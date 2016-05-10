@@ -1,0 +1,55 @@
+//
+//  PrefixHeader.pch
+//  DagolfLa
+//
+//  Created by 黄安 on 16/5/4.
+//  Copyright © 2016年 bhxx. All rights reserved.
+//
+
+
+
+// Include any system framework and library headers here that should be included in all compilation units.
+// You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
+
+
+#import <Availability.h>
+
+
+#ifndef __IPHONE_5_0
+#warning "This project uses features only available in iOS SDK 5.0 and later."
+#endif
+
+#ifdef __OBJC__
+#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
+#import <SystemConfiguration/SystemConfiguration.h>
+#import <MobileCoreServices/MobileCoreServices.h>
+#import "AppDelegate.h"
+#import "ContantHead.h"
+#import "PostDataRequest.h"
+#import "MBProgressHUD.h"
+//    #import "MJRefresh.h"
+#define FeLogDebug(format,...)        writeCinLog(__FUNCTION__,CinLogLevelDebug,format,##__VA_ARGS__)
+#define FeLogInfo(format,...)        writeCinLog(__FUNCTION__,CinLogLevelInfo,format,##__VA_ARGS__)
+#define FeLogWarn(format,...)        writeCinLog(__FUNCTION__,CinLogLevelWarning,format,##__VA_ARGS__)
+#define FeLogError(format,...)        writeCinLog(__FUNCTION__,CinLogLevelError,format,##__VA_ARGS__)
+
+#endif
+//定义debug模式下输出NSLog，release模式下不输出NSLog
+#ifdef DEBUG
+#define NSLog(format, ...) NSLog(format, ## __VA_ARGS__)
+#else
+#define NSLog(format, ...)
+#endif
+
+//#define screen_height [UIScreen mainScreen].bounds.size.height
+//#define screen_width [UIScreen mainScreen].bounds.size.width
+
+//#define currentIOSVersion [[[UIDevice currentDevice] systemVersion] floatValue]
+
+#ifndef PrefixHeader_pch
+#define PrefixHeader_pch
+// Include any system framework and library headers here that should be included in all compilation units.
+// You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
+
+#endif

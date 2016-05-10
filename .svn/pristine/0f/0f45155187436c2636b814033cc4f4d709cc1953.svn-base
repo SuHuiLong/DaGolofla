@@ -1,0 +1,25 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "191ec5ea-d7f3-3948-8fe4-4f89c31b8a1c++4255",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+    "191ec5ea-d7f3-3948-8fe4-4f89c31b8a1c++4255" : {
+
+    }
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "191ec5ea-d7f3-3948-8fe4-4f89c31b8a1c++4255" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "34280EE8-464F-4DEB-B00F-6D651C0BA63A",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "191ec5ea-d7f3-3948-8fe4-4f89c31b8a1c++4255" : "%E9%AB%98%E5%B0%94%E5%A4%AB2.0Bate\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "DagolfLa",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "DagolfLa.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/192.168.2.33:8443\/svn\/gaoerfu",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Subversion",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "191ec5ea-d7f3-3948-8fe4-4f89c31b8a1c++4255"
+    }
+  ]
+}

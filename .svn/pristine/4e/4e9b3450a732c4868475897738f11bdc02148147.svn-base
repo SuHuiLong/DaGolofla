@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9532" systemVersion="14F1605" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="75" id="KGk-i7-Jjw" customClass="MyTeamsTableViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="75"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="375" height="74"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tu4.png" translatesAutoresizingMaskIntoConstraints="NO" id="reD-Qz-VRy">
+                        <rect key="frame" x="8" y="7" width="60" height="60"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="reD-Qz-VRy" secondAttribute="height" multiplier="1:1" id="Fch-dC-1tv"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="皇家第一高尔夫俱乐部（2222人）" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tIe-lN-3Cq">
+                        <rect key="frame" x="76" y="7" width="291" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="tIe-lN-3Cq" secondAttribute="height" multiplier="97:7" id="f84-6b-2Cm"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="球队的介绍内容信息，球队的介绍内容西西呢" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HAx-M4-Waz">
+                        <rect key="frame" x="76" y="45" width="291" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="HAx-M4-Waz" secondAttribute="height" multiplier="340:21" constant="-49" id="MDB-SG-T7I"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="地区：暂无地区" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AKC-wz-l3j">
+                        <rect key="frame" x="76" y="26" width="291" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="AKC-wz-l3j" secondAttribute="height" multiplier="97:7" id="riO-gd-bvC"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="tIe-lN-3Cq" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="-1" id="6nj-ut-8iC"/>
+                    <constraint firstItem="AKC-wz-l3j" firstAttribute="leading" secondItem="reD-Qz-VRy" secondAttribute="trailing" constant="8" id="6tD-eD-hbR"/>
+                    <constraint firstItem="reD-Qz-VRy" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="-1" id="DOj-jO-Jl4"/>
+                    <constraint firstItem="tIe-lN-3Cq" firstAttribute="leading" secondItem="reD-Qz-VRy" secondAttribute="trailing" constant="8" id="K8a-hS-wOa"/>
+                    <constraint firstItem="tIe-lN-3Cq" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="M8L-j7-Azu"/>
+                    <constraint firstItem="reD-Qz-VRy" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="PLr-XZ-7t7"/>
+                    <constraint firstItem="HAx-M4-Waz" firstAttribute="top" secondItem="tIe-lN-3Cq" secondAttribute="bottom" constant="17" id="QzQ-TV-qrM"/>
+                    <constraint firstItem="AKC-wz-l3j" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="18" id="YzG-wT-5D9"/>
+                    <constraint firstItem="HAx-M4-Waz" firstAttribute="leading" secondItem="reD-Qz-VRy" secondAttribute="trailing" constant="8" id="c00-FG-y0o"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="reD-Qz-VRy" secondAttribute="bottom" constant="-1" id="it9-JC-iuX"/>
+                    <constraint firstItem="AKC-wz-l3j" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="oek-eY-WEc"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="HAx-M4-Waz" secondAttribute="trailing" id="uHf-du-HI8"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="areaLabel" destination="AKC-wz-l3j" id="eMm-Gf-7fW"/>
+                <outlet property="detailLabel" destination="HAx-M4-Waz" id="iMd-gT-1Jo"/>
+                <outlet property="iconImage" destination="reD-Qz-VRy" id="42p-g8-8LN"/>
+                <outlet property="titleLabel" destination="tIe-lN-3Cq" id="sPP-Do-56W"/>
+            </connections>
+            <point key="canvasLocation" x="331.5" y="316.5"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="tu4.png" width="45" height="45"/>
+    </resources>
+</document>
