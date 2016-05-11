@@ -749,6 +749,9 @@
 		F56F0B871CC60B0400A222F3 /* NoteHandlle.m in Sources */ = {isa = PBXBuildFile; fileRef = F56F0B861CC60B0400A222F3 /* NoteHandlle.m */; };
 		F56F0B8D1CC613E100A222F3 /* NoteModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F56F0B8C1CC613E100A222F3 /* NoteModel.m */; };
 		F56F0B901CC637A200A222F3 /* AddNoteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F56F0B8F1CC637A200A222F3 /* AddNoteViewController.m */; };
+		F5A1053B1CE300F80050461D /* JGTeamChannelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5A1053A1CE300F80050461D /* JGTeamChannelViewController.m */; };
+		F5A105401CE301D00050461D /* JGTeamChannelTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = F5A1053D1CE301D00050461D /* JGTeamChannelTableView.m */; };
+		F5A105411CE301D00050461D /* JGTeamChannelTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F5A1053F1CE301D00050461D /* JGTeamChannelTableViewCell.m */; };
 		F5E3F7F01CAA54BC00B24C77 /* dz.png in Resources */ = {isa = PBXBuildFile; fileRef = F5E3F7ED1CAA54BC00B24C77 /* dz.png */; };
 		F5E3F7F11CAA54BC00B24C77 /* dz@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F5E3F7EE1CAA54BC00B24C77 /* dz@2x.png */; };
 		F5E3F7F21CAA54BC00B24C77 /* dz@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = F5E3F7EF1CAA54BC00B24C77 /* dz@3x.png */; };
@@ -1908,6 +1911,12 @@
 		F56F0B8C1CC613E100A222F3 /* NoteModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoteModel.m; sourceTree = "<group>"; };
 		F56F0B8E1CC637A200A222F3 /* AddNoteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddNoteViewController.h; sourceTree = "<group>"; };
 		F56F0B8F1CC637A200A222F3 /* AddNoteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddNoteViewController.m; sourceTree = "<group>"; };
+		F5A105391CE300F80050461D /* JGTeamChannelViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGTeamChannelViewController.h; sourceTree = "<group>"; };
+		F5A1053A1CE300F80050461D /* JGTeamChannelViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGTeamChannelViewController.m; sourceTree = "<group>"; };
+		F5A1053C1CE301D00050461D /* JGTeamChannelTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGTeamChannelTableView.h; sourceTree = "<group>"; };
+		F5A1053D1CE301D00050461D /* JGTeamChannelTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGTeamChannelTableView.m; sourceTree = "<group>"; };
+		F5A1053E1CE301D00050461D /* JGTeamChannelTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGTeamChannelTableViewCell.h; sourceTree = "<group>"; };
+		F5A1053F1CE301D00050461D /* JGTeamChannelTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGTeamChannelTableViewCell.m; sourceTree = "<group>"; };
 		F5E3F7ED1CAA54BC00B24C77 /* dz.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dz.png; sourceTree = "<group>"; };
 		F5E3F7EE1CAA54BC00B24C77 /* dz@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dz@2x.png"; sourceTree = "<group>"; };
 		F5E3F7EF1CAA54BC00B24C77 /* dz@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dz@3x.png"; sourceTree = "<group>"; };
@@ -2316,6 +2325,10 @@
 		3660E0F81BFC54D90033B4D7 /* 球队 */ = {
 			isa = PBXGroup;
 			children = (
+				F5A1053C1CE301D00050461D /* JGTeamChannelTableView.h */,
+				F5A1053D1CE301D00050461D /* JGTeamChannelTableView.m */,
+				F5A1053E1CE301D00050461D /* JGTeamChannelTableViewCell.h */,
+				F5A1053F1CE301D00050461D /* JGTeamChannelTableViewCell.m */,
 				361847561C03275200BE565F /* 球队管理 */,
 				36DD4DAD1BFDB664008D3424 /* 创建球队 */,
 				3660E1931BFC573C0033B4D7 /* MineTeamActiveCell.h */,
@@ -3489,6 +3502,7 @@
 		36BFFD2A1BC76C8D005B3CE2 /* DagolfLa */ = {
 			isa = PBXGroup;
 			children = (
+				F5A105381CE300F80050461D /* 球队新版本 */,
 				65B5969D1CAD43AC007AB83A /* 社区测试文件 */,
 				65B596CF1CAD43AC007AB83A /* 社区导航文件 */,
 				36BFFEEA1BC76D09005B3CE2 /* 第三方库 */,
@@ -4818,6 +4832,15 @@
 			path = "备注球友本地数据库";
 			sourceTree = "<group>";
 		};
+		F5A105381CE300F80050461D /* 球队新版本 */ = {
+			isa = PBXGroup;
+			children = (
+				F5A105391CE300F80050461D /* JGTeamChannelViewController.h */,
+				F5A1053A1CE300F80050461D /* JGTeamChannelViewController.m */,
+			);
+			path = "球队新版本";
+			sourceTree = "<group>";
+		};
 		F5EB44641C995788008ACD73 /* 球友列表 */ = {
 			isa = PBXGroup;
 			children = (
@@ -5291,6 +5314,7 @@
 				36BFFFC81BC770B1005B3CE2 /* AreaViewController.m in Sources */,
 				36BF004F1BC77213005B3CE2 /* UserAssistModel.m in Sources */,
 				36BFFFCF1BC770B1005B3CE2 /* ZYQAssetPickerController.m in Sources */,
+				F5A1053B1CE300F80050461D /* JGTeamChannelViewController.m in Sources */,
 				36E300F61C3FF3F9005C3F08 /* MJRefreshGifHeader.m in Sources */,
 				36BFFF6A1BC76D09005B3CE2 /* UIRefreshControl+AFNetworking.m in Sources */,
 				36BF01831BC77611005B3CE2 /* YueMyBallViewController.m in Sources */,
@@ -5497,6 +5521,8 @@
 				36DF6DF71C0809B400B60B67 /* TeamBrowseViewController.m in Sources */,
 				36BF01A11BC779D8005B3CE2 /* YueDetailModel.m in Sources */,
 				20BA61291CDC99D0004B61F5 /* ALAirplayView.m in Sources */,
+				F5A105401CE301D00050461D /* JGTeamChannelTableView.m in Sources */,
+				F5A105411CE301D00050461D /* JGTeamChannelTableViewCell.m in Sources */,
 				36E300ED1C3FF3F9005C3F08 /* MJRefreshComponent.m in Sources */,
 				36EB78C51C0FD65C00263E50 /* ScoreBySelfModel.m in Sources */,
 				65B596D51CAD43AC007AB83A /* ILRegularExpressionManager.m in Sources */,

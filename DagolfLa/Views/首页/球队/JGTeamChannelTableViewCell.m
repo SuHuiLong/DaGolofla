@@ -16,8 +16,7 @@
     
     if (self) {
         
-    
-    
+        self.iconImageV = [[UIImageView alloc] initWithFrame:CGRectMake(5, 5, 30, 30)];
         
         
         

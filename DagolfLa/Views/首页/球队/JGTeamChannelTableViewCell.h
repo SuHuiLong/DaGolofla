@@ -10,4 +10,9 @@
 
 @interface JGTeamChannelTableViewCell : UITableViewCell
 
+@property (nonatomic, strong)UIImageView *iconImageV;
+@property (nonatomic, strong)UILabel *nameLabel;
+@property (nonatomic, strong)UILabel *adressLabel;
+@property (nonatomic, strong)UILabel *describLabel;
+
 @end
