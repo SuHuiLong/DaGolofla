@@ -15,6 +15,7 @@
 @implementation UIDevice (ALSystemVersion)
 
 
+
 + (float)iOSVersions {
     static float version = 0.f;
     static dispatch_once_t onceToken;
