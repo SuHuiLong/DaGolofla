@@ -13,6 +13,10 @@
 
 @interface ViewController : UIViewController
 
+/****
+ 
+ **/
+
 @property (strong, nonatomic) NSNumber *lat;
 @property (strong, nonatomic) NSNumber *lng;
 @property (nonatomic,assign) NSInteger type;
