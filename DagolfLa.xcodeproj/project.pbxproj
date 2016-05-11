@@ -7,6 +7,19 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2067C6B81CE30CA4002900C8 /* JGTeamActibityNameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2067C6B51CE30CA4002900C8 /* JGTeamActibityNameViewController.m */; };
+		2067C6B91CE30CA4002900C8 /* JGTeamActivityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2067C6B71CE30CA4002900C8 /* JGTeamActivityViewController.m */; };
+		2067C6BD1CE30CB4002900C8 /* JGTeamAcitivtyModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2067C6BC1CE30CB4002900C8 /* JGTeamAcitivtyModel.m */; };
+		2067C6CE1CE30CC0002900C8 /* JGActivityNameBaseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2067C6C01CE30CC0002900C8 /* JGActivityNameBaseCell.m */; };
+		2067C6CF1CE30CC0002900C8 /* JGActivityNameBaseCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2067C6C11CE30CC0002900C8 /* JGActivityNameBaseCell.xib */; };
+		2067C6D01CE30CC0002900C8 /* JGCostsDescriptionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2067C6C31CE30CC0002900C8 /* JGCostsDescriptionCell.m */; };
+		2067C6D11CE30CC0002900C8 /* JGCostsDescriptionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2067C6C41CE30CC0002900C8 /* JGCostsDescriptionCell.xib */; };
+		2067C6D21CE30CC0002900C8 /* JGTeamActivityCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2067C6C61CE30CC0002900C8 /* JGTeamActivityCell.m */; };
+		2067C6D31CE30CC0002900C8 /* JGTeamActivityCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2067C6C71CE30CC0002900C8 /* JGTeamActivityCell.xib */; };
+		2067C6D41CE30CC0002900C8 /* JGTeamActivityDetailsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2067C6C91CE30CC0002900C8 /* JGTeamActivityDetailsCell.m */; };
+		2067C6D51CE30CC0002900C8 /* JGTeamActivityDetailsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2067C6CA1CE30CC0002900C8 /* JGTeamActivityDetailsCell.xib */; };
+		2067C6D61CE30CC0002900C8 /* JGTeamActivityWithAddressCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2067C6CC1CE30CC0002900C8 /* JGTeamActivityWithAddressCell.m */; };
+		2067C6D71CE30CC0002900C8 /* JGTeamActivityWithAddressCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2067C6CD1CE30CC0002900C8 /* JGTeamActivityWithAddressCell.xib */; };
 		20BA61291CDC99D0004B61F5 /* ALAirplayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 20BA61151CDC99D0004B61F5 /* ALAirplayView.m */; };
 		20BA612A1CDC99D0004B61F5 /* ALButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 20BA61171CDC99D0004B61F5 /* ALButton.m */; };
 		20BA612B1CDC99D0004B61F5 /* ALMoviePlayerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 20BA61191CDC99D0004B61F5 /* ALMoviePlayerController.m */; };
@@ -775,6 +788,27 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2067C6B41CE30CA4002900C8 /* JGTeamActibityNameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGTeamActibityNameViewController.h; sourceTree = "<group>"; };
+		2067C6B51CE30CA4002900C8 /* JGTeamActibityNameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGTeamActibityNameViewController.m; sourceTree = "<group>"; };
+		2067C6B61CE30CA4002900C8 /* JGTeamActivityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGTeamActivityViewController.h; sourceTree = "<group>"; };
+		2067C6B71CE30CA4002900C8 /* JGTeamActivityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGTeamActivityViewController.m; sourceTree = "<group>"; };
+		2067C6BB1CE30CB4002900C8 /* JGTeamAcitivtyModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGTeamAcitivtyModel.h; sourceTree = "<group>"; };
+		2067C6BC1CE30CB4002900C8 /* JGTeamAcitivtyModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGTeamAcitivtyModel.m; sourceTree = "<group>"; };
+		2067C6BF1CE30CC0002900C8 /* JGActivityNameBaseCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGActivityNameBaseCell.h; sourceTree = "<group>"; };
+		2067C6C01CE30CC0002900C8 /* JGActivityNameBaseCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGActivityNameBaseCell.m; sourceTree = "<group>"; };
+		2067C6C11CE30CC0002900C8 /* JGActivityNameBaseCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JGActivityNameBaseCell.xib; sourceTree = "<group>"; };
+		2067C6C21CE30CC0002900C8 /* JGCostsDescriptionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGCostsDescriptionCell.h; sourceTree = "<group>"; };
+		2067C6C31CE30CC0002900C8 /* JGCostsDescriptionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGCostsDescriptionCell.m; sourceTree = "<group>"; };
+		2067C6C41CE30CC0002900C8 /* JGCostsDescriptionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JGCostsDescriptionCell.xib; sourceTree = "<group>"; };
+		2067C6C51CE30CC0002900C8 /* JGTeamActivityCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGTeamActivityCell.h; sourceTree = "<group>"; };
+		2067C6C61CE30CC0002900C8 /* JGTeamActivityCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGTeamActivityCell.m; sourceTree = "<group>"; };
+		2067C6C71CE30CC0002900C8 /* JGTeamActivityCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JGTeamActivityCell.xib; sourceTree = "<group>"; };
+		2067C6C81CE30CC0002900C8 /* JGTeamActivityDetailsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGTeamActivityDetailsCell.h; sourceTree = "<group>"; };
+		2067C6C91CE30CC0002900C8 /* JGTeamActivityDetailsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGTeamActivityDetailsCell.m; sourceTree = "<group>"; };
+		2067C6CA1CE30CC0002900C8 /* JGTeamActivityDetailsCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JGTeamActivityDetailsCell.xib; sourceTree = "<group>"; };
+		2067C6CB1CE30CC0002900C8 /* JGTeamActivityWithAddressCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGTeamActivityWithAddressCell.h; sourceTree = "<group>"; };
+		2067C6CC1CE30CC0002900C8 /* JGTeamActivityWithAddressCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGTeamActivityWithAddressCell.m; sourceTree = "<group>"; };
+		2067C6CD1CE30CC0002900C8 /* JGTeamActivityWithAddressCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JGTeamActivityWithAddressCell.xib; sourceTree = "<group>"; };
 		20BA61141CDC99D0004B61F5 /* ALAirplayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALAirplayView.h; sourceTree = "<group>"; };
 		20BA61151CDC99D0004B61F5 /* ALAirplayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALAirplayView.m; sourceTree = "<group>"; };
 		20BA61161CDC99D0004B61F5 /* ALButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALButton.h; sourceTree = "<group>"; };
@@ -2004,6 +2038,48 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2067C6B31CE30CA4002900C8 /* 球队活动 */ = {
+			isa = PBXGroup;
+			children = (
+				2067C6B41CE30CA4002900C8 /* JGTeamActibityNameViewController.h */,
+				2067C6B51CE30CA4002900C8 /* JGTeamActibityNameViewController.m */,
+				2067C6B61CE30CA4002900C8 /* JGTeamActivityViewController.h */,
+				2067C6B71CE30CA4002900C8 /* JGTeamActivityViewController.m */,
+			);
+			path = "球队活动";
+			sourceTree = "<group>";
+		};
+		2067C6BA1CE30CB4002900C8 /* model */ = {
+			isa = PBXGroup;
+			children = (
+				2067C6BB1CE30CB4002900C8 /* JGTeamAcitivtyModel.h */,
+				2067C6BC1CE30CB4002900C8 /* JGTeamAcitivtyModel.m */,
+			);
+			path = model;
+			sourceTree = "<group>";
+		};
+		2067C6BE1CE30CC0002900C8 /* 球队活动 */ = {
+			isa = PBXGroup;
+			children = (
+				2067C6BF1CE30CC0002900C8 /* JGActivityNameBaseCell.h */,
+				2067C6C01CE30CC0002900C8 /* JGActivityNameBaseCell.m */,
+				2067C6C11CE30CC0002900C8 /* JGActivityNameBaseCell.xib */,
+				2067C6C21CE30CC0002900C8 /* JGCostsDescriptionCell.h */,
+				2067C6C31CE30CC0002900C8 /* JGCostsDescriptionCell.m */,
+				2067C6C41CE30CC0002900C8 /* JGCostsDescriptionCell.xib */,
+				2067C6C51CE30CC0002900C8 /* JGTeamActivityCell.h */,
+				2067C6C61CE30CC0002900C8 /* JGTeamActivityCell.m */,
+				2067C6C71CE30CC0002900C8 /* JGTeamActivityCell.xib */,
+				2067C6C81CE30CC0002900C8 /* JGTeamActivityDetailsCell.h */,
+				2067C6C91CE30CC0002900C8 /* JGTeamActivityDetailsCell.m */,
+				2067C6CA1CE30CC0002900C8 /* JGTeamActivityDetailsCell.xib */,
+				2067C6CB1CE30CC0002900C8 /* JGTeamActivityWithAddressCell.h */,
+				2067C6CC1CE30CC0002900C8 /* JGTeamActivityWithAddressCell.m */,
+				2067C6CD1CE30CC0002900C8 /* JGTeamActivityWithAddressCell.xib */,
+			);
+			path = "球队活动";
+			sourceTree = "<group>";
+		};
 		20BA61131CDC99D0004B61F5 /* ALMoviePlayerController */ = {
 			isa = PBXGroup;
 			children = (
@@ -4843,6 +4919,7 @@
 		F5A105381CE300F80050461D /* 球队新版本 */ = {
 			isa = PBXGroup;
 			children = (
+				2067C6BA1CE30CB4002900C8 /* model */,
 				F5A105421CE309750050461D /* controller */,
 				F5A105471CE309750050461D /* view */,
 			);
@@ -4852,6 +4929,7 @@
 		F5A105421CE309750050461D /* controller */ = {
 			isa = PBXGroup;
 			children = (
+				2067C6B31CE30CA4002900C8 /* 球队活动 */,
 				F5A105431CE309750050461D /* JGTeamChannelViewController.h */,
 				F5A105441CE309750050461D /* JGTeamChannelViewController.m */,
 			);
@@ -4861,6 +4939,7 @@
 		F5A105471CE309750050461D /* view */ = {
 			isa = PBXGroup;
 			children = (
+				2067C6BE1CE30CC0002900C8 /* 球队活动 */,
 				F5A105481CE309750050461D /* JGTeamChannelTableView.h */,
 				F5A105491CE309750050461D /* JGTeamChannelTableView.m */,
 				F5A1054A1CE309750050461D /* JGTeamChannelTableViewCell.h */,
@@ -5042,6 +5121,7 @@
 				36BFFE8E1BC76CDC005B3CE2 /* xq_gz@3x.png in Resources */,
 				36BFFE2E1BC76CDC005B3CE2 /* genduo3@2x.png in Resources */,
 				65B596E51CAD43AC007AB83A /* zan@2x.png in Resources */,
+				2067C6D11CE30CC0002900C8 /* JGCostsDescriptionCell.xib in Resources */,
 				36BFFE5B1BC76CDC005B3CE2 /* tianjia@3x.png in Resources */,
 				36BF000B1BC770C4005B3CE2 /* chatto_bg_focused.png in Resources */,
 				36BFFE9C1BC76CDC005B3CE2 /* gqxs.png in Resources */,
@@ -5123,6 +5203,7 @@
 				6543320D1BD5D9B900363947 /* UMSocialSDKResourcesNew.bundle in Resources */,
 				36BFFE2F1BC76CDC005B3CE2 /* genduo3@3x.png in Resources */,
 				36BFFE601BC76CDC005B3CE2 /* tu2@2x.png in Resources */,
+				2067C6CF1CE30CC0002900C8 /* JGActivityNameBaseCell.xib in Resources */,
 				36BFFEDB1BC76CDC005B3CE2 /* xiaoxi.png in Resources */,
 				36BFFE5E1BC76CDC005B3CE2 /* tu1@3x.png in Resources */,
 				36BFFE6A1BC76CDC005B3CE2 /* tx1@2x.png in Resources */,
@@ -5133,6 +5214,7 @@
 				36BFFE901BC76CDC005B3CE2 /* xq_xx@2x.png in Resources */,
 				36BFFE4C1BC76CDC005B3CE2 /* rili@3x.png in Resources */,
 				36BFFE4E1BC76CDC005B3CE2 /* search@2x.png in Resources */,
+				2067C6D51CE30CC0002900C8 /* JGTeamActivityDetailsCell.xib in Resources */,
 				36BFFE411BC76CDC005B3CE2 /* nes.png in Resources */,
 				36BFFE211BC76CDC005B3CE2 /* banner@2x.png in Resources */,
 				6543320B1BD5D9B900363947 /* UMSnsAccountViewController.xib in Resources */,
@@ -5154,6 +5236,7 @@
 				36BFFEC71BC76CDC005B3CE2 /* tab_wd@2x.png in Resources */,
 				36BFFE221BC76CDC005B3CE2 /* banner@3x.png in Resources */,
 				36BFFED71BC76CDC005B3CE2 /* wyyq@3x.png in Resources */,
+				2067C6D31CE30CC0002900C8 /* JGTeamActivityCell.xib in Resources */,
 				36E1FBB61C7D9043006B1456 /* bannerS.jpg in Resources */,
 				36BFFE661BC76CDC005B3CE2 /* tu4@2x.png in Resources */,
 				36BFFE771BC76CDC005B3CE2 /* xb_n.png in Resources */,
@@ -5233,6 +5316,7 @@
 				36BFFEB91BC76CDC005B3CE2 /* tab_bg2@3x.png in Resources */,
 				36BFFE801BC76CDC005B3CE2 /* xinxi.png in Resources */,
 				36BFFE6C1BC76CDC005B3CE2 /* tx2.png in Resources */,
+				2067C6D71CE30CC0002900C8 /* JGTeamActivityWithAddressCell.xib in Resources */,
 				36BFFEB51BC76CDC005B3CE2 /* tab_bg1@2x.png in Resources */,
 				36BFFEC41BC76CDC005B3CE2 /* tab_sy@2x.png in Resources */,
 				362317261BDA12F500257862 /* guide_01@2x.png in Resources */,
@@ -5320,6 +5404,7 @@
 			files = (
 				36E301031C3FF410005C3F08 /* MJDIYHeader.m in Sources */,
 				36B9B59F1C3E45A70053B227 /* TeamPhotoEditViewController.m in Sources */,
+				2067C6D41CE30CC0002900C8 /* JGTeamActivityDetailsCell.m in Sources */,
 				36E300F81C3FF3F9005C3F08 /* MJRefreshStateHeader.m in Sources */,
 				366884961C4DE40B00B81E04 /* RewordCheckModel.m in Sources */,
 				363053271BDE3DEB00B02C68 /* ShareAlert.m in Sources */,
@@ -5351,6 +5436,7 @@
 				36BFFF661BC76D09005B3CE2 /* UIAlertView+AFNetworking.m in Sources */,
 				36DBFD381BEF3ADC00CA64D3 /* FriendModel.m in Sources */,
 				368B733B1C1045DE0002A618 /* ScoreGameModel.m in Sources */,
+				2067C6CE1CE30CC0002900C8 /* JGActivityNameBaseCell.m in Sources */,
 				36BF01871BC77611005B3CE2 /* CityCollectionViewCell.m in Sources */,
 				36E300FD1C3FF3F9005C3F08 /* UIView+MJExtension.m in Sources */,
 				36BF01C91BC77ABE005B3CE2 /* YueMyBallTableViewCell.m in Sources */,
@@ -5385,6 +5471,7 @@
 				36B9B5981C3E00200053B227 /* CollectViewController.m in Sources */,
 				360148F81C1FFE5E0074C395 /* ManageFinfishModel.m in Sources */,
 				36DCEEC41C0BEF1100AA862C /* ManageCreateLogoTableViewCell.m in Sources */,
+				2067C6B91CE30CA4002900C8 /* JGTeamActivityViewController.m in Sources */,
 				36EA30CF1C1D52A3008BD2B4 /* YueBallDetailModel.m in Sources */,
 				369E6B041C4FCC3400ED6684 /* ManageSelfDetTableViewCell.m in Sources */,
 				36BFFFFB1BC770C4005B3CE2 /* UIImage+StrethImage.m in Sources */,
@@ -5553,6 +5640,7 @@
 				F5A105411CE301D00050461D /* JGTeamChannelTableViewCell.m in Sources */,
 				36E300ED1C3FF3F9005C3F08 /* MJRefreshComponent.m in Sources */,
 				36EB78C51C0FD65C00263E50 /* ScoreBySelfModel.m in Sources */,
+				2067C6BD1CE30CB4002900C8 /* JGTeamAcitivtyModel.m in Sources */,
 				65B596D51CAD43AC007AB83A /* ILRegularExpressionManager.m in Sources */,
 				36DF09B51C03F303007A8A4E /* TeamIntroduceViewCell.m in Sources */,
 				36D39B371BCCD8D000C0B197 /* RewordModel.m in Sources */,
@@ -5617,6 +5705,7 @@
 				36BF008C1BC772EF005B3CE2 /* MySetReceiveController.m in Sources */,
 				3660E1A91BFC584C0033B4D7 /* TeamManageViewController.m in Sources */,
 				367E31FF1C1EBAC00007BD32 /* YueHallPeoTableViewCell.m in Sources */,
+				2067C6D01CE30CC0002900C8 /* JGCostsDescriptionCell.m in Sources */,
 				36BF01CB1BC77ABE005B3CE2 /* YueWaitTableViewCell.m in Sources */,
 				3660E13E1BFC55AC0033B4D7 /* TeamDeMessViewController.m in Sources */,
 				65B596F11CAD43AC007AB83A /* JKSlideSwitchView.m in Sources */,
@@ -5650,6 +5739,7 @@
 				36BFFF611BC76D09005B3CE2 /* AFURLSessionManager.m in Sources */,
 				36067BD11C982791001AE22C /* ShieldingTableViewCell.m in Sources */,
 				36BFFF781BC76D09005B3CE2 /* SDWebImageDownloader.m in Sources */,
+				2067C6B81CE30CA4002900C8 /* JGTeamActibityNameViewController.m in Sources */,
 				36DD4DB61BFDBE30008D3424 /* TeamCreateTextViewCell.m in Sources */,
 				36BFFF6B1BC76D09005B3CE2 /* UIWebView+AFNetworking.m in Sources */,
 				36BFFF8A1BC76D09005B3CE2 /* FDCalendar.m in Sources */,
@@ -5665,6 +5755,7 @@
 				36E300F51C3FF3F9005C3F08 /* MJRefreshBackStateFooter.m in Sources */,
 				36DF6DEF1C07FDBD00B60B67 /* TeamPhotoViewController.m in Sources */,
 				36BF01F41BC77C71005B3CE2 /* MyselfImpotTableViewCell.m in Sources */,
+				2067C6D61CE30CC0002900C8 /* JGTeamActivityWithAddressCell.m in Sources */,
 				36BF01851BC77611005B3CE2 /* YueSearchViewController.m in Sources */,
 				36BFFF941BC76D6B005B3CE2 /* TabBarController.m in Sources */,
 				36BF01001BC7750D005B3CE2 /* YueQiuViewController.m in Sources */,
@@ -5677,6 +5768,7 @@
 				65B596DA1CAD43AC007AB83A /* YMTextData.m in Sources */,
 				36BF00881BC772EF005B3CE2 /* MySetApplyController.m in Sources */,
 				3684FDB21C4A3635002A14FC /* TeamJoinSetTableViewCell.m in Sources */,
+				2067C6D21CE30CC0002900C8 /* JGTeamActivityCell.m in Sources */,
 				36BFFF761BC76D09005B3CE2 /* SDWebImageCompat.m in Sources */,
 				36BF01C11BC77ABD005B3CE2 /* FabuPostTableViewCell.m in Sources */,
 				36BFFF821BC76D09005B3CE2 /* Helper.m in Sources */,

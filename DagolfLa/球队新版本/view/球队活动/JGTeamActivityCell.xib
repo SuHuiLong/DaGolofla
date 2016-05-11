@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="99" id="KGk-i7-Jjw" customClass="JGTeamActivityCell">
+            <rect key="frame" x="0.0" y="0.0" width="332" height="99"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="332" height="98.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" text="球队活动列表一" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="srA-90-vhx">
+                        <rect key="frame" x="8" y="8" width="105" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="21" id="O5T-yb-Cv0"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="正在报名" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jEI-w9-a7H">
+                        <rect key="frame" x="272" y="8" width="52" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="21" id="b4s-SM-ziZ"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="活动时间：6月1号－6月3号" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wiU-Cc-leL">
+                        <rect key="frame" x="8" y="42" width="161" height="16"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="16" id="TWK-t0-Ee5"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="已报名的人数（5人）" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Wa-su-XmR">
+                        <rect key="frame" x="8" y="68" width="125" height="16"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="16" id="Hzo-cO-bhS"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="地点：上海市佘山高尔夫球场" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lW8-fF-h3E">
+                        <rect key="frame" x="179" y="42" width="145" height="16"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="16" id="HYf-Ku-U4S"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="7Wa-su-XmR" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="5nB-So-WvM"/>
+                    <constraint firstItem="lW8-fF-h3E" firstAttribute="top" secondItem="jEI-w9-a7H" secondAttribute="bottom" constant="13" id="M2h-cu-D1O"/>
+                    <constraint firstItem="jEI-w9-a7H" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="OE4-Xd-9zx"/>
+                    <constraint firstItem="wiU-Cc-leL" firstAttribute="top" secondItem="srA-90-vhx" secondAttribute="bottom" constant="13" id="OLo-Wa-La1"/>
+                    <constraint firstItem="srA-90-vhx" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="Sg8-vs-uLg"/>
+                    <constraint firstItem="7Wa-su-XmR" firstAttribute="top" secondItem="wiU-Cc-leL" secondAttribute="bottom" constant="10" id="Ttm-PP-qsR"/>
+                    <constraint firstAttribute="trailing" secondItem="jEI-w9-a7H" secondAttribute="trailing" constant="8" id="ari-aG-ote"/>
+                    <constraint firstItem="wiU-Cc-leL" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="iWv-5y-SMX"/>
+                    <constraint firstItem="srA-90-vhx" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="l3V-xs-duB"/>
+                    <constraint firstAttribute="trailing" secondItem="lW8-fF-h3E" secondAttribute="trailing" constant="8" id="tCZ-OZ-Koj"/>
+                    <constraint firstItem="lW8-fF-h3E" firstAttribute="leading" secondItem="wiU-Cc-leL" secondAttribute="trailing" constant="10" id="tRW-6E-l8Y"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="Apply" destination="jEI-w9-a7H" id="x2u-jr-oJ4"/>
+                <outlet property="activityAddress" destination="lW8-fF-h3E" id="5Ro-J4-XLW"/>
+                <outlet property="activityName" destination="wiU-Cc-leL" id="gzG-U1-NJy"/>
+                <outlet property="activitytitle" destination="srA-90-vhx" id="6fe-59-kef"/>
+                <outlet property="applyNumber" destination="7Wa-su-XmR" id="InB-iZ-I5D"/>
+            </connections>
+            <point key="canvasLocation" x="268" y="296.5"/>
+        </tableViewCell>
+    </objects>
+</document>
