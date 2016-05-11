@@ -28,7 +28,7 @@
 #import "ManageViewController.h"
 #import "VoteViewController.h"
 #import "SpeciallOfferViewController.h"
-
+#import "JGTeamChannelViewController.h"
 
 #import <BaiduMapAPI/BMapKit.h>
 #import <MapKit/MapKit.h>

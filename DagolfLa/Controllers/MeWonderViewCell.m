@@ -10,15 +10,11 @@
 
 @implementation MeWonderViewCell
 
-/***
- **
- 
- 
- * asdasd
- */
+/* dfdfdv反反复复ff */
 
 - (void)awakeFromNib {
     // Initialization code
+    NSLog(@"qweqweqweqwe");
 }
 
 
