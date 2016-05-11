@@ -10,12 +10,7 @@
 
 @implementation MeWonderViewCell
 
-/***
- **
- 
- 
- * asdasd
- */
+/* dfdfdff */
 
 - (void)awakeFromNib {
     // Initialization code
