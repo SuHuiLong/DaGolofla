@@ -739,6 +739,7 @@
 		828A999C1CE3085A00AF9860 /* JGTeamChannelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 828A99951CE3085A00AF9860 /* JGTeamChannelViewController.m */; };
 		828A999D1CE3085A00AF9860 /* JGTeamChannelTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 828A99991CE3085A00AF9860 /* JGTeamChannelTableView.m */; };
 		828A999E1CE3085A00AF9860 /* JGTeamChannelTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 828A999B1CE3085A00AF9860 /* JGTeamChannelTableViewCell.m */; };
+		828A99A11CE308DB00AF9860 /* JGtestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 828A99A01CE308DB00AF9860 /* JGtestViewController.m */; };
 		AA857EE01C5F48AA0034B4C8 /* SelfDataViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA857EDF1C5F48AA0034B4C8 /* SelfDataViewController.m */; };
 		AA91C7861C4201B80078DA17 /* IQButtonBarArrowLeft@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AA91C7821C4201B80078DA17 /* IQButtonBarArrowLeft@2x.png */; };
 		AA91C7871C4201B80078DA17 /* IQButtonBarArrowRight@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AA91C7831C4201B80078DA17 /* IQButtonBarArrowRight@2x.png */; };
@@ -1898,6 +1899,8 @@
 		828A99991CE3085A00AF9860 /* JGTeamChannelTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGTeamChannelTableView.m; sourceTree = "<group>"; };
 		828A999A1CE3085A00AF9860 /* JGTeamChannelTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGTeamChannelTableViewCell.h; sourceTree = "<group>"; };
 		828A999B1CE3085A00AF9860 /* JGTeamChannelTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGTeamChannelTableViewCell.m; sourceTree = "<group>"; };
+		828A999F1CE308DB00AF9860 /* JGtestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGtestViewController.h; sourceTree = "<group>"; };
+		828A99A01CE308DB00AF9860 /* JGtestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGtestViewController.m; sourceTree = "<group>"; };
 		AA857EDF1C5F48AA0034B4C8 /* SelfDataViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = SelfDataViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		AA91C7821C4201B80078DA17 /* IQButtonBarArrowLeft@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "IQButtonBarArrowLeft@2x.png"; sourceTree = "<group>"; };
 		AA91C7831C4201B80078DA17 /* IQButtonBarArrowRight@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "IQButtonBarArrowRight@2x.png"; sourceTree = "<group>"; };
@@ -4821,6 +4824,8 @@
 			children = (
 				828A99941CE3085A00AF9860 /* JGTeamChannelViewController.h */,
 				828A99951CE3085A00AF9860 /* JGTeamChannelViewController.m */,
+				828A999F1CE308DB00AF9860 /* JGtestViewController.h */,
+				828A99A01CE308DB00AF9860 /* JGtestViewController.m */,
 			);
 			path = controller;
 			sourceTree = "<group>";
@@ -5579,6 +5584,7 @@
 				36BF00901BC772EF005B3CE2 /* AccountDetailController.m in Sources */,
 				36BF01DC1BC77BB0005B3CE2 /* UserInformationModel.m in Sources */,
 				36BFFFFD1BC770C4005B3CE2 /* ChartCellFrame.m in Sources */,
+				828A99A11CE308DB00AF9860 /* JGtestViewController.m in Sources */,
 				36BF00851BC772EF005B3CE2 /* MyTradeViewController.m in Sources */,
 				36067BCE1C97F915001AE22C /* NewFriendTableViewCell.m in Sources */,
 				3660E0F41BFC54680033B4D7 /* MyTeamViewController.m in Sources */,
