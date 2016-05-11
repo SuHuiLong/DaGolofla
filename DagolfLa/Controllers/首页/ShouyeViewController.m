@@ -399,7 +399,7 @@
 //                           @"ManageViewController",
 //                           @"VoteViewController",
 //                           @"SpeciallOfferViewController"];
-        NSArray *vcArr = @[@"YueHallViewController",
+        NSArray *vcArr = @[@"JGTeamActivityViewController",
                            @"HighBallViewController",
                            @"JGTeamActivityViewController",
                            @"ManageViewController",

@@ -11,6 +11,7 @@
 #import "JGTeamActivityDetailsCell.h"
 #import "JGCostsDescriptionCell.h"
 #import "JGActivityNameBaseCell.h"
+#import "JGTeamApplyViewController.h"
 
 static NSString *const JGTeamActivityWithAddressCellIdentifier = @"JGTeamActivityWithAddressCell";
 static NSString *const JGTeamActivityDetailsCellIdentifier = @"JGTeamActivityDetailsCell";
@@ -31,8 +32,22 @@ static NSString *const JGActivityNameBaseCellIdentifier = @"JGActivityNameBaseCe
     self.navigationItem.title = @"活动名称";
     
     [self createTeamActibityNameTableView];
+    
+    [self createApplyBtn];
 }
-
+#pragma mark -- 创建报名按钮
+- (void)createApplyBtn{
+    UIButton *applyBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, screenHeight - 64 -44, screenWidth, 44)];
+    [applyBtn setTitle:@"我要报名" forState:UIControlStateNormal];
+    applyBtn.backgroundColor = [UIColor yellowColor];
+    [applyBtn addTarget:self action:@selector(applyBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:applyBtn];
+}
+- (void)applyBtnClick:(UIButton *)btn{
+    JGTeamApplyViewController * applyCtrl = [[JGTeamApplyViewController alloc]initWithNibName:@"JGTeamApplyViewController" bundle:nil];
+    [self.navigationController pushViewController:applyCtrl animated:YES];
+}
+#pragma mark -- 创建TableView
 - (void)createTeamActibityNameTableView{
     self.teamActibityNameTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight) style:UITableViewStyleGrouped];
     self.teamActibityNameTableView.delegate = self;
