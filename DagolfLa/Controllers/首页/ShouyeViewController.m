@@ -28,7 +28,7 @@
 #import "ManageViewController.h"
 #import "VoteViewController.h"
 #import "SpeciallOfferViewController.h"
-
+#import "JGTeamChannelViewController.h"
 
 #import <BaiduMapAPI/BMapKit.h>
 #import <MapKit/MapKit.h>
@@ -395,7 +395,7 @@
     if ([[NSUserDefaults standardUserDefaults]objectForKey:@"userId"]) {
         NSArray *vcArr = @[@"YueHallViewController",
                            @"HighBallViewController",
-                           @"MyTeamViewController",
+                           @"JGTeamChannelViewController",
                            @"ManageViewController",
                            @"VoteViewController",
                            @"SpeciallOfferViewController"];
