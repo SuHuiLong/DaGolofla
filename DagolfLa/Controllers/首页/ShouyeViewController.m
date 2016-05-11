@@ -393,9 +393,15 @@
 {
     
     if ([[NSUserDefaults standardUserDefaults]objectForKey:@"userId"]) {
+//        NSArray *vcArr = @[@"YueHallViewController",
+//                           @"HighBallViewController",
+//                           @"MyTeamViewController",
+//                           @"ManageViewController",
+//                           @"VoteViewController",
+//                           @"SpeciallOfferViewController"];
         NSArray *vcArr = @[@"YueHallViewController",
                            @"HighBallViewController",
-                           @"MyTeamViewController",
+                           @"JGTeamActivityViewController",
                            @"ManageViewController",
                            @"VoteViewController",
                            @"SpeciallOfferViewController"];
