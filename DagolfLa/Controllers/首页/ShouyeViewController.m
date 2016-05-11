@@ -393,6 +393,7 @@
 {
     
     if ([[NSUserDefaults standardUserDefaults]objectForKey:@"userId"]) {
+        //hadfhj
 //        NSArray *vcArr = @[@"YueHallViewController",
 //                           @"HighBallViewController",
 //                           @"MyTeamViewController",
