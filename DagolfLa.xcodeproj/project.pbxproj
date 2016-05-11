@@ -736,7 +736,6 @@
 		65B801001CD04D150077A324 /* DeatilModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 65B800FF1CD04D150077A324 /* DeatilModel.m */; };
 		65CD8E4B1BEA067F006984F3 /* AddressBookViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 65CD8E491BEA067F006984F3 /* AddressBookViewCell.m */; };
 		65CD8E4C1BEA067F006984F3 /* AddressBookViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 65CD8E4A1BEA067F006984F3 /* AddressBookViewCell.xib */; };
-		828A99A11CE308DB00AF9860 /* JGtestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 828A99A01CE308DB00AF9860 /* JGtestViewController.m */; };
 		AA857EE01C5F48AA0034B4C8 /* SelfDataViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA857EDF1C5F48AA0034B4C8 /* SelfDataViewController.m */; };
 		AA91C7861C4201B80078DA17 /* IQButtonBarArrowLeft@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AA91C7821C4201B80078DA17 /* IQButtonBarArrowLeft@2x.png */; };
 		AA91C7871C4201B80078DA17 /* IQButtonBarArrowRight@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AA91C7831C4201B80078DA17 /* IQButtonBarArrowRight@2x.png */; };
@@ -750,8 +749,6 @@
 		F56F0B871CC60B0400A222F3 /* NoteHandlle.m in Sources */ = {isa = PBXBuildFile; fileRef = F56F0B861CC60B0400A222F3 /* NoteHandlle.m */; };
 		F56F0B8D1CC613E100A222F3 /* NoteModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F56F0B8C1CC613E100A222F3 /* NoteModel.m */; };
 		F56F0B901CC637A200A222F3 /* AddNoteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F56F0B8F1CC637A200A222F3 /* AddNoteViewController.m */; };
-		F5A105401CE301D00050461D /* JGTeamChannelTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = F5A1053D1CE301D00050461D /* JGTeamChannelTableView.m */; };
-		F5A105411CE301D00050461D /* JGTeamChannelTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F5A1053F1CE301D00050461D /* JGTeamChannelTableViewCell.m */; };
 		F5A1054C1CE309750050461D /* JGTeamChannelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5A105441CE309750050461D /* JGTeamChannelViewController.m */; };
 		F5A1054E1CE309750050461D /* JGTeamChannelTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = F5A105491CE309750050461D /* JGTeamChannelTableView.m */; };
 		F5A1054F1CE309750050461D /* JGTeamChannelTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F5A1054B1CE309750050461D /* JGTeamChannelTableViewCell.m */; };
@@ -1895,7 +1892,6 @@
 		65CD8E481BEA067F006984F3 /* AddressBookViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddressBookViewCell.h; sourceTree = "<group>"; };
 		65CD8E491BEA067F006984F3 /* AddressBookViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddressBookViewCell.m; sourceTree = "<group>"; };
 		65CD8E4A1BEA067F006984F3 /* AddressBookViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddressBookViewCell.xib; sourceTree = "<group>"; };
-		828A99A01CE308DB00AF9860 /* JGtestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGtestViewController.m; sourceTree = "<group>"; };
 		AA857EDF1C5F48AA0034B4C8 /* SelfDataViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = SelfDataViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		AA91C7821C4201B80078DA17 /* IQButtonBarArrowLeft@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "IQButtonBarArrowLeft@2x.png"; sourceTree = "<group>"; };
 		AA91C7831C4201B80078DA17 /* IQButtonBarArrowRight@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "IQButtonBarArrowRight@2x.png"; sourceTree = "<group>"; };
@@ -1915,10 +1911,6 @@
 		F56F0B8C1CC613E100A222F3 /* NoteModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoteModel.m; sourceTree = "<group>"; };
 		F56F0B8E1CC637A200A222F3 /* AddNoteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddNoteViewController.h; sourceTree = "<group>"; };
 		F56F0B8F1CC637A200A222F3 /* AddNoteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddNoteViewController.m; sourceTree = "<group>"; };
-		F5A1053C1CE301D00050461D /* JGTeamChannelTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGTeamChannelTableView.h; sourceTree = "<group>"; };
-		F5A1053D1CE301D00050461D /* JGTeamChannelTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGTeamChannelTableView.m; sourceTree = "<group>"; };
-		F5A1053E1CE301D00050461D /* JGTeamChannelTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGTeamChannelTableViewCell.h; sourceTree = "<group>"; };
-		F5A1053F1CE301D00050461D /* JGTeamChannelTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGTeamChannelTableViewCell.m; sourceTree = "<group>"; };
 		F5A105431CE309750050461D /* JGTeamChannelViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGTeamChannelViewController.h; sourceTree = "<group>"; };
 		F5A105441CE309750050461D /* JGTeamChannelViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGTeamChannelViewController.m; sourceTree = "<group>"; };
 		F5A105481CE309750050461D /* JGTeamChannelTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGTeamChannelTableView.h; sourceTree = "<group>"; };
@@ -2333,10 +2325,6 @@
 		3660E0F81BFC54D90033B4D7 /* 球队 */ = {
 			isa = PBXGroup;
 			children = (
-				F5A1053C1CE301D00050461D /* JGTeamChannelTableView.h */,
-				F5A1053D1CE301D00050461D /* JGTeamChannelTableView.m */,
-				F5A1053E1CE301D00050461D /* JGTeamChannelTableViewCell.h */,
-				F5A1053F1CE301D00050461D /* JGTeamChannelTableViewCell.m */,
 				361847561C03275200BE565F /* 球队管理 */,
 				36DD4DAD1BFDB664008D3424 /* 创建球队 */,
 				3660E1931BFC573C0033B4D7 /* MineTeamActiveCell.h */,
@@ -5549,8 +5537,6 @@
 				36DF6DF71C0809B400B60B67 /* TeamBrowseViewController.m in Sources */,
 				36BF01A11BC779D8005B3CE2 /* YueDetailModel.m in Sources */,
 				20BA61291CDC99D0004B61F5 /* ALAirplayView.m in Sources */,
-				F5A105401CE301D00050461D /* JGTeamChannelTableView.m in Sources */,
-				F5A105411CE301D00050461D /* JGTeamChannelTableViewCell.m in Sources */,
 				36E300ED1C3FF3F9005C3F08 /* MJRefreshComponent.m in Sources */,
 				36EB78C51C0FD65C00263E50 /* ScoreBySelfModel.m in Sources */,
 				65B596D51CAD43AC007AB83A /* ILRegularExpressionManager.m in Sources */,
@@ -5583,7 +5569,6 @@
 				36BF00901BC772EF005B3CE2 /* AccountDetailController.m in Sources */,
 				36BF01DC1BC77BB0005B3CE2 /* UserInformationModel.m in Sources */,
 				36BFFFFD1BC770C4005B3CE2 /* ChartCellFrame.m in Sources */,
-				828A99A11CE308DB00AF9860 /* JGtestViewController.m in Sources */,
 				36BF00851BC772EF005B3CE2 /* MyTradeViewController.m in Sources */,
 				36067BCE1C97F915001AE22C /* NewFriendTableViewCell.m in Sources */,
 				3660E0F41BFC54680033B4D7 /* MyTeamViewController.m in Sources */,

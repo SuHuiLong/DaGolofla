@@ -16,10 +16,18 @@
     
     if (self) {
         
-        self.iconImageV = [[UIImageView alloc] initWithFrame:CGRectMake(5, 5, 30, 30)];
-        
-        
-        
+        self.iconImageV = [[UIImageView alloc] initWithFrame:CGRectMake(5, 5, 30, 40)];
+        self.iconImageV.backgroundColor = [UIColor orangeColor];
+        [self.contentView addSubview:self.iconImageV];
+        self.nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(45, 5, screenWidth - 45, 20)];
+        self.nameLabel.backgroundColor = [UIColor orangeColor];
+        [self.contentView addSubview:self.nameLabel];
+        self.adressLabel = [[UILabel alloc] initWithFrame:CGRectMake(45, 30, screenWidth - 45, 10)];
+        self.adressLabel.backgroundColor = [UIColor orangeColor];
+        [self.contentView addSubview:self.adressLabel];
+        self.describLabel = [[UILabel alloc] initWithFrame:CGRectMake(45, 45, screenWidth - 45, 10)];
+        self.describLabel.backgroundColor = [UIColor orangeColor];
+        [self.contentView addSubview:self.describLabel];
     }
     
     return self;

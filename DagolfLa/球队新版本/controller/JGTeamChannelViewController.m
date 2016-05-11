@@ -67,6 +67,8 @@
     if (indexPath.section == 0) {
         cell = [self.tableView dequeueReusableCellWithIdentifier:@"first"];
         cell.textLabel.text = self.firstSectionArray[indexPath.row];
+    }else{
+        cell = [self.tableView dequeueReusableCellWithIdentifier:@"second"];
     }
     return cell;
 }

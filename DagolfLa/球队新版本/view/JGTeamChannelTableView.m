@@ -7,6 +7,7 @@
 //
 
 #import "JGTeamChannelTableView.h"
+#import "JGTeamChannelTableViewCell.h"
 
 @interface JGTeamChannelTableView ()
 
@@ -18,10 +19,8 @@
 - (instancetype)initWithFrame:(CGRect)frame style:(UITableViewStyle)style{
    self = [super initWithFrame:frame style:style];
     if (self) {
-        
-        
         [self registerClass:[UITableViewCell class] forCellReuseIdentifier:@"first"];
-        
+        [self registerClass:[JGTeamChannelTableViewCell class] forCellReuseIdentifier:@"second"];
     }
     return self;
 }
