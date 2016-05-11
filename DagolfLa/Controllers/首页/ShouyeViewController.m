@@ -401,7 +401,7 @@
 //                           @"SpeciallOfferViewController"];
         NSArray *vcArr = @[@"JGTeamActivityViewController",
                            @"HighBallViewController",
-                           @"JGTeamActivityViewController",
+                           @"JGTeamChannelViewController",
                            @"ManageViewController",
                            @"VoteViewController",
                            @"SpeciallOfferViewController"];
