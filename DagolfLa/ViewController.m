@@ -14,10 +14,7 @@
 
 @implementation ViewController
 
-/**
- *
- *
- */
+/*******/
 
 -(void)viewWillAppear:(BOOL)animated
 {
