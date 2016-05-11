@@ -750,11 +750,9 @@
 		F56F0B871CC60B0400A222F3 /* NoteHandlle.m in Sources */ = {isa = PBXBuildFile; fileRef = F56F0B861CC60B0400A222F3 /* NoteHandlle.m */; };
 		F56F0B8D1CC613E100A222F3 /* NoteModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F56F0B8C1CC613E100A222F3 /* NoteModel.m */; };
 		F56F0B901CC637A200A222F3 /* AddNoteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F56F0B8F1CC637A200A222F3 /* AddNoteViewController.m */; };
-		F5A1053B1CE300F80050461D /* JGTeamChannelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5A1053A1CE300F80050461D /* JGTeamChannelViewController.m */; };
 		F5A105401CE301D00050461D /* JGTeamChannelTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = F5A1053D1CE301D00050461D /* JGTeamChannelTableView.m */; };
 		F5A105411CE301D00050461D /* JGTeamChannelTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F5A1053F1CE301D00050461D /* JGTeamChannelTableViewCell.m */; };
 		F5A1054C1CE309750050461D /* JGTeamChannelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5A105441CE309750050461D /* JGTeamChannelViewController.m */; };
-		F5A1054D1CE309750050461D /* JGtestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5A105461CE309750050461D /* JGtestViewController.m */; };
 		F5A1054E1CE309750050461D /* JGTeamChannelTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = F5A105491CE309750050461D /* JGTeamChannelTableView.m */; };
 		F5A1054F1CE309750050461D /* JGTeamChannelTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F5A1054B1CE309750050461D /* JGTeamChannelTableViewCell.m */; };
 		F5E3F7F01CAA54BC00B24C77 /* dz.png in Resources */ = {isa = PBXBuildFile; fileRef = F5E3F7ED1CAA54BC00B24C77 /* dz.png */; };
@@ -1917,16 +1915,12 @@
 		F56F0B8C1CC613E100A222F3 /* NoteModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoteModel.m; sourceTree = "<group>"; };
 		F56F0B8E1CC637A200A222F3 /* AddNoteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddNoteViewController.h; sourceTree = "<group>"; };
 		F56F0B8F1CC637A200A222F3 /* AddNoteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddNoteViewController.m; sourceTree = "<group>"; };
-		F5A105391CE300F80050461D /* JGTeamChannelViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGTeamChannelViewController.h; sourceTree = "<group>"; };
-		F5A1053A1CE300F80050461D /* JGTeamChannelViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGTeamChannelViewController.m; sourceTree = "<group>"; };
 		F5A1053C1CE301D00050461D /* JGTeamChannelTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGTeamChannelTableView.h; sourceTree = "<group>"; };
 		F5A1053D1CE301D00050461D /* JGTeamChannelTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGTeamChannelTableView.m; sourceTree = "<group>"; };
 		F5A1053E1CE301D00050461D /* JGTeamChannelTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGTeamChannelTableViewCell.h; sourceTree = "<group>"; };
 		F5A1053F1CE301D00050461D /* JGTeamChannelTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGTeamChannelTableViewCell.m; sourceTree = "<group>"; };
 		F5A105431CE309750050461D /* JGTeamChannelViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGTeamChannelViewController.h; sourceTree = "<group>"; };
 		F5A105441CE309750050461D /* JGTeamChannelViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGTeamChannelViewController.m; sourceTree = "<group>"; };
-		F5A105451CE309750050461D /* JGtestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGtestViewController.h; sourceTree = "<group>"; };
-		F5A105461CE309750050461D /* JGtestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGtestViewController.m; sourceTree = "<group>"; };
 		F5A105481CE309750050461D /* JGTeamChannelTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGTeamChannelTableView.h; sourceTree = "<group>"; };
 		F5A105491CE309750050461D /* JGTeamChannelTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGTeamChannelTableView.m; sourceTree = "<group>"; };
 		F5A1054A1CE309750050461D /* JGTeamChannelTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGTeamChannelTableViewCell.h; sourceTree = "<group>"; };
@@ -4851,8 +4845,6 @@
 			children = (
 				F5A105421CE309750050461D /* controller */,
 				F5A105471CE309750050461D /* view */,
-				F5A105391CE300F80050461D /* JGTeamChannelViewController.h */,
-				F5A1053A1CE300F80050461D /* JGTeamChannelViewController.m */,
 			);
 			path = "球队新版本";
 			sourceTree = "<group>";
@@ -4862,8 +4854,6 @@
 			children = (
 				F5A105431CE309750050461D /* JGTeamChannelViewController.h */,
 				F5A105441CE309750050461D /* JGTeamChannelViewController.m */,
-				F5A105451CE309750050461D /* JGtestViewController.h */,
-				F5A105461CE309750050461D /* JGtestViewController.m */,
 			);
 			path = controller;
 			sourceTree = "<group>";
@@ -5352,7 +5342,6 @@
 				36BFFFC81BC770B1005B3CE2 /* AreaViewController.m in Sources */,
 				36BF004F1BC77213005B3CE2 /* UserAssistModel.m in Sources */,
 				36BFFFCF1BC770B1005B3CE2 /* ZYQAssetPickerController.m in Sources */,
-				F5A1053B1CE300F80050461D /* JGTeamChannelViewController.m in Sources */,
 				36E300F61C3FF3F9005C3F08 /* MJRefreshGifHeader.m in Sources */,
 				36BFFF6A1BC76D09005B3CE2 /* UIRefreshControl+AFNetworking.m in Sources */,
 				36BF01831BC77611005B3CE2 /* YueMyBallViewController.m in Sources */,
@@ -5650,7 +5639,6 @@
 				36E300FA1C3FF3F9005C3F08 /* MJRefreshConst.m in Sources */,
 				36BFFF5B1BC76D09005B3CE2 /* AFHTTPSessionManager.m in Sources */,
 				362BCD8D1C045DEF001E2818 /* TeamActiveModel.m in Sources */,
-				F5A1054D1CE309750050461D /* JGtestViewController.m in Sources */,
 				F5A1054F1CE309750050461D /* JGTeamChannelTableViewCell.m in Sources */,
 				20BA612A1CDC99D0004B61F5 /* ALButton.m in Sources */,
 				36E1FBB41C7D817A006B1456 /* ChangePicViewController.m in Sources */,
