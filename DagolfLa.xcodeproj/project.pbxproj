@@ -775,11 +775,6 @@
 		F52A49E51C969F79002A4973 /* ScreenTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F52A49E41C969F79002A4973 /* ScreenTableViewCell.m */; };
 		F566EFAB1CA0F01B008BB328 /* InformSetmodel.m in Sources */ = {isa = PBXBuildFile; fileRef = F566EFAA1CA0F01B008BB328 /* InformSetmodel.m */; };
 		F569A1251CE3314B00CD0FD5 /* JGTeamChannelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F569A1241CE3314B00CD0FD5 /* JGTeamChannelViewController.m */; };
-		F569A12D1CE3315C00CD0FD5 /* JGTeamChannelActivityTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F569A1281CE3315C00CD0FD5 /* JGTeamChannelActivityTableViewCell.m */; };
-		F569A12E1CE3315C00CD0FD5 /* JGTeamChannelTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = F569A12A1CE3315C00CD0FD5 /* JGTeamChannelTableView.m */; };
-		F569A12F1CE3315C00CD0FD5 /* JGTeamChannelTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F569A12C1CE3315C00CD0FD5 /* JGTeamChannelTableViewCell.m */; };
-		F569A1351CE3337700CD0FD5 /* JGTeamDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F569A1341CE3337700CD0FD5 /* JGTeamDetailViewController.m */; };
-		F569A1381CE333C900CD0FD5 /* JGTeamDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = F569A1371CE333C900CD0FD5 /* JGTeamDetailView.m */; };
 		F569A13F1CE35A9C00CD0FD5 /* JGTeamChannelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F569A13B1CE35A9C00CD0FD5 /* JGTeamChannelViewController.m */; };
 		F569A1401CE35A9C00CD0FD5 /* JGTeamDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F569A13E1CE35A9C00CD0FD5 /* JGTeamDetailViewController.m */; };
 		F569A1481CE35AA500CD0FD5 /* JGTeamChannelActivityTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F569A1431CE35AA500CD0FD5 /* JGTeamChannelActivityTableViewCell.m */; };
@@ -1989,11 +1984,6 @@
 		F566EFA91CA0F01B008BB328 /* InformSetmodel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InformSetmodel.h; sourceTree = "<group>"; };
 		F566EFAA1CA0F01B008BB328 /* InformSetmodel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InformSetmodel.m; sourceTree = "<group>"; };
 		F569A1241CE3314B00CD0FD5 /* JGTeamChannelViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGTeamChannelViewController.m; sourceTree = "<group>"; };
-		F569A1281CE3315C00CD0FD5 /* JGTeamChannelActivityTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGTeamChannelActivityTableViewCell.m; sourceTree = "<group>"; };
-		F569A12A1CE3315C00CD0FD5 /* JGTeamChannelTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGTeamChannelTableView.m; sourceTree = "<group>"; };
-		F569A12C1CE3315C00CD0FD5 /* JGTeamChannelTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGTeamChannelTableViewCell.m; sourceTree = "<group>"; };
-		F569A1341CE3337700CD0FD5 /* JGTeamDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGTeamDetailViewController.m; sourceTree = "<group>"; };
-		F569A1371CE333C900CD0FD5 /* JGTeamDetailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGTeamDetailView.m; sourceTree = "<group>"; };
 		F569A13A1CE35A9C00CD0FD5 /* JGTeamChannelViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGTeamChannelViewController.h; sourceTree = "<group>"; };
 		F569A13B1CE35A9C00CD0FD5 /* JGTeamChannelViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGTeamChannelViewController.m; sourceTree = "<group>"; };
 		F569A13D1CE35A9C00CD0FD5 /* JGTeamDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGTeamDetailViewController.h; sourceTree = "<group>"; };
@@ -5629,7 +5619,6 @@
 				36BF01C51BC77ABD005B3CE2 /* FabuYueBallViewCell.m in Sources */,
 				36E1FBB11C7D7DA2006B1456 /* ChangePicModel.m in Sources */,
 				365736971C1685FA00D2BC10 /* ScoreProModel.m in Sources */,
-				F569A12E1CE3315C00CD0FD5 /* JGTeamChannelTableView.m in Sources */,
 				36BFFF591BC76D09005B3CE2 /* AFHTTPRequestOperation.m in Sources */,
 				65B596E91CAD43AC007AB83A /* WFPopView.m in Sources */,
 				F569A13F1CE35A9C00CD0FD5 /* JGTeamChannelViewController.m in Sources */,
@@ -5822,7 +5811,6 @@
 				36BF008A1BC772EF005B3CE2 /* MySetHelpController.m in Sources */,
 				36BFFF751BC76D09005B3CE2 /* SDImageCache.m in Sources */,
 				3669C28C1C48AAC9006CBAAA /* PublishViewController.m in Sources */,
-				F569A1351CE3337700CD0FD5 /* JGTeamDetailViewController.m in Sources */,
 				36067BBC1C96B43B001AE22C /* ChatDetailViewController.m in Sources */,
 				36067BC41C97EF16001AE22C /* ContactViewController.m in Sources */,
 				36BF00901BC772EF005B3CE2 /* AccountDetailController.m in Sources */,
@@ -5884,7 +5872,6 @@
 				36BFFF801BC76D09005B3CE2 /* UIImageView+WebCache.m in Sources */,
 				20C1B8BA1CE350ED00508ABC /* JGAddTeamGuestViewController.m in Sources */,
 				36E300FA1C3FF3F9005C3F08 /* MJRefreshConst.m in Sources */,
-				F569A1381CE333C900CD0FD5 /* JGTeamDetailView.m in Sources */,
 				36BFFF5B1BC76D09005B3CE2 /* AFHTTPSessionManager.m in Sources */,
 				362BCD8D1C045DEF001E2818 /* TeamActiveModel.m in Sources */,
 				20BA612A1CDC99D0004B61F5 /* ALButton.m in Sources */,
@@ -5937,7 +5924,6 @@
 				36BFFF741BC76D09005B3CE2 /* NSData+ImageContentType.m in Sources */,
 				3683947E1C0984C800F162F6 /* TeamPhotoAddViewController.m in Sources */,
 				AA9B5F031C573678009381DF /* PostDataRequest.m in Sources */,
-				F569A12D1CE3315C00CD0FD5 /* JGTeamChannelActivityTableViewCell.m in Sources */,
 				36BF00DE1BC77428005B3CE2 /* MemberShipViewController.m in Sources */,
 				36BFFD2E1BC76C8D005B3CE2 /* main.m in Sources */,
 				3660E14A1BFC55C30033B4D7 /* ManageExamDetController.m in Sources */,
@@ -5950,7 +5936,6 @@
 				3660E1DF1BFC64020033B4D7 /* ScoredCardViewController.m in Sources */,
 				65B801001CD04D150077A324 /* DeatilModel.m in Sources */,
 				3684FDA31C4A206E002A14FC /* TeamJoinReasonViewController.m in Sources */,
-				F569A12F1CE3315C00CD0FD5 /* JGTeamChannelTableViewCell.m in Sources */,
 				364F813D1C06FB4000DEE016 /* TeamPhotoAlbumViewCell.m in Sources */,
 				65319B7F1C967C960036DCF1 /* HomeHeadView.m in Sources */,
 				36067BAB1C96A9FB001AE22C /* ScreenViewController.m in Sources */,
