@@ -10,7 +10,10 @@
 
 @interface JGMemTitleTableViewCell : UITableViewCell
 
-
+/**
+ *  这是球队成员管理的cell
+ 主标题cell
+ */
 
 @property (strong, nonatomic) UILabel* titleLabel;
 

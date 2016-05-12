@@ -12,7 +12,7 @@
 #import "JGTeamDetailViewController.h"
 
 
-#import "JGTeamCreatePhotoController.h"
+#import "JGTeamPhotoViewController.h"
 
 @interface JGTeamChannelViewController ()<UITableViewDataSource, UITableViewDelegate>
 
@@ -76,7 +76,7 @@
 - (void)team:(UIButton *)button{
     
     if (button.tag == 200) {
-        JGTeamCreatePhotoController* phoVc = [[JGTeamCreatePhotoController alloc]init];
+        JGTeamPhotoViewController* phoVc = [[JGTeamPhotoViewController alloc]init];
         [self.navigationController pushViewController:phoVc animated:YES];
     }else if (button.tag == 201) {
 

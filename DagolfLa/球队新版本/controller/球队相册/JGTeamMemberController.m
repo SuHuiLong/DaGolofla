@@ -9,7 +9,7 @@
 #import "JGTeamMemberController.h"
 #import "JGMenberTableViewCell.h"
 
-#import "JGMemManageController.m"
+#import "JGMemManageController.h"
 @interface JGTeamMemberController ()<UITableViewDelegate, UITableViewDataSource>
 {
     UITableView* _tableView;

@@ -9,8 +9,10 @@
 #import <UIKit/UIKit.h>
 
 @interface JGMemDataTableViewCell : UITableViewCell
-
-
+/**
+ *  球队成员管理cell
+    基本信息cell
+ */
 
 @property (strong, nonatomic) UILabel* firstLabel;
 

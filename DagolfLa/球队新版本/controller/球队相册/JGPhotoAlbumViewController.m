@@ -27,6 +27,16 @@
     rightBtn.tintColor = [UIColor whiteColor];
     self.navigationItem.rightBarButtonItem = rightBtn;
     
+    
+    
+    [self uiConfig];
+    
+}
+
+
+-(void)uiConfig
+{
+    
 }
 
 -(void)upDataClick

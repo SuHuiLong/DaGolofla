@@ -592,14 +592,12 @@
 		36C165641BCE82C400194436 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36C165631BCE82C400194436 /* CoreTelephony.framework */; };
 		36C165991BCE8B9800194436 /* MyattenModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 36C165981BCE8B9800194436 /* MyattenModel.m */; };
 		36C39B4E1BDB5AE900712C0A /* CommuniteTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 36BF00351BC771FB005B3CE2 /* CommuniteTableViewCell.m */; };
-		36CFDB8A1BCDF6B700301269 /* BaiduMapAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36CFDB891BCDF6B700301269 /* BaiduMapAPI.framework */; };
 		36CFDB8C1BCDF71600301269 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36CFDB8B1BCDF71600301269 /* CoreLocation.framework */; };
 		36CFDB8E1BCDF72700301269 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36CFDB8D1BCDF72700301269 /* QuartzCore.framework */; };
 		36CFDB901BCDF73600301269 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36CFDB8F1BCDF73600301269 /* OpenGLES.framework */; };
 		36CFDB921BCDF74600301269 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36CFDB911BCDF74600301269 /* SystemConfiguration.framework */; };
 		36CFDB941BCDF74F00301269 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36CFDB931BCDF74F00301269 /* CoreGraphics.framework */; };
 		36CFDB961BCDF75700301269 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36CFDB951BCDF75700301269 /* Security.framework */; };
-		36CFDB981BCDF77C00301269 /* mapapi.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 36CFDB971BCDF77C00301269 /* mapapi.bundle */; };
 		36CFDB9E1BCE2E7300301269 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36CFDB9D1BCE2E7300301269 /* AddressBook.framework */; };
 		36CFDBA01BCE2E7900301269 /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36CFDB9F1BCE2E7900301269 /* AddressBookUI.framework */; };
 		36CFDBA31BCE3D5100301269 /* TKAddressModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 36CFDBA21BCE3D5100301269 /* TKAddressModel.m */; };
@@ -764,6 +762,13 @@
 		828A99F51CE3481D00AF9860 /* JGMemManageController.m in Sources */ = {isa = PBXBuildFile; fileRef = 828A99F41CE3481D00AF9860 /* JGMemManageController.m */; };
 		828A99F91CE348D500AF9860 /* JGMemTitleTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 828A99F81CE348D500AF9860 /* JGMemTitleTableViewCell.m */; };
 		828A99FC1CE3549900AF9860 /* JGMemDataTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 828A99FB1CE3549900AF9860 /* JGMemDataTableViewCell.m */; };
+		82D595DF1CE42BDF00CD9587 /* BaiduMapAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82D595DD1CE42BDF00CD9587 /* BaiduMapAPI.framework */; };
+		82D595E01CE42BDF00CD9587 /* mapapi.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 82D595DE1CE42BDF00CD9587 /* mapapi.bundle */; };
+		82D595E31CE42E7B00CD9587 /* JGMemHalfTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 82D595E21CE42E7B00CD9587 /* JGMemHalfTableViewCell.m */; };
+		82D595E61CE4510100CD9587 /* JGMemAuthorityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 82D595E51CE4510100CD9587 /* JGMemAuthorityViewController.m */; };
+		82D595E91CE4604500CD9587 /* JGTeamPhotoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 82D595E81CE4604500CD9587 /* JGTeamPhotoViewController.m */; };
+		82D595ED1CE4654C00CD9587 /* JGTeamPhotoCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 82D595EB1CE4654C00CD9587 /* JGTeamPhotoCollectionViewCell.m */; };
+		82D595EE1CE4654C00CD9587 /* JGTeamPhotoCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 82D595EC1CE4654C00CD9587 /* JGTeamPhotoCollectionViewCell.xib */; };
 		AA857EE01C5F48AA0034B4C8 /* SelfDataViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA857EDF1C5F48AA0034B4C8 /* SelfDataViewController.m */; };
 		AA91C7861C4201B80078DA17 /* IQButtonBarArrowLeft@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AA91C7821C4201B80078DA17 /* IQButtonBarArrowLeft@2x.png */; };
 		AA91C7871C4201B80078DA17 /* IQButtonBarArrowRight@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AA91C7831C4201B80078DA17 /* IQButtonBarArrowRight@2x.png */; };
@@ -1676,14 +1681,12 @@
 		36C165631BCE82C400194436 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		36C165971BCE8B9800194436 /* MyattenModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyattenModel.h; sourceTree = "<group>"; };
 		36C165981BCE8B9800194436 /* MyattenModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyattenModel.m; sourceTree = "<group>"; };
-		36CFDB891BCDF6B700301269 /* BaiduMapAPI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BaiduMapAPI.framework; path = ../BaiduMapAPI.framework; sourceTree = "<group>"; };
 		36CFDB8B1BCDF71600301269 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		36CFDB8D1BCDF72700301269 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		36CFDB8F1BCDF73600301269 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		36CFDB911BCDF74600301269 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		36CFDB931BCDF74F00301269 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		36CFDB951BCDF75700301269 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
-		36CFDB971BCDF77C00301269 /* mapapi.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = mapapi.bundle; path = ../mapapi.bundle; sourceTree = "<group>"; };
 		36CFDB9D1BCE2E7300301269 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
 		36CFDB9F1BCE2E7900301269 /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
 		36CFDBA11BCE3D5100301269 /* TKAddressModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKAddressModel.h; sourceTree = "<group>"; };
@@ -1970,6 +1973,17 @@
 		828A99F81CE348D500AF9860 /* JGMemTitleTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGMemTitleTableViewCell.m; sourceTree = "<group>"; };
 		828A99FA1CE3549900AF9860 /* JGMemDataTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGMemDataTableViewCell.h; sourceTree = "<group>"; };
 		828A99FB1CE3549900AF9860 /* JGMemDataTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGMemDataTableViewCell.m; sourceTree = "<group>"; };
+		82D595DD1CE42BDF00CD9587 /* BaiduMapAPI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = BaiduMapAPI.framework; sourceTree = SOURCE_ROOT; };
+		82D595DE1CE42BDF00CD9587 /* mapapi.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = mapapi.bundle; sourceTree = SOURCE_ROOT; };
+		82D595E11CE42E7B00CD9587 /* JGMemHalfTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGMemHalfTableViewCell.h; sourceTree = "<group>"; };
+		82D595E21CE42E7B00CD9587 /* JGMemHalfTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGMemHalfTableViewCell.m; sourceTree = "<group>"; };
+		82D595E41CE4510100CD9587 /* JGMemAuthorityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGMemAuthorityViewController.h; sourceTree = "<group>"; };
+		82D595E51CE4510100CD9587 /* JGMemAuthorityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGMemAuthorityViewController.m; sourceTree = "<group>"; };
+		82D595E71CE4604500CD9587 /* JGTeamPhotoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGTeamPhotoViewController.h; sourceTree = "<group>"; };
+		82D595E81CE4604500CD9587 /* JGTeamPhotoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGTeamPhotoViewController.m; sourceTree = "<group>"; };
+		82D595EA1CE4654C00CD9587 /* JGTeamPhotoCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGTeamPhotoCollectionViewCell.h; sourceTree = "<group>"; };
+		82D595EB1CE4654C00CD9587 /* JGTeamPhotoCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGTeamPhotoCollectionViewCell.m; sourceTree = "<group>"; };
+		82D595EC1CE4654C00CD9587 /* JGTeamPhotoCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JGTeamPhotoCollectionViewCell.xib; sourceTree = "<group>"; };
 		AA857EDF1C5F48AA0034B4C8 /* SelfDataViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = SelfDataViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		AA91C7821C4201B80078DA17 /* IQButtonBarArrowLeft@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "IQButtonBarArrowLeft@2x.png"; sourceTree = "<group>"; };
 		AA91C7831C4201B80078DA17 /* IQButtonBarArrowRight@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "IQButtonBarArrowRight@2x.png"; sourceTree = "<group>"; };
@@ -2033,6 +2047,7 @@
 				36C165641BCE82C400194436 /* CoreTelephony.framework in Frameworks */,
 				363D4F301C86DAF00089E52C /* CoreFoundation.framework in Frameworks */,
 				36D0B1011C8015E900C7245E /* CFNetwork.framework in Frameworks */,
+				82D595DF1CE42BDF00CD9587 /* BaiduMapAPI.framework in Frameworks */,
 				36CFDB8E1BCDF72700301269 /* QuartzCore.framework in Frameworks */,
 				36CFDB901BCDF73600301269 /* OpenGLES.framework in Frameworks */,
 				36C164BF1BCE6B8D00194436 /* MapKit.framework in Frameworks */,
@@ -2064,7 +2079,6 @@
 				36D0B0F71C80151C00C7245E /* RongIMKit.framework in Frameworks */,
 				36E300B01C3F4FC0005C3F08 /* libWeChatSDK.a in Frameworks */,
 				36E300AC1C3F4F3C005C3F08 /* libSocialSina.a in Frameworks */,
-				36CFDB8A1BCDF6B700301269 /* BaiduMapAPI.framework in Frameworks */,
 				36A0469C1BC8E5DC00296DE3 /* MessageUI.framework in Frameworks */,
 				20BA61321CDC99D0004B61F5 /* UTDID.framework in Frameworks */,
 			);
@@ -4388,6 +4402,8 @@
 		36D0B0F91C80156900C7245E /* frameWork */ = {
 			isa = PBXGroup;
 			children = (
+				82D595DD1CE42BDF00CD9587 /* BaiduMapAPI.framework */,
+				82D595DE1CE42BDF00CD9587 /* mapapi.bundle */,
 				20BA613B1CDC9B8E004B61F5 /* CoreMotion.framework */,
 				20BA61391CDC9A89004B61F5 /* Photos.framework */,
 				20BA61371CDC9A65004B61F5 /* MediaPlayer.framework */,
@@ -4412,14 +4428,12 @@
 				36C164BE1BCE6B8D00194436 /* MapKit.framework */,
 				36CFDB9F1BCE2E7900301269 /* AddressBookUI.framework */,
 				36CFDB9D1BCE2E7300301269 /* AddressBook.framework */,
-				36CFDB971BCDF77C00301269 /* mapapi.bundle */,
 				36CFDB951BCDF75700301269 /* Security.framework */,
 				36CFDB931BCDF74F00301269 /* CoreGraphics.framework */,
 				36CFDB911BCDF74600301269 /* SystemConfiguration.framework */,
 				36CFDB8F1BCDF73600301269 /* OpenGLES.framework */,
 				36CFDB8D1BCDF72700301269 /* QuartzCore.framework */,
 				36CFDB8B1BCDF71600301269 /* CoreLocation.framework */,
-				36CFDB891BCDF6B700301269 /* BaiduMapAPI.framework */,
 				36A0469B1BC8E5DC00296DE3 /* MessageUI.framework */,
 				36DF29AB1BE999280031A8CB /* ImageIO.framework */,
 			);
@@ -4948,6 +4962,8 @@
 		828A99E11CE3165B00AF9860 /* 球队相册 */ = {
 			isa = PBXGroup;
 			children = (
+				82D595E71CE4604500CD9587 /* JGTeamPhotoViewController.h */,
+				82D595E81CE4604500CD9587 /* JGTeamPhotoViewController.m */,
 				828A99E21CE3167800AF9860 /* JGTeamCreatePhotoController.h */,
 				828A99E31CE3167800AF9860 /* JGTeamCreatePhotoController.m */,
 				828A99E51CE325BB00AF9860 /* JGPhotoAlbumViewController.h */,
@@ -4956,6 +4972,8 @@
 				828A99E91CE32B7000AF9860 /* JGTeamMemberController.m */,
 				828A99F31CE3481D00AF9860 /* JGMemManageController.h */,
 				828A99F41CE3481D00AF9860 /* JGMemManageController.m */,
+				82D595E41CE4510100CD9587 /* JGMemAuthorityViewController.h */,
+				82D595E51CE4510100CD9587 /* JGMemAuthorityViewController.m */,
 			);
 			path = "球队相册";
 			sourceTree = "<group>";
@@ -4963,6 +4981,9 @@
 		828A99EB1CE32E2500AF9860 /* 球队相册 */ = {
 			isa = PBXGroup;
 			children = (
+				82D595EA1CE4654C00CD9587 /* JGTeamPhotoCollectionViewCell.h */,
+				82D595EB1CE4654C00CD9587 /* JGTeamPhotoCollectionViewCell.m */,
+				82D595EC1CE4654C00CD9587 /* JGTeamPhotoCollectionViewCell.xib */,
 			);
 			path = "球队相册";
 			sourceTree = "<group>";
@@ -4984,6 +5005,8 @@
 				828A99F81CE348D500AF9860 /* JGMemTitleTableViewCell.m */,
 				828A99FA1CE3549900AF9860 /* JGMemDataTableViewCell.h */,
 				828A99FB1CE3549900AF9860 /* JGMemDataTableViewCell.m */,
+				82D595E11CE42E7B00CD9587 /* JGMemHalfTableViewCell.h */,
+				82D595E21CE42E7B00CD9587 /* JGMemHalfTableViewCell.m */,
 			);
 			path = "球队成员管理";
 			sourceTree = "<group>";
@@ -5218,7 +5241,6 @@
 				36BF01C81BC77ABE005B3CE2 /* YueHallTableViewCell.xib in Resources */,
 				36BFFE911BC76CDC005B3CE2 /* xq_xx@3x.png in Resources */,
 				36BFFE301BC76CDC005B3CE2 /* genduo@2x.png in Resources */,
-				36CFDB981BCDF77C00301269 /* mapapi.bundle in Resources */,
 				36BFFE831BC76CDC005B3CE2 /* xl_sc.png in Resources */,
 				36A046981BC8A7E600296DE3 /* tx4.png in Resources */,
 				36D0B0F51C80151C00C7245E /* release_notes_ios.txt in Resources */,
@@ -5313,6 +5335,7 @@
 				36A046A31BC8EA1B00296DE3 /* MessageTableViewCell.xib in Resources */,
 				65B596E01CAD43AC007AB83A /* 3.png in Resources */,
 				36D0B0F61C80151C00C7245E /* RongCloud.bundle in Resources */,
+				82D595E01CE42BDF00CD9587 /* mapapi.bundle in Resources */,
 				3660E0901BFC48B00033B4D7 /* Default@2x-667.png in Resources */,
 				36BFFEAD1BC76CDC005B3CE2 /* lxc@3x.png in Resources */,
 				36BFFE4F1BC76CDC005B3CE2 /* search@3x.png in Resources */,
@@ -5422,6 +5445,7 @@
 				AA91C7871C4201B80078DA17 /* IQButtonBarArrowRight@2x.png in Resources */,
 				36BF00051BC770C4005B3CE2 /* chat_bottom_up_nor.png in Resources */,
 				36BFFEBC1BC76CDC005B3CE2 /* tab_jf@3x.png in Resources */,
+				82D595EE1CE4654C00CD9587 /* JGTeamPhotoCollectionViewCell.xib in Resources */,
 				36C05BBA1BD872F900B3DD2D /* YueBallHallView.xib in Resources */,
 				36BFFED91BC76CDC005B3CE2 /* wyzq@2x.png in Resources */,
 				20BA61341CDC99D0004B61F5 /* yw_1222.jpg in Resources */,
@@ -5639,6 +5663,7 @@
 				36BFFF791BC76D09005B3CE2 /* SDWebImageDownloaderOperation.m in Sources */,
 				36DBFD3B1BEF452200CA64D3 /* NearByModel.m in Sources */,
 				36DF09BC1C040B51007A8A4E /* TeamIntroCViewController.m in Sources */,
+				82D595ED1CE4654C00CD9587 /* JGTeamPhotoCollectionViewCell.m in Sources */,
 				F5B647101CE41E7E00A7A056 /* JGTeamDetailView.m in Sources */,
 				36BFFF851BC76D09005B3CE2 /* LazyPageScrollView.m in Sources */,
 				36BF00C11BC77383005B3CE2 /* MeTableViewCell.m in Sources */,
@@ -5703,6 +5728,7 @@
 				36BF008E1BC772EF005B3CE2 /* MyRecomViewController.m in Sources */,
 				36E300F71C3FF3F9005C3F08 /* MJRefreshNormalHeader.m in Sources */,
 				36BF00E21BC77428005B3CE2 /* TeacherViewController.m in Sources */,
+				82D595E61CE4510100CD9587 /* JGMemAuthorityViewController.m in Sources */,
 				36D6266B1C1A61DB0066E4DD /* ScoreView.m in Sources */,
 				F56F0B8D1CC613E100A222F3 /* NoteModel.m in Sources */,
 				3660E1411BFC55AC0033B4D7 /* ActiveNumViewController.m in Sources */,
@@ -5817,6 +5843,7 @@
 				654332211BD630E500363947 /* PostRewordTableViewCell.m in Sources */,
 				20C1B8B01CE3241C00508ABC /* JGTableViewCell.m in Sources */,
 				36BFFF651BC76D09005B3CE2 /* UIActivityIndicatorView+AFNetworking.m in Sources */,
+				82D595E31CE42E7B00CD9587 /* JGMemHalfTableViewCell.m in Sources */,
 				36D9F7221C23BD4700699569 /* ScoreCardModel.m in Sources */,
 				36B08F711C2D322600CD660E /* UITableViewRowAction+JZExtension.m in Sources */,
 				36BF008A1BC772EF005B3CE2 /* MySetHelpController.m in Sources */,
@@ -5889,6 +5916,7 @@
 				36E1FBB41C7D817A006B1456 /* ChangePicViewController.m in Sources */,
 				36BF00921BC772EF005B3CE2 /* MyNewsBoxViewController.m in Sources */,
 				F56F0B871CC60B0400A222F3 /* NoteHandlle.m in Sources */,
+				82D595E91CE4604500CD9587 /* JGTeamPhotoViewController.m in Sources */,
 				3660E1431BFC55AC0033B4D7 /* ScoreSelfViewController.m in Sources */,
 				36BFFF5F1BC76D09005B3CE2 /* AFURLRequestSerialization.m in Sources */,
 				36DF6DFC1C08235900B60B67 /* TeamPhotoCollectionViewCell.m in Sources */,
