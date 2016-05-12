@@ -489,8 +489,12 @@
 #pragma mark - 调用手机相机和相册
 - (void)usePhonePhotoAndCamera {
     UIActionSheet *selestSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"相机",@"相册", nil];
+    
+
+    
     [selestSheet showInView:self.view];
 }
+
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (buttonIndex == 0) {
         [self usePhonCamera];
@@ -498,6 +502,7 @@
         [self usePhonePhoto];
     }
 }
+
 #pragma mark - 调用相机
 - (void)usePhonCamera {
     UIImagePickerControllerSourceType sourceType = UIImagePickerControllerSourceTypeCamera;

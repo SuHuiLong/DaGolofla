@@ -29,7 +29,7 @@
     
     UIView* _viewHeader;
     
-    UICollectionView* _collectionView;
+//    UICollectionView* _collectionView;
     NSMutableArray* _dataProArray;
     NSMutableArray* _numProArray;
     
