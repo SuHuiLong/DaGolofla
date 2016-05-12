@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="52" id="KGk-i7-Jjw" customClass="JGInvoiceTypeTextCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="52"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="51.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="发票抬头" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Orp-83-eAQ">
+                        <rect key="frame" x="10" y="10" width="60" height="31.5"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="60" id="6mL-sQ-mOi"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <color key="textColor" red="0.51372549020000002" green="0.51372549020000002" blue="0.51372549020000002" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="50L-49-qPm">
+                        <rect key="frame" x="130" y="10" width="180" height="31"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <textInputTraits key="textInputTraits"/>
+                    </textField>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="50L-49-qPm" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="4KT-ss-z4e"/>
+                    <constraint firstItem="Orp-83-eAQ" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="Kxe-W0-IL8"/>
+                    <constraint firstAttribute="trailing" secondItem="50L-49-qPm" secondAttribute="trailing" constant="10" id="bga-MW-Gd4"/>
+                    <constraint firstItem="50L-49-qPm" firstAttribute="leading" secondItem="Orp-83-eAQ" secondAttribute="trailing" constant="60" id="fRB-mT-rky"/>
+                    <constraint firstItem="Orp-83-eAQ" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="hCg-oB-4IA"/>
+                    <constraint firstAttribute="bottom" secondItem="Orp-83-eAQ" secondAttribute="bottom" constant="10" id="nab-U3-AnI"/>
+                    <constraint firstAttribute="bottom" secondItem="50L-49-qPm" secondAttribute="bottom" constant="10" id="svd-dD-qqE"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="contentText" destination="50L-49-qPm" id="htO-xK-iyT"/>
+                <outlet property="title" destination="Orp-83-eAQ" id="pPF-c0-0vv"/>
+            </connections>
+            <point key="canvasLocation" x="232" y="274"/>
+        </tableViewCell>
+    </objects>
+</document>

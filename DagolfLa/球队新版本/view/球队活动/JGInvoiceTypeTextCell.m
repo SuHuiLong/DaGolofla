@@ -1,14 +1,14 @@
 //
-//  JGApplyPepoleCell.m
+//  JGInvoiceTypeTextCell.m
 //  DagolfLa
 //
-//  Created by 黄安 on 16/5/11.
+//  Created by 黄安 on 16/5/12.
 //  Copyright © 2016年 bhxx. All rights reserved.
 //
 
-#import "JGApplyPepoleCell.h"
+#import "JGInvoiceTypeTextCell.h"
 
-@implementation JGApplyPepoleCell
+@implementation JGInvoiceTypeTextCell
 
 - (void)awakeFromNib {
     [super awakeFromNib];
@@ -19,12 +19,6 @@
     [super setSelected:selected animated:animated];
 
     // Configure the view for the selected state
-}
-#pragma mark -- 添加嘉宾
-- (IBAction)addApplyBtnClick:(UIButton *)sender {
-    if (self.delegate) {
-        [self.delegate addApplyPeopleClick];
-    }
 }
 
 @end

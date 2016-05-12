@@ -1,14 +1,14 @@
 //
-//  JGApplyPepoleCell.m
+//  JGAlreadyAddGuestCell.m
 //  DagolfLa
 //
-//  Created by 黄安 on 16/5/11.
+//  Created by 黄安 on 16/5/12.
 //  Copyright © 2016年 bhxx. All rights reserved.
 //
 
-#import "JGApplyPepoleCell.h"
+#import "JGAlreadyAddGuestCell.h"
 
-@implementation JGApplyPepoleCell
+@implementation JGAlreadyAddGuestCell
 
 - (void)awakeFromNib {
     [super awakeFromNib];
@@ -20,11 +20,10 @@
 
     // Configure the view for the selected state
 }
-#pragma mark -- 添加嘉宾
-- (IBAction)addApplyBtnClick:(UIButton *)sender {
-    if (self.delegate) {
-        [self.delegate addApplyPeopleClick];
-    }
+
+#pragma mark -- 删除事件
+- (IBAction)deleteGuestBtnClick:(UIButton *)sender {
 }
+
 
 @end

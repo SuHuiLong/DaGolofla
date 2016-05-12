@@ -7,8 +7,11 @@
 //
 
 #import "JGAddTeamGuestViewController.h"
+#import "JGAlreadyAddGuestCell.h"
 
-@interface JGAddTeamGuestViewController ()
+@interface JGAddTeamGuestViewController ()<UITableViewDelegate, UITableViewDataSource>
+
+@property (nonatomic, strong) UITableView *addTeamGuestTableView;
 
 @end
 
@@ -16,7 +19,54 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
+    self.view.backgroundColor = [UIColor redColor];
+    self.navigationItem.title = @"添加嘉宾";
+    
+    [self createAddGuestTableview];
+}
+#pragma mark --创建tableView
+- (void)createAddGuestTableview{
+    self.addTeamGuestTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, self.alrealyAddGuestLabel.frame.origin.y + self.alrealyAddGuestLabel.frame.size.height + 3, screenWidth, screenHeight - (self.alrealyAddGuestLabel.frame.origin.y + self.alrealyAddGuestLabel.frame.size.height + 3 )-64-44) style:UITableViewStyleGrouped];
+    self.addTeamGuestTableView.delegate = self;
+    self.addTeamGuestTableView.dataSource = self;
+    self.addTeamGuestTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    [self.view addSubview:self.addTeamGuestTableView];
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    return 1;
+}
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+    return 4;
+}
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return 44;
+}
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
+    return 1;
+}
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    return 7;
+}
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    static NSString * JGAlreadyAddGuestCellID = @"JGAlreadyAddGuestCell";
+    JGAlreadyAddGuestCell *alreadyGuestCell = [tableView dequeueReusableCellWithIdentifier:JGAlreadyAddGuestCellID];
+    if (alreadyGuestCell == nil) {
+        alreadyGuestCell = [[[NSBundle mainBundle]loadNibNamed:@"JGAlreadyAddGuestCell" owner:self options:nil]lastObject];
+    }
+    
+    alreadyGuestCell.selectionStyle = UITableViewCellSelectionStyleNone;
+    
+    
+    return alreadyGuestCell;
+}
+#pragma mark -- 添加事件
+- (IBAction)addGuestBtnClick:(UIButton *)sender {
+    
+}
+#pragma mark -- 完成按钮事件
+- (IBAction)finishBtnClick:(UIButton *)sender {
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)didReceiveMemoryWarning {

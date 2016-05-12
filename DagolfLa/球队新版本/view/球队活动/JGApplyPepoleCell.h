@@ -8,9 +8,17 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol JGApplyPepoleCellDelegate <NSObject>
+
+- (void)addApplyPeopleClick;
+
+@end
+
 @interface JGApplyPepoleCell : UITableViewCell
 //添加活动嘉宾
 - (IBAction)addApplyBtnClick:(UIButton *)sender;
 //报名人姓名列表视图
 @property (weak, nonatomic) IBOutlet UIView *applyListView;
+
+@property (weak, nonatomic)id <JGApplyPepoleCellDelegate> delegate;
 @end

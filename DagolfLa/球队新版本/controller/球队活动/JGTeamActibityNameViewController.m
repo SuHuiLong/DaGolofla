@@ -49,9 +49,10 @@ static NSString *const JGActivityNameBaseCellIdentifier = @"JGActivityNameBaseCe
 }
 #pragma mark -- 创建TableView
 - (void)createTeamActibityNameTableView{
-    self.teamActibityNameTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight) style:UITableViewStyleGrouped];
+    self.teamActibityNameTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight -64) style:UITableViewStyleGrouped];
     self.teamActibityNameTableView.delegate = self;
     self.teamActibityNameTableView.dataSource = self;
+    self.teamActibityNameTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     //活动场地cell
     UINib *addressNib = [UINib nibWithNibName:@"JGTeamActivityWithAddressCell" bundle:[NSBundle mainBundle]];
     [self.teamActibityNameTableView registerNib:addressNib forCellReuseIdentifier:JGTeamActivityWithAddressCellIdentifier];

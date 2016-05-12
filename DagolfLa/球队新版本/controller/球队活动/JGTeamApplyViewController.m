@@ -10,12 +10,14 @@
 #import "JGActivityNameBaseCell.h"
 #import "JGTableViewCell.h"
 #import "JGApplyPepoleCell.h"
+#import "JGAddTeamGuestViewController.h"
+#import "JGInvoiceViewController.h"
 
 static NSString *const JGActivityNameBaseCellIdentifier = @"JGActivityNameBaseCell";
 static NSString *const JGTableViewCellIdentifier = @"JGTableViewCell";
 static NSString *const JGApplyPepoleCellIdentifier = @"JGApplyPepoleCell";
 
-@interface JGTeamApplyViewController ()
+@interface JGTeamApplyViewController ()<JGApplyPepoleCellDelegate>
 
 @end
 
@@ -66,6 +68,7 @@ static NSString *const JGApplyPepoleCellIdentifier = @"JGApplyPepoleCell";
         return tableCell;
     }else if (indexPath.section == 1){
         JGApplyPepoleCell *applyPepoleCell = [tableView dequeueReusableCellWithIdentifier:JGApplyPepoleCellIdentifier forIndexPath:indexPath];
+        applyPepoleCell.delegate = self;
         applyPepoleCell.selectionStyle = UITableViewCellSelectionStyleNone;
         return applyPepoleCell;
     }else{
@@ -79,10 +82,25 @@ static NSString *const JGApplyPepoleCellIdentifier = @"JGApplyPepoleCell";
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 2) {
-        
+        JGInvoiceViewController *invoiceCtrl = [[JGInvoiceViewController alloc]init];
+        [self.navigationController pushViewController:invoiceCtrl animated:YES];
     }
 }
-
+#pragma mark -- 立即付款
+- (IBAction)nowPayBtnClick:(UIButton *)sender {
+//    UIAlertAction *sheet = [[UIActionSheet alloc]initWithTitle:@"我是最牛逼的开发"delegate:nilcancelButtonTitle:@"是"destructiveButtonTitle:@"是" otherButtonTitles:@"关闭",nil];
+//    
+//    [sheet showInView:self.view];
+}
+#pragma mark -- 现场付款
+- (IBAction)scenePayBtnClick:(UIButton *)sender {
+    
+}
+#pragma mark -- 添加嘉宾
+- (void)addApplyPeopleClick{
+    JGAddTeamGuestViewController *addTeamGuestCtrl = [[JGAddTeamGuestViewController alloc]initWithNibName:@"JGAddTeamGuestViewController" bundle:nil];
+    [self.navigationController pushViewController:addTeamGuestCtrl animated:YES];
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
