@@ -312,7 +312,7 @@
 /**
  *  监听文字改变
  */
-- (void)textDidChange
+- (void)textDidChangeÔ
 {
     self.navigationItem.rightBarButtonItem.enabled = (_textView.text.length != 0);
 }

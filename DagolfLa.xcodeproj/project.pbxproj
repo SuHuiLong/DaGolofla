@@ -773,6 +773,8 @@
 		AACE5E841C7C7D5800966646 /* xiangcemoren.jpg in Resources */ = {isa = PBXBuildFile; fileRef = AACE5E831C7C7D5800966646 /* xiangcemoren.jpg */; };
 		AAE5CF0F1C60756B00D66086 /* selfBackPic.jpg in Resources */ = {isa = PBXBuildFile; fileRef = AAE5CF0E1C60756B00D66086 /* selfBackPic.jpg */; };
 		F52A49E51C969F79002A4973 /* ScreenTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F52A49E41C969F79002A4973 /* ScreenTableViewCell.m */; };
+		F5321AE71CE4499600CAE1EF /* JGCreateTeamViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5321AE61CE4499600CAE1EF /* JGCreateTeamViewController.m */; };
+		F5321AEA1CE449C400CAE1EF /* JGCreateTeamView.m in Sources */ = {isa = PBXBuildFile; fileRef = F5321AE91CE449C400CAE1EF /* JGCreateTeamView.m */; };
 		F566EFAB1CA0F01B008BB328 /* InformSetmodel.m in Sources */ = {isa = PBXBuildFile; fileRef = F566EFAA1CA0F01B008BB328 /* InformSetmodel.m */; };
 		F569A13F1CE35A9C00CD0FD5 /* JGTeamChannelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F569A13B1CE35A9C00CD0FD5 /* JGTeamChannelViewController.m */; };
 		F569A1401CE35A9C00CD0FD5 /* JGTeamDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F569A13E1CE35A9C00CD0FD5 /* JGTeamDetailViewController.m */; };
@@ -1981,6 +1983,10 @@
 		AAE5CF0E1C60756B00D66086 /* selfBackPic.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = selfBackPic.jpg; sourceTree = SOURCE_ROOT; };
 		F52A49E31C969F79002A4973 /* ScreenTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScreenTableViewCell.h; sourceTree = "<group>"; };
 		F52A49E41C969F79002A4973 /* ScreenTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScreenTableViewCell.m; sourceTree = "<group>"; };
+		F5321AE51CE4499600CAE1EF /* JGCreateTeamViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGCreateTeamViewController.h; sourceTree = "<group>"; };
+		F5321AE61CE4499600CAE1EF /* JGCreateTeamViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGCreateTeamViewController.m; sourceTree = "<group>"; };
+		F5321AE81CE449C400CAE1EF /* JGCreateTeamView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGCreateTeamView.h; sourceTree = "<group>"; };
+		F5321AE91CE449C400CAE1EF /* JGCreateTeamView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGCreateTeamView.m; sourceTree = "<group>"; };
 		F566EFA91CA0F01B008BB328 /* InformSetmodel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InformSetmodel.h; sourceTree = "<group>"; };
 		F566EFAA1CA0F01B008BB328 /* InformSetmodel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InformSetmodel.m; sourceTree = "<group>"; };
 		F569A13A1CE35A9C00CD0FD5 /* JGTeamChannelViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGTeamChannelViewController.h; sourceTree = "<group>"; };
@@ -4999,6 +5005,24 @@
 			path = IQKeyBoardManager;
 			sourceTree = "<group>";
 		};
+		F5321AE31CE4492800CAE1EF /* 创建球队 */ = {
+			isa = PBXGroup;
+			children = (
+				F5321AE51CE4499600CAE1EF /* JGCreateTeamViewController.h */,
+				F5321AE61CE4499600CAE1EF /* JGCreateTeamViewController.m */,
+			);
+			path = "创建球队";
+			sourceTree = "<group>";
+		};
+		F5321AE41CE4493000CAE1EF /* 创建球队 */ = {
+			isa = PBXGroup;
+			children = (
+				F5321AE81CE449C400CAE1EF /* JGCreateTeamView.h */,
+				F5321AE91CE449C400CAE1EF /* JGCreateTeamView.m */,
+			);
+			path = "创建球队";
+			sourceTree = "<group>";
+		};
 		F569A1321CE3334F00CD0FD5 /* 球队详情 */ = {
 			isa = PBXGroup;
 			children = (
@@ -5061,6 +5085,7 @@
 		F5A105421CE309750050461D /* controller */ = {
 			isa = PBXGroup;
 			children = (
+				F5321AE31CE4492800CAE1EF /* 创建球队 */,
 				F569A1391CE35A9C00CD0FD5 /* 球队频道首页 */,
 				F569A13C1CE35A9C00CD0FD5 /* 球队详情 */,
 				828A99E11CE3165B00AF9860 /* 球队相册 */,
@@ -5072,6 +5097,7 @@
 		F5A105471CE309750050461D /* view */ = {
 			isa = PBXGroup;
 			children = (
+				F5321AE41CE4493000CAE1EF /* 创建球队 */,
 				F5B6470D1CE41E7E00A7A056 /* 球队详情 */,
 				F569A1411CE35AA500CD0FD5 /* 球队频道首页 */,
 				828A99EC1CE32E5700AF9860 /* 球队成员 */,
@@ -5772,6 +5798,7 @@
 				36BFFFAF1BC76FF3005B3CE2 /* ForgetViewController.m in Sources */,
 				F5EB44671C995788008ACD73 /* BallFriListCell.m in Sources */,
 				36BF004E1BC77213005B3CE2 /* OtherDataModel.m in Sources */,
+				F5321AEA1CE449C400CAE1EF /* JGCreateTeamView.m in Sources */,
 				AA857EE01C5F48AA0034B4C8 /* SelfDataViewController.m in Sources */,
 				20BA612C1CDC99D0004B61F5 /* ALMoviePlayerControls.m in Sources */,
 				36BF00531BC7726D005B3CE2 /* SelfViewController.m in Sources */,
@@ -5810,6 +5837,7 @@
 				368DCA641C88285000871D28 /* ReportViewController.m in Sources */,
 				3623173D1BDA498B00257862 /* PicArrShowViewControllerViewController.m in Sources */,
 				36BF015E1BC77611005B3CE2 /* PostRewordViewController.m in Sources */,
+				F5321AE71CE4499600CAE1EF /* JGCreateTeamViewController.m in Sources */,
 				3660E12A1BFC553A0033B4D7 /* ManageMineController.m in Sources */,
 				366E6EFB1C117BC200FD65B3 /* ScoreModel.m in Sources */,
 				3660E2011BFC64DD0033B4D7 /* ScoreByActiveViewController.m in Sources */,
