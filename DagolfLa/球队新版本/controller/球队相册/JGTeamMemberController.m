@@ -8,6 +8,8 @@
 
 #import "JGTeamMemberController.h"
 #import "JGMenberTableViewCell.h"
+
+#import "JGMemManageController.m"
 @interface JGTeamMemberController ()<UITableViewDelegate, UITableViewDataSource>
 {
     UITableView* _tableView;
@@ -32,7 +34,8 @@
 
 -(void)manageClick
 {
-    
+    JGMemManageController* menVc = [[JGMemManageController alloc]init];
+    [self.navigationController pushViewController:menVc animated:YES];
 }
 
 -(void)uiConfig
