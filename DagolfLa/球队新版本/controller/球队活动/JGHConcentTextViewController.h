@@ -1,0 +1,36 @@
+//
+//  JGHConcentTextViewController.h
+//  DagolfLa
+//
+//  Created by 黄安 on 16/5/13.
+//  Copyright © 2016年 bhxx. All rights reserved.
+//
+
+#import "ViewController.h"
+
+@protocol JGHConcentTextViewControllerDelegate <NSObject>
+
+- (void)didSelectSaveBtnClick:(UIButton *)saveBtn;
+
+@end
+
+@interface JGHConcentTextViewController : ViewController
+
+//页面标题问题
+@property (nonatomic, copy)NSString *itemText;
+
+//保存按钮
+@property (weak, nonatomic) IBOutlet UIButton *saveBtn;
+//保存按钮事件
+- (IBAction)saveBtn:(UIButton *)sender;
+//限制文字
+@property (weak, nonatomic) IBOutlet UILabel *labelText;
+//输入的内容
+@property (weak, nonatomic) IBOutlet UITextView *contentText;
+
+//占位符
+@property (weak, nonatomic) IBOutlet UILabel *placeholdertext;
+
+@property (weak, nonatomic) id <JGHConcentTextViewControllerDelegate> delegate;
+
+@end

@@ -7,14 +7,42 @@
 //
 
 #import "JGTableViewCell.h"
+#import "JGHLaunchActivityModel.h"
 
 @implementation JGTableViewCell
 
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
+    
+    
 }
 
+- (void)configTitlesString:(NSString *)titles{
+    self.titles.text = titles;
+}
+
+- (void)configContionsString:(NSString *)contions{
+    self.contions.text = contions;
+}
+- (void)configContionsStringWhitModel:(JGHLaunchActivityModel *)model andIndexPath:(NSIndexPath *)indexPath{
+    NSLog(@"%ld", (long)indexPath.section);
+    NSLog(@"%ld", (long)indexPath.row);
+    if (indexPath.section == 0) {
+        
+    }else if (indexPath.section == 1){
+        if (indexPath.row == 0) {
+            self.contions.text = model.startDate;
+        }else if (indexPath.row == 1){
+            self.contions.text = model.endDate;
+        }else{
+            self.contions.text = model.activityAddress;
+        }
+    }else if (indexPath.section == 2){
+        
+    }
+        
+}
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
 
