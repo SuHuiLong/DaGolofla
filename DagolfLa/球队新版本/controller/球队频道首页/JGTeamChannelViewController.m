@@ -14,7 +14,7 @@
 
 
 #import "JGTeamPhotoViewController.h"
-
+#import "JGLMyTeamViewController.h"
 @interface JGTeamChannelViewController ()<UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, strong)UIScrollView *topView;
@@ -77,10 +77,11 @@
 - (void)team:(UIButton *)button{
     
     if (button.tag == 200) {
+        JGLMyTeamViewController* myVc = [[JGLMyTeamViewController alloc]init];
+        [self.navigationController pushViewController:myVc animated:YES];
+    }else if (button.tag == 201) {
         JGTeamPhotoViewController* phoVc = [[JGTeamPhotoViewController alloc]init];
         [self.navigationController pushViewController:phoVc animated:YES];
-    }else if (button.tag == 201) {
-
     }else if (button.tag == 202) {
         
         JGCreateTeamViewController *creatTeamVC = [[JGCreateTeamViewController alloc] init];
