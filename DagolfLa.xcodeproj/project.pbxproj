@@ -767,6 +767,7 @@
 		828A99F51CE3481D00AF9860 /* JGMemManageController.m in Sources */ = {isa = PBXBuildFile; fileRef = 828A99F41CE3481D00AF9860 /* JGMemManageController.m */; };
 		828A99F91CE348D500AF9860 /* JGMemTitleTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 828A99F81CE348D500AF9860 /* JGMemTitleTableViewCell.m */; };
 		828A99FC1CE3549900AF9860 /* JGMemDataTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 828A99FB1CE3549900AF9860 /* JGMemDataTableViewCell.m */; };
+		82AAB7A61CE5629C005F5633 /* JGCreateTeamViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5321AE61CE4499600CAE1EF /* JGCreateTeamViewController.m */; };
 		82D595DF1CE42BDF00CD9587 /* BaiduMapAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82D595DD1CE42BDF00CD9587 /* BaiduMapAPI.framework */; };
 		82D595E01CE42BDF00CD9587 /* mapapi.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 82D595DE1CE42BDF00CD9587 /* mapapi.bundle */; };
 		82D595E31CE42E7B00CD9587 /* JGMemHalfTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 82D595E21CE42E7B00CD9587 /* JGMemHalfTableViewCell.m */; };
@@ -783,7 +784,6 @@
 		AACE5E841C7C7D5800966646 /* xiangcemoren.jpg in Resources */ = {isa = PBXBuildFile; fileRef = AACE5E831C7C7D5800966646 /* xiangcemoren.jpg */; };
 		AAE5CF0F1C60756B00D66086 /* selfBackPic.jpg in Resources */ = {isa = PBXBuildFile; fileRef = AAE5CF0E1C60756B00D66086 /* selfBackPic.jpg */; };
 		F52A49E51C969F79002A4973 /* ScreenTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F52A49E41C969F79002A4973 /* ScreenTableViewCell.m */; };
-		F5321AE71CE4499600CAE1EF /* JGCreateTeamViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5321AE61CE4499600CAE1EF /* JGCreateTeamViewController.m */; };
 		F5321AEA1CE449C400CAE1EF /* JGCreateTeamView.m in Sources */ = {isa = PBXBuildFile; fileRef = F5321AE91CE449C400CAE1EF /* JGCreateTeamView.m */; };
 		F566EFAB1CA0F01B008BB328 /* InformSetmodel.m in Sources */ = {isa = PBXBuildFile; fileRef = F566EFAA1CA0F01B008BB328 /* InformSetmodel.m */; };
 		F569A13F1CE35A9C00CD0FD5 /* JGTeamChannelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F569A13B1CE35A9C00CD0FD5 /* JGTeamChannelViewController.m */; };
@@ -5629,6 +5629,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				82AAB7A61CE5629C005F5633 /* JGCreateTeamViewController.m in Sources */,
 				36E301031C3FF410005C3F08 /* MJDIYHeader.m in Sources */,
 				36B9B59F1C3E45A70053B227 /* TeamPhotoEditViewController.m in Sources */,
 				828A99E41CE3167800AF9860 /* JGTeamCreatePhotoController.m in Sources */,
