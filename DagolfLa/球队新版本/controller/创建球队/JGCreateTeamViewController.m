@@ -9,7 +9,9 @@
 #import "JGCreateTeamViewController.h"
 #import "JGCreateTeamView.h"
 #import "JGTeamDetailViewController.h"
-
+#import "DateTimeViewController.h"
+#import "TeamAreaViewController.h"
+#import "JGTeamMainhallViewController.h"
 
 @interface JGCreateTeamViewController ()<UIImagePickerControllerDelegate,UIActionSheetDelegate,UINavigationControllerDelegate>
 @property (nonatomic, strong)JGCreateTeamView *creatTeamV;
@@ -27,6 +29,12 @@
     [self.view addSubview:self.creatTeamV];
     [self.creatTeamV.previewBtn addTarget:self action:@selector(preview) forControlEvents:(UIControlEventTouchUpInside)];
     [self.creatTeamV.addIconBtn addTarget:self action:@selector(usePhonePhotoAndCamera) forControlEvents:(UIControlEventTouchUpInside)];
+    
+    UIButton *dateBtn = [self.creatTeamV viewWithTag:200];
+    [dateBtn addTarget:self action:@selector(dateBtn:) forControlEvents:(UIControlEventTouchUpInside)];
+    UIButton *areaBtn = [self.creatTeamV viewWithTag:201];
+    [areaBtn addTarget:self action:@selector(area:) forControlEvents:(UIControlEventTouchUpInside)];
+    [self.creatTeamV.teamIntroduBtn addTarget:self action:@selector(bigTing) forControlEvents:(UIControlEventTouchUpInside)];
     // Do any additional setup after loading the view.
 }
 
@@ -35,11 +43,55 @@
     [self.navigationController pushViewController:detailV animated:YES];
 }
 
+- (void)bigTing{
+    JGTeamMainhallViewController *mainHall = [[JGTeamMainhallViewController alloc] init];
+    [self.navigationController pushViewController:mainHall animated:YES];
+}
+
+
+- (void)dateBtn: (UIButton *)button{
+    //日期选择
+    DateTimeViewController* dateVc = [[DateTimeViewController alloc]init];
+    [dateVc setCallback:^(NSString *dateStr, NSString *dateWeek, NSString *str) {
+        
+        NSArray* arr = [dateWeek componentsSeparatedByString:@"  "];
+        
+        [button setTitle:[NSString stringWithFormat:@"成立日期          %@,%@",dateStr,arr[1]] forState:(UIControlStateNormal)];
+        //                _strDayStart = dateWeek;
+        //                ////NSLog(@"%@",dateWeek);
+        //        NSIndexPath *indexPath=[NSIndexPath indexPathForRow:2 inSection:0];
+        //        [_tableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath,nil] withRowAnimation:UITableViewRowAnimationNone];
+        //        [_dict setValue:dateStr forKey:@"eventdates"];
+        //        [_dict setValue:arr[1] forKey:@"evnntWeek"];
+    }];
+    [self.navigationController pushViewController:dateVc animated:YES];
+}
+
+- (void)area:(UIButton *)btn{
+    //地区选择
+    TeamAreaViewController* areaVc = [[TeamAreaViewController alloc]init];
+    areaVc.teamType = @10;
+    areaVc.callBackCity = ^(NSString* strPro, NSString* strCity, NSNumber* cityId){
+        [btn setTitle:[NSString stringWithFormat:@"所在地区          %@,%@", strPro, strCity] forState:(UIControlStateNormal)];
+        //        _strProfince = strPro;
+        //        _strCity = strCity;
+        //        NSIndexPath *indexPath=[NSIndexPath indexPathForRow:3 inSection:0];
+        //        [_tableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath,nil] withRowAnimation:UITableViewRowAnimationNone];
+        //        [_dict setValue:_strCity forKey:@"teamCrtyName"];
+        //        [_dict setObject:cityId forKey:@"teamcrtyId"];
+        
+    };
+    [self.navigationController pushViewController:areaVc animated:YES];
+    
+}
+
+
+
 #pragma mark - 调用手机相机和相册
 - (void)usePhonePhotoAndCamera {
-   
+    
     UIActionSheet *selestSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"相机",@"相册", nil];
-   
+    
     [selestSheet showInView:self.view];
 }
 
@@ -76,11 +128,11 @@
     [picker dismissViewControllerAnimated:YES completion:nil];
 }
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
-
+    
     UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
     [self.creatTeamV.addIconBtn setImage:image forState:(UIControlStateNormal)];
     [self dismissViewControllerAnimated:YES completion:nil];
-
+    
 }
 
 
@@ -93,13 +145,13 @@
 
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end
