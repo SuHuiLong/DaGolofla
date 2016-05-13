@@ -786,9 +786,9 @@
 		AAB749E21C7B221A00018467 /* moren.jpg in Resources */ = {isa = PBXBuildFile; fileRef = AAB749E11C7B221A00018467 /* moren.jpg */; };
 		AACE5E841C7C7D5800966646 /* xiangcemoren.jpg in Resources */ = {isa = PBXBuildFile; fileRef = AACE5E831C7C7D5800966646 /* xiangcemoren.jpg */; };
 		AAE5CF0F1C60756B00D66086 /* selfBackPic.jpg in Resources */ = {isa = PBXBuildFile; fileRef = AAE5CF0E1C60756B00D66086 /* selfBackPic.jpg */; };
-		F50B7FAD1CE577A30065069D /* JGTeamMainhallViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F50B7FAC1CE577A30065069D /* JGTeamMainhallViewController.m */; };
 		F50B7FB01CE59C8F0065069D /* JGTeamDetailStyleTwoView.m in Sources */ = {isa = PBXBuildFile; fileRef = F50B7FAF1CE59C8F0065069D /* JGTeamDetailStyleTwoView.m */; };
 		F50B7FB31CE59E050065069D /* JGTeamDetailStylelTwoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F50B7FB21CE59E050065069D /* JGTeamDetailStylelTwoViewController.m */; };
+		F50B7FB71CE5DBB70065069D /* JGTeamMainhallViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F50B7FB61CE5DBB70065069D /* JGTeamMainhallViewController.m */; };
 		F52A49E51C969F79002A4973 /* ScreenTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F52A49E41C969F79002A4973 /* ScreenTableViewCell.m */; };
 		F5321AEA1CE449C400CAE1EF /* JGCreateTeamView.m in Sources */ = {isa = PBXBuildFile; fileRef = F5321AE91CE449C400CAE1EF /* JGCreateTeamView.m */; };
 		F566EFAB1CA0F01B008BB328 /* InformSetmodel.m in Sources */ = {isa = PBXBuildFile; fileRef = F566EFAA1CA0F01B008BB328 /* InformSetmodel.m */; };
@@ -2020,12 +2020,12 @@
 		AAB749E11C7B221A00018467 /* moren.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = moren.jpg; sourceTree = "<group>"; };
 		AACE5E831C7C7D5800966646 /* xiangcemoren.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = xiangcemoren.jpg; sourceTree = "<group>"; };
 		AAE5CF0E1C60756B00D66086 /* selfBackPic.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = selfBackPic.jpg; sourceTree = SOURCE_ROOT; };
-		F50B7FAB1CE577A30065069D /* JGTeamMainhallViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGTeamMainhallViewController.h; sourceTree = "<group>"; };
-		F50B7FAC1CE577A30065069D /* JGTeamMainhallViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGTeamMainhallViewController.m; sourceTree = "<group>"; };
 		F50B7FAE1CE59C8F0065069D /* JGTeamDetailStyleTwoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGTeamDetailStyleTwoView.h; sourceTree = "<group>"; };
 		F50B7FAF1CE59C8F0065069D /* JGTeamDetailStyleTwoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGTeamDetailStyleTwoView.m; sourceTree = "<group>"; };
 		F50B7FB11CE59E050065069D /* JGTeamDetailStylelTwoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGTeamDetailStylelTwoViewController.h; sourceTree = "<group>"; };
 		F50B7FB21CE59E050065069D /* JGTeamDetailStylelTwoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGTeamDetailStylelTwoViewController.m; sourceTree = "<group>"; };
+		F50B7FB51CE5DBB70065069D /* JGTeamMainhallViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGTeamMainhallViewController.h; sourceTree = "<group>"; };
+		F50B7FB61CE5DBB70065069D /* JGTeamMainhallViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGTeamMainhallViewController.m; sourceTree = "<group>"; };
 		F52A49E31C969F79002A4973 /* ScreenTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScreenTableViewCell.h; sourceTree = "<group>"; };
 		F52A49E41C969F79002A4973 /* ScreenTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScreenTableViewCell.m; sourceTree = "<group>"; };
 		F5321AE51CE4499600CAE1EF /* JGCreateTeamViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGCreateTeamViewController.h; sourceTree = "<group>"; };
@@ -5088,18 +5088,18 @@
 			path = IQKeyBoardManager;
 			sourceTree = "<group>";
 		};
-		F50B7FA91CE577760065069D /* 球队大厅 */ = {
+		F50B7FAA1CE5777D0065069D /* 球队大厅 */ = {
 			isa = PBXGroup;
 			children = (
-				F50B7FAB1CE577A30065069D /* JGTeamMainhallViewController.h */,
-				F50B7FAC1CE577A30065069D /* JGTeamMainhallViewController.m */,
 			);
 			path = "球队大厅";
 			sourceTree = "<group>";
 		};
-		F50B7FAA1CE5777D0065069D /* 球队大厅 */ = {
+		F50B7FB41CE5DBB70065069D /* 球队大厅 */ = {
 			isa = PBXGroup;
 			children = (
+				F50B7FB51CE5DBB70065069D /* JGTeamMainhallViewController.h */,
+				F50B7FB61CE5DBB70065069D /* JGTeamMainhallViewController.m */,
 			);
 			path = "球队大厅";
 			sourceTree = "<group>";
@@ -5186,6 +5186,7 @@
 		F5A105421CE309750050461D /* controller */ = {
 			isa = PBXGroup;
 			children = (
+				F50B7FB41CE5DBB70065069D /* 球队大厅 */,
 				82AAB7A71CE57571005F5633 /* 我的球队 */,
 				F5321AE31CE4492800CAE1EF /* 创建球队 */,
 				F569A1391CE35A9C00CD0FD5 /* 球队频道首页 */,
@@ -5808,6 +5809,7 @@
 				362317121BD9D31500257862 /* PageViewController.m in Sources */,
 				65B596EB1CAD43AC007AB83A /* YMButton.m in Sources */,
 				828A99F51CE3481D00AF9860 /* JGMemManageController.m in Sources */,
+				F50B7FB71CE5DBB70065069D /* JGTeamMainhallViewController.m in Sources */,
 				36B08F701C2D322600CD660E /* UITableViewCell+JZExtension.m in Sources */,
 				36BF00911BC772EF005B3CE2 /* MyAccountViewController.m in Sources */,
 				F569A1401CE35A9C00CD0FD5 /* JGTeamDetailViewController.m in Sources */,
@@ -5938,7 +5940,6 @@
 				20BA61291CDC99D0004B61F5 /* ALAirplayView.m in Sources */,
 				36E300ED1C3FF3F9005C3F08 /* MJRefreshComponent.m in Sources */,
 				36EB78C51C0FD65C00263E50 /* ScoreBySelfModel.m in Sources */,
-				F50B7FAD1CE577A30065069D /* JGTeamMainhallViewController.m in Sources */,
 				65B596D51CAD43AC007AB83A /* ILRegularExpressionManager.m in Sources */,
 				36DF09B51C03F303007A8A4E /* TeamIntroduceViewCell.m in Sources */,
 				36D39B371BCCD8D000C0B197 /* RewordModel.m in Sources */,

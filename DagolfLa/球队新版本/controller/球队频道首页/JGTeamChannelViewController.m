@@ -11,7 +11,7 @@
 #import "JGTeamChannelTableViewCell.h"
 #import "JGTeamDetailViewController.h"
 #import "JGCreateTeamViewController.h"
-
+#import "JGTeamDetailStylelTwoViewController.h"
 
 #import "JGTeamPhotoViewController.h"
 #import "JGLMyTeamViewController.h"
