@@ -786,6 +786,9 @@
 		AAB749E21C7B221A00018467 /* moren.jpg in Resources */ = {isa = PBXBuildFile; fileRef = AAB749E11C7B221A00018467 /* moren.jpg */; };
 		AACE5E841C7C7D5800966646 /* xiangcemoren.jpg in Resources */ = {isa = PBXBuildFile; fileRef = AACE5E831C7C7D5800966646 /* xiangcemoren.jpg */; };
 		AAE5CF0F1C60756B00D66086 /* selfBackPic.jpg in Resources */ = {isa = PBXBuildFile; fileRef = AAE5CF0E1C60756B00D66086 /* selfBackPic.jpg */; };
+		F50B7FAD1CE577A30065069D /* JGTeamMainhallViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F50B7FAC1CE577A30065069D /* JGTeamMainhallViewController.m */; };
+		F50B7FB01CE59C8F0065069D /* JGTeamDetailStyleTwoView.m in Sources */ = {isa = PBXBuildFile; fileRef = F50B7FAF1CE59C8F0065069D /* JGTeamDetailStyleTwoView.m */; };
+		F50B7FB31CE59E050065069D /* JGTeamDetailStylelTwoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F50B7FB21CE59E050065069D /* JGTeamDetailStylelTwoViewController.m */; };
 		F52A49E51C969F79002A4973 /* ScreenTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F52A49E41C969F79002A4973 /* ScreenTableViewCell.m */; };
 		F5321AEA1CE449C400CAE1EF /* JGCreateTeamView.m in Sources */ = {isa = PBXBuildFile; fileRef = F5321AE91CE449C400CAE1EF /* JGCreateTeamView.m */; };
 		F566EFAB1CA0F01B008BB328 /* InformSetmodel.m in Sources */ = {isa = PBXBuildFile; fileRef = F566EFAA1CA0F01B008BB328 /* InformSetmodel.m */; };
@@ -2017,6 +2020,12 @@
 		AAB749E11C7B221A00018467 /* moren.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = moren.jpg; sourceTree = "<group>"; };
 		AACE5E831C7C7D5800966646 /* xiangcemoren.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = xiangcemoren.jpg; sourceTree = "<group>"; };
 		AAE5CF0E1C60756B00D66086 /* selfBackPic.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = selfBackPic.jpg; sourceTree = SOURCE_ROOT; };
+		F50B7FAB1CE577A30065069D /* JGTeamMainhallViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGTeamMainhallViewController.h; sourceTree = "<group>"; };
+		F50B7FAC1CE577A30065069D /* JGTeamMainhallViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGTeamMainhallViewController.m; sourceTree = "<group>"; };
+		F50B7FAE1CE59C8F0065069D /* JGTeamDetailStyleTwoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGTeamDetailStyleTwoView.h; sourceTree = "<group>"; };
+		F50B7FAF1CE59C8F0065069D /* JGTeamDetailStyleTwoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGTeamDetailStyleTwoView.m; sourceTree = "<group>"; };
+		F50B7FB11CE59E050065069D /* JGTeamDetailStylelTwoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGTeamDetailStylelTwoViewController.h; sourceTree = "<group>"; };
+		F50B7FB21CE59E050065069D /* JGTeamDetailStylelTwoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGTeamDetailStylelTwoViewController.m; sourceTree = "<group>"; };
 		F52A49E31C969F79002A4973 /* ScreenTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScreenTableViewCell.h; sourceTree = "<group>"; };
 		F52A49E41C969F79002A4973 /* ScreenTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScreenTableViewCell.m; sourceTree = "<group>"; };
 		F5321AE51CE4499600CAE1EF /* JGCreateTeamViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGCreateTeamViewController.h; sourceTree = "<group>"; };
@@ -5079,6 +5088,22 @@
 			path = IQKeyBoardManager;
 			sourceTree = "<group>";
 		};
+		F50B7FA91CE577760065069D /* 球队大厅 */ = {
+			isa = PBXGroup;
+			children = (
+				F50B7FAB1CE577A30065069D /* JGTeamMainhallViewController.h */,
+				F50B7FAC1CE577A30065069D /* JGTeamMainhallViewController.m */,
+			);
+			path = "球队大厅";
+			sourceTree = "<group>";
+		};
+		F50B7FAA1CE5777D0065069D /* 球队大厅 */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "球队大厅";
+			sourceTree = "<group>";
+		};
 		F5321AE31CE4492800CAE1EF /* 创建球队 */ = {
 			isa = PBXGroup;
 			children = (
@@ -5118,6 +5143,8 @@
 			children = (
 				F569A13D1CE35A9C00CD0FD5 /* JGTeamDetailViewController.h */,
 				F569A13E1CE35A9C00CD0FD5 /* JGTeamDetailViewController.m */,
+				F50B7FB11CE59E050065069D /* JGTeamDetailStylelTwoViewController.h */,
+				F50B7FB21CE59E050065069D /* JGTeamDetailStylelTwoViewController.m */,
 			);
 			path = "球队详情";
 			sourceTree = "<group>";
@@ -5172,6 +5199,7 @@
 		F5A105471CE309750050461D /* view */ = {
 			isa = PBXGroup;
 			children = (
+				F50B7FAA1CE5777D0065069D /* 球队大厅 */,
 				F5321AE41CE4493000CAE1EF /* 创建球队 */,
 				F5B6470D1CE41E7E00A7A056 /* 球队详情 */,
 				F569A1411CE35AA500CD0FD5 /* 球队频道首页 */,
@@ -5187,6 +5215,8 @@
 			children = (
 				F5B6470E1CE41E7E00A7A056 /* JGTeamDetailView.h */,
 				F5B6470F1CE41E7E00A7A056 /* JGTeamDetailView.m */,
+				F50B7FAE1CE59C8F0065069D /* JGTeamDetailStyleTwoView.h */,
+				F50B7FAF1CE59C8F0065069D /* JGTeamDetailStyleTwoView.m */,
 			);
 			path = "球队详情";
 			sourceTree = "<group>";
@@ -5866,6 +5896,7 @@
 				36B9B5951C3DFFDC0053B227 /* MyOrderViewController.m in Sources */,
 				36D9E0081BFF15350078B6C5 /* TeamModel.m in Sources */,
 				65B596D71CAD43AC007AB83A /* NSString+NSString_ILExtension.m in Sources */,
+				F50B7FB01CE59C8F0065069D /* JGTeamDetailStyleTwoView.m in Sources */,
 				654A031B1CC89F70007F5243 /* PersonHomeController.m in Sources */,
 				36BFFF5C1BC76D09005B3CE2 /* AFNetworkReachabilityManager.m in Sources */,
 				3660E1421BFC55AC0033B4D7 /* ActiveScoreController.m in Sources */,
@@ -5907,6 +5938,7 @@
 				20BA61291CDC99D0004B61F5 /* ALAirplayView.m in Sources */,
 				36E300ED1C3FF3F9005C3F08 /* MJRefreshComponent.m in Sources */,
 				36EB78C51C0FD65C00263E50 /* ScoreBySelfModel.m in Sources */,
+				F50B7FAD1CE577A30065069D /* JGTeamMainhallViewController.m in Sources */,
 				65B596D51CAD43AC007AB83A /* ILRegularExpressionManager.m in Sources */,
 				36DF09B51C03F303007A8A4E /* TeamIntroduceViewCell.m in Sources */,
 				36D39B371BCCD8D000C0B197 /* RewordModel.m in Sources */,
@@ -5934,6 +5966,7 @@
 				36B08F711C2D322600CD660E /* UITableViewRowAction+JZExtension.m in Sources */,
 				36BF008A1BC772EF005B3CE2 /* MySetHelpController.m in Sources */,
 				36BFFF751BC76D09005B3CE2 /* SDImageCache.m in Sources */,
+				F50B7FB31CE59E050065069D /* JGTeamDetailStylelTwoViewController.m in Sources */,
 				3669C28C1C48AAC9006CBAAA /* PublishViewController.m in Sources */,
 				36067BBC1C96B43B001AE22C /* ChatDetailViewController.m in Sources */,
 				36067BC41C97EF16001AE22C /* ContactViewController.m in Sources */,

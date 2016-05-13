@@ -114,7 +114,7 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    JGTeamDetailViewController *detailV = [[JGTeamDetailViewController alloc] init];
+    JGTeamDetailStylelTwoViewController *detailV = [[JGTeamDetailStylelTwoViewController alloc] init];
     [self.navigationController pushViewController:detailV animated:YES];
 }
 
