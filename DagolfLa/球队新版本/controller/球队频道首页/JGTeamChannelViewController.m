@@ -11,10 +11,10 @@
 #import "JGTeamChannelTableViewCell.h"
 #import "JGTeamDetailViewController.h"
 #import "JGCreateTeamViewController.h"
-
+#import "JGTeamDetailStylelTwoViewController.h"
 
 #import "JGTeamPhotoViewController.h"
-
+#import "JGLMyTeamViewController.h"
 @interface JGTeamChannelViewController ()<UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, strong)UIScrollView *topView;
@@ -77,10 +77,11 @@
 - (void)team:(UIButton *)button{
     
     if (button.tag == 200) {
+        JGLMyTeamViewController* myVc = [[JGLMyTeamViewController alloc]init];
+        [self.navigationController pushViewController:myVc animated:YES];
+    }else if (button.tag == 201) {
         JGTeamPhotoViewController* phoVc = [[JGTeamPhotoViewController alloc]init];
         [self.navigationController pushViewController:phoVc animated:YES];
-    }else if (button.tag == 201) {
-
     }else if (button.tag == 202) {
         
         JGCreateTeamViewController *creatTeamVC = [[JGCreateTeamViewController alloc] init];
@@ -113,7 +114,7 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    JGTeamDetailViewController *detailV = [[JGTeamDetailViewController alloc] init];
+    JGTeamDetailStylelTwoViewController *detailV = [[JGTeamDetailStylelTwoViewController alloc] init];
     [self.navigationController pushViewController:detailV animated:YES];
 }
 

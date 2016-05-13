@@ -8,6 +8,7 @@
 
 #import "JGCreateTeamView.h"
 
+
 @interface JGCreateTeamView ()<UITextViewDelegate>
 
 @property (nonatomic, strong)UILabel *placeHold;
@@ -137,7 +138,6 @@
         self.placeHold.hidden = NO;
     }
 }
-
 
 
 /*

@@ -8,6 +8,7 @@
 
 #import "JGMemAuthorityViewController.h"
 
+#import "JGLSelfSetViewController.h"
 @interface JGMemAuthorityViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
     UITableView* _tableView;
@@ -24,6 +25,7 @@
     
     UIBarButtonItem* rightBtn = [[UIBarButtonItem alloc]initWithTitle:@"保存" style:UIBarButtonItemStylePlain target:self action:@selector(saveSetClick)];
     self.navigationItem.rightBarButtonItem = rightBtn;
+    rightBtn.tintColor = [UIColor whiteColor];
     
     self.title = @"权限设置";
     _arrayTitle = [NSArray arrayWithObjects:@"队长",@"会长/副会长",@"队长秘书长",@"队长秘书/干事",@"剔除出队", nil];
@@ -34,7 +36,8 @@
 
 -(void)saveSetClick
 {
-    //保存权限设置
+    JGLSelfSetViewController* selfVc = [[JGLSelfSetViewController alloc]init];
+    [self.navigationController pushViewController:selfVc animated:YES];
 }
 
 -(void)uiConfig
