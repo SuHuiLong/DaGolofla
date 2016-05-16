@@ -67,7 +67,7 @@
     _collectionView.contentSize = CGSizeMake(0, 0);
     //注册cell
     [_collectionView registerNib: [UINib nibWithNibName:@"JGPhotoShowCollectionViewCell"
- bundle:nil] forCellWithReuseIdentifier:@"JGPhotoShowCollectionViewCell"];
+                                                 bundle:nil] forCellWithReuseIdentifier:@"JGPhotoShowCollectionViewCell"];
     /**
      *  如果是使用的xib文件则使用这个方法，    //获取含有UICollectionReusableView的Nib文件,
      UINib *headerNib = [UINib nibWithNibName: @"HeaderCollectionReusableView" bundle: [NSBundle mainBundle]];
@@ -146,13 +146,13 @@
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

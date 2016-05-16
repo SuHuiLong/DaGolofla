@@ -775,6 +775,7 @@
 		828A99F51CE3481D00AF9860 /* JGMemManageController.m in Sources */ = {isa = PBXBuildFile; fileRef = 828A99F41CE3481D00AF9860 /* JGMemManageController.m */; };
 		828A99F91CE348D500AF9860 /* JGMemTitleTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 828A99F81CE348D500AF9860 /* JGMemTitleTableViewCell.m */; };
 		828A99FC1CE3549900AF9860 /* JGMemDataTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 828A99FB1CE3549900AF9860 /* JGMemDataTableViewCell.m */; };
+		8294872F1CE9F06B0018D3F6 /* JGPhotoShowCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 829487261CE99A2F0018D3F6 /* JGPhotoShowCollectionViewCell.xib */; };
 		82AAB7AA1CE57589005F5633 /* JGLMyTeamViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 82AAB7A91CE57589005F5633 /* JGLMyTeamViewController.m */; };
 		82AAB7AE1CE5BEB8005F5633 /* JGLSelfSetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 82AAB7AD1CE5BEB8005F5633 /* JGLSelfSetViewController.m */; };
 		82AAB7B11CE5C18E005F5633 /* JGSelfSetTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 82AAB7B01CE5C18E005F5633 /* JGSelfSetTableViewCell.m */; };
@@ -5420,6 +5421,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8294872F1CE9F06B0018D3F6 /* JGPhotoShowCollectionViewCell.xib in Resources */,
 				20CA13801CE574A400DA15B9 /* JGHConcentTextViewController.xib in Resources */,
 				36BFFE581BC76CDC005B3CE2 /* tianjia2@2x.png in Resources */,
 				36BFFE611BC76CDC005B3CE2 /* tu2@3x.png in Resources */,
