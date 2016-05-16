@@ -767,6 +767,10 @@
 		828A99F51CE3481D00AF9860 /* JGMemManageController.m in Sources */ = {isa = PBXBuildFile; fileRef = 828A99F41CE3481D00AF9860 /* JGMemManageController.m */; };
 		828A99F91CE348D500AF9860 /* JGMemTitleTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 828A99F81CE348D500AF9860 /* JGMemTitleTableViewCell.m */; };
 		828A99FC1CE3549900AF9860 /* JGMemDataTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 828A99FB1CE3549900AF9860 /* JGMemDataTableViewCell.m */; };
+		829487271CE99A2F0018D3F6 /* JGPhotoShowCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 829487251CE99A2F0018D3F6 /* JGPhotoShowCollectionViewCell.m */; };
+		829487281CE99A2F0018D3F6 /* JGPhotoShowCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 829487261CE99A2F0018D3F6 /* JGPhotoShowCollectionViewCell.xib */; };
+		8294872B1CE9B8FE0018D3F6 /* JGPhotoTimeReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8294872A1CE9B8FE0018D3F6 /* JGPhotoTimeReusableView.m */; };
+		8294872E1CE9C92A0018D3F6 /* JGLUpdataPhotoController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8294872D1CE9C92A0018D3F6 /* JGLUpdataPhotoController.m */; };
 		82AAB7A61CE5629C005F5633 /* JGCreateTeamViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5321AE61CE4499600CAE1EF /* JGCreateTeamViewController.m */; };
 		82AAB7AA1CE57589005F5633 /* JGLMyTeamViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 82AAB7A91CE57589005F5633 /* JGLMyTeamViewController.m */; };
 		82AAB7AE1CE5BEB8005F5633 /* JGLSelfSetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 82AAB7AD1CE5BEB8005F5633 /* JGLSelfSetViewController.m */; };
@@ -1994,6 +1998,13 @@
 		828A99F81CE348D500AF9860 /* JGMemTitleTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGMemTitleTableViewCell.m; sourceTree = "<group>"; };
 		828A99FA1CE3549900AF9860 /* JGMemDataTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGMemDataTableViewCell.h; sourceTree = "<group>"; };
 		828A99FB1CE3549900AF9860 /* JGMemDataTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGMemDataTableViewCell.m; sourceTree = "<group>"; };
+		829487241CE99A2F0018D3F6 /* JGPhotoShowCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGPhotoShowCollectionViewCell.h; sourceTree = "<group>"; };
+		829487251CE99A2F0018D3F6 /* JGPhotoShowCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGPhotoShowCollectionViewCell.m; sourceTree = "<group>"; };
+		829487261CE99A2F0018D3F6 /* JGPhotoShowCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JGPhotoShowCollectionViewCell.xib; sourceTree = "<group>"; };
+		829487291CE9B8FE0018D3F6 /* JGPhotoTimeReusableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGPhotoTimeReusableView.h; sourceTree = "<group>"; };
+		8294872A1CE9B8FE0018D3F6 /* JGPhotoTimeReusableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGPhotoTimeReusableView.m; sourceTree = "<group>"; };
+		8294872C1CE9C92A0018D3F6 /* JGLUpdataPhotoController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGLUpdataPhotoController.h; sourceTree = "<group>"; };
+		8294872D1CE9C92A0018D3F6 /* JGLUpdataPhotoController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGLUpdataPhotoController.m; sourceTree = "<group>"; };
 		82AAB7A81CE57589005F5633 /* JGLMyTeamViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGLMyTeamViewController.h; sourceTree = "<group>"; };
 		82AAB7A91CE57589005F5633 /* JGLMyTeamViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGLMyTeamViewController.m; sourceTree = "<group>"; };
 		82AAB7AC1CE5BEB8005F5633 /* JGLSelfSetViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGLSelfSetViewController.h; sourceTree = "<group>"; };
@@ -5021,6 +5032,8 @@
 				828A99E31CE3167800AF9860 /* JGTeamCreatePhotoController.m */,
 				828A99E51CE325BB00AF9860 /* JGPhotoAlbumViewController.h */,
 				828A99E61CE325BB00AF9860 /* JGPhotoAlbumViewController.m */,
+				8294872C1CE9C92A0018D3F6 /* JGLUpdataPhotoController.h */,
+				8294872D1CE9C92A0018D3F6 /* JGLUpdataPhotoController.m */,
 				828A99E81CE32B7000AF9860 /* JGTeamMemberController.h */,
 				828A99E91CE32B7000AF9860 /* JGTeamMemberController.m */,
 				828A99F31CE3481D00AF9860 /* JGMemManageController.h */,
@@ -5064,6 +5077,11 @@
 				828A99FB1CE3549900AF9860 /* JGMemDataTableViewCell.m */,
 				82D595E11CE42E7B00CD9587 /* JGMemHalfTableViewCell.h */,
 				82D595E21CE42E7B00CD9587 /* JGMemHalfTableViewCell.m */,
+				829487241CE99A2F0018D3F6 /* JGPhotoShowCollectionViewCell.h */,
+				829487251CE99A2F0018D3F6 /* JGPhotoShowCollectionViewCell.m */,
+				829487261CE99A2F0018D3F6 /* JGPhotoShowCollectionViewCell.xib */,
+				829487291CE9B8FE0018D3F6 /* JGPhotoTimeReusableView.h */,
+				8294872A1CE9B8FE0018D3F6 /* JGPhotoTimeReusableView.m */,
 			);
 			path = "球队成员管理";
 			sourceTree = "<group>";
@@ -5432,6 +5450,7 @@
 				20C1B8B11CE3241C00508ABC /* JGTableViewCell.xib in Resources */,
 				36BFFE241BC76CDC005B3CE2 /* chenggong@2x.png in Resources */,
 				36BF000D1BC770C4005B3CE2 /* icon01.jpg in Resources */,
+				829487281CE99A2F0018D3F6 /* JGPhotoShowCollectionViewCell.xib in Resources */,
 				65B596DD1CAD43AC007AB83A /* 03@2x.png in Resources */,
 				36BFFEBE1BC76CDC005B3CE2 /* tab_line@2x.png in Resources */,
 				654332071BD5D9B900363947 /* UMSCommentInputControlleriPad.xib in Resources */,
@@ -5837,6 +5856,7 @@
 				36BFFF5A1BC76D09005B3CE2 /* AFHTTPRequestOperationManager.m in Sources */,
 				36DE28D71C1EA02E008FA24D /* RewardArravelTableViewCell.m in Sources */,
 				36BF004C1BC77213005B3CE2 /* ComDeatailModel.m in Sources */,
+				829487271CE99A2F0018D3F6 /* JGPhotoShowCollectionViewCell.m in Sources */,
 				65B596E81CAD43AC007AB83A /* WFHudView.m in Sources */,
 				65B596E71CAD43AC007AB83A /* WFActionSheet.m in Sources */,
 				36BF00BB1BC77383005B3CE2 /* MyAttentionViewCell.m in Sources */,
@@ -5954,6 +5974,7 @@
 				368DCA641C88285000871D28 /* ReportViewController.m in Sources */,
 				3623173D1BDA498B00257862 /* PicArrShowViewControllerViewController.m in Sources */,
 				36BF015E1BC77611005B3CE2 /* PostRewordViewController.m in Sources */,
+				8294872B1CE9B8FE0018D3F6 /* JGPhotoTimeReusableView.m in Sources */,
 				20CA13651CE4276500DA15B9 /* JGTeamAcitivtyModel.m in Sources */,
 				3660E12A1BFC553A0033B4D7 /* ManageMineController.m in Sources */,
 				366E6EFB1C117BC200FD65B3 /* ScoreModel.m in Sources */,
@@ -6092,6 +6113,7 @@
 				36E300F31C3FF3F9005C3F08 /* MJRefreshBackGifFooter.m in Sources */,
 				368B73281C100A390002A618 /* ScoreTableViewCell.m in Sources */,
 				369B2B671C61B23F00366AA2 /* NewsDetailViewCell.m in Sources */,
+				8294872E1CE9C92A0018D3F6 /* JGLUpdataPhotoController.m in Sources */,
 				36BF01911BC7766B005B3CE2 /* MeWonderViewCell.m in Sources */,
 				F566EFAB1CA0F01B008BB328 /* InformSetmodel.m in Sources */,
 				3660E1DF1BFC64020033B4D7 /* ScoredCardViewController.m in Sources */,

@@ -10,4 +10,10 @@
 
 @interface JGSelfSetTableViewCell : UITableViewCell
 
+
+@property (strong, nonatomic) UILabel* titleLabel;
+
+@property (strong, nonatomic) UILabel* detailLabel;
+
+
 @end
