@@ -44,6 +44,16 @@
         [self.teamIntroductionBackView addSubview:self.teamIntroductionLB];
         
         
+
+        self.teamManage = [UIButton buttonWithType:(UIButtonTypeCustom)];
+        self.teamManage.frame = CGRectMake(0, self.teamIntroductionLB.frame.size.height + 280 * screenWidth / 320 + 10 * screenWidth / 320, screenWidth, 30);
+        self.teamManage.backgroundColor = [UIColor whiteColor];
+        [self.teamManage setTitleColor:[UIColor lightGrayColor] forState:(UIControlStateNormal)];
+        [self.teamManage setImage:[UIImage imageNamed:@")"] forState:(UIControlStateNormal)];
+        self.teamManage.imageEdgeInsets = UIEdgeInsetsMake(0, 300 * screenWidth / 320, 0, 0);
+        self.teamManage.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+        [self.teamManage setTitle:@"球队管理" forState:(UIControlStateNormal)];
+        
         self.buttonBackView = [[UIView alloc] initWithFrame:CGRectMake(0, self.teamIntroductionLB.frame.size.height + 280 * screenWidth / 320 + 10 * screenWidth / 320, screenWidth, 110 * screenWidth / 320)];
         self.buttonBackView.backgroundColor = [UIColor whiteColor];
         [self addSubview:self.buttonBackView];
@@ -94,10 +104,18 @@
 }
 
 - (void)resetUI{
+    
     [self.teamIntroductionLB sizeToFit];
     [self.teamIntroductionBackView setFrame:CGRectMake(0, 160 * screenWidth / 320, screenWidth, self.teamIntroductionLB.frame.size.height + 30 * screenWidth / 320)];
     
-    [self.buttonBackView setFrame:CGRectMake(0, self.teamIntroductionBackView.frame.size.height + 170 * screenWidth / 320, screenWidth, 110 * screenWidth / 320)];
+    [self.teamManage setFrame:CGRectMake(0, self.teamIntroductionBackView.frame.size.height + 170 * screenWidth / 320, screenWidth, 30 * screenWidth / 320)];
+   
+    if (_isManager) {
+        [self addSubview:self.teamManage];
+    }
+    
+    
+    [self.buttonBackView setFrame:CGRectMake(0, _isManager ? (self.teamIntroductionBackView.frame.size.height + 210 * screenWidth / 320) : (self.teamIntroductionBackView.frame.size.height + 170 * screenWidth / 320), screenWidth, 110 * screenWidth / 320)];
     [self.setButton setFrame:CGRectMake(0, self.buttonBackView.frame.origin.y + 120 * screenWidth / 320, screenWidth, 30 * screenWidth / 320)];
     [self.applyJoin setFrame:CGRectMake(10 * screenWidth / 320, self.buttonBackView.frame.origin.y + 120 * screenWidth / 320 + 40, screenWidth - 20 * screenWidth / 320, 30 * screenWidth / 320)];
 }

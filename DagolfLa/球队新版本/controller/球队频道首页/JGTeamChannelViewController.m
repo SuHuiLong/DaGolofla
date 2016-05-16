@@ -12,6 +12,8 @@
 #import "JGTeamDetailViewController.h"
 #import "JGCreateTeamViewController.h"
 #import "JGTeamDetailStylelTwoViewController.h"
+#import "JGApplyMaterialViewController.h"
+
 
 #import "JGTeamPhotoViewController.h"
 #import "JGLMyTeamViewController.h"
@@ -114,8 +116,15 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    JGTeamDetailStylelTwoViewController *detailV = [[JGTeamDetailStylelTwoViewController alloc] init];
-    [self.navigationController pushViewController:detailV animated:YES];
+
+    if (indexPath.row == 0) {
+        JGTeamDetailStylelTwoViewController *detailV = [[JGTeamDetailStylelTwoViewController alloc] init];
+        [self.navigationController pushViewController:detailV animated:YES];
+    }else{
+        JGApplyMaterialViewController *applyMaterialVC = [[JGApplyMaterialViewController alloc] init];
+        [self.navigationController pushViewController:applyMaterialVC animated:YES];
+    }
+
 }
 
 

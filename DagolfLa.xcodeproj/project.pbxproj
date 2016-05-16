@@ -814,6 +814,12 @@
 		F56F0B871CC60B0400A222F3 /* NoteHandlle.m in Sources */ = {isa = PBXBuildFile; fileRef = F56F0B861CC60B0400A222F3 /* NoteHandlle.m */; };
 		F56F0B8D1CC613E100A222F3 /* NoteModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F56F0B8C1CC613E100A222F3 /* NoteModel.m */; };
 		F56F0B901CC637A200A222F3 /* AddNoteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F56F0B8F1CC637A200A222F3 /* AddNoteViewController.m */; };
+		F5B5498F1CE98F5B0091C962 /* JGTeamManageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5B5498E1CE98F5B0091C962 /* JGTeamManageViewController.m */; };
+		F5B549931CE9AC9C0091C962 /* JGApplyMaterialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5B549921CE9AC9C0091C962 /* JGApplyMaterialViewController.m */; };
+		F5B549971CE9B0710091C962 /* JGApplyMaterialTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F5B549961CE9B0710091C962 /* JGApplyMaterialTableViewCell.m */; };
+		F5B549981CE9EBD00091C962 /* JGLUpdataPhotoController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8294872D1CE9C92A0018D3F6 /* JGLUpdataPhotoController.m */; };
+		F5B549991CE9EC3B0091C962 /* JGPhotoShowCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 829487251CE99A2F0018D3F6 /* JGPhotoShowCollectionViewCell.m */; };
+		F5B5499A1CE9EC6E0091C962 /* JGPhotoTimeReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8294872A1CE9B8FE0018D3F6 /* JGPhotoTimeReusableView.m */; };
 		F5B647101CE41E7E00A7A056 /* JGTeamDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = F5B6470F1CE41E7E00A7A056 /* JGTeamDetailView.m */; };
 		F5E3F7F01CAA54BC00B24C77 /* dz.png in Resources */ = {isa = PBXBuildFile; fileRef = F5E3F7ED1CAA54BC00B24C77 /* dz.png */; };
 		F5E3F7F11CAA54BC00B24C77 /* dz@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F5E3F7EE1CAA54BC00B24C77 /* dz@2x.png */; };
@@ -2032,6 +2038,13 @@
 		828A99F81CE348D500AF9860 /* JGMemTitleTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGMemTitleTableViewCell.m; sourceTree = "<group>"; };
 		828A99FA1CE3549900AF9860 /* JGMemDataTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGMemDataTableViewCell.h; sourceTree = "<group>"; };
 		828A99FB1CE3549900AF9860 /* JGMemDataTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGMemDataTableViewCell.m; sourceTree = "<group>"; };
+		829487241CE99A2F0018D3F6 /* JGPhotoShowCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGPhotoShowCollectionViewCell.h; sourceTree = "<group>"; };
+		829487251CE99A2F0018D3F6 /* JGPhotoShowCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGPhotoShowCollectionViewCell.m; sourceTree = "<group>"; };
+		829487261CE99A2F0018D3F6 /* JGPhotoShowCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JGPhotoShowCollectionViewCell.xib; sourceTree = "<group>"; };
+		829487291CE9B8FE0018D3F6 /* JGPhotoTimeReusableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGPhotoTimeReusableView.h; sourceTree = "<group>"; };
+		8294872A1CE9B8FE0018D3F6 /* JGPhotoTimeReusableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGPhotoTimeReusableView.m; sourceTree = "<group>"; };
+		8294872C1CE9C92A0018D3F6 /* JGLUpdataPhotoController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGLUpdataPhotoController.h; sourceTree = "<group>"; };
+		8294872D1CE9C92A0018D3F6 /* JGLUpdataPhotoController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGLUpdataPhotoController.m; sourceTree = "<group>"; };
 		82AAB7A81CE57589005F5633 /* JGLMyTeamViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGLMyTeamViewController.h; sourceTree = "<group>"; };
 		82AAB7A91CE57589005F5633 /* JGLMyTeamViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGLMyTeamViewController.m; sourceTree = "<group>"; };
 		82AAB7AC1CE5BEB8005F5633 /* JGLSelfSetViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGLSelfSetViewController.h; sourceTree = "<group>"; };
@@ -2088,6 +2101,12 @@
 		F56F0B8C1CC613E100A222F3 /* NoteModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoteModel.m; sourceTree = "<group>"; };
 		F56F0B8E1CC637A200A222F3 /* AddNoteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddNoteViewController.h; sourceTree = "<group>"; };
 		F56F0B8F1CC637A200A222F3 /* AddNoteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddNoteViewController.m; sourceTree = "<group>"; };
+		F5B5498D1CE98F5B0091C962 /* JGTeamManageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGTeamManageViewController.h; sourceTree = "<group>"; };
+		F5B5498E1CE98F5B0091C962 /* JGTeamManageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGTeamManageViewController.m; sourceTree = "<group>"; };
+		F5B549911CE9AC9C0091C962 /* JGApplyMaterialViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGApplyMaterialViewController.h; sourceTree = "<group>"; };
+		F5B549921CE9AC9C0091C962 /* JGApplyMaterialViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGApplyMaterialViewController.m; sourceTree = "<group>"; };
+		F5B549951CE9B0710091C962 /* JGApplyMaterialTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGApplyMaterialTableViewCell.h; sourceTree = "<group>"; };
+		F5B549961CE9B0710091C962 /* JGApplyMaterialTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGApplyMaterialTableViewCell.m; sourceTree = "<group>"; };
 		F5B6470E1CE41E7E00A7A056 /* JGTeamDetailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGTeamDetailView.h; sourceTree = "<group>"; };
 		F5B6470F1CE41E7E00A7A056 /* JGTeamDetailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGTeamDetailView.m; sourceTree = "<group>"; };
 		F5E3F7ED1CAA54BC00B24C77 /* dz.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dz.png; sourceTree = "<group>"; };
@@ -5083,6 +5102,8 @@
 				828A99E31CE3167800AF9860 /* JGTeamCreatePhotoController.m */,
 				828A99E51CE325BB00AF9860 /* JGPhotoAlbumViewController.h */,
 				828A99E61CE325BB00AF9860 /* JGPhotoAlbumViewController.m */,
+				8294872C1CE9C92A0018D3F6 /* JGLUpdataPhotoController.h */,
+				8294872D1CE9C92A0018D3F6 /* JGLUpdataPhotoController.m */,
 				828A99E81CE32B7000AF9860 /* JGTeamMemberController.h */,
 				828A99E91CE32B7000AF9860 /* JGTeamMemberController.m */,
 				828A99F31CE3481D00AF9860 /* JGMemManageController.h */,
@@ -5126,6 +5147,11 @@
 				828A99FB1CE3549900AF9860 /* JGMemDataTableViewCell.m */,
 				82D595E11CE42E7B00CD9587 /* JGMemHalfTableViewCell.h */,
 				82D595E21CE42E7B00CD9587 /* JGMemHalfTableViewCell.m */,
+				829487241CE99A2F0018D3F6 /* JGPhotoShowCollectionViewCell.h */,
+				829487251CE99A2F0018D3F6 /* JGPhotoShowCollectionViewCell.m */,
+				829487261CE99A2F0018D3F6 /* JGPhotoShowCollectionViewCell.xib */,
+				829487291CE9B8FE0018D3F6 /* JGPhotoTimeReusableView.h */,
+				8294872A1CE9B8FE0018D3F6 /* JGPhotoTimeReusableView.m */,
 			);
 			path = "球队成员管理";
 			sourceTree = "<group>";
@@ -5235,6 +5261,15 @@
 			path = "备注球友本地数据库";
 			sourceTree = "<group>";
 		};
+		F58FC22B1CE975CF003D01ED /* 球队管理 */ = {
+			isa = PBXGroup;
+			children = (
+				F5B5498D1CE98F5B0091C962 /* JGTeamManageViewController.h */,
+				F5B5498E1CE98F5B0091C962 /* JGTeamManageViewController.m */,
+			);
+			path = "球队管理";
+			sourceTree = "<group>";
+		};
 		F5A105381CE300F80050461D /* 球队新版本 */ = {
 			isa = PBXGroup;
 			children = (
@@ -5248,6 +5283,8 @@
 		F5A105421CE309750050461D /* controller */ = {
 			isa = PBXGroup;
 			children = (
+				F5B549901CE9AC000091C962 /* 申请资料 */,
+				F58FC22B1CE975CF003D01ED /* 球队管理 */,
 				F50B7FB41CE5DBB70065069D /* 球队大厅 */,
 				82AAB7A71CE57571005F5633 /* 我的球队 */,
 				F5321AE31CE4492800CAE1EF /* 创建球队 */,
@@ -5262,6 +5299,7 @@
 		F5A105471CE309750050461D /* view */ = {
 			isa = PBXGroup;
 			children = (
+				F5B549941CE9B0490091C962 /* 申请资料 */,
 				F50B7FAA1CE5777D0065069D /* 球队大厅 */,
 				F5321AE41CE4493000CAE1EF /* 创建球队 */,
 				F5B6470D1CE41E7E00A7A056 /* 球队详情 */,
@@ -5271,6 +5309,24 @@
 				2067C6BE1CE30CC0002900C8 /* 球队活动 */,
 			);
 			path = view;
+			sourceTree = "<group>";
+		};
+		F5B549901CE9AC000091C962 /* 申请资料 */ = {
+			isa = PBXGroup;
+			children = (
+				F5B549911CE9AC9C0091C962 /* JGApplyMaterialViewController.h */,
+				F5B549921CE9AC9C0091C962 /* JGApplyMaterialViewController.m */,
+			);
+			path = "申请资料";
+			sourceTree = "<group>";
+		};
+		F5B549941CE9B0490091C962 /* 申请资料 */ = {
+			isa = PBXGroup;
+			children = (
+				F5B549951CE9B0710091C962 /* JGApplyMaterialTableViewCell.h */,
+				F5B549961CE9B0710091C962 /* JGApplyMaterialTableViewCell.m */,
+			);
+			path = "申请资料";
 			sourceTree = "<group>";
 		};
 		F5B6470D1CE41E7E00A7A056 /* 球队详情 */ = {
@@ -5395,6 +5451,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8294872F1CE9F06B0018D3F6 /* JGPhotoShowCollectionViewCell.xib in Resources */,
 				20CA13801CE574A400DA15B9 /* JGHConcentTextViewController.xib in Resources */,
 				36BFFE581BC76CDC005B3CE2 /* tianjia2@2x.png in Resources */,
 				36BFFE611BC76CDC005B3CE2 /* tu2@3x.png in Resources */,
@@ -5749,6 +5806,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F5B5499A1CE9EC6E0091C962 /* JGPhotoTimeReusableView.m in Sources */,
+				F5B549991CE9EC3B0091C962 /* JGPhotoShowCollectionViewCell.m in Sources */,
+				F5B549981CE9EBD00091C962 /* JGLUpdataPhotoController.m in Sources */,
 				20CA13781CE562BD00DA15B9 /* JGCreateTeamViewController.m in Sources */,
 				36E301031C3FF410005C3F08 /* MJDIYHeader.m in Sources */,
 				36B9B59F1C3E45A70053B227 /* TeamPhotoEditViewController.m in Sources */,
@@ -5796,6 +5856,7 @@
 				3660E1DE1BFC64020033B4D7 /* HistoryViewController.m in Sources */,
 				36E300EF1C3FF3F9005C3F08 /* MJRefreshHeader.m in Sources */,
 				3660E0F71BFC54900033B4D7 /* ManageViewController.m in Sources */,
+				F5B549971CE9B0710091C962 /* JGApplyMaterialTableViewCell.m in Sources */,
 				36E196E21C05ADD600914F74 /* TeamActiveDeController.m in Sources */,
 				36BF003F1BC771FB005B3CE2 /* OtherDataTableViewCell.m in Sources */,
 				3684FDAB1C4A35F4002A14FC /* TeamApplyViewCell.m in Sources */,
@@ -5864,6 +5925,7 @@
 				36BF00FB1BC7750D005B3CE2 /* HighBallViewController.m in Sources */,
 				828A99EA1CE32B7000AF9860 /* JGTeamMemberController.m in Sources */,
 				36BF00BD1BC77383005B3CE2 /* MyNewsBoxTableCell.m in Sources */,
+				F5B549931CE9AC9C0091C962 /* JGApplyMaterialViewController.m in Sources */,
 				36BF01A01BC779D8005B3CE2 /* JobModel.m in Sources */,
 				654730331BE7295E00636541 /* PostRewardCell.m in Sources */,
 				36C164C41BCE6F2400194436 /* ShowMapViewViewController.m in Sources */,
@@ -6104,6 +6166,7 @@
 				36BF00871BC772EF005B3CE2 /* MySetAboutController.m in Sources */,
 				36BFFF801BC76D09005B3CE2 /* UIImageView+WebCache.m in Sources */,
 				20C1B8BA1CE350ED00508ABC /* JGAddTeamGuestViewController.m in Sources */,
+				F5B5498F1CE98F5B0091C962 /* JGTeamManageViewController.m in Sources */,
 				36E300FA1C3FF3F9005C3F08 /* MJRefreshConst.m in Sources */,
 				20CA13711CE4929C00DA15B9 /* JGInvoiceTypeTextCell.m in Sources */,
 				36BFFF5B1BC76D09005B3CE2 /* AFHTTPSessionManager.m in Sources */,

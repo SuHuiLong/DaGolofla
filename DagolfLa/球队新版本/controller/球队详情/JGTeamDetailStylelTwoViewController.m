@@ -8,6 +8,7 @@
 
 #import "JGTeamDetailStylelTwoViewController.h"
 #import "JGTeamDetailStyleTwoView.h"
+#import "JGTeamManageViewController.h"
 
 @interface JGTeamDetailStylelTwoViewController ()
 
@@ -21,11 +22,17 @@
     
     JGTeamDetailStyleTwoView *teamDetailV = [[JGTeamDetailStyleTwoView alloc] initWithFrame:self.view.bounds];
     [self.view addSubview:teamDetailV];
-    teamDetailV.teamIntroductionLB.text = @"寂寞的人总是会用心地记住在他生命中出现过的每一个人，所以我总是意犹未尽地想起你。在每个星光坠落的晚上，一遍一遍，数我的寂寞。";
+    teamDetailV.teamIntroductionLB.text = @"寂寞的人总是会用心地记住在他生命中出现过的每一个人，所以我总是意犹未尽地想起你。在每个星光坠落的晚上，一遍一遍，数我的寂寞。寂寞的人总是会用心地记住在他生命中出现过的每一个人，所以我总是意犹未尽地想起你。在每个星光坠落的晚上，一遍一遍，数我的寂寞。寂寞的人总是会用心地记住在他生命中出现过的每一个人，所以我总是意犹未尽地想起你。在每个星光坠落的晚上，一遍一遍，数我的寂寞。";
+    teamDetailV.isManager = YES;
     [teamDetailV resetUI];
     teamDetailV.contentSize = CGSizeMake(screenWidth, teamDetailV.applyJoin.frame.origin.y + 70);
-
+    [teamDetailV.teamManage addTarget:self action:@selector(manageTeam) forControlEvents:(UIControlEventTouchUpInside)];
     // Do any additional setup after loading the view.
+}
+
+- (void)manageTeam{
+    JGTeamManageViewController *teamManager = [[JGTeamManageViewController alloc] init];
+    [self.navigationController pushViewController:teamManager animated:YES];
 }
 
 - (void)didReceiveMemoryWarning {

@@ -24,6 +24,8 @@
 @property (nonatomic, strong)UIImageView *leaderIconV;  // 队长头像
 @property (nonatomic, strong)UILabel *setUpLbalel; // 成立时间
 @property (nonatomic, strong)UIButton *setButton; // 个人设置
+@property (nonatomic, strong)UIButton *teamManage; // 球队管理
+@property (nonatomic, assign)BOOL isManager; // 是否是管理员
 //@property (nonatomic, strong)UILabel *timeLB;
 
 - (void)resetUI;
