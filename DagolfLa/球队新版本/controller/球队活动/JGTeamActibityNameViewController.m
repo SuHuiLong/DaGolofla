@@ -19,7 +19,9 @@ static NSString *const JGCostsDescriptionCellIdentifier = @"JGCostsDescriptionCe
 static NSString *const JGActivityNameBaseCellIdentifier = @"JGActivityNameBaseCell";
 
 @interface JGTeamActibityNameViewController ()<UITableViewDelegate, UITableViewDataSource>
-
+{
+    CGFloat _tableViewHeight;
+}
 @property (nonatomic, strong)UITableView *teamActibityNameTableView;
 @property (nonatomic, strong)UITableView *dataArray;//数据源
 
@@ -29,17 +31,39 @@ static NSString *const JGActivityNameBaseCellIdentifier = @"JGActivityNameBaseCe
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.navigationItem.title = @"活动名称";
+    self.navigationItem.title = @"活动详情";
+    
+    if ([self.isAdmin isEqualToString:@"0"]) {
+        _tableViewHeight = screenHeight -64 -44 - 48;
+        [self createSaveAndLaunchBtn];
+    }else{
+        _tableViewHeight = screenHeight -64;
+        [self createApplyBtn];
+    }
     
     [self createTeamActibityNameTableView];
-    
-    [self createApplyBtn];
+}
+#pragma mark -- 创建保存 ＋ 发布 按钮
+- (void)createSaveAndLaunchBtn{
+    UIButton *saveBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, screenHeight - 64 -44 - 48, screenWidth, 44)];
+    [saveBtn setTitle:@"保存" forState:UIControlStateNormal];
+    saveBtn.backgroundColor = [UIColor yellowColor];
+    saveBtn.layer.cornerRadius = 8.0;
+    [saveBtn addTarget:self action:@selector(applyBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:saveBtn];
+    UIButton *launchBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, screenHeight - 64 -44, screenWidth, 44)];
+    [launchBtn setTitle:@"发布" forState:UIControlStateNormal];
+    launchBtn.backgroundColor = [UIColor yellowColor];
+    launchBtn.layer.cornerRadius = 8.0;
+    [launchBtn addTarget:self action:@selector(applyBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:launchBtn];
 }
 #pragma mark -- 创建报名按钮
 - (void)createApplyBtn{
     UIButton *applyBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, screenHeight - 64 -44, screenWidth, 44)];
     [applyBtn setTitle:@"我要报名" forState:UIControlStateNormal];
     applyBtn.backgroundColor = [UIColor yellowColor];
+    applyBtn.layer.cornerRadius = 8.0;
     [applyBtn addTarget:self action:@selector(applyBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:applyBtn];
 }
@@ -49,7 +73,7 @@ static NSString *const JGActivityNameBaseCellIdentifier = @"JGActivityNameBaseCe
 }
 #pragma mark -- 创建TableView
 - (void)createTeamActibityNameTableView{
-    self.teamActibityNameTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight -64) style:UITableViewStyleGrouped];
+    self.teamActibityNameTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, _tableViewHeight) style:UITableViewStyleGrouped];
     self.teamActibityNameTableView.delegate = self;
     self.teamActibityNameTableView.dataSource = self;
     self.teamActibityNameTableView.separatorStyle = UITableViewCellSeparatorStyleNone;

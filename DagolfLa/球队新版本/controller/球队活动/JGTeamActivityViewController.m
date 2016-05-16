@@ -10,6 +10,7 @@
 #import "JGTeamAcitivtyModel.h"
 #import "JGTeamActivityCell.h"
 #import "JGTeamActibityNameViewController.h"
+#import "JGHLaunchActivityViewController.h"
 
 @interface JGTeamActivityViewController ()<UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, strong)UITableView *teamActivityTableView;
@@ -23,6 +24,29 @@
     self.navigationItem.title = @"球队活动";
     
     [self createTeamActivityTabelView];
+    
+    self.isAdmin = @"0";
+    //判断权限
+    if ([self.isAdmin isEqualToString:@"0"]) {
+        [self createAdminBtn];
+    }
+    
+}
+#pragma mark -- 创建发布活动
+- (void)createAdminBtn{
+    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    btn.frame = RightNavItemFrame;
+    btn.titleLabel.font = [UIFont systemFontOfSize:FontSize_Normal];
+    [btn setTitle:@"发布活动" forState:UIControlStateNormal];
+    [btn addTarget:self action:@selector(launchActivityBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    btn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
+    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithCustomView:btn];
+    self.navigationItem.rightBarButtonItem = rightItem;
+}
+
+- (void)launchActivityBtnClick:(UIButton *)btn{
+    JGHLaunchActivityViewController * launchCtrl = [[JGHLaunchActivityViewController alloc]init];
+    [self.navigationController pushViewController:launchCtrl animated:YES];
 }
 #pragma mark -- 创建TableView
 - (void)createTeamActivityTabelView{

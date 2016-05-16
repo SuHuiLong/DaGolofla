@@ -7,11 +7,17 @@
 //
 
 #import <UIKit/UIKit.h>
+@class JGHLaunchActivityModel;
 
 @interface JGTableViewCell : UITableViewCell
 //titles
 @property (weak, nonatomic) IBOutlet UILabel *titles;
 //内容
 @property (weak, nonatomic) IBOutlet UILabel *contions;
+
+
+- (void)configTitlesString:(NSString *)titles;
+
+- (void)configContionsStringWhitModel:(JGHLaunchActivityModel *)model andIndexPath:(NSIndexPath *)indexPath;
 
 @end
