@@ -820,6 +820,7 @@
 		F5B549981CE9EBD00091C962 /* JGLUpdataPhotoController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8294872D1CE9C92A0018D3F6 /* JGLUpdataPhotoController.m */; };
 		F5B549991CE9EC3B0091C962 /* JGPhotoShowCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 829487251CE99A2F0018D3F6 /* JGPhotoShowCollectionViewCell.m */; };
 		F5B5499A1CE9EC6E0091C962 /* JGPhotoTimeReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8294872A1CE9B8FE0018D3F6 /* JGPhotoTimeReusableView.m */; };
+		F5B5499B1CE9F3C00091C962 /* JGPhotoShowCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 829487261CE99A2F0018D3F6 /* JGPhotoShowCollectionViewCell.xib */; };
 		F5B647101CE41E7E00A7A056 /* JGTeamDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = F5B6470F1CE41E7E00A7A056 /* JGTeamDetailView.m */; };
 		F5E3F7F01CAA54BC00B24C77 /* dz.png in Resources */ = {isa = PBXBuildFile; fileRef = F5E3F7ED1CAA54BC00B24C77 /* dz.png */; };
 		F5E3F7F11CAA54BC00B24C77 /* dz@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F5E3F7EE1CAA54BC00B24C77 /* dz@2x.png */; };
@@ -5451,6 +5452,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F5B5499B1CE9F3C00091C962 /* JGPhotoShowCollectionViewCell.xib in Resources */,
 				20CA13801CE574A400DA15B9 /* JGHConcentTextViewController.xib in Resources */,
 				36BFFE581BC76CDC005B3CE2 /* tianjia2@2x.png in Resources */,
 				36BFFE611BC76CDC005B3CE2 /* tu2@3x.png in Resources */,
