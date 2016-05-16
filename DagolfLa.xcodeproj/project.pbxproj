@@ -810,6 +810,9 @@
 		F5B5498F1CE98F5B0091C962 /* JGTeamManageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5B5498E1CE98F5B0091C962 /* JGTeamManageViewController.m */; };
 		F5B549931CE9AC9C0091C962 /* JGApplyMaterialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5B549921CE9AC9C0091C962 /* JGApplyMaterialViewController.m */; };
 		F5B549971CE9B0710091C962 /* JGApplyMaterialTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F5B549961CE9B0710091C962 /* JGApplyMaterialTableViewCell.m */; };
+		F5B549981CE9EBD00091C962 /* JGLUpdataPhotoController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8294872D1CE9C92A0018D3F6 /* JGLUpdataPhotoController.m */; };
+		F5B549991CE9EC3B0091C962 /* JGPhotoShowCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 829487251CE99A2F0018D3F6 /* JGPhotoShowCollectionViewCell.m */; };
+		F5B5499A1CE9EC6E0091C962 /* JGPhotoTimeReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8294872A1CE9B8FE0018D3F6 /* JGPhotoTimeReusableView.m */; };
 		F5B647101CE41E7E00A7A056 /* JGTeamDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = F5B6470F1CE41E7E00A7A056 /* JGTeamDetailView.m */; };
 		F5E3F7F01CAA54BC00B24C77 /* dz.png in Resources */ = {isa = PBXBuildFile; fileRef = F5E3F7ED1CAA54BC00B24C77 /* dz.png */; };
 		F5E3F7F11CAA54BC00B24C77 /* dz@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F5E3F7EE1CAA54BC00B24C77 /* dz@2x.png */; };
@@ -5517,7 +5520,6 @@
 				20C1B8B11CE3241C00508ABC /* JGTableViewCell.xib in Resources */,
 				36BFFE241BC76CDC005B3CE2 /* chenggong@2x.png in Resources */,
 				36BF000D1BC770C4005B3CE2 /* icon01.jpg in Resources */,
-				829487281CE99A2F0018D3F6 /* JGPhotoShowCollectionViewCell.xib in Resources */,
 				65B596DD1CAD43AC007AB83A /* 03@2x.png in Resources */,
 				36BFFEBE1BC76CDC005B3CE2 /* tab_line@2x.png in Resources */,
 				654332071BD5D9B900363947 /* UMSCommentInputControlleriPad.xib in Resources */,
@@ -5770,6 +5772,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F5B5499A1CE9EC6E0091C962 /* JGPhotoTimeReusableView.m in Sources */,
+				F5B549991CE9EC3B0091C962 /* JGPhotoShowCollectionViewCell.m in Sources */,
+				F5B549981CE9EBD00091C962 /* JGLUpdataPhotoController.m in Sources */,
 				20CA13781CE562BD00DA15B9 /* JGCreateTeamViewController.m in Sources */,
 				36E301031C3FF410005C3F08 /* MJDIYHeader.m in Sources */,
 				36B9B59F1C3E45A70053B227 /* TeamPhotoEditViewController.m in Sources */,
@@ -5929,7 +5934,6 @@
 				36BFFF5A1BC76D09005B3CE2 /* AFHTTPRequestOperationManager.m in Sources */,
 				36DE28D71C1EA02E008FA24D /* RewardArravelTableViewCell.m in Sources */,
 				36BF004C1BC77213005B3CE2 /* ComDeatailModel.m in Sources */,
-				829487271CE99A2F0018D3F6 /* JGPhotoShowCollectionViewCell.m in Sources */,
 				65B596E81CAD43AC007AB83A /* WFHudView.m in Sources */,
 				65B596E71CAD43AC007AB83A /* WFActionSheet.m in Sources */,
 				36BF00BB1BC77383005B3CE2 /* MyAttentionViewCell.m in Sources */,
@@ -6048,7 +6052,6 @@
 				368DCA641C88285000871D28 /* ReportViewController.m in Sources */,
 				3623173D1BDA498B00257862 /* PicArrShowViewControllerViewController.m in Sources */,
 				36BF015E1BC77611005B3CE2 /* PostRewordViewController.m in Sources */,
-				8294872B1CE9B8FE0018D3F6 /* JGPhotoTimeReusableView.m in Sources */,
 				20CA13651CE4276500DA15B9 /* JGTeamAcitivtyModel.m in Sources */,
 				3660E12A1BFC553A0033B4D7 /* ManageMineController.m in Sources */,
 				366E6EFB1C117BC200FD65B3 /* ScoreModel.m in Sources */,
@@ -6189,7 +6192,6 @@
 				36E300F31C3FF3F9005C3F08 /* MJRefreshBackGifFooter.m in Sources */,
 				368B73281C100A390002A618 /* ScoreTableViewCell.m in Sources */,
 				369B2B671C61B23F00366AA2 /* NewsDetailViewCell.m in Sources */,
-				8294872E1CE9C92A0018D3F6 /* JGLUpdataPhotoController.m in Sources */,
 				36BF01911BC7766B005B3CE2 /* MeWonderViewCell.m in Sources */,
 				F566EFAB1CA0F01B008BB328 /* InformSetmodel.m in Sources */,
 				3660E1DF1BFC64020033B4D7 /* ScoredCardViewController.m in Sources */,
