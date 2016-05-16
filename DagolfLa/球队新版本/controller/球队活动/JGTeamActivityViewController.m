@@ -11,6 +11,7 @@
 #import "JGTeamActivityCell.h"
 #import "JGTeamActibityNameViewController.h"
 #import "JGHLaunchActivityViewController.h"
+#import "JGTeamGroupViewController.h"
 
 @interface JGTeamActivityViewController ()<UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, strong)UITableView *teamActivityTableView;
@@ -47,6 +48,8 @@
 - (void)launchActivityBtnClick:(UIButton *)btn{
     JGHLaunchActivityViewController * launchCtrl = [[JGHLaunchActivityViewController alloc]init];
     [self.navigationController pushViewController:launchCtrl animated:YES];
+//    JGTeamGroupViewController *JGTeamGroupCtrl = [[JGTeamGroupViewController alloc]init];
+//    [self.navigationController pushViewController:JGTeamGroupCtrl animated:YES];
 }
 #pragma mark -- 创建TableView
 - (void)createTeamActivityTabelView{

@@ -16,11 +16,11 @@
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT" customClass="UIControl">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="59d-vM-7JT">
-                    <rect key="frame" x="10" y="10" width="300" height="150"/>
+                    <rect key="frame" x="10" y="10" width="580" height="150"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="150" id="xf7-Vi-0Zh"/>
@@ -44,7 +44,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WUq-Qv-XaG">
-                    <rect key="frame" x="10" y="201" width="300" height="30"/>
+                    <rect key="frame" x="10" y="201" width="580" height="30"/>
                     <color key="backgroundColor" red="0.94509803920000002" green="0.52156862749999999" blue="0.023529411760000001" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="30" id="k6J-7l-Yea"/>
@@ -76,7 +76,6 @@
                 <constraint firstItem="WUq-Qv-XaG" firstAttribute="top" secondItem="guF-Re-8sg" secondAttribute="bottom" constant="20" id="ffO-oD-Efw"/>
                 <constraint firstItem="59d-vM-7JT" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="10" id="gFK-Yg-4YG"/>
             </constraints>
-            <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
             <connections>
                 <action selector="touchView:" destination="-1" eventType="touchUpInside" id="beJ-4f-PKA"/>
             </connections>

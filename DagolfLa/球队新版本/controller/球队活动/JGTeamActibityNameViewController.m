@@ -37,7 +37,7 @@ static NSString *const JGActivityNameBaseCellIdentifier = @"JGActivityNameBaseCe
         _tableViewHeight = screenHeight -64 -44 - 48;
         [self createSaveAndLaunchBtn];
     }else{
-        _tableViewHeight = screenHeight -64;
+        _tableViewHeight = screenHeight -64 -44;
         [self createApplyBtn];
     }
     

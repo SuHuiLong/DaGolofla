@@ -12,12 +12,16 @@
 #import "JGApplyPepoleCell.h"
 #import "JGAddTeamGuestViewController.h"
 #import "JGInvoiceViewController.h"
+#import "JGTeamGroupViewController.h"
 
 static NSString *const JGActivityNameBaseCellIdentifier = @"JGActivityNameBaseCell";
 static NSString *const JGTableViewCellIdentifier = @"JGTableViewCell";
 static NSString *const JGApplyPepoleCellIdentifier = @"JGApplyPepoleCell";
 
 @interface JGTeamApplyViewController ()<JGApplyPepoleCellDelegate>
+{
+    UIAlertController *_actionView;
+}
 
 @end
 
@@ -88,9 +92,25 @@ static NSString *const JGApplyPepoleCellIdentifier = @"JGApplyPepoleCell";
 }
 #pragma mark -- 立即付款
 - (IBAction)nowPayBtnClick:(UIButton *)sender {
-//    UIAlertAction *sheet = [[UIActionSheet alloc]initWithTitle:@"我是最牛逼的开发"delegate:nilcancelButtonTitle:@"是"destructiveButtonTitle:@"是" otherButtonTitles:@"关闭",nil];
-//    
-//    [sheet showInView:self.view];
+    _actionView = [UIAlertController alertControllerWithTitle:@"选择支付方式" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    // 分别3个创建操作
+    UIAlertAction *weiChatAction = [UIAlertAction actionWithTitle:@"微信支付" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        NSLog(@"微信支付");
+        JGTeamGroupViewController *groupCtrl = [[JGTeamGroupViewController alloc]init];
+        [self.navigationController pushViewController:groupCtrl animated:YES];
+    }];
+    UIAlertAction *zhifubaoAction = [UIAlertAction actionWithTitle:@"支付宝支付" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        NSLog(@"支付宝支付");
+        JGTeamGroupViewController *groupCtrl = [[JGTeamGroupViewController alloc]init];
+        [self.navigationController pushViewController:groupCtrl animated:YES];
+    }];
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        NSLog(@"取消支付");
+    }];
+    [_actionView addAction:weiChatAction];
+    [_actionView addAction:zhifubaoAction];
+    [_actionView addAction:cancelAction];
+    [self presentViewController:_actionView animated:YES completion:nil];
 }
 #pragma mark -- 现场付款
 - (IBAction)scenePayBtnClick:(UIButton *)sender {
