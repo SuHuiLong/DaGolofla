@@ -35,7 +35,8 @@
     for (JGApplyMaterialTableViewCell *cell in self.tableView.visibleCells) {
         NSLog(@"%@", cell.labell.text);
     }
-
+    
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)creatTableView{
