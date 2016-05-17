@@ -67,6 +67,7 @@
 		20CA139A1CE984C500DA15B9 /* JGGroupdetailsCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 20CA13981CE984C500DA15B9 /* JGGroupdetailsCollectionViewCell.m */; };
 		20CA139B1CE984C500DA15B9 /* JGGroupdetailsCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 20CA13991CE984C500DA15B9 /* JGGroupdetailsCollectionViewCell.xib */; };
 		20CA13DC1CE9F2C200DA15B9 /* UIColor+ColorTransfer.m in Sources */ = {isa = PBXBuildFile; fileRef = 20CA13DB1CE9F2C200DA15B9 /* UIColor+ColorTransfer.m */; };
+		20CA13FF1CEAF07100DA15B9 /* SXPickPhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = 20CA13FE1CEAF07100DA15B9 /* SXPickPhoto.m */; };
 		360148F81C1FFE5E0074C395 /* ManageFinfishModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 360148F71C1FFE5E0074C395 /* ManageFinfishModel.m */; };
 		36067BAB1C96A9FB001AE22C /* ScreenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 36067BAA1C96A9FB001AE22C /* ScreenViewController.m */; };
 		36067BAF1C96AA31001AE22C /* InformViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 36067BAE1C96AA31001AE22C /* InformViewController.m */; };
@@ -932,6 +933,8 @@
 		20CA13991CE984C500DA15B9 /* JGGroupdetailsCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JGGroupdetailsCollectionViewCell.xib; sourceTree = "<group>"; };
 		20CA13DA1CE9F2C200DA15B9 /* UIColor+ColorTransfer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+ColorTransfer.h"; sourceTree = "<group>"; };
 		20CA13DB1CE9F2C200DA15B9 /* UIColor+ColorTransfer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+ColorTransfer.m"; sourceTree = "<group>"; };
+		20CA13FD1CEAF07100DA15B9 /* SXPickPhoto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SXPickPhoto.h; sourceTree = "<group>"; };
+		20CA13FE1CEAF07100DA15B9 /* SXPickPhoto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SXPickPhoto.m; sourceTree = "<group>"; };
 		360148F61C1FFE5E0074C395 /* ManageFinfishModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ManageFinfishModel.h; sourceTree = "<group>"; };
 		360148F71C1FFE5E0074C395 /* ManageFinfishModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ManageFinfishModel.m; sourceTree = "<group>"; };
 		36067BA91C96A9FB001AE22C /* ScreenViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScreenViewController.h; sourceTree = "<group>"; };
@@ -4192,6 +4195,8 @@
 		36BFFF431BC76D09005B3CE2 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				20CA13FD1CEAF07100DA15B9 /* SXPickPhoto.h */,
+				20CA13FE1CEAF07100DA15B9 /* SXPickPhoto.m */,
 				20CA13DA1CE9F2C200DA15B9 /* UIColor+ColorTransfer.h */,
 				20CA13DB1CE9F2C200DA15B9 /* UIColor+ColorTransfer.m */,
 				F56F0B841CC609C500A222F3 /* 备注球友本地数据库 */,
@@ -6096,6 +6101,7 @@
 				36BFFF601BC76D09005B3CE2 /* AFURLResponseSerialization.m in Sources */,
 				20CA139A1CE984C500DA15B9 /* JGGroupdetailsCollectionViewCell.m in Sources */,
 				654332211BD630E500363947 /* PostRewordTableViewCell.m in Sources */,
+				20CA13FF1CEAF07100DA15B9 /* SXPickPhoto.m in Sources */,
 				20C1B8B01CE3241C00508ABC /* JGTableViewCell.m in Sources */,
 				36BFFF651BC76D09005B3CE2 /* UIActivityIndicatorView+AFNetworking.m in Sources */,
 				82D595E31CE42E7B00CD9587 /* JGMemHalfTableViewCell.m in Sources */,

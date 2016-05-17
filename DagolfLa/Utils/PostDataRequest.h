@@ -12,6 +12,10 @@
 typedef void(^SuccessBlockType) (id respondsData);
 typedef void(^FailedBlockType) (NSError *error);
 
+typedef void (^GBHEStartBlock)(void);
+typedef void (^GBHEFailedBlock)(id errType);
+typedef void (^GBHECompletionBlock)(id data);
+typedef void (^GBHEBytesRecvBlock)(unsigned long long length, unsigned long long total);
 
 @interface PostDataRequest : NSObject
 
@@ -51,5 +55,16 @@ typedef void(^FailedBlockType) (NSError *error);
                downloadSuccess:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                downloadFailure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
                       progress:(void (^)(float progress))progress;
+
+//Json请求
+- (void) httpRequest:(NSString *)url
+            withData:(NSDictionary *)postData
+       requestMethod:(NSString*)httpMethod
+         failedBlock:(GBHEFailedBlock)failedBlock
+     completionBlock:(GBHECompletionBlock)completionBlock;
+
+
+//取消网络请求
+- (void)cancelRequest;
 
 @end

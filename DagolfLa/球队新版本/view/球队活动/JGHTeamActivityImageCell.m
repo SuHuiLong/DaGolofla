@@ -11,6 +11,7 @@
 
 @interface JGHTeamActivityImageCell ()<UITextViewDelegate>
 
+
 @end
 
 @implementation JGHTeamActivityImageCell
@@ -18,7 +19,16 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
-        
+    
+    
+    UITapGestureRecognizer *tapGesturRecognizer = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(selectImageClick)];
+    self.activityImage.userInteractionEnabled = YES;
+    [self.activityImage addGestureRecognizer:tapGesturRecognizer];
+}
+- (void)selectImageClick{
+    if (self.delegate) {
+        [self.delegate didSelectPhotoImage];
+    }
 }
 #pragma mark -- UITextViewDelegate代理
 - (void)textViewDidBeginEditing:(UITextView *)textView{

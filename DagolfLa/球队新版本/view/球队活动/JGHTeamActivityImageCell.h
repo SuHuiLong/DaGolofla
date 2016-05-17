@@ -9,6 +9,12 @@
 #import <UIKit/UIKit.h>
 @class JGHLaunchActivityModel;
 
+@protocol JGHTeamActivityImageCellDelegate <NSObject>
+
+- (void)didSelectPhotoImage;
+
+@end
+
 @interface JGHTeamActivityImageCell : UITableViewCell
 //图片
 @property (weak, nonatomic) IBOutlet UIImageView *activityImage;
@@ -17,5 +23,6 @@
 //占位符
 @property (weak, nonatomic) IBOutlet UILabel *placeholdertext;
 
+@property (nonatomic, weak) id <JGHTeamActivityImageCellDelegate> delegate;
 
 @end

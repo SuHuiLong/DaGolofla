@@ -14,24 +14,27 @@
 #import "TeamAreaViewController.h"
 #import "JGHLaunchActivityModel.h"
 #import "JGTeamActibityNameViewController.h"
+#import "SXPickPhoto.h"
 
 static NSString *const JGTableViewCellIdentifier = @"JGTableViewCell";
 static NSString *const JGHTeamActivityImageCellIdentifier = @"JGHTeamActivityImageCell";
 
 
-@interface JGHLaunchActivityViewController ()<UITableViewDelegate, UITableViewDataSource>
+@interface JGHLaunchActivityViewController ()<UITableViewDelegate, UITableViewDataSource, JGHTeamActivityImageCellDelegate, JGHConcentTextViewControllerDelegate>
 {
     //、、、、、、、
     NSArray *_titleArray;
     
     
 }
-
+@property (nonatomic,strong)SXPickPhoto * pickPhoto;//相册类
 @property (nonatomic, strong)UITableView *launchActivityTableView;
 
-//@property (nonatomic, strong)NSMutableDictionary *dict;
+@property (nonatomic, strong)NSMutableDictionary *dataDict;
 
 @property (nonatomic, strong)JGHLaunchActivityModel *model;
+
+@property (nonatomic, strong)UIImage *headerImage;
 
 @end
 
@@ -40,10 +43,11 @@ static NSString *const JGHTeamActivityImageCellIdentifier = @"JGHTeamActivityIma
 - (instancetype)init{
     if (self == [super init]) {
         self.model = [[JGHLaunchActivityModel alloc]init];
+        self.dataDict = [NSMutableDictionary dictionary];
+        self.pickPhoto = [[SXPickPhoto alloc]init];
     }
     return self;
 }
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationItem.title = @"活动发布";
@@ -113,6 +117,11 @@ static NSString *const JGHTeamActivityImageCellIdentifier = @"JGHTeamActivityIma
     if (indexPath.section == 0) {
         JGHTeamActivityImageCell *launchImageActivityCell = [tableView dequeueReusableCellWithIdentifier:JGHTeamActivityImageCellIdentifier forIndexPath:indexPath];
         launchImageActivityCell.selectionStyle = UITableViewCellSelectionStyleNone;
+        launchImageActivityCell.delegate = self;
+        if (_headerImage != nil) {
+            launchImageActivityCell.activityImage.image = _headerImage;
+        }
+        
         return launchImageActivityCell;
     }else{
         JGTableViewCell *launchActivityCell = [tableView dequeueReusableCellWithIdentifier:JGTableViewCellIdentifier forIndexPath:indexPath];
@@ -163,6 +172,45 @@ static NSString *const JGHTeamActivityImageCellIdentifier = @"JGHTeamActivityIma
     }
     
     [self.launchActivityTableView reloadData];
+}
+
+#pragma mark --添加活动头像－－JGHTeamActivityImageCellDelegate 
+-(void)didSelectPhotoImage{
+    UIAlertAction * act1 = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+    }];
+    //拍照：
+    UIAlertAction * act2 = [UIAlertAction actionWithTitle:@"拍照" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        //打开相机
+        [_pickPhoto ShowTakePhotoWithController:self andWithBlock:^(NSObject *Data) {
+            if ([Data isKindOfClass:[UIImage class]])
+            {
+                _headerImage = (UIImage *)Data;
+                [self.launchActivityTableView reloadData];
+            }
+        }];
+    }];
+    //相册
+    UIAlertAction * act3 = [UIAlertAction actionWithTitle:@"相册" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        //打开相册
+        [_pickPhoto SHowLocalPhotoWithController:self andWithBlock:^(NSObject *Data) {
+            if ([Data isKindOfClass:[UIImage class]])
+            {
+                _headerImage = (UIImage *)Data;
+                [self.launchActivityTableView reloadData];
+            }
+        }];
+    }];
+    
+    UIAlertController * aleVC = [UIAlertController alertControllerWithTitle:@"提示" message:@"选择图片" preferredStyle:UIAlertControllerStyleActionSheet];
+    [aleVC addAction:act1];
+    [aleVC addAction:act2];
+    [aleVC addAction:act3];
+    
+    [self presentViewController:aleVC animated:YES completion:nil];
+}
+#pragma mark -- 添加内容详情代理  JGHConcentTextViewControllerDelegate
+- (void)didSelectSaveBtnClick:(NSString *)text{
+    [self.model setValue:text forKey:@""];
 }
 
 - (void)didReceiveMemoryWarning {

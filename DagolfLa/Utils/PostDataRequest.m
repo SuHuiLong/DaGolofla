@@ -11,6 +11,8 @@
 //#define urlStr [NSString stringWithFormat:@"http://192.168.2.38:8088/dagaoerfu/%@",port]
 //#define urlStr [NSString stringWithFormat:@"http://139.196.58.35:8080/dagaoerfu/%@",port]
 
+#define TEST  YES   //可自由切-换生产和测试环境
+#define BaseUrl TEST?@"http://139.196.9.49:8081/dagaoerfu/":@"http://139.196.9.49:8081/dagaoerfu/"
 
 
 #import "PostDataRequest.h"
@@ -308,7 +310,101 @@
     [alertView dismissWithClickedButtonIndex:0 animated:YES];
 }
 
+- (void) httpRequest:(NSString *)url
+            withData:(NSDictionary *)postData
+       requestMethod:(NSString*)httpMethod
+         failedBlock:(GBHEFailedBlock)failedBlock
+     completionBlock:(GBHECompletionBlock)completionBlock
+{
+    url = [NSString stringWithFormat:@"%@%@", BaseUrl, url];
+    NSLog(@"%@",url);
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    //设置请求格式
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    //返回数据格式
+    manager.responseSerializer = [AFJSONResponseSerializer serializerWithReadingOptions:NSJSONReadingMutableContainers];
+    //https安全策略
+    manager.securityPolicy.allowInvalidCertificates = YES;
+    manager.securityPolicy.validatesDomainName = NO;
+    
+    NSComparisonResult comparison1 = [httpMethod caseInsensitiveCompare:@"GET"];
+    NSComparisonResult comparisonResult2 = [httpMethod caseInsensitiveCompare:@"POST"];
+    if (comparison1 == NSOrderedSame)
+    {
+        [manager GET:url parameters:postData success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            
+            if (completionBlock) {
+                completionBlock(responseObject);
+            }
+            
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            if (failedBlock) {
+                failedBlock(error);
+            }
+            
+        }];
+    }
+    if (comparisonResult2 == NSOrderedSame)
+    {
+        BOOL isFile = NO;
+        for (NSString *key in postData.allKeys) {
+            id value = postData[key];
+            if ([value isKindOfClass:[NSData class]]) {
+                
+                isFile = YES;
+                break;
+            }
+        }
+        
+        if (!isFile) {//判断是上传数据还是下请求数据
+            [manager POST:url parameters:postData success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                
+            } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                
+            }];
+        }else
+        {
+            [manager POST:url parameters:postData constructingBodyWithBlock:^(id formData) {
+                //取出需要上传的图片数据
+                for (NSString *key in postData) {
+                    
+                    id value = postData[key];
+                    
+                    if ([value isKindOfClass:[NSData class]]) {
+                        
+                        [formData appendPartWithFileData:value
+                         
+                                                    name:key
+                         
+                                                fileName:key
+                         
+                                                mimeType:@"image/jpg"];
+                        
+                    }
+                }
+            } success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                if (completionBlock) {
+                    completionBlock(responseObject);
+                }
+            } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                if ([[error.userInfo objectForKey:@"_kCFStreamErrorCodeKey"] integerValue] == 60) {
+                    [Helper downLoadDataOverrun];
+                }else if ([[error.userInfo objectForKey:@"_kCFStreamErrorCodeKey"] integerValue] == 51) {
+                    [Helper netWorkError];
+                }
+                if (failedBlock) {
+                    failedBlock(error);
+                }
+            }];
+        }
+    }
+}
 
+- (void)cancelRequest
+{
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager.operationQueue cancelAllOperations];
+}
 
 
 @end
