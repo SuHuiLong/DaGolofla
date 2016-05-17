@@ -8,7 +8,7 @@
 
 #import "JGTeamCreatePhotoController.h"
 #import "UITool.h"
-#import "JGPhotoAlbumViewController.h"
+
 
 
 @interface JGTeamCreatePhotoController ()
@@ -25,11 +25,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = @"创建相册";
     self.view.backgroundColor = [UITool colorWithHexString:@"EEEEEE" alpha:1];
 
 
-    
     UIBarButtonItem* rightBtn = [[UIBarButtonItem alloc]initWithTitle:@"保存" style:UIBarButtonItemStylePlain target:self action:@selector(saveClick)];
     rightBtn.tintColor = [UIColor whiteColor];
     self.navigationItem.rightBarButtonItem = rightBtn;
@@ -56,8 +54,7 @@
 
 -(void)saveClick
 {
-    JGPhotoAlbumViewController* phoVc = [[JGPhotoAlbumViewController alloc]init];
-    [self.navigationController pushViewController:phoVc animated:YES];
+    
 }
 /*\
  字体 15   a0a0a0    黑色 313131
@@ -183,7 +180,7 @@
     labelEdit.text = @"照片编辑";
     labelEdit.font = [UIFont systemFontOfSize:15*screenWidth/375];
     
-    
+
     //删除相册按钮
     UIButton* btnDelete = [UIButton buttonWithType:UIButtonTypeCustom];
     btnDelete.backgroundColor = [UIColor darkGrayColor];

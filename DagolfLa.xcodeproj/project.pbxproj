@@ -5107,10 +5107,10 @@
 		828A99E11CE3165B00AF9860 /* 球队相册 */ = {
 			isa = PBXGroup;
 			children = (
-				82D595E71CE4604500CD9587 /* JGTeamPhotoViewController.h */,
-				82D595E81CE4604500CD9587 /* JGTeamPhotoViewController.m */,
 				828A99E21CE3167800AF9860 /* JGTeamCreatePhotoController.h */,
 				828A99E31CE3167800AF9860 /* JGTeamCreatePhotoController.m */,
+				82D595E71CE4604500CD9587 /* JGTeamPhotoViewController.h */,
+				82D595E81CE4604500CD9587 /* JGTeamPhotoViewController.m */,
 				828A99E51CE325BB00AF9860 /* JGPhotoAlbumViewController.h */,
 				828A99E61CE325BB00AF9860 /* JGPhotoAlbumViewController.m */,
 				8294872C1CE9C92A0018D3F6 /* JGLUpdataPhotoController.h */,

@@ -10,6 +10,7 @@
 #import "JGTeamCreatePhotoController.h"
 
 #import "JGTeamPhotoCollectionViewCell.h"
+#import "JGPhotoAlbumViewController.h"
 @interface JGTeamPhotoViewController ()<UICollectionViewDataSource,UICollectionViewDelegate>
 {
     UICollectionView* _collectionView;
@@ -105,7 +106,9 @@
 //UICollectionView被选中时调用的方法
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    
+    //
+    JGPhotoAlbumViewController* phoVc = [[JGPhotoAlbumViewController alloc]init];
+    [self.navigationController pushViewController:phoVc animated:YES];
 }
 
 

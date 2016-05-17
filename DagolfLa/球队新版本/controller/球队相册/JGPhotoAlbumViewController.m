@@ -42,8 +42,8 @@
 
 -(void)upDataClick
 {
-    JGTeamMemberController* teamVc = [[JGTeamMemberController alloc]init];
-    [self.navigationController pushViewController:teamVc animated:YES];
+    JGLUpdataPhotoController* upVc = [[JGLUpdataPhotoController alloc]init];
+    [self.navigationController pushViewController:upVc animated:YES];
 }
 
 
@@ -135,8 +135,11 @@
 //UICollectionView被选中时调用的方法
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    JGLUpdataPhotoController* upVc = [[JGLUpdataPhotoController alloc]init];
-    [self.navigationController pushViewController:upVc animated:YES];
+    /**
+     球队成员跳转暂时关闭
+     */
+//    JGTeamMemberController* teamVc = [[JGTeamMemberController alloc]init];
+//    [self.navigationController pushViewController:teamVc animated:YES];
 }
 
 
