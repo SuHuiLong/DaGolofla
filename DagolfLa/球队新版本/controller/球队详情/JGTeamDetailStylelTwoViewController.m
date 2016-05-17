@@ -9,8 +9,13 @@
 #import "JGTeamDetailStylelTwoViewController.h"
 #import "JGTeamDetailStyleTwoView.h"
 #import "JGTeamManageViewController.h"
+#import "JGLSelfSetViewController.h"
+#import "JGTeamPhotoViewController.h"
+#import "JGTeamMemberController.h"
+#import "JGTeamActivityViewController.h" //球队活动
 
 @interface JGTeamDetailStylelTwoViewController ()
+
 
 @end
 
@@ -27,7 +32,39 @@
     [teamDetailV resetUI];
     teamDetailV.contentSize = CGSizeMake(screenWidth, teamDetailV.applyJoin.frame.origin.y + 70);
     [teamDetailV.teamManage addTarget:self action:@selector(manageTeam) forControlEvents:(UIControlEventTouchUpInside)];
+    [teamDetailV.setButton addTarget:self action:@selector(set) forControlEvents:(UIControlEventTouchUpInside)];
+    
+    for (int i = 0; i < 3; i ++) {
+        UIButton *button = [teamDetailV.buttonBackView viewWithTag:200 + i];
+        [button addTarget:self action:@selector(photos:) forControlEvents:(UIControlEventTouchUpInside)];
+    }
+
     // Do any additional setup after loading the view.
+}
+
+- (void)photos:(UIButton *)button{
+    if (button.tag == 200) {
+        // 成员
+        JGTeamMemberController *memberVC = [[JGTeamMemberController alloc] init];
+        [self.navigationController pushViewController:memberVC animated:YES];
+        
+    }else if (button.tag == 201){
+        // 活动
+        JGTeamActivityViewController *activityVC = [[JGTeamActivityViewController alloc] init];
+        [self.navigationController pushViewController:activityVC animated:YES];
+        
+    }else{
+        // 相册
+        JGTeamPhotoViewController *photoVC = [[JGTeamPhotoViewController alloc] init];
+        [self.navigationController pushViewController:photoVC animated:YES];
+ 
+    }
+}
+
+// 个人设置
+- (void)set{
+    JGLSelfSetViewController *selfSetVC = [[JGLSelfSetViewController alloc] init];
+    [self.navigationController pushViewController:selfSetVC animated:YES];
 }
 
 - (void)manageTeam{
