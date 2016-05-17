@@ -16,7 +16,8 @@
     if (self) {
         
         self.topBackImageV = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 150 * screenWidth / 320)];
-        self.topBackImageV.backgroundColor = [UIColor orangeColor];
+        self.topBackImageV.image = [UIImage imageNamed:@"jianbian"];
+        self.topBackImageV.userInteractionEnabled = YES;
         [self addSubview:self.topBackImageV];
         
         self.iconImageV = [[UIImageView alloc] initWithFrame:CGRectMake(10 * screenWidth / 320, 80 * screenWidth / 320, 60 * screenWidth / 320, 60 * screenWidth / 320)];

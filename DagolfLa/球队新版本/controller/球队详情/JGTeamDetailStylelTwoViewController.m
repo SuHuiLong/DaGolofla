@@ -21,14 +21,31 @@
 
 @implementation JGTeamDetailStylelTwoViewController
 
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:YES];
+    self.navigationController.navigationBarHidden = NO;
+}
+
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:YES];
+    self.navigationController.navigationBarHidden = YES;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor colorWithRed:0.94 green:0.94 blue:0.94 alpha:1];
-    
+    self.automaticallyAdjustsScrollViewInsets=NO;
+
     JGTeamDetailStyleTwoView *teamDetailV = [[JGTeamDetailStyleTwoView alloc] initWithFrame:self.view.bounds];
     [self.view addSubview:teamDetailV];
     teamDetailV.teamIntroductionLB.text = @"寂寞的人总是会用心地记住在他生命中出现过的每一个人，所以我总是意犹未尽地想起你。在每个星光坠落的晚上，一遍一遍，数我的寂寞。寂寞的人总是会用心地记住在他生命中出现过的每一个人，所以我总是意犹未尽地想起你。在每个星光坠落的晚上，一遍一遍，数我的寂寞。寂寞的人总是会用心地记住在他生命中出现过的每一个人，所以我总是意犹未尽地想起你。在每个星光坠落的晚上，一遍一遍，数我的寂寞。";
     teamDetailV.isManager = YES;
+    UIButton *backBtn = [UIButton buttonWithType:(UIButtonTypeCustom)];
+    backBtn.frame = CGRectMake(0 , 20, 30 * screenWidth / 320, 30 * screenWidth / 320);
+    [backBtn addTarget:self action:@selector(backBut) forControlEvents:(UIControlEventTouchUpInside)];
+    [backBtn setImage:[UIImage imageNamed:@"backL"] forState:(UIControlStateNormal)];
+    [teamDetailV.topBackImageV addSubview:backBtn];
+
     [teamDetailV resetUI];
     teamDetailV.contentSize = CGSizeMake(screenWidth, teamDetailV.applyJoin.frame.origin.y + 70);
     [teamDetailV.teamManage addTarget:self action:@selector(manageTeam) forControlEvents:(UIControlEventTouchUpInside)];
@@ -40,6 +57,10 @@
     }
 
     // Do any additional setup after loading the view.
+}
+
+- (void)backBut{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)photos:(UIButton *)button{

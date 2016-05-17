@@ -43,6 +43,7 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+        
     //初始化趣拍
     [[TaeSDK sharedInstance] asyncInit:^{
         

@@ -44,6 +44,8 @@
     [super viewDidLoad];
 //    self.view.backgroundColor = [UIColor lightGrayColor];
     self.view.backgroundColor = [UIColor colorWithRed:0.94 green:0.94 blue:0.94 alpha:1];
+    self.automaticallyAdjustsScrollViewInsets=NO;
+
     
     UIButton *backBtn = [UIButton buttonWithType:(UIButtonTypeCustom)];
     backBtn.frame = CGRectMake(0 , 20, 30 * screenWidth / 320, 30 * screenWidth / 320);
