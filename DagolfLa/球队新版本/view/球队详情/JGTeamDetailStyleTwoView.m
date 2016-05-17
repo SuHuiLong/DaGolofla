@@ -117,7 +117,7 @@
     
     [self.buttonBackView setFrame:CGRectMake(0, _isManager ? (self.teamIntroductionBackView.frame.size.height + 210 * screenWidth / 320) : (self.teamIntroductionBackView.frame.size.height + 170 * screenWidth / 320), screenWidth, 110 * screenWidth / 320)];
     [self.setButton setFrame:CGRectMake(0, self.buttonBackView.frame.origin.y + 120 * screenWidth / 320, screenWidth, 30 * screenWidth / 320)];
-    [self.applyJoin setFrame:CGRectMake(10 * screenWidth / 320, self.buttonBackView.frame.origin.y + 120 * screenWidth / 320 + 40, screenWidth - 20 * screenWidth / 320, 30 * screenWidth / 320)];
+    [self.applyJoin setFrame:CGRectMake(10 * screenWidth / 320, self.buttonBackView.frame.origin.y + 120 * screenWidth / 320 + 40 * screenWidth / 320, screenWidth - 20 * screenWidth / 320, 30 * screenWidth / 320)];
 }
 
 

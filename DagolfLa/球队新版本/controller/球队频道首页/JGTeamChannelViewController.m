@@ -13,12 +13,14 @@
 #import "JGTeamMainhallViewController.h"
 #import "JGTeamDetailStylelTwoViewController.h"
 #import "JGApplyMaterialViewController.h"
+#import "JGTeamDetailViewController.h"
+#import "JGCreateTeamViewController.h"
 
 #import "JGTeamActivityViewController.h"
 #import "JGLMyTeamViewController.h"
 @interface JGTeamChannelViewController ()<UITableViewDataSource, UITableViewDelegate>
 
-@property (nonatomic, strong)UIScrollView *topView;
+@property (nonatomic, strong)UIImageView *topView;
 
 @property (nonatomic, strong)JGTeamChannelTableView *tableView;
 @property (nonatomic, strong)NSMutableArray *dataArray;
@@ -28,15 +30,40 @@
 
 @implementation JGTeamChannelViewController
 
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:YES];
+    self.navigationController.navigationBarHidden = NO;
+}
+
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:YES];
+    self.navigationController.navigationBarHidden = YES;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-
 //    self.view.backgroundColor = [UIColor lightGrayColor];
     self.view.backgroundColor = [UIColor colorWithRed:0.94 green:0.94 blue:0.94 alpha:1];
-
-    self.topView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 130 * screenWidth / 320)];
-    self.topView.backgroundColor = [UIColor orangeColor];
+    
+    UIButton *backBtn = [UIButton buttonWithType:(UIButtonTypeCustom)];
+    backBtn.frame = CGRectMake(0 , 20, 30 * screenWidth / 320, 30 * screenWidth / 320);
+    [backBtn addTarget:self action:@selector(backBut) forControlEvents:(UIControlEventTouchUpInside)];
+    [backBtn setImage:[UIImage imageNamed:@"backL"] forState:(UIControlStateNormal)];
+    
+    UIButton *creatTeam = [UIButton buttonWithType:(UIButtonTypeCustom)];
+    creatTeam.frame = CGRectMake(screenWidth - 80 * screenWidth / 320 , 20 * screenWidth / 320, 80 * screenWidth / 320, 30 * screenWidth / 320);
+    [creatTeam addTarget:self action:@selector(creatTeam) forControlEvents:(UIControlEventTouchUpInside)];
+    [creatTeam setTitle:@"创建球队" forState:(UIControlStateNormal)];
+    
+    
+    self.topView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 130 * screenWidth / 320)];
+    self.topView.image = [UIImage imageNamed:@"jianbian"];
+    self.topView.userInteractionEnabled = YES;
     [self.view addSubview:self.topView];
+    
+    [self.topView addSubview:backBtn];
+    [self.topView addSubview:creatTeam];
+
     self.buttonArray = [NSMutableArray arrayWithObjects:@"我的球队", @"球队活动", @"球队大厅", nil];
 
     for (int i = 0; i < 3; i ++) {
@@ -54,13 +81,13 @@
         [self.view addSubview:button];
     }
     
-    self.tableView = [[JGTeamChannelTableView alloc] initWithFrame:CGRectMake(0, 270 * screenWidth / 320, screenWidth, (screenHeight - 270 - 64) * screenWidth / 320) style:(UITableViewStylePlain)];
+    self.tableView = [[JGTeamChannelTableView alloc] initWithFrame:CGRectMake(0, 270 * screenWidth / 320, screenWidth, (screenHeight - 270) * screenWidth / 320) style:(UITableViewStylePlain)];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.separatorStyle = UITableViewCellAccessoryNone;
     self.tableView.rowHeight = 83 * screenWidth / 320;
-//    self.dataArray = [NSMutableArray arrayWithObjects:@"1我的球队", @"1球队活动", @"1球队大厅", nil];
-    self.dataArray = [NSMutableArray arrayWithCapacity:0];
+    self.dataArray = [NSMutableArray arrayWithObjects:@"1我的球队", @"1球队活动", @"1球队大厅", nil];
+//    self.dataArray = [NSMutableArray arrayWithCapacity:0];
     UILabel *titleLB = [[UILabel alloc] initWithFrame:CGRectMake(0, 240 * screenWidth / 320, screenWidth, 30 * screenWidth / 320)];
     if ([self.dataArray count] != 0) {
         titleLB.text = @" 近期活动";
@@ -73,6 +100,18 @@
     [self.view addSubview:self.tableView];
     
     // Do any additional setup after loading the view.
+}
+
+- (void)creatTeam{
+    
+    JGCreateTeamViewController *creatteamVc = [[JGCreateTeamViewController alloc] init];
+    [self.navigationController pushViewController:creatteamVc animated:YES];
+
+}
+
+
+- (void)backBut{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)team:(UIButton *)button{
@@ -101,7 +140,7 @@
     if ([self.dataArray count] != 0) {
         JGTeamChannelTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"cell"];
         cell.nameLabel.text = self.dataArray[indexPath.row];
-        cell.adressLabel.text = @"测试数据 Test";
+        cell.adressLabel.text = @"测试数据 Testtttt";
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
         return cell;
@@ -120,8 +159,8 @@
         JGTeamDetailStylelTwoViewController *detailV = [[JGTeamDetailStylelTwoViewController alloc] init];
         [self.navigationController pushViewController:detailV animated:YES];
     }else{
-        JGApplyMaterialViewController *applyMaterialVC = [[JGApplyMaterialViewController alloc] init];
-        [self.navigationController pushViewController:applyMaterialVC animated:YES];
+        JGTeamDetailViewController *detailVC = [[JGTeamDetailViewController alloc] init];
+        [self.navigationController pushViewController:detailVC animated:YES];
     }
 
 }

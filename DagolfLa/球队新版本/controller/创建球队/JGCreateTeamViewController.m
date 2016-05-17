@@ -12,6 +12,7 @@
 #import "DateTimeViewController.h"
 #import "TeamAreaViewController.h"
 #import "JGTeamMainhallViewController.h"
+#import "JGHConcentTextViewController.h"
 
 @interface JGCreateTeamViewController ()<UIImagePickerControllerDelegate,UIActionSheetDelegate,UINavigationControllerDelegate>
 @property (nonatomic, strong)JGCreateTeamView *creatTeamV;
@@ -34,7 +35,7 @@
     [dateBtn addTarget:self action:@selector(dateBtn:) forControlEvents:(UIControlEventTouchUpInside)];
     UIButton *areaBtn = [self.creatTeamV viewWithTag:201];
     [areaBtn addTarget:self action:@selector(area:) forControlEvents:(UIControlEventTouchUpInside)];
-    [self.creatTeamV.teamIntroduBtn addTarget:self action:@selector(bigTing) forControlEvents:(UIControlEventTouchUpInside)];
+    [self.creatTeamV.teamIntroduBtn addTarget:self action:@selector(intro) forControlEvents:(UIControlEventTouchUpInside)];
     // Do any additional setup after loading the view.
 }
 
@@ -43,9 +44,9 @@
     [self.navigationController pushViewController:detailV animated:YES];
 }
 
-- (void)bigTing{
-    JGTeamMainhallViewController *mainHall = [[JGTeamMainhallViewController alloc] init];
-    [self.navigationController pushViewController:mainHall animated:YES];
+- (void)intro{
+    JGHConcentTextViewController *introVC = [[JGHConcentTextViewController alloc] init];
+    [self.navigationController pushViewController:introVC animated:YES];
 }
 
 

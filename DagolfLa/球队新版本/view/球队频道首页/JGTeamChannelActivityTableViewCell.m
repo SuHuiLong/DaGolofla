@@ -15,16 +15,16 @@
     
     if (self) {
         
-        self.nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 5 * screenWidth / 320, screenWidth, 20 * screenWidth / 320)];
-        self.nameLabel.font = [UIFont systemFontOfSize:15];
+        self.nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(10 * screenWidth / 320, 5 * screenWidth / 320, screenWidth - 10 * screenWidth / 320, 20 * screenWidth / 320)];
+        self.nameLabel.font = [UIFont systemFontOfSize:15 * screenWidth / 320];
         [self.contentView addSubview:self.nameLabel];
         
-        self.adressLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 30 * screenWidth / 320, screenWidth, 20 * screenWidth / 320)];
-        self.adressLabel.font = [UIFont systemFontOfSize:12];
+        self.adressLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 30 * screenWidth / 320, screenWidth - 10 * screenWidth / 320, 20 * screenWidth / 320)];
+        self.adressLabel.font = [UIFont systemFontOfSize:12 * screenWidth / 320];
         [self.contentView addSubview:self.adressLabel];
         
-        self.describLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 55 * screenWidth / 320, screenWidth, 20 * screenWidth / 320)];
-        self.describLabel.backgroundColor = [UIColor orangeColor];
+        self.describLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 55 * screenWidth / 320, screenWidth - 10 * screenWidth / 320, 20 * screenWidth / 320)];
+        self.describLabel.font = [UIFont systemFontOfSize:12 * screenWidth / 320];
         [self.contentView addSubview:self.describLabel];
         
         UIView *lightGrayView = [[UIView alloc] initWithFrame:CGRectMake(0, 80 * screenWidth / 320, screenWidth, 3 * screenWidth / 320)];
