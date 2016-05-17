@@ -168,6 +168,7 @@ static NSString *const JGHTeamActivityImageCellIdentifier = @"JGHTeamActivityIma
         JGHConcentTextViewController *concentTextCtrl = [[JGHConcentTextViewController alloc]initWithNibName:@"JGHConcentTextViewController" bundle:nil];
         
         concentTextCtrl.itemText = @"内容";
+        concentTextCtrl.delegate = self;
         [self.navigationController pushViewController:concentTextCtrl animated:YES];
     }
     
@@ -210,7 +211,7 @@ static NSString *const JGHTeamActivityImageCellIdentifier = @"JGHTeamActivityIma
 }
 #pragma mark -- 添加内容详情代理  JGHConcentTextViewControllerDelegate
 - (void)didSelectSaveBtnClick:(NSString *)text{
-    [self.model setValue:text forKey:@""];
+    [self.model setValue:text forKey:@"activityInfo"];
 }
 
 - (void)didReceiveMemoryWarning {

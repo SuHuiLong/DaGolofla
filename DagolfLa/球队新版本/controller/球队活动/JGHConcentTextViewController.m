@@ -30,8 +30,8 @@
 - (IBAction)saveBtn:(UIButton *)sender {
     [self.view endEditing:YES];
     if ([self.delegate respondsToSelector:@selector(didSelectSaveBtnClick:)]) {
-        [self.delegate didSelectSaveBtnClick:_contentText.text];
         [self.navigationController popViewControllerAnimated:YES];
+        [self.delegate didSelectSaveBtnClick:_contentText.text];
     }
 }
 #pragma mark -- UITextViewDelegate代理
