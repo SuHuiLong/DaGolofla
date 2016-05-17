@@ -10,4 +10,9 @@
 
 @interface JGTeamCreatePhotoController : ViewController
 
+/**
+ *  判断是相册创建还是相册管理
+ */
+@property (assign, nonatomic) BOOL isManage;
+
 @end

@@ -34,6 +34,16 @@
                         <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <button opaque="NO" alpha="0.5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xN1-6F-taI">
+                        <rect key="frame" x="114" y="79" width="46" height="30"/>
+                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="46" id="gdP-mK-ZBd"/>
+                        </constraints>
+                        <state key="normal" title="管理">
+                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                    </button>
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             </view>
@@ -46,12 +56,15 @@
                 <constraint firstItem="9Mh-bs-OAv" firstAttribute="top" secondItem="GEH-gn-fVa" secondAttribute="bottom" id="M3C-GJ-coj"/>
                 <constraint firstAttribute="bottom" secondItem="bgj-WW-C15" secondAttribute="bottom" id="Qoc-nD-WB8"/>
                 <constraint firstItem="bgj-WW-C15" firstAttribute="top" secondItem="9Mh-bs-OAv" secondAttribute="bottom" id="YAt-zY-0Jz"/>
+                <constraint firstItem="9Mh-bs-OAv" firstAttribute="top" secondItem="xN1-6F-taI" secondAttribute="bottom" constant="1" id="Zys-v6-QnT"/>
                 <constraint firstItem="GEH-gn-fVa" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="dx0-xs-qqi"/>
                 <constraint firstAttribute="trailing" secondItem="GEH-gn-fVa" secondAttribute="trailing" id="htA-09-09v"/>
+                <constraint firstItem="xN1-6F-taI" firstAttribute="trailing" secondItem="9Mh-bs-OAv" secondAttribute="trailing" id="jDc-ZW-QBl"/>
             </constraints>
             <size key="customSize" width="160" height="150"/>
             <connections>
                 <outlet property="iconIngv" destination="GEH-gn-fVa" id="dE5-zi-8d2"/>
+                <outlet property="manageBtn" destination="xN1-6F-taI" id="M8O-TN-0vD"/>
                 <outlet property="nameLabel" destination="bgj-WW-C15" id="B4Y-Z6-r92"/>
                 <outlet property="timeLabel" destination="9Mh-bs-OAv" id="Opg-NP-O22"/>
             </connections>

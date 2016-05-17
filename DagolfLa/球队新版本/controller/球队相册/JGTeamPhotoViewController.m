@@ -33,6 +33,8 @@
 -(void)createClick
 {
     JGTeamCreatePhotoController* phoVc = [[JGTeamCreatePhotoController alloc]init];
+    phoVc.title = @"创建相册";
+    phoVc.isManage = NO;
     [self.navigationController pushViewController:phoVc animated:YES];
 }
 
@@ -74,16 +76,21 @@
 //每个UICollectionView展示的内容
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    //    static NSString * CellIdentifier = @"GradientCell";
-    //    MeWonderViewCell * cell = [collectionView dequeueReusableCellWithReuseIdentifier:CellIdentifier forIndexPath:indexPath];
-    //    return cell;
     
     JGTeamPhotoCollectionViewCell *cell = [[JGTeamPhotoCollectionViewCell alloc]init];
     
     // Set up the reuse identifier
     cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"JGTeamPhotoCollectionViewCell" forIndexPath:indexPath];
     cell.backgroundColor = [UIColor whiteColor];
+    [cell.manageBtn addTarget:self action:@selector(manageClick) forControlEvents:UIControlEventTouchUpInside];
     return cell;
+}
+-(void)manageClick
+{
+    JGTeamCreatePhotoController* phoVc = [[JGTeamCreatePhotoController alloc]init];
+    phoVc.title = @"球队相册管理";
+    phoVc.isManage = YES;
+    [self.navigationController pushViewController:phoVc animated:YES];
 }
 //定义每个UICollectionView 的大小
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
