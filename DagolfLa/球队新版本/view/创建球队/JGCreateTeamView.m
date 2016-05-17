@@ -31,12 +31,12 @@
         
         self.addIconBtn = [UIButton buttonWithType:(UIButtonTypeCustom)];
         [self.addIconBtn setFrame:CGRectMake(10 * screenWidth / 320, 10 * screenWidth / 320, 60 * screenWidth / 320, 60 * screenWidth / 320)];
-        [self.addIconBtn setImage:[UIImage imageNamed:@"vedioStopBtn"] forState:(UIControlStateNormal)];
+        [self.addIconBtn setImage:[UIImage imageNamed:@"ssgl@2x"] forState:(UIControlStateNormal)];
         self.addIconBtn.backgroundColor = [UIColor purpleColor];
         [topView addSubview:self.addIconBtn];
         
         self.teamNmaeTV = [[UITextView alloc] initWithFrame:CGRectMake(80 * screenWidth / 320, 10 * screenWidth / 320, screenWidth - 90 * screenWidth / 320, 60 * screenWidth / 320)];
-        self.teamNmaeTV.font = [UIFont systemFontOfSize:16];
+        self.teamNmaeTV.font = [UIFont systemFontOfSize:18 * screenWidth / 320];
         [topView addSubview:self.teamNmaeTV];
         self.teamNmaeTV.delegate = self;
         
