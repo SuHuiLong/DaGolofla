@@ -10,7 +10,7 @@
 
 @protocol JGHConcentTextViewControllerDelegate <NSObject>
 
-- (void)didSelectSaveBtnClick:(UIButton *)saveBtn;
+- (void)didSelectSaveBtnClick:(NSString *)text;//
 
 @end
 
