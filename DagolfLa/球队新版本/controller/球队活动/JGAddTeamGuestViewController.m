@@ -9,9 +9,11 @@
 #import "JGAddTeamGuestViewController.h"
 #import "JGAlreadyAddGuestCell.h"
 
-@interface JGAddTeamGuestViewController ()<UITableViewDelegate, UITableViewDataSource>
+@interface JGAddTeamGuestViewController ()<UITableViewDelegate, UITableViewDataSource, JGAlreadyAddGuestCellDelegate>
 
 @property (nonatomic, strong) UITableView *addTeamGuestTableView;
+
+@property (nonatomic, assign)NSInteger sex;//0-1女，1-男，默认男－1
 
 @end
 
@@ -19,9 +21,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.view.backgroundColor = [UIColor redColor];
+    self.view.backgroundColor = [UIColor colorWithHexString:BG_color];
     self.navigationItem.title = @"添加嘉宾";
-    
+    self.sex = 1;//男－默认
     [self createAddGuestTableview];
 }
 #pragma mark --创建tableView
@@ -56,19 +58,47 @@
     }
     
     alreadyGuestCell.selectionStyle = UITableViewCellSelectionStyleNone;
+    alreadyGuestCell.deleteGuest.tag = indexPath.section + 100;
     
     
     return alreadyGuestCell;
 }
-#pragma mark -- 添加事件
+#pragma mark -- 添加按钮事件
 - (IBAction)addGuestBtnClick:(UIButton *)sender {
+    if (self.nameText.text.length == 0) {
+        self.nameText.layer.borderColor = [UIColor redColor].CGColor;
+        self.nameText.layer.borderWidth= 1.0f;
+        return;
+    }
+    
+    if (self.poorPointText.text.length == 0) {
+        self.poorPointText.layer.borderColor=[[UIColor redColor] CGColor];
+        self.poorPointText.layer.borderWidth= 1.0f;
+        return;
+    }
+    
     
 }
 #pragma mark -- 完成按钮事件
 - (IBAction)finishBtnClick:(UIButton *)sender {
     [self.navigationController popViewControllerAnimated:YES];
 }
-
+#pragma mark -- 男
+- (IBAction)manBtn:(UIButton *)sender {
+    self.sex = 1;
+    [self.manBtn setImage:[UIImage imageNamed:@"gou_x"] forState:UIControlStateNormal];
+    [self.womenBtn setImage:[UIImage imageNamed:@"xuan_w"] forState:UIControlStateNormal];
+}
+#pragma mark -- 女
+- (IBAction)womenBtn:(UIButton *)sender {
+    self.sex = 0;
+    [self.womenBtn setImage:[UIImage imageNamed:@"gou_x"] forState:UIControlStateNormal];
+    [self.manBtn setImage:[UIImage imageNamed:@"xuan_w"] forState:UIControlStateNormal];
+}
+#pragma mark -- 删除好友 －－ JGAlreadyAddGuestCellDelegate
+- (void)didSelecctDeleteGuestId:(NSInteger)guesId{
+    
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

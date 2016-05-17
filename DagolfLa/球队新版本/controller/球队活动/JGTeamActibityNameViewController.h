@@ -7,6 +7,7 @@
 //
 
 #import "ViewController.h"
+@class JGHLaunchActivityModel;
 
 @interface JGTeamActibityNameViewController : ViewController
 
@@ -15,5 +16,7 @@
 
 //0－管理员  1-非管理员
 @property (nonatomic, copy)NSString *isAdmin;
+
+@property (nonatomic, strong)JGHLaunchActivityModel *model;
 
 @end

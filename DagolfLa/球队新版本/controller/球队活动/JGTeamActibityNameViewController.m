@@ -12,6 +12,7 @@
 #import "JGCostsDescriptionCell.h"
 #import "JGActivityNameBaseCell.h"
 #import "JGTeamApplyViewController.h"
+#import "JGHLaunchActivityModel.h"
 
 static NSString *const JGTeamActivityWithAddressCellIdentifier = @"JGTeamActivityWithAddressCell";
 static NSString *const JGTeamActivityDetailsCellIdentifier = @"JGTeamActivityDetailsCell";
@@ -102,7 +103,15 @@ static NSString *const JGActivityNameBaseCellIdentifier = @"JGActivityNameBaseCe
     if (indexPath.section == 0) {
         return 110;
     }else if (indexPath.section == 1 || indexPath.section == 3){
-        return 70;
+//        return 70;
+        static JGTeamActivityDetailsCell *cell;
+        if (!cell) {
+            cell = [self.teamActibityNameTableView dequeueReusableCellWithIdentifier:JGTeamActivityDetailsCellIdentifier];
+        }
+        
+        cell.activityDetails.text = self.model.activityInfo;
+        NSLog(@"%f", [cell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height + 1);
+        return [cell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height + 1;
     }else if (indexPath.section == 2){
         return 110;
     }else{
@@ -123,6 +132,7 @@ static NSString *const JGActivityNameBaseCellIdentifier = @"JGActivityNameBaseCe
     }else if (indexPath.section == 1 || indexPath.section == 3){
         JGTeamActivityDetailsCell *detailsCell = [tableView dequeueReusableCellWithIdentifier:JGTeamActivityDetailsCellIdentifier forIndexPath:indexPath];
         detailsCell.selectionStyle = UITableViewCellSelectionStyleNone;
+        [detailsCell configDetailsText:@"活动详情" AndActivityDetailsText:_model.activityInfo];
         return detailsCell;
     }else if (indexPath.section == 2){
         JGCostsDescriptionCell *costDescriptionCell = [tableView dequeueReusableCellWithIdentifier:JGCostsDescriptionCellIdentifier forIndexPath:indexPath];

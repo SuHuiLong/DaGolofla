@@ -23,8 +23,8 @@
                         <color key="textColor" red="0.51372549020000002" green="0.51372549020000002" blue="0.51372549020000002" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="       活动详情" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5RC-gM-j1a">
-                        <rect key="frame" x="10" y="32" width="300" height="16"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="       活动详情" textAlignment="natural" lineBreakMode="characterWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="300" translatesAutoresizingMaskIntoConstraints="NO" id="5RC-gM-j1a">
+                        <rect key="frame" x="10" y="32" width="300" height="37.5"/>
                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                         <color key="textColor" red="0.51372549020000002" green="0.51372549020000002" blue="0.51372549020000002" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
@@ -35,6 +35,7 @@
                     <constraint firstItem="6Ny-Ic-rXK" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="Hx2-aD-g5v"/>
                     <constraint firstItem="5RC-gM-j1a" firstAttribute="top" secondItem="6Ny-Ic-rXK" secondAttribute="bottom" constant="3" id="PvU-dL-FOh"/>
                     <constraint firstItem="6Ny-Ic-rXK" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="dgN-6S-EqX"/>
+                    <constraint firstAttribute="bottom" secondItem="5RC-gM-j1a" secondAttribute="bottom" constant="8" id="xJK-yC-AWE"/>
                     <constraint firstItem="5RC-gM-j1a" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="yxb-7h-u35"/>
                 </constraints>
             </tableViewCellContentView>

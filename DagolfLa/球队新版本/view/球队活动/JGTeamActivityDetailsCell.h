@@ -14,4 +14,6 @@
 //活动详情内容
 @property (weak, nonatomic) IBOutlet UILabel *activityDetails;
 
+- (void)configDetailsText:(NSString *)details AndActivityDetailsText:(NSString *)activityDetails;
+
 @end

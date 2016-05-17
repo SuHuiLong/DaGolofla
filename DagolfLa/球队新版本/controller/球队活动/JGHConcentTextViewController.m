@@ -20,6 +20,11 @@
     
     self.saveBtn.layer.masksToBounds = YES;
     self.saveBtn.layer.cornerRadius = 5.0;
+    
+    self.contentText.text = self.contentTextString;
+    if (self.contentTextString.length > 0) {
+        self.placeholdertext.hidden = YES;
+    }
 }
 
 
@@ -29,9 +34,10 @@
 #pragma mark -- 保存方法
 - (IBAction)saveBtn:(UIButton *)sender {
     [self.view endEditing:YES];
+    self.contentTextString = _contentText.text;
     if ([self.delegate respondsToSelector:@selector(didSelectSaveBtnClick:)]) {
         [self.navigationController popViewControllerAnimated:YES];
-        [self.delegate didSelectSaveBtnClick:_contentText.text];
+        [self.delegate didSelectSaveBtnClick:self.contentTextString];
     }
 }
 #pragma mark -- UITextViewDelegate代理

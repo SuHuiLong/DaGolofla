@@ -39,7 +39,11 @@
             self.contions.text = model.activityAddress;
         }
     }else if (indexPath.section == 2){
-        
+        if (indexPath.row == 0) {
+            self.contions.text = model.activityInfo;
+        }else if (indexPath.row == 1){
+            self.contions.text = model.payInfo;
+        }
     }
         
 }

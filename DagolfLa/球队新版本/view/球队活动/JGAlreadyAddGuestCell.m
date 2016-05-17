@@ -23,6 +23,9 @@
 
 #pragma mark -- 删除事件
 - (IBAction)deleteGuestBtnClick:(UIButton *)sender {
+    if (self.delegate) {
+        [self.delegate didSelecctDeleteGuestId:sender.tag - 100];
+    }
 }
 
 

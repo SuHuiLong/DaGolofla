@@ -60,9 +60,14 @@ typedef NS_ENUM(NSInteger, GestureType) {
 #define RGBA(r,g,b,a)   [UIColor colorWithRed:(float)r/255.0f green:(float)g/255.0f blue:(float)b/255.0f alpha:a]
 #define kScreenHeight ([[UIScreen mainScreen] bounds].size.height)
 
+#define BG_color @"#EEEEEF"
+
 //正式环境图片基础地址
 #define imageBaseUrl @"http://139.196.9.49:8081/"
 //测试环境图片基础地址//#define IMAGE_VEDIO_BASEURL @""
 //#define imageBaseUrl @"http://192.168.2.38:8088/"
+
+#import "UIColor+ColorTransfer.h"
+
 
 #endif

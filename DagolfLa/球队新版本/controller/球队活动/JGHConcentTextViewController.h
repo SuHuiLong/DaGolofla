@@ -27,7 +27,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *labelText;
 //输入的内容
 @property (weak, nonatomic) IBOutlet UITextView *contentText;
-
+//存储输入的内容
+@property (copy, nonatomic) NSString *contentTextString;
 //占位符
 @property (weak, nonatomic) IBOutlet UILabel *placeholdertext;
 

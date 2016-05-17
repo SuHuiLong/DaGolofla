@@ -66,9 +66,11 @@ static NSString *const JGHTeamActivityImageCellIdentifier = @"JGHTeamActivityIma
     [previewBtn addTarget:self action:@selector(previewBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:previewBtn];
 }
+#pragma mark -- 预览跳转页面
 - (void)previewBtnClick:(UIButton *)btn{
     JGTeamActibityNameViewController *ActivityDetailCtrl = [[JGTeamActibityNameViewController alloc]init];
     ActivityDetailCtrl.isAdmin = @"0";
+    ActivityDetailCtrl.model = self.model;
     [self.navigationController pushViewController:ActivityDetailCtrl animated:YES];
 }
 #pragma mark -- 创建tabelview
@@ -169,6 +171,7 @@ static NSString *const JGHTeamActivityImageCellIdentifier = @"JGHTeamActivityIma
         
         concentTextCtrl.itemText = @"内容";
         concentTextCtrl.delegate = self;
+        concentTextCtrl.contentTextString = _model.activityInfo;
         [self.navigationController pushViewController:concentTextCtrl animated:YES];
     }
     
@@ -212,6 +215,7 @@ static NSString *const JGHTeamActivityImageCellIdentifier = @"JGHTeamActivityIma
 #pragma mark -- 添加内容详情代理  JGHConcentTextViewControllerDelegate
 - (void)didSelectSaveBtnClick:(NSString *)text{
     [self.model setValue:text forKey:@"activityInfo"];
+    [self.launchActivityTableView reloadData];
 }
 
 - (void)didReceiveMemoryWarning {

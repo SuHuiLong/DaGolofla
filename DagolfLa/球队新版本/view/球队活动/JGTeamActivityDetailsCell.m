@@ -21,4 +21,9 @@
     // Configure the view for the selected state
 }
 
+- (void)configDetailsText:(NSString *)details AndActivityDetailsText:(NSString *)activityDetails{
+    self.details.text = details;
+    self.activityDetails.text = activityDetails;
+}
+
 @end

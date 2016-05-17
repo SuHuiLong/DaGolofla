@@ -66,6 +66,7 @@
             </tableViewCellContentView>
             <connections>
                 <outlet property="age" destination="rpY-Va-f7m" id="Mcb-d2-SPa"/>
+                <outlet property="deleteGuest" destination="G4D-4n-WTe" id="gup-6x-Gxh"/>
                 <outlet property="name" destination="FkE-kh-s6v" id="Rhk-MP-aRD"/>
                 <outlet property="sex" destination="gpD-fV-f9E" id="5PD-kp-7oL"/>
             </connections>

@@ -1975,7 +1975,7 @@
 		654A031A1CC89F6F007F5243 /* PersonHomeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = PersonHomeController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		655E74881BCF788200624D83 /* ChatPeopleMessageModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatPeopleMessageModel.h; sourceTree = "<group>"; };
 		655E74891BCF788200624D83 /* ChatPeopleMessageModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatPeopleMessageModel.m; sourceTree = "<group>"; };
-		65B5969E1CAD43AC007AB83A /* ContantHead.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContantHead.h; sourceTree = "<group>"; };
+		65B5969E1CAD43AC007AB83A /* ContantHead.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ContantHead.h; path = "../社区测试文件/ContantHead.h"; sourceTree = "<group>"; };
 		65B596A01CAD43AC007AB83A /* ILRegularExpressionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILRegularExpressionManager.h; sourceTree = "<group>"; };
 		65B596A11CAD43AC007AB83A /* ILRegularExpressionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILRegularExpressionManager.m; sourceTree = "<group>"; };
 		65B596A21CAD43AC007AB83A /* NSArray+NSArray_ILExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+NSArray_ILExtension.h"; sourceTree = "<group>"; };
@@ -4198,6 +4198,7 @@
 		36BFFF431BC76D09005B3CE2 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				65B5969E1CAD43AC007AB83A /* ContantHead.h */,
 				20CA14001CEB086600DA15B9 /* JsonHttp.h */,
 				20CA14011CEB086600DA15B9 /* JsonHttp.m */,
 				20CA13FD1CEAF07100DA15B9 /* SXPickPhoto.h */,
@@ -5016,7 +5017,6 @@
 		65B5969D1CAD43AC007AB83A /* 社区测试文件 */ = {
 			isa = PBXGroup;
 			children = (
-				65B5969E1CAD43AC007AB83A /* ContantHead.h */,
 				65B5969F1CAD43AC007AB83A /* Manager */,
 				65B596AC1CAD43AC007AB83A /* Source */,
 				65B596B81CAD43AC007AB83A /* UIView+Extension.h */,
