@@ -10,12 +10,11 @@
 #import "JGTeamChannelTableView.h"
 #import "JGTeamChannelTableViewCell.h"
 #import "JGTeamDetailViewController.h"
-#import "JGCreateTeamViewController.h"
+#import "JGTeamMainhallViewController.h"
 #import "JGTeamDetailStylelTwoViewController.h"
 #import "JGApplyMaterialViewController.h"
 
-
-#import "JGTeamPhotoViewController.h"
+#import "JGTeamActivityViewController.h"
 #import "JGLMyTeamViewController.h"
 @interface JGTeamChannelViewController ()<UITableViewDataSource, UITableViewDelegate>
 
@@ -82,12 +81,12 @@
         JGLMyTeamViewController* myVc = [[JGLMyTeamViewController alloc]init];
         [self.navigationController pushViewController:myVc animated:YES];
     }else if (button.tag == 201) {
-        JGTeamPhotoViewController* phoVc = [[JGTeamPhotoViewController alloc]init];
-        [self.navigationController pushViewController:phoVc animated:YES];
+        JGTeamActivityViewController* teamVc = [[JGTeamActivityViewController alloc]init];
+        [self.navigationController pushViewController:teamVc animated:YES];
     }else if (button.tag == 202) {
         
-        JGCreateTeamViewController *creatTeamVC = [[JGCreateTeamViewController alloc] init];
-        [self.navigationController pushViewController:creatTeamVC animated:YES];
+        JGTeamMainhallViewController *MainhallTeamVC = [[JGTeamMainhallViewController alloc] init];
+        [self.navigationController pushViewController:MainhallTeamVC animated:YES];
 
     }
 }
