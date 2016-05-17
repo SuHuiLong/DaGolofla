@@ -14,6 +14,7 @@
 
 @property (nonatomic, strong)UITableView *tableView;
 @property (nonatomic, strong)NSArray *titleArray;
+@property (nonatomic, strong)NSArray *placeholderArray;
 
 @end
 
@@ -31,12 +32,24 @@
 }
 
 - (void)complete{
-    
+    BOOL isLength = YES;
+
     for (JGApplyMaterialTableViewCell *cell in self.tableView.visibleCells) {
-        NSLog(@"%@", cell.labell.text);
+        NSLog(@"%@", cell.textFD.text);
     }
-    
-    [self.navigationController popViewControllerAnimated:YES];
+    for (int i = 0; i < 4; i ++) {
+        JGApplyMaterialTableViewCell *cell = self.tableView.visibleCells[i];
+        if ([cell.textFD.text length] == 0) {
+            isLength = NO;
+        }else{
+
+        }
+    }
+    if (isLength) {
+        [self.navigationController popViewControllerAnimated:YES];
+    }else{
+        NSLog(@"＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊");
+    }
 }
 
 - (void)creatTableView{
@@ -46,6 +59,7 @@
     self.tableView.dataSource = self;
     [self.tableView registerClass:[JGApplyMaterialTableViewCell class] forCellReuseIdentifier:@"cell"];
     self.titleArray = [NSArray arrayWithObjects:@[@"姓名", @"性别", @"差点", @"手机号码"], @"常住地址", @"衣服尺码", @"惯用手", nil];
+    self.placeholderArray = [NSArray arrayWithObjects:@[@"请输入真实姓名", @"请输入性别", @"请输入您的差点", @"请输入手机号" ],@"方便活动邀请（选填）",@"统一制服定做（选填）",@"制定特殊需求（选填）", nil];
     [self.view addSubview: self.tableView];
 }
 
@@ -67,8 +81,10 @@
     
     if (indexPath.section == 0) {
         cell.labell.text = self.titleArray[indexPath.section][indexPath.row];
+        cell.textFD.placeholder = self.placeholderArray[indexPath.section][indexPath.row];
     }else{
         cell.labell.text = self.titleArray[indexPath.section];
+        cell.textFD.placeholder = self.placeholderArray[indexPath.section];
     }
     
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
