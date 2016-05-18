@@ -7,7 +7,9 @@
 //
 
 #import "ViewController.h"
+#import "JGTeamDetail.h"
 
 @interface JGTeamDetailViewController : ViewController
+@property (nonatomic, strong)JGTeamDetail *teamDetailModel;
 
 @end
