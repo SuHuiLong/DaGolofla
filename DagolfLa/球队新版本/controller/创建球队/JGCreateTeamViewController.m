@@ -53,7 +53,7 @@
     detailV.teamDetailModel = self.teamDetailModel;
     
     NSMutableDictionary *dic = [NSMutableDictionary dictionary];
-    [dic setObject:@"BBB" forKey:@"name"];
+    [dic setObject:@"LB" forKey:@"name"];
     [dic setObject:@"AAA" forKey:@"crtyName"];
     [dic setObject:@"AAA" forKey:@"info"];
     [dic setObject:@"AAA" forKey:@"notice"];
