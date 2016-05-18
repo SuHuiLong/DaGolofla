@@ -11,9 +11,16 @@
 
 #import "JGTeamPhotoCollectionViewCell.h"
 #import "JGPhotoAlbumViewController.h"
+
+#import "MJRefresh.h"
+#import "MJDIYHeader.h"
+#import "MJDIYBackFooter.h"
+
+
 @interface JGTeamPhotoViewController ()<UICollectionViewDataSource,UICollectionViewDelegate>
 {
     UICollectionView* _collectionView;
+    NSInteger _page;
 }
 @end
 
@@ -22,6 +29,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    _page = 0;
     self.title = @"球队相册";
     
     UIBarButtonItem* rightBtn = [[UIBarButtonItem alloc]initWithTitle:@"创建相册" style:UIBarButtonItemStylePlain target:self action:@selector(createClick)];
@@ -61,7 +69,59 @@
     _collectionView.contentSize = CGSizeMake(0, 0);
     //注册cell
     [_collectionView registerNib: [UINib nibWithNibName:@"JGTeamPhotoCollectionViewCell" bundle:nil] forCellWithReuseIdentifier:@"JGTeamPhotoCollectionViewCell"];
+    
+    _collectionView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
+    _collectionView.footer=[MJDIYBackFooter footerWithRefreshingTarget:self refreshingAction:@selector(footerRereshing)];
+    [_collectionView.header beginRefreshing];
 }
+
+#pragma mark - 下载数据
+- (void)downLoadData:(int)page isReshing:(BOOL)isReshing{
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    
+    [dict setObject:@"189781710290821120" forKey:@"teamKey"];
+    [dict setObject:[NSNumber numberWithInt:page] forKey:@"offset"];
+    [[JsonHttp jsonHttp]httpRequest:@"team/getTeamAlbumList" withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
+        NSLog(@"errType == %@", errType);
+    } completionBlock:^(id data) {
+        if ([[data objectForKey:@"packSuccess"] boolValue]) {
+            if (page == 1)
+            {
+                //清除数组数据
+            }
+            //数据解析
+            for (NSDictionary *dataDict in [dict objectForKey:@"rows"]) {
+                
+            }
+            _page++;
+            [_collectionView reloadData];
+        }else {
+            [Helper alertViewWithTitle:[dict objectForKey:@"message"] withBlock:^(UIAlertController *alertView) {
+                [self presentViewController:alertView animated:YES completion:nil];
+            }];
+        }
+        [_collectionView reloadData];
+        if (isReshing) {
+            [_collectionView.header endRefreshing];
+        }else {
+            [_collectionView.footer endRefreshing];
+        }
+    }];
+}
+#pragma mark 开始进入刷新状态
+- (void)headerRereshing
+{
+    _page = 0;
+    [self downLoadData:_page isReshing:YES];
+}
+
+- (void)footerRereshing
+{
+    [self downLoadData:_page isReshing:NO];
+}
+
+
+
 
 #pragma mark -- uicollection方法
 //定义展示的UICollectionViewCell的个数
