@@ -824,6 +824,7 @@
 		F5B5499A1CE9EC6E0091C962 /* JGPhotoTimeReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8294872A1CE9B8FE0018D3F6 /* JGPhotoTimeReusableView.m */; };
 		F5B5499B1CE9F3C00091C962 /* JGPhotoShowCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 829487261CE99A2F0018D3F6 /* JGPhotoShowCollectionViewCell.xib */; };
 		F5B647101CE41E7E00A7A056 /* JGTeamDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = F5B6470F1CE41E7E00A7A056 /* JGTeamDetailView.m */; };
+		F5BDF0A11CEC1B750020175A /* JGTeamDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = F5BDF0A01CEC1B750020175A /* JGTeamDetail.m */; };
 		F5E3F7F01CAA54BC00B24C77 /* dz.png in Resources */ = {isa = PBXBuildFile; fileRef = F5E3F7ED1CAA54BC00B24C77 /* dz.png */; };
 		F5E3F7F11CAA54BC00B24C77 /* dz@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F5E3F7EE1CAA54BC00B24C77 /* dz@2x.png */; };
 		F5E3F7F21CAA54BC00B24C77 /* dz@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = F5E3F7EF1CAA54BC00B24C77 /* dz@3x.png */; };
@@ -2116,6 +2117,8 @@
 		F5B549961CE9B0710091C962 /* JGApplyMaterialTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGApplyMaterialTableViewCell.m; sourceTree = "<group>"; };
 		F5B6470E1CE41E7E00A7A056 /* JGTeamDetailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGTeamDetailView.h; sourceTree = "<group>"; };
 		F5B6470F1CE41E7E00A7A056 /* JGTeamDetailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGTeamDetailView.m; sourceTree = "<group>"; };
+		F5BDF09F1CEC1B750020175A /* JGTeamDetail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGTeamDetail.h; sourceTree = "<group>"; };
+		F5BDF0A01CEC1B750020175A /* JGTeamDetail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGTeamDetail.m; sourceTree = "<group>"; };
 		F5E3F7ED1CAA54BC00B24C77 /* dz.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dz.png; sourceTree = "<group>"; };
 		F5E3F7EE1CAA54BC00B24C77 /* dz@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dz@2x.png"; sourceTree = "<group>"; };
 		F5E3F7EF1CAA54BC00B24C77 /* dz@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dz@3x.png"; sourceTree = "<group>"; };
@@ -5224,6 +5227,8 @@
 		F569A1321CE3334F00CD0FD5 /* 球队详情 */ = {
 			isa = PBXGroup;
 			children = (
+				F5BDF09F1CEC1B750020175A /* JGTeamDetail.h */,
+				F5BDF0A01CEC1B750020175A /* JGTeamDetail.m */,
 			);
 			path = "球队详情";
 			sourceTree = "<group>";
@@ -6031,6 +6036,7 @@
 				36BF00A71BC77326005B3CE2 /* MeselfModel.m in Sources */,
 				36BFFFD01BC770B1005B3CE2 /* NewsMessageViewController.m in Sources */,
 				36BF01601BC77611005B3CE2 /* XuanshangViewController.m in Sources */,
+				F5BDF0A11CEC1B750020175A /* JGTeamDetail.m in Sources */,
 				36F721161BE8ADEB001C02C6 /* FootDetailViewController.m in Sources */,
 				36BFFFCC1BC770B1005B3CE2 /* ZanNumViewController.m in Sources */,
 				3660E1491BFC55C30033B4D7 /* ManageForMeController.m in Sources */,

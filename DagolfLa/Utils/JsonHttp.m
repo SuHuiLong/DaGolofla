@@ -33,6 +33,7 @@ static JsonHttp *jsonHttp = nil;
 {
     url = [NSString stringWithFormat:@"%@%@",PORTOCOL_APP_ROOT_URL,url];
     NSLog(@"%@",url);
+
     NSData *data=[NSJSONSerialization dataWithJSONObject:postData options:NSJSONWritingPrettyPrinted error:nil];
     NSMutableString *jsonString=[[NSMutableString alloc] initWithData:data encoding:NSUTF8StringEncoding];
 //    NSString *str1=[string stringByReplacingOccurrencesOfString:@"\n" withString:@""];
