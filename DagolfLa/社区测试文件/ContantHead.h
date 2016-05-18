@@ -22,6 +22,10 @@ typedef NS_ENUM(NSInteger, GestureType) {
 #define offSet_X 70*screenWidth/375
 #define EmotionItemPattern    @"\\[em:(\\d+):\\]"
 
+
+//userId
+#define userID @"userId"
+
 #define kDistance 10*screenWidth/375 //说说和图片的间隔
 #define kReplyBtnDistance 30*screenWidth/375 //回复按钮距离
 #define kReply_FavourDistance 8*screenWidth/375 //回复按钮到点赞的距离
