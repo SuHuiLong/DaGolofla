@@ -25,47 +25,18 @@ static JsonHttp *jsonHttp = nil;
     return jsonHttp;
 }
 
-- (void) httpRequest:(NSString *)url
-            withData:(NSDictionary *)postData
-       requestMethod:(NSString*)httpMethod
-         failedBlock:(GBHEFailedBlock)failedBlock
-     completionBlock:(GBHECompletionBlock)completionBlock
+- (void)httpRequest:(NSString *)url JsonKey:(NSString *)jsonKey withData:(NSDictionary *)postData requestMethod:(NSString *)httpMethod failedBlock:(GBHEFailedBlock)failedBlock completionBlock:(GBHECompletionBlock)completionBlock
 {
     url = [NSString stringWithFormat:@"%@%@",PORTOCOL_APP_ROOT_URL,url];
     NSLog(@"%@",url);
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    NSError *error;
     NSMutableDictionary *postDict = [NSMutableDictionary dictionary];
-    [postDict setObject:postData forKey:@"teamActivity"];
-//    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:postDict options:NSJSONWritingPrettyPrinted error:&error];//此处data参数是我上面提到的key为"data"的数组
-//    NSString *str1 = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-//    NSString *jsonString=[str1 stringByReplacingOccurrencesOfString:@"\n" withString:@""];
-    //设置请求格式Json
-//    manager.requestSerializer = [AFJSONRequestSerializer serializer];
-    
-    //申明返回的结果是json类型
-//    manager.responseSerializer = [AFJSONResponseSerializer serializer];
+    [postDict setObject:postData forKey:jsonKey];
     //申明请求的数据是json类型
     manager.requestSerializer=[AFJSONRequestSerializer serializer];
     //如果报接受类型不一致请替换一致text/html或别的
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
-    //传入的参数
-//    NSDictionary *parameters = @{@"1":@"XXXX",@"2":@"XXXX",@"3":@"XXXXX"};
-    //你的接口地址
-//    NSString *url=@"http://xxxxx";
-//    //发送请求
-//    [manager POST:url parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-//        NSLog(@"JSON: %@", responseObject);
-//    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//        NSLog(@"Error: %@", error);
-//    }];
-    
-    
-//    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
-//    NSString *accept = [NSString stringWithFormat:@"application/json"];
-//    [manager setValue:accept forHTTPHeaderField: @"Accept"];
-//    [manager setValue:accept forKey:@"Accept"];
     //返回数据格式
     manager.responseSerializer = [AFJSONResponseSerializer serializerWithReadingOptions:NSJSONReadingMutableContainers];
     //https安全策略

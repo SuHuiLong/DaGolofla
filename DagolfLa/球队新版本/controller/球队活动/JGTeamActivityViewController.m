@@ -40,11 +40,11 @@
     
     [dict setObject:[def objectForKey:@"userId"] forKey:@"userKey"];//3619
     [dict setObject:@"1" forKey:@"offset"];
-    [[JsonHttp jsonHttp]httpRequest:@"team/getMyTeamList" withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
-        NSLog(@"errType == %@", errType);
-    } completionBlock:^(id data) {
-        NSLog(@"data == %@", data);
-    }];
+//    [[JsonHttp jsonHttp]httpRequest:@"team/getMyTeamList" withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
+//        NSLog(@"errType == %@", errType);
+//    } completionBlock:^(id data) {
+//        NSLog(@"data == %@", data);
+//    }];
 }
 
 #pragma mark -- 创建发布活动

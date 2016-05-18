@@ -81,32 +81,32 @@
     
     [dict setObject:@"189781710290821120" forKey:@"teamKey"];
     [dict setObject:[NSNumber numberWithInt:page] forKey:@"offset"];
-    [[JsonHttp jsonHttp]httpRequest:@"team/getTeamAlbumList" withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
-        NSLog(@"errType == %@", errType);
-    } completionBlock:^(id data) {
-        if ([[data objectForKey:@"packSuccess"] boolValue]) {
-            if (page == 1)
-            {
-                //清除数组数据
-            }
-            //数据解析
-            for (NSDictionary *dataDict in [dict objectForKey:@"rows"]) {
-                
-            }
-            _page++;
-            [_collectionView reloadData];
-        }else {
-            [Helper alertViewWithTitle:[dict objectForKey:@"message"] withBlock:^(UIAlertController *alertView) {
-                [self presentViewController:alertView animated:YES completion:nil];
-            }];
-        }
-        [_collectionView reloadData];
-        if (isReshing) {
-            [_collectionView.header endRefreshing];
-        }else {
-            [_collectionView.footer endRefreshing];
-        }
-    }];
+//    [[JsonHttp jsonHttp]httpRequest:@"team/getTeamAlbumList" withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
+//        NSLog(@"errType == %@", errType);
+//    } completionBlock:^(id data) {
+//        if ([[data objectForKey:@"packSuccess"] boolValue]) {
+//            if (page == 1)
+//            {
+//                //清除数组数据
+//            }
+//            //数据解析
+//            for (NSDictionary *dataDict in [dict objectForKey:@"rows"]) {
+//                
+//            }
+//            _page++;
+//            [_collectionView reloadData];
+//        }else {
+//            [Helper alertViewWithTitle:[dict objectForKey:@"message"] withBlock:^(UIAlertController *alertView) {
+//                [self presentViewController:alertView animated:YES completion:nil];
+//            }];
+//        }
+//        [_collectionView reloadData];
+//        if (isReshing) {
+//            [_collectionView.header endRefreshing];
+//        }else {
+//            [_collectionView.footer endRefreshing];
+//        }
+//    }];
 }
 #pragma mark 开始进入刷新状态
 - (void)headerRereshing

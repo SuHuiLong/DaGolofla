@@ -77,7 +77,7 @@ static NSString *const JGActivityNameBaseCellIdentifier = @"JGActivityNameBaseCe
     //121212
     [dict setObject:@"121212" forKey:@"userKey"];
     
-    [dict setObject:@"神奇勇气2" forKey:@"name"];//活动名字
+    [dict setObject:@"神奇四侠6" forKey:@"name"];//活动名字
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
     NSDate *date = [dateFormatter dateFromString:@"2016-05-14 16:01:03"];
@@ -97,11 +97,10 @@ static NSString *const JGActivityNameBaseCellIdentifier = @"JGActivityNameBaseCe
     [dict setObject:@"" forKey:@"sumCount"];//活动报名总人数
 
     //createTeamActivity
-    [[JsonHttp jsonHttp]httpRequest:@"team/createTeamActivity" withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
+    [[JsonHttp jsonHttp]httpRequest:@"team/createTeamActivity" JsonKey:@"teamActivity" withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
         NSLog(@"%@", errType);
     } completionBlock:^(id data) {
-        NSLog(@"data = %@", data);
-        
+        NSLog(@"%@", date);
     }];
     
     

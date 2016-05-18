@@ -19,7 +19,7 @@ typedef void (^GBHEBytesRecvBlock)(unsigned long long length, unsigned long long
 
 
 + (instancetype)jsonHttp;
-- (void) httpRequest:(NSString *)url
+- (void) httpRequest:(NSString *)url JsonKey:(NSString *)jsonKey
             withData:(NSDictionary *)postData
        requestMethod:(NSString*)httpMethod
          failedBlock:(GBHEFailedBlock)failedBlock
