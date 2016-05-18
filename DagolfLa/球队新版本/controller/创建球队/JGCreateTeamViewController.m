@@ -53,7 +53,7 @@
     detailV.teamDetailModel = self.teamDetailModel;
     
     NSMutableDictionary *dic = [NSMutableDictionary dictionary];
-    [dic setObject:@"BBB" forKey:@"name"];
+    [dic setObject:@"LB" forKey:@"name"];
     [dic setObject:@"AAA" forKey:@"crtyName"];
     [dic setObject:@"AAA" forKey:@"info"];
     [dic setObject:@"AAA" forKey:@"notice"];
@@ -62,12 +62,12 @@
     [dic setObject:@"110" forKey:@"userMobile"];
     [dic setObject:@"244" forKey:@"createUserKey"];
 
-
-    [[JsonHttp jsonHttp] httpRequest:@"team/createTeam" withData:dic requestMethod:@"POST" failedBlock:^(id errType) {
-        NSLog(@"erro");
+    [[JsonHttp jsonHttp] httpRequest:@"team/createTeam" JsonKey:@"team" withData:dic requestMethod:@"POST" failedBlock:^(id errType) {
+        NSLog(@"error");
     } completionBlock:^(id data) {
         NSLog(@"%@", data);
     }];
+    
     [self.navigationController pushViewController:detailV animated:YES];
 }
 
