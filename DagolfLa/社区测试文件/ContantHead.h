@@ -68,6 +68,6 @@ typedef NS_ENUM(NSInteger, GestureType) {
 //#define imageBaseUrl @"http://192.168.2.38:8088/"
 
 #import "UIColor+ColorTransfer.h"
-
+#import "JsonHttp.h"
 
 #endif

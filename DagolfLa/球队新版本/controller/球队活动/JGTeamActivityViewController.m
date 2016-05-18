@@ -32,7 +32,22 @@
         [self createAdminBtn];
     }
     
+    [self loadData];
 }
+- (void)loadData{
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
+    
+    [dict setObject:[def objectForKey:@"userId"] forKey:@"userKey"];
+    [dict setObject:@"1" forKey:@"offset"];
+    [[JsonHttp jsonHttp]httpRequest:@"team/getMyTeamList" withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
+        NSLog(@"errType == %@", errType);
+    } completionBlock:^(id data) {
+        NSLog(@"data == %@", data);
+        NSString *restr = @"1111";
+    }];
+}
+
 #pragma mark -- 创建发布活动
 - (void)createAdminBtn{
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];

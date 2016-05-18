@@ -8,9 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-#define PORTOCOL_APP_ROOT_URL   "http://obt.wanda.cn/tmsWanda/"
-
-
+#define PORTOCOL_APP_ROOT_URL   @"http://192.168.2.6:8888/"
 
 @interface JsonHttp : NSObject
 

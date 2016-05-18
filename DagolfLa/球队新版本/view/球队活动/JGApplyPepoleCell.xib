@@ -3,7 +3,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -70,31 +69,45 @@
                         <color key="textColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yXh-sZ-DYE">
-                        <rect key="frame" x="100" y="48" width="215" height="39"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="characterWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="223" translatesAutoresizingMaskIntoConstraints="NO" id="XuX-iZ-WVD">
+                        <rect key="frame" x="100" y="48" width="223" height="36.5"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3UM-Lc-LCL">
+                        <rect key="frame" x="99" y="12" width="1" height="70"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="1" id="awi-Rz-zdO"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <constraints>
                     <constraint firstItem="7zR-bj-A4G" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="16O-VQ-xpu"/>
+                    <constraint firstAttribute="bottom" secondItem="XuX-iZ-WVD" secondAttribute="bottom" constant="10" id="5gK-WI-7sq"/>
                     <constraint firstItem="98Q-mW-9aQ" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="6RG-Di-WBn"/>
-                    <constraint firstItem="yXh-sZ-DYE" firstAttribute="top" secondItem="98Q-mW-9aQ" secondAttribute="bottom" constant="8" id="GKD-Pb-Pd2"/>
                     <constraint firstItem="bIm-pm-RO8" firstAttribute="leading" secondItem="SJ4-3J-gOz" secondAttribute="trailing" constant="30" id="RSa-ym-aeJ"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="yXh-sZ-DYE" secondAttribute="trailing" constant="10" id="Uae-SH-aAJ"/>
+                    <constraint firstAttribute="bottom" secondItem="3UM-Lc-LCL" secondAttribute="bottom" constant="12" id="VCI-zV-Uls"/>
                     <constraint firstItem="QcQ-EQ-dFQ" firstAttribute="leading" secondItem="7zR-bj-A4G" secondAttribute="trailing" constant="4" id="VKe-aJ-Bg9"/>
                     <constraint firstItem="SJ4-3J-gOz" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="cLa-Vl-sao"/>
                     <constraint firstItem="QcQ-EQ-dFQ" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="16" id="dVe-N7-Jv0"/>
                     <constraint firstAttribute="trailing" secondItem="98Q-mW-9aQ" secondAttribute="trailing" constant="10" id="hCz-52-Vq3"/>
-                    <constraint firstItem="yXh-sZ-DYE" firstAttribute="leading" secondItem="bIm-pm-RO8" secondAttribute="leading" id="nPU-zv-Hx4"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="yXh-sZ-DYE" secondAttribute="bottom" id="ool-b7-YfC"/>
                     <constraint firstItem="bIm-pm-RO8" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="qD1-fp-iT4"/>
+                    <constraint firstItem="bIm-pm-RO8" firstAttribute="leading" secondItem="3UM-Lc-LCL" secondAttribute="trailing" id="s88-Em-WCx"/>
                     <constraint firstAttribute="trailing" secondItem="QcQ-EQ-dFQ" secondAttribute="trailing" constant="10" id="tFk-Z2-fut"/>
                     <constraint firstItem="SJ4-3J-gOz" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="tRg-id-ZKU"/>
+                    <constraint firstItem="3UM-Lc-LCL" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="12" id="vWZ-rW-9de"/>
+                    <constraint firstItem="XuX-iZ-WVD" firstAttribute="top" secondItem="98Q-mW-9aQ" secondAttribute="bottom" constant="8" id="wGw-B3-SsH"/>
+                    <constraint firstItem="XuX-iZ-WVD" firstAttribute="leading" secondItem="3UM-Lc-LCL" secondAttribute="trailing" id="wkf-bB-1Y4"/>
+                    <constraint firstAttribute="trailing" secondItem="XuX-iZ-WVD" secondAttribute="trailing" constant="10" id="yf5-nf-So0"/>
                     <constraint firstItem="98Q-mW-9aQ" firstAttribute="top" secondItem="7zR-bj-A4G" secondAttribute="bottom" constant="8" id="yjS-iy-fBz"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
-                <outlet property="applyListView" destination="yXh-sZ-DYE" id="A37-pE-dYh"/>
+                <outlet property="guestList" destination="XuX-iZ-WVD" id="klC-b9-WCr"/>
             </connections>
             <point key="canvasLocation" x="232.5" y="264.5"/>
         </tableViewCell>

@@ -103,6 +103,7 @@ static NSString *const JGActivityNameBaseCellIdentifier = @"JGActivityNameBaseCe
                 [btn setTitle:self.invoiceTypeArray[i] forState:UIControlStateNormal];
                 btn.titleLabel.font = [UIFont systemFontOfSize:15];
                 btn.titleLabel.textColor = [UIColor blackColor];
+                btn.titleLabel.textColor = [UIColor blackColor];
                 btn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
                 btn.tag = 100 + i;
                 [btn addTarget:self action:@selector(didSelectInvoiceTypeBtnClick:) forControlEvents:UIControlEventTouchUpInside];

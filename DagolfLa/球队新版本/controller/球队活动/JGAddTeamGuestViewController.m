@@ -13,6 +13,8 @@
 
 @property (nonatomic, strong) UITableView *addTeamGuestTableView;
 
+@property (nonatomic, strong) NSMutableArray *guestArray;
+
 @property (nonatomic, assign)NSInteger sex;//0-1女，1-男，默认男－1
 
 @end

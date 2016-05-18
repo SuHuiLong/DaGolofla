@@ -54,7 +54,14 @@ static NSString *const JGApplyPepoleCellIdentifier = @"JGApplyPepoleCell";
     if (indexPath.section == 0) {
         return 44;
     }else if (indexPath.section == 1){
-        return 90;
+        static JGApplyPepoleCell *cell;
+        if (!cell) {
+            cell = [tableView dequeueReusableCellWithIdentifier:JGApplyPepoleCellIdentifier];
+        }
+        
+        cell.guestList.text = @"绝代风华\n哈哈哈\n嘿嘿嘿\n鸡尾酒\n贝多芬";
+        
+        return [cell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height + 1;
     }else{
         return 44;
     }
@@ -73,6 +80,8 @@ static NSString *const JGApplyPepoleCellIdentifier = @"JGApplyPepoleCell";
     }else if (indexPath.section == 1){
         JGApplyPepoleCell *applyPepoleCell = [tableView dequeueReusableCellWithIdentifier:JGApplyPepoleCellIdentifier forIndexPath:indexPath];
         applyPepoleCell.delegate = self;
+        applyPepoleCell.guestList.text = @"绝代风华\n哈哈哈\n嘿嘿嘿\n鸡尾酒\n贝多芬";
+
         applyPepoleCell.selectionStyle = UITableViewCellSelectionStyleNone;
         return applyPepoleCell;
     }else{
