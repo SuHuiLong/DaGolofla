@@ -25,11 +25,9 @@
 #define kProvince_Url @"region/queryByFather.do"
 @implementation CityHighChooseView
 {
-    //    UIScrollView* _scrollView;
     
     UIView* _viewHeader;
     
-//    UICollectionView* _collectionView;
     NSMutableArray* _dataProArray;
     NSMutableArray* _numProArray;
     

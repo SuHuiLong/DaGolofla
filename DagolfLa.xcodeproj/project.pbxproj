@@ -777,6 +777,7 @@
 		65B801001CD04D150077A324 /* DeatilModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 65B800FF1CD04D150077A324 /* DeatilModel.m */; };
 		65CD8E4B1BEA067F006984F3 /* AddressBookViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 65CD8E491BEA067F006984F3 /* AddressBookViewCell.m */; };
 		65CD8E4C1BEA067F006984F3 /* AddressBookViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 65CD8E4A1BEA067F006984F3 /* AddressBookViewCell.xib */; };
+		8281BE551CEC41D200C5BD31 /* JGTeamPhotoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8281BE541CEC41D200C5BD31 /* JGTeamPhotoModel.m */; };
 		828A99E41CE3167800AF9860 /* JGTeamCreatePhotoController.m in Sources */ = {isa = PBXBuildFile; fileRef = 828A99E31CE3167800AF9860 /* JGTeamCreatePhotoController.m */; };
 		828A99E71CE325BB00AF9860 /* JGPhotoAlbumViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 828A99E61CE325BB00AF9860 /* JGPhotoAlbumViewController.m */; };
 		828A99EA1CE32B7000AF9860 /* JGTeamMemberController.m in Sources */ = {isa = PBXBuildFile; fileRef = 828A99E91CE32B7000AF9860 /* JGTeamMemberController.m */; };
@@ -2031,6 +2032,8 @@
 		65CD8E481BEA067F006984F3 /* AddressBookViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddressBookViewCell.h; sourceTree = "<group>"; };
 		65CD8E491BEA067F006984F3 /* AddressBookViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddressBookViewCell.m; sourceTree = "<group>"; };
 		65CD8E4A1BEA067F006984F3 /* AddressBookViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddressBookViewCell.xib; sourceTree = "<group>"; };
+		8281BE531CEC41D200C5BD31 /* JGTeamPhotoModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGTeamPhotoModel.h; sourceTree = "<group>"; };
+		8281BE541CEC41D200C5BD31 /* JGTeamPhotoModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGTeamPhotoModel.m; sourceTree = "<group>"; };
 		828A99E21CE3167800AF9860 /* JGTeamCreatePhotoController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGTeamCreatePhotoController.h; sourceTree = "<group>"; };
 		828A99E31CE3167800AF9860 /* JGTeamCreatePhotoController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGTeamCreatePhotoController.m; sourceTree = "<group>"; };
 		828A99E51CE325BB00AF9860 /* JGPhotoAlbumViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGPhotoAlbumViewController.h; sourceTree = "<group>"; };
@@ -2226,6 +2229,7 @@
 		2067C6BA1CE30CB4002900C8 /* model */ = {
 			isa = PBXGroup;
 			children = (
+				8281BE521CEC41A800C5BD31 /* 球队相册 */,
 				20CA13621CE4276500DA15B9 /* 球队活动 */,
 				F569A1321CE3334F00CD0FD5 /* 球队详情 */,
 			);
@@ -5104,13 +5108,22 @@
 			path = "社区导航文件";
 			sourceTree = "<group>";
 		};
+		8281BE521CEC41A800C5BD31 /* 球队相册 */ = {
+			isa = PBXGroup;
+			children = (
+				8281BE531CEC41D200C5BD31 /* JGTeamPhotoModel.h */,
+				8281BE541CEC41D200C5BD31 /* JGTeamPhotoModel.m */,
+			);
+			path = "球队相册";
+			sourceTree = "<group>";
+		};
 		828A99E11CE3165B00AF9860 /* 球队相册 */ = {
 			isa = PBXGroup;
 			children = (
-				828A99E21CE3167800AF9860 /* JGTeamCreatePhotoController.h */,
-				828A99E31CE3167800AF9860 /* JGTeamCreatePhotoController.m */,
 				82D595E71CE4604500CD9587 /* JGTeamPhotoViewController.h */,
 				82D595E81CE4604500CD9587 /* JGTeamPhotoViewController.m */,
+				828A99E21CE3167800AF9860 /* JGTeamCreatePhotoController.h */,
+				828A99E31CE3167800AF9860 /* JGTeamCreatePhotoController.m */,
 				828A99E51CE325BB00AF9860 /* JGPhotoAlbumViewController.h */,
 				828A99E61CE325BB00AF9860 /* JGPhotoAlbumViewController.m */,
 				8294872C1CE9C92A0018D3F6 /* JGLUpdataPhotoController.h */,
@@ -6120,6 +6133,7 @@
 				36067BC41C97EF16001AE22C /* ContactViewController.m in Sources */,
 				36BF00901BC772EF005B3CE2 /* AccountDetailController.m in Sources */,
 				36BF01DC1BC77BB0005B3CE2 /* UserInformationModel.m in Sources */,
+				8281BE551CEC41D200C5BD31 /* JGTeamPhotoModel.m in Sources */,
 				20CA14021CEB086600DA15B9 /* JsonHttp.m in Sources */,
 				36BFFFFD1BC770C4005B3CE2 /* ChartCellFrame.m in Sources */,
 				36BF00851BC772EF005B3CE2 /* MyTradeViewController.m in Sources */,
