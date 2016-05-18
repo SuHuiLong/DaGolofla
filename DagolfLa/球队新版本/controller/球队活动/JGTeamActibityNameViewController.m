@@ -43,6 +43,7 @@ static NSString *const JGActivityNameBaseCellIdentifier = @"JGActivityNameBaseCe
     }
     
     [self createTeamActibityNameTableView];
+    
 }
 #pragma mark -- 创建保存 ＋ 发布 按钮
 - (void)createSaveAndLaunchBtn{
@@ -69,6 +70,41 @@ static NSString *const JGActivityNameBaseCellIdentifier = @"JGActivityNameBaseCe
     [self.view addSubview:applyBtn];
 }
 - (void)applyBtnClick:(UIButton *)btn{
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    [dict setObject:@"189781710290821120" forKey:@"teamKey"];//球队key
+    NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
+    [dict setObject:[user objectForKey:@"userId"] forKey:@"userKey"];//用户key
+    //121212
+    [dict setObject:@"121212" forKey:@"userKey"];
+    
+    [dict setObject:@"神奇勇气2" forKey:@"name"];//活动名字
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    NSDate *date = [dateFormatter dateFromString:@"2016-05-14 16:01:03"];
+    [dict setObject:@"" forKey:@"beginDate"];//活动开始时间
+    [dict setObject:@"" forKey:@"endDate"];//活动结束时间
+    [dict setObject:@"" forKey:@"ballKey"];//球场id
+    [dict setObject:@"" forKey:@"ballName"];//球场名称
+    [dict setObject:@"" forKey:@"ballGeohash"];//球场坐标
+    [dict setObject:@"" forKey:@"info"];//活动简介
+    [dict setObject:@"" forKey:@"costInfo"];//费用说明
+    [dict setObject:@"" forKey:@"memberPrice"];//会员价
+    [dict setObject:@"" forKey:@"guestPrice"];//嘉宾价
+    [dict setObject:@"" forKey:@"subsidyPrice"];//补贴价
+    [dict setObject:@"" forKey:@"maxCount"];//最大人员数
+    [dict setObject:@"" forKey:@"isClose"];//活动是否结束 0 : 开始 , 1 : 已结束
+    [dict setObject:@"" forKey:@"createTime"];//活动创建时间
+    [dict setObject:@"" forKey:@"sumCount"];//活动报名总人数
+
+    //createTeamActivity
+    [[JsonHttp jsonHttp]httpRequest:@"team/createTeamActivity" withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
+        NSLog(@"%@", errType);
+    } completionBlock:^(id data) {
+        NSLog(@"data = %@", data);
+        
+    }];
+    
+    
     JGTeamApplyViewController * applyCtrl = [[JGTeamApplyViewController alloc]initWithNibName:@"JGTeamApplyViewController" bundle:nil];
     [self.navigationController pushViewController:applyCtrl animated:YES];
 }

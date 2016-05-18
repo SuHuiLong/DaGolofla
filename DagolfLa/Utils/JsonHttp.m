@@ -33,9 +33,6 @@ static JsonHttp *jsonHttp = nil;
 {
     url = [NSString stringWithFormat:@"%@%@",PORTOCOL_APP_ROOT_URL,url];
     NSLog(@"%@",url);
-    NSData *data=[NSJSONSerialization dataWithJSONObject:postData options:NSJSONWritingPrettyPrinted error:nil];
-    NSMutableString *jsonString=[[NSMutableString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-//    NSString *str1=[string stringByReplacingOccurrencesOfString:@"\n" withString:@""];
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     //设置请求格式Json
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
@@ -49,7 +46,7 @@ static JsonHttp *jsonHttp = nil;
     NSComparisonResult comparisonResult2 = [httpMethod caseInsensitiveCompare:@"POST"];
     if (comparison1 == NSOrderedSame)
     {
-        [manager GET:url parameters:@{@"json":jsonString} success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [manager GET:url parameters:postData success:^(AFHTTPRequestOperation *operation, id responseObject) {
             if (completionBlock) {
                 completionBlock(responseObject);
             }
@@ -73,18 +70,23 @@ static JsonHttp *jsonHttp = nil;
         }
         
         if (!isFile) {//判断是上传数据还是下请求数据
-            [manager POST:url parameters:@{@"json":jsonString} success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            [manager POST:url parameters:postData success:^(AFHTTPRequestOperation *operation, id responseObject) {
                 if (completionBlock) {
                     completionBlock(responseObject);
                 }
             } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                if ([[error.userInfo objectForKey:@"_kCFStreamErrorCodeKey"] integerValue] == 60) {
+                    [Helper downLoadDataOverrun];
+                }else if ([[error.userInfo objectForKey:@"_kCFStreamErrorCodeKey"] integerValue] == 51) {
+                    [Helper netWorkError];
+                }
                 if (failedBlock) {
                     failedBlock(error);
                 }
             }];
         }else
         {
-            [manager POST:url parameters:@{@"json":jsonString} constructingBodyWithBlock:^(id formData) {
+            [manager POST:url parameters:postData constructingBodyWithBlock:^(id formData) {
                 //取出需要上传的图片数据
                 for (NSString *key in postData) {
                     
