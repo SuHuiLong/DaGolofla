@@ -84,7 +84,7 @@ static NSString *const JGActivityNameBaseCellIdentifier = @"JGActivityNameBaseCe
     [dict setObject:@"" forKey:@"beginDate"];//活动开始时间
     [dict setObject:@"" forKey:@"endDate"];//活动结束时间
     [dict setObject:@"" forKey:@"ballKey"];//球场id
-    [dict setObject:@"" forKey:@"ballName"];//球场名称
+    [dict setObject:@"蝴蝶防护" forKey:@"ballName"];//球场名称
     [dict setObject:@"" forKey:@"ballGeohash"];//球场坐标
     [dict setObject:@"" forKey:@"info"];//活动简介
     [dict setObject:@"" forKey:@"costInfo"];//费用说明

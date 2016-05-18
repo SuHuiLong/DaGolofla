@@ -69,7 +69,6 @@
 		20CA13DC1CE9F2C200DA15B9 /* UIColor+ColorTransfer.m in Sources */ = {isa = PBXBuildFile; fileRef = 20CA13DB1CE9F2C200DA15B9 /* UIColor+ColorTransfer.m */; };
 		20CA13FF1CEAF07100DA15B9 /* SXPickPhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = 20CA13FE1CEAF07100DA15B9 /* SXPickPhoto.m */; };
 		20CA14021CEB086600DA15B9 /* JsonHttp.m in Sources */ = {isa = PBXBuildFile; fileRef = 20CA14011CEB086600DA15B9 /* JsonHttp.m */; };
-		20CA14051CEC1F5F00DA15B9 /* UINavigationController+FDFullscreenPopGesture.m in Sources */ = {isa = PBXBuildFile; fileRef = 20CA14041CEC1F5F00DA15B9 /* UINavigationController+FDFullscreenPopGesture.m */; };
 		360148F81C1FFE5E0074C395 /* ManageFinfishModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 360148F71C1FFE5E0074C395 /* ManageFinfishModel.m */; };
 		36067BAB1C96A9FB001AE22C /* ScreenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 36067BAA1C96A9FB001AE22C /* ScreenViewController.m */; };
 		36067BAF1C96AA31001AE22C /* InformViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 36067BAE1C96AA31001AE22C /* InformViewController.m */; };
@@ -939,8 +938,6 @@
 		20CA13FE1CEAF07100DA15B9 /* SXPickPhoto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SXPickPhoto.m; sourceTree = "<group>"; };
 		20CA14001CEB086600DA15B9 /* JsonHttp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JsonHttp.h; sourceTree = "<group>"; };
 		20CA14011CEB086600DA15B9 /* JsonHttp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JsonHttp.m; sourceTree = "<group>"; };
-		20CA14031CEC1F5F00DA15B9 /* UINavigationController+FDFullscreenPopGesture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationController+FDFullscreenPopGesture.h"; sourceTree = "<group>"; };
-		20CA14041CEC1F5F00DA15B9 /* UINavigationController+FDFullscreenPopGesture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationController+FDFullscreenPopGesture.m"; sourceTree = "<group>"; };
 		360148F61C1FFE5E0074C395 /* ManageFinfishModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ManageFinfishModel.h; sourceTree = "<group>"; };
 		360148F71C1FFE5E0074C395 /* ManageFinfishModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ManageFinfishModel.m; sourceTree = "<group>"; };
 		36067BA91C96A9FB001AE22C /* ScreenViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScreenViewController.h; sourceTree = "<group>"; };
@@ -4201,8 +4198,6 @@
 		36BFFF431BC76D09005B3CE2 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				20CA14031CEC1F5F00DA15B9 /* UINavigationController+FDFullscreenPopGesture.h */,
-				20CA14041CEC1F5F00DA15B9 /* UINavigationController+FDFullscreenPopGesture.m */,
 				65B5969E1CAD43AC007AB83A /* ContantHead.h */,
 				20CA14001CEB086600DA15B9 /* JsonHttp.h */,
 				20CA14011CEB086600DA15B9 /* JsonHttp.m */,
@@ -5975,7 +5970,6 @@
 				36BF005D1BC77296005B3CE2 /* AddFootViewController.m in Sources */,
 				36BF01641BC77611005B3CE2 /* CustomIOSAlertView.m in Sources */,
 				36BF003C1BC771FB005B3CE2 /* ComDetailViewCell.m in Sources */,
-				20CA14051CEC1F5F00DA15B9 /* UINavigationController+FDFullscreenPopGesture.m in Sources */,
 				36BF008B1BC772EF005B3CE2 /* MySetPasswordController.m in Sources */,
 				36DCA73C1C22630500E12DF7 /* ScoreProStandedModel.m in Sources */,
 				36D39B3E1BCCE23100C0B197 /* MBProgressHUD.m in Sources */,
