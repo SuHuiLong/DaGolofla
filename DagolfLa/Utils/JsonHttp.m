@@ -29,17 +29,11 @@ static JsonHttp *jsonHttp = nil;
 {
     url = [NSString stringWithFormat:@"%@%@",PORTOCOL_APP_ROOT_URL,url];
     NSLog(@"%@",url);
-
-    NSData *data=[NSJSONSerialization dataWithJSONObject:postData options:NSJSONWritingPrettyPrinted error:nil];
-    NSMutableString *jsonString=[[NSMutableString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-//    NSString *str1=[string stringByReplacingOccurrencesOfString:@"\n" withString:@""];
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     NSMutableDictionary *postDict = [NSMutableDictionary dictionary];
     [postDict setObject:postData forKey:jsonKey];
     //申明请求的数据是json类型
     manager.requestSerializer=[AFJSONRequestSerializer serializer];
-    //如果报接受类型不一致请替换一致text/html或别的
-    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
     //返回数据格式
     manager.responseSerializer = [AFJSONResponseSerializer serializerWithReadingOptions:NSJSONReadingMutableContainers];
     //https安全策略
