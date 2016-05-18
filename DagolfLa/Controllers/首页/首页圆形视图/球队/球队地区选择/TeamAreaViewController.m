@@ -26,7 +26,6 @@
 {
     UIView* _viewHeader;
     
-    UICollectionView* _collectionView;
     NSMutableArray* _dataProArray;
     NSMutableArray* _numProArray;
     
