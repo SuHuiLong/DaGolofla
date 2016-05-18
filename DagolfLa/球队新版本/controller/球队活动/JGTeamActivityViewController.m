@@ -32,7 +32,7 @@
         [self createAdminBtn];
     }
     
-    [self loadData];
+//    [self loadData];
 }
 - (void)loadData{
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
