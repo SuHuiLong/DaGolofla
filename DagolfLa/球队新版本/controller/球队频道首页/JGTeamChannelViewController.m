@@ -121,11 +121,11 @@
     if (button.tag == 200) {
         NSMutableDictionary *dic = [NSMutableDictionary dictionary];
         [dic setObject:@244 forKey:@"userKey"];
-        [[JsonHttp jsonHttp] httpRequest:@"team/getMyTeamList" withData:dic requestMethod:@"POST" failedBlock:^(id errType) {
-            NSLog(@"erro");
-        } completionBlock:^(id data) {
-            NSLog(@"%@", data);
-        }];
+//        [[JsonHttp jsonHttp] httpRequest:@"team/getMyTeamList" withData:dic requestMethod:@"POST" failedBlock:^(id errType) {
+//            NSLog(@"erro");
+//        } completionBlock:^(id data) {
+//            NSLog(@"%@", data);
+//        }];
         JGLMyTeamViewController* myVc = [[JGLMyTeamViewController alloc]init];
         [self.navigationController pushViewController:myVc animated:YES];
     }else if (button.tag == 201) {

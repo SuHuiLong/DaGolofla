@@ -31,7 +31,11 @@ static JsonHttp *jsonHttp = nil;
     NSLog(@"%@",url);
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     NSMutableDictionary *postDict = [NSMutableDictionary dictionary];
-    [postDict setObject:postData forKey:jsonKey];
+    if (jsonKey == nil) {
+        postDict = [NSMutableDictionary dictionaryWithDictionary:postData];
+    }else{
+        [postDict setObject:postData forKey:jsonKey];
+    }
     //申明请求的数据是json类型
     manager.requestSerializer=[AFJSONRequestSerializer serializer];
     //返回数据格式
