@@ -120,7 +120,7 @@
     
     if (button.tag == 200) {
         NSMutableDictionary *dic = [NSMutableDictionary dictionary];
-        [dic setObject:@244 forKey:@"userKey"];
+//        [dic setObject:@244 forKey:@"userKey"];
 //        [[JsonHttp jsonHttp] httpRequest:@"team/getMyTeamList" withData:dic requestMethod:@"POST" failedBlock:^(id errType) {
 //            NSLog(@"erro");
 //        } completionBlock:^(id data) {
