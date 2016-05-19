@@ -19,4 +19,7 @@
 
 @property (nonatomic, strong)JGHLaunchActivityModel *model;
 
+//活动id
+@property (nonatomic, assign)NSInteger teamActivityKey;
+
 @end
