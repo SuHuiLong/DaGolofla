@@ -6,18 +6,29 @@
 //  Copyright © 2016年 bhxx. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import "BaseModel.h"
 
-@interface JGTeamAcitivtyModel : NSObject
+@interface JGTeamAcitivtyModel : BaseModel
+
 //活动列表标题
-@property (strong, nonatomic) NSString *activitytitle;
+@property (strong, nonatomic) NSString *name;
 //报名
 @property (strong, nonatomic) NSString *Apply;
-//活动时间
-@property (strong, nonatomic) NSString *activityName;
+//活动id
+@property (assign, nonatomic) NSInteger *teamActivityKey;
+//球队id
+@property (assign, nonatomic) NSInteger *teamKey;
+//用户id
+@property (assign, nonatomic) NSInteger *userKey;
+//创建时间
+@property (assign, nonatomic) NSInteger *createTime;
+//开始时间
+@property (assign, nonatomic) NSInteger *beginDate;
+//结束时间
+@property (assign, nonatomic) NSInteger *endDate;
 //活动地址
-@property (strong, nonatomic) NSString *activityAddress;
+@property (strong, nonatomic) NSString *ballName;
 //报名人数
-@property (strong, nonatomic) NSString *applyNumber;
+@property (assign, nonatomic) NSInteger *sumCount;
 
 @end

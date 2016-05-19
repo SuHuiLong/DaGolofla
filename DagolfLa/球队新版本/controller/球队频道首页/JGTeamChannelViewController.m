@@ -15,9 +15,11 @@
 #import "JGApplyMaterialViewController.h"
 #import "JGTeamDetailViewController.h"
 #import "JGCreateTeamViewController.h"
-
+#import "JGTeamChannelActivityTableViewCell.h"
 #import "JGTeamActivityViewController.h"
 #import "JGLMyTeamViewController.h"
+#import "JGTeamAcitivtyModel.h"
+
 @interface JGTeamChannelViewController ()<UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, strong)UIImageView *topView;
@@ -25,6 +27,8 @@
 @property (nonatomic, strong)JGTeamChannelTableView *tableView;
 @property (nonatomic, strong)NSMutableArray *dataArray;
 @property (nonatomic, strong)NSMutableArray *buttonArray;
+
+@property (nonatomic, strong)NSMutableArray *myActivityArray;
 
 @end
 
@@ -88,8 +92,8 @@
     self.tableView.dataSource = self;
     self.tableView.separatorStyle = UITableViewCellAccessoryNone;
     self.tableView.rowHeight = 83 * screenWidth / 320;
-    self.dataArray = [NSMutableArray arrayWithObjects:@"1我的球队", @"1球队活动", @"1球队大厅", nil];
-//    self.dataArray = [NSMutableArray arrayWithCapacity:0];
+//    self.dataArray = [NSMutableArray arrayWithObjects:@"1我的球队", @"1球队活动", @"1球队大厅", nil];
+    self.dataArray = [NSMutableArray arrayWithCapacity:0];
     UILabel *titleLB = [[UILabel alloc] initWithFrame:CGRectMake(0, 240 * screenWidth / 320, screenWidth, 30 * screenWidth / 320)];
     if ([self.dataArray count] != 0) {
         titleLB.text = @" 近期活动";
@@ -101,10 +105,27 @@
     
     [self.view addSubview:self.tableView];
     
-    
- 
+    [self setData];
     
     // Do any additional setup after loading the view.
+}
+
+
+- (void)setData{
+    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+    [dic setObject:@244 forKey:@"userKey"];
+    [dic setValue:@0 forKey:@"offset"];
+    [[JsonHttp jsonHttp] httpRequest:@"team/getMyTeamActivityList" JsonKey:nil withData:dic requestMethod:@"POST" failedBlock:^(id errType) {
+        NSLog(@"getMyTeamActivityList ***** error");
+    } completionBlock:^(id data) {
+
+        for (NSDictionary *dicModel in data[@"activityList"]) {
+            JGTeamAcitivtyModel *model = [[JGTeamAcitivtyModel alloc] init];
+            [model setValuesForKeysWithDictionary:dicModel];
+            [self.myActivityArray addObject:model];
+        }
+        [self.tableView reloadData];
+    }];
 }
 
 - (void)creatTeam{
@@ -143,23 +164,22 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-        return self.buttonArray.count;
+        return self.myActivityArray.count;
 }
 
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    if ([self.dataArray count] != 0) {
+    if ([self.myActivityArray count] == 0) {
         JGTeamChannelTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"cell"];
-        cell.nameLabel.text = self.dataArray[indexPath.row];
-        cell.adressLabel.text = @"测试数据 Testtttt";
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
         return cell;
     }else{
-        JGTeamChannelTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"cellActivity"];
-        cell.nameLabel.text = self.buttonArray[indexPath.row];
-        cell.adressLabel.text = @"测试数据 Test";
+        JGTeamChannelActivityTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"cellActivity"];
+        if (self.myActivityArray) {
+            cell.activityModel = self.myActivityArray[indexPath.row];
+        }
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
     }
@@ -177,6 +197,12 @@
 
 }
 
+- (NSMutableArray *)myActivityArray{
+    if (!_myActivityArray) {
+        _myActivityArray = [[NSMutableArray alloc] init];
+    }
+    return _myActivityArray;
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
