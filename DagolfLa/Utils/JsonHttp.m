@@ -102,7 +102,7 @@ static JsonHttp *jsonHttp = nil;
                          
                                                 fileName:key
                          
-                                                mimeType:@"image/jpg"];
+                                                mimeType:@"image/png"];
                         
                     }
                 }
@@ -118,6 +118,55 @@ static JsonHttp *jsonHttp = nil;
         }
     }
 }
+
+
+
+
+- (void)httpRequest:(NSString *)url JsonKey:(NSString *)jsonKey withData:(NSDictionary *)postData andArray:(NSArray *)arrayPic requestMethod:(NSString *)httpMethod failedBlock:(GBHEFailedBlock)failedBlock completionBlock:(GBHECompletionBlock)completionBlock
+{
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    NSMutableDictionary *postDict = [NSMutableDictionary dictionary];
+    if (jsonKey == nil) {
+        postDict = [NSMutableDictionary dictionaryWithDictionary:postData];
+    }else{
+        [postDict setObject:postData forKey:jsonKey];
+    }
+    [manager setRequestSerializer:[AFJSONRequestSerializer serializer]];
+    //    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    [manager.requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Accept"];
+    [manager.requestSerializer setValue:@"application/json; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
+    
+    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/plain", nil];
+    
+    [manager POST:url parameters:postDict constructingBodyWithBlock:^(id formData) {
+        //取出需要上传的图片数据
+        for (NSString *key in postData) {
+            
+            id value = postData[key];
+            
+            if ([value isKindOfClass:[NSData class]]) {
+                
+                [formData appendPartWithFileData:value
+                 
+                                            name:key
+                 
+                                        fileName:key
+                 
+                                        mimeType:@"image/png"];
+                
+            }
+        }
+    } success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        if (completionBlock) {
+            completionBlock(responseObject);
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        if (failedBlock) {
+            failedBlock(error);
+        }
+    }];
+}
+
 
 - (void)cancelRequest
 {

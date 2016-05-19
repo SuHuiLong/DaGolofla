@@ -15,4 +15,13 @@
     // Initialization code
 }
 
+-(void)showData:(JGLPhotoAlbumModel *)model
+{
+    //图片规则未定
+    _timeLabel.text = [NSString stringWithFormat:@"%@",model.createTime];
+    
+    _nameLabel.text = [NSString stringWithFormat:@"%@",model.groupsName];
+}
+
+
 @end
