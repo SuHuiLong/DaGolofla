@@ -7,6 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "JGTeamDetail.h"
+#import "JGTeamDetail.h"
 
 @interface JGTeamChannelTableViewCell : UITableViewCell
 
@@ -14,5 +16,6 @@
 @property (nonatomic, strong)UILabel *nameLabel;
 @property (nonatomic, strong)UILabel *adressLabel;
 @property (nonatomic, strong)UILabel *describLabel;
+@property (nonatomic, strong)JGTeamDetail *teamModel;
 
 @end

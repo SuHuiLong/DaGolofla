@@ -43,7 +43,7 @@
     self.nameLabel.text = activityModel.name;
 //    self.dateLabel.text = activityModel.createTime;
     self.adressLabel.text = activityModel.ballName;
-    self.describLabel.text = [NSString stringWithFormat:@"%@", activityModel.sumCount] ;
+    self.describLabel.text = [NSString stringWithFormat:@"%zd", activityModel.sumCount] ;
 }
 
 - (void)awakeFromNib {
