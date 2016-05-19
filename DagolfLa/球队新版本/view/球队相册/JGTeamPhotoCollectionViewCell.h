@@ -7,11 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "JGLPhotoAlbumModel.h"
 
 @interface JGTeamPhotoCollectionViewCell : UICollectionViewCell
 @property (weak, nonatomic) IBOutlet UIImageView *iconIngv;
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UIButton *manageBtn;
+
+
+-(void)showData:(JGLPhotoAlbumModel *)model;
+
 
 @end

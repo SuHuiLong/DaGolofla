@@ -19,16 +19,21 @@
 #import "JGTeamActivityViewController.h"
 #import "JGLMyTeamViewController.h"
 #import "JGTeamAcitivtyModel.h"
+#import "JGTeamDetail.h"
+#import "JGTeamActivityCell.h"
+#import "JGTeamActibityNameViewController.h"
+
 
 @interface JGTeamChannelViewController ()<UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, strong)UIImageView *topView;
 
 @property (nonatomic, strong)JGTeamChannelTableView *tableView;
-@property (nonatomic, strong)NSMutableArray *dataArray;
 @property (nonatomic, strong)NSMutableArray *buttonArray;
 
+@property (nonatomic, strong)NSMutableArray *teamArray;
 @property (nonatomic, strong)NSMutableArray *myActivityArray;
+@property (nonatomic, strong)UILabel *titleLB;
 
 @end
 
@@ -92,40 +97,68 @@
     self.tableView.dataSource = self;
     self.tableView.separatorStyle = UITableViewCellAccessoryNone;
     self.tableView.rowHeight = 83 * screenWidth / 320;
-//    self.dataArray = [NSMutableArray arrayWithObjects:@"1我的球队", @"1球队活动", @"1球队大厅", nil];
-    self.dataArray = [NSMutableArray arrayWithCapacity:0];
-    UILabel *titleLB = [[UILabel alloc] initWithFrame:CGRectMake(0, 240 * screenWidth / 320, screenWidth, 30 * screenWidth / 320)];
-    if ([self.dataArray count] != 0) {
-        titleLB.text = @" 近期活动";
-    }else{
-        titleLB.text = @" 推荐球队";
-    }
-    
-    [self.view addSubview:titleLB];
     
     [self.view addSubview:self.tableView];
     
     [self setData];
+    
+    self.titleLB = [[UILabel alloc] initWithFrame:CGRectMake(0, 240 * screenWidth / 320, screenWidth, 30 * screenWidth / 320)];
+    [self.view addSubview:self.titleLB];
     
     // Do any additional setup after loading the view.
 }
 
 
 - (void)setData{
-    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
-    [dic setObject:@244 forKey:@"userKey"];
-    [dic setValue:@0 forKey:@"offset"];
-    [[JsonHttp jsonHttp] httpRequest:@"team/getMyTeamActivityList" JsonKey:nil withData:dic requestMethod:@"POST" failedBlock:^(id errType) {
-        NSLog(@"getMyTeamActivityList ***** error");
+    
+    NSMutableDictionary *getMyTeam = [NSMutableDictionary dictionary];
+    [getMyTeam setObject:@244 forKey:@"userKey"];
+    [getMyTeam setValue:@0 forKey:@"offset"];
+    [[JsonHttp jsonHttp] httpRequest:@"team/getMyTeamList" JsonKey:nil withData:getMyTeam requestMethod:@"POST" failedBlock:^(id errType) {
+        NSLog(@"%@", errType);
     } completionBlock:^(id data) {
-
-        for (NSDictionary *dicModel in data[@"activityList"]) {
-            JGTeamAcitivtyModel *model = [[JGTeamAcitivtyModel alloc] init];
+        
+        for (NSDictionary *dicModel in data[@"teamList"]) {
+            JGTeamDetail *model = [[JGTeamDetail alloc] init];
             [model setValuesForKeysWithDictionary:dicModel];
-            [self.myActivityArray addObject:model];
+            [self.teamArray addObject:model];
         }
         [self.tableView reloadData];
-    }];
+        if ([_teamArray count] != 0) {
+            self.titleLB.text = @" 近期活动";
+            NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+            [dic setObject:@244 forKey:@"userKey"];
+            [dic setValue:@0 forKey:@"offset"];
+            [[JsonHttp jsonHttp] httpRequest:@"team/getMyTeamActivityList" JsonKey:nil withData:dic requestMethod:@"POST" failedBlock:^(id errType) {
+                NSLog(@"getMyTeamActivityList ***** error");
+            } completionBlock:^(id data) {
+                
+                for (NSDictionary *dicModel in data[@"activityList"]) {
+                    JGTeamAcitivtyModel *model = [[JGTeamAcitivtyModel alloc] init];
+                    [model setValuesForKeysWithDictionary:dicModel];
+                    [self.myActivityArray addObject:model];
+                }
+                [self.tableView reloadData];
+            }];
+        }else{
+            self.titleLB.text = @" 推荐球队";
+            [[JsonHttp jsonHttp] httpRequest:@"team/getTeamList" JsonKey:nil withData:nil requestMethod:@"POST" failedBlock:^(id errType) {
+                NSLog(@"getTeamList ***** error");
+            } completionBlock:^(id data) {
+                
+                for (NSDictionary *dicModel in data[@"getTeamList"]) {
+                    JGTeamDetail *model = [[JGTeamDetail alloc] init];
+                    [model setValuesForKeysWithDictionary:dicModel];
+                    [self.teamArray addObject:model];
+                }
+                [self.tableView reloadData];
+            }];
+
+        }
+}];
+    
+    
+
 }
 
 - (void)creatTeam{
@@ -164,37 +197,46 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-        return self.myActivityArray.count;
-}
 
+        return ([self.myActivityArray count] != 0 ? [self.myActivityArray count] : [self.teamArray count]);
+}
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     if ([self.myActivityArray count] == 0) {
         JGTeamChannelTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"cell"];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        
+        cell.teamModel = self.teamArray[indexPath.row];
         return cell;
+        
     }else{
+        
         JGTeamChannelActivityTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"cellActivity"];
-        if (self.myActivityArray) {
-            cell.activityModel = self.myActivityArray[indexPath.row];
-        }
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        cell.activityModel = self.myActivityArray[indexPath.row];
         return cell;
     }
 }
 
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-
-    if (indexPath.row == 0) {
-        JGTeamDetailStylelTwoViewController *detailV = [[JGTeamDetailStylelTwoViewController alloc] init];
-        [self.navigationController pushViewController:detailV animated:YES];
+    
+    if ([self.teamArray count] == 0) {
+        JGTeamActibityNameViewController *teamActivityVC = [[JGTeamActibityNameViewController alloc] init];
+        JGTeamAcitivtyModel *model = self.myActivityArray[indexPath.row];
+           teamActivityVC.teamActivityKey = model.timeKey;
+        [self.navigationController pushViewController:teamActivityVC animated:YES];
+        
     }else{
-        JGTeamDetailViewController *detailVC = [[JGTeamDetailViewController alloc] init];
-        [self.navigationController pushViewController:detailVC animated:YES];
-    }
-
+        
+        if (indexPath.row == 0) {
+            JGTeamDetailStylelTwoViewController *detailV = [[JGTeamDetailStylelTwoViewController alloc] init];
+            [self.navigationController pushViewController:detailV animated:YES];
+        }else{
+            JGTeamDetailViewController *detailVC = [[JGTeamDetailViewController alloc] init];
+            [self.navigationController pushViewController:detailVC animated:YES];
+        }
+    }   
 }
 
 - (NSMutableArray *)myActivityArray{
@@ -202,6 +244,13 @@
         _myActivityArray = [[NSMutableArray alloc] init];
     }
     return _myActivityArray;
+}
+
+- (NSMutableArray *)teamArray{
+    if (!_teamArray) {
+        _teamArray = [[NSMutableArray alloc] init];
+    }
+    return _teamArray;
 }
 
 - (void)didReceiveMemoryWarning {

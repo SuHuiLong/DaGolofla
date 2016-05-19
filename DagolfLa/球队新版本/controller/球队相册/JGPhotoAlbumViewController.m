@@ -27,7 +27,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.title = @"球队相册";
+    if (![Helper isBlankString:_strTitle]) {
+        self.title = _strTitle;
+    }
+    else
+    {
+        self.title = @"球队相册";
+    }
     
     
     UIBarButtonItem* rightBtn = [[UIBarButtonItem alloc]initWithTitle:@"上传" style:UIBarButtonItemStylePlain target:self action:@selector(upDataClick)];
@@ -43,6 +49,10 @@
 -(void)upDataClick
 {
     JGLUpdataPhotoController* upVc = [[JGLUpdataPhotoController alloc]init];
+    if (![Helper isBlankString:_strTitle]) {
+        upVc.strTitle = _strTitle;
+    }
+    upVc.strTimeKey = _strTimeKey;
     [self.navigationController pushViewController:upVc animated:YES];
 }
 

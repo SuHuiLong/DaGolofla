@@ -9,23 +9,10 @@
 #import "JGLUpdataPhotoController.h"
 
 #import "ZYQAssetPickerController.h"
-#import "IWTextView.h"
-#import "Helper.h"
 #import "BrowseImagesViewController.h"
 
 
-
-#import "Helper.h"
-#import "PostDataRequest.h"
-//#import "MBProgressHUD.h"
 #define LINE_COUNT 4
-#define kUsersave_URL @"userMood/save.do"
-
-#import "AreaViewController.h"
-#import "DateTimeViewController.h"
-#import "UIView+ChangeFrame.h"
-
-#import "MBProgressHUD.h"
 
 #import "BallParkViewController.h"
 @interface JGLUpdataPhotoController ()<UITextViewDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,ZYQAssetPickerControllerDelegate,UIScrollViewDelegate,UIPickerViewAccessibilityDelegate,UIPickerViewDataSource,UIPickerViewDelegate>
@@ -35,22 +22,11 @@
     
     UIView* _viewTime, * _viewNum, *_viewWhiteBase;
     
-    IWTextView* _textView;
     UIView* _viewBase;
     UIScrollView* _scrollView;
-    CGFloat _contentSizeY;
-    
-    UIView* _viewLine;
-    UIView* _viewArea;
-    UIButton* _fabuBtn;
-    
-    int indexBtn;
-    
-    UILabel* _labelChoose;
-    
+
     //发布按钮
     UIButton* _btnAdd;
-    NSInteger _btnNum;
     
     // 左侧的箭头
     UIImageView *_leftImage;
@@ -92,10 +68,7 @@
     
     //添加按钮
     [self createButton];
-    
-    //创建照片和心情视图
-    [self createView];
-    
+
     /**
      相册照片添加的执行方法
      
@@ -121,63 +94,12 @@
     
     UILabel* labelTitle = [[UILabel alloc]initWithFrame:CGRectMake(10*ScreenWidth/375, 0, screenWidth-20*ScreenWidth/375, 45*ScreenWidth/375)];
     labelTitle.textAlignment = NSTextAlignmentLeft;
-    labelTitle.text = @"相册名称:海南打球照片";
+    labelTitle.text = [NSString stringWithFormat:@"相册名称:%@",_strTitle];
     labelTitle.textColor = [UIColor lightGrayColor];
     labelTitle.font = [UIFont systemFontOfSize:15*ScreenWidth/375];
     [viewTitle addSubview:labelTitle];
-    
-    
+  
 }
-
-
-//文字设置
--(void)createView
-{
-    _viewBase = [[UIView alloc]initWithFrame:CGRectMake(0*ScreenWidth/375, 65*ScreenWidth/375, ScreenWidth, 90*ScreenWidth/375)];
-    _viewBase.backgroundColor = [UIColor whiteColor];
-    
-    _contentSizeY = 10*ScreenWidth/375 + 90*ScreenWidth/375;
-    [_scrollView addSubview:_viewBase];
-    
-    //发布的文字
-    _textView = [[IWTextView alloc]initWithFrame:CGRectMake(5*ScreenWidth/375, 5*ScreenWidth/375, _viewBase.frame.size.width-10*ScreenWidth/375, 80*ScreenWidth/375)];
-    //垂直方向上可以拖拽
-    _textView.alwaysBounceVertical = NO;
-    _textView.delegate = self;       //设置代理方法的实现类
-    _textView.placeholder = @"说点什么吧";
-    [_viewBase addSubview:_textView];
-    _textView.font = [UIFont systemFontOfSize:15*ScreenWidth/375];
-    _textView.tag = 100;
-    // 1.监听textView文字改变的通知
-    [IWNotificationCenter addObserver:self selector:@selector(textDidChange) name:UITextViewTextDidChangeNotification object:_textView];
-}
-/**
- *  监听文字改变
- */
-- (void)textDidChange
-{
-    self.navigationItem.rightBarButtonItem.enabled = (_textView.text.length != 0);
-}
-
-#pragma mark --键盘响应事件
-//键盘响应
--(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
-{
-    UITextField * textField=(UITextField*)[self.view viewWithTag:100];
-    
-    [textField resignFirstResponder];
-}
--(BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
-{
-    if ([text isEqualToString:@"\n"]) {
-        [textView resignFirstResponder];
-        return NO;
-    }
-    return YES;
-}
-
-
-
 
 
 
@@ -194,12 +116,12 @@
     
     _imageWidth = (ScreenWidth - ((LINE_COUNT + 1) * 20*ScreenWidth/375)) / LINE_COUNT;
     
-    _contentView = [[UIView alloc] initWithFrame:CGRectMake(0*ScreenWidth/375, 155*ScreenWidth/375, ScreenWidth, _imageWidth + 2 *10 *ScreenWidth/375)];
+    _contentView = [[UIView alloc] initWithFrame:CGRectMake(0*ScreenWidth/375, 65*ScreenWidth/375, ScreenWidth, _imageWidth + 2 *10 *ScreenWidth/375)];
     _contentView.backgroundColor = [UIColor whiteColor];
     _contentView.clipsToBounds = YES;
     [_scrollView addSubview:_contentView];
     
-    _contentSizeY = _contentSizeY + _imageWidth + 2 *10 *ScreenWidth/375;
+//    _contentSizeY = _contentSizeY + _imageWidth + 2 *10 *ScreenWidth/375;
     
     _addButton = [UIButton buttonWithType:UIButtonTypeCustom];
     _addButton.frame = CGRectMake(5*ScreenWidth/375, 10*ScreenWidth/375, _imageWidth, _imageWidth);
@@ -219,8 +141,6 @@
 - (void)addButtonClick:(UIButton *)sender {
     
     if (_selectImages.count < 9) {
-        indexBtn++;
-        [_textView resignFirstResponder];
         [_actionSheet showInView:_scrollView];
     }
     else
@@ -366,15 +286,6 @@
     //重写添加足迹按扭得位置
     _btnAdd.frame = CGRectMake(10*ScreenWidth/375, _contentView.frame.origin.y+_addButton.bounds.size.height + _addButton.frame.origin.y + 30*ScreenWidth/375, ScreenWidth-20*ScreenWidth/375, 44*ScreenWidth/375);
     
-    
-    _contentSizeY = _contentSizeY + _addButton.bounds.size.height + _addButton.frame.origin.y + 20*ScreenWidth/375 - _imageWidth + 2 *10 *ScreenWidth/375;
-    
-    _viewLine.frame = CGRectMake(10*ScreenWidth/375, _contentView.frame.size.height - 2, ScreenWidth -20*ScreenWidth/375, 2);
-    
-    _viewArea.frame = CGRectMake(10*ScreenWidth/375, 100*ScreenWidth/375 + _addButton.bounds.size.height + _addButton.frame.origin.y + 20*ScreenWidth/375, ScreenWidth - 20*ScreenWidth/375, 44*ScreenWidth/375);
-    
-    _fabuBtn.frame = CGRectMake(10*ScreenWidth/375, 130*ScreenWidth/375+ _addButton.bounds.size.height + _addButton.frame.origin.y, ScreenWidth - 20*ScreenWidth/375, 44);
-    
 }
 //重设图片的位置
 - (void)resetAllImagePosition {
@@ -400,7 +311,6 @@
 - (CGRect)frameWithButtonIndex:(NSInteger)index {
     
     index ++;
-    _btnNum = index;
     NSInteger row = ceil(index * 1.0 / LINE_COUNT); // 第几行
     NSInteger cloumn = index % LINE_COUNT; // 第几列
     
@@ -421,7 +331,7 @@
 -(void)createButton
 {
     _btnAdd = [UIButton buttonWithType:UIButtonTypeSystem];
-    _btnAdd.frame = CGRectMake(10*ScreenWidth/375, 200*ScreenWidth/375+_imageWidth+ 65*ScreenWidth/375, ScreenWidth-20*ScreenWidth/375, 44*ScreenWidth/375);
+    _btnAdd.frame = CGRectMake(10*ScreenWidth/375, 120*ScreenWidth/375+_imageWidth+ 65*ScreenWidth/375, ScreenWidth-20*ScreenWidth/375, 44*ScreenWidth/375);
     _btnAdd.layer.masksToBounds = YES;
     _btnAdd.layer.cornerRadius = 8*ScreenWidth/375;
     
@@ -433,8 +343,11 @@
 }
 
 -(void)FabuClick:(UIButton *)btn{
+    NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
+    [dict setObject:_strTimeKey forKey:@"albumKey"];
+    [dict setObject:@1 forKey:@"mediaType"];
+//    [dict setObject:@"" forKey:@""];
     
-   
 }
 
 
