@@ -248,4 +248,25 @@
     return YES;
 }
 
+//毫秒转化string
++ (NSString *)dateConversionToString:(CGFloat )date{
+    
+    NSDate *dateNew = [NSDate dateWithTimeIntervalSince1970:date];
+    NSDateFormatter * dm = [[NSDateFormatter alloc]init];
+    [dm setDateFormat:@"yyyy-MM-dd"];
+    NSString * dateString = [dm stringFromDate:dateNew];
+    return dateString;
+}
+
+//string转化毫秒
++ (CGFloat )stringConversionToDate:(NSString *)dateStr{
+    
+    NSString *datestring = [NSString stringWithFormat:@"%@", dateStr];
+    NSDateFormatter * dm = [[NSDateFormatter alloc]init];
+    [dm setDateFormat:@"yyyy-MM-dd"];
+    NSDate * newdate = [dm dateFromString:datestring];
+    return [newdate timeIntervalSince1970];
+}
+
+
 @end

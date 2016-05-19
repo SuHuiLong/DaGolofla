@@ -39,35 +39,55 @@
     UIButton *areaBtn = [self.creatTeamV viewWithTag:201];
     [areaBtn addTarget:self action:@selector(area:) forControlEvents:(UIControlEventTouchUpInside)];
     [self.creatTeamV.teamIntroduBtn addTarget:self action:@selector(intro) forControlEvents:(UIControlEventTouchUpInside)];
+    [self.creatTeamV.examineSWt addTarget:self action:@selector(isExamine) forControlEvents:(UIControlEventTouchUpInside)];
+    [self.paraDic setObject:@1 forKey:@"check"];
+    for (NSInteger i = 0; i < 2; i ++) {
+        UITextField *tF = [self.creatTeamV viewWithTag:232 + i];
+        [tF addTarget:self action:@selector(nameAndphone:) forControlEvents:(UIControlEventTouchUpInside)];
+    }
     // Do any additional setup after loading the view.
+}
+
+- (void)isExamine{
+    if (self.creatTeamV.examineSWt.isOn == YES) {
+        [self.paraDic setObject:@1 forKey:@"check"];
+    }else{
+        [self.paraDic setObject:@0 forKey:@"check"];
+    }
 }
 
 // 预览
 - (void)preview{
 
 
-    self.teamDetailModel.userName = @"Jay";
-    self.teamDetailModel.userMobile = @"911";
+    [self.paraDic setObject:self.creatTeamV.teamNmaeTV.text forKey:@"name"];
+    
+    [self.paraDic setObject:@"AAA" forKey:@"notice"];
+    
+    [self.paraDic setObject:@"244" forKey:@"createUserKey"];
     self.teamDetailModel.check = 0;
+
+    
+//    [[JsonHttp jsonHttp] httpRequest:@"team/createTeam" JsonKey:@"team" withData:self.paraDic requestMethod:@"POST" failedBlock:^(id errType) {
+//        NSLog(@"error");
+//    } completionBlock:^(id data) {
+//        NSLog(@"%@", data);
+//    }];
     
     JGTeamDetailViewController *detailV = [[JGTeamDetailViewController alloc] init];
-    [detailV.teamDetailModel setValuesForKeysWithDictionary:self.paraDic];
-
-    [self.paraDic setObject:self.creatTeamV.teamNmaeTV.text forKey:@"name"];
-
-    [self.paraDic setObject:@"AAA" forKey:@"notice"];
-    [self.paraDic setObject:@1 forKey:@"check"];
-    [self.paraDic setObject:@"iOS" forKey:@"userName"];
-    [self.paraDic setObject:@"110" forKey:@"userMobile"];
-    [self.paraDic setObject:@"244" forKey:@"createUserKey"];
-
-    [[JsonHttp jsonHttp] httpRequest:@"team/createTeam" JsonKey:@"team" withData:self.paraDic requestMethod:@"POST" failedBlock:^(id errType) {
-        NSLog(@"error");
-    } completionBlock:^(id data) {
-        NSLog(@"%@", data);
-    }];
+    detailV.teamDetailDic = self.paraDic;
     
     [self.navigationController pushViewController:detailV animated:YES];
+}
+
+- (void)nameAndphone:(UITextField *)tf{
+    if (tf.tag == 233) {
+        [self.paraDic setObject:tf.text forKey:@"userName"];
+    }else if (tf.tag == 234){
+        [self.paraDic setObject:tf.text forKey:@"userMobile"];
+
+    }else{
+    }
 }
 
 - (void)intro{
@@ -93,12 +113,15 @@
         
         [button setTitle:[NSString stringWithFormat:@"成立日期          %@,%@",dateStr,arr[1]] forState:(UIControlStateNormal)];
         
-        NSString *datestring = [NSString stringWithFormat:@"%@", dateStr];
-        NSDateFormatter * dm = [[NSDateFormatter alloc]init];
-        [dm setDateFormat:@"yyyy-MM-dd"];
-        NSDate * newdate = [dm dateFromString:datestring];
-        [self.paraDic setObject:[NSString stringWithFormat:@"%f", [newdate timeIntervalSince1970]] forKey:@"createtime"];
-        //        NSDate *minu = [NSDate dateWithTimeInterval:+(24*60*60) sinceDate:newdate];
+        
+//           CGFloat time = [Helper stringConversionToDate: dateStr];
+//        NSString *datestring = [NSString stringWithFormat:@"%@", dateStr];
+//        NSDateFormatter * dm = [[NSDateFormatter alloc]init];
+//        [dm setDateFormat:@"yyyy-MM-dd"];
+//        NSDate * newdate = [dm dateFromString:datestring];
+        
+        [self.paraDic setObject:[NSString stringWithFormat:@"%f", [Helper stringConversionToDate: dateStr]] forKey:@"establishTime"];
+        
 
     }];
     [self.navigationController pushViewController:dateVc animated:YES];
