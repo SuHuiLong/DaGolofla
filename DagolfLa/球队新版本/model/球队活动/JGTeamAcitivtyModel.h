@@ -26,7 +26,7 @@
 @property (assign, nonatomic) NSInteger *beginDate;
 //结束时间
 @property (assign, nonatomic) NSInteger *endDate;
-//活动地址
+//地区
 @property (strong, nonatomic) NSString *ballName;
 //报名人数
 @property (assign, nonatomic) NSInteger *sumCount;
