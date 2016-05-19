@@ -39,7 +39,15 @@
     }
     
     [self loadData];
+    
+//    [self loadTestData];
 }
+//- (void)loadTestData{
+//    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+//    [dict setObject:@"" forKey:@"albumKey"];
+//    [dict setObject:@1 forKey:@"mediaType"];
+//}
+
 - (void)loadData{
     //获取球队活动
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];

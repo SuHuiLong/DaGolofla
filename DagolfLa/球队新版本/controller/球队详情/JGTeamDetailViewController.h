@@ -10,6 +10,6 @@
 #import "JGTeamDetail.h"
 
 @interface JGTeamDetailViewController : ViewController
-@property (nonatomic, strong)JGTeamDetail *teamDetailModel;
-
+//@property (nonatomic, strong)JGTeamDetail *teamDetailModel;
+@property (nonatomic, strong)NSMutableDictionary *teamDetailDic;
 @end

@@ -21,7 +21,7 @@
 @property (nonatomic, copy)NSString *userMobile;
 @property (nonatomic, copy)NSString *createUserKey; // 球队创建人id
 @property (nonatomic, copy)NSString *createUserName;
-@property (nonatomic, copy)NSString *establishTime; // 球队创建时间
+@property (nonatomic, assign)CGFloat establishTime; // 球队创建时间
 @property (nonatomic, assign)NSInteger userNum; // 球队总人数
 @property (nonatomic, assign)NSInteger clickNum; // 点击量
 @property (nonatomic, copy)NSString *geohash; // 坐标信息

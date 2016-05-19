@@ -7,8 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "JGTeamDetail.h"
 
 @interface JGTeamDetailView : UIScrollView
+
+@property (nonatomic, strong)JGTeamDetail *teamDetailModel;
 
 @property (nonatomic, strong)UIImageView *topBackImageV;
 @property (nonatomic, strong)UIImageView *iconImageV;
@@ -20,9 +23,15 @@
 @property (nonatomic, strong)UILabel *teamIntroductionLB;
 @property (nonatomic, strong)UIView *buttonBackView;
 @property (nonatomic, strong)UIView *teamIntroductionBackView;
-@property (nonatomic, strong)UIButton *applyJoin;// 申请加入
 @property (nonatomic, strong)UIImageView *leaderIconV;  // 队长头像
 @property (nonatomic, strong)UILabel *setUpLbalel; // 成立时间
+
+@property (nonatomic, strong)UIButton *applyJoin;// 申请加入
+
+@property (nonatomic, strong)UIButton *saveBtn;// 保存
+@property (nonatomic, strong)UIButton *applyBtn;// 提交
+
+
 //@property (nonatomic, strong)UILabel *timeLB;
 
 - (void)resetUI;

@@ -38,7 +38,7 @@
         [self.addressAndTimeImageV addSubview:teamLd];
         
         self.teamLeaderNameLB = [[UILabel alloc] initWithFrame:CGRectMake(80 * screenWidth / 320, 0, 100 * screenWidth / 320, 30 * screenWidth / 320)];
-        self.teamLeaderNameLB.text = @"小泽玛丽亚";
+//        self.teamLeaderNameLB.text = @"小泽玛丽亚";
         [self.addressAndTimeImageV addSubview:_teamLeaderNameLB];
         
         self.leaderIconV = [[UIImageView alloc] initWithFrame:CGRectMake(200 * screenWidth / 320, 2 * screenWidth / 320, 28 * screenWidth / 320, 28 * screenWidth / 320)];
@@ -53,7 +53,8 @@
         [self.addressAndTimeImageV addSubview:addresL];
         
         self.addressLB = [[UILabel alloc] initWithFrame:CGRectMake(80 * screenWidth / 320, 40 * screenWidth / 320, screenWidth / 2 - 80 * screenWidth / 320, 30 * screenWidth / 320)];
-        self.addressLB.text = @"🇯🇵";
+        self.addressLB.font = [UIFont systemFontOfSize:13 * screenWidth / 320];
+//        self.addressLB.text = @"🇯🇵";
         [self.addressAndTimeImageV addSubview:_addressLB];
         
         UILabel *setUpLB = [[UILabel alloc] initWithFrame:CGRectMake(screenWidth / 2, 40 * screenWidth / 320, 70 * screenWidth / 320, 30 * screenWidth / 320)];
@@ -62,7 +63,8 @@
         [self.addressAndTimeImageV addSubview:setUpLB];
         
         self.setUpLbalel = [[UILabel alloc] initWithFrame:CGRectMake(screenWidth / 2 + 70 * screenWidth / 320, 40 * screenWidth / 320, screenWidth / 2 - 70 * screenWidth / 320, 30 * screenWidth / 320)];
-        self.setUpLbalel.text = @"2016/02/16";
+//        self.setUpLbalel.text = @"2016/02/16";
+        self.setUpLbalel.font = [UIFont systemFontOfSize:15 * screenWidth / 320];
         [self.addressAndTimeImageV addSubview:self.setUpLbalel];
         
         UIView *view = [[UIView alloc] initWithFrame:CGRectMake(10 * screenWidth / 320, 34 * screenWidth / 320, screenWidth - 20 * screenWidth / 320, 2 * screenWidth / 320)];
@@ -111,8 +113,16 @@
     self.applyJoin = [UIButton buttonWithType:(UIButtonTypeCustom)];
     self.applyJoin.frame = CGRectMake(10 * screenWidth / 320, self.teamIntroductionLB.frame.size.height + 280 * screenWidth / 320 + 90 * screenWidth / 320, screenWidth - 20 * screenWidth / 320, 30 * screenWidth / 320);
     self.applyJoin.backgroundColor = [UIColor orangeColor];
-    [self.applyJoin setTitle:@"申请加入" forState:(UIControlStateNormal)];
+//    [self.applyJoin setTitle:@"申请加入" forState:(UIControlStateNormal)];
+    [self.applyJoin setTitle:@"保存" forState:(UIControlStateNormal)];
     [self addSubview:self.applyJoin];
+    
+    self.applyBtn = [UIButton buttonWithType:(UIButtonTypeCustom)];
+    self.applyBtn.frame = CGRectMake(10 * screenWidth / 320, self.teamIntroductionLB.frame.size.height + 280 * screenWidth / 320 + 130 * screenWidth / 320, screenWidth - 20 * screenWidth / 320, 30 * screenWidth / 320);
+    self.applyBtn.backgroundColor = [UIColor orangeColor];
+    [self.applyBtn setTitle:@"提交" forState:(UIControlStateNormal)];
+    [self addSubview:self.applyBtn];
+    
     
     return self;
 }
@@ -124,9 +134,34 @@
     [self.buttonBackView setFrame:CGRectMake(0, self.teamIntroductionBackView.frame.size.height + 250 * screenWidth / 320, screenWidth, 70 * screenWidth / 320)];
     
     [self.applyJoin setFrame:CGRectMake(10 * screenWidth / 320, self.buttonBackView.frame.origin.y + 80 * screenWidth / 320, screenWidth - 20 * screenWidth / 320, 30 * screenWidth / 320)];
+    [self.applyBtn setFrame:CGRectMake(10 * screenWidth / 320, self.buttonBackView.frame.origin.y + 120 * screenWidth / 320, screenWidth - 20 * screenWidth / 320, 30 * screenWidth / 320)];
+
 }
 
+- (void)setTeamDetailModel:(JGTeamDetail *)teamDetailModel{
+    self.nameLB.text = teamDetailModel.name;
+    self.teamIntroductionLB.text = teamDetailModel.info;
+    self.addressLB.text = teamDetailModel.crtyName;
+    self.setUpLbalel.text = [Helper dateConversionToString:teamDetailModel.establishTime];
 
+    
+    
+    // 时间
+//    NSDate *dateNew = [NSDate dateWithTimeIntervalSince1970:teamDetailModel.establishTime];
+//    NSDateFormatter * dm = [[NSDateFormatter alloc]init];
+//    [dm setDateFormat:@"yyyy-MM-dd"];
+//    NSString * datestring2 = [dm stringFromDate:dateNew];
+//    self.setUpLbalel.text = datestring2;
+
+    /*
+     @property (nonatomic, strong)UIImageView *iconImageV;
+     @property (nonatomic, strong)UIImageView *teamLeaderIcon;
+     @property (nonatomic, strong)UILabel *teamLeaderNameLB;
+     @property (nonatomic, strong)UIButton *applyJoin;// 申请加入
+     @property (nonatomic, strong)UIImageView *leaderIconV;  // 队长头像
+     @property (nonatomic, strong)UILabel *setUpLbalel; // 成立时间
+     */
+}
 /*
  
 // Only override drawRect: if you perform custom drawing.

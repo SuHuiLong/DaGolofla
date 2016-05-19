@@ -56,4 +56,10 @@
 +(void)loginWithBlock:(void(^)(UIViewController *vc))block WithBlock1:(void(^)(UIAlertController *alertView))block1;
 //判断是否为数字
 +(BOOL)isPureNumandCharacters:(NSString *)string;
+
+//毫秒转化string
++ (NSString *)dateConversionToString:(CGFloat )date;
+
+//string转化毫秒
++ (CGFloat )stringConversionToDate:(NSString *)dateStr;
 @end

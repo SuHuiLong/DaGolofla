@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+@class JGTeamAcitivtyModel;
 
 @interface JGTeamActivityWithAddressCell : UITableViewCell
 //球场名称
@@ -15,4 +16,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *activityTime;
 //人员限制
 @property (weak, nonatomic) IBOutlet UILabel *limits;
+
+- (void)configModel:(JGTeamAcitivtyModel *)model;
+
 @end

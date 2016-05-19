@@ -48,4 +48,5 @@
 @property (assign, nonatomic) NSInteger maxCount;
 //活动介绍
 @property (copy, nonatomic) NSString *info;
+
 @end

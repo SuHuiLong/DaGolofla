@@ -98,8 +98,8 @@
         label.font = [UIFont systemFontOfSize:15];
         [self addSubview:label];
         
-        [self lableAndTextField:280 * screenWidth / 320 title:@"  真实姓名" placeHolder:@"请输入姓名"];
-        [self lableAndTextField:320 * screenWidth / 320 title:@"  联系方式" placeHolder:@"请输入手机号"];
+        [self lableAndTextField:280 * screenWidth / 320 title:@"  真实姓名" placeHolder:@"请输入姓名 " withTag:233];
+        [self lableAndTextField:320 * screenWidth / 320 title:@"  联系方式" placeHolder:@"请输入手机号" withTag:234];
         
         UILabel *apply = [[UILabel alloc] initWithFrame:CGRectMake(0, 355 * screenWidth / 320, screenWidth, 20 * screenWidth / 320)];
         apply.text = @" 注：为了球队能够顺利创建，请务必输入真实信息";
@@ -117,7 +117,7 @@
     return self;
 }
 
-- (void)lableAndTextField: (CGFloat)y title: (NSString *)title placeHolder: (NSString *)holder{
+- (void)lableAndTextField: (CGFloat)y title: (NSString *)title placeHolder: (NSString *)holder withTag: (NSInteger)tag{
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, y, 100 * screenWidth / 320, 30 * screenWidth / 320)];
     label.text = title;
     label.textColor = [UIColor lightGrayColor];
@@ -125,6 +125,7 @@
     [self addSubview:label];
     UITextField *textField = [[UITextField alloc] initWithFrame:CGRectMake(100 * screenWidth / 320, y, screenWidth - 100 * screenWidth / 320, 30 * screenWidth / 320)];
     textField.placeholder = holder;
+    textField.tag = tag;
     textField.backgroundColor = [UIColor whiteColor];
     [self addSubview:textField];
 }
