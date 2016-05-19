@@ -32,19 +32,22 @@
         [self createAdminBtn];
     }
     
-//    [self loadData];
+    [self loadData];
 }
 - (void)loadData{
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
-    
-    [dict setObject:[def objectForKey:@"userId"] forKey:@"userKey"];//3619
+//    NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
+    //244
+    [dict setObject:@"244" forKey:@"userKey"];//3619
     [dict setObject:@"1" forKey:@"offset"];
-//    [[JsonHttp jsonHttp]httpRequest:@"team/getMyTeamList" withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
-//        NSLog(@"errType == %@", errType);
-//    } completionBlock:^(id data) {
-//        NSLog(@"data == %@", data);
-//    }];
+    
+    [[JsonHttp jsonHttp]httpRequest:@"team/getMyTeamList" JsonKey:nil withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
+        NSLog(@"errType == %@", errType);
+    } completionBlock:^(id data) {
+        NSLog(@"data == %@", data);
+        
+    }];
+    
 }
 
 #pragma mark -- 创建发布活动
