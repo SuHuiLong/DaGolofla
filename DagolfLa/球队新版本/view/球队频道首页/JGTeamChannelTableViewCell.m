@@ -49,6 +49,13 @@
     self.describLabel.text = teamModel.info;        // 球队介绍
 }
 
+-(void)showData:(JGLMyTeamModel *)model
+{
+    self.nameLabel.text = model.name;
+    self.adressLabel.text = model.crtyName;
+    self.describLabel.text = model.info;
+}
+
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code

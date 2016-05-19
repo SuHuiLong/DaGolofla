@@ -9,11 +9,19 @@
 #import "JGLMyTeamViewController.h"
 #import "JGTeamChannelTableView.h"
 #import "JGTeamChannelTableViewCell.h"
+
+#import "MJRefresh.h"
+#import "MJDIYBackFooter.h"
+#import "MJDIYHeader.h"
+
+
+#import "JGLMyTeamModel.h"
 @interface JGLMyTeamViewController ()<UITableViewDelegate,UITableViewDataSource>
 {
     JGTeamChannelTableView* _tableView;
     
     NSMutableArray* _dataArray;
+    NSInteger _page;
 }
 @end
 
@@ -22,8 +30,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    _dataArray = [NSMutableArray arrayWithObjects:@"qwer",@"werq",@"asdfsdfs", nil];
-    
+    _page = 0;
+    _dataArray = [[NSMutableArray alloc]init];
     self.title = @"我的球队";
     [self uiConfig];
     
@@ -38,10 +46,64 @@
     _tableView.separatorStyle = UITableViewCellAccessoryNone;
     _tableView.rowHeight = 83 * screenWidth / 320;
     [self.view addSubview:_tableView];
-    
+    _tableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
+    _tableView.footer=[MJDIYBackFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRereshing)];
+    [_tableView.header beginRefreshing];
 }
 
 
+#pragma mark - 下载数据
+- (void)downLoadData:(int)page isReshing:(BOOL)isReshing{
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    
+    [dict setObject:@244 forKey:@"userKey"];
+    [dict setObject:[NSNumber numberWithInt:page] forKey:@"offset"];
+    [[JsonHttp jsonHttp]httpRequest:@"team/getMyTeamList" JsonKey:nil withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
+        if (isReshing) {
+            [_tableView.header endRefreshing];
+        }else {
+            [_tableView.footer endRefreshing];
+        }
+    } completionBlock:^(id data) {
+        if ([[data objectForKey:@"packSuccess"] boolValue]) {
+            if (page == 0)
+            {
+                //清除数组数据
+                [_dataArray removeAllObjects];
+            }
+            //数据解析
+            for (NSDictionary *dicList in [data objectForKey:@"teamAlbumList"]) {
+                JGLMyTeamModel *model = [[JGLMyTeamModel alloc] init];
+                [model setValuesForKeysWithDictionary:dicList];
+                [_dataArray addObject:model];
+            }
+            _page++;
+            [_tableView reloadData];
+        }else {
+            [Helper alertViewWithTitle:[dict objectForKey:@"message"] withBlock:^(UIAlertController *alertView) {
+                [self presentViewController:alertView animated:YES completion:nil];
+            }];
+        }
+        [_tableView reloadData];
+        if (isReshing) {
+            [_tableView.header endRefreshing];
+        }else {
+            [_tableView.footer endRefreshing];
+        }
+    }];
+}
+
+#pragma mark 开始进入刷新状态
+- (void)headRereshing
+{
+    _page = 0;
+    [self downLoadData:_page isReshing:YES];
+}
+
+- (void)footRereshing
+{
+    [self downLoadData:_page isReshing:NO];
+}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return 20;
@@ -51,7 +113,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
         JGTeamChannelTableViewCell *cell = [_tableView dequeueReusableCellWithIdentifier:@"cell"];
-        cell.nameLabel.text = _dataArray[indexPath.row%3];
+//        cell.nameLabel.text = _dataArray[indexPath.row%3];
         cell.adressLabel.text = @"测试数据 Test";
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
