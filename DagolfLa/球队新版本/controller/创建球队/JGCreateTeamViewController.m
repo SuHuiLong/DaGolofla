@@ -18,6 +18,7 @@
 @interface JGCreateTeamViewController ()<UIImagePickerControllerDelegate,UIActionSheetDelegate,UINavigationControllerDelegate, JGHConcentTextViewControllerDelegate>
 @property (nonatomic, strong)JGCreateTeamView *creatTeamV;
 @property (nonatomic, strong)JGTeamDetail *teamDetailModel;
+@property (nonatomic, strong)NSMutableDictionary *paraDic;
 
 @end
 
@@ -43,14 +44,28 @@
 
 // 预览
 - (void)preview{
-    
-    self.teamDetailModel.name = self.creatTeamV.teamNmaeTV.text;
+
+
     self.teamDetailModel.userName = @"Jay";
-    self.teamDetailModel.userMobile = @"110";
+    self.teamDetailModel.userMobile = @"911";
     self.teamDetailModel.check = 0;
     
     JGTeamDetailViewController *detailV = [[JGTeamDetailViewController alloc] init];
-    detailV.teamDetailModel = self.teamDetailModel;
+    [detailV.teamDetailModel setValuesForKeysWithDictionary:self.paraDic];
+
+    [self.paraDic setObject:self.creatTeamV.teamNmaeTV.text forKey:@"name"];
+
+    [self.paraDic setObject:@"AAA" forKey:@"notice"];
+    [self.paraDic setObject:@1 forKey:@"check"];
+    [self.paraDic setObject:@"iOS" forKey:@"userName"];
+    [self.paraDic setObject:@"110" forKey:@"userMobile"];
+    [self.paraDic setObject:@"244" forKey:@"createUserKey"];
+
+    [[JsonHttp jsonHttp] httpRequest:@"team/createTeam" JsonKey:@"team" withData:self.paraDic requestMethod:@"POST" failedBlock:^(id errType) {
+        NSLog(@"error");
+    } completionBlock:^(id data) {
+        NSLog(@"%@", data);
+    }];
     
     NSMutableDictionary *dic = [NSMutableDictionary dictionary];
     [dic setObject:@"LB" forKey:@"name"];
@@ -76,9 +91,11 @@
     introVC.delegate = self;
     [self.navigationController pushViewController:introVC animated:YES];
 }
-//
+// 代理方法
 - (void)didSelectSaveBtnClick:(NSString *)text{
-    self.teamDetailModel.info = text;
+    
+    [self.paraDic setObject:text forKey:@"info"];
+
 }
 
 
@@ -96,10 +113,8 @@
         NSDateFormatter * dm = [[NSDateFormatter alloc]init];
         [dm setDateFormat:@"yyyy-MM-dd"];
         NSDate * newdate = [dm dateFromString:datestring];
-        NSDate *minu = [NSDate dateWithTimeInterval:+(24*60*60) sinceDate:newdate];
-        self.teamDetailModel.createtime = minu;
-//        NSLog(@"minu is %@",minu);
-
+        [self.paraDic setObject:[NSString stringWithFormat:@"%f", [newdate timeIntervalSince1970]] forKey:@"createtime"];
+        //        NSDate *minu = [NSDate dateWithTimeInterval:+(24*60*60) sinceDate:newdate];
 
     }];
     [self.navigationController pushViewController:dateVc animated:YES];
@@ -123,8 +138,9 @@
     areaVc.teamType = @10;
     areaVc.callBackCity = ^(NSString* strPro, NSString* strCity, NSNumber* cityId){
         [btn setTitle:[NSString stringWithFormat:@"所在地区          %@,%@", strPro, strCity] forState:(UIControlStateNormal)];
-        self.teamDetailModel.crtyName = [NSString stringWithFormat:@"%@ %@", strPro, strCity];
-        
+
+        [self.paraDic setObject:[NSString stringWithFormat:@"%@ %@", strPro, strCity] forKey:@"crtyName"];
+
     };
     [self.navigationController pushViewController:areaVc animated:YES];
     
@@ -185,6 +201,13 @@
         _teamDetailModel = [[JGTeamDetail alloc] init];
     }
     return _teamDetailModel;
+}
+
+- (NSMutableDictionary *)paraDic{
+    if (!_paraDic) {
+        _paraDic = [[NSMutableDictionary alloc] init];
+    }
+    return _paraDic;
 }
 
 
