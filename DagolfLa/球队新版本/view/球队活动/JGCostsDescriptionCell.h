@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+@class JGTeamAcitivtyModel;
 
 @interface JGCostsDescriptionCell : UITableViewCell
 //人均车费
@@ -17,4 +18,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *others;
 //合集人均总费用
 @property (weak, nonatomic) IBOutlet UILabel *totalPerCost;
+
+- (void)configModel:(JGTeamAcitivtyModel *)model;
+
 @end

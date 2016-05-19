@@ -49,7 +49,7 @@ static NSString *const JGActivityNameBaseCellIdentifier = @"JGActivityNameBaseCe
         [self createApplyBtn];
     }
     
-    [self createTeamActibityNameTableView];
+    
     
     [self loadData];
 }
@@ -64,14 +64,13 @@ static NSString *const JGActivityNameBaseCellIdentifier = @"JGActivityNameBaseCe
         NSLog(@"error == %@", errType);
     } completionBlock:^(id data) {
         NSLog(@"data == %@", data);
-        NSArray *array = [NSArray array];
-        array = [data objectForKey:@"activity"];
-        for (NSDictionary *dict in array) {
-            JGTeamAcitivtyModel *model = [[JGTeamAcitivtyModel alloc]init];
-            [model setValuesForKeysWithDictionary:dict];
-            
-        }
+        NSDictionary *dict = [NSDictionary dictionary];
+        dict = [data objectForKey:@"activity"];
+        JGTeamAcitivtyModel *model = [[JGTeamAcitivtyModel alloc]init];
+        [model setValuesForKeysWithDictionary:dict];
+        [self.dataArray addObject:model];
         
+        [self createTeamActibityNameTableView];
     }];
 }
 #pragma mark -- 创建保存 ＋ 发布 按钮
@@ -172,7 +171,10 @@ static NSString *const JGActivityNameBaseCellIdentifier = @"JGActivityNameBaseCe
             cell = [self.teamActibityNameTableView dequeueReusableCellWithIdentifier:JGTeamActivityDetailsCellIdentifier];
         }
         
-//        cell.activityDetails.text = self.model.activityInfo;
+        JGTeamAcitivtyModel *model = [[JGTeamAcitivtyModel alloc]init];
+        model = self.dataArray[0];
+        cell.activityDetails.text = model.info;
+        
         return [cell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height + 1;
     }else if (indexPath.section == 2){
         return 110;
@@ -187,24 +189,29 @@ static NSString *const JGActivityNameBaseCellIdentifier = @"JGActivityNameBaseCe
     return 7;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    JGTeamAcitivtyModel *model = [[JGTeamAcitivtyModel alloc]init];
+    model = self.dataArray[0];
     if (indexPath.section == 0) {
         JGTeamActivityWithAddressCell *addressCell = [tableView dequeueReusableCellWithIdentifier:JGTeamActivityWithAddressCellIdentifier forIndexPath:indexPath];
         addressCell.selectionStyle = UITableViewCellSelectionStyleNone;
+        [addressCell configModel:model];
         return addressCell;
     }else if (indexPath.section == 1 || indexPath.section == 3){
         JGTeamActivityDetailsCell *detailsCell = [tableView dequeueReusableCellWithIdentifier:JGTeamActivityDetailsCellIdentifier forIndexPath:indexPath];
         detailsCell.selectionStyle = UITableViewCellSelectionStyleNone;
-//        [detailsCell configDetailsText:@"活动详情" AndActivityDetailsText:_model.];
+        [detailsCell configDetailsText:@"活动详情" AndActivityDetailsText:model.info];
         return detailsCell;
     }else if (indexPath.section == 2){
         JGCostsDescriptionCell *costDescriptionCell = [tableView dequeueReusableCellWithIdentifier:JGCostsDescriptionCellIdentifier forIndexPath:indexPath];
         costDescriptionCell.selectionStyle = UITableViewCellSelectionStyleNone;
+        [costDescriptionCell configModel:model];
         return costDescriptionCell;
     }else{
         JGActivityNameBaseCell *activityNameBaseCell = [tableView dequeueReusableCellWithIdentifier:JGActivityNameBaseCellIdentifier forIndexPath:indexPath];
         activityNameBaseCell.selectionStyle = UITableViewCellSelectionStyleNone;
         return activityNameBaseCell;
     }
+
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
