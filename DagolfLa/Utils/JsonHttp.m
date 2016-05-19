@@ -77,7 +77,7 @@ static JsonHttp *jsonHttp = nil;
                     completionBlock(responseObject);
                 }
             } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                if ([[error.userInfo objectForKey:@"_kCFStreamErrorCodeKey"] integerValue] == 60) {
+                if ([[error.userInfo objectForKey:@"_kCFStreamErrorCodeKey"] integerValue] == 61) {
                     [Helper downLoadDataOverrun];
                 }else if ([[error.userInfo objectForKey:@"_kCFStreamErrorCodeKey"] integerValue] == 51) {
                     [Helper netWorkError];

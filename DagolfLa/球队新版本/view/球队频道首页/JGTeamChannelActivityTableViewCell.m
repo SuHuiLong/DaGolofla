@@ -19,11 +19,15 @@
         self.nameLabel.font = [UIFont systemFontOfSize:15 * screenWidth / 320];
         [self.contentView addSubview:self.nameLabel];
         
-        self.adressLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 30 * screenWidth / 320, screenWidth - 10 * screenWidth / 320, 20 * screenWidth / 320)];
+        self.dateLabel = [[UILabel alloc] initWithFrame:CGRectMake(10 * screenWidth / 320, 30 * screenWidth / 320, screenWidth / 2 - 10 * screenWidth / 320, 20 * screenWidth / 320)];
+        self.dateLabel.font = [UIFont systemFontOfSize:12 * screenWidth / 320];
+        [self.contentView addSubview:self.dateLabel];
+        
+        self.adressLabel = [[UILabel alloc] initWithFrame:CGRectMake(20 * screenWidth / 320 + screenWidth / 2, 30 * screenWidth / 320, screenWidth / 2 - 20 * screenWidth / 320, 20 * screenWidth / 320)];
         self.adressLabel.font = [UIFont systemFontOfSize:12 * screenWidth / 320];
         [self.contentView addSubview:self.adressLabel];
-        
-        self.describLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 55 * screenWidth / 320, screenWidth - 10 * screenWidth / 320, 20 * screenWidth / 320)];
+
+        self.describLabel = [[UILabel alloc] initWithFrame:CGRectMake(10 * screenWidth / 320, 55 * screenWidth / 320, screenWidth - 10 * screenWidth / 320, 20 * screenWidth / 320)];
         self.describLabel.font = [UIFont systemFontOfSize:12 * screenWidth / 320];
         [self.contentView addSubview:self.describLabel];
         
@@ -33,6 +37,13 @@
     }
     
     return self;
+}
+
+- (void)setActivityModel:(JGTeamAcitivtyModel *)activityModel{
+    self.nameLabel.text = activityModel.name;
+//    self.dateLabel.text = activityModel.createTime;
+    self.adressLabel.text = activityModel.ballName;
+    self.describLabel.text = [NSString stringWithFormat:@"%zd", activityModel.sumCount] ;
 }
 
 - (void)awakeFromNib {

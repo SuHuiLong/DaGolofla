@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -11,7 +11,7 @@
             <rect key="frame" x="0.0" y="0.0" width="332" height="99"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="332" height="98.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="332" height="98"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" text="球队活动列表一" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="srA-90-vhx">
@@ -33,7 +33,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="活动时间：6月1号－6月3号" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wiU-Cc-leL">
-                        <rect key="frame" x="8" y="42" width="161" height="16"/>
+                        <rect key="frame" x="8" y="42" width="157" height="16"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="16" id="TWK-t0-Ee5"/>
                         </constraints>
@@ -50,29 +50,59 @@
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="地点：上海市佘山高尔夫球场" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lW8-fF-h3E">
-                        <rect key="frame" x="179" y="42" width="145" height="16"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RLQ-14-4eq">
+                        <rect key="frame" x="165" y="3" width="1" height="92.5"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="1" id="lWT-Fc-xht"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="地点：上海市佘山高尔夫球场" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lW8-fF-h3E">
+                        <rect key="frame" x="176" y="42" width="147.5" height="16"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="16" id="HYf-Ku-U4S"/>
+                            <constraint firstAttribute="height" constant="16" id="ShT-4X-pck"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="HYf-Ku-U4S"/>
+                            </mask>
+                        </variation>
                     </label>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="RLQ-14-4eq" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="3" id="0SD-jY-QWH"/>
                     <constraint firstItem="7Wa-su-XmR" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="5nB-So-WvM"/>
+                    <constraint firstItem="RLQ-14-4eq" firstAttribute="leading" secondItem="wiU-Cc-leL" secondAttribute="trailing" id="BNQ-pn-uit"/>
+                    <constraint firstItem="RLQ-14-4eq" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="HgX-fA-TYP"/>
                     <constraint firstItem="lW8-fF-h3E" firstAttribute="top" secondItem="jEI-w9-a7H" secondAttribute="bottom" constant="13" id="M2h-cu-D1O"/>
                     <constraint firstItem="jEI-w9-a7H" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="OE4-Xd-9zx"/>
                     <constraint firstItem="wiU-Cc-leL" firstAttribute="top" secondItem="srA-90-vhx" secondAttribute="bottom" constant="13" id="OLo-Wa-La1"/>
+                    <constraint firstItem="lW8-fF-h3E" firstAttribute="top" secondItem="jEI-w9-a7H" secondAttribute="bottom" constant="13" id="RvX-Ie-QEm"/>
                     <constraint firstItem="srA-90-vhx" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="Sg8-vs-uLg"/>
+                    <constraint firstItem="RLQ-14-4eq" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="T1T-bb-W7j"/>
                     <constraint firstItem="7Wa-su-XmR" firstAttribute="top" secondItem="wiU-Cc-leL" secondAttribute="bottom" constant="10" id="Ttm-PP-qsR"/>
                     <constraint firstAttribute="trailing" secondItem="jEI-w9-a7H" secondAttribute="trailing" constant="8" id="ari-aG-ote"/>
+                    <constraint firstItem="lW8-fF-h3E" firstAttribute="leading" secondItem="RLQ-14-4eq" secondAttribute="trailing" constant="10" id="fB3-Gy-hEc"/>
+                    <constraint firstAttribute="trailing" secondItem="lW8-fF-h3E" secondAttribute="trailing" constant="8" id="fev-B5-jc2"/>
                     <constraint firstItem="wiU-Cc-leL" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="iWv-5y-SMX"/>
                     <constraint firstItem="srA-90-vhx" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="l3V-xs-duB"/>
                     <constraint firstAttribute="trailing" secondItem="lW8-fF-h3E" secondAttribute="trailing" constant="8" id="tCZ-OZ-Koj"/>
                     <constraint firstItem="lW8-fF-h3E" firstAttribute="leading" secondItem="wiU-Cc-leL" secondAttribute="trailing" constant="10" id="tRW-6E-l8Y"/>
+                    <constraint firstAttribute="bottom" secondItem="RLQ-14-4eq" secondAttribute="bottom" constant="3" id="wqF-ri-0p3"/>
                 </constraints>
+                <variation key="default">
+                    <mask key="constraints">
+                        <exclude reference="M2h-cu-D1O"/>
+                        <exclude reference="tCZ-OZ-Koj"/>
+                        <exclude reference="tRW-6E-l8Y"/>
+                    </mask>
+                </variation>
             </tableViewCellContentView>
             <connections>
                 <outlet property="Apply" destination="jEI-w9-a7H" id="x2u-jr-oJ4"/>

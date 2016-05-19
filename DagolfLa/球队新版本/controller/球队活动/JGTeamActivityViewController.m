@@ -20,6 +20,12 @@
 
 @implementation JGTeamActivityViewController
 
+- (instancetype)init{
+    if (self = [super init]) {
+        self.dataArray = [NSMutableArray array];
+    }
+    return self;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationItem.title = @"球队活动";
@@ -35,19 +41,31 @@
     [self loadData];
 }
 - (void)loadData{
+    //获取球队活动
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-//    NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
-    //244
-    [dict setObject:@"244" forKey:@"userKey"];//3619
+    NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
+    //244  121212
+//    [dict setObject:[def object ForKey:userID] forKey:@"userKey"];//3619
+    //189781710290821120  http://192.168.2.6:8888
+    [dict setObject:@"189781710290821120" forKey:@"teamKey"];
     [dict setObject:@"1" forKey:@"offset"];
     
-    [[JsonHttp jsonHttp]httpRequest:@"team/getMyTeamList" JsonKey:nil withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
+    [[JsonHttp jsonHttp]httpRequest:@"team/getTeamActivityList" JsonKey:nil withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
         NSLog(@"errType == %@", errType);
     } completionBlock:^(id data) {
         NSLog(@"data == %@", data);
+        [self.dataArray removeAllObjects];
         
+        NSArray *array = [data objectForKey:@"activityList"];
+        for (NSDictionary *dict in array) {
+            JGTeamAcitivtyModel *model = [[JGTeamAcitivtyModel alloc]init];
+            
+            [model setValuesForKeysWithDictionary:dict];
+            [self.dataArray addObject:model];
+        }
+        
+        [self.teamActivityTableView reloadData];
     }];
-    
 }
 
 #pragma mark -- 创建发布活动
@@ -82,7 +100,7 @@
     return 1;
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 4;
+    return self.dataArray.count;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return 100;
@@ -102,10 +120,17 @@
     
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
+    JGTeamAcitivtyModel *model = [[JGTeamAcitivtyModel alloc]init];
+    model = self.dataArray[indexPath.section];
+    [cell setJGTeamActivityCellWithModel:model];
+    
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     JGTeamActibityNameViewController *activityNameCtrl = [[JGTeamActibityNameViewController alloc]init];
+    JGTeamAcitivtyModel *model = [[JGTeamAcitivtyModel alloc]init];
+    model = self.dataArray[indexPath.section];
+    activityNameCtrl.teamActivityKey = model.timeKey;
     [self.navigationController pushViewController:activityNameCtrl animated:YES];
 }
 - (void)didReceiveMemoryWarning {

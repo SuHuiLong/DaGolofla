@@ -12,7 +12,7 @@
 #import "JGCostsDescriptionCell.h"
 #import "JGActivityNameBaseCell.h"
 #import "JGTeamApplyViewController.h"
-#import "JGHLaunchActivityModel.h"
+#import "JGTeamAcitivtyModel.h"
 
 static NSString *const JGTeamActivityWithAddressCellIdentifier = @"JGTeamActivityWithAddressCell";
 static NSString *const JGTeamActivityDetailsCellIdentifier = @"JGTeamActivityDetailsCell";
@@ -24,11 +24,18 @@ static NSString *const JGActivityNameBaseCellIdentifier = @"JGActivityNameBaseCe
     CGFloat _tableViewHeight;
 }
 @property (nonatomic, strong)UITableView *teamActibityNameTableView;
-@property (nonatomic, strong)UITableView *dataArray;//数据源
+@property (nonatomic, strong)NSMutableArray *dataArray;//数据源
 
 @end
 
 @implementation JGTeamActibityNameViewController
+
+- (instancetype)init{
+    if (self == [super init]) {
+        self.dataArray = [NSMutableArray array];
+    }
+    return self;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -44,6 +51,28 @@ static NSString *const JGActivityNameBaseCellIdentifier = @"JGActivityNameBaseCe
     
     [self createTeamActibityNameTableView];
     
+    [self loadData];
+}
+#pragma mark -- 下载数据
+- (void)loadData{
+    NSUserDefaults *userDef = [NSUserDefaults standardUserDefaults];
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    [dict setObject:[NSString stringWithFormat:@"%ld", (long)self.teamActivityKey] forKey:@"activityKey"];
+//    [dict setObject:[userDef objectForKey:userID] forKey:@"userKey"];
+    [dict setObject:@"244" forKey:@"userKey"];
+    [[JsonHttp jsonHttp]httpRequest:@"team/getTeamActivity" JsonKey:nil withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
+        NSLog(@"error == %@", errType);
+    } completionBlock:^(id data) {
+        NSLog(@"data == %@", data);
+        NSArray *array = [NSArray array];
+        array = [data objectForKey:@"activity"];
+        for (NSDictionary *dict in array) {
+            JGTeamAcitivtyModel *model = [[JGTeamAcitivtyModel alloc]init];
+            [model setValuesForKeysWithDictionary:dict];
+            
+        }
+        
+    }];
 }
 #pragma mark -- 创建保存 ＋ 发布 按钮
 - (void)createSaveAndLaunchBtn{
@@ -71,36 +100,36 @@ static NSString *const JGActivityNameBaseCellIdentifier = @"JGActivityNameBaseCe
 }
 - (void)applyBtnClick:(UIButton *)btn{
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    [dict setObject:@"189781710290821120" forKey:@"teamKey"];//球队key
+    [dict setObject:@"189911222513049600" forKey:@"teamKey"];//球队key
     NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
     [dict setObject:[user objectForKey:@"userId"] forKey:@"userKey"];//用户key
     //121212
-    [dict setObject:@"121212" forKey:@"userKey"];
+    [dict setObject:@"244" forKey:@"userKey"];
     
-    [dict setObject:@"神奇四侠6" forKey:@"name"];//活动名字
+    [dict setObject:@"007哈哈哈哈" forKey:@"name"];//活动名字
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
     NSDate *date = [dateFormatter dateFromString:@"2016-05-14 16:01:03"];
     [dict setObject:@"" forKey:@"beginDate"];//活动开始时间
     [dict setObject:@"" forKey:@"endDate"];//活动结束时间
-    [dict setObject:@"" forKey:@"ballKey"];//球场id
-    [dict setObject:@"蝴蝶防护" forKey:@"ballName"];//球场名称
+    [dict setObject:@"004" forKey:@"ballKey"];//球场id
+    [dict setObject:@"浦东新车球场" forKey:@"ballName"];//球场名称
     [dict setObject:@"" forKey:@"ballGeohash"];//球场坐标
-    [dict setObject:@"" forKey:@"info"];//活动简介
+    [dict setObject:@"护士繁华的风格变化的腐败黄金时代不好的发布时间的封闭不会是绝大部分黄金时代不废江河百货商店减肥百货商店发布时间地方保护手机的发布" forKey:@"info"];//活动简介
     [dict setObject:@"" forKey:@"costInfo"];//费用说明
-    [dict setObject:@"" forKey:@"memberPrice"];//会员价
-    [dict setObject:@"" forKey:@"guestPrice"];//嘉宾价
-    [dict setObject:@"" forKey:@"subsidyPrice"];//补贴价
-    [dict setObject:@"" forKey:@"maxCount"];//最大人员数
-    [dict setObject:@"" forKey:@"isClose"];//活动是否结束 0 : 开始 , 1 : 已结束
+    [dict setObject:@"120" forKey:@"memberPrice"];//会员价
+    [dict setObject:@"220" forKey:@"guestPrice"];//嘉宾价
+    [dict setObject:@"30" forKey:@"subsidyPrice"];//补贴价
+    [dict setObject:@"100" forKey:@"maxCount"];//最大人员数
+    [dict setObject:@"0" forKey:@"isClose"];//活动是否结束 0 : 开始 , 1 : 已结束
     [dict setObject:@"" forKey:@"createTime"];//活动创建时间
-    [dict setObject:@"" forKey:@"sumCount"];//活动报名总人数
+//    [dict setObject:@"50" forKey:@"sumCount"];//活动报名总人数
 
     //createTeamActivity
     [[JsonHttp jsonHttp]httpRequest:@"team/createTeamActivity" JsonKey:@"teamActivity" withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
         NSLog(@"%@", errType);
     } completionBlock:^(id data) {
-        NSLog(@"%@", date);
+        NSLog(@"%@", data);
     }];
     
     
@@ -143,7 +172,7 @@ static NSString *const JGActivityNameBaseCellIdentifier = @"JGActivityNameBaseCe
             cell = [self.teamActibityNameTableView dequeueReusableCellWithIdentifier:JGTeamActivityDetailsCellIdentifier];
         }
         
-        cell.activityDetails.text = self.model.activityInfo;
+//        cell.activityDetails.text = self.model.activityInfo;
         return [cell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height + 1;
     }else if (indexPath.section == 2){
         return 110;
@@ -165,7 +194,7 @@ static NSString *const JGActivityNameBaseCellIdentifier = @"JGActivityNameBaseCe
     }else if (indexPath.section == 1 || indexPath.section == 3){
         JGTeamActivityDetailsCell *detailsCell = [tableView dequeueReusableCellWithIdentifier:JGTeamActivityDetailsCellIdentifier forIndexPath:indexPath];
         detailsCell.selectionStyle = UITableViewCellSelectionStyleNone;
-        [detailsCell configDetailsText:@"活动详情" AndActivityDetailsText:_model.activityInfo];
+//        [detailsCell configDetailsText:@"活动详情" AndActivityDetailsText:_model.];
         return detailsCell;
     }else if (indexPath.section == 2){
         JGCostsDescriptionCell *costDescriptionCell = [tableView dequeueReusableCellWithIdentifier:JGCostsDescriptionCellIdentifier forIndexPath:indexPath];

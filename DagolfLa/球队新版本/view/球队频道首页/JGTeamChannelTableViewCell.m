@@ -23,18 +23,15 @@
         [self.contentView addSubview:self.iconImageV];
         
         self.nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(90 * screenWidth / 320, 5 * screenWidth / 320, screenWidth - 90 * screenWidth / 320, 20 * screenWidth / 320)];
-//        self.nameLabel.backgroundColor = [UIColor orangeColor];
         self.nameLabel.font = [UIFont systemFontOfSize:15 * screenWidth / 320];
         [self.contentView addSubview:self.nameLabel];
         
         self.adressLabel = [[UILabel alloc] initWithFrame:CGRectMake(90 * screenWidth / 320, 30 * screenWidth / 320, screenWidth - 90 * screenWidth / 320, 20 * screenWidth / 320)];
-//        self.adressLabel.backgroundColor = [UIColor orangeColor];
         self.adressLabel.textColor = [UIColor lightGrayColor];
         self.adressLabel.font = [UIFont systemFontOfSize:12 * screenWidth / 320];
         [self.contentView addSubview:self.adressLabel];
         
         self.describLabel = [[UILabel alloc] initWithFrame:CGRectMake(90 * screenWidth / 320, 55 * screenWidth / 320, screenWidth - 90 * screenWidth / 320, 20 * screenWidth / 320)];
-//        self.describLabel.backgroundColor = [UIColor orangeColor];
         self.describLabel.font = [UIFont systemFontOfSize:12 * screenWidth / 320];
         [self.contentView addSubview:self.describLabel];
         
@@ -46,8 +43,11 @@
     return self;
 }
 
-
-
+- (void)setTeamModel:(JGTeamDetail *)teamModel{
+    self.nameLabel.text = teamModel.name;
+    self.adressLabel.text = teamModel.crtyName;
+    self.describLabel.text = teamModel.info;        // 球队介绍
+}
 
 - (void)awakeFromNib {
     [super awakeFromNib];

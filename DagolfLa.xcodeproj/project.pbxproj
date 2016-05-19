@@ -887,7 +887,7 @@
 		20BA61371CDC9A65004B61F5 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		20BA61391CDC9A89004B61F5 /* Photos.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Photos.framework; path = System/Library/Frameworks/Photos.framework; sourceTree = SDKROOT; };
 		20BA613B1CDC9B8E004B61F5 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
-		20BA613D1CDCA04D004B61F5 /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
+		20BA613D1CDCA04D004B61F5 /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PrefixHeader.pch; path = ../PrefixHeader.pch; sourceTree = "<group>"; };
 		20BA613E1CDCA180004B61F5 /* VedioPlayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VedioPlayViewController.h; sourceTree = "<group>"; };
 		20BA613F1CDCA180004B61F5 /* VedioPlayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VedioPlayViewController.m; sourceTree = "<group>"; };
 		20BA61401CDCA180004B61F5 /* VedioPlayViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VedioPlayViewController.xib; sourceTree = "<group>"; };
@@ -3826,7 +3826,6 @@
 				36BFFD2C1BC76C8D005B3CE2 /* Info.plist */,
 				36BFFD2D1BC76C8D005B3CE2 /* main.m */,
 				363D4F331C86E1C70089E52C /* PushConfig.plist */,
-				20BA613D1CDCA04D004B61F5 /* PrefixHeader.pch */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -4209,6 +4208,7 @@
 			isa = PBXGroup;
 			children = (
 				65B5969E1CAD43AC007AB83A /* ContantHead.h */,
+				20BA613D1CDCA04D004B61F5 /* PrefixHeader.pch */,
 				20CA14001CEB086600DA15B9 /* JsonHttp.h */,
 				20CA14011CEB086600DA15B9 /* JsonHttp.m */,
 				20CA13FD1CEAF07100DA15B9 /* SXPickPhoto.h */,
