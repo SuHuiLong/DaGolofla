@@ -23,22 +23,20 @@
 }
 
 - (void)setJGTeamActivityCellWithModel:(JGTeamAcitivtyModel *)modeel{
-    //活动列表标题
-//    @property (weak, nonatomic) IBOutlet UILabel *activitytitle;
-    self.activitytitle.text = modeel.activitytitle;
+    self.activitytitle.text = modeel.name;
     //报名
-    if (modeel.Apply == 0) {
+    if (modeel.isClose == 0) {
         self.Apply.text = @"正在报名";
     }else{
         self.Apply.text = @"活动结束";
         self.Apply.textColor = [UIColor redColor];
     }
     //活动时间
-    self.activityName.text = [NSString stringWithFormat:@"活动时间:%@", modeel.activityTime];
+    self.activityName.text = [NSString stringWithFormat:@"活动时间:%ld", (long)modeel.beginDate];
     //活动地址
-    self.activityAddress.text = [NSString stringWithFormat:@"地点:%@", modeel.activityAddress];
+    self.activityAddress.text = [NSString stringWithFormat:@"地点:%@", modeel.ballName];
     //报名人数
-    self.applyNumber.text = [NSString stringWithFormat:@"已报名人数(%@人)", modeel.applyNumber];
+    self.applyNumber.text = [NSString stringWithFormat:@"已报名人数(%ld人)", (long)modeel.sumCount];
 }
 
 @end

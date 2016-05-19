@@ -67,22 +67,6 @@
         NSLog(@"%@", data);
     }];
     
-    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
-    [dic setObject:@"LB" forKey:@"name"];
-    [dic setObject:@"AAA" forKey:@"crtyName"];
-    [dic setObject:@"AAA" forKey:@"info"];
-    [dic setObject:@"AAA" forKey:@"notice"];
-    [dic setObject:@1 forKey:@"check"];
-    [dic setObject:@"userName" forKey:@"userName"];
-    [dic setObject:@"110" forKey:@"userMobile"];
-    [dic setObject:@"244" forKey:@"createUserKey"];
-
-    [[JsonHttp jsonHttp] httpRequest:@"team/createTeam" JsonKey:@"team" withData:dic requestMethod:@"POST" failedBlock:^(id errType) {
-        NSLog(@"error");
-    } completionBlock:^(id data) {
-        NSLog(@"%@", data);
-    }];
-    
     [self.navigationController pushViewController:detailV animated:YES];
 }
 

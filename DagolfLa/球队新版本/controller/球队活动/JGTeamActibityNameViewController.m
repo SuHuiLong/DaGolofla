@@ -12,7 +12,7 @@
 #import "JGCostsDescriptionCell.h"
 #import "JGActivityNameBaseCell.h"
 #import "JGTeamApplyViewController.h"
-#import "JGHLaunchActivityModel.h"
+#import "JGTeamAcitivtyModel.h"
 
 static NSString *const JGTeamActivityWithAddressCellIdentifier = @"JGTeamActivityWithAddressCell";
 static NSString *const JGTeamActivityDetailsCellIdentifier = @"JGTeamActivityDetailsCell";
@@ -24,11 +24,18 @@ static NSString *const JGActivityNameBaseCellIdentifier = @"JGActivityNameBaseCe
     CGFloat _tableViewHeight;
 }
 @property (nonatomic, strong)UITableView *teamActibityNameTableView;
-@property (nonatomic, strong)UITableView *dataArray;//数据源
+@property (nonatomic, strong)NSMutableArray *dataArray;//数据源
 
 @end
 
 @implementation JGTeamActibityNameViewController
+
+- (instancetype)init{
+    if (self == [super init]) {
+        self.dataArray = [NSMutableArray array];
+    }
+    return self;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -44,6 +51,28 @@ static NSString *const JGActivityNameBaseCellIdentifier = @"JGActivityNameBaseCe
     
     [self createTeamActibityNameTableView];
     
+    [self loadData];
+}
+#pragma mark -- 下载数据
+- (void)loadData{
+    NSUserDefaults *userDef = [NSUserDefaults standardUserDefaults];
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    [dict setObject:[NSString stringWithFormat:@"%ld", (long)self.teamActivityKey] forKey:@"activityKey"];
+//    [dict setObject:[userDef objectForKey:userID] forKey:@"userKey"];
+    [dict setObject:@"244" forKey:@"userKey"];
+    [[JsonHttp jsonHttp]httpRequest:@"team/getTeamActivity" JsonKey:nil withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
+        NSLog(@"error == %@", errType);
+    } completionBlock:^(id data) {
+        NSLog(@"data == %@", data);
+        NSArray *array = [NSArray array];
+        array = [data objectForKey:@"activity"];
+        for (NSDictionary *dict in array) {
+            JGTeamAcitivtyModel *model = [[JGTeamAcitivtyModel alloc]init];
+            [model setValuesForKeysWithDictionary:dict];
+            
+        }
+        
+    }];
 }
 #pragma mark -- 创建保存 ＋ 发布 按钮
 - (void)createSaveAndLaunchBtn{
@@ -143,7 +172,7 @@ static NSString *const JGActivityNameBaseCellIdentifier = @"JGActivityNameBaseCe
             cell = [self.teamActibityNameTableView dequeueReusableCellWithIdentifier:JGTeamActivityDetailsCellIdentifier];
         }
         
-        cell.activityDetails.text = self.model.activityInfo;
+//        cell.activityDetails.text = self.model.activityInfo;
         return [cell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height + 1;
     }else if (indexPath.section == 2){
         return 110;
@@ -165,7 +194,7 @@ static NSString *const JGActivityNameBaseCellIdentifier = @"JGActivityNameBaseCe
     }else if (indexPath.section == 1 || indexPath.section == 3){
         JGTeamActivityDetailsCell *detailsCell = [tableView dequeueReusableCellWithIdentifier:JGTeamActivityDetailsCellIdentifier forIndexPath:indexPath];
         detailsCell.selectionStyle = UITableViewCellSelectionStyleNone;
-        [detailsCell configDetailsText:@"活动详情" AndActivityDetailsText:_model.activityInfo];
+//        [detailsCell configDetailsText:@"活动详情" AndActivityDetailsText:_model.];
         return detailsCell;
     }else if (indexPath.section == 2){
         JGCostsDescriptionCell *costDescriptionCell = [tableView dequeueReusableCellWithIdentifier:JGCostsDescriptionCellIdentifier forIndexPath:indexPath];

@@ -59,25 +59,13 @@
         NSArray *array = [data objectForKey:@"activityList"];
         for (NSDictionary *dict in array) {
             JGTeamAcitivtyModel *model = [[JGTeamAcitivtyModel alloc]init];
-            //活动列表标题
-            model.activitytitle = [dict objectForKey:@"name"];
-            //报名
-            model.Apply = (long)[dict objectForKey:@"isClose"];
-            //活动时间
-//            @property (strong, nonatomic) NSString *activityTime;
-            model.activityTime = @"2016-07-03";
-            //活动地址
-            model.activityAddress = @"上海市浦东新区";
-//            @property (strong, nonatomic) NSString *activityAddress;
-            //报名人数
-            model.applyNumber = @"20";
-//            @property (strong, nonatomic) NSString *applyNumber;
+            
+            [model setValuesForKeysWithDictionary:dict];
             [self.dataArray addObject:model];
         }
         
         [self.teamActivityTableView reloadData];
     }];
-    
 }
 
 #pragma mark -- 创建发布活动
@@ -140,6 +128,9 @@
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     JGTeamActibityNameViewController *activityNameCtrl = [[JGTeamActibityNameViewController alloc]init];
+    JGTeamAcitivtyModel *model = [[JGTeamAcitivtyModel alloc]init];
+    model = self.dataArray[indexPath.section];
+    activityNameCtrl.teamActivityKey = model.timeKey;
     [self.navigationController pushViewController:activityNameCtrl animated:YES];
 }
 - (void)didReceiveMemoryWarning {
