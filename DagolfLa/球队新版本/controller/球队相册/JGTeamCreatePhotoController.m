@@ -17,6 +17,9 @@
     UIButton* _btnSome;
     UIImageView* _imgvAll;
     UIImageView* _imgvSome;
+    //判断球队是否公开，0：全部可见。1：球队成员
+    NSInteger _isOpen;
+    UITextField* _textTitle;
 }
 
 @end
@@ -27,6 +30,7 @@
     [super viewDidLoad];
     self.view.backgroundColor = [UITool colorWithHexString:@"EEEEEE" alpha:1];
 
+    _isOpen = 0;
 
     UIBarButtonItem* rightBtn = [[UIBarButtonItem alloc]initWithTitle:@"保存" style:UIBarButtonItemStylePlain target:self action:@selector(saveClick)];
     rightBtn.tintColor = [UIColor whiteColor];
@@ -54,7 +58,16 @@
 
 -(void)saveClick
 {
-    
+    NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
+    [dict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:userID] forKey:@"userKey"];
+    [dict setObject:@189911222513049600 forKey:@"teamKey"];
+    [dict setObject:[NSString stringWithFormat:@"%@",_textTitle.text] forKey:@"groupsName"];
+    [[JsonHttp jsonHttp]httpRequest:@"team/createTeamAlbum" JsonKey:@"teamAlbum" withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
+        NSLog(@"errType == %@", errType);
+    } completionBlock:^(id data) {
+       
+        
+    }];
 }
 /*\
  字体 15   a0a0a0    黑色 313131
@@ -75,13 +88,12 @@
     
     
     
-    UITextField* textTitle = [[UITextField alloc]initWithFrame:CGRectMake(120*screenWidth/375, 1*screenWidth/375, screenWidth-130*screenWidth/375, 45*screenWidth/375)];
-    textTitle.placeholder = @"输入相册名";
-    textTitle.textColor = [UITool colorWithHexString:@"313131" alpha:1];
-    textTitle.font = [UIFont systemFontOfSize:15*screenWidth/375];
-    [viewTitle addSubview:textTitle];
-    
-    
+    _textTitle = [[UITextField alloc]initWithFrame:CGRectMake(120*screenWidth/375, 1*screenWidth/375, screenWidth-130*screenWidth/375, 45*screenWidth/375)];
+    _textTitle.placeholder = @"输入相册名";
+    _textTitle.textColor = [UITool colorWithHexString:@"313131" alpha:1];
+    _textTitle.font = [UIFont systemFontOfSize:15*screenWidth/375];
+    [viewTitle addSubview:_textTitle];
+  
 }
 
 #pragma mark --创建权限设置页面
@@ -146,11 +158,13 @@
     if (btn.tag == 1001) {
         _imgvAll.image = [UIImage imageNamed:@"duihao"];
         _imgvSome.image = [UIImage imageNamed:@""];
+        _isOpen = 0;
     }
     else
     {
         _imgvAll.image = [UIImage imageNamed:@""];
         _imgvSome.image = [UIImage imageNamed:@"duihao"];
+        _isOpen = 1;
     }
 }
 

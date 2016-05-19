@@ -16,11 +16,13 @@
 #import "MJDIYHeader.h"
 #import "MJDIYBackFooter.h"
 
+#import "JGLPhotoAlbumModel.h"
 
 @interface JGTeamPhotoViewController ()<UICollectionViewDataSource,UICollectionViewDelegate>
 {
     UICollectionView* _collectionView;
     NSInteger _page;
+    NSMutableArray* _dataArray;
 }
 @end
 
@@ -31,6 +33,8 @@
     
     _page = 0;
     self.title = @"球队相册";
+    _dataArray = [[NSMutableArray alloc]init];
+    
     
     UIBarButtonItem* rightBtn = [[UIBarButtonItem alloc]initWithTitle:@"创建相册" style:UIBarButtonItemStylePlain target:self action:@selector(createClick)];
     rightBtn.tintColor = [UIColor whiteColor];
@@ -79,34 +83,41 @@
 - (void)downLoadData:(int)page isReshing:(BOOL)isReshing{
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     
-    [dict setObject:@"189781710290821120" forKey:@"teamKey"];
+    [dict setObject:@189911222513049600 forKey:@"teamKey"];
     [dict setObject:[NSNumber numberWithInt:page] forKey:@"offset"];
-//    [[JsonHttp jsonHttp]httpRequest:@"team/getTeamAlbumList" withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
-//        NSLog(@"errType == %@", errType);
-//    } completionBlock:^(id data) {
-//        if ([[data objectForKey:@"packSuccess"] boolValue]) {
-//            if (page == 1)
-//            {
-//                //清除数组数据
-//            }
-//            //数据解析
-//            for (NSDictionary *dataDict in [dict objectForKey:@"rows"]) {
-//                
-//            }
-//            _page++;
-//            [_collectionView reloadData];
-//        }else {
-//            [Helper alertViewWithTitle:[dict objectForKey:@"message"] withBlock:^(UIAlertController *alertView) {
-//                [self presentViewController:alertView animated:YES completion:nil];
-//            }];
-//        }
-//        [_collectionView reloadData];
-//        if (isReshing) {
-//            [_collectionView.header endRefreshing];
-//        }else {
-//            [_collectionView.footer endRefreshing];
-//        }
-//    }];
+    [[JsonHttp jsonHttp]httpRequest:@"team/getTeamAlbumList" JsonKey:nil withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
+        if (isReshing) {
+            [_collectionView.header endRefreshing];
+        }else {
+            [_collectionView.footer endRefreshing];
+        }
+    } completionBlock:^(id data) {
+        if ([[data objectForKey:@"packSuccess"] boolValue]) {
+            if (page == 0)
+            {
+                //清除数组数据
+                [_dataArray removeAllObjects];
+            }
+            //数据解析
+            for (NSDictionary *dicList in [data objectForKey:@"teamAlbumList"]) {
+                JGLPhotoAlbumModel *model = [[JGLPhotoAlbumModel alloc] init];
+                [model setValuesForKeysWithDictionary:dicList];
+                [_dataArray addObject:model];
+            }
+            _page++;
+            [_collectionView reloadData];
+        }else {
+            [Helper alertViewWithTitle:[dict objectForKey:@"message"] withBlock:^(UIAlertController *alertView) {
+                [self presentViewController:alertView animated:YES completion:nil];
+            }];
+        }
+        [_collectionView reloadData];
+        if (isReshing) {
+            [_collectionView.header endRefreshing];
+        }else {
+            [_collectionView.footer endRefreshing];
+        }
+    }];
 }
 #pragma mark 开始进入刷新状态
 - (void)headerRereshing
@@ -127,7 +138,7 @@
 //定义展示的UICollectionViewCell的个数
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return 40;
+    return _dataArray.count;
 }
 //定义展示的Section的个数
 -(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
@@ -143,6 +154,7 @@
     // Set up the reuse identifier
     cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"JGTeamPhotoCollectionViewCell" forIndexPath:indexPath];
     cell.backgroundColor = [UIColor whiteColor];
+    [cell showData:_dataArray[indexPath.row]];
     [cell.manageBtn addTarget:self action:@selector(manageClick) forControlEvents:UIControlEventTouchUpInside];
     return cell;
 }
@@ -168,6 +180,8 @@
 {
     //
     JGPhotoAlbumViewController* phoVc = [[JGPhotoAlbumViewController alloc]init];
+    phoVc.strTitle = [_dataArray[indexPath.row] groupsName];
+    phoVc.strTimeKey = [_dataArray[indexPath.row] timeKey];
     [self.navigationController pushViewController:phoVc animated:YES];
 }
 

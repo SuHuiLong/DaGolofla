@@ -10,4 +10,7 @@
 
 @interface JGLUpdataPhotoController : ViewController
 
+
+@property (strong, nonatomic) NSString* strTitle;
+@property (strong, nonatomic) NSNumber* strTimeKey;
 @end
