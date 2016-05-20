@@ -21,7 +21,7 @@ static NSString *const JGTableViewCellIdentifier = @"JGTableViewCell";
 static NSString *const JGHTeamActivityImageCellIdentifier = @"JGHTeamActivityImageCell";
 
 
-@interface JGHLaunchActivityViewController ()<UITableViewDelegate, UITableViewDataSource, JGHTeamActivityImageCellDelegate, JGHConcentTextViewControllerDelegate>
+@interface JGHLaunchActivityViewController ()<UITableViewDelegate, UITableViewDataSource, JGHTeamActivityImageCellDelegate, JGHConcentTextViewControllerDelegate, NSURLConnectionDownloadDelegate>
 {
     //、、、、、、、
     NSArray *_titleArray;
@@ -200,27 +200,21 @@ static NSString *const JGHTeamActivityImageCellIdentifier = @"JGHTeamActivityIma
         [_pickPhoto SHowLocalPhotoWithController:self andWithBlock:^(NSObject *Data) {
             if ([Data isKindOfClass:[UIImage class]])
             {
+                // @{@"nType":@"1", @"tag":@"dagolfla", @"data":@"test"};
                 _headerImage = (UIImage *)Data;
-                
                 NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-//                [dict setObject:@"1" forKey:@"mediaType"];
-//                [dict setObject:@"190138107805310976" forKey:@"albumKey"];
-                
-                [dict setObject:@"/team/11010.png" forKey:@"data"];
-                [dict setObject:@"1" forKey:@"mType"];
-                [dict setObject:@"1000" forKey:@"tag"];
-                
+                [dict setObject:@"11010" forKey:@"data"];
+                [dict setObject:@"1" forKey:@"nType"];
+                [dict setObject:@"team" forKey:@"tag"];
                 NSMutableArray *array = [NSMutableArray array];
                 
                 [array addObject:UIImageJPEGRepresentation(_headerImage, 0.7)];
-                
-                [[JsonHttp jsonHttp]httpRequest:nil JsonKey:nil withData:dict andArray:array requestMethod:@"POST" failedBlock:^(id errType) {
-                    NSLog(@"%@", errType);
+
+                [[JsonHttp jsonHttp]httpRequestImageOrVedio:@"1" withData:dict andDataArray:array failedBlock:^(id errType) {
+                    NSLog(@"errType===%@", errType);
                 } completionBlock:^(id data) {
-                    NSLog(@"%@", data);
+                    NSLog(@"data===%@", data);
                 }];
-                
-                [self.launchActivityTableView reloadData];
             }
         }];
     }];
@@ -232,6 +226,12 @@ static NSString *const JGHTeamActivityImageCellIdentifier = @"JGHTeamActivityIma
     
     [self presentViewController:aleVC animated:YES completion:nil];
 }
+
+- (void)connectionDidFinishDownloading:(NSURLConnection *)connection destinationURL:(NSURL *) destinationURL{
+    NSLog(@"%@", destinationURL);
+    NSLog(@"%@", connection);
+}
+
 #pragma mark -- 添加内容详情代理  JGHConcentTextViewControllerDelegate
 - (void)didSelectSaveBtnClick:(NSString *)text{
     [self.model setValue:text forKey:@"activityInfo"];
