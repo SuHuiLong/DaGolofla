@@ -38,7 +38,6 @@
         [self.addressAndTimeImageV addSubview:teamLd];
         
         self.teamLeaderNameLB = [[UILabel alloc] initWithFrame:CGRectMake(80 * screenWidth / 320, 0, 100 * screenWidth / 320, 30 * screenWidth / 320)];
-//        self.teamLeaderNameLB.text = @"小泽玛丽亚";
         [self.addressAndTimeImageV addSubview:_teamLeaderNameLB];
         
         self.leaderIconV = [[UIImageView alloc] initWithFrame:CGRectMake(200 * screenWidth / 320, 2 * screenWidth / 320, 28 * screenWidth / 320, 28 * screenWidth / 320)];
@@ -52,9 +51,8 @@
         addresL.textColor = [UIColor lightGrayColor];
         [self.addressAndTimeImageV addSubview:addresL];
         
-        self.addressLB = [[UILabel alloc] initWithFrame:CGRectMake(80 * screenWidth / 320, 40 * screenWidth / 320, screenWidth / 2 - 80 * screenWidth / 320, 30 * screenWidth / 320)];
+        self.addressLB = [[UILabel alloc] initWithFrame:CGRectMake(60 * screenWidth / 320, 40 * screenWidth / 320, screenWidth / 2 - 60 * screenWidth / 320, 30 * screenWidth / 320)];
         self.addressLB.font = [UIFont systemFontOfSize:13 * screenWidth / 320];
-//        self.addressLB.text = @"🇯🇵";
         [self.addressAndTimeImageV addSubview:_addressLB];
         
         UILabel *setUpLB = [[UILabel alloc] initWithFrame:CGRectMake(screenWidth / 2, 40 * screenWidth / 320, 70 * screenWidth / 320, 30 * screenWidth / 320)];
@@ -147,11 +145,11 @@
     
     
     // 时间
-//    NSDate *dateNew = [NSDate dateWithTimeIntervalSince1970:teamDetailModel.establishTime];
-//    NSDateFormatter * dm = [[NSDateFormatter alloc]init];
-//    [dm setDateFormat:@"yyyy-MM-dd"];
-//    NSString * datestring2 = [dm stringFromDate:dateNew];
-//    self.setUpLbalel.text = datestring2;
+    //    NSDate *dateNew = [NSDate dateWithTimeIntervalSince1970:teamDetailModel.establishTime];
+    //    NSDateFormatter * dm = [[NSDateFormatter alloc]init];
+    //    [dm setDateFormat:@"yyyy-MM-dd"];
+    //    NSString * datestring2 = [dm stringFromDate:dateNew];
+    //    self.setUpLbalel.text = datestring2;
 
     /*
      @property (nonatomic, strong)UIImageView *iconImageV;
