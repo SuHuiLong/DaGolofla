@@ -45,9 +45,51 @@
         UITextField *tF = [self.creatTeamV viewWithTag:232 + i];
         [tF addTarget:self action:@selector(nameAndphone:) forControlEvents:(UIControlEventTouchUpInside)];
     }
+    
+    [self postImageToSever];
+    
     // Do any additional setup after loading the view.
 }
 
+
+
+- (void)postImageToSever {
+    
+    NSString *imagePath = [[NSBundle mainBundle] pathForResource:@"bannerS.jpg" ofType:nil];
+    NSData *data = [NSData dataWithContentsOfFile:imagePath];
+
+    NSString* url = @"http://192.168.1.101:8080/upload.do";
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    
+    [manager POST:url parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+        
+        [formData appendPartWithFileData:data name:@"avatar" fileName:@"11010.png" mimeType:@"image/png"];
+        
+    } success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSLog(@"Upload  responseObject%@",responseObject);
+//        success(responseObject);
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        NSString* ErrorResponse = [[NSString alloc] initWithData:(NSData *)error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] encoding:NSUTF8StringEncoding];
+        
+        NSLog(@"%@",ErrorResponse);
+    }];
+    
+
+    
+    
+}
+
+
+
+
+
+
+
+// 是否需要审核
 - (void)isExamine{
     if (self.creatTeamV.examineSWt.isOn == YES) {
         [self.paraDic setObject:@1 forKey:@"check"];

@@ -26,13 +26,13 @@
     if (self) {
         
         UIView *topView = [[UIView alloc] initWithFrame:CGRectMake(0, 10 * screenWidth / 320, screenWidth, 80 * screenWidth / 320)];
-        topView.backgroundColor = [UIColor orangeColor];
+//        topView.backgroundColor = [UIColor orangeColor];
         [self addSubview:topView];
         
         self.addIconBtn = [UIButton buttonWithType:(UIButtonTypeCustom)];
         [self.addIconBtn setFrame:CGRectMake(10 * screenWidth / 320, 10 * screenWidth / 320, 60 * screenWidth / 320, 60 * screenWidth / 320)];
         [self.addIconBtn setImage:[UIImage imageNamed:@"ssgl@2x"] forState:(UIControlStateNormal)];
-        self.addIconBtn.backgroundColor = [UIColor purpleColor];
+//        self.addIconBtn.backgroundColor = [UIColor purpleColor];
         [topView addSubview:self.addIconBtn];
         
         self.teamNmaeTV = [[UITextView alloc] initWithFrame:CGRectMake(80 * screenWidth / 320, 10 * screenWidth / 320, screenWidth - 90 * screenWidth / 320, 60 * screenWidth / 320)];
