@@ -10,9 +10,15 @@
 #import "JGMenberTableViewCell.h"
 
 #import "JGMemManageController.h"
+
+#import "MJRefresh.h"
+#import "MJDIYBackFooter.h"
+#import "MJDIYHeader.h"
 @interface JGTeamMemberController ()<UITableViewDelegate, UITableViewDataSource>
 {
     UITableView* _tableView;
+    NSInteger _page;
+    NSMutableArray* _dataArray;
 }
 @end
 
@@ -46,7 +52,68 @@
     [self.view addSubview:_tableView];
     
     [_tableView registerClass:[JGMenberTableViewCell class] forCellReuseIdentifier:@"JGMenberTableViewCell"];
+    
+    
+    _tableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
+    _tableView.footer=[MJDIYBackFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRereshing)];
+    [_tableView.header beginRefreshing];
+    
 }
+
+
+#pragma mark - 下载数据
+- (void)downLoadData:(int)page isReshing:(BOOL)isReshing{
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    
+    [dict setObject:@122 forKey:@"teamKey"];
+    [dict setObject:[NSNumber numberWithInt:page] forKey:@"offset"];
+    [[JsonHttp jsonHttp]httpRequest:@"team/getTeamMemberList" JsonKey:nil withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
+        if (isReshing) {
+            [_tableView.header endRefreshing];
+        }else {
+            [_tableView.footer endRefreshing];
+        }
+    } completionBlock:^(id data) {
+        if ([[data objectForKey:@"packSuccess"] boolValue]) {
+            if (page == 0)
+            {
+                //清除数组数据
+                [_dataArray removeAllObjects];
+            }
+            //数据解析
+//            for (NSDictionary *dataDic in [data objectForKey:@"teamList"]) {
+//                JGLMyTeamModel *model = [[JGLMyTeamModel alloc] init];
+//                [model setValuesForKeysWithDictionary:dataDic];
+//                [_dataArray addObject:model];
+//            }
+            _page++;
+            [_tableView reloadData];
+        }else {
+            [Helper alertViewWithTitle:@"失败" withBlock:^(UIAlertController *alertView) {
+                [self presentViewController:alertView animated:YES completion:nil];
+            }];
+        }
+        [_tableView reloadData];
+        if (isReshing) {
+            [_tableView.header endRefreshing];
+        }else {
+            [_tableView.footer endRefreshing];
+        }
+    }];
+}
+
+#pragma mark 开始进入刷新状态
+- (void)headRereshing
+{
+    _page = 0;
+    [self downLoadData:_page isReshing:YES];
+}
+
+- (void)footRereshing
+{
+    [self downLoadData:_page isReshing:NO];
+}
+
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
