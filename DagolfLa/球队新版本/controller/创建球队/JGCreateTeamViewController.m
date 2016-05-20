@@ -55,46 +55,31 @@
 
 - (void)postImageToSever {
     
-    //获取地址
+    NSString *imagePath = [[NSBundle mainBundle] pathForResource:@"bannerS.jpg" ofType:nil];
+    NSData *data = [NSData dataWithContentsOfFile:imagePath];
+
+    NSString* url = @"http://192.168.1.101:8080/upload.do";
     
-    NSString *path = @"http://192.168.1.101:8080/upload.do"; //下载管理类的对象
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];   //默认传输的数据类型是二进制
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     
-    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-    
-    //第三个参数：进行上传数据的保存操作
-    
-    [manager POST:path parameters:nil constructingBodyWithBlock:^(id formData) {
+    [manager POST:url parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
         
-        //找到要上传的图片
-        
-        NSString *imagePath = [[NSBundle mainBundle] pathForResource:@"bannerS.jpg" ofType:nil];
-        
-        /*
-         
-         第一个参数：将要上传的数据的原始路径
-         
-         第二个参数：要上传的路径的key
-         
-         第三个参数：上传后文件的别名
-         
-         第四个参数：原始图片的格式
-         
-         */
-        
-        [formData appendPartWithFileURL:[NSURL fileURLWithPath:imagePath] name:@"/team/11010.png" fileName:@"11010" mimeType:@"image.jpg" error:nil];
+        [formData appendPartWithFileData:data name:@"avatar" fileName:@"11010.png" mimeType:@"image/png"];
         
     } success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
-        NSString *str = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
-        
-        NSLog(@"%@",str);
+        NSLog(@"Upload  responseObject%@",responseObject);
+//        success(responseObject);
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
-        NSLog(@"%@",error.description);
+        NSString* ErrorResponse = [[NSString alloc] initWithData:(NSData *)error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] encoding:NSUTF8StringEncoding];
         
+        NSLog(@"%@",ErrorResponse);
     }];
+    
+
+    
     
 }
 
