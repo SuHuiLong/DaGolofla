@@ -15,6 +15,8 @@
 #define LINE_COUNT 4
 
 #import "BallParkViewController.h"
+
+#import "PostDataRequest.h"
 @interface JGLUpdataPhotoController ()<UITextViewDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,ZYQAssetPickerControllerDelegate,UIScrollViewDelegate,UIPickerViewAccessibilityDelegate,UIPickerViewDataSource,UIPickerViewDelegate>
 {
     
@@ -346,7 +348,12 @@
     NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
     [dict setObject:_strTimeKey forKey:@"albumKey"];
     [dict setObject:@1 forKey:@"mediaType"];
-//    [dict setObject:@"" forKey:@""];
+
+    [[JsonHttp jsonHttp] httpRequest:@"team/saveTeamMedia" JsonKey:@"TeamMedia" withData:dict andArray:_selectImages requestMethod:@"POST" failedBlock:^(id errType) {
+        NSLog(@"失败");
+    } completionBlock:^(id data) {
+        
+    }];
     
 }
 
