@@ -72,15 +72,15 @@
                 [_dataArray removeAllObjects];
             }
             //数据解析
-            for (NSDictionary *dicList in [data objectForKey:@"teamAlbumList"]) {
+            for (NSDictionary *dataDic in [data objectForKey:@"teamList"]) {
                 JGLMyTeamModel *model = [[JGLMyTeamModel alloc] init];
-                [model setValuesForKeysWithDictionary:dicList];
+                [model setValuesForKeysWithDictionary:dataDic];
                 [_dataArray addObject:model];
             }
             _page++;
             [_tableView reloadData];
         }else {
-            [Helper alertViewWithTitle:[dict objectForKey:@"message"] withBlock:^(UIAlertController *alertView) {
+            [Helper alertViewWithTitle:@"失败" withBlock:^(UIAlertController *alertView) {
                 [self presentViewController:alertView animated:YES completion:nil];
             }];
         }
@@ -106,17 +106,17 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 20;
+    return _dataArray.count;
 }
 
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-        JGTeamChannelTableViewCell *cell = [_tableView dequeueReusableCellWithIdentifier:@"cell"];
+    JGTeamChannelTableViewCell *cell = [_tableView dequeueReusableCellWithIdentifier:@"cell"];
 //        cell.nameLabel.text = _dataArray[indexPath.row%3];
-        cell.adressLabel.text = @"测试数据 Test";
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        return cell;
+    [cell showData:_dataArray[indexPath.row]];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    return cell;
     
 }
 
