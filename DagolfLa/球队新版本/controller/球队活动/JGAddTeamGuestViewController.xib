@@ -226,12 +226,12 @@
                     </constraints>
                     <variation key="default">
                         <mask key="constraints">
-                            <exclude reference="Wn2-i1-L5g"/>
                             <exclude reference="3ah-PT-TyQ"/>
                             <exclude reference="8BZ-FC-uKq"/>
                             <exclude reference="8mP-Xt-USp"/>
                             <exclude reference="Rhc-J7-jdi"/>
                             <exclude reference="noW-xS-oKh"/>
+                            <exclude reference="Wn2-i1-L5g"/>
                             <exclude reference="33T-hP-ecn"/>
                             <exclude reference="DNH-WW-6jl"/>
                             <exclude reference="DXP-3L-4ap"/>
