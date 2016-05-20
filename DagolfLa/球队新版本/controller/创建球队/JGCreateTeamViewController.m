@@ -45,9 +45,66 @@
         UITextField *tF = [self.creatTeamV viewWithTag:232 + i];
         [tF addTarget:self action:@selector(nameAndphone:) forControlEvents:(UIControlEventTouchUpInside)];
     }
+    
+    [self postImageToSever];
+    
     // Do any additional setup after loading the view.
 }
 
+
+
+- (void)postImageToSever {
+    
+    //获取地址
+    
+    NSString *path = @"http://192.168.1.101:8080/upload.do"; //下载管理类的对象
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];   //默认传输的数据类型是二进制
+    
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    
+    //第三个参数：进行上传数据的保存操作
+    
+    [manager POST:path parameters:nil constructingBodyWithBlock:^(id formData) {
+        
+        //找到要上传的图片
+        
+        NSString *imagePath = [[NSBundle mainBundle] pathForResource:@"bannerS.jpg" ofType:nil];
+        
+        /*
+         
+         第一个参数：将要上传的数据的原始路径
+         
+         第二个参数：要上传的路径的key
+         
+         第三个参数：上传后文件的别名
+         
+         第四个参数：原始图片的格式
+         
+         */
+        
+        [formData appendPartWithFileURL:[NSURL fileURLWithPath:imagePath] name:@"/team/11010.png" fileName:@"11010" mimeType:@"image.jpg" error:nil];
+        
+    } success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSString *str = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+        
+        NSLog(@"%@",str);
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        NSLog(@"%@",error.description);
+        
+    }];
+    
+}
+
+
+
+
+
+
+
+// 是否需要审核
 - (void)isExamine{
     if (self.creatTeamV.examineSWt.isOn == YES) {
         [self.paraDic setObject:@1 forKey:@"check"];
