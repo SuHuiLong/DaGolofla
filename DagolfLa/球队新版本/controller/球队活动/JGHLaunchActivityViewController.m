@@ -1,3 +1,4 @@
+
 //
 //  JGHLaunchActivityViewController.m
 //  DagolfLa
@@ -200,6 +201,25 @@ static NSString *const JGHTeamActivityImageCellIdentifier = @"JGHTeamActivityIma
             if ([Data isKindOfClass:[UIImage class]])
             {
                 _headerImage = (UIImage *)Data;
+                
+                NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+//                [dict setObject:@"1" forKey:@"mediaType"];
+//                [dict setObject:@"190138107805310976" forKey:@"albumKey"];
+                
+                [dict setObject:@"/team/11010.png" forKey:@"data"];
+                [dict setObject:@"1" forKey:@"mType"];
+                [dict setObject:@"1000" forKey:@"tag"];
+                
+                NSMutableArray *array = [NSMutableArray array];
+                
+                [array addObject:UIImageJPEGRepresentation(_headerImage, 0.7)];
+                
+                [[JsonHttp jsonHttp]httpRequest:nil JsonKey:nil withData:dict andArray:array requestMethod:@"POST" failedBlock:^(id errType) {
+                    NSLog(@"%@", errType);
+                } completionBlock:^(id data) {
+                    NSLog(@"%@", data);
+                }];
+                
                 [self.launchActivityTableView reloadData];
             }
         }];
