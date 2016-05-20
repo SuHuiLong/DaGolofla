@@ -29,5 +29,6 @@ typedef void (^GBHEBytesRecvBlock)(unsigned long long length, unsigned long long
 //取消网络请求
 - (void)cancelRequest;
 
+- (void)httpRequest:(NSString *)url JsonKey:(NSString *)jsonKey withData:(NSDictionary *)postData andArray:(NSArray *)arrayPic requestMethod:(NSString *)httpMethod failedBlock:(GBHEFailedBlock)failedBlock completionBlock:(GBHECompletionBlock)completionBlock;
 
 @end

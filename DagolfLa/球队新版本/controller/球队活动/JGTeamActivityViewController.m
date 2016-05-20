@@ -40,13 +40,16 @@
     
     [self loadData];
     
-//    [self loadTestData];
+    [self loadTestData];
 }
-//- (void)loadTestData{
-//    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-//    [dict setObject:@"" forKey:@"albumKey"];
-//    [dict setObject:@1 forKey:@"mediaType"];
-//}
+- (void)loadTestData{
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    [dict setObject:@"/team/11010.png" forKey:@"data"];
+    [dict setObject:@"1" forKey:@"mType"];
+    [dict setObject:@"1000" forKey:@"tag"];
+    
+
+}
 
 - (void)loadData{
     //获取球队活动
