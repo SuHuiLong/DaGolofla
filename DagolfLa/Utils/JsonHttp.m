@@ -39,7 +39,8 @@ static JsonHttp *jsonHttp = nil;
     //申明请求的数据是json类型
     manager.requestSerializer=[AFJSONRequestSerializer serializer];
     //返回数据格式
-    manager.responseSerializer = [AFJSONResponseSerializer serializerWithReadingOptions:NSJSONReadingMutableContainers];
+    manager.responseSerializer = [AFJSONResponseSerializer serializer];
+//    [AFJSONResponseSerializer serializerWithReadingOptions:NSJSONReadingMutableContainers];
     //https安全策略
 //    manager.securityPolicy.allowInvalidCertificates = YES;
 //    manager.securityPolicy.validatesDomainName = NO;

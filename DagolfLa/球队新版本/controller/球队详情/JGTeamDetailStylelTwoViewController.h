@@ -10,4 +10,6 @@
 
 @interface JGTeamDetailStylelTwoViewController : ViewController
 
+@property (nonatomic, strong)NSDictionary *detailDic;
+
 @end

@@ -10,9 +10,12 @@
 #import "JGTeamChannelTableView.h"
 #import "JGTeamChannelTableViewCell.h"
 
+#import "JGTeamDetailStylelTwoViewController.h"
+
 #import "MJRefresh.h"
 #import "MJDIYBackFooter.h"
 #import "MJDIYHeader.h"
+#import "JGTeamDetail.h"
 
 
 #import "JGLMyTeamModel.h"
@@ -122,6 +125,23 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
 
+
+    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+    [dic setObject:@244 forKey:@"userKey"];
+    JGLMyTeamModel *model = _dataArray[indexPath.row];
+    [dic setObject: model.teamKey forKey:@"teamKey"];
+    
+    [[JsonHttp jsonHttp] httpRequest:@"team/getTeamInfo" JsonKey:nil withData:dic requestMethod:@"POST" failedBlock:^(id errType) {
+        NSLog(@"getTeamInfo ******** %@", errType);
+    } completionBlock:^(id data) {
+        
+        JGTeamDetailStylelTwoViewController *detailVC = [[JGTeamDetailStylelTwoViewController alloc] init];
+        NSDictionary *dataDic = [data objectForKey:@"team"];
+        detailVC.detailDic = dataDic;
+        [self.navigationController pushViewController:detailVC animated:YES];
+        
+    }];
+    
 }
 
 

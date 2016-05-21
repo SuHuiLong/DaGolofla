@@ -25,7 +25,6 @@
         [self.topBackImageV addSubview: self.iconImageV];
         
         self.nameLB = [[UILabel alloc] initWithFrame:CGRectMake(80 * screenWidth / 320, 110 * screenWidth / 320, screenWidth - 100 * screenWidth / 320, 30 * screenWidth / 320)];
-        self.nameLB.backgroundColor = [UIColor whiteColor];
         [self.topBackImageV addSubview:self.nameLB];
         
         
@@ -34,11 +33,12 @@
         [self addSubview:self.teamIntroductionBackView];
         
         UILabel *teamIntroduction = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 30 * screenWidth / 320)];
-        teamIntroduction.text = @"球队动态";
+        teamIntroduction.text = @" 球队动态";
+        teamIntroduction.textColor = [UIColor lightGrayColor];
         teamIntroduction.backgroundColor = [UIColor whiteColor];
         [self.teamIntroductionBackView addSubview:teamIntroduction];
         
-        self.teamIntroductionLB = [[UILabel alloc] initWithFrame:CGRectMake(0, 30 * screenWidth / 320, screenWidth, 0)];
+        self.teamIntroductionLB = [[UILabel alloc] initWithFrame:CGRectMake(6 * screenWidth / 320, 30 * screenWidth / 320, screenWidth - 12 * screenWidth / 320, 0)];
         self.teamIntroductionLB.numberOfLines = 0;
         self.teamIntroductionLB.backgroundColor = [UIColor whiteColor];
         self.teamIntroductionLB.font = [UIFont systemFontOfSize:15];
@@ -120,6 +120,20 @@
     [self.setButton setFrame:CGRectMake(0, self.buttonBackView.frame.origin.y + 120 * screenWidth / 320, screenWidth, 30 * screenWidth / 320)];
     [self.applyJoin setFrame:CGRectMake(10 * screenWidth / 320, self.buttonBackView.frame.origin.y + 120 * screenWidth / 320 + 40 * screenWidth / 320, screenWidth - 20 * screenWidth / 320, 30 * screenWidth / 320)];
 }
+
+
+- (void)setDetailModel:(JGTeamDetail *)detailModel{
+    
+    self.nameLB.text = detailModel.name;
+    self.addressLB.text = detailModel.crtyName;
+    self.setUpLbalel.text = detailModel.establishTime;
+    self.teamIntroductionLB.text = detailModel.info;
+    /*
+     @property (nonatomic, strong)UIImageView *iconImageV;
+     @property (nonatomic, strong)UILabel *teamLeaderNameLB;
+     */
+}
+
 
 
 /*

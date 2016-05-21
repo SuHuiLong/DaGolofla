@@ -140,7 +140,7 @@
     self.nameLB.text = teamDetailModel.name;
     self.teamIntroductionLB.text = teamDetailModel.info;
     self.addressLB.text = teamDetailModel.crtyName;
-    self.setUpLbalel.text = [Helper dateConversionToString:teamDetailModel.establishTime];
+    self.setUpLbalel.text = teamDetailModel.establishTime;
 
     
     
