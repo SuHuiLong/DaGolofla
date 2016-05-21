@@ -15,7 +15,7 @@
 //报名
 @property (weak, nonatomic) IBOutlet UILabel *Apply;
 //活动时间
-@property (weak, nonatomic) IBOutlet UILabel *activityName;
+@property (weak, nonatomic) IBOutlet UILabel *activityTime;
 //活动地址
 @property (weak, nonatomic) IBOutlet UILabel *activityAddress;
 //报名人数

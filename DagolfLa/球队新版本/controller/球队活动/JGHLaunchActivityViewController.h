@@ -6,8 +6,10 @@
 //  Copyright © 2016年 bhxx. All rights reserved.
 //
 
-#import "ViewController.h"
+#import <UIKit/UIKit.h>
 
-@interface JGHLaunchActivityViewController : ViewController
+@interface JGHLaunchActivityViewController : UIViewController
+
+@property (nonatomic, retain) UIImageView *imgProfile;
 
 @end
