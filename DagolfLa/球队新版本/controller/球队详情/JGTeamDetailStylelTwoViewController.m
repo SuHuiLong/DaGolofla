@@ -13,6 +13,7 @@
 #import "JGTeamPhotoViewController.h"
 #import "JGTeamMemberController.h"
 #import "JGTeamActivityViewController.h" //球队活动
+#import "JGTeamDetail.h"
 
 @interface JGTeamDetailStylelTwoViewController ()
 
@@ -37,8 +38,18 @@
     self.automaticallyAdjustsScrollViewInsets = NO;
 
     JGTeamDetailStyleTwoView *teamDetailV = [[JGTeamDetailStyleTwoView alloc] initWithFrame:self.view.bounds];
+    JGTeamDetail *detailModel = [[JGTeamDetail alloc] init];
+    [detailModel setValuesForKeysWithDictionary:self.detailDic];
+    teamDetailV.detailModel = detailModel;
+    NSLog(@"%ld", [[[NSUserDefaults standardUserDefaults] objectForKey:@"userId"] integerValue]);
+    NSLog(@"%ld", (long)[detailModel.createUserKey integerValue]);
+
+    if ([detailModel.createUserKey integerValue] == [[[NSUserDefaults standardUserDefaults] objectForKey:@"userId"] integerValue]) {
+        teamDetailV.isManager = YES;
+    }else{
+        teamDetailV.isManager = NO;
+    }
     [self.view addSubview:teamDetailV];
-    teamDetailV.teamIntroductionLB.text = @"寂寞的人总是会用心地记住在他生命中出现过的每一个人，所以我总是意犹未尽地想起你。在每个星光坠落的晚上，一遍一遍，数我的寂寞。寂寞的人总是会用心地记住在他生命中出现过的每一个人，所以我总是意犹未尽地想起你。在每个星光坠落的晚上，一遍一遍，数我的寂寞。寂寞的人总是会用心地记住在他生命中出现过的每一个人，所以我总是意犹未尽地想起你。在每个星光坠落的晚上，一遍一遍，数我的寂寞。";
     teamDetailV.isManager = YES;
     UIButton *backBtn = [UIButton buttonWithType:(UIButtonTypeCustom)];
     backBtn.frame = CGRectMake(0 , 20, 30 * screenWidth / 320, 30 * screenWidth / 320);
@@ -81,6 +92,7 @@
  
     }
 }
+
 
 // 个人设置
 - (void)set{

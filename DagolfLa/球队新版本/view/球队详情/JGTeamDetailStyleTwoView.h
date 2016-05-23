@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "JGTeamDetail.h"
 
 @interface JGTeamDetailStyleTwoView : UIScrollView
 
@@ -27,6 +28,7 @@
 @property (nonatomic, strong)UIButton *teamManage; // 球队管理
 @property (nonatomic, assign)BOOL isManager; // 是否是管理员
 //@property (nonatomic, strong)UILabel *timeLB;
+@property (nonatomic, strong)JGTeamDetail *detailModel;
 
 - (void)resetUI;
 

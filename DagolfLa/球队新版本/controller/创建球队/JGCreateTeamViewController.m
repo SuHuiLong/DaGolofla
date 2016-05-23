@@ -106,7 +106,7 @@
     
     [self.paraDic setObject:@"AAA" forKey:@"notice"];
     
-    [self.paraDic setObject:@"244" forKey:@"createUserKey"];
+    [self.paraDic setObject:@244 forKey:@"createUserKey"];
     self.teamDetailModel.check = 0;
 
     
@@ -162,8 +162,10 @@
 //        [dm setDateFormat:@"yyyy-MM-dd"];
 //        NSDate * newdate = [dm dateFromString:datestring];
         
-        [self.paraDic setObject:[NSString stringWithFormat:@"%f", [Helper stringConversionToDate: dateStr]] forKey:@"establishTime"];
-        
+//        [self.paraDic setObject:[NSString stringWithFormat:@"%f", [Helper stringConversionToDate: dateStr]] forKey:@"establishTime"];
+        //格式  2016-12-12  12:12:12
+        [self.paraDic setObject: [NSString stringWithFormat:@"%@ 00:00:00", dateStr] forKey:@"establishTime"];
+
 
     }];
     [self.navigationController pushViewController:dateVc animated:YES];

@@ -18,8 +18,8 @@
 #import "SXPickPhoto.h"
 
 static NSString *const JGTableViewCellIdentifier = @"JGTableViewCell";
-static NSString *const JGHTeamActivityImageCellIdentifier = @"JGHTeamActivityImageCell";
-
+//static NSString *const JGHTeamActivityImageCellIdentifier = @"JGHTeamActivityImageCell";
+static CGFloat ImageHeight  = 210.0;
 
 @interface JGHLaunchActivityViewController ()<UITableViewDelegate, UITableViewDataSource, JGHTeamActivityImageCellDelegate, JGHConcentTextViewControllerDelegate, NSURLConnectionDownloadDelegate>
 {
@@ -37,27 +37,122 @@ static NSString *const JGHTeamActivityImageCellIdentifier = @"JGHTeamActivityIma
 
 @property (nonatomic, strong)UIImage *headerImage;
 
+@property (nonnull, strong)UIButton *headPortraitBtn;//头像
+
+@property (nonatomic, strong)UITextField *titleField;//球队名称输入框
+
+@property (nonatomic, strong)UIView *titleView;//顶部导航
+
+@property (nonatomic, strong)UIButton *addressBtn;//添加地址
+
+//@property (nonatomic, strong)UILabel *headabel;
+
 @end
 
 @implementation JGHLaunchActivityViewController
+
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:YES];
+    self.navigationController.navigationBarHidden = YES;
+}
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:YES];
+    self.navigationController.navigationBarHidden = NO;
+}
 
 - (instancetype)init{
     if (self == [super init]) {
         self.model = [[JGHLaunchActivityModel alloc]init];
         self.dataDict = [NSMutableDictionary dictionary];
         self.pickPhoto = [[SXPickPhoto alloc]init];
+        self.titleView = [[UIView alloc]init];
+        UIImage *image = [UIImage imageNamed:@"bg"];
+        self.imgProfile = [[UIImageView alloc] initWithImage:image];
+        self.imgProfile.frame = CGRectMake(0, 0, screenWidth, ImageHeight);
+        self.imgProfile.userInteractionEnabled = YES;
+        self.launchActivityTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight)];
+        UINib *tableViewNib = [UINib nibWithNibName:@"JGTableViewCell" bundle: [NSBundle mainBundle]];
+        [self.launchActivityTableView registerNib:tableViewNib forCellReuseIdentifier:JGTableViewCellIdentifier];
+        self.launchActivityTableView.dataSource = self;
+        self.launchActivityTableView.delegate = self;
+        self.launchActivityTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+        [self.view addSubview:self.launchActivityTableView];
+        [self.view addSubview:self.imgProfile];
+        self.titleView.frame = CGRectMake(0, 20, screenWidth, 44);
+        self.titleView.backgroundColor = [UIColor clearColor];
+        [self.imgProfile addSubview:self.titleView];
     }
     return self;
 }
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.navigationItem.title = @"活动发布";
+    self.navigationController.navigationBar.hidden = YES;
+    self.automaticallyAdjustsScrollViewInsets=NO;
     
-    _titleArray = @[@[], @[@"开始时间", @"结束时间", @"活动地点"], @[@"活动简介", @"费用说明"], @[@"奖项设置", @"费用设置", @"人员限制"]];
+    //返回按钮
+    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    btn.frame = BackBtnFrame;
+    btn.titleLabel.font = [UIFont systemFontOfSize:FontSize_Normal];
+    btn.tag = 521;
+    [btn setImage:[UIImage imageNamed:@"backL"] forState:UIControlStateNormal];
+    [btn addTarget:self action:@selector(initItemsBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    [self.titleView addSubview:btn];
+    //点击更换
+    UIButton *replaceBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    replaceBtn.frame = CGRectMake(screenWidth-64, 0, 54, 44);
+    replaceBtn.titleLabel.font = [UIFont systemFontOfSize:FontSize_Normal];
+    [replaceBtn setTitle:@"点击更换" forState:UIControlStateNormal];
+    replaceBtn.titleLabel.font = [UIFont systemFontOfSize:13];
+    replaceBtn.tag = 520;
+    [replaceBtn addTarget:self action:@selector(initItemsBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    [self.titleView addSubview:replaceBtn];
+    //输入框
+    self.titleField = [[UITextField alloc]initWithFrame:CGRectMake(64, 7, screenWidth - 128, 30)];
+    self.titleField.placeholder = @"请输入活动名称";
+    [self.titleField setValue:[UIColor whiteColor] forKeyPath:@"_placeholderLabel.textColor"];
+    [self.titleField setValue:[UIFont boldSystemFontOfSize:15] forKeyPath:@"_placeholderLabel.font"];
+    self.titleField.textAlignment = NSTextAlignmentCenter;
+    self.titleField.font = [UIFont systemFontOfSize:15];
+    //头像
+    self.headPortraitBtn = [[UIButton alloc]initWithFrame:CGRectMake(20, 150, 50, 50)];
+    [self.headPortraitBtn setImage:[UIImage imageNamed:@"relogo"] forState:UIControlStateNormal];
+    [self.headPortraitBtn addTarget:self action:@selector(replaceWithPicture:) forControlEvents:UIControlEventTouchUpInside];
     
-    [self createLaunchActivityTableView];
+    [self.imgProfile addSubview:self.headPortraitBtn];
+    [self.titleView addSubview:self.titleField];
+    
+//    self.headabel = [[UILabel alloc]initWithFrame:CGRectMake(80, 180, 60, 20)];
+//    [self.headabel setText:@"活动地址:"];
+//    self.headabel.font = [UIFont systemFontOfSize:13];
+//    [self.imgProfile addSubview:self.headabel];
+    
+    self.addressBtn = [[UIButton alloc]initWithFrame:CGRectMake(70, 170, 60, 20)];
+    self.addressBtn.tag = 333;
+    [self.addressBtn setTitle:@"请添加地址" forState:UIControlStateNormal];
+    self.addressBtn.titleLabel.font = [UIFont systemFontOfSize:13];
+    [self.addressBtn addTarget:self action:@selector(replaceWithPicture:) forControlEvents:UIControlEventTouchUpInside];
+    [self.imgProfile addSubview:self.addressBtn];
+    
+    _titleArray = @[@[], @[@"活动日期", @"开球时间", @"报名截止时间"], @[@"费用说明", @"人员限制", @"费用设置"], @[@"联系电话"]];
     
     [self createPreviewBtn];
+}
+- (void)replaceWithPicture:(UIButton *)Btn{
+    if (Btn.tag == 333) {
+        //球场列表
+        
+    }
+    [self didSelectPhotoImage:Btn];
+}
+
+- (void)initItemsBtnClick:(UIButton *)btn{
+    if (btn.tag == 521) {
+        [self.navigationController popViewControllerAnimated:YES];
+    }else if (btn.tag == 520){
+        //更换头像
+        [self didSelectPhotoImage:btn];
+    }
 }
 #pragma mark -- 预览
 - (void)createPreviewBtn{
@@ -74,19 +169,48 @@ static NSString *const JGHTeamActivityImageCellIdentifier = @"JGHTeamActivityIma
     ActivityDetailCtrl.model = self.model;
     [self.navigationController pushViewController:ActivityDetailCtrl animated:YES];
 }
-#pragma mark -- 创建tabelview
-- (void)createLaunchActivityTableView{
-    self.launchActivityTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight - 64) style:UITableViewStyleGrouped];
-    UINib *tableViewNib = [UINib nibWithNibName:@"JGTableViewCell" bundle: [NSBundle mainBundle]];
-    [self.launchActivityTableView registerNib:tableViewNib forCellReuseIdentifier:JGTableViewCellIdentifier];
-
-    UINib *launchNib = [UINib nibWithNibName:@"JGHTeamActivityImageCell" bundle: [NSBundle mainBundle]];
-    [self.launchActivityTableView registerNib:launchNib forCellReuseIdentifier:JGHTeamActivityImageCellIdentifier];
-    
-    self.launchActivityTableView.delegate = self;
-    self.launchActivityTableView.dataSource = self;
-    self.launchActivityTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    [self.view addSubview:self.launchActivityTableView];
+#pragma mark -- 改变图片位置 放大缩小
+- (void)updateImg {
+    CGFloat yOffset = _launchActivityTableView.contentOffset.y;
+    NSLog(@"yOffset:%f",yOffset);
+    CGFloat XOffset = _launchActivityTableView.contentOffset.x;
+     NSLog(@"XOffset:%f",XOffset);
+    CGFloat factor = ((ABS(yOffset)+ImageHeight)*screenWidth)/ImageHeight;
+    if (yOffset < 0) {
+        
+        CGRect f = CGRectMake(-(factor-screenWidth)/2, 0, factor, ImageHeight+ABS(yOffset));
+        self.imgProfile.frame = f;
+        
+        CGRect title = self.titleView.frame;
+        self.titleView.frame = CGRectMake((factor-screenWidth)/2, 20, title.size.width, title.size.height);
+        
+        CGRect head = self.headPortraitBtn.frame;
+        self.headPortraitBtn.frame = CGRectMake((factor-screenWidth)/2 + 20, head.origin.y + ABS(yOffset), head.size.width, head.size.height);
+        
+//        CGRect headabel = self.headabel.frame;
+//        self.headabel.frame = CGRectMake((factor-screenWidth)/2 + 20, headabel.origin.y + ABS(yOffset), headabel.size.width, headabel.size.height);
+        
+        CGRect addressBtn = self.addressBtn.frame;
+        self.addressBtn.frame = CGRectMake((factor-screenWidth)/2 + 20 + self.headPortraitBtn.frame.size.width, addressBtn.origin.y + ABS(yOffset), addressBtn.size.width, addressBtn.size.height);
+    } else {
+        CGRect f = self.imgProfile.frame;
+        f.origin.y = -yOffset;
+        self.imgProfile.frame = f;
+        
+        CGRect t = self.titleView.frame;
+        t.origin.y = yOffset + 20;
+        self.titleView.frame = t;
+        
+        CGRect head = self.headPortraitBtn.frame;
+        self.headPortraitBtn.frame = CGRectMake((factor-screenWidth)/2 + 20, head.origin.y - ABS(yOffset), head.size.width, head.size.height);
+        
+        CGRect addressBtn = self.addressBtn.frame;
+        self.addressBtn.frame = CGRectMake((factor-screenWidth)/2 + 20 + self.headPortraitBtn.frame.size.width, addressBtn.origin.y - ABS(yOffset), addressBtn.size.width, addressBtn.size.height);
+    }
+}
+#pragma mark - Table View Delegate
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    [self updateImg];
 }
 #pragma mark -- tableView 代理
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
@@ -95,9 +219,9 @@ static NSString *const JGHTeamActivityImageCellIdentifier = @"JGHTeamActivityIma
     }else if (section == 1){
         return 3;
     }else if (section == 2){
-        return 2;
-    }else{
         return 3;
+    }else{
+        return 1;
     }
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
@@ -105,7 +229,7 @@ static NSString *const JGHTeamActivityImageCellIdentifier = @"JGHTeamActivityIma
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 0) {
-        return 100;
+        return ImageHeight;
     }else{
         return 44;
     }
@@ -117,24 +241,34 @@ static NSString *const JGHTeamActivityImageCellIdentifier = @"JGHTeamActivityIma
     return 2;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    NSString *windowReuseIdentifier = @"SectionOneCell";
     if (indexPath.section == 0) {
-        JGHTeamActivityImageCell *launchImageActivityCell = [tableView dequeueReusableCellWithIdentifier:JGHTeamActivityImageCellIdentifier forIndexPath:indexPath];
-        launchImageActivityCell.selectionStyle = UITableViewCellSelectionStyleNone;
-        launchImageActivityCell.delegate = self;
-        if (_headerImage != nil) {
-            launchImageActivityCell.activityImage.image = _headerImage;
+        UITableViewCell *launchImageActivityCell = nil;
+        launchImageActivityCell = [tableView dequeueReusableCellWithIdentifier:windowReuseIdentifier];
+        if (!launchImageActivityCell) {
+            
+            launchImageActivityCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:windowReuseIdentifier];
         }
+        
+        launchImageActivityCell.selectionStyle = UITableViewCellSelectionStyleNone;
         
         return launchImageActivityCell;
     }else{
         JGTableViewCell *launchActivityCell = [tableView dequeueReusableCellWithIdentifier:JGTableViewCellIdentifier forIndexPath:indexPath];
-        launchActivityCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+//        launchActivityCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         launchActivityCell.selectionStyle = UITableViewCellSelectionStyleNone;
         
         NSArray *str = _titleArray[indexPath.section];
+        if (indexPath.row == [str count]-1) {
+            launchActivityCell.underline.hidden = YES;
+        }else{
+            launchActivityCell.underline.hidden = NO;
+        }
+
         [launchActivityCell configTitlesString:str[indexPath.row]];
         
         [launchActivityCell configContionsStringWhitModel:self.model andIndexPath:indexPath];
+        
         
         return launchActivityCell;
     }
@@ -180,7 +314,7 @@ static NSString *const JGHTeamActivityImageCellIdentifier = @"JGHTeamActivityIma
 }
 
 #pragma mark --添加活动头像－－JGHTeamActivityImageCellDelegate 
--(void)didSelectPhotoImage{
+-(void)didSelectPhotoImage:(UIButton *)btn{
     UIAlertAction * act1 = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
     }];
     //拍照：
