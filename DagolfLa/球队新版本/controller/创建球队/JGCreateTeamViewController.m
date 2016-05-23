@@ -41,10 +41,10 @@
     [self.creatTeamV.teamIntroduBtn addTarget:self action:@selector(intro) forControlEvents:(UIControlEventTouchUpInside)];
     [self.creatTeamV.examineSWt addTarget:self action:@selector(isExamine) forControlEvents:(UIControlEventTouchUpInside)];
     [self.paraDic setObject:@1 forKey:@"check"];
-    for (NSInteger i = 0; i < 2; i ++) {
-        UITextField *tF = [self.creatTeamV viewWithTag:232 + i];
-        [tF addTarget:self action:@selector(nameAndphone:) forControlEvents:(UIControlEventTouchUpInside)];
-    }
+//    for (NSInteger i = 0; i < 2; i ++) {
+//        UITextField *tF = [self.creatTeamV viewWithTag:232 + i];
+//        [tF addTarget:self action:@selector(nameAndphone:) forControlEvents:(UIControlEventTouchUpInside)];
+//    }
     
     [self postImageToSever];
     
@@ -101,12 +101,27 @@
 // 预览
 - (void)preview{
 
+    for (NSInteger i = 0; i < 2; i ++) {
+        UITextField *tF = [self.creatTeamV viewWithTag:233 + i];
+        if (tF.tag == 233) {
+            [self.paraDic setObject:tF.text forKey:@"userName"];
+        }else if (tF.tag == 234){
+            [self.paraDic setObject:tF.text forKey:@"userMobile"];
+        }else{
+        }    }
+
+
+   
+    [self.paraDic setObject:@0 forKey:@"timeKey"];
 
     [self.paraDic setObject:self.creatTeamV.teamNmaeTV.text forKey:@"name"];
-    
+   
+    [self.paraDic setObject:@"iOS" forKey:@"createUserName"];
+
     [self.paraDic setObject:@"AAA" forKey:@"notice"];
     
     [self.paraDic setObject:@244 forKey:@"createUserKey"];
+   
     self.teamDetailModel.check = 0;
 
     
@@ -165,6 +180,7 @@
 //        [self.paraDic setObject:[NSString stringWithFormat:@"%f", [Helper stringConversionToDate: dateStr]] forKey:@"establishTime"];
         //格式  2016-12-12  12:12:12
         [self.paraDic setObject: [NSString stringWithFormat:@"%@ 00:00:00", dateStr] forKey:@"establishTime"];
+        [self.paraDic setObject:[NSString stringWithFormat:@"%@ 00:00:00", dateStr] forKey:@"createtime"];
 
 
     }];

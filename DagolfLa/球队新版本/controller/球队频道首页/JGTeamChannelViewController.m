@@ -51,10 +51,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-//    self.view.backgroundColor = [UIColor lightGrayColor];
+    //    self.view.backgroundColor = [UIColor lightGrayColor];
     self.view.backgroundColor = [UIColor colorWithRed:0.94 green:0.94 blue:0.94 alpha:1];
     self.automaticallyAdjustsScrollViewInsets=NO;
-
+    
     
     UIButton *backBtn = [UIButton buttonWithType:(UIButtonTypeCustom)];
     backBtn.frame = CGRectMake(0 , 20, 30 * screenWidth / 320, 30 * screenWidth / 320);
@@ -74,10 +74,11 @@
     
     [self.topView addSubview:backBtn];
     [self.topView addSubview:creatTeam];
-
+    
     self.buttonArray = [NSMutableArray arrayWithObjects:@"我的球队", @"球队活动", @"球队大厅", nil];
-
+    
     for (int i = 0; i < 3; i ++) {
+        
         UIButton *button = [UIButton buttonWithType:(UIButtonTypeCustom)];
         button.frame = CGRectMake(0, (135 + i * 35) * screenWidth / 320, screenWidth, 30 * screenWidth / 320);
         button.tag = 200 + i;
@@ -87,9 +88,12 @@
         [button setTitleColor:[UIColor lightGrayColor] forState:(UIControlStateNormal)];
         [button setImage:[UIImage imageNamed:@")"] forState:(UIControlStateNormal)];
         button.imageEdgeInsets = UIEdgeInsetsMake(0, 300 * screenWidth / 320, 0, 0);
-        button.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-   
+        //        button.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+        button.titleEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 200 * screenWidth / 320);
         [self.view addSubview:button];
+        UIImageView *iamgeV = [[UIImageView alloc] initWithFrame:CGRectMake(10, 0, 30 * screenWidth / 320, 30 * screenWidth / 320)];
+        iamgeV.backgroundColor = [UIColor orangeColor];
+        [button addSubview:iamgeV];
     }
     
     self.tableView = [[JGTeamChannelTableView alloc] initWithFrame:CGRectMake(0, 270 * screenWidth / 320, screenWidth, screenHeight - 270 * screenWidth / 320) style:(UITableViewStylePlain)];
@@ -153,19 +157,17 @@
                 }
                 [self.tableView reloadData];
             }];
-
+            
         }
-}];
+    }];
     
-    
-
 }
 
 - (void)creatTeam{
     
     JGCreateTeamViewController *creatteamVc = [[JGCreateTeamViewController alloc] init];
     [self.navigationController pushViewController:creatteamVc animated:YES];
-
+    
 }
 
 
@@ -176,13 +178,13 @@
 - (void)team:(UIButton *)button{
     
     if (button.tag == 200) {
-//        NSMutableDictionary *dic = [NSMutableDictionary dictionary];
-//        [dic setObject:@244 forKey:@"userKey"];
-//        [[JsonHttp jsonHttp] httpRequest:@"team/getMyTeamList" withData:dic requestMethod:@"POST" failedBlock:^(id errType) {
-//            NSLog(@"erro");
-//        } completionBlock:^(id data) {
-//            NSLog(@"%@", data);
-//        }];
+        //        NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+        //        [dic setObject:@244 forKey:@"userKey"];
+        //        [[JsonHttp jsonHttp] httpRequest:@"team/getMyTeamList" withData:dic requestMethod:@"POST" failedBlock:^(id errType) {
+        //            NSLog(@"erro");
+        //        } completionBlock:^(id data) {
+        //            NSLog(@"%@", data);
+        //        }];
         JGLMyTeamViewController* myVc = [[JGLMyTeamViewController alloc]init];
         [self.navigationController pushViewController:myVc animated:YES];
     }else if (button.tag == 201) {
@@ -192,13 +194,13 @@
         
         JGTeamMainhallViewController *MainhallTeamVC = [[JGTeamMainhallViewController alloc] init];
         [self.navigationController pushViewController:MainhallTeamVC animated:YES];
-
+        
     }
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-
-        return ([self.myActivityArray count] != 0 ? [self.myActivityArray count] : [self.teamArray count]);
+    
+    return ([self.myActivityArray count] != 0 ? [self.myActivityArray count] : [self.teamArray count]);
 }
 
 
@@ -224,7 +226,7 @@
     if ([self.teamArray count] == 0) {
         JGTeamActibityNameViewController *teamActivityVC = [[JGTeamActibityNameViewController alloc] init];
         JGTeamAcitivtyModel *model = self.myActivityArray[indexPath.row];
-           teamActivityVC.teamActivityKey = model.timeKey;
+        teamActivityVC.teamActivityKey = model.timeKey;
         [self.navigationController pushViewController:teamActivityVC animated:YES];
         
     }else{
@@ -236,7 +238,7 @@
             JGTeamDetailViewController *detailVC = [[JGTeamDetailViewController alloc] init];
             [self.navigationController pushViewController:detailVC animated:YES];
         }
-    }   
+    }
 }
 
 - (NSMutableArray *)myActivityArray{
@@ -259,13 +261,13 @@
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

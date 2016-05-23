@@ -66,6 +66,7 @@
         } completionBlock:^(id data) {
             NSLog(@"%@", data);
         }];
+    NSLog(@"%@", self.teamDetailDic);
 }
 
 - (void)backBut{
