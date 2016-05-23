@@ -14,6 +14,8 @@
 #import "MJRefresh.h"
 #import "MJDIYBackFooter.h"
 #import "MJDIYHeader.h"
+
+#import "JGLTeamMemberModel.h"
 @interface JGTeamMemberController ()<UITableViewDelegate, UITableViewDataSource>
 {
     UITableView* _tableView;
@@ -81,11 +83,11 @@
                 [_dataArray removeAllObjects];
             }
             //数据解析
-//            for (NSDictionary *dataDic in [data objectForKey:@"teamList"]) {
-//                JGLMyTeamModel *model = [[JGLMyTeamModel alloc] init];
-//                [model setValuesForKeysWithDictionary:dataDic];
-//                [_dataArray addObject:model];
-//            }
+            for (NSDictionary *dataDic in [data objectForKey:@"teamList"]) {
+                JGLTeamMemberModel *model = [[JGLTeamMemberModel alloc] init];
+                [model setValuesForKeysWithDictionary:dataDic];
+                [_dataArray addObject:model];
+            }
             _page++;
             [_tableView reloadData];
         }else {
@@ -129,6 +131,7 @@
 
     JGMenberTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"JGMenberTableViewCell" forIndexPath:indexPath];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    [cell showData:_dataArray[indexPath.row]];
     return cell;
 
     

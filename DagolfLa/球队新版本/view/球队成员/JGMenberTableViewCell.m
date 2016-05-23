@@ -53,7 +53,23 @@
     return self;
 }
 
-
+-(void)showData:(JGLTeamMemberModel *)model
+{
+    _nameLabel.text = [NSString stringWithFormat:@"%@",model.userName];
+    
+    if ([model.sex integerValue] == 2) {
+        [_sexImgv setImage: [UIImage imageNamed:@"xb_n"]];
+    }
+    else
+    {
+        [_sexImgv setImage: [UIImage imageNamed:@"xb_nn"]];
+    }
+    
+    _almostLabel.text = [NSString stringWithFormat:@"%@",model.almost];
+    
+    _poleLabel.text = [NSString stringWithFormat:@"%@",model.mobile];
+    
+}
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
 

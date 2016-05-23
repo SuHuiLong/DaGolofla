@@ -98,12 +98,12 @@
 //定义展示的UICollectionViewCell的个数
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return 40;
+    return 8;
 }
 //定义展示的Section的个数
 -(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
 {
-    return 10;
+    return 8;
 }
 
 
@@ -114,7 +114,7 @@
         _headView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"JGPhotoTimeReusableView"forIndexPath:indexPath];
         
         
-        _headView.timeLabel.text = [NSString stringWithFormat:@"2016年5月%d号",indexPath.section];
+        _headView.timeLabel.text = [NSString stringWithFormat:@"2016年5月%ld号",(long)indexPath.section];
         _headView.backgroundColor = [UIColor lightGrayColor];
         return _headView;
     }
@@ -124,12 +124,24 @@
 //每个UICollectionView展示的内容
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    JGPhotoShowCollectionViewCell *cell = [[JGPhotoShowCollectionViewCell alloc]init];
+    if (indexPath.row == 7) {
+        JGPhotoShowCollectionViewCell *cell = [[JGPhotoShowCollectionViewCell alloc]init];
+        cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"JGPhotoShowCollectionViewCell" forIndexPath:indexPath];
+        cell.backgroundColor = [UIColor whiteColor];
+        cell.iconImgv.hidden = YES;
+        cell.addBtn.hidden = NO;
+        return cell;
+    }
+    else
+    {
+        JGPhotoShowCollectionViewCell *cell = [[JGPhotoShowCollectionViewCell alloc]init];
+        cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"JGPhotoShowCollectionViewCell" forIndexPath:indexPath];
+        cell.backgroundColor = [UIColor blackColor];
+        cell.iconImgv.hidden = NO;
+        cell.addBtn.hidden = YES;
+        return cell;
+    }
     
-    // Set up the reuse identifier
-    cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"JGPhotoShowCollectionViewCell" forIndexPath:indexPath];
-    cell.backgroundColor = [UIColor blackColor];
-    return cell;
     
 }
 //定义每个UICollectionView 的大小
