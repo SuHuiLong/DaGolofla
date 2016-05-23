@@ -14,7 +14,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *titles;
 //内容
 @property (weak, nonatomic) IBOutlet UILabel *contions;
-
+//下划线
+@property (weak, nonatomic) IBOutlet UILabel *underline;
 
 - (void)configTitlesString:(NSString *)titles;
 

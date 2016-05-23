@@ -20,6 +20,15 @@
 
 @implementation JGTeamActivityViewController
 
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:YES];
+    self.navigationController.navigationBarHidden = NO;
+}
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:YES];
+    self.navigationController.navigationBarHidden = YES;
+}
+
 - (instancetype)init{
     if (self = [super init]) {
         self.dataArray = [NSMutableArray array];

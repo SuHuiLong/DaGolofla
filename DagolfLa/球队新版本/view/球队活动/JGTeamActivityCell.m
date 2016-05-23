@@ -32,11 +32,11 @@
         self.Apply.textColor = [UIColor redColor];
     }
     //活动时间
-    self.activityName.text = [NSString stringWithFormat:@"活动时间:%ld", (long)modeel.beginDate];
+    self.activityTime.text = [NSString stringWithFormat:@"活动时间:%ld", (long)modeel.beginDate];
     //活动地址
     self.activityAddress.text = [NSString stringWithFormat:@"地点:%@", modeel.ballName];
     //报名人数
-    self.applyNumber.text = [NSString stringWithFormat:@"已报名人数(%ld人)", (long)modeel.sumCount];
+    self.applyNumber.text = [NSString stringWithFormat:@" %ld", (long)modeel.sumCount];
 }
 
 @end

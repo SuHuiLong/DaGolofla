@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "JGLTeamMemberModel.h"
 @interface JGMenberTableViewCell : UITableViewCell
 
 
@@ -21,5 +21,7 @@
 
 @property (strong, nonatomic) UILabel* poleLabel;
 
+
+-(void) showData:(JGLTeamMemberModel *)model;
 
 @end
