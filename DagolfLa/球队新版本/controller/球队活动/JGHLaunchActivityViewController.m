@@ -37,9 +37,15 @@ static CGFloat ImageHeight  = 210.0;
 
 @property (nonatomic, strong)UIImage *headerImage;
 
-@property (nonatomic, strong)UITextField *titleField;
+@property (nonnull, strong)UIButton *headPortraitBtn;//头像
 
-@property (nonatomic, strong)UIView *titleView;
+@property (nonatomic, strong)UITextField *titleField;//球队名称输入框
+
+@property (nonatomic, strong)UIView *titleView;//顶部导航
+
+@property (nonatomic, strong)UIButton *addressBtn;//添加地址
+
+//@property (nonatomic, strong)UILabel *headabel;
 
 @end
 
@@ -108,13 +114,38 @@ static CGFloat ImageHeight  = 210.0;
     [self.titleField setValue:[UIFont boldSystemFontOfSize:15] forKeyPath:@"_placeholderLabel.font"];
     self.titleField.textAlignment = NSTextAlignmentCenter;
     self.titleField.font = [UIFont systemFontOfSize:15];
+    //头像
+    self.headPortraitBtn = [[UIButton alloc]initWithFrame:CGRectMake(20, 150, 50, 50)];
+    [self.headPortraitBtn setImage:[UIImage imageNamed:@"relogo"] forState:UIControlStateNormal];
+    [self.headPortraitBtn addTarget:self action:@selector(replaceWithPicture:) forControlEvents:UIControlEventTouchUpInside];
     
+    [self.imgProfile addSubview:self.headPortraitBtn];
     [self.titleView addSubview:self.titleField];
-
+    
+//    self.headabel = [[UILabel alloc]initWithFrame:CGRectMake(80, 180, 60, 20)];
+//    [self.headabel setText:@"活动地址:"];
+//    self.headabel.font = [UIFont systemFontOfSize:13];
+//    [self.imgProfile addSubview:self.headabel];
+    
+    self.addressBtn = [[UIButton alloc]initWithFrame:CGRectMake(70, 170, 60, 20)];
+    self.addressBtn.tag = 333;
+    [self.addressBtn setTitle:@"请添加地址" forState:UIControlStateNormal];
+    self.addressBtn.titleLabel.font = [UIFont systemFontOfSize:13];
+    [self.addressBtn addTarget:self action:@selector(replaceWithPicture:) forControlEvents:UIControlEventTouchUpInside];
+    [self.imgProfile addSubview:self.addressBtn];
+    
     _titleArray = @[@[], @[@"活动日期", @"开球时间", @"报名截止时间"], @[@"费用说明", @"人员限制", @"费用设置"], @[@"联系电话"]];
-        
+    
     [self createPreviewBtn];
 }
+- (void)replaceWithPicture:(UIButton *)Btn{
+    if (Btn.tag == 333) {
+        //球场列表
+        
+    }
+    [self didSelectPhotoImage:Btn];
+}
+
 - (void)initItemsBtnClick:(UIButton *)btn{
     if (btn.tag == 521) {
         [self.navigationController popViewControllerAnimated:YES];
@@ -138,25 +169,43 @@ static CGFloat ImageHeight  = 210.0;
     ActivityDetailCtrl.model = self.model;
     [self.navigationController pushViewController:ActivityDetailCtrl animated:YES];
 }
-#pragma mark -- 改变图片位置
+#pragma mark -- 改变图片位置 放大缩小
 - (void)updateImg {
     CGFloat yOffset = _launchActivityTableView.contentOffset.y;
-    CGFloat xOffset = _launchActivityTableView.contentOffset.x;
     NSLog(@"yOffset:%f",yOffset);
-    NSLog(@"xOffset=====:%f",xOffset);
+    CGFloat XOffset = _launchActivityTableView.contentOffset.x;
+     NSLog(@"XOffset:%f",XOffset);
+    CGFloat factor = ((ABS(yOffset)+ImageHeight)*screenWidth)/ImageHeight;
     if (yOffset < 0) {
-        if (yOffset < -20.0) {
-            self.titleView.hidden = YES;
-        }else{
-            self.titleView.hidden = NO;
-        }
-        CGFloat factor = ((ABS(yOffset)+ImageHeight)*screenWidth)/ImageHeight;
+        
         CGRect f = CGRectMake(-(factor-screenWidth)/2, 0, factor, ImageHeight+ABS(yOffset));
         self.imgProfile.frame = f;
+        
+        CGRect title = self.titleView.frame;
+        self.titleView.frame = CGRectMake((factor-screenWidth)/2, 20, title.size.width, title.size.height);
+        
+        CGRect head = self.headPortraitBtn.frame;
+        self.headPortraitBtn.frame = CGRectMake((factor-screenWidth)/2 + 20, head.origin.y + ABS(yOffset), head.size.width, head.size.height);
+        
+//        CGRect headabel = self.headabel.frame;
+//        self.headabel.frame = CGRectMake((factor-screenWidth)/2 + 20, headabel.origin.y + ABS(yOffset), headabel.size.width, headabel.size.height);
+        
+        CGRect addressBtn = self.addressBtn.frame;
+        self.addressBtn.frame = CGRectMake((factor-screenWidth)/2 + 20 + self.headPortraitBtn.frame.size.width, addressBtn.origin.y + ABS(yOffset), addressBtn.size.width, addressBtn.size.height);
     } else {
         CGRect f = self.imgProfile.frame;
         f.origin.y = -yOffset;
         self.imgProfile.frame = f;
+        
+        CGRect t = self.titleView.frame;
+        t.origin.y = yOffset + 20;
+        self.titleView.frame = t;
+        
+        CGRect head = self.headPortraitBtn.frame;
+        self.headPortraitBtn.frame = CGRectMake((factor-screenWidth)/2 + 20, head.origin.y - ABS(yOffset), head.size.width, head.size.height);
+        
+        CGRect addressBtn = self.addressBtn.frame;
+        self.addressBtn.frame = CGRectMake((factor-screenWidth)/2 + 20 + self.headPortraitBtn.frame.size.width, addressBtn.origin.y - ABS(yOffset), addressBtn.size.width, addressBtn.size.height);
     }
 }
 #pragma mark - Table View Delegate
