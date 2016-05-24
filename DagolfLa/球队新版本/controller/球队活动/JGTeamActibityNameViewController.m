@@ -39,7 +39,7 @@ static NSString *const JGActivityNameBaseCellIdentifier = @"JGActivityNameBaseCe
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.navigationItem.title = @"活动详情";
+    self.navigationItem.title = @"活动预览";
     
     if ([self.isAdmin isEqualToString:@"0"]) {
         _tableViewHeight = screenHeight -64 -44 - 48;
@@ -51,7 +51,7 @@ static NSString *const JGActivityNameBaseCellIdentifier = @"JGActivityNameBaseCe
     
     
     
-    [self loadData];
+//    [self loadData];
 }
 #pragma mark -- 下载数据
 - (void)loadData{
@@ -97,32 +97,39 @@ static NSString *const JGActivityNameBaseCellIdentifier = @"JGActivityNameBaseCe
     [applyBtn addTarget:self action:@selector(applyBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:applyBtn];
 }
+#pragma mark -- 发布活动
 - (void)applyBtnClick:(UIButton *)btn{
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    [dict setObject:@"189911222513049600" forKey:@"teamKey"];//球队key
+    [dict setObject:@"0" forKey:@"timeKey"];//timeKey
+    [dict setObject:@"192" forKey:@"teamKey"];//球队key
     NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
-    [dict setObject:[user objectForKey:@"userId"] forKey:@"userKey"];//用户key
+    [dict setObject:@"244" forKey:@"userKey"];//用户key
     //121212
-    [dict setObject:@"244" forKey:@"userKey"];
+//    [dict setObject:@"244" forKey:@"userKey"];
     
-    [dict setObject:@"007哈哈哈哈" forKey:@"name"];//活动名字
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
-    NSDate *date = [dateFormatter dateFromString:@"2016-05-14 16:01:03"];
-    [dict setObject:@"" forKey:@"beginDate"];//活动开始时间
-    [dict setObject:@"" forKey:@"endDate"];//活动结束时间
-    [dict setObject:@"004" forKey:@"ballKey"];//球场id
+    [dict setObject:@"高尔夫友谊聚会活动" forKey:@"name"];//活动名字
+//    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+//    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+//    NSDate *date = [dateFormatter dateFromString:@"2016-05-14 16:01:03"];
+    [dict setObject:@"2016-06-01 12:01:00" forKey:@"signUpEndTime"];//活动报名截止时间
+    [dict setObject:@"2016-05-01 12:01:00" forKey:@"beginDate"];//活动开始时间
+    [dict setObject:@"2016-08-01 12:01:00" forKey:@"endDate"];//活动结束时间
+    [dict setObject:@"400" forKey:@"ballKey"];//球场id
     [dict setObject:@"浦东新车球场" forKey:@"ballName"];//球场名称
     [dict setObject:@"" forKey:@"ballGeohash"];//球场坐标
     [dict setObject:@"护士繁华的风格变化的腐败黄金时代不好的发布时间的封闭不会是绝大部分黄金时代不废江河百货商店减肥百货商店发布时间地方保护手机的发布" forKey:@"info"];//活动简介
-    [dict setObject:@"" forKey:@"costInfo"];//费用说明
+    [dict setObject:@"每人100元" forKey:@"costInfo"];//费用说明
     [dict setObject:@"120" forKey:@"memberPrice"];//会员价
     [dict setObject:@"220" forKey:@"guestPrice"];//嘉宾价
+    [dict setObject:@"2016-05-01 12:01:00" forKey:@"subsidyBeginTime"];//补贴开始时间
+    [dict setObject:@"2016-06-01 12:01:00" forKey:@"subsidyEndTime"];//补贴结束时间
     [dict setObject:@"30" forKey:@"subsidyPrice"];//补贴价
     [dict setObject:@"100" forKey:@"maxCount"];//最大人员数
     [dict setObject:@"0" forKey:@"isClose"];//活动是否结束 0 : 开始 , 1 : 已结束
-    [dict setObject:@"" forKey:@"createTime"];//活动创建时间
-//    [dict setObject:@"50" forKey:@"sumCount"];//活动报名总人数
+    [dict setObject:@"2016-04-01 12:01:00" forKey:@"createTime"];//活动创建时间
+    [dict setObject:@"50" forKey:@"sumCount"];//活动报名总人数
+    [dict setObject:@"5000" forKey:@"sumMoney"];//活动总金额
+    [dict setObject:@"5000" forKey:@"WithdrawalsMoney"];//提现金额
 
     //createTeamActivity
     [[JsonHttp jsonHttp]httpRequest:@"team/createTeamActivity" JsonKey:@"teamActivity" withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
@@ -130,7 +137,6 @@ static NSString *const JGActivityNameBaseCellIdentifier = @"JGActivityNameBaseCe
     } completionBlock:^(id data) {
         NSLog(@"%@", data);
     }];
-    
     
     JGTeamApplyViewController * applyCtrl = [[JGTeamApplyViewController alloc]initWithNibName:@"JGTeamApplyViewController" bundle:nil];
     [self.navigationController pushViewController:applyCtrl animated:YES];
