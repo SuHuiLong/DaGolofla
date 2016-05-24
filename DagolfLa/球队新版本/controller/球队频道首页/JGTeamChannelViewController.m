@@ -117,23 +117,22 @@
     
     NSMutableDictionary *getMyTeam = [NSMutableDictionary dictionary];
     [getMyTeam setObject:@244 forKey:@"userKey"];
+    [getMyTeam setObject:@192 forKey:@"teamKey"];
     [getMyTeam setValue:@0 forKey:@"offset"];
-    [[JsonHttp jsonHttp] httpRequest:@"team/getMyTeamList" JsonKey:nil withData:getMyTeam requestMethod:@"POST" failedBlock:^(id errType) {
+    [[JsonHttp jsonHttp] httpRequest:@"team/getMyTeamList" JsonKey:nil withData:getMyTeam requestMethod:@"GET" failedBlock:^(id errType) {
         NSLog(@"%@", errType);
     } completionBlock:^(id data) {
         
-        for (NSDictionary *dicModel in data[@"teamList"]) {
-            JGTeamDetail *model = [[JGTeamDetail alloc] init];
-            [model setValuesForKeysWithDictionary:dicModel];
-            [self.teamArray addObject:model];
-        }
-        [self.tableView reloadData];
+
+        self.teamArray =  [data[@"teamList"] mutableCopy];
+        
         if ([_teamArray count] != 0) {
             self.titleLB.text = @" 近期活动";
             NSMutableDictionary *dic = [NSMutableDictionary dictionary];
             [dic setObject:@244 forKey:@"userKey"];
             [dic setValue:@0 forKey:@"offset"];
-            [[JsonHttp jsonHttp] httpRequest:@"team/getMyTeamActivityList" JsonKey:nil withData:dic requestMethod:@"POST" failedBlock:^(id errType) {
+            [getMyTeam setObject:@192 forKey:@"teamKey"];
+            [[JsonHttp jsonHttp] httpRequest:@"team/getMyTeamActivityList" JsonKey:nil withData:dic requestMethod:@"GET" failedBlock:^(id errType) {
                 NSLog(@"getMyTeamActivityList ***** error");
             } completionBlock:^(id data) {
                 
@@ -146,16 +145,30 @@
             }];
         }else{
             self.titleLB.text = @" 推荐球队";
-            [[JsonHttp jsonHttp] httpRequest:@"team/getTeamList" JsonKey:nil withData:nil requestMethod:@"POST" failedBlock:^(id errType) {
+            NSUserDefaults *user=[NSUserDefaults standardUserDefaults];
+            NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+            [dic setObject:[user objectForKey:@"lng"] forKey:@"longitude"];
+            [dic setObject:[user objectForKey:@"lat"] forKey:@"latitude"];
+            [dic setValue:@0 forKey:@"offset"];
+            [[JsonHttp jsonHttp] httpRequest:@"team/getTeamList" JsonKey:nil withData:dic requestMethod:@"GET" failedBlock:^(id errType) {
                 NSLog(@"getTeamList ***** error");
             } completionBlock:^(id data) {
                 
-                for (NSDictionary *dicModel in data[@"getTeamList"]) {
+                for (NSDictionary *dicModel in data[@"teamList"]) {
                     JGTeamDetail *model = [[JGTeamDetail alloc] init];
                     [model setValuesForKeysWithDictionary:dicModel];
                     [self.teamArray addObject:model];
                 }
                 [self.tableView reloadData];
+                
+                
+                /*
+                 
+                 NSUserDefaults *user=[NSUserDefaults standardUserDefaults];
+                 [self.paraDic setObject:[NSNumber numberWithFloat:currLocation.coordinate.latitude] forKey:@"likeName"];
+                 [user setObject:[NSNumber numberWithFloat:currLocation.coordinate.latitude] forKey:@"lat"];
+                 [user setObject:[NSNumber numberWithFloat:currLocation.coordinate.longitude] forKey:@"lng"];
+                 */
             }];
             
         }

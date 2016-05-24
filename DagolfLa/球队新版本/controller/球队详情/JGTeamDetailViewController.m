@@ -11,6 +11,7 @@
 #import "JGApplyMaterialViewController.h"
 #import "JGTeamPhotoViewController.h" // 球队相册
 #import "JGTeamActivityViewController.h" // 球队活动
+#import "JGApplyMaterialViewController.h"
 
 @interface JGTeamDetailViewController ()
 
@@ -41,7 +42,7 @@
 
     //    teamDetaliV.teamIntroductionLB.text = @"寂寞的人总是会用心地记住在他生命中出现过的每一个人，所以我总是意犹未尽地想起你。在每个星光坠落的晚上，一遍一遍，数我的寂寞。火车上的第一个晚上，我沉沉地睡去，梦境中，我看到了13岁的齐铭，眼睛大大的，头发柔软，漂亮得如同女孩子。他孤单地站在站台上，猜着火车，他问我哪列火车可以到北京去，可是我动不了，说不出话，于是他蹲在地上哭了。我想走过去抱着他，可是我却动不了，齐铭望着我，一直哭不肯停。可是我连话都说不出来，我难过得像要死掉了。梦中开过了一列火车，轰隆隆，轰隆隆，碾碎了齐铭的面容，碾碎了我留在齐铭身上的青春，碾碎了那几个明媚的夏天，碾碎了那面白色的墙，碾碎了齐铭那辆帅气的单车，碾碎了他的素描，碾碎了我最后的梦境。";
 
-    [self.teamDetaliV.applyJoin addTarget:self action:@selector(apply) forControlEvents:(UIControlEventTouchUpInside)];
+//    [self.teamDetaliV.applyJoin addTarget:self action:@selector(apply) forControlEvents:(UIControlEventTouchUpInside)];
     for (int i = 0; i < 2; i ++) {
         UIButton *button = [self.teamDetaliV.buttonBackView viewWithTag:200 + i];
         [button addTarget:self action:@selector(buttons:) forControlEvents:(UIControlEventTouchUpInside)];
@@ -53,10 +54,21 @@
     [backBtn setImage:[UIImage imageNamed:@"backL"] forState:(UIControlStateNormal)];
     [self.teamDetaliV.topBackImageV addSubview:backBtn];
     [self.teamDetaliV.applyBtn addTarget:self action:@selector(applyCreat) forControlEvents:(UIControlEventTouchUpInside)];
+    [self.teamDetaliV.applyJoin addTarget:self action:@selector(applyJoin) forControlEvents:(UIControlEventTouchUpInside)];
     [self.teamDetaliV resetUI];
     [self.view addSubview:self.teamDetaliV];
     self.teamDetaliV.contentSize = CGSizeMake(screenWidth, self.teamDetaliV.applyBtn.frame.origin.y + 70);
     // Do any additional setup after loading the view.
+}
+
+//
+
+
+// 申请加入
+- (void)applyJoin{
+    JGApplyMaterialViewController *apVC = [[JGApplyMaterialViewController alloc] init];
+    apVC.teamKey = [[self.teamDetailDic objectForKey:@"timeKey"] integerValue];
+    [self.navigationController pushViewController:apVC animated:YES];
 }
 
 // 创建球队
@@ -87,10 +99,10 @@
     }
 }
 
-- (void)apply{
-    JGApplyMaterialViewController *apVC = [[JGApplyMaterialViewController alloc] init];
-    [self.navigationController pushViewController:apVC animated:YES];
-}
+//- (void)apply{
+//    JGApplyMaterialViewController *apVC = [[JGApplyMaterialViewController alloc] init];
+//    [self.navigationController pushViewController:apVC animated:YES];
+//}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

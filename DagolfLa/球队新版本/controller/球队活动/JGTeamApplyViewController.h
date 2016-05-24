@@ -12,5 +12,7 @@
 
 @property (weak, nonatomic) IBOutlet UITableView *teamApplyTableView;
 
+//activityKey
+@property (copy, nonatomic)NSString *activityKey;
 
 @end

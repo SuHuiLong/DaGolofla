@@ -9,5 +9,5 @@
 #import "ViewController.h"
 
 @interface JGApplyMaterialViewController : ViewController
-
+@property (nonatomic, assign)NSInteger teamKey;
 @end

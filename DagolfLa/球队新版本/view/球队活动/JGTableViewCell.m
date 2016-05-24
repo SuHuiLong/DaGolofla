@@ -8,6 +8,7 @@
 
 #import "JGTableViewCell.h"
 #import "JGHLaunchActivityModel.h"
+#import "JGTeamAcitivtyModel.h"
 
 @implementation JGTableViewCell
 
@@ -45,8 +46,25 @@
             self.contions.text = model.payInfo;
         }
     }
-        
+    
+    
 }
+
+- (void)configJGTeamAcitivtyModel:(JGTeamAcitivtyModel *)model andIndecPath:(NSIndexPath *)indexPath{
+    
+    if (indexPath.row == 0) {
+        self.contions.text = model.name;
+    }else if (indexPath.row == 1){
+        self.contions.text = model.name;
+    }else if (indexPath.row == 2){
+        self.contions.text = model.name;
+    }else if (indexPath.row == 3){
+        self.contions.text = model.name;
+    }else if (indexPath.row == 4){
+        self.contions.text = model.name;
+    }
+}
+
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
 

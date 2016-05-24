@@ -12,6 +12,7 @@
 #import "JGTeamActibityNameViewController.h"
 #import "JGHLaunchActivityViewController.h"
 #import "JGTeamGroupViewController.h"
+#import "JGTeamApplyViewController.h"
 
 @interface JGTeamActivityViewController ()<UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, strong)UITableView *teamActivityTableView;
@@ -65,12 +66,12 @@
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
     //244  121212
-//    [dict setObject:[def object ForKey:userID] forKey:@"userKey"];//3619
+    [dict setObject:@"244" forKey:@"userKey"];//3619
     //189781710290821120  http://192.168.2.6:8888
-    [dict setObject:@"189781710290821120" forKey:@"teamKey"];
+    [dict setObject:@"192" forKey:@"teamKey"];
     [dict setObject:@"1" forKey:@"offset"];
     
-    [[JsonHttp jsonHttp]httpRequest:@"team/getTeamActivityList" JsonKey:nil withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
+    [[JsonHttp jsonHttp]httpRequest:@"team/getTeamActivityList" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
         NSLog(@"errType == %@", errType);
     } completionBlock:^(id data) {
         NSLog(@"data == %@", data);
@@ -99,7 +100,7 @@
     UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithCustomView:btn];
     self.navigationItem.rightBarButtonItem = rightItem;
 }
-
+#pragma mark -- 发布球队活动
 - (void)launchActivityBtnClick:(UIButton *)btn{
     JGHLaunchActivityViewController * launchCtrl = [[JGHLaunchActivityViewController alloc]init];
     [self.navigationController pushViewController:launchCtrl animated:YES];
@@ -147,11 +148,11 @@
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    JGTeamActibityNameViewController *activityNameCtrl = [[JGTeamActibityNameViewController alloc]init];
+    JGTeamApplyViewController *teamApplyCtrl = [[JGTeamApplyViewController alloc]init];
     JGTeamAcitivtyModel *model = [[JGTeamAcitivtyModel alloc]init];
     model = self.dataArray[indexPath.section];
-    activityNameCtrl.teamActivityKey = model.timeKey;
-    [self.navigationController pushViewController:activityNameCtrl animated:YES];
+    teamApplyCtrl.activityKey = model.timeKey;
+    [self.navigationController pushViewController:teamApplyCtrl animated:YES];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

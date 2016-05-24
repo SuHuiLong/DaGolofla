@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 @class JGHLaunchActivityModel;
+@class JGTeamAcitivtyModel;
 
 @interface JGTableViewCell : UITableViewCell
 //titles
@@ -20,5 +21,7 @@
 - (void)configTitlesString:(NSString *)titles;
 
 - (void)configContionsStringWhitModel:(JGHLaunchActivityModel *)model andIndexPath:(NSIndexPath *)indexPath;
+
+- (void)configJGTeamAcitivtyModel:(JGTeamAcitivtyModel *)model andIndecPath:(NSIndexPath *)indexPath;
 
 @end

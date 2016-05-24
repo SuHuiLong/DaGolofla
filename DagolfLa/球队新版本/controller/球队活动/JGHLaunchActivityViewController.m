@@ -70,7 +70,7 @@ static CGFloat ImageHeight  = 210.0;
         self.imgProfile = [[UIImageView alloc] initWithImage:image];
         self.imgProfile.frame = CGRectMake(0, 0, screenWidth, ImageHeight);
         self.imgProfile.userInteractionEnabled = YES;
-        self.launchActivityTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight)];
+        self.launchActivityTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight - 100)];
         UINib *tableViewNib = [UINib nibWithNibName:@"JGTableViewCell" bundle: [NSBundle mainBundle]];
         [self.launchActivityTableView registerNib:tableViewNib forCellReuseIdentifier:JGTableViewCellIdentifier];
         self.launchActivityTableView.dataSource = self;
@@ -122,15 +122,12 @@ static CGFloat ImageHeight  = 210.0;
     [self.imgProfile addSubview:self.headPortraitBtn];
     [self.titleView addSubview:self.titleField];
     
-//    self.headabel = [[UILabel alloc]initWithFrame:CGRectMake(80, 180, 60, 20)];
-//    [self.headabel setText:@"活动地址:"];
-//    self.headabel.font = [UIFont systemFontOfSize:13];
-//    [self.imgProfile addSubview:self.headabel];
-    
-    self.addressBtn = [[UIButton alloc]initWithFrame:CGRectMake(70, 170, 60, 20)];
+    //地址
+    self.addressBtn = [[UIButton alloc]initWithFrame:CGRectMake(70, 170, screenWidth-70, 30)];
     self.addressBtn.tag = 333;
     [self.addressBtn setTitle:@"请添加地址" forState:UIControlStateNormal];
     self.addressBtn.titleLabel.font = [UIFont systemFontOfSize:13];
+    self.addressBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     [self.addressBtn addTarget:self action:@selector(replaceWithPicture:) forControlEvents:UIControlEventTouchUpInside];
     [self.imgProfile addSubview:self.addressBtn];
     
@@ -173,8 +170,6 @@ static CGFloat ImageHeight  = 210.0;
 - (void)updateImg {
     CGFloat yOffset = _launchActivityTableView.contentOffset.y;
     NSLog(@"yOffset:%f",yOffset);
-    CGFloat XOffset = _launchActivityTableView.contentOffset.x;
-     NSLog(@"XOffset:%f",XOffset);
     CGFloat factor = ((ABS(yOffset)+ImageHeight)*screenWidth)/ImageHeight;
     if (yOffset < 0) {
         
@@ -184,14 +179,9 @@ static CGFloat ImageHeight  = 210.0;
         CGRect title = self.titleView.frame;
         self.titleView.frame = CGRectMake((factor-screenWidth)/2, 20, title.size.width, title.size.height);
         
-        CGRect head = self.headPortraitBtn.frame;
-        self.headPortraitBtn.frame = CGRectMake((factor-screenWidth)/2 + 20, head.origin.y + ABS(yOffset), head.size.width, head.size.height);
+        self.headPortraitBtn.hidden = YES;
         
-//        CGRect headabel = self.headabel.frame;
-//        self.headabel.frame = CGRectMake((factor-screenWidth)/2 + 20, headabel.origin.y + ABS(yOffset), headabel.size.width, headabel.size.height);
-        
-        CGRect addressBtn = self.addressBtn.frame;
-        self.addressBtn.frame = CGRectMake((factor-screenWidth)/2 + 20 + self.headPortraitBtn.frame.size.width, addressBtn.origin.y + ABS(yOffset), addressBtn.size.width, addressBtn.size.height);
+        self.addressBtn.hidden = YES;
     } else {
         CGRect f = self.imgProfile.frame;
         f.origin.y = -yOffset;
@@ -201,11 +191,10 @@ static CGFloat ImageHeight  = 210.0;
         t.origin.y = yOffset + 20;
         self.titleView.frame = t;
         
-        CGRect head = self.headPortraitBtn.frame;
-        self.headPortraitBtn.frame = CGRectMake((factor-screenWidth)/2 + 20, head.origin.y - ABS(yOffset), head.size.width, head.size.height);
-        
-        CGRect addressBtn = self.addressBtn.frame;
-        self.addressBtn.frame = CGRectMake((factor-screenWidth)/2 + 20 + self.headPortraitBtn.frame.size.width, addressBtn.origin.y - ABS(yOffset), addressBtn.size.width, addressBtn.size.height);
+        if (yOffset == 0.0) {
+            self.headPortraitBtn.hidden = NO;
+            self.addressBtn.hidden = NO;
+        }
     }
 }
 #pragma mark - Table View Delegate
