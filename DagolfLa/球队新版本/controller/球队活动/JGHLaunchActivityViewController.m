@@ -16,17 +16,19 @@
 #import "JGHLaunchActivityModel.h"
 #import "JGTeamActibityNameViewController.h"
 #import "SXPickPhoto.h"
+#import "JGHTeamContactTableViewCell.h"
+#import "JGCostSetViewController.h"
 
 static NSString *const JGTableViewCellIdentifier = @"JGTableViewCell";
-//static NSString *const JGHTeamActivityImageCellIdentifier = @"JGHTeamActivityImageCell";
+static NSString *const JGHTeamContactCellIdentifier = @"JGHTeamContactTableViewCell";
 static CGFloat ImageHeight  = 210.0;
 
-@interface JGHLaunchActivityViewController ()<UITableViewDelegate, UITableViewDataSource, JGHTeamActivityImageCellDelegate, JGHConcentTextViewControllerDelegate, NSURLConnectionDownloadDelegate>
+@interface JGHLaunchActivityViewController ()<UITableViewDelegate, UITableViewDataSource, JGHTeamActivityImageCellDelegate, JGHConcentTextViewControllerDelegate, NSURLConnectionDownloadDelegate,JGHTeamContactTableViewCellDelegate, JGCostSetViewControllerDelegate>
 {
     //、、、、、、、
-    NSArray *_titleArray;
+    NSArray *_titleArray;//标题数组
     
-    
+    NSString *_contcat;//联系人
 }
 @property (nonatomic,strong)SXPickPhoto * pickPhoto;//相册类
 @property (nonatomic, strong)UITableView *launchActivityTableView;
@@ -44,8 +46,6 @@ static CGFloat ImageHeight  = 210.0;
 @property (nonatomic, strong)UIView *titleView;//顶部导航
 
 @property (nonatomic, strong)UIButton *addressBtn;//添加地址
-
-//@property (nonatomic, strong)UILabel *headabel;
 
 @end
 
@@ -70,12 +70,15 @@ static CGFloat ImageHeight  = 210.0;
         self.imgProfile = [[UIImageView alloc] initWithImage:image];
         self.imgProfile.frame = CGRectMake(0, 0, screenWidth, ImageHeight);
         self.imgProfile.userInteractionEnabled = YES;
-        self.launchActivityTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight - 100)];
+        self.launchActivityTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight - 44)];
         UINib *tableViewNib = [UINib nibWithNibName:@"JGTableViewCell" bundle: [NSBundle mainBundle]];
         [self.launchActivityTableView registerNib:tableViewNib forCellReuseIdentifier:JGTableViewCellIdentifier];
+        UINib *contactNib = [UINib nibWithNibName:@"JGHTeamContactTableViewCell" bundle: [NSBundle mainBundle]];
+        [self.launchActivityTableView registerNib:contactNib forCellReuseIdentifier:JGHTeamContactCellIdentifier];
         self.launchActivityTableView.dataSource = self;
         self.launchActivityTableView.delegate = self;
         self.launchActivityTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+        self.launchActivityTableView.backgroundColor = [UIColor colorWithHexString:@"#EAEAEB"];
         [self.view addSubview:self.launchActivityTableView];
         [self.view addSubview:self.imgProfile];
         self.titleView.frame = CGRectMake(0, 20, screenWidth, 44);
@@ -89,7 +92,7 @@ static CGFloat ImageHeight  = 210.0;
     [super viewDidLoad];
     self.navigationController.navigationBar.hidden = YES;
     self.automaticallyAdjustsScrollViewInsets=NO;
-    
+    self.view.backgroundColor = [UIColor colorWithHexString:@"#EAEAEB"];
     //返回按钮
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
     btn.frame = BackBtnFrame;
@@ -131,7 +134,7 @@ static CGFloat ImageHeight  = 210.0;
     [self.addressBtn addTarget:self action:@selector(replaceWithPicture:) forControlEvents:UIControlEventTouchUpInside];
     [self.imgProfile addSubview:self.addressBtn];
     
-    _titleArray = @[@[], @[@"活动日期", @"开球时间", @"报名截止时间"], @[@"费用说明", @"人员限制", @"费用设置"], @[@"联系电话"]];
+    _titleArray = @[@[], @[@"活动日期", @"开球时间", @"报名截止时间"], @[@"费用说明", @"人员限制", @"活动说明"], @[@"联系电话"]];
     
     [self createPreviewBtn];
 }
@@ -153,9 +156,9 @@ static CGFloat ImageHeight  = 210.0;
 }
 #pragma mark -- 预览
 - (void)createPreviewBtn{
-    UIButton *previewBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, screenHeight - 64 -44, screenWidth, 44)];
+    UIButton *previewBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, screenHeight -44, screenWidth, 44)];
     [previewBtn setTitle:@"预览" forState:UIControlStateNormal];
-    previewBtn.backgroundColor = [UIColor yellowColor];
+    previewBtn.backgroundColor = [UIColor colorWithHexString:@"#F59826"];
     [previewBtn addTarget:self action:@selector(previewBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:previewBtn];
 }
@@ -166,6 +169,8 @@ static CGFloat ImageHeight  = 210.0;
     ActivityDetailCtrl.model = self.model;
     [self.navigationController pushViewController:ActivityDetailCtrl animated:YES];
 }
+
+
 #pragma mark -- 改变图片位置 放大缩小
 - (void)updateImg {
     CGFloat yOffset = _launchActivityTableView.contentOffset.y;
@@ -218,16 +223,16 @@ static CGFloat ImageHeight  = 210.0;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 0) {
-        return ImageHeight;
+        return ImageHeight -10;
     }else{
         return 44;
     }
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
-    return 1;
+    return 0;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    return 2;
+    return 10;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     NSString *windowReuseIdentifier = @"SectionOneCell";
@@ -242,9 +247,12 @@ static CGFloat ImageHeight  = 210.0;
         launchImageActivityCell.selectionStyle = UITableViewCellSelectionStyleNone;
         
         return launchImageActivityCell;
+    }else if (indexPath.section == 3){
+        JGHTeamContactTableViewCell *contactCell = [tableView dequeueReusableCellWithIdentifier:JGHTeamContactCellIdentifier];
+        contactCell.delegate = self;
+        return contactCell;
     }else{
         JGTableViewCell *launchActivityCell = [tableView dequeueReusableCellWithIdentifier:JGTableViewCellIdentifier forIndexPath:indexPath];
-//        launchActivityCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         launchActivityCell.selectionStyle = UITableViewCellSelectionStyleNone;
         
         NSArray *str = _titleArray[indexPath.section];
@@ -291,12 +299,20 @@ static CGFloat ImageHeight  = 210.0;
             [self.navigationController pushViewController:areaVc animated:YES];
         }
     }else if (indexPath.section == 2){
+        if (indexPath.row == 0) {
+            JGCostSetViewController *costView = [[JGCostSetViewController alloc]initWithNibName:@"JGCostSetViewController" bundle:nil];
+            costView.delegate = self;
+            [self.navigationController pushViewController:costView animated:YES];
+        }
+        
+        /**
         JGHConcentTextViewController *concentTextCtrl = [[JGHConcentTextViewController alloc]initWithNibName:@"JGHConcentTextViewController" bundle:nil];
         
         concentTextCtrl.itemText = @"内容";
         concentTextCtrl.delegate = self;
         concentTextCtrl.contentTextString = _model.activityInfo;
         [self.navigationController pushViewController:concentTextCtrl animated:YES];
+         */
     }
     
     [self.launchActivityTableView reloadData];
@@ -360,7 +376,15 @@ static CGFloat ImageHeight  = 210.0;
     [self.model setValue:text forKey:@"activityInfo"];
     [self.launchActivityTableView reloadData];
 }
-
+#pragma mark -- 联系人代理
+- (void)inputTextString:(NSString *)string{
+    _contcat = string;
+}
+#pragma mark -- 费用代理
+- (void)inputMembersCost:(NSString *)membersCost guestCost:(NSString *)guestCost{
+    self.model.guestCost = guestCost;
+    self.model.membersCost = membersCost;
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

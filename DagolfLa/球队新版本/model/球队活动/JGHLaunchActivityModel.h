@@ -25,8 +25,10 @@
 @property (nonatomic, copy)NSString *payInfo;
 //奖项设置
 @property (nonatomic, copy)NSString *setAward;
-//费用设置
-@property (nonatomic, copy)NSString *setpay;
+//费用设置－－球队会员费
+@property (nonatomic, copy)NSString *membersCost;
+//嘉宾费用
+@property (nonatomic, copy)NSString *guestCost;
 //人员限制
 @property (nonatomic, copy)NSString *limits;
 

@@ -69,6 +69,10 @@
 		20CA13DC1CE9F2C200DA15B9 /* UIColor+ColorTransfer.m in Sources */ = {isa = PBXBuildFile; fileRef = 20CA13DB1CE9F2C200DA15B9 /* UIColor+ColorTransfer.m */; };
 		20CA13FF1CEAF07100DA15B9 /* SXPickPhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = 20CA13FE1CEAF07100DA15B9 /* SXPickPhoto.m */; };
 		20CA14021CEB086600DA15B9 /* JsonHttp.m in Sources */ = {isa = PBXBuildFile; fileRef = 20CA14011CEB086600DA15B9 /* JsonHttp.m */; };
+		20F6A5C41CF3EDE800DD9383 /* JGHTeamContactTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 20F6A5C21CF3EDE800DD9383 /* JGHTeamContactTableViewCell.m */; };
+		20F6A5C51CF3EDE800DD9383 /* JGHTeamContactTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 20F6A5C31CF3EDE800DD9383 /* JGHTeamContactTableViewCell.xib */; };
+		20F6A5C91CF3F78200DD9383 /* JGCostSetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 20F6A5C71CF3F78200DD9383 /* JGCostSetViewController.m */; };
+		20F6A5CA1CF3F78200DD9383 /* JGCostSetViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 20F6A5C81CF3F78200DD9383 /* JGCostSetViewController.xib */; };
 		360148F81C1FFE5E0074C395 /* ManageFinfishModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 360148F71C1FFE5E0074C395 /* ManageFinfishModel.m */; };
 		36067BAB1C96A9FB001AE22C /* ScreenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 36067BAA1C96A9FB001AE22C /* ScreenViewController.m */; };
 		36067BAF1C96AA31001AE22C /* InformViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 36067BAE1C96AA31001AE22C /* InformViewController.m */; };
@@ -812,6 +816,7 @@
 		F50B7FB71CE5DBB70065069D /* JGTeamMainhallViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F50B7FB61CE5DBB70065069D /* JGTeamMainhallViewController.m */; };
 		F52A49E51C969F79002A4973 /* ScreenTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F52A49E41C969F79002A4973 /* ScreenTableViewCell.m */; };
 		F5321AEA1CE449C400CAE1EF /* JGCreateTeamView.m in Sources */ = {isa = PBXBuildFile; fileRef = F5321AE91CE449C400CAE1EF /* JGCreateTeamView.m */; };
+		F543ACB81CF3F89400C6B111 /* JGButtonTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F543ACB71CF3F89400C6B111 /* JGButtonTableViewCell.m */; };
 		F566EFAB1CA0F01B008BB328 /* InformSetmodel.m in Sources */ = {isa = PBXBuildFile; fileRef = F566EFAA1CA0F01B008BB328 /* InformSetmodel.m */; };
 		F569A13F1CE35A9C00CD0FD5 /* JGTeamChannelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F569A13B1CE35A9C00CD0FD5 /* JGTeamChannelViewController.m */; };
 		F569A1401CE35A9C00CD0FD5 /* JGTeamDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F569A13E1CE35A9C00CD0FD5 /* JGTeamDetailViewController.m */; };
@@ -944,6 +949,12 @@
 		20CA13FE1CEAF07100DA15B9 /* SXPickPhoto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SXPickPhoto.m; sourceTree = "<group>"; };
 		20CA14001CEB086600DA15B9 /* JsonHttp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JsonHttp.h; sourceTree = "<group>"; };
 		20CA14011CEB086600DA15B9 /* JsonHttp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JsonHttp.m; sourceTree = "<group>"; };
+		20F6A5C11CF3EDE800DD9383 /* JGHTeamContactTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHTeamContactTableViewCell.h; sourceTree = "<group>"; };
+		20F6A5C21CF3EDE800DD9383 /* JGHTeamContactTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHTeamContactTableViewCell.m; sourceTree = "<group>"; };
+		20F6A5C31CF3EDE800DD9383 /* JGHTeamContactTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JGHTeamContactTableViewCell.xib; sourceTree = "<group>"; };
+		20F6A5C61CF3F78200DD9383 /* JGCostSetViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGCostSetViewController.h; sourceTree = "<group>"; };
+		20F6A5C71CF3F78200DD9383 /* JGCostSetViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGCostSetViewController.m; sourceTree = "<group>"; };
+		20F6A5C81CF3F78200DD9383 /* JGCostSetViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JGCostSetViewController.xib; sourceTree = "<group>"; };
 		360148F61C1FFE5E0074C395 /* ManageFinfishModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ManageFinfishModel.h; sourceTree = "<group>"; };
 		360148F71C1FFE5E0074C395 /* ManageFinfishModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ManageFinfishModel.m; sourceTree = "<group>"; };
 		36067BA91C96A9FB001AE22C /* ScreenViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScreenViewController.h; sourceTree = "<group>"; };
@@ -2106,6 +2117,8 @@
 		F5321AE61CE4499600CAE1EF /* JGCreateTeamViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGCreateTeamViewController.m; sourceTree = "<group>"; };
 		F5321AE81CE449C400CAE1EF /* JGCreateTeamView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGCreateTeamView.h; sourceTree = "<group>"; };
 		F5321AE91CE449C400CAE1EF /* JGCreateTeamView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGCreateTeamView.m; sourceTree = "<group>"; };
+		F543ACB61CF3F89400C6B111 /* JGButtonTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGButtonTableViewCell.h; sourceTree = "<group>"; };
+		F543ACB71CF3F89400C6B111 /* JGButtonTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGButtonTableViewCell.m; sourceTree = "<group>"; };
 		F566EFA91CA0F01B008BB328 /* InformSetmodel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InformSetmodel.h; sourceTree = "<group>"; };
 		F566EFAA1CA0F01B008BB328 /* InformSetmodel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InformSetmodel.m; sourceTree = "<group>"; };
 		F569A13A1CE35A9C00CD0FD5 /* JGTeamChannelViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGTeamChannelViewController.h; sourceTree = "<group>"; };
@@ -2237,6 +2250,9 @@
 				20CA138A1CE954B300DA15B9 /* JGTeamGroupViewController.m */,
 				20CA13941CE97C9C00DA15B9 /* JGHTeamMembersViewController.h */,
 				20CA13951CE97C9C00DA15B9 /* JGHTeamMembersViewController.m */,
+				20F6A5C61CF3F78200DD9383 /* JGCostSetViewController.h */,
+				20F6A5C71CF3F78200DD9383 /* JGCostSetViewController.m */,
+				20F6A5C81CF3F78200DD9383 /* JGCostSetViewController.xib */,
 			);
 			path = "球队活动";
 			sourceTree = "<group>";
@@ -2293,6 +2309,9 @@
 				2067C6CB1CE30CC0002900C8 /* JGTeamActivityWithAddressCell.h */,
 				2067C6CC1CE30CC0002900C8 /* JGTeamActivityWithAddressCell.m */,
 				2067C6CD1CE30CC0002900C8 /* JGTeamActivityWithAddressCell.xib */,
+				20F6A5C11CF3EDE800DD9383 /* JGHTeamContactTableViewCell.h */,
+				20F6A5C21CF3EDE800DD9383 /* JGHTeamContactTableViewCell.m */,
+				20F6A5C31CF3EDE800DD9383 /* JGHTeamContactTableViewCell.xib */,
 			);
 			path = "球队活动";
 			sourceTree = "<group>";
@@ -5382,6 +5401,8 @@
 			children = (
 				F5B549951CE9B0710091C962 /* JGApplyMaterialTableViewCell.h */,
 				F5B549961CE9B0710091C962 /* JGApplyMaterialTableViewCell.m */,
+				F543ACB61CF3F89400C6B111 /* JGButtonTableViewCell.h */,
+				F543ACB71CF3F89400C6B111 /* JGButtonTableViewCell.m */,
 			);
 			path = "申请资料";
 			sourceTree = "<group>";
@@ -5563,6 +5584,7 @@
 				36BFFE271BC76CDC005B3CE2 /* fabu@2x.png in Resources */,
 				36BFFE991BC76CDC005B3CE2 /* gqsb.png in Resources */,
 				36BFFEA01BC76CDC005B3CE2 /* guanggao1@2x.png in Resources */,
+				20F6A5C51CF3EDE800DD9383 /* JGHTeamContactTableViewCell.xib in Resources */,
 				65B596DC1CAD43AC007AB83A /* 02@2x.png in Resources */,
 				36BFFE9E1BC76CDC005B3CE2 /* gqxs@3x.png in Resources */,
 				36BFFE5A1BC76CDC005B3CE2 /* tianjia@2x.png in Resources */,
@@ -5656,6 +5678,7 @@
 				20CA136A1CE44CCB00DA15B9 /* JGAlreadyAddGuestCell.xib in Resources */,
 				65B596E11CAD43AC007AB83A /* button_send_comment@2x.png in Resources */,
 				36BFFEC11BC76CDC005B3CE2 /* tab_sq@2x.png in Resources */,
+				20F6A5CA1CF3F78200DD9383 /* JGCostSetViewController.xib in Resources */,
 				6543320D1BD5D9B900363947 /* UMSocialSDKResourcesNew.bundle in Resources */,
 				36BFFE2F1BC76CDC005B3CE2 /* genduo3@3x.png in Resources */,
 				36BFFE601BC76CDC005B3CE2 /* tu2@2x.png in Resources */,
@@ -5863,9 +5886,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				20F6A5C41CF3EDE800DD9383 /* JGHTeamContactTableViewCell.m in Sources */,
 				F5B5499A1CE9EC6E0091C962 /* JGPhotoTimeReusableView.m in Sources */,
 				F5B549991CE9EC3B0091C962 /* JGPhotoShowCollectionViewCell.m in Sources */,
 				F5B549981CE9EBD00091C962 /* JGLUpdataPhotoController.m in Sources */,
+				F543ACB81CF3F89400C6B111 /* JGButtonTableViewCell.m in Sources */,
 				20CA13781CE562BD00DA15B9 /* JGCreateTeamViewController.m in Sources */,
 				36E301031C3FF410005C3F08 /* MJDIYHeader.m in Sources */,
 				36B9B59F1C3E45A70053B227 /* TeamPhotoEditViewController.m in Sources */,
@@ -5947,6 +5972,7 @@
 				36EA30CF1C1D52A3008BD2B4 /* YueBallDetailModel.m in Sources */,
 				369E6B041C4FCC3400ED6684 /* ManageSelfDetTableViewCell.m in Sources */,
 				36BFFFFB1BC770C4005B3CE2 /* UIImage+StrethImage.m in Sources */,
+				20F6A5C91CF3F78200DD9383 /* JGCostSetViewController.m in Sources */,
 				36A9B6921CA37D9200A120EE /* UITabBar+badge.m in Sources */,
 				36DE28CE1C1E6B30008FA24D /* RewardDetailModel.m in Sources */,
 				36BF01C51BC77ABD005B3CE2 /* FabuYueBallViewCell.m in Sources */,

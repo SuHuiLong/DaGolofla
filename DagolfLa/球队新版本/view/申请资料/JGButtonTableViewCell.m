@@ -1,14 +1,14 @@
 //
-//  JGApplyMaterialTableViewCell.m
+//  JGButtonTableViewCell.m
 //  DagolfLa
 //
-//  Created by 東 on 16/5/16.
+//  Created by 東 on 16/5/24.
 //  Copyright © 2016年 bhxx. All rights reserved.
 //
 
-#import "JGApplyMaterialTableViewCell.h"
+#import "JGButtonTableViewCell.h"
 
-@implementation JGApplyMaterialTableViewCell
+@implementation JGButtonTableViewCell
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
@@ -17,9 +17,12 @@
         self.labell = [[UILabel alloc] initWithFrame:CGRectMake(10 * screenWidth / 320, 0, 110 * screenWidth / 320, self.frame.size.height)];
         [self addSubview:self.labell];
         
-        self.textFD = [[UITextField alloc] initWithFrame:CGRectMake(110 * screenWidth / 320, 0, screenWidth - 130 * screenWidth / 320, self.frame.size.height)];
-        [self addSubview:self.textFD];
-        self.textFD.textAlignment = 2;
+        self.button = [UIButton buttonWithType:(UIButtonTypeCustom)];
+        
+        [self.button setFrame:CGRectMake(screenWidth - 110 * screenWidth / 320, 0, 110 * screenWidth / 320, self.frame.size.height)];
+        [self.button setTitleColor:[UIColor lightGrayColor] forState:(UIControlStateNormal)];
+        [self.button setTitle:@"请输入性别" forState:(UIControlStateNormal)];
+        [self addSubview:self.button];
     }
     return self;
 }
