@@ -9,5 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface JGPhotoShowCollectionViewCell : UICollectionViewCell
+@property (weak, nonatomic) IBOutlet UIButton *addBtn;
+@property (weak, nonatomic) IBOutlet UIImageView *iconImgv;
 
 @end

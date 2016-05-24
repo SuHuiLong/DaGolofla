@@ -58,7 +58,7 @@
         UILabel *setUpLB = [[UILabel alloc] initWithFrame:CGRectMake(screenWidth / 2, 40 * screenWidth / 320, 70 * screenWidth / 320, 30 * screenWidth / 320)];
         setUpLB.text = @"成立时间";
         setUpLB.textColor = [UIColor lightGrayColor];
-        [self.addressAndTimeImageV addSubview:setUpLB];
+//        [self.addressAndTimeImageV addSubview:setUpLB];
         
         self.setUpLbalel = [[UILabel alloc] initWithFrame:CGRectMake(screenWidth / 2 + 70 * screenWidth / 320, 40 * screenWidth / 320, screenWidth / 2 - 70 * screenWidth / 320, 30 * screenWidth / 320)];
 //        self.setUpLbalel.text = @"2016/02/16";

@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -12,6 +14,16 @@
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                 <rect key="frame" x="0.0" y="0.0" width="80" height="80"/>
                 <subviews>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RM7-QD-hqH">
+                        <rect key="frame" x="0.0" y="0.0" width="80" height="80"/>
+                        <color key="backgroundColor" red="1" green="0.7120002238773383" blue="0.030384115218547114" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="RM7-QD-hqH" secondAttribute="height" multiplier="1:1" id="vUU-26-Hdo"/>
+                        </constraints>
+                        <state key="normal" title="添加">
+                            <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                    </button>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Qz1-q5-oEa">
                         <rect key="frame" x="0.0" y="0.0" width="80" height="80"/>
                     </imageView>
@@ -21,10 +33,18 @@
             <constraints>
                 <constraint firstItem="Qz1-q5-oEa" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="NgM-ei-GVW"/>
                 <constraint firstAttribute="trailing" secondItem="Qz1-q5-oEa" secondAttribute="trailing" id="XQX-it-5sh"/>
+                <constraint firstItem="RM7-QD-hqH" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="Zyq-Bl-QQ1"/>
+                <constraint firstAttribute="trailing" secondItem="RM7-QD-hqH" secondAttribute="trailing" id="eXx-Vd-zGi"/>
                 <constraint firstItem="Qz1-q5-oEa" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="f2x-gk-3Uj"/>
+                <constraint firstAttribute="bottom" secondItem="RM7-QD-hqH" secondAttribute="bottom" id="kqS-cG-yZf"/>
                 <constraint firstAttribute="bottom" secondItem="Qz1-q5-oEa" secondAttribute="bottom" id="wEl-9P-fuB"/>
+                <constraint firstItem="RM7-QD-hqH" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="yoj-jL-mlz"/>
             </constraints>
             <size key="customSize" width="81" height="102"/>
+            <connections>
+                <outlet property="addBtn" destination="RM7-QD-hqH" id="mFR-yK-3dx"/>
+                <outlet property="iconImgv" destination="Qz1-q5-oEa" id="Oop-TX-AJB"/>
+            </connections>
             <point key="canvasLocation" x="477" y="345"/>
         </collectionViewCell>
     </objects>
