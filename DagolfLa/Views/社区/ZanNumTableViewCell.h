@@ -24,4 +24,6 @@
 @property (nonatomic,strong) UserAssistModel * userAssisModel;
 
 -(void)showTeamPeopleData:(TeamPeopleModel *)model;
+
+
 @end

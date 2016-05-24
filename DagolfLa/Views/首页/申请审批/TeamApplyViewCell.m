@@ -109,6 +109,52 @@
     }
     _chadianLabel.text = [NSString stringWithFormat:@"差点 ：%@",model.almost];
 }
+-(void)agree1Click
+{
+    NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
+    [dict setObject:@181 forKey:@"teamKey"];
+    [dict setObject:@244 forKey:@"userKey"];
+    [dict setObject:@184 forKey:@"memberKey"];
+    [dict setObject:@1 forKey:@"state"];
+    [[JsonHttp jsonHttp]httpRequest:@"team/auditTeamMember" JsonKey:nil withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
+        
+    } completionBlock:^(id data) {
+        NSLog(@"%@",[data objectForKey:@"packResultMsg"]);
+    }];
+}
+-(void)dis1Click
+{
+    NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
+    [dict setObject:@181 forKey:@"teamKey"];
+    [dict setObject:@244 forKey:@"userKey"];
+    [dict setObject:@184 forKey:@"memberKey"];
+    [dict setObject:@2 forKey:@"state"];
+    [[JsonHttp jsonHttp]httpRequest:@"team/auditTeamMember" JsonKey:nil withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
+        
+    } completionBlock:^(id data) {
+        NSLog(@"%@",[data objectForKey:@"packResultMsg"]);
+    }];
+}
+
+-(void)showManage:(JGLTeamMemberModel *)model
+{
+    [_agreeBtn addTarget:self action:@selector(agree1Click) forControlEvents:UIControlEventTouchUpInside];
+    [_disMissBtn addTarget:self action:@selector(dis1Click) forControlEvents:UIControlEventTouchUpInside];
+    
+    
+    _nameLabel.text = model.userName;
+    if ([model.sex integerValue] == 1) {
+        _sexImage.image = [UIImage imageNamed:@"xb_nn"];
+    }
+    else
+    {
+        _sexImage.image = [UIImage imageNamed:@"xb_n"];
+    }
+   
+    _ageLabel.text = [NSString stringWithFormat:@"差点 ：%@",model.almost];
+
+    _chadianLabel.text = [NSString stringWithFormat:@"手机号 ：%@",model.mobile];
+}
 
 
 @end

@@ -528,6 +528,19 @@
     }
     
     
+    
+//    NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
+//    [dict setObject:@171 forKey:@"teamKey"];
+//    [dict setObject:@244 forKey:@"userKey"];
+//    [dict setObject:@"我叫邱思宇" forKey:@"name"];
+//    [dict setObject:@"XXXXXXXXXXXXXXDDDDDDDDDDDDDSSSSSSS" forKey:@"info"];
+//    [dict setObject:@"公告公告公告公告公告公告公告公告公告" forKey:@"notice"];
+//    [[JsonHttp jsonHttp]httpRequest:@"team/updateTeam" JsonKey:nil withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
+//        NSLog(@"err");
+//    } completionBlock:^(id data) {
+//        
+//    }];
+  
 }
 
 -(void)createBtnView

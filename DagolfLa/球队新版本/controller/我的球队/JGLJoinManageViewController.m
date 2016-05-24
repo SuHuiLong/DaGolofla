@@ -1,34 +1,26 @@
 //
-//  JGLMyTeamViewController.m
+//  JGLJoinManageViewController.m
 //  DagolfLa
 //
-//  Created by 黄达明 on 16/5/13.
+//  Created by 黄达明 on 16/5/23.
 //  Copyright © 2016年 bhxx. All rights reserved.
 //
 
-#import "JGLMyTeamViewController.h"
-#import "JGTeamChannelTableView.h"
-#import "JGTeamChannelTableViewCell.h"
-
-#import "JGTeamDetailStylelTwoViewController.h"
-
+#import "JGLJoinManageViewController.h"
+#import "TeamApplyViewCell.h"
 #import "MJRefresh.h"
 #import "MJDIYBackFooter.h"
 #import "MJDIYHeader.h"
-#import "JGTeamDetail.h"
-
-
-#import "JGLMyTeamModel.h"
-@interface JGLMyTeamViewController ()<UITableViewDelegate,UITableViewDataSource>
+#import "JGLTeamMemberModel.h"
+@interface JGLJoinManageViewController ()<UITableViewDelegate,UITableViewDataSource>
 {
-    JGTeamChannelTableView* _tableView;
-    
+    UITableView* _tableView;
     NSMutableArray* _dataArray;
     NSInteger _page;
 }
 @end
 
-@implementation JGLMyTeamViewController
+@implementation JGLJoinManageViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -43,12 +35,13 @@
 
 -(void) uiConfig
 {
-    _tableView = [[JGTeamChannelTableView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight) style:(UITableViewStylePlain)];
+    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight) style:(UITableViewStylePlain)];
     _tableView.delegate = self;
     _tableView.dataSource = self;
     _tableView.separatorStyle = UITableViewCellAccessoryNone;
     _tableView.rowHeight = 83 * screenWidth / 320;
     [self.view addSubview:_tableView];
+    [_tableView registerNib:[UINib nibWithNibName:@"TeamApplyViewCell" bundle:nil] forCellReuseIdentifier:@"TeamApplyViewCell"];
     _tableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
     _tableView.footer=[MJDIYBackFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRereshing)];
     [_tableView.header beginRefreshing];
@@ -58,10 +51,10 @@
 #pragma mark - 下载数据
 - (void)downLoadData:(int)page isReshing:(BOOL)isReshing{
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    
+    [dict setObject:@181 forKey:@"teamKey"];
     [dict setObject:@244 forKey:@"userKey"];
     [dict setObject:[NSNumber numberWithInt:page] forKey:@"offset"];
-    [[JsonHttp jsonHttp]httpRequest:@"team/getMyTeamList" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
+    [[JsonHttp jsonHttp]httpRequest:@"team/getAuditTeamMemberList" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
         if (isReshing) {
             [_tableView.header endRefreshing];
         }else {
@@ -75,8 +68,8 @@
                 [_dataArray removeAllObjects];
             }
             //数据解析
-            for (NSDictionary *dataDic in [data objectForKey:@"teamList"]) {
-                JGLMyTeamModel *model = [[JGLMyTeamModel alloc] init];
+            for (NSDictionary *dataDic in [data objectForKey:@"teamMember"]) {
+                JGLTeamMemberModel *model = [[JGLTeamMemberModel alloc] init];
                 [model setValuesForKeysWithDictionary:dataDic];
                 [_dataArray addObject:model];
             }
@@ -108,6 +101,11 @@
     [self downLoadData:_page isReshing:NO];
 }
 
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 55*ScreenWidth/375;
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return _dataArray.count;
 }
@@ -115,33 +113,17 @@
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    JGTeamChannelTableViewCell *cell = [_tableView dequeueReusableCellWithIdentifier:@"cell"];
-//        cell.nameLabel.text = _dataArray[indexPath.row%3];
-    [cell showData:_dataArray[indexPath.row]];
+    TeamApplyViewCell *cell = [_tableView dequeueReusableCellWithIdentifier:@"TeamApplyViewCell"];
+    //        cell.nameLabel.text = _dataArray[indexPath.row%3];
+//    [cell showData:_dataArray[indexPath.row]];
+    [cell showManage:_dataArray[indexPath.row]];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
     
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-
-
-    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
-    [dic setObject:@244 forKey:@"userKey"];
-    JGLMyTeamModel *model = _dataArray[indexPath.row];
-    [dic setObject: model.teamKey forKey:@"teamKey"];
-    
-    [[JsonHttp jsonHttp] httpRequest:@"team/getTeamInfo" JsonKey:nil withData:dic requestMethod:@"POST" failedBlock:^(id errType) {
-        NSLog(@"getTeamInfo ******** %@", errType);
-    } completionBlock:^(id data) {
-        
-        JGTeamDetailStylelTwoViewController *detailVC = [[JGTeamDetailStylelTwoViewController alloc] init];
-        NSDictionary *dataDic = [data objectForKey:@"team"];
-        detailVC.detailDic = dataDic;
-        [self.navigationController pushViewController:detailVC animated:YES];
-        
-    }];
-    
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPat{
+  
 }
 
 
@@ -152,13 +134,13 @@
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

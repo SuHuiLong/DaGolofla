@@ -788,7 +788,6 @@
 		828A99F51CE3481D00AF9860 /* JGMemManageController.m in Sources */ = {isa = PBXBuildFile; fileRef = 828A99F41CE3481D00AF9860 /* JGMemManageController.m */; };
 		828A99F91CE348D500AF9860 /* JGMemTitleTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 828A99F81CE348D500AF9860 /* JGMemTitleTableViewCell.m */; };
 		828A99FC1CE3549900AF9860 /* JGMemDataTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 828A99FB1CE3549900AF9860 /* JGMemDataTableViewCell.m */; };
-		82AAB7AA1CE57589005F5633 /* JGLMyTeamViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 82AAB7A91CE57589005F5633 /* JGLMyTeamViewController.m */; };
 		82AAB7AE1CE5BEB8005F5633 /* JGLSelfSetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 82AAB7AD1CE5BEB8005F5633 /* JGLSelfSetViewController.m */; };
 		82AAB7B11CE5C18E005F5633 /* JGSelfSetTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 82AAB7B01CE5C18E005F5633 /* JGSelfSetTableViewCell.m */; };
 		82D595DF1CE42BDF00CD9587 /* BaiduMapAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82D595DD1CE42BDF00CD9587 /* BaiduMapAPI.framework */; };
@@ -798,6 +797,8 @@
 		82D595E91CE4604500CD9587 /* JGTeamPhotoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 82D595E81CE4604500CD9587 /* JGTeamPhotoViewController.m */; };
 		82D595ED1CE4654C00CD9587 /* JGTeamPhotoCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 82D595EB1CE4654C00CD9587 /* JGTeamPhotoCollectionViewCell.m */; };
 		82D595EE1CE4654C00CD9587 /* JGTeamPhotoCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 82D595EC1CE4654C00CD9587 /* JGTeamPhotoCollectionViewCell.xib */; };
+		82E6A6E51CF2FDE8009DD179 /* JGLMyTeamViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 82AAB7A91CE57589005F5633 /* JGLMyTeamViewController.m */; };
+		82E6A6EB1CF2FFA3009DD179 /* JGLJoinManageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 82E6A6EA1CF2FFA3009DD179 /* JGLJoinManageViewController.m */; };
 		AA857EE01C5F48AA0034B4C8 /* SelfDataViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA857EDF1C5F48AA0034B4C8 /* SelfDataViewController.m */; };
 		AA91C7861C4201B80078DA17 /* IQButtonBarArrowLeft@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AA91C7821C4201B80078DA17 /* IQButtonBarArrowLeft@2x.png */; };
 		AA91C7871C4201B80078DA17 /* IQButtonBarArrowRight@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AA91C7831C4201B80078DA17 /* IQButtonBarArrowRight@2x.png */; };
@@ -2082,6 +2083,8 @@
 		82D595EA1CE4654C00CD9587 /* JGTeamPhotoCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGTeamPhotoCollectionViewCell.h; sourceTree = "<group>"; };
 		82D595EB1CE4654C00CD9587 /* JGTeamPhotoCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGTeamPhotoCollectionViewCell.m; sourceTree = "<group>"; };
 		82D595EC1CE4654C00CD9587 /* JGTeamPhotoCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JGTeamPhotoCollectionViewCell.xib; sourceTree = "<group>"; };
+		82E6A6E91CF2FFA3009DD179 /* JGLJoinManageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGLJoinManageViewController.h; sourceTree = "<group>"; };
+		82E6A6EA1CF2FFA3009DD179 /* JGLJoinManageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGLJoinManageViewController.m; sourceTree = "<group>"; };
 		AA857EDF1C5F48AA0034B4C8 /* SelfDataViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = SelfDataViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		AA91C7821C4201B80078DA17 /* IQButtonBarArrowLeft@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "IQButtonBarArrowLeft@2x.png"; sourceTree = "<group>"; };
 		AA91C7831C4201B80078DA17 /* IQButtonBarArrowRight@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "IQButtonBarArrowRight@2x.png"; sourceTree = "<group>"; };
@@ -5211,6 +5214,8 @@
 			children = (
 				82AAB7A81CE57589005F5633 /* JGLMyTeamViewController.h */,
 				82AAB7A91CE57589005F5633 /* JGLMyTeamViewController.m */,
+				82E6A6E91CF2FFA3009DD179 /* JGLJoinManageViewController.h */,
+				82E6A6EA1CF2FFA3009DD179 /* JGLJoinManageViewController.m */,
 			);
 			path = "我的球队";
 			sourceTree = "<group>";
@@ -5955,6 +5960,7 @@
 				36DFD9181C0EC1EE004DC690 /* HistoryRightTableViewCell.m in Sources */,
 				36BF01821BC77611005B3CE2 /* YueDetailViewController.m in Sources */,
 				821A130F1CED5F9C00694E49 /* JGLPhotoAlbumModel.m in Sources */,
+				82E6A6E51CF2FDE8009DD179 /* JGLMyTeamViewController.m in Sources */,
 				36BFFF791BC76D09005B3CE2 /* SDWebImageDownloaderOperation.m in Sources */,
 				36DBFD3B1BEF452200CA64D3 /* NearByModel.m in Sources */,
 				36DF09BC1C040B51007A8A4E /* TeamIntroCViewController.m in Sources */,
@@ -6065,12 +6071,12 @@
 				82AAB7AE1CE5BEB8005F5633 /* JGLSelfSetViewController.m in Sources */,
 				36B08F721C2D322600CD660E /* UITableViewRowAction.m in Sources */,
 				3660E1281BFC553A0033B4D7 /* ManageCreateController.m in Sources */,
-				82AAB7AA1CE57589005F5633 /* JGLMyTeamViewController.m in Sources */,
 				36D39B361BCCD8D000C0B197 /* AppraiseModel.m in Sources */,
 				3684FDAD1C4A35F4002A14FC /* TeamInviteTableViewCell.m in Sources */,
 				36BF005E1BC77296005B3CE2 /* MyFootViewController.m in Sources */,
 				362D8A691C1BD547000BA0BE /* ManageMessageViewCell.m in Sources */,
 				36BF00A71BC77326005B3CE2 /* MeselfModel.m in Sources */,
+				82E6A6EB1CF2FFA3009DD179 /* JGLJoinManageViewController.m in Sources */,
 				36BFFFD01BC770B1005B3CE2 /* NewsMessageViewController.m in Sources */,
 				36BF01601BC77611005B3CE2 /* XuanshangViewController.m in Sources */,
 				F5BDF0A11CEC1B750020175A /* JGTeamDetail.m in Sources */,

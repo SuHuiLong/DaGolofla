@@ -29,7 +29,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    
+    _dataArray = [[NSMutableArray alloc]init];
     UIBarButtonItem* rightBtn = [[UIBarButtonItem alloc]initWithTitle:@"保存" style:UIBarButtonItemStylePlain target:self action:@selector(manageClick)];
     rightBtn.tintColor = [UIColor whiteColor];
     self.navigationItem.rightBarButtonItem = rightBtn;
@@ -67,9 +67,10 @@
 - (void)downLoadData:(int)page isReshing:(BOOL)isReshing{
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     
-    [dict setObject:@122 forKey:@"teamKey"];
+    [dict setObject:@181 forKey:@"teamKey"];
+    [dict setObject:@244 forKey:@"userKey"];
     [dict setObject:[NSNumber numberWithInt:page] forKey:@"offset"];
-    [[JsonHttp jsonHttp]httpRequest:@"team/getTeamMemberList" JsonKey:nil withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
+    [[JsonHttp jsonHttp]httpRequest:@"team/getTeamMemberList" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
         if (isReshing) {
             [_tableView.header endRefreshing];
         }else {
@@ -83,7 +84,7 @@
                 [_dataArray removeAllObjects];
             }
             //数据解析
-            for (NSDictionary *dataDic in [data objectForKey:@"teamList"]) {
+            for (NSDictionary *dataDic in [data objectForKey:@"teamMemberList"]) {
                 JGLTeamMemberModel *model = [[JGLTeamMemberModel alloc] init];
                 [model setValuesForKeysWithDictionary:dataDic];
                 [_dataArray addObject:model];
@@ -123,18 +124,15 @@
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 10;
+    return _dataArray.count;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-
     JGMenberTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"JGMenberTableViewCell" forIndexPath:indexPath];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     [cell showData:_dataArray[indexPath.row]];
     return cell;
-
-    
 }
 
 

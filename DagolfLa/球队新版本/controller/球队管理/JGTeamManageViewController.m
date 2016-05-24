@@ -7,6 +7,9 @@
 //
 
 #import "JGTeamManageViewController.h"
+#import "JGLJoinManageViewController.h"
+#import "JGTeamMemberController.h"
+#import "JGTeamPhotoViewController.h"
 
 @interface JGTeamManageViewController ()<UITableViewDelegate, UITableViewDataSource>
 
@@ -66,8 +69,47 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     return 10;
 }
-
-
+-(void)
+tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    //入队审核
+    if (indexPath.section == 0) {
+        JGLJoinManageViewController* joinVc = [[JGLJoinManageViewController alloc]init];
+        [self.navigationController pushViewController:joinVc animated:YES];
+    }
+    else if (indexPath.section == 1)
+    {
+        switch (indexPath.row) {
+            case 0:
+            {
+                //成员管理
+                JGTeamMemberController* menVc = [[JGTeamMemberController alloc]init];
+                [self.navigationController pushViewController:menVc animated:YES];
+            }
+                break;
+            case 1:
+            {
+                
+            }
+                break;
+            case 2:
+            {
+                JGTeamPhotoViewController* phoVc = [[JGTeamPhotoViewController alloc]init];
+                [self.navigationController pushViewController:phoVc animated:YES];
+            }
+                break;
+            default:
+                break;
+        }
+    }
+    else if (indexPath.section == 2)
+    {
+        
+    }
+    else{
+        
+    }
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
