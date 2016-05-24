@@ -23,8 +23,8 @@
     [super viewDidLoad];
     
     
-    _arrayTitle = [NSArray arrayWithObjects:@[@"群名片"],@[@"性别",@"差点",@"手机号码"],@[@"常住地址",@"衣服尺码",@"惯用手"],nil];
-    _arrayDetail = [NSArray arrayWithObjects:@[@"卡卡"],@[@"男",@"27",@"15872205752"],@[@"上海",@"l",@"左手"],nil];
+    _arrayTitle = [NSArray arrayWithObjects:@[@"姓名",@"性别",@"手机号"],@[@"行业",@"单位",@"职位",@"常驻地址",@"衣服尺码",@"惯用手"],nil];
+    _arrayDetail = [NSArray arrayWithObjects:@[@"姓名",@"性别",@"手机号"],@[@"行业",@"单位",@"职位",@"常驻地址",@"衣服尺码",@"惯用手"],nil];
     self.title = @"个人设置";
     UIBarButtonItem* rightBtn = [[UIBarButtonItem alloc]initWithTitle:@"保存" style:UIBarButtonItemStylePlain target:self action:@selector(saveSetClick)];
     self.navigationItem.rightBarButtonItem = rightBtn;
@@ -54,8 +54,12 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (section == 1 || section == 2) {
+    if (section == 0) {
         return 3;
+    }
+    else if (section == 1)
+    {
+        return 6;
     }
     else
     {
@@ -64,12 +68,33 @@
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    return 10*ScreenWidth/375;
+    if (section == 0 || section == 1) {
+        return 30*ScreenWidth/375;
+    }
+    else
+    {
+        return 10*ScreenWidth/375;
+    }
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    if (section == 0) {
+        return @"必填项";
+    }
+    else if (section == 1)
+    {
+        return @"选填项";
+    }
+    else
+    {
+        return nil;
+    }
 }
 
 //指定有多少个分区(Section)，默认为1
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 5;
+    return 4;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -77,7 +102,7 @@
 }
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.section == 0 || indexPath.section == 1 || indexPath.section == 2) {
+    if (indexPath.section == 0 || indexPath.section == 1) {
         JGSelfSetTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"JGSelfSetTableViewCell" forIndexPath:indexPath];
         cell.titleLabel.text = _arrayTitle[indexPath.section][indexPath.row];
         cell.detailLabel.text = _arrayDetail[indexPath.section][indexPath.row];
