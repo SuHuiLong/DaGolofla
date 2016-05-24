@@ -13,8 +13,10 @@
 @interface JGApplyMaterialViewController ()<UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic, strong)UITableView *tableView;
+@property (nonatomic, strong)UITableView *secondTableView;
 @property (nonatomic, strong)NSArray *titleArray;
 @property (nonatomic, strong)NSArray *placeholderArray;
+@property (nonatomic, strong)NSMutableDictionary *paraDic;
 
 @end
 
@@ -28,12 +30,26 @@
     self.navigationItem.rightBarButtonItem = rightBar;
 
     [self creatTableView];
+    
     // Do any additional setup after loading the view.
 }
 
+- (void)creatNewTableView{
+    
+    self.secondTableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
+    [self.tableView registerClass:[JGApplyMaterialTableViewCell class] forCellReuseIdentifier:@"cell"];
+    self.titleArray = [NSArray arrayWithObjects:@[@"姓名", @"性别", @"手机号码"], "行业", @"公司", @"职业",   @"常住地址", @"衣服尺码", @"惯用手", nil];
+    self.placeholderArray = [NSArray arrayWithObjects:@[@"请输入真实姓名", @"请输入性别", @"请输入您的差点", @"请输入手机号" ],@"方便活动邀请（选填）",@"统一制服定做（选填）",@"制定特殊需求（选填）", nil];
+    [self.view addSubview: self.tableView];
+    
+}
+
+
 - (void)complete{
     BOOL isLength = YES;
-
+    NSArray *array = [NSArray arrayWithObjects:@"userName", @"sex", @"almost", @"mobile", nil];
     for (JGApplyMaterialTableViewCell *cell in self.tableView.visibleCells) {
         NSLog(@"%@", cell.textFD.text);
     }
@@ -42,14 +58,44 @@
         if ([cell.textFD.text length] == 0) {
             isLength = NO;
         }else{
+            
+            if (i == 0 || i == 3) {
+                [self.paraDic setObject:cell.textFD.text  forKey:array[i]];
 
+            }else{
+                [self.paraDic setObject:@([cell.textFD.text  integerValue]) forKey:array[i]];
+            }
+            
         }
     }
+    
     if (isLength) {
+       
+//        [self.paraDic setObject:@"911" forKey:@"mobile"];
+//        [self.paraDic setObject:@0 forKey:@"sex"];
+//        [self.paraDic setObject:@0 forKey:@"almost"];
+//        [self.paraDic setObject:@"nyanco" forKey:@"userName"];
+// TEST
+        [self.paraDic setObject:@83 forKey:@"userKey"];
+        
+//        [self.paraDic setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"userId"] forKey:@"userKey"];
+        [self.paraDic setObject:@(self.teamKey) forKey:@"teamKey"];
+        [self.paraDic setObject:@0 forKey:@"state"];
+        [self.paraDic setObject:@"2016-12-11 10:00:00" forKey:@"createTime"];
+        [self.paraDic setObject:@0 forKey:@"timeKey"];
+
+        [[JsonHttp jsonHttp] httpRequest:@"team/reqJoinTeam" JsonKey:@"teamMemeber" withData:self.paraDic requestMethod:@"POST" failedBlock:^(id errType) {
+            NSLog(@"error *** %@", errType);
+        } completionBlock:^(id data) {
+            NSLog(@"%@", data);
+        }];
+        
         [self.navigationController popViewControllerAnimated:YES];
     }else{
         NSLog(@"＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊");
     }
+    
+
 }
 
 - (void)creatTableView{
@@ -94,6 +140,13 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     return 10;
+}
+
+- (NSMutableDictionary *)paraDic{
+    if (!_paraDic) {
+        _paraDic = [[NSMutableDictionary alloc] init];
+    }
+    return _paraDic;
 }
 
 - (void)didReceiveMemoryWarning {

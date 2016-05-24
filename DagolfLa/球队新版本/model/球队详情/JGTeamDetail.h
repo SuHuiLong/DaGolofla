@@ -29,5 +29,7 @@
 @property (nonatomic, copy) NSString *answerName; // 回答咨询人姓名
 @property (nonatomic, assign) NSInteger answerKey; // 回答咨询人用户key
 
+
+
 @property (nonatomic, strong)JGTeamDetail *detailModel;
 @end

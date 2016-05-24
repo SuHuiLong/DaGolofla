@@ -14,16 +14,22 @@
 #import "UIScrollView+MJRefresh.h"
 #import "JGTeamChannelTableViewCell.h"
 #import "JGTeamChannelTableView.h"
+#import <CoreLocation/CoreLocation.h>
+#import "JGTeamDetail.h"
+#import "JGTeamDetailViewController.h"
 
-@interface JGTeamMainhallViewController ()<UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate,UISearchResultsUpdating>
+@interface JGTeamMainhallViewController ()<UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate,UISearchResultsUpdating,CLLocationManagerDelegate>
 
 @property (strong, nonatomic) UITableView *tableView;
 @property (nonatomic, strong) UISearchController *searchController;
 @property (strong, nonatomic) NSMutableArray *searchArray;
 @property (nonatomic, strong) NSMutableDictionary *paraDic;
 @property (assign, nonatomic) int page;
+@property (strong, nonatomic) CLLocationManager* locationManager;
+@property (strong, nonatomic) NSMutableArray *modelArray;
 
 @end
+
 
 @implementation JGTeamMainhallViewController
 
@@ -60,7 +66,69 @@
     self.searchController.searchBar.placeholder = @"输入球队昵称搜索";
     self.tableView.tableHeaderView = self.searchController.searchBar;
     
+    [self getData];
     // Do any additional setup after loading the view.
+}
+
+
+- (void)getData{
+    
+    [[JsonHttp jsonHttp] httpRequest:@"team/getTeamList" JsonKey:nil withData:self.paraDic requestMethod:@"GET" failedBlock:^(id errType) {
+        NSLog(@"error");
+    } completionBlock:^(id data) {
+        NSLog(@"%@", data);
+        self.modelArray = [data objectForKey:@"teamList"];
+        [self.tableView reloadData];
+//        for (NSDictionary *Dic in dataArray) {
+//            JGTeamDetail *model = [[JGTeamDetail alloc] init];
+//            [model setValuesForKeysWithDictionary:Dic];
+//            [self.modelArray addObject:model];
+//        }
+    }];
+    
+}
+
+
+-(void)getCurPosition{
+    
+    if (_locationManager==nil) {
+        _locationManager=[[CLLocationManager alloc] init];
+    }
+    if ([CLLocationManager locationServicesEnabled]) {
+        _locationManager.delegate=self;
+        _locationManager.desiredAccuracy=kCLLocationAccuracyBest;
+        _locationManager.distanceFilter=10.0f;
+        if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0)
+        {
+            [_locationManager requestWhenInUseAuthorization];  //调用了这句,就会弹出允许框了.
+        }
+        [_locationManager startUpdatingLocation];
+    }
+}
+
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
+{
+    CLLocation *currLocation = [locations lastObject];
+    //NSLog(@"经度=%f 纬度=%f 高度=%f", currLocation.coordinate.latitude, currLocation.coordinate.longitude, currLocation.altitude);
+    NSUserDefaults *user=[NSUserDefaults standardUserDefaults];
+    [self.paraDic setObject:[NSNumber numberWithFloat:currLocation.coordinate.latitude] forKey:@"likeName"];
+    [user setObject:[NSNumber numberWithFloat:currLocation.coordinate.latitude] forKey:@"lat"];
+    [user setObject:[NSNumber numberWithFloat:currLocation.coordinate.longitude] forKey:@"lng"];
+    [_locationManager stopUpdatingLocation];
+    [user synchronize];
+}
+
+- (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
+{
+    if ([error code] == kCLErrorDenied)
+    {
+        //访问被拒绝
+        //NSLog(@"访问被拒绝");
+    }
+    if ([error code] == kCLErrorLocationUnknown) {
+        //无法获取位置信息
+        //NSLog(@"无法获取位置信息");
+    }
 }
 
 
@@ -70,7 +138,7 @@
         return [self.searchArray count];
     }else{
         self.tableView.footer = nil;
-        return 2;
+        return [self.modelArray count];
     }
 }
 
@@ -81,15 +149,17 @@
 
     if (!self.searchController.active || [self.searchArray count] == 0) {
         
-        cell.nameLabel.text = @"nameLB";
-        cell.adressLabel.text = @"测试数据 Test";
+        cell.nameLabel.text = [self.modelArray[indexPath.row] objectForKey:@"name"];
+        cell.adressLabel.text = [self.modelArray[indexPath.row] objectForKey:@"crtyName"];
+        cell.describLabel.text = [self.modelArray[indexPath.row] objectForKey:@"info"];;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
         return cell;
     }else{
-        
-        cell.nameLabel.text = @"nameLB";
-        cell.adressLabel.text = @"测试数据 Test";
+        // TEST
+        cell.nameLabel.text = [self.modelArray[indexPath.row] objectForKey:@"name"];
+        cell.adressLabel.text = [self.modelArray[indexPath.row] objectForKey:@"crtyName"];
+        cell.describLabel.text = [self.modelArray[indexPath.row] objectForKey:@"info"];;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
         return cell;
@@ -106,10 +176,9 @@
     NSString *searchString = [self.searchController.searchBar text];
     //    NSPredicate *preicate = [NSPredicate predicateWithFormat:@"SELF CONTAINS[c] %@", searchString];
     _page = 1;
-    [self.paraDic setObject:[NSNumber numberWithInt:_page] forKey:@"page"];
-    [self.paraDic setObject:@10 forKey:@"rows"];
-    [self.paraDic setObject:searchString forKey:@"searchStr"];
-    [self.paraDic setObject:[[NSUserDefaults standardUserDefaults]objectForKey:@"userId"] forKey:@"userId"];
+    [self.paraDic setObject:[NSNumber numberWithInt:_page] forKey:@"offset"];
+    [self.paraDic setObject:searchString forKey:@"likeName"];
+//    [self.paraDic setObject:[[NSUserDefaults standardUserDefaults]objectForKey:@"userId"] forKey:@"userId"];
     if ([searchString length] > 0) {
         [[PostDataRequest sharedInstance] postDataRequest:@"user/searchTuser.do" parameter:self.paraDic success:^(id respondsData) {
             NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:respondsData options:NSJSONReadingMutableContainers error:nil];
@@ -172,6 +241,11 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    
+    JGTeamDetailViewController *teamDetailVC = [[JGTeamDetailViewController alloc] init];
+    teamDetailVC.teamDetailDic = self.modelArray[indexPath.row];
+    [self.navigationController  pushViewController:teamDetailVC animated:YES];
+    
 //    if (self.searchController.active == NO) {
 //        if (indexPath.row == 1) {
 //            RecomeFriendViewController* reVc = [[RecomeFriendViewController alloc]init];
@@ -214,6 +288,14 @@
     }];
     
 }
+
+- (NSMutableArray *)modelArray{
+    if (!_modelArray) {
+        _modelArray = [[NSMutableArray alloc] init];
+    }
+    return _modelArray;
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

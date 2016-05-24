@@ -31,6 +31,7 @@
     
     self.creatTeamV = [[JGCreateTeamView alloc] initWithFrame:self.view.bounds];
     [self.view addSubview:self.creatTeamV];
+    [self.paraDic setObject:@1 forKey:@"check"];
     [self.creatTeamV.previewBtn addTarget:self action:@selector(preview) forControlEvents:(UIControlEventTouchUpInside)];
     [self.creatTeamV.addIconBtn addTarget:self action:@selector(usePhonePhotoAndCamera) forControlEvents:(UIControlEventTouchUpInside)];
     
@@ -40,7 +41,7 @@
     [areaBtn addTarget:self action:@selector(area:) forControlEvents:(UIControlEventTouchUpInside)];
     [self.creatTeamV.teamIntroduBtn addTarget:self action:@selector(intro) forControlEvents:(UIControlEventTouchUpInside)];
     [self.creatTeamV.examineSWt addTarget:self action:@selector(isExamine) forControlEvents:(UIControlEventTouchUpInside)];
-    [self.paraDic setObject:@1 forKey:@"check"];
+    [self.paraDic setObject:@0 forKey:@"check"];
 //    for (NSInteger i = 0; i < 2; i ++) {
 //        UITextField *tF = [self.creatTeamV viewWithTag:232 + i];
 //        [tF addTarget:self action:@selector(nameAndphone:) forControlEvents:(UIControlEventTouchUpInside)];
@@ -119,8 +120,8 @@
     [self.paraDic setObject:@"iOS" forKey:@"createUserName"];
 
     [self.paraDic setObject:@"AAA" forKey:@"notice"];
-    
-    [self.paraDic setObject:@244 forKey:@"createUserKey"];
+    NSUserDefaults *user=[NSUserDefaults standardUserDefaults];
+    [self.paraDic setObject:[user objectForKey:@"userId"] forKey:@"createUserKey"];
    
     self.teamDetailModel.check = 0;
 

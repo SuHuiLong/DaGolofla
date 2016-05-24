@@ -26,6 +26,7 @@
         self.nameLabel.font = [UIFont systemFontOfSize:15 * screenWidth / 320];
         [self.contentView addSubview:self.nameLabel];
         
+        UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
         self.adressLabel = [[UILabel alloc] initWithFrame:CGRectMake(90 * screenWidth / 320, 30 * screenWidth / 320, screenWidth - 90 * screenWidth / 320, 20 * screenWidth / 320)];
         self.adressLabel.textColor = [UIColor lightGrayColor];
         self.adressLabel.font = [UIFont systemFontOfSize:12 * screenWidth / 320];
