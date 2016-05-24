@@ -13,6 +13,7 @@
 #import "JGAddTeamGuestViewController.h"
 #import "JGInvoiceViewController.h"
 #import "JGTeamGroupViewController.h"
+#import "JGTeamAcitivtyModel.h"
 
 static NSString *const JGActivityNameBaseCellIdentifier = @"JGActivityNameBaseCell";
 static NSString *const JGTableViewCellIdentifier = @"JGTableViewCell";
@@ -23,13 +24,37 @@ static NSString *const JGApplyPepoleCellIdentifier = @"JGApplyPepoleCell";
     UIAlertController *_actionView;
 }
 
+@property (strong, nonatomic)JGTeamAcitivtyModel *model;//数据模型
+
+@property (nonatomic, strong)NSArray *titleArray;//标题
+
+@property (nonatomic, strong)NSMutableArray *applyArray;//成员数组--添加成员字典
+
+@property (nonatomic, strong)NSMutableDictionary *info;
+
 @end
 
 @implementation JGTeamApplyViewController
 
+- (instancetype)init{
+    if (self == [super init]) {
+        self.model = [[JGTeamAcitivtyModel alloc]init];
+        self.applyArray = [NSMutableArray array];
+        self.info = [NSMutableDictionary dictionary];
+    }
+    return self;
+}
+
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:YES];
+    self.navigationController.navigationBarHidden = NO;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationItem.title = @"报名缴费";
+    
+    self.titleArray = @[@"活动名称", @"活动地址", @"活动日期", @"活动费用", @"嘉宾费用"];
     //注册cell
     UINib *activityNameNib = [UINib nibWithNibName:@"JGActivityNameBaseCell" bundle: [NSBundle mainBundle]];
     [self.teamApplyTableView registerNib:activityNameNib forCellReuseIdentifier:JGActivityNameBaseCellIdentifier];
@@ -39,11 +64,30 @@ static NSString *const JGApplyPepoleCellIdentifier = @"JGApplyPepoleCell";
     
     UINib *applyPepoleNib = [UINib nibWithNibName:@"JGApplyPepoleCell" bundle: [NSBundle mainBundle]];
     [self.teamApplyTableView registerNib:applyPepoleNib forCellReuseIdentifier:JGApplyPepoleCellIdentifier];
+    
+//    [self loadData];
+}
+
+- (void)loadData{
+    NSUserDefaults *userdf = [NSUserDefaults standardUserDefaults];
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    [dict setObject:@"244" forKey:userID];
+    [dict setObject:self.activityKey forKey:@"activityKey"];
+    [[JsonHttp jsonHttp]httpRequest:@"team/getTeamActivity" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
+        NSLog(@"errType == %@", errType);
+    } completionBlock:^(id data) {
+        NSLog(@"data == %@", data);
+        NSMutableDictionary *datadict = [NSMutableDictionary dictionary];
+        datadict = [data objectForKey:@"activity"];
+        [self.model setValuesForKeysWithDictionary:datadict];
+        
+        [self.teamApplyTableView reloadData];
+    }];
 }
 #pragma mark -- tableView 代理
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     if (section == 0) {
-        return 4;
+        return 5;
     }
     return 1;
 }
@@ -75,13 +119,15 @@ static NSString *const JGApplyPepoleCellIdentifier = @"JGApplyPepoleCell";
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 0) {
         JGTableViewCell *tableCell = [tableView dequeueReusableCellWithIdentifier:JGTableViewCellIdentifier forIndexPath:indexPath];
+        [tableCell configTitlesString:self.titleArray[indexPath.row]];
+        [tableCell configJGTeamAcitivtyModel:self.model andIndecPath:indexPath];
         tableCell.selectionStyle = UITableViewCellSelectionStyleNone;
         return tableCell;
     }else if (indexPath.section == 1){
         JGApplyPepoleCell *applyPepoleCell = [tableView dequeueReusableCellWithIdentifier:JGApplyPepoleCellIdentifier forIndexPath:indexPath];
         applyPepoleCell.delegate = self;
         applyPepoleCell.guestList.text = @"绝代风华\n哈哈哈\n嘿嘿嘿\n鸡尾酒\n贝多芬";
-
+        
         applyPepoleCell.selectionStyle = UITableViewCellSelectionStyleNone;
         return applyPepoleCell;
     }else{
@@ -123,7 +169,19 @@ static NSString *const JGApplyPepoleCellIdentifier = @"JGApplyPepoleCell";
 }
 #pragma mark -- 现场付款
 - (IBAction)scenePayBtnClick:(UIButton *)sender {
-    
+    JGTeamGroupViewController *groupCtrl = [[JGTeamGroupViewController alloc]init];
+    [self.navigationController pushViewController:groupCtrl animated:YES];
+}
+#pragma mark -- 提交报名信息
+- (void)submitInfo{
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    [dict setObject:_applyArray forKey:@"teamSignUpList"];//报名人员数组
+    [dict setObject:_info forKey:@"info"];
+    [[JsonHttp jsonHttp]httpRequest:@"team/doTeamActivitySignUp" JsonKey:nil withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
+        NSLog(@"errType == %@", errType);
+    } completionBlock:^(id data) {
+        NSLog(@"data == %@", data);
+    }];
 }
 #pragma mark -- 添加嘉宾
 - (void)addApplyPeopleClick{

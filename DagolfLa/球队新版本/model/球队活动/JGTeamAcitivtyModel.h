@@ -11,27 +11,25 @@
 @interface JGTeamAcitivtyModel : BaseModel
 
 //活动列表标题
-@property (strong, nonatomic) NSString *name;
+@property (copy, nonatomic) NSString *name;
 //活动是否结束 0 : 开始 , 1 : 已结束
 @property (assign, nonatomic) NSInteger isClose;
-//活动id －－
-@property (assign, nonatomic) NSInteger teamActivityKey;//徐东东确认删除
 //活动id
-@property (assign, nonatomic) NSInteger timeKey;
+@property (copy, nonatomic) NSString *timeKey;
 //球队id
 @property (assign, nonatomic) NSInteger teamKey;
 //ts
-@property (assign, nonatomic) NSInteger ts;
+@property (copy, nonatomic) NSString *ts;
 //用户id
 @property (assign, nonatomic) NSInteger userKey;
 //创建时间
 @property (assign, nonatomic) NSInteger createTime;
 //开始时间
-@property (assign, nonatomic) NSInteger beginDate;
+@property (copy, nonatomic) NSString *beginDate;
 //结束时间
-@property (assign, nonatomic) NSInteger endDate;
+@property (copy, nonatomic) NSString *endDate;
 //地区
-@property (strong, nonatomic) NSString *ballName;
+@property (copy, nonatomic) NSString *ballName;
 //报名人数
 @property (assign, nonatomic) NSInteger sumCount;
 //会员价
