@@ -116,7 +116,7 @@
 - (void)setData{
     
     NSMutableDictionary *getMyTeam = [NSMutableDictionary dictionary];
-    [getMyTeam setObject:@244 forKey:@"userKey"];
+    [getMyTeam setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"userId"] forKey:@"userKey"];
     [getMyTeam setObject:@192 forKey:@"teamKey"];
     [getMyTeam setValue:@0 forKey:@"offset"];
     [[JsonHttp jsonHttp] httpRequest:@"team/getMyTeamList" JsonKey:nil withData:getMyTeam requestMethod:@"GET" failedBlock:^(id errType) {
