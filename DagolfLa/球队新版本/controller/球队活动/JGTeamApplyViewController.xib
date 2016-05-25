@@ -20,7 +20,7 @@
             <subviews>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="grouped" separatorStyle="none" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="x4j-CI-6bl">
                     <rect key="frame" x="0.0" y="0.0" width="600" height="556"/>
-                    <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                    <color key="backgroundColor" red="0.91764705882352937" green="0.91764705882352937" blue="0.92156862745098034" alpha="1" colorSpace="calibratedRGB"/>
                     <connections>
                         <outlet property="dataSource" destination="-1" id="Ith-ku-UvV"/>
                         <outlet property="delegate" destination="-1" id="V45-rB-upT"/>
@@ -28,17 +28,22 @@
                 </tableView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PsX-f3-PPu">
                     <rect key="frame" x="0.0" y="556" width="300" height="44"/>
-                    <state key="normal" title="现场支付"/>
+                    <state key="normal" title="现场支付">
+                        <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
                     <connections>
                         <action selector="scenePayBtnClick:" destination="-1" eventType="touchUpInside" id="l6G-wv-4Jx"/>
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="huT-MD-A4w">
                     <rect key="frame" x="300" y="556" width="300" height="44"/>
+                    <color key="backgroundColor" red="0.89411764709999997" green="0.2901960784" blue="0.027450980390000001" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="44" id="msW-71-NKb"/>
                     </constraints>
-                    <state key="normal" title="立刻付款"/>
+                    <state key="normal" title="立刻付款">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
                     <connections>
                         <action selector="nowPayBtnClick:" destination="-1" eventType="touchUpInside" id="Z0g-87-U33"/>
                     </connections>

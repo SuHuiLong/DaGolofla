@@ -46,7 +46,7 @@
 
 - (void)setTeamModel:(JGTeamDetail *)teamModel{
     self.nameLabel.text = teamModel.name;
-    self.adressLabel.text = teamModel.crtyName;
+    self.adressLabel.text = teamModel.cityName;
     self.describLabel.text = teamModel.info;        // 球队介绍
 }
 

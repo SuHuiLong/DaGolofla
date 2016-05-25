@@ -8,9 +8,9 @@
 
 #import "JGHTeamContactTableViewCell.h"
 
-@interface JGHTeamContactTableViewCell ()<UITextViewDelegate>
-
-@end
+//@interface JGHTeamContactTableViewCell ()<UITextViewDelegate>
+//
+//@end
 
 @implementation JGHTeamContactTableViewCell
 
@@ -24,12 +24,16 @@
 
     // Configure the view for the selected state
 }
-
-- (void)textViewDidEndEditing:(UITextView *)textView{
-    
-    if (self.delegate) {
-        [self.delegate inputTextString:textView.text];
-    }
-}
+//
+//- (void)textViewDidEndEditing:(UITextView *)textView{
+//    
+//    if (self.delegate) {
+//        [self.delegate inputTextString:textView.text];
+//    }
+//}
+//
+//- (void)textViewDidBeginEditing:(UITextView *)textView{
+//    NSLog(@"qqqq");
+//}
 
 @end

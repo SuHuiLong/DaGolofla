@@ -39,18 +39,14 @@
                     <constraint firstItem="t0j-QG-XY6" firstAttribute="leading" secondItem="B6N-97-idM" secondAttribute="trailing" constant="5" id="Ao0-bd-xR0"/>
                     <constraint firstItem="t0j-QG-XY6" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="CyW-Ls-R0S"/>
                     <constraint firstItem="MBb-6c-PEW" firstAttribute="leading" secondItem="t0j-QG-XY6" secondAttribute="trailing" constant="20" id="LuO-iL-1ZY"/>
-                    <constraint firstItem="B6N-97-idM" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="bsb-ue-48M"/>
                     <constraint firstItem="B6N-97-idM" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="hY0-Dq-0W4"/>
                     <constraint firstItem="MBb-6c-PEW" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="z1V-f4-BeW"/>
                 </constraints>
-                <variation key="default">
-                    <mask key="constraints">
-                        <exclude reference="bsb-ue-48M"/>
-                    </mask>
-                </variation>
             </tableViewCellContentView>
             <connections>
-                <outlet property="contactLabel" destination="MBb-6c-PEW" id="5Rx-30-6sa"/>
+                <outlet property="contactLabel" destination="t0j-QG-XY6" id="fNU-GW-JpH"/>
+                <outlet property="headImage" destination="B6N-97-idM" id="Kb3-ug-hql"/>
+                <outlet property="tetfileView" destination="MBb-6c-PEW" id="GH6-zA-Exv"/>
             </connections>
         </tableViewCell>
     </objects>
