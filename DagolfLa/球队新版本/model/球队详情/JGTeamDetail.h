@@ -13,7 +13,7 @@
 
 @property (nonatomic, copy) NSString *name; // 球队名称
 @property (nonatomic, copy) NSDate *createtime;
-@property (nonatomic, copy) NSString *crtyName;
+@property (nonatomic, copy) NSString *cityName;
 @property (nonatomic, copy) NSString *info; // 球队介绍
 @property (nonatomic, copy) NSString *notice; // 球队公告
 @property (nonatomic, copy) NSString *money; //球队会费
@@ -28,8 +28,8 @@
 @property (nonatomic, copy) NSString *geohash; // 坐标信息
 @property (nonatomic, copy) NSString *answerName; // 回答咨询人姓名
 @property (nonatomic, assign) NSInteger answerKey; // 回答咨询人用户key
-
-
+@property (nonatomic, assign) NSInteger userSum; // 球队总人数
+@property (nonatomic, assign) NSInteger timeKey;
 
 @property (nonatomic, strong)JGTeamDetail *detailModel;
 @end

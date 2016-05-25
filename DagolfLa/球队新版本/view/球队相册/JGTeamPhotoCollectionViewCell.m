@@ -20,7 +20,7 @@
     //图片规则未定
     _timeLabel.text = [NSString stringWithFormat:@"%@",model.createTime];
     
-    _nameLabel.text = [NSString stringWithFormat:@"%@",model.groupsName];
+    _nameLabel.text = [NSString stringWithFormat:@"%@",model.name];
 }
 
 

@@ -11,7 +11,7 @@
 #import "YueDetailModel.h"
 #import "TeamJoinModel.h"
 
-#import "JGLTeamMemberModel.h"
+//#import "JGLTeamMemberModel.h"
 @interface TeamApplyViewCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UIImageView *iconImage;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
@@ -29,7 +29,7 @@
 @property (strong, nonatomic) NSNumber* ballId;
 -(void)showYueDetail:(YueDetailModel *)model;
 
--(void)showManage:(JGLTeamMemberModel *)model;
+//-(void)showManage:(JGLTeamMemberModel *)model;
 
 @property (copy, nonatomic) void(^callBackData)();
 @end

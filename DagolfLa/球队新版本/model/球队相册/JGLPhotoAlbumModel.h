@@ -28,7 +28,7 @@
 
 @property (strong, nonatomic) NSNumber* createTime;
 
-@property (strong, nonatomic) NSString* groupsName;
+@property (strong, nonatomic) NSString* name;
 
 @property (strong, nonatomic) NSNumber* photoNums;
 

@@ -74,14 +74,16 @@ static NSString *const NotificationName = @"AFNetworkReachabilityStatusReachable
     UIBarButtonItem *leftItem = [[UIBarButtonItem alloc]initWithCustomView:btn];
     self.navigationItem.leftBarButtonItem = leftItem;
 }
+
+#pragma mark ---  分享
 - (void)initItemsBtnClick:(UIButton *)btn{
-    if (self.delegate) {
-        [self.delegate closeVideo];
-    }
-    
-    [self dismissViewControllerAnimated:YES completion:^{
-        
-    }];
+//    if (self.delegate) {
+//        [self.delegate closeVideo];
+//    }
+//    
+//    [self dismissViewControllerAnimated:YES completion:^{
+//        
+//    }];
 }
 - (void)_initRightItems
 {

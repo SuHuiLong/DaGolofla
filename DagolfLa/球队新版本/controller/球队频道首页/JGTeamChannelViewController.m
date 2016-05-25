@@ -22,6 +22,8 @@
 #import "JGTeamDetail.h"
 #import "JGTeamActivityCell.h"
 #import "JGTeamActibityNameViewController.h"
+#import "JGNotTeamMemberDetailViewController.h"
+#import "JGNewCreateTeamTableViewController.h"
 
 
 @interface JGTeamChannelViewController ()<UITableViewDataSource, UITableViewDelegate>
@@ -147,11 +149,24 @@
             self.titleLB.text = @" 推荐球队";
             NSUserDefaults *user=[NSUserDefaults standardUserDefaults];
             NSMutableDictionary *dic = [NSMutableDictionary dictionary];
-            [dic setObject:[user objectForKey:@"lng"] forKey:@"longitude"];
-            [dic setObject:[user objectForKey:@"lat"] forKey:@"latitude"];
+            if ([user objectForKey:@"lng"]) {
+                [dic setObject:[user objectForKey:@"lng"] forKey:@"longitude"];
+            }
+            else
+            {
+                [dic setObject:@121.605072 forKey:@"longitude"];
+            }
+            
+            if ([user objectForKey:@"lat"]) {
+                [dic setObject:[user objectForKey:@"lat"] forKey:@"latitude"];
+            }
+            else
+            {
+                [dic setObject:@31.156063 forKey:@"latitude"];
+            }
             [dic setValue:@0 forKey:@"offset"];
             [[JsonHttp jsonHttp] httpRequest:@"team/getTeamList" JsonKey:nil withData:dic requestMethod:@"GET" failedBlock:^(id errType) {
-                NSLog(@"getTeamList ***** error");
+                NSLog(@"getTeamList ***** error%@",errType);
             } completionBlock:^(id data) {
                 
                 for (NSDictionary *dicModel in data[@"teamList"]) {
@@ -178,7 +193,7 @@
 
 - (void)creatTeam{
     
-    JGCreateTeamViewController *creatteamVc = [[JGCreateTeamViewController alloc] init];
+    JGNewCreateTeamTableViewController *creatteamVc = [[JGNewCreateTeamTableViewController alloc] init];
     [self.navigationController pushViewController:creatteamVc animated:YES];
     
 }
@@ -244,13 +259,14 @@
         
     }else{
         
-        if (indexPath.row == 0) {
-            JGTeamDetailStylelTwoViewController *detailV = [[JGTeamDetailStylelTwoViewController alloc] init];
+//        if (indexPath.row == 0) {
+            JGNotTeamMemberDetailViewController *detailV = [[JGNotTeamMemberDetailViewController alloc] init];
+            detailV.detailModel = self.teamArray[indexPath.row];
             [self.navigationController pushViewController:detailV animated:YES];
-        }else{
-            JGTeamDetailViewController *detailVC = [[JGTeamDetailViewController alloc] init];
-            [self.navigationController pushViewController:detailVC animated:YES];
-        }
+//        }else{
+//            JGTeamDetailViewController *detailVC = [[JGTeamDetailViewController alloc] init];
+//            [self.navigationController pushViewController:detailVC animated:YES];
+//        }
     }
 }
 

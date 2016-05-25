@@ -811,6 +811,13 @@
 		82D595EE1CE4654C00CD9587 /* JGTeamPhotoCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 82D595EC1CE4654C00CD9587 /* JGTeamPhotoCollectionViewCell.xib */; };
 		82E6A6E51CF2FDE8009DD179 /* JGLMyTeamViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 82AAB7A91CE57589005F5633 /* JGLMyTeamViewController.m */; };
 		82E6A6EB1CF2FFA3009DD179 /* JGLJoinManageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 82E6A6EA1CF2FFA3009DD179 /* JGLJoinManageViewController.m */; };
+		82E6A6F21CF55313009DD179 /* JGLTeamAdviceTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 82E6A6F11CF55313009DD179 /* JGLTeamAdviceTableViewCell.m */; };
+		82E6A6F61CF5812C009DD179 /* JGLAuthorityTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 82E6A6F41CF5812C009DD179 /* JGLAuthorityTableViewCell.m */; };
+		82E6A6F71CF5812C009DD179 /* JGLAuthorityTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 82E6A6F51CF5812C009DD179 /* JGLAuthorityTableViewCell.xib */; };
+		82E6A6FE1CF58C9A009DD179 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 82E6A6FD1CF58C9A009DD179 /* libsqlite3.0.tbd */; };
+		82E6A7071CF59F2E009DD179 /* ApiXml.mm in Sources */ = {isa = PBXBuildFile; fileRef = 82E6A7021CF59F2E009DD179 /* ApiXml.mm */; };
+		82E6A7081CF59F2E009DD179 /* payRequsestHandler.mm in Sources */ = {isa = PBXBuildFile; fileRef = 82E6A7041CF59F2E009DD179 /* payRequsestHandler.mm */; };
+		82E6A7091CF59F2E009DD179 /* WXUtil.mm in Sources */ = {isa = PBXBuildFile; fileRef = 82E6A7061CF59F2E009DD179 /* WXUtil.mm */; };
 		AA857EE01C5F48AA0034B4C8 /* SelfDataViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA857EDF1C5F48AA0034B4C8 /* SelfDataViewController.m */; };
 		AA91C7861C4201B80078DA17 /* IQButtonBarArrowLeft@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AA91C7821C4201B80078DA17 /* IQButtonBarArrowLeft@2x.png */; };
 		AA91C7871C4201B80078DA17 /* IQButtonBarArrowRight@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AA91C7831C4201B80078DA17 /* IQButtonBarArrowRight@2x.png */; };
@@ -825,6 +832,12 @@
 		F52A49E51C969F79002A4973 /* ScreenTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F52A49E41C969F79002A4973 /* ScreenTableViewCell.m */; };
 		F5321AEA1CE449C400CAE1EF /* JGCreateTeamView.m in Sources */ = {isa = PBXBuildFile; fileRef = F5321AE91CE449C400CAE1EF /* JGCreateTeamView.m */; };
 		F543ACB81CF3F89400C6B111 /* JGButtonTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F543ACB71CF3F89400C6B111 /* JGButtonTableViewCell.m */; };
+		F543ACC11CF4246000C6B111 /* JGNotTeamMemberDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F543ACC01CF4246000C6B111 /* JGNotTeamMemberDetailViewController.m */; };
+		F543ACC41CF4269D00C6B111 /* JGLableAndLableTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F543ACC31CF4269D00C6B111 /* JGLableAndLableTableViewCell.m */; };
+		F543ACC71CF42E1200C6B111 /* JGDisplayInfoTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F543ACC61CF42E1200C6B111 /* JGDisplayInfoTableViewCell.m */; };
+		F543ACCA1CF476D400C6B111 /* JGNewCreateTeamTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F543ACC91CF476D400C6B111 /* JGNewCreateTeamTableViewController.m */; };
+		F55597221CF5328C00F33099 /* JGPreviewTeamViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F55597211CF5328C00F33099 /* JGPreviewTeamViewController.m */; };
+		F55597251CF53FF900F33099 /* JGTeamMemberORManagerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F55597241CF53FF900F33099 /* JGTeamMemberORManagerViewController.m */; };
 		F566EFAB1CA0F01B008BB328 /* InformSetmodel.m in Sources */ = {isa = PBXBuildFile; fileRef = F566EFAA1CA0F01B008BB328 /* InformSetmodel.m */; };
 		F569A13F1CE35A9C00CD0FD5 /* JGTeamChannelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F569A13B1CE35A9C00CD0FD5 /* JGTeamChannelViewController.m */; };
 		F569A1401CE35A9C00CD0FD5 /* JGTeamDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F569A13E1CE35A9C00CD0FD5 /* JGTeamDetailViewController.m */; };
@@ -2116,6 +2129,21 @@
 		82D595EC1CE4654C00CD9587 /* JGTeamPhotoCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JGTeamPhotoCollectionViewCell.xib; sourceTree = "<group>"; };
 		82E6A6E91CF2FFA3009DD179 /* JGLJoinManageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGLJoinManageViewController.h; sourceTree = "<group>"; };
 		82E6A6EA1CF2FFA3009DD179 /* JGLJoinManageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGLJoinManageViewController.m; sourceTree = "<group>"; };
+		82E6A6F01CF55313009DD179 /* JGLTeamAdviceTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGLTeamAdviceTableViewCell.h; sourceTree = "<group>"; };
+		82E6A6F11CF55313009DD179 /* JGLTeamAdviceTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGLTeamAdviceTableViewCell.m; sourceTree = "<group>"; };
+		82E6A6F31CF5812B009DD179 /* JGLAuthorityTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGLAuthorityTableViewCell.h; sourceTree = "<group>"; };
+		82E6A6F41CF5812C009DD179 /* JGLAuthorityTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGLAuthorityTableViewCell.m; sourceTree = "<group>"; };
+		82E6A6F51CF5812C009DD179 /* JGLAuthorityTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JGLAuthorityTableViewCell.xib; sourceTree = "<group>"; };
+		82E6A6F91CF58BAE009DD179 /* libWeChatSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWeChatSDK.a; sourceTree = "<group>"; };
+		82E6A6FA1CF58BAE009DD179 /* WXApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApi.h; sourceTree = "<group>"; };
+		82E6A6FB1CF58BAE009DD179 /* WXApiObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApiObject.h; sourceTree = "<group>"; };
+		82E6A6FD1CF58C9A009DD179 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
+		82E6A7011CF59F2E009DD179 /* ApiXml.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApiXml.h; sourceTree = "<group>"; };
+		82E6A7021CF59F2E009DD179 /* ApiXml.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ApiXml.mm; sourceTree = "<group>"; };
+		82E6A7031CF59F2E009DD179 /* payRequsestHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = payRequsestHandler.h; sourceTree = "<group>"; };
+		82E6A7041CF59F2E009DD179 /* payRequsestHandler.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = payRequsestHandler.mm; sourceTree = "<group>"; };
+		82E6A7051CF59F2E009DD179 /* WXUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXUtil.h; sourceTree = "<group>"; };
+		82E6A7061CF59F2E009DD179 /* WXUtil.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = WXUtil.mm; sourceTree = "<group>"; };
 		AA857EDF1C5F48AA0034B4C8 /* SelfDataViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = SelfDataViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		AA91C7821C4201B80078DA17 /* IQButtonBarArrowLeft@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "IQButtonBarArrowLeft@2x.png"; sourceTree = "<group>"; };
 		AA91C7831C4201B80078DA17 /* IQButtonBarArrowRight@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "IQButtonBarArrowRight@2x.png"; sourceTree = "<group>"; };
@@ -2139,6 +2167,18 @@
 		F5321AE91CE449C400CAE1EF /* JGCreateTeamView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGCreateTeamView.m; sourceTree = "<group>"; };
 		F543ACB61CF3F89400C6B111 /* JGButtonTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGButtonTableViewCell.h; sourceTree = "<group>"; };
 		F543ACB71CF3F89400C6B111 /* JGButtonTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGButtonTableViewCell.m; sourceTree = "<group>"; };
+		F543ACBF1CF4246000C6B111 /* JGNotTeamMemberDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGNotTeamMemberDetailViewController.h; sourceTree = "<group>"; };
+		F543ACC01CF4246000C6B111 /* JGNotTeamMemberDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGNotTeamMemberDetailViewController.m; sourceTree = "<group>"; };
+		F543ACC21CF4269D00C6B111 /* JGLableAndLableTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGLableAndLableTableViewCell.h; sourceTree = "<group>"; };
+		F543ACC31CF4269D00C6B111 /* JGLableAndLableTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGLableAndLableTableViewCell.m; sourceTree = "<group>"; };
+		F543ACC51CF42E1200C6B111 /* JGDisplayInfoTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGDisplayInfoTableViewCell.h; sourceTree = "<group>"; };
+		F543ACC61CF42E1200C6B111 /* JGDisplayInfoTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGDisplayInfoTableViewCell.m; sourceTree = "<group>"; };
+		F543ACC81CF476D400C6B111 /* JGNewCreateTeamTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGNewCreateTeamTableViewController.h; sourceTree = "<group>"; };
+		F543ACC91CF476D400C6B111 /* JGNewCreateTeamTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGNewCreateTeamTableViewController.m; sourceTree = "<group>"; };
+		F55597201CF5328C00F33099 /* JGPreviewTeamViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGPreviewTeamViewController.h; sourceTree = "<group>"; };
+		F55597211CF5328C00F33099 /* JGPreviewTeamViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGPreviewTeamViewController.m; sourceTree = "<group>"; };
+		F55597231CF53FF900F33099 /* JGTeamMemberORManagerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGTeamMemberORManagerViewController.h; sourceTree = "<group>"; };
+		F55597241CF53FF900F33099 /* JGTeamMemberORManagerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGTeamMemberORManagerViewController.m; sourceTree = "<group>"; };
 		F566EFA91CA0F01B008BB328 /* InformSetmodel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InformSetmodel.h; sourceTree = "<group>"; };
 		F566EFAA1CA0F01B008BB328 /* InformSetmodel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InformSetmodel.m; sourceTree = "<group>"; };
 		F569A13A1CE35A9C00CD0FD5 /* JGTeamChannelViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGTeamChannelViewController.h; sourceTree = "<group>"; };
@@ -2185,17 +2225,19 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				36D0B1091C80165300C7245E /* libc++.tbd in Frameworks */,
+				82E6A6FE1CF58C9A009DD179 /* libsqlite3.0.tbd in Frameworks */,
+				36E6EB431BDDB93000A17B43 /* libz.tbd in Frameworks */,
+				36CFDB921BCDF74600301269 /* SystemConfiguration.framework in Frameworks */,
 				20BA613C1CDC9B8E004B61F5 /* CoreMotion.framework in Frameworks */,
 				20BA613A1CDC9A89004B61F5 /* Photos.framework in Frameworks */,
 				20BA61381CDC9A66004B61F5 /* MediaPlayer.framework in Frameworks */,
 				20BA61361CDC99D0004B61F5 /* ALBBQuPaiPlugin.framework in Frameworks */,
-				36E6EB431BDDB93000A17B43 /* libz.tbd in Frameworks */,
 				36CFDB961BCDF75700301269 /* Security.framework in Frameworks */,
 				20BA612F1CDC99D0004B61F5 /* SecurityGuardSDK.framework in Frameworks */,
 				36D0B10F1C8016EC00C7245E /* UIKit.framework in Frameworks */,
 				363D4F321C86DB1C0089E52C /* Foundation.framework in Frameworks */,
 				36CFDB941BCDF74F00301269 /* CoreGraphics.framework in Frameworks */,
-				36CFDB921BCDF74600301269 /* SystemConfiguration.framework in Frameworks */,
 				36C165641BCE82C400194436 /* CoreTelephony.framework in Frameworks */,
 				363D4F301C86DAF00089E52C /* CoreFoundation.framework in Frameworks */,
 				36D0B1011C8015E900C7245E /* CFNetwork.framework in Frameworks */,
@@ -2208,7 +2250,6 @@
 				36E6EB3F1BDDB91400A17B43 /* libsqlite3.tbd in Frameworks */,
 				36D0B10B1C80166400C7245E /* libc++abi.tbd in Frameworks */,
 				20BA612E1CDC99D0004B61F5 /* ALBBRpcPlugin.framework in Frameworks */,
-				36D0B1091C80165300C7245E /* libc++.tbd in Frameworks */,
 				36DF29AC1BE999280031A8CB /* ImageIO.framework in Frameworks */,
 				36D0B1071C80163200C7245E /* CoreVideo.framework in Frameworks */,
 				36D0B1051C80161F00C7245E /* CoreMedia.framework in Frameworks */,
@@ -3840,6 +3881,7 @@
 		36BFFD1F1BC76C8D005B3CE2 = {
 			isa = PBXGroup;
 			children = (
+				82E6A6FD1CF58C9A009DD179 /* libsqlite3.0.tbd */,
 				36D0B0F91C80156900C7245E /* frameWork */,
 				36BFFD531BC76CDB005B3CE2 /* 社区图标 */,
 				36BFFDCD1BC76CDC005B3CE2 /* 首页图片 */,
@@ -4151,6 +4193,7 @@
 		36BFFEEA1BC76D09005B3CE2 /* 第三方库 */ = {
 			isa = PBXGroup;
 			children = (
+				82E6A6F81CF58B83009DD179 /* 微信支付 */,
 				20BA61131CDC99D0004B61F5 /* ALMoviePlayerController */,
 				20BA611C1CDC99D0004B61F5 /* Qupai */,
 				F5EB44681C9957A6008ACD73 /* 排序类 */,
@@ -5238,6 +5281,9 @@
 				828A99F11CE32E9300AF9860 /* JGMenberTableViewCell.m */,
 				82AAB7AF1CE5C18E005F5633 /* JGSelfSetTableViewCell.h */,
 				82AAB7B01CE5C18E005F5633 /* JGSelfSetTableViewCell.m */,
+				82E6A6F31CF5812B009DD179 /* JGLAuthorityTableViewCell.h */,
+				82E6A6F41CF5812C009DD179 /* JGLAuthorityTableViewCell.m */,
+				82E6A6F51CF5812C009DD179 /* JGLAuthorityTableViewCell.xib */,
 			);
 			path = "球队成员";
 			sourceTree = "<group>";
@@ -5269,6 +5315,39 @@
 				82E6A6EA1CF2FFA3009DD179 /* JGLJoinManageViewController.m */,
 			);
 			path = "我的球队";
+			sourceTree = "<group>";
+		};
+		82E6A6EC1CF5529A009DD179 /* 我的球队 */ = {
+			isa = PBXGroup;
+			children = (
+				82E6A6F01CF55313009DD179 /* JGLTeamAdviceTableViewCell.h */,
+				82E6A6F11CF55313009DD179 /* JGLTeamAdviceTableViewCell.m */,
+			);
+			path = "我的球队";
+			sourceTree = "<group>";
+		};
+		82E6A6F81CF58B83009DD179 /* 微信支付 */ = {
+			isa = PBXGroup;
+			children = (
+				82E6A7001CF59F2E009DD179 /* lib */,
+				82E6A6F91CF58BAE009DD179 /* libWeChatSDK.a */,
+				82E6A6FA1CF58BAE009DD179 /* WXApi.h */,
+				82E6A6FB1CF58BAE009DD179 /* WXApiObject.h */,
+			);
+			path = "微信支付";
+			sourceTree = "<group>";
+		};
+		82E6A7001CF59F2E009DD179 /* lib */ = {
+			isa = PBXGroup;
+			children = (
+				82E6A7011CF59F2E009DD179 /* ApiXml.h */,
+				82E6A7021CF59F2E009DD179 /* ApiXml.mm */,
+				82E6A7031CF59F2E009DD179 /* payRequsestHandler.h */,
+				82E6A7041CF59F2E009DD179 /* payRequsestHandler.mm */,
+				82E6A7051CF59F2E009DD179 /* WXUtil.h */,
+				82E6A7061CF59F2E009DD179 /* WXUtil.mm */,
+			);
+			path = lib;
 			sourceTree = "<group>";
 		};
 		AA91C7811C4201B80078DA17 /* IQKeyBoardManager */ = {
@@ -5303,6 +5382,8 @@
 			children = (
 				F5321AE51CE4499600CAE1EF /* JGCreateTeamViewController.h */,
 				F5321AE61CE4499600CAE1EF /* JGCreateTeamViewController.m */,
+				F543ACC81CF476D400C6B111 /* JGNewCreateTeamTableViewController.h */,
+				F543ACC91CF476D400C6B111 /* JGNewCreateTeamTableViewController.m */,
 			);
 			path = "创建球队";
 			sourceTree = "<group>";
@@ -5341,6 +5422,12 @@
 				F569A13E1CE35A9C00CD0FD5 /* JGTeamDetailViewController.m */,
 				F50B7FB11CE59E050065069D /* JGTeamDetailStylelTwoViewController.h */,
 				F50B7FB21CE59E050065069D /* JGTeamDetailStylelTwoViewController.m */,
+				F543ACBF1CF4246000C6B111 /* JGNotTeamMemberDetailViewController.h */,
+				F543ACC01CF4246000C6B111 /* JGNotTeamMemberDetailViewController.m */,
+				F55597201CF5328C00F33099 /* JGPreviewTeamViewController.h */,
+				F55597211CF5328C00F33099 /* JGPreviewTeamViewController.m */,
+				F55597231CF53FF900F33099 /* JGTeamMemberORManagerViewController.h */,
+				F55597241CF53FF900F33099 /* JGTeamMemberORManagerViewController.m */,
 			);
 			path = "球队详情";
 			sourceTree = "<group>";
@@ -5407,6 +5494,7 @@
 		F5A105471CE309750050461D /* view */ = {
 			isa = PBXGroup;
 			children = (
+				82E6A6EC1CF5529A009DD179 /* 我的球队 */,
 				F5B549941CE9B0490091C962 /* 申请资料 */,
 				F50B7FAA1CE5777D0065069D /* 球队大厅 */,
 				F5321AE41CE4493000CAE1EF /* 创建球队 */,
@@ -5446,6 +5534,10 @@
 				F5B6470F1CE41E7E00A7A056 /* JGTeamDetailView.m */,
 				F50B7FAE1CE59C8F0065069D /* JGTeamDetailStyleTwoView.h */,
 				F50B7FAF1CE59C8F0065069D /* JGTeamDetailStyleTwoView.m */,
+				F543ACC21CF4269D00C6B111 /* JGLableAndLableTableViewCell.h */,
+				F543ACC31CF4269D00C6B111 /* JGLableAndLableTableViewCell.m */,
+				F543ACC51CF42E1200C6B111 /* JGDisplayInfoTableViewCell.h */,
+				F543ACC61CF42E1200C6B111 /* JGDisplayInfoTableViewCell.m */,
 			);
 			path = "球队详情";
 			sourceTree = "<group>";
@@ -5522,7 +5614,7 @@
 				TargetAttributes = {
 					36BFFD271BC76C8D005B3CE2 = {
 						CreatedOnToolsVersion = 6.3.2;
-						DevelopmentTeam = T8ML76W22A;
+						DevelopmentTeam = 5P6JNXBH3C;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -5587,6 +5679,7 @@
 				36BFFE4A1BC76CDC005B3CE2 /* rili.png in Resources */,
 				3684FDAC1C4A35F4002A14FC /* TeamApplyViewCell.xib in Resources */,
 				36BFFE8A1BC76CDC005B3CE2 /* xq_bk@2x.png in Resources */,
+				82E6A6F71CF5812C009DD179 /* JGLAuthorityTableViewCell.xib in Resources */,
 				36BFFECF1BC76CDC005B3CE2 /* wdqd.png in Resources */,
 				20BA61421CDCA180004B61F5 /* VedioPlayViewController.xib in Resources */,
 				36BFFEA61BC76CDC005B3CE2 /* hjxs@2x.png in Resources */,
@@ -5951,6 +6044,7 @@
 				36BFFF691BC76D09005B3CE2 /* UIProgressView+AFNetworking.m in Sources */,
 				36BFFF671BC76D09005B3CE2 /* UIButton+AFNetworking.m in Sources */,
 				65CD8E4B1BEA067F006984F3 /* AddressBookViewCell.m in Sources */,
+				82E6A7071CF59F2E009DD179 /* ApiXml.mm in Sources */,
 				369F7D1E1CB62BAA000BC13D /* MeHeadTableViewCell.m in Sources */,
 				36BFFF951BC76D6B005B3CE2 /* TabBarItem.m in Sources */,
 				36BFFFC81BC770B1005B3CE2 /* AreaViewController.m in Sources */,
@@ -5976,7 +6070,9 @@
 				F5B549971CE9B0710091C962 /* JGApplyMaterialTableViewCell.m in Sources */,
 				36E196E21C05ADD600914F74 /* TeamActiveDeController.m in Sources */,
 				36BF003F1BC771FB005B3CE2 /* OtherDataTableViewCell.m in Sources */,
+				F543ACC41CF4269D00C6B111 /* JGLableAndLableTableViewCell.m in Sources */,
 				3684FDAB1C4A35F4002A14FC /* TeamApplyViewCell.m in Sources */,
+				F543ACC11CF4246000C6B111 /* JGNotTeamMemberDetailViewController.m in Sources */,
 				36BF00861BC772EF005B3CE2 /* MySetViewController.m in Sources */,
 				F569A1481CE35AA500CD0FD5 /* JGTeamChannelActivityTableViewCell.m in Sources */,
 				368DCA611C88152700871D28 /* ResponseViewController.m in Sources */,
@@ -6036,6 +6132,7 @@
 				36BFFFB11BC76FF3005B3CE2 /* ResetPassViewController.m in Sources */,
 				36E300FC1C3FF3F9005C3F08 /* UIScrollView+MJRefresh.m in Sources */,
 				36BFFF811BC76D09005B3CE2 /* UIView+WebCacheOperation.m in Sources */,
+				82E6A6F61CF5812C009DD179 /* JGLAuthorityTableViewCell.m in Sources */,
 				65B596EC1CAD43AC007AB83A /* YMReplyInputView.m in Sources */,
 				36BF01861BC77611005B3CE2 /* CityChooseView.m in Sources */,
 				36BF00111BC770C4005B3CE2 /* ChartContentView.m in Sources */,
@@ -6062,6 +6159,7 @@
 				362317121BD9D31500257862 /* PageViewController.m in Sources */,
 				65B596EB1CAD43AC007AB83A /* YMButton.m in Sources */,
 				828A99F51CE3481D00AF9860 /* JGMemManageController.m in Sources */,
+				F55597251CF53FF900F33099 /* JGTeamMemberORManagerViewController.m in Sources */,
 				20F6A5D71CF498E600DD9383 /* JGHApplyModel.m in Sources */,
 				F50B7FB71CE5DBB70065069D /* JGTeamMainhallViewController.m in Sources */,
 				36B08F701C2D322600CD660E /* UITableViewCell+JZExtension.m in Sources */,
@@ -6182,6 +6280,7 @@
 				36DC9D5C1C994E6E003E4FCC /* RecomeFriendViewController.m in Sources */,
 				36BF01DB1BC77BB0005B3CE2 /* EnrollModel.m in Sources */,
 				36BFFF881BC76D09005B3CE2 /* UITool.m in Sources */,
+				F543ACCA1CF476D400C6B111 /* JGNewCreateTeamTableViewController.m in Sources */,
 				3660E2061BFC64DD0033B4D7 /* DataViewController.m in Sources */,
 				65B596EA1CAD43AC007AB83A /* WFTextView.m in Sources */,
 				36BFFF9B1BC76FBD005B3CE2 /* ShouyeViewController.m in Sources */,
@@ -6241,6 +6340,7 @@
 				36067BCE1C97F915001AE22C /* NewFriendTableViewCell.m in Sources */,
 				3660E0F41BFC54680033B4D7 /* MyTeamViewController.m in Sources */,
 				828A99FC1CE3549900AF9860 /* JGMemDataTableViewCell.m in Sources */,
+				82E6A6F21CF55313009DD179 /* JGLTeamAdviceTableViewCell.m in Sources */,
 				368B73341C102A710002A618 /* ScoreProfessViewController.m in Sources */,
 				36BF01A41BC779EA005B3CE2 /* BaseModel.m in Sources */,
 				36BFFF871BC76D09005B3CE2 /* Setbutton.m in Sources */,
@@ -6252,6 +6352,7 @@
 				36DF6E001C08243300B60B67 /* TeamPhotoDeModel.m in Sources */,
 				20F6A5D31CF475D200DD9383 /* JGHApplyListCell.m in Sources */,
 				20CA13DC1CE9F2C200DA15B9 /* UIColor+ColorTransfer.m in Sources */,
+				F55597221CF5328C00F33099 /* JGPreviewTeamViewController.m in Sources */,
 				36BF019E1BC779D8005B3CE2 /* BallParkModel.m in Sources */,
 				3684B1DA1C23E92A00B93920 /* TeamAreaViewController.m in Sources */,
 				36BFFF891BC76D09005B3CE2 /* UserDataInformation.m in Sources */,
@@ -6265,6 +6366,7 @@
 				36DC9D581C99398A003E4FCC /* NewFriendModel.m in Sources */,
 				36C165991BCE8B9800194436 /* MyattenModel.m in Sources */,
 				368B73331C102A710002A618 /* ScoreSimpleViewController.m in Sources */,
+				82E6A7091CF59F2E009DD179 /* WXUtil.mm in Sources */,
 				36BF00E31BC77428005B3CE2 /* UseMallViewController.m in Sources */,
 				AA91C7881C4201B80078DA17 /* IQKeyboardManager.m in Sources */,
 				36DCB8251C01AA38000EB674 /* TeamJoinModel.m in Sources */,
@@ -6289,6 +6391,7 @@
 				65B596D61CAD43AC007AB83A /* NSArray+NSArray_ILExtension.m in Sources */,
 				36BFFF5D1BC76D09005B3CE2 /* AFSecurityPolicy.m in Sources */,
 				36BF01AB1BC77A6B005B3CE2 /* TeamMessageController.m in Sources */,
+				F543ACC71CF42E1200C6B111 /* JGDisplayInfoTableViewCell.m in Sources */,
 				36BF00931BC772EF005B3CE2 /* NewsDetailController.m in Sources */,
 				65B596E61CAD43AC007AB83A /* UIView+Extension.m in Sources */,
 				82AAB7B11CE5C18E005F5633 /* JGSelfSetTableViewCell.m in Sources */,
@@ -6343,6 +6446,7 @@
 				65B596D91CAD43AC007AB83A /* WFReplyBody.m in Sources */,
 				65B596DA1CAD43AC007AB83A /* YMTextData.m in Sources */,
 				36BF00881BC772EF005B3CE2 /* MySetApplyController.m in Sources */,
+				82E6A7081CF59F2E009DD179 /* payRequsestHandler.mm in Sources */,
 				3684FDB21C4A3635002A14FC /* TeamJoinSetTableViewCell.m in Sources */,
 				2067C6D21CE30CC0002900C8 /* JGTeamActivityCell.m in Sources */,
 				36BFFF761BC76D09005B3CE2 /* SDWebImageCompat.m in Sources */,
@@ -6532,8 +6636,6 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
-					"$(SRCROOT)/UMSocial_Sdk_Extra_Frameworks/Wechat",
-					"$(PROJECT_DIR)/DagolfLa/第三方库/Wechat",
 					"$(PROJECT_DIR)/DagolfLa/第三方库/Rong_Cloud_iOS_IMKit_SDK_v2_4_8_stable",
 					"$(PROJECT_DIR)/DagolfLa/第三方库/Qupai/OneSDK",
 					"$(PROJECT_DIR)/DagolfLa/第三方库/Qupai/QupaiSDK",
@@ -6541,16 +6643,16 @@
 				GCC_PREFIX_HEADER = "$(SRCROOT)/DagolfLa/PrefixHeader.pch";
 				INFOPLIST_FILE = DagolfLa/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(SRCROOT)/UMSocial_Sdk_Extra_Frameworks/Wechat",
 					"$(PROJECT_DIR)",
 					"$(PROJECT_DIR)/DagolfLa/第三方库/Wechat",
 					"$(PROJECT_DIR)/DagolfLa/第三方库/UMSocial_Sdk_4.2.5",
 					"$(PROJECT_DIR)/DagolfLa/第三方库/UMSocial_Sdk_4.2.5/Sina",
 					"$(PROJECT_DIR)/DagolfLa/第三方库/Rong_Cloud_iOS_IMKit_SDK_v2_4_8_stable",
 					"$(PROJECT_DIR)/DagolfLa/第三方库/lib",
+					"$(PROJECT_DIR)/DagolfLa/第三方库/微信支付",
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
@@ -6574,8 +6676,6 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
-					"$(SRCROOT)/UMSocial_Sdk_Extra_Frameworks/Wechat",
-					"$(PROJECT_DIR)/DagolfLa/第三方库/Wechat",
 					"$(PROJECT_DIR)/DagolfLa/第三方库/Rong_Cloud_iOS_IMKit_SDK_v2_4_8_stable",
 					"$(PROJECT_DIR)/DagolfLa/第三方库/Qupai/OneSDK",
 					"$(PROJECT_DIR)/DagolfLa/第三方库/Qupai/QupaiSDK",
@@ -6583,16 +6683,16 @@
 				GCC_PREFIX_HEADER = "$(SRCROOT)/DagolfLa/PrefixHeader.pch";
 				INFOPLIST_FILE = DagolfLa/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(SRCROOT)/UMSocial_Sdk_Extra_Frameworks/Wechat",
 					"$(PROJECT_DIR)",
 					"$(PROJECT_DIR)/DagolfLa/第三方库/Wechat",
 					"$(PROJECT_DIR)/DagolfLa/第三方库/UMSocial_Sdk_4.2.5",
 					"$(PROJECT_DIR)/DagolfLa/第三方库/UMSocial_Sdk_4.2.5/Sina",
 					"$(PROJECT_DIR)/DagolfLa/第三方库/Rong_Cloud_iOS_IMKit_SDK_v2_4_8_stable",
 					"$(PROJECT_DIR)/DagolfLa/第三方库/lib",
+					"$(PROJECT_DIR)/DagolfLa/第三方库/微信支付",
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";

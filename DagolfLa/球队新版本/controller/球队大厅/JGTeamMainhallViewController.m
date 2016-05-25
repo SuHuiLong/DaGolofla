@@ -17,6 +17,12 @@
 #import <CoreLocation/CoreLocation.h>
 #import "JGTeamDetail.h"
 #import "JGTeamDetailViewController.h"
+#import "JGNotTeamMemberDetailViewController.h"
+#import "JGTeamMemberORManagerViewController.h"
+
+#import "MJRefresh.h"
+#import "MJDIYBackFooter.h"
+#import "MJDIYHeader.h"
 
 @interface JGTeamMainhallViewController ()<UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate,UISearchResultsUpdating,CLLocationManagerDelegate>
 
@@ -24,9 +30,9 @@
 @property (nonatomic, strong) UISearchController *searchController;
 @property (strong, nonatomic) NSMutableArray *searchArray;
 @property (nonatomic, strong) NSMutableDictionary *paraDic;
-@property (assign, nonatomic) int page;
+@property (assign, nonatomic) NSInteger page;
 @property (strong, nonatomic) CLLocationManager* locationManager;
-@property (strong, nonatomic) NSMutableArray *modelArray;
+@property (strong, nonatomic) NSMutableArray *modelArray; //数据源
 
 @end
 
@@ -48,14 +54,17 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    _page = 0;
     self.title = @"球队大厅";
     _tableView = [[JGTeamChannelTableView alloc] initWithFrame:[UIScreen mainScreen].bounds style:(UITableViewStylePlain)];
+    _tableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
+    _tableView.footer=[MJDIYBackFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRereshing)];
+    [_tableView.header beginRefreshing];
     self.view = _tableView;
     _tableView.delegate = self;
     _tableView.dataSource = self;
     _tableView.rowHeight = 83 * ScreenWidth/320;
-    _tableView.scrollEnabled = NO;
+//    _tableView.scrollEnabled = NO;
     _searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
     _searchController.searchResultsUpdater = self;
     _searchController.searchBar.barTintColor = [UIColor orangeColor];
@@ -66,7 +75,7 @@
     self.searchController.searchBar.placeholder = @"输入球队昵称搜索";
     self.tableView.tableHeaderView = self.searchController.searchBar;
     
-    [self getData];
+//    [self getData];
     // Do any additional setup after loading the view.
 }
 
@@ -87,6 +96,58 @@
     }];
     
 }
+
+
+// 刷新
+- (void)headRereshing
+{
+    [self downLoadData:_page isReshing:YES];
+}
+
+- (void)footRereshing
+{
+    [self downLoadData:_page isReshing:NO];
+}
+
+#pragma mark - 下载数据
+- (void)downLoadData:(NSInteger)page isReshing:(BOOL)isReshing{
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    
+    [dict setObject:@244 forKey:@"userKey"];
+    [dict setObject:[NSNumber numberWithInteger:page] forKey:@"offset"];
+    [[JsonHttp jsonHttp]httpRequest:@"team/getTeamList" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
+        if (isReshing) {
+            [_tableView.header endRefreshing];
+        }else {
+            [_tableView.footer endRefreshing];
+        }
+    } completionBlock:^(id data) {
+        if ([data objectForKey:@"teamList"]) {
+            if (page == 0)
+            {
+                //清除数组数据
+                [self.searchArray removeAllObjects];
+            }
+
+            [self.modelArray addObjectsFromArray:[data objectForKey:@"teamList"]];
+
+            
+            _page++;
+            [_tableView reloadData];
+        }else {
+            [Helper alertViewWithTitle:@"失败" withBlock:^(UIAlertController *alertView) {
+                [self presentViewController:alertView animated:YES completion:nil];
+            }];
+        }
+        [_tableView reloadData];
+        if (isReshing) {
+            [_tableView.header endRefreshing];
+        }else {
+            [_tableView.footer endRefreshing];
+        }
+    }];
+}
+
 
 
 -(void)getCurPosition{
@@ -137,7 +198,7 @@
     if (self.searchController.active) {
         return [self.searchArray count];
     }else{
-        self.tableView.footer = nil;
+//        self.tableView.footer = nil;
         return [self.modelArray count];
     }
 }
@@ -147,11 +208,16 @@
    
     JGTeamChannelTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"cell"];
 
-    if (!self.searchController.active || [self.searchArray count] == 0) {
-        
-        cell.nameLabel.text = [self.modelArray[indexPath.row] objectForKey:@"name"];
-        cell.adressLabel.text = [self.modelArray[indexPath.row] objectForKey:@"crtyName"];
-        cell.describLabel.text = [self.modelArray[indexPath.row] objectForKey:@"info"];;
+
+//    if (!self.searchController.active || [self.searchArray count] == 0) {
+    if (self.searchController.active) {
+    
+        if ([self.searchArray count] != 0) {
+            cell.nameLabel.text = [self.searchArray[indexPath.row] objectForKey:@"name"];
+            cell.adressLabel.text = [self.searchArray[indexPath.row] objectForKey:@"crtyName"];
+            cell.describLabel.text = [self.searchArray[indexPath.row] objectForKey:@"info"];;
+        }
+
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
         return cell;
@@ -172,18 +238,72 @@
 -(void)updateSearchResultsForSearchController:(UISearchController *)searchController {
     [self.searchArray removeAllObjects];
     
-    
-    NSString *searchString = [self.searchController.searchBar text];
-    //    NSPredicate *preicate = [NSPredicate predicateWithFormat:@"SELF CONTAINS[c] %@", searchString];
-    _page = 1;
-    [self.paraDic setObject:[NSNumber numberWithInt:_page] forKey:@"offset"];
-    [self.paraDic setObject:searchString forKey:@"likeName"];
-//    [self.paraDic setObject:[[NSUserDefaults standardUserDefaults]objectForKey:@"userId"] forKey:@"userId"];
-    if ([searchString length] > 0) {
-        [[PostDataRequest sharedInstance] postDataRequest:@"user/searchTuser.do" parameter:self.paraDic success:^(id respondsData) {
-            NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:respondsData options:NSJSONReadingMutableContainers error:nil];
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    [dict setObject:[self.searchController.searchBar text] forKey:@"likeName"];
+    [dict setObject:[[NSUserDefaults standardUserDefaults]objectForKey:@"userId"] forKey:@"userKey"];
+//    [dict setObject:[NSNumber numberWithInteger:_page] forKey:@"offset"];
+    [dict setObject:@0 forKey:@"offset"];
+    [[JsonHttp jsonHttp]httpRequest:@"team/getTeamList" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
+     
+        
+    } completionBlock:^(id data) {
+        if ([data objectForKey:@"teamList"]) {
+            if (_page == 0)
+            {
+                //清除数组数据
+                [self.searchArray removeAllObjects];
+            }
             
-            if ([[dict objectForKey:@"success"] boolValue]) {
+            [self.modelArray addObjectsFromArray:[data objectForKey:@"teamList"]];
+            
+            
+            _page++;
+            [_tableView reloadData];
+        }else {
+//            [Helper alertViewWithTitle:@"失败" withBlock:^(UIAlertController *alertView) {
+//                [self presentViewController:alertView animated:YES completion:nil];
+//            }];
+        }
+        [_tableView reloadData];
+    
+        
+    }];
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+//    NSString *searchString = [self.searchController.searchBar text];
+    //    NSPredicate *preicate = [NSPredicate predicateWithFormat:@"SELF CONTAINS[c] %@", searchString];
+//    _page = 1;
+//    [self.paraDic setObject:[NSNumber numberWithInteger:_page] forKey:@"offset"];
+//    [self.paraDic setObject:searchString forKey:@"likeName"];
+//    [self.paraDic setObject:[[NSUserDefaults standardUserDefaults]objectForKey:@"userId"] forKey:@"userId"];
+//    if ([searchString length] > 0) {
+//        [[PostDataRequest sharedInstance] postDataRequest:@"user/searchTuser.do" parameter:self.paraDic success:^(id respondsData) {
+//            NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:respondsData options:NSJSONReadingMutableContainers error:nil];
+//            
+//            if ([[dict objectForKey:@"success"] boolValue]) {
 //                NSArray *arra = [dict objectForKey:@"rows"];
 //                
 //                for (NSDictionary *dic in arra) {
@@ -199,29 +319,29 @@
 //                    self.tableView.footer = [MJDIYBackFooter footerWithRefreshingTarget:self refreshingAction:@selector(refrenshing1)];
 //                }
                 
-                [self.tableView reloadData];
-            }else {
+//                [self.tableView reloadData];
+//            }else {
                 //                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:[dict objectForKey:@"message"] delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
                 //                [alert show];
-            }
-            
-        } failed:^(NSError *error) {
-            
-            
-        }];
-        self.tableView.scrollEnabled = YES;
-    }else{
-        self.tableView.scrollEnabled = NO;
-    }
+//            }
     
+//        } failed:^(NSError *error) {
+//            
+//            
+//        }];
+//        self.tableView.scrollEnabled = YES;
+//    }else{
+//        self.tableView.scrollEnabled = NO;
+//    }
+//
     //    if (self.searchList!= nil) {
     //        [self.searchList removeAllObjects];
     //    }
     //过滤数据
     //    self.searchList= [NSMutableArray arrayWithArray:[_dataList filteredArrayUsingPredicate:preicate]];
     //刷新表格
-    [self.searchArray removeAllObjects];
-    [self.tableView reloadData];
+//    [self.searchArray removeAllObjects];
+//    [self.tableView reloadData];
 }
 
 
@@ -241,10 +361,31 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
+    [dic setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"userId"] forKey:@"userKey"];
+    [dic setObject:@([[self.modelArray[indexPath.row] objectForKey:@"timeKey"] integerValue]) forKey:@"teamKey"];
+
+    [[JsonHttp jsonHttp] httpRequest:@"team/getTeamInfo" JsonKey:nil withData:dic requestMethod:@"GET" failedBlock:^(id errType) {
+        NSLog(@"error");
+    } completionBlock:^(id data) {
+        NSLog(@"%@", data);
+        if (![data objectForKey:@"teamMember"]) {
+            JGNotTeamMemberDetailViewController *detailVC = [[JGNotTeamMemberDetailViewController alloc] init];
+            [self.navigationController pushViewController:detailVC animated:YES];
+        }else{
+            if ([[data objectForKey:@"teamMember"] objectForKey:@"identity"] == 0){
+                JGTeamMemberORManagerViewController *detailVC = [[JGTeamMemberORManagerViewController alloc] init];
+                [self.navigationController pushViewController:detailVC animated:YES];
+            }else{
+                JGTeamMemberORManagerViewController *detailVC = [[JGTeamMemberORManagerViewController alloc] init];
+                [self.navigationController pushViewController:detailVC animated:YES];
+            }
+        }
+    }];
     
-    JGTeamDetailViewController *teamDetailVC = [[JGTeamDetailViewController alloc] init];
-    teamDetailVC.teamDetailDic = self.modelArray[indexPath.row];
-    [self.navigationController  pushViewController:teamDetailVC animated:YES];
+//    JGTeamDetailViewController *teamDetailVC = [[JGTeamDetailViewController alloc] init];
+//    teamDetailVC.teamDetailDic = self.modelArray[indexPath.row];
+//    [self.navigationController  pushViewController:teamDetailVC animated:YES];
     
 //    if (self.searchController.active == NO) {
 //        if (indexPath.row == 1) {
