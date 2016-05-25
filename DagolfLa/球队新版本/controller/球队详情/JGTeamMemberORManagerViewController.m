@@ -15,7 +15,6 @@
 #import "JGHTeamActivityImageCell.h"
 #import "DateTimeViewController.h"
 #import "TeamAreaViewController.h"
-#import "JGHLaunchActivityModel.h"
 #import "JGTeamActibityNameViewController.h"
 #import "SXPickPhoto.h"
 #import "JGHTeamContactTableViewCell.h"
@@ -28,7 +27,7 @@ static NSString *const JGHTeamContactCellIdentifier = @"JGHTeamContactTableViewC
 static CGFloat ImageHeight  = 210.0;
 
 
-@interface JGTeamMemberORManagerViewController ()<UITableViewDelegate, UITableViewDataSource, JGHTeamActivityImageCellDelegate, JGHConcentTextViewControllerDelegate, NSURLConnectionDownloadDelegate,JGHTeamContactTableViewCellDelegate, JGCostSetViewControllerDelegate>
+@interface JGTeamMemberORManagerViewController ()<UITableViewDelegate, UITableViewDataSource, JGHTeamActivityImageCellDelegate, JGHConcentTextViewControllerDelegate, NSURLConnectionDownloadDelegate, JGCostSetViewControllerDelegate>
 {
     //、、、、、、、
     NSArray *_titleArray;//标题数组
@@ -40,7 +39,6 @@ static CGFloat ImageHeight  = 210.0;
 
 @property (nonatomic, strong)NSMutableDictionary *dataDict;
 
-@property (nonatomic, strong)JGHLaunchActivityModel *model;
 
 @property (nonatomic, strong)UIImage *headerImage;
 
@@ -69,7 +67,6 @@ static CGFloat ImageHeight  = 210.0;
 
 - (instancetype)init{
     if (self == [super init]) {
-        self.model = [[JGHLaunchActivityModel alloc]init];
         self.dataDict = [NSMutableDictionary dictionary];
         self.pickPhoto = [[SXPickPhoto alloc]init];
         self.titleView = [[UIView alloc]init];
@@ -433,20 +430,7 @@ static CGFloat ImageHeight  = 210.0;
     NSLog(@"%@", connection);
 }
 
-#pragma mark -- 添加内容详情代理  JGHConcentTextViewControllerDelegate
-- (void)didSelectSaveBtnClick:(NSString *)text{
-    [self.model setValue:text forKey:@"activityInfo"];
-    [self.launchActivityTableView reloadData];
-}
-#pragma mark -- 联系人代理
-- (void)inputTextString:(NSString *)string{
-    _contcat = string;
-}
-#pragma mark -- 费用代理
-- (void)inputMembersCost:(NSString *)membersCost guestCost:(NSString *)guestCost{
-    self.model.guestCost = guestCost;
-    self.model.membersCost = membersCost;
-}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

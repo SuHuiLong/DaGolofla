@@ -15,7 +15,6 @@
 #import "JGHTeamActivityImageCell.h"
 #import "DateTimeViewController.h"
 #import "TeamAreaViewController.h"
-#import "JGHLaunchActivityModel.h"
 #import "JGTeamActibityNameViewController.h"
 #import "SXPickPhoto.h"
 #import "JGHTeamContactTableViewCell.h"
@@ -29,7 +28,7 @@ static NSString *const JGHTeamContactCellIdentifier = @"JGHTeamContactTableViewC
 static CGFloat ImageHeight  = 210.0;
 
 
-@interface JGNewCreateTeamTableViewController ()<UITableViewDelegate, UITableViewDataSource, JGHTeamActivityImageCellDelegate, JGHConcentTextViewControllerDelegate, NSURLConnectionDownloadDelegate,JGHTeamContactTableViewCellDelegate, JGCostSetViewControllerDelegate,JGHConcentTextViewControllerDelegate>
+@interface JGNewCreateTeamTableViewController ()<UITableViewDelegate, UITableViewDataSource, JGHTeamActivityImageCellDelegate, JGHConcentTextViewControllerDelegate, NSURLConnectionDownloadDelegate, JGCostSetViewControllerDelegate,JGHConcentTextViewControllerDelegate>
 {
 
     NSArray *_titleArray;//标题数组
@@ -41,7 +40,6 @@ static CGFloat ImageHeight  = 210.0;
 
 @property (nonatomic, strong)NSMutableDictionary *dataDict;
 
-@property (nonatomic, strong)JGHLaunchActivityModel *model;
 
 @property (nonatomic, strong)UIImage *headerImage;
 
@@ -72,7 +70,29 @@ static CGFloat ImageHeight  = 210.0;
 
 - (instancetype)init{
     if (self == [super init]) {
-        self.model = [[JGHLaunchActivityModel alloc]init];
+        
+        /*
+          self.pickPhoto = [[SXPickPhoto alloc]init];
+         self.titleView = [[UIView alloc]init];
+         UIImage *image = [UIImage imageNamed:@"bg"];
+         self.imgProfile = [[UIImageView alloc] initWithImage:image];
+         self.imgProfile.frame = CGRectMake(0, 0, screenWidth, ImageHeight);
+         self.imgProfile.userInteractionEnabled = YES;
+         self.launchActivityTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight - 44)];
+         UINib *tableViewNib = [UINib nibWithNibName:@"JGTableViewCell" bundle: [NSBundle mainBundle]];
+         [self.launchActivityTableView registerNib:tableViewNib forCellReuseIdentifier:JGTableViewCellIdentifier];
+         UINib *contactNib = [UINib nibWithNibName:@"JGHTeamContactTableViewCell" bundle: [NSBundle mainBundle]];
+         [self.launchActivityTableView registerNib:contactNib forCellReuseIdentifier:JGHTeamContactCellIdentifier];
+         self.launchActivityTableView.dataSource = self;
+         self.launchActivityTableView.delegate = self;
+         self.launchActivityTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+         self.launchActivityTableView.backgroundColor = [UIColor colorWithHexString:@"#EAEAEB"];
+         [self.view addSubview:self.launchActivityTableView];
+         [self.view addSubview:self.imgProfile];
+         self.titleView.frame = CGRectMake(0, 10, screenWidth, 44);
+         self.titleView.backgroundColor = [UIColor clearColor];
+         [self.imgProfile addSubview:self.titleView];
+         */
         self.dataDict = [NSMutableDictionary dictionary];
         self.pickPhoto = [[SXPickPhoto alloc]init];
         self.titleView = [[UIView alloc]init];
@@ -135,9 +155,11 @@ static CGFloat ImageHeight  = 210.0;
     self.titleField.font = [UIFont systemFontOfSize:15];
     //头像
     self.headPortraitBtn = [[UIButton alloc]initWithFrame:CGRectMake(20, 150, 50, 50)];
-    [self.headPortraitBtn setImage:[UIImage imageNamed:@"relogo"] forState:UIControlStateNormal];
-    [self.headPortraitBtn addTarget:self action:@selector(replaceWithPicture:) forControlEvents:UIControlEventTouchUpInside];
-    
+    [self.headPortraitBtn setImage:[UIImage imageNamed:@"zwt"] forState:UIControlStateNormal];
+    [self.headPortraitBtn addTarget:self action:@selector(initItemsBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    self.headPortraitBtn.backgroundColor = [UIColor redColor];
+    self.headPortraitBtn.layer.cornerRadius = 8.0;
+    self.headPortraitBtn.tag = 740;
     [self.imgProfile addSubview:self.headPortraitBtn];
     [self.titleView addSubview:self.titleField];
     
@@ -154,22 +176,107 @@ static CGFloat ImageHeight  = 210.0;
     
     [self createPreviewBtn];
 }
-- (void)replaceWithPicture:(UIButton *)Btn{
-    if (Btn.tag == 333) {
-        //球场列表
-        
-    }
-    [self didSelectPhotoImage:Btn];
-}
+//- (void)replaceWithPicture:(UIButton *)Btn{
+//    if (Btn.tag == 333) {
+//        //球场列表
+//        
+//    }
+//    [self didSelectPhotoImage:Btn];
+//}
 
 - (void)initItemsBtnClick:(UIButton *)btn{
     if (btn.tag == 521) {
         [self.navigationController popViewControllerAnimated:YES];
     }else if (btn.tag == 520){
-        //更换头像
-        [self didSelectPhotoImage:btn];
+        //更换背景
+        [self SelectPhotoImage:btn];
+    }else if (btn.tag == 740){
+        [self SelectPhotoImage:btn];
     }
 }
+
+#pragma mark --添加活动头像
+-(void)SelectPhotoImage:(UIButton *)btn{
+//    _photos = 10;
+    UIAlertAction * act1 = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+//        _photos = 1;
+    }];
+    //拍照：
+    UIAlertAction * act2 = [UIAlertAction actionWithTitle:@"拍照" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
+        //打开相机
+        [_pickPhoto ShowTakePhotoWithController:self andWithBlock:^(NSObject *Data) {
+            if ([Data isKindOfClass:[UIImage class]])
+            {
+                _headerImage = (UIImage *)Data;
+                if (btn.tag == 520) {
+                    self.imgProfile.image = _headerImage;
+                }else if (btn.tag == 740){
+                    [self.headPortraitBtn setImage:_headerImage forState:UIControlStateNormal];
+                    self.headPortraitBtn.layer.masksToBounds = YES;
+                    self.headPortraitBtn.layer.cornerRadius = 8.0;
+                }
+                
+                [self.launchActivityTableView reloadData];
+//                _photos = 1;
+            }
+        }];
+    }];
+    //相册
+    UIAlertAction * act3 = [UIAlertAction actionWithTitle:@"相册" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
+        //打开相册
+        [_pickPhoto SHowLocalPhotoWithController:self andWithBlock:^(NSObject *Data) {
+            if ([Data isKindOfClass:[UIImage class]])
+            {
+                // @{@"nType":@"1", @"tag":@"dagolfla", @"data":@"test"};
+                _headerImage = (UIImage *)Data;
+                
+                //设置背景
+                if (btn.tag == 520) {
+                    self.imgProfile.image = _headerImage;
+                    [self.paraDic setObject:[NSArray arrayWithObject:UIImageJPEGRepresentation(_headerImage, 0.7)] forKey:@"headerImage"];
+
+                }else if (btn.tag == 740){
+                    [self.headPortraitBtn setImage:_headerImage forState:UIControlStateNormal];
+                    self.headPortraitBtn.layer.masksToBounds = YES;
+                    self.headPortraitBtn.layer.cornerRadius = 8.0;
+                    [self.paraDic setObject:[NSArray arrayWithObject:UIImageJPEGRepresentation(_headerImage, 0.7)] forKey:@"headPortraitBtn"];
+
+                }
+                
+                // 上传图片
+       /*          NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+                 [dict setObject:@"11010" forKey:@"data"];
+                 [dict setObject:@"1" forKey:@"nType"];
+                 [dict setObject:@"team" forKey:@"tag"];
+                 NSMutableArray *array = [NSMutableArray array];
+                 
+                 [array addObject:UIImageJPEGRepresentation(_headerImage, 0.7)];
+                 
+                 
+                 
+                 [[JsonHttp jsonHttp]httpRequestImageOrVedio:@"1" withData:dict andDataArray:array failedBlock:^(id errType) {
+                 NSLog(@"errType===%@", errType);
+                 } completionBlock:^(id data) {
+                 NSLog(@"data===%@", data);
+                 }];
+         */
+            }
+            
+//            _photos = 1;
+        }];
+    }];
+    
+    UIAlertController * aleVC = [UIAlertController alertControllerWithTitle:@"提示" message:@"选择图片" preferredStyle:UIAlertControllerStyleActionSheet];
+    [aleVC addAction:act1];
+    [aleVC addAction:act2];
+    [aleVC addAction:act3];
+    
+    [self presentViewController:aleVC animated:YES completion:nil];
+}
+
+
 #pragma mark -- 预览按钮
 - (void)createPreviewBtn{
     UIButton *previewBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, screenHeight -44, screenWidth, 44)];
@@ -184,38 +291,20 @@ static CGFloat ImageHeight  = 210.0;
     
     [self.paraDic setObject:self.titleField.text forKey:@"name"];
     
+   
+    JGLableAndLableTableViewCell *cell1 = [self.launchActivityTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1]];
+    [self.paraDic setObject:cell1.contentLB.text forKey:@"establishTime"];
+    JGLableAndLableTableViewCell *cell2 = [self.launchActivityTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:1]];
+    [self.paraDic setObject:cell2.contentLB.text forKey:@"cityName"];
     
-    
-    
+    JGApplyMaterialTableViewCell *cell11 = [self.launchActivityTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:3]];
+    [self.paraDic setObject:cell11.textFD.text forKey:@"userName"];
+    JGApplyMaterialTableViewCell *cell22 = [self.launchActivityTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:3]];
+    [self.paraDic setObject:cell22.textFD.text forKey:@"userMobile"];
 
-    
-    
-//    for (NSInteger i = 0; i < 2; i ++) {
-//        UITextField *tF = [self.creatTeamV viewWithTag:233 + i];
-//        if (tF.tag == 233) {
-//            [self.paraDic setObject:tF.text forKey:@"userName"];
-//        }else if (tF.tag == 234){
-//            [self.paraDic setObject:tF.text forKey:@"userMobile"];
-//        }else{
-//        }    }
-//    
-//    
-//    
-//    [self.paraDic setObject:@0 forKey:@"timeKey"];
-//    
-//    [self.paraDic setObject:self.creatTeamV.teamNmaeTV.text forKey:@"name"];
-//    
-//    [self.paraDic setObject:@"iOS" forKey:@"createUserName"];
-//    
-//    [self.paraDic setObject:@"AAA" forKey:@"notice"];
-//    NSUserDefaults *user=[NSUserDefaults standardUserDefaults];
-//    [self.paraDic setObject:[user objectForKey:@"userId"] forKey:@"createUserKey"];
-//    
-//    self.teamDetailModel.check = 0;
-
-    
-    
+        
     JGPreviewTeamViewController *preVC = [[JGPreviewTeamViewController alloc] init];
+    preVC.detailDic = self.paraDic;
     [self.navigationController pushViewController:preVC animated:YES];
     
 //    NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
@@ -360,17 +449,18 @@ static CGFloat ImageHeight  = 210.0;
         return launchActivityCell;
     }
 }
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 1) {
                 if (indexPath.row == 0) {
                     //时间选择
                     DateTimeViewController *dataCtrl = [[DateTimeViewController alloc]init];
                     [dataCtrl setCallback:^(NSString *dateStr, NSString *dateWeek, NSString *str) {
-                        if (indexPath.row == 0) {
-                            [self.model setValue:dateStr forKey:@"startDate"];
-                        }else{
-                            [self.model setValue:dateStr forKey:@"endDate"];
-                        }
+//                        if (indexPath.row == 0) {
+//                            [self.model setValue:dateStr forKey:@"startDate"];
+//                        }else{
+//                            [self.model setValue:dateStr forKey:@"endDate"];
+//                        }
                         
                         JGLableAndLableTableViewCell *launchActivityCell = [self.launchActivityTableView cellForRowAtIndexPath:indexPath];
                         launchActivityCell.contentLB.text = dateStr;
@@ -414,67 +504,18 @@ static CGFloat ImageHeight  = 210.0;
 
 #pragma mark -- 添加内容详情代理  JGHConcentTextViewControllerDelegate
 - (void)didSelectSaveBtnClick:(NSString *)text{
-    NSLog(@"%@", text);
-//    [self.paraDic setObject:text forKey:@"info"];
+
+    [self.paraDic setObject:text forKey:@"info"];
     
 }
-#pragma mark --添加活动头像－－JGHTeamActivityImageCellDelegate
--(void)didSelectPhotoImage:(UIButton *)btn{
-    UIAlertAction * act1 = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-    }];
-    //拍照：
-    UIAlertAction * act2 = [UIAlertAction actionWithTitle:@"拍照" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        //打开相机
-        [_pickPhoto ShowTakePhotoWithController:self andWithBlock:^(NSObject *Data) {
-            if ([Data isKindOfClass:[UIImage class]])
-            {
-                _headerImage = (UIImage *)Data;
-                [self.launchActivityTableView reloadData];
-            }
-        }];
-    }];
-    //相册
-    UIAlertAction * act3 = [UIAlertAction actionWithTitle:@"相册" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        //打开相册
-        [_pickPhoto SHowLocalPhotoWithController:self andWithBlock:^(NSObject *Data) {
-            if ([Data isKindOfClass:[UIImage class]])
-            {
-                // @{@"nType":@"1", @"tag":@"dagolfla", @"data":@"test"};
-                _headerImage = (UIImage *)Data;
-                NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-                [dict setObject:@"11010" forKey:@"data"];
-                [dict setObject:@"1" forKey:@"nType"];
-                [dict setObject:@"team" forKey:@"tag"];
-                NSMutableArray *array = [NSMutableArray array];
-                
-                [array addObject:UIImageJPEGRepresentation(_headerImage, 0.7)];
-                
-                [[JsonHttp jsonHttp]httpRequestImageOrVedio:@"1" withData:dict andDataArray:array failedBlock:^(id errType) {
-                    NSLog(@"errType===%@", errType);
-                } completionBlock:^(id data) {
-                    NSLog(@"data===%@", data);
-                }];
-            }
-        }];
-    }];
-    
-    UIAlertController * aleVC = [UIAlertController alertControllerWithTitle:@"提示" message:@"选择图片" preferredStyle:UIAlertControllerStyleActionSheet];
-    [aleVC addAction:act1];
-    [aleVC addAction:act2];
-    [aleVC addAction:act3];
-    
-    [self presentViewController:aleVC animated:YES completion:nil];
-}
+
 
 - (void)connectionDidFinishDownloading:(NSURLConnection *)connection destinationURL:(NSURL *) destinationURL{
     NSLog(@"%@", destinationURL);
     NSLog(@"%@", connection);
 }
 
-//- (void)didSelectSaveBtnClick:(NSString *)text{
-//    [self.model setValue:text forKey:@"activityInfo"];
-//    [self.launchActivityTableView reloadData];
-//}
+
 
 - (NSMutableDictionary *)paraDic{
     if (!_paraDic) {
@@ -483,15 +524,7 @@ static CGFloat ImageHeight  = 210.0;
     return _paraDic;
 }
 
-#pragma mark -- 联系人代理
-- (void)inputTextString:(NSString *)string{
-    _contcat = string;
-}
-#pragma mark -- 费用代理
-- (void)inputMembersCost:(NSString *)membersCost guestCost:(NSString *)guestCost{
-    self.model.guestCost = guestCost;
-    self.model.membersCost = membersCost;
-}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

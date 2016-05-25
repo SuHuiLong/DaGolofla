@@ -14,7 +14,6 @@
 #import "JGHTeamActivityImageCell.h"
 #import "DateTimeViewController.h"
 #import "TeamAreaViewController.h"
-#import "JGHLaunchActivityModel.h"
 #import "JGTeamActibityNameViewController.h"
 #import "SXPickPhoto.h"
 #import "JGHTeamContactTableViewCell.h"
@@ -27,7 +26,7 @@ static NSString *const JGHTeamContactCellIdentifier = @"JGHTeamContactTableViewC
 static CGFloat ImageHeight  = 210.0;
 
 
-@interface JGPreviewTeamViewController ()<UITableViewDelegate, UITableViewDataSource, JGHTeamActivityImageCellDelegate, JGHConcentTextViewControllerDelegate, NSURLConnectionDownloadDelegate,JGHTeamContactTableViewCellDelegate, JGCostSetViewControllerDelegate>
+@interface JGPreviewTeamViewController ()<UITableViewDelegate, UITableViewDataSource, JGHTeamActivityImageCellDelegate, JGHConcentTextViewControllerDelegate, NSURLConnectionDownloadDelegate, JGCostSetViewControllerDelegate>
 {
     //、、、、、、、
     NSArray *_titleArray;//标题数组
@@ -39,7 +38,6 @@ static CGFloat ImageHeight  = 210.0;
 
 @property (nonatomic, strong)NSMutableDictionary *dataDict;
 
-@property (nonatomic, strong)JGHLaunchActivityModel *model;
 
 @property (nonatomic, strong)UIImage *headerImage;
 
@@ -68,7 +66,6 @@ static CGFloat ImageHeight  = 210.0;
 
 - (instancetype)init{
     if (self == [super init]) {
-        self.model = [[JGHLaunchActivityModel alloc]init];
         self.dataDict = [NSMutableDictionary dictionary];
         self.pickPhoto = [[SXPickPhoto alloc]init];
         self.titleView = [[UIView alloc]init];
@@ -129,7 +126,9 @@ static CGFloat ImageHeight  = 210.0;
     self.headPortraitBtn = [[UIButton alloc]initWithFrame:CGRectMake(20, 150, 50, 50)];
     [self.headPortraitBtn setImage:[UIImage imageNamed:@"relogo"] forState:UIControlStateNormal];
     [self.headPortraitBtn addTarget:self action:@selector(replaceWithPicture:) forControlEvents:UIControlEventTouchUpInside];
-    
+//    UIImage *image =[self.detailDic objectForKey:@"headerImage"][0];
+
+    [self.headPortraitBtn setImage:[self.detailDic objectForKey:@"headerImage"][0] forState:(UIControlStateNormal)];
     [self.imgProfile addSubview:self.headPortraitBtn];
     [self.titleView addSubview:self.titleField];
     
@@ -184,6 +183,19 @@ static CGFloat ImageHeight  = 210.0;
 }
 #pragma mark -- 提交
 - (void)previewBtnClick:(UIButton *)btn{
+    
+    //
+    //    [self.paraDic setObject:@0 forKey:@"timeKey"];
+    //
+    //
+    //    [self.paraDic setObject:@"iOS" forKey:@"createUserName"];
+    //
+    //    [self.paraDic setObject:@"AAA" forKey:@"notice"];
+    //    NSUserDefaults *user=[NSUserDefaults standardUserDefaults];
+    //    [self.paraDic setObject:[user objectForKey:@"userId"] forKey:@"createUserKey"];
+    //
+    //    self.teamDetailModel.check = 0;
+    
     NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
     [dic setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"userId"] forKey:@"userKey"];
     [dic setObject:@(self.detailModel.timeKey) forKey:@"teamKey"];
@@ -437,20 +449,6 @@ static CGFloat ImageHeight  = 210.0;
     NSLog(@"%@", connection);
 }
 
-#pragma mark -- 添加内容详情代理  JGHConcentTextViewControllerDelegate
-- (void)didSelectSaveBtnClick:(NSString *)text{
-    [self.model setValue:text forKey:@"activityInfo"];
-    [self.launchActivityTableView reloadData];
-}
-#pragma mark -- 联系人代理
-- (void)inputTextString:(NSString *)string{
-    _contcat = string;
-}
-#pragma mark -- 费用代理
-- (void)inputMembersCost:(NSString *)membersCost guestCost:(NSString *)guestCost{
-    self.model.guestCost = guestCost;
-    self.model.membersCost = membersCost;
-}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
