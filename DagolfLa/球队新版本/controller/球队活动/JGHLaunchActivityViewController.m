@@ -189,6 +189,8 @@ static CGFloat ImageHeight  = 210.0;
     ActivityDetailCtrl.model = self.model;
     [self.navigationController pushViewController:ActivityDetailCtrl animated:YES];
 }
+
+
 #pragma mark -- 改变图片位置 放大缩小
 - (void)updateImg {
     CGFloat yOffset = _launchActivityTableView.contentOffset.y;

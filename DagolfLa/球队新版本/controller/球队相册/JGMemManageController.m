@@ -24,6 +24,7 @@
      *  存放用户的数据
      */
     NSMutableArray* _dataArray;
+    NSMutableArray* _keyArray;
     
 }
 @end
@@ -35,7 +36,7 @@
     // Do any additional setup after loading the view.
     
     
-    
+    _keyArray = [[NSMutableArray alloc]initWithObjects:@"A",@"B",@"C",@"D",@"E",@"F",@"G",@"H",@"I",@"J",@"K",@"L",@"M",@"N",@"O",@"P",@"Q",@"R",@"S",@"T",@"U",@"V",@"W",@"X",@"Y",@"Z",@"#", nil];
     self.title = @"球队成员管理";
     _arrayTitle = [NSArray arrayWithObjects:@"基本信息",@"入会时间",@"权限设置", nil];
     _arrayInformation = [NSArray arrayWithObjects:@"姓名",@"性别",@"差点",@"球龄", nil];
@@ -127,6 +128,35 @@
         
     }
 }
+
+
+
+// 右侧索引
+- (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView {
+    //  改变索引颜色
+    _tableView.sectionIndexColor = [UIColor colorWithRed:0.36f green:0.66f blue:0.31f alpha:1.00f];;
+    NSInteger number = [_dataArray count];
+    return [_keyArray subarrayWithRange:NSMakeRange(0, number)];
+}
+
+//点击索引跳转到相应位置
+- (NSInteger)tableView:(UITableView *)tableView sectionForSectionIndexTitle:(NSString *)title atIndex:(NSInteger)index
+{
+    
+    NSIndexPath *selectIndexPath = [NSIndexPath indexPathForRow:0 inSection:index + 1];
+    
+    if (![_dataArray[index] count]) {
+        
+        return 0;
+        
+    }else{
+        
+        [tableView scrollToRowAtIndexPath:selectIndexPath atScrollPosition:UITableViewScrollPositionNone animated:YES];
+        
+        return index + 1;
+    }
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

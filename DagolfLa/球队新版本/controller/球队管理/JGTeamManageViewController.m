@@ -10,6 +10,7 @@
 #import "JGLJoinManageViewController.h"
 #import "JGTeamMemberController.h"
 #import "JGTeamPhotoViewController.h"
+#import "JGTeamActivityViewController.h"
 
 @interface JGTeamManageViewController ()<UITableViewDelegate, UITableViewDataSource>
 
@@ -89,7 +90,8 @@ tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexP
                 break;
             case 1:
             {
-                
+                JGTeamActivityViewController* acVc = [[JGTeamActivityViewController alloc]init];
+                [self.navigationController pushViewController:acVc animated:YES];
             }
                 break;
             case 2:
