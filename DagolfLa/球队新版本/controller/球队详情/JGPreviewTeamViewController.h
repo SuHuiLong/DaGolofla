@@ -13,5 +13,6 @@
 
 @property (nonatomic, strong) JGTeamDetail *detailModel;
 @property (nonatomic, retain) UIImageView *imgProfile;
+@property (nonatomic, strong) NSMutableDictionary *detailDic;
 
 @end
