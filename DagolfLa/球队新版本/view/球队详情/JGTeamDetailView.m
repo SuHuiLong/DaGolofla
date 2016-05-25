@@ -139,7 +139,7 @@
 - (void)setTeamDetailModel:(JGTeamDetail *)teamDetailModel{
     self.nameLB.text = teamDetailModel.name;
     self.teamIntroductionLB.text = teamDetailModel.info;
-    self.addressLB.text = teamDetailModel.crtyName;
+    self.addressLB.text = teamDetailModel.cityName;
     self.setUpLbalel.text = teamDetailModel.establishTime;
 
     

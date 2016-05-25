@@ -252,6 +252,7 @@
     {
         [self startApp];
     }
+    
     return YES;
 }
 
