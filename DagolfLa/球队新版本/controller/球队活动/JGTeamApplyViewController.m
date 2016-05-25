@@ -17,11 +17,12 @@
 #import "JGHHeaderLabelCell.h"
 #import "JGHApplyListCell.h"
 
-//微信支付
+
+//微信
 #import "WXApi.h"
 #import "payRequsestHandler.h"
 
-static NSString *const JGActivityNameBaseCellIdentifier = @"JGActivityNameBaseCell";
+static NSString *const JGActivityBaseInfoCellIdentifier = @"JGActivityBaseInfoCell";
 static NSString *const JGTableViewCellIdentifier = @"JGTableViewCell";
 static NSString *const JGApplyPepoleCellIdentifier = @"JGApplyPepoleCell";
 static NSString *const JGHHeaderLabelCellIdentifier = @"JGHHeaderLabelCell";
