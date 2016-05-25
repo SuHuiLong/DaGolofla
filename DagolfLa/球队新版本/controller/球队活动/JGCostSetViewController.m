@@ -19,7 +19,7 @@
     self.view.backgroundColor = [UIColor colorWithHexString:@"#EAEAEB"];
     self.navigationItem.title = @"费用设置";
     
-    
+    [self createAdminBtn];
 }
 
 #pragma mark -- 创建保存按钮
@@ -27,7 +27,7 @@
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
     btn.frame = RightNavItemFrame;
     btn.titleLabel.font = [UIFont systemFontOfSize:FontSize_Normal];
-    [btn setTitle:@"保存" forState:UIControlStateNormal];
+    [btn setTitle:@"完成" forState:UIControlStateNormal];
     [btn addTarget:self action:@selector(saveBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     btn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
     UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithCustomView:btn];
@@ -36,6 +36,7 @@
 - (void)saveBtnClick:(UIButton *)btn{
     if (self.delegate) {
         [self.delegate inputMembersCost:self.membersCost.text guestCost:self.guestCost.text];
+        [self.navigationController popViewControllerAnimated:YES];
     }
 }
 - (void)didReceiveMemoryWarning {

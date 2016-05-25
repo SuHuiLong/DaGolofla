@@ -7,7 +7,7 @@
 //
 
 #import "BaseModel.h"
-
+#import "ChineseString.h"
 @interface JGLTeamMemberModel : BaseModel
 
 
@@ -33,6 +33,7 @@
 //申请状态 0申请中  1 已通过  2未通过
 @property (strong, nonatomic) NSNumber* state;
 
+@property (strong,nonatomic) ChineseString *chineseString;
 
 
 @end

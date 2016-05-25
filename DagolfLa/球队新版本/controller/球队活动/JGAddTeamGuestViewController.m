@@ -25,6 +25,7 @@
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor colorWithHexString:BG_color];
     self.navigationItem.title = @"添加嘉宾";
+    self.applyArray = [NSMutableArray array];
     self.sex = 1;//男－默认
     [self createAddGuestTableview];
 }
@@ -62,7 +63,6 @@
     alreadyGuestCell.selectionStyle = UITableViewCellSelectionStyleNone;
     alreadyGuestCell.deleteGuest.tag = indexPath.section + 100;
     
-    
     return alreadyGuestCell;
 }
 #pragma mark -- 添加按钮事件
@@ -73,12 +73,15 @@
         return;
     }
     
-    if (self.poorPointText.text.length == 0) {
-        self.poorPointText.layer.borderColor=[[UIColor redColor] CGColor];
-        self.poorPointText.layer.borderWidth= 1.0f;
-        return;
-    }
+//    if (self.poorPointText.text.length == 0) {
+//        self.poorPointText.layer.borderColor=[[UIColor redColor] CGColor];
+//        self.poorPointText.layer.borderWidth= 1.0f;
+//        return;
+//    }
     
+    NSMutableDictionary *applyDict = [NSMutableDictionary dictionary];
+    [applyDict setObject:self.teamKey forKey:@"teamKey"];//球队key
+    [applyDict setObject:self.activityKey forKey:@"activityKey"];//活动ID
     
 }
 #pragma mark -- 完成按钮事件
@@ -116,4 +119,6 @@
 }
 */
 
+- (IBAction)isPlayersBtn:(UIButton *)sender {
+}
 @end

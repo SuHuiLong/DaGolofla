@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-@class JGHLaunchActivityModel;
+@class JGTeamAcitivtyModel;
 
 @protocol JGHTeamActivityImageCellDelegate <NSObject>
 

@@ -43,6 +43,8 @@
 
 -(void)backButtonClcik{
     [self.navigationController popViewControllerAnimated:YES];
+    
+    [[JsonHttp jsonHttp]cancelRequest];
 }
 
 - (void)viewDidLoad {

@@ -7,19 +7,19 @@
 //
 
 #import "ViewController.h"
-@class JGHLaunchActivityModel;
+@class JGTeamAcitivtyModel;
 
 @interface JGTeamActibityNameViewController : ViewController
 
 //yes-报名，no-未报名
 @property (nonatomic, assign)BOOL isApply;
 
-//0－管理员  1-非管理员
-@property (nonatomic, copy)NSString *isAdmin;
-
-@property (nonatomic, strong)JGHLaunchActivityModel *model;
+@property (nonatomic, strong)JGTeamAcitivtyModel *model;
 
 //活动id
 @property (nonatomic, assign)NSInteger teamActivityKey;
+
+@property (nonatomic, retain) UIImageView *imgProfile;//拉大图片
+
 
 @end

@@ -28,7 +28,9 @@
 @property (copy, nonatomic) NSString *beginDate;
 //结束时间
 @property (copy, nonatomic) NSString *endDate;
-//地区
+//报名截止时间
+@property (copy, nonatomic) NSString *signUpEndTime;
+//球场名称
 @property (copy, nonatomic) NSString *ballName;
 //报名人数
 @property (assign, nonatomic) NSInteger sumCount;
@@ -46,5 +48,11 @@
 @property (assign, nonatomic) NSInteger maxCount;
 //活动介绍
 @property (copy, nonatomic) NSString *info;
+//球场id
+@property (assign, nonatomic) NSInteger ballKey;
+//联系人
+@property (copy, nonatomic) NSString *username;
+//联系人电话
+@property (copy, nonatomic) NSString *usernumber;
 
 @end
