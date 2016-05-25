@@ -32,9 +32,7 @@
 
     _isOpen = 0;
 
-    UIBarButtonItem* rightBtn = [[UIBarButtonItem alloc]initWithTitle:@"保存" style:UIBarButtonItemStylePlain target:self action:@selector(saveClick)];
-    rightBtn.tintColor = [UIColor whiteColor];
-    self.navigationItem.rightBarButtonItem = rightBtn;
+   
     
     /**
      *  创建相册名称
@@ -50,18 +48,45 @@
      */
     if (_isManage == 1) {
         [self createManage];
+        UIBarButtonItem* rightBtn = [[UIBarButtonItem alloc]initWithTitle:@"修改" style:UIBarButtonItemStylePlain target:self action:@selector(upDataClick)];
+        rightBtn.tintColor = [UIColor whiteColor];
+        self.navigationItem.rightBarButtonItem = rightBtn;
+    }
+    else
+    {
+        UIBarButtonItem* rightBtn = [[UIBarButtonItem alloc]initWithTitle:@"保存" style:UIBarButtonItemStylePlain target:self action:@selector(saveClick)];
+        rightBtn.tintColor = [UIColor whiteColor];
+        self.navigationItem.rightBarButtonItem = rightBtn;
     }
     
     
-    
 }
-
+#pragma mark --修改
+-(void)upDataClick
+{
+    NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
+    [dict setObject:[NSNumber numberWithInteger:_isOpen] forKey:@"power"];
+    [dict setObject:@214 forKey:@"timeKey"];
+    [dict setObject:[NSString stringWithFormat:@"%@",_textTitle.text] forKey:@"name"];
+    [dict setObject:@244 forKey:@"userKey"];
+    [[JsonHttp jsonHttp]httpRequest:@"team/updateTeamAlbum" JsonKey:nil withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
+        NSLog(@"errType == %@", errType);
+    } completionBlock:^(id data) {
+        
+        
+    }];
+}
+#pragma mark --上传
 -(void)saveClick
 {
     NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
-    [dict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:userID] forKey:@"userKey"];
-    [dict setObject:@189911222513049600 forKey:@"teamKey"];
-    [dict setObject:[NSString stringWithFormat:@"%@",_textTitle.text] forKey:@"groupsName"];
+//    [dict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:userID] forKey:@"userKey"];
+    [dict setObject:@244 forKey:@"userKey"];
+    [dict setObject:@"2016-05-27 7:00:00" forKey:@"createTime"];
+    [dict setObject:[NSNumber numberWithInteger:_isOpen] forKey:@"power"];
+    [dict setObject:@0 forKey:@"timeKey"];
+    [dict setObject:@181 forKey:@"teamKey"];
+    [dict setObject:[NSString stringWithFormat:@"%@",_textTitle.text] forKey:@"name"];
     [[JsonHttp jsonHttp]httpRequest:@"team/createTeamAlbum" JsonKey:@"teamAlbum" withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
         NSLog(@"errType == %@", errType);
     } completionBlock:^(id data) {
@@ -210,8 +235,15 @@
 
 -(void)deleteClick
 {
-    
-}
+    NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
+    [dict setObject:@244 forKey:@"userKey"];
+    [dict setObject:@[@215] forKey:@"timeKeyList"];
+    [[JsonHttp jsonHttp]httpRequest:@"team/batchDeleteTeamAlbum" JsonKey:nil withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
+        NSLog(@"errType == %@", errType);
+    } completionBlock:^(id data) {
+        
+        
+    }];}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

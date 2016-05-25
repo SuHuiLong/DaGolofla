@@ -8,6 +8,7 @@
 
 #import "JGLJoinManageViewController.h"
 #import "TeamApplyViewCell.h"
+#import "JGLTeamAdviceTableViewCell.h"
 #import "MJRefresh.h"
 #import "MJDIYBackFooter.h"
 #import "MJDIYHeader.h"
@@ -41,7 +42,8 @@
     _tableView.separatorStyle = UITableViewCellAccessoryNone;
     _tableView.rowHeight = 83 * screenWidth / 320;
     [self.view addSubview:_tableView];
-    [_tableView registerNib:[UINib nibWithNibName:@"TeamApplyViewCell" bundle:nil] forCellReuseIdentifier:@"TeamApplyViewCell"];
+//    [_tableView registerNib:[UINib nibWithNibName:@"TeamApplyViewCell" bundle:nil] forCellReuseIdentifier:@"TeamApplyViewCell"];
+    [_tableView registerClass:[JGLTeamAdviceTableViewCell class] forCellReuseIdentifier:@"JGLTeamAdviceTableViewCell"];
     _tableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
     _tableView.footer=[MJDIYBackFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRereshing)];
     [_tableView.header beginRefreshing];
@@ -113,10 +115,8 @@
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    TeamApplyViewCell *cell = [_tableView dequeueReusableCellWithIdentifier:@"TeamApplyViewCell"];
-    //        cell.nameLabel.text = _dataArray[indexPath.row%3];
-//    [cell showData:_dataArray[indexPath.row]];
-    [cell showManage:_dataArray[indexPath.row]];
+    JGLTeamAdviceTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"JGLTeamAdviceTableViewCell" forIndexPath:indexPath];
+    [cell showData:_dataArray[indexPath.row]];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
     

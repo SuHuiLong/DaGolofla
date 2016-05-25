@@ -147,8 +147,21 @@
             self.titleLB.text = @" 推荐球队";
             NSUserDefaults *user=[NSUserDefaults standardUserDefaults];
             NSMutableDictionary *dic = [NSMutableDictionary dictionary];
-            [dic setObject:[user objectForKey:@"lng"] forKey:@"longitude"];
-            [dic setObject:[user objectForKey:@"lat"] forKey:@"latitude"];
+            if ([user objectForKey:@"lng"]) {
+                [dic setObject:[user objectForKey:@"lng"] forKey:@"longitude"];
+            }
+            else
+            {
+                [dic setObject:@121.605072 forKey:@"longitude"];
+            }
+            
+            if ([user objectForKey:@"lat"]) {
+                [dic setObject:[user objectForKey:@"lat"] forKey:@"latitude"];
+            }
+            else
+            {
+                [dic setObject:@31.156063 forKey:@"latitude"];
+            }
             [dic setValue:@0 forKey:@"offset"];
             [[JsonHttp jsonHttp] httpRequest:@"team/getTeamList" JsonKey:nil withData:dic requestMethod:@"GET" failedBlock:^(id errType) {
                 NSLog(@"getTeamList ***** error");

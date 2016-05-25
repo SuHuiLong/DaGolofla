@@ -9,11 +9,14 @@
 #import "JGMemAuthorityViewController.h"
 
 #import "JGLSelfSetViewController.h"
+#import "JGLAuthorityTableViewCell.h"
 @interface JGMemAuthorityViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
     UITableView* _tableView;
     
     NSArray* _arrayTitle;
+    NSArray* _arraySection;
+    NSArray* _arrayDetail;
 }
 
 @end
@@ -28,25 +31,44 @@
     rightBtn.tintColor = [UIColor whiteColor];
     
     self.title = @"权限设置";
-    _arrayTitle = [NSArray arrayWithObjects:@"队长",@"会长/副会长",@"队长秘书长",@"队长秘书/干事",@"剔除出队", nil];
-
+    
+    _arrayTitle = @[@[@"队长",@"会长",@"副会长",@"队长秘书长",@"球队秘书",@"干事"],@[@"活动管理",@"权限管理",@"账户管理"]];
+    _arraySection = @[@"身份设置",@"职责设置"];
+    _arrayDetail = @[@"活动发布和对活动成员的管理",@"设置队员身份和职责",@"对内收支情况的管理"];
     [self uiConfig];
  
 }
 
 -(void)saveSetClick
 {
-    JGLSelfSetViewController* selfVc = [[JGLSelfSetViewController alloc]init];
-    [self.navigationController pushViewController:selfVc animated:YES];
+//    JGLSelfSetViewController* selfVc = [[JGLSelfSetViewController alloc]init];
+//    [self.navigationController pushViewController:selfVc animated:YES];
+    
+    
+    NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
+    [dict setObject:@181 forKey:@"teamKey"];
+    [dict setObject:@83 forKey:@"userKey"];
+    [dict setObject:@"1001,1002" forKey:@"power"];
+    [dict setObject:@196 forKey:@"memberKey"];
+    [dict setObject:@5 forKey:@"identity"];
+    [[JsonHttp jsonHttp]httpRequest:@"team/updateTeamMemberPower" JsonKey:nil withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
+        NSLog(@"errType == %@", errType);
+    } completionBlock:^(id data) {
+        
+        
+    }];
+    
+    
 }
 
 -(void)uiConfig
 {
-    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, 45*5*ScreenWidth/375 + 20*ScreenWidth/375) style:UITableViewStylePlain];
+    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, 45*11*ScreenWidth/375 + 20*ScreenWidth/375) style:UITableViewStylePlain];
     _tableView.delegate = self;
     _tableView.dataSource = self;
     [self.view addSubview:_tableView];
     [_tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"cellid"];
+    [_tableView registerNib:[UINib nibWithNibName:@"JGLAuthorityTableViewCell" bundle:nil] forCellReuseIdentifier:@"JGLAuthorityTableViewCell"];
 }
 
 
@@ -55,11 +77,11 @@
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if (section == 0) {
-        return 4;
+        return 7;
     }
     else
     {
-        return 1;
+        return 4;
     }
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
@@ -77,16 +99,19 @@
 }
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.section == 0) {
+    if (indexPath.row == 0) {
         UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"cellid" forIndexPath:indexPath];
-        cell.textLabel.text = _arrayTitle[indexPath.row];
+        cell.textLabel.text = _arraySection[indexPath.section];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
     }
     else
     {
-        UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"cellid" forIndexPath:indexPath];
-        cell.textLabel.text = _arrayTitle[4];
+        JGLAuthorityTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"JGLAuthorityTableViewCell" forIndexPath:indexPath];
+        cell.titleLabel.text = _arrayTitle[indexPath.section][indexPath.row - 1];
+        cell.titleLabel.font = [UIFont systemFontOfSize:14*screenWidth/375];
+        cell.detailLabel.text = _arrayDetail[indexPath.row - 1];
+        cell.detailLabel.textColor = [UIColor lightGrayColor];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
     }

@@ -15,6 +15,10 @@
 #import "JGTeamGroupViewController.h"
 #import "JGTeamAcitivtyModel.h"
 
+//微信支付
+#import "WXApi.h"
+#import "payRequsestHandler.h"
+
 static NSString *const JGActivityNameBaseCellIdentifier = @"JGActivityNameBaseCell";
 static NSString *const JGTableViewCellIdentifier = @"JGTableViewCell";
 static NSString *const JGApplyPepoleCellIdentifier = @"JGApplyPepoleCell";
@@ -151,21 +155,44 @@ static NSString *const JGApplyPepoleCellIdentifier = @"JGApplyPepoleCell";
     // 分别3个创建操作
     UIAlertAction *weiChatAction = [UIAlertAction actionWithTitle:@"微信支付" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         NSLog(@"微信支付");
-        JGTeamGroupViewController *groupCtrl = [[JGTeamGroupViewController alloc]init];
-        [self.navigationController pushViewController:groupCtrl animated:YES];
+
+        NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
+        [dict setObject:@0 forKey:@"payInfo"];
+        
+        [[JsonHttp jsonHttp]httpRequest:@"pay/doPayWeiXin" JsonKey:@"payInfo" withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
+            NSLog(@"errType == %@", errType);
+        } completionBlock:^(id data) {
+            
+            NSDictionary *dict = [[data objectForKey:@"rows"] objectForKey:@"appRequest"];
+            //微信
+            //创建支付签名对象
+            payRequsestHandler *req = [payRequsestHandler alloc];
+            
+            //初始化支付签名对象
+            [req init:@"wxdcdc4e20544ed728" mch_id:[dict objectForKey:@"partnerid"]];
+            //设置秘钥
+            [req setKey:[[data objectForKey:@"rows"] objectForKey:@"key"]];
+            
+            NSMutableDictionary *dict1 = [req sendPay_demoPrePayid:[dict objectForKey:@"prepayid"]];
+            if (dict1) {
+                PayReq *request = [[PayReq alloc] init];
+                request.openID       = [dict1 objectForKey:@"appid"];
+                request.partnerId    = [dict1 objectForKey:@"partnerid"];
+                request.prepayId     = [dict1 objectForKey:@"prepayid"];
+                request.package      = [dict1 objectForKey:@"package"];
+                request.nonceStr     = [dict1 objectForKey:@"noncestr"];
+                request.timeStamp    =[[dict1 objectForKey:@"timestamp"] intValue];
+                request.sign         = [dict1 objectForKey:@"sign"];
+                
+                [WXApi sendReq:request];
+            }
+            
+            
+        }];
+
+        
     }];
-    UIAlertAction *zhifubaoAction = [UIAlertAction actionWithTitle:@"支付宝支付" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        NSLog(@"支付宝支付");
-        JGTeamGroupViewController *groupCtrl = [[JGTeamGroupViewController alloc]init];
-        [self.navigationController pushViewController:groupCtrl animated:YES];
-    }];
-    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-        NSLog(@"取消支付");
-    }];
-    [_actionView addAction:weiChatAction];
-    [_actionView addAction:zhifubaoAction];
-    [_actionView addAction:cancelAction];
-    [self presentViewController:_actionView animated:YES completion:nil];
+    
 }
 #pragma mark -- 现场付款
 - (IBAction)scenePayBtnClick:(UIButton *)sender {
