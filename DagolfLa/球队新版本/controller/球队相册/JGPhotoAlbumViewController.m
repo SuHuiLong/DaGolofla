@@ -44,16 +44,40 @@
     
     [self uiConfig];
     
+    NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
+    [dict setObject:@214 forKey:@"albumKey"];
+    [dict setObject:@0 forKey:@"offset"];
+
+
+    [[JsonHttp jsonHttp]httpRequest:@"team/getTeamMediaList" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
+        NSLog(@"errType == %@", errType);
+    } completionBlock:^(id data) {
+        
+        
+    }];
+    
+    
 }
 
 -(void)upDataClick
 {
-    JGLUpdataPhotoController* upVc = [[JGLUpdataPhotoController alloc]init];
-    if (![Helper isBlankString:_strTitle]) {
-        upVc.strTitle = _strTitle;
-    }
-    upVc.strTimeKey = _strTimeKey;
-    [self.navigationController pushViewController:upVc animated:YES];
+    
+    NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
+    [dict setObject:@0 forKey:@"timeKey"];
+    [dict setObject:@527 forKey:@"userKey"];
+    [dict setObject:@214 forKey:@"albumKey"];
+    [dict setObject:@1 forKey:@"mediaType"];
+    
+    
+    [dict setObject:@"2016-12-11 10:00:00" forKey:@"createTime"];
+    [[JsonHttp jsonHttp]httpRequest:@"team/createTeamMedia" JsonKey:@"teamMedia" withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
+        NSLog(@"errType == %@", errType);
+    } completionBlock:^(id data) {
+        
+        
+    }];
+    
+    
 }
 
 
@@ -162,6 +186,19 @@
      */
 //    JGTeamMemberController* teamVc = [[JGTeamMemberController alloc]init];
 //    [self.navigationController pushViewController:teamVc animated:YES];
+    
+    
+    
+    NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
+    [dict setObject:@[@223] forKey:@"timeKeyList"];
+    [dict setObject:@527 forKey:@"userKey"];
+
+    [[JsonHttp jsonHttp]httpRequest:@"team/batchDeleteTeamMedia" JsonKey:nil withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
+        NSLog(@"errType == %@", errType);
+    } completionBlock:^(id data) {
+        
+        
+    }];
 }
 
 

@@ -10,4 +10,5 @@
 
 @interface JGLSelfSetViewController : ViewController
 
+@property (nonatomic, assign)NSInteger teamKey;
 @end

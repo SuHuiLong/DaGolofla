@@ -83,9 +83,9 @@
 - (void)downLoadData:(int)page isReshing:(BOOL)isReshing{
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     
-    [dict setObject:@189911222513049600 forKey:@"teamKey"];
+    [dict setObject:@181 forKey:@"teamKey"];
     [dict setObject:[NSNumber numberWithInt:page] forKey:@"offset"];
-    [[JsonHttp jsonHttp]httpRequest:@"team/getTeamAlbumList" JsonKey:nil withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
+    [[JsonHttp jsonHttp]httpRequest:@"team/getTeamAlbumList" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
         if (isReshing) {
             [_collectionView.header endRefreshing];
         }else {
@@ -180,7 +180,7 @@
 {
     //
     JGPhotoAlbumViewController* phoVc = [[JGPhotoAlbumViewController alloc]init];
-    phoVc.strTitle = [_dataArray[indexPath.row] groupsName];
+    phoVc.strTitle = [_dataArray[indexPath.row] name];
     phoVc.strTimeKey = [_dataArray[indexPath.row] timeKey];
     [self.navigationController pushViewController:phoVc animated:YES];
 }
