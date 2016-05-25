@@ -65,7 +65,8 @@ typedef NS_ENUM(NSInteger, GestureType) {
 #define kScreenHeight ([[UIScreen mainScreen] bounds].size.height)
 
 #define BG_color @"#EEEEEF"
-
+#define TB_BG_Color @"#CFCFCF"
+#define Nav_Color @"#F59826"
 //正式环境图片基础地址
 #define imageBaseUrl @"http://139.196.9.49:8081/"
 //测试环境图片基础地址//#define IMAGE_VEDIO_BASEURL @""

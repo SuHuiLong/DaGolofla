@@ -7,7 +7,6 @@
 //
 
 #import "JGTableViewCell.h"
-#import "JGHLaunchActivityModel.h"
 #import "JGTeamAcitivtyModel.h"
 
 @implementation JGTableViewCell
@@ -26,24 +25,26 @@
 - (void)configContionsString:(NSString *)contions{
     self.contions.text = contions;
 }
-- (void)configContionsStringWhitModel:(JGHLaunchActivityModel *)model andIndexPath:(NSIndexPath *)indexPath{
+- (void)configContionsStringWhitModel:(JGTeamAcitivtyModel *)model andIndexPath:(NSIndexPath *)indexPath{
     NSLog(@"%ld", (long)indexPath.section);
     NSLog(@"%ld", (long)indexPath.row);
     if (indexPath.section == 0) {
         
     }else if (indexPath.section == 1){
         if (indexPath.row == 0) {
-            self.contions.text = model.startDate;
+            self.contions.text = model.beginDate;//活动开始时间
         }else if (indexPath.row == 1){
-            self.contions.text = model.endDate;
+            self.contions.text = model.endDate;//活动结束时间
         }else{
-            self.contions.text = model.activityAddress;
+            self.contions.text = model.signUpEndTime;//报名截止时间
         }
     }else if (indexPath.section == 2){
         if (indexPath.row == 0) {
-            self.contions.text = model.activityInfo;
+            self.contions.text = [NSString stringWithFormat:@"%ld/%ld", (long)model.memberPrice, (long)model.guestPrice];//费用说明
         }else if (indexPath.row == 1){
-            self.contions.text = model.payInfo;
+            self.contions.text = [NSString stringWithFormat:@"%ld(人)", (long)model.maxCount];
+        }else{
+            self.contions.text = model.info;
         }
     }
     

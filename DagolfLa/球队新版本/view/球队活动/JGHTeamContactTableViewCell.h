@@ -8,17 +8,21 @@
 
 #import <UIKit/UIKit.h>
 
-@protocol JGHTeamContactTableViewCellDelegate <NSObject>
-
-- (void)inputTextString:(NSString *)string;
-
-@end
+//@protocol JGHTeamContactTableViewCellDelegate <NSObject>
+//
+//- (void)inputTextString:(NSString *)string;
+//
+//@end
 
 @interface JGHTeamContactTableViewCell : UITableViewCell
 
 //联系人电话
-@property (weak, nonatomic) IBOutlet UITextField *contactLabel;
+@property (weak, nonatomic) IBOutlet UILabel *contactLabel;
 
-@property (weak, nonatomic) id <JGHTeamContactTableViewCellDelegate> delegate;
+@property (weak, nonatomic) IBOutlet UIImageView *headImage;
+
+@property (weak, nonatomic) IBOutlet UITextField *tetfileView;
+
+//@property (weak, nonatomic) id <JGHTeamContactTableViewCellDelegate> delegate;
 
 @end

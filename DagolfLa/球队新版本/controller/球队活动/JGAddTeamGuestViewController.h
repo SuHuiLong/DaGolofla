@@ -20,4 +20,17 @@
 //已经添加
 @property (weak, nonatomic) IBOutlet UILabel *alrealyAddGuestLabel;
 @property (assign, nonatomic) BOOL isMen, isWomen;
+//手机号
+@property (weak, nonatomic) IBOutlet UITextField *photoNumber;
+//是否为球队队员
+@property (weak, nonatomic) IBOutlet UIButton *isPlayersBtn;
+- (IBAction)isPlayersBtn:(UIButton *)sender;
+
+//添加嘉宾
+@property (nonatomic, strong)NSMutableArray *applyArray;
+
+@property (nonatomic, copy)NSString *teamKey;//球队key
+@property (nonatomic, copy)NSString *activityKey;//活动ID
+
+
 @end

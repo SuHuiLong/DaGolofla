@@ -148,11 +148,13 @@
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    JGTeamApplyViewController *teamApplyCtrl = [[JGTeamApplyViewController alloc]init];
-    JGTeamAcitivtyModel *model = [[JGTeamAcitivtyModel alloc]init];
-    model = self.dataArray[indexPath.section];
-    teamApplyCtrl.activityKey = model.timeKey;
-    [self.navigationController pushViewController:teamApplyCtrl animated:YES];
+//    JGTeamApplyViewController *teamApplyCtrl = [[JGTeamApplyViewController alloc]initWithNibName:@"JGTeamApplyViewController" bundle:nil];
+//    JGTeamAcitivtyModel *model = [[JGTeamAcitivtyModel alloc]init];
+//    model = self.dataArray[indexPath.section];
+//    teamApplyCtrl.activityKey = model.timeKey;
+//    [self.navigationController pushViewController:teamApplyCtrl animated:YES];
+    JGTeamActibityNameViewController *activityNameCtrl = [[JGTeamActibityNameViewController alloc]init];
+    [self.navigationController pushViewController:activityNameCtrl animated:YES];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

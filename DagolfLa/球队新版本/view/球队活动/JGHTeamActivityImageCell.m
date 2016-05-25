@@ -7,7 +7,7 @@
 //
 
 #import "JGHTeamActivityImageCell.h"
-#import "JGHLaunchActivityModel.h"
+#import "JGTeamAcitivtyModel.h"
 
 @interface JGHTeamActivityImageCell ()<UITextViewDelegate>
 
