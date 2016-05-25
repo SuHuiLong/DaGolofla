@@ -13,7 +13,7 @@
 
 @property (nonatomic, strong) UITableView *addTeamGuestTableView;
 
-@property (nonatomic, strong) NSMutableArray *guestArray;
+//@property (nonatomic, strong)NSMutableDictionary *guextDict;//成员字典
 
 @property (nonatomic, assign)NSInteger sex;//0-1女，1-男，默认男－1
 
@@ -24,7 +24,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor colorWithHexString:BG_color];
-    self.navigationItem.title = @"添加嘉宾";
+    self.guestArray = [NSMutableArray array];
+    self.navigationItem.title = @"添加地球人";
     self.applyArray = [NSMutableArray array];
     self.sex = 1;//男－默认
     [self createAddGuestTableview];
@@ -63,6 +64,8 @@
     alreadyGuestCell.selectionStyle = UITableViewCellSelectionStyleNone;
     alreadyGuestCell.deleteGuest.tag = indexPath.section + 100;
     
+    
+    
     return alreadyGuestCell;
 }
 #pragma mark -- 添加按钮事件
@@ -73,20 +76,49 @@
         return;
     }
     
-//    if (self.poorPointText.text.length == 0) {
-//        self.poorPointText.layer.borderColor=[[UIColor redColor] CGColor];
-//        self.poorPointText.layer.borderWidth= 1.0f;
-//        return;
-//    }
-    
     NSMutableDictionary *applyDict = [NSMutableDictionary dictionary];
-    [applyDict setObject:self.teamKey forKey:@"teamKey"];//球队key
-    [applyDict setObject:self.activityKey forKey:@"activityKey"];//活动ID
+    [applyDict setObject:@"192" forKey:@"teamKey"];//球队key
+    [applyDict setObject:@"206" forKey:@"activityKey"];//球队活动id
+    [applyDict setObject:@244 forKey:@"userKey"];//报名用户key , 没有则是嘉宾
+    [applyDict setObject:@1 forKey:@"type"];//"是否是球队成员 0: 不是  1：是
+
+    [applyDict setObject:@0 forKey:@"userKey"];//报名用户key , 没有则是嘉宾
+    [applyDict setObject:@0 forKey:@"type"];
+    
+    [applyDict setObject:_nameText.text forKey:@"name"];//姓名
+    if (_photoNumber.text.length>0) {
+        [applyDict setObject:_photoNumber.text forKey:@"mobile"];//手机号
+    }
+    
+    if (_poorPointText.text.length>0) {
+        [applyDict setObject:_poorPointText.text forKey:@"almost"];//差点
+    }
+    
+    [applyDict setObject:@"1" forKey:@"isOnlinePay"];//是否线上付款 1-线上
+    [applyDict setObject:[NSString stringWithFormat:@"%ld", (long)self.sex] forKey:@"sex"];//性别 0: 女 1: 男
+    //        [dict setObject:@"192" forKey:@"groupIndex"];//组的索引   每组4 人
+    //        [dict setObject:@"192" forKey:@"sortIndex"];//排序索引号
+    //        [dict setObject:@"192" forKey:@"payMoney"];//实际付款金额
+    //        [dict setObject:@"192" forKey:@"payTime"];//实际付款时间
+    //        [dict setObject:@"192" forKey:@"subsidyPrice"];//补贴价
+    //        [dict setObject:@"3500" forKey:@"money"];//报名费
+//    [self.guextDict setObject:@"2016-06-11 10:00:00" forKey:@"createTime"];//报名时间
+    [applyDict setObject:@0 forKey:@"signUpInfoKey"];//报名信息的timeKey
+    [applyDict setObject:@0 forKey:@"timeKey"];//timeKey
+    [applyDict setObject:@"1" forKey:@"select"];//付款勾选默认勾
+    
+    [self.guestArray addObject:applyDict];
+//    NSMutableDictionary *applyDict = [NSMutableDictionary dictionary];
+//    [applyDict setObject:self.teamKey forKey:@"teamKey"];//球队key
+//    [applyDict setObject:self.activityKey forKey:@"activityKey"];//活动ID
     
 }
 #pragma mark -- 完成按钮事件
 - (IBAction)finishBtnClick:(UIButton *)sender {
-    [self.navigationController popViewControllerAnimated:YES];
+    if (self.delegate) {
+        [self.delegate addGuestListArray:self.guestArray];
+        [self.navigationController popViewControllerAnimated:YES];
+    }
 }
 #pragma mark -- 男
 - (IBAction)manBtn:(UIButton *)sender {

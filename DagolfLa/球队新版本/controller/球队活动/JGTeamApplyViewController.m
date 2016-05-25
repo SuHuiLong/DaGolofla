@@ -23,7 +23,7 @@ static NSString *const JGApplyPepoleCellIdentifier = @"JGApplyPepoleCell";
 static NSString *const JGHHeaderLabelCellIdentifier = @"JGHHeaderLabelCell";
 static NSString *const JGHApplyListCellIdentifier = @"JGHApplyListCell";
 
-@interface JGTeamApplyViewController ()<JGApplyPepoleCellDelegate, JGHApplyListCellDelegate>
+@interface JGTeamApplyViewController ()<JGApplyPepoleCellDelegate, JGHApplyListCellDelegate, JGAddTeamGuestViewControllerDelegate>
 {
     UIAlertController *_actionView;
 }
@@ -78,7 +78,7 @@ static NSString *const JGHApplyListCellIdentifier = @"JGHApplyListCell";
     [self.teamApplyTableView registerNib:applyListNib forCellReuseIdentifier:JGHApplyListCellIdentifier];
     
 //    [self loadData];
-    [self createData];
+//    [self createData];
 }
 #pragma mark -- 创建测试数据
 - (void)createData{
@@ -254,6 +254,8 @@ static NSString *const JGHApplyListCellIdentifier = @"JGHApplyListCell";
 #pragma mark -- 添加嘉宾
 - (void)addApplyPeopleClick{
     JGAddTeamGuestViewController *addTeamGuestCtrl = [[JGAddTeamGuestViewController alloc]initWithNibName:@"JGAddTeamGuestViewController" bundle:nil];
+    addTeamGuestCtrl.delegate = self;
+    addTeamGuestCtrl.guestArray = self.applyArray;
     [self.navigationController pushViewController:addTeamGuestCtrl animated:YES];
 }
 - (void)didReceiveMemoryWarning {
@@ -268,7 +270,11 @@ static NSString *const JGHApplyListCellIdentifier = @"JGHApplyListCell";
 - (void)didSelectDeleteBtn:(UIButton *)btn{
     
 }
-
+#pragma mark -- 添加打球人页面代理－－－放回打球人数组
+- (void)addGuestListArray:(NSArray *)guestListArray{
+    self.applyArray = [NSMutableArray arrayWithArray:guestListArray];
+    [self.teamApplyTableView reloadData];
+}
 /*
 #pragma mark - Navigation
 
