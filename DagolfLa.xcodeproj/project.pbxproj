@@ -818,6 +818,7 @@
 		82E6A7071CF59F2E009DD179 /* ApiXml.mm in Sources */ = {isa = PBXBuildFile; fileRef = 82E6A7021CF59F2E009DD179 /* ApiXml.mm */; };
 		82E6A7081CF59F2E009DD179 /* payRequsestHandler.mm in Sources */ = {isa = PBXBuildFile; fileRef = 82E6A7041CF59F2E009DD179 /* payRequsestHandler.mm */; };
 		82E6A7091CF59F2E009DD179 /* WXUtil.mm in Sources */ = {isa = PBXBuildFile; fileRef = 82E6A7061CF59F2E009DD179 /* WXUtil.mm */; };
+		82E6A70D1CF5DDB8009DD179 /* JGLTeamEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 82E6A70C1CF5DDB8009DD179 /* JGLTeamEditViewController.m */; };
 		AA857EE01C5F48AA0034B4C8 /* SelfDataViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA857EDF1C5F48AA0034B4C8 /* SelfDataViewController.m */; };
 		AA91C7861C4201B80078DA17 /* IQButtonBarArrowLeft@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AA91C7821C4201B80078DA17 /* IQButtonBarArrowLeft@2x.png */; };
 		AA91C7871C4201B80078DA17 /* IQButtonBarArrowRight@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AA91C7831C4201B80078DA17 /* IQButtonBarArrowRight@2x.png */; };
@@ -2144,6 +2145,8 @@
 		82E6A7041CF59F2E009DD179 /* payRequsestHandler.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = payRequsestHandler.mm; sourceTree = "<group>"; };
 		82E6A7051CF59F2E009DD179 /* WXUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXUtil.h; sourceTree = "<group>"; };
 		82E6A7061CF59F2E009DD179 /* WXUtil.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = WXUtil.mm; sourceTree = "<group>"; };
+		82E6A70B1CF5DDB8009DD179 /* JGLTeamEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGLTeamEditViewController.h; sourceTree = "<group>"; };
+		82E6A70C1CF5DDB8009DD179 /* JGLTeamEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGLTeamEditViewController.m; sourceTree = "<group>"; };
 		AA857EDF1C5F48AA0034B4C8 /* SelfDataViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = SelfDataViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		AA91C7821C4201B80078DA17 /* IQButtonBarArrowLeft@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "IQButtonBarArrowLeft@2x.png"; sourceTree = "<group>"; };
 		AA91C7831C4201B80078DA17 /* IQButtonBarArrowRight@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "IQButtonBarArrowRight@2x.png"; sourceTree = "<group>"; };
@@ -5350,6 +5353,15 @@
 			path = lib;
 			sourceTree = "<group>";
 		};
+		82E6A70A1CF5DDA8009DD179 /* 球队编辑页 */ = {
+			isa = PBXGroup;
+			children = (
+				82E6A70B1CF5DDB8009DD179 /* JGLTeamEditViewController.h */,
+				82E6A70C1CF5DDB8009DD179 /* JGLTeamEditViewController.m */,
+			);
+			path = "球队编辑页";
+			sourceTree = "<group>";
+		};
 		AA91C7811C4201B80078DA17 /* IQKeyBoardManager */ = {
 			isa = PBXGroup;
 			children = (
@@ -5478,6 +5490,7 @@
 		F5A105421CE309750050461D /* controller */ = {
 			isa = PBXGroup;
 			children = (
+				82E6A70A1CF5DDA8009DD179 /* 球队编辑页 */,
 				F5B549901CE9AC000091C962 /* 申请资料 */,
 				F58FC22B1CE975CF003D01ED /* 球队管理 */,
 				F50B7FB41CE5DBB70065069D /* 球队大厅 */,
@@ -6254,6 +6267,7 @@
 				65B596D71CAD43AC007AB83A /* NSString+NSString_ILExtension.m in Sources */,
 				F50B7FB01CE59C8F0065069D /* JGTeamDetailStyleTwoView.m in Sources */,
 				654A031B1CC89F70007F5243 /* PersonHomeController.m in Sources */,
+				82E6A70D1CF5DDB8009DD179 /* JGLTeamEditViewController.m in Sources */,
 				36BFFF5C1BC76D09005B3CE2 /* AFNetworkReachabilityManager.m in Sources */,
 				3660E1421BFC55AC0033B4D7 /* ActiveScoreController.m in Sources */,
 				F569A14A1CE35AA500CD0FD5 /* JGTeamChannelTableViewCell.m in Sources */,
@@ -6642,7 +6656,7 @@
 				);
 				GCC_PREFIX_HEADER = "$(SRCROOT)/DagolfLa/PrefixHeader.pch";
 				INFOPLIST_FILE = DagolfLa/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				LD_RUNPATH_SEARCH_PATHS = "";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -6659,6 +6673,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = bihuaxinxi.DagolfLa;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/DagolfLa/第三方库/lib";
 				VALID_ARCHS = "arm64 armv7 armv7s";
 			};
@@ -6682,7 +6697,7 @@
 				);
 				GCC_PREFIX_HEADER = "$(SRCROOT)/DagolfLa/PrefixHeader.pch";
 				INFOPLIST_FILE = DagolfLa/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				LD_RUNPATH_SEARCH_PATHS = "";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -6699,6 +6714,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = bihuaxinxi.DagolfLa;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/DagolfLa/第三方库/lib";
 				VALID_ARCHS = "arm64 armv7 armv7s";
 			};

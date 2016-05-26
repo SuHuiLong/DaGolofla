@@ -12,6 +12,7 @@
 #import "JGTeamPhotoViewController.h"
 #import "JGTeamActivityViewController.h"
 
+#import "JGLTeamEditViewController.h"
 @interface JGTeamManageViewController ()<UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic, strong)UITableView *tableView;
@@ -109,7 +110,8 @@ tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexP
         
     }
     else{
-        
+        JGLTeamEditViewController* teVc = [[JGLTeamEditViewController alloc]init];
+        [self.navigationController pushViewController:teVc animated:YES];
     }
 }
 - (void)didReceiveMemoryWarning {
