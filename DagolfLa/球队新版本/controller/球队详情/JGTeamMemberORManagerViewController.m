@@ -8,6 +8,7 @@
 
 
 #import "JGTeamMemberORManagerViewController.h"
+#import "JGTeamInfoViewController.h" //跳转info
 
 #import "JGHLaunchActivityViewController.h"
 #import "JGTableViewCell.h"
@@ -22,7 +23,6 @@
 #import "JGLableAndLableTableViewCell.h"
 #import "JGDisplayInfoTableViewCell.h"
 #import "TeamInviteViewController.h"
-
 
 #import "JGTeamManageViewController.h"
 
@@ -347,8 +347,71 @@ static CGFloat ImageHeight  = 210.0;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 1) {
+        //        if (indexPath.row == 0 || indexPath.row == 1) {
+        //            //时间选择
+        //            DateTimeViewController *dataCtrl = [[DateTimeViewController alloc]init];
+        //            [dataCtrl setCallback:^(NSString *dateStr, NSString *dateWeek, NSString *str) {
+        //                if (indexPath.row == 0) {
+        //                    [self.model setValue:dateStr forKey:@"startDate"];
+        //                }else{
+        //                    [self.model setValue:dateStr forKey:@"endDate"];
+        //                }
+        //
+        //                NSIndexPath *indPath = [NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section];
+        //                [self.launchActivityTableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indPath, nil] withRowAnimation:UITableViewRowAnimationNone];
+        //            }];
+        //
+        //            [self.navigationController pushViewController:dataCtrl animated:YES];
+        //        }else{
+        //            //地区选择
+        //            TeamAreaViewController* areaVc = [[TeamAreaViewController alloc]init];
+        //            areaVc.teamType = @10;
+        //            areaVc.callBackCity = ^(NSString* strPro, NSString* strCity, NSNumber* cityId){
+        //                [self.model setValue:[NSString stringWithFormat:@"%@-%@", strPro, strCity] forKey:@"activityAddress"];
+        //                NSIndexPath *indPath = [NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section];
+        //                [self.launchActivityTableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indPath, nil] withRowAnimation:UITableViewRowAnimationNone];
+        //            };
+        //            [self.navigationController pushViewController:areaVc animated:YES];
+        //        }
+        
+        
+        
+        
+    }
+    else if (indexPath.section == 2){
+    
+        switch (indexPath.row) {
+            case 0:
+            {
+                
+            }
+                break;
+            case 1:
+            {
+                JGTeamMemberController* tmVc = [[JGTeamMemberController alloc]init];
+                [self.navigationController pushViewController:tmVc animated:YES];
+            }
+                break;
+            case 2:
+            {
+                
+            }
+                break;
+            case 3:
+            {
+                JGTeamInfoViewController *infoVc = [[JGTeamInfoViewController alloc] init];
+                infoVc.string = [self.detailDic objectForKey:@"info"];
+                [self.navigationController pushViewController:infoVc animated:YES];
 
-    }else if (indexPath.section == 2){
+            }
+                break;
+                
+            default:
+                break;
+        }
+        
+    }
+    else if (indexPath.section == 3){
         if (indexPath.row == 0) {
             JGCostSetViewController *costView = [[JGCostSetViewController alloc]initWithNibName:@"JGCostSetViewController" bundle:nil];
             costView.delegate = self;
