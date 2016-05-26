@@ -15,4 +15,7 @@
 //activityKey
 @property (copy, nonatomic)NSString *activityKey;
 
+
+@property (copy, nonatomic)NSString *invoiceKey;//发票key
+
 @end

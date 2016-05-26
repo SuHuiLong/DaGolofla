@@ -28,5 +28,20 @@
     }
 }
 
+- (void)configDict:(NSMutableDictionary *)dict{
+    //姓名
+//    @property (weak, nonatomic) IBOutlet UILabel *name;
+    self.name.text = [dict objectForKey:@"name"];
+    //性别
+//    @property (weak, nonatomic) IBOutlet UILabel *sex;
+    if ([[dict objectForKey:@"sex"]isEqualToString:@"0"]) {
+        self.sex.text = @"女";
+    }else{
+        self.sex.text = @"男";
+    }
+    //电话
+//    @property (weak, nonatomic) IBOutlet UILabel *number;
+    self.number.text = [dict objectForKey:@"mobile"];
+}
 
 @end

@@ -1,13 +1,12 @@
 //
-//  JGTeamMemberORManagerViewController.m
+//  JGNotTeamMemberDetailViewController.m
 //  DagolfLa
 //
-//  Created by 東 on 16/5/25.
+//  Created by lq on 16/5/24.
 //  Copyright © 2016年 bhxx. All rights reserved.
 //
 
-
-#import "JGTeamMemberORManagerViewController.h"
+#import "JGLTeamEditViewController.h"
 
 #import "JGHLaunchActivityViewController.h"
 #import "JGTableViewCell.h"
@@ -15,25 +14,20 @@
 #import "JGHTeamActivityImageCell.h"
 #import "DateTimeViewController.h"
 #import "TeamAreaViewController.h"
+
 #import "JGTeamActibityNameViewController.h"
 #import "SXPickPhoto.h"
 #import "JGHTeamContactTableViewCell.h"
 #import "JGCostSetViewController.h"
 #import "JGLableAndLableTableViewCell.h"
 #import "JGDisplayInfoTableViewCell.h"
-#import "TeamInviteViewController.h"
-
-
-#import "JGTeamManageViewController.h"
-
-#import "JGTeamMemberController.h"
 
 static NSString *const JGTableViewCellIdentifier = @"JGTableViewCell";
 static NSString *const JGHTeamContactCellIdentifier = @"JGHTeamContactTableViewCell";
 static CGFloat ImageHeight  = 210.0;
 
 
-@interface JGTeamMemberORManagerViewController ()<UITableViewDelegate, UITableViewDataSource, JGHTeamActivityImageCellDelegate, JGHConcentTextViewControllerDelegate, NSURLConnectionDownloadDelegate, JGCostSetViewControllerDelegate>
+@interface JGLTeamEditViewController ()<UITableViewDelegate, UITableViewDataSource, JGHConcentTextViewControllerDelegate, NSURLConnectionDownloadDelegate, JGCostSetViewControllerDelegate>
 {
     //、、、、、、、
     NSArray *_titleArray;//标题数组
@@ -45,12 +39,11 @@ static CGFloat ImageHeight  = 210.0;
 
 @property (nonatomic, strong)NSMutableDictionary *dataDict;
 
-
 @property (nonatomic, strong)UIImage *headerImage;
 
 @property (nonnull, strong)UIButton *headPortraitBtn;//头像
 
-@property (nonatomic, strong)UILabel *titleField;//球队名称输入框
+@property (nonatomic, strong)UITextField *titleField;//球队名称输入框
 
 @property (nonatomic, strong)UIView *titleView;//顶部导航
 
@@ -58,12 +51,11 @@ static CGFloat ImageHeight  = 210.0;
 
 @end
 
-@implementation JGTeamMemberORManagerViewController
+@implementation JGLTeamEditViewController
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:YES];
     self.navigationController.navigationBarHidden = YES;
-    self.titleField.text = self.detailModel.name;
     
 }
 - (void)viewWillDisappear:(BOOL)animated{
@@ -116,19 +108,19 @@ static CGFloat ImageHeight  = 210.0;
     UIButton *replaceBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     replaceBtn.frame = CGRectMake(screenWidth-64, 0, 54, 44);
     replaceBtn.titleLabel.font = [UIFont systemFontOfSize:FontSize_Normal];
-    [replaceBtn setTitle:@"分享" forState:UIControlStateNormal];
+    [replaceBtn setTitle:@"点击更换" forState:UIControlStateNormal];
     replaceBtn.titleLabel.font = [UIFont systemFontOfSize:13];
     replaceBtn.tag = 520;
     [replaceBtn addTarget:self action:@selector(initItemsBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.titleView addSubview:replaceBtn];
     //输入框
-    self.titleField = [[UILabel alloc]initWithFrame:CGRectMake(64, 7, screenWidth - 128, 30)];
-    self.titleField.textColor = [UIColor whiteColor];
+    self.titleField = [[UITextField alloc]initWithFrame:CGRectMake(64, 7, screenWidth - 138, 30)];
+    self.titleField.textColor = [UIColor clearColor];
     self.titleField.font = [UIFont systemFontOfSize:15];
-    //    [self.titleField setValue:[UIColor whiteColor] forKeyPath:@"_placeholderLabel.textColor"];
-    //    [self.titleField setValue:[UIFont boldSystemFontOfSize:15] forKeyPath:@"_placeholderLabel.font"];
     self.titleField.textAlignment = NSTextAlignmentCenter;
     self.titleField.font = [UIFont systemFontOfSize:15];
+    self.titleField.borderStyle = UITextBorderStyleRoundedRect;
+    
     //头像
     self.headPortraitBtn = [[UIButton alloc]initWithFrame:CGRectMake(20, 150, 50, 50)];
     [self.headPortraitBtn setImage:[UIImage imageNamed:@"relogo"] forState:UIControlStateNormal];
@@ -146,7 +138,7 @@ static CGFloat ImageHeight  = 210.0;
     //    [self.addressBtn addTarget:self action:@selector(replaceWithPicture:) forControlEvents:UIControlEventTouchUpInside];
     //    [self.imgProfile addSubview:self.addressBtn];
     
-//    _titleArray = @[@[], @[@"活动日期", @"开球时间", @"报名截止时间"], @[@"费用说明", @"人员限制", @"活动说明"], @[@"联系电话"]];
+    _titleArray = @[@[], @[@"活动日期", @"开球时间", @"报名截止时间"], @[@"费用说明", @"人员限制", @"活动说明"], @[@"联系电话"]];
     
     [self createPreviewBtn];
 }
@@ -162,28 +154,33 @@ static CGFloat ImageHeight  = 210.0;
     if (btn.tag == 521) {
         [self.navigationController popViewControllerAnimated:YES];
     }else if (btn.tag == 520){
-        //分享
-
+        //更换头像
+        [self didSelectPhotoImage:btn];
     }
 }
-#pragma mark -- 邀请好友BUTTON
+#pragma mark -- 预览
 - (void)createPreviewBtn{
     UIButton *previewBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, screenHeight -44, screenWidth, 44)];
-    [previewBtn setTitle:@"邀请好友" forState:UIControlStateNormal];
+    [previewBtn setTitle:@"保存" forState:UIControlStateNormal];
     previewBtn.backgroundColor = [UIColor colorWithHexString:@"#F59826"];
     [previewBtn addTarget:self action:@selector(previewBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:previewBtn];
 }
-#pragma mark -- 邀请好友
+#pragma mark -- 保存编辑操作
 - (void)previewBtnClick:(UIButton *)btn{
-    TeamInviteViewController *inviteVc = [[TeamInviteViewController alloc] init];
-    [self.navigationController pushViewController:inviteVc animated:YES];
 //    NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
 //    [dic setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"userId"] forKey:@"userKey"];
-//    [dic setObject:@(self.detailModel.timeKey) forKey:@"teamKey"];
+////    [dic setObject:@(self.detailModel.timeKey) forKey:@"teamKey"];
 //    [dic setObject:@0 forKey:@"state"];
 //    [dic setObject:@"2016-12-11 10:00:00" forKey:@"createTime"];
 //    [dic setObject:@0 forKey:@"timeKey"];
+//    
+//    //差个页面
+//    [dic setObject:@"iOS" forKey:@"userName"];
+//    [dic setObject:@0 forKey:@"sex"];
+//    [dic setObject:@0 forKey:@"almost"];
+//    [dic setObject:@1234567890 forKey:@"mobile"];
+//    
 //    
 //    [[JsonHttp jsonHttp] httpRequest:@"team/reqJoinTeam" JsonKey:@"teamMemeber" withData:dic requestMethod:@"POST" failedBlock:^(id errType) {
 //        NSLog(@"error *** %@", errType);
@@ -233,32 +230,26 @@ static CGFloat ImageHeight  = 210.0;
     if (section == 0) {
         return 1;
     }else if (section == 1){
-        return 1;
-    }else if (section == 2){
         return 4;
+    }else if (section == 2){
+        return 2;
     }else{
         return 1;
     }
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 5;
+    return 4;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 0) {
         return ImageHeight -10;
-    }else if (indexPath.section == 1){
-        return [self calculationLabelHeight:[self.detailDic objectForKey:@"notice"]] + 40 * screenWidth / 320;
-        
-    }else if (indexPath.section == 4){
-        if (self.isManager == NO) {
-            return 0;
-        }else{
-            return 40;
-        }
+    }else if (indexPath.section == 3){
+//        return [self calculationLabelHeight:self.detailModel.info] + 40 * screenWidth / 320;
+        return 50;
     }else{
-        return 40;
+        return 44;
     }
 }
 
@@ -288,66 +279,82 @@ static CGFloat ImageHeight  = 210.0;
         launchImageActivityCell.selectionStyle = UITableViewCellSelectionStyleNone;
         
         return launchImageActivityCell;
-    }else if (indexPath.section == 1){
+    }else if (indexPath.section == 3){
         JGDisplayInfoTableViewCell *contactCell = [tableView dequeueReusableCellWithIdentifier:@"Display"];
-        contactCell.promptLB.text = @"球队动态";
+        contactCell.promptLB.text = @"球队简介";
         
         contactCell.contentLB.lineBreakMode = NSLineBreakByWordWrapping;
-        contactCell.contentLB.text = [self.detailDic objectForKey:@"notice"];
-        contactCell.contentLB.frame = CGRectMake(10, 35  * screenWidth / 320, screenWidth - 20  * screenWidth / 320, [self calculationLabelHeight:[self.detailDic objectForKey:@"notice"]]);
+//        contactCell.contentLB.text = self.detailModel.info;
+//        contactCell.contentLB.frame = CGRectMake(10, 35  * screenWidth / 320, screenWidth - 20  * screenWidth / 320, [self calculationLabelHeight:self.detailModel.info]);
         return contactCell;
-    }else if (indexPath.section == 2){
+    }else if (indexPath.section == 1){
         
         JGLableAndLableTableViewCell *launchActivityCell = [tableView dequeueReusableCellWithIdentifier:@"lbVSlb" forIndexPath:indexPath];
         launchActivityCell.selectionStyle = UITableViewCellSelectionStyleNone;
         
         switch (indexPath.row) {
             case 0:
-                launchActivityCell.promptLB.text = @"赛事活动";
+                launchActivityCell.promptLB.text = @"球队队长";
+                launchActivityCell.contentLB.text = @"MISS";
                 break;
             case 1:
-                launchActivityCell.promptLB.text = @"球队成员";
-                launchActivityCell.contentLB.text = self.detailModel.cityName;
+                launchActivityCell.promptLB.text = @"所属地区";
+//                launchActivityCell.contentLB.text = self.detailModel.cityName;
                 break;
             case 2:
-                launchActivityCell.promptLB.text = @"球队相册";
-                launchActivityCell.contentLB.text = self.detailModel.establishTime;
+                launchActivityCell.promptLB.text = @"成立时间";
+//                launchActivityCell.contentLB.text = self.detailModel.establishTime;
                 break;
             case 3:
-                launchActivityCell.promptLB.text = @"球队简介";
+                launchActivityCell.promptLB.text = @"球队规模";
 //                launchActivityCell.contentLB.text = [NSString stringWithFormat:@"%td人", self.detailModel.userSum];
                 break;
             default:
                 break;
         }
         
-        launchActivityCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        return launchActivityCell;
         
-    }else if (indexPath.section == 3){
-        JGLableAndLableTableViewCell *launchActivityCell = [tableView dequeueReusableCellWithIdentifier:@"lbVSlb" forIndexPath:indexPath];
-        launchActivityCell.selectionStyle = UITableViewCellSelectionStyleNone;
-            launchActivityCell.promptLB.text = @"个人设置";
-
-        launchActivityCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         return launchActivityCell;
-        
     }else{
-     
         JGLableAndLableTableViewCell *launchActivityCell = [tableView dequeueReusableCellWithIdentifier:@"lbVSlb" forIndexPath:indexPath];
         launchActivityCell.selectionStyle = UITableViewCellSelectionStyleNone;
-            launchActivityCell.promptLB.text = @"球队管理";
-        launchActivityCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        if (self.isManager == NO) {
-            launchActivityCell.promptLB.text = @"";
+        if (indexPath.row == 0) {
+            launchActivityCell.promptLB.text = @"赛事活动";
+        }else{
+            launchActivityCell.promptLB.text = @"球队相册";
         }
+        launchActivityCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         return launchActivityCell;
-
     }
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 1) {
-
+        //        if (indexPath.row == 0 || indexPath.row == 1) {
+        //            //时间选择
+        //            DateTimeViewController *dataCtrl = [[DateTimeViewController alloc]init];
+        //            [dataCtrl setCallback:^(NSString *dateStr, NSString *dateWeek, NSString *str) {
+        //                if (indexPath.row == 0) {
+        //                    [self.model setValue:dateStr forKey:@"startDate"];
+        //                }else{
+        //                    [self.model setValue:dateStr forKey:@"endDate"];
+        //                }
+        //
+        //                NSIndexPath *indPath = [NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section];
+        //                [self.launchActivityTableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indPath, nil] withRowAnimation:UITableViewRowAnimationNone];
+        //            }];
+        //
+        //            [self.navigationController pushViewController:dataCtrl animated:YES];
+        //        }else{
+        //            //地区选择
+        //            TeamAreaViewController* areaVc = [[TeamAreaViewController alloc]init];
+        //            areaVc.teamType = @10;
+        //            areaVc.callBackCity = ^(NSString* strPro, NSString* strCity, NSNumber* cityId){
+        //                [self.model setValue:[NSString stringWithFormat:@"%@-%@", strPro, strCity] forKey:@"activityAddress"];
+        //                NSIndexPath *indPath = [NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section];
+        //                [self.launchActivityTableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indPath, nil] withRowAnimation:UITableViewRowAnimationNone];
+        //            };
+        //            [self.navigationController pushViewController:areaVc animated:YES];
+        //        }
     }else if (indexPath.section == 2){
         if (indexPath.row == 0) {
             JGCostSetViewController *costView = [[JGCostSetViewController alloc]initWithNibName:@"JGCostSetViewController" bundle:nil];
@@ -363,11 +370,6 @@ static CGFloat ImageHeight  = 210.0;
          concentTextCtrl.contentTextString = _model.activityInfo;
          [self.navigationController pushViewController:concentTextCtrl animated:YES];
          */
-    }
-    else
-    {
-        JGTeamManageViewController* tmVc = [[JGTeamManageViewController alloc]init];
-        [self.navigationController pushViewController:tmVc animated:YES];
     }
     
     [self.launchActivityTableView reloadData];
@@ -443,5 +445,4 @@ static CGFloat ImageHeight  = 210.0;
  */
 
 @end
-
 

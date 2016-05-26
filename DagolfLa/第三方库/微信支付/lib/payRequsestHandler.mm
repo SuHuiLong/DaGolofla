@@ -73,7 +73,7 @@
     NSString *sign;
     NSMutableString *reqPars=[NSMutableString string];
     //生成签名
-    sign        = [self createMd5Sign:packageParams];
+//    sign        = [self createMd5Sign:packageParams];
     //生成xml的package
     NSArray *keys = [packageParams allKeys];
     [reqPars appendString:@"<xml>\n"];
@@ -194,7 +194,7 @@
         NSMutableDictionary *signParams = [NSMutableDictionary dictionary];
         [signParams setObject: appid        forKey:@"appid"];
         [signParams setObject: nonce_str    forKey:@"noncestr"];
-        [signParams setObject: package      forKey:@"package"];
+        [signParams setObject: package      forKey:@"Package"];
         [signParams setObject: mchid        forKey:@"partnerid"];
         [signParams setObject: time_stamp   forKey:@"timestamp"];
         [signParams setObject: prePayid     forKey:@"prepayid"];
