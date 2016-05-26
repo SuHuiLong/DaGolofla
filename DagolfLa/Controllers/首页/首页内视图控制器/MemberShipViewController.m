@@ -90,7 +90,19 @@
     [[PostDataRequest sharedInstance] getDataRequest:strUrl success:^(id respondsData) {
 //        NSDictionary* dict = [NSJSONSerialization JSONObjectWithData:respondsData options:NSJSONReadingMutableContainers error:nil];
         NSURL* url = [NSURL URLWithString:@"http://www.dagolfla.com/app/MembershipSerch.html"];
-        //    NSURL* url = [NSURL URLWithString:@"http://www.dagolfla.com/app/Packbookserch.html"];
+        
+        
+    
+       
+//        NSURL* url = [NSURL URLWithString:@"http://192.168.1.101:8888/team/getMyTeamActivityList"];
+
+        
+//        NSString *oldUserAgent = [[[UIWebView alloc] init] stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"];
+//        NSString * appName = [[NSBundle mainBundle] infoDictionary][@"CFBundleDisplayName"];
+//        NSString *version = [[NSBundle mainBundle] infoDictionary][@"CFBundleShortVersionString"];
+//        NSString *customUserAgent = [oldUserAgent stringByAppendingFormat:@" %@/1.0", appName];
+//        [[NSUserDefaults standardUserDefaults] registerDefaults:@{@"UserAgent":customUserAgent}];
+//        NSLog(@"%@",customUserAgent);
         
         //设置页面禁止滚动
         _webView.scrollView.bounces = NO ;
