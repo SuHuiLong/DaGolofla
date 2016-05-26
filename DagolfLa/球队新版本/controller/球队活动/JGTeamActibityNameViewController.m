@@ -466,10 +466,11 @@ static CGFloat ImageHeight  = 210.0;
         return (UIView *)launchImageActivityCell;
     }else if (section == 1) {
         JGTeamActivityWithAddressCell *addressCell = [tableView dequeueReusableCellWithIdentifier:JGTeamActivityWithAddressCellIdentifier];
-//        [addressCell configModel:model];
+        [addressCell configModel:self.model];
         return (UIView *)addressCell;
     }else if (section == 2 || section == 3){
         JGHHeaderLabelCell *headerCell = [tableView dequeueReusableCellWithIdentifier:JGHHeaderLabelCellIdentifier];
+//        headerCell congifContact:self.model. andNote:<#(NSString *)#>
         return (UIView *)headerCell;
     }else{
         JGTeamActivityDetailsCell *detailsCell = [tableView dequeueReusableCellWithIdentifier:JGTeamActivityDetailsCellIdentifier];

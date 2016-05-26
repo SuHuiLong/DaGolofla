@@ -10,11 +10,11 @@
 @class JGTeamAcitivtyModel;
 
 @interface JGTeamActivityWithAddressCell : UITableViewCell
-//球场名称
+//开始时间
 @property (weak, nonatomic) IBOutlet UILabel *reamName;
-//活动时间
+//结束时间
 @property (weak, nonatomic) IBOutlet UILabel *activityTime;
-//人员限制
+//截止时间
 @property (weak, nonatomic) IBOutlet UILabel *limits;
 
 - (void)configModel:(JGTeamAcitivtyModel *)model;

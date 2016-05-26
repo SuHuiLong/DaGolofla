@@ -57,6 +57,7 @@
     
     [self loadTestData];
 }
+
 - (void)loadTestData{
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     [dict setObject:@"/team/11010.png" forKey:@"data"];
