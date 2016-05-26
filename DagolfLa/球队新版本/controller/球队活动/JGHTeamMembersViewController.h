@@ -18,4 +18,6 @@
 
 @property (nonatomic, weak)id <JGHTeamMembersViewControllerDelegate> delegate;
 
+@property (nonatomic, strong)NSMutableArray *teamGroupAllDataArray;
+
 @end

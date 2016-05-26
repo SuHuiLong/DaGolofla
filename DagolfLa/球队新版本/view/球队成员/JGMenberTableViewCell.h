@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "JGLTeamMemberModel.h"
+#import "JGHPlayersModel.h"
+
 @interface JGMenberTableViewCell : UITableViewCell
 
 
@@ -23,5 +25,7 @@
 
 
 -(void) showData:(JGLTeamMemberModel *)model;
+
+- (void)configJGHPlayersModel:(JGHPlayersModel *)model;
 
 @end

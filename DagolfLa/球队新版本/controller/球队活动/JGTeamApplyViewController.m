@@ -136,6 +136,7 @@ static NSString *const JGHApplyListCellIdentifier = @"JGHApplyListCell";
         NSLog(@"errType == %@", errType);
     } completionBlock:^(id data) {
         NSLog(@"data == %@", data);
+        //getTeamActivity
         NSMutableDictionary *datadict = [NSMutableDictionary dictionary];
         datadict = [data objectForKey:@"activity"];
         [self.model setValuesForKeysWithDictionary:datadict];

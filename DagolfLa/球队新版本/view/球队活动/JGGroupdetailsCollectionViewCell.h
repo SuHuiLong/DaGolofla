@@ -7,10 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+@class JGHPlayersModel;
+@class JGGroupdetailsCollectionViewCell;
 
 @protocol JGGroupdetailsCollectionViewCellDelegate <NSObject>
 
-- (void)didSelectHeaderImage:(UIButton *)btn;
+- (void)didSelectHeaderImage:(UIButton *)btn JGGroupCell:(JGGroupdetailsCollectionViewCell *)cell;
 
 @end
 
@@ -55,5 +57,9 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *lable4;
 
+
+- (void)configJGHPlayersModel:(JGHPlayersModel *)model andSortIndex:(NSInteger)sortIndex;
+
+- (void)configCellWithModelArray:(NSMutableArray *)modelArray;
 
 @end

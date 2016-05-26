@@ -25,6 +25,7 @@ typedef NS_ENUM(NSInteger, GestureType) {
 
 //userId
 #define userID @"userId"
+#define isAdmin @"isAdmin"
 
 #define kDistance 10*screenWidth/375 //说说和图片的间隔
 #define kReplyBtnDistance 30*screenWidth/375 //回复按钮距离

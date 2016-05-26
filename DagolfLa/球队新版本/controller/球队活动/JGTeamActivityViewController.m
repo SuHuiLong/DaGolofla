@@ -41,11 +41,11 @@
     
     [self createTeamActivityTabelView];
     
-    self.isAdmin = @"0";
-    //判断权限
-    if ([self.isAdmin isEqualToString:@"0"]) {
-        [self createAdminBtn];
-    }
+//    self.isAdmin = @"0";
+//    //判断权限
+//    if ([self.isAdmin isEqualToString:@"0"]) {
+//        [self createAdminBtn];
+//    }
     
     [self loadData];
     
