@@ -17,17 +17,20 @@
 
 @property (nonatomic, assign)NSInteger sex;//0-1女，1-男，默认男－1
 
+@property (nonatomic, assign)NSInteger isPlays;//0-不是，1-是，默认是
+
 @end
 
 @implementation JGAddTeamGuestViewController
 
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor colorWithHexString:BG_color];
-    self.guestArray = [NSMutableArray array];
+//    self.applyArray = [NSMutableArray array];
     self.navigationItem.title = @"添加地球人";
-    self.applyArray = [NSMutableArray array];
     self.sex = 1;//男－默认
+    self.isPlays = 1;
     [self createAddGuestTableview];
 }
 #pragma mark --创建tableView
@@ -43,7 +46,7 @@
     return 1;
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 4;
+    return _applyArray.count;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return 44;
@@ -52,7 +55,7 @@
     return 1;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    return 7;
+    return 10;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     static NSString * JGAlreadyAddGuestCellID = @"JGAlreadyAddGuestCell";
@@ -63,8 +66,8 @@
     
     alreadyGuestCell.selectionStyle = UITableViewCellSelectionStyleNone;
     alreadyGuestCell.deleteGuest.tag = indexPath.section + 100;
-    
-    
+    alreadyGuestCell.delegate = self;
+    [alreadyGuestCell configDict:self.applyArray[indexPath.section]];
     
     return alreadyGuestCell;
 }
@@ -80,8 +83,8 @@
     [applyDict setObject:@"192" forKey:@"teamKey"];//球队key
     [applyDict setObject:@"206" forKey:@"activityKey"];//球队活动id
     [applyDict setObject:@244 forKey:@"userKey"];//报名用户key , 没有则是嘉宾
-    [applyDict setObject:@1 forKey:@"type"];//"是否是球队成员 0: 不是  1：是
-
+    [applyDict setObject:[NSString stringWithFormat:@"%ld", (long)_isPlays] forKey:@"type"];//"是否是球队成员 0: 不是  1：是
+    
     [applyDict setObject:@0 forKey:@"userKey"];//报名用户key , 没有则是嘉宾
     [applyDict setObject:@0 forKey:@"type"];
     
@@ -107,7 +110,8 @@
     [applyDict setObject:@0 forKey:@"timeKey"];//timeKey
     [applyDict setObject:@"1" forKey:@"select"];//付款勾选默认勾
     
-    [self.guestArray addObject:applyDict];
+    [self.applyArray addObject:applyDict];
+    [self.addTeamGuestTableView reloadData];
 //    NSMutableDictionary *applyDict = [NSMutableDictionary dictionary];
 //    [applyDict setObject:self.teamKey forKey:@"teamKey"];//球队key
 //    [applyDict setObject:self.activityKey forKey:@"activityKey"];//活动ID
@@ -116,7 +120,7 @@
 #pragma mark -- 完成按钮事件
 - (IBAction)finishBtnClick:(UIButton *)sender {
     if (self.delegate) {
-        [self.delegate addGuestListArray:self.guestArray];
+        [self.delegate addGuestListArray:self.applyArray];
         [self.navigationController popViewControllerAnimated:YES];
     }
 }
@@ -134,7 +138,9 @@
 }
 #pragma mark -- 删除好友 －－ JGAlreadyAddGuestCellDelegate
 - (void)didSelecctDeleteGuestId:(NSInteger)guesId{
-    
+    NSLog(@"删除好友");
+    [self.applyArray removeObjectAtIndex:guesId];
+    [self.addTeamGuestTableView reloadData];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -150,7 +156,16 @@
     // Pass the selected object to the new view controller.
 }
 */
-
+#pragma mark -- 是否是球队成员
 - (IBAction)isPlayersBtn:(UIButton *)sender {
+    if (self.isPlays == 1) {
+        self.isPlays = 0;
+        [self.isPlayersBtn setImage:[UIImage imageNamed:@"kuang"] forState:UIControlStateNormal];
+    }else{
+        self.isPlays = 1;
+        [self.isPlayersBtn setImage:[UIImage imageNamed:@"kuang_xz"] forState:UIControlStateNormal];
+    }
+    
+    NSLog(@"%ld", (long)self.isPlays);
 }
 @end

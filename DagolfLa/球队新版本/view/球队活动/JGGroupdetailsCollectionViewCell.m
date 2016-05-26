@@ -17,6 +17,14 @@
     self.bgView.layer.masksToBounds = YES;
     self.bgView.layer.cornerRadius = 5;
     
+    if (!iPhone6) {
+        [self.lable1 removeConstraints:self.constraints];
+        self.lable1.frame = CGRectMake(self.sction1.frame.origin.x, self.sction1.frame.origin.y + self.sction1.frame.size.height/7*4, self.sction1.frame.size.width, self.sction1.frame.size.height/7*2);
+        [self.sction1 addSubview:self.lable1];
+    }
+    
+//    self.lable1.frame = CGRectMake(self.sction1.frame.origin.x, self.sction1.frame.origin.y + self.sction1.frame.size.height/7*4, self.sction1.frame.size.width, self.sction1.frame.size.height/7*2);
+    
 }
 
 //第一个

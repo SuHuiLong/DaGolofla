@@ -40,6 +40,6 @@
 
 @property (weak, nonatomic)id <JGAddTeamGuestViewControllerDelegate> delegate;
 
-@property (nonatomic, strong) NSMutableArray *guestArray;//成员数组集合
+//@property (nonatomic, strong) NSMutableArray *guestArray;//成员数组集合
 
 @end

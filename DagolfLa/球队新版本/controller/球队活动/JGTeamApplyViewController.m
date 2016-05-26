@@ -11,7 +11,7 @@
 #import "JGTableViewCell.h"
 #import "JGApplyPepoleCell.h"
 #import "JGAddTeamGuestViewController.h"
-#import "JGInvoiceViewController.h"
+#import "JGHAddInvoiceViewController.h"
 #import "JGTeamGroupViewController.h"
 #import "JGTeamAcitivtyModel.h"
 #import "JGHHeaderLabelCell.h"
@@ -28,7 +28,7 @@ static NSString *const JGApplyPepoleCellIdentifier = @"JGApplyPepoleCell";
 static NSString *const JGHHeaderLabelCellIdentifier = @"JGHHeaderLabelCell";
 static NSString *const JGHApplyListCellIdentifier = @"JGHApplyListCell";
 
-@interface JGTeamApplyViewController ()<JGApplyPepoleCellDelegate, JGHApplyListCellDelegate, JGAddTeamGuestViewControllerDelegate>
+@interface JGTeamApplyViewController ()<JGApplyPepoleCellDelegate, JGHApplyListCellDelegate, JGAddTeamGuestViewControllerDelegate, JGHAddInvoiceViewControllerDelegate>
 {
     UIAlertController *_actionView;
 }
@@ -42,6 +42,10 @@ static NSString *const JGHApplyListCellIdentifier = @"JGHApplyListCell";
 @property (nonatomic, strong)NSMutableDictionary *info;
 
 @property (nonatomic, strong)UIButton *cellClickBtn;//拦截cell点击事件
+
+@property (nonatomic, assign)NSInteger realPayPrice;//实付金额
+@property (nonatomic, assign)NSInteger subsidiesPrice;//补贴金额
+
 
 @end
 
@@ -66,6 +70,8 @@ static NSString *const JGHApplyListCellIdentifier = @"JGHApplyListCell";
     self.applyArray = [NSMutableArray array];
     self.info = [NSMutableDictionary dictionary];
     self.titleArray = @[@"活动名称", @"活动地址", @"活动日期", @"活动费用", @"嘉宾费用"];
+    _realPayPrice = 0;
+    _subsidiesPrice = 0;
     //注册cell
     UINib *activityNameNib = [UINib nibWithNibName:@"JGActivityBaseInfoCell" bundle: [NSBundle mainBundle]];
     [self.teamApplyTableView registerNib:activityNameNib forCellReuseIdentifier:JGActivityBaseInfoCellIdentifier];
@@ -191,25 +197,34 @@ static NSString *const JGHApplyListCellIdentifier = @"JGHApplyListCell";
         return (UIView *)applyPepoleCell;
     }else{
         JGHHeaderLabelCell *activityNameCell = [tableView dequeueReusableCellWithIdentifier:JGHHeaderLabelCellIdentifier];
-        activityNameCell.selectionStyle = UITableViewCellSelectionStyleNone;
         if (section == 2) {
             self.cellClickBtn.frame = CGRectMake(0, 0, screenWidth, activityNameCell.frame.size.height);
             [self.cellClickBtn addTarget:self action:@selector(cellClickBtn:) forControlEvents:UIControlEventTouchUpInside];
+            [activityNameCell congiftitles:@"发票信息："];
             [activityNameCell.contentView addSubview:self.cellClickBtn];
+            activityNameCell.accessoryType = UITableViewCellSelectionStyleBlue;
+        }else{
+            activityNameCell.selectionStyle = UITableViewCellSelectionStyleNone;
+            [activityNameCell congiftitles:@"实付金额："];
+            [activityNameCell congifContact:[NSString stringWithFormat:@"%ld", (long)_realPayPrice] andNote:[NSString stringWithFormat:@"%ld", (long)_subsidiesPrice]];
         }
         
         return (UIView *)activityNameCell;
     }
 }
-#pragma mark -- 发票cell点击事件
+#pragma mark -- 发票点击事件
 - (void)cellClickBtn:(UIButton *)btn{
-    JGInvoiceViewController *invoiceCtrl = [[JGInvoiceViewController alloc]init];
+    JGHAddInvoiceViewController *invoiceCtrl = [[JGHAddInvoiceViewController alloc]init];
+    invoiceCtrl.delegate = self;
+    invoiceCtrl.invoiceKey = _invoiceKey;
     [self.navigationController pushViewController:invoiceCtrl animated:YES];
 }
 #pragma mark -- 立即付款
 - (IBAction)nowPayBtnClick:(UIButton *)sender {
-    _actionView = [UIAlertController alertControllerWithTitle:@"选择支付方式" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     // 分别3个创建操作
+    UIAlertAction * cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+//        _photos = 1;
+    }];
     UIAlertAction *weiChatAction = [UIAlertAction actionWithTitle:@"微信支付" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         NSLog(@"微信支付");
 
@@ -250,6 +265,52 @@ static NSString *const JGHApplyListCellIdentifier = @"JGHApplyListCell";
         
     }];
     
+    UIAlertAction *zhifubaoAction = [UIAlertAction actionWithTitle:@"微信支付" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        NSLog(@"支付宝支付");
+        
+        NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
+        [dict setObject:@0 forKey:@"payInfo"];
+        
+        [[JsonHttp jsonHttp]httpRequest:@"pay/doPayWeiXin" JsonKey:@"payInfo" withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
+            NSLog(@"errType == %@", errType);
+        } completionBlock:^(id data) {
+            
+            NSDictionary *dict = [[data objectForKey:@"rows"] objectForKey:@"appRequest"];
+            //微信
+            //创建支付签名对象
+            payRequsestHandler *req = [payRequsestHandler alloc];
+            
+            //初始化支付签名对象
+            [req init:@"wxdcdc4e20544ed728" mch_id:[dict objectForKey:@"partnerid"]];
+            //设置秘钥
+            [req setKey:[[data objectForKey:@"rows"] objectForKey:@"key"]];
+            
+            NSMutableDictionary *dict1 = [req sendPay_demoPrePayid:[dict objectForKey:@"prepayid"]];
+            if (dict1) {
+                PayReq *request = [[PayReq alloc] init];
+                request.openID       = [dict1 objectForKey:@"appid"];
+                request.partnerId    = [dict1 objectForKey:@"partnerid"];
+                request.prepayId     = [dict1 objectForKey:@"prepayid"];
+                request.package      = [dict1 objectForKey:@"package"];
+                request.nonceStr     = [dict1 objectForKey:@"noncestr"];
+                request.timeStamp    =[[dict1 objectForKey:@"timestamp"] intValue];
+                request.sign         = [dict1 objectForKey:@"sign"];
+                
+                [WXApi sendReq:request];
+            }
+            
+            
+        }];
+        
+        
+    }];
+    
+    _actionView = [UIAlertController alertControllerWithTitle:@"选择支付方式" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    [_actionView addAction:weiChatAction];
+    [_actionView addAction:zhifubaoAction];
+    [_actionView addAction:cancelAction];
+    [self presentViewController:_actionView animated:YES completion:nil];
+    
 }
 #pragma mark -- 现场付款
 - (IBAction)scenePayBtnClick:(UIButton *)sender {
@@ -283,7 +344,7 @@ static NSString *const JGHApplyListCellIdentifier = @"JGHApplyListCell";
 - (void)addApplyPeopleClick{
     JGAddTeamGuestViewController *addTeamGuestCtrl = [[JGAddTeamGuestViewController alloc]initWithNibName:@"JGAddTeamGuestViewController" bundle:nil];
     addTeamGuestCtrl.delegate = self;
-    addTeamGuestCtrl.guestArray = self.applyArray;
+    addTeamGuestCtrl.applyArray = self.applyArray;
     [self.navigationController pushViewController:addTeamGuestCtrl animated:YES];
 }
 - (void)didReceiveMemoryWarning {
@@ -302,6 +363,10 @@ static NSString *const JGHApplyListCellIdentifier = @"JGHApplyListCell";
 - (void)addGuestListArray:(NSArray *)guestListArray{
     self.applyArray = [NSMutableArray arrayWithArray:guestListArray];
     [self.teamApplyTableView reloadData];
+}
+#pragma mark -- 发票代理
+- (void)backAddressKey:(NSString *)addressKey{
+    self.invoiceKey = addressKey;
 }
 /*
 #pragma mark - Navigation

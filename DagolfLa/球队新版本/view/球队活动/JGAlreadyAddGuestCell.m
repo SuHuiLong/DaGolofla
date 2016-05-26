@@ -41,6 +41,7 @@
     }
     //电话
 //    @property (weak, nonatomic) IBOutlet UILabel *number;
+    self.number.text = [dict objectForKey:@"mobile"];
 }
 
 @end

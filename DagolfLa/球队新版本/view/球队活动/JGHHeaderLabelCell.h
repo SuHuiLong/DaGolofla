@@ -14,5 +14,14 @@
 @property (weak, nonatomic) IBOutlet UILabel *titles;
 //contcat
 @property (weak, nonatomic) IBOutlet UILabel *contact;
+@property (weak, nonatomic) IBOutlet UILabel *noteLbael;
+//补贴金额
+@property (weak, nonatomic) IBOutlet UILabel *subsidies;
+
+@property (weak, nonatomic) IBOutlet UILabel *yuan;
+
+- (void)congiftitles:(NSString *)titles;
+
+- (void)congifContact:(NSString *)contact andNote:(NSString *)note;
 
 @end

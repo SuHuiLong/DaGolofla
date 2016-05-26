@@ -30,4 +30,30 @@
 
 @property (weak, nonatomic) id <JGGroupdetailsCollectionViewCellDelegate> delegate;
 
+
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *sction1Left;
+
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *section1Right;
+
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *section2Left;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *section2Right;
+
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *section3Left;
+
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *section3Right;
+
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *section4Left;
+
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *section4Right;
+
+
+@property (weak, nonatomic) IBOutlet UILabel *lable1;
+
+@property (weak, nonatomic) IBOutlet UILabel *lable2;
+
+@property (weak, nonatomic) IBOutlet UILabel *lable3;
+
+@property (weak, nonatomic) IBOutlet UILabel *lable4;
+
+
 @end
