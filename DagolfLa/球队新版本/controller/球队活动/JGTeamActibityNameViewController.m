@@ -34,7 +34,7 @@ static CGFloat ImageHeight  = 210.0;
 
 @property (nonnull, strong)UIButton *headPortraitBtn;//头像
 
-@property (nonatomic, strong)UITextField *titleField;//球队名称输入框
+@property (nonatomic, strong)UILabel *titleField;//球队名称输入框
 
 @property (nonatomic, strong)UIView *titleView;//顶部导航
 
@@ -46,10 +46,18 @@ static CGFloat ImageHeight  = 210.0;
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:YES];
     self.navigationController.navigationBarHidden = YES;
+    [self setData];
+    
 }
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:YES];
     self.navigationController.navigationBarHidden = NO;
+}
+
+
+- (void)setData{
+    self.titleField.text = self.model.name;
+    [self.addressBtn setTitle:self.model.ballName forState:(UIControlStateNormal)];
 }
 
 - (instancetype)init{
@@ -118,12 +126,13 @@ static CGFloat ImageHeight  = 210.0;
     [replaceBtn addTarget:self action:@selector(initItemsBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.titleView addSubview:replaceBtn];
     //输入框
-    self.titleField = [[UITextField alloc]initWithFrame:CGRectMake(64, 7, screenWidth - 128, 30)];
-    self.titleField.placeholder = @"请输入活动名称";
-    [self.titleField setValue:[UIColor whiteColor] forKeyPath:@"_placeholderLabel.textColor"];
-    [self.titleField setValue:[UIFont boldSystemFontOfSize:15] forKeyPath:@"_placeholderLabel.font"];
+    self.titleField = [[UILabel alloc]initWithFrame:CGRectMake(64, 7, screenWidth - 128, 30)];
+    self.titleField.text = self.model.name;
+    self.titleField.textColor = [UIColor whiteColor];
+//    [self.titleField setValue:[UIColor whiteColor] forKeyPath:@"_placeholderLabel.textColor"];
+//    [self.titleField setValue:[UIFont boldSystemFontOfSize:15] forKeyPath:@"_placeholderLabel.font"];
     self.titleField.textAlignment = NSTextAlignmentCenter;
-    self.titleField.font = [UIFont systemFontOfSize:15];
+    self.titleField.font = [UIFont systemFontOfSize:16 * screenWidth / 320];
     //头像
     self.headPortraitBtn = [[UIButton alloc]initWithFrame:CGRectMake(10, 135, 65, 65)];
     [self.headPortraitBtn setImage:[UIImage imageNamed:@"zwt"] forState:UIControlStateNormal];
@@ -140,7 +149,7 @@ static CGFloat ImageHeight  = 210.0;
     [self.addressBtn setTitle:@"请添加地址" forState:UIControlStateNormal];
     self.addressBtn.titleLabel.font = [UIFont systemFontOfSize:13];
     self.addressBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-    [self.addressBtn addTarget:self action:@selector(replaceWithPicture:) forControlEvents:UIControlEventTouchUpInside];
+//    [self.addressBtn addTarget:self action:@selector(replaceWithPicture:) forControlEvents:UIControlEventTouchUpInside];
     [self.imgProfile addSubview:self.addressBtn];
 }
 #pragma mark -- 下载数据
@@ -457,10 +466,11 @@ static CGFloat ImageHeight  = 210.0;
         return (UIView *)launchImageActivityCell;
     }else if (section == 1) {
         JGTeamActivityWithAddressCell *addressCell = [tableView dequeueReusableCellWithIdentifier:JGTeamActivityWithAddressCellIdentifier];
-//        [addressCell configModel:model];
+        [addressCell configModel:self.model];
         return (UIView *)addressCell;
     }else if (section == 2 || section == 3){
         JGHHeaderLabelCell *headerCell = [tableView dequeueReusableCellWithIdentifier:JGHHeaderLabelCellIdentifier];
+//        headerCell congifContact:self.model. andNote:<#(NSString *)#>
         return (UIView *)headerCell;
     }else{
         JGTeamActivityDetailsCell *detailsCell = [tableView dequeueReusableCellWithIdentifier:JGTeamActivityDetailsCellIdentifier];

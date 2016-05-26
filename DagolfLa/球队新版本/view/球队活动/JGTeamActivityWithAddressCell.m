@@ -23,12 +23,12 @@
 }
 
 - (void)configModel:(JGTeamAcitivtyModel *)model{
-    //球场名称
-    self.reamName.text = model.ballName;
-    //活动时间
-    self.activityTime.text = [NSString stringWithFormat:@"%ld", (long)model.beginDate];
-    //人员限制
-    self.limits.text = [NSString stringWithFormat:@"限制球队(%ld)人", (long)model.maxCount];
+    //开始
+    self.reamName.text = model.beginDate;
+    //结束时间
+    self.activityTime.text = model.endDate;
+    //截止
+    self.limits.text = model.signUpEndTime;
 }
 
 @end

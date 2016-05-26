@@ -157,7 +157,7 @@ static CGFloat ImageHeight  = 210.0;
         //球场列表
         
     }
-    [self didSelectPhotoImage:Btn];
+//    [self didSelectPhotoImage:Btn];
 }
 
 - (void)initItemsBtnClick:(UIButton *)btn{

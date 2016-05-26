@@ -181,13 +181,19 @@ static CGFloat ImageHeight  = 210.0;
     NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
     NSDictionary *Dic =[user objectForKey:@"cacheCreatTeamDic"];
     [[JsonHttp jsonHttp] httpRequest:@"team/createTeam" JsonKey:@"team" withData:Dic requestMethod:@"POST" failedBlock:^(id errType) {
-        NSLog(@"error");
+//        NSLog(@"error");
     } completionBlock:^(id data) {
-        NSLog(@"%@", data);
-        [user setObject:0 forKey:@"cacheCreatTeamDic"];
-        [user synchronize];
+//        NSLog(@"%@", data);
+        if ([data objectForKey:@"packSuccess"]) {
+            [user setObject:0 forKey:@"cacheCreatTeamDic"];
+            [user synchronize];
+        }
+
     }];
-    
+    [Helper alertViewNoHaveCancleWithTitle:@"活动创建提交成功" withBlock:^(UIAlertController *alertView) {
+        [self.navigationController presentViewController:alertView animated:YES completion:nil];
+    }];
+    [self.navigationController popViewControllerAnimated:YES];
 //    NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
 //    [dic setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"userId"] forKey:@"userKey"];
 //    //    [dic setObject:@([self.detailDic objectForKey:@"timeKey"]) forKey:@"teamKey"];

@@ -55,4 +55,5 @@
 //联系人电话
 @property (copy, nonatomic) NSString *usernumber;
 
+@property (assign, nonatomic) NSInteger teamActivityKey;
 @end

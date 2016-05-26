@@ -14,9 +14,15 @@
 #import "JGTeamGroupViewController.h"
 #import "JGTeamApplyViewController.h"
 
+#import "MJRefresh.h"
+#import "MJDIYBackFooter.h"
+#import "MJDIYHeader.h"
+
 @interface JGTeamActivityViewController ()<UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, strong)UITableView *teamActivityTableView;
 @property (nonatomic, strong)NSMutableArray *dataArray;//数据模型数组
+@property (nonatomic, assign)NSInteger page;
+
 @end
 
 @implementation JGTeamActivityViewController
@@ -38,7 +44,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationItem.title = @"球队活动";
-    
+    self.page = 1;
     [self createTeamActivityTabelView];
     
 //    self.isAdmin = @"0";
@@ -51,6 +57,7 @@
     
     [self loadTestData];
 }
+
 - (void)loadTestData{
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     [dict setObject:@"/team/11010.png" forKey:@"data"];
@@ -65,12 +72,12 @@
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
     //244  121212
-    [dict setObject:@"244" forKey:@"userKey"];//3619
+    [dict setObject:[def objectForKey:@"userId"] forKey:@"userKey"];//3619
     //189781710290821120  http://192.168.2.6:8888
-    [dict setObject:@"192" forKey:@"teamKey"];
+//    [dict setObject:@"192" forKey:@"teamKey"];
     [dict setObject:@"0" forKey:@"offset"];
     
-    [[JsonHttp jsonHttp]httpRequest:@"team/getTeamActivityList" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
+    [[JsonHttp jsonHttp]httpRequest:@"team/getMyTeamActivityList" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
         NSLog(@"errType == %@", errType);
     } completionBlock:^(id data) {
         NSLog(@"data == %@", data);
@@ -112,8 +119,78 @@
     self.teamActivityTableView.delegate = self;
     self.teamActivityTableView.dataSource = self;
     self.teamActivityTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    
+    self.teamActivityTableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
+    self.teamActivityTableView.footer=[MJDIYBackFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRereshing)];
+//    self.teamActivityTableView.header beginRefreshing];
+    
     [self.view addSubview:self.teamActivityTableView];
 }
+
+#pragma mark 开始进入刷新状态
+- (void)headRereshing
+{
+    self.page = 0;
+    [self downLoadData:self.page isReshing:YES];
+}
+
+- (void)footRereshing
+{
+    [self downLoadData:self.page isReshing:NO];
+}
+
+#pragma mark - 下载数据
+- (void)downLoadData:(NSInteger)page isReshing:(BOOL)isReshing{
+    
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
+    [dict setObject:[def objectForKey:@"userId"] forKey:@"userKey"];//3619
+    [dict setObject:@(self.page) forKey:@"offset"];
+    
+    [[JsonHttp jsonHttp]httpRequest:@"team/getMyTeamActivityList" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
+        if (isReshing) {
+            [self.teamActivityTableView.header endRefreshing];
+        }else {
+            [self.teamActivityTableView.footer endRefreshing];
+        }
+    } completionBlock:^(id data) {
+        if ([[data objectForKey:@"packSuccess"] boolValue]) {
+            if (page == 0)
+            {
+                //清除数组数据
+                [self.dataArray removeAllObjects];
+            }
+            if ([data objectForKey:@"activityList"]) {
+                NSArray *array = [data objectForKey:@"activityList"];
+                for (NSDictionary *dict in array) {
+                    JGTeamAcitivtyModel *model = [[JGTeamAcitivtyModel alloc]init];
+                    [model setValuesForKeysWithDictionary:dict];
+                    [self.dataArray addObject:model];
+                }
+                self.page++;
+                
+                [self.teamActivityTableView reloadData];
+            }else{
+                [Helper alertViewWithTitle:@"没有更多活动" withBlock:^(UIAlertController *alertView) {
+                    [self presentViewController:alertView animated:YES completion:nil];
+                }];
+            }
+
+        }else {
+            
+            [Helper alertViewWithTitle:@"获取失败" withBlock:^(UIAlertController *alertView) {
+                [self presentViewController:alertView animated:YES completion:nil];
+            }];
+        }
+        [self.teamActivityTableView reloadData];
+        if (isReshing) {
+            [self.teamActivityTableView.header endRefreshing];
+        }else {
+            [self.teamActivityTableView.footer endRefreshing];
+        }
+    }];
+}
+
 
 #pragma mark -- tableView 代理
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
@@ -152,8 +229,32 @@
 //    model = self.dataArray[indexPath.section];
 //    teamApplyCtrl.activityKey = model.timeKey;
 //    [self.navigationController pushViewController:teamApplyCtrl animated:YES];
+//    @Param( value = "activityKey" , require = true) Long  activityKey  ,
+//    @Param( value = "userKey"  )                    Long  userKey      ,
     JGTeamActibityNameViewController *activityNameCtrl = [[JGTeamActibityNameViewController alloc]init];
-    [self.navigationController pushViewController:activityNameCtrl animated:YES];
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    JGTeamAcitivtyModel *model = self.dataArray[indexPath.section];
+    [dict setObject:@(model.teamActivityKey) forKey:@"activityKey"];
+    [dict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"userId" ] forKey:@"userKey"];
+    [[JsonHttp jsonHttp]httpRequest:@"team/getTeamActivity" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
+     
+    } completionBlock:^(id data) {
+        if ([[data objectForKey:@"packSuccess"] boolValue]) {
+            NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
+            [user setValue:[data objectForKey:@"teamMember"] forKey:@"teamMember"];
+            [user synchronize];
+
+            JGTeamAcitivtyModel *model = [[JGTeamAcitivtyModel alloc] init];
+            [model setValuesForKeysWithDictionary:[data objectForKey:@"activity"]];
+            activityNameCtrl.model = model;
+            [self.navigationController pushViewController:activityNameCtrl animated:YES];
+          }else {
+             [Helper alertViewWithTitle:@"获取失败" withBlock:^(UIAlertController *alertView) {
+                [self presentViewController:alertView animated:YES completion:nil];
+            }];
+        }
+     }];
+    
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

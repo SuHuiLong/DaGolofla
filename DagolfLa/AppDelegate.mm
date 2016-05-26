@@ -31,7 +31,7 @@
 
 #import <TAESDK/TaeSDK.h>
 
-
+#import <AlipaySDK/AlipaySDK.h>
 
 @interface AppDelegate ()
 {
@@ -262,6 +262,7 @@
     return YES;
 }
 
+
 //新浪微博的
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
 {
@@ -275,12 +276,24 @@
 }
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
 {
-    BOOL result = [UMSocialSnsService handleOpenURL:url];
-    if (result == FALSE) {
-        //调用其他SDK，例如支付宝SDK等
-        return [WXApi handleOpenURL:url delegate:self];
+    if ([url.scheme isEqualToString:@"wxdcdc4e20544ed728"]) {
+        BOOL result = [UMSocialSnsService handleOpenURL:url];
+        if (result == FALSE) {
+            //调用其他SDK，例如支付宝SDK等
+            return [WXApi handleOpenURL:url delegate:self];
+        }
+        return result;
     }
-    return result;
+    else
+    {
+        //跳转支付宝钱包进行支付，处理支付结果
+        [[AlipaySDK defaultService] processOrderWithPaymentResult:url standbyCallback:^(NSDictionary *resultDic) {
+            NSLog(@"result = %@",resultDic);
+            NSLog(@"客户端支付");
+        }];
+        
+        return YES;
+    }
 }
 
 
