@@ -347,9 +347,9 @@
     [dic setObject:@([[self.modelArray[indexPath.row] objectForKey:@"timeKey"] integerValue]) forKey:@"teamKey"];
 
     [[JsonHttp jsonHttp] httpRequest:@"team/getTeamInfo" JsonKey:nil withData:dic requestMethod:@"GET" failedBlock:^(id errType) {
-        NSLog(@"error");
+
     } completionBlock:^(id data) {
-        NSLog(@"%@", data);
+
         if (![data objectForKey:@"teamMember"]) {
             JGNotTeamMemberDetailViewController *detailVC = [[JGNotTeamMemberDetailViewController alloc] init];
             if (self.searchController.active) {
@@ -361,9 +361,11 @@
         }else{
             if ([[data objectForKey:@"teamMember"] objectForKey:@"identity"] == 0){
                 JGTeamMemberORManagerViewController *detailVC = [[JGTeamMemberORManagerViewController alloc] init];
-                [self.navigationController pushViewController:detailVC animated:YES];
+                detailVC.detailDic = [data objectForKey:@"team"];
+                 [self.navigationController pushViewController:detailVC animated:YES];
             }else{
                 JGTeamMemberORManagerViewController *detailVC = [[JGTeamMemberORManagerViewController alloc] init];
+                detailVC.detailDic = [data objectForKey:@"team"];
                 [self.navigationController pushViewController:detailVC animated:YES];
             }
         }

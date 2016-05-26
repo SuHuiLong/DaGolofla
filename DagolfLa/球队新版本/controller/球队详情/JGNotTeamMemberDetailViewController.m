@@ -119,10 +119,10 @@ static CGFloat ImageHeight  = 210.0;
     //输入框
     self.titleField = [[UILabel alloc]initWithFrame:CGRectMake(64, 7, screenWidth - 128, 30)];
     self.titleField.textColor = [UIColor whiteColor];
-    self.titleField.font = [UIFont systemFontOfSize:15];
+    self.titleField.font = [UIFont systemFontOfSize:18 * screenWidth / 320];
 
     self.titleField.textAlignment = NSTextAlignmentCenter;
-    self.titleField.font = [UIFont systemFontOfSize:15];
+//    self.titleField.font = [UIFont systemFontOfSize:15];
     //头像
     self.headPortraitBtn = [[UIButton alloc]initWithFrame:CGRectMake(20, 150, 50, 50)];
     [self.headPortraitBtn setImage:[UIImage imageNamed:@"relogo"] forState:UIControlStateNormal];
@@ -211,7 +211,7 @@ static CGFloat ImageHeight  = 210.0;
     }else if (section == 1){
         return 4;
     }else if (section == 2){
-        return 2;
+        return 1;
     }else{
         return 1;
     }

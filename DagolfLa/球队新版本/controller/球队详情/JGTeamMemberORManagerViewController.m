@@ -9,6 +9,8 @@
 
 #import "JGTeamMemberORManagerViewController.h"
 #import "JGTeamInfoViewController.h" //跳转info
+#import "JGLSelfSetViewController.h" //个人设置
+#import "JGTeamActivityViewController.h" //活动
 
 #import "JGHLaunchActivityViewController.h"
 #import "JGTableViewCell.h"
@@ -63,7 +65,7 @@ static CGFloat ImageHeight  = 210.0;
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:YES];
     self.navigationController.navigationBarHidden = YES;
-    self.titleField.text = self.detailModel.name;
+    self.titleField.text = [self.detailDic objectForKey:@"name"];
     
 }
 - (void)viewWillDisappear:(BOOL)animated{
@@ -124,11 +126,11 @@ static CGFloat ImageHeight  = 210.0;
     //输入框
     self.titleField = [[UILabel alloc]initWithFrame:CGRectMake(64, 7, screenWidth - 128, 30)];
     self.titleField.textColor = [UIColor whiteColor];
-    self.titleField.font = [UIFont systemFontOfSize:15];
+    self.titleField.font = [UIFont systemFontOfSize:18 * screenWidth / 320];
     //    [self.titleField setValue:[UIColor whiteColor] forKeyPath:@"_placeholderLabel.textColor"];
     //    [self.titleField setValue:[UIFont boldSystemFontOfSize:15] forKeyPath:@"_placeholderLabel.font"];
     self.titleField.textAlignment = NSTextAlignmentCenter;
-    self.titleField.font = [UIFont systemFontOfSize:15];
+//    self.titleField.font = [UIFont systemFontOfSize:15];
     //头像
     self.headPortraitBtn = [[UIButton alloc]initWithFrame:CGRectMake(20, 150, 50, 50)];
     [self.headPortraitBtn setImage:[UIImage imageNamed:@"relogo"] forState:UIControlStateNormal];
@@ -235,7 +237,7 @@ static CGFloat ImageHeight  = 210.0;
     }else if (section == 1){
         return 1;
     }else if (section == 2){
-        return 4;
+        return 3;
     }else{
         return 1;
     }
@@ -307,13 +309,13 @@ static CGFloat ImageHeight  = 210.0;
                 break;
             case 1:
                 launchActivityCell.promptLB.text = @"球队成员";
-                launchActivityCell.contentLB.text = self.detailModel.cityName;
+//                launchActivityCell.contentLB.text = self.detailModel.cityName;
                 break;
+//            case 2:
+//                launchActivityCell.promptLB.text = @"球队相册";
+////                launchActivityCell.contentLB.text = self.detailModel.establishTime;
+//                break;
             case 2:
-                launchActivityCell.promptLB.text = @"球队相册";
-                launchActivityCell.contentLB.text = self.detailModel.establishTime;
-                break;
-            case 3:
                 launchActivityCell.promptLB.text = @"球队简介";
 //                launchActivityCell.contentLB.text = [NSString stringWithFormat:@"%td人", self.detailModel.userSum];
                 break;
@@ -383,6 +385,8 @@ static CGFloat ImageHeight  = 210.0;
         switch (indexPath.row) {
             case 0:
             {
+                JGTeamActivityViewController *activiyVC = [[JGTeamActivityViewController alloc] init];
+                [self.navigationController pushViewController:activiyVC animated:YES];
                 
             }
                 break;
@@ -394,14 +398,14 @@ static CGFloat ImageHeight  = 210.0;
                 break;
             case 2:
             {
-                
+                JGTeamInfoViewController *infoVc = [[JGTeamInfoViewController alloc] init];
+                infoVc.string = [self.detailDic objectForKey:@"info"];
+                [self.navigationController pushViewController:infoVc animated:YES];
             }
                 break;
             case 3:
             {
-                JGTeamInfoViewController *infoVc = [[JGTeamInfoViewController alloc] init];
-                infoVc.string = [self.detailDic objectForKey:@"info"];
-                [self.navigationController pushViewController:infoVc animated:YES];
+
 
             }
                 break;
@@ -413,8 +417,8 @@ static CGFloat ImageHeight  = 210.0;
     }
     else if (indexPath.section == 3){
         if (indexPath.row == 0) {
-            JGCostSetViewController *costView = [[JGCostSetViewController alloc]initWithNibName:@"JGCostSetViewController" bundle:nil];
-            costView.delegate = self;
+            JGLSelfSetViewController *costView = [[JGLSelfSetViewController alloc]init];
+               costView.teamKey = [[self.detailDic objectForKey:@"teamKey"] integerValue];
             [self.navigationController pushViewController:costView animated:YES];
         }
         
