@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+@class JGHPlayersModel;
 
 @interface JGTeamGroupCollectionViewCell : UICollectionViewCell
 //image
@@ -16,5 +17,7 @@
 //性别 差点
 @property (weak, nonatomic) IBOutlet UILabel *sexAndValue;
 
+
+- (void)configJGHPlayersModel:(JGHPlayersModel *)model;
 
 @end

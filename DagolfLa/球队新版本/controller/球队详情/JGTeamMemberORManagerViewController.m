@@ -21,6 +21,8 @@
 #import "JGCostSetViewController.h"
 #import "JGLableAndLableTableViewCell.h"
 #import "JGDisplayInfoTableViewCell.h"
+#import "TeamInviteViewController.h"
+
 
 #import "JGTeamManageViewController.h"
 
@@ -160,8 +162,8 @@ static CGFloat ImageHeight  = 210.0;
     if (btn.tag == 521) {
         [self.navigationController popViewControllerAnimated:YES];
     }else if (btn.tag == 520){
-        //更换头像
-        [self didSelectPhotoImage:btn];
+        //分享
+
     }
 }
 #pragma mark -- 邀请好友BUTTON
@@ -174,18 +176,20 @@ static CGFloat ImageHeight  = 210.0;
 }
 #pragma mark -- 邀请好友
 - (void)previewBtnClick:(UIButton *)btn{
-    NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
-    [dic setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"userId"] forKey:@"userKey"];
-    [dic setObject:@(self.detailModel.timeKey) forKey:@"teamKey"];
-    [dic setObject:@0 forKey:@"state"];
-    [dic setObject:@"2016-12-11 10:00:00" forKey:@"createTime"];
-    [dic setObject:@0 forKey:@"timeKey"];
-    
-    [[JsonHttp jsonHttp] httpRequest:@"team/reqJoinTeam" JsonKey:@"teamMemeber" withData:dic requestMethod:@"POST" failedBlock:^(id errType) {
-        NSLog(@"error *** %@", errType);
-    } completionBlock:^(id data) {
-        NSLog(@"%@", data);
-    }];
+    TeamInviteViewController *inviteVc = [[TeamInviteViewController alloc] init];
+    [self.navigationController pushViewController:inviteVc animated:YES];
+//    NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
+//    [dic setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"userId"] forKey:@"userKey"];
+//    [dic setObject:@(self.detailModel.timeKey) forKey:@"teamKey"];
+//    [dic setObject:@0 forKey:@"state"];
+//    [dic setObject:@"2016-12-11 10:00:00" forKey:@"createTime"];
+//    [dic setObject:@0 forKey:@"timeKey"];
+//    
+//    [[JsonHttp jsonHttp] httpRequest:@"team/reqJoinTeam" JsonKey:@"teamMemeber" withData:dic requestMethod:@"POST" failedBlock:^(id errType) {
+//        NSLog(@"error *** %@", errType);
+//    } completionBlock:^(id data) {
+//        NSLog(@"%@", data);
+//    }];
 }
 
 
@@ -244,11 +248,17 @@ static CGFloat ImageHeight  = 210.0;
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 0) {
         return ImageHeight -10;
-    }else if (indexPath.section == 3){
-        return [self calculationLabelHeight:self.detailModel.info] + 40 * screenWidth / 320;
+    }else if (indexPath.section == 1){
+        return [self calculationLabelHeight:[self.detailDic objectForKey:@"notice"]] + 40 * screenWidth / 320;
         
+    }else if (indexPath.section == 4){
+        if (self.isManager == NO) {
+            return 0;
+        }else{
+            return 40;
+        }
     }else{
-        return 44;
+        return 40;
     }
 }
 
@@ -283,8 +293,8 @@ static CGFloat ImageHeight  = 210.0;
         contactCell.promptLB.text = @"球队动态";
         
         contactCell.contentLB.lineBreakMode = NSLineBreakByWordWrapping;
-        contactCell.contentLB.text = self.detailModel.info;
-        contactCell.contentLB.frame = CGRectMake(10, 35  * screenWidth / 320, screenWidth - 20  * screenWidth / 320, [self calculationLabelHeight:self.detailModel.info]);
+        contactCell.contentLB.text = [self.detailDic objectForKey:@"notice"];
+        contactCell.contentLB.frame = CGRectMake(10, 35  * screenWidth / 320, screenWidth - 20  * screenWidth / 320, [self calculationLabelHeight:[self.detailDic objectForKey:@"notice"]]);
         return contactCell;
     }else if (indexPath.section == 2){
         
@@ -294,7 +304,6 @@ static CGFloat ImageHeight  = 210.0;
         switch (indexPath.row) {
             case 0:
                 launchActivityCell.promptLB.text = @"赛事活动";
-                launchActivityCell.contentLB.text = @"MISS";
                 break;
             case 1:
                 launchActivityCell.promptLB.text = @"球队成员";
@@ -306,14 +315,15 @@ static CGFloat ImageHeight  = 210.0;
                 break;
             case 3:
                 launchActivityCell.promptLB.text = @"球队简介";
-                launchActivityCell.contentLB.text = [NSString stringWithFormat:@"%td人", self.detailModel.userSum];
+//                launchActivityCell.contentLB.text = [NSString stringWithFormat:@"%td人", self.detailModel.userSum];
                 break;
             default:
                 break;
         }
         
-        
+        launchActivityCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         return launchActivityCell;
+        
     }else if (indexPath.section == 3){
         JGLableAndLableTableViewCell *launchActivityCell = [tableView dequeueReusableCellWithIdentifier:@"lbVSlb" forIndexPath:indexPath];
         launchActivityCell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -321,82 +331,24 @@ static CGFloat ImageHeight  = 210.0;
 
         launchActivityCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         return launchActivityCell;
+        
     }else{
      
         JGLableAndLableTableViewCell *launchActivityCell = [tableView dequeueReusableCellWithIdentifier:@"lbVSlb" forIndexPath:indexPath];
         launchActivityCell.selectionStyle = UITableViewCellSelectionStyleNone;
             launchActivityCell.promptLB.text = @"球队管理";
         launchActivityCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        return launchActivityCell;
-        if (_isManager) {
-            
+        if (self.isManager == NO) {
+            launchActivityCell.promptLB.text = @"";
         }
+        return launchActivityCell;
+
     }
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 1) {
-        //        if (indexPath.row == 0 || indexPath.row == 1) {
-        //            //时间选择
-        //            DateTimeViewController *dataCtrl = [[DateTimeViewController alloc]init];
-        //            [dataCtrl setCallback:^(NSString *dateStr, NSString *dateWeek, NSString *str) {
-        //                if (indexPath.row == 0) {
-        //                    [self.model setValue:dateStr forKey:@"startDate"];
-        //                }else{
-        //                    [self.model setValue:dateStr forKey:@"endDate"];
-        //                }
-        //
-        //                NSIndexPath *indPath = [NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section];
-        //                [self.launchActivityTableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indPath, nil] withRowAnimation:UITableViewRowAnimationNone];
-        //            }];
-        //
-        //            [self.navigationController pushViewController:dataCtrl animated:YES];
-        //        }else{
-        //            //地区选择
-        //            TeamAreaViewController* areaVc = [[TeamAreaViewController alloc]init];
-        //            areaVc.teamType = @10;
-        //            areaVc.callBackCity = ^(NSString* strPro, NSString* strCity, NSNumber* cityId){
-        //                [self.model setValue:[NSString stringWithFormat:@"%@-%@", strPro, strCity] forKey:@"activityAddress"];
-        //                NSIndexPath *indPath = [NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section];
-        //                [self.launchActivityTableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indPath, nil] withRowAnimation:UITableViewRowAnimationNone];
-        //            };
-        //            [self.navigationController pushViewController:areaVc animated:YES];
-        //        }
-        
-        
-        
-        
-    }
-    else if (indexPath.section == 2){
-    
-        switch (indexPath.row) {
-            case 0:
-            {
-                
-            }
-                break;
-            case 1:
-            {
-                JGTeamMemberController* tmVc = [[JGTeamMemberController alloc]init];
-                [self.navigationController pushViewController:tmVc animated:YES];
-            }
-                break;
-            case 2:
-            {
-                
-            }
-                break;
-            case 3:
-            {
-                
-            }
-                break;
-                
-            default:
-                break;
-        }
-        
-    }
-    else if (indexPath.section == 3){
+
+    }else if (indexPath.section == 2){
         if (indexPath.row == 0) {
             JGCostSetViewController *costView = [[JGCostSetViewController alloc]initWithNibName:@"JGCostSetViewController" bundle:nil];
             costView.delegate = self;

@@ -236,6 +236,11 @@
                 if (![Helper isBlankString:[[userData objectForKey:@"rows"] objectForKey:@"pic"]]) {
                     [user setObject:[[userData objectForKey:@"rows"] objectForKey:@"pic"] forKey:@"pic"];
                 }
+                
+                if ([[userData objectForKey:@"rows"] objectForKey:@"almost"] != nil) {
+                    [user setObject:[[userData objectForKey:@"rows"] objectForKey:@"almost"] forKey:@"almost"];
+                }
+                
                 if (![Helper isBlankString:[[userData objectForKey:@"rows"] objectForKey:@"userName"]]) {
                     [user setObject:[[userData objectForKey:@"rows"] objectForKey:@"userName"] forKey:@"userName"];
                 }

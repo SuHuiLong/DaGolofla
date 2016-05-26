@@ -68,7 +68,7 @@
     [dict setObject:@"244" forKey:@"userKey"];//3619
     //189781710290821120  http://192.168.2.6:8888
     [dict setObject:@"192" forKey:@"teamKey"];
-    [dict setObject:@"1" forKey:@"offset"];
+    [dict setObject:@"0" forKey:@"offset"];
     
     [[JsonHttp jsonHttp]httpRequest:@"team/getTeamActivityList" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
         NSLog(@"errType == %@", errType);

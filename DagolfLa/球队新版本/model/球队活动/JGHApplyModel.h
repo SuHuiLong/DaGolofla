@@ -6,9 +6,9 @@
 //  Copyright © 2016年 bhxx. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import "BaseModel.h"
 
-@interface JGHApplyModel : NSObject
+@interface JGHApplyModel : BaseModel
 
 @property (assign, nonatomic)NSInteger teamKey;//球队key
 @property (assign, nonatomic)NSInteger activityKey;//球队活动id

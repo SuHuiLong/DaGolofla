@@ -27,6 +27,9 @@
     NSMutableArray* _dataArray;
     NSInteger _page;
 }
+
+@property (nonatomic, strong) NSMutableArray *TeamArray;
+
 @end
 
 @implementation JGLMyTeamViewController
@@ -76,6 +79,7 @@
                 [_dataArray removeAllObjects];
             }
             //数据解析
+            self.TeamArray = [data objectForKey:@"teamList"];
             for (NSDictionary *dataDic in [data objectForKey:@"teamList"]) {
                 JGLMyTeamModel *model = [[JGLMyTeamModel alloc] init];
                 [model setValuesForKeysWithDictionary:dataDic];
@@ -124,25 +128,34 @@
     
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{    
+    
+    NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
+    [dic setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"userId"] forKey:@"userKey"];
+    [dic setObject:@([[self.TeamArray[indexPath.row] objectForKey:@"teamKey"] integerValue]) forKey:@"teamKey"];
+    
+    [[JsonHttp jsonHttp] httpRequest:@"team/getTeamInfo" JsonKey:nil withData:dic requestMethod:@"GET" failedBlock:^(id errType) {
+        [Helper alertViewNoHaveCancleWithTitle:@"获取球队信息失败" withBlock:^(UIAlertController *alertView) {
+            [self.navigationController presentViewController:alertView animated:YES completion:nil];
+        }];
+    } completionBlock:^(id data) {
 
-    JGTeamMemberORManagerViewController *detailVC = [[JGTeamMemberORManagerViewController alloc] init];
-    [self.navigationController pushViewController:detailVC animated:YES];
-//    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
-//    [dic setObject:@244 forKey:@"userKey"];
-//    JGLMyTeamModel *model = _dataArray[indexPath.row];
-//    [dic setObject: model.teamKey forKey:@"teamKey"];
-//    
-//    [[JsonHttp jsonHttp] httpRequest:@"team/getTeamInfo" JsonKey:nil withData:dic requestMethod:@"POST" failedBlock:^(id errType) {
-//        NSLog(@"getTeamInfo ******** %@", errType);
-//    } completionBlock:^(id data) {
-//        
-//        JGTeamDetailStylelTwoViewController *detailVC = [[JGTeamDetailStylelTwoViewController alloc] init];
-//        NSDictionary *dataDic = [data objectForKey:@"team"];
-//        detailVC.detailDic = dataDic;
-//        [self.navigationController pushViewController:detailVC animated:YES];
-//        
-//    }];
+            if ([[[data objectForKey:@"teamMember"] objectForKey:@"power"] containsString:@"1005"]){
+                JGTeamMemberORManagerViewController *detailVC = [[JGTeamMemberORManagerViewController alloc] init];
+                detailVC.detailDic = self.TeamArray[indexPath.row];
+//                detailVC.detailModel.manager = 1;
+                detailVC.isManager = YES;
+                [self.navigationController pushViewController:detailVC animated:YES];
+            }else{
+                JGTeamMemberORManagerViewController *detailVC = [[JGTeamMemberORManagerViewController alloc] init];
+                detailVC.detailDic = self.TeamArray[indexPath.row];
+//                detailVC.detailModel.manager = 0;
+                detailVC.isManager = NO;
+
+                [self.navigationController pushViewController:detailVC animated:YES];
+            }
+        
+    }];
     
 }
 

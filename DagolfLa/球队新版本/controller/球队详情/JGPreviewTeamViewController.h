@@ -11,8 +11,9 @@
 
 @interface JGPreviewTeamViewController : ViewController
 
-@property (nonatomic, strong) JGTeamDetail *detailModel;
+//@property (nonatomic, strong) JGTeamDetail *detailModel;
 @property (nonatomic, retain) UIImageView *imgProfile;
 @property (nonatomic, strong) NSMutableDictionary *detailDic;
+@property (nonatomic, strong)UIButton *headPortraitBtn;//头像
 
 @end
