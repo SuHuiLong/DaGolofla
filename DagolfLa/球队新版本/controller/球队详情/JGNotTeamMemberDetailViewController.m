@@ -29,7 +29,7 @@ static CGFloat ImageHeight  = 210.0;
 
 @interface JGNotTeamMemberDetailViewController ()<UITableViewDelegate, UITableViewDataSource, JGHConcentTextViewControllerDelegate, NSURLConnectionDownloadDelegate, JGCostSetViewControllerDelegate>
 {
-    //、、、、、、、
+  
     NSArray *_titleArray;//标题数组
     
     NSString *_contcat;//联系人
