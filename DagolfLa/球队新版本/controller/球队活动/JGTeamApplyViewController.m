@@ -21,7 +21,7 @@
 #import "WXApi.h"
 #import "payRequsestHandler.h"
 
-static NSString *const JGActivityNameBaseCellIdentifier = @"JGActivityNameBaseCell";
+static NSString *const JGActivityBaseInfoCellIdentifier = @"JGActivityNameBaseCell";
 static NSString *const JGTableViewCellIdentifier = @"JGTableViewCell";
 static NSString *const JGApplyPepoleCellIdentifier = @"JGApplyPepoleCell";
 static NSString *const JGHHeaderLabelCellIdentifier = @"JGHHeaderLabelCell";

@@ -62,4 +62,6 @@
 
 //string转化毫秒
 + (CGFloat )stringConversionToDate:(NSString *)dateStr;
+
++ (NSString *)returnCurrentDateString;
 @end

@@ -44,11 +44,11 @@
     return self;
 }
 
-- (void)setTeamModel:(JGTeamDetail *)teamModel{
-    self.nameLabel.text = teamModel.name;
-    self.adressLabel.text = teamModel.cityName;
-    self.describLabel.text = teamModel.info;        // 球队介绍
-}
+//- (void)setTeamModel:(JGTeamDetail *)teamModel{
+//    self.nameLabel.text = teamModel.name;
+//    self.adressLabel.text = teamModel.cityName;
+//    self.describLabel.text = teamModel.info;        // 球队介绍
+//}
 
 -(void)showData:(JGLMyTeamModel *)model
 {

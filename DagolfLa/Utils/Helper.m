@@ -268,5 +268,11 @@
     return [newdate timeIntervalSince1970];
 }
 
++ (NSString *)returnCurrentDateString{
+    NSDate *dateNew = [NSDate dateWithTimeIntervalSinceNow:0];
+    NSDateFormatter * dm = [[NSDateFormatter alloc]init];
+    [dm setDateFormat:@"yyyy-MM-dd 00:00:00"];
+    return [dm stringFromDate:dateNew];
+}
 
 @end

@@ -85,6 +85,8 @@
         button.frame = CGRectMake(0, (135 + i * 35) * screenWidth / 320, screenWidth, 30 * screenWidth / 320);
         button.tag = 200 + i;
         button.backgroundColor = [UIColor whiteColor];
+        button.titleLabel.font =[UIFont systemFontOfSize:15 * screenWidth / 320];
+
         [button addTarget:self action:@selector(team:) forControlEvents:(UIControlEventTouchUpInside)];
         [button setTitle:self.buttonArray[i] forState:(UIControlStateNormal)];
         [button setTitleColor:[UIColor lightGrayColor] forState:(UIControlStateNormal)];
@@ -93,9 +95,11 @@
         //        button.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
         button.titleEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 200 * screenWidth / 320);
         [self.view addSubview:button];
-        UIImageView *iamgeV = [[UIImageView alloc] initWithFrame:CGRectMake(10, 0, 30 * screenWidth / 320, 30 * screenWidth / 320)];
-        iamgeV.backgroundColor = [UIColor orangeColor];
-        [button addSubview:iamgeV];
+        UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake(10 * screenWidth / 320, 6 * screenWidth / 320, 20 * screenWidth / 320, 20 * screenWidth / 320)];
+        NSArray *arra = [NSArray arrayWithObjects:@"qd", @"hd-1", @"dt", nil];
+        imageV.image = [UIImage imageNamed:arra[i]];
+        imageV.contentMode = UIViewContentModeScaleAspectFit;
+        [button addSubview:imageV];
     }
     
     self.tableView = [[JGTeamChannelTableView alloc] initWithFrame:CGRectMake(0, 270 * screenWidth / 320, screenWidth, screenHeight - 270 * screenWidth / 320) style:(UITableViewStylePlain)];
@@ -168,12 +172,12 @@
             [[JsonHttp jsonHttp] httpRequest:@"team/getTeamList" JsonKey:nil withData:dic requestMethod:@"GET" failedBlock:^(id errType) {
                 NSLog(@"getTeamList ***** error%@",errType);
             } completionBlock:^(id data) {
-                
-                for (NSDictionary *dicModel in data[@"teamList"]) {
-                    JGTeamDetail *model = [[JGTeamDetail alloc] init];
-                    [model setValuesForKeysWithDictionary:dicModel];
-                    [self.teamArray addObject:model];
-                }
+                self.teamArray = data[@"teamList"];
+//                for (NSDictionary *dicModel in data[@"teamList"]) {
+//                    JGTeamDetail *model = [[JGTeamDetail alloc] init];
+//                    [model setValuesForKeysWithDictionary:dicModel];
+//                    [self.teamArray addObject:model];
+//                }
                 [self.tableView reloadData];
                 
                 
@@ -193,8 +197,39 @@
 
 - (void)creatTeam{
     
-    JGNewCreateTeamTableViewController *creatteamVc = [[JGNewCreateTeamTableViewController alloc] init];
-    [self.navigationController pushViewController:creatteamVc animated:YES];
+    NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
+
+    
+    
+    if ([user objectForKey:@"cacheCreatTeamDic"]) {
+        UIAlertController *alert=[UIAlertController alertControllerWithTitle:@"提示" message:@"是否继续上次编辑" preferredStyle:UIAlertControllerStyleAlert];
+        
+        UIAlertAction *action1=[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            [user setObject:0 forKey:@"cacheCreatTeamDic"];
+            JGNewCreateTeamTableViewController *creatteamVc = [[JGNewCreateTeamTableViewController alloc] init];
+            [self.navigationController pushViewController:creatteamVc animated:YES];
+        }];
+        UIAlertAction* action2=[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            JGNewCreateTeamTableViewController *creatteamVc = [[JGNewCreateTeamTableViewController alloc] init];
+            creatteamVc.detailDic = [user objectForKey:@"cacheCreatTeamDic"];
+            creatteamVc.titleField.text = [[user objectForKey:@"cacheCreatTeamDic"] objectForKey:@"name"];
+            
+            
+            //        @property (nonatomic, retain) UIImageView *imgProfile;
+            //        @property (nonatomic, strong)UIButton *headPortraitBtn;//头像
+            //        @property (nonatomic, strong)UITextField *titleField;//球队名称输入框
+            [self.navigationController pushViewController:creatteamVc animated:YES];
+        }];
+        
+        [alert addAction:action1];
+        [alert addAction:action2];
+        [self presentViewController:alert animated:YES completion:nil];
+
+    }else{
+        JGNewCreateTeamTableViewController *creatteamVc = [[JGNewCreateTeamTableViewController alloc] init];
+        [self.navigationController pushViewController:creatteamVc animated:YES];
+    }
+    
     
 }
 
@@ -237,6 +272,10 @@
         JGTeamChannelTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"cell"];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.teamModel = self.teamArray[indexPath.row];
+             cell.nameLabel.text = [self.teamArray[indexPath.row] objectForKey:@"name"];
+        cell.adressLabel.text = [self.teamArray[indexPath.row] objectForKey:@"crtyName"];
+        cell.describLabel.text = [self.teamArray[indexPath.row] objectForKey:@"info"];
+
         return cell;
         
     }else{
@@ -261,7 +300,9 @@
         
 //        if (indexPath.row == 0) {
             JGNotTeamMemberDetailViewController *detailV = [[JGNotTeamMemberDetailViewController alloc] init];
-            detailV.detailModel = self.teamArray[indexPath.row];
+        detailV.detailDic = self.teamArray[indexPath.row];
+ 
+//            detailV.detailModel = self.teamArray[indexPath.row];
             [self.navigationController pushViewController:detailV animated:YES];
 //        }else{
 //            JGTeamDetailViewController *detailVC = [[JGTeamDetailViewController alloc] init];

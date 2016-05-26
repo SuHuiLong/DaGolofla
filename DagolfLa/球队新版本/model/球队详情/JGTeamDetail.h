@@ -30,6 +30,6 @@
 @property (nonatomic, assign) NSInteger answerKey; // 回答咨询人用户key
 @property (nonatomic, assign) NSInteger userSum; // 球队总人数
 @property (nonatomic, assign) NSInteger timeKey;
-
+@property (nonatomic, assign) NSInteger manager; // 0 成员  非0是管理员
 @property (nonatomic, strong)JGTeamDetail *detailModel;
 @end
