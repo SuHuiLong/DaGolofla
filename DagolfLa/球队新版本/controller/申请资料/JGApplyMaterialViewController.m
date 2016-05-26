@@ -287,7 +287,9 @@
             [self.navigationController popViewControllerAnimated:YES];
 
         }];
-        
+        [Helper alertViewNoHaveCancleWithTitle:@"申请提交成功" withBlock:^(UIAlertController *alertView) {
+            [self.navigationController presentViewController:alertView animated:YES completion:nil];
+        }];
     }else{
         [Helper alertViewNoHaveCancleWithTitle:@"请完善申请信息" withBlock:^(UIAlertController *alertView) {
             [self.navigationController presentViewController:alertView animated:YES completion:nil];
