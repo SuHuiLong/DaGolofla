@@ -43,9 +43,7 @@ static CGFloat ImageHeight  = 210.0;
 
 @property (nonatomic, strong)UIImage *headerImage;
 
-@property (nonnull, strong)UIButton *headPortraitBtn;//头像
 
-@property (nonatomic, strong)UITextField *titleField;//球队名称输入框
 
 @property (nonatomic, strong)UIView *titleView;//顶部导航
 
@@ -60,7 +58,7 @@ static CGFloat ImageHeight  = 210.0;
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:YES];
     self.navigationController.navigationBarHidden = YES;
-    self.titleField.text = self.detailModel.name;
+//    self.titleField.text = self.detailModel.name;
     
 }
 - (void)viewWillDisappear:(BOOL)animated{
@@ -127,6 +125,10 @@ static CGFloat ImageHeight  = 210.0;
     self.navigationController.navigationBar.hidden = YES;
     self.automaticallyAdjustsScrollViewInsets=NO;
     self.view.backgroundColor = [UIColor colorWithHexString:@"#EAEAEB"];
+    
+       
+    
+    
     //返回按钮
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
     btn.frame = BackBtnFrame;
@@ -288,23 +290,85 @@ static CGFloat ImageHeight  = 210.0;
 #pragma mark -- 预览界面
 - (void)previewBtnClick:(UIButton *)btn{
     
+    if (!self.titleField.text || ([self.titleField.text length] == 0)) {
+        [Helper alertViewNoHaveCancleWithTitle:@"请完善球队信息" withBlock:^(UIAlertController *alertView) {
+            [self.navigationController presentViewController:alertView animated:YES completion:nil];
+        }];
+        return;
+    }else{
+        [self.paraDic setObject:self.titleField.text forKey:@"name"];
+    }
     
-    [self.paraDic setObject:self.titleField.text forKey:@"name"];
-    
-   
     JGLableAndLableTableViewCell *cell1 = [self.launchActivityTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1]];
-    [self.paraDic setObject:cell1.contentLB.text forKey:@"establishTime"];
+    [self notNil:cell1.contentLB.text SetValueForKey:@"establishTime"];
+    if (!cell1.contentLB.text || ([cell1.contentLB.text length] == 0)) {
+        [Helper alertViewNoHaveCancleWithTitle:@"请完善球队信息" withBlock:^(UIAlertController *alertView) {
+            [self.navigationController presentViewController:alertView animated:YES completion:nil];
+        }];
+        return;
+    }
     JGLableAndLableTableViewCell *cell2 = [self.launchActivityTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:1]];
-    [self.paraDic setObject:cell2.contentLB.text forKey:@"cityName"];
+    [self notNil:cell2.contentLB.text SetValueForKey:@"crtyName"];
+    if (!cell2.contentLB.text || ([cell2.contentLB.text length] == 0)) {
+        [Helper alertViewNoHaveCancleWithTitle:@"请完善球队信息" withBlock:^(UIAlertController *alertView) {
+            [self.navigationController presentViewController:alertView animated:YES completion:nil];
+        }];
+        return;
+    }
     
     JGApplyMaterialTableViewCell *cell11 = [self.launchActivityTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:3]];
-    [self.paraDic setObject:cell11.textFD.text forKey:@"userName"];
+    [self notNil:cell11.textFD.text SetValueForKey:@"userName"];
+    if (!cell11.textFD.text || ([cell11.textFD.text length] == 0)) {
+//        [Helper alertViewWithTitle:@"请填写完整信息" withBlock:nil];
+        [Helper alertViewNoHaveCancleWithTitle:@"请完善球队信息" withBlock:^(UIAlertController *alertView) {
+            [self.navigationController presentViewController:alertView animated:YES completion:nil];
+        }];
+        return;
+    }
     JGApplyMaterialTableViewCell *cell22 = [self.launchActivityTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:3]];
-    [self.paraDic setObject:cell22.textFD.text forKey:@"userMobile"];
-
-        
+    [self notNil:cell22.textFD.text SetValueForKey:@"userMobile"];
+    if (!cell22.textFD.text || ([cell22.textFD.text length] == 0)) {
+        [Helper alertViewNoHaveCancleWithTitle:@"请完善球队信息" withBlock:^(UIAlertController *alertView) {
+            [self.navigationController presentViewController:alertView animated:YES completion:nil];
+        }];
+        return;
+    }
+//    [self notNil:text SetValueForKey:@"info"];
+    if ([self.detailDic objectForKey:@"info"]) {
+        [self.paraDic setObject:[self.detailDic objectForKey:@"info"] forKey:@"info"];
+    }
+    if (![self.paraDic objectForKey:@"info"] || ([[self.paraDic objectForKey:@"info"] length] == 0)) {
+        [Helper alertViewNoHaveCancleWithTitle:@"请完善球队信息" withBlock:^(UIAlertController *alertView) {
+            [self.navigationController presentViewController:alertView animated:YES completion:nil];
+        }];
+        return;
+    }
+    
+    /*
+     self.imgProfile.image = _headerImage;
+     [self.paraDic setObject:[NSArray arrayWithObject:UIImageJPEGRepresentation(_headerImage, 0.7)] forKey:@"headerImage"];
+     
+     }else if (btn.tag == 740){
+     [self.headPortraitBtn setImage:_headerImage forState:UIControlStateNormal];
+     */
+    NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
+    [self.paraDic setObject:@"" forKey:@"notice"];
+    [self.paraDic setObject:@0 forKey:@"timeKey"];
+    [self.paraDic setObject:[user objectForKey:@"userId"] forKey:@"createUserKey"];
+    [self.paraDic setObject:@"1" forKey:@"check"];
+    [self.paraDic setObject:[user objectForKey:@"userName"] forKey:@"createUserName"];
+    NSDate *dateNew = [NSDate dateWithTimeIntervalSinceNow:0];
+    NSDateFormatter * dm = [[NSDateFormatter alloc]init];
+    [dm setDateFormat:@"yyyy-MM-dd 00:00:00"];
+    NSString * dateString = [dm stringFromDate:dateNew];
+    [self.paraDic setObject:dateString forKey:@"createtime"];
+    [user setObject:self.paraDic forKey:@"cacheCreatTeamDic"];
+    [user synchronize];
+    
     JGPreviewTeamViewController *preVC = [[JGPreviewTeamViewController alloc] init];
     preVC.detailDic = self.paraDic;
+    preVC.imgProfile.image = self.imgProfile.image;
+    [preVC.headPortraitBtn setImage:self.headPortraitBtn.imageView.image forState:(UIControlStateNormal)];
     [self.navigationController pushViewController:preVC animated:YES];
     
 //    NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
@@ -319,6 +383,15 @@ static CGFloat ImageHeight  = 210.0;
 //    } completionBlock:^(id data) {
 //        NSLog(@"%@", data);
 //    }];
+}
+
+// 判断是否为空 然后
+- (void)notNil:(NSString *)str SetValueForKey:(NSString *)key{
+    if (!str || ([str length] == 0)) {
+        NSLog(@"-8-8-8-8-8-8-8-8-8-8-8-8-8-8-8-");
+    }else{
+        [self.paraDic setValue:str forKey:key];
+    }
 }
 
 
@@ -375,13 +448,18 @@ static CGFloat ImageHeight  = 210.0;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+//    if (indexPath.section == 0) {
+//        return ImageHeight -10;
+//    }else if (indexPath.section == 3){
+//        return [self calculationLabelHeight:[self.detailDic objectForKey:@"info"]] + 40 * screenWidth / 320;
+//        
+//    }else{
+//        return 30;
+    //    }
     if (indexPath.section == 0) {
         return ImageHeight -10;
-    }else if (indexPath.section == 3){
-        return [self calculationLabelHeight:self.detailModel.info] + 40 * screenWidth / 320;
-        
     }else{
-        return 44;
+        return 30 * screenWidth / 320;
     }
 }
 
@@ -421,8 +499,8 @@ static CGFloat ImageHeight  = 210.0;
         contactCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         contactCell.selectionStyle = UITableViewCellSelectionStyleNone;
         contactCell.contentLB.lineBreakMode = NSLineBreakByWordWrapping;
-        contactCell.contentLB.text = self.detailModel.info;
-        contactCell.contentLB.frame = CGRectMake(10, 35  * screenWidth / 320, screenWidth - 20  * screenWidth / 320, [self calculationLabelHeight:self.detailModel.info]);
+//        contactCell.contentLB.text = [self.detailDic objectForKey:@"info"];
+        contactCell.contentLB.frame = CGRectMake(10, 35  * screenWidth / 320, screenWidth - 20  * screenWidth / 320, [self calculationLabelHeight:[self.detailDic objectForKey:@"info"]]);
         return contactCell;
     }else if (indexPath.section == 1){
         
@@ -430,8 +508,10 @@ static CGFloat ImageHeight  = 210.0;
         launchActivityCell.selectionStyle = UITableViewCellSelectionStyleNone;
         if (indexPath.row == 0) {
             launchActivityCell.promptLB.text = @"成立日期";
+            launchActivityCell.contentLB.text = [self.detailDic objectForKey:@"establishTime"];
         }else{
             launchActivityCell.promptLB.text = @"所在地区";
+            launchActivityCell.contentLB.text = [self.detailDic objectForKey:@"crtyName"];
         }
         launchActivityCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         
@@ -442,9 +522,11 @@ static CGFloat ImageHeight  = 210.0;
         if (indexPath.row == 0) {
             launchActivityCell.labell.text = @"真实姓名";
             launchActivityCell.textFD.placeholder = @"请输入真实姓名";
+            launchActivityCell.textFD.text = [self.detailDic objectForKey:@"userName"];
         }else{
             launchActivityCell.labell.text = @"联系方式";
             launchActivityCell.textFD.placeholder = @"请输入手机号";
+            launchActivityCell.textFD.text = [self.detailDic objectForKey:@"userMobile"];
         }
         return launchActivityCell;
     }
@@ -463,7 +545,7 @@ static CGFloat ImageHeight  = 210.0;
 //                        }
                         
                         JGLableAndLableTableViewCell *launchActivityCell = [self.launchActivityTableView cellForRowAtIndexPath:indexPath];
-                        launchActivityCell.contentLB.text = dateStr;
+                        launchActivityCell.contentLB.text = [NSString stringWithFormat:@"%@ 00:00:00", dateStr];
 //                        NSIndexPath *indPath = [NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section];
 //                        [self.launchActivityTableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indPath, nil] withRowAnimation:UITableViewRowAnimationNone];
                     }];
@@ -486,6 +568,7 @@ static CGFloat ImageHeight  = 210.0;
         if (indexPath.row == 0) {
             JGHConcentTextViewController *introVC = [[JGHConcentTextViewController alloc] init];
             introVC.delegate = self;
+            introVC.contentTextString = [self.detailDic objectForKey:@"info"];
             [self.navigationController pushViewController:introVC animated:YES];
         }
         

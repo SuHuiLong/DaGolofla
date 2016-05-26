@@ -12,6 +12,7 @@
 @interface JGTeamMemberORManagerViewController : ViewController
 
 @property (nonatomic, strong) JGTeamDetail *detailModel;
+@property (nonatomic, strong) NSMutableDictionary *detailDic;
 @property (nonatomic, retain) UIImageView *imgProfile;
 @property (nonatomic, assign) BOOL isManager;
 

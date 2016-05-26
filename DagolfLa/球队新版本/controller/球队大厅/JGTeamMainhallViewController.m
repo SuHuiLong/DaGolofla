@@ -67,7 +67,7 @@
 //    _tableView.scrollEnabled = NO;
     _searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
     _searchController.searchResultsUpdater = self;
-    _searchController.searchBar.barTintColor = [UIColor orangeColor];
+    _searchController.searchBar.barTintColor = [UIColor colorWithRed:0.94 green:0.94 blue:0.94 alpha:1];
     _searchController.dimsBackgroundDuringPresentation = NO;
     _searchController.hidesNavigationBarDuringPresentation = NO;
     _searchController.searchBar.frame = CGRectMake(self.searchController.searchBar.frame.origin.x, self.searchController.searchBar.frame.origin.y, self.searchController.searchBar.frame.size.width, 44.0);
@@ -130,12 +130,11 @@
             }
 
             [self.modelArray addObjectsFromArray:[data objectForKey:@"teamList"]];
-
             
             _page++;
             [_tableView reloadData];
         }else {
-            [Helper alertViewWithTitle:@"失败" withBlock:^(UIAlertController *alertView) {
+            [Helper alertViewWithTitle:@"没有更多球队" withBlock:^(UIAlertController *alertView) {
                 [self presentViewController:alertView animated:YES completion:nil];
             }];
         }
@@ -248,14 +247,13 @@
         
     } completionBlock:^(id data) {
         if ([data objectForKey:@"teamList"]) {
-            if (_page == 0)
-            {
                 //清除数组数据
                 [self.searchArray removeAllObjects];
+            
+//            [self.modelArray addObjectsFromArray:[data objectForKey:@"teamList"]];
+            for (NSDictionary *dic in [data objectForKey:@"teamList"]) {
+                [self.searchArray addObject:dic];
             }
-            
-            [self.modelArray addObjectsFromArray:[data objectForKey:@"teamList"]];
-            
             
             _page++;
             [_tableView reloadData];
@@ -272,24 +270,7 @@
     
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
     
     
     
@@ -347,7 +328,7 @@
 
 - (NSMutableArray *)searchArray{
     if (!_searchArray) {
-        _searchArray = [NSMutableArray arrayWithObjects:@"123", @"123", nil];
+        _searchArray = [[NSMutableArray alloc] init];;
     }
     return _searchArray;
 }
@@ -366,18 +347,25 @@
     [dic setObject:@([[self.modelArray[indexPath.row] objectForKey:@"timeKey"] integerValue]) forKey:@"teamKey"];
 
     [[JsonHttp jsonHttp] httpRequest:@"team/getTeamInfo" JsonKey:nil withData:dic requestMethod:@"GET" failedBlock:^(id errType) {
-        NSLog(@"error");
+
     } completionBlock:^(id data) {
-        NSLog(@"%@", data);
+
         if (![data objectForKey:@"teamMember"]) {
             JGNotTeamMemberDetailViewController *detailVC = [[JGNotTeamMemberDetailViewController alloc] init];
+            if (self.searchController.active) {
+                detailVC.detailDic = self.searchArray[indexPath.row];
+            }else{
+                detailVC.detailDic = self.modelArray[indexPath.row];
+            }
             [self.navigationController pushViewController:detailVC animated:YES];
         }else{
             if ([[data objectForKey:@"teamMember"] objectForKey:@"identity"] == 0){
                 JGTeamMemberORManagerViewController *detailVC = [[JGTeamMemberORManagerViewController alloc] init];
-                [self.navigationController pushViewController:detailVC animated:YES];
+                detailVC.detailDic = [data objectForKey:@"team"];
+                 [self.navigationController pushViewController:detailVC animated:YES];
             }else{
                 JGTeamMemberORManagerViewController *detailVC = [[JGTeamMemberORManagerViewController alloc] init];
+                detailVC.detailDic = [data objectForKey:@"team"];
                 [self.navigationController pushViewController:detailVC animated:YES];
             }
         }

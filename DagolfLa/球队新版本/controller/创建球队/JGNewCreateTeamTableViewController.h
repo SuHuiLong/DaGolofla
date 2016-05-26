@@ -13,5 +13,9 @@
 
 @property (nonatomic, strong) JGTeamDetail *detailModel;
 @property (nonatomic, retain) UIImageView *imgProfile;
+@property (nonatomic, strong)UIButton *headPortraitBtn;//头像
+@property (nonatomic, strong)UITextField *titleField;//球队名称输入框
+@property (nonatomic, strong) NSMutableDictionary *detailDic;
+
 
 @end
