@@ -7,6 +7,7 @@
 //
 
 #import "JGGroupdetailsCollectionViewCell.h"
+#import "JGHPlayersModel.h"
 
 @implementation JGGroupdetailsCollectionViewCell
 
@@ -46,7 +47,28 @@
 
 - (void)selectImage:(UIButton *)btn{
     if (self.delegate) {
-        [self.delegate didSelectHeaderImage:btn];
+        [self.delegate didSelectHeaderImage:btn JGGroupCell:self];
+    }
+}
+
+- (void)configJGHPlayersModel:(JGHPlayersModel *)model andSortIndex:(NSInteger)sortIndex{
+    self.lable1.text = model.name;
+}
+
+- (void)configCellWithModelArray:(NSMutableArray *)modelArray{
+    NSLog(@"%ld", (long)self.tag);
+    for (JGHPlayersModel *model in modelArray) {
+        if (model.groupIndex == self.tag) {
+            if (model.sortIndex == 0) {
+                self.lable1.text = model.name;
+            }else if (model.sortIndex == 1){
+                self.lable2.text = model.name;
+            }else if (model.sortIndex == 2){
+                self.lable3.text = model.name;
+            }else if (model.sortIndex == 3){
+                self.lable4.text = model.name;
+            }
+        }
     }
 }
 

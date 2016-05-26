@@ -10,7 +10,5 @@
 
 @interface JGTeamActivityViewController : ViewController
 
-//0－管理员  1-非管理员
-@property (nonatomic, copy)NSString *isAdmin;
 
 @end

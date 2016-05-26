@@ -70,6 +70,24 @@
     _poleLabel.text = [NSString stringWithFormat:@"%@",model.mobile];
     
 }
+
+- (void)configJGHPlayersModel:(JGHPlayersModel *)model{
+    _nameLabel.text = [NSString stringWithFormat:@"%@",model.name];
+    
+    if (model.sex == 0) {
+        [_sexImgv setImage: [UIImage imageNamed:@"xb_n"]];
+    }
+    else
+    {
+        [_sexImgv setImage: [UIImage imageNamed:@"xb_nn"]];
+    }
+    
+    _almostLabel.text = [NSString stringWithFormat:@"%ld", model.almost];
+    
+    _poleLabel.text = [NSString stringWithFormat:@"%@",model.mobile];
+
+}
+
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
 

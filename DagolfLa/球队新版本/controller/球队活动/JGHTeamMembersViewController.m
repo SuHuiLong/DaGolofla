@@ -8,6 +8,7 @@
 
 #import "JGHTeamMembersViewController.h"
 #import "JGMenberTableViewCell.h"
+#import "JGHPlayersModel.h"
 
 @interface JGHTeamMembersViewController ()<UITableViewDelegate, UITableViewDataSource>
 {
@@ -16,6 +17,13 @@
 @end
 
 @implementation JGHTeamMembersViewController
+
+- (instancetype)init{
+    if (self == [super init]) {
+        self.teamGroupAllDataArray = [NSMutableArray array];
+    }
+    return self;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -37,12 +45,17 @@
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 10;
+    return _teamGroupAllDataArray.count;
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     JGMenberTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"JGMenberTableViewCell" forIndexPath:indexPath];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    
+    JGHPlayersModel *model = [[JGHPlayersModel alloc]init];
+    model = _teamGroupAllDataArray[indexPath.row];
+    [cell configJGHPlayersModel:model];
+    
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -52,6 +65,23 @@
     }
     
     [self.navigationController popViewControllerAnimated:YES];
+    
+    //更新分组updateTeamActivityGroupIndex
+    [self updateTeamActivityGroupIndex];
 }
+
+- (void)updateTeamActivityGroupIndex{
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    [dict setObject:@"" forKey:@"oldSignUpKey"];//老的球队活动报名人timeKey
+    [dict setObject:@"" forKey:@"newSignUpKey"];//新的球队活动报名人timeKey
+    [dict setObject:@"" forKey:@"groupIndex"];//组号
+    [dict setObject:@"" forKey:@"sortIndex"];//排序索引
+    [[JsonHttp jsonHttp]httpRequest:@"team/updateTeamActivityGroupIndex" JsonKey:nil withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
+        NSLog(@"errType == %@", errType);
+    } completionBlock:^(id data) {
+        NSLog(@"data == %@", data);
+    }];
+}
+
 
 @end
