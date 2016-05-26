@@ -34,6 +34,11 @@
     self.name.text = [dict objectForKey:@"name"];
     //性别
 //    @property (weak, nonatomic) IBOutlet UILabel *sex;
+    if ([[dict objectForKey:@"sex"]isEqualToString:@"0"]) {
+        self.sex.text = @"女";
+    }else{
+        self.sex.text = @"男";
+    }
     //电话
 //    @property (weak, nonatomic) IBOutlet UILabel *number;
 }
