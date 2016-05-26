@@ -19,6 +19,7 @@ static NSString *const JGGroupdetailsCollectionViewCellIdentifier = @"JGGroupdet
 @interface JGTeamGroupViewController ()<UICollectionViewDataSource, UICollectionViewDelegate, JGGroupdetailsCollectionViewCellDelegate>
 {
     NSInteger _collectionHegith;
+    
 }
 
 @property (nonatomic, weak) UICollectionView *collectionView;
@@ -134,7 +135,7 @@ static NSString *const JGGroupdetailsCollectionViewCellIdentifier = @"JGGroupdet
     }
 }
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
-    collectionView.tag = indexPath.item;
+//    collectionView.tag = indexPath.item;
     if ([collectionView isEqual:self.collectionView]) {
         JGTeamGroupCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:JGTeamGroupCollectionViewCellIdentifier forIndexPath:indexPath];
         JGHPlayersModel *model = [[JGHPlayersModel alloc]init];
@@ -143,8 +144,10 @@ static NSString *const JGGroupdetailsCollectionViewCellIdentifier = @"JGGroupdet
         return cell;
     }else{
         JGGroupdetailsCollectionViewCell *groupCell = [collectionView dequeueReusableCellWithReuseIdentifier:JGGroupdetailsCollectionViewCellIdentifier forIndexPath:indexPath];
-        groupCell.delegate = self;
+        groupCell.delegate = self; 
         groupCell.tag = indexPath.item;
+//        NSLog(@"%ld", (long)indexPath.item);
+//        NSLog(@"%ld", (long)groupCell.tag);
 //        groupCell.sction1.tag = indexPath.item*1000 + indexPath.;
 //        JGHPlayersModel *model = [[JGHPlayersModel alloc]init];
         if (_alreadyDataArray.count !=0) {
@@ -158,27 +161,45 @@ static NSString *const JGGroupdetailsCollectionViewCellIdentifier = @"JGGroupdet
 }
 #pragma mark -- 点击头像图片的代理方法JGGroupdetailsCollectionViewCellDelegate
 - (void)didSelectHeaderImage:(UIButton *)btn JGGroupCell:(JGGroupdetailsCollectionViewCell *)cell{
-    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
         
     }];
-    UIAlertAction *commitAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+    UIAlertAction *commitAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        
+        NSUserDefaults *userDef = [NSUserDefaults standardUserDefaults];
+        
+        
         NSMutableDictionary *dict = [NSMutableDictionary dictionary];
         [dict setObject:@0 forKey:@"oldSignUpKey"];// 老的球队活动报名人timeKey
-        [dict setObject:@278 forKey:@"oldSignUpKey"]; // 新的球队活动报名人timeKey
-//        [dict setObject:<#(nonnull id)#> forKey:@"groupIndex"];// 组号
-//        [dict setObject:<#(nonnull id)#> forKey:@"sortIndex"];
-//        @Param(value = "newSignUpKey", require=true) Long     newSignUpKey,   // 新的球队活动报名人timeKey
-//        @Param(value = "groupIndex", require=true)Integer     groupIndex,     // 组号
-//        @Param(value = "sortIndex", require=true) Integer     sortIndex,      // 排序索引
+        [dict setObject:@279 forKey:@"newSignUpKey"]; // 新的球队活动报名人timeKey
+        [dict setObject:[NSString stringWithFormat:@"%ld", (long)cell.tag] forKey:@"groupIndex"]; // 组号
+        [dict setObject:[NSString stringWithFormat:@"%ld", (long)btn.tag] forKey:@"sortIndex"]; // 排序索引
         
-//        [JsonHttp jsonHttp]httpRequest:@"team/updateTeamActivityGroupIndex" JsonKey:nil withData:<#(NSDictionary *)#> requestMethod:<#(NSString *)#> failedBlock:<#^(id errType)failedBlock#> completionBlock:<#^(id data)completionBlock#>
+        [[JsonHttp jsonHttp]httpRequest:@"team/updateTeamActivityGroupIndex" JsonKey:nil withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
+            NSLog(@"errtype === %@", errType);
+        } completionBlock:^(id data) {
+            NSLog(@"data === %@", data);
+            if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+                for (int i=0; i<_teamGroupAllDataArray.count; i++) {
+                    JGHPlayersModel *model = _teamGroupAllDataArray[i];
+                    if ((long)model.timeKey == (long)[[dict objectForKey:@"newSignUpKey"] integerValue]) {
+                        [self.teamGroupAllDataArray removeObject:model];
+                        [self.alreadyDataArray addObject:model];
+                        
+                    }
+                }
+                
+                [self.collectionView reloadData];
+                [self.groupDetailsCollectionView reloadData];
+            }
+        }];
     }];
     
     
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"系统提示" message:@"是否加入改组！" preferredStyle:UIAlertControllerStyleAlert];
     
-    [alertController addAction:commitAction];
     [alertController addAction:cancelAction];
+    [alertController addAction:commitAction];
     
     [self presentViewController:alertController animated:YES completion:nil];
     

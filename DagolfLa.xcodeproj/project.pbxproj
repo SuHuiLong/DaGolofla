@@ -4182,7 +4182,6 @@
 			isa = PBXGroup;
 			children = (
 				20513B671CF7050A003233FB /* zhifu */,
-				82E6A6FD1CF58C9A009DD179 /* libsqlite3.0.tbd */,
 				36D0B0F91C80156900C7245E /* frameWork */,
 				36BFFD531BC76CDB005B3CE2 /* 社区图标 */,
 				36BFFDCD1BC76CDC005B3CE2 /* 首页图片 */,
@@ -4963,6 +4962,7 @@
 		36D0B0F91C80156900C7245E /* frameWork */ = {
 			isa = PBXGroup;
 			children = (
+				82E6A6FD1CF58C9A009DD179 /* libsqlite3.0.tbd */,
 				82D595DD1CE42BDF00CD9587 /* BaiduMapAPI.framework */,
 				82D595DE1CE42BDF00CD9587 /* mapapi.bundle */,
 				20BA613B1CDC9B8E004B61F5 /* CoreMotion.framework */,

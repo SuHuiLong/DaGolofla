@@ -44,5 +44,6 @@
 
 @property (nonatomic, assign)NSInteger type;//类型: 0:嘉宾  1:球队队员
 
+@property (nonatomic, assign)NSInteger timeKey;//timeKey
 
 @end

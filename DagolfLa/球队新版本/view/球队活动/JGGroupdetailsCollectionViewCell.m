@@ -57,19 +57,43 @@
 
 - (void)configCellWithModelArray:(NSMutableArray *)modelArray{
     NSLog(@"%ld", (long)self.tag);
+    if (self.lable1.text.length != 0) {
+        self.lable1.text = nil;
+    }
+    
+    if (self.lable2.text.length != 0) {
+        self.lable2.text = nil;
+    }
+    
+    if (self.lable3.text.length != 0) {
+        self.lable3.text = nil;
+    }
+    
+    if (self.lable4.text.length != 0) {
+        self.lable4.text = nil;
+    }
+    
     for (JGHPlayersModel *model in modelArray) {
         if (model.groupIndex == self.tag) {
             if (model.sortIndex == 0) {
                 self.lable1.text = model.name;
-            }else if (model.sortIndex == 1){
+            }
+            
+            if (model.sortIndex == 1){
                 self.lable2.text = model.name;
-            }else if (model.sortIndex == 2){
+            }
+            
+            if (model.sortIndex == 2){
                 self.lable3.text = model.name;
-            }else if (model.sortIndex == 3){
+            }
+            
+            if (model.sortIndex == 3){
                 self.lable4.text = model.name;
             }
         }
     }
+    
+    
 }
 
 @end
