@@ -24,6 +24,8 @@
 #import "JGTeamActibityNameViewController.h"
 #import "JGNotTeamMemberDetailViewController.h"
 #import "JGNewCreateTeamTableViewController.h"
+#import "JGTeamActivityCell.h"
+#import <CoreLocation/CLLocation.h>
 
 
 @interface JGTeamChannelViewController ()<UITableViewDataSource, UITableViewDelegate>
@@ -138,7 +140,9 @@
             [dic setValue:@0 forKey:@"offset"];
             [getMyTeam setObject:@192 forKey:@"teamKey"];
             [[JsonHttp jsonHttp] httpRequest:@"team/getMyTeamActivityList" JsonKey:nil withData:dic requestMethod:@"GET" failedBlock:^(id errType) {
-                NSLog(@"getMyTeamActivityList ***** error");
+                [Helper alertViewNoHaveCancleWithTitle:@"获取活动列表失败" withBlock:^(UIAlertController *alertView) {
+                    [self.navigationController presentViewController:alertView animated:YES completion:nil];
+                }];
             } completionBlock:^(id data) {
                 
                 for (NSDictionary *dicModel in data[@"activityList"]) {
@@ -167,32 +171,40 @@
             {
                 [dic setObject:@31.156063 forKey:@"latitude"];
             }
+            [dic setValue:[user objectForKey:@"currentCity"] forKey:@"crtyName"];
             [dic setValue:@0 forKey:@"offset"];
             [[JsonHttp jsonHttp] httpRequest:@"team/getTeamList" JsonKey:nil withData:dic requestMethod:@"GET" failedBlock:^(id errType) {
-                NSLog(@"getTeamList ***** error%@",errType);
+                [Helper alertViewNoHaveCancleWithTitle:@"获取推荐球队列表失败" withBlock:^(UIAlertController *alertView) {
+                    [self.navigationController presentViewController:alertView animated:YES completion:nil];
+                }];
             } completionBlock:^(id data) {
-                self.teamArray = data[@"teamList"];
-//                for (NSDictionary *dicModel in data[@"teamList"]) {
-//                    JGTeamDetail *model = [[JGTeamDetail alloc] init];
-//                    [model setValuesForKeysWithDictionary:dicModel];
-//                    [self.teamArray addObject:model];
+                
+//                if (data[@"teamList"]) {
+                    self.teamArray = data[@"teamList"];
+//                }else{
+//                    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+//                    [dict setValue:@0 forKey:@"offset"];
+//                    [[JsonHttp jsonHttp] httpRequest:@"team/getTeamList" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
+//                        NSLog(@"getTeamList ***** error%@",errType);
+//                    } completionBlock:^(id data) {
+//                        
+//                        self.teamArray = data[@"teamList"];
+//                        
+//                        [self.tableView reloadData];
+//                        
+//                    }];
+//                    
 //                }
+
                 [self.tableView reloadData];
                 
-                
-                /*
-                 
-                 NSUserDefaults *user=[NSUserDefaults standardUserDefaults];
-                 [self.paraDic setObject:[NSNumber numberWithFloat:currLocation.coordinate.latitude] forKey:@"likeName"];
-                 [user setObject:[NSNumber numberWithFloat:currLocation.coordinate.latitude] forKey:@"lat"];
-                 [user setObject:[NSNumber numberWithFloat:currLocation.coordinate.longitude] forKey:@"lng"];
-                 */
             }];
             
         }
     }];
     
 }
+
 
 - (void)creatTeam{
     
@@ -279,9 +291,9 @@
         
     }else{
         
-        JGTeamChannelActivityTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"cellActivity"];
+        JGTeamActivityCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"JGTeamActivityCell"];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        cell.activityModel = self.myActivityArray[indexPath.row];
+        [cell setJGTeamActivityCellWithModel:self.myActivityArray[indexPath.row]];
         return cell;
     }
 }
