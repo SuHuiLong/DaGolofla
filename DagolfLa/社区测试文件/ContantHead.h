@@ -76,4 +76,8 @@ typedef NS_ENUM(NSInteger, GestureType) {
 #import "UIColor+ColorTransfer.h"
 #import "JsonHttp.h"
 #import "Helper.h"
+
+#import "UIImageView+WebCache.h"
+#import "UIButton+WebCache.h"
+
 #endif

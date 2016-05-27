@@ -93,6 +93,16 @@
 }
 
 
+//新方法 头像路径
++ (NSURL *)setImageIconUrl:(NSNumber *)timeKey {
+    //        NSString *imageStr = [NSString stringWithFormat:@"http://192.168.2.18:8080/%@",downloadImageUrl];
+    NSString *imageStr = [NSString stringWithFormat:@"http://192.168.1.101/user/head/%@.jpg",timeKey];
+    NSURL *imageUrl = [NSURL URLWithString:imageStr];
+    return imageUrl;
+}
+
+
+
 //手机号码格式验证
 + (BOOL)testMobileIsTrue:(NSString *)mobile {
     ////NSLog(@"monlie  ==  %@",mobile);
