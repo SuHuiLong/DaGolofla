@@ -168,38 +168,57 @@ static CGFloat ImageHeight  = 210.0;
 
 #pragma mark -- 提交
 - (void)previewBtnClick:(UIButton *)btn{
-    NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
-    NSDictionary *Dic =[user objectForKey:@"cacheCreatTeamDic"];
-    [[JsonHttp jsonHttp] httpRequest:@"team/createTeam" JsonKey:@"team" withData:Dic requestMethod:@"POST" failedBlock:^(id errType) {
-
+    
+    
+    
+    [[JsonHttp jsonHttp] httpRequest:@"globalCode/createTimeKey" JsonKey:nil withData:nil requestMethod:@"GET" failedBlock:^(id errType) {
+        
     } completionBlock:^(id data) {
-
-        if ([data objectForKey:@"packSuccess"]) {
-            [user setObject:0 forKey:@"cacheCreatTeamDic"];
-//            [user removeObjectForKey:@"cacheCreatTeamDic"];
-            [user synchronize];
+        
+        
+        NSNumber* strTimeKey = [data objectForKey:@"timeKey"];
+        // 上传图片
+        NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+        [dict setObject:strTimeKey forKey:@"data"];
+        [dict setObject:TYPE_TEAM_HEAD forKey:@"nType"];
+        [dict setObject:PHOTO_DAGOLFLA forKey:@"tag"];
+        
+        [[JsonHttp jsonHttp]httpRequestImageOrVedio:@"1" withData:dict andDataArray:[_dictPhoto objectForKey:@"headPortraitBtn"] failedBlock:^(id errType) {
+            NSLog(@"errType===%@", errType);
+        } completionBlock:^(id data) {
+            NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
+//
+//            NSMutableDictionary *Dic =[user objectForKey:@"cacheCreatTeamDic"];
+//            [Dic setObject:strTimeKey forKey:@"timeKey"];
+            [_detailDic setObject:strTimeKey forKey:@"timeKey"];
             
             
-            // 上传图片
-            NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-//            [dict setObject:[_detailDic objectForKey:@"teamKey"] forKey:@"data"];
-            [dict setObject:TYPE_TEAM_HEAD forKey:@"nType"];
-            [dict setObject:PHOTO_DAGOLFLA forKey:@"tag"];
-            NSMutableArray *array = [NSMutableArray array];
-            
-            [array addObject:[_dictPhoto objectForKey:@"headPortraitBtn"]];
-            [[JsonHttp jsonHttp]httpRequestImageOrVedio:@"1" withData:dict andDataArray:array failedBlock:^(id errType) {
-                NSLog(@"errType===%@", errType);
+            [[JsonHttp jsonHttp] httpRequest:@"team/createTeam" JsonKey:@"team" withData:_detailDic requestMethod:@"POST" failedBlock:^(id errType) {
+                
             } completionBlock:^(id data) {
-                NSLog(@"data===%@", data);
+                
+                if ([data objectForKey:@"packSuccess"]) {
+                    [user setObject:0 forKey:@"cacheCreatTeamDic"];
+                    //            [user removeObjectForKey:@"cacheCreatTeamDic"];
+                    [user synchronize];
+                    
+                    
+                }
             }];
-            
-        }
+            [Helper alertViewNoHaveCancleWithTitle:@"球队创建提交成功" withBlock:^(UIAlertController *alertView) {
+                [self.navigationController presentViewController:alertView animated:YES completion:nil];
+            }];
+            [self.navigationController popViewControllerAnimated:YES];
+        }];
+        
+        
+        
+        
+        
     }];
-    [Helper alertViewNoHaveCancleWithTitle:@"球队创建提交成功" withBlock:^(UIAlertController *alertView) {
-        [self.navigationController presentViewController:alertView animated:YES completion:nil];
-    }];
-    [self.navigationController popViewControllerAnimated:YES];
+
+    
+    
 
 }
 
