@@ -15,9 +15,11 @@
     if (self) {
         
         self.labell = [[UILabel alloc] initWithFrame:CGRectMake(10 * screenWidth / 320, 0, 110 * screenWidth / 320, self.frame.size.height)];
+        self.labell.font = [UIFont systemFontOfSize:15 * screenWidth / 320];
         [self addSubview:self.labell];
         
         self.textFD = [[UITextField alloc] initWithFrame:CGRectMake(110 * screenWidth / 320, 0, screenWidth - 130 * screenWidth / 320, self.frame.size.height)];
+        self.textFD.font = [UIFont systemFontOfSize:15 * screenWidth / 320];
         [self addSubview:self.textFD];
         self.textFD.textAlignment = 2;
     }
