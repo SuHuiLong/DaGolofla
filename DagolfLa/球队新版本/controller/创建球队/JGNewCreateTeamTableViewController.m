@@ -364,6 +364,7 @@ static CGFloat ImageHeight  = 210.0;
     
     JGPreviewTeamViewController *preVC = [[JGPreviewTeamViewController alloc] init];
     preVC.detailDic = self.paraDic;
+    preVC.dictPhoto = _dictPhoto;
     preVC.imgProfile.image = self.imgProfile.image;
     [preVC.headPortraitBtn setImage:self.headPortraitBtn.imageView.image forState:(UIControlStateNormal)];
     [self.navigationController pushViewController:preVC animated:YES];
@@ -537,6 +538,7 @@ static CGFloat ImageHeight  = 210.0;
                 if (indexPath.row == 0) {
                     //时间选择
                     DateTimeViewController *dataCtrl = [[DateTimeViewController alloc]init];
+                    dataCtrl.typeIndex = @1;
                     [dataCtrl setCallback:^(NSString *dateStr, NSString *dateWeek, NSString *str) {
 //                        if (indexPath.row == 0) {
 //                            [self.model setValue:dateStr forKey:@"startDate"];
