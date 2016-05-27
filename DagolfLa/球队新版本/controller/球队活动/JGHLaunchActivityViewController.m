@@ -20,6 +20,7 @@
 #import "JGCostSetViewController.h"
 #import "BallParkViewController.h"
 
+
 static NSString *const JGTableViewCellIdentifier = @"JGTableViewCell";
 static NSString *const JGHTeamContactCellIdentifier = @"JGHTeamContactTableViewCell";
 static CGFloat ImageHeight  = 210.0;
@@ -28,10 +29,11 @@ static CGFloat ImageHeight  = 210.0;
 {
     //、、、、、、、
     NSArray *_titleArray;//标题数组
-    
-//    NSString *_contcat;//联系人
-    
     NSInteger _photos;
+    
+    NSMutableDictionary* dictData;
+    
+    NSString* _strName;
 }
 @property (nonatomic,strong)SXPickPhoto * pickPhoto;//相册类
 @property (nonatomic, strong)UITableView *launchActivityTableView;
@@ -71,6 +73,9 @@ static CGFloat ImageHeight  = 210.0;
         self.dataDict = [NSMutableDictionary dictionary];
         self.pickPhoto = [[SXPickPhoto alloc]init];
         self.titleView = [[UIView alloc]init];
+    
+
+        _dataDict = [[NSMutableDictionary alloc]init];
         UIImage *image = [UIImage imageNamed:@"bg"];
         self.imgProfile = [[UIImageView alloc] initWithImage:image];
         self.imgProfile.frame = CGRectMake(0, 0, screenWidth, ImageHeight);
@@ -98,6 +103,9 @@ static CGFloat ImageHeight  = 210.0;
     self.navigationController.navigationBar.hidden = YES;
     self.automaticallyAdjustsScrollViewInsets=NO;
     self.view.backgroundColor = [UIColor colorWithHexString:@"#EAEAEB"];
+    
+    
+    
     _photos = 1;
     //返回按钮
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -185,6 +193,14 @@ static CGFloat ImageHeight  = 210.0;
 - (void)previewBtnClick:(UIButton *)btn{
     NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
     [userdef setObject:@"1" forKey:@"isAdmin"];//代表管理员
+    
+    [_dataDict setObject:self.titleField.text forKey:@"activityTitle"];
+    [_dataDict setObject:self.addressBtn.titleLabel.text forKey:@"activityAddress"];
+    [_dataDict setObject:[NSNumber numberWithInteger:self.model.maxCount] forKey:@"activityMaxCount"];
+    [_dataDict setObject:_strName forKey:@"activityUserName"];
+    [_dataDict setObject:self.model.usernumber forKey:@"activityUserNumber"];
+    
+    
     JGTeamActibityNameViewController *ActivityDetailCtrl = [[JGTeamActibityNameViewController alloc]init];
     ActivityDetailCtrl.model = self.model;
     [self.navigationController pushViewController:ActivityDetailCtrl animated:YES];
@@ -271,13 +287,14 @@ static CGFloat ImageHeight  = 210.0;
         JGHTeamContactTableViewCell *contactCell = [tableView dequeueReusableCellWithIdentifier:JGHTeamContactCellIdentifier];
         if (indexPath.row == 1) {
             contactCell.contactLabel.text = @"联系人电话";
-            contactCell.contactLabel.tag = 123;
             contactCell.tetfileView.placeholder = @"请输入联系人电话";
+            contactCell.tetfileView.tag = 123;
         }else{
             contactCell.contactLabel.text = @"联系人";
-            contactCell.contactLabel.tag = 23;
             contactCell.tetfileView.keyboardType = UIKeyboardTypeDefault;
             contactCell.tetfileView.placeholder = @"请输入联系人姓名";
+            contactCell.tetfileView.delegate = self;
+            contactCell.tetfileView.tag = 23;
         }
         
         contactCell.tetfileView.delegate = self;
@@ -287,7 +304,7 @@ static CGFloat ImageHeight  = 210.0;
         if (indexPath.row == 1 && indexPath.section == 2) {
             JGHTeamContactTableViewCell *contactCell = [tableView dequeueReusableCellWithIdentifier:JGHTeamContactCellIdentifier];
             contactCell.tetfileView.delegate = self;
-            contactCell.contactLabel.tag = 234;
+            contactCell.tetfileView.tag = 234;
             contactCell.contactLabel.text = @"人员限制";
             contactCell.tetfileView.placeholder = @"请输入最大人员限制数";
             return contactCell;
@@ -318,10 +335,13 @@ static CGFloat ImageHeight  = 210.0;
         [dataCtrl setCallback:^(NSString *dateStr, NSString *dateWeek, NSString *str) {
             if (indexPath.row == 0) {
                 [self.model setValue:dateStr forKey:@"beginDate"];
+                [_dataDict setObject:dateStr forKey:@"activityBeginDate"];
             }else if(indexPath.row == 1){
                 [self.model setValue:dateStr forKey:@"endDate"];
+                [_dataDict setObject:dateStr forKey:@"activityEndDate"];
             }else{
                 [self.model setValue:dateStr forKey:@"signUpEndTime"];
+                [_dataDict setObject:dateStr forKey:@"activityEignUpEndTime"];
             }
             
             NSIndexPath *indPath = [NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section];
@@ -339,6 +359,7 @@ static CGFloat ImageHeight  = 210.0;
             concentTextCtrl.itemText = @"内容";
             concentTextCtrl.delegate = self;
             concentTextCtrl.contentTextString = _model.info;
+            
             [self.navigationController pushViewController:concentTextCtrl animated:YES];
         }
     }
@@ -431,21 +452,24 @@ static CGFloat ImageHeight  = 210.0;
 #pragma mark -- 添加内容详情代理  JGHConcentTextViewControllerDelegate
 - (void)didSelectSaveBtnClick:(NSString *)text{
     [self.model setValue:text forKey:@"info"];
+    [_dataDict setObject:text forKey:@"activityContext"];
     [self.launchActivityTableView reloadData];
 }
 #pragma mark -- 费用代理
 - (void)inputMembersCost:(NSString *)membersCost guestCost:(NSString *)guestCost{
     self.model.guestPrice = [guestCost integerValue];
     self.model.memberPrice = [membersCost integerValue];
+    [_dataDict setObject:guestCost forKey:@"activityGuestCost"];
+    [_dataDict setObject:membersCost forKey:@"activityMembersCost"];
     [self.launchActivityTableView reloadData];
 }
 #pragma mark -- UITextFliaView
 - (void)textFieldDidEndEditing:(UITextField *)textField{
     if (textField.tag == 123) {
         self.model.maxCount = [textField.text integerValue];
-//        self.model.usernumber = @"18721110361";
     }else if (textField.tag == 23) {
         self.model.username = textField.text;
+        _strName = textField.text;
     }else{
         self.model.usernumber = textField.text;
     }
