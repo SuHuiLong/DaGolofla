@@ -187,9 +187,11 @@ static NSString *const JGHApplyListCellIdentifier = @"JGHApplyListCell";
         return applyListCel;
 //    }
 }
+
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     if (section == 0) {
         JGActivityBaseInfoCell *infoCell = [tableView dequeueReusableCellWithIdentifier:JGActivityBaseInfoCellIdentifier];
+        [infoCell configJGTeamAcitivtyModel:self.modelss];
         infoCell.selectionStyle = UITableViewCellSelectionStyleNone;
         return (UIView *)infoCell;
     }else if (section == 1){

@@ -32,9 +32,9 @@
     self.yuan.text = @"元)";
 }
 //报名总人数
-- (void)congifCount:(NSString *)count andSum:(NSString *)sum{
+- (void)congifCount:(NSInteger)count andSum:(NSInteger)sum{
 //    self.contact.text = [NSString stringWithFormat:@"¥%@", contact];
-    self.noteLbael.text = [NSString stringWithFormat:@"(%@/%2)"];
+    self.noteLbael.text = [NSString stringWithFormat:@" (%td/%td)", sum, count];
 //    self.subsidies.text = note;
 //    self.yuan.text = @"元)";
 }

@@ -24,4 +24,7 @@
 
 - (void)congifContact:(NSString *)contact andNote:(NSString *)note;
 
+
+- (void)congifCount:(NSInteger)count andSum:(NSInteger)sum;
+
 @end
