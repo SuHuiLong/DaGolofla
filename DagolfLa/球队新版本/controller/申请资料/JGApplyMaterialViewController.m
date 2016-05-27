@@ -11,7 +11,7 @@
 #import "JGButtonTableViewCell.h"
 
 
-@interface JGApplyMaterialViewController ()<UITableViewDelegate, UITableViewDataSource,UIPickerViewDataSource,UIPickerViewDelegate>
+@interface JGApplyMaterialViewController ()<UITableViewDelegate, UITableViewDataSource,UIPickerViewDataSource,UIPickerViewDelegate,UITextFieldDelegate>
 
 @property (nonatomic, strong)UITableView *tableView;
 @property (nonatomic, strong)UITableView *secondTableView;
@@ -31,15 +31,14 @@
     UIBarButtonItem *rightBar = [[UIBarButtonItem alloc] initWithTitle:@"完成" style:(UIBarButtonItemStyleDone) target:self action:@selector(complete)];
     rightBar.tintColor = [UIColor whiteColor];
     self.navigationItem.rightBarButtonItem = rightBar;
-
-//    [self creatTableView];
+    
+    //    [self creatTableView];
     [self creatNewTableView];
     // Do any additional setup after loading the view.
 }
 
 - (void)pickerVieCreate{
     self.pickerView = [[UIPickerView alloc]init];
-
 }
 
 
@@ -48,7 +47,6 @@
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
 {
     return 1;
-    
 }
 
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
@@ -73,11 +71,11 @@
 -(void)createDataClick:(NSString *)string
 {
     self.pickerBackView = [[UIView alloc] initWithFrame:CGRectMake(0, ScreenHeight - ScreenHeight/3, ScreenWidth, ScreenHeight/3)];
-//    self.pickerBackView.userInteractionEnabled = YES;
-//    [UIView animateWithDuration:0.2 animations:^{
-//        self.pickerBackView.frame = CGRectMake(0, ScreenHeight/3*2 - 49, ScreenWidth, ScreenHeight/3);
-//        self.pickerBackView.userInteractionEnabled = NO;
-//    } completion:nil];
+    //    self.pickerBackView.userInteractionEnabled = YES;
+    //    [UIView animateWithDuration:0.2 animations:^{
+    //        self.pickerBackView.frame = CGRectMake(0, ScreenHeight/3*2 - 49, ScreenWidth, ScreenHeight/3);
+    //        self.pickerBackView.userInteractionEnabled = NO;
+    //    } completion:nil];
     self.pickerBackView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:self.pickerBackView];
     
@@ -98,15 +96,15 @@
     
     // 性别，年龄，差点的选择器
     // UIPickerView只有三个高度， heights for UIPickerView (162.0, 180.0 and 216.0)，用代码设置 pickerView.frame=cgrectmake()...
-            [self setUpPickerView:1 frame:CGRectMake(screenWidth/ 2 - 50, 0, 100, 162) with:1111];
-
-    }
+    [self setUpPickerView:1 frame:CGRectMake(screenWidth/ 2 - 50, 0, 100, 162) with:1111];
+    
+}
 //hand选择器
 -(void)createDataClickSec:(NSString *)string
 {
     
     self.pickerBackView = [[UIView alloc] initWithFrame:CGRectMake(0, ScreenHeight - ScreenHeight/3, ScreenWidth, ScreenHeight/3)];
-
+    
     self.pickerBackView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:self.pickerBackView];
     
@@ -124,7 +122,7 @@
     [_button2 setTitleColor:[UIColor blackColor] forState:(UIControlStateNormal)];
     [_button2 addTarget:self action:@selector(buttonMissClickSec:) forControlEvents:UIControlEventTouchUpInside];
     [self.pickerBackView addSubview:_button2];
-
+    
     [self setUpPickerView:1 frame:CGRectMake(screenWidth/ 2 - 50, 0, 100, 162) with:2222];
     
 }
@@ -135,15 +133,21 @@
     self.pickerView.showsSelectionIndicator = YES;
     self.pickerView.frame = frame;
     self.pickerView.tag = tag;
-
+    
     [self.pickerBackView addSubview:self.pickerView];
     self.pickerView.delegate = self;
     self.pickerView.dataSource = self;
-//    [ self.pickerView. selectRow:1 inComponent:0 animated:YES];
+    //    [ self.pickerView. selectRow:1 inComponent:0 animated:YES];
 }
 
 - (void)buttonShowClickSec: (UIButton *)btn{
-    [self.pickerBackView removeFromSuperview];
+
+    
+    if ([[self.view subviews] containsObject:self.pickerBackView]) {
+        [self.pickerBackView removeFromSuperview];
+    }
+    
+    
     [self.paraDic setObject:@0 forKey:@"hand"];
     NSIndexPath *indexpat = [NSIndexPath indexPathForRow:5 inSection:1];
     JGButtonTableViewCell *cell = [self.secondTableView cellForRowAtIndexPath:indexpat];
@@ -152,9 +156,12 @@
 
 - (void)buttonMissClickSec: (UIButton *)btn{
     if (![self.paraDic objectForKey:@"hand"]) {
-    [self.paraDic setObject:@0 forKey:@"hand"];
-}
-    [self.pickerBackView removeFromSuperview];
+        [self.paraDic setObject:@0 forKey:@"hand"];
+    }
+
+    if ([[self.view subviews] containsObject:self.pickerBackView]) {
+        [self.pickerBackView removeFromSuperview];
+    }
     NSIndexPath *indexpat = [NSIndexPath indexPathForRow:5 inSection:1];
     JGButtonTableViewCell *cell = [self.secondTableView cellForRowAtIndexPath:indexpat];
     if ([[self.paraDic objectForKey:@"hand"] integerValue] == 0) {
@@ -166,7 +173,11 @@
 
 
 - (void)buttonShowClick: (UIButton *)btn{
-    [self.pickerBackView removeFromSuperview];
+ 
+    
+    if ([[self.view subviews] containsObject:self.pickerBackView]) {
+        [self.pickerBackView removeFromSuperview];
+    }
     [self.paraDic setObject:@0 forKey:@"sex"];
     NSIndexPath *indexpat = [NSIndexPath indexPathForRow:1 inSection:0];
     JGButtonTableViewCell *cell = [self.secondTableView cellForRowAtIndexPath:indexpat];
@@ -177,7 +188,9 @@
     if (![self.paraDic objectForKey:@"sex"]) {
         [self.paraDic setObject:@0 forKey:@"sex"];
     }
-    [self.pickerBackView removeFromSuperview];
+    if ([[self.view subviews] containsObject:self.pickerBackView]) {
+        [self.pickerBackView removeFromSuperview];
+    }
     NSIndexPath *indexpat = [NSIndexPath indexPathForRow:1 inSection:0];
     JGButtonTableViewCell *cell = [self.secondTableView cellForRowAtIndexPath:indexpat];
     if ([[self.paraDic objectForKey:@"sex"] integerValue] == 0) {
@@ -196,7 +209,7 @@
     self.secondTableView.dataSource = self;
     [self.secondTableView registerClass:[JGApplyMaterialTableViewCell class] forCellReuseIdentifier:@"cell"];
     [self.secondTableView registerClass:[JGButtonTableViewCell class] forCellReuseIdentifier:@"cellBtn"];
-
+    
     self.titleArray = [NSArray arrayWithObjects:@[@"姓名", @"性别", @"手机号码"], @[@"行业", @"公司", @"职业",   @"常住地址", @"衣服尺码", @"惯用手"], nil];
     self.placeholderArray = [NSArray arrayWithObjects:@[@"请输入真实姓名", @"请输入性别", @"请输入手机号" ],@[@"请输入你的行业",@"请输入你的公司",@"请输入你的职位",@"方便活动邀请", @"统一制服制定", @"制定特殊需求"],  nil];
     [self.view addSubview: self.secondTableView];
@@ -205,13 +218,35 @@
 
 // 创建选择性别的选择器
 - (void)cellBtn{
-    [self createDataClick:@"lalala"];
+    [self.view endEditing:YES];
+    if ([[self.view subviews] containsObject:self.pickerBackView]) {
+        [self.pickerBackView removeFromSuperview];
+    }else{
+        [self createDataClick:@"lalala"];
+    }
 }
 
 //
 - (void)cellBtnSec{
-    [self createDataClickSec:@"lalla"];
+    [self.view endEditing:YES];
+    if ([[self.view subviews] containsObject:self.pickerBackView]) {
+        [self.pickerBackView removeFromSuperview];
+    }else{
+        [self createDataClickSec:@"lalla"];
+    }
+}
 
+- (void)textFieldDidBeginEditing:(UITextField *)textField{
+    if ([[self.view subviews] containsObject:self.pickerBackView]) {
+        [self.pickerBackView removeFromSuperview];
+    }
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    if ([[self.view subviews] containsObject:self.pickerBackView]) {
+        [self.pickerBackView removeFromSuperview];
+    }
 }
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component{
@@ -226,12 +261,12 @@
 - (void)complete{
     BOOL isLength = YES;
     NSArray *array = [NSArray arrayWithObjects:@"userName", @"sex", @"mobile", nil];
-
+    
     for (int i = 0; i < 3; i ++) {
         
         if (i == 1) {
-//            JGButtonTableViewCell *cell = self.secondTableView.visibleCells[i];
-//            [self.paraDic setObject:@([cell.button.titleLabel.text  integerValue]) forKey:array[i]];
+            //            JGButtonTableViewCell *cell = self.secondTableView.visibleCells[i];
+            //            [self.paraDic setObject:@([cell.button.titleLabel.text  integerValue]) forKey:array[i]];
             
         }else{
             
@@ -250,9 +285,9 @@
     for (int i = 0; i < 6; i ++) {
         if (i == 5) {
             
-//            JGButtonTableViewCell *cell = [self.secondTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:1]];
-//            
-//            [self.paraDic setObject:@([cell.button.titleLabel.text  integerValue]) forKey:array[i]];
+            //            JGButtonTableViewCell *cell = [self.secondTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:1]];
+            //
+            //            [self.paraDic setObject:@([cell.button.titleLabel.text  integerValue]) forKey:array[i]];
             
         }else{
             
@@ -265,8 +300,8 @@
     
     if (isLength) {
         
-//        [self.paraDic setObject:@83 forKey:@"userKey"];   // TEST
-        if (![Helper isBlankString:[[NSUserDefaults standardUserDefaults] objectForKey:@"almost"]]) {
+        //        [self.paraDic setObject:@83 forKey:@"userKey"];   // TEST
+        if ([[NSUserDefaults standardUserDefaults] objectForKey:@"almost"] != nil) {
             [self.paraDic setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"almost"] forKey:@"almost"];
         }else{
             [self.paraDic setObject:@0 forKey:@"almost"];
@@ -285,7 +320,7 @@
         } completionBlock:^(id data) {
             NSLog(@"%@", data);
             [self.navigationController popViewControllerAnimated:YES];
-
+            
         }];
         [Helper alertViewNoHaveCancleWithTitle:@"申请提交成功" withBlock:^(UIAlertController *alertView) {
             [self.navigationController presentViewController:alertView animated:YES completion:nil];
@@ -343,19 +378,19 @@
         [cell.button addTarget:self action:@selector(cellBtnSec) forControlEvents:(UIControlEventTouchUpInside)];
         return cell;
     }else{
-    JGApplyMaterialTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
-    
-    if (indexPath.section == 0) {
-        cell.labell.text = self.titleArray[indexPath.section][indexPath.row];
-        cell.textFD.placeholder = self.placeholderArray[indexPath.section][indexPath.row];
-    }else{
-        cell.labell.text = self.titleArray[indexPath.section][indexPath.row];
-        cell.textFD.placeholder = self.placeholderArray[indexPath.section][indexPath.row];
-    }
-    
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-//    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    return cell;
+        JGApplyMaterialTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
+        
+        if (indexPath.section == 0) {
+            cell.labell.text = self.titleArray[indexPath.section][indexPath.row];
+            cell.textFD.placeholder = self.placeholderArray[indexPath.section][indexPath.row];
+        }else{
+            cell.labell.text = self.titleArray[indexPath.section][indexPath.row];
+            cell.textFD.placeholder = self.placeholderArray[indexPath.section][indexPath.row];
+        }
+        cell.textFD.delegate = self;
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        //    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        return cell;
     }
 }
 
@@ -380,13 +415,13 @@
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end
