@@ -25,6 +25,7 @@ typedef NS_ENUM(NSInteger, GestureType) {
 
 //userId
 #define userID @"userId"
+//1001-活动，1003,1001,1004,1002,1005
 #define TeamMember @"teamMember"
 
 #define kDistance 10*screenWidth/375 //说说和图片的间隔
@@ -76,4 +77,8 @@ typedef NS_ENUM(NSInteger, GestureType) {
 #import "UIColor+ColorTransfer.h"
 #import "JsonHttp.h"
 #import "Helper.h"
+
+#import "UIImageView+WebCache.h"
+#import "UIButton+WebCache.h"
+
 #endif

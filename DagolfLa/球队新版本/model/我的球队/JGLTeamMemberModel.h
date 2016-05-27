@@ -11,7 +11,34 @@
 @interface JGLTeamMemberModel : BaseModel
 
 
+
+/*
+ address = "\U9ed1\U9f99\U6c5f\U7701 \U4f0a\U6625\U5e02";
+ almost = 0;
+ ballage = 1;
+ createTime = "2016-05-23 19:53:05";
+ delFlag = 0;
+ douDef1 = 0;
+ douDef2 = 0;
+ hand = 0;
+ identity = 0;
+ mobile = 12345678901;
+ power = "1003,1001,1004,1002,1005";
+ rsyncFlag = 0;
+ sex = 0;
+ state = 1;
+ syncFlag = 0;
+ teamKey = 192;
+ timeKey = 193;
+ ts = "2016-05-23 19:53:05";
+ userKey = 244;
+ userName = IIIIIIIIIIIIIIIIIII;
+ */
+@property (strong, nonatomic) NSString* createTime;
+
 @property (strong, nonatomic) NSNumber* teamKey;
+
+@property (strong, nonatomic) NSNumber* ballage;
 
 @property (strong, nonatomic) NSNumber* userKey;
 
@@ -29,9 +56,17 @@
 //惯用手 0左手   1右手
 @property (strong, nonatomic) NSNumber* hand;
 //权限   格式0， 1 ，2
-@property (strong, nonatomic) NSNumber* power;
+@property (strong, nonatomic) NSString* power;
 //申请状态 0申请中  1 已通过  2未通过
 @property (strong, nonatomic) NSNumber* state;
+
+@property (strong, nonatomic) NSNumber* identity;
+
+@property (strong, nonatomic) NSNumber* rsyncFlag;
+
+@property (strong, nonatomic) NSNumber* timeKey;
+
+@property (strong, nonatomic) NSString* ts;
 
 @property (strong,nonatomic) ChineseString *chineseString;
 

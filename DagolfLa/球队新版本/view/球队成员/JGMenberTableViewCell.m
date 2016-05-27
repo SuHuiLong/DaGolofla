@@ -55,6 +55,9 @@
 
 -(void)showData:(JGLTeamMemberModel *)model
 {
+    
+    [_iconImgv sd_setImageWithURL:[Helper setImageIconUrl:model.timeKey] placeholderImage:[UIImage imageNamed:@"logo"]];
+    
     _nameLabel.text = [NSString stringWithFormat:@"%@",model.userName];
     
     if ([model.sex integerValue] == 2) {

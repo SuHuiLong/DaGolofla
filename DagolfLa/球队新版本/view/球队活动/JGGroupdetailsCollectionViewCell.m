@@ -57,6 +57,8 @@
 
 - (void)configCellWithModelArray:(NSMutableArray *)modelArray{
     NSLog(@"%ld", (long)self.tag);
+    self.groupName.text = [NSString stringWithFormat:@"第%ld组", (long)self.tag];
+    //清空空间内容
     if (self.lable1.text.length != 0) {
         self.lable1.text = nil;
     }

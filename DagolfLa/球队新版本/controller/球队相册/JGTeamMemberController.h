@@ -10,4 +10,8 @@
 
 @interface JGTeamMemberController : ViewController
 
+
+@property (strong, nonatomic) NSNumber* teamKey;
+
+
 @end

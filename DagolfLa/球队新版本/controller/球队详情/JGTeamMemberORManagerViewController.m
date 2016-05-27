@@ -71,6 +71,8 @@ static CGFloat ImageHeight  = 210.0;
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:YES];
     self.navigationController.navigationBarHidden = NO;
+    
+    NSLog(@"%@",_detailDic);
 }
 
 - (instancetype)init{
@@ -393,6 +395,7 @@ static CGFloat ImageHeight  = 210.0;
             case 1:
             {
                 JGTeamMemberController* tmVc = [[JGTeamMemberController alloc]init];
+                tmVc.teamKey = [_detailDic objectForKey:@"teamKey"];
                 [self.navigationController pushViewController:tmVc animated:YES];
             }
                 break;

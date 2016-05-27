@@ -16,7 +16,7 @@
 static NSString *const JGTeamGroupCollectionViewCellIdentifier = @"JGTeamGroupCollectionViewCell";
 static NSString *const JGGroupdetailsCollectionViewCellIdentifier = @"JGGroupdetailsCollectionViewCell";
 
-@interface JGTeamGroupViewController ()<UICollectionViewDataSource, UICollectionViewDelegate, JGGroupdetailsCollectionViewCellDelegate>
+@interface JGTeamGroupViewController ()<UICollectionViewDataSource, UICollectionViewDelegate, JGGroupdetailsCollectionViewCellDelegate, JGHTeamMembersViewControllerDelegate>
 {
     NSInteger _collectionHegith;
     
@@ -168,56 +168,67 @@ static NSString *const JGGroupdetailsCollectionViewCellIdentifier = @"JGGroupdet
         
         NSUserDefaults *userDef = [NSUserDefaults standardUserDefaults];
         
-        
         NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-        [dict setObject:@0 forKey:@"oldSignUpKey"];// 老的球队活动报名人timeKey
-        [dict setObject:@279 forKey:@"newSignUpKey"]; // 新的球队活动报名人timeKey
-        [dict setObject:[NSString stringWithFormat:@"%ld", (long)cell.tag] forKey:@"groupIndex"]; // 组号
-        [dict setObject:[NSString stringWithFormat:@"%ld", (long)btn.tag] forKey:@"sortIndex"]; // 排序索引
+        NSLog(@"%@", [userDef objectForKey:TeamMember]);
+        NSString *str = [userDef objectForKey:TeamMember];
         
-        [[JsonHttp jsonHttp]httpRequest:@"team/updateTeamActivityGroupIndex" JsonKey:nil withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
-            NSLog(@"errtype === %@", errType);
-        } completionBlock:^(id data) {
-            NSLog(@"data === %@", data);
-            if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
-                for (int i=0; i<_teamGroupAllDataArray.count; i++) {
-                    JGHPlayersModel *model = _teamGroupAllDataArray[i];
-                    if ((long)model.timeKey == (long)[[dict objectForKey:@"newSignUpKey"] integerValue]) {
-                        [self.teamGroupAllDataArray removeObject:model];
-                        [self.alreadyDataArray addObject:model];
-                        
-                    }
-                }
-                
-                [self.collectionView reloadData];
-                [self.groupDetailsCollectionView reloadData];
+        if ([str rangeOfString:@"1001"].location != NSNotFound) {
+            //管理员
+            JGHTeamMembersViewController *teamMemberCtrl = [[JGHTeamMembersViewController alloc]init];
+            NSMutableArray *listArray = [NSMutableArray arrayWithArray:self.alreadyDataArray];
+            [listArray addObjectsFromArray:self.teamGroupAllDataArray];
+            teamMemberCtrl.teamGroupAllDataArray = listArray;
+            teamMemberCtrl.delegate = self;
+            //组号
+            teamMemberCtrl.groupIndex = cell.tag;
+            //排序索引
+            teamMemberCtrl.sortIndex = btn.tag;
+            // 老的球队活动报名人timeKey
+            //获取老球员
+            NSString *lableName = [NSString stringWithFormat:@"label%ld", (long)btn.tag+1];
+            Class someClass = NSClassFromString(lableName);
+            UILabel *obj = [[someClass alloc] init];
+            if (obj.text.length != 0) {
+                NSLog(@"%@", obj.text);
             }
-        }];
+//            teamMemberCtrl.oldSignUpKey =
+
+            [self.navigationController pushViewController:teamMemberCtrl animated:YES];
+        }else{
+            [dict setObject:@0 forKey:@"oldSignUpKey"];// 老的球队活动报名人timeKey
+            [dict setObject:@279 forKey:@"newSignUpKey"]; // 新的球队活动报名人timeKey
+            [dict setObject:[NSString stringWithFormat:@"%ld", (long)cell.tag] forKey:@"groupIndex"]; // 组号
+            [dict setObject:[NSString stringWithFormat:@"%ld", (long)btn.tag] forKey:@"sortIndex"]; // 排序索引
+        }
     }];
     
     
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"系统提示" message:@"是否加入改组！" preferredStyle:UIAlertControllerStyleAlert];
-    
     [alertController addAction:cancelAction];
     [alertController addAction:commitAction];
-    
     [self presentViewController:alertController animated:YES completion:nil];
-    
-    
-    //非管理员
-    
-//    JGHTeamMembersViewController *teamMemberCtrl = [[JGHTeamMembersViewController alloc]init];
-//    NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
-//    //    if ([[userdef objectForKey:isAdmin]isEqualToString:@"1"]) {
-//    //代表管理员
-//    teamMemberCtrl.teamGroupAllDataArray = self.teamGroupAllDataArray;
-//    //    }
-//    
-//    
-//    [self.navigationController pushViewController:teamMemberCtrl animated:YES];
-    
 }
 
+#pragma mark -- 更新组
+- (void)updateTeamActivityGroupIndex:(NSMutableDictionary *)dict{
+    [[JsonHttp jsonHttp]httpRequest:@"team/updateTeamActivityGroupIndex" JsonKey:nil withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
+        NSLog(@"errtype === %@", errType);
+    } completionBlock:^(id data) {
+        NSLog(@"data === %@", data);
+        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+            for (int i=0; i<_teamGroupAllDataArray.count; i++) {
+                JGHPlayersModel *model = _teamGroupAllDataArray[i];
+                if ((long)model.timeKey == (long)[[dict objectForKey:@"newSignUpKey"] integerValue]) {
+                    [self.teamGroupAllDataArray removeObject:model];
+                    [self.alreadyDataArray addObject:model];
+                }
+            }
+            
+            [self.collectionView reloadData];
+            [self.groupDetailsCollectionView reloadData];
+        }
+    }];
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
