@@ -50,7 +50,7 @@
 //    self.isAdmin = @"0";
 //    //判断权限
 //    if ([self.isAdmin isEqualToString:@"0"]) {
-//        [self createAdminBtn];
+    [self createAdminBtn];
 //    }
     
     [self loadData];
@@ -241,7 +241,7 @@
     } completionBlock:^(id data) {
         if ([[data objectForKey:@"packSuccess"] boolValue]) {
             NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
-            [user setValue:[data objectForKey:@"teamMember"] forKey:@"teamMember"];
+            [user setValue:[[data objectForKey:TeamMember] objectForKey:@"power"] forKey:TeamMember];
             [user synchronize];
 
             JGTeamAcitivtyModel *model = [[JGTeamAcitivtyModel alloc] init];

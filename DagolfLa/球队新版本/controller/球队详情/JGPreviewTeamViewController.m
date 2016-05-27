@@ -143,6 +143,7 @@ static CGFloat ImageHeight  = 210.0;
         [self didSelectPhotoImage:btn];
     }
 }
+
 #pragma mark -- 预览
 - (void)createPreviewBtn{
     

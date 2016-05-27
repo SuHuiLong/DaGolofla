@@ -25,7 +25,7 @@ static CGFloat ImageHeight  = 210.0;
 
 @interface JGTeamActibityNameViewController ()<UITableViewDelegate, UITableViewDataSource>
 {
-//    CGFloat _tableViewHeight;
+    //    CGFloat _tableViewHeight;
 }
 @property (nonatomic, strong)UITableView *teamActibityNameTableView;
 @property (nonatomic, strong)NSMutableArray *dataArray;//数据源
@@ -64,7 +64,7 @@ static CGFloat ImageHeight  = 210.0;
     if (self == [super init]) {
         self.dataArray = [NSMutableArray array];
         self.model = [[JGTeamAcitivtyModel alloc]init];
-//        self.dataDict = [NSMutableDictionary dictionary];
+        //        self.dataDict = [NSMutableDictionary dictionary];
         self.pickPhoto = [[SXPickPhoto alloc]init];
         self.titleView = [[UIView alloc]init];
         UIImage *image = [UIImage imageNamed:@"bg"];
@@ -104,7 +104,7 @@ static CGFloat ImageHeight  = 210.0;
         self.teamActibityNameTableView.frame = CGRectMake(0, 0, ScreenWidth, ScreenHeight - 44 - 40);
         [self createSaveAndLaunchBtn];
     }else{
-//        _tableViewHeight = screenHeight -64 -44;
+        //        _tableViewHeight = screenHeight -64 -44;
         [self createApplyBtn];
     }
     
@@ -129,8 +129,8 @@ static CGFloat ImageHeight  = 210.0;
     self.titleField = [[UILabel alloc]initWithFrame:CGRectMake(64, 7, screenWidth - 128, 30)];
     self.titleField.text = self.model.name;
     self.titleField.textColor = [UIColor whiteColor];
-//    [self.titleField setValue:[UIColor whiteColor] forKeyPath:@"_placeholderLabel.textColor"];
-//    [self.titleField setValue:[UIFont boldSystemFontOfSize:15] forKeyPath:@"_placeholderLabel.font"];
+    //    [self.titleField setValue:[UIColor whiteColor] forKeyPath:@"_placeholderLabel.textColor"];
+    //    [self.titleField setValue:[UIFont boldSystemFontOfSize:15] forKeyPath:@"_placeholderLabel.font"];
     self.titleField.textAlignment = NSTextAlignmentCenter;
     self.titleField.font = [UIFont systemFontOfSize:16 * screenWidth / 320];
     //头像
@@ -149,7 +149,7 @@ static CGFloat ImageHeight  = 210.0;
     [self.addressBtn setTitle:@"请添加地址" forState:UIControlStateNormal];
     self.addressBtn.titleLabel.font = [UIFont systemFontOfSize:13];
     self.addressBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-//    [self.addressBtn addTarget:self action:@selector(replaceWithPicture:) forControlEvents:UIControlEventTouchUpInside];
+    //    [self.addressBtn addTarget:self action:@selector(replaceWithPicture:) forControlEvents:UIControlEventTouchUpInside];
     [self.imgProfile addSubview:self.addressBtn];
 }
 #pragma mark -- 下载数据
@@ -157,7 +157,7 @@ static CGFloat ImageHeight  = 210.0;
     NSUserDefaults *userDef = [NSUserDefaults standardUserDefaults];
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     [dict setObject:[NSString stringWithFormat:@"%ld", (long)self.teamActivityKey] forKey:@"activityKey"];
-//    [dict setObject:[userDef objectForKey:userID] forKey:@"userKey"];
+    //    [dict setObject:[userDef objectForKey:userID] forKey:@"userKey"];
     [dict setObject:@"244" forKey:@"userKey"];
     [[JsonHttp jsonHttp]httpRequest:@"team/getTeamActivity" JsonKey:nil withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
         NSLog(@"error == %@", errType);
@@ -169,7 +169,7 @@ static CGFloat ImageHeight  = 210.0;
         [model setValuesForKeysWithDictionary:dict];
         [self.dataArray addObject:model];
         
-//        [self createTeamActibityNameTableView];
+        //        [self createTeamActibityNameTableView];
     }];
 }
 - (void)replaceWithPicture:(UIButton *)Btn{
@@ -201,9 +201,9 @@ static CGFloat ImageHeight  = 210.0;
 }
 #pragma mark --添加活动头像
 -(void)SelectPhotoImage:(UIButton *)btn{
-//    _photos = 10;
+    //    _photos = 10;
     UIAlertAction * act1 = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-//        _photos = 1;
+        //        _photos = 1;
     }];
     //拍照：
     UIAlertAction * act2 = [UIAlertAction actionWithTitle:@"拍照" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
@@ -222,7 +222,7 @@ static CGFloat ImageHeight  = 210.0;
                 }
                 
                 [self.teamActibityNameTableView reloadData];
-//                _photos = 1;
+                //                _photos = 1;
             }
         }];
     }];
@@ -264,7 +264,7 @@ static CGFloat ImageHeight  = 210.0;
                  */
             }
             
-//            _photos = 1;
+            //            _photos = 1;
         }];
     }];
     
@@ -302,13 +302,14 @@ static CGFloat ImageHeight  = 210.0;
     UIButton *applyBtn = [[UIButton alloc]initWithFrame:CGRectMake(photoBtn.frame.size.width + 1, screenHeight-44, screenWidth - 75 *ScreenWidth/375, 44)];
     [applyBtn setTitle:@"报名参加" forState:UIControlStateNormal];
     applyBtn.backgroundColor = [UIColor colorWithHexString:Nav_Color];
-//    applyBtn.layer.cornerRadius = 8.0;
+    //    applyBtn.layer.cornerRadius = 8.0;
     [applyBtn addTarget:self action:@selector(applyAttendBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:applyBtn];
 }
 #pragma mark -- 报名参加
 - (void)applyAttendBtnClick:(UIButton *)btn{
     JGTeamApplyViewController *teamApplyCtrl = [[JGTeamApplyViewController alloc]initWithNibName:@"JGTeamApplyViewController" bundle:nil];
+    teamApplyCtrl.modelss = self.model;
     [self.navigationController pushViewController:teamApplyCtrl animated:YES];
 }
 #pragma mark -- 拨打电话
@@ -320,52 +321,52 @@ static CGFloat ImageHeight  = 210.0;
 #pragma mark -- 发布活动
 - (void)applyBtnClick:(UIButton *)btn{
     /**
-    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-//    [dict setObject:self.model.timeKey forKey:@"timeKey"];//timeKey
-    [dict setObject:[NSString stringWithFormat:@"%ld", (long)self.model.teamKey] forKey:@"teamKey"];//球队key
-    NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
-    [dict setObject:@"244" forKey:@"userKey"];//用户key
-    //121212
-//    [dict setObject:@"244" forKey:@"userKey"];
-    
-    [dict setObject:self.model.name forKey:@"name"];//活动名字
-//    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-//    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
-//    NSDate *date = [dateFormatter dateFromString:@"2016-05-14 16:01:03"];
-    [dict setObject:self.model.signUpEndTime forKey:@"signUpEndTime"];//活动报名截止时间
-    [dict setObject:self.model.beginDate forKey:@"beginDate"];//活动开始时间
-    [dict setObject:self.model.endDate forKey:@"endDate"];//活动结束时间
-    [dict setObject:[NSString stringWithFormat:@"%ld", (long)self.model.ballKey] forKey:@"ballKey"];//球场id
-    [dict setObject:self.model.ballName forKey:@"ballName"];//球场名称
-    [dict setObject:@"" forKey:@"ballGeohash"];//球场坐标
-    [dict setObject:self.model.info forKey:@"info"];//活动简介
-//    [dict setObject:@"每人100元" forKey:@"costInfo"];//费用说明－－无
-    [dict setObject:[NSString stringWithFormat:@"%ld",(long)self.model.memberPrice] forKey:@"memberPrice"];//会员价
-    [dict setObject:[NSString stringWithFormat:@"%ld", (long)self.model.guestPrice] forKey:@"guestPrice"];//嘉宾价
-//    [dict setObject:@"2016-05-01 12:01:00" forKey:@"subsidyBeginTime"];//补贴开始时间
-//    [dict setObject:@"2016-06-01 12:01:00" forKey:@"subsidyEndTime"];//补贴结束时间
-//    [dict setObject:@"30" forKey:@"subsidyPrice"];//补贴价
-    [dict setObject:[NSString stringWithFormat:@"%ld", (long)self.model.maxCount] forKey:@"maxCount"];//最大人员数
-    [dict setObject:[NSString stringWithFormat:@"%ld", (long)_model.isClose] forKey:@"isClose"];//活动是否结束 0 : 开始 , 1 : 已结束
-    NSDateFormatter *formatter =[[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"yyyyMMddHHmmss"];
-    NSString *currentTime = [formatter stringFromDate:[NSDate date]];
-    [dict setObject:@"2016-04-01 12:01:00" forKey:@"createTime"];//活动创建时间
-//    [dict setObject:@"50" forKey:@"sumCount"];//活动报名总人数
-//    [dict setObject:@"5000" forKey:@"sumMoney"];//活动总金额
-//    [dict setObject:@"5000" forKey:@"WithdrawalsMoney"];//提现金额
-    
-    //createTeamActivity
-    /**
-    [[JsonHttp jsonHttp]httpRequest:@"team/createTeamActivity" JsonKey:@"teamActivity" withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
-        NSLog(@"%@", errType);
-    } completionBlock:^(id data) {
-        NSLog(@"%@", data);
-    }];
+     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+     //    [dict setObject:self.model.timeKey forKey:@"timeKey"];//timeKey
+     [dict setObject:[NSString stringWithFormat:@"%ld", (long)self.model.teamKey] forKey:@"teamKey"];//球队key
+     NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
+     [dict setObject:@"244" forKey:@"userKey"];//用户key
+     //121212
+     //    [dict setObject:@"244" forKey:@"userKey"];
+     
+     [dict setObject:self.model.name forKey:@"name"];//活动名字
+     //    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+     //    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+     //    NSDate *date = [dateFormatter dateFromString:@"2016-05-14 16:01:03"];
+     [dict setObject:self.model.signUpEndTime forKey:@"signUpEndTime"];//活动报名截止时间
+     [dict setObject:self.model.beginDate forKey:@"beginDate"];//活动开始时间
+     [dict setObject:self.model.endDate forKey:@"endDate"];//活动结束时间
+     [dict setObject:[NSString stringWithFormat:@"%ld", (long)self.model.ballKey] forKey:@"ballKey"];//球场id
+     [dict setObject:self.model.ballName forKey:@"ballName"];//球场名称
+     [dict setObject:@"" forKey:@"ballGeohash"];//球场坐标
+     [dict setObject:self.model.info forKey:@"info"];//活动简介
+     //    [dict setObject:@"每人100元" forKey:@"costInfo"];//费用说明－－无
+     [dict setObject:[NSString stringWithFormat:@"%ld",(long)self.model.memberPrice] forKey:@"memberPrice"];//会员价
+     [dict setObject:[NSString stringWithFormat:@"%ld", (long)self.model.guestPrice] forKey:@"guestPrice"];//嘉宾价
+     //    [dict setObject:@"2016-05-01 12:01:00" forKey:@"subsidyBeginTime"];//补贴开始时间
+     //    [dict setObject:@"2016-06-01 12:01:00" forKey:@"subsidyEndTime"];//补贴结束时间
+     //    [dict setObject:@"30" forKey:@"subsidyPrice"];//补贴价
+     [dict setObject:[NSString stringWithFormat:@"%ld", (long)self.model.maxCount] forKey:@"maxCount"];//最大人员数
+     [dict setObject:[NSString stringWithFormat:@"%ld", (long)_model.isClose] forKey:@"isClose"];//活动是否结束 0 : 开始 , 1 : 已结束
+     NSDateFormatter *formatter =[[NSDateFormatter alloc] init];
+     [formatter setDateFormat:@"yyyyMMddHHmmss"];
+     NSString *currentTime = [formatter stringFromDate:[NSDate date]];
+     [dict setObject:@"2016-04-01 12:01:00" forKey:@"createTime"];//活动创建时间
+     //    [dict setObject:@"50" forKey:@"sumCount"];//活动报名总人数
+     //    [dict setObject:@"5000" forKey:@"sumMoney"];//活动总金额
+     //    [dict setObject:@"5000" forKey:@"WithdrawalsMoney"];//提现金额
+     
+     //createTeamActivity
+     /**
+     [[JsonHttp jsonHttp]httpRequest:@"team/createTeamActivity" JsonKey:@"teamActivity" withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
+     NSLog(@"%@", errType);
+     } completionBlock:^(id data) {
+     NSLog(@"%@", data);
+     }];
      */
     
-//    JGTeamApplyViewController * applyCtrl = [[JGTeamApplyViewController alloc]initWithNibName:@"JGTeamApplyViewController" bundle:nil];
-//    [self.navigationController pushViewController:applyCtrl animated:YES];
+    //    JGTeamApplyViewController * applyCtrl = [[JGTeamApplyViewController alloc]initWithNibName:@"JGTeamApplyViewController" bundle:nil];
+    //    [self.navigationController pushViewController:applyCtrl animated:YES];
     
     [self launchActivity];
 }
@@ -379,25 +380,25 @@ static CGFloat ImageHeight  = 210.0;
 }
 #pragma mark -- 创建TableView
 /**
-- (void)createTeamActibityNameTableView{
-    self.teamActibityNameTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, _tableViewHeight) style:UITableViewStyleGrouped];
-    self.teamActibityNameTableView.delegate = self;
-    self.teamActibityNameTableView.dataSource = self;
-    self.teamActibityNameTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    //活动场地cell
-    UINib *addressNib = [UINib nibWithNibName:@"JGTeamActivityWithAddressCell" bundle:[NSBundle mainBundle]];
-    [self.teamActibityNameTableView registerNib:addressNib forCellReuseIdentifier:JGTeamActivityWithAddressCellIdentifier];
-    //活动详情／规则说明
-    UINib *detailNib = [UINib nibWithNibName:@"JGTeamActivityDetailsCell" bundle:[NSBundle mainBundle]];
-    [self.teamActibityNameTableView registerNib:detailNib forCellReuseIdentifier:JGTeamActivityDetailsCellIdentifier];
-    //费用说明cell
-    UINib *CostsDescriptionNib = [UINib nibWithNibName:@"JGCostsDescriptionCell" bundle:[NSBundle mainBundle]];
-    [self.teamActibityNameTableView registerNib:CostsDescriptionNib forCellReuseIdentifier:JGCostsDescriptionCellIdentifier];
-    //基础cell
-    UINib *activityNameBaseCellNib = [UINib nibWithNibName:@"JGActivityNameBaseCell" bundle:[NSBundle mainBundle]];
-    [self.teamActibityNameTableView registerNib:activityNameBaseCellNib forCellReuseIdentifier:JGActivityNameBaseCellIdentifier];
-    [self.view addSubview:self.teamActibityNameTableView];
-}
+ - (void)createTeamActibityNameTableView{
+ self.teamActibityNameTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, _tableViewHeight) style:UITableViewStyleGrouped];
+ self.teamActibityNameTableView.delegate = self;
+ self.teamActibityNameTableView.dataSource = self;
+ self.teamActibityNameTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+ //活动场地cell
+ UINib *addressNib = [UINib nibWithNibName:@"JGTeamActivityWithAddressCell" bundle:[NSBundle mainBundle]];
+ [self.teamActibityNameTableView registerNib:addressNib forCellReuseIdentifier:JGTeamActivityWithAddressCellIdentifier];
+ //活动详情／规则说明
+ UINib *detailNib = [UINib nibWithNibName:@"JGTeamActivityDetailsCell" bundle:[NSBundle mainBundle]];
+ [self.teamActibityNameTableView registerNib:detailNib forCellReuseIdentifier:JGTeamActivityDetailsCellIdentifier];
+ //费用说明cell
+ UINib *CostsDescriptionNib = [UINib nibWithNibName:@"JGCostsDescriptionCell" bundle:[NSBundle mainBundle]];
+ [self.teamActibityNameTableView registerNib:CostsDescriptionNib forCellReuseIdentifier:JGCostsDescriptionCellIdentifier];
+ //基础cell
+ UINib *activityNameBaseCellNib = [UINib nibWithNibName:@"JGActivityNameBaseCell" bundle:[NSBundle mainBundle]];
+ [self.teamActibityNameTableView registerNib:activityNameBaseCellNib forCellReuseIdentifier:JGActivityNameBaseCellIdentifier];
+ [self.view addSubview:self.teamActibityNameTableView];
+ }
  */
 #pragma mark -- tableView 代理
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
@@ -432,26 +433,34 @@ static CGFloat ImageHeight  = 210.0;
         
 //        JGTeamAcitivtyModel *model = [[JGTeamAcitivtyModel alloc]init];
 //        model = self.dataArray[0];
-//        cell.activityDetails.text = model.info;
+        cell.activityDetails.text = self.model.info;
         
         return [cell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height + 1;
     }
     return 44;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-//    JGTeamAcitivtyModel *model = [[JGTeamAcitivtyModel alloc]init];
-//    model = self.dataArray[0];
+    //    JGTeamAcitivtyModel *model = [[JGTeamAcitivtyModel alloc]init];
+    //    model = self.dataArray[0];
     if (indexPath.section == 2) {
         JGHCostListTableViewCell *costListCell = [tableView dequeueReusableCellWithIdentifier:JGHCostListTableViewCellIdentifier];
         costListCell.selectionStyle = UITableViewCellSelectionStyleNone;
+        if (indexPath.row == 0) {
+            costListCell.titles.text = @"活动报名费";
+            costListCell.price.text = [NSString stringWithFormat:@"%td", self.model.memberPrice];
+        }else{
+            costListCell.titles.text = @"平台补贴费用";
+            costListCell.price.text = [NSString stringWithFormat:@"%td", self.model.subsidyPrice];
+        }
+        
         //    [addressCell configModel:model];
         return costListCell;
     }
     return nil;
 }
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
-//    JGTeamAcitivtyModel *model = [[JGTeamAcitivtyModel alloc]init];
-//    model = self.dataArray[0];
+    //    JGTeamAcitivtyModel *model = [[JGTeamAcitivtyModel alloc]init];
+    //    model = self.dataArray[0];
     NSString *windowReuseIdentifier = @"SectionOneCell";
     if (section == 0) {
         UITableViewCell *launchImageActivityCell = nil;
@@ -468,16 +477,23 @@ static CGFloat ImageHeight  = 210.0;
         JGTeamActivityWithAddressCell *addressCell = [tableView dequeueReusableCellWithIdentifier:JGTeamActivityWithAddressCellIdentifier];
         [addressCell configModel:self.model];
         return (UIView *)addressCell;
-    }else if (section == 2 || section == 3){
+    }else if (section == 2){
         JGHHeaderLabelCell *headerCell = [tableView dequeueReusableCellWithIdentifier:JGHHeaderLabelCellIdentifier];
-//        headerCell congifContact:self.model. andNote:<#(NSString *)#>
+        //        [headerCell congiftitles:@"参赛费用"];
+        
+        return (UIView *)headerCell;
+    }else if (section == 3){
+        JGHHeaderLabelCell *headerCell = [tableView dequeueReusableCellWithIdentifier:JGHHeaderLabelCellIdentifier];
+        [headerCell congiftitles:@"查看报名人"];
+        [headerCell congifCount:self.model.sumCount andSum:self.model.maxCount];
         return (UIView *)headerCell;
     }else{
         JGTeamActivityDetailsCell *detailsCell = [tableView dequeueReusableCellWithIdentifier:JGTeamActivityDetailsCellIdentifier];
-//        [detailsCell configDetailsText:@"活动详情" AndActivityDetailsText:model.info];
+        [detailsCell configDetailsText:@"活动详情" AndActivityDetailsText:self.model.info];
         return (UIView *)detailsCell;
     }
 }
+
 #pragma mark - Table View Delegate
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     [self updateImg];
@@ -519,13 +535,13 @@ static CGFloat ImageHeight  = 210.0;
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end
