@@ -7,13 +7,14 @@
 //
 
 #import "ViewController.h"
-
+#import "JGTeamAcitivtyModel.h"
 @interface JGTeamApplyViewController : ViewController
 
 @property (weak, nonatomic) IBOutlet UITableView *teamApplyTableView;
 
 //activityKey
 @property (copy, nonatomic)NSString *activityKey;
+@property (nonatomic, strong)JGTeamAcitivtyModel *modelss;
 
 
 @property (copy, nonatomic)NSString *invoiceKey;//发票key
