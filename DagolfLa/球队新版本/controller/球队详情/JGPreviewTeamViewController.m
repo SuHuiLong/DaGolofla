@@ -165,49 +165,26 @@ static CGFloat ImageHeight  = 210.0;
         [self.navigationController presentViewController:alertView animated:YES completion:nil];
     }];
 }
+
 #pragma mark -- 提交
 - (void)previewBtnClick:(UIButton *)btn{
     
-    //
-    //    [self.paraDic setObject:@0 forKey:@"timeKey"];
-    //
-    //
-    //    [self.paraDic setObject:@"iOS" forKey:@"createUserName"];
-    //
-    //    [self.paraDic setObject:@"AAA" forKey:@"notice"];
-    //    NSUserDefaults *user=[NSUserDefaults standardUserDefaults];
-    //    [self.paraDic setObject:[user objectForKey:@"userId"] forKey:@"createUserKey"];
-    //
-    //    self.teamDetailModel.check = 0;
     NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
     NSDictionary *Dic =[user objectForKey:@"cacheCreatTeamDic"];
     [[JsonHttp jsonHttp] httpRequest:@"team/createTeam" JsonKey:@"team" withData:Dic requestMethod:@"POST" failedBlock:^(id errType) {
-//        NSLog(@"error");
+
     } completionBlock:^(id data) {
-//        NSLog(@"%@", data);
+
         if ([data objectForKey:@"packSuccess"]) {
             [user setObject:0 forKey:@"cacheCreatTeamDic"];
             [user synchronize];
         }
-
     }];
-    [Helper alertViewNoHaveCancleWithTitle:@"活动创建提交成功" withBlock:^(UIAlertController *alertView) {
+    [Helper alertViewNoHaveCancleWithTitle:@"球队创建提交成功" withBlock:^(UIAlertController *alertView) {
         [self.navigationController presentViewController:alertView animated:YES completion:nil];
     }];
     [self.navigationController popViewControllerAnimated:YES];
-//    NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
-//    [dic setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"userId"] forKey:@"userKey"];
-//    //    [dic setObject:@([self.detailDic objectForKey:@"timeKey"]) forKey:@"teamKey"];
-//    [dic setObject:@0 forKey:@"state"];
-//    [dic setObject:@"2016-12-11 10:00:00" forKey:@"createTime"];
-//    [dic setObject:@0 forKey:@"timeKey"];
-//    [[JsonHttp jsonHttp] httpRequest:@"team/reqJoinTeam" JsonKey:@"teamMemeber" withData:dic requestMethod:@"POST" failedBlock:^(id errType) {
-//        NSLog(@"error *** %@", errType);
-//    } completionBlock:^(id data) {
-//        NSLog(@"%@", data);
-//        [user setObject:0 forKey:@"cacheCreatTeamDic"];
-//        [user synchronize];
-//    }];
+
 }
 
 

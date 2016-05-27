@@ -31,15 +31,17 @@
 - (IBAction)touchView:(id)sender {
     [self.view endEditing:YES];
 }
+
 #pragma mark -- 保存方法
 - (IBAction)saveBtn:(UIButton *)sender {
     [self.view endEditing:YES];
     self.contentTextString = _contentText.text;
     if ([self.delegate respondsToSelector:@selector(didSelectSaveBtnClick:)]) {
         [self.navigationController popViewControllerAnimated:YES];
-        [self.delegate didSelectSaveBtnClick:self.contentTextString];
+        [self.delegate didSelectSaveBtnClick:self.contentText.text];
     }
 }
+
 #pragma mark -- UITextViewDelegate代理
 - (void)textViewDidBeginEditing:(UITextView *)textView{
     self.placeholdertext.hidden = YES;

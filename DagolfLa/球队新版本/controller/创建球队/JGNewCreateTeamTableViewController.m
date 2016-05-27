@@ -59,6 +59,9 @@ static CGFloat ImageHeight  = 210.0;
     [super viewWillAppear:YES];
     self.navigationController.navigationBarHidden = YES;
 //    self.titleField.text = self.detailModel.name;
+    if (self.detailDic) {
+        self.paraDic = self.detailDic;
+    }
     
 }
 - (void)viewWillDisappear:(BOOL)animated{
@@ -334,8 +337,8 @@ static CGFloat ImageHeight  = 210.0;
         return;
     }
 //    [self notNil:text SetValueForKey:@"info"];
-    if ([self.detailDic objectForKey:@"info"]) {
-        [self.paraDic setObject:[self.detailDic objectForKey:@"info"] forKey:@"info"];
+    if ([self.paraDic objectForKey:@"info"]) {
+        [self.paraDic setObject:[self.paraDic objectForKey:@"info"] forKey:@"info"];
     }
     if (![self.paraDic objectForKey:@"info"] || ([[self.paraDic objectForKey:@"info"] length] == 0)) {
         [Helper alertViewNoHaveCancleWithTitle:@"请完善球队信息" withBlock:^(UIAlertController *alertView) {
@@ -458,6 +461,9 @@ static CGFloat ImageHeight  = 210.0;
     //    }
     if (indexPath.section == 0) {
         return ImageHeight -10;
+    }else if (indexPath.section == 2){
+        return [self calculationLabelHeight:[self.paraDic objectForKey:@"info"]] + 40 * screenWidth / 320;
+        
     }else{
         return 30 * screenWidth / 320;
     }
@@ -499,8 +505,8 @@ static CGFloat ImageHeight  = 210.0;
         contactCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         contactCell.selectionStyle = UITableViewCellSelectionStyleNone;
         contactCell.contentLB.lineBreakMode = NSLineBreakByWordWrapping;
-//        contactCell.contentLB.text = [self.detailDic objectForKey:@"info"];
-        contactCell.contentLB.frame = CGRectMake(10, 35  * screenWidth / 320, screenWidth - 20  * screenWidth / 320, [self calculationLabelHeight:[self.detailDic objectForKey:@"info"]]);
+        contactCell.contentLB.text = [self.paraDic objectForKey:@"info"];
+        contactCell.contentLB.frame = CGRectMake(10, 35  * screenWidth / 320, screenWidth - 20  * screenWidth / 320, [self calculationLabelHeight:[self.paraDic objectForKey:@"info"]]);
         return contactCell;
     }else if (indexPath.section == 1){
         
@@ -568,7 +574,7 @@ static CGFloat ImageHeight  = 210.0;
         if (indexPath.row == 0) {
             JGHConcentTextViewController *introVC = [[JGHConcentTextViewController alloc] init];
             introVC.delegate = self;
-            introVC.contentTextString = [self.detailDic objectForKey:@"info"];
+            introVC.contentTextString = [self.paraDic objectForKey:@"info"];
             [self.navigationController pushViewController:introVC animated:YES];
         }
         
@@ -588,7 +594,12 @@ static CGFloat ImageHeight  = 210.0;
 #pragma mark -- 添加内容详情代理  JGHConcentTextViewControllerDelegate
 - (void)didSelectSaveBtnClick:(NSString *)text{
 
+    JGDisplayInfoTableViewCell *contactCell = [self.launchActivityTableView cellForRowAtIndexPath:[NSIndexPath  indexPathForRow:0 inSection:2]];
+    contactCell.contentLB.frame = CGRectMake(10, 35  * screenWidth / 320, screenWidth - 20  * screenWidth / 320, [self calculationLabelHeight:text]);
+    contactCell.contentLB.text = text;
     [self.paraDic setObject:text forKey:@"info"];
+    NSIndexPath *indexPath = [NSIndexPath  indexPathForRow:0 inSection:2];
+    [self.launchActivityTableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:YES];
     
 }
 
