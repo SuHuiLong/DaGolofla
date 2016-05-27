@@ -20,7 +20,7 @@
 
 - (instancetype)init{
     if (self == [super init]) {
-        self.teamGroupAllDataArray = [NSMutableArray array];
+        self.teamGroupAllDataArray = [NSArray array];
     }
     return self;
 }
@@ -59,8 +59,13 @@
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    [dict setObject:@0 forKey:@"oldSignUpKey"];// 老的球队活动报名人timeKey
+    [dict setObject:@279 forKey:@"newSignUpKey"]; // 新的球队活动报名人timeKey
+    [dict setObject:[NSString stringWithFormat:@"%ld", (long)self.groupIndex] forKey:@"groupIndex"]; // 组号
+    [dict setObject:[NSString stringWithFormat:@"%ld", (long)self.sortIndex] forKey:@"sortIndex"]; // 排序索引
     if (self.delegate) {
-        [self.delegate didSelectMembers];
+        [self.delegate didSelectMembers:dict];
         
     }
     
