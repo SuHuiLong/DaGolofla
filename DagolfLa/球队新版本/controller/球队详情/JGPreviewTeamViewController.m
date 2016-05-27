@@ -165,49 +165,61 @@ static CGFloat ImageHeight  = 210.0;
         [self.navigationController presentViewController:alertView animated:YES completion:nil];
     }];
 }
+
 #pragma mark -- 提交
 - (void)previewBtnClick:(UIButton *)btn{
     
-    //
-    //    [self.paraDic setObject:@0 forKey:@"timeKey"];
-    //
-    //
-    //    [self.paraDic setObject:@"iOS" forKey:@"createUserName"];
-    //
-    //    [self.paraDic setObject:@"AAA" forKey:@"notice"];
-    //    NSUserDefaults *user=[NSUserDefaults standardUserDefaults];
-    //    [self.paraDic setObject:[user objectForKey:@"userId"] forKey:@"createUserKey"];
-    //
-    //    self.teamDetailModel.check = 0;
-    NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
-    NSDictionary *Dic =[user objectForKey:@"cacheCreatTeamDic"];
-    [[JsonHttp jsonHttp] httpRequest:@"team/createTeam" JsonKey:@"team" withData:Dic requestMethod:@"POST" failedBlock:^(id errType) {
-//        NSLog(@"error");
+    
+    
+    [[JsonHttp jsonHttp] httpRequest:@"globalCode/createTimeKey" JsonKey:nil withData:nil requestMethod:@"GET" failedBlock:^(id errType) {
+        
     } completionBlock:^(id data) {
-//        NSLog(@"%@", data);
-        if ([data objectForKey:@"packSuccess"]) {
-            [user setObject:0 forKey:@"cacheCreatTeamDic"];
-            [user synchronize];
-        }
+        
+        
+        NSNumber* strTimeKey = [data objectForKey:@"timeKey"];
+        // 上传图片
+        NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+        [dict setObject:strTimeKey forKey:@"data"];
+        [dict setObject:TYPE_TEAM_HEAD forKey:@"nType"];
+        [dict setObject:PHOTO_DAGOLFLA forKey:@"tag"];
+        
+        [[JsonHttp jsonHttp]httpRequestImageOrVedio:@"1" withData:dict andDataArray:[_dictPhoto objectForKey:@"headPortraitBtn"] failedBlock:^(id errType) {
+            NSLog(@"errType===%@", errType);
+        } completionBlock:^(id data) {
+            NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
+//
+//            NSMutableDictionary *Dic =[user objectForKey:@"cacheCreatTeamDic"];
+//            [Dic setObject:strTimeKey forKey:@"timeKey"];
+            [_detailDic setObject:strTimeKey forKey:@"timeKey"];
+            
+            
+            [[JsonHttp jsonHttp] httpRequest:@"team/createTeam" JsonKey:@"team" withData:_detailDic requestMethod:@"POST" failedBlock:^(id errType) {
+                
+            } completionBlock:^(id data) {
+                
+                if ([data objectForKey:@"packSuccess"]) {
+                    [user setObject:0 forKey:@"cacheCreatTeamDic"];
+                    //            [user removeObjectForKey:@"cacheCreatTeamDic"];
+                    [user synchronize];
+                    
+                    
+                }
+            }];
+            [Helper alertViewNoHaveCancleWithTitle:@"球队创建提交成功" withBlock:^(UIAlertController *alertView) {
+                [self.navigationController presentViewController:alertView animated:YES completion:nil];
+            }];
+            [self.navigationController popViewControllerAnimated:YES];
+        }];
+        
+        
+        
+        
+        
+    }];
 
-    }];
-    [Helper alertViewNoHaveCancleWithTitle:@"活动创建提交成功" withBlock:^(UIAlertController *alertView) {
-        [self.navigationController presentViewController:alertView animated:YES completion:nil];
-    }];
-    [self.navigationController popViewControllerAnimated:YES];
-//    NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
-//    [dic setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"userId"] forKey:@"userKey"];
-//    //    [dic setObject:@([self.detailDic objectForKey:@"timeKey"]) forKey:@"teamKey"];
-//    [dic setObject:@0 forKey:@"state"];
-//    [dic setObject:@"2016-12-11 10:00:00" forKey:@"createTime"];
-//    [dic setObject:@0 forKey:@"timeKey"];
-//    [[JsonHttp jsonHttp] httpRequest:@"team/reqJoinTeam" JsonKey:@"teamMemeber" withData:dic requestMethod:@"POST" failedBlock:^(id errType) {
-//        NSLog(@"error *** %@", errType);
-//    } completionBlock:^(id data) {
-//        NSLog(@"%@", data);
-//        [user setObject:0 forKey:@"cacheCreatTeamDic"];
-//        [user synchronize];
-//    }];
+    
+    
+
 }
 
 

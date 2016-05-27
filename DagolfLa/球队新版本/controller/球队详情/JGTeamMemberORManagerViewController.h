@@ -10,7 +10,9 @@
 #import "JGTeamDetail.h"
 
 @interface JGTeamMemberORManagerViewController : ViewController
-
+/**
+ *  显示邀请好友：球队成员的球队详情界面
+ */
 @property (nonatomic, strong) JGTeamDetail *detailModel;
 @property (nonatomic, strong) NSMutableDictionary *detailDic;
 @property (nonatomic, retain) UIImageView *imgProfile;

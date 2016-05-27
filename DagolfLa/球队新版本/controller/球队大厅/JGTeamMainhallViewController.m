@@ -19,6 +19,7 @@
 #import "JGTeamDetailViewController.h"
 #import "JGNotTeamMemberDetailViewController.h"
 #import "JGTeamMemberORManagerViewController.h"
+#import "JGNewCreateTeamTableViewController.h"
 
 #import "MJRefresh.h"
 #import "MJDIYBackFooter.h"
@@ -54,6 +55,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+
+    UIBarButtonItem *bar = [[UIBarButtonItem alloc] initWithTitle:@"创建球队" style:(UIBarButtonItemStylePlain) target:self action:@selector(creatTeam)];
+    bar.tintColor = [UIColor whiteColor];
+    self.navigationItem.rightBarButtonItem = bar;
     _page = 0;
     self.title = @"球队大厅";
     _tableView = [[JGTeamChannelTableView alloc] initWithFrame:[UIScreen mainScreen].bounds style:(UITableViewStylePlain)];
@@ -97,6 +102,43 @@
     
 }
 
+- (void)creatTeam{
+    
+    NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
+    
+    
+    
+    if ([user objectForKey:@"cacheCreatTeamDic"]) {
+        UIAlertController *alert=[UIAlertController alertControllerWithTitle:@"提示" message:@"是否继续上次编辑" preferredStyle:UIAlertControllerStyleAlert];
+        
+        UIAlertAction *action1=[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            [user setObject:0 forKey:@"cacheCreatTeamDic"];
+            JGNewCreateTeamTableViewController *creatteamVc = [[JGNewCreateTeamTableViewController alloc] init];
+            [self.navigationController pushViewController:creatteamVc animated:YES];
+        }];
+        UIAlertAction* action2=[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            JGNewCreateTeamTableViewController *creatteamVc = [[JGNewCreateTeamTableViewController alloc] init];
+            creatteamVc.detailDic = [user objectForKey:@"cacheCreatTeamDic"];
+            creatteamVc.titleField.text = [[user objectForKey:@"cacheCreatTeamDic"] objectForKey:@"name"];
+            
+            
+            //        @property (nonatomic, retain) UIImageView *imgProfile;
+            //        @property (nonatomic, strong)UIButton *headPortraitBtn;//头像
+            //        @property (nonatomic, strong)UITextField *titleField;//球队名称输入框
+            [self.navigationController pushViewController:creatteamVc animated:YES];
+        }];
+        
+        [alert addAction:action1];
+        [alert addAction:action2];
+        [self presentViewController:alert animated:YES completion:nil];
+        
+    }else{
+        JGNewCreateTeamTableViewController *creatteamVc = [[JGNewCreateTeamTableViewController alloc] init];
+        [self.navigationController pushViewController:creatteamVc animated:YES];
+    }
+    
+    
+}
 
 // 刷新
 - (void)headRereshing
@@ -266,63 +308,7 @@
     
         
     }];
-    
-    
-    
-    
 
-    
-    
-    
-//    NSString *searchString = [self.searchController.searchBar text];
-    //    NSPredicate *preicate = [NSPredicate predicateWithFormat:@"SELF CONTAINS[c] %@", searchString];
-//    _page = 1;
-//    [self.paraDic setObject:[NSNumber numberWithInteger:_page] forKey:@"offset"];
-//    [self.paraDic setObject:searchString forKey:@"likeName"];
-//    [self.paraDic setObject:[[NSUserDefaults standardUserDefaults]objectForKey:@"userId"] forKey:@"userId"];
-//    if ([searchString length] > 0) {
-//        [[PostDataRequest sharedInstance] postDataRequest:@"user/searchTuser.do" parameter:self.paraDic success:^(id respondsData) {
-//            NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:respondsData options:NSJSONReadingMutableContainers error:nil];
-//            
-//            if ([[dict objectForKey:@"success"] boolValue]) {
-//                NSArray *arra = [dict objectForKey:@"rows"];
-//                
-//                for (NSDictionary *dic in arra) {
-//                    NewFriendModel *myModel = [[NewFriendModel alloc] init];
-//                    [myModel setValuesForKeysWithDictionary:dic];
-//                    [self.searchArray addObject:myModel];
-//                }
-//                
-//                if ([self.searchArray count] < _page * 10) {
-//                    self.tableView.footer = nil;
-//                    
-//                }else{
-//                    self.tableView.footer = [MJDIYBackFooter footerWithRefreshingTarget:self refreshingAction:@selector(refrenshing1)];
-//                }
-                
-//                [self.tableView reloadData];
-//            }else {
-                //                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:[dict objectForKey:@"message"] delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-                //                [alert show];
-//            }
-    
-//        } failed:^(NSError *error) {
-//            
-//            
-//        }];
-//        self.tableView.scrollEnabled = YES;
-//    }else{
-//        self.tableView.scrollEnabled = NO;
-//    }
-//
-    //    if (self.searchList!= nil) {
-    //        [self.searchList removeAllObjects];
-    //    }
-    //过滤数据
-    //    self.searchList= [NSMutableArray arrayWithArray:[_dataList filteredArrayUsingPredicate:preicate]];
-    //刷新表格
-//    [self.searchArray removeAllObjects];
-//    [self.tableView reloadData];
 }
 
 

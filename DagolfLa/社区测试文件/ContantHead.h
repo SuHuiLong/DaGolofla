@@ -74,7 +74,20 @@ typedef NS_ENUM(NSInteger, GestureType) {
 //测试环境图片基础地址//#define IMAGE_VEDIO_BASEURL @""
 //#define imageBaseUrl @"http://192.168.2.38:8088/"
 
+//上传图片的打高尔夫啦tag
+#define PHOTO_DAGOLFLA @"dagolfla"
+
+#define TYPE_TEAM_HEAD       @1   // 球队头像类型
+#define TYPE_TEAM_BACKGROUND @2   // 球队背景类型
+#define TYPE_MEDIA_IMAGE     @3   // 相册的媒介图像
+#define TYPE_MEDIA_VIDEO     @4   // 相册的媒介视频
+#define TYPE_USER_HEAD       @5   // 用户头像
+
 #import "UIColor+ColorTransfer.h"
 #import "JsonHttp.h"
 #import "Helper.h"
+
+#import "UIImageView+WebCache.h"
+#import "UIButton+WebCache.h"
+
 #endif

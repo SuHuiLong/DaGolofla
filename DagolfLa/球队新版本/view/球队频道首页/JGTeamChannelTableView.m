@@ -6,6 +6,8 @@
 //  Copyright © 2016年 bhxx. All rights reserved.
 //
 
+#import "JGTeamActivityCell.h"
+
 #import "JGTeamChannelTableView.h"
 #import "JGTeamChannelTableViewCell.h"
 #import "JGTeamChannelActivityTableViewCell.h"
@@ -21,7 +23,7 @@
     if (self) {
         [self registerClass:[JGTeamChannelTableViewCell class] forCellReuseIdentifier:@"cell"];
         [self registerClass:[JGTeamChannelActivityTableViewCell class] forCellReuseIdentifier:@"cellActivity"];
-
+        [self registerNib:[UINib nibWithNibName:@"JGTeamActivityCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"JGTeamActivityCell"];
     }
     return self;
 }

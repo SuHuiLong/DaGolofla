@@ -34,6 +34,8 @@ static CGFloat ImageHeight  = 210.0;
     NSArray *_titleArray;//标题数组
     
     NSString *_contcat;//联系人
+    
+    NSMutableDictionary* _dictPhoto;
 }
 @property (nonatomic,strong)SXPickPhoto * pickPhoto;//相册类
 @property (nonatomic, strong)UITableView *launchActivityTableView;
@@ -59,6 +61,11 @@ static CGFloat ImageHeight  = 210.0;
     [super viewWillAppear:YES];
     self.navigationController.navigationBarHidden = YES;
 //    self.titleField.text = self.detailModel.name;
+    if (self.detailDic) {
+        self.paraDic = self.detailDic;
+    }
+    
+//    NSLog(@"%@",_detailDic);
     
 }
 - (void)viewWillDisappear:(BOOL)animated{
@@ -92,6 +99,7 @@ static CGFloat ImageHeight  = 210.0;
          [self.imgProfile addSubview:self.titleView];
          */
         self.dataDict = [NSMutableDictionary dictionary];
+        _dictPhoto = [[NSMutableDictionary alloc]init];
         self.pickPhoto = [[SXPickPhoto alloc]init];
         self.titleView = [[UIView alloc]init];
         UIImage *image = [UIImage imageNamed:@"bg"];
@@ -193,6 +201,7 @@ static CGFloat ImageHeight  = 210.0;
         //更换背景
         [self SelectPhotoImage:btn];
     }else if (btn.tag == 740){
+        //头像
         [self SelectPhotoImage:btn];
     }
 }
@@ -237,33 +246,20 @@ static CGFloat ImageHeight  = 210.0;
                 //设置背景
                 if (btn.tag == 520) {
                     self.imgProfile.image = _headerImage;
-                    [self.paraDic setObject:[NSArray arrayWithObject:UIImageJPEGRepresentation(_headerImage, 0.7)] forKey:@"headerImage"];
+                    [_dictPhoto setObject:[NSArray arrayWithObject:UIImageJPEGRepresentation(_headerImage, 0.7)] forKey:@"headerImage"];
 
                 }else if (btn.tag == 740){
+                    //头像
                     [self.headPortraitBtn setImage:_headerImage forState:UIControlStateNormal];
                     self.headPortraitBtn.layer.masksToBounds = YES;
                     self.headPortraitBtn.layer.cornerRadius = 8.0;
-                    [self.paraDic setObject:[NSArray arrayWithObject:UIImageJPEGRepresentation(_headerImage, 0.7)] forKey:@"headPortraitBtn"];
+                    [_dictPhoto setObject:[NSArray arrayWithObject:UIImageJPEGRepresentation(_headerImage, 0.7)] forKey:@"headPortraitBtn"];
+                    
+
 
                 }
                 
-                // 上传图片
-       /*          NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-                 [dict setObject:@"11010" forKey:@"data"];
-                 [dict setObject:@"1" forKey:@"nType"];
-                 [dict setObject:@"team" forKey:@"tag"];
-                 NSMutableArray *array = [NSMutableArray array];
-                 
-                 [array addObject:UIImageJPEGRepresentation(_headerImage, 0.7)];
-                 
-                 
-                 
-                 [[JsonHttp jsonHttp]httpRequestImageOrVedio:@"1" withData:dict andDataArray:array failedBlock:^(id errType) {
-                 NSLog(@"errType===%@", errType);
-                 } completionBlock:^(id data) {
-                 NSLog(@"data===%@", data);
-                 }];
-         */
+       
             }
             
 //            _photos = 1;
@@ -334,8 +330,8 @@ static CGFloat ImageHeight  = 210.0;
         return;
     }
 //    [self notNil:text SetValueForKey:@"info"];
-    if ([self.detailDic objectForKey:@"info"]) {
-        [self.paraDic setObject:[self.detailDic objectForKey:@"info"] forKey:@"info"];
+    if ([self.paraDic objectForKey:@"info"]) {
+        [self.paraDic setObject:[self.paraDic objectForKey:@"info"] forKey:@"info"];
     }
     if (![self.paraDic objectForKey:@"info"] || ([[self.paraDic objectForKey:@"info"] length] == 0)) {
         [Helper alertViewNoHaveCancleWithTitle:@"请完善球队信息" withBlock:^(UIAlertController *alertView) {
@@ -363,10 +359,12 @@ static CGFloat ImageHeight  = 210.0;
     NSString * dateString = [dm stringFromDate:dateNew];
     [self.paraDic setObject:dateString forKey:@"createtime"];
     [user setObject:self.paraDic forKey:@"cacheCreatTeamDic"];
+    [user setObject:_dictPhoto forKey:@"teamPhotoDic"];
     [user synchronize];
     
     JGPreviewTeamViewController *preVC = [[JGPreviewTeamViewController alloc] init];
     preVC.detailDic = self.paraDic;
+    preVC.dictPhoto = _dictPhoto;
     preVC.imgProfile.image = self.imgProfile.image;
     [preVC.headPortraitBtn setImage:self.headPortraitBtn.imageView.image forState:(UIControlStateNormal)];
     [self.navigationController pushViewController:preVC animated:YES];
@@ -458,6 +456,9 @@ static CGFloat ImageHeight  = 210.0;
     //    }
     if (indexPath.section == 0) {
         return ImageHeight -10;
+    }else if (indexPath.section == 2){
+        return [self calculationLabelHeight:[self.paraDic objectForKey:@"info"]] + 40 * screenWidth / 320;
+        
     }else{
         return 30 * screenWidth / 320;
     }
@@ -499,8 +500,8 @@ static CGFloat ImageHeight  = 210.0;
         contactCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         contactCell.selectionStyle = UITableViewCellSelectionStyleNone;
         contactCell.contentLB.lineBreakMode = NSLineBreakByWordWrapping;
-//        contactCell.contentLB.text = [self.detailDic objectForKey:@"info"];
-        contactCell.contentLB.frame = CGRectMake(10, 35  * screenWidth / 320, screenWidth - 20  * screenWidth / 320, [self calculationLabelHeight:[self.detailDic objectForKey:@"info"]]);
+        contactCell.contentLB.text = [self.paraDic objectForKey:@"info"];
+        contactCell.contentLB.frame = CGRectMake(10, 35  * screenWidth / 320, screenWidth - 20  * screenWidth / 320, [self calculationLabelHeight:[self.paraDic objectForKey:@"info"]]);
         return contactCell;
     }else if (indexPath.section == 1){
         
@@ -537,6 +538,7 @@ static CGFloat ImageHeight  = 210.0;
                 if (indexPath.row == 0) {
                     //时间选择
                     DateTimeViewController *dataCtrl = [[DateTimeViewController alloc]init];
+                    dataCtrl.typeIndex = @1;
                     [dataCtrl setCallback:^(NSString *dateStr, NSString *dateWeek, NSString *str) {
 //                        if (indexPath.row == 0) {
 //                            [self.model setValue:dateStr forKey:@"startDate"];
@@ -568,7 +570,7 @@ static CGFloat ImageHeight  = 210.0;
         if (indexPath.row == 0) {
             JGHConcentTextViewController *introVC = [[JGHConcentTextViewController alloc] init];
             introVC.delegate = self;
-            introVC.contentTextString = [self.detailDic objectForKey:@"info"];
+            introVC.contentTextString = [self.paraDic objectForKey:@"info"];
             [self.navigationController pushViewController:introVC animated:YES];
         }
         
@@ -588,7 +590,12 @@ static CGFloat ImageHeight  = 210.0;
 #pragma mark -- 添加内容详情代理  JGHConcentTextViewControllerDelegate
 - (void)didSelectSaveBtnClick:(NSString *)text{
 
+    JGDisplayInfoTableViewCell *contactCell = [self.launchActivityTableView cellForRowAtIndexPath:[NSIndexPath  indexPathForRow:0 inSection:2]];
+    contactCell.contentLB.frame = CGRectMake(10, 35  * screenWidth / 320, screenWidth - 20  * screenWidth / 320, [self calculationLabelHeight:text]);
+    contactCell.contentLB.text = text;
     [self.paraDic setObject:text forKey:@"info"];
+    NSIndexPath *indexPath = [NSIndexPath  indexPathForRow:0 inSection:2];
+    [self.launchActivityTableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:YES];
     
 }
 

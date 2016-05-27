@@ -24,11 +24,18 @@
 #import "JGTeamActibityNameViewController.h"
 #import "JGNotTeamMemberDetailViewController.h"
 #import "JGNewCreateTeamTableViewController.h"
+#import "JGTeamActivityCell.h"
+#import <CoreLocation/CLLocation.h>
+
+#import "HomeHeadView.h"  // topscrollView
+#import "ChangePicModel.h"
 
 
 @interface JGTeamChannelViewController ()<UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, strong)UIImageView *topView;
+@property (nonatomic, strong)HomeHeadView *topScrollView;
+@property (nonatomic, strong)NSMutableArray *scrillViewArray;
 
 @property (nonatomic, strong)JGTeamChannelTableView *tableView;
 @property (nonatomic, strong)NSMutableArray *buttonArray;
@@ -67,22 +74,29 @@
     creatTeam.frame = CGRectMake(screenWidth - 80 * screenWidth / 320 , 20 * screenWidth / 320, 80 * screenWidth / 320, 30 * screenWidth / 320);
     [creatTeam addTarget:self action:@selector(creatTeam) forControlEvents:(UIControlEventTouchUpInside)];
     [creatTeam setTitle:@"创建球队" forState:(UIControlStateNormal)];
+    creatTeam.titleLabel.font = [UIFont systemFontOfSize:15  * screenWidth / 320];
     
-    
-    self.topView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 130 * screenWidth / 320)];
+    self.topView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 160 * screenWidth / 320)];
     self.topView.image = [UIImage imageNamed:@"jianbian"];
     self.topView.userInteractionEnabled = YES;
-    [self.view addSubview:self.topView];
-    
+//    [self.view addSubview:self.topView];
     [self.topView addSubview:backBtn];
     [self.topView addSubview:creatTeam];
+    
+    self.topScrollView = [[HomeHeadView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 160 * screenWidth / 320)];
+    self.topScrollView.userInteractionEnabled = YES;
+    [self createScrollView];
+    [self.view addSubview:self.topScrollView];
+    
+    [self.topScrollView addSubview:backBtn];
+    [self.topScrollView addSubview:creatTeam];
     
     self.buttonArray = [NSMutableArray arrayWithObjects:@"我的球队", @"球队活动", @"球队大厅", nil];
     
     for (int i = 0; i < 3; i ++) {
         
         UIButton *button = [UIButton buttonWithType:(UIButtonTypeCustom)];
-        button.frame = CGRectMake(0, (135 + i * 35) * screenWidth / 320, screenWidth, 30 * screenWidth / 320);
+        button.frame = CGRectMake(0, (165 + i * 35) * screenWidth / 320, screenWidth, 30 * screenWidth / 320);
         button.tag = 200 + i;
         button.backgroundColor = [UIColor whiteColor];
         button.titleLabel.font =[UIFont systemFontOfSize:15 * screenWidth / 320];
@@ -102,7 +116,7 @@
         [button addSubview:imageV];
     }
     
-    self.tableView = [[JGTeamChannelTableView alloc] initWithFrame:CGRectMake(0, 270 * screenWidth / 320, screenWidth, screenHeight - 270 * screenWidth / 320) style:(UITableViewStylePlain)];
+    self.tableView = [[JGTeamChannelTableView alloc] initWithFrame:CGRectMake(0, 300 * screenWidth / 320, screenWidth, screenHeight - 300 * screenWidth / 320) style:(UITableViewStylePlain)];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.separatorStyle = UITableViewCellAccessoryNone;
@@ -112,12 +126,47 @@
     
     [self setData];
     
-    self.titleLB = [[UILabel alloc] initWithFrame:CGRectMake(0, 240 * screenWidth / 320, screenWidth, 30 * screenWidth / 320)];
+    self.titleLB = [[UILabel alloc] initWithFrame:CGRectMake(0, 270 * screenWidth / 320, screenWidth, 30 * screenWidth / 320)];
     [self.view addSubview:self.titleLB];
     
     // Do any additional setup after loading the view.
 }
 
+//创建首页页面滚动视图
+-(void)createScrollView
+{
+    //    NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
+    [[PostDataRequest sharedInstance] postDataRequest:@"scroll/queryAll.do" parameter:@{@"scrollClass":@0} success:^(id respondsData) {
+        
+        NSDictionary* dict = [NSJSONSerialization JSONObjectWithData:respondsData options:NSJSONReadingMutableContainers error:nil];
+        if ([[dict objectForKey:@"success"] integerValue] == 1) {
+            
+            NSMutableArray* arrayIcon = [[NSMutableArray alloc]init];
+            NSMutableArray* arrayUrl = [[NSMutableArray alloc]init];
+            NSMutableArray* arrayTitle = [[NSMutableArray alloc]init];
+            for (NSDictionary *dataDict in [dict objectForKey:@"rows"]) {
+                ////NSLog(@"%@",dataDict);
+                ChangePicModel *model = [[ChangePicModel alloc] init];
+                [model setValuesForKeysWithDictionary:dataDict];
+                [self.scrillViewArray addObject:model];
+                [arrayIcon addObject:model.pic];
+                [arrayUrl addObject:model.nexturl];
+                [arrayTitle addObject:model.title];
+            }
+            //            //NSLog(@"%@",arrayIcon[0]);
+            
+            [self.topScrollView config:arrayIcon data:arrayUrl title:arrayTitle];
+            self.topScrollView.delegate = self;
+            [self.topScrollView setClick:^(UIViewController *vc) {
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
+                [self.navigationController pushViewController:vc animated:YES];
+            }];
+        }
+    } failed:^(NSError *error) {
+        
+    }];
+    
+}
 
 - (void)setData{
     
@@ -128,7 +177,6 @@
     [[JsonHttp jsonHttp] httpRequest:@"team/getMyTeamList" JsonKey:nil withData:getMyTeam requestMethod:@"GET" failedBlock:^(id errType) {
         NSLog(@"%@", errType);
     } completionBlock:^(id data) {
-        
 
         self.teamArray =  [data[@"teamList"] mutableCopy];
         
@@ -139,7 +187,9 @@
             [dic setValue:@0 forKey:@"offset"];
             [getMyTeam setObject:@192 forKey:@"teamKey"];
             [[JsonHttp jsonHttp] httpRequest:@"team/getMyTeamActivityList" JsonKey:nil withData:dic requestMethod:@"GET" failedBlock:^(id errType) {
-                NSLog(@"getMyTeamActivityList ***** error");
+                [Helper alertViewNoHaveCancleWithTitle:@"获取活动列表失败" withBlock:^(UIAlertController *alertView) {
+                    [self.navigationController presentViewController:alertView animated:YES completion:nil];
+                }];
             } completionBlock:^(id data) {
                 
                 for (NSDictionary *dicModel in data[@"activityList"]) {
@@ -168,32 +218,40 @@
             {
                 [dic setObject:@31.156063 forKey:@"latitude"];
             }
+            [dic setValue:[user objectForKey:@"currentCity"] forKey:@"crtyName"];
             [dic setValue:@0 forKey:@"offset"];
             [[JsonHttp jsonHttp] httpRequest:@"team/getTeamList" JsonKey:nil withData:dic requestMethod:@"GET" failedBlock:^(id errType) {
-                NSLog(@"getTeamList ***** error%@",errType);
+                [Helper alertViewNoHaveCancleWithTitle:@"获取推荐球队列表失败" withBlock:^(UIAlertController *alertView) {
+                    [self.navigationController presentViewController:alertView animated:YES completion:nil];
+                }];
             } completionBlock:^(id data) {
-                self.teamArray = data[@"teamList"];
-//                for (NSDictionary *dicModel in data[@"teamList"]) {
-//                    JGTeamDetail *model = [[JGTeamDetail alloc] init];
-//                    [model setValuesForKeysWithDictionary:dicModel];
-//                    [self.teamArray addObject:model];
+                
+//                if (data[@"teamList"]) {
+                    self.teamArray = data[@"teamList"];
+//                }else{
+//                    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+//                    [dict setValue:@0 forKey:@"offset"];
+//                    [[JsonHttp jsonHttp] httpRequest:@"team/getTeamList" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
+//                        NSLog(@"getTeamList ***** error%@",errType);
+//                    } completionBlock:^(id data) {
+//                        
+//                        self.teamArray = data[@"teamList"];
+//                        
+//                        [self.tableView reloadData];
+//                        
+//                    }];
+//                    
 //                }
+
                 [self.tableView reloadData];
                 
-                
-                /*
-                 
-                 NSUserDefaults *user=[NSUserDefaults standardUserDefaults];
-                 [self.paraDic setObject:[NSNumber numberWithFloat:currLocation.coordinate.latitude] forKey:@"likeName"];
-                 [user setObject:[NSNumber numberWithFloat:currLocation.coordinate.latitude] forKey:@"lat"];
-                 [user setObject:[NSNumber numberWithFloat:currLocation.coordinate.longitude] forKey:@"lng"];
-                 */
             }];
             
         }
     }];
     
 }
+
 
 - (void)creatTeam{
     
@@ -280,9 +338,9 @@
         
     }else{
         
-        JGTeamChannelActivityTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"cellActivity"];
+        JGTeamActivityCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"JGTeamActivityCell"];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        cell.activityModel = self.myActivityArray[indexPath.row];
+        [cell setJGTeamActivityCellWithModel:self.myActivityArray[indexPath.row]];
         return cell;
     }
 }
@@ -309,6 +367,13 @@
 //            [self.navigationController pushViewController:detailVC animated:YES];
 //        }
     }
+}
+
+- (NSMutableArray *)scrillViewArray{
+    if (!_scrillViewArray) {
+        _scrillViewArray = [[NSMutableArray alloc] init];
+    }
+    return _scrillViewArray;
 }
 
 - (NSMutableArray *)myActivityArray{

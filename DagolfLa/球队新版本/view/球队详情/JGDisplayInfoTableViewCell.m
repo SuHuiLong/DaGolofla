@@ -15,11 +15,11 @@
     if (self) {
         
         self.promptLB = [[UILabel alloc] initWithFrame:CGRectMake(10 * screenWidth / 320, 0, 100 * screenWidth / 320, 30 * screenWidth / 320)];
-//        self.promptLB.textColor = [UIColor lightGrayColor];
+        self.promptLB.font = [UIFont systemFontOfSize:15  * screenWidth / 320];
         [self.contentView addSubview:self.promptLB];
         
         self.contentLB = [[UILabel alloc] initWithFrame:CGRectMake(10, 35  * screenWidth / 320, screenWidth - 20  * screenWidth / 320, 60)];
-        self.contentLB.font = [UIFont systemFontOfSize:15];
+        self.contentLB.font = [UIFont systemFontOfSize:15  * screenWidth / 320];
         self.contentLB.numberOfLines = 0;
         self.contentLB.lineBreakMode = NSLineBreakByWordWrapping;
         [self.contentView addSubview:self.contentLB];
