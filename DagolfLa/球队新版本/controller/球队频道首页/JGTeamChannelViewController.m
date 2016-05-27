@@ -128,7 +128,6 @@
     [[JsonHttp jsonHttp] httpRequest:@"team/getMyTeamList" JsonKey:nil withData:getMyTeam requestMethod:@"GET" failedBlock:^(id errType) {
         NSLog(@"%@", errType);
     } completionBlock:^(id data) {
-        
 
         self.teamArray =  [data[@"teamList"] mutableCopy];
         

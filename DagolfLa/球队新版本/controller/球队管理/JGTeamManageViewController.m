@@ -29,8 +29,7 @@
 }
 
 - (void)creatTableView{
-    
-    self.tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:(UITableViewStylePlain)];
+      self.tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:(UITableViewStylePlain)];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.array = [NSArray arrayWithObjects:@"入队审核",@[@"队员管理",@"活动管理", @"相册管理"],@"账户管理",@"球队资料编辑", nil];
@@ -40,7 +39,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     if (section == 1) {
-        return 3;
+        return 2;
     }else{
         return 1;
     }
