@@ -8,16 +8,30 @@
 
 #import "JGHAddInvoiceViewController.h"
 #import "JGHConcentTextViewController.h"
-//#import "InvoiceModel.h"
+#import "JGHAddAddressViewController.h"
+//#import "JGHIvoiceTypeCell.h"
+//#import "JGInvoiceTypeTextCell.h"
+//#import "JGTeamActivityDetailsCell.h"
 
-@interface JGHAddInvoiceViewController ()<JGHConcentTextViewControllerDelegate>
+//static NSString *const JGHIvoiceTypeCellIdentifier = @"JGHIvoiceTypeCell";
+//static NSString *const JGInvoiceTypeTextCellIdentifier = @"JGInvoiceTypeTextCell";
+//static NSString *const JGTeamActivityDetailsCellIdentifier = @"JGTeamActivityDetailsCell";
 
-@property (nonatomic, assign)NSInteger invoiceType;//1－文具,2－办公,3－餐饮
+@interface JGHAddInvoiceViewController ()<JGHAddAddressViewControllerDelegate>
+{
+    NSInteger _invoiceType;//地址的高度
+}
 
+@property (nonatomic, strong)NSArray *invoiceTypeArray;//1－文具,2－办公,3－餐饮
 
 @end
 
 @implementation JGHAddInvoiceViewController
+- (void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+//    NSLog(@"%f", screenHeight- (self.invoiceTypeArray.count*40+40+44*3+64+3*10));
+//    self.commitBtnConstraintUnder.constant = screenHeight- (self.invoiceTypeArray.count*40+222+25+_commitBtn.frame.size.height+_promptlabel.frame.size.height);
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -25,7 +39,7 @@
     self.view.backgroundColor = [UIColor colorWithHexString:TB_BG_Color];
     self.commitBtn.layer.masksToBounds = YES;
     self.commitBtn.layer.cornerRadius = 8.0;
-    
+    self.addressDict = [NSMutableDictionary dictionary];
     _invoiceType = 1;
     
     if (self.invoiceKey) {
@@ -45,18 +59,19 @@
         NSLog(@"err==%@", errType);
     } completionBlock:^(id data) {
         NSLog(@"data==%@", data);
-        NSArray *array = [data objectForKey:@""];
+        NSArray *array = [data objectForKey:@"invoiceList"];
         for (NSDictionary *dict in array) {
             if ([_invoiceKey isEqualToString:[data objectForKey:@"timeKey"]]) {
-                _invoiceHeader.text = [dict objectForKey:@"name"];
-                _contact.text = [dict objectForKey:@"info"];
-                if ([[data objectForKey:@"type"] integerValue] == 1) {
-                    self.imageConstraint.constant = 14;
-                }else if ([[data objectForKey:@"type"] integerValue] == 2){
-                    self.imageConstraint.constant = 45;
-                }else{
-                    self.imageConstraint.constant = 71;
-                }
+                _textField.text = [dict objectForKey:@"title"];
+//                _contact.text = [dict objectForKey:@"title"];
+                _invoiceType = [[dict objectForKey:@"type"] integerValue];
+//                if ([[data objectForKey:@"type"] integerValue] == 1) {
+//                    self.imageConstraint.constant = 14;
+//                }else if ([[data objectForKey:@"type"] integerValue] == 2){
+//                    self.imageConstraint.constant = 45;
+//                }else{
+//                    self.imageConstraint.constant = 71;
+//                }
             }
         }
     }];
@@ -67,32 +82,11 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
-
 - (IBAction)commitBtn:(UIButton *)sender {
-    if (_invoiceHeader.text.length == 0) {
-        _invoiceHeader.layer.borderColor = [UIColor redColor].CGColor;
-        _invoiceHeader.layer.borderWidth= 1.0f;
-        return;
-    }
     
-    if (_contact.text.length == 0) {
-        _contact.layer.borderColor = [UIColor redColor].CGColor;
-        _contact.layer.borderWidth= 1.0f;
-        return;
-    }
-    
-    if (_addressBtn.currentTitle.length == 0) {
-        _addressBtn.layer.borderColor = [UIColor redColor].CGColor;
-        _addressBtn.layer.borderWidth= 1.0f;
+    if (_textField.text.length == 0) {
+        _textField.layer.borderColor = [UIColor redColor].CGColor;
+        _textField.layer.borderWidth= 1.0f;
         return;
     }
     
@@ -100,11 +94,11 @@
     [dict setObject:@244 forKey:@"userKey"];//用户Key
     [dict setObject:@0 forKey:@"timeKey"];//timeKey
     [dict setObject:@"个人发票" forKey:@"name"];//发票名称
-    [dict setObject:_invoiceHeader.text forKey:@"title"];//发票抬头
-    [dict setObject:_contact.text forKey:@"info"];//发票抬头
+    [dict setObject:_textField.text forKey:@"title"];//发票抬头
+//    [dict setObject: forKey:@"info"];//发票内容
     [dict setObject:[NSString stringWithFormat:@"%ld", (long)_invoiceType] forKey:@"type"];//发票类型
     
-    if (_invoiceKey) {
+    if (_invoiceKey) {//修改
         [[JsonHttp jsonHttp]httpRequest:@"invoice/updateInvoice" JsonKey:@"invoice" withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
             NSLog(@"errType == %@", errType);
         } completionBlock:^(id data) {
@@ -130,28 +124,54 @@
     }
 }
 
-- (IBAction)OfficeBtn:(UIButton *)sender {
-    self.imageConstraint.constant = 45;
-    _invoiceType = 2;
-}
-- (IBAction)stationeryBtn:(UIButton *)sender {
-    self.imageConstraint.constant = 14;
+- (IBAction)btn1:(UIButton *)sender {
     _invoiceType = 1;
-}
-- (IBAction)foodBtn:(UIButton *)sender {
-    self.imageConstraint.constant = 71;
-    _invoiceType = 3;
-}
-- (IBAction)addressBtn:(UIButton *)sender {
-    JGHConcentTextViewController *addressCtrl = [[JGHConcentTextViewController alloc]initWithNibName:@"JGHConcentTextViewController" bundle:nil];
-    addressCtrl.delegate = self;
-    addressCtrl.contentTextString = _addressBtn.currentTitle;
-    [self.navigationController pushViewController:addressCtrl animated:YES];
+    self.image1.hidden = NO;
+    
+    self.image2.hidden = YES;
+    self.image3.hidden = YES;
+    self.image4.hidden = YES;
 }
 
-#pragma mark --地址输入文本代理
-- (void)didSelectSaveBtnClick:(NSString *)text{
-    [_addressBtn setTitle:text forState:UIControlStateNormal];
+- (IBAction)btn2:(UIButton *)sender {
+    _invoiceType = 2;
+    self.image2.hidden = NO;
+    
+    self.image1.hidden = YES;
+    self.image3.hidden = YES;
+    self.image4.hidden = YES;
+}
+
+- (IBAction)btn3:(UIButton *)sender {
+    _invoiceType = 3;
+    self.image3.hidden = NO;
+    
+    self.image2.hidden = YES;
+    self.image1.hidden = YES;
+    self.image4.hidden = YES;
+}
+
+- (IBAction)btn4:(UIButton *)sender {
+    _invoiceType = 4;
+    self.image4.hidden = NO;
+    
+    self.image1.hidden = YES;
+    self.image2.hidden = YES;
+    self.image3.hidden = YES;
+}
+#pragma mark -- 地址
+- (IBAction)addreeBtn:(UIButton *)sender {
+    JGHAddAddressViewController *addressCtrl = [[JGHAddAddressViewController alloc]initWithNibName:@"JGHAddAddressViewController" bundle:nil];
+    addressCtrl.delegate = self;
+    addressCtrl.addressDict = self.addressDict;
+    [self.navigationController pushViewController:addressCtrl animated:YES];
+}
+#pragma mark -- JGHAddAddressViewControllerDelegate 地址代理
+- (void)didSelectAddressDict:(NSMutableDictionary *)addressDict{
+    self.addressDict = addressDict;
+    self.addressName.text = [self.addressDict objectForKey:@"userName"];//地址联系人名字
+    self.addressNumber.text = [self.addressDict objectForKey:@"mobile"];//地址联系人号码
+    self.addressDetails.text = [self.addressDict objectForKey:@"address"];//地址详情
 }
 
 @end

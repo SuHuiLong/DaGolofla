@@ -14,6 +14,15 @@
 //活动详情内容
 @property (weak, nonatomic) IBOutlet UILabel *activityDetails;
 
+//联系人
+@property (weak, nonatomic) IBOutlet UILabel *name;
+//电话
+@property (weak, nonatomic) IBOutlet UILabel *number;
+
+
 - (void)configDetailsText:(NSString *)details AndActivityDetailsText:(NSString *)activityDetails;
+
+
+- (void)configDetailsText:(NSString *)details andActivityDetailsText:(NSString *)activityDetails andName:(NSString *)name andNumber:(NSString *)number;
 
 @end

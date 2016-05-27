@@ -41,6 +41,7 @@
             </tableViewCellContentView>
             <connections>
                 <outlet property="contentText" destination="50L-49-qPm" id="htO-xK-iyT"/>
+                <outlet property="intervalConstraint" destination="fRB-mT-rky" id="Dgi-2b-83h"/>
                 <outlet property="title" destination="Orp-83-eAQ" id="pPF-c0-0vv"/>
             </connections>
             <point key="canvasLocation" x="232" y="274"/>

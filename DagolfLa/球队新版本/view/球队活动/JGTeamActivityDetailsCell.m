@@ -26,4 +26,11 @@
     self.activityDetails.text = activityDetails;
 }
 
+- (void)configDetailsText:(NSString *)details andActivityDetailsText:(NSString *)activityDetails andName:(NSString *)name andNumber:(NSString *)number{
+    self.details.text = details;
+    self.activityDetails.text = activityDetails;
+    self.name.text = name;
+    self.number.text = number;
+}
+
 @end

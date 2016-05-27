@@ -362,7 +362,7 @@ static NSString *const JGHApplyListCellIdentifier = @"JGHApplyListCell";
 - (void)didSelectDeleteBtn:(UIButton *)btn{
     
 }
-#pragma mark -- 添加打球人页面代理－－－放回打球人数组
+#pragma mark -- 添加打球人页面代理－－－返回打球人数组
 - (void)addGuestListArray:(NSArray *)guestListArray{
     self.applyArray = [NSMutableArray arrayWithArray:guestListArray];
     [self.teamApplyTableView reloadData];

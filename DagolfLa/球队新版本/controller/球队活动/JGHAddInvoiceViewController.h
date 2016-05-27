@@ -15,42 +15,41 @@
 @end
 
 @interface JGHAddInvoiceViewController : ViewController
+//tou
+@property (weak, nonatomic) IBOutlet UITextField *textField;
+@property (weak, nonatomic) IBOutlet UIButton *btn1;
+@property (weak, nonatomic) IBOutlet UIButton *btn2;
+@property (weak, nonatomic) IBOutlet UIButton *btn3;
+@property (weak, nonatomic) IBOutlet UIButton *btn4;
+- (IBAction)btn1:(UIButton *)sender;
+- (IBAction)btn2:(UIButton *)sender;
+- (IBAction)btn3:(UIButton *)sender;
+- (IBAction)btn4:(UIButton *)sender;
 
-//发票抬头
-@property (weak, nonatomic) IBOutlet UITextField *invoiceHeader;
-
-//开票内容
-@property (weak, nonatomic) IBOutlet UITextField *contact;
-
-//邮寄地址
-@property (weak, nonatomic) IBOutlet UIButton *addressBtn;
-- (IBAction)addressBtn:(UIButton *)sender;
-
-//发票类型
-//文具类
-@property (weak, nonatomic) IBOutlet UIButton *stationeryBtn;
-- (IBAction)stationeryBtn:(UIButton *)sender;
-
-//办公用品
-@property (weak, nonatomic) IBOutlet UIButton *OfficeBtn;
-- (IBAction)OfficeBtn:(UIButton *)sender;
-
-//餐饮
-@property (weak, nonatomic) IBOutlet UIButton *foodBtn;
-- (IBAction)foodBtn:(UIButton *)sender;
-
-//勾选图片位置约束
-//顶部
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *imageConstraint;
-//顶部
-//@property (weak, nonatomic) IBOutlet NSLayoutConstraint *ImageBottomConstraint;
+//提示
+@property (weak, nonatomic) IBOutlet UILabel *promptlabel;
+@property (weak, nonatomic) IBOutlet UIImageView *image1;
+@property (weak, nonatomic) IBOutlet UIImageView *image2;
+@property (weak, nonatomic) IBOutlet UIImageView *image3;
+@property (weak, nonatomic) IBOutlet UIImageView *image4;
 
 //确定
 @property (weak, nonatomic) IBOutlet UIButton *commitBtn;
 - (IBAction)commitBtn:(UIButton *)sender;
 
+
 @property (weak, nonatomic)id <JGHAddInvoiceViewControllerDelegate> delegate;
 
 @property (copy, nonatomic)NSString *invoiceKey;
+//地址
+- (IBAction)addreeBtn:(UIButton *)sender;
+
+@property (nonatomic, strong)NSMutableDictionary *addressDict;
+
+@property (weak, nonatomic) IBOutlet UILabel *addressName;//地址联系人名字
+
+@property (weak, nonatomic) IBOutlet UILabel *addressNumber;//地址联系人号码
+
+@property (weak, nonatomic) IBOutlet UILabel *addressDetails;//地址详情
 
 @end

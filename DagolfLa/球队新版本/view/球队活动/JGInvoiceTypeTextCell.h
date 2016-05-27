@@ -14,5 +14,9 @@
 //内容
 @property (weak, nonatomic) IBOutlet UITextField *contentText;
 
+//间隔约束
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *intervalConstraint;
+
+
 
 @end

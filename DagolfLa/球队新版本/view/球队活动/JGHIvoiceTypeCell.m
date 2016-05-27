@@ -1,14 +1,14 @@
 //
-//  JGInvoiceTypeTextCell.m
+//  JGHIvoiceTypeCell.m
 //  DagolfLa
 //
-//  Created by 黄安 on 16/5/12.
+//  Created by 黄安 on 16/5/27.
 //  Copyright © 2016年 bhxx. All rights reserved.
 //
 
-#import "JGInvoiceTypeTextCell.h"
+#import "JGHIvoiceTypeCell.h"
 
-@implementation JGInvoiceTypeTextCell
+@implementation JGHIvoiceTypeCell
 
 - (void)awakeFromNib {
     [super awakeFromNib];
@@ -20,6 +20,5 @@
 
     // Configure the view for the selected state
 }
-
 
 @end

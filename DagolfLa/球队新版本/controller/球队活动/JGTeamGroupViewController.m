@@ -20,6 +20,7 @@ static NSString *const JGGroupdetailsCollectionViewCellIdentifier = @"JGGroupdet
 {
     NSInteger _collectionHegith;
     
+    NSInteger _groupDetailsCollectionViewCount;//cell的个数,默认0
 }
 
 @property (nonatomic, weak) UICollectionView *collectionView;
@@ -43,7 +44,7 @@ static NSString *const JGGroupdetailsCollectionViewCellIdentifier = @"JGGroupdet
     //待分组label
     self.teamGroupAllDataArray = [NSMutableArray array];
     self.alreadyDataArray = [NSMutableArray array];
-    
+    _groupDetailsCollectionViewCount = 0;
     UILabel *waitGroupLabel = [[UILabel alloc]initWithFrame:CGRectMake(5, 5, screenWidth, 25)];
     waitGroupLabel.text = @"未分组";
     waitGroupLabel.textAlignment = NSTextAlignmentLeft;
@@ -92,6 +93,7 @@ static NSString *const JGGroupdetailsCollectionViewCellIdentifier = @"JGGroupdet
     } completionBlock:^(id data) {
         NSLog(@"data == %@", data);
         NSArray *dataArray = [data objectForKey:@"teamSignUpList"];
+        _groupDetailsCollectionViewCount = [dataArray count];
         for (NSDictionary *dict in dataArray) {
             JGHPlayersModel *model = [[JGHPlayersModel alloc]init];
             [model setValuesForKeysWithDictionary:dict];
@@ -131,7 +133,11 @@ static NSString *const JGGroupdetailsCollectionViewCellIdentifier = @"JGGroupdet
     if ([collectionView isEqual:self.collectionView]) {
         return _teamGroupAllDataArray.count;
     }else{
-        return 30;
+        if (_groupDetailsCollectionViewCount%4 == 0) {
+            return _groupDetailsCollectionViewCount/4;
+        }else{
+            return _groupDetailsCollectionViewCount/4 + 1;
+        }
     }
 }
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
