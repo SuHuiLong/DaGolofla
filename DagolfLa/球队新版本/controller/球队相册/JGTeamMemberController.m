@@ -67,7 +67,7 @@
 - (void)downLoadData:(int)page isReshing:(BOOL)isReshing{
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     
-    [dict setObject:@192 forKey:@"teamKey"];
+    [dict setObject:_teamKey forKey:@"teamKey"];
     [dict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:userID] forKey:@"userKey"];
     [dict setObject:[NSNumber numberWithInt:page] forKey:@"offset"];
     [[JsonHttp jsonHttp]httpRequest:@"team/getTeamMemberList" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {

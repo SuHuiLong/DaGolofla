@@ -351,9 +351,9 @@ static CGFloat ImageHeight  = 210.0;
                 // @{@"nType":@"1", @"tag":@"dagolfla", @"data":@"test"};
                 _headerImage = (UIImage *)Data;
                 NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-                [dict setObject:@"11010" forKey:@"data"];
+                [dict setObject:@"11010" forKey:@"data"];//文件名||文件名+_background==>teamKey
                 [dict setObject:@"1" forKey:@"nType"];
-                [dict setObject:@"team" forKey:@"tag"];
+                [dict setObject:@"dagolfla" forKey:@"tag"];
                 NSMutableArray *array = [NSMutableArray array];
                 
                 [array addObject:UIImageJPEGRepresentation(_headerImage, 0.7)];

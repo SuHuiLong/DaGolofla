@@ -167,18 +167,6 @@ static CGFloat ImageHeight  = 210.0;
 }
 #pragma mark -- 提交
 - (void)previewBtnClick:(UIButton *)btn{
-    
-    //
-    //    [self.paraDic setObject:@0 forKey:@"timeKey"];
-    //
-    //
-    //    [self.paraDic setObject:@"iOS" forKey:@"createUserName"];
-    //
-    //    [self.paraDic setObject:@"AAA" forKey:@"notice"];
-    //    NSUserDefaults *user=[NSUserDefaults standardUserDefaults];
-    //    [self.paraDic setObject:[user objectForKey:@"userId"] forKey:@"createUserKey"];
-    //
-    //    self.teamDetailModel.check = 0;
     NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
     NSDictionary *Dic =[user objectForKey:@"cacheCreatTeamDic"];
     [[JsonHttp jsonHttp] httpRequest:@"team/createTeam" JsonKey:@"team" withData:Dic requestMethod:@"POST" failedBlock:^(id errType) {
@@ -187,7 +175,24 @@ static CGFloat ImageHeight  = 210.0;
 //        NSLog(@"%@", data);
         if ([data objectForKey:@"packSuccess"]) {
             [user setObject:0 forKey:@"cacheCreatTeamDic"];
+//            [user removeObjectForKey:@"cacheCreatTeamDic"];
             [user synchronize];
+            
+            
+            // 上传图片
+            NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+//            [dict setObject:[_detailDic objectForKey:@"teamKey"] forKey:@"data"];
+            [dict setObject:TYPE_TEAM_HEAD forKey:@"nType"];
+            [dict setObject:PHOTO_DAGOLFLA forKey:@"tag"];
+            NSMutableArray *array = [NSMutableArray array];
+            
+            [array addObject:[_dictPhoto objectForKey:@"headPortraitBtn"]];
+            [[JsonHttp jsonHttp]httpRequestImageOrVedio:@"1" withData:dict andDataArray:array failedBlock:^(id errType) {
+                NSLog(@"errType===%@", errType);
+            } completionBlock:^(id data) {
+                NSLog(@"data===%@", data);
+            }];
+            
         }
 
     }];
