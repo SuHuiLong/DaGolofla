@@ -18,5 +18,6 @@
 
 
 @property (copy, nonatomic)NSString *invoiceKey;//发票key
+@property (copy, nonatomic)NSString *invoiceName;//发票name
 
 @end

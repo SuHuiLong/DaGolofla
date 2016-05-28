@@ -10,7 +10,7 @@
 
 @protocol JGHAddInvoiceViewControllerDelegate <NSObject>
 
-- (void)backAddressKey:(NSString *)addressKey;
+- (void)backAddressKey:(NSString *)addressKey andInvoiceName:(NSString *)name;
 
 @end
 

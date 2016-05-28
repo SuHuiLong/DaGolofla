@@ -237,6 +237,12 @@
                                 <constraint firstAttribute="height" constant="20" id="4qG-I9-GLf"/>
                             </constraints>
                         </imageView>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZRV-Fb-HAR">
+                            <rect key="frame" x="0.0" y="0.0" width="600" height="72"/>
+                            <connections>
+                                <action selector="addreeBtn:" destination="-1" eventType="touchUpInside" id="uc9-eM-xgC"/>
+                            </connections>
+                        </button>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ubv-oS-ZpG">
                             <rect key="frame" x="100" y="41" width="42" height="21"/>
                             <constraints>
@@ -258,21 +264,27 @@
                         <constraint firstAttribute="trailing" secondItem="Ubv-oS-ZpG" secondAttribute="trailing" constant="10" id="5Yv-Z3-Ecr"/>
                         <constraint firstItem="hjD-xL-VXN" firstAttribute="top" secondItem="SRG-De-Dcc" secondAttribute="top" constant="10" id="8r4-Iv-4Xt"/>
                         <constraint firstItem="uMM-np-86v" firstAttribute="top" secondItem="SRG-De-Dcc" secondAttribute="top" constant="10" id="FV1-6t-Llf"/>
+                        <constraint firstItem="ZRV-Fb-HAR" firstAttribute="top" secondItem="SRG-De-Dcc" secondAttribute="top" id="FeY-uU-rox"/>
+                        <constraint firstAttribute="trailing" secondItem="ZRV-Fb-HAR" secondAttribute="trailing" id="Fu3-XQ-W0x"/>
                         <constraint firstAttribute="height" constant="72" id="Hwu-t5-m5a"/>
                         <constraint firstItem="GtZ-eE-32G" firstAttribute="centerY" secondItem="SRG-De-Dcc" secondAttribute="centerY" id="KRe-28-R0C"/>
                         <constraint firstItem="Ubv-oS-ZpG" firstAttribute="leading" secondItem="SRG-De-Dcc" secondAttribute="leading" constant="77" id="LRP-gh-TdF"/>
                         <constraint firstItem="WnH-Q1-0aW" firstAttribute="leading" secondItem="hjD-xL-VXN" secondAttribute="trailing" constant="20" id="M9d-f7-6rB"/>
                         <constraint firstItem="hjD-xL-VXN" firstAttribute="leading" secondItem="uMM-np-86v" secondAttribute="trailing" constant="20" id="PQm-Hk-1Mr"/>
+                        <constraint firstAttribute="bottom" secondItem="ZRV-Fb-HAR" secondAttribute="bottom" id="Qqc-Zk-gdP"/>
                         <constraint firstItem="WnH-Q1-0aW" firstAttribute="top" secondItem="SRG-De-Dcc" secondAttribute="top" constant="10" id="Sbf-dY-Tax"/>
+                        <constraint firstItem="GtZ-eE-32G" firstAttribute="leading" secondItem="ZRV-Fb-HAR" secondAttribute="trailing" id="Vly-4z-mNP"/>
                         <constraint firstAttribute="trailing" secondItem="GtZ-eE-32G" secondAttribute="trailing" constant="5" id="cpG-sV-9Of"/>
                         <constraint firstItem="Ubv-oS-ZpG" firstAttribute="top" secondItem="WnH-Q1-0aW" secondAttribute="bottom" constant="10" id="i9A-WE-xKr"/>
                         <constraint firstAttribute="bottom" secondItem="Ubv-oS-ZpG" secondAttribute="bottom" constant="10" id="rDw-d5-rbI"/>
                         <constraint firstItem="Ubv-oS-ZpG" firstAttribute="leading" secondItem="SRG-De-Dcc" secondAttribute="leading" constant="100" id="rjS-qz-ms2"/>
+                        <constraint firstItem="ZRV-Fb-HAR" firstAttribute="leading" secondItem="SRG-De-Dcc" secondAttribute="leading" id="vNW-6t-lMl"/>
                     </constraints>
                     <variation key="default">
                         <mask key="constraints">
                             <exclude reference="5Yv-Z3-Ecr"/>
                             <exclude reference="LRP-gh-TdF"/>
+                            <exclude reference="Vly-4z-mNP"/>
                         </mask>
                     </variation>
                 </view>
@@ -285,12 +297,6 @@
                     </state>
                     <connections>
                         <action selector="commitBtn:" destination="-1" eventType="touchUpInside" id="qLp-Wa-X8H"/>
-                    </connections>
-                </button>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZRV-Fb-HAR">
-                    <rect key="frame" x="0.0" y="0.0" width="30" height="30"/>
-                    <connections>
-                        <action selector="addreeBtn:" destination="-1" eventType="touchUpInside" id="uc9-eM-xgC"/>
                     </connections>
                 </button>
             </subviews>

@@ -90,8 +90,9 @@
         return;
     }
     
+    NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    [dict setObject:@244 forKey:@"userKey"];//用户Key
+    [dict setObject:[userdef objectForKey:userID] forKey:@"userKey"];//用户Key
     [dict setObject:@0 forKey:@"timeKey"];//timeKey
     [dict setObject:@"个人发票" forKey:@"name"];//发票名称
     [dict setObject:_textField.text forKey:@"title"];//发票抬头
@@ -103,6 +104,15 @@
             NSLog(@"errType == %@", errType);
         } completionBlock:^(id data) {
             NSLog(@"data == %@", data);
+            if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+                if (self.delegate) {
+                    //返回字典key
+                    [self.delegate backAddressKey:[dict objectForKey:@"invoiceKey"] andInvoiceName:[dict objectForKey:@"name"]];
+                    [self.navigationController popViewControllerAnimated:YES];
+                }
+            }else{
+                //错误
+            }
         }];
     }else{
         //创建发票
@@ -110,13 +120,12 @@
             NSLog(@"err == %@", errType);
         } completionBlock:^(id data) {
             NSLog(@"data == %@", data);
-            if ([data objectForKey:@"packSuccess"]) {
+            if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
                 if (self.delegate) {
                     //返回字典key
-                    [self.delegate backAddressKey:[data objectForKey:@"invoiceKey"]];
+                    [self.delegate backAddressKey:[data objectForKey:@"invoiceKey"] andInvoiceName:[data objectForKey:@"name"]];
+                    [self.navigationController popViewControllerAnimated:YES];
                 }
-                
-                [self.navigationController popViewControllerAnimated:YES];
             }else{
                 //错误
             }

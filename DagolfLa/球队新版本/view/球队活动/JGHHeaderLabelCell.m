@@ -39,4 +39,8 @@
 //    self.yuan.text = @"元)";
 }
 
+- (void)configInvoiceIfo:(NSString *)str{
+    self.noteLbael.text = str;
+}
+
 @end

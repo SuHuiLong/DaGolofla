@@ -167,25 +167,12 @@ static NSString *const JGHApplyListCellIdentifier = @"JGHApplyListCell";
     return 44;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-//    if (indexPath.section == 0) {
-//        JGActivityBaseInfoCell *infoCell = [tableView dequeueReusableCellWithIdentifier:JGActivityBaseInfoCellIdentifier];
-//        infoCell.selectionStyle = UITableViewCellSelectionStyleNone;
-//        return infoCell;
-//    }else if (indexPath.section == 1){
-//        JGApplyPepoleCell *applyPepoleCell = [tableView dequeueReusableCellWithIdentifier:JGApplyPepoleCellIdentifier forIndexPath:indexPath];
-//        applyPepoleCell.delegate = self;
-//        applyPepoleCell.guestList.text = @"绝代风华\n哈哈哈\n嘿嘿嘿\n鸡尾酒\n贝多芬";
-//        
-//        applyPepoleCell.selectionStyle = UITableViewCellSelectionStyleNone;
-//        return applyPepoleCell;
-//    }else{
-        JGHApplyListCell *applyListCel = [tableView dequeueReusableCellWithIdentifier:JGHApplyListCellIdentifier forIndexPath:indexPath];
-        applyListCel.selectionStyle = UITableViewCellSelectionStyleNone;
+    JGHApplyListCell *applyListCel = [tableView dequeueReusableCellWithIdentifier:JGHApplyListCellIdentifier forIndexPath:indexPath];
+    applyListCel.selectionStyle = UITableViewCellSelectionStyleNone;
     
-        [applyListCel configDict:_applyArray[indexPath.row]];
+    [applyListCel configDict:_applyArray[indexPath.row]];
     
-        return applyListCel;
-//    }
+    return applyListCel;
 }
 
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
@@ -206,9 +193,25 @@ static NSString *const JGHApplyListCellIdentifier = @"JGHApplyListCell";
             [activityNameCell congiftitles:@"发票信息："];
             [activityNameCell.contentView addSubview:self.cellClickBtn];
             activityNameCell.accessoryType = UITableViewCellSelectionStyleBlue;
+            if ([_invoiceKey isEqual:[NSNull class]]) {
+                [activityNameCell configInvoiceIfo:_invoiceName];
+            }
         }else{
             activityNameCell.selectionStyle = UITableViewCellSelectionStyleNone;
             [activityNameCell congiftitles:@"实付金额："];
+            int i = 0;
+            int y = 0;
+            for (NSDictionary *dict in _applyArray) {
+                if ([[dict objectForKey:@"type"]integerValue] == 1) {
+                    i += 1;
+                }else{
+                    y += 1;
+                }
+            }
+            
+            _realPayPrice = _modelss.memberPrice * i + _modelss.guestPrice * y;
+            _subsidiesPrice = _modelss.subsidyPrice * i;
+            
             [activityNameCell congifContact:[NSString stringWithFormat:@"%ld", (long)_realPayPrice] andNote:[NSString stringWithFormat:@"%ld", (long)_subsidiesPrice]];
         }
         
@@ -301,11 +304,7 @@ static NSString *const JGHApplyListCellIdentifier = @"JGHApplyListCell";
                 
                 [WXApi sendReq:request];
             }
-            
-            
         }];
-        
-        
     }];
     
     _actionView = [UIAlertController alertControllerWithTitle:@"选择支付方式" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
@@ -324,14 +323,19 @@ static NSString *const JGHApplyListCellIdentifier = @"JGHApplyListCell";
 }
 #pragma mark -- 提交报名信息
 - (void)submitInfo{
+    if ([_invoiceKey isEqual:[NSNull class]]) {
+        [self.info setObject:_invoiceKey forKey:@"invoiceKey"];//发票Key
+    }
+    
+    NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     
 //    NSMutableDictionary *infoDict = [NSMutableDictionary dictionary];
     [self.info setObject:@"192" forKey:@"teamKey"];//球队key
     [self.info setObject:@"206" forKey:@"activityKey"];//球队活动key
     [self.info setObject:@"球球" forKey:@"userName"];//报名人名称
-    [self.info setObject:@"" forKey:@"invoiceKey"];//发票Key
-    [self.info setObject:@244 forKey:@"userKey"];//用户Key
+    
+    [self.info setObject:[userdef objectForKey:userID] forKey:@"userKey"];//用户Key
     [self.info setObject:@0 forKey:@"timeKey"];//timeKey
 //    [self.info setObject:self.info forKey:@"info"];
     
@@ -365,12 +369,16 @@ static NSString *const JGHApplyListCellIdentifier = @"JGHApplyListCell";
 #pragma mark -- 添加打球人页面代理－－－返回打球人数组
 - (void)addGuestListArray:(NSArray *)guestListArray{
     self.applyArray = [NSMutableArray arrayWithArray:guestListArray];
+    
     [self.teamApplyTableView reloadData];
 }
 #pragma mark -- 发票代理
-- (void)backAddressKey:(NSString *)addressKey{
+- (void)backAddressKey:(NSString *)addressKey andInvoiceName:(NSString *)name{
     self.invoiceKey = addressKey;
+    _invoiceName = name;
+    [self.teamApplyTableView reloadData];
 }
+
 /*
 #pragma mark - Navigation
 

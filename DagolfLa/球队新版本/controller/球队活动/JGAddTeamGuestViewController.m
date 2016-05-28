@@ -86,7 +86,7 @@
     [applyDict setObject:[NSString stringWithFormat:@"%ld", (long)_isPlays] forKey:@"type"];//"是否是球队成员 0: 不是  1：是
     
     [applyDict setObject:@0 forKey:@"userKey"];//报名用户key , 没有则是嘉宾
-    [applyDict setObject:@0 forKey:@"type"];
+//    [applyDict setObject:@0 forKey:@"type"];
     
     [applyDict setObject:_nameText.text forKey:@"name"];//姓名
     if (_photoNumber.text.length>0) {
@@ -166,6 +166,6 @@
         [self.isPlayersBtn setImage:[UIImage imageNamed:@"kuang_xz"] forState:UIControlStateNormal];
     }
     
-    NSLog(@"%ld", (long)self.isPlays);
+    NSLog(@"是否是球员＝＝%ld", (long)self.isPlays);
 }
 @end

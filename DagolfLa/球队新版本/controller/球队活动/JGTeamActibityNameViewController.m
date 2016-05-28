@@ -357,7 +357,7 @@ static CGFloat ImageHeight  = 210.0;
      //    [dict setObject:@"5000" forKey:@"WithdrawalsMoney"];//提现金额
      
      //createTeamActivity
-     /**
+     
      [[JsonHttp jsonHttp]httpRequest:@"team/createTeamActivity" JsonKey:@"teamActivity" withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
      NSLog(@"%@", errType);
      } completionBlock:^(id data) {
@@ -378,28 +378,6 @@ static CGFloat ImageHeight  = 210.0;
         }
     }
 }
-#pragma mark -- 创建TableView
-/**
- - (void)createTeamActibityNameTableView{
- self.teamActibityNameTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, _tableViewHeight) style:UITableViewStyleGrouped];
- self.teamActibityNameTableView.delegate = self;
- self.teamActibityNameTableView.dataSource = self;
- self.teamActibityNameTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
- //活动场地cell
- UINib *addressNib = [UINib nibWithNibName:@"JGTeamActivityWithAddressCell" bundle:[NSBundle mainBundle]];
- [self.teamActibityNameTableView registerNib:addressNib forCellReuseIdentifier:JGTeamActivityWithAddressCellIdentifier];
- //活动详情／规则说明
- UINib *detailNib = [UINib nibWithNibName:@"JGTeamActivityDetailsCell" bundle:[NSBundle mainBundle]];
- [self.teamActibityNameTableView registerNib:detailNib forCellReuseIdentifier:JGTeamActivityDetailsCellIdentifier];
- //费用说明cell
- UINib *CostsDescriptionNib = [UINib nibWithNibName:@"JGCostsDescriptionCell" bundle:[NSBundle mainBundle]];
- [self.teamActibityNameTableView registerNib:CostsDescriptionNib forCellReuseIdentifier:JGCostsDescriptionCellIdentifier];
- //基础cell
- UINib *activityNameBaseCellNib = [UINib nibWithNibName:@"JGActivityNameBaseCell" bundle:[NSBundle mainBundle]];
- [self.teamActibityNameTableView registerNib:activityNameBaseCellNib forCellReuseIdentifier:JGActivityNameBaseCellIdentifier];
- [self.view addSubview:self.teamActibityNameTableView];
- }
- */
 #pragma mark -- tableView 代理
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     if (section == 2) {
