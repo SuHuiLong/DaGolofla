@@ -27,4 +27,6 @@
 
 - (void)congifCount:(NSInteger)count andSum:(NSInteger)sum;
 
+- (void)configInvoiceIfo:(NSString *)str;
+
 @end

@@ -191,6 +191,16 @@ static CGFloat ImageHeight  = 210.0;
 }
 #pragma mark -- 预览跳转页面
 - (void)previewBtnClick:(UIButton *)btn{
+    if (_strName == nil) {
+        UIAlertAction *commitAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        }];
+        
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"系统提示" message:@"请输入名称！" preferredStyle:UIAlertControllerStyleAlert];
+        [alertController addAction:commitAction];
+        [self presentViewController:alertController animated:YES completion:nil];
+        return;
+    }
+    
     NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
     [userdef setObject:@"1" forKey:@"isAdmin"];//代表管理员
     

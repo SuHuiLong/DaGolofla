@@ -167,52 +167,48 @@ static NSString *const JGGroupdetailsCollectionViewCellIdentifier = @"JGGroupdet
 }
 #pragma mark -- 点击头像图片的代理方法JGGroupdetailsCollectionViewCellDelegate
 - (void)didSelectHeaderImage:(UIButton *)btn JGGroupCell:(JGGroupdetailsCollectionViewCell *)cell{
-    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+    NSUserDefaults *userDef = [NSUserDefaults standardUserDefaults];
+    NSString *str = [userDef objectForKey:TeamMember];
+    if ([str rangeOfString:@"1001"].location != NSNotFound) {
+        //管理员 -- 进入球队列表页码
+        JGHTeamMembersViewController *teamMemberCtrl = [[JGHTeamMembersViewController alloc]init];
+        NSMutableArray *listArray = [NSMutableArray arrayWithArray:self.alreadyDataArray];
+        [listArray addObjectsFromArray:self.teamGroupAllDataArray];
+        teamMemberCtrl.teamGroupAllDataArray = listArray;
+        teamMemberCtrl.delegate = self;
+        //组号
+        teamMemberCtrl.groupIndex = cell.tag;
+        //排序索引
+        teamMemberCtrl.sortIndex = btn.tag;
+        // 老的球队活动报名人timeKey
+        //获取老球员
+        NSString *lableName = [NSString stringWithFormat:@"label%ld", (long)btn.tag+1];
+        Class someClass = NSClassFromString(lableName);
+        UILabel *obj = [[someClass alloc] init];
+        if (obj.text.length != 0) {
+            NSLog(@"%@", obj.text);
+        }
+        //            teamMemberCtrl.oldSignUpKey =
         
-    }];
-    UIAlertAction *commitAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        
-        NSUserDefaults *userDef = [NSUserDefaults standardUserDefaults];
-        
-        NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-        NSLog(@"%@", [userDef objectForKey:TeamMember]);
-        NSString *str = [userDef objectForKey:TeamMember];
-        
-        if ([str rangeOfString:@"1001"].location != NSNotFound) {
-            //管理员
-            JGHTeamMembersViewController *teamMemberCtrl = [[JGHTeamMembersViewController alloc]init];
-            NSMutableArray *listArray = [NSMutableArray arrayWithArray:self.alreadyDataArray];
-            [listArray addObjectsFromArray:self.teamGroupAllDataArray];
-            teamMemberCtrl.teamGroupAllDataArray = listArray;
-            teamMemberCtrl.delegate = self;
-            //组号
-            teamMemberCtrl.groupIndex = cell.tag;
-            //排序索引
-            teamMemberCtrl.sortIndex = btn.tag;
-            // 老的球队活动报名人timeKey
-            //获取老球员
-            NSString *lableName = [NSString stringWithFormat:@"label%ld", (long)btn.tag+1];
-            Class someClass = NSClassFromString(lableName);
-            UILabel *obj = [[someClass alloc] init];
-            if (obj.text.length != 0) {
-                NSLog(@"%@", obj.text);
-            }
-//            teamMemberCtrl.oldSignUpKey =
-
-            [self.navigationController pushViewController:teamMemberCtrl animated:YES];
-        }else{
+        [self.navigationController pushViewController:teamMemberCtrl animated:YES];
+    }else{
+        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+        }];
+        UIAlertAction *commitAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+            NSLog(@"%@", [userDef objectForKey:TeamMember]);
             [dict setObject:@0 forKey:@"oldSignUpKey"];// 老的球队活动报名人timeKey
             [dict setObject:@279 forKey:@"newSignUpKey"]; // 新的球队活动报名人timeKey
             [dict setObject:[NSString stringWithFormat:@"%ld", (long)cell.tag] forKey:@"groupIndex"]; // 组号
             [dict setObject:[NSString stringWithFormat:@"%ld", (long)btn.tag] forKey:@"sortIndex"]; // 排序索引
-        }
-    }];
-    
-    
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"系统提示" message:@"是否加入改组！" preferredStyle:UIAlertControllerStyleAlert];
-    [alertController addAction:cancelAction];
-    [alertController addAction:commitAction];
-    [self presentViewController:alertController animated:YES completion:nil];
+        }];
+        
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"系统提示" message:@"是否加入改组！" preferredStyle:UIAlertControllerStyleAlert];
+        [alertController addAction:cancelAction];
+        [alertController addAction:commitAction];
+        [self presentViewController:alertController animated:YES completion:nil];
+
+    }
 }
 
 #pragma mark -- 更新组
@@ -232,8 +228,18 @@ static NSString *const JGGroupdetailsCollectionViewCellIdentifier = @"JGGroupdet
             
             [self.collectionView reloadData];
             [self.groupDetailsCollectionView reloadData];
+            
+            UIAlertAction *commitAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            }];
+            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"系统提示" message:@"已分组成功!" preferredStyle:UIAlertControllerStyleAlert];
+            [alertController addAction:commitAction];
+            [self presentViewController:alertController animated:YES completion:nil];
         }
     }];
+}
+#pragma mark -- 管理员替换队员与分配队员代理
+- (void)didSelectMembers:(NSMutableDictionary *)dict{
+    [self updateTeamActivityGroupIndex:dict];
 }
 
 - (void)didReceiveMemoryWarning {
