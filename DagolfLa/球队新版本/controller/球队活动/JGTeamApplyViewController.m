@@ -16,17 +16,23 @@
 #import "JGTeamAcitivtyModel.h"
 #import "JGHHeaderLabelCell.h"
 #import "JGHApplyListCell.h"
-
-
+#import "JGSignUoPromptCell.h"
+#import "JGHTotalPriceCell.h"
 //微信
 #import "WXApi.h"
 #import "payRequsestHandler.h"
+
+#import <AlipaySDK/AlipaySDK.h>
+#import "Order.h"
+#import "DataSigner.h"
 
 static NSString *const JGActivityBaseInfoCellIdentifier = @"JGActivityBaseInfoCell";
 static NSString *const JGTableViewCellIdentifier = @"JGTableViewCell";
 static NSString *const JGApplyPepoleCellIdentifier = @"JGApplyPepoleCell";
 static NSString *const JGHHeaderLabelCellIdentifier = @"JGHHeaderLabelCell";
 static NSString *const JGHApplyListCellIdentifier = @"JGHApplyListCell";
+static NSString *const JGSignUoPromptCellIdentifier = @"JGSignUoPromptCell";
+static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
 
 @interface JGTeamApplyViewController ()<JGApplyPepoleCellDelegate, JGHApplyListCellDelegate, JGAddTeamGuestViewControllerDelegate, JGHAddInvoiceViewControllerDelegate>
 {
@@ -88,6 +94,12 @@ static NSString *const JGHApplyListCellIdentifier = @"JGHApplyListCell";
     UINib *applyListNib = [UINib nibWithNibName:@"JGHApplyListCell" bundle: [NSBundle mainBundle]];
     [self.teamApplyTableView registerNib:applyListNib forCellReuseIdentifier:JGHApplyListCellIdentifier];
     
+    UINib *signUoPromptNib = [UINib nibWithNibName:@"JGSignUoPromptCell" bundle: [NSBundle mainBundle]];
+    [self.teamApplyTableView registerNib:signUoPromptNib forCellReuseIdentifier:JGSignUoPromptCellIdentifier];
+    
+    UINib *totalPriceCellNib = [UINib nibWithNibName:@"JGHTotalPriceCell" bundle: [NSBundle mainBundle]];
+    [self.teamApplyTableView registerNib:totalPriceCellNib forCellReuseIdentifier:JGHTotalPriceCellIdentifier];
+    
 //    [self loadData];
 //    [self createData];
 }
@@ -148,7 +160,10 @@ static NSString *const JGHApplyListCellIdentifier = @"JGHApplyListCell";
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     if (section == 1) {
         //人员个数
-        return self.applyArray.count;
+        if (self.applyArray.count > 0) {
+            return self.applyArray.count + 2;
+        }
+        return 2;
     }
     return 0;
 }
@@ -157,6 +172,9 @@ static NSString *const JGHApplyListCellIdentifier = @"JGHApplyListCell";
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
     return 10;
+}
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return 30;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     if (section == 0) {
@@ -167,12 +185,52 @@ static NSString *const JGHApplyListCellIdentifier = @"JGHApplyListCell";
     return 44;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    JGHApplyListCell *applyListCel = [tableView dequeueReusableCellWithIdentifier:JGHApplyListCellIdentifier forIndexPath:indexPath];
-    applyListCel.selectionStyle = UITableViewCellSelectionStyleNone;
-    
-    [applyListCel configDict:_applyArray[indexPath.row]];
-    
-    return applyListCel;
+    if (self.applyArray.count > 0) {
+        if (indexPath.row == self.applyArray.count){
+            JGHTotalPriceCell *totalPriceCell = [tableView dequeueReusableCellWithIdentifier:JGHTotalPriceCellIdentifier forIndexPath:indexPath];
+            totalPriceCell.selectionStyle = UITableViewCellSelectionStyleNone;
+            static int i = 0;
+            static int y = 0;
+            for (NSDictionary *dict in _applyArray) {
+                if ([[dict objectForKey:@"type"]integerValue] == 1) {
+                    i += 1;
+                }else{
+                    y += 1;
+                }
+            }
+            
+            _realPayPrice = _modelss.memberPrice * i + _modelss.guestPrice * y;
+            _subsidiesPrice = _modelss.subsidyPrice * i;
+            
+            i = 0;
+            y = 0;
+            [totalPriceCell configTotalPrice:_realPayPrice];
+            return totalPriceCell;
+        }else if (indexPath.row == self.applyArray.count+1){
+            JGSignUoPromptCell *signUoPromptCell = [tableView dequeueReusableCellWithIdentifier:JGSignUoPromptCellIdentifier forIndexPath:indexPath];
+            signUoPromptCell.selectionStyle = UITableViewCellSelectionStyleNone;
+            return signUoPromptCell;
+        }else{
+            JGHApplyListCell *applyListCel = [tableView dequeueReusableCellWithIdentifier:JGHApplyListCellIdentifier forIndexPath:indexPath];
+            applyListCel.chooseBtn.tag = indexPath.row;
+            applyListCel.deleteBtn.tag = indexPath.row + 100;
+            applyListCel.delegate = self;
+            applyListCel.selectionStyle = UITableViewCellSelectionStyleNone;
+            [applyListCel configDict:_applyArray[indexPath.row]];
+            return applyListCel;
+        }
+    }else{
+        if (indexPath.row == 0) {
+            JGHTotalPriceCell *totalPriceCell = [tableView dequeueReusableCellWithIdentifier:JGHTotalPriceCellIdentifier];
+            totalPriceCell.selectionStyle = UITableViewCellSelectionStyleNone;
+            [totalPriceCell configTotalPrice:0];
+            return totalPriceCell;
+        }else{
+            JGSignUoPromptCell *signUoPromptCell = [tableView dequeueReusableCellWithIdentifier:JGSignUoPromptCellIdentifier forIndexPath:indexPath];
+            signUoPromptCell.selectionStyle = UITableViewCellSelectionStyleNone;
+            return signUoPromptCell;
+        }
+    }
 }
 
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
@@ -199,8 +257,8 @@ static NSString *const JGHApplyListCellIdentifier = @"JGHApplyListCell";
         }else{
             activityNameCell.selectionStyle = UITableViewCellSelectionStyleNone;
             [activityNameCell congiftitles:@"实付金额："];
-            int i = 0;
-            int y = 0;
+            static int i = 0;
+            static int y = 0;
             for (NSDictionary *dict in _applyArray) {
                 if ([[dict objectForKey:@"type"]integerValue] == 1) {
                     i += 1;
@@ -211,6 +269,9 @@ static NSString *const JGHApplyListCellIdentifier = @"JGHApplyListCell";
             
             _realPayPrice = _modelss.memberPrice * i + _modelss.guestPrice * y;
             _subsidiesPrice = _modelss.subsidyPrice * i;
+            
+            i = 0;
+            y = 0;
             
             [activityNameCell congifContact:[NSString stringWithFormat:@"%ld", (long)_realPayPrice] andNote:[NSString stringWithFormat:@"%ld", (long)_subsidiesPrice]];
         }
@@ -233,77 +294,72 @@ static NSString *const JGHApplyListCellIdentifier = @"JGHApplyListCell";
     }];
     UIAlertAction *weiChatAction = [UIAlertAction actionWithTitle:@"微信支付" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         NSLog(@"微信支付");
-
         NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
-        [dict setObject:@0 forKey:@"payInfo"];
-        
+        [dict setObject:@0 forKey:@"orderType"];
+        [dict setObject:@527 forKey:@"srcKey"];
         [[JsonHttp jsonHttp]httpRequest:@"pay/doPayWeiXin" JsonKey:@"payInfo" withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
             NSLog(@"errType == %@", errType);
         } completionBlock:^(id data) {
             
-            NSDictionary *dict = [[data objectForKey:@"rows"] objectForKey:@"appRequest"];
+            NSDictionary *dict = [data objectForKey:@"pay"];
             //微信
             //创建支付签名对象
-            payRequsestHandler *req = [payRequsestHandler alloc];
+            //        payRequsestHandler *req = [payRequsestHandler alloc];
             
             //初始化支付签名对象
-            [req init:@"wxdcdc4e20544ed728" mch_id:[dict objectForKey:@"partnerid"]];
+            //        [req init:@"wxdcdc4e20544ed728" mch_id:[dict objectForKey:@"partnerid"]];
             //设置秘钥
-            [req setKey:[[data objectForKey:@"rows"] objectForKey:@"key"]];
+            //        [req setKey:[[data objectForKey:@"rows"] objectForKey:@"key"]];
             
-            NSMutableDictionary *dict1 = [req sendPay_demoPrePayid:[dict objectForKey:@"prepayid"]];
-            if (dict1) {
+            //        NSMutableDictionary *dict1 = [req sendPay_demoPrePayid:[dict objectForKey:@"prepayid"]];
+            if (dict) {
                 PayReq *request = [[PayReq alloc] init];
-                request.openID       = [dict1 objectForKey:@"appid"];
-                request.partnerId    = [dict1 objectForKey:@"partnerid"];
-                request.prepayId     = [dict1 objectForKey:@"prepayid"];
-                request.package      = [dict1 objectForKey:@"package"];
-                request.nonceStr     = [dict1 objectForKey:@"noncestr"];
-                request.timeStamp    =[[dict1 objectForKey:@"timestamp"] intValue];
-                request.sign         = [dict1 objectForKey:@"sign"];
+                request.openID       = [dict objectForKey:@"appid"];
+                request.partnerId    = [dict objectForKey:@"partnerid"];
+                request.prepayId     = [dict objectForKey:@"prepayid"];
+                request.package      = [dict objectForKey:@"Package"];
+                request.nonceStr     = [dict objectForKey:@"noncestr"];
+                request.timeStamp    =[[dict objectForKey:@"timestamp"] intValue];
+                request.sign         = [dict objectForKey:@"sign"];
                 
                 [WXApi sendReq:request];
             }
             
             
         }];
-
-        
     }];
     
-    UIAlertAction *zhifubaoAction = [UIAlertAction actionWithTitle:@"微信支付" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *zhifubaoAction = [UIAlertAction actionWithTitle:@"支付宝支付" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         NSLog(@"支付宝支付");
-        
         NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
-        [dict setObject:@0 forKey:@"payInfo"];
-        
-        [[JsonHttp jsonHttp]httpRequest:@"pay/doPayWeiXin" JsonKey:@"payInfo" withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
+        [dict setObject:@0 forKey:@"orderType"];
+        [dict setObject:@527 forKey:@"srcKey"];
+        [[JsonHttp jsonHttp]httpRequest:@"pay/doPayByAliPay" JsonKey:@"payInfo" withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
             NSLog(@"errType == %@", errType);
         } completionBlock:^(id data) {
             
-            NSDictionary *dict = [[data objectForKey:@"rows"] objectForKey:@"appRequest"];
-            //微信
-            //创建支付签名对象
-            payRequsestHandler *req = [payRequsestHandler alloc];
+            /*
+             partner="2088911674587712"&seller_id="2088911674587712"&out_trade_no="Order_583"&subject="测试"&body="奶奶的"&total_fee="0.01"&notify_url="http://xiaoar.oicp.net:16681/pay/onCallbackAlipay"&service="mobile.securitypay.pay"&payment_type="1"&_input_charset="utf-8"&it_b_pay="30m"&sign="EbYezU%2BZDT%2FFwDDMTRnxgHztxZ9U2r%2BuB9hzo874Tkp1qSY1z3Nyean2%2B%2BPwFocbXg64VpYF4hNvnNYxAVF8NsSJRgZhghGsDf8XVqV3Q9Z%2FvJOchyUjalgl9D8EPoxLWaedkmT%2Bygvkbuekm5Q2VLU%2BOiuL8ofslX79eKNzQFE%3D"&sign_type="RSA"
+             */
             
-            //初始化支付签名对象
-            [req init:@"wxdcdc4e20544ed728" mch_id:[dict objectForKey:@"partnerid"]];
-            //设置秘钥
-            [req setKey:[[data objectForKey:@"rows"] objectForKey:@"key"]];
-            
-            NSMutableDictionary *dict1 = [req sendPay_demoPrePayid:[dict objectForKey:@"prepayid"]];
-            if (dict1) {
-                PayReq *request = [[PayReq alloc] init];
-                request.openID       = [dict1 objectForKey:@"appid"];
-                request.partnerId    = [dict1 objectForKey:@"partnerid"];
-                request.prepayId     = [dict1 objectForKey:@"prepayid"];
-                request.package      = [dict1 objectForKey:@"package"];
-                request.nonceStr     = [dict1 objectForKey:@"noncestr"];
-                request.timeStamp    =[[dict1 objectForKey:@"timestamp"] intValue];
-                request.sign         = [dict1 objectForKey:@"sign"];
+            NSLog(@"%@",[data objectForKey:@"query"]);
+            [[AlipaySDK defaultService] payOrder:[data objectForKey:@"query"] fromScheme:@"dagolfla" callback:^(NSDictionary *resultDic) {
                 
-                [WXApi sendReq:request];
-            }
+                NSLog(@"支付宝=====%@",resultDic[@"resultStatus"]);
+                if ([resultDic[@"resultStatus"] isEqualToString:@"9000"]) {
+                    NSLog(@"陈公");
+                } else if ([resultDic[@"resultStatus"] isEqualToString:@"4000"]) {
+                    NSLog(@"失败");
+                } else if ([resultDic[@"resultStatus"] isEqualToString:@"6002"]) {
+                    NSLog(@"网络错误");
+                } else if ([resultDic[@"resultStatus"] isEqualToString:@"6001"]) {
+                    NSLog(@"取消支付");
+                } else {
+                    NSLog(@"支付失败");
+                }
+                [self.navigationController popViewControllerAnimated:YES];
+                [[NSNotificationCenter defaultCenter] removeObserver:self];
+            }];
         }];
     }];
     
@@ -323,9 +379,11 @@ static NSString *const JGHApplyListCellIdentifier = @"JGHApplyListCell";
 }
 #pragma mark -- 提交报名信息
 - (void)submitInfo{
-    if ([_invoiceKey isEqual:[NSNull class]]) {
+    if ([_invoiceKey isKindOfClass:[NSNull class]]) {
         [self.info setObject:_invoiceKey forKey:@"invoiceKey"];//发票Key
+        //地址Key
     }
+    
     
     NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
@@ -352,6 +410,8 @@ static NSString *const JGHApplyListCellIdentifier = @"JGHApplyListCell";
     JGAddTeamGuestViewController *addTeamGuestCtrl = [[JGAddTeamGuestViewController alloc]initWithNibName:@"JGAddTeamGuestViewController" bundle:nil];
     addTeamGuestCtrl.delegate = self;
     addTeamGuestCtrl.applyArray = self.applyArray;
+    addTeamGuestCtrl.guestPrice = self.modelss.guestPrice;
+    addTeamGuestCtrl.memberPrice = self.modelss.memberPrice;
     [self.navigationController pushViewController:addTeamGuestCtrl animated:YES];
 }
 - (void)didReceiveMemoryWarning {
@@ -360,11 +420,20 @@ static NSString *const JGHApplyListCellIdentifier = @"JGHApplyListCell";
 }
 #pragma mark --  选择嘉宾
 - (void)didChooseBtn:(UIButton *)btn{
-    
+    NSLog(@"%ld", (long)btn.tag);
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    dict = [self.applyArray objectAtIndex:btn.tag];
+    [dict setObject:@"0" forKey:@"isOnlinePay"];
+    [dict setObject:@"0" forKey:@"select"];
+    [self.applyArray replaceObjectAtIndex:btn.tag withObject:dict];
+    [self.teamApplyTableView reloadData];
 }
 #pragma mark -- 删除嘉宾
 - (void)didSelectDeleteBtn:(UIButton *)btn{
+    NSLog(@"%ld", (long)btn.tag);
     
+    [self.applyArray removeObjectAtIndex:btn.tag - 100];
+    [self.teamApplyTableView reloadData];
 }
 #pragma mark -- 添加打球人页面代理－－－返回打球人数组
 - (void)addGuestListArray:(NSArray *)guestListArray{

@@ -64,44 +64,48 @@ static CGFloat ImageHeight  = 210.0;
     if (self == [super init]) {
         self.dataArray = [NSMutableArray array];
         self.model = [[JGTeamAcitivtyModel alloc]init];
-        //        self.dataDict = [NSMutableDictionary dictionary];
+        self.activityDict = [NSMutableDictionary dictionary];
         self.pickPhoto = [[SXPickPhoto alloc]init];
         self.titleView = [[UIView alloc]init];
-        UIImage *image = [UIImage imageNamed:@"bg"];
-        self.imgProfile = [[UIImageView alloc] initWithImage:image];
-        self.imgProfile.frame = CGRectMake(0, 0, screenWidth, ImageHeight);
-        self.imgProfile.userInteractionEnabled = YES;
-        self.teamActibityNameTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight - 44)];
-        UINib *tableViewNib = [UINib nibWithNibName:@"JGHHeaderLabelCell" bundle: [NSBundle mainBundle]];
-        [self.teamActibityNameTableView registerNib:tableViewNib forCellReuseIdentifier:JGHHeaderLabelCellIdentifier];
-        UINib *addressNib = [UINib nibWithNibName:@"JGTeamActivityWithAddressCell" bundle: [NSBundle mainBundle]];
-        [self.teamActibityNameTableView registerNib:addressNib forCellReuseIdentifier:JGTeamActivityWithAddressCellIdentifier];
-        UINib *deetailsNib = [UINib nibWithNibName:@"JGTeamActivityDetailsCell" bundle: [NSBundle mainBundle]];
-        [self.teamActibityNameTableView registerNib:deetailsNib forCellReuseIdentifier:JGTeamActivityDetailsCellIdentifier];
-        UINib *costListNib = [UINib nibWithNibName:@"JGHCostListTableViewCell" bundle:[NSBundle mainBundle]];
-        [self.teamActibityNameTableView registerNib:costListNib forCellReuseIdentifier:JGHCostListTableViewCellIdentifier];
-        self.teamActibityNameTableView.dataSource = self;
-        self.teamActibityNameTableView.delegate = self;
-        self.teamActibityNameTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-        self.teamActibityNameTableView.backgroundColor = [UIColor colorWithHexString:TB_BG_Color];
-        [self.view addSubview:self.teamActibityNameTableView];
-        [self.view addSubview:self.imgProfile];
-        self.titleView.frame = CGRectMake(0, 10, screenWidth, 44);
-        self.titleView.backgroundColor = [UIColor clearColor];
-        [self.imgProfile addSubview:self.titleView];
-    }
+            }
     return self;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor colorWithHexString:TB_BG_Color];
+    self.automaticallyAdjustsScrollViewInsets = NO;
+    UIImage *image = [UIImage imageNamed:@"bg"];
+    self.imgProfile = [[UIImageView alloc] initWithImage:image];
+    self.imgProfile.frame = CGRectMake(0, 0, screenWidth, ImageHeight);
+    self.imgProfile.userInteractionEnabled = YES;
+    self.teamActibityNameTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight - 44)];
+    UINib *tableViewNib = [UINib nibWithNibName:@"JGHHeaderLabelCell" bundle: [NSBundle mainBundle]];
+    [self.teamActibityNameTableView registerNib:tableViewNib forCellReuseIdentifier:JGHHeaderLabelCellIdentifier];
+    UINib *addressNib = [UINib nibWithNibName:@"JGTeamActivityWithAddressCell" bundle: [NSBundle mainBundle]];
+    [self.teamActibityNameTableView registerNib:addressNib forCellReuseIdentifier:JGTeamActivityWithAddressCellIdentifier];
+    UINib *deetailsNib = [UINib nibWithNibName:@"JGTeamActivityDetailsCell" bundle: [NSBundle mainBundle]];
+    [self.teamActibityNameTableView registerNib:deetailsNib forCellReuseIdentifier:JGTeamActivityDetailsCellIdentifier];
+    UINib *costListNib = [UINib nibWithNibName:@"JGHCostListTableViewCell" bundle:[NSBundle mainBundle]];
+    [self.teamActibityNameTableView registerNib:costListNib forCellReuseIdentifier:JGHCostListTableViewCellIdentifier];
+    self.teamActibityNameTableView.dataSource = self;
+    self.teamActibityNameTableView.delegate = self;
+    self.teamActibityNameTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    self.teamActibityNameTableView.backgroundColor = [UIColor colorWithHexString:TB_BG_Color];
+    [self.view addSubview:self.teamActibityNameTableView];
+    [self.view addSubview:self.imgProfile];
+    self.titleView.frame = CGRectMake(0, 10, screenWidth, 44);
+    self.titleView.backgroundColor = [UIColor clearColor];
+    [self.imgProfile addSubview:self.titleView];
+
     
-    NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
     
-    if ([[userdef objectForKey:@"isAdmin"]isEqualToString:@"1"]) {
-        [userdef setObject:@"0" forKey:@"isAdmin"];//去除管理员权限管理员
-        self.teamActibityNameTableView.frame = CGRectMake(0, 0, ScreenWidth, ScreenHeight - 44 - 40);
+    
+//    NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
+    
+    if (self.isAdmin == 1) {
+//        [userdef setObject:@"0" forKey:@"isAdmin"];//去除管理员权限管理员
+//        self.teamActibityNameTableView.frame = CGRectMake(0, 0, ScreenWidth, ScreenHeight - 44 - 40);
         [self createSaveAndLaunchBtn];
     }else{
         //        _tableViewHeight = screenHeight -64 -44;
@@ -387,7 +391,11 @@ static CGFloat ImageHeight  = 210.0;
     return 0;
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 5;
+    if (_isAdmin == 1) {
+        return 4;//创建页面－－预览
+    }else{
+        return 5;//详情页面
+    }
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 2) {
@@ -409,11 +417,22 @@ static CGFloat ImageHeight  = 210.0;
             cell = [self.teamActibityNameTableView dequeueReusableCellWithIdentifier:JGTeamActivityDetailsCellIdentifier];
         }
         
-//        JGTeamAcitivtyModel *model = [[JGTeamAcitivtyModel alloc]init];
-//        model = self.dataArray[0];
         cell.activityDetails.text = self.model.info;
         
         return [cell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height + 1;
+    }else if (section == 3){
+        if (_isAdmin == 1) {
+            static JGTeamActivityDetailsCell *cell;
+            if (!cell) {
+                cell = [self.teamActibityNameTableView dequeueReusableCellWithIdentifier:JGTeamActivityDetailsCellIdentifier];
+            }
+            
+            cell.activityDetails.text = self.model.info;
+            
+            return [cell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height + 1;
+        }else{
+            return 44;
+        }
     }
     return 44;
 }
@@ -461,10 +480,16 @@ static CGFloat ImageHeight  = 210.0;
         
         return (UIView *)headerCell;
     }else if (section == 3){
-        JGHHeaderLabelCell *headerCell = [tableView dequeueReusableCellWithIdentifier:JGHHeaderLabelCellIdentifier];
-        [headerCell congiftitles:@"查看报名人"];
-        [headerCell congifCount:self.model.sumCount andSum:self.model.maxCount];
-        return (UIView *)headerCell;
+        if (_isAdmin != 1) {
+            JGHHeaderLabelCell *headerCell = [tableView dequeueReusableCellWithIdentifier:JGHHeaderLabelCellIdentifier];
+            [headerCell congiftitles:@"查看报名人"];
+            [headerCell congifCount:self.model.sumCount andSum:self.model.maxCount];
+            return (UIView *)headerCell;
+        }else{
+            JGTeamActivityDetailsCell *detailsCell = [tableView dequeueReusableCellWithIdentifier:JGTeamActivityDetailsCellIdentifier];
+            [detailsCell configDetailsText:@"活动详情" AndActivityDetailsText:self.model.info];
+            return (UIView *)detailsCell;
+        }
     }else{
         JGTeamActivityDetailsCell *detailsCell = [tableView dequeueReusableCellWithIdentifier:JGTeamActivityDetailsCellIdentifier];
         [detailsCell configDetailsText:@"活动详情" AndActivityDetailsText:self.model.info];

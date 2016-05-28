@@ -21,5 +21,9 @@
 
 @property (nonatomic, retain) UIImageView *imgProfile;//拉大图片
 
+//发布页面过来的数据字典
+@property (nonatomic, strong)NSMutableDictionary *activityDict;
+
+@property (nonatomic, assign)NSInteger isAdmin;//活动创建 1
 
 @end

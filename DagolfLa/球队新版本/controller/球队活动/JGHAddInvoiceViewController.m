@@ -49,7 +49,13 @@
 }
 #pragma mark -- 获取地址信息
 - (void)loadAddressData{
-    
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    [[JsonHttp jsonHttp]httpRequest:@"address/getAddressList" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
+        NSLog(@"err==%@", errType);
+    } completionBlock:^(id data) {
+        NSLog(@"data==%@", data);
+        
+    }];
 }
 #pragma mark -- 获取发票信息
 - (void)loadInvoiceData{

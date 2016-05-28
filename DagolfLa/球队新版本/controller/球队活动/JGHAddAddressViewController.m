@@ -125,6 +125,7 @@
         NSLog(@"data == %@", data);
         if ([[data objectForKey:@"packSuccess"] integerValue]==1) {
             if (self.delegate) {
+                [dict setObject:[data objectForKey:@"timeKey"] forKey:@"timeKey"];
                 [self.delegate didSelectAddressDict:dict];
                 [self.navigationController popViewControllerAnimated:YES];
             }
