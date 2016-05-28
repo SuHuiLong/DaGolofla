@@ -162,8 +162,6 @@
     self.webView.navigationDelegate = self;
     self.webView.allowsBackForwardNavigationGestures =YES;
     [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:ShouYe]]];
-    
-
 }
 
 
