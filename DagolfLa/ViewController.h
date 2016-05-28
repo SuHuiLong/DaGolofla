@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 #import "AppDelegate.h"
+#import <WebKit/WebKit.h>
 #define IWNotificationCenter [NSNotificationCenter defaultCenter]
 
 @interface ViewController : UIViewController

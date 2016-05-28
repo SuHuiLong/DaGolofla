@@ -37,11 +37,11 @@
     
     //活动费用
 //    @property (weak, nonatomic) IBOutlet UILabel *member;
-    self.member.text = [NSString stringWithFormat:@"%ld", model.memberPrice];
+    self.member.text = [NSString stringWithFormat:@"%ld", (long)model.memberPrice];
     
     //嘉宾费用
 //    @property (weak, nonatomic) IBOutlet UILabel *guest;
-    self.guest.text = [NSString stringWithFormat:@"%ld", model.guestPrice];
+    self.guest.text = [NSString stringWithFormat:@"%ld", (long)model.guestPrice];
 }
 
 @end
