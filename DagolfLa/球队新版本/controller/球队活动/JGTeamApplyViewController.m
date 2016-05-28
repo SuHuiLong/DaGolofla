@@ -323,9 +323,11 @@ static NSString *const JGHApplyListCellIdentifier = @"JGHApplyListCell";
 }
 #pragma mark -- 提交报名信息
 - (void)submitInfo{
-    if ([_invoiceKey isEqual:[NSNull class]]) {
+    if ([_invoiceKey isKindOfClass:[NSNull class]]) {
         [self.info setObject:_invoiceKey forKey:@"invoiceKey"];//发票Key
+        //地址Key
     }
+    
     
     NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];

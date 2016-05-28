@@ -29,11 +29,9 @@ static CGFloat ImageHeight  = 210.0;
 {
     //、、、、、、、
     NSArray *_titleArray;//标题数组
-    NSInteger _photos;
+    NSInteger _photos;//跳转相册问题
     
     NSMutableDictionary* dictData;
-    
-    NSString* _strName;
 }
 @property (nonatomic,strong)SXPickPhoto * pickPhoto;//相册类
 @property (nonatomic, strong)UITableView *launchActivityTableView;
@@ -73,7 +71,6 @@ static CGFloat ImageHeight  = 210.0;
         self.dataDict = [NSMutableDictionary dictionary];
         self.pickPhoto = [[SXPickPhoto alloc]init];
         self.titleView = [[UIView alloc]init];
-    
 
         _dataDict = [[NSMutableDictionary alloc]init];
         UIImage *image = [UIImage imageNamed:@"bg"];
@@ -129,6 +126,8 @@ static CGFloat ImageHeight  = 210.0;
     self.titleField.placeholder = @"请输入活动名称";
     [self.titleField setValue:[UIColor whiteColor] forKeyPath:@"_placeholderLabel.textColor"];
     [self.titleField setValue:[UIFont boldSystemFontOfSize:15] forKeyPath:@"_placeholderLabel.font"];
+    self.titleField.tag = 345;
+    self.titleField.delegate = self;
     self.titleField.textAlignment = NSTextAlignmentCenter;
     self.titleField.font = [UIFont systemFontOfSize:15];
     //头像
@@ -191,32 +190,48 @@ static CGFloat ImageHeight  = 210.0;
 }
 #pragma mark -- 预览跳转页面
 - (void)previewBtnClick:(UIButton *)btn{
-    if (_strName == nil) {
-        UIAlertAction *commitAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        }];
-        
-        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"系统提示" message:@"请输入名称！" preferredStyle:UIAlertControllerStyleAlert];
-        [alertController addAction:commitAction];
-        [self presentViewController:alertController animated:YES completion:nil];
-        return;
+    if (self.titleField.text.length == 0) {
+        [self alertviewString:@"活动名称不能为空！"];
     }
     
-    NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
-    [userdef setObject:@"1" forKey:@"isAdmin"];//代表管理员
+    if (self.addressBtn.titleLabel.text.length == 0) {
+        [self alertviewString:@"活动地址不能为空！"];
+    }
     
-    [_dataDict setObject:self.titleField.text forKey:@"activityTitle"];
-    [_dataDict setObject:self.addressBtn.titleLabel.text forKey:@"activityAddress"];
-    [_dataDict setObject:[NSNumber numberWithInteger:self.model.maxCount] forKey:@"activityMaxCount"];
-    [_dataDict setObject:_strName forKey:@"activityUserName"];
-    [_dataDict setObject:self.model.usernumber forKey:@"activityUserNumber"];
+    if (self.model.maxCount <= 0) {
+        [self alertviewString:@"活动地址不能为空！"];
+    }
     
+    if (self.model.usernumber.length != 11) {
+        [self alertviewString:@"手机号码格式不正确！"];
+    }
+    
+//    [_dataDict setObject:self.titleField.text forKey:@"name"];//活动名称
+//    [_dataDict setObject:self.addressBtn.titleLabel.text forKey:@"ballName"];//地址
+//    [_dataDict setObject:[NSNumber numberWithInteger:self.model.maxCount] forKey:@"maxCount"];//人员限制
+//    [_dataDict setObject:self.model.usernumber forKey:@"userMobile"];//手机号
+//    [_dataDict setObject:self.model.username forKey:@"userName"];//联系人名称
+//    [_dataDict setObject:@"" forKey:@"beginDate"];//开始时间
+//    [_dataDict setObject:@"" forKey:@"endDate"];//活动结束时间
+//    [_dataDict setObject:@"" forKey:@"signUpEndTime"];//活动报名截止时间
+//    [_dataDict setObject:@"" forKey:@"memberPrice"];//会员价
+//    [_dataDict setObject:@"" forKey:@"guestPrice"];//嘉宾价
+//    [_dataDict setObject:self.model.info forKey:@"info"];//活动简介
+//    [_dataDict setObject:@"" forKey:@"signUpEndTime"];//活动报名截止时间
+//    [_dataDict setObject:@"" forKey:@"signUpEndTime"];//活动报名截止时间
     
     JGTeamActibityNameViewController *ActivityDetailCtrl = [[JGTeamActibityNameViewController alloc]init];
     ActivityDetailCtrl.model = self.model;
+    ActivityDetailCtrl.isAdmin = 1;
     [self.navigationController pushViewController:ActivityDetailCtrl animated:YES];
 }
 
-
+#pragma mark -- 提示信息
+- (void)alertviewString:(NSString *)string{
+    [Helper alertViewNoHaveCancleWithTitle:string withBlock:^(UIAlertController *alertView) {
+        [self.navigationController presentViewController:alertView animated:YES completion:nil];
+    }];
+}
 #pragma mark -- 改变图片位置 放大缩小
 - (void)updateImg {
     CGFloat yOffset = _launchActivityTableView.contentOffset.y;
@@ -303,7 +318,7 @@ static CGFloat ImageHeight  = 210.0;
             contactCell.contactLabel.text = @"联系人";
             contactCell.tetfileView.keyboardType = UIKeyboardTypeDefault;
             contactCell.tetfileView.placeholder = @"请输入联系人姓名";
-            contactCell.tetfileView.delegate = self;
+//            contactCell.tetfileView.delegate = self;
             contactCell.tetfileView.tag = 23;
         }
         
@@ -406,14 +421,12 @@ static CGFloat ImageHeight  = 210.0;
     }];
     //相册
     UIAlertAction * act3 = [UIAlertAction actionWithTitle:@"相册" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        
         //打开相册
         [_pickPhoto SHowLocalPhotoWithController:self andWithBlock:^(NSObject *Data) {
             if ([Data isKindOfClass:[UIImage class]])
             {
                 // @{@"nType":@"1", @"tag":@"dagolfla", @"data":@"test"};
                 _headerImage = (UIImage *)Data;
-                
                 //设置背景
                 if (btn.tag == 520) {
                     self.imgProfile.image = _headerImage;
@@ -422,7 +435,6 @@ static CGFloat ImageHeight  = 210.0;
                     self.headPortraitBtn.layer.masksToBounds = YES;
                     self.headPortraitBtn.layer.cornerRadius = 8.0;
                 }
-                
                 /** 上传图片
                 NSMutableDictionary *dict = [NSMutableDictionary dictionary];
                 [dict setObject:@"11010" forKey:@"data"];
@@ -431,9 +443,7 @@ static CGFloat ImageHeight  = 210.0;
                 NSMutableArray *array = [NSMutableArray array];
                 
                 [array addObject:UIImageJPEGRepresentation(_headerImage, 0.7)];
-                
-                
-                
+                 
                 [[JsonHttp jsonHttp]httpRequestImageOrVedio:@"1" withData:dict andDataArray:array failedBlock:^(id errType) {
                     NSLog(@"errType===%@", errType);
                 } completionBlock:^(id data) {
@@ -441,16 +451,13 @@ static CGFloat ImageHeight  = 210.0;
                 }];
                  */
             }
-            
             _photos = 1;
         }];
     }];
-    
     UIAlertController * aleVC = [UIAlertController alertControllerWithTitle:@"提示" message:@"选择图片" preferredStyle:UIAlertControllerStyleActionSheet];
     [aleVC addAction:act1];
     [aleVC addAction:act2];
     [aleVC addAction:act3];
-    
     [self presentViewController:aleVC animated:YES completion:nil];
 }
 
@@ -475,13 +482,14 @@ static CGFloat ImageHeight  = 210.0;
 }
 #pragma mark -- UITextFliaView
 - (void)textFieldDidEndEditing:(UITextField *)textField{
-    if (textField.tag == 123) {
+    if (textField.tag == 234) {
         self.model.maxCount = [textField.text integerValue];
     }else if (textField.tag == 23) {
         self.model.username = textField.text;
-        _strName = textField.text;
-    }else{
+    }else if (textField.tag == 123){
         self.model.usernumber = textField.text;
+    }else if (textField.tag == 345){
+        self.model.name = textField.text;
     }
 }
 - (void)didReceiveMemoryWarning {

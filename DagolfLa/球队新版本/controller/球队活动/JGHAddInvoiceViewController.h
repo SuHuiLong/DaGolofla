@@ -40,7 +40,7 @@
 
 @property (weak, nonatomic)id <JGHAddInvoiceViewControllerDelegate> delegate;
 
-@property (copy, nonatomic)NSString *invoiceKey;
+@property (copy, nonatomic)NSString *invoiceKey;//发票Key
 //地址
 - (IBAction)addreeBtn:(UIButton *)sender;
 
