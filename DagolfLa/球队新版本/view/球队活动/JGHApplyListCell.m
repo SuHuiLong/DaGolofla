@@ -39,7 +39,7 @@
     self.name.text = [dict objectForKey:@"name"];
 //    @property (weak, nonatomic) IBOutlet UILabel *name;
     //价格
-    self.price.text = [dict objectForKey:@"money"];
+    self.price.text = [dict objectForKey:@"payMoney"];
 //    @property (weak, nonatomic) IBOutlet UILabel *price;
     if ([[dict objectForKey:@"select"]isEqualToString:@"1"]) {
         [self.chooseBtn setImage:[UIImage imageNamed:@"kuangwx"] forState:UIControlStateNormal];
