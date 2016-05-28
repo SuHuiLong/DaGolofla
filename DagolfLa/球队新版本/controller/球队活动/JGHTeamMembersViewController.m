@@ -29,7 +29,33 @@
     [super viewDidLoad];
     self.navigationItem.title = @"成员列表";
     [self uiConfig];
+    
+    if (self.isload == 1) {
+        [self loadData];
+    }
 }
+- (void)loadData{
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    [dict setObject:[NSString stringWithFormat:@"%ld", (long)_activityKey] forKey:@"activityKey"];
+    [[JsonHttp jsonHttp]httpRequest:@"team/getTeamActivitySignUpList" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
+        NSLog(@"%@", errType);
+    } completionBlock:^(id data) {
+        NSLog(@"data==%@", data);
+        if ([data count]>2) {
+            NSArray *dataArray = [data objectForKey:@"teamSignUpList"];
+            for (NSDictionary *dict in dataArray) {
+                JGHPlayersModel *model = [[JGHPlayersModel alloc]init];
+                [model setValuesForKeysWithDictionary:dict];
+                [self.teamGroupAllDataArray addObject:model];
+            }
+        }else if ([data count] == 2){
+            
+        }
+        
+        [_tableView reloadData];
+    }];
+}
+
 -(void)uiConfig
 {
     _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight)];

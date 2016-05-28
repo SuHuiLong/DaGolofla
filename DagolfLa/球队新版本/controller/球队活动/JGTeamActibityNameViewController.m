@@ -16,6 +16,7 @@
 #import "BallParkViewController.h"
 #import "JGHCostListTableViewCell.h"
 #import "JGTeamActivityViewController.h"
+#import "JGHTeamMembersViewController.h"
 
 static NSString *const JGTeamActivityWithAddressCellIdentifier = @"JGTeamActivityWithAddressCell";
 static NSString *const JGTeamActivityDetailsCellIdentifier = @"JGTeamActivityDetailsCell";
@@ -482,6 +483,9 @@ static CGFloat ImageHeight  = 210.0;
     }else if (section == 3){
         if (_isAdmin != 1) {
             JGHHeaderLabelCell *headerCell = [tableView dequeueReusableCellWithIdentifier:JGHHeaderLabelCellIdentifier];
+            UIButton *applyListBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, screenWidth, headerCell.frame.size.height)];
+            [applyListBtn addTarget:self action:@selector(getTeamActivitySignUpList:) forControlEvents:UIControlEventTouchUpInside];
+            [headerCell addSubview:applyListBtn];
             [headerCell congiftitles:@"查看报名人"];
             [headerCell congifCount:self.model.sumCount andSum:self.model.maxCount];
             return (UIView *)headerCell;
@@ -496,7 +500,13 @@ static CGFloat ImageHeight  = 210.0;
         return (UIView *)detailsCell;
     }
 }
-
+#pragma mark -- 查看已报名人列表
+- (void)getTeamActivitySignUpList:(UIButton *)btn{
+    JGHTeamMembersViewController *teamMemberCtrl = [[JGHTeamMembersViewController alloc]init];
+    teamMemberCtrl.activityKey = self.teamActivityKey; //活动key
+    teamMemberCtrl.isload = 1;
+    [self.navigationController pushViewController:teamMemberCtrl animated:YES];
+}
 #pragma mark - Table View Delegate
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     [self updateImg];

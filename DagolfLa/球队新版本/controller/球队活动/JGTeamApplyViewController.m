@@ -99,46 +99,7 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
     
     UINib *totalPriceCellNib = [UINib nibWithNibName:@"JGHTotalPriceCell" bundle: [NSBundle mainBundle]];
     [self.teamApplyTableView registerNib:totalPriceCellNib forCellReuseIdentifier:JGHTotalPriceCellIdentifier];
-    
-//    [self loadData];
-//    [self createData];
 }
-#pragma mark -- 创建测试数据
-- (void)createData{
-    for (int i=0; i<10; i++) {
-        NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-        [dict setObject:@"192" forKey:@"teamKey"];//球队key
-        [dict setObject:@"206" forKey:@"activityKey"];//球队活动id
-        if (i==0) {
-            [dict setObject:@244 forKey:@"userKey"];//报名用户key , 没有则是嘉宾
-            [dict setObject:@1 forKey:@"type"];
-        }else{
-            [dict setObject:@0 forKey:@"userKey"];//报名用户key , 没有则是嘉宾
-            [dict setObject:@0 forKey:@"type"];
-        }
-        [dict setObject:[NSString stringWithFormat:@"test%d", i] forKey:@"name"];//姓名
-        [dict setObject:[NSString stringWithFormat:@"1872111036%d", i] forKey:@"mobile"];//手机号
-        [dict setObject:[NSString stringWithFormat:@"7%d", i] forKey:@"almost"];//差点
-        [dict setObject:@"0" forKey:@"isOnlinePay"];//是否线上 付款
-        [dict setObject:@"0" forKey:@"sex"];//性别 0: 女 1: 男
-//        [dict setObject:@"192" forKey:@"groupIndex"];//组的索引   每组4 人
-//        [dict setObject:@"192" forKey:@"sortIndex"];//排序索引号
-//        [dict setObject:@"192" forKey:@"payMoney"];//实际付款金额
-//        [dict setObject:@"192" forKey:@"payTime"];//实际付款时间
-//        [dict setObject:@"192" forKey:@"subsidyPrice"];//补贴价
-//        [dict setObject:@"3500" forKey:@"money"];//报名费
-        [dict setObject:@"2016-06-11 10:00:00" forKey:@"createTime"];//报名时间
-        [dict setObject:@0 forKey:@"signUpInfoKey"];//报名信息的timeKey
-        [dict setObject:@0 forKey:@"timeKey"];//timeKey
-        [dict setObject:@"1" forKey:@"select"];
-        
-        [self.applyArray addObject:dict];
-    }
-    
-    [self.teamApplyTableView reloadData];
-}
-
-
 - (void)loadData{
     NSUserDefaults *userdf = [NSUserDefaults standardUserDefaults];
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
@@ -192,7 +153,7 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
             static int i = 0;
             static int y = 0;
             for (NSDictionary *dict in _applyArray) {
-                if ([[dict objectForKey:@"type"]integerValue] == 1) {
+                if ([[dict objectForKey:@"isOnlinePay"]integerValue] == 1) {
                     i += 1;
                 }else{
                     y += 1;
@@ -260,7 +221,7 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
             static int i = 0;
             static int y = 0;
             for (NSDictionary *dict in _applyArray) {
-                if ([[dict objectForKey:@"type"]integerValue] == 1) {
+                if ([[dict objectForKey:@"isOnlinePay"]integerValue] == 1) {
                     i += 1;
                 }else{
                     y += 1;

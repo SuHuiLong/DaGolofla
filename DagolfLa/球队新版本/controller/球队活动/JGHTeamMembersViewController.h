@@ -18,7 +18,7 @@
 
 @property (nonatomic, weak)id <JGHTeamMembersViewControllerDelegate> delegate;
 
-@property (nonatomic, strong)NSArray *teamGroupAllDataArray;
+@property (nonatomic, strong)NSMutableArray *teamGroupAllDataArray;
 
 //组号
 @property (nonatomic, assign)NSInteger groupIndex;
@@ -29,5 +29,9 @@
 // 老的球队活动报名人timeKey
 @property (nonatomic, assign)NSInteger oldSignUpKey;
 
+
+@property (nonatomic, assign)NSInteger isload;// 1- 需要下载数据
+
+@property (nonatomic, assign)NSInteger activityKey;//活动key
 
 @end
