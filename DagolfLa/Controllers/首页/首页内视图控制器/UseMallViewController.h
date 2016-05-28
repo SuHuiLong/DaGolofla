@@ -11,6 +11,6 @@
 @interface UseMallViewController : ViewController
 
 
-@property(nonatomic,copy)NSString *link;
+//@property(nonatomic,copy)NSString *link;
 
 @end

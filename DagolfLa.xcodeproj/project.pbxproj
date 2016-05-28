@@ -827,6 +827,7 @@
 		828A99FC1CE3549900AF9860 /* JGMemDataTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 828A99FB1CE3549900AF9860 /* JGMemDataTableViewCell.m */; };
 		82AAB7AE1CE5BEB8005F5633 /* JGLSelfSetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 82AAB7AD1CE5BEB8005F5633 /* JGLSelfSetViewController.m */; };
 		82AAB7B11CE5C18E005F5633 /* JGSelfSetTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 82AAB7B01CE5C18E005F5633 /* JGSelfSetTableViewCell.m */; };
+		82BEEC841CF98828000DFE46 /* JGLNewShopDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 82BEEC831CF98828000DFE46 /* JGLNewShopDetailViewController.m */; };
 		82D595DF1CE42BDF00CD9587 /* BaiduMapAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82D595DD1CE42BDF00CD9587 /* BaiduMapAPI.framework */; };
 		82D595E01CE42BDF00CD9587 /* mapapi.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 82D595DE1CE42BDF00CD9587 /* mapapi.bundle */; };
 		82D595E31CE42E7B00CD9587 /* JGMemHalfTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 82D595E21CE42E7B00CD9587 /* JGMemHalfTableViewCell.m */; };
@@ -2266,6 +2267,8 @@
 		82AAB7AD1CE5BEB8005F5633 /* JGLSelfSetViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGLSelfSetViewController.m; sourceTree = "<group>"; };
 		82AAB7AF1CE5C18E005F5633 /* JGSelfSetTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGSelfSetTableViewCell.h; sourceTree = "<group>"; };
 		82AAB7B01CE5C18E005F5633 /* JGSelfSetTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGSelfSetTableViewCell.m; sourceTree = "<group>"; };
+		82BEEC821CF98828000DFE46 /* JGLNewShopDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGLNewShopDetailViewController.h; sourceTree = "<group>"; };
+		82BEEC831CF98828000DFE46 /* JGLNewShopDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGLNewShopDetailViewController.m; sourceTree = "<group>"; };
 		82D595DD1CE42BDF00CD9587 /* BaiduMapAPI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = BaiduMapAPI.framework; sourceTree = SOURCE_ROOT; };
 		82D595DE1CE42BDF00CD9587 /* mapapi.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = mapapi.bundle; sourceTree = SOURCE_ROOT; };
 		82D595E11CE42E7B00CD9587 /* JGMemHalfTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGMemHalfTableViewCell.h; sourceTree = "<group>"; };
@@ -4740,6 +4743,7 @@
 		36BFFF971BC76FB4005B3CE2 /* 首页 */ = {
 			isa = PBXGroup;
 			children = (
+				82BEEC811CF98813000DFE46 /* 商城详情界面 */,
 				36BF01011BC775AC005B3CE2 /* 首页滚涂 */,
 				36BF00C91BC77428005B3CE2 /* 首页内视图控制器 */,
 				36BF00E81BC774BA005B3CE2 /* 首页圆形视图 */,
@@ -5622,6 +5626,15 @@
 				82E6A6EA1CF2FFA3009DD179 /* JGLJoinManageViewController.m */,
 			);
 			path = "我的球队";
+			sourceTree = "<group>";
+		};
+		82BEEC811CF98813000DFE46 /* 商城详情界面 */ = {
+			isa = PBXGroup;
+			children = (
+				82BEEC821CF98828000DFE46 /* JGLNewShopDetailViewController.h */,
+				82BEEC831CF98828000DFE46 /* JGLNewShopDetailViewController.m */,
+			);
+			path = "商城详情界面";
 			sourceTree = "<group>";
 		};
 		82E6A6EC1CF5529A009DD179 /* 我的球队 */ = {
@@ -6722,6 +6735,7 @@
 				82E6A7151CF68190009DD179 /* JGLTeamEditTableViewCell.m in Sources */,
 				3660E0EB1BFC53B70033B4D7 /* SelfScoreTableViewCell.m in Sources */,
 				362BCD911C048803001E2818 /* TeamActivePostController.m in Sources */,
+				82BEEC841CF98828000DFE46 /* JGLNewShopDetailViewController.m in Sources */,
 				3660E17C1BFC56C20033B4D7 /* ScoreCommentOtherViewCell.m in Sources */,
 				3660E1861BFC56DD0033B4D7 /* ScoreTitleTableViewCell.m in Sources */,
 				3660E1D91BFC64020033B4D7 /* ScoreBySelfViewController.m in Sources */,
