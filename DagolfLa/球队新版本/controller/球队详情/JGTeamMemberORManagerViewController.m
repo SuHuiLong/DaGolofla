@@ -28,6 +28,20 @@
 #import "JGDisplayInfoTableViewCell.h"
 #import "TeamInviteViewController.h"
 
+#import "ShareAlert.h"
+#import "EnterViewController.h"
+#import "UMSocial.h"
+#import "ShareAlert.h"
+#import "UMSocialData.h"
+#import "ShareAlert.h"
+#import "UMSocialConfig.h"
+#import "UMSocialSinaHandler.h"
+#import "UMSocialDataService.h"
+#import "UMSocialWechatHandler.h"
+
+#import "UMSocialWechatHandler.h"
+#import "UMSocialControllerService.h"
+
 #import "JGTeamManageViewController.h"
 
 #import "JGTeamMemberController.h"
@@ -69,7 +83,6 @@ static CGFloat ImageHeight  = 210.0;
     self.navigationController.navigationBarHidden = YES;
     self.titleField.text = [self.detailDic objectForKey:@"name"];
 //    [self.headPortraitBtn.imageView sd_setImageWithURL:[Helper setImageIconUrl:[self.detailDic objectForKey:@"timeKey"]] placeholderImage:[UIImage imageNamed:@"logo"]];
-    [self.headPortraitBtn sd_setImageWithURL:[Helper setImageIconUrl:[self.detailDic objectForKey:@"timeKey"]] forState:(UIControlStateNormal) placeholderImage:[UIImage imageNamed:@"logo"]];
 }
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:YES];
@@ -149,9 +162,9 @@ static CGFloat ImageHeight  = 210.0;
     //头像
     self.headPortraitBtn = [[UIButton alloc]initWithFrame:CGRectMake(20 * screenWidth / 320, 150, 50, 50)];
 //    [self.headPortraitBtn.imageView sd_setImageWithURL:[Helper setImageIconUrl:[self.detailDic objectForKey:@"teamKey"]] placeholderImage:[UIImage imageNamed:@"logo"]];
-    [self.headPortraitBtn setImage:[UIImage imageNamed:@"relogo"] forState:UIControlStateNormal];
+    [self.headPortraitBtn setImage:[UIImage imageNamed:@"logo"] forState:UIControlStateNormal];
     [self.headPortraitBtn addTarget:self action:@selector(replaceWithPicture:) forControlEvents:UIControlEventTouchUpInside];
-    
+    self.headPortraitBtn.imageView.contentMode = UIViewContentModeScaleAspectFill;
     [self.imgProfile addSubview:self.headPortraitBtn];
     [self.titleView addSubview:self.titleField];
     
@@ -168,6 +181,84 @@ static CGFloat ImageHeight  = 210.0;
     
     [self createPreviewBtn];
 }
+
+#pragma mark -分享
+
+- (void)addShare{
+    
+    
+    if ([[NSUserDefaults standardUserDefaults]objectForKey:@"userId"]) {
+//        self.ymData = (YMTextData *)[_tableDataSource objectAtIndex:indexRow];
+        
+        ShareAlert* alert = [[ShareAlert alloc]initMyAlert];
+        alert.frame = CGRectMake(0, ScreenHeight, ScreenWidth, ScreenWidth);
+        [alert setCallBackTitle:^(NSInteger index) {
+            [self shareInfo:index];
+        }];
+        [UIView animateWithDuration:0.2 animations:^{
+            [alert show];
+        }];
+        
+        
+    }else {
+        [Helper alertViewWithTitle:@"是否立即登录?" withBlockCancle:^{
+        } withBlockSure:^{
+            EnterViewController *vc = [[EnterViewController alloc] init];
+            [self.navigationController pushViewController:vc animated:YES];
+        } withBlock:^(UIAlertController *alertView) {
+            [self presentViewController:alertView animated:YES completion:nil];
+        }];
+    }
+    
+};
+
+-(void)shareInfo:(NSInteger)index{
+    
+    NSData *fiData = [[NSData alloc]init];
+    
+//    if (self.ymData.pics.count == 0) {
+//        fiData = [NSData dataWithContentsOfURL:[Helper imageUrl:self.ymData.uPic]];
+//    }else{
+//        fiData = [NSData dataWithContentsOfURL:[Helper imageUrl:self.ymData.pics[0]]];
+//    }
+    
+    NSString*  shareUrl = [NSString stringWithFormat:@"http://www.dagolfla.com:8081/dagaoerfu/html5/mood/Topic_details.html?id=%@",[self.detailDic objectForKey:@""]];
+    [UMSocialData defaultData].extConfig.title=[NSString stringWithFormat:@"来自%@的话题",[self.detailDic objectForKey:@""]];
+    if (index == 0){
+        //微信
+        [UMSocialWechatHandler setWXAppId:@"wxdcdc4e20544ed728" appSecret:@"fdc75aae5a98f2aa0f62ef8cba2b08e9" url:shareUrl];
+        [UMSocialConfig hiddenNotInstallPlatforms:@[UMShareToWechatSession,UMShareToWechatTimeline,UMShareToSina]];
+        [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatSession] content:[NSString stringWithFormat:@"来自%@的话题:%@ %@",[self.detailDic objectForKey:@""],[self.detailDic objectForKey:@""],shareUrl]  image:fiData location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
+            if (response.responseCode == UMSResponseCodeSuccess) {
+//                [self shareS:indexRow];
+            }
+        }];
+    }else if (index==1){
+        //朋友圈
+        [UMSocialWechatHandler setWXAppId:@"wxdcdc4e20544ed728" appSecret:@"fdc75aae5a98f2aa0f62ef8cba2b08e9" url:shareUrl];
+        [UMSocialConfig hiddenNotInstallPlatforms:@[UMShareToWechatSession,UMShareToWechatTimeline,UMShareToSina]];
+        [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatTimeline] content:[NSString stringWithFormat:@"来自%@的话题:%@ %@",[self.detailDic objectForKey:@""],[self.detailDic objectForKey:@""],shareUrl] image:fiData location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
+            if (response.responseCode == UMSResponseCodeSuccess) {
+//                [self shareS:indexRow];
+            }
+        }];
+    }else{
+        UMSocialData *data = [UMSocialData defaultData];
+        data.shareImage = [UIImage imageNamed:@"logo"];
+        data.shareText = [NSString stringWithFormat:@"%@%@",@"打高尔夫啦",shareUrl];
+        [[UMSocialControllerService defaultControllerService] setSocialData:data];
+        //2.设置分享平台
+        [UMSocialSnsPlatformManager getSocialPlatformWithName:UMShareToSina].snsClickHandler(self,[UMSocialControllerService defaultControllerService],YES);
+        //        [self shareS:indexRow];
+        
+        self.launchActivityTableView.frame = CGRectMake(0, 64, ScreenWidth, screenHeight - 64 - 49);
+        
+    }
+    
+}
+
+
+
 - (void)replaceWithPicture:(UIButton *)Btn{
     if (Btn.tag == 333) {
         //球场列表
@@ -181,7 +272,7 @@ static CGFloat ImageHeight  = 210.0;
         [self.navigationController popViewControllerAnimated:YES];
     }else if (btn.tag == 520){
         //分享
-
+        [self addShare];
     }else if (btn.tag == 526){
         // 球队详情
         JGTeamDeatilWKwebViewController *wkVC = [[JGTeamDeatilWKwebViewController alloc] init];

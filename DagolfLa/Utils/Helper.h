@@ -23,7 +23,7 @@
 
 + (NSURL *)imageIconUrl:(NSString *)downloadImageUrl;
 
-+ (NSURL *)setImageIconUrl:(NSNumber *)timeKey type:(NSInteger)type;
++ (NSURL *)setImageIconUrl:(NSNumber *)timeKey;
 
 //验证手机号码格式
 + (BOOL)testMobileIsTrue:(NSString *)mobile;

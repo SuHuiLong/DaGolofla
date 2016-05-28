@@ -302,7 +302,7 @@ static CGFloat ImageHeight  = 210.0;
         launchActivityCell.selectionStyle = UITableViewCellSelectionStyleNone;
         if (indexPath.row == 0) {
             launchActivityCell.promptLB.text = @"赛事活动";
-            launchActivityCell.imageV.image = [UIImage imageNamed:@"hd-1"];
+            launchActivityCell.imageV.image = [UIImage imageNamed:@"hd-2"];
         }else{
             launchActivityCell.promptLB.text = @"球队相册";
         }
