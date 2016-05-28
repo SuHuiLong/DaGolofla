@@ -102,6 +102,50 @@
 }
 
 
++ (NSURL *)setImageIconUrl:(NSString *)iconType andTeamKey:(NSNumber *)timeKey andIsSetWidth:(BOOL)isSet andIsBackGround:(BOOL)isBack
+{
+    NSString *imageStr;
+    if (isSet == 0) {
+        if (isBack == 0) {
+            if ([iconType isEqualToString:@"user"] == 1) {
+                imageStr = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/%@/head/%@.jpg",iconType,timeKey];
+            }
+            else
+            {
+                imageStr = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/%@/%@.jpg",iconType,timeKey];
+            }
+            
+        }
+        else
+        {
+            imageStr = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/%@/%@_background.jpg",iconType,timeKey];
+        }
+        
+    }
+    else
+    {
+        if (isBack == 0) {
+            if ([iconType isEqualToString:@"user"] == 1) {
+                imageStr = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/%@/head/%@.jpg@120w_120h",iconType,timeKey];
+            }
+            else
+            {
+                imageStr = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/%@/%@.jpg@120w_120h",iconType,timeKey];
+            }
+            
+        }
+        else
+        {
+            imageStr = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/%@/%@_background.jpg@120w_120h",iconType,timeKey];
+        }
+    }
+    
+    NSURL *imageUrl = [NSURL URLWithString:imageStr];
+    return imageUrl;
+
+}
+
+
 
 //手机号码格式验证
 + (BOOL)testMobileIsTrue:(NSString *)mobile {
