@@ -11,6 +11,8 @@
 #import "JGTeamInfoViewController.h" //跳转info
 #import "JGLSelfSetViewController.h" //个人设置
 #import "JGTeamActivityViewController.h" //活动
+#import "JGImageAndLabelAndLabelTableViewCell.h"
+#import "JGTeamDeatilWKwebViewController.h"// 球队详情
 
 #import "JGHLaunchActivityViewController.h"
 #import "JGTableViewCell.h"
@@ -66,7 +68,8 @@ static CGFloat ImageHeight  = 210.0;
     [super viewWillAppear:YES];
     self.navigationController.navigationBarHidden = YES;
     self.titleField.text = [self.detailDic objectForKey:@"name"];
-    
+//    [self.headPortraitBtn.imageView sd_setImageWithURL:[Helper setImageIconUrl:[self.detailDic objectForKey:@"timeKey"]] placeholderImage:[UIImage imageNamed:@"logo"]];
+    [self.headPortraitBtn sd_setImageWithURL:[Helper setImageIconUrl:[self.detailDic objectForKey:@"timeKey"]] forState:(UIControlStateNormal) placeholderImage:[UIImage imageNamed:@"logo"]];
 }
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:YES];
@@ -86,7 +89,7 @@ static CGFloat ImageHeight  = 210.0;
         self.imgProfile.userInteractionEnabled = YES;
         
         self.launchActivityTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight - 44) style:(UITableViewStylePlain)];
-        [self.launchActivityTableView registerClass:[JGLableAndLableTableViewCell class] forCellReuseIdentifier:@"lbVSlb"];
+        [self.launchActivityTableView registerClass:[JGImageAndLabelAndLabelTableViewCell class] forCellReuseIdentifier:@"lbVSlb"];
         [self.launchActivityTableView registerClass:[JGDisplayInfoTableViewCell class] forCellReuseIdentifier:@"Display"];
         
         self.launchActivityTableView.dataSource = self;
@@ -116,17 +119,27 @@ static CGFloat ImageHeight  = 210.0;
     [btn setImage:[UIImage imageNamed:@"backL"] forState:UIControlStateNormal];
     [btn addTarget:self action:@selector(initItemsBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.titleView addSubview:btn];
-    //点击更换
-    UIButton *replaceBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    replaceBtn.frame = CGRectMake(screenWidth-64, 0, 54, 44);
+    //分享
+    UIButton *replaceBtn = [UIButton buttonWithType:UIButtonTypeSystem];
+    replaceBtn.frame = CGRectMake(screenWidth - 54 * screenWidth / 320, 0, 54 * screenWidth / 320, 44 * screenWidth / 320);
     replaceBtn.titleLabel.font = [UIFont systemFontOfSize:FontSize_Normal];
-    [replaceBtn setTitle:@"分享" forState:UIControlStateNormal];
-    replaceBtn.titleLabel.font = [UIFont systemFontOfSize:13];
+    [replaceBtn setTintColor:[UIColor whiteColor]];
+    [replaceBtn setImage:[UIImage imageNamed:@"fenxiang"] forState:(UIControlStateNormal)];
+    replaceBtn.titleLabel.font = [UIFont systemFontOfSize:15 * screenWidth / 320];
     replaceBtn.tag = 520;
     [replaceBtn addTarget:self action:@selector(initItemsBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.titleView addSubview:replaceBtn];
+    // 球队详情
+    UIButton *detailBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    detailBtn.frame = CGRectMake(screenWidth- 90 * screenWidth / 320, 0, 54 * screenWidth / 320, 44 * screenWidth / 320);
+    detailBtn.titleLabel.font = [UIFont systemFontOfSize:FontSize_Normal];
+    [detailBtn setTitle:@"详情" forState:UIControlStateNormal];
+    detailBtn.titleLabel.font = [UIFont systemFontOfSize:15 * screenWidth / 320];
+    detailBtn.tag = 526;
+    [detailBtn addTarget:self action:@selector(initItemsBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    [self.titleView addSubview:detailBtn];
     //输入框
-    self.titleField = [[UILabel alloc]initWithFrame:CGRectMake(64, 7, screenWidth - 128, 30)];
+    self.titleField = [[UILabel alloc]initWithFrame:CGRectMake(64 * screenWidth / 320, 7 * screenWidth / 320, screenWidth - 128, 30 * screenWidth / 320)];
     self.titleField.textColor = [UIColor whiteColor];
     self.titleField.font = [UIFont systemFontOfSize:18 * screenWidth / 320];
     //    [self.titleField setValue:[UIColor whiteColor] forKeyPath:@"_placeholderLabel.textColor"];
@@ -134,7 +147,8 @@ static CGFloat ImageHeight  = 210.0;
     self.titleField.textAlignment = NSTextAlignmentCenter;
 //    self.titleField.font = [UIFont systemFontOfSize:15];
     //头像
-    self.headPortraitBtn = [[UIButton alloc]initWithFrame:CGRectMake(20, 150, 50, 50)];
+    self.headPortraitBtn = [[UIButton alloc]initWithFrame:CGRectMake(20 * screenWidth / 320, 150, 50, 50)];
+//    [self.headPortraitBtn.imageView sd_setImageWithURL:[Helper setImageIconUrl:[self.detailDic objectForKey:@"teamKey"]] placeholderImage:[UIImage imageNamed:@"logo"]];
     [self.headPortraitBtn setImage:[UIImage imageNamed:@"relogo"] forState:UIControlStateNormal];
     [self.headPortraitBtn addTarget:self action:@selector(replaceWithPicture:) forControlEvents:UIControlEventTouchUpInside];
     
@@ -168,6 +182,12 @@ static CGFloat ImageHeight  = 210.0;
     }else if (btn.tag == 520){
         //分享
 
+    }else if (btn.tag == 526){
+        // 球队详情
+        JGTeamDeatilWKwebViewController *wkVC = [[JGTeamDeatilWKwebViewController alloc] init];
+        wkVC.detailString = [self.detailDic objectForKey:@"details"];
+        wkVC.teamName = [self.detailDic objectForKey:@"name"];
+        [self.navigationController pushViewController:wkVC animated:YES];
     }
 }
 #pragma mark -- 邀请好友BUTTON
@@ -251,7 +271,7 @@ static CGFloat ImageHeight  = 210.0;
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 0) {
-        return ImageHeight -10;
+        return ImageHeight - 10 * screenWidth / 320;
     }else if (indexPath.section == 1){
         return [self calculationLabelHeight:[self.detailDic objectForKey:@"notice"]] + 40 * screenWidth / 320;
         
@@ -259,10 +279,10 @@ static CGFloat ImageHeight  = 210.0;
         if (self.isManager == NO) {
             return 0;
         }else{
-            return 40;
+            return 40 * screenWidth / 320;
         }
     }else{
-        return 40;
+        return 40 * screenWidth / 320;
     }
 }
 
@@ -295,21 +315,24 @@ static CGFloat ImageHeight  = 210.0;
     }else if (indexPath.section == 1){
         JGDisplayInfoTableViewCell *contactCell = [tableView dequeueReusableCellWithIdentifier:@"Display"];
         contactCell.promptLB.text = @"球队动态";
-        
+        contactCell.promptLB.textColor = [UIColor lightGrayColor];
+        contactCell.promptLB.frame = CGRectMake(10 * screenWidth / 320, 0, 100 * screenWidth / 320, 30 * screenWidth / 320);
         contactCell.contentLB.lineBreakMode = NSLineBreakByWordWrapping;
         contactCell.contentLB.text = [self.detailDic objectForKey:@"notice"];
         contactCell.contentLB.frame = CGRectMake(10, 35  * screenWidth / 320, screenWidth - 20  * screenWidth / 320, [self calculationLabelHeight:[self.detailDic objectForKey:@"notice"]]);
         return contactCell;
     }else if (indexPath.section == 2){
         
-        JGLableAndLableTableViewCell *launchActivityCell = [tableView dequeueReusableCellWithIdentifier:@"lbVSlb" forIndexPath:indexPath];
+        JGImageAndLabelAndLabelTableViewCell *launchActivityCell = [tableView dequeueReusableCellWithIdentifier:@"lbVSlb" forIndexPath:indexPath];
         launchActivityCell.selectionStyle = UITableViewCellSelectionStyleNone;
         
         switch (indexPath.row) {
             case 0:
+                launchActivityCell.imageV.image = [UIImage imageNamed:@"hd-2"];
                 launchActivityCell.promptLB.text = @"赛事活动";
                 break;
             case 1:
+                launchActivityCell.imageV.image = [UIImage imageNamed:@"qdcy"];
                 launchActivityCell.promptLB.text = @"球队成员";
 //                launchActivityCell.contentLB.text = self.detailModel.cityName;
                 break;
@@ -318,6 +341,7 @@ static CGFloat ImageHeight  = 210.0;
 ////                launchActivityCell.contentLB.text = self.detailModel.establishTime;
 //                break;
             case 2:
+                launchActivityCell.imageV.image = [UIImage imageNamed:@"qdjj"];
                 launchActivityCell.promptLB.text = @"球队简介";
 //                launchActivityCell.contentLB.text = [NSString stringWithFormat:@"%td人", self.detailModel.userSum];
                 break;
@@ -329,18 +353,20 @@ static CGFloat ImageHeight  = 210.0;
         return launchActivityCell;
         
     }else if (indexPath.section == 3){
-        JGLableAndLableTableViewCell *launchActivityCell = [tableView dequeueReusableCellWithIdentifier:@"lbVSlb" forIndexPath:indexPath];
+        JGImageAndLabelAndLabelTableViewCell *launchActivityCell = [tableView dequeueReusableCellWithIdentifier:@"lbVSlb" forIndexPath:indexPath];
         launchActivityCell.selectionStyle = UITableViewCellSelectionStyleNone;
-            launchActivityCell.promptLB.text = @"个人设置";
+        launchActivityCell.imageV.image = [UIImage imageNamed:@"sz"];
+        launchActivityCell.promptLB.text = @"个人设置";
 
         launchActivityCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         return launchActivityCell;
         
     }else{
      
-        JGLableAndLableTableViewCell *launchActivityCell = [tableView dequeueReusableCellWithIdentifier:@"lbVSlb" forIndexPath:indexPath];
+        JGImageAndLabelAndLabelTableViewCell *launchActivityCell = [tableView dequeueReusableCellWithIdentifier:@"lbVSlb" forIndexPath:indexPath];
         launchActivityCell.selectionStyle = UITableViewCellSelectionStyleNone;
             launchActivityCell.promptLB.text = @"球队管理";
+        launchActivityCell.imageV.image = [UIImage imageNamed:@"qdgl"];
         launchActivityCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         if (self.isManager == NO) {
             launchActivityCell.promptLB.text = @"";
@@ -351,36 +377,6 @@ static CGFloat ImageHeight  = 210.0;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 1) {
-        //        if (indexPath.row == 0 || indexPath.row == 1) {
-        //            //时间选择
-        //            DateTimeViewController *dataCtrl = [[DateTimeViewController alloc]init];
-        //            [dataCtrl setCallback:^(NSString *dateStr, NSString *dateWeek, NSString *str) {
-        //                if (indexPath.row == 0) {
-        //                    [self.model setValue:dateStr forKey:@"startDate"];
-        //                }else{
-        //                    [self.model setValue:dateStr forKey:@"endDate"];
-        //                }
-        //
-        //                NSIndexPath *indPath = [NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section];
-        //                [self.launchActivityTableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indPath, nil] withRowAnimation:UITableViewRowAnimationNone];
-        //            }];
-        //
-        //            [self.navigationController pushViewController:dataCtrl animated:YES];
-        //        }else{
-        //            //地区选择
-        //            TeamAreaViewController* areaVc = [[TeamAreaViewController alloc]init];
-        //            areaVc.teamType = @10;
-        //            areaVc.callBackCity = ^(NSString* strPro, NSString* strCity, NSNumber* cityId){
-        //                [self.model setValue:[NSString stringWithFormat:@"%@-%@", strPro, strCity] forKey:@"activityAddress"];
-        //                NSIndexPath *indPath = [NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section];
-        //                [self.launchActivityTableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indPath, nil] withRowAnimation:UITableViewRowAnimationNone];
-        //            };
-        //            [self.navigationController pushViewController:areaVc animated:YES];
-        //        }
-        
-        
-        
-        
     }
     else if (indexPath.section == 2){
     
@@ -424,19 +420,12 @@ static CGFloat ImageHeight  = 210.0;
                costView.teamKey = [[self.detailDic objectForKey:@"teamKey"] integerValue];
             [self.navigationController pushViewController:costView animated:YES];
         }
-        
-        /**
-         JGHConcentTextViewController *concentTextCtrl = [[JGHConcentTextViewController alloc]initWithNibName:@"JGHConcentTextViewController" bundle:nil];
-         
-         concentTextCtrl.itemText = @"内容";
-         concentTextCtrl.delegate = self;
-         concentTextCtrl.contentTextString = _model.activityInfo;
-         [self.navigationController pushViewController:concentTextCtrl animated:YES];
-         */
     }
     else
     {
         JGTeamManageViewController* tmVc = [[JGTeamManageViewController alloc]init];
+        tmVc.teamKey = [[self.detailDic objectForKey:@"teamKey"] integerValue];
+        tmVc.detailDic = self.detailDic;
         [self.navigationController pushViewController:tmVc animated:YES];
     }
     

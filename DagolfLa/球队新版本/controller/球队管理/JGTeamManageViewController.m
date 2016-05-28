@@ -11,12 +11,14 @@
 #import "JGTeamMemberController.h"
 #import "JGTeamPhotoViewController.h"
 #import "JGTeamActivityViewController.h"
+#import "JGImageAndLabelAndLabelTableViewCell.h"
 
 #import "JGLTeamEditViewController.h"
 @interface JGTeamManageViewController ()<UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic, strong)UITableView *tableView;
 @property (nonatomic, strong)NSArray *array;
+@property (nonatomic, strong)NSArray *imageArray;
 
 @end
 
@@ -32,7 +34,9 @@
       self.tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:(UITableViewStylePlain)];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
+    [self.tableView registerClass:[JGImageAndLabelAndLabelTableViewCell class] forCellReuseIdentifier:@"imageVSlabel"];
     self.array = [NSArray arrayWithObjects:@"入队审核",@[@"队员管理",@"活动管理", @"相册管理"],@"账户管理",@"球队资料编辑", nil];
+    self.imageArray = [NSArray arrayWithObjects:@"rd", @[@"dy", @"hd-2", @"xcgl"], @"zhgl", @"qdjj", nil];
     [self.view addSubview: self.tableView];
 }
 
@@ -51,15 +55,15 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
 
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
-    if (!cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:@"cell"];
-    }
+    JGImageAndLabelAndLabelTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"imageVSlabel"];
+   
     
     if (indexPath.section == 1) {
-        cell.textLabel.text = self.array[indexPath.section][indexPath.row];
+        cell.imageV.image = [UIImage imageNamed:self.imageArray[indexPath.section][indexPath.row]];
+        cell.promptLB.text = self.array[indexPath.section][indexPath.row];
     }else{
-        cell.textLabel.text = self.array[indexPath.section];
+        cell.imageV.image = [UIImage imageNamed:self.imageArray[indexPath.section]];
+        cell.promptLB.text = self.array[indexPath.section];
      }
     
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -85,6 +89,7 @@ tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexP
             {
                 //成员管理
                 JGTeamMemberController* menVc = [[JGTeamMemberController alloc]init];
+                menVc.teamKey = [NSNumber numberWithInteger:self.teamKey];
                 [self.navigationController pushViewController:menVc animated:YES];
             }
                 break;
@@ -110,6 +115,7 @@ tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexP
     }
     else{
         JGLTeamEditViewController* teVc = [[JGLTeamEditViewController alloc]init];
+        teVc.detailDic = self.detailDic;
         [self.navigationController pushViewController:teVc animated:YES];
     }
 }

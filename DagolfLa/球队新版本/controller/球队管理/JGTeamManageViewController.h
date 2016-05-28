@@ -10,4 +10,7 @@
 
 @interface JGTeamManageViewController : ViewController
 
+@property (nonatomic, assign) NSInteger teamKey;
+@property (nonatomic, strong) NSMutableDictionary *detailDic;
+
 @end

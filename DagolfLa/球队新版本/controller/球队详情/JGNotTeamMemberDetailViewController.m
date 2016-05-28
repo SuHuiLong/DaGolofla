@@ -15,6 +15,7 @@
 #import "JGHTeamActivityImageCell.h"
 #import "DateTimeViewController.h"
 #import "TeamAreaViewController.h"
+#import "JGImageAndLabelAndLabelTableViewCell.h"
 
 #import "JGTeamActibityNameViewController.h"
 #import "SXPickPhoto.h"
@@ -79,7 +80,9 @@ static CGFloat ImageHeight  = 210.0;
         self.launchActivityTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight - 44) style:(UITableViewStylePlain)];
         [self.launchActivityTableView registerClass:[JGLableAndLableTableViewCell class] forCellReuseIdentifier:@"lbVSlb"];
         [self.launchActivityTableView registerClass:[JGDisplayInfoTableViewCell class] forCellReuseIdentifier:@"Display"];
+        [self.launchActivityTableView registerClass:[JGImageAndLabelAndLabelTableViewCell class] forCellReuseIdentifier:@"iamgeVCell"];
 
+        
         self.launchActivityTableView.dataSource = self;
         self.launchActivityTableView.delegate = self;
         self.launchActivityTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -228,7 +231,7 @@ static CGFloat ImageHeight  = 210.0;
         return [self calculationLabelHeight:[self.detailDic objectForKey:@"info"]] + 40 * screenWidth / 320;
         
     }else{
-        return 44;
+        return 40 * screenWidth / 320;
     }
 }
 
@@ -261,7 +264,7 @@ static CGFloat ImageHeight  = 210.0;
     }else if (indexPath.section == 3){
         JGDisplayInfoTableViewCell *contactCell = [tableView dequeueReusableCellWithIdentifier:@"Display"];
         contactCell.promptLB.text = @"球队简介";
-
+        contactCell.promptLB.frame = CGRectMake(10 * screenWidth / 320, 0, 100 * screenWidth / 320, 30 * screenWidth / 320);
         contactCell.contentLB.lineBreakMode = NSLineBreakByWordWrapping;
         contactCell.contentLB.text = [self.detailDic objectForKey:@"info"];
         contactCell.contentLB.frame = CGRectMake(10, 35  * screenWidth / 320, screenWidth - 20  * screenWidth / 320, [self calculationLabelHeight:[self.detailDic objectForKey:@"info"]]);
@@ -295,10 +298,11 @@ static CGFloat ImageHeight  = 210.0;
         
         return launchActivityCell;
     }else{
-        JGLableAndLableTableViewCell *launchActivityCell = [tableView dequeueReusableCellWithIdentifier:@"lbVSlb" forIndexPath:indexPath];
+        JGImageAndLabelAndLabelTableViewCell *launchActivityCell = [tableView dequeueReusableCellWithIdentifier:@"iamgeVCell" forIndexPath:indexPath];
         launchActivityCell.selectionStyle = UITableViewCellSelectionStyleNone;
         if (indexPath.row == 0) {
             launchActivityCell.promptLB.text = @"赛事活动";
+            launchActivityCell.imageV.image = [UIImage imageNamed:@"hd-1"];
         }else{
             launchActivityCell.promptLB.text = @"球队相册";
         }

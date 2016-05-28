@@ -12,5 +12,5 @@
 
 @property (nonatomic, strong)UILabel *promptLB; // 提示label
 @property (nonatomic, strong)UILabel *contentLB; // 内容label
-
+@property (nonatomic, strong)UIImageView *imageV; // 
 @end
