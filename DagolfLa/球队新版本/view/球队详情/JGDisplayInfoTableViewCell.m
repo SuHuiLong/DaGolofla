@@ -13,8 +13,12 @@
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
+
+        self.imageV = [[UIImageView alloc] initWithFrame:CGRectMake(10, 5, 20, 20)];
+//        self.imageV.backgroundColor = [UIColor orangeColor];
+        [self addSubview:self.imageV];
         
-        self.promptLB = [[UILabel alloc] initWithFrame:CGRectMake(10 * screenWidth / 320, 0, 100 * screenWidth / 320, 30 * screenWidth / 320)];
+        self.promptLB = [[UILabel alloc] initWithFrame:CGRectMake(40 * screenWidth / 320, 0, 100 * screenWidth / 320, 30 * screenWidth / 320)];
         self.promptLB.font = [UIFont systemFontOfSize:15  * screenWidth / 320];
         [self.contentView addSubview:self.promptLB];
         

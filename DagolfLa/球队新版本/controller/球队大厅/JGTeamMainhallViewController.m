@@ -344,16 +344,38 @@
                 detailVC.detailDic = self.modelArray[indexPath.row];
             }
             [self.navigationController pushViewController:detailVC animated:YES];
-        }else{
-            if ([[data objectForKey:@"teamMember"] objectForKey:@"identity"] == 0){
+        }else{            
+            
+            if ([[[data objectForKey:@"teamMember"] objectForKey:@"power"] containsString:@"1005"]){
                 JGTeamMemberORManagerViewController *detailVC = [[JGTeamMemberORManagerViewController alloc] init];
-                detailVC.detailDic = [data objectForKey:@"team"];
-                 [self.navigationController pushViewController:detailVC animated:YES];
+                if (self.searchController.active) {
+                    detailVC.detailDic = self.searchArray[indexPath.row];
+                }else{
+                    detailVC.detailDic = self.modelArray[indexPath.row];
+                }
+                detailVC.isManager = YES;
+                [self.navigationController pushViewController:detailVC animated:YES];
             }else{
                 JGTeamMemberORManagerViewController *detailVC = [[JGTeamMemberORManagerViewController alloc] init];
-                detailVC.detailDic = [data objectForKey:@"team"];
+                if (self.searchController.active) {
+                    detailVC.detailDic = self.searchArray[indexPath.row];
+                }else{
+                    detailVC.detailDic = self.modelArray[indexPath.row];
+                }
+                detailVC.isManager = NO;
                 [self.navigationController pushViewController:detailVC animated:YES];
             }
+            
+//            if ([[data objectForKey:@"teamMember"] objectForKey:@"identity"] == 0){
+//                
+//                JGTeamMemberORManagerViewController *detailVC = [[JGTeamMemberORManagerViewController alloc] init];
+//                detailVC.detailDic = [data objectForKey:@"team"];
+//                 [self.navigationController pushViewController:detailVC animated:YES];
+//            }else{
+//                JGTeamMemberORManagerViewController *detailVC = [[JGTeamMemberORManagerViewController alloc] init];
+//                detailVC.detailDic = [data objectForKey:@"team"];
+//                [self.navigationController pushViewController:detailVC animated:YES];
+//            }
         }
     }];
     

@@ -315,7 +315,8 @@ static CGFloat ImageHeight  = 210.0;
     }else if (indexPath.section == 3){
         JGDisplayInfoTableViewCell *contactCell = [tableView dequeueReusableCellWithIdentifier:@"Display"];
         contactCell.promptLB.text = @"球队简介";
-        
+        contactCell.promptLB.frame = CGRectMake(10 * screenWidth / 320, 0, 100 * screenWidth / 320, 30 * screenWidth / 320);
+
         contactCell.contentLB.lineBreakMode = NSLineBreakByWordWrapping;
         contactCell.contentLB.text = [self.detailDic objectForKey:@"info"];
         contactCell.contentLB.frame = CGRectMake(10, 35  * screenWidth / 320, screenWidth - 20  * screenWidth / 320, [self calculationLabelHeight:[self.detailDic objectForKey:@"info"]]);

@@ -861,6 +861,8 @@
 		F50B7FB01CE59C8F0065069D /* JGTeamDetailStyleTwoView.m in Sources */ = {isa = PBXBuildFile; fileRef = F50B7FAF1CE59C8F0065069D /* JGTeamDetailStyleTwoView.m */; };
 		F50B7FB31CE59E050065069D /* JGTeamDetailStylelTwoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F50B7FB21CE59E050065069D /* JGTeamDetailStylelTwoViewController.m */; };
 		F50B7FB71CE5DBB70065069D /* JGTeamMainhallViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F50B7FB61CE5DBB70065069D /* JGTeamMainhallViewController.m */; };
+		F50EFF331CF9609100F7AB3F /* JGImageAndLabelAndLabelTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F50EFF321CF9609100F7AB3F /* JGImageAndLabelAndLabelTableViewCell.m */; };
+		F50EFF361CF9762C00F7AB3F /* JGTeamDeatilWKwebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F50EFF351CF9762C00F7AB3F /* JGTeamDeatilWKwebViewController.m */; };
 		F52A49E51C969F79002A4973 /* ScreenTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F52A49E41C969F79002A4973 /* ScreenTableViewCell.m */; };
 		F5321AEA1CE449C400CAE1EF /* JGCreateTeamView.m in Sources */ = {isa = PBXBuildFile; fileRef = F5321AE91CE449C400CAE1EF /* JGCreateTeamView.m */; };
 		F543ACB81CF3F89400C6B111 /* JGButtonTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F543ACB71CF3F89400C6B111 /* JGButtonTableViewCell.m */; };
@@ -2320,6 +2322,10 @@
 		F50B7FB21CE59E050065069D /* JGTeamDetailStylelTwoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGTeamDetailStylelTwoViewController.m; sourceTree = "<group>"; };
 		F50B7FB51CE5DBB70065069D /* JGTeamMainhallViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGTeamMainhallViewController.h; sourceTree = "<group>"; };
 		F50B7FB61CE5DBB70065069D /* JGTeamMainhallViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGTeamMainhallViewController.m; sourceTree = "<group>"; };
+		F50EFF311CF9609100F7AB3F /* JGImageAndLabelAndLabelTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGImageAndLabelAndLabelTableViewCell.h; sourceTree = "<group>"; };
+		F50EFF321CF9609100F7AB3F /* JGImageAndLabelAndLabelTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGImageAndLabelAndLabelTableViewCell.m; sourceTree = "<group>"; };
+		F50EFF341CF9762C00F7AB3F /* JGTeamDeatilWKwebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGTeamDeatilWKwebViewController.h; sourceTree = "<group>"; };
+		F50EFF351CF9762C00F7AB3F /* JGTeamDeatilWKwebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGTeamDeatilWKwebViewController.m; sourceTree = "<group>"; };
 		F52A49E31C969F79002A4973 /* ScreenTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScreenTableViewCell.h; sourceTree = "<group>"; };
 		F52A49E41C969F79002A4973 /* ScreenTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScreenTableViewCell.m; sourceTree = "<group>"; };
 		F5321AE51CE4499600CAE1EF /* JGCreateTeamViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGCreateTeamViewController.h; sourceTree = "<group>"; };
@@ -5762,6 +5768,8 @@
 				F55597241CF53FF900F33099 /* JGTeamMemberORManagerViewController.m */,
 				F55597261CF6DB0F00F33099 /* JGTeamInfoViewController.h */,
 				F55597271CF6DB0F00F33099 /* JGTeamInfoViewController.m */,
+				F50EFF341CF9762C00F7AB3F /* JGTeamDeatilWKwebViewController.h */,
+				F50EFF351CF9762C00F7AB3F /* JGTeamDeatilWKwebViewController.m */,
 			);
 			path = "球队详情";
 			sourceTree = "<group>";
@@ -5872,6 +5880,8 @@
 				F50B7FAF1CE59C8F0065069D /* JGTeamDetailStyleTwoView.m */,
 				F543ACC21CF4269D00C6B111 /* JGLableAndLableTableViewCell.h */,
 				F543ACC31CF4269D00C6B111 /* JGLableAndLableTableViewCell.m */,
+				F50EFF311CF9609100F7AB3F /* JGImageAndLabelAndLabelTableViewCell.h */,
+				F50EFF321CF9609100F7AB3F /* JGImageAndLabelAndLabelTableViewCell.m */,
 				F543ACC51CF42E1200C6B111 /* JGDisplayInfoTableViewCell.h */,
 				F543ACC61CF42E1200C6B111 /* JGDisplayInfoTableViewCell.m */,
 			);
@@ -6520,6 +6530,7 @@
 				36BFFFFC1BC770C4005B3CE2 /* ChartCell.m in Sources */,
 				828A99F21CE32E9300AF9860 /* JGMenberTableViewCell.m in Sources */,
 				36BF015F1BC77611005B3CE2 /* XuanshangSearchController.m in Sources */,
+				F50EFF361CF9762C00F7AB3F /* JGTeamDeatilWKwebViewController.m in Sources */,
 				3660E19C1BFC573C0033B4D7 /* MineTeamActiveCell.m in Sources */,
 				36E301021C3FF410005C3F08 /* MJDIYBackFooter.m in Sources */,
 				65B596F01CAD43AC007AB83A /* WXViewController.m in Sources */,
@@ -6568,6 +6579,7 @@
 				36CFDBA31BCE3D5100301269 /* TKAddressModel.m in Sources */,
 				369F7D211CB636C3000BC13D /* MeDetailTableViewCell.m in Sources */,
 				3660E1211BFC553A0033B4D7 /* TeamCreateViewController.m in Sources */,
+				F50EFF331CF9609100F7AB3F /* JGImageAndLabelAndLabelTableViewCell.m in Sources */,
 				36BFFF7C1BC76D09005B3CE2 /* UIButton+WebCache.m in Sources */,
 				36DF09B21C03EFFB007A8A4E /* TeamLogoHeadCell.m in Sources */,
 				36BFFF831BC76D09005B3CE2 /* HorButtonSet.m in Sources */,

@@ -10,4 +10,5 @@
 
 @interface JGLTeamEditViewController : ViewController
 @property (nonatomic, retain) UIImageView *imgProfile;
+@property (nonatomic, strong) NSMutableDictionary *detailDic;
 @end
