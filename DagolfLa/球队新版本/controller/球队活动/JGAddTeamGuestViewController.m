@@ -79,14 +79,21 @@
         return;
     }
     
+//    NSUserDefaults *userDef = [NSUserDefaults standardUserDefaults];
     NSMutableDictionary *applyDict = [NSMutableDictionary dictionary];
     [applyDict setObject:@"192" forKey:@"teamKey"];//球队key
     [applyDict setObject:@"206" forKey:@"activityKey"];//球队活动id
-    [applyDict setObject:@244 forKey:@"userKey"];//报名用户key , 没有则是嘉宾
+//    [applyDict setObject:[userDef objectForKey:userID] forKey:@"userKey"];//报名用户key , 没有则是嘉宾
     [applyDict setObject:[NSString stringWithFormat:@"%ld", (long)_isPlays] forKey:@"type"];//"是否是球队成员 0: 不是  1：是
+    if (_isPlays == 0) {
+        //嘉宾
+        [applyDict setObject:[NSString stringWithFormat:@"%ld", self.memberPrice] forKey:@"payMoney"];//实际付款金额
+    }else{
+        //队员
+        [applyDict setObject:[NSString stringWithFormat:@"%ld", self.guestPrice] forKey:@"payMoney"];//实际付款金额
+    }
     
     [applyDict setObject:@0 forKey:@"userKey"];//报名用户key , 没有则是嘉宾
-//    [applyDict setObject:@0 forKey:@"type"];
     
     [applyDict setObject:_nameText.text forKey:@"name"];//姓名
     if (_photoNumber.text.length>0) {
@@ -101,8 +108,8 @@
     [applyDict setObject:[NSString stringWithFormat:@"%ld", (long)self.sex] forKey:@"sex"];//性别 0: 女 1: 男
     //        [dict setObject:@"192" forKey:@"groupIndex"];//组的索引   每组4 人
     //        [dict setObject:@"192" forKey:@"sortIndex"];//排序索引号
-    //        [dict setObject:@"192" forKey:@"payMoney"];//实际付款金额
-    //        [dict setObject:@"192" forKey:@"payTime"];//实际付款时间
+    
+//            [dict setObject:@"192" forKey:@"payTime"];//实际付款时间
     //        [dict setObject:@"192" forKey:@"subsidyPrice"];//补贴价
     //        [dict setObject:@"3500" forKey:@"money"];//报名费
 //    [self.guextDict setObject:@"2016-06-11 10:00:00" forKey:@"createTime"];//报名时间

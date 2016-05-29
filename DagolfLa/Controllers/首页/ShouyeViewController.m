@@ -19,6 +19,9 @@
 #import "JGLNewShopDetailViewController.h"
 
 #define WebViewNav_TintColor ([UIColor orangeColor])
+
+#define ShouYe @"http://res.dagolfla.com/web/html/index.html"
+
 @interface ShouyeViewController ()<UIApplicationDelegate,CLLocationManagerDelegate,WKNavigationDelegate,WKUIDelegate>
 
 @property (strong, nonatomic) CLLocationManager* locationManager;
@@ -158,9 +161,7 @@
     self.webView.UIDelegate = self;
     self.webView.navigationDelegate = self;
     self.webView.allowsBackForwardNavigationGestures =YES;
-    [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"http://imgcache.dagolfla.com/html/index.html"]]];
-    
-
+    [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:ShouYe]]];
 }
 
 

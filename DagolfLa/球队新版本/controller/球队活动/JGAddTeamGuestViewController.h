@@ -42,4 +42,10 @@
 
 //@property (nonatomic, strong) NSMutableArray *guestArray;//成员数组集合
 
+//嘉宾费用
+@property (nonatomic, assign)NSInteger guestPrice;
+
+//球队队员费用
+@property (nonatomic, assign)NSInteger memberPrice;
+
 @end
