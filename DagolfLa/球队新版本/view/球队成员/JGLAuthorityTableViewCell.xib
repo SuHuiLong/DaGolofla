@@ -16,9 +16,9 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="活动管理" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dd9-if-8wf">
-                        <rect key="frame" x="30" y="11" width="71" height="21"/>
+                        <rect key="frame" x="30" y="11" width="121" height="21"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="71" id="DEe-Mz-PnM"/>
+                            <constraint firstAttribute="width" constant="121" id="DEe-Mz-PnM"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -46,7 +46,7 @@
                     <constraint firstItem="Dd9-if-8wf" firstAttribute="baseline" secondItem="KtU-4S-quU" secondAttribute="baseline" id="bQN-Rr-0Jv"/>
                     <constraint firstItem="Dd9-if-8wf" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="ktm-aw-lb5"/>
                     <constraint firstItem="7rn-rE-r7O" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="oB3-rY-3L5"/>
-                    <constraint firstItem="KtU-4S-quU" firstAttribute="leading" secondItem="Dd9-if-8wf" secondAttribute="trailing" constant="2" id="t6f-K8-aVV"/>
+                    <constraint firstItem="KtU-4S-quU" firstAttribute="leading" secondItem="Dd9-if-8wf" secondAttribute="trailing" constant="-48" id="t6f-K8-aVV"/>
                     <constraint firstItem="Dd9-if-8wf" firstAttribute="top" secondItem="KtU-4S-quU" secondAttribute="top" id="w7S-2g-0z7"/>
                 </constraints>
             </tableViewCellContentView>
@@ -55,7 +55,7 @@
                 <outlet property="iconImgv" destination="7rn-rE-r7O" id="Tpj-1k-n8p"/>
                 <outlet property="titleLabel" destination="Dd9-if-8wf" id="ajI-zw-BU8"/>
             </connections>
-            <point key="canvasLocation" x="280.5" y="274"/>
+            <point key="canvasLocation" x="390.5" y="259"/>
         </tableViewCell>
     </objects>
     <resources>

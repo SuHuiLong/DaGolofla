@@ -10,4 +10,7 @@
 
 @interface JGLJoinManageViewController : ViewController
 
+@property (strong, nonatomic) NSNumber* teamKey;
+
+
 @end
