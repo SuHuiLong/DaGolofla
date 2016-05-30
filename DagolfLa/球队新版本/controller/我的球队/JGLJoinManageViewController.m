@@ -70,7 +70,7 @@
                 [_dataArray removeAllObjects];
             }
             //数据解析
-            for (NSDictionary *dataDic in [data objectForKey:@"teamMember"]) {
+            for (NSDictionary *dataDic in [data objectForKey:@"teamMemberList"]) {
                 JGLTeamMemberModel *model = [[JGLTeamMemberModel alloc] init];
                 [model setValuesForKeysWithDictionary:dataDic];
                 [_dataArray addObject:model];

@@ -17,6 +17,7 @@
 @property (nonatomic, strong)UILabel *adressLabel;
 @property (nonatomic, strong)UILabel *describLabel;
 @property (nonatomic, strong)JGTeamDetail *teamModel;
+@property (nonatomic, strong)UILabel *stateLabel;
 
 -(void)showData:(JGLMyTeamModel *)model;
 

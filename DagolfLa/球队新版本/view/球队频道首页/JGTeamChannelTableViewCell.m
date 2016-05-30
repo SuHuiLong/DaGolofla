@@ -43,6 +43,14 @@
         UIView *lightGrayView = [[UIView alloc] initWithFrame:CGRectMake(0, 80 * screenWidth / 320, screenWidth, 3 * screenWidth / 320)];
         lightGrayView.backgroundColor = [UIColor colorWithRed:0.94 green:0.94 blue:0.94 alpha:1];
         [self.contentView addSubview:lightGrayView];
+    
+        self.stateLabel = [[UILabel alloc] initWithFrame:CGRectMake(screenWidth - 80* screenWidth / 320 , 0, 75 * screenWidth / 320, 30)];
+//        self.stateLabel.text = @"";
+        self.stateLabel.font = [UIFont systemFontOfSize:13 * screenWidth / 320];
+        self.stateLabel.textColor = [UIColor blueColor];
+        self.stateLabel.textAlignment = NSTextAlignmentRight;
+        [self.contentView addSubview:self.stateLabel];
+//        self.stateLabel.backgroundColor = [UIColor orangeColor];
     }
     
     return self;
@@ -61,6 +69,13 @@
     self.nameLabel.text = [NSString stringWithFormat:@"%@(%@人)",model.name,model.userSum];
     self.adressLabel.text = model.crtyName;
     self.describLabel.text = model.info;
+    if ([model.state integerValue] == 0) {
+        self.stateLabel.text = @"正在审核";
+    }else if ([model.state integerValue] == 2){
+        self.stateLabel.text = @"审核未通过";
+    }else{
+        self.stateLabel.text = @"";
+    }
 }
 
 - (void)awakeFromNib {
