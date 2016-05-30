@@ -56,7 +56,7 @@
 -(void)showData:(JGLTeamMemberModel *)model
 {
     
-    [_iconImgv sd_setImageWithURL:[Helper setImageIconUrl:model.timeKey] placeholderImage:[UIImage imageNamed:@"logo"]];
+    [_iconImgv sd_setImageWithURL:[Helper setImageIconUrl:[model.timeKey integerValue]] placeholderImage:[UIImage imageNamed:@"logo"]];
     
     _nameLabel.text = [NSString stringWithFormat:@"%@",model.userName];
     
@@ -85,7 +85,7 @@
         [_sexImgv setImage: [UIImage imageNamed:@"xb_nn"]];
     }
     
-    _almostLabel.text = [NSString stringWithFormat:@"%ld", model.almost];
+    _almostLabel.text = [NSString stringWithFormat:@"%td", model.almost];
     
     _poleLabel.text = [NSString stringWithFormat:@"%@",model.mobile];
 

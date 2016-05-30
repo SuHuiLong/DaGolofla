@@ -227,7 +227,7 @@ static CGFloat ImageHeight  = 210.0;
 //        fiData = [NSData dataWithContentsOfURL:[Helper imageUrl:self.ymData.pics[0]]];
 //    }
     
-    NSString*  shareUrl = [NSString stringWithFormat:@"http://192.168.1.104:8888/imgcache.dagolfla.com/share/team/team.html?key=%@",[self.detailDic objectForKey:@"teamKey"]];
+    NSString*  shareUrl = [NSString stringWithFormat:@"http://192.168.1.104:8888/imgcache.dagolfla.com/share/team/team.html?key=%@",[self.detailDic objectForKey:@"timeKey"]];
     [UMSocialData defaultData].extConfig.title=[NSString stringWithFormat:@"来自%@的球队",[self.detailDic objectForKey:@"name"]];
     if (index == 0){
         //微信
@@ -487,7 +487,7 @@ static CGFloat ImageHeight  = 210.0;
             case 1:
             {
                 JGTeamMemberController* tmVc = [[JGTeamMemberController alloc]init];
-                tmVc.teamKey = [_detailDic objectForKey:@"teamKey"];
+                tmVc.teamKey = [_detailDic objectForKey:@"timeKey"];
                 [self.navigationController pushViewController:tmVc animated:YES];
             }
                 break;
@@ -513,14 +513,14 @@ static CGFloat ImageHeight  = 210.0;
     else if (indexPath.section == 3){
         if (indexPath.row == 0) {
             JGLSelfSetViewController *costView = [[JGLSelfSetViewController alloc]init];
-               costView.teamKey = [[self.detailDic objectForKey:@"teamKey"] integerValue];
+               costView.teamKey = [[self.detailDic objectForKey:@"timeKey"] integerValue];
             [self.navigationController pushViewController:costView animated:YES];
         }
     }
     else
     {
         JGTeamManageViewController* tmVc = [[JGTeamManageViewController alloc]init];
-        tmVc.teamKey = [[self.detailDic objectForKey:@"teamKey"] integerValue];
+        tmVc.teamKey = [[self.detailDic objectForKey:@"timeKey"] integerValue];
         tmVc.detailDic = self.detailDic;
         [self.navigationController pushViewController:tmVc animated:YES];
     }

@@ -30,21 +30,15 @@
     [super viewDidLoad];
     
     _dataArray = [[NSMutableArray alloc]init];
-    UIBarButtonItem* rightBtn = [[UIBarButtonItem alloc]initWithTitle:@"保存" style:UIBarButtonItemStylePlain target:self action:@selector(manageClick)];
-    rightBtn.tintColor = [UIColor whiteColor];
-    self.navigationItem.rightBarButtonItem = rightBtn;
+//    UIBarButtonItem* rightBtn = [[UIBarButtonItem alloc]initWithTitle:@"管理" style:UIBarButtonItemStylePlain target:self action:@selector(manageClick)];
+//    rightBtn.tintColor = [UIColor whiteColor];
+//    self.navigationItem.rightBarButtonItem = rightBtn;
     
     
     [self uiConfig];
     
 }
 
-
--(void)manageClick
-{
-    JGMemManageController* menVc = [[JGMemManageController alloc]init];
-    [self.navigationController pushViewController:menVc animated:YES];
-}
 
 -(void)uiConfig
 {
@@ -135,6 +129,11 @@
     return cell;
 }
 
-
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    JGMemManageController* menVc = [[JGMemManageController alloc]init];
+    menVc.model = _dataArray[indexPath.row];
+    [self.navigationController pushViewController:menVc animated:YES];
+}
 
 @end

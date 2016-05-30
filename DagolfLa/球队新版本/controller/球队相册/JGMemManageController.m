@@ -23,7 +23,6 @@
     /**
      *  存放用户的数据
      */
-    NSMutableArray* _dataArray;
     NSMutableArray* _keyArray;
     
 }
@@ -36,13 +35,8 @@
     // Do any additional setup after loading the view.
     
     
-    _keyArray = [[NSMutableArray alloc]initWithObjects:@"A",@"B",@"C",@"D",@"E",@"F",@"G",@"H",@"I",@"J",@"K",@"L",@"M",@"N",@"O",@"P",@"Q",@"R",@"S",@"T",@"U",@"V",@"W",@"X",@"Y",@"Z",@"#", nil];
-    self.title = @"球队成员管理";
     _arrayTitle = [NSArray arrayWithObjects:@"基本信息",@"入会时间",@"权限设置", nil];
     _arrayInformation = [NSArray arrayWithObjects:@"姓名",@"性别",@"差点",@"球龄", nil];
-    
-    _dataArray = [[NSMutableArray alloc]init];
-    [_dataArray addObject:@[@"罗开叉",@"男",@"39",@"1年"]];
     
     [self uiConfig];
     
@@ -56,11 +50,30 @@
     _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, 45*7*ScreenWidth/375 + 30*ScreenWidth/375) style:UITableViewStylePlain];
     _tableView.delegate = self;
     _tableView.dataSource = self;
+//    _tableView.scrollEnabled = NO;
     [self.view addSubview:_tableView];
     [_tableView registerClass:[JGMemTitleTableViewCell class] forCellReuseIdentifier:@"JGMemTitleTableViewCell"];
     [_tableView registerClass:[JGMemHalfTableViewCell class] forCellReuseIdentifier:@"JGMemHalfTableViewCell"];
+    
+    
+#warning 暂为实现
+//    UIButton* btnDelete = [UIButton buttonWithType:UIButtonTypeCustom];
+//    btnDelete.titleLabel.font = [UIFont systemFontOfSize:15*screenWidth/375];
+//    [btnDelete setTitle:@"剔除出队" forState:UIControlStateNormal];
+//    [btnDelete setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+//    btnDelete.backgroundColor = [UIColor orangeColor];
+//    btnDelete.layer.cornerRadius = 8 *screenWidth/375;
+//    btnDelete.layer.masksToBounds = YES;
+//    btnDelete.frame = CGRectMake(10*screenWidth/375, 45*7*ScreenWidth/375 + 40*ScreenWidth/375, screenWidth-20*screenWidth/375, 44*screenWidth/375);
+//    [btnDelete addTarget:self action:@selector(deleteClick) forControlEvents:UIControlEventTouchUpInside];
+//    [self.view addSubview:btnDelete];
+    
 }
 
+//-(void)deleteClick
+//{
+//    
+//}
 
 
 
@@ -94,7 +107,7 @@
         cell.titleLabel.text = _arrayTitle[indexPath.section];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         if (indexPath.section == 1) {
-            cell.detailLabel.text = @"2015年6月15号";
+            cell.detailLabel.text = _model.createTime;
         }
         
         return cell;
@@ -103,7 +116,50 @@
     {
         JGMemHalfTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"JGMemHalfTableViewCell" forIndexPath:indexPath];
         cell.titleLabel.text = _arrayInformation[indexPath.row-1];
-        cell.detailLabel.text = _dataArray[0][indexPath.row - 1];
+        if (indexPath.section == 0) {
+            switch (indexPath.row) {
+                case 1:
+                {
+                    if (![Helper isBlankString:_model.userName]) {
+                        cell.detailLabel.text = _model.userName;
+                    }
+                    else
+                    {
+                        cell.detailLabel.text = @"暂无用户名";
+                    }
+                    
+                }
+                    break;
+                case 2:
+                {
+                    if ([_model.sex integerValue] == 1) {
+                        cell.detailLabel.text = @"男";
+                    }
+                    else if ([_model.sex integerValue] == 2)
+                    {
+                        cell.detailLabel.text = @"女";
+                    }
+                    else
+                    {
+                        cell.detailLabel.text = @"保密";
+                    }
+                }
+                    break;
+                case 3:
+                {
+                    cell.detailLabel.text = [NSString stringWithFormat:@"%@",_model.almost];
+                }
+                    break;
+                case 4:
+                {
+                    cell.detailLabel.text = [NSString stringWithFormat:@"%@",_model.ballage];
+                }
+                    break;
+                    
+                default:
+                    break;
+            }
+        }
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
     }
@@ -114,13 +170,12 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.section == 1) {
-        //跳转到日期选择的点击事件
-    }
-    else if (indexPath.section == 2)
+    if (indexPath.section == 2)
     {
         //权限设置的点击事件
         JGMemAuthorityViewController* autVc = [[JGMemAuthorityViewController alloc]init];
+        autVc.teamKey = _model.teamKey;
+        autVc.memberKey = _model.timeKey;
         [self.navigationController pushViewController:autVc animated:YES];
     }
     else
@@ -129,33 +184,19 @@
     }
 }
 
-
-
-// 右侧索引
-- (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView {
-    //  改变索引颜色
-    _tableView.sectionIndexColor = [UIColor colorWithRed:0.36f green:0.66f blue:0.31f alpha:1.00f];;
-    NSInteger number = [_dataArray count];
-    return [_keyArray subarrayWithRange:NSMakeRange(0, number)];
-}
-
-//点击索引跳转到相应位置
-- (NSInteger)tableView:(UITableView *)tableView sectionForSectionIndexTitle:(NSString *)title atIndex:(NSInteger)index
+-(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 {
-    
-    NSIndexPath *selectIndexPath = [NSIndexPath indexPathForRow:0 inSection:index + 1];
-    
-    if (![_dataArray[index] count]) {
-        
-        return 0;
-        
-    }else{
-        
-        [tableView scrollToRowAtIndexPath:selectIndexPath atScrollPosition:UITableViewScrollPositionNone animated:YES];
-        
-        return index + 1;
+    if (section == 3) {
+        return 64*screenWidth/375;
     }
+    else
+    {
+        return 0;
+    }
+
 }
+
+
 
 
 - (void)didReceiveMemoryWarning {

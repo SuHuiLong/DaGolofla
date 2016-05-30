@@ -25,6 +25,7 @@ typedef NS_ENUM(NSInteger, GestureType) {
 
 //userId
 #define userID @"userId"
+#define DEFAULF_USERID [[NSUserDefaults standardUserDefaults] objectForKey:@"userId"]
 //1001-活动，1003,1001,1004,1002,1005
 #define TeamMember @"teamMember"
 #define TeamKey @"teamKey"
