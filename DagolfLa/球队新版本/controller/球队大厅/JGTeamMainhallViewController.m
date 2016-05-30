@@ -257,7 +257,8 @@
     
         if ([self.searchArray count] != 0) {
             [cell.iconImageV sd_setImageWithURL:[Helper setImageIconUrl:[[self.searchArray[indexPath.row] objectForKey:@"timeKey"] integerValue]] placeholderImage:[UIImage imageNamed:@"logo"]];
-            cell.nameLabel.text = [self.searchArray[indexPath.row] objectForKey:@"name"];
+//            cell.nameLabel.text = [self.searchArray[indexPath.row] objectForKey:@"name"];
+            cell.nameLabel.text = [NSString stringWithFormat:@"%@ (%@人)",[self.modelArray[indexPath.row] objectForKey:@"name"],[self.searchArray[indexPath.row] objectForKey:@"userSum"]];
             cell.adressLabel.text = [self.searchArray[indexPath.row] objectForKey:@"crtyName"];
             cell.describLabel.text = [self.searchArray[indexPath.row] objectForKey:@"info"];;
         }
@@ -268,7 +269,8 @@
     }else{
         // TEST
         [cell.iconImageV sd_setImageWithURL:[Helper setImageIconUrl:[[self.modelArray[indexPath.row] objectForKey:@"timeKey"] integerValue]] placeholderImage:[UIImage imageNamed:@"logo"]];
-        cell.nameLabel.text = [self.modelArray[indexPath.row] objectForKey:@"name"];
+        
+        cell.nameLabel.text = [NSString stringWithFormat:@"%@ (%@)",[self.modelArray[indexPath.row] objectForKey:@"name"],[self.modelArray[indexPath.row] objectForKey:@"userSum"]];
         cell.adressLabel.text = [self.modelArray[indexPath.row] objectForKey:@"crtyName"];
         cell.describLabel.text = [self.modelArray[indexPath.row] objectForKey:@"info"];;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;

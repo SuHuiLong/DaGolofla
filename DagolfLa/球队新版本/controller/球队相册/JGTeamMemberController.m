@@ -131,20 +131,26 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (_isEdit) {
+    JGLTeamMemberModel *modelll = _dataArray[indexPath.row];
+    
+    if ([modelll.power containsString:@"1002"]) {
+        if (_isEdit) {
+            
+            JGLTeamMemberModel *model = _dataArray[indexPath.row];
+            NSInteger key = [model.userKey integerValue];
+            NSString *name = model.userName;
+            NSString *mobie = model.mobile;
+            self.block(key, name, mobie);
+            [self.navigationController popViewControllerAnimated:YES];
+        }else{
+            JGMemManageController* menVc = [[JGMemManageController alloc]init];
+            menVc.model = _dataArray[indexPath.row];
+            [self.navigationController pushViewController:menVc animated:YES];
+        }
         
-        JGLTeamMemberModel *model = _dataArray[indexPath.row];
-        NSInteger key = [model.userKey integerValue];
-        NSString *name = model.userName;
-        NSString *mobie = model.mobile;
-        self.block(key, name, mobie);
-        [self.navigationController popViewControllerAnimated:YES];
     }else{
-        JGMemManageController* menVc = [[JGMemManageController alloc]init];
-        menVc.model = _dataArray[indexPath.row];
-        [self.navigationController pushViewController:menVc animated:YES];
-    }
-
+        
+    }    
 }
 
 @end
