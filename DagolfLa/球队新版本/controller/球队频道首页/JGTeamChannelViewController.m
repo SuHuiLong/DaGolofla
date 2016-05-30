@@ -43,6 +43,7 @@
 @property (nonatomic, strong)NSMutableArray *buttonArray;
 
 @property (nonatomic, strong)NSMutableArray *teamArray;
+@property (nonatomic, strong)NSMutableArray *myTeamArray;
 @property (nonatomic, strong)NSMutableArray *myActivityArray;
 @property (nonatomic, strong)UILabel *titleLB;
 
@@ -184,9 +185,9 @@
         NSLog(@"%@", errType);
     } completionBlock:^(id data) {
 
-        self.teamArray =  [data[@"teamList"] mutableCopy];
+        self.myTeamArray =  [data[@"teamList"] mutableCopy];
         
-        if ([_teamArray count] != 0) {
+        if ([self.myTeamArray count] != 0) {
             self.titleLB.text = @" 近期活动";
             NSMutableDictionary *dic = [NSMutableDictionary dictionary];
             [dic setObject:@244 forKey:@"userKey"];
@@ -321,12 +322,39 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
-    return ([self.myActivityArray count] != 0 ? [self.myActivityArray count] : [self.teamArray count]);
+    
+    
+    if (([self.myTeamArray count] == 0)) {
+               return [self.teamArray count];
+    }else{
+        if ([self.myActivityArray count] == 0) {
+            return 0;
+        }else{
+            return [self.myActivityArray count];
+        }
+    }
+    
+    
+    
+    
+//    if (([self.teamArray count] != 0) || ([self.myTeamArray count] != 0)) {
+//            return [self.teamArray count] != 0 ? [self.teamArray count] : [self.myTeamArray count];
+//    }else{
+//        if ([self.myActivityArray count] == 0) {
+//            return 0;
+//        }else{
+//            return [self.myActivityArray count];
+//        }
+//    }
+    
+//    return ([self.myActivityArray count] != 0 ? [self.myActivityArray count] : [self.teamArray count]);
 }
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    if ([self.myActivityArray count] == 0) {
+  
+    
+    if (([self.myTeamArray count] == 0)) {
         JGTeamChannelTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"cell"];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.teamModel = self.teamArray[indexPath.row];
@@ -337,11 +365,14 @@
         ;
         return cell;
     }else{
-        
+            if ([self.myActivityArray count] == 0) {
+            return nil;
+        }else{
         JGTeamActivityCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"JGTeamActivityCell"];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         [cell setJGTeamActivityCellWithModel:self.myActivityArray[indexPath.row]];
         return cell;
+        }
     }
 }
 
@@ -384,6 +415,13 @@
         _teamArray = [[NSMutableArray alloc] init];
     }
     return _teamArray;
+}
+
+- (NSMutableArray *)myTeamArray{
+    if (!_myTeamArray) {
+        _myTeamArray = [[NSMutableArray alloc] init];
+    }
+    return _myTeamArray;
 }
 
 - (void)didReceiveMemoryWarning {

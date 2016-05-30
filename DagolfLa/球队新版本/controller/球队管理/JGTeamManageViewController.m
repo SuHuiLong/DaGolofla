@@ -12,9 +12,9 @@
 #import "JGTeamPhotoViewController.h"
 #import "JGTeamActivityViewController.h"
 #import "JGImageAndLabelAndLabelTableViewCell.h"
-
+#import "JGHConcentTextViewController.h"
 #import "JGLTeamEditViewController.h"
-@interface JGTeamManageViewController ()<UITableViewDelegate, UITableViewDataSource>
+@interface JGTeamManageViewController ()<UITableViewDelegate, UITableViewDataSource, JGHConcentTextViewControllerDelegate>
 
 @property (nonatomic, strong)UITableView *tableView;
 @property (nonatomic, strong)NSArray *array;
@@ -35,8 +35,8 @@
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     [self.tableView registerClass:[JGImageAndLabelAndLabelTableViewCell class] forCellReuseIdentifier:@"imageVSlabel"];
-    self.array = [NSArray arrayWithObjects:@"入队审核",@[@"队员管理",@"活动管理", @"相册管理"],@"账户管理",@"球队资料编辑", nil];
-    self.imageArray = [NSArray arrayWithObjects:@"rd", @[@"dy", @"hd-2", @"xcgl"], @"zhgl", @"qdjj", nil];
+    self.array = [NSArray arrayWithObjects:@"入队审核",@[@"队员管理",@"活动管理", @"相册管理"],@"发布公告",@"球队资料编辑", nil];
+    self.imageArray = [NSArray arrayWithObjects:@"rd", @[@"dy", @"hd-2", @"xcgl"], @"fbgg", @"qdjj", nil];
     [self.view addSubview: self.tableView];
 }
 
@@ -115,7 +115,9 @@
     }
     else if (indexPath.section == 2)
     {
-        
+        JGHConcentTextViewController *contVC = [[JGHConcentTextViewController alloc] init];
+        contVC.delegate = self;
+        [self.navigationController pushViewController:contVC animated:YES];
     }
     else{
         JGLTeamEditViewController* teVc = [[JGLTeamEditViewController alloc]init];
@@ -123,6 +125,32 @@
         [self.navigationController pushViewController:teVc animated:YES];
     }
 }
+
+- (void)didSelectSaveBtnClick:(NSString *)text{
+    
+    UIAlertController *alert=[UIAlertController alertControllerWithTitle:@"提示" message:@"发布成功" preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction *action1=[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+        [dic setObject:DEFAULF_USERID forKey:@"userKey"];
+        [dic setObject:[self.detailDic objectForKey:@"timeKey"] forKey:@"teamKey"];
+        [dic setObject:text forKey:@"notice"];
+        [[JsonHttp jsonHttp] httpRequest:@"team/updateTeam" JsonKey:nil withData:dic requestMethod:@"POST" failedBlock:^(id errType) {
+           } completionBlock:^(id data) {
+               
+//                [Helper alertViewNoHaveCancleWithTitle:@"保存成功" withBlock:^(UIAlertController *alertView) {
+//                    [self.navigationController presentViewController:alertView animated:YES completion:nil];
+//                }];
+           }];
+    
+    
+    }];
+ 
+    
+    [alert addAction:action1];
+    [self presentViewController:alert animated:YES completion:nil];
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
