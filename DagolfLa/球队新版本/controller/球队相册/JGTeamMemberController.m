@@ -133,7 +133,7 @@
 {
     JGLTeamMemberModel *modelll = _dataArray[indexPath.row];
     
-    if ([modelll.power containsString:@"1002"]) {
+    if ([self.power containsString:@"1002"]) {
         if (_isEdit) {
             
             JGLTeamMemberModel *model = _dataArray[indexPath.row];

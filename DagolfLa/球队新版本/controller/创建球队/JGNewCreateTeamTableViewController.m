@@ -228,10 +228,15 @@ static CGFloat ImageHeight  = 210.0;
                 _headerImage = (UIImage *)Data;
                 if (btn.tag == 520) {
                     self.imgProfile.image = _headerImage;
+                    
+                    [_dictPhoto setObject:[NSArray arrayWithObject:UIImageJPEGRepresentation(_headerImage, 0.7)] forKey:@"headerImage"];
+
                 }else if (btn.tag == 740){
                     [self.headPortraitBtn setImage:_headerImage forState:UIControlStateNormal];
                     self.headPortraitBtn.layer.masksToBounds = YES;
                     self.headPortraitBtn.layer.cornerRadius = 8.0;
+                    [_dictPhoto setObject:[NSArray arrayWithObject:UIImageJPEGRepresentation(_headerImage, 0.7)] forKey:@"headPortraitBtn"];
+
                 }
                 
                 [self.launchActivityTableView reloadData];

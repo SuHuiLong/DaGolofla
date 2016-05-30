@@ -94,6 +94,7 @@
                 //成员管理
                 JGTeamMemberController* menVc = [[JGTeamMemberController alloc]init];
                 menVc.title = @"队员管理";
+                menVc.power =self.power;
                 menVc.teamKey = [NSNumber numberWithInteger:self.teamKey];
                 [self.navigationController pushViewController:menVc animated:YES];
             }
