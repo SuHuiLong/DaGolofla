@@ -545,13 +545,13 @@ static CGFloat ImageHeight  = 210.0;
         NSString *sectionTitle=[self tableView:tableView titleForFooterInSection:section];
         
         UILabel *label=[[UILabel alloc] init] ;
-        label.frame=CGRectMake(10, 0, 300, 22);
+        label.frame=CGRectMake(10 * screenWidth / 320, 0, 300 * screenWidth / 320, 22 * screenWidth / 320);
         label.backgroundColor=[UIColor clearColor];
         label.textColor=[UIColor lightGrayColor];
         label.font=[UIFont systemFontOfSize:12 * screenWidth / 320];
         label.text=sectionTitle;
         
-        UIView *sectionView=[[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.bounds.size.width, 18)];
+        UIView *sectionView=[[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.bounds.size.width, 18 * screenWidth / 320)];
         [sectionView setBackgroundColor:[UIColor clearColor]];
         [sectionView addSubview:label];
         return sectionView;

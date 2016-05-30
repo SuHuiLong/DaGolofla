@@ -82,7 +82,6 @@ static CGFloat ImageHeight  = 210.0;
     [super viewWillAppear:YES];
     self.navigationController.navigationBarHidden = YES;
     self.titleField.text = [self.detailDic objectForKey:@"name"];
-
     
     [self.headPortraitBtn sd_setImageWithURL:[Helper setImageIconUrl:@"team" andTeamKey:[[self.detailDic objectForKey:@"timeKey"] integerValue] andIsSetWidth:YES andIsBackGround:NO] forState:(UIControlStateNormal) placeholderImage:[UIImage imageNamed:@"logo"]];
     self.headPortraitBtn.layer.masksToBounds = YES;
@@ -469,6 +468,7 @@ static CGFloat ImageHeight  = 210.0;
         launchActivityCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         if (self.isManager == NO) {
             launchActivityCell.promptLB.text = @"";
+            launchActivityCell.imageV.image = nil;
         }
         return launchActivityCell;
     }

@@ -207,7 +207,7 @@ static CGFloat ImageHeight  = 210.0;
                 
                 if ([data objectForKey:@"packSuccess"]) {
                     [user setObject:0 forKey:@"cacheCreatTeamDic"];
-                    //            [user removeObjectForKey:@"cacheCreatTeamDic"];
+            //  [user removeObjectForKey:@"cacheCreatTeamDic"];
                     [user synchronize];
                 }
             }];

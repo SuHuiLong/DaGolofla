@@ -386,6 +386,9 @@
         }else{
             cell.labell.text = self.titleArray[indexPath.section][indexPath.row];
             cell.textFD.placeholder = self.placeholderArray[indexPath.section][indexPath.row];
+            if (indexPath.row == 2 && indexPath.section == 0) {
+                cell.textFD.keyboardType = UIKeyboardTypePhonePad;
+            }
         }
         cell.textFD.delegate = self;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
