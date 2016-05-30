@@ -28,7 +28,7 @@ static NSString *const JGHTeamContactCellIdentifier = @"JGHTeamContactTableViewC
 static CGFloat ImageHeight  = 210.0;
 
 
-@interface JGNewCreateTeamTableViewController ()<UITableViewDelegate, UITableViewDataSource, JGHTeamActivityImageCellDelegate, JGHConcentTextViewControllerDelegate, NSURLConnectionDownloadDelegate, JGCostSetViewControllerDelegate,JGHConcentTextViewControllerDelegate>
+@interface JGNewCreateTeamTableViewController ()<UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, JGHTeamActivityImageCellDelegate, JGHConcentTextViewControllerDelegate, NSURLConnectionDownloadDelegate, JGCostSetViewControllerDelegate,JGHConcentTextViewControllerDelegate>
 {
     
     NSArray *_titleArray;//标题数组
@@ -277,7 +277,6 @@ static CGFloat ImageHeight  = 210.0;
 }
 
 
-
 #pragma mark -- 预览按钮
 - (void)createPreviewBtn{
     UIButton *previewBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, screenHeight -44, screenWidth, 44)];
@@ -286,29 +285,36 @@ static CGFloat ImageHeight  = 210.0;
     [previewBtn addTarget:self action:@selector(previewBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:previewBtn];
 }
+
 #pragma mark -- 预览界面
 - (void)previewBtnClick:(UIButton *)btn{
     
+    [self.view endEditing:YES];
+    
     if (!self.titleField.text || ([self.titleField.text length] == 0)) {
+        //    if ([[self.paraDic objectForKey:@"name"] length] > 0) {
         [Helper alertViewNoHaveCancleWithTitle:@"请填写球队名称" withBlock:^(UIAlertController *alertView) {
             [self.navigationController presentViewController:alertView animated:YES completion:nil];
         }];
         return;
     }else{
-        [self.paraDic setObject:self.titleField.text forKey:@"name"];
+        [self.paraDic setObject:self.detailDic forKey:@"name"];
     }
     
     JGLableAndLableTableViewCell *cell1 = [self.launchActivityTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1]];
     [self notNil:cell1.contentLB.text SetValueForKey:@"establishTime"];
-    if (!cell1.contentLB.text || ([cell1.contentLB.text length] == 0)) {
+    //    if (!cell1.contentLB.text || ([cell1.contentLB.text length] == 0)) {
+    if ([[self.paraDic objectForKey:@"establishTime"] length] == 0) {
         [Helper alertViewNoHaveCancleWithTitle:@"请填写球队创建时间" withBlock:^(UIAlertController *alertView) {
             [self.navigationController presentViewController:alertView animated:YES completion:nil];
         }];
         return;
     }
+    
     JGLableAndLableTableViewCell *cell2 = [self.launchActivityTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:1]];
     [self notNil:cell2.contentLB.text SetValueForKey:@"crtyName"];
-    if (!cell2.contentLB.text || ([cell2.contentLB.text length] == 0)) {
+    //    if (!cell2.contentLB.text || ([cell2.contentLB.text length] == 0)) {
+    if ([[self.paraDic objectForKey:@"crtyName"] length] == 0) {
         [Helper alertViewNoHaveCancleWithTitle:@"请填写球队所在地区" withBlock:^(UIAlertController *alertView) {
             [self.navigationController presentViewController:alertView animated:YES completion:nil];
         }];
@@ -317,8 +323,8 @@ static CGFloat ImageHeight  = 210.0;
     
     JGApplyMaterialTableViewCell *cell11 = [self.launchActivityTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:3]];
     [self notNil:cell11.textFD.text SetValueForKey:@"userName"];
-    if (!cell11.textFD.text || ([cell11.textFD.text length] == 0)) {
-        //        [Helper alertViewWithTitle:@"请填写完整信息" withBlock:nil];
+    //    if (!cell11.textFD.text || ([cell11.textFD.text length] == 0)) {
+    if ([[self.paraDic objectForKey:@"userName"] length] == 0) {
         [Helper alertViewNoHaveCancleWithTitle:@"请填写真实姓名" withBlock:^(UIAlertController *alertView) {
             [self.navigationController presentViewController:alertView animated:YES completion:nil];
         }];
@@ -326,7 +332,9 @@ static CGFloat ImageHeight  = 210.0;
     }
     JGApplyMaterialTableViewCell *cell22 = [self.launchActivityTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:3]];
     [self notNil:cell22.textFD.text SetValueForKey:@"userMobile"];
-    if (!cell22.textFD.text || ([cell22.textFD.text length] == 0)) {
+    //    if (!cell22.textFD.text || ([cell22.textFD.text length] == 0)) {
+    if ([[self.paraDic objectForKey:@"userMobile"] length] == 0) {
+        
         [Helper alertViewNoHaveCancleWithTitle:@"请填写联系方式" withBlock:^(UIAlertController *alertView) {
             [self.navigationController presentViewController:alertView animated:YES completion:nil];
         }];
@@ -372,18 +380,23 @@ static CGFloat ImageHeight  = 210.0;
     [preVC.headPortraitBtn setImage:self.headPortraitBtn.imageView.image forState:(UIControlStateNormal)];
     [self.navigationController pushViewController:preVC animated:YES];
     
-    //    NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
-    //    [dic setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"userId"] forKey:@"userKey"];
-    //    [dic setObject:@(self.detailModel.timeKey) forKey:@"teamKey"];
-    //    [dic setObject:@0 forKey:@"state"];
-    //    [dic setObject:@"2016-12-11 10:00:00" forKey:@"createTime"];
-    //    [dic setObject:@0 forKey:@"timeKey"];
-    //
-    //    [[JsonHttp jsonHttp] httpRequest:@"team/reqJoinTeam" JsonKey:@"teamMemeber" withData:dic requestMethod:@"POST" failedBlock:^(id errType) {
-    //        NSLog(@"error *** %@", errType);
-    //    } completionBlock:^(id data) {
-    //        NSLog(@"%@", data);
-    //    }];
+}
+
+- (void)textFieldDidEndEditing:(UITextField *)textField{
+    
+    if (textField.text && [textField.text length] != 0) {
+        if (textField.tag == 1115) {
+            [self.detailDic setObject:textField.text forKey:@"userName"];
+        }else if (textField.tag == 1116){
+            [self.detailDic setObject:textField.text forKey:@"userMobile"];
+        }
+    }else{
+        if (textField.tag == 1115) {
+            [self.detailDic setObject:@"" forKey:@"userName"];
+        }else if (textField.tag == 1116){
+            [self.detailDic setObject:@"" forKey:@"userMobile"];
+        }
+    }
 }
 
 // 判断是否为空 然后
@@ -549,6 +562,8 @@ static CGFloat ImageHeight  = 210.0;
 }
 
 
+#pragma mark -------cellForROwAtIndexPath
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     NSString *windowReuseIdentifier = @"SectionOneCell";
     if (indexPath.section == 0) {
@@ -593,10 +608,14 @@ static CGFloat ImageHeight  = 210.0;
         if (indexPath.row == 0) {
             launchActivityCell.labell.text = @"真实姓名";
             launchActivityCell.textFD.placeholder = @"请输入真实姓名";
+            launchActivityCell.textFD.delegate = self;
+            launchActivityCell.textFD.tag = 1115;
             launchActivityCell.textFD.text = [self.detailDic objectForKey:@"userName"];
         }else{
             launchActivityCell.labell.text = @"联系方式";
             launchActivityCell.textFD.placeholder = @"请输入手机号";
+            launchActivityCell.textFD.delegate = self;
+            launchActivityCell.textFD.tag = 1116;
             launchActivityCell.textFD.text = [self.detailDic objectForKey:@"userMobile"];
             launchActivityCell.textFD.keyboardType = UIKeyboardTypePhonePad;
         }
@@ -612,9 +631,9 @@ static CGFloat ImageHeight  = 210.0;
             dataCtrl.typeIndex = @1;
             [dataCtrl setCallback:^(NSString *dateStr, NSString *dateWeek, NSString *str) {
                 
-            JGLableAndLableTableViewCell *launchActivityCell = [self.launchActivityTableView cellForRowAtIndexPath:indexPath];
-            launchActivityCell.contentLB.text = [NSString stringWithFormat:@"%@ 00:00:00", dateStr];
-                
+                JGLableAndLableTableViewCell *launchActivityCell = [self.launchActivityTableView cellForRowAtIndexPath:indexPath];
+                launchActivityCell.contentLB.text = [NSString stringWithFormat:@"%@ 00:00:00", dateStr];
+                [self.detailDic setObject:[NSString stringWithFormat:@"%@ 00:00:00", dateStr] forKey:@"establishTime"];
             }];
             
             [self.navigationController pushViewController:dataCtrl animated:YES];
@@ -624,9 +643,9 @@ static CGFloat ImageHeight  = 210.0;
             areaVc.teamType = @10;
             areaVc.callBackCity = ^(NSString* strPro, NSString* strCity, NSNumber* cityId){
                 
-            JGLableAndLableTableViewCell *launchActivityCell = [self.launchActivityTableView cellForRowAtIndexPath:indexPath];
-            launchActivityCell.contentLB.text = [NSString stringWithFormat:@"%@ %@", strPro, strCity];
-                
+                JGLableAndLableTableViewCell *launchActivityCell = [self.launchActivityTableView cellForRowAtIndexPath:indexPath];
+                launchActivityCell.contentLB.text = [NSString stringWithFormat:@"%@ %@", strPro, strCity];
+                [self.detailDic setObject:[NSString stringWithFormat:@"%@ %@", strPro, strCity] forKey:@"crtyName"];
             };
             [self.navigationController pushViewController:areaVc animated:YES];
         }
@@ -661,7 +680,12 @@ static CGFloat ImageHeight  = 210.0;
     NSLog(@"%@", connection);
 }
 
-
+- (NSMutableDictionary *)detailDic{
+    if (!_detailDic) {
+        _detailDic = [[NSMutableDictionary alloc] init];
+    }
+    return _detailDic;
+}
 
 - (NSMutableDictionary *)paraDic{
     if (!_paraDic) {

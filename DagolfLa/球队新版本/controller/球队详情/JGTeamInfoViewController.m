@@ -8,23 +8,35 @@
 
 #import "JGTeamInfoViewController.h"
 
+
 @interface JGTeamInfoViewController ()
+
+@property (nonatomic, strong) UIScrollView *scrollView;
 
 @end
 
 @implementation JGTeamInfoViewController
 
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:YES];
+    self.scrollView.contentSize = CGSizeMake(screenWidth, [self calculationLabelHeight:self.string]);
+    
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"球队简介";
-    
     
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, screenWidth - 20, [self calculationLabelHeight:self.string])];
     label.text = self.string;
     label.font = [UIFont systemFontOfSize:15 * screenWidth / 320];
     label.numberOfLines = 0;
-    [self.view addSubview:label];
     
+    self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, [self calculationLabelHeight:self.string])];
+    
+    [self.scrollView addSubview:label];
+    
+    [self.view addSubview:self.scrollView];
     
     // Do any additional setup after loading the view.
 }

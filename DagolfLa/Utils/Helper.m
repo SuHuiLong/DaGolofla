@@ -102,23 +102,23 @@
 }
 
 
-+ (NSURL *)setImageIconUrl:(NSString *)iconType andTeamKey:(NSNumber *)timeKey andIsSetWidth:(BOOL)isSet andIsBackGround:(BOOL)isBack
++ (NSURL *)setImageIconUrl:(NSString *)iconType andTeamKey:(NSInteger)timeKey andIsSetWidth:(BOOL)isSet andIsBackGround:(BOOL)isBack
 {
     NSString *imageStr;
     if (isSet == 0) {
         if (isBack == 0) {
             if ([iconType isEqualToString:@"user"] == 1) {
-                imageStr = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/%@/head/%@.jpg",iconType,timeKey];
+                imageStr = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/%@/head/%td.jpg",iconType,timeKey];
             }
             else
             {
-                imageStr = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/%@/%@.jpg",iconType,timeKey];
+                imageStr = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/%@/%td.jpg",iconType,timeKey];
             }
             
         }
         else
         {
-            imageStr = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/%@/%@_background.jpg",iconType,timeKey];
+            imageStr = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/%@/%td_background.jpg",iconType,timeKey];
         }
         
     }
@@ -126,17 +126,17 @@
     {
         if (isBack == 0) {
             if ([iconType isEqualToString:@"user"] == 1) {
-                imageStr = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/%@/head/%@.jpg@120w_120h",iconType,timeKey];
+                imageStr = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/%@/head/%td.jpg@120w_120h",iconType,timeKey];
             }
             else
             {
-                imageStr = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/%@/%@.jpg@120w_120h",iconType,timeKey];
+                imageStr = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/%@/%td.jpg@120w_120h",iconType,timeKey];
             }
             
         }
         else
         {
-            imageStr = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/%@/%@_background.jpg@120w_120h",iconType,timeKey];
+            imageStr = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/%@/%td_background.jpg@120w_120h",iconType,timeKey];
         }
     }
     
