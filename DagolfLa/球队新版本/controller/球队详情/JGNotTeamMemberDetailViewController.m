@@ -60,7 +60,9 @@ static CGFloat ImageHeight  = 210.0;
     [super viewWillAppear:YES];
     self.navigationController.navigationBarHidden = YES;
     self.titleField.text = [self.detailDic objectForKey:@"name"];
-
+    [self.headPortraitBtn sd_setImageWithURL:[Helper setImageIconUrl:@"team" andTeamKey:[[self.detailDic objectForKey:@"timeKey"] integerValue] andIsSetWidth:YES andIsBackGround:NO] forState:(UIControlStateNormal) placeholderImage:[UIImage imageNamed:@"logo"]];
+    self.headPortraitBtn.layer.masksToBounds = YES;
+    self.headPortraitBtn.layer.cornerRadius = 8.0;
 }
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:YES];
@@ -302,7 +304,7 @@ static CGFloat ImageHeight  = 210.0;
         launchActivityCell.selectionStyle = UITableViewCellSelectionStyleNone;
         if (indexPath.row == 0) {
             launchActivityCell.promptLB.text = @"赛事活动";
-            launchActivityCell.imageV.image = [UIImage imageNamed:@"hd-1"];
+            launchActivityCell.imageV.image = [UIImage imageNamed:@"hd-2"];
         }else{
             launchActivityCell.promptLB.text = @"球队相册";
         }

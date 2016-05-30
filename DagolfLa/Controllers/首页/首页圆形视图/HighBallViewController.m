@@ -37,9 +37,7 @@
 #import "Helper.h"
 
 
-//微信
-#import "WXApi.h"
-#import "payRequsestHandler.h"
+
 
 @interface HighBallViewController ()<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate>
 {
@@ -523,14 +521,14 @@
 //发布悬赏点击事件，跳转界面
 -(void)xuanshangClick
 {
-//    if ([[NSUserDefaults standardUserDefaults]objectForKey:@"userId"]) {
-//        PostRewordViewController* postVc = [[PostRewordViewController alloc]init];
-//        [self.navigationController pushViewController:postVc animated:YES];
-//        
-//    }else {
-//        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"打高尔夫啦" message:@"确定是否立即登录？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
-//        [alertView show];
-//    }
+    if ([[NSUserDefaults standardUserDefaults]objectForKey:@"userId"]) {
+        PostRewordViewController* postVc = [[PostRewordViewController alloc]init];
+        [self.navigationController pushViewController:postVc animated:YES];
+        
+    }else {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"打高尔夫啦" message:@"确定是否立即登录？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+        [alertView show];
+    }
     
     
     
@@ -549,40 +547,7 @@
     
     
     
-    NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
-    [dict setObject:@0 forKey:@"orderType"];
-    [dict setObject:@527 forKey:@"srcKey"];
-    [[JsonHttp jsonHttp]httpRequest:@"pay/doPayWeiXin" JsonKey:@"payInfo" withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
-        NSLog(@"errType == %@", errType);
-    } completionBlock:^(id data) {
-        
-        NSDictionary *dict = [data objectForKey:@"pay"];
-        //微信
-        //创建支付签名对象
-//        payRequsestHandler *req = [payRequsestHandler alloc];
-        
-        //初始化支付签名对象
-//        [req init:@"wxdcdc4e20544ed728" mch_id:[dict objectForKey:@"partnerid"]];
-        //设置秘钥
-//        [req setKey:[[data objectForKey:@"rows"] objectForKey:@"key"]];
-        
-//        NSMutableDictionary *dict1 = [req sendPay_demoPrePayid:[dict objectForKey:@"prepayid"]];
-        if (dict) {
-            PayReq *request = [[PayReq alloc] init];
-            request.openID       = [dict objectForKey:@"appid"];
-            request.partnerId    = [dict objectForKey:@"partnerid"];
-            request.prepayId     = [dict objectForKey:@"prepayid"];
-            request.package      = [dict objectForKey:@"Package"];
-            request.nonceStr     = [dict objectForKey:@"noncestr"];
-            request.timeStamp    =[[dict objectForKey:@"timestamp"] intValue];
-            request.sign         = [dict objectForKey:@"sign"];
-            
-            [WXApi sendReq:request];
-        }
-        
-        
-    }];
-  
+      
 }
 
 -(void)createBtnView

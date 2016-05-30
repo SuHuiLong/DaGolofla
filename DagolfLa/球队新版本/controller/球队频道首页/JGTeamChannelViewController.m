@@ -26,6 +26,7 @@
 #import "JGNewCreateTeamTableViewController.h"
 #import "JGTeamActivityCell.h"
 #import <CoreLocation/CLLocation.h>
+#import "EnterViewController.h"
 
 #import "HomeHeadView.h"  // topscrollView
 #import "ChangePicModel.h"
@@ -170,9 +171,13 @@
 
 - (void)setData{
     
+    
+    if ([[NSUserDefaults standardUserDefaults]objectForKey:@"userId"]) {
+
+    
     NSMutableDictionary *getMyTeam = [NSMutableDictionary dictionary];
     [getMyTeam setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"userId"] forKey:@"userKey"];
-    [getMyTeam setObject:@192 forKey:@"teamKey"];
+//    [getMyTeam setObject:@192 forKey:@"teamKey"];
     [getMyTeam setValue:@0 forKey:@"offset"];
     [[JsonHttp jsonHttp] httpRequest:@"team/getMyTeamList" JsonKey:nil withData:getMyTeam requestMethod:@"GET" failedBlock:^(id errType) {
         NSLog(@"%@", errType);
@@ -218,30 +223,19 @@
             {
                 [dic setObject:@31.156063 forKey:@"latitude"];
             }
-            [dic setValue:[user objectForKey:@"currentCity"] forKey:@"crtyName"];
+            NSString *str = [user objectForKey:@"currentCity"];
+            if (![user objectForKey:@"currentCity"]) {
+                str = @"上海";
+            }
+            [dic setValue:str forKey:@"crtyName"];
             [dic setValue:@0 forKey:@"offset"];
             [[JsonHttp jsonHttp] httpRequest:@"team/getTeamList" JsonKey:nil withData:dic requestMethod:@"GET" failedBlock:^(id errType) {
                 [Helper alertViewNoHaveCancleWithTitle:@"获取推荐球队列表失败" withBlock:^(UIAlertController *alertView) {
                     [self.navigationController presentViewController:alertView animated:YES completion:nil];
                 }];
             } completionBlock:^(id data) {
-                
-//                if (data[@"teamList"]) {
-                    self.teamArray = data[@"teamList"];
-//                }else{
-//                    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-//                    [dict setValue:@0 forKey:@"offset"];
-//                    [[JsonHttp jsonHttp] httpRequest:@"team/getTeamList" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
-//                        NSLog(@"getTeamList ***** error%@",errType);
-//                    } completionBlock:^(id data) {
-//                        
-//                        self.teamArray = data[@"teamList"];
-//                        
-//                        [self.tableView reloadData];
-//                        
-//                    }];
-//                    
-//                }
+                self.teamArray = data[@"teamList"];
+
 
                 [self.tableView reloadData];
                 
@@ -249,7 +243,15 @@
             
         }
     }];
-    
+    }else{
+        [Helper alertViewWithTitle:@"是否立即登录?" withBlockCancle:^{
+        } withBlockSure:^{
+            EnterViewController *vc = [[EnterViewController alloc] init];
+            [self.navigationController pushViewController:vc animated:YES];
+        } withBlock:^(UIAlertController *alertView) {
+            [self presentViewController:alertView animated:YES completion:nil];
+        }];
+    }
 }
 
 
@@ -335,7 +337,6 @@
         cell.describLabel.text = [self.teamArray[indexPath.row] objectForKey:@"info"];
 
         return cell;
-        
     }else{
         
         JGTeamActivityCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"JGTeamActivityCell"];
@@ -348,24 +349,19 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    if ([self.teamArray count] == 0) {
+    if ([self.myActivityArray count] == 0) {
+
+        JGNotTeamMemberDetailViewController *detailV = [[JGNotTeamMemberDetailViewController alloc] init];
+        detailV.detailDic = self.teamArray[indexPath.row];
+        
+        [self.navigationController pushViewController:detailV animated:YES];
+    }else{
         JGTeamActibityNameViewController *teamActivityVC = [[JGTeamActibityNameViewController alloc] init];
         JGTeamAcitivtyModel *model = self.myActivityArray[indexPath.row];
-        teamActivityVC.teamActivityKey = model.timeKey;
+        teamActivityVC.teamActivityKey = [model.timeKey integerValue];
+        teamActivityVC.model = model;
         [self.navigationController pushViewController:teamActivityVC animated:YES];
-        
-    }else{
-        
-//        if (indexPath.row == 0) {
-            JGNotTeamMemberDetailViewController *detailV = [[JGNotTeamMemberDetailViewController alloc] init];
-        detailV.detailDic = self.teamArray[indexPath.row];
- 
-//            detailV.detailModel = self.teamArray[indexPath.row];
-            [self.navigationController pushViewController:detailV animated:YES];
-//        }else{
-//            JGTeamDetailViewController *detailVC = [[JGTeamDetailViewController alloc] init];
-//            [self.navigationController pushViewController:detailVC animated:YES];
-//        }
+
     }
 }
 
