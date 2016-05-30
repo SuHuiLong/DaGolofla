@@ -333,7 +333,7 @@
              cell.nameLabel.text = [self.teamArray[indexPath.row] objectForKey:@"name"];
         cell.adressLabel.text = [self.teamArray[indexPath.row] objectForKey:@"crtyName"];
         cell.describLabel.text = [self.teamArray[indexPath.row] objectForKey:@"info"];
-        [cell.iconImageV sd_setImageWithURL:[Helper setImageIconUrl:[self.teamArray[indexPath.row] objectForKey:@"timeKey"]] placeholderImage:[UIImage imageNamed:@"logo"]];
+        [cell.iconImageV sd_setImageWithURL:[Helper setImageIconUrl:[[self.teamArray[indexPath.row] objectForKey:@"timeKey"] integerValue]] placeholderImage:[UIImage imageNamed:@"logo"]];
         ;
         return cell;
     }else{

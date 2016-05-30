@@ -63,6 +63,7 @@
     [dict setObject:@"1000" forKey:@"tag"];
     
 }
+
 #pragma mark -- 下载数据
 - (void)loadData{
     //获取球队活动
@@ -113,12 +114,14 @@
     UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithCustomView:btn];
     self.navigationItem.rightBarButtonItem = rightItem;
 }
+
 #pragma mark -- 发布球队活动
 - (void)launchActivityBtnClick:(UIButton *)btn{
     JGHLaunchActivityViewController * launchCtrl = [[JGHLaunchActivityViewController alloc]init];
     launchCtrl.teamKey = _timeKey;
     [self.navigationController pushViewController:launchCtrl animated:YES];
 }
+
 #pragma mark -- 创建TableView
 - (void)createTeamActivityTabelView{
     self.teamActivityTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight) style:UITableViewStyleGrouped];
