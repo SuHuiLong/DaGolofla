@@ -37,6 +37,9 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
 @interface JGTeamApplyViewController ()<JGApplyPepoleCellDelegate, JGHApplyListCellDelegate, JGAddTeamGuestViewControllerDelegate, JGHAddInvoiceViewControllerDelegate>
 {
     UIAlertController *_actionView;
+    NSInteger _i;
+    NSInteger _y;
+    NSString *_infoKey;
 }
 
 //@property (strong, nonatomic)JGTeamAcitivtyModel *model;//数据模型
@@ -56,6 +59,8 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
 @end
 
 @implementation JGTeamApplyViewController
+
+
 
 - (UIButton *)cellClickBtn{
     if (_cellClickBtn == nil) {
@@ -78,6 +83,26 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
     self.titleArray = @[@"活动名称", @"活动地址", @"活动日期", @"活动费用", @"嘉宾费用"];
     _realPayPrice = 0;
     _subsidiesPrice = 0;
+    
+    //默认添加自己的信息
+    if (self.applyArray.count == 0) {
+        NSMutableDictionary *applyDict = [NSMutableDictionary dictionary];
+        [applyDict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:TeamKey] forKey:TeamKey];//球队key
+        [applyDict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:ActivityKey] forKey:ActivityKey];//球队活动id
+        [applyDict setObject:@1 forKey:@"type"];//"是否是球队成员 0: 不是  1：是
+        
+        [applyDict setObject:[NSString stringWithFormat:@"%ld", (long)_modelss.memberPrice] forKey:@"payMoney"];//实际付款金额
+        
+        [applyDict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:userID] forKey:@"userKey"];//报名用户key , 没有则是嘉宾
+        
+        [applyDict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"userName"] forKey:@"name"];//姓名
+        [applyDict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"mobile"] forKey:@"mobile"];//手机号
+        [applyDict setObject:@"1" forKey:@"isOnlinePay"];//是否线上付款 1-线上
+        [applyDict setObject:@0 forKey:@"signUpInfoKey"];//报名信息的timeKey
+        [applyDict setObject:@0 forKey:@"timeKey"];//timeKey
+        [applyDict setObject:@"1" forKey:@"select"];//付款勾选默认勾
+        [self.applyArray addObject:applyDict];
+    }
     //注册cell
     UINib *activityNameNib = [UINib nibWithNibName:@"JGActivityBaseInfoCell" bundle: [NSBundle mainBundle]];
     [self.teamApplyTableView registerNib:activityNameNib forCellReuseIdentifier:JGActivityBaseInfoCellIdentifier];
@@ -133,23 +158,22 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
         if (indexPath.row == self.applyArray.count){
             JGHTotalPriceCell *totalPriceCell = [tableView dequeueReusableCellWithIdentifier:JGHTotalPriceCellIdentifier forIndexPath:indexPath];
             totalPriceCell.selectionStyle = UITableViewCellSelectionStyleNone;
-            static int i = 0;
-            static int y = 0;
+            
             for (NSDictionary *dict in _applyArray) {
                 if ([[dict objectForKey:@"select"]integerValue] == 1) {
-                    if ([[dict objectForKey:@"isOnlinePay"]integerValue] == 1) {
-                        i += 1;
+                    if ([[dict objectForKey:@"type"]integerValue] == 1) {
+                        _i += 1;
                     }else{
-                        y += 1;
+                        _y += 1;
                     }
                 }
             }
             
-            _realPayPrice = _modelss.memberPrice * i + _modelss.guestPrice * y;
-            _subsidiesPrice = _modelss.subsidyPrice * i;
+            _realPayPrice = _modelss.memberPrice * _i + _modelss.guestPrice * _y;
+            _subsidiesPrice = _modelss.subsidyPrice * _i;
             
-            i = 0;
-            y = 0;
+//            i = 0;
+//            y = 0;
             [totalPriceCell configTotalPrice:_realPayPrice];
             return totalPriceCell;
         }else if (indexPath.row == self.applyArray.count+1){
@@ -203,23 +227,19 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
         }else{
             activityNameCell.selectionStyle = UITableViewCellSelectionStyleNone;
             [activityNameCell congiftitles:@"实付金额："];
-            static int i = 0;
-            static int y = 0;
             for (NSDictionary *dict in _applyArray) {
                 if ([[dict objectForKey:@"select"]integerValue] == 1) {
-                    if ([[dict objectForKey:@"isOnlinePay"]integerValue] == 1) {
-                        i += 1;
+                    if ([[dict objectForKey:@"type"]integerValue] == 1) {
+                        _i += 1;
                     }else{
-                        y += 1;
+                        _y += 1;
                     }
                 }
             }
             
-            _realPayPrice = _modelss.memberPrice * i + _modelss.guestPrice * y;
-            _subsidiesPrice = _modelss.subsidyPrice * i;
-            
-            i = 0;
-            y = 0;
+            _realPayPrice = _modelss.memberPrice * _i + _modelss.guestPrice * _y;
+            _subsidiesPrice = _modelss.subsidyPrice * _i;
+
             
             [activityNameCell congifContact:[NSString stringWithFormat:@"%ld", (long)_realPayPrice] andNote:[NSString stringWithFormat:@"%ld", (long)_subsidiesPrice]];
         }
@@ -241,70 +261,12 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
     UIAlertAction * cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
     }];
     UIAlertAction *weiChatAction = [UIAlertAction actionWithTitle:@"微信支付" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        NSLog(@"微信支付");
-        NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
-        [dict setObject:@0 forKey:@"orderType"];
-        [dict setObject:@527 forKey:@"srcKey"];
-        [dict setObject:@"活动报名" forKey:@"name"];
-        [dict setObject:@"活动微信订单" forKey:@"otherInfo"];
-        if (_invoiceKey != nil) {
-            [dict setObject:_addressKey forKey:@"addressKey"];
-            [dict setObject:_invoiceKey forKey:@"invoiceKey"];
-        }
-        
-        [[JsonHttp jsonHttp]httpRequest:@"pay/doPayWeiXin" JsonKey:@"payInfo" withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
-            NSLog(@"errType == %@", errType);
-        } completionBlock:^(id data) {
-            NSDictionary *dict = [data objectForKey:@"pay"];
-            //微信
-            if (dict) {
-                PayReq *request = [[PayReq alloc] init];
-                request.openID       = [dict objectForKey:@"appid"];
-                request.partnerId    = [dict objectForKey:@"partnerid"];
-                request.prepayId     = [dict objectForKey:@"prepayid"];
-                request.package      = [dict objectForKey:@"Package"];
-                request.nonceStr     = [dict objectForKey:@"noncestr"];
-                request.timeStamp    =[[dict objectForKey:@"timestamp"] intValue];
-                request.sign         = [dict objectForKey:@"sign"];
-                
-                [WXApi sendReq:request];
-            }
-        }];
+        //添加微信支付请求
+        [self submitInfo:1];
     }];
     UIAlertAction *zhifubaoAction = [UIAlertAction actionWithTitle:@"支付宝支付" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        NSLog(@"支付宝支付");
-        NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
-        [dict setObject:@0 forKey:@"orderType"];
-        [dict setObject:@527 forKey:@"srcKey"];
-        [dict setObject:@"活动报名" forKey:@"name"];
-        [dict setObject:@"活动支付宝订单" forKey:@"otherInfo"];
-        if (_invoiceKey != nil) {
-            [dict setObject:_addressKey forKey:@"addressKey"];
-            [dict setObject:_invoiceKey forKey:@"invoiceKey"];
-        }
-        
-        [[JsonHttp jsonHttp]httpRequest:@"pay/doPayByAliPay" JsonKey:@"payInfo" withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
-            NSLog(@"errType == %@", errType);
-        } completionBlock:^(id data) {
-            NSLog(@"%@",[data objectForKey:@"query"]);
-            [[AlipaySDK defaultService] payOrder:[data objectForKey:@"query"] fromScheme:@"dagolfla" callback:^(NSDictionary *resultDic) {
-                
-                NSLog(@"支付宝=====%@",resultDic[@"resultStatus"]);
-                if ([resultDic[@"resultStatus"] isEqualToString:@"9000"]) {
-                    NSLog(@"陈公");
-                } else if ([resultDic[@"resultStatus"] isEqualToString:@"4000"]) {
-                    NSLog(@"失败");
-                } else if ([resultDic[@"resultStatus"] isEqualToString:@"6002"]) {
-                    NSLog(@"网络错误");
-                } else if ([resultDic[@"resultStatus"] isEqualToString:@"6001"]) {
-                    NSLog(@"取消支付");
-                } else {
-                    NSLog(@"支付失败");
-                }
-                [self.navigationController popViewControllerAnimated:YES];
-                [[NSNotificationCenter defaultCenter] removeObserver:self];
-            }];
-        }];
+        //添加支付宝支付请求
+        [self submitInfo:2];
     }];
     
     _actionView = [UIAlertController alertControllerWithTitle:@"选择支付方式" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
@@ -313,26 +275,26 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
     [_actionView addAction:cancelAction];
     [self presentViewController:_actionView animated:YES completion:nil];
 }
+
 #pragma mark -- 现场付款
 - (IBAction)scenePayBtnClick:(UIButton *)sender {
     NSMutableArray *array = [NSMutableArray arrayWithArray:self.applyArray];
-    
-    for (int i=0; i<self.applyArray.count; i++) {
+    [self.applyArray removeAllObjects];
+    NSInteger count = [array count];
+    for (int i=0; i<count; i++) {
         NSMutableDictionary *dict = [NSMutableDictionary dictionary];
         dict = array[i];
         if ([[dict objectForKey:@"isOnlinePay"] integerValue] == 1) {
             [dict setObject:@0 forKey:@"isOnlinePay"];//是否线上付款 1-线上
         }
         
-        [array addObject:dict];
+        [self.applyArray addObject:dict];
     }
-
-   [self.applyArray removeAllObjects];
-    self.applyArray = array;
-    [self submitInfo];
+    
+    [self submitInfo:3];
 }
 #pragma mark -- 提交报名信息
-- (void)submitInfo{
+- (void)submitInfo:(NSInteger)type{
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
 
     if ([_invoiceKey isKindOfClass:[NSNull class]]) {
@@ -349,7 +311,6 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
     
     [self.info setObject:[userdef objectForKey:userID] forKey:@"userKey"];//用户Key
     [self.info setObject:@0 forKey:@"timeKey"];//timeKey
-//    [self.info setObject:self.info forKey:@"info"];
     
     [dict setObject:_applyArray forKey:@"teamSignUpList"];//报名人员数组
     [dict setObject:_info forKey:@"info"];
@@ -357,37 +318,100 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
         NSLog(@"errType == %@", errType);
     } completionBlock:^(id data) {
         NSLog(@"data == %@", data);
-        JGTeamGroupViewController *groupCtrl = [[JGTeamGroupViewController alloc]init];
-        //本人的teamKey;如果本人报名了。返回
-        if ([data count] == 3) {
-            groupCtrl.teamKey = [[data objectForKey:@"signUpKey"] integerValue];
+        _infoKey = [data objectForKey:@"infoKey"];
+        if (type == 1) {
+            [self weChatPay];
+        }else if (type == 2){
+            [self zhifubaoPay];
         }
-        
-        [self.navigationController pushViewController:groupCtrl animated:YES];
+    }];
+}
+#pragma mark -- 微信支付
+- (void)weChatPay{
+    NSLog(@"微信支付");
+    //获取通知中心单例对象
+    NSNotificationCenter * center = [NSNotificationCenter defaultCenter];
+    //添加当前类对象为一个观察者，name和object设置为nil，表示接收一切通知
+    [center addObserver:self selector:@selector(notice:) name:@"weChatNotice" object:nil];
+    NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
+    [dict setObject:@2 forKey:@"orderType"];
+    [dict setObject:_infoKey forKey:@"srcKey"];
+    [dict setObject:@"活动报名" forKey:@"name"];
+    [dict setObject:@"活动微信订单" forKey:@"otherInfo"];
+    if (_invoiceKey != nil) {
+        [dict setObject:_addressKey forKey:@"addressKey"];
+        [dict setObject:_invoiceKey forKey:@"invoiceKey"];
+    }
+    
+    [[JsonHttp jsonHttp]httpRequest:@"pay/doPayWeiXin" JsonKey:@"payInfo" withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
+        NSLog(@"errType == %@", errType);
+    } completionBlock:^(id data) {
+        NSDictionary *dict = [data objectForKey:@"pay"];
+        //微信
+        if (dict) {
+            PayReq *request = [[PayReq alloc] init];
+            request.openID       = [dict objectForKey:@"appid"];
+            request.partnerId    = [dict objectForKey:@"partnerid"];
+            request.prepayId     = [dict objectForKey:@"prepayid"];
+            request.package      = [dict objectForKey:@"Package"];
+            request.nonceStr     = [dict objectForKey:@"noncestr"];
+            request.timeStamp    =[[dict objectForKey:@"timestamp"] intValue];
+            request.sign         = [dict objectForKey:@"sign"];
+            
+            [WXApi sendReq:request];
+        }
+    }];
+}
+#pragma mark -- 微信支付成功后返回的通知
+- (void)notice:(id)not{
+    //跳转分组页面
+    JGTeamGroupViewController *groupCtrl = [[JGTeamGroupViewController alloc]init];
+    groupCtrl.teamActivityKey = [_modelss.timeKey integerValue];
+    [self.navigationController pushViewController:groupCtrl animated:YES];
+}
+#pragma mark -- 支付宝
+- (void)zhifubaoPay{
+    NSLog(@"支付宝支付");
+    NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
+    [dict setObject:@2 forKey:@"orderType"];
+    [dict setObject:_infoKey forKey:@"srcKey"];
+    [dict setObject:@"活动报名" forKey:@"name"];
+    [dict setObject:@"活动支付宝订单" forKey:@"otherInfo"];
+    if (_invoiceKey != nil) {
+        [dict setObject:_addressKey forKey:@"addressKey"];
+        [dict setObject:_invoiceKey forKey:@"invoiceKey"];
+    }
+    
+    [[JsonHttp jsonHttp]httpRequest:@"pay/doPayByAliPay" JsonKey:@"payInfo" withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
+        NSLog(@"errType == %@", errType);
+    } completionBlock:^(id data) {
+        NSLog(@"%@",[data objectForKey:@"query"]);
+        [[AlipaySDK defaultService] payOrder:[data objectForKey:@"query"] fromScheme:@"dagolfla" callback:^(NSDictionary *resultDic) {
+            
+            //跳转分组页面
+            JGTeamGroupViewController *groupCtrl = [[JGTeamGroupViewController alloc]init];
+            groupCtrl.teamActivityKey = [_modelss.timeKey integerValue];
+            [self.navigationController pushViewController:groupCtrl animated:YES];
+            NSLog(@"支付宝=====%@",resultDic[@"resultStatus"]);
+            if ([resultDic[@"resultStatus"] isEqualToString:@"9000"]) {
+                NSLog(@"陈公");
+                
+            } else if ([resultDic[@"resultStatus"] isEqualToString:@"4000"]) {
+                NSLog(@"失败");
+            } else if ([resultDic[@"resultStatus"] isEqualToString:@"6002"]) {
+                NSLog(@"网络错误");
+            } else if ([resultDic[@"resultStatus"] isEqualToString:@"6001"]) {
+                NSLog(@"取消支付");
+            } else {
+                NSLog(@"支付失败");
+            }
+        }];
     }];
 }
 #pragma mark -- 添加嘉宾
 - (void)addApplyPeopleClick{
     JGAddTeamGuestViewController *addTeamGuestCtrl = [[JGAddTeamGuestViewController alloc]initWithNibName:@"JGAddTeamGuestViewController" bundle:nil];
     addTeamGuestCtrl.delegate = self;
-    if (self.applyArray.count == 0) {
-        NSMutableDictionary *applyDict = [NSMutableDictionary dictionary];
-        [applyDict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:TeamKey] forKey:TeamKey];//球队key
-        [applyDict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:ActivityKey] forKey:ActivityKey];//球队活动id
-        [applyDict setObject:@1 forKey:@"type"];//"是否是球队成员 0: 不是  1：是
-
-        [applyDict setObject:[NSString stringWithFormat:@"%ld", (long)_modelss.memberPrice] forKey:@"payMoney"];//实际付款金额
-        
-        [applyDict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:userID] forKey:@"userKey"];//报名用户key , 没有则是嘉宾
-        
-        [applyDict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"userName"] forKey:@"name"];//姓名
-        [applyDict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"mobile"] forKey:@"mobile"];//手机号
-        [applyDict setObject:@"1" forKey:@"isOnlinePay"];//是否线上付款 1-线上
-        [applyDict setObject:@0 forKey:@"signUpInfoKey"];//报名信息的timeKey
-        [applyDict setObject:@0 forKey:@"timeKey"];//timeKey
-        [applyDict setObject:@"1" forKey:@"select"];//付款勾选默认勾
-        [self.applyArray addObject:applyDict];
-    }
     
     addTeamGuestCtrl.applyArray = self.applyArray;
     addTeamGuestCtrl.guestPrice = self.modelss.guestPrice;
@@ -407,20 +431,24 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
     [dict setObject:@"0" forKey:@"select"];
     _realPayPrice = 0;
     _subsidiesPrice = 0;
+    _i = 0;
+    _y = 0;
     [self.applyArray replaceObjectAtIndex:btn.tag withObject:dict];
     [self.teamApplyTableView reloadData];
 }
 #pragma mark -- 删除嘉宾
 - (void)didSelectDeleteBtn:(UIButton *)btn{
     NSLog(@"%ld", (long)btn.tag);
-    
+    _i = 0;
+    _y = 0;
     [self.applyArray removeObjectAtIndex:btn.tag - 100];
     [self.teamApplyTableView reloadData];
 }
 #pragma mark -- 添加打球人页面代理－－－返回打球人数组
 - (void)addGuestListArray:(NSArray *)guestListArray{
     self.applyArray = [NSMutableArray arrayWithArray:guestListArray];
-    
+    _i = 0;
+    _y = 0;
     [self.teamApplyTableView reloadData];
 }
 #pragma mark -- 发票代理

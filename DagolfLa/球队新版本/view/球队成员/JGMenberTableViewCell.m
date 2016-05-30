@@ -74,7 +74,7 @@
 }
 
 - (void)configJGHPlayersModel:(JGHPlayersModel *)model{
-    
+    [_iconImgv sd_setImageWithURL:[Helper setImageIconUrl:@"user" andTeamKey:model.userKey andIsSetWidth:YES andIsBackGround:NO]];
     _nameLabel.text = [NSString stringWithFormat:@"%@",model.name];
     
     if (model.sex == 0) {

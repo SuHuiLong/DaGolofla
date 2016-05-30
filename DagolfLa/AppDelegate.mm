@@ -323,6 +323,7 @@
     }
     if ([resp isKindOfClass:[PayResp class]]) {
         strTitle = [NSString stringWithFormat:@"支付结果"];
+        
         switch (resp.errCode) {
             case WXSuccess:
             {
@@ -359,6 +360,11 @@
                 break;
         }
         //------------------------
+        
+        //创建一个消息对象
+        NSNotification * notice = [NSNotification notificationWithName:@"weChatNotice" object:nil userInfo:@{@"secess":@"1"}];
+        //发送消息
+        [[NSNotificationCenter defaultCenter]postNotification:notice];
     }
 }
 

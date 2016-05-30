@@ -14,10 +14,22 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
+    NSInteger _collectionHegith;
+    if (iPhone5) {
+        _collectionHegith = 200;
+    }else{
+        _collectionHegith = screenHeight/3-20;
+    }
+//    self.headImageView.frame = CGRectMake(5, 5, (screenWidth-50)/5, _collectionHegith);
+    self.headImageView.layer.masksToBounds = YES;
+    self.headImageView.layer.cornerRadius = _headImageView.frame.size.width/2;
+    
 }
 
 - (void)configJGHPlayersModel:(JGHPlayersModel *)model{
+    
     //image
+    [_headImageView sd_setImageWithURL:[Helper setImageIconUrl:@"user" andTeamKey:model.userKey andIsSetWidth:YES andIsBackGround:NO]];
 //    @property (weak, nonatomic) IBOutlet UIImageView *headImageView;
     //名字
 //    @property (weak, nonatomic) IBOutlet UILabel *name;

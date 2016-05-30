@@ -271,9 +271,6 @@ static CGFloat ImageHeight  = 210.0;
 }
 #pragma mark -- 创建报名按钮
 - (void)createApplyBtn{
-    
-    
-    
     self.headPortraitBtn.layer.masksToBounds = YES;
     self.headPortraitBtn.layer.cornerRadius = 8.0;
     
@@ -299,7 +296,7 @@ static CGFloat ImageHeight  = 210.0;
 }
 #pragma mark -- 拨打电话
 - (void)telPhotoClick:(UIButton *)btn{
-    NSMutableString * str=[[NSMutableString alloc] initWithFormat:@"telprompt://%@",@"18721110360"];
+    NSMutableString * str=[[NSMutableString alloc] initWithFormat:@"telprompt://%@", _model.userMobile];
     //            NSLog(@"str======%@",str);
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:str]];
 }
@@ -326,8 +323,8 @@ static CGFloat ImageHeight  = 210.0;
     [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
     NSString *currentTime = [formatter stringFromDate:[NSDate date]];
     [dict setObject:currentTime forKey:@"createTime"];//活动创建时间
-    [dict setObject:self.model.username forKey:@"userName"];//联系人
-    [dict setObject:self.model.usernumber forKey:@"userMobile"];//联系人
+    [dict setObject:self.model.userName forKey:@"userName"];//联系人
+    [dict setObject:self.model.userMobile forKey:@"userMobile"];//联系人
     
     if (btn.tag == 800) {
         //保存活动
@@ -341,7 +338,16 @@ static CGFloat ImageHeight  = 210.0;
         } completionBlock:^(id data) {
             NSLog(@"%@", data);
             
+            if ([[data objectForKey:@"packSuccess"] integerValue] == 0) {
+                [Helper alertViewWithTitle:[data objectForKey:@"packResultMsg"] withBlock:^(UIAlertController *alertView) {
+                    [self.navigationController presentViewController:alertView animated:YES completion:nil];
+                }];
+                
+                return ;
+            }
+            
             NSMutableArray *imageArray = [NSMutableArray array];
+            
             [imageArray addObject:UIImageJPEGRepresentation(self.model.bgImage, 0.7)];
             
             NSNumber* strTimeKey = [data objectForKey:@"timeKey"];
@@ -363,7 +369,16 @@ static CGFloat ImageHeight  = 210.0;
                 } completionBlock:^(id data) {
                     NSLog(@"data == %@", data);
                     if ([[data objectForKey:@"code"] integerValue] == 1) {
-                        [self launchActivity];
+                        //获取主线层
+                        if ([NSThread isMainThread]) {
+                            NSLog(@"Yay!");
+                            [self.navigationController popViewControllerAnimated:YES];
+                        } else {
+                            NSLog(@"Humph, switching to main");
+                            dispatch_async(dispatch_get_main_queue(), ^{
+                                [self.navigationController popToRootViewControllerAnimated:YES];
+                            });
+                        }
                     }
                 }];
             }];
@@ -372,13 +387,11 @@ static CGFloat ImageHeight  = 210.0;
 }
 #pragma mark -- 活动发布成功后
 - (void)launchActivity{
-    for (UIViewController *controller in self.navigationController.viewControllers) {
-        if ([controller isKindOfClass:[JGTeamActivityViewController class]]) {
-//            [controller setValue:@1 forKey:@"myActivityList"];
-//            [controller setValue:[NSString stringWithFormat:@"%td", self.teamKey] forKey:@"timeKey"];
-            [self.navigationController popToViewController:controller animated:YES];
-        }
-    }
+//    for (UIViewController *controller in self.navigationController.viewControllers) {
+//        if ([controller isKindOfClass:[JGTeamActivityViewController class]]) {
+//            [self.navigationController popToViewController:controller animated:YES];
+//        }
+//    }
 }
 #pragma mark -- tableView 代理
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
@@ -474,8 +487,6 @@ static CGFloat ImageHeight  = 210.0;
         return (UIView *)addressCell;
     }else if (section == 2){
         JGHHeaderLabelCell *headerCell = [tableView dequeueReusableCellWithIdentifier:JGHHeaderLabelCellIdentifier];
-        //        [headerCell congiftitles:@"参赛费用"];
-        
         return (UIView *)headerCell;
     }else if (section == 3){
         if (_isAdmin != 1) {

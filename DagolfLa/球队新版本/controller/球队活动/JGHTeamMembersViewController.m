@@ -58,7 +58,7 @@
 
 -(void)uiConfig
 {
-    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight)];
+    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight - 64)];
     _tableView.delegate = self;
     _tableView.dataSource = self;
     [self.view addSubview:_tableView];
@@ -86,10 +86,10 @@
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    NSDictionary *dataDict = [NSDictionary dictionary];
-    dataDict = [self.teamGroupAllDataArray objectAtIndex:indexPath.row];
+    JGHPlayersModel *model = [[JGHPlayersModel alloc]init];
+    model = [self.teamGroupAllDataArray objectAtIndex:indexPath.row];
     [dict setObject:[NSString stringWithFormat:@"%td", _oldSignUpKey] forKey:@"oldSignUpKey"];// 老的球队活动报名人timeKey
-    [dict setObject:[dataDict objectForKey:TeamKey] forKey:@"newSignUpKey"]; // 新的球队活动报名人timeKey
+    [dict setObject:[NSString stringWithFormat:@"%td", model.timeKey] forKey:@"newSignUpKey"]; // 新的球队活动报名人timeKey
     [dict setObject:[NSString stringWithFormat:@"%ld", (long)self.groupIndex] forKey:@"groupIndex"]; // 组号
     [dict setObject:[NSString stringWithFormat:@"%ld", (long)self.sortIndex] forKey:@"sortIndex"]; // 排序索引
     if (self.delegate) {
@@ -103,18 +103,18 @@
 //    [self updateTeamActivityGroupIndex];
 }
 
-- (void)updateTeamActivityGroupIndex{
-    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    [dict setObject:@"" forKey:@"oldSignUpKey"];//老的球队活动报名人timeKey
-    [dict setObject:@"" forKey:@"newSignUpKey"];//新的球队活动报名人timeKey
-    [dict setObject:@"" forKey:@"groupIndex"];//组号
-    [dict setObject:@"" forKey:@"sortIndex"];//排序索引
-    [[JsonHttp jsonHttp]httpRequest:@"team/updateTeamActivityGroupIndex" JsonKey:nil withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
-        NSLog(@"errType == %@", errType);
-    } completionBlock:^(id data) {
-        NSLog(@"data == %@", data);
-    }];
-}
+//- (void)updateTeamActivityGroupIndex{
+//    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+//    [dict setObject:@"" forKey:@"oldSignUpKey"];//老的球队活动报名人timeKey
+//    [dict setObject:@"" forKey:@"newSignUpKey"];//新的球队活动报名人timeKey
+//    [dict setObject:@"" forKey:@"groupIndex"];//组号
+//    [dict setObject:@"" forKey:@"sortIndex"];//排序索引
+//    [[JsonHttp jsonHttp]httpRequest:@"team/updateTeamActivityGroupIndex" JsonKey:nil withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
+//        NSLog(@"errType == %@", errType);
+//    } completionBlock:^(id data) {
+//        NSLog(@"data == %@", data);
+//    }];
+//}
 
 
 @end
