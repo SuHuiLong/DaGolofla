@@ -20,7 +20,6 @@
 #import "JGCostSetViewController.h"
 #import "BallParkViewController.h"
 
-
 static NSString *const JGTableViewCellIdentifier = @"JGTableViewCell";
 static NSString *const JGHTeamContactCellIdentifier = @"JGHTeamContactTableViewCell";
 static CGFloat ImageHeight  = 210.0;
@@ -73,7 +72,7 @@ static CGFloat ImageHeight  = 210.0;
         self.titleView = [[UIView alloc]init];
 
         _dataDict = [[NSMutableDictionary alloc]init];
-        UIImage *image = [UIImage imageNamed:@"bg"];
+        UIImage *image = [UIImage imageNamed:BGImage];
         self.imgProfile = [[UIImageView alloc] initWithImage:image];
         self.imgProfile.frame = CGRectMake(0, 0, screenWidth, ImageHeight);
         self.imgProfile.userInteractionEnabled = YES;
@@ -130,9 +129,8 @@ static CGFloat ImageHeight  = 210.0;
     self.titleField.font = [UIFont systemFontOfSize:15];
     //头像
     self.headPortraitBtn = [[UIButton alloc]initWithFrame:CGRectMake(10, 135, 65, 65)];
-    [self.headPortraitBtn setImage:[UIImage imageNamed:@"zwt"] forState:UIControlStateNormal];
+    [self.headPortraitBtn setImage:[UIImage imageNamed:HEADERRImage] forState:UIControlStateNormal];
     [self.headPortraitBtn addTarget:self action:@selector(initItemsBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-//    self.headPortraitBtn.backgroundColor = [UIColor redColor];
     self.headPortraitBtn.layer.cornerRadius = 8.0;
     self.headPortraitBtn.tag = 740;
     [self.imgProfile addSubview:self.headPortraitBtn];
@@ -190,37 +188,63 @@ static CGFloat ImageHeight  = 210.0;
 - (void)previewBtnClick:(UIButton *)btn{
     if (self.titleField.text.length == 0) {
         [self alertviewString:@"活动名称不能为空！"];
+        return;
     }
     
-    if (self.addressBtn.titleLabel.text.length == 0) {
-        [self alertviewString:@"活动地址不能为空！"];
+    if (self.model.beginDate == nil) {
+        [self alertviewString:@"活动开始时间不能为空！"];
+        return;
     }
     
-    if (self.model.maxCount <= 0) {
-        [self alertviewString:@"活动地址不能为空！"];
+    if (self.model.endDate == nil) {
+        [self alertviewString:@"活动结束时间不能为空！"];
+        return;
     }
+    
+    if (self.model.signUpEndTime == nil) {
+        [self alertviewString:@"活动报名截止时间不能为空！"];
+        return;
+    }
+    
+//    if (self.model.maxCount <= 0) {
+//        [self alertviewString:@"活动地址不能为空！"];
+//        return;
+//    }
     
     if (self.model.usernumber.length != 11) {
         [self alertviewString:@"手机号码格式不正确！"];
+        return;
     }
     
-//    [_dataDict setObject:self.titleField.text forKey:@"name"];//活动名称
-//    [_dataDict setObject:self.addressBtn.titleLabel.text forKey:@"ballName"];//地址
-//    [_dataDict setObject:[NSNumber numberWithInteger:self.model.maxCount] forKey:@"maxCount"];//人员限制
-//    [_dataDict setObject:self.model.usernumber forKey:@"userMobile"];//手机号
-//    [_dataDict setObject:self.model.username forKey:@"userName"];//联系人名称
-//    [_dataDict setObject:@"" forKey:@"beginDate"];//开始时间
-//    [_dataDict setObject:@"" forKey:@"endDate"];//活动结束时间
-//    [_dataDict setObject:@"" forKey:@"signUpEndTime"];//活动报名截止时间
-//    [_dataDict setObject:@"" forKey:@"memberPrice"];//会员价
-//    [_dataDict setObject:@"" forKey:@"guestPrice"];//嘉宾价
-//    [_dataDict setObject:self.model.info forKey:@"info"];//活动简介
-//    [_dataDict setObject:@"" forKey:@"signUpEndTime"];//活动报名截止时间
-//    [_dataDict setObject:@"" forKey:@"signUpEndTime"];//活动报名截止时间
+    if (self.model.ballName == nil) {
+        [self alertviewString:@"活动地址不能为空！"];
+        return;
+    }
+    
+    if (self.model.info == nil) {
+        [self alertviewString:@"活动说明不能为空！"];
+        return;
+    }
+    
+    if (self.model.memberPrice < 0) {
+        [self alertviewString:@"请填写活动会员价！"];
+        return;
+    }
+    
+    if (self.model.guestPrice <= 0) {
+        [self alertviewString:@"请填写活动嘉宾价！"];
+        return;
+    }
+    
+    if (self.model.username == nil) {
+        [self alertviewString:@"活动联系人不能为空！"];
+        return;
+    }
     
     JGTeamActibityNameViewController *ActivityDetailCtrl = [[JGTeamActibityNameViewController alloc]init];
     ActivityDetailCtrl.model = self.model;
     ActivityDetailCtrl.isAdmin = 1;
+    ActivityDetailCtrl.teamKey = self.teamKey;
     [self.navigationController pushViewController:ActivityDetailCtrl animated:YES];
 }
 

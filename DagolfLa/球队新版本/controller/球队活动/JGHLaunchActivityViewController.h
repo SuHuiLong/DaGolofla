@@ -12,4 +12,6 @@
 
 @property (nonatomic, retain) UIImageView *imgProfile;
 
+@property (nonatomic, assign)NSInteger teamKey;//发布活动teamkey
+
 @end

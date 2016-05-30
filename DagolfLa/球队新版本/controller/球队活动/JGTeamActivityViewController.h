@@ -10,5 +10,7 @@
 
 @interface JGTeamActivityViewController : ViewController
 
+@property (nonatomic, assign)NSInteger myActivityList;//我的球队活动传 －－ 1
+@property (nonatomic, assign)NSInteger timeKey;//球队key
 
 @end

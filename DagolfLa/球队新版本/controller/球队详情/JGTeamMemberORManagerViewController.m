@@ -88,7 +88,10 @@ static CGFloat ImageHeight  = 210.0;
     self.headPortraitBtn.layer.masksToBounds = YES;
     self.headPortraitBtn.layer.cornerRadius = 8.0;
     
+    [self.imgProfile sd_setImageWithURL:[Helper setImageIconUrl:@"team" andTeamKey:[[self.detailDic objectForKey:@"timeKey"] integerValue] andIsSetWidth:YES andIsBackGround:YES] placeholderImage:[UIImage imageNamed:@"tu2"]];
+
 }
+
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:YES];
     self.navigationController.navigationBarHidden = NO;
@@ -468,9 +471,9 @@ static CGFloat ImageHeight  = 210.0;
             launchActivityCell.promptLB.text = @"";
         }
         return launchActivityCell;
-
     }
 }
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 1) {
     }
@@ -480,6 +483,8 @@ static CGFloat ImageHeight  = 210.0;
             case 0:
             {
                 JGTeamActivityViewController *activiyVC = [[JGTeamActivityViewController alloc] init];
+                activiyVC.myActivityList = 1;
+                activiyVC.timeKey = [[self.detailDic objectForKey:@"timeKey"] integerValue];
                 [self.navigationController pushViewController:activiyVC animated:YES];
                 
             }

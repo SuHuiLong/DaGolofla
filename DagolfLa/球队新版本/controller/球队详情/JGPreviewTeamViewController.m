@@ -76,7 +76,7 @@ static CGFloat ImageHeight  = 210.0;
         UIImage *image = [UIImage imageNamed:@"bg"];
         self.imgProfile = [[UIImageView alloc] initWithImage:image];
         self.imgProfile.frame = CGRectMake(0, 0, screenWidth, ImageHeight);
-      self.imgProfile.userInteractionEnabled = YES;
+        self.imgProfile.userInteractionEnabled = YES;
         
         self.launchActivityTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight - 98) style:(UITableViewStylePlain)];
         [self.launchActivityTableView registerClass:[JGLableAndLableTableViewCell class] forCellReuseIdentifier:@"lbVSlb"];
@@ -121,7 +121,7 @@ static CGFloat ImageHeight  = 210.0;
     [self.headPortraitBtn setImage:[UIImage imageNamed:@"relogo"] forState:UIControlStateNormal];
     [self.headPortraitBtn addTarget:self action:@selector(replaceWithPicture:) forControlEvents:UIControlEventTouchUpInside];
     self.headPortraitBtn.userInteractionEnabled = NO;
-
+    
     [self.imgProfile addSubview:self.headPortraitBtn];
     [self.titleView addSubview:self.titleField];
     
@@ -175,7 +175,6 @@ static CGFloat ImageHeight  = 210.0;
         
     } completionBlock:^(id data) {
         
-        
         NSNumber* strTimeKey = [data objectForKey:@"timeKey"];
         // 上传图片
         NSMutableDictionary *dict = [NSMutableDictionary dictionary];
@@ -186,10 +185,19 @@ static CGFloat ImageHeight  = 210.0;
         [[JsonHttp jsonHttp]httpRequestImageOrVedio:@"1" withData:dict andDataArray:[_dictPhoto objectForKey:@"headPortraitBtn"] failedBlock:^(id errType) {
             NSLog(@"errType===%@", errType);
         } completionBlock:^(id data) {
+            
+            [dict setObject:[NSString stringWithFormat:@"%@_background" ,strTimeKey] forKey:@"data"];
+            [dict setObject:TYPE_TEAM_BACKGROUND forKey:@"nType"];
+            [[JsonHttp jsonHttp] httpRequestImageOrVedio:@"1" withData:dict andDataArray:[_dictPhoto objectForKey:@"headerImage"] failedBlock:^(id errType) {
+                NSLog(@"errType===%@", errType);
+            } completionBlock:^(id data) {
+                
+            }];
+            
             NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
-//
-//            NSMutableDictionary *Dic =[user objectForKey:@"cacheCreatTeamDic"];
-//            [Dic setObject:strTimeKey forKey:@"timeKey"];
+
+            //            NSMutableDictionary *Dic =[user objectForKey:@"cacheCreatTeamDic"];
+            //            [Dic setObject:strTimeKey forKey:@"timeKey"];
             [_detailDic setObject:strTimeKey forKey:@"timeKey"];
             
             
@@ -204,39 +212,30 @@ static CGFloat ImageHeight  = 210.0;
                 }
             }];
             
-
             UIAlertController *alert=[UIAlertController alertControllerWithTitle:@"提示" message:@"球队创建成功是否返回上个页面" preferredStyle:UIAlertControllerStyleAlert];
             
             UIAlertAction *action1=[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-         
+                
             }];
             UIAlertAction* action2=[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-          
-//            [self.navigationController popViewControllerAnimated:YES];
+                
                 [self.navigationController popToRootViewControllerAnimated:YES];
-  
+                
             }];
             
             [alert addAction:action1];
             [alert addAction:action2];
             [self presentViewController:alert animated:YES completion:nil];
             
-            
-//            [Helper alertViewNoHaveCancleWithTitle:@"球队创建提交成功" withBlock:^(UIAlertController *alertView) {
-//                [self.navigationController presentViewController:alertView animated:YES completion:nil];
-//            }];
-//            [self.navigationController popViewControllerAnimated:YES];
         }];
-        
-        
-        
-        
-        
     }];
-
     
     
-
+    
+    
+    
+    
+    
 }
 
 
@@ -333,7 +332,7 @@ static CGFloat ImageHeight  = 210.0;
         JGDisplayInfoTableViewCell *contactCell = [tableView dequeueReusableCellWithIdentifier:@"Display"];
         contactCell.promptLB.text = @"球队简介";
         contactCell.promptLB.frame = CGRectMake(10 * screenWidth / 320, 0, 100 * screenWidth / 320, 30 * screenWidth / 320);
-
+        
         contactCell.contentLB.lineBreakMode = NSLineBreakByWordWrapping;
         contactCell.contentLB.text = [self.detailDic objectForKey:@"info"];
         contactCell.contentLB.frame = CGRectMake(10, 35  * screenWidth / 320, screenWidth - 20  * screenWidth / 320, [self calculationLabelHeight:[self.detailDic objectForKey:@"info"]]);
@@ -352,14 +351,14 @@ static CGFloat ImageHeight  = 210.0;
                 launchActivityCell.promptLB.text = @"成立时间";
                 launchActivityCell.contentLB.text = [self.detailDic objectForKey:@"establishTime"];
                 break;
-//            case 2:
-//                launchActivityCell.promptLB.text = @"球队队长";
-//                launchActivityCell.contentLB.text = self.detailModel.establishTime;
-//                break;
-//            case 3:
-//                launchActivityCell.promptLB.text = @"球队规模";
-//                launchActivityCell.contentLB.text = [NSString stringWithFormat:@"%td人", self.detailModel.userSum];
-//                break;
+                //            case 2:
+                //                launchActivityCell.promptLB.text = @"球队队长";
+                //                launchActivityCell.contentLB.text = self.detailModel.establishTime;
+                //                break;
+                //            case 3:
+                //                launchActivityCell.promptLB.text = @"球队规模";
+                //                launchActivityCell.contentLB.text = [NSString stringWithFormat:@"%td人", self.detailModel.userSum];
+                //                break;
             default:
                 break;
         }
@@ -380,7 +379,7 @@ static CGFloat ImageHeight  = 210.0;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-   
+    
     if (indexPath.section == 2) {
         
         if (indexPath.row == 0) {

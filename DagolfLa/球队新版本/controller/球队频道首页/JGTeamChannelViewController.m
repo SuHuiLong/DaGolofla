@@ -27,6 +27,7 @@
 #import "JGTeamActivityCell.h"
 #import <CoreLocation/CLLocation.h>
 #import "EnterViewController.h"
+#import "Helper.h"
 
 #import "HomeHeadView.h"  // topscrollView
 #import "ChangePicModel.h"
@@ -271,13 +272,10 @@
         }];
         UIAlertAction* action2=[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             JGNewCreateTeamTableViewController *creatteamVc = [[JGNewCreateTeamTableViewController alloc] init];
-            creatteamVc.detailDic = [user objectForKey:@"cacheCreatTeamDic"];
+            creatteamVc.detailDic = [[user objectForKey:@"cacheCreatTeamDic"] mutableCopy];
             creatteamVc.titleField.text = [[user objectForKey:@"cacheCreatTeamDic"] objectForKey:@"name"];
             
-            
-            //        @property (nonatomic, retain) UIImageView *imgProfile;
-            //        @property (nonatomic, strong)UIButton *headPortraitBtn;//头像
-            //        @property (nonatomic, strong)UITextField *titleField;//球队名称输入框
+
             [self.navigationController pushViewController:creatteamVc animated:YES];
         }];
         
@@ -335,7 +333,8 @@
              cell.nameLabel.text = [self.teamArray[indexPath.row] objectForKey:@"name"];
         cell.adressLabel.text = [self.teamArray[indexPath.row] objectForKey:@"crtyName"];
         cell.describLabel.text = [self.teamArray[indexPath.row] objectForKey:@"info"];
-
+        [cell.iconImageV sd_setImageWithURL:[Helper setImageIconUrl:[[self.teamArray[indexPath.row] objectForKey:@"timeKey"] integerValue]] placeholderImage:[UIImage imageNamed:@"logo"]];
+        ;
         return cell;
     }else{
         

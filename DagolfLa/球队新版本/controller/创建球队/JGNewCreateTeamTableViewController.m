@@ -60,7 +60,9 @@ static CGFloat ImageHeight  = 210.0;
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:YES];
     self.navigationController.navigationBarHidden = YES;
-    //    self.titleField.text = self.detailModel.name;
+    if ([self.detailDic objectForKey:@"name"]) {
+        self.titleField.text = [self.detailDic objectForKey:@"name"];
+    }
     if (self.detailDic) {
         self.paraDic = self.detailDic;
     }
@@ -165,6 +167,7 @@ static CGFloat ImageHeight  = 210.0;
     [self.titleField setValue:[UIFont boldSystemFontOfSize:15] forKeyPath:@"_placeholderLabel.font"];
     self.titleField.textAlignment = NSTextAlignmentCenter;
     self.titleField.font = [UIFont systemFontOfSize:15];
+    self.titleField.tag = 1117;
     //头像
     self.headPortraitBtn = [[UIButton alloc]initWithFrame:CGRectMake(20, 150, 50, 50)];
     [self.headPortraitBtn setImage:[UIImage imageNamed:@"zwt"] forState:UIControlStateNormal];
@@ -298,11 +301,12 @@ static CGFloat ImageHeight  = 210.0;
         }];
         return;
     }else{
-        [self.paraDic setObject:self.detailDic forKey:@"name"];
+        NSString *name = self.titleField.text;
+        [self.paraDic setObject:name forKey:@"name"];
     }
-    
+
     JGLableAndLableTableViewCell *cell1 = [self.launchActivityTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1]];
-    [self notNil:cell1.contentLB.text SetValueForKey:@"establishTime"];
+//    [self notNil:cell1.contentLB.text SetValueForKey:@"establishTime"];
     //    if (!cell1.contentLB.text || ([cell1.contentLB.text length] == 0)) {
     if ([[self.paraDic objectForKey:@"establishTime"] length] == 0) {
         [Helper alertViewNoHaveCancleWithTitle:@"请填写球队创建时间" withBlock:^(UIAlertController *alertView) {
@@ -312,7 +316,7 @@ static CGFloat ImageHeight  = 210.0;
     }
     
     JGLableAndLableTableViewCell *cell2 = [self.launchActivityTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:1]];
-    [self notNil:cell2.contentLB.text SetValueForKey:@"crtyName"];
+//    [self notNil:cell2.contentLB.text SetValueForKey:@"crtyName"];
     //    if (!cell2.contentLB.text || ([cell2.contentLB.text length] == 0)) {
     if ([[self.paraDic objectForKey:@"crtyName"] length] == 0) {
         [Helper alertViewNoHaveCancleWithTitle:@"请填写球队所在地区" withBlock:^(UIAlertController *alertView) {
@@ -322,7 +326,7 @@ static CGFloat ImageHeight  = 210.0;
     }
     
     JGApplyMaterialTableViewCell *cell11 = [self.launchActivityTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:3]];
-    [self notNil:cell11.textFD.text SetValueForKey:@"userName"];
+//    [self notNil:cell11.textFD.text SetValueForKey:@"userName"];
     //    if (!cell11.textFD.text || ([cell11.textFD.text length] == 0)) {
     if ([[self.paraDic objectForKey:@"userName"] length] == 0) {
         [Helper alertViewNoHaveCancleWithTitle:@"请填写真实姓名" withBlock:^(UIAlertController *alertView) {
@@ -331,7 +335,7 @@ static CGFloat ImageHeight  = 210.0;
         return;
     }
     JGApplyMaterialTableViewCell *cell22 = [self.launchActivityTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:3]];
-    [self notNil:cell22.textFD.text SetValueForKey:@"userMobile"];
+//    [self notNil:cell22.textFD.text SetValueForKey:@"userMobile"];
     //    if (!cell22.textFD.text || ([cell22.textFD.text length] == 0)) {
     if ([[self.paraDic objectForKey:@"userMobile"] length] == 0) {
         
@@ -341,9 +345,9 @@ static CGFloat ImageHeight  = 210.0;
         return;
     }
     //    [self notNil:text SetValueForKey:@"info"];
-    if ([self.paraDic objectForKey:@"info"]) {
-        [self.paraDic setObject:[self.paraDic objectForKey:@"info"] forKey:@"info"];
-    }
+//    if ([self.paraDic objectForKey:@"info"]) {
+//        [self.paraDic setObject:[self.paraDic objectForKey:@"info"] forKey:@"info"];
+//    }
     if (![self.paraDic objectForKey:@"info"] || ([[self.paraDic objectForKey:@"info"] length] == 0)) {
         [Helper alertViewNoHaveCancleWithTitle:@"请完善球队信息" withBlock:^(UIAlertController *alertView) {
             [self.navigationController presentViewController:alertView animated:YES completion:nil];
@@ -389,12 +393,16 @@ static CGFloat ImageHeight  = 210.0;
             [self.detailDic setObject:textField.text forKey:@"userName"];
         }else if (textField.tag == 1116){
             [self.detailDic setObject:textField.text forKey:@"userMobile"];
+        }else if (textField.tag == 1117){
+            [self.detailDic setObject:textField.text forKey:@"name"];
         }
     }else{
         if (textField.tag == 1115) {
             [self.detailDic setObject:@"" forKey:@"userName"];
         }else if (textField.tag == 1116){
             [self.detailDic setObject:@"" forKey:@"userMobile"];
+        }else if (textField.tag == 1117){
+            [self.detailDic setObject:@"" forKey:@"name"];
         }
     }
 }

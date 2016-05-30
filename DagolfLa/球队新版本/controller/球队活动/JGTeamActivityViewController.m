@@ -46,12 +46,10 @@
     self.navigationItem.title = @"球队活动";
     self.page = 1;
     [self createTeamActivityTabelView];
+    if (_myActivityList == 1) {
+        [self createAdminBtn];
+    }
     
-//    self.isAdmin = @"0";
-//    //判断权限
-//    if ([self.isAdmin isEqualToString:@"0"]) {
-    [self createAdminBtn];
-//    }
     
     [self loadData];
     
@@ -64,27 +62,35 @@
     [dict setObject:@"1" forKey:@"mType"];
     [dict setObject:@"1000" forKey:@"tag"];
     
-
 }
 
+#pragma mark -- 下载数据
 - (void)loadData{
     //获取球队活动
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
-    //244  121212
     [dict setObject:[def objectForKey:@"userId"] forKey:@"userKey"];//3619
     //189781710290821120  http://192.168.2.6:8888
-//    [dict setObject:@"192" forKey:@"teamKey"];
     [dict setObject:@"0" forKey:@"offset"];
+    NSString *urlString = nil;
+    //244  121212
+    if (_myActivityList == 1) {
+        //我的活动列表
+        urlString = @"team/getMyTeamActivityList";
+        [dict setObject:@(self.timeKey) forKey:@"teamKey"];
+    }else{
+        //活动大厅
+        urlString = @"team/getTeamActivityList";
+    }
     
-    [[JsonHttp jsonHttp]httpRequest:@"team/getMyTeamActivityList" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
+    [[JsonHttp jsonHttp]httpRequest:urlString JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
         NSLog(@"errType == %@", errType);
     } completionBlock:^(id data) {
         NSLog(@"data == %@", data);
         [self.dataArray removeAllObjects];
         
         NSArray *array = [data objectForKey:@"activityList"];
-        NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
+//        NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
         
         for (NSDictionary *dict in array) {
             JGTeamAcitivtyModel *model = [[JGTeamAcitivtyModel alloc]init];
@@ -108,11 +114,14 @@
     UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithCustomView:btn];
     self.navigationItem.rightBarButtonItem = rightItem;
 }
+
 #pragma mark -- 发布球队活动
 - (void)launchActivityBtnClick:(UIButton *)btn{
     JGHLaunchActivityViewController * launchCtrl = [[JGHLaunchActivityViewController alloc]init];
+    launchCtrl.teamKey = _timeKey;
     [self.navigationController pushViewController:launchCtrl animated:YES];
 }
+
 #pragma mark -- 创建TableView
 - (void)createTeamActivityTabelView{
     self.teamActivityTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight) style:UITableViewStyleGrouped];
