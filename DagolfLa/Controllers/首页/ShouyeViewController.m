@@ -76,6 +76,9 @@
 
     [self createWebView];
     
+    
+    
+    
 }
 
 
@@ -161,6 +164,26 @@
     self.webView.UIDelegate = self;
     self.webView.navigationDelegate = self;
     self.webView.allowsBackForwardNavigationGestures =YES;
+    
+    __weak typeof(self) weakSelf = self;
+    [self.webView evaluateJavaScript:@"navigator.userAgent" completionHandler:^(id result, NSError *error) {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        
+        NSString *userAgent = result;
+        NSString *newUserAgent = [userAgent stringByAppendingString:@" DagolfLa/2.0"];
+        
+        NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:newUserAgent, @"UserAgent", nil];
+        [[NSUserDefaults standardUserDefaults] registerDefaults:dictionary];
+        
+        strongSelf.webView = [[WKWebView alloc] initWithFrame:strongSelf.view.bounds];
+        
+        // After this point the web view will use a custom appended user agent
+        [strongSelf.webView evaluateJavaScript:@"navigator.userAgent" completionHandler:^(id result, NSError *error) {
+            NSLog(@"%@", result);
+            [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:ShouYe]]];
+        }];
+
+    }];
     [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:ShouYe]]];
 }
 
@@ -170,7 +193,7 @@
 // 页面开始加载时调用
 - (void)webView:(WKWebView *)webView didStartProvisionalNavigation:(WKNavigation *)navigation
 {
-//    NSLog(@"%@",navigation)
+    
 }
 - (void)evaluateJavaScript:(NSString *)javaScriptString
          completionHandler:(void (^)(id, NSError *))completionHandler
