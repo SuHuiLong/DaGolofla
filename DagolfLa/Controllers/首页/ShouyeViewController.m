@@ -15,6 +15,8 @@
 #import "PackageViewController.h"
 #import "StadiumViewController.h"
 #import "TeacherViewController.h"
+
+#import "EnterViewController.h"
 //跳转详情界面
 #import "JGLNewShopDetailViewController.h"
 
@@ -220,61 +222,75 @@
     NSLog(@"%@",url);
     decisionHandler(WKNavigationActionPolicyAllow);
     
-    if ([url rangeOfString:@"myTeam"].location != NSNotFound)
-    {
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
-        JGTeamChannelViewController* teamVc = [[JGTeamChannelViewController alloc]init];
-        [self.navigationController pushViewController:teamVc animated:YES];
-    }
-    else if ([url rangeOfString:@"sportMgr"].location != NSNotFound)
-    {
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
-        ManageViewController* manVc = [[ManageViewController alloc]init];
-        [self.navigationController pushViewController:manVc animated:YES];
-    }
-    else if ([url rangeOfString:@"vote"].location != NSNotFound)
-    {
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
-        VoteViewController* voteVc = [[VoteViewController alloc]init];
-        [self.navigationController pushViewController:voteVc animated:YES];
-    }
-    else if ([url rangeOfString:@"type=shopMall"].location != NSNotFound && [url rangeOfString:@"url="].location == NSNotFound)
-    {
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
-        UseMallViewController* userVc = [[UseMallViewController alloc]init];
-        [self.navigationController pushViewController:userVc animated:YES];
-    }
-    else if ([url rangeOfString:@"packageBook"].location != NSNotFound)
-    {
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
-        PackageViewController* pacVc = [[PackageViewController alloc]init];
-        [self.navigationController pushViewController:pacVc animated:YES];
-    }
-    else if ([url rangeOfString:@"courseBook"].location != NSNotFound)
-    {
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
-        StadiumViewController* staVC = [[StadiumViewController alloc]init];
-        [self.navigationController pushViewController:staVC animated:YES];
-    }
-    else if ([url rangeOfString:@"pcoach"].location != NSNotFound)
-    {
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
-        TeacherViewController* teaVc = [[TeacherViewController alloc]init];
-        [self.navigationController pushViewController:teaVc animated:YES];
-    }
-    else if ([url rangeOfString:@"dagolfla://menu?type=shopMall&url="].location != NSNotFound)
-    {
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
-        JGLNewShopDetailViewController* shoVc = [[JGLNewShopDetailViewController alloc]init];
-        NSArray *array = [url componentsSeparatedByString:@"url="]; //从字符A中分隔成2个元素的数组
-        NSLog(@"array:%@",array); //结果是adfsfsfs和dfsdf
-        shoVc.urlRequest = array[1];        
-        [self.navigationController pushViewController:shoVc animated:YES];
+    if ([[NSUserDefaults standardUserDefaults]objectForKey:@"userId"]) {
+        if ([url rangeOfString:@"myTeam"].location != NSNotFound)
+        {
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
+            JGTeamChannelViewController* teamVc = [[JGTeamChannelViewController alloc]init];
+            [self.navigationController pushViewController:teamVc animated:YES];
+        }
+        else if ([url rangeOfString:@"sportMgr"].location != NSNotFound)
+        {
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
+            ManageViewController* manVc = [[ManageViewController alloc]init];
+            [self.navigationController pushViewController:manVc animated:YES];
+        }
+        else if ([url rangeOfString:@"vote"].location != NSNotFound)
+        {
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
+            VoteViewController* voteVc = [[VoteViewController alloc]init];
+            [self.navigationController pushViewController:voteVc animated:YES];
+        }
+        else if ([url rangeOfString:@"type=shopMall"].location != NSNotFound && [url rangeOfString:@"url="].location == NSNotFound)
+        {
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
+            UseMallViewController* userVc = [[UseMallViewController alloc]init];
+            [self.navigationController pushViewController:userVc animated:YES];
+        }
+        else if ([url rangeOfString:@"packageBook"].location != NSNotFound)
+        {
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
+            PackageViewController* pacVc = [[PackageViewController alloc]init];
+            [self.navigationController pushViewController:pacVc animated:YES];
+        }
+        else if ([url rangeOfString:@"courseBook"].location != NSNotFound)
+        {
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
+            StadiumViewController* staVC = [[StadiumViewController alloc]init];
+            [self.navigationController pushViewController:staVC animated:YES];
+        }
+        else if ([url rangeOfString:@"pcoach"].location != NSNotFound)
+        {
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
+            TeacherViewController* teaVc = [[TeacherViewController alloc]init];
+            [self.navigationController pushViewController:teaVc animated:YES];
+        }
+        else if ([url rangeOfString:@"dagolfla://menu?type=shopMall&url="].location != NSNotFound)
+        {
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
+            JGLNewShopDetailViewController* shoVc = [[JGLNewShopDetailViewController alloc]init];
+            NSArray *array = [url componentsSeparatedByString:@"url="]; //从字符A中分隔成2个元素的数组
+            NSLog(@"array:%@",array); //结果是adfsfsfs和dfsdf
+            shoVc.urlRequest = array[1];        
+            [self.navigationController pushViewController:shoVc animated:YES];
+            
+        }
+        else
+        {
+            
+        }
 
     }
     else
     {
-        
+        [Helper alertViewWithTitle:@"是否立即登录" withBlockCancle:^{
+            
+        } withBlockSure:^{
+            EnterViewController *vc = [[EnterViewController alloc] init];
+            [self.navigationController pushViewController:vc animated:YES];
+        } withBlock:^(UIAlertController *alertView) {
+            [self.navigationController presentViewController:alertView animated:YES completion:nil];
+        }];
     }
     
 }

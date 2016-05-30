@@ -98,7 +98,6 @@
 
 
 - (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler {
-//    NSLog(@"4.%@         bbbbbbbbbbbbbbbb",navigationAction.request);
     NSString *url = [navigationAction.request.URL.absoluteString stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSLog(@"%@",url);
     decisionHandler(WKNavigationActionPolicyAllow);

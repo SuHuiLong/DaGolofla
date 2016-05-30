@@ -34,10 +34,6 @@
 #import "ManageForMeController.h"
 
 
-//支付宝
-#import <AlipaySDK/AlipaySDK.h>
-#import "Order.h"
-#import "DataSigner.h"
 @interface ManageViewController ()<UITableViewDelegate,UITableViewDataSource,CustomIOSAlertViewDelegate,UITextFieldDelegate>
 {
     UISearchController* _controller;
@@ -549,46 +545,8 @@
 //赛事点击事件，跳转界面
 -(void)createClick
 {
-//    ManageCreateController* createVc = [[ManageCreateController alloc]init];
-//
-//    [self.navigationController pushViewController:createVc animated:YES];
-    
-    
-    
-    NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
-    [dict setObject:@0 forKey:@"orderType"];
-    [dict setObject:@527 forKey:@"srcKey"];
-    [[JsonHttp jsonHttp]httpRequest:@"pay/doPayByAliPay" JsonKey:@"payInfo" withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
-        NSLog(@"errType == %@", errType);
-    } completionBlock:^(id data) {
-        
-        /*
-         partner="2088911674587712"&seller_id="2088911674587712"&out_trade_no="Order_583"&subject="测试"&body="奶奶的"&total_fee="0.01"&notify_url="http://xiaoar.oicp.net:16681/pay/onCallbackAlipay"&service="mobile.securitypay.pay"&payment_type="1"&_input_charset="utf-8"&it_b_pay="30m"&sign="EbYezU%2BZDT%2FFwDDMTRnxgHztxZ9U2r%2BuB9hzo874Tkp1qSY1z3Nyean2%2B%2BPwFocbXg64VpYF4hNvnNYxAVF8NsSJRgZhghGsDf8XVqV3Q9Z%2FvJOchyUjalgl9D8EPoxLWaedkmT%2Bygvkbuekm5Q2VLU%2BOiuL8ofslX79eKNzQFE%3D"&sign_type="RSA"
-         */
-        
-        NSLog(@"%@",[data objectForKey:@"query"]);
-        [[AlipaySDK defaultService] payOrder:[data objectForKey:@"query"] fromScheme:@"dagolfla" callback:^(NSDictionary *resultDic) {
-            
-            NSLog(@"支付宝=====%@",resultDic[@"resultStatus"]);
-            if ([resultDic[@"resultStatus"] isEqualToString:@"9000"]) {
-                NSLog(@"陈公");
-            } else if ([resultDic[@"resultStatus"] isEqualToString:@"4000"]) {
-                NSLog(@"失败");
-            } else if ([resultDic[@"resultStatus"] isEqualToString:@"6002"]) {
-                NSLog(@"网络错误");
-            } else if ([resultDic[@"resultStatus"] isEqualToString:@"6001"]) {
-                NSLog(@"取消支付");
-            } else {
-                NSLog(@"支付失败");
-            }
-            [self.navigationController popViewControllerAnimated:YES];
-            [[NSNotificationCenter defaultCenter] removeObserver:self];
-        }];
-        
-        
-    }];
-    
-    
+    ManageCreateController* createVc = [[ManageCreateController alloc]init];
+    [self.navigationController pushViewController:createVc animated:YES];
     
 }
 
