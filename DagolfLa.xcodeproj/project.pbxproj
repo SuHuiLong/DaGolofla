@@ -49,6 +49,7 @@
 		2080304F1CF9A70800448BFC /* JGSignUoPromptCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2080304D1CF9A70700448BFC /* JGSignUoPromptCell.xib */; };
 		208030531CF9A79800448BFC /* JGHTotalPriceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 208030511CF9A79800448BFC /* JGHTotalPriceCell.m */; };
 		208030541CF9A79800448BFC /* JGHTotalPriceCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 208030521CF9A79800448BFC /* JGHTotalPriceCell.xib */; };
+		2080305C1CFCB86C00448BFC /* UMMobClick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2080305B1CFCB86B00448BFC /* UMMobClick.framework */; };
 		20BA61291CDC99D0004B61F5 /* ALAirplayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 20BA61151CDC99D0004B61F5 /* ALAirplayView.m */; };
 		20BA612A1CDC99D0004B61F5 /* ALButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 20BA61171CDC99D0004B61F5 /* ALButton.m */; };
 		20BA612B1CDC99D0004B61F5 /* ALMoviePlayerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 20BA61191CDC99D0004B61F5 /* ALMoviePlayerController.m */; };
@@ -759,7 +760,6 @@
 		36E301021C3FF410005C3F08 /* MJDIYBackFooter.m in Sources */ = {isa = PBXBuildFile; fileRef = 36E300FF1C3FF410005C3F08 /* MJDIYBackFooter.m */; };
 		36E301031C3FF410005C3F08 /* MJDIYHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 36E301011C3FF410005C3F08 /* MJDIYHeader.m */; };
 		36E6EB3D1BDDB8FD00A17B43 /* libstdc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 36E6EB3C1BDDB8FD00A17B43 /* libstdc++.tbd */; };
-		36E6EB3F1BDDB91400A17B43 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 36E6EB3E1BDDB91400A17B43 /* libsqlite3.tbd */; };
 		36E6EB411BDDB92200A17B43 /* libiconv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 36E6EB401BDDB92200A17B43 /* libiconv.tbd */; };
 		36E6EB431BDDB93000A17B43 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 36E6EB421BDDB93000A17B43 /* libz.tbd */; };
 		36EA30CF1C1D52A3008BD2B4 /* YueBallDetailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 36EA30CE1C1D52A3008BD2B4 /* YueBallDetailModel.m */; };
@@ -1060,6 +1060,7 @@
 		208030501CF9A79800448BFC /* JGHTotalPriceCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHTotalPriceCell.h; sourceTree = "<group>"; };
 		208030511CF9A79800448BFC /* JGHTotalPriceCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHTotalPriceCell.m; sourceTree = "<group>"; };
 		208030521CF9A79800448BFC /* JGHTotalPriceCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JGHTotalPriceCell.xib; sourceTree = "<group>"; };
+		2080305B1CFCB86B00448BFC /* UMMobClick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = UMMobClick.framework; sourceTree = "<group>"; };
 		20BA61141CDC99D0004B61F5 /* ALAirplayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALAirplayView.h; sourceTree = "<group>"; };
 		20BA61151CDC99D0004B61F5 /* ALAirplayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALAirplayView.m; sourceTree = "<group>"; };
 		20BA61161CDC99D0004B61F5 /* ALButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALButton.h; sourceTree = "<group>"; };
@@ -2407,15 +2408,15 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				36CFDB961BCDF75700301269 /* Security.framework in Frameworks */,
+				36E6EB431BDDB93000A17B43 /* libz.tbd in Frameworks */,
 				36D0B1091C80165300C7245E /* libc++.tbd in Frameworks */,
 				82E6A6FE1CF58C9A009DD179 /* libsqlite3.0.tbd in Frameworks */,
-				36E6EB431BDDB93000A17B43 /* libz.tbd in Frameworks */,
 				36CFDB921BCDF74600301269 /* SystemConfiguration.framework in Frameworks */,
 				20BA613C1CDC9B8E004B61F5 /* CoreMotion.framework in Frameworks */,
 				20BA613A1CDC9A89004B61F5 /* Photos.framework in Frameworks */,
 				20BA61381CDC9A66004B61F5 /* MediaPlayer.framework in Frameworks */,
 				20BA61361CDC99D0004B61F5 /* ALBBQuPaiPlugin.framework in Frameworks */,
-				36CFDB961BCDF75700301269 /* Security.framework in Frameworks */,
 				20BA612F1CDC99D0004B61F5 /* SecurityGuardSDK.framework in Frameworks */,
 				36D0B10F1C8016EC00C7245E /* UIKit.framework in Frameworks */,
 				363D4F321C86DB1C0089E52C /* Foundation.framework in Frameworks */,
@@ -2429,7 +2430,6 @@
 				36C164BF1BCE6B8D00194436 /* MapKit.framework in Frameworks */,
 				36D0B10D1C80169C00C7245E /* libxml2.tbd in Frameworks */,
 				36E6EB3D1BDDB8FD00A17B43 /* libstdc++.tbd in Frameworks */,
-				36E6EB3F1BDDB91400A17B43 /* libsqlite3.tbd in Frameworks */,
 				36D0B10B1C80166400C7245E /* libc++abi.tbd in Frameworks */,
 				20513BD21CF7050A003233FB /* libssl.a in Frameworks */,
 				20BA612E1CDC99D0004B61F5 /* ALBBRpcPlugin.framework in Frameworks */,
@@ -2444,6 +2444,7 @@
 				36D0B0FD1C8015D500C7245E /* AudioToolbox.framework in Frameworks */,
 				36D0B0FB1C8015C700C7245E /* AssetsLibrary.framework in Frameworks */,
 				36E6EB411BDDB92200A17B43 /* libiconv.tbd in Frameworks */,
+				2080305C1CFCB86C00448BFC /* UMMobClick.framework in Frameworks */,
 				36E300AF1C3F4FC0005C3F08 /* libSocialWechat.a in Frameworks */,
 				36E300AA1C3F4ECC005C3F08 /* libUMSocial_Sdk_4.2.5.a in Frameworks */,
 				20513BD11CF7050A003233FB /* libcrypto.a in Frameworks */,
@@ -4212,6 +4213,7 @@
 		36BFFD1F1BC76C8D005B3CE2 = {
 			isa = PBXGroup;
 			children = (
+				2080305B1CFCB86B00448BFC /* UMMobClick.framework */,
 				20513B671CF7050A003233FB /* zhifu */,
 				36D0B0F91C80156900C7245E /* frameWork */,
 				36BFFD531BC76CDB005B3CE2 /* 社区图标 */,
