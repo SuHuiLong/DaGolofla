@@ -205,7 +205,7 @@ static NSString *const JGGroupdetailsCollectionViewCellIdentifier = @"JGGroupdet
                 }
             }else{
                 teamMemberCtrl.oldSignUpKey = 0;
-            }
+            }    
         }
         
         [self.navigationController pushViewController:teamMemberCtrl animated:YES];
