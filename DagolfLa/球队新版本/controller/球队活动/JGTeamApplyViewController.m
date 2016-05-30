@@ -358,6 +358,11 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
     } completionBlock:^(id data) {
         NSLog(@"data == %@", data);
         JGTeamGroupViewController *groupCtrl = [[JGTeamGroupViewController alloc]init];
+        //本人的teamKey;如果本人报名了。返回
+        if ([data count] == 3) {
+            groupCtrl.teamKey = [[data objectForKey:@"signUpKey"] integerValue];
+        }
+        
         [self.navigationController pushViewController:groupCtrl animated:YES];
     }];
 }
@@ -377,18 +382,7 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
         
         [applyDict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"userName"] forKey:@"name"];//姓名
         [applyDict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"mobile"] forKey:@"mobile"];//手机号
-        
-//        [applyDict setObject:_poorPointText.text forKey:@"almost"];//差点
-        
         [applyDict setObject:@"1" forKey:@"isOnlinePay"];//是否线上付款 1-线上
-//        [applyDict setObject:[NSString stringWithFormat:@"%ld", (long)self.sex] forKey:@"sex"];//性别 0: 女 1: 男
-        //        [dict setObject:@"192" forKey:@"groupIndex"];//组的索引   每组4 人
-        //        [dict setObject:@"192" forKey:@"sortIndex"];//排序索引号
-        
-        //            [dict setObject:@"192" forKey:@"payTime"];//实际付款时间
-        //        [dict setObject:@"192" forKey:@"subsidyPrice"];//补贴价
-        //        [dict setObject:@"3500" forKey:@"money"];//报名费
-        //    [self.guextDict setObject:@"2016-06-11 10:00:00" forKey:@"createTime"];//报名时间
         [applyDict setObject:@0 forKey:@"signUpInfoKey"];//报名信息的timeKey
         [applyDict setObject:@0 forKey:@"timeKey"];//timeKey
         [applyDict setObject:@"1" forKey:@"select"];//付款勾选默认勾

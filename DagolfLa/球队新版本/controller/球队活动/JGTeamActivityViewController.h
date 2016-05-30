@@ -10,5 +10,7 @@
 
 @interface JGTeamActivityViewController : ViewController
 
+@property (nonatomic, assign)NSInteger myActivityList;
+
 
 @end

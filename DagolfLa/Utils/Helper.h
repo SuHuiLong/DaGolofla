@@ -23,7 +23,7 @@
 
 + (NSURL *)imageIconUrl:(NSString *)downloadImageUrl;
 
-+ (NSURL *)setImageIconUrl:(NSNumber *)timeKey;
++ (NSURL *)setImageIconUrl:(NSInteger)timeKey;
 
 
 
