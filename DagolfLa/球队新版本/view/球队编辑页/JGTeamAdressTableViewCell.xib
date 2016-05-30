@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -17,9 +17,9 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="对外联系人" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="toa-RE-lnI">
-                        <rect key="frame" x="8" y="11" width="93" height="21"/>
+                        <rect key="frame" x="8" y="11" width="144" height="21"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="93" id="LO5-ld-4Rq"/>
+                            <constraint firstAttribute="width" constant="144" id="i7y-vQ-nOQ"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
@@ -27,19 +27,21 @@
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="张先生：19200000000" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N38-q2-5AT">
                         <rect key="frame" x="109" y="11" width="211" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="211" id="iMU-e9-dzz"/>
+                        </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="N38-q2-5AT" firstAttribute="leading" secondItem="toa-RE-lnI" secondAttribute="trailing" constant="8" symbolic="YES" id="2bh-Se-wLy"/>
-                    <constraint firstItem="toa-RE-lnI" firstAttribute="firstBaseline" secondItem="N38-q2-5AT" secondAttribute="firstBaseline" id="7nW-jh-0g6"/>
-                    <constraint firstItem="toa-RE-lnI" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="3" id="9EU-Du-na1"/>
-                    <constraint firstItem="toa-RE-lnI" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="CvL-aJ-xZF"/>
-                    <constraint firstItem="toa-RE-lnI" firstAttribute="baseline" secondItem="N38-q2-5AT" secondAttribute="baseline" id="Fju-wF-MQ9"/>
-                    <constraint firstItem="toa-RE-lnI" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="Jkc-tl-ajV"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="N38-q2-5AT" secondAttribute="trailing" constant="47" id="w8M-jh-D1P"/>
+                    <constraint firstItem="toa-RE-lnI" firstAttribute="firstBaseline" secondItem="N38-q2-5AT" secondAttribute="firstBaseline" id="37k-d8-0yZ"/>
+                    <constraint firstItem="toa-RE-lnI" firstAttribute="baseline" secondItem="N38-q2-5AT" secondAttribute="baseline" id="HPt-1e-Kz1"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="N38-q2-5AT" secondAttribute="trailing" constant="47" id="TKs-9q-0UC"/>
+                    <constraint firstItem="toa-RE-lnI" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="3" id="o3D-ZX-TdK"/>
+                    <constraint firstItem="toa-RE-lnI" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="r9P-gf-JKc"/>
+                    <constraint firstItem="toa-RE-lnI" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="rVe-Pf-d6r"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
