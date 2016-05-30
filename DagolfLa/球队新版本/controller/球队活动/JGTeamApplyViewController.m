@@ -386,6 +386,7 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
             //跳转分组页面
             JGTeamGroupViewController *groupCtrl = [[JGTeamGroupViewController alloc]init];
             groupCtrl.teamActivityKey = [_modelss.timeKey integerValue];
+            [self.navigationController pushViewController:groupCtrl animated:YES];
         }
     }];
 }

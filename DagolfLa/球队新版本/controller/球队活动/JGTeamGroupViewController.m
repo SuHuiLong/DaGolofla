@@ -95,6 +95,8 @@ static NSString *const JGGroupdetailsCollectionViewCellIdentifier = @"JGGroupdet
         NSLog(@"errType == %@", errType);
     } completionBlock:^(id data) {
         NSLog(@"data == %@", data);
+        [self.alreadyDataArray removeAllObjects];
+        [self.teamGroupAllDataArray removeAllObjects];
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
             if ([data count] == 2) {
                 [Helper alertViewNoHaveCancleWithTitle:@"暂无报名信息！" withBlock:^(UIAlertController *alertView) {

@@ -57,6 +57,11 @@
 
 - (void)configCellWithModelArray:(NSMutableArray *)modelArray{
     NSLog(@"%ld", (long)self.tag);
+
+//    if () {
+//        <#statements#>
+//    }
+    
     self.groupName.text = [NSString stringWithFormat:@"第%ld组", (long)self.tag];
     //清空空间内容
     if (self.lable1.text.length != 0) {
@@ -79,18 +84,22 @@
         if (model.groupIndex == self.tag) {
             if (model.sortIndex == 0) {
                 self.lable1.text = model.name;
+                [self.sction1 sd_setImageWithURL:[Helper setImageIconUrl:@"user" andTeamKey:model.timeKey andIsSetWidth:YES andIsBackGround:NO] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"addGroup"]];
             }
             
             if (model.sortIndex == 1){
                 self.lable2.text = model.name;
+                [self.sction2 sd_setImageWithURL:[Helper setImageIconUrl:@"user" andTeamKey:model.timeKey andIsSetWidth:YES andIsBackGround:NO] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"addGroup"]];
             }
             
             if (model.sortIndex == 2){
                 self.lable3.text = model.name;
+                [self.section3 sd_setImageWithURL:[Helper setImageIconUrl:@"user" andTeamKey:model.timeKey andIsSetWidth:YES andIsBackGround:NO] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"addGroup"]];
             }
             
             if (model.sortIndex == 3){
                 self.lable4.text = model.name;
+                [self.section4 sd_setImageWithURL:[Helper setImageIconUrl:@"user" andTeamKey:model.timeKey andIsSetWidth:YES andIsBackGround:NO] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"addGroup"]];
             }
         }
     }
