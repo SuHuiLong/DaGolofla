@@ -50,19 +50,18 @@
         [self createAdminBtn];
     }
     
-    
     [self loadData];
     
-    [self loadTestData];
+//    [self loadTestData];
 }
 
-- (void)loadTestData{
-    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    [dict setObject:@"/team/11010.png" forKey:@"data"];
-    [dict setObject:@"1" forKey:@"mType"];
-    [dict setObject:@"1000" forKey:@"tag"];
-    
-}
+//- (void)loadTestData{
+//    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+//    [dict setObject:@"/team/11010.png" forKey:@"data"];
+//    [dict setObject:@"1" forKey:@"mType"];
+//    [dict setObject:@"1000" forKey:@"tag"];
+//    
+//}
 
 #pragma mark -- 下载数据
 - (void)loadData{
@@ -252,6 +251,7 @@
             JGTeamAcitivtyModel *model = [[JGTeamAcitivtyModel alloc] init];
             [model setValuesForKeysWithDictionary:[data objectForKey:@"activity"]];
             activityNameCtrl.model = model;
+            activityNameCtrl.teamActivityKey = [model.timeKey integerValue];
             [self.navigationController pushViewController:activityNameCtrl animated:YES];
           }else {
              [Helper alertViewWithTitle:@"获取失败" withBlock:^(UIAlertController *alertView) {

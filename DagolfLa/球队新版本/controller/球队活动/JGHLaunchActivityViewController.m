@@ -73,6 +73,7 @@ static CGFloat ImageHeight  = 210.0;
 
         _dataDict = [[NSMutableDictionary alloc]init];
         UIImage *image = [UIImage imageNamed:BGImage];
+        self.model.headerImage = image;
         self.imgProfile = [[UIImageView alloc] initWithImage:image];
         self.imgProfile.frame = CGRectMake(0, 0, screenWidth, ImageHeight);
         self.imgProfile.userInteractionEnabled = YES;
@@ -130,6 +131,7 @@ static CGFloat ImageHeight  = 210.0;
     //头像
     self.headPortraitBtn = [[UIButton alloc]initWithFrame:CGRectMake(10, 135, 65, 65)];
     [self.headPortraitBtn setImage:[UIImage imageNamed:HEADERRImage] forState:UIControlStateNormal];
+    self.model.headerImage = [UIImage imageNamed:HEADERRImage];
     [self.headPortraitBtn addTarget:self action:@selector(initItemsBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     self.headPortraitBtn.layer.cornerRadius = 8.0;
     self.headPortraitBtn.tag = 740;
@@ -449,7 +451,6 @@ static CGFloat ImageHeight  = 210.0;
         [_pickPhoto SHowLocalPhotoWithController:self andWithBlock:^(NSObject *Data) {
             if ([Data isKindOfClass:[UIImage class]])
             {
-                // @{@"nType":@"1", @"tag":@"dagolfla", @"data":@"test"};
                 _headerImage = (UIImage *)Data;
                 //设置背景
                 if (btn.tag == 520) {
@@ -461,21 +462,6 @@ static CGFloat ImageHeight  = 210.0;
                     self.headPortraitBtn.layer.masksToBounds = YES;
                     self.headPortraitBtn.layer.cornerRadius = 8.0;
                 }
-                /** 上传图片
-                NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-                [dict setObject:@"11010" forKey:@"data"];
-                [dict setObject:@"1" forKey:@"nType"];
-                [dict setObject:@"team" forKey:@"tag"];
-                NSMutableArray *array = [NSMutableArray array];
-                
-                [array addObject:UIImageJPEGRepresentation(_headerImage, 0.7)];
-                 
-                [[JsonHttp jsonHttp]httpRequestImageOrVedio:@"1" withData:dict andDataArray:array failedBlock:^(id errType) {
-                    NSLog(@"errType===%@", errType);
-                } completionBlock:^(id data) {
-                    NSLog(@"data===%@", data);
-                }];
-                 */
             }
             _photos = 1;
         }];
