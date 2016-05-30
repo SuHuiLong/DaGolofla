@@ -52,16 +52,7 @@
     
     [self loadData];
     
-//    [self loadTestData];
 }
-
-//- (void)loadTestData{
-//    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-//    [dict setObject:@"/team/11010.png" forKey:@"data"];
-//    [dict setObject:@"1" forKey:@"mType"];
-//    [dict setObject:@"1000" forKey:@"tag"];
-//    
-//}
 
 #pragma mark -- 下载数据
 - (void)loadData{
@@ -239,7 +230,8 @@
     [[NSUserDefaults standardUserDefaults]setObject:@(model.teamActivityKey) forKey:@"activityKey"];
     [[NSUserDefaults standardUserDefaults] setObject:[NSString stringWithFormat:@"%ld", (long)model.teamKey] forKey:TeamKey];
     [[NSUserDefaults standardUserDefaults] synchronize];
-    [dict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"userId" ] forKey:@"userKey"];
+    [dict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"userId"] forKey:@"userKey"];
+    NSLog(@"%@", [[NSUserDefaults standardUserDefaults] objectForKey:@"userId" ]);
     [[JsonHttp jsonHttp]httpRequest:@"team/getTeamActivity" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
      
     } completionBlock:^(id data) {

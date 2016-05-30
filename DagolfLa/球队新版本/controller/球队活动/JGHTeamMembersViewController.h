@@ -26,8 +26,8 @@
 //排序索引
 @property (nonatomic, assign)NSInteger sortIndex;
 
-// 老的球队活动报名人timeKey
-@property (nonatomic, assign)NSInteger oldSignUpKey;
+
+@property (nonatomic, assign)NSInteger oldSignUpKey;//老的球队活动报名人timeKey
 
 
 @property (nonatomic, assign)NSInteger isload;// 1- 需要下载数据

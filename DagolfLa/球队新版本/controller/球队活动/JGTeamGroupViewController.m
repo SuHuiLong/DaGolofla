@@ -31,6 +31,8 @@ static NSString *const JGGroupdetailsCollectionViewCellIdentifier = @"JGGroupdet
 
 @property (nonatomic, strong)NSMutableArray *alreadyDataArray;//已分组数据
 
+@property (nonatomic, assign)NSInteger newTeamKey;
+
 @end
 
 @implementation JGTeamGroupViewController
@@ -82,13 +84,13 @@ static NSString *const JGGroupdetailsCollectionViewCellIdentifier = @"JGGroupdet
     [self.groupDetailsCollectionView registerNib:[UINib nibWithNibName:@"JGGroupdetailsCollectionViewCell" bundle:[NSBundle mainBundle]] forCellWithReuseIdentifier:JGGroupdetailsCollectionViewCellIdentifier];
     [self.view addSubview:self.groupDetailsCollectionView];
     
+    
     [self loadData];
 }
 #pragma mark -- 获取报名人员列表信息
 - (void)loadData{
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    [dict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:ActivityKey] forKey:ActivityKey];
-//    [dict setObject:@"206" forKey:ActivityKey];
+    [dict setObject:[NSString stringWithFormat:@"%td", self.teamActivityKey] forKey:@"activityKey"];
     [[JsonHttp jsonHttp]httpRequest:@"team/getTeamActivitySignUpList" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
         NSLog(@"errType == %@", errType);
     } completionBlock:^(id data) {
@@ -182,10 +184,10 @@ static NSString *const JGGroupdetailsCollectionViewCellIdentifier = @"JGGroupdet
         teamMemberCtrl.sortIndex = btn.tag;
         // 老的球队活动报名人timeKey
         //获取老球员
-        for (NSMutableDictionary *dict in self.alreadyDataArray) {
-            if ([[dict objectForKey:@"groupIndex"] integerValue] == cell.tag) {
-                if ([[dict objectForKey:@"sortIndex"] integerValue] == btn.tag) {
-                    teamMemberCtrl.oldSignUpKey = [[dict objectForKey:TeamKey] integerValue];
+        for (JGHPlayersModel *model in self.alreadyDataArray) {
+            if (model.groupIndex == cell.tag) {
+                if (model.sortIndex == btn.tag) {
+                    teamMemberCtrl.oldSignUpKey = model.timeKey;
                 }
             }else{
                 teamMemberCtrl.oldSignUpKey = 0;
@@ -201,7 +203,7 @@ static NSString *const JGGroupdetailsCollectionViewCellIdentifier = @"JGGroupdet
             NSMutableDictionary *dict = [NSMutableDictionary dictionary];
             NSLog(@"%@", [userDef objectForKey:TeamMember]);
             [dict setObject:@0 forKey:@"oldSignUpKey"];// 老的球队活动报名人timeKey
-            [dict setObject:[NSString stringWithFormat:@"%td", _teamKey] forKey:@"newSignUpKey"]; // 新的球队活动报名人timeKey
+            [dict setObject:[NSString stringWithFormat:@"%td", _newTeamKey] forKey:@"newSignUpKey"]; // 新的球队活动报名人timeKey
             [dict setObject:[NSString stringWithFormat:@"%ld", (long)cell.tag] forKey:@"groupIndex"]; // 组号
             [dict setObject:[NSString stringWithFormat:@"%ld", (long)btn.tag] forKey:@"sortIndex"]; // 排序索引
         }];
@@ -221,16 +223,15 @@ static NSString *const JGGroupdetailsCollectionViewCellIdentifier = @"JGGroupdet
     } completionBlock:^(id data) {
         NSLog(@"data === %@", data);
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
-            for (int i=0; i<_teamGroupAllDataArray.count; i++) {
-                JGHPlayersModel *model = _teamGroupAllDataArray[i];
-                if ((long)model.timeKey == (long)[[dict objectForKey:@"newSignUpKey"] integerValue]) {
-                    [self.teamGroupAllDataArray removeObject:model];
-                    [self.alreadyDataArray addObject:model];
-                }
-            }
+//            for (int i=0; i<_teamGroupAllDataArray.count; i++) {
+//                JGHPlayersModel *model = _teamGroupAllDataArray[i];
+//                if ((long)model.timeKey == (long)[[dict objectForKey:@"newSignUpKey"] integerValue]) {
+//                    [self.teamGroupAllDataArray removeObject:model];
+//                    [self.alreadyDataArray addObject:model];
+//                }
+//            }
             
-            [self.collectionView reloadData];
-            [self.groupDetailsCollectionView reloadData];
+            [self loadData];
             
             UIAlertAction *commitAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             }];
