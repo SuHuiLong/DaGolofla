@@ -86,6 +86,8 @@ static CGFloat ImageHeight  = 210.0;
 
 @property (nonatomic, strong)UIButton *addressBtn;//添加地址
 
+@property (nonatomic, copy)NSString *power;
+
 @end
 
 @implementation JGTeamMemberORManagerViewController
@@ -101,6 +103,20 @@ static CGFloat ImageHeight  = 210.0;
     
     [self.imgProfile sd_setImageWithURL:[Helper setImageIconUrl:@"team" andTeamKey:[[self.detailDic objectForKey:@"timeKey"] integerValue] andIsSetWidth:YES andIsBackGround:YES] placeholderImage:[UIImage imageNamed:@"selfBackPic.jpg"]];
 
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    [dict setObject:DEFAULF_USERID forKey:@"userKey"];
+    [dict setObject:[self.detailDic objectForKey:@"timeKey"] forKey:@"teamKey"];
+    [[JsonHttp jsonHttp] httpRequest:@"team/getTeamInfo" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
+     
+        
+    } completionBlock:^(id data) {
+           self.power = [[data objectForKey:@"teamMember"] objectForKey:@"power"];
+        [[NSUserDefaults standardUserDefaults] setObject:self.power forKey:@"power"];
+        [[NSUserDefaults standardUserDefaults]  synchronize];
+    }];
+    
+    
+    
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
@@ -566,6 +582,7 @@ static CGFloat ImageHeight  = 210.0;
         JGTeamManageViewController* tmVc = [[JGTeamManageViewController alloc]init];
         tmVc.teamKey = [[self.detailDic objectForKey:@"timeKey"] integerValue];
         tmVc.detailDic = self.detailDic;
+        tmVc.power = self.power;
         [self.navigationController pushViewController:tmVc animated:YES];
     }
     

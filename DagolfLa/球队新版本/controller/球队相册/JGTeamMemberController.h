@@ -16,6 +16,10 @@
 
 @property (assign, nonatomic) BOOL isEdit;
 
+@property (assign, nonatomic) BOOL isManager;
+
+@property (copy ,nonatomic) NSString *power;
+
 @property(nonatomic,copy)void(^block)(NSInteger str,NSString *str1,NSString *str2);
 
 @end
