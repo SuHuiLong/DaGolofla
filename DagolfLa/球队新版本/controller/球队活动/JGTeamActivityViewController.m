@@ -75,11 +75,11 @@
     //244  121212
     if (_myActivityList == 1) {
         //我的活动列表
-        urlString = @"team/getTeamActivityList";
-        [dict setObject:[def objectForKey:TeamKey] forKey:@"teamKey"];
+        urlString = @"team/getMyTeamActivityList";
+        [dict setObject:@(self.timeKey) forKey:@"teamKey"];
     }else{
         //活动大厅
-        urlString = @"team/getMyTeamActivityList";
+        urlString = @"team/getTeamActivityList";
     }
     
     [[JsonHttp jsonHttp]httpRequest:urlString JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {

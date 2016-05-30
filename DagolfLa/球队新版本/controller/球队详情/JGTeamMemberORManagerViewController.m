@@ -483,6 +483,8 @@ static CGFloat ImageHeight  = 210.0;
             case 0:
             {
                 JGTeamActivityViewController *activiyVC = [[JGTeamActivityViewController alloc] init];
+                activiyVC.myActivityList = 1;
+                activiyVC.timeKey = [[self.detailDic objectForKey:@"timeKey"] integerValue];
                 [self.navigationController pushViewController:activiyVC animated:YES];
                 
             }
