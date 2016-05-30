@@ -15,4 +15,8 @@
 
 @interface JGMemAuthorityViewController : ViewController
 
+
+@property (strong, nonatomic) NSNumber* teamKey;
+@property (strong, nonatomic) NSNumber* memberKey;
+
 @end

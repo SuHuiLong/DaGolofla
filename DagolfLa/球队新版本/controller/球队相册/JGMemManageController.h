@@ -7,7 +7,10 @@
 //
 
 #import "ViewController.h"
-
+#import "JGLTeamMemberModel.h"
 @interface JGMemManageController : ViewController
+
+
+@property (strong, nonatomic) JGLTeamMemberModel* model;
 
 @end

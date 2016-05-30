@@ -80,6 +80,7 @@ tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexP
     //入队审核
     if (indexPath.section == 0) {
         JGLJoinManageViewController* joinVc = [[JGLJoinManageViewController alloc]init];
+        joinVc.teamKey = [NSNumber numberWithInteger:_teamKey];
         [self.navigationController pushViewController:joinVc animated:YES];
     }
     else if (indexPath.section == 1)
@@ -89,6 +90,7 @@ tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexP
             {
                 //成员管理
                 JGTeamMemberController* menVc = [[JGTeamMemberController alloc]init];
+                menVc.title = @"队员管理";
                 menVc.teamKey = [NSNumber numberWithInteger:self.teamKey];
                 [self.navigationController pushViewController:menVc animated:YES];
             }

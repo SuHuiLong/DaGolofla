@@ -50,19 +50,18 @@
         [self createAdminBtn];
     }
     
-    
     [self loadData];
     
-    [self loadTestData];
+//    [self loadTestData];
 }
 
-- (void)loadTestData{
-    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    [dict setObject:@"/team/11010.png" forKey:@"data"];
-    [dict setObject:@"1" forKey:@"mType"];
-    [dict setObject:@"1000" forKey:@"tag"];
-    
-}
+//- (void)loadTestData{
+//    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+//    [dict setObject:@"/team/11010.png" forKey:@"data"];
+//    [dict setObject:@"1" forKey:@"mType"];
+//    [dict setObject:@"1000" forKey:@"tag"];
+//    
+//}
 
 #pragma mark -- 下载数据
 - (void)loadData{
@@ -90,7 +89,7 @@
         [self.dataArray removeAllObjects];
         
         NSArray *array = [data objectForKey:@"activityList"];
-        NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
+//        NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
         
         for (NSDictionary *dict in array) {
             JGTeamAcitivtyModel *model = [[JGTeamAcitivtyModel alloc]init];
@@ -118,6 +117,7 @@
 #pragma mark -- 发布球队活动
 - (void)launchActivityBtnClick:(UIButton *)btn{
     JGHLaunchActivityViewController * launchCtrl = [[JGHLaunchActivityViewController alloc]init];
+    launchCtrl.teamKey = _timeKey;
     [self.navigationController pushViewController:launchCtrl animated:YES];
 }
 
@@ -251,6 +251,7 @@
             JGTeamAcitivtyModel *model = [[JGTeamAcitivtyModel alloc] init];
             [model setValuesForKeysWithDictionary:[data objectForKey:@"activity"]];
             activityNameCtrl.model = model;
+            activityNameCtrl.teamActivityKey = [model.timeKey integerValue];
             [self.navigationController pushViewController:activityNameCtrl animated:YES];
           }else {
              [Helper alertViewWithTitle:@"获取失败" withBlock:^(UIAlertController *alertView) {
