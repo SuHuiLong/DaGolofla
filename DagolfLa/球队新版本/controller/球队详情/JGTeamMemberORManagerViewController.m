@@ -110,9 +110,9 @@ static CGFloat ImageHeight  = 210.0;
      
         
     } completionBlock:^(id data) {
-        
            self.power = [[data objectForKey:@"teamMember"] objectForKey:@"power"];
-        
+        [[NSUserDefaults standardUserDefaults] setObject:self.power forKey:@"power"];
+        [[NSUserDefaults standardUserDefaults]  synchronize];
     }];
     
     

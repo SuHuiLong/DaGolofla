@@ -131,9 +131,9 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    JGLTeamMemberModel *modelll = _dataArray[indexPath.row];
-    
-    if ([self.power containsString:@"1002"]) {
+//    JGLTeamMemberModel *modelll = _dataArray[indexPath.row];
+    NSString *power = [[NSUserDefaults standardUserDefaults] objectForKey:@"power"];
+    if ([power containsString:@"1002"]) {
         if (_isEdit) {
             
             JGLTeamMemberModel *model = _dataArray[indexPath.row];
