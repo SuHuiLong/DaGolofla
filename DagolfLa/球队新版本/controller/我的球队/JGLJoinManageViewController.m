@@ -70,7 +70,7 @@
                 [_dataArray removeAllObjects];
             }
             //数据解析
-            for (NSDictionary *dataDic in [data objectForKey:@"teamMember"]) {
+            for (NSDictionary *dataDic in [data objectForKey:@"teamMemberList"]) {
                 JGLTeamMemberModel *model = [[JGLTeamMemberModel alloc] init];
                 [model setValuesForKeysWithDictionary:dataDic];
                 [_dataArray addObject:model];
@@ -105,7 +105,7 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 55*ScreenWidth/375;
+    return 55*ScreenWidth/320;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
@@ -118,15 +118,46 @@
     JGLTeamAdviceTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"JGLTeamAdviceTableViewCell" forIndexPath:indexPath];
     [cell showData:_dataArray[indexPath.row]];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    [cell.agreeBtn addTarget:self action:@selector(agreeClick:) forControlEvents:UIControlEventTouchUpInside];
+    cell.agreeBtn.tag = indexPath.row + 10000;
+    [cell.disMissBtn addTarget:self action:@selector(disMissClick:) forControlEvents:UIControlEventTouchUpInside];
+    cell.disMissBtn.tag = indexPath.row + 100000;
     return cell;
     
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPat{
-  
+-(void)agreeClick:(UIButton *)btn
+{
+    NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
+    [dict setObject:[_dataArray[btn.tag - 10000] teamKey] forKey:@"teamKey"];
+    [dict setObject:DEFAULF_USERID forKey:@"userKey"];
+    [dict setObject:[_dataArray[btn.tag - 10000] timeKey] forKey:@"memberKey"];
+    [dict setObject:@1 forKey:@"state"];
+    [[JsonHttp jsonHttp]httpRequest:@"team/auditTeamMember" JsonKey:nil withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
+        
+    } completionBlock:^(id data) {
+        NSLog(@"%@",[data objectForKey:@"packResultMsg"]);
+    }];
+}
+-(void)disMissClick:(UIButton *)btn
+{
+    NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
+    [dict setObject:[_dataArray[btn.tag - 10000] teamKey] forKey:@"teamKey"];
+    [dict setObject:DEFAULF_USERID forKey:@"userKey"];
+    [dict setObject:[_dataArray[btn.tag - 10000] timeKey] forKey:@"memberKey"];
+    [dict setObject:@2 forKey:@"state"];
+    [[JsonHttp jsonHttp]httpRequest:@"team/auditTeamMember" JsonKey:nil withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
+        
+    } completionBlock:^(id data) {
+        NSLog(@"%@",[data objectForKey:@"packResultMsg"]);
+    }];
 }
 
 
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
