@@ -89,7 +89,7 @@
         [self.dataArray removeAllObjects];
         
         NSArray *array = [data objectForKey:@"activityList"];
-        NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
+//        NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
         
         for (NSDictionary *dict in array) {
             JGTeamAcitivtyModel *model = [[JGTeamAcitivtyModel alloc]init];
@@ -116,6 +116,7 @@
 #pragma mark -- 发布球队活动
 - (void)launchActivityBtnClick:(UIButton *)btn{
     JGHLaunchActivityViewController * launchCtrl = [[JGHLaunchActivityViewController alloc]init];
+    launchCtrl.teamKey = _timeKey;
     [self.navigationController pushViewController:launchCtrl animated:YES];
 }
 #pragma mark -- 创建TableView

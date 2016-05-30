@@ -165,8 +165,6 @@ static CGFloat ImageHeight  = 210.0;
     [previewBtn addTarget:self action:@selector(previewBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:previewBtn];
 }
-
-
 #pragma mark -- 保存编辑操作
 - (void)previewBtnClick:(UIButton *)btn{
     [self.view endEditing:YES];

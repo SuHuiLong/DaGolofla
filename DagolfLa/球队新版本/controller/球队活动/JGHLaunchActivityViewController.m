@@ -206,10 +206,10 @@ static CGFloat ImageHeight  = 210.0;
         return;
     }
     
-    if (self.model.maxCount <= 0) {
-        [self alertviewString:@"活动地址不能为空！"];
-        return;
-    }
+//    if (self.model.maxCount <= 0) {
+//        [self alertviewString:@"活动地址不能为空！"];
+//        return;
+//    }
     
     if (self.model.usernumber.length != 11) {
         [self alertviewString:@"手机号码格式不正确！"];
@@ -244,6 +244,7 @@ static CGFloat ImageHeight  = 210.0;
     JGTeamActibityNameViewController *ActivityDetailCtrl = [[JGTeamActibityNameViewController alloc]init];
     ActivityDetailCtrl.model = self.model;
     ActivityDetailCtrl.isAdmin = 1;
+    ActivityDetailCtrl.teamKey = self.teamKey;
     [self.navigationController pushViewController:ActivityDetailCtrl animated:YES];
 }
 

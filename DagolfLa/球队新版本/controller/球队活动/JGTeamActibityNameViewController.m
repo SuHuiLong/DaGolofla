@@ -28,6 +28,7 @@ static CGFloat ImageHeight  = 210.0;
 @interface JGTeamActibityNameViewController ()<UITableViewDelegate, UITableViewDataSource>
 {
     //    CGFloat _tableViewHeight;
+//    NSMutableDictionary *_dictPhoto;
 }
 @property (nonatomic, strong)UITableView *teamActibityNameTableView;
 @property (nonatomic, strong)NSMutableArray *dataArray;//数据源
@@ -77,6 +78,7 @@ static CGFloat ImageHeight  = 210.0;
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor colorWithHexString:TB_BG_Color];
     self.automaticallyAdjustsScrollViewInsets = NO;
+//    _dictPhoto = [NSMutableDictionary dictionary];
     UIImage *bgImage = nil;
     UIImage *headerImage = nil;
     if (![_model isKindOfClass:[NSNull class]]) {
@@ -110,7 +112,6 @@ static CGFloat ImageHeight  = 210.0;
     if (self.isAdmin == 1) {// 发布页面
         [self createSaveAndLaunchBtn];
     }else{
-        //        _tableViewHeight = screenHeight -64 -44;
         [self createApplyBtn];
     }
     
@@ -129,22 +130,17 @@ static CGFloat ImageHeight  = 210.0;
     [replaceBtn setTitle:@"点击更换" forState:UIControlStateNormal];
     replaceBtn.titleLabel.font = [UIFont systemFontOfSize:13];
     replaceBtn.tag = 520;
-//    [replaceBtn addTarget:self action:@selector(initItemsBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     replaceBtn.hidden = YES;
     [self.titleView addSubview:replaceBtn];
     //输入框
     self.titleField = [[UILabel alloc]initWithFrame:CGRectMake(64, 7, screenWidth - 128, 30)];
     self.titleField.text = self.model.name;
     self.titleField.textColor = [UIColor whiteColor];
-    //    [self.titleField setValue:[UIColor whiteColor] forKeyPath:@"_placeholderLabel.textColor"];
-    //    [self.titleField setValue:[UIFont boldSystemFontOfSize:15] forKeyPath:@"_placeholderLabel.font"];
     self.titleField.textAlignment = NSTextAlignmentCenter;
     self.titleField.font = [UIFont systemFontOfSize:16 * screenWidth / 320];
     //头像
     self.headPortraitBtn = [[UIButton alloc]initWithFrame:CGRectMake(10, 135, 65, 65)];
     [self.headPortraitBtn setImage:headerImage forState:UIControlStateNormal];
-//    [self.headPortraitBtn addTarget:self action:@selector(initItemsBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-//    self.headPortraitBtn.backgroundColor = [UIColor redColor];
     self.headPortraitBtn.layer.cornerRadius = 8.0;
     self.headPortraitBtn.tag = 740;
     [self.imgProfile addSubview:self.headPortraitBtn];
@@ -161,7 +157,6 @@ static CGFloat ImageHeight  = 210.0;
     CGRect address = self.addressBtn.frame;
     self.addressBtn.frame = CGRectMake(address.origin.x, address.origin.y, size.width, 25);
 
-    //    [self.addressBtn addTarget:self action:@selector(replaceWithPicture:) forControlEvents:UIControlEventTouchUpInside];
     [self.imgProfile addSubview:self.addressBtn];
 }
 - (void)replaceWithPicture:(UIButton *)Btn{
@@ -316,8 +311,8 @@ static CGFloat ImageHeight  = 210.0;
 - (void)applyBtnClick:(UIButton *)btn{
     
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    [dict setObject:[NSString stringWithFormat:@"%ld", (long)self.model.teamKey] forKey:@"teamKey"];//球队key
-    NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
+    [dict setObject:[NSString stringWithFormat:@"%td", self.teamKey] forKey:@"teamKey"];//球队key
+    [dict setObject:@0 forKey:@"timeKey"];
     [dict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:userID] forKey:@"userKey"];//用户key
     [dict setObject:self.model.name forKey:@"name"];//活动名字
     [dict setObject:self.model.signUpEndTime forKey:@"signUpEndTime"];//活动报名截止时间
@@ -325,16 +320,18 @@ static CGFloat ImageHeight  = 210.0;
     [dict setObject:self.model.endDate forKey:@"endDate"];//活动结束时间
     [dict setObject:[NSString stringWithFormat:@"%ld", (long)self.model.ballKey] forKey:@"ballKey"];//球场id
     [dict setObject:self.model.ballName forKey:@"ballName"];//球场名称
-    [dict setObject:@"" forKey:@"ballGeohash"];//球场坐标
+//    [dict setObject:@"" forKey:@"ballGeohash"];//球场坐标
     [dict setObject:self.model.info forKey:@"info"];//活动简介
     [dict setObject:[NSString stringWithFormat:@"%ld",(long)self.model.memberPrice] forKey:@"memberPrice"];//会员价
     [dict setObject:[NSString stringWithFormat:@"%ld", (long)self.model.guestPrice] forKey:@"guestPrice"];//嘉宾价
     [dict setObject:[NSString stringWithFormat:@"%ld", (long)self.model.maxCount] forKey:@"maxCount"];//最大人员数
     [dict setObject:[NSString stringWithFormat:@"%ld", (long)_model.isClose] forKey:@"isClose"];//活动是否结束 0 : 开始 , 1 : 已结束
     NSDateFormatter *formatter =[[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"yyyyMMdd HHmmss"];
+    [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
     NSString *currentTime = [formatter stringFromDate:[NSDate date]];
     [dict setObject:currentTime forKey:@"createTime"];//活动创建时间
+    [dict setObject:self.model.username forKey:@"userName"];//联系人
+    [dict setObject:self.model.usernumber forKey:@"userMobile"];//联系人
     
     if (btn.tag == 800) {
         //保存活动
@@ -347,10 +344,9 @@ static CGFloat ImageHeight  = 210.0;
             NSLog(@"%@", errType);
         } completionBlock:^(id data) {
             NSLog(@"%@", data);
-            /**
-            [[JsonHttp jsonHttp] httpRequest:@"globalCode/createTimeKey" JsonKey:nil withData:nil requestMethod:@"GET" failedBlock:^(id errType) {
-                
-            } completionBlock:^(id data) {
+            if (self.model.headerImage != nil) {
+                NSMutableArray *imageArray = [NSMutableArray array];
+                [imageArray addObject:UIImageJPEGRepresentation(self.model.headerImage, 0.7)];
                 
                 NSNumber* strTimeKey = [data objectForKey:@"timeKey"];
                 // 上传图片
@@ -359,71 +355,25 @@ static CGFloat ImageHeight  = 210.0;
                 [dict setObject:TYPE_TEAM_HEAD forKey:@"nType"];
                 [dict setObject:PHOTO_DAGOLFLA forKey:@"tag"];
                 
-                [[JsonHttp jsonHttp]httpRequestImageOrVedio:@"1" withData:dict andDataArray:[_dictPhoto objectForKey:@"headPortraitBtn"] failedBlock:^(id errType) {
+                [[JsonHttp jsonHttp]httpRequestImageOrVedio:@"1" withData:dict andDataArray:imageArray failedBlock:^(id errType) {
                     NSLog(@"errType===%@", errType);
                 } completionBlock:^(id data) {
                     
                     [dict setObject:[NSString stringWithFormat:@"%@_backgroup" ,strTimeKey] forKey:@"data"];
                     [dict setObject:TYPE_TEAM_BACKGROUND forKey:@"nType"];
-                    [[JsonHttp jsonHttp] httpRequestImageOrVedio:@"1" withData:dict andDataArray:[_dictPhoto objectForKey:@"headerImage"] failedBlock:^(id errType) {
-                        NSLog(@"errType===%@", errType);
-                    } completionBlock:^(id data) {
-                        
-                    }];
-            */
-            [self launchActivity];
+                    //                [[JsonHttp jsonHttp] httpRequestImageOrVedio:@"1" withData:dict andDataArray:[_dictPhoto objectForKey:@"headerImage"] failedBlock:^(id errType) {
+                    //                    NSLog(@"errType===%@", errType);
+                    //                } completionBlock:^(id data) {
+                    //                    
+                    //                }];
+                    //
+                }];
+
+            }
+                        //
+            //            [self launchActivity];
         }];
     }
-        
-    
-
-//     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-     //    [dict setObject:self.model.timeKey forKey:@"timeKey"];//timeKey
-//     [dict setObject:[NSString stringWithFormat:@"%ld", (long)self.model.teamKey] forKey:@"teamKey"];//球队key
-//     NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
-//     [dict setObject:@"244" forKey:@"userKey"];//用户key
-     //121212
-     //    [dict setObject:@"244" forKey:@"userKey"];
-     
-//     [dict setObject:self.model.name forKey:@"name"];//活动名字
-     //    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-     //    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
-     //    NSDate *date = [dateFormatter dateFromString:@"2016-05-14 16:01:03"];
-//     [dict setObject:self.model.signUpEndTime forKey:@"signUpEndTime"];//活动报名截止时间
-//     [dict setObject:self.model.beginDate forKey:@"beginDate"];//活动开始时间
-//     [dict setObject:self.model.endDate forKey:@"endDate"];//活动结束时间
-//     [dict setObject:[NSString stringWithFormat:@"%ld", (long)self.model.ballKey] forKey:@"ballKey"];//球场id
-//     [dict setObject:self.model.ballName forKey:@"ballName"];//球场名称
-//     [dict setObject:@"" forKey:@"ballGeohash"];//球场坐标
-//     [dict setObject:self.model.info forKey:@"info"];//活动简介
-//     //    [dict setObject:@"每人100元" forKey:@"costInfo"];//费用说明－－无
-//     [dict setObject:[NSString stringWithFormat:@"%ld",(long)self.model.memberPrice] forKey:@"memberPrice"];//会员价
-//     [dict setObject:[NSString stringWithFormat:@"%ld", (long)self.model.guestPrice] forKey:@"guestPrice"];//嘉宾价
-//     //    [dict setObject:@"2016-05-01 12:01:00" forKey:@"subsidyBeginTime"];//补贴开始时间
-//     //    [dict setObject:@"2016-06-01 12:01:00" forKey:@"subsidyEndTime"];//补贴结束时间
-//     //    [dict setObject:@"30" forKey:@"subsidyPrice"];//补贴价
-//     [dict setObject:[NSString stringWithFormat:@"%ld", (long)self.model.maxCount] forKey:@"maxCount"];//最大人员数
-//     [dict setObject:[NSString stringWithFormat:@"%ld", (long)_model.isClose] forKey:@"isClose"];//活动是否结束 0 : 开始 , 1 : 已结束
-//     NSDateFormatter *formatter =[[NSDateFormatter alloc] init];
-//     [formatter setDateFormat:@"yyyyMMddHHmmss"];
-//     NSString *currentTime = [formatter stringFromDate:[NSDate date]];
-//     [dict setObject:@"2016-04-01 12:01:00" forKey:@"createTime"];//活动创建时间
-//     //    [dict setObject:@"50" forKey:@"sumCount"];//活动报名总人数
-//     //    [dict setObject:@"5000" forKey:@"sumMoney"];//活动总金额
-//     //    [dict setObject:@"5000" forKey:@"WithdrawalsMoney"];//提现金额
-//     
-//     //createTeamActivity
-//     
-//     [[JsonHttp jsonHttp]httpRequest:@"team/createTeamActivity" JsonKey:@"teamActivity" withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
-//     NSLog(@"%@", errType);
-//     } completionBlock:^(id data) {
-//     NSLog(@"%@", data);
-//     }];
-    
-    //    JGTeamApplyViewController * applyCtrl = [[JGTeamApplyViewController alloc]initWithNibName:@"JGTeamApplyViewController" bundle:nil];
-    //    [self.navigationController pushViewController:applyCtrl animated:YES];
-    
-    
 }
 #pragma mark -- 活动发布成功后
 - (void)launchActivity{
