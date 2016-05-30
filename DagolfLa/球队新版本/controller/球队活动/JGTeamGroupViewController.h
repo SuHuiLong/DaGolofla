@@ -10,4 +10,6 @@
 
 @interface JGTeamGroupViewController : ViewController
 
+@property (nonatomic, assign)NSInteger teamKey;
+
 @end

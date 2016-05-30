@@ -9,17 +9,10 @@
 #import "JGHAddInvoiceViewController.h"
 #import "JGHConcentTextViewController.h"
 #import "JGHAddAddressViewController.h"
-//#import "JGHIvoiceTypeCell.h"
-//#import "JGInvoiceTypeTextCell.h"
-//#import "JGTeamActivityDetailsCell.h"
-
-//static NSString *const JGHIvoiceTypeCellIdentifier = @"JGHIvoiceTypeCell";
-//static NSString *const JGInvoiceTypeTextCellIdentifier = @"JGInvoiceTypeTextCell";
-//static NSString *const JGTeamActivityDetailsCellIdentifier = @"JGTeamActivityDetailsCell";
 
 @interface JGHAddInvoiceViewController ()<JGHAddAddressViewControllerDelegate>
 {
-    NSInteger _invoiceType;//地址的高度
+    NSInteger _invoiceType;
 }
 
 @property (nonatomic, strong)NSArray *invoiceTypeArray;//1－文具,2－办公,3－餐饮
@@ -29,8 +22,6 @@
 @implementation JGHAddInvoiceViewController
 - (void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
-//    NSLog(@"%f", screenHeight- (self.invoiceTypeArray.count*40+40+44*3+64+3*10));
-//    self.commitBtnConstraintUnder.constant = screenHeight- (self.invoiceTypeArray.count*40+222+25+_commitBtn.frame.size.height+_promptlabel.frame.size.height);
 }
 
 - (void)viewDidLoad {
@@ -40,59 +31,54 @@
     self.commitBtn.layer.masksToBounds = YES;
     self.commitBtn.layer.cornerRadius = 8.0;
     self.addressDict = [NSMutableDictionary dictionary];
+//    self.invocieAndAddressDcit = [NSMutableDictionary dictionary];
     _invoiceType = 1;
     
-    if (self.invoiceKey) {
-        [self loadInvoiceData];
-        [self loadAddressData];
-    }
+    self.image1.hidden = NO;
+    
+//    if (_invoiceKey) {
+//        [self loadInvoiceData];//获取发票数据
+//        
+//    }
 }
-#pragma mark -- 获取地址信息
-- (void)loadAddressData{
-    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    [[JsonHttp jsonHttp]httpRequest:@"address/getAddressList" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
-        NSLog(@"err==%@", errType);
-    } completionBlock:^(id data) {
-        NSLog(@"data==%@", data);
-        
-    }];
-}
-#pragma mark -- 获取发票信息
-- (void)loadInvoiceData{
-    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    [dict setObject:@244 forKey:@"userKey"];
-    [[JsonHttp jsonHttp]httpRequest:@"invoice/getInvoiceList" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
-        NSLog(@"err==%@", errType);
-    } completionBlock:^(id data) {
-        NSLog(@"data==%@", data);
-        NSArray *array = [data objectForKey:@"invoiceList"];
-        for (NSDictionary *dict in array) {
-            if ([_invoiceKey isEqualToString:[data objectForKey:@"timeKey"]]) {
-                _textField.text = [dict objectForKey:@"title"];
-//                _contact.text = [dict objectForKey:@"title"];
-                _invoiceType = [[dict objectForKey:@"type"] integerValue];
-//                if ([[data objectForKey:@"type"] integerValue] == 1) {
-//                    self.imageConstraint.constant = 14;
-//                }else if ([[data objectForKey:@"type"] integerValue] == 2){
-//                    self.imageConstraint.constant = 45;
-//                }else{
-//                    self.imageConstraint.constant = 71;
-//                }
-            }
-        }
-    }];
-}
+//#pragma mark -- 获取发票信息
+//- (void)loadInvoiceData{
+//    _textField.text = [self.invocieAndAddressDcit objectForKey:@"title"];
+//    //                _contact.text = [dict objectForKey:@"title"];
+//    _invoiceType = [[self.invocieAndAddressDcit objectForKey:@"type"] integerValue];
+//    if (_invoiceType == 1) {
+//        self.image1.hidden = NO;
+//    }else if (_invoiceType == 2){
+//        self.image2.hidden = NO;
+//    }else if (_invoiceType == 3){
+//        self.image3.hidden = NO;
+//    }else{
+//        self.image4.hidden = NO;
+//    }
+//    
+//    self.addressName.text = [self.invocieAndAddressDcit objectForKey:@"userName"];//地址联系人名字
+//    self.addressNumber.text = [self.invocieAndAddressDcit objectForKey:@"mobile"];//地址联系人号码
+//    self.addressDetails.text = [self.invocieAndAddressDcit objectForKey:@"address"];//地址详情
+//}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
+#pragma mark -- 确定按钮
 - (IBAction)commitBtn:(UIButton *)sender {
-    
+    //发票抬头
     if (_textField.text.length == 0) {
         _textField.layer.borderColor = [UIColor redColor].CGColor;
         _textField.layer.borderWidth= 1.0f;
+        return;
+    }
+    //发票邮寄地址
+    if (self.addressName.text.length == 0) {
+        [Helper alertViewWithTitle:@"请输入邮寄地址！" withBlock:^(UIAlertController *alertView) {
+            [self presentViewController:alertView animated:YES completion:nil];
+        }];
+        
         return;
     }
     
@@ -113,7 +99,7 @@
             if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
                 if (self.delegate) {
                     //返回字典key
-                    [self.delegate backAddressKey:[dict objectForKey:@"invoiceKey"] andInvoiceName:[dict objectForKey:@"name"]];
+                    [self.delegate backAddressKey:_invoiceKey andInvoiceName:_textField.text andAddressKey:[self.addressDict objectForKey:@"timeKey"]];
                     [self.navigationController popViewControllerAnimated:YES];
                 }
             }else{
@@ -129,7 +115,8 @@
             if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
                 if (self.delegate) {
                     //返回字典key
-                    [self.delegate backAddressKey:[data objectForKey:@"invoiceKey"] andInvoiceName:[data objectForKey:@"name"]];
+                    _invoiceKey = [data objectForKey:@"invoiceKey"];
+                    [self.delegate backAddressKey:_invoiceKey andInvoiceName:_textField.text andAddressKey:[self.addressDict objectForKey:@"timeKey"]];
                     [self.navigationController popViewControllerAnimated:YES];
                 }
             }else{

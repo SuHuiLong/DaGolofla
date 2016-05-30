@@ -20,7 +20,7 @@
 
 - (instancetype)init{
     if (self == [super init]) {
-        self.teamGroupAllDataArray = [NSArray array];
+        self.teamGroupAllDataArray = [NSMutableArray array];
     }
     return self;
 }
@@ -86,8 +86,10 @@
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    [dict setObject:@0 forKey:@"oldSignUpKey"];// 老的球队活动报名人timeKey
-    [dict setObject:@279 forKey:@"newSignUpKey"]; // 新的球队活动报名人timeKey
+    NSDictionary *dataDict = [NSDictionary dictionary];
+    dataDict = [self.teamGroupAllDataArray objectAtIndex:indexPath.row];
+    [dict setObject:[NSString stringWithFormat:@"%td", _oldSignUpKey] forKey:@"oldSignUpKey"];// 老的球队活动报名人timeKey
+    [dict setObject:[dataDict objectForKey:TeamKey] forKey:@"newSignUpKey"]; // 新的球队活动报名人timeKey
     [dict setObject:[NSString stringWithFormat:@"%ld", (long)self.groupIndex] forKey:@"groupIndex"]; // 组号
     [dict setObject:[NSString stringWithFormat:@"%ld", (long)self.sortIndex] forKey:@"sortIndex"]; // 排序索引
     if (self.delegate) {
@@ -98,7 +100,7 @@
     [self.navigationController popViewControllerAnimated:YES];
     
     //更新分组updateTeamActivityGroupIndex
-    [self updateTeamActivityGroupIndex];
+//    [self updateTeamActivityGroupIndex];
 }
 
 - (void)updateTeamActivityGroupIndex{

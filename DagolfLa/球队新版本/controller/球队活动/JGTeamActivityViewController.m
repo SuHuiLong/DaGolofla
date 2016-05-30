@@ -46,12 +46,10 @@
     self.navigationItem.title = @"球队活动";
     self.page = 1;
     [self createTeamActivityTabelView];
+    if (_myActivityList == 1) {
+        [self createAdminBtn];
+    }
     
-//    self.isAdmin = @"0";
-//    //判断权限
-//    if ([self.isAdmin isEqualToString:@"0"]) {
-    [self createAdminBtn];
-//    }
     
     [self loadData];
     
@@ -64,26 +62,35 @@
     [dict setObject:@"1" forKey:@"mType"];
     [dict setObject:@"1000" forKey:@"tag"];
     
-
 }
-
+#pragma mark -- 下载数据
 - (void)loadData{
     //获取球队活动
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
-    //244  121212
     [dict setObject:[def objectForKey:@"userId"] forKey:@"userKey"];//3619
     //189781710290821120  http://192.168.2.6:8888
-//    [dict setObject:@"192" forKey:@"teamKey"];
     [dict setObject:@"0" forKey:@"offset"];
+    NSString *urlString = nil;
+    //244  121212
+    if (_myActivityList == 1) {
+        //我的活动列表
+        urlString = @"team/getTeamActivityList";
+        [dict setObject:[def objectForKey:TeamKey] forKey:@"teamKey"];
+    }else{
+        //活动大厅
+        urlString = @"team/getMyTeamActivityList";
+    }
     
-    [[JsonHttp jsonHttp]httpRequest:@"team/getMyTeamActivityList" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
+    [[JsonHttp jsonHttp]httpRequest:urlString JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
         NSLog(@"errType == %@", errType);
     } completionBlock:^(id data) {
         NSLog(@"data == %@", data);
         [self.dataArray removeAllObjects];
         
         NSArray *array = [data objectForKey:@"activityList"];
+        NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
+        
         for (NSDictionary *dict in array) {
             JGTeamAcitivtyModel *model = [[JGTeamAcitivtyModel alloc]init];
             
@@ -110,8 +117,6 @@
 - (void)launchActivityBtnClick:(UIButton *)btn{
     JGHLaunchActivityViewController * launchCtrl = [[JGHLaunchActivityViewController alloc]init];
     [self.navigationController pushViewController:launchCtrl animated:YES];
-//    JGTeamGroupViewController *JGTeamGroupCtrl = [[JGTeamGroupViewController alloc]init];
-//    [self.navigationController pushViewController:JGTeamGroupCtrl animated:YES];
 }
 #pragma mark -- 创建TableView
 - (void)createTeamActivityTabelView{
@@ -224,17 +229,13 @@
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-//    JGTeamApplyViewController *teamApplyCtrl = [[JGTeamApplyViewController alloc]initWithNibName:@"JGTeamApplyViewController" bundle:nil];
-//    JGTeamAcitivtyModel *model = [[JGTeamAcitivtyModel alloc]init];
-//    model = self.dataArray[indexPath.section];
-//    teamApplyCtrl.activityKey = model.timeKey;
-//    [self.navigationController pushViewController:teamApplyCtrl animated:YES];
-//    @Param( value = "activityKey" , require = true) Long  activityKey  ,
-//    @Param( value = "userKey"  )                    Long  userKey      ,
     JGTeamActibityNameViewController *activityNameCtrl = [[JGTeamActibityNameViewController alloc]init];
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     JGTeamAcitivtyModel *model = self.dataArray[indexPath.section];
     [dict setObject:@(model.teamActivityKey) forKey:@"activityKey"];
+    [[NSUserDefaults standardUserDefaults]setObject:@(model.teamActivityKey) forKey:@"activityKey"];
+    [[NSUserDefaults standardUserDefaults] setObject:[NSString stringWithFormat:@"%ld", (long)model.teamKey] forKey:TeamKey];
+    [[NSUserDefaults standardUserDefaults] synchronize];
     [dict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"userId" ] forKey:@"userKey"];
     [[JsonHttp jsonHttp]httpRequest:@"team/getTeamActivity" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
      

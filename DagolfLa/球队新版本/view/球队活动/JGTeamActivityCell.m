@@ -8,6 +8,7 @@
 
 #import "JGTeamActivityCell.h"
 #import "JGTeamAcitivtyModel.h"
+#import "UIImageView+WebCache.h"
 
 @implementation JGTeamActivityCell
 
@@ -23,6 +24,8 @@
 }
 
 - (void)setJGTeamActivityCellWithModel:(JGTeamAcitivtyModel *)modeel{
+    //头像
+    [self.imageview sd_setImageWithURL:[Helper setImageIconUrl:modeel.teamKey] placeholderImage:[UIImage imageNamed:@"logo"]];
     //活动名称
     self.activitytitle.text = modeel.name;
     //报名

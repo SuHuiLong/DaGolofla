@@ -29,7 +29,7 @@ static NSString *const JGGroupdetailsCollectionViewCellIdentifier = @"JGGroupdet
 
 @property (nonatomic, strong)NSMutableArray *teamGroupAllDataArray;//未分组数据
 
-@property (nonatomic, strong)NSMutableArray *alreadyDataArray;//一分组数据
+@property (nonatomic, strong)NSMutableArray *alreadyDataArray;//已分组数据
 
 @end
 
@@ -87,7 +87,8 @@ static NSString *const JGGroupdetailsCollectionViewCellIdentifier = @"JGGroupdet
 #pragma mark -- 获取报名人员列表信息
 - (void)loadData{
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    [dict setObject:@206 forKey:@"activityKey"];
+    [dict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:ActivityKey] forKey:ActivityKey];
+//    [dict setObject:@"206" forKey:ActivityKey];
     [[JsonHttp jsonHttp]httpRequest:@"team/getTeamActivitySignUpList" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
         NSLog(@"errType == %@", errType);
     } completionBlock:^(id data) {
@@ -104,7 +105,6 @@ static NSString *const JGGroupdetailsCollectionViewCellIdentifier = @"JGGroupdet
                 //已经分组
                 [self.alreadyDataArray addObject:model];
             }
-            
         }
         
         [self.collectionView reloadData];
@@ -182,23 +182,26 @@ static NSString *const JGGroupdetailsCollectionViewCellIdentifier = @"JGGroupdet
         teamMemberCtrl.sortIndex = btn.tag;
         // 老的球队活动报名人timeKey
         //获取老球员
-        NSString *lableName = [NSString stringWithFormat:@"label%ld", (long)btn.tag+1];
-        Class someClass = NSClassFromString(lableName);
-        UILabel *obj = [[someClass alloc] init];
-        if (obj.text.length != 0) {
-            NSLog(@"%@", obj.text);
+        for (NSMutableDictionary *dict in self.alreadyDataArray) {
+            if ([[dict objectForKey:@"groupIndex"] integerValue] == cell.tag) {
+                if ([[dict objectForKey:@"sortIndex"] integerValue] == btn.tag) {
+                    teamMemberCtrl.oldSignUpKey = [[dict objectForKey:TeamKey] integerValue];
+                }
+            }else{
+                teamMemberCtrl.oldSignUpKey = 0;
+            }
         }
-        //            teamMemberCtrl.oldSignUpKey =
         
         [self.navigationController pushViewController:teamMemberCtrl animated:YES];
     }else{
+
         UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
         }];
         UIAlertAction *commitAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             NSMutableDictionary *dict = [NSMutableDictionary dictionary];
             NSLog(@"%@", [userDef objectForKey:TeamMember]);
             [dict setObject:@0 forKey:@"oldSignUpKey"];// 老的球队活动报名人timeKey
-            [dict setObject:@279 forKey:@"newSignUpKey"]; // 新的球队活动报名人timeKey
+            [dict setObject:[NSString stringWithFormat:@"%td", _teamKey] forKey:@"newSignUpKey"]; // 新的球队活动报名人timeKey
             [dict setObject:[NSString stringWithFormat:@"%ld", (long)cell.tag] forKey:@"groupIndex"]; // 组号
             [dict setObject:[NSString stringWithFormat:@"%ld", (long)btn.tag] forKey:@"sortIndex"]; // 排序索引
         }];

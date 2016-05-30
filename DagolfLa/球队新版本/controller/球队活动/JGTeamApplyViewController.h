@@ -13,11 +13,12 @@
 @property (weak, nonatomic) IBOutlet UITableView *teamApplyTableView;
 
 //activityKey
-@property (copy, nonatomic)NSString *activityKey;
 @property (nonatomic, strong)JGTeamAcitivtyModel *modelss;
 
 
 @property (copy, nonatomic)NSString *invoiceKey;//发票key
 @property (copy, nonatomic)NSString *invoiceName;//发票name
+@property (copy, nonatomic)NSString *addressKey;//发票name
+
 
 @end
