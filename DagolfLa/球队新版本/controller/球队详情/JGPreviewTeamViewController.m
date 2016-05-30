@@ -201,14 +201,31 @@ static CGFloat ImageHeight  = 210.0;
                     [user setObject:0 forKey:@"cacheCreatTeamDic"];
                     //            [user removeObjectForKey:@"cacheCreatTeamDic"];
                     [user synchronize];
-                    
-                    
                 }
             }];
-            [Helper alertViewNoHaveCancleWithTitle:@"球队创建提交成功" withBlock:^(UIAlertController *alertView) {
-                [self.navigationController presentViewController:alertView animated:YES completion:nil];
+            
+
+            UIAlertController *alert=[UIAlertController alertControllerWithTitle:@"提示" message:@"球队创建成功是否返回上个页面" preferredStyle:UIAlertControllerStyleAlert];
+            
+            UIAlertAction *action1=[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+         
             }];
-            [self.navigationController popViewControllerAnimated:YES];
+            UIAlertAction* action2=[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+          
+//            [self.navigationController popViewControllerAnimated:YES];
+                [self.navigationController popToRootViewControllerAnimated:YES];
+  
+            }];
+            
+            [alert addAction:action1];
+            [alert addAction:action2];
+            [self presentViewController:alert animated:YES completion:nil];
+            
+            
+//            [Helper alertViewNoHaveCancleWithTitle:@"球队创建提交成功" withBlock:^(UIAlertController *alertView) {
+//                [self.navigationController presentViewController:alertView animated:YES completion:nil];
+//            }];
+//            [self.navigationController popViewControllerAnimated:YES];
         }];
         
         

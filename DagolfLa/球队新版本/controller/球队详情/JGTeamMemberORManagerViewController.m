@@ -82,7 +82,12 @@ static CGFloat ImageHeight  = 210.0;
     [super viewWillAppear:YES];
     self.navigationController.navigationBarHidden = YES;
     self.titleField.text = [self.detailDic objectForKey:@"name"];
-//    [self.headPortraitBtn.imageView sd_setImageWithURL:[Helper setImageIconUrl:[self.detailDic objectForKey:@"timeKey"]] placeholderImage:[UIImage imageNamed:@"logo"]];
+
+    
+    [self.headPortraitBtn sd_setImageWithURL:[Helper setImageIconUrl:@"team" andTeamKey:[[self.detailDic objectForKey:@"timeKey"] integerValue] andIsSetWidth:YES andIsBackGround:NO] forState:(UIControlStateNormal) placeholderImage:[UIImage imageNamed:@"logo"]];
+    self.headPortraitBtn.layer.masksToBounds = YES;
+    self.headPortraitBtn.layer.cornerRadius = 8.0;
+    
 }
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:YES];
@@ -223,12 +228,12 @@ static CGFloat ImageHeight  = 210.0;
 //    }
     
     NSString*  shareUrl = [NSString stringWithFormat:@"http://192.168.1.104:8888/imgcache.dagolfla.com/share/team/team.html?key=%@",[self.detailDic objectForKey:@"teamKey"]];
-    [UMSocialData defaultData].extConfig.title=[NSString stringWithFormat:@"来自%@的话题",[self.detailDic objectForKey:@"name"]];
+    [UMSocialData defaultData].extConfig.title=[NSString stringWithFormat:@"来自%@的球队",[self.detailDic objectForKey:@"name"]];
     if (index == 0){
         //微信
         [UMSocialWechatHandler setWXAppId:@"wxdcdc4e20544ed728" appSecret:@"fdc75aae5a98f2aa0f62ef8cba2b08e9" url:shareUrl];
         [UMSocialConfig hiddenNotInstallPlatforms:@[UMShareToWechatSession,UMShareToWechatTimeline,UMShareToSina]];
-        [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatSession] content:[NSString stringWithFormat:@"来自%@的话题:%@ %@",[self.detailDic objectForKey:@""],[self.detailDic objectForKey:@""],shareUrl]  image:fiData location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
+        [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatSession] content:[NSString stringWithFormat:@"来自%@的球队:%@ %@",[self.detailDic objectForKey:@"name"],[self.detailDic objectForKey:@"name"],shareUrl]  image:fiData location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
             if (response.responseCode == UMSResponseCodeSuccess) {
 //                [self shareS:indexRow];
             }
@@ -237,7 +242,7 @@ static CGFloat ImageHeight  = 210.0;
         //朋友圈
         [UMSocialWechatHandler setWXAppId:@"wxdcdc4e20544ed728" appSecret:@"fdc75aae5a98f2aa0f62ef8cba2b08e9" url:shareUrl];
         [UMSocialConfig hiddenNotInstallPlatforms:@[UMShareToWechatSession,UMShareToWechatTimeline,UMShareToSina]];
-        [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatTimeline] content:[NSString stringWithFormat:@"来自%@的话题:%@ %@",[self.detailDic objectForKey:@"name"],[self.detailDic objectForKey:@""],shareUrl] image:fiData location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
+        [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatTimeline] content:[NSString stringWithFormat:@"来自%@的话题:%@ %@",[self.detailDic objectForKey:@"name"],[self.detailDic objectForKey:@"name"],shareUrl] image:fiData location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
             if (response.responseCode == UMSResponseCodeSuccess) {
 //                [self shareS:indexRow];
             }

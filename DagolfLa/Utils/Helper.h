@@ -25,6 +25,14 @@
 
 + (NSURL *)setImageIconUrl:(NSNumber *)timeKey;
 
+
+
+// 新版本球队图片请求
++ (NSURL *)setImageIconUrl:(NSString *)iconType andTeamKey:(NSInteger)timeKey andIsSetWidth:(BOOL)isSet andIsBackGround:(BOOL)isBack;
+
+
+
+
 //验证手机号码格式
 + (BOOL)testMobileIsTrue:(NSString *)mobile;
 

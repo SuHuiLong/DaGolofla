@@ -26,6 +26,7 @@
 #import "JGNewCreateTeamTableViewController.h"
 #import "JGTeamActivityCell.h"
 #import <CoreLocation/CLLocation.h>
+#import "EnterViewController.h"
 
 #import "HomeHeadView.h"  // topscrollView
 #import "ChangePicModel.h"
@@ -170,6 +171,10 @@
 
 - (void)setData{
     
+    
+    if ([[NSUserDefaults standardUserDefaults]objectForKey:@"userId"]) {
+
+    
     NSMutableDictionary *getMyTeam = [NSMutableDictionary dictionary];
     [getMyTeam setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"userId"] forKey:@"userKey"];
 //    [getMyTeam setObject:@192 forKey:@"teamKey"];
@@ -229,23 +234,8 @@
                     [self.navigationController presentViewController:alertView animated:YES completion:nil];
                 }];
             } completionBlock:^(id data) {
-                
-//                if (data[@"teamList"]) {
-                    self.teamArray = data[@"teamList"];
-//                }else{
-//                    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-//                    [dict setValue:@0 forKey:@"offset"];
-//                    [[JsonHttp jsonHttp] httpRequest:@"team/getTeamList" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
-//                        NSLog(@"getTeamList ***** error%@",errType);
-//                    } completionBlock:^(id data) {
-//                        
-//                        self.teamArray = data[@"teamList"];
-//                        
-//                        [self.tableView reloadData];
-//                        
-//                    }];
-//                    
-//                }
+                self.teamArray = data[@"teamList"];
+
 
                 [self.tableView reloadData];
                 
@@ -253,7 +243,15 @@
             
         }
     }];
-    
+    }else{
+        [Helper alertViewWithTitle:@"是否立即登录?" withBlockCancle:^{
+        } withBlockSure:^{
+            EnterViewController *vc = [[EnterViewController alloc] init];
+            [self.navigationController pushViewController:vc animated:YES];
+        } withBlock:^(UIAlertController *alertView) {
+            [self presentViewController:alertView animated:YES completion:nil];
+        }];
+    }
 }
 
 
