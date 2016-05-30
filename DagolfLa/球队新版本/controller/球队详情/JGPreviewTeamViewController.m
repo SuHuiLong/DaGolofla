@@ -186,7 +186,7 @@ static CGFloat ImageHeight  = 210.0;
             NSLog(@"errType===%@", errType);
         } completionBlock:^(id data) {
             
-            [dict setObject:[NSString stringWithFormat:@"%@_backgroup" ,strTimeKey] forKey:@"data"];
+            [dict setObject:[NSString stringWithFormat:@"%@_background" ,strTimeKey] forKey:@"data"];
             [dict setObject:TYPE_TEAM_BACKGROUND forKey:@"nType"];
             [[JsonHttp jsonHttp] httpRequestImageOrVedio:@"1" withData:dict andDataArray:[_dictPhoto objectForKey:@"headerImage"] failedBlock:^(id errType) {
                 NSLog(@"errType===%@", errType);
@@ -194,9 +194,8 @@ static CGFloat ImageHeight  = 210.0;
                 
             }];
             
-            
             NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
-            //
+
             //            NSMutableDictionary *Dic =[user objectForKey:@"cacheCreatTeamDic"];
             //            [Dic setObject:strTimeKey forKey:@"timeKey"];
             [_detailDic setObject:strTimeKey forKey:@"timeKey"];

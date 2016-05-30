@@ -32,7 +32,7 @@
     label.font = [UIFont systemFontOfSize:15 * screenWidth / 320];
     label.numberOfLines = 0;
     
-    self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, [self calculationLabelHeight:self.string])];
+    self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight)];
     
     [self.scrollView addSubview:label];
     

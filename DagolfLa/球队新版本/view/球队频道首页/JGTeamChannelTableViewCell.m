@@ -52,7 +52,7 @@
 
 -(void)showData:(JGLMyTeamModel *)model
 {
-    [self.iconImageV sd_setImageWithURL:[Helper setImageIconUrl:model.teamKey] placeholderImage:[UIImage imageNamed:@"logo"]];
+    [self.iconImageV sd_setImageWithURL:[Helper setImageIconUrl:[model.teamKey integerValue]] placeholderImage:[UIImage imageNamed:@"logo"]];
     
     self.nameLabel.text = [NSString stringWithFormat:@"%@(%@人)",model.name,model.userSum];
     self.adressLabel.text = model.crtyName;
