@@ -18,6 +18,21 @@
 #import "JGTeamActivityViewController.h"
 #import "JGHTeamMembersViewController.h"
 #import "JGTeamDeatilWKwebViewController.h"
+#import "JGTeamGroupViewController.h"
+
+#import "UMSocial.h"
+#import "ShareAlert.h"
+#import "UMSocialData.h"
+#import "ShareAlert.h"
+#import "UMSocialConfig.h"
+#import "UMSocialSinaHandler.h"
+#import "UMSocialDataService.h"
+#import "UMSocialWechatHandler.h"
+#import "CommuniteTableViewCell.h"
+#import "UMSocialWechatHandler.h"
+#import "UMSocialControllerService.h"
+
+#import "EnterViewController.h"
 
 static NSString *const JGTeamActivityWithAddressCellIdentifier = @"JGTeamActivityWithAddressCell";
 static NSString *const JGTeamActivityDetailsCellIdentifier = @"JGTeamActivityDetailsCell";
@@ -132,15 +147,26 @@ static CGFloat ImageHeight  = 210.0;
     [btn setImage:[UIImage imageNamed:@"backL"] forState:UIControlStateNormal];
     [btn addTarget:self action:@selector(initItemsBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.titleView addSubview:btn];
-    //点击更换背景
-    UIButton *replaceBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    replaceBtn.frame = CGRectMake(screenWidth-64, 0, 54, 44);
-    replaceBtn.titleLabel.font = [UIFont systemFontOfSize:FontSize_Normal];
-    [replaceBtn setTitle:@"点击更换" forState:UIControlStateNormal];
-    replaceBtn.titleLabel.font = [UIFont systemFontOfSize:13];
-    replaceBtn.tag = 520;
-    replaceBtn.hidden = YES;
-    [self.titleView addSubview:replaceBtn];
+    
+    //分享按钮
+    UIButton *shareBtn = [[UIButton alloc]initWithFrame:CGRectMake(screenWidth-64, 0, 44, 44)];
+    [shareBtn setImage:[UIImage imageNamed:@"fenxiang"] forState:UIControlStateNormal];
+    [shareBtn addTarget:self action:@selector(addShare) forControlEvents:UIControlEventTouchUpInside];
+    [self.titleView addSubview:shareBtn];
+    //有管理权限的用户在活动详情页面显示－－活动分组
+    NSUserDefaults *userDef = [NSUserDefaults standardUserDefaults];
+    NSString *str = [userDef objectForKey:TeamMember];
+    if ([str rangeOfString:@"1001"].location != NSNotFound){
+        UIButton *replaceBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        replaceBtn.frame = CGRectMake(screenWidth-104, 0, 54, 44);
+        replaceBtn.titleLabel.font = [UIFont systemFontOfSize:FontSize_Normal];
+        [replaceBtn setTitle:@"活动分组" forState:UIControlStateNormal];
+        replaceBtn.titleLabel.font = [UIFont systemFontOfSize:13];
+        [replaceBtn addTarget:self action:@selector(pushGroupCtrl:) forControlEvents:UIControlEventTouchUpInside];
+        replaceBtn.tag = 520;
+        [self.titleView addSubview:replaceBtn];
+    }
+    
     //输入框
     self.titleField = [[UILabel alloc]initWithFrame:CGRectMake(64, 7, screenWidth - 128, 30)];
     self.titleField.text = self.model.name;
@@ -166,9 +192,79 @@ static CGFloat ImageHeight  = 210.0;
     CGSize size = [self.model.ballName boundingRectWithSize:CGSizeMake(screenWidth - 100, 0) options: NSStringDrawingTruncatesLastVisibleLine | NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading attributes:attribute context:nil].size;
     CGRect address = self.addressBtn.frame;
     self.addressBtn.frame = CGRectMake(address.origin.x, address.origin.y, size.width, 25);
-
+    
     [self.imgProfile addSubview:self.addressBtn];
 }
+#pragma mark -分享
+- (void)addShare{
+    if ([[NSUserDefaults standardUserDefaults]objectForKey:@"userId"]) {
+        //        self.ymData = (YMTextData *)[_tableDataSource objectAtIndex:indexRow];
+        
+        ShareAlert* alert = [[ShareAlert alloc]initMyAlert];
+        
+        [self.titleView addSubview:alert];
+        [alert setCallBackTitle:^(NSInteger index) {
+            [self shareInfo:index];
+        }];
+        [UIView animateWithDuration:0.2 animations:^{
+            [alert show];
+        }];
+    }else {
+        [Helper alertViewWithTitle:@"是否立即登录?" withBlockCancle:^{
+        } withBlockSure:^{
+            EnterViewController *vc = [[EnterViewController alloc] init];
+            [self.navigationController pushViewController:vc animated:YES];
+        } withBlock:^(UIAlertController *alertView) {
+            [self presentViewController:alertView animated:YES completion:nil];
+        }];
+    }
+}
+#pragma mark - 分享
+-(void)shareInfo:(NSInteger)index{
+    
+    NSData *fiData = [[NSData alloc]init];
+    
+    //http://192.168.1.104:8888/imgcache.dagolfla.com/share/team/team.html?key=181
+    NSString*  shareUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/team/teamac.html?key=%td", _teamActivityKey];
+//    [UMSocialData defaultData].extConfig.title=[NSString stringWithFormat:@"来自%@的球队", [self.detailDic objectForKey:@"name"]];
+    if (index == 0){
+        //微信
+        [UMSocialWechatHandler setWXAppId:@"wxdcdc4e20544ed728" appSecret:@"fdc75aae5a98f2aa0f62ef8cba2b08e9" url:shareUrl];
+        [UMSocialConfig hiddenNotInstallPlatforms:@[UMShareToWechatSession,UMShareToWechatTimeline,UMShareToSina]];
+        [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatSession] content:[NSString stringWithFormat:@"来自[打高尔夫啦]的球队活动:%@ %@", _model.name, shareUrl]  image:fiData location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
+            if (response.responseCode == UMSResponseCodeSuccess) {
+                //                [self shareS:indexRow];
+            }
+        }];
+        
+    }else if (index==1){
+        //朋友圈
+        [UMSocialWechatHandler setWXAppId:@"wxdcdc4e20544ed728" appSecret:@"fdc75aae5a98f2aa0f62ef8cba2b08e9" url:shareUrl];
+        [UMSocialConfig hiddenNotInstallPlatforms:@[UMShareToWechatSession,UMShareToWechatTimeline,UMShareToSina]];
+        [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatTimeline] content:[NSString stringWithFormat:@"来自[打高尔夫啦]的球队活动:%@ %@", _model.name, shareUrl] image:fiData location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
+            if (response.responseCode == UMSResponseCodeSuccess) {
+                //                [self shareS:indexRow];
+            }
+        }];
+    }else{
+        UMSocialData *data = [UMSocialData defaultData];
+        data.shareImage = [UIImage imageNamed:@"logo"];
+        data.shareText = [NSString stringWithFormat:@"%@%@",@"打高尔夫啦",shareUrl];
+        [[UMSocialControllerService defaultControllerService] setSocialData:data];
+        //2.设置分享平台
+        [UMSocialSnsPlatformManager getSocialPlatformWithName:UMShareToSina].snsClickHandler(self,[UMSocialControllerService defaultControllerService],YES);
+//        self.launchActivityTableView.frame = CGRectMake(0, 64, ScreenWidth, screenHeight - 64 - 49);
+        
+    }
+    
+}
+#pragma mark -- 跳转分组页面
+- (void)pushGroupCtrl:(UIButton *)btn{
+    JGTeamGroupViewController *teamGroupCtrl = [[JGTeamGroupViewController alloc]init];
+    teamGroupCtrl.teamActivityKey = _teamActivityKey;
+    [self.navigationController pushViewController:teamGroupCtrl animated:YES];
+}
+#pragma mark -- 获取球场地址
 - (void)replaceWithPicture:(UIButton *)Btn{
     //球场列表
     BallParkViewController *ballCtrl = [[BallParkViewController alloc]init];
@@ -518,7 +614,7 @@ static CGFloat ImageHeight  = 210.0;
 - (void)pushDetailSCtrl:(UIButton *)btn{
     JGTeamDeatilWKwebViewController *WKCtrl = [[JGTeamDeatilWKwebViewController alloc]init];
     WKCtrl.teamName = self.model.name;
-    WKCtrl.detailString = self.model.info;
+    WKCtrl.detailString = self.model.details;
     [self.navigationController pushViewController:WKCtrl animated:YES];
 }
 #pragma mark -- 查看已报名人列表

@@ -323,6 +323,10 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
             [self weChatPay];
         }else if (type == 2){
             [self zhifubaoPay];
+        }else{
+            //跳转分组页面
+            JGTeamGroupViewController *groupCtrl = [[JGTeamGroupViewController alloc]init];
+            groupCtrl.teamActivityKey = [_modelss.timeKey integerValue];
         }
     }];
 }

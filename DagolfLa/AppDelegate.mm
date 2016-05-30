@@ -33,6 +33,8 @@
 
 #import <AlipaySDK/AlipaySDK.h>
 
+#import "UMMobClick/MobClick.h"
+
 @interface AppDelegate ()
 {
     BMKMapManager* _mapManager;
@@ -40,6 +42,16 @@
 @end
 
 @implementation AppDelegate
+
+- (void)umengTrack {
+    //    [MobClick setAppVersion:XcodeAppVersion]; //参数为NSString * 类型,自定义app版本信息，如果不设置，默认从CFBundleVersion里取
+    [MobClick setLogEnabled:YES];
+    UMConfigInstance.appKey = @"54448737fd98c53d2b0018af";
+    UMConfigInstance.secret = @"secretstringaldfkals";
+    //    UMConfigInstance.eSType = E_UM_GAME;
+    [MobClick startWithConfigure:UMConfigInstance];
+}
+
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
         

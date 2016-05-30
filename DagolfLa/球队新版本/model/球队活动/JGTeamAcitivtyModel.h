@@ -63,4 +63,8 @@
 //活动背景
 @property (nonatomic, strong) UIImage *bgImage;
 
+//活动详情
+@property (nonatomic, strong) NSString *details;
+
+
 @end

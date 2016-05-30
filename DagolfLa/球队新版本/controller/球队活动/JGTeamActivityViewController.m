@@ -121,7 +121,7 @@
     
     self.teamActivityTableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
     self.teamActivityTableView.footer=[MJDIYBackFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRereshing)];
-//    self.teamActivityTableView.header beginRefreshing];
+    [self.teamActivityTableView.header beginRefreshing];
     
     [self.view addSubview:self.teamActivityTableView];
 }

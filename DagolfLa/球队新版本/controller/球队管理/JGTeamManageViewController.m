@@ -26,6 +26,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.navigationItem.title = @"球队管理";
+    
     [self creatTableView];
     // Do any additional setup after loading the view.
 }
@@ -78,7 +80,6 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     //入队审核
-
     
     if (indexPath.section == 0) {
         JGLJoinManageViewController* joinVc = [[JGLJoinManageViewController alloc]init];
@@ -99,8 +100,13 @@
                 break;
             case 1:
             {
-                JGTeamActivityViewController* acVc = [[JGTeamActivityViewController alloc]init];
-                [self.navigationController pushViewController:acVc animated:YES];
+                //活动管理
+                JGTeamActivityViewController *activityCtrl = [[JGTeamActivityViewController alloc]init];
+                activityCtrl.timeKey = self.teamKey;
+                activityCtrl.myActivityList = 1;
+                [self.navigationController pushViewController:activityCtrl animated:YES];
+//                JGTeamActivityViewController* acVc = [[JGTeamActivityViewController alloc]init];
+//                [self.navigationController pushViewController:acVc animated:YES];
             }
                 break;
             case 2:
