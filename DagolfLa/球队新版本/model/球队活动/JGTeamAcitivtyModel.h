@@ -51,9 +51,9 @@
 //球场id
 @property (assign, nonatomic) NSInteger ballKey;
 //联系人
-@property (copy, nonatomic) NSString *username;
+@property (copy, nonatomic) NSString *userName;
 //联系人电话
-@property (copy, nonatomic) NSString *usernumber;
+@property (copy, nonatomic) NSString *userMobile;
 
 @property (assign, nonatomic) NSInteger teamActivityKey;
 

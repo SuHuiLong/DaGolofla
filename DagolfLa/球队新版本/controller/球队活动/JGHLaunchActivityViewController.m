@@ -73,7 +73,7 @@ static CGFloat ImageHeight  = 210.0;
 
         _dataDict = [[NSMutableDictionary alloc]init];
         UIImage *image = [UIImage imageNamed:BGImage];
-        self.model.headerImage = image;
+        self.model.bgImage = image;
         self.imgProfile = [[UIImageView alloc] initWithImage:image];
         self.imgProfile.frame = CGRectMake(0, 0, screenWidth, ImageHeight);
         self.imgProfile.userInteractionEnabled = YES;
@@ -207,13 +207,8 @@ static CGFloat ImageHeight  = 210.0;
         [self alertviewString:@"活动报名截止时间不能为空！"];
         return;
     }
-    
-//    if (self.model.maxCount <= 0) {
-//        [self alertviewString:@"活动地址不能为空！"];
-//        return;
-//    }
-    
-    if (self.model.usernumber.length != 11) {
+
+    if (self.model.userMobile.length != 11) {
         [self alertviewString:@"手机号码格式不正确！"];
         return;
     }
@@ -238,7 +233,7 @@ static CGFloat ImageHeight  = 210.0;
         return;
     }
     
-    if (self.model.username == nil) {
+    if (self.model.userName == nil) {
         [self alertviewString:@"活动联系人不能为空！"];
         return;
     }
@@ -497,9 +492,9 @@ static CGFloat ImageHeight  = 210.0;
     if (textField.tag == 234) {
         self.model.maxCount = [textField.text integerValue];
     }else if (textField.tag == 23) {
-        self.model.username = textField.text;
+        self.model.userName = textField.text;
     }else if (textField.tag == 123){
-        self.model.usernumber = textField.text;
+        self.model.userMobile = textField.text;
     }else if (textField.tag == 345){
         self.model.name = textField.text;
     }
