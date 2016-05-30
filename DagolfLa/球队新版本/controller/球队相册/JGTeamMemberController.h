@@ -8,10 +8,14 @@
 
 #import "ViewController.h"
 
+
 @interface JGTeamMemberController : ViewController
 
 
 @property (strong, nonatomic) NSNumber* teamKey;
 
+@property (assign, nonatomic) BOOL isEdit;
+
+@property(nonatomic,copy)void(^block)(NSInteger str,NSString *str1,NSString *str2);
 
 @end

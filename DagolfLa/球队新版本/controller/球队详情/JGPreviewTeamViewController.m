@@ -187,7 +187,7 @@ static CGFloat ImageHeight  = 210.0;
         } completionBlock:^(id data) {
             
             [dict setObject:[NSString stringWithFormat:@"%@_background" ,strTimeKey] forKey:@"data"];
-            [dict setObject:TYPE_TEAM_BACKGROUND forKey:@"nType"];
+            [dict setObject:TYPE_TEAM_HEAD forKey:@"nType"];
             [[JsonHttp jsonHttp] httpRequestImageOrVedio:@"1" withData:dict andDataArray:[_dictPhoto objectForKey:@"headerImage"] failedBlock:^(id errType) {
                 NSLog(@"errType===%@", errType);
             } completionBlock:^(id data) {
@@ -212,7 +212,7 @@ static CGFloat ImageHeight  = 210.0;
                 }
             }];
             
-            UIAlertController *alert=[UIAlertController alertControllerWithTitle:@"提示" message:@"球队创建成功是否返回上个页面" preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertController *alert=[UIAlertController alertControllerWithTitle:@"提示" message:@"球队创建成功是否返回主页面" preferredStyle:UIAlertControllerStyleAlert];
             
             UIAlertAction *action1=[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                 

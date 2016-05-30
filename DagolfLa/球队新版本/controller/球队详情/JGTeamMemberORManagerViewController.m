@@ -13,6 +13,7 @@
 #import "JGTeamActivityViewController.h" //活动
 #import "JGImageAndLabelAndLabelTableViewCell.h"
 #import "JGTeamDeatilWKwebViewController.h"// 球队详情
+#import "JGApplyMaterialViewController.h"
 
 #import "JGHLaunchActivityViewController.h"
 #import "JGTableViewCell.h"
@@ -98,7 +99,7 @@ static CGFloat ImageHeight  = 210.0;
     self.headPortraitBtn.layer.masksToBounds = YES;
     self.headPortraitBtn.layer.cornerRadius = 8.0;
     
-    [self.imgProfile sd_setImageWithURL:[Helper setImageIconUrl:@"team" andTeamKey:[[self.detailDic objectForKey:@"timeKey"] integerValue] andIsSetWidth:YES andIsBackGround:YES] placeholderImage:[UIImage imageNamed:@"tu2"]];
+    [self.imgProfile sd_setImageWithURL:[Helper setImageIconUrl:@"team" andTeamKey:[[self.detailDic objectForKey:@"timeKey"] integerValue] andIsSetWidth:YES andIsBackGround:YES] placeholderImage:[UIImage imageNamed:@"selfBackPic.jpg"]];
 
 }
 
@@ -555,9 +556,13 @@ static CGFloat ImageHeight  = 210.0;
     }
     else if (indexPath.section == 3){
         if (indexPath.row == 0) {
-            JGLSelfSetViewController *costView = [[JGLSelfSetViewController alloc]init];
-               costView.teamKey = [[self.detailDic objectForKey:@"timeKey"] integerValue];
-            [self.navigationController pushViewController:costView animated:YES];
+            JGApplyMaterialViewController *meter = [[JGApplyMaterialViewController alloc] init];
+            meter.isSelfSet = YES;
+            meter.detailDic = self.detailDic;
+            [self.navigationController pushViewController:meter animated:YES];
+//            JGLSelfSetViewController *costView = [[JGLSelfSetViewController alloc]init];
+//               costView.teamKey = [[self.detailDic objectForKey:@"timeKey"] integerValue];
+//            [self.navigationController pushViewController:costView animated:YES];
         }
     }
     else

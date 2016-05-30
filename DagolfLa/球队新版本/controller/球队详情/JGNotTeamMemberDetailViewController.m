@@ -16,6 +16,8 @@
 #import "DateTimeViewController.h"
 #import "TeamAreaViewController.h"
 #import "JGImageAndLabelAndLabelTableViewCell.h"
+#import "ChatDetailViewController.h"
+#import "JGTeamDeatilWKwebViewController.h"
 
 #import "JGTeamActibityNameViewController.h"
 #import "SXPickPhoto.h"
@@ -63,7 +65,7 @@ static CGFloat ImageHeight  = 210.0;
     [self.headPortraitBtn sd_setImageWithURL:[Helper setImageIconUrl:@"team" andTeamKey:[[self.detailDic objectForKey:@"timeKey"] integerValue] andIsSetWidth:YES andIsBackGround:NO] forState:(UIControlStateNormal) placeholderImage:[UIImage imageNamed:@"logo"]];
     self.headPortraitBtn.layer.masksToBounds = YES;
     self.headPortraitBtn.layer.cornerRadius = 8.0;
-    
+    self.headPortraitBtn.userInteractionEnabled = NO;
     
 //    [self.headPortraitBtn sd_setImageWithURL:[Helper setImageIconUrl:@"team" andTeamKey:[[self.detailDic objectForKey:@"timeKey"] integerValue] andIsSetWidth:YES andIsBackGround:NO] forState:(UIControlStateNormal) placeholderImage:[UIImage imageNamed:@"logo"]];
 //    self.headPortraitBtn.layer.masksToBounds = YES;
@@ -127,7 +129,7 @@ static CGFloat ImageHeight  = 210.0;
     UIButton *replaceBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     replaceBtn.frame = CGRectMake(screenWidth-64, 0, 54, 44);
     replaceBtn.titleLabel.font = [UIFont systemFontOfSize:FontSize_Normal];
-    [replaceBtn setTitle:@"分享" forState:UIControlStateNormal];
+    [replaceBtn setTitle:@"详情" forState:UIControlStateNormal];
     replaceBtn.titleLabel.font = [UIFont systemFontOfSize:13];
     replaceBtn.tag = 520;
     [replaceBtn addTarget:self action:@selector(initItemsBtnClick:) forControlEvents:UIControlEventTouchUpInside];
@@ -164,16 +166,28 @@ static CGFloat ImageHeight  = 210.0;
         [self.navigationController popViewControllerAnimated:YES];
     }else if (btn.tag == 520){
         //更换头像
-        [self didSelectPhotoImage:btn];
+        // 球队详情
+        JGTeamDeatilWKwebViewController *wkVC = [[JGTeamDeatilWKwebViewController alloc] init];
+        wkVC.detailString = [self.detailDic objectForKey:@"details"];
+        wkVC.teamName = [self.detailDic objectForKey:@"name"];
+        [self.navigationController pushViewController:wkVC animated:YES];
+//        [self didSelectPhotoImage:btn];
     }
 }
 #pragma mark -- 预览
 - (void)createPreviewBtn{
-    UIButton *previewBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, screenHeight -44, screenWidth, 44)];
+    UIButton *previewBtn = [[UIButton alloc]initWithFrame:CGRectMake(41 * screenWidth / 320, screenHeight -44, screenWidth - 40, 44)];
     [previewBtn setTitle:@"申请加入" forState:UIControlStateNormal];
     previewBtn.backgroundColor = [UIColor colorWithHexString:@"#F59826"];
     [previewBtn addTarget:self action:@selector(previewBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:previewBtn];
+    
+    UIButton *askBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, screenHeight -44, 40 * screenWidth / 320, 44)];
+    [askBtn setTitle:@"咨询" forState:UIControlStateNormal];
+    askBtn.backgroundColor = [UIColor colorWithHexString:@"#F59826"];
+    [askBtn addTarget:self action:@selector(askBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:askBtn];
+    
 }
 #pragma mark -- 申请加入
 - (void)previewBtnClick:(UIButton *)btn{
@@ -184,6 +198,21 @@ static CGFloat ImageHeight  = 210.0;
 
 }
 
+#pragma mark -- 咨询
+- (void)askBtnClick:(UIButton *)btn{
+    ChatDetailViewController *vc = [[ChatDetailViewController alloc] init];
+    //设置聊天类型
+    vc.conversationType = ConversationType_PRIVATE;
+    //设置对方的id
+    vc.targetId = [NSString stringWithFormat:@"%@",[self.detailDic objectForKey:@"answerKey"]];
+    //设置对方的名字
+    //    vc.userName = model.conversationTitle;
+    //设置聊天标题
+    vc.title = [self.detailDic objectForKey:@"answerName"];
+    //设置不现实自己的名称  NO表示不现实
+    vc.displayUserNameInCell = NO;
+    [self.navigationController pushViewController:vc animated:YES];
+}
 
 #pragma mark -- 改变图片位置 放大缩小
 - (void)updateImg {

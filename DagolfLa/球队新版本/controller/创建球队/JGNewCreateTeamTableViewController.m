@@ -104,10 +104,11 @@ static CGFloat ImageHeight  = 210.0;
         _dictPhoto = [[NSMutableDictionary alloc]init];
         self.pickPhoto = [[SXPickPhoto alloc]init];
         self.titleView = [[UIView alloc]init];
-        UIImage *image = [UIImage imageNamed:@"bg"];
+        UIImage *image = [UIImage imageNamed:@"selfBackPic.jpg"];
         self.imgProfile = [[UIImageView alloc] initWithImage:image];
         self.imgProfile.frame = CGRectMake(0, 0, screenWidth, ImageHeight);
         self.imgProfile.userInteractionEnabled = YES;
+        self.imgProfile.contentMode = UIViewContentModeScaleAspectFit;
         
         self.launchActivityTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight - 44) style:(UITableViewStylePlain)];
         [self.launchActivityTableView registerClass:[JGLableAndLableTableViewCell class] forCellReuseIdentifier:@"lbVSlb"];
@@ -170,9 +171,9 @@ static CGFloat ImageHeight  = 210.0;
     self.titleField.tag = 1117;
     //头像
     self.headPortraitBtn = [[UIButton alloc]initWithFrame:CGRectMake(20, 150, 50, 50)];
-    [self.headPortraitBtn setImage:[UIImage imageNamed:@"zwt"] forState:UIControlStateNormal];
+    [self.headPortraitBtn setImage:[UIImage imageNamed:@"logo"] forState:UIControlStateNormal];
     [self.headPortraitBtn addTarget:self action:@selector(initItemsBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-    self.headPortraitBtn.backgroundColor = [UIColor redColor];
+//    self.headPortraitBtn.backgroundColor = [UIColor redColor];
     self.headPortraitBtn.layer.cornerRadius = 8.0;
     self.headPortraitBtn.tag = 740;
     [self.imgProfile addSubview:self.headPortraitBtn];
@@ -481,8 +482,9 @@ static CGFloat ImageHeight  = 210.0;
     if (indexPath.section == 0) {
         return ImageHeight -10;
     }else if (indexPath.section == 2){
-        return [self calculationLabelHeight:[self.paraDic objectForKey:@"info"]] + 40 * screenWidth / 320;
-        
+//        return [self calculationLabelHeight:[self.paraDic objectForKey:@"info"]] + 40 * screenWidth / 320;
+        return 30 * screenWidth / 320;
+
     }else{
         return 30 * screenWidth / 320;
     }
@@ -586,16 +588,30 @@ static CGFloat ImageHeight  = 210.0;
         
         return launchImageActivityCell;
     }else if (indexPath.section == 2){
-        JGDisplayInfoTableViewCell *contactCell = [self.launchActivityTableView dequeueReusableCellWithIdentifier:@"Display"];
-        contactCell.promptLB.text = @"球队简介";
-        contactCell.promptLB.frame = CGRectMake(10 * screenWidth / 320, 0, 100 * screenWidth / 320, 30 * screenWidth / 320);
         
-        contactCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        contactCell.selectionStyle = UITableViewCellSelectionStyleNone;
-        contactCell.contentLB.lineBreakMode = NSLineBreakByWordWrapping;
-        contactCell.contentLB.text = [self.paraDic objectForKey:@"info"];
-        contactCell.contentLB.frame = CGRectMake(10, 35 * screenWidth / 320, screenWidth - 20  * screenWidth / 320, [self calculationLabelHeight:[self.paraDic objectForKey:@"info"]]);
-        return contactCell;
+        JGLableAndLableTableViewCell *launchActivityCell = [self.launchActivityTableView dequeueReusableCellWithIdentifier:@"lbVSlb"];
+        launchActivityCell.promptLB.text = @"球队简介";
+        launchActivityCell.contentLB.text = [self.paraDic objectForKey:@"info"];
+        launchActivityCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        launchActivityCell.selectionStyle = UITableViewCellSelectionStyleNone;
+        launchActivityCell.contentLB.lineBreakMode = NSLineBreakByWordWrapping;
+        
+        return launchActivityCell;
+
+//        JGDisplayInfoTableViewCell *contactCell = [self.launchActivityTableView dequeueReusableCellWithIdentifier:@"Display"];
+//        contactCell.promptLB.text = @"球队简介";
+//        contactCell.promptLB.frame = CGRectMake(10 * screenWidth / 320, 0, 100 * screenWidth / 320, 30 * screenWidth / 320);
+//        
+//        contactCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+//        contactCell.selectionStyle = UITableViewCellSelectionStyleNone;
+//        contactCell.contentLB.lineBreakMode = NSLineBreakByWordWrapping;
+//        contactCell.contentLB.text = [self.paraDic objectForKey:@"info"];
+//        contactCell.contentLB.frame = CGRectMake(10, 35 * screenWidth / 320, screenWidth - 20  * screenWidth / 320, [self calculationLabelHeight:[self.paraDic objectForKey:@"info"]]);
+//        return contactCell;
+        
+        
+        
+        
     }else if (indexPath.section == 1){
         
         JGLableAndLableTableViewCell *launchActivityCell = [self.launchActivityTableView dequeueReusableCellWithIdentifier:@"lbVSlb"];
@@ -673,12 +689,20 @@ static CGFloat ImageHeight  = 210.0;
 #pragma mark -- 添加内容详情代理  JGHConcentTextViewControllerDelegate
 - (void)didSelectSaveBtnClick:(NSString *)text{
     
-    JGDisplayInfoTableViewCell *contactCell = [self.launchActivityTableView cellForRowAtIndexPath:[NSIndexPath  indexPathForRow:0 inSection:2]];
-    contactCell.contentLB.frame = CGRectMake(10, 35  * screenWidth / 320, screenWidth - 20  * screenWidth / 320, [self calculationLabelHeight:text]);
-    contactCell.contentLB.text = text;
+    JGLableAndLableTableViewCell *launchActivityCell = [self.launchActivityTableView cellForRowAtIndexPath:[NSIndexPath  indexPathForRow:0 inSection:2]];
+
+    launchActivityCell.contentLB.text = text;
+    
     [self.paraDic setObject:text forKey:@"info"];
-    NSIndexPath *indexPath = [NSIndexPath  indexPathForRow:0 inSection:2];
-    [self.launchActivityTableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:YES];
+
+    
+    
+//    JGDisplayInfoTableViewCell *contactCell = [self.launchActivityTableView cellForRowAtIndexPath:[NSIndexPath  indexPathForRow:0 inSection:2]];
+//    contactCell.contentLB.frame = CGRectMake(10, 35  * screenWidth / 320, screenWidth - 20  * screenWidth / 320, [self calculationLabelHeight:text]);
+//    contactCell.contentLB.text = text;
+//    [self.paraDic setObject:text forKey:@"info"];
+//    NSIndexPath *indexPath = [NSIndexPath  indexPathForRow:0 inSection:2];
+//    [self.launchActivityTableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:YES];
     
 }
 

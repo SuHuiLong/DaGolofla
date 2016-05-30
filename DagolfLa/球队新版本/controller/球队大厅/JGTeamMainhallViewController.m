@@ -256,7 +256,7 @@
     if (self.searchController.active) {
     
         if ([self.searchArray count] != 0) {
-            [cell.iconImageV sd_setImageWithURL:[Helper setImageIconUrl:[self.searchArray[indexPath.row] objectForKey:@"timeKey"]] placeholderImage:[UIImage imageNamed:@"logo"]];
+            [cell.iconImageV sd_setImageWithURL:[Helper setImageIconUrl:[[self.searchArray[indexPath.row] objectForKey:@"timeKey"] integerValue]] placeholderImage:[UIImage imageNamed:@"logo"]];
             cell.nameLabel.text = [self.searchArray[indexPath.row] objectForKey:@"name"];
             cell.adressLabel.text = [self.searchArray[indexPath.row] objectForKey:@"crtyName"];
             cell.describLabel.text = [self.searchArray[indexPath.row] objectForKey:@"info"];;
@@ -267,7 +267,7 @@
         return cell;
     }else{
         // TEST
-        [cell.iconImageV sd_setImageWithURL:[Helper setImageIconUrl:[self.modelArray[indexPath.row] objectForKey:@"timeKey"]] placeholderImage:[UIImage imageNamed:@"logo"]];
+        [cell.iconImageV sd_setImageWithURL:[Helper setImageIconUrl:[[self.modelArray[indexPath.row] objectForKey:@"timeKey"] integerValue]] placeholderImage:[UIImage imageNamed:@"logo"]];
         cell.nameLabel.text = [self.modelArray[indexPath.row] objectForKey:@"name"];
         cell.adressLabel.text = [self.modelArray[indexPath.row] objectForKey:@"crtyName"];
         cell.describLabel.text = [self.modelArray[indexPath.row] objectForKey:@"info"];;
