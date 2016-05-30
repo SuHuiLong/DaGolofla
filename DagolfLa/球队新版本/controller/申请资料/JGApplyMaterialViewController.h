@@ -9,5 +9,8 @@
 #import "ViewController.h"
 
 @interface JGApplyMaterialViewController : ViewController
+
 @property (nonatomic, assign)NSInteger teamKey;
+@property (nonatomic, assign)BOOL isSelfSet;
+@property (nonatomic, strong)NSMutableDictionary *detailDic;
 @end

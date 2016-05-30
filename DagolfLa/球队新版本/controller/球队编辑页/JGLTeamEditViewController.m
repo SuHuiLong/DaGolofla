@@ -22,6 +22,7 @@
 #import "JGLTeamEditTableViewCell.h"
 #import "JGTeamAdressTableViewCell.h"
 #import "JGTeamEIntroTableViewCell.h"
+#import "JGTeamMemberController.h"
 
 static NSString *const JGTableViewCellIdentifier = @"JGTableViewCell";
 static NSString *const JGHTeamContactCellIdentifier = @"JGHTeamContactTableViewCell";
@@ -53,6 +54,10 @@ static CGFloat ImageHeight  = 210.0;
 
 @property (nonatomic, strong)UIButton *addressBtn;//添加地址
 
+@property (nonatomic, assign) NSInteger userKey;
+
+@property (nonatomic, assign) BOOL isFirst;
+
 @end
 
 @implementation JGLTeamEditViewController
@@ -60,7 +65,19 @@ static CGFloat ImageHeight  = 210.0;
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:YES];
     self.navigationController.navigationBarHidden = YES;
+    self.titleField.text = [self.detailDic objectForKey:@"name"];
     
+    if (_isFirst) {
+        [self.headPortraitBtn sd_setImageWithURL:[Helper setImageIconUrl:@"team" andTeamKey:[[self.detailDic objectForKey:@"timeKey"] integerValue] andIsSetWidth:YES andIsBackGround:NO] forState:(UIControlStateNormal) placeholderImage:[UIImage imageNamed:@"logo"]];
+        self.headPortraitBtn.layer.masksToBounds = YES;
+        self.headPortraitBtn.layer.cornerRadius = 8.0;
+        
+        [self.imgProfile sd_setImageWithURL:[Helper setImageIconUrl:@"team" andTeamKey:[[self.detailDic objectForKey:@"timeKey"] integerValue] andIsSetWidth:YES andIsBackGround:YES] placeholderImage:[UIImage imageNamed:@"tu2"]];
+        self.isFirst = NO;
+    }else{
+        
+    }
+
 }
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:YES];
@@ -69,6 +86,7 @@ static CGFloat ImageHeight  = 210.0;
 
 - (instancetype)init{
     if (self == [super init]) {
+        self.isFirst = YES;
         self.dataDict = [NSMutableDictionary dictionary];
         self.pickPhoto = [[SXPickPhoto alloc]init];
         self.titleView = [[UIView alloc]init];
@@ -76,7 +94,7 @@ static CGFloat ImageHeight  = 210.0;
         self.imgProfile = [[UIImageView alloc] initWithImage:image];
         self.imgProfile.frame = CGRectMake(0, 0, screenWidth, ImageHeight);
         self.imgProfile.userInteractionEnabled = YES;
-        
+        self.imgProfile.tag = 520;
         self.launchActivityTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight - 44) style:(UITableViewStylePlain)];
 //        [self.launchActivityTableView registerClass:[JGLableAndLableTableViewCell class] forCellReuseIdentifier:@"lbVSlb"];
 //        [self.launchActivityTableView registerClass:[JGDisplayInfoTableViewCell class] forCellReuseIdentifier:@"Display"];
@@ -133,7 +151,7 @@ static CGFloat ImageHeight  = 210.0;
     self.headPortraitBtn = [[UIButton alloc]initWithFrame:CGRectMake(20, 150, 50, 50)];
     [self.headPortraitBtn setImage:[UIImage imageNamed:@"relogo"] forState:UIControlStateNormal];
     [self.headPortraitBtn addTarget:self action:@selector(replaceWithPicture:) forControlEvents:UIControlEventTouchUpInside];
-    
+    self.headPortraitBtn.tag = 522;
     [self.imgProfile addSubview:self.headPortraitBtn];
     [self.titleView addSubview:self.titleField];
     
@@ -152,7 +170,7 @@ static CGFloat ImageHeight  = 210.0;
 - (void)initItemsBtnClick:(UIButton *)btn{
     if (btn.tag == 521) {
         [self.navigationController popViewControllerAnimated:YES];
-    }else if (btn.tag == 520){
+    }else if (btn.tag == 520 || (btn.tag == 522)){
         //更换头像
         [self didSelectPhotoImage:btn];
     }
@@ -169,20 +187,22 @@ static CGFloat ImageHeight  = 210.0;
 - (void)previewBtnClick:(UIButton *)btn{
     [self.view endEditing:YES];
     NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
-    [dic setObject:@192 forKey:@"teamKey"];
-    [dic setObject:@244 forKey:@"userKey"];
+    [dic setObject:[self.detailDic objectForKey:@"timeKey"] forKey:@"teamKey"];
+    [dic setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"userId"] forKey:@"userKey"];
+    [dic setObject:@(self.userKey) forKey:@"answerKey"];
     NSLog(@"%@",_titleField.text);
     [dic setObject:self.titleField.text forKey:@"name"];
-    [dic setObject:@83 forKey:@"answerKey"];
     
     JGTeamEIntroTableViewCell * cell = [self.launchActivityTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:3]];
     [dic setObject:cell.textView.text forKey:@"info"];
     
     [[JsonHttp jsonHttp] httpRequest:@"team/updateTeam" JsonKey:nil withData:dic requestMethod:@"POST" failedBlock:^(id errType) {
-        NSLog(@"error *** %@", errType);
-    } completionBlock:^(id data) {
-        NSLog(@"%@", data);
-    }];
+        [Helper alertViewNoHaveCancleWithTitle:@"保存失败，请稍后再试" withBlock:^(UIAlertController *alertView) {
+            [self.navigationController presentViewController:alertView animated:YES completion:nil];
+        }];    } completionBlock:^(id data) {
+        [Helper alertViewNoHaveCancleWithTitle:@"保存成功" withBlock:^(UIAlertController *alertView) {
+            [self.navigationController presentViewController:alertView animated:YES completion:nil];
+        }];    }];
 }
 
 #pragma mark --编辑框的代理方法
@@ -272,6 +292,7 @@ static CGFloat ImageHeight  = 210.0;
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     return 10;
 }
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     NSString *windowReuseIdentifier = @"SectionOneCell";
     if (indexPath.section == 0) {
@@ -289,6 +310,16 @@ static CGFloat ImageHeight  = 210.0;
     {
         JGLTeamEditTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"JGLTeamEditTableViewCell" forIndexPath:indexPath];
         cell.titleLabel.text = _titleArray[indexPath.section][indexPath.row];
+        cell.titleLabel.font = [UIFont systemFontOfSize:15 * screenWidth / 320];
+        if (indexPath.row == 0) {
+            cell.textField.text = [self.detailDic objectForKey:@"captainName"];
+        }else if (indexPath.row == 1){
+            cell.textField.text = [self.detailDic objectForKey:@"crtyName"];
+        }else{
+            cell.textField.text = [self.detailDic objectForKey:@"establishTime"];
+        }
+        cell.textField.font = [UIFont systemFontOfSize:15 * screenWidth / 320];
+
         cell.textField.userInteractionEnabled = NO;
         return cell;
     }
@@ -296,24 +327,48 @@ static CGFloat ImageHeight  = 210.0;
     {
         JGTeamAdressTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"JGTeamAdressTableViewCell" forIndexPath:indexPath];
         cell.titleLabel.text = _titleArray[indexPath.section][indexPath.row];
+        cell.detailLabel.text = [NSString stringWithFormat:@"%@, %@", [self.detailDic objectForKey:@"answerName"], [self.detailDic objectForKey:@"answerMobile"]];
+        cell.titleLabel.font = [UIFont systemFontOfSize:15 * screenWidth / 320];
+        cell.detailLabel.font = [UIFont systemFontOfSize:15 * screenWidth / 320];
+
+        
         return cell;
     }
     else
     {
         JGTeamEIntroTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"JGTeamEIntroTableViewCell" forIndexPath:indexPath];
         cell.titleLabel.text = _titleArray[indexPath.section][indexPath.row];
+        cell.textView.text = [self.detailDic objectForKey:@"info"];
         cell.textView.delegate = self;
+        
+        cell.titleLabel.font = [UIFont systemFontOfSize:15 * screenWidth / 320];
+        cell.textView.font = [UIFont systemFontOfSize:15 * screenWidth / 320];
+
         return cell;
     }
     
 }
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 1) {
-            }else if (indexPath.section == 2){
+    }else if (indexPath.section == 2){
         if (indexPath.row == 0) {
-            JGCostSetViewController *costView = [[JGCostSetViewController alloc]initWithNibName:@"JGCostSetViewController" bundle:nil];
-            costView.delegate = self;
-            [self.navigationController pushViewController:costView animated:YES];
+            //            JGTeamMemberController *costView = [[JGTeamMemberController alloc]initWithNibName:@"JGCostSetViewController" bundle:nil];
+            //            costView.delegate = self;
+            JGTeamMemberController *memVC = [[JGTeamMemberController alloc] init];
+            memVC.teamKey = [self.detailDic objectForKey:@"timeKey"];
+            memVC.isEdit = YES;
+            memVC.block = ^(NSInteger key, NSString* name, NSString *mobie){
+                
+                JGTeamAdressTableViewCell* cell = [self.launchActivityTableView cellForRowAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:2]];
+                cell.detailLabel.text = [NSString stringWithFormat:@"%@, %@", name, mobie];
+                self.userKey = key;
+            };
+            [self.navigationController pushViewController:memVC animated:YES];
+        
+            
+  
+        
         }
         
         /**
@@ -339,7 +394,7 @@ static CGFloat ImageHeight  = 210.0;
         [_pickPhoto ShowTakePhotoWithController:self andWithBlock:^(NSObject *Data) {
             if ([Data isKindOfClass:[UIImage class]])
             {
-                _headerImage = (UIImage *)Data;
+                self.headPortraitBtn.imageView.image = (UIImage *)Data;
                 [self.launchActivityTableView reloadData];
             }
         }];
@@ -351,7 +406,74 @@ static CGFloat ImageHeight  = 210.0;
             if ([Data isKindOfClass:[UIImage class]])
             {
                 // @{@"nType":@"1", @"tag":@"dagolfla", @"data":@"test"};
-                _headerImage = (UIImage *)Data;
+                
+                //设置背景
+                if (btn.tag == 520) {
+                    self.imgProfile.image = (UIImage *)Data;
+                    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+                    [dict setObject:PHOTO_DAGOLFLA forKey:@"tag"];
+                    [dict setObject:[NSString stringWithFormat:@"%@_background" ,[self.detailDic objectForKey:@"timeKey"]] forKey:@"data"];
+                    [dict setObject:TYPE_TEAM_HEAD forKey:@"nType"];
+                    [[JsonHttp jsonHttp] httpRequestImageOrVedio:@"1" withData:dict andDataArray:[NSArray arrayWithObject:UIImageJPEGRepresentation(self.imgProfile.image, 0.7)] failedBlock:^(id errType) {
+                        NSLog(@"errType===%@", errType);
+                    } completionBlock:^(id data) {
+                        NSLog(@" _+_++_+_+_+_+_+_+_");
+
+                    }];
+//                    [_dictPhoto setObject:[NSArray arrayWithObject:UIImageJPEGRepresentation(_headerImage, 0.7)] forKey:@"headerImage"];
+                    
+                }else if (btn.tag == 522){
+                    //头像
+                    [self.headPortraitBtn setImage:(UIImage *)Data forState:UIControlStateNormal];
+                    self.headPortraitBtn.layer.masksToBounds = YES;
+                    self.headPortraitBtn.layer.cornerRadius = 8.0;
+                    
+                    NSNumber* strTimeKey = [self.detailDic objectForKey:@"timeKey"];
+                    // 上传图片
+                    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+                    [dict setObject:strTimeKey forKey:@"data"];
+                    [dict setObject:TYPE_TEAM_HEAD forKey:@"nType"];
+                    [dict setObject:PHOTO_DAGOLFLA forKey:@"tag"];
+                    
+                    [[JsonHttp jsonHttp]httpRequestImageOrVedio:@"1" withData:dict andDataArray:[NSArray arrayWithObject:UIImageJPEGRepresentation((UIImage *)Data, 0.7)] failedBlock:^(id errType) {
+                        NSLog(@"errType===%@", errType);
+                    } completionBlock:^(id data) {
+                        NSLog(@" _+_+----------+_+_");
+                    }];
+                    
+//                    [_dictPhoto setObject:[NSArray arrayWithObject:UIImageJPEGRepresentation(_headerImage, 0.7)] forKey:@"headPortraitBtn"];
+                    
+                    
+                    
+                }
+                
+                /*
+                 
+                 NSNumber* strTimeKey = [data objectForKey:@"timeKey"];
+                 // 上传图片
+                 NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+                 [dict setObject:strTimeKey forKey:@"data"];
+                 [dict setObject:TYPE_TEAM_HEAD forKey:@"nType"];
+                 [dict setObject:PHOTO_DAGOLFLA forKey:@"tag"];
+                 
+                 [[JsonHttp jsonHttp]httpRequestImageOrVedio:@"1" withData:dict andDataArray:[_dictPhoto objectForKey:@"headPortraitBtn"] failedBlock:^(id errType) {
+                 NSLog(@"errType===%@", errType);
+                 } completionBlock:^(id data) {
+                 
+                 [dict setObject:[NSString stringWithFormat:@"%@_background" ,strTimeKey] forKey:@"data"];
+                 [dict setObject:TYPE_TEAM_BACKGROUND forKey:@"nType"];
+                 [[JsonHttp jsonHttp] httpRequestImageOrVedio:@"1" withData:dict andDataArray:[_dictPhoto objectForKey:@"headerImage"] failedBlock:^(id errType) {
+                 NSLog(@"errType===%@", errType);
+                 } completionBlock:^(id data) {
+                 
+                 }];
+                 
+                 
+                 */
+                
+                
+                
+                self.headerImage = (UIImage *)Data;
                 NSMutableDictionary *dict = [NSMutableDictionary dictionary];
                 [dict setObject:@"11010" forKey:@"data"];
                 [dict setObject:@"1" forKey:@"nType"];

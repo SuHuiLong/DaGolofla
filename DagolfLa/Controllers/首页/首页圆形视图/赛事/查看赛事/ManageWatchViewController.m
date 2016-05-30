@@ -1,5 +1,5 @@
 //
-//  MemberShipViewController.m
+//  ManageWatchViewController.h
 //  DaGolfla
 //
 //  Created by bhxx on 15/7/22.

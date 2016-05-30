@@ -13,6 +13,7 @@
 #import "JGTeamActivityViewController.h" //活动
 #import "JGImageAndLabelAndLabelTableViewCell.h"
 #import "JGTeamDeatilWKwebViewController.h"// 球队详情
+#import "JGApplyMaterialViewController.h"
 
 #import "JGHLaunchActivityViewController.h"
 #import "JGTableViewCell.h"
@@ -45,6 +46,7 @@
 #import "JGTeamManageViewController.h"
 
 #import "JGTeamMemberController.h"
+#import "TeamMessageController.h"//发送信息
 
 static NSString *const JGTableViewCellIdentifier = @"JGTableViewCell";
 static NSString *const JGHTeamContactCellIdentifier = @"JGHTeamContactTableViewCell";
@@ -57,6 +59,16 @@ static CGFloat ImageHeight  = 210.0;
     NSArray *_titleArray;//标题数组
     
     NSString *_contcat;//联系人
+    
+    
+    //好友列表请求的数据
+    NSMutableArray* _arrayIndex;
+    NSMutableArray* _arrayData;
+    NSMutableArray* _arrayData1;
+    
+    NSMutableArray* _messageArray;
+    NSMutableArray* _telArray;
+
 }
 @property (nonatomic,strong)SXPickPhoto * pickPhoto;//相册类
 @property (nonatomic, strong)UITableView *launchActivityTableView;
@@ -82,13 +94,12 @@ static CGFloat ImageHeight  = 210.0;
     [super viewWillAppear:YES];
     self.navigationController.navigationBarHidden = YES;
     self.titleField.text = [self.detailDic objectForKey:@"name"];
-
     
     [self.headPortraitBtn sd_setImageWithURL:[Helper setImageIconUrl:@"team" andTeamKey:[[self.detailDic objectForKey:@"timeKey"] integerValue] andIsSetWidth:YES andIsBackGround:NO] forState:(UIControlStateNormal) placeholderImage:[UIImage imageNamed:@"logo"]];
     self.headPortraitBtn.layer.masksToBounds = YES;
     self.headPortraitBtn.layer.cornerRadius = 8.0;
     
-    [self.imgProfile sd_setImageWithURL:[Helper setImageIconUrl:@"team" andTeamKey:[[self.detailDic objectForKey:@"timeKey"] integerValue] andIsSetWidth:YES andIsBackGround:YES] placeholderImage:[UIImage imageNamed:@"tu2"]];
+    [self.imgProfile sd_setImageWithURL:[Helper setImageIconUrl:@"team" andTeamKey:[[self.detailDic objectForKey:@"timeKey"] integerValue] andIsSetWidth:YES andIsBackGround:YES] placeholderImage:[UIImage imageNamed:@"selfBackPic.jpg"]];
 
 }
 
@@ -132,6 +143,14 @@ static CGFloat ImageHeight  = 210.0;
     self.navigationController.navigationBar.hidden = YES;
     self.automaticallyAdjustsScrollViewInsets=NO;
     self.view.backgroundColor = [UIColor colorWithHexString:@"#EAEAEB"];
+    
+    //好友
+    _arrayIndex = [[NSMutableArray alloc]init];
+    _arrayData = [[NSMutableArray alloc]init];
+    _arrayData1 = [[NSMutableArray alloc]init];
+    _messageArray = [[NSMutableArray alloc]init];
+    _telArray = [[NSMutableArray alloc]init];
+    
     //返回按钮
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
     btn.frame = BackBtnFrame;
@@ -229,7 +248,6 @@ static CGFloat ImageHeight  = 210.0;
 //    }else{
 //        fiData = [NSData dataWithContentsOfURL:[Helper imageUrl:self.ymData.pics[0]]];
 //    }
-    
     NSString*  shareUrl = [NSString stringWithFormat:@"http://192.168.1.104:8888/imgcache.dagolfla.com/share/team/team.html?key=%@",[self.detailDic objectForKey:@"timeKey"]];
     [UMSocialData defaultData].extConfig.title=[NSString stringWithFormat:@"来自%@的球队",[self.detailDic objectForKey:@"name"]];
     if (index == 0){
@@ -241,6 +259,7 @@ static CGFloat ImageHeight  = 210.0;
 //                [self shareS:indexRow];
             }
         }];
+
     }else if (index==1){
         //朋友圈
         [UMSocialWechatHandler setWXAppId:@"wxdcdc4e20544ed728" appSecret:@"fdc75aae5a98f2aa0f62ef8cba2b08e9" url:shareUrl];
@@ -257,8 +276,6 @@ static CGFloat ImageHeight  = 210.0;
         [[UMSocialControllerService defaultControllerService] setSocialData:data];
         //2.设置分享平台
         [UMSocialSnsPlatformManager getSocialPlatformWithName:UMShareToSina].snsClickHandler(self,[UMSocialControllerService defaultControllerService],YES);
-        //        [self shareS:indexRow];
-        
         self.launchActivityTableView.frame = CGRectMake(0, 64, ScreenWidth, screenHeight - 64 - 49);
         
     }
@@ -300,19 +317,40 @@ static CGFloat ImageHeight  = 210.0;
 #pragma mark -- 邀请好友
 - (void)previewBtnClick:(UIButton *)btn{
     TeamInviteViewController *inviteVc = [[TeamInviteViewController alloc] init];
+    
+    
+    inviteVc.block = ^(NSMutableArray* arrayIndex, NSMutableArray* arrayData, NSMutableArray *addressArray){
+        
+        
+        //接收数据
+        [_arrayIndex removeAllObjects];
+        [_arrayData1 removeAllObjects];//第一个列表的数据
+        [_arrayData removeAllObjects];//第二个列表的数据
+        
+        [_messageArray removeAllObjects];//第三个列表
+        [_telArray removeAllObjects];//第四个列表
+        
+        _arrayIndex=arrayIndex;
+        _arrayData1=arrayData;
+        
+        for (int i = 0; i < [addressArray[0] count]; i++) {
+            [_telArray addObject:addressArray[0][i]];
+        }
+        
+        [_arrayData addObjectsFromArray:arrayData[0]];
+        [_arrayData addObjectsFromArray:arrayData[1]];
+        
+        //存储短信数组
+        [_messageArray addObjectsFromArray:arrayData[2]];
+        NSMutableArray* arrayIdLis = [[NSMutableArray alloc]init];
+        
+        
+        
+    };
+    
+    
     [self.navigationController pushViewController:inviteVc animated:YES];
-//    NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
-//    [dic setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"userId"] forKey:@"userKey"];
-//    [dic setObject:@(self.detailModel.timeKey) forKey:@"teamKey"];
-//    [dic setObject:@0 forKey:@"state"];
-//    [dic setObject:@"2016-12-11 10:00:00" forKey:@"createTime"];
-//    [dic setObject:@0 forKey:@"timeKey"];
-//    
-//    [[JsonHttp jsonHttp] httpRequest:@"team/reqJoinTeam" JsonKey:@"teamMemeber" withData:dic requestMethod:@"POST" failedBlock:^(id errType) {
-//        NSLog(@"error *** %@", errType);
-//    } completionBlock:^(id data) {
-//        NSLog(@"%@", data);
-//    }];
+
 }
 
 
@@ -469,6 +507,7 @@ static CGFloat ImageHeight  = 210.0;
         launchActivityCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         if (self.isManager == NO) {
             launchActivityCell.promptLB.text = @"";
+            launchActivityCell.imageV.image = nil;
         }
         return launchActivityCell;
     }
@@ -517,9 +556,13 @@ static CGFloat ImageHeight  = 210.0;
     }
     else if (indexPath.section == 3){
         if (indexPath.row == 0) {
-            JGLSelfSetViewController *costView = [[JGLSelfSetViewController alloc]init];
-               costView.teamKey = [[self.detailDic objectForKey:@"timeKey"] integerValue];
-            [self.navigationController pushViewController:costView animated:YES];
+            JGApplyMaterialViewController *meter = [[JGApplyMaterialViewController alloc] init];
+            meter.isSelfSet = YES;
+            meter.detailDic = self.detailDic;
+            [self.navigationController pushViewController:meter animated:YES];
+//            JGLSelfSetViewController *costView = [[JGLSelfSetViewController alloc]init];
+//               costView.teamKey = [[self.detailDic objectForKey:@"timeKey"] integerValue];
+//            [self.navigationController pushViewController:costView animated:YES];
         }
     }
     else

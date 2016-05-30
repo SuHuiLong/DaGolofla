@@ -12,7 +12,9 @@
 
 #import "ChatDetailViewController.h"
 #import "RCDraggableButton.h"
+
 @interface PracticeViewController ()<UIWebViewDelegate>
+
 
 @property(nonatomic,retain)UIWebView *webView;
 
@@ -152,8 +154,18 @@
         return NO;
         
     }
+    
+    
+    
+    
+    
+    
     return YES;
 }
+
+
+
+
 
 -(void)webViewDidFinishLoad:(UIWebView *)webView
 {

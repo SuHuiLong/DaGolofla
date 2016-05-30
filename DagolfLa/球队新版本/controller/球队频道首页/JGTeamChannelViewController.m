@@ -359,6 +359,7 @@
         JGTeamAcitivtyModel *model = self.myActivityArray[indexPath.row];
         teamActivityVC.teamActivityKey = [model.timeKey integerValue];
         teamActivityVC.model = model;
+        teamActivityVC.teamActivityKey = model.teamActivityKey;
         [self.navigationController pushViewController:teamActivityVC animated:YES];
 
     }

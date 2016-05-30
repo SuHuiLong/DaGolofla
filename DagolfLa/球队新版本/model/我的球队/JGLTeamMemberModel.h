@@ -68,7 +68,7 @@
 
 @property (strong, nonatomic) NSString* ts;
 
-@property (strong,nonatomic) ChineseString *chineseString;
+@property (strong, nonatomic) ChineseString *chineseString;
 
 
 @end

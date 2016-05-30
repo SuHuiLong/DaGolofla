@@ -27,7 +27,12 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title  = @"入队申请资料";
+    if (self.isSelfSet) {
+        self.title  = @"个人设置";
+    }else{
+        self.title  = @"入队申请资料";
+    }
+    
     UIBarButtonItem *rightBar = [[UIBarButtonItem alloc] initWithTitle:@"完成" style:(UIBarButtonItemStyleDone) target:self action:@selector(complete)];
     rightBar.tintColor = [UIColor whiteColor];
     self.navigationItem.rightBarButtonItem = rightBar;
@@ -257,7 +262,7 @@
     }
 }
 
-
+#pragma mark ------提及
 - (void)complete{
     BOOL isLength = YES;
     NSArray *array = [NSArray arrayWithObjects:@"userName", @"sex", @"mobile", nil];
@@ -313,8 +318,19 @@
         [self.paraDic setObject:[Helper returnCurrentDateString] forKey:@"createTime"];
         [self.paraDic setObject:@0 forKey:@"timeKey"];
         
+        if (self.isSelfSet) {
+            
+            [[JsonHttp jsonHttp] httpRequest:@"/teamupdateTeamMember" JsonKey:@"newMembr" withData:self.paraDic requestMethod:@"POST" failedBlock:^(id errType) {
+                
+            } completionBlock:^(id data) {
+                
+            }];
+            
+            
+        }else{
+        
         [[JsonHttp jsonHttp] httpRequest:@"team/reqJoinTeam" JsonKey:@"teamMemeber" withData:self.paraDic requestMethod:@"POST" failedBlock:^(id errType) {
-            [Helper alertViewNoHaveCancleWithTitle:@"申请失败 请稍后再试" withBlock:^(UIAlertController *alertView) {
+            [Helper alertViewNoHaveCancleWithTitle:@"提交失败 请稍后再试" withBlock:^(UIAlertController *alertView) {
                 [self.navigationController presentViewController:alertView animated:YES completion:nil];
             }];
         } completionBlock:^(id data) {
@@ -322,11 +338,14 @@
             [self.navigationController popViewControllerAnimated:YES];
             
         }];
-        [Helper alertViewNoHaveCancleWithTitle:@"申请提交成功" withBlock:^(UIAlertController *alertView) {
+        }
+        
+        
+        [Helper alertViewNoHaveCancleWithTitle:@"提交成功" withBlock:^(UIAlertController *alertView) {
             [self.navigationController presentViewController:alertView animated:YES completion:nil];
         }];
     }else{
-        [Helper alertViewNoHaveCancleWithTitle:@"请完善申请信息" withBlock:^(UIAlertController *alertView) {
+        [Helper alertViewNoHaveCancleWithTitle:@"请完善信息" withBlock:^(UIAlertController *alertView) {
             [self.navigationController presentViewController:alertView animated:YES completion:nil];
         }];
     }
@@ -367,6 +386,19 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
+    
+//    if (self.detailDic) {
+//        
+// 
+//        
+//        
+//        
+//        
+//        
+//        
+//        
+//        return nil;
+//    }else{
     if (indexPath.section == 0 && indexPath.row == 1) {
         JGButtonTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellBtn" forIndexPath:indexPath];
         cell.labell.text = self.titleArray[indexPath.section][indexPath.row];
@@ -386,13 +418,17 @@
         }else{
             cell.labell.text = self.titleArray[indexPath.section][indexPath.row];
             cell.textFD.placeholder = self.placeholderArray[indexPath.section][indexPath.row];
+            if (indexPath.row == 2 && indexPath.section == 0) {
+                cell.textFD.keyboardType = UIKeyboardTypePhonePad;
+            }
         }
         cell.textFD.delegate = self;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         //    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         return cell;
+        }
     }
-}
+//}
 
 //- (void)cellBtn{
 //    NSLog(@"***********/n*************");
