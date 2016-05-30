@@ -37,8 +37,9 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
 @interface JGTeamApplyViewController ()<JGApplyPepoleCellDelegate, JGHApplyListCellDelegate, JGAddTeamGuestViewControllerDelegate, JGHAddInvoiceViewControllerDelegate>
 {
     UIAlertController *_actionView;
-    NSInteger _i;
-    NSInteger _y;
+    
+    NSInteger _w;
+    NSInteger _z;
     NSString *_infoKey;
 }
 
@@ -52,6 +53,7 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
 
 @property (nonatomic, strong)UIButton *cellClickBtn;//拦截cell点击事件
 
+@property (nonatomic, assign)NSInteger amountPayable;//应付金额
 @property (nonatomic, assign)NSInteger realPayPrice;//实付金额
 @property (nonatomic, assign)NSInteger subsidiesPrice;//补贴金额
 
@@ -83,7 +85,8 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
     self.titleArray = @[@"活动名称", @"活动地址", @"活动日期", @"活动费用", @"嘉宾费用"];
     _realPayPrice = 0;
     _subsidiesPrice = 0;
-    
+    _amountPayable = 0;
+
     //默认添加自己的信息
     if (self.applyArray.count == 0) {
         NSMutableDictionary *applyDict = [NSMutableDictionary dictionary];
@@ -102,6 +105,8 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
         [applyDict setObject:@0 forKey:@"timeKey"];//timeKey
         [applyDict setObject:@"1" forKey:@"select"];//付款勾选默认勾
         [self.applyArray addObject:applyDict];
+        
+        [self countAmountPayable];
     }
     //注册cell
     UINib *activityNameNib = [UINib nibWithNibName:@"JGActivityBaseInfoCell" bundle: [NSBundle mainBundle]];
@@ -158,23 +163,7 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
         if (indexPath.row == self.applyArray.count){
             JGHTotalPriceCell *totalPriceCell = [tableView dequeueReusableCellWithIdentifier:JGHTotalPriceCellIdentifier forIndexPath:indexPath];
             totalPriceCell.selectionStyle = UITableViewCellSelectionStyleNone;
-            
-            for (NSDictionary *dict in _applyArray) {
-                if ([[dict objectForKey:@"select"]integerValue] == 1) {
-                    if ([[dict objectForKey:@"type"]integerValue] == 1) {
-                        _i += 1;
-                    }else{
-                        _y += 1;
-                    }
-                }
-            }
-            
-            _realPayPrice = _modelss.memberPrice * _i + _modelss.guestPrice * _y;
-            _subsidiesPrice = _modelss.subsidyPrice * _i;
-            
-//            i = 0;
-//            y = 0;
-            [totalPriceCell configTotalPrice:_realPayPrice];
+            [totalPriceCell configTotalPrice:_amountPayable];
             return totalPriceCell;
         }else if (indexPath.row == self.applyArray.count+1){
             JGSignUoPromptCell *signUoPromptCell = [tableView dequeueReusableCellWithIdentifier:JGSignUoPromptCellIdentifier forIndexPath:indexPath];
@@ -227,20 +216,6 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
         }else{
             activityNameCell.selectionStyle = UITableViewCellSelectionStyleNone;
             [activityNameCell congiftitles:@"实付金额："];
-            for (NSDictionary *dict in _applyArray) {
-                if ([[dict objectForKey:@"select"]integerValue] == 1) {
-                    if ([[dict objectForKey:@"type"]integerValue] == 1) {
-                        _i += 1;
-                    }else{
-                        _y += 1;
-                    }
-                }
-            }
-            
-            _realPayPrice = _modelss.memberPrice * _i + _modelss.guestPrice * _y;
-            _subsidiesPrice = _modelss.subsidyPrice * _i;
-
-            
             [activityNameCell congifContact:[NSString stringWithFormat:@"%ld", (long)_realPayPrice] andNote:[NSString stringWithFormat:@"%ld", (long)_subsidiesPrice]];
         }
         
@@ -293,10 +268,94 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
     
     [self submitInfo:3];
 }
+
+#pragma mark -- 添加嘉宾
+- (void)addApplyPeopleClick{
+    JGAddTeamGuestViewController *addTeamGuestCtrl = [[JGAddTeamGuestViewController alloc]initWithNibName:@"JGAddTeamGuestViewController" bundle:nil];
+    addTeamGuestCtrl.delegate = self;
+    
+    addTeamGuestCtrl.applyArray = self.applyArray;
+    addTeamGuestCtrl.guestPrice = self.modelss.guestPrice;
+    addTeamGuestCtrl.memberPrice = self.modelss.memberPrice;
+    [self.navigationController pushViewController:addTeamGuestCtrl animated:YES];
+}
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+#pragma mark --  选择嘉宾
+- (void)didChooseBtn:(UIButton *)btn{
+    NSLog(@"%ld", (long)btn.tag);
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    dict = [self.applyArray objectAtIndex:btn.tag];
+    if ([[dict objectForKey:@"select"] integerValue] == 0) {
+        [btn setImage:[UIImage imageNamed:@"kuangwx"] forState:UIControlStateNormal];
+        [dict setObject:@"1" forKey:@"isOnlinePay"];
+        [dict setObject:@"1" forKey:@"select"];
+        [self.applyArray replaceObjectAtIndex:btn.tag withObject:dict];
+    }else{
+        [btn setImage:[UIImage imageNamed:@"kuang"] forState:UIControlStateNormal];
+        [dict setObject:@"0" forKey:@"isOnlinePay"];
+        [dict setObject:@"0" forKey:@"select"];
+        [self.applyArray replaceObjectAtIndex:btn.tag withObject:dict];
+    }
+    
+    //计算价格
+    [self countAmountPayable];
+}
+#pragma mark -- 删除嘉宾
+- (void)didSelectDeleteBtn:(UIButton *)btn{
+    NSLog(@"%ld", (long)btn.tag);
+    [self.applyArray removeObjectAtIndex:btn.tag - 100];
+    //计算价格
+    [self countAmountPayable];
+}
+#pragma mark -- 添加打球人页面代理－－－返回打球人数组
+- (void)addGuestListArray:(NSArray *)guestListArray{
+    self.applyArray = [NSMutableArray arrayWithArray:guestListArray];
+    //计算价格
+    [self countAmountPayable];
+}
+#pragma mark -- 计算应付价格
+- (void)countAmountPayable{
+    _w = 0;
+    _z = 0;
+    _subsidiesPrice = 0;
+    _amountPayable = 0;
+    _realPayPrice = 0;
+    for (int i=0; i<_applyArray.count; i++) {
+        NSDictionary *dict = [NSDictionary dictionary];
+        dict = _applyArray[i];
+        if ([[dict objectForKey:@"select"]integerValue] == 1) {
+            _amountPayable += [[dict objectForKey:@"payMoney"] integerValue];
+            
+            if ([[dict objectForKey:@"type"]integerValue] == 1) {
+                _subsidiesPrice += _modelss.subsidyPrice;
+//                _w += 1;
+//            }else{
+//                _z += 1;
+            }
+        }
+    }
+
+//    _subsidiesPrice = _modelss.subsidyPrice * _w;
+//    _amountPayable = _modelss.memberPrice * _w + _modelss.guestPrice * _z;
+    _realPayPrice = _amountPayable - _subsidiesPrice;
+    
+    [self.teamApplyTableView reloadData];
+}
+
+#pragma mark -- 发票代理
+- (void)backAddressKey:(NSString *)invoiceKey andInvoiceName:(NSString *)name andAddressKey:(NSString *)addressKey{
+    self.invoiceKey = invoiceKey;
+    self.addressKey = addressKey;
+    _invoiceName = name;
+    [self.teamApplyTableView reloadData];
+}
 #pragma mark -- 提交报名信息
 - (void)submitInfo:(NSInteger)type{
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-
+    
     if ([_invoiceKey isKindOfClass:[NSNull class]]) {
         [self.info setObject:_invoiceKey forKey:@"invoiceKey"];//发票Key
         [self.info setObject:_addressKey forKey:@"addressKey"];//地址Key
@@ -412,57 +471,6 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
         }];
     }];
 }
-#pragma mark -- 添加嘉宾
-- (void)addApplyPeopleClick{
-    JGAddTeamGuestViewController *addTeamGuestCtrl = [[JGAddTeamGuestViewController alloc]initWithNibName:@"JGAddTeamGuestViewController" bundle:nil];
-    addTeamGuestCtrl.delegate = self;
-    
-    addTeamGuestCtrl.applyArray = self.applyArray;
-    addTeamGuestCtrl.guestPrice = self.modelss.guestPrice;
-    addTeamGuestCtrl.memberPrice = self.modelss.memberPrice;
-    [self.navigationController pushViewController:addTeamGuestCtrl animated:YES];
-}
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-#pragma mark --  选择嘉宾
-- (void)didChooseBtn:(UIButton *)btn{
-    NSLog(@"%ld", (long)btn.tag);
-    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    dict = [self.applyArray objectAtIndex:btn.tag];
-    [dict setObject:@"0" forKey:@"isOnlinePay"];
-    [dict setObject:@"0" forKey:@"select"];
-    _realPayPrice = 0;
-    _subsidiesPrice = 0;
-    _i = 0;
-    _y = 0;
-    [self.applyArray replaceObjectAtIndex:btn.tag withObject:dict];
-    [self.teamApplyTableView reloadData];
-}
-#pragma mark -- 删除嘉宾
-- (void)didSelectDeleteBtn:(UIButton *)btn{
-    NSLog(@"%ld", (long)btn.tag);
-    _i = 0;
-    _y = 0;
-    [self.applyArray removeObjectAtIndex:btn.tag - 100];
-    [self.teamApplyTableView reloadData];
-}
-#pragma mark -- 添加打球人页面代理－－－返回打球人数组
-- (void)addGuestListArray:(NSArray *)guestListArray{
-    self.applyArray = [NSMutableArray arrayWithArray:guestListArray];
-    _i = 0;
-    _y = 0;
-    [self.teamApplyTableView reloadData];
-}
-#pragma mark -- 发票代理
-- (void)backAddressKey:(NSString *)invoiceKey andInvoiceName:(NSString *)name andAddressKey:(NSString *)addressKey{
-    self.invoiceKey = invoiceKey;
-    self.addressKey = addressKey;
-    _invoiceName = name;
-    [self.teamApplyTableView reloadData];
-}
-
 /*
 #pragma mark - Navigation
 

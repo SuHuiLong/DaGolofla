@@ -149,7 +149,7 @@ static CGFloat ImageHeight  = 210.0;
     [self.titleView addSubview:btn];
     
     //分享按钮
-    UIButton *shareBtn = [[UIButton alloc]initWithFrame:CGRectMake(screenWidth-64, 0, 44, 44)];
+    UIButton *shareBtn = [[UIButton alloc]initWithFrame:CGRectMake(screenWidth-44, 0, 44, 44)];
     [shareBtn setImage:[UIImage imageNamed:@"fenxiang"] forState:UIControlStateNormal];
     [shareBtn addTarget:self action:@selector(addShare) forControlEvents:UIControlEventTouchUpInside];
     [self.titleView addSubview:shareBtn];
@@ -158,7 +158,7 @@ static CGFloat ImageHeight  = 210.0;
     NSString *str = [userDef objectForKey:TeamMember];
     if ([str rangeOfString:@"1001"].location != NSNotFound){
         UIButton *replaceBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        replaceBtn.frame = CGRectMake(screenWidth-104, 0, 54, 44);
+        replaceBtn.frame = CGRectMake(screenWidth-94, 3, 54, 44);
         replaceBtn.titleLabel.font = [UIFont systemFontOfSize:FontSize_Normal];
         [replaceBtn setTitle:@"活动分组" forState:UIControlStateNormal];
         replaceBtn.titleLabel.font = [UIFont systemFontOfSize:13];
@@ -435,7 +435,7 @@ static CGFloat ImageHeight  = 210.0;
             NSLog(@"%@", data);
             
             if ([[data objectForKey:@"packSuccess"] integerValue] == 0) {
-                [Helper alertViewWithTitle:[data objectForKey:@"packResultMsg"] withBlock:^(UIAlertController *alertView) {
+                [Helper alertViewWithTitle:@"活动发布失败！" withBlock:^(UIAlertController *alertView) {
                     [self.navigationController presentViewController:alertView animated:YES completion:nil];
                 }];
                 
