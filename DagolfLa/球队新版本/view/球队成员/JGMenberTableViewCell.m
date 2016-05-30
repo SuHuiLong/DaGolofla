@@ -55,8 +55,7 @@
 
 -(void)showData:(JGLTeamMemberModel *)model
 {
-    
-    [_iconImgv sd_setImageWithURL:[Helper setImageIconUrl:[model.timeKey integerValue]] placeholderImage:[UIImage imageNamed:@"logo"]];
+    [_iconImgv sd_setImageWithURL:[Helper setImageIconUrl:@"user" andTeamKey:[model.userKey integerValue] andIsSetWidth:YES andIsBackGround:NO] placeholderImage:[UIImage imageNamed:@"logo"]];
     
     _nameLabel.text = [NSString stringWithFormat:@"%@",model.userName];
     
@@ -75,6 +74,7 @@
 }
 
 - (void)configJGHPlayersModel:(JGHPlayersModel *)model{
+    
     _nameLabel.text = [NSString stringWithFormat:@"%@",model.name];
     
     if (model.sex == 0) {

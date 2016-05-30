@@ -11,8 +11,17 @@
 #import "Helper.h"
 #import "ChatDetailViewController.h"
 #import "RCDraggableButton.h"
-@interface UseMallViewController ()<UIWebViewDelegate>
 
+
+#import <AlipaySDK/AlipaySDK.h>
+#import "Order.h"
+#import "DataSigner.h"
+@interface UseMallViewController ()<UIWebViewDelegate>
+{
+    NSString* _payUrl;
+    NSMutableDictionary* _dictCan;
+    UIAlertController *_actionView;
+}
 @property(nonatomic,retain)UIWebView *webView;
 
 @property(nonatomic,retain)UIImageView *imageView;
@@ -53,7 +62,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    _dictCan = [[NSMutableDictionary alloc]init];
     self.webView.frame=CGRectMake(0, 0, ScreenWidth, ScreenHeight-10*ScreenWidth/375+64);
     self.webView.delegate=self;
     
@@ -95,7 +104,7 @@
     
     
     [[PostDataRequest sharedInstance] getDataRequest:strUrl success:^(id respondsData) {
-//        NSDictionary* dict = [NSJSONSerialization JSONObjectWithData:respondsData options:NSJSONReadingMutableContainers error:nil];
+        //        NSDictionary* dict = [NSJSONSerialization JSONObjectWithData:respondsData options:NSJSONReadingMutableContainers error:nil];
         
         NSURL* url = [NSURL URLWithString:@"http://www.dagolfla.com/app/index.html"];
         //设置页面禁止滚动
@@ -105,7 +114,7 @@
         
         
         NSString *userAgent = [[[UIWebView alloc] init] stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"];
-        NSString *customUserAgent = [userAgent stringByAppendingFormat:@" mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm"];
+        NSString *customUserAgent = [userAgent stringByAppendingFormat:@" dagolfla/2.0"];
         [[NSUserDefaults standardUserDefaults] registerDefaults:@{@"UserAgent":customUserAgent}];
         [self.webView loadRequest:[NSURLRequest requestWithURL:url]];
         
@@ -114,17 +123,19 @@
     } failed:^(NSError *error) {
         [_actIndicatorView stopAnimating];
     }];
-
+    
 }
 -(void)btnWebClick:(UIButton *)btn
 {
-//    [btn removeFromSuperview];
+    //    [btn removeFromSuperview];
     [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
-    ////NSLog(@"%@",[request.URL absoluteString]);
+    NSLog(@"%@",[request.URL absoluteString]);
+    NSString *str = [[request.URL absoluteString] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSLog(@"1111  ======      =   %@",str);
     NSArray  * array= [[request.URL absoluteString] componentsSeparatedByString:@":"];
     NSArray  * arrayUrl= [[request.URL absoluteString] componentsSeparatedByString:@"privatemsg:"];
     NSString *xinWenURL = @"privatemsg";
@@ -170,24 +181,111 @@
     }
     
     
-    
-    
-//    https://mcashier.
-    
-//     NSArray  * arrayMc= [[request.URL absoluteString] componentsSeparatedByString:@"."];
-//    if ([arrayMc[0] isEqual:@"https://mcashier"]) {
-//        UIView* view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, 44*ScreenWidth/375)];
-//        [_webView addSubview:view];
-//        
-//        view.backgroundColor = [UIColor redColor];
-   
-//    return NO;
-//        
-//    }
+    //支付
+    if ([str rangeOfString:@"dagolfla://pay"].location != NSNotFound){
+        _payUrl = str;
+        NSArray *arrayUrl = [_payUrl componentsSeparatedByString:@"?"];
+        NSArray *arrayCanShu = [arrayUrl[2] componentsSeparatedByString:@"&"];
+        for (int i = 0; i < arrayCanShu.count; i++) {
+            if (![Helper isBlankString:arrayCanShu[i]]) {
+                NSArray* arrCan = [arrayCanShu[i] componentsSeparatedByString:@"="];
+                [_dictCan setObject:arrCan[1] forKey:arrCan[0]];
+            }
+        }
+        NSLog(@"%@",_dictCan);
+        
+        UIAlertAction * cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        }];
+        UIAlertAction *weiChatAction = [UIAlertAction actionWithTitle:@"微信支付" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            //添加请求
+            [self weChatPay];
+        }];
+        UIAlertAction *zhifubaoAction = [UIAlertAction actionWithTitle:@"支付宝支付" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            //添加请求
+            [self zhifubaoPay];
+        }];
+        
+        _actionView = [UIAlertController alertControllerWithTitle:@"选择支付方式" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+        [_actionView addAction:weiChatAction];
+        [_actionView addAction:zhifubaoAction];
+        [_actionView addAction:cancelAction];
+        [self presentViewController:_actionView animated:YES completion:nil];
+    }
+    else
+    {
+        
+    }
     
     
     return YES;
 }
+
+
+
+#pragma mark -- 支付宝
+- (void)zhifubaoPay{
+    NSLog(@"支付宝支付");
+    NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
+    [dict setObject:@3 forKey:@"orderType"];
+    [dict setObject:[_dictCan objectForKey:@"ordersn"] forKey:@"ordersn"];
+    [dict setObject:[_dictCan objectForKey:@"protitle"] forKey:@"name"];//title
+    [[JsonHttp jsonHttp]httpRequest:@"pay/doPayByAliPay" JsonKey:@"payInfo" withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
+        NSLog(@"errType == %@", errType);
+    } completionBlock:^(id data) {
+        NSLog(@"%@",[data objectForKey:@"query"]);
+        [[AlipaySDK defaultService] payOrder:[data objectForKey:@"query"] fromScheme:@"dagolfla" callback:^(NSDictionary *resultDic) {
+            
+            NSLog(@"支付宝=====%@",resultDic[@"resultStatus"]);
+            if ([resultDic[@"resultStatus"] isEqualToString:@"9000"]) {
+                NSLog(@"陈公");
+            } else if ([resultDic[@"resultStatus"] isEqualToString:@"4000"]) {
+                [Helper alertViewWithTitle:@"对不起，您的支付失败了" withBlock:^(UIAlertController *alertView) {
+                    [self.navigationController presentViewController:alertView animated:YES completion:nil];
+                }];
+            } else if ([resultDic[@"resultStatus"] isEqualToString:@"6002"]) {
+                [Helper alertViewWithTitle:@"对不起，请检查您的网络" withBlock:^(UIAlertController *alertView) {
+                    [self.navigationController presentViewController:alertView animated:YES completion:nil];
+                }];
+            } else if ([resultDic[@"resultStatus"] isEqualToString:@"6001"]) {
+                NSLog(@"取消支付");
+            } else {
+                [Helper alertViewWithTitle:@"对不起，您的支付失败了" withBlock:^(UIAlertController *alertView) {
+                    [self.navigationController presentViewController:alertView animated:YES completion:nil];
+                }];
+            }
+        }];
+    }];
+}
+
+#pragma mark -- 微信支付
+- (void)weChatPay{
+    NSLog(@"微信支付");
+    
+    NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
+    [dict setObject:@3 forKey:@"orderType"];
+    [dict setObject:[_dictCan objectForKey:@"ordersn"] forKey:@"ordersn"];
+    [dict setObject:[_dictCan objectForKey:@"protitle"] forKey:@"name"];
+    
+    [[JsonHttp jsonHttp]httpRequest:@"pay/doPayWeiXin" JsonKey:@"payInfo" withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
+        NSLog(@"errType == %@", errType);
+    } completionBlock:^(id data) {
+        NSDictionary *dict = [data objectForKey:@"pay"];
+        //微信
+        if (dict) {
+            PayReq *request = [[PayReq alloc] init];
+            request.openID       = [dict objectForKey:@"appid"];
+            request.partnerId    = [dict objectForKey:@"partnerid"];
+            request.prepayId     = [dict objectForKey:@"prepayid"];
+            request.package      = [dict objectForKey:@"Package"];
+            request.nonceStr     = [dict objectForKey:@"noncestr"];
+            request.timeStamp    =[[dict objectForKey:@"timestamp"] intValue];
+            request.sign         = [dict objectForKey:@"sign"];
+            
+            [WXApi sendReq:request];
+        }
+    }];
+}
+
 
 -(void)webViewDidFinishLoad:(UIWebView *)webView
 {
