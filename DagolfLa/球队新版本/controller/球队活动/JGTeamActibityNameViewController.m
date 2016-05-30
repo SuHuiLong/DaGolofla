@@ -344,7 +344,7 @@ static CGFloat ImageHeight  = 210.0;
             NSLog(@"%@", errType);
         } completionBlock:^(id data) {
             NSLog(@"%@", data);
-            if (self.model.headerImage != nil) {
+//            if (self.model.headerImage != nil || ) {
                 NSMutableArray *imageArray = [NSMutableArray array];
                 [imageArray addObject:UIImageJPEGRepresentation(self.model.headerImage, 0.7)];
                 
@@ -369,7 +369,7 @@ static CGFloat ImageHeight  = 210.0;
                     //
                 }];
 
-            }
+//            }
                         //
             //            [self launchActivity];
         }];
