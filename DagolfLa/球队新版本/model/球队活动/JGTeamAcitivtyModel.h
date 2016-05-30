@@ -56,4 +56,11 @@
 @property (copy, nonatomic) NSString *usernumber;
 
 @property (assign, nonatomic) NSInteger teamActivityKey;
+
+//活动头像
+@property (nonatomic, strong) UIImage *headerImage;
+
+//活动背景
+@property (nonatomic, strong) UIImage *bgImage;
+
 @end

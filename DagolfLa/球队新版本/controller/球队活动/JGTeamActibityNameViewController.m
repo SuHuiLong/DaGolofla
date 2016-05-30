@@ -17,6 +17,7 @@
 #import "JGHCostListTableViewCell.h"
 #import "JGTeamActivityViewController.h"
 #import "JGHTeamMembersViewController.h"
+#import "JGTeamDeatilWKwebViewController.h"
 
 static NSString *const JGTeamActivityWithAddressCellIdentifier = @"JGTeamActivityWithAddressCell";
 static NSString *const JGTeamActivityDetailsCellIdentifier = @"JGTeamActivityDetailsCell";
@@ -76,8 +77,14 @@ static CGFloat ImageHeight  = 210.0;
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor colorWithHexString:TB_BG_Color];
     self.automaticallyAdjustsScrollViewInsets = NO;
-    UIImage *image = [UIImage imageNamed:@"bg"];
-    self.imgProfile = [[UIImageView alloc] initWithImage:image];
+    UIImage *bgImage = nil;
+    UIImage *headerImage = nil;
+    if (![_model isKindOfClass:[NSNull class]]) {
+        bgImage = _model.bgImage;
+        headerImage = _model.headerImage;
+    }
+    
+    self.imgProfile = [[UIImageView alloc] initWithImage:bgImage];
     self.imgProfile.frame = CGRectMake(0, 0, screenWidth, ImageHeight);
     self.imgProfile.userInteractionEnabled = YES;
     self.teamActibityNameTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight - 44)];
@@ -100,13 +107,7 @@ static CGFloat ImageHeight  = 210.0;
     [self.imgProfile addSubview:self.titleView];
 
     
-    
-    
-//    NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
-    
-    if (self.isAdmin == 1) {
-//        [userdef setObject:@"0" forKey:@"isAdmin"];//去除管理员权限管理员
-//        self.teamActibityNameTableView.frame = CGRectMake(0, 0, ScreenWidth, ScreenHeight - 44 - 40);
+    if (self.isAdmin == 1) {// 发布页面
         [self createSaveAndLaunchBtn];
     }else{
         //        _tableViewHeight = screenHeight -64 -44;
@@ -128,7 +129,8 @@ static CGFloat ImageHeight  = 210.0;
     [replaceBtn setTitle:@"点击更换" forState:UIControlStateNormal];
     replaceBtn.titleLabel.font = [UIFont systemFontOfSize:13];
     replaceBtn.tag = 520;
-    [replaceBtn addTarget:self action:@selector(initItemsBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+//    [replaceBtn addTarget:self action:@selector(initItemsBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    replaceBtn.hidden = YES;
     [self.titleView addSubview:replaceBtn];
     //输入框
     self.titleField = [[UILabel alloc]initWithFrame:CGRectMake(64, 7, screenWidth - 128, 30)];
@@ -140,8 +142,8 @@ static CGFloat ImageHeight  = 210.0;
     self.titleField.font = [UIFont systemFontOfSize:16 * screenWidth / 320];
     //头像
     self.headPortraitBtn = [[UIButton alloc]initWithFrame:CGRectMake(10, 135, 65, 65)];
-    [self.headPortraitBtn setImage:[UIImage imageNamed:@"zwt"] forState:UIControlStateNormal];
-    [self.headPortraitBtn addTarget:self action:@selector(initItemsBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    [self.headPortraitBtn setImage:headerImage forState:UIControlStateNormal];
+//    [self.headPortraitBtn addTarget:self action:@selector(initItemsBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     self.headPortraitBtn.backgroundColor = [UIColor redColor];
     self.headPortraitBtn.layer.cornerRadius = 8.0;
     self.headPortraitBtn.tag = 740;
@@ -151,31 +153,16 @@ static CGFloat ImageHeight  = 210.0;
     //地址
     self.addressBtn = [[UIButton alloc]initWithFrame:CGRectMake(85, 180, 70, 25)];
     self.addressBtn.tag = 333;
-    [self.addressBtn setTitle:@"请添加地址" forState:UIControlStateNormal];
+    [self.addressBtn setTitle:_model.ballName forState:UIControlStateNormal];
     self.addressBtn.titleLabel.font = [UIFont systemFontOfSize:13];
     self.addressBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+    NSDictionary *attribute = @{NSFontAttributeName: [UIFont systemFontOfSize:13]};
+    CGSize size = [self.model.ballName boundingRectWithSize:CGSizeMake(screenWidth - 100, 0) options: NSStringDrawingTruncatesLastVisibleLine | NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading attributes:attribute context:nil].size;
+    CGRect address = self.addressBtn.frame;
+    self.addressBtn.frame = CGRectMake(address.origin.x, address.origin.y, size.width, 25);
+
     //    [self.addressBtn addTarget:self action:@selector(replaceWithPicture:) forControlEvents:UIControlEventTouchUpInside];
     [self.imgProfile addSubview:self.addressBtn];
-}
-#pragma mark -- 下载数据
-- (void)loadData{
-    NSUserDefaults *userDef = [NSUserDefaults standardUserDefaults];
-    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    [dict setObject:[NSString stringWithFormat:@"%ld", (long)self.teamActivityKey] forKey:@"activityKey"];
-    //    [dict setObject:[userDef objectForKey:userID] forKey:@"userKey"];
-    [dict setObject:@"244" forKey:@"userKey"];
-    [[JsonHttp jsonHttp]httpRequest:@"team/getTeamActivity" JsonKey:nil withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
-        NSLog(@"error == %@", errType);
-    } completionBlock:^(id data) {
-        NSLog(@"data == %@", data);
-        NSDictionary *dict = [NSDictionary dictionary];
-        dict = [data objectForKey:@"activity"];
-        JGTeamAcitivtyModel *model = [[JGTeamAcitivtyModel alloc]init];
-        [model setValuesForKeysWithDictionary:dict];
-        [self.dataArray addObject:model];
-        
-        //        [self createTeamActibityNameTableView];
-    }];
 }
 - (void)replaceWithPicture:(UIButton *)Btn{
     //球场列表
@@ -325,6 +312,7 @@ static CGFloat ImageHeight  = 210.0;
 }
 #pragma mark -- 发布活动
 - (void)applyBtnClick:(UIButton *)btn{
+    
     /**
      NSMutableDictionary *dict = [NSMutableDictionary dictionary];
      //    [dict setObject:self.model.timeKey forKey:@"timeKey"];//timeKey
@@ -368,8 +356,8 @@ static CGFloat ImageHeight  = 210.0;
      } completionBlock:^(id data) {
      NSLog(@"%@", data);
      }];
-     */
     
+    */
     //    JGTeamApplyViewController * applyCtrl = [[JGTeamApplyViewController alloc]initWithNibName:@"JGTeamApplyViewController" bundle:nil];
     //    [self.navigationController pushViewController:applyCtrl animated:YES];
     
@@ -491,14 +479,27 @@ static CGFloat ImageHeight  = 210.0;
             return (UIView *)headerCell;
         }else{
             JGTeamActivityDetailsCell *detailsCell = [tableView dequeueReusableCellWithIdentifier:JGTeamActivityDetailsCellIdentifier];
+            UIButton *detailsBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, screenWidth, detailsCell.frame.size.height)];
+            [detailsBtn addTarget:self action:@selector(pushDetailSCtrl:) forControlEvents:UIControlEventTouchUpInside];
+            [detailsCell addSubview:detailsBtn];
             [detailsCell configDetailsText:@"活动详情" AndActivityDetailsText:self.model.info];
             return (UIView *)detailsCell;
         }
     }else{
         JGTeamActivityDetailsCell *detailsCell = [tableView dequeueReusableCellWithIdentifier:JGTeamActivityDetailsCellIdentifier];
+        UIButton *detailsBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, screenWidth, detailsCell.frame.size.height)];
+        [detailsBtn addTarget:self action:@selector(pushDetailSCtrl:) forControlEvents:UIControlEventTouchUpInside];
+        [detailsCell addSubview:detailsBtn];
         [detailsCell configDetailsText:@"活动详情" AndActivityDetailsText:self.model.info];
         return (UIView *)detailsCell;
     }
+}
+#pragma mark -- 详情页面
+- (void)pushDetailSCtrl:(UIButton *)btn{
+    JGTeamDeatilWKwebViewController *WKCtrl = [[JGTeamDeatilWKwebViewController alloc]init];
+    WKCtrl.teamName = self.model.name;
+    WKCtrl.detailString = self.model.info;
+    [self.navigationController pushViewController:WKCtrl animated:YES];
 }
 #pragma mark -- 查看已报名人列表
 - (void)getTeamActivitySignUpList:(UIButton *)btn{

@@ -10,7 +10,7 @@
 
 @protocol JGHAddInvoiceViewControllerDelegate <NSObject>
 
-- (void)backAddressKey:(NSString *)addressKey andInvoiceName:(NSString *)name;
+- (void)backAddressKey:(NSString *)invoiceKey andInvoiceName:(NSString *)name andAddressKey:(NSString *)addressKey;
 
 @end
 
@@ -41,6 +41,7 @@
 @property (weak, nonatomic)id <JGHAddInvoiceViewControllerDelegate> delegate;
 
 @property (copy, nonatomic)NSString *invoiceKey;//发票Key
+@property (copy, nonatomic)NSString *addressKey;//地址Key
 //地址
 - (IBAction)addreeBtn:(UIButton *)sender;
 
@@ -51,5 +52,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *addressNumber;//地址联系人号码
 
 @property (weak, nonatomic) IBOutlet UILabel *addressDetails;//地址详情
+
+//@property (nonatomic, strong)NSMutableDictionary *invocieAndAddressDcit;
 
 @end

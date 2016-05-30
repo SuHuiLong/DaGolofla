@@ -14,6 +14,7 @@
 //yes-报名，no-未报名
 @property (nonatomic, assign)BOOL isApply;
 
+//发布页面过来的数据
 @property (nonatomic, strong)JGTeamAcitivtyModel *model;
 
 //活动id

@@ -101,8 +101,6 @@ static CGFloat ImageHeight  = 210.0;
     self.automaticallyAdjustsScrollViewInsets=NO;
     self.view.backgroundColor = [UIColor colorWithHexString:@"#EAEAEB"];
     
-    
-    
     _photos = 1;
     //返回按钮
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -134,7 +132,7 @@ static CGFloat ImageHeight  = 210.0;
     self.headPortraitBtn = [[UIButton alloc]initWithFrame:CGRectMake(10, 135, 65, 65)];
     [self.headPortraitBtn setImage:[UIImage imageNamed:@"zwt"] forState:UIControlStateNormal];
     [self.headPortraitBtn addTarget:self action:@selector(initItemsBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-    self.headPortraitBtn.backgroundColor = [UIColor redColor];
+//    self.headPortraitBtn.backgroundColor = [UIColor redColor];
     self.headPortraitBtn.layer.cornerRadius = 8.0;
     self.headPortraitBtn.tag = 740;
     [self.imgProfile addSubview:self.headPortraitBtn];
@@ -408,8 +406,10 @@ static CGFloat ImageHeight  = 210.0;
                 _headerImage = (UIImage *)Data;
                 if (btn.tag == 520) {
                     self.imgProfile.image = _headerImage;
+                    self.model.bgImage = _headerImage;
                 }else if (btn.tag == 740){
                     [self.headPortraitBtn setImage:_headerImage forState:UIControlStateNormal];
+                    self.model.headerImage = _headerImage;
                     self.headPortraitBtn.layer.masksToBounds = YES;
                     self.headPortraitBtn.layer.cornerRadius = 8.0;
                 }
@@ -430,8 +430,10 @@ static CGFloat ImageHeight  = 210.0;
                 //设置背景
                 if (btn.tag == 520) {
                     self.imgProfile.image = _headerImage;
+                    self.model.bgImage = _headerImage;
                 }else if (btn.tag == 740){
                     [self.headPortraitBtn setImage:_headerImage forState:UIControlStateNormal];
+                    self.model.headerImage = _headerImage;
                     self.headPortraitBtn.layer.masksToBounds = YES;
                     self.headPortraitBtn.layer.cornerRadius = 8.0;
                 }

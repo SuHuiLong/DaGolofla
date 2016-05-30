@@ -21,6 +21,10 @@
 //报名人数
 @property (weak, nonatomic) IBOutlet UILabel *applyNumber;
 
+//imageView
+@property (weak, nonatomic) IBOutlet UIImageView *imageview;
+
+
 //填充cell数据
 - (void)setJGTeamActivityCellWithModel:(JGTeamAcitivtyModel *)modeel;
 

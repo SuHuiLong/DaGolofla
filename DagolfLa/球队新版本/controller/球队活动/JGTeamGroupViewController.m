@@ -87,7 +87,8 @@ static NSString *const JGGroupdetailsCollectionViewCellIdentifier = @"JGGroupdet
 #pragma mark -- 获取报名人员列表信息
 - (void)loadData{
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    [dict setObject:@206 forKey:@"activityKey"];
+    [dict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:ActivityKey] forKey:ActivityKey];
+//    [dict setObject:@"206" forKey:ActivityKey];
     [[JsonHttp jsonHttp]httpRequest:@"team/getTeamActivitySignUpList" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
         NSLog(@"errType == %@", errType);
     } completionBlock:^(id data) {
@@ -104,7 +105,6 @@ static NSString *const JGGroupdetailsCollectionViewCellIdentifier = @"JGGroupdet
                 //已经分组
                 [self.alreadyDataArray addObject:model];
             }
-            
         }
         
         [self.collectionView reloadData];
@@ -169,7 +169,7 @@ static NSString *const JGGroupdetailsCollectionViewCellIdentifier = @"JGGroupdet
 - (void)didSelectHeaderImage:(UIButton *)btn JGGroupCell:(JGGroupdetailsCollectionViewCell *)cell{
     NSUserDefaults *userDef = [NSUserDefaults standardUserDefaults];
     NSString *str = [userDef objectForKey:TeamMember];
-    if ([str rangeOfString:@"1001"].location != NSNotFound) {
+    if ([str rangeOfString:@"10000001"].location != NSNotFound) {
         //管理员 -- 进入球队列表页码
         JGHTeamMembersViewController *teamMemberCtrl = [[JGHTeamMembersViewController alloc]init];
         NSMutableArray *listArray = [NSMutableArray arrayWithArray:self.alreadyDataArray];
@@ -192,13 +192,18 @@ static NSString *const JGGroupdetailsCollectionViewCellIdentifier = @"JGGroupdet
         
         [self.navigationController pushViewController:teamMemberCtrl animated:YES];
     }else{
+        
+        if (cell) {
+            
+        }
+        
         UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
         }];
         UIAlertAction *commitAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             NSMutableDictionary *dict = [NSMutableDictionary dictionary];
             NSLog(@"%@", [userDef objectForKey:TeamMember]);
             [dict setObject:@0 forKey:@"oldSignUpKey"];// 老的球队活动报名人timeKey
-            [dict setObject:@279 forKey:@"newSignUpKey"]; // 新的球队活动报名人timeKey
+            [dict setObject:[userDef objectForKey:userID] forKey:@"newSignUpKey"]; // 新的球队活动报名人timeKey
             [dict setObject:[NSString stringWithFormat:@"%ld", (long)cell.tag] forKey:@"groupIndex"]; // 组号
             [dict setObject:[NSString stringWithFormat:@"%ld", (long)btn.tag] forKey:@"sortIndex"]; // 排序索引
         }];

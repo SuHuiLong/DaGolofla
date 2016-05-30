@@ -20,7 +20,7 @@
 
 - (instancetype)init{
     if (self == [super init]) {
-        self.teamGroupAllDataArray = [NSArray array];
+        self.teamGroupAllDataArray = [NSMutableArray array];
     }
     return self;
 }

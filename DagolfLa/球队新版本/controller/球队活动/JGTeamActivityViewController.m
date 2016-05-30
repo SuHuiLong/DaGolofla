@@ -84,6 +84,8 @@
         [self.dataArray removeAllObjects];
         
         NSArray *array = [data objectForKey:@"activityList"];
+        NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
+        
         for (NSDictionary *dict in array) {
             JGTeamAcitivtyModel *model = [[JGTeamAcitivtyModel alloc]init];
             
@@ -110,8 +112,6 @@
 - (void)launchActivityBtnClick:(UIButton *)btn{
     JGHLaunchActivityViewController * launchCtrl = [[JGHLaunchActivityViewController alloc]init];
     [self.navigationController pushViewController:launchCtrl animated:YES];
-//    JGTeamGroupViewController *JGTeamGroupCtrl = [[JGTeamGroupViewController alloc]init];
-//    [self.navigationController pushViewController:JGTeamGroupCtrl animated:YES];
 }
 #pragma mark -- 创建TableView
 - (void)createTeamActivityTabelView{
@@ -224,17 +224,13 @@
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-//    JGTeamApplyViewController *teamApplyCtrl = [[JGTeamApplyViewController alloc]initWithNibName:@"JGTeamApplyViewController" bundle:nil];
-//    JGTeamAcitivtyModel *model = [[JGTeamAcitivtyModel alloc]init];
-//    model = self.dataArray[indexPath.section];
-//    teamApplyCtrl.activityKey = model.timeKey;
-//    [self.navigationController pushViewController:teamApplyCtrl animated:YES];
-//    @Param( value = "activityKey" , require = true) Long  activityKey  ,
-//    @Param( value = "userKey"  )                    Long  userKey      ,
     JGTeamActibityNameViewController *activityNameCtrl = [[JGTeamActibityNameViewController alloc]init];
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     JGTeamAcitivtyModel *model = self.dataArray[indexPath.section];
     [dict setObject:@(model.teamActivityKey) forKey:@"activityKey"];
+    [[NSUserDefaults standardUserDefaults]setObject:@(model.teamActivityKey) forKey:@"activityKey"];
+    [[NSUserDefaults standardUserDefaults] setObject:[NSString stringWithFormat:@"%ld", (long)model.teamKey] forKey:TeamKey];
+    [[NSUserDefaults standardUserDefaults] synchronize];
     [dict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"userId" ] forKey:@"userKey"];
     [[JsonHttp jsonHttp]httpRequest:@"team/getTeamActivity" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
      

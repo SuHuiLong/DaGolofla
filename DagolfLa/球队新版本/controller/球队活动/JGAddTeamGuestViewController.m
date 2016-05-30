@@ -28,9 +28,12 @@
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor colorWithHexString:BG_color];
 //    self.applyArray = [NSMutableArray array];
-    self.navigationItem.title = @"添加地球人";
+    self.navigationItem.title = @"添加打球人";
     self.sex = 1;//男－默认
     self.isPlays = 1;
+    
+//    self.nameText.text = [[NSUserDefaults standardUserDefaults]objectForKey:@"userName"];
+    
     [self createAddGuestTableview];
 }
 #pragma mark --创建tableView
@@ -81,16 +84,16 @@
     
 //    NSUserDefaults *userDef = [NSUserDefaults standardUserDefaults];
     NSMutableDictionary *applyDict = [NSMutableDictionary dictionary];
-    [applyDict setObject:@"192" forKey:@"teamKey"];//球队key
-    [applyDict setObject:@"206" forKey:@"activityKey"];//球队活动id
+    [applyDict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:TeamKey] forKey:TeamKey];//球队key
+    [applyDict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:ActivityKey] forKey:ActivityKey];//球队活动id
 //    [applyDict setObject:[userDef objectForKey:userID] forKey:@"userKey"];//报名用户key , 没有则是嘉宾
     [applyDict setObject:[NSString stringWithFormat:@"%ld", (long)_isPlays] forKey:@"type"];//"是否是球队成员 0: 不是  1：是
     if (_isPlays == 0) {
         //嘉宾
-        [applyDict setObject:[NSString stringWithFormat:@"%ld", self.memberPrice] forKey:@"payMoney"];//实际付款金额
+        [applyDict setObject:[NSString stringWithFormat:@"%ld", (long)self.memberPrice] forKey:@"payMoney"];//实际付款金额
     }else{
         //队员
-        [applyDict setObject:[NSString stringWithFormat:@"%ld", self.guestPrice] forKey:@"payMoney"];//实际付款金额
+        [applyDict setObject:[NSString stringWithFormat:@"%ld", (long)self.guestPrice] forKey:@"payMoney"];//实际付款金额
     }
     
     [applyDict setObject:@0 forKey:@"userKey"];//报名用户key , 没有则是嘉宾

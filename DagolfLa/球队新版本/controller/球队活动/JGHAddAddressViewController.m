@@ -60,7 +60,7 @@
     // Pass the selected object to the new view controller.
 }
 */
-
+#pragma mark -- 确定
 - (IBAction)commitBtn:(UIButton *)sender {
     if (_name.text.length == 0) {
         _name.layer.borderColor = [UIColor redColor].CGColor;
