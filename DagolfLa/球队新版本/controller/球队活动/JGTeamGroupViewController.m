@@ -95,6 +95,18 @@ static NSString *const JGGroupdetailsCollectionViewCellIdentifier = @"JGGroupdet
         NSLog(@"errType == %@", errType);
     } completionBlock:^(id data) {
         NSLog(@"data == %@", data);
+        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+            if ([data count] == 2) {
+                [Helper alertViewNoHaveCancleWithTitle:@"暂无报名信息！" withBlock:^(UIAlertController *alertView) {
+                   [self.navigationController presentViewController:alertView animated:YES completion:^{
+                       
+                   }];
+                }];
+                
+                return ;
+            }
+        }
+        
         NSArray *dataArray = [data objectForKey:@"teamSignUpList"];
         _groupDetailsCollectionViewCount = [dataArray count];
         for (NSDictionary *dict in dataArray) {

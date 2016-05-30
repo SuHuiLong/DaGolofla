@@ -12,8 +12,9 @@
 #import "JGTeamPhotoViewController.h"
 #import "JGTeamActivityViewController.h"
 #import "JGImageAndLabelAndLabelTableViewCell.h"
-
 #import "JGLTeamEditViewController.h"
+#import "JGTeamActivityViewController.h"
+
 @interface JGTeamManageViewController ()<UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic, strong)UITableView *tableView;
@@ -26,6 +27,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.navigationItem.title = @"球队管理";
+    
     [self creatTableView];
     // Do any additional setup after loading the view.
 }
@@ -35,6 +38,7 @@
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     [self.tableView registerClass:[JGImageAndLabelAndLabelTableViewCell class] forCellReuseIdentifier:@"imageVSlabel"];
+    //活动管理去掉－－－东东
     self.array = [NSArray arrayWithObjects:@"入队审核",@[@"队员管理",@"活动管理", @"相册管理"],@"账户管理",@"球队资料编辑", nil];
     self.imageArray = [NSArray arrayWithObjects:@"rd", @[@"dy", @"hd-2", @"xcgl"], @"zhgl", @"qdjj", nil];
     [self.view addSubview: self.tableView];
@@ -77,7 +81,6 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     //入队审核
-
     
     if (indexPath.section == 0) {
         JGLJoinManageViewController* joinVc = [[JGLJoinManageViewController alloc]init];
@@ -98,8 +101,13 @@
                 break;
             case 1:
             {
-                JGTeamActivityViewController* acVc = [[JGTeamActivityViewController alloc]init];
-                [self.navigationController pushViewController:acVc animated:YES];
+                //活动管理
+                JGTeamActivityViewController *activityCtrl = [[JGTeamActivityViewController alloc]init];
+                activityCtrl.timeKey = self.teamKey;
+                activityCtrl.myActivityList = 1;
+                [self.navigationController pushViewController:activityCtrl animated:YES];
+//                JGTeamActivityViewController* acVc = [[JGTeamActivityViewController alloc]init];
+//                [self.navigationController pushViewController:acVc animated:YES];
             }
                 break;
             case 2:

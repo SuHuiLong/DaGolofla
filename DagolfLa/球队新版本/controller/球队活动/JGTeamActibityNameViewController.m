@@ -18,6 +18,7 @@
 #import "JGTeamActivityViewController.h"
 #import "JGHTeamMembersViewController.h"
 #import "JGTeamDeatilWKwebViewController.h"
+#import "JGTeamGroupViewController.h"
 
 static NSString *const JGTeamActivityWithAddressCellIdentifier = @"JGTeamActivityWithAddressCell";
 static NSString *const JGTeamActivityDetailsCellIdentifier = @"JGTeamActivityDetailsCell";
@@ -132,15 +133,20 @@ static CGFloat ImageHeight  = 210.0;
     [btn setImage:[UIImage imageNamed:@"backL"] forState:UIControlStateNormal];
     [btn addTarget:self action:@selector(initItemsBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.titleView addSubview:btn];
-    //点击更换背景
-    UIButton *replaceBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    replaceBtn.frame = CGRectMake(screenWidth-64, 0, 54, 44);
-    replaceBtn.titleLabel.font = [UIFont systemFontOfSize:FontSize_Normal];
-    [replaceBtn setTitle:@"点击更换" forState:UIControlStateNormal];
-    replaceBtn.titleLabel.font = [UIFont systemFontOfSize:13];
-    replaceBtn.tag = 520;
-    replaceBtn.hidden = YES;
-    [self.titleView addSubview:replaceBtn];
+    //有管理权限的用户在活动详情页面显示－－活动分组
+    NSUserDefaults *userDef = [NSUserDefaults standardUserDefaults];
+    NSString *str = [userDef objectForKey:TeamMember];
+    if ([str rangeOfString:@"1001"].location != NSNotFound){
+        UIButton *replaceBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        replaceBtn.frame = CGRectMake(screenWidth-64, 0, 54, 44);
+        replaceBtn.titleLabel.font = [UIFont systemFontOfSize:FontSize_Normal];
+        [replaceBtn setTitle:@"活动分组" forState:UIControlStateNormal];
+        replaceBtn.titleLabel.font = [UIFont systemFontOfSize:13];
+        [replaceBtn addTarget:self action:@selector(pushGroupCtrl:) forControlEvents:UIControlEventTouchUpInside];
+        replaceBtn.tag = 520;
+        [self.titleView addSubview:replaceBtn];
+    }
+    
     //输入框
     self.titleField = [[UILabel alloc]initWithFrame:CGRectMake(64, 7, screenWidth - 128, 30)];
     self.titleField.text = self.model.name;
@@ -169,6 +175,13 @@ static CGFloat ImageHeight  = 210.0;
 
     [self.imgProfile addSubview:self.addressBtn];
 }
+#pragma mark -- 跳转分组页面
+- (void)pushGroupCtrl:(UIButton *)btn{
+    JGTeamGroupViewController *teamGroupCtrl = [[JGTeamGroupViewController alloc]init];
+    teamGroupCtrl.teamActivityKey = _teamActivityKey;
+    [self.navigationController pushViewController:teamGroupCtrl animated:YES];
+}
+#pragma mark -- 获取球场地址
 - (void)replaceWithPicture:(UIButton *)Btn{
     //球场列表
     BallParkViewController *ballCtrl = [[BallParkViewController alloc]init];
@@ -518,7 +531,7 @@ static CGFloat ImageHeight  = 210.0;
 - (void)pushDetailSCtrl:(UIButton *)btn{
     JGTeamDeatilWKwebViewController *WKCtrl = [[JGTeamDeatilWKwebViewController alloc]init];
     WKCtrl.teamName = self.model.name;
-    WKCtrl.detailString = self.model.info;
+    WKCtrl.detailString = self.model.details;
     [self.navigationController pushViewController:WKCtrl animated:YES];
 }
 #pragma mark -- 查看已报名人列表
