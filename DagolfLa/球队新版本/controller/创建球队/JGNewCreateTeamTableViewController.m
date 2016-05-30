@@ -108,7 +108,7 @@ static CGFloat ImageHeight  = 210.0;
         self.imgProfile = [[UIImageView alloc] initWithImage:image];
         self.imgProfile.frame = CGRectMake(0, 0, screenWidth, ImageHeight);
         self.imgProfile.userInteractionEnabled = YES;
-        self.imgProfile.contentMode = UIViewContentModeScaleAspectFit;
+        self.imgProfile.contentMode = UIViewContentModeScaleToFill;
         
         self.launchActivityTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight - 44) style:(UITableViewStylePlain)];
         [self.launchActivityTableView registerClass:[JGLableAndLableTableViewCell class] forCellReuseIdentifier:@"lbVSlb"];
