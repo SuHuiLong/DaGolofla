@@ -46,8 +46,8 @@
 - (void)umengTrack {
     //    [MobClick setAppVersion:XcodeAppVersion]; //参数为NSString * 类型,自定义app版本信息，如果不设置，默认从CFBundleVersion里取
     [MobClick setLogEnabled:YES];
-    UMConfigInstance.appKey = @"54448737fd98c53d2b0018af";
-    UMConfigInstance.secret = @"secretstringaldfkals";
+    UMConfigInstance.appKey = @"574c75ed67e58ecb16003314";
+    UMConfigInstance.secret = nil;
     //    UMConfigInstance.eSType = E_UM_GAME;
     [MobClick startWithConfigure:UMConfigInstance];
 }
@@ -270,7 +270,7 @@
     
     //微信支付
     [WXApi registerApp:@"wxdcdc4e20544ed728"];
-    
+    [self umengTrack];
     return YES;
 }
 
