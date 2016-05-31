@@ -136,9 +136,7 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-//    JGLTeamMemberModel *modelll = _dataArray[indexPath.row];
-    NSString *power = [[NSUserDefaults standardUserDefaults] objectForKey:@"power"];
-    if ([power containsString:@"1002"]) {
+    if ([_power rangeOfString:@"1002"].location != NSNotFound) {
         if (_isEdit) {
             
             JGLTeamMemberModel *model = _dataArray[indexPath.row];
