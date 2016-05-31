@@ -66,9 +66,9 @@ static CGFloat ImageHeight  = 210.0;
     self.navigationController.navigationBarHidden = YES;
     [self setData];
     if (_teamActivityKey != 0){
-        [self.imgProfile sd_setImageWithURL:[Helper setImageIconUrl:@"activity" andTeamKey:_teamActivityKey andIsSetWidth:YES andIsBackGround:YES] placeholderImage:[UIImage imageNamed:@"tu2"]];
+        [self.imgProfile sd_setImageWithURL:[Helper setImageIconUrl:@"activity" andTeamKey:_teamActivityKey andIsSetWidth:YES andIsBackGround:NO] placeholderImage:[UIImage imageNamed:@"tu2"]];
         
-        [self.headPortraitBtn sd_setImageWithURL:[Helper setImageIconUrl:@"activity" andTeamKey:_teamActivityKey andIsSetWidth:YES andIsBackGround:NO] forState:(UIControlStateNormal) placeholderImage:[UIImage imageNamed:@"logo"]];
+        [self.headPortraitBtn sd_setImageWithURL:[Helper setImageIconUrl:@"activity" andTeamKey:_teamActivityKey andIsSetWidth:YES andIsBackGround:YES] forState:(UIControlStateNormal) placeholderImage:[UIImage imageNamed:@"logo"]];
     }else if (_myActivityKey != 0){
         [self.imgProfile sd_setImageWithURL:[Helper setImageIconUrl:@"activity" andTeamKey:_myActivityKey andIsSetWidth:YES andIsBackGround:YES] placeholderImage:[UIImage imageNamed:@"tu2"]];
         

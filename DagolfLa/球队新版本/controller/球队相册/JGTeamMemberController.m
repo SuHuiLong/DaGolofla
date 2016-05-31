@@ -148,22 +148,26 @@
             self.block(key, name, mobie);
             [self.navigationController popViewControllerAnimated:YES];
         }else{
-            
-            JGLTeamMemberModel *model = _dataArray[indexPath.row];
-            ChatDetailViewController *vc = [[ChatDetailViewController alloc] init];
-            //设置聊天类型
-            vc.conversationType = ConversationType_PRIVATE;
-            //设置对方的id
-            vc.targetId = [NSString stringWithFormat:@"%@", model.userKey];
-            //设置对方的名字
-//            vc.userName = model.userName;
-            //设置聊天标题
-            vc.title = model.userName;
-            //设置不现实自己的名称  NO表示不现实
-            vc.displayUserNameInCell = NO;
-            [self.navigationController pushViewController:vc animated:YES];
+            if (_teamMembers == 1) {
+                JGLTeamMemberModel *model = _dataArray[indexPath.row];
+                ChatDetailViewController *vc = [[ChatDetailViewController alloc] init];
+                //设置聊天类型
+                vc.conversationType = ConversationType_PRIVATE;
+                //设置对方的id
+                vc.targetId = [NSString stringWithFormat:@"%@", model.userKey];
+                //设置对方的名字
+                //            vc.userName = model.userName;
+                //设置聊天标题
+                vc.title = model.userName;
+                //设置不现实自己的名称  NO表示不现实
+                vc.displayUserNameInCell = NO;
+                [self.navigationController pushViewController:vc animated:YES];
+            }else if (_teamManagement == 1){
+                JGMemManageController* menVc = [[JGMemManageController alloc]init];
+                menVc.model = _dataArray[indexPath.row];
+                [self.navigationController pushViewController:menVc animated:YES];
+            }
         }
-        
     }else{
         
     }    

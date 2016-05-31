@@ -102,7 +102,7 @@ static CGFloat ImageHeight  = 210.0;
     self.headPortraitBtn.layer.cornerRadius = 8.0;
     
     [self.imgProfile sd_setImageWithURL:[Helper setImageIconUrl:@"team" andTeamKey:[[self.detailDic objectForKey:@"timeKey"] integerValue] andIsSetWidth:YES andIsBackGround:YES] placeholderImage:[UIImage imageNamed:@"selfBackPic.jpg"]];
-
+    
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     [dict setObject:DEFAULF_USERID forKey:@"userKey"];
     [dict setObject:[self.detailDic objectForKey:@"timeKey"] forKey:@"teamKey"];
@@ -111,8 +111,8 @@ static CGFloat ImageHeight  = 210.0;
         
     } completionBlock:^(id data) {
            self.power = [[data objectForKey:@"teamMember"] objectForKey:@"power"];
-        [[NSUserDefaults standardUserDefaults] setObject:self.power forKey:@"power"];
-        [[NSUserDefaults standardUserDefaults]  synchronize];
+//        [[NSUserDefaults standardUserDefaults] setObject:self.power forKey:@"power"];
+//        [[NSUserDefaults standardUserDefaults]  synchronize];
     }];
     
     
@@ -535,7 +535,7 @@ static CGFloat ImageHeight  = 210.0;
             {
                 //获取球队活动列表
                 JGTeamActivityViewController *activiyVC = [[JGTeamActivityViewController alloc] init];
-//                activiyVC.myActivityList = 1;
+                activiyVC.power = self.power;
                 activiyVC.timeKey = [[self.detailDic objectForKey:@"timeKey"] integerValue];
                 [self.navigationController pushViewController:activiyVC animated:YES];
                 
@@ -544,6 +544,7 @@ static CGFloat ImageHeight  = 210.0;
             case 1:
             {
                 JGTeamMemberController* tmVc = [[JGTeamMemberController alloc]init];
+                tmVc.teamMembers = 1;
                 tmVc.teamKey = [_detailDic objectForKey:@"timeKey"];
                 [self.navigationController pushViewController:tmVc animated:YES];
             }

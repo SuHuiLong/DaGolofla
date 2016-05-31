@@ -46,7 +46,7 @@
     self.navigationItem.title = @"球队活动";
     self.page = 1;
     [self createTeamActivityTabelView];
-    if (_myActivityList == 1) {
+    if (_myActivityList == 1 || [self.power containsString:@"1002"]) {
         [self createAdminBtn];
     }
     
