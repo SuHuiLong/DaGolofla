@@ -17,7 +17,7 @@
 //发布页面过来的数据
 @property (nonatomic, strong)JGTeamAcitivtyModel *model;
 
-
+@property (nonatomic, assign)NSInteger isTeamChannal; // 是否是球队频道传过来 1:是
 
 @property (nonatomic, retain) UIImageView *imgProfile;//拉大图片
 
@@ -31,5 +31,8 @@
 @property (nonatomic, assign)NSInteger myActivityKey;//我的活动key
 //活动id
 @property (nonatomic, assign)NSInteger teamActivityKey;//活动大厅－活动key
+
+//来自我的活动
+@property (nonatomic, assign)NSInteger isMEActivity;
 
 @end

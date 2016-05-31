@@ -154,18 +154,19 @@ static CGFloat ImageHeight  = 210.0;
     [shareBtn addTarget:self action:@selector(addShare) forControlEvents:UIControlEventTouchUpInside];
     [self.titleView addSubview:shareBtn];
     //有管理权限的用户在活动详情页面显示－－活动分组
-    NSUserDefaults *userDef = [NSUserDefaults standardUserDefaults];
-    NSString *str = [userDef objectForKey:TeamMember];
-    if ([str rangeOfString:@"1001"].location != NSNotFound){
-        UIButton *replaceBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        replaceBtn.frame = CGRectMake(screenWidth-94, 3, 54, 44);
-        replaceBtn.titleLabel.font = [UIFont systemFontOfSize:FontSize_Normal];
-        [replaceBtn setTitle:@"活动分组" forState:UIControlStateNormal];
-        replaceBtn.titleLabel.font = [UIFont systemFontOfSize:13];
-        [replaceBtn addTarget:self action:@selector(pushGroupCtrl:) forControlEvents:UIControlEventTouchUpInside];
-        replaceBtn.tag = 520;
-        [self.titleView addSubview:replaceBtn];
-    }
+#warning ,,,,,,,TeamMember
+//    NSUserDefaults *userDef = [NSUserDefaults standardUserDefaults];
+//    NSString *str = [userDef objectForKey:userID];
+//    if ([str rangeOfString:@"1001"].location != NSNotFound){
+//        UIButton *replaceBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+//        replaceBtn.frame = CGRectMake(screenWidth-94, 3, 54, 44);
+//        replaceBtn.titleLabel.font = [UIFont systemFontOfSize:FontSize_Normal];
+//        [replaceBtn setTitle:@"活动分组" forState:UIControlStateNormal];
+//        replaceBtn.titleLabel.font = [UIFont systemFontOfSize:13];
+//        [replaceBtn addTarget:self action:@selector(pushGroupCtrl:) forControlEvents:UIControlEventTouchUpInside];
+//        replaceBtn.tag = 520;
+//        [self.titleView addSubview:replaceBtn];
+//    }
     
     //输入框
     self.titleField = [[UILabel alloc]initWithFrame:CGRectMake(64, 7, screenWidth - 128, 30)];
@@ -195,9 +196,12 @@ static CGFloat ImageHeight  = 210.0;
     
     [self.imgProfile addSubview:self.addressBtn];
     
-    [self dataSet];
+//    if (self.isTeamChannal == 1) {
+        [self dataSet];
+//    }
+    
 }
-#pragma mark -- 下载数据
+#pragma mark -- 下载数据 －－－ 成功
 - (void)dataSet{
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     [dict setValue:@(self.teamActivityKey) forKey:@"activityKey"];
@@ -209,15 +213,39 @@ static CGFloat ImageHeight  = 210.0;
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
             NSMutableDictionary *dict = [NSMutableDictionary dictionary];
             dict = [data objectForKey:@"activity"];
+            if ([data objectForKey:@"power"]) {
+                if ([data objectForKey:@"power"]) {
+                    NSString *str = [data objectForKey:@"power"];
+                    if ([str containsString:@"1001"]) {
+                        [self createGroupBtn];
+                    }
+                }
+            }
+            
             [self.model setValuesForKeysWithDictionary:dict];
             [self.teamActibityNameTableView reloadData];
         }else{
-            [Helper alertViewWithTitle:@"活动数据获取失败！" withBlock:^(UIAlertController *alertView) {
-                [self.navigationController presentViewController:alertView animated:YES completion:nil];
-            }];
+            
         }
     }];
 }
+
+//有管理权限的用户在活动详情页面显示－－活动分组
+- (void)createGroupBtn{
+//    NSUserDefaults *userDef = [NSUserDefaults standardUserDefaults];
+//    NSString *str = [userDef objectForKey:userID];
+//    if ([str rangeOfString:@"1001"].location != NSNotFound){
+    UIButton *replaceBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    replaceBtn.frame = CGRectMake(screenWidth-94, 3, 54, 44);
+    replaceBtn.titleLabel.font = [UIFont systemFontOfSize:FontSize_Normal];
+    [replaceBtn setTitle:@"活动分组" forState:UIControlStateNormal];
+    replaceBtn.titleLabel.font = [UIFont systemFontOfSize:13];
+    [replaceBtn addTarget:self action:@selector(pushGroupCtrl:) forControlEvents:UIControlEventTouchUpInside];
+    replaceBtn.tag = 520;
+    [self.titleView addSubview:replaceBtn];
+//    }
+}
+
 #pragma mark -分享
 - (void)addShare{
     if ([[NSUserDefaults standardUserDefaults]objectForKey:@"userId"]) {
@@ -411,6 +439,7 @@ static CGFloat ImageHeight  = 210.0;
 - (void)applyAttendBtnClick:(UIButton *)btn{
     JGTeamApplyViewController *teamApplyCtrl = [[JGTeamApplyViewController alloc]initWithNibName:@"JGTeamApplyViewController" bundle:nil];
     teamApplyCtrl.modelss = self.model;
+    teamApplyCtrl.isTeamChannal = self.isTeamChannal;
     [self.navigationController pushViewController:teamApplyCtrl animated:YES];
 }
 #pragma mark -- 拨打电话

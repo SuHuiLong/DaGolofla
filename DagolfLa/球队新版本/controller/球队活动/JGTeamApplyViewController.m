@@ -90,8 +90,8 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
     //默认添加自己的信息
     if (self.applyArray.count == 0) {
         NSMutableDictionary *applyDict = [NSMutableDictionary dictionary];
-        [applyDict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:TeamKey] forKey:TeamKey];//球队key
-        [applyDict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:ActivityKey] forKey:ActivityKey];//球队活动id
+        [applyDict setObject:[NSString stringWithFormat:@"%td", _modelss.teamKey] forKey:@"teamKey"];//球队key
+        [applyDict setObject:_modelss.timeKey forKey:@"activityKey"];//球队活动id
         [applyDict setObject:@1 forKey:@"type"];//"是否是球队成员 0: 不是  1：是
         
         [applyDict setObject:[NSString stringWithFormat:@"%ld", (long)_modelss.memberPrice] forKey:@"payMoney"];//实际付款金额
@@ -363,10 +363,15 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
     
     NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
     [dict setObject:[userdef objectForKey:userID] forKey:@"appUserKey"];
+    [self.info setObject:[NSString stringWithFormat:@"%td", _modelss.teamKey] forKey:@"teamKey"];//球队key
+    if (_isTeamChannal == 1) {
+        [self.info setObject:[NSString stringWithFormat:@"%td", _modelss.teamActivityKey] forKey:@"activityKey"];//球队活动key
+    }else{
+        [self.info setObject:[NSString stringWithFormat:@"%@", _modelss.timeKey] forKey:@"activityKey"];//球队活动key
+
+    }
     
-    [self.info setObject:[userdef objectForKey:TeamKey] forKey:TeamKey];//球队key
-    [self.info setObject:[userdef objectForKey:ActivityKey] forKey:@"activityKey"];//球队活动key
-    [self.info setObject:[userdef objectForKey:@"userName"] forKey:@"userName"];//报名人名称
+    [self.info setObject:[userdef objectForKey:@"userName"] forKey:@"userName"];//报名人名称//teamkey 156
     
     [self.info setObject:[userdef objectForKey:userID] forKey:@"userKey"];//用户Key
     [self.info setObject:@0 forKey:@"timeKey"];//timeKey
@@ -377,16 +382,32 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
         NSLog(@"errType == %@", errType);
     } completionBlock:^(id data) {
         NSLog(@"data == %@", data);
-        _infoKey = [data objectForKey:@"infoKey"];
-        if (type == 1) {
-            [self weChatPay];
-        }else if (type == 2){
-            [self zhifubaoPay];
+        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+            _infoKey = [data objectForKey:@"infoKey"];
+            if (type == 1) {
+                [self weChatPay];
+            }else if (type == 2){
+                [self zhifubaoPay];
+            }else{
+                //跳转分组页面
+                JGTeamGroupViewController *groupCtrl = [[JGTeamGroupViewController alloc]init];
+                groupCtrl.teamActivityKey = [_modelss.timeKey integerValue];
+                [self.navigationController pushViewController:groupCtrl animated:YES];
+            }
         }else{
-            //跳转分组页面
-            JGTeamGroupViewController *groupCtrl = [[JGTeamGroupViewController alloc]init];
-            groupCtrl.teamActivityKey = [_modelss.timeKey integerValue];
-            [self.navigationController pushViewController:groupCtrl animated:YES];
+            if ([data count]== 2) {
+                [Helper alertViewWithTitle:@"报名失败！" withBlock:^(UIAlertController *alertView) {
+                    [self.navigationController presentViewController:alertView animated:YES completion:^{
+                        
+                    }];
+                }];
+            }else{
+                [Helper alertViewWithTitle:[data objectForKey:@"packResultMsg"] withBlock:^(UIAlertController *alertView) {
+                    [self.navigationController presentViewController:alertView animated:YES completion:^{
+                        
+                    }];
+                }];
+            }
         }
     }];
 }
