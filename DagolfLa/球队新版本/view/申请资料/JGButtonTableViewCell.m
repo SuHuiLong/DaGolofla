@@ -21,7 +21,7 @@
         
         [self.button setFrame:CGRectMake(screenWidth - 110 * screenWidth / 320, 0, 110 * screenWidth / 320, self.frame.size.height)];
         [self.button setTitleColor:[UIColor lightGrayColor] forState:(UIControlStateNormal)];
-        [self.button setTitle:@"请输入性别" forState:(UIControlStateNormal)];
+        [self.button setTitle:@"请选择" forState:(UIControlStateNormal)];
         [self addSubview:self.button];
     }
     return self;

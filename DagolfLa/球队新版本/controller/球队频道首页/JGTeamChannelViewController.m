@@ -190,9 +190,9 @@
         if ([self.myTeamArray count] != 0) {
             self.titleLB.text = @" 近期活动";
             NSMutableDictionary *dic = [NSMutableDictionary dictionary];
-            [dic setObject:@244 forKey:@"userKey"];
+            [dic setObject:DEFAULF_USERID forKey:@"userKey"];
             [dic setValue:@0 forKey:@"offset"];
-            [getMyTeam setObject:@192 forKey:@"teamKey"];
+//            [getMyTeam setObject:@192 forKey:@"teamKey"];
             [[JsonHttp jsonHttp] httpRequest:@"team/getMyTeamActivityList" JsonKey:nil withData:dic requestMethod:@"GET" failedBlock:^(id errType) {
                 [Helper alertViewNoHaveCancleWithTitle:@"获取活动列表失败" withBlock:^(UIAlertController *alertView) {
                     [self.navigationController presentViewController:alertView animated:YES completion:nil];
@@ -388,7 +388,7 @@
     }else{
         JGTeamActibityNameViewController *teamActivityVC = [[JGTeamActibityNameViewController alloc] init];
         JGTeamAcitivtyModel *model = self.myActivityArray[indexPath.row];
-        teamActivityVC.teamActivityKey = [model.timeKey integerValue];
+        teamActivityVC.teamActivityKey = model.teamActivityKey;
         teamActivityVC.model = model;
         teamActivityVC.teamActivityKey = model.teamActivityKey;
         [self.navigationController pushViewController:teamActivityVC animated:YES];

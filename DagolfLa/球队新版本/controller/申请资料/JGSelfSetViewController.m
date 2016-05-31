@@ -6,12 +6,12 @@
 //  Copyright © 2016年 bhxx. All rights reserved.
 //
 
-#import "JGApplyMaterialViewController.h"
+#import "JGSelfSetViewController.h"
 #import "JGApplyMaterialTableViewCell.h"
 #import "JGButtonTableViewCell.h"
 
 
-@interface JGApplyMaterialViewController ()<UITableViewDelegate, UITableViewDataSource,UIPickerViewDataSource,UIPickerViewDelegate,UITextFieldDelegate>
+@interface JGSelfSetViewController ()<UITableViewDelegate, UITableViewDataSource,UIPickerViewDataSource,UIPickerViewDelegate,UITextFieldDelegate>
 
 @property (nonatomic, strong)UITableView *tableView;
 @property (nonatomic, strong)UITableView *secondTableView;
@@ -23,7 +23,12 @@
 
 @end
 
-@implementation JGApplyMaterialViewController
+@implementation JGSelfSetViewController
+
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:YES];
+    [self setCellData];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -146,7 +151,7 @@
 }
 
 - (void)buttonShowClickSec: (UIButton *)btn{
-
+    
     
     if ([[self.view subviews] containsObject:self.pickerBackView]) {
         [self.pickerBackView removeFromSuperview];
@@ -163,7 +168,7 @@
     if (![self.paraDic objectForKey:@"hand"]) {
         [self.paraDic setObject:@0 forKey:@"hand"];
     }
-
+    
     if ([[self.view subviews] containsObject:self.pickerBackView]) {
         [self.pickerBackView removeFromSuperview];
     }
@@ -178,7 +183,7 @@
 
 
 - (void)buttonShowClick: (UIButton *)btn{
- 
+    
     
     if ([[self.view subviews] containsObject:self.pickerBackView]) {
         [self.pickerBackView removeFromSuperview];
@@ -216,7 +221,7 @@
     [self.secondTableView registerClass:[JGButtonTableViewCell class] forCellReuseIdentifier:@"cellBtn"];
     
     self.titleArray = [NSArray arrayWithObjects:@[@"姓名", @"性别", @"手机号码"], @[@"行业", @"公司", @"职业",   @"常住地址", @"衣服尺码", @"惯用手"], nil];
-    self.placeholderArray = [NSArray arrayWithObjects:@[@"请输入真实姓名", @"请输入性别", @"请输入手机号" ],@[@"请输入你的行业",@"请输入你的公司",@"请输入你的职位",@"方便活动邀请", @"统一制服制定", @"制定特殊需求"],  nil];
+    self.placeholderArray = [NSArray arrayWithObjects:@[@"请输入真实姓名", @"请输入", @"请输入手机号" ],@[@"请输入你的行业",@"请输入你的公司",@"请输入你的职位",@"方便活动邀请", @"统一制服制定", @"制定特殊需求"],  nil];
     [self.view addSubview: self.secondTableView];
     
 }
@@ -265,6 +270,7 @@
 #pragma mark ------提及
 - (void)complete{
     BOOL isLength = YES;
+    [self.view endEditing:YES];
     NSArray *array = [NSArray arrayWithObjects:@"userName", @"sex", @"mobile", nil];
     
     for (int i = 0; i < 3; i ++) {
@@ -312,15 +318,15 @@
             [self.paraDic setObject:@0 forKey:@"almost"];
         }
         [self.paraDic setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"userId"] forKey:@"userKey"];
-        [self.paraDic setObject:@(self.teamKey) forKey:@"teamKey"];
-        [self.paraDic setObject:@0 forKey:@"state"];
+        [self.paraDic setObject:[self.memeDic objectForKey:@"timeKey"] forKey:@"timeKey"];
+//        [self.paraDic setObject:@0 forKey:@"state"];
         
         [self.paraDic setObject:[Helper returnCurrentDateString] forKey:@"createTime"];
-        [self.paraDic setObject:@0 forKey:@"timeKey"];
+//        [self.paraDic setObject:@0 forKey:@"timeKey"];
         
         if (self.isSelfSet) {
             
-            [[JsonHttp jsonHttp] httpRequest:@"/teamupdateTeamMember" JsonKey:@"newMembr" withData:self.paraDic requestMethod:@"POST" failedBlock:^(id errType) {
+            [[JsonHttp jsonHttp] httpRequest:@"team/updateTeamMember" JsonKey:@"newMembr" withData:self.paraDic requestMethod:@"POST" failedBlock:^(id errType) {
                 
             } completionBlock:^(id data) {
                 
@@ -328,16 +334,16 @@
             
             
         }else{
-        
-        [[JsonHttp jsonHttp] httpRequest:@"team/reqJoinTeam" JsonKey:@"teamMemeber" withData:self.paraDic requestMethod:@"POST" failedBlock:^(id errType) {
-            [Helper alertViewNoHaveCancleWithTitle:@"提交失败 请稍后再试" withBlock:^(UIAlertController *alertView) {
-                [self.navigationController presentViewController:alertView animated:YES completion:nil];
-            }];
-        } completionBlock:^(id data) {
-            NSLog(@"%@", data);
-            [self.navigationController popViewControllerAnimated:YES];
             
-        }];
+//            [[JsonHttp jsonHttp] httpRequest:@"team/reqJoinTeam" JsonKey:@"teamMemeber" withData:self.paraDic requestMethod:@"POST" failedBlock:^(id errType) {
+//                [Helper alertViewNoHaveCancleWithTitle:@"提交失败 请稍后再试" withBlock:^(UIAlertController *alertView) {
+//                    [self.navigationController presentViewController:alertView animated:YES completion:nil];
+//                }];
+//            } completionBlock:^(id data) {
+//                NSLog(@"%@", data);
+//                [self.navigationController popViewControllerAnimated:YES];
+//                
+//            }];
         }
         
         
@@ -359,7 +365,7 @@
     [self.tableView registerClass:[JGApplyMaterialTableViewCell class] forCellReuseIdentifier:@"cell"];
     [self.tableView registerClass:[JGButtonTableViewCell class] forCellReuseIdentifier:@"cellBtn"];
     self.titleArray = [NSArray arrayWithObjects:@[@"姓名", @"性别", @"差点", @"手机号码"], @"常住地址", @"衣服尺码", @"惯用手", nil];
-    self.placeholderArray = [NSArray arrayWithObjects:@[@"请输入真实姓名", @"请输入性别", @"请输入您的差点", @"请输入手机号" ],@"方便活动邀请（选填）",@"统一制服定做（选填）",@"制定特殊需求（选填）", nil];
+    self.placeholderArray = [NSArray arrayWithObjects:@[@"请输入真实姓名", @"请输入", @"请输入您的差点", @"请输入手机号" ],@"方便活动邀请（选填）",@"统一制服定做（选填）",@"制定特殊需求（选填）", nil];
     [self.view addSubview: self.tableView];
 }
 
@@ -385,38 +391,202 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    
+    if (indexPath.section == 0 && indexPath.row == 0) {
+        JGApplyMaterialTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
+        cell.labell.text = @"姓名";
+        if ([self.memeDic objectForKey:@"userName"]) {
+            cell.textFD.text = [self.memeDic objectForKey:@"userName"];
+            return cell;
 
-    if (indexPath.section == 0 && indexPath.row == 1) {
+        }else{
+            cell.textFD.placeholder = @"请输入姓名";
+            return cell;
+
+        }
+    }else if (indexPath.section == 0 && indexPath.row == 1){
         JGButtonTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellBtn" forIndexPath:indexPath];
-        cell.labell.text = self.titleArray[indexPath.section][indexPath.row];
+        cell.labell.text = @"性别";
         [cell.button addTarget:self action:@selector(cellBtn) forControlEvents:(UIControlEventTouchUpInside)];
+        if ([self.memeDic objectForKey:@"sex"]) {
+            if ([self.memeDic objectForKey:@"sex"] == 0) {
+                [cell.button setTitle:@"保密" forState:(UIControlStateNormal)];
+            }else if ([[self.memeDic objectForKey:@"sex"] integerValue] == 1){
+                [cell.button setTitle:@"男" forState:(UIControlStateNormal)];
+            }else{
+                [cell.button setTitle:@"女" forState:(UIControlStateNormal)];
+            }
+        }else{
+            [cell.button setTitle:@"性别" forState:(UIControlStateNormal)];
+            
+        }
         return cell;
+
+    }else if (indexPath.section == 0 && indexPath.row == 2){
+        JGApplyMaterialTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
+        cell.labell.text = @"手机号码";
+        if ([self.memeDic objectForKey:@"mobile"]) {
+            cell.textFD.text = [self.memeDic objectForKey:@"mobile"];
+            return cell;
+
+        }else{
+            cell.textFD.placeholder = @"请输入手机号码";
+            return cell;
+
+        }
+    }else if (indexPath.section == 1 && indexPath.row == 0){
+        JGApplyMaterialTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
+        cell.labell.text = @"行业";
+        if ([self.memeDic objectForKey:@"industry"]) {
+            cell.textFD.text = [self.memeDic objectForKey:@"industry"];
+            return cell;
+        }else{
+            cell.textFD.placeholder = @"请输入你的行业";
+            return cell;
+        }
+
+    }else if (indexPath.section == 1 && indexPath.row == 1){
+        JGApplyMaterialTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
+        cell.labell.text = @"公司";
+        if ([self.memeDic objectForKey:@"company"]) {
+            cell.textFD.text = [self.memeDic objectForKey:@"company"];
+            return cell;
+        }else{
+            cell.textFD.placeholder = @"请输入你的公司";
+            return cell;
+        }
+    }else if (indexPath.section == 1 && indexPath.row == 2){
+        JGApplyMaterialTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
+        cell.labell.text = @"职业";
+        if ([self.memeDic objectForKey:@"occupation"]) {
+            cell.textFD.text = [self.memeDic objectForKey:@"occupation"];
+            return cell;
+        }else{
+            cell.textFD.placeholder = @"请输入你的职业";
+              return cell;
+        }
+
+    }else if (indexPath.section == 1 && indexPath.row == 3){
+        JGApplyMaterialTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
+        cell.labell.text = @"常住地址";
+        if ([self.memeDic objectForKey:@"address"]) {
+            cell.textFD.text = [self.memeDic objectForKey:@"address"];
+              return cell;
+        }else{
+            cell.textFD.placeholder = @"请输入你的常住地址";
+            return cell;
+
+        }
+    }else if (indexPath.section == 1 && indexPath.row == 4){
+        JGApplyMaterialTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
+        cell.labell.text = @"衣服尺码";
+        if ([self.memeDic objectForKey:@"size"]) {
+            cell.textFD.text = [self.memeDic objectForKey:@"size"];
+            return cell;
+
+        }else{
+            cell.textFD.placeholder = @"请输入你的衣服尺码";
+             return cell;
+        }
+
     }else if (indexPath.section == 1 && indexPath.row == 5){
         JGButtonTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellBtn" forIndexPath:indexPath];
-        cell.labell.text = self.titleArray[indexPath.section][indexPath.row];
+        cell.labell.text = @"惯用手";
         [cell.button addTarget:self action:@selector(cellBtnSec) forControlEvents:(UIControlEventTouchUpInside)];
-        return cell;
-    }else{
-        JGApplyMaterialTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
-        
-        if (indexPath.section == 0) {
-            cell.labell.text = self.titleArray[indexPath.section][indexPath.row];
-            cell.textFD.placeholder = self.placeholderArray[indexPath.section][indexPath.row];
-        }else{
-            cell.labell.text = self.titleArray[indexPath.section][indexPath.row];
-            cell.textFD.placeholder = self.placeholderArray[indexPath.section][indexPath.row];
-            if (indexPath.row == 2 && indexPath.section == 0) {
-                cell.textFD.keyboardType = UIKeyboardTypePhonePad;
+        if ([self.memeDic objectForKey:@"hand"]) {
+            if ([[self.memeDic objectForKey:@"hand"] integerValue]== 0) {
+                [cell.button setTitle:@"左手" forState:(UIControlStateNormal)];
+            }else if ([[self.memeDic objectForKey:@"hand"] integerValue] == 1){
+                [cell.button setTitle:@"右手" forState:(UIControlStateNormal)];
             }
+        }else{
+            [cell.button setTitle:@"请输入惯用手" forState:(UIControlStateNormal)];
+            
         }
-        cell.textFD.delegate = self;
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        //    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         return cell;
+
+    }else{
+        return nil;
+    }
+    
+   
+    
+//    if (indexPath.section == 0 && indexPath.row == 1) {
+//        JGButtonTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellBtn" forIndexPath:indexPath];
+//        cell.labell.text = self.titleArray[indexPath.section][indexPath.row];
+//        [cell.button addTarget:self action:@selector(cellBtn) forControlEvents:(UIControlEventTouchUpInside)];
+//        return cell;
+//    }else if (indexPath.section == 1 && indexPath.row == 5){
+//        JGButtonTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellBtn" forIndexPath:indexPath];
+//        cell.labell.text = self.titleArray[indexPath.section][indexPath.row];
+//        [cell.button addTarget:self action:@selector(cellBtnSec) forControlEvents:(UIControlEventTouchUpInside)];
+//        return cell;
+//    }else{
+//        JGApplyMaterialTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
+//        
+//        if (indexPath.section == 0) {
+//            cell.labell.text = self.titleArray[indexPath.section][indexPath.row];
+//            cell.textFD.placeholder = self.placeholderArray[indexPath.section][indexPath.row];
+//        }else{
+//            cell.labell.text = self.titleArray[indexPath.section][indexPath.row];
+//            cell.textFD.placeholder = self.placeholderArray[indexPath.section][indexPath.row];
+//            if (indexPath.row == 2 && indexPath.section == 0) {
+//                cell.textFD.keyboardType = UIKeyboardTypePhonePad;
+//            }
+//        }
+//        cell.textFD.delegate = self;
+//        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+//        //    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+//        return cell;
+    }
+//}
+
+
+- (void)setCellData{
+    
+    for (int i = 0; i < 3; i++) {
+        if (i == 0) {
+            JGApplyMaterialTableViewCell *cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0]];
+            cell.textFD.text = [self.memeDic objectForKey:@"userName"];
+        }else if (i == 2){
+            JGApplyMaterialTableViewCell *cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0]];
+            cell.textFD.text = [self.memeDic objectForKey:@"mobile"];
+        }else if (i == 1){
+            JGButtonTableViewCell *cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0]];
+            [cell.button setTitle:[self.memeDic objectForKey:@"sex"] forState:(UIControlStateNormal)];
+            
         }
     }
-
-
+    
+    for (int i = 0; i < 6; i ++) {
+        
+        if (i == 0) {
+            
+            JGApplyMaterialTableViewCell *cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:1]];
+            cell.textFD.text = [self.memeDic objectForKey:@"industry"];
+        }else if (i == 1){
+            JGApplyMaterialTableViewCell *cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:1]];
+            cell.textFD.text = [self.memeDic objectForKey:@"company"];
+            
+        }else if (i == 2){
+            JGApplyMaterialTableViewCell *cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:1]];
+            cell.textFD.text = [self.memeDic objectForKey:@"industry"];
+            
+        }else if (i == 3){
+            JGApplyMaterialTableViewCell *cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:1]];
+            cell.textFD.text = [self.memeDic objectForKey:@"address"];
+            
+        }else if (i == 4){
+            JGApplyMaterialTableViewCell *cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:1]];
+            cell.textFD.text = [self.memeDic objectForKey:@"size"];
+            
+        }else if (i == 5){
+            JGButtonTableViewCell *cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:1]];
+            [cell.button setTitle:[self.memeDic objectForKey:@"hand"] forState:(UIControlStateNormal)];
+        }
+    }
+}
 
 
 //}
