@@ -31,6 +31,8 @@
     BOOL _isClick;
 }
 
+@property (nonatomic, strong)NSMutableArray *memberArray;
+
 @end
 
 @implementation JGMemAuthorityViewController
@@ -38,6 +40,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     _isClick = NO;
+    self.memberArray  =  [[NSMutableArray alloc] init];
     UIBarButtonItem* rightBtn = [[UIBarButtonItem alloc]initWithTitle:@"保存" style:UIBarButtonItemStylePlain target:self action:@selector(saveSetClick)];
     self.navigationItem.rightBarButtonItem = rightBtn;
     rightBtn.tintColor = [UIColor whiteColor];
@@ -47,6 +50,39 @@
     [[JsonHttp jsonHttp]httpRequest:@"team/getTeamMember" JsonKey:nil withData:dic requestMethod:@"GET" failedBlock:^(id errType) {
         NSLog(@"errType == %@", errType);
     } completionBlock:^(id data) {
+        
+        NSString *str = [[data objectForKey:@"member"]objectForKey:@"power"];
+        NSArray *array = [str componentsSeparatedByString:@","];
+        
+        if ([str containsString:@"1001"]) {
+            [self.memberArray addObject:@"1"];
+        }else{
+            [self.memberArray addObject:@"0"];
+        }
+        
+        if ([str containsString:@"1002"]){
+            [self.memberArray addObject:@"1"];
+        }else{
+            [self.memberArray addObject:@"0"];
+        }
+        
+        if ([str containsString:@"1003"]){
+            [self.memberArray addObject:@"1"];
+        }else{
+            [self.memberArray addObject:@"0"];
+        }
+        
+        if ([str containsString:@"1004"]){
+            [self.memberArray addObject:@"1"];
+        }else{
+            [self.memberArray addObject:@"0"];
+        }
+        
+        if ([str containsString:@"1005"]){
+            [self.memberArray addObject:@"1"];
+        }else{
+            [self.memberArray addObject:@"0"];
+        }
         
         _identity = [[[data objectForKey:@"member"] objectForKey:@"identity"] integerValue];
         _strPower = [[data objectForKey:@"member"] objectForKey:@"power"];
@@ -61,7 +97,7 @@
     
     _arrayTitle = @[@[@"队长",@"会长",@"副会长",@"队长秘书长",@"球队秘书",@"干事"],@[@"活动管理",@"权限管理",@"账户管理", @"咨询管理", @"球队管理"]];
     _arraySection = @[@"身份设置",@"职责设置"];
-    _arrayDetail = @[@"活动发布和对活动成员的管理",@"设置队员身份和职责",@"对内收支情况的管理"];
+    _arrayDetail = @[@"活动发布和对活动成员的管理",@"设置队员身份和职责",@"对内收支情况的管理",@"回复非球队成员的咨询",@""];
     _chooseID = 666;
     _arrayNum = [[NSMutableArray alloc]init];
     [self uiConfig];
@@ -167,6 +203,7 @@
 }
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    
     if (indexPath.row == 0) {
         UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"cellid" forIndexPath:indexPath];
         cell.textLabel.text = _arraySection[indexPath.section];
@@ -216,62 +253,71 @@
         }
         else
         {
+            
             cell.titleLabel.text = _arrayTitle[indexPath.section][indexPath.row - 1];
             cell.titleLabel.font = [UIFont systemFontOfSize:14*screenWidth/375];
+            cell.detailLabel.text = _arrayDetail[indexPath.row - 1];
             if (_isClick == NO) {
-                if ([_strPower rangeOfString:@"1001"].location != NSNotFound) {
-                    if (indexPath.row == 1) {
+                if (_memberArray.count != 0) {
+                    if ([[_memberArray objectAtIndex:indexPath.row-1]integerValue] == 1) {
                         cell.iconImgv.image = [UIImage imageNamed:@"kuang_xz"];
-                    }
-                    else
-                    {
-                        cell.iconImgv.image = [UIImage imageNamed:@"kuang"];
-                    }
-                }
-                else if ([_strPower rangeOfString:@"1002"].location != NSNotFound)
-                {
-                    if (indexPath.row == 2) {
-                        cell.iconImgv.image = [UIImage imageNamed:@"kuang_xz"];
-                    }
-                    else
-                    {
-                        cell.iconImgv.image = [UIImage imageNamed:@"kuang"];
-                    }
-                }
-                else if ([_strPower rangeOfString:@"1003"].location != NSNotFound)
-                {
-                    if (indexPath.row == 3) {
-                        cell.iconImgv.image = [UIImage imageNamed:@"kuang_xz"];
-                    }
-                    else
-                    {
-                        cell.iconImgv.image = [UIImage imageNamed:@"kuang"];
-                    }
-                }
-                else if ([_strPower rangeOfString:@"1004"].location != NSNotFound)
-                {
-                    if (indexPath.row == 4) {
-                        cell.iconImgv.image = [UIImage imageNamed:@"kuang_xz"];
-                    }
-                    else
-                    {
-                        cell.iconImgv.image = [UIImage imageNamed:@"kuang"];
-                    }
-                }
-                else if ([_strPower rangeOfString:@"1005"].location != NSNotFound)
-                {
-                    if (indexPath.row == 5) {
-                        cell.iconImgv.image = [UIImage imageNamed:@"kuang_xz"];
-                    }
-                    else
-                    {
+                    }else{
                         cell.iconImgv.image = [UIImage imageNamed:@"kuang"];
                     }
                 }
                 else{
-                    
+                
+//                if ([_strPower rangeOfString:@"1001"].location != NSNotFound) {
+//                    if (indexPath.row == 1) {
+//                        cell.iconImgv.image = [UIImage imageNamed:@"kuang_xz"];
+//                    }
+//                    else
+//                    {
+//                        cell.iconImgv.image = [UIImage imageNamed:@"kuang"];
+//                    }
+//                }
+//                if ([_strPower rangeOfString:@"1002"].location != NSNotFound)
+//                {
+//                    if (indexPath.row == 2) {
+//                        cell.iconImgv.image = [UIImage imageNamed:@"kuang_xz"];
+//                    }
+//                    else
+//                    {
+//                        cell.iconImgv.image = [UIImage imageNamed:@"kuang"];
+//                    }
+//                }
+//                if ([_strPower rangeOfString:@"1003"].location != NSNotFound)
+//                {
+//                    if (indexPath.row == 3) {
+//                        cell.iconImgv.image = [UIImage imageNamed:@"kuang_xz"];
+//                    }
+//                    else
+//                    {
+//                        cell.iconImgv.image = [UIImage imageNamed:@"kuang"];
+//                    }
+//                }
+//                if ([_strPower rangeOfString:@"1004"].location != NSNotFound)
+//                {
+//                    if (indexPath.row == 4) {
+//                        cell.iconImgv.image = [UIImage imageNamed:@"kuang_xz"];
+//                    }
+//                    else
+//                    {
+//                        cell.iconImgv.image = [UIImage imageNamed:@"kuang"];
+//                    }
+//                }
+//                if ([_strPower rangeOfString:@"1005"].location != NSNotFound)
+//                {
+//                    if (indexPath.row == 5) {
+//                        cell.iconImgv.image = [UIImage imageNamed:@"kuang_xz"];
+//                    }
+//                    else
+//                    {
+//                        cell.iconImgv.image = [UIImage imageNamed:@"kuang"];
+//                    }
                 }
-
+//
+//
             }
             else
             {
