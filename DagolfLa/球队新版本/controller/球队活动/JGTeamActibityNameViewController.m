@@ -196,9 +196,8 @@ static CGFloat ImageHeight  = 210.0;
     [self.imgProfile addSubview:self.addressBtn];
     
     [self dataSet];
-    
 }
-
+#pragma mark -- 下载数据
 - (void)dataSet{
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     [dict setValue:@(self.teamActivityKey) forKey:@"activityKey"];
@@ -209,22 +208,16 @@ static CGFloat ImageHeight  = 210.0;
         NSLog(@"%@", data);
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
             NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+            dict = [data objectForKey:@"activity"];
             [self.model setValuesForKeysWithDictionary:dict];
-//            JGTeamApplyViewController *applyCtrl = [[JGTeamApplyViewController alloc]init];
-//            applyCtrl.modelss = self.model;
-//            [self.navigationController pushViewController:applyCtrl animated:YES];
-            
             [self.teamActibityNameTableView reloadData];
         }else{
             [Helper alertViewWithTitle:@"活动数据获取失败！" withBlock:^(UIAlertController *alertView) {
                 [self.navigationController presentViewController:alertView animated:YES completion:nil];
             }];
         }
-       
     }];
 }
-
-
 #pragma mark -分享
 - (void)addShare{
     if ([[NSUserDefaults standardUserDefaults]objectForKey:@"userId"]) {
