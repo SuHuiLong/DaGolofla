@@ -887,6 +887,7 @@
 		F56F0B871CC60B0400A222F3 /* NoteHandlle.m in Sources */ = {isa = PBXBuildFile; fileRef = F56F0B861CC60B0400A222F3 /* NoteHandlle.m */; };
 		F56F0B8D1CC613E100A222F3 /* NoteModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F56F0B8C1CC613E100A222F3 /* NoteModel.m */; };
 		F56F0B901CC637A200A222F3 /* AddNoteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F56F0B8F1CC637A200A222F3 /* AddNoteViewController.m */; };
+		F5843DF91CFCF5EA00547812 /* JGSelfSetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5843DF81CFCF5EA00547812 /* JGSelfSetViewController.m */; };
 		F5B5498F1CE98F5B0091C962 /* JGTeamManageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5B5498E1CE98F5B0091C962 /* JGTeamManageViewController.m */; };
 		F5B549931CE9AC9C0091C962 /* JGApplyMaterialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5B549921CE9AC9C0091C962 /* JGApplyMaterialViewController.m */; };
 		F5B549971CE9B0710091C962 /* JGApplyMaterialTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F5B549961CE9B0710091C962 /* JGApplyMaterialTableViewCell.m */; };
@@ -2380,6 +2381,8 @@
 		F56F0B8C1CC613E100A222F3 /* NoteModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoteModel.m; sourceTree = "<group>"; };
 		F56F0B8E1CC637A200A222F3 /* AddNoteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddNoteViewController.h; sourceTree = "<group>"; };
 		F56F0B8F1CC637A200A222F3 /* AddNoteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddNoteViewController.m; sourceTree = "<group>"; };
+		F5843DF71CFCF5EA00547812 /* JGSelfSetViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGSelfSetViewController.h; sourceTree = "<group>"; };
+		F5843DF81CFCF5EA00547812 /* JGSelfSetViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGSelfSetViewController.m; sourceTree = "<group>"; };
 		F5B5498D1CE98F5B0091C962 /* JGTeamManageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGTeamManageViewController.h; sourceTree = "<group>"; };
 		F5B5498E1CE98F5B0091C962 /* JGTeamManageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGTeamManageViewController.m; sourceTree = "<group>"; };
 		F5B549911CE9AC9C0091C962 /* JGApplyMaterialViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGApplyMaterialViewController.h; sourceTree = "<group>"; };
@@ -5887,6 +5890,8 @@
 			children = (
 				F5B549911CE9AC9C0091C962 /* JGApplyMaterialViewController.h */,
 				F5B549921CE9AC9C0091C962 /* JGApplyMaterialViewController.m */,
+				F5843DF71CFCF5EA00547812 /* JGSelfSetViewController.h */,
+				F5843DF81CFCF5EA00547812 /* JGSelfSetViewController.m */,
 			);
 			path = "申请资料";
 			sourceTree = "<group>";
@@ -6648,6 +6653,7 @@
 				36BFFF7F1BC76D09005B3CE2 /* UIImageView+HighlightedWebCache.m in Sources */,
 				36B9B59B1C3E004C0053B227 /* ProFileViewController.m in Sources */,
 				F5EB44701C9957A7008ACD73 /* pinyin.m in Sources */,
+				F5843DF91CFCF5EA00547812 /* JGSelfSetViewController.m in Sources */,
 				36E300F21C3FF3F9005C3F08 /* MJRefreshAutoStateFooter.m in Sources */,
 				36B9B5951C3DFFDC0053B227 /* MyOrderViewController.m in Sources */,
 				36D9E0081BFF15350078B6C5 /* TeamModel.m in Sources */,

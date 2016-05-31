@@ -14,6 +14,7 @@
 #import "JGImageAndLabelAndLabelTableViewCell.h"
 #import "JGTeamDeatilWKwebViewController.h"// 球队详情
 #import "JGApplyMaterialViewController.h"
+#import "JGSelfSetViewController.h"
 
 #import "JGHLaunchActivityViewController.h"
 #import "JGTableViewCell.h"
@@ -74,7 +75,7 @@ static CGFloat ImageHeight  = 210.0;
 @property (nonatomic, strong)UITableView *launchActivityTableView;
 
 @property (nonatomic, strong)NSMutableDictionary *dataDict;
-
+@property (nonatomic, strong)NSMutableDictionary *memBerDic;
 
 @property (nonatomic, strong)UIImage *headerImage;
 
@@ -111,8 +112,10 @@ static CGFloat ImageHeight  = 210.0;
         
     } completionBlock:^(id data) {
            self.power = [[data objectForKey:@"teamMember"] objectForKey:@"power"];
-//        [[NSUserDefaults standardUserDefaults] setObject:self.power forKey:@"power"];
-//        [[NSUserDefaults standardUserDefaults]  synchronize];
+        [[NSUserDefaults standardUserDefaults] setObject:self.power forKey:@"power"];
+        [[NSUserDefaults standardUserDefaults]  synchronize];
+        self.memBerDic = [data objectForKey:@"teamMember"];
+        
     }];
     
     
@@ -571,9 +574,10 @@ static CGFloat ImageHeight  = 210.0;
     }
     else if (indexPath.section == 3){
         if (indexPath.row == 0) {
-            JGApplyMaterialViewController *meter = [[JGApplyMaterialViewController alloc] init];
+            JGSelfSetViewController *meter = [[JGSelfSetViewController alloc] init];
             meter.isSelfSet = YES;
             meter.detailDic = self.detailDic;
+            meter.memeDic = self.memBerDic;
             [self.navigationController pushViewController:meter animated:YES];
 //            JGLSelfSetViewController *costView = [[JGLSelfSetViewController alloc]init];
 //               costView.teamKey = [[self.detailDic objectForKey:@"timeKey"] integerValue];

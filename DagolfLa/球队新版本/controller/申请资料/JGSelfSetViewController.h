@@ -8,7 +8,7 @@
 
 #import "ViewController.h"
 
-@interface JGApplyMaterialViewController : ViewController
+@interface JGSelfSetViewController : ViewController
 
 @property (nonatomic, assign)NSInteger teamKey;
 @property (nonatomic, assign)BOOL isSelfSet;
