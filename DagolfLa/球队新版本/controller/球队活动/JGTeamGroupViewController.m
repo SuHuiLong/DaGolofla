@@ -21,6 +21,8 @@ static NSString *const JGGroupdetailsCollectionViewCellIdentifier = @"JGGroupdet
     NSInteger _collectionHegith;
     
     NSInteger _groupDetailsCollectionViewCount;//cell的个数,默认0
+    
+    NSString *_power;//权限判断
 }
 
 @property (nonatomic, weak) UICollectionView *collectionView;
@@ -90,6 +92,7 @@ static NSString *const JGGroupdetailsCollectionViewCellIdentifier = @"JGGroupdet
 #pragma mark -- 获取报名人员列表信息
 - (void)loadData{
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    [dict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:userID] forKey:@"userKey"];
     [dict setObject:[NSString stringWithFormat:@"%td", self.teamActivityKey] forKey:@"activityKey"];
     [[JsonHttp jsonHttp]httpRequest:@"team/getTeamActivitySignUpList" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
         NSLog(@"errType == %@", errType);
@@ -98,15 +101,15 @@ static NSString *const JGGroupdetailsCollectionViewCellIdentifier = @"JGGroupdet
         [self.alreadyDataArray removeAllObjects];
         [self.teamGroupAllDataArray removeAllObjects];
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
-            if ([data count] == 2) {
-                [Helper alertViewNoHaveCancleWithTitle:@"暂无报名信息！" withBlock:^(UIAlertController *alertView) {
-                   [self.navigationController presentViewController:alertView animated:YES completion:^{
-                       
-                   }];
+            _power = [[data objectForKey:@"member"] objectForKey:@"power"];
+            
+        }else{
+            [Helper alertViewNoHaveCancleWithTitle:@"暂无报名信息！" withBlock:^(UIAlertController *alertView) {
+                [self.navigationController presentViewController:alertView animated:YES completion:^{
                 }];
-                
-                return ;
-            }
+            }];
+            
+            return ;
         }
         
         NSArray *dataArray = [data objectForKey:@"teamSignUpList"];
@@ -184,7 +187,8 @@ static NSString *const JGGroupdetailsCollectionViewCellIdentifier = @"JGGroupdet
 #pragma mark -- 点击头像图片的代理方法JGGroupdetailsCollectionViewCellDelegate
 - (void)didSelectHeaderImage:(UIButton *)btn JGGroupCell:(JGGroupdetailsCollectionViewCell *)cell{
     NSUserDefaults *userDef = [NSUserDefaults standardUserDefaults];
-    NSString *str = [userDef objectForKey:TeamMember];
+#warning TeamMember
+    NSString *str = [userDef objectForKey:userID];
     if ([str rangeOfString:@"1001"].location != NSNotFound) {
         //管理员 -- 进入球队列表页码
         JGHTeamMembersViewController *teamMemberCtrl = [[JGHTeamMembersViewController alloc]init];
@@ -215,7 +219,8 @@ static NSString *const JGGroupdetailsCollectionViewCellIdentifier = @"JGGroupdet
         }];
         UIAlertAction *commitAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-            NSLog(@"%@", [userDef objectForKey:TeamMember]);
+#warning TeamMember
+//            NSLog(@"%@", [userDef objectForKey:TeamMember]);
             [dict setObject:@0 forKey:@"oldSignUpKey"];// 老的球队活动报名人timeKey
             [dict setObject:[NSString stringWithFormat:@"%td", _newTeamKey] forKey:@"newSignUpKey"]; // 新的球队活动报名人timeKey
             [dict setObject:[NSString stringWithFormat:@"%ld", (long)cell.tag] forKey:@"groupIndex"]; // 组号

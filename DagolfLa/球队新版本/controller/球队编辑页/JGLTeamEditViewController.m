@@ -203,7 +203,6 @@ static CGFloat ImageHeight  = 210.0;
         }];
     } completionBlock:^(id data) {
         
-        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
             [Helper alertViewNoHaveCancleWithTitle:@"保存成功" withBlock:^(UIAlertController *alertView) {
                 [self.navigationController presentViewController:alertView animated:YES completion:nil];
             }];
@@ -218,7 +217,6 @@ static CGFloat ImageHeight  = 210.0;
             [[SDImageCache sharedImageCache]removeImageForKey:headUrl fromDisk:YES withCompletion:^{
                 
             }];
-        }
         
     }];
 }
