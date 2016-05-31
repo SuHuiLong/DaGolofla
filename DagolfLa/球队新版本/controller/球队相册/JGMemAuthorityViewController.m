@@ -21,8 +21,14 @@
     
     NSInteger _chooseID;
     
-    BOOL _chooseJob[3];
+    BOOL _chooseJob[5];
     NSMutableArray* _arrayNum;//存储power的数据
+    
+    NSInteger _identity;
+    NSString* _strPower;
+    NSArray* _arrPower;
+    //咨询回答1004，球队管理1005
+    BOOL _isClick;
 }
 
 @end
@@ -31,14 +37,29 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    _isClick = NO;
     UIBarButtonItem* rightBtn = [[UIBarButtonItem alloc]initWithTitle:@"保存" style:UIBarButtonItemStylePlain target:self action:@selector(saveSetClick)];
     self.navigationItem.rightBarButtonItem = rightBtn;
     rightBtn.tintColor = [UIColor whiteColor];
     
+    NSMutableDictionary* dic = [[NSMutableDictionary alloc]init];
+    [dic setObject:_memberKey forKey:@"memberKey"];
+    [[JsonHttp jsonHttp]httpRequest:@"team/getTeamMember" JsonKey:nil withData:dic requestMethod:@"GET" failedBlock:^(id errType) {
+        NSLog(@"errType == %@", errType);
+    } completionBlock:^(id data) {
+        
+        _identity = [[[data objectForKey:@"member"] objectForKey:@"identity"] integerValue];
+        _strPower = [[data objectForKey:@"member"] objectForKey:@"power"];
+        [_tableView reloadData];
+        
+    }];
+
+    
+    
+    
     self.title = @"权限设置";
     
-    _arrayTitle = @[@[@"队长",@"会长",@"副会长",@"队长秘书长",@"球队秘书",@"干事"],@[@"活动管理",@"权限管理",@"账户管理"]];
+    _arrayTitle = @[@[@"队长",@"会长",@"副会长",@"队长秘书长",@"球队秘书",@"干事"],@[@"活动管理",@"权限管理",@"账户管理", @"咨询管理", @"球队管理"]];
     _arraySection = @[@"身份设置",@"职责设置"];
     _arrayDetail = @[@"活动发布和对活动成员的管理",@"设置队员身份和职责",@"对内收支情况的管理"];
     _chooseID = 666;
@@ -63,6 +84,12 @@
     if (_chooseJob[2] == 1) {
         [_arrayNum addObject:@1003];
     }
+    if (_chooseJob[3] == 1) {
+        [_arrayNum addObject:@1004];
+    }
+    if (_chooseJob[4] == 1) {
+        [_arrayNum addObject:@1005];
+    }
     //把数组转换成字符串
     NSString *strNum=[_arrayNum componentsJoinedByString:@","];
     [dict setObject:strNum forKey:@"power"];
@@ -74,8 +101,20 @@
         [[JsonHttp jsonHttp]httpRequest:@"team/updateTeamMemberPower" JsonKey:nil withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
             NSLog(@"errType == %@", errType);
         } completionBlock:^(id data) {
-            
-            NSLog(@"%@",[data objectForKey:@"packResultMsg"]);
+            if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+                [Helper alertViewNoHaveCancleWithTitle:@"设置成功" withBlock:^(UIAlertController *alertView) {
+                    [self.navigationController presentViewController:alertView animated:YES completion:nil];
+                }];
+                [self.navigationController popViewControllerAnimated:YES];
+
+            }
+            else
+            {
+                [Helper alertViewNoHaveCancleWithTitle:@"请检查勾选是否有误" withBlock:^(UIAlertController *alertView) {
+                    [self.navigationController presentViewController:alertView animated:YES completion:nil];
+                }];
+
+            }
         }];
     }
     else
@@ -91,7 +130,8 @@
 
 -(void)uiConfig
 {
-    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, 45*11*ScreenWidth/375 + 20*ScreenWidth/375) style:UITableViewStylePlain];
+    
+    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, screenHeight-15*screenWidth/375) style:UITableViewStylePlain];
     _tableView.delegate = self;
     _tableView.dataSource = self;
     [self.view addSubview:_tableView];
@@ -109,7 +149,7 @@
     }
     else
     {
-        return 4;
+        return 6;
     }
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
@@ -140,16 +180,9 @@
         if (indexPath.section == 0) {
             cell.titleLabel.text = _arrayTitle[indexPath.section][indexPath.row - 1];
             cell.detailLabel.hidden = YES;
-            if (indexPath.row != 0) {
-                if (_chooseID != 666) {
-                    if (indexPath.row == _chooseID) {
-                        cell.iconImgv.image = [UIImage imageNamed:@"duihao"];
-                    }
-                    else
-                    {
-                        cell.iconImgv.image = [UIImage imageNamed:@""];
-                    }
-                    
+            if (_isClick == NO) {
+                if (indexPath.row == _identity) {
+                    cell.iconImgv.image = [UIImage imageNamed:@"duihao"];
                 }
                 else
                 {
@@ -158,21 +191,99 @@
             }
             else
             {
-                cell.iconImgv.image = [UIImage imageNamed:@""];
+                if (indexPath.row != 0) {
+                    if (_chooseID != 666) {
+                        if (indexPath.row == _chooseID) {
+                            cell.iconImgv.image = [UIImage imageNamed:@"duihao"];
+                        }
+                        else
+                        {
+                            cell.iconImgv.image = [UIImage imageNamed:@""];
+                        }
+                        
+                    }
+                    else
+                    {
+                        cell.iconImgv.image = [UIImage imageNamed:@""];
+                    }
+                }
+                else
+                {
+                    cell.iconImgv.image = [UIImage imageNamed:@""];
+                }
             }
-            
+        
         }
         else
         {
             cell.titleLabel.text = _arrayTitle[indexPath.section][indexPath.row - 1];
             cell.titleLabel.font = [UIFont systemFontOfSize:14*screenWidth/375];
-            if (_chooseJob[indexPath.row - 1] == 0) {
-                cell.iconImgv.image = [UIImage imageNamed:@"kuang"];
+            if (_isClick == NO) {
+                if ([_strPower rangeOfString:@"1001"].location != NSNotFound) {
+                    if (indexPath.row == 1) {
+                        cell.iconImgv.image = [UIImage imageNamed:@"kuang_xz"];
+                    }
+                    else
+                    {
+                        cell.iconImgv.image = [UIImage imageNamed:@"kuang"];
+                    }
+                }
+                else if ([_strPower rangeOfString:@"1002"].location != NSNotFound)
+                {
+                    if (indexPath.row == 2) {
+                        cell.iconImgv.image = [UIImage imageNamed:@"kuang_xz"];
+                    }
+                    else
+                    {
+                        cell.iconImgv.image = [UIImage imageNamed:@"kuang"];
+                    }
+                }
+                else if ([_strPower rangeOfString:@"1003"].location != NSNotFound)
+                {
+                    if (indexPath.row == 3) {
+                        cell.iconImgv.image = [UIImage imageNamed:@"kuang_xz"];
+                    }
+                    else
+                    {
+                        cell.iconImgv.image = [UIImage imageNamed:@"kuang"];
+                    }
+                }
+                else if ([_strPower rangeOfString:@"1004"].location != NSNotFound)
+                {
+                    if (indexPath.row == 4) {
+                        cell.iconImgv.image = [UIImage imageNamed:@"kuang_xz"];
+                    }
+                    else
+                    {
+                        cell.iconImgv.image = [UIImage imageNamed:@"kuang"];
+                    }
+                }
+                else if ([_strPower rangeOfString:@"1005"].location != NSNotFound)
+                {
+                    if (indexPath.row == 5) {
+                        cell.iconImgv.image = [UIImage imageNamed:@"kuang_xz"];
+                    }
+                    else
+                    {
+                        cell.iconImgv.image = [UIImage imageNamed:@"kuang"];
+                    }
+                }
+                else{
+                    
+                }
+
             }
             else
             {
-                cell.iconImgv.image = [UIImage imageNamed:@"kuang_xz"];
+                if (_chooseJob[indexPath.row - 1] == 0) {
+                    cell.iconImgv.image = [UIImage imageNamed:@"kuang"];
+                }
+                else
+                {
+                    cell.iconImgv.image = [UIImage imageNamed:@"kuang_xz"];
+                }
             }
+            
             
         }
         
@@ -187,9 +298,10 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    _isClick = YES;
     if (indexPath.section == 0) {
         _chooseID = indexPath.row;
-        NSLog(@"%ld",_chooseID);
+        NSLog(@"%td",_chooseID);
         [_tableView reloadData];
     }
     else

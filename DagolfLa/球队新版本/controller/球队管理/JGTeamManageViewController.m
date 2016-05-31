@@ -80,7 +80,6 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     //入队审核
-    
     if (indexPath.section == 0) {
         JGLJoinManageViewController* joinVc = [[JGLJoinManageViewController alloc]init];
         joinVc.teamKey = [NSNumber numberWithInteger:_teamKey];
