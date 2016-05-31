@@ -130,7 +130,7 @@ static JsonHttp *jsonHttp = nil;
     
     NSString *TWITTERFON_FORM_BOUNDARY = @"AaB03x";
     //根据url初始化request
-    NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:@"http://192.168.1.104:8080/upload.do"] cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:10];
+    NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:@"http://webfile.dagolfla.com/upload.do"] cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:10];
     //分界线 --AaB03x
     NSString *MPboundary=[[NSString alloc]initWithFormat:@"--%@",TWITTERFON_FORM_BOUNDARY];
     //结束符 AaB03x--

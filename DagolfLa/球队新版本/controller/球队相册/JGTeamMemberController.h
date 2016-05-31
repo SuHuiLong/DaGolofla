@@ -22,4 +22,10 @@
 
 @property(nonatomic,copy)void(^block)(NSInteger str,NSString *str1,NSString *str2);
 
+//球队成员 -1
+@property (nonatomic, assign) NSInteger teamMembers;
+
+//队员管理 -1
+@property (nonatomic, assign) NSInteger teamManagement;
+
 @end

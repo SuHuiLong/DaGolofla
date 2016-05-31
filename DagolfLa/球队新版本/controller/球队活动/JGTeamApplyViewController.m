@@ -356,7 +356,7 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
 - (void)submitInfo:(NSInteger)type{
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     
-    if ([_invoiceKey isKindOfClass:[NSNull class]]) {
+    if (_invoiceKey != nil) {
         [self.info setObject:_invoiceKey forKey:@"invoiceKey"];//发票Key
         [self.info setObject:_addressKey forKey:@"addressKey"];//地址Key
     }
@@ -402,10 +402,10 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
     [dict setObject:_infoKey forKey:@"srcKey"];
     [dict setObject:@"活动报名" forKey:@"name"];
     [dict setObject:@"活动微信订单" forKey:@"otherInfo"];
-    if (_invoiceKey != nil) {
-        [dict setObject:_addressKey forKey:@"addressKey"];
-        [dict setObject:_invoiceKey forKey:@"invoiceKey"];
-    }
+//    if (_invoiceKey != nil) {
+//        [dict setObject:_addressKey forKey:@"addressKey"];
+//        [dict setObject:_invoiceKey forKey:@"invoiceKey"];
+//    }
     
     [[JsonHttp jsonHttp]httpRequest:@"pay/doPayWeiXin" JsonKey:@"payInfo" withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
         NSLog(@"errType == %@", errType);

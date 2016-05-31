@@ -84,27 +84,33 @@
         if (model.groupIndex == self.tag) {
             if (model.sortIndex == 0) {
                 self.lable1.text = model.name;
-                [self.sction1 sd_setImageWithURL:[Helper setImageIconUrl:@"user" andTeamKey:model.timeKey andIsSetWidth:YES andIsBackGround:NO] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"addGroup"]];
+                [self.sction1 sd_setImageWithURL:[Helper setImageIconUrl:@"user" andTeamKey:model.userKey andIsSetWidth:YES andIsBackGround:NO] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"addGroup"]];
+                self.sction1.layer.masksToBounds = YES;
+                self.sction1.layer.cornerRadius = self.sction1.frame.size.width/2;
             }
             
             if (model.sortIndex == 1){
                 self.lable2.text = model.name;
-                [self.sction2 sd_setImageWithURL:[Helper setImageIconUrl:@"user" andTeamKey:model.timeKey andIsSetWidth:YES andIsBackGround:NO] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"addGroup"]];
+                [self.sction2 sd_setImageWithURL:[Helper setImageIconUrl:@"user" andTeamKey:model.userKey andIsSetWidth:YES andIsBackGround:NO] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"addGroup"]];
+                self.sction2.layer.masksToBounds = YES;
+                self.sction2.layer.cornerRadius = self.sction1.frame.size.width/2;
             }
             
             if (model.sortIndex == 2){
                 self.lable3.text = model.name;
-                [self.section3 sd_setImageWithURL:[Helper setImageIconUrl:@"user" andTeamKey:model.timeKey andIsSetWidth:YES andIsBackGround:NO] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"addGroup"]];
+                [self.section3 sd_setImageWithURL:[Helper setImageIconUrl:@"user" andTeamKey:model.userKey andIsSetWidth:YES andIsBackGround:NO] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"addGroup"]];
+                self.section3.layer.masksToBounds = YES;
+                self.section3.layer.cornerRadius = self.sction1.frame.size.width/2;
             }
             
             if (model.sortIndex == 3){
                 self.lable4.text = model.name;
-                [self.section4 sd_setImageWithURL:[Helper setImageIconUrl:@"user" andTeamKey:model.timeKey andIsSetWidth:YES andIsBackGround:NO] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"addGroup"]];
+                [self.section4 sd_setImageWithURL:[Helper setImageIconUrl:@"user" andTeamKey:model.userKey andIsSetWidth:YES andIsBackGround:NO] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"addGroup"]];
+                self.section4.layer.masksToBounds = YES;
+                self.section4.layer.cornerRadius = self.sction1.frame.size.width/2;
             }
         }
     }
-    
-    
 }
 
 @end

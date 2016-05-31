@@ -18,4 +18,5 @@
 @property (nonatomic, retain) UIImageView *imgProfile;
 @property (nonatomic, assign) BOOL isManager;
 
+
 @end
