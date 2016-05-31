@@ -533,8 +533,9 @@ static CGFloat ImageHeight  = 210.0;
         switch (indexPath.row) {
             case 0:
             {
+                //获取球队活动列表
                 JGTeamActivityViewController *activiyVC = [[JGTeamActivityViewController alloc] init];
-                activiyVC.myActivityList = 1;
+//                activiyVC.myActivityList = 1;
                 activiyVC.timeKey = [[self.detailDic objectForKey:@"timeKey"] integerValue];
                 [self.navigationController pushViewController:activiyVC animated:YES];
                 

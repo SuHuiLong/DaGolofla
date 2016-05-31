@@ -16,6 +16,9 @@
 #import "MJDIYHeader.h"
 
 #import "JGLTeamMemberModel.h"
+
+#import "ChatDetailViewController.h"
+
 @interface JGTeamMemberController ()<UITableViewDelegate, UITableViewDataSource>
 {
     UITableView* _tableView;
@@ -28,6 +31,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.navigationItem.title = @"成员列表";
     
     _dataArray = [[NSMutableArray alloc]init];
 //    UIBarButtonItem* rightBtn = [[UIBarButtonItem alloc]initWithTitle:@"管理" style:UIBarButtonItemStylePlain target:self action:@selector(manageClick)];
@@ -143,9 +148,20 @@
             self.block(key, name, mobie);
             [self.navigationController popViewControllerAnimated:YES];
         }else{
-            JGMemManageController* menVc = [[JGMemManageController alloc]init];
-            menVc.model = _dataArray[indexPath.row];
-            [self.navigationController pushViewController:menVc animated:YES];
+            
+            JGLTeamMemberModel *model = _dataArray[indexPath.row];
+            ChatDetailViewController *vc = [[ChatDetailViewController alloc] init];
+            //设置聊天类型
+            vc.conversationType = ConversationType_PRIVATE;
+            //设置对方的id
+            vc.targetId = [NSString stringWithFormat:@"%@", model.userKey];
+            //设置对方的名字
+//            vc.userName = model.userName;
+            //设置聊天标题
+            vc.title = model.userName;
+            //设置不现实自己的名称  NO表示不现实
+            vc.displayUserNameInCell = NO;
+            [self.navigationController pushViewController:vc animated:YES];
         }
         
     }else{
