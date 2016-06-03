@@ -169,9 +169,14 @@ static CGFloat ImageHeight  = 210.0;
 
 #pragma mark -- 提交
 - (void)previewBtnClick:(UIButton *)btn{
+
     
-    
-    
+    MBProgressHUD *progress = [[MBProgressHUD alloc] initWithView:self.view];
+    progress.mode = MBProgressHUDModeIndeterminate;
+    progress.labelText = @"正在发布...";
+    [self.view addSubview:progress];
+    [progress show:YES];
+
     [[JsonHttp jsonHttp] httpRequest:@"globalCode/createTimeKey" JsonKey:nil withData:nil requestMethod:@"GET" failedBlock:^(id errType) {
         
     } completionBlock:^(id data) {
@@ -205,6 +210,23 @@ static CGFloat ImageHeight  = 210.0;
             [[JsonHttp jsonHttp] httpRequest:@"team/createTeam" JsonKey:@"team" withData:_detailDic requestMethod:@"POST" failedBlock:^(id errType) {
                 
             } completionBlock:^(id data) {
+
+                [MBProgressHUD hideAllHUDsForView:self.view animated:NO];
+                
+                UIAlertController *alert=[UIAlertController alertControllerWithTitle:@"提示" message:@"球队创建成功是否返回主页面" preferredStyle:UIAlertControllerStyleAlert];
+                
+                UIAlertAction *action1=[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                    
+                }];
+                UIAlertAction* action2=[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                    
+                    [self.navigationController popToRootViewControllerAnimated:YES];
+                    
+                }];
+                
+                [alert addAction:action1];
+                [alert addAction:action2];
+                [self presentViewController:alert animated:YES completion:nil];
                 
                 if ([data objectForKey:@"packSuccess"]) {
                     [user setObject:0 forKey:@"cacheCreatTeamDic"];
@@ -212,29 +234,12 @@ static CGFloat ImageHeight  = 210.0;
                     [user synchronize];
                 }
             }];
-            
-            UIAlertController *alert=[UIAlertController alertControllerWithTitle:@"提示" message:@"球队创建成功是否返回主页面" preferredStyle:UIAlertControllerStyleAlert];
-            
-            UIAlertAction *action1=[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                
-            }];
-            UIAlertAction* action2=[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                
-                [self.navigationController popToRootViewControllerAnimated:YES];
-                
-            }];
-            
-            [alert addAction:action1];
-            [alert addAction:action2];
-            [self presentViewController:alert animated:YES completion:nil];
+
+
+
             
         }];
     }];
-    
-    
-    
-    
-    
     
     
 }

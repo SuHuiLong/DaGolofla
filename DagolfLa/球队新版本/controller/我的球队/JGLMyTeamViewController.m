@@ -79,12 +79,13 @@
                 [_dataArray removeAllObjects];
             }
             //数据解析
-            self.TeamArray = [data objectForKey:@"teamList"];
+//            self.TeamArray = [data objectForKey:@"teamList"];
             for (NSDictionary *dataDic in [data objectForKey:@"teamList"]) {
                 JGLMyTeamModel *model = [[JGLMyTeamModel alloc] init];
                 [model setValuesForKeysWithDictionary:dataDic];
                 [_dataArray addObject:model];
             }
+            [self.TeamArray addObjectsFromArray:[data objectForKey:@"teamList"]];
             _page++;
             [_tableView reloadData];
         }else {
@@ -159,7 +160,12 @@
     
 }
 
-
+- (NSMutableArray *)TeamArray{
+    if (!_TeamArray) {
+        _TeamArray = [[NSMutableArray alloc] init];
+    }
+    return _TeamArray;
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
