@@ -21,4 +21,7 @@
 @property (copy, nonatomic)NSString *addressKey;//发票name
 
 
+@property (assign, nonatomic)NSInteger isTeamChannal;
+
+
 @end

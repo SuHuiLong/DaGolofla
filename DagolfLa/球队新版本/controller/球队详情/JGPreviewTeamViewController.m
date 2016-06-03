@@ -287,7 +287,7 @@ static CGFloat ImageHeight  = 210.0;
     }else if (section == 1){
         return 2;
     }else if (section == 2){
-        return 2;
+        return 1;
     }else{
         return 1;
     }

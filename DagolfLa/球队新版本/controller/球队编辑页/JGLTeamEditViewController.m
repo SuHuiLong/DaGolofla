@@ -23,6 +23,7 @@
 #import "JGTeamAdressTableViewCell.h"
 #import "JGTeamEIntroTableViewCell.h"
 #import "JGTeamMemberController.h"
+#import "SDImageCache.h"
 
 static NSString *const JGTableViewCellIdentifier = @"JGTableViewCell";
 static NSString *const JGHTeamContactCellIdentifier = @"JGHTeamContactTableViewCell";
@@ -199,10 +200,25 @@ static CGFloat ImageHeight  = 210.0;
     [[JsonHttp jsonHttp] httpRequest:@"team/updateTeam" JsonKey:nil withData:dic requestMethod:@"POST" failedBlock:^(id errType) {
         [Helper alertViewNoHaveCancleWithTitle:@"保存失败，请稍后再试" withBlock:^(UIAlertController *alertView) {
             [self.navigationController presentViewController:alertView animated:YES completion:nil];
-        }];    } completionBlock:^(id data) {
-        [Helper alertViewNoHaveCancleWithTitle:@"保存成功" withBlock:^(UIAlertController *alertView) {
-            [self.navigationController presentViewController:alertView animated:YES completion:nil];
-        }];    }];
+        }];
+    } completionBlock:^(id data) {
+        
+            [Helper alertViewNoHaveCancleWithTitle:@"保存成功" withBlock:^(UIAlertController *alertView) {
+                [self.navigationController presentViewController:alertView animated:YES completion:nil];
+            }];
+//
+            NSString *headUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/team/%@.jpg", [self.detailDic objectForKey:@"timeKey"]];
+            
+            NSString *bgUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/team/%@_background.jpg", [self.detailDic objectForKey:@"timeKey"]];
+            
+            [[SDImageCache sharedImageCache]removeImageForKey:bgUrl fromDisk:YES withCompletion:^{
+
+            }];
+            [[SDImageCache sharedImageCache]removeImageForKey:headUrl fromDisk:YES withCompletion:^{
+                
+            }];
+        
+    }];
 }
 
 #pragma mark --编辑框的代理方法

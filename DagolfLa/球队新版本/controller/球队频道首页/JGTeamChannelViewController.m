@@ -386,9 +386,10 @@
         
         [self.navigationController pushViewController:detailV animated:YES];
     }else{
+        //频道首页cell
         JGTeamActibityNameViewController *teamActivityVC = [[JGTeamActibityNameViewController alloc] init];
         JGTeamAcitivtyModel *model = self.myActivityArray[indexPath.row];
-        teamActivityVC.teamActivityKey = model.teamActivityKey;
+        teamActivityVC.isTeamChannal = 1;
         teamActivityVC.model = model;
         teamActivityVC.teamActivityKey = model.teamActivityKey;
         [self.navigationController pushViewController:teamActivityVC animated:YES];

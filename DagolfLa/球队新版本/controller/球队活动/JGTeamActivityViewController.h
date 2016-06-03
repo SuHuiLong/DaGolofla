@@ -16,5 +16,8 @@
 //发布活动权限
 @property (nonatomic, copy)NSString *power;
 
+//来自我的活动
+@property (nonatomic, assign)NSInteger isMEActivity;
+
 
 @end

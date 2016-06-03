@@ -12,7 +12,6 @@
 #import "JGTeamActibityNameViewController.h"
 #import "JGHLaunchActivityViewController.h"
 #import "JGTeamGroupViewController.h"
-#import "JGTeamApplyViewController.h"
 
 #import "MJRefresh.h"
 #import "MJDIYBackFooter.h"
@@ -145,8 +144,8 @@
     NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
     [dict setObject:[def objectForKey:@"userId"] forKey:@"userKey"];//3619
     [dict setObject:@(self.page) forKey:@"offset"];
-    
-    [[JsonHttp jsonHttp]httpRequest:@"team/getMyTeamActivityList" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
+    [dict setObject:[NSString stringWithFormat:@"%td", _timeKey] forKey:@"teamKey"];
+    [[JsonHttp jsonHttp]httpRequest:@"team/getTeamActivityList" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
         if (isReshing) {
             [self.teamActivityTableView.header endRefreshing];
         }else {
@@ -224,21 +223,23 @@
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     JGTeamActibityNameViewController *activityNameCtrl = [[JGTeamActibityNameViewController alloc]init];
+    activityNameCtrl.isTeamChannal = 2;
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     JGTeamAcitivtyModel *model = self.dataArray[indexPath.section];
     [dict setObject:@(model.teamActivityKey) forKey:@"activityKey"];
     [[NSUserDefaults standardUserDefaults]setObject:@(model.teamActivityKey) forKey:@"activityKey"];
-    [[NSUserDefaults standardUserDefaults] setObject:[NSString stringWithFormat:@"%ld", (long)model.teamKey] forKey:TeamKey];
+    
+//    [[NSUserDefaults standardUserDefaults] setObject:[NSString stringWithFormat:@"%ld", (long)model.teamKey] forKey:TeamKey];
     [[NSUserDefaults standardUserDefaults] synchronize];
     [dict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"userId"] forKey:@"userKey"];
     NSLog(@"%@", [[NSUserDefaults standardUserDefaults] objectForKey:@"userId" ]);
-    [[JsonHttp jsonHttp]httpRequest:@"team/getTeamActivity" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
+    [[JsonHttp jsonHttp]httpRequest:@"team/getTeamActivityList" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
      
     } completionBlock:^(id data) {
         if ([[data objectForKey:@"packSuccess"] boolValue]) {
-            NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
-            [user setValue:[[data objectForKey:TeamMember] objectForKey:@"power"] forKey:TeamMember];
-            [user synchronize];
+//            NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
+//            [user setValue:[[data objectForKey:TeamMember] objectForKey:@"power"] forKey:TeamMember];
+//            [user synchronize];
 
             JGTeamAcitivtyModel *model = [[JGTeamAcitivtyModel alloc] init];
             [model setValuesForKeysWithDictionary:[data objectForKey:@"activity"]];
