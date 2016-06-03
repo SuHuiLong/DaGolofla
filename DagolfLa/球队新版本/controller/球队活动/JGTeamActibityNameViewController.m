@@ -70,9 +70,9 @@ static CGFloat ImageHeight  = 210.0;
         
         [self.headPortraitBtn sd_setImageWithURL:[Helper setImageIconUrl:@"activity" andTeamKey:[_model.timeKey integerValue] andIsSetWidth:YES andIsBackGround:YES] forState:(UIControlStateNormal) placeholderImage:[UIImage imageNamed:@"logo"]];
     }else if (self.isTeamChannal == 1){
-        [self.imgProfile sd_setImageWithURL:[Helper setImageIconUrl:@"activity" andTeamKey:[_model.timeKey integerValue] andIsSetWidth:YES andIsBackGround:YES] placeholderImage:[UIImage imageNamed:@"tu2"]];
+        [self.imgProfile sd_setImageWithURL:[Helper setImageIconUrl:@"activity" andTeamKey:[_model.timeKey integerValue] andIsSetWidth:YES andIsBackGround:NO] placeholderImage:[UIImage imageNamed:@"tu2"]];
         
-        [self.headPortraitBtn sd_setImageWithURL:[Helper setImageIconUrl:@"activity" andTeamKey:[_model.timeKey integerValue] andIsSetWidth:YES andIsBackGround:NO] forState:(UIControlStateNormal) placeholderImage:[UIImage imageNamed:@"logo"]];
+        [self.headPortraitBtn sd_setImageWithURL:[Helper setImageIconUrl:@"activity" andTeamKey:[_model.timeKey integerValue] andIsSetWidth:YES andIsBackGround:YES] forState:(UIControlStateNormal) placeholderImage:[UIImage imageNamed:@"logo"]];
     }
 }
 - (void)viewWillDisappear:(BOOL)animated{
