@@ -7069,7 +7069,7 @@
 					"$(SRCROOT)/DagolfLa",
 				);
 				INFOPLIST_FILE = DagolfLa/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -7118,7 +7118,7 @@
 					"$(SRCROOT)/DagolfLa",
 				);
 				INFOPLIST_FILE = DagolfLa/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
