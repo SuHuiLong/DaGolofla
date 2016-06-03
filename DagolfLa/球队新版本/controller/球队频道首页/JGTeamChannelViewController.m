@@ -370,7 +370,8 @@
         }else{
         JGTeamActivityCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"JGTeamActivityCell"];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        [cell setJGTeamActivityCellWithModel:self.myActivityArray[indexPath.row]];
+//        [cell setJGTeamActivityCellWithModel:self.myActivityArray[indexPath.row]];
+            [cell setJGTeamActivityCellWithModel:self.myActivityArray[indexPath.row] fromCtrl:2];
         return cell;
         }
     }
