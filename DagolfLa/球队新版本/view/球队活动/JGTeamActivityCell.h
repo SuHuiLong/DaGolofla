@@ -26,6 +26,8 @@
 
 
 //填充cell数据
-- (void)setJGTeamActivityCellWithModel:(JGTeamAcitivtyModel *)modeel;
+//- (void)setJGTeamActivityCellWithModel:(JGTeamAcitivtyModel *)modeel;
+
+- (void)setJGTeamActivityCellWithModel:(JGTeamAcitivtyModel *)modeel fromCtrl:(NSInteger)ctrlId;
 
 @end

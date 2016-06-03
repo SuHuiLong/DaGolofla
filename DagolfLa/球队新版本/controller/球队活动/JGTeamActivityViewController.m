@@ -61,6 +61,7 @@
     [dict setObject:[def objectForKey:@"userId"] forKey:@"userKey"];//3619
     //189781710290821120  http://192.168.2.6:8888
     [dict setObject:@"0" forKey:@"offset"];
+    [dict setObject:[NSString stringWithFormat:@"%td", _timeKey] forKey:@"teamKey"];
     NSString *urlString = nil;
     //244  121212
     if (_myActivityList == 1) {
@@ -68,8 +69,8 @@
         urlString = @"team/getMyTeamActivityList";
         [dict setObject:@(self.timeKey) forKey:@"teamKey"];
     }else{
-        //活动大厅
-        urlString = @"team/getTeamActivityList";
+        //活动大厅getMyTeamActivityAll //  getTeamActivityList
+        urlString = @"team/getMyTeamActivityAll";
     }
     
     [[JsonHttp jsonHttp]httpRequest:urlString JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
@@ -217,7 +218,8 @@
     
     JGTeamAcitivtyModel *model = [[JGTeamAcitivtyModel alloc]init];
     model = self.dataArray[indexPath.section];
-    [cell setJGTeamActivityCellWithModel:model];
+//    [cell setJGTeamActivityCellWithModel:model];
+    [cell setJGTeamActivityCellWithModel:model fromCtrl:1];
     
     return cell;
 }
@@ -227,29 +229,31 @@
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     JGTeamAcitivtyModel *model = self.dataArray[indexPath.section];
     [dict setObject:@(model.teamActivityKey) forKey:@"activityKey"];
-    [[NSUserDefaults standardUserDefaults]setObject:@(model.teamActivityKey) forKey:@"activityKey"];
-    
-//    [[NSUserDefaults standardUserDefaults] setObject:[NSString stringWithFormat:@"%ld", (long)model.teamKey] forKey:TeamKey];
-    [[NSUserDefaults standardUserDefaults] synchronize];
+    [dict setObject:[NSString stringWithFormat:@"%td", model.teamKey] forKey:@"teamKey"];    
     [dict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"userId"] forKey:@"userKey"];
     NSLog(@"%@", [[NSUserDefaults standardUserDefaults] objectForKey:@"userId" ]);
     [[JsonHttp jsonHttp]httpRequest:@"team/getTeamActivityList" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
      
     } completionBlock:^(id data) {
         if ([[data objectForKey:@"packSuccess"] boolValue]) {
-//            NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
-//            [user setValue:[[data objectForKey:TeamMember] objectForKey:@"power"] forKey:TeamMember];
-//            [user synchronize];
-
+            NSArray *array = [NSArray array];
+            array = [data objectForKey:@"activityList"];
+            
             JGTeamAcitivtyModel *model = [[JGTeamAcitivtyModel alloc] init];
-            [model setValuesForKeysWithDictionary:[data objectForKey:@"activity"]];
+            [model setValuesForKeysWithDictionary:array[indexPath.section]];
             activityNameCtrl.model = model;
-            activityNameCtrl.teamActivityKey = [model.timeKey integerValue];
+//            activityNameCtrl.teamActivityKey = [model.teamKey integerValue];
             [self.navigationController pushViewController:activityNameCtrl animated:YES];
           }else {
-             [Helper alertViewWithTitle:@"获取失败" withBlock:^(UIAlertController *alertView) {
-                [self presentViewController:alertView animated:YES completion:nil];
-            }];
+              if ([data objectForKey:@"packResultMsg"]) {
+                  [Helper alertViewWithTitle:[data objectForKey:@"packResultMsg"] withBlock:^(UIAlertController *alertView) {
+                      [self presentViewController:alertView animated:YES completion:nil];
+                  }];
+              }else{
+                  [Helper alertViewWithTitle:@"获取失败" withBlock:^(UIAlertController *alertView) {
+                      [self presentViewController:alertView animated:YES completion:nil];
+                  }];
+              }
         }
      }];
     

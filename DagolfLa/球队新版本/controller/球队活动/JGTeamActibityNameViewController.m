@@ -65,16 +65,15 @@ static CGFloat ImageHeight  = 210.0;
     [super viewWillAppear:YES];
     self.navigationController.navigationBarHidden = YES;
     [self setData];
-    if (_teamActivityKey != 0){
-        [self.imgProfile sd_setImageWithURL:[Helper setImageIconUrl:@"activity" andTeamKey:_teamActivityKey andIsSetWidth:YES andIsBackGround:NO] placeholderImage:[UIImage imageNamed:@"tu2"]];
+    if (self.isTeamChannal == 2){
+        [self.imgProfile sd_setImageWithURL:[Helper setImageIconUrl:@"activity" andTeamKey:[_model.timeKey integerValue] andIsSetWidth:YES andIsBackGround:NO] placeholderImage:[UIImage imageNamed:@"tu2"]];
         
-        [self.headPortraitBtn sd_setImageWithURL:[Helper setImageIconUrl:@"activity" andTeamKey:_teamActivityKey andIsSetWidth:YES andIsBackGround:YES] forState:(UIControlStateNormal) placeholderImage:[UIImage imageNamed:@"logo"]];
-    }else if (_myActivityKey != 0){
-        [self.imgProfile sd_setImageWithURL:[Helper setImageIconUrl:@"activity" andTeamKey:_myActivityKey andIsSetWidth:YES andIsBackGround:YES] placeholderImage:[UIImage imageNamed:@"tu2"]];
+        [self.headPortraitBtn sd_setImageWithURL:[Helper setImageIconUrl:@"activity" andTeamKey:[_model.timeKey integerValue] andIsSetWidth:YES andIsBackGround:YES] forState:(UIControlStateNormal) placeholderImage:[UIImage imageNamed:@"logo"]];
+    }else if (self.isTeamChannal == 1){
+        [self.imgProfile sd_setImageWithURL:[Helper setImageIconUrl:@"activity" andTeamKey:[_model.timeKey integerValue] andIsSetWidth:YES andIsBackGround:NO] placeholderImage:[UIImage imageNamed:@"tu2"]];
         
-        [self.headPortraitBtn sd_setImageWithURL:[Helper setImageIconUrl:@"activity" andTeamKey:_myActivityKey andIsSetWidth:YES andIsBackGround:NO] forState:(UIControlStateNormal) placeholderImage:[UIImage imageNamed:@"logo"]];
+        [self.headPortraitBtn sd_setImageWithURL:[Helper setImageIconUrl:@"activity" andTeamKey:[_model.timeKey integerValue] andIsSetWidth:YES andIsBackGround:YES] forState:(UIControlStateNormal) placeholderImage:[UIImage imageNamed:@"logo"]];
     }
-    
 }
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:YES];
@@ -105,10 +104,15 @@ static CGFloat ImageHeight  = 210.0;
 //    _dictPhoto = [NSMutableDictionary dictionary];
     UIImage *bgImage = nil;
     UIImage *headerImage = nil;
-    if (![_model isKindOfClass:[NSNull class]]) {
+    if (self.isTeamChannal == 2) {
+        NSLog(@"我的球队过来的数据");
+    }else{
         bgImage = _model.bgImage;
         headerImage = _model.headerImage;
     }
+//    if (![_model isKindOfClass:[NSNull class]]) {
+//        
+//    }
     
     self.imgProfile = [[UIImageView alloc] initWithImage:bgImage];
     self.imgProfile.frame = CGRectMake(0, 0, screenWidth, ImageHeight);
@@ -154,7 +158,6 @@ static CGFloat ImageHeight  = 210.0;
     [shareBtn addTarget:self action:@selector(addShare) forControlEvents:UIControlEventTouchUpInside];
     [self.titleView addSubview:shareBtn];
     //有管理权限的用户在活动详情页面显示－－活动分组
-#warning ,,,,,,,TeamMember
 //    NSUserDefaults *userDef = [NSUserDefaults standardUserDefaults];
 //    NSString *str = [userDef objectForKey:userID];
 //    if ([str rangeOfString:@"1001"].location != NSNotFound){
@@ -168,9 +171,9 @@ static CGFloat ImageHeight  = 210.0;
 //        [self.titleView addSubview:replaceBtn];
 //    }
     
-    //输入框
+    //活动名称输入框
     self.titleField = [[UILabel alloc]initWithFrame:CGRectMake(64, 7, screenWidth - 128, 30)];
-    self.titleField.text = self.model.name;
+    self.titleField.text = _model.name;
     self.titleField.textColor = [UIColor whiteColor];
     self.titleField.textAlignment = NSTextAlignmentCenter;
     self.titleField.font = [UIFont systemFontOfSize:16 * screenWidth / 320];
@@ -196,7 +199,8 @@ static CGFloat ImageHeight  = 210.0;
     
     [self.imgProfile addSubview:self.addressBtn];
     
-//    if (self.isTeamChannal == 1) {
+
+//    if (self.isTeamChannal == 2) {
         [self dataSet];
 //    }
     
@@ -212,7 +216,12 @@ static CGFloat ImageHeight  = 210.0;
     [progress show:YES];
     
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    [dict setValue:@(self.teamActivityKey) forKey:@"activityKey"];
+    if (self.isTeamChannal == 2) {
+        [dict setValue:_model.timeKey forKey:@"activityKey"];
+    }else{
+        [dict setValue:[NSString stringWithFormat:@"%td", _model.teamActivityKey] forKey:@"activityKey"];
+    }
+    
     [dict setValue:DEFAULF_USERID forKey:@"userKey"];
     [[JsonHttp jsonHttp] httpRequest:@"team/getTeamActivity" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
         NSLog(@"error");

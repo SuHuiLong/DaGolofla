@@ -28,9 +28,9 @@ typedef NS_ENUM(NSInteger, GestureType) {
 #define DEFAULF_USERID [[NSUserDefaults standardUserDefaults] objectForKey:@"userId"]
 //1001-活动，1003,1001,1004,1002,1005
 //#define ActivityKey @"activityKey"
-#define HEADERRImage @"zwt"//头像默认图片
+#define HEADERRImage @"logo"//头像默认图片
 #define BACKImage @"backL"//返回按钮
-#define BGImage @"bg"//背景图片
+#define BGImage @"selfBackPic"//背景图片
 
 #define kDistance 10*screenWidth/375 //说说和图片的间隔
 #define kReplyBtnDistance 30*screenWidth/375 //回复按钮距离
