@@ -160,6 +160,7 @@ static CGFloat ImageHeight  = 210.0;
     
     [self createPreviewBtn];
 }
+
 - (void)replaceWithPicture:(UIButton *)Btn{
     if (Btn.tag == 333) {
         //球场列表
@@ -176,6 +177,7 @@ static CGFloat ImageHeight  = 210.0;
         [self didSelectPhotoImage:btn];
     }
 }
+
 #pragma mark -- 预览
 - (void)createPreviewBtn{
     UIButton *previewBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, screenHeight -44, screenWidth, 44)];
@@ -206,16 +208,14 @@ static CGFloat ImageHeight  = 210.0;
             [Helper alertViewNoHaveCancleWithTitle:@"保存成功" withBlock:^(UIAlertController *alertView) {
                 [self.navigationController presentViewController:alertView animated:YES completion:nil];
             }];
-//
+
             NSString *headUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/team/%@.jpg", [self.detailDic objectForKey:@"timeKey"]];
             
             NSString *bgUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/team/%@_background.jpg", [self.detailDic objectForKey:@"timeKey"]];
             
             [[SDImageCache sharedImageCache]removeImageForKey:bgUrl fromDisk:YES withCompletion:^{
-
             }];
             [[SDImageCache sharedImageCache]removeImageForKey:headUrl fromDisk:YES withCompletion:^{
-                
             }];
         
     }];
@@ -381,10 +381,6 @@ static CGFloat ImageHeight  = 210.0;
                 self.userKey = key;
             };
             [self.navigationController pushViewController:memVC animated:YES];
-        
-            
-  
-        
         }
         
         /**
@@ -421,8 +417,6 @@ static CGFloat ImageHeight  = 210.0;
         [_pickPhoto SHowLocalPhotoWithController:self andWithBlock:^(NSObject *Data) {
             if ([Data isKindOfClass:[UIImage class]])
             {
-                // @{@"nType":@"1", @"tag":@"dagolfla", @"data":@"test"};
-                
                 //设置背景
                 if (btn.tag == 520) {
                     self.imgProfile.image = (UIImage *)Data;
@@ -455,53 +449,21 @@ static CGFloat ImageHeight  = 210.0;
                     } completionBlock:^(id data) {
                         NSLog(@" _+_+----------+_+_");
                     }];
-                    
-//                    [_dictPhoto setObject:[NSArray arrayWithObject:UIImageJPEGRepresentation(_headerImage, 0.7)] forKey:@"headPortraitBtn"];
-                    
-                    
-                    
                 }
-                
-                /*
-                 
-                 NSNumber* strTimeKey = [data objectForKey:@"timeKey"];
-                 // 上传图片
-                 NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-                 [dict setObject:strTimeKey forKey:@"data"];
-                 [dict setObject:TYPE_TEAM_HEAD forKey:@"nType"];
-                 [dict setObject:PHOTO_DAGOLFLA forKey:@"tag"];
-                 
-                 [[JsonHttp jsonHttp]httpRequestImageOrVedio:@"1" withData:dict andDataArray:[_dictPhoto objectForKey:@"headPortraitBtn"] failedBlock:^(id errType) {
-                 NSLog(@"errType===%@", errType);
-                 } completionBlock:^(id data) {
-                 
-                 [dict setObject:[NSString stringWithFormat:@"%@_background" ,strTimeKey] forKey:@"data"];
-                 [dict setObject:TYPE_TEAM_BACKGROUND forKey:@"nType"];
-                 [[JsonHttp jsonHttp] httpRequestImageOrVedio:@"1" withData:dict andDataArray:[_dictPhoto objectForKey:@"headerImage"] failedBlock:^(id errType) {
-                 NSLog(@"errType===%@", errType);
-                 } completionBlock:^(id data) {
-                 
-                 }];
-                 
-                 
-                 */
-                
-                
-                
-                self.headerImage = (UIImage *)Data;
-                NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-                [dict setObject:@"11010" forKey:@"data"];
-                [dict setObject:@"1" forKey:@"nType"];
-                [dict setObject:@"team" forKey:@"tag"];
-                NSMutableArray *array = [NSMutableArray array];
-                
-                [array addObject:UIImageJPEGRepresentation(_headerImage, 0.7)];
-                
-                [[JsonHttp jsonHttp]httpRequestImageOrVedio:@"1" withData:dict andDataArray:array failedBlock:^(id errType) {
-                    NSLog(@"errType===%@", errType);
-                } completionBlock:^(id data) {
-                    NSLog(@"data===%@", data);
-                }];
+                //测试数据
+                //                self.headerImage = (UIImage *)Data;
+                //                NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+                //                [dict setObject:@"11010" forKey:@"data"];
+                //                [dict setObject:@"1" forKey:@"nType"];
+                //                [dict setObject:@"team" forKey:@"tag"];
+                //                NSMutableArray *array = [NSMutableArray array];
+                //                [array addObject:UIImageJPEGRepresentation(_headerImage, 0.7)];
+                //
+                //                [[JsonHttp jsonHttp]httpRequestImageOrVedio:@"1" withData:dict andDataArray:array failedBlock:^(id errType) {
+                //                    NSLog(@"errType===%@", errType);
+                //                } completionBlock:^(id data) {
+                //                    NSLog(@"data===%@", data);
+                //                }];
             }
         }];
     }];

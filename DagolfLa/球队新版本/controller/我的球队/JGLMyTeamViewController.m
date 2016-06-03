@@ -139,6 +139,7 @@
         [Helper alertViewNoHaveCancleWithTitle:@"获取球队信息失败" withBlock:^(UIAlertController *alertView) {
             [self.navigationController presentViewController:alertView animated:YES completion:nil];
         }];
+        
     } completionBlock:^(id data) {
         JGTeamMemberORManagerViewController *detailVC = [[JGTeamMemberORManagerViewController alloc] init];
         if ([[[data objectForKey:@"teamMember"] objectForKey:@"power"] containsString:@"1005"]){

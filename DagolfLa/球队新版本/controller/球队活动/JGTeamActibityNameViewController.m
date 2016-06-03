@@ -70,9 +70,9 @@ static CGFloat ImageHeight  = 210.0;
         
         [self.headPortraitBtn sd_setImageWithURL:[Helper setImageIconUrl:@"activity" andTeamKey:[_model.timeKey integerValue] andIsSetWidth:YES andIsBackGround:YES] forState:(UIControlStateNormal) placeholderImage:[UIImage imageNamed:@"logo"]];
     }else if (self.isTeamChannal == 1){
-        [self.imgProfile sd_setImageWithURL:[Helper setImageIconUrl:@"activity" andTeamKey:[_model.timeKey integerValue] andIsSetWidth:YES andIsBackGround:YES] placeholderImage:[UIImage imageNamed:@"tu2"]];
+        [self.imgProfile sd_setImageWithURL:[Helper setImageIconUrl:@"activity" andTeamKey:[_model.timeKey integerValue] andIsSetWidth:YES andIsBackGround:NO] placeholderImage:[UIImage imageNamed:@"tu2"]];
         
-        [self.headPortraitBtn sd_setImageWithURL:[Helper setImageIconUrl:@"activity" andTeamKey:[_model.timeKey integerValue] andIsSetWidth:YES andIsBackGround:NO] forState:(UIControlStateNormal) placeholderImage:[UIImage imageNamed:@"logo"]];
+        [self.headPortraitBtn sd_setImageWithURL:[Helper setImageIconUrl:@"activity" andTeamKey:[_model.timeKey integerValue] andIsSetWidth:YES andIsBackGround:YES] forState:(UIControlStateNormal) placeholderImage:[UIImage imageNamed:@"logo"]];
     }
 }
 - (void)viewWillDisappear:(BOOL)animated{
@@ -205,8 +205,16 @@ static CGFloat ImageHeight  = 210.0;
 //    }
     
 }
+
 #pragma mark -- 下载数据 －－－ 成功
 - (void)dataSet{
+    
+    MBProgressHUD *progress = [[MBProgressHUD alloc] initWithView:self.view];
+    progress.mode = MBProgressHUDModeIndeterminate;
+    progress.labelText = @"正在发布...";
+    [self.view addSubview:progress];
+    [progress show:YES];
+    
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     if (self.isTeamChannal == 2) {
         [dict setValue:_model.timeKey forKey:@"activityKey"];
@@ -219,6 +227,8 @@ static CGFloat ImageHeight  = 210.0;
         NSLog(@"error");
     } completionBlock:^(id data) {
         NSLog(@"%@", data);
+        [MBProgressHUD hideAllHUDsForView:self.view animated:NO];
+        
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
             NSMutableDictionary *dict = [NSMutableDictionary dictionary];
             dict = [data objectForKey:@"activity"];
