@@ -213,7 +213,7 @@ static CGFloat ImageHeight  = 210.0;
 
                 [MBProgressHUD hideAllHUDsForView:self.view animated:NO];
                 
-                UIAlertController *alert=[UIAlertController alertControllerWithTitle:@"提示" message:@"球队创建成功是否返回主页面" preferredStyle:UIAlertControllerStyleAlert];
+                UIAlertController *alert=[UIAlertController alertControllerWithTitle:@"提示" message:@"球队创建成功" preferredStyle:UIAlertControllerStyleAlert];
                 
                 UIAlertAction *action1=[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                     

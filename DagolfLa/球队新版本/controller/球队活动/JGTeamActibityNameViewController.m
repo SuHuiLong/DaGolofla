@@ -201,8 +201,16 @@ static CGFloat ImageHeight  = 210.0;
 //    }
     
 }
+
 #pragma mark -- 下载数据 －－－ 成功
 - (void)dataSet{
+    
+    MBProgressHUD *progress = [[MBProgressHUD alloc] initWithView:self.view];
+    progress.mode = MBProgressHUDModeIndeterminate;
+    progress.labelText = @"正在发布...";
+    [self.view addSubview:progress];
+    [progress show:YES];
+    
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     [dict setValue:@(self.teamActivityKey) forKey:@"activityKey"];
     [dict setValue:DEFAULF_USERID forKey:@"userKey"];
@@ -210,6 +218,8 @@ static CGFloat ImageHeight  = 210.0;
         NSLog(@"error");
     } completionBlock:^(id data) {
         NSLog(@"%@", data);
+        [MBProgressHUD hideAllHUDsForView:self.view animated:NO];
+        
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
             NSMutableDictionary *dict = [NSMutableDictionary dictionary];
             dict = [data objectForKey:@"activity"];
