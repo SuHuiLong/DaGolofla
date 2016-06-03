@@ -187,7 +187,7 @@ static NSString *const JGGroupdetailsCollectionViewCellIdentifier = @"JGGroupdet
 #pragma mark -- 点击头像图片的代理方法JGGroupdetailsCollectionViewCellDelegate
 - (void)didSelectHeaderImage:(UIButton *)btn JGGroupCell:(JGGroupdetailsCollectionViewCell *)cell{
     NSUserDefaults *userDef = [NSUserDefaults standardUserDefaults];
-#warning TeamMember
+#warning 点击第一个分组按钮崩溃
     NSString *str = [userDef objectForKey:userID];
     if ([str rangeOfString:@"1001"].location != NSNotFound) {
         //管理员 -- 进入球队列表页码

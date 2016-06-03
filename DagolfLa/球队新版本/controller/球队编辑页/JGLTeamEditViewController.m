@@ -436,7 +436,6 @@ static CGFloat ImageHeight  = 210.0;
                         NSLog(@" _+_++_+_+_+_+_+_+_");
 
                     }];
-//                    [_dictPhoto setObject:[NSArray arrayWithObject:UIImageJPEGRepresentation(_headerImage, 0.7)] forKey:@"headerImage"];
                     
                 }else if (btn.tag == 522){
                     //头像
