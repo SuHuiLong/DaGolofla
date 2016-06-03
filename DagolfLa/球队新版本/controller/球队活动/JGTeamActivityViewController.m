@@ -57,8 +57,8 @@
 - (void)loadData{
     //获取球队活动
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
-    [dict setObject:[def objectForKey:@"userId"] forKey:@"userKey"];//3619
+    
+    [dict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:userID] forKey:@"userKey"];//3619
     //189781710290821120  http://192.168.2.6:8888
     [dict setObject:@"0" forKey:@"offset"];
     [dict setObject:[NSString stringWithFormat:@"%td", _timeKey] forKey:@"teamKey"];

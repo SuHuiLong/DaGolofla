@@ -73,7 +73,9 @@
             for (NSDictionary *dataDic in [data objectForKey:@"teamMemberList"]) {
                 JGLTeamMemberModel *model = [[JGLTeamMemberModel alloc] init];
                 [model setValuesForKeysWithDictionary:dataDic];
-                [_dataArray addObject:model];
+                if ([model.state integerValue] != 2) {
+                    [_dataArray addObject:model];
+                }
             }
             _page++;
             [_tableView reloadData];
@@ -137,19 +139,24 @@
         
     } completionBlock:^(id data) {
         NSLog(@"%@",[data objectForKey:@"packResultMsg"]);
+        [_dataArray removeObjectAtIndex:btn.tag - 10000];
+        [_tableView reloadData];
+        
     }];
 }
 -(void)disMissClick:(UIButton *)btn
 {
     NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
-    [dict setObject:[_dataArray[btn.tag - 10000] teamKey] forKey:@"teamKey"];
+    [dict setObject:[_dataArray[btn.tag - 100000] teamKey] forKey:@"teamKey"];
     [dict setObject:DEFAULF_USERID forKey:@"userKey"];
-    [dict setObject:[_dataArray[btn.tag - 10000] timeKey] forKey:@"memberKey"];
+    [dict setObject:[_dataArray[btn.tag - 100000] timeKey] forKey:@"memberKey"];
     [dict setObject:@2 forKey:@"state"];
     [[JsonHttp jsonHttp]httpRequest:@"team/auditTeamMember" JsonKey:nil withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
         
     } completionBlock:^(id data) {
         NSLog(@"%@",[data objectForKey:@"packResultMsg"]);
+        [_dataArray removeObjectAtIndex:btn.tag - 100000];
+        [_tableView reloadData];
     }];
 }
 
