@@ -90,7 +90,6 @@
             //创建图片视图
             _imageView = [[UIImageView alloc] initWithFrame:CGRectMake(ScreenWidth * i, 0, ScreenWidth, _scrollHeight)];
             _imageView.backgroundColor = [UIColor orangeColor];
-            
             if (i == 0) {
 //                NSURL *imageUrl = [NSURL URLWithString:[NSString stringWithFormat:@"http://imgcache.dagolfla.com/adver/%@.jpg",dataArray[i-1]]];
 

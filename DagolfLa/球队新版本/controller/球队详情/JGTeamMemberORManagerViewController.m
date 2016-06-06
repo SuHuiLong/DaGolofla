@@ -566,7 +566,7 @@ static CGFloat ImageHeight  = 210.0;
             {
                 JGTeamDeatilWKwebViewController *wkVC = [[JGTeamDeatilWKwebViewController alloc] init];
                 
-                wkVC.detailString = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/teamDetails/teamDetails.html?key=%@", [self.detailDic objectForKey:@"timeKey"]];;
+                wkVC.detailString = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/team/teamDetails.html?key=%@", [self.detailDic objectForKey:@"timeKey"]];;
                 wkVC.teamName = [self.detailDic objectForKey:@"name"];
                 [self.navigationController pushViewController:wkVC animated:YES];
             }
