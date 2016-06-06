@@ -160,7 +160,6 @@ static NSString *const JGGroupdetailsCollectionViewCellIdentifier = @"JGGroupdet
     }
 }
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
-//    collectionView.tag = indexPath.item;
     if ([collectionView isEqual:self.collectionView]) {
         JGTeamGroupCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:JGTeamGroupCollectionViewCellIdentifier forIndexPath:indexPath];
         JGHPlayersModel *model = [[JGHPlayersModel alloc]init];
@@ -181,7 +180,7 @@ static NSString *const JGGroupdetailsCollectionViewCellIdentifier = @"JGGroupdet
 #pragma mark -- 点击头像图片的代理方法JGGroupdetailsCollectionViewCellDelegate
 - (void)didSelectHeaderImage:(UIButton *)btn JGGroupCell:(JGGroupdetailsCollectionViewCell *)cell{
 
-    if ([_power rangeOfString:@"1001"].location != NSNotFound) {
+    if ([_power containsString:@"1001"]) {
         //管理员 -- 进入球队列表页码
         JGHTeamMembersViewController *teamMemberCtrl = [[JGHTeamMembersViewController alloc]init];
         NSMutableArray *listArray = [NSMutableArray arrayWithArray:self.alreadyDataArray];
@@ -209,14 +208,34 @@ static NSString *const JGGroupdetailsCollectionViewCellIdentifier = @"JGGroupdet
         [self.navigationController pushViewController:teamMemberCtrl animated:YES];
     }else{
 
+        for (JGHPlayersModel *model in self.alreadyDataArray) {
+            if (model.groupIndex == cell.tag) {
+                if (model.sortIndex == btn.tag) {
+                    [Helper alertViewNoHaveCancleWithTitle:@"该分组已被分组，如有疑问，请联系管理员！" withBlock:^(UIAlertController *alertView) {
+                        [self.navigationController presentViewController:alertView animated:YES completion:nil];
+                    }];
+                    
+                    return;
+                }
+            }
+        }
+        
         UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
         }];
         UIAlertAction *commitAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
             NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-            [dict setObject:@0 forKey:@"oldSignUpKey"];// 老的球队活动报名人timeKey
-            [dict setObject:[NSString stringWithFormat:@"%td", _newTeamKey] forKey:@"newSignUpKey"]; // 新的球队活动报名人timeKey
+            for (JGHPlayersModel *model in self.teamGroupAllDataArray) {
+                if (model.userKey == [[userdef objectForKey:userID] integerValue]) {
+                    [dict setObject:[NSString stringWithFormat:@"%td", model.timeKey] forKey:@"newSignUpKey"]; // 新的球队活动报名人timeKey
+                }
+            }
+            
+            [dict setObject:@-1 forKey:@"oldSignUpKey"];// 老的球队活动报名人timeKey
+            
             [dict setObject:[NSString stringWithFormat:@"%ld", (long)cell.tag] forKey:@"groupIndex"]; // 组号
             [dict setObject:[NSString stringWithFormat:@"%ld", (long)btn.tag] forKey:@"sortIndex"]; // 排序索引
+            [self updateTeamActivityGroupIndex:dict];
         }];
         
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"系统提示" message:@"是否加入改组！" preferredStyle:UIAlertControllerStyleAlert];
