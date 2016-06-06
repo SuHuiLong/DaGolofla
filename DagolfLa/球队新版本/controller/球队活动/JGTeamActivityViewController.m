@@ -18,6 +18,9 @@
 #import "MJDIYHeader.h"
 
 @interface JGTeamActivityViewController ()<UITableViewDelegate, UITableViewDataSource>
+{
+    NSString *_urlString;
+}
 @property (nonatomic, strong)UITableView *teamActivityTableView;
 @property (nonatomic, strong)NSMutableArray *dataArray;//数据模型数组
 @property (nonatomic, assign)NSInteger page;
@@ -57,23 +60,25 @@
 - (void)loadData{
     //获取球队活动
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
-    [dict setObject:[def objectForKey:@"userId"] forKey:@"userKey"];//3619
+    
+    [dict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:userID] forKey:@"userKey"];//3619
     //189781710290821120  http://192.168.2.6:8888
     [dict setObject:@"0" forKey:@"offset"];
     [dict setObject:[NSString stringWithFormat:@"%td", _timeKey] forKey:@"teamKey"];
-    NSString *urlString = nil;
-    //244  121212
-    if (_myActivityList == 1) {
+    
+    //_isMEActivity 1 我的活动； 2 球队活动； 3 所有活动
+    if (_isMEActivity == 1) {
         //我的活动列表
-        urlString = @"team/getMyTeamActivityList";
+        _urlString = @"team/getTeamActivityList";
         [dict setObject:@(self.timeKey) forKey:@"teamKey"];
+    }else if (_isMEActivity == 2) {
+        //活动大厅getMyTeamActivityAll //
+        _urlString = @"team/getTeamActivityList";
     }else{
-        //活动大厅getMyTeamActivityAll //  getTeamActivityList
-        urlString = @"team/getMyTeamActivityAll";
+        _urlString = @"team/getMyTeamActivityAll";
     }
     
-    [[JsonHttp jsonHttp]httpRequest:urlString JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
+    [[JsonHttp jsonHttp]httpRequest:_urlString JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
         NSLog(@"errType == %@", errType);
     } completionBlock:^(id data) {
         NSLog(@"data == %@", data);
@@ -146,7 +151,7 @@
     [dict setObject:[def objectForKey:@"userId"] forKey:@"userKey"];//3619
     [dict setObject:@(self.page) forKey:@"offset"];
     [dict setObject:[NSString stringWithFormat:@"%td", _timeKey] forKey:@"teamKey"];
-    [[JsonHttp jsonHttp]httpRequest:@"team/getTeamActivityList" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
+    [[JsonHttp jsonHttp]httpRequest:_urlString JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
         if (isReshing) {
             [self.teamActivityTableView.header endRefreshing];
         }else {
@@ -240,6 +245,7 @@
             array = [data objectForKey:@"activityList"];
             
             JGTeamAcitivtyModel *model = [[JGTeamAcitivtyModel alloc] init];
+            NSLog(@"%ld", (long)indexPath.section);
             [model setValuesForKeysWithDictionary:array[indexPath.section]];
             activityNameCtrl.model = model;
 //            activityNameCtrl.teamActivityKey = [model.teamKey integerValue];

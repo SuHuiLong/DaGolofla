@@ -111,6 +111,7 @@
 		20F6A5DC1CF52C4F00DD9383 /* JGHHeaderLabelCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 20F6A5DA1CF52C4F00DD9383 /* JGHHeaderLabelCell.xib */; };
 		20F6A5E01CF53A4400DD9383 /* JGHCostListTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 20F6A5DE1CF53A4400DD9383 /* JGHCostListTableViewCell.m */; };
 		20F6A5E11CF53A4400DD9383 /* JGHCostListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 20F6A5DF1CF53A4400DD9383 /* JGHCostListTableViewCell.xib */; };
+		20FBD5F51D044E5900DEE48D /* ShowHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 20FBD5F41D044E5900DEE48D /* ShowHUD.m */; };
 		360148F81C1FFE5E0074C395 /* ManageFinfishModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 360148F71C1FFE5E0074C395 /* ManageFinfishModel.m */; };
 		36067BAB1C96A9FB001AE22C /* ScreenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 36067BAA1C96A9FB001AE22C /* ScreenViewController.m */; };
 		36067BAF1C96AA31001AE22C /* InformViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 36067BAE1C96AA31001AE22C /* InformViewController.m */; };
@@ -1153,6 +1154,8 @@
 		20F6A5DD1CF53A4400DD9383 /* JGHCostListTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHCostListTableViewCell.h; sourceTree = "<group>"; };
 		20F6A5DE1CF53A4400DD9383 /* JGHCostListTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHCostListTableViewCell.m; sourceTree = "<group>"; };
 		20F6A5DF1CF53A4400DD9383 /* JGHCostListTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JGHCostListTableViewCell.xib; sourceTree = "<group>"; };
+		20FBD5F31D044E5900DEE48D /* ShowHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShowHUD.h; sourceTree = "<group>"; };
+		20FBD5F41D044E5900DEE48D /* ShowHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShowHUD.m; sourceTree = "<group>"; };
 		360148F61C1FFE5E0074C395 /* ManageFinfishModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ManageFinfishModel.h; sourceTree = "<group>"; };
 		360148F71C1FFE5E0074C395 /* ManageFinfishModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ManageFinfishModel.m; sourceTree = "<group>"; };
 		36067BA91C96A9FB001AE22C /* ScreenViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScreenViewController.h; sourceTree = "<group>"; };
@@ -4649,6 +4652,8 @@
 			children = (
 				65B5969E1CAD43AC007AB83A /* ContantHead.h */,
 				20BA613D1CDCA04D004B61F5 /* PrefixHeader.pch */,
+				20FBD5F31D044E5900DEE48D /* ShowHUD.h */,
+				20FBD5F41D044E5900DEE48D /* ShowHUD.m */,
 				20CA14001CEB086600DA15B9 /* JsonHttp.h */,
 				20CA14011CEB086600DA15B9 /* JsonHttp.m */,
 				20CA13FD1CEAF07100DA15B9 /* SXPickPhoto.h */,
@@ -5996,7 +6001,7 @@
 				TargetAttributes = {
 					36BFFD271BC76C8D005B3CE2 = {
 						CreatedOnToolsVersion = 6.3.2;
-						DevelopmentTeam = R269PG52XZ;
+						DevelopmentTeam = 5P6JNXBH3C;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -6790,6 +6795,7 @@
 				36BF01AA1BC77A6B005B3CE2 /* TeamInviteViewController.m in Sources */,
 				36D39B311BCCD85C00C0B197 /* UIView+ChangeFrame.m in Sources */,
 				36BF008C1BC772EF005B3CE2 /* MySetReceiveController.m in Sources */,
+				20FBD5F51D044E5900DEE48D /* ShowHUD.m in Sources */,
 				3660E1A91BFC584C0033B4D7 /* TeamManageViewController.m in Sources */,
 				367E31FF1C1EBAC00007BD32 /* YueHallPeoTableViewCell.m in Sources */,
 				2067C6D01CE30CC0002900C8 /* JGCostsDescriptionCell.m in Sources */,
@@ -7069,7 +7075,7 @@
 					"$(SRCROOT)/DagolfLa",
 				);
 				INFOPLIST_FILE = DagolfLa/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -7118,7 +7124,7 @@
 					"$(SRCROOT)/DagolfLa",
 				);
 				INFOPLIST_FILE = DagolfLa/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",

@@ -10,6 +10,7 @@
 
 @interface JGHPlayersModel : BaseModel
 
+
 @property (nonatomic, assign)NSInteger teamKey;//球队key
 
 @property (nonatomic, assign)NSInteger activityKey;//球队活动id

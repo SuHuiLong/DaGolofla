@@ -22,6 +22,8 @@
     if (self) {
         _iconImgv = [[UIImageView alloc]initWithFrame:CGRectMake(5*screenWidth/375, 5*screenWidth/375, 40*screenWidth/375, 40*screenWidth/375)];
         [self addSubview:_iconImgv];
+        _iconImgv.layer.masksToBounds = YES;
+        _iconImgv.layer.cornerRadius = 40*screenWidth/375 /2;
         [_iconImgv setImage:[UIImage imageNamed:@"tx3"]];
         
         _nameLabel = [[UILabel alloc]initWithFrame:CGRectMake(60*screenWidth/375, 5*screenWidth/375, 200*screenWidth/375, 20*screenWidth/375)];

@@ -595,6 +595,9 @@ static CGFloat ImageHeight  = 210.0;
     }
     else
     {
+        /**
+         球队管理点击跳转
+         */
         JGTeamManageViewController* tmVc = [[JGTeamManageViewController alloc]init];
         tmVc.teamKey = [[self.detailDic objectForKey:@"timeKey"] integerValue];
         tmVc.detailDic = self.detailDic;

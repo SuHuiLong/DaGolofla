@@ -100,9 +100,6 @@
 
 -(void)showData:(JGLTeamMemberModel *)model
 {
-//    [_agreeBtn addTarget:self action:@selector(agree1Click) forControlEvents:UIControlEventTouchUpInside];
-//    [_disMissBtn addTarget:self action:@selector(dis1Click) forControlEvents:UIControlEventTouchUpInside];
-
 
     [_iconImage sd_setImageWithURL:[Helper setImageIconUrl:@"user" andTeamKey:[model.userKey integerValue] andIsSetWidth:YES andIsBackGround:NO]];
     _nameLabel.text = model.userName;

@@ -291,7 +291,7 @@
         }
     }
     
-    NSArray *secArray = [NSArray arrayWithObjects:@"company", @"industry", @"occupation", @"address", @"size", @"hand", nil];
+    NSArray *secArray = [NSArray arrayWithObjects:@"industry", @"company", @"occupation", @"address", @"size", @"hand", nil];
     
     for (int i = 0; i < 6; i ++) {
         if (i == 5) {
@@ -510,37 +510,8 @@
         return nil;
     }
     
-   
-    
-//    if (indexPath.section == 0 && indexPath.row == 1) {
-//        JGButtonTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellBtn" forIndexPath:indexPath];
-//        cell.labell.text = self.titleArray[indexPath.section][indexPath.row];
-//        [cell.button addTarget:self action:@selector(cellBtn) forControlEvents:(UIControlEventTouchUpInside)];
-//        return cell;
-//    }else if (indexPath.section == 1 && indexPath.row == 5){
-//        JGButtonTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellBtn" forIndexPath:indexPath];
-//        cell.labell.text = self.titleArray[indexPath.section][indexPath.row];
-//        [cell.button addTarget:self action:@selector(cellBtnSec) forControlEvents:(UIControlEventTouchUpInside)];
-//        return cell;
-//    }else{
-//        JGApplyMaterialTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
-//        
-//        if (indexPath.section == 0) {
-//            cell.labell.text = self.titleArray[indexPath.section][indexPath.row];
-//            cell.textFD.placeholder = self.placeholderArray[indexPath.section][indexPath.row];
-//        }else{
-//            cell.labell.text = self.titleArray[indexPath.section][indexPath.row];
-//            cell.textFD.placeholder = self.placeholderArray[indexPath.section][indexPath.row];
-//            if (indexPath.row == 2 && indexPath.section == 0) {
-//                cell.textFD.keyboardType = UIKeyboardTypePhonePad;
-//            }
-//        }
-//        cell.textFD.delegate = self;
-//        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-//        //    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-//        return cell;
-    }
-//}
+}
+
 
 
 - (void)setCellData{
