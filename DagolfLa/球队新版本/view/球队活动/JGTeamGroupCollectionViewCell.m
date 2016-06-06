@@ -36,8 +36,18 @@
 //    @property (weak, nonatomic) IBOutlet UILabel *name;
     self.name.text = model.name;
     //性别 差点
-//    @property (weak, nonatomic) IBOutlet UILabel *sexAndValue;
-    self.sexAndValue.text = [NSString stringWithFormat:@"%@ 差点:%ld", model.sex==0? @"女":@"男", (long)model.almost];
+//    self.sexAndValue.text = [NSString stringWithFormat:@"%@ 差点:%ld", model.sex==0? @"女":@"男", (long)model.almost];
+    
+    NSString *sexStr = nil;
+    if (model.sex == 0) {
+        sexStr = @"女";
+    }else if (model.sex == 1){
+        sexStr = @"男";
+    }else{
+        sexStr = @"保密";
+    }
+    
+    self.sexAndValue.text = [NSString stringWithFormat:@"%@ 差点:%ld", sexStr, (long)model.almost];
 }
 
 @end
