@@ -23,6 +23,9 @@
 #import "JGDisplayInfoTableViewCell.h"
 #import "JGPreviewTeamViewController.h"
 
+#import "IQKeyboardManager.h"
+
+
 static NSString *const JGTableViewCellIdentifier = @"JGTableViewCell";
 static NSString *const JGHTeamContactCellIdentifier = @"JGHTeamContactTableViewCell";
 static CGFloat ImageHeight  = 210.0;
@@ -36,6 +39,8 @@ static CGFloat ImageHeight  = 210.0;
     NSString *_contcat;//联系人
     
     NSMutableDictionary* _dictPhoto;
+    
+    BOOL _wasKeyboardManagerEnabled;
 }
 @property (nonatomic,strong)SXPickPhoto * pickPhoto;//相册类
 @property (nonatomic, strong)UITableView *launchActivityTableView;
@@ -67,12 +72,14 @@ static CGFloat ImageHeight  = 210.0;
         self.paraDic = self.detailDic;
     }
     
-    //    NSLog(@"%@",_detailDic);
+//    _wasKeyboardManagerEnabled = [[IQKeyboardManager sharedManager] isEnabled];
+//    [[IQKeyboardManager sharedManager] setEnable:NO];
     
 }
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:YES];
     self.navigationController.navigationBarHidden = NO;
+//     [[IQKeyboardManager sharedManager] setEnable:_wasKeyboardManagerEnabled];
 }
 
 - (instancetype)init{
