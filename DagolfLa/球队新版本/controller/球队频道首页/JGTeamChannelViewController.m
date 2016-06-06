@@ -88,7 +88,9 @@
     
     self.topScrollView = [[HomeHeadView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 160 * screenWidth / 320)];
     self.topScrollView.userInteractionEnabled = YES;
-    [self createScrollView];
+    
+    //    [self createScrollView];
+    [self creatCro];
     [self.view addSubview:self.topScrollView];
     
     [self.topScrollView addSubview:backBtn];
@@ -135,9 +137,53 @@
     // Do any additional setup after loading the view.
 }
 
+
+- (void)creatCro{
+  
+    NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
+    [dict setValue:@1 forKey:@"nPos"];
+    [dict setValue:@0 forKey:@"nType"];
+    [dict setValue:@0 forKey:@"page"];
+    [dict setValue:@20 forKey:@"rows"];
+
+    [[JsonHttp jsonHttp] httpRequest:@"adv/getAdvertList" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
+        
+    } completionBlock:^(id data) {
+        
+        
+        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+            
+            NSMutableArray* arrayIcon = [[NSMutableArray alloc]init];
+            NSMutableArray* arrayUrl = [[NSMutableArray alloc]init];
+            NSMutableArray* arrayTitle = [[NSMutableArray alloc]init];
+            for (NSDictionary *dataDict in [data objectForKey:@"advList"]) {
+                
+                [arrayIcon addObject: [dataDict objectForKey:@"timeKey"]];
+                [arrayUrl addObject: [dataDict objectForKey:@"linkaddr"]];
+                [arrayTitle addObject: [dataDict objectForKey:@"title"]];
+
+            }
+            
+            [self.topScrollView config:arrayIcon data:arrayUrl title:arrayTitle];
+            self.topScrollView.delegate = self;
+            [self.topScrollView setClick:^(UIViewController *vc) {
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
+                [self.navigationController pushViewController:vc animated:YES];
+            }];
+        }
+
+        
+        
+    }];
+
+}
+
+
+
 //创建首页页面滚动视图
 -(void)createScrollView
 {
+    [self creatCro];
     //    NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
     [[PostDataRequest sharedInstance] postDataRequest:@"scroll/queryAll.do" parameter:@{@"scrollClass":@0} success:^(id respondsData) {
         
