@@ -288,6 +288,10 @@
 }
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
 {
+    if ([url.scheme isEqualToString:@"sina.561e0d97e0f55a66640014e2"])
+    {
+        return  [UMSocialSnsService handleOpenURL:url wxApiDelegate:nil];
+    }
     if ([url.scheme isEqualToString:@"wxdcdc4e20544ed728"]) {
         BOOL result = [UMSocialSnsService handleOpenURL:url];
         if (result == FALSE) {
@@ -445,6 +449,7 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    [UMSocialSnsService  applicationDidBecomeActive];
     [application setApplicationIconBadgeNumber:0];
     [application cancelAllLocalNotifications];
     [JPUSHService resetBadge];

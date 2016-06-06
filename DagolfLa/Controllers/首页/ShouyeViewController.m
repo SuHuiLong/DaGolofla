@@ -183,14 +183,51 @@
         [strongSelf.webView evaluateJavaScript:@"navigator.userAgent" completionHandler:^(id result, NSError *error) {
             NSLog(@"%@", result);
             [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:ShouYe]]];
+//            [self loadDocument:@"index.html" inView:self.webView];
         }];
 
     }];
+//    [self loadDocument:@"index.html" inView:self.webView];
     [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:ShouYe]]];
 }
 
 
 #pragma mark --webview的代理方法
+// 页面加载失败时调用
+- (void)webView:(WKWebView *)webView didFailProvisionalNavigation:(WKNavigation *)navigation
+{
+    __weak typeof(self) weakSelf = self;
+    [self.webView evaluateJavaScript:@"navigator.userAgent" completionHandler:^(id result, NSError *error) {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        
+        NSString *userAgent = result;
+        NSString *newUserAgent = [userAgent stringByAppendingString:@" DagolfLa/2.0"];
+        
+        NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:newUserAgent, @"UserAgent", nil];
+        [[NSUserDefaults standardUserDefaults] registerDefaults:dictionary];
+        
+        strongSelf.webView = [[WKWebView alloc] initWithFrame:strongSelf.view.bounds];
+        
+        // After this point the web view will use a custom appended user agent
+        [strongSelf.webView evaluateJavaScript:@"navigator.userAgent" completionHandler:^(id result, NSError *error) {
+            NSLog(@"%@", result);
+            [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:ShouYe]]];
+            //            [self loadDocument:@"index.html" inView:self.webView];
+        }];
+        
+    }];
+    //    [self loadDocument:@"index.html" inView:self.webView];
+    [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:ShouYe]]];
+}
+-(void)loadDocument:(NSString*)documentName inView:(WKWebView*)webView
+{
+    NSString *path = [[NSBundle mainBundle] pathForResource:documentName ofType:nil];
+    //注意这里，是fileURLWithPath，而不是URLWithString。打开本地的用前者，打开网络的用后者
+    NSURL *url = [NSURL fileURLWithPath:path];
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    [webView loadRequest:request];
+}
+
 
 // 页面开始加载时调用
 - (void)webView:(WKWebView *)webView didStartProvisionalNavigation:(WKNavigation *)navigation
