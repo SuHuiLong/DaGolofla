@@ -22,7 +22,7 @@
     }
 //    self.headImageView.frame = CGRectMake(5, 5, (screenWidth-50)/5, _collectionHegith);
     self.headImageView.layer.masksToBounds = YES;
-    self.headImageView.layer.cornerRadius = _headImageView.frame.size.width/2;
+    self.headImageView.layer.cornerRadius = 50/2;
     
 }
 

@@ -232,6 +232,15 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
 }
 #pragma mark -- 立即付款
 - (IBAction)nowPayBtnClick:(UIButton *)sender {
+    //如果价格为空
+    if (_realPayPrice == 0) {
+        // 分别3个创建操作
+        [Helper alertViewNoHaveCancleWithTitle:@"为勾选嘉宾，请选择现场付款！" withBlock:^(UIAlertController *alertView) {
+            [self.navigationController presentViewController:alertView animated:YES completion:nil];
+        }];
+        
+        return;
+    }
     // 分别3个创建操作
     UIAlertAction * cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
     }];
@@ -331,15 +340,10 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
             
             if ([[dict objectForKey:@"type"]integerValue] == 1) {
                 _subsidiesPrice += _modelss.subsidyPrice;
-//                _w += 1;
-//            }else{
-//                _z += 1;
             }
         }
     }
 
-//    _subsidiesPrice = _modelss.subsidyPrice * _w;
-//    _amountPayable = _modelss.memberPrice * _w + _modelss.guestPrice * _z;
     _realPayPrice = _amountPayable - _subsidiesPrice;
     
     [self.teamApplyTableView reloadData];
@@ -423,10 +427,6 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
     [dict setObject:_infoKey forKey:@"srcKey"];
     [dict setObject:@"活动报名" forKey:@"name"];
     [dict setObject:@"活动微信订单" forKey:@"otherInfo"];
-//    if (_invoiceKey != nil) {
-//        [dict setObject:_addressKey forKey:@"addressKey"];
-//        [dict setObject:_invoiceKey forKey:@"invoiceKey"];
-//    }
     
     [[JsonHttp jsonHttp]httpRequest:@"pay/doPayWeiXin" JsonKey:@"payInfo" withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
         NSLog(@"errType == %@", errType);

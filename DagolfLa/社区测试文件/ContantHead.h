@@ -30,7 +30,7 @@ typedef NS_ENUM(NSInteger, GestureType) {
 //#define ActivityKey @"activityKey"
 #define HEADERRImage @"logo"//头像默认图片
 #define BACKImage @"backL"//返回按钮
-#define BGImage @"selfBackPic"//背景图片
+#define BGImage @"selfBackPic.jpg"//背景图片
 
 #define kDistance 10*screenWidth/375 //说说和图片的间隔
 #define kReplyBtnDistance 30*screenWidth/375 //回复按钮距离
@@ -93,5 +93,6 @@ typedef NS_ENUM(NSInteger, GestureType) {
 
 #import "UIImageView+WebCache.h"
 #import "UIButton+WebCache.h"
+#import "ShowHUD.h"
 
 #endif

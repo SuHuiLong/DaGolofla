@@ -14,6 +14,8 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
+    //清楚缓存
+//    [[SDImageCache sharedImageCache] clearDisk];
     
     self.bgView.layer.masksToBounds = YES;
     self.bgView.layer.cornerRadius = 5;
@@ -24,8 +26,30 @@
         [self.sction1 addSubview:self.lable1];
     }
     
-//    self.lable1.frame = CGRectMake(self.sction1.frame.origin.x, self.sction1.frame.origin.y + self.sction1.frame.size.height/7*4, self.sction1.frame.size.width, self.sction1.frame.size.height/7*2);
+    //姓名
+    self.lable1 = [[UILabel alloc]init];
+    self.lable1.frame = CGRectMake(0, _sction1.frame.size.height*3/5, _sction1.frame.size.width, _sction1.frame.size.height*1/4);
+    self.lable1.font = [UIFont systemFontOfSize:11];
+    self.lable1.textAlignment = NSTextAlignmentCenter;
+    [self.sction1 addSubview:self.lable1];
     
+    self.lable2 = [[UILabel alloc]init];
+    self.lable2.frame = CGRectMake(0, _sction2.frame.size.height*3/5, _sction2.frame.size.width, _sction2.frame.size.height*1/4);
+    self.lable2.font = [UIFont systemFontOfSize:11];
+    self.lable2.textAlignment = NSTextAlignmentCenter;
+    [self.sction2 addSubview:self.lable2];
+    
+    self.lable3 = [[UILabel alloc]init];
+    self.lable3.frame = CGRectMake(0, _section3.frame.size.height*3/5, _section3.frame.size.width, _section3.frame.size.height*1/4);
+    self.lable3.font = [UIFont systemFontOfSize:11];
+    self.lable3.textAlignment = NSTextAlignmentCenter;
+    [self.section3 addSubview:self.lable3];
+    
+    self.lable4 = [[UILabel alloc]init];
+    self.lable4.frame = CGRectMake(0, _section4.frame.size.height*3/5, _section4.frame.size.width, _section4.frame.size.height*1/4);
+    self.lable4.font = [UIFont systemFontOfSize:11];
+    self.lable4.textAlignment = NSTextAlignmentCenter;
+    [self.section4 addSubview:self.lable4];
 }
 
 //第一个
@@ -51,18 +75,8 @@
     }
 }
 
-- (void)configJGHPlayersModel:(JGHPlayersModel *)model andSortIndex:(NSInteger)sortIndex{
-    self.lable1.text = model.name;
-}
 
 - (void)configCellWithModelArray:(NSMutableArray *)modelArray{
-    NSLog(@"%ld", (long)self.tag);
-
-//    if () {
-//        <#statements#>
-//    }
-    
-    self.groupName.text = [NSString stringWithFormat:@"第%ld组", (long)self.tag];
     //清空空间内容
     if (self.lable1.text.length != 0) {
         self.lable1.text = nil;
@@ -80,37 +94,61 @@
         self.lable4.text = nil;
     }
     
+    [self.sction1 setImage:[UIImage imageNamed:@"addGroup"] forState:UIControlStateNormal];
+    [self.sction2 setImage:[UIImage imageNamed:@"addGroup"] forState:UIControlStateNormal];
+    [self.section3 setImage:[UIImage imageNamed:@"addGroup"] forState:UIControlStateNormal];
+    [self.section4 setImage:[UIImage imageNamed:@"addGroup"] forState:UIControlStateNormal];
+    
+    
+    NSLog(@"%ld", (long)self.tag);
+    
+    self.groupName.text = [NSString stringWithFormat:@"第%ld组", (long)self.tag];
+    
     for (JGHPlayersModel *model in modelArray) {
         if (model.groupIndex == self.tag) {
-            if (model.sortIndex == 0) {
-                self.lable1.text = model.name;
-                [self.sction1 sd_setImageWithURL:[Helper setImageIconUrl:@"user" andTeamKey:model.userKey andIsSetWidth:YES andIsBackGround:NO] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"addGroup"]];
-                self.sction1.layer.masksToBounds = YES;
-                self.sction1.layer.cornerRadius = self.sction1.frame.size.width/2;
-            }
             
-            if (model.sortIndex == 1){
-                self.lable2.text = model.name;
-                [self.sction2 sd_setImageWithURL:[Helper setImageIconUrl:@"user" andTeamKey:model.userKey andIsSetWidth:YES andIsBackGround:NO] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"addGroup"]];
-                self.sction2.layer.masksToBounds = YES;
-                self.sction2.layer.cornerRadius = self.sction1.frame.size.width/2;
-            }
-            
-            if (model.sortIndex == 2){
-                self.lable3.text = model.name;
-                [self.section3 sd_setImageWithURL:[Helper setImageIconUrl:@"user" andTeamKey:model.userKey andIsSetWidth:YES andIsBackGround:NO] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"addGroup"]];
-                self.section3.layer.masksToBounds = YES;
-                self.section3.layer.cornerRadius = self.sction1.frame.size.width/2;
-            }
-            
-            if (model.sortIndex == 3){
-                self.lable4.text = model.name;
-                [self.section4 sd_setImageWithURL:[Helper setImageIconUrl:@"user" andTeamKey:model.userKey andIsSetWidth:YES andIsBackGround:NO] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"addGroup"]];
-                self.section4.layer.masksToBounds = YES;
-                self.section4.layer.cornerRadius = self.sction1.frame.size.width/2;
+            if (model.sortIndex == -1) {
+                [self.section4 setImage:[UIImage imageNamed:@"addGroup"] forState:UIControlStateNormal];
+            }else{
+                if (model.sortIndex == 0) {
+                    [self.sction1 sd_setImageWithURL:[Helper setImageIconUrl:@"user" andTeamKey:model.userKey andIsSetWidth:YES andIsBackGround:NO] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"addGroup"]];
+                    self.sction1.layer.masksToBounds = YES;
+                    self.sction1.layer.cornerRadius = self.sction1.frame.size.width/2;
+                    
+                    self.lable1.text = model.name;
+                }
+                
+                if (model.sortIndex == 1){
+                    
+                    [self.sction2 sd_setImageWithURL:[Helper setImageIconUrl:@"user" andTeamKey:model.userKey andIsSetWidth:YES andIsBackGround:NO] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"addGroup"]];
+                    self.sction2.layer.masksToBounds = YES;
+                    self.sction2.layer.cornerRadius = self.sction1.frame.size.width/2;
+                    
+                    self.lable2.text = model.name;
+                }
+                
+                if (model.sortIndex == 2){
+                    
+                    [self.section3 sd_setImageWithURL:[Helper setImageIconUrl:@"user" andTeamKey:model.userKey andIsSetWidth:YES andIsBackGround:NO] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"addGroup"]];
+                    self.section3.layer.masksToBounds = YES;
+                    self.section3.layer.cornerRadius = self.sction1.frame.size.width/2;
+                    
+                    self.lable3.text = model.name;
+                }
+                
+                if (model.sortIndex == 3){
+                    
+                    [self.section4 sd_setImageWithURL:[Helper setImageIconUrl:@"user" andTeamKey:model.userKey andIsSetWidth:YES andIsBackGround:NO] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"addGroup"]];
+                    self.section4.layer.masksToBounds = YES;
+                    self.section4.layer.cornerRadius = self.sction1.frame.size.width/2;
+                    
+                    self.lable4.text = model.name;
+                }
             }
         }
     }
+    
+    
 }
 
 @end
