@@ -64,6 +64,7 @@
 
 -(void)showData:(JGLMyTeamModel *)model
 {
+    NSLog(@"%@",[Helper setImageIconUrl:[model.teamKey integerValue]]);
     [self.iconImageV sd_setImageWithURL:[Helper setImageIconUrl:[model.teamKey integerValue]] placeholderImage:[UIImage imageNamed:@"logo"]];
     
     self.nameLabel.text = [NSString stringWithFormat:@"%@(%@人)",model.name,model.userSum];
