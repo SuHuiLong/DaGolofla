@@ -63,6 +63,7 @@
             [_tableView.footer endRefreshing];
         }
     } completionBlock:^(id data) {
+        NSLog(@"data == %@", data);
         if ([[data objectForKey:@"packSuccess"] boolValue]) {
             if (page == 0)
             {
