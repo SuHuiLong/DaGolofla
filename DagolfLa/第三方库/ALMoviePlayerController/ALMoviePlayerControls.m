@@ -148,7 +148,7 @@ static CGFloat iPhoneScreenPortraitHeight;
     _titleLabel.font = [UIFont systemFontOfSize:15.0f];
     _titleLabel.textColor = [UIColor whiteColor];
     _titleLabel.textAlignment = NSTextAlignmentCenter;
-    _titleLabel.text = @"标题";
+    _titleLabel.text = @"";
     _titleLabel.layer.shadowColor = [UIColor blackColor].CGColor;
     _titleLabel.layer.shadowRadius = 1.f;
     _titleLabel.layer.shadowOffset = CGSizeMake(1.f, 1.f);

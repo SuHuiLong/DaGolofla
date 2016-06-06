@@ -55,6 +55,7 @@ static CGFloat ImageHeight  = 210.0;
 @property (nonatomic, strong)UIView *titleView;//顶部导航
 
 @property (nonatomic, strong)UIButton *addressBtn;//添加地址
+
 @end
 
 @implementation JGTeamActibityNameViewController
@@ -130,18 +131,6 @@ static CGFloat ImageHeight  = 210.0;
     self.titleView.backgroundColor = [UIColor clearColor];
     [self.imgProfile addSubview:self.titleView];
 
-    
-    if (self.isAdmin == 1) {// 发布页面
-        [self createSaveAndLaunchBtn];
-    }else{
-        [self createApplyBtn];//报名页面
-        //分享按钮
-        UIButton *shareBtn = [[UIButton alloc]initWithFrame:CGRectMake(screenWidth-44, 0, 44, 44)];
-        [shareBtn setImage:[UIImage imageNamed:@"fenxiang"] forState:UIControlStateNormal];
-        [shareBtn addTarget:self action:@selector(addShare) forControlEvents:UIControlEventTouchUpInside];
-        [self.titleView addSubview:shareBtn];
-    }
-    
     //返回按钮
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
     btn.frame = BackBtnFrame;
@@ -179,13 +168,19 @@ static CGFloat ImageHeight  = 210.0;
     
     [self.imgProfile addSubview:self.addressBtn];
     
+    if (self.isAdmin == 1) {// 发布页面
+        [self createSaveAndLaunchBtn];
+    }else{
+        [self createApplyBtn];//报名页面
+        //分享按钮
+        UIButton *shareBtn = [[UIButton alloc]initWithFrame:CGRectMake(screenWidth-44, 0, 44, 44)];
+        [shareBtn setImage:[UIImage imageNamed:@"fenxiang"] forState:UIControlStateNormal];
+        [shareBtn addTarget:self action:@selector(addShare) forControlEvents:UIControlEventTouchUpInside];
+        [self.titleView addSubview:shareBtn];
+    }
 
-//    if (self.isTeamChannal == 2) {
-        [self dataSet];
-//    }
-    
+    [self dataSet];
 }
-
 #pragma mark -- 下载数据 －－－ 成功
 - (void)dataSet{
     MBProgressHUD *progress = [[MBProgressHUD alloc] initWithView:self.view];
@@ -210,45 +205,38 @@ static CGFloat ImageHeight  = 210.0;
         
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
             NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-            dict = [data objectForKey:@"activity"];
-            /**
-            if ([data objectForKey:@"power"]) {
-                if ([data objectForKey:@"power"]) {
-                    NSString *str = [data objectForKey:@"power"];
+            dict = [data objectForKey:@"teamMember"];
+            if ([dict objectForKey:@"power"]) {
+                if ([dict objectForKey:@"power"]) {
+                    NSString *str = [dict objectForKey:@"power"];
                     if ([str containsString:@"1001"]) {
                         [self createGroupBtn];
                     }
                 }
             }
-            */
-            [self.model setValuesForKeysWithDictionary:dict];
+            
+            [self.model setValuesForKeysWithDictionary:[data objectForKey:@"activity"]];
             [self.teamActibityNameTableView reloadData];
         }else{
             
         }
     }];
 }
-
-////有管理权限的用户在活动详情页面显示－－活动分组
-//- (void)createGroupBtn{
-////    NSUserDefaults *userDef = [NSUserDefaults standardUserDefaults];
-////    NSString *str = [userDef objectForKey:userID];
-////    if ([str rangeOfString:@"1001"].location != NSNotFound){
-//    UIButton *replaceBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-//    replaceBtn.frame = CGRectMake(screenWidth-94, 3, 54, 44);
-//    replaceBtn.titleLabel.font = [UIFont systemFontOfSize:FontSize_Normal];
-//    [replaceBtn setTitle:@"活动分组" forState:UIControlStateNormal];
-//    replaceBtn.titleLabel.font = [UIFont systemFontOfSize:13];
-//    [replaceBtn addTarget:self action:@selector(pushGroupCtrl:) forControlEvents:UIControlEventTouchUpInside];
-//    replaceBtn.tag = 520;
-//    [self.titleView addSubview:replaceBtn];
-////    }
-//}
+//有管理权限的用户在活动详情页面显示－－活动分组
+- (void)createGroupBtn{
+    UIButton *replaceBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    replaceBtn.frame = CGRectMake(screenWidth-94, 3, 54, 44);
+    replaceBtn.titleLabel.font = [UIFont systemFontOfSize:FontSize_Normal];
+    [replaceBtn setTitle:@"活动分组" forState:UIControlStateNormal];
+    replaceBtn.titleLabel.font = [UIFont systemFontOfSize:13];
+    [replaceBtn addTarget:self action:@selector(pushGroupCtrl:) forControlEvents:UIControlEventTouchUpInside];
+    replaceBtn.tag = 520;
+    [self.titleView addSubview:replaceBtn];
+}
 
 #pragma mark -分享
 - (void)addShare{
     if ([[NSUserDefaults standardUserDefaults]objectForKey:@"userId"]) {
-        //        self.ymData = (YMTextData *)[_tableDataSource objectAtIndex:indexRow];
         
         ShareAlert* alert = [[ShareAlert alloc]initMyAlert];
         
@@ -349,9 +337,7 @@ static CGFloat ImageHeight  = 210.0;
 }
 #pragma mark --添加活动头像
 -(void)SelectPhotoImage:(UIButton *)btn{
-    //    _photos = 10;
     UIAlertAction * act1 = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-        //        _photos = 1;
     }];
     //拍照：
     UIAlertAction * act2 = [UIAlertAction actionWithTitle:@"拍照" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
@@ -370,7 +356,6 @@ static CGFloat ImageHeight  = 210.0;
                 }
                 
                 [self.teamActibityNameTableView reloadData];
-                //                _photos = 1;
             }
         }];
     }];
@@ -483,6 +468,9 @@ static CGFloat ImageHeight  = 210.0;
         NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
         [userdef setObject:dict forKey:@"TeamActivityData"];
         [userdef synchronize];
+        [Helper alertViewWithTitle:@"活动保存成功！" withBlock:^(UIAlertController *alertView) {
+            [self.navigationController presentViewController:alertView animated:YES completion:nil];
+        }];
     }else if (btn.tag == 801){
         //发布活动
         [[JsonHttp jsonHttp]httpRequest:@"team/createTeamActivity" JsonKey:@"teamActivity" withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
@@ -536,14 +524,6 @@ static CGFloat ImageHeight  = 210.0;
             }];
         }];
     }
-}
-#pragma mark -- 活动发布成功后
-- (void)launchActivity{
-//    for (UIViewController *controller in self.navigationController.viewControllers) {
-//        if ([controller isKindOfClass:[JGTeamActivityViewController class]]) {
-//            [self.navigationController popToViewController:controller animated:YES];
-//        }
-//    }
 }
 #pragma mark -- tableView 代理
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
@@ -613,14 +593,11 @@ static CGFloat ImageHeight  = 210.0;
             costListCell.price.text = [NSString stringWithFormat:@"%td", self.model.subsidyPrice];
         }
         
-        //    [addressCell configModel:model];
         return costListCell;
     }
     return nil;
 }
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
-    //    JGTeamAcitivtyModel *model = [[JGTeamAcitivtyModel alloc]init];
-    //    model = self.dataArray[0];
     NSString *windowReuseIdentifier = @"SectionOneCell";
     if (section == 0) {
         UITableViewCell *launchImageActivityCell = nil;
@@ -668,16 +645,19 @@ static CGFloat ImageHeight  = 210.0;
 }
 #pragma mark -- 详情页面
 - (void)pushDetailSCtrl:(UIButton *)btn{
+    
     JGTeamDeatilWKwebViewController *WKCtrl = [[JGTeamDeatilWKwebViewController alloc]init];
-    WKCtrl.teamName = self.model.name;
-    WKCtrl.detailString = self.model.details;
+    WKCtrl.detailString = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/team/teamActivityDetails.html?key=%@", _model.timeKey];;
+    WKCtrl.teamName = @"活动详情";
     [self.navigationController pushViewController:WKCtrl animated:YES];
 }
 #pragma mark -- 查看已报名人列表
 - (void)getTeamActivitySignUpList:(UIButton *)btn{
-    JGTeamGroupViewController *teamGroupCtrl = [[JGTeamGroupViewController alloc]init];
-    teamGroupCtrl.teamActivityKey = [_model.timeKey integerValue];
-    [self.navigationController pushViewController:teamGroupCtrl animated:YES];
+    JGTeamDeatilWKwebViewController *WKCtrl = [[JGTeamDeatilWKwebViewController alloc]init];
+    //http://imgcache.dagolfla.com/share/team/group.html?key=1645
+    WKCtrl.detailString = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/team/group.html?key=%@", _model.timeKey];;
+    WKCtrl.teamName = @"报名人列表";
+    [self.navigationController pushViewController:WKCtrl animated:YES];
 }
 #pragma mark - Table View Delegate
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {

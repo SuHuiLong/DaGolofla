@@ -84,7 +84,6 @@
     
 //    NSUserDefaults *userDef = [NSUserDefaults standardUserDefaults];
     NSMutableDictionary *applyDict = [NSMutableDictionary dictionary];
-#warning--TeamKey
 //    [applyDict setObject:_teamKey forKey:@"teamKey"];//球队key
 //    [applyDict setObject:_activityKey forKey:@"activityKey"];//球队活动id
 //    [applyDict setObject:[userDef objectForKey:userID] forKey:@"userKey"];//报名用户key , 没有则是嘉宾

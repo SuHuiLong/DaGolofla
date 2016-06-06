@@ -85,7 +85,6 @@
         [self.dataArray removeAllObjects];
         
         NSArray *array = [data objectForKey:@"activityList"];
-//        NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
         
         for (NSDictionary *dict in array) {
             JGTeamAcitivtyModel *model = [[JGTeamAcitivtyModel alloc]init];
@@ -114,7 +113,29 @@
 - (void)launchActivityBtnClick:(UIButton *)btn{
     JGHLaunchActivityViewController * launchCtrl = [[JGHLaunchActivityViewController alloc]init];
     launchCtrl.teamKey = _timeKey;
+    NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
+    NSLog(@"%@", [userdef objectForKey:@"TeamActivityData"]);
+    NSDictionary *activityDict = [NSDictionary dictionary];
+    activityDict = [userdef objectForKey:@"TeamActivityData"];
+    if (activityDict) {
+        [Helper alertViewWithTitle:@"是否继续上次未完成的操作！" withBlockCancle:^{
+            NSLog(@"不继续，清除数据");
+            [userdef removeObjectForKey:@"TeamActivityData"];
+            [userdef synchronize];
+            [self.navigationController pushViewController:launchCtrl animated:YES];
+        } withBlockSure:^{
+            NSMutableDictionary *dataDict = [userdef objectForKey:@"TeamActivityData"];
+            JGTeamAcitivtyModel *model = [[JGTeamAcitivtyModel alloc]init];
+            [model setValuesForKeysWithDictionary:dataDict];
+            launchCtrl.model = model;
+            [self.navigationController pushViewController:launchCtrl animated:YES];
+        } withBlock:^(UIAlertController *alertView) {
+            [self.navigationController presentViewController:alertView animated:YES completion:nil];
+        }];
+    }
+    
     [self.navigationController pushViewController:launchCtrl animated:YES];
+
 }
 
 #pragma mark -- 创建TableView
@@ -262,7 +283,6 @@
               }
         }
      }];
-    
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

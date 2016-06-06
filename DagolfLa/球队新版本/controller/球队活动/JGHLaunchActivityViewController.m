@@ -37,8 +37,6 @@ static CGFloat ImageHeight  = 210.0;
 
 @property (nonatomic, strong)NSMutableDictionary *dataDict;
 
-@property (nonatomic, strong)JGTeamAcitivtyModel *model;
-
 @property (nonatomic, strong)UIImage *headerImage;
 
 @property (nonnull, strong)UIButton *headPortraitBtn;//头像
@@ -48,6 +46,7 @@ static CGFloat ImageHeight  = 210.0;
 @property (nonatomic, strong)UIView *titleView;//顶部导航
 
 @property (nonatomic, strong)UIButton *addressBtn;//添加地址
+
 
 @end
 
@@ -97,9 +96,8 @@ static CGFloat ImageHeight  = 210.0;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.navigationController.navigationBar.hidden = YES;
+    self.view.backgroundColor = [UIColor colorWithHexString:TB_BG_Color];
     self.automaticallyAdjustsScrollViewInsets = NO;
-    self.view.backgroundColor = [UIColor colorWithHexString:@"#EAEAEB"];
     
     _photos = 1;
     //返回按钮
@@ -128,6 +126,7 @@ static CGFloat ImageHeight  = 210.0;
     self.titleField.delegate = self;
     self.titleField.textAlignment = NSTextAlignmentCenter;
     self.titleField.font = [UIFont systemFontOfSize:15];
+    
     //头像
     self.headPortraitBtn = [[UIButton alloc]initWithFrame:CGRectMake(10, 135, 65, 65)];
     [self.headPortraitBtn setImage:[UIImage imageNamed:HEADERRImage] forState:UIControlStateNormal];
@@ -147,10 +146,15 @@ static CGFloat ImageHeight  = 210.0;
     [self.addressBtn addTarget:self action:@selector(replaceWithPicture:) forControlEvents:UIControlEventTouchUpInside];
     [self.imgProfile addSubview:self.addressBtn];
     
+    if (_model.name != nil) {
+        self.titleField.text = _model.name;
+        [self.addressBtn setTitle:_model.ballName forState:UIControlStateNormal];
+    }
     _titleArray = @[@[], @[@"活动开始时间", @"活动结束时间", @"报名截止时间"], @[@"费用说明", @"人员限制", @"活动说明"], @[@"联系电话"]];
     
     [self createPreviewBtn];
 }
+
 - (void)replaceWithPicture:(UIButton *)Btn{
     //球场列表
     BallParkViewController *ballCtrl = [[BallParkViewController alloc]init];

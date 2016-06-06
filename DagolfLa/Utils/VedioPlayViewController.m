@@ -77,13 +77,13 @@ static NSString *const NotificationName = @"AFNetworkReachabilityStatusReachable
 
 #pragma mark ---  分享
 - (void)initItemsBtnClick:(UIButton *)btn{
-//    if (self.delegate) {
-//        [self.delegate closeVideo];
-//    }
-//    
-//    [self dismissViewControllerAnimated:YES completion:^{
-//        
-//    }];
+    if (self.delegate) {
+        [self.delegate closeVideo];
+    }
+    
+    [self dismissViewControllerAnimated:YES completion:^{
+        
+    }];
 }
 - (void)_initRightItems
 {
@@ -143,7 +143,7 @@ static NSString *const NotificationName = @"AFNetworkReachabilityStatusReachable
     //create a player
     
     self.navigationController.navigationBarHidden = NO;
-    self.moviePlayer = [[ALMoviePlayerController alloc] initWithFrame:CGRectMake(0, (screenHeight-64)/3, screenWidth, (screenHeight-64)/3)];
+    self.moviePlayer = [[ALMoviePlayerController alloc] initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight-64)];
     self.moviePlayer.view.alpha = 0.f;
     self.moviePlayer.delegate = self; //IMPORTANT!
     
@@ -174,7 +174,7 @@ static NSString *const NotificationName = @"AFNetworkReachabilityStatusReachable
 #pragma mark -- 设置默认的 frame
 - (void)configureViewForOrientation:(UIInterfaceOrientation)orientation {
     //设置默认的frame
-    self.defaultFrame = CGRectMake(0, (screenHeight-64)/3, self.moviePlayer.view.frame.size.width, (screenHeight-64)/3);
+    self.defaultFrame = CGRectMake(0, 0, self.moviePlayer.view.frame.size.width, screenHeight-64);
     if (self.moviePlayer.isFullscreen){
         return;
     }
