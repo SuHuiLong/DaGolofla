@@ -33,32 +33,17 @@
 @property (weak, nonatomic) id <JGGroupdetailsCollectionViewCellDelegate> delegate;
 
 
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *sction1Left;
 
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *section1Right;
+@property (strong, nonatomic) UILabel *lable1;
 
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *section2Left;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *section2Right;
+@property (strong, nonatomic) UILabel *lable2;
 
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *section3Left;
+@property (strong, nonatomic) UILabel *lable3;
 
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *section3Right;
-
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *section4Left;
-
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *section4Right;
+@property (strong, nonatomic) UILabel *lable4;
 
 
-@property (weak, nonatomic) IBOutlet UILabel *lable1;
-
-@property (weak, nonatomic) IBOutlet UILabel *lable2;
-
-@property (weak, nonatomic) IBOutlet UILabel *lable3;
-
-@property (weak, nonatomic) IBOutlet UILabel *lable4;
-
-
-- (void)configJGHPlayersModel:(JGHPlayersModel *)model andSortIndex:(NSInteger)sortIndex;
+//- (void)configJGHPlayersModel:(JGHPlayersModel *)model andSortIndex:(NSInteger)sortIndex;
 
 - (void)configCellWithModelArray:(NSMutableArray *)modelArray;
 

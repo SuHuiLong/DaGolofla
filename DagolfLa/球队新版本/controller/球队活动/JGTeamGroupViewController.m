@@ -171,13 +171,7 @@ static NSString *const JGGroupdetailsCollectionViewCellIdentifier = @"JGGroupdet
         JGGroupdetailsCollectionViewCell *groupCell = [collectionView dequeueReusableCellWithReuseIdentifier:JGGroupdetailsCollectionViewCellIdentifier forIndexPath:indexPath];
         groupCell.delegate = self; 
         groupCell.tag = indexPath.item;
-//        NSLog(@"%ld", (long)indexPath.item);
-//        NSLog(@"%ld", (long)groupCell.tag);
-//        groupCell.sction1.tag = indexPath.item*1000 + indexPath.;
-//        JGHPlayersModel *model = [[JGHPlayersModel alloc]init];
         if (_alreadyDataArray.count !=0) {
-//            model = _alreadyDataArray[indexPath.item];
-//            [groupCell configJGHPlayersModel:model andSortIndex:indexPath.item];
             [groupCell configCellWithModelArray:_alreadyDataArray];
         }
         
@@ -186,10 +180,8 @@ static NSString *const JGGroupdetailsCollectionViewCellIdentifier = @"JGGroupdet
 }
 #pragma mark -- 点击头像图片的代理方法JGGroupdetailsCollectionViewCellDelegate
 - (void)didSelectHeaderImage:(UIButton *)btn JGGroupCell:(JGGroupdetailsCollectionViewCell *)cell{
-    NSUserDefaults *userDef = [NSUserDefaults standardUserDefaults];
-#warning 点击第一个分组按钮崩溃
-    NSString *str = [userDef objectForKey:userID];
-    if ([str rangeOfString:@"1001"].location != NSNotFound) {
+
+    if ([_power rangeOfString:@"1001"].location != NSNotFound) {
         //管理员 -- 进入球队列表页码
         JGHTeamMembersViewController *teamMemberCtrl = [[JGHTeamMembersViewController alloc]init];
         NSMutableArray *listArray = [NSMutableArray arrayWithArray:self.alreadyDataArray];
@@ -203,12 +195,14 @@ static NSString *const JGGroupdetailsCollectionViewCellIdentifier = @"JGGroupdet
         // 老的球队活动报名人timeKey
         //获取老球员
         for (JGHPlayersModel *model in self.alreadyDataArray) {
+            NSLog(@"%ld", (long)cell.tag);
+            NSLog(@"%ld", (long)model.groupIndex);
             if (model.groupIndex == cell.tag) {
                 if (model.sortIndex == btn.tag) {
                     teamMemberCtrl.oldSignUpKey = model.timeKey;
                 }
             }else{
-                teamMemberCtrl.oldSignUpKey = 0;
+                teamMemberCtrl.oldSignUpKey = -1;
             }    
         }
         
@@ -219,8 +213,6 @@ static NSString *const JGGroupdetailsCollectionViewCellIdentifier = @"JGGroupdet
         }];
         UIAlertAction *commitAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-#warning TeamMember
-//            NSLog(@"%@", [userDef objectForKey:TeamMember]);
             [dict setObject:@0 forKey:@"oldSignUpKey"];// 老的球队活动报名人timeKey
             [dict setObject:[NSString stringWithFormat:@"%td", _newTeamKey] forKey:@"newSignUpKey"]; // 新的球队活动报名人timeKey
             [dict setObject:[NSString stringWithFormat:@"%ld", (long)cell.tag] forKey:@"groupIndex"]; // 组号
@@ -242,14 +234,7 @@ static NSString *const JGGroupdetailsCollectionViewCellIdentifier = @"JGGroupdet
     } completionBlock:^(id data) {
         NSLog(@"data === %@", data);
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
-//            for (int i=0; i<_teamGroupAllDataArray.count; i++) {
-//                JGHPlayersModel *model = _teamGroupAllDataArray[i];
-//                if ((long)model.timeKey == (long)[[dict objectForKey:@"newSignUpKey"] integerValue]) {
-//                    [self.teamGroupAllDataArray removeObject:model];
-//                    [self.alreadyDataArray addObject:model];
-//                }
-//            }
-            
+            // 重新加载数据
             [self loadData];
             
             UIAlertAction *commitAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {

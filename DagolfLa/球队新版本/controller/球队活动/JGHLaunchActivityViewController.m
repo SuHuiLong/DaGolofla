@@ -98,7 +98,7 @@ static CGFloat ImageHeight  = 210.0;
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationController.navigationBar.hidden = YES;
-    self.automaticallyAdjustsScrollViewInsets=NO;
+    self.automaticallyAdjustsScrollViewInsets = NO;
     self.view.backgroundColor = [UIColor colorWithHexString:@"#EAEAEB"];
     
     _photos = 1;
@@ -205,6 +205,18 @@ static CGFloat ImageHeight  = 210.0;
     
     if (self.model.signUpEndTime == nil) {
         [self alertviewString:@"活动报名截止时间不能为空！"];
+        return;
+    }
+    
+    if ([self.model.beginDate compare:self.model.endDate] > 0) {
+        NSLog(@"333");
+        [self alertviewString:@"活动开始时间不能大于结束时间"];
+        return;
+    }
+    
+    if ([self.model.signUpEndTime compare:self.model.endDate] > 0) {
+        NSLog(@"333");
+        [self alertviewString:@"活动报名截止时间不能大于活动结束时间"];
         return;
     }
 

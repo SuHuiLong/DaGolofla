@@ -35,6 +35,15 @@
 #pragma mark -- 保存方法
 - (IBAction)saveBtn:(UIButton *)sender {
     [self.view endEditing:YES];
+    
+    if (self.contentText.text.length >220) {
+        [Helper alertViewWithTitle:@"输入内容超出限制！" withBlock:^(UIAlertController *alertView) {
+            [self.navigationController presentViewController:alertView animated:YES completion:nil];
+        }];
+        NSLog(@"%ld", (unsigned long)_contentText.text.length);
+        return;
+    }
+    
     self.contentTextString = _contentText.text;
     if ([self.delegate respondsToSelector:@selector(didSelectSaveBtnClick:)]) {
         [self.navigationController popViewControllerAnimated:YES];
