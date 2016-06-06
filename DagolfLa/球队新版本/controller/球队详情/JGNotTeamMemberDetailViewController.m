@@ -168,6 +168,9 @@ static CGFloat ImageHeight  = 210.0;
         //更换头像
         // 球队详情
         JGTeamDeatilWKwebViewController *wkVC = [[JGTeamDeatilWKwebViewController alloc] init];
+        
+        
+        
         wkVC.detailString = [self.detailDic objectForKey:@"details"];
         wkVC.teamName = [self.detailDic objectForKey:@"name"];
         [self.navigationController pushViewController:wkVC animated:YES];
@@ -379,7 +382,7 @@ static CGFloat ImageHeight  = 210.0;
        
     }else if (indexPath.section == 3){
         JGTeamDeatilWKwebViewController *wkVC = [[JGTeamDeatilWKwebViewController alloc] init];
-        wkVC.detailString = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/teamDetails/teamDetails.html?key=%@", [self.detailDic objectForKey:@"timeKey"]];;
+        wkVC.detailString = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/team/teamDetails.html?key=%@", [self.detailDic objectForKey:@"timeKey"]];;
         wkVC.teamName = [self.detailDic objectForKey:@"name"];
         [self.navigationController pushViewController:wkVC animated:YES];
     }
