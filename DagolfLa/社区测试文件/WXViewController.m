@@ -1125,12 +1125,7 @@
                 [_tableDataSource[inputTag] setValue:[NSNumber numberWithInteger:a] forKey:@"commentCount"];
                 
                 [self.mainTable reloadData];
-                
-                //                NSIndexPath *indexPath_1=[NSIndexPath indexPathForRow:inputTag inSection:0];
-                //                NSArray *indexArray=[NSArray arrayWithObject:indexPath_1];
-                //                [mainTable reloadRowsAtIndexPaths:indexArray withRowAnimation:UITableViewRowAnimationAutomatic];
-                
-                
+
                 
             }else{
                 [Helper alertViewNoHaveCancleWithTitle:@"发布评论失败" withBlock:^(UIAlertController *alertView) {
@@ -1158,8 +1153,6 @@
         [dict setObject:b.replyUser forKey:@"replyUserName"];
         [[PostDataRequest sharedInstance] postDataRequest:@"userComment/saveNew.do" parameter:dict success:^(id respondsData) {
             NSDictionary* dataDic = [NSJSONSerialization JSONObjectWithData:respondsData options:NSJSONReadingMutableContainers error:nil];
-            
-            
             
             if ([[dataDic objectForKey:@"success"] integerValue] == 1) {
                 
