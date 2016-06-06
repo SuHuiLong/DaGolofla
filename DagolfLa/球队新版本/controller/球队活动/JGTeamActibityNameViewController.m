@@ -698,12 +698,6 @@ static CGFloat ImageHeight  = 210.0;
 #pragma mark -- 查看已报名人列表
 - (void)getTeamActivitySignUpList:(UIButton *)btn{
     JGTeamGroupViewController *teamGroupCtrl = [[JGTeamGroupViewController alloc]init];
-//    if (_teamActivityKey != 0) {
-//        teamMemberCtrl.activityKey = self.teamActivityKey; //活动key
-//    }else{
-//        teamMemberCtrl.activityKey = self.myActivityKey; //活动key
-//    }
-//    
     teamGroupCtrl.teamActivityKey = [_model.timeKey integerValue];
     [self.navigationController pushViewController:teamGroupCtrl animated:YES];
 }
