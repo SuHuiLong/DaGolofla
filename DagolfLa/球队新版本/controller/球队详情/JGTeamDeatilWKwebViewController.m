@@ -24,14 +24,18 @@
     self.webView.UIDelegate = self;
     self.webView.navigationDelegate = self;
     self.webView.allowsBackForwardNavigationGestures =YES;
+    [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.detailString]]];
+    
+    
 //    [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"http://imgcache.dagolfla.com/html/index.html"]]];
-    if (self.detailString) {
-        [self.webView loadHTMLString:self.detailString baseURL:nil];
-    }else{
-        [Helper alertViewNoHaveCancleWithTitle:@"球队详情页面为空" withBlock:^(UIAlertController *alertView) {
-            [self.navigationController presentViewController:alertView animated:YES completion:nil];
-        }];
-    }
+    
+//    if (self.detailString) {
+//        [self.webView loadHTMLString:self.detailString baseURL:nil];
+//    }else{
+//        [Helper alertViewNoHaveCancleWithTitle:@"球队暂无简介" withBlock:^(UIAlertController *alertView) {
+//            [self.navigationController presentViewController:alertView animated:YES completion:nil];
+//        }];
+//    }
     
     
     
