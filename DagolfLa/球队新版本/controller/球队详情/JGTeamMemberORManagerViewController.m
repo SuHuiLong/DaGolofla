@@ -198,7 +198,7 @@ static CGFloat ImageHeight  = 210.0;
     detailBtn.titleLabel.font = [UIFont systemFontOfSize:15 * screenWidth / 320];
     detailBtn.tag = 526;
     [detailBtn addTarget:self action:@selector(initItemsBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-    [self.titleView addSubview:detailBtn];
+//    [self.titleView addSubview:detailBtn];
     //输入框
     self.titleField = [[UILabel alloc]initWithFrame:CGRectMake(64 * screenWidth / 320, 7 * screenWidth / 320, screenWidth - 128, 30 * screenWidth / 320)];
     self.titleField.textColor = [UIColor whiteColor];
@@ -564,9 +564,11 @@ static CGFloat ImageHeight  = 210.0;
                 break;
             case 2:
             {
-                JGTeamInfoViewController *infoVc = [[JGTeamInfoViewController alloc] init];
-                infoVc.string = [self.detailDic objectForKey:@"info"];
-                [self.navigationController pushViewController:infoVc animated:YES];
+                JGTeamDeatilWKwebViewController *wkVC = [[JGTeamDeatilWKwebViewController alloc] init];
+                
+                wkVC.detailString = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/teamDetails/teamDetails.html?key=%@", [self.detailDic objectForKey:@"timeKey"]];;
+                wkVC.teamName = [self.detailDic objectForKey:@"name"];
+                [self.navigationController pushViewController:wkVC animated:YES];
             }
                 break;
             case 3:

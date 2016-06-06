@@ -91,7 +91,7 @@
             _page++;
             [_tableView reloadData];
         }else {
-            [Helper alertViewWithTitle:@"失败" withBlock:^(UIAlertController *alertView) {
+            [Helper alertViewWithTitle:[NSString stringWithFormat:@"%@",[data objectForKey:@"packResultMsg"]] withBlock:^(UIAlertController *alertView) {
                 [self presentViewController:alertView animated:YES completion:nil];
             }];
         }

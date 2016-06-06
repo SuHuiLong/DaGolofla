@@ -133,7 +133,7 @@ static CGFloat ImageHeight  = 210.0;
     replaceBtn.titleLabel.font = [UIFont systemFontOfSize:13];
     replaceBtn.tag = 520;
     [replaceBtn addTarget:self action:@selector(initItemsBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-    [self.titleView addSubview:replaceBtn];
+//    [self.titleView addSubview:replaceBtn];
     //输入框
     self.titleField = [[UILabel alloc]initWithFrame:CGRectMake(64, 7, screenWidth - 128, 30)];
     self.titleField.textColor = [UIColor whiteColor];
@@ -174,6 +174,7 @@ static CGFloat ImageHeight  = 210.0;
 //        [self didSelectPhotoImage:btn];
     }
 }
+
 #pragma mark -- 预览
 - (void)createPreviewBtn{
     UIButton *previewBtn = [[UIButton alloc]initWithFrame:CGRectMake(41 * screenWidth / 320, screenHeight -44, screenWidth - 40, 44)];
@@ -270,8 +271,8 @@ static CGFloat ImageHeight  = 210.0;
     if (indexPath.section == 0) {
         return ImageHeight -10;
     }else if (indexPath.section == 3){
-        return [self calculationLabelHeight:[self.detailDic objectForKey:@"info"]] + 40 * screenWidth / 320;
-        
+//        return [self calculationLabelHeight:[self.detailDic objectForKey:@"info"]] + 40 * screenWidth / 320;
+        return 40 * screenWidth / 320;
     }else{
         return 40 * screenWidth / 320;
     }
@@ -304,13 +305,21 @@ static CGFloat ImageHeight  = 210.0;
         
         return launchImageActivityCell;
     }else if (indexPath.section == 3){
-        JGDisplayInfoTableViewCell *contactCell = [tableView dequeueReusableCellWithIdentifier:@"Display"];
-        contactCell.promptLB.text = @"球队简介";
-        contactCell.promptLB.frame = CGRectMake(10 * screenWidth / 320, 0, 100 * screenWidth / 320, 30 * screenWidth / 320);
-        contactCell.contentLB.lineBreakMode = NSLineBreakByWordWrapping;
-        contactCell.contentLB.text = [self.detailDic objectForKey:@"info"];
-        contactCell.contentLB.frame = CGRectMake(10, 35  * screenWidth / 320, screenWidth - 20  * screenWidth / 320, [self calculationLabelHeight:[self.detailDic objectForKey:@"info"]]);
-        return contactCell;
+        
+        JGImageAndLabelAndLabelTableViewCell *launchActivityCell = [tableView dequeueReusableCellWithIdentifier:@"iamgeVCell" forIndexPath:indexPath];
+        launchActivityCell.selectionStyle = UITableViewCellSelectionStyleNone;
+        launchActivityCell.promptLB.text = @"球队简介";
+        launchActivityCell.imageV.image = [UIImage imageNamed:@"qdjj"];
+        launchActivityCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        return launchActivityCell;
+        
+//        JGDisplayInfoTableViewCell *contactCell = [tableView dequeueReusableCellWithIdentifier:@"Display"];
+//        contactCell.promptLB.text = @"球队简介";
+//        contactCell.promptLB.frame = CGRectMake(10 * screenWidth / 320, 0, 100 * screenWidth / 320, 30 * screenWidth / 320);
+//        contactCell.contentLB.lineBreakMode = NSLineBreakByWordWrapping;
+//        contactCell.contentLB.text = [self.detailDic objectForKey:@"info"];
+//        contactCell.contentLB.frame = CGRectMake(10, 35  * screenWidth / 320, screenWidth - 20  * screenWidth / 320, [self calculationLabelHeight:[self.detailDic objectForKey:@"info"]]);
+//        return contactCell;
     }else if (indexPath.section == 1){
         
         JGLableAndLableTableViewCell *launchActivityCell = [tableView dequeueReusableCellWithIdentifier:@"lbVSlb" forIndexPath:indexPath];
@@ -368,6 +377,11 @@ static CGFloat ImageHeight  = 210.0;
         }
         
        
+    }else if (indexPath.section == 3){
+        JGTeamDeatilWKwebViewController *wkVC = [[JGTeamDeatilWKwebViewController alloc] init];
+        wkVC.detailString = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/teamDetails/teamDetails.html?key=%@", [self.detailDic objectForKey:@"timeKey"]];;
+        wkVC.teamName = [self.detailDic objectForKey:@"name"];
+        [self.navigationController pushViewController:wkVC animated:YES];
     }
     
     [self.launchActivityTableView reloadData];

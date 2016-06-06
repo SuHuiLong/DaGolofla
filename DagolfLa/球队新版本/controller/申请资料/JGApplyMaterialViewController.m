@@ -342,8 +342,12 @@
         
         
         [Helper alertViewNoHaveCancleWithTitle:@"提交成功" withBlock:^(UIAlertController *alertView) {
+            [self.navigationController popViewControllerAnimated:YES];
             [self.navigationController presentViewController:alertView animated:YES completion:nil];
+
         }];
+        
+        
     }else{
         [Helper alertViewNoHaveCancleWithTitle:@"请完善信息" withBlock:^(UIAlertController *alertView) {
             [self.navigationController presentViewController:alertView animated:YES completion:nil];

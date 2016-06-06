@@ -12,5 +12,6 @@
 
 @property (nonatomic, copy) NSString *teamName;
 @property (nonatomic, copy) NSString *detailString;
+@property (nonatomic, assign) NSInteger teamKey;
 
 @end
