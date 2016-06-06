@@ -93,7 +93,7 @@
             
             strongSelf.webView = [[WKWebView alloc] initWithFrame:strongSelf.view.bounds];
             [strongSelf.webView evaluateJavaScript:@"navigator.userAgent" completionHandler:^(id result, NSError *error) {
-                NSLog(@"%@", result);
+                NSLog(@"%@", _urlRequest);
                 [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:_urlRequest]]];
             }];
             
@@ -131,7 +131,7 @@
 
 - (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler {
     NSString *url = [navigationAction.request.URL.absoluteString stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    NSLog(@"111111          %@  \n",url);
+
     
     decisionHandler(WKNavigationActionPolicyAllow);
     

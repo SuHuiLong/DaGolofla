@@ -92,12 +92,14 @@
             _imageView.backgroundColor = [UIColor orangeColor];
             
             if (i == 0) {
-                [_imageView sd_setImageWithURL:[Helper imageUrl:dataArray[dataArray.count - 1]] placeholderImage:[UIImage imageNamed:@"bannerS.jpg"]];
+//                NSURL *imageUrl = [NSURL URLWithString:[NSString stringWithFormat:@"http://imgcache.dagolfla.com/adver/%@.jpg",dataArray[i-1]]];
+
+                [_imageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://imgcache.dagolfla.com/adver/%@.jpg",dataArray[dataArray.count - 1]]] placeholderImage:[UIImage imageNamed:@"bannerS.jpg"]];
                 
             }else if (i == dataArray.count+1) {
-                [_imageView sd_setImageWithURL:[Helper imageUrl:dataArray[0]] placeholderImage:[UIImage imageNamed:@"bannerS.jpg"]];
+                [_imageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://imgcache.dagolfla.com/adver/%@.jpg",dataArray[0]]] placeholderImage:[UIImage imageNamed:@"bannerS.jpg"]];
             } else {
-                [_imageView sd_setImageWithURL:[Helper imageUrl:dataArray[i-1]] placeholderImage:[UIImage imageNamed:@"bannerS.jpg"]];
+                [_imageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://imgcache.dagolfla.com/adver/%@.jpg",dataArray[i-1]]] placeholderImage:[UIImage imageNamed:@"bannerS.jpg"]];
             }
             [_scrollView addSubview:_imageView];
             

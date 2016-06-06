@@ -270,8 +270,8 @@
             [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
             JGLNewShopDetailViewController* shoVc = [[JGLNewShopDetailViewController alloc]init];
             NSArray *array = [url componentsSeparatedByString:@"url="]; //从字符A中分隔成2个元素的数组
-            NSLog(@"array:%@",array); //结果是adfsfsfs和dfsdf
-            shoVc.urlRequest = array[1];        
+            NSArray* array1 = [array[1] componentsSeparatedByString:@"\n"];
+            shoVc.urlRequest = array1[0];
             [self.navigationController pushViewController:shoVc animated:YES];
             
         }

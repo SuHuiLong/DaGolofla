@@ -205,18 +205,19 @@ static CGFloat ImageHeight  = 210.0;
         }];
     } completionBlock:^(id data) {
         
-            [Helper alertViewNoHaveCancleWithTitle:@"保存成功" withBlock:^(UIAlertController *alertView) {
-                [self.navigationController presentViewController:alertView animated:YES completion:nil];
-            }];
-
-            NSString *headUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/team/%@.jpg", [self.detailDic objectForKey:@"timeKey"]];
-            
-            NSString *bgUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/team/%@_background.jpg", [self.detailDic objectForKey:@"timeKey"]];
-            
-            [[SDImageCache sharedImageCache]removeImageForKey:bgUrl fromDisk:YES withCompletion:^{
-            }];
-            [[SDImageCache sharedImageCache]removeImageForKey:headUrl fromDisk:YES withCompletion:^{
-            }];
+        [Helper alertViewNoHaveCancleWithTitle:@"保存成功" withBlock:^(UIAlertController *alertView) {
+            [self.navigationController presentViewController:alertView animated:YES completion:nil];
+            [self.navigationController popViewControllerAnimated:YES];
+        }];
+        
+        NSString *headUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/team/%@.jpg", [self.detailDic objectForKey:@"timeKey"]];
+        
+        NSString *bgUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/team/%@_background.jpg", [self.detailDic objectForKey:@"timeKey"]];
+        
+        [[SDImageCache sharedImageCache]removeImageForKey:bgUrl fromDisk:YES withCompletion:^{
+        }];
+        [[SDImageCache sharedImageCache]removeImageForKey:headUrl fromDisk:YES withCompletion:^{
+        }];
         
     }];
 }

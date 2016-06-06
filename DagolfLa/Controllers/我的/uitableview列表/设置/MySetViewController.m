@@ -205,6 +205,11 @@
         [user removeObjectForKey:@"uid"];
         [user removeObjectForKey:@"isWeChat"];
         [user removeObjectForKey:@"rongTk"];
+        NSUserDefaults * defs = [NSUserDefaults standardUserDefaults];
+        NSDictionary * dict = [defs dictionaryRepresentation];
+        for (id key in dict) {
+            [defs removeObjectForKey:key];
+        }
         [user synchronize];
 
         [self.tabBarController.tabBar hideBadgeOnItemIndex:3];
