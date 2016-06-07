@@ -91,7 +91,7 @@
     self.topScrollView.userInteractionEnabled = YES;
     
     //    [self createScrollView];
-//    [self creatCro];
+    [self creatCro];
     [self.view addSubview:self.topScrollView];
     
     [self.topScrollView addSubview:backBtn];
