@@ -73,7 +73,7 @@
 }
 
 
-- (void)config:(NSArray *)dataArray data:(NSArray *)url title:(NSArray *)name;
+- (void)config:(NSArray *)dataArray data:(NSArray *)url title:(NSArray *)name ts:(NSArray *)ts;
 {
     _modelArray = dataArray;
     _urlArray = url;
@@ -93,12 +93,12 @@
             if (i == 0) {
 //                NSURL *imageUrl = [NSURL URLWithString:[NSString stringWithFormat:@"http://imgcache.dagolfla.com/adver/%@.jpg",dataArray[i-1]]];
 
-                [_imageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://imgcache.dagolfla.com/adver/%@.jpg",dataArray[dataArray.count - 1]]] placeholderImage:[UIImage imageNamed:@"bannerS.jpg"]];
+                [_imageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://imgcache.dagolfla.com/adver/%@.jpg?ts=%@",dataArray[dataArray.count - 1], ts[ts.count - 1]]] placeholderImage:[UIImage imageNamed:@"bannerS.jpg"]];
                 
             }else if (i == dataArray.count+1) {
-                [_imageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://imgcache.dagolfla.com/adver/%@.jpg",dataArray[0]]] placeholderImage:[UIImage imageNamed:@"bannerS.jpg"]];
+                [_imageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://imgcache.dagolfla.com/adver/%@.jpg?ts=%@",dataArray[0], ts[0]]] placeholderImage:[UIImage imageNamed:@"bannerS.jpg"]];
             } else {
-                [_imageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://imgcache.dagolfla.com/adver/%@.jpg",dataArray[i-1]]] placeholderImage:[UIImage imageNamed:@"bannerS.jpg"]];
+                [_imageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://imgcache.dagolfla.com/adver/%@.jpg?ts=%@",dataArray[i-1], ts[i - 1]]] placeholderImage:[UIImage imageNamed:@"bannerS.jpg"]];
             }
             [_scrollView addSubview:_imageView];
             

@@ -106,7 +106,10 @@
     [btn addTarget:self action:@selector(launchActivityBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     btn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
     UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithCustomView:btn];
-    self.navigationItem.rightBarButtonItem = rightItem;
+    
+    if (self.state == 1) {
+        self.navigationItem.rightBarButtonItem = rightItem;
+    }
 }
 
 #pragma mark -- 发布球队活动
@@ -254,6 +257,7 @@
     JGTeamAcitivtyModel *model = [[JGTeamAcitivtyModel alloc]init];
     model = self.dataArray[indexPath.section];
     activityNameCtrl.teamKey = [model.timeKey integerValue];
+    activityNameCtrl.model = model;
     [self.navigationController pushViewController:activityNameCtrl animated:YES];
     
     /**

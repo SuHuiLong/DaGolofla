@@ -317,7 +317,7 @@
     
     NSString *datestring = [NSString stringWithFormat:@"%@", dateStr];
     NSDateFormatter * dm = [[NSDateFormatter alloc]init];
-    [dm setDateFormat:@"yyyy-MM-dd"];
+    [dm setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
     NSDate * newdate = [dm dateFromString:datestring];
     return [newdate timeIntervalSince1970];
 }

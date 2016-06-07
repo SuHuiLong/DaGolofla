@@ -23,5 +23,7 @@
 
 @property (assign, nonatomic)NSInteger isTeamChannal;
 
+//用户在球队的真实姓名
+@property (nonatomic, strong)NSString *userName;
 
 @end

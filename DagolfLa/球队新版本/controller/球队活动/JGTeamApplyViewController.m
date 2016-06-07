@@ -98,7 +98,13 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
         
         [applyDict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:userID] forKey:@"userKey"];//报名用户key , 没有则是嘉宾
         
-        [applyDict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"userName"] forKey:@"name"];//姓名
+        //先判断是否存在球队真是姓名，否则给用户名
+        if (self.userName == nil) {
+            [applyDict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"userName"] forKey:@"name"];//姓名
+        }else{
+            [applyDict setObject:self.userName forKey:@"name"];//姓名
+        }
+        
         [applyDict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"mobile"] forKey:@"mobile"];//手机号
         [applyDict setObject:@"1" forKey:@"isOnlinePay"];//是否线上付款 1-线上
         [applyDict setObject:@0 forKey:@"signUpInfoKey"];//报名信息的timeKey

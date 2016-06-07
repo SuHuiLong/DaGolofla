@@ -157,26 +157,28 @@
             NSMutableArray* arrayIcon = [[NSMutableArray alloc]init];
             NSMutableArray* arrayUrl = [[NSMutableArray alloc]init];
             NSMutableArray* arrayTitle = [[NSMutableArray alloc]init];
+            NSMutableArray* arrayTs = [[NSMutableArray alloc]init];
             for (NSDictionary *dataDict in [data objectForKey:@"advList"]) {
                 
                 [arrayIcon addObject: [dataDict objectForKey:@"timeKey"]];
                 [arrayUrl addObject: [dataDict objectForKey:@"linkaddr"]];
                 [arrayTitle addObject: [dataDict objectForKey:@"title"]];
-
+                NSLog(@"%@", [dataDict objectForKey:@"ts"]);
+                NSLog(@"%f", [Helper stringConversionToDate:[dataDict objectForKey:@"ts"]]);
+                [arrayTs addObject:@([Helper stringConversionToDate:[dataDict objectForKey:@"ts"]])];
             }
             
-            if (arrayIcon.count != 0) {
-                [self.topScrollView config:arrayIcon data:arrayUrl title:arrayTitle];
+            if ([arrayIcon count] != 0) {
+                
+                [self.topScrollView config:arrayIcon data:arrayUrl title:arrayTitle ts:arrayTs];
                 self.topScrollView.delegate = self;
                 [self.topScrollView setClick:^(UIViewController *vc) {
                     [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
                     [self.navigationController pushViewController:vc animated:YES];
                 }];
             }
-            
-        }
 
-        
+        }
         
     }];
 
@@ -185,44 +187,41 @@
 
 
 //创建首页页面滚动视图
--(void)createScrollView
-{
-    [self creatCro];
-    //    NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
-    [[PostDataRequest sharedInstance] postDataRequest:@"scroll/queryAll.do" parameter:@{@"scrollClass":@0} success:^(id respondsData) {
-        
-        NSDictionary* dict = [NSJSONSerialization JSONObjectWithData:respondsData options:NSJSONReadingMutableContainers error:nil];
-        if ([[dict objectForKey:@"success"] integerValue] == 1) {
-            
-            NSMutableArray* arrayIcon = [[NSMutableArray alloc]init];
-            NSMutableArray* arrayUrl = [[NSMutableArray alloc]init];
-            NSMutableArray* arrayTitle = [[NSMutableArray alloc]init];
-            for (NSDictionary *dataDict in [dict objectForKey:@"rows"]) {
-                ////NSLog(@"%@",dataDict);
-                ChangePicModel *model = [[ChangePicModel alloc] init];
-                [model setValuesForKeysWithDictionary:dataDict];
-                [self.scrillViewArray addObject:model];
-                [arrayIcon addObject:model.pic];
-                [arrayUrl addObject:model.nexturl];
-                [arrayTitle addObject:model.title];
-            }
-            //            //NSLog(@"%@",arrayIcon[0]);
-            if (arrayIcon.count != 0) {
-                [self.topScrollView config:arrayIcon data:arrayUrl title:arrayTitle];
-                self.topScrollView.delegate = self;
-                [self.topScrollView setClick:^(UIViewController *vc) {
-                    [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
-                    [self.navigationController pushViewController:vc animated:YES];
-                }];
-            }
-            
-            
-        }
-    } failed:^(NSError *error) {
-        
-    }];
-    
-}
+//-(void)createScrollView
+//{
+//    [self creatCro];
+//    //    NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
+//    [[PostDataRequest sharedInstance] postDataRequest:@"scroll/queryAll.do" parameter:@{@"scrollClass":@0} success:^(id respondsData) {
+//        
+//        NSDictionary* dict = [NSJSONSerialization JSONObjectWithData:respondsData options:NSJSONReadingMutableContainers error:nil];
+//        if ([[dict objectForKey:@"success"] integerValue] == 1) {
+//            
+//            NSMutableArray* arrayIcon = [[NSMutableArray alloc]init];
+//            NSMutableArray* arrayUrl = [[NSMutableArray alloc]init];
+//            NSMutableArray* arrayTitle = [[NSMutableArray alloc]init];
+//            for (NSDictionary *dataDict in [dict objectForKey:@"rows"]) {
+//                ////NSLog(@"%@",dataDict);
+//                ChangePicModel *model = [[ChangePicModel alloc] init];
+//                [model setValuesForKeysWithDictionary:dataDict];
+//                [self.scrillViewArray addObject:model];
+//                [arrayIcon addObject:model.pic];
+//                [arrayUrl addObject:model.nexturl];
+//                [arrayTitle addObject:model.title];
+//            }
+//            //            //NSLog(@"%@",arrayIcon[0]);
+//            
+//            [self.topScrollView config:arrayIcon data:arrayUrl title:arrayTitle];
+//            self.topScrollView.delegate = self;
+//            [self.topScrollView setClick:^(UIViewController *vc) {
+//                [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
+//                [self.navigationController pushViewController:vc animated:YES];
+//            }];
+//        }
+//    } failed:^(NSError *error) {
+//        
+//    }];
+//    
+//}
 
 - (void)setData{
     
@@ -246,7 +245,7 @@
             [dic setObject:DEFAULF_USERID forKey:@"userKey"];
             [dic setValue:@0 forKey:@"offset"];
 //            [getMyTeam setObject:@192 forKey:@"teamKey"];
-            [[JsonHttp jsonHttp] httpRequest:@"team/getMyTeamActivityList" JsonKey:nil withData:dic requestMethod:@"GET" failedBlock:^(id errType) {
+            [[JsonHttp jsonHttp] httpRequest:@"team/getMyTeamActivityAll" JsonKey:nil withData:dic requestMethod:@"GET" failedBlock:^(id errType) {
                 [Helper alertViewNoHaveCancleWithTitle:@"获取活动列表失败" withBlock:^(UIAlertController *alertView) {
                     [self.navigationController presentViewController:alertView animated:YES completion:nil];
                 }];
