@@ -97,8 +97,12 @@ static CGFloat ImageHeight  = 210.0;
     [super viewWillAppear:YES];
     self.navigationController.navigationBarHidden = YES;
     self.titleField.text = [self.detailDic objectForKey:@"name"];
-    
-//    NSLog(@"%@ *-*-*-*-*-*-*-*-*-*-*-* %@", [Helper setImageIconUrl:@"team" andTeamKey:[[self.detailDic objectForKey:@"timeKey"] integerValue] andIsSetWidth:YES andIsBackGround:YES], [Helper setImageIconUrl:@"team" andTeamKey:[[self.detailDic objectForKey:@"timeKey"] integerValue] andIsSetWidth:YES andIsBackGround:YES]);
+//    NSString *bgUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/team/%@_background.jpg@400w_150h", [self.detailDic objectForKey:@"timeKey"]];
+//    [[SDImageCache sharedImageCache] removeImageForKey:bgUrl fromDisk:YES];
+//
+//    [[SDImageCache sharedImageCache] removeImageForKey:bgUrl];
+//
+    NSLog(@"%@ *-*-*-*-*-*-*-*-*-*-*-* %@", [Helper setImageIconUrl:@"team" andTeamKey:[[self.detailDic objectForKey:@"timeKey"] integerValue] andIsSetWidth:YES andIsBackGround:NO], [Helper setImageIconUrl:@"team" andTeamKey:[[self.detailDic objectForKey:@"timeKey"] integerValue] andIsSetWidth:YES andIsBackGround:YES]);
     
     [self.headPortraitBtn sd_setImageWithURL:[Helper setImageIconUrl:@"team" andTeamKey:[[self.detailDic objectForKey:@"timeKey"] integerValue] andIsSetWidth:YES andIsBackGround:NO] forState:(UIControlStateNormal) placeholderImage:[UIImage imageNamed:@"logo"]];
     self.headPortraitBtn.layer.masksToBounds = YES;

@@ -91,7 +91,7 @@
     self.topScrollView.userInteractionEnabled = YES;
     
     //    [self createScrollView];
-//    [self creatCro];
+    [self creatCro];
     [self.view addSubview:self.topScrollView];
     
     [self.topScrollView addSubview:backBtn];
@@ -165,15 +165,17 @@
 
             }
             
-            [self.topScrollView config:arrayIcon data:arrayUrl title:arrayTitle];
-            self.topScrollView.delegate = self;
-            [self.topScrollView setClick:^(UIViewController *vc) {
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
-                [self.navigationController pushViewController:vc animated:YES];
-            }];
-        }
+            if ([arrayIcon count] != 0) {
+                
+                [self.topScrollView config:arrayIcon data:arrayUrl title:arrayTitle];
+                self.topScrollView.delegate = self;
+                [self.topScrollView setClick:^(UIViewController *vc) {
+                    [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
+                    [self.navigationController pushViewController:vc animated:YES];
+                }];
+            }
 
-        
+        }
         
     }];
 
@@ -182,41 +184,41 @@
 
 
 //创建首页页面滚动视图
--(void)createScrollView
-{
-    [self creatCro];
-    //    NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
-    [[PostDataRequest sharedInstance] postDataRequest:@"scroll/queryAll.do" parameter:@{@"scrollClass":@0} success:^(id respondsData) {
-        
-        NSDictionary* dict = [NSJSONSerialization JSONObjectWithData:respondsData options:NSJSONReadingMutableContainers error:nil];
-        if ([[dict objectForKey:@"success"] integerValue] == 1) {
-            
-            NSMutableArray* arrayIcon = [[NSMutableArray alloc]init];
-            NSMutableArray* arrayUrl = [[NSMutableArray alloc]init];
-            NSMutableArray* arrayTitle = [[NSMutableArray alloc]init];
-            for (NSDictionary *dataDict in [dict objectForKey:@"rows"]) {
-                ////NSLog(@"%@",dataDict);
-                ChangePicModel *model = [[ChangePicModel alloc] init];
-                [model setValuesForKeysWithDictionary:dataDict];
-                [self.scrillViewArray addObject:model];
-                [arrayIcon addObject:model.pic];
-                [arrayUrl addObject:model.nexturl];
-                [arrayTitle addObject:model.title];
-            }
-            //            //NSLog(@"%@",arrayIcon[0]);
-            
-            [self.topScrollView config:arrayIcon data:arrayUrl title:arrayTitle];
-            self.topScrollView.delegate = self;
-            [self.topScrollView setClick:^(UIViewController *vc) {
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
-                [self.navigationController pushViewController:vc animated:YES];
-            }];
-        }
-    } failed:^(NSError *error) {
-        
-    }];
-    
-}
+//-(void)createScrollView
+//{
+//    [self creatCro];
+//    //    NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
+//    [[PostDataRequest sharedInstance] postDataRequest:@"scroll/queryAll.do" parameter:@{@"scrollClass":@0} success:^(id respondsData) {
+//        
+//        NSDictionary* dict = [NSJSONSerialization JSONObjectWithData:respondsData options:NSJSONReadingMutableContainers error:nil];
+//        if ([[dict objectForKey:@"success"] integerValue] == 1) {
+//            
+//            NSMutableArray* arrayIcon = [[NSMutableArray alloc]init];
+//            NSMutableArray* arrayUrl = [[NSMutableArray alloc]init];
+//            NSMutableArray* arrayTitle = [[NSMutableArray alloc]init];
+//            for (NSDictionary *dataDict in [dict objectForKey:@"rows"]) {
+//                ////NSLog(@"%@",dataDict);
+//                ChangePicModel *model = [[ChangePicModel alloc] init];
+//                [model setValuesForKeysWithDictionary:dataDict];
+//                [self.scrillViewArray addObject:model];
+//                [arrayIcon addObject:model.pic];
+//                [arrayUrl addObject:model.nexturl];
+//                [arrayTitle addObject:model.title];
+//            }
+//            //            //NSLog(@"%@",arrayIcon[0]);
+//            
+//            [self.topScrollView config:arrayIcon data:arrayUrl title:arrayTitle];
+//            self.topScrollView.delegate = self;
+//            [self.topScrollView setClick:^(UIViewController *vc) {
+//                [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
+//                [self.navigationController pushViewController:vc animated:YES];
+//            }];
+//        }
+//    } failed:^(NSError *error) {
+//        
+//    }];
+//    
+//}
 
 - (void)setData{
     
