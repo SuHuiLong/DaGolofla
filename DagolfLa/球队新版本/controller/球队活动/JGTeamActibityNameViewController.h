@@ -35,4 +35,8 @@
 //来自我的活动
 @property (nonatomic, assign)NSInteger isMEActivity;
 
+//判断是否是球队成员
+@property (nonatomic, assign)NSInteger ispalys;//1 表示球队成员 2非球队成员
+
+
 @end

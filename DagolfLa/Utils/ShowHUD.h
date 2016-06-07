@@ -10,6 +10,7 @@
 
 @interface ShowHUD : NSObject
 
++(instancetype)showHUD;
 /**
  *  @param text 要显示的文本
  *  @param view 在所在的view上展示
