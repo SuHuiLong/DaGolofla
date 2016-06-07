@@ -165,12 +165,15 @@
 
             }
             
-            [self.topScrollView config:arrayIcon data:arrayUrl title:arrayTitle];
-            self.topScrollView.delegate = self;
-            [self.topScrollView setClick:^(UIViewController *vc) {
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
-                [self.navigationController pushViewController:vc animated:YES];
-            }];
+            if (arrayIcon.count != 0) {
+                [self.topScrollView config:arrayIcon data:arrayUrl title:arrayTitle];
+                self.topScrollView.delegate = self;
+                [self.topScrollView setClick:^(UIViewController *vc) {
+                    [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
+                    [self.navigationController pushViewController:vc animated:YES];
+                }];
+            }
+            
         }
 
         
@@ -204,13 +207,16 @@
                 [arrayTitle addObject:model.title];
             }
             //            //NSLog(@"%@",arrayIcon[0]);
+            if (arrayIcon.count != 0) {
+                [self.topScrollView config:arrayIcon data:arrayUrl title:arrayTitle];
+                self.topScrollView.delegate = self;
+                [self.topScrollView setClick:^(UIViewController *vc) {
+                    [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
+                    [self.navigationController pushViewController:vc animated:YES];
+                }];
+            }
             
-            [self.topScrollView config:arrayIcon data:arrayUrl title:arrayTitle];
-            self.topScrollView.delegate = self;
-            [self.topScrollView setClick:^(UIViewController *vc) {
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
-                [self.navigationController pushViewController:vc animated:YES];
-            }];
+            
         }
     } failed:^(NSError *error) {
         
