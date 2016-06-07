@@ -146,7 +146,7 @@ static CGFloat ImageHeight  = 210.0;
     [self.addressBtn addTarget:self action:@selector(replaceWithPicture:) forControlEvents:UIControlEventTouchUpInside];
     [self.imgProfile addSubview:self.addressBtn];
     
-    if (_model.name != nil) {
+    if (self.model.name != nil) {
         self.titleField.text = _model.name;
         [self.addressBtn setTitle:_model.ballName forState:UIControlStateNormal];
     }
@@ -349,11 +349,18 @@ static CGFloat ImageHeight  = 210.0;
             contactCell.contactLabel.text = @"联系人电话";
             contactCell.tetfileView.placeholder = @"请输入联系人电话";
             contactCell.tetfileView.tag = 123;
+            if (self.model.name != nil) {
+                contactCell.tetfileView.text = self.model.userMobile;
+            }
         }else{
             contactCell.contactLabel.text = @"联系人";
             contactCell.tetfileView.keyboardType = UIKeyboardTypeDefault;
             contactCell.tetfileView.placeholder = @"请输入联系人姓名";
 //            contactCell.tetfileView.delegate = self;
+            if (self.model.name != nil) {
+                contactCell.tetfileView.text = self.model.userName;
+            }
+            
             contactCell.tetfileView.tag = 23;
         }
         
@@ -366,6 +373,10 @@ static CGFloat ImageHeight  = 210.0;
             contactCell.tetfileView.delegate = self;
             contactCell.tetfileView.tag = 234;
             contactCell.contactLabel.text = @"人员限制";
+            if (self.model.name != nil) {
+                contactCell.tetfileView.text = [NSString stringWithFormat:@"%td", self.model.maxCount];
+            }
+            
             contactCell.tetfileView.placeholder = @"请输入最大人员限制数";
             return contactCell;
         }else{

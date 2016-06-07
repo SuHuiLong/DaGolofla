@@ -244,7 +244,6 @@
     
     JGTeamAcitivtyModel *model = [[JGTeamAcitivtyModel alloc]init];
     model = self.dataArray[indexPath.section];
-//    [cell setJGTeamActivityCellWithModel:model];
     [cell setJGTeamActivityCellWithModel:model fromCtrl:1];
     
     return cell;
@@ -252,13 +251,21 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     JGTeamActibityNameViewController *activityNameCtrl = [[JGTeamActibityNameViewController alloc]init];
     activityNameCtrl.isTeamChannal = 2;
+    JGTeamAcitivtyModel *model = [[JGTeamAcitivtyModel alloc]init];
+    model = self.dataArray[indexPath.section];
+    activityNameCtrl.teamKey = [model.timeKey integerValue];
+    [self.navigationController pushViewController:activityNameCtrl animated:YES];
+    
+    /**
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     JGTeamAcitivtyModel *model = self.dataArray[indexPath.section];
     [dict setObject:@(model.teamActivityKey) forKey:@"activityKey"];
     [dict setObject:[NSString stringWithFormat:@"%td", model.teamKey] forKey:@"teamKey"];    
     [dict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"userId"] forKey:@"userKey"];
     NSLog(@"%@", [[NSUserDefaults standardUserDefaults] objectForKey:@"userId" ]);
-    [[JsonHttp jsonHttp]httpRequest:@"team/getTeamActivityList" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
+    
+    //team/getTeamActivityList
+    [[JsonHttp jsonHttp]httpRequest:_urlString JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
      
     } completionBlock:^(id data) {
         if ([[data objectForKey:@"packSuccess"] boolValue]) {
@@ -283,6 +290,7 @@
               }
         }
      }];
+     */
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

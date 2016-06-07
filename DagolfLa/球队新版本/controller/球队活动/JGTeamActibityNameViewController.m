@@ -33,7 +33,7 @@
 #import "UMSocialControllerService.h"
 
 #import "EnterViewController.h"
-#import "JGTeamGroupViewController.h"
+#import "JGTeamDeatilWKwebViewController.h"
 
 static NSString *const JGTeamActivityWithAddressCellIdentifier = @"JGTeamActivityWithAddressCell";
 static NSString *const JGTeamActivityDetailsCellIdentifier = @"JGTeamActivityDetailsCell";
@@ -191,7 +191,8 @@ static CGFloat ImageHeight  = 210.0;
     
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     if (self.isTeamChannal == 2) {
-        [dict setValue:_model.timeKey forKey:@"activityKey"];
+//        [dict setValue:_model.timeKey forKey:@"activityKey"];
+        [dict setValue:[NSString stringWithFormat:@"%td", _teamKey] forKey:@"activityKey"];
     }else{
         [dict setValue:[NSString stringWithFormat:@"%td", _model.teamActivityKey] forKey:@"activityKey"];
     }
@@ -303,9 +304,15 @@ static CGFloat ImageHeight  = 210.0;
 }
 #pragma mark -- 跳转分组页面
 - (void)pushGroupCtrl:(UIButton *)btn{
+    //http://imgcache.dagolfla.com/share/team/group.html?key=1645
+    JGTeamDeatilWKwebViewController *detailCtrl = [[JGTeamDeatilWKwebViewController alloc]init];
+    detailCtrl.detailString = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/team/group.html?key=%td", _teamActivityKey];
+    [self.navigationController pushViewController:detailCtrl animated:YES];
+    /**
     JGTeamGroupViewController *teamGroupCtrl = [[JGTeamGroupViewController alloc]init];
     teamGroupCtrl.teamActivityKey = _teamActivityKey;
     [self.navigationController pushViewController:teamGroupCtrl animated:YES];
+     */
 }
 #pragma mark -- 获取球场地址
 - (void)replaceWithPicture:(UIButton *)Btn{
@@ -440,6 +447,7 @@ static CGFloat ImageHeight  = 210.0;
 #pragma mark -- 发布活动 ＋ 保存活动
 - (void)applyBtnClick:(UIButton *)btn{
     
+    [[ShowHUD showHUD]showAnimationWithText:@"创建中..." FromView:self.view];
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     [dict setObject:[NSString stringWithFormat:@"%td", self.teamKey] forKey:@"teamKey"];//球队key
     [dict setObject:@0 forKey:@"timeKey"];
@@ -468,6 +476,7 @@ static CGFloat ImageHeight  = 210.0;
         NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
         [userdef setObject:dict forKey:@"TeamActivityData"];
         [userdef synchronize];
+        [[ShowHUD showHUD]hideAnimationFromView:self.view];
         [Helper alertViewWithTitle:@"活动保存成功！" withBlock:^(UIAlertController *alertView) {
             [self.navigationController presentViewController:alertView animated:YES completion:nil];
         }];
@@ -475,9 +484,10 @@ static CGFloat ImageHeight  = 210.0;
         //发布活动
         [[JsonHttp jsonHttp]httpRequest:@"team/createTeamActivity" JsonKey:@"teamActivity" withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
             NSLog(@"%@", errType);
+            [[ShowHUD showHUD]hideAnimationFromView:self.view];
         } completionBlock:^(id data) {
             NSLog(@"%@", data);
-            
+            [[ShowHUD showHUD]hideAnimationFromView:self.view];
             if ([[data objectForKey:@"packSuccess"] integerValue] == 0) {
                 [Helper alertViewWithTitle:@"活动发布失败！" withBlock:^(UIAlertController *alertView) {
                     [self.navigationController presentViewController:alertView animated:YES completion:nil];
