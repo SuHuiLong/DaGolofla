@@ -189,7 +189,7 @@ static CGFloat ImageHeight  = 210.0;
 - (void)dataSet{
     MBProgressHUD *progress = [[MBProgressHUD alloc] initWithView:self.view];
     progress.mode = MBProgressHUDModeIndeterminate;
-    progress.labelText = @"正在发布...";
+    progress.labelText = @"正在加载数据...";
     [self.view addSubview:progress];
     [progress show:YES];
     
@@ -273,15 +273,18 @@ static CGFloat ImageHeight  = 210.0;
     }
     else
     {
-        fiData = [NSData dataWithContentsOfURL:[Helper setImageIconUrl:@"activity" andTeamKey:_myActivityKey andIsSetWidth:YES andIsBackGround:NO]];
+        fiData = [NSData dataWithContentsOfURL:[Helper setImageIconUrl:@"activity" andTeamKey:[_model.timeKey integerValue]andIsSetWidth:YES andIsBackGround:NO]];
     }
     
   
     
+    NSString*  shareUrl;
+    if (self.isTeamChannal == 2) {
+       shareUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/team/teamac.html?key=%@", _model.timeKey];
+    }else{
+        shareUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/team/teamac.html?key=%td", _teamActivityKey];
+    }
     
-    
-
-    NSString*  shareUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/team/teamac.html?key=%td", _teamActivityKey];
     [UMSocialData defaultData].extConfig.title=[NSString stringWithFormat:@"%@报名", _model.name];
     if (index == 0){
         //微信

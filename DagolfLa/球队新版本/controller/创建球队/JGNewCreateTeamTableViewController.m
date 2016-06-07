@@ -111,7 +111,7 @@ static CGFloat ImageHeight  = 210.0;
         _dictPhoto = [[NSMutableDictionary alloc]init];
         self.pickPhoto = [[SXPickPhoto alloc]init];
         self.titleView = [[UIView alloc]init];
-        UIImage *image = [UIImage imageNamed:@"selfBackPic.jpg"];
+        UIImage *image = [UIImage imageNamed:TeamBGImage];
         self.imgProfile = [[UIImageView alloc] initWithImage:image];
         self.imgProfile.frame = CGRectMake(0, 0, screenWidth, ImageHeight);
         self.imgProfile.userInteractionEnabled = YES;
@@ -178,7 +178,7 @@ static CGFloat ImageHeight  = 210.0;
     self.titleField.tag = 1117;
     //头像
     self.headPortraitBtn = [[UIButton alloc]initWithFrame:CGRectMake(20, 150, 50, 50)];
-    [self.headPortraitBtn setImage:[UIImage imageNamed:@"logo"] forState:UIControlStateNormal];
+    [self.headPortraitBtn setImage:[UIImage imageNamed:TeamLogoImage] forState:UIControlStateNormal];
     [self.headPortraitBtn addTarget:self action:@selector(initItemsBtnClick:) forControlEvents:UIControlEventTouchUpInside];
 //    self.headPortraitBtn.backgroundColor = [UIColor redColor];
     self.headPortraitBtn.layer.cornerRadius = 8.0;
@@ -264,14 +264,16 @@ static CGFloat ImageHeight  = 210.0;
                 //设置背景
                 if (btn.tag == 520) {
                     self.imgProfile.image = _headerImage;
-                    [_dictPhoto setObject:[NSArray arrayWithObject:UIImageJPEGRepresentation(_headerImage, 0.7)] forKey:@"headerImage"];
+                    self.imgProfile.contentMode = UIViewContentModeScaleAspectFill;
+                    self.imgProfile.layer.masksToBounds = YES;
+                    [_dictPhoto setObject:[NSArray arrayWithObject:UIImageJPEGRepresentation(_headerImage, 1.0)] forKey:@"headerImage"];
                     
                 }else if (btn.tag == 740){
                     //头像
                     [self.headPortraitBtn setImage:_headerImage forState:UIControlStateNormal];
                     self.headPortraitBtn.layer.masksToBounds = YES;
                     self.headPortraitBtn.layer.cornerRadius = 8.0;
-                    [_dictPhoto setObject:[NSArray arrayWithObject:UIImageJPEGRepresentation(_headerImage, 0.7)] forKey:@"headPortraitBtn"];
+                    [_dictPhoto setObject:[NSArray arrayWithObject:UIImageJPEGRepresentation(_headerImage, 1.0)] forKey:@"headPortraitBtn"];
                     
                     
                     

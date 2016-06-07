@@ -157,17 +157,20 @@
             NSMutableArray* arrayIcon = [[NSMutableArray alloc]init];
             NSMutableArray* arrayUrl = [[NSMutableArray alloc]init];
             NSMutableArray* arrayTitle = [[NSMutableArray alloc]init];
+            NSMutableArray* arrayTs = [[NSMutableArray alloc]init];
             for (NSDictionary *dataDict in [data objectForKey:@"advList"]) {
                 
                 [arrayIcon addObject: [dataDict objectForKey:@"timeKey"]];
                 [arrayUrl addObject: [dataDict objectForKey:@"linkaddr"]];
                 [arrayTitle addObject: [dataDict objectForKey:@"title"]];
-
+                NSLog(@"%@", [dataDict objectForKey:@"ts"]);
+                NSLog(@"%f", [Helper stringConversionToDate:[dataDict objectForKey:@"ts"]]);
+                [arrayTs addObject:@([Helper stringConversionToDate:[dataDict objectForKey:@"ts"]])];
             }
             
             if ([arrayIcon count] != 0) {
                 
-                [self.topScrollView config:arrayIcon data:arrayUrl title:arrayTitle];
+                [self.topScrollView config:arrayIcon data:arrayUrl title:arrayTitle ts:arrayTs];
                 self.topScrollView.delegate = self;
                 [self.topScrollView setClick:^(UIViewController *vc) {
                     [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
