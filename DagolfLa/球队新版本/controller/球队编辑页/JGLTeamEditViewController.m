@@ -95,6 +95,8 @@ static CGFloat ImageHeight  = 210.0;
         self.imgProfile = [[UIImageView alloc] initWithImage:image];
         self.imgProfile.frame = CGRectMake(0, 0, screenWidth, ImageHeight);
         self.imgProfile.userInteractionEnabled = YES;
+        self.imgProfile.contentMode = UIViewContentModeScaleAspectFill;
+        self.imgProfile.layer.masksToBounds = YES;
         self.imgProfile.tag = 520;
         self.launchActivityTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight - 44) style:(UITableViewStylePlain)];
 //        [self.launchActivityTableView registerClass:[JGLableAndLableTableViewCell class] forCellReuseIdentifier:@"lbVSlb"];
@@ -414,11 +416,13 @@ static CGFloat ImageHeight  = 210.0;
                 //设置背景
                 if (btn.tag == 520) {
                     self.imgProfile.image = (UIImage *)Data;
+                    self.imgProfile.contentMode = UIViewContentModeScaleAspectFill;
+                    self.imgProfile.layer.masksToBounds = YES;
                     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
                     [dict setObject:PHOTO_DAGOLFLA forKey:@"tag"];
                     [dict setObject:[NSString stringWithFormat:@"%@_background" ,[self.detailDic objectForKey:@"timeKey"]] forKey:@"data"];
                     [dict setObject:TYPE_TEAM_HEAD forKey:@"nType"];
-                    [[JsonHttp jsonHttp] httpRequestImageOrVedio:@"1" withData:dict andDataArray:[NSArray arrayWithObject:UIImageJPEGRepresentation(self.imgProfile.image, 0.7)] failedBlock:^(id errType) {
+                    [[JsonHttp jsonHttp] httpRequestImageOrVedio:@"1" withData:dict andDataArray:[NSArray arrayWithObject:UIImageJPEGRepresentation(self.imgProfile.image, 1.0)] failedBlock:^(id errType) {
                         NSLog(@"errType===%@", errType);
                     } completionBlock:^(id data) {
 
@@ -442,7 +446,7 @@ static CGFloat ImageHeight  = 210.0;
                     [dict setObject:TYPE_TEAM_HEAD forKey:@"nType"];
                     [dict setObject:PHOTO_DAGOLFLA forKey:@"tag"];
                     
-                    [[JsonHttp jsonHttp]httpRequestImageOrVedio:@"1" withData:dict andDataArray:[NSArray arrayWithObject:UIImageJPEGRepresentation((UIImage *)Data, 0.7)] failedBlock:^(id errType) {
+                    [[JsonHttp jsonHttp]httpRequestImageOrVedio:@"1" withData:dict andDataArray:[NSArray arrayWithObject:UIImageJPEGRepresentation((UIImage *)Data, 1.0)] failedBlock:^(id errType) {
                         NSLog(@"errType===%@", errType);
                     } completionBlock:^(id data) {
                         NSString *head = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/team/661.jpg@100w_100h"];

@@ -19,5 +19,7 @@
 //来自我的活动
 @property (nonatomic, assign)NSInteger isMEActivity;
 
+// 球队审核状态
+@property (nonatomic, assign)NSInteger state;
 
 @end

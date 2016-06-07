@@ -89,6 +89,8 @@ static CGFloat ImageHeight  = 210.0;
 
 @property (nonatomic, copy)NSString *power;
 
+@property (nonatomic, assign) NSInteger state;
+
 @end
 
 @implementation JGTeamMemberORManagerViewController
@@ -117,6 +119,8 @@ static CGFloat ImageHeight  = 210.0;
      
         
     } completionBlock:^(id data) {
+        
+        self.state = [[[data objectForKey:@"team"] objectForKey:@"state"] integerValue];
            self.power = [[data objectForKey:@"teamMember"] objectForKey:@"power"];
         [[NSUserDefaults standardUserDefaults] setObject:self.power forKey:@"power"];
         [[NSUserDefaults standardUserDefaults]  synchronize];
@@ -144,6 +148,8 @@ static CGFloat ImageHeight  = 210.0;
         self.imgProfile = [[UIImageView alloc] initWithImage:image];
         self.imgProfile.frame = CGRectMake(0, 0, screenWidth, ImageHeight);
         self.imgProfile.userInteractionEnabled = YES;
+        self.imgProfile.contentMode = UIViewContentModeScaleAspectFill;
+        self.imgProfile.layer.masksToBounds = YES;
         
         self.launchActivityTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight - 44) style:(UITableViewStylePlain)];
         [self.launchActivityTableView registerClass:[JGImageAndLabelAndLabelTableViewCell class] forCellReuseIdentifier:@"lbVSlb"];
@@ -551,6 +557,7 @@ static CGFloat ImageHeight  = 210.0;
                 //获取球队活动列表
                 JGTeamActivityViewController *activiyVC = [[JGTeamActivityViewController alloc] init];
                 activiyVC.power = self.power;
+                activiyVC.state = self.state;
                 activiyVC.timeKey = [[self.detailDic objectForKey:@"timeKey"] integerValue];
                 activiyVC.isMEActivity = 1;
                 [self.navigationController pushViewController:activiyVC animated:YES];

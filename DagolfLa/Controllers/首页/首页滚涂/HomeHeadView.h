@@ -17,7 +17,7 @@
 @interface HomeHeadView : UIView <UIScrollViewDelegate>
 
 //显示数据
-- (void)config:(NSArray *)dataArray data:(NSArray *)url title:(NSArray *)name;
+- (void)config:(NSArray *)dataArray data:(NSArray *)url title:(NSArray *)name ts:(NSArray *)ts;
 
 
 - (void)setClick:( void (^)(UIViewController* ))click;
