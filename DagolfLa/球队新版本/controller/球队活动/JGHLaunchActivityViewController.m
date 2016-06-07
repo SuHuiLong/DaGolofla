@@ -71,7 +71,7 @@ static CGFloat ImageHeight  = 210.0;
         self.titleView = [[UIView alloc]init];
 
         _dataDict = [[NSMutableDictionary alloc]init];
-        UIImage *image = [UIImage imageNamed:BGImage];
+        UIImage *image = [UIImage imageNamed:ActivityBGImage];
         self.model.bgImage = image;
         self.imgProfile = [[UIImageView alloc] initWithImage:image];
         self.imgProfile.frame = CGRectMake(0, 0, screenWidth, ImageHeight);
@@ -129,8 +129,8 @@ static CGFloat ImageHeight  = 210.0;
     
     //头像
     self.headPortraitBtn = [[UIButton alloc]initWithFrame:CGRectMake(10, 135, 65, 65)];
-    [self.headPortraitBtn setImage:[UIImage imageNamed:HEADERRImage] forState:UIControlStateNormal];
-    self.model.headerImage = [UIImage imageNamed:HEADERRImage];
+    [self.headPortraitBtn setImage:[UIImage imageNamed:TeamLogoImage] forState:UIControlStateNormal];
+    self.model.headerImage = [UIImage imageNamed:TeamLogoImage];
     [self.headPortraitBtn addTarget:self action:@selector(initItemsBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     self.headPortraitBtn.layer.cornerRadius = 8.0;
     self.headPortraitBtn.tag = 740;

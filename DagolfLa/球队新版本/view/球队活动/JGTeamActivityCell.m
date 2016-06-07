@@ -56,11 +56,17 @@
     //活动名称
     self.activitytitle.text = modeel.name;
     //报名
-    if (modeel.isClose == 0) {
-        self.Apply.text = @"正在报名";
-    }else{
+    if (modeel.isClose == 1) {
         self.Apply.text = @"活动结束";
         self.Apply.textColor = [UIColor redColor];
+    }else{
+        NSString *str = [Helper returnCurrentDateString];//跟当前时间比较
+        if ([str compare:modeel.endDate] > 0) {
+            self.Apply.text = @"活动结束";
+            self.Apply.textColor = [UIColor redColor];
+        }else{
+            self.Apply.text = @"正在报名";
+        }
     }
     //活动时间componentsSeparatedByString
     NSString *timeString = [[modeel.beginDate componentsSeparatedByString:@" "]firstObject];

@@ -42,6 +42,9 @@ static NSString *const JGHCostListTableViewCellIdentifier = @"JGHCostListTableVi
 static CGFloat ImageHeight  = 210.0;
 
 @interface JGTeamActibityNameViewController ()<UITableViewDelegate, UITableViewDataSource>
+{
+    NSInteger _isTeamMember;//是否是球队成员 1 － 不是
+}
 
 @property (nonatomic, strong)UITableView *teamActibityNameTableView;
 @property (nonatomic, strong)NSMutableArray *dataArray;//数据源
@@ -55,6 +58,7 @@ static CGFloat ImageHeight  = 210.0;
 @property (nonatomic, strong)UIView *titleView;//顶部导航
 
 @property (nonatomic, strong)UIButton *addressBtn;//添加地址
+
 
 @end
 
@@ -214,6 +218,8 @@ static CGFloat ImageHeight  = 210.0;
                         [self createGroupBtn];
                     }
                 }
+            }else{
+                _isTeamMember = 1;
             }
             
             [self.model setValuesForKeysWithDictionary:[data objectForKey:@"activity"]];
