@@ -48,6 +48,9 @@
 
 #import "JGTeamMemberController.h"
 #import "TeamMessageController.h"//发送信息
+//球队照片
+#import "JGTeamPhotoViewController.h"
+
 
 static NSString *const JGTableViewCellIdentifier = @"JGTableViewCell";
 static NSString *const JGHTeamContactCellIdentifier = @"JGHTeamContactTableViewCell";
@@ -99,18 +102,23 @@ static CGFloat ImageHeight  = 210.0;
     [super viewWillAppear:YES];
     self.navigationController.navigationBarHidden = YES;
     self.titleField.text = [self.detailDic objectForKey:@"name"];
-//    NSString *bgUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/team/%@_background.jpg@400w_150h", [self.detailDic objectForKey:@"timeKey"]];
-//    [[SDImageCache sharedImageCache] removeImageForKey:bgUrl fromDisk:YES];
+    NSString *head = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/team/%@.jpg@100w_100h", [self.detailDic objectForKey:@"timeKey"]];
+    NSString *headUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/team/%@.jpg@120w_120h", [self.detailDic objectForKey:@"timeKey"]];
+    NSString *bgUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/team/%@_background.jpg@400w_150h", [self.detailDic objectForKey:@"timeKey"]];
+    [[SDImageCache sharedImageCache] removeImageForKey:bgUrl fromDisk:YES];
+    [[SDImageCache sharedImageCache] removeImageForKey:head fromDisk:YES];
+    [[SDImageCache sharedImageCache] removeImageForKey:headUrl fromDisk:YES];
+
 //
 //    [[SDImageCache sharedImageCache] removeImageForKey:bgUrl];
 //
-    NSLog(@"%@ *-*-*-*-*-*-*-*-*-*-*-* %@", [Helper setImageIconUrl:@"team" andTeamKey:[[self.detailDic objectForKey:@"timeKey"] integerValue] andIsSetWidth:YES andIsBackGround:NO], [Helper setImageIconUrl:@"team" andTeamKey:[[self.detailDic objectForKey:@"timeKey"] integerValue] andIsSetWidth:YES andIsBackGround:YES]);
+//    NSLog(@"%@ *-*-*-*-*-*-*-*-*-*-*-* %@", [Helper setImageIconUrl:@"team" andTeamKey:[[self.detailDic objectForKey:@"timeKey"] integerValue] andIsSetWidth:YES andIsBackGround:NO], [Helper setImageIconUrl:@"team" andTeamKey:[[self.detailDic objectForKey:@"timeKey"] integerValue] andIsSetWidth:YES andIsBackGround:YES]);
     
-    [self.headPortraitBtn sd_setImageWithURL:[Helper setImageIconUrl:@"team" andTeamKey:[[self.detailDic objectForKey:@"timeKey"] integerValue] andIsSetWidth:YES andIsBackGround:NO] forState:(UIControlStateNormal) placeholderImage:[UIImage imageNamed:@"logo"]];
+    [self.headPortraitBtn sd_setImageWithURL:[Helper setImageIconUrl:@"team" andTeamKey:[[self.detailDic objectForKey:@"timeKey"] integerValue] andIsSetWidth:YES andIsBackGround:NO] forState:(UIControlStateNormal) placeholderImage:[UIImage imageNamed:TeamLogoImage]];
     self.headPortraitBtn.layer.masksToBounds = YES;
     self.headPortraitBtn.layer.cornerRadius = 8.0;
     
-    [self.imgProfile sd_setImageWithURL:[Helper setImageIconUrl:@"team" andTeamKey:[[self.detailDic objectForKey:@"timeKey"] integerValue] andIsSetWidth:YES andIsBackGround:YES] placeholderImage:[UIImage imageNamed:@"selfBackPic.jpg"]];
+    [self.imgProfile sd_setImageWithURL:[Helper setImageIconUrl:@"team" andTeamKey:[[self.detailDic objectForKey:@"timeKey"] integerValue] andIsSetWidth:YES andIsBackGround:YES] placeholderImage:[UIImage imageNamed:TeamBGImage]];
     
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     [dict setObject:DEFAULF_USERID forKey:@"userKey"];
@@ -127,9 +135,6 @@ static CGFloat ImageHeight  = 210.0;
         self.memBerDic = [data objectForKey:@"teamMember"];
         
     }];
-    
-    
-    
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
@@ -429,7 +434,7 @@ static CGFloat ImageHeight  = 210.0;
     }else if (section == 1){
         return 1;
     }else if (section == 2){
-        return 3;
+        return 4;
     }else{
         return 1;
     }
@@ -506,14 +511,17 @@ static CGFloat ImageHeight  = 210.0;
                 launchActivityCell.promptLB.text = @"球队成员";
 //                launchActivityCell.contentLB.text = self.detailModel.cityName;
                 break;
-//            case 2:
-//                launchActivityCell.promptLB.text = @"球队相册";
-////                launchActivityCell.contentLB.text = self.detailModel.establishTime;
-//                break;
             case 2:
-                launchActivityCell.imageV.image = [UIImage imageNamed:@"qdjj"];
+                
+                launchActivityCell.promptLB.text = @"球队相册";
+                launchActivityCell.imageV.image = [UIImage imageNamed:@"xc"];
+                //                launchActivityCell.contentLB.text = [NSString stringWithFormat:@"%td人", self.detailModel.userSum];
+                
+                break;
+            case 3:
                 launchActivityCell.promptLB.text = @"球队简介";
-//                launchActivityCell.contentLB.text = [NSString stringWithFormat:@"%td人", self.detailModel.userSum];
+                launchActivityCell.imageV.image = [UIImage imageNamed:@"qdjj"];
+                //                launchActivityCell.contentLB.text = self.detailModel.establishTime;
                 break;
             default:
                 break;
@@ -575,17 +583,19 @@ static CGFloat ImageHeight  = 210.0;
                 break;
             case 2:
             {
+                JGTeamPhotoViewController* phoVc = [[JGTeamPhotoViewController alloc]init];
+                phoVc.teamKey = [self.detailDic objectForKey:@"timeKey"];
+                phoVc.power = self.power;
+                [self.navigationController pushViewController:phoVc animated:YES];
+            }
+                break;
+            case 3:
+            {
                 JGTeamDeatilWKwebViewController *wkVC = [[JGTeamDeatilWKwebViewController alloc] init];
                 
                 wkVC.detailString = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/team/teamDetails.html?key=%@", [self.detailDic objectForKey:@"timeKey"]];;
                 wkVC.teamName = [self.detailDic objectForKey:@"name"];
                 [self.navigationController pushViewController:wkVC animated:YES];
-            }
-                break;
-            case 3:
-            {
-
-
             }
                 break;
                 

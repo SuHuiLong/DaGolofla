@@ -14,11 +14,24 @@
 #import "JGPhotoTimeReusableView.h"
 
 #import "JGLUpdataPhotoController.h"
+#import "SXPickPhoto.h"
+
+#import "MJRefresh.h"
+#import "MJDIYHeader.h"
+#import "MJDIYBackFooter.h"
+
+#import "JGPhotoListModel.h"
+#import "JGTeamPhotoShowViewController.h"
 @interface JGPhotoAlbumViewController ()<UICollectionViewDelegate,UICollectionViewDataSource>
 {
     UICollectionView* _collectionView;
+    
+    NSMutableDictionary* _dictPhoto;
+    
+    NSMutableArray* _dataArray;
+    NSInteger _page;
 }
-
+@property (nonatomic,strong)  SXPickPhoto * pickPhoto;//相册类
 @property (strong, nonatomic) JGPhotoTimeReusableView *headView;
 @end
 
@@ -26,6 +39,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    _page = 0;
+    _dictPhoto = [[NSMutableDictionary alloc]init];
+    self.pickPhoto = [[SXPickPhoto alloc]init];
+    _dataArray = [[NSMutableArray alloc]init];
     
     if (![Helper isBlankString:_strTitle]) {
         self.title = _strTitle;
@@ -35,51 +53,108 @@
         self.title = @"球队相册";
     }
     
-    
-    UIBarButtonItem* rightBtn = [[UIBarButtonItem alloc]initWithTitle:@"上传" style:UIBarButtonItemStylePlain target:self action:@selector(upDataClick)];
-    rightBtn.tintColor = [UIColor whiteColor];
-    self.navigationItem.rightBarButtonItem = rightBtn;
-    
-    
-    
+    if ([_power containsString:@"1005"] == YES) {
+        UIBarButtonItem* rightBtn = [[UIBarButtonItem alloc]initWithTitle:@"上传" style:UIBarButtonItemStylePlain target:self action:@selector(upDataClick)];
+        rightBtn.tintColor = [UIColor whiteColor];
+        self.navigationItem.rightBarButtonItem = rightBtn;
+    }
+
     [self uiConfig];
-    
-    NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
-    [dict setObject:@214 forKey:@"albumKey"];
-    [dict setObject:@0 forKey:@"offset"];
-
-
-    [[JsonHttp jsonHttp]httpRequest:@"team/getTeamMediaList" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
-        NSLog(@"errType == %@", errType);
-    } completionBlock:^(id data) {
-        
-        
-    }];
-    
     
 }
 
 -(void)upDataClick
 {
     
-    NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
-    [dict setObject:@0 forKey:@"timeKey"];
-    [dict setObject:@527 forKey:@"userKey"];
-    [dict setObject:@214 forKey:@"albumKey"];
-    [dict setObject:@1 forKey:@"mediaType"];
-    
-    
-    [dict setObject:@"2016-12-11 10:00:00" forKey:@"createTime"];
-    [[JsonHttp jsonHttp]httpRequest:@"team/createTeamMedia" JsonKey:@"teamMedia" withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
-        NSLog(@"errType == %@", errType);
-    } completionBlock:^(id data) {
-        
-        
+    //    _photos = 10;
+    UIAlertAction * act1 = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        //        _photos = 1;
+    }];
+    //拍照：
+    UIAlertAction * act2 = [UIAlertAction actionWithTitle:@"拍照" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        //打开相机
+        [_pickPhoto ShowTakePhotoWithController:self andWithBlock:^(NSObject *Data) {
+            NSArray* arrayData = [NSArray arrayWithObject:UIImageJPEGRepresentation((UIImage *)Data, 0.7)];
+            [self imageArray:arrayData];
+            
+        }];
+    }];
+    //相册
+    UIAlertAction * act3 = [UIAlertAction actionWithTitle:@"相册" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        //打开相册
+        [_pickPhoto SHowLocalPhotoWithController:self andWithBlock:^(NSObject *Data) {
+            NSArray* arrayData = [NSArray arrayWithObject:UIImageJPEGRepresentation((UIImage *)Data, 0.7)];
+            [self imageArray:arrayData];
+        }];
     }];
     
+    UIAlertController * aleVC = [UIAlertController alertControllerWithTitle:@"提示" message:@"选择图片" preferredStyle:UIAlertControllerStyleActionSheet];
+    [aleVC addAction:act1];
+    [aleVC addAction:act2];
+    [aleVC addAction:act3];
+    
+    [self presentViewController:aleVC animated:YES completion:nil];
+
     
 }
+#pragma mark --上传图片方法
+-(void)imageArray:(NSArray *)array
+{
+    /**
+     *  获取timekey用来作为上传图片的timekey
+     *
+     *  @param errType nil
+     *
+     *  @return nil
+     */
+    [[JsonHttp jsonHttp] httpRequest:@"globalCode/createTimeKey" JsonKey:nil withData:nil requestMethod:@"GET" failedBlock:^(id errType) {
+        
+    }completionBlock:^(id data) {
+        NSNumber* TimeKey = [data objectForKey:@"timeKey"];
+        
+        /**
+         上传图片
+         */
+        NSMutableDictionary* dictMedia = [[NSMutableDictionary alloc]init];
+        [dictMedia setObject:[NSString stringWithFormat:@"%@" ,TimeKey] forKey:@"data"];
+        [dictMedia setObject:TYPE_MEDIA_IMAGE forKey:@"nType"];
+        [dictMedia setObject:@"dagolfla" forKey:@"tag"];
+        [[JsonHttp jsonHttp] httpRequestImageOrVedio:@"1" withData:dictMedia andDataArray:array failedBlock:^(id errType) {
+            NSLog(@"errType===%@", errType);
+        } completionBlock:^(id data) {
+            /**
+             上传图片的参数
+             */
+            if ([[data objectForKey:@"code"] integerValue] == 1) {
+                NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
+                if (TimeKey != nil) {
+                    [dict setObject:TimeKey forKey:@"timeKey"];
+                }
+                [dict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:userID] forKey:@"userKey"];
+                [dict setObject:_albumKey forKey:@"albumKey"];
+                [dict setObject:@1 forKey:@"mediaType"];
+                
+                
+                [dict setObject:@"2016-12-11 10:00:00" forKey:@"createTime"];
+                [[JsonHttp jsonHttp]httpRequest:@"team/createTeamMedia" JsonKey:@"teamMedia" withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
+                    NSLog(@"errType == %@", errType);
+                } completionBlock:^(id data) {
+                    _collectionView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
+                    [_collectionView.header beginRefreshing];
+                    [_collectionView reloadData];
+                }];
+            }
+            else
+            {
+                [Helper alertViewWithTitle:@"上传图片失败" withBlock:^(UIAlertController *alertView) {
+                    [self.navigationController presentViewController:alertView animated:YES completion:nil];
+                }];
+            }
+           
+        }];
 
+    }];
+}
 
 -(void)uiConfig
 {
@@ -108,9 +183,64 @@
      */
     //获取含有UICollectionReusableView的class文件。
     [_collectionView registerClass:[JGPhotoTimeReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"JGPhotoTimeReusableView"];
+    
+    _collectionView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
+    _collectionView.footer=[MJDIYBackFooter footerWithRefreshingTarget:self refreshingAction:@selector(footerRereshing)];
+    [_collectionView.header beginRefreshing];
+    
+    
 }
 
+#pragma mark - 下载数据
+- (void)downLoadData:(int)page isReshing:(BOOL)isReshing{
+    NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
+    [dict setObject:_albumKey forKey:@"albumKey"];
+    [dict setObject:[NSNumber numberWithInt:page] forKey:@"offset"];
+    [[JsonHttp jsonHttp]httpRequest:@"team/getTeamMediaList" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
+        if (isReshing) {
+            [_collectionView.header endRefreshing];
+        }else {
+            [_collectionView.footer endRefreshing];
+        }
+    } completionBlock:^(id data) {
+        if ([[data objectForKey:@"packSuccess"] boolValue]) {
+            if (page == 0)
+            {
+                //清除数组数据
+                [_dataArray removeAllObjects];
+            }
+            //数据解析
+            for (NSDictionary *dicList in [data objectForKey:@"teamMediaList"]) {
+                JGPhotoListModel *model = [[JGPhotoListModel alloc] init];
+                [model setValuesForKeysWithDictionary:dicList];
+                [_dataArray addObject:model];
+            }
+            _page++;
+            [_collectionView reloadData];
+        }else {
+            [Helper alertViewWithTitle:[dict objectForKey:@"message"] withBlock:^(UIAlertController *alertView) {
+                [self presentViewController:alertView animated:YES completion:nil];
+            }];
+        }
+        [_collectionView reloadData];
+        if (isReshing) {
+            [_collectionView.header endRefreshing];
+        }else {
+            [_collectionView.footer endRefreshing];
+        }
+    }];
+}
+#pragma mark 开始进入刷新状态
+- (void)headerRereshing
+{
+    _page = 0;
+    [self downLoadData:_page isReshing:YES];
+}
 
+- (void)footerRereshing
+{
+    [self downLoadData:_page isReshing:NO];
+}
 
 #pragma mark -- uicollection方法
 
@@ -122,49 +252,52 @@
 //定义展示的UICollectionViewCell的个数
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return 8;
+    return _dataArray.count;
 }
 //定义展示的Section的个数
 -(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
 {
-    return 8;
+    return 1;
 }
 
 
-- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath{
-    
-    //设置SectionHeader
-    if ([kind isEqualToString: UICollectionElementKindSectionHeader]) {
-        _headView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"JGPhotoTimeReusableView"forIndexPath:indexPath];
-        
-        
-        _headView.timeLabel.text = [NSString stringWithFormat:@"2016年5月%ld号",(long)indexPath.section];
-        _headView.backgroundColor = [UIColor lightGrayColor];
-        return _headView;
-    }
-    return nil;
-}
+//- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath{
+//    
+//    //设置SectionHeader
+//    if ([kind isEqualToString: UICollectionElementKindSectionHeader]) {
+//        _headView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"JGPhotoTimeReusableView"forIndexPath:indexPath];
+//        
+//        
+//        _headView.timeLabel.text = [NSString stringWithFormat:@"2016年5月%ld号",(long)indexPath.section];
+//        _headView.backgroundColor = [UIColor lightGrayColor];
+//        return _headView;
+//    }
+//    return nil;
+//}
 
 //每个UICollectionView展示的内容
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row == 7) {
-        JGPhotoShowCollectionViewCell *cell = [[JGPhotoShowCollectionViewCell alloc]init];
-        cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"JGPhotoShowCollectionViewCell" forIndexPath:indexPath];
-        cell.backgroundColor = [UIColor whiteColor];
-        cell.iconImgv.hidden = YES;
-        cell.addBtn.hidden = NO;
-        return cell;
-    }
-    else
-    {
-        JGPhotoShowCollectionViewCell *cell = [[JGPhotoShowCollectionViewCell alloc]init];
-        cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"JGPhotoShowCollectionViewCell" forIndexPath:indexPath];
-        cell.backgroundColor = [UIColor blackColor];
-        cell.iconImgv.hidden = NO;
-        cell.addBtn.hidden = YES;
-        return cell;
-    }
+//    if (indexPath.row == 7) {
+//        JGPhotoShowCollectionViewCell *cell = [[JGPhotoShowCollectionViewCell alloc]init];
+//        cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"JGPhotoShowCollectionViewCell" forIndexPath:indexPath];
+//        cell.backgroundColor = [UIColor whiteColor];
+//        cell.iconImgv.hidden = YES;
+//        cell.addBtn.hidden = NO;
+//        return cell;
+//    }
+//    else
+//    {
+    JGPhotoShowCollectionViewCell *cell = [[JGPhotoShowCollectionViewCell alloc]init];
+    cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"JGPhotoShowCollectionViewCell" forIndexPath:indexPath];
+    cell.backgroundColor = [UIColor blackColor];
+    cell.iconImgv.hidden = NO;
+    cell.iconImgv.layer.masksToBounds = YES;
+    cell.iconImgv.contentMode = UIViewContentModeScaleAspectFill;
+    cell.addBtn.hidden = YES;
+    [cell.iconImgv sd_setImageWithURL:[Helper setImageIconUrl:@"album/media" andTeamKey:[[_dataArray[indexPath.row] timeKey] integerValue] andIsSetWidth:YES andIsBackGround:NO] placeholderImage:[UIImage imageNamed:@"logo"]];
+    return cell;
+//    }
     
     
 }
@@ -181,24 +314,23 @@
 //UICollectionView被选中时调用的方法
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    /**
-     球队成员跳转暂时关闭
-     */
-//    JGTeamMemberController* teamVc = [[JGTeamMemberController alloc]init];
-//    [self.navigationController pushViewController:teamVc animated:YES];
+    NSMutableArray * arr = [[NSMutableArray alloc]init];
+    for (int i = 0; i < _dataArray.count; i++) {
+        [arr addObject:[_dataArray[i]timeKey]];
+    }
+    JGTeamPhotoShowViewController *picVC = [[JGTeamPhotoShowViewController alloc]initWithIndex:indexPath.row];
+    picVC.selectImages = arr;
+    picVC.power = _power;
     
+    picVC.deleteBlock = ^(NSInteger index) {
+        _collectionView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
+        [_collectionView.header beginRefreshing];
+        [_collectionView reloadData];
+    };
     
+    [self.navigationController pushViewController:picVC animated:YES];
     
-    NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
-    [dict setObject:@[@223] forKey:@"timeKeyList"];
-    [dict setObject:@527 forKey:@"userKey"];
 
-    [[JsonHttp jsonHttp]httpRequest:@"team/batchDeleteTeamMedia" JsonKey:nil withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
-        NSLog(@"errType == %@", errType);
-    } completionBlock:^(id data) {
-        
-        
-    }];
 }
 
 

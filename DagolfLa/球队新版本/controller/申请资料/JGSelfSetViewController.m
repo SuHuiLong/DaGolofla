@@ -320,6 +320,8 @@
         }
         [self.paraDic setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"userId"] forKey:@"userKey"];
         [self.paraDic setObject:[self.memeDic objectForKey:@"timeKey"] forKey:@"timeKey"];
+        [self.paraDic setObject:[self.memeDic objectForKey:@"teamKey"] forKey:@"teamKey"];
+
 //        [self.paraDic setObject:@0 forKey:@"state"];
         
         [self.paraDic setObject:[Helper returnCurrentDateString] forKey:@"createTime"];

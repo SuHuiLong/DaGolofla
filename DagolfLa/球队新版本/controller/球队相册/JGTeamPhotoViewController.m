@@ -35,11 +35,12 @@
     self.title = @"球队相册";
     _dataArray = [[NSMutableArray alloc]init];
     
-    
-    UIBarButtonItem* rightBtn = [[UIBarButtonItem alloc]initWithTitle:@"创建相册" style:UIBarButtonItemStylePlain target:self action:@selector(createClick)];
-    rightBtn.tintColor = [UIColor whiteColor];
-    self.navigationItem.rightBarButtonItem = rightBtn;
-    
+    if ([_power containsString:@"1005"] == YES) {
+        UIBarButtonItem* rightBtn = [[UIBarButtonItem alloc]initWithTitle:@"创建相册" style:UIBarButtonItemStylePlain target:self action:@selector(createClick)];
+        rightBtn.tintColor = [UIColor whiteColor];
+        self.navigationItem.rightBarButtonItem = rightBtn;
+    }
+
     [self uiConfig];
 }
 
@@ -48,6 +49,12 @@
     JGTeamCreatePhotoController* phoVc = [[JGTeamCreatePhotoController alloc]init];
     phoVc.title = @"创建相册";
     phoVc.isManage = NO;
+    phoVc.teamKey = _teamKey;
+    phoVc.createBlock = ^(void){
+        _collectionView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
+        [_collectionView.header beginRefreshing];
+        [_collectionView reloadData];
+    };
     [self.navigationController pushViewController:phoVc animated:YES];
 }
 
@@ -83,7 +90,8 @@
 - (void)downLoadData:(int)page isReshing:(BOOL)isReshing{
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     
-    [dict setObject:@181 forKey:@"teamKey"];
+    [dict setObject:_teamKey forKey:@"teamKey"];
+    [dict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:userID] forKey:@"userKey"];
     [dict setObject:[NSNumber numberWithInt:page] forKey:@"offset"];
     [[JsonHttp jsonHttp]httpRequest:@"team/getTeamAlbumList" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
         if (isReshing) {
@@ -155,14 +163,29 @@
     cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"JGTeamPhotoCollectionViewCell" forIndexPath:indexPath];
     cell.backgroundColor = [UIColor whiteColor];
     [cell showData:_dataArray[indexPath.row]];
-    [cell.manageBtn addTarget:self action:@selector(manageClick) forControlEvents:UIControlEventTouchUpInside];
+    if ([_power containsString:@"1005"] == YES) {
+        cell.manageBtn.hidden = NO;
+        cell.manageBtn.tag = 10000 + indexPath.row;
+        [cell.manageBtn addTarget:self action:@selector(manageClick:) forControlEvents:UIControlEventTouchUpInside];
+    }
+    else
+    {
+        cell.manageBtn.hidden = YES;
+    }
     return cell;
 }
--(void)manageClick
+-(void)manageClick:(UIButton *)btn
 {
     JGTeamCreatePhotoController* phoVc = [[JGTeamCreatePhotoController alloc]init];
     phoVc.title = @"球队相册管理";
     phoVc.isManage = YES;
+    phoVc.teamKey = _teamKey;
+    phoVc.timeKey = [_dataArray[btn.tag - 10000] timeKey];
+    phoVc.createBlock = ^(void){
+        _collectionView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
+        [_collectionView.header beginRefreshing];
+        [_collectionView reloadData];
+    };
     [self.navigationController pushViewController:phoVc animated:YES];
 }
 //定义每个UICollectionView 的大小
@@ -182,6 +205,8 @@
     JGPhotoAlbumViewController* phoVc = [[JGPhotoAlbumViewController alloc]init];
     phoVc.strTitle = [_dataArray[indexPath.row] name];
     phoVc.strTimeKey = [_dataArray[indexPath.row] timeKey];
+    phoVc.albumKey = [_dataArray[indexPath.row] timeKey];
+    phoVc.power = _power;
     [self.navigationController pushViewController:phoVc animated:YES];
 }
 

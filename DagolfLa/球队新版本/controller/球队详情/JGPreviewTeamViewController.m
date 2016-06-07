@@ -237,10 +237,6 @@ static CGFloat ImageHeight  = 210.0;
                     [user synchronize];
                 }
             }];
-
-
-
-            
         }];
     }];
     

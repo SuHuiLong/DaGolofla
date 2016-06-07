@@ -47,7 +47,8 @@
      ismanage == 1 需要创建，否则不创建
      */
     if (_isManage == 1) {
-        [self createManage];
+//        [self createManage];
+        [self createDelete];
         UIBarButtonItem* rightBtn = [[UIBarButtonItem alloc]initWithTitle:@"修改" style:UIBarButtonItemStylePlain target:self action:@selector(upDataClick)];
         rightBtn.tintColor = [UIColor whiteColor];
         self.navigationItem.rightBarButtonItem = rightBtn;
@@ -66,13 +67,18 @@
 {
     NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
     [dict setObject:[NSNumber numberWithInteger:_isOpen] forKey:@"power"];
-    [dict setObject:@214 forKey:@"timeKey"];
+    [dict setObject:_timeKey forKey:@"timeKey"];
     [dict setObject:[NSString stringWithFormat:@"%@",_textTitle.text] forKey:@"name"];
-    [dict setObject:@244 forKey:@"userKey"];
+    [dict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:userID] forKey:@"userKey"];
     [[JsonHttp jsonHttp]httpRequest:@"team/updateTeamAlbum" JsonKey:nil withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
         NSLog(@"errType == %@", errType);
     } completionBlock:^(id data) {
-        
+        if ([[data objectForKey:@"packSuccess"] boolValue] == 1) {
+            [Helper alertViewWithTitle:@"修改相册成功" withBlock:^(UIAlertController *alertView) {
+                [self.navigationController popViewControllerAnimated:YES];
+                [self.navigationController presentViewController:alertView animated:YES completion:nil];
+            }];
+        }
         
     }];
 }
@@ -81,16 +87,22 @@
 {
     NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
 //    [dict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:userID] forKey:@"userKey"];
-    [dict setObject:@244 forKey:@"userKey"];
-    [dict setObject:@"2016-05-27 7:00:00" forKey:@"createTime"];
+    [dict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:userID] forKey:@"userKey"];
+    [dict setObject:[Helper returnCurrentDateString] forKey:@"createTime"];
     [dict setObject:[NSNumber numberWithInteger:_isOpen] forKey:@"power"];
     [dict setObject:@0 forKey:@"timeKey"];
-    [dict setObject:@181 forKey:@"teamKey"];
+    [dict setObject:_teamKey forKey:@"teamKey"];
     [dict setObject:[NSString stringWithFormat:@"%@",_textTitle.text] forKey:@"name"];
     [[JsonHttp jsonHttp]httpRequest:@"team/createTeamAlbum" JsonKey:@"teamAlbum" withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
         NSLog(@"errType == %@", errType);
     } completionBlock:^(id data) {
-       
+        if ([[data objectForKey:@"packSuccess"] boolValue] == 1) {
+            _createBlock();
+//            [Helper alertViewWithTitle:@"创建相册成功" withBlock:^(UIAlertController *alertView) {
+                [self.navigationController popViewControllerAnimated:YES];
+//                [self.navigationController presentViewController:alertView animated:YES completion:nil];
+//            }];
+        }
         
     }];
 }
@@ -219,7 +231,10 @@
     labelEdit.text = @"照片编辑";
     labelEdit.font = [UIFont systemFontOfSize:15*screenWidth/375];
     
+}
 
+-(void)createDelete
+{
     //删除相册按钮
     UIButton* btnDelete = [UIButton buttonWithType:UIButtonTypeCustom];
     btnDelete.backgroundColor = [UIColor darkGrayColor];
@@ -227,7 +242,7 @@
     [btnDelete setTintColor:[UIColor whiteColor]];
     [self.view addSubview:btnDelete];
     btnDelete.titleLabel.font = [UIFont systemFontOfSize:16*screenWidth/375];
-    btnDelete.frame = CGRectMake(10*screenWidth/375, 95*screenWidth/375 + 45*screenWidth/375*5, screenWidth-20*screenWidth/375, 45*screenWidth/375);
+    btnDelete.frame = CGRectMake(10*screenWidth/375, 95*screenWidth/375 + 45*screenWidth/375*3, screenWidth-20*screenWidth/375, 45*screenWidth/375);
     btnDelete.layer.cornerRadius = 8*screenWidth/375;
     btnDelete.layer.masksToBounds = YES;
     [btnDelete addTarget:self action:@selector(deleteClick) forControlEvents:UIControlEventTouchUpInside];
@@ -236,13 +251,18 @@
 -(void)deleteClick
 {
     NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
-    [dict setObject:@244 forKey:@"userKey"];
-    [dict setObject:@[@215] forKey:@"timeKeyList"];
+    [dict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:userID] forKey:@"userKey"];
+    [dict setObject:@[_timeKey] forKey:@"timeKeyList"];
     [[JsonHttp jsonHttp]httpRequest:@"team/batchDeleteTeamAlbum" JsonKey:nil withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
         NSLog(@"errType == %@", errType);
     } completionBlock:^(id data) {
-        
-        
+        if ([[data objectForKey:@"packSuccess"] boolValue] == 1) {
+            _createBlock();
+//            [Helper alertViewWithTitle:@"删除相册成功" withBlock:^(UIAlertController *alertView) {
+                [self.navigationController popViewControllerAnimated:YES];
+//                [self.navigationController presentViewController:alertView animated:YES completion:nil];
+//            }];
+        }
     }];}
 
 - (void)didReceiveMemoryWarning {

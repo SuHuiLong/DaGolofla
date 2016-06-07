@@ -39,6 +39,7 @@
 
     
 }
+
 @property (strong, nonatomic) UIView *contentView;
 @property (strong, nonatomic) UIButton *addButton;
 @property (assign, nonatomic) CGFloat imageWidth;
