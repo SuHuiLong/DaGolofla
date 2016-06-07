@@ -822,6 +822,8 @@
 		821A130F1CED5F9C00694E49 /* JGLPhotoAlbumModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 821A130E1CED5F9C00694E49 /* JGLPhotoAlbumModel.m */; };
 		821A13131CEDE04400694E49 /* JGLMyTeamModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 821A13121CEDE04400694E49 /* JGLMyTeamModel.m */; };
 		823C149D1CEEF0B5000AB612 /* JGLTeamMemberModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 823C149C1CEEF0B5000AB612 /* JGLTeamMemberModel.m */; };
+		82636E8D1D06CB1600216DC1 /* JGPhotoListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 82636E8C1D06CB1600216DC1 /* JGPhotoListModel.m */; };
+		82636E901D06D18100216DC1 /* JGTeamPhotoShowViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 82636E8F1D06D18100216DC1 /* JGTeamPhotoShowViewController.m */; };
 		8281BE551CEC41D200C5BD31 /* JGTeamPhotoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8281BE541CEC41D200C5BD31 /* JGTeamPhotoModel.m */; };
 		828A99E41CE3167800AF9860 /* JGTeamCreatePhotoController.m in Sources */ = {isa = PBXBuildFile; fileRef = 828A99E31CE3167800AF9860 /* JGTeamCreatePhotoController.m */; };
 		828A99E71CE325BB00AF9860 /* JGPhotoAlbumViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 828A99E61CE325BB00AF9860 /* JGPhotoAlbumViewController.m */; };
@@ -2255,6 +2257,10 @@
 		821A13121CEDE04400694E49 /* JGLMyTeamModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGLMyTeamModel.m; sourceTree = "<group>"; };
 		823C149B1CEEF0B5000AB612 /* JGLTeamMemberModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGLTeamMemberModel.h; sourceTree = "<group>"; };
 		823C149C1CEEF0B5000AB612 /* JGLTeamMemberModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGLTeamMemberModel.m; sourceTree = "<group>"; };
+		82636E8B1D06CB1600216DC1 /* JGPhotoListModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGPhotoListModel.h; sourceTree = "<group>"; };
+		82636E8C1D06CB1600216DC1 /* JGPhotoListModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGPhotoListModel.m; sourceTree = "<group>"; };
+		82636E8E1D06D18100216DC1 /* JGTeamPhotoShowViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGTeamPhotoShowViewController.h; sourceTree = "<group>"; };
+		82636E8F1D06D18100216DC1 /* JGTeamPhotoShowViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGTeamPhotoShowViewController.m; sourceTree = "<group>"; };
 		8281BE531CEC41D200C5BD31 /* JGTeamPhotoModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGTeamPhotoModel.h; sourceTree = "<group>"; };
 		8281BE541CEC41D200C5BD31 /* JGTeamPhotoModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGTeamPhotoModel.m; sourceTree = "<group>"; };
 		828A99E21CE3167800AF9860 /* JGTeamCreatePhotoController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGTeamCreatePhotoController.h; sourceTree = "<group>"; };
@@ -5579,6 +5585,8 @@
 				8281BE541CEC41D200C5BD31 /* JGTeamPhotoModel.m */,
 				821A130D1CED5F9C00694E49 /* JGLPhotoAlbumModel.h */,
 				821A130E1CED5F9C00694E49 /* JGLPhotoAlbumModel.m */,
+				82636E8B1D06CB1600216DC1 /* JGPhotoListModel.h */,
+				82636E8C1D06CB1600216DC1 /* JGPhotoListModel.m */,
 			);
 			path = "球队相册";
 			sourceTree = "<group>";
@@ -5592,6 +5600,8 @@
 				828A99E31CE3167800AF9860 /* JGTeamCreatePhotoController.m */,
 				828A99E51CE325BB00AF9860 /* JGPhotoAlbumViewController.h */,
 				828A99E61CE325BB00AF9860 /* JGPhotoAlbumViewController.m */,
+				82636E8E1D06D18100216DC1 /* JGTeamPhotoShowViewController.h */,
+				82636E8F1D06D18100216DC1 /* JGTeamPhotoShowViewController.m */,
 				8294872C1CE9C92A0018D3F6 /* JGLUpdataPhotoController.h */,
 				8294872D1CE9C92A0018D3F6 /* JGLUpdataPhotoController.m */,
 				828A99E81CE32B7000AF9860 /* JGTeamMemberController.h */,
@@ -6413,6 +6423,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				82636E8D1D06CB1600216DC1 /* JGPhotoListModel.m in Sources */,
 				20F6A5C41CF3EDE800DD9383 /* JGHTeamContactTableViewCell.m in Sources */,
 				F5B5499A1CE9EC6E0091C962 /* JGPhotoTimeReusableView.m in Sources */,
 				F5B549991CE9EC3B0091C962 /* JGPhotoShowCollectionViewCell.m in Sources */,
@@ -6882,6 +6893,7 @@
 				36BF008F1BC772EF005B3CE2 /* MyAwardViewController.m in Sources */,
 				20CA13961CE97C9C00DA15B9 /* JGHTeamMembersViewController.m in Sources */,
 				36BF00411BC771FB005B3CE2 /* ZanNumTableViewCell.m in Sources */,
+				82636E901D06D18100216DC1 /* JGTeamPhotoShowViewController.m in Sources */,
 				36BFFF741BC76D09005B3CE2 /* NSData+ImageContentType.m in Sources */,
 				3683947E1C0984C800F162F6 /* TeamPhotoAddViewController.m in Sources */,
 				AA9B5F031C573678009381DF /* PostDataRequest.m in Sources */,
