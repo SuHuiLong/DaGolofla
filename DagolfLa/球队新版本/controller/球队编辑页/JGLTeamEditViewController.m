@@ -422,11 +422,10 @@ static CGFloat ImageHeight  = 210.0;
                         NSLog(@"errType===%@", errType);
                     } completionBlock:^(id data) {
 
-                        
-                        NSString *bgUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/team/%@_background.jpg", [self.detailDic objectForKey:@"timeKey"]];
-                        
-                        [[SDImageCache sharedImageCache]removeImageForKey:bgUrl fromDisk:YES withCompletion:^{
-                        }];                        
+                        NSString *bgUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/team/%@_background.jpg@400w_150h", [self.detailDic objectForKey:@"timeKey"]];
+                        [[SDImageCache sharedImageCache] removeImageForKey:bgUrl];
+//                        [[SDImageCache sharedImageCache]removeImageForKey:bgUrl fromDisk:YES withCompletion:^{
+//                        }];
 
                     }];
                     
@@ -446,11 +445,12 @@ static CGFloat ImageHeight  = 210.0;
                     [[JsonHttp jsonHttp]httpRequestImageOrVedio:@"1" withData:dict andDataArray:[NSArray arrayWithObject:UIImageJPEGRepresentation((UIImage *)Data, 0.7)] failedBlock:^(id errType) {
                         NSLog(@"errType===%@", errType);
                     } completionBlock:^(id data) {
-
-                        NSString *headUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/team/%@.jpg", [self.detailDic objectForKey:@"timeKey"]];
-                        
-                        [[SDImageCache sharedImageCache]removeImageForKey:headUrl fromDisk:YES withCompletion:^{
-                        }];
+                        NSString *head = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/team/661.jpg@100w_100h"];
+                        NSString *headUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/team/%@.jpg@120w_120h", [self.detailDic objectForKey:@"timeKey"]];
+                        [[SDImageCache sharedImageCache] removeImageForKey:headUrl fromDisk:YES];
+                        [[SDImageCache sharedImageCache] removeImageForKey:head fromDisk:YES];
+//                        [[SDImageCache sharedImageCache]removeImageForKey:headUrl fromDisk:YES withCompletion:^{
+//                        }];
                         
                     }];
                 }

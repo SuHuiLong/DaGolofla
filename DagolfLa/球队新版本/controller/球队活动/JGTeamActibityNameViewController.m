@@ -276,6 +276,10 @@ static CGFloat ImageHeight  = 210.0;
         fiData = [NSData dataWithContentsOfURL:[Helper setImageIconUrl:@"activity" andTeamKey:_myActivityKey andIsSetWidth:YES andIsBackGround:NO]];
     }
     
+  
+    
+    
+    
 
     NSString*  shareUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/team/teamac.html?key=%td", _teamActivityKey];
     [UMSocialData defaultData].extConfig.title=[NSString stringWithFormat:@"%@报名", _model.name];
