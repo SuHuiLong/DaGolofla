@@ -130,7 +130,8 @@
 {
     JGMenberTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"JGMenberTableViewCell" forIndexPath:indexPath];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    [cell showData:_dataArray[indexPath.row]];
+//    [cell showData:_dataArray[indexPath.row]];
+    [cell showData:_dataArray[indexPath.row] andPower:_power];
     return cell;
 }
 

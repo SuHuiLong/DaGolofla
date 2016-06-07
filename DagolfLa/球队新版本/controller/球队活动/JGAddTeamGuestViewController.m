@@ -76,9 +76,11 @@
 }
 #pragma mark -- 添加按钮事件
 - (IBAction)addGuestBtnClick:(UIButton *)sender {
-    if (self.nameText.text.length == 0) {
-        self.nameText.layer.borderColor = [UIColor redColor].CGColor;
-        self.nameText.layer.borderWidth= 1.0f;
+    NSString *namestring = self.nameText.text;
+    namestring = [namestring stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    NSLog(@"%@", namestring);
+    if (namestring.length == 0) {
+        [[ShowHUD showHUD]showToastWithText:@"姓名不能为空或者空格！" FromView:self.view];
         return;
     }
     

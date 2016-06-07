@@ -110,6 +110,12 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
         [applyDict setObject:@0 forKey:@"signUpInfoKey"];//报名信息的timeKey
         [applyDict setObject:@0 forKey:@"timeKey"];//timeKey
         [applyDict setObject:@"1" forKey:@"select"];//付款勾选默认勾
+        if ([[NSUserDefaults standardUserDefaults]objectForKey:@"almost"]) {
+            [applyDict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"almost"] forKey:@"almost"];
+        }else{
+            [applyDict setObject:@"0" forKey:@"almost"];
+        }
+        
         [self.applyArray addObject:applyDict];
         
         [self countAmountPayable];

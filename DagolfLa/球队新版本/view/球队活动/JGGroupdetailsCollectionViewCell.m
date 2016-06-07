@@ -50,6 +50,19 @@
     self.lable4.font = [UIFont systemFontOfSize:11];
     self.lable4.textAlignment = NSTextAlignmentCenter;
     [self.section4 addSubview:self.lable4];
+    
+    //付款图标
+    self.money1 = [[UIImageView alloc]initWithFrame:CGRectMake(_sction1.frame.size.width - 12, _sction1.frame.size.height/2-6, 12, 12)];
+    [_sction1 addSubview:_money1];
+    
+    self.money2 = [[UIImageView alloc]initWithFrame:CGRectMake(_sction2.frame.size.width - 12, _sction2.frame.size.height/2-6, 12, 12)];
+    [_sction2 addSubview:_money2];
+    
+    self.money3 = [[UIImageView alloc]initWithFrame:CGRectMake(_section3.frame.size.width - 12, _section3.frame.size.height/2-6, 12, 12)];
+    [_section3 addSubview:_money3];
+    
+    self.money4 = [[UIImageView alloc]initWithFrame:CGRectMake(_section4.frame.size.width - 12, _section4.frame.size.height/2-6, 12, 12)];
+    [_section4 addSubview:_money4];
 }
 
 //第一个
@@ -94,11 +107,16 @@
         self.lable4.text = nil;
     }
     
+    //清空背景图
     [self.sction1 setImage:[UIImage imageNamed:@"addGroup"] forState:UIControlStateNormal];
     [self.sction2 setImage:[UIImage imageNamed:@"addGroup"] forState:UIControlStateNormal];
     [self.section3 setImage:[UIImage imageNamed:@"addGroup"] forState:UIControlStateNormal];
     [self.section4 setImage:[UIImage imageNamed:@"addGroup"] forState:UIControlStateNormal];
-    
+    //清空钱币图标
+    [self.money1 setImage:nil];
+    [self.money2 setImage:nil];
+    [self.money3 setImage:nil];
+    [self.money4 setImage:nil];
     
     NSLog(@"%ld", (long)self.tag);
     
@@ -116,6 +134,10 @@
                     self.sction1.layer.cornerRadius = self.sction1.frame.size.width/2;
                     
                     self.lable1.text = model.name;
+                    //金钱按钮
+                    if (model.payMoney != 0) {
+                        [self.money1 setImage:[UIImage imageNamed:@"payMoney"]];
+                    }
                 }
                 
                 if (model.sortIndex == 1){
@@ -125,6 +147,11 @@
                     self.sction2.layer.cornerRadius = self.sction1.frame.size.width/2;
                     
                     self.lable2.text = model.name;
+                    
+                    //金钱按钮
+                    if (model.payMoney != 0) {
+                        [self.money2 setImage:[UIImage imageNamed:@"payMoney"]];
+                    }
                 }
                 
                 if (model.sortIndex == 2){
@@ -134,6 +161,11 @@
                     self.section3.layer.cornerRadius = self.sction1.frame.size.width/2;
                     
                     self.lable3.text = model.name;
+                    
+                    //金钱按钮
+                    if (model.payMoney != 0) {
+                        [self.money3 setImage:[UIImage imageNamed:@"payMoney"]];
+                    }
                 }
                 
                 if (model.sortIndex == 3){
@@ -143,10 +175,17 @@
                     self.section4.layer.cornerRadius = self.sction1.frame.size.width/2;
                     
                     self.lable4.text = model.name;
+                    
+                    //金钱按钮
+                    if (model.payMoney != 0) {
+                        [self.money4 setImage:[UIImage imageNamed:@"payMoney"]];
+                    }
                 }
             }
         }
     }
+    
+    
     
     
 }

@@ -23,8 +23,12 @@
 
 @property (strong, nonatomic) UILabel* poleLabel;
 
+@property (strong, nonatomic) UILabel *moneyLabel;
 
--(void) showData:(JGLTeamMemberModel *)model;
+
+//-(void) showData:(JGLTeamMemberModel *)model;
+
+- (void)showData:(JGLTeamMemberModel *)model andPower:(NSString *)power;
 
 - (void)configJGHPlayersModel:(JGHPlayersModel *)model;
 

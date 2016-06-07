@@ -33,7 +33,7 @@
 #import "UMSocialControllerService.h"
 
 #import "EnterViewController.h"
-#import "JGTeamDeatilWKwebViewController.h"
+#import "JGTeamGroupViewController.h"
 
 static NSString *const JGTeamActivityWithAddressCellIdentifier = @"JGTeamActivityWithAddressCell";
 static NSString *const JGTeamActivityDetailsCellIdentifier = @"JGTeamActivityDetailsCell";
@@ -76,7 +76,7 @@ static CGFloat ImageHeight  = 210.0;
         [self.headPortraitBtn sd_setImageWithURL:[Helper setImageIconUrl:@"team" andTeamKey:_model.teamKey andIsSetWidth:YES andIsBackGround:NO] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:TeamLogoImage]];
     }else if (self.isTeamChannal == 1){
         //近期活动过来的数据---其他走上面
-        [self.imgProfile sd_setImageWithURL:[Helper setImageIconUrl:@"activity" andTeamKey:[_model.timeKey integerValue] andIsSetWidth:YES andIsBackGround:YES] placeholderImage:[UIImage imageNamed:TeamLogoImage]];
+        [self.imgProfile sd_setImageWithURL:[Helper setImageIconUrl:@"activity" andTeamKey:[_model.timeKey integerValue] andIsSetWidth:YES andIsBackGround:YES] placeholderImage:[UIImage imageNamed:ActivityBGImage]];
         
         [self.headPortraitBtn sd_setImageWithURL:[Helper setImageIconUrl:@"team" andTeamKey:_model.teamKey andIsSetWidth:YES andIsBackGround:NO] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:TeamLogoImage]];
     }
@@ -200,7 +200,12 @@ static CGFloat ImageHeight  = 210.0;
 //        [dict setValue:_model.timeKey forKey:@"activityKey"];
         [dict setValue:[NSString stringWithFormat:@"%td", _teamKey] forKey:@"activityKey"];
     }else{
-        [dict setValue:[NSString stringWithFormat:@"%td", [_model.timeKey integerValue]] forKey:@"activityKey"];
+        //近期活动
+        if (self.isTeamChannal == 1) {
+            [dict setValue:[NSString stringWithFormat:@"%td", _model.teamActivityKey] forKey:@"activityKey"];
+        }else{
+            [dict setValue:[NSString stringWithFormat:@"%td", [_model.timeKey integerValue]] forKey:@"activityKey"];
+        }
     }
     
     [dict setValue:DEFAULF_USERID forKey:@"userKey"];
@@ -279,8 +284,16 @@ static CGFloat ImageHeight  = 210.0;
     {
         fiData = [NSData dataWithContentsOfURL:[Helper setImageIconUrl:@"activity" andTeamKey:[_model.timeKey integerValue]andIsSetWidth:YES andIsBackGround:NO]];
     }
-
-    NSString*  shareUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/team/teamac.html?key=%td", _teamActivityKey];
+    
+  
+    
+    NSString*  shareUrl;
+    if (self.isTeamChannal == 2) {
+       shareUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/team/teamac.html?key=%@", _model.timeKey];
+    }else{
+        shareUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/team/teamac.html?key=%td", _teamActivityKey];
+    }
+    
     [UMSocialData defaultData].extConfig.title=[NSString stringWithFormat:@"%@报名", _model.name];
     if (index == 0){
         //微信
@@ -313,10 +326,14 @@ static CGFloat ImageHeight  = 210.0;
 }
 #pragma mark -- 跳转分组页面
 - (void)pushGroupCtrl:(UIButton *)btn{
-    //http://imgcache.dagolfla.com/share/team/group.html?key=1645
-    JGTeamDeatilWKwebViewController *detailCtrl = [[JGTeamDeatilWKwebViewController alloc]init];
-    detailCtrl.detailString = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/team/group.html?key=%td", _teamActivityKey];
-    [self.navigationController pushViewController:detailCtrl animated:YES];
+    JGTeamGroupViewController *teamCtrl = [[JGTeamGroupViewController alloc]init];
+    if (_isTeamChannal == 2) {
+        teamCtrl.teamActivityKey = [_model.timeKey integerValue];
+    }else{
+        teamCtrl.teamActivityKey = _teamActivityKey;
+    }
+    
+    [self.navigationController pushViewController:teamCtrl animated:YES];
 }
 #pragma mark -- 获取球场地址
 - (void)replaceWithPicture:(UIButton *)Btn{
@@ -436,15 +453,20 @@ static CGFloat ImageHeight  = 210.0;
 }
 #pragma mark -- 报名参加
 - (void)applyAttendBtnClick:(UIButton *)btn{
-    //判断是不改球队成员
-    if (_isTeamMember == 1) {
-        [[ShowHUD showHUD]showToastWithText:@"您不是改球队队员！" FromView:self.view];
+    //判断活动是否结束报名
+    if ([[Helper returnCurrentDateString] compare:_model.signUpEndTime] > 0) {
+        [[ShowHUD showHUD]showToastWithText:@"该活动已结束报名！" FromView:self.view];
     }else{
-        JGTeamApplyViewController *teamApplyCtrl = [[JGTeamApplyViewController alloc]initWithNibName:@"JGTeamApplyViewController" bundle:nil];
-        teamApplyCtrl.modelss = self.model;
-        teamApplyCtrl.isTeamChannal = self.isTeamChannal;
-        teamApplyCtrl.userName = _userName;
-        [self.navigationController pushViewController:teamApplyCtrl animated:YES];
+        //判断是不改球队成员
+        if (_isTeamMember == 1) {
+            [[ShowHUD showHUD]showToastWithText:@"您不是改球队队员！" FromView:self.view];
+        }else{
+            JGTeamApplyViewController *teamApplyCtrl = [[JGTeamApplyViewController alloc]initWithNibName:@"JGTeamApplyViewController" bundle:nil];
+            teamApplyCtrl.modelss = self.model;
+            teamApplyCtrl.isTeamChannal = self.isTeamChannal;
+            teamApplyCtrl.userName = _userName;
+            [self.navigationController pushViewController:teamApplyCtrl animated:YES];
+        }
     }
 }
 #pragma mark -- 拨打电话

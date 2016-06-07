@@ -87,10 +87,10 @@ static NSString *const JGGroupdetailsCollectionViewCellIdentifier = @"JGGroupdet
     [self.view addSubview:self.groupDetailsCollectionView];
     
     
-    [self loadData];
+    [self loadData:0];
 }
-#pragma mark -- 获取报名人员列表信息
-- (void)loadData{
+#pragma mark -- 获取报名人员列表信息 1－表示分组
+- (void)loadData:(NSInteger)fenzu{
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     [dict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:userID] forKey:@"userKey"];
     [dict setObject:[NSString stringWithFormat:@"%td", self.teamActivityKey] forKey:@"activityKey"];
@@ -124,6 +124,14 @@ static NSString *const JGGroupdetailsCollectionViewCellIdentifier = @"JGGroupdet
                 //已经分组
                 [self.alreadyDataArray addObject:model];
             }
+        }
+        
+        if (fenzu == 1) {
+            UIAlertAction *commitAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            }];
+            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"系统提示" message:@"已分组成功!" preferredStyle:UIAlertControllerStyleAlert];
+            [alertController addAction:commitAction];
+            [self presentViewController:alertController animated:YES completion:nil];
         }
         
         [self.collectionView reloadData];
@@ -254,13 +262,7 @@ static NSString *const JGGroupdetailsCollectionViewCellIdentifier = @"JGGroupdet
         NSLog(@"data === %@", data);
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
             // 重新加载数据
-            [self loadData];
-            
-            UIAlertAction *commitAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-            }];
-            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"系统提示" message:@"已分组成功!" preferredStyle:UIAlertControllerStyleAlert];
-            [alertController addAction:commitAction];
-            [self presentViewController:alertController animated:YES completion:nil];
+            [self loadData:1];
         }
     }];
 }

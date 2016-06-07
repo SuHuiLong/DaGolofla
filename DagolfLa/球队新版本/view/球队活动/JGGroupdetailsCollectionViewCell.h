@@ -42,6 +42,10 @@
 
 @property (strong, nonatomic) UILabel *lable4;
 
+@property (strong, nonatomic) UIImageView *money1;
+@property (strong, nonatomic) UIImageView *money2;
+@property (strong, nonatomic) UIImageView *money3;
+@property (strong, nonatomic) UIImageView *money4;
 
 //- (void)configJGHPlayersModel:(JGHPlayersModel *)model andSortIndex:(NSInteger)sortIndex;
 

@@ -50,12 +50,18 @@
         [self addSubview:_poleLabel];
         _poleLabel.font = [UIFont systemFontOfSize:14*screenWidth/375];
         
+        _moneyLabel = [[UILabel alloc]initWithFrame:CGRectMake((screenWidth - 60)*screenWidth/375, (self.frame.size.height/3)*screenWidth/375, 60*screenWidth/375, (self.frame.size.height/3)*screenWidth/375)];
+        _moneyLabel.textColor = [UIColor blackColor];
+        _moneyLabel.textAlignment = NSTextAlignmentLeft;
         
+        _moneyLabel.hidden = YES;
+        [self addSubview:_moneyLabel];
+        _moneyLabel.font = [UIFont systemFontOfSize:14*screenWidth/375];
     }
     return self;
 }
 
--(void)showData:(JGLTeamMemberModel *)model
+- (void)showData:(JGLTeamMemberModel *)model andPower:(NSString *)power
 {
     [_iconImgv sd_setImageWithURL:[Helper setImageIconUrl:@"user" andTeamKey:[model.userKey integerValue] andIsSetWidth:YES andIsBackGround:NO] placeholderImage:[UIImage imageNamed:@"logo"]];
     
@@ -71,7 +77,54 @@
     
     _almostLabel.text = [NSString stringWithFormat:@"%@",model.almost];
     
-    _poleLabel.text = [NSString stringWithFormat:@"%@",model.mobile];
+    //显示模式XXX。。。XXX
+    if ([power containsString:@"1001"]) {
+        _poleLabel.text = [NSString stringWithFormat:@"%@", model.mobile];
+    }else{
+        if (model.mobile.length == 11) {
+            _poleLabel.text = [NSString stringWithFormat:@"%@***%@",[model.mobile substringToIndex:3], [model.mobile substringFromIndex:8]];
+        }else{
+            _poleLabel.text = [NSString stringWithFormat:@"%@***", model.mobile];
+        }
+    }
+    
+    
+    _moneyLabel.hidden = NO;
+    _moneyLabel.text = nil;
+    _moneyLabel.textColor = [UIColor blackColor];
+    
+    /**
+     public static final int  IDENTITY_UNKNOW            =  0;   // 未知
+     public static final int  IDENTITY_CAPTAIN           =  1;   //队长
+     public static final int  IDENTITY_PRESIDENT         =  2;   //会长
+     public static final int  IDENTITY_VICEPRESIDENT     =  3;   //副会长
+     public static final int  IDENTITY_SECRETARYGENERAL  =  4;   //球队秘书长
+     public static final int  IDENTITY_SECRETARY         =  5;   //球队秘书
+     public static final int  IDENTITY_MOHAMED           =  6;   //干事
+     */
+    
+    if(model.identity == 1){
+        _moneyLabel.text = @"队长";
+        _moneyLabel.textColor = [UIColor redColor];
+    }else if(model.identity == 2){
+        _moneyLabel.text = @"会长";
+        _moneyLabel.textColor = [UIColor redColor];
+    }else if(model.identity == 3){
+        _moneyLabel.text = @"副会长";
+        _moneyLabel.textColor = [UIColor redColor];
+    }else if(model.identity == 4){
+        _moneyLabel.text = @"球队秘书长";
+        _moneyLabel.textColor = [UIColor redColor];
+    }else if(model.identity == 5){
+        _moneyLabel.text = @"球队秘书";
+        _moneyLabel.textColor = [UIColor redColor];
+    }else if(model.identity == 6){
+        _moneyLabel.text = @"干事";
+        _moneyLabel.textColor = [UIColor redColor];
+    }else{
+        _moneyLabel.text = @"球员";
+        _moneyLabel.textColor = [UIColor blackColor];
+    }
     
 }
 
@@ -91,7 +144,18 @@
     _almostLabel.text = [NSString stringWithFormat:@"%td", model.almost];
     
     _poleLabel.text = [NSString stringWithFormat:@"%@",model.mobile];
-
+    
+    /**
+    _moneyLabel.hidden = NO;
+    _moneyLabel.text = nil;
+    _moneyLabel.textColor = [UIColor blackColor];
+    if (model.payMoney == 0) {
+        _moneyLabel.text = @"未付款";
+        _moneyLabel.textColor = [UIColor redColor];
+    }else{
+        _moneyLabel.text = @"已付款";
+    }
+     */
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

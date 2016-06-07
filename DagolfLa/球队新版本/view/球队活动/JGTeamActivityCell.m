@@ -31,11 +31,20 @@
     //活动名称
     self.activitytitle.text = modeel.name;
     //报名
-    if (modeel.isClose == 0) {
-        self.Apply.text = @"正在报名";
-    }else{
+    self.Apply.text = @"";
+    self.Apply.textColor = [UIColor blackColor];
+    if (modeel.isClose == 1) {
         self.Apply.text = @"活动结束";
         self.Apply.textColor = [UIColor redColor];
+    }else{
+        NSString *str = [Helper returnCurrentDateString];//跟当前时间比较
+        if ([str compare:modeel.signUpEndTime] > 0) {
+            self.Apply.text = @"报名结束";
+            self.Apply.textColor = [UIColor redColor];
+        }else{
+            self.Apply.text = @"报名中";
+            self.Apply.textColor = [UIColor blackColor];
+        }
     }
     //活动时间componentsSeparatedByString
     NSString *timeString = [[modeel.beginDate componentsSeparatedByString:@" "]firstObject];
@@ -50,29 +59,29 @@
 
 - (void)setJGTeamActivityCellWithModel:(JGTeamAcitivtyModel *)modeel fromCtrl:(NSInteger)ctrlId{
     if (ctrlId == 1) {
-//        [self.imageview sd_setImageWithURL:[Helper setImageIconUrl:@"activity" andTeamKey:[modeel.timeKey integerValue] andIsSetWidth:YES andIsBackGround:YES] placeholderImage:[UIImage imageNamed:ActivityBGImage]];
         //球队活动all
         [self.imageview sd_setImageWithURL:[Helper setImageIconUrl:@"activity" andTeamKey:[modeel.timeKey integerValue] andIsSetWidth:YES andIsBackGround:YES] placeholderImage:[UIImage imageNamed:ActivityBGImage]];
     }else{
-//        [self.imageview sd_setImageWithURL:[Helper setImageIconUrl:@"activity" andTeamKey:modeel.teamActivityKey andIsSetWidth:YES andIsBackGround:YES] placeholderImage:[UIImage imageNamed:ActivityBGImage]];
-        
         //近期活动
         [self.imageview sd_setImageWithURL:[Helper setImageIconUrl:@"activity" andTeamKey:[modeel.timeKey integerValue] andIsSetWidth:YES andIsBackGround:YES] placeholderImage:[UIImage imageNamed:ActivityBGImage]];
     }
     
     //活动名称
     self.activitytitle.text = modeel.name;
+    
+    self.Apply.text = @"";
+    self.Apply.textColor = [UIColor blackColor];
     //报名
     if (modeel.isClose == 1) {
         self.Apply.text = @"活动结束";
         self.Apply.textColor = [UIColor redColor];
     }else{
         NSString *str = [Helper returnCurrentDateString];//跟当前时间比较
-        if ([str compare:modeel.endDate] > 0) {
-            self.Apply.text = @"活动结束";
+        if ([str compare:modeel.signUpEndTime] > 0) {
+            self.Apply.text = @"报名结束";
             self.Apply.textColor = [UIColor redColor];
         }else{
-            self.Apply.text = @"正在报名";
+            self.Apply.text = @"报名中";
             self.Apply.textColor = [UIColor blackColor];
         }
     }
