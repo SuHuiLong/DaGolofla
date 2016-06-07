@@ -10,4 +10,9 @@
 
 @interface JGTeamPhotoViewController : ViewController
 
+//相册中的参数：球队的key
+@property (strong, nonatomic) NSNumber* teamKey;
+
+//相册中的权限设置
+@property (strong, nonatomic) NSString* power;
 @end

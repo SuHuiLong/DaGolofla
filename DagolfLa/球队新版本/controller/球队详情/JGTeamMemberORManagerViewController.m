@@ -48,6 +48,9 @@
 
 #import "JGTeamMemberController.h"
 #import "TeamMessageController.h"//发送信息
+//球队照片
+#import "JGTeamPhotoViewController.h"
+
 
 static NSString *const JGTableViewCellIdentifier = @"JGTableViewCell";
 static NSString *const JGHTeamContactCellIdentifier = @"JGHTeamContactTableViewCell";
@@ -431,7 +434,7 @@ static CGFloat ImageHeight  = 210.0;
     }else if (section == 1){
         return 1;
     }else if (section == 2){
-        return 3;
+        return 4;
     }else{
         return 1;
     }
@@ -508,14 +511,17 @@ static CGFloat ImageHeight  = 210.0;
                 launchActivityCell.promptLB.text = @"球队成员";
 //                launchActivityCell.contentLB.text = self.detailModel.cityName;
                 break;
-//            case 2:
-//                launchActivityCell.promptLB.text = @"球队相册";
-////                launchActivityCell.contentLB.text = self.detailModel.establishTime;
-//                break;
             case 2:
-                launchActivityCell.imageV.image = [UIImage imageNamed:@"qdjj"];
+                
+                launchActivityCell.promptLB.text = @"球队相册";
+                launchActivityCell.imageV.image = [UIImage imageNamed:@"xc"];
+                //                launchActivityCell.contentLB.text = [NSString stringWithFormat:@"%td人", self.detailModel.userSum];
+                
+                break;
+            case 3:
                 launchActivityCell.promptLB.text = @"球队简介";
-//                launchActivityCell.contentLB.text = [NSString stringWithFormat:@"%td人", self.detailModel.userSum];
+                launchActivityCell.imageV.image = [UIImage imageNamed:@"qdjj"];
+                //                launchActivityCell.contentLB.text = self.detailModel.establishTime;
                 break;
             default:
                 break;
@@ -577,17 +583,19 @@ static CGFloat ImageHeight  = 210.0;
                 break;
             case 2:
             {
+                JGTeamPhotoViewController* phoVc = [[JGTeamPhotoViewController alloc]init];
+                phoVc.teamKey = [self.detailDic objectForKey:@"timeKey"];
+                phoVc.power = self.power;
+                [self.navigationController pushViewController:phoVc animated:YES];
+            }
+                break;
+            case 3:
+            {
                 JGTeamDeatilWKwebViewController *wkVC = [[JGTeamDeatilWKwebViewController alloc] init];
                 
                 wkVC.detailString = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/team/teamDetails.html?key=%@", [self.detailDic objectForKey:@"timeKey"]];;
                 wkVC.teamName = [self.detailDic objectForKey:@"name"];
                 [self.navigationController pushViewController:wkVC animated:YES];
-            }
-                break;
-            case 3:
-            {
-
-
             }
                 break;
                 

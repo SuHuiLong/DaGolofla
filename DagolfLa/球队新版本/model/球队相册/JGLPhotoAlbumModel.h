@@ -44,4 +44,6 @@
 @property (strong, nonatomic) NSNumber* timeKey;
 
 @property (strong, nonatomic) NSNumber* ts;
+
+@property (strong, nonatomic) NSNumber* mediaKey;
 @end

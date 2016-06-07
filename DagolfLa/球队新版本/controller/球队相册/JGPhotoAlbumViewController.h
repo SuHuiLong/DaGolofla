@@ -14,4 +14,7 @@
 @property (strong, nonatomic) NSString* strTitle;
 @property (strong, nonatomic) NSNumber* strTimeKey;
 
+//相册的key
+@property (strong, nonatomic) NSNumber* albumKey;
+@property (strong, nonatomic) NSString* power;
 @end
