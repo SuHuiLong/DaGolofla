@@ -196,16 +196,16 @@
                 
                 [self.teamActivityTableView reloadData];
             }else{
-                [Helper alertViewWithTitle:@"没有更多活动" withBlock:^(UIAlertController *alertView) {
-                    [self presentViewController:alertView animated:YES completion:nil];
-                }];
+//                [Helper alertViewWithTitle:@"没有更多活动" withBlock:^(UIAlertController *alertView) {
+//                    [self presentViewController:alertView animated:YES completion:nil];
+//                }];
             }
 
         }else {
             
-            [Helper alertViewWithTitle:@"获取失败" withBlock:^(UIAlertController *alertView) {
-                [self presentViewController:alertView animated:YES completion:nil];
-            }];
+//            [Helper alertViewWithTitle:@"获取失败" withBlock:^(UIAlertController *alertView) {
+//                [self presentViewController:alertView animated:YES completion:nil];
+//            }];
         }
         [self.teamActivityTableView reloadData];
         if (isReshing) {

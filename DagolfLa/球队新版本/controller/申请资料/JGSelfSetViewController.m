@@ -163,7 +163,7 @@
     JGButtonTableViewCell *cell = [self.secondTableView cellForRowAtIndexPath:indexpat];
     [cell.button setTitle:@"保密" forState:(UIControlStateNormal)];
 }//buttonHand
-
+#pragma mark --惯用手确定按钮
 - (void)buttonMissClickSec: (UIButton *)btn{
     if (![self.paraDic objectForKey:@"hand"]) {
         [self.paraDic setObject:@0 forKey:@"hand"];
@@ -194,6 +194,7 @@
     [cell.button setTitle:@"保密" forState:(UIControlStateNormal)];
 }//button1
 
+#pragma mark --性别确定按钮
 - (void)buttonMissClick: (UIButton *)btn{
     if (![self.paraDic objectForKey:@"sex"]) {
         [self.paraDic setObject:@0 forKey:@"sex"];
