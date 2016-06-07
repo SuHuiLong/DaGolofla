@@ -176,9 +176,9 @@
             _page++;
             [_tableView reloadData];
         }else {
-            [Helper alertViewWithTitle:@"没有更多球队" withBlock:^(UIAlertController *alertView) {
-                [self presentViewController:alertView animated:YES completion:nil];
-            }];
+//            [Helper alertViewWithTitle:@"没有更多球队" withBlock:^(UIAlertController *alertView) {
+//                [self presentViewController:alertView animated:YES completion:nil];
+//            }];
         }
         [_tableView reloadData];
         if (isReshing) {
@@ -256,7 +256,7 @@
     if (self.searchController.active) {
     
         if ([self.searchArray count] != 0) {
-            [cell.iconImageV sd_setImageWithURL:[Helper setImageIconUrl:[[self.searchArray[indexPath.row] objectForKey:@"timeKey"] integerValue]] placeholderImage:[UIImage imageNamed:@"logo"]];
+            [cell.iconImageV sd_setImageWithURL:[Helper setImageIconUrl:[[self.searchArray[indexPath.row] objectForKey:@"timeKey"] integerValue]] placeholderImage:[UIImage imageNamed:TeamLogoImage]];
 //            cell.nameLabel.text = [self.searchArray[indexPath.row] objectForKey:@"name"];
             cell.nameLabel.text = [NSString stringWithFormat:@"%@ (%@人)",[self.modelArray[indexPath.row] objectForKey:@"name"],[self.searchArray[indexPath.row] objectForKey:@"userSum"]];
             cell.adressLabel.text = [self.searchArray[indexPath.row] objectForKey:@"crtyName"];
@@ -268,7 +268,7 @@
         return cell;
     }else{
         // TEST
-        [cell.iconImageV sd_setImageWithURL:[Helper setImageIconUrl:[[self.modelArray[indexPath.row] objectForKey:@"timeKey"] integerValue]] placeholderImage:[UIImage imageNamed:@"logo"]];
+        [cell.iconImageV sd_setImageWithURL:[Helper setImageIconUrl:[[self.modelArray[indexPath.row] objectForKey:@"timeKey"] integerValue]] placeholderImage:[UIImage imageNamed:TeamLogoImage]];
         
         cell.nameLabel.text = [NSString stringWithFormat:@"%@ (%@)",[self.modelArray[indexPath.row] objectForKey:@"name"],[self.modelArray[indexPath.row] objectForKey:@"userSum"]];
         cell.adressLabel.text = [self.modelArray[indexPath.row] objectForKey:@"crtyName"];

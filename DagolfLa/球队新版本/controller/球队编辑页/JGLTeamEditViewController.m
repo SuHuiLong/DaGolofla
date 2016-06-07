@@ -206,10 +206,9 @@ static CGFloat ImageHeight  = 210.0;
             [self.navigationController presentViewController:alertView animated:YES completion:nil];
         }];
     } completionBlock:^(id data) {
-        
+        [self.navigationController popViewControllerAnimated:YES];
         [Helper alertViewNoHaveCancleWithTitle:@"保存成功" withBlock:^(UIAlertController *alertView) {
             [self.navigationController presentViewController:alertView animated:YES completion:nil];
-            [self.navigationController popViewControllerAnimated:YES];
         }];
         
 //  注释
