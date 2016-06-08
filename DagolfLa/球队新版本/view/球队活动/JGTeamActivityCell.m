@@ -59,11 +59,11 @@
 
 - (void)setJGTeamActivityCellWithModel:(JGTeamAcitivtyModel *)modeel fromCtrl:(NSInteger)ctrlId{
     if (ctrlId == 1) {
-        //球队活动all
+        //球队活动all 和活动大厅
         [self.imageview sd_setImageWithURL:[Helper setImageIconUrl:@"activity" andTeamKey:[modeel.timeKey integerValue] andIsSetWidth:YES andIsBackGround:YES] placeholderImage:[UIImage imageNamed:ActivityBGImage]];
     }else{
-        //近期活动
-        [self.imageview sd_setImageWithURL:[Helper setImageIconUrl:@"activity" andTeamKey:[modeel.timeKey integerValue] andIsSetWidth:YES andIsBackGround:YES] placeholderImage:[UIImage imageNamed:ActivityBGImage]];
+        //近期活动 -- 把活动的头像做cell的头像
+        [self.imageview sd_setImageWithURL:[Helper setImageIconUrl:@"activity" andTeamKey:modeel.teamActivityKey andIsSetWidth:NO andIsBackGround:YES] placeholderImage:[UIImage imageNamed:ActivityBGImage]];
     }
     
     //活动名称

@@ -73,7 +73,7 @@ static CGFloat ImageHeight  = 210.0;
         self.headPortraitBtn.layer.masksToBounds = YES;
         self.headPortraitBtn.layer.cornerRadius = 8.0;
         
-        [self.imgProfile sd_setImageWithURL:[Helper setImageIconUrl:@"team" andTeamKey:[[self.detailDic objectForKey:@"timeKey"] integerValue] andIsSetWidth:YES andIsBackGround:YES] placeholderImage:[UIImage imageNamed:@"tu2"]];
+        [self.imgProfile sd_setImageWithURL:[Helper setImageIconUrl:@"team" andTeamKey:[[self.detailDic objectForKey:@"timeKey"] integerValue] andIsSetWidth:NO andIsBackGround:YES] placeholderImage:[UIImage imageNamed:@"tu2"]];
         self.isFirst = NO;
     }else{
         

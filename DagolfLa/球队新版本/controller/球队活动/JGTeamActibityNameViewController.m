@@ -73,12 +73,17 @@ static CGFloat ImageHeight  = 210.0;
     [self setData];
     
     if (self.isTeamChannal == 2){
-        [self.imgProfile sd_setImageWithURL:[Helper setImageIconUrl:@"activity" andTeamKey:_teamKey andIsSetWidth:YES andIsBackGround:YES] placeholderImage:[UIImage imageNamed:ActivityBGImage]];
+        //球队活动大厅
+        [self.imgProfile sd_setImageWithURL:[Helper setImageIconUrl:@"activity" andTeamKey:_teamKey andIsSetWidth:NO andIsBackGround:YES] placeholderImage:[UIImage imageNamed:ActivityBGImage]];
+        self.imgProfile.contentMode = UIViewContentModeScaleAspectFill;
+        self.imgProfile.layer.masksToBounds = YES;
         
         [self.headPortraitBtn sd_setImageWithURL:[Helper setImageIconUrl:@"team" andTeamKey:_model.teamKey andIsSetWidth:YES andIsBackGround:NO] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:TeamLogoImage]];
     }else if (self.isTeamChannal == 1){
         //近期活动过来的数据---其他走上面
-        [self.imgProfile sd_setImageWithURL:[Helper setImageIconUrl:@"activity" andTeamKey:[_model.timeKey integerValue] andIsSetWidth:YES andIsBackGround:YES] placeholderImage:[UIImage imageNamed:ActivityBGImage]];
+        [self.imgProfile sd_setImageWithURL:[Helper setImageIconUrl:@"activity" andTeamKey:_teamActivityKey andIsSetWidth:NO andIsBackGround:YES] placeholderImage:[UIImage imageNamed:ActivityBGImage]];
+        self.imgProfile.contentMode = UIViewContentModeScaleAspectFill;
+        self.imgProfile.layer.masksToBounds = YES;
         
         [self.headPortraitBtn sd_setImageWithURL:[Helper setImageIconUrl:@"team" andTeamKey:_model.teamKey andIsSetWidth:YES andIsBackGround:NO] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:TeamLogoImage]];
     }
@@ -537,17 +542,17 @@ static CGFloat ImageHeight  = 210.0;
             NSNumber* strTimeKey = [data objectForKey:@"timeKey"];
             // 上传图片
             NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-            [dict setObject:strTimeKey forKey:@"data"];
+//            [dict setObject:strTimeKey forKey:@"data"];
             [dict setObject:TYPE_TEAM_BACKGROUND forKey:@"nType"];
             [dict setObject:PHOTO_DAGOLFLA forKey:@"tag"];
             
-            [[JsonHttp jsonHttp]httpRequestImageOrVedio:@"1" withData:dict andDataArray:imageArray failedBlock:^(id errType) {
-                NSLog(@"errType===%@", errType);
-            } completionBlock:^(id data) {
+//            [[JsonHttp jsonHttp]httpRequestImageOrVedio:@"1" withData:dict andDataArray:imageArray failedBlock:^(id errType) {
+//                NSLog(@"errType===%@", errType);
+//            } completionBlock:^(id data) {
                 [dict setObject:[NSString stringWithFormat:@"%@_background" ,strTimeKey] forKey:@"data"];
                 [dict setObject:TYPE_TEAM_BACKGROUND forKey:@"nType"];
-                [imageArray removeAllObjects];
-                [imageArray addObject:UIImageJPEGRepresentation(self.model.headerImage, 0.7)];
+//                [imageArray removeAllObjects];
+//                [imageArray addObject:UIImageJPEGRepresentation(self.model.headerImage, 0.7)];
                 [[JsonHttp jsonHttp] httpRequestImageOrVedio:@"1" withData:dict andDataArray:imageArray failedBlock:^(id errType) {
                     NSLog(@"errType===%@", errType);
                 } completionBlock:^(id data) {
@@ -564,7 +569,7 @@ static CGFloat ImageHeight  = 210.0;
                             });
                         }
                     }
-                }];
+//                }];
             }];
         }];
     }

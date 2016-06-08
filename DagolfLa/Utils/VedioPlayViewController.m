@@ -37,7 +37,7 @@ static NSString *const NotificationName = @"AFNetworkReachabilityStatusReachable
     [self addVideoPlayer];
     
     //网络检测
-//    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(isReachableToPlay:) name:NotificationName object:nil];
+    //    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(isReachableToPlay:) name:NotificationName object:nil];
 }
 //检测当前网络环境是否为wifi
 /**
@@ -142,7 +142,7 @@ static NSString *const NotificationName = @"AFNetworkReachabilityStatusReachable
 }
 - (void)hidenDownloadView:(UIAlertView *)alertView{
     
-
+    
     [alertView dismissWithClickedButtonIndex:0 animated:YES];
 }
 //添加视频播放控件
@@ -157,7 +157,7 @@ static NSString *const NotificationName = @"AFNetworkReachabilityStatusReachable
     //create the controls
     self.movieControls = [[ALMoviePlayerControls alloc] initWithMoviePlayer:self.moviePlayer style:ALMoviePlayerControlsStyleDefault];
     self.movieControls.AutorotateDelegate = self;
-//    [self.movieControls setBarColor:RGB(85, 80, 78, 0.5)];
+    //    [self.movieControls setBarColor:RGB(85, 80, 78, 0.5)];
     [self.movieControls setTimeRemainingDecrements:YES];
     [self.moviePlayer setControls:self.movieControls];
     [self.view addSubview:self.moviePlayer.view];
@@ -212,9 +212,9 @@ static NSString *const NotificationName = @"AFNetworkReachabilityStatusReachable
 
 #pragma mark --- ALMoviePlayerControllerDelegate
 - (void)moviePlayerWillMoveFromWindow {
-//    if (![self.playerView.subviews containsObject:self.moviePlayer.view]){
-//        [self.playerView addSubview:self.moviePlayer.view];
-//    }
+    //    if (![self.playerView.subviews containsObject:self.moviePlayer.view]){
+    //        [self.playerView addSubview:self.moviePlayer.view];
+    //    }
     [self.moviePlayer setFrame:self.defaultFrame];
 }
 
@@ -252,13 +252,13 @@ static NSString *const NotificationName = @"AFNetworkReachabilityStatusReachable
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end
