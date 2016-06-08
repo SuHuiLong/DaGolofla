@@ -60,6 +60,8 @@ static CGFloat ImageHeight  = 210.0;
 
 @property (nonatomic, strong)UIButton *addressBtn;//添加地址
 
+@property (nonatomic, strong)UIButton *applyBtn;
+
 
 @end
 
@@ -229,6 +231,7 @@ static CGFloat ImageHeight  = 210.0;
                 }
             }else{
                 _isTeamMember = 1;//非球队成员
+                [self.applyBtn setBackgroundColor:[UIColor lightGrayColor]];
             }
             
             [self.model setValuesForKeysWithDictionary:[data objectForKey:@"activity"]];
@@ -278,11 +281,12 @@ static CGFloat ImageHeight  = 210.0;
     
     NSData *fiData = [[NSData alloc]init];
     if (_teamActivityKey != 0) {
+        //近期活动_teamActivityKey
         fiData = [NSData dataWithContentsOfURL:[Helper setImageIconUrl:@"activity" andTeamKey:_teamActivityKey andIsSetWidth:YES andIsBackGround:NO]];
     }
     else
     {
-        fiData = [NSData dataWithContentsOfURL:[Helper setImageIconUrl:@"activity" andTeamKey:[_model.timeKey integerValue]andIsSetWidth:YES andIsBackGround:NO]];
+        fiData = [NSData dataWithContentsOfURL:[Helper setImageIconUrl:@"activity" andTeamKey:[_model.timeKey integerValue] andIsSetWidth:YES andIsBackGround:NO]];
     }
     
   
@@ -444,12 +448,12 @@ static CGFloat ImageHeight  = 210.0;
     UILabel *lines = [[UILabel alloc]initWithFrame:CGRectMake(photoBtn.frame.origin.x, photoBtn.frame.size.width, 1, 44)];
     lines.backgroundColor = [UIColor blackColor];
     [self.view addSubview:lines];
-    UIButton *applyBtn = [[UIButton alloc]initWithFrame:CGRectMake(photoBtn.frame.size.width + 1, screenHeight-44, screenWidth - 75 *ScreenWidth/375, 44)];
-    [applyBtn setTitle:@"报名参加" forState:UIControlStateNormal];
-    applyBtn.backgroundColor = [UIColor colorWithHexString:Nav_Color];
+    self.applyBtn = [[UIButton alloc]initWithFrame:CGRectMake(photoBtn.frame.size.width + 1, screenHeight-44, screenWidth - 75 *ScreenWidth/375, 44)];
+    [self.applyBtn setTitle:@"报名参加" forState:UIControlStateNormal];
+    self.applyBtn.backgroundColor = [UIColor colorWithHexString:Nav_Color];
     //    applyBtn.layer.cornerRadius = 8.0;
-    [applyBtn addTarget:self action:@selector(applyAttendBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:applyBtn];
+    [self.applyBtn addTarget:self action:@selector(applyAttendBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:self.applyBtn];
 }
 #pragma mark -- 报名参加
 - (void)applyAttendBtnClick:(UIButton *)btn{
@@ -459,7 +463,7 @@ static CGFloat ImageHeight  = 210.0;
     }else{
         //判断是不改球队成员
         if (_isTeamMember == 1) {
-            [[ShowHUD showHUD]showToastWithText:@"您不是改球队队员！" FromView:self.view];
+            [[ShowHUD showHUD]showToastWithText:@"您不是该球队队员！" FromView:self.view];
         }else{
             JGTeamApplyViewController *teamApplyCtrl = [[JGTeamApplyViewController alloc]initWithNibName:@"JGTeamApplyViewController" bundle:nil];
             teamApplyCtrl.modelss = self.model;

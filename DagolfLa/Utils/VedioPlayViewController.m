@@ -13,7 +13,7 @@
 
 static NSString *const NotificationName = @"AFNetworkReachabilityStatusReachableViaWWAN";
 
-@interface VedioPlayViewController ()<ALMoviePlayerControllerDelegate, ALMoviePlayerAutorotateDelegate, UIAlertViewDelegate>
+@interface VedioPlayViewController ()<ALMoviePlayerControllerDelegate, ALMoviePlayerAutorotateDelegate>
 @property (nonatomic, strong) ALMoviePlayerController *moviePlayer;//视频播放器
 @property (nonatomic, strong) ALMoviePlayerControls *movieControls;
 @property (nonatomic) CGRect defaultFrame;
@@ -40,10 +40,13 @@ static NSString *const NotificationName = @"AFNetworkReachabilityStatusReachable
 //    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(isReachableToPlay:) name:NotificationName object:nil];
 }
 //检测当前网络环境是否为wifi
+/**
 - (void)isReachableToPlay:(BOOL)isBegin{
     self.moviePlayer.contentPlayersURL = [NSURL URLWithString:self.vedioURL];
-    [PostDataRequest isNetWorkReachable];
+//    [PostDataRequest isNetWorkReachable];
+    [self.moviePlayer play];
     //获取网络状态
+    
     NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
     NSLog(@"%@", [userdef objectForKey:NETWORKSTATS]);
     if ([[userdef objectForKey:NETWORKSTATS]isEqualToString:@"11"]) {//断网
@@ -63,7 +66,9 @@ static NSString *const NotificationName = @"AFNetworkReachabilityStatusReachable
         isEverPlayer = NO;
         [self.moviePlayer stop];
     }
+    
 }
+     */
 - (void)_initItems
 {
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -75,13 +80,15 @@ static NSString *const NotificationName = @"AFNetworkReachabilityStatusReachable
     self.navigationItem.leftBarButtonItem = leftItem;
 }
 
-#pragma mark ---  分享
+#pragma mark ---  关闭
 - (void)initItemsBtnClick:(UIButton *)btn{
+    [self.moviePlayer stop];
     if (self.delegate) {
         [self.delegate closeVideo];
     }
     
     [self dismissViewControllerAnimated:YES completion:^{
+//        [self.delegate closeVideo];
         
     }];
 }
@@ -168,7 +175,13 @@ static NSString *const NotificationName = @"AFNetworkReachabilityStatusReachable
         }];
     });
     
-    [self isReachableToPlay:YES];
+//    self.moviePlayer.contentPlayersURL = [NSURL URLWithString:self.vedioURL];
+//    isEverPlayer = YES;
+//    [self.moviePlayer play];
+    
+    [self.moviePlayer play];
+    [self.moviePlayer setContentURL:[NSURL URLWithString:self.vedioURL]];
+    isEverPlayer = YES;
 }
 
 #pragma mark -- 设置默认的 frame
@@ -182,16 +195,16 @@ static NSString *const NotificationName = @"AFNetworkReachabilityStatusReachable
     [self.moviePlayer setFrame:self.defaultFrame];
 }
 #pragma mark ------------ UIAlertViewDelegate
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
-    if (buttonIndex == 1) {
-        //非wifi网络环境下 ，继续播放
-        if (isEverPlayer == NO){
-            [self.moviePlayer setContentURL:[NSURL URLWithString:self.vedioURL]];
-        }
-        
-        [self.moviePlayer play];
-    }
-}
+//- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+//    if (buttonIndex == 1) {
+//        //非wifi网络环境下 ，继续播放
+//        if (isEverPlayer == NO){
+//            [self.moviePlayer setContentURL:[NSURL URLWithString:self.vedioURL]];
+//        }
+//        
+//        [self.moviePlayer play];
+//    }
+//}
 #pragma mark -- ALMoviePlayerControllerDelegate
 - (void)movieTimedOut {
     NSLog(@"MOVIE TIMED OUT");

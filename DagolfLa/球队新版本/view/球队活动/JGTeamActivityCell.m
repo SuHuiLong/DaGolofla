@@ -35,15 +35,15 @@
     self.Apply.textColor = [UIColor blackColor];
     if (modeel.isClose == 1) {
         self.Apply.text = @"活动结束";
-        self.Apply.textColor = [UIColor redColor];
+        self.Apply.textColor = [UIColor lightGrayColor];
     }else{
         NSString *str = [Helper returnCurrentDateString];//跟当前时间比较
         if ([str compare:modeel.signUpEndTime] > 0) {
             self.Apply.text = @"报名结束";
-            self.Apply.textColor = [UIColor redColor];
+            self.Apply.textColor = [UIColor lightGrayColor];
         }else{
             self.Apply.text = @"报名中";
-            self.Apply.textColor = [UIColor blackColor];
+            self.Apply.textColor = [UIColor orangeColor];
         }
     }
     //活动时间componentsSeparatedByString
@@ -74,15 +74,15 @@
     //报名
     if (modeel.isClose == 1) {
         self.Apply.text = @"活动结束";
-        self.Apply.textColor = [UIColor redColor];
+        self.Apply.textColor = [UIColor lightGrayColor];
     }else{
         NSString *str = [Helper returnCurrentDateString];//跟当前时间比较
         if ([str compare:modeel.signUpEndTime] > 0) {
             self.Apply.text = @"报名结束";
-            self.Apply.textColor = [UIColor redColor];
+            self.Apply.textColor = [UIColor lightGrayColor];
         }else{
             self.Apply.text = @"报名中";
-            self.Apply.textColor = [UIColor blackColor];
+            self.Apply.textColor = [UIColor orangeColor];
         }
     }
     //活动时间componentsSeparatedByString
