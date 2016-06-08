@@ -109,6 +109,7 @@
                 {
                     [user setObject:[[dict objectForKey:@"rows"] objectForKey:@"userName"] forKey:@"userName"];
                 }
+                [user setObject:[[dict objectForKey:@"rows"] objectForKey:@"sex"] forKey:@"sex"];
                 [user synchronize];
             }
         } failed:^(NSError *error) {
