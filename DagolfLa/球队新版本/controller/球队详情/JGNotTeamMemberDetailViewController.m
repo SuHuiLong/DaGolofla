@@ -377,6 +377,8 @@ static CGFloat ImageHeight  = 210.0;
         if (indexPath.row == 0) {
             
             JGTeamActivityViewController *activity = [[JGTeamActivityViewController alloc] init];
+            activity.isMEActivity = 1;
+            activity.timeKey = [[self.detailDic objectForKey:@"timeKey"] integerValue];
             [self.navigationController pushViewController:activity animated:YES];
             
         }else{

@@ -136,7 +136,11 @@
     decisionHandler(WKNavigationActionPolicyAllow);
     
     
-    
+    if ([url rangeOfString:@"backsys"].location != NSNotFound){
+        self.navigationController.navigationBarHidden=NO;
+        [self.navigationController popViewControllerAnimated:YES];
+        return ;
+    }
     
 
     if ([url rangeOfString:@"dagolfla://pay"].location != NSNotFound){

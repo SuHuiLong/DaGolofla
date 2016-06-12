@@ -146,7 +146,7 @@
             }
             else
             {
-                [Helper alertViewNoHaveCancleWithTitle:@"请检查勾选是否有误" withBlock:^(UIAlertController *alertView) {
+                [Helper alertViewNoHaveCancleWithTitle:[data objectForKey:@"packResultMsg"] withBlock:^(UIAlertController *alertView) {
                     [self.navigationController presentViewController:alertView animated:YES completion:nil];
                 }];
 
