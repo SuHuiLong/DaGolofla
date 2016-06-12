@@ -6,7 +6,6 @@
 //  Copyright © 2016年 bhxx. All rights reserved.
 //
 
-
 #import "JGTeamMemberORManagerViewController.h"
 #import "JGTeamInfoViewController.h" //跳转info
 #import "JGLSelfSetViewController.h" //个人设置
@@ -94,6 +93,8 @@ static CGFloat ImageHeight  = 210.0;
 
 @property (nonatomic, assign) NSInteger state;
 
+@property (nonatomic, strong) UIImageView *jbImageV;
+
 @end
 
 @implementation JGTeamMemberORManagerViewController
@@ -168,7 +169,14 @@ static CGFloat ImageHeight  = 210.0;
         [self.view addSubview:self.imgProfile];
         self.titleView.frame = CGRectMake(0, 20, screenWidth, 44);
         self.titleView.backgroundColor = [UIColor clearColor];
-        [self.imgProfile addSubview:self.titleView];
+//        [self.imgProfile addSubview:self.titleView];
+        
+        
+        self.jbImageV = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 74 * screenWidth / 320)];
+        self.jbImageV.image = [UIImage imageNamed:@"jb"];
+        self.jbImageV.userInteractionEnabled = YES;
+        [self.imgProfile addSubview:self.jbImageV];
+        [self.jbImageV addSubview:self.titleView];
     }
     return self;
 }

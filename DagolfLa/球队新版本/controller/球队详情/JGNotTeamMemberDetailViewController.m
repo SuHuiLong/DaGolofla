@@ -344,7 +344,7 @@ static CGFloat ImageHeight  = 210.0;
                 break;
             case 2:
                 launchActivityCell.promptLB.text = @"成立时间";
-                launchActivityCell.contentLB.text = [self.detailDic objectForKey:@"establishTime"];
+                launchActivityCell.contentLB.text = [[self.detailDic objectForKey:@"establishTime"] substringToIndex:10];
                 break;
             case 3:
                 launchActivityCell.promptLB.text = @"球队规模";
@@ -376,6 +376,10 @@ static CGFloat ImageHeight  = 210.0;
         if (indexPath.row == 0) {
             
             JGTeamActivityViewController *activity = [[JGTeamActivityViewController alloc] init];
+            activity.isMEActivity = 1;
+//            activity.power = self.power;
+//            activity.state = self.state;
+            activity.timeKey = [[self.detailDic objectForKey:@"timeKey"] integerValue];
             [self.navigationController pushViewController:activity animated:YES];
             
         }else{
