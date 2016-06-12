@@ -105,7 +105,7 @@ static CGFloat ImageHeight  = 210.0;
     self.titleField.text = [self.detailDic objectForKey:@"name"];
     NSString *head = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/team/%@.jpg@100w_100h", [self.detailDic objectForKey:@"timeKey"]];
     NSString *headUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/team/%@.jpg@120w_120h", [self.detailDic objectForKey:@"timeKey"]];
-    NSString *bgUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/team/%@_background.jpg@400w_150h", [self.detailDic objectForKey:@"timeKey"]];
+    NSString *bgUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/team/%@_background.jpg", [self.detailDic objectForKey:@"timeKey"]];
     [[SDImageCache sharedImageCache] removeImageForKey:bgUrl fromDisk:YES];
     [[SDImageCache sharedImageCache] removeImageForKey:head fromDisk:YES];
     [[SDImageCache sharedImageCache] removeImageForKey:headUrl fromDisk:YES];
@@ -119,7 +119,7 @@ static CGFloat ImageHeight  = 210.0;
     self.headPortraitBtn.layer.masksToBounds = YES;
     self.headPortraitBtn.layer.cornerRadius = 8.0;
     
-    [self.imgProfile sd_setImageWithURL:[Helper setImageIconUrl:@"team" andTeamKey:[[self.detailDic objectForKey:@"timeKey"] integerValue] andIsSetWidth:YES andIsBackGround:YES] placeholderImage:[UIImage imageNamed:TeamBGImage]];
+    [self.imgProfile sd_setImageWithURL:[Helper setImageIconUrl:@"team" andTeamKey:[[self.detailDic objectForKey:@"timeKey"] integerValue] andIsSetWidth:NO andIsBackGround:YES] placeholderImage:[UIImage imageNamed:TeamBGImage]];
     
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     [dict setObject:DEFAULF_USERID forKey:@"userKey"];
@@ -286,21 +286,26 @@ static CGFloat ImageHeight  = 210.0;
 -(void)shareInfo:(NSInteger)index{
     
     NSData *fiData;
-    
+    NSLog(@"%@",[Helper setImageIconUrl:@"team" andTeamKey:[[self.detailDic objectForKey:@"timeKey"] integerValue] andIsSetWidth:YES andIsBackGround:NO]);
     fiData = [NSData dataWithContentsOfURL:[Helper setImageIconUrl:@"team" andTeamKey:[[self.detailDic objectForKey:@"timeKey"] integerValue] andIsSetWidth:YES andIsBackGround:NO]];
+    NSObject* obj;
+    if (fiData != nil && fiData.length > 0) {
+        obj = fiData;
+    }
+    else
+    {
+        obj = [UIImage imageNamed:@"iconlogo"];
+    }
     
     //http://192.168.1.104:8888/imgcache.dagolfla.com/share/team/team.html?key=181
     NSString*  shareUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/team/team.html?key=%@",[self.detailDic objectForKey:@"timeKey"]];
     [UMSocialData defaultData].extConfig.title=[NSString stringWithFormat:@"欢迎加入%@",[self.detailDic objectForKey:@"name"]];
     if (index == 0){
-//        [Helper setImageIconUrl:@"team" andTeamKey:[[self.detailDic objectForKey:@"timeKey"] integerValue] andIsSetWidth:YES andIsBackGround:NO]
-        
-        
         
         //微信
         [UMSocialWechatHandler setWXAppId:@"wxdcdc4e20544ed728" appSecret:@"fdc75aae5a98f2aa0f62ef8cba2b08e9" url:shareUrl];
         [UMSocialConfig hiddenNotInstallPlatforms:@[UMShareToWechatSession,UMShareToWechatTimeline,UMShareToSina]];
-        [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatSession] content:[NSString stringWithFormat:@"球队简介:%@",[self.detailDic objectForKey:@"info"]]  image:fiData location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
+        [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatSession] content:[NSString stringWithFormat:@"球队简介:%@",[self.detailDic objectForKey:@"info"]]  image:obj location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
             if (response.responseCode == UMSResponseCodeSuccess) {
 //                [self shareS:indexRow];
             }
@@ -310,7 +315,7 @@ static CGFloat ImageHeight  = 210.0;
         //朋友圈
         [UMSocialWechatHandler setWXAppId:@"wxdcdc4e20544ed728" appSecret:@"fdc75aae5a98f2aa0f62ef8cba2b08e9" url:shareUrl];
         [UMSocialConfig hiddenNotInstallPlatforms:@[UMShareToWechatSession,UMShareToWechatTimeline,UMShareToSina]];
-        [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatTimeline] content:[NSString stringWithFormat:@"球队简介:%@",[self.detailDic objectForKey:@"info"]] image:fiData location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
+        [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatTimeline] content:[NSString stringWithFormat:@"球队简介:%@",[self.detailDic objectForKey:@"info"]] image:obj location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
             if (response.responseCode == UMSResponseCodeSuccess) {
 //                [self shareS:indexRow];
             }
@@ -442,7 +447,7 @@ static CGFloat ImageHeight  = 210.0;
     }else if (section == 1){
         return 1;
     }else if (section == 2){
-        return 4;
+        return 3;
     }else{
         return 1;
     }
@@ -519,14 +524,14 @@ static CGFloat ImageHeight  = 210.0;
                 launchActivityCell.promptLB.text = @"球队成员";
 //                launchActivityCell.contentLB.text = self.detailModel.cityName;
                 break;
+//            case 2:
+//                
+//                launchActivityCell.promptLB.text = @"球队相册";
+//                launchActivityCell.imageV.image = [UIImage imageNamed:@"xc"];
+//                //                launchActivityCell.contentLB.text = [NSString stringWithFormat:@"%td人", self.detailModel.userSum];
+//                
+//                break;
             case 2:
-                
-                launchActivityCell.promptLB.text = @"球队相册";
-                launchActivityCell.imageV.image = [UIImage imageNamed:@"xc"];
-                //                launchActivityCell.contentLB.text = [NSString stringWithFormat:@"%td人", self.detailModel.userSum];
-                
-                break;
-            case 3:
                 launchActivityCell.promptLB.text = @"球队简介";
                 launchActivityCell.imageV.image = [UIImage imageNamed:@"qdjj"];
                 //                launchActivityCell.contentLB.text = self.detailModel.establishTime;
@@ -589,15 +594,15 @@ static CGFloat ImageHeight  = 210.0;
                 [self.navigationController pushViewController:tmVc animated:YES];
             }
                 break;
+//            case 2:
+//            {
+//                JGTeamPhotoViewController* phoVc = [[JGTeamPhotoViewController alloc]init];
+//                phoVc.teamKey = [self.detailDic objectForKey:@"timeKey"];
+//                phoVc.power = self.power;
+//                [self.navigationController pushViewController:phoVc animated:YES];
+//            }
+//                break;
             case 2:
-            {
-                JGTeamPhotoViewController* phoVc = [[JGTeamPhotoViewController alloc]init];
-                phoVc.teamKey = [self.detailDic objectForKey:@"timeKey"];
-                phoVc.power = self.power;
-                [self.navigationController pushViewController:phoVc animated:YES];
-            }
-                break;
-            case 3:
             {
                 JGTeamDeatilWKwebViewController *wkVC = [[JGTeamDeatilWKwebViewController alloc] init];
                 

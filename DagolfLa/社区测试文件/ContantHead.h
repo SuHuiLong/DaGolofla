@@ -33,7 +33,8 @@ typedef NS_ENUM(NSInteger, GestureType) {
 //#define BGImage @"selfBackPic.jpg"//背景图片
 
 #define TeamBGImage @"teamBGImage"// 球队背景图片
-#define TeamLogoImage @"teamLogo"
+#define TeamLogoImage @"teamLogo"//logo白色图片
+#define IconLogo @"iconlogo"//绿色app logo
 #define ActivityBGImage @"activityBGImage"
 
 #define kDistance 10*screenWidth/375 //说说和图片的间隔

@@ -135,7 +135,7 @@
                 [dict setObject:@1 forKey:@"mediaType"];
                 
                 
-                [dict setObject:@"2016-12-11 10:00:00" forKey:@"createTime"];
+                [dict setObject:[Helper returnCurrentDateString] forKey:@"createTime"];
                 [[JsonHttp jsonHttp]httpRequest:@"team/createTeamMedia" JsonKey:@"teamMedia" withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
                     NSLog(@"errType == %@", errType);
                 } completionBlock:^(id data) {

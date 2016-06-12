@@ -60,6 +60,8 @@ static CGFloat ImageHeight  = 210.0;
 
 @property (nonatomic, strong)UIButton *addressBtn;//添加地址
 
+@property (nonatomic, strong)UIButton *applyBtn;
+
 
 @end
 
@@ -71,12 +73,17 @@ static CGFloat ImageHeight  = 210.0;
     [self setData];
     
     if (self.isTeamChannal == 2){
-        [self.imgProfile sd_setImageWithURL:[Helper setImageIconUrl:@"activity" andTeamKey:_teamKey andIsSetWidth:YES andIsBackGround:YES] placeholderImage:[UIImage imageNamed:ActivityBGImage]];
+        //球队活动大厅
+        [self.imgProfile sd_setImageWithURL:[Helper setImageIconUrl:@"activity" andTeamKey:_teamKey andIsSetWidth:NO andIsBackGround:YES] placeholderImage:[UIImage imageNamed:ActivityBGImage]];
+        self.imgProfile.contentMode = UIViewContentModeScaleAspectFill;
+        self.imgProfile.layer.masksToBounds = YES;
         
         [self.headPortraitBtn sd_setImageWithURL:[Helper setImageIconUrl:@"team" andTeamKey:_model.teamKey andIsSetWidth:YES andIsBackGround:NO] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:TeamLogoImage]];
     }else if (self.isTeamChannal == 1){
         //近期活动过来的数据---其他走上面
-        [self.imgProfile sd_setImageWithURL:[Helper setImageIconUrl:@"activity" andTeamKey:[_model.timeKey integerValue] andIsSetWidth:YES andIsBackGround:YES] placeholderImage:[UIImage imageNamed:ActivityBGImage]];
+        [self.imgProfile sd_setImageWithURL:[Helper setImageIconUrl:@"activity" andTeamKey:_teamActivityKey andIsSetWidth:NO andIsBackGround:YES] placeholderImage:[UIImage imageNamed:ActivityBGImage]];
+        self.imgProfile.contentMode = UIViewContentModeScaleAspectFill;
+        self.imgProfile.layer.masksToBounds = YES;
         
         [self.headPortraitBtn sd_setImageWithURL:[Helper setImageIconUrl:@"team" andTeamKey:_model.teamKey andIsSetWidth:YES andIsBackGround:NO] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:TeamLogoImage]];
     }
@@ -229,6 +236,7 @@ static CGFloat ImageHeight  = 210.0;
                 }
             }else{
                 _isTeamMember = 1;//非球队成员
+                [self.applyBtn setBackgroundColor:[UIColor lightGrayColor]];
             }
             
             [self.model setValuesForKeysWithDictionary:[data objectForKey:@"activity"]];
@@ -278,11 +286,11 @@ static CGFloat ImageHeight  = 210.0;
     
     NSData *fiData = [[NSData alloc]init];
     if (_teamActivityKey != 0) {
-        fiData = [NSData dataWithContentsOfURL:[Helper setImageIconUrl:@"activity" andTeamKey:_teamActivityKey andIsSetWidth:YES andIsBackGround:NO]];
+        fiData = [NSData dataWithContentsOfURL:[Helper setImageIconUrl:@"activity" andTeamKey:_teamActivityKey andIsSetWidth:YES andIsBackGround:YES]];
     }
     else
     {
-        fiData = [NSData dataWithContentsOfURL:[Helper setImageIconUrl:@"activity" andTeamKey:[_model.timeKey integerValue]andIsSetWidth:YES andIsBackGround:NO]];
+        fiData = [NSData dataWithContentsOfURL:[Helper setImageIconUrl:@"activity" andTeamKey:[_model.timeKey integerValue]andIsSetWidth:YES andIsBackGround:YES]];
     }
     
   
@@ -295,11 +303,12 @@ static CGFloat ImageHeight  = 210.0;
     }
     
     [UMSocialData defaultData].extConfig.title=[NSString stringWithFormat:@"%@报名", _model.name];
+    
     if (index == 0){
         //微信
         [UMSocialWechatHandler setWXAppId:@"wxdcdc4e20544ed728" appSecret:@"fdc75aae5a98f2aa0f62ef8cba2b08e9" url:shareUrl];
         [UMSocialConfig hiddenNotInstallPlatforms:@[UMShareToWechatSession,UMShareToWechatTimeline,UMShareToSina]];
-        [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatSession] content:[NSString stringWithFormat:@"球队会员：%td元，平台补贴：%td元，活动地点：%@，活动时间：%@", _model.memberPrice,_model.subsidyPrice,_model.ballName,_model.beginDate]  image:fiData location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
+        [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatSession] content:[NSString stringWithFormat:@"球队会员：%td元，平台补贴：%td元，活动地点：%@，活动时间：%@", _model.memberPrice,_model.subsidyPrice,_model.ballName,_model.beginDate]  image:(fiData != nil && fiData.length > 0) ?fiData : [UIImage imageNamed:TeamBGImage] location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
             if (response.responseCode == UMSResponseCodeSuccess) {
                 //                [self shareS:indexRow];
             }
@@ -309,7 +318,7 @@ static CGFloat ImageHeight  = 210.0;
         //朋友圈
         [UMSocialWechatHandler setWXAppId:@"wxdcdc4e20544ed728" appSecret:@"fdc75aae5a98f2aa0f62ef8cba2b08e9" url:shareUrl];
         [UMSocialConfig hiddenNotInstallPlatforms:@[UMShareToWechatSession,UMShareToWechatTimeline,UMShareToSina]];
-        [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatTimeline] content:[NSString stringWithFormat:@"球队会员：%td元，平台补贴：%td元，活动地点：%@，活动时间：%@", _model.memberPrice,_model.subsidyPrice,_model.ballName,_model.beginDate] image:fiData location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
+        [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatTimeline] content:[NSString stringWithFormat:@"球队会员：%td元，平台补贴：%td元，活动地点：%@，活动时间：%@", _model.memberPrice,_model.subsidyPrice,_model.ballName,_model.beginDate] image:(fiData != nil && fiData.length > 0) ?fiData : [UIImage imageNamed:TeamBGImage] location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
             if (response.responseCode == UMSResponseCodeSuccess) {
                 //                [self shareS:indexRow];
             }
@@ -444,12 +453,12 @@ static CGFloat ImageHeight  = 210.0;
     UILabel *lines = [[UILabel alloc]initWithFrame:CGRectMake(photoBtn.frame.origin.x, photoBtn.frame.size.width, 1, 44)];
     lines.backgroundColor = [UIColor blackColor];
     [self.view addSubview:lines];
-    UIButton *applyBtn = [[UIButton alloc]initWithFrame:CGRectMake(photoBtn.frame.size.width + 1, screenHeight-44, screenWidth - 75 *ScreenWidth/375, 44)];
-    [applyBtn setTitle:@"报名参加" forState:UIControlStateNormal];
-    applyBtn.backgroundColor = [UIColor colorWithHexString:Nav_Color];
+    self.applyBtn = [[UIButton alloc]initWithFrame:CGRectMake(photoBtn.frame.size.width + 1, screenHeight-44, screenWidth - 75 *ScreenWidth/375, 44)];
+    [self.applyBtn setTitle:@"报名参加" forState:UIControlStateNormal];
+    self.applyBtn.backgroundColor = [UIColor colorWithHexString:Nav_Color];
     //    applyBtn.layer.cornerRadius = 8.0;
-    [applyBtn addTarget:self action:@selector(applyAttendBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:applyBtn];
+    [self.applyBtn addTarget:self action:@selector(applyAttendBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:self.applyBtn];
 }
 #pragma mark -- 报名参加
 - (void)applyAttendBtnClick:(UIButton *)btn{
@@ -459,7 +468,7 @@ static CGFloat ImageHeight  = 210.0;
     }else{
         //判断是不改球队成员
         if (_isTeamMember == 1) {
-            [[ShowHUD showHUD]showToastWithText:@"您不是改球队队员！" FromView:self.view];
+            [[ShowHUD showHUD]showToastWithText:@"您不是该球队队员！" FromView:self.view];
         }else{
             JGTeamApplyViewController *teamApplyCtrl = [[JGTeamApplyViewController alloc]initWithNibName:@"JGTeamApplyViewController" bundle:nil];
             teamApplyCtrl.modelss = self.model;
@@ -533,17 +542,17 @@ static CGFloat ImageHeight  = 210.0;
             NSNumber* strTimeKey = [data objectForKey:@"timeKey"];
             // 上传图片
             NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-            [dict setObject:strTimeKey forKey:@"data"];
+//            [dict setObject:strTimeKey forKey:@"data"];
             [dict setObject:TYPE_TEAM_BACKGROUND forKey:@"nType"];
             [dict setObject:PHOTO_DAGOLFLA forKey:@"tag"];
             
-            [[JsonHttp jsonHttp]httpRequestImageOrVedio:@"1" withData:dict andDataArray:imageArray failedBlock:^(id errType) {
-                NSLog(@"errType===%@", errType);
-            } completionBlock:^(id data) {
+//            [[JsonHttp jsonHttp]httpRequestImageOrVedio:@"1" withData:dict andDataArray:imageArray failedBlock:^(id errType) {
+//                NSLog(@"errType===%@", errType);
+//            } completionBlock:^(id data) {
                 [dict setObject:[NSString stringWithFormat:@"%@_background" ,strTimeKey] forKey:@"data"];
                 [dict setObject:TYPE_TEAM_BACKGROUND forKey:@"nType"];
-                [imageArray removeAllObjects];
-                [imageArray addObject:UIImageJPEGRepresentation(self.model.headerImage, 0.7)];
+//                [imageArray removeAllObjects];
+//                [imageArray addObject:UIImageJPEGRepresentation(self.model.headerImage, 0.7)];
                 [[JsonHttp jsonHttp] httpRequestImageOrVedio:@"1" withData:dict andDataArray:imageArray failedBlock:^(id errType) {
                     NSLog(@"errType===%@", errType);
                 } completionBlock:^(id data) {
@@ -560,7 +569,7 @@ static CGFloat ImageHeight  = 210.0;
                             });
                         }
                     }
-                }];
+//                }];
             }];
         }];
     }

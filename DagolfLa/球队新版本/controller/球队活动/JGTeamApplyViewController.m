@@ -98,6 +98,7 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
         
         [applyDict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:userID] forKey:@"userKey"];//报名用户key , 没有则是嘉宾
         
+        
         //先判断是否存在球队真是姓名，否则给用户名
         if (self.userName == nil) {
             [applyDict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"userName"] forKey:@"name"];//姓名
@@ -114,6 +115,14 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
             [applyDict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"almost"] forKey:@"almost"];
         }else{
             [applyDict setObject:@"0" forKey:@"almost"];
+        }
+        
+        //性别
+        NSLog(@"%@", [[NSUserDefaults standardUserDefaults]objectForKey:@"sex"]);
+        if ([[NSUserDefaults standardUserDefaults]objectForKey:@"sex"]) {
+            [applyDict setObject:[[NSUserDefaults standardUserDefaults]objectForKey:@"sex"] forKey:@"sex"];
+        }else{
+            [applyDict setObject:@"1" forKey:@"almost"];
         }
         
         [self.applyArray addObject:applyDict];

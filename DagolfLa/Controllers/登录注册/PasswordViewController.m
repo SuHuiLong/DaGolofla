@@ -197,6 +197,7 @@
                 NSUserDefaults *user=[NSUserDefaults standardUserDefaults];
                 [user setObject:[[userData objectForKey:@"rows"] objectForKey:@"userId"] forKey:@"userId"];
                 [user setObject:[[userData objectForKey:@"rows"] objectForKey:@"mobile"] forKey:@"mobile"];
+                [user setObject:[[userData objectForKey:@"rows"] objectForKey:@"sex"] forKey:@"sex"];
                 //判断是否登录，用来社区的刷新
                 [user setObject:@1 forKey:@"isFirstEnter"];
                 if (![Helper isBlankString:[[userData objectForKey:@"rows"] objectForKey:@"pic"]]) {

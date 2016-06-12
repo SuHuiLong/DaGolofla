@@ -111,7 +111,7 @@
             {
                 [user setObject:[[userData objectForKey:@"rows"] objectForKey:@"userName"] forKey:@"userName"];
             }
-            
+            [user setObject:[[userData objectForKey:@"rows"] objectForKey:@"sex"] forKey:@"sex"];
             [user synchronize];
             
             [self.navigationController popToRootViewControllerAnimated:YES];

@@ -232,7 +232,7 @@
                 [user setObject:@1 forKey:@"isFirstEnter"];
                 [user setObject:[[userData objectForKey:@"rows"] objectForKey:@"userId"] forKey:@"userId"];
                 [user setObject:[[userData objectForKey:@"rows"] objectForKey:@"mobile"] forKey:@"mobile"];
-                
+                [user setObject:[[userData objectForKey:@"rows"] objectForKey:@"sex"] forKey:@"sex"];
                 if (![Helper isBlankString:[[userData objectForKey:@"rows"] objectForKey:@"pic"]]) {
                     [user setObject:[[userData objectForKey:@"rows"] objectForKey:@"pic"] forKey:@"pic"];
                 }
@@ -486,7 +486,9 @@
                     if (![Helper isBlankString:[[dict objectForKey:@"rows"] objectForKey:@"userName"] ]) {
                         [user setObject:[[dict objectForKey:@"rows"] objectForKey:@"userName"] forKey:@"userName"];
                        
-                    }
+                    } 
+                    
+                    [user setObject:[[dict objectForKey:@"rows"] objectForKey:@"sex"] forKey:@"sex"];
                     [user setObject:[[dict objectForKey:@"rows"] objectForKey:@"rongTk"] forKey:@"rongTk"];
                     [user synchronize];
                     //保存信息

@@ -35,11 +35,11 @@
     self.title = @"球队相册";
     _dataArray = [[NSMutableArray alloc]init];
     
-    if ([_power containsString:@"1005"] == YES) {
+//    if ([_power containsString:@"1005"] == YES) {
         UIBarButtonItem* rightBtn = [[UIBarButtonItem alloc]initWithTitle:@"创建相册" style:UIBarButtonItemStylePlain target:self action:@selector(createClick)];
         rightBtn.tintColor = [UIColor whiteColor];
         self.navigationItem.rightBarButtonItem = rightBtn;
-    }
+//    }
 
     [self uiConfig];
 }
