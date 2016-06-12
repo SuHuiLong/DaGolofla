@@ -16,17 +16,30 @@
 
 
 /**
- *  createTime = 1463625281000;
- groupsName = Cccaa;
- rsyncFlag = 0;
- syncFlag = 0;
- teamKey = 189911222513049600;
- timeKey = 190138107805310976;
- ts = 1463625281000;
+ {
+ createTime = "2016-06-12 16:16:24";
+ delFlag = 0;
+ douDef1 = 0;
+ douDef2 = 0;
+ mediaKey = 0;
+ name = Qwer;
+ photoNums = 0;
+ power = 0;
+ teamKey = 2852;
+ timeKey = 2859;
+ ts = "2016-06-12 16:16:24";
+ userKey = 244;
  */
 
 
 @property (strong, nonatomic) NSNumber* createTime;
+
+@property (strong, nonatomic) NSNumber* delFlag;
+
+@property (strong, nonatomic) NSNumber* douDef1;
+@property (strong, nonatomic) NSNumber* douDef2;
+
+@property (strong, nonatomic) NSNumber* mediaKey;
 
 @property (strong, nonatomic) NSString* name;
 
@@ -45,5 +58,5 @@
 
 @property (strong, nonatomic) NSNumber* ts;
 
-@property (strong, nonatomic) NSNumber* mediaKey;
+@property (strong, nonatomic) NSNumber* userKey;
 @end

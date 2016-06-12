@@ -115,6 +115,7 @@
     else
     {
         JGMemHalfTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"JGMemHalfTableViewCell" forIndexPath:indexPath];
+        
         cell.titleLabel.text = _arrayInformation[indexPath.row-1];
         if (indexPath.section == 0) {
             switch (indexPath.row) {

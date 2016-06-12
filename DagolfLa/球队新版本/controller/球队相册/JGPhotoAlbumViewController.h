@@ -17,4 +17,6 @@
 //相册的key
 @property (strong, nonatomic) NSNumber* albumKey;
 @property (strong, nonatomic) NSString* power;
+
+@property (strong, nonatomic) NSNumber* userKey;
 @end
