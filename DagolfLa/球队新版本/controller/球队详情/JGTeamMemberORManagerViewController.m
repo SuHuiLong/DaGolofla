@@ -6,7 +6,6 @@
 //  Copyright © 2016年 bhxx. All rights reserved.
 //
 
-
 #import "JGTeamMemberORManagerViewController.h"
 #import "JGTeamInfoViewController.h" //跳转info
 #import "JGLSelfSetViewController.h" //个人设置
@@ -93,6 +92,8 @@ static CGFloat ImageHeight  = 210.0;
 @property (nonatomic, copy)NSString *power;
 
 @property (nonatomic, assign) NSInteger state;
+
+@property (nonatomic, strong) UIImageView *jbImageV;
 
 @end
 

@@ -53,7 +53,7 @@
         self.title = @"球队相册";
     }
     
-    if ([_power containsString:@"1005"] == YES) {
+    if ([_power containsString:@"1005"] == YES || [DEFAULF_USERID integerValue] == [_userKey integerValue]) {
         UIBarButtonItem* rightBtn = [[UIBarButtonItem alloc]initWithTitle:@"上传" style:UIBarButtonItemStylePlain target:self action:@selector(upDataClick)];
         rightBtn.tintColor = [UIColor whiteColor];
         self.navigationItem.rightBarButtonItem = rightBtn;
@@ -321,7 +321,7 @@
     JGTeamPhotoShowViewController *picVC = [[JGTeamPhotoShowViewController alloc]initWithIndex:indexPath.row];
     picVC.selectImages = arr;
     picVC.power = _power;
-    
+    picVC.userKey = _userKey;
     picVC.deleteBlock = ^(NSInteger index) {
         _collectionView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
         [_collectionView.header beginRefreshing];

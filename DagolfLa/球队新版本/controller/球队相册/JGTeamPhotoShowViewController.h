@@ -16,6 +16,8 @@
 
 @property (strong, nonatomic) NSString* power;
 
+@property (strong, nonatomic) NSNumber* userKey;
+
 @property (copy, nonatomic) void(^deleteBlock)(NSInteger index);
 
 @end

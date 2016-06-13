@@ -35,7 +35,7 @@
     self.title = @"球队相册";
     _dataArray = [[NSMutableArray alloc]init];
     
-    if ([_power containsString:@"1005"] == YES) {
+    if ([[_dictMember objectForKey:@"state"] integerValue] == 1) {
         UIBarButtonItem* rightBtn = [[UIBarButtonItem alloc]initWithTitle:@"创建相册" style:UIBarButtonItemStylePlain target:self action:@selector(createClick)];
         rightBtn.tintColor = [UIColor whiteColor];
         self.navigationItem.rightBarButtonItem = rightBtn;
@@ -163,7 +163,7 @@
     cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"JGTeamPhotoCollectionViewCell" forIndexPath:indexPath];
     cell.backgroundColor = [UIColor whiteColor];
     [cell showData:_dataArray[indexPath.row]];
-    if ([_power containsString:@"1005"] == YES) {
+    if ([_power containsString:@"1005"] == YES || [DEFAULF_USERID integerValue] == [[_dataArray[indexPath.row] userKey] integerValue]) {
         cell.manageBtn.hidden = NO;
         cell.manageBtn.tag = 10000 + indexPath.row;
         [cell.manageBtn addTarget:self action:@selector(manageClick:) forControlEvents:UIControlEventTouchUpInside];
@@ -207,6 +207,7 @@
     phoVc.strTimeKey = [_dataArray[indexPath.row] timeKey];
     phoVc.albumKey = [_dataArray[indexPath.row] timeKey];
     phoVc.power = _power;
+    phoVc.userKey = [_dataArray[indexPath.row] userKey];
     [self.navigationController pushViewController:phoVc animated:YES];
 }
 

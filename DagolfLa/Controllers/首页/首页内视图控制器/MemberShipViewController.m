@@ -97,17 +97,15 @@
 //        NSURL* url = [NSURL URLWithString:@"http://192.168.1.101:8888/team/getMyTeamActivityList"];
 
         
-//        NSString *oldUserAgent = [[[UIWebView alloc] init] stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"];
-//        NSString * appName = [[NSBundle mainBundle] infoDictionary][@"CFBundleDisplayName"];
-//        NSString *version = [[NSBundle mainBundle] infoDictionary][@"CFBundleShortVersionString"];
-//        NSString *customUserAgent = [oldUserAgent stringByAppendingFormat:@" %@/1.0", appName];
-//        [[NSUserDefaults standardUserDefaults] registerDefaults:@{@"UserAgent":customUserAgent}];
-//        NSLog(@"%@",customUserAgent);
         
         //设置页面禁止滚动
         _webView.scrollView.bounces = NO ;
         //设置web占满屏幕
         _webView.scalesPageToFit = YES ;
+        
+        NSString *userAgent = [[[UIWebView alloc] init] stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"];
+        NSString *customUserAgent = [userAgent stringByAppendingFormat:@" dagolfla/2.0"];
+        [[NSUserDefaults standardUserDefaults] registerDefaults:@{@"UserAgent":customUserAgent}];
         [self.webView loadRequest:[NSURLRequest requestWithURL:url]];
         
         
