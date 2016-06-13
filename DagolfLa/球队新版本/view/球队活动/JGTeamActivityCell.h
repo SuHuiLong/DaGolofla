@@ -23,7 +23,8 @@
 
 //imageView
 @property (weak, nonatomic) IBOutlet UIImageView *imageview;
-
+//activityStateImage
+@property (weak, nonatomic) IBOutlet UIImageView *activityStateImage;
 
 //填充cell数据
 //- (void)setJGTeamActivityCellWithModel:(JGTeamAcitivtyModel *)modeel;

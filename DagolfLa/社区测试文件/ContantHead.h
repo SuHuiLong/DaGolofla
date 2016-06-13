@@ -82,6 +82,8 @@ typedef NS_ENUM(NSInteger, GestureType) {
 //测试环境图片基础地址//#define IMAGE_VEDIO_BASEURL @""
 //#define imageBaseUrl @"http://192.168.2.38:8088/"
 
+#define CornerRadiu 8.0 //圆角值
+
 //上传图片的打高尔夫啦tag
 #define PHOTO_DAGOLFLA @"dagolfla"
 

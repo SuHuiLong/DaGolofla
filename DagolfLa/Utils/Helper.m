@@ -311,7 +311,6 @@
     NSString * dateString = [dm stringFromDate:dateNew];
     return dateString;
 }
-
 //string转化毫秒
 + (CGFloat )stringConversionToDate:(NSString *)dateStr{
     
@@ -327,6 +326,26 @@
     NSDateFormatter * dm = [[NSDateFormatter alloc]init];
     [dm setDateFormat:@"yyyy-MM-dd 00:00:00"];
     return [dm stringFromDate:dateNew];
+}
+
+
++ (NSString *)returnDateformatString:(NSString *)dateString{
+    NSString *str = nil;
+    NSString *yearStr = [[dateString componentsSeparatedByString:@" "]objectAtIndex:0];
+    NSString *dateCatory = nil;
+    NSArray *array = [yearStr componentsSeparatedByString:@"-"];
+    for (int i=0; i<3; i++) {
+        if (i == 0) {
+            dateCatory = @"年";
+        }else if (i == 1){
+            dateCatory = @"月";
+        }else{
+            dateCatory = @"日";
+            str = [NSString stringWithFormat:@"%@%@%@", [[array objectAtIndex:0]stringByAppendingString:dateCatory], [[array objectAtIndex:1]stringByAppendingString:dateCatory], [[array objectAtIndex:2]stringByAppendingString:dateCatory]];
+            NSLog(@"str == %@", str);
+        }
+    }
+    return str;
 }
 
 @end

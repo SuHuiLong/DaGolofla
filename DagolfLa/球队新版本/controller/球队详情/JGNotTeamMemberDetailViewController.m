@@ -110,7 +110,7 @@ static CGFloat ImageHeight  = 210.0;
         self.launchActivityTableView.backgroundColor = [UIColor colorWithHexString:@"#EAEAEB"];
         [self.view addSubview:self.launchActivityTableView];
         [self.view addSubview:self.imgProfile];
-        self.titleView.frame = CGRectMake(0, 20, screenWidth, 44);
+        self.titleView.frame = CGRectMake(0, 0, screenWidth, 44);
         self.titleView.backgroundColor = [UIColor clearColor];
         [self.imgProfile addSubview:self.titleView];
     }
@@ -123,9 +123,15 @@ static CGFloat ImageHeight  = 210.0;
     self.navigationController.navigationBar.hidden = YES;
     self.automaticallyAdjustsScrollViewInsets=NO;
     self.view.backgroundColor = [UIColor colorWithHexString:@"#EAEAEB"];
+    
+    //渐变图
+    UIImageView *gradientImage = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, ImageHeight)];
+    [gradientImage setImage:[UIImage imageNamed:@"tableHeaderBGImage"]];
+    [self.titleView addSubview:gradientImage];
+    
     //返回按钮
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    btn.frame = BackBtnFrame;
+    btn.frame = CGRectMake(0, 10, 44, 44);
     btn.titleLabel.font = [UIFont systemFontOfSize:FontSize_Normal];
     btn.tag = 521;
     [btn setImage:[UIImage imageNamed:@"backL"] forState:UIControlStateNormal];
@@ -141,7 +147,7 @@ static CGFloat ImageHeight  = 210.0;
     [replaceBtn addTarget:self action:@selector(initItemsBtnClick:) forControlEvents:UIControlEventTouchUpInside];
 //    [self.titleView addSubview:replaceBtn];
     //输入框
-    self.titleField = [[UILabel alloc]initWithFrame:CGRectMake(64, 7, screenWidth - 128, 30)];
+    self.titleField = [[UILabel alloc]initWithFrame:CGRectMake(64, 17, screenWidth - 128, 30)];
     self.titleField.textColor = [UIColor whiteColor];
     self.titleField.font = [UIFont systemFontOfSize:18 * screenWidth / 320];
 
@@ -235,7 +241,7 @@ static CGFloat ImageHeight  = 210.0;
         self.imgProfile.frame = f;
         
         CGRect title = self.titleView.frame;
-        self.titleView.frame = CGRectMake((factor-screenWidth)/2, 20, title.size.width, title.size.height);
+        self.titleView.frame = CGRectMake((factor-screenWidth)/2, 0, title.size.width, title.size.height);
         
         self.headPortraitBtn.hidden = YES;
         
@@ -246,7 +252,7 @@ static CGFloat ImageHeight  = 210.0;
         self.imgProfile.frame = f;
         
         CGRect t = self.titleView.frame;
-        t.origin.y = yOffset + 20;
+        t.origin.y = yOffset;
         self.titleView.frame = t;
         
         if (yOffset == 0.0) {
@@ -377,6 +383,8 @@ static CGFloat ImageHeight  = 210.0;
         if (indexPath.row == 0) {
             
             JGTeamActivityViewController *activity = [[JGTeamActivityViewController alloc] init];
+            activity.isMEActivity = 1;
+            activity.timeKey = [[self.detailDic objectForKey:@"timeKey"] integerValue];
             [self.navigationController pushViewController:activity animated:YES];
             
         }else{

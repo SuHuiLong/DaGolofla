@@ -24,11 +24,12 @@
 
 - (void)configModel:(JGTeamAcitivtyModel *)model{
     //开始
-    self.reamName.text = model.beginDate;
+//    self.reamName.text = model.beginDate;
+    self.reamName.text = [Helper returnDateformatString:model.beginDate];
     //结束时间
-    self.activityTime.text = model.endDate;
+    self.activityTime.text = [Helper returnDateformatString:model.endDate];
     //截止
-    self.limits.text = model.signUpEndTime;
+    self.limits.text = [Helper returnDateformatString:model.signUpEndTime];
 }
 
 @end

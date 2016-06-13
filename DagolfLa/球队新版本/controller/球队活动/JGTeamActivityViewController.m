@@ -48,7 +48,7 @@
     self.navigationItem.title = @"球队活动";
     self.page = 1;
     [self createTeamActivityTabelView];
-    if (_myActivityList == 1 || [self.power containsString:@"1002"]) {
+    if (_myActivityList == 1 || [self.power containsString:@"1001"]) {
         [self createAdminBtn];
     }
     
@@ -234,7 +234,7 @@
     return 1;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    return 7;
+    return 0.1;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     static NSString *teamActivityCellID = @"JGTeamActivityCell";

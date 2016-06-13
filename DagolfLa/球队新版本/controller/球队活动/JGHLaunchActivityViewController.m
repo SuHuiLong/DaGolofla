@@ -158,6 +158,8 @@ static CGFloat ImageHeight  = 210.0;
     if (self.model.name != nil) {
         self.titleField.text = _model.name;
         [self.addressBtn setTitle:_model.ballName forState:UIControlStateNormal];
+    }else{
+         [self.titleField becomeFirstResponder];
     }
     _titleArray = @[@[], @[@"活动开始时间", @"活动结束时间", @"报名截止时间"], @[@"费用说明", @"人员限制", @"活动说明"], @[@"联系电话"]];
     
