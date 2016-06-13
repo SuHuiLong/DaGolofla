@@ -75,4 +75,7 @@
 //返回当前时间
 + (NSString *)returnCurrentDateString;
 
+//2016-06-06 07:07:45 返回 2016年6月6号
++ (NSString *)returnDateformatString:(NSString *)dateString;
+
 @end

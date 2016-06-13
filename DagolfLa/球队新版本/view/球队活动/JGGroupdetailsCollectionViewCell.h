@@ -49,6 +49,10 @@
 
 //- (void)configJGHPlayersModel:(JGHPlayersModel *)model andSortIndex:(NSInteger)sortIndex;
 
+- (void)configGroupName:(NSString *)groupname;
+
 - (void)configCellWithModelArray:(NSMutableArray *)modelArray;
+
+
 
 @end

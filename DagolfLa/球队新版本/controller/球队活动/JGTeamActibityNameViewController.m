@@ -140,13 +140,20 @@ static CGFloat ImageHeight  = 210.0;
     self.teamActibityNameTableView.backgroundColor = [UIColor colorWithHexString:TB_BG_Color];
     [self.view addSubview:self.teamActibityNameTableView];
     [self.view addSubview:self.imgProfile];
-    self.titleView.frame = CGRectMake(0, 10, screenWidth, 44);
+    
+    //顶部图
+    self.titleView.frame = CGRectMake(0, 0, screenWidth, 44);
     self.titleView.backgroundColor = [UIColor clearColor];
     [self.imgProfile addSubview:self.titleView];
+    
+    //渐变图
+    UIImageView *gradientImage = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, ImageHeight)];
+    [gradientImage setImage:[UIImage imageNamed:@"tableHeaderBGImage"]];
+    [self.titleView addSubview:gradientImage];
 
     //返回按钮
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    btn.frame = BackBtnFrame;
+    btn.frame = CGRectMake(0, 10, 44, 44);
     btn.titleLabel.font = [UIFont systemFontOfSize:FontSize_Normal];
     btn.tag = 521;
     [btn setImage:[UIImage imageNamed:@"backL"] forState:UIControlStateNormal];
@@ -154,7 +161,7 @@ static CGFloat ImageHeight  = 210.0;
     [self.titleView addSubview:btn];
     
     //活动名称输入框
-    self.titleField = [[UILabel alloc]initWithFrame:CGRectMake(64, 7, screenWidth - 128, 30)];
+    self.titleField = [[UILabel alloc]initWithFrame:CGRectMake(64, 17, screenWidth - 128, 30)];
     self.titleField.text = _model.name;
     self.titleField.textColor = [UIColor whiteColor];
     self.titleField.textAlignment = NSTextAlignmentCenter;
@@ -183,10 +190,11 @@ static CGFloat ImageHeight  = 210.0;
     
     if (self.isAdmin == 1) {// 发布页面
         [self createSaveAndLaunchBtn];
+       
     }else{
         [self createApplyBtn];//报名页面
         //分享按钮
-        UIButton *shareBtn = [[UIButton alloc]initWithFrame:CGRectMake(screenWidth-44, 0, 44, 44)];
+        UIButton *shareBtn = [[UIButton alloc]initWithFrame:CGRectMake(screenWidth-44, self.titleField.frame.origin.y, 44, self.titleField.frame.size.height)];
         [shareBtn setImage:[UIImage imageNamed:@"fenxiang"] forState:UIControlStateNormal];
         [shareBtn addTarget:self action:@selector(addShare) forControlEvents:UIControlEventTouchUpInside];
         [self.titleView addSubview:shareBtn];
@@ -225,16 +233,20 @@ static CGFloat ImageHeight  = 210.0;
         
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
             NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-            dict = [data objectForKey:@"teamMember"];
-            if ([dict objectForKey:@"power"]) {
+            
+            if ([data objectForKey:@"teamMember"]) {
+                dict = [data objectForKey:@"teamMember"];
                 _userName = [dict objectForKey:@"userName"];//获取用户在球队的真实姓名
+                
                 if ([dict objectForKey:@"power"]) {
                     NSString *str = [dict objectForKey:@"power"];
                     if ([str containsString:@"1001"]) {
                         [self createGroupBtn];
                     }
                 }
-            }else{
+            }
+            
+            if (![data objectForKey:@"teamMember"]) {
                 _isTeamMember = 1;//非球队成员
                 [self.applyBtn setBackgroundColor:[UIColor lightGrayColor]];
             }
@@ -246,10 +258,10 @@ static CGFloat ImageHeight  = 210.0;
         }
     }];
 }
-//有管理权限的用户在活动详情页面显示－－活动分组
+#pragma mark－－有管理权限的用户在活动详情页面显示－－活动分组
 - (void)createGroupBtn{
     UIButton *replaceBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    replaceBtn.frame = CGRectMake(screenWidth-94, 3, 54, 44);
+    replaceBtn.frame = CGRectMake(screenWidth-94, self.titleField.frame.origin.y, 60, self.titleField.frame.size.height);
     replaceBtn.titleLabel.font = [UIFont systemFontOfSize:FontSize_Normal];
     [replaceBtn setTitle:@"活动分组" forState:UIControlStateNormal];
     replaceBtn.titleLabel.font = [UIFont systemFontOfSize:13];
@@ -293,11 +305,11 @@ static CGFloat ImageHeight  = 210.0;
         fiData = [NSData dataWithContentsOfURL:[Helper setImageIconUrl:@"activity" andTeamKey:[_model.timeKey integerValue]andIsSetWidth:YES andIsBackGround:YES]];
     }
     
-  
+    
     
     NSString*  shareUrl;
     if (self.isTeamChannal == 2) {
-       shareUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/team/teamac.html?key=%@", _model.timeKey];
+        shareUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/team/teamac.html?key=%@", _model.timeKey];
     }else{
         shareUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/team/teamac.html?key=%td", _teamActivityKey];
     }
@@ -542,34 +554,35 @@ static CGFloat ImageHeight  = 210.0;
             NSNumber* strTimeKey = [data objectForKey:@"timeKey"];
             // 上传图片
             NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-//            [dict setObject:strTimeKey forKey:@"data"];
             [dict setObject:TYPE_TEAM_BACKGROUND forKey:@"nType"];
             [dict setObject:PHOTO_DAGOLFLA forKey:@"tag"];
             
-//            [[JsonHttp jsonHttp]httpRequestImageOrVedio:@"1" withData:dict andDataArray:imageArray failedBlock:^(id errType) {
-//                NSLog(@"errType===%@", errType);
-//            } completionBlock:^(id data) {
-                [dict setObject:[NSString stringWithFormat:@"%@_background" ,strTimeKey] forKey:@"data"];
-                [dict setObject:TYPE_TEAM_BACKGROUND forKey:@"nType"];
-//                [imageArray removeAllObjects];
-//                [imageArray addObject:UIImageJPEGRepresentation(self.model.headerImage, 0.7)];
-                [[JsonHttp jsonHttp] httpRequestImageOrVedio:@"1" withData:dict andDataArray:imageArray failedBlock:^(id errType) {
-                    NSLog(@"errType===%@", errType);
-                } completionBlock:^(id data) {
-                    NSLog(@"data == %@", data);
-                    if ([[data objectForKey:@"code"] integerValue] == 1) {
-                        //获取主线层
-                        if ([NSThread isMainThread]) {
-                            NSLog(@"Yay!");
-                            [self.navigationController popViewControllerAnimated:YES];
-                        } else {
-                            NSLog(@"Humph, switching to main");
-                            dispatch_async(dispatch_get_main_queue(), ^{
-                                [self.navigationController popToRootViewControllerAnimated:YES];
-                            });
-                        }
+            [dict setObject:[NSString stringWithFormat:@"%@_background" ,strTimeKey] forKey:@"data"];
+            [dict setObject:TYPE_TEAM_BACKGROUND forKey:@"nType"];
+            [[JsonHttp jsonHttp] httpRequestImageOrVedio:@"1" withData:dict andDataArray:imageArray failedBlock:^(id errType) {
+                NSLog(@"errType===%@", errType);
+            } completionBlock:^(id data) {
+                NSLog(@"data == %@", data);
+                if ([[data objectForKey:@"code"] integerValue] == 1) {
+                    UIAlertAction *commitAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+                        
+                        [self.navigationController popToRootViewControllerAnimated:YES];
+                    }];
+                    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"系统提示" message:@"活动创建成功!" preferredStyle:UIAlertControllerStyleAlert];
+                    [alertController addAction:commitAction];
+                    //获取主线层
+                    if ([NSThread isMainThread]) {
+                        NSLog(@"Yay!");
+                        [self presentViewController:alertController animated:YES completion:nil];
+                        [self.navigationController popViewControllerAnimated:YES];
+                    } else {
+                        NSLog(@"Humph, switching to main");
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            [self presentViewController:alertController animated:YES completion:nil];
+                        });
                     }
-//                }];
+                    
+                }
             }];
         }];
     }
@@ -723,7 +736,7 @@ static CGFloat ImageHeight  = 210.0;
         self.imgProfile.frame = f;
         
         CGRect title = self.titleView.frame;
-        self.titleView.frame = CGRectMake((factor-screenWidth)/2, 10, title.size.width, title.size.height);
+        self.titleView.frame = CGRectMake((factor-screenWidth)/2, 0, title.size.width, title.size.height);
         
         self.headPortraitBtn.hidden = YES;
         
@@ -734,7 +747,8 @@ static CGFloat ImageHeight  = 210.0;
         self.imgProfile.frame = f;
         
         CGRect t = self.titleView.frame;
-        t.origin.y = yOffset + 10;
+//        t.origin.y = yOffset + 10;
+        t.origin.y = yOffset;
         self.titleView.frame = t;
         
         if (yOffset == 0.0) {

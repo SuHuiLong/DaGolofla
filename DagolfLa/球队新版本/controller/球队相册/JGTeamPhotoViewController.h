@@ -15,4 +15,7 @@
 
 //相册中的权限设置
 @property (strong, nonatomic) NSString* power;
+
+//teamember
+@property (strong, nonatomic) NSMutableDictionary* dictMember;
 @end

@@ -50,7 +50,7 @@
 }
 
 -(void)savePicButton {
-    if ([_power containsString:@"1005"] == YES) {
+    if ([_power containsString:@"1005"] == YES || [DEFAULF_USERID integerValue] == [_userKey integerValue]) {
         UIButton *savePicBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         [savePicBtn setTitle:@"编辑" forState:UIControlStateNormal];
         savePicBtn.titleLabel.textColor = [UIColor whiteColor];

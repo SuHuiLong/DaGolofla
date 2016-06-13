@@ -256,7 +256,7 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
     //如果价格为空
     if (_realPayPrice == 0) {
         // 分别3个创建操作
-        [Helper alertViewNoHaveCancleWithTitle:@"为勾选嘉宾，请选择现场付款！" withBlock:^(UIAlertController *alertView) {
+        [Helper alertViewNoHaveCancleWithTitle:@"无需支付，请选择直接报名！" withBlock:^(UIAlertController *alertView) {
             [self.navigationController presentViewController:alertView animated:YES completion:nil];
         }];
         
@@ -336,9 +336,13 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
 #pragma mark -- 删除嘉宾
 - (void)didSelectDeleteBtn:(UIButton *)btn{
     NSLog(@"%ld", (long)btn.tag);
-    [self.applyArray removeObjectAtIndex:btn.tag - 100];
-    //计算价格
-    [self countAmountPayable];
+    if ([self.applyArray count]) {
+        [self.applyArray removeObjectAtIndex:btn.tag - 100];
+        //计算价格
+        [self countAmountPayable];
+    }
+    
+    [self.teamApplyTableView reloadData];
 }
 #pragma mark -- 添加打球人页面代理－－－返回打球人数组
 - (void)addGuestListArray:(NSArray *)guestListArray{

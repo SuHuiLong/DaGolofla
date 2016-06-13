@@ -66,7 +66,7 @@
                             <action selector="sction2:" destination="gTV-IL-0wX" eventType="touchUpInside" id="e1T-RX-Zkd"/>
                         </connections>
                     </button>
-                    <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zAO-eG-BzH">
+                    <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zAO-eG-BzH">
                         <rect key="frame" x="19" y="102" width="50" height="50"/>
                         <constraints>
                             <constraint firstAttribute="width" secondItem="zAO-eG-BzH" secondAttribute="height" multiplier="1:1" id="Seo-Jo-QN2"/>
