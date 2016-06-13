@@ -68,7 +68,7 @@
     self.view = _tableView;
     _tableView.delegate = self;
     _tableView.dataSource = self;
-    _tableView.rowHeight = 83 * ScreenWidth/320;
+    _tableView.rowHeight = 80 * ScreenWidth/320;
 //    _tableView.scrollEnabled = NO;
     _searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
     _searchController.searchResultsUpdater = self;
@@ -264,7 +264,7 @@
         }
 
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        
+        self.tableView.separatorStyle = UITableViewCellAccessoryNone;
         return cell;
     }else{
         // TEST
@@ -274,7 +274,8 @@
         cell.adressLabel.text = [self.modelArray[indexPath.row] objectForKey:@"crtyName"];
         cell.describLabel.text = [self.modelArray[indexPath.row] objectForKey:@"info"];;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        
+        self.tableView.separatorStyle = UITableViewCellAccessoryNone;
+
         return cell;
     }
 }

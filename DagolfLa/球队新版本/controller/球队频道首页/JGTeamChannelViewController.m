@@ -14,7 +14,6 @@
 #import "JGTeamDetailStylelTwoViewController.h"
 #import "JGApplyMaterialViewController.h"
 #import "JGTeamDetailViewController.h"
-#import "JGCreateTeamViewController.h"
 #import "JGTeamChannelActivityTableViewCell.h"
 #import "JGTeamActivityViewController.h"
 #import "JGLMyTeamViewController.h"
@@ -90,7 +89,6 @@
     self.topScrollView = [[HomeHeadView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 160 * screenWidth / 320)];
     self.topScrollView.userInteractionEnabled = YES;
     
-    //    [self createScrollView];
     [self creatCro];
     [self.view addSubview:self.topScrollView];
     
@@ -102,37 +100,41 @@
     for (int i = 0; i < 3; i ++) {
         
         UIButton *button = [UIButton buttonWithType:(UIButtonTypeCustom)];
-        button.frame = CGRectMake(0, (165 + i * 35) * screenWidth / 320, screenWidth, 30 * screenWidth / 320);
+        button.frame = CGRectMake(0, 175 * screenWidth / 320 + i * 50 * screenWidth / 320, screenWidth, 40 * screenWidth / 320);
         button.tag = 200 + i;
         button.backgroundColor = [UIColor whiteColor];
         button.titleLabel.font =[UIFont systemFontOfSize:15 * screenWidth / 320];
 
         [button addTarget:self action:@selector(team:) forControlEvents:(UIControlEventTouchUpInside)];
         [button setTitle:self.buttonArray[i] forState:(UIControlStateNormal)];
-        [button setTitleColor:[UIColor lightGrayColor] forState:(UIControlStateNormal)];
+        [button setTitleColor:[UIColor blackColor] forState:(UIControlStateNormal)];
         [button setImage:[UIImage imageNamed:@")"] forState:(UIControlStateNormal)];
         button.imageEdgeInsets = UIEdgeInsetsMake(0, 300 * screenWidth / 320, 0, 0);
         //        button.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
         button.titleEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 200 * screenWidth / 320);
         [self.view addSubview:button];
-        UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake(10 * screenWidth / 320, 6 * screenWidth / 320, 20 * screenWidth / 320, 20 * screenWidth / 320)];
+        UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake(10 * screenWidth / 320, 10 * screenWidth / 320, 20 * screenWidth / 320, 20 * screenWidth / 320)];
         NSArray *arra = [NSArray arrayWithObjects:@"qd", @"hd-1", @"dt", nil];
         imageV.image = [UIImage imageNamed:arra[i]];
         imageV.contentMode = UIViewContentModeScaleAspectFit;
         [button addSubview:imageV];
     }
     
-    self.tableView = [[JGTeamChannelTableView alloc] initWithFrame:CGRectMake(0, 300 * screenWidth / 320, screenWidth, screenHeight - 300 * screenWidth / 320) style:(UITableViewStylePlain)];
+    self.tableView = [[JGTeamChannelTableView alloc] initWithFrame:CGRectMake(0, 360 * screenWidth / 320, screenWidth, screenHeight - 360 * screenWidth / 320) style:(UITableViewStylePlain)];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.separatorStyle = UITableViewCellAccessoryNone;
-    self.tableView.rowHeight = 83 * screenWidth / 320;
+    self.tableView.rowHeight = 80 * screenWidth / 320;
     
     [self.view addSubview:self.tableView];
     
     [self setData];
     
-    self.titleLB = [[UILabel alloc] initWithFrame:CGRectMake(0, 270 * screenWidth / 320, screenWidth, 30 * screenWidth / 320)];
+    UIImageView *blueImageV = [[UIImageView alloc] initWithFrame:CGRectMake(10 * screenWidth / 320, 332 * screenWidth / 320, 5 * screenWidth / 320, 16 * screenWidth / 320)];
+    blueImageV.backgroundColor = [UIColor colorWithRed:0.5 green:0.76 blue:1.0 alpha:1.0];
+    [self.view addSubview:blueImageV];
+    
+    self.titleLB = [[UILabel alloc] initWithFrame:CGRectMake(25, 320 * screenWidth / 320, screenWidth, 40 * screenWidth / 320)];
     [self.view addSubview:self.titleLB];
     
     // Do any additional setup after loading the view.
@@ -352,13 +354,7 @@
 - (void)team:(UIButton *)button{
     
     if (button.tag == 200) {
-        //        NSMutableDictionary *dic = [NSMutableDictionary dictionary];
-        //        [dic setObject:@244 forKey:@"userKey"];
-        //        [[JsonHttp jsonHttp] httpRequest:@"team/getMyTeamList" withData:dic requestMethod:@"POST" failedBlock:^(id errType) {
-        //            NSLog(@"erro");
-        //        } completionBlock:^(id data) {
-        //            NSLog(@"%@", data);
-        //        }];
+
         JGLMyTeamViewController* myVc = [[JGLMyTeamViewController alloc]init];
         [self.navigationController pushViewController:myVc animated:YES];
     }else if (button.tag == 201) {
