@@ -10,7 +10,7 @@
 #import "JGApplyMaterialTableViewCell.h"
 #import "JGButtonTableViewCell.h"
 
-
+#import "JGLTeamChoiseViewController.h"
 @interface JGSelfSetViewController ()<UITableViewDelegate, UITableViewDataSource,UIPickerViewDataSource,UIPickerViewDelegate,UITextFieldDelegate>
 
 @property (nonatomic, strong)UITableView *tableView;
@@ -215,7 +215,7 @@
 
 - (void)creatNewTableView{
     
-    self.secondTableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
+    self.secondTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 26*screenWidth/320*2 + 40*screenWidth/320*9) style:UITableViewStylePlain];
     self.secondTableView.delegate = self;
     self.secondTableView.dataSource = self;
     [self.secondTableView registerClass:[JGApplyMaterialTableViewCell class] forCellReuseIdentifier:@"cell"];
@@ -255,8 +255,26 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    if ([[self.view subviews] containsObject:self.pickerBackView]) {
-        [self.pickerBackView removeFromSuperview];
+    if (indexPath.section == 0 && indexPath.row == 1) {
+        JGLTeamChoiseViewController* tcVc = [[JGLTeamChoiseViewController alloc]init];
+        tcVc.dataArray = @[@"保密",@"男",@"女"];
+        tcVc.introBlock = ^(NSString* strName, NSNumber* num){
+            
+        };
+        [self.navigationController pushViewController:tcVc animated:YES];
+    }
+    else if (indexPath.section == 1 && indexPath.row == 5)
+    {
+        JGLTeamChoiseViewController* tcVc = [[JGLTeamChoiseViewController alloc]init];
+        tcVc.dataArray = @[@"左手",@"右手"];
+        tcVc.introBlock = ^(NSString* strName, NSNumber* num){
+            
+        };
+        [self.navigationController pushViewController:tcVc animated:YES];
+    }
+    else
+    {
+        return;
     }
 }
 
@@ -360,17 +378,6 @@
     }
 }
 
-- (void)creatTableView{
-    
-    self.tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:(UITableViewStylePlain)];
-    self.tableView.delegate = self;
-    self.tableView.dataSource = self;
-    [self.tableView registerClass:[JGApplyMaterialTableViewCell class] forCellReuseIdentifier:@"cell"];
-    [self.tableView registerClass:[JGButtonTableViewCell class] forCellReuseIdentifier:@"cellBtn"];
-    self.titleArray = [NSArray arrayWithObjects:@[@"姓名", @"性别", @"差点", @"手机号码"], @"常住地址", @"衣服尺码", @"惯用手", nil];
-    self.placeholderArray = [NSArray arrayWithObjects:@[@"请输入真实姓名", @"请输入", @"请输入您的差点", @"请输入手机号" ],@"方便活动邀请（选填）",@"统一制服定做（选填）",@"制定特殊需求（选填）", nil];
-    [self.view addSubview: self.tableView];
-}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     if (section == 0) {
@@ -398,6 +405,7 @@
     
     if (indexPath.section == 0 && indexPath.row == 0) {
         JGApplyMaterialTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.labell.text = @"姓名";
         if ([self.memeDic objectForKey:@"userName"]) {
             cell.textFD.text = [self.memeDic objectForKey:@"userName"];
@@ -411,6 +419,7 @@
     }else if (indexPath.section == 0 && indexPath.row == 1){
         JGButtonTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellBtn" forIndexPath:indexPath];
         cell.labell.text = @"性别";
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         [cell.button addTarget:self action:@selector(cellBtn) forControlEvents:(UIControlEventTouchUpInside)];
         if ([self.memeDic objectForKey:@"sex"]) {
             if ([self.memeDic objectForKey:@"sex"] == 0) {
@@ -429,6 +438,7 @@
     }else if (indexPath.section == 0 && indexPath.row == 2){
         JGApplyMaterialTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
         cell.labell.text = @"手机号码";
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         if ([self.memeDic objectForKey:@"mobile"]) {
             cell.textFD.text = [self.memeDic objectForKey:@"mobile"];
             return cell;
@@ -441,6 +451,7 @@
     }else if (indexPath.section == 1 && indexPath.row == 0){
         JGApplyMaterialTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
         cell.labell.text = @"行业";
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         if ([self.memeDic objectForKey:@"industry"]) {
             cell.textFD.text = [self.memeDic objectForKey:@"industry"];
             return cell;
@@ -452,6 +463,7 @@
     }else if (indexPath.section == 1 && indexPath.row == 1){
         JGApplyMaterialTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
         cell.labell.text = @"公司";
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         if ([self.memeDic objectForKey:@"company"]) {
             cell.textFD.text = [self.memeDic objectForKey:@"company"];
             return cell;
@@ -462,6 +474,7 @@
     }else if (indexPath.section == 1 && indexPath.row == 2){
         JGApplyMaterialTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
         cell.labell.text = @"职业";
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         if ([self.memeDic objectForKey:@"occupation"]) {
             cell.textFD.text = [self.memeDic objectForKey:@"occupation"];
             return cell;
@@ -473,6 +486,7 @@
     }else if (indexPath.section == 1 && indexPath.row == 3){
         JGApplyMaterialTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
         cell.labell.text = @"常住地址";
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         if ([self.memeDic objectForKey:@"address"]) {
             cell.textFD.text = [self.memeDic objectForKey:@"address"];
               return cell;
@@ -484,11 +498,13 @@
     }else if (indexPath.section == 1 && indexPath.row == 4){
         JGApplyMaterialTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
         cell.labell.text = @"衣服尺码";
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         if ([self.memeDic objectForKey:@"size"]) {
             cell.textFD.text = [self.memeDic objectForKey:@"size"];
             return cell;
 
         }else{
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
             cell.textFD.placeholder = @"请输入你的衣服尺码";
              return cell;
         }
@@ -496,6 +512,7 @@
     }else if (indexPath.section == 1 && indexPath.row == 5){
         JGButtonTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellBtn" forIndexPath:indexPath];
         cell.labell.text = @"惯用手";
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         [cell.button addTarget:self action:@selector(cellBtnSec) forControlEvents:(UIControlEventTouchUpInside)];
         if ([self.memeDic objectForKey:@"hand"]) {
             if ([[self.memeDic objectForKey:@"hand"] integerValue]== 0) {
@@ -562,12 +579,6 @@
     }
 }
 
-
-//}
-
-//- (void)cellBtn{
-//    NSLog(@"***********/n*************");
-//}
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     return 26 * screenWidth / 320;

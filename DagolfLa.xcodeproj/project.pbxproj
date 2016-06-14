@@ -821,6 +821,8 @@
 		65CD8E4C1BEA067F006984F3 /* AddressBookViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 65CD8E4A1BEA067F006984F3 /* AddressBookViewCell.xib */; };
 		821A130F1CED5F9C00694E49 /* JGLPhotoAlbumModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 821A130E1CED5F9C00694E49 /* JGLPhotoAlbumModel.m */; };
 		821A13131CEDE04400694E49 /* JGLMyTeamModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 821A13121CEDE04400694E49 /* JGLMyTeamModel.m */; };
+		821F51041D0E89D700AF0E93 /* JGLMyTeamTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 821F51031D0E89D700AF0E93 /* JGLMyTeamTableViewCell.m */; };
+		821F51071D0ECF4700AF0E93 /* JGLTeamChoiseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 821F51061D0ECF4700AF0E93 /* JGLTeamChoiseViewController.m */; };
 		823C149D1CEEF0B5000AB612 /* JGLTeamMemberModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 823C149C1CEEF0B5000AB612 /* JGLTeamMemberModel.m */; };
 		82636E8D1D06CB1600216DC1 /* JGPhotoListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 82636E8C1D06CB1600216DC1 /* JGPhotoListModel.m */; };
 		82636E901D06D18100216DC1 /* JGTeamPhotoShowViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 82636E8F1D06D18100216DC1 /* JGTeamPhotoShowViewController.m */; };
@@ -2255,6 +2257,10 @@
 		821A130E1CED5F9C00694E49 /* JGLPhotoAlbumModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGLPhotoAlbumModel.m; sourceTree = "<group>"; };
 		821A13111CEDE04400694E49 /* JGLMyTeamModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGLMyTeamModel.h; sourceTree = "<group>"; };
 		821A13121CEDE04400694E49 /* JGLMyTeamModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGLMyTeamModel.m; sourceTree = "<group>"; };
+		821F51021D0E89D700AF0E93 /* JGLMyTeamTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGLMyTeamTableViewCell.h; sourceTree = "<group>"; };
+		821F51031D0E89D700AF0E93 /* JGLMyTeamTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGLMyTeamTableViewCell.m; sourceTree = "<group>"; };
+		821F51051D0ECF4700AF0E93 /* JGLTeamChoiseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGLTeamChoiseViewController.h; sourceTree = "<group>"; };
+		821F51061D0ECF4700AF0E93 /* JGLTeamChoiseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGLTeamChoiseViewController.m; sourceTree = "<group>"; };
 		823C149B1CEEF0B5000AB612 /* JGLTeamMemberModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGLTeamMemberModel.h; sourceTree = "<group>"; };
 		823C149C1CEEF0B5000AB612 /* JGLTeamMemberModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGLTeamMemberModel.m; sourceTree = "<group>"; };
 		82636E8B1D06CB1600216DC1 /* JGPhotoListModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGPhotoListModel.h; sourceTree = "<group>"; };
@@ -5684,6 +5690,8 @@
 			children = (
 				82E6A6F01CF55313009DD179 /* JGLTeamAdviceTableViewCell.h */,
 				82E6A6F11CF55313009DD179 /* JGLTeamAdviceTableViewCell.m */,
+				821F51021D0E89D700AF0E93 /* JGLMyTeamTableViewCell.h */,
+				821F51031D0E89D700AF0E93 /* JGLMyTeamTableViewCell.m */,
 			);
 			path = "我的球队";
 			sourceTree = "<group>";
@@ -5907,6 +5915,8 @@
 				F5B549921CE9AC9C0091C962 /* JGApplyMaterialViewController.m */,
 				F5843DF71CFCF5EA00547812 /* JGSelfSetViewController.h */,
 				F5843DF81CFCF5EA00547812 /* JGSelfSetViewController.m */,
+				821F51051D0ECF4700AF0E93 /* JGLTeamChoiseViewController.h */,
+				821F51061D0ECF4700AF0E93 /* JGLTeamChoiseViewController.m */,
 			);
 			path = "申请资料";
 			sourceTree = "<group>";
@@ -6634,6 +6644,7 @@
 				36CFDBA31BCE3D5100301269 /* TKAddressModel.m in Sources */,
 				369F7D211CB636C3000BC13D /* MeDetailTableViewCell.m in Sources */,
 				3660E1211BFC553A0033B4D7 /* TeamCreateViewController.m in Sources */,
+				821F51041D0E89D700AF0E93 /* JGLMyTeamTableViewCell.m in Sources */,
 				F50EFF331CF9609100F7AB3F /* JGImageAndLabelAndLabelTableViewCell.m in Sources */,
 				36BFFF7C1BC76D09005B3CE2 /* UIButton+WebCache.m in Sources */,
 				36DF09B21C03EFFB007A8A4E /* TeamLogoHeadCell.m in Sources */,
@@ -6852,6 +6863,7 @@
 				208030491CF828D000448BFC /* JGHAddAddressViewController.m in Sources */,
 				36067BD11C982791001AE22C /* ShieldingTableViewCell.m in Sources */,
 				36BFFF781BC76D09005B3CE2 /* SDWebImageDownloader.m in Sources */,
+				821F51071D0ECF4700AF0E93 /* JGLTeamChoiseViewController.m in Sources */,
 				821A13131CEDE04400694E49 /* JGLMyTeamModel.m in Sources */,
 				2067C6B81CE30CA4002900C8 /* JGTeamActibityNameViewController.m in Sources */,
 				36DD4DB61BFDBE30008D3424 /* TeamCreateTextViewCell.m in Sources */,

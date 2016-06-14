@@ -7,7 +7,7 @@
 //
 
 #import "JGLTeamAdviceTableViewCell.h"
-
+#import "UITool.h"
 @implementation JGLTeamAdviceTableViewCell
 
 - (void)awakeFromNib {
@@ -35,68 +35,49 @@
         _ageLabel.textAlignment = NSTextAlignmentLeft;
         _ageLabel.font = [UIFont systemFontOfSize:13*screenWidth/320];
         _ageLabel.text = @"24年";
-        _sexImage = [[UIImageView alloc]initWithFrame:CGRectMake(59*screenWidth/320, 38*screenWidth/320, 9*screenWidth/320, 12*screenWidth/320)];
+        _sexImage = [[UIImageView alloc]initWithFrame:CGRectMake(55*screenWidth/320, 38*screenWidth/320, 9*screenWidth/320, 12*screenWidth/320)];
         [self addSubview:_sexImage];
         _sexImage.image = [UIImage imageNamed:@"xb_nn"];
         
         
-        _chadianLabel = [[UILabel alloc]initWithFrame:CGRectMake(74*screenWidth/320, 34*screenWidth/320, 60*screenWidth/320, 20*screenWidth/320)];
-        _chadianLabel.font = [UIFont systemFontOfSize:13*screenWidth/320];
+        _chadianLabel = [[UILabel alloc]initWithFrame:CGRectMake(70*screenWidth/320, 34*screenWidth/320, 50*screenWidth/320, 20*screenWidth/320)];
+        _chadianLabel.font = [UIFont systemFontOfSize:10*screenWidth/320];
         _chadianLabel.textColor = [UIColor darkGrayColor];
         [self addSubview:_chadianLabel];
         _chadianLabel.text = @"差点:39";
         
-        _mobileLabel = [[UILabel alloc]initWithFrame:CGRectMake(140*screenWidth/320, 34*screenWidth/320, 130*screenWidth/320, 20*screenWidth/320)];
-        _mobileLabel.font = [UIFont systemFontOfSize:13*screenWidth/320];
+        _mobileLabel = [[UILabel alloc]initWithFrame:CGRectMake(115*screenWidth/320, 34*screenWidth/320, 100*screenWidth/320, 20*screenWidth/320)];
+        _mobileLabel.font = [UIFont systemFontOfSize:10*screenWidth/320];
         _mobileLabel.textColor = [UIColor darkGrayColor];
         [self addSubview:_mobileLabel];
         _mobileLabel.text = @"手机号:18612341234";
         
         
         _agreeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        _agreeBtn.frame = CGRectMake(227*screenWidth/320, 15*screenWidth/320, 46*screenWidth/320, 25*screenWidth/320);
+        _agreeBtn.frame = CGRectMake(224*screenWidth/320, 15*screenWidth/320, 46*screenWidth/320, 24*screenWidth/320);
         [_agreeBtn setTitle:@"同意" forState:UIControlStateNormal];
-//        _agreeBtn.titleLabel.textColor = [UIColor orangeColor];
         [_agreeBtn setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
+        [_agreeBtn.layer setBorderWidth:1.0]; //边框宽度
+        _agreeBtn.layer.borderColor = [[UITool colorWithHexString:@"#f39800" alpha:1] CGColor];
         [self addSubview:_agreeBtn];
-        _agreeBtn.titleLabel.font = [UIFont systemFontOfSize:15];
+        _agreeBtn.titleLabel.font = [UIFont systemFontOfSize:14];
+        _agreeBtn.layer.masksToBounds = YES;
+        _agreeBtn.layer.cornerRadius = 8*screenWidth/320;
         
         _disMissBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        _disMissBtn.frame = CGRectMake(271*screenWidth/320, 15*screenWidth/320, 46*screenWidth/320, 25*screenWidth/320);
+        _disMissBtn.frame = CGRectMake(271*screenWidth/320, 15*screenWidth/320, 46*screenWidth/320, 24*screenWidth/320);
         [_disMissBtn setTitle:@"拒绝" forState:UIControlStateNormal];
-        [_disMissBtn setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
-        _disMissBtn.titleLabel.font = [UIFont systemFontOfSize:15];
+        [_disMissBtn setTitleColor:[UITool colorWithHexString:@"#f39800" alpha:1] forState:UIControlStateNormal];
+        [_disMissBtn.layer setBorderWidth:1.0]; //边框宽度
+        _disMissBtn.layer.borderColor = [[UITool colorWithHexString:@"#f39800" alpha:1] CGColor];
+        _disMissBtn.titleLabel.font = [UIFont systemFontOfSize:14];
+        _disMissBtn.layer.masksToBounds = YES;
+        _disMissBtn.layer.cornerRadius = 8*screenWidth/320;
         [self addSubview:_disMissBtn];
     }
     return self;
 }
 
-//-(void)agree1Click
-//{
-//    NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
-//    [dict setObject:@181 forKey:@"teamKey"];
-//    [dict setObject:@244 forKey:@"userKey"];
-//    [dict setObject:@184 forKey:@"memberKey"];
-//    [dict setObject:@1 forKey:@"state"];
-//    [[JsonHttp jsonHttp]httpRequest:@"team/auditTeamMember" JsonKey:nil withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
-//
-//    } completionBlock:^(id data) {
-//        NSLog(@"%@",[data objectForKey:@"packResultMsg"]);
-//    }];
-//}
-//-(void)dis1Click
-//{
-//    NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
-//    [dict setObject:@181 forKey:@"teamKey"];
-//    [dict setObject:@244 forKey:@"userKey"];
-//    [dict setObject:@184 forKey:@"memberKey"];
-//    [dict setObject:@2 forKey:@"state"];
-//    [[JsonHttp jsonHttp]httpRequest:@"team/auditTeamMember" JsonKey:nil withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
-//
-//    } completionBlock:^(id data) {
-//        NSLog(@"%@",[data objectForKey:@"packResultMsg"]);
-//    }];
-//}
 
 -(void)showData:(JGLTeamMemberModel *)model
 {

@@ -119,6 +119,8 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     JGLTeamAdviceTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"JGLTeamAdviceTableViewCell" forIndexPath:indexPath];
+    cell.iconImage.layer.cornerRadius = cell.iconImage.frame.size.width/2;
+    cell.iconImage.layer.masksToBounds = YES;
     [cell showData:_dataArray[indexPath.row]];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     [cell.agreeBtn addTarget:self action:@selector(agreeClick:) forControlEvents:UIControlEventTouchUpInside];
