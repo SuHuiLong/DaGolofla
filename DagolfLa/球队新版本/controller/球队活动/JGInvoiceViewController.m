@@ -29,6 +29,7 @@ static NSString *const JGHInvoiceCellCellIdentifier = @"JGHInvoiceCell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.view.backgroundColor = [UIColor colorWithHexString:BG_color];
     self.navigationItem.title = @"发票信息";
     self.invoiceTypeArray = @[@"文具类", @"办公用品", @"餐饮"];
     self.invoiceArray = [NSMutableArray array];

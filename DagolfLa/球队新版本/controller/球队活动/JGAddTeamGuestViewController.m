@@ -13,8 +13,6 @@
 
 @property (nonatomic, strong) UITableView *addTeamGuestTableView;
 
-//@property (nonatomic, strong)NSMutableDictionary *guextDict;//成员字典
-
 @property (nonatomic, assign)NSInteger sex;//0-1女，1-男，默认男－1
 
 @property (nonatomic, assign)NSInteger isPlays;//0-不是，1-是，默认是
@@ -27,13 +25,15 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor colorWithHexString:BG_color];
-//    self.applyArray = [NSMutableArray array];
     self.navigationItem.title = @"添加打球人";
+    
+    self.addGuestBtn.layer.borderWidth = 1.0;
+    self.addGuestBtn.layer.borderColor = [UIColor colorWithHexString:@"#7DDFFD"].CGColor;
+    self.addGuestBtn.layer.masksToBounds = YES;
+    
     self.sex = 1;//男－默认
     self.isPlays = 1;
-    
-//    self.nameText.text = [[NSUserDefaults standardUserDefaults]objectForKey:@"userName"];
-    
+        
     [self createAddGuestTableview];
 }
 #pragma mark --创建tableView
@@ -76,6 +76,7 @@
 }
 #pragma mark -- 添加按钮事件
 - (IBAction)addGuestBtnClick:(UIButton *)sender {
+    
     NSString *namestring = self.nameText.text;
     namestring = [namestring stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
     NSLog(@"%@", namestring);
@@ -92,10 +93,10 @@
     [applyDict setObject:[NSString stringWithFormat:@"%ld", (long)_isPlays] forKey:@"type"];//"是否是球队成员 0: 不是  1：是
     if (_isPlays == 0) {
         //嘉宾
-        [applyDict setObject:[NSString stringWithFormat:@"%ld", (long)self.guestPrice] forKey:@"payMoney"];//实际付款金额
+        [applyDict setObject:[NSString stringWithFormat:@"%.2f", self.guestPrice] forKey:@"payMoney"];//实际付款金额
     }else{
         //队员
-        [applyDict setObject:[NSString stringWithFormat:@"%ld", (long)self.memberPrice] forKey:@"payMoney"];//实际付款金额
+        [applyDict setObject:[NSString stringWithFormat:@"%.2f", self.memberPrice] forKey:@"payMoney"];//实际付款金额
     }
     
     [applyDict setObject:@0 forKey:@"userKey"];//报名用户key , 没有则是嘉宾

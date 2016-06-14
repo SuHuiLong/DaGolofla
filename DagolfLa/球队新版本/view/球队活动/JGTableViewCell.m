@@ -40,7 +40,7 @@
         }
     }else if (indexPath.section == 2){
         if (indexPath.row == 0) {
-            self.contions.text = [NSString stringWithFormat:@"%ld/%ld", (long)model.memberPrice, (long)model.guestPrice];//费用说明
+            self.contions.text = [NSString stringWithFormat:@"%.2f/%.2f", [model.memberPrice floatValue], [model.guestPrice floatValue]];//费用说明
         }else if (indexPath.row == 1){
             self.contions.text = [NSString stringWithFormat:@"%ld(人)", (long)model.maxCount];
         }else{

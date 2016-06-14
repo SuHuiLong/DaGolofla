@@ -247,7 +247,8 @@
             [dic setObject:DEFAULF_USERID forKey:@"userKey"];
             [dic setValue:@0 forKey:@"offset"];
 //            [getMyTeam setObject:@192 forKey:@"teamKey"];
-            [[JsonHttp jsonHttp] httpRequest:@"team/getMyTeamActivityList" JsonKey:nil withData:dic requestMethod:@"GET" failedBlock:^(id errType) {
+            //getMyTeamActivityList
+            [[JsonHttp jsonHttp] httpRequest:@"team/getMyTeamActivityAll" JsonKey:nil withData:dic requestMethod:@"GET" failedBlock:^(id errType) {
                 [Helper alertViewNoHaveCancleWithTitle:@"获取活动列表失败" withBlock:^(UIAlertController *alertView) {
                     [self.navigationController presentViewController:alertView animated:YES completion:nil];
                 }];
@@ -419,8 +420,7 @@
         }else{
         JGTeamActivityCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"JGTeamActivityCell"];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-//        [cell setJGTeamActivityCellWithModel:self.myActivityArray[indexPath.row]];
-            [cell setJGTeamActivityCellWithModel:self.myActivityArray[indexPath.row] fromCtrl:2];
+        [cell setJGTeamActivityCellWithModel:self.myActivityArray[indexPath.row] fromCtrl:2];
         return cell;
         }
     }

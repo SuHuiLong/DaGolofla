@@ -20,6 +20,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *activityAddress;
 //报名人数
 @property (weak, nonatomic) IBOutlet UILabel *applyNumber;
+@property (weak, nonatomic) IBOutlet UILabel *maxCount;
 
 //imageView
 @property (weak, nonatomic) IBOutlet UIImageView *imageview;
@@ -27,7 +28,6 @@
 @property (weak, nonatomic) IBOutlet UIImageView *activityStateImage;
 
 //填充cell数据
-//- (void)setJGTeamActivityCellWithModel:(JGTeamAcitivtyModel *)modeel;
 
 - (void)setJGTeamActivityCellWithModel:(JGTeamAcitivtyModel *)modeel fromCtrl:(NSInteger)ctrlId;
 

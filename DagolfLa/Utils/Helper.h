@@ -78,4 +78,7 @@
 //2016-06-06 07:07:45 返回 2016年6月6号
 + (NSString *)returnDateformatString:(NSString *)dateString;
 
+//nsstring 转成 nsnumber类型
++ (NSNumber *)returnNumberForString:(NSString *)string;
+
 @end

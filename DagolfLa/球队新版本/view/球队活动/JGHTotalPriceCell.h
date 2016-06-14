@@ -14,6 +14,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *totalPrice;
 
 
-- (void)configTotalPrice:(NSInteger)total;
+- (void)configTotalPrice:(float)total;
 
 @end

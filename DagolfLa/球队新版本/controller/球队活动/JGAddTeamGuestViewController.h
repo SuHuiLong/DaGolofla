@@ -31,6 +31,7 @@
 //是否为球队队员
 @property (weak, nonatomic) IBOutlet UIButton *isPlayersBtn;
 - (IBAction)isPlayersBtn:(UIButton *)sender;
+@property (weak, nonatomic) IBOutlet UIButton *addGuestBtn;
 
 //添加嘉宾
 @property (nonatomic, strong)NSMutableArray *applyArray;
@@ -43,9 +44,9 @@
 //@property (nonatomic, strong) NSMutableArray *guestArray;//成员数组集合
 
 //嘉宾费用
-@property (nonatomic, assign)NSInteger guestPrice;
+@property (nonatomic, assign)float guestPrice;
 
 //球队队员费用
-@property (nonatomic, assign)NSInteger memberPrice;
+@property (nonatomic, assign)float memberPrice;
 
 @end

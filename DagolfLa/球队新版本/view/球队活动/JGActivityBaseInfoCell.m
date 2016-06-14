@@ -33,15 +33,15 @@
     
     //活动日期
 //    @property (weak, nonatomic) IBOutlet UILabel *time;
-    self.time.text = model.beginDate;
+    self.time.text = [Helper returnDateformatString:model.beginDate];
     
     //活动费用
 //    @property (weak, nonatomic) IBOutlet UILabel *member;
-    self.member.text = [NSString stringWithFormat:@"%ld", (long)model.memberPrice];
+    self.member.text = [NSString stringWithFormat:@"%.2f", [model.memberPrice floatValue]];
     
     //嘉宾费用
 //    @property (weak, nonatomic) IBOutlet UILabel *guest;
-    self.guest.text = [NSString stringWithFormat:@"%ld", (long)model.guestPrice];
+    self.guest.text = [NSString stringWithFormat:@"%.2f", [model.guestPrice floatValue]];
 }
 
 @end
