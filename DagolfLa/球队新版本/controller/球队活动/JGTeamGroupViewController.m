@@ -23,11 +23,13 @@ static NSString *const JGGroupdetailsCollectionViewCellIdentifier = @"JGGroupdet
     NSInteger _groupDetailsCollectionViewCount;//cell的个数,默认0
     
     NSString *_power;//权限判断
+    
+    NSInteger _maxGroup;//当前分组数。。默认4
 }
 
-@property (nonatomic, weak) UICollectionView *collectionView;
+@property (nonatomic, weak) UICollectionView *collectionView;//上列表
 
-@property (nonatomic, strong) UICollectionView *groupDetailsCollectionView;
+@property (nonatomic, strong) UICollectionView *groupDetailsCollectionView;//下列表
 
 @property (nonatomic, strong)NSMutableArray *teamGroupAllDataArray;//未分组数据
 
@@ -54,6 +56,8 @@ static NSString *const JGGroupdetailsCollectionViewCellIdentifier = @"JGGroupdet
     waitGroupLabel.textAlignment = NSTextAlignmentLeft;
     waitGroupLabel.font = [UIFont systemFontOfSize:15];
     [self.view addSubview:waitGroupLabel];
+    
+    _maxGroup = 4;
 
     if (iPhone5) {
         _collectionHegith = 200;
@@ -71,11 +75,19 @@ static NSString *const JGGroupdetailsCollectionViewCellIdentifier = @"JGGroupdet
     self.collectionView = collectionView;
     [self.view addSubview:self.collectionView];
     //好友分组label
-    UILabel *groupLabel = [[UILabel alloc]initWithFrame:CGRectMake(5, self.collectionView.frame.size.height+waitGroupLabel.frame.size.height+5, screenWidth, 25)];
+    UILabel *groupLabel = [[UILabel alloc]initWithFrame:CGRectMake(5, self.collectionView.frame.size.height+waitGroupLabel.frame.size.height+5, screenWidth-80, 25)];
     groupLabel.text = @"好友分组";
     groupLabel.textAlignment = NSTextAlignmentLeft;
     groupLabel.font = [UIFont systemFontOfSize:15];
     [self.view addSubview:groupLabel];
+    //添加分组
+    UIButton *addGroupBtn = [[UIButton alloc]initWithFrame:CGRectMake(screenWidth - 80, self.collectionView.frame.size.height+waitGroupLabel.frame.size.height+5, 80, 25)];
+    [addGroupBtn setTitle:@"添加分组" forState:UIControlStateNormal];
+    addGroupBtn.backgroundColor = [UIColor lightGrayColor];
+    [addGroupBtn setTintColor:[UIColor blackColor]];
+    addGroupBtn.titleLabel.font = [UIFont systemFontOfSize:15];
+    [addGroupBtn addTarget:self action:@selector(addGroupBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:addGroupBtn];
     //4方格
     UICollectionViewFlowLayout *gridlayout = [UICollectionViewFlowLayout new];
     gridlayout.scrollDirection = UICollectionViewScrollDirectionVertical;
@@ -88,6 +100,20 @@ static NSString *const JGGroupdetailsCollectionViewCellIdentifier = @"JGGroupdet
     
     
     [self loadData:0];
+}
+#pragma mark -- 添加分组
+- (void)addGroupBtnClick:(UIButton *)btn{
+    _maxGroup += 1;
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    [dict setObject:[NSString stringWithFormat:@"%td", _maxGroup] forKey:@"maxGroup"];
+    [dict setObject:[NSString stringWithFormat:@"%td", self.teamActivityKey] forKey:@"activityKey"];
+    [[JsonHttp jsonHttp]httpRequest:@"team/updateTeamActivityMaxGroup" JsonKey:nil withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
+        NSLog(@"errType == %@", errType);
+    } completionBlock:^(id data) {
+        NSLog(@"data == %@", data);
+        
+        [self loadData:0];//刷新页面
+    }];
 }
 #pragma mark -- 获取报名人员列表信息 1－表示分组
 - (void)loadData:(NSInteger)fenzu{
@@ -102,7 +128,7 @@ static NSString *const JGGroupdetailsCollectionViewCellIdentifier = @"JGGroupdet
         [self.teamGroupAllDataArray removeAllObjects];
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
             _power = [[data objectForKey:@"member"] objectForKey:@"power"];
-            
+            _maxGroup = [[data objectForKey:@"maxGroup"] integerValue];//获取分组数
         }else{
             [Helper alertViewNoHaveCancleWithTitle:@"暂无报名信息！" withBlock:^(UIAlertController *alertView) {
                 [self.navigationController presentViewController:alertView animated:YES completion:^{
@@ -160,11 +186,15 @@ static NSString *const JGGroupdetailsCollectionViewCellIdentifier = @"JGGroupdet
     if ([collectionView isEqual:self.collectionView]) {
         return _teamGroupAllDataArray.count;
     }else{
-        if (_groupDetailsCollectionViewCount%4 == 0) {
-            return _groupDetailsCollectionViewCount/4;
+        
+        return _maxGroup;
+        /**
+        if (_maxGroup%4 == 0) {
+            return _maxGroup/4;
         }else{
-            return _groupDetailsCollectionViewCount/4 + 1;
+            return _maxGroup/4 + 1;
         }
+        */
     }
 }
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
@@ -178,6 +208,7 @@ static NSString *const JGGroupdetailsCollectionViewCellIdentifier = @"JGGroupdet
         JGGroupdetailsCollectionViewCell *groupCell = [collectionView dequeueReusableCellWithReuseIdentifier:JGGroupdetailsCollectionViewCellIdentifier forIndexPath:indexPath];
         groupCell.delegate = self; 
         groupCell.tag = indexPath.item;
+        [groupCell configGroupName:@"dd"];
         if (_alreadyDataArray.count !=0) {
             [groupCell configCellWithModelArray:_alreadyDataArray];
         }

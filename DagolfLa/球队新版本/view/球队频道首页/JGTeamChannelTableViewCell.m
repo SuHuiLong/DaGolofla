@@ -16,13 +16,13 @@
     
     if (self) {
         
-        self.iconImageV = [[UIImageView alloc] initWithFrame:CGRectMake(5 * screenWidth / 320, 5 * screenWidth / 320, 70 * screenWidth / 320, 70 * screenWidth / 320)];
+        self.iconImageV = [[UIImageView alloc] initWithFrame:CGRectMake(10 * screenWidth / 320, 9 * screenWidth / 320, 60 * screenWidth / 320, 60 * screenWidth / 320)];
 //        self.iconImageV.backgroundColor = [UIColor orangeColor];
         self.iconImageV.layer.cornerRadius = 5 * screenWidth / 320;
         self.iconImageV.clipsToBounds = YES;
         [self.contentView addSubview:self.iconImageV];
         
-        self.nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(90 * screenWidth / 320, 5 * screenWidth / 320, screenWidth - 160 * screenWidth / 320, 20 * screenWidth / 320)];
+        self.nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(90 * screenWidth / 320, 9 * screenWidth / 320, screenWidth - 100 * screenWidth / 320, 20 * screenWidth / 320)];
         self.nameLabel.font = [UIFont systemFontOfSize:15 * screenWidth / 320];
         [self.contentView addSubview:self.nameLabel];
         
@@ -36,11 +36,11 @@
         self.adressLabel.font = [UIFont systemFontOfSize:12 * screenWidth / 320];
         [self.contentView addSubview:self.adressLabel];
         
-        self.describLabel = [[UILabel alloc] initWithFrame:CGRectMake(90 * screenWidth / 320, 55 * screenWidth / 320, screenWidth - 90 * screenWidth / 320, 20 * screenWidth / 320)];
+        self.describLabel = [[UILabel alloc] initWithFrame:CGRectMake(90 * screenWidth / 320, 50 * screenWidth / 320, screenWidth - 90 * screenWidth / 320, 20 * screenWidth / 320)];
         self.describLabel.font = [UIFont systemFontOfSize:12 * screenWidth / 320];
         [self.contentView addSubview:self.describLabel];
         
-        UIView *lightGrayView = [[UIView alloc] initWithFrame:CGRectMake(0, 80 * screenWidth / 320, screenWidth, 3 * screenWidth / 320)];
+        UIView *lightGrayView = [[UIView alloc] initWithFrame:CGRectMake(0, 78 * screenWidth / 320, screenWidth, 1 * screenWidth / 320)];
         lightGrayView.backgroundColor = [UIColor colorWithRed:0.94 green:0.94 blue:0.94 alpha:1];
         [self.contentView addSubview:lightGrayView];
     

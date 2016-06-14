@@ -41,34 +41,34 @@ static NSString *const NotificationName = @"AFNetworkReachabilityStatusReachable
 }
 //检测当前网络环境是否为wifi
 /**
-- (void)isReachableToPlay:(BOOL)isBegin{
-    self.moviePlayer.contentPlayersURL = [NSURL URLWithString:self.vedioURL];
-//    [PostDataRequest isNetWorkReachable];
-    [self.moviePlayer play];
-    //获取网络状态
-    
-    NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
-    NSLog(@"%@", [userdef objectForKey:NETWORKSTATS]);
-    if ([[userdef objectForKey:NETWORKSTATS]isEqualToString:@"11"]) {//断网
-        UIAlertView *tipAlertView = [[UIAlertView alloc] initWithTitle:@"信息提示：" message:@"网络已经断开链接，请检查网络？" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-        [tipAlertView show];
-        isEverPlayer = NO;
-        [self.moviePlayer stop];
-    }else if ([[userdef objectForKey:NETWORKSTATS]isEqualToString:@"-1"]){//无线网络
-        [self.moviePlayer stop];
-        [self.moviePlayer setContentURL:[NSURL URLWithString:self.vedioURL]];
-        isEverPlayer = YES;
-    }else{
-        //流量
-        UIAlertView *tipAlertView = [[UIAlertView alloc] initWithTitle:@"信息提示：" message:@"当前为非wifi网络，是否继续播放？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确认", nil];
-        tipAlertView.tag = 1;
-        [tipAlertView show];
-        isEverPlayer = NO;
-        [self.moviePlayer stop];
-    }
-    
-}
-     */
+ - (void)isReachableToPlay:(BOOL)isBegin{
+ self.moviePlayer.contentPlayersURL = [NSURL URLWithString:self.vedioURL];
+ //    [PostDataRequest isNetWorkReachable];
+ [self.moviePlayer play];
+ //获取网络状态
+ 
+ NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
+ NSLog(@"%@", [userdef objectForKey:NETWORKSTATS]);
+ if ([[userdef objectForKey:NETWORKSTATS]isEqualToString:@"11"]) {//断网
+ UIAlertView *tipAlertView = [[UIAlertView alloc] initWithTitle:@"信息提示：" message:@"网络已经断开链接，请检查网络？" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+ [tipAlertView show];
+ isEverPlayer = NO;
+ [self.moviePlayer stop];
+ }else if ([[userdef objectForKey:NETWORKSTATS]isEqualToString:@"-1"]){//无线网络
+ [self.moviePlayer stop];
+ [self.moviePlayer setContentURL:[NSURL URLWithString:self.vedioURL]];
+ isEverPlayer = YES;
+ }else{
+ //流量
+ UIAlertView *tipAlertView = [[UIAlertView alloc] initWithTitle:@"信息提示：" message:@"当前为非wifi网络，是否继续播放？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确认", nil];
+ tipAlertView.tag = 1;
+ [tipAlertView show];
+ isEverPlayer = NO;
+ [self.moviePlayer stop];
+ }
+ 
+ }
+ */
 - (void)_initItems
 {
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -88,7 +88,7 @@ static NSString *const NotificationName = @"AFNetworkReachabilityStatusReachable
     }
     
     [self dismissViewControllerAnimated:YES completion:^{
-//        [self.delegate closeVideo];
+        //        [self.delegate closeVideo];
         
     }];
 }
@@ -175,9 +175,9 @@ static NSString *const NotificationName = @"AFNetworkReachabilityStatusReachable
         }];
     });
     
-//    self.moviePlayer.contentPlayersURL = [NSURL URLWithString:self.vedioURL];
-//    isEverPlayer = YES;
-//    [self.moviePlayer play];
+    //    self.moviePlayer.contentPlayersURL = [NSURL URLWithString:self.vedioURL];
+    //    isEverPlayer = YES;
+    //    [self.moviePlayer play];
     
     [self.moviePlayer play];
     [self.moviePlayer setContentURL:[NSURL URLWithString:self.vedioURL]];
@@ -201,7 +201,7 @@ static NSString *const NotificationName = @"AFNetworkReachabilityStatusReachable
 //        if (isEverPlayer == NO){
 //            [self.moviePlayer setContentURL:[NSURL URLWithString:self.vedioURL]];
 //        }
-//        
+//
 //        [self.moviePlayer play];
 //    }
 //}

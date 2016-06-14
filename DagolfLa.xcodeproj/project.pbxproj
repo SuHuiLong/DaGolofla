@@ -83,7 +83,6 @@
 		20CA136D1CE4784900DA15B9 /* JGInvoiceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 20CA136C1CE4784900DA15B9 /* JGInvoiceViewController.m */; };
 		20CA13711CE4929C00DA15B9 /* JGInvoiceTypeTextCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 20CA136F1CE4929C00DA15B9 /* JGInvoiceTypeTextCell.m */; };
 		20CA13721CE4929C00DA15B9 /* JGInvoiceTypeTextCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 20CA13701CE4929C00DA15B9 /* JGInvoiceTypeTextCell.xib */; };
-		20CA13781CE562BD00DA15B9 /* JGCreateTeamViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5321AE61CE4499600CAE1EF /* JGCreateTeamViewController.m */; };
 		20CA137B1CE56B6100DA15B9 /* JGHLaunchActivityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 20CA137A1CE56B6100DA15B9 /* JGHLaunchActivityViewController.m */; };
 		20CA137F1CE574A400DA15B9 /* JGHConcentTextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 20CA137D1CE574A400DA15B9 /* JGHConcentTextViewController.m */; };
 		20CA13801CE574A400DA15B9 /* JGHConcentTextViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 20CA137E1CE574A400DA15B9 /* JGHConcentTextViewController.xib */; };
@@ -2358,8 +2357,6 @@
 		F50EFF351CF9762C00F7AB3F /* JGTeamDeatilWKwebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGTeamDeatilWKwebViewController.m; sourceTree = "<group>"; };
 		F52A49E31C969F79002A4973 /* ScreenTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScreenTableViewCell.h; sourceTree = "<group>"; };
 		F52A49E41C969F79002A4973 /* ScreenTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScreenTableViewCell.m; sourceTree = "<group>"; };
-		F5321AE51CE4499600CAE1EF /* JGCreateTeamViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGCreateTeamViewController.h; sourceTree = "<group>"; };
-		F5321AE61CE4499600CAE1EF /* JGCreateTeamViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGCreateTeamViewController.m; sourceTree = "<group>"; };
 		F5321AE81CE449C400CAE1EF /* JGCreateTeamView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGCreateTeamView.h; sourceTree = "<group>"; };
 		F5321AE91CE449C400CAE1EF /* JGCreateTeamView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGCreateTeamView.m; sourceTree = "<group>"; };
 		F543ACB61CF3F89400C6B111 /* JGButtonTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGButtonTableViewCell.h; sourceTree = "<group>"; };
@@ -5775,8 +5772,6 @@
 		F5321AE31CE4492800CAE1EF /* 创建球队 */ = {
 			isa = PBXGroup;
 			children = (
-				F5321AE51CE4499600CAE1EF /* JGCreateTeamViewController.h */,
-				F5321AE61CE4499600CAE1EF /* JGCreateTeamViewController.m */,
 				F543ACC81CF476D400C6B111 /* JGNewCreateTeamTableViewController.h */,
 				F543ACC91CF476D400C6B111 /* JGNewCreateTeamTableViewController.m */,
 			);
@@ -6021,7 +6016,7 @@
 				TargetAttributes = {
 					36BFFD271BC76C8D005B3CE2 = {
 						CreatedOnToolsVersion = 6.3.2;
-						DevelopmentTeam = 5P6JNXBH3C;
+						DevelopmentTeam = R269PG52XZ;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -6439,7 +6434,6 @@
 				F5B549991CE9EC3B0091C962 /* JGPhotoShowCollectionViewCell.m in Sources */,
 				F5B549981CE9EBD00091C962 /* JGLUpdataPhotoController.m in Sources */,
 				F543ACB81CF3F89400C6B111 /* JGButtonTableViewCell.m in Sources */,
-				20CA13781CE562BD00DA15B9 /* JGCreateTeamViewController.m in Sources */,
 				36E301031C3FF410005C3F08 /* MJDIYHeader.m in Sources */,
 				36B9B59F1C3E45A70053B227 /* TeamPhotoEditViewController.m in Sources */,
 				828A99E41CE3167800AF9860 /* JGTeamCreatePhotoController.m in Sources */,
@@ -7114,7 +7108,7 @@
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = bihuaxinxi.DagolfLa1;
+				PRODUCT_BUNDLE_IDENTIFIER = bihuaxinxi.DagolfLa;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -7163,7 +7157,7 @@
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = bihuaxinxi.DagolfLa1;
+				PRODUCT_BUNDLE_IDENTIFIER = bihuaxinxi.DagolfLa;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;

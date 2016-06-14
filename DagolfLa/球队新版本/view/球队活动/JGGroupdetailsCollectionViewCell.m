@@ -30,24 +30,32 @@
     self.lable1 = [[UILabel alloc]init];
     self.lable1.frame = CGRectMake(0, _sction1.frame.size.height*3/5, _sction1.frame.size.width, _sction1.frame.size.height*1/4);
     self.lable1.font = [UIFont systemFontOfSize:11];
+    self.lable1.backgroundColor = [UIColor whiteColor];
+    self.lable1.alpha = 0.4;
     self.lable1.textAlignment = NSTextAlignmentCenter;
     [self.sction1 addSubview:self.lable1];
     
     self.lable2 = [[UILabel alloc]init];
     self.lable2.frame = CGRectMake(0, _sction2.frame.size.height*3/5, _sction2.frame.size.width, _sction2.frame.size.height*1/4);
     self.lable2.font = [UIFont systemFontOfSize:11];
+    self.lable2.backgroundColor = [UIColor whiteColor];
+    self.lable2.alpha = 0.4;
     self.lable2.textAlignment = NSTextAlignmentCenter;
     [self.sction2 addSubview:self.lable2];
     
     self.lable3 = [[UILabel alloc]init];
     self.lable3.frame = CGRectMake(0, _section3.frame.size.height*3/5, _section3.frame.size.width, _section3.frame.size.height*1/4);
     self.lable3.font = [UIFont systemFontOfSize:11];
+    self.lable3.backgroundColor = [UIColor whiteColor];
+    self.lable3.alpha = 0.4;
     self.lable3.textAlignment = NSTextAlignmentCenter;
     [self.section3 addSubview:self.lable3];
     
     self.lable4 = [[UILabel alloc]init];
     self.lable4.frame = CGRectMake(0, _section4.frame.size.height*3/5, _section4.frame.size.width, _section4.frame.size.height*1/4);
     self.lable4.font = [UIFont systemFontOfSize:11];
+    self.lable4.backgroundColor = [UIColor whiteColor];
+    self.lable4.alpha = 0.4;
     self.lable4.textAlignment = NSTextAlignmentCenter;
     [self.section4 addSubview:self.lable4];
     
@@ -63,6 +71,7 @@
     
     self.money4 = [[UIImageView alloc]initWithFrame:CGRectMake(_section4.frame.size.width - 12, _section4.frame.size.height/2-6, 12, 12)];
     [_section4 addSubview:_money4];
+    
 }
 
 //第一个
@@ -88,6 +97,10 @@
     }
 }
 
+- (void)configGroupName:(NSString *)groupname{
+    NSLog(@"tag == %ld", (long)self.tag);
+    self.groupName.text = [NSString stringWithFormat:@"第%ld组", (long)self.tag + 1];
+}
 
 - (void)configCellWithModelArray:(NSMutableArray *)modelArray{
     //清空空间内容
@@ -117,10 +130,6 @@
     [self.money2 setImage:nil];
     [self.money3 setImage:nil];
     [self.money4 setImage:nil];
-    
-    NSLog(@"%ld", (long)self.tag);
-    
-    self.groupName.text = [NSString stringWithFormat:@"第%ld组", (long)self.tag];
     
     for (JGHPlayersModel *model in modelArray) {
         if (model.groupIndex == self.tag) {
@@ -184,9 +193,6 @@
             }
         }
     }
-    
-    
-    
     
 }
 
