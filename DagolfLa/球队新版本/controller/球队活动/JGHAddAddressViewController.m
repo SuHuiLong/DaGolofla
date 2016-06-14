@@ -21,8 +21,12 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.view.backgroundColor = [UIColor colorWithHexString:BG_color];
     self.navigationItem.title = @"地址信息";
     self.addressTextView.delegate = self;
+    
+    self.commitBtn.layer.cornerRadius = 8.0;
+    self.commitBtn.layer.masksToBounds = YES;
     
     if (_addressTextView.text.length == 0) {
         self.textLable.hidden = NO;

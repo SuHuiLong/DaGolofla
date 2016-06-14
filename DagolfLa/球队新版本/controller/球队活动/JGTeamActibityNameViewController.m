@@ -73,19 +73,26 @@ static CGFloat ImageHeight  = 210.0;
     [self setData];
     
     if (self.isTeamChannal == 2){
-        //球队活动大厅
-        [self.imgProfile sd_setImageWithURL:[Helper setImageIconUrl:@"activity" andTeamKey:_teamKey andIsSetWidth:NO andIsBackGround:YES] placeholderImage:[UIImage imageNamed:ActivityBGImage]];
+        if (_model.teamActivityKey == 0) {
+            //我的球队活动
+            [self.imgProfile sd_setImageWithURL:[Helper setImageIconUrl:@"activity" andTeamKey:[_model.timeKey integerValue] andIsSetWidth:NO andIsBackGround:YES] placeholderImage:[UIImage imageNamed:ActivityBGImage]];
+            [self.headPortraitBtn sd_setImageWithURL:[Helper setImageIconUrl:@"team" andTeamKey:_model.teamKey andIsSetWidth:YES andIsBackGround:NO] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:TeamLogoImage]];
+        }else{
+            //球队活动
+            [self.imgProfile sd_setImageWithURL:[Helper setImageIconUrl:@"activity" andTeamKey:_model.teamActivityKey andIsSetWidth:NO andIsBackGround:YES] placeholderImage:[UIImage imageNamed:ActivityBGImage]];
+            [self.headPortraitBtn sd_setImageWithURL:[Helper setImageIconUrl:@"team" andTeamKey:_model.teamKey andIsSetWidth:YES andIsBackGround:NO] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:TeamLogoImage]];
+        }
+
         self.imgProfile.contentMode = UIViewContentModeScaleAspectFill;
         self.imgProfile.layer.masksToBounds = YES;
-        
-        [self.headPortraitBtn sd_setImageWithURL:[Helper setImageIconUrl:@"team" andTeamKey:_model.teamKey andIsSetWidth:YES andIsBackGround:NO] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:TeamLogoImage]];
     }else if (self.isTeamChannal == 1){
         //近期活动过来的数据---其他走上面
-        [self.imgProfile sd_setImageWithURL:[Helper setImageIconUrl:@"activity" andTeamKey:_teamActivityKey andIsSetWidth:NO andIsBackGround:YES] placeholderImage:[UIImage imageNamed:ActivityBGImage]];
+        [self.imgProfile sd_setImageWithURL:[Helper setImageIconUrl:@"activity" andTeamKey:[_model.timeKey integerValue] andIsSetWidth:NO andIsBackGround:YES] placeholderImage:[UIImage imageNamed:ActivityBGImage]];
         self.imgProfile.contentMode = UIViewContentModeScaleAspectFill;
         self.imgProfile.layer.masksToBounds = YES;
         
         [self.headPortraitBtn sd_setImageWithURL:[Helper setImageIconUrl:@"team" andTeamKey:_model.teamKey andIsSetWidth:YES andIsBackGround:NO] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:TeamLogoImage]];
+        
     }
 }
 - (void)viewWillDisappear:(BOOL)animated{
@@ -111,7 +118,7 @@ static CGFloat ImageHeight  = 210.0;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.view.backgroundColor = [UIColor colorWithHexString:TB_BG_Color];
+    self.view.backgroundColor = [UIColor colorWithHexString:BG_color];
     self.automaticallyAdjustsScrollViewInsets = NO;
     UIImage *bgImage = nil;
     UIImage *headerImage = nil;
@@ -137,7 +144,7 @@ static CGFloat ImageHeight  = 210.0;
     self.teamActibityNameTableView.dataSource = self;
     self.teamActibityNameTableView.delegate = self;
     self.teamActibityNameTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    self.teamActibityNameTableView.backgroundColor = [UIColor colorWithHexString:TB_BG_Color];
+    self.teamActibityNameTableView.backgroundColor = [UIColor colorWithHexString:BG_color];
     [self.view addSubview:self.teamActibityNameTableView];
     [self.view addSubview:self.imgProfile];
     
@@ -189,47 +196,46 @@ static CGFloat ImageHeight  = 210.0;
     [self.imgProfile addSubview:self.addressBtn];
     
     if (self.isAdmin == 1) {// 发布页面
-        [self createSaveAndLaunchBtn];
+//        [self createSaveAndLaunchBtn];
        
     }else{
         [self createApplyBtn];//报名页面
         //分享按钮
-        UIButton *shareBtn = [[UIButton alloc]initWithFrame:CGRectMake(screenWidth-44, self.titleField.frame.origin.y, 44, self.titleField.frame.size.height)];
-        [shareBtn setImage:[UIImage imageNamed:@"fenxiang"] forState:UIControlStateNormal];
+        UIButton *shareBtn = [[UIButton alloc]initWithFrame:CGRectMake(screenWidth-44, self.titleField.frame.origin.y, 44, 25)];
+        [shareBtn setImage:[UIImage imageNamed:@"iconfont-fenxiang"] forState:UIControlStateNormal];
         [shareBtn addTarget:self action:@selector(addShare) forControlEvents:UIControlEventTouchUpInside];
         [self.titleView addSubview:shareBtn];
     }
 
     [self dataSet];
 }
-#pragma mark -- 下载数据 －－－ 成功
+#pragma mark -- 下载数据 －－－
 - (void)dataSet{
-    MBProgressHUD *progress = [[MBProgressHUD alloc] initWithView:self.view];
-    progress.mode = MBProgressHUDModeIndeterminate;
-    progress.labelText = @"正在加载数据...";
-    [self.view addSubview:progress];
-    [progress show:YES];
+    [[ShowHUD showHUD]showAnimationWithText:@"加载中..." FromView:self.view];
     
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    if (self.isTeamChannal == 2) {
-//        [dict setValue:_model.timeKey forKey:@"activityKey"];
-        [dict setValue:[NSString stringWithFormat:@"%td", _teamKey] forKey:@"activityKey"];
-    }else{
+    if (self.isTeamChannal == 1) {
         //近期活动
-        if (self.isTeamChannal == 1) {
-            [dict setValue:[NSString stringWithFormat:@"%td", _model.teamActivityKey] forKey:@"activityKey"];
-        }else{
-            [dict setValue:[NSString stringWithFormat:@"%td", [_model.timeKey integerValue]] forKey:@"activityKey"];
+        [dict setValue:[NSString stringWithFormat:@"%td", [_model.timeKey integerValue]] forKey:@"activityKey"];
+    }else{
+        if (self.isTeamChannal == 2) {
+            if (_model.teamActivityKey == 0) {
+                //球队活动
+                [dict setValue:[NSString stringWithFormat:@"%td", [_model.timeKey integerValue]] forKey:@"activityKey"];
+            }else{
+                //我的球队
+                [dict setValue:[NSString stringWithFormat:@"%td", _model.teamActivityKey] forKey:@"activityKey"];
+            }
         }
     }
     
     [dict setValue:DEFAULF_USERID forKey:@"userKey"];
     [[JsonHttp jsonHttp] httpRequest:@"team/getTeamActivity" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
         NSLog(@"error");
-        [MBProgressHUD hideAllHUDsForView:self.view animated:NO];
+        [[ShowHUD showHUD]hideAnimationFromView:self.view];
     } completionBlock:^(id data) {
         NSLog(@"%@", data);
-        [MBProgressHUD hideAllHUDsForView:self.view animated:NO];
+        [[ShowHUD showHUD]hideAnimationFromView:self.view];
         
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
             NSMutableDictionary *dict = [NSMutableDictionary dictionary];
@@ -237,20 +243,11 @@ static CGFloat ImageHeight  = 210.0;
             if ([data objectForKey:@"teamMember"]) {
                 dict = [data objectForKey:@"teamMember"];
                 _userName = [dict objectForKey:@"userName"];//获取用户在球队的真实姓名
-                
-                if ([dict objectForKey:@"power"]) {
-                    NSString *str = [dict objectForKey:@"power"];
-                    if ([str containsString:@"1001"]) {
-                        [self createGroupBtn];
-                    }
-                }
-            }
-            
-            if (![data objectForKey:@"teamMember"]) {
+            }else{
                 _isTeamMember = 1;//非球队成员
                 [self.applyBtn setBackgroundColor:[UIColor lightGrayColor]];
             }
-            
+
             [self.model setValuesForKeysWithDictionary:[data objectForKey:@"activity"]];
             [self.teamActibityNameTableView reloadData];
         }else{
@@ -258,18 +255,6 @@ static CGFloat ImageHeight  = 210.0;
         }
     }];
 }
-#pragma mark－－有管理权限的用户在活动详情页面显示－－活动分组
-- (void)createGroupBtn{
-    UIButton *replaceBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    replaceBtn.frame = CGRectMake(screenWidth-94, self.titleField.frame.origin.y, 60, self.titleField.frame.size.height);
-    replaceBtn.titleLabel.font = [UIFont systemFontOfSize:FontSize_Normal];
-    [replaceBtn setTitle:@"活动分组" forState:UIControlStateNormal];
-    replaceBtn.titleLabel.font = [UIFont systemFontOfSize:13];
-    [replaceBtn addTarget:self action:@selector(pushGroupCtrl:) forControlEvents:UIControlEventTouchUpInside];
-    replaceBtn.tag = 520;
-    [self.titleView addSubview:replaceBtn];
-}
-
 #pragma mark -分享
 - (void)addShare{
     if ([[NSUserDefaults standardUserDefaults]objectForKey:@"userId"]) {
@@ -320,7 +305,7 @@ static CGFloat ImageHeight  = 210.0;
         //微信
         [UMSocialWechatHandler setWXAppId:@"wxdcdc4e20544ed728" appSecret:@"fdc75aae5a98f2aa0f62ef8cba2b08e9" url:shareUrl];
         [UMSocialConfig hiddenNotInstallPlatforms:@[UMShareToWechatSession,UMShareToWechatTimeline,UMShareToSina]];
-        [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatSession] content:[NSString stringWithFormat:@"球队会员：%td元，平台补贴：%td元，活动地点：%@，活动时间：%@", _model.memberPrice,_model.subsidyPrice,_model.ballName,_model.beginDate]  image:(fiData != nil && fiData.length > 0) ?fiData : [UIImage imageNamed:TeamBGImage] location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
+        [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatSession] content:[NSString stringWithFormat:@"球队会员：%f元，平台补贴：%f元，活动地点：%@，活动时间：%@", [_model.memberPrice floatValue],[_model.subsidyPrice floatValue],_model.ballName,_model.beginDate]  image:(fiData != nil && fiData.length > 0) ?fiData : [UIImage imageNamed:TeamBGImage] location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
             if (response.responseCode == UMSResponseCodeSuccess) {
                 //                [self shareS:indexRow];
             }
@@ -330,7 +315,7 @@ static CGFloat ImageHeight  = 210.0;
         //朋友圈
         [UMSocialWechatHandler setWXAppId:@"wxdcdc4e20544ed728" appSecret:@"fdc75aae5a98f2aa0f62ef8cba2b08e9" url:shareUrl];
         [UMSocialConfig hiddenNotInstallPlatforms:@[UMShareToWechatSession,UMShareToWechatTimeline,UMShareToSina]];
-        [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatTimeline] content:[NSString stringWithFormat:@"球队会员：%td元，平台补贴：%td元，活动地点：%@，活动时间：%@", _model.memberPrice,_model.subsidyPrice,_model.ballName,_model.beginDate] image:(fiData != nil && fiData.length > 0) ?fiData : [UIImage imageNamed:TeamBGImage] location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
+        [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatTimeline] content:[NSString stringWithFormat:@"球队会员：%f元，平台补贴：%f元，活动地点：%@，活动时间：%@", [_model.memberPrice floatValue],[_model.subsidyPrice floatValue],_model.ballName,_model.beginDate] image:(fiData != nil && fiData.length > 0) ?fiData : [UIImage imageNamed:TeamBGImage] location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
             if (response.responseCode == UMSResponseCodeSuccess) {
                 //                [self shareS:indexRow];
             }
@@ -436,23 +421,6 @@ static CGFloat ImageHeight  = 210.0;
     
     [self presentViewController:aleVC animated:YES completion:nil];
 }
-#pragma mark -- 创建保存 ＋ 发布 按钮
-- (void)createSaveAndLaunchBtn{
-    UIButton *saveBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, screenHeight -44 - 40, screenWidth, 40)];
-    [saveBtn setTitle:@"保存" forState:UIControlStateNormal];
-    saveBtn.backgroundColor = [UIColor colorWithHexString:Nav_Color];
-    saveBtn.layer.cornerRadius = 8.0;
-    saveBtn.tag = 800;//保存
-    [saveBtn addTarget:self action:@selector(applyBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:saveBtn];
-    UIButton *launchBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, screenHeight -40, screenWidth, 40)];
-    [launchBtn setTitle:@"发布" forState:UIControlStateNormal];
-    launchBtn.backgroundColor = [UIColor colorWithHexString:Nav_Color];
-    launchBtn.layer.cornerRadius = 8.0;
-    launchBtn.tag = 801;//发布
-    [launchBtn addTarget:self action:@selector(applyBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:launchBtn];
-}
 #pragma mark -- 创建报名按钮
 - (void)createApplyBtn{
     self.headPortraitBtn.layer.masksToBounds = YES;
@@ -468,7 +436,6 @@ static CGFloat ImageHeight  = 210.0;
     self.applyBtn = [[UIButton alloc]initWithFrame:CGRectMake(photoBtn.frame.size.width + 1, screenHeight-44, screenWidth - 75 *ScreenWidth/375, 44)];
     [self.applyBtn setTitle:@"报名参加" forState:UIControlStateNormal];
     self.applyBtn.backgroundColor = [UIColor colorWithHexString:Nav_Color];
-    //    applyBtn.layer.cornerRadius = 8.0;
     [self.applyBtn addTarget:self action:@selector(applyAttendBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.applyBtn];
 }
@@ -494,98 +461,6 @@ static CGFloat ImageHeight  = 210.0;
 - (void)telPhotoClick:(UIButton *)btn{
     NSMutableString * str=[[NSMutableString alloc] initWithFormat:@"telprompt://%@", _model.userMobile];
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:str]];
-}
-#pragma mark -- 发布活动 ＋ 保存活动
-- (void)applyBtnClick:(UIButton *)btn{
-    
-    [[ShowHUD showHUD]showAnimationWithText:@"创建中..." FromView:self.view];
-    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    [dict setObject:[NSString stringWithFormat:@"%td", self.teamKey] forKey:@"teamKey"];//球队key
-    [dict setObject:@0 forKey:@"timeKey"];
-    [dict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:userID] forKey:@"userKey"];//用户key
-    [dict setObject:self.model.name forKey:@"name"];//活动名字
-    [dict setObject:self.model.signUpEndTime forKey:@"signUpEndTime"];//活动报名截止时间
-    [dict setObject:self.model.beginDate forKey:@"beginDate"];//活动开始时间
-    [dict setObject:self.model.endDate forKey:@"endDate"];//活动结束时间
-    [dict setObject:[NSString stringWithFormat:@"%ld", (long)self.model.ballKey] forKey:@"ballKey"];//球场id
-    [dict setObject:self.model.ballName forKey:@"ballName"];//球场名称
-    //    [dict setObject:@"" forKey:@"ballGeohash"];//球场坐标
-    [dict setObject:self.model.info forKey:@"info"];//活动简介
-    [dict setObject:[NSString stringWithFormat:@"%ld",(long)self.model.memberPrice] forKey:@"memberPrice"];//会员价
-    [dict setObject:[NSString stringWithFormat:@"%ld", (long)self.model.guestPrice] forKey:@"guestPrice"];//嘉宾价
-    [dict setObject:[NSString stringWithFormat:@"%ld", (long)self.model.maxCount] forKey:@"maxCount"];//最大人员数
-    [dict setObject:[NSString stringWithFormat:@"%ld", (long)_model.isClose] forKey:@"isClose"];//活动是否结束 0 : 开始 , 1 : 已结束
-    NSDateFormatter *formatter =[[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
-    NSString *currentTime = [formatter stringFromDate:[NSDate date]];
-    [dict setObject:currentTime forKey:@"createTime"];//活动创建时间
-    [dict setObject:self.model.userName forKey:@"userName"];//联系人
-    [dict setObject:self.model.userMobile forKey:@"userMobile"];//联系人
-    
-    if (btn.tag == 800) {
-        //保存活动
-        NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
-        [userdef setObject:dict forKey:@"TeamActivityData"];
-        [userdef synchronize];
-        [[ShowHUD showHUD]hideAnimationFromView:self.view];
-        [Helper alertViewWithTitle:@"活动保存成功！" withBlock:^(UIAlertController *alertView) {
-            [self.navigationController presentViewController:alertView animated:YES completion:nil];
-        }];
-    }else if (btn.tag == 801){
-        //发布活动
-        [[JsonHttp jsonHttp]httpRequest:@"team/createTeamActivity" JsonKey:@"teamActivity" withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
-            NSLog(@"%@", errType);
-            [[ShowHUD showHUD]hideAnimationFromView:self.view];
-        } completionBlock:^(id data) {
-            NSLog(@"%@", data);
-            [[ShowHUD showHUD]hideAnimationFromView:self.view];
-            if ([[data objectForKey:@"packSuccess"] integerValue] == 0) {
-                [Helper alertViewWithTitle:@"活动发布失败！" withBlock:^(UIAlertController *alertView) {
-                    [self.navigationController presentViewController:alertView animated:YES completion:nil];
-                }];
-                
-                return ;
-            }
-            
-            NSMutableArray *imageArray = [NSMutableArray array];
-            
-            [imageArray addObject:UIImageJPEGRepresentation(self.model.bgImage, 0.7)];
-            
-            NSNumber* strTimeKey = [data objectForKey:@"timeKey"];
-            // 上传图片
-            NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-            [dict setObject:TYPE_TEAM_BACKGROUND forKey:@"nType"];
-            [dict setObject:PHOTO_DAGOLFLA forKey:@"tag"];
-            
-            [dict setObject:[NSString stringWithFormat:@"%@_background" ,strTimeKey] forKey:@"data"];
-            [dict setObject:TYPE_TEAM_BACKGROUND forKey:@"nType"];
-            [[JsonHttp jsonHttp] httpRequestImageOrVedio:@"1" withData:dict andDataArray:imageArray failedBlock:^(id errType) {
-                NSLog(@"errType===%@", errType);
-            } completionBlock:^(id data) {
-                NSLog(@"data == %@", data);
-                if ([[data objectForKey:@"code"] integerValue] == 1) {
-                    UIAlertAction *commitAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-                        
-                        [self.navigationController popToRootViewControllerAnimated:YES];
-                    }];
-                    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"系统提示" message:@"活动创建成功!" preferredStyle:UIAlertControllerStyleAlert];
-                    [alertController addAction:commitAction];
-                    //获取主线层
-                    if ([NSThread isMainThread]) {
-                        NSLog(@"Yay!");
-                        [self presentViewController:alertController animated:YES completion:nil];
-                        [self.navigationController popViewControllerAnimated:YES];
-                    } else {
-                        NSLog(@"Humph, switching to main");
-                        dispatch_async(dispatch_get_main_queue(), ^{
-                            [self presentViewController:alertController animated:YES completion:nil];
-                        });
-                    }
-                    
-                }
-            }];
-        }];
-    }
 }
 #pragma mark -- tableView 代理
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
@@ -642,17 +517,15 @@ static CGFloat ImageHeight  = 210.0;
     return 44;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    //    JGTeamAcitivtyModel *model = [[JGTeamAcitivtyModel alloc]init];
-    //    model = self.dataArray[0];
     if (indexPath.section == 2) {
         JGHCostListTableViewCell *costListCell = [tableView dequeueReusableCellWithIdentifier:JGHCostListTableViewCellIdentifier];
         costListCell.selectionStyle = UITableViewCellSelectionStyleNone;
         if (indexPath.row == 0) {
             costListCell.titles.text = @"活动报名费";
-            costListCell.price.text = [NSString stringWithFormat:@"%td", self.model.memberPrice];
+            costListCell.price.text = [NSString stringWithFormat:@"%.2f", [self.model.memberPrice floatValue]];
         }else{
             costListCell.titles.text = @"平台补贴费用";
-            costListCell.price.text = [NSString stringWithFormat:@"%td", self.model.subsidyPrice];
+            costListCell.price.text = [NSString stringWithFormat:@"%.2f", [self.model.subsidyPrice floatValue]];
         }
         
         return costListCell;
@@ -705,6 +578,11 @@ static CGFloat ImageHeight  = 210.0;
         return (UIView *)detailsCell;
     }
 }
+- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
+    UIView *footView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, 10)];
+    footView.backgroundColor = [UIColor colorWithHexString:BG_color];
+    return footView;
+}
 #pragma mark -- 详情页面
 - (void)pushDetailSCtrl:(UIButton *)btn{
     
@@ -747,7 +625,6 @@ static CGFloat ImageHeight  = 210.0;
         self.imgProfile.frame = f;
         
         CGRect t = self.titleView.frame;
-//        t.origin.y = yOffset + 10;
         t.origin.y = yOffset;
         self.titleView.frame = t;
         

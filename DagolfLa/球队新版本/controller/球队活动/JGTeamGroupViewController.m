@@ -25,6 +25,8 @@ static NSString *const JGGroupdetailsCollectionViewCellIdentifier = @"JGGroupdet
     NSString *_power;//权限判断
     
     NSInteger _maxGroup;//当前分组数。。默认4
+    
+    UILabel *_waitGroupLabel;//待分组
 }
 
 @property (nonatomic, weak) UICollectionView *collectionView;//上列表
@@ -43,6 +45,7 @@ static NSString *const JGGroupdetailsCollectionViewCellIdentifier = @"JGGroupdet
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.view.backgroundColor = [UIColor colorWithHexString:BG_color];
     self.navigationItem.title = @"活动分组";
     
 //    UIView* view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 0, 0)];
@@ -51,11 +54,16 @@ static NSString *const JGGroupdetailsCollectionViewCellIdentifier = @"JGGroupdet
     self.teamGroupAllDataArray = [NSMutableArray array];
     self.alreadyDataArray = [NSMutableArray array];
     _groupDetailsCollectionViewCount = 0;
-    UILabel *waitGroupLabel = [[UILabel alloc]initWithFrame:CGRectMake(5, 5, screenWidth, 25)];
-    waitGroupLabel.text = @"未分组";
-    waitGroupLabel.textAlignment = NSTextAlignmentLeft;
-    waitGroupLabel.font = [UIFont systemFontOfSize:15];
-    [self.view addSubview:waitGroupLabel];
+    _waitGroupLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 10, screenWidth, 30)];
+    _waitGroupLabel.text = @"待分组";
+    _waitGroupLabel.backgroundColor = [UIColor whiteColor];
+    _waitGroupLabel.textAlignment = NSTextAlignmentLeft;
+    _waitGroupLabel.font = [UIFont systemFontOfSize:15];
+    [self.view addSubview:_waitGroupLabel];
+    
+    UILabel *lineLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 29, screenWidth - 20, 1)];
+    lineLabel.backgroundColor = [UIColor redColor];
+    [_waitGroupLabel addSubview:lineLabel];
     
     _maxGroup = 4;
 
@@ -66,7 +74,7 @@ static NSString *const JGGroupdetailsCollectionViewCellIdentifier = @"JGGroupdet
     }
     UICollectionViewFlowLayout *layout = [UICollectionViewFlowLayout new];
     layout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
-    UICollectionView *collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 25, screenWidth, _collectionHegith)
+    UICollectionView *collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 35, screenWidth, _collectionHegith)
                                                           collectionViewLayout:layout];
     collectionView.backgroundColor = [UIColor whiteColor];
     collectionView.dataSource = self;
@@ -74,24 +82,36 @@ static NSString *const JGGroupdetailsCollectionViewCellIdentifier = @"JGGroupdet
     [collectionView registerNib:[UINib nibWithNibName:@"JGTeamGroupCollectionViewCell" bundle:[NSBundle mainBundle]] forCellWithReuseIdentifier:JGTeamGroupCollectionViewCellIdentifier];
     self.collectionView = collectionView;
     [self.view addSubview:self.collectionView];
+    //提示语
+    UILabel *promptLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, collectionView.frame.size.height+_waitGroupLabel.frame.size.height+20, screenWidth, 12)];
+    promptLabel.text = @"提示:点击任意“待添加”，实现自动分组";
+    promptLabel.textColor = [UIColor colorWithHexString:Prompt_Color];
+    promptLabel.backgroundColor = [UIColor colorWithHexString:BG_color];
+    promptLabel.textAlignment = NSTextAlignmentLeft;
+    promptLabel.font = [UIFont systemFontOfSize:12];
+    [self.view addSubview:promptLabel];
     //好友分组label
-    UILabel *groupLabel = [[UILabel alloc]initWithFrame:CGRectMake(5, self.collectionView.frame.size.height+waitGroupLabel.frame.size.height+5, screenWidth-80, 25)];
+    UILabel *groupLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, self.collectionView.frame.size.height+_waitGroupLabel.frame.size.height+30 + 10, screenWidth-90, 21)];
     groupLabel.text = @"好友分组";
+    groupLabel.backgroundColor = [UIColor colorWithHexString:BG_color];
     groupLabel.textAlignment = NSTextAlignmentLeft;
     groupLabel.font = [UIFont systemFontOfSize:15];
     [self.view addSubview:groupLabel];
     //添加分组
-    UIButton *addGroupBtn = [[UIButton alloc]initWithFrame:CGRectMake(screenWidth - 80, self.collectionView.frame.size.height+waitGroupLabel.frame.size.height+5, 80, 25)];
+    UIButton *addGroupBtn = [[UIButton alloc]initWithFrame:CGRectMake(screenWidth - 90, self.collectionView.frame.size.height+_waitGroupLabel.frame.size.height+30+10, 60, 21)];
     [addGroupBtn setTitle:@"添加分组" forState:UIControlStateNormal];
-    addGroupBtn.backgroundColor = [UIColor lightGrayColor];
-    [addGroupBtn setTintColor:[UIColor blackColor]];
-    addGroupBtn.titleLabel.font = [UIFont systemFontOfSize:15];
+    addGroupBtn.layer.masksToBounds = YES;
+    [addGroupBtn setTitleColor:[UIColor colorWithHexString:@"#7DDFFD"] forState:UIControlStateNormal];
+    addGroupBtn.backgroundColor = [UIColor colorWithHexString:BG_color];
+    addGroupBtn.layer.borderWidth = 1.0;
+    addGroupBtn.layer.borderColor = [UIColor colorWithHexString:@"#7DDFFD"].CGColor;
+    addGroupBtn.titleLabel.font = [UIFont systemFontOfSize:12];
     [addGroupBtn addTarget:self action:@selector(addGroupBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:addGroupBtn];
     //4方格
     UICollectionViewFlowLayout *gridlayout = [UICollectionViewFlowLayout new];
     gridlayout.scrollDirection = UICollectionViewScrollDirectionVertical;
-    self.groupDetailsCollectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, groupLabel.frame.origin.y + groupLabel.frame.size.height, screenWidth, screenHeight - groupLabel.frame.size.height-groupLabel.frame.origin.y - 64) collectionViewLayout:gridlayout];
+    self.groupDetailsCollectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, groupLabel.frame.origin.y + groupLabel.frame.size.height + 10, screenWidth, screenHeight - groupLabel.frame.size.height-groupLabel.frame.origin.y - 64) collectionViewLayout:gridlayout];
     self.groupDetailsCollectionView.backgroundColor = [UIColor whiteColor];
     self.groupDetailsCollectionView.dataSource = self;
     self.groupDetailsCollectionView.delegate = self;
@@ -152,6 +172,8 @@ static NSString *const JGGroupdetailsCollectionViewCellIdentifier = @"JGGroupdet
             }
         }
         
+        _waitGroupLabel.text = [NSString stringWithFormat:@"待分组:%ld(人)", (unsigned long)[self.teamGroupAllDataArray count]];
+        
         if (fenzu == 1) {
             UIAlertAction *commitAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             }];
@@ -186,15 +208,7 @@ static NSString *const JGGroupdetailsCollectionViewCellIdentifier = @"JGGroupdet
     if ([collectionView isEqual:self.collectionView]) {
         return _teamGroupAllDataArray.count;
     }else{
-        
         return _maxGroup;
-        /**
-        if (_maxGroup%4 == 0) {
-            return _maxGroup/4;
-        }else{
-            return _maxGroup/4 + 1;
-        }
-        */
     }
 }
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
@@ -216,6 +230,7 @@ static NSString *const JGGroupdetailsCollectionViewCellIdentifier = @"JGGroupdet
         return groupCell;
     }
 }
+
 #pragma mark -- 点击头像图片的代理方法JGGroupdetailsCollectionViewCellDelegate
 - (void)didSelectHeaderImage:(UIButton *)btn JGGroupCell:(JGGroupdetailsCollectionViewCell *)cell{
 

@@ -75,7 +75,8 @@
         //活动大厅getMyTeamActivityAll //
         _urlString = @"team/getTeamActivityList";
     }else{
-        _urlString = @"team/getMyTeamActivityAll";
+        //getMyTeamActivityAll
+        _urlString = @"team/getMyTeamActivityList";
     }
     
     [[JsonHttp jsonHttp]httpRequest:_urlString JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
@@ -112,24 +113,23 @@
     }
 }
 
-#pragma mark -- 发布球队活动
+#pragma mark -- 发布活动
 - (void)launchActivityBtnClick:(UIButton *)btn{
     JGHLaunchActivityViewController * launchCtrl = [[JGHLaunchActivityViewController alloc]init];
     launchCtrl.teamKey = _timeKey;
     NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
-    NSLog(@"%@", [userdef objectForKey:@"TeamActivityData"]);
-    NSDictionary *activityDict = [NSDictionary dictionary];
-    activityDict = [userdef objectForKey:@"TeamActivityData"];
-    if (activityDict) {
+    NSLog(@"%@", [userdef objectForKey:@"TeamActivityArray"]);
+    NSMutableArray *activityArray = [NSMutableArray array];
+    activityArray = [userdef objectForKey:@"TeamActivityArray"];
+    if ([activityArray count]) {
         [Helper alertViewWithTitle:@"是否继续上次未完成的操作！" withBlockCancle:^{
             NSLog(@"不继续，清除数据");
-            [userdef removeObjectForKey:@"TeamActivityData"];
+            [userdef removeObjectForKey:@"TeamActivityArray"];
             [userdef synchronize];
             [self.navigationController pushViewController:launchCtrl animated:YES];
         } withBlockSure:^{
-            NSMutableDictionary *dataDict = [userdef objectForKey:@"TeamActivityData"];
             JGTeamAcitivtyModel *model = [[JGTeamAcitivtyModel alloc]init];
-            [model setValuesForKeysWithDictionary:dataDict];
+            model = [[userdef objectForKey:@"TeamActivityArray"]objectAtIndex:0];
             launchCtrl.model = model;
             [self.navigationController pushViewController:launchCtrl animated:YES];
         } withBlock:^(UIAlertController *alertView) {
@@ -140,7 +140,11 @@
     [self.navigationController pushViewController:launchCtrl animated:YES];
 
 }
-
+- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
+    UIView *footView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, 1)];
+    footView.backgroundColor = [UIColor colorWithHexString:BG_color];
+    return footView;
+}
 #pragma mark -- 创建TableView
 - (void)createTeamActivityTabelView{
     self.teamActivityTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight) style:UITableViewStyleGrouped];
@@ -198,18 +202,10 @@
                 self.page++;
                 
                 [self.teamActivityTableView reloadData];
-            }else{
-//                [Helper alertViewWithTitle:@"没有更多活动" withBlock:^(UIAlertController *alertView) {
-//                    [self presentViewController:alertView animated:YES completion:nil];
-//                }];
             }
 
-        }else {
-            
-//            [Helper alertViewWithTitle:@"获取失败" withBlock:^(UIAlertController *alertView) {
-//                [self presentViewController:alertView animated:YES completion:nil];
-//            }];
         }
+        
         [self.teamActivityTableView reloadData];
         if (isReshing) {
             [self.teamActivityTableView.header endRefreshing];
@@ -228,7 +224,7 @@
     return self.dataArray.count;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 100;
+    return 81;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
     return 1;
@@ -247,7 +243,11 @@
     
     JGTeamAcitivtyModel *model = [[JGTeamAcitivtyModel alloc]init];
     model = self.dataArray[indexPath.section];
-    [cell setJGTeamActivityCellWithModel:model fromCtrl:1];
+    if (_isMEActivity == 1) {
+        [cell setJGTeamActivityCellWithModel:model fromCtrl:2];
+    }else{
+        [cell setJGTeamActivityCellWithModel:model fromCtrl:1];
+    }
     
     return cell;
 }
@@ -259,42 +259,6 @@
     activityNameCtrl.teamKey = [model.timeKey integerValue];
     activityNameCtrl.model = model;
     [self.navigationController pushViewController:activityNameCtrl animated:YES];
-    
-    /**
-    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    JGTeamAcitivtyModel *model = self.dataArray[indexPath.section];
-    [dict setObject:@(model.teamActivityKey) forKey:@"activityKey"];
-    [dict setObject:[NSString stringWithFormat:@"%td", model.teamKey] forKey:@"teamKey"];    
-    [dict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"userId"] forKey:@"userKey"];
-    NSLog(@"%@", [[NSUserDefaults standardUserDefaults] objectForKey:@"userId" ]);
-    
-    //team/getTeamActivityList
-    [[JsonHttp jsonHttp]httpRequest:_urlString JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
-     
-    } completionBlock:^(id data) {
-        if ([[data objectForKey:@"packSuccess"] boolValue]) {
-            NSArray *array = [NSArray array];
-            array = [data objectForKey:@"activityList"];
-            
-            JGTeamAcitivtyModel *model = [[JGTeamAcitivtyModel alloc] init];
-            NSLog(@"%ld", (long)indexPath.section);
-            [model setValuesForKeysWithDictionary:array[indexPath.section]];
-            activityNameCtrl.model = model;
-//            activityNameCtrl.teamActivityKey = [model.teamKey integerValue];
-            [self.navigationController pushViewController:activityNameCtrl animated:YES];
-          }else {
-              if ([data objectForKey:@"packResultMsg"]) {
-                  [Helper alertViewWithTitle:[data objectForKey:@"packResultMsg"] withBlock:^(UIAlertController *alertView) {
-                      [self presentViewController:alertView animated:YES completion:nil];
-                  }];
-              }else{
-                  [Helper alertViewWithTitle:@"获取失败" withBlock:^(UIAlertController *alertView) {
-                      [self presentViewController:alertView animated:YES completion:nil];
-                  }];
-              }
-        }
-     }];
-     */
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

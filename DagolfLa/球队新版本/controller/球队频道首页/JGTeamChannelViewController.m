@@ -45,7 +45,7 @@
 @property (nonatomic, strong)NSMutableArray *myTeamArray;
 @property (nonatomic, strong)NSMutableArray *myActivityArray;
 @property (nonatomic, strong)UILabel *titleLB;
-
+@property (nonatomic, strong)UIView *topBackView;
 @end
 
 @implementation JGTeamChannelViewController
@@ -64,9 +64,13 @@
     [super viewDidLoad];
     // ss
     //    self.view.backgroundColor = [UIColor lightGrayColor];
-    self.view.backgroundColor = [UIColor colorWithRed:0.94 green:0.94 blue:0.94 alpha:1];
+    self.view.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];
     self.automaticallyAdjustsScrollViewInsets=NO;
     
+    self.topBackView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 360 * screenWidth / 320)];
+    self.topBackView.userInteractionEnabled = YES;
+    self.topBackView.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];
+    [self.view addSubview:self.topBackView];
     
     UIButton *backBtn = [UIButton buttonWithType:(UIButtonTypeCustom)];
     backBtn.frame = CGRectMake(0 , 20, 30 * screenWidth / 320, 30 * screenWidth / 320);
@@ -90,7 +94,7 @@
     self.topScrollView.userInteractionEnabled = YES;
     
     [self creatCro];
-    [self.view addSubview:self.topScrollView];
+    [self.topBackView addSubview:self.topScrollView];
     
     [self.topScrollView addSubview:backBtn];
     [self.topScrollView addSubview:creatTeam];
@@ -112,7 +116,7 @@
         button.imageEdgeInsets = UIEdgeInsetsMake(0, 300 * screenWidth / 320, 0, 0);
         //        button.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
         button.titleEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 200 * screenWidth / 320);
-        [self.view addSubview:button];
+        [self.topBackView addSubview:button];
         UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake(10 * screenWidth / 320, 10 * screenWidth / 320, 20 * screenWidth / 320, 20 * screenWidth / 320)];
         NSArray *arra = [NSArray arrayWithObjects:@"qd", @"hd-1", @"dt", nil];
         imageV.image = [UIImage imageNamed:arra[i]];
@@ -120,22 +124,23 @@
         [button addSubview:imageV];
     }
     
-    self.tableView = [[JGTeamChannelTableView alloc] initWithFrame:CGRectMake(0, 360 * screenWidth / 320, screenWidth, screenHeight - 360 * screenWidth / 320) style:(UITableViewStylePlain)];
+    self.tableView = [[JGTeamChannelTableView alloc] initWithFrame:CGRectMake(0, 0 * screenWidth / 320, screenWidth, screenHeight) style:(UITableViewStylePlain)];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.separatorStyle = UITableViewCellAccessoryNone;
     self.tableView.rowHeight = 80 * screenWidth / 320;
-    
+    self.tableView.tableHeaderView = [UIView new];
+    self.tableView.tableHeaderView = self.topBackView;
     [self.view addSubview:self.tableView];
     
     [self setData];
     
     UIImageView *blueImageV = [[UIImageView alloc] initWithFrame:CGRectMake(10 * screenWidth / 320, 332 * screenWidth / 320, 5 * screenWidth / 320, 16 * screenWidth / 320)];
     blueImageV.backgroundColor = [UIColor colorWithRed:0.5 green:0.76 blue:1.0 alpha:1.0];
-    [self.view addSubview:blueImageV];
+    [self.topBackView addSubview:blueImageV];
     
     self.titleLB = [[UILabel alloc] initWithFrame:CGRectMake(25, 320 * screenWidth / 320, screenWidth, 40 * screenWidth / 320)];
-    [self.view addSubview:self.titleLB];
+    [self.topBackView addSubview:self.titleLB];
     
     // Do any additional setup after loading the view.
 }
@@ -247,7 +252,8 @@
             [dic setObject:DEFAULF_USERID forKey:@"userKey"];
             [dic setValue:@0 forKey:@"offset"];
 //            [getMyTeam setObject:@192 forKey:@"teamKey"];
-            [[JsonHttp jsonHttp] httpRequest:@"team/getMyTeamActivityList" JsonKey:nil withData:dic requestMethod:@"GET" failedBlock:^(id errType) {
+            //getMyTeamActivityList
+            [[JsonHttp jsonHttp] httpRequest:@"team/getMyTeamActivityAll" JsonKey:nil withData:dic requestMethod:@"GET" failedBlock:^(id errType) {
                 [Helper alertViewNoHaveCancleWithTitle:@"获取活动列表失败" withBlock:^(UIAlertController *alertView) {
                     [self.navigationController presentViewController:alertView animated:YES completion:nil];
                 }];
@@ -419,8 +425,7 @@
         }else{
         JGTeamActivityCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"JGTeamActivityCell"];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-//        [cell setJGTeamActivityCellWithModel:self.myActivityArray[indexPath.row]];
-            [cell setJGTeamActivityCellWithModel:self.myActivityArray[indexPath.row] fromCtrl:2];
+        [cell setJGTeamActivityCellWithModel:self.myActivityArray[indexPath.row] fromCtrl:2];
         return cell;
         }
     }

@@ -27,7 +27,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationItem.title = @"发票信息";
-    self.view.backgroundColor = [UIColor colorWithHexString:TB_BG_Color];
+    self.view.backgroundColor = [UIColor colorWithHexString:BG_color];
     self.commitBtn.layer.masksToBounds = YES;
     self.commitBtn.layer.cornerRadius = 8.0;
     self.addressDict = [NSMutableDictionary dictionary];

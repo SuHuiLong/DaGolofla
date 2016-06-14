@@ -75,8 +75,8 @@ typedef NS_ENUM(NSInteger, GestureType) {
 #define RGBA(r,g,b,a)   [UIColor colorWithRed:(float)r/255.0f green:(float)g/255.0f blue:(float)b/255.0f alpha:a]
 #define kScreenHeight ([[UIScreen mainScreen] bounds].size.height)
 
-#define BG_color @"#EEEEEF"
-#define TB_BG_Color @"#CFCFCF"
+#define BG_color @"#EEEEEE"
+#define Prompt_Color @"#F39800"
 #define Nav_Color @"#F59826"
 //正式环境图片基础地址
 #define imageBaseUrl @"http://139.196.9.49:8081/"

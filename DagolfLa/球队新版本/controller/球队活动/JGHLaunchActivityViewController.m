@@ -10,7 +10,6 @@
 #import "JGHLaunchActivityViewController.h"
 #import "JGTableViewCell.h"
 #import "JGHConcentTextViewController.h"
-#import "JGHTeamActivityImageCell.h"
 #import "DateTimeViewController.h"
 #import "TeamAreaViewController.h"
 #import "JGTeamAcitivtyModel.h"
@@ -19,12 +18,14 @@
 #import "JGHTeamContactTableViewCell.h"
 #import "JGCostSetViewController.h"
 #import "BallParkViewController.h"
+#import "JGHSaveAndSubmitBtnCell.h"
 
 static NSString *const JGTableViewCellIdentifier = @"JGTableViewCell";
 static NSString *const JGHTeamContactCellIdentifier = @"JGHTeamContactTableViewCell";
+static NSString *const JGHSaveAndSubmitBtnCellIdentifier = @"JGHSaveAndSubmitBtnCell";
 static CGFloat ImageHeight  = 210.0;
 
-@interface JGHLaunchActivityViewController ()<UITableViewDelegate, UITableViewDataSource, JGHConcentTextViewControllerDelegate, NSURLConnectionDownloadDelegate,UITextFieldDelegate, JGCostSetViewControllerDelegate>
+@interface JGHLaunchActivityViewController ()<UITableViewDelegate, UITableViewDataSource, JGHConcentTextViewControllerDelegate, NSURLConnectionDownloadDelegate,UITextFieldDelegate, JGCostSetViewControllerDelegate, JGHSaveAndSubmitBtnCellDelegate>
 {
     //、、、、、、、
     NSArray *_titleArray;//标题数组
@@ -82,7 +83,7 @@ static CGFloat ImageHeight  = 210.0;
         self.imgProfile = [[UIImageView alloc] initWithImage:image];
         self.imgProfile.frame = CGRectMake(0, 0, screenWidth, ImageHeight);
         self.imgProfile.userInteractionEnabled = YES;
-        self.launchActivityTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight - 44)];
+        self.launchActivityTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight)];
         self.imgProfile.contentMode = UIViewContentModeScaleAspectFill;
         self.imgProfile.layer.masksToBounds = YES;
         
@@ -90,6 +91,9 @@ static CGFloat ImageHeight  = 210.0;
         [self.launchActivityTableView registerNib:tableViewNib forCellReuseIdentifier:JGTableViewCellIdentifier];
         UINib *contactNib = [UINib nibWithNibName:@"JGHTeamContactTableViewCell" bundle: [NSBundle mainBundle]];
         [self.launchActivityTableView registerNib:contactNib forCellReuseIdentifier:JGHTeamContactCellIdentifier];
+        
+        UINib *saveAndsubmitNib = [UINib nibWithNibName:@"JGHSaveAndSubmitBtnCell" bundle: [NSBundle mainBundle]];
+        [self.launchActivityTableView registerNib:saveAndsubmitNib forCellReuseIdentifier:JGHSaveAndSubmitBtnCellIdentifier];
         self.launchActivityTableView.dataSource = self;
         self.launchActivityTableView.delegate = self;
         self.launchActivityTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -105,7 +109,7 @@ static CGFloat ImageHeight  = 210.0;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.view.backgroundColor = [UIColor colorWithHexString:TB_BG_Color];
+    self.view.backgroundColor = [UIColor colorWithHexString:BG_color];
     self.automaticallyAdjustsScrollViewInsets = NO;
     
     _photos = 1;
@@ -140,9 +144,7 @@ static CGFloat ImageHeight  = 210.0;
     self.headPortraitBtn = [[UIButton alloc]initWithFrame:CGRectMake(10, 135, 65, 65)];
     [self.headPortraitBtn setImage:[UIImage imageNamed:TeamLogoImage] forState:UIControlStateNormal];
     self.model.headerImage = [UIImage imageNamed:TeamLogoImage];
-//    [self.headPortraitBtn addTarget:self action:@selector(initItemsBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     self.headPortraitBtn.layer.cornerRadius = 8.0;
-//    self.headPortraitBtn.tag = 740;
     [self.imgProfile addSubview:self.headPortraitBtn];
     [self.titleView addSubview:self.titleField];
     
@@ -162,8 +164,6 @@ static CGFloat ImageHeight  = 210.0;
          [self.titleField becomeFirstResponder];
     }
     _titleArray = @[@[], @[@"活动开始时间", @"活动结束时间", @"报名截止时间"], @[@"费用说明", @"人员限制", @"活动说明"], @[@"联系电话"]];
-    
-    [self createPreviewBtn];
 }
 
 - (void)replaceWithPicture:(UIButton *)Btn{
@@ -190,92 +190,7 @@ static CGFloat ImageHeight  = 210.0;
         //更换背景
         [self SelectPhotoImage:btn];
     }
-    
-    /**  功能移除
-    else if (btn.tag == 740){
-        [self SelectPhotoImage:btn];
-    }
-     */
 }
-#pragma mark -- 预览
-- (void)createPreviewBtn{
-    UIButton *previewBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, screenHeight -44, screenWidth, 44)];
-    [previewBtn setTitle:@"预览" forState:UIControlStateNormal];
-    previewBtn.backgroundColor = [UIColor colorWithHexString:@"#F59826"];
-    [previewBtn addTarget:self action:@selector(previewBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:previewBtn];
-}
-#pragma mark -- 预览跳转页面
-- (void)previewBtnClick:(UIButton *)btn{
-    if (self.titleField.text.length == 0) {
-        [self alertviewString:@"活动名称不能为空！"];
-        return;
-    }
-    
-    if (self.model.beginDate == nil) {
-        [self alertviewString:@"活动开始时间不能为空！"];
-        return;
-    }
-    
-    if (self.model.endDate == nil) {
-        [self alertviewString:@"活动结束时间不能为空！"];
-        return;
-    }
-    
-    if (self.model.signUpEndTime == nil) {
-        [self alertviewString:@"活动报名截止时间不能为空！"];
-        return;
-    }
-    
-    if ([self.model.beginDate compare:self.model.endDate] > 0) {
-        NSLog(@"333");
-        [self alertviewString:@"活动开始时间不能大于结束时间"];
-        return;
-    }
-    
-    if ([self.model.signUpEndTime compare:self.model.endDate] > 0) {
-        NSLog(@"333");
-        [self alertviewString:@"活动报名截止时间不能大于活动结束时间"];
-        return;
-    }
-
-    if (self.model.userMobile.length != 11) {
-        [self alertviewString:@"手机号码格式不正确！"];
-        return;
-    }
-    
-    if (self.model.ballName == nil) {
-        [self alertviewString:@"活动地址不能为空！"];
-        return;
-    }
-    
-    if (self.model.info == nil) {
-        [self alertviewString:@"活动说明不能为空！"];
-        return;
-    }
-    
-    if (self.model.memberPrice < 0) {
-        [self alertviewString:@"请填写活动会员价！"];
-        return;
-    }
-    
-    if (self.model.guestPrice <= 0) {
-        [self alertviewString:@"请填写活动嘉宾价！"];
-        return;
-    }
-    
-    if (self.model.userName == nil) {
-        [self alertviewString:@"活动联系人不能为空！"];
-        return;
-    }
-    
-    JGTeamActibityNameViewController *ActivityDetailCtrl = [[JGTeamActibityNameViewController alloc]init];
-    ActivityDetailCtrl.model = self.model;
-    ActivityDetailCtrl.isAdmin = 1;
-    ActivityDetailCtrl.teamKey = self.teamKey;
-    [self.navigationController pushViewController:ActivityDetailCtrl animated:YES];
-}
-
 #pragma mark -- 提示信息
 - (void)alertviewString:(NSString *)string{
     [Helper alertViewNoHaveCancleWithTitle:string withBlock:^(UIAlertController *alertView) {
@@ -325,12 +240,14 @@ static CGFloat ImageHeight  = 210.0;
         return 3;
     }else if (section == 2){
         return 3;
+    }else if (section == 4){
+        return 1;
     }else{
         return 2;
     }
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 4;
+    return 5;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 0) {
@@ -371,7 +288,6 @@ static CGFloat ImageHeight  = 210.0;
             contactCell.contactLabel.text = @"联系人";
             contactCell.tetfileView.keyboardType = UIKeyboardTypeDefault;
             contactCell.tetfileView.placeholder = @"请输入联系人姓名";
-//            contactCell.tetfileView.delegate = self;
             if (self.model.name != nil) {
                 contactCell.tetfileView.text = self.model.userName;
             }
@@ -382,6 +298,11 @@ static CGFloat ImageHeight  = 210.0;
         contactCell.tetfileView.delegate = self;
         
         return contactCell;
+    }else if (indexPath.section == 4){
+        JGHSaveAndSubmitBtnCell *saveCell = [tableView dequeueReusableCellWithIdentifier:JGHSaveAndSubmitBtnCellIdentifier];
+        saveCell.backgroundColor = [UIColor colorWithHexString:BG_color];
+        saveCell.delegate = self;
+        return saveCell;
     }else{
         if (indexPath.row == 1 && indexPath.section == 2) {
             JGHTeamContactTableViewCell *contactCell = [tableView dequeueReusableCellWithIdentifier:JGHTeamContactCellIdentifier];
@@ -395,6 +316,7 @@ static CGFloat ImageHeight  = 210.0;
             contactCell.tetfileView.placeholder = @"请输入最大人员限制数";
             return contactCell;
         }else{
+            
             JGTableViewCell *launchActivityCell = [tableView dequeueReusableCellWithIdentifier:JGTableViewCellIdentifier forIndexPath:indexPath];
             launchActivityCell.selectionStyle = UITableViewCellSelectionStyleNone;
             
@@ -410,8 +332,14 @@ static CGFloat ImageHeight  = 210.0;
             [launchActivityCell configContionsStringWhitModel:self.model andIndexPath:indexPath];
             
             return launchActivityCell;
+             
         }
     }
+}
+- (nullable UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
+    UIView *footView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, 10)];
+    footView.backgroundColor = [UIColor colorWithHexString:BG_color];
+    return footView;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     _photos = 1;
@@ -452,7 +380,160 @@ static CGFloat ImageHeight  = 210.0;
     
     [self.launchActivityTableView reloadData];
 }
-
+#pragma mark --保存代理
+- (void)SaveBtnClick:(UIButton *)btn{
+    NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
+    NSMutableArray *array = [NSMutableArray array];
+    [array addObject:_model];
+    [userdef setObject:array forKey:@"TeamActivityArray"];
+    [userdef synchronize];
+    [[ShowHUD showHUD]hideAnimationFromView:self.view];
+    [Helper alertViewWithTitle:@"活动保存成功！" withBlock:^(UIAlertController *alertView) {
+        [self.navigationController presentViewController:alertView animated:YES completion:nil];
+    }];
+}
+#pragma mark --提交代理
+- (void)SubmitBtnClick:(UIButton *)btn{
+    if (self.titleField.text.length == 0) {
+        [[ShowHUD showHUD]showToastWithText:@"活动名称不能为空！" FromView:self.view];
+        return;
+    }
+    
+    if (self.model.beginDate == nil) {
+        [[ShowHUD showHUD]showToastWithText:@"活动开始时间不能为空！" FromView:self.view];
+        return;
+    }
+    
+    if (self.model.endDate == nil) {
+        [[ShowHUD showHUD]showToastWithText:@"活动结束时间不能为空！" FromView:self.view];
+        return;
+    }
+    
+    if (self.model.signUpEndTime == nil) {
+        [[ShowHUD showHUD]showToastWithText:@"活动开始时间不能为空！" FromView:self.view];
+        
+        [self alertviewString:@"活动报名截止时间不能为空！"];
+        return;
+    }
+    
+    if ([self.model.beginDate compare:self.model.endDate] > 0) {
+        [[ShowHUD showHUD]showToastWithText:@"活动开始时间不能大于结束时间！" FromView:self.view];
+        return;
+    }
+    
+    if ([self.model.signUpEndTime compare:self.model.endDate] > 0) {
+        [[ShowHUD showHUD]showToastWithText:@"活动报名截止时间不能大于活动结束时间！" FromView:self.view];
+        return;
+    }
+    
+    if (self.model.userMobile.length != 11) {
+        [[ShowHUD showHUD]showToastWithText:@"手机号码格式不正确！" FromView:self.view];
+        return;
+    }
+    
+    if (self.model.ballName == nil) {
+        [[ShowHUD showHUD]showToastWithText:@"活动地址不能为空！" FromView:self.view];
+        return;
+    }
+    
+    if (self.model.info == nil) {
+        [[ShowHUD showHUD]showToastWithText:@"活动说明不能为空！" FromView:self.view];
+        return;
+    }
+    
+    if (self.model.memberPrice < 0) {
+        [[ShowHUD showHUD]showToastWithText:@"请填写活动会员价！" FromView:self.view];
+        return;
+    }
+    
+    if (self.model.guestPrice <= 0) {
+        [[ShowHUD showHUD]showToastWithText:@"请填写活动嘉宾价！" FromView:self.view];
+        return;
+    }
+    
+    if (self.model.userName == nil) {
+        [[ShowHUD showHUD]showToastWithText:@"活动联系人不能为空！" FromView:self.view];
+        return;
+    }
+    
+    [[ShowHUD showHUD]showAnimationWithText:@"提交中..." FromView:self.view];
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    [dict setObject:[NSString stringWithFormat:@"%td", self.teamKey] forKey:@"teamKey"];//球队key
+    [dict setObject:@0 forKey:@"timeKey"];
+    [dict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:userID] forKey:@"userKey"];//用户key
+    [dict setObject:self.model.name forKey:@"name"];//活动名字
+    [dict setObject:self.model.signUpEndTime forKey:@"signUpEndTime"];//活动报名截止时间
+    [dict setObject:self.model.beginDate forKey:@"beginDate"];//活动开始时间
+    [dict setObject:self.model.endDate forKey:@"endDate"];//活动结束时间
+    [dict setObject:[NSString stringWithFormat:@"%ld", (long)self.model.ballKey] forKey:@"ballKey"];//球场id
+    [dict setObject:self.model.ballName forKey:@"ballName"];//球场名称
+    //    [dict setObject:@"" forKey:@"ballGeohash"];//球场坐标
+    [dict setObject:self.model.info forKey:@"info"];//活动简介
+    [dict setObject:[NSString stringWithFormat:@"%.2f", [self.model.memberPrice floatValue]] forKey:@"memberPrice"];//会员价
+    [dict setObject:[NSString stringWithFormat:@"%.2f", [self.model.guestPrice floatValue]] forKey:@"guestPrice"];//嘉宾价
+    [dict setObject:[NSString stringWithFormat:@"%ld", (long)self.model.maxCount] forKey:@"maxCount"];//最大人员数
+    [dict setObject:[NSString stringWithFormat:@"%ld", (long)_model.isClose] forKey:@"isClose"];//活动是否结束 0 : 开始 , 1 : 已结束
+    NSDateFormatter *formatter =[[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    NSString *currentTime = [formatter stringFromDate:[NSDate date]];
+    [dict setObject:currentTime forKey:@"createTime"];//活动创建时间
+    [dict setObject:self.model.userName forKey:@"userName"];//联系人
+    [dict setObject:self.model.userMobile forKey:@"userMobile"];//联系人
+    
+    //发布活动
+    [[JsonHttp jsonHttp]httpRequest:@"team/createTeamActivity" JsonKey:@"teamActivity" withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
+        NSLog(@"%@", errType);
+        [[ShowHUD showHUD]hideAnimationFromView:self.view];
+    } completionBlock:^(id data) {
+        NSLog(@"%@", data);
+        [[ShowHUD showHUD]hideAnimationFromView:self.view];
+        if ([[data objectForKey:@"packSuccess"] integerValue] == 0) {
+            [Helper alertViewWithTitle:@"活动发布失败！" withBlock:^(UIAlertController *alertView) {
+                [self.navigationController presentViewController:alertView animated:YES completion:nil];
+            }];
+            
+            return ;
+        }
+        
+        NSMutableArray *imageArray = [NSMutableArray array];
+        
+        [imageArray addObject:UIImageJPEGRepresentation(self.model.bgImage, 0.7)];
+        
+        NSNumber* strTimeKey = [data objectForKey:@"timeKey"];
+        // 上传图片
+        NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+        [dict setObject:TYPE_TEAM_BACKGROUND forKey:@"nType"];
+        [dict setObject:PHOTO_DAGOLFLA forKey:@"tag"];
+        
+        [dict setObject:[NSString stringWithFormat:@"%@_background" ,strTimeKey] forKey:@"data"];
+        [dict setObject:TYPE_TEAM_BACKGROUND forKey:@"nType"];
+        [[JsonHttp jsonHttp] httpRequestImageOrVedio:@"1" withData:dict andDataArray:imageArray failedBlock:^(id errType) {
+            NSLog(@"errType===%@", errType);
+        } completionBlock:^(id data) {
+            NSLog(@"data == %@", data);
+            if ([[data objectForKey:@"code"] integerValue] == 1) {
+                UIAlertAction *commitAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+                    
+                    [self.navigationController popViewControllerAnimated:YES];
+                }];
+                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"系统提示" message:@"活动创建成功!" preferredStyle:UIAlertControllerStyleAlert];
+                [alertController addAction:commitAction];
+                //获取主线层
+                if ([NSThread isMainThread]) {
+                    NSLog(@"Yay!");
+                    [self presentViewController:alertController animated:YES completion:nil];
+                    [self.navigationController popViewControllerAnimated:YES];
+                } else {
+                    NSLog(@"Humph, switching to main");
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [self presentViewController:alertController animated:YES completion:nil];
+                    });
+                }
+                
+            }
+        }];
+    }];
+}
 #pragma mark --添加活动头像
 -(void)SelectPhotoImage:(UIButton *)btn{
     _photos = 10;
@@ -523,8 +604,9 @@ static CGFloat ImageHeight  = 210.0;
 }
 #pragma mark -- 费用代理
 - (void)inputMembersCost:(NSString *)membersCost guestCost:(NSString *)guestCost{
-    self.model.guestPrice = [guestCost integerValue];
-    self.model.memberPrice = [membersCost integerValue];
+    NSLog(@"guestCost == %@", [Helper returnNumberForString:guestCost]);
+    self.model.guestPrice = [Helper returnNumberForString:guestCost];
+    self.model.memberPrice = [Helper returnNumberForString:membersCost];
     [_dataDict setObject:guestCost forKey:@"activityGuestCost"];
     [_dataDict setObject:membersCost forKey:@"activityMembersCost"];
     [self.launchActivityTableView reloadData];
@@ -541,6 +623,7 @@ static CGFloat ImageHeight  = 210.0;
         self.model.name = textField.text;
     }
 }
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

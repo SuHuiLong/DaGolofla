@@ -35,11 +35,11 @@
 //报名人数
 @property (assign, nonatomic) NSInteger sumCount;
 //会员价
-@property (assign, nonatomic) NSInteger memberPrice;
+@property (strong, nonatomic) NSNumber* memberPrice;
 //补贴价
-@property (assign, nonatomic) NSInteger subsidyPrice;
+@property (strong, nonatomic) NSNumber* subsidyPrice;
 //嘉宾价
-@property (assign, nonatomic) NSInteger guestPrice;
+@property (strong, nonatomic) NSNumber* guestPrice;
 //syncFlag
 @property (assign, nonatomic) NSInteger syncFlag;
 //rsyncFlag

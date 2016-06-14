@@ -31,13 +31,13 @@
 
 @property (nonatomic, assign)NSInteger sortIndex;//排序索引号，默认－1（未排序）
 
-@property (nonatomic, assign)NSInteger payMoney;//实际付款金额
+@property (nonatomic, strong)NSNumber *payMoney;//实际付款金额
 
 @property (nonatomic, copy)NSString *payTime;//实际付款时间
 
-@property (nonatomic, assign)NSInteger subsidyPrice;//补贴价
+@property (nonatomic, strong)NSNumber *subsidyPrice;//补贴价
 
-@property (nonatomic, assign)NSInteger money;//报名费
+@property (nonatomic, strong)NSNumber *money;//报名费
 
 @property (nonatomic, copy)NSString *createTime;//报名时间
 

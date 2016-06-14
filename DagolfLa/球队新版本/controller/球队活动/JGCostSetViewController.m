@@ -16,7 +16,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.view.backgroundColor = [UIColor colorWithHexString:@"#EAEAEB"];
+    self.view.backgroundColor = [UIColor colorWithHexString:BG_color];
     self.navigationItem.title = @"费用设置";
     
     [self createAdminBtn];
@@ -27,7 +27,7 @@
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
     btn.frame = RightNavItemFrame;
     btn.titleLabel.font = [UIFont systemFontOfSize:FontSize_Normal];
-    [btn setTitle:@"完成" forState:UIControlStateNormal];
+    [btn setTitle:@"保存" forState:UIControlStateNormal];
     [btn addTarget:self action:@selector(saveBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     btn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
     UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithCustomView:btn];

@@ -15,20 +15,21 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="qyIcon" translatesAutoresizingMaskIntoConstraints="NO" id="B6N-97-idM">
-                        <rect key="frame" x="8" y="13" width="17" height="16.5"/>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="B6N-97-idM">
+                        <rect key="frame" x="8" y="19" width="5" height="4.5"/>
                         <constraints>
                             <constraint firstAttribute="width" secondItem="B6N-97-idM" secondAttribute="height" multiplier="1:1" id="Pao-m0-ksU"/>
+                            <constraint firstAttribute="width" constant="5" id="Z9T-rT-COF"/>
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="联系人电话" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t0j-QG-XY6">
-                        <rect key="frame" x="30" y="12" width="75" height="18"/>
+                        <rect key="frame" x="18" y="12" width="75" height="18"/>
                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入联系人电话" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="MBb-6c-PEW">
-                        <rect key="frame" x="125" y="13.5" width="185" height="17"/>
+                        <rect key="frame" x="113" y="13" width="197" height="17"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                     </textField>
@@ -50,7 +51,4 @@
             </connections>
         </tableViewCell>
     </objects>
-    <resources>
-        <image name="qyIcon" width="17" height="15"/>
-    </resources>
 </document>
