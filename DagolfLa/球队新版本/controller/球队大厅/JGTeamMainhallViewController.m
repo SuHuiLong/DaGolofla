@@ -93,11 +93,7 @@
         NSLog(@"%@", data);
         self.modelArray = [data objectForKey:@"teamList"];
         [self.tableView reloadData];
-//        for (NSDictionary *Dic in dataArray) {
-//            JGTeamDetail *model = [[JGTeamDetail alloc] init];
-//            [model setValuesForKeysWithDictionary:Dic];
-//            [self.modelArray addObject:model];
-//        }
+
     }];
     
 }

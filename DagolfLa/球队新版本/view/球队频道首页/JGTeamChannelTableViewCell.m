@@ -43,7 +43,7 @@
         
         UIView *lightGrayView = [[UIView alloc] initWithFrame:CGRectMake(0, 78 * screenWidth / 320, screenWidth, 1 * screenWidth / 320)];
         lightGrayView.backgroundColor = [UIColor colorWithRed:0.94 green:0.94 blue:0.94 alpha:1];
-        [self.contentView addSubview:lightGrayView];
+//        [self.contentView addSubview:lightGrayView];
     
         self.stateLabel = [[UILabel alloc] initWithFrame:CGRectMake(screenWidth - 80* screenWidth / 320 , 0, 75 * screenWidth / 320, 30)];
 //        self.stateLabel.text = @"";

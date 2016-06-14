@@ -94,6 +94,10 @@ static CGFloat ImageHeight  = 210.0;
 
 @property (nonatomic, strong) UIImageView *jbImageV;
 
+@property (nonatomic, strong) UIButton *previewBtn;
+
+@property (nonatomic, strong) UIView *footBackView;
+
 @end
 
 @implementation JGTeamMemberORManagerViewController
@@ -244,6 +248,8 @@ static CGFloat ImageHeight  = 210.0;
     self.view.backgroundColor = [UIColor whiteColor];
     self.launchActivityTableView.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];;
     [self createPreviewBtn];
+    self.launchActivityTableView.tableFooterView = self.footBackView;
+    
 }
 
 #pragma mark -分享
@@ -348,14 +354,28 @@ static CGFloat ImageHeight  = 210.0;
     }
 }
 #pragma mark -- 邀请好友BUTTON
+//- (UIButton *)previewBtn{
+//    if (!_previewBtn) {
+//        self.previewBtn = [[UIButton alloc]initWithFrame:CGRectMake(10 * screenWidth / 320, screenHeight - 54 * screenWidth / 320, screenWidth - 20 * screenWidth / 320, 44 * screenWidth / 320)];
+//        [self.previewBtn setTitle:@"邀请好友" forState:UIControlStateNormal];
+//        self.previewBtn.backgroundColor = [UIColor colorWithHexString:@"#F59826"];
+//        [self.previewBtn addTarget:self action:@selector(previewBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+//        self.previewBtn.clipsToBounds = YES;
+//        self.previewBtn.layer.cornerRadius = 6.f;
+//    }
+//    return _previewBtn;
+//}
 - (void)createPreviewBtn{
-    UIButton *previewBtn = [[UIButton alloc]initWithFrame:CGRectMake(10 * screenWidth / 320, screenHeight - 54 * screenWidth / 320, screenWidth - 20 * screenWidth / 320, 44 * screenWidth / 320)];
-    [previewBtn setTitle:@"邀请好友" forState:UIControlStateNormal];
-    previewBtn.backgroundColor = [UIColor colorWithHexString:@"#F59826"];
-    [previewBtn addTarget:self action:@selector(previewBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-    previewBtn.clipsToBounds = YES;
-    previewBtn.layer.cornerRadius = 6.f;
-    [self.launchActivityTableView addSubview:previewBtn];
+//    self.previewBtn = [[UIButton alloc]initWithFrame:CGRectMake(10 * screenWidth / 320, screenHeight - 54 * screenWidth / 320, screenWidth - 20 * screenWidth / 320, 44 * screenWidth / 320)];
+    self.footBackView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 60 * screenWidth / 320)];
+    self.previewBtn = [[UIButton alloc]initWithFrame:CGRectMake(10 * screenWidth / 320, 10 * screenWidth / 320, screenWidth - 20 * screenWidth / 320, 44 * screenWidth / 320)];
+    [self.previewBtn setTitle:@"邀请好友" forState:UIControlStateNormal];
+    self.previewBtn.backgroundColor = [UIColor colorWithHexString:@"#F59826"];
+    [self.previewBtn addTarget:self action:@selector(previewBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    self.previewBtn.clipsToBounds = YES;
+    self.previewBtn.layer.cornerRadius = 6.f;
+    [self.footBackView addSubview:self.previewBtn];
+//    [self.launchActivityTableView addSubview:self.previewBtn];
 }
 #pragma mark -- 邀请好友
 - (void)previewBtnClick:(UIButton *)btn{
@@ -439,7 +459,7 @@ static CGFloat ImageHeight  = 210.0;
     }else if (section == 1){
         return 1;
     }else if (section == 2){
-        return 3;
+        return 4;
     }else{
         return 1;
     }
@@ -523,14 +543,14 @@ static CGFloat ImageHeight  = 210.0;
                 launchActivityCell.promptLB.text = @"球队成员";
 //                launchActivityCell.contentLB.text = self.detailModel.cityName;
                 break;
-//            case 2:
-//                
-//                launchActivityCell.promptLB.text = @"球队相册";
-//                launchActivityCell.imageV.image = [UIImage imageNamed:@"xc"];
-//                //                launchActivityCell.contentLB.text = [NSString stringWithFormat:@"%td人", self.detailModel.userSum];
-//                
-//                break;
             case 2:
+                
+                launchActivityCell.promptLB.text = @"球队相册";
+                launchActivityCell.imageV.image = [UIImage imageNamed:@"xc"];
+                //                launchActivityCell.contentLB.text = [NSString stringWithFormat:@"%td人", self.detailModel.userSum];
+                
+                break;
+            case 3:
                 launchActivityCell.promptLB.text = @"球队简介";
                 launchActivityCell.imageV.image = [UIImage imageNamed:@"qdjj"];
                 //                launchActivityCell.contentLB.text = self.detailModel.establishTime;
@@ -593,15 +613,15 @@ static CGFloat ImageHeight  = 210.0;
                 [self.navigationController pushViewController:tmVc animated:YES];
             }
                 break;
-//            case 2:
-//            {
-//                JGTeamPhotoViewController* phoVc = [[JGTeamPhotoViewController alloc]init];
-//                phoVc.teamKey = [self.detailDic objectForKey:@"timeKey"];
-//                phoVc.power = self.power;
-//                [self.navigationController pushViewController:phoVc animated:YES];
-//            }
-//                break;
             case 2:
+            {
+                JGTeamPhotoViewController* phoVc = [[JGTeamPhotoViewController alloc]init];
+                phoVc.teamKey = [self.detailDic objectForKey:@"timeKey"];
+                phoVc.power = self.power;
+                [self.navigationController pushViewController:phoVc animated:YES];
+            }
+                break;
+            case 3:
             {
                 JGTeamDeatilWKwebViewController *wkVC = [[JGTeamDeatilWKwebViewController alloc] init];
                 
