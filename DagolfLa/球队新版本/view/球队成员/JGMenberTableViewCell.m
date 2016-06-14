@@ -7,7 +7,7 @@
 //
 
 #import "JGMenberTableViewCell.h"
-
+#import "UITool.h"
 @implementation JGMenberTableViewCell
 
 - (void)awakeFromNib {
@@ -44,18 +44,20 @@
         _almostLabel.font = [UIFont systemFontOfSize:14*screenWidth/375];
         
         
-        _poleLabel = [[UILabel alloc]initWithFrame:CGRectMake(170*screenWidth/375, 30*screenWidth/375, 130*screenWidth/375, 20*screenWidth/375)];
+        _poleLabel = [[UILabel alloc]initWithFrame:CGRectMake(150*screenWidth/375, 30*screenWidth/375, 130*screenWidth/375, 20*screenWidth/375)];
         _poleLabel.textColor = [UIColor blackColor];
         _poleLabel.text = @"平均杆数 102杆";
         [self addSubview:_poleLabel];
         _poleLabel.font = [UIFont systemFontOfSize:14*screenWidth/375];
         
-        _moneyLabel = [[UILabel alloc]initWithFrame:CGRectMake((screenWidth - 60)*screenWidth/375, (self.frame.size.height/3)*screenWidth/375, 60*screenWidth/375, (self.frame.size.height/3)*screenWidth/375)];
+        _moneyLabel = [[UILabel alloc]initWithFrame:CGRectMake((screenWidth - 90)*screenWidth/375, (self.frame.size.height/3)*screenWidth/375, 60*screenWidth/375, (self.frame.size.height/2)*screenWidth/375)];
         _moneyLabel.textColor = [UIColor blackColor];
-        _moneyLabel.textAlignment = NSTextAlignmentLeft;
+        _moneyLabel.textAlignment = NSTextAlignmentCenter;
         
         _moneyLabel.hidden = YES;
         [self addSubview:_moneyLabel];
+        _moneyLabel.layer.cornerRadius = 5*screenWidth/320;
+        _moneyLabel.layer.masksToBounds = YES;
         _moneyLabel.font = [UIFont systemFontOfSize:14*screenWidth/375];
     }
     return self;
@@ -105,25 +107,30 @@
     
     if(model.identity == 1){
         _moneyLabel.text = @"队长";
-        _moneyLabel.textColor = [UIColor redColor];
+        _moneyLabel.textColor = [UIColor whiteColor];
+        _moneyLabel.backgroundColor = [UITool colorWithHexString:@"#fec72e" alpha:1];
     }else if(model.identity == 2){
         _moneyLabel.text = @"会长";
-        _moneyLabel.textColor = [UIColor redColor];
+        _moneyLabel.textColor = [UIColor whiteColor];
+        _moneyLabel.backgroundColor = [UITool colorWithHexString:@"#6cd9a3" alpha:1];
     }else if(model.identity == 3){
         _moneyLabel.text = @"副会长";
-        _moneyLabel.textColor = [UIColor redColor];
+        _moneyLabel.textColor = [UIColor whiteColor];
+        _moneyLabel.backgroundColor = [UITool colorWithHexString:@"#6cd9a3" alpha:1];
     }else if(model.identity == 4){
         _moneyLabel.text = @"球队秘书长";
-        _moneyLabel.textColor = [UIColor redColor];
+        _moneyLabel.textColor = [UIColor whiteColor];
+        _moneyLabel.backgroundColor = [UITool colorWithHexString:@"#6cd9a3" alpha:1];
     }else if(model.identity == 5){
         _moneyLabel.text = @"球队秘书";
-        _moneyLabel.textColor = [UIColor redColor];
+        _moneyLabel.textColor = [UIColor whiteColor];
+        _moneyLabel.backgroundColor = [UITool colorWithHexString:@"#6cd9a3" alpha:1];
     }else if(model.identity == 6){
         _moneyLabel.text = @"干事";
-        _moneyLabel.textColor = [UIColor redColor];
+        _moneyLabel.textColor = [UIColor whiteColor];
+        _moneyLabel.backgroundColor = [UITool colorWithHexString:@"#6cd9a3" alpha:1];
     }else{
-        _moneyLabel.text = @"球员";
-        _moneyLabel.textColor = [UIColor blackColor];
+        _moneyLabel.hidden = YES;
     }
     
 }

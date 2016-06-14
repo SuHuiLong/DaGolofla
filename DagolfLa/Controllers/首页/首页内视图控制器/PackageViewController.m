@@ -97,11 +97,8 @@
     }
     
     [[PostDataRequest sharedInstance] getDataRequest:strUrl success:^(id respondsData) {
-//        NSDictionary* dict = [NSJSONSerialization JSONObjectWithData:respondsData options:NSJSONReadingMutableContainers error:nil];
-        
-        
-        NSURL* url = [NSURL URLWithString:@"http://www.dagolfla.com/app/Packbookserch.html"];
 
+        NSURL* url = [NSURL URLWithString:@"http://www.dagolfla.com/app/Packbookserch.html"];
         //设置页面禁止滚动
         _webView.scrollView.bounces = NO ;
         //设置web占满屏幕
@@ -166,6 +163,19 @@
         
     }
     
+//   分享
+    if ([str rangeOfString:@"dagolfla://share"].location != NSNotFound) {
+        ShareAlert* alert = [[ShareAlert alloc]initMyAlert];
+        alert.frame = CGRectMake(0, ScreenHeight, ScreenWidth, ScreenWidth);
+        [alert setCallBackTitle:^(NSInteger index) {
+            [self shareInfo:index shareUrl:str];
+        }];
+        [UIView animateWithDuration:0.2 animations:^{
+            [alert show];
+        }];
+        return NO;
+    }
+    
     
     //支付
     if ([str rangeOfString:@"dagolfla://pay"].location != NSNotFound){
@@ -178,7 +188,6 @@
                 [_dictCan setObject:arrCan[1] forKey:arrCan[0]];
             }
         }
-        NSLog(@"%@",_dictCan);
         
         UIAlertAction * cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
         }];
@@ -206,26 +215,22 @@
     return YES;
 }
 
-
-
-
-
 #pragma mark -- 支付宝
 - (void)zhifubaoPay{
-    NSLog(@"支付宝支付");
+//    NSLog(@"支付宝支付");
     NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
     [dict setObject:@3 forKey:@"orderType"];
     [dict setObject:[_dictCan objectForKey:@"ordersn"] forKey:@"ordersn"];
     [dict setObject:[_dictCan objectForKey:@"protitle"] forKey:@"name"];//title
     [[JsonHttp jsonHttp]httpRequest:@"pay/doPayByAliPay" JsonKey:@"payInfo" withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
-        NSLog(@"errType == %@", errType);
+//        NSLog(@"errType == %@", errType);
     } completionBlock:^(id data) {
         NSLog(@"%@",[data objectForKey:@"query"]);
         [[AlipaySDK defaultService] payOrder:[data objectForKey:@"query"] fromScheme:@"dagolfla" callback:^(NSDictionary *resultDic) {
             
-            NSLog(@"支付宝=====%@",resultDic[@"resultStatus"]);
+//            NSLog(@"支付宝=====%@",resultDic[@"resultStatus"]);
             if ([resultDic[@"resultStatus"] isEqualToString:@"9000"]) {
-                NSLog(@"陈公");
+//                NSLog(@"陈公");
             } else if ([resultDic[@"resultStatus"] isEqualToString:@"4000"]) {
                 [Helper alertViewWithTitle:@"对不起，您的支付失败了" withBlock:^(UIAlertController *alertView) {
                     [self.navigationController presentViewController:alertView animated:YES completion:nil];
@@ -235,7 +240,7 @@
                     [self.navigationController presentViewController:alertView animated:YES completion:nil];
                 }];
             } else if ([resultDic[@"resultStatus"] isEqualToString:@"6001"]) {
-                NSLog(@"取消支付");
+//                NSLog(@"取消支付");
             } else {
                 [Helper alertViewWithTitle:@"对不起，您的支付失败了" withBlock:^(UIAlertController *alertView) {
                     [self.navigationController presentViewController:alertView animated:YES completion:nil];
@@ -247,7 +252,7 @@
 
 #pragma mark -- 微信支付
 - (void)weChatPay{
-    NSLog(@"微信支付");
+//    NSLog(@"微信支付");
     
     NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
     [dict setObject:@3 forKey:@"orderType"];
@@ -255,7 +260,7 @@
     [dict setObject:[_dictCan objectForKey:@"protitle"] forKey:@"name"];
     
     [[JsonHttp jsonHttp]httpRequest:@"pay/doPayWeiXin" JsonKey:@"payInfo" withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
-        NSLog(@"errType == %@", errType);
+//        NSLog(@"errType == %@", errType);
     } completionBlock:^(id data) {
         NSDictionary *dict = [data objectForKey:@"pay"];
         //微信
@@ -275,9 +280,60 @@
 }
 
 
+#pragma mark --分享
+-(void)shareInfo:(NSInteger)index shareUrl:(NSString *)strUrl
+{
+    NSArray* array1 = [strUrl componentsSeparatedByString:@"fromurl="];
+    NSArray* array2 = [array1[1] componentsSeparatedByString:@"&"];
+    NSString*  shareUrl = array2[0];
+    NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
+    for (int i = 1; i < array2.count; i ++) {
+        NSArray* array3 = [array2[i] componentsSeparatedByString:@"="];
+        [dict setObject:array3[1] forKey:array3[0]];
+    }
+    
+    [UMSocialData defaultData].extConfig.title=[NSString stringWithFormat:@"%@",[dict objectForKey:@"title"]];
+    NSData* fiData = [NSData dataWithContentsOfURL:[NSURL URLWithString:[dict objectForKey:@"shareimg"]]];
+
+    if(index==0)
+    {
+        //微信
+        [UMSocialWechatHandler setWXAppId:@"wxdcdc4e20544ed728" appSecret:@"fdc75aae5a98f2aa0f62ef8cba2b08e9" url:shareUrl];
+        [UMSocialConfig hiddenNotInstallPlatforms:@[UMShareToWechatSession,UMShareToWechatTimeline,UMShareToSina]];
+        [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatSession] content:[dict objectForKey:@"title"] image:fiData location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
+            if (response.responseCode == UMSResponseCodeSuccess) {
+                
+            }
+        }];
+    }
+    else if (index==1)
+    {
+        //朋友圈
+        [UMSocialWechatHandler setWXAppId:@"wxdcdc4e20544ed728" appSecret:@"fdc75aae5a98f2aa0f62ef8cba2b08e9" url:shareUrl];
+        [UMSocialConfig hiddenNotInstallPlatforms:@[UMShareToWechatSession,UMShareToWechatTimeline,UMShareToSina]];
+        [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatTimeline] content:[dict objectForKey:@"title"] image:fiData location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
+            if (response.responseCode == UMSResponseCodeSuccess) {
+                ////NSLog(@"分享成功！");
+            }
+        }];
+        
+    }
+    else
+    {
+        
+        UMSocialData *data = [UMSocialData defaultData];
+        data.shareImage = fiData;
+        data.shareText = [NSString stringWithFormat:@"%@%@",[dict objectForKey:@"title"],shareUrl];
+        [[UMSocialControllerService defaultControllerService] setSocialData:data];
+        //2.设置分享平台
+        [UMSocialSnsPlatformManager getSocialPlatformWithName:UMShareToSina].snsClickHandler(self,[UMSocialControllerService defaultControllerService],YES);
+
+    }
+}
 
 
 
+#pragma mark --webview代理方法
 -(void)webViewDidFinishLoad:(UIWebView *)webView
 {
     UIImageView *statusView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 20, ScreenWidth, 20)];
