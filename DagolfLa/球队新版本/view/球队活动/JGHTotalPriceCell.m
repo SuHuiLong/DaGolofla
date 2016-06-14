@@ -21,8 +21,8 @@
     // Configure the view for the selected state
 }
 
-- (void)configTotalPrice:(NSInteger)total{
-    self.totalPrice.text = [NSString stringWithFormat:@"¥%ld", (long)total];
+- (void)configTotalPrice:(float)total{
+    self.totalPrice.text = [NSString stringWithFormat:@"¥%.2f", total];
 }
 
 @end

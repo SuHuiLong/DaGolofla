@@ -13,7 +13,6 @@
 #import "JGHLaunchActivityViewController.h"
 #import "JGTableViewCell.h"
 #import "JGHConcentTextViewController.h"
-#import "JGHTeamActivityImageCell.h"
 #import "DateTimeViewController.h"
 #import "TeamAreaViewController.h"
 #import "JGTeamActibityNameViewController.h"
@@ -28,7 +27,7 @@ static NSString *const JGHTeamContactCellIdentifier = @"JGHTeamContactTableViewC
 static CGFloat ImageHeight  = 210.0;
 
 
-@interface JGPreviewTeamViewController ()<UITableViewDelegate, UITableViewDataSource, JGHTeamActivityImageCellDelegate, JGHConcentTextViewControllerDelegate, NSURLConnectionDownloadDelegate, JGCostSetViewControllerDelegate>
+@interface JGPreviewTeamViewController ()<UITableViewDelegate, UITableViewDataSource, JGHConcentTextViewControllerDelegate, NSURLConnectionDownloadDelegate, JGCostSetViewControllerDelegate>
 {
     //、、、、、、、
     NSArray *_titleArray;//标题数组

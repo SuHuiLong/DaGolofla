@@ -348,4 +348,10 @@
     return str;
 }
 
++ (NSNumber *)returnNumberForString:(NSString *)string{
+    NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
+    [numberFormatter setNumberStyle:NSNumberFormatterDecimalStyle];
+    return [numberFormatter numberFromString:string];
+}
+
 @end

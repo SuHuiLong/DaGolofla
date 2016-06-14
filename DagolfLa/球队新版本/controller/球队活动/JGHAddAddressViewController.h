@@ -18,6 +18,7 @@
 
 @property (nonatomic, weak)id <JGHAddAddressViewControllerDelegate> delegate;
 
+@property (weak, nonatomic) IBOutlet UIButton *commitBtn;
 
 - (IBAction)commitBtn:(UIButton *)sender;
 //详细地址textView

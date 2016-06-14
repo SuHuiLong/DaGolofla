@@ -53,10 +53,9 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
 
 @property (nonatomic, strong)UIButton *cellClickBtn;//拦截cell点击事件
 
-@property (nonatomic, assign)NSInteger amountPayable;//应付金额
-@property (nonatomic, assign)NSInteger realPayPrice;//实付金额
-@property (nonatomic, assign)NSInteger subsidiesPrice;//补贴金额
-
+@property (nonatomic, assign)float amountPayable;//应付金额
+@property (nonatomic, assign)float realPayPrice;//实付金额
+@property (nonatomic, assign)float subsidiesPrice;//补贴金额
 
 @end
 
@@ -79,7 +78,7 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationItem.title = @"报名缴费";
-//    self.model = [[JGTeamAcitivtyModel alloc]init];
+    self.view.backgroundColor = [UIColor colorWithHexString:BG_color];
     self.applyArray = [NSMutableArray array];
     self.info = [NSMutableDictionary dictionary];
     self.titleArray = @[@"活动名称", @"活动地址", @"活动日期", @"活动费用", @"嘉宾费用"];
@@ -94,7 +93,7 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
         [applyDict setObject:_modelss.timeKey forKey:@"activityKey"];//球队活动id
         [applyDict setObject:@1 forKey:@"type"];//"是否是球队成员 0: 不是  1：是
         
-        [applyDict setObject:[NSString stringWithFormat:@"%ld", (long)_modelss.memberPrice] forKey:@"payMoney"];//实际付款金额
+        [applyDict setObject:[NSString stringWithFormat:@"%.2f", [_modelss.memberPrice floatValue]] forKey:@"payMoney"];//实际付款金额
         
         [applyDict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:userID] forKey:@"userKey"];//报名用户key , 没有则是嘉宾
         
@@ -150,6 +149,7 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
     
     UINib *totalPriceCellNib = [UINib nibWithNibName:@"JGHTotalPriceCell" bundle: [NSBundle mainBundle]];
     [self.teamApplyTableView registerNib:totalPriceCellNib forCellReuseIdentifier:JGHTotalPriceCellIdentifier];
+    self.teamApplyTableView.backgroundColor = [UIColor colorWithHexString:BG_color];
 }
 #pragma mark -- tableView 代理
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
@@ -228,20 +228,23 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
         if (section == 2) {
             self.cellClickBtn.frame = CGRectMake(0, 0, screenWidth, activityNameCell.frame.size.height);
             [self.cellClickBtn addTarget:self action:@selector(cellClickBtn:) forControlEvents:UIControlEventTouchUpInside];
-            [activityNameCell congiftitles:@"发票信息："];
+            [activityNameCell congiftitles:@"发票信息"];
             [activityNameCell.contentView addSubview:self.cellClickBtn];
             activityNameCell.accessoryType = UITableViewCellSelectionStyleBlue;
-//            if ([_invoiceKey isEqual:[NSNull class]]) {
             [activityNameCell configInvoiceIfo:_invoiceName];
-//            }
         }else{
             activityNameCell.selectionStyle = UITableViewCellSelectionStyleNone;
-            [activityNameCell congiftitles:@"实付金额："];
-            [activityNameCell congifContact:[NSString stringWithFormat:@"%ld", (long)_realPayPrice] andNote:[NSString stringWithFormat:@"%ld", (long)_subsidiesPrice]];
+            [activityNameCell congiftitles:@"实付金额"];
+            [activityNameCell congifContact:[NSString stringWithFormat:@"%.2f", _realPayPrice] andNote:[NSString stringWithFormat:@"%.2f", _subsidiesPrice]];
         }
         
         return (UIView *)activityNameCell;
     }
+}
+- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
+    UIView *footView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, 10)];
+    footView.backgroundColor = [UIColor colorWithHexString:BG_color];
+    return footView;
 }
 #pragma mark -- 发票点击事件
 - (void)cellClickBtn:(UIButton *)btn{
@@ -305,8 +308,8 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
     addTeamGuestCtrl.delegate = self;
     
     addTeamGuestCtrl.applyArray = self.applyArray;
-    addTeamGuestCtrl.guestPrice = self.modelss.guestPrice;
-    addTeamGuestCtrl.memberPrice = self.modelss.memberPrice;
+    addTeamGuestCtrl.guestPrice = [self.modelss.guestPrice floatValue];
+    addTeamGuestCtrl.memberPrice = [self.modelss.memberPrice floatValue];
     [self.navigationController pushViewController:addTeamGuestCtrl animated:YES];
 }
 - (void)didReceiveMemoryWarning {
@@ -354,17 +357,19 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
 - (void)countAmountPayable{
     _w = 0;
     _z = 0;
-    _subsidiesPrice = 0;
-    _amountPayable = 0;
-    _realPayPrice = 0;
+    _subsidiesPrice = 0.0;
+    _amountPayable = 0.0;
+    _realPayPrice = 0.0;
     for (int i=0; i<_applyArray.count; i++) {
         NSDictionary *dict = [NSDictionary dictionary];
         dict = _applyArray[i];
         if ([[dict objectForKey:@"select"]integerValue] == 1) {
-            _amountPayable += [[dict objectForKey:@"payMoney"] integerValue];
+            NSLog(@"%@", [dict objectForKey:@"payMoney"]);
+            float value = [[dict objectForKey:@"payMoney"] floatValue];
+            _amountPayable += value;
             
             if ([[dict objectForKey:@"type"]integerValue] == 1) {
-                _subsidiesPrice += _modelss.subsidyPrice;
+                _subsidiesPrice += [_modelss.subsidyPrice floatValue];
             }
         }
     }

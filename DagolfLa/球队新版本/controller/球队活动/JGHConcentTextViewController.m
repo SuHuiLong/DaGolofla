@@ -16,6 +16,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.view.backgroundColor = [UIColor colorWithHexString:BG_color];
     self.navigationItem.title = self.itemText;
     
     self.saveBtn.layer.masksToBounds = YES;

@@ -12,7 +12,6 @@
 #import "JGHLaunchActivityViewController.h"
 #import "JGTableViewCell.h"
 #import "JGHConcentTextViewController.h"
-#import "JGHTeamActivityImageCell.h"
 #import "DateTimeViewController.h"
 #import "TeamAreaViewController.h"
 #import "JGImageAndLabelAndLabelTableViewCell.h"
