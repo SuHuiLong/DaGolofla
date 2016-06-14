@@ -158,6 +158,7 @@
 }
 - (void)getDataRequest:(NSString *)port success:(SuccessBlockType)successBlock failed:(FailedBlockType)faliedBlock{
     
+    _httpManager.responseSerializer.acceptableContentTypes =  [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html", nil];//设置相应内容类型
     [_httpManager GET:port parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (successBlock) {
             successBlock(responseObject);

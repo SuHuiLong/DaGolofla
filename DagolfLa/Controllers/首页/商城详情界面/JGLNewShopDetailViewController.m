@@ -143,6 +143,19 @@
     }
     
 
+    //   分享
+    if ([url rangeOfString:@"dagolfla://share"].location != NSNotFound) {
+        ShareAlert* alert = [[ShareAlert alloc]initMyAlert];
+        alert.frame = CGRectMake(0, ScreenHeight, ScreenWidth, ScreenWidth);
+        [alert setCallBackTitle:^(NSInteger index) {
+            [self shareInfo:index shareUrl:url];
+        }];
+        [UIView animateWithDuration:0.2 animations:^{
+            [alert show];
+        }];
+        return ;
+    }
+
     if ([url rangeOfString:@"dagolfla://pay"].location != NSNotFound){
         _payUrl = url;
         NSArray *arrayUrl = [_payUrl componentsSeparatedByString:@"?"];
@@ -245,6 +258,59 @@
         }
     }];
 }
+
+#pragma mark --分享
+-(void)shareInfo:(NSInteger)index shareUrl:(NSString *)strUrl
+{
+    NSArray* array1 = [strUrl componentsSeparatedByString:@"fromurl="];
+    NSArray* array2 = [array1[1] componentsSeparatedByString:@"&"];
+    NSString*  shareUrl = array2[0];
+    NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
+    for (int i = 1; i < array2.count; i ++) {
+        NSArray* array3 = [array2[i] componentsSeparatedByString:@"="];
+        [dict setObject:array3[1] forKey:array3[0]];
+    }
+    
+    [UMSocialData defaultData].extConfig.title=[NSString stringWithFormat:@"%@",[dict objectForKey:@"title"]];
+    NSData* fiData = [NSData dataWithContentsOfURL:[NSURL URLWithString:[dict objectForKey:@"shareimg"]]];
+    
+    if(index==0)
+    {
+        //微信
+        [UMSocialWechatHandler setWXAppId:@"wxdcdc4e20544ed728" appSecret:@"fdc75aae5a98f2aa0f62ef8cba2b08e9" url:shareUrl];
+        [UMSocialConfig hiddenNotInstallPlatforms:@[UMShareToWechatSession,UMShareToWechatTimeline,UMShareToSina]];
+        [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatSession] content:[dict objectForKey:@"title"] image:fiData location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
+            if (response.responseCode == UMSResponseCodeSuccess) {
+                
+            }
+        }];
+    }
+    else if (index==1)
+    {
+        //朋友圈
+        [UMSocialWechatHandler setWXAppId:@"wxdcdc4e20544ed728" appSecret:@"fdc75aae5a98f2aa0f62ef8cba2b08e9" url:shareUrl];
+        [UMSocialConfig hiddenNotInstallPlatforms:@[UMShareToWechatSession,UMShareToWechatTimeline,UMShareToSina]];
+        [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatTimeline] content:[dict objectForKey:@"title"] image:fiData location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
+            if (response.responseCode == UMSResponseCodeSuccess) {
+                ////NSLog(@"分享成功！");
+            }
+        }];
+        
+    }
+    else
+    {
+        
+        UMSocialData *data = [UMSocialData defaultData];
+        data.shareImage = fiData;
+        data.shareText = [NSString stringWithFormat:@"%@%@",[dict objectForKey:@"title"],shareUrl];
+        [[UMSocialControllerService defaultControllerService] setSocialData:data];
+        //2.设置分享平台
+        [UMSocialSnsPlatformManager getSocialPlatformWithName:UMShareToSina].snsClickHandler(self,[UMSocialControllerService defaultControllerService],YES);
+        
+    }
+}
+
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

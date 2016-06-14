@@ -18,6 +18,7 @@
 #import "JGLTeamMemberModel.h"
 
 #import "ChatDetailViewController.h"
+#import "JGTeamMemberManager.h"
 
 @interface JGTeamMemberController ()<UITableViewDelegate, UITableViewDataSource>
 {
@@ -25,6 +26,9 @@
     NSInteger _page;
     NSMutableArray* _dataArray;
 }
+
+@property (strong, nonatomic)NSMutableArray *keyArray;
+@property (strong, nonatomic)NSMutableArray *listArray;
 @end
 
 @implementation JGTeamMemberController
@@ -33,7 +37,8 @@
     [super viewDidLoad];
     
     self.navigationItem.title = @"成员列表";
-    
+    _keyArray = [[NSMutableArray alloc]init];
+    _listArray = [[NSMutableArray alloc]init];
     _dataArray = [[NSMutableArray alloc]init];
 //    UIBarButtonItem* rightBtn = [[UIBarButtonItem alloc]initWithTitle:@"管理" style:UIBarButtonItemStylePlain target:self action:@selector(manageClick)];
 //    rightBtn.tintColor = [UIColor whiteColor];
@@ -47,7 +52,7 @@
 
 -(void)uiConfig
 {
-    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight)];
+    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight-15*screenWidth/375)];
     _tableView.delegate = self;
     _tableView.dataSource = self;
     [self.view addSubview:_tableView];
@@ -88,6 +93,19 @@
                 [model setValuesForKeysWithDictionary:dataDic];
                 [_dataArray addObject:model];
             }
+            
+            self.listArray = [[NSMutableArray alloc]initWithArray:[JGTeamMemberManager archiveNumbers:_dataArray]];
+            
+            _keyArray = [[NSMutableArray alloc]initWithObjects:@"A",@"B",@"C",@"D",@"E",@"F",@"G",@"H",@"I",@"J",@"K",@"L",@"M",@"N",@"O",@"P",@"Q",@"R",@"S",@"T",@"U",@"V",@"W",@"X",@"Y",@"Z",@"#", nil];
+            
+            for (int i = (int)self.listArray.count-1; i>=0; i--) {
+                if ([self.listArray[i] count] == 0) {
+                    [self.keyArray removeObjectAtIndex:i];
+                    [self.listArray removeObjectAtIndex:i];
+                }
+            }
+            
+            
             _page++;
             [_tableView reloadData];
         }else {
@@ -121,11 +139,22 @@
 {
     return 50*ScreenWidth/375;
 }
+//每个分区内的row个数
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return _dataArray.count;
+    return [self.listArray[section] count];
 }
-
+//
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+    return [self.listArray count];
+}
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
+    if ([self.listArray[section] count] == 0) {
+        return nil;
+    }else{
+        return self.keyArray[section];
+    }
+}
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     JGMenberTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"JGMenberTableViewCell" forIndexPath:indexPath];
@@ -133,7 +162,10 @@
 //    [cell showData:_dataArray[indexPath.row]];
     cell.iconImgv.layer.masksToBounds = YES;
     cell.iconImgv.layer.cornerRadius = 8*screenWidth/375;
-    [cell showData:_dataArray[indexPath.row] andPower:_power];
+    if (_listArray.count != 0) {
+        [cell showData:_listArray[indexPath.section][indexPath.row] andPower:_power];
+    }
+    
     return cell;
 }
 
@@ -142,7 +174,7 @@
     if ([_power rangeOfString:@"1002"].location != NSNotFound) {
         if (_isEdit) {
             
-            JGLTeamMemberModel *model = _dataArray[indexPath.row];
+            JGLTeamMemberModel *model = _listArray[indexPath.section][indexPath.row];
             NSInteger key = [model.userKey integerValue];
             NSString *name = model.userName;
             NSString *mobie = model.mobile;
@@ -150,7 +182,7 @@
             [self.navigationController popViewControllerAnimated:YES];
         }else{
             if (_teamMembers == 1) {
-                JGLTeamMemberModel *model = _dataArray[indexPath.row];
+                JGLTeamMemberModel *model = _listArray[indexPath.section][indexPath.row];
                 ChatDetailViewController *vc = [[ChatDetailViewController alloc] init];
                 //设置聊天类型
                 vc.conversationType = ConversationType_PRIVATE;
@@ -165,7 +197,7 @@
                 [self.navigationController pushViewController:vc animated:YES];
             }else if (_teamManagement == 1){
                 JGMemManageController* menVc = [[JGMemManageController alloc]init];
-                menVc.model = _dataArray[indexPath.row];
+                menVc.model = _listArray[indexPath.section][indexPath.row];
                 [self.navigationController pushViewController:menVc animated:YES];
             }
         }
@@ -173,5 +205,34 @@
         
     }    
 }
+
+
+
+// 右侧索引
+- (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView {
+    //  改变索引颜色
+    _tableView.sectionIndexColor = [UIColor colorWithRed:0.36f green:0.66f blue:0.31f alpha:1.00f];;
+    NSInteger number = [_listArray count];
+    return [self.keyArray subarrayWithRange:NSMakeRange(0, number)];
+}
+
+//点击索引跳转到相应位置
+- (NSInteger)tableView:(UITableView *)tableView sectionForSectionIndexTitle:(NSString *)title atIndex:(NSInteger)index
+{
+    
+    NSIndexPath *selectIndexPath = [NSIndexPath indexPathForRow:0 inSection:index + 1];
+    
+    if (![_listArray[index] count]) {
+        
+        return 0;
+        
+    }else{
+        
+        [tableView scrollToRowAtIndexPath:selectIndexPath atScrollPosition:UITableViewScrollPositionNone animated:YES];
+        
+        return index + 1;
+    }
+}
+
 
 @end
