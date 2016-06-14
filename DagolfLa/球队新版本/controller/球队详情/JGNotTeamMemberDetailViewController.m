@@ -216,18 +216,23 @@ static CGFloat ImageHeight  = 210.0;
 
 #pragma mark -- 咨询
 - (void)askBtnClick:(UIButton *)btn{
-    ChatDetailViewController *vc = [[ChatDetailViewController alloc] init];
-    //设置聊天类型
-    vc.conversationType = ConversationType_PRIVATE;
-    //设置对方的id
-    vc.targetId = [NSString stringWithFormat:@"%@",[self.detailDic objectForKey:@"answerKey"]];
-    //设置对方的名字
-    //    vc.userName = model.conversationTitle;
-    //设置聊天标题
-    vc.title = [self.detailDic objectForKey:@"answerName"];
-    //设置不现实自己的名称  NO表示不现实
-    vc.displayUserNameInCell = NO;
-    [self.navigationController pushViewController:vc animated:YES];
+    
+    
+    NSMutableString * str=[[NSMutableString alloc] initWithFormat:@"telprompt://%@", [self.detailDic objectForKey:@"userMobile"]];
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:str]];
+    
+//    ChatDetailViewController *vc = [[ChatDetailViewController alloc] init];
+//    //设置聊天类型
+//    vc.conversationType = ConversationType_PRIVATE;
+//    //设置对方的id
+//    vc.targetId = [NSString stringWithFormat:@"%@",[self.detailDic objectForKey:@"answerKey"]];
+//    //设置对方的名字
+//    //    vc.userName = model.conversationTitle;
+//    //设置聊天标题
+//    vc.title = [self.detailDic objectForKey:@"answerName"];
+//    //设置不现实自己的名称  NO表示不现实
+//    vc.displayUserNameInCell = NO;
+//    [self.navigationController pushViewController:vc animated:YES];
 }
 
 #pragma mark -- 改变图片位置 放大缩小
