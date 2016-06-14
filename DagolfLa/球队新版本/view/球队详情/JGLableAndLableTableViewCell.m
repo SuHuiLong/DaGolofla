@@ -15,11 +15,11 @@
     if (self) {
  
         
-        self.promptLB = [[UILabel alloc] initWithFrame:CGRectMake(10 * screenWidth / 320, 0, 100 * screenWidth / 320, 30 * screenWidth / 320)];
+        self.promptLB = [[UILabel alloc] initWithFrame:CGRectMake(20 * screenWidth / 320, 15 * screenWidth / 320, 100 * screenWidth / 320, 15 * screenWidth / 320)];
         self.promptLB.font = [UIFont systemFontOfSize:15 * screenWidth / 320];
         [self.contentView addSubview:self.promptLB];
         
-        self.contentLB = [[UILabel alloc] initWithFrame:CGRectMake(120  * screenWidth / 320, 0, screenWidth - 130  * screenWidth / 320, 30 * screenWidth / 320)];
+        self.contentLB = [[UILabel alloc] initWithFrame:CGRectMake(120  * screenWidth / 320, 15 * screenWidth / 320, screenWidth - 130  * screenWidth / 320, 15 * screenWidth / 320)];
         self.contentLB.font = [UIFont systemFontOfSize:15 * screenWidth / 320];
         self.contentLB.textColor = [UIColor lightGrayColor];
         [self.contentView addSubview:self.contentLB];

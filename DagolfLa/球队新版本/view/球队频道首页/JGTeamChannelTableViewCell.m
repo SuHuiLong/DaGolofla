@@ -22,7 +22,7 @@
         self.iconImageV.clipsToBounds = YES;
         [self.contentView addSubview:self.iconImageV];
         
-        self.nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(90 * screenWidth / 320, 9 * screenWidth / 320, screenWidth - 100 * screenWidth / 320, 20 * screenWidth / 320)];
+        self.nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(90 * screenWidth / 320, 9 * screenWidth / 320, screenWidth - 90 * screenWidth / 320, 20 * screenWidth / 320)];
         self.nameLabel.font = [UIFont systemFontOfSize:15 * screenWidth / 320];
         [self.contentView addSubview:self.nameLabel];
         
@@ -38,6 +38,7 @@
         
         self.describLabel = [[UILabel alloc] initWithFrame:CGRectMake(90 * screenWidth / 320, 50 * screenWidth / 320, screenWidth - 90 * screenWidth / 320, 20 * screenWidth / 320)];
         self.describLabel.font = [UIFont systemFontOfSize:12 * screenWidth / 320];
+        self.describLabel.textColor = [UIColor lightGrayColor];
         [self.contentView addSubview:self.describLabel];
         
         UIView *lightGrayView = [[UIView alloc] initWithFrame:CGRectMake(0, 78 * screenWidth / 320, screenWidth, 1 * screenWidth / 320)];

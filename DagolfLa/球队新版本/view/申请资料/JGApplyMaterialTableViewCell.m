@@ -14,11 +14,11 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         
-        self.labell = [[UILabel alloc] initWithFrame:CGRectMake(10 * screenWidth / 320, 0, 110 * screenWidth / 320, 30 * screenWidth / 320)];
+        self.labell = [[UILabel alloc] initWithFrame:CGRectMake(20 * screenWidth / 320, 15 * screenWidth / 320, 110 * screenWidth / 320, 15 * screenWidth / 320)];
         self.labell.font = [UIFont systemFontOfSize:15 * screenWidth / 320];
         [self addSubview:self.labell];
         
-        self.textFD = [[UITextField alloc] initWithFrame:CGRectMake(110 * screenWidth / 320, 0, screenWidth - 130 * screenWidth / 320, 30 * screenWidth / 320)];
+        self.textFD = [[UITextField alloc] initWithFrame:CGRectMake(110 * screenWidth / 320, 15 * screenWidth / 320, screenWidth - 130 * screenWidth / 320, 15 * screenWidth / 320)];
         self.textFD.font = [UIFont systemFontOfSize:15 * screenWidth / 320];
         [self addSubview:self.textFD];
         self.textFD.textAlignment = 2;
