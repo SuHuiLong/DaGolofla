@@ -129,7 +129,7 @@ static CGFloat ImageHeight  = 210.0;
     } completionBlock:^(id data) {
         
         self.state = [[[data objectForKey:@"team"] objectForKey:@"state"] integerValue];
-           self.power = [[data objectForKey:@"teamMember"] objectForKey:@"power"];
+           self.power = [[data objectForKey:@"teamMember" ] objectForKey:@"power"];
         [[NSUserDefaults standardUserDefaults] setObject:self.power forKey:@"power"];
         [[NSUserDefaults standardUserDefaults]  synchronize];
         self.memBerDic = [data objectForKey:@"teamMember"];
@@ -156,7 +156,7 @@ static CGFloat ImageHeight  = 210.0;
         self.imgProfile.contentMode = UIViewContentModeScaleAspectFill;
         self.imgProfile.layer.masksToBounds = YES;
         
-        self.launchActivityTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight - 44) style:(UITableViewStylePlain)];
+        self.launchActivityTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight) style:(UITableViewStylePlain)];
         [self.launchActivityTableView registerClass:[JGImageAndLabelAndLabelTableViewCell class] forCellReuseIdentifier:@"lbVSlb"];
         [self.launchActivityTableView registerClass:[JGDisplayInfoTableViewCell class] forCellReuseIdentifier:@"Display"];
         
@@ -237,18 +237,12 @@ static CGFloat ImageHeight  = 210.0;
     self.headPortraitBtn.imageView.contentMode = UIViewContentModeScaleAspectFill;
     [self.imgProfile addSubview:self.headPortraitBtn];
     [self.titleView addSubview:self.titleField];
+
     
-    //地址
-    //    self.addressBtn = [[UIButton alloc]initWithFrame:CGRectMake(70, 170, screenWidth-70, 30)];
-    //    self.addressBtn.tag = 333;
-    //    [self.addressBtn setTitle:@"请添加地址" forState:UIControlStateNormal];
-    //    self.addressBtn.titleLabel.font = [UIFont systemFontOfSize:13];
-    //    self.addressBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-    //    [self.addressBtn addTarget:self action:@selector(replaceWithPicture:) forControlEvents:UIControlEventTouchUpInside];
-    //    [self.imgProfile addSubview:self.addressBtn];
-    
-//    _titleArray = @[@[], @[@"活动日期", @"开球时间", @"报名截止时间"], @[@"费用说明", @"人员限制", @"活动说明"], @[@"联系电话"]];
-    
+
+//    self.view.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];
+    self.view.backgroundColor = [UIColor whiteColor];
+    self.launchActivityTableView.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];;
     [self createPreviewBtn];
 }
 
@@ -355,11 +349,13 @@ static CGFloat ImageHeight  = 210.0;
 }
 #pragma mark -- 邀请好友BUTTON
 - (void)createPreviewBtn{
-    UIButton *previewBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, screenHeight -44, screenWidth, 44)];
+    UIButton *previewBtn = [[UIButton alloc]initWithFrame:CGRectMake(10 * screenWidth / 320, screenHeight - 54 * screenWidth / 320, screenWidth - 20 * screenWidth / 320, 44 * screenWidth / 320)];
     [previewBtn setTitle:@"邀请好友" forState:UIControlStateNormal];
     previewBtn.backgroundColor = [UIColor colorWithHexString:@"#F59826"];
     [previewBtn addTarget:self action:@selector(previewBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:previewBtn];
+    previewBtn.clipsToBounds = YES;
+    previewBtn.layer.cornerRadius = 6.f;
+    [self.launchActivityTableView addSubview:previewBtn];
 }
 #pragma mark -- 邀请好友
 - (void)previewBtnClick:(UIButton *)btn{
@@ -483,6 +479,13 @@ static CGFloat ImageHeight  = 210.0;
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     return 10;
 }
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
+    UIView *view = [[UIView alloc] init];
+    view.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];
+    return view;
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     NSString *windowReuseIdentifier = @"SectionOneCell";
     if (indexPath.section == 0) {

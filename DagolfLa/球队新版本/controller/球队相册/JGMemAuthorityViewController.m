@@ -21,7 +21,7 @@
     
     NSInteger _chooseID;
     
-    BOOL _chooseJob[5];
+    BOOL _chooseJob[3];
     NSMutableArray* _arrayNum;//存储power的数据
     
     NSInteger _identity;
@@ -72,17 +72,6 @@
             [self.memberArray addObject:@"0"];
         }
         
-        if ([str containsString:@"1004"]){
-            [self.memberArray addObject:@"1"];
-        }else{
-            [self.memberArray addObject:@"0"];
-        }
-        
-        if ([str containsString:@"1005"]){
-            [self.memberArray addObject:@"1"];
-        }else{
-            [self.memberArray addObject:@"0"];
-        }
         
         _identity = [[[data objectForKey:@"member"] objectForKey:@"identity"] integerValue];
         _strPower = [[data objectForKey:@"member"] objectForKey:@"power"];
@@ -95,9 +84,9 @@
     
     self.title = @"权限设置";
     
-    _arrayTitle = @[@[@"队长",@"会长",@"副会长",@"队长秘书长",@"球队秘书",@"干事"],@[@"活动管理",@"权限管理",@"账户管理", @"咨询管理", @"球队管理"]];
+    _arrayTitle = @[@[@"队长",@"会长",@"副会长",@"队长秘书长",@"球队秘书",@"干事"],@[@"活动管理",@"权限管理",@"资金管理"]];
     _arraySection = @[@"身份设置",@"职责设置"];
-    _arrayDetail = @[@"活动发布和对活动成员的管理",@"设置队员身份和职责",@"对内收支情况的管理",@"回复非球队成员的咨询",@""];
+    _arrayDetail = @[@"活动发布和对活动成员的管理",@"设置队员身份和职责",@"对内收支情况的管理"];
     _chooseID = 666;
     _arrayNum = [[NSMutableArray alloc]init];
     [self uiConfig];
@@ -120,15 +109,11 @@
     if (_chooseJob[2] == 1) {
         [_arrayNum addObject:@1003];
     }
-    if (_chooseJob[3] == 1) {
-        [_arrayNum addObject:@1004];
-    }
-    if (_chooseJob[4] == 1) {
-        [_arrayNum addObject:@1005];
-    }
+
     //把数组转换成字符串
     NSString *strNum=[_arrayNum componentsJoinedByString:@","];
-    [dict setObject:strNum forKey:@"power"];
+    NSString* strPower = [NSString stringWithFormat:@"%@,1004,1005",strNum];
+    [dict setObject:strPower forKey:@"power"];
     [dict setObject:_memberKey forKey:@"memberKey"];
     [dict setObject:[NSNumber numberWithInteger:_chooseID] forKey:@"identity"];
 
@@ -185,7 +170,7 @@
     }
     else
     {
-        return 6;
+        return 4;
     }
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
@@ -266,55 +251,7 @@
                     }
                 }
                 else{
-                
-//                if ([_strPower rangeOfString:@"1001"].location != NSNotFound) {
-//                    if (indexPath.row == 1) {
-//                        cell.iconImgv.image = [UIImage imageNamed:@"kuang_xz"];
-//                    }
-//                    else
-//                    {
-//                        cell.iconImgv.image = [UIImage imageNamed:@"kuang"];
-//                    }
-//                }
-//                if ([_strPower rangeOfString:@"1002"].location != NSNotFound)
-//                {
-//                    if (indexPath.row == 2) {
-//                        cell.iconImgv.image = [UIImage imageNamed:@"kuang_xz"];
-//                    }
-//                    else
-//                    {
-//                        cell.iconImgv.image = [UIImage imageNamed:@"kuang"];
-//                    }
-//                }
-//                if ([_strPower rangeOfString:@"1003"].location != NSNotFound)
-//                {
-//                    if (indexPath.row == 3) {
-//                        cell.iconImgv.image = [UIImage imageNamed:@"kuang_xz"];
-//                    }
-//                    else
-//                    {
-//                        cell.iconImgv.image = [UIImage imageNamed:@"kuang"];
-//                    }
-//                }
-//                if ([_strPower rangeOfString:@"1004"].location != NSNotFound)
-//                {
-//                    if (indexPath.row == 4) {
-//                        cell.iconImgv.image = [UIImage imageNamed:@"kuang_xz"];
-//                    }
-//                    else
-//                    {
-//                        cell.iconImgv.image = [UIImage imageNamed:@"kuang"];
-//                    }
-//                }
-//                if ([_strPower rangeOfString:@"1005"].location != NSNotFound)
-//                {
-//                    if (indexPath.row == 5) {
-//                        cell.iconImgv.image = [UIImage imageNamed:@"kuang_xz"];
-//                    }
-//                    else
-//                    {
-//                        cell.iconImgv.image = [UIImage imageNamed:@"kuang"];
-//                    }
+
                 }
 //
 //
@@ -362,15 +299,5 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

@@ -26,7 +26,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="张先生：19200000000" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N38-q2-5AT">
-                        <rect key="frame" x="109" y="11" width="211" height="21"/>
+                        <rect key="frame" x="131" y="11" width="211" height="21"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="211" id="iMU-e9-dzz"/>
                         </constraints>
@@ -38,7 +38,7 @@
                 <constraints>
                     <constraint firstItem="toa-RE-lnI" firstAttribute="firstBaseline" secondItem="N38-q2-5AT" secondAttribute="firstBaseline" id="37k-d8-0yZ"/>
                     <constraint firstItem="toa-RE-lnI" firstAttribute="baseline" secondItem="N38-q2-5AT" secondAttribute="baseline" id="HPt-1e-Kz1"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="N38-q2-5AT" secondAttribute="trailing" constant="47" id="TKs-9q-0UC"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="N38-q2-5AT" secondAttribute="trailing" constant="25" id="TKs-9q-0UC"/>
                     <constraint firstItem="toa-RE-lnI" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="3" id="o3D-ZX-TdK"/>
                     <constraint firstItem="toa-RE-lnI" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="r9P-gf-JKc"/>
                     <constraint firstItem="toa-RE-lnI" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="rVe-Pf-d6r"/>

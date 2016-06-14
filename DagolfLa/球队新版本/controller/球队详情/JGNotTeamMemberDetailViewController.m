@@ -350,7 +350,8 @@ static CGFloat ImageHeight  = 210.0;
                 break;
             case 2:
                 launchActivityCell.promptLB.text = @"成立时间";
-                launchActivityCell.contentLB.text = [[self.detailDic objectForKey:@"establishTime"] substringToIndex:10];
+                
+                launchActivityCell.contentLB.text = [Helper returnDateformatString:[self.detailDic objectForKey:@"establishTime"]];
                 break;
             case 3:
                 launchActivityCell.promptLB.text = @"球队规模";

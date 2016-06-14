@@ -1,28 +1,36 @@
 //
-//  JGTeamChannelTableViewCell.m
+//  JGLMyTeamTableViewCell.m
 //  DagolfLa
 //
-//  Created by 東 on 16/5/11.
+//  Created by 黄达明 on 16/6/13.
 //  Copyright © 2016年 bhxx. All rights reserved.
 //
 
-#import "JGTeamChannelTableViewCell.h"
+#import "JGLMyTeamTableViewCell.h"
 
-@implementation JGTeamChannelTableViewCell
+@implementation JGLMyTeamTableViewCell
 
+- (void)awakeFromNib {
+    [super awakeFromNib];
+    // Initialization code
+}
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     
     if (self) {
         
-        self.iconImageV = [[UIImageView alloc] initWithFrame:CGRectMake(10 * screenWidth / 320, 9 * screenWidth / 320, 60 * screenWidth / 320, 60 * screenWidth / 320)];
-//        self.iconImageV.backgroundColor = [UIColor orangeColor];
+        self.iconImageV = [[UIImageView alloc] initWithFrame:CGRectMake(5 * screenWidth / 320, 5 * screenWidth / 320, 70 * screenWidth / 320, 70 * screenWidth / 320)];
+        //        self.iconImageV.backgroundColor = [UIColor orangeColor];
         self.iconImageV.layer.cornerRadius = 5 * screenWidth / 320;
         self.iconImageV.clipsToBounds = YES;
         [self.contentView addSubview:self.iconImageV];
         
-        self.nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(90 * screenWidth / 320, 9 * screenWidth / 320, screenWidth - 90 * screenWidth / 320, 20 * screenWidth / 320)];
+        self.iconState = [[UIImageView alloc] initWithFrame:CGRectMake(40* screenWidth / 320 , 0, 30 * screenWidth / 320, 30 * screenWidth / 320)];
+        [self.iconImageV addSubview:self.iconState];
+        
+        
+        self.nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(90 * screenWidth / 320, 5 * screenWidth / 320, screenWidth - 160 * screenWidth / 320, 20 * screenWidth / 320)];
         self.nameLabel.font = [UIFont systemFontOfSize:15 * screenWidth / 320];
         [self.contentView addSubview:self.nameLabel];
         
@@ -36,32 +44,19 @@
         self.adressLabel.font = [UIFont systemFontOfSize:12 * screenWidth / 320];
         [self.contentView addSubview:self.adressLabel];
         
-        self.describLabel = [[UILabel alloc] initWithFrame:CGRectMake(90 * screenWidth / 320, 50 * screenWidth / 320, screenWidth - 90 * screenWidth / 320, 20 * screenWidth / 320)];
+        self.describLabel = [[UILabel alloc] initWithFrame:CGRectMake(90 * screenWidth / 320, 55 * screenWidth / 320, screenWidth - 90 * screenWidth / 320, 20 * screenWidth / 320)];
         self.describLabel.font = [UIFont systemFontOfSize:12 * screenWidth / 320];
-        self.describLabel.textColor = [UIColor lightGrayColor];
         [self.contentView addSubview:self.describLabel];
         
-        UIView *lightGrayView = [[UIView alloc] initWithFrame:CGRectMake(0, 78 * screenWidth / 320, screenWidth, 1 * screenWidth / 320)];
+        UIView *lightGrayView = [[UIView alloc] initWithFrame:CGRectMake(0, 80 * screenWidth / 320, screenWidth, 3 * screenWidth / 320)];
         lightGrayView.backgroundColor = [UIColor colorWithRed:0.94 green:0.94 blue:0.94 alpha:1];
         [self.contentView addSubview:lightGrayView];
-    
-        self.stateLabel = [[UILabel alloc] initWithFrame:CGRectMake(screenWidth - 80* screenWidth / 320 , 0, 75 * screenWidth / 320, 30)];
-//        self.stateLabel.text = @"";
-        self.stateLabel.font = [UIFont systemFontOfSize:13 * screenWidth / 320];
-        self.stateLabel.textColor = [UIColor blueColor];
-        self.stateLabel.textAlignment = NSTextAlignmentRight;
-        [self.contentView addSubview:self.stateLabel];
-//        self.stateLabel.backgroundColor = [UIColor orangeColor];
+        
+        
     }
     
     return self;
 }
-
-//- (void)setTeamModel:(JGTeamDetail *)teamModel{
-//    self.nameLabel.text = teamModel.name;
-//    self.adressLabel.text = teamModel.cityName;
-//    self.describLabel.text = teamModel.info;        // 球队介绍
-//}
 
 -(void)showData:(JGLMyTeamModel *)model
 {
@@ -72,18 +67,17 @@
     self.adressLabel.text = model.crtyName;
     self.describLabel.text = model.info;
     if ([model.state integerValue] == 0) {
-        self.stateLabel.text = @"正在审核";
+//        self.stateLabel.text = @"正在审核";
+        _iconState.image  = [UIImage imageNamed:@"dsh"];
     }else if ([model.state integerValue] == 2){
-        self.stateLabel.text = @"审核未通过";
+//        self.stateLabel.text = @"审核未通过";
+        _iconState.image  = [UIImage imageNamed:@"jj"];
     }else{
-        self.stateLabel.text = @"";
+//        self.stateLabel.text = @"";
+        _iconState.image  = [UIImage imageNamed:@"tg"];
     }
 }
 
-- (void)awakeFromNib {
-    [super awakeFromNib];
-    // Initialization code
-}
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];

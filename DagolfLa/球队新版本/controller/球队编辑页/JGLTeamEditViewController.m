@@ -68,11 +68,11 @@ static CGFloat ImageHeight  = 210.0;
     self.titleField.text = [self.detailDic objectForKey:@"name"];
     
     if (_isFirst) {
-        [self.headPortraitBtn sd_setImageWithURL:[Helper setImageIconUrl:@"team" andTeamKey:[[self.detailDic objectForKey:@"timeKey"] integerValue] andIsSetWidth:YES andIsBackGround:NO] forState:(UIControlStateNormal) placeholderImage:[UIImage imageNamed:@"logo"]];
+        [self.headPortraitBtn sd_setImageWithURL:[Helper setImageIconUrl:@"team" andTeamKey:[[self.detailDic objectForKey:@"timeKey"] integerValue] andIsSetWidth:YES andIsBackGround:NO] forState:(UIControlStateNormal) placeholderImage:[UIImage imageNamed:TeamLogoImage]];
         self.headPortraitBtn.layer.masksToBounds = YES;
         self.headPortraitBtn.layer.cornerRadius = 8.0;
         
-        [self.imgProfile sd_setImageWithURL:[Helper setImageIconUrl:@"team" andTeamKey:[[self.detailDic objectForKey:@"timeKey"] integerValue] andIsSetWidth:NO andIsBackGround:YES] placeholderImage:[UIImage imageNamed:@"tu2"]];
+        [self.imgProfile sd_setImageWithURL:[Helper setImageIconUrl:@"team" andTeamKey:[[self.detailDic objectForKey:@"timeKey"] integerValue] andIsSetWidth:NO andIsBackGround:YES] placeholderImage:[UIImage imageNamed:TeamBGImage]];
         self.isFirst = NO;
     }else{
         
@@ -92,12 +92,12 @@ static CGFloat ImageHeight  = 210.0;
         self.titleView = [[UIView alloc]init];
         UIImage *image = [UIImage imageNamed:@"bg"];
         self.imgProfile = [[UIImageView alloc] initWithImage:image];
-        self.imgProfile.frame = CGRectMake(0, 0, screenWidth, ImageHeight);
+        self.imgProfile.frame = CGRectMake(0, 0, screenWidth, ImageHeight  * screenWidth / 375);
         self.imgProfile.userInteractionEnabled = YES;
         self.imgProfile.contentMode = UIViewContentModeScaleAspectFill;
         self.imgProfile.layer.masksToBounds = YES;
         self.imgProfile.tag = 520;
-        self.launchActivityTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight - 44) style:(UITableViewStylePlain)];
+        self.launchActivityTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight) style:(UITableViewStylePlain)];
 //        [self.launchActivityTableView registerClass:[JGLableAndLableTableViewCell class] forCellReuseIdentifier:@"lbVSlb"];
 //        [self.launchActivityTableView registerClass:[JGDisplayInfoTableViewCell class] forCellReuseIdentifier:@"Display"];
         [_launchActivityTableView registerNib:[UINib nibWithNibName:@"JGLTeamEditTableViewCell" bundle:nil] forCellReuseIdentifier:@"JGLTeamEditTableViewCell"];
@@ -133,24 +133,25 @@ static CGFloat ImageHeight  = 210.0;
     [self.titleView addSubview:btn];
     //点击更换
     UIButton *replaceBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    replaceBtn.frame = CGRectMake(screenWidth-64, 0, 54, 44);
+    replaceBtn.frame = CGRectMake(screenWidth-64 * screenWidth / 375, 0, 54 * screenWidth / 375, 44 * screenWidth / 375);
     replaceBtn.titleLabel.font = [UIFont systemFontOfSize:FontSize_Normal];
     [replaceBtn setTitle:@"点击更换" forState:UIControlStateNormal];
-    replaceBtn.titleLabel.font = [UIFont systemFontOfSize:13];
+    replaceBtn.titleLabel.font = [UIFont systemFontOfSize:13 * screenWidth / 375];
     replaceBtn.tag = 520;
     [replaceBtn addTarget:self action:@selector(initItemsBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.titleView addSubview:replaceBtn];
     //输入框
-    self.titleField = [[UITextField alloc]initWithFrame:CGRectMake(64, 7, screenWidth - 138, 30)];
+    self.titleField = [[UITextField alloc]initWithFrame:CGRectMake(64 * screenWidth / 375, 7 * screenWidth / 375, screenWidth - 138 * screenWidth / 375, 30 * screenWidth / 375)];
     self.titleField.backgroundColor = [UIColor clearColor];
-    self.titleField.font = [UIFont systemFontOfSize:15];
+//    self.titleField.font = [UIFont systemFontOfSize:15 * screenWidth / 375];
     self.titleField.textAlignment = NSTextAlignmentCenter;
-    self.titleField.font = [UIFont systemFontOfSize:15];
-    self.titleField.borderStyle = UITextBorderStyleRoundedRect;
+    self.titleField.textColor = [UIColor whiteColor];
+    self.titleField.font = [UIFont systemFontOfSize:16 * screenWidth / 375];
+//    self.titleField.borderStyle = UITextBorderStyleRoundedRect;
     self.titleField.delegate = self;
     
     //头像
-    self.headPortraitBtn = [[UIButton alloc]initWithFrame:CGRectMake(20, 150, 50, 50)];
+    self.headPortraitBtn = [[UIButton alloc]initWithFrame:CGRectMake(20 * screenWidth / 375, 150 * screenWidth / 375, 50 * screenWidth / 375, 50 * screenWidth / 375)];
     [self.headPortraitBtn setImage:[UIImage imageNamed:@"relogo"] forState:UIControlStateNormal];
     [self.headPortraitBtn addTarget:self action:@selector(replaceWithPicture:) forControlEvents:UIControlEventTouchUpInside];
     self.headPortraitBtn.tag = 522;
@@ -179,13 +180,16 @@ static CGFloat ImageHeight  = 210.0;
     }
 }
 
-#pragma mark -- 预览
+#pragma mark -- 保存
 - (void)createPreviewBtn{
-    UIButton *previewBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, screenHeight -44, screenWidth, 44)];
+    UIButton *previewBtn = [[UIButton alloc]initWithFrame:CGRectMake(10 * screenWidth / 375, screenHeight -80 * screenWidth / 375, screenWidth - 20 * screenWidth / 375, 44 * screenWidth / 375)];
     [previewBtn setTitle:@"保存" forState:UIControlStateNormal];
+    previewBtn.clipsToBounds = YES;
+    previewBtn.layer.cornerRadius = 6.f;
+    previewBtn.layer.borderColor = [[UIColor redColor] CGColor];
     previewBtn.backgroundColor = [UIColor colorWithHexString:@"#F59826"];
     [previewBtn addTarget:self action:@selector(previewBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:previewBtn];
+    [self.launchActivityTableView addSubview:previewBtn];
 }
 #pragma mark -- 保存编辑操作
 - (void)previewBtnClick:(UIButton *)btn{
@@ -230,14 +234,14 @@ static CGFloat ImageHeight  = 210.0;
 - (void)updateImg {
     CGFloat yOffset = _launchActivityTableView.contentOffset.y;
     NSLog(@"yOffset:%f",yOffset);
-    CGFloat factor = ((ABS(yOffset)+ImageHeight)*screenWidth)/ImageHeight;
+    CGFloat factor = ((ABS(yOffset)+(ImageHeight  * screenWidth / 375))*screenWidth)/(ImageHeight  * screenWidth / 375);
     if (yOffset < 0) {
         
-        CGRect f = CGRectMake(-(factor-screenWidth)/2, 0, factor, ImageHeight+ABS(yOffset));
+        CGRect f = CGRectMake(-(factor-screenWidth)/2, 0, factor, (ImageHeight  * screenWidth / 375)+ABS(yOffset));
         self.imgProfile.frame = f;
         
         CGRect title = self.titleView.frame;
-        self.titleView.frame = CGRectMake((factor-screenWidth)/2, 20, title.size.width, title.size.height);
+        self.titleView.frame = CGRectMake((factor-screenWidth)/2, 20  * screenWidth / 375, title.size.width, title.size.height);
         
         self.headPortraitBtn.hidden = YES;
         
@@ -248,7 +252,7 @@ static CGFloat ImageHeight  = 210.0;
         self.imgProfile.frame = f;
         
         CGRect t = self.titleView.frame;
-        t.origin.y = yOffset + 20;
+        t.origin.y = yOffset + 20  * screenWidth / 375;
         self.titleView.frame = t;
         
         if (yOffset == 0.0) {
@@ -280,19 +284,19 @@ static CGFloat ImageHeight  = 210.0;
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 0) {
-        return ImageHeight -10;
+        return ImageHeight  * screenWidth / 375 - 10  * screenWidth / 375;
     }else if (indexPath.section == 3){
 //        return [self calculationLabelHeight:self.detailModel.info] + 40 * screenWidth / 320;
-        return 150;
+        return 150  * screenWidth / 375;
     }else{
-        return 44;
+        return 45  * screenWidth / 375;
     }
 }
 
 - (CGFloat)calculationLabelHeight: (NSString *)LbText{
     
     NSDictionary *dic = [NSDictionary dictionaryWithObject:[UIFont systemFontOfSize:15] forKey:NSFontAttributeName];
-    CGRect bounds = [LbText boundingRectWithSize:(CGSizeMake(screenWidth - 20  * screenWidth / 320 , 10000)) options:(NSStringDrawingUsesLineFragmentOrigin) attributes:dic context:nil];
+    CGRect bounds = [LbText boundingRectWithSize:(CGSizeMake(screenWidth - 20  * screenWidth / 375 , 10000)) options:(NSStringDrawingUsesLineFragmentOrigin) attributes:dic context:nil];
     return bounds.size.height;
 }
 
@@ -300,7 +304,7 @@ static CGFloat ImageHeight  = 210.0;
     return 0;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    return 10;
+    return 10 * screenWidth / 375;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -320,15 +324,15 @@ static CGFloat ImageHeight  = 210.0;
     {
         JGLTeamEditTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"JGLTeamEditTableViewCell" forIndexPath:indexPath];
         cell.titleLabel.text = _titleArray[indexPath.section][indexPath.row];
-        cell.titleLabel.font = [UIFont systemFontOfSize:15 * screenWidth / 320];
+        cell.titleLabel.font = [UIFont systemFontOfSize:15  * screenWidth / 375];
         if (indexPath.row == 0) {
             cell.textField.text = [self.detailDic objectForKey:@"captainName"];
         }else if (indexPath.row == 1){
             cell.textField.text = [self.detailDic objectForKey:@"crtyName"];
         }else{
-            cell.textField.text = [self.detailDic objectForKey:@"establishTime"];
+            cell.textField.text = [Helper returnDateformatString:[self.detailDic objectForKey:@"establishTime"]];
         }
-        cell.textField.font = [UIFont systemFontOfSize:15 * screenWidth / 320];
+        cell.textField.font = [UIFont systemFontOfSize:15  * screenWidth / 375];
 
         cell.textField.userInteractionEnabled = NO;
         return cell;
@@ -338,9 +342,9 @@ static CGFloat ImageHeight  = 210.0;
         JGTeamAdressTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"JGTeamAdressTableViewCell" forIndexPath:indexPath];
         cell.titleLabel.text = _titleArray[indexPath.section][indexPath.row];
         cell.detailLabel.text = [NSString stringWithFormat:@"%@, %@", [self.detailDic objectForKey:@"answerName"], [self.detailDic objectForKey:@"answerMobile"]];
-        cell.titleLabel.font = [UIFont systemFontOfSize:15 * screenWidth / 320];
-        cell.detailLabel.font = [UIFont systemFontOfSize:15 * screenWidth / 320];
-
+        cell.titleLabel.font = [UIFont systemFontOfSize:15  * screenWidth / 375];
+        cell.detailLabel.font = [UIFont systemFontOfSize:15  * screenWidth / 375];
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         
         return cell;
     }
@@ -351,8 +355,8 @@ static CGFloat ImageHeight  = 210.0;
         cell.textView.text = [self.detailDic objectForKey:@"info"];
         cell.textView.delegate = self;
         
-        cell.titleLabel.font = [UIFont systemFontOfSize:15 * screenWidth / 320];
-        cell.textView.font = [UIFont systemFontOfSize:15 * screenWidth / 320];
+        cell.titleLabel.font = [UIFont systemFontOfSize:15  * screenWidth / 375];
+        cell.textView.font = [UIFont systemFontOfSize:15  * screenWidth / 375];
 
         return cell;
     }
