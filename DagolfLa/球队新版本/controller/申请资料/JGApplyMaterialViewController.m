@@ -9,6 +9,8 @@
 #import "JGApplyMaterialViewController.h"
 #import "JGApplyMaterialTableViewCell.h"
 #import "JGButtonTableViewCell.h"
+#import "JGLTeamChoiseViewController.h"
+#import "JGLableAndLableTableViewCell.h"
 
 
 @interface JGApplyMaterialViewController ()<UITableViewDelegate, UITableViewDataSource,UIPickerViewDataSource,UIPickerViewDelegate,UITextFieldDelegate>
@@ -33,7 +35,7 @@
         self.title  = @"入队申请资料";
     }
     
-    UIBarButtonItem *rightBar = [[UIBarButtonItem alloc] initWithTitle:@"完成" style:(UIBarButtonItemStyleDone) target:self action:@selector(complete)];
+    UIBarButtonItem *rightBar = [[UIBarButtonItem alloc] initWithTitle:@"保存" style:(UIBarButtonItemStyleDone) target:self action:@selector(complete)];
     rightBar.tintColor = [UIColor whiteColor];
     self.navigationItem.rightBarButtonItem = rightBar;
     
@@ -214,6 +216,8 @@
     self.secondTableView.dataSource = self;
     [self.secondTableView registerClass:[JGApplyMaterialTableViewCell class] forCellReuseIdentifier:@"cell"];
     [self.secondTableView registerClass:[JGButtonTableViewCell class] forCellReuseIdentifier:@"cellBtn"];
+    [self.secondTableView registerClass:[JGLableAndLableTableViewCell class] forCellReuseIdentifier:@"cellLB"];
+
     
     self.titleArray = [NSArray arrayWithObjects:@[@"姓名", @"性别", @"手机号码"], @[@"行业", @"公司", @"职业",   @"常住地址", @"衣服尺码", @"惯用手"], nil];
     self.placeholderArray = [NSArray arrayWithObjects:@[@"请输入真实姓名", @"请输入性别", @"请输入手机号" ],@[@"请输入你的行业",@"请输入你的公司",@"请输入你的职位",@"方便活动邀请", @"统一制服制定", @"制定特殊需求"],  nil];
@@ -247,12 +251,12 @@
     }
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    
-    if ([[self.view subviews] containsObject:self.pickerBackView]) {
-        [self.pickerBackView removeFromSuperview];
-    }
-}
+//- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+//    
+//    if ([[self.view subviews] containsObject:self.pickerBackView]) {
+//        [self.pickerBackView removeFromSuperview];
+//    }
+//}
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component{
     if (pickerView.tag == 1111) {
@@ -270,8 +274,11 @@
     for (int i = 0; i < 3; i ++) {
         
         if (i == 1) {
-            //            JGButtonTableViewCell *cell = self.secondTableView.visibleCells[i];
-            //            [self.paraDic setObject:@([cell.button.titleLabel.text  integerValue]) forKey:array[i]];
+            
+            JGLableAndLableTableViewCell *cell = self.secondTableView.visibleCells[i];
+            if ([cell.contentLB.text isEqualToString:@"请选择"]) {
+                isLength = NO;
+            }
             
         }else{
             
@@ -355,6 +362,39 @@
     }
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    if (indexPath.section == 0 && indexPath.row == 1) {
+        JGLTeamChoiseViewController* tcVc = [[JGLTeamChoiseViewController alloc]init];
+        tcVc.dataArray = @[@"女",@"男",@"保密"];
+        tcVc.introBlock = ^(NSString* strName, NSNumber* num){
+            if ([num integerValue] == 2) {
+                [self.paraDic setObject:@-1 forKey:@"sex"];
+            }else{
+                [self.paraDic setObject:num forKey:@"sex"];
+            }
+            JGLableAndLableTableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+            cell.contentLB.text = strName;
+        };
+        [self.navigationController pushViewController:tcVc animated:YES];
+    }
+    else if (indexPath.section == 1 && indexPath.row == 5)
+    {
+        JGLTeamChoiseViewController* tcVc = [[JGLTeamChoiseViewController alloc]init];
+        tcVc.dataArray = @[@"左手",@"右手"];
+        tcVc.introBlock = ^(NSString* strName, NSNumber* num){
+            [self.paraDic setObject:num forKey:@"hand"];
+            JGLableAndLableTableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+            cell.contentLB.text = strName;
+        };
+        [self.navigationController pushViewController:tcVc animated:YES];
+    }
+    else
+    {
+        return;
+    }
+}
+
 - (void)creatTableView{
     
     self.tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:(UITableViewStylePlain)];
@@ -391,23 +431,38 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
 
     if (indexPath.section == 0 && indexPath.row == 1) {
-        JGButtonTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellBtn" forIndexPath:indexPath];
-        cell.labell.text = self.titleArray[indexPath.section][indexPath.row];
-        [cell.button addTarget:self action:@selector(cellBtn) forControlEvents:(UIControlEventTouchUpInside)];
+        JGLableAndLableTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellLB" forIndexPath:indexPath];
+        cell.promptLB.text = self.titleArray[indexPath.section][indexPath.row];
+        cell.promptLB.textColor = [UIColor lightGrayColor];
+        cell.contentLB.frame = CGRectMake(100  * screenWidth / 320, 15 * screenWidth / 320, screenWidth - 130  * screenWidth / 320, 15 * screenWidth / 320);
+        cell.contentLB.text = @"请选择";
+        cell.contentLB.textAlignment = NSTextAlignmentRight;
+//        [cell.button addTarget:self action:@selector(cellBtn) forControlEvents:(UIControlEventTouchUpInside)];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+
         return cell;
     }else if (indexPath.section == 1 && indexPath.row == 5){
-        JGButtonTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellBtn" forIndexPath:indexPath];
-        cell.labell.text = self.titleArray[indexPath.section][indexPath.row];
-        [cell.button addTarget:self action:@selector(cellBtnSec) forControlEvents:(UIControlEventTouchUpInside)];
+        JGLableAndLableTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellLB" forIndexPath:indexPath];
+        cell.promptLB.text = self.titleArray[indexPath.section][indexPath.row];
+        cell.promptLB.textColor = [UIColor lightGrayColor];
+        cell.contentLB.frame = CGRectMake(100  * screenWidth / 320, 15 * screenWidth / 320, screenWidth - 130  * screenWidth / 320, 15 * screenWidth / 320);
+        cell.contentLB.text = @"请选择";
+        cell.contentLB.textAlignment = NSTextAlignmentRight;
+//        [cell.button addTarget:self action:@selector(cellBtnSec) forControlEvents:(UIControlEventTouchUpInside)];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         return cell;
     }else{
         JGApplyMaterialTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
         
         if (indexPath.section == 0) {
             cell.labell.text = self.titleArray[indexPath.section][indexPath.row];
+            cell.labell.textColor = [UIColor lightGrayColor];
             cell.textFD.placeholder = self.placeholderArray[indexPath.section][indexPath.row];
         }else{
             cell.labell.text = self.titleArray[indexPath.section][indexPath.row];
+            cell.labell.textColor = [UIColor lightGrayColor];
             cell.textFD.placeholder = self.placeholderArray[indexPath.section][indexPath.row];
             if (indexPath.row == 2 && indexPath.section == 0) {
                 cell.textFD.keyboardType = UIKeyboardTypePhonePad;
