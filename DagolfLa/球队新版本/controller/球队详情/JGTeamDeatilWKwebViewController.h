@@ -14,4 +14,5 @@
 @property (nonatomic, copy) NSString *detailString;
 @property (nonatomic, assign) NSInteger teamKey;
 
+
 @end

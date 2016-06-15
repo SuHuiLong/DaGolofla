@@ -34,4 +34,5 @@
 
 @property (nonatomic, assign)NSInteger activityKey;//活动key
 
+
 @end

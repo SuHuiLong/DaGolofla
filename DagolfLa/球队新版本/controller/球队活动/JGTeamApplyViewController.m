@@ -94,6 +94,7 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
         [applyDict setObject:@1 forKey:@"type"];//"是否是球队成员 0: 不是  1：是
         
         [applyDict setObject:[NSString stringWithFormat:@"%.2f", [_modelss.memberPrice floatValue]] forKey:@"payMoney"];//实际付款金额
+//        [applyDict setObject:@4455 forKey:@"payMoney"];//实际付款金额
         
         [applyDict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:userID] forKey:@"userKey"];//报名用户key , 没有则是嘉宾
         
@@ -402,7 +403,6 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
         [self.info setObject:[NSString stringWithFormat:@"%td", _modelss.teamActivityKey] forKey:@"activityKey"];//球队活动key
     }else{
         [self.info setObject:[NSString stringWithFormat:@"%@", _modelss.timeKey] forKey:@"activityKey"];//球队活动key
-
     }
     
     [self.info setObject:[userdef objectForKey:@"userName"] forKey:@"userName"];//报名人名称//teamkey 156

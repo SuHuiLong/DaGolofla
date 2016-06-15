@@ -52,6 +52,8 @@
 		2080305C1CFCB86C00448BFC /* UMMobClick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2080305B1CFCB86B00448BFC /* UMMobClick.framework */; };
 		209B3FE61D0FCB0300A6FF72 /* JGHSaveAndSubmitBtnCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 209B3FE41D0FCB0300A6FF72 /* JGHSaveAndSubmitBtnCell.m */; };
 		209B3FE71D0FCB0300A6FF72 /* JGHSaveAndSubmitBtnCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 209B3FE51D0FCB0300A6FF72 /* JGHSaveAndSubmitBtnCell.xib */; };
+		209B3FEB1D10182B00A6FF72 /* JGHManagerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 209B3FEA1D10182B00A6FF72 /* JGHManagerViewController.m */; };
+		209B3FEE1D1023CC00A6FF72 /* JGHActicityDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 209B3FED1D1023CC00A6FF72 /* JGHActicityDetailsViewController.m */; };
 		20BA61291CDC99D0004B61F5 /* ALAirplayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 20BA61151CDC99D0004B61F5 /* ALAirplayView.m */; };
 		20BA612A1CDC99D0004B61F5 /* ALButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 20BA61171CDC99D0004B61F5 /* ALButton.m */; };
 		20BA612B1CDC99D0004B61F5 /* ALMoviePlayerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 20BA61191CDC99D0004B61F5 /* ALMoviePlayerController.m */; };
@@ -1069,6 +1071,10 @@
 		209B3FE31D0FCB0300A6FF72 /* JGHSaveAndSubmitBtnCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHSaveAndSubmitBtnCell.h; sourceTree = "<group>"; };
 		209B3FE41D0FCB0300A6FF72 /* JGHSaveAndSubmitBtnCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHSaveAndSubmitBtnCell.m; sourceTree = "<group>"; };
 		209B3FE51D0FCB0300A6FF72 /* JGHSaveAndSubmitBtnCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JGHSaveAndSubmitBtnCell.xib; sourceTree = "<group>"; };
+		209B3FE91D10182B00A6FF72 /* JGHManagerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHManagerViewController.h; sourceTree = "<group>"; };
+		209B3FEA1D10182B00A6FF72 /* JGHManagerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHManagerViewController.m; sourceTree = "<group>"; };
+		209B3FEC1D1023CC00A6FF72 /* JGHActicityDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHActicityDetailsViewController.h; sourceTree = "<group>"; };
+		209B3FED1D1023CC00A6FF72 /* JGHActicityDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHActicityDetailsViewController.m; sourceTree = "<group>"; };
 		20BA61141CDC99D0004B61F5 /* ALAirplayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALAirplayView.h; sourceTree = "<group>"; };
 		20BA61151CDC99D0004B61F5 /* ALAirplayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALAirplayView.m; sourceTree = "<group>"; };
 		20BA61161CDC99D0004B61F5 /* ALButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALButton.h; sourceTree = "<group>"; };
@@ -2730,6 +2736,17 @@
 				208030521CF9A79800448BFC /* JGHTotalPriceCell.xib */,
 			);
 			path = "球队活动";
+			sourceTree = "<group>";
+		};
+		209B3FE81D10175200A6FF72 /*  活动管理 */ = {
+			isa = PBXGroup;
+			children = (
+				209B3FE91D10182B00A6FF72 /* JGHManagerViewController.h */,
+				209B3FEA1D10182B00A6FF72 /* JGHManagerViewController.m */,
+				209B3FEC1D1023CC00A6FF72 /* JGHActicityDetailsViewController.h */,
+				209B3FED1D1023CC00A6FF72 /* JGHActicityDetailsViewController.m */,
+			);
+			path = " 活动管理";
 			sourceTree = "<group>";
 		};
 		20BA61131CDC99D0004B61F5 /* ALMoviePlayerController */ = {
@@ -5882,6 +5899,7 @@
 				F569A13C1CE35A9C00CD0FD5 /* 球队详情 */,
 				828A99E11CE3165B00AF9860 /* 球队相册 */,
 				2067C6B31CE30CA4002900C8 /* 球队活动 */,
+				209B3FE81D10175200A6FF72 /*  活动管理 */,
 			);
 			path = controller;
 			sourceTree = "<group>";
@@ -6016,7 +6034,7 @@
 				TargetAttributes = {
 					36BFFD271BC76C8D005B3CE2 = {
 						CreatedOnToolsVersion = 6.3.2;
-						DevelopmentTeam = R269PG52XZ;
+						DevelopmentTeam = T8ML76W22A;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -6652,6 +6670,7 @@
 				65B596F21CAD43AC007AB83A /* JKSlideViewController.m in Sources */,
 				36DF562F1C1519B40006D9BA /* ScoreWriteProController.m in Sources */,
 				20513BD61CF7050A003233FB /* DataVerifier.m in Sources */,
+				209B3FEE1D1023CC00A6FF72 /* JGHActicityDetailsViewController.m in Sources */,
 				F569A1491CE35AA500CD0FD5 /* JGTeamChannelTableView.m in Sources */,
 				36BFFF8B1BC76D09005B3CE2 /* FDCalendarItem.m in Sources */,
 				36BFFF9E1BC76FD4005B3CE2 /* CommunityViewController.m in Sources */,
@@ -6740,6 +6759,7 @@
 				36BF00FF1BC7750D005B3CE2 /* YueHallViewController.m in Sources */,
 				20513BD71CF7050A003233FB /* MD5DataSigner.m in Sources */,
 				36695E341C55E650003130F4 /* ActivityIntroViewController.m in Sources */,
+				209B3FEB1D10182B00A6FF72 /* JGHManagerViewController.m in Sources */,
 				368DCA641C88285000871D28 /* ReportViewController.m in Sources */,
 				3623173D1BDA498B00257862 /* PicArrShowViewControllerViewController.m in Sources */,
 				20CA138F1CE9562800DA15B9 /* JGTeamGroupCollectionViewCell.m in Sources */,

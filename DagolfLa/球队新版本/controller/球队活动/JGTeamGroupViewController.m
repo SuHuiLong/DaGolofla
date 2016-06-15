@@ -16,7 +16,7 @@
 static NSString *const JGTeamGroupCollectionViewCellIdentifier = @"JGTeamGroupCollectionViewCell";
 static NSString *const JGGroupdetailsCollectionViewCellIdentifier = @"JGGroupdetailsCollectionViewCell";
 
-@interface JGTeamGroupViewController ()<UICollectionViewDataSource, UICollectionViewDelegate, JGGroupdetailsCollectionViewCellDelegate, JGHTeamMembersViewControllerDelegate>
+@interface JGTeamGroupViewController ()<UICollectionViewDataSource, UICollectionViewDelegate, JGGroupdetailsCollectionViewCellDelegate, JGHTeamMembersViewControllerDelegate, UIScrollViewDelegate>
 {
     NSInteger _collectionHegith;
     
@@ -27,6 +27,10 @@ static NSString *const JGGroupdetailsCollectionViewCellIdentifier = @"JGGroupdet
     NSInteger _maxGroup;//当前分组数。。默认4
     
     UILabel *_waitGroupLabel;//待分组
+    
+    NSInteger _addGroup;//添加分组后页面下滑标志
+    
+    NSInteger _deleGroup;//判断是否存在可删除成员
 }
 
 @property (nonatomic, weak) UICollectionView *collectionView;//上列表
@@ -39,9 +43,18 @@ static NSString *const JGGroupdetailsCollectionViewCellIdentifier = @"JGGroupdet
 
 @property (nonatomic, assign)NSInteger newTeamKey;
 
+@property (nonatomic, strong)UIView *collectionHeaderView;//collectionHeaderView
+
 @end
 
 @implementation JGTeamGroupViewController
+
+- (UIView *)collectionHeaderView{
+    if (_collectionHeaderView == nil) {
+        self.collectionHeaderView = [[UIView alloc]init];
+    }
+    return _collectionHeaderView;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -72,6 +85,11 @@ static NSString *const JGGroupdetailsCollectionViewCellIdentifier = @"JGGroupdet
     }else{
         _collectionHegith = screenHeight/3-20;
     }
+    
+    //设置头视图的大小
+//    self.collectionHeaderView.backgroundColor = [UIColor colorWithHexString:BG_color];
+//    self.collectionHeaderView.frame = CGRectMake(0, 0, screenWidth, _collectionHegith + 12 + 21 + 21);
+    //列表
     UICollectionViewFlowLayout *layout = [UICollectionViewFlowLayout new];
     layout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
     UICollectionView *collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 35, screenWidth, _collectionHegith)
@@ -108,6 +126,7 @@ static NSString *const JGGroupdetailsCollectionViewCellIdentifier = @"JGGroupdet
     addGroupBtn.titleLabel.font = [UIFont systemFontOfSize:12];
     [addGroupBtn addTarget:self action:@selector(addGroupBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:addGroupBtn];
+    
     //4方格
     UICollectionViewFlowLayout *gridlayout = [UICollectionViewFlowLayout new];
     gridlayout.scrollDirection = UICollectionViewScrollDirectionVertical;
@@ -123,15 +142,19 @@ static NSString *const JGGroupdetailsCollectionViewCellIdentifier = @"JGGroupdet
 }
 #pragma mark -- 添加分组
 - (void)addGroupBtnClick:(UIButton *)btn{
+    [[ShowHUD showHUD]showAnimationWithText:@"" FromView:self.view];
     _maxGroup += 1;
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     [dict setObject:[NSString stringWithFormat:@"%td", _maxGroup] forKey:@"maxGroup"];
     [dict setObject:[NSString stringWithFormat:@"%td", self.teamActivityKey] forKey:@"activityKey"];
     [[JsonHttp jsonHttp]httpRequest:@"team/updateTeamActivityMaxGroup" JsonKey:nil withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
         NSLog(@"errType == %@", errType);
+        [[ShowHUD showHUD]hideAnimationFromView:self.view];
     } completionBlock:^(id data) {
         NSLog(@"data == %@", data);
-        
+        [[ShowHUD showHUD]hideAnimationFromView:self.view];
+        [[ShowHUD showHUD]showToastWithText:@"分组添加成功！" FromView:self.view];
+        _addGroup = 1;
         [self loadData:0];//刷新页面
     }];
 }
@@ -182,11 +205,20 @@ static NSString *const JGGroupdetailsCollectionViewCellIdentifier = @"JGGroupdet
             [self presentViewController:alertController animated:YES completion:nil];
         }
         
+        if (_addGroup == 1) {
+            [self.groupDetailsCollectionView setContentOffset:CGPointMake(0,(screenWidth/2)*(int)((_maxGroup-1)/2)) animated:YES];
+            _addGroup = 0;
+        }
+        
+        if (_deleGroup == 1) {
+            _deleGroup = 0;
+            [[ShowHUD showHUD]showToastWithText:@"删除成功！" FromView:self.view];
+        }
+        
         [self.collectionView reloadData];
         [self.groupDetailsCollectionView reloadData];
     }];
 }
-
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     if ([collectionView isEqual:self.collectionView]) {
@@ -230,7 +262,43 @@ static NSString *const JGGroupdetailsCollectionViewCellIdentifier = @"JGGroupdet
         return groupCell;
     }
 }
+#pragma mark --这个方法是返回 Header的大小 size
+/**
+-(CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section{
+    return CGSizeMake(screenWidth, _collectionHegith);
+}
 
+#pragma mark --这个也是最重要的方法 获取Header的 方法。
+- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
+{
+    UICollectionReusableView *headerView = nil;
+    
+    if (kind == UICollectionElementKindSectionHeader){
+        
+//        UICollectionReusableView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"HeaderView" forIndexPath:indexPath];
+        
+        headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"JGPhotoTimeReusableView" forIndexPath:indexPath];
+//        NSString *title = [[NSString alloc] initWithFormat:@"Recipe Group #%i",indexPath.section +1];
+//        
+//        headerView.title.text = title;
+//        
+//        UIImage *headerImage = [UIImage imageNamed:@"header_banner.png"];
+//        
+//        headerView.backgroundImage.image = headerImage;
+        
+//        reusableView = _collectionHeaderView;
+        
+    }
+    
+    
+    return headerView;
+    
+//    NSString *CellIdentifier = @"header";
+    //从缓存中获取 Headercell
+//    _collectionHeaderView *self = (_collectionHeaderView *)[[collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"header" forIndexPath:indexPath];
+//    return cell;
+}
+ */
 #pragma mark -- 点击头像图片的代理方法JGGroupdetailsCollectionViewCellDelegate
 - (void)didSelectHeaderImage:(UIButton *)btn JGGroupCell:(JGGroupdetailsCollectionViewCell *)cell{
 
@@ -299,7 +367,31 @@ static NSString *const JGGroupdetailsCollectionViewCellIdentifier = @"JGGroupdet
 
     }
 }
-
+#pragma mark -- 长按头像删除分组
+- (void)handleLongPressWithBtnTag:(NSInteger)tag JGGroupCell:(JGGroupdetailsCollectionViewCell *)cell{
+    for (JGHPlayersModel *model in self.alreadyDataArray) {
+        if (model.groupIndex == cell.tag) {
+            if (model.sortIndex == tag) {
+                NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+                [dict setObject:@-1 forKey:@"oldSignUpKey"];// 老的球队活动报名人timeKey
+                [dict setObject:[NSString stringWithFormat:@"%td", model.timeKey] forKey:@"newSignUpKey"]; // 新的球队活动报名人timeKey
+                [dict setObject:[NSString stringWithFormat:@"%td", cell.tag] forKey:@"groupIndex"]; // 组号
+                [dict setObject:[NSString stringWithFormat:@"%td", tag] forKey:@"sortIndex"]; // 排序索引
+                _deleGroup = 1;
+                [self updateTeamActivityGroupIndex:dict];
+            }
+        }
+    }
+    
+    if (_deleGroup != 1) {
+        [self deleteGroupClick];
+    }
+}
+#pragma mark -- 无可删除的成员
+- (void)deleteGroupClick{
+    _deleGroup = 0;
+    [[ShowHUD showHUD]showToastWithText:@"该分组无可删除的成员！" FromView:self.view];
+}
 #pragma mark -- 更新组
 - (void)updateTeamActivityGroupIndex:(NSMutableDictionary *)dict{
     [[JsonHttp jsonHttp]httpRequest:@"team/updateTeamActivityGroupIndex" JsonKey:nil withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
@@ -316,6 +408,7 @@ static NSString *const JGGroupdetailsCollectionViewCellIdentifier = @"JGGroupdet
 - (void)didSelectMembers:(NSMutableDictionary *)dict{
     [self updateTeamActivityGroupIndex:dict];
 }
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

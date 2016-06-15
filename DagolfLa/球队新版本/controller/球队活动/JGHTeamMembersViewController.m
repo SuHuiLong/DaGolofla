@@ -10,7 +10,7 @@
 #import "JGMenberTableViewCell.h"
 #import "JGHPlayersModel.h"
 
-@interface JGHTeamMembersViewController ()<UITableViewDelegate, UITableViewDataSource>
+@interface JGHTeamMembersViewController ()<UITableViewDelegate, UITableViewDataSource, JGMenberPhoneCellDelegate>
 {
     UITableView* _tableView;
 }
@@ -78,7 +78,7 @@
 {
     JGMenberTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"JGMenberTableViewCell" forIndexPath:indexPath];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    
+    cell.delegate = self;
     JGHPlayersModel *model = [[JGHPlayersModel alloc]init];
     model = _teamGroupAllDataArray[indexPath.row];
     [cell configJGHPlayersModel:model];
@@ -101,6 +101,10 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-
+#pragma mark -- 打电话代理
+- (void)makePhoneClick:(NSString *)phone{
+    NSMutableString * str=[[NSMutableString alloc] initWithFormat:@"telprompt://%@", phone];
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:str]];
+}
 
 @end

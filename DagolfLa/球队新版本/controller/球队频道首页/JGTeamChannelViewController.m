@@ -320,8 +320,6 @@
 - (void)creatTeam{
     
     NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
-
-    
     
     if ([user objectForKey:@"cacheCreatTeamDic"]) {
         UIAlertController *alert=[UIAlertController alertControllerWithTitle:@"提示" message:@"是否继续上次编辑" preferredStyle:UIAlertControllerStyleAlert];

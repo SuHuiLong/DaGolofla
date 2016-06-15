@@ -16,6 +16,7 @@
     [super awakeFromNib];
     // Initialization code
     
+//    self.imageview.frame = CGRectMake(self.imageview.frame.origin.x, self.imageview.frame.origin.y, 60 * screenWidth/375, 60 * screenWidth/375);
     self.imageview.layer.masksToBounds = YES;
     self.imageview.layer.cornerRadius = CornerRadiu;
 }
@@ -71,6 +72,7 @@
         [self.imageview sd_setImageWithURL:[Helper setImageIconUrl:@"activity" andTeamKey:[modeel.timeKey integerValue] andIsSetWidth:YES andIsBackGround:YES] placeholderImage:[UIImage imageNamed:ActivityBGImage]];
     }
     
+//    self.imageview.frame = CGRectMake(self.imageview.frame.origin.x, self.imageview.frame.origin.y, 60 * screenWidth/375, 60 * screenWidth/375);
     //活动名称
     self.activitytitle.text = modeel.name;
     self.activityStateImage.image = nil;
