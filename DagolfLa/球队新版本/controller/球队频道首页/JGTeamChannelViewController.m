@@ -32,6 +32,10 @@
 #import "ChangePicModel.h"
 
 
+#import "MJRefresh.h"
+#import "MJDIYBackFooter.h"
+#import "MJDIYHeader.h"
+
 @interface JGTeamChannelViewController ()<UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, strong)UIImageView *topView;
@@ -46,6 +50,9 @@
 @property (nonatomic, strong)NSMutableArray *myActivityArray;
 @property (nonatomic, strong)UILabel *titleLB;
 @property (nonatomic, strong)UIView *topBackView;
+
+@property (assign, nonatomic) NSInteger page;
+
 @end
 
 @implementation JGTeamChannelViewController
@@ -62,11 +69,12 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // ss
+
     //    self.view.backgroundColor = [UIColor lightGrayColor];
     self.view.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];
     self.automaticallyAdjustsScrollViewInsets=NO;
-    
+    _page = 0;
+
     self.topBackView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 360 * screenWidth / 320)];
     self.topBackView.userInteractionEnabled = YES;
     self.topBackView.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];
@@ -127,10 +135,14 @@
     self.tableView = [[JGTeamChannelTableView alloc] initWithFrame:CGRectMake(0, 0 * screenWidth / 320, screenWidth, screenHeight) style:(UITableViewStylePlain)];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
-    self.tableView.separatorStyle = UITableViewCellAccessoryNone;
+//    self.tableView.separatorStyle = UITableViewCellAccessoryNone;
+    self.tableView.separatorStyle = UITableViewCellAccessoryDisclosureIndicator;
     self.tableView.rowHeight = 80 * screenWidth / 320;
     self.tableView.tableHeaderView = [UIView new];
     self.tableView.tableHeaderView = self.topBackView;
+    self.tableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
+    self.tableView.footer=[MJDIYBackFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRereshing)];
+    [self.tableView.header beginRefreshing];
     [self.view addSubview:self.tableView];
     
     [self setData];
@@ -143,6 +155,71 @@
     [self.topBackView addSubview:self.titleLB];
     
     // Do any additional setup after loading the view.
+}
+
+#pragma mark ---刷新
+// 刷新
+- (void)headRereshing
+{
+    [self downLoadData:_page isReshing:YES];
+}
+
+- (void)footRereshing
+{
+    [self downLoadData:_page isReshing:NO];
+}
+
+#pragma mark - 下载数据
+- (void)downLoadData:(NSInteger)page isReshing:(BOOL)isReshing{
+    
+    if ([self.myTeamArray count] != 0) {
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    [dict setObject:DEFAULF_USERID forKey:@"userKey"];
+    [dict setObject:[NSNumber numberWithInteger:page] forKey:@"offset"];
+    [[JsonHttp jsonHttp]httpRequest:@"team/getMyTeamActivityAll" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
+        if (isReshing) {
+            [_tableView.header endRefreshing];
+        }else {
+            [_tableView.footer endRefreshing];
+        }
+    } completionBlock:^(id data) {
+        if ([data objectForKey:@"teamList"]) {
+            if (page == 0)
+            {
+                //清除数组数据
+                [self.myActivityArray removeAllObjects];
+            }
+            
+            for (NSDictionary *dicModel in data[@"activityList"]) {
+                JGTeamAcitivtyModel *model = [[JGTeamAcitivtyModel alloc] init];
+                [model setValuesForKeysWithDictionary:dicModel];
+                [self.myActivityArray addObject:model];
+            }
+            [self.tableView reloadData];
+            
+//            [self.myActivityArray addObjectsFromArray:[data objectForKey:@"teamList"]];
+            
+            _page++;
+            [_tableView reloadData];
+        }else {
+            //            [Helper alertViewWithTitle:@"没有更多球队" withBlock:^(UIAlertController *alertView) {
+            //                [self presentViewController:alertView animated:YES completion:nil];
+            //            }];
+        }
+        [_tableView reloadData];
+        if (isReshing) {
+            [_tableView.header endRefreshing];
+        }else {
+            [_tableView.footer endRefreshing];
+        }
+    }];
+    }else{
+        if (isReshing) {
+            [_tableView.header endRefreshing];
+        }else {
+            [_tableView.footer endRefreshing];
+        }
+    }
 }
 
 
@@ -192,53 +269,13 @@
 }
 
 
-
-//创建首页页面滚动视图
-//-(void)createScrollView
-//{
-//    [self creatCro];
-//    //    NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
-//    [[PostDataRequest sharedInstance] postDataRequest:@"scroll/queryAll.do" parameter:@{@"scrollClass":@0} success:^(id respondsData) {
-//        
-//        NSDictionary* dict = [NSJSONSerialization JSONObjectWithData:respondsData options:NSJSONReadingMutableContainers error:nil];
-//        if ([[dict objectForKey:@"success"] integerValue] == 1) {
-//            
-//            NSMutableArray* arrayIcon = [[NSMutableArray alloc]init];
-//            NSMutableArray* arrayUrl = [[NSMutableArray alloc]init];
-//            NSMutableArray* arrayTitle = [[NSMutableArray alloc]init];
-//            for (NSDictionary *dataDict in [dict objectForKey:@"rows"]) {
-//                ////NSLog(@"%@",dataDict);
-//                ChangePicModel *model = [[ChangePicModel alloc] init];
-//                [model setValuesForKeysWithDictionary:dataDict];
-//                [self.scrillViewArray addObject:model];
-//                [arrayIcon addObject:model.pic];
-//                [arrayUrl addObject:model.nexturl];
-//                [arrayTitle addObject:model.title];
-//            }
-//            //            //NSLog(@"%@",arrayIcon[0]);
-//            
-//            [self.topScrollView config:arrayIcon data:arrayUrl title:arrayTitle];
-//            self.topScrollView.delegate = self;
-//            [self.topScrollView setClick:^(UIViewController *vc) {
-//                [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
-//                [self.navigationController pushViewController:vc animated:YES];
-//            }];
-//        }
-//    } failed:^(NSError *error) {
-//        
-//    }];
-//    
-//}
-
 - (void)setData{
     
     
     if ([[NSUserDefaults standardUserDefaults]objectForKey:@"userId"]) {
 
-    
     NSMutableDictionary *getMyTeam = [NSMutableDictionary dictionary];
     [getMyTeam setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"userId"] forKey:@"userKey"];
-//    [getMyTeam setObject:@192 forKey:@"teamKey"];
     [getMyTeam setValue:@0 forKey:@"offset"];
     [[JsonHttp jsonHttp] httpRequest:@"team/getMyTeamList" JsonKey:nil withData:getMyTeam requestMethod:@"GET" failedBlock:^(id errType) {
         NSLog(@"%@", errType);
@@ -251,8 +288,7 @@
             NSMutableDictionary *dic = [NSMutableDictionary dictionary];
             [dic setObject:DEFAULF_USERID forKey:@"userKey"];
             [dic setValue:@0 forKey:@"offset"];
-//            [getMyTeam setObject:@192 forKey:@"teamKey"];
-            //getMyTeamActivityList
+
             [[JsonHttp jsonHttp] httpRequest:@"team/getMyTeamActivityAll" JsonKey:nil withData:dic requestMethod:@"GET" failedBlock:^(id errType) {
                 [Helper alertViewNoHaveCancleWithTitle:@"获取活动列表失败" withBlock:^(UIAlertController *alertView) {
                     [self.navigationController presentViewController:alertView animated:YES completion:nil];
@@ -347,7 +383,6 @@
         [self.navigationController pushViewController:creatteamVc animated:YES];
     }
     
-    
 }
 
 
@@ -387,20 +422,7 @@
         }
     }
     
-    
-    
-    
-//    if (([self.teamArray count] != 0) || ([self.myTeamArray count] != 0)) {
-//            return [self.teamArray count] != 0 ? [self.teamArray count] : [self.myTeamArray count];
-//    }else{
-//        if ([self.myActivityArray count] == 0) {
-//            return 0;
-//        }else{
-//            return [self.myActivityArray count];
-//        }
-//    }
-    
-//    return ([self.myActivityArray count] != 0 ? [self.myActivityArray count] : [self.teamArray count]);
+
 }
 
 

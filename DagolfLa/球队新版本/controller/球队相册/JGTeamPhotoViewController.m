@@ -44,6 +44,7 @@
     [self uiConfig];
 }
 
+
 -(void)createClick
 {
     JGTeamCreatePhotoController* phoVc = [[JGTeamCreatePhotoController alloc]init];
@@ -208,6 +209,11 @@
     phoVc.albumKey = [_dataArray[indexPath.row] timeKey];
     phoVc.power = _power;
     phoVc.userKey = [_dataArray[indexPath.row] userKey];
+    phoVc.blockRefresh = ^(){
+        _collectionView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
+        [_collectionView.header beginRefreshing];
+        [_collectionView reloadData];
+    };
     [self.navigationController pushViewController:phoVc animated:YES];
 }
 

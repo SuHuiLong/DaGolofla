@@ -62,6 +62,9 @@
     _page = 0;
     self.title = @"球队大厅";
     _tableView = [[JGTeamChannelTableView alloc] initWithFrame:[UIScreen mainScreen].bounds style:(UITableViewStylePlain)];
+//    _tableView = [[JGTeamChannelTableView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight - 40)];
+    _tableView.separatorStyle = UITableViewCellAccessoryDisclosureIndicator;
+
     _tableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
     _tableView.footer=[MJDIYBackFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRereshing)];
     [_tableView.header beginRefreshing];
@@ -93,11 +96,7 @@
         NSLog(@"%@", data);
         self.modelArray = [data objectForKey:@"teamList"];
         [self.tableView reloadData];
-//        for (NSDictionary *Dic in dataArray) {
-//            JGTeamDetail *model = [[JGTeamDetail alloc] init];
-//            [model setValuesForKeysWithDictionary:Dic];
-//            [self.modelArray addObject:model];
-//        }
+
     }];
     
 }
@@ -264,7 +263,7 @@
         }
 
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        self.tableView.separatorStyle = UITableViewCellAccessoryNone;
+//        self.tableView.separatorStyle = UITableViewCellAccessoryNone;
         return cell;
     }else{
         // TEST
@@ -274,7 +273,7 @@
         cell.adressLabel.text = [self.modelArray[indexPath.row] objectForKey:@"crtyName"];
         cell.describLabel.text = [self.modelArray[indexPath.row] objectForKey:@"info"];;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        self.tableView.separatorStyle = UITableViewCellAccessoryNone;
+//        self.tableView.separatorStyle = UITableViewCellAccessoryNone;
 
         return cell;
     }

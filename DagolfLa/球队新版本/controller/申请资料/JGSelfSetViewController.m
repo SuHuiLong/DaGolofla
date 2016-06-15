@@ -9,6 +9,7 @@
 #import "JGSelfSetViewController.h"
 #import "JGApplyMaterialTableViewCell.h"
 #import "JGButtonTableViewCell.h"
+#import "JGLableAndLableTableViewCell.h"
 
 #import "JGLTeamChoiseViewController.h"
 @interface JGSelfSetViewController ()<UITableViewDelegate, UITableViewDataSource,UIPickerViewDataSource,UIPickerViewDelegate,UITextFieldDelegate>
@@ -38,7 +39,7 @@
         self.title  = @"入队申请资料";
     }
     
-    UIBarButtonItem *rightBar = [[UIBarButtonItem alloc] initWithTitle:@"完成" style:(UIBarButtonItemStyleDone) target:self action:@selector(complete)];
+    UIBarButtonItem *rightBar = [[UIBarButtonItem alloc] initWithTitle:@"保存" style:(UIBarButtonItemStyleDone) target:self action:@selector(complete)];
     rightBar.tintColor = [UIColor whiteColor];
     self.navigationItem.rightBarButtonItem = rightBar;
     
@@ -215,12 +216,13 @@
 
 - (void)creatNewTableView{
     
-    self.secondTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 26*screenWidth/320*2 + 40*screenWidth/320*9) style:UITableViewStylePlain];
+    self.secondTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 26*screenWidth/320*2 + 40*screenWidth/320*10) style:UITableViewStylePlain];
     self.secondTableView.delegate = self;
     self.secondTableView.dataSource = self;
     [self.secondTableView registerClass:[JGApplyMaterialTableViewCell class] forCellReuseIdentifier:@"cell"];
     [self.secondTableView registerClass:[JGButtonTableViewCell class] forCellReuseIdentifier:@"cellBtn"];
-    
+    [self.secondTableView registerClass:[JGLableAndLableTableViewCell class] forCellReuseIdentifier:@"cellLB"];
+
     self.titleArray = [NSArray arrayWithObjects:@[@"姓名", @"性别", @"手机号码"], @[@"行业", @"公司", @"职业",   @"常住地址", @"衣服尺码", @"惯用手"], nil];
     self.placeholderArray = [NSArray arrayWithObjects:@[@"请输入真实姓名", @"请输入", @"请输入手机号" ],@[@"请输入你的行业",@"请输入你的公司",@"请输入你的职位",@"方便活动邀请", @"统一制服制定", @"制定特殊需求"],  nil];
     [self.view addSubview: self.secondTableView];
@@ -257,9 +259,15 @@
     
     if (indexPath.section == 0 && indexPath.row == 1) {
         JGLTeamChoiseViewController* tcVc = [[JGLTeamChoiseViewController alloc]init];
-        tcVc.dataArray = @[@"保密",@"男",@"女"];
+        tcVc.dataArray = @[@"女",@"男",@"保密"];
         tcVc.introBlock = ^(NSString* strName, NSNumber* num){
-            
+            JGLableAndLableTableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+            cell.contentLB.text = strName;
+            if ([num integerValue] == 2) {
+                [self.paraDic setObject:@-1 forKey:@"sex"];
+            }else{
+                [self.paraDic setObject:num forKey:@"sex"];
+            }
         };
         [self.navigationController pushViewController:tcVc animated:YES];
     }
@@ -268,7 +276,10 @@
         JGLTeamChoiseViewController* tcVc = [[JGLTeamChoiseViewController alloc]init];
         tcVc.dataArray = @[@"左手",@"右手"];
         tcVc.introBlock = ^(NSString* strName, NSNumber* num){
-            
+            JGLableAndLableTableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+            cell.contentLB.text = strName;
+            [self.paraDic setObject:num forKey:@"hand"];
+
         };
         [self.navigationController pushViewController:tcVc animated:YES];
     }
@@ -350,7 +361,7 @@
             [[JsonHttp jsonHttp] httpRequest:@"team/updateTeamMember" JsonKey:@"newMembr" withData:self.paraDic requestMethod:@"POST" failedBlock:^(id errType) {
                 
             } completionBlock:^(id data) {
-                
+
             }];
             
             
@@ -367,7 +378,8 @@
 //            }];
         }
         
-        
+        [self.navigationController popViewControllerAnimated:YES];
+
         [Helper alertViewNoHaveCancleWithTitle:@"提交成功" withBlock:^(UIAlertController *alertView) {
             [self.navigationController presentViewController:alertView animated:YES completion:nil];
         }];
@@ -407,6 +419,7 @@
         JGApplyMaterialTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.labell.text = @"姓名";
+        cell.labell.textColor = [UIColor lightGrayColor];
         if ([self.memeDic objectForKey:@"userName"]) {
             cell.textFD.text = [self.memeDic objectForKey:@"userName"];
             return cell;
@@ -417,6 +430,35 @@
 
         }
     }else if (indexPath.section == 0 && indexPath.row == 1){
+        
+        
+        
+        JGLableAndLableTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellLB" forIndexPath:indexPath];
+        cell.promptLB.text = self.titleArray[indexPath.section][indexPath.row];
+        cell.promptLB.textColor = [UIColor lightGrayColor];
+        cell.contentLB.frame = CGRectMake(100  * screenWidth / 320, 15 * screenWidth / 320, screenWidth - 130  * screenWidth / 320, 15 * screenWidth / 320);
+        if ([self.memeDic objectForKey:@"sex"]) {
+
+            if ([[self.memeDic objectForKey:@"sex"] integerValue] == 0) {
+                cell.contentLB.text = @"女";
+            }else if ([[self.memeDic objectForKey:@"sex"] integerValue] == 1){
+                cell.contentLB.text = @"男";
+            }else{
+                cell.contentLB.text = @"保密";
+            }
+        }else{
+            cell.contentLB.text = @"请选择";
+        }
+        
+        cell.contentLB.textAlignment = NSTextAlignmentRight;
+        cell.contentLB.textColor = [UIColor blackColor];
+        //        [cell.button addTarget:self action:@selector(cellBtn) forControlEvents:(UIControlEventTouchUpInside)];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        
+        
+        
+        /*
         JGButtonTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellBtn" forIndexPath:indexPath];
         cell.labell.text = @"性别";
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -432,12 +474,13 @@
         }else{
             [cell.button setTitle:@"性别" forState:(UIControlStateNormal)];
             
-        }
+        }*/
         return cell;
 
     }else if (indexPath.section == 0 && indexPath.row == 2){
         JGApplyMaterialTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
         cell.labell.text = @"手机号码";
+        cell.labell.textColor = [UIColor lightGrayColor];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         if ([self.memeDic objectForKey:@"mobile"]) {
             cell.textFD.text = [self.memeDic objectForKey:@"mobile"];
@@ -451,6 +494,7 @@
     }else if (indexPath.section == 1 && indexPath.row == 0){
         JGApplyMaterialTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
         cell.labell.text = @"行业";
+        cell.labell.textColor = [UIColor lightGrayColor];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         if ([self.memeDic objectForKey:@"industry"]) {
             cell.textFD.text = [self.memeDic objectForKey:@"industry"];
@@ -463,6 +507,7 @@
     }else if (indexPath.section == 1 && indexPath.row == 1){
         JGApplyMaterialTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
         cell.labell.text = @"公司";
+        cell.labell.textColor = [UIColor lightGrayColor];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         if ([self.memeDic objectForKey:@"company"]) {
             cell.textFD.text = [self.memeDic objectForKey:@"company"];
@@ -474,6 +519,7 @@
     }else if (indexPath.section == 1 && indexPath.row == 2){
         JGApplyMaterialTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
         cell.labell.text = @"职业";
+        cell.labell.textColor = [UIColor lightGrayColor];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         if ([self.memeDic objectForKey:@"occupation"]) {
             cell.textFD.text = [self.memeDic objectForKey:@"occupation"];
@@ -486,6 +532,7 @@
     }else if (indexPath.section == 1 && indexPath.row == 3){
         JGApplyMaterialTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
         cell.labell.text = @"常住地址";
+        cell.labell.textColor = [UIColor lightGrayColor];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         if ([self.memeDic objectForKey:@"address"]) {
             cell.textFD.text = [self.memeDic objectForKey:@"address"];
@@ -498,6 +545,7 @@
     }else if (indexPath.section == 1 && indexPath.row == 4){
         JGApplyMaterialTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
         cell.labell.text = @"衣服尺码";
+        cell.labell.textColor = [UIColor lightGrayColor];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         if ([self.memeDic objectForKey:@"size"]) {
             cell.textFD.text = [self.memeDic objectForKey:@"size"];
@@ -510,6 +558,29 @@
         }
 
     }else if (indexPath.section == 1 && indexPath.row == 5){
+        
+        JGLableAndLableTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellLB" forIndexPath:indexPath];
+        cell.promptLB.text = self.titleArray[indexPath.section][indexPath.row];
+        cell.promptLB.textColor = [UIColor lightGrayColor];
+        cell.contentLB.frame = CGRectMake(100  * screenWidth / 320, 15 * screenWidth / 320, screenWidth - 130  * screenWidth / 320, 15 * screenWidth / 320);
+        
+        if ([self.memeDic objectForKey:@"hand"]) {
+            if ([[self.memeDic objectForKey:@"hand"] integerValue]== 0) {
+                cell.contentLB.text = @"左手";
+            }else if ([[self.memeDic objectForKey:@"hand"] integerValue] == 1){
+                cell.contentLB.text = @"右手";
+            }
+        }else{
+            cell.contentLB.text = @"请选择";
+        }
+        
+        cell.contentLB.textColor = [UIColor blackColor];
+        cell.contentLB.textAlignment = NSTextAlignmentRight;
+        //        [cell.button addTarget:self action:@selector(cellBtnSec) forControlEvents:(UIControlEventTouchUpInside)];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        
+        /*
         JGButtonTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellBtn" forIndexPath:indexPath];
         cell.labell.text = @"惯用手";
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -524,6 +595,7 @@
             [cell.button setTitle:@"请输入惯用手" forState:(UIControlStateNormal)];
             
         }
+         */
         return cell;
 
     }else{

@@ -7,7 +7,7 @@
 //
 
 #import "JGNotTeamMemberDetailViewController.h"
-#import "JGTeamCreatePhotoController.h" //相册
+#import "JGTeamPhotoViewController.h" //相册
 #import "JGTeamActivityViewController.h" //活动
 #import "JGHLaunchActivityViewController.h"
 #import "JGTableViewCell.h"
@@ -53,6 +53,8 @@ static CGFloat ImageHeight  = 210.0;
 
 @property (nonatomic, strong)UIButton *addressBtn;//添加地址
 
+@property (nonatomic, strong)UIView *backView;
+
 @end
 
 @implementation JGNotTeamMemberDetailViewController
@@ -97,7 +99,7 @@ static CGFloat ImageHeight  = 210.0;
         self.imgProfile.frame = CGRectMake(0, 0, screenWidth, ImageHeight);
         self.imgProfile.userInteractionEnabled = YES;
 
-        self.launchActivityTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight - 44) style:(UITableViewStylePlain)];
+        self.launchActivityTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight) style:(UITableViewStylePlain)];
         [self.launchActivityTableView registerClass:[JGLableAndLableTableViewCell class] forCellReuseIdentifier:@"lbVSlb"];
         [self.launchActivityTableView registerClass:[JGDisplayInfoTableViewCell class] forCellReuseIdentifier:@"Display"];
         [self.launchActivityTableView registerClass:[JGImageAndLabelAndLabelTableViewCell class] forCellReuseIdentifier:@"iamgeVCell"];
@@ -163,6 +165,7 @@ static CGFloat ImageHeight  = 210.0;
 
     
     [self createPreviewBtn];
+    self.launchActivityTableView.tableFooterView = self.backView;
 }
 - (void)replaceWithPicture:(UIButton *)Btn{
     if (Btn.tag == 333) {
@@ -180,8 +183,6 @@ static CGFloat ImageHeight  = 210.0;
         // 球队详情
         JGTeamDeatilWKwebViewController *wkVC = [[JGTeamDeatilWKwebViewController alloc] init];
         
-        
-        
         wkVC.detailString = [self.detailDic objectForKey:@"details"];
         wkVC.teamName = [self.detailDic objectForKey:@"name"];
         [self.navigationController pushViewController:wkVC animated:YES];
@@ -191,18 +192,28 @@ static CGFloat ImageHeight  = 210.0;
 
 #pragma mark -- 预览
 - (void)createPreviewBtn{
-    UIButton *previewBtn = [[UIButton alloc]initWithFrame:CGRectMake(41 * screenWidth / 320, screenHeight -44, screenWidth - 40, 44)];
+    
+    self.backView = [[UIView alloc] initWithFrame:CGRectMake(10 * screenWidth / 320, screenHeight - 0, screenWidth - 20 * screenWidth / 320, 60 * screenWidth / 320)];
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 10, screenWidth - 20 * screenWidth / 320,40 * screenWidth / 320)];
+
+    UIButton *previewBtn = [[UIButton alloc]initWithFrame:CGRectMake(71 * screenWidth / 320, 0 * screenWidth / 320, screenWidth - 90 * screenWidth / 320, 40 * screenWidth / 320)];
     [previewBtn setTitle:@"申请加入" forState:UIControlStateNormal];
     previewBtn.backgroundColor = [UIColor colorWithHexString:@"#F59826"];
     [previewBtn addTarget:self action:@selector(previewBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:previewBtn];
+    [view addSubview:previewBtn];
     
-    UIButton *askBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, screenHeight -44, 40 * screenWidth / 320, 44)];
-    [askBtn setTitle:@"咨询" forState:UIControlStateNormal];
+    UIButton *askBtn = [UIButton buttonWithType:(UIButtonTypeCustom)];
+    askBtn.frame = CGRectMake(0, 0 * screenWidth / 320, 70 * screenWidth / 320, 40 * screenWidth / 320);
+//    [askBtn setTitle:@"咨询" forState:UIControlStateNormal];
     askBtn.backgroundColor = [UIColor colorWithHexString:@"#F59826"];
+    [askBtn setImage:[UIImage imageNamed:@"consulting"] forState:(UIControlStateNormal)];
+    // {top, left, bottom, right};
     [askBtn addTarget:self action:@selector(askBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:askBtn];
-    
+    [view addSubview:askBtn];
+    view.clipsToBounds = YES;
+    view.layer.cornerRadius = 6.f;
+    [self.backView addSubview:view];
+//    [self.launchActivityTableView addSubview:self.backView];
 }
 #pragma mark -- 申请加入
 - (void)previewBtnClick:(UIButton *)btn{
@@ -215,18 +226,23 @@ static CGFloat ImageHeight  = 210.0;
 
 #pragma mark -- 咨询
 - (void)askBtnClick:(UIButton *)btn{
-    ChatDetailViewController *vc = [[ChatDetailViewController alloc] init];
-    //设置聊天类型
-    vc.conversationType = ConversationType_PRIVATE;
-    //设置对方的id
-    vc.targetId = [NSString stringWithFormat:@"%@",[self.detailDic objectForKey:@"answerKey"]];
-    //设置对方的名字
-    //    vc.userName = model.conversationTitle;
-    //设置聊天标题
-    vc.title = [self.detailDic objectForKey:@"answerName"];
-    //设置不现实自己的名称  NO表示不现实
-    vc.displayUserNameInCell = NO;
-    [self.navigationController pushViewController:vc animated:YES];
+    
+    
+    NSMutableString * str=[[NSMutableString alloc] initWithFormat:@"telprompt://%@", [self.detailDic objectForKey:@"userMobile"]];
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:str]];
+    
+//    ChatDetailViewController *vc = [[ChatDetailViewController alloc] init];
+//    //设置聊天类型
+//    vc.conversationType = ConversationType_PRIVATE;
+//    //设置对方的id
+//    vc.targetId = [NSString stringWithFormat:@"%@",[self.detailDic objectForKey:@"answerKey"]];
+//    //设置对方的名字
+//    //    vc.userName = model.conversationTitle;
+//    //设置聊天标题
+//    vc.title = [self.detailDic objectForKey:@"answerName"];
+//    //设置不现实自己的名称  NO表示不现实
+//    vc.displayUserNameInCell = NO;
+//    [self.navigationController pushViewController:vc animated:YES];
 }
 
 #pragma mark -- 改变图片位置 放大缩小
@@ -271,7 +287,7 @@ static CGFloat ImageHeight  = 210.0;
     }else if (section == 1){
         return 4;
     }else if (section == 2){
-        return 1;
+        return 2;
     }else{
         return 1;
     }
@@ -371,6 +387,7 @@ static CGFloat ImageHeight  = 210.0;
             launchActivityCell.imageV.image = [UIImage imageNamed:@"hd-2"];
         }else{
             launchActivityCell.promptLB.text = @"球队相册";
+            launchActivityCell.imageV.image = [UIImage imageNamed:@"xc"];
         }
         launchActivityCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         return launchActivityCell;
@@ -389,7 +406,8 @@ static CGFloat ImageHeight  = 210.0;
             
         }else{
             
-            JGTeamCreatePhotoController *photo = [[JGTeamCreatePhotoController alloc] init];
+            JGTeamPhotoViewController *photo = [[JGTeamPhotoViewController alloc] init];
+            photo.teamKey = [self.detailDic objectForKey:@"timeKey"];
             [self.navigationController pushViewController:photo animated:YES];
         }
         

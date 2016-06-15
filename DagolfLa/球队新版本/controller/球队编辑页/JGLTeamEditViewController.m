@@ -146,7 +146,8 @@ static CGFloat ImageHeight  = 210.0;
 //    self.titleField.font = [UIFont systemFontOfSize:15 * screenWidth / 375];
     self.titleField.textAlignment = NSTextAlignmentCenter;
     self.titleField.textColor = [UIColor whiteColor];
-    self.titleField.font = [UIFont systemFontOfSize:16 * screenWidth / 375];
+    self.titleField.font = [UIFont systemFontOfSize:15];
+
 //    self.titleField.borderStyle = UITextBorderStyleRoundedRect;
     self.titleField.delegate = self;
     
