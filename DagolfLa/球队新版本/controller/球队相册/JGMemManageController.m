@@ -35,7 +35,7 @@
     // Do any additional setup after loading the view.
     
     
-    _arrayTitle = [NSArray arrayWithObjects:@"基本信息",@"入会时间",@"权限设置", nil];
+    _arrayTitle = [NSArray arrayWithObjects:@"基本信息",@"权限设置", nil];
     _arrayInformation = [NSArray arrayWithObjects:@"姓名",@"性别",@"差点",@"球龄", nil];
     
     [self uiConfig];
@@ -47,7 +47,7 @@
 
 -(void)uiConfig
 {
-    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, 45*7*ScreenWidth/375 + 30*ScreenWidth/375) style:UITableViewStylePlain];
+    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, 45*6*ScreenWidth/375 + 30*ScreenWidth/375) style:UITableViewStylePlain];
     _tableView.delegate = self;
     _tableView.dataSource = self;
 //    _tableView.scrollEnabled = NO;
@@ -94,7 +94,7 @@
 
 //指定有多少个分区(Section)，默认为1
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 3;
+    return 2;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -106,9 +106,9 @@
         JGMemTitleTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"JGMemTitleTableViewCell" forIndexPath:indexPath];
         cell.titleLabel.text = _arrayTitle[indexPath.section];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        if (indexPath.section == 1) {
-            cell.detailLabel.text = _model.createTime;
-        }
+//        if (indexPath.section == 1) {
+//            cell.detailLabel.text = _model.createTime;
+//        }
         
         
         return cell;
@@ -172,7 +172,7 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.section == 2)
+    if (indexPath.section == 1)
     {
         //权限设置的点击事件
         JGMemAuthorityViewController* autVc = [[JGMemAuthorityViewController alloc]init];
@@ -188,7 +188,7 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 {
-    if (section == 3) {
+    if (section == 2) {
         return 64*screenWidth/375;
     }
     else

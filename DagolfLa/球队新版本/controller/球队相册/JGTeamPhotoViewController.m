@@ -202,20 +202,26 @@
             cell.suoImage.hidden = NO;
         }
     }
-    if ([_power containsString:@"1005"] == YES || [DEFAULF_USERID integerValue] == [[_dataArray[indexPath.row] userKey] integerValue]) {
-        cell.manageBtn.hidden = NO;
-        cell.manageBtn.tag = 10000 + indexPath.row;
-        [cell.manageBtn addTarget:self action:@selector(manageClick:) forControlEvents:UIControlEventTouchUpInside];
+    if (_power != nil) {
+        if ([_power containsString:@"1005"] == YES || [DEFAULF_USERID integerValue] == [[_dataArray[indexPath.row] userKey] integerValue]) {
+            cell.manageBtn.hidden = NO;
+            cell.manageBtn.tag = 10000 + indexPath.row;
+            [cell.manageBtn addTarget:self action:@selector(manageClick:) forControlEvents:UIControlEventTouchUpInside];
+        }
+        else
+        {
+            cell.manageBtn.hidden = YES;
+        }
     }
     else
     {
         cell.manageBtn.hidden = YES;
     }
+    
     return cell;
 }
 -(void)manageClick:(UIButton *)btn
 {
-    
     JGTeamCreatePhotoController* phoVc = [[JGTeamCreatePhotoController alloc]init];
     phoVc.title = @"球队相册管理";
     phoVc.isManage = YES;

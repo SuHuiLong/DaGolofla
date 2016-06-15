@@ -9,7 +9,7 @@
 #import "ChangePicViewController.h"
 //#import "Helper.h"
 //#import "PostDataRequest.h"
-//#import "RCDraggableButton.h"
+#import "RCDraggableButton.h"
 @interface ChangePicViewController ()<UIWebViewDelegate>
 
 @property(nonatomic,retain)UIWebView *webView;
@@ -17,6 +17,7 @@
 @property(nonatomic,retain)UIImageView *imageView;
 
 @property(nonatomic,retain)UIActivityIndicatorView *actIndicatorView;
+
 
 @end
 
@@ -70,8 +71,35 @@
     [self.view addSubview:actIndicator];
     _actIndicatorView = actIndicator;
     
+    
+    RCDraggableButton *avatar = [[RCDraggableButton alloc] initInKeyWindowWithFrame:CGRectMake(0, 100, 33, 38)];
+    [self.view addSubview:avatar];
+    avatar.backgroundColor = [UIColor clearColor];
+    [avatar setBackgroundImage:[UIImage imageNamed:@"sy"] forState:UIControlStateNormal];
+    UITapGestureRecognizer *tapGesture=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(btnWebClick:)];
+    tapGesture.numberOfTapsRequired = 1;
+    [avatar addGestureRecognizer:tapGesture];
+    
 }
+-(void)btnWebClick:(UIButton *)btn
+{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
+{
 
+    //返回
+    NSArray  * arrayBack= [[request.URL absoluteString] componentsSeparatedByString:@":"];
+    ////NSLog(@"%@",arrayBack);
+    NSString *backStr = @"backsys";
+    if ([arrayBack[0] isEqual:backStr]) {
+        self.navigationController.navigationBarHidden=NO;
+        [self.navigationController popViewControllerAnimated:YES];
+        return NO;
+        
+    }
+    return YES;
+}
 
 -(void)webViewDidFinishLoad:(UIWebView *)webView
 {
@@ -79,6 +107,9 @@
     [_actIndicatorView stopAnimating];
 
 }
+
+
+
 -(void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
 {
     ////NSLog(@"webview下载失败，error = %@",[error localizedDescription]);
