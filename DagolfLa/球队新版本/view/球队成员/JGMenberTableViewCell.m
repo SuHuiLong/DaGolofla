@@ -171,11 +171,14 @@
 
 - (void)clickTap:(UITapGestureRecognizer *)recognizer{
     NSLog(@"%@", _poleLabel.text);
-    if (_poleLabel.text) {
+    NSString *string = [_poleLabel.text stringByTrimmingCharactersInSet:[NSCharacterSet decimalDigitCharacterSet]];
+    if(string.length == 0)
+    {
         if (self.delegate) {
             [self.delegate makePhoneClick:_poleLabel.text];
         }
     }
+    
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
