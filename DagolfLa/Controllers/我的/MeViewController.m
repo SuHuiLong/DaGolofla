@@ -161,7 +161,7 @@
 //    _arrayTitle = @[@[@"我的聊天",@"我的消息",@"交易中心",@"我的活动",@"推荐有礼"],@[@"设置"]];
     _arrayTitle = @[@[@""],@[@"球友",@"足迹"],@[@"交易中心",@"我的活动"],@[@"推荐有礼",@"关于我们",@"产品评价"],@[@"设置"]];
     _arrayPic = @[@[@""],@[@"qyIcon",@"zuji"],@[@"jyIcon",@"hdIcon"],@[@"tjIcon",@"gyIcon",@"proIcon"],@[@"setIcon"]];
-    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, 44*8*ScreenWidth/375+40*ScreenWidth/375+90*ScreenWidth/375)];
+    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, 44*7*ScreenWidth/375+40*ScreenWidth/375+90*ScreenWidth/375)];
     
     _tableView.delegate = self;
     _tableView.dataSource = self;
@@ -200,7 +200,7 @@
     }
     else if (section == 2)
     {
-        count = 2;
+        count = 1;
     }
     else if (section == 3)
     {
