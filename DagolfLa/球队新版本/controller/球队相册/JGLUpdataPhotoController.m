@@ -346,14 +346,22 @@
 }
 
 -(void)FabuClick:(UIButton *)btn{
+    MBProgressHUD *progress = [[MBProgressHUD alloc] initWithView:self.view];
+    progress.mode = MBProgressHUDModeIndeterminate;
+    progress.labelText = @"正在修改...";
+    [self.view addSubview:progress];
+    [progress show:YES];
+    
+    
     NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
     [dict setObject:_strTimeKey forKey:@"albumKey"];
     [dict setObject:@1 forKey:@"mediaType"];
 
     [[JsonHttp jsonHttp] httpRequest:@"team/saveTeamMedia" JsonKey:@"TeamMedia" withData:dict andArray:_selectImages requestMethod:@"POST" failedBlock:^(id errType) {
         NSLog(@"失败");
+        [MBProgressHUD hideAllHUDsForView:self.view animated:NO];
     } completionBlock:^(id data) {
-        
+        [MBProgressHUD hideAllHUDsForView:self.view animated:NO];
     }];
     
 }

@@ -14,7 +14,7 @@
 @property (strong, nonatomic) NSNumber* teamKey;
 
 //相册中的权限设置
-@property (strong, nonatomic) NSString* power;
+@property (strong, nonatomic) NSString* powerPho;
 
 //teamember,判断是不是球队成员
 @property (strong, nonatomic) NSMutableDictionary* dictMember;

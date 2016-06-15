@@ -70,6 +70,7 @@
 #pragma mark --没有权限只能保存图片
 -(void)saveClick
 {
+    
     [Helper alertViewWithTitle:@"是否确定要保存照片" withBlockCancle:^{
         
     } withBlockSure:^{
@@ -108,12 +109,21 @@
         [Helper alertViewWithTitle:@"是否确定要删除照片" withBlockCancle:^{
             
         } withBlockSure:^{
+            
+            MBProgressHUD *progress = [[MBProgressHUD alloc] initWithView:self.view];
+            progress.mode = MBProgressHUDModeIndeterminate;
+            progress.labelText = @"正在删除...";
+            [self.view addSubview:progress];
+            [progress show:YES];
+            
             NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
             [dict setObject:@[[self.selectImages objectAtIndex:self.index]] forKey:@"timeKeyList"];
             [dict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:userID] forKey:@"userKey"];
             [[JsonHttp jsonHttp]httpRequest:@"team/batchDeleteTeamMedia" JsonKey:nil withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
                 NSLog(@"errType == %@", errType);
+                [MBProgressHUD hideAllHUDsForView:self.view animated:NO];
             } completionBlock:^(id data) {
+                [MBProgressHUD hideAllHUDsForView:self.view animated:NO];
                 _isDelete = YES;
                 if (_deleteBlock) {
                     _deleteBlock(_index);
