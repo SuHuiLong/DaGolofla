@@ -72,8 +72,44 @@
     self.money4 = [[UIImageView alloc]initWithFrame:CGRectMake(_section4.frame.size.width - 12, _section4.frame.size.height/2-6, 12, 12)];
     [_section4 addSubview:_money4];
     
+//    UILongPressGestureRecognizer *recognizerone = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongPress:)];
+//    recognizerone.minimumPressDuration = 0.5; //设置最小长按时间；默认为0.5秒
+//    UILongPressGestureRecognizer *recognizertwo = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongPress:)];
+//    recognizertwo.minimumPressDuration = 0.5; //设置最小长按时间；默认为0.5秒
+//    UILongPressGestureRecognizer *recognizerthree = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongPress:)];
+//    recognizerthree.minimumPressDuration = 0.5; //设置最小长按时间；默认为0.5秒
+//    UILongPressGestureRecognizer *recognizerfour = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongPress:)];
+//    recognizerfour.minimumPressDuration = 0.5; //设置最小长按时间；默认为0.5秒
+//    [_sction1 addGestureRecognizer:recognizerone];
+//    [_sction2 addGestureRecognizer:recognizertwo];
+//    [_section3 addGestureRecognizer:recognizerthree];
+//    [_section4 addGestureRecognizer:recognizerfour];
 }
-
+#pragma mark -- 长按手势
+- (void)handleLongPress:(UILongPressGestureRecognizer *)recognizer{
+    NSLog(@"%td", recognizer.view.tag);
+    if (self.delegate) {
+        [self.delegate handleLongPressWithBtnTag:recognizer.view.tag JGGroupCell:self];
+    }
+}
+//- (void)handleLongPress:(UILongPressGestureRecognizer *)recognizer{
+//    NSLog(@"%td", recognizer.view.tag);
+//    if (self.delegate) {
+//        [self.delegate handleLongPressWithBtnTag:recognizer.view.tag];
+//    }
+//}
+//- (void)handleLongPress:(UILongPressGestureRecognizer *)recognizer{
+//    NSLog(@"%td", recognizer.view.tag);
+//    if (self.delegate) {
+//        [self.delegate handleLongPressWithBtnTag:recognizer.view.tag];
+//    }
+//}
+//- (void)handleLongPress:(UILongPressGestureRecognizer *)recognizer{
+//    NSLog(@"%td", recognizer.view.tag);
+//    if (self.delegate) {
+//        [self.delegate handleLongPressWithBtnTag:recognizer.view.tag];
+//    }
+//}
 //第一个
 - (IBAction)sction1:(UIButton *)sender {
     [self selectImage:sender];

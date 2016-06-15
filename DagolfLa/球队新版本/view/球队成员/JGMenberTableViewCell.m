@@ -52,8 +52,10 @@
         
         _moneyLabel = [[UILabel alloc]initWithFrame:CGRectMake((screenWidth - 90)*screenWidth/320, 13*screenWidth/320, 60*screenWidth/320, 24*screenWidth/320)];
         _moneyLabel.textColor = [UIColor blackColor];
-        _moneyLabel.textAlignment = NSTextAlignmentCenter;
-        _moneyLabel.hidden = YES;
+        _moneyLabel.textAlignment = NSTextAlignmentLeft;
+        
+        _moneyLabel.hidden = NO;
+        _moneyLabel.text = nil;
         [self addSubview:_moneyLabel];
         _moneyLabel.layer.cornerRadius = 5*screenWidth/320;
         _moneyLabel.layer.masksToBounds = YES;
@@ -150,18 +152,30 @@
     _almostLabel.text = [NSString stringWithFormat:@"%td", model.almost];
     
     _poleLabel.text = [NSString stringWithFormat:@"%@",model.mobile];
+    [_poleLabel setUserInteractionEnabled:YES];
+    _poleLabel.textColor = [UIColor blueColor];
+    UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickTap:)];
+    [_poleLabel addGestureRecognizer:recognizer];
     
-    /**
     _moneyLabel.hidden = NO;
     _moneyLabel.text = nil;
     _moneyLabel.textColor = [UIColor blackColor];
-    if (model.payMoney == 0) {
-        _moneyLabel.text = @"未付款";
+    if (model.groupIndex < 0) {
+        _moneyLabel.text = @"未分组";
         _moneyLabel.textColor = [UIColor redColor];
     }else{
-        _moneyLabel.text = @"已付款";
+        _moneyLabel.text = [NSString stringWithFormat:@"%td组%td号", model.groupIndex+1, model.sortIndex+1];
     }
-     */
+    
+}
+
+- (void)clickTap:(UITapGestureRecognizer *)recognizer{
+    NSLog(@"%@", _poleLabel.text);
+    if (_poleLabel.text) {
+        if (self.delegate) {
+            [self.delegate makePhoneClick:_poleLabel.text];
+        }
+    }
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

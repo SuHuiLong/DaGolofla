@@ -4,11 +4,12 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="93" id="KGk-i7-Jjw" customClass="JGTeamActivityCell">
+        <tableViewCell autoresizesSubviews="NO" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="93" id="KGk-i7-Jjw" customClass="JGTeamActivityCell">
             <rect key="frame" x="0.0" y="0.0" width="370" height="93"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
@@ -39,7 +40,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="活动时间：6月1号" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wiU-Cc-leL">
-                        <rect key="frame" x="83" y="36" width="157" height="16"/>
+                        <rect key="frame" x="83" y="36" width="183" height="16"/>
                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
@@ -59,7 +60,7 @@
                         </variation>
                     </label>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="mUs-Ij-ZPX">
-                        <rect key="frame" x="8" y="14" width="65" height="65"/>
+                        <rect key="frame" x="8" y="14.5" width="65" height="65"/>
                         <constraints>
                             <constraint firstAttribute="width" secondItem="mUs-Ij-ZPX" secondAttribute="height" multiplier="1:1" id="NS2-h9-y8k"/>
                             <constraint firstAttribute="width" constant="65" id="tsV-Hc-Tsd"/>
@@ -77,8 +78,8 @@
                         <color key="textColor" red="0.94509803920000002" green="0.52156862749999999" blue="0.023529411760000001" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="已报名人数" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GQY-PT-ddJ">
-                        <rect key="frame" x="245" y="36" width="65" height="16"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="已报名" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GQY-PT-ddJ">
+                        <rect key="frame" x="271" y="36" width="39" height="16"/>
                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
@@ -98,9 +99,8 @@
                 </subviews>
                 <constraints>
                     <constraint firstItem="GQY-PT-ddJ" firstAttribute="leading" secondItem="wiU-Cc-leL" secondAttribute="trailing" constant="5" id="4DS-Df-74O"/>
-                    <constraint firstItem="mUs-Ij-ZPX" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="ACE-Y8-eXh"/>
+                    <constraint firstItem="mUs-Ij-ZPX" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" multiplier="0.25" constant="8" id="ACE-Y8-eXh"/>
                     <constraint firstItem="jEI-w9-a7H" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="ACz-Nc-XV0"/>
-                    <constraint firstItem="mUs-Ij-ZPX" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="DIT-BM-RG6"/>
                     <constraint firstItem="wiU-Cc-leL" firstAttribute="leading" secondItem="mUs-Ij-ZPX" secondAttribute="trailing" constant="10" id="DMT-i4-P0x"/>
                     <constraint firstItem="eiU-5e-67h" firstAttribute="top" secondItem="jEI-w9-a7H" secondAttribute="bottom" constant="10" id="Deh-uu-xru"/>
                     <constraint firstItem="8in-Cy-Vkf" firstAttribute="top" secondItem="mUs-Ij-ZPX" secondAttribute="top" id="FKa-SG-zFJ"/>
@@ -112,9 +112,10 @@
                     <constraint firstItem="GQY-PT-ddJ" firstAttribute="top" secondItem="jEI-w9-a7H" secondAttribute="bottom" constant="10" id="PMb-TT-iU4"/>
                     <constraint firstItem="lW8-fF-h3E" firstAttribute="top" secondItem="wiU-Cc-leL" secondAttribute="bottom" constant="12" id="Qs9-2i-4a4"/>
                     <constraint firstItem="srA-90-vhx" firstAttribute="leading" secondItem="mUs-Ij-ZPX" secondAttribute="trailing" constant="10" id="R6O-Wa-BxP"/>
+                    <constraint firstItem="lW8-fF-h3E" firstAttribute="leading" secondItem="8in-Cy-Vkf" secondAttribute="trailing" id="RRF-Dx-cKd"/>
                     <constraint firstItem="sCc-bc-k8k" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="SAc-Ex-kmf"/>
-                    <constraint firstItem="srA-90-vhx" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="Sg8-vs-uLg"/>
                     <constraint firstItem="7Wa-su-XmR" firstAttribute="top" secondItem="jEI-w9-a7H" secondAttribute="bottom" constant="10" id="Vdu-e2-kIh"/>
+                    <constraint firstItem="8in-Cy-Vkf" firstAttribute="top" secondItem="mUs-Ij-ZPX" secondAttribute="top" id="WUn-HJ-DE2"/>
                     <constraint firstItem="wiU-Cc-leL" firstAttribute="top" secondItem="srA-90-vhx" secondAttribute="bottom" constant="10" id="YPr-vc-GS3"/>
                     <constraint firstItem="lW8-fF-h3E" firstAttribute="leading" secondItem="mUs-Ij-ZPX" secondAttribute="trailing" constant="10" id="fFN-N8-fcu"/>
                     <constraint firstItem="srA-90-vhx" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="fgW-Oz-3QB"/>
@@ -125,14 +126,13 @@
                     <constraint firstAttribute="trailing" secondItem="sCc-bc-k8k" secondAttribute="trailing" constant="8" id="sCp-OT-vkL"/>
                     <constraint firstAttribute="trailing" secondItem="lW8-fF-h3E" secondAttribute="trailing" constant="8" id="tCZ-OZ-Koj"/>
                     <constraint firstItem="lW8-fF-h3E" firstAttribute="leading" secondItem="wiU-Cc-leL" secondAttribute="trailing" constant="10" id="tRW-6E-l8Y"/>
-                    <constraint firstItem="wiU-Cc-leL" firstAttribute="leading" secondItem="8in-Cy-Vkf" secondAttribute="trailing" constant="10" id="v4r-08-hFt"/>
+                    <constraint firstItem="wiU-Cc-leL" firstAttribute="leading" secondItem="8in-Cy-Vkf" secondAttribute="trailing" constant="10" id="yXf-ua-Re6"/>
                 </constraints>
                 <variation key="default">
                     <mask key="constraints">
-                        <exclude reference="DIT-BM-RG6"/>
-                        <exclude reference="Sg8-vs-uLg"/>
                         <exclude reference="M2h-cu-D1O"/>
                         <exclude reference="Qs9-2i-4a4"/>
+                        <exclude reference="RRF-Dx-cKd"/>
                         <exclude reference="tCZ-OZ-Koj"/>
                         <exclude reference="tRW-6E-l8Y"/>
                     </mask>
