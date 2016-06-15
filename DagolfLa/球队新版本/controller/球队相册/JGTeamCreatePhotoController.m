@@ -47,7 +47,7 @@
      ismanage == 1 需要创建，否则不创建
      */
     if (_isManage == 1) {
-//        [self createManage];
+        [self createManage];
         [self createDelete];
         UIBarButtonItem* rightBtn = [[UIBarButtonItem alloc]initWithTitle:@"修改" style:UIBarButtonItemStylePlain target:self action:@selector(upDataClick)];
         rightBtn.tintColor = [UIColor whiteColor];
@@ -242,7 +242,7 @@
     [btnDelete setTintColor:[UIColor whiteColor]];
     [self.view addSubview:btnDelete];
     btnDelete.titleLabel.font = [UIFont systemFontOfSize:16*screenWidth/375];
-    btnDelete.frame = CGRectMake(10*screenWidth/375, 95*screenWidth/375 + 45*screenWidth/375*3, screenWidth-20*screenWidth/375, 45*screenWidth/375);
+    btnDelete.frame = CGRectMake(10*screenWidth/375, 95*screenWidth/375 + 45*screenWidth/375*5, screenWidth-20*screenWidth/375, 45*screenWidth/375);
     btnDelete.layer.cornerRadius = 8*screenWidth/375;
     btnDelete.layer.masksToBounds = YES;
     [btnDelete addTarget:self action:@selector(deleteClick) forControlEvents:UIControlEventTouchUpInside];

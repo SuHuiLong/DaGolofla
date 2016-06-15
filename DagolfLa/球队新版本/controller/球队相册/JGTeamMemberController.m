@@ -61,7 +61,6 @@
     
     
     _tableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
-    _tableView.footer=[MJDIYBackFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRereshing)];
     [_tableView.header beginRefreshing];
     
 }
@@ -77,8 +76,6 @@
     [[JsonHttp jsonHttp]httpRequest:@"team/getTeamMemberList" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
         if (isReshing) {
             [_tableView.header endRefreshing];
-        }else {
-            [_tableView.footer endRefreshing];
         }
     } completionBlock:^(id data) {
         if ([[data objectForKey:@"packSuccess"] boolValue]) {
@@ -116,8 +113,6 @@
         [_tableView reloadData];
         if (isReshing) {
             [_tableView.header endRefreshing];
-        }else {
-            [_tableView.footer endRefreshing];
         }
     }];
 }
@@ -128,12 +123,6 @@
     _page = 0;
     [self downLoadData:_page isReshing:YES];
 }
-
-- (void)footRereshing
-{
-    [self downLoadData:_page isReshing:NO];
-}
-
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -165,7 +154,13 @@
     if (_listArray.count != 0) {
         [cell showData:_listArray[indexPath.section][indexPath.row] andPower:_power];
     }
-    
+    if (screenWidth == 320) {
+       cell.moneyLabel.frame = CGRectMake((screenWidth - 80)*screenWidth/320, 13*screenWidth/320, 60*screenWidth/320, 24*screenWidth/320);
+    }
+    else
+    {
+        cell.moneyLabel.frame = CGRectMake((screenWidth - 80)*screenWidth/375, 13*screenWidth/375, 60*screenWidth/375, 24*screenWidth/375);
+    }
     return cell;
 }
 
@@ -220,7 +215,7 @@
 - (NSInteger)tableView:(UITableView *)tableView sectionForSectionIndexTitle:(NSString *)title atIndex:(NSInteger)index
 {
     
-    NSIndexPath *selectIndexPath = [NSIndexPath indexPathForRow:0 inSection:index + 1];
+    NSIndexPath *selectIndexPath = [NSIndexPath indexPathForRow:0 inSection:index];
     
     if (![_listArray[index] count]) {
         
@@ -230,7 +225,7 @@
         
         [tableView scrollToRowAtIndexPath:selectIndexPath atScrollPosition:UITableViewScrollPositionNone animated:YES];
         
-        return index + 1;
+        return index;
     }
 }
 
