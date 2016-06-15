@@ -66,7 +66,7 @@
     [dict setObject:[NSString stringWithFormat:@"%td", _timeKey] forKey:@"teamKey"];
     
     //球队活动
-    _urlString = @"team/getMyTeamActivityList";
+    _urlString = @"team/getTeamActivityList";
     
     [[JsonHttp jsonHttp]httpRequest:_urlString JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
         NSLog(@"errType == %@", errType);
@@ -230,7 +230,7 @@
     JGTeamAcitivtyModel *model = [[JGTeamAcitivtyModel alloc]init];
     model = self.dataArray[indexPath.section];
  
-    [cell setJGTeamActivityCellWithModel:model fromCtrl:1];
+    [cell setJGTeamActivityCellWithModel:model fromCtrl:2];
     
     return cell;
 }
