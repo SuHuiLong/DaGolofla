@@ -14,6 +14,9 @@
 #import "JGImageAndLabelAndLabelTableViewCell.h"
 #import "JGHConcentTextViewController.h"
 #import "JGLTeamEditViewController.h"
+#import "JGHManagerViewController.h"
+#import "JGTeamDeatilWKwebViewController.h"
+
 @interface JGTeamManageViewController ()<UITableViewDelegate, UITableViewDataSource, JGHConcentTextViewControllerDelegate>
 
 @property (nonatomic, strong)UITableView *tableView;
@@ -112,13 +115,18 @@
             menVc.teamKey = [NSNumber numberWithInteger:self.teamKey];
             [self.navigationController pushViewController:menVc animated:YES];
         }else if (indexPath.row == 1) {
-            
+            JGHManagerViewController *mangerCtrl = [[JGHManagerViewController alloc]init];
+            mangerCtrl.timeKey = self.teamKey;
+            [self.navigationController pushViewController:mangerCtrl animated:YES];
         }else{
             
         }
         
     }else if (indexPath.section == 3) {
-        
+        JGTeamDeatilWKwebViewController *teamDetailCtrl = [[JGTeamDeatilWKwebViewController alloc]init];
+        teamDetailCtrl.teamName = @"账户详情";
+        teamDetailCtrl.detailString = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/team/accountManage.html?teamKey=%td&userKey=%@", self.teamKey, [[NSUserDefaults standardUserDefaults] objectForKey:userID]];
+        [self.navigationController pushViewController:teamDetailCtrl animated:YES];
     }
         
     

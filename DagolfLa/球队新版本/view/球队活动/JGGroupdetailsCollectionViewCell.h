@@ -14,6 +14,9 @@
 
 - (void)didSelectHeaderImage:(UIButton *)btn JGGroupCell:(JGGroupdetailsCollectionViewCell *)cell;
 
+//长按手势
+- (void)handleLongPressWithBtnTag:(NSInteger)tag JGGroupCell:(JGGroupdetailsCollectionViewCell *)cell;
+
 @end
 
 @interface JGGroupdetailsCollectionViewCell : UICollectionViewCell

@@ -22,6 +22,8 @@
     _iconIngv.contentMode = UIViewContentModeScaleAspectFill;
     _timeLabel.text = [NSString stringWithFormat:@"%@",model.createTime];
     _nameLabel.text = [NSString stringWithFormat:@"%@",model.name];
+    
+        
 }
 
 

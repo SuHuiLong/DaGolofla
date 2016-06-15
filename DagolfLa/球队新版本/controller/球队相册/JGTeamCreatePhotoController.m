@@ -8,7 +8,7 @@
 
 #import "JGTeamCreatePhotoController.h"
 #import "UITool.h"
-
+#import "SXPickPhoto.h"
 
 
 @interface JGTeamCreatePhotoController ()
@@ -20,7 +20,10 @@
     //判断球队是否公开，0：全部可见。1：球队成员
     NSInteger _isOpen;
     UITextField* _textTitle;
+    
+    UIImageView* _imgvChange;
 }
+@property (nonatomic,strong)SXPickPhoto * pickPhoto;//相册类
 
 @end
 
@@ -31,7 +34,7 @@
     self.view.backgroundColor = [UITool colorWithHexString:@"EEEEEE" alpha:1];
 
     _isOpen = 0;
-
+    self.pickPhoto = [[SXPickPhoto alloc]init];
    
     
     /**
@@ -209,30 +212,124 @@
 -(void)createManage
 {
     //相册封面
-    UIView* viewCover = [[UIView alloc]initWithFrame:CGRectMake(0, 75*screenWidth/375 + 45*screenWidth/375*3, screenWidth, 45*screenWidth/375)];
+    UIView* viewCover = [[UIView alloc]initWithFrame:CGRectMake(0, 75*screenWidth/375 + 45*screenWidth/375*3, screenWidth, 70*screenWidth/375)];
     viewCover.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:viewCover];
     
-    UILabel* labelCover = [[UILabel alloc]initWithFrame:CGRectMake(10*screenWidth/375, 0, 100*screenWidth/375, 45*screenWidth/375)];
+    
+    UIButton* btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    btn.frame = CGRectMake(0, 0, screenWidth, 70*screenWidth/375);
+    [viewCover addSubview:btn];
+    [btn addTarget:self action:@selector(changeBackClick:) forControlEvents:UIControlEventTouchUpInside];
+    btn.tag = 1001;
+    
+    UILabel* labelCover = [[UILabel alloc]initWithFrame:CGRectMake(10*screenWidth/375, 0, 100*screenWidth/375, 70*screenWidth/375)];
     labelCover.textColor = [UIColor lightGrayColor];
     [viewCover addSubview:labelCover];
     labelCover.text = @"相册封面";
     labelCover.font = [UIFont systemFontOfSize:15*screenWidth/375];
     
-    //照片编辑
     
-    UIView* viewEdit = [[UIView alloc]initWithFrame:CGRectMake(0, 85*screenWidth/375 + 45*screenWidth/375*4, screenWidth, 45*screenWidth/375)];
-    viewEdit.backgroundColor = [UIColor whiteColor];
-    [self.view addSubview:viewEdit];
     
-    UILabel* labelEdit = [[UILabel alloc]initWithFrame:CGRectMake(10*screenWidth/375, 0, 100*screenWidth/375, 45*screenWidth/375)];
-    labelEdit.textColor = [UIColor lightGrayColor];
-    [viewEdit addSubview:labelEdit];
-    labelEdit.text = @"照片编辑";
-    labelEdit.font = [UIFont systemFontOfSize:15*screenWidth/375];
+    _imgvChange = [[UIImageView alloc]initWithFrame:CGRectMake(screenWidth-70*screenWidth/375, 0, 70*screenWidth/375, 70*screenWidth/375)];
+    [viewCover addSubview:_imgvChange];
+    _imgvChange.layer.masksToBounds = YES;
+    _imgvChange.contentMode = UIViewContentModeScaleToFill;
+    [_imgvChange sd_setImageWithURL:[Helper setImageIconUrl:@"album/media" andTeamKey:[_numPhotoKey integerValue]andIsSetWidth:YES andIsBackGround:NO] placeholderImage:[UIImage imageNamed:@"xcback"]];
+    
     
 }
 
+#pragma mark --更换相册封面的点击事件
+-(void)changeBackClick:(UIButton *)btn
+{
+    UIAlertAction * act1 = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        //        _photos = 1;
+    }];
+    //拍照：
+    UIAlertAction * act2 = [UIAlertAction actionWithTitle:@"拍照" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        //打开相机
+        [_pickPhoto ShowTakePhotoWithController:self andWithBlock:^(NSObject *Data) {
+            NSArray* arrayData = [NSArray arrayWithObject:UIImageJPEGRepresentation((UIImage *)Data, 0.7)];
+            [self imageArray:arrayData];
+            
+        }];
+    }];
+    //相册
+    UIAlertAction * act3 = [UIAlertAction actionWithTitle:@"相册" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        //打开相册
+        [_pickPhoto SHowLocalPhotoWithController:self andWithBlock:^(NSObject *Data) {
+            NSArray* arrayData = [NSArray arrayWithObject:UIImageJPEGRepresentation((UIImage *)Data, 0.7)];
+            [self imageArray:arrayData];
+        }];
+    }];
+    
+    UIAlertController * aleVC = [UIAlertController alertControllerWithTitle:@"提示" message:@"选择图片" preferredStyle:UIAlertControllerStyleActionSheet];
+    [aleVC addAction:act1];
+    [aleVC addAction:act2];
+    [aleVC addAction:act3];
+    
+    [self presentViewController:aleVC animated:YES completion:nil];
+}
+
+#pragma mark --上传图片方法
+-(void)imageArray:(NSArray *)array
+{
+    /**
+     *  获取timekey用来作为上传图片的timekey
+     *
+     *  @param errType nil
+     *
+     *  @return nil
+     */
+    [[JsonHttp jsonHttp] httpRequest:@"globalCode/createTimeKey" JsonKey:nil withData:nil requestMethod:@"GET" failedBlock:^(id errType) {
+        
+    }completionBlock:^(id data) {
+        NSNumber* TimeKey = [data objectForKey:@"timeKey"];
+        
+        /**
+         上传图片
+         */
+        NSMutableDictionary* dictMedia = [[NSMutableDictionary alloc]init];
+        [dictMedia setObject:[NSString stringWithFormat:@"%@" ,TimeKey] forKey:@"data"];
+        [dictMedia setObject:TYPE_MEDIA_IMAGE forKey:@"nType"];
+        [dictMedia setObject:@"dagolfla" forKey:@"tag"];
+        [[JsonHttp jsonHttp] httpRequestImageOrVedio:@"1" withData:dictMedia andDataArray:array failedBlock:^(id errType) {
+            NSLog(@"errType===%@", errType);
+        } completionBlock:^(id data) {
+            /**
+             上传图片的参数
+             */
+            if ([[data objectForKey:@"code"] integerValue] == 1) {
+                NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
+                if (TimeKey != nil) {
+                   [dict setObject:TimeKey forKey:@"mediaKey"];
+                }
+                [dict setObject:_timeKey forKey:@"timeKey"];
+                [dict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:userID] forKey:@"userKey"];
+                
+                [[JsonHttp jsonHttp]httpRequest:@"team/updateTeamAlbum" JsonKey:nil withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
+                    NSLog(@"errType == %@", errType);
+                } completionBlock:^(id data) {
+                    NSLog(@"%@",data);
+                    _imgvChange.image = [UIImage imageWithData:array[0]];
+                }];
+            }
+            else
+            {
+                [Helper alertViewWithTitle:@"上传图片失败" withBlock:^(UIAlertController *alertView) {
+                    [self.navigationController presentViewController:alertView animated:YES completion:nil];
+                }];
+            }
+            
+        }];
+        
+    }];
+}
+
+
+
+#pragma 创建删除按钮
 -(void)createDelete
 {
     //删除相册按钮
@@ -242,7 +339,7 @@
     [btnDelete setTintColor:[UIColor whiteColor]];
     [self.view addSubview:btnDelete];
     btnDelete.titleLabel.font = [UIFont systemFontOfSize:16*screenWidth/375];
-    btnDelete.frame = CGRectMake(10*screenWidth/375, 95*screenWidth/375 + 45*screenWidth/375*5, screenWidth-20*screenWidth/375, 45*screenWidth/375);
+    btnDelete.frame = CGRectMake(10*screenWidth/375, 110*screenWidth/375 + 45*screenWidth/375*4, screenWidth-20*screenWidth/375, 45*screenWidth/375);
     btnDelete.layer.cornerRadius = 8*screenWidth/375;
     btnDelete.layer.masksToBounds = YES;
     [btnDelete addTarget:self action:@selector(deleteClick) forControlEvents:UIControlEventTouchUpInside];

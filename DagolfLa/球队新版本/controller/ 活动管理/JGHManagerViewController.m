@@ -1,22 +1,23 @@
 //
-//  JGTeamActivityViewController.m
+//  JGHManagerViewController.m
 //  DagolfLa
 //
-//  Created by 黄安 on 16/5/10.
+//  Created by 黄安 on 16/6/14.
 //  Copyright © 2016年 bhxx. All rights reserved.
 //
 
-#import "JGTeamActivityViewController.h"
+#import "JGHManagerViewController.h"
 #import "JGTeamAcitivtyModel.h"
 #import "JGTeamActivityCell.h"
 #import "JGTeamActibityNameViewController.h"
 #import "JGHLaunchActivityViewController.h"
 #import "JGTeamGroupViewController.h"
+#import "JGHActicityDetailsViewController.h"
 #import "MJRefresh.h"
 #import "MJDIYBackFooter.h"
 #import "MJDIYHeader.h"
 
-@interface JGTeamActivityViewController ()<UITableViewDelegate, UITableViewDataSource>
+@interface JGHManagerViewController ()<UITableViewDelegate, UITableViewDataSource>
 {
     NSString *_urlString;
 }
@@ -26,7 +27,7 @@
 
 @end
 
-@implementation JGTeamActivityViewController
+@implementation JGHManagerViewController
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:YES];
@@ -48,9 +49,7 @@
     self.page = 1;
     [self createTeamActivityTabelView];
     
-    if (_myActivityList == 1 || [self.power containsString:@"1001"]) {
-        [self createAdminBtn];
-    }
+    [self createAdminBtn];
     
     [self loadData];
     
@@ -66,18 +65,8 @@
     [dict setObject:@"0" forKey:@"offset"];
     [dict setObject:[NSString stringWithFormat:@"%td", _timeKey] forKey:@"teamKey"];
     
-    //_isMEActivity 1 我的活动； 2 球队活动； 3 所有活动
-    if (_isMEActivity == 1) {
-        //我的活动列表
-        _urlString = @"team/getTeamActivityList";
-        [dict setObject:@(self.timeKey) forKey:@"teamKey"];
-    }else if (_isMEActivity == 2) {
-        //活动大厅getMyTeamActivityAll //
-        _urlString = @"team/getTeamActivityList";
-    }else{
-        //getMyTeamActivityAll
-        _urlString = @"team/getMyTeamActivityList";
-    }
+    //球队活动
+    _urlString = @"team/getMyTeamActivityList";
     
     [[JsonHttp jsonHttp]httpRequest:_urlString JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
         NSLog(@"errType == %@", errType);
@@ -107,10 +96,7 @@
     [btn addTarget:self action:@selector(launchActivityBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     btn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
     UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithCustomView:btn];
-    
-    if (self.state == 1) {
-        self.navigationItem.rightBarButtonItem = rightItem;
-    }
+    self.navigationItem.rightBarButtonItem = rightItem;
 }
 
 #pragma mark -- 发布活动
@@ -129,7 +115,7 @@
             [self.navigationController pushViewController:launchCtrl animated:YES];
         } withBlockSure:^{
             JGTeamAcitivtyModel *model = [[JGTeamAcitivtyModel alloc]init];
-            [model setValuesForKeysWithDictionary:[userdef objectForKey:@"TeamActivityArray"]];
+            model = [[userdef objectForKey:@"TeamActivityArray"]objectAtIndex:0];
             launchCtrl.model = model;
             [self.navigationController pushViewController:launchCtrl animated:YES];
         } withBlock:^(UIAlertController *alertView) {
@@ -138,7 +124,7 @@
     }
     
     [self.navigationController pushViewController:launchCtrl animated:YES];
-
+    
 }
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
     UIView *footView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, 1)];
@@ -203,7 +189,7 @@
                 
                 [self.teamActivityTableView reloadData];
             }
-
+            
         }
         
         [self.teamActivityTableView reloadData];
@@ -224,7 +210,7 @@
     return self.dataArray.count;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 80;
+    return 81;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
     return 1;
@@ -243,23 +229,21 @@
     
     JGTeamAcitivtyModel *model = [[JGTeamAcitivtyModel alloc]init];
     model = self.dataArray[indexPath.section];
-    if (_isMEActivity == 1) {
-        [cell setJGTeamActivityCellWithModel:model fromCtrl:2];
-    }else{
-        [cell setJGTeamActivityCellWithModel:model fromCtrl:1];
-    }
+ 
+    [cell setJGTeamActivityCellWithModel:model fromCtrl:1];
     
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    JGTeamActibityNameViewController *activityNameCtrl = [[JGTeamActibityNameViewController alloc]init];
-    activityNameCtrl.isTeamChannal = 2;
+    JGHActicityDetailsViewController *detailsCtrl = [[JGHActicityDetailsViewController alloc]init];
+//    detailsCtrl.isTeamChannal = 2;
     JGTeamAcitivtyModel *model = [[JGTeamAcitivtyModel alloc]init];
     model = self.dataArray[indexPath.section];
-    activityNameCtrl.teamKey = [model.timeKey integerValue];
-    activityNameCtrl.model = model;
-    [self.navigationController pushViewController:activityNameCtrl animated:YES];
+//    activityNameCtrl.teamKey = [model.timeKey integerValue];
+    detailsCtrl.model = model;
+    [self.navigationController pushViewController:detailsCtrl animated:YES];
 }
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

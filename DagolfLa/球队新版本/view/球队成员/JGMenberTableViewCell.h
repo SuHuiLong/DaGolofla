@@ -10,6 +10,12 @@
 #import "JGLTeamMemberModel.h"
 #import "JGHPlayersModel.h"
 
+@protocol JGMenberPhoneCellDelegate <NSObject>
+
+- (void)makePhoneClick:(NSString *)phone;
+
+@end
+
 @interface JGMenberTableViewCell : UITableViewCell
 
 
@@ -31,5 +37,7 @@
 - (void)showData:(JGLTeamMemberModel *)model andPower:(NSString *)power;
 
 - (void)configJGHPlayersModel:(JGHPlayersModel *)model;
+
+@property (weak, nonatomic)id <JGMenberPhoneCellDelegate> delegate;
 
 @end

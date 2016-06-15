@@ -19,6 +19,10 @@
 //球队相册的timekey，修改相册需要
 @property (strong, nonatomic) NSNumber* timeKey;
 
+//图片相册的当前封面
+@property (strong, nonatomic) NSNumber* numPhotoKey;
+
+
 //创建相册的block
 @property (copy, nonatomic) void(^createBlock)();
 @end
