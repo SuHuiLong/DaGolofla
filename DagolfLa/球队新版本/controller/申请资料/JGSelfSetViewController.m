@@ -439,7 +439,7 @@
         cell.contentLB.frame = CGRectMake(100  * screenWidth / 320, 15 * screenWidth / 320, screenWidth - 130  * screenWidth / 320, 15 * screenWidth / 320);
         if ([self.memeDic objectForKey:@"sex"]) {
 
-            if ([self.memeDic objectForKey:@"sex"] == 0) {
+            if ([[self.memeDic objectForKey:@"sex"] integerValue] == 0) {
                 cell.contentLB.text = @"女";
             }else if ([[self.memeDic objectForKey:@"sex"] integerValue] == 1){
                 cell.contentLB.text = @"男";

@@ -30,7 +30,7 @@
         [self.iconImageV addSubview:self.iconState];
         
         
-        self.nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(90 * screenWidth / 320, 5 * screenWidth / 320, screenWidth - 160 * screenWidth / 320, 20 * screenWidth / 320)];
+        self.nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(90 * screenWidth / 320, 5 * screenWidth / 320, screenWidth - 90 * screenWidth / 320, 20 * screenWidth / 320)];
         self.nameLabel.font = [UIFont systemFontOfSize:15 * screenWidth / 320];
         [self.contentView addSubview:self.nameLabel];
         

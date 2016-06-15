@@ -62,6 +62,7 @@
     _page = 0;
     self.title = @"球队大厅";
     _tableView = [[JGTeamChannelTableView alloc] initWithFrame:[UIScreen mainScreen].bounds style:(UITableViewStylePlain)];
+//    _tableView = [[JGTeamChannelTableView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight - 40)];
     _tableView.separatorStyle = UITableViewCellAccessoryDisclosureIndicator;
 
     _tableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];

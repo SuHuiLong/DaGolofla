@@ -42,12 +42,11 @@ static CGFloat ImageHeight  = 210.0;
 
 @property (nonnull, strong)UIButton *headPortraitBtn;//头像
 
-@property (nonatomic, strong)UITextField *titleField;//球队名称输入框
 
 @property (nonatomic, strong)UIView *titleView;//顶部导航
 
 @property (nonatomic, strong)UIButton *addressBtn;//添加地址
-
+@property (nonatomic, strong)UITextField *titleField;//球队名称输入框
 
 @end
 
@@ -62,6 +61,20 @@ static CGFloat ImageHeight  = 210.0;
     
     self.headPortraitBtn.layer.masksToBounds = YES;
     self.headPortraitBtn.layer.cornerRadius = 8.0;
+    
+    if (_model.name) {
+        self.titleField.text = _model.name;
+    }
+    
+    if (_model.ballName) {
+        
+        NSDictionary *attribute = @{NSFontAttributeName: [UIFont systemFontOfSize:13]};
+        CGSize size = [self.model.ballName boundingRectWithSize:CGSizeMake(screenWidth - 100, 0) options: NSStringDrawingTruncatesLastVisibleLine | NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading attributes:attribute context:nil].size;
+        CGRect address = self.addressBtn.frame;
+        self.addressBtn.frame = CGRectMake(address.origin.x, address.origin.y, size.width, 25);
+        [self.addressBtn setTitle:self.model.ballName forState:UIControlStateNormal];
+    }
+    
 }
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:YES];
@@ -164,6 +177,9 @@ static CGFloat ImageHeight  = 210.0;
          [self.titleField becomeFirstResponder];
     }
     _titleArray = @[@[], @[@"活动开始时间", @"活动结束时间", @"报名截止时间"], @[@"费用说明", @"人员限制", @"活动说明"], @[@"联系电话"]];
+    
+//    [self.model setValuesForKeysWithDictionary:[[NSUserDefaults standardUserDefaults] objectForKey:@"TeamActivityArray"]];
+    
 }
 
 - (void)replaceWithPicture:(UIButton *)Btn{
@@ -260,7 +276,12 @@ static CGFloat ImageHeight  = 210.0;
     return 0;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    return 10;
+    
+    if (section == 4) {
+        return 20;
+    }else{
+        return 10;
+    }
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     NSString *windowReuseIdentifier = @"SectionOneCell";
@@ -382,16 +403,79 @@ static CGFloat ImageHeight  = 210.0;
 }
 #pragma mark --保存代理
 - (void)SaveBtnClick:(UIButton *)btn{
+    
+    [self.view endEditing:YES];
+    
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+
+    
+    if (self.titleField.text.length != 0) {
+        [dict setObject:self.model.name forKey:@"name"];//活动名字
+    }
+    
+    if (self.model.beginDate != nil) {
+        [dict setObject:self.model.beginDate forKey:@"beginDate"];//活动开始时间
+
+    }
+    
+    if (self.model.endDate != nil) {
+        [dict setObject:self.model.endDate forKey:@"endDate"];//活动结束时间
+    }
+    
+    if (self.model.signUpEndTime != nil) {
+        [dict setObject:self.model.signUpEndTime forKey:@"signUpEndTime"];//活动报名截止时间
+
+    }
+    
+    
+    if (self.model.userMobile.length == 11) {
+        [dict setObject:self.model.userMobile forKey:@"userMobile"];//联系人
+
+    }
+    
+    if (self.model.ballName != nil) {
+        [dict setObject:self.model.ballName forKey:@"ballName"];//球场名称
+
+    }
+    
+    if (self.model.info != nil) {
+        [dict setObject:self.model.info forKey:@"info"];//活动简介
+
+    }
+    
+    if (self.model.memberPrice > 0) {
+        [dict setObject:[NSString stringWithFormat:@"%.2f", [self.model.memberPrice floatValue]] forKey:@"memberPrice"];//会员价
+    }
+    
+    if (self.model.guestPrice > 0) {
+        [dict setObject:[NSString stringWithFormat:@"%.2f", [self.model.guestPrice floatValue]] forKey:@"guestPrice"];//嘉宾价
+    }
+    
+    if (self.model.userName != nil) {
+        [dict setObject:self.model.userName forKey:@"userName"];//联系人
+
+    }
+    
+    if (self.model.maxCount > 0) {
+        [dict setObject:[NSString stringWithFormat:@"%ld", (long)self.model.maxCount] forKey:@"maxCount"];//最大人员数
+    }
+    if (self.model.ballKey != 0) {
+        [dict setObject:[NSString stringWithFormat:@"%ld", (long)self.model.ballKey] forKey:@"ballKey"];//球场id
+
+    }
+
+    
     NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
-    NSMutableArray *array = [NSMutableArray array];
-    [array addObject:_model];
-    [userdef setObject:array forKey:@"TeamActivityArray"];
+//    NSMutableArray *array = [NSMutableArray array];
+//    [array addObject:_model];
+    [userdef setObject:dict forKey:@"TeamActivityArray"];
     [userdef synchronize];
     [[ShowHUD showHUD]hideAnimationFromView:self.view];
     [Helper alertViewWithTitle:@"活动保存成功！" withBlock:^(UIAlertController *alertView) {
         [self.navigationController presentViewController:alertView animated:YES completion:nil];
     }];
 }
+
 #pragma mark --提交代理
 - (void)SubmitBtnClick:(UIButton *)btn{
     if (self.titleField.text.length == 0) {

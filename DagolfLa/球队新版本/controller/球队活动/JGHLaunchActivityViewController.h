@@ -17,4 +17,6 @@
 
 @property (nonatomic, strong)JGTeamAcitivtyModel *model;
 
+
+
 @end
