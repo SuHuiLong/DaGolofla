@@ -180,7 +180,7 @@
                     
                     self.lable1.text = model.name;
                     //金钱按钮
-                    if (model.payMoney != 0) {
+                    if ([model.payMoney floatValue] != 0) {
                         [self.money1 setImage:[UIImage imageNamed:@"payMoney"]];
                     }
                 }
@@ -194,7 +194,7 @@
                     self.lable2.text = model.name;
                     
                     //金钱按钮
-                    if (model.payMoney != 0) {
+                    if ([model.payMoney floatValue] != 0) {
                         [self.money2 setImage:[UIImage imageNamed:@"payMoney"]];
                     }
                 }
@@ -208,7 +208,7 @@
                     self.lable3.text = model.name;
                     
                     //金钱按钮
-                    if (model.payMoney != 0) {
+                    if ([model.payMoney floatValue] != 0) {
                         [self.money3 setImage:[UIImage imageNamed:@"payMoney"]];
                     }
                 }
@@ -222,7 +222,7 @@
                     self.lable4.text = model.name;
                     
                     //金钱按钮
-                    if (model.payMoney != 0) {
+                    if ([model.payMoney floatValue] != 0) {
                         [self.money4 setImage:[UIImage imageNamed:@"payMoney"]];
                     }
                 }
