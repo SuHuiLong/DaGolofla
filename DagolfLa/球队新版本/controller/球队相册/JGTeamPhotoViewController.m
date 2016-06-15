@@ -108,7 +108,8 @@
                 [_dataArray removeAllObjects];
             }
             //数据解析
-            for (NSDictionary *dicList in [data objectForKey:@"teamAlbumList"]) {
+            for (NSDictionary *dicList in [data objectForKey:@"teamAlbumList"])
+            {
                 JGLPhotoAlbumModel *model = [[JGLPhotoAlbumModel alloc] init];
                 [model setValuesForKeysWithDictionary:dicList];
                 [_dataArray addObject:model];
@@ -164,6 +165,43 @@
     cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"JGTeamPhotoCollectionViewCell" forIndexPath:indexPath];
     cell.backgroundColor = [UIColor whiteColor];
     [cell showData:_dataArray[indexPath.row]];
+
+    
+    /**
+     *  //POWER == 0，所有人可见，隐藏image    power == 1  仅球队成员可见
+     if ([model.power integerValue] == 0) {
+     _suoImage.hidden = YES;
+     }
+     else
+     {
+     _suoImage.hidden = NO;
+     }
+
+     */
+    if (_dictMember != nil) {
+        if ([[_dictMember objectForKey:@"state"] integerValue] == 1) {
+            cell.suoImage.hidden = YES;
+        }
+        else{
+            if ([[_dataArray[indexPath.row] power] integerValue] == 0) {
+                cell.suoImage.hidden = YES;
+            }
+            else
+            {
+                cell.suoImage.hidden = NO;
+            }
+        }
+    }
+    else
+    {
+        if ([[_dataArray[indexPath.row] power] integerValue] == 0) {
+            cell.suoImage.hidden = YES;
+        }
+        else
+        {
+            cell.suoImage.hidden = NO;
+        }
+    }
     if ([_power containsString:@"1005"] == YES || [DEFAULF_USERID integerValue] == [[_dataArray[indexPath.row] userKey] integerValue]) {
         cell.manageBtn.hidden = NO;
         cell.manageBtn.tag = 10000 + indexPath.row;
@@ -177,10 +215,12 @@
 }
 -(void)manageClick:(UIButton *)btn
 {
+    
     JGTeamCreatePhotoController* phoVc = [[JGTeamCreatePhotoController alloc]init];
     phoVc.title = @"球队相册管理";
     phoVc.isManage = YES;
     phoVc.teamKey = _teamKey;
+    phoVc.numPhotoKey = [_dataArray[btn.tag - 10000] mediaKey];
     phoVc.timeKey = [_dataArray[btn.tag - 10000] timeKey];
     phoVc.createBlock = ^(void){
         _collectionView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
@@ -202,7 +242,6 @@
 //UICollectionView被选中时调用的方法
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    //
     JGPhotoAlbumViewController* phoVc = [[JGPhotoAlbumViewController alloc]init];
     phoVc.strTitle = [_dataArray[indexPath.row] name];
     phoVc.strTimeKey = [_dataArray[indexPath.row] timeKey];
@@ -214,7 +253,41 @@
         [_collectionView.header beginRefreshing];
         [_collectionView reloadData];
     };
-    [self.navigationController pushViewController:phoVc animated:YES];
+    if (_dictMember != nil) {
+        if ([[_dictMember objectForKey:@"state"] integerValue] == 1) {
+            //需要跳转
+            [self.navigationController pushViewController:phoVc animated:YES];
+        }
+        else{
+            if ([[_dataArray[indexPath.row] power] integerValue] == 0) {
+                //需要跳转
+                [self.navigationController pushViewController:phoVc animated:YES];
+            }
+            else
+            {
+                //不要需要跳转
+                [Helper alertViewWithTitle:@"此相册仅对球队成员开放，请先加入球队再行观看" withBlock:^(UIAlertController *alertView) {
+                    [self.navigationController presentViewController:alertView animated:YES completion:nil];
+                }];
+            }
+        }
+    }
+    else
+    {
+        if ([[_dataArray[indexPath.row] power] integerValue] == 0) {
+            //需要跳转
+            [self.navigationController pushViewController:phoVc animated:YES];
+        }
+        else
+        {
+            //不要需要跳转
+            [Helper alertViewWithTitle:@"此相册仅对球队成员开放，请先加入球队再行观看" withBlock:^(UIAlertController *alertView) {
+                [self.navigationController presentViewController:alertView animated:YES completion:nil];
+            }];
+        }
+    }
+    
+    
 }
 
 
