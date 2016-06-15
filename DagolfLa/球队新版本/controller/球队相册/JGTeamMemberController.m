@@ -106,8 +106,12 @@
             _page++;
             [_tableView reloadData];
         }else {
-            [Helper alertViewWithTitle:[NSString stringWithFormat:@"%@",[data objectForKey:@"packResultMsg"]] withBlock:^(UIAlertController *alertView) {
-                [self presentViewController:alertView animated:YES completion:nil];
+//            [Helper alertViewWithTitle:[NSString stringWithFormat:@"%@",[data objectForKey:@"packResultMsg"]] withBlock:^(UIAlertController *alertView) {
+//                [self presentViewController:alertView animated:YES completion:nil];
+//            }];
+            
+            [Helper alertViewNoHaveCancleWithTitle:[NSString stringWithFormat:@"%@",[data objectForKey:@"packResultMsg"]] withBlock:^(UIAlertController *alertView) {
+                [self.navigationController presentViewController:alertView animated:YES completion:nil];
             }];
         }
         [_tableView reloadData];

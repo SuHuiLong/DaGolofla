@@ -50,16 +50,16 @@
         [self addSubview:_poleLabel];
         _poleLabel.font = [UIFont systemFontOfSize:14*screenWidth/375];
         
-        _moneyLabel = [[UILabel alloc]initWithFrame:CGRectMake((screenWidth - 90)*screenWidth/320, 13*screenWidth/320, 60*screenWidth/320, 24*screenWidth/320)];
+        _moneyLabel = [[UILabel alloc]initWithFrame:CGRectMake((screenWidth - 90)*screenWidth/375, 13*screenWidth/375, 60*screenWidth/375, 24*screenWidth/375)];
         _moneyLabel.textColor = [UIColor blackColor];
         _moneyLabel.textAlignment = NSTextAlignmentLeft;
         
         _moneyLabel.hidden = NO;
         _moneyLabel.text = nil;
         [self addSubview:_moneyLabel];
-        _moneyLabel.layer.cornerRadius = 5*screenWidth/320;
+        _moneyLabel.layer.cornerRadius = 5*screenWidth/375;
         _moneyLabel.layer.masksToBounds = YES;
-        _moneyLabel.font = [UIFont systemFontOfSize:14*screenWidth/320];
+        _moneyLabel.font = [UIFont systemFontOfSize:14*screenWidth/375];
     }
     return self;
 }
@@ -171,11 +171,14 @@
 
 - (void)clickTap:(UITapGestureRecognizer *)recognizer{
     NSLog(@"%@", _poleLabel.text);
-    if (_poleLabel.text) {
+    NSString *string = [_poleLabel.text stringByTrimmingCharactersInSet:[NSCharacterSet decimalDigitCharacterSet]];
+    if(string.length == 0)
+    {
         if (self.delegate) {
             [self.delegate makePhoneClick:_poleLabel.text];
         }
     }
+    
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

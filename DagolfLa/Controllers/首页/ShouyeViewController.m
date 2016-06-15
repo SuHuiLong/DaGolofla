@@ -57,6 +57,15 @@
     [self getCurPosition];
 }
 
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    //把当前页面的任务栏影藏
+    [[UIApplication sharedApplication] setStatusBarHidden:NO];
+    //把当前界面的导航栏隐藏
+    self.navigationController.navigationBarHidden = NO;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     //设置任务栏不占位置
@@ -187,62 +196,80 @@
     btnField.tag = 1006;
 }
 
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (buttonIndex == 1) {
+        EnterViewController *vc = [[EnterViewController alloc] init];
+        [self.navigationController pushViewController:vc animated:YES];
+    }
+}
+
 -(void)manageClick:(UIButton *)btn
 {
-    switch (btn.tag) {
-        case 1001:
-        {
-            NSLog(@"shangchen");
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
-            UseMallViewController* userVc = [[UseMallViewController alloc]init];
-            [self.navigationController pushViewController:userVc animated:YES];
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"userId"]) {
+        
+        switch (btn.tag) {
+            case 1001:
+            {
+                NSLog(@"shangchen");
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
+                UseMallViewController* userVc = [[UseMallViewController alloc]init];
+                [self.navigationController pushViewController:userVc animated:YES];
+            }
+                break;
+            case 1002:
+            {
+                NSLog(@"taocan");
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
+                PackageViewController* pacVc = [[PackageViewController alloc]init];
+                [self.navigationController pushViewController:pacVc animated:YES];
+            }
+                break;
+            case 1003:
+            {
+                NSLog(@"jiaolian");
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
+                TeacherViewController* teaVc = [[TeacherViewController alloc]init];
+                [self.navigationController pushViewController:teaVc animated:YES];
+            }
+                break;
+            case 1004:
+            {
+                NSLog(@"qiuudi");
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
+                JGTeamChannelViewController* teamVc = [[JGTeamChannelViewController alloc]init];
+                [self.navigationController pushViewController:teamVc animated:YES];
+            }
+                break;
+            case 1005:
+            {
+                NSLog(@"toup");
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
+                VoteViewController* voteVc = [[VoteViewController alloc]init];
+                [self.navigationController pushViewController:voteVc animated:YES];
+            }
+                break;
+            case 1006:
+            {
+                NSLog(@"qiuchan");
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
+                StadiumViewController* staVC = [[StadiumViewController alloc]init];
+                [self.navigationController pushViewController:staVC animated:YES];
+                
+            }
+                break;
+                
+            default:
+                break;
         }
-            break;
-        case 1002:
-        {
-            NSLog(@"taocan");
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
-            PackageViewController* pacVc = [[PackageViewController alloc]init];
-            [self.navigationController pushViewController:pacVc animated:YES];
-        }
-            break;
-        case 1003:
-        {
-            NSLog(@"jiaolian");
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
-            TeacherViewController* teaVc = [[TeacherViewController alloc]init];
-            [self.navigationController pushViewController:teaVc animated:YES];
-        }
-            break;
-        case 1004:
-        {
-            NSLog(@"qiuudi");
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
-            JGTeamChannelViewController* teamVc = [[JGTeamChannelViewController alloc]init];
-            [self.navigationController pushViewController:teamVc animated:YES];
-        }
-            break;
-        case 1005:
-        {
-            NSLog(@"toup");
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
-            VoteViewController* voteVc = [[VoteViewController alloc]init];
-            [self.navigationController pushViewController:voteVc animated:YES];
-        }
-            break;
-        case 1006:
-        {
-            NSLog(@"qiuchan");
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
-            StadiumViewController* staVC = [[StadiumViewController alloc]init];
-            [self.navigationController pushViewController:staVC animated:YES];
-            
-        }
-            break;
-            
-        default:
-            break;
+
+    
     }
+else
+    {
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"打高尔夫啦" message:@"确定是否立即登录？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+        [alertView show];
+    }
+
 }
 
 
