@@ -432,7 +432,7 @@ static CGFloat ImageHeight  = 210.0;
     [self.applyBtn setTitle:@"报名参加" forState:UIControlStateNormal];
     self.applyBtn.backgroundColor = [UIColor colorWithHexString:Nav_Color];
     [self.applyBtn addTarget:self action:@selector(applyAttendBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-    if ([[Helper returnCurrentDateString] compare:_model.signUpEndTime] > 0) {
+    if ([[Helper returnCurrentDateString] compare:_model.signUpEndTime] >= 0) {
         self.applyBtn.backgroundColor = [UIColor lightGrayColor];
     }
     
@@ -441,8 +441,8 @@ static CGFloat ImageHeight  = 210.0;
 #pragma mark -- 报名参加
 - (void)applyAttendBtnClick:(UIButton *)btn{
     //判断活动是否结束报名
-    if ([[Helper returnCurrentDateString] compare:_model.signUpEndTime] > 0) {
-        [[ShowHUD showHUD]showToastWithText:@"该活动已结束报名！" FromView:self.view];
+    if ([[Helper returnCurrentDateString] compare:_model.signUpEndTime] >= 0) {
+        [[ShowHUD showHUD]showToastWithText:@"该活动已截止报名！" FromView:self.view];
     }else{
         //判断是不改球队成员
         if (_isTeamMember == 1) {
