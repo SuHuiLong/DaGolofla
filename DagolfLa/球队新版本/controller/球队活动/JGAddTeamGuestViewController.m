@@ -116,7 +116,6 @@
     [applyDict setObject:@"1" forKey:@"select"];//付款勾选默认勾
     
     [self.applyArray addObject:applyDict];
-    [[ShowHUD showHUD]showToastWithText:@"添加成功！" FromView:self.view];
     
     [self.addTeamGuestTableView reloadData];
     self.nameText.text = nil;

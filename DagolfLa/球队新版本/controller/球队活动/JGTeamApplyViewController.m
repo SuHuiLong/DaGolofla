@@ -94,7 +94,6 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
         [applyDict setObject:@1 forKey:@"type"];//"是否是球队成员 0: 不是  1：是
         
         [applyDict setObject:[NSString stringWithFormat:@"%.2f", [_modelss.memberPrice floatValue]] forKey:@"payMoney"];//实际付款金额
-//        [applyDict setObject:@4455 forKey:@"payMoney"];//实际付款金额
         
         [applyDict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:userID] forKey:@"userKey"];//报名用户key , 没有则是嘉宾
         
@@ -285,7 +284,7 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
     [self presentViewController:_actionView animated:YES completion:nil];
 }
 
-#pragma mark -- 现场付款
+#pragma mark -- 报名不付款付款
 - (IBAction)scenePayBtnClick:(UIButton *)sender {
     NSMutableArray *array = [NSMutableArray arrayWithArray:self.applyArray];
     [self.applyArray removeAllObjects];
@@ -389,6 +388,7 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
 }
 #pragma mark -- 提交报名信息
 - (void)submitInfo:(NSInteger)type{
+    [[ShowHUD showHUD]showAnimationWithText:@"报名中..." FromView:self.view];
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     
     if (_invoiceKey != nil) {
@@ -400,7 +400,12 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
     [dict setObject:[userdef objectForKey:userID] forKey:@"appUserKey"];
     [self.info setObject:[NSString stringWithFormat:@"%td", _modelss.teamKey] forKey:@"teamKey"];//球队key
     if (_isTeamChannal == 1) {
-        [self.info setObject:[NSString stringWithFormat:@"%td", _modelss.teamActivityKey] forKey:@"activityKey"];//球队活动key
+        if (_modelss.teamActivityKey == 0) {
+            [self.info setObject:[NSString stringWithFormat:@"%td", [_modelss.timeKey integerValue]] forKey:@"activityKey"];//球队活动key
+        }else{
+            [self.info setObject:[NSString stringWithFormat:@"%td", _modelss.teamActivityKey] forKey:@"activityKey"];//球队活动key
+        }
+        
     }else{
         [self.info setObject:[NSString stringWithFormat:@"%@", _modelss.timeKey] forKey:@"activityKey"];//球队活动key
     }
@@ -414,7 +419,9 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
     [dict setObject:_info forKey:@"info"];
     [[JsonHttp jsonHttp]httpRequest:@"team/doTeamActivitySignUp" JsonKey:nil withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
         NSLog(@"errType == %@", errType);
+        [[ShowHUD showHUD]hideAnimationFromView:self.view];
     } completionBlock:^(id data) {
+        [[ShowHUD showHUD]hideAnimationFromView:self.view];
         NSLog(@"data == %@", data);
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
             _infoKey = [data objectForKey:@"infoKey"];

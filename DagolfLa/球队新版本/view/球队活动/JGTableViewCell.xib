@@ -15,14 +15,15 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="39.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="qyIcon" translatesAutoresizingMaskIntoConstraints="NO" id="bCJ-lo-R8x">
-                        <rect key="frame" x="8" y="11" width="17" height="17"/>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="bCJ-lo-R8x">
+                        <rect key="frame" x="8" y="19" width="1" height="1"/>
                         <constraints>
+                            <constraint firstAttribute="width" constant="1" id="flP-dQ-uEy"/>
                             <constraint firstAttribute="width" secondItem="bCJ-lo-R8x" secondAttribute="height" multiplier="1:1" id="ngR-7w-tKt"/>
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="活动名称" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y6Z-Jf-rjv">
-                        <rect key="frame" x="30" y="11" width="60" height="18"/>
+                        <rect key="frame" x="14" y="11" width="60" height="18"/>
                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                         <nil key="highlightedColor"/>
                     </label>
@@ -52,7 +53,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="accessoryHUI" translatesAutoresizingMaskIntoConstraints="NO" id="NNN-Lc-grf">
-                        <rect key="frame" x="298" y="9.5" width="10" height="20"/>
+                        <rect key="frame" x="298" y="9" width="10" height="20"/>
                         <constraints>
                             <constraint firstAttribute="width" secondItem="NNN-Lc-grf" secondAttribute="height" multiplier="1:2" id="2lg-SW-rVL"/>
                             <constraint firstAttribute="width" constant="12" id="Cqa-XH-KdT"/>
@@ -99,6 +100,5 @@
     </objects>
     <resources>
         <image name="accessoryHUI" width="10" height="16"/>
-        <image name="qyIcon" width="17" height="15"/>
     </resources>
 </document>

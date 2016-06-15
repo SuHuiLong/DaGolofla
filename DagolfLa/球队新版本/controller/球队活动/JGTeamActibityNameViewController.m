@@ -195,7 +195,7 @@ static CGFloat ImageHeight  = 210.0;
     
     [self.imgProfile addSubview:self.addressBtn];
 
-    [self createApplyBtn];//报名页面
+    [self createApplyBtn];//报名按钮
     //分享按钮
     UIButton *shareBtn = [[UIButton alloc]initWithFrame:CGRectMake(screenWidth-44, self.titleField.frame.origin.y, 44, 25)];
     [shareBtn setImage:[UIImage imageNamed:@"iconfont-fenxiang"] forState:UIControlStateNormal];
@@ -432,6 +432,10 @@ static CGFloat ImageHeight  = 210.0;
     [self.applyBtn setTitle:@"报名参加" forState:UIControlStateNormal];
     self.applyBtn.backgroundColor = [UIColor colorWithHexString:Nav_Color];
     [self.applyBtn addTarget:self action:@selector(applyAttendBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    if ([[Helper returnCurrentDateString] compare:_model.signUpEndTime] > 0) {
+        self.applyBtn.backgroundColor = [UIColor lightGrayColor];
+    }
+    
     [self.view addSubview:self.applyBtn];
 }
 #pragma mark -- 报名参加
