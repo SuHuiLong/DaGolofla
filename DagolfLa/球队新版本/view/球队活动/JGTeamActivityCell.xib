@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -12,7 +12,7 @@
             <rect key="frame" x="0.0" y="0.0" width="370" height="93"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="370" height="92.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="370" height="92"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" text="球队活动列表一" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="srA-90-vhx">
@@ -92,18 +92,9 @@
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="g02-NP-6fH">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="activityStateImage" translatesAutoresizingMaskIntoConstraints="NO" id="8in-Cy-Vkf">
                         <rect key="frame" x="42" y="14" width="31" height="32"/>
-                        <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="activityStateImage" translatesAutoresizingMaskIntoConstraints="NO" id="8in-Cy-Vkf">
-                                <rect key="frame" x="0.0" y="0.0" width="31" height="32"/>
-                            </imageView>
-                        </subviews>
-                        <constraints>
-                            <constraint firstAttribute="trailing" secondItem="8in-Cy-Vkf" secondAttribute="trailing" id="a7r-Nt-3Qd"/>
-                            <constraint firstItem="8in-Cy-Vkf" firstAttribute="top" secondItem="g02-NP-6fH" secondAttribute="top" id="jM2-t8-dhP"/>
-                        </constraints>
-                    </stackView>
+                    </imageView>
                 </subviews>
                 <constraints>
                     <constraint firstItem="GQY-PT-ddJ" firstAttribute="leading" secondItem="wiU-Cc-leL" secondAttribute="trailing" constant="5" id="4DS-Df-74O"/>
@@ -112,6 +103,7 @@
                     <constraint firstItem="mUs-Ij-ZPX" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="DIT-BM-RG6"/>
                     <constraint firstItem="wiU-Cc-leL" firstAttribute="leading" secondItem="mUs-Ij-ZPX" secondAttribute="trailing" constant="10" id="DMT-i4-P0x"/>
                     <constraint firstItem="eiU-5e-67h" firstAttribute="top" secondItem="jEI-w9-a7H" secondAttribute="bottom" constant="10" id="Deh-uu-xru"/>
+                    <constraint firstItem="8in-Cy-Vkf" firstAttribute="top" secondItem="mUs-Ij-ZPX" secondAttribute="top" id="FKa-SG-zFJ"/>
                     <constraint firstItem="sCc-bc-k8k" firstAttribute="top" secondItem="mUs-Ij-ZPX" secondAttribute="bottom" id="FqH-EN-YIJ"/>
                     <constraint firstItem="jEI-w9-a7H" firstAttribute="leading" secondItem="srA-90-vhx" secondAttribute="trailing" constant="5" id="JTp-L7-H7k"/>
                     <constraint firstItem="lW8-fF-h3E" firstAttribute="top" secondItem="jEI-w9-a7H" secondAttribute="bottom" constant="13" id="M2h-cu-D1O"/>
@@ -126,15 +118,14 @@
                     <constraint firstItem="wiU-Cc-leL" firstAttribute="top" secondItem="srA-90-vhx" secondAttribute="bottom" constant="10" id="YPr-vc-GS3"/>
                     <constraint firstItem="lW8-fF-h3E" firstAttribute="leading" secondItem="mUs-Ij-ZPX" secondAttribute="trailing" constant="10" id="fFN-N8-fcu"/>
                     <constraint firstItem="srA-90-vhx" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="fgW-Oz-3QB"/>
-                    <constraint firstItem="g02-NP-6fH" firstAttribute="top" secondItem="mUs-Ij-ZPX" secondAttribute="top" id="g7b-Bm-hnE"/>
                     <constraint firstItem="7Wa-su-XmR" firstAttribute="leading" secondItem="eiU-5e-67h" secondAttribute="trailing" id="gxb-V4-Y4Y"/>
                     <constraint firstAttribute="trailing" secondItem="jEI-w9-a7H" secondAttribute="trailing" constant="8" id="j3e-yB-6b9"/>
-                    <constraint firstItem="g02-NP-6fH" firstAttribute="trailing" secondItem="mUs-Ij-ZPX" secondAttribute="trailing" id="mUS-2T-s2o"/>
                     <constraint firstAttribute="trailing" secondItem="7Wa-su-XmR" secondAttribute="trailing" constant="8" id="n4Y-0r-59u"/>
                     <constraint firstItem="sCc-bc-k8k" firstAttribute="top" secondItem="lW8-fF-h3E" secondAttribute="bottom" id="nWV-kM-AIE"/>
                     <constraint firstAttribute="trailing" secondItem="sCc-bc-k8k" secondAttribute="trailing" constant="8" id="sCp-OT-vkL"/>
                     <constraint firstAttribute="trailing" secondItem="lW8-fF-h3E" secondAttribute="trailing" constant="8" id="tCZ-OZ-Koj"/>
                     <constraint firstItem="lW8-fF-h3E" firstAttribute="leading" secondItem="wiU-Cc-leL" secondAttribute="trailing" constant="10" id="tRW-6E-l8Y"/>
+                    <constraint firstItem="wiU-Cc-leL" firstAttribute="leading" secondItem="8in-Cy-Vkf" secondAttribute="trailing" constant="10" id="v4r-08-hFt"/>
                 </constraints>
                 <variation key="default">
                     <mask key="constraints">

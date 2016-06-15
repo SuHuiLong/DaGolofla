@@ -16,6 +16,8 @@
 //相册中的权限设置
 @property (strong, nonatomic) NSString* power;
 
-//teamember
+//teamember,判断是不是球队成员
 @property (strong, nonatomic) NSMutableDictionary* dictMember;
+
+//判断球队是不是在审核中
 @end

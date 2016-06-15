@@ -30,6 +30,8 @@
     
     NSMutableArray* _dataArray;
     NSInteger _page;
+    
+    BOOL _isUpdata;
 }
 @property (nonatomic,strong)  SXPickPhoto * pickPhoto;//相册类
 @property (strong, nonatomic) JGPhotoTimeReusableView *headView;
@@ -37,10 +39,22 @@
 
 @implementation JGPhotoAlbumViewController
 
+
+-(void)backButtonClcik{
+    if (_isUpdata == YES) {
+        _blockRefresh();
+    }
+    
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     _page = 0;
+    _isUpdata = NO;
     _dictPhoto = [[NSMutableDictionary alloc]init];
     self.pickPhoto = [[SXPickPhoto alloc]init];
     _dataArray = [[NSMutableArray alloc]init];
@@ -52,6 +66,12 @@
     {
         self.title = @"球队相册";
     }
+    
+    
+    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"backL"] style:UIBarButtonItemStylePlain target:self action:@selector(backButtonClcik)];
+    item.tintColor=[UIColor whiteColor];
+    self.navigationItem.leftBarButtonItem = item;
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"nav_bg"] forBarMetrics:UIBarMetricsDefault];
     
     if ([_power containsString:@"1005"] == YES || [DEFAULF_USERID integerValue] == [_userKey integerValue]) {
         UIBarButtonItem* rightBtn = [[UIBarButtonItem alloc]initWithTitle:@"上传" style:UIBarButtonItemStylePlain target:self action:@selector(upDataClick)];
@@ -140,6 +160,7 @@
                     NSLog(@"errType == %@", errType);
                 } completionBlock:^(id data) {
                     _collectionView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
+                    _isUpdata = YES;
                     [_collectionView.header beginRefreshing];
                     [_collectionView reloadData];
                 }];
@@ -246,7 +267,7 @@
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section
 {
-    return CGSizeMake(screenWidth, 25*ScreenWidth/375);
+    return CGSizeMake(screenWidth, 15*ScreenWidth/375);
 }
 
 //定义展示的UICollectionViewCell的个数
@@ -290,12 +311,12 @@
 //    {
     JGPhotoShowCollectionViewCell *cell = [[JGPhotoShowCollectionViewCell alloc]init];
     cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"JGPhotoShowCollectionViewCell" forIndexPath:indexPath];
-    cell.backgroundColor = [UIColor blackColor];
+    cell.backgroundColor = [UIColor whiteColor];
     cell.iconImgv.hidden = NO;
     cell.iconImgv.layer.masksToBounds = YES;
     cell.iconImgv.contentMode = UIViewContentModeScaleAspectFill;
     cell.addBtn.hidden = YES;
-    [cell.iconImgv sd_setImageWithURL:[Helper setImageIconUrl:@"album/media" andTeamKey:[[_dataArray[indexPath.row] timeKey] integerValue] andIsSetWidth:YES andIsBackGround:NO] placeholderImage:[UIImage imageNamed:@"logo"]];
+    [cell.iconImgv sd_setImageWithURL:[Helper setImageIconUrl:@"album/media" andTeamKey:[[_dataArray[indexPath.row] timeKey] integerValue] andIsSetWidth:YES andIsBackGround:NO] placeholderImage:[UIImage imageNamed:@"xcback"]];
     return cell;
 //    }
     
@@ -304,7 +325,7 @@
 //定义每个UICollectionView 的大小
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    return CGSizeMake(81*ScreenWidth/375, 84*ScreenWidth/375);
+    return CGSizeMake(115*ScreenWidth/375, 115*ScreenWidth/375);
 }
 ////定义每个UICollectionView 的 margin
 -(UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section

@@ -50,15 +50,14 @@
         [self addSubview:_poleLabel];
         _poleLabel.font = [UIFont systemFontOfSize:14*screenWidth/375];
         
-        _moneyLabel = [[UILabel alloc]initWithFrame:CGRectMake((screenWidth - 90)*screenWidth/375, (self.frame.size.height/3)*screenWidth/375, 60*screenWidth/375, (self.frame.size.height/2)*screenWidth/375)];
+        _moneyLabel = [[UILabel alloc]initWithFrame:CGRectMake((screenWidth - 90)*screenWidth/320, 13*screenWidth/320, 60*screenWidth/320, 24*screenWidth/320)];
         _moneyLabel.textColor = [UIColor blackColor];
         _moneyLabel.textAlignment = NSTextAlignmentCenter;
-        
         _moneyLabel.hidden = YES;
         [self addSubview:_moneyLabel];
         _moneyLabel.layer.cornerRadius = 5*screenWidth/320;
         _moneyLabel.layer.masksToBounds = YES;
-        _moneyLabel.font = [UIFont systemFontOfSize:14*screenWidth/375];
+        _moneyLabel.font = [UIFont systemFontOfSize:14*screenWidth/320];
     }
     return self;
 }
@@ -118,11 +117,11 @@
         _moneyLabel.textColor = [UIColor whiteColor];
         _moneyLabel.backgroundColor = [UITool colorWithHexString:@"#6cd9a3" alpha:1];
     }else if(model.identity == 4){
-        _moneyLabel.text = @"球队秘书长";
+        _moneyLabel.text = @"秘书长";
         _moneyLabel.textColor = [UIColor whiteColor];
         _moneyLabel.backgroundColor = [UITool colorWithHexString:@"#6cd9a3" alpha:1];
     }else if(model.identity == 5){
-        _moneyLabel.text = @"球队秘书";
+        _moneyLabel.text = @"秘书";
         _moneyLabel.textColor = [UIColor whiteColor];
         _moneyLabel.backgroundColor = [UITool colorWithHexString:@"#6cd9a3" alpha:1];
     }else if(model.identity == 6){

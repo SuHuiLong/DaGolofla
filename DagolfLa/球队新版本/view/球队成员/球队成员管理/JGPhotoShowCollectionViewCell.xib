@@ -9,13 +9,13 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="JGPhotoShowCollectionViewCell">
-            <rect key="frame" x="0.0" y="0.0" width="80" height="80"/>
+            <rect key="frame" x="0.0" y="0.0" width="110" height="110"/>
             <autoresizingMask key="autoresizingMask"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                <rect key="frame" x="0.0" y="0.0" width="80" height="80"/>
+                <rect key="frame" x="0.0" y="0.0" width="110" height="110"/>
                 <subviews>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RM7-QD-hqH">
-                        <rect key="frame" x="0.0" y="0.0" width="80" height="80"/>
+                        <rect key="frame" x="0.0" y="0.0" width="110" height="110"/>
                         <color key="backgroundColor" red="1" green="0.7120002238773383" blue="0.030384115218547114" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="width" secondItem="RM7-QD-hqH" secondAttribute="height" multiplier="1:1" id="vUU-26-Hdo"/>
@@ -25,7 +25,7 @@
                         </state>
                     </button>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Qz1-q5-oEa">
-                        <rect key="frame" x="0.0" y="0.0" width="80" height="80"/>
+                        <rect key="frame" x="0.0" y="0.0" width="110" height="110"/>
                     </imageView>
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -40,12 +40,12 @@
                 <constraint firstAttribute="bottom" secondItem="Qz1-q5-oEa" secondAttribute="bottom" id="wEl-9P-fuB"/>
                 <constraint firstItem="RM7-QD-hqH" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="yoj-jL-mlz"/>
             </constraints>
-            <size key="customSize" width="81" height="102"/>
+            <size key="customSize" width="113" height="133"/>
             <connections>
                 <outlet property="addBtn" destination="RM7-QD-hqH" id="mFR-yK-3dx"/>
                 <outlet property="iconImgv" destination="Qz1-q5-oEa" id="Oop-TX-AJB"/>
             </connections>
-            <point key="canvasLocation" x="477" y="345"/>
+            <point key="canvasLocation" x="461" y="359"/>
         </collectionViewCell>
     </objects>
 </document>

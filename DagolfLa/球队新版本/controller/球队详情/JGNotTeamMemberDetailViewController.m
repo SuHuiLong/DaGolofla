@@ -7,7 +7,7 @@
 //
 
 #import "JGNotTeamMemberDetailViewController.h"
-#import "JGTeamCreatePhotoController.h" //相册
+#import "JGTeamPhotoViewController.h" //相册
 #import "JGTeamActivityViewController.h" //活动
 #import "JGHLaunchActivityViewController.h"
 #import "JGTableViewCell.h"
@@ -406,7 +406,8 @@ static CGFloat ImageHeight  = 210.0;
             
         }else{
             
-            JGTeamCreatePhotoController *photo = [[JGTeamCreatePhotoController alloc] init];
+            JGTeamPhotoViewController *photo = [[JGTeamPhotoViewController alloc] init];
+            photo.teamKey = [self.detailDic objectForKey:@"timeKey"];
             [self.navigationController pushViewController:photo animated:YES];
         }
         
