@@ -47,11 +47,11 @@
         self.describLabel = [[UILabel alloc] initWithFrame:CGRectMake(90 * screenWidth / 320, 55 * screenWidth / 320, screenWidth - 90 * screenWidth / 320, 20 * screenWidth / 320)];
         self.describLabel.font = [UIFont systemFontOfSize:12 * screenWidth / 320];
         [self.contentView addSubview:self.describLabel];
-        
+        self.describLabel.textColor = [UIColor lightGrayColor];
+
         UIView *lightGrayView = [[UIView alloc] initWithFrame:CGRectMake(0, 80 * screenWidth / 320, screenWidth, 3 * screenWidth / 320)];
         lightGrayView.backgroundColor = [UIColor colorWithRed:0.94 green:0.94 blue:0.94 alpha:1];
         [self.contentView addSubview:lightGrayView];
-        
         
     }
     
@@ -68,13 +68,13 @@
     self.describLabel.text = model.info;
     if ([model.state integerValue] == 0) {
 //        self.stateLabel.text = @"正在审核";
-        _iconState.image  = [UIImage imageNamed:@"dsh"];
+        _iconState.image  = [UIImage imageNamed:@"dsh-1"];
     }else if ([model.state integerValue] == 2){
 //        self.stateLabel.text = @"审核未通过";
-        _iconState.image  = [UIImage imageNamed:@"jj"];
+//        _iconState.image  = [UIImage imageNamed:@"jj"];
     }else{
 //        self.stateLabel.text = @"";
-        _iconState.image  = [UIImage imageNamed:@"tg"];
+        _iconState.image  = nil;
     }
 }
 

@@ -138,6 +138,13 @@ static CGFloat ImageHeight  = 210.0;
         [[NSUserDefaults standardUserDefaults]  synchronize];
         self.memBerDic = [data objectForKey:@"teamMember"];
         
+        if ([[self.detailDic objectForKey:@"state"] integerValue] == 0) {
+            [self.previewBtn setTitle:@"正在等待审核" forState:UIControlStateNormal];
+            self.previewBtn.backgroundColor = [UIColor lightGrayColor];
+        }else{
+            [self.previewBtn setTitle:@"邀请好友" forState:UIControlStateNormal];
+            self.previewBtn.backgroundColor = [UIColor colorWithHexString:@"#F59826"];
+        }
     }];
 }
 
@@ -255,7 +262,10 @@ static CGFloat ImageHeight  = 210.0;
 #pragma mark -分享
 
 - (void)addShare{
-    
+   
+    if ([[self.detailDic objectForKey:@"state"] integerValue] == 0) {
+        return;
+    }
     
     if ([[NSUserDefaults standardUserDefaults]objectForKey:@"userId"]) {
 //        self.ymData = (YMTextData *)[_tableDataSource objectAtIndex:indexRow];
@@ -379,6 +389,12 @@ static CGFloat ImageHeight  = 210.0;
 }
 #pragma mark -- 邀请好友
 - (void)previewBtnClick:(UIButton *)btn{
+    
+    if ([[self.detailDic objectForKey:@"state"] integerValue] == 0) {
+        return;
+    }
+    
+    
     TeamInviteViewController *inviteVc = [[TeamInviteViewController alloc] init];
     
     
@@ -587,6 +603,11 @@ static CGFloat ImageHeight  = 210.0;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    if ([[self.detailDic objectForKey:@"state"] integerValue] == 0) {
+        return;
+    }
+    
     if (indexPath.section == 1) {
     }
     else if (indexPath.section == 2){
