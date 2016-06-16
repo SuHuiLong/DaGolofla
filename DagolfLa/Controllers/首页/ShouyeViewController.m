@@ -145,52 +145,55 @@
     //商城
     UIButton* btnMall = [UIButton buttonWithType:UIButtonTypeCustom];
     btnMall.frame = CGRectMake(5*screenWidth/375, screenWidth/2 + 5*screenWidth/375, screenWidth-10*screenWidth/375, 100*screenWidth/375);
-    [btnMall setImage:[UIImage imageNamed:@"userMall"] forState:UIControlStateNormal];
+    [btnMall setBackgroundImage:[UIImage imageNamed:@"userMall"] forState:UIControlStateNormal];
     [_scrollView addSubview:btnMall];
     [btnMall addTarget:self action:@selector(manageClick:) forControlEvents:UIControlEventTouchUpInside];
     btnMall.tag = 1001;
-    
+
 }
 -(void)createTeamOrder
 {
     //套餐
     UIButton* btnOrder = [UIButton buttonWithType:UIButtonTypeCustom];
     btnOrder.frame = CGRectMake(5*screenWidth/375, screenWidth/2 + 110*screenWidth/375, 100*screenWidth/375, 100*screenWidth/375);
-    [btnOrder setImage:[UIImage imageNamed:@"tcOrder"] forState:UIControlStateNormal];
+    [btnOrder setBackgroundImage:[UIImage imageNamed:@"tcOrder"] forState:UIControlStateNormal];
     [_scrollView addSubview:btnOrder];
     [btnOrder addTarget:self action:@selector(manageClick:) forControlEvents:UIControlEventTouchUpInside];
     btnOrder.tag = 1002;
+
     
     //教练
     UIButton* btnTeacher = [UIButton buttonWithType:UIButtonTypeCustom];
     btnTeacher.frame = CGRectMake(5*screenWidth/375, screenWidth/2 + 215*screenWidth/375, 100*screenWidth/375, 100*screenWidth/375);
-    [btnTeacher setImage:[UIImage imageNamed:@"zyjl"] forState:UIControlStateNormal];
+    [btnTeacher setBackgroundImage:[UIImage imageNamed:@"zyjl"] forState:UIControlStateNormal];
     [_scrollView addSubview:btnTeacher];
     [btnTeacher addTarget:self action:@selector(manageClick:) forControlEvents:UIControlEventTouchUpInside];
     btnTeacher.tag = 1003;
-    
+
     //球队
     UIButton* btnTeam = [UIButton buttonWithType:UIButtonTypeCustom];
     btnTeam.frame = CGRectMake(110*screenWidth/375, screenWidth/2 + 110*screenWidth/375, screenWidth-115*screenWidth/375, 205*screenWidth/375);
-    [btnTeam setImage:[UIImage imageNamed:@"myqd"] forState:UIControlStateNormal];
+    [btnTeam setBackgroundImage:[UIImage imageNamed:@"myqd"] forState:UIControlStateNormal];
     [_scrollView addSubview:btnTeam];
     [btnTeam addTarget:self action:@selector(manageClick:) forControlEvents:UIControlEventTouchUpInside];
     btnTeam.tag = 1004;
+
 }
 -(void)createFieldAndVote
 {
     //投票
     UIButton* btnVote = [UIButton buttonWithType:UIButtonTypeCustom];
     btnVote.frame = CGRectMake(5*screenWidth/375, screenWidth/2 + 320*screenWidth/375, screenWidth/2-10*screenWidth/375, 100*screenWidth/375);
-    [btnVote setImage:[UIImage imageNamed:@"wytp"] forState:UIControlStateNormal];
+    [btnVote setBackgroundImage:[UIImage imageNamed:@"wytp"] forState:UIControlStateNormal];
     [_scrollView addSubview:btnVote];
     [btnVote addTarget:self action:@selector(manageClick:) forControlEvents:UIControlEventTouchUpInside];
     btnVote.tag = 1005;
+
     
     //球场
     UIButton* btnField = [UIButton buttonWithType:UIButtonTypeCustom];
     btnField.frame = CGRectMake(screenWidth/2, screenWidth/2 + 320*screenWidth/375, screenWidth/2-10*screenWidth/375, 100*screenWidth/375);
-    [btnField setImage:[UIImage imageNamed:@"qcyd"] forState:UIControlStateNormal];
+    [btnField setBackgroundImage:[UIImage imageNamed:@"qcyd"] forState:UIControlStateNormal];
     [_scrollView addSubview:btnField];
     [btnField addTarget:self action:@selector(manageClick:) forControlEvents:UIControlEventTouchUpInside];
     btnField.tag = 1006;
