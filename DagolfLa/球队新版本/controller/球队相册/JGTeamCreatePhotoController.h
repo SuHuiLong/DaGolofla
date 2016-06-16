@@ -28,4 +28,7 @@
 
 //创建相册的block
 @property (copy, nonatomic) void(^createBlock)();
+
+@property (strong, nonatomic) NSString* titleStr;
+
 @end
