@@ -22,6 +22,7 @@
     _iconIngv.contentMode = UIViewContentModeScaleAspectFill;
     _timeLabel.text = [NSString stringWithFormat:@"%@",model.createTime];
     if (![Helper isBlankString:model.name]) {
+
         _nameLabel.text = [NSString stringWithFormat:@"%@",model.name];
     }
     else
@@ -29,6 +30,7 @@
         _nameLabel.text = [NSString stringWithFormat:@"%@",model.name];
     }
     
+
         
 }
 

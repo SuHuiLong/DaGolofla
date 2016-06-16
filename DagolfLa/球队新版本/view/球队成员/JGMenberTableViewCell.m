@@ -52,7 +52,7 @@
         
         _moneyLabel = [[UILabel alloc]initWithFrame:CGRectMake((screenWidth - 90)*screenWidth/375, 13*screenWidth/375, 60*screenWidth/375, 24*screenWidth/375)];
         _moneyLabel.textColor = [UIColor blackColor];
-        _moneyLabel.textAlignment = NSTextAlignmentLeft;
+        _moneyLabel.textAlignment = NSTextAlignmentCenter;
         
         _moneyLabel.hidden = NO;
         _moneyLabel.text = nil;

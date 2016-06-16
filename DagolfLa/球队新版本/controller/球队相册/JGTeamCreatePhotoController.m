@@ -78,7 +78,10 @@
     NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
     [dict setObject:[NSNumber numberWithInteger:_isOpen] forKey:@"power"];
     [dict setObject:_timeKey forKey:@"timeKey"];
-    [dict setObject:[NSString stringWithFormat:@"%@",_textTitle.text] forKey:@"name"];
+    if (![Helper isBlankString:_textTitle.text]) {
+        [dict setObject:[NSString stringWithFormat:@"%@",_textTitle.text] forKey:@"name"];
+    }
+    
     [dict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:userID] forKey:@"userKey"];
     [[JsonHttp jsonHttp]httpRequest:@"team/updateTeamAlbum" JsonKey:nil withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
         NSLog(@"errType == %@", errType);
@@ -110,7 +113,10 @@
         [dict setObject:[NSNumber numberWithInteger:_isOpen] forKey:@"power"];
         [dict setObject:@0 forKey:@"timeKey"];
         [dict setObject:_teamKey forKey:@"teamKey"];
-        [dict setObject:[NSString stringWithFormat:@"%@",_textTitle.text] forKey:@"name"];
+        if (![Helper isBlankString:_textTitle.text]) {
+            [dict setObject:[NSString stringWithFormat:@"%@",_textTitle.text] forKey:@"name"];
+        }
+        
         [[JsonHttp jsonHttp]httpRequest:@"team/createTeamAlbum" JsonKey:@"teamAlbum" withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
             [MBProgressHUD hideAllHUDsForView:self.view animated:NO];
         } completionBlock:^(id data) {
@@ -155,6 +161,9 @@
     _textTitle.textColor = [UITool colorWithHexString:@"313131" alpha:1];
     _textTitle.font = [UIFont systemFontOfSize:15*screenWidth/375];
     [viewTitle addSubview:_textTitle];
+    if (![Helper isBlankString:_titleStr]) {
+        _textTitle.text = _titleStr;
+    }
   
 }
 
@@ -400,15 +409,16 @@
 -(void)deleteClick
 {
     
-    MBProgressHUD *progress = [[MBProgressHUD alloc] initWithView:self.view];
-    progress.mode = MBProgressHUDModeIndeterminate;
-    progress.labelText = @"正在删除...";
-    [self.view addSubview:progress];
-    [progress show:YES];
+    
     
     [Helper alertViewWithTitle:@"删除相册不可找回，您是否确认删除？" withBlockCancle:^{
-        
     } withBlockSure:^{
+        MBProgressHUD *progress = [[MBProgressHUD alloc] initWithView:self.view];
+        progress.mode = MBProgressHUDModeIndeterminate;
+        progress.labelText = @"正在删除...";
+        [self.view addSubview:progress];
+        [progress show:YES];
+        
         NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
         [dict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:userID] forKey:@"userKey"];
         [dict setObject:@[_timeKey] forKey:@"timeKeyList"];

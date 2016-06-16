@@ -231,6 +231,7 @@
     phoVc.isShowMem = [_dataArray[btn.tag - 10000] power];
     phoVc.numPhotoKey = [_dataArray[btn.tag - 10000] mediaKey];
     phoVc.timeKey = [_dataArray[btn.tag - 10000] timeKey];
+    phoVc.titleStr = [_dataArray[btn.tag - 10000] name];
     phoVc.createBlock = ^(void){
         _collectionView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
         [_collectionView.header beginRefreshing];
