@@ -662,7 +662,7 @@ static CGFloat ImageHeight  = 210.0;
         launchActivityCell.selectionStyle = UITableViewCellSelectionStyleNone;
         if (indexPath.row == 0) {
             launchActivityCell.promptLB.text = @"成立日期";
-            launchActivityCell.contentLB.text = [self.detailDic objectForKey:@"establishTime"];
+            launchActivityCell.contentLB.text = [Helper returnDateformatString:[self.detailDic objectForKey:@"establishTime"]] ;
         }else{
             launchActivityCell.promptLB.text = @"所在地区";
             launchActivityCell.contentLB.text = [self.detailDic objectForKey:@"crtyName"];
