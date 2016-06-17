@@ -25,7 +25,7 @@
 #import "MJDIYBackFooter.h"
 #import "MJDIYHeader.h"
 
-@interface JGTeamMainhallViewController ()<UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate,UISearchResultsUpdating,CLLocationManagerDelegate>
+@interface JGTeamMainhallViewController ()<UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate,UISearchResultsUpdating,CLLocationManagerDelegate,UIBarPositioningDelegate>
 
 @property (strong, nonatomic) UITableView *tableView;
 @property (nonatomic, strong) UISearchController *searchController;
@@ -61,14 +61,16 @@
     self.navigationItem.rightBarButtonItem = bar;
     _page = 0;
     self.title = @"球队大厅";
-    _tableView = [[JGTeamChannelTableView alloc] initWithFrame:[UIScreen mainScreen].bounds style:(UITableViewStylePlain)];
+    _tableView = [[JGTeamChannelTableView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight) style:(UITableViewStylePlain)];
 //    _tableView = [[JGTeamChannelTableView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight - 40)];
     _tableView.separatorStyle = UITableViewCellAccessoryDisclosureIndicator;
 
     _tableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
     _tableView.footer=[MJDIYBackFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRereshing)];
     [_tableView.header beginRefreshing];
-    self.view = _tableView;
+//    self.view = _tableView;
+    [self.view addSubview:_tableView];
+    
     _tableView.delegate = self;
     _tableView.dataSource = self;
     _tableView.rowHeight = 80 * ScreenWidth/320;
@@ -82,7 +84,7 @@
     self.searchController.searchBar.tintColor = [UIColor colorWithRed:0.36f green:0.66f blue:0.31f alpha:1.00f];
     self.searchController.searchBar.placeholder = @"输入球队昵称搜索";
     self.tableView.tableHeaderView = self.searchController.searchBar;
-    
+    self.searchController.searchBar.delegate = self;
 //    [self getData];
     // Do any additional setup after loading the view.
 }
@@ -245,36 +247,41 @@
 
 //返回单元格内容
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-   
+    
     JGTeamChannelTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"cell"];
     if (indexPath.row == 16) {
         NSLog(@"");
     }
-
-//    if (!self.searchController.active || [self.searchArray count] == 0) {
-    if (self.searchController.active) {
     
+    //    if (!self.searchController.active || [self.searchArray count] == 0) {
+    if (self.searchController.active) {
+        NSString *bgUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/team/%@.jpg@100w_100h", [self.searchArray[indexPath.row] objectForKey:@"timeKey"]];
+        [[SDImageCache sharedImageCache] removeImageForKey:bgUrl fromDisk:YES];
+        
         if ([self.searchArray count] != 0) {
             [cell.iconImageV sd_setImageWithURL:[Helper setImageIconUrl:[[self.searchArray[indexPath.row] objectForKey:@"timeKey"] integerValue]] placeholderImage:[UIImage imageNamed:TeamLogoImage]];
-//            cell.nameLabel.text = [self.searchArray[indexPath.row] objectForKey:@"name"];
-            cell.nameLabel.text = [NSString stringWithFormat:@"%@ (%@人)",[self.modelArray[indexPath.row] objectForKey:@"name"],[self.searchArray[indexPath.row] objectForKey:@"userSum"]];
+            //            cell.nameLabel.text = [self.searchArray[indexPath.row] objectForKey:@"name"];
+            cell.nameLabel.text = [NSString stringWithFormat:@"%@ (%@人)",[self.searchArray[indexPath.row] objectForKey:@"name"],[self.searchArray[indexPath.row] objectForKey:@"userSum"]];
             cell.adressLabel.text = [self.searchArray[indexPath.row] objectForKey:@"crtyName"];
             cell.describLabel.text = [self.searchArray[indexPath.row] objectForKey:@"info"];;
         }
-
+        
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-//        self.tableView.separatorStyle = UITableViewCellAccessoryNone;
+        //        self.tableView.separatorStyle = UITableViewCellAccessoryNone;
         return cell;
     }else{
         // TEST
+        NSString *bgUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/team/%@.jpg@100w_100h", [self.modelArray[indexPath.row] objectForKey:@"timeKey"]];
+        [[SDImageCache sharedImageCache] removeImageForKey:bgUrl fromDisk:YES];
         [cell.iconImageV sd_setImageWithURL:[Helper setImageIconUrl:[[self.modelArray[indexPath.row] objectForKey:@"timeKey"] integerValue]] placeholderImage:[UIImage imageNamed:TeamLogoImage]];
-        
+        NSLog(@"%@", [Helper setImageIconUrl:[[self.modelArray[indexPath.row] objectForKey:@"timeKey"] integerValue]]);
+
         cell.nameLabel.text = [NSString stringWithFormat:@"%@ (%@)",[self.modelArray[indexPath.row] objectForKey:@"name"],[self.modelArray[indexPath.row] objectForKey:@"userSum"]];
         cell.adressLabel.text = [self.modelArray[indexPath.row] objectForKey:@"crtyName"];
-        cell.describLabel.text = [self.modelArray[indexPath.row] objectForKey:@"info"];;
+        cell.describLabel.text = [self.modelArray[indexPath.row] objectForKey:@"info"];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-//        self.tableView.separatorStyle = UITableViewCellAccessoryNone;
-
+        //        self.tableView.separatorStyle = UITableViewCellAccessoryNone;
+        
         return cell;
     }
 }
@@ -283,22 +290,58 @@
 #pragma mark ------搜索框回调方法
 
 -(void)updateSearchResultsForSearchController:(UISearchController *)searchController {
+//    [self.searchArray removeAllObjects];
+//    
+//    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+//    [dict setObject:[self.searchController.searchBar text] forKey:@"likeName"];
+//    [dict setObject:[[NSUserDefaults standardUserDefaults]objectForKey:@"userId"] forKey:@"userKey"];
+////    [dict setObject:[NSNumber numberWithInteger:_page] forKey:@"offset"];
+//    [dict setObject:@0 forKey:@"offset"];
+//    [[JsonHttp jsonHttp]httpRequest:@"team/getTeamList" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
+//     
+//        
+//    } completionBlock:^(id data) {
+//        if ([data objectForKey:@"teamList"]) {
+//                //清除数组数据
+//                [self.searchArray removeAllObjects];
+//            
+////            [self.modelArray addObjectsFromArray:[data objectForKey:@"teamList"]];
+//            for (NSDictionary *dic in [data objectForKey:@"teamList"]) {
+//                [self.searchArray addObject:dic];
+//            }
+//            
+//            _page++;
+//            [_tableView reloadData];
+//        }else {
+////            [Helper alertViewWithTitle:@"失败" withBlock:^(UIAlertController *alertView) {
+////                [self presentViewController:alertView animated:YES completion:nil];
+////            }];
+//        }
+//        [_tableView reloadData];
+//    
+//        
+//    }];
+//
+}
+
+
+-(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
     [self.searchArray removeAllObjects];
     
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     [dict setObject:[self.searchController.searchBar text] forKey:@"likeName"];
     [dict setObject:[[NSUserDefaults standardUserDefaults]objectForKey:@"userId"] forKey:@"userKey"];
-//    [dict setObject:[NSNumber numberWithInteger:_page] forKey:@"offset"];
+    //    [dict setObject:[NSNumber numberWithInteger:_page] forKey:@"offset"];
     [dict setObject:@0 forKey:@"offset"];
     [[JsonHttp jsonHttp]httpRequest:@"team/getTeamList" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
-     
+        
         
     } completionBlock:^(id data) {
         if ([data objectForKey:@"teamList"]) {
-                //清除数组数据
-                [self.searchArray removeAllObjects];
+            //清除数组数据
+            [self.searchArray removeAllObjects];
             
-//            [self.modelArray addObjectsFromArray:[data objectForKey:@"teamList"]];
+            //            [self.modelArray addObjectsFromArray:[data objectForKey:@"teamList"]];
             for (NSDictionary *dic in [data objectForKey:@"teamList"]) {
                 [self.searchArray addObject:dic];
             }
@@ -306,16 +349,14 @@
             _page++;
             [_tableView reloadData];
         }else {
-//            [Helper alertViewWithTitle:@"失败" withBlock:^(UIAlertController *alertView) {
-//                [self presentViewController:alertView animated:YES completion:nil];
-//            }];
+            //            [Helper alertViewWithTitle:@"失败" withBlock:^(UIAlertController *alertView) {
+            //                [self presentViewController:alertView animated:YES completion:nil];
+            //            }];
         }
         [_tableView reloadData];
-    
         
-    }];
-
-}
+        
+    }];}
 
 
 - (NSMutableArray *)searchArray{

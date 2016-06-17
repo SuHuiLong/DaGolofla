@@ -312,6 +312,8 @@
     
     if (isLength) {
         
+        [[NSUserDefaults standardUserDefaults] setObject:[self.paraDic objectForKey:@"userName"]forKey: @"realUserName"];
+        
         //        [self.paraDic setObject:@83 forKey:@"userKey"];   // TEST
         if ([[NSUserDefaults standardUserDefaults] objectForKey:@"almost"] != nil) {
             [self.paraDic setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"almost"] forKey:@"almost"];
@@ -332,7 +334,6 @@
             } completionBlock:^(id data) {
                 
             }];
-            
             
         }else{
         
@@ -435,7 +436,10 @@
         cell.promptLB.text = self.titleArray[indexPath.section][indexPath.row];
         cell.promptLB.textColor = [UIColor lightGrayColor];
         cell.contentLB.frame = CGRectMake(100  * screenWidth / 320, 15 * screenWidth / 320, screenWidth - 130  * screenWidth / 320, 15 * screenWidth / 320);
-        cell.contentLB.text = @"请选择";
+        NSLog(@"%@", [[NSUserDefaults standardUserDefaults] objectForKey:@"sex"]);
+        NSInteger sex = [[[NSUserDefaults standardUserDefaults] objectForKey:@"sex"] integerValue];
+        cell.contentLB.text = sex ? @"男" : @"女";
+//        cell.contentLB.text = @"请选择";
         cell.contentLB.textAlignment = NSTextAlignmentRight;
 //        [cell.button addTarget:self action:@selector(cellBtn) forControlEvents:(UIControlEventTouchUpInside)];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -459,6 +463,15 @@
         if (indexPath.section == 0) {
             cell.labell.text = self.titleArray[indexPath.section][indexPath.row];
             cell.labell.textColor = [UIColor lightGrayColor];
+            if (indexPath.row == 0) {
+                if ([[NSUserDefaults standardUserDefaults] objectForKey:@"realUserName"]) {
+                    cell.textFD.text = [[NSUserDefaults standardUserDefaults] objectForKey:@"realUserName"];
+                }
+                
+            }else if (indexPath.row == 2){
+                cell.textFD.text = [[NSUserDefaults standardUserDefaults] objectForKey:@"mobile"];
+                cell.textFD.keyboardType = UIKeyboardTypePhonePad;
+            }
             cell.textFD.placeholder = self.placeholderArray[indexPath.section][indexPath.row];
         }else{
             cell.labell.text = self.titleArray[indexPath.section][indexPath.row];
@@ -474,10 +487,6 @@
         return cell;
         }
     }
-
-
-
-
 //}
 
 //- (void)cellBtn{

@@ -324,7 +324,7 @@
 + (NSString *)returnCurrentDateString{
     NSDate *dateNew = [NSDate dateWithTimeIntervalSinceNow:0];
     NSDateFormatter * dm = [[NSDateFormatter alloc]init];
-    [dm setDateFormat:@"yyyy-MM-dd 00:00:00"];
+    [dm setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
     return [dm stringFromDate:dateNew];
 }
 

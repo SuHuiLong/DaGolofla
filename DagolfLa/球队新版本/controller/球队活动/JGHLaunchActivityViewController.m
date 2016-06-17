@@ -375,7 +375,7 @@ static CGFloat ImageHeight  = 210.0;
                 [self.model setValue:dateStr forKey:@"endDate"];
                 [_dataDict setObject:dateStr forKey:@"activityEndDate"];
             }else{
-                [self.model setValue:dateStr forKey:@"signUpEndTime"];
+                [self.model setValue:[NSString stringWithFormat:@"%@ 23:59:59", dateStr] forKey:@"signUpEndTime"];
                 [_dataDict setObject:dateStr forKey:@"activityEignUpEndTime"];
             }
             
@@ -424,9 +424,7 @@ static CGFloat ImageHeight  = 210.0;
     
     if (self.model.signUpEndTime != nil) {
         [dict setObject:self.model.signUpEndTime forKey:@"signUpEndTime"];//活动报名截止时间
-
     }
-    
     
     if (self.model.userMobile.length == 11) {
         [dict setObject:self.model.userMobile forKey:@"userMobile"];//联系人
@@ -466,14 +464,10 @@ static CGFloat ImageHeight  = 210.0;
 
     
     NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
-//    NSMutableArray *array = [NSMutableArray array];
-//    [array addObject:_model];
     [userdef setObject:dict forKey:@"TeamActivityArray"];
     [userdef synchronize];
     [[ShowHUD showHUD]hideAnimationFromView:self.view];
-    [Helper alertViewWithTitle:@"活动保存成功！" withBlock:^(UIAlertController *alertView) {
-        [self.navigationController presentViewController:alertView animated:YES completion:nil];
-    }];
+    [[ShowHUD showHUD]showToastWithText:@"提示：活动保存成功！" FromView:self.view];
 }
 
 #pragma mark --提交代理
@@ -506,7 +500,7 @@ static CGFloat ImageHeight  = 210.0;
     }
     
     if ([self.model.signUpEndTime compare:self.model.endDate] > 0) {
-        [[ShowHUD showHUD]showToastWithText:@"活动报名截止时间不能大于活动结束时间！" FromView:self.view];
+        [[ShowHUD showHUD]showToastWithText:@"报名截止时间不能大于活动结束时间！" FromView:self.view];
         return;
     }
     

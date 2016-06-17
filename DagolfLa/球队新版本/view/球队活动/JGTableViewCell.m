@@ -36,7 +36,7 @@
         }else if (indexPath.row == 1){
             self.contions.text = model.endDate;//活动结束时间
         }else{
-            self.contions.text = model.signUpEndTime;//报名截止时间
+            self.contions.text = [[model.signUpEndTime componentsSeparatedByString:@" "] objectAtIndex:0];//报名截止时间
         }
     }else if (indexPath.section == 2){
         if (indexPath.row == 0) {

@@ -61,7 +61,7 @@ static CGFloat ImageHeight  = 210.0;
 
 @property (nonatomic, strong)UIButton *addressBtn;//添加地址
 
-@property (nonatomic, strong)UIButton *applyBtn;
+@property (nonatomic, strong)UIButton *editorBtn;
 
 @end
 
@@ -140,7 +140,7 @@ static CGFloat ImageHeight  = 210.0;
     
     //渐变图
     UIImageView *gradientImage = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, ImageHeight)];
-    [gradientImage setImage:[UIImage imageNamed:@"tableHeaderBGImage"]];
+    [gradientImage setImage:[UIImage imageNamed:@"backChange"]];
     [self.titleView addSubview:gradientImage];
     
     //返回按钮
@@ -180,13 +180,12 @@ static CGFloat ImageHeight  = 210.0;
     
     [self.imgProfile addSubview:self.addressBtn];
     
-//    [self createApplyBtn];//报名页面
+    [self createEditorBtn];//报名页面
     //分享按钮
     UIButton *shareBtn = [[UIButton alloc]initWithFrame:CGRectMake(screenWidth-44, self.titleField.frame.origin.y, 44, 25)];
     [shareBtn setImage:[UIImage imageNamed:@"iconfont-fenxiang"] forState:UIControlStateNormal];
     [shareBtn addTarget:self action:@selector(addShare) forControlEvents:UIControlEventTouchUpInside];
     [self.titleView addSubview:shareBtn];
-    //    }
     
     [self dataSet];
 }
@@ -228,7 +227,7 @@ static CGFloat ImageHeight  = 210.0;
                 _userName = [dict objectForKey:@"userName"];//获取用户在球队的真实姓名
             }else{
                 _isTeamMember = 1;//非球队成员
-                [self.applyBtn setBackgroundColor:[UIColor lightGrayColor]];
+                [self.editorBtn setBackgroundColor:[UIColor lightGrayColor]];
             }
             
             [self.model setValuesForKeysWithDictionary:[data objectForKey:@"activity"]];
@@ -405,26 +404,19 @@ static CGFloat ImageHeight  = 210.0;
     
     [self presentViewController:aleVC animated:YES completion:nil];
 }
-#pragma mark -- 创建报名按钮
-- (void)createApplyBtn{
+#pragma mark -- 保存按钮
+- (void)createEditorBtn{
     self.headPortraitBtn.layer.masksToBounds = YES;
     self.headPortraitBtn.layer.cornerRadius = 8.0;
     
-    UIButton *photoBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, screenHeight-44, (75*screenWidth/375)-1, 44)];
-    [photoBtn setImage:[UIImage imageNamed:@"consulting"] forState:UIControlStateNormal];
-    [photoBtn addTarget:self action:@selector(telPhotoClick:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:photoBtn];
-    UILabel *lines = [[UILabel alloc]initWithFrame:CGRectMake(photoBtn.frame.origin.x, photoBtn.frame.size.width, 1, 44)];
-    lines.backgroundColor = [UIColor blackColor];
-    [self.view addSubview:lines];
-    self.applyBtn = [[UIButton alloc]initWithFrame:CGRectMake(photoBtn.frame.size.width + 1, screenHeight-44, screenWidth - 75 *ScreenWidth/375, 44)];
-    [self.applyBtn setTitle:@"报名参加" forState:UIControlStateNormal];
-    self.applyBtn.backgroundColor = [UIColor colorWithHexString:Nav_Color];
-    [self.applyBtn addTarget:self action:@selector(applyAttendBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:self.applyBtn];
+    self.editorBtn = [[UIButton alloc]initWithFrame:CGRectMake( 0, screenHeight-44, screenWidth, 44)];
+    [self.editorBtn setTitle:@"保存" forState:UIControlStateNormal];
+    self.editorBtn.backgroundColor = [UIColor lightGrayColor];
+    [self.editorBtn addTarget:self action:@selector(editonAttendBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:self.editorBtn];
 }
-#pragma mark -- 报名参加
-- (void)applyAttendBtnClick:(UIButton *)btn{
+#pragma mark -- 保存
+- (void)editonAttendBtnClick:(UIButton *)btn{
     //判断活动是否结束报名
     if ([[Helper returnCurrentDateString] compare:_model.signUpEndTime] > 0) {
         [[ShowHUD showHUD]showToastWithText:@"该活动已结束报名！" FromView:self.view];
@@ -440,11 +432,6 @@ static CGFloat ImageHeight  = 210.0;
             [self.navigationController pushViewController:teamApplyCtrl animated:YES];
         }
     }
-}
-#pragma mark -- 拨打电话
-- (void)telPhotoClick:(UIButton *)btn{
-    NSMutableString * str=[[NSMutableString alloc] initWithFormat:@"telprompt://%@", _model.userMobile];
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:str]];
 }
 #pragma mark -- tableView 代理
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
