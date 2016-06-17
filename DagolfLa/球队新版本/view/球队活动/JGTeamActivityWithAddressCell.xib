@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -11,7 +11,7 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="118"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="117.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="117"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="2016年6月4号" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MfD-yP-tS2">
@@ -32,7 +32,7 @@
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="活动结束时间:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TNJ-Zt-Pyw">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="活动截止时间:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TNJ-Zt-Pyw">
                         <rect key="frame" x="10" y="47" width="95" height="18"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="16" id="nlD-GZ-hy0"/>
@@ -64,7 +64,7 @@
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="报名截止时间:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ynB-3e-GCH">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="活动地址:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ynB-3e-GCH">
                         <rect key="frame" x="10" y="86" width="95" height="18"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="16" id="xot-Tq-nr2"/>
@@ -79,7 +79,7 @@
                         </variation>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2016年6月4号" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pRC-3c-7RJ">
-                        <rect key="frame" x="135" y="86" width="98" height="18"/>
+                        <rect key="frame" x="87" y="86" width="98" height="18"/>
                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                         <nil key="highlightedColor"/>
                     </label>
@@ -107,7 +107,7 @@
                     <constraint firstItem="jau-Yi-GgI" firstAttribute="leading" secondItem="TNJ-Zt-Pyw" secondAttribute="trailing" constant="30" id="A5P-bD-moh"/>
                     <constraint firstItem="MfD-yP-tS2" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="DmQ-Hj-Kfs"/>
                     <constraint firstItem="ynB-3e-GCH" firstAttribute="top" secondItem="O8M-rD-L0z" secondAttribute="bottom" constant="10" id="ITc-F4-Z7X"/>
-                    <constraint firstItem="pRC-3c-7RJ" firstAttribute="leading" secondItem="ynB-3e-GCH" secondAttribute="trailing" constant="30" id="Jo9-op-BqV"/>
+                    <constraint firstItem="pRC-3c-7RJ" firstAttribute="leading" secondItem="ynB-3e-GCH" secondAttribute="trailing" constant="-18" id="Jo9-op-BqV"/>
                     <constraint firstItem="TNJ-Zt-Pyw" firstAttribute="top" secondItem="q2Y-ZT-vDM" secondAttribute="bottom" constant="10" id="OKo-ev-6A4"/>
                     <constraint firstItem="MfD-yP-tS2" firstAttribute="leading" secondItem="JhD-mG-DPV" secondAttribute="trailing" constant="30" id="bSI-5c-MQt"/>
                     <constraint firstItem="ynB-3e-GCH" firstAttribute="height" secondItem="JhD-mG-DPV" secondAttribute="height" id="cPQ-5o-5C1"/>
