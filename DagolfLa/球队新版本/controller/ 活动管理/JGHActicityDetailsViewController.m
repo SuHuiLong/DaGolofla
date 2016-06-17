@@ -180,7 +180,7 @@ static CGFloat ImageHeight  = 210.0;
     
     [self.imgProfile addSubview:self.addressBtn];
     
-    [self createEditorBtn];//报名页面
+//    [self createEditorBtn];//报名页面
     //分享按钮
     UIButton *shareBtn = [[UIButton alloc]initWithFrame:CGRectMake(screenWidth-44, self.titleField.frame.origin.y, 44, 25)];
     [shareBtn setImage:[UIImage imageNamed:@"iconfont-fenxiang"] forState:UIControlStateNormal];
@@ -195,7 +195,7 @@ static CGFloat ImageHeight  = 210.0;
     
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     //球队活动
-    [dict setValue:[NSString stringWithFormat:@"%td", _model.teamActivityKey] forKey:@"activityKey"];
+    [dict setValue:[NSString stringWithFormat:@"%td", [_model.timeKey integerValue]] forKey:@"activityKey"];
 //    if (self.isTeamChannal == 1) {
 //        //近期活动
 //        [dict setValue:[NSString stringWithFormat:@"%td", [_model.timeKey integerValue]] forKey:@"activityKey"];

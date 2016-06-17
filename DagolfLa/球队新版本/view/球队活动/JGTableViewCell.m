@@ -47,8 +47,6 @@
             self.contions.text = model.info;
         }
     }
-    
-    
 }
 
 - (void)configJGTeamAcitivtyModel:(JGTeamAcitivtyModel *)model andIndecPath:(NSIndexPath *)indexPath{

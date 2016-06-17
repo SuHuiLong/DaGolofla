@@ -50,10 +50,10 @@
 		208030531CF9A79800448BFC /* JGHTotalPriceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 208030511CF9A79800448BFC /* JGHTotalPriceCell.m */; };
 		208030541CF9A79800448BFC /* JGHTotalPriceCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 208030521CF9A79800448BFC /* JGHTotalPriceCell.xib */; };
 		2080305C1CFCB86C00448BFC /* UMMobClick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2080305B1CFCB86B00448BFC /* UMMobClick.framework */; };
+		208837871D1400D9004C7B5D /* JGHActicityDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 208837861D1400D9004C7B5D /* JGHActicityDetailsViewController.m */; };
 		209B3FE61D0FCB0300A6FF72 /* JGHSaveAndSubmitBtnCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 209B3FE41D0FCB0300A6FF72 /* JGHSaveAndSubmitBtnCell.m */; };
 		209B3FE71D0FCB0300A6FF72 /* JGHSaveAndSubmitBtnCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 209B3FE51D0FCB0300A6FF72 /* JGHSaveAndSubmitBtnCell.xib */; };
 		209B3FEB1D10182B00A6FF72 /* JGHManagerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 209B3FEA1D10182B00A6FF72 /* JGHManagerViewController.m */; };
-		209B3FEE1D1023CC00A6FF72 /* JGHActicityDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 209B3FED1D1023CC00A6FF72 /* JGHActicityDetailsViewController.m */; };
 		20BA61291CDC99D0004B61F5 /* ALAirplayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 20BA61151CDC99D0004B61F5 /* ALAirplayView.m */; };
 		20BA612A1CDC99D0004B61F5 /* ALButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 20BA61171CDC99D0004B61F5 /* ALButton.m */; };
 		20BA612B1CDC99D0004B61F5 /* ALMoviePlayerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 20BA61191CDC99D0004B61F5 /* ALMoviePlayerController.m */; };
@@ -1069,13 +1069,13 @@
 		208030511CF9A79800448BFC /* JGHTotalPriceCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHTotalPriceCell.m; sourceTree = "<group>"; };
 		208030521CF9A79800448BFC /* JGHTotalPriceCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JGHTotalPriceCell.xib; sourceTree = "<group>"; };
 		2080305B1CFCB86B00448BFC /* UMMobClick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = UMMobClick.framework; sourceTree = "<group>"; };
+		208837851D1400D9004C7B5D /* JGHActicityDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHActicityDetailsViewController.h; sourceTree = "<group>"; };
+		208837861D1400D9004C7B5D /* JGHActicityDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHActicityDetailsViewController.m; sourceTree = "<group>"; };
 		209B3FE31D0FCB0300A6FF72 /* JGHSaveAndSubmitBtnCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHSaveAndSubmitBtnCell.h; sourceTree = "<group>"; };
 		209B3FE41D0FCB0300A6FF72 /* JGHSaveAndSubmitBtnCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHSaveAndSubmitBtnCell.m; sourceTree = "<group>"; };
 		209B3FE51D0FCB0300A6FF72 /* JGHSaveAndSubmitBtnCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JGHSaveAndSubmitBtnCell.xib; sourceTree = "<group>"; };
 		209B3FE91D10182B00A6FF72 /* JGHManagerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHManagerViewController.h; sourceTree = "<group>"; };
 		209B3FEA1D10182B00A6FF72 /* JGHManagerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHManagerViewController.m; sourceTree = "<group>"; };
-		209B3FEC1D1023CC00A6FF72 /* JGHActicityDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHActicityDetailsViewController.h; sourceTree = "<group>"; };
-		209B3FED1D1023CC00A6FF72 /* JGHActicityDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHActicityDetailsViewController.m; sourceTree = "<group>"; };
 		20BA61141CDC99D0004B61F5 /* ALAirplayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALAirplayView.h; sourceTree = "<group>"; };
 		20BA61151CDC99D0004B61F5 /* ALAirplayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALAirplayView.m; sourceTree = "<group>"; };
 		20BA61161CDC99D0004B61F5 /* ALButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALButton.h; sourceTree = "<group>"; };
@@ -2744,10 +2744,10 @@
 		209B3FE81D10175200A6FF72 /*  活动管理 */ = {
 			isa = PBXGroup;
 			children = (
+				208837851D1400D9004C7B5D /* JGHActicityDetailsViewController.h */,
+				208837861D1400D9004C7B5D /* JGHActicityDetailsViewController.m */,
 				209B3FE91D10182B00A6FF72 /* JGHManagerViewController.h */,
 				209B3FEA1D10182B00A6FF72 /* JGHManagerViewController.m */,
-				209B3FEC1D1023CC00A6FF72 /* JGHActicityDetailsViewController.h */,
-				209B3FED1D1023CC00A6FF72 /* JGHActicityDetailsViewController.m */,
 			);
 			path = " 活动管理";
 			sourceTree = "<group>";
@@ -6538,6 +6538,7 @@
 				36BF00AA1BC77326005B3CE2 /* NewsModel.m in Sources */,
 				369E6B011C4FCAB700ED6684 /* ManageOtherTableViewCell.m in Sources */,
 				36DF09B91C040697007A8A4E /* TeamNameTableViewCell.m in Sources */,
+				208837871D1400D9004C7B5D /* JGHActicityDetailsViewController.m in Sources */,
 				36B9B5981C3E00200053B227 /* CollectViewController.m in Sources */,
 				360148F81C1FFE5E0074C395 /* ManageFinfishModel.m in Sources */,
 				36DCEEC41C0BEF1100AA862C /* ManageCreateLogoTableViewCell.m in Sources */,
@@ -6675,7 +6676,6 @@
 				65B596F21CAD43AC007AB83A /* JKSlideViewController.m in Sources */,
 				36DF562F1C1519B40006D9BA /* ScoreWriteProController.m in Sources */,
 				20513BD61CF7050A003233FB /* DataVerifier.m in Sources */,
-				209B3FEE1D1023CC00A6FF72 /* JGHActicityDetailsViewController.m in Sources */,
 				F569A1491CE35AA500CD0FD5 /* JGTeamChannelTableView.m in Sources */,
 				36BFFF8B1BC76D09005B3CE2 /* FDCalendarItem.m in Sources */,
 				36BFFF9E1BC76FD4005B3CE2 /* CommunityViewController.m in Sources */,
