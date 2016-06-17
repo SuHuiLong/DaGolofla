@@ -22,7 +22,13 @@
 //图片相册的当前封面
 @property (strong, nonatomic) NSNumber* numPhotoKey;
 
+//是否是球队成员可见
+@property (strong, nonatomic) NSNumber* isShowMem;
+
 
 //创建相册的block
 @property (copy, nonatomic) void(^createBlock)();
+
+@property (strong, nonatomic) NSString* titleStr;
+
 @end

@@ -127,7 +127,7 @@ static CGFloat ImageHeight  = 210.0;
     
     //渐变图
     UIImageView *gradientImage = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, ImageHeight)];
-    [gradientImage setImage:[UIImage imageNamed:@"tableHeaderBGImage"]];
+    [gradientImage setImage:[UIImage imageNamed:@"backChange"]];
     [self.titleView addSubview:gradientImage];
     
     //返回按钮
@@ -276,10 +276,12 @@ static CGFloat ImageHeight  = 210.0;
         }
     }
 }
+
 #pragma mark - Table View Delegate
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     [self updateImg];
 }
+
 #pragma mark -- tableView 代理
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     if (section == 0) {
@@ -287,7 +289,7 @@ static CGFloat ImageHeight  = 210.0;
     }else if (section == 1){
         return 4;
     }else if (section == 2){
-        return 2;
+        return 1;
     }else{
         return 1;
     }

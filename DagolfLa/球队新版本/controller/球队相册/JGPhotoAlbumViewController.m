@@ -120,6 +120,13 @@
 #pragma mark --上传图片方法
 -(void)imageArray:(NSArray *)array
 {
+    
+    MBProgressHUD *progress = [[MBProgressHUD alloc] initWithView:self.view];
+    progress.mode = MBProgressHUDModeIndeterminate;
+    progress.labelText = @"正在修改...";
+    [self.view addSubview:progress];
+    [progress show:YES];
+    
     /**
      *  获取timekey用来作为上传图片的timekey
      *
@@ -128,7 +135,7 @@
      *  @return nil
      */
     [[JsonHttp jsonHttp] httpRequest:@"globalCode/createTimeKey" JsonKey:nil withData:nil requestMethod:@"GET" failedBlock:^(id errType) {
-        
+        [MBProgressHUD hideAllHUDsForView:self.view animated:NO];
     }completionBlock:^(id data) {
         NSNumber* TimeKey = [data objectForKey:@"timeKey"];
         
@@ -141,6 +148,7 @@
         [dictMedia setObject:@"dagolfla" forKey:@"tag"];
         [[JsonHttp jsonHttp] httpRequestImageOrVedio:@"1" withData:dictMedia andDataArray:array failedBlock:^(id errType) {
             NSLog(@"errType===%@", errType);
+            [MBProgressHUD hideAllHUDsForView:self.view animated:NO];
         } completionBlock:^(id data) {
             /**
              上传图片的参数
@@ -157,16 +165,19 @@
                 
                 [dict setObject:[Helper returnCurrentDateString] forKey:@"createTime"];
                 [[JsonHttp jsonHttp]httpRequest:@"team/createTeamMedia" JsonKey:@"teamMedia" withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
+                    [MBProgressHUD hideAllHUDsForView:self.view animated:NO];
                     NSLog(@"errType == %@", errType);
                 } completionBlock:^(id data) {
                     _collectionView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
                     _isUpdata = YES;
                     [_collectionView.header beginRefreshing];
                     [_collectionView reloadData];
+                    [MBProgressHUD hideAllHUDsForView:self.view animated:NO];
                 }];
             }
             else
             {
+                [MBProgressHUD hideAllHUDsForView:self.view animated:NO];
                 [Helper alertViewWithTitle:@"上传图片失败" withBlock:^(UIAlertController *alertView) {
                     [self.navigationController presentViewController:alertView animated:YES completion:nil];
                 }];

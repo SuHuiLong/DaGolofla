@@ -110,7 +110,7 @@ static CGFloat ImageHeight  = 210.0;
 
         [self.view addSubview:self.launchActivityTableView];
         [self.view addSubview:self.imgProfile];
-        self.titleView.frame = CGRectMake(0, 20, screenWidth, 44);
+        self.titleView.frame = CGRectMake(0, 0, screenWidth, 44);
         self.titleView.backgroundColor = [UIColor clearColor];
         [self.imgProfile addSubview:self.titleView];
     }
@@ -126,10 +126,14 @@ static CGFloat ImageHeight  = 210.0;
     
     
     
+    //渐变图
+    UIImageView *gradientImage = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, ImageHeight)];
+    [gradientImage setImage:[UIImage imageNamed:@"backChange"]];
+    [self.titleView addSubview:gradientImage];
     
     //返回按钮
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    btn.frame = BackBtnFrame;
+    btn.frame = CGRectMake(0, 10 * screenWidth / 320, 44 * screenWidth / 320, 44 * screenWidth / 320);
     btn.titleLabel.font = [UIFont systemFontOfSize:FontSize_Normal];
     btn.tag = 521;
     [btn setImage:[UIImage imageNamed:@"backL"] forState:UIControlStateNormal];
@@ -137,7 +141,7 @@ static CGFloat ImageHeight  = 210.0;
     [self.titleView addSubview:btn];
     //点击更换
     UIButton *replaceBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    replaceBtn.frame = CGRectMake(screenWidth-64, 0, 54, 44);
+    replaceBtn.frame = CGRectMake(screenWidth-64, 10 * screenWidth / 320, 54, 44);
     replaceBtn.titleLabel.font = [UIFont systemFontOfSize:FontSize_Normal];
     [replaceBtn setTitle:@"点击更换" forState:UIControlStateNormal];
     replaceBtn.titleLabel.font = [UIFont systemFontOfSize:13];
@@ -145,7 +149,7 @@ static CGFloat ImageHeight  = 210.0;
     [replaceBtn addTarget:self action:@selector(initItemsBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.titleView addSubview:replaceBtn];
     //输入框
-    self.titleField = [[UITextField alloc]initWithFrame:CGRectMake(64, 7, screenWidth - 128, 30)];
+    self.titleField = [[UITextField alloc]initWithFrame:CGRectMake(64, 17 * screenWidth / 320, screenWidth - 128, 30)];
     //    self.titleField.textColor = [UIColor whiteColor];
     //    self.titleField.font = [UIFont systemFontOfSize:15];
     self.titleField.placeholder = @"请输入球队名";
@@ -505,7 +509,7 @@ static CGFloat ImageHeight  = 210.0;
         self.imgProfile.frame = f;
         
         CGRect title = self.titleView.frame;
-        self.titleView.frame = CGRectMake((factor-screenWidth)/2, 20 * screenWidth / 320, title.size.width, title.size.height);
+        self.titleView.frame = CGRectMake((factor-screenWidth)/2, 0 * screenWidth / 320, title.size.width, title.size.height);
         
         self.headPortraitBtn.hidden = YES;
         
@@ -516,7 +520,7 @@ static CGFloat ImageHeight  = 210.0;
         self.imgProfile.frame = f;
         
         CGRect t = self.titleView.frame;
-        t.origin.y = yOffset + 20 * screenWidth / 320;
+        t.origin.y = yOffset + 0 * screenWidth / 320;
         self.titleView.frame = t;
         
         if (yOffset == 0.0) {
@@ -662,7 +666,10 @@ static CGFloat ImageHeight  = 210.0;
         launchActivityCell.selectionStyle = UITableViewCellSelectionStyleNone;
         if (indexPath.row == 0) {
             launchActivityCell.promptLB.text = @"成立日期";
-            launchActivityCell.contentLB.text = [self.detailDic objectForKey:@"establishTime"];
+            if ([self.detailDic objectForKey:@"establishTime"]) {
+                launchActivityCell.contentLB.text = [Helper returnDateformatString:[self.detailDic objectForKey:@"establishTime"]] ;
+            }
+            
         }else{
             launchActivityCell.promptLB.text = @"所在地区";
             launchActivityCell.contentLB.text = [self.detailDic objectForKey:@"crtyName"];

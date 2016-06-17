@@ -110,7 +110,7 @@ static CGFloat ImageHeight  = 210.0;
         self.launchActivityTableView.backgroundColor = [UIColor colorWithHexString:@"#EAEAEB"];
         [self.view addSubview:self.launchActivityTableView];
         [self.view addSubview:self.imgProfile];
-        self.titleView.frame = CGRectMake(0, 20, screenWidth, 44);
+        self.titleView.frame = CGRectMake(0, 0, screenWidth, 44);
         self.titleView.backgroundColor = [UIColor clearColor];
         [self.imgProfile addSubview:self.titleView];
     }
@@ -123,9 +123,16 @@ static CGFloat ImageHeight  = 210.0;
     self.navigationController.navigationBar.hidden = YES;
     self.automaticallyAdjustsScrollViewInsets=NO;
     self.view.backgroundColor = [UIColor colorWithHexString:@"#EAEAEB"];
+    
+    
+    //渐变图
+    UIImageView *gradientImage = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, ImageHeight)];
+    [gradientImage setImage:[UIImage imageNamed:@"backChange"]];
+    [self.titleView addSubview:gradientImage];
+    
     //返回按钮
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    btn.frame = BackBtnFrame;
+    btn.frame = CGRectMake(0, 10 * screenWidth / 375, 44 * screenWidth / 375, 44 * screenWidth / 375);
     btn.titleLabel.font = [UIFont systemFontOfSize:FontSize_Normal];
     btn.tag = 521;
     [btn setImage:[UIImage imageNamed:@"backL"] forState:UIControlStateNormal];
@@ -133,7 +140,7 @@ static CGFloat ImageHeight  = 210.0;
     [self.titleView addSubview:btn];
     //点击更换
     UIButton *replaceBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    replaceBtn.frame = CGRectMake(screenWidth-64 * screenWidth / 375, 0, 54 * screenWidth / 375, 44 * screenWidth / 375);
+    replaceBtn.frame = CGRectMake(screenWidth-64 * screenWidth / 375, 10 * screenWidth / 375, 54 * screenWidth / 375, 44 * screenWidth / 375);
     replaceBtn.titleLabel.font = [UIFont systemFontOfSize:FontSize_Normal];
     [replaceBtn setTitle:@"点击更换" forState:UIControlStateNormal];
     replaceBtn.titleLabel.font = [UIFont systemFontOfSize:13 * screenWidth / 375];
@@ -141,12 +148,12 @@ static CGFloat ImageHeight  = 210.0;
     [replaceBtn addTarget:self action:@selector(initItemsBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.titleView addSubview:replaceBtn];
     //输入框
-    self.titleField = [[UITextField alloc]initWithFrame:CGRectMake(64 * screenWidth / 375, 7 * screenWidth / 375, screenWidth - 138 * screenWidth / 375, 30 * screenWidth / 375)];
+    self.titleField = [[UITextField alloc]initWithFrame:CGRectMake(64 * screenWidth / 375, 17 * screenWidth / 375, screenWidth - 138 * screenWidth / 375, 30 * screenWidth / 375)];
     self.titleField.backgroundColor = [UIColor clearColor];
 //    self.titleField.font = [UIFont systemFontOfSize:15 * screenWidth / 375];
     self.titleField.textAlignment = NSTextAlignmentCenter;
     self.titleField.textColor = [UIColor whiteColor];
-    self.titleField.font = [UIFont systemFontOfSize:15];
+    self.titleField.font = [UIFont systemFontOfSize:15 * screenWidth / 375];
 
 //    self.titleField.borderStyle = UITextBorderStyleRoundedRect;
     self.titleField.delegate = self;
@@ -160,6 +167,7 @@ static CGFloat ImageHeight  = 210.0;
     [self.titleView addSubview:self.titleField];
     
     _titleArray = @[@[], @[@"球队队长", @"所属地区", @"成立时间"], @[@"对外联系人"], @[@"球队简介"]];
+    
     
     [self createPreviewBtn];
 }
@@ -242,7 +250,7 @@ static CGFloat ImageHeight  = 210.0;
         self.imgProfile.frame = f;
         
         CGRect title = self.titleView.frame;
-        self.titleView.frame = CGRectMake((factor-screenWidth)/2, 20  * screenWidth / 375, title.size.width, title.size.height);
+        self.titleView.frame = CGRectMake((factor-screenWidth)/2, 0  * screenWidth / 375, title.size.width, title.size.height);
         
         self.headPortraitBtn.hidden = YES;
         
@@ -253,7 +261,7 @@ static CGFloat ImageHeight  = 210.0;
         self.imgProfile.frame = f;
         
         CGRect t = self.titleView.frame;
-        t.origin.y = yOffset + 20  * screenWidth / 375;
+        t.origin.y = yOffset + 0  * screenWidth / 375;
         self.titleView.frame = t;
         
         if (yOffset == 0.0) {

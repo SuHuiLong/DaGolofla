@@ -16,6 +16,7 @@
 #import "JGLTeamEditViewController.h"
 #import "JGHManagerViewController.h"
 #import "JGTeamDeatilWKwebViewController.h"
+#import "JGTeamPhotoViewController.h"
 
 @interface JGTeamManageViewController ()<UITableViewDelegate, UITableViewDataSource, JGHConcentTextViewControllerDelegate>
 
@@ -119,7 +120,11 @@
             mangerCtrl.timeKey = self.teamKey;
             [self.navigationController pushViewController:mangerCtrl animated:YES];
         }else{
-            
+            JGTeamPhotoViewController* phoVc = [[JGTeamPhotoViewController alloc]init];
+            phoVc.teamKey = [self.detailDic objectForKey:@"timeKey"];
+            phoVc.powerPho = self.power;
+            phoVc.dictMember = _memberDic;
+            [self.navigationController pushViewController:phoVc animated:YES];
         }
         
     }else if (indexPath.section == 3) {

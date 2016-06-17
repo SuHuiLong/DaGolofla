@@ -13,4 +13,6 @@
 @property (nonatomic, assign) NSInteger teamKey;
 @property (nonatomic, strong) NSMutableDictionary *detailDic;
 @property (nonatomic, copy)NSString * power;
+
+@property (strong, nonatomic) NSMutableDictionary* memberDic;
 @end

@@ -10,7 +10,7 @@
 #import "UITool.h"
 #import "SXPickPhoto.h"
 
-
+#import "MBProgressHUD.h"
 @interface JGTeamCreatePhotoController ()
 {
     UIButton* _btnAll;
@@ -68,19 +68,29 @@
 #pragma mark --修改
 -(void)upDataClick
 {
+    
+    MBProgressHUD *progress = [[MBProgressHUD alloc] initWithView:self.view];
+    progress.mode = MBProgressHUDModeIndeterminate;
+    progress.labelText = @"正在修改...";
+    [self.view addSubview:progress];
+    [progress show:YES];
+    
     NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
     [dict setObject:[NSNumber numberWithInteger:_isOpen] forKey:@"power"];
     [dict setObject:_timeKey forKey:@"timeKey"];
-    [dict setObject:[NSString stringWithFormat:@"%@",_textTitle.text] forKey:@"name"];
+    if (![Helper isBlankString:_textTitle.text]) {
+        [dict setObject:[NSString stringWithFormat:@"%@",_textTitle.text] forKey:@"name"];
+    }
+    
     [dict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:userID] forKey:@"userKey"];
     [[JsonHttp jsonHttp]httpRequest:@"team/updateTeamAlbum" JsonKey:nil withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
         NSLog(@"errType == %@", errType);
+        [MBProgressHUD hideAllHUDsForView:self.view animated:NO];
     } completionBlock:^(id data) {
+        [MBProgressHUD hideAllHUDsForView:self.view animated:NO];
         if ([[data objectForKey:@"packSuccess"] boolValue] == 1) {
-            [Helper alertViewWithTitle:@"修改相册成功" withBlock:^(UIAlertController *alertView) {
-                [self.navigationController popViewControllerAnimated:YES];
-                [self.navigationController presentViewController:alertView animated:YES completion:nil];
-            }];
+            [[ShowHUD showHUD]showToastWithText:@"修改相册信息成功" FromView:self.view];
+            [self.navigationController popViewControllerAnimated:YES];
         }
         
     }];
@@ -88,26 +98,44 @@
 #pragma mark --上传
 -(void)saveClick
 {
-    NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
-//    [dict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:userID] forKey:@"userKey"];
-    [dict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:userID] forKey:@"userKey"];
-    [dict setObject:[Helper returnCurrentDateString] forKey:@"createTime"];
-    [dict setObject:[NSNumber numberWithInteger:_isOpen] forKey:@"power"];
-    [dict setObject:@0 forKey:@"timeKey"];
-    [dict setObject:_teamKey forKey:@"teamKey"];
-    [dict setObject:[NSString stringWithFormat:@"%@",_textTitle.text] forKey:@"name"];
-    [[JsonHttp jsonHttp]httpRequest:@"team/createTeamAlbum" JsonKey:@"teamAlbum" withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
-        NSLog(@"errType == %@", errType);
-    } completionBlock:^(id data) {
-        if ([[data objectForKey:@"packSuccess"] boolValue] == 1) {
-            _createBlock();
-//            [Helper alertViewWithTitle:@"创建相册成功" withBlock:^(UIAlertController *alertView) {
-                [self.navigationController popViewControllerAnimated:YES];
-//                [self.navigationController presentViewController:alertView animated:YES completion:nil];
-//            }];
+    
+    MBProgressHUD *progress = [[MBProgressHUD alloc] initWithView:self.view];
+    progress.mode = MBProgressHUDModeIndeterminate;
+    progress.labelText = @"正在上传...";
+    [self.view addSubview:progress];
+    [progress show:YES];
+    
+    if (![Helper isBlankString:_textTitle.text]) {
+        NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
+        //    [dict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:userID] forKey:@"userKey"];
+        [dict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:userID] forKey:@"userKey"];
+        [dict setObject:[Helper returnCurrentDateString] forKey:@"createTime"];
+        [dict setObject:[NSNumber numberWithInteger:_isOpen] forKey:@"power"];
+        [dict setObject:@0 forKey:@"timeKey"];
+        [dict setObject:_teamKey forKey:@"teamKey"];
+        if (![Helper isBlankString:_textTitle.text]) {
+            [dict setObject:[NSString stringWithFormat:@"%@",_textTitle.text] forKey:@"name"];
         }
         
-    }];
+        [[JsonHttp jsonHttp]httpRequest:@"team/createTeamAlbum" JsonKey:@"teamAlbum" withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
+            [MBProgressHUD hideAllHUDsForView:self.view animated:NO];
+        } completionBlock:^(id data) {
+            [MBProgressHUD hideAllHUDsForView:self.view animated:NO];
+            if ([[data objectForKey:@"packSuccess"] boolValue] == 1) {
+                _createBlock();
+                //            [Helper alertViewWithTitle:@"创建相册成功" withBlock:^(UIAlertController *alertView) {
+                [self.navigationController popViewControllerAnimated:YES];
+                //                [self.navigationController presentViewController:alertView animated:YES completion:nil];
+                //            }];
+            }
+            
+        }];
+    }
+    else
+   {
+       [MBProgressHUD hideAllHUDsForView:self.view animated:NO];
+       [[ShowHUD showHUD]showToastWithText:@"请填写相册名称" FromView:self.view];
+   }
 }
 /*\
  字体 15   a0a0a0    黑色 313131
@@ -133,6 +161,9 @@
     _textTitle.textColor = [UITool colorWithHexString:@"313131" alpha:1];
     _textTitle.font = [UIFont systemFontOfSize:15*screenWidth/375];
     [viewTitle addSubview:_textTitle];
+    if (![Helper isBlankString:_titleStr]) {
+        _textTitle.text = _titleStr;
+    }
   
 }
 
@@ -167,7 +198,17 @@
     labelAll.textColor = [UITool colorWithHexString:@"a0a0a0" alpha:1];
     
     _imgvAll = [[UIImageView alloc]initWithFrame:CGRectMake(screenWidth-50*screenWidth/375, 15*screenWidth/375, 15*screenWidth/375, 15*screenWidth/375)];
-    _imgvAll.image = [UIImage imageNamed:@"duihao"];
+    if ([_isShowMem integerValue] == 0) {
+        _imgvAll.image = [UIImage imageNamed:@"duihao"];
+    }
+    else if ([_isShowMem integerValue] == 1)
+    {
+        _imgvAll.image = [UIImage imageNamed:@""];
+    }
+    else
+    {
+        _imgvAll.image = [UIImage imageNamed:@"duihao"];
+    }
     [_btnAll addSubview:_imgvAll];
     
     UIView* line2 = [[UIView alloc]initWithFrame:CGRectMake(10*screenWidth/375, 45*screenWidth/375*2, screenWidth-20*screenWidth/375, 1*screenWidth/375)];
@@ -189,6 +230,16 @@
     
     _imgvSome = [[UIImageView alloc]initWithFrame:CGRectMake(screenWidth-50*screenWidth/375, 15*screenWidth/375, 15*screenWidth/375, 15*screenWidth/375)];
     [_btnSome addSubview:_imgvSome];
+    if ([_isShowMem integerValue] == 0) {
+        _imgvSome.image = [UIImage imageNamed:@""];
+    }
+    else if ([_isShowMem integerValue] == 1)
+    {
+        _imgvSome.image = [UIImage imageNamed:@"duihao"];
+    }
+    else{
+        
+    }
 
     
 }
@@ -275,6 +326,14 @@
 #pragma mark --上传图片方法
 -(void)imageArray:(NSArray *)array
 {
+    
+    MBProgressHUD *progress = [[MBProgressHUD alloc] initWithView:self.view];
+    progress.mode = MBProgressHUDModeIndeterminate;
+    progress.labelText = @"正在上传...";
+    [self.view addSubview:progress];
+    [progress show:YES];
+    
+    
     /**
      *  获取timekey用来作为上传图片的timekey
      *
@@ -283,7 +342,7 @@
      *  @return nil
      */
     [[JsonHttp jsonHttp] httpRequest:@"globalCode/createTimeKey" JsonKey:nil withData:nil requestMethod:@"GET" failedBlock:^(id errType) {
-        
+        [MBProgressHUD hideAllHUDsForView:self.view animated:NO];
     }completionBlock:^(id data) {
         NSNumber* TimeKey = [data objectForKey:@"timeKey"];
         
@@ -296,10 +355,12 @@
         [dictMedia setObject:@"dagolfla" forKey:@"tag"];
         [[JsonHttp jsonHttp] httpRequestImageOrVedio:@"1" withData:dictMedia andDataArray:array failedBlock:^(id errType) {
             NSLog(@"errType===%@", errType);
+            [MBProgressHUD hideAllHUDsForView:self.view animated:NO];
         } completionBlock:^(id data) {
             /**
              上传图片的参数
              */
+            
             if ([[data objectForKey:@"code"] integerValue] == 1) {
                 NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
                 if (TimeKey != nil) {
@@ -310,16 +371,16 @@
                 
                 [[JsonHttp jsonHttp]httpRequest:@"team/updateTeamAlbum" JsonKey:nil withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
                     NSLog(@"errType == %@", errType);
+                    [MBProgressHUD hideAllHUDsForView:self.view animated:NO];
                 } completionBlock:^(id data) {
-                    NSLog(@"%@",data);
+                    [MBProgressHUD hideAllHUDsForView:self.view animated:NO];
                     _imgvChange.image = [UIImage imageWithData:array[0]];
                 }];
             }
             else
             {
-                [Helper alertViewWithTitle:@"上传图片失败" withBlock:^(UIAlertController *alertView) {
-                    [self.navigationController presentViewController:alertView animated:YES completion:nil];
-                }];
+                [MBProgressHUD hideAllHUDsForView:self.view animated:NO];
+                [[ShowHUD showHUD]showToastWithText:@"上传图片失败" FromView:self.view];
             }
             
         }];
@@ -347,20 +408,35 @@
 
 -(void)deleteClick
 {
-    NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
-    [dict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:userID] forKey:@"userKey"];
-    [dict setObject:@[_timeKey] forKey:@"timeKeyList"];
-    [[JsonHttp jsonHttp]httpRequest:@"team/batchDeleteTeamAlbum" JsonKey:nil withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
-        NSLog(@"errType == %@", errType);
-    } completionBlock:^(id data) {
-        if ([[data objectForKey:@"packSuccess"] boolValue] == 1) {
-            _createBlock();
-//            [Helper alertViewWithTitle:@"删除相册成功" withBlock:^(UIAlertController *alertView) {
+    
+    
+    
+    [Helper alertViewWithTitle:@"删除相册不可找回，您是否确认删除？" withBlockCancle:^{
+    } withBlockSure:^{
+        MBProgressHUD *progress = [[MBProgressHUD alloc] initWithView:self.view];
+        progress.mode = MBProgressHUDModeIndeterminate;
+        progress.labelText = @"正在删除...";
+        [self.view addSubview:progress];
+        [progress show:YES];
+        
+        NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
+        [dict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:userID] forKey:@"userKey"];
+        [dict setObject:@[_timeKey] forKey:@"timeKeyList"];
+        [[JsonHttp jsonHttp]httpRequest:@"team/batchDeleteTeamAlbum" JsonKey:nil withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
+            NSLog(@"errType == %@", errType);
+            [MBProgressHUD hideAllHUDsForView:self.view animated:NO];
+        } completionBlock:^(id data) {
+            [MBProgressHUD hideAllHUDsForView:self.view animated:NO];
+            if ([[data objectForKey:@"packSuccess"] boolValue] == 1) {
+                _createBlock();
                 [self.navigationController popViewControllerAnimated:YES];
-//                [self.navigationController presentViewController:alertView animated:YES completion:nil];
-//            }];
-        }
-    }];}
+            }
+        }];
+    } withBlock:^(UIAlertController *alertView) {
+        [self.navigationController presentViewController:alertView animated:YES completion:nil];
+    }];
+    
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

@@ -202,7 +202,7 @@ static CGFloat ImageHeight  = 210.0;
     
     //渐变图
     UIImageView *gradientImage = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, ImageHeight)];
-    [gradientImage setImage:[UIImage imageNamed:@"tableHeaderBGImage"]];
+    [gradientImage setImage:[UIImage imageNamed:@"backChange"]];
     [self.titleView addSubview:gradientImage];
     
     //返回按钮
@@ -638,7 +638,7 @@ static CGFloat ImageHeight  = 210.0;
             {
                 JGTeamPhotoViewController* phoVc = [[JGTeamPhotoViewController alloc]init];
                 phoVc.teamKey = [self.detailDic objectForKey:@"timeKey"];
-                phoVc.power = self.power;
+                phoVc.powerPho = self.power;
                 phoVc.dictMember = _memBerDic;
                 [self.navigationController pushViewController:phoVc animated:YES];
             }
@@ -679,6 +679,7 @@ static CGFloat ImageHeight  = 210.0;
         tmVc.teamKey = [[self.detailDic objectForKey:@"timeKey"] integerValue];
         tmVc.detailDic = self.detailDic;
         tmVc.power = self.power;
+        tmVc.memberDic = _memBerDic;
         [self.navigationController pushViewController:tmVc animated:YES];
     }
     

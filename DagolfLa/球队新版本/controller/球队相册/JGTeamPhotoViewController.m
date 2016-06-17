@@ -50,6 +50,8 @@
     JGTeamCreatePhotoController* phoVc = [[JGTeamCreatePhotoController alloc]init];
     phoVc.title = @"创建相册";
     phoVc.isManage = NO;
+    //传非0，1的数
+    phoVc.isShowMem = @3;
     phoVc.teamKey = _teamKey;
     phoVc.createBlock = ^(void){
         _collectionView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
@@ -202,8 +204,8 @@
             cell.suoImage.hidden = NO;
         }
     }
-    if (_power != nil) {
-        if ([_power containsString:@"1005"] == YES || [DEFAULF_USERID integerValue] == [[_dataArray[indexPath.row] userKey] integerValue]) {
+    if (_powerPho != nil) {
+        if ([_powerPho containsString:@"1005"] == YES || [DEFAULF_USERID integerValue] == [[_dataArray[indexPath.row] userKey] integerValue]) {
             cell.manageBtn.hidden = NO;
             cell.manageBtn.tag = 10000 + indexPath.row;
             [cell.manageBtn addTarget:self action:@selector(manageClick:) forControlEvents:UIControlEventTouchUpInside];
@@ -226,8 +228,10 @@
     phoVc.title = @"球队相册管理";
     phoVc.isManage = YES;
     phoVc.teamKey = _teamKey;
+    phoVc.isShowMem = [_dataArray[btn.tag - 10000] power];
     phoVc.numPhotoKey = [_dataArray[btn.tag - 10000] mediaKey];
     phoVc.timeKey = [_dataArray[btn.tag - 10000] timeKey];
+    phoVc.titleStr = [_dataArray[btn.tag - 10000] name];
     phoVc.createBlock = ^(void){
         _collectionView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
         [_collectionView.header beginRefreshing];
@@ -252,7 +256,7 @@
     phoVc.strTitle = [_dataArray[indexPath.row] name];
     phoVc.strTimeKey = [_dataArray[indexPath.row] timeKey];
     phoVc.albumKey = [_dataArray[indexPath.row] timeKey];
-    phoVc.power = _power;
+    phoVc.power = _powerPho;
     phoVc.userKey = [_dataArray[indexPath.row] userKey];
     phoVc.blockRefresh = ^(){
         _collectionView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
