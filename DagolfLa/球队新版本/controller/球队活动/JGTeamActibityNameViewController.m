@@ -45,6 +45,8 @@ static CGFloat ImageHeight  = 210.0;
 {
     NSInteger _isTeamMember;//是否是球队成员 1 － 不是
     NSString *_userName;//用户在球队的真实姓名
+    
+    id _isApply;//是否已经报名0未，1已
 }
 
 @property (nonatomic, strong)UITableView *teamActibityNameTableView;
@@ -155,7 +157,7 @@ static CGFloat ImageHeight  = 210.0;
     
     //渐变图
     UIImageView *gradientImage = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, ImageHeight)];
-    [gradientImage setImage:[UIImage imageNamed:@"tableHeaderBGImage"]];
+    [gradientImage setImage:[UIImage imageNamed:@"backChange"]];
     [self.titleView addSubview:gradientImage];
 
     //返回按钮
@@ -231,7 +233,7 @@ static CGFloat ImageHeight  = 210.0;
     } completionBlock:^(id data) {
         NSLog(@"%@", data);
         [[ShowHUD showHUD]hideAnimationFromView:self.view];
-        
+        _isApply = [data objectForKey:@"hasSignUp"];
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
             NSMutableDictionary *dict = [NSMutableDictionary dictionary];
             
@@ -452,6 +454,7 @@ static CGFloat ImageHeight  = 210.0;
             teamApplyCtrl.modelss = self.model;
             teamApplyCtrl.isTeamChannal = self.isTeamChannal;
             teamApplyCtrl.userName = _userName;
+            teamApplyCtrl.isApply = (BOOL)[_isApply floatValue];
             [self.navigationController pushViewController:teamApplyCtrl animated:YES];
         }
     }

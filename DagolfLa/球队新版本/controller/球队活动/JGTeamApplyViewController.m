@@ -87,7 +87,7 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
     _amountPayable = 0;
 
     //默认添加自己的信息
-    if (self.applyArray.count == 0) {
+    if (!_isApply) {
         NSMutableDictionary *applyDict = [NSMutableDictionary dictionary];
         [applyDict setObject:[NSString stringWithFormat:@"%td", _modelss.teamKey] forKey:@"teamKey"];//球队key
         [applyDict setObject:_modelss.timeKey forKey:@"activityKey"];//球队活动id
@@ -97,7 +97,7 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
         
         [applyDict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:userID] forKey:@"userKey"];//报名用户key , 没有则是嘉宾
         
-        
+        [applyDict setObject:[NSString stringWithFormat:@"%.2f", [_modelss.subsidyPrice floatValue]] forKey:@"subsidyPrice"];
         //先判断是否存在球队真是姓名，否则给用户名
         if (self.userName == nil) {
             [applyDict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"userName"] forKey:@"name"];//姓名
@@ -169,7 +169,19 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
     return 10;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 30;
+    if (self.applyArray.count > 0) {
+        if (indexPath.row == self.applyArray.count+1){
+            return 44;
+        }else{
+            return 30;
+        }
+    }else{
+        if (indexPath.row == 1) {
+            return 44;
+        }else{
+            return 30;
+        }
+    }
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     if (section == 0) {
@@ -259,10 +271,7 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
     //如果价格为空
     if (_realPayPrice == 0) {
         // 分别3个创建操作
-        [Helper alertViewNoHaveCancleWithTitle:@"无需支付，请选择直接报名！" withBlock:^(UIAlertController *alertView) {
-            [self.navigationController presentViewController:alertView animated:YES completion:nil];
-        }];
-        
+        [[ShowHUD showHUD]showToastWithText:@"无需支付，请选择直接报名！" FromView:self.view];
         return;
     }
     // 分别3个创建操作
@@ -338,11 +347,21 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
 }
 #pragma mark -- 删除嘉宾
 - (void)didSelectDeleteBtn:(UIButton *)btn{
-    NSLog(@"%ld", (long)btn.tag);
+    NSLog(@"%td", btn.tag - 100);
     if ([self.applyArray count]) {
-        [self.applyArray removeObjectAtIndex:btn.tag - 100];
-        //计算价格
-        [self countAmountPayable];
+        NSDictionary *dict = [NSDictionary dictionary];
+        dict = [self.applyArray objectAtIndex:btn.tag-100];
+        if ([dict objectForKey:@"userKey"]) {
+            [Helper alertViewWithTitle:@"删除后将不享受平台补贴，是否删除？" withBlockCancle:^{
+                
+            } withBlockSure:^{
+                [self.applyArray removeObjectAtIndex:btn.tag - 100];
+                //计算价格
+                [self countAmountPayable];
+            } withBlock:^(UIAlertController *alertView) {
+                [self.navigationController presentViewController:alertView animated:YES completion:nil];
+            }];
+        }
     }
     
     [self.teamApplyTableView reloadData];
@@ -360,6 +379,8 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
     _subsidiesPrice = 0.0;
     _amountPayable = 0.0;
     _realPayPrice = 0.0;
+    //判断成员中是否包含自己
+    NSInteger isMember = 0;
     for (int i=0; i<_applyArray.count; i++) {
         NSDictionary *dict = [NSDictionary dictionary];
         dict = _applyArray[i];
@@ -368,13 +389,20 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
             float value = [[dict objectForKey:@"payMoney"] floatValue];
             _amountPayable += value;
             
-            if ([[dict objectForKey:@"type"]integerValue] == 1) {
+            if ([dict objectForKey:@"subsidyPrice"]) {
+                isMember = 1;
                 _subsidiesPrice += [_modelss.subsidyPrice floatValue];
+
             }
         }
     }
 
-    _realPayPrice = _amountPayable - _subsidiesPrice;
+    //仅当前报名人[在线支付]享受平台补贴
+    if (isMember == 1) {
+            _realPayPrice = _amountPayable - [_modelss.subsidyPrice floatValue];
+    }else{
+        _realPayPrice = _amountPayable;
+    }
     
     [self.teamApplyTableView reloadData];
 }
@@ -388,6 +416,11 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
 }
 #pragma mark -- 提交报名信息
 - (void)submitInfo:(NSInteger)type{
+    if (![self.applyArray count]) {
+        [[ShowHUD showHUD]showToastWithText:@"请添加打球人，再报名！" FromView:self.view];
+        return;
+    }
+    
     [[ShowHUD showHUD]showAnimationWithText:@"报名中..." FromView:self.view];
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     

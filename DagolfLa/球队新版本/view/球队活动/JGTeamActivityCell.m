@@ -42,7 +42,7 @@
 //        self.Apply.textColor = [UIColor lightGrayColor];
     }else{
         NSString *str = [Helper returnCurrentDateString];//跟当前时间比较
-        if ([str compare:modeel.signUpEndTime] > 0) {
+        if ([str compare:modeel.signUpEndTime] >= 0) {
 //            self.Apply.text = @"";
 //            self.Apply.textColor = [UIColor lightGrayColor];
         }else{
@@ -84,7 +84,7 @@
 //        self.Apply.textColor = [UIColor lightGrayColor];
     }else{
         NSString *str = [Helper returnCurrentDateString];//跟当前时间比较
-        if ([str compare:modeel.signUpEndTime] > 0) {
+        if ([str compare:modeel.signUpEndTime] >= 0) {
 //            self.Apply.text = @"报名结束";
 //            self.Apply.textColor = [UIColor lightGrayColor];
         }else{

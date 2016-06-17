@@ -12,4 +12,8 @@
 @property(nonatomic,assign)NSInteger type1;
 @property (nonatomic,copy) void(^callback)(NSString *,NSInteger);
 @property (nonatomic,copy) void(^callback1)(NSDictionary *dict);
+
+
+@property (assign, nonatomic) BOOL isNeedAdd;//是否需要球场的block
+@property (nonatomic,copy) void(^callbackAddress)(NSString *,NSInteger, NSString* );
 @end

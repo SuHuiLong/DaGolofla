@@ -8,11 +8,18 @@
 
 #import "JGHApplyListCell.h"
 
+
 @implementation JGHApplyListCell
+
 
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
+    
+    self.couponsLabel = [[UILabel alloc]initWithFrame:CGRectMake( self.couponsImageView.frame.size.width / 4, self.couponsImageView.frame.size.height / 10, self.couponsImageView.frame.size.width/4*2, self.couponsImageView.frame.size.height/2)];
+    self.couponsLabel.textAlignment = NSTextAlignmentCenter;
+    self.couponsLabel.textColor = [UIColor whiteColor];
+    [self.couponsLabel setFont:[UIFont fontWithName:@"Helvetica-Bold" size:8.0]];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -45,6 +52,16 @@
         [self.chooseBtn setImage:[UIImage imageNamed:@"kuangwx"] forState:UIControlStateNormal];
     }else{
         [self.chooseBtn setImage:[UIImage imageNamed:@"kuang"] forState:UIControlStateNormal];
+    }
+    
+    //优惠券价格
+    if ([dict objectForKey:@"subsidyPrice"]) {
+        self.couponsImageView.hidden = NO;
+        
+        self.couponsLabel.text = [NSString stringWithFormat:@"%.1f", [[dict objectForKey:@"subsidyPrice"] floatValue]];
+        [self.couponsImageView addSubview:self.couponsLabel];
+    }else{
+        self.couponsImageView.hidden = YES;
     }
 }
 
