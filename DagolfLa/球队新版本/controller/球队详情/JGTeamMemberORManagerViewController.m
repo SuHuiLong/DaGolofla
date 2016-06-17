@@ -107,8 +107,11 @@ static CGFloat ImageHeight  = 210.0;
     self.navigationController.navigationBarHidden = YES;
     self.titleField.text = [self.detailDic objectForKey:@"name"];
     NSString *head = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/team/%@.jpg@100w_100h", [self.detailDic objectForKey:@"timeKey"]];
+    NSString *head2 = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/team/%@.jpg@200w_200h", [self.detailDic objectForKey:@"timeKey"]];
     NSString *headUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/team/%@.jpg@120w_120h", [self.detailDic objectForKey:@"timeKey"]];
     NSString *bgUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/team/%@_background.jpg", [self.detailDic objectForKey:@"timeKey"]];
+    
+    [[SDImageCache sharedImageCache] removeImageForKey:head2 fromDisk:YES];
     [[SDImageCache sharedImageCache] removeImageForKey:bgUrl fromDisk:YES];
     [[SDImageCache sharedImageCache] removeImageForKey:head fromDisk:YES];
     [[SDImageCache sharedImageCache] removeImageForKey:headUrl fromDisk:YES];
@@ -117,7 +120,7 @@ static CGFloat ImageHeight  = 210.0;
 //    [[SDImageCache sharedImageCache] removeImageForKey:bgUrl];
 //
 //    NSLog(@"%@ *-*-*-*-*-*-*-*-*-*-*-* %@", [Helper setImageIconUrl:@"team" andTeamKey:[[self.detailDic objectForKey:@"timeKey"] integerValue] andIsSetWidth:YES andIsBackGround:NO], [Helper setImageIconUrl:@"team" andTeamKey:[[self.detailDic objectForKey:@"timeKey"] integerValue] andIsSetWidth:YES andIsBackGround:YES]);
-    
+    NSLog(@"%@", [Helper setImageIconUrl:@"team" andTeamKey:[[self.detailDic objectForKey:@"timeKey"] integerValue] andIsSetWidth:YES andIsBackGround:NO]);
     [self.headPortraitBtn sd_setImageWithURL:[Helper setImageIconUrl:@"team" andTeamKey:[[self.detailDic objectForKey:@"timeKey"] integerValue] andIsSetWidth:YES andIsBackGround:NO] forState:(UIControlStateNormal) placeholderImage:[UIImage imageNamed:TeamLogoImage]];
     self.headPortraitBtn.layer.masksToBounds = YES;
     self.headPortraitBtn.layer.cornerRadius = 8.0;

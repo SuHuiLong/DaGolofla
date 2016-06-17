@@ -43,6 +43,7 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     self.searchController.searchBar.hidden = NO;
+    [_tableView reloadData];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -249,15 +250,12 @@
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
     JGTeamChannelTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"cell"];
-    if (indexPath.row == 16) {
-        NSLog(@"");
-    }
     
     //    if (!self.searchController.active || [self.searchArray count] == 0) {
     if (self.searchController.active) {
         NSString *bgUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/team/%@.jpg@100w_100h", [self.searchArray[indexPath.row] objectForKey:@"timeKey"]];
         [[SDImageCache sharedImageCache] removeImageForKey:bgUrl fromDisk:YES];
-        
+
         if ([self.searchArray count] != 0) {
             [cell.iconImageV sd_setImageWithURL:[Helper setImageIconUrl:[[self.searchArray[indexPath.row] objectForKey:@"timeKey"] integerValue]] placeholderImage:[UIImage imageNamed:TeamLogoImage]];
             //            cell.nameLabel.text = [self.searchArray[indexPath.row] objectForKey:@"name"];
@@ -272,6 +270,7 @@
     }else{
         // TEST
         NSString *bgUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/team/%@.jpg@100w_100h", [self.modelArray[indexPath.row] objectForKey:@"timeKey"]];
+                NSLog(@"%@",[Helper setImageIconUrl:[[self.modelArray[indexPath.row] objectForKey:@"timeKey"] integerValue]]);
         [[SDImageCache sharedImageCache] removeImageForKey:bgUrl fromDisk:YES];
         [cell.iconImageV sd_setImageWithURL:[Helper setImageIconUrl:[[self.modelArray[indexPath.row] objectForKey:@"timeKey"] integerValue]] placeholderImage:[UIImage imageNamed:TeamLogoImage]];
         NSLog(@"%@", [Helper setImageIconUrl:[[self.modelArray[indexPath.row] objectForKey:@"timeKey"] integerValue]]);
