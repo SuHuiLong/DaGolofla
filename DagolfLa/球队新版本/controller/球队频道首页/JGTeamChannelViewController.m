@@ -104,8 +104,14 @@
     [self creatCro];
     [self.topBackView addSubview:self.topScrollView];
     
-    [self.topScrollView addSubview:backBtn];
-    [self.topScrollView addSubview:creatTeam];
+    //渐变图
+    UIImageView *gradientImage = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, 60 * screenWidth / 320)];
+    [gradientImage setImage:[UIImage imageNamed:@"backChange"]];
+    gradientImage.userInteractionEnabled = YES;
+    [self.topScrollView addSubview:gradientImage];
+    
+    [gradientImage addSubview:backBtn];
+    [gradientImage addSubview:creatTeam];
     
     self.buttonArray = [NSMutableArray arrayWithObjects:@"我的球队", @"球队活动", @"球队大厅", nil];
     
@@ -153,6 +159,9 @@
     
     self.titleLB = [[UILabel alloc] initWithFrame:CGRectMake(25, 320 * screenWidth / 320, screenWidth, 40 * screenWidth / 320)];
     [self.topBackView addSubview:self.titleLB];
+    
+
+    
     
     // Do any additional setup after loading the view.
 }
