@@ -326,14 +326,11 @@
 #pragma mark --上传图片方法
 -(void)imageArray:(NSArray *)array
 {
-    
     MBProgressHUD *progress = [[MBProgressHUD alloc] initWithView:self.view];
     progress.mode = MBProgressHUDModeIndeterminate;
     progress.labelText = @"正在上传...";
     [self.view addSubview:progress];
     [progress show:YES];
-    
-    
     /**
      *  获取timekey用来作为上传图片的timekey
      *
@@ -395,7 +392,7 @@
 {
     //删除相册按钮
     UIButton* btnDelete = [UIButton buttonWithType:UIButtonTypeCustom];
-    btnDelete.backgroundColor = [UIColor darkGrayColor];
+    btnDelete.backgroundColor = [UIColor orangeColor];
     [btnDelete setTitle:@"删除相册" forState:UIControlStateNormal];
     [btnDelete setTintColor:[UIColor whiteColor]];
     [self.view addSubview:btnDelete];

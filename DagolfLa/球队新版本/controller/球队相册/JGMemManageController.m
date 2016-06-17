@@ -56,24 +56,67 @@
     [_tableView registerClass:[JGMemHalfTableViewCell class] forCellReuseIdentifier:@"JGMemHalfTableViewCell"];
     
     
-#warning 暂为实现
-//    UIButton* btnDelete = [UIButton buttonWithType:UIButtonTypeCustom];
-//    btnDelete.titleLabel.font = [UIFont systemFontOfSize:15*screenWidth/375];
-//    [btnDelete setTitle:@"剔除出队" forState:UIControlStateNormal];
-//    [btnDelete setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-//    btnDelete.backgroundColor = [UIColor orangeColor];
-//    btnDelete.layer.cornerRadius = 8 *screenWidth/375;
-//    btnDelete.layer.masksToBounds = YES;
-//    btnDelete.frame = CGRectMake(10*screenWidth/375, 45*7*ScreenWidth/375 + 40*ScreenWidth/375, screenWidth-20*screenWidth/375, 44*screenWidth/375);
-//    [btnDelete addTarget:self action:@selector(deleteClick) forControlEvents:UIControlEventTouchUpInside];
-//    [self.view addSubview:btnDelete];
+    
+    UIButton* btnDelete = [UIButton buttonWithType:UIButtonTypeCustom];
+    btnDelete.titleLabel.font = [UIFont systemFontOfSize:15*screenWidth/375];
+    
+    [btnDelete setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    if ([_power rangeOfString:@"1002"].location != NSNotFound) {
+        [btnDelete setTitle:@"剔除出队" forState:UIControlStateNormal];
+        btnDelete.backgroundColor = [UIColor orangeColor];
+        [btnDelete addTarget:self action:@selector(deleteClick) forControlEvents:UIControlEventTouchUpInside];
+    }
+    else{
+        [btnDelete setTitle:@"您没有权限删除队员" forState:UIControlStateNormal];
+        btnDelete.backgroundColor = [UIColor darkGrayColor];
+    }
+   
+    btnDelete.layer.cornerRadius = 8 *screenWidth/375;
+    btnDelete.layer.masksToBounds = YES;
+    btnDelete.frame = CGRectMake(10*screenWidth/375, 45*6*ScreenWidth/375 + 40*ScreenWidth/375, screenWidth-20*screenWidth/375, 44*screenWidth/375);
+    
+    [self.view addSubview:btnDelete];
     
 }
 
-//-(void)deleteClick
-//{
-//    
-//}
+-(void)deleteClick
+{
+    [Helper alertViewWithTitle:@"您是否确定要删除该队员" withBlockCancle:^{
+        
+    } withBlockSure:^{
+        MBProgressHUD *progress = [[MBProgressHUD alloc] initWithView:self.view];
+        progress.mode = MBProgressHUDModeIndeterminate;
+        progress.labelText = @"正在上传...";
+        [self.view addSubview:progress];
+        [progress show:YES];
+        
+        
+        NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+        [dic setObject:DEFAULF_USERID forKey:@"userKey"];
+        [dic setObject:_teamKey forKey:@"teamKey"];//球队的timekey
+        [dic setObject:_model.timeKey forKey:@"memberKey"];//球队的member的timekey
+        [[JsonHttp jsonHttp] httpRequest:@"team/deleteTeamMember" JsonKey:nil withData:dic requestMethod:@"POST" failedBlock:^(id errType) {
+            [MBProgressHUD hideAllHUDsForView:self.view animated:NO];
+            [[ShowHUD showHUD]showToastWithText:@"删除失败" FromView:self.view];
+        } completionBlock:^(id data) {
+            [MBProgressHUD hideAllHUDsForView:self.view animated:NO];
+            if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+                _deleteBlock();
+                [self.navigationController popViewControllerAnimated:YES];
+            }
+            else
+            {
+                [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+            }
+            
+        }];
+        
+    } withBlock:^(UIAlertController *alertView) {
+        [self.navigationController presentViewController:alertView animated:YES completion:nil];
+    }];
+    
+   
+}
 
 
 
@@ -103,13 +146,13 @@
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.row == 0) {
+        
         JGMemTitleTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"JGMemTitleTableViewCell" forIndexPath:indexPath];
         cell.titleLabel.text = _arrayTitle[indexPath.section];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-//        if (indexPath.section == 1) {
-//            cell.detailLabel.text = _model.createTime;
-//        }
-        
+        if (indexPath.section == 1) {
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        }
         
         return cell;
     }

@@ -22,7 +22,6 @@
 {
     UITableView* _tableView;
     NSMutableArray* _dataArray;
-    NSMutableArray* _numArray;
     BOOL _isClick;
     UITextField *_textField;
     
@@ -103,8 +102,7 @@
 //        _tableView.footer=[MJDIYBackFooter footerWithRefreshingTarget:self refreshingAction:@selector(footerRereshing)];
         [_tableView.header beginRefreshing];
     }else{
-        UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@"提示" message:@"请填写搜索信息" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
-        [alert show];
+        [[ShowHUD showHUD]showToastWithText:@"请填写搜索信息" FromView:self.view];
     }
 
 }
@@ -125,8 +123,6 @@
 -(void)createTableView
 {
     _dataArray = [[NSMutableArray alloc]init];
-    _numArray = [[NSMutableArray alloc]init];
-//    _dataArray = @[@"XXX球场",@"QQQQ球场",@"WWWW球场",@"上海汤臣高尔夫球场",@"qerq球场",@"XXX球场",@"QQQQ球场",@"WWWW球场",@"上海汤臣高尔夫球场",@"qerq球场"];
     _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 44*ScreenWidth/375, ScreenWidth, ScreenHeight-44*ScreenWidth/375-64) style:UITableViewStylePlain];
     _tableView.backgroundColor = [UIColor whiteColor];
     _tableView.delegate = self;
@@ -152,13 +148,12 @@
         if ([[dict objectForKey:@"success"] boolValue]) {
             if (page == 1){
                 [_dataArray removeAllObjects];
-                [_numArray removeAllObjects];
             }
             for (NSDictionary *dataDict in [dict objectForKey:@"rows"]) {
                 BallParkModel *model = [[BallParkModel alloc] init];
                 [model setValuesForKeysWithDictionary:dataDict];
-                [_dataArray addObject:model.ballName];
-                [_numArray addObject:model.ballId];
+                [_dataArray addObject:model];
+//                [_numArray addObject:model.ballId];
             }
             _page++;
             [_tableView reloadData];
@@ -209,7 +204,7 @@
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellid];
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    cell.textLabel.text = _dataArray[indexPath.row];//表示这个数组里买呢有多少区。区里面有多少行
+    cell.textLabel.text = [_dataArray[indexPath.row] ballName];//表示这个数组里买呢有多少区。区里面有多少行
     cell.textLabel.font = [UIFont systemFontOfSize:15*ScreenWidth/375];
     return cell;
 }
@@ -219,35 +214,48 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (_type1==0) {
-        if (_isClick == NO)
-        {
-            //点击事件选中后传值
-            _callback(_dataArray[indexPath.row],[_numArray[indexPath.row] integerValue]);
-            [self.navigationController popViewControllerAnimated:YES];
+    if (_isNeedAdd == YES) {
+        if (![Helper isBlankString:[_dataArray[indexPath.row] ballAddress]]) {
+            _callbackAddress([_dataArray[indexPath.row] ballName],[[_dataArray[indexPath.row] ballId] integerValue],[_dataArray[indexPath.row] ballAddress]);
         }
-    }else{
-        if (_isClick == NO)
-        {
-            [[PostDataRequest sharedInstance] postDataRequest:@"ball/getBallCode.do" parameter:@{@"ballId":@([_numArray[indexPath.row] integerValue])} success:^(id respondsData) {
-                NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:respondsData options:NSJSONReadingMutableContainers error:nil];
-                if ([[dict objectForKey:@"success"] integerValue] == 1) {
-                    //点击事件选中后传值
-                    _callback1([dict objectForKey:@"rows"]);
-                     _callback(_dataArray[indexPath.row],[_numArray[indexPath.row] integerValue]);
-                    [self.navigationController popViewControllerAnimated:YES];
-                }
-                else{
-                    [Helper alertViewWithTitle:@"球场整修中" withBlock:^(UIAlertController *alertView) {
-                        [self presentViewController:alertView animated:YES completion:nil];
-                    }];
-                }
-            } failed:^(NSError *error) {
+        else{
+            _callbackAddress([_dataArray[indexPath.row] ballName],[[_dataArray[indexPath.row] ballId] integerValue],[_dataArray[indexPath.row] ballName]);
+        }
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+    else
+    {
+        if (_type1==0) {
+            if (_isClick == NO)
+            {
+                //点击事件选中后传值
+                _callback([_dataArray[indexPath.row] ballName],[[_dataArray[indexPath.row] ballId] integerValue]);
+                [self.navigationController popViewControllerAnimated:YES];
+            }
+        }else{
+            if (_isClick == NO)
+            {
+                [[PostDataRequest sharedInstance] postDataRequest:@"ball/getBallCode.do" parameter:@{@"ballId":@([[_dataArray[indexPath.row] ballId] integerValue])} success:^(id respondsData) {
+                    NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:respondsData options:NSJSONReadingMutableContainers error:nil];
+                    if ([[dict objectForKey:@"success"] integerValue] == 1) {
+                        //点击事件选中后传值
+                        _callback1([dict objectForKey:@"rows"]);
+                        _callback([_dataArray[indexPath.row] ballName],[[_dataArray[indexPath.row] ballId] integerValue]);
+                        [self.navigationController popViewControllerAnimated:YES];
+                    }
+                    else{
+                        [Helper alertViewWithTitle:@"球场整修中" withBlock:^(UIAlertController *alertView) {
+                            [self presentViewController:alertView animated:YES completion:nil];
+                        }];
+                    }
+                } failed:^(NSError *error) {
+                    
+                }];
                 
-            }];
-            
+            }
         }
     }
+    
 }
 
 
