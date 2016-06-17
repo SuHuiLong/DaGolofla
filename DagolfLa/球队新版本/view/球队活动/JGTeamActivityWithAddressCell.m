@@ -26,10 +26,10 @@
     //开始
 //    self.reamName.text = model.beginDate;
     self.reamName.text = [Helper returnDateformatString:model.beginDate];
-    //结束时间
-    self.activityTime.text = [Helper returnDateformatString:model.endDate];
     //截止
-    self.limits.text = [Helper returnDateformatString:model.signUpEndTime];
+    self.activityTime.text = [Helper returnDateformatString:model.signUpEndTime];
+    //地址
+    self.limits.text = model.ballAddress;
 }
 
 @end

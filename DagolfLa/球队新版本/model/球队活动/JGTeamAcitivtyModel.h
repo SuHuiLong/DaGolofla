@@ -66,5 +66,6 @@
 //活动详情
 @property (nonatomic, strong) NSString *details;
 
-
+//活动地址
+@property (nonatomic, copy) NSString *ballAddress;
 @end
