@@ -416,6 +416,11 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
 }
 #pragma mark -- 提交报名信息
 - (void)submitInfo:(NSInteger)type{
+    if (![self.applyArray count]) {
+        [[ShowHUD showHUD]showToastWithText:@"请添加打球人，再报名！" FromView:self.view];
+        return;
+    }
+    
     [[ShowHUD showHUD]showAnimationWithText:@"报名中..." FromView:self.view];
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     
