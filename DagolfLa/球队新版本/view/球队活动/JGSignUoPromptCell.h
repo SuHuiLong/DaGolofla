@@ -10,4 +10,7 @@
 
 @interface JGSignUoPromptCell : UITableViewCell
 
+
+@property (weak, nonatomic) IBOutlet UILabel *pamaptLabel;
+
 @end

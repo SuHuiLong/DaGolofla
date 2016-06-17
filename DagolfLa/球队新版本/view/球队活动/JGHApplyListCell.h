@@ -29,6 +29,10 @@
 @property (weak, nonatomic) IBOutlet UIButton *deleteBtn;
 - (IBAction)deleteBtn:(UIButton *)sender;
 
+@property (weak, nonatomic) IBOutlet UIImageView *couponsImageView;
+
+@property (nonatomic, strong)UILabel *couponsLabel;
+
 @property (weak, nonatomic)id <JGHApplyListCellDelegate> delegate;
 
 - (void)configDict:(NSDictionary *)dict;
