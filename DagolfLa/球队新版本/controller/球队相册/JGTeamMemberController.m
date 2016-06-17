@@ -159,11 +159,15 @@
         [cell showData:_listArray[indexPath.section][indexPath.row] andPower:_power];
     }
     if (screenWidth == 320) {
-       cell.moneyLabel.frame = CGRectMake((screenWidth - 80)*screenWidth/320, 13*screenWidth/320, 60*screenWidth/320, 24*screenWidth/320);
+       cell.moneyLabel.frame = CGRectMake((screenWidth - 80)*screenWidth/320, 10*screenWidth/320, 60*screenWidth/320, 24*screenWidth/320);
+    }
+    else if (screenWidth == 375)
+    {
+        cell.moneyLabel.frame = CGRectMake((screenWidth - 80)*screenWidth/375, 13*screenWidth/375, 60*screenWidth/375, 24*screenWidth/375);
     }
     else
     {
-        cell.moneyLabel.frame = CGRectMake((screenWidth - 80)*screenWidth/375, 13*screenWidth/375, 60*screenWidth/375, 24*screenWidth/375);
+        cell.moneyLabel.frame = CGRectMake((screenWidth - 130)*screenWidth/375, 13*screenWidth/375, 60*screenWidth/375, 24*screenWidth/375);
     }
     return cell;
 }
@@ -197,6 +201,13 @@
             }else if (_teamManagement == 1){
                 JGMemManageController* menVc = [[JGMemManageController alloc]init];
                 menVc.model = _listArray[indexPath.section][indexPath.row];
+                menVc.power = _power;
+                menVc.teamKey = _teamKey;
+                menVc.deleteBlock = ^(){
+                    _tableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
+                    [_tableView.header beginRefreshing];
+                    [_tableView reloadData];
+                };
                 [self.navigationController pushViewController:menVc animated:YES];
             }
         }

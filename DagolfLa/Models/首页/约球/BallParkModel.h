@@ -12,7 +12,7 @@
 
 @property (copy, nonatomic) NSNumber* ballId;
 @property (copy, nonatomic) NSString* ballName;
-
+@property (strong, nonatomic) NSString* ballAddress;
 
 @property (strong, nonatomic) NSNumber* yIndex;
 @property (strong, nonatomic) NSNumber* xIndex;
