@@ -180,7 +180,7 @@ static CGFloat ImageHeight  = 210.0;
     
     [self.imgProfile addSubview:self.addressBtn];
     
-//    [self createEditorBtn];//报名页面
+    [self createEditorBtn];//
     //分享按钮
     UIButton *shareBtn = [[UIButton alloc]initWithFrame:CGRectMake(screenWidth-44, self.titleField.frame.origin.y, 44, 25)];
     [shareBtn setImage:[UIImage imageNamed:@"iconfont-fenxiang"] forState:UIControlStateNormal];
@@ -404,6 +404,7 @@ static CGFloat ImageHeight  = 210.0;
     
     [self presentViewController:aleVC animated:YES completion:nil];
 }
+
 #pragma mark -- 保存按钮
 - (void)createEditorBtn{
     self.headPortraitBtn.layer.masksToBounds = YES;
@@ -415,6 +416,7 @@ static CGFloat ImageHeight  = 210.0;
     [self.editorBtn addTarget:self action:@selector(editonAttendBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.editorBtn];
 }
+
 #pragma mark -- 保存
 - (void)editonAttendBtnClick:(UIButton *)btn{
     //判断活动是否结束报名
