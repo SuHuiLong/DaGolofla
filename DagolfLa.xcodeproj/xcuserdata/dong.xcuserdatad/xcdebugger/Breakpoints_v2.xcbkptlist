@@ -59,38 +59,6 @@
             endingLineNumber = "407"
             landmarkName = "-previewBtnClick:"
             landmarkType = "5">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "__54-[JGNewCreateTeamTableViewController previewBtnClick:]_block_invoke_2"
-                  moduleName = "DagolfLa"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/dong/Desktop/dagolfla_ios511/DagolfLa/%E7%90%83%E9%98%9F%E6%96%B0%E7%89%88%E6%9C%AC/controller/%E5%88%9B%E5%BB%BA%E7%90%83%E9%98%9F/JGNewCreateTeamTableViewController.m"
-                  timestampString = "487760747.893707"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "407"
-                  endingLineNumber = "407"
-                  offsetFromSymbolStart = "348">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "__54-[JGNewCreateTeamTableViewController previewBtnClick:]_block_invoke_3"
-                  moduleName = "DagolfLa"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/dong/Desktop/dagolfla_ios511/DagolfLa/%E7%90%83%E9%98%9F%E6%96%B0%E7%89%88%E6%9C%AC/controller/%E5%88%9B%E5%BB%BA%E7%90%83%E9%98%9F/JGNewCreateTeamTableViewController.m"
-                  timestampString = "487760747.894215"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "408"
-                  endingLineNumber = "408"
-                  offsetFromSymbolStart = "65">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -107,6 +75,38 @@
             endingLineNumber = "410"
             landmarkName = "-previewBtnClick:"
             landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__54-[JGNewCreateTeamTableViewController previewBtnClick:]_block_invoke_2"
+                  moduleName = "DagolfLa"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/dong/Desktop/dagolfla_ios511/DagolfLa/%E7%90%83%E9%98%9F%E6%96%B0%E7%89%88%E6%9C%AC/controller/%E5%88%9B%E5%BB%BA%E7%90%83%E9%98%9F/JGNewCreateTeamTableViewController.m"
+                  timestampString = "488104219.892357"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "411"
+                  endingLineNumber = "411"
+                  offsetFromSymbolStart = "372">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__54-[JGNewCreateTeamTableViewController previewBtnClick:]_block_invoke_3"
+                  moduleName = "DagolfLa"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/dong/Desktop/dagolfla_ios511/DagolfLa/%E7%90%83%E9%98%9F%E6%96%B0%E7%89%88%E6%9C%AC/controller/%E5%88%9B%E5%BB%BA%E7%90%83%E9%98%9F/JGNewCreateTeamTableViewController.m"
+                  timestampString = "488104219.892509"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "412"
+                  endingLineNumber = "412"
+                  offsetFromSymbolStart = "48">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy

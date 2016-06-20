@@ -19,7 +19,7 @@
 #import "JGHTeamMembersViewController.h"
 #import "JGTeamDeatilWKwebViewController.h"
 #import "JGTeamGroupViewController.h"
-
+#import "JGTableViewCell.h"
 #import "UMSocial.h"
 #import "ShareAlert.h"
 #import "UMSocialData.h"
@@ -34,17 +34,24 @@
 
 #import "EnterViewController.h"
 #import "JGTeamGroupViewController.h"
+#import "JGHTeamContactTableViewCell.h"
+#import "DateTimeViewController.h"
+#import "JGCostSetViewController.h"
 
+static NSString *const JGTableViewCellIdentifier = @"JGTableViewCell";
 static NSString *const JGTeamActivityWithAddressCellIdentifier = @"JGTeamActivityWithAddressCell";
 static NSString *const JGTeamActivityDetailsCellIdentifier = @"JGTeamActivityDetailsCell";
 static NSString *const JGHHeaderLabelCellIdentifier = @"JGHHeaderLabelCell";
 static NSString *const JGHCostListTableViewCellIdentifier = @"JGHCostListTableViewCell";
+static NSString *const JGHTeamContactCellIdentifier = @"JGHTeamContactTableViewCell";
 static CGFloat ImageHeight  = 210.0;
 
 @interface JGHActicityDetailsViewController ()<UITableViewDelegate, UITableViewDataSource>
 {
     NSInteger _isTeamMember;//是否是球队成员 1 － 不是
     NSString *_userName;//用户在球队的真实姓名
+    NSArray *_titleArray;//标题数组
+    NSInteger _isEditor;//是否编辑0，1-已编辑
 }
 
 
@@ -70,9 +77,7 @@ static CGFloat ImageHeight  = 210.0;
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:YES];
     self.navigationController.navigationBarHidden = YES;
-    
-    [self setData];
-    
+        
     //我的球队活动
     [self.imgProfile sd_setImageWithURL:[Helper setImageIconUrl:@"activity" andTeamKey:[_model.timeKey integerValue] andIsSetWidth:NO andIsBackGround:YES] placeholderImage:[UIImage imageNamed:ActivityBGImage]];
     [self.headPortraitBtn sd_setImageWithURL:[Helper setImageIconUrl:@"team" andTeamKey:_model.teamKey andIsSetWidth:YES andIsBackGround:NO] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:TeamLogoImage]];
@@ -84,11 +89,6 @@ static CGFloat ImageHeight  = 210.0;
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:YES];
     self.navigationController.navigationBarHidden = NO;
-}
-
-- (void)setData{
-//    self.titleField.text = self.model.name;
-//    [self.addressBtn setTitle:self.model.ballName forState:(UIControlStateNormal)];
 }
 
 - (instancetype)init{
@@ -107,12 +107,8 @@ static CGFloat ImageHeight  = 210.0;
     self.automaticallyAdjustsScrollViewInsets = NO;
     UIImage *bgImage = nil;
     UIImage *headerImage = nil;
-//    if (self.isTeamChannal == 2) {
-//        NSLog(@"我的球队过来的数据");
-//    }else{
-//        bgImage = _model.bgImage;
-//        headerImage = _model.headerImage;
-//    }
+    
+    _titleArray = @[@"活动开始时间", @"活动结束时间", @"报名截止时间"];
     
     self.imgProfile = [[UIImageView alloc] initWithImage:bgImage];
     self.imgProfile.frame = CGRectMake(0, 0, screenWidth, ImageHeight);
@@ -126,6 +122,10 @@ static CGFloat ImageHeight  = 210.0;
     [self.teamActibityNameTableView registerNib:deetailsNib forCellReuseIdentifier:JGTeamActivityDetailsCellIdentifier];
     UINib *costListNib = [UINib nibWithNibName:@"JGHCostListTableViewCell" bundle:[NSBundle mainBundle]];
     [self.teamActibityNameTableView registerNib:costListNib forCellReuseIdentifier:JGHCostListTableViewCellIdentifier];
+    UINib *tableNib = [UINib nibWithNibName:@"JGTableViewCell" bundle: [NSBundle mainBundle]];
+    UINib *contactNib = [UINib nibWithNibName:@"JGHTeamContactTableViewCell" bundle: [NSBundle mainBundle]];
+    [self.teamActibityNameTableView registerNib:contactNib forCellReuseIdentifier:JGHTeamContactCellIdentifier];
+    [self.teamActibityNameTableView registerNib:tableNib forCellReuseIdentifier:JGTableViewCellIdentifier];
     self.teamActibityNameTableView.dataSource = self;
     self.teamActibityNameTableView.delegate = self;
     self.teamActibityNameTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -158,6 +158,15 @@ static CGFloat ImageHeight  = 210.0;
     self.titleField.textColor = [UIColor whiteColor];
     self.titleField.textAlignment = NSTextAlignmentCenter;
     self.titleField.font = [UIFont systemFontOfSize:16 * screenWidth / 320];
+    //点击更换背景
+    UIButton *replaceBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    replaceBtn.frame = CGRectMake(screenWidth-64, 0, 54, 44);
+    replaceBtn.titleLabel.font = [UIFont systemFontOfSize:FontSize_Normal];
+    [replaceBtn setTitle:@"点击更换" forState:UIControlStateNormal];
+    replaceBtn.titleLabel.font = [UIFont systemFontOfSize:13];
+    replaceBtn.tag = 520;
+    [replaceBtn addTarget:self action:@selector(initItemsBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    [self.titleView addSubview:replaceBtn];
     //头像
     self.headPortraitBtn = [[UIButton alloc]initWithFrame:CGRectMake(10, 135, 65, 65)];
     [self.headPortraitBtn setImage:headerImage forState:UIControlStateNormal];
@@ -180,7 +189,7 @@ static CGFloat ImageHeight  = 210.0;
     
     [self.imgProfile addSubview:self.addressBtn];
     
-//    [self createEditorBtn];//报名页面
+    [self createEditorBtn];//
     //分享按钮
     UIButton *shareBtn = [[UIButton alloc]initWithFrame:CGRectMake(screenWidth-44, self.titleField.frame.origin.y, 44, 25)];
     [shareBtn setImage:[UIImage imageNamed:@"iconfont-fenxiang"] forState:UIControlStateNormal];
@@ -192,25 +201,9 @@ static CGFloat ImageHeight  = 210.0;
 #pragma mark -- 下载数据 －－－
 - (void)dataSet{
     [[ShowHUD showHUD]showAnimationWithText:@"加载中..." FromView:self.view];
-    
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     //球队活动
-    [dict setValue:[NSString stringWithFormat:@"%td", [_model.timeKey integerValue]] forKey:@"activityKey"];
-//    if (self.isTeamChannal == 1) {
-//        //近期活动
-//        [dict setValue:[NSString stringWithFormat:@"%td", [_model.timeKey integerValue]] forKey:@"activityKey"];
-//    }else{
-//        if (self.isTeamChannal == 2) {
-//            if (_model.teamActivityKey == 0) {
-//                //球队活动
-//                [dict setValue:[NSString stringWithFormat:@"%td", [_model.timeKey integerValue]] forKey:@"activityKey"];
-//            }else{
-//                //我的球队
-//                [dict setValue:[NSString stringWithFormat:@"%td", _model.teamActivityKey] forKey:@"activityKey"];
-//            }
-//        }
-//    }
-    
+    [dict setValue:[NSString stringWithFormat:@"%td", _model.teamActivityKey] forKey:@"activityKey"];
     [dict setValue:DEFAULF_USERID forKey:@"userKey"];
     [[JsonHttp jsonHttp] httpRequest:@"team/getTeamActivity" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
         NSLog(@"error");
@@ -237,90 +230,10 @@ static CGFloat ImageHeight  = 210.0;
         }
     }];
 }
-#pragma mark -分享
-- (void)addShare{
-    if ([[NSUserDefaults standardUserDefaults]objectForKey:@"userId"]) {
-        
-        ShareAlert* alert = [[ShareAlert alloc]initMyAlert];
-        
-        [self.titleView addSubview:alert];
-        [alert setCallBackTitle:^(NSInteger index) {
-            [self shareInfo:index];
-        }];
-        [UIView animateWithDuration:0.2 animations:^{
-            [alert show];
-        }];
-    }else {
-        [Helper alertViewWithTitle:@"是否立即登录?" withBlockCancle:^{
-        } withBlockSure:^{
-            EnterViewController *vc = [[EnterViewController alloc] init];
-            [self.navigationController pushViewController:vc animated:YES];
-        } withBlock:^(UIAlertController *alertView) {
-            [self presentViewController:alertView animated:YES completion:nil];
-        }];
-    }
-}
-#pragma mark - 分享
--(void)shareInfo:(NSInteger)index{
-    
-    NSData *fiData = [[NSData alloc]init];
-//    if (_teamActivityKey != 0) {
-//        fiData = [NSData dataWithContentsOfURL:[Helper setImageIconUrl:@"activity" andTeamKey:_teamActivityKey andIsSetWidth:YES andIsBackGround:YES]];
-//    }
-//    else
-//    {
-        fiData = [NSData dataWithContentsOfURL:[Helper setImageIconUrl:@"activity" andTeamKey:[_model.timeKey integerValue]andIsSetWidth:YES andIsBackGround:YES]];
-//    }
-    
-    NSString*  shareUrl;
-    shareUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/team/teamac.html?key=%@", _model.timeKey];
-    
-//    NSString*  shareUrl;
-//    if (self.isTeamChannal == 2) {
-//        shareUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/team/teamac.html?key=%@", _model.timeKey];
-//    }else{
-//        shareUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/team/teamac.html?key=%td", _teamActivityKey];
-//    }
-    
-    [UMSocialData defaultData].extConfig.title=[NSString stringWithFormat:@"%@报名", _model.name];
-    
-    if (index == 0){
-        //微信
-        [UMSocialWechatHandler setWXAppId:@"wxdcdc4e20544ed728" appSecret:@"fdc75aae5a98f2aa0f62ef8cba2b08e9" url:shareUrl];
-        [UMSocialConfig hiddenNotInstallPlatforms:@[UMShareToWechatSession,UMShareToWechatTimeline,UMShareToSina]];
-        [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatSession] content:[NSString stringWithFormat:@"球队会员：%f元，平台补贴：%f元，活动地点：%@，活动时间：%@", [_model.memberPrice floatValue],[_model.subsidyPrice floatValue],_model.ballName,_model.beginDate]  image:(fiData != nil && fiData.length > 0) ?fiData : [UIImage imageNamed:TeamBGImage] location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
-            if (response.responseCode == UMSResponseCodeSuccess) {
-                //                [self shareS:indexRow];
-            }
-        }];
-        
-    }else if (index==1){
-        //朋友圈
-        [UMSocialWechatHandler setWXAppId:@"wxdcdc4e20544ed728" appSecret:@"fdc75aae5a98f2aa0f62ef8cba2b08e9" url:shareUrl];
-        [UMSocialConfig hiddenNotInstallPlatforms:@[UMShareToWechatSession,UMShareToWechatTimeline,UMShareToSina]];
-        [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatTimeline] content:[NSString stringWithFormat:@"球队会员：%f元，平台补贴：%f元，活动地点：%@，活动时间：%@", [_model.memberPrice floatValue],[_model.subsidyPrice floatValue],_model.ballName,_model.beginDate] image:(fiData != nil && fiData.length > 0) ?fiData : [UIImage imageNamed:TeamBGImage] location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
-            if (response.responseCode == UMSResponseCodeSuccess) {
-                //                [self shareS:indexRow];
-            }
-        }];
-    }else{
-        UMSocialData *data = [UMSocialData defaultData];
-        data.shareImage = [UIImage imageNamed:@"logo"];
-        data.shareText = [NSString stringWithFormat:@"%@%@",@"打高尔夫啦",shareUrl];
-        [[UMSocialControllerService defaultControllerService] setSocialData:data];
-        //2.设置分享平台
-        [UMSocialSnsPlatformManager getSocialPlatformWithName:UMShareToSina].snsClickHandler(self,[UMSocialControllerService defaultControllerService],YES);
-    }
-    
-}
 #pragma mark -- 跳转分组页面
 - (void)pushGroupCtrl:(UIButton *)btn{
     JGTeamGroupViewController *teamCtrl = [[JGTeamGroupViewController alloc]init];
-//    if (_isTeamChannal == 2) {
-        teamCtrl.teamActivityKey = [_model.timeKey integerValue];
-//    }else{
-//        teamCtrl.teamActivityKey = _teamActivityKey;
-//    }
+    teamCtrl.teamActivityKey = [_model.timeKey integerValue];
     
     [self.navigationController pushViewController:teamCtrl animated:YES];
 }
@@ -378,7 +291,6 @@ static CGFloat ImageHeight  = 210.0;
     }];
     //相册
     UIAlertAction * act3 = [UIAlertAction actionWithTitle:@"相册" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        
         //打开相册
         [_pickPhoto SHowLocalPhotoWithController:self andWithBlock:^(NSObject *Data) {
             if ([Data isKindOfClass:[UIImage class]])
@@ -404,6 +316,7 @@ static CGFloat ImageHeight  = 210.0;
     
     [self presentViewController:aleVC animated:YES completion:nil];
 }
+
 #pragma mark -- 保存按钮
 - (void)createEditorBtn{
     self.headPortraitBtn.layer.masksToBounds = YES;
@@ -415,6 +328,7 @@ static CGFloat ImageHeight  = 210.0;
     [self.editorBtn addTarget:self action:@selector(editonAttendBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.editorBtn];
 }
+
 #pragma mark -- 保存
 - (void)editonAttendBtnClick:(UIButton *)btn{
     //判断活动是否结束报名
@@ -427,7 +341,6 @@ static CGFloat ImageHeight  = 210.0;
         }else{
             JGTeamApplyViewController *teamApplyCtrl = [[JGTeamApplyViewController alloc]initWithNibName:@"JGTeamApplyViewController" bundle:nil];
             teamApplyCtrl.modelss = self.model;
-//            teamApplyCtrl.isTeamChannal = self.isTeamChannal;
             teamApplyCtrl.userName = _userName;
             [self.navigationController pushViewController:teamApplyCtrl animated:YES];
         }
@@ -435,34 +348,32 @@ static CGFloat ImageHeight  = 210.0;
 }
 #pragma mark -- tableView 代理
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    if (section == 2) {
+    if (section == 3) {
         //参赛费用列表
         return 2;
     }
     return 0;
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    //    if (_isAdmin == 1) {
-    //        return 4;//创建页面－－预览
-    //    }else{
-    return 5;//详情页面
-    //    }
+    return 9;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (indexPath.section == 2) {
+    if (indexPath.section == 3) {
         return 30;
     }
     return 0;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
-    return 10;
+    if (section == 1) {
+        return 0;
+    }else{
+        return 10;
+    }
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     if (section == 0) {
         return ImageHeight;
-    }else if (section == 1){
-        return 110;
-    }else if (section == 4){
+    }else if (section == 6){
         static JGTeamActivityDetailsCell *cell;
         if (!cell) {
             cell = [self.teamActibityNameTableView dequeueReusableCellWithIdentifier:JGTeamActivityDetailsCellIdentifier];
@@ -475,14 +386,14 @@ static CGFloat ImageHeight  = 210.0;
     return 44;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (indexPath.section == 2) {
+    if (indexPath.section == 3) {
         JGHCostListTableViewCell *costListCell = [tableView dequeueReusableCellWithIdentifier:JGHCostListTableViewCellIdentifier];
         costListCell.selectionStyle = UITableViewCellSelectionStyleNone;
         if (indexPath.row == 0) {
-            costListCell.titles.text = @"活动报名费";
+            costListCell.titles.text = @"球队队员费用";
             costListCell.price.text = [NSString stringWithFormat:@"%.2f", [self.model.memberPrice floatValue]];
         }else{
-            costListCell.titles.text = @"平台补贴费用";
+            costListCell.titles.text = @"嘉宾费用";
             costListCell.price.text = [NSString stringWithFormat:@"%.2f", [self.model.subsidyPrice floatValue]];
         }
         
@@ -503,34 +414,120 @@ static CGFloat ImageHeight  = 210.0;
         launchImageActivityCell.selectionStyle = UITableViewCellSelectionStyleNone;
         
         return (UIView *)launchImageActivityCell;
-    }else if (section == 1) {
-        JGTeamActivityWithAddressCell *addressCell = [tableView dequeueReusableCellWithIdentifier:JGTeamActivityWithAddressCellIdentifier];
-        [addressCell configModel:self.model];
-        return (UIView *)addressCell;
-    }else if (section == 2){
-        JGHHeaderLabelCell *headerCell = [tableView dequeueReusableCellWithIdentifier:JGHHeaderLabelCellIdentifier];
-        return (UIView *)headerCell;
+    }else if (section == 1 || section == 2) {
+        
+        JGTableViewCell *launchActivityCell = [tableView dequeueReusableCellWithIdentifier:JGTableViewCellIdentifier];
+        launchActivityCell.selectionStyle = UITableViewCellSelectionStyleNone;
+        UIButton *timeCellBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, screenWidth, launchActivityCell.frame.size.height)];
+        timeCellBtn.tag = section + 100;
+        [timeCellBtn addTarget:self action:@selector(getTimeAndAddressClick:) forControlEvents:UIControlEventTouchUpInside];
+        [launchActivityCell addSubview:timeCellBtn];
+        if (section == 2) {
+            launchActivityCell.underline.hidden = YES;
+        }else{
+            launchActivityCell.underline.hidden = NO;
+        }
+        
+        [launchActivityCell configTitlesString:_titleArray[section-1]];
+        
+        [launchActivityCell configTimeString:_model andTag:section];
+        
+        return launchActivityCell;
+
     }else if (section == 3){
+        JGHHeaderLabelCell *headerCell = [tableView dequeueReusableCellWithIdentifier:JGHHeaderLabelCellIdentifier];
+        UIButton *timeCellBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, screenWidth, headerCell.frame.size.height)];
+        timeCellBtn.tag = section + 100;
+        [timeCellBtn addTarget:self action:@selector(editorCostClick:) forControlEvents:UIControlEventTouchUpInside];
+        [headerCell addSubview:timeCellBtn];
+        return (UIView *)headerCell;
+    }else if (section == 4){
         JGHHeaderLabelCell *headerCell = [tableView dequeueReusableCellWithIdentifier:JGHHeaderLabelCellIdentifier];
         UIButton *applyListBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, screenWidth, headerCell.frame.size.height)];
         [applyListBtn addTarget:self action:@selector(getTeamActivitySignUpList:) forControlEvents:UIControlEventTouchUpInside];
         [headerCell addSubview:applyListBtn];
-        [headerCell congiftitles:@"查看分组"];
+        [headerCell congiftitles:@"分组管理"];
         [headerCell congifCount:self.model.sumCount andSum:self.model.maxCount];
         return (UIView *)headerCell;
-    }else{
+    }else if (section == 5){
         JGTeamActivityDetailsCell *detailsCell = [tableView dequeueReusableCellWithIdentifier:JGTeamActivityDetailsCellIdentifier];
         UIButton *detailsBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, screenWidth, detailsCell.frame.size.height)];
         [detailsBtn addTarget:self action:@selector(pushDetailSCtrl:) forControlEvents:UIControlEventTouchUpInside];
         [detailsCell addSubview:detailsBtn];
         [detailsCell configDetailsText:@"活动详情" AndActivityDetailsText:self.model.info];
         return (UIView *)detailsCell;
+    }else if (section == 6){
+        JGHTeamContactTableViewCell *contactCell = [tableView dequeueReusableCellWithIdentifier:JGHTeamContactCellIdentifier];
+        contactCell.tetfileView.tag = 234;
+        contactCell.contactLabel.text = @"人员限制";
+
+        if (self.model.name != nil) {
+            contactCell.tetfileView.text = [NSString stringWithFormat:@"%td", self.model.maxCount];
+        }
+        
+        contactCell.tetfileView.placeholder = @"请输入最大人员限制数";
+        return contactCell;
+
+    }else if (section == 7){
+        JGHTeamContactTableViewCell *contactCell = [tableView dequeueReusableCellWithIdentifier:JGHTeamContactCellIdentifier];
+        contactCell.tetfileView.tag = 234;
+        contactCell.contactLabel.text = @"联系人";
+        if (self.model.name != nil) {
+            contactCell.tetfileView.text = [NSString stringWithFormat:@"%td", self.model.maxCount];
+        }
+        
+        contactCell.tetfileView.placeholder = @"请输入最大人员限制数";
+        return contactCell;
+        
+    }else{
+        JGHTeamContactTableViewCell *contactCell = [tableView dequeueReusableCellWithIdentifier:JGHTeamContactCellIdentifier];
+        contactCell.tetfileView.tag = 234;
+        contactCell.contactLabel.text = @"联系人电话";
+        
+        if (self.model.name != nil) {
+            contactCell.tetfileView.text = [NSString stringWithFormat:@"%td", self.model.maxCount];
+        }
+        
+        contactCell.tetfileView.placeholder = @"请输入最大人员限制数";
+        return contactCell;
     }
 }
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
     UIView *footView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, 10)];
     footView.backgroundColor = [UIColor colorWithHexString:BG_color];
     return footView;
+}
+#pragma mark -- 修改时间地点
+- (void)getTimeAndAddressClick:(UIButton *)btn{
+    DateTimeViewController *dataCtrl = [[DateTimeViewController alloc]init];
+    [dataCtrl setCallback:^(NSString *dateStr, NSString *dateWeek, NSString *str) {
+        if (btn.tag == 101) {
+            [self.model setValue:dateStr forKey:@"beginDate"];
+        }else{
+            [self.model setValue:[NSString stringWithFormat:@"%@ 23:59:59", dateStr] forKey:@"signUpEndTime"];
+        }
+        
+        [self.teamActibityNameTableView reloadData];
+    }];
+    [self.navigationController pushViewController:dataCtrl animated:YES];
+}
+#pragma mark -- 修改价格
+- (void)editorCostClick:(UIButton *)btn{
+    JGCostSetViewController *costView = [[JGCostSetViewController alloc]initWithNibName:@"JGCostSetViewController" bundle:nil];
+    costView.delegate = self;
+    [self.navigationController pushViewController:costView animated:YES];
+}
+#pragma mark -- 添加内容详情代理  JGHConcentTextViewControllerDelegate
+- (void)didSelectSaveBtnClick:(NSString *)text{
+    [self.model setValue:text forKey:@"info"];
+    [self.teamActibityNameTableView reloadData];
+}
+#pragma mark -- 费用代理
+- (void)inputMembersCost:(NSString *)membersCost guestCost:(NSString *)guestCost{
+    NSLog(@"guestCost == %@", [Helper returnNumberForString:guestCost]);
+    self.model.guestPrice = [Helper returnNumberForString:guestCost];
+    self.model.memberPrice = [Helper returnNumberForString:membersCost];
+    [self.teamActibityNameTableView reloadData];
 }
 #pragma mark -- 详情页面
 - (void)pushDetailSCtrl:(UIButton *)btn{
@@ -542,13 +539,6 @@ static CGFloat ImageHeight  = 210.0;
 }
 #pragma mark -- 查看已报名人列表
 - (void)getTeamActivitySignUpList:(UIButton *)btn{
-    /**
-    JGTeamDeatilWKwebViewController *WKCtrl = [[JGTeamDeatilWKwebViewController alloc]init];
-    //http://imgcache.dagolfla.com/share/team/group.html?key=1645
-    WKCtrl.detailString = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/team/group.html?key=%@", _model.timeKey];;
-    WKCtrl.teamName = @"报名人列表";
-    [self.navigationController pushViewController:WKCtrl animated:YES];
-     */
     JGTeamGroupViewController *groupCtrl = [[JGTeamGroupViewController alloc]init];
     groupCtrl.teamActivityKey = [_model.timeKey integerValue];
     [self.navigationController pushViewController:groupCtrl animated:YES];

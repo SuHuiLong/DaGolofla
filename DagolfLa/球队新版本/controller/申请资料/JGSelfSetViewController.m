@@ -10,6 +10,7 @@
 #import "JGApplyMaterialTableViewCell.h"
 #import "JGButtonTableViewCell.h"
 #import "JGLableAndLableTableViewCell.h"
+#import "JGTeamPayViewController.h"
 
 #import "JGLTeamChoiseViewController.h"
 @interface JGSelfSetViewController ()<UITableViewDelegate, UITableViewDataSource,UIPickerViewDataSource,UIPickerViewDelegate,UITextFieldDelegate>
@@ -216,12 +217,13 @@
 
 - (void)creatNewTableView{
     
-    self.secondTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 26*screenWidth/320*2 + 40*screenWidth/320*10) style:UITableViewStylePlain];
+    self.secondTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 26*screenWidth/320*2 + 40*screenWidth/320*11) style:UITableViewStylePlain];
     self.secondTableView.delegate = self;
     self.secondTableView.dataSource = self;
     [self.secondTableView registerClass:[JGApplyMaterialTableViewCell class] forCellReuseIdentifier:@"cell"];
     [self.secondTableView registerClass:[JGButtonTableViewCell class] forCellReuseIdentifier:@"cellBtn"];
     [self.secondTableView registerClass:[JGLableAndLableTableViewCell class] forCellReuseIdentifier:@"cellLB"];
+    [self.secondTableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"cellSys"];
 
     self.titleArray = [NSArray arrayWithObjects:@[@"姓名", @"性别", @"手机号码"], @[@"行业", @"公司", @"职业",   @"常住地址", @"衣服尺码", @"惯用手"], nil];
     self.placeholderArray = [NSArray arrayWithObjects:@[@"请输入真实姓名", @"请输入", @"请输入手机号" ],@[@"请输入你的行业",@"请输入你的公司",@"请输入你的职位",@"方便活动邀请", @"统一制服制定", @"制定特殊需求"],  nil];
@@ -283,8 +285,13 @@
         };
         [self.navigationController pushViewController:tcVc animated:YES];
     }
-    else
+    else if (indexPath.section == 2)
     {
+        JGTeamPayViewController *teamPayVC = [[JGTeamPayViewController alloc] init];
+        teamPayVC.detailDic = self.memeDic;
+        teamPayVC.name = [self.detailDic objectForKey:@"name"];
+        [self.navigationController pushViewController:teamPayVC animated:YES];
+    }else{
         return;
     }
 }
@@ -394,8 +401,10 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     if (section == 0) {
         return 3;
-    }else{
+    }else if (section == 1){
         return 6;
+    }else{
+        return 1;
     }
 }
 
@@ -403,13 +412,15 @@
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
     if (section == 0) {
         return @"必填项";
-    }else{
+    }else if (section == 1){
         return @"选填项";
+    }else{
+        return nil;
     }
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 2;
+    return 3;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -598,6 +609,12 @@
          */
         return cell;
 
+    }else if (indexPath.section == 2){
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellSys"];
+        cell.textLabel.text = @"球队会费支付";
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        return cell;
     }else{
         return nil;
     }
@@ -653,7 +670,11 @@
 
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    return 26 * screenWidth / 320;
+    if (section == 2) {
+        return 10 * screenWidth / 320;
+    }else{
+        return 26 * screenWidth / 320;
+    }
 }
 
 - (NSMutableDictionary *)paraDic{
