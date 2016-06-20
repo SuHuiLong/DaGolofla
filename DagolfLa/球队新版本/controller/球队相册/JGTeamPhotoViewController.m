@@ -171,14 +171,6 @@
     
     /**
      *  //POWER == 0，所有人可见，隐藏image    power == 1  仅球队成员可见
-     if ([model.power integerValue] == 0) {
-     _suoImage.hidden = YES;
-     }
-     else
-     {
-     _suoImage.hidden = NO;
-     }
-
      */
     if (_dictMember != nil) {
         if ([[_dictMember objectForKey:@"state"] integerValue] == 1) {

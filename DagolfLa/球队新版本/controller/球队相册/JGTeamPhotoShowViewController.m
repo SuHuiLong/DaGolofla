@@ -45,28 +45,10 @@
     [super viewDidLoad];
     self.automaticallyAdjustsScrollViewInsets = NO;
     self.title = [NSString stringWithFormat:@"第%td/%lu张", (long)self.index + 1, (unsigned long)self.selectImages.count];
-    [self savePicButton];
     [self initializeUserInterface];
 }
 
--(void)savePicButton {
-    if ([_power containsString:@"1005"] == YES || [DEFAULF_USERID integerValue] == [_userKey integerValue]) {
-        UIButton *savePicBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        [savePicBtn setTitle:@"编辑" forState:UIControlStateNormal];
-        savePicBtn.titleLabel.textColor = [UIColor whiteColor];
-        [savePicBtn setFrame:CGRectMake(0, 0, 40, 44)];
-        [savePicBtn addTarget:self action:@selector(editImageImg) forControlEvents:UIControlEventTouchUpInside];
-        UIBarButtonItem *saveItem = [[UIBarButtonItem alloc]initWithCustomView:savePicBtn];
-        
-        self.navigationItem.rightBarButtonItem = saveItem;
-    }
-    else
-    {
-        UIBarButtonItem* rightBtn = [[UIBarButtonItem alloc]initWithTitle:@"保存" style:UIBarButtonItemStylePlain target:self action:@selector(saveClick)];
-        rightBtn.tintColor = [UIColor whiteColor];
-        self.navigationItem.rightBarButtonItem = rightBtn;
-    }
-}
+
 #pragma mark --没有权限只能保存图片
 -(void)saveClick
 {
@@ -84,7 +66,7 @@
     }];
 }
 #pragma mark --有权限可以删除图片
--(void)editImageImg {
+-(void)editImageClick {
     
     //    _photos = 10;
     UIAlertAction * act1 = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
@@ -189,8 +171,25 @@
     _scrollView.bounces = NO;
     self.offset = _scrollView.contentOffset;
     [self.view addSubview:_scrollView];
+    /**
+     *  在图片上加长按手势
+     */
+    if ([_power containsString:@"1005"] == YES || [DEFAULF_USERID integerValue] == [_userKey integerValue]) {
+        //像这种控件的长按事件有些地方是有系统自带的。但有些时候用起来也不太方便。下面这个可能以后能用到
+        UILongPressGestureRecognizer *longPressReger = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(editImageClick)];
+        longPressReger.minimumPressDuration = 1.0;
+        [_scrollView addGestureRecognizer:longPressReger];
+    }
+    else
+    {
+        //像这种控件的长按事件有些地方是有系统自带的。但有些时候用起来也不太方便。下面这个可能以后能用到
+        UILongPressGestureRecognizer *longPressReger = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(saveClick)];
+        longPressReger.minimumPressDuration = 1.0;
+        [_scrollView addGestureRecognizer:longPressReger];
+    }
     
     [self resetScrollViewSubViews];
+    
 }
 
 - (void)resetScrollViewSubViews {

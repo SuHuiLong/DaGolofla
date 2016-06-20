@@ -351,7 +351,7 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
     if ([self.applyArray count]) {
         NSDictionary *dict = [NSDictionary dictionary];
         dict = [self.applyArray objectAtIndex:btn.tag-100];
-        if ([dict objectForKey:@"userKey"]) {
+        if ([[dict objectForKey:@"userKey"] integerValue] != 0) {
             [Helper alertViewWithTitle:@"删除后将不享受平台补贴，是否删除？" withBlockCancle:^{
                 
             } withBlockSure:^{
@@ -361,6 +361,10 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
             } withBlock:^(UIAlertController *alertView) {
                 [self.navigationController presentViewController:alertView animated:YES completion:nil];
             }];
+        }else{
+            [self.applyArray removeObjectAtIndex:btn.tag - 100];
+            //计算价格
+            [self countAmountPayable];
         }
     }
     
