@@ -94,6 +94,7 @@
     [center addObserver:self selector:@selector(notice:) name:@"weChatNotice" object:nil];
     NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
     [dict setObject:[NSString stringWithFormat:@"%@.00",cell.textFD.text] forKey:@"money"];
+//    [dict setObject:@0.01 forKey:@"money"];
     [dict setObject:@1 forKey:@"orderType"];
     [dict setObject:[self.detailDic objectForKey:@"timeKey"] forKey:@"srcKey"]; // teammember's timekey
     
@@ -133,6 +134,7 @@
     JGApplyMaterialTableViewCell *cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1]];
     NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
     [dict setObject:[NSString stringWithFormat:@"%@.00",cell.textFD.text] forKey:@"money"];
+//    [dict setObject:@0.01 forKey:@"money"];
     [dict setObject:@1 forKey:@"orderType"];
     [dict setObject:[self.detailDic objectForKey:@"timeKey"] forKey:@"srcKey"]; // teammember's timekey
     
