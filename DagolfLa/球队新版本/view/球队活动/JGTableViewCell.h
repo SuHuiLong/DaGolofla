@@ -23,4 +23,6 @@
 
 - (void)configJGTeamAcitivtyModel:(JGTeamAcitivtyModel *)model andIndecPath:(NSIndexPath *)indexPath;
 
+- (void)configTimeString:(JGTeamAcitivtyModel *)model andTag:(NSInteger)tag;
+
 @end

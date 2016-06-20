@@ -487,9 +487,7 @@ static CGFloat ImageHeight  = 210.0;
     }
     
     if (self.model.signUpEndTime == nil) {
-        [[ShowHUD showHUD]showToastWithText:@"活动开始时间不能为空！" FromView:self.view];
-        
-        [self alertviewString:@"活动报名截止时间不能为空！"];
+        [[ShowHUD showHUD]showToastWithText:@"活动报名截止时间不能为空！" FromView:self.view];
         return;
     }
     
@@ -619,7 +617,6 @@ static CGFloat ImageHeight  = 210.0;
     }];
     //拍照：
     UIAlertAction * act2 = [UIAlertAction actionWithTitle:@"拍照" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        
         //打开相机
         [_pickPhoto ShowTakePhotoWithController:self andWithBlock:^(NSObject *Data) {
             if ([Data isKindOfClass:[UIImage class]])
