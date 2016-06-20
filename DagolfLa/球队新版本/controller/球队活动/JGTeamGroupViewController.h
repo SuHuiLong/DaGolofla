@@ -12,4 +12,7 @@
 
 @property (nonatomic, assign)NSInteger teamActivityKey;
 
+//1-报名页面过来的数据，返回到详情页面
+@property (nonatomic, assign)NSInteger activityFrom;
+
 @end

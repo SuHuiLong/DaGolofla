@@ -47,8 +47,6 @@
             self.contions.text = model.info;
         }
     }
-    
-    
 }
 
 - (void)configJGTeamAcitivtyModel:(JGTeamAcitivtyModel *)model andIndecPath:(NSIndexPath *)indexPath{
@@ -65,6 +63,17 @@
         self.contions.text = model.name;
     }
 }
+
+- (void)configTimeString:(JGTeamAcitivtyModel *)model andTag:(NSInteger)tag{
+    if (tag == 1) {
+        self.contions.text = [[model.beginDate componentsSeparatedByString:@" "] objectAtIndex:0];//活动开始时间
+    }
+    
+    if (tag == 2) {
+        self.contions.text = [[model.signUpEndTime componentsSeparatedByString:@" "] objectAtIndex:0];//报名截止时间
+    }
+}
+
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];

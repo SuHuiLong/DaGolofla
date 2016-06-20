@@ -12,6 +12,7 @@
 #import "JGGroupdetailsCollectionViewCell.h"
 #import "JGHTeamMembersViewController.h"
 #import "JGHPlayersModel.h"
+#import "JGTeamActibityNameViewController.h"
 
 static NSString *const JGTeamGroupCollectionViewCellIdentifier = @"JGTeamGroupCollectionViewCell";
 static NSString *const JGGroupdetailsCollectionViewCellIdentifier = @"JGGroupdetailsCollectionViewCell";
@@ -59,6 +60,19 @@ static NSString *const JGGroupdetailsCollectionViewCellIdentifier = @"JGGroupdet
     return _collectionHeaderView;
 }
 
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+
+    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    btn.frame = BackBtnFrame;
+    btn.titleLabel.font = [UIFont systemFontOfSize:FontSize_Normal];
+    [btn setImage:[UIImage imageNamed:@"backL"] forState:UIControlStateNormal];
+    [btn addTarget:self action:@selector(backButtonClcik:) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc]initWithCustomView:btn];
+    self.navigationItem.leftBarButtonItem = leftItem;
+}
+    
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor colorWithHexString:BG_color];
@@ -146,10 +160,20 @@ static NSString *const JGGroupdetailsCollectionViewCellIdentifier = @"JGGroupdet
     
     [self loadData:0];
 }
-
-
+#pragma mark -- 返回事件
+- (void)backButtonClcik:(UIButton *)btn{
+    if (_activityFrom == 1) {
+        for (UIViewController *controller in self.navigationController.viewControllers) {
+            if ([controller isKindOfClass:[JGTeamActibityNameViewController class]]) {
+                
+                [self.navigationController popToViewController:controller animated:YES];
+            }
+        }
+    }else{
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+}
 #pragma mark -- 分享
-
 - (void)shareBtn{
     ShareAlert* alert = [[ShareAlert alloc]initMyAlert];
     

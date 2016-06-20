@@ -465,6 +465,7 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
             }else{
                 //跳转分组页面
                 JGTeamGroupViewController *groupCtrl = [[JGTeamGroupViewController alloc]init];
+                groupCtrl.activityFrom = 1;
                 groupCtrl.teamActivityKey = [_modelss.timeKey integerValue];
                 [self.navigationController pushViewController:groupCtrl animated:YES];
             }
@@ -522,6 +523,7 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
     //跳转分组页面
     JGTeamGroupViewController *groupCtrl = [[JGTeamGroupViewController alloc]init];
     groupCtrl.teamActivityKey = [_modelss.timeKey integerValue];
+    groupCtrl.activityFrom = 1;
     [self.navigationController pushViewController:groupCtrl animated:YES];
 }
 #pragma mark -- 支付宝
@@ -545,6 +547,7 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
             
             //跳转分组页面
             JGTeamGroupViewController *groupCtrl = [[JGTeamGroupViewController alloc]init];
+            groupCtrl.activityFrom = 1;
             groupCtrl.teamActivityKey = [_modelss.timeKey integerValue];
             [self.navigationController pushViewController:groupCtrl animated:YES];
             NSLog(@"支付宝=====%@",resultDic[@"resultStatus"]);
