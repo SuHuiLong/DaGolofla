@@ -278,7 +278,20 @@
             JGLableAndLableTableViewCell *cell = self.secondTableView.visibleCells[i];
             if ([cell.contentLB.text isEqualToString:@"请选择"]) {
                 isLength = NO;
+            }else{
+                if (![self.paraDic objectForKey:@"sex"]) {
+                    NSInteger sex = [[[NSUserDefaults standardUserDefaults] objectForKey:@"sex"] integerValue];
+                    if (sex == 0) {
+                        [self.paraDic setObject:@0 forKey:@"sex"];
+                    }else{
+                        [self.paraDic setObject:@1 forKey:@"sex"];
+                    }
+                }
             }
+            
+            
+            
+            
             
         }else{
             
@@ -321,6 +334,7 @@
             [self.paraDic setObject:@0 forKey:@"almost"];
         }
         [self.paraDic setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"userId"] forKey:@"userKey"];
+        
         [self.paraDic setObject:@(self.teamKey) forKey:@"teamKey"];
         [self.paraDic setObject:@0 forKey:@"state"];
         
@@ -439,6 +453,11 @@
         NSLog(@"%@", [[NSUserDefaults standardUserDefaults] objectForKey:@"sex"]);
         NSInteger sex = [[[NSUserDefaults standardUserDefaults] objectForKey:@"sex"] integerValue];
         cell.contentLB.text = sex ? @"男" : @"女";
+//        if (sex == 0) {
+//            [self.paraDic setObject:@0 forKey:@"sex"];
+//        }else{
+//            [self.paraDic setObject:@1 forKey:@"sex"];
+//        }
 //        cell.contentLB.text = @"请选择";
         cell.contentLB.textAlignment = NSTextAlignmentRight;
 //        [cell.button addTarget:self action:@selector(cellBtn) forControlEvents:(UIControlEventTouchUpInside)];
