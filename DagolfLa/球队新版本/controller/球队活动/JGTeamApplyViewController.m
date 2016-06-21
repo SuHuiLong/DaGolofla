@@ -26,6 +26,8 @@
 #import "Order.h"
 #import "DataSigner.h"
 
+#import "JGHApplyListView.h"
+
 static NSString *const JGActivityBaseInfoCellIdentifier = @"JGActivityBaseInfoCell";
 static NSString *const JGTableViewCellIdentifier = @"JGTableViewCell";
 static NSString *const JGApplyPepoleCellIdentifier = @"JGApplyPepoleCell";
@@ -57,11 +59,30 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
 @property (nonatomic, assign)float realPayPrice;//实付金额
 @property (nonatomic, assign)float subsidiesPrice;//补贴金额
 
+@property (nonatomic, strong)UIView *tranView;
+@property (nonatomic, strong)JGHApplyListView *applyListView;//报名人列表
+
 @end
 
 @implementation JGTeamApplyViewController
 
+- (UIView *)tranView{
+    if (_tranView == nil) {
+        self.tranView = [[UIView alloc]init];
+        self.tranView.backgroundColor = [UIColor lightGrayColor];
+        self.tranView.alpha = 0.4;
+        [self.view addSubview:_tranView];
+    }
+    return _tranView;
+}
 
+- (JGHApplyListView *)applyListView{
+    if (_applyListView == nil) {
+        self.applyListView = [[JGHApplyListView alloc]init];
+        [self.view addSubview:_applyListView];
+    }
+    return _applyListView;
+}
 
 - (UIButton *)cellClickBtn{
     if (_cellClickBtn == nil) {
@@ -266,8 +287,16 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
     invoiceCtrl.addressKey = _addressKey;
     [self.navigationController pushViewController:invoiceCtrl animated:YES];
 }
-#pragma mark -- 立即付款
+#pragma mark -- 立即支付
 - (IBAction)nowPayBtnClick:(UIButton *)sender {
+    self.tranView.frame = CGRectMake(0, 0, screenWidth, screenHeight - (152 + _applyArray.count * 30)-64 -44);
+    self.applyListView.frame = CGRectMake(0, screenHeight - (196 + _applyArray.count * 30)-64, screenWidth, 196 + 44 + _applyArray.count * 30);
+    [_applyListView configViewData:_applyArray];
+    
+    
+    
+    
+    /**
     //如果价格为空
     if (_realPayPrice == 0) {
         // 分别3个创建操作
@@ -291,9 +320,10 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
     [_actionView addAction:zhifubaoAction];
     [_actionView addAction:cancelAction];
     [self presentViewController:_actionView animated:YES completion:nil];
+     */
 }
 
-#pragma mark -- 报名不付款付款
+#pragma mark -- 仅报名
 - (IBAction)scenePayBtnClick:(UIButton *)sender {
     NSMutableArray *array = [NSMutableArray arrayWithArray:self.applyArray];
     [self.applyArray removeAllObjects];
@@ -351,7 +381,7 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
     if ([self.applyArray count]) {
         NSDictionary *dict = [NSDictionary dictionary];
         dict = [self.applyArray objectAtIndex:btn.tag-100];
-        if ([dict objectForKey:@"userKey"]) {
+        if ([[dict objectForKey:@"userKey"] integerValue] != 0) {
             [Helper alertViewWithTitle:@"删除后将不享受平台补贴，是否删除？" withBlockCancle:^{
                 
             } withBlockSure:^{
@@ -361,6 +391,10 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
             } withBlock:^(UIAlertController *alertView) {
                 [self.navigationController presentViewController:alertView animated:YES completion:nil];
             }];
+        }else{
+            [self.applyArray removeObjectAtIndex:btn.tag - 100];
+            //计算价格
+            [self countAmountPayable];
         }
     }
     

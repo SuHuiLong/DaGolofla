@@ -14,5 +14,6 @@
 @property (nonatomic, copy) NSString *detailString;
 @property (nonatomic, assign) NSInteger teamKey;
 
+@property (nonatomic, assign)NSInteger isShareBtn;//是否创建分享按钮 1-创建
 
 @end

@@ -28,8 +28,8 @@
                 </tableView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PsX-f3-PPu">
                     <rect key="frame" x="0.0" y="556" width="300" height="44"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    <state key="normal" title="报名不付款">
+                    <color key="backgroundColor" red="0.93333333333333335" green="0.52156862745098043" blue="0.027450980392156862" alpha="1" colorSpace="calibratedRGB"/>
+                    <state key="normal" title="仅报名">
                         <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                     <connections>
@@ -38,11 +38,11 @@
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="huT-MD-A4w">
                     <rect key="frame" x="300" y="556" width="300" height="44"/>
-                    <color key="backgroundColor" red="0.89411764709999997" green="0.2901960784" blue="0.027450980390000001" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="backgroundColor" red="0.89411764705882357" green="0.29019607843137257" blue="0.015686274509803921" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="44" id="msW-71-NKb"/>
                     </constraints>
-                    <state key="normal" title="报名并付款">
+                    <state key="normal" title="立即支付">
                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                     <connections>
