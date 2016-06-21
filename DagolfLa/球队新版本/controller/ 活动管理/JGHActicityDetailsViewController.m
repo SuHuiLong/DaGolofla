@@ -197,7 +197,12 @@ static CGFloat ImageHeight  = 210.0;
     
     [self.imgProfile addSubview:self.addressBtn];
     
-    [self createEditorBtn];//保存
+    [self createEditorBtn];//
+    //分享按钮
+    UIButton *shareBtn = [[UIButton alloc]initWithFrame:CGRectMake(screenWidth-44, self.titleField.frame.origin.y, 44, 25)];
+    [shareBtn setImage:[UIImage imageNamed:@"iconfont-fenxiang"] forState:UIControlStateNormal];
+    [shareBtn addTarget:self action:@selector(addShare) forControlEvents:UIControlEventTouchUpInside];
+    [self.titleView addSubview:shareBtn];
     
     [self dataSet];
 }
@@ -322,6 +327,7 @@ static CGFloat ImageHeight  = 210.0;
     
     [self presentViewController:aleVC animated:YES completion:nil];
 }
+
 #pragma mark -- 保存按钮
 - (void)createEditorBtn{
     self.headPortraitBtn.layer.masksToBounds = YES;
@@ -333,6 +339,7 @@ static CGFloat ImageHeight  = 210.0;
     [self.editorBtn addTarget:self action:@selector(editonAttendBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.editorBtn];
 }
+
 #pragma mark -- 保存
 - (void)editonAttendBtnClick:(UIButton *)btn{
     if (_isEditor == 0) {

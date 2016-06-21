@@ -10,6 +10,7 @@
 
 #import "JGLSelfSetViewController.h"
 #import "JGLAuthorityTableViewCell.h"
+#import "JGLManageCancelViewController.h"
 @interface JGMemAuthorityViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
     UITableView* _tableView;
@@ -289,8 +290,16 @@
     }
     else
     {
-        _chooseJob[indexPath.row - 1] = !_chooseJob[indexPath.row - 1];
-        [_tableView reloadData];
+        
+//        if (indexPath.row == 3) {
+//            JGLManageCancelViewController*  manVc = [[JGLManageCancelViewController alloc]init];
+//            [self.navigationController pushViewController:manVc animated:YES];
+//        }
+//        else
+//        {
+            _chooseJob[indexPath.row - 1] = !_chooseJob[indexPath.row - 1];
+            [_tableView reloadData];
+//        }
     }
 }
 

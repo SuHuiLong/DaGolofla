@@ -58,7 +58,7 @@
 {
     NSMutableArray *_imageDataSource;
     
-    NSMutableArray *_contentDataSource;//模拟接口给的数据
+    NSMutableArray *_contentDataSource;//数据
     
     
     NSMutableArray *_shuoshuoDatasSource;//说说数据源
@@ -211,11 +211,6 @@
     }else{
         [dic setValue:@1 forKey:@"searchState"];
     }
-    
-    //    if (self.state == 0) {
-    //    }else{
-    //        [dic setValue:[NSNumber numberWithInteger:self.state] forKey:@"searchState"];
-    //    }
     
     [dic setValue:@0 forKey:@"moodType"];
     

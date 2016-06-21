@@ -820,6 +820,7 @@
 		65B801001CD04D150077A324 /* DeatilModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 65B800FF1CD04D150077A324 /* DeatilModel.m */; };
 		65CD8E4B1BEA067F006984F3 /* AddressBookViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 65CD8E491BEA067F006984F3 /* AddressBookViewCell.m */; };
 		65CD8E4C1BEA067F006984F3 /* AddressBookViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 65CD8E4A1BEA067F006984F3 /* AddressBookViewCell.xib */; };
+		8200F31B1D17BF4C00BAF7A9 /* JGLManageCancelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8200F31A1D17BF4C00BAF7A9 /* JGLManageCancelViewController.m */; };
 		8215EE121D0FD9F90099F161 /* JGTeamMemberManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8215EE111D0FD9F90099F161 /* JGTeamMemberManager.m */; };
 		821A130F1CED5F9C00694E49 /* JGLPhotoAlbumModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 821A130E1CED5F9C00694E49 /* JGLPhotoAlbumModel.m */; };
 		821A13131CEDE04400694E49 /* JGLMyTeamModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 821A13121CEDE04400694E49 /* JGLMyTeamModel.m */; };
@@ -2260,6 +2261,8 @@
 		65CD8E481BEA067F006984F3 /* AddressBookViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddressBookViewCell.h; sourceTree = "<group>"; };
 		65CD8E491BEA067F006984F3 /* AddressBookViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddressBookViewCell.m; sourceTree = "<group>"; };
 		65CD8E4A1BEA067F006984F3 /* AddressBookViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddressBookViewCell.xib; sourceTree = "<group>"; };
+		8200F3191D17BF4C00BAF7A9 /* JGLManageCancelViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGLManageCancelViewController.h; sourceTree = "<group>"; };
+		8200F31A1D17BF4C00BAF7A9 /* JGLManageCancelViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGLManageCancelViewController.m; sourceTree = "<group>"; };
 		8215EE101D0FD9F90099F161 /* JGTeamMemberManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGTeamMemberManager.h; sourceTree = "<group>"; };
 		8215EE111D0FD9F90099F161 /* JGTeamMemberManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGTeamMemberManager.m; sourceTree = "<group>"; };
 		821A130D1CED5F9C00694E49 /* JGLPhotoAlbumModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGLPhotoAlbumModel.h; sourceTree = "<group>"; };
@@ -5636,6 +5639,8 @@
 				828A99F41CE3481D00AF9860 /* JGMemManageController.m */,
 				82D595E41CE4510100CD9587 /* JGMemAuthorityViewController.h */,
 				82D595E51CE4510100CD9587 /* JGMemAuthorityViewController.m */,
+				8200F3191D17BF4C00BAF7A9 /* JGLManageCancelViewController.h */,
+				8200F31A1D17BF4C00BAF7A9 /* JGLManageCancelViewController.m */,
 				82AAB7AC1CE5BEB8005F5633 /* JGLSelfSetViewController.h */,
 				82AAB7AD1CE5BEB8005F5633 /* JGLSelfSetViewController.m */,
 			);
@@ -6044,7 +6049,7 @@
 				TargetAttributes = {
 					36BFFD271BC76C8D005B3CE2 = {
 						CreatedOnToolsVersion = 6.3.2;
-						DevelopmentTeam = T8ML76W22A;
+						DevelopmentTeam = 5P6JNXBH3C;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -6684,6 +6689,7 @@
 				F569A1491CE35AA500CD0FD5 /* JGTeamChannelTableView.m in Sources */,
 				36BFFF8B1BC76D09005B3CE2 /* FDCalendarItem.m in Sources */,
 				36BFFF9E1BC76FD4005B3CE2 /* CommunityViewController.m in Sources */,
+				8200F31B1D17BF4C00BAF7A9 /* JGLManageCancelViewController.m in Sources */,
 				36BF00C81BC773EF005B3CE2 /* YueWaitViewController.m in Sources */,
 				36BFFFAE1BC76FF3005B3CE2 /* EnterViewController.m in Sources */,
 				82AAB7AE1CE5BEB8005F5633 /* JGLSelfSetViewController.m in Sources */,
@@ -7125,7 +7131,7 @@
 					"$(SRCROOT)/DagolfLa",
 				);
 				INFOPLIST_FILE = DagolfLa/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -7140,7 +7146,7 @@
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = bihuaxinxi.DagolfLa;
+				PRODUCT_BUNDLE_IDENTIFIER = bihuaxinxi.DagolfLa1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -7174,7 +7180,7 @@
 					"$(SRCROOT)/DagolfLa",
 				);
 				INFOPLIST_FILE = DagolfLa/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -7189,7 +7195,7 @@
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = bihuaxinxi.DagolfLa;
+				PRODUCT_BUNDLE_IDENTIFIER = bihuaxinxi.DagolfLa1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;

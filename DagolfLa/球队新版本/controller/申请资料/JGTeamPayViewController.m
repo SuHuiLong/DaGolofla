@@ -87,15 +87,16 @@
 #pragma mark -- 微信支付
 - (void)weChatPay{
     NSLog(@"微信支付");
+        JGApplyMaterialTableViewCell *cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1]];
     //获取通知中心单例对象
     NSNotificationCenter * center = [NSNotificationCenter defaultCenter];
     //添加当前类对象为一个观察者，name和object设置为nil，表示接收一切通知
     [center addObserver:self selector:@selector(notice:) name:@"weChatNotice" object:nil];
     NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
-    [dict setObject:@2 forKey:@"orderType"];
-//    [dict setObject:_infoKey forKey:@"srcKey"];
-    [dict setObject:@"活动报名" forKey:@"name"];
-    [dict setObject:@"活动微信订单" forKey:@"otherInfo"];
+    [dict setObject:[NSString stringWithFormat:@"%@.00",cell.textFD.text] forKey:@"money"];
+//    [dict setObject:@0.01 forKey:@"money"];
+    [dict setObject:@1 forKey:@"orderType"];
+    [dict setObject:[self.detailDic objectForKey:@"timeKey"] forKey:@"srcKey"]; // teammember's timekey
     
     [[JsonHttp jsonHttp]httpRequest:@"pay/doPayWeiXin" JsonKey:@"payInfo" withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
         NSLog(@"errType == %@", errType);
@@ -130,26 +131,20 @@
 
 - (void)zhifubaoPay{
     NSLog(@"支付宝支付");
+    JGApplyMaterialTableViewCell *cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1]];
     NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
-    [dict setObject:@2 forKey:@"orderType"];
-//    [dict setObject:_infoKey forKey:@"srcKey"];
-    [dict setObject:@"活动报名" forKey:@"name"];
-    [dict setObject:@"活动支付宝订单" forKey:@"otherInfo"];
-//    if (_invoiceKey != nil) {
-//        [dict setObject:_addressKey forKey:@"addressKey"];
-//        [dict setObject:_invoiceKey forKey:@"invoiceKey"];
-//    }
+    [dict setObject:[NSString stringWithFormat:@"%@.00",cell.textFD.text] forKey:@"money"];
+//    [dict setObject:@0.01 forKey:@"money"];
+    [dict setObject:@1 forKey:@"orderType"];
+    [dict setObject:[self.detailDic objectForKey:@"timeKey"] forKey:@"srcKey"]; // teammember's timekey
     
     [[JsonHttp jsonHttp]httpRequest:@"pay/doPayByAliPay" JsonKey:@"payInfo" withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
         NSLog(@"errType == %@", errType);
     } completionBlock:^(id data) {
         NSLog(@"%@",[data objectForKey:@"query"]);
         [[AlipaySDK defaultService] payOrder:[data objectForKey:@"query"] fromScheme:@"dagolfla" callback:^(NSDictionary *resultDic) {
+
             
-//跳转分组页面
-//            JGTeamGroupViewController *groupCtrl = [[JGTeamGroupViewController alloc]init];
-//            groupCtrl.teamActivityKey = [_modelss.timeKey integerValue];
-//            [self.navigationController pushViewController:groupCtrl animated:YES];
             NSLog(@"支付宝=====%@",resultDic[@"resultStatus"]);
             if ([resultDic[@"resultStatus"] isEqualToString:@"9000"]) {
                 NSLog(@"陈公");
