@@ -34,7 +34,7 @@
         [self addSubview:_ageLabel];
         _ageLabel.textAlignment = NSTextAlignmentLeft;
         _ageLabel.font = [UIFont systemFontOfSize:13*screenWidth/320];
-        _ageLabel.text = @"24年";
+        _ageLabel.text = @"";
         _sexImage = [[UIImageView alloc]initWithFrame:CGRectMake(55*screenWidth/320, 38*screenWidth/320, 9*screenWidth/320, 12*screenWidth/320)];
         [self addSubview:_sexImage];
         _sexImage.image = [UIImage imageNamed:@"xb_nn"];
@@ -82,9 +82,11 @@
 -(void)showData:(JGLTeamMemberModel *)model
 {
 
-    [_iconImage sd_setImageWithURL:[Helper setImageIconUrl:@"user" andTeamKey:[model.userKey integerValue] andIsSetWidth:YES andIsBackGround:NO]];
+    [_iconImage sd_setImageWithURL:[Helper setImageIconUrl:@"user" andTeamKey:[model.userKey integerValue] andIsSetWidth:YES andIsBackGround:NO] placeholderImage:[UIImage imageNamed:@"logo"]];
     _nameLabel.text = model.userName;
-    _ageLabel.text = [NSString stringWithFormat:@"%@岁",model.ballage];
+    if (model.ballage) {
+        _ageLabel.text = [NSString stringWithFormat:@"%@岁",model.ballage];
+    }
     if ([model.sex integerValue] == 1) {
         _sexImage.image = [UIImage imageNamed:@"xb_nn"];
     }

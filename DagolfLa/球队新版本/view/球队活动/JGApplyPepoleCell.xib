@@ -101,6 +101,10 @@
                     </mask>
                 </variation>
             </tableViewCellContentView>
+            <connections>
+                <outlet property="addApplyBtn" destination="7zR-bj-A4G" id="pmC-2K-gMk"/>
+                <outlet property="directionImageView" destination="IoS-wJ-mLo" id="fpi-RJ-Nfg"/>
+            </connections>
             <point key="canvasLocation" x="232.5" y="239"/>
         </tableViewCell>
     </objects>

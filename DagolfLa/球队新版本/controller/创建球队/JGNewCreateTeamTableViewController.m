@@ -433,20 +433,29 @@ static CGFloat ImageHeight  = 210.0;
                     
                     [MBProgressHUD hideAllHUDsForView:self.view animated:NO];
                     
-                    UIAlertController *alert=[UIAlertController alertControllerWithTitle:@"提示" message:@"球队创建成功" preferredStyle:UIAlertControllerStyleAlert];
                     
-                    UIAlertAction *action1=[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                        
-                    }];
-                    UIAlertAction* action2=[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                        
-                        [self.navigationController popToRootViewControllerAnimated:YES];
+                    [Helper alertViewNoHaveCancleWithTitle:@"球队创建成功" withBlock:^(UIAlertController *alertView) {
+                        [self.navigationController popViewControllerAnimated:YES];
+                        [self.navigationController presentViewController:alertView animated:YES completion:nil];
                         
                     }];
                     
-                    [alert addAction:action1];
-                    [alert addAction:action2];
-                    [self presentViewController:alert animated:YES completion:nil];
+//                    
+//                    UIAlertController *alert=[UIAlertController alertControllerWithTitle:@"提示" message:@"球队创建成功" preferredStyle:UIAlertControllerStyleAlert];
+//                    
+//                    UIAlertAction *action1=[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+//                        
+//                    }];
+//                    
+//                    UIAlertAction* action2=[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+//                        
+//                        [self.navigationController popToRootViewControllerAnimated:YES];
+//                        
+//                    }];
+//                    
+//                    [alert addAction:action1];
+//                    [alert addAction:action2];
+//                    [self presentViewController:alert animated:YES completion:nil];
                     
                     if ([data objectForKey:@"packSuccess"]) {
                         [user setObject:0 forKey:@"cacheCreatTeamDic"];
@@ -783,6 +792,7 @@ static CGFloat ImageHeight  = 210.0;
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
 
 /*
  #pragma mark - Navigation

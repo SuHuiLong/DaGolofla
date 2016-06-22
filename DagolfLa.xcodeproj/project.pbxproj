@@ -51,6 +51,7 @@
 		208030541CF9A79800448BFC /* JGHTotalPriceCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 208030521CF9A79800448BFC /* JGHTotalPriceCell.xib */; };
 		2080305C1CFCB86C00448BFC /* UMMobClick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2080305B1CFCB86B00448BFC /* UMMobClick.framework */; };
 		208837991D17D206004C7B5D /* JGHActicityDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 208837981D17D206004C7B5D /* JGHActicityDetailsViewController.m */; };
+		2088379C1D192213004C7B5D /* JGHApplyListView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2088379B1D192213004C7B5D /* JGHApplyListView.m */; };
 		209B3FE61D0FCB0300A6FF72 /* JGHSaveAndSubmitBtnCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 209B3FE41D0FCB0300A6FF72 /* JGHSaveAndSubmitBtnCell.m */; };
 		209B3FE71D0FCB0300A6FF72 /* JGHSaveAndSubmitBtnCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 209B3FE51D0FCB0300A6FF72 /* JGHSaveAndSubmitBtnCell.xib */; };
 		209B3FEB1D10182B00A6FF72 /* JGHManagerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 209B3FEA1D10182B00A6FF72 /* JGHManagerViewController.m */; };
@@ -1075,6 +1076,8 @@
 		2080305B1CFCB86B00448BFC /* UMMobClick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = UMMobClick.framework; sourceTree = "<group>"; };
 		208837971D17D206004C7B5D /* JGHActicityDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHActicityDetailsViewController.h; sourceTree = "<group>"; };
 		208837981D17D206004C7B5D /* JGHActicityDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHActicityDetailsViewController.m; sourceTree = "<group>"; };
+		2088379A1D192213004C7B5D /* JGHApplyListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHApplyListView.h; sourceTree = "<group>"; };
+		2088379B1D192213004C7B5D /* JGHApplyListView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHApplyListView.m; sourceTree = "<group>"; };
 		209B3FE31D0FCB0300A6FF72 /* JGHSaveAndSubmitBtnCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHSaveAndSubmitBtnCell.h; sourceTree = "<group>"; };
 		209B3FE41D0FCB0300A6FF72 /* JGHSaveAndSubmitBtnCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHSaveAndSubmitBtnCell.m; sourceTree = "<group>"; };
 		209B3FE51D0FCB0300A6FF72 /* JGHSaveAndSubmitBtnCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JGHSaveAndSubmitBtnCell.xib; sourceTree = "<group>"; };
@@ -2682,6 +2685,8 @@
 		2067C6BE1CE30CC0002900C8 /* 球队活动 */ = {
 			isa = PBXGroup;
 			children = (
+				2088379A1D192213004C7B5D /* JGHApplyListView.h */,
+				2088379B1D192213004C7B5D /* JGHApplyListView.m */,
 				209B3FE31D0FCB0300A6FF72 /* JGHSaveAndSubmitBtnCell.h */,
 				209B3FE41D0FCB0300A6FF72 /* JGHSaveAndSubmitBtnCell.m */,
 				209B3FE51D0FCB0300A6FF72 /* JGHSaveAndSubmitBtnCell.xib */,
@@ -4690,6 +4695,7 @@
 		36BFFF431BC76D09005B3CE2 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				F511DAAC1D1A5ABD00CB5530 /* datePicker */,
 				65B5969E1CAD43AC007AB83A /* ContantHead.h */,
 				20BA613D1CDCA04D004B61F5 /* PrefixHeader.pch */,
 				20FBD5F31D044E5900DEE48D /* ShowHUD.h */,
@@ -5805,6 +5811,13 @@
 			path = "球队大厅";
 			sourceTree = "<group>";
 		};
+		F511DAAC1D1A5ABD00CB5530 /* datePicker */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = datePicker;
+			sourceTree = "<group>";
+		};
 		F5321AE31CE4492800CAE1EF /* 创建球队 */ = {
 			isa = PBXGroup;
 			children = (
@@ -6057,7 +6070,7 @@
 				TargetAttributes = {
 					36BFFD271BC76C8D005B3CE2 = {
 						CreatedOnToolsVersion = 6.3.2;
-						DevelopmentTeam = 5P6JNXBH3C;
+						DevelopmentTeam = R269PG52XZ;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -6673,6 +6686,7 @@
 				36BFFFCD1BC770B1005B3CE2 /* BrowseImagesViewController.m in Sources */,
 				36BFFFFA1BC770C4005B3CE2 /* NSString+DocumentPath.m in Sources */,
 				36DFD9121C0E97E1004DC690 /* HistoryHeadTableViewCell.m in Sources */,
+				2088379C1D192213004C7B5D /* JGHApplyListView.m in Sources */,
 				36D39B3A1BCCD9A600C0B197 /* AppraiseViewController.m in Sources */,
 				36BFFFAD1BC76FF3005B3CE2 /* EnrollViewController.m in Sources */,
 				36BF01811BC77611005B3CE2 /* JobChooseViewController.m in Sources */,
@@ -7156,7 +7170,7 @@
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = bihuaxinxi.DagolfLa1;
+				PRODUCT_BUNDLE_IDENTIFIER = bihuaxinxi.DagolfLa;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -7205,7 +7219,7 @@
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = bihuaxinxi.DagolfLa1;
+				PRODUCT_BUNDLE_IDENTIFIER = bihuaxinxi.DagolfLa;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;

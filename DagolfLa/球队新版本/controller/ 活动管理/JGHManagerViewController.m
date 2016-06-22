@@ -236,14 +236,54 @@
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     JGHActicityDetailsViewController *detailsCtrl = [[JGHActicityDetailsViewController alloc]init];
-//    detailsCtrl.isTeamChannal = 2;
     JGTeamAcitivtyModel *model = [[JGTeamAcitivtyModel alloc]init];
     model = self.dataArray[indexPath.section];
-//    activityNameCtrl.teamKey = [model.timeKey integerValue];
     detailsCtrl.model = model;
     [self.navigationController pushViewController:detailsCtrl animated:YES];
 }
 
+/**
+- (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return @"删除";
+}
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    return YES;
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        
+        //删除证件信息
+        [self removeCerBase:model.certtyid];
+        
+        [self.cerArray removeObjectAtIndex:indexPath.row];
+        // Delete the row from the data source.
+        
+        [self.customTableView deleteRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath, nil] withRowAnimation:UITableViewRowAnimationTop];
+    }
+}
+#pragma mark -- 删除证件信息
+- (void)removeCerBase:(NSString *)certId
+{
+    //    https://101.200.199.81/tmsWanda/deletecertinfo.action?certId=68968
+    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+    [params setObject:certId forKey:@"certId"];
+    
+    [[HttpRequestAdapter shareAdapter]httpRequest:@"deletecertinfo.action" withData:params requestMethod:@"GET" failedBlock:^(id errType) {
+        NSLog(@"%@", errType);
+    } completionBlock:^(id data) {
+        
+        NSLog(@"%@", data);
+        
+        if ([[data objectForKey:@"sys_status"] isEqualToString:@"ok"]) {
+            NSLog(@"证件删除成功！");
+            [self.customTableView reloadData];
+        }
+        
+    }];
+}
+*/
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

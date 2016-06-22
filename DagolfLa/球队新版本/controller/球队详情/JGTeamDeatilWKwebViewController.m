@@ -18,6 +18,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    if (_isShareBtn == 1) {
+        UIBarButtonItem *bar = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"iconfont-fenxiang"] style:(UIBarButtonItemStylePlain) target:self action:@selector(shareBtn)];
+        bar.tintColor = [UIColor whiteColor];
+        self.navigationItem.rightBarButtonItem = bar;
+
+    }
+    
     self.title = self.teamName;
     self.webView = [[WKWebView alloc]initWithFrame:self.view.bounds];
     [self.view addSubview:self.webView];
@@ -37,10 +44,84 @@
 //        }];
 //    }
     
-    
-    
     // Do any additional setup after loading the view.
 }
+
+#pragma mark -- 分享
+- (void)shareBtn{
+    ShareAlert* alert = [[ShareAlert alloc]initMyAlert];
+    
+    [self.view addSubview:alert];
+    [alert setCallBackTitle:^(NSInteger index) {
+        [self shareInfo:index];
+    }];
+    
+    [UIView animateWithDuration:0.2 animations:^{
+        [alert show];
+    }];
+}
+
+-(void)shareInfo:(NSInteger)index{
+    
+    NSData *fiData = [[NSData alloc]init];
+    fiData = [NSData dataWithContentsOfURL:[Helper setImageIconUrl:@"activity" andTeamKey:self.teamKey andIsSetWidth:YES andIsBackGround:YES]];
+    
+    
+    NSString*  shareUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/team/group.html?key=%td", self.teamKey];
+    
+    [UMSocialData defaultData].extConfig.title=[NSString stringWithFormat:@"%@分组表",self.teamName];
+    
+    if (index == 0){
+        //微信
+        [UMSocialWechatHandler setWXAppId:@"wxdcdc4e20544ed728" appSecret:@"fdc75aae5a98f2aa0f62ef8cba2b08e9" url:shareUrl];
+        [UMSocialConfig hiddenNotInstallPlatforms:@[UMShareToWechatSession,UMShareToWechatTimeline,UMShareToSina]];
+        [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatSession] content:[NSString stringWithFormat:@"【%@】%@分组表", self.teamName,self.teamName]  image:(fiData != nil && fiData.length > 0) ?fiData : [UIImage imageNamed:TeamBGImage] location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
+            if (response.responseCode == UMSResponseCodeSuccess) {
+                //                [self shareS:indexRow];
+            }
+        }];
+        
+    }else if (index==1){
+        //朋友圈
+        [UMSocialWechatHandler setWXAppId:@"wxdcdc4e20544ed728" appSecret:@"fdc75aae5a98f2aa0f62ef8cba2b08e9" url:shareUrl];
+        [UMSocialConfig hiddenNotInstallPlatforms:@[UMShareToWechatSession,UMShareToWechatTimeline,UMShareToSina]];
+        [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatTimeline] content:[NSString stringWithFormat:@"%@球队%@活动的分组表", self.teamName,self.teamName] image:(fiData != nil && fiData.length > 0) ?fiData : [UIImage imageNamed:TeamBGImage] location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
+            if (response.responseCode == UMSResponseCodeSuccess) {
+                //                [self shareS:indexRow];
+            }
+        }];
+    }else{
+        UMSocialData *data = [UMSocialData defaultData];
+        data.shareImage = [UIImage imageNamed:@"logo"];
+        data.shareText = [NSString stringWithFormat:@"%@%@",@"打高尔夫啦",shareUrl];
+        [[UMSocialControllerService defaultControllerService] setSocialData:data];
+        //2.设置分享平台
+        [UMSocialSnsPlatformManager getSocialPlatformWithName:UMShareToSina].snsClickHandler(self,[UMSocialControllerService defaultControllerService],YES);
+    }
+    
+}
+
+
+- (void)clearCookies{
+    
+    WKWebsiteDataStore *dateStore = [WKWebsiteDataStore defaultDataStore];
+    [dateStore fetchDataRecordsOfTypes:[WKWebsiteDataStore allWebsiteDataTypes]
+                     completionHandler:^(NSArray<WKWebsiteDataRecord *> * __nonnull records) {
+                         for (WKWebsiteDataRecord *record  in records)
+                         {
+                             //                             if ( [record.displayName containsString:@"baidu"]) //取消备注，可以针对某域名清除，否则是全清
+                             //                             {
+                             [[WKWebsiteDataStore defaultDataStore] removeDataOfTypes:record.dataTypes
+                                                                       forDataRecords:@[record]
+                                                                    completionHandler:^{
+                                                                        NSLog(@"Cookies for %@ deleted successfully",record.displayName);
+                                                                    }];
+                             //                             }
+                         }
+                     }];
+    
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

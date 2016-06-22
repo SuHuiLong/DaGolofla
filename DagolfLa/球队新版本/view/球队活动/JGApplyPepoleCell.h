@@ -17,6 +17,8 @@
 @interface JGApplyPepoleCell : UITableViewCell
 //添加活动嘉宾
 - (IBAction)addApplyBtnClick:(UIButton *)sender;
+@property (weak, nonatomic) IBOutlet UIButton *addApplyBtn;
+@property (weak, nonatomic) IBOutlet UIImageView *directionImageView;
 
 @property (weak, nonatomic)id <JGApplyPepoleCellDelegate> delegate;
 @end

@@ -116,9 +116,9 @@ static CGFloat ImageHeight  = 210.0;
     [[SDImageCache sharedImageCache] removeImageForKey:head fromDisk:YES];
     [[SDImageCache sharedImageCache] removeImageForKey:headUrl fromDisk:YES];
 
-//
+
 //    [[SDImageCache sharedImageCache] removeImageForKey:bgUrl];
-//
+
 //    NSLog(@"%@ *-*-*-*-*-*-*-*-*-*-*-* %@", [Helper setImageIconUrl:@"team" andTeamKey:[[self.detailDic objectForKey:@"timeKey"] integerValue] andIsSetWidth:YES andIsBackGround:NO], [Helper setImageIconUrl:@"team" andTeamKey:[[self.detailDic objectForKey:@"timeKey"] integerValue] andIsSetWidth:YES andIsBackGround:YES]);
     NSLog(@"%@", [Helper setImageIconUrl:@"team" andTeamKey:[[self.detailDic objectForKey:@"timeKey"] integerValue] andIsSetWidth:YES andIsBackGround:NO]);
     [self.headPortraitBtn sd_setImageWithURL:[Helper setImageIconUrl:@"team" andTeamKey:[[self.detailDic objectForKey:@"timeKey"] integerValue] andIsSetWidth:YES andIsBackGround:NO] forState:(UIControlStateNormal) placeholderImage:[UIImage imageNamed:TeamLogoImage]];
@@ -143,6 +143,9 @@ static CGFloat ImageHeight  = 210.0;
         
         if ([[self.detailDic objectForKey:@"state"] integerValue] == 0) {
             [self.previewBtn setTitle:@"正在等待审核" forState:UIControlStateNormal];
+            self.previewBtn.backgroundColor = [UIColor lightGrayColor];
+        }else if ([[self.detailDic objectForKey:@"state"] integerValue] == 2){
+            [self.previewBtn setTitle:@"审核未通过" forState:UIControlStateNormal];
             self.previewBtn.backgroundColor = [UIColor lightGrayColor];
         }else{
             [self.previewBtn setTitle:@"邀请好友" forState:UIControlStateNormal];
@@ -183,7 +186,6 @@ static CGFloat ImageHeight  = 210.0;
         self.titleView.frame = CGRectMake(0, 0, screenWidth, 44);
         self.titleView.backgroundColor = [UIColor clearColor];
         [self.imgProfile addSubview:self.titleView];
-        
         
     }
     return self;
@@ -267,6 +269,10 @@ static CGFloat ImageHeight  = 210.0;
 - (void)addShare{
    
     if ([[self.detailDic objectForKey:@"state"] integerValue] == 0) {
+        return;
+    }
+    
+    if ([[self.detailDic objectForKey:@"state"] integerValue] == 2) {
         return;
     }
     
@@ -396,7 +402,9 @@ static CGFloat ImageHeight  = 210.0;
     if ([[self.detailDic objectForKey:@"state"] integerValue] == 0) {
         return;
     }
-    
+    if ([[self.detailDic objectForKey:@"state"] integerValue] == 2) {
+        return;
+    }
     
     TeamInviteViewController *inviteVc = [[TeamInviteViewController alloc] init];
     
@@ -608,6 +616,10 @@ static CGFloat ImageHeight  = 210.0;
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
     if ([[self.detailDic objectForKey:@"state"] integerValue] == 0) {
+        return;
+    }
+    
+    if ([[self.detailDic objectForKey:@"state"] integerValue] == 2) {
         return;
     }
     

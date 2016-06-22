@@ -575,9 +575,10 @@ static CGFloat ImageHeight  = 210.0;
     }
     
     JGTeamDeatilWKwebViewController *WKCtrl = [[JGTeamDeatilWKwebViewController alloc]init];
-    //http://imgcache.dagolfla.com/share/team/group.html?key=1645
     WKCtrl.detailString = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/team/group.html?key=%@", _model.timeKey];;
     WKCtrl.teamName = @"报名人列表";
+    WKCtrl.isShareBtn = 1;
+    WKCtrl.teamKey = [_model.timeKey integerValue];
     [self.navigationController pushViewController:WKCtrl animated:YES];
 }
 #pragma mark - Table View Delegate
