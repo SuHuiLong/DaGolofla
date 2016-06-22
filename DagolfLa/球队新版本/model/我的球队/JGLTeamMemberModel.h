@@ -68,6 +68,12 @@
 
 @property (strong, nonatomic) NSString* ts;
 
+@property (strong, nonatomic) NSNumber* accountUserKey;
+
+@property (strong, nonatomic) NSString* accountUserName;
+
+@property (strong, nonatomic) NSString* accountUserMobile;
+
 @property (strong, nonatomic) ChineseString *chineseString;
 
 

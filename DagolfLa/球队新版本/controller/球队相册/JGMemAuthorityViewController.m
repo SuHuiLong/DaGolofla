@@ -11,6 +11,8 @@
 #import "JGLSelfSetViewController.h"
 #import "JGLAuthorityTableViewCell.h"
 #import "JGLManageCancelViewController.h"
+
+#import "JGLPowerSettTableViewCell.h"
 @interface JGMemAuthorityViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
     UITableView* _tableView;
@@ -22,7 +24,7 @@
     
     NSInteger _chooseID;
     
-    BOOL _chooseJob[3];
+    BOOL _chooseJob[2];
     NSMutableArray* _arrayNum;//存储power的数据
     
     NSInteger _identity;
@@ -67,11 +69,11 @@
             [self.memberArray addObject:@"0"];
         }
         
-        if ([str containsString:@"1003"]){
-            [self.memberArray addObject:@"1"];
-        }else{
-            [self.memberArray addObject:@"0"];
-        }
+//        if ([str containsString:@"1003"]){
+//            [self.memberArray addObject:@"1"];
+//        }else{
+//            [self.memberArray addObject:@"0"];
+//        }
         
         
         _identity = [[[data objectForKey:@"member"] objectForKey:@"identity"] integerValue];
@@ -85,9 +87,9 @@
     
     self.title = @"权限设置";
     
-    _arrayTitle = @[@[@"队长",@"会长",@"副会长",@"队长秘书长",@"球队秘书",@"干事"],@[@"活动管理",@"权限管理",@"资金管理"]];
-    _arraySection = @[@"身份设置",@"职责设置"];
-    _arrayDetail = @[@"活动发布和对活动成员的管理",@"设置队员身份和职责",@"对内收支情况的管理"];
+    _arrayTitle = @[@[@"队长",@"会长",@"副会长",@"队长秘书长",@"球队秘书",@"干事"],@[@"活动管理",@"权限管理"]];
+    _arraySection = @[@"身份设置",@"职责设置",@"资金管理"];
+    _arrayDetail = @[@"活动发布和对活动成员的管理",@"设置队员身份和职责"];
     _chooseID = 666;
     _arrayNum = [[NSMutableArray alloc]init];
     [self uiConfig];
@@ -107,9 +109,9 @@
     if (_chooseJob[1] == 1) {
         [_arrayNum addObject:@1002];
     }
-    if (_chooseJob[2] == 1) {
-        [_arrayNum addObject:@1003];
-    }
+//    if (_chooseJob[2] == 1) {
+//        [_arrayNum addObject:@1003];
+//    }
 
     //把数组转换成字符串
     NSString *strNum=[_arrayNum componentsJoinedByString:@","];
@@ -159,9 +161,9 @@
     [self.view addSubview:_tableView];
     [_tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"cellid"];
     [_tableView registerNib:[UINib nibWithNibName:@"JGLAuthorityTableViewCell" bundle:nil] forCellReuseIdentifier:@"JGLAuthorityTableViewCell"];
+    
+    [_tableView registerNib:[UINib nibWithNibName:@"JGLPowerSettTableViewCell" bundle:nil] forCellReuseIdentifier:@"JGLPowerSettTableViewCell"];
 }
-
-
 
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -169,9 +171,13 @@
     if (section == 0) {
         return 7;
     }
+    else if (section == 1)
+    {
+        return 3;
+    }
     else
     {
-        return 4;
+        return 1;
     }
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
@@ -181,7 +187,7 @@
 
 //指定有多少个分区(Section)，默认为1
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 2;
+    return 3;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -191,14 +197,34 @@
 {
     
     if (indexPath.row == 0) {
-        UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"cellid" forIndexPath:indexPath];
-        cell.textLabel.text = _arraySection[indexPath.section];
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        return cell;
+        if (indexPath.section == 2) {
+            if (![Helper isBlankString:[_dictAccount objectForKey:@"accountUserName"]]) {
+                JGLPowerSettTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"JGLPowerSettTableViewCell" forIndexPath:indexPath];
+                cell.labelTitle.text = _arraySection[indexPath.section];
+                cell.labelName.text = [NSString stringWithFormat:@"%@",[_dictAccount objectForKey:@"accountUserName"]];
+                cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                [cell.btnChange addTarget:self action:@selector(changeClick) forControlEvents:UIControlEventTouchUpInside];
+                return cell;
+            }else
+            {
+                UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"cellid" forIndexPath:indexPath];
+                cell.textLabel.text = _arraySection[indexPath.section];
+                cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                return cell;
+            }
+            
+        }
+        else
+        {
+            UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"cellid" forIndexPath:indexPath];
+            cell.textLabel.text = _arraySection[indexPath.section];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            return cell;
+        }
+       
     }
     else
     {
-        
         JGLAuthorityTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"JGLAuthorityTableViewCell" forIndexPath:indexPath];
         if (indexPath.section == 0) {
             cell.titleLabel.text = _arrayTitle[indexPath.section][indexPath.row - 1];
@@ -235,7 +261,6 @@
                     cell.iconImgv.image = [UIImage imageNamed:@""];
                 }
             }
-        
         }
         else
         {
@@ -254,8 +279,6 @@
                 else{
 
                 }
-//
-//
             }
             else
             {
@@ -280,6 +303,27 @@
 }
 
 
+-(void)changeClick
+{
+    [Helper alertViewWithTitle:[NSString stringWithFormat:@"球队只能设置一个资金管理人，如需更换请先取消%@的资金管理权限",[_dictAccount objectForKey:@"accountUserName"]] withBlockCancle:^{
+        
+    } withBlockSure:^{
+        JGLManageCancelViewController*  manVc = [[JGLManageCancelViewController alloc]init];
+        manVc.model = _model;
+        manVc.teamKey = _teamKey;
+        manVc.title = @"取消权限";
+        manVc.isCancel = 1;
+        manVc.blockCancel = ^(){
+            [_dictAccount removeAllObjects];
+            NSIndexSet *indexSet=[[NSIndexSet alloc]initWithIndex:2];
+            [_tableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationAutomatic];
+        };
+        [self.navigationController pushViewController:manVc animated:YES];
+    } withBlock:^(UIAlertController *alertView) {
+        [self.navigationController presentViewController:alertView animated:YES completion:nil];
+    }];
+}
+
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     _isClick = YES;
@@ -288,18 +332,51 @@
         NSLog(@"%td",_chooseID);
         [_tableView reloadData];
     }
+    else if (indexPath.section == 1)
+    {
+        _chooseJob[indexPath.row - 1] = !_chooseJob[indexPath.row - 1];
+        [_tableView reloadData];
+    }
     else
     {
-        
-//        if (indexPath.row == 3) {
-//            JGLManageCancelViewController*  manVc = [[JGLManageCancelViewController alloc]init];
-//            [self.navigationController pushViewController:manVc animated:YES];
-//        }
-//        else
-//        {
-            _chooseJob[indexPath.row - 1] = !_chooseJob[indexPath.row - 1];
-            [_tableView reloadData];
-//        }
+        if (![Helper isBlankString:[_dictAccount objectForKey:@"accountUserName"]]) {
+            [self changeClick];
+        }
+        else
+        {
+            JGLManageCancelViewController*  manVc = [[JGLManageCancelViewController alloc]init];
+            manVc.model = _model;
+            manVc.teamKey = _teamKey;
+            manVc.title = @"设置资金管理权限";
+            manVc.isCancel = 0;
+            manVc.blockSetting = ^(){
+                NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+                
+                [dict setObject:_teamKey forKey:@"teamKey"];
+                [dict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:userID] forKey:@"userKey"];
+                [dict setObject:@1 forKey:@"offset"];
+                [[JsonHttp jsonHttp]httpRequest:@"team/getTeamMemberList" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
+                    
+                } completionBlock:^(id data) {
+                    
+                    if (![Helper isBlankString:[data objectForKey:@"accountUserKey"]]) {
+                        [_dictAccount setObject:[data objectForKey:@"accountUserKey"] forKey:@"accountUserKey"];
+                    }
+                    if (![Helper isBlankString:[data objectForKey:@"accountUserMobile"]]) {
+                        [_dictAccount setObject:[data objectForKey:@"accountUserMobile"] forKey:@"accountUserMobile"];
+                    }
+                    if (![Helper isBlankString:[data objectForKey:@"accountUserName"]]) {
+                        [_dictAccount setObject:[data objectForKey:@"accountUserName"] forKey:@"accountUserName"];
+                    }
+                    
+//                    [_tableView reloadData];
+                    NSIndexSet *indexSet=[[NSIndexSet alloc]initWithIndex:2];
+                    [_tableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationAutomatic];
+                    
+                }];
+            };
+            [self.navigationController pushViewController:manVc animated:YES];
+        }
     }
 }
 
