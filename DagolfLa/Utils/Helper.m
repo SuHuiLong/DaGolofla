@@ -337,11 +337,13 @@
     for (int i=0; i<3; i++) {
         if (i == 0) {
             dateCatory = @"年";
+            str = [NSString stringWithFormat:@"%@", [[array objectAtIndex:0]stringByAppendingString:dateCatory]];
         }else if (i == 1){
             dateCatory = @"月";
+            str = [NSString stringWithFormat:@"%@%@", str, [[array objectAtIndex:1]stringByAppendingString:dateCatory]];
         }else{
             dateCatory = @"日";
-            str = [NSString stringWithFormat:@"%@%@%@", [[array objectAtIndex:0]stringByAppendingString:dateCatory], [[array objectAtIndex:1]stringByAppendingString:dateCatory], [[array objectAtIndex:2]stringByAppendingString:dateCatory]];
+            str = [NSString stringWithFormat:@"%@%@", str, [[array objectAtIndex:2]stringByAppendingString:dateCatory]];
             NSLog(@"str == %@", str);
         }
     }
