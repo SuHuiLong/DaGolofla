@@ -36,6 +36,10 @@
 #import "MJDIYBackFooter.h"
 #import "MJDIYHeader.h"
 
+#import "JGActivityMemNonMangerViewController.h" //test
+
+
+
 @interface JGTeamChannelViewController ()<UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, strong)UIImageView *topView;
@@ -406,9 +410,13 @@
         JGLMyTeamViewController* myVc = [[JGLMyTeamViewController alloc]init];
         [self.navigationController pushViewController:myVc animated:YES];
     }else if (button.tag == 201) {
-        JGTeamActivityViewController* teamVc = [[JGTeamActivityViewController alloc]init];
-        teamVc.isMEActivity = 3;
-        [self.navigationController pushViewController:teamVc animated:YES];
+//        JGTeamActivityViewController* teamVc = [[JGTeamActivityViewController alloc]init];
+//        teamVc.isMEActivity = 3;
+//        [self.navigationController pushViewController:teamVc animated:YES];
+       
+        JGActivityMemNonMangerViewController *vc = [[JGActivityMemNonMangerViewController alloc] init];
+        [self.navigationController pushViewController:vc animated:YES];
+    
     }else if (button.tag == 202) {
         
         JGTeamMainhallViewController *MainhallTeamVC = [[JGTeamMainhallViewController alloc] init];
