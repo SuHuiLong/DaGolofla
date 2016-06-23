@@ -29,8 +29,9 @@
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PsX-f3-PPu">
                     <rect key="frame" x="0.0" y="556" width="300" height="44"/>
                     <color key="backgroundColor" red="0.93333333333333335" green="0.52156862745098043" blue="0.027450980392156862" alpha="1" colorSpace="calibratedRGB"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <state key="normal" title="仅报名">
-                        <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                     <connections>
                         <action selector="scenePayBtnClick:" destination="-1" eventType="touchUpInside" id="l6G-wv-4Jx"/>
@@ -42,6 +43,7 @@
                     <constraints>
                         <constraint firstAttribute="height" constant="44" id="msW-71-NKb"/>
                     </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <state key="normal" title="立即支付">
                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </state>

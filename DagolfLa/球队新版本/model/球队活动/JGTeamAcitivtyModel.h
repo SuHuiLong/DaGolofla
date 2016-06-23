@@ -40,6 +40,10 @@
 @property (strong, nonatomic) NSNumber* subsidyPrice;
 //嘉宾价
 @property (strong, nonatomic) NSNumber* guestPrice;
+//球队会员记名价
+@property (strong, nonatomic) NSNumber* billNamePrice;
+//球队会员不记名价
+@property (strong, nonatomic) NSNumber* billPrice;
 //syncFlag
 @property (assign, nonatomic) NSInteger syncFlag;
 //rsyncFlag

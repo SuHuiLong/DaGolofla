@@ -36,7 +36,7 @@ static CGFloat ImageHeight  = 210.0;
 @property (nonatomic,strong)SXPickPhoto * pickPhoto;//相册类
 @property (nonatomic, strong)UITableView *launchActivityTableView;
 
-@property (nonatomic, strong)NSMutableDictionary *dataDict;
+//@property (nonatomic, strong)NSMutableDictionary *dataDict;
 
 @property (nonatomic, strong)UIImage *headerImage;
 
@@ -86,11 +86,11 @@ static CGFloat ImageHeight  = 210.0;
 - (instancetype)init{
     if (self == [super init]) {
         self.model = [[JGTeamAcitivtyModel alloc]init];
-        self.dataDict = [NSMutableDictionary dictionary];
+//        self.dataDict = [NSMutableDictionary dictionary];
         self.pickPhoto = [[SXPickPhoto alloc]init];
         self.titleView = [[UIView alloc]init];
 
-        _dataDict = [[NSMutableDictionary alloc]init];
+//        _dataDict = [[NSMutableDictionary alloc]init];
         UIImage *image = [UIImage imageNamed:ActivityBGImage];
         self.model.bgImage = image;
         self.imgProfile = [[UIImageView alloc] initWithImage:image];
@@ -369,13 +369,13 @@ static CGFloat ImageHeight  = 210.0;
         [dataCtrl setCallback:^(NSString *dateStr, NSString *dateWeek, NSString *str) {
             if (indexPath.row == 0) {
                 [self.model setValue:dateStr forKey:@"beginDate"];
-                [_dataDict setObject:dateStr forKey:@"activityBeginDate"];
+//                [_dataDict setObject:dateStr forKey:@"activityBeginDate"];
             }else if(indexPath.row == 1){
                 [self.model setValue:dateStr forKey:@"endDate"];
-                [_dataDict setObject:dateStr forKey:@"activityEndDate"];
+//                [_dataDict setObject:dateStr forKey:@"activityEndDate"];
             }else{
                 [self.model setValue:[NSString stringWithFormat:@"%@ 23:59:59", dateStr] forKey:@"signUpEndTime"];
-                [_dataDict setObject:dateStr forKey:@"activityEignUpEndTime"];
+//                [_dataDict setObject:dateStr forKey:@"activityEignUpEndTime"];
             }
             
             NSIndexPath *indPath = [NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section];
@@ -414,7 +414,6 @@ static CGFloat ImageHeight  = 210.0;
     
     if (self.model.beginDate != nil) {
         [dict setObject:self.model.beginDate forKey:@"beginDate"];//活动开始时间
-
     }
     
     if (self.model.endDate != nil) {
@@ -427,17 +426,14 @@ static CGFloat ImageHeight  = 210.0;
     
     if (self.model.userMobile.length == 11) {
         [dict setObject:self.model.userMobile forKey:@"userMobile"];//联系人
-
     }
     
     if (self.model.ballName != nil) {
         [dict setObject:self.model.ballName forKey:@"ballName"];//球场名称
-
     }
     
     if (self.model.info != nil) {
         [dict setObject:self.model.info forKey:@"info"];//活动简介
-
     }
     
     if (self.model.memberPrice > 0) {
@@ -450,7 +446,6 @@ static CGFloat ImageHeight  = 210.0;
     
     if (self.model.userName != nil) {
         [dict setObject:self.model.userName forKey:@"userName"];//联系人
-
     }
     
     if (self.model.maxCount > 0) {
@@ -458,9 +453,7 @@ static CGFloat ImageHeight  = 210.0;
     }
     if (self.model.ballKey != 0) {
         [dict setObject:[NSString stringWithFormat:@"%ld", (long)self.model.ballKey] forKey:@"ballKey"];//球场id
-
     }
-
     
     NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
     [userdef setObject:dict forKey:@"TeamActivityArray"];
@@ -542,10 +535,11 @@ static CGFloat ImageHeight  = 210.0;
     [dict setObject:self.model.endDate forKey:@"endDate"];//活动结束时间
     [dict setObject:[NSString stringWithFormat:@"%ld", (long)self.model.ballKey] forKey:@"ballKey"];//球场id
     [dict setObject:self.model.ballName forKey:@"ballName"];//球场名称
-    //    [dict setObject:@"" forKey:@"ballGeohash"];//球场坐标
     [dict setObject:self.model.info forKey:@"info"];//活动简介
     [dict setObject:[NSString stringWithFormat:@"%.2f", [self.model.memberPrice floatValue]] forKey:@"memberPrice"];//会员价
     [dict setObject:[NSString stringWithFormat:@"%.2f", [self.model.guestPrice floatValue]] forKey:@"guestPrice"];//嘉宾价
+    [dict setObject:[NSString stringWithFormat:@"%.2f", [self.model.billNamePrice floatValue]] forKey:@"billNamePrice"];//球队会员记名价
+    [dict setObject:[NSString stringWithFormat:@"%.2f", [self.model.billPrice floatValue]] forKey:@"billPrice"];//球队会员不记名价
     [dict setObject:[NSString stringWithFormat:@"%ld", (long)self.model.maxCount] forKey:@"maxCount"];//最大人员数
     [dict setObject:[NSString stringWithFormat:@"%ld", (long)_model.isClose] forKey:@"isClose"];//活动是否结束 0 : 开始 , 1 : 已结束
     NSDateFormatter *formatter =[[NSDateFormatter alloc] init];
@@ -664,25 +658,28 @@ static CGFloat ImageHeight  = 210.0;
     [aleVC addAction:act3];
     [self presentViewController:aleVC animated:YES completion:nil];
 }
-
 - (void)connectionDidFinishDownloading:(NSURLConnection *)connection destinationURL:(NSURL *) destinationURL{
     NSLog(@"%@", destinationURL);
     NSLog(@"%@", connection);
 }
-
 #pragma mark -- 添加内容详情代理  JGHConcentTextViewControllerDelegate
 - (void)didSelectSaveBtnClick:(NSString *)text{
     [self.model setValue:text forKey:@"info"];
-    [_dataDict setObject:text forKey:@"activityContext"];
+//    [_dataDict setObject:text forKey:@"activityContext"];
     [self.launchActivityTableView reloadData];
 }
 #pragma mark -- 费用代理
-- (void)inputMembersCost:(NSString *)membersCost guestCost:(NSString *)guestCost{
-    NSLog(@"guestCost == %@", [Helper returnNumberForString:guestCost]);
+- (void)inputMembersCost:(NSString *)membersCost guestCost:(NSString *)guestCost andRegisteredPrice:(NSString *)registeredPrice andBearerPrice:(NSString *)bearerPrice{
+    NSLog(@"%@", [Helper returnNumberForString:guestCost]);
+    NSLog(@"%@", [Helper returnNumberForString:membersCost]);
+    NSLog(@"%@", [Helper returnNumberForString:registeredPrice]);
+    NSLog(@"%@", [Helper returnNumberForString:bearerPrice]);
     self.model.guestPrice = [Helper returnNumberForString:guestCost];
     self.model.memberPrice = [Helper returnNumberForString:membersCost];
-    [_dataDict setObject:guestCost forKey:@"activityGuestCost"];
-    [_dataDict setObject:membersCost forKey:@"activityMembersCost"];
+    self.model.billNamePrice = [Helper returnNumberForString:registeredPrice];
+    self.model.billPrice = [Helper returnNumberForString:bearerPrice];
+//    [_dataDict setObject:guestCost forKey:@"activityGuestCost"];
+//    [_dataDict setObject:membersCost forKey:@"activityMembersCost"];
     [self.launchActivityTableView reloadData];
 }
 #pragma mark -- UITextFliaView

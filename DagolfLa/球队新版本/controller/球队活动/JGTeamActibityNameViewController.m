@@ -34,11 +34,13 @@
 
 #import "EnterViewController.h"
 #import "JGTeamGroupViewController.h"
+#import "JGActivityNameBaseCell.h"
 
 static NSString *const JGTeamActivityWithAddressCellIdentifier = @"JGTeamActivityWithAddressCell";
 static NSString *const JGTeamActivityDetailsCellIdentifier = @"JGTeamActivityDetailsCell";
 static NSString *const JGHHeaderLabelCellIdentifier = @"JGHHeaderLabelCell";
 static NSString *const JGHCostListTableViewCellIdentifier = @"JGHCostListTableViewCell";
+static NSString *const JGActivityNameBaseCellIdentifier = @"JGActivityNameBaseCell";
 static CGFloat ImageHeight  = 210.0;
 
 @interface JGTeamActibityNameViewController ()<UITableViewDelegate, UITableViewDataSource>
@@ -51,6 +53,7 @@ static CGFloat ImageHeight  = 210.0;
 
 @property (nonatomic, strong)UITableView *teamActibityNameTableView;
 @property (nonatomic, strong)NSMutableArray *dataArray;//数据源
+@property (nonatomic, strong)NSMutableArray *subDataArray;//费用说明数据源
 @property (nonatomic,strong)SXPickPhoto * pickPhoto;//相册类
 @property (nonatomic, strong)UIImage *headerImage;
 
@@ -110,6 +113,7 @@ static CGFloat ImageHeight  = 210.0;
 - (instancetype)init{
     if (self == [super init]) {
         self.dataArray = [NSMutableArray array];
+        self.subDataArray = [NSMutableArray array];
         self.model = [[JGTeamAcitivtyModel alloc]init];
         self.activityDict = [NSMutableDictionary dictionary];
         self.pickPhoto = [[SXPickPhoto alloc]init];
@@ -143,6 +147,8 @@ static CGFloat ImageHeight  = 210.0;
     [self.teamActibityNameTableView registerNib:deetailsNib forCellReuseIdentifier:JGTeamActivityDetailsCellIdentifier];
     UINib *costListNib = [UINib nibWithNibName:@"JGHCostListTableViewCell" bundle:[NSBundle mainBundle]];
     [self.teamActibityNameTableView registerNib:costListNib forCellReuseIdentifier:JGHCostListTableViewCellIdentifier];
+    UINib *costSubsidiesNib = [UINib nibWithNibName:@"JGActivityNameBaseCell" bundle:[NSBundle mainBundle]];
+    [self.teamActibityNameTableView registerNib:costSubsidiesNib forCellReuseIdentifier:JGActivityNameBaseCellIdentifier];
     self.teamActibityNameTableView.dataSource = self;
     self.teamActibityNameTableView.delegate = self;
     self.teamActibityNameTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -246,6 +252,23 @@ static CGFloat ImageHeight  = 210.0;
             }
 
             [self.model setValuesForKeysWithDictionary:[data objectForKey:@"activity"]];
+            
+            if ([self.model.memberPrice floatValue] > 0) {
+                [_subDataArray addObject:[NSString stringWithFormat:@"%.2f-球队队员资费", [self.model.memberPrice floatValue]]];
+            }
+            
+            if ([self.model.guestPrice floatValue] > 0) {
+                [_subDataArray addObject:[NSString stringWithFormat:@"%.2f-普通嘉宾资费", [self.model.guestPrice floatValue]]];
+            }
+            
+            if ([self.model.billNamePrice floatValue] > 0) {
+                [_subDataArray addObject:[NSString stringWithFormat:@"%.2f-球场记名会员资费", [self.model.billNamePrice floatValue]]];
+            }
+            
+            if ([self.model.billPrice floatValue] > 0) {
+                [_subDataArray addObject:[NSString stringWithFormat:@"%.2f-球场无记名会员资费", [self.model.billPrice floatValue]]];
+            }
+            
             [self.teamActibityNameTableView reloadData];
         }else{
             
@@ -287,8 +310,6 @@ static CGFloat ImageHeight  = 210.0;
         fiData = [NSData dataWithContentsOfURL:[Helper setImageIconUrl:@"activity" andTeamKey:[_model.timeKey integerValue]andIsSetWidth:YES andIsBackGround:YES]];
     }
     
-    
-    
     NSString*  shareUrl;
     if (self.isTeamChannal == 2) {
         shareUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/team/teamac.html?key=%@", _model.timeKey];
@@ -325,7 +346,6 @@ static CGFloat ImageHeight  = 210.0;
         //2.设置分享平台
         [UMSocialSnsPlatformManager getSocialPlatformWithName:UMShareToSina].snsClickHandler(self,[UMSocialControllerService defaultControllerService],YES);
     }
-    
 }
 #pragma mark -- 跳转分组页面
 - (void)pushGroupCtrl:(UIButton *)btn{
@@ -468,7 +488,8 @@ static CGFloat ImageHeight  = 210.0;
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     if (section == 2) {
         //参赛费用列表
-        return 2;
+        NSLog(@"%td", _subDataArray.count + 1);
+        return _subDataArray.count + 1;
     }
     return 0;
 }
@@ -503,17 +524,26 @@ static CGFloat ImageHeight  = 210.0;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 2) {
-        JGHCostListTableViewCell *costListCell = [tableView dequeueReusableCellWithIdentifier:JGHCostListTableViewCellIdentifier];
-        costListCell.selectionStyle = UITableViewCellSelectionStyleNone;
-        if (indexPath.row == 0) {
-            costListCell.titles.text = @"活动报名费";
-            costListCell.price.text = [NSString stringWithFormat:@"%.2f", [self.model.memberPrice floatValue]];
+        if (indexPath.row == _subDataArray.count) {
+            JGActivityNameBaseCell *costSubCell = [tableView dequeueReusableCellWithIdentifier:JGActivityNameBaseCellIdentifier];
+            costSubCell.selectionStyle = UITableViewCellSelectionStyleNone;
+            if (_model.subsidyPrice) {
+                NSLog(@"%.2f", [_model.subsidyPrice floatValue]);
+                [costSubCell configCostSubInstructionPriceFloat:[_model.subsidyPrice floatValue]];
+            }else{
+                [costSubCell configCostSubInstructionPriceFloat:0.0];
+            }
+            
+            return costSubCell;
         }else{
-            costListCell.titles.text = @"平台补贴费用";
-            costListCell.price.text = [NSString stringWithFormat:@"%.2f", [self.model.subsidyPrice floatValue]];
+            JGHCostListTableViewCell *costListCell = [tableView dequeueReusableCellWithIdentifier:JGHCostListTableViewCellIdentifier];
+            costListCell.selectionStyle = UITableViewCellSelectionStyleNone;
+            if (_subDataArray.count > 0) {
+                [costListCell configCostData:_subDataArray[indexPath.row]];
+            }
+            
+            return costListCell;
         }
-        
-        return costListCell;
     }
     return nil;
 }

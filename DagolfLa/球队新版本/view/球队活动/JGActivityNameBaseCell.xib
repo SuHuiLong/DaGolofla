@@ -30,7 +30,10 @@
             </tableViewCellContentView>
             <connections>
                 <outlet property="baseLabel" destination="RY0-2a-gMN" id="BZB-gL-Rut"/>
+                <outlet property="downValue" destination="0QA-db-k3g" id="gkB-bp-WdU"/>
+                <outlet property="topValue" destination="sW7-u6-dfJ" id="HUf-4M-dYk"/>
             </connections>
+            <point key="canvasLocation" x="92" y="220"/>
         </tableViewCell>
     </objects>
 </document>

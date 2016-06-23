@@ -21,4 +21,10 @@
     // Configure the view for the selected state
 }
 
+- (void)configCostData:(NSString *)string{
+    self.titles.text = [[string componentsSeparatedByString:@"-"] objectAtIndex:1];
+    self.price.text = [[string componentsSeparatedByString:@"-"] objectAtIndex:0];
+}
+
+
 @end

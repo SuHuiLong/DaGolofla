@@ -13,4 +13,6 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *pamaptLabel;
 
+- (void)configPromptString:(NSString *)string;
+
 @end

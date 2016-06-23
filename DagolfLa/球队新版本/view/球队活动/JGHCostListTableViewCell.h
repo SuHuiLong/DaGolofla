@@ -15,5 +15,7 @@
 //价格
 @property (weak, nonatomic) IBOutlet UILabel *price;
 
+//详情页
+- (void)configCostData:(NSString *)string;
 
 @end

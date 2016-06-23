@@ -17,13 +17,20 @@ static NSString *const JGSignUoPromptCellIdentifier = @"JGSignUoPromptCell";
 static NSString *const JGHApplyListCellIdentifier = @"JGHApplyListCell";
 static NSString *const JGHHeaderLabelCellIdentifier = @"JGHHeaderLabelCell";
 
-@interface JGHApplyListView ()<UITableViewDelegate, UITableViewDataSource, JGHApplyListCellDelegate, JGApplyPepoleCellDelegate>
+@interface JGHApplyListView ()<UITableViewDelegate, UITableViewDataSource, JGHApplyListCellDelegate>
+{
+    
+}
 
 @property (nonatomic, strong)UITableView *applistTableView;
 
 @property (nonatomic, strong)UIButton *cancelBtn;
 
 @property (nonatomic, strong)UIButton *submitBtn;
+
+@property (nonatomic, assign)float amountPayable;//应付金额
+@property (nonatomic, assign)float realPayPrice;//实付金额
+@property (nonatomic, assign)float realSubPrice;//补贴金额
 
 @end
 
@@ -33,6 +40,9 @@ static NSString *const JGHHeaderLabelCellIdentifier = @"JGHHeaderLabelCell";
     if (self == [super init]) {
         self.backgroundColor = [UIColor whiteColor];
         self.applistArray = [NSMutableArray array];
+        _realPayPrice = 0;
+        _amountPayable = 0;
+        _realSubPrice = 0;
         [self createTeamActivityTabelView];//tableView
         [self createCancelAndSubmitBtn];
     }
@@ -48,25 +58,29 @@ static NSString *const JGHHeaderLabelCellIdentifier = @"JGHHeaderLabelCell";
 }
 #pragma mark -- 创建取消－支付按钮
 - (void)createCancelAndSubmitBtn{
-    self.cancelBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 196, screenWidth/2, 44)];
+    self.cancelBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 152, screenWidth/2, 44)];
     [self.cancelBtn setTitle:@"取消" forState:UIControlStateNormal];
     [self.cancelBtn setBackgroundColor:[UIColor colorWithHexString:@"#F19725"]];
     [self.cancelBtn addTarget:self action:@selector(cancelBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:self.cancelBtn];
     
-    self.submitBtn = [[UIButton alloc]initWithFrame:CGRectMake(screenWidth/2, 196, screenWidth/2, 44)];
-    [self.submitBtn setTitle:@"立即支付" forState:UIControlStateNormal];
+    self.submitBtn = [[UIButton alloc]initWithFrame:CGRectMake(screenWidth/2, 152, screenWidth/2, 44)];
+    [self.submitBtn setTitle:@"报名并支付" forState:UIControlStateNormal];
     [self.submitBtn setBackgroundColor:[UIColor colorWithHexString:@"#E8611D"]];
     [self.submitBtn addTarget:self action:@selector(submitBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:self.submitBtn];
 }
 #pragma mark -- 取消
 - (void)cancelBtnClick:(UIButton *)btn{
-    
+    if (self.delegate) {
+        [self.delegate didSelectCancelBtn:btn];
+    }
 }
 #pragma mark -- 立即支付
 - (void)submitBtnClick:(UIButton *)btn{
-    
+    if (self.delegate) {
+        [self.delegate didSelectPayBtn:btn];
+    }
 }
 #pragma mark -- 创建TableView
 - (void)createTeamActivityTabelView{
@@ -122,12 +136,15 @@ static NSString *const JGHHeaderLabelCellIdentifier = @"JGHHeaderLabelCell";
         if (indexPath.row == _applistArray.count){
             JGSignUoPromptCell *signUoPromptCell = [tableView dequeueReusableCellWithIdentifier:JGSignUoPromptCellIdentifier forIndexPath:indexPath];
             signUoPromptCell.selectionStyle = UITableViewCellSelectionStyleNone;
+            [signUoPromptCell configPromptString:@"提示：未勾选系统默认为现场支付\n           仅当前报名人[在线支付]享受平台补贴。"];
             return signUoPromptCell;
         }else{
             JGHApplyListCell *applyListCel = [tableView dequeueReusableCellWithIdentifier:JGHApplyListCellIdentifier forIndexPath:indexPath];
             applyListCel.chooseBtn.tag = indexPath.row;
             applyListCel.deleteBtn.tag = indexPath.row + 100;
+            applyListCel.delegate = self;
             applyListCel.selectionStyle = UITableViewCellSelectionStyleNone;
+            applyListCel.deleteBtn.hidden = YES;
             [applyListCel configDict:_applistArray[indexPath.row]];
             return applyListCel;
         }
@@ -135,6 +152,7 @@ static NSString *const JGHHeaderLabelCellIdentifier = @"JGHHeaderLabelCell";
         
         JGSignUoPromptCell *signUoPromptCell = [tableView dequeueReusableCellWithIdentifier:JGSignUoPromptCellIdentifier forIndexPath:indexPath];
         signUoPromptCell.selectionStyle = UITableViewCellSelectionStyleNone;
+        [signUoPromptCell configPromptString:@"提示：未勾选系统默认为现场支付\n           仅当前报名人[在线支付]享受平台补贴。"];
         return signUoPromptCell;
     }
 }
@@ -149,7 +167,7 @@ static NSString *const JGHHeaderLabelCellIdentifier = @"JGHHeaderLabelCell";
         JGHHeaderLabelCell *activityNameCell = [tableView dequeueReusableCellWithIdentifier:JGHHeaderLabelCellIdentifier];
         activityNameCell.selectionStyle = UITableViewCellSelectionStyleNone;
         [activityNameCell congiftitles:@"实付金额"];
-//        [activityNameCell congifContact:[NSString stringWithFormat:@"%.2f", _realPayPrice] andNote:[NSString stringWithFormat:@"%.2f", _subsidiesPrice]];
+        [activityNameCell congifContact:[NSString stringWithFormat:@"%.2f", _realPayPrice] andNote:[NSString stringWithFormat:@"%.2f", _realSubPrice]];
         return (UIView *)activityNameCell;
     }
 }
@@ -163,17 +181,73 @@ static NSString *const JGHHeaderLabelCellIdentifier = @"JGHHeaderLabelCell";
 - (void)configViewData:(NSMutableArray *)array{
     self.applistArray = array;
     [self.applistTableView reloadData];
-    
+    [self countAmountPayable];
     [self updateView];
 }
 
 #pragma mark -- 更新页面
 - (void)updateView{
-    self.applistTableView.frame = CGRectMake(0, 0, screenWidth, 196 + _applistArray.count * 30);
-    NSLog(@"%f", self.frame.size.height - 44);
+    if (screenHeight < ((_applistArray.count * 30) + 108)) {
+        self.applistTableView.frame = CGRectMake(0, 0, screenWidth, screenHeight - 64 - 44);
+        self.cancelBtn.frame = CGRectMake(0, screenHeight - 64, screenWidth/2, 44);
+        self.submitBtn.frame = CGRectMake(screenWidth/2, screenHeight - 64, screenWidth/2, 44);
+    }else{
+        self.applistTableView.frame = CGRectMake(0, 0, screenWidth, 196 + _applistArray.count * 30);
+        self.cancelBtn.frame = CGRectMake(0, 152 + (_applistArray.count * 30), screenWidth/2, 44);
+        self.submitBtn.frame = CGRectMake(screenWidth/2, 152 + (_applistArray.count * 30), screenWidth/2, 44);
+    }
+}
+
+#pragma mark --  选择嘉宾
+- (void)didChooseBtn:(UIButton *)btn{
+    NSLog(@"%ld", (long)btn.tag);
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    dict = [self.applistArray objectAtIndex:btn.tag];
+    if ([[dict objectForKey:@"select"] integerValue] == 0) {
+        [btn setImage:[UIImage imageNamed:@"kuangwx"] forState:UIControlStateNormal];
+        [dict setObject:@"1" forKey:@"isOnlinePay"];
+        [dict setObject:@"1" forKey:@"select"];
+        [self.applistArray replaceObjectAtIndex:btn.tag withObject:dict];
+    }else{
+        [btn setImage:[UIImage imageNamed:@"kuang"] forState:UIControlStateNormal];
+        [dict setObject:@"0" forKey:@"isOnlinePay"];
+        [dict setObject:@"0" forKey:@"select"];
+        [self.applistArray replaceObjectAtIndex:btn.tag withObject:dict];
+    }
     
-    self.cancelBtn.frame = CGRectMake(0, 196 + _applistArray.count * 30, screenWidth/2, 44);
-    self.submitBtn.frame = CGRectMake(screenWidth/2, 196 + _applistArray.count * 30, screenWidth/2, 44);
+    //计算价格
+    [self countAmountPayable];
+}
+#pragma mark -- 计算应付价格
+- (void)countAmountPayable{
+    _amountPayable = 0.0;
+    _realPayPrice = 0.0;
+    _realSubPrice = 0.0;
+    //判断成员中是否包含自己
+    NSInteger isMember = 0;
+    for (int i=0; i<_applistArray.count; i++) {
+        NSDictionary *dict = [NSDictionary dictionary];
+        dict = _applistArray[i];
+        if ([[dict objectForKey:@"select"]integerValue] == 1) {
+            NSLog(@"%@", [dict objectForKey:@"payMoney"]);
+            float value = [[dict objectForKey:@"payMoney"] floatValue];
+            _amountPayable += value;
+            
+            if ([[dict objectForKey:@"userKey"] integerValue] != 0) {
+                isMember = 1;
+            }
+        }
+    }
+    
+    //仅当前报名人[在线支付]享受平台补贴
+    if (isMember == 1) {
+        _realSubPrice = _subsidiesPrice;
+        _realPayPrice = _amountPayable - _realSubPrice;
+    }else{
+        _realPayPrice = _amountPayable;
+    }
+    
+    [self.applistTableView reloadData];
 }
 
 // Only override drawRect: if you perform custom drawing.

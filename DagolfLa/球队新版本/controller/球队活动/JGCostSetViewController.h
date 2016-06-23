@@ -10,7 +10,7 @@
 
 @protocol JGCostSetViewControllerDelegate <NSObject>
 
-- (void)inputMembersCost:(NSString *)membersCost guestCost:(NSString *)guestCost;
+- (void)inputMembersCost:(NSString *)membersCost guestCost:(NSString *)guestCost andRegisteredPrice:(NSString *)registeredPrice andBearerPrice:(NSString *)bearerPrice;
 
 @end
 
@@ -21,6 +21,13 @@
 
 //嘉宾费用
 @property (weak, nonatomic) IBOutlet UITextField *guestCost;
+
+//记名费
+@property (weak, nonatomic) IBOutlet UITextField *registeredPrice;
+
+//不记名费
+@property (weak, nonatomic) IBOutlet UITextField *bearerPrice;
+
 
 @property (weak, nonatomic)id <JGCostSetViewControllerDelegate> delegate;
 
