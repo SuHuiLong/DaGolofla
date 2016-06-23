@@ -102,6 +102,7 @@
                 <outlet property="deleteBtn" destination="jFd-jJ-yHa" id="Trm-vh-ffF"/>
                 <outlet property="name" destination="7Hp-DK-bKB" id="Tnm-Jb-JJQ"/>
                 <outlet property="price" destination="jw7-MW-8hY" id="Rcn-I1-FXw"/>
+                <outlet property="subsidiesImageView" destination="bBf-nw-Zwe" id="GTr-1m-i0o"/>
             </connections>
             <point key="canvasLocation" x="273" y="202"/>
         </tableViewCell>

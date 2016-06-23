@@ -10,6 +10,9 @@
 
 @protocol JGHApplyListViewDelegate <NSObject>
 
+- (void)didSelectCancelBtn:(UIButton *)btn;
+
+- (void)didSelectPayBtn:(UIButton *)btn;
 
 
 @end
@@ -18,7 +21,10 @@
 
 @property (nonatomic, strong)NSMutableArray *applistArray;
 
+@property (weak, nonatomic)id <JGHApplyListViewDelegate> delegate;
 
 - (void)configViewData:(NSMutableArray *)array;
+
+@property (nonatomic, assign)float subsidiesPrice;//补贴金额
 
 @end

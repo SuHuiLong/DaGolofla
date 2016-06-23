@@ -12,4 +12,11 @@
 //base
 @property (weak, nonatomic) IBOutlet UILabel *baseLabel;
 
+- (void)configCostSubInstructionPriceFloat:(CGFloat)price;
+
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *topValue;
+
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *downValue;
+
+
 @end

@@ -1,15 +1,14 @@
 //
-//  JGActivityBaseInfoCell.m
+//  JGLActiveMemTableViewCell.m
 //  DagolfLa
 //
-//  Created by 黄安 on 16/5/24.
+//  Created by 黄达明 on 16/6/23.
 //  Copyright © 2016年 bhxx. All rights reserved.
 //
 
-#import "JGActivityBaseInfoCell.h"
-#import "JGTeamAcitivtyModel.h"
+#import "JGLActiveMemTableViewCell.h"
 
-@implementation JGActivityBaseInfoCell
+@implementation JGLActiveMemTableViewCell
 
 - (void)awakeFromNib {
     [super awakeFromNib];
@@ -21,6 +20,5 @@
 
     // Configure the view for the selected state
 }
-
 
 @end

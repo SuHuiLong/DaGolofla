@@ -198,11 +198,6 @@ static CGFloat ImageHeight  = 210.0;
     [self.imgProfile addSubview:self.addressBtn];
     
     [self createEditorBtn];//
-    //分享按钮
-    UIButton *shareBtn = [[UIButton alloc]initWithFrame:CGRectMake(screenWidth-44, self.titleField.frame.origin.y, 44, 25)];
-    [shareBtn setImage:[UIImage imageNamed:@"iconfont-fenxiang"] forState:UIControlStateNormal];
-    [shareBtn addTarget:self action:@selector(addShare) forControlEvents:UIControlEventTouchUpInside];
-    [self.titleView addSubview:shareBtn];
     
     [self dataSet];
 }

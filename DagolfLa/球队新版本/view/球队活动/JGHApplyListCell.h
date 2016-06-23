@@ -25,6 +25,9 @@
 @property (weak, nonatomic) IBOutlet UILabel *name;
 //价格
 @property (weak, nonatomic) IBOutlet UILabel *price;
+//subsidies
+@property (weak, nonatomic) IBOutlet UIImageView *subsidiesImageView;
+
 //删除
 @property (weak, nonatomic) IBOutlet UIButton *deleteBtn;
 - (IBAction)deleteBtn:(UIButton *)sender;

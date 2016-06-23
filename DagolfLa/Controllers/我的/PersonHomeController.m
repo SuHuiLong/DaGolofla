@@ -19,7 +19,6 @@
 #import "DeatilModel.h"
 
 #import "SelfDataViewController.h"
-#import "LazyPageScrollView.h"
 #import "ChatDetailViewController.h"
 #import "ChatDetailViewController.h"
 #import "AddFootViewController.h"
