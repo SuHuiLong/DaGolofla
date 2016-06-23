@@ -419,6 +419,7 @@
         NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
         [dict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:userID] forKey:@"userKey"];
         [dict setObject:@[_timeKey] forKey:@"timeKeyList"];
+        [dict setObject:_teamKey forKey:@"teamKey"];
         [[JsonHttp jsonHttp]httpRequest:@"team/batchDeleteTeamAlbum" JsonKey:nil withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
             NSLog(@"errType == %@", errType);
             [MBProgressHUD hideAllHUDsForView:self.view animated:NO];
@@ -427,6 +428,10 @@
             if ([[data objectForKey:@"packSuccess"] boolValue] == 1) {
                 _createBlock();
                 [self.navigationController popViewControllerAnimated:YES];
+            }
+            else
+            {
+                [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
             }
         }];
     } withBlock:^(UIAlertController *alertView) {

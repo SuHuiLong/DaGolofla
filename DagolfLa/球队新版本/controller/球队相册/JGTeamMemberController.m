@@ -25,6 +25,8 @@
     UITableView* _tableView;
     NSInteger _page;
     NSMutableArray* _dataArray;
+    
+    NSMutableDictionary* _dataAccountDict;
 }
 
 @property (strong, nonatomic)NSMutableArray *keyArray;
@@ -40,6 +42,7 @@
     _keyArray = [[NSMutableArray alloc]init];
     _listArray = [[NSMutableArray alloc]init];
     _dataArray = [[NSMutableArray alloc]init];
+    _dataAccountDict = [[NSMutableDictionary alloc]init];
 //    UIBarButtonItem* rightBtn = [[UIBarButtonItem alloc]initWithTitle:@"管理" style:UIBarButtonItemStylePlain target:self action:@selector(manageClick)];
 //    rightBtn.tintColor = [UIColor whiteColor];
 //    self.navigationItem.rightBarButtonItem = rightBtn;
@@ -83,6 +86,10 @@
             {
                 //清除数组数据
                 [_dataArray removeAllObjects];
+                [_keyArray removeAllObjects];
+                [_listArray removeAllObjects];
+                [_dataAccountDict removeAllObjects];
+                
             }
             //数据解析
             for (NSDictionary *dataDic in [data objectForKey:@"teamMemberList"]) {
@@ -92,7 +99,17 @@
             }
             
             self.listArray = [[NSMutableArray alloc]initWithArray:[JGTeamMemberManager archiveNumbers:_dataArray]];
-            
+
+            if (![Helper isBlankString:[data objectForKey:@"accountUserKey"]]) {
+                [_dataAccountDict setObject:[data objectForKey:@"accountUserKey"] forKey:@"accountUserKey"];
+            }
+            if (![Helper isBlankString:[data objectForKey:@"accountUserMobile"]]) {
+                [_dataAccountDict setObject:[data objectForKey:@"accountUserMobile"] forKey:@"accountUserMobile"];
+            }
+            if (![Helper isBlankString:[data objectForKey:@"accountUserName"]]) {
+                [_dataAccountDict setObject:[data objectForKey:@"accountUserName"] forKey:@"accountUserName"];
+            }
+
             _keyArray = [[NSMutableArray alloc]initWithObjects:@"A",@"B",@"C",@"D",@"E",@"F",@"G",@"H",@"I",@"J",@"K",@"L",@"M",@"N",@"O",@"P",@"Q",@"R",@"S",@"T",@"U",@"V",@"W",@"X",@"Y",@"Z",@"#", nil];
             
             for (int i = (int)self.listArray.count-1; i>=0; i--) {
@@ -105,11 +122,7 @@
             
             _page++;
             [_tableView reloadData];
-        }else {
-//            [Helper alertViewWithTitle:[NSString stringWithFormat:@"%@",[data objectForKey:@"packResultMsg"]] withBlock:^(UIAlertController *alertView) {
-//                [self presentViewController:alertView animated:YES completion:nil];
-//            }];
-            
+        }else {            
             [Helper alertViewNoHaveCancleWithTitle:[NSString stringWithFormat:@"%@",[data objectForKey:@"packResultMsg"]] withBlock:^(UIAlertController *alertView) {
                 [self.navigationController presentViewController:alertView animated:YES completion:nil];
             }];
@@ -203,6 +216,7 @@
                 menVc.model = _listArray[indexPath.section][indexPath.row];
                 menVc.power = _power;
                 menVc.teamKey = _teamKey;
+                menVc.dictAccount = _dataAccountDict;
                 menVc.deleteBlock = ^(){
                     _tableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
                     [_tableView.header beginRefreshing];

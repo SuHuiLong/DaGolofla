@@ -17,6 +17,7 @@
 //球队的timekey
 @property (strong, nonatomic) NSNumber* teamKey;
 
+@property (strong, nonatomic) NSMutableDictionary* dictAccount;
 
 @property (copy, nonatomic) void(^deleteBlock)();
 

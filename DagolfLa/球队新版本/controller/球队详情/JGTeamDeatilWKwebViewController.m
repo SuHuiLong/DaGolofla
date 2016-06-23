@@ -44,8 +44,6 @@
 //        }];
 //    }
     
-    
-    
     // Do any additional setup after loading the view.
 }
 
@@ -57,6 +55,7 @@
     [alert setCallBackTitle:^(NSInteger index) {
         [self shareInfo:index];
     }];
+    
     [UIView animateWithDuration:0.2 animations:^{
         [alert show];
     }];
@@ -99,6 +98,27 @@
         //2.设置分享平台
         [UMSocialSnsPlatformManager getSocialPlatformWithName:UMShareToSina].snsClickHandler(self,[UMSocialControllerService defaultControllerService],YES);
     }
+    
+}
+
+
+- (void)clearCookies{
+    
+    WKWebsiteDataStore *dateStore = [WKWebsiteDataStore defaultDataStore];
+    [dateStore fetchDataRecordsOfTypes:[WKWebsiteDataStore allWebsiteDataTypes]
+                     completionHandler:^(NSArray<WKWebsiteDataRecord *> * __nonnull records) {
+                         for (WKWebsiteDataRecord *record  in records)
+                         {
+                             //                             if ( [record.displayName containsString:@"baidu"]) //取消备注，可以针对某域名清除，否则是全清
+                             //                             {
+                             [[WKWebsiteDataStore defaultDataStore] removeDataOfTypes:record.dataTypes
+                                                                       forDataRecords:@[record]
+                                                                    completionHandler:^{
+                                                                        NSLog(@"Cookies for %@ deleted successfully",record.displayName);
+                                                                    }];
+                             //                             }
+                         }
+                     }];
     
 }
 

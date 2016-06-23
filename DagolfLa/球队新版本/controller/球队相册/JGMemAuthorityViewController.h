@@ -7,7 +7,7 @@
 //
 
 #import "ViewController.h"
-
+#import "JGLTeamMemberModel.h"
 
 /**
  *  球队成员的权限设置
@@ -18,5 +18,10 @@
 
 @property (strong, nonatomic) NSNumber* teamKey;
 @property (strong, nonatomic) NSNumber* memberKey;
+
+@property (strong, nonatomic) NSMutableDictionary* dictAccount;
+
+@property (strong, nonatomic) JGLTeamMemberModel* model;
+
 
 @end

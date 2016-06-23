@@ -18,6 +18,10 @@
 
 @property (strong, nonatomic) NSNumber* userKey;
 
+@property (strong, nonatomic) NSNumber* teamTimeKey;
+
+@property (strong, nonatomic) NSNumber* state;
+
 @property (copy, nonatomic) void(^deleteBlock)(NSInteger index);
 
 @end

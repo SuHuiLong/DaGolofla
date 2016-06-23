@@ -100,6 +100,7 @@
             
             NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
             [dict setObject:@[[self.selectImages objectAtIndex:self.index]] forKey:@"timeKeyList"];
+            [dict setObject:_teamTimeKey forKey:@"teamKey"];
             [dict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:userID] forKey:@"userKey"];
             [[JsonHttp jsonHttp]httpRequest:@"team/batchDeleteTeamMedia" JsonKey:nil withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
                 NSLog(@"errType == %@", errType);
@@ -174,11 +175,20 @@
     /**
      *  在图片上加长按手势
      */
-    if ([_power containsString:@"1005"] == YES || [DEFAULF_USERID integerValue] == [_userKey integerValue]) {
-        //像这种控件的长按事件有些地方是有系统自带的。但有些时候用起来也不太方便。下面这个可能以后能用到
-        UILongPressGestureRecognizer *longPressReger = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(editImageClick)];
-        longPressReger.minimumPressDuration = 1.0;
-        [_scrollView addGestureRecognizer:longPressReger];
+    if ([_state integerValue] == 1) {
+        if ([_power containsString:@"1005"] == YES || [DEFAULF_USERID integerValue] == [_userKey integerValue]) {
+            //像这种控件的长按事件有些地方是有系统自带的。但有些时候用起来也不太方便。下面这个可能以后能用到
+            UILongPressGestureRecognizer *longPressReger = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(editImageClick)];
+            longPressReger.minimumPressDuration = 1.0;
+            [_scrollView addGestureRecognizer:longPressReger];
+        }
+        else
+        {
+            //像这种控件的长按事件有些地方是有系统自带的。但有些时候用起来也不太方便。下面这个可能以后能用到
+            UILongPressGestureRecognizer *longPressReger = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(saveClick)];
+            longPressReger.minimumPressDuration = 1.0;
+            [_scrollView addGestureRecognizer:longPressReger];
+        }
     }
     else
     {

@@ -221,6 +221,9 @@
         JGMemAuthorityViewController* autVc = [[JGMemAuthorityViewController alloc]init];
         autVc.teamKey = _model.teamKey;
         autVc.memberKey = _model.timeKey;
+        autVc.model = _model;
+        //判断有没有设定资金管理者
+        autVc.dictAccount = _dictAccount;
         [self.navigationController pushViewController:autVc animated:YES];
     }
     else

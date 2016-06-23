@@ -249,6 +249,8 @@
     phoVc.strTimeKey = [_dataArray[indexPath.row] timeKey];
     phoVc.albumKey = [_dataArray[indexPath.row] timeKey];
     phoVc.power = _powerPho;
+    phoVc.state = [_dictMember objectForKey:@"state"];
+    phoVc.teamTimeKey = _teamKey;
     phoVc.userKey = [_dataArray[indexPath.row] userKey];
     phoVc.blockRefresh = ^(){
         _collectionView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
