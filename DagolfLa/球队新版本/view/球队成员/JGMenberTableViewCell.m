@@ -70,7 +70,7 @@
     
     _nameLabel.text = [NSString stringWithFormat:@"%@",model.userName];
     
-    if ([model.sex integerValue] == 2) {
+    if ([model.sex integerValue] == 0) {
         [_sexImgv setImage: [UIImage imageNamed:@"xb_n"]];
     }
     else
