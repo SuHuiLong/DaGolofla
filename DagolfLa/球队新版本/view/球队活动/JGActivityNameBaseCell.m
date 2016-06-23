@@ -21,4 +21,14 @@
     // Configure the view for the selected state
 }
 
+- (void)configCostSubInstructionPriceFloat:(CGFloat)price{
+    self.topValue.constant = 0.0;
+    self.downValue.constant = 0.0;
+    self.baseLabel.textAlignment = NSTextAlignmentRight;
+    self.baseLabel.text = [NSString stringWithFormat:@"用户本人线上支付-%.2f", price];
+    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:self.baseLabel.text];
+    [attributedString addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"#F19725"] range:NSMakeRange(8, self.baseLabel.text.length-8)]; // 0为起始位置 length是从起始位置开始 设置指定颜色的长度
+    self.baseLabel.attributedText = attributedString;
+}
+
 @end

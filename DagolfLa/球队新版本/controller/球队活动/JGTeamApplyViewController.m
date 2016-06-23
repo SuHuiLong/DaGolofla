@@ -7,7 +7,7 @@
 //
 
 #import "JGTeamApplyViewController.h"
-#import "JGActivityBaseInfoCell.h"
+#import "JGHActivityBaseInfoCell.h"
 #import "JGTableViewCell.h"
 #import "JGApplyPepoleCell.h"
 #import "JGAddTeamGuestViewController.h"
@@ -27,7 +27,10 @@
 #import "DataSigner.h"
 
 #import "JGHApplyListView.h"
+#import "JGHJustApplyListView.h"
+#import "JGActivityBaseInfoCell.h"
 
+static NSString *const JGHActivityBaseInfoCellIdentifier = @"JGHActivityBaseInfoCell";
 static NSString *const JGActivityBaseInfoCellIdentifier = @"JGActivityBaseInfoCell";
 static NSString *const JGTableViewCellIdentifier = @"JGTableViewCell";
 static NSString *const JGApplyPepoleCellIdentifier = @"JGApplyPepoleCell";
@@ -36,7 +39,7 @@ static NSString *const JGHApplyListCellIdentifier = @"JGHApplyListCell";
 static NSString *const JGSignUoPromptCellIdentifier = @"JGSignUoPromptCell";
 static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
 
-@interface JGTeamApplyViewController ()<JGApplyPepoleCellDelegate, JGHApplyListCellDelegate, JGAddTeamGuestViewControllerDelegate, JGHAddInvoiceViewControllerDelegate>
+@interface JGTeamApplyViewController ()<JGApplyPepoleCellDelegate, JGHApplyListCellDelegate, JGAddTeamGuestViewControllerDelegate, JGHAddInvoiceViewControllerDelegate, JGHApplyListViewDelegate, JGHJustApplyListViewDelegate>
 {
     UIAlertController *_actionView;
     
@@ -45,11 +48,11 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
     NSString *_infoKey;
 }
 
-//@property (strong, nonatomic)JGTeamAcitivtyModel *model;//数据模型
-
 @property (nonatomic, strong)NSArray *titleArray;//标题
 
 @property (nonatomic, strong)NSMutableArray *applyArray;//成员数组----添加成员字典
+
+@property (nonatomic, strong)NSMutableArray *baseInfoArray;//基本信息
 
 @property (nonatomic, strong)NSMutableDictionary *info;
 
@@ -61,6 +64,7 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
 
 @property (nonatomic, strong)UIView *tranView;
 @property (nonatomic, strong)JGHApplyListView *applyListView;//报名人列表
+@property (nonatomic, strong)JGHJustApplyListView *justApplyListView;//仅报名列表
 
 @end
 
@@ -79,9 +83,20 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
 - (JGHApplyListView *)applyListView{
     if (_applyListView == nil) {
         self.applyListView = [[JGHApplyListView alloc]init];
+        self.applyListView.delegate = self;
+        self.applyListView.subsidiesPrice = [_modelss.subsidyPrice floatValue];
         [self.view addSubview:_applyListView];
     }
     return _applyListView;
+}
+
+- (JGHJustApplyListView *)justApplyListView{
+    if (_justApplyListView == nil) {
+        self.justApplyListView = [[JGHJustApplyListView alloc]init];
+        self.justApplyListView.delegate = self;
+        [self.view addSubview:_justApplyListView];
+    }
+    return _justApplyListView;
 }
 
 - (UIButton *)cellClickBtn{
@@ -102,11 +117,32 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
     self.view.backgroundColor = [UIColor colorWithHexString:BG_color];
     self.applyArray = [NSMutableArray array];
     self.info = [NSMutableDictionary dictionary];
+    self.baseInfoArray = [NSMutableArray array];
     self.titleArray = @[@"活动名称", @"活动地址", @"活动日期", @"活动费用", @"嘉宾费用"];
     _realPayPrice = 0;
     _subsidiesPrice = 0;
     _amountPayable = 0;
 
+    [_baseInfoArray addObject:[NSString stringWithFormat:@"%@-球场名称", _modelss.name]];
+    [_baseInfoArray addObject:[NSString stringWithFormat:@"%@-活动地址", _modelss.ballName]];
+    [_baseInfoArray addObject:[NSString stringWithFormat:@"%@-活动日期", [Helper returnDateformatString:_modelss.endDate]]];
+    //基础信息
+    if ([self.modelss.memberPrice floatValue] > 0) {
+        [_baseInfoArray addObject:[NSString stringWithFormat:@"%.2f-球队队员资费", [self.modelss.memberPrice floatValue]]];
+    }
+    
+    if ([self.modelss.guestPrice floatValue] > 0) {
+        [_baseInfoArray addObject:[NSString stringWithFormat:@"%.2f-普通嘉宾资费", [self.modelss.guestPrice floatValue]]];
+    }
+    
+    if ([self.modelss.billNamePrice floatValue] > 0) {
+        [_baseInfoArray addObject:[NSString stringWithFormat:@"%.2f-球场记名会员资费", [self.modelss.billNamePrice floatValue]]];
+    }
+    
+    if ([self.modelss.billPrice floatValue] > 0) {
+        [_baseInfoArray addObject:[NSString stringWithFormat:@"%.2f-球场无记名会员资费", [self.modelss.billPrice floatValue]]];
+    }
+    
     //默认添加自己的信息
     if (!_isApply) {
         NSMutableDictionary *applyDict = [NSMutableDictionary dictionary];
@@ -150,8 +186,11 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
         [self countAmountPayable];
     }
     //注册cell
-    UINib *activityNameNib = [UINib nibWithNibName:@"JGActivityBaseInfoCell" bundle: [NSBundle mainBundle]];
-    [self.teamApplyTableView registerNib:activityNameNib forCellReuseIdentifier:JGActivityBaseInfoCellIdentifier];
+    UINib *activityNameNib = [UINib nibWithNibName:@"JGHActivityBaseInfoCell" bundle: [NSBundle mainBundle]];
+    [self.teamApplyTableView registerNib:activityNameNib forCellReuseIdentifier:JGHActivityBaseInfoCellIdentifier];
+    
+    UINib *activityBaseInfoNib = [UINib nibWithNibName:@"JGActivityBaseInfoCell" bundle: [NSBundle mainBundle]];
+    [self.teamApplyTableView registerNib:activityBaseInfoNib forCellReuseIdentifier:JGActivityBaseInfoCellIdentifier];
     
     UINib *tableViewNib = [UINib nibWithNibName:@"JGTableViewCell" bundle: [NSBundle mainBundle]];
     [self.teamApplyTableView registerNib:tableViewNib forCellReuseIdentifier:JGTableViewCellIdentifier];
@@ -174,7 +213,9 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
 }
 #pragma mark -- tableView 代理
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    if (section == 1) {
+    if (section == 0) {
+        return _baseInfoArray.count;
+    }else if (section == 1) {
         //人员个数
         if (self.applyArray.count > 0) {
             return self.applyArray.count + 2;
@@ -184,64 +225,57 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
     return 0;
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 4;
+    return 3;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
     return 10;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (self.applyArray.count > 0) {
-        if (indexPath.row == self.applyArray.count+1){
-            return 44;
-        }else{
-            return 30;
-        }
-    }else{
-        if (indexPath.row == 1) {
-            return 44;
-        }else{
-            return 30;
-        }
-    }
+    return 30;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    if (section == 0) {
-        return 165;
-    }else if (section == 1){
-        return 40;
-    }
     return 44;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (self.applyArray.count > 0) {
-        if (indexPath.row == self.applyArray.count){
-            JGHTotalPriceCell *totalPriceCell = [tableView dequeueReusableCellWithIdentifier:JGHTotalPriceCellIdentifier forIndexPath:indexPath];
-            totalPriceCell.selectionStyle = UITableViewCellSelectionStyleNone;
-            [totalPriceCell configTotalPrice:_amountPayable];
-            return totalPriceCell;
-        }else if (indexPath.row == self.applyArray.count+1){
-            JGSignUoPromptCell *signUoPromptCell = [tableView dequeueReusableCellWithIdentifier:JGSignUoPromptCellIdentifier forIndexPath:indexPath];
-            signUoPromptCell.selectionStyle = UITableViewCellSelectionStyleNone;
-            return signUoPromptCell;
-        }else{
-            JGHApplyListCell *applyListCel = [tableView dequeueReusableCellWithIdentifier:JGHApplyListCellIdentifier forIndexPath:indexPath];
-            applyListCel.chooseBtn.tag = indexPath.row;
-            applyListCel.deleteBtn.tag = indexPath.row + 100;
-            applyListCel.delegate = self;
-            applyListCel.selectionStyle = UITableViewCellSelectionStyleNone;
-            [applyListCel configDict:_applyArray[indexPath.row]];
-            return applyListCel;
-        }
+    if (indexPath.section == 0) {
+        JGHActivityBaseInfoCell *infoCell = [tableView dequeueReusableCellWithIdentifier:JGHActivityBaseInfoCellIdentifier];
+        [infoCell configBaseInfo:_baseInfoArray[indexPath.row] andIndexRow:indexPath.row];
+        infoCell.selectionStyle = UITableViewCellSelectionStyleNone;
+        return infoCell;
     }else{
-        if (indexPath.row == 0) {
-            JGHTotalPriceCell *totalPriceCell = [tableView dequeueReusableCellWithIdentifier:JGHTotalPriceCellIdentifier];
-            totalPriceCell.selectionStyle = UITableViewCellSelectionStyleNone;
-            [totalPriceCell configTotalPrice:0];
-            return totalPriceCell;
+        if (self.applyArray.count > 0) {
+            if (indexPath.row == self.applyArray.count){
+                JGHTotalPriceCell *totalPriceCell = [tableView dequeueReusableCellWithIdentifier:JGHTotalPriceCellIdentifier forIndexPath:indexPath];
+                totalPriceCell.selectionStyle = UITableViewCellSelectionStyleNone;
+                [totalPriceCell configTotalPrice:_amountPayable];
+                return totalPriceCell;
+            }else if (indexPath.row == self.applyArray.count+1){
+                JGSignUoPromptCell *signUoPromptCell = [tableView dequeueReusableCellWithIdentifier:JGSignUoPromptCellIdentifier forIndexPath:indexPath];
+                signUoPromptCell.selectionStyle = UITableViewCellSelectionStyleNone;
+                [signUoPromptCell configPromptString:@"提示：当前报名者在线支付，本人可享受平台补贴。"];
+                return signUoPromptCell;
+            }else{
+                JGHApplyListCell *applyListCel = [tableView dequeueReusableCellWithIdentifier:JGHApplyListCellIdentifier forIndexPath:indexPath];
+                applyListCel.chooseBtn.tag = indexPath.row;
+                applyListCel.deleteBtn.tag = indexPath.row + 100;
+                applyListCel.chooseBtn.hidden = YES;
+                applyListCel.delegate = self;
+                applyListCel.selectionStyle = UITableViewCellSelectionStyleNone;
+                [applyListCel configDict:_applyArray[indexPath.row]];
+                return applyListCel;
+            }
         }else{
-            JGSignUoPromptCell *signUoPromptCell = [tableView dequeueReusableCellWithIdentifier:JGSignUoPromptCellIdentifier forIndexPath:indexPath];
-            signUoPromptCell.selectionStyle = UITableViewCellSelectionStyleNone;
-            return signUoPromptCell;
+            if (indexPath.row == 0) {
+                JGHTotalPriceCell *totalPriceCell = [tableView dequeueReusableCellWithIdentifier:JGHTotalPriceCellIdentifier];
+                totalPriceCell.selectionStyle = UITableViewCellSelectionStyleNone;
+                [totalPriceCell configTotalPrice:0];
+                return totalPriceCell;
+            }else{
+                JGSignUoPromptCell *signUoPromptCell = [tableView dequeueReusableCellWithIdentifier:JGSignUoPromptCellIdentifier forIndexPath:indexPath];
+                signUoPromptCell.selectionStyle = UITableViewCellSelectionStyleNone;
+                [signUoPromptCell configPromptString:@"提示：当前报名者在线支付，本人可享受平台补贴。"];
+                return signUoPromptCell;
+            }
         }
     }
 }
@@ -249,7 +283,6 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     if (section == 0) {
         JGActivityBaseInfoCell *infoCell = [tableView dequeueReusableCellWithIdentifier:JGActivityBaseInfoCellIdentifier];
-        [infoCell configJGTeamAcitivtyModel:self.modelss];
         infoCell.selectionStyle = UITableViewCellSelectionStyleNone;
         return (UIView *)infoCell;
     }else if (section == 1){
@@ -258,18 +291,12 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
         return (UIView *)applyPepoleCell;
     }else{
         JGHHeaderLabelCell *activityNameCell = [tableView dequeueReusableCellWithIdentifier:JGHHeaderLabelCellIdentifier];
-        if (section == 2) {
-            self.cellClickBtn.frame = CGRectMake(0, 0, screenWidth, activityNameCell.frame.size.height);
-            [self.cellClickBtn addTarget:self action:@selector(cellClickBtn:) forControlEvents:UIControlEventTouchUpInside];
-            [activityNameCell congiftitles:@"发票信息"];
-            [activityNameCell.contentView addSubview:self.cellClickBtn];
-            activityNameCell.accessoryType = UITableViewCellSelectionStyleBlue;
-            [activityNameCell configInvoiceIfo:_invoiceName];
-        }else{
-            activityNameCell.selectionStyle = UITableViewCellSelectionStyleNone;
-            [activityNameCell congiftitles:@"实付金额"];
-            [activityNameCell congifContact:[NSString stringWithFormat:@"%.2f", _realPayPrice] andNote:[NSString stringWithFormat:@"%.2f", _subsidiesPrice]];
-        }
+        self.cellClickBtn.frame = CGRectMake(0, 0, screenWidth, activityNameCell.frame.size.height);
+        [self.cellClickBtn addTarget:self action:@selector(cellClickBtn:) forControlEvents:UIControlEventTouchUpInside];
+        [activityNameCell congiftitles:@"发票信息"];
+        [activityNameCell.contentView addSubview:self.cellClickBtn];
+        activityNameCell.accessoryType = UITableViewCellSelectionStyleBlue;
+        [activityNameCell configInvoiceIfo:_invoiceName];
         
         return (UIView *)activityNameCell;
     }
@@ -289,42 +316,58 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
 }
 #pragma mark -- 立即支付
 - (IBAction)nowPayBtnClick:(UIButton *)sender {
-    self.tranView.frame = CGRectMake(0, 0, screenWidth, screenHeight - (152 + _applyArray.count * 30)-64 -44);
-    self.applyListView.frame = CGRectMake(0, screenHeight - (196 + _applyArray.count * 30)-64, screenWidth, 196 + 44 + _applyArray.count * 30);
-    [_applyListView configViewData:_applyArray];
-    
-    
-    
-    
-    /**
+    if (_applyArray.count == 0) {
+        [[ShowHUD showHUD]showToastWithText:@"请添加打球人，再支付！" FromView:self.view];
+        return;
+    }
     //如果价格为空
     if (_realPayPrice == 0) {
         // 分别3个创建操作
-        [[ShowHUD showHUD]showToastWithText:@"无需支付，请选择直接报名！" FromView:self.view];
+        [[ShowHUD showHUD]showToastWithText:@"无可支付金额，如有疑问请联系客服！" FromView:self.view];
         return;
     }
-    // 分别3个创建操作
-    UIAlertAction * cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-    }];
-    UIAlertAction *weiChatAction = [UIAlertAction actionWithTitle:@"微信支付" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        //添加微信支付请求
-        [self submitInfo:1];
-    }];
-    UIAlertAction *zhifubaoAction = [UIAlertAction actionWithTitle:@"支付宝支付" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        //添加支付宝支付请求
-        [self submitInfo:2];
-    }];
     
-    _actionView = [UIAlertController alertControllerWithTitle:@"选择支付方式" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-    [_actionView addAction:weiChatAction];
-    [_actionView addAction:zhifubaoAction];
-    [_actionView addAction:cancelAction];
-    [self presentViewController:_actionView animated:YES completion:nil];
-     */
+    self.tranView.hidden = NO;
+    self.applyListView.hidden = NO;
+    if (screenHeight < ((_applyArray.count * 30) + 108)){
+        self.tranView.frame = CGRectMake(0, 0, screenWidth, 0);
+        self.applyListView.frame = CGRectMake(0, 0, screenWidth, screenHeight - 44-64);
+        [_applyListView configViewData:_applyArray];
+    }else{
+        self.tranView.frame = CGRectMake(0, 0, screenWidth, screenHeight - (152 + _applyArray.count * 30)-64 -44);
+        self.applyListView.frame = CGRectMake(0, screenHeight - (196 + _applyArray.count * 30)-64, screenWidth, 196 + 44 + _applyArray.count * 30);
+        [_applyListView configViewData:_applyArray];
+    }
 }
 
 #pragma mark -- 仅报名
 - (IBAction)scenePayBtnClick:(UIButton *)sender {
+    if (_applyArray.count == 0) {
+        [[ShowHUD showHUD]showToastWithText:@"请添加打球人，再报名！" FromView:self.view];
+        return;
+    }
+    
+    self.tranView.hidden = NO;
+    self.justApplyListView.hidden = NO;
+    if (screenHeight < ((_applyArray.count * 30) + 108)){
+        self.tranView.frame = CGRectMake(0, 0, screenWidth, 0);
+        self.justApplyListView.frame = CGRectMake(0, 0, screenWidth, screenHeight - 44-64);
+        [_justApplyListView configjustApplyViewData:_applyArray];
+    }else{
+        self.tranView.frame = CGRectMake(0, 0, screenWidth, screenHeight - (88 + _applyArray.count * 30)-64 -44);
+        self.justApplyListView.frame = CGRectMake(0, screenHeight - (132 + _applyArray.count * 30)-64, screenWidth, 88 + 44 + _applyArray.count * 30);
+        [_justApplyListView configjustApplyViewData:_applyArray];
+    }
+    
+    
+}
+#pragma mark -- 取消 －－ 仅报名
+- (void)didJustApplyListCancelBtn:(UIButton *)btn{
+    self.tranView.hidden = YES;
+    self.justApplyListView.hidden = YES;
+}
+#pragma mark -- 立即报名 －－ 仅报名
+- (void)didJustApplyListApplyBtn:(UIButton *)btn{
     NSMutableArray *array = [NSMutableArray arrayWithArray:self.applyArray];
     [self.applyArray removeAllObjects];
     NSInteger count = [array count];
@@ -340,41 +383,38 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
     
     [self submitInfo:3];
 }
-
 #pragma mark -- 添加嘉宾
 - (void)addApplyPeopleClick{
+    NSMutableArray *array = [NSMutableArray array];
+    array = [NSMutableArray arrayWithArray:_baseInfoArray];
+    for (int i=0; i<5; i++) {
+        [array removeObjectAtIndex:0];
+    }
+    
+    NSMutableArray *arrayData = [NSMutableArray array];
+    if (array.count > 0) {
+        [arrayData addObject:_baseInfoArray[4]];
+        [arrayData addObject:_baseInfoArray[3]];
+        for (int i=0; i<array.count; i++) {
+            [arrayData addObject:array[i]];
+        }
+    }else{
+        [arrayData addObject:_baseInfoArray[4]];
+        [arrayData addObject:_baseInfoArray[3]];
+    }
+    
     JGAddTeamGuestViewController *addTeamGuestCtrl = [[JGAddTeamGuestViewController alloc]initWithNibName:@"JGAddTeamGuestViewController" bundle:nil];
     addTeamGuestCtrl.delegate = self;
     
     addTeamGuestCtrl.applyArray = self.applyArray;
-    addTeamGuestCtrl.guestPrice = [self.modelss.guestPrice floatValue];
-    addTeamGuestCtrl.memberPrice = [self.modelss.memberPrice floatValue];
+    addTeamGuestCtrl.catoryArray = arrayData;
     [self.navigationController pushViewController:addTeamGuestCtrl animated:YES];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-#pragma mark --  选择嘉宾
-- (void)didChooseBtn:(UIButton *)btn{
-    NSLog(@"%ld", (long)btn.tag);
-    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    dict = [self.applyArray objectAtIndex:btn.tag];
-    if ([[dict objectForKey:@"select"] integerValue] == 0) {
-        [btn setImage:[UIImage imageNamed:@"kuangwx"] forState:UIControlStateNormal];
-        [dict setObject:@"1" forKey:@"isOnlinePay"];
-        [dict setObject:@"1" forKey:@"select"];
-        [self.applyArray replaceObjectAtIndex:btn.tag withObject:dict];
-    }else{
-        [btn setImage:[UIImage imageNamed:@"kuang"] forState:UIControlStateNormal];
-        [dict setObject:@"0" forKey:@"isOnlinePay"];
-        [dict setObject:@"0" forKey:@"select"];
-        [self.applyArray replaceObjectAtIndex:btn.tag withObject:dict];
-    }
-    
-    //计算价格
-    [self countAmountPayable];
-}
+
 #pragma mark -- 删除嘉宾
 - (void)didSelectDeleteBtn:(UIButton *)btn{
     NSLog(@"%td", btn.tag - 100);
@@ -414,33 +454,18 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
     _amountPayable = 0.0;
     _realPayPrice = 0.0;
     //判断成员中是否包含自己
-    NSInteger isMember = 0;
     for (int i=0; i<_applyArray.count; i++) {
         NSDictionary *dict = [NSDictionary dictionary];
         dict = _applyArray[i];
-        if ([[dict objectForKey:@"select"]integerValue] == 1) {
-            NSLog(@"%@", [dict objectForKey:@"payMoney"]);
-            float value = [[dict objectForKey:@"payMoney"] floatValue];
-            _amountPayable += value;
-            
-            if ([dict objectForKey:@"subsidyPrice"]) {
-                isMember = 1;
-                _subsidiesPrice += [_modelss.subsidyPrice floatValue];
-
-            }
-        }
+        NSLog(@"%@", [dict objectForKey:@"payMoney"]);
+        float value = [[dict objectForKey:@"payMoney"] floatValue];
+        _amountPayable += value;
     }
-
-    //仅当前报名人[在线支付]享受平台补贴
-    if (isMember == 1) {
-            _realPayPrice = _amountPayable - [_modelss.subsidyPrice floatValue];
-    }else{
-        _realPayPrice = _amountPayable;
-    }
+    
+    _realPayPrice = _amountPayable;
     
     [self.teamApplyTableView reloadData];
 }
-
 #pragma mark -- 发票代理
 - (void)backAddressKey:(NSString *)invoiceKey andInvoiceName:(NSString *)name andAddressKey:(NSString *)addressKey{
     self.invoiceKey = invoiceKey;
@@ -472,7 +497,6 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
         }else{
             [self.info setObject:[NSString stringWithFormat:@"%td", _modelss.teamActivityKey] forKey:@"activityKey"];//球队活动key
         }
-        
     }else{
         [self.info setObject:[NSString stringWithFormat:@"%@", _modelss.timeKey] forKey:@"activityKey"];//球队活动key
     }
@@ -599,6 +623,31 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
             }
         }];
     }];
+}
+#pragma mark -- 确认页面－－取消 -立即支付
+- (void)didSelectCancelBtn:(UIButton *)btn{
+    self.applyListView.hidden = YES;
+    self.tranView.hidden = YES;
+}
+#pragma mark -- 确认页面－－立即支付
+- (void)didSelectPayBtn:(UIButton *)btn{
+    // 分别3个创建操作
+    UIAlertAction * cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+    }];
+    UIAlertAction *weiChatAction = [UIAlertAction actionWithTitle:@"微信支付" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        //添加微信支付请求
+        [self submitInfo:1];
+    }];
+    UIAlertAction *zhifubaoAction = [UIAlertAction actionWithTitle:@"支付宝支付" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        //添加支付宝支付请求
+        [self submitInfo:2];
+    }];
+    
+    _actionView = [UIAlertController alertControllerWithTitle:@"选择支付方式" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    [_actionView addAction:weiChatAction];
+    [_actionView addAction:zhifubaoAction];
+    [_actionView addAction:cancelAction];
+    [self presentViewController:_actionView animated:YES completion:nil];
 }
 /*
 #pragma mark - Navigation

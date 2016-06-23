@@ -29,8 +29,11 @@
 //手机号
 @property (weak, nonatomic) IBOutlet UITextField *photoNumber;
 //是否为球队队员
-@property (weak, nonatomic) IBOutlet UIButton *isPlayersBtn;
-- (IBAction)isPlayersBtn:(UIButton *)sender;
+@property (weak, nonatomic) IBOutlet UIButton *catoryBtn;
+- (IBAction)catoryBtn:(UIButton *)sender;
+//类型名称
+@property (weak, nonatomic) IBOutlet UILabel *catoryName;
+
 @property (weak, nonatomic) IBOutlet UIButton *addGuestBtn;
 
 //添加嘉宾
@@ -41,12 +44,10 @@
 
 @property (weak, nonatomic)id <JGAddTeamGuestViewControllerDelegate> delegate;
 
-//@property (nonatomic, strong) NSMutableArray *guestArray;//成员数组集合
+@property (weak, nonatomic) IBOutlet UIImageView *catoryImageView;
 
-//嘉宾费用
-@property (nonatomic, assign)float guestPrice;
 
-//球队队员费用
-@property (nonatomic, assign)float memberPrice;
+@property (nonatomic, strong)NSMutableArray *catoryArray;
+
 
 @end

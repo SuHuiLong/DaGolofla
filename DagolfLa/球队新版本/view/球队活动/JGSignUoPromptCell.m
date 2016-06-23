@@ -15,7 +15,11 @@
     // Initialization code
     
     
-    self.pamaptLabel.text = @"提示：未勾选系统默认为现场支付\n           仅当前报名人[在线支付]享受平台补贴";
+    
+}
+
+- (void)configPromptString:(NSString *)string{
+    self.pamaptLabel.text = string;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

@@ -11,29 +11,55 @@
 
 @interface JGAddTeamGuestViewController ()<UITableViewDelegate, UITableViewDataSource, JGAlreadyAddGuestCellDelegate>
 
+{
+    NSInteger _iscatoryVlaue;//类型值0:嘉宾  1:球队队员 2: 球场会员记名  3: 球场会员不记名
+}
+
 @property (nonatomic, strong) UITableView *addTeamGuestTableView;
 
 @property (nonatomic, assign)NSInteger sex;//0-1女，1-男，默认男－1
 
-@property (nonatomic, assign)NSInteger isPlays;//0-不是，1-是，默认是
+//@property (nonatomic, assign)NSInteger isPlaysCatory;//
+
+@property (nonatomic, strong)UIView *catoryView;//类型列表
 
 @end
 
 @implementation JGAddTeamGuestViewController
 
+- (UIView *)catoryView{
+    if (_catoryView == nil) {
+        self.catoryView = [[UIView alloc]init];
+        self.catoryView.backgroundColor = [UIColor whiteColor];
+        _catoryView.frame = CGRectMake(_catoryBtn.frame.origin.x, _catoryBtn.frame.origin.y, _catoryBtn.frame.size.width + 50, _catoryArray.count * 44);
+        for (int i=0; i<_catoryArray.count; i++) {
+            UIButton *catoryBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 44*i, _catoryBtn.frame.size.width+50, 44)];
+            catoryBtn.tag = 200 + i;
+            catoryBtn.backgroundColor = [UIColor whiteColor];
+            [catoryBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+            catoryBtn.titleLabel.font = [UIFont systemFontOfSize:15];
+            [catoryBtn setTitle:[[_catoryArray[i] componentsSeparatedByString:@"-"]objectAtIndex:1] forState:UIControlStateNormal];
+            [catoryBtn addTarget:self action:@selector(catoryBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+            [_catoryView addSubview:catoryBtn];
+        }
+        
+        [self.view addSubview:self.catoryView];
+    }
+    return _catoryView;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor colorWithHexString:BG_color];
     self.navigationItem.title = @"添加打球人";
-    
+    _iscatoryVlaue = 0;
+    self.catoryName.text = @"普通嘉宾资费";
     self.addGuestBtn.layer.borderWidth = 1.0;
     self.addGuestBtn.layer.borderColor = [UIColor colorWithHexString:@"#7DDFFD"].CGColor;
     self.addGuestBtn.layer.masksToBounds = YES;
     
     self.sex = 1;//男－默认
-    self.isPlays = 1;
-        
+    
     [self createAddGuestTableview];
 }
 #pragma mark --创建tableView
@@ -89,14 +115,10 @@
     }
     
     NSMutableDictionary *applyDict = [NSMutableDictionary dictionary];
-    [applyDict setObject:[NSString stringWithFormat:@"%ld", (long)_isPlays] forKey:@"type"];//"是否是球队成员 0: 不是  1：是
-    if (_isPlays == 0) {
-        //嘉宾
-        [applyDict setObject:[NSString stringWithFormat:@"%.2f", self.guestPrice] forKey:@"payMoney"];//实际付款金额
-    }else{
-        //队员
-        [applyDict setObject:[NSString stringWithFormat:@"%.2f", self.memberPrice] forKey:@"payMoney"];//实际付款金额
-    }
+    
+    [applyDict setObject:[NSString stringWithFormat:@"%td", _iscatoryVlaue] forKey:@"type"];
+    //payMoney
+    [applyDict setObject:[[_catoryArray[_iscatoryVlaue] componentsSeparatedByString:@"-"] objectAtIndex:0] forKey:@"payMoney"];
     
     [applyDict setObject:@0 forKey:@"userKey"];//报名用户key , 没有则是嘉宾
     
@@ -152,26 +174,21 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
-#pragma mark -- 是否是球队成员
-- (IBAction)isPlayersBtn:(UIButton *)sender {
-    if (self.isPlays == 1) {
-        self.isPlays = 0;
-        [self.isPlayersBtn setImage:[UIImage imageNamed:@"kuang"] forState:UIControlStateNormal];
-    }else{
-        self.isPlays = 1;
-        [self.isPlayersBtn setImage:[UIImage imageNamed:@"kuang_xz"] forState:UIControlStateNormal];
-    }
+#pragma mark -- 选择资费
+- (IBAction)catoryBtn:(UIButton *)sender {
     
-    NSLog(@"是否是球员＝＝%ld", (long)self.isPlays);
+    self.catoryView.hidden = NO;
+    self.catoryImageView.image = [UIImage imageNamed:@")-1"];
+    
 }
+
+#pragma mark -- 类型选择事件
+- (void)catoryBtnClick:(UIButton *)btn{
+    NSLog(@"%@", btn.currentTitle);
+    _iscatoryVlaue = btn.tag - 200;
+    self.catoryName.text = btn.currentTitle;
+    self.catoryView.hidden = YES;
+}
+
+
 @end

@@ -35,7 +35,7 @@
 }
 - (void)saveBtnClick:(UIButton *)btn{
     if (self.delegate) {
-        [self.delegate inputMembersCost:self.membersCost.text guestCost:self.guestCost.text];
+        [self.delegate inputMembersCost:self.membersCost.text guestCost:self.guestCost.text andRegisteredPrice:self.registeredPrice.text andBearerPrice:self.bearerPrice.text];
         [self.navigationController popViewControllerAnimated:YES];
     }
 }
