@@ -842,6 +842,7 @@
 		828A99FC1CE3549900AF9860 /* JGMemDataTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 828A99FB1CE3549900AF9860 /* JGMemDataTableViewCell.m */; };
 		82AAB7AE1CE5BEB8005F5633 /* JGLSelfSetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 82AAB7AD1CE5BEB8005F5633 /* JGLSelfSetViewController.m */; };
 		82AAB7B11CE5C18E005F5633 /* JGSelfSetTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 82AAB7B01CE5C18E005F5633 /* JGSelfSetTableViewCell.m */; };
+		82ABF1B01D1BC0B3004493DB /* JGLActiveCancelMemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 82ABF1AF1D1BC0B3004493DB /* JGLActiveCancelMemViewController.m */; };
 		82BEEC841CF98828000DFE46 /* JGLNewShopDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 82BEEC831CF98828000DFE46 /* JGLNewShopDetailViewController.m */; };
 		82D595DF1CE42BDF00CD9587 /* BaiduMapAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82D595DD1CE42BDF00CD9587 /* BaiduMapAPI.framework */; };
 		82D595E01CE42BDF00CD9587 /* mapapi.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 82D595DE1CE42BDF00CD9587 /* mapapi.bundle */; };
@@ -2316,6 +2317,8 @@
 		82AAB7AD1CE5BEB8005F5633 /* JGLSelfSetViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGLSelfSetViewController.m; sourceTree = "<group>"; };
 		82AAB7AF1CE5C18E005F5633 /* JGSelfSetTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGSelfSetTableViewCell.h; sourceTree = "<group>"; };
 		82AAB7B01CE5C18E005F5633 /* JGSelfSetTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGSelfSetTableViewCell.m; sourceTree = "<group>"; };
+		82ABF1AE1D1BC0B3004493DB /* JGLActiveCancelMemViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGLActiveCancelMemViewController.h; sourceTree = "<group>"; };
+		82ABF1AF1D1BC0B3004493DB /* JGLActiveCancelMemViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGLActiveCancelMemViewController.m; sourceTree = "<group>"; };
 		82BEEC821CF98828000DFE46 /* JGLNewShopDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGLNewShopDetailViewController.h; sourceTree = "<group>"; };
 		82BEEC831CF98828000DFE46 /* JGLNewShopDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGLNewShopDetailViewController.m; sourceTree = "<group>"; };
 		82D595DD1CE42BDF00CD9587 /* BaiduMapAPI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = BaiduMapAPI.framework; sourceTree = SOURCE_ROOT; };
@@ -5715,6 +5718,15 @@
 			path = "我的球队";
 			sourceTree = "<group>";
 		};
+		82ABF1AD1D1BC095004493DB /* 活动取消报名 */ = {
+			isa = PBXGroup;
+			children = (
+				82ABF1AE1D1BC0B3004493DB /* JGLActiveCancelMemViewController.h */,
+				82ABF1AF1D1BC0B3004493DB /* JGLActiveCancelMemViewController.m */,
+			);
+			path = "活动取消报名";
+			sourceTree = "<group>";
+		};
 		82BEEC811CF98813000DFE46 /* 商城详情界面 */ = {
 			isa = PBXGroup;
 			children = (
@@ -5932,6 +5944,7 @@
 				828A99E11CE3165B00AF9860 /* 球队相册 */,
 				2067C6B31CE30CA4002900C8 /* 球队活动 */,
 				209B3FE81D10175200A6FF72 /*  活动管理 */,
+				82ABF1AD1D1BC095004493DB /* 活动取消报名 */,
 			);
 			path = controller;
 			sourceTree = "<group>";
@@ -6962,6 +6975,7 @@
 				82636E901D06D18100216DC1 /* JGTeamPhotoShowViewController.m in Sources */,
 				36BFFF741BC76D09005B3CE2 /* NSData+ImageContentType.m in Sources */,
 				3683947E1C0984C800F162F6 /* TeamPhotoAddViewController.m in Sources */,
+				82ABF1B01D1BC0B3004493DB /* JGLActiveCancelMemViewController.m in Sources */,
 				AA9B5F031C573678009381DF /* PostDataRequest.m in Sources */,
 				36BF00DE1BC77428005B3CE2 /* MemberShipViewController.m in Sources */,
 				36BFFD2E1BC76C8D005B3CE2 /* main.m in Sources */,
