@@ -10,4 +10,9 @@
 
 @interface JGActivityMemNonmangerTableViewCell : UITableViewCell
 
+
+@property (nonatomic, strong) UIImageView *headIconV;
+@property (nonatomic, strong) UILabel *nameLB;
+@property (nonatomic, strong) UILabel *phoneLB;
+
 @end
