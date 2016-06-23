@@ -16,7 +16,29 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    
+    self.title = @"XXXXX活动";
+    UIBarButtonItem* rightBtn = [[UIBarButtonItem alloc]initWithTitle:@"分组管理" style:UIBarButtonItemStylePlain target:self action:@selector(groupClick)];
+    rightBtn.tintColor = [UIColor whiteColor];
+    self.navigationItem.rightBarButtonItem = rightBtn;
+    
+    
+    [self uiConfig];
+    
+}
+
+#pragma mark --分组管理点击事件
+
+-(void)groupClick
+{
+    
+}
+
+
+#pragma mark --uitableview创建
+-(void)uiConfig
+{
+    
 }
 
 - (void)didReceiveMemoryWarning {
