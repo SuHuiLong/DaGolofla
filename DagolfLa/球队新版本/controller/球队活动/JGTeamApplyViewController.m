@@ -466,7 +466,6 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
     
     [self.teamApplyTableView reloadData];
 }
-
 #pragma mark -- 发票代理
 - (void)backAddressKey:(NSString *)invoiceKey andInvoiceName:(NSString *)name andAddressKey:(NSString *)addressKey{
     self.invoiceKey = invoiceKey;

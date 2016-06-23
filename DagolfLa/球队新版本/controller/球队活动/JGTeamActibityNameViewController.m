@@ -203,7 +203,6 @@ static CGFloat ImageHeight  = 210.0;
     
     [self.imgProfile addSubview:self.addressBtn];
 
-    [self createApplyBtn];//报名按钮
     //分享按钮
     UIButton *shareBtn = [[UIButton alloc]initWithFrame:CGRectMake(screenWidth-44, self.titleField.frame.origin.y, 44, 25)];
     [shareBtn setImage:[UIImage imageNamed:@"iconfont-fenxiang"] forState:UIControlStateNormal];
@@ -240,6 +239,11 @@ static CGFloat ImageHeight  = 210.0;
         NSLog(@"%@", data);
         [[ShowHUD showHUD]hideAnimationFromView:self.view];
         _isApply = [data objectForKey:@"hasSignUp"];
+        if ([_isApply integerValue] == 0) {
+            [self createApplyBtn];//报名按钮
+        }else{
+            [self createCancelBtnAndApplyOrPay];//已报名
+        }
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
             NSMutableDictionary *dict = [NSMutableDictionary dictionary];
             
@@ -437,6 +441,36 @@ static CGFloat ImageHeight  = 210.0;
     [aleVC addAction:act3];
     
     [self presentViewController:aleVC animated:YES completion:nil];
+}
+#pragma mark -- 取消报名－－报名／支付
+- (void)createCancelBtnAndApplyOrPay{
+    self.headPortraitBtn.layer.masksToBounds = YES;
+    self.headPortraitBtn.layer.cornerRadius = 8.0;
+    
+    UIButton *photoBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, screenHeight-44, (75*screenWidth/375)-1, 44)];
+    [photoBtn setImage:[UIImage imageNamed:@"consulting"] forState:UIControlStateNormal];
+    [photoBtn addTarget:self action:@selector(telPhotoClick:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:photoBtn];
+
+    UIButton *cancelApplyBtn = [[UIButton alloc]initWithFrame:CGRectMake(photoBtn.frame.size.width, screenHeight-44, (screenWidth - 75 *ScreenWidth/375)/2, 44)];
+    [cancelApplyBtn setTitle:@"取消报名" forState:UIControlStateNormal];
+    cancelApplyBtn.backgroundColor = [UIColor colorWithHexString:Nav_Color];
+    [cancelApplyBtn addTarget:self action:@selector(applyAttendBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    if ([[Helper returnCurrentDateString] compare:_model.signUpEndTime] >= 0) {
+        cancelApplyBtn.backgroundColor = [UIColor lightGrayColor];
+    }
+    
+    [self.view addSubview:cancelApplyBtn];
+    
+    UIButton *applyOrPayBtn = [[UIButton alloc]initWithFrame:CGRectMake(photoBtn.frame.size.width + cancelApplyBtn.frame.size.width, screenHeight-44, (screenWidth - 75 *ScreenWidth/375)/2, 44)];
+    [applyOrPayBtn setTitle:@"报名／支付" forState:UIControlStateNormal];
+    applyOrPayBtn.backgroundColor = [UIColor colorWithHexString:Cancel_Color];
+    [applyOrPayBtn addTarget:self action:@selector(applyAttendBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    if ([[Helper returnCurrentDateString] compare:_model.signUpEndTime] >= 0) {
+        applyOrPayBtn.backgroundColor = [UIColor lightGrayColor];
+    }
+    
+    [self.view addSubview:applyOrPayBtn];
 }
 #pragma mark -- 创建报名按钮
 - (void)createApplyBtn{
