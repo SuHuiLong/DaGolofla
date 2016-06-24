@@ -49,10 +49,10 @@
 
 - (void)check{
     JGTeamDeatilWKwebViewController *WKCtrl = [[JGTeamDeatilWKwebViewController alloc]init];
-//    WKCtrl.detailString = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/team/group.html?key=%@", _model.timeKey];;
-//    WKCtrl.teamName = @"报名人列表";
-//    WKCtrl.isShareBtn = 1;
-//    WKCtrl.teamKey = [_model.timeKey integerValue];
+    WKCtrl.detailString = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/team/group.html?key=%@", self.activityKey];;
+    WKCtrl.teamName = @"报名人列表";
+    WKCtrl.isShareBtn = 1;
+    WKCtrl.teamKey = [self.activityKey integerValue];
     [self.navigationController pushViewController:WKCtrl animated:YES];
 }
 
@@ -71,7 +71,7 @@
 - (void)downLoadData:(NSInteger)page isReshing:(BOOL)isReshing{
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     
-    [dict setObject:@4375 forKey:@"activityKey"];
+    [dict setObject:self.activityKey forKey:@"activityKey"];
     [dict setObject:[NSNumber numberWithInteger:_page]forKey:@"offset"];
     [[JsonHttp jsonHttp]httpRequest:@"team/getTeamActivitySignUpList" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
         if (isReshing) {

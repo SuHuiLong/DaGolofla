@@ -162,6 +162,7 @@ static CGFloat ImageHeight  = 210.0;
     self.titleField = [[UITextField alloc]initWithFrame:CGRectMake(64, 17, screenWidth - 128, 30)];
     self.titleField.text = _model.name;
     self.titleField.tag = 123;
+    self.titleField.delegate = self;
     self.titleField.textColor = [UIColor whiteColor];
     self.titleField.textAlignment = NSTextAlignmentCenter;
     self.titleField.font = [UIFont systemFontOfSize:16 * screenWidth / 320];
@@ -248,6 +249,7 @@ static CGFloat ImageHeight  = 210.0;
         NSLog(@"%@----%ld", balltitle, (long)ballid);
         self.model.ballKey = *(&(ballid));
         self.model.ballName = balltitle;
+        _isEditor = 1;
         NSDictionary *attribute = @{NSFontAttributeName: [UIFont systemFontOfSize:13]};
         CGSize size = [self.model.ballName boundingRectWithSize:CGSizeMake(screenWidth - 100, 0) options: NSStringDrawingTruncatesLastVisibleLine | NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading attributes:attribute context:nil].size;
         CGRect address = self.addressBtn.frame;
@@ -337,6 +339,9 @@ static CGFloat ImageHeight  = 210.0;
 
 #pragma mark -- 保存
 - (void)editonAttendBtnClick:(UIButton *)btn{
+    
+    [self.view endEditing:YES];
+    
     if (_isEditor == 0) {
         [[ShowHUD showHUD]showToastWithText:@"未修改信息，无需保存！" FromView:self.view];
         return;
@@ -432,7 +437,6 @@ static CGFloat ImageHeight  = 210.0;
                 [Helper alertViewWithTitle:@"活动更新失败！" withBlock:^(UIAlertController *alertView) {
                     [self.navigationController presentViewController:alertView animated:YES completion:nil];
                 }];
-                
                 return ;
             }
             
@@ -694,14 +698,30 @@ static CGFloat ImageHeight  = 210.0;
 #pragma mark -- UITextFliaView
 - (void)textFieldDidEndEditing:(UITextField *)textField{
     if (textField.tag == 234) {
+        if (self.model.maxCount != [textField.text integerValue]) {
+            _isEditor = 1;
+        }
         self.model.maxCount = [textField.text integerValue];
     }else if (textField.tag == 345) {
+        if (![self.model.userName isEqualToString:textField.text]) {
+            _isEditor = 1;
+        }
         self.model.userName = textField.text;
     }else if (textField.tag == 456){
+        if (![self.model.userMobile isEqualToString:textField.text]) {
+            _isEditor = 1;
+        }
         self.model.userMobile = textField.text;
     }else if (textField.tag == 123){
+        if (![self.model.name isEqualToString:textField.text]) {
+            _isEditor = 1;
+        }
         self.model.name = textField.text;
     }
+    if (_isEditor == 1) {
+        self.editorBtn.backgroundColor = [UIColor colorWithHexString:@"#F59A2C"];
+    }
+    
 }
 #pragma mark - Table View Delegate
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {

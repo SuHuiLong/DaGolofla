@@ -410,12 +410,9 @@
         JGLMyTeamViewController* myVc = [[JGLMyTeamViewController alloc]init];
         [self.navigationController pushViewController:myVc animated:YES];
     }else if (button.tag == 201) {
-//        JGTeamActivityViewController* teamVc = [[JGTeamActivityViewController alloc]init];
-//        teamVc.isMEActivity = 3;
-//        [self.navigationController pushViewController:teamVc animated:YES];
-       
-        JGActivityMemNonMangerViewController *vc = [[JGActivityMemNonMangerViewController alloc] init];
-        [self.navigationController pushViewController:vc animated:YES];
+        JGTeamActivityViewController* teamVc = [[JGTeamActivityViewController alloc]init];
+        teamVc.isMEActivity = 3;
+        [self.navigationController pushViewController:teamVc animated:YES];
     
     }else if (button.tag == 202) {
         

@@ -177,7 +177,6 @@ static CGFloat ImageHeight  = 210.0;
         self.launchActivityTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight) style:(UITableViewStylePlain)];
         [self.launchActivityTableView registerClass:[JGImageAndLabelAndLabelTableViewCell class] forCellReuseIdentifier:@"lbVSlb"];
         [self.launchActivityTableView registerClass:[JGDisplayInfoTableViewCell class] forCellReuseIdentifier:@"Display"];
-        
         self.launchActivityTableView.dataSource = self;
         self.launchActivityTableView.delegate = self;
         self.launchActivityTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -516,7 +515,7 @@ static CGFloat ImageHeight  = 210.0;
 
 - (CGFloat)calculationLabelHeight: (NSString *)LbText{
     
-    NSDictionary *dic = [NSDictionary dictionaryWithObject:[UIFont systemFontOfSize:15] forKey:NSFontAttributeName];
+    NSDictionary *dic = [NSDictionary dictionaryWithObject:[UIFont systemFontOfSize:15  * screenWidth / 320] forKey:NSFontAttributeName];
     CGRect bounds = [LbText boundingRectWithSize:(CGSizeMake(screenWidth - 20  * screenWidth / 320 , 10000)) options:(NSStringDrawingUsesLineFragmentOrigin) attributes:dic context:nil];
     return bounds.size.height;
 }
@@ -549,7 +548,7 @@ static CGFloat ImageHeight  = 210.0;
         return launchImageActivityCell;
     }else if (indexPath.section == 1){
         JGDisplayInfoTableViewCell *contactCell = [tableView dequeueReusableCellWithIdentifier:@"Display"];
-        contactCell.promptLB.text = @"球队动态";
+        contactCell.promptLB.text = @"球队公告";
         contactCell.promptLB.textColor = [UIColor lightGrayColor];
         contactCell.promptLB.frame = CGRectMake(10 * screenWidth / 320, 0, 100 * screenWidth / 320, 30 * screenWidth / 320);
         contactCell.contentLB.lineBreakMode = NSLineBreakByWordWrapping;
