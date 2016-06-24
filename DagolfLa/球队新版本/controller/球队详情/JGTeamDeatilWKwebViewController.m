@@ -18,6 +18,27 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    NSSet *websiteDataTypes = [NSSet setWithArray:@[
+                                                    WKWebsiteDataTypeDiskCache,
+                                                    WKWebsiteDataTypeOfflineWebApplicationCache,
+                                                    WKWebsiteDataTypeMemoryCache,
+                                                    WKWebsiteDataTypeLocalStorage,
+                                                    WKWebsiteDataTypeCookies,
+                                                    WKWebsiteDataTypeSessionStorage,
+                                                    WKWebsiteDataTypeIndexedDBDatabases,
+                                                    WKWebsiteDataTypeWebSQLDatabases
+                                                    ]];
+    //你可以选择性的删除一些你需要删除的文件 or 也可以直接全部删除所有缓存的type
+    //NSSet *websiteDataTypes = [WKWebsiteDataStore allWebsiteDataTypes];
+    NSDate *dateFrom = [NSDate dateWithTimeIntervalSince1970:0];
+    [[WKWebsiteDataStore defaultDataStore] removeDataOfTypes:websiteDataTypes   
+                                               modifiedSince:dateFrom completionHandler:^{
+                                                   // code
+                                               }];
+
+    
+    
+    
     if (_isShareBtn == 1) {
         UIBarButtonItem *bar = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"iconfont-fenxiang"] style:(UIBarButtonItemStylePlain) target:self action:@selector(shareBtn)];
         bar.tintColor = [UIColor whiteColor];
