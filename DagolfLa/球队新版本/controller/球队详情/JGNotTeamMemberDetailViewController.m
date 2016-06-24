@@ -161,9 +161,7 @@ static CGFloat ImageHeight  = 210.0;
     
     [self.imgProfile addSubview:self.headPortraitBtn];
     [self.titleView addSubview:self.titleField];
-    
-
-    
+        
     [self createPreviewBtn];
     self.launchActivityTableView.tableFooterView = self.backView;
 }

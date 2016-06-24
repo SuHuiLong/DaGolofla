@@ -27,4 +27,11 @@
     }
 }
 
+- (void)configCancelApplyTitles:(NSString *)string{
+    self.addApplyBtn.hidden = YES;
+    self.directionImageView.hidden = YES;
+    
+    self.titles.text = string;
+}
+
 @end

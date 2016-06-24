@@ -55,9 +55,9 @@
     NSString *timeString = [[modeel.beginDate componentsSeparatedByString:@" "]firstObject];
     NSString *monthTimeString = [[timeString componentsSeparatedByString:@"-"]objectAtIndex:1];
     NSString *dataTimeString = [[timeString componentsSeparatedByString:@"-"]objectAtIndex:2];
-    self.activityTime.text = [NSString stringWithFormat:@"活动时间:%@月%@日", monthTimeString, dataTimeString];
+    self.activityTime.text = [NSString stringWithFormat:@"%@月%@日", monthTimeString, dataTimeString];
     //活动地址
-    self.activityAddress.text = [NSString stringWithFormat:@"地点:%@", modeel.ballName];
+    self.activityAddress.text = [NSString stringWithFormat:@"%@", modeel.ballName];
     //报名人数
     self.applyNumber.text = [NSString stringWithFormat:@" %ld", (long)modeel.sumCount];
 }
@@ -97,9 +97,9 @@
     NSString *timeString = [[modeel.beginDate componentsSeparatedByString:@" "]firstObject];
     NSString *monthTimeString = [[timeString componentsSeparatedByString:@"-"]objectAtIndex:1];
     NSString *dataTimeString = [[timeString componentsSeparatedByString:@"-"]objectAtIndex:2];
-    self.activityTime.text = [NSString stringWithFormat:@"活动时间:%@月%@日", monthTimeString, dataTimeString];
+    self.activityTime.text = [NSString stringWithFormat:@"%@月%@日", monthTimeString, dataTimeString];
     //活动地址
-    self.activityAddress.text = [NSString stringWithFormat:@"地点:%@", modeel.ballName];
+    self.activityAddress.text = [NSString stringWithFormat:@"%@", modeel.ballName];
     //报名人数
     self.applyNumber.text = [NSString stringWithFormat:@"%td", modeel.sumCount];
     self.maxCount.text = [NSString stringWithFormat:@"/%td(人)", modeel.maxCount];

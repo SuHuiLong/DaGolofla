@@ -16,9 +16,8 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="报名人" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SJ4-3J-gOz">
-                        <rect key="frame" x="10" y="10" width="60" height="21"/>
+                        <rect key="frame" x="10" y="10" width="45" height="21"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="60" id="eG6-y1-jW9"/>
                             <constraint firstAttribute="height" constant="21" id="h7G-Zk-m3i"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
@@ -104,6 +103,7 @@
             <connections>
                 <outlet property="addApplyBtn" destination="7zR-bj-A4G" id="pmC-2K-gMk"/>
                 <outlet property="directionImageView" destination="IoS-wJ-mLo" id="fpi-RJ-Nfg"/>
+                <outlet property="titles" destination="SJ4-3J-gOz" id="OUY-PC-gmM"/>
             </connections>
             <point key="canvasLocation" x="232.5" y="239"/>
         </tableViewCell>

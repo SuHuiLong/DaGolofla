@@ -8,7 +8,6 @@
 
 #import "JGHApplyListCell.h"
 
-
 @implementation JGHApplyListCell
 
 
@@ -63,6 +62,30 @@
     }else{
         self.couponsImageView.hidden = YES;
     }
+}
+
+- (void)configCancelApplyDict:(NSMutableDictionary *)dict{
+    self.monay.hidden = NO;
+    //名字
+    self.name.text = [dict objectForKey:@"name"];
+    
+    //价格
+    if ([[dict objectForKey:@"payMoney"] floatValue] > 0) {
+        self.price.text = [NSString stringWithFormat:@"%.2f", [[dict objectForKey:@"payMoney"] floatValue]];
+    }else{
+        self.price.text = @"未付款";
+        self.monay.hidden = YES;
+    }
+    
+    //    @property (weak, nonatomic) IBOutlet UILabel *price;
+    if ([[dict objectForKey:@"select"]isEqualToString:@"1"]) {
+        [self.chooseBtn setImage:[UIImage imageNamed:@"kuangwx"] forState:UIControlStateNormal];
+    }else{
+        [self.chooseBtn setImage:[UIImage imageNamed:@"kuang"] forState:UIControlStateNormal];
+    }
+    
+    self.couponsImageView.hidden = YES;
+    self.deleteBtn.hidden = YES;
 }
 
 @end

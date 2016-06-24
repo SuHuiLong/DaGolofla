@@ -451,7 +451,7 @@ static NSString *const JGGroupdetailsCollectionViewCellIdentifier = @"JGGroupdet
             [self updateTeamActivityGroupIndex:dict];
         }];
         
-        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"系统提示" message:@"是否加入改组！" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"系统提示" message:@"是否加入该组！" preferredStyle:UIAlertControllerStyleAlert];
         [alertController addAction:cancelAction];
         [alertController addAction:commitAction];
         [self presentViewController:alertController animated:YES completion:nil];

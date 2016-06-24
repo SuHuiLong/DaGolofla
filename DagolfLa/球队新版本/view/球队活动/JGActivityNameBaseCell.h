@@ -18,5 +18,7 @@
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *downValue;
 
+- (void)configActivityRefundRulesString:(NSString *)string;
+
 
 @end
