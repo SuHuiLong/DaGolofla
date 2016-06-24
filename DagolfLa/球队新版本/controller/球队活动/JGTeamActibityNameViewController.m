@@ -38,7 +38,7 @@
 #import "JGHCancelApplyViewController.h"
 
 #import "JGActivityMemNonMangerViewController.h"
-
+#import "JGLActiveCancelMemViewController.h"
 
 static NSString *const JGTeamActivityWithAddressCellIdentifier = @"JGTeamActivityWithAddressCell";
 static NSString *const JGTeamActivityDetailsCellIdentifier = @"JGTeamActivityDetailsCell";
@@ -53,6 +53,8 @@ static CGFloat ImageHeight  = 210.0;
     NSString *_userName;//用户在球队的真实姓名
     
     id _isApply;//是否已经报名0未，1已
+    
+    NSString *_power;//权限
 }
 
 @property (nonatomic, strong)UITableView *teamActibityNameTableView;
@@ -242,7 +244,7 @@ static CGFloat ImageHeight  = 210.0;
     } completionBlock:^(id data) {
         NSLog(@"%@", data);
         [[ShowHUD showHUD]hideAnimationFromView:self.view];
-        _isApply = [data objectForKey:@"hasSignUp"];
+        _isApply = [data objectForKey:@"hasSignUp"];//是否报名
         if ([_isApply integerValue] == 0) {
             [self createApplyBtn];//报名按钮
         }else{
@@ -254,6 +256,9 @@ static CGFloat ImageHeight  = 210.0;
             if ([data objectForKey:@"teamMember"]) {
                 dict = [data objectForKey:@"teamMember"];
                 _userName = [dict objectForKey:@"userName"];//获取用户在球队的真实姓名
+                if ([dict objectForKey:@"power"]) {
+                    _power = [dict objectForKey:@"power"];
+                }
             }else{
                 _isTeamMember = 1;//非球队成员
                 [self.applyBtn setBackgroundColor:[UIColor lightGrayColor]];
@@ -660,11 +665,16 @@ static CGFloat ImageHeight  = 210.0;
 
 #pragma mark -- 查看成绩
 - (void)getTeamActivityResults:(UIButton *)btn{
-    
+    NSInteger timeKey;
     JGTeamDeatilWKwebViewController *wkVC = [[JGTeamDeatilWKwebViewController alloc] init];
-    //        wkVC.detailString = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/score/scoreRanking.html?userKey=%@&srcType=1&srcKey=4309", [[NSUserDefaults standardUserDefaults] objectForKey:@"userKey"],];
+    if (_model.teamActivityKey == 0) {
+        timeKey = [_model.timeKey integerValue];
+    }else{
+        timeKey = _model.teamActivityKey;
+    }
+    wkVC.detailString = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/score/scoreRanking.html?userKey=%@&srcType=1&srcKey=%td", [[NSUserDefaults standardUserDefaults] objectForKey:@"userKey"], timeKey];
+    wkVC.teamName = @"活动成绩";
     [self.navigationController pushViewController:wkVC animated:YES];
-    
 }
 #pragma mark -- 详情页面
 - (void)pushDetailSCtrl:(UIButton *)btn{
@@ -680,18 +690,21 @@ static CGFloat ImageHeight  = 210.0;
         return;
     }
     
-#warning -------- 需要判断是否是管理员  ------补充 activityKey
-    
-    JGActivityMemNonMangerViewController *nonMangerVC = [[JGActivityMemNonMangerViewController alloc] init];
-    //        nonMangerVC.activityKey =
-    [self.navigationController  pushViewController:nonMangerVC animated:YES];
-    
-//    JGTeamDeatilWKwebViewController *WKCtrl = [[JGTeamDeatilWKwebViewController alloc]init];
-//    WKCtrl.detailString = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/team/group.html?key=%@", _model.timeKey];;
-//    WKCtrl.teamName = @"报名人列表";
-//    WKCtrl.isShareBtn = 1;
-//    WKCtrl.teamKey = [_model.timeKey integerValue];
-//    [self.navigationController pushViewController:WKCtrl animated:YES];
+    if ([_power containsString:@"1001"]) {
+        
+    }else{
+        NSInteger timeKey;
+        JGActivityMemNonMangerViewController *nonMangerVC = [[JGActivityMemNonMangerViewController alloc] init];
+        
+        if (_model.teamActivityKey == 0) {
+            timeKey = [_model.timeKey integerValue];
+        }else{
+            timeKey = _model.teamActivityKey;
+        }
+        
+        nonMangerVC.activityKey = [NSNumber numberWithInteger:timeKey];
+        [self.navigationController  pushViewController:nonMangerVC animated:YES];
+    }
 }
 #pragma mark - Table View Delegate
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
