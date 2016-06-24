@@ -388,9 +388,9 @@
     [_scrollView addSubview:_viewSec];
     
     UICollectionViewFlowLayout *flowLayout=[[UICollectionViewFlowLayout alloc] init];
-    flowLayout.minimumInteritemSpacing=0.f;//左右间隔
+    flowLayout.minimumInteritemSpacing=ScreenWidth / 8;//左右间隔
     flowLayout.minimumLineSpacing=0.f;
-    _collectionView = [[UICollectionView alloc]initWithFrame:CGRectMake(0, 0, _viewSec.frame.size.width, _viewSec.frame.size.height) collectionViewLayout:flowLayout];
+    _collectionView = [[UICollectionView alloc]initWithFrame:CGRectMake(ScreenWidth / 8, 0, _viewSec.frame.size.width, _viewSec.frame.size.height) collectionViewLayout:flowLayout];
     //    _collectionView.frame = _yuansuScrollview.frame;
     [_viewSec addSubview:_collectionView];
     _collectionView.delegate=self;
@@ -431,7 +431,7 @@
 //定义展示的UICollectionViewCell的个数
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return 4;
+    return 2;
 }
 //定义展示的Section的个数
 -(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView

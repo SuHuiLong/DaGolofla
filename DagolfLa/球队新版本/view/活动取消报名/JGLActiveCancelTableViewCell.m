@@ -22,6 +22,10 @@
 -(void)showData:(JGHPlayersModel *)model
 {
     [_iconImg sd_setImageWithURL:[Helper setImageIconUrl:@"user" andTeamKey:model.userKey andIsSetWidth:YES andIsBackGround:NO] placeholderImage:[UIImage imageNamed:TeamLogoImage]];
+    
+    _iconImg.layer.cornerRadius = 20;
+    _iconImg.clipsToBounds = YES;
+    
     if (![Helper isBlankString:model.name]) {
         _nameLabel.text = [NSString stringWithFormat:@"%@",model.name];
     }else

@@ -232,14 +232,24 @@ static NSString *const JGHButtonCellIdentifier = @"JGHButtonCell";
 }
 #pragma mark --取消报名
 - (void)selectCommitBtnClick:(UIButton *)btn{
+    NSInteger applyCount = 0;
+    for (NSMutableDictionary *dict in _dataArray) {
+        if ([[dict objectForKey:@"select"] integerValue] == 1) {
+            applyCount += 1;
+        }
+    }
     
-    [Helper alertViewWithTitle:@"确定取消报名？" withBlockCancle:^{
-        NSLog(@"取消报名");
-    } withBlockSure:^{
-        [self cancelApply];
-    } withBlock:^(UIAlertController *alertView) {
-       [self presentViewController:alertView animated:YES completion:nil];
-    }];
+    if (applyCount == 0) {
+        [[ShowHUD showHUD]showToastWithText:@"请选择取消报名人！" FromView:self.view];
+    }else{
+        [Helper alertViewWithTitle:@"确定取消报名？" withBlockCancle:^{
+            NSLog(@"取消报名");
+        } withBlockSure:^{
+            [self cancelApply];
+        } withBlock:^(UIAlertController *alertView) {
+            [self presentViewController:alertView animated:YES completion:nil];
+        }];
+    }
 }
 
 - (void)cancelApply{
