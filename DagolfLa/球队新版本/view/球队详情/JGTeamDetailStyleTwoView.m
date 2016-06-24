@@ -33,7 +33,7 @@
         [self addSubview:self.teamIntroductionBackView];
         
         UILabel *teamIntroduction = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 30 * screenWidth / 320)];
-        teamIntroduction.text = @" 球队动态";
+        teamIntroduction.text = @" 球队公告";
         teamIntroduction.textColor = [UIColor lightGrayColor];
         teamIntroduction.backgroundColor = [UIColor whiteColor];
         [self.teamIntroductionBackView addSubview:teamIntroduction];
