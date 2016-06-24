@@ -93,6 +93,7 @@
     //拍照：
     UIAlertAction * act2 = [UIAlertAction actionWithTitle:@"拍照" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         //打开相机
+        _pickPhoto.picker.allowsEditing = NO;
         [_pickPhoto ShowTakePhotoWithController:self andWithBlock:^(NSObject *Data) {
             NSArray* arrayData = [NSArray arrayWithObject:UIImageJPEGRepresentation((UIImage *)Data, 0.7)];
             [self imageArray:arrayData];
@@ -102,6 +103,7 @@
     //相册
     UIAlertAction * act3 = [UIAlertAction actionWithTitle:@"相册" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         //打开相册
+        _pickPhoto.picker.allowsEditing = NO;
         [_pickPhoto SHowLocalPhotoWithController:self andWithBlock:^(NSObject *Data) {
             NSArray* arrayData = [NSArray arrayWithObject:UIImageJPEGRepresentation((UIImage *)Data, 0.7)];
             [self imageArray:arrayData];

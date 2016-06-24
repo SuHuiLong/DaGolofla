@@ -22,6 +22,8 @@
 
 #import "HomeHeadView.h"
 
+#import "JGLPaySignUpViewController.h"
+
 @interface ShouyeViewController ()<UIApplicationDelegate,CLLocationManagerDelegate>
 {
 //    UITableView *_tableView;
@@ -215,7 +217,7 @@
             {
                 NSLog(@"shangchen");
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
-                UseMallViewController* userVc = [[UseMallViewController alloc]init];
+                JGLPaySignUpViewController* userVc = [[JGLPaySignUpViewController alloc]init];
                 [self.navigationController pushViewController:userVc animated:YES];
             }
                 break;

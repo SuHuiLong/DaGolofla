@@ -833,6 +833,7 @@
 		823C149D1CEEF0B5000AB612 /* JGLTeamMemberModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 823C149C1CEEF0B5000AB612 /* JGLTeamMemberModel.m */; };
 		82636E8D1D06CB1600216DC1 /* JGPhotoListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 82636E8C1D06CB1600216DC1 /* JGPhotoListModel.m */; };
 		82636E901D06D18100216DC1 /* JGTeamPhotoShowViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 82636E8F1D06D18100216DC1 /* JGTeamPhotoShowViewController.m */; };
+		827AA0111D1D003C00F6B80B /* JGLPaySignModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 827AA0101D1D003C00F6B80B /* JGLPaySignModel.m */; };
 		8281BE551CEC41D200C5BD31 /* JGTeamPhotoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8281BE541CEC41D200C5BD31 /* JGTeamPhotoModel.m */; };
 		828A99E41CE3167800AF9860 /* JGTeamCreatePhotoController.m in Sources */ = {isa = PBXBuildFile; fileRef = 828A99E31CE3167800AF9860 /* JGTeamCreatePhotoController.m */; };
 		828A99E71CE325BB00AF9860 /* JGPhotoAlbumViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 828A99E61CE325BB00AF9860 /* JGPhotoAlbumViewController.m */; };
@@ -848,6 +849,12 @@
 		82ABF1B51D1BC640004493DB /* JGLActiveMemTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 82ABF1B31D1BC640004493DB /* JGLActiveMemTableViewCell.xib */; };
 		82ABF1B91D1BC718004493DB /* JGLActiveCancelTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 82ABF1B71D1BC718004493DB /* JGLActiveCancelTableViewCell.m */; };
 		82ABF1BA1D1BC718004493DB /* JGLActiveCancelTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 82ABF1B81D1BC718004493DB /* JGLActiveCancelTableViewCell.xib */; };
+		82ABF1BD1D1BFDB0004493DB /* JGLPaySignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 82ABF1BC1D1BFDB0004493DB /* JGLPaySignUpViewController.m */; };
+		82ABF1C61D1C02A3004493DB /* JGLPayHeaderTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 82ABF1C51D1C02A3004493DB /* JGLPayHeaderTableViewCell.m */; };
+		82ABF1CD1D1C072E004493DB /* JGLSignPeoTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 82ABF1CB1D1C072E004493DB /* JGLSignPeoTableViewCell.m */; };
+		82ABF1CE1D1C072E004493DB /* JGLSignPeoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 82ABF1CC1D1C072E004493DB /* JGLSignPeoTableViewCell.xib */; };
+		82ABF1D21D1C0847004493DB /* JGLPayListTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 82ABF1D01D1C0847004493DB /* JGLPayListTableViewCell.m */; };
+		82ABF1D31D1C0847004493DB /* JGLPayListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 82ABF1D11D1C0847004493DB /* JGLPayListTableViewCell.xib */; };
 		82BEEC841CF98828000DFE46 /* JGLNewShopDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 82BEEC831CF98828000DFE46 /* JGLNewShopDetailViewController.m */; };
 		82D595DF1CE42BDF00CD9587 /* BaiduMapAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82D595DD1CE42BDF00CD9587 /* BaiduMapAPI.framework */; };
 		82D595E01CE42BDF00CD9587 /* mapapi.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 82D595DE1CE42BDF00CD9587 /* mapapi.bundle */; };
@@ -2297,6 +2304,8 @@
 		82636E8C1D06CB1600216DC1 /* JGPhotoListModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGPhotoListModel.m; sourceTree = "<group>"; };
 		82636E8E1D06D18100216DC1 /* JGTeamPhotoShowViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGTeamPhotoShowViewController.h; sourceTree = "<group>"; };
 		82636E8F1D06D18100216DC1 /* JGTeamPhotoShowViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGTeamPhotoShowViewController.m; sourceTree = "<group>"; };
+		827AA00F1D1D003C00F6B80B /* JGLPaySignModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGLPaySignModel.h; sourceTree = "<group>"; };
+		827AA0101D1D003C00F6B80B /* JGLPaySignModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGLPaySignModel.m; sourceTree = "<group>"; };
 		8281BE531CEC41D200C5BD31 /* JGTeamPhotoModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGTeamPhotoModel.h; sourceTree = "<group>"; };
 		8281BE541CEC41D200C5BD31 /* JGTeamPhotoModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGTeamPhotoModel.m; sourceTree = "<group>"; };
 		828A99E21CE3167800AF9860 /* JGTeamCreatePhotoController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGTeamCreatePhotoController.h; sourceTree = "<group>"; };
@@ -2334,6 +2343,16 @@
 		82ABF1B61D1BC718004493DB /* JGLActiveCancelTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGLActiveCancelTableViewCell.h; sourceTree = "<group>"; };
 		82ABF1B71D1BC718004493DB /* JGLActiveCancelTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGLActiveCancelTableViewCell.m; sourceTree = "<group>"; };
 		82ABF1B81D1BC718004493DB /* JGLActiveCancelTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JGLActiveCancelTableViewCell.xib; sourceTree = "<group>"; };
+		82ABF1BB1D1BFDB0004493DB /* JGLPaySignUpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGLPaySignUpViewController.h; sourceTree = "<group>"; };
+		82ABF1BC1D1BFDB0004493DB /* JGLPaySignUpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGLPaySignUpViewController.m; sourceTree = "<group>"; };
+		82ABF1C41D1C02A3004493DB /* JGLPayHeaderTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGLPayHeaderTableViewCell.h; sourceTree = "<group>"; };
+		82ABF1C51D1C02A3004493DB /* JGLPayHeaderTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGLPayHeaderTableViewCell.m; sourceTree = "<group>"; };
+		82ABF1CA1D1C072E004493DB /* JGLSignPeoTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGLSignPeoTableViewCell.h; sourceTree = "<group>"; };
+		82ABF1CB1D1C072E004493DB /* JGLSignPeoTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGLSignPeoTableViewCell.m; sourceTree = "<group>"; };
+		82ABF1CC1D1C072E004493DB /* JGLSignPeoTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JGLSignPeoTableViewCell.xib; sourceTree = "<group>"; };
+		82ABF1CF1D1C0847004493DB /* JGLPayListTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGLPayListTableViewCell.h; sourceTree = "<group>"; };
+		82ABF1D01D1C0847004493DB /* JGLPayListTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGLPayListTableViewCell.m; sourceTree = "<group>"; };
+		82ABF1D11D1C0847004493DB /* JGLPayListTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JGLPayListTableViewCell.xib; sourceTree = "<group>"; };
 		82BEEC821CF98828000DFE46 /* JGLNewShopDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGLNewShopDetailViewController.h; sourceTree = "<group>"; };
 		82BEEC831CF98828000DFE46 /* JGLNewShopDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGLNewShopDetailViewController.m; sourceTree = "<group>"; };
 		82D595DD1CE42BDF00CD9587 /* BaiduMapAPI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = BaiduMapAPI.framework; sourceTree = SOURCE_ROOT; };
@@ -2851,6 +2870,8 @@
 				20513B4B1CF5D448003233FB /* InvoiceModel.m */,
 				20513B5A1CF69F3B003233FB /* JGHPlayersModel.h */,
 				20513B5B1CF69F3B003233FB /* JGHPlayersModel.m */,
+				827AA00F1D1D003C00F6B80B /* JGLPaySignModel.h */,
+				827AA0101D1D003C00F6B80B /* JGLPaySignModel.m */,
 			);
 			path = "球队活动";
 			sourceTree = "<group>";
@@ -5746,8 +5767,25 @@
 				82ABF1AF1D1BC0B3004493DB /* JGLActiveCancelMemViewController.m */,
 				F5EEB1511D1BC1C7009D37CE /* JGActivityMemNonMangerViewController.h */,
 				F5EEB1521D1BC1C7009D37CE /* JGActivityMemNonMangerViewController.m */,
+				82ABF1BB1D1BFDB0004493DB /* JGLPaySignUpViewController.h */,
+				82ABF1BC1D1BFDB0004493DB /* JGLPaySignUpViewController.m */,
 			);
 			path = "活动取消报名";
+			sourceTree = "<group>";
+		};
+		82ABF1BE1D1C0141004493DB /* 支付报名 */ = {
+			isa = PBXGroup;
+			children = (
+				82ABF1C41D1C02A3004493DB /* JGLPayHeaderTableViewCell.h */,
+				82ABF1C51D1C02A3004493DB /* JGLPayHeaderTableViewCell.m */,
+				82ABF1CA1D1C072E004493DB /* JGLSignPeoTableViewCell.h */,
+				82ABF1CB1D1C072E004493DB /* JGLSignPeoTableViewCell.m */,
+				82ABF1CC1D1C072E004493DB /* JGLSignPeoTableViewCell.xib */,
+				82ABF1CF1D1C0847004493DB /* JGLPayListTableViewCell.h */,
+				82ABF1D01D1C0847004493DB /* JGLPayListTableViewCell.m */,
+				82ABF1D11D1C0847004493DB /* JGLPayListTableViewCell.xib */,
+			);
+			path = "支付报名";
 			sourceTree = "<group>";
 		};
 		82BEEC811CF98813000DFE46 /* 商城详情界面 */ = {
@@ -6060,6 +6098,7 @@
 		F5EEB1541D1BC28F009D37CE /* 活动取消报名 */ = {
 			isa = PBXGroup;
 			children = (
+				82ABF1BE1D1C0141004493DB /* 支付报名 */,
 				F5EEB1551D1BC2BB009D37CE /* JGActivityMemNonmangerTableViewCell.h */,
 				F5EEB1561D1BC2BB009D37CE /* JGActivityMemNonmangerTableViewCell.m */,
 				82ABF1B11D1BC640004493DB /* JGLActiveMemTableViewCell.h */,
@@ -6249,6 +6288,7 @@
 				36BF00081BC770C4005B3CE2 /* chat_bottom_voice_press.png in Resources */,
 				36BFFE3D1BC76CDC005B3CE2 /* kuang_xz@3x.png in Resources */,
 				36BFFECD1BC76CDC005B3CE2 /* tttj@2x.png in Resources */,
+				82ABF1D31D1C0847004493DB /* JGLPayListTableViewCell.xib in Resources */,
 				36BFFEA71BC76CDC005B3CE2 /* hjxs@3x.png in Resources */,
 				36BFFE7D1BC76CDC005B3CE2 /* xiala.png in Resources */,
 				20C1B8AC1CE313A200508ABC /* JGTeamApplyViewController.xib in Resources */,
@@ -6442,6 +6482,7 @@
 				AA91C7861C4201B80078DA17 /* IQButtonBarArrowLeft@2x.png in Resources */,
 				36BFFE341BC76CDC005B3CE2 /* home@3x.png in Resources */,
 				36BF01CC1BC77ABE005B3CE2 /* YueWaitTableViewCell.xib in Resources */,
+				82ABF1CE1D1C072E004493DB /* JGLSignPeoTableViewCell.xib in Resources */,
 				36BFFE531BC76CDC005B3CE2 /* shouchang2@3x.png in Resources */,
 				36BF00C01BC77383005B3CE2 /* NewsDetailViewCell.xib in Resources */,
 				36BFFEB91BC76CDC005B3CE2 /* tab_bg2@3x.png in Resources */,
@@ -6736,6 +6777,7 @@
 				F56F0B8D1CC613E100A222F3 /* NoteModel.m in Sources */,
 				3660E1411BFC55AC0033B4D7 /* ActiveNumViewController.m in Sources */,
 				36BF01071BC775AC005B3CE2 /* MallView.m in Sources */,
+				82ABF1BD1D1BFDB0004493DB /* JGLPaySignUpViewController.m in Sources */,
 				36BF01661BC77611005B3CE2 /* RewardAreaViewController.m in Sources */,
 				36747C441BE0AE3B0052A1B0 /* CityHighChooseView.m in Sources */,
 				36BFFFCD1BC770B1005B3CE2 /* BrowseImagesViewController.m in Sources */,
@@ -6798,6 +6840,7 @@
 				F50B7FB01CE59C8F0065069D /* JGTeamDetailStyleTwoView.m in Sources */,
 				654A031B1CC89F70007F5243 /* PersonHomeController.m in Sources */,
 				82E6A70D1CF5DDB8009DD179 /* JGLTeamEditViewController.m in Sources */,
+				82ABF1D21D1C0847004493DB /* JGLPayListTableViewCell.m in Sources */,
 				208030441CF7F32E00448BFC /* JGHIvoiceTypeCell.m in Sources */,
 				36BFFF5C1BC76D09005B3CE2 /* AFNetworkReachabilityManager.m in Sources */,
 				3660E1421BFC55AC0033B4D7 /* ActiveScoreController.m in Sources */,
@@ -6964,6 +7007,7 @@
 				823C149D1CEEF0B5000AB612 /* JGLTeamMemberModel.m in Sources */,
 				20BA612A1CDC99D0004B61F5 /* ALButton.m in Sources */,
 				36E1FBB41C7D817A006B1456 /* ChangePicViewController.m in Sources */,
+				82ABF1CD1D1C072E004493DB /* JGLSignPeoTableViewCell.m in Sources */,
 				36BF00921BC772EF005B3CE2 /* MyNewsBoxViewController.m in Sources */,
 				F56F0B871CC60B0400A222F3 /* NoteHandlle.m in Sources */,
 				82D595E91CE4604500CD9587 /* JGTeamPhotoViewController.m in Sources */,
@@ -6997,10 +7041,12 @@
 				36BF01851BC77611005B3CE2 /* YueSearchViewController.m in Sources */,
 				36BFFF941BC76D6B005B3CE2 /* TabBarController.m in Sources */,
 				20C1B8B51CE344C600508ABC /* JGApplyPepoleCell.m in Sources */,
+				82ABF1C61D1C02A3004493DB /* JGLPayHeaderTableViewCell.m in Sources */,
 				36BF01001BC7750D005B3CE2 /* YueQiuViewController.m in Sources */,
 				36BFFFA11BC76FE3005B3CE2 /* MeViewController.m in Sources */,
 				20513B4C1CF5D448003233FB /* InvoiceModel.m in Sources */,
 				36F4D2B31C7871230094737B /* RCDraggableButton.m in Sources */,
+				827AA0111D1D003C00F6B80B /* JGLPaySignModel.m in Sources */,
 				36BFFFFE1BC770C4005B3CE2 /* ChatWithViewController.m in Sources */,
 				3660E1AE1BFC58830033B4D7 /* TeamGaoActiveController.m in Sources */,
 				36DA6ABC1C018AAD00AE5001 /* TeamPeopleModel.m in Sources */,
