@@ -84,7 +84,6 @@ static CGFloat ImageHeight  = 210.0;
     [super viewWillAppear:YES];
     self.navigationController.navigationBarHidden = YES;
     [self setData];
-    
     if (self.isTeamChannal == 2){
         if (_model.teamActivityKey == 0) {
             //我的球队活动
@@ -142,6 +141,11 @@ static CGFloat ImageHeight  = 210.0;
         bgImage = _model.bgImage;
         headerImage = _model.headerImage;
     }
+    
+    //监听分组页面返回，刷新数据
+    NSNotificationCenter * center = [NSNotificationCenter defaultCenter];
+    //添加当前类对象为一个观察者，name和object设置为nil，表示接收一切通知
+    [center addObserver:self selector:@selector(reloadActivityData:) name:@"reloadActivityData" object:nil];
     
     self.imgProfile = [[UIImageView alloc] initWithImage:bgImage];
     self.imgProfile.frame = CGRectMake(0, 0, screenWidth, ImageHeight);
@@ -778,6 +782,18 @@ static CGFloat ImageHeight  = 210.0;
         }
     }
 }
+
+#pragma mark --分组页面返回后，刷新数据
+- (void)reloadData:(LoadData)block{
+    [self dataSet];
+}
+
+#pragma mark -- 刷新数据
+- (void)reloadActivityData:(id)not{
+    
+    [self dataSet];
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

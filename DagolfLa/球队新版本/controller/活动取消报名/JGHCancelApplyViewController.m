@@ -48,6 +48,7 @@ static NSString *const JGHButtonCellIdentifier = @"JGHButtonCell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    self.navigationItem.title = @"取消报名";
     
     [self createTableView];
 }
