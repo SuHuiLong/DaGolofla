@@ -37,6 +37,9 @@
 #import "JGActivityNameBaseCell.h"
 #import "JGHCancelApplyViewController.h"
 
+#import "JGActivityMemNonMangerViewController.h"
+
+
 static NSString *const JGTeamActivityWithAddressCellIdentifier = @"JGTeamActivityWithAddressCell";
 static NSString *const JGTeamActivityDetailsCellIdentifier = @"JGTeamActivityDetailsCell";
 static NSString *const JGHHeaderLabelCellIdentifier = @"JGHHeaderLabelCell";
@@ -653,8 +656,14 @@ static CGFloat ImageHeight  = 210.0;
     footView.backgroundColor = [UIColor colorWithHexString:BG_color];
     return footView;
 }
+
+
 #pragma mark -- 查看成绩
 - (void)getTeamActivityResults:(UIButton *)btn{
+    
+    JGTeamDeatilWKwebViewController *wkVC = [[JGTeamDeatilWKwebViewController alloc] init];
+    //        wkVC.detailString = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/score/scoreRanking.html?userKey=%@&srcType=1&srcKey=4309", [[NSUserDefaults standardUserDefaults] objectForKey:@"userKey"],];
+    [self.navigationController pushViewController:wkVC animated:YES];
     
 }
 #pragma mark -- 详情页面
@@ -671,12 +680,18 @@ static CGFloat ImageHeight  = 210.0;
         return;
     }
     
-    JGTeamDeatilWKwebViewController *WKCtrl = [[JGTeamDeatilWKwebViewController alloc]init];
-    WKCtrl.detailString = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/team/group.html?key=%@", _model.timeKey];;
-    WKCtrl.teamName = @"报名人列表";
-    WKCtrl.isShareBtn = 1;
-    WKCtrl.teamKey = [_model.timeKey integerValue];
-    [self.navigationController pushViewController:WKCtrl animated:YES];
+#warning -------- 需要判断是否是管理员  ------补充 activityKey
+    
+    JGActivityMemNonMangerViewController *nonMangerVC = [[JGActivityMemNonMangerViewController alloc] init];
+    //        nonMangerVC.activityKey =
+    [self.navigationController  pushViewController:nonMangerVC animated:YES];
+    
+//    JGTeamDeatilWKwebViewController *WKCtrl = [[JGTeamDeatilWKwebViewController alloc]init];
+//    WKCtrl.detailString = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/team/group.html?key=%@", _model.timeKey];;
+//    WKCtrl.teamName = @"报名人列表";
+//    WKCtrl.isShareBtn = 1;
+//    WKCtrl.teamKey = [_model.timeKey integerValue];
+//    [self.navigationController pushViewController:WKCtrl animated:YES];
 }
 #pragma mark - Table View Delegate
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
