@@ -28,11 +28,13 @@
     if (_isClick == NO) {
         [btn setImage:[UIImage imageNamed:@"kuang"] forState:UIControlStateNormal];
         _isClick = YES;
+        _chooseNoNum();
     }
     else
     {
         [btn setImage:[UIImage imageNamed:@"kuang_xz"] forState:UIControlStateNormal];
         _isClick = NO;
+        _chooseYesNum();
     }
 }
 

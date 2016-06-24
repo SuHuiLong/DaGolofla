@@ -39,6 +39,7 @@
 
 #import "JGActivityMemNonMangerViewController.h"
 #import "JGLActiveCancelMemViewController.h"
+#import "JGLPaySignUpViewController.h"
 
 static NSString *const JGTeamActivityWithAddressCellIdentifier = @"JGTeamActivityWithAddressCell";
 static NSString *const JGTeamActivityDetailsCellIdentifier = @"JGTeamActivityDetailsCell";
@@ -474,12 +475,32 @@ static CGFloat ImageHeight  = 210.0;
     UIButton *applyOrPayBtn = [[UIButton alloc]initWithFrame:CGRectMake(photoBtn.frame.size.width + cancelApplyBtn.frame.size.width, screenHeight-44, (screenWidth - 75 *ScreenWidth/375)/2, 44)];
     [applyOrPayBtn setTitle:@"报名／支付" forState:UIControlStateNormal];
     applyOrPayBtn.backgroundColor = [UIColor colorWithHexString:Cancel_Color];
-    [applyOrPayBtn addTarget:self action:@selector(applyAttendBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    [applyOrPayBtn addTarget:self action:@selector(applyOrPayBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     if ([[Helper returnCurrentDateString] compare:_model.signUpEndTime] >= 0) {
         applyOrPayBtn.backgroundColor = [UIColor lightGrayColor];
     }
     
     [self.view addSubview:applyOrPayBtn];
+}
+#pragma mark -- 报名／支付
+- (void)applyOrPayBtnClick:(UIButton *)btn{
+    JGLPaySignUpViewController *paySignUpCtrl = [[JGLPaySignUpViewController alloc]init];
+    if (self.isTeamChannal == 1) {
+        //近期活动
+        paySignUpCtrl.activityKey = [_model.timeKey integerValue];
+    }else{
+        if (self.isTeamChannal == 2) {
+            if (_model.teamActivityKey == 0) {
+                //球队活动
+                paySignUpCtrl.activityKey = [_model.timeKey integerValue];
+            }else{
+                //我的球队
+                paySignUpCtrl.activityKey = _model.teamActivityKey;
+            }
+        }
+    }
+    paySignUpCtrl.model = _model;
+    [self.navigationController pushViewController:paySignUpCtrl animated:YES];
 }
 #pragma mark -- 取消报名
 - (void)cancelApplyBtnClick:(UIButton *)btn{
