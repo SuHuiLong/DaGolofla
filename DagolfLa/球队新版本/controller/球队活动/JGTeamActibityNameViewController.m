@@ -322,20 +322,17 @@ static CGFloat ImageHeight  = 210.0;
 -(void)shareInfo:(NSInteger)index{
     
     NSData *fiData = [[NSData alloc]init];
-    if (_teamActivityKey != 0) {
-        fiData = [NSData dataWithContentsOfURL:[Helper setImageIconUrl:@"activity" andTeamKey:_teamActivityKey andIsSetWidth:YES andIsBackGround:YES]];
+    NSString*  shareUrl;
+    if ([_model.timeKey integerValue] == 0) {
+        fiData = [NSData dataWithContentsOfURL:[Helper setImageIconUrl:@"activity" andTeamKey:_model.teamActivityKey andIsSetWidth:YES andIsBackGround:YES]];
+        shareUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/team/teamac.html?key=%td", _model.teamActivityKey];
     }
     else
     {
         fiData = [NSData dataWithContentsOfURL:[Helper setImageIconUrl:@"activity" andTeamKey:[_model.timeKey integerValue]andIsSetWidth:YES andIsBackGround:YES]];
+        shareUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/team/teamac.html?key=%@", _model.timeKey];
     }
     
-    NSString*  shareUrl;
-    if (self.isTeamChannal == 2) {
-        shareUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/team/teamac.html?key=%@", _model.timeKey];
-    }else{
-        shareUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/team/teamac.html?key=%td", _teamActivityKey];
-    }
     
     [UMSocialData defaultData].extConfig.title=[NSString stringWithFormat:@"%@报名", _model.name];
     
