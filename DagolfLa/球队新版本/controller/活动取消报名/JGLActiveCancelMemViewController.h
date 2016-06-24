@@ -10,4 +10,7 @@
 
 @interface JGLActiveCancelMemViewController : ViewController
 
+//活动key
+@property (strong, nonatomic) NSNumber * activityKey;
+
 @end

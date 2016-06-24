@@ -38,7 +38,8 @@
 #import "JGHCancelApplyViewController.h"
 
 #import "JGActivityMemNonMangerViewController.h"
-
+#import "JGLActiveCancelMemViewController.h"
+#import "JGLPaySignUpViewController.h"
 
 static NSString *const JGTeamActivityWithAddressCellIdentifier = @"JGTeamActivityWithAddressCell";
 static NSString *const JGTeamActivityDetailsCellIdentifier = @"JGTeamActivityDetailsCell";
@@ -53,6 +54,8 @@ static CGFloat ImageHeight  = 210.0;
     NSString *_userName;//用户在球队的真实姓名
     
     id _isApply;//是否已经报名0未，1已
+    
+    NSString *_power;//权限
 }
 
 @property (nonatomic, strong)UITableView *teamActibityNameTableView;
@@ -242,7 +245,7 @@ static CGFloat ImageHeight  = 210.0;
     } completionBlock:^(id data) {
         NSLog(@"%@", data);
         [[ShowHUD showHUD]hideAnimationFromView:self.view];
-        _isApply = [data objectForKey:@"hasSignUp"];
+        _isApply = [data objectForKey:@"hasSignUp"];//是否报名
         if ([_isApply integerValue] == 0) {
             [self createApplyBtn];//报名按钮
         }else{
@@ -254,6 +257,9 @@ static CGFloat ImageHeight  = 210.0;
             if ([data objectForKey:@"teamMember"]) {
                 dict = [data objectForKey:@"teamMember"];
                 _userName = [dict objectForKey:@"userName"];//获取用户在球队的真实姓名
+                if ([dict objectForKey:@"power"]) {
+                    _power = [dict objectForKey:@"power"];
+                }
             }else{
                 _isTeamMember = 1;//非球队成员
                 [self.applyBtn setBackgroundColor:[UIColor lightGrayColor]];
@@ -469,12 +475,32 @@ static CGFloat ImageHeight  = 210.0;
     UIButton *applyOrPayBtn = [[UIButton alloc]initWithFrame:CGRectMake(photoBtn.frame.size.width + cancelApplyBtn.frame.size.width, screenHeight-44, (screenWidth - 75 *ScreenWidth/375)/2, 44)];
     [applyOrPayBtn setTitle:@"报名／支付" forState:UIControlStateNormal];
     applyOrPayBtn.backgroundColor = [UIColor colorWithHexString:Cancel_Color];
-    [applyOrPayBtn addTarget:self action:@selector(applyAttendBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    [applyOrPayBtn addTarget:self action:@selector(applyOrPayBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     if ([[Helper returnCurrentDateString] compare:_model.signUpEndTime] >= 0) {
         applyOrPayBtn.backgroundColor = [UIColor lightGrayColor];
     }
     
     [self.view addSubview:applyOrPayBtn];
+}
+#pragma mark -- 报名／支付
+- (void)applyOrPayBtnClick:(UIButton *)btn{
+    JGLPaySignUpViewController *paySignUpCtrl = [[JGLPaySignUpViewController alloc]init];
+    if (self.isTeamChannal == 1) {
+        //近期活动
+        paySignUpCtrl.activityKey = [_model.timeKey integerValue];
+    }else{
+        if (self.isTeamChannal == 2) {
+            if (_model.teamActivityKey == 0) {
+                //球队活动
+                paySignUpCtrl.activityKey = [_model.timeKey integerValue];
+            }else{
+                //我的球队
+                paySignUpCtrl.activityKey = _model.teamActivityKey;
+            }
+        }
+    }
+    paySignUpCtrl.model = _model;
+    [self.navigationController pushViewController:paySignUpCtrl animated:YES];
 }
 #pragma mark -- 取消报名
 - (void)cancelApplyBtnClick:(UIButton *)btn{
@@ -660,11 +686,10 @@ static CGFloat ImageHeight  = 210.0;
 
 #pragma mark -- 查看成绩
 - (void)getTeamActivityResults:(UIButton *)btn{
-    
+    NSInteger timeKey;
     JGTeamDeatilWKwebViewController *wkVC = [[JGTeamDeatilWKwebViewController alloc] init];
             wkVC.detailString = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/score/scoreRanking.html?userKey=%@&srcType=1&srcKey=4381", [[NSUserDefaults standardUserDefaults] objectForKey:@"userKey"]];
     [self.navigationController pushViewController:wkVC animated:YES];
-    
 }
 #pragma mark -- 详情页面
 - (void)pushDetailSCtrl:(UIButton *)btn{

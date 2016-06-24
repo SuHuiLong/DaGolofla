@@ -1,12 +1,12 @@
 //
-//  JGHApplyListView.m
+//  JGHRepeatApplyView.m
 //  DagolfLa
 //
-//  Created by 黄安 on 16/6/21.
+//  Created by 黄安 on 16/6/24.
 //  Copyright © 2016年 bhxx. All rights reserved.
 //
 
-#import "JGHApplyListView.h"
+#import "JGHRepeatApplyView.h"
 #import "JGHHeaderLabelCell.h"
 #import "JGApplyPepoleCell.h"
 #import "JGHApplyListCell.h"
@@ -17,9 +17,9 @@ static NSString *const JGSignUoPromptCellIdentifier = @"JGSignUoPromptCell";
 static NSString *const JGHApplyListCellIdentifier = @"JGHApplyListCell";
 static NSString *const JGHHeaderLabelCellIdentifier = @"JGHHeaderLabelCell";
 
-@interface JGHApplyListView ()<UITableViewDelegate, UITableViewDataSource, JGHApplyListCellDelegate>
+@interface JGHRepeatApplyView ()<UITableViewDelegate, UITableViewDataSource>
 
-@property (nonatomic, strong)UITableView *applistTableView;
+@property (nonatomic, strong)UITableView *repeatApplyTableView;
 
 @property (nonatomic, strong)UIButton *cancelBtn;
 
@@ -31,12 +31,12 @@ static NSString *const JGHHeaderLabelCellIdentifier = @"JGHHeaderLabelCell";
 
 @end
 
-@implementation JGHApplyListView
+@implementation JGHRepeatApplyView
 
 - (instancetype)init{
     if (self == [super init]) {
         self.backgroundColor = [UIColor whiteColor];
-        self.applistArray = [NSMutableArray array];
+        self.repeatAppArray = [NSMutableArray array];
         _realPayPrice = 0;
         _amountPayable = 0;
         _realSubPrice = 0;
@@ -46,13 +46,23 @@ static NSString *const JGHHeaderLabelCellIdentifier = @"JGHHeaderLabelCell";
     return self;
 }
 
-- (instancetype)initWithFrame:(CGRect)frame{
-    self = [super initWithFrame:frame];
-    if (self) {
-        
-    }
-    return self;
+#pragma mark -- 创建TableView
+- (void)createTeamActivityTabelView{
+    self.repeatApplyTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, 196) style:UITableViewStyleGrouped];
+    self.repeatApplyTableView.delegate = self;
+    self.repeatApplyTableView.dataSource = self;
+    self.repeatApplyTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    UINib *applyPepoleNib = [UINib nibWithNibName:@"JGApplyPepoleCell" bundle: [NSBundle mainBundle]];
+    [self.repeatApplyTableView registerNib:applyPepoleNib forCellReuseIdentifier:JGApplyPepoleCellIdentifier];
+    UINib *signUoPromptNib = [UINib nibWithNibName:@"JGSignUoPromptCell" bundle: [NSBundle mainBundle]];
+    [self.repeatApplyTableView registerNib:signUoPromptNib forCellReuseIdentifier:JGSignUoPromptCellIdentifier];
+    UINib *applyListNib = [UINib nibWithNibName:@"JGHApplyListCell" bundle: [NSBundle mainBundle]];
+    [self.repeatApplyTableView registerNib:applyListNib forCellReuseIdentifier:JGHApplyListCellIdentifier];
+    UINib *headerLabelNib = [UINib nibWithNibName:@"JGHHeaderLabelCell" bundle: [NSBundle mainBundle]];
+    [self.repeatApplyTableView registerNib:headerLabelNib forCellReuseIdentifier:JGHHeaderLabelCellIdentifier];
+    [self addSubview:self.repeatApplyTableView];
 }
+
 #pragma mark -- 创建取消－支付按钮
 - (void)createCancelAndSubmitBtn{
     self.cancelBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 152, screenWidth/2, 44)];
@@ -67,42 +77,13 @@ static NSString *const JGHHeaderLabelCellIdentifier = @"JGHHeaderLabelCell";
     [self.submitBtn addTarget:self action:@selector(submitBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:self.submitBtn];
 }
-#pragma mark -- 取消
-- (void)cancelBtnClick:(UIButton *)btn{
-    if (self.delegate) {
-        [self.delegate didSelectCancelBtn:btn];
-    }
-}
-#pragma mark -- 立即支付
-- (void)submitBtnClick:(UIButton *)btn{
-    if (self.delegate) {
-        [self.delegate didSelectPayBtn:btn];
-    }
-}
-#pragma mark -- 创建TableView
-- (void)createTeamActivityTabelView{
-    self.applistTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, 196) style:UITableViewStyleGrouped];
-    self.applistTableView.delegate = self;
-    self.applistTableView.dataSource = self;
-    self.applistTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    UINib *applyPepoleNib = [UINib nibWithNibName:@"JGApplyPepoleCell" bundle: [NSBundle mainBundle]];
-    [self.applistTableView registerNib:applyPepoleNib forCellReuseIdentifier:JGApplyPepoleCellIdentifier];
-    UINib *signUoPromptNib = [UINib nibWithNibName:@"JGSignUoPromptCell" bundle: [NSBundle mainBundle]];
-    [self.applistTableView registerNib:signUoPromptNib forCellReuseIdentifier:JGSignUoPromptCellIdentifier];
-    UINib *applyListNib = [UINib nibWithNibName:@"JGHApplyListCell" bundle: [NSBundle mainBundle]];
-    [self.applistTableView registerNib:applyListNib forCellReuseIdentifier:JGHApplyListCellIdentifier];
-    UINib *headerLabelNib = [UINib nibWithNibName:@"JGHHeaderLabelCell" bundle: [NSBundle mainBundle]];
-    [self.applistTableView registerNib:headerLabelNib forCellReuseIdentifier:JGHHeaderLabelCellIdentifier];
-//    self.applistTableView.bounces = NO;
-    [self addSubview:self.applistTableView];
-}
 
 #pragma mark -- tableView 代理
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     if (section == 0) {
         //人员个数
-        if (self.applistArray.count > 0) {
-            return self.applistArray.count + 1;
+        if (self.repeatAppArray.count > 0) {
+            return self.repeatAppArray.count + 1;
         }
         return 1;
     }
@@ -115,8 +96,8 @@ static NSString *const JGHHeaderLabelCellIdentifier = @"JGHHeaderLabelCell";
     return 10;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (self.applistArray.count > 0) {
-        if (indexPath.row == self.applistArray.count){
+    if (self.repeatAppArray.count > 0) {
+        if (indexPath.row == self.repeatAppArray.count){
             return 44;
         }else{
             return 30;
@@ -129,8 +110,8 @@ static NSString *const JGHHeaderLabelCellIdentifier = @"JGHHeaderLabelCell";
     return 44;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (self.applistArray.count > 0) {
-        if (indexPath.row == _applistArray.count){
+    if (self.repeatAppArray.count > 0) {
+        if (indexPath.row == _repeatAppArray.count){
             JGSignUoPromptCell *signUoPromptCell = [tableView dequeueReusableCellWithIdentifier:JGSignUoPromptCellIdentifier forIndexPath:indexPath];
             signUoPromptCell.selectionStyle = UITableViewCellSelectionStyleNone;
             [signUoPromptCell configPromptString:@"提示：未勾选系统默认为现场支付\n           仅当前报名人[在线支付]享受平台补贴。"];
@@ -139,14 +120,13 @@ static NSString *const JGHHeaderLabelCellIdentifier = @"JGHHeaderLabelCell";
             JGHApplyListCell *applyListCel = [tableView dequeueReusableCellWithIdentifier:JGHApplyListCellIdentifier forIndexPath:indexPath];
             applyListCel.chooseBtn.tag = indexPath.row;
             applyListCel.deleteBtn.tag = indexPath.row + 100;
-            applyListCel.delegate = self;
+//            applyListCel.delegate = self;
             applyListCel.selectionStyle = UITableViewCellSelectionStyleNone;
             applyListCel.deleteBtn.hidden = YES;
-            [applyListCel configDict:_applistArray[indexPath.row]];
+            [applyListCel configDict:_repeatAppArray[indexPath.row]];
             return applyListCel;
         }
     }else{
-        
         JGSignUoPromptCell *signUoPromptCell = [tableView dequeueReusableCellWithIdentifier:JGSignUoPromptCellIdentifier forIndexPath:indexPath];
         signUoPromptCell.selectionStyle = UITableViewCellSelectionStyleNone;
         [signUoPromptCell configPromptString:@"提示：未勾选系统默认为现场支付\n           仅当前报名人[在线支付]享受平台补贴。"];
@@ -176,44 +156,23 @@ static NSString *const JGHHeaderLabelCellIdentifier = @"JGHHeaderLabelCell";
 
 #pragma mark -- 刷新页面数据
 - (void)configViewData:(NSMutableArray *)array{
-    self.applistArray = array;
-    [self.applistTableView reloadData];
-    [self countAmountPayable];
+    self.repeatAppArray = array;
+    [self.repeatApplyTableView reloadData];
+//    [self countAmountPayable];
     [self updateView];
 }
 
 #pragma mark -- 更新页面
 - (void)updateView{
-    if (screenHeight < ((_applistArray.count * 30) + 108)) {
-        self.applistTableView.frame = CGRectMake(0, 0, screenWidth, screenHeight - 64 - 44);
+    if (screenHeight < ((_repeatAppArray.count * 30) + 108)) {
+        self.repeatApplyTableView.frame = CGRectMake(0, 0, screenWidth, screenHeight - 64 - 44);
         self.cancelBtn.frame = CGRectMake(0, screenHeight - 64, screenWidth/2, 44);
         self.submitBtn.frame = CGRectMake(screenWidth/2, screenHeight - 64, screenWidth/2, 44);
     }else{
-        self.applistTableView.frame = CGRectMake(0, 0, screenWidth, 196 + _applistArray.count * 30);
-        self.cancelBtn.frame = CGRectMake(0, 152 + (_applistArray.count * 30), screenWidth/2, 44);
-        self.submitBtn.frame = CGRectMake(screenWidth/2, 152 + (_applistArray.count * 30), screenWidth/2, 44);
+        self.repeatApplyTableView.frame = CGRectMake(0, 0, screenWidth, 196 + _repeatAppArray.count * 30);
+        self.cancelBtn.frame = CGRectMake(0, 152 + (_repeatAppArray.count * 30), screenWidth/2, 44);
+        self.submitBtn.frame = CGRectMake(screenWidth/2, 152 + (_repeatAppArray.count * 30), screenWidth/2, 44);
     }
-}
-
-#pragma mark --  选择嘉宾
-- (void)didChooseBtn:(UIButton *)btn{
-    NSLog(@"%ld", (long)btn.tag);
-    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    dict = [self.applistArray objectAtIndex:btn.tag];
-    if ([[dict objectForKey:@"select"] integerValue] == 0) {
-        [btn setImage:[UIImage imageNamed:@"kuangwx"] forState:UIControlStateNormal];
-        [dict setObject:@"1" forKey:@"isOnlinePay"];
-        [dict setObject:@"1" forKey:@"select"];
-        [self.applistArray replaceObjectAtIndex:btn.tag withObject:dict];
-    }else{
-        [btn setImage:[UIImage imageNamed:@"kuang"] forState:UIControlStateNormal];
-        [dict setObject:@"0" forKey:@"isOnlinePay"];
-        [dict setObject:@"0" forKey:@"select"];
-        [self.applistArray replaceObjectAtIndex:btn.tag withObject:dict];
-    }
-    
-    //计算价格
-    [self countAmountPayable];
 }
 #pragma mark -- 计算应付价格
 - (void)countAmountPayable{
@@ -222,9 +181,9 @@ static NSString *const JGHHeaderLabelCellIdentifier = @"JGHHeaderLabelCell";
     _realSubPrice = 0.0;
     //判断成员中是否包含自己
     NSInteger isMember = 0;
-    for (int i=0; i<_applistArray.count; i++) {
+    for (int i=0; i<_repeatAppArray.count; i++) {
         NSDictionary *dict = [NSDictionary dictionary];
-        dict = _applistArray[i];
+        dict = _repeatAppArray[i];
         if ([[dict objectForKey:@"select"]integerValue] == 1) {
             NSLog(@"%@", [dict objectForKey:@"payMoney"]);
             float value = [[dict objectForKey:@"payMoney"] floatValue];
@@ -244,15 +203,15 @@ static NSString *const JGHHeaderLabelCellIdentifier = @"JGHHeaderLabelCell";
         _realPayPrice = _amountPayable;
     }
     
-    [self.applistTableView reloadData];
+    [self.repeatApplyTableView reloadData];
 }
 
+/*
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.
 - (void)drawRect:(CGRect)rect {
     // Drawing code
-    
 }
-
+*/
 
 @end
