@@ -26,6 +26,8 @@
 
 @property (strong, nonatomic) NSString* strTitle;
 
+@property (strong, nonatomic) NSString* teamName;
+
 @property (copy, nonatomic) void(^deleteBlock)(NSInteger index);
 
 @end

@@ -48,9 +48,27 @@
         _nameLabel.text = [NSString stringWithFormat:@"暂无姓名"];
     }
     
-    _moneyLabel.text = [NSString stringWithFormat:@"%@",model.money];
+    
+    _moneyLabel.text = [NSString stringWithFormat:@"%.2f",[model.money floatValue]];
     
 }
+
+
+-(void)showData1:(JGTeamAcitivtyModel *)model
+{
+    if (![Helper isBlankString:model.name]) {
+        _nameLabel.text = [NSString stringWithFormat:@"%@",model.name];
+    }
+    else
+    {
+        _nameLabel.text = [NSString stringWithFormat:@"暂无姓名"];
+    }
+    
+    
+    _moneyLabel.text = [NSString stringWithFormat:@"%.2f",[model.payMoney floatValue]];
+    
+}
+
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
