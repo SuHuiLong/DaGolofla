@@ -22,8 +22,6 @@
 
 #import "HomeHeadView.h"
 
-#import "JGLPaySignUpViewController.h"
-
 @interface ShouyeViewController ()<UIApplicationDelegate,CLLocationManagerDelegate>
 {
 //    UITableView *_tableView;
