@@ -490,14 +490,10 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
     NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
     [dict setObject:[userdef objectForKey:userID] forKey:@"appUserKey"];
     [self.info setObject:[NSString stringWithFormat:@"%td", _modelss.teamKey] forKey:@"teamKey"];//球队key
-    if (_isTeamChannal == 1) {
-        if (_modelss.teamActivityKey == 0) {
-            [self.info setObject:[NSString stringWithFormat:@"%td", [_modelss.timeKey integerValue]] forKey:@"activityKey"];//球队活动key
-        }else{
-            [self.info setObject:[NSString stringWithFormat:@"%td", _modelss.teamActivityKey] forKey:@"activityKey"];//球队活动key
-        }
+    if (_modelss.teamActivityKey == 0) {
+        [self.info setObject:[NSString stringWithFormat:@"%td", [_modelss.timeKey integerValue]] forKey:@"activityKey"];//球队活动key
     }else{
-        [self.info setObject:[NSString stringWithFormat:@"%@", _modelss.timeKey] forKey:@"activityKey"];//球队活动key
+        [self.info setObject:[NSString stringWithFormat:@"%td", _modelss.teamActivityKey] forKey:@"activityKey"];//球队活动key
     }
     
     [self.info setObject:[userdef objectForKey:@"userName"] forKey:@"userName"];//报名人名称//teamkey 156

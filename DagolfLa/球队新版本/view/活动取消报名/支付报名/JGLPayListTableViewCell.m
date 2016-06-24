@@ -38,7 +38,7 @@
     }
 }
 
--(void)showData:(JGLPaySignModel *)model
+-(void)showData:(JGTeamAcitivtyModel *)model
 {
     if (![Helper isBlankString:model.name]) {
         _nameLabel.text = [NSString stringWithFormat:@"%@",model.name];

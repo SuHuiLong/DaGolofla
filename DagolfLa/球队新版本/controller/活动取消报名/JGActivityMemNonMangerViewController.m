@@ -26,7 +26,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.title = @"Steam球队活动";
     self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight) style:(UITableViewStylePlain)];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
