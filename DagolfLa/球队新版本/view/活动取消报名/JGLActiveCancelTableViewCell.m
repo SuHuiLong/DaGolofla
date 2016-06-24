@@ -41,8 +41,8 @@
         _phoneLabel.text = [NSString stringWithFormat:@"未填写手机号"];
     }
     
-    if (model.money != nil) {
-        NSString* strMoney = [NSString stringWithFormat:@"已付费:%@",model.money];
+    if (model.payMoney != nil) {
+        NSString* strMoney = [NSString stringWithFormat:@"已付费:%@",model.payMoney];
         NSMutableAttributedString *str = [[NSMutableAttributedString alloc] initWithString:strMoney];
         [str addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(0,4)];
         [str addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:NSMakeRange(4,str.length - 4)];
