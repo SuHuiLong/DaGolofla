@@ -11,6 +11,7 @@
 #import "JGApplyPepoleCell.h"
 #import "JGHApplyListCell.h"
 #import "JGSignUoPromptCell.h"
+#import "JGTeamAcitivtyModel.h"
 
 static NSString *const JGApplyPepoleCellIdentifier = @"JGApplyPepoleCell";
 static NSString *const JGSignUoPromptCellIdentifier = @"JGSignUoPromptCell";
@@ -72,12 +73,23 @@ static NSString *const JGHHeaderLabelCellIdentifier = @"JGHHeaderLabelCell";
     [self addSubview:self.cancelBtn];
     
     self.submitBtn = [[UIButton alloc]initWithFrame:CGRectMake(screenWidth/2, 152, screenWidth/2, 44)];
-    [self.submitBtn setTitle:@"报名并支付" forState:UIControlStateNormal];
+    [self.submitBtn setTitle:@"立即支付" forState:UIControlStateNormal];
     [self.submitBtn setBackgroundColor:[UIColor colorWithHexString:@"#E8611D"]];
     [self.submitBtn addTarget:self action:@selector(submitBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:self.submitBtn];
 }
-
+#pragma mark -- 取消
+- (void)cancelBtnClick:(UIButton *)btn{
+    if (self.delegate) {
+        [self.delegate selectCancelRepeatApply:btn];
+    }
+}
+#pragma mark -- 立即支付
+- (void)submitBtnClick:(UIButton *)btn{
+    if (self.delegate) {
+        [self.delegate selectRepeatApply:btn];
+    }
+}
 #pragma mark -- tableView 代理
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     if (section == 0) {
@@ -118,12 +130,10 @@ static NSString *const JGHHeaderLabelCellIdentifier = @"JGHHeaderLabelCell";
             return signUoPromptCell;
         }else{
             JGHApplyListCell *applyListCel = [tableView dequeueReusableCellWithIdentifier:JGHApplyListCellIdentifier forIndexPath:indexPath];
-            applyListCel.chooseBtn.tag = indexPath.row;
-            applyListCel.deleteBtn.tag = indexPath.row + 100;
-//            applyListCel.delegate = self;
+            applyListCel.chooseBtn.hidden = YES;
             applyListCel.selectionStyle = UITableViewCellSelectionStyleNone;
             applyListCel.deleteBtn.hidden = YES;
-            [applyListCel configDict:_repeatAppArray[indexPath.row]];
+            [applyListCel configCancelModel:_repeatAppArray[indexPath.row]];
             return applyListCel;
         }
     }else{
@@ -157,8 +167,8 @@ static NSString *const JGHHeaderLabelCellIdentifier = @"JGHHeaderLabelCell";
 #pragma mark -- 刷新页面数据
 - (void)configViewData:(NSMutableArray *)array{
     self.repeatAppArray = array;
-    [self.repeatApplyTableView reloadData];
-//    [self countAmountPayable];
+//    [self.repeatApplyTableView reloadData];
+    [self countAmountPayable];
     [self updateView];
 }
 
@@ -181,17 +191,16 @@ static NSString *const JGHHeaderLabelCellIdentifier = @"JGHHeaderLabelCell";
     _realSubPrice = 0.0;
     //判断成员中是否包含自己
     NSInteger isMember = 0;
+    
     for (int i=0; i<_repeatAppArray.count; i++) {
-        NSDictionary *dict = [NSDictionary dictionary];
-        dict = _repeatAppArray[i];
-        if ([[dict objectForKey:@"select"]integerValue] == 1) {
-            NSLog(@"%@", [dict objectForKey:@"payMoney"]);
-            float value = [[dict objectForKey:@"payMoney"] floatValue];
-            _amountPayable += value;
-            
-            if ([[dict objectForKey:@"userKey"] integerValue] != 0) {
-                isMember = 1;
-            }
+        JGTeamAcitivtyModel *model = [[JGTeamAcitivtyModel alloc]init];
+        model = _repeatAppArray[i];
+        NSLog(@"%@", model.money);
+        float value = [model.money floatValue];
+        _amountPayable += value;
+        
+        if ([model.subsidyPrice integerValue] != 0) {
+            isMember = 1;
         }
     }
     

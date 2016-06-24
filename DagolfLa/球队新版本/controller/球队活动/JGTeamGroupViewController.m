@@ -240,8 +240,13 @@ static NSString *const JGGroupdetailsCollectionViewCellIdentifier = @"JGGroupdet
     } completionBlock:^(id data) {
         NSLog(@"data == %@", data);
         [[ShowHUD showHUD]hideAnimationFromView:self.view];
-        [[ShowHUD showHUD]showToastWithText:@"分组添加成功！" FromView:self.view];
-        _addGroup = 1;
+        if ([[data objectForKey:@"packSuccess"] integerValue] == 0) {
+            [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+        }else{
+            [[ShowHUD showHUD]showToastWithText:@"分组添加成功！" FromView:self.view];
+            _addGroup = 1;
+        }
+        
         [self loadData:0];//刷新页面
     }];
 }

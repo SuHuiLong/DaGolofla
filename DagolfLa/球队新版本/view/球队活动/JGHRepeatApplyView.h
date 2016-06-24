@@ -10,7 +10,9 @@
 
 @protocol JGHRepeatApplyViewDelegate <NSObject>
 
+- (void)selectCancelRepeatApply:(UIButton *)btn;
 
+- (void)selectRepeatApply:(UIButton *)btn;
 
 @end
 
