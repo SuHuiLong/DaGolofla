@@ -217,7 +217,7 @@
             {
                 NSLog(@"shangchen");
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
-                JGLPaySignUpViewController* userVc = [[JGLPaySignUpViewController alloc]init];
+                UseMallViewController* userVc = [[UseMallViewController alloc]init];
                 [self.navigationController pushViewController:userVc animated:YES];
             }
                 break;
