@@ -716,8 +716,18 @@ static CGFloat ImageHeight  = 210.0;
         return;
     }
     
+    NSInteger timeKey;
+    if (_model.teamActivityKey == 0) {
+        timeKey = [_model.timeKey integerValue];
+    }else{
+        timeKey = _model.teamActivityKey;
+    }
+    
     if ([_power containsString:@"1001"]) {
-        
+        JGLActiveCancelMemViewController *powerCtrl = [[JGLActiveCancelMemViewController alloc]init];
+        powerCtrl.title = self.model.name;
+        powerCtrl.activityKey = [NSNumber numberWithInteger:timeKey];
+        [self.navigationController pushViewController:powerCtrl animated:YES];
     }else{
         NSInteger timeKey;
         JGActivityMemNonMangerViewController *nonMangerVC = [[JGActivityMemNonMangerViewController alloc] init];
@@ -729,6 +739,7 @@ static CGFloat ImageHeight  = 210.0;
         }
         
         nonMangerVC.activityKey = [NSNumber numberWithInteger:timeKey];
+        nonMangerVC.title = self.model.name;
         [self.navigationController  pushViewController:nonMangerVC animated:YES];
     }
 }

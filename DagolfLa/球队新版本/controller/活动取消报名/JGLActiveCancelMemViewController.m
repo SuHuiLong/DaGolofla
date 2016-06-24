@@ -32,7 +32,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.title = @"XXXXX活动";
     UIBarButtonItem* rightBtn = [[UIBarButtonItem alloc]initWithTitle:@"分组管理" style:UIBarButtonItemStylePlain target:self action:@selector(groupClick)];
     rightBtn.tintColor = [UIColor whiteColor];
     self.navigationItem.rightBarButtonItem = rightBtn;
@@ -48,9 +47,8 @@
 
 -(void)groupClick
 {
-#warning 球队teamActivityKey没有传
     JGTeamGroupViewController* tgVc = [[JGTeamGroupViewController alloc]init];
-    
+    tgVc.teamActivityKey = [self.activityKey integerValue];
     [self.navigationController pushViewController:tgVc animated:YES];
 }
 
@@ -75,7 +73,7 @@
 #pragma mark - 下载数据
 - (void)downLoadData:(int)page isReshing:(BOOL)isReshing{
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    [dict setObject:@4375 forKey:@"activityKey"];
+    [dict setObject:self.activityKey forKey:@"activityKey"];
     [dict setObject:[NSNumber numberWithInteger:_page] forKey:@"offSet"];
     [[JsonHttp jsonHttp]httpRequest:@"team/getTeamActivitySignUpList" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
         if (isReshing) {
