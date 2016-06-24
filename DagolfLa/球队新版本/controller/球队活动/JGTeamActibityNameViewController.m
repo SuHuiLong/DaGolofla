@@ -499,7 +499,10 @@ static CGFloat ImageHeight  = 210.0;
             }
         }
     }
+    
     paySignUpCtrl.model = _model;
+    paySignUpCtrl.isApply = (BOOL)[_isApply floatValue];
+    paySignUpCtrl.userName = _userName;
     [self.navigationController pushViewController:paySignUpCtrl animated:YES];
 }
 #pragma mark -- 取消报名

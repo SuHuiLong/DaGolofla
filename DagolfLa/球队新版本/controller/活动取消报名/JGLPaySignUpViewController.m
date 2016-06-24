@@ -22,6 +22,7 @@
 #import <AlipaySDK/AlipaySDK.h>
 #import "Order.h"
 #import "DataSigner.h"
+#import "JGTeamApplyViewController.h"
 
 @interface JGLPaySignUpViewController ()<UITableViewDelegate,UITableViewDataSource, JGHRepeatApplyViewDelegate>
 {
@@ -46,6 +47,8 @@
 
 @property (nonatomic, strong)NSMutableArray *applyDataArray;
 
+@property (nonatomic, strong)NSMutableDictionary *payDict;
+
 @end
 
 @implementation JGLPaySignUpViewController
@@ -55,6 +58,7 @@
         self.model = [[JGTeamAcitivtyModel alloc]init];
         self.applyDataArray = [NSMutableArray array];
         self.info = [NSMutableDictionary dictionary];
+        self.payDict = [NSMutableDictionary dictionary];
     }
     return self;
 }
@@ -104,7 +108,7 @@
     [btnDelete setTitle:@"继续报名" forState:UIControlStateNormal];
     [btnDelete setTintColor:[UIColor whiteColor]];
     [self.view addSubview:btnDelete];
-    btnDelete.titleLabel.font = [UIFont systemFontOfSize:15*screenWidth/375];
+    btnDelete.titleLabel.font = [UIFont systemFontOfSize:17];
     btnDelete.frame = CGRectMake(10*screenWidth/375, screenHeight - 54*screenWidth/375-64, screenWidth-20*screenWidth/375, 44*screenWidth/375);
     btnDelete.layer.cornerRadius = 8*screenWidth/375;
     btnDelete.layer.masksToBounds = YES;
@@ -113,7 +117,12 @@
 #pragma mark --添加报名人点击事件
 -(void)addPeopleClick
 {
-    
+    JGTeamApplyViewController *applyCtrl = [[JGTeamApplyViewController alloc]init];
+    applyCtrl.modelss = _model;
+//    teamApplyCtrl.isTeamChannal = self.isTeamChannal;
+    applyCtrl.userName = _userName;
+    applyCtrl.isApply = _isApply;
+    [self.navigationController pushViewController:applyCtrl animated:YES];
 }
 
 -(void)createFooterView
@@ -388,15 +397,29 @@
   
     
     [self.info setObject:[userdef objectForKey:@"userName"] forKey:@"userName"];//报名人名称//teamkey 156
-    
     [self.info setObject:[userdef objectForKey:userID] forKey:@"userKey"];//用户Key
     [self.info setObject:@0 forKey:@"timeKey"];//timeKey
     NSMutableArray *teamSignUpList = [NSMutableArray array];
-    for (JGTeamAcitivtyModel *model in _applyDataArray) {
+    NSMutableString *otherInfo = [[NSMutableString alloc]init];
+    for (int i=0; i<_applyDataArray.count; i++) {
+        
+        JGTeamAcitivtyModel *model = [[JGTeamAcitivtyModel alloc]init];
+        model = _applyDataArray[i];
         [teamSignUpList addObject:model.timeKey];
+        if (i==0) {
+            otherInfo = [NSMutableString stringWithFormat:@"%@,", model.timeKey];
+        }else{
+            [otherInfo appendFormat:@"%@,", model.timeKey];
+        }
     }
+    
     [dict setObject:teamSignUpList forKey:@"signupKeyList"];//报名人员数组
     [dict setObject:_info forKey:@"info"];
+    //支付字典
+    [self.payDict setObject:@4 forKey:@"orderType"];
+    [self.payDict setObject:@"活动报名" forKey:@"name"];
+    [self.payDict setObject:otherInfo forKey:@"otherInfo"];
+    
     [[JsonHttp jsonHttp]httpRequest:@"team/doTeamActivitySignUpPay" JsonKey:nil withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
         NSLog(@"errType == %@", errType);
         [[ShowHUD showHUD]hideAnimationFromView:self.view];
@@ -405,6 +428,7 @@
         NSLog(@"data == %@", data);
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
             _infoKey = [data objectForKey:@"infoKey"];
+            [self.payDict setObject:_infoKey forKey:@"srcKey"];
             if (type == 1) {
                 [self weChatPay];
             }else if (type == 2){
@@ -441,13 +465,8 @@
     NSNotificationCenter * center = [NSNotificationCenter defaultCenter];
     //添加当前类对象为一个观察者，name和object设置为nil，表示接收一切通知
     [center addObserver:self selector:@selector(notice:) name:@"weChatNotice" object:nil];
-    NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
-    [dict setObject:@2 forKey:@"orderType"];
-    [dict setObject:_infoKey forKey:@"srcKey"];
-    [dict setObject:@"活动报名" forKey:@"name"];
-    [dict setObject:@"活动微信订单" forKey:@"otherInfo"];
     
-    [[JsonHttp jsonHttp]httpRequest:@"pay/doPayWeiXin" JsonKey:@"payInfo" withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
+    [[JsonHttp jsonHttp]httpRequest:@"pay/doPayWeiXin" JsonKey:@"payInfo" withData:_payDict requestMethod:@"POST" failedBlock:^(id errType) {
         NSLog(@"errType == %@", errType);
     } completionBlock:^(id data) {
         NSDictionary *dict = [data objectForKey:@"pay"];
@@ -477,17 +496,8 @@
 #pragma mark -- 支付宝
 - (void)zhifubaoPay{
     NSLog(@"支付宝支付");
-    NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
-    [dict setObject:@2 forKey:@"orderType"];
-    [dict setObject:_infoKey forKey:@"srcKey"];
-    [dict setObject:@"活动报名" forKey:@"name"];
-    [dict setObject:@"活动支付宝订单" forKey:@"otherInfo"];
-//    if (_invoiceKey != nil) {
-//        [dict setObject:_addressKey forKey:@"addressKey"];
-//        [dict setObject:_invoiceKey forKey:@"invoiceKey"];
-//    }
     
-    [[JsonHttp jsonHttp]httpRequest:@"pay/doPayByAliPay" JsonKey:@"payInfo" withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
+    [[JsonHttp jsonHttp]httpRequest:@"pay/doPayByAliPay" JsonKey:@"payInfo" withData:_payDict requestMethod:@"POST" failedBlock:^(id errType) {
         NSLog(@"errType == %@", errType);
     } completionBlock:^(id data) {
         NSLog(@"%@",[data objectForKey:@"query"]);
