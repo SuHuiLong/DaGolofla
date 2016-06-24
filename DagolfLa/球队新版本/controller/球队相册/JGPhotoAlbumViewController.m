@@ -355,9 +355,14 @@
     JGTeamPhotoShowViewController *picVC = [[JGTeamPhotoShowViewController alloc]initWithIndex:indexPath.row];
     picVC.selectImages = arr;
     picVC.power = _power;
+    picVC.dataArray = [[NSMutableArray alloc]init];
+    for (int i = 0;  i < _dataArray.count; i ++) {
+        [picVC.dataArray addObject:_dataArray[i]];
+    }
     picVC.state = _state;
     picVC.teamTimeKey = _teamTimeKey;
     picVC.userKey = _userKey;
+    picVC.strTitle = _strTitle;
     picVC.deleteBlock = ^(NSInteger index) {
         _collectionView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
         [_collectionView.header beginRefreshing];

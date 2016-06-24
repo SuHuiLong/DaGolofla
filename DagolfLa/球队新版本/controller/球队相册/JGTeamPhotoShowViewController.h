@@ -22,6 +22,10 @@
 
 @property (strong, nonatomic) NSNumber* state;
 
+@property (strong, nonatomic) NSMutableArray* dataArray;
+
+@property (strong, nonatomic) NSString* strTitle;
+
 @property (copy, nonatomic) void(^deleteBlock)(NSInteger index);
 
 @end

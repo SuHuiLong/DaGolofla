@@ -7,7 +7,7 @@
 //
 
 #import "JGTeamPhotoShowViewController.h"
-
+#import "JGPhotoListModel.h"
 @interface JGTeamPhotoShowViewController ()<UIScrollViewDelegate>
 {
     BOOL _isDelete;
@@ -46,7 +46,65 @@
     self.automaticallyAdjustsScrollViewInsets = NO;
     self.title = [NSString stringWithFormat:@"第%td/%lu张", (long)self.index + 1, (unsigned long)self.selectImages.count];
     [self initializeUserInterface];
+    
+    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithTitle:@"分享" style:UIBarButtonItemStylePlain target:self action:@selector(shareButtonClcik)];
+    item.tintColor=[UIColor whiteColor];
+    self.navigationItem.rightBarButtonItem = item;
+    
 }
+#pragma mark --分享点击事件
+-(void)shareButtonClcik
+{
+    ShareAlert* alert = [[ShareAlert alloc]initMyAlert];
+    alert.frame = CGRectMake(0, ScreenHeight, ScreenWidth, ScreenWidth);
+    [alert setCallBackTitle:^(NSInteger index) {
+        [self shareInfo:index];
+    }];
+    [UIView animateWithDuration:0.2 animations:^{
+        [alert show];
+    }];
+}
+
+#pragma mark -- 分享
+-(void)shareInfo:(NSInteger)index{
+    
+    //meida的timekey和球队key
+    JGPhotoListModel* model = _dataArray[self.index];
+    NSString*  shareUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/team/teamPhotoShare.html?mediaKey=%@&teamKey=%@",model.timeKey,_teamTimeKey];
+    [UMSocialData defaultData].extConfig.title = _strTitle;
+    NSData* fiData;
+    fiData = [NSData dataWithContentsOfURL:[Helper setImageIconUrl:@"album/media" andTeamKey:[[self.selectImages objectAtIndex:self.index] integerValue] andIsSetWidth:NO andIsBackGround:NO]];
+    if (index == 0){
+        
+        //微信
+        [UMSocialWechatHandler setWXAppId:@"wxdcdc4e20544ed728" appSecret:@"fdc75aae5a98f2aa0f62ef8cba2b08e9" url:shareUrl];
+        [UMSocialConfig hiddenNotInstallPlatforms:@[UMShareToWechatSession,UMShareToWechatTimeline,UMShareToSina]];
+        [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatSession] content:model.teamName  image:fiData location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
+            if (response.responseCode == UMSResponseCodeSuccess) {
+                //                [self shareS:indexRow];
+            }
+        }];
+        
+    }else if (index==1){
+        //朋友圈
+        [UMSocialWechatHandler setWXAppId:@"wxdcdc4e20544ed728" appSecret:@"fdc75aae5a98f2aa0f62ef8cba2b08e9" url:shareUrl];
+        [UMSocialConfig hiddenNotInstallPlatforms:@[UMShareToWechatSession,UMShareToWechatTimeline,UMShareToSina]];
+        [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatTimeline] content:model.teamName image:fiData location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
+            if (response.responseCode == UMSResponseCodeSuccess) {
+                //                [self shareS:indexRow];
+            }
+        }];
+    }else{
+        UMSocialData *data = [UMSocialData defaultData];
+        data.shareImage = [UIImage imageNamed:@"logo"];
+        data.shareText = [NSString stringWithFormat:@"%@%@",@"打高尔夫啦",shareUrl];
+        [[UMSocialControllerService defaultControllerService] setSocialData:data];
+        //2.设置分享平台
+        [UMSocialSnsPlatformManager getSocialPlatformWithName:UMShareToSina].snsClickHandler(self,[UMSocialControllerService defaultControllerService],YES);
+    }
+    
+}
+
 
 
 #pragma mark --没有权限只能保存图片
