@@ -851,6 +851,10 @@
 		82AAB7AE1CE5BEB8005F5633 /* JGLSelfSetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 82AAB7AD1CE5BEB8005F5633 /* JGLSelfSetViewController.m */; };
 		82AAB7B11CE5C18E005F5633 /* JGSelfSetTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 82AAB7B01CE5C18E005F5633 /* JGSelfSetTableViewCell.m */; };
 		82ABF1B01D1BC0B3004493DB /* JGLActiveCancelMemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 82ABF1AF1D1BC0B3004493DB /* JGLActiveCancelMemViewController.m */; };
+		82ABF1B41D1BC640004493DB /* JGLActiveMemTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 82ABF1B21D1BC640004493DB /* JGLActiveMemTableViewCell.m */; };
+		82ABF1B51D1BC640004493DB /* JGLActiveMemTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 82ABF1B31D1BC640004493DB /* JGLActiveMemTableViewCell.xib */; };
+		82ABF1B91D1BC718004493DB /* JGLActiveCancelTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 82ABF1B71D1BC718004493DB /* JGLActiveCancelTableViewCell.m */; };
+		82ABF1BA1D1BC718004493DB /* JGLActiveCancelTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 82ABF1B81D1BC718004493DB /* JGLActiveCancelTableViewCell.xib */; };
 		82BEEC841CF98828000DFE46 /* JGLNewShopDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 82BEEC831CF98828000DFE46 /* JGLNewShopDetailViewController.m */; };
 		82D595DF1CE42BDF00CD9587 /* BaiduMapAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82D595DD1CE42BDF00CD9587 /* BaiduMapAPI.framework */; };
 		82D595E01CE42BDF00CD9587 /* mapapi.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 82D595DE1CE42BDF00CD9587 /* mapapi.bundle */; };
@@ -2342,6 +2346,12 @@
 		82AAB7B01CE5C18E005F5633 /* JGSelfSetTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGSelfSetTableViewCell.m; sourceTree = "<group>"; };
 		82ABF1AE1D1BC0B3004493DB /* JGLActiveCancelMemViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGLActiveCancelMemViewController.h; sourceTree = "<group>"; };
 		82ABF1AF1D1BC0B3004493DB /* JGLActiveCancelMemViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGLActiveCancelMemViewController.m; sourceTree = "<group>"; };
+		82ABF1B11D1BC640004493DB /* JGLActiveMemTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGLActiveMemTableViewCell.h; sourceTree = "<group>"; };
+		82ABF1B21D1BC640004493DB /* JGLActiveMemTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGLActiveMemTableViewCell.m; sourceTree = "<group>"; };
+		82ABF1B31D1BC640004493DB /* JGLActiveMemTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JGLActiveMemTableViewCell.xib; sourceTree = "<group>"; };
+		82ABF1B61D1BC718004493DB /* JGLActiveCancelTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGLActiveCancelTableViewCell.h; sourceTree = "<group>"; };
+		82ABF1B71D1BC718004493DB /* JGLActiveCancelTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGLActiveCancelTableViewCell.m; sourceTree = "<group>"; };
+		82ABF1B81D1BC718004493DB /* JGLActiveCancelTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JGLActiveCancelTableViewCell.xib; sourceTree = "<group>"; };
 		82BEEC821CF98828000DFE46 /* JGLNewShopDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGLNewShopDetailViewController.h; sourceTree = "<group>"; };
 		82BEEC831CF98828000DFE46 /* JGLNewShopDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGLNewShopDetailViewController.m; sourceTree = "<group>"; };
 		82D595DD1CE42BDF00CD9587 /* BaiduMapAPI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = BaiduMapAPI.framework; sourceTree = SOURCE_ROOT; };
@@ -6306,6 +6316,7 @@
 				36BFFE2D1BC76CDC005B3CE2 /* genduo3.png in Resources */,
 				36BFFEDC1BC76CDC005B3CE2 /* xiaoxi@2x.png in Resources */,
 				36BFFED41BC76CDC005B3CE2 /* wytp@3x.png in Resources */,
+				82ABF1B51D1BC640004493DB /* JGLActiveMemTableViewCell.xib in Resources */,
 				3623172E1BDA12F500257862 /* guide_04.png in Resources */,
 				36BFFE561BC76CDC005B3CE2 /* tianjia.png in Resources */,
 				3660E08F1BFC48B00033B4D7 /* Default@2x-568.png in Resources */,
@@ -6370,6 +6381,7 @@
 				20F6A5DC1CF52C4F00DD9383 /* JGHHeaderLabelCell.xib in Resources */,
 				36E1FBB61C7D9043006B1456 /* bannerS.jpg in Resources */,
 				20513B591CF67EED003233FB /* JGHAddressCell.xib in Resources */,
+				82ABF1BA1D1BC718004493DB /* JGLActiveCancelTableViewCell.xib in Resources */,
 				36BFFE661BC76CDC005B3CE2 /* tu4@2x.png in Resources */,
 				36BFFE771BC76CDC005B3CE2 /* xb_n.png in Resources */,
 				36BFFE2C1BC76CDC005B3CE2 /* genduo.png in Resources */,
@@ -6675,6 +6687,7 @@
 				36BFFF7B1BC76D09005B3CE2 /* SDWebImagePrefetcher.m in Sources */,
 				36BF00E11BC77428005B3CE2 /* StadiumViewController.m in Sources */,
 				36BFFFB11BC76FF3005B3CE2 /* ResetPassViewController.m in Sources */,
+				82ABF1B41D1BC640004493DB /* JGLActiveMemTableViewCell.m in Sources */,
 				36E300FC1C3FF3F9005C3F08 /* UIScrollView+MJRefresh.m in Sources */,
 				36BFFF811BC76D09005B3CE2 /* UIView+WebCacheOperation.m in Sources */,
 				82E6A6F61CF5812C009DD179 /* JGLAuthorityTableViewCell.m in Sources */,
@@ -7040,6 +7053,7 @@
 				82ABF1B01D1BC0B3004493DB /* JGLActiveCancelMemViewController.m in Sources */,
 				AA9B5F031C573678009381DF /* PostDataRequest.m in Sources */,
 				36BF00DE1BC77428005B3CE2 /* MemberShipViewController.m in Sources */,
+				82ABF1B91D1BC718004493DB /* JGLActiveCancelTableViewCell.m in Sources */,
 				36BFFD2E1BC76C8D005B3CE2 /* main.m in Sources */,
 				3660E14A1BFC55C30033B4D7 /* ManageExamDetController.m in Sources */,
 				20C1B8AB1CE313A200508ABC /* JGTeamApplyViewController.m in Sources */,

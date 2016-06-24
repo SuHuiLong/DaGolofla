@@ -10,4 +10,6 @@
 
 @interface JGActivityMemNonMangerViewController : ViewController
 
+@property (nonatomic, strong)NSMutableArray *dataArray;
+
 @end
