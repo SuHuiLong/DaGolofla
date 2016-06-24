@@ -199,7 +199,7 @@ static NSString *const JGHHeaderLabelCellIdentifier = @"JGHHeaderLabelCell";
         float value = [model.money floatValue];
         _amountPayable += value;
         
-        if ([model.subsidyPrice integerValue] != 0) {
+        if ([model.subsidyPrice floatValue] != 0) {
             isMember = 1;
         }
     }
