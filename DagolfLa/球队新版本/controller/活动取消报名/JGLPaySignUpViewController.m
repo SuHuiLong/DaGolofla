@@ -23,8 +23,9 @@
 #import "Order.h"
 #import "DataSigner.h"
 #import "JGTeamApplyViewController.h"
+#import "JGHAddInvoiceViewController.h"
 
-@interface JGLPaySignUpViewController ()<UITableViewDelegate,UITableViewDataSource, JGHRepeatApplyViewDelegate>
+@interface JGLPaySignUpViewController ()<UITableViewDelegate,UITableViewDataSource, JGHRepeatApplyViewDelegate,JGHAddInvoiceViewControllerDelegate>
 {
     UITableView* _tableView;
     UIView* _viewFoott;
@@ -321,7 +322,13 @@
 
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    
+    if (indexPath.section == 3) {
+        JGHAddInvoiceViewController *invoiceCtrl = [[JGHAddInvoiceViewController alloc]init];
+        invoiceCtrl.delegate = self;
+        invoiceCtrl.invoiceKey = _invoiceKey;
+        invoiceCtrl.addressKey = _addressKey;
+        [self.navigationController pushViewController:invoiceCtrl animated:YES];
+    }
     
 }
 
@@ -381,10 +388,10 @@
     [[ShowHUD showHUD]showAnimationWithText:@"报名中..." FromView:self.view];
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     
-//    if (_invoiceKey != nil) {
-//        [self.info setObject:_invoiceKey forKey:@"invoiceKey"];//发票Key
-//        [self.info setObject:_addressKey forKey:@"addressKey"];//地址Key
-//    }
+    if (_invoiceKey != nil) {
+        [self.info setObject:_invoiceKey forKey:@"invoiceKey"];//发票Key
+        [self.info setObject:_addressKey forKey:@"addressKey"];//地址Key
+    }
     
     NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
 //    [dict setObject:[userdef objectForKey:userID] forKey:@"appUserKey"];
@@ -524,7 +531,13 @@
         }];
     }];
 }
-
+#pragma mark -- 发票代理
+- (void)backAddressKey:(NSString *)invoiceKey andInvoiceName:(NSString *)name andAddressKey:(NSString *)addressKey{
+    self.invoiceKey = invoiceKey;
+    self.addressKey = addressKey;
+    _invoiceName = name;
+    [_tableView reloadData];
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

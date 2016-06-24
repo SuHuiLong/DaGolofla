@@ -19,7 +19,7 @@
 
 @property (copy, nonatomic)NSString *invoiceKey;//发票key
 @property (copy, nonatomic)NSString *invoiceName;//发票name
-@property (copy, nonatomic)NSString *addressKey;//发票name
+@property (copy, nonatomic)NSString *addressKey;//地址
 
 
 @property (assign, nonatomic)NSInteger isTeamChannal;
