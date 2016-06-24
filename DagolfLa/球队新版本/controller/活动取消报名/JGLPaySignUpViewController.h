@@ -7,7 +7,12 @@
 //
 
 #import "ViewController.h"
+@class JGTeamAcitivtyModel;
 
 @interface JGLPaySignUpViewController : ViewController
+
+@property (nonatomic, strong) JGTeamAcitivtyModel *model;
+
+@property (nonatomic, assign)NSInteger activityKey;
 
 @end

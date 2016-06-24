@@ -45,6 +45,7 @@
 		207FEC9C1D1BDDB20098E23C /* JGHButtonCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 207FEC9A1D1BDDB10098E23C /* JGHButtonCell.xib */; };
 		207FECA01D1BE4180098E23C /* JGHTextFiledCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 207FEC9E1D1BE4180098E23C /* JGHTextFiledCell.m */; };
 		207FECA11D1BE4180098E23C /* JGHTextFiledCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 207FEC9F1D1BE4180098E23C /* JGHTextFiledCell.xib */; };
+		207FECB41D1D27E40098E23C /* JGHRepeatApplyView.m in Sources */ = {isa = PBXBuildFile; fileRef = 207FECB31D1D27E40098E23C /* JGHRepeatApplyView.m */; };
 		208030441CF7F32E00448BFC /* JGHIvoiceTypeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 208030421CF7F32E00448BFC /* JGHIvoiceTypeCell.m */; };
 		208030451CF7F32E00448BFC /* JGHIvoiceTypeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 208030431CF7F32E00448BFC /* JGHIvoiceTypeCell.xib */; };
 		208030491CF828D000448BFC /* JGHAddAddressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 208030471CF828D000448BFC /* JGHAddAddressViewController.m */; };
@@ -1089,6 +1090,8 @@
 		207FEC9D1D1BE4180098E23C /* JGHTextFiledCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHTextFiledCell.h; sourceTree = "<group>"; };
 		207FEC9E1D1BE4180098E23C /* JGHTextFiledCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHTextFiledCell.m; sourceTree = "<group>"; };
 		207FEC9F1D1BE4180098E23C /* JGHTextFiledCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JGHTextFiledCell.xib; sourceTree = "<group>"; };
+		207FECB21D1D27E40098E23C /* JGHRepeatApplyView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHRepeatApplyView.h; sourceTree = "<group>"; };
+		207FECB31D1D27E40098E23C /* JGHRepeatApplyView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHRepeatApplyView.m; sourceTree = "<group>"; };
 		208030411CF7F32E00448BFC /* JGHIvoiceTypeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHIvoiceTypeCell.h; sourceTree = "<group>"; };
 		208030421CF7F32E00448BFC /* JGHIvoiceTypeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHIvoiceTypeCell.m; sourceTree = "<group>"; };
 		208030431CF7F32E00448BFC /* JGHIvoiceTypeCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JGHIvoiceTypeCell.xib; sourceTree = "<group>"; };
@@ -2748,6 +2751,8 @@
 				2088379B1D192213004C7B5D /* JGHApplyListView.m */,
 				2088379D1D1A2600004C7B5D /* JGHJustApplyListView.h */,
 				2088379E1D1A2600004C7B5D /* JGHJustApplyListView.m */,
+				207FECB21D1D27E40098E23C /* JGHRepeatApplyView.h */,
+				207FECB31D1D27E40098E23C /* JGHRepeatApplyView.m */,
 				209B3FE31D0FCB0300A6FF72 /* JGHSaveAndSubmitBtnCell.h */,
 				209B3FE41D0FCB0300A6FF72 /* JGHSaveAndSubmitBtnCell.m */,
 				209B3FE51D0FCB0300A6FF72 /* JGHSaveAndSubmitBtnCell.xib */,
@@ -7042,6 +7047,7 @@
 				823C149D1CEEF0B5000AB612 /* JGLTeamMemberModel.m in Sources */,
 				207FECA01D1BE4180098E23C /* JGHTextFiledCell.m in Sources */,
 				20BA612A1CDC99D0004B61F5 /* ALButton.m in Sources */,
+				207FECB41D1D27E40098E23C /* JGHRepeatApplyView.m in Sources */,
 				36E1FBB41C7D817A006B1456 /* ChangePicViewController.m in Sources */,
 				82ABF1CD1D1C072E004493DB /* JGLSignPeoTableViewCell.m in Sources */,
 				36BF00921BC772EF005B3CE2 /* MyNewsBoxViewController.m in Sources */,

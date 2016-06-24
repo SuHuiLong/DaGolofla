@@ -18,4 +18,7 @@
 
 -(void)showData:(JGLPaySignModel *)model;
 
+@property (copy, nonatomic) void (^chooseNoNum)();
+@property (copy, nonatomic) void (^chooseYesNum)();
+
 @end

@@ -17,6 +17,9 @@
 #import "MJDIYHeader.h"
 
 #import "JGLPaySignModel.h"
+#import "JGTeamAcitivtyModel.h"
+#import "JGHRepeatApplyView.h"
+
 @interface JGLPaySignUpViewController ()<UITableViewDelegate,UITableViewDataSource>
 {
     UITableView* _tableView;
@@ -27,11 +30,44 @@
     NSMutableArray* _dataArrayYet;//已付款
     NSMutableArray* _dataArrayWait;//代付款
     
-
+    UIAlertController *_actionView;
+    NSMutableDictionary* _numDict;//用来记录被删除的数组下表
 }
+
+@property (nonatomic, strong)JGHRepeatApplyView *applyListView;//报名人列表
+
+@property (nonatomic, strong)UIView *tranView;
+
 @end
 
 @implementation JGLPaySignUpViewController
+
+- (instancetype)init{
+    if (self == [super init]) {
+        self.model = [[JGTeamAcitivtyModel alloc]init];
+    }
+    return self;
+}
+
+- (UIView *)tranView{
+    if (_tranView == nil) {
+        self.tranView = [[UIView alloc]init];
+        self.tranView.backgroundColor = [UIColor lightGrayColor];
+        self.tranView.alpha = 0.4;
+        [self.view addSubview:_tranView];
+    }
+    return _tranView;
+}
+
+- (JGHRepeatApplyView *)applyListView{
+    if (_applyListView == nil) {
+        self.applyListView = [[JGHRepeatApplyView alloc]init];
+//        self.applyListView.delegate = self;
+        self.applyListView.subsidiesPrice = [_model.subsidyPrice floatValue];
+        [self.view addSubview:_applyListView];
+    }
+    return _applyListView;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -42,7 +78,8 @@
     self.title = @"报名/支付";
     _dataArrayYet = [[NSMutableArray alloc]init];
     _dataArrayWait = [[NSMutableArray alloc]init];
-    self.view.backgroundColor = [UITool colorWithHexString:@"eeeeee" alpha:1];
+    _numDict = [[NSMutableDictionary alloc]init];
+    self.view.backgroundColor = [UIColor colorWithHexString:BG_color];
     [self createFooterView];
     [self uiConfig];
     
@@ -54,7 +91,7 @@
 {
     UIButton* btnDelete = [UIButton buttonWithType:UIButtonTypeCustom];
     btnDelete.backgroundColor = [UIColor orangeColor];
-    [btnDelete setTitle:@"添加报名人" forState:UIControlStateNormal];
+    [btnDelete setTitle:@"继续报名" forState:UIControlStateNormal];
     [btnDelete setTintColor:[UIColor whiteColor]];
     [self.view addSubview:btnDelete];
     btnDelete.titleLabel.font = [UIFont systemFontOfSize:15*screenWidth/375];
@@ -85,6 +122,7 @@
     _tableView.delegate = self;
     _tableView.dataSource = self;
     _tableView.tableFooterView = _viewFoott;
+    _tableView.backgroundColor = [UIColor colorWithHexString:BG_color];
     [self.view addSubview:_tableView];
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
@@ -103,7 +141,7 @@
 - (void)downLoadData:(int)page isReshing:(BOOL)isReshing{
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     [dict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:userID] forKey:@"userKey"];
-    [dict setObject:@4481 forKey:@"activityKey"];
+    [dict setObject:[NSString stringWithFormat:@"%td", _activityKey] forKey:@"activityKey"];
     [[JsonHttp jsonHttp]httpRequest:@"team/getUserActivitySignUpList" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
         if (isReshing) {
             [_tableView.header endRefreshing];
@@ -191,7 +229,7 @@
         return cell;
     }
     /**
-        报名人视图
+     报名人视图
      */
     else if (indexPath.section == 1)
     {
@@ -228,9 +266,18 @@
             else{
                 if (_dataArrayWait.count != 0) {
                     [cell showData:_dataArrayWait[indexPath.row-_dataArrayYet.count-1]];
+                    NSString* strNum = [NSString stringWithFormat:@"%td",indexPath.row-_dataArrayYet.count-1];
+                    [_numDict setObject:_dataArrayWait[indexPath.row-_dataArrayYet.count-1] forKey:strNum];
                 }
-                
-                
+                //删除未勾选的内容
+                cell.chooseNoNum = ^(){
+                    //                    [_numDict setObject:_dataArrayWait[indexPath.row-_dataArrayYet.count-1] forKey:strNum];
+                    [_numDict removeObjectForKey:[NSString stringWithFormat:@"%td",indexPath.row-_dataArrayYet.count-1]];
+                };
+                //添加勾选的内容
+                cell.chooseYesNum = ^(){
+                    [_numDict setObject:_dataArrayWait[indexPath.row-_dataArrayYet.count-1] forKey:[NSString stringWithFormat:@"%td",indexPath.row-_dataArrayYet.count-1]];
+                };
                 if (indexPath.row == _dataArrayYet.count+1) {
                     cell.titleLabel.text = @"待付款";
                     cell.payBtn.hidden = NO;
@@ -254,17 +301,35 @@
 }
 
 
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    
+}
+
 #pragma mark --支付
 -(void)payMoneyClick
 {
+    NSLog(@"%@",_numDict);
+    //所有勾选上的球员
+    NSArray* arrData = [_numDict allValues];
     
-}
-
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (_dataArrayWait.count == 0) {
+        [[ShowHUD showHUD]showToastWithText:@"请勾选付款人！" FromView:self.view];
+        return;
+    }
     
-
+    self.tranView.hidden = NO;
+    self.applyListView.hidden = NO;
+    if (screenHeight < ((_dataArrayWait.count * 30) + 108)){
+        self.tranView.frame = CGRectMake(0, 0, screenWidth, 0);
+        self.applyListView.frame = CGRectMake(0, 0, screenWidth, screenHeight - 44-64);
+        [_applyListView configViewData:_dataArrayWait];
+    }else{
+        self.tranView.frame = CGRectMake(0, 0, screenWidth, screenHeight - (152 + _dataArrayWait.count * 30)-64 -44);
+        self.applyListView.frame = CGRectMake(0, screenHeight - (196 + _dataArrayWait.count * 30)-64, screenWidth, 196 + 44 + _dataArrayWait.count * 30);
+        [_applyListView configViewData:_dataArrayWait];
+    }
 }
-
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
