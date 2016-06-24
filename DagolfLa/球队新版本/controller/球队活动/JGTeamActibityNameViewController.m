@@ -662,14 +662,14 @@ static CGFloat ImageHeight  = 210.0;
 - (void)getTeamActivityResults:(UIButton *)btn{
     
     JGTeamDeatilWKwebViewController *wkVC = [[JGTeamDeatilWKwebViewController alloc] init];
-    //        wkVC.detailString = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/score/scoreRanking.html?userKey=%@&srcType=1&srcKey=4309", [[NSUserDefaults standardUserDefaults] objectForKey:@"userKey"],];
+            wkVC.detailString = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/score/scoreRanking.html?userKey=%@&srcType=1&srcKey=4381", [[NSUserDefaults standardUserDefaults] objectForKey:@"userKey"]];
     [self.navigationController pushViewController:wkVC animated:YES];
     
 }
 #pragma mark -- 详情页面
 - (void)pushDetailSCtrl:(UIButton *)btn{
     JGTeamDeatilWKwebViewController *WKCtrl = [[JGTeamDeatilWKwebViewController alloc]init];
-    WKCtrl.detailString = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/team/teamActivityDetails.html?key=%@", _model.timeKey];;
+    WKCtrl.detailString = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/team/teamActivityDetails.html?key=%@", _model.timeKey];
     WKCtrl.teamName = @"活动详情";
     [self.navigationController pushViewController:WKCtrl animated:YES];
 }
@@ -683,7 +683,8 @@ static CGFloat ImageHeight  = 210.0;
 #warning -------- 需要判断是否是管理员  ------补充 activityKey
     
     JGActivityMemNonMangerViewController *nonMangerVC = [[JGActivityMemNonMangerViewController alloc] init];
-    //        nonMangerVC.activityKey =
+            nonMangerVC.activityKey = @4381;
+    nonMangerVC.title = [NSString stringWithFormat:@"%@球队活动",self.model.name];
     [self.navigationController  pushViewController:nonMangerVC animated:YES];
     
 //    JGTeamDeatilWKwebViewController *WKCtrl = [[JGTeamDeatilWKwebViewController alloc]init];

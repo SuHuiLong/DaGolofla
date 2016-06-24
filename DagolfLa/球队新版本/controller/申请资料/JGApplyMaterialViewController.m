@@ -154,7 +154,6 @@
         [self.pickerBackView removeFromSuperview];
     }
     
-    
     [self.paraDic setObject:@0 forKey:@"hand"];
     NSIndexPath *indexpat = [NSIndexPath indexPathForRow:5 inSection:1];
     JGButtonTableViewCell *cell = [self.secondTableView cellForRowAtIndexPath:indexpat];
@@ -211,9 +210,10 @@
 
 - (void)creatNewTableView{
     
-    self.secondTableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
+    self.secondTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 3 * 44 * screenWidth / 320) style:UITableViewStylePlain];
     self.secondTableView.delegate = self;
     self.secondTableView.dataSource = self;
+    self.secondTableView.scrollEnabled = NO;
     [self.secondTableView registerClass:[JGApplyMaterialTableViewCell class] forCellReuseIdentifier:@"cell"];
     [self.secondTableView registerClass:[JGButtonTableViewCell class] forCellReuseIdentifier:@"cellBtn"];
     [self.secondTableView registerClass:[JGLableAndLableTableViewCell class] forCellReuseIdentifier:@"cellLB"];
@@ -422,6 +422,10 @@
     [self.view addSubview: self.tableView];
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return 30 * screenWidth / 320;
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     if (section == 0) {
         return 3;
@@ -440,7 +444,7 @@
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 2;
+    return 1;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
