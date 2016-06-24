@@ -437,9 +437,9 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
     if (section == 0) {
-        return @"必填项";
+        return @"";
     }else{
-        return @"选填项";
+        return @"";
     }
 }
 

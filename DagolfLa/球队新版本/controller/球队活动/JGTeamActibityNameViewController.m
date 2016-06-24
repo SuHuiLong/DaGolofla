@@ -692,7 +692,14 @@ static CGFloat ImageHeight  = 210.0;
 - (void)getTeamActivityResults:(UIButton *)btn{
     NSInteger timeKey;
     JGTeamDeatilWKwebViewController *wkVC = [[JGTeamDeatilWKwebViewController alloc] init];
-            wkVC.detailString = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/score/scoreRanking.html?userKey=%@&srcType=1&srcKey=4381", [[NSUserDefaults standardUserDefaults] objectForKey:@"userKey"]];
+    if (_model.teamActivityKey == 0) {
+        timeKey = [_model.timeKey integerValue];
+    }else{
+        timeKey = _model.teamActivityKey;
+    }
+
+    wkVC.detailString = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/score/scoreRanking.html?userKey=%@&srcType=1&srcKey=%td", DEFAULF_USERID, timeKey];
+    wkVC.teamName = @"活动成绩";
     [self.navigationController pushViewController:wkVC animated:YES];
 }
 #pragma mark -- 详情页面
@@ -709,21 +716,19 @@ static CGFloat ImageHeight  = 210.0;
         return;
     }
     
-    NSInteger timeKey;
-    if (_model.teamActivityKey == 0) {
-        timeKey = [_model.timeKey integerValue];
-    }else{
-        timeKey = _model.teamActivityKey;
-    }
-    
     if ([_power containsString:@"1001"]) {
-        JGLActiveCancelMemViewController *powerCtrl = [[JGLActiveCancelMemViewController alloc]init];
-        powerCtrl.activityKey = [NSNumber numberWithInteger:timeKey];
-        [self.navigationController pushViewController:powerCtrl animated:YES];
+        
     }else{
+        NSInteger timeKey;
         JGActivityMemNonMangerViewController *nonMangerVC = [[JGActivityMemNonMangerViewController alloc] init];
+        
+        if (_model.teamActivityKey == 0) {
+            timeKey = [_model.timeKey integerValue];
+        }else{
+            timeKey = _model.teamActivityKey;
+        }
+        
         nonMangerVC.activityKey = [NSNumber numberWithInteger:timeKey];
-        nonMangerVC.title = [NSString stringWithFormat:@"%@球队活动",self.model.name];
         [self.navigationController  pushViewController:nonMangerVC animated:YES];
     }
 }
