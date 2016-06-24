@@ -197,7 +197,12 @@
                     break;
                 case 4:
                 {
-                    cell.detailLabel.text = [NSString stringWithFormat:@"%@",_model.ballage];
+                    if (_model.ballage != nil) {
+                        cell.detailLabel.text = [NSString stringWithFormat:@"%@",_model.ballage];
+                    }
+                    else{
+                        cell.detailLabel.text = [NSString stringWithFormat:@"暂无球龄"];
+                    }
                 }
                     break;
                     

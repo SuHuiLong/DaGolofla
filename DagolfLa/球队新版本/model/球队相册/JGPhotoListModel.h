@@ -40,6 +40,7 @@
 @property (strong, nonatomic) NSString* ts;
 @property (strong, nonatomic) NSNumber* userKey;
 @property (strong, nonatomic) NSNumber* width;
+@property (strong, nonatomic) NSString* teamName;
 
 
 @end
