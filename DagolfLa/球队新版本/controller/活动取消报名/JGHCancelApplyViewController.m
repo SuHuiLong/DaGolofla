@@ -104,6 +104,10 @@ static NSString *const JGHButtonCellIdentifier = @"JGHButtonCell";
                 [applyDict setObject:@"1" forKey:@"select"];//付款勾选默认勾
                 [self.dataArray addObject:applyDict];
             }
+        }else{
+            if ([data objectForKey:@"packResultMsg"]) {
+                [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+            }
         }
         
         [[ShowHUD showHUD]hideAnimationFromView:self.view];
