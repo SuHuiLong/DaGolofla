@@ -369,11 +369,6 @@
 }
 #pragma mark -- 提交报名信息
 - (void)submitInfo:(NSInteger)type{
-//    if (![self.applyArray count]) {
-//        [[ShowHUD showHUD]showToastWithText:@"请添加打球人，再报名！" FromView:self.view];
-//        return;
-//    }
-    
     [[ShowHUD showHUD]showAnimationWithText:@"报名中..." FromView:self.view];
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     
@@ -400,9 +395,9 @@
     for (JGTeamAcitivtyModel *model in _applyDataArray) {
         [teamSignUpList addObject:model.timeKey];
     }
-    [dict setObject:teamSignUpList forKey:@"teamSignUpList"];//报名人员数组
+    [dict setObject:teamSignUpList forKey:@"signupKeyList"];//报名人员数组
     [dict setObject:_info forKey:@"info"];
-    [[JsonHttp jsonHttp]httpRequest:@"team/doTeamActivitySignUp" JsonKey:nil withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
+    [[JsonHttp jsonHttp]httpRequest:@"team/doTeamActivitySignUpPay" JsonKey:nil withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
         NSLog(@"errType == %@", errType);
         [[ShowHUD showHUD]hideAnimationFromView:self.view];
     } completionBlock:^(id data) {
