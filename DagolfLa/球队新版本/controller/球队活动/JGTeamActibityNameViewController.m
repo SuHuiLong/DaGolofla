@@ -40,6 +40,7 @@
 #import "JGActivityMemNonMangerViewController.h"
 #import "JGLActiveCancelMemViewController.h"
 #import "JGLPaySignUpViewController.h"
+#import "JGLActiveCancelMemViewController.h"
 
 static NSString *const JGTeamActivityWithAddressCellIdentifier = @"JGTeamActivityWithAddressCell";
 static NSString *const JGTeamActivityDetailsCellIdentifier = @"JGTeamActivityDetailsCell";
@@ -708,19 +709,23 @@ static CGFloat ImageHeight  = 210.0;
         return;
     }
     
-#warning -------- 需要判断是否是管理员  ------补充 activityKey
+    NSInteger timeKey;
+    if (_model.teamActivityKey == 0) {
+        timeKey = [_model.timeKey integerValue];
+    }else{
+        timeKey = _model.teamActivityKey;
+    }
     
-    JGActivityMemNonMangerViewController *nonMangerVC = [[JGActivityMemNonMangerViewController alloc] init];
-            nonMangerVC.activityKey = @4381;
-    nonMangerVC.title = [NSString stringWithFormat:@"%@球队活动",self.model.name];
-    [self.navigationController  pushViewController:nonMangerVC animated:YES];
-    
-//    JGTeamDeatilWKwebViewController *WKCtrl = [[JGTeamDeatilWKwebViewController alloc]init];
-//    WKCtrl.detailString = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/team/group.html?key=%@", _model.timeKey];;
-//    WKCtrl.teamName = @"报名人列表";
-//    WKCtrl.isShareBtn = 1;
-//    WKCtrl.teamKey = [_model.timeKey integerValue];
-//    [self.navigationController pushViewController:WKCtrl animated:YES];
+    if ([_power containsString:@"1001"]) {
+        JGLActiveCancelMemViewController *powerCtrl = [[JGLActiveCancelMemViewController alloc]init];
+        powerCtrl.activityKey = [NSNumber numberWithInteger:timeKey];
+        [self.navigationController pushViewController:powerCtrl animated:YES];
+    }else{
+        JGActivityMemNonMangerViewController *nonMangerVC = [[JGActivityMemNonMangerViewController alloc] init];
+        nonMangerVC.activityKey = [NSNumber numberWithInteger:timeKey];
+        nonMangerVC.title = [NSString stringWithFormat:@"%@球队活动",self.model.name];
+        [self.navigationController  pushViewController:nonMangerVC animated:YES];
+    }
 }
 #pragma mark - Table View Delegate
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
