@@ -37,6 +37,8 @@ typedef NS_ENUM(NSInteger, GestureType) {
 #define IconLogo @"iconlogo"//绿色app logo
 #define ActivityBGImage @"activityBGImage"
 
+#define loadingString @"加载中..."
+
 #define kDistance 10*screenWidth/375 //说说和图片的间隔
 #define kReplyBtnDistance 30*screenWidth/375 //回复按钮距离
 #define kReply_FavourDistance 8*screenWidth/375 //回复按钮到点赞的距离

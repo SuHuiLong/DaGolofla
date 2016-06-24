@@ -40,4 +40,11 @@
     self.noteLbael.text = str;
 }
 
+- (void)configRefoundMonay:(float)monay{
+    self.contact.text = [NSString stringWithFormat:@"¥%.2f", monay];
+    self.noteLbael.hidden = YES;
+    self.subsidies.hidden = YES;
+    self.yuan.hidden = YES;
+}
+
 @end

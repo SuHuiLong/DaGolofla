@@ -59,6 +59,9 @@
 //联系人电话
 @property (copy, nonatomic) NSString *userMobile;
 
+//联系人电话
+@property (copy, nonatomic) NSString *mobile;
+
 @property (assign, nonatomic) NSInteger teamActivityKey;
 
 //活动头像
@@ -72,4 +75,14 @@
 
 //活动地址
 @property (nonatomic, copy) NSString *ballAddress;
+//类型
+@property (assign, nonatomic) NSInteger type;
+
+//取消原因canSignUpReason
+@property (nonatomic, strong)NSString *canSignUpReason;
+
+//退款原因refoundReason
+
+
+
 @end

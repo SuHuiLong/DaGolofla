@@ -100,6 +100,7 @@
                 <outlet property="chooseBtn" destination="KAt-LN-FMZ" id="QZN-e9-Rxl"/>
                 <outlet property="couponsImageView" destination="bBf-nw-Zwe" id="EBt-Si-lye"/>
                 <outlet property="deleteBtn" destination="jFd-jJ-yHa" id="Trm-vh-ffF"/>
+                <outlet property="monay" destination="qhl-67-oC0" id="UFK-x3-Sq5"/>
                 <outlet property="name" destination="7Hp-DK-bKB" id="Tnm-Jb-JJQ"/>
                 <outlet property="price" destination="jw7-MW-8hY" id="Rcn-I1-FXw"/>
                 <outlet property="subsidiesImageView" destination="bBf-nw-Zwe" id="GTr-1m-i0o"/>

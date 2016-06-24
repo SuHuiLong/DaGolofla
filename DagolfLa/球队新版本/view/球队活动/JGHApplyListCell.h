@@ -27,6 +27,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *price;
 //subsidies
 @property (weak, nonatomic) IBOutlet UIImageView *subsidiesImageView;
+@property (weak, nonatomic) IBOutlet UILabel *monay;
 
 //删除
 @property (weak, nonatomic) IBOutlet UIButton *deleteBtn;
@@ -39,5 +40,8 @@
 @property (weak, nonatomic)id <JGHApplyListCellDelegate> delegate;
 
 - (void)configDict:(NSDictionary *)dict;
+
+//退款相关
+- (void)configCancelApplyDict:(NSMutableDictionary *)dict;
 
 @end

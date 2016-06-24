@@ -172,7 +172,6 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
         }else{
             [applyDict setObject:@"0" forKey:@"almost"];
         }
-        
         //性别
         NSLog(@"%@", [[NSUserDefaults standardUserDefaults]objectForKey:@"sex"]);
         if ([[NSUserDefaults standardUserDefaults]objectForKey:@"sex"]) {

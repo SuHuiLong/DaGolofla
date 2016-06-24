@@ -35,6 +35,7 @@
 #import "EnterViewController.h"
 #import "JGTeamGroupViewController.h"
 #import "JGActivityNameBaseCell.h"
+#import "JGHCancelApplyViewController.h"
 
 static NSString *const JGTeamActivityWithAddressCellIdentifier = @"JGTeamActivityWithAddressCell";
 static NSString *const JGTeamActivityDetailsCellIdentifier = @"JGTeamActivityDetailsCell";
@@ -455,7 +456,7 @@ static CGFloat ImageHeight  = 210.0;
     UIButton *cancelApplyBtn = [[UIButton alloc]initWithFrame:CGRectMake(photoBtn.frame.size.width, screenHeight-44, (screenWidth - 75 *ScreenWidth/375)/2, 44)];
     [cancelApplyBtn setTitle:@"取消报名" forState:UIControlStateNormal];
     cancelApplyBtn.backgroundColor = [UIColor colorWithHexString:Nav_Color];
-    [cancelApplyBtn addTarget:self action:@selector(applyAttendBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    [cancelApplyBtn addTarget:self action:@selector(cancelApplyBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     if ([[Helper returnCurrentDateString] compare:_model.signUpEndTime] >= 0) {
         cancelApplyBtn.backgroundColor = [UIColor lightGrayColor];
     }
@@ -471,6 +472,28 @@ static CGFloat ImageHeight  = 210.0;
     }
     
     [self.view addSubview:applyOrPayBtn];
+}
+#pragma mark -- 取消报名
+- (void)cancelApplyBtnClick:(UIButton *)btn{
+    
+    JGHCancelApplyViewController *cancelApplyCtrl = [[JGHCancelApplyViewController alloc]init];
+    if (self.isTeamChannal == 1) {
+        //近期活动
+        cancelApplyCtrl.activityKey = [_model.timeKey integerValue];
+    }else{
+        if (self.isTeamChannal == 2) {
+            if (_model.teamActivityKey == 0) {
+                //球队活动
+                cancelApplyCtrl.activityKey = [_model.timeKey integerValue];
+            }else{
+                //我的球队
+                cancelApplyCtrl.activityKey = _model.teamActivityKey;
+            }
+        }
+    }
+    
+    cancelApplyCtrl.model = _model;
+    [self.navigationController pushViewController:cancelApplyCtrl animated:YES];
 }
 #pragma mark -- 创建报名按钮
 - (void)createApplyBtn{
@@ -528,7 +551,7 @@ static CGFloat ImageHeight  = 210.0;
     return 0;
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 5;//详情页面
+    return 6;//详情页面
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 2) {
@@ -544,7 +567,7 @@ static CGFloat ImageHeight  = 210.0;
         return ImageHeight;
     }else if (section == 1){
         return 110;
-    }else if (section == 4){
+    }else if (section == 5){
         static JGTeamActivityDetailsCell *cell;
         if (!cell) {
             cell = [self.teamActibityNameTableView dequeueReusableCellWithIdentifier:JGTeamActivityDetailsCellIdentifier];
@@ -609,6 +632,13 @@ static CGFloat ImageHeight  = 210.0;
         [headerCell congiftitles:@"查看报名人"];
         [headerCell congifCount:self.model.sumCount andSum:self.model.maxCount];
         return (UIView *)headerCell;
+    }else if (section == 4){
+        JGHHeaderLabelCell *headerCell = [tableView dequeueReusableCellWithIdentifier:JGHHeaderLabelCellIdentifier];
+        UIButton *applyListBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, screenWidth, headerCell.frame.size.height)];
+        [applyListBtn addTarget:self action:@selector(getTeamActivityResults:) forControlEvents:UIControlEventTouchUpInside];
+        [headerCell addSubview:applyListBtn];
+        [headerCell congiftitles:@"查看成绩"];
+        return (UIView *)headerCell;
     }else{
         JGTeamActivityDetailsCell *detailsCell = [tableView dequeueReusableCellWithIdentifier:JGTeamActivityDetailsCellIdentifier];
         UIButton *detailsBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, screenWidth, detailsCell.frame.size.height)];
@@ -623,9 +653,12 @@ static CGFloat ImageHeight  = 210.0;
     footView.backgroundColor = [UIColor colorWithHexString:BG_color];
     return footView;
 }
+#pragma mark -- 查看成绩
+- (void)getTeamActivityResults:(UIButton *)btn{
+    
+}
 #pragma mark -- 详情页面
 - (void)pushDetailSCtrl:(UIButton *)btn{
-    
     JGTeamDeatilWKwebViewController *WKCtrl = [[JGTeamDeatilWKwebViewController alloc]init];
     WKCtrl.detailString = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/team/teamActivityDetails.html?key=%@", _model.timeKey];;
     WKCtrl.teamName = @"活动详情";
