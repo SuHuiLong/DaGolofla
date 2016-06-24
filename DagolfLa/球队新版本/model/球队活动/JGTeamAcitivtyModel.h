@@ -83,6 +83,10 @@
 
 //退款原因refoundReason
 
+@property (nonatomic, strong)NSNumber *payMoney;
+
+//
+@property (nonatomic, strong)NSNumber *money;
 
 
 @end

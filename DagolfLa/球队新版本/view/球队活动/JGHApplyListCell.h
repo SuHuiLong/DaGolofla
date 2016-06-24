@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+@class JGTeamAcitivtyModel;
 
 @protocol JGHApplyListCellDelegate <NSObject>
 
@@ -43,5 +44,8 @@
 
 //退款相关
 - (void)configCancelApplyDict:(NSMutableDictionary *)dict;
+
+//在报名
+- (void)configCancelModel:(JGTeamAcitivtyModel *)model;
 
 @end

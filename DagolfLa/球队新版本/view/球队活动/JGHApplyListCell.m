@@ -7,9 +7,9 @@
 //
 
 #import "JGHApplyListCell.h"
+#import "JGTeamAcitivtyModel.h"
 
 @implementation JGHApplyListCell
-
 
 - (void)awakeFromNib {
     [super awakeFromNib];
@@ -86,6 +86,24 @@
     
     self.couponsImageView.hidden = YES;
     self.deleteBtn.hidden = YES;
+}
+
+- (void)configCancelModel:(JGTeamAcitivtyModel *)model{
+    //名字
+    self.name.text = model.name;
+    //    @property (weak, nonatomic) IBOutlet UILabel *name;
+    //价格
+    self.price.text = [NSString stringWithFormat:@"%.2f", [model.money floatValue]];
+    
+    //优惠券价格
+    if ([model.subsidyPrice integerValue] > 0.0) {
+        self.couponsImageView.hidden = NO;
+        
+        self.couponsLabel.text = [NSString stringWithFormat:@"%.1f", [model.subsidyPrice floatValue]];
+        [self.couponsImageView addSubview:self.couponsLabel];
+    }else{
+        self.couponsImageView.hidden = YES;
+    }
 }
 
 @end

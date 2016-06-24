@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "JGLPaySignModel.h"
+#import "JGTeamAcitivtyModel.h"
+
 @interface JGLPayListTableViewCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UIButton *stateBtn;
@@ -16,7 +18,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *moneyLabel;
 @property (weak, nonatomic) IBOutlet UIButton *payBtn;
 
--(void)showData:(JGLPaySignModel *)model;
+-(void)showData:(JGTeamAcitivtyModel *)model;
 
 @property (copy, nonatomic) void (^chooseNoNum)();
 @property (copy, nonatomic) void (^chooseYesNum)();
