@@ -272,6 +272,7 @@ static CGFloat ImageHeight  = 210.0;
 
             [self.model setValuesForKeysWithDictionary:[data objectForKey:@"activity"]];
             
+            [_subDataArray removeAllObjects];
             if ([self.model.memberPrice floatValue] > 0) {
                 [_subDataArray addObject:[NSString stringWithFormat:@"%.2f-球队队员资费", [self.model.memberPrice floatValue]]];
             }
