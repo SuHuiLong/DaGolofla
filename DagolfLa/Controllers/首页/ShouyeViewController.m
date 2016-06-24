@@ -17,8 +17,6 @@
 #import "TeacherViewController.h"
 
 #import "EnterViewController.h"
-
-#import "JGLActiveCancelMemViewController.h"
 //跳转详情界面
 #import "JGLNewShopDetailViewController.h"
 
@@ -217,7 +215,7 @@
             {
                 NSLog(@"shangchen");
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
-                JGLActiveCancelMemViewController* userVc = [[JGLActiveCancelMemViewController alloc]init];
+                UseMallViewController* userVc = [[UseMallViewController alloc]init];
                 [self.navigationController pushViewController:userVc animated:YES];
             }
                 break;

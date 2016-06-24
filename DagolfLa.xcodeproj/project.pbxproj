@@ -39,6 +39,13 @@
 		2067C6D51CE30CC0002900C8 /* JGTeamActivityDetailsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2067C6CA1CE30CC0002900C8 /* JGTeamActivityDetailsCell.xib */; };
 		2067C6D61CE30CC0002900C8 /* JGTeamActivityWithAddressCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2067C6CC1CE30CC0002900C8 /* JGTeamActivityWithAddressCell.m */; };
 		2067C6D71CE30CC0002900C8 /* JGTeamActivityWithAddressCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2067C6CD1CE30CC0002900C8 /* JGTeamActivityWithAddressCell.xib */; };
+		207FEC921D1BC3F30098E23C /* JGHCancelApplyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 207FEC911D1BC3F30098E23C /* JGHCancelApplyViewController.m */; };
+		207FEC961D1BC98F0098E23C /* JGHCancelApplyBaseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 207FEC941D1BC98F0098E23C /* JGHCancelApplyBaseCell.m */; };
+		207FEC971D1BC98F0098E23C /* JGHCancelApplyBaseCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 207FEC951D1BC98F0098E23C /* JGHCancelApplyBaseCell.xib */; };
+		207FEC9B1D1BDDB10098E23C /* JGHButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 207FEC991D1BDDB10098E23C /* JGHButtonCell.m */; };
+		207FEC9C1D1BDDB20098E23C /* JGHButtonCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 207FEC9A1D1BDDB10098E23C /* JGHButtonCell.xib */; };
+		207FECA01D1BE4180098E23C /* JGHTextFiledCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 207FEC9E1D1BE4180098E23C /* JGHTextFiledCell.m */; };
+		207FECA11D1BE4180098E23C /* JGHTextFiledCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 207FEC9F1D1BE4180098E23C /* JGHTextFiledCell.xib */; };
 		208030441CF7F32E00448BFC /* JGHIvoiceTypeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 208030421CF7F32E00448BFC /* JGHIvoiceTypeCell.m */; };
 		208030451CF7F32E00448BFC /* JGHIvoiceTypeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 208030431CF7F32E00448BFC /* JGHIvoiceTypeCell.xib */; };
 		208030491CF828D000448BFC /* JGHAddAddressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 208030471CF828D000448BFC /* JGHAddAddressViewController.m */; };
@@ -1066,6 +1073,17 @@
 		2067C6CB1CE30CC0002900C8 /* JGTeamActivityWithAddressCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGTeamActivityWithAddressCell.h; sourceTree = "<group>"; };
 		2067C6CC1CE30CC0002900C8 /* JGTeamActivityWithAddressCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGTeamActivityWithAddressCell.m; sourceTree = "<group>"; };
 		2067C6CD1CE30CC0002900C8 /* JGTeamActivityWithAddressCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JGTeamActivityWithAddressCell.xib; sourceTree = "<group>"; };
+		207FEC901D1BC3F30098E23C /* JGHCancelApplyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHCancelApplyViewController.h; sourceTree = "<group>"; };
+		207FEC911D1BC3F30098E23C /* JGHCancelApplyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHCancelApplyViewController.m; sourceTree = "<group>"; };
+		207FEC931D1BC98F0098E23C /* JGHCancelApplyBaseCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHCancelApplyBaseCell.h; sourceTree = "<group>"; };
+		207FEC941D1BC98F0098E23C /* JGHCancelApplyBaseCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHCancelApplyBaseCell.m; sourceTree = "<group>"; };
+		207FEC951D1BC98F0098E23C /* JGHCancelApplyBaseCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JGHCancelApplyBaseCell.xib; sourceTree = "<group>"; };
+		207FEC981D1BDDB10098E23C /* JGHButtonCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHButtonCell.h; sourceTree = "<group>"; };
+		207FEC991D1BDDB10098E23C /* JGHButtonCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHButtonCell.m; sourceTree = "<group>"; };
+		207FEC9A1D1BDDB10098E23C /* JGHButtonCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JGHButtonCell.xib; sourceTree = "<group>"; };
+		207FEC9D1D1BE4180098E23C /* JGHTextFiledCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHTextFiledCell.h; sourceTree = "<group>"; };
+		207FEC9E1D1BE4180098E23C /* JGHTextFiledCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHTextFiledCell.m; sourceTree = "<group>"; };
+		207FEC9F1D1BE4180098E23C /* JGHTextFiledCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JGHTextFiledCell.xib; sourceTree = "<group>"; };
 		208030411CF7F32E00448BFC /* JGHIvoiceTypeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHIvoiceTypeCell.h; sourceTree = "<group>"; };
 		208030421CF7F32E00448BFC /* JGHIvoiceTypeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHIvoiceTypeCell.m; sourceTree = "<group>"; };
 		208030431CF7F32E00448BFC /* JGHIvoiceTypeCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JGHIvoiceTypeCell.xib; sourceTree = "<group>"; };
@@ -2777,6 +2795,9 @@
 				208030501CF9A79800448BFC /* JGHTotalPriceCell.h */,
 				208030511CF9A79800448BFC /* JGHTotalPriceCell.m */,
 				208030521CF9A79800448BFC /* JGHTotalPriceCell.xib */,
+				207FEC981D1BDDB10098E23C /* JGHButtonCell.h */,
+				207FEC991D1BDDB10098E23C /* JGHButtonCell.m */,
+				207FEC9A1D1BDDB10098E23C /* JGHButtonCell.xib */,
 			);
 			path = "球队活动";
 			sourceTree = "<group>";
@@ -5746,6 +5767,8 @@
 				82ABF1AF1D1BC0B3004493DB /* JGLActiveCancelMemViewController.m */,
 				F5EEB1511D1BC1C7009D37CE /* JGActivityMemNonMangerViewController.h */,
 				F5EEB1521D1BC1C7009D37CE /* JGActivityMemNonMangerViewController.m */,
+				207FEC901D1BC3F30098E23C /* JGHCancelApplyViewController.h */,
+				207FEC911D1BC3F30098E23C /* JGHCancelApplyViewController.m */,
 			);
 			path = "活动取消报名";
 			sourceTree = "<group>";
@@ -6062,12 +6085,12 @@
 			children = (
 				F5EEB1551D1BC2BB009D37CE /* JGActivityMemNonmangerTableViewCell.h */,
 				F5EEB1561D1BC2BB009D37CE /* JGActivityMemNonmangerTableViewCell.m */,
-				82ABF1B11D1BC640004493DB /* JGLActiveMemTableViewCell.h */,
-				82ABF1B21D1BC640004493DB /* JGLActiveMemTableViewCell.m */,
-				82ABF1B31D1BC640004493DB /* JGLActiveMemTableViewCell.xib */,
-				82ABF1B61D1BC718004493DB /* JGLActiveCancelTableViewCell.h */,
-				82ABF1B71D1BC718004493DB /* JGLActiveCancelTableViewCell.m */,
-				82ABF1B81D1BC718004493DB /* JGLActiveCancelTableViewCell.xib */,
+				207FEC931D1BC98F0098E23C /* JGHCancelApplyBaseCell.h */,
+				207FEC941D1BC98F0098E23C /* JGHCancelApplyBaseCell.m */,
+				207FEC951D1BC98F0098E23C /* JGHCancelApplyBaseCell.xib */,
+				207FEC9D1D1BE4180098E23C /* JGHTextFiledCell.h */,
+				207FEC9E1D1BE4180098E23C /* JGHTextFiledCell.m */,
+				207FEC9F1D1BE4180098E23C /* JGHTextFiledCell.xib */,
 			);
 			path = "活动取消报名";
 			sourceTree = "<group>";
@@ -6202,6 +6225,7 @@
 				36BF00071BC770C4005B3CE2 /* chat_bottom_voice_nor.png in Resources */,
 				36BFFEE01BC76CDC005B3CE2 /* xiaoxidian2@2x.png in Resources */,
 				36BF00041BC770C4005B3CE2 /* chat_bottom_textfield.png in Resources */,
+				207FEC971D1BC98F0098E23C /* JGHCancelApplyBaseCell.xib in Resources */,
 				36BFFE9F1BC76CDC005B3CE2 /* guanggao1.png in Resources */,
 				362317281BDA12F500257862 /* guide_02.png in Resources */,
 				36BFFEBA1BC76CDC005B3CE2 /* tab_jf.png in Resources */,
@@ -6279,6 +6303,7 @@
 				36D0B0F61C80151C00C7245E /* RongCloud.bundle in Resources */,
 				82D595E01CE42BDF00CD9587 /* mapapi.bundle in Resources */,
 				3660E0901BFC48B00033B4D7 /* Default@2x-667.png in Resources */,
+				207FECA11D1BE4180098E23C /* JGHTextFiledCell.xib in Resources */,
 				36BFFEAD1BC76CDC005B3CE2 /* lxc@3x.png in Resources */,
 				36BFFE4F1BC76CDC005B3CE2 /* search@3x.png in Resources */,
 				36BFFE3E1BC76CDC005B3CE2 /* left_jt.png in Resources */,
@@ -6490,6 +6515,7 @@
 				36BFFE9D1BC76CDC005B3CE2 /* gqxs@2x.png in Resources */,
 				36BFFE401BC76CDC005B3CE2 /* left_jt@3x.png in Resources */,
 				36BFFEC61BC76CDC005B3CE2 /* tab_wd.png in Resources */,
+				207FEC9C1D1BDDB20098E23C /* JGHButtonCell.xib in Resources */,
 				654332031BD5D9B900363947 /* UMSocialLocalizable.strings in Resources */,
 				AACE5E841C7C7D5800966646 /* xiangcemoren.jpg in Resources */,
 				36BFFE3C1BC76CDC005B3CE2 /* kuang_xz@2x.png in Resources */,
@@ -6561,6 +6587,7 @@
 				65B596EE1CAD43AC007AB83A /* YMTableViewCell.m in Sources */,
 				36E300F01C3FF3F9005C3F08 /* MJRefreshAutoGifFooter.m in Sources */,
 				36DF6DEE1C07FDBD00B60B67 /* TeamCreatePhotoController.m in Sources */,
+				207FEC921D1BC3F30098E23C /* JGHCancelApplyViewController.m in Sources */,
 				36BF00A81BC77326005B3CE2 /* MyfootModel.m in Sources */,
 				209B3FE61D0FCB0300A6FF72 /* JGHSaveAndSubmitBtnCell.m in Sources */,
 				36BF00891BC772EF005B3CE2 /* MySetBindViewController.m in Sources */,
@@ -6804,6 +6831,7 @@
 				F569A14A1CE35AA500CD0FD5 /* JGTeamChannelTableViewCell.m in Sources */,
 				3644DBD91C522E4B0066842B /* ManageApplyModel.m in Sources */,
 				366409AC1CBF9BCE002FC920 /* InfoDataViewController.m in Sources */,
+				207FEC961D1BC98F0098E23C /* JGHCancelApplyBaseCell.m in Sources */,
 				36E300EB1C3FF3F9005C3F08 /* MJRefreshAutoFooter.m in Sources */,
 				36BFFF631BC76D09005B3CE2 /* README.md in Sources */,
 				36DF56321C151F940006D9BA /* ScoreProWriteCell.m in Sources */,
@@ -6839,6 +6867,7 @@
 				36BF01611BC77611005B3CE2 /* AreaChooseViewController.m in Sources */,
 				3657369A1C16872B00D2BC10 /* ScoreProListModel.m in Sources */,
 				36BF01631BC77611005B3CE2 /* BallParkViewController.m in Sources */,
+				207FEC9B1D1BDDB10098E23C /* JGHButtonCell.m in Sources */,
 				36DF6DF71C0809B400B60B67 /* TeamBrowseViewController.m in Sources */,
 				36BF01A11BC779D8005B3CE2 /* YueDetailModel.m in Sources */,
 				20BA61291CDC99D0004B61F5 /* ALAirplayView.m in Sources */,
@@ -6962,6 +6991,7 @@
 				36BFFF5B1BC76D09005B3CE2 /* AFHTTPSessionManager.m in Sources */,
 				362BCD8D1C045DEF001E2818 /* TeamActiveModel.m in Sources */,
 				823C149D1CEEF0B5000AB612 /* JGLTeamMemberModel.m in Sources */,
+				207FECA01D1BE4180098E23C /* JGHTextFiledCell.m in Sources */,
 				20BA612A1CDC99D0004B61F5 /* ALButton.m in Sources */,
 				36E1FBB41C7D817A006B1456 /* ChangePicViewController.m in Sources */,
 				36BF00921BC772EF005B3CE2 /* MyNewsBoxViewController.m in Sources */,

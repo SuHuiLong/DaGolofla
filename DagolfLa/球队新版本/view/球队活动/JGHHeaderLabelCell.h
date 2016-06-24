@@ -29,4 +29,6 @@
 
 - (void)configInvoiceIfo:(NSString *)str;
 
+- (void)configRefoundMonay:(float)monay;
+
 @end

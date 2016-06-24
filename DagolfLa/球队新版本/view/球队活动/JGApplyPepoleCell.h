@@ -21,4 +21,10 @@
 @property (weak, nonatomic) IBOutlet UIImageView *directionImageView;
 
 @property (weak, nonatomic)id <JGApplyPepoleCellDelegate> delegate;
+
+@property (weak, nonatomic) IBOutlet UILabel *titles;
+
+- (void)configCancelApplyTitles:(NSString *)string;
+
+
 @end
