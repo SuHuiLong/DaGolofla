@@ -128,8 +128,8 @@
 
 -(void)createFooterView
 {
-    _viewFoott = [[UIView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, 20*screenWidth/375)];
-    UILabel* label = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, screenWidth, 20*screenWidth/375)];
+    _viewFoott = [[UIView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, 30*screenWidth/375)];
+    UILabel* label = [[UILabel alloc]initWithFrame:CGRectMake(10*screenWidth/375, 5*screenWidth/375, screenWidth, 20*screenWidth/375)];
     label.font = [UIFont systemFontOfSize:15*screenWidth/375];
     label.text = @"提示：当前报名者在线支付，本人可享受平台补贴。";
     [_viewFoott addSubview:label];
@@ -245,6 +245,7 @@
      */
     if (indexPath.section == 0) {
         JGLPayHeaderTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"JGLPayHeaderTableViewCell" forIndexPath:indexPath];
+        [cell showData:_model];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
     }
@@ -254,6 +255,9 @@
     else if (indexPath.section == 1)
     {
         JGLSignPeoTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"JGLSignPeoTableViewCell" forIndexPath:indexPath];
+        cell.iconImg.layer.masksToBounds = YES;
+        cell.iconImg.layer.cornerRadius = cell.iconImg.frame.size.height/2;
+        [cell showData:_model];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
     }
