@@ -444,6 +444,7 @@ static CGFloat ImageHeight  = 210.0;
             [dict setObject:[NSString stringWithFormat:@"%.2f", [self.model.billPrice floatValue]] forKey:@"billPrice"];//
         }
         
+        NSLog(@"%@", self.model.billPrice);
         [dict setObject:[NSString stringWithFormat:@"%ld", (long)self.model.maxCount] forKey:@"maxCount"];//最大人员数
         [dict setObject:[NSString stringWithFormat:@"%ld", (long)_model.isClose] forKey:@"isClose"];//活动是否结束 0 : 开始 , 1 : 已结束
         NSDateFormatter *formatter =[[NSDateFormatter alloc] init];
