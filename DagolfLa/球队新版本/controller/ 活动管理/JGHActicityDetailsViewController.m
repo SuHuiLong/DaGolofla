@@ -57,6 +57,7 @@ static CGFloat ImageHeight  = 210.0;
 
 @property (nonatomic, strong)UITableView *teamActibityNameTableView;
 @property (nonatomic, strong)NSMutableArray *dataArray;//数据源
+@property (nonatomic, strong)NSMutableArray *subDataArray;//费用说明数据源
 @property (nonatomic,strong)SXPickPhoto * pickPhoto;//相册类
 @property (nonatomic, strong)UIImage *headerImage;
 
@@ -103,6 +104,7 @@ static CGFloat ImageHeight  = 210.0;
         self.model = [[JGTeamAcitivtyModel alloc]init];
         self.pickPhoto = [[SXPickPhoto alloc]init];
         self.titleView = [[UIView alloc]init];
+        self.subDataArray = [NSMutableArray array];
     }
     return self;
 }
@@ -228,6 +230,24 @@ static CGFloat ImageHeight  = 210.0;
             }
             
             [self.model setValuesForKeysWithDictionary:[data objectForKey:@"activity"]];
+            
+            [_subDataArray removeAllObjects];
+            if ([self.model.memberPrice floatValue] > 0) {
+                [_subDataArray addObject:[NSString stringWithFormat:@"%.2f-球队队员资费", [self.model.memberPrice floatValue]]];
+            }
+            
+            if ([self.model.guestPrice floatValue] > 0) {
+                [_subDataArray addObject:[NSString stringWithFormat:@"%.2f-普通嘉宾资费", [self.model.guestPrice floatValue]]];
+            }
+            
+            if ([self.model.billNamePrice floatValue] > 0) {
+                [_subDataArray addObject:[NSString stringWithFormat:@"%.2f-球场记名会员资费", [self.model.billNamePrice floatValue]]];
+            }
+            
+            if ([self.model.billPrice floatValue] > 0) {
+                [_subDataArray addObject:[NSString stringWithFormat:@"%.2f-球场无记名会员资费", [self.model.billPrice floatValue]]];
+            }
+            
             [self.teamActibityNameTableView reloadData];
         }else{
             
@@ -416,6 +436,14 @@ static CGFloat ImageHeight  = 210.0;
         [dict setObject:self.model.info forKey:@"info"];//活动简介
         [dict setObject:[NSString stringWithFormat:@"%.2f", [self.model.memberPrice floatValue]] forKey:@"memberPrice"];//会员价
         [dict setObject:[NSString stringWithFormat:@"%.2f", [self.model.guestPrice floatValue]] forKey:@"guestPrice"];//嘉宾价
+        if ([self.model.billNamePrice floatValue] >= 0.0) {
+            [dict setObject:[NSString stringWithFormat:@"%.2f", [self.model.billNamePrice floatValue]] forKey:@"billNamePrice"];//
+        }
+        
+        if ([self.model.billPrice floatValue] >= 0.0) {
+            [dict setObject:[NSString stringWithFormat:@"%.2f", [self.model.billPrice floatValue]] forKey:@"billPrice"];//
+        }
+        
         [dict setObject:[NSString stringWithFormat:@"%ld", (long)self.model.maxCount] forKey:@"maxCount"];//最大人员数
         [dict setObject:[NSString stringWithFormat:@"%ld", (long)_model.isClose] forKey:@"isClose"];//活动是否结束 0 : 开始 , 1 : 已结束
         NSDateFormatter *formatter =[[NSDateFormatter alloc] init];
@@ -497,7 +525,7 @@ static CGFloat ImageHeight  = 210.0;
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     if (section == 3) {
         //参赛费用列表
-        return 2;
+        return _subDataArray.count;
     }
     return 0;
 }
@@ -536,12 +564,8 @@ static CGFloat ImageHeight  = 210.0;
     if (indexPath.section == 3) {
         JGHCostListTableViewCell *costListCell = [tableView dequeueReusableCellWithIdentifier:JGHCostListTableViewCellIdentifier];
         costListCell.selectionStyle = UITableViewCellSelectionStyleNone;
-        if (indexPath.row == 0) {
-            costListCell.titles.text = @"球队队员费用";
-            costListCell.price.text = [NSString stringWithFormat:@"%.2f", [self.model.memberPrice floatValue]];
-        }else{
-            costListCell.titles.text = @"嘉宾费用";
-            costListCell.price.text = [NSString stringWithFormat:@"%.2f", [self.model.guestPrice floatValue]];
+        if (_subDataArray.count > 0) {
+            [costListCell configCostData:_subDataArray[indexPath.row]];
         }
         
         return costListCell;
@@ -685,6 +709,24 @@ static CGFloat ImageHeight  = 210.0;
     self.model.memberPrice = [Helper returnNumberForString:membersCost];
     self.model.billNamePrice = [Helper returnNumberForString:registeredPrice];
     self.model.billPrice = [Helper returnNumberForString:bearerPrice];
+    
+    [_subDataArray removeAllObjects];
+    if ([self.model.memberPrice floatValue] > 0) {
+        [_subDataArray addObject:[NSString stringWithFormat:@"%.2f-球队队员资费", [self.model.memberPrice floatValue]]];
+    }
+    
+    if ([self.model.guestPrice floatValue] > 0) {
+        [_subDataArray addObject:[NSString stringWithFormat:@"%.2f-普通嘉宾资费", [self.model.guestPrice floatValue]]];
+    }
+    
+    if ([self.model.billNamePrice floatValue] > 0) {
+        [_subDataArray addObject:[NSString stringWithFormat:@"%.2f-球场记名会员资费", [self.model.billNamePrice floatValue]]];
+    }
+    
+    if ([self.model.billPrice floatValue] > 0) {
+        [_subDataArray addObject:[NSString stringWithFormat:@"%.2f-球场无记名会员资费", [self.model.billPrice floatValue]]];
+    }
+    
     [self.teamActibityNameTableView reloadData];
 }
 #pragma mark -- 详情页面
