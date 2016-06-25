@@ -675,10 +675,16 @@ static CGFloat ImageHeight  = 210.0;
     [self.teamActibityNameTableView reloadData];
 }
 #pragma mark -- 费用代理
-- (void)inputMembersCost:(NSString *)membersCost guestCost:(NSString *)guestCost{
+- (void)inputMembersCost:(NSString *)membersCost guestCost:(NSString *)guestCost andRegisteredPrice:(NSString *)registeredPrice andBearerPrice:(NSString *)bearerPrice{
     _isEditor = 1;
+    NSLog(@"%@", [Helper returnNumberForString:guestCost]);
+    NSLog(@"%@", [Helper returnNumberForString:membersCost]);
+    NSLog(@"%@", [Helper returnNumberForString:registeredPrice]);
+    NSLog(@"%@", [Helper returnNumberForString:bearerPrice]);
     self.model.guestPrice = [Helper returnNumberForString:guestCost];
     self.model.memberPrice = [Helper returnNumberForString:membersCost];
+    self.model.billNamePrice = [Helper returnNumberForString:registeredPrice];
+    self.model.billPrice = [Helper returnNumberForString:bearerPrice];
     [self.teamActibityNameTableView reloadData];
 }
 #pragma mark -- 详情页面
