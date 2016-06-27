@@ -651,7 +651,8 @@ static CGFloat ImageHeight  = 210.0;
             contactCell.tetfileView.text = self.model.userName;
         }
         
-        contactCell.tetfileView.placeholder = @"请输入最大人员限制数";
+        contactCell.tetfileView.placeholder = @"请输入联系人";
+        contactCell.tetfileView.keyboardType = UIKeyboardTypeDefault;
         return contactCell.contentView;
     }else{
         JGHTeamContactTableViewCell *contactCell = [tableView dequeueReusableCellWithIdentifier:JGHTeamContactCellIdentifier];

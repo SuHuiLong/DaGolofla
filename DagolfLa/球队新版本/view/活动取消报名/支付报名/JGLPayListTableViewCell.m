@@ -18,7 +18,7 @@
     
     _isClick = NO;
     
-    [_stateBtn addTarget:self action:@selector(stateClick:) forControlEvents:UIControlEventTouchUpInside];
+   
     
     _titleLabel.font = [UIFont systemFontOfSize:14*ScreenWidth/320];
     _nameLabel.font  = [UIFont systemFontOfSize:13*ScreenWidth/320];
@@ -40,17 +40,21 @@
         [btn setImage:[UIImage imageNamed:@"kuang"] forState:UIControlStateNormal];
         _isClick = YES;
         _chooseNoNum();
+        _modelData.isClick = YES;
     }
     else
     {
         [btn setImage:[UIImage imageNamed:@"kuang_xz"] forState:UIControlStateNormal];
         _isClick = NO;
         _chooseYesNum();
+        _modelData.isClick = NO;
     }
 }
 
 -(void)showData:(JGTeamAcitivtyModel *)model
 {
+    [_stateBtn addTarget:self action:@selector(stateClick:) forControlEvents:UIControlEventTouchUpInside];
+    
     if (![Helper isBlankString:model.name]) {
         _nameLabel.text = [NSString stringWithFormat:@"%@",model.name];
     }
@@ -60,8 +64,43 @@
     }
     
     _moneyLabel.text = [NSString stringWithFormat:@"%.2f元",[model.money floatValue]];
+    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:_moneyLabel.text];
+    [attributedString addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(_moneyLabel.text.length-1, 1)]; // 0为起始位置 length是从起始位置开始 设置指定颜色的长度
+    _moneyLabel.attributedText = attributedString;
+    
+    if (model.isClick == NO) {
+        [_stateBtn setImage:[UIImage imageNamed:@"kuang_xz"] forState:UIControlStateNormal];
+    }
+    else{
+        [_stateBtn setImage:[UIImage imageNamed:@"kuang"] forState:UIControlStateNormal];
+    }
+}
+
+-(void)showData1:(JGTeamAcitivtyModel *)model
+{
+    
+     [_stateBtn addTarget:self action:@selector(stateClick:) forControlEvents:UIControlEventTouchUpInside];
+    if (![Helper isBlankString:model.name]) {
+        _nameLabel.text = [NSString stringWithFormat:@"%@",model.name];
+    }
+    else
+    {
+        _nameLabel.text = [NSString stringWithFormat:@"暂无姓名"];
+    }
+    _moneyLabel.text = [NSString stringWithFormat:@"%.2f元",[model.payMoney floatValue]];
+    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:_moneyLabel.text];
+    [attributedString addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(_moneyLabel.text.length-1, 1)]; // 0为起始位置 length是从起始位置开始 设置指定颜色的长度
+    _moneyLabel.attributedText = attributedString;
+    
+    if (model.isClick == NO) {
+        [_stateBtn setImage:[UIImage imageNamed:@"kuang_xz"] forState:UIControlStateNormal];
+    }
+    else{
+        [_stateBtn setImage:[UIImage imageNamed:@"kuang"] forState:UIControlStateNormal];
+    }
     
 }
+
 
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

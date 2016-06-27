@@ -140,6 +140,8 @@
     JGLActivityMemberTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"JGLActivityMemberTableViewCell" forIndexPath:indexPath];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     [cell showData:_dataArray[indexPath.row]];
+    cell.iconImg.layer.cornerRadius = cell.iconImg.frame.size.height/2;
+    cell.iconImg.layer.masksToBounds = YES;
     return cell;
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
