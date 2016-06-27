@@ -181,6 +181,7 @@
             {
                 JGTeamAcitivtyModel *model = [[JGTeamAcitivtyModel alloc] init];
                 [model setValuesForKeysWithDictionary:dicList];
+                model.isClick = NO;
                 if ([model.payMoney integerValue] > 0) {
                     [_dataArrayYet addObject:model];
                 }
@@ -269,13 +270,6 @@
     }
     else if (indexPath.section == 2){
         if (indexPath.row == 0) {
-            /**
-             *  报名人名单和发票信息
-             */
-//            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellid" forIndexPath:indexPath];
-//            cell.selectionStyle = UITableViewCellSelectionStyleNone;
-//            cell.textLabel.text = @"报名人名单(8)";
-//            return cell;
             
             static NSString *CellIdentifier = @"Cell";
             UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
@@ -303,6 +297,7 @@
             //cell从1开始
             if (indexPath.row - 1 < _dataArrayYet.count) {//已付款的cell，个数为数组0 ----- count-1 个
                 [cell showData1:_dataArrayYet[indexPath.row - 1]];
+                cell.modelData = _dataArrayYet[indexPath.row - 1];
                 cell.stateBtn.hidden = YES;
                 cell.payBtn.hidden = YES;
                 if (indexPath.row == 1) {
@@ -315,6 +310,7 @@
             else{
                 if (_dataArrayWait.count != 0) {
                     [cell showData:_dataArrayWait[indexPath.row-_dataArrayYet.count-1]];
+                    cell.modelData = _dataArrayWait[indexPath.row-_dataArrayYet.count-1];
                     NSString* strNum = [NSString stringWithFormat:@"%td",indexPath.row-_dataArrayYet.count-1];
                     [_numDict setObject:_dataArrayWait[indexPath.row-_dataArrayYet.count-1] forKey:strNum];
                 }
@@ -322,11 +318,16 @@
                 cell.chooseNoNum = ^(){
                     //                    [_numDict setObject:_dataArrayWait[indexPath.row-_dataArrayYet.count-1] forKey:strNum];
                     [_numDict removeObjectForKey:[NSString stringWithFormat:@"%td",indexPath.row-_dataArrayYet.count-1]];
+                    
+
                 };
                 //添加勾选的内容
                 cell.chooseYesNum = ^(){
                     [_numDict setObject:_dataArrayWait[indexPath.row-_dataArrayYet.count-1] forKey:[NSString stringWithFormat:@"%td",indexPath.row-_dataArrayYet.count-1]];
+
                 };
+                
+                
                 if (indexPath.row == _dataArrayYet.count+1) {
                     cell.titleLabel.text = @"待付款";
                     cell.payBtn.hidden = NO;

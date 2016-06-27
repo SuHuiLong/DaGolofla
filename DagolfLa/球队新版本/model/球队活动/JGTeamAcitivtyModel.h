@@ -87,6 +87,8 @@
 
 //
 @property (nonatomic, strong)NSNumber *money;
+//用来记录是否选中
+@property (nonatomic, assign) BOOL isClick;
 
 
 @end
