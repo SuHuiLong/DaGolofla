@@ -278,7 +278,7 @@
             }
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             cell.textLabel.font = [UIFont systemFontOfSize:15*ScreenWidth/320];
-            cell.textLabel.text = [NSString stringWithFormat:@"报名人名单(%td)",_dataArrayYet.count + _dataArrayWait.count];
+            cell.textLabel.text = [NSString stringWithFormat:@"打球人名单(%td)",_dataArrayYet.count + _dataArrayWait.count];
             return cell;
             
             
