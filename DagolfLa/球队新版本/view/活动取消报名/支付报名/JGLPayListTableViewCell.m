@@ -59,7 +59,7 @@
         _nameLabel.text = [NSString stringWithFormat:@"暂无姓名"];
     }
     
-    _moneyLabel.text = [NSString stringWithFormat:@"¥%@",model.money];
+    _moneyLabel.text = [NSString stringWithFormat:@"%@元",model.money];
     
 }
 
