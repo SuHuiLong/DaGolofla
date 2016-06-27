@@ -384,7 +384,7 @@
     self.applyListView.hidden = NO;
     if (screenHeight < ((self.applyDataArray.count * 30) + 108)){
         self.tranView.frame = CGRectMake(0, 0, screenWidth, 0);
-        self.applyListView.frame = CGRectMake(0, 0, screenWidth, screenHeight - 44-64);
+        self.applyListView.frame = CGRectMake(0, 0, screenWidth, screenHeight -64);
         [_applyListView configViewData:self.applyDataArray];
     }else{
         self.tranView.frame = CGRectMake(0, 0, screenWidth, screenHeight - (152 + self.applyDataArray.count * 30)-64 -44);

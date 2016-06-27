@@ -176,8 +176,8 @@ static NSString *const JGHHeaderLabelCellIdentifier = @"JGHHeaderLabelCell";
 - (void)updateView{
     if (screenHeight < ((_repeatAppArray.count * 30) + 108)) {
         self.repeatApplyTableView.frame = CGRectMake(0, 0, screenWidth, screenHeight - 64 - 44);
-        self.cancelBtn.frame = CGRectMake(0, screenHeight - 64, screenWidth/2, 44);
-        self.submitBtn.frame = CGRectMake(screenWidth/2, screenHeight - 64, screenWidth/2, 44);
+        self.cancelBtn.frame = CGRectMake(0, screenHeight -64 -44, screenWidth/2, 44);
+        self.submitBtn.frame = CGRectMake(screenWidth/2, screenHeight -44 -64, screenWidth/2, 44);
     }else{
         self.repeatApplyTableView.frame = CGRectMake(0, 0, screenWidth, 196 + _repeatAppArray.count * 30);
         self.cancelBtn.frame = CGRectMake(0, 152 + (_repeatAppArray.count * 30), screenWidth/2, 44);
