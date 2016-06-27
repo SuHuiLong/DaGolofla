@@ -24,7 +24,7 @@
 
 -(void)showData:(NSDictionary *)dict showModel:(JGTeamAcitivtyModel *)model
 {
-    [_iconImg sd_setImageWithURL:[Helper setImageIconUrl:@"user" andTeamKey:model.userKey andIsSetWidth:YES andIsBackGround:NO] placeholderImage:[UIImage imageNamed:TeamLogoImage]];
+    [_iconImg sd_setImageWithURL:[Helper setImageIconUrl:@"user" andTeamKey:[[dict objectForKey:@"userKey"] integerValue] andIsSetWidth:YES andIsBackGround:NO] placeholderImage:[UIImage imageNamed:TeamLogoImage]];
     if (![Helper isBlankString:[dict objectForKey:@"userName"]]) {
         _nameLabel.text = [NSString stringWithFormat:@"%@",[dict objectForKey:@"userName"]];
     }else{

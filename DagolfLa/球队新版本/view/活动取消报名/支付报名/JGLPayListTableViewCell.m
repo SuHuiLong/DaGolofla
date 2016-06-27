@@ -83,7 +83,7 @@
     {
         _nameLabel.text = [NSString stringWithFormat:@"暂无姓名"];
     }
-    _moneyLabel.text = [NSString stringWithFormat:@"%.2f",[model.payMoney floatValue]];
+    _moneyLabel.text = [NSString stringWithFormat:@"%.2f元",[model.payMoney floatValue]];
     
     if (model.isClick == NO) {
         [_stateBtn setImage:[UIImage imageNamed:@"kuang_xz"] forState:UIControlStateNormal];
