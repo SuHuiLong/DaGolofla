@@ -8,7 +8,7 @@
 
 #import "JGLActiveCancelMemViewController.h"
 #import "JGLActiveMemTableViewCell.h"
-#import "JGLActiveCancelTableViewCell.h"
+#import "JGLActivityMemberTableViewCell.h"
 #import "UITool.h"
 
 
@@ -62,7 +62,8 @@
     _tableView.dataSource = self;
     [self.view addSubview:_tableView];
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    [_tableView registerNib:[UINib nibWithNibName:@"JGLActiveCancelTableViewCell" bundle:nil] forCellReuseIdentifier:@"JGLActiveCancelTableViewCell"];
+//    [_tableView registerNib:[UINib nibWithNibName:@"JGLActiveCancelTableViewCell" bundle:nil] forCellReuseIdentifier:@"JGLActiveCancelTableViewCell"];
+    [_tableView registerClass:[JGLActivityMemberTableViewCell class] forCellReuseIdentifier:@"JGLActivityMemberTableViewCell"];
     
     _tableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
     _tableView.footer=[MJDIYBackFooter footerWithRefreshingTarget:self refreshingAction:@selector(footerRereshing)];
@@ -127,7 +128,7 @@
 #pragma MARK -- tableview
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 44*ScreenWidth/375;
+    return 50*ScreenWidth/320;
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -136,7 +137,7 @@
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    JGLActiveCancelTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"JGLActiveCancelTableViewCell" forIndexPath:indexPath];
+    JGLActivityMemberTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"JGLActivityMemberTableViewCell" forIndexPath:indexPath];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     [cell showData:_dataArray[indexPath.row]];
     return cell;

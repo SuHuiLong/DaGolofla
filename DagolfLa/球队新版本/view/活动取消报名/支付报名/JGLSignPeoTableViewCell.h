@@ -15,6 +15,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *mobileLabel;
 
 
--(void)showData:(JGTeamAcitivtyModel *)model;
+-(void)showData:(NSDictionary *)dict showModel:(JGTeamAcitivtyModel *)model;
 
 @end
