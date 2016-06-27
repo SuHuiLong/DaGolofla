@@ -497,6 +497,7 @@ static CGFloat ImageHeight  = 210.0;
 #pragma mark -- 报名／支付
 - (void)applyOrPayBtnClick:(UIButton *)btn{
     JGLPaySignUpViewController *paySignUpCtrl = [[JGLPaySignUpViewController alloc]init];
+    paySignUpCtrl.dictRealDetail = self.teamMemberDic;
     if (self.isTeamChannal == 1) {
         //近期活动
         paySignUpCtrl.activityKey = [_model.timeKey integerValue];
