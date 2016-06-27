@@ -242,11 +242,6 @@
      *  头视图
      */
     if (indexPath.section == 0) {
-//        JGLPayHeaderTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"JGLPayHeaderTableViewCell" forIndexPath:indexPath];
-//        [cell showData:_model];
-//        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-//        return cell;
-        
         static NSString *CellIdentifier = @"JGLPayHeaderTableViewCell";
         JGLPayHeaderTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
         if (cell == nil) {
@@ -267,18 +262,10 @@
         if (cell == nil) {
              cell = [[[NSBundle mainBundle]loadNibNamed:@"JGLSignPeoTableViewCell" owner:self options:nil] lastObject];
         }
-        [cell showData:_model];
+        [cell showData:_dictRealDetail showModel:_model];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
-        
-        
-        
-//        JGLSignPeoTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"JGLSignPeoTableViewCell" forIndexPath:indexPath];
-//        cell.iconImg.layer.masksToBounds = YES;
-//        cell.iconImg.layer.cornerRadius = cell.iconImg.frame.size.height/2;
-//        [cell showData:_model];
-//        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-//        return cell;
+
     }
     else if (indexPath.section == 2){
         if (indexPath.row == 0) {
@@ -296,6 +283,7 @@
                 cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
             }
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            cell.textLabel.font = [UIFont systemFontOfSize:15*ScreenWidth/320];
             cell.textLabel.text = [NSString stringWithFormat:@"报名人名单(%td)",_dataArrayYet.count + _dataArrayWait.count];
             return cell;
             
@@ -361,6 +349,7 @@
         }
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.textLabel.text = @"发票信息";
+        cell.textLabel.font = [UIFont systemFontOfSize:15*ScreenWidth/320];
         return cell;
         
     }

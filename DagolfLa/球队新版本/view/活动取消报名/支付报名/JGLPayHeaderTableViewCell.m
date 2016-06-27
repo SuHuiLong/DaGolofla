@@ -82,7 +82,7 @@
     }
 
     
-    [_iconImgv sd_setImageWithURL:[Helper setImageIconUrl:@"activity" andTeamKey:model.teamActivityKey andIsSetWidth:YES andIsBackGround:YES] placeholderImage:[UIImage imageNamed:ActivityBGImage]];
+    [_iconImgv sd_setImageWithURL:[Helper setImageIconUrl:@"activity" andTeamKey:[model.timeKey integerValue] andIsSetWidth:YES andIsBackGround:YES] placeholderImage:[UIImage imageNamed:TeamLogoImage]];
     
     NSString *str = [Helper returnCurrentDateString];//跟当前时间比较
     if ([str compare:model.signUpEndTime] >= 0) {

@@ -22,17 +22,17 @@
     _mobileLabel.font = [UIFont systemFontOfSize:13*ScreenWidth/320];
 }
 
--(void)showData:(JGTeamAcitivtyModel *)model
+-(void)showData:(NSDictionary *)dict showModel:(JGTeamAcitivtyModel *)model
 {
     [_iconImg sd_setImageWithURL:[Helper setImageIconUrl:@"user" andTeamKey:model.userKey andIsSetWidth:YES andIsBackGround:NO] placeholderImage:[UIImage imageNamed:TeamLogoImage]];
-    if (![Helper isBlankString:model.userName]) {
-        _nameLabel.text = [NSString stringWithFormat:@"%@",model.userName];
+    if (![Helper isBlankString:[dict objectForKey:@"userName"]]) {
+        _nameLabel.text = [NSString stringWithFormat:@"%@",[dict objectForKey:@"userName"]];
     }else{
         _nameLabel.text = [NSString stringWithFormat:@"暂无姓名"];
     }
     
-    if (![Helper isBlankString:model.mobile]) {
-        _mobileLabel.text = [NSString stringWithFormat:@"%@",model.mobile];
+    if (![Helper isBlankString:[dict objectForKey:@"mobile"]]) {
+        _mobileLabel.text = [NSString stringWithFormat:@"%@",[dict objectForKey:@"mobile"]];
     }else{
         _mobileLabel.text = [NSString stringWithFormat:@"暂无手机号"];
     }
