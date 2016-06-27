@@ -65,16 +65,18 @@
 }
 
 - (void)configCancelApplyDict:(NSMutableDictionary *)dict{
-    self.monay.hidden = NO;
+    self.monay.hidden = YES;
     //名字
+    self.name.textAlignment = NSTextAlignmentLeft;
     self.name.text = [dict objectForKey:@"name"];
     
     //价格
+    self.price.font = [UIFont systemFontOfSize:15.0];
     if ([[dict objectForKey:@"payMoney"] floatValue] > 0) {
         self.price.text = [NSString stringWithFormat:@"%.2f", [[dict objectForKey:@"payMoney"] floatValue]];
     }else{
         self.price.text = @"未付款";
-        self.monay.hidden = YES;
+        self.price.font = [UIFont systemFontOfSize:12.0];
     }
     
     //    @property (weak, nonatomic) IBOutlet UILabel *price;
@@ -96,7 +98,7 @@
     self.price.text = [NSString stringWithFormat:@"%.2f", [model.money floatValue]];
     
     //优惠券价格
-    if ([model.subsidyPrice integerValue] > 0.0) {
+    if (model.userKey == [[[NSUserDefaults standardUserDefaults]objectForKey:userID] integerValue]) {
         self.couponsImageView.hidden = NO;
         
         self.couponsLabel.text = [NSString stringWithFormat:@"%.2f", [model.subsidyPrice floatValue]];

@@ -269,15 +269,15 @@ static CGFloat ImageHeight  = 210.0;
             [self.model setValuesForKeysWithDictionary:[data objectForKey:@"activity"]];
             
             if ([[Helper returnCurrentDateString] compare:_model.signUpEndTime] < 0) {
-                
-            }
-            if ([_isApply integerValue] == 0) {
-                if ([[Helper returnCurrentDateString] compare:_model.signUpEndTime] < 0) {
+                if ([_isApply integerValue] == 0) {
                     [self createApplyBtn];//报名按钮
+                }else{
+                    [self createCancelBtnAndApplyOrPay];//已报名
                 }
             }else{
-                [self createCancelBtnAndApplyOrPay];//已报名
+                self.teamActibityNameTableView.frame = CGRectMake(0, 0, ScreenWidth, ScreenHeight);
             }
+            
             
             [_subDataArray removeAllObjects];
             if ([self.model.memberPrice floatValue] > 0) {
