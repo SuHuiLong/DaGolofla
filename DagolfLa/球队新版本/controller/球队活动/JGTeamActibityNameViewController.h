@@ -9,7 +9,13 @@
 #import "ViewController.h"
 @class JGTeamAcitivtyModel;
 
+typedef void (^LoadData)(void);
+
 @interface JGTeamActibityNameViewController : ViewController
+
+@property (nonatomic, copy) LoadData loadData;
+
+- (void)reloadData:(LoadData)block;
 
 //发布页面过来的数据
 @property (nonatomic, strong)JGTeamAcitivtyModel *model;

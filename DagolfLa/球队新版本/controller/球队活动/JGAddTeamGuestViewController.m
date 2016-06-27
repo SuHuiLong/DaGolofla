@@ -60,8 +60,18 @@
     
     self.sex = 1;//男－默认
     
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]init];
+    [tap addTarget:self action:@selector(hideCatoryView:)];
+    [self.view addGestureRecognizer:tap];
+    
     [self createAddGuestTableview];
 }
+
+#pragma mark -- 手势
+- (void)hideCatoryView:(UITapGestureRecognizer *)tap{
+    self.catoryView.hidden = YES;
+}
+
 #pragma mark --创建tableView
 - (void)createAddGuestTableview{
     self.addTeamGuestTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, self.alrealyAddGuestLabel.frame.origin.y + self.alrealyAddGuestLabel.frame.size.height + 3, screenWidth, screenHeight - (self.alrealyAddGuestLabel.frame.origin.y + self.alrealyAddGuestLabel.frame.size.height + 3 )-64-44) style:UITableViewStyleGrouped];
@@ -189,6 +199,8 @@
     self.catoryName.text = btn.currentTitle;
     self.catoryView.hidden = YES;
 }
+
+
 
 
 @end

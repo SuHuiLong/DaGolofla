@@ -165,7 +165,10 @@ static NSString *const JGGroupdetailsCollectionViewCellIdentifier = @"JGGroupdet
     if (_activityFrom == 1) {
         for (UIViewController *controller in self.navigationController.viewControllers) {
             if ([controller isKindOfClass:[JGTeamActibityNameViewController class]]) {
-                
+                //创建一个消息对象
+                NSNotification * notice = [NSNotification notificationWithName:@"reloadActivityData" object:nil userInfo:nil];
+                //发送消息
+                [[NSNotificationCenter defaultCenter]postNotification:notice];
                 [self.navigationController popToViewController:controller animated:YES];
             }
         }

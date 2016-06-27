@@ -85,7 +85,6 @@ static CGFloat ImageHeight  = 210.0;
     [super viewWillAppear:YES];
     self.navigationController.navigationBarHidden = YES;
     [self setData];
-    
     if (self.isTeamChannal == 2){
         if (_model.teamActivityKey == 0) {
             //我的球队活动
@@ -143,6 +142,11 @@ static CGFloat ImageHeight  = 210.0;
         bgImage = _model.bgImage;
         headerImage = _model.headerImage;
     }
+    
+    //监听分组页面返回，刷新数据
+    NSNotificationCenter * center = [NSNotificationCenter defaultCenter];
+    //添加当前类对象为一个观察者，name和object设置为nil，表示接收一切通知
+    [center addObserver:self selector:@selector(reloadActivityData:) name:@"reloadActivityData" object:nil];
     
     self.imgProfile = [[UIImageView alloc] initWithImage:bgImage];
     self.imgProfile.frame = CGRectMake(0, 0, screenWidth, ImageHeight);
@@ -248,11 +252,7 @@ static CGFloat ImageHeight  = 210.0;
         NSLog(@"%@", data);
         [[ShowHUD showHUD]hideAnimationFromView:self.view];
         _isApply = [data objectForKey:@"hasSignUp"];//是否报名
-        if ([_isApply integerValue] == 0) {
-            [self createApplyBtn];//报名按钮
-        }else{
-            [self createCancelBtnAndApplyOrPay];//已报名
-        }
+
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
             NSMutableDictionary *dict = [NSMutableDictionary dictionary];
             
@@ -270,6 +270,18 @@ static CGFloat ImageHeight  = 210.0;
 
             [self.model setValuesForKeysWithDictionary:[data objectForKey:@"activity"]];
             
+            if ([[Helper returnCurrentDateString] compare:_model.signUpEndTime] < 0) {
+                
+            }
+            if ([_isApply integerValue] == 0) {
+                if ([[Helper returnCurrentDateString] compare:_model.signUpEndTime] < 0) {
+                    [self createApplyBtn];//报名按钮
+                }
+            }else{
+                [self createCancelBtnAndApplyOrPay];//已报名
+            }
+            
+            [_subDataArray removeAllObjects];
             if ([self.model.memberPrice floatValue] > 0) {
                 [_subDataArray addObject:[NSString stringWithFormat:@"%.2f-球队队员资费", [self.model.memberPrice floatValue]]];
             }
@@ -319,20 +331,17 @@ static CGFloat ImageHeight  = 210.0;
 -(void)shareInfo:(NSInteger)index{
     
     NSData *fiData = [[NSData alloc]init];
-    if (_teamActivityKey != 0) {
-        fiData = [NSData dataWithContentsOfURL:[Helper setImageIconUrl:@"activity" andTeamKey:_teamActivityKey andIsSetWidth:YES andIsBackGround:YES]];
+    NSString*  shareUrl;
+    if ([_model.timeKey integerValue] == 0) {
+        fiData = [NSData dataWithContentsOfURL:[Helper setImageIconUrl:@"activity" andTeamKey:_model.teamActivityKey andIsSetWidth:YES andIsBackGround:YES]];
+        shareUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/team/teamac.html?key=%td", _model.teamActivityKey];
     }
     else
     {
         fiData = [NSData dataWithContentsOfURL:[Helper setImageIconUrl:@"activity" andTeamKey:[_model.timeKey integerValue]andIsSetWidth:YES andIsBackGround:YES]];
+        shareUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/team/teamac.html?key=%@", _model.timeKey];
     }
     
-    NSString*  shareUrl;
-    if (self.isTeamChannal == 2) {
-        shareUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/team/teamac.html?key=%@", _model.timeKey];
-    }else{
-        shareUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/team/teamac.html?key=%td", _teamActivityKey];
-    }
     
     [UMSocialData defaultData].extConfig.title=[NSString stringWithFormat:@"%@报名", _model.name];
     
@@ -546,9 +555,7 @@ static CGFloat ImageHeight  = 210.0;
     [self.applyBtn setTitle:@"报名参加" forState:UIControlStateNormal];
     self.applyBtn.backgroundColor = [UIColor colorWithHexString:Nav_Color];
     [self.applyBtn addTarget:self action:@selector(applyAttendBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-    if ([[Helper returnCurrentDateString] compare:_model.signUpEndTime] >= 0) {
-        self.applyBtn.backgroundColor = [UIColor lightGrayColor];
-    }
+
     
     [self.view addSubview:self.applyBtn];
 }
@@ -780,6 +787,18 @@ static CGFloat ImageHeight  = 210.0;
         }
     }
 }
+
+#pragma mark --分组页面返回后，刷新数据
+- (void)reloadData:(LoadData)block{
+    [self dataSet];
+}
+
+#pragma mark -- 刷新数据
+- (void)reloadActivityData:(id)not{
+    
+    [self dataSet];
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

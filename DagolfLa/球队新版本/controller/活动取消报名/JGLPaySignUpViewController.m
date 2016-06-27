@@ -24,7 +24,7 @@
 #import "DataSigner.h"
 #import "JGTeamApplyViewController.h"
 #import "JGHAddInvoiceViewController.h"
-
+#import "UITool.h"
 @interface JGLPaySignUpViewController ()<UITableViewDelegate,UITableViewDataSource, JGHRepeatApplyViewDelegate,JGHAddInvoiceViewControllerDelegate>
 {
     UITableView* _tableView;
@@ -128,10 +128,11 @@
 
 -(void)createFooterView
 {
-    _viewFoott = [[UIView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, 20*screenWidth/375)];
-    UILabel* label = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, screenWidth, 20*screenWidth/375)];
+    _viewFoott = [[UIView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, 30*screenWidth/375)];
+    UILabel* label = [[UILabel alloc]initWithFrame:CGRectMake(10*screenWidth/375, 5*screenWidth/375, screenWidth, 20*screenWidth/375)];
     label.font = [UIFont systemFontOfSize:15*screenWidth/375];
-    label.text = @"提示：当前报名者在线支付，本人可享受平台补贴。";
+    label.text = @"提示：当前报名者在线支付，本人可享受平台补贴。";\
+    label.textColor = [UITool colorWithHexString:@"#F19725" alpha:1];
     [_viewFoott addSubview:label];
 }
 #pragma mark --uitableview创建
@@ -146,11 +147,11 @@
     [self.view addSubview:_tableView];
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
-    [_tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"cellid"];
-    [_tableView registerClass:[JGLPayHeaderTableViewCell class] forCellReuseIdentifier:@"JGLPayHeaderTableViewCell"];
-    [_tableView registerNib:[UINib nibWithNibName:@"JGLSignPeoTableViewCell" bundle:nil] forCellReuseIdentifier:@"JGLSignPeoTableViewCell"];
-    [_tableView registerNib:[UINib nibWithNibName:@"JGLPayListTableViewCell" bundle:nil] forCellReuseIdentifier:@"JGLPayListTableViewCell"];
- 
+//    [_tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"cellid"];
+////    [_tableView registerClass:[JGLPayHeaderTableViewCell class] forCellReuseIdentifier:@"JGLPayHeaderTableViewCell"];
+//    [_tableView registerNib:[UINib nibWithNibName:@"JGLSignPeoTableViewCell" bundle:nil] forCellReuseIdentifier:@"JGLSignPeoTableViewCell"];
+//    [_tableView registerNib:[UINib nibWithNibName:@"JGLPayListTableViewCell" bundle:nil] forCellReuseIdentifier:@"JGLPayListTableViewCell"];
+// 
     
     _tableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
     [_tableView.header beginRefreshing];
@@ -173,6 +174,7 @@
                 //清除数组数据
                 [_dataArrayYet removeAllObjects];
                 [_dataArrayWait removeAllObjects];
+                [_numDict removeAllObjects];
             }
             //数据解析
             for (NSDictionary *dicList in [data objectForKey:@"teamSignUpList"])
@@ -216,12 +218,8 @@
     if (indexPath.section == 0) {
         return 75*ScreenWidth/320;
     }
-    else if (indexPath.section == 1)
-    {
-        return 50*ScreenWidth/375;
-    }
     else{
-        return 44*ScreenWidth/375;
+        return 44*ScreenWidth/320;
     }
 }
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -244,7 +242,17 @@
      *  头视图
      */
     if (indexPath.section == 0) {
-        JGLPayHeaderTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"JGLPayHeaderTableViewCell" forIndexPath:indexPath];
+//        JGLPayHeaderTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"JGLPayHeaderTableViewCell" forIndexPath:indexPath];
+//        [cell showData:_model];
+//        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+//        return cell;
+        
+        static NSString *CellIdentifier = @"JGLPayHeaderTableViewCell";
+        JGLPayHeaderTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        if (cell == nil) {
+            cell = [[JGLPayHeaderTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        }
+        [cell showData:_model];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
     }
@@ -253,27 +261,60 @@
      */
     else if (indexPath.section == 1)
     {
-        JGLSignPeoTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"JGLSignPeoTableViewCell" forIndexPath:indexPath];
+        
+        static NSString *CellIdentifier = @"JGLSignPeoTableViewCell";
+        JGLSignPeoTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        if (cell == nil) {
+             cell = [[[NSBundle mainBundle]loadNibNamed:@"JGLSignPeoTableViewCell" owner:self options:nil] lastObject];
+        }
+        [cell showData:_model];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
+        
+        
+        
+//        JGLSignPeoTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"JGLSignPeoTableViewCell" forIndexPath:indexPath];
+//        cell.iconImg.layer.masksToBounds = YES;
+//        cell.iconImg.layer.cornerRadius = cell.iconImg.frame.size.height/2;
+//        [cell showData:_model];
+//        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+//        return cell;
     }
     else if (indexPath.section == 2){
         if (indexPath.row == 0) {
             /**
              *  报名人名单和发票信息
              */
-            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellid" forIndexPath:indexPath];
+//            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellid" forIndexPath:indexPath];
+//            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+//            cell.textLabel.text = @"报名人名单(8)";
+//            return cell;
+            
+            static NSString *CellIdentifier = @"Cell";
+            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+            if (cell == nil) {
+                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+            }
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            cell.textLabel.text = @"报名人名单(8)";
+            cell.textLabel.text = [NSString stringWithFormat:@"报名人名单(%td)",_dataArrayYet.count + _dataArrayWait.count];
             return cell;
+            
+            
+            
         }
         else{
-            JGLPayListTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"JGLPayListTableViewCell" forIndexPath:indexPath];
+            
+            static NSString *CellIdentifier = @"JGLPayListTableViewCell";
+            JGLPayListTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+            if (cell == nil) {
+                  cell = [[[NSBundle mainBundle]loadNibNamed:@"JGLPayListTableViewCell" owner:self options:nil] lastObject];
+            }
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            
             
             //cell从1开始
             if (indexPath.row - 1 < _dataArrayYet.count) {//已付款的cell，个数为数组0 ----- count-1 个
-                [cell showData:_dataArrayYet[indexPath.row - 1]];
+                [cell showData1:_dataArrayYet[indexPath.row - 1]];
                 cell.stateBtn.hidden = YES;
                 cell.payBtn.hidden = YES;
                 if (indexPath.row == 1) {
@@ -312,10 +353,16 @@
         }
     }
     else{
-        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellid" forIndexPath:indexPath];
+
+        static NSString *CellIdentifier = @"Cell";
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        if (cell == nil) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        }
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.textLabel.text = @"发票信息";
         return cell;
+        
     }
     
 }

@@ -48,6 +48,7 @@ static NSString *const JGHButtonCellIdentifier = @"JGHButtonCell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    self.navigationItem.title = @"取消报名";
     
     [self createTableView];
 }
@@ -102,6 +103,10 @@ static NSString *const JGHButtonCellIdentifier = @"JGHButtonCell";
                 NSMutableDictionary *applyDict = [NSMutableDictionary dictionaryWithDictionary:dataDict];
                 [applyDict setObject:@"1" forKey:@"select"];//付款勾选默认勾
                 [self.dataArray addObject:applyDict];
+            }
+        }else{
+            if ([data objectForKey:@"packResultMsg"]) {
+                [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
             }
         }
         

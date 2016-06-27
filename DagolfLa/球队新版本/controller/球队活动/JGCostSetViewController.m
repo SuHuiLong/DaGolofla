@@ -34,7 +34,21 @@
     self.navigationItem.rightBarButtonItem = rightItem;
 }
 - (void)saveBtnClick:(UIButton *)btn{
+    if (self.membersCost.text.length == 0) {
+        [[ShowHUD showHUD]showToastWithText:@"请输入会员费用！" FromView:self.view];
+        return;
+    }
+    
+    if (self.guestCost.text.length == 0) {
+        [[ShowHUD showHUD]showToastWithText:@"请输入嘉宾费用！" FromView:self.view];
+        return;
+    }
+    
     if (self.delegate) {
+        NSLog(@"%@", self.membersCost.text);
+        NSLog(@"%@", self.guestCost.text);
+        NSLog(@"%@", self.registeredPrice.text);
+        NSLog(@"%@", self.bearerPrice.text);
         [self.delegate inputMembersCost:self.membersCost.text guestCost:self.guestCost.text andRegisteredPrice:self.registeredPrice.text andBearerPrice:self.bearerPrice.text];
         [self.navigationController popViewControllerAnimated:YES];
     }
