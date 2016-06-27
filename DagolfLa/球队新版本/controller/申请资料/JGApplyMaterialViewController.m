@@ -41,6 +41,7 @@
     
     //    [self creatTableView];
     [self creatNewTableView];
+    self.view.backgroundColor = [UIColor colorWithHexString:BG_color];
     // Do any additional setup after loading the view.
 }
 
@@ -210,7 +211,7 @@
 
 - (void)creatNewTableView{
     
-    self.secondTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 3 * 44 * screenWidth / 320) style:UITableViewStylePlain];
+    self.secondTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 4 * 40 * screenWidth / 320) style:UITableViewStylePlain];
     self.secondTableView.delegate = self;
     self.secondTableView.dataSource = self;
     self.secondTableView.scrollEnabled = NO;
@@ -423,7 +424,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 30 * screenWidth / 320;
+    return 40 * screenWidth / 320;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
