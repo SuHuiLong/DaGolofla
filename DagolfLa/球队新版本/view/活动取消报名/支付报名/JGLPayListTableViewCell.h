@@ -18,6 +18,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *moneyLabel;
 @property (weak, nonatomic) IBOutlet UIButton *payBtn;
 
+@property (strong, nonatomic) JGTeamAcitivtyModel *modelData;
+
 -(void)showData:(JGTeamAcitivtyModel *)model;
 -(void)showData1:(JGTeamAcitivtyModel *)model;
 @property (copy, nonatomic) void (^chooseNoNum)();
