@@ -13,9 +13,6 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     
-    
-    
-    
 }
 
 
@@ -42,12 +39,15 @@
     }
     
     if (model.money != nil) {
-        NSString* strMoney = [NSString stringWithFormat:@"已付费:%@",model.money];
+        NSString* strMoney = [NSString stringWithFormat:@"已付费:%@元",model.money];
         NSMutableAttributedString *str = [[NSMutableAttributedString alloc] initWithString:strMoney];
         [str addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(0,4)];
         [str addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:NSMakeRange(4,str.length - 4)];
-        [str addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"Arial-BoldItalicMT" size:14.0] range:NSMakeRange(0, 4)];
-        [str addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"HelveticaNeue-Bold" size:15.0] range:NSMakeRange(4,str.length - 4)];
+        //        [str addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"Arial-BoldItalicMT" size:14.0] range:NSMakeRange(0, 4)];
+        //        [str addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"HelveticaNeue-Bold" size:15.0] range:NSMakeRange(4,str.length - 4)];
+        [str addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:14.0] range:NSMakeRange(0, 4)];
+        [str addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:15.0] range:NSMakeRange(4,str.length - 4)];
+
         _moneyLabel.attributedText = str;
     }
     

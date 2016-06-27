@@ -624,7 +624,7 @@
 
 
 - (void)setCellData{
-    
+
     for (int i = 0; i < 3; i++) {
         if (i == 0) {
             JGApplyMaterialTableViewCell *cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0]];
