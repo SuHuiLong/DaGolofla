@@ -13,6 +13,13 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
+    
+    _iconImg.layer.masksToBounds = YES;
+    _iconImg.layer.cornerRadius = _iconImg.frame.size.height/2;
+
+    _titleLabel.font  = [UIFont systemFontOfSize:14*ScreenWidth/320];
+    _nameLabel.font   = [UIFont systemFontOfSize:13*ScreenWidth/320];
+    _mobileLabel.font = [UIFont systemFontOfSize:13*ScreenWidth/320];
 }
 
 -(void)showData:(JGTeamAcitivtyModel *)model
