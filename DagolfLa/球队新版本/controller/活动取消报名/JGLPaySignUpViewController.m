@@ -473,6 +473,7 @@
     [self.payDict setObject:@4 forKey:@"orderType"];
     [self.payDict setObject:@"活动报名" forKey:@"name"];
     [self.payDict setObject:otherInfo forKey:@"otherInfo"];
+    [self.payDict setObject:[userdef objectForKey:userID] forKey:@"userKey"];
     
     [[JsonHttp jsonHttp]httpRequest:@"team/doTeamActivitySignUpPay" JsonKey:nil withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
         NSLog(@"errType == %@", errType);
