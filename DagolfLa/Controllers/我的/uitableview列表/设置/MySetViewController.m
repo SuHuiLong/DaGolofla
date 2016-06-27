@@ -65,7 +65,7 @@
     self.view.backgroundColor = [UIColor colorWithRed:0.93f green:0.93f blue:0.93f alpha:1.00f];
     _titleArray = [[NSArray alloc]init];
 //    _titleArray = @[@[@"关于我们",@"帮助反馈",@"清空缓存"],@[@"是否接受他人约球"]];
-    _titleArray = @[@"通知设置",@"屏蔽管理",@"帮助反馈",@"清空缓存"];
+    _titleArray = @[@"通知设置",@"屏蔽管理",@"帮助反馈",@"清空缓存", @"实名认证", @"重置登录密码", @"设置支付密码"];
     
     
     _dict = [[NSMutableDictionary alloc]init];
@@ -83,7 +83,7 @@
 
 -(void)uiConfig
 {
-    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, 44*4*ScreenWidth/375) style:UITableViewStylePlain];
+    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, 44*7*ScreenWidth/375) style:UITableViewStylePlain];
     _tableView.delegate = self;
     _tableView.dataSource = self;
     [self.view addSubview:_tableView];
@@ -159,7 +159,7 @@
  */
 -(void)createBtnView
 {
-    _btnExit = [[UIButton alloc]initWithFrame:CGRectMake(10*ScreenWidth/375, 44*4*ScreenWidth/375+1*10*ScreenWidth/375, ScreenWidth-20*ScreenWidth/375, 44*ScreenWidth/375)];
+    _btnExit = [[UIButton alloc]initWithFrame:CGRectMake(10*ScreenWidth/375, 44*7*ScreenWidth/375+1*10*ScreenWidth/375, ScreenWidth-20*ScreenWidth/375, 44*ScreenWidth/375)];
     [self.view addSubview:_btnExit];
     [_btnExit setTitle:@"退出登录" forState:UIControlStateNormal];
     [_btnExit setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
@@ -252,7 +252,7 @@
 //    {
 //        number  = 1;
 //    }
-    return 4;
+    return 7;
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -263,6 +263,13 @@
         cell.accessoryType  = UITableViewCellAccessoryDisclosureIndicator;
     }
     cell.textLabel.font = [UIFont systemFontOfSize:15*ScreenWidth/375];
+    if (indexPath.row == 4) {
+        UILabel *lable = [[UILabel alloc] initWithFrame:CGRectMake(310, 0, 60, 44)];
+        lable.text = @"未认证";
+        lable.font = [UIFont systemFontOfSize:14*ScreenWidth/375];
+        lable.textColor = [UIColor redColor];
+        [cell addSubview:lable];
+    }
     return cell;
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -283,7 +290,8 @@
         MySetHelpController* mySetVc = [[MySetHelpController alloc]init];
         [self.navigationController pushViewController:mySetVc animated:YES];
     }
-    else {
+    else if (indexPath.row == 3)
+    {
         [[SDImageCache sharedImageCache] clearDisk];
         NSInteger cacha=[[SDImageCache sharedImageCache] getSize];
         float ca=cacha/1000.0/1000.0;
@@ -293,7 +301,15 @@
             _labCache.text=[NSString stringWithFormat:@"%.2fM",ca];
         }
     }
-
+    else if (indexPath.row == 4) {
+        
+    }
+    else if (indexPath.row == 5) {
+        
+    }
+    else if (indexPath.row == 6) {
+        
+    }
 
 }
 
