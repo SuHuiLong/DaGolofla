@@ -842,10 +842,9 @@
 		82636E901D06D18100216DC1 /* JGTeamPhotoShowViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 82636E8F1D06D18100216DC1 /* JGTeamPhotoShowViewController.m */; };
 		827AA0111D1D003C00F6B80B /* JGLPaySignModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 827AA0101D1D003C00F6B80B /* JGLPaySignModel.m */; };
 		827AA0141D1D1BFF00F6B80B /* JGHCancelApplyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 827AA0131D1D1BFF00F6B80B /* JGHCancelApplyViewController.m */; };
-		827AA01B1D1D1C5500F6B80B /* JGLActiveCancelTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 827AA0161D1D1C5500F6B80B /* JGLActiveCancelTableViewCell.m */; };
-		827AA01C1D1D1C5500F6B80B /* JGLActiveCancelTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 827AA0171D1D1C5500F6B80B /* JGLActiveCancelTableViewCell.xib */; };
 		827AA01D1D1D1C5500F6B80B /* JGLActiveMemTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 827AA0191D1D1C5500F6B80B /* JGLActiveMemTableViewCell.m */; };
 		827AA01E1D1D1C5500F6B80B /* JGLActiveMemTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 827AA01A1D1D1C5500F6B80B /* JGLActiveMemTableViewCell.xib */; };
+		827BD52B1D20F23D009AF9CA /* JGLActivityMemberTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 827BD52A1D20F23D009AF9CA /* JGLActivityMemberTableViewCell.m */; };
 		8281BE551CEC41D200C5BD31 /* JGTeamPhotoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8281BE541CEC41D200C5BD31 /* JGTeamPhotoModel.m */; };
 		828A99E41CE3167800AF9860 /* JGTeamCreatePhotoController.m in Sources */ = {isa = PBXBuildFile; fileRef = 828A99E31CE3167800AF9860 /* JGTeamCreatePhotoController.m */; };
 		828A99E71CE325BB00AF9860 /* JGPhotoAlbumViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 828A99E61CE325BB00AF9860 /* JGPhotoAlbumViewController.m */; };
@@ -2327,12 +2326,11 @@
 		827AA0101D1D003C00F6B80B /* JGLPaySignModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGLPaySignModel.m; sourceTree = "<group>"; };
 		827AA0121D1D1BFF00F6B80B /* JGHCancelApplyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHCancelApplyViewController.h; sourceTree = "<group>"; };
 		827AA0131D1D1BFF00F6B80B /* JGHCancelApplyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHCancelApplyViewController.m; sourceTree = "<group>"; };
-		827AA0151D1D1C5500F6B80B /* JGLActiveCancelTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGLActiveCancelTableViewCell.h; sourceTree = "<group>"; };
-		827AA0161D1D1C5500F6B80B /* JGLActiveCancelTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGLActiveCancelTableViewCell.m; sourceTree = "<group>"; };
-		827AA0171D1D1C5500F6B80B /* JGLActiveCancelTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JGLActiveCancelTableViewCell.xib; sourceTree = "<group>"; };
 		827AA0181D1D1C5500F6B80B /* JGLActiveMemTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGLActiveMemTableViewCell.h; sourceTree = "<group>"; };
 		827AA0191D1D1C5500F6B80B /* JGLActiveMemTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGLActiveMemTableViewCell.m; sourceTree = "<group>"; };
 		827AA01A1D1D1C5500F6B80B /* JGLActiveMemTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JGLActiveMemTableViewCell.xib; sourceTree = "<group>"; };
+		827BD5291D20F23D009AF9CA /* JGLActivityMemberTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGLActivityMemberTableViewCell.h; sourceTree = "<group>"; };
+		827BD52A1D20F23D009AF9CA /* JGLActivityMemberTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGLActivityMemberTableViewCell.m; sourceTree = "<group>"; };
 		8281BE531CEC41D200C5BD31 /* JGTeamPhotoModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGTeamPhotoModel.h; sourceTree = "<group>"; };
 		8281BE541CEC41D200C5BD31 /* JGTeamPhotoModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGTeamPhotoModel.m; sourceTree = "<group>"; };
 		828A99E21CE3167800AF9860 /* JGTeamCreatePhotoController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGTeamCreatePhotoController.h; sourceTree = "<group>"; };
@@ -6126,9 +6124,8 @@
 		F5EEB1541D1BC28F009D37CE /* 活动取消报名 */ = {
 			isa = PBXGroup;
 			children = (
-				827AA0151D1D1C5500F6B80B /* JGLActiveCancelTableViewCell.h */,
-				827AA0161D1D1C5500F6B80B /* JGLActiveCancelTableViewCell.m */,
-				827AA0171D1D1C5500F6B80B /* JGLActiveCancelTableViewCell.xib */,
+				827BD5291D20F23D009AF9CA /* JGLActivityMemberTableViewCell.h */,
+				827BD52A1D20F23D009AF9CA /* JGLActivityMemberTableViewCell.m */,
 				827AA0181D1D1C5500F6B80B /* JGLActiveMemTableViewCell.h */,
 				827AA0191D1D1C5500F6B80B /* JGLActiveMemTableViewCell.m */,
 				827AA01A1D1D1C5500F6B80B /* JGLActiveMemTableViewCell.xib */,
@@ -6235,7 +6232,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				F5B5499B1CE9F3C00091C962 /* JGPhotoShowCollectionViewCell.xib in Resources */,
-				827AA01C1D1D1C5500F6B80B /* JGLActiveCancelTableViewCell.xib in Resources */,
 				20CA13801CE574A400DA15B9 /* JGHConcentTextViewController.xib in Resources */,
 				36BFFE581BC76CDC005B3CE2 /* tianjia2@2x.png in Resources */,
 				36BFFE611BC76CDC005B3CE2 /* tu2@3x.png in Resources */,
@@ -6930,7 +6926,6 @@
 				36D39B371BCCD8D000C0B197 /* RewordModel.m in Sources */,
 				36DD4DB11BFDB68E008D3424 /* TeamCreateTableViewCell.m in Sources */,
 				3660E13D1BFC55AC0033B4D7 /* MineTeamController.m in Sources */,
-				827AA01B1D1D1C5500F6B80B /* JGLActiveCancelTableViewCell.m in Sources */,
 				36DBCAC31C27DD6300C374C8 /* ManageWatchViewController.m in Sources */,
 				368394821C09A67E00F162F6 /* GameModel.m in Sources */,
 				36067BBD1C96B43B001AE22C /* ChatListViewController.m in Sources */,
@@ -7017,6 +7012,7 @@
 				36BF01CB1BC77ABE005B3CE2 /* YueWaitTableViewCell.m in Sources */,
 				20513B501CF5D9AD003233FB /* JGHAddInvoiceViewController.m in Sources */,
 				3660E13E1BFC55AC0033B4D7 /* TeamDeMessViewController.m in Sources */,
+				827BD52B1D20F23D009AF9CA /* JGLActivityMemberTableViewCell.m in Sources */,
 				65B596F11CAD43AC007AB83A /* JKSlideSwitchView.m in Sources */,
 				368B73321C102A710002A618 /* ScoreFootViewController.m in Sources */,
 				65B596ED1CAD43AC007AB83A /* YMShowImageView.m in Sources */,
