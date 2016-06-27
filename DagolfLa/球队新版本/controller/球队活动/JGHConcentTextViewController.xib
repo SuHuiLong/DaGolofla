@@ -44,10 +44,10 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WUq-Qv-XaG">
-                    <rect key="frame" x="10" y="201" width="580" height="30"/>
+                    <rect key="frame" x="10" y="201" width="580" height="44"/>
                     <color key="backgroundColor" red="0.94509803920000002" green="0.52156862749999999" blue="0.023529411760000001" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="30" id="k6J-7l-Yea"/>
+                        <constraint firstAttribute="height" constant="44" id="k6J-7l-Yea"/>
                     </constraints>
                     <state key="normal" title="保存">
                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>

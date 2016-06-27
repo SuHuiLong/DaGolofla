@@ -73,7 +73,11 @@
     //价格
     self.price.font = [UIFont systemFontOfSize:15.0];
     if ([[dict objectForKey:@"payMoney"] floatValue] > 0) {
-        self.price.text = [NSString stringWithFormat:@"%.2f", [[dict objectForKey:@"payMoney"] floatValue]];
+        self.price.text = [NSString stringWithFormat:@"%.2f元", [[dict objectForKey:@"payMoney"] floatValue]];
+        self.price.text = [NSString stringWithFormat:@"10000.00元"];
+        NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:self.price.text];
+        [attributedString addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(self.price.text.length-1, 1)]; // 0为起始位置 length是从起始位置开始 设置指定颜色的长度
+        self.price.attributedText = attributedString;
     }else{
         self.price.text = @"未付款";
         self.price.font = [UIFont systemFontOfSize:12.0];
