@@ -174,6 +174,7 @@
                 //清除数组数据
                 [_dataArrayYet removeAllObjects];
                 [_dataArrayWait removeAllObjects];
+                [_numDict removeAllObjects];
             }
             //数据解析
             for (NSDictionary *dicList in [data objectForKey:@"teamSignUpList"])
@@ -217,12 +218,8 @@
     if (indexPath.section == 0) {
         return 75*ScreenWidth/320;
     }
-    else if (indexPath.section == 1)
-    {
-        return 50*ScreenWidth/375;
-    }
     else{
-        return 44*ScreenWidth/375;
+        return 44*ScreenWidth/320;
     }
 }
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -270,8 +267,6 @@
         if (cell == nil) {
              cell = [[[NSBundle mainBundle]loadNibNamed:@"JGLSignPeoTableViewCell" owner:self options:nil] lastObject];
         }
-        cell.iconImg.layer.masksToBounds = YES;
-        cell.iconImg.layer.cornerRadius = cell.iconImg.frame.size.height/2;
         [cell showData:_model];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
@@ -301,7 +296,7 @@
                 cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
             }
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            cell.textLabel.text = @"报名人名单(8)";
+            cell.textLabel.text = [NSString stringWithFormat:@"报名人名单(%td)",_dataArrayYet.count + _dataArrayWait.count];
             return cell;
             
             

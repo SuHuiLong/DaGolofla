@@ -7,7 +7,7 @@
 //
 
 #import "JGLPayListTableViewCell.h"
-
+#import "UITool.h"
 @implementation JGLPayListTableViewCell
 {
     BOOL _isClick;
@@ -19,6 +19,17 @@
     _isClick = NO;
     
     [_stateBtn addTarget:self action:@selector(stateClick:) forControlEvents:UIControlEventTouchUpInside];
+    
+    _titleLabel.font = [UIFont systemFontOfSize:14*ScreenWidth/320];
+    _nameLabel.font  = [UIFont systemFontOfSize:13*ScreenWidth/320];
+    
+    [_payBtn setTitleColor:[UITool colorWithHexString:@"#e00000" alpha:1] forState:UIControlStateNormal];
+    [_payBtn.layer setBorderWidth:1.0]; //边框宽度
+    _payBtn.layer.borderColor = [[UITool colorWithHexString:@"#e00000" alpha:1] CGColor];
+    _payBtn.titleLabel.font = [UIFont systemFontOfSize:13*screenWidth/375];
+    _payBtn.layer.masksToBounds = YES;
+    _payBtn.layer.cornerRadius = 8*screenWidth/320;
+    
 }
 
 
@@ -48,24 +59,7 @@
         _nameLabel.text = [NSString stringWithFormat:@"暂无姓名"];
     }
     
-    
-    _moneyLabel.text = [NSString stringWithFormat:@"%.2f",[model.money floatValue]];
-    
-}
-
-
--(void)showData1:(JGTeamAcitivtyModel *)model
-{
-    if (![Helper isBlankString:model.name]) {
-        _nameLabel.text = [NSString stringWithFormat:@"%@",model.name];
-    }
-    else
-    {
-        _nameLabel.text = [NSString stringWithFormat:@"暂无姓名"];
-    }
-    
-    
-    _moneyLabel.text = [NSString stringWithFormat:@"%.2f",[model.payMoney floatValue]];
+    _moneyLabel.text = [NSString stringWithFormat:@"%@元",model.money];
     
 }
 

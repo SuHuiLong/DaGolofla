@@ -75,6 +75,7 @@ static CGFloat ImageHeight  = 210.0;
 
 @property (nonatomic, strong)UIButton *applyBtn;
 
+@property (nonatomic, strong)NSDictionary *teamMemberDic;
 
 @end
 
@@ -257,6 +258,7 @@ static CGFloat ImageHeight  = 210.0;
             
             if ([data objectForKey:@"teamMember"]) {
                 dict = [data objectForKey:@"teamMember"];
+                self.teamMemberDic = dict;
                 _userName = [dict objectForKey:@"userName"];//获取用户在球队的真实姓名
                 if ([dict objectForKey:@"power"]) {
                     _power = [dict objectForKey:@"power"];
@@ -495,6 +497,7 @@ static CGFloat ImageHeight  = 210.0;
 #pragma mark -- 报名／支付
 - (void)applyOrPayBtnClick:(UIButton *)btn{
     JGLPaySignUpViewController *paySignUpCtrl = [[JGLPaySignUpViewController alloc]init];
+    paySignUpCtrl.dictRealDetail = self.teamMemberDic;
     if (self.isTeamChannal == 1) {
         //近期活动
         paySignUpCtrl.activityKey = [_model.timeKey integerValue];

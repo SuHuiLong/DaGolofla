@@ -21,7 +21,7 @@
     if (self) {
         _iconImgv = [[UIImageView alloc]initWithFrame:CGRectMake(10*screenWidth/320, 7*screenWidth/320, 61*screenWidth/320, 61*screenWidth/320)];
         [self addSubview:_iconImgv];
-        _iconImgv.image = [UIImage imageNamed:@"tu1"];
+        _iconImgv.image = [UIImage imageNamed:TeamLogoImage];
         _iconImgv.layer.masksToBounds = YES;
         _iconImgv.layer.cornerRadius = 6*screenWidth/320;
         
@@ -90,8 +90,10 @@
     }else{
         [_stateImgv setImage:[UIImage imageNamed:@"activityStateImage"]];
     }
-    
-    _timeLabel.text = [NSString stringWithFormat:@"%td",model.createTime];
+    NSString *timeString = [[model.beginDate componentsSeparatedByString:@" "]firstObject];
+    NSString *monthTimeString = [[timeString componentsSeparatedByString:@"-"]objectAtIndex:1];
+    NSString *dataTimeString = [[timeString componentsSeparatedByString:@"-"]objectAtIndex:2];
+    _timeLabel.text = [NSString stringWithFormat:@"%@月%@日", monthTimeString, dataTimeString];
     
     _peopleLabel.text = [NSString stringWithFormat:@"已报名人数(%td/%td人)",model.sumCount,model.maxCount];
     if (![Helper isBlankString:model.ballName])
