@@ -19,7 +19,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *payBtn;
 
 -(void)showData:(JGTeamAcitivtyModel *)model;
-
+-(void)showData1:(JGTeamAcitivtyModel *)model;
 @property (copy, nonatomic) void (^chooseNoNum)();
 @property (copy, nonatomic) void (^chooseYesNum)();
 
