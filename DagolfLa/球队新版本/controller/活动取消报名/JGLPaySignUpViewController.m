@@ -24,7 +24,7 @@
 #import "DataSigner.h"
 #import "JGTeamApplyViewController.h"
 #import "JGHAddInvoiceViewController.h"
-
+#import "UITool.h"
 @interface JGLPaySignUpViewController ()<UITableViewDelegate,UITableViewDataSource, JGHRepeatApplyViewDelegate,JGHAddInvoiceViewControllerDelegate>
 {
     UITableView* _tableView;
@@ -131,7 +131,8 @@
     _viewFoott = [[UIView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, 30*screenWidth/375)];
     UILabel* label = [[UILabel alloc]initWithFrame:CGRectMake(10*screenWidth/375, 5*screenWidth/375, screenWidth, 20*screenWidth/375)];
     label.font = [UIFont systemFontOfSize:15*screenWidth/375];
-    label.text = @"提示：当前报名者在线支付，本人可享受平台补贴。";
+    label.text = @"提示：当前报名者在线支付，本人可享受平台补贴。";\
+    label.textColor = [UITool colorWithHexString:@"#F19725" alpha:1];
     [_viewFoott addSubview:label];
 }
 #pragma mark --uitableview创建
@@ -318,7 +319,7 @@
             
             //cell从1开始
             if (indexPath.row - 1 < _dataArrayYet.count) {//已付款的cell，个数为数组0 ----- count-1 个
-                [cell showData:_dataArrayYet[indexPath.row - 1]];
+                [cell showData1:_dataArrayYet[indexPath.row - 1]];
                 cell.stateBtn.hidden = YES;
                 cell.payBtn.hidden = YES;
                 if (indexPath.row == 1) {

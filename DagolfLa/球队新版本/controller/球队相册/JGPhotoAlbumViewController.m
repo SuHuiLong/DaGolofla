@@ -32,6 +32,8 @@
     NSInteger _page;
     
     BOOL _isUpdata;
+    
+    NSString* _teamName;
 }
 @property (nonatomic,strong)  SXPickPhoto * pickPhoto;//相册类
 @property (strong, nonatomic) JGPhotoTimeReusableView *headView;
@@ -249,6 +251,8 @@
                 [model setValuesForKeysWithDictionary:dicList];
                 [_dataArray addObject:model];
             }
+            _teamName = [data objectForKey:@"teamName"];
+            
             _page++;
             [_collectionView reloadData];
         }else {
@@ -362,6 +366,7 @@
     picVC.state = _state;
     picVC.teamTimeKey = _teamTimeKey;
     picVC.userKey = _userKey;
+    picVC.teamName = _teamName;
     picVC.strTitle = _strTitle;
     picVC.deleteBlock = ^(NSInteger index) {
         _collectionView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];

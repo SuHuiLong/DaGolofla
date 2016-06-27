@@ -126,7 +126,7 @@ static NSString *const JGHHeaderLabelCellIdentifier = @"JGHHeaderLabelCell";
         if (indexPath.row == _repeatAppArray.count){
             JGSignUoPromptCell *signUoPromptCell = [tableView dequeueReusableCellWithIdentifier:JGSignUoPromptCellIdentifier forIndexPath:indexPath];
             signUoPromptCell.selectionStyle = UITableViewCellSelectionStyleNone;
-            [signUoPromptCell configPromptString:@"提示：未勾选系统默认为现场支付\n           仅当前报名人[在线支付]享受平台补贴。"];
+            [signUoPromptCell configPromptString:@"提示：仅勾选人在线支付，未勾选人仅报名\n           当前报名者在线支付，本人可享受平台补贴。"];
             return signUoPromptCell;
         }else{
             JGHApplyListCell *applyListCel = [tableView dequeueReusableCellWithIdentifier:JGHApplyListCellIdentifier forIndexPath:indexPath];
