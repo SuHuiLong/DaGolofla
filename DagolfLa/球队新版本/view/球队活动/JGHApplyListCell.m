@@ -57,7 +57,7 @@
     if ([dict objectForKey:@"subsidyPrice"]) {
         self.couponsImageView.hidden = NO;
         
-        self.couponsLabel.text = [NSString stringWithFormat:@"%.1f", [[dict objectForKey:@"subsidyPrice"] floatValue]];
+        self.couponsLabel.text = [NSString stringWithFormat:@"%.2f", [[dict objectForKey:@"subsidyPrice"] floatValue]];
         [self.couponsImageView addSubview:self.couponsLabel];
     }else{
         self.couponsImageView.hidden = YES;
@@ -99,7 +99,7 @@
     if ([model.subsidyPrice integerValue] > 0.0) {
         self.couponsImageView.hidden = NO;
         
-        self.couponsLabel.text = [NSString stringWithFormat:@"%.1f", [model.subsidyPrice floatValue]];
+        self.couponsLabel.text = [NSString stringWithFormat:@"%.2f", [model.subsidyPrice floatValue]];
         [self.couponsImageView addSubview:self.couponsLabel];
     }else{
         self.couponsImageView.hidden = YES;

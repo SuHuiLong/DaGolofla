@@ -251,11 +251,7 @@ static CGFloat ImageHeight  = 210.0;
         NSLog(@"%@", data);
         [[ShowHUD showHUD]hideAnimationFromView:self.view];
         _isApply = [data objectForKey:@"hasSignUp"];//是否报名
-        if ([_isApply integerValue] == 0) {
-            [self createApplyBtn];//报名按钮
-        }else{
-            [self createCancelBtnAndApplyOrPay];//已报名
-        }
+
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
             NSMutableDictionary *dict = [NSMutableDictionary dictionary];
             
@@ -271,6 +267,17 @@ static CGFloat ImageHeight  = 210.0;
             }
 
             [self.model setValuesForKeysWithDictionary:[data objectForKey:@"activity"]];
+            
+            if ([[Helper returnCurrentDateString] compare:_model.signUpEndTime] < 0) {
+                
+            }
+            if ([_isApply integerValue] == 0) {
+                if ([[Helper returnCurrentDateString] compare:_model.signUpEndTime] < 0) {
+                    [self createApplyBtn];//报名按钮
+                }
+            }else{
+                [self createCancelBtnAndApplyOrPay];//已报名
+            }
             
             [_subDataArray removeAllObjects];
             if ([self.model.memberPrice floatValue] > 0) {
@@ -546,9 +553,7 @@ static CGFloat ImageHeight  = 210.0;
     [self.applyBtn setTitle:@"报名参加" forState:UIControlStateNormal];
     self.applyBtn.backgroundColor = [UIColor colorWithHexString:Nav_Color];
     [self.applyBtn addTarget:self action:@selector(applyAttendBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-    if ([[Helper returnCurrentDateString] compare:_model.signUpEndTime] >= 0) {
-        self.applyBtn.backgroundColor = [UIColor lightGrayColor];
-    }
+
     
     [self.view addSubview:self.applyBtn];
 }
