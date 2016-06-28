@@ -29,7 +29,11 @@
 		20513BD91CF7050A003233FB /* openssl_wrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 20513BC91CF7050A003233FB /* openssl_wrapper.m */; };
 		20513BDA1CF7050A003233FB /* RSADataSigner.m in Sources */ = {isa = PBXBuildFile; fileRef = 20513BCB1CF7050A003233FB /* RSADataSigner.m */; };
 		20513BDB1CF7050A003233FB /* RSADataVerifier.m in Sources */ = {isa = PBXBuildFile; fileRef = 20513BCD1CF7050A003233FB /* RSADataVerifier.m */; };
-		20591C311D212DF4003271EC /* JGHTradRecordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 20591C2E1D212DF4003271EC /* JGHTradRecordViewController.m */; };
+		20591C551D215BCD003271EC /* JGDPrivateAccountModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 20591C4A1D215BCD003271EC /* JGDPrivateAccountModel.m */; };
+		20591C561D215BCD003271EC /* JGDPrivateAccountTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 20591C4E1D215BCD003271EC /* JGDPrivateAccountTableViewCell.m */; };
+		20591C571D215BCD003271EC /* JGHTradRecordCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 20591C511D215BCD003271EC /* JGHTradRecordCell.m */; };
+		20591C5E1D220EE0003271EC /* JGDPrivateAccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 20591C5A1D220EE0003271EC /* JGDPrivateAccountViewController.m */; };
+		20591C5F1D220EE0003271EC /* JGHTradRecordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 20591C5D1D220EE0003271EC /* JGHTradRecordViewController.m */; };
 		2067C6B81CE30CA4002900C8 /* JGTeamActibityNameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2067C6B51CE30CA4002900C8 /* JGTeamActibityNameViewController.m */; };
 		2067C6B91CE30CA4002900C8 /* JGTeamActivityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2067C6B71CE30CA4002900C8 /* JGTeamActivityViewController.m */; };
 		2067C6CE1CE30CC0002900C8 /* JGActivityNameBaseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2067C6C01CE30CC0002900C8 /* JGActivityNameBaseCell.m */; };
@@ -1069,8 +1073,16 @@
 		20513BCB1CF7050A003233FB /* RSADataSigner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSADataSigner.m; sourceTree = "<group>"; };
 		20513BCC1CF7050A003233FB /* RSADataVerifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSADataVerifier.h; sourceTree = "<group>"; };
 		20513BCD1CF7050A003233FB /* RSADataVerifier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSADataVerifier.m; sourceTree = "<group>"; };
-		20591C2D1D212DF4003271EC /* JGHTradRecordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHTradRecordViewController.h; sourceTree = "<group>"; };
-		20591C2E1D212DF4003271EC /* JGHTradRecordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHTradRecordViewController.m; sourceTree = "<group>"; };
+		20591C491D215BCD003271EC /* JGDPrivateAccountModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGDPrivateAccountModel.h; sourceTree = "<group>"; };
+		20591C4A1D215BCD003271EC /* JGDPrivateAccountModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGDPrivateAccountModel.m; sourceTree = "<group>"; };
+		20591C4D1D215BCD003271EC /* JGDPrivateAccountTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGDPrivateAccountTableViewCell.h; sourceTree = "<group>"; };
+		20591C4E1D215BCD003271EC /* JGDPrivateAccountTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGDPrivateAccountTableViewCell.m; sourceTree = "<group>"; };
+		20591C501D215BCD003271EC /* JGHTradRecordCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHTradRecordCell.h; sourceTree = "<group>"; };
+		20591C511D215BCD003271EC /* JGHTradRecordCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHTradRecordCell.m; sourceTree = "<group>"; };
+		20591C591D220EE0003271EC /* JGDPrivateAccountViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGDPrivateAccountViewController.h; sourceTree = "<group>"; };
+		20591C5A1D220EE0003271EC /* JGDPrivateAccountViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGDPrivateAccountViewController.m; sourceTree = "<group>"; };
+		20591C5C1D220EE0003271EC /* JGHTradRecordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHTradRecordViewController.h; sourceTree = "<group>"; };
+		20591C5D1D220EE0003271EC /* JGHTradRecordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHTradRecordViewController.m; sourceTree = "<group>"; };
 		2067C6B41CE30CA4002900C8 /* JGTeamActibityNameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGTeamActibityNameViewController.h; sourceTree = "<group>"; };
 		2067C6B51CE30CA4002900C8 /* JGTeamActibityNameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGTeamActibityNameViewController.m; sourceTree = "<group>"; };
 		2067C6B61CE30CA4002900C8 /* JGTeamActivityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGTeamActivityViewController.h; sourceTree = "<group>"; };
@@ -2709,41 +2721,85 @@
 			path = Util;
 			sourceTree = "<group>";
 		};
-		20591C281D212D78003271EC /* 资金账户 */ = {
+		20591C3D1D215BCD003271EC /* 资金账户 */ = {
 			isa = PBXGroup;
 			children = (
-				20591C2C1D212DF4003271EC /* controller */,
-				20591C2F1D212DF4003271EC /* model */,
-				20591C301D212DF4003271EC /* view */,
+				20591C3E1D215BCD003271EC /* controller */,
+				20591C471D215BCD003271EC /* model */,
+				20591C4B1D215BCD003271EC /* view */,
 			);
 			path = "资金账户";
 			sourceTree = "<group>";
 		};
-		20591C2C1D212DF4003271EC /* controller */ = {
+		20591C3E1D215BCD003271EC /* controller */ = {
 			isa = PBXGroup;
 			children = (
 				F55426671D22115300233B20 /* 个人帐户 */,
 				827BD52C1D214A01009AF9CA /* 添加银行卡 */,
-				20591C2D1D212DF4003271EC /* JGHTradRecordViewController.h */,
-				20591C2E1D212DF4003271EC /* JGHTradRecordViewController.m */,
 			);
 			path = controller;
 			sourceTree = "<group>";
 		};
-		20591C2F1D212DF4003271EC /* model */ = {
+		20591C471D215BCD003271EC /* model */ = {
 			isa = PBXGroup;
 			children = (
-				F554265F1D214CFC00233B20 /* 个人帐户 */,
+				20591C481D215BCD003271EC /* 个人帐户 */,
 			);
 			path = model;
 			sourceTree = "<group>";
 		};
-		20591C301D212DF4003271EC /* view */ = {
+		20591C481D215BCD003271EC /* 个人帐户 */ = {
 			isa = PBXGroup;
 			children = (
-				F55426601D214D0900233B20 /* 个人帐户 */,
+				20591C491D215BCD003271EC /* JGDPrivateAccountModel.h */,
+				20591C4A1D215BCD003271EC /* JGDPrivateAccountModel.m */,
+			);
+			path = "个人帐户";
+			sourceTree = "<group>";
+		};
+		20591C4B1D215BCD003271EC /* view */ = {
+			isa = PBXGroup;
+			children = (
+				20591C4C1D215BCD003271EC /* 个人帐户 */,
+				20591C4F1D215BCD003271EC /* 交易记录 */,
 			);
 			path = view;
+			sourceTree = "<group>";
+		};
+		20591C4C1D215BCD003271EC /* 个人帐户 */ = {
+			isa = PBXGroup;
+			children = (
+				20591C4D1D215BCD003271EC /* JGDPrivateAccountTableViewCell.h */,
+				20591C4E1D215BCD003271EC /* JGDPrivateAccountTableViewCell.m */,
+			);
+			path = "个人帐户";
+			sourceTree = "<group>";
+		};
+		20591C4F1D215BCD003271EC /* 交易记录 */ = {
+			isa = PBXGroup;
+			children = (
+				20591C501D215BCD003271EC /* JGHTradRecordCell.h */,
+				20591C511D215BCD003271EC /* JGHTradRecordCell.m */,
+			);
+			path = "交易记录";
+			sourceTree = "<group>";
+		};
+		20591C581D220EE0003271EC /* 个人帐户 */ = {
+			isa = PBXGroup;
+			children = (
+				20591C591D220EE0003271EC /* JGDPrivateAccountViewController.h */,
+				20591C5A1D220EE0003271EC /* JGDPrivateAccountViewController.m */,
+			);
+			path = "个人帐户";
+			sourceTree = "<group>";
+		};
+		20591C5B1D220EE0003271EC /* 交易记录 */ = {
+			isa = PBXGroup;
+			children = (
+				20591C5C1D220EE0003271EC /* JGHTradRecordViewController.h */,
+				20591C5D1D220EE0003271EC /* JGHTradRecordViewController.m */,
+			);
+			path = "交易记录";
 			sourceTree = "<group>";
 		};
 		2067C6B31CE30CA4002900C8 /* 球队活动 */ = {
@@ -4408,7 +4464,7 @@
 		36BFFD2A1BC76C8D005B3CE2 /* DagolfLa */ = {
 			isa = PBXGroup;
 			children = (
-				20591C281D212D78003271EC /* 资金账户 */,
+				20591C3D1D215BCD003271EC /* 资金账户 */,
 				F5A105381CE300F80050461D /* 球队新版本 */,
 				65B5969D1CAD43AC007AB83A /* 社区测试文件 */,
 				65B596CF1CAD43AC007AB83A /* 社区导航文件 */,
@@ -6809,9 +6865,11 @@
 				F569A13F1CE35A9C00CD0FD5 /* JGTeamChannelViewController.m in Sources */,
 				36DF59431C2983D80021D0CF /* TeamCreateHeadTableViewCell.m in Sources */,
 				36DFD9181C0EC1EE004DC690 /* HistoryRightTableViewCell.m in Sources */,
+				20591C561D215BCD003271EC /* JGDPrivateAccountTableViewCell.m in Sources */,
 				36BF01821BC77611005B3CE2 /* YueDetailViewController.m in Sources */,
 				F55597281CF6DB0F00F33099 /* JGTeamInfoViewController.m in Sources */,
 				821A130F1CED5F9C00694E49 /* JGLPhotoAlbumModel.m in Sources */,
+				20591C5F1D220EE0003271EC /* JGHTradRecordViewController.m in Sources */,
 				82E6A6E51CF2FDE8009DD179 /* JGLMyTeamViewController.m in Sources */,
 				36BFFF791BC76D09005B3CE2 /* SDWebImageDownloaderOperation.m in Sources */,
 				36DBFD3B1BEF452200CA64D3 /* NearByModel.m in Sources */,
@@ -6835,6 +6893,7 @@
 				20513BD01CF7050A003233FB /* APAuthV2Info.m in Sources */,
 				36B9B5921C3DFFCE0053B227 /* ShopCarViewController.m in Sources */,
 				36BF01DA1BC77BB0005B3CE2 /* CaptchaModel.m in Sources */,
+				20591C5E1D220EE0003271EC /* JGDPrivateAccountViewController.m in Sources */,
 				36BF00FB1BC7750D005B3CE2 /* HighBallViewController.m in Sources */,
 				828A99EA1CE32B7000AF9860 /* JGTeamMemberController.m in Sources */,
 				36BF00BD1BC77383005B3CE2 /* MyNewsBoxTableCell.m in Sources */,
@@ -6884,6 +6943,7 @@
 				3660E1851BFC56DD0033B4D7 /* ScoreDetailTableViewCell.m in Sources */,
 				36DF6DF41C07FEAD00B60B67 /* TeamPhotoDetViewController.m in Sources */,
 				360C6A011C46910200798C8A /* TeamAreaChooseView.m in Sources */,
+				20591C571D215BCD003271EC /* JGHTradRecordCell.m in Sources */,
 				36BFFF5A1BC76D09005B3CE2 /* AFHTTPRequestOperationManager.m in Sources */,
 				36DE28D71C1EA02E008FA24D /* RewardArravelTableViewCell.m in Sources */,
 				36BF004C1BC77213005B3CE2 /* ComDeatailModel.m in Sources */,
@@ -6908,7 +6968,6 @@
 				2088379C1D192213004C7B5D /* JGHApplyListView.m in Sources */,
 				36D39B3A1BCCD9A600C0B197 /* AppraiseViewController.m in Sources */,
 				36BFFFAD1BC76FF3005B3CE2 /* EnrollViewController.m in Sources */,
-				F55426661D214D7200233B20 /* JGDPrivateAccountModel.m in Sources */,
 				36BF01811BC77611005B3CE2 /* JobChooseViewController.m in Sources */,
 				366B918F1C0448CB0095B4F6 /* TeamActiveTableViewCell.m in Sources */,
 				65B596D81CAD43AC007AB83A /* WFMessageBody.m in Sources */,
@@ -6917,6 +6976,7 @@
 				36CFDBA31BCE3D5100301269 /* TKAddressModel.m in Sources */,
 				369F7D211CB636C3000BC13D /* MeDetailTableViewCell.m in Sources */,
 				3660E1211BFC553A0033B4D7 /* TeamCreateViewController.m in Sources */,
+				20591C551D215BCD003271EC /* JGDPrivateAccountModel.m in Sources */,
 				821F51041D0E89D700AF0E93 /* JGLMyTeamTableViewCell.m in Sources */,
 				F50EFF331CF9609100F7AB3F /* JGImageAndLabelAndLabelTableViewCell.m in Sources */,
 				36BFFF7C1BC76D09005B3CE2 /* UIButton+WebCache.m in Sources */,
@@ -6988,7 +7048,6 @@
 				AA857EE01C5F48AA0034B4C8 /* SelfDataViewController.m in Sources */,
 				20BA612C1CDC99D0004B61F5 /* ALMoviePlayerControls.m in Sources */,
 				36BF00531BC7726D005B3CE2 /* SelfViewController.m in Sources */,
-				20591C311D212DF4003271EC /* JGHTradRecordViewController.m in Sources */,
 				36E300EC1C3FF3F9005C3F08 /* MJRefreshBackFooter.m in Sources */,
 				36603F0F1C45330200AF0446 /* YuePriceTableViewCell.m in Sources */,
 				36DC9D5C1C994E6E003E4FCC /* RecomeFriendViewController.m in Sources */,
@@ -7134,7 +7193,6 @@
 				362BCD8D1C045DEF001E2818 /* TeamActiveModel.m in Sources */,
 				823C149D1CEEF0B5000AB612 /* JGLTeamMemberModel.m in Sources */,
 				207FECA01D1BE4180098E23C /* JGHTextFiledCell.m in Sources */,
-				F55426631D214D5C00233B20 /* JGDPrivateAccountTableViewCell.m in Sources */,
 				20BA612A1CDC99D0004B61F5 /* ALButton.m in Sources */,
 				207FECB41D1D27E40098E23C /* JGHRepeatApplyView.m in Sources */,
 				36E1FBB41C7D817A006B1456 /* ChangePicViewController.m in Sources */,
