@@ -846,6 +846,7 @@
 		827AA01D1D1D1C5500F6B80B /* JGLActiveMemTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 827AA0191D1D1C5500F6B80B /* JGLActiveMemTableViewCell.m */; };
 		827AA01E1D1D1C5500F6B80B /* JGLActiveMemTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 827AA01A1D1D1C5500F6B80B /* JGLActiveMemTableViewCell.xib */; };
 		827BD52B1D20F23D009AF9CA /* JGLActivityMemberTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 827BD52A1D20F23D009AF9CA /* JGLActivityMemberTableViewCell.m */; };
+		827BD52F1D214A42009AF9CA /* JGLAddBankCardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 827BD52E1D214A42009AF9CA /* JGLAddBankCardViewController.m */; };
 		8281BE551CEC41D200C5BD31 /* JGTeamPhotoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8281BE541CEC41D200C5BD31 /* JGTeamPhotoModel.m */; };
 		828A99E41CE3167800AF9860 /* JGTeamCreatePhotoController.m in Sources */ = {isa = PBXBuildFile; fileRef = 828A99E31CE3167800AF9860 /* JGTeamCreatePhotoController.m */; };
 		828A99E71CE325BB00AF9860 /* JGPhotoAlbumViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 828A99E61CE325BB00AF9860 /* JGPhotoAlbumViewController.m */; };
@@ -2334,6 +2335,8 @@
 		827AA01A1D1D1C5500F6B80B /* JGLActiveMemTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JGLActiveMemTableViewCell.xib; sourceTree = "<group>"; };
 		827BD5291D20F23D009AF9CA /* JGLActivityMemberTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGLActivityMemberTableViewCell.h; sourceTree = "<group>"; };
 		827BD52A1D20F23D009AF9CA /* JGLActivityMemberTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGLActivityMemberTableViewCell.m; sourceTree = "<group>"; };
+		827BD52D1D214A42009AF9CA /* JGLAddBankCardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGLAddBankCardViewController.h; sourceTree = "<group>"; };
+		827BD52E1D214A42009AF9CA /* JGLAddBankCardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGLAddBankCardViewController.m; sourceTree = "<group>"; };
 		8281BE531CEC41D200C5BD31 /* JGTeamPhotoModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGTeamPhotoModel.h; sourceTree = "<group>"; };
 		8281BE541CEC41D200C5BD31 /* JGTeamPhotoModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGTeamPhotoModel.m; sourceTree = "<group>"; };
 		828A99E21CE3167800AF9860 /* JGTeamCreatePhotoController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGTeamCreatePhotoController.h; sourceTree = "<group>"; };
@@ -2710,6 +2713,7 @@
 		20591C2C1D212DF4003271EC /* controller */ = {
 			isa = PBXGroup;
 			children = (
+				827BD52C1D214A01009AF9CA /* 添加银行卡 */,
 				20591C2D1D212DF4003271EC /* JGHTradRecordViewController.h */,
 				20591C2E1D212DF4003271EC /* JGHTradRecordViewController.m */,
 			);
@@ -5724,6 +5728,15 @@
 			path = "我的球队";
 			sourceTree = "<group>";
 		};
+		827BD52C1D214A01009AF9CA /* 添加银行卡 */ = {
+			isa = PBXGroup;
+			children = (
+				827BD52D1D214A42009AF9CA /* JGLAddBankCardViewController.h */,
+				827BD52E1D214A42009AF9CA /* JGLAddBankCardViewController.m */,
+			);
+			path = "添加银行卡";
+			sourceTree = "<group>";
+		};
 		8281BE521CEC41A800C5BD31 /* 球队相册 */ = {
 			isa = PBXGroup;
 			children = (
@@ -6712,6 +6725,7 @@
 				F543ACC11CF4246000C6B111 /* JGNotTeamMemberDetailViewController.m in Sources */,
 				36BF00861BC772EF005B3CE2 /* MySetViewController.m in Sources */,
 				F569A1481CE35AA500CD0FD5 /* JGTeamChannelActivityTableViewCell.m in Sources */,
+				827BD52F1D214A42009AF9CA /* JGLAddBankCardViewController.m in Sources */,
 				368DCA611C88152700871D28 /* ResponseViewController.m in Sources */,
 				36BFFF841BC76D09005B3CE2 /* IWTextView.m in Sources */,
 				3660E1251BFC553A0033B4D7 /* TeamSuccessController.m in Sources */,
