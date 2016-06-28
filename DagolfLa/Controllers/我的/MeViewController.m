@@ -49,6 +49,7 @@
 #import "MeDetailTableViewCell.h"
 
 #import "PersonHomeController.h"
+#import "JGDPrivateAccountViewController.h"
 
 @interface MeViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
@@ -248,8 +249,7 @@
             cell.detailLabel.text = @"您还没有登录，赶快登陆哦";
             cell.imgvSex.image = [UIImage imageNamed:@"xb_n"];
         }
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+
         return cell;
     }
     else
@@ -273,9 +273,9 @@
 //        NSArray *titleArr = @[@"我的聊天",@"我的消息",@"交易中心",@"我的活动",@"推荐有礼",@"设置"];
         _arrayTitle = @[@[@""],@[@"球友"],@[@"个人帐户"],@[@"交易中心", @"我的活动"],@[@"推荐有礼",@"关于我们",@"产品评价"],@[@"设置"]];
 
-        NSArray *titleArr = @[@"个人资料",@"球友",@"足迹",@"交易中心",@"我的活动",@"推荐有礼",@"关于我们",@"产品评价",@"设置"];
+        NSArray *titleArr = @[@"个人资料",@"球友",@"个人帐户",@"交易中心",@"我的活动",@"推荐有礼",@"关于我们",@"产品评价",@"设置"];
 //PersonHomeController   PersonHomeController
-        NSArray* VcArr = @[@"PersonHomeController",@"ContactViewController",@"ContactViewController", @"MyTradeViewController",@"MyActivityViewController",@"MyRecomViewController",@"MySetAboutController",@"",@"MySetViewController"];
+        NSArray* VcArr = @[@"PersonHomeController",@"ContactViewController",@"JGDPrivateAccountViewController", @"MyTradeViewController",@"MyActivityViewController",@"MyRecomViewController",@"MySetAboutController",@"",@"MySetViewController"];
         NSMutableArray *arr = [[NSMutableArray alloc]init];
         for (int i = 0; i < VcArr.count; i++) {
             if (i != 7) {
@@ -319,7 +319,7 @@
                 case 0:
                 {
                     [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
-                    [self.navigationController pushViewController:arr[3] animated:YES];
+                    [self.navigationController pushViewController:arr[2] animated:YES];
                     break;
                 }
                 case 1:

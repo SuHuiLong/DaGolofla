@@ -10,4 +10,8 @@
 
 @interface JGDPrivateAccountTableViewCell : UITableViewCell
 
+
+
+
+
 @end
