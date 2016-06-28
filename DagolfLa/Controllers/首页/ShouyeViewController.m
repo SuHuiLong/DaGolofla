@@ -22,6 +22,8 @@
 
 #import "HomeHeadView.h"
 
+#import "JGLAddBankCardViewController.h"
+
 @interface ShouyeViewController ()<UIApplicationDelegate,CLLocationManagerDelegate>
 {
 //    UITableView *_tableView;
@@ -214,8 +216,9 @@
             case 1001:
             {
                 NSLog(@"shangchen");
+//                UseMallViewController
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
-                UseMallViewController* userVc = [[UseMallViewController alloc]init];
+                JGLAddBankCardViewController* userVc = [[JGLAddBankCardViewController alloc]init];
                 [self.navigationController pushViewController:userVc animated:YES];
             }
                 break;
