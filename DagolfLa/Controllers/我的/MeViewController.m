@@ -160,8 +160,8 @@
     _arrayTitle = [[NSArray alloc]init];
     _arrayPic = [[NSArray alloc]init];
 //    _arrayTitle = @[@[@"我的聊天",@"我的消息",@"交易中心",@"我的活动",@"推荐有礼"],@[@"设置"]];
-    _arrayTitle = @[@[@""],@[@"球友"],@[@"个人帐户"],@[@"交易中心", @"我的活动"],@[@"推荐有礼",@"关于我们",@"产品评价"],@[@"设置"]];
-//    _arrayPic = @[@[@""],@[@"qyIcon",@"zuji"],@[@"jyIcon",@"hdIcon"],@[@"tjIcon",@"gyIcon",@"proIcon"],@[@"setIcon"]];
+    _arrayTitle = @[@[@""],@[@"球友",@"足迹"],@[@"个人帐户",@"交易中心"],@[@"推荐有礼",@"关于我们",@"产品评价"],@[@"设置"]];
+    _arrayPic = @[@[@""],@[@"qyIcon",@"zuji"],@[@"hdIcon",@"jyIcon"],@[@"tjIcon",@"gyIcon",@"proIcon"],@[@"setIcon"]];
     _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, 44*8*ScreenWidth/375+40*ScreenWidth/375+90*ScreenWidth/375)];
     
     _tableView.delegate = self;
@@ -176,7 +176,7 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     
-    return 6;//返回标题数组中元素的个数来确定分区的个数
+    return 5;//返回标题数组中元素的个数来确定分区的个数
     
 }
 //返回各个分区的头高度
@@ -197,20 +197,18 @@
     }
     else if (section == 1)
     {
-        count = 1;
+        count = 2;
     }
     else if (section == 2)
     {
-        count = 1;
+        count = 2;
     }
     else if (section == 3)
     {
-        count = 2;
-    }
-    else if (section == 4)
-    {
         count = 3;
-    }else{
+    }
+    else
+    {
         count = 1;
     }
     return count;
@@ -249,7 +247,8 @@
             cell.detailLabel.text = @"您还没有登录，赶快登陆哦";
             cell.imgvSex.image = [UIImage imageNamed:@"xb_n"];
         }
-
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
     }
     else
@@ -257,7 +256,7 @@
         MeDetailTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MeDetailTableViewCell" forIndexPath:indexPath];
 //        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.titleLabel.text = _arrayTitle[indexPath.section][indexPath.row];
-//        cell.iconImgv.image = [UIImage imageNamed:_arrayPic[indexPath.section][indexPath.row]];
+        cell.iconImgv.image = [UIImage imageNamed:_arrayPic[indexPath.section][indexPath.row]];
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
@@ -271,16 +270,14 @@
     
     if ([[NSUserDefaults standardUserDefaults] objectForKey:@"userId"]) {
 //        NSArray *titleArr = @[@"我的聊天",@"我的消息",@"交易中心",@"我的活动",@"推荐有礼",@"设置"];
-        _arrayTitle = @[@[@""],@[@"球友"],@[@"个人帐户"],@[@"交易中心", @"我的活动"],@[@"推荐有礼",@"关于我们",@"产品评价"],@[@"设置"]];
-
-        NSArray *titleArr = @[@"个人资料",@"球友",@"个人帐户",@"交易中心",@"我的活动",@"推荐有礼",@"关于我们",@"产品评价",@"设置"];
+        NSArray *titleArr = @[@"个人资料",@"球友",@"足迹",@"交易中心",@"我的活动",@"推荐有礼",@"关于我们",@"产品评价",@"设置"];
 //PersonHomeController   PersonHomeController
-        NSArray* VcArr = @[@"PersonHomeController",@"ContactViewController",@"JGDPrivateAccountViewController", @"MyTradeViewController",@"MyActivityViewController",@"MyRecomViewController",@"MySetAboutController",@"",@"MySetViewController"];
+        NSArray* VcArr = @[@"PersonHomeController",@"ContactViewController",@"MyFootViewController",@"JGDPrivateAccountViewController",@"MyTradeViewController",@"MyRecomViewController",@"MySetAboutController",@"",@"MySetViewController"];
         NSMutableArray *arr = [[NSMutableArray alloc]init];
         for (int i = 0; i < VcArr.count; i++) {
             if (i != 7) {
                 ViewController* vc = [[NSClassFromString(VcArr[i]) alloc]init];
-//                vc.title = titleArr[i];
+                vc.title = titleArr[i];
                 [arr addObject:vc];
             }
             
@@ -319,7 +316,7 @@
                 case 0:
                 {
                     [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
-                    [self.navigationController pushViewController:arr[2] animated:YES];
+                    [self.navigationController pushViewController:arr[3] animated:YES];
                     break;
                 }
                 case 1:
@@ -333,27 +330,6 @@
             }
         }
         else if (indexPath.section == 3)
-        {
-            
-            switch (indexPath.row) {
-                case 0:
-                {
-                    [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
-                    [self.navigationController pushViewController:arr[3] animated:YES];
-                    break;
-                }
-                    
-                case 1:{
-                    [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
-                    [self.navigationController pushViewController:arr[4] animated:YES];
-                    
-                    break;
-                }
-                default:
-                    break;
-            }
-        }
-        else if (indexPath.section == 4)
         {
             
             switch (indexPath.row) {

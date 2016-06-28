@@ -263,13 +263,13 @@
         cell.accessoryType  = UITableViewCellAccessoryDisclosureIndicator;
     }
     cell.textLabel.font = [UIFont systemFontOfSize:15*ScreenWidth/375];
-    if (indexPath.row == 4) {
-        UILabel *lable = [[UILabel alloc] initWithFrame:CGRectMake(310, 0, 60, 44)];
-        lable.text = @"未认证";
-        lable.font = [UIFont systemFontOfSize:14*ScreenWidth/375];
-        lable.textColor = [UIColor redColor];
-        [cell addSubview:lable];
-    }
+//    if (indexPath.row == 4) {
+//        UILabel *lable = [[UILabel alloc] initWithFrame:CGRectMake(300*ScreenWidth/375, 0, 60*ScreenWidth/375, 44*ScreenWidth/375)];
+//        lable.text = @"未认证";
+//        lable.font = [UIFont systemFontOfSize:14*ScreenWidth/375];
+//        lable.textColor = [UIColor redColor];
+//        [cell addSubview:lable];
+//    }
     return cell;
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath

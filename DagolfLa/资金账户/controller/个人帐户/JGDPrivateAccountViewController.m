@@ -32,12 +32,13 @@
 
 
 - (void)creatTableV{
-    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 289 * ScreenWidth / 375) style:(UITableViewStylePlain)];
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 287 * ScreenWidth / 375) style:(UITableViewStylePlain)];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.scrollEnabled = NO;
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 160 *ScreenWidth / 375)];
-    view.backgroundColor = [UIColor colorWithHexString:@"#32B14D"];
+    UIImageView *view = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 160 *ScreenWidth / 375)];
+    view.image = [UIImage imageNamed:@"account_bg"];
+//    view.backgroundColor = [UIColor colorWithHexString:@"#32B14D"];
     self.tableView.tableHeaderView = view;
     self.tableView.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];
 
