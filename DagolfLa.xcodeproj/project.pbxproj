@@ -908,6 +908,9 @@
 		F543ACC41CF4269D00C6B111 /* JGLableAndLableTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F543ACC31CF4269D00C6B111 /* JGLableAndLableTableViewCell.m */; };
 		F543ACC71CF42E1200C6B111 /* JGDisplayInfoTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F543ACC61CF42E1200C6B111 /* JGDisplayInfoTableViewCell.m */; };
 		F543ACCA1CF476D400C6B111 /* JGNewCreateTeamTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F543ACC91CF476D400C6B111 /* JGNewCreateTeamTableViewController.m */; };
+		F554265E1D214CEF00233B20 /* JGDPrivateAccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F554265D1D214CEF00233B20 /* JGDPrivateAccountViewController.m */; };
+		F55426631D214D5C00233B20 /* JGDPrivateAccountTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F55426621D214D5C00233B20 /* JGDPrivateAccountTableViewCell.m */; };
+		F55426661D214D7200233B20 /* JGDPrivateAccountModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F55426651D214D7200233B20 /* JGDPrivateAccountModel.m */; };
 		F55597221CF5328C00F33099 /* JGPreviewTeamViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F55597211CF5328C00F33099 /* JGPreviewTeamViewController.m */; };
 		F55597251CF53FF900F33099 /* JGTeamMemberORManagerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F55597241CF53FF900F33099 /* JGTeamMemberORManagerViewController.m */; };
 		F55597281CF6DB0F00F33099 /* JGTeamInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F55597271CF6DB0F00F33099 /* JGTeamInfoViewController.m */; };
@@ -2452,6 +2455,12 @@
 		F543ACC61CF42E1200C6B111 /* JGDisplayInfoTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGDisplayInfoTableViewCell.m; sourceTree = "<group>"; };
 		F543ACC81CF476D400C6B111 /* JGNewCreateTeamTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGNewCreateTeamTableViewController.h; sourceTree = "<group>"; };
 		F543ACC91CF476D400C6B111 /* JGNewCreateTeamTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGNewCreateTeamTableViewController.m; sourceTree = "<group>"; };
+		F554265C1D214CEF00233B20 /* JGDPrivateAccountViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGDPrivateAccountViewController.h; sourceTree = "<group>"; };
+		F554265D1D214CEF00233B20 /* JGDPrivateAccountViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGDPrivateAccountViewController.m; sourceTree = "<group>"; };
+		F55426611D214D5C00233B20 /* JGDPrivateAccountTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGDPrivateAccountTableViewCell.h; sourceTree = "<group>"; };
+		F55426621D214D5C00233B20 /* JGDPrivateAccountTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGDPrivateAccountTableViewCell.m; sourceTree = "<group>"; };
+		F55426641D214D7200233B20 /* JGDPrivateAccountModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGDPrivateAccountModel.h; sourceTree = "<group>"; };
+		F55426651D214D7200233B20 /* JGDPrivateAccountModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGDPrivateAccountModel.m; sourceTree = "<group>"; };
 		F55597201CF5328C00F33099 /* JGPreviewTeamViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGPreviewTeamViewController.h; sourceTree = "<group>"; };
 		F55597211CF5328C00F33099 /* JGPreviewTeamViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGPreviewTeamViewController.m; sourceTree = "<group>"; };
 		F55597231CF53FF900F33099 /* JGTeamMemberORManagerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGTeamMemberORManagerViewController.h; sourceTree = "<group>"; };
@@ -2723,6 +2732,7 @@
 		20591C2F1D212DF4003271EC /* model */ = {
 			isa = PBXGroup;
 			children = (
+				F554265F1D214CFC00233B20 /* 个人帐户 */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -2730,6 +2740,7 @@
 		20591C301D212DF4003271EC /* view */ = {
 			isa = PBXGroup;
 			children = (
+				F55426601D214D0900233B20 /* 个人帐户 */,
 			);
 			path = view;
 			sourceTree = "<group>";
@@ -5985,6 +5996,33 @@
 			path = "创建球队";
 			sourceTree = "<group>";
 		};
+		F554265B1D214C6100233B20 /* 个人帐户 */ = {
+			isa = PBXGroup;
+			children = (
+				F554265C1D214CEF00233B20 /* JGDPrivateAccountViewController.h */,
+				F554265D1D214CEF00233B20 /* JGDPrivateAccountViewController.m */,
+			);
+			path = "个人帐户";
+			sourceTree = "<group>";
+		};
+		F554265F1D214CFC00233B20 /* 个人帐户 */ = {
+			isa = PBXGroup;
+			children = (
+				F55426641D214D7200233B20 /* JGDPrivateAccountModel.h */,
+				F55426651D214D7200233B20 /* JGDPrivateAccountModel.m */,
+			);
+			path = "个人帐户";
+			sourceTree = "<group>";
+		};
+		F55426601D214D0900233B20 /* 个人帐户 */ = {
+			isa = PBXGroup;
+			children = (
+				F55426611D214D5C00233B20 /* JGDPrivateAccountTableViewCell.h */,
+				F55426621D214D5C00233B20 /* JGDPrivateAccountTableViewCell.m */,
+			);
+			path = "个人帐户";
+			sourceTree = "<group>";
+		};
 		F569A1321CE3334F00CD0FD5 /* 球队详情 */ = {
 			isa = PBXGroup;
 			children = (
@@ -6869,6 +6907,7 @@
 				2088379C1D192213004C7B5D /* JGHApplyListView.m in Sources */,
 				36D39B3A1BCCD9A600C0B197 /* AppraiseViewController.m in Sources */,
 				36BFFFAD1BC76FF3005B3CE2 /* EnrollViewController.m in Sources */,
+				F55426661D214D7200233B20 /* JGDPrivateAccountModel.m in Sources */,
 				36BF01811BC77611005B3CE2 /* JobChooseViewController.m in Sources */,
 				366B918F1C0448CB0095B4F6 /* TeamActiveTableViewCell.m in Sources */,
 				65B596D81CAD43AC007AB83A /* WFMessageBody.m in Sources */,
@@ -6898,6 +6937,7 @@
 				36BFFFAE1BC76FF3005B3CE2 /* EnterViewController.m in Sources */,
 				82AAB7AE1CE5BEB8005F5633 /* JGLSelfSetViewController.m in Sources */,
 				36B08F721C2D322600CD660E /* UITableViewRowAction.m in Sources */,
+				F554265E1D214CEF00233B20 /* JGDPrivateAccountViewController.m in Sources */,
 				3660E1281BFC553A0033B4D7 /* ManageCreateController.m in Sources */,
 				36D39B361BCCD8D000C0B197 /* AppraiseModel.m in Sources */,
 				3684FDAD1C4A35F4002A14FC /* TeamInviteTableViewCell.m in Sources */,
@@ -7094,6 +7134,7 @@
 				362BCD8D1C045DEF001E2818 /* TeamActiveModel.m in Sources */,
 				823C149D1CEEF0B5000AB612 /* JGLTeamMemberModel.m in Sources */,
 				207FECA01D1BE4180098E23C /* JGHTextFiledCell.m in Sources */,
+				F55426631D214D5C00233B20 /* JGDPrivateAccountTableViewCell.m in Sources */,
 				20BA612A1CDC99D0004B61F5 /* ALButton.m in Sources */,
 				207FECB41D1D27E40098E23C /* JGHRepeatApplyView.m in Sources */,
 				36E1FBB41C7D817A006B1456 /* ChangePicViewController.m in Sources */,
