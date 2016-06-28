@@ -34,6 +34,14 @@
 		20591C571D215BCD003271EC /* JGHTradRecordCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 20591C511D215BCD003271EC /* JGHTradRecordCell.m */; };
 		20591C5E1D220EE0003271EC /* JGDPrivateAccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 20591C5A1D220EE0003271EC /* JGDPrivateAccountViewController.m */; };
 		20591C5F1D220EE0003271EC /* JGHTradRecordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 20591C5D1D220EE0003271EC /* JGHTradRecordViewController.m */; };
+		20591C621D22139D003271EC /* JGHWithdrawDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 20591C611D22139D003271EC /* JGHWithdrawDetailsViewController.m */; };
+		20591C651D22187C003271EC /* JGHWithdrawMoneyCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 20591C641D22187C003271EC /* JGHWithdrawMoneyCell.m */; };
+		20591C681D221972003271EC /* JGHWithdrawCatoryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 20591C671D221972003271EC /* JGHWithdrawCatoryCell.m */; };
+		20591C6B1D2219A4003271EC /* JGHWithdrawTimeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 20591C6A1D2219A4003271EC /* JGHWithdrawTimeCell.m */; };
+		20591C6F1D221B0B003271EC /* JGHWithdrawDetailsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 20591C6D1D221B0B003271EC /* JGHWithdrawDetailsCell.m */; };
+		20591C701D221B0B003271EC /* JGHWithdrawDetailsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 20591C6E1D221B0B003271EC /* JGHWithdrawDetailsCell.xib */; };
+		20591C731D2247BB003271EC /* JGHRefundDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 20591C721D2247BA003271EC /* JGHRefundDetailsViewController.m */; };
+		20591C761D224DF1003271EC /* JGHWithdrawViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 20591C751D224DF1003271EC /* JGHWithdrawViewController.m */; };
 		2067C6B81CE30CA4002900C8 /* JGTeamActibityNameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2067C6B51CE30CA4002900C8 /* JGTeamActibityNameViewController.m */; };
 		2067C6B91CE30CA4002900C8 /* JGTeamActivityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2067C6B71CE30CA4002900C8 /* JGTeamActivityViewController.m */; };
 		2067C6CE1CE30CC0002900C8 /* JGActivityNameBaseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2067C6C01CE30CC0002900C8 /* JGActivityNameBaseCell.m */; };
@@ -1080,6 +1088,21 @@
 		20591C5A1D220EE0003271EC /* JGDPrivateAccountViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGDPrivateAccountViewController.m; sourceTree = "<group>"; };
 		20591C5C1D220EE0003271EC /* JGHTradRecordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHTradRecordViewController.h; sourceTree = "<group>"; };
 		20591C5D1D220EE0003271EC /* JGHTradRecordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHTradRecordViewController.m; sourceTree = "<group>"; };
+		20591C601D22139C003271EC /* JGHWithdrawDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHWithdrawDetailsViewController.h; sourceTree = "<group>"; };
+		20591C611D22139D003271EC /* JGHWithdrawDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHWithdrawDetailsViewController.m; sourceTree = "<group>"; };
+		20591C631D22187C003271EC /* JGHWithdrawMoneyCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHWithdrawMoneyCell.h; sourceTree = "<group>"; };
+		20591C641D22187C003271EC /* JGHWithdrawMoneyCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHWithdrawMoneyCell.m; sourceTree = "<group>"; };
+		20591C661D221972003271EC /* JGHWithdrawCatoryCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHWithdrawCatoryCell.h; sourceTree = "<group>"; };
+		20591C671D221972003271EC /* JGHWithdrawCatoryCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHWithdrawCatoryCell.m; sourceTree = "<group>"; };
+		20591C691D2219A4003271EC /* JGHWithdrawTimeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHWithdrawTimeCell.h; sourceTree = "<group>"; };
+		20591C6A1D2219A4003271EC /* JGHWithdrawTimeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHWithdrawTimeCell.m; sourceTree = "<group>"; };
+		20591C6C1D221B0B003271EC /* JGHWithdrawDetailsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHWithdrawDetailsCell.h; sourceTree = "<group>"; };
+		20591C6D1D221B0B003271EC /* JGHWithdrawDetailsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHWithdrawDetailsCell.m; sourceTree = "<group>"; };
+		20591C6E1D221B0B003271EC /* JGHWithdrawDetailsCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JGHWithdrawDetailsCell.xib; sourceTree = "<group>"; };
+		20591C711D2247BA003271EC /* JGHRefundDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHRefundDetailsViewController.h; sourceTree = "<group>"; };
+		20591C721D2247BA003271EC /* JGHRefundDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHRefundDetailsViewController.m; sourceTree = "<group>"; };
+		20591C741D224DF1003271EC /* JGHWithdrawViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHWithdrawViewController.h; sourceTree = "<group>"; };
+		20591C751D224DF1003271EC /* JGHWithdrawViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHWithdrawViewController.m; sourceTree = "<group>"; };
 		2067C6B41CE30CA4002900C8 /* JGTeamActibityNameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGTeamActibityNameViewController.h; sourceTree = "<group>"; };
 		2067C6B51CE30CA4002900C8 /* JGTeamActibityNameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGTeamActibityNameViewController.m; sourceTree = "<group>"; };
 		2067C6B61CE30CA4002900C8 /* JGTeamActivityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGTeamActivityViewController.h; sourceTree = "<group>"; };
@@ -2772,6 +2795,15 @@
 			children = (
 				20591C501D215BCD003271EC /* JGHTradRecordCell.h */,
 				20591C511D215BCD003271EC /* JGHTradRecordCell.m */,
+				20591C631D22187C003271EC /* JGHWithdrawMoneyCell.h */,
+				20591C641D22187C003271EC /* JGHWithdrawMoneyCell.m */,
+				20591C661D221972003271EC /* JGHWithdrawCatoryCell.h */,
+				20591C671D221972003271EC /* JGHWithdrawCatoryCell.m */,
+				20591C691D2219A4003271EC /* JGHWithdrawTimeCell.h */,
+				20591C6A1D2219A4003271EC /* JGHWithdrawTimeCell.m */,
+				20591C6C1D221B0B003271EC /* JGHWithdrawDetailsCell.h */,
+				20591C6D1D221B0B003271EC /* JGHWithdrawDetailsCell.m */,
+				20591C6E1D221B0B003271EC /* JGHWithdrawDetailsCell.xib */,
 			);
 			path = "交易记录";
 			sourceTree = "<group>";
@@ -2790,6 +2822,12 @@
 			children = (
 				20591C5C1D220EE0003271EC /* JGHTradRecordViewController.h */,
 				20591C5D1D220EE0003271EC /* JGHTradRecordViewController.m */,
+				20591C601D22139C003271EC /* JGHWithdrawDetailsViewController.h */,
+				20591C611D22139D003271EC /* JGHWithdrawDetailsViewController.m */,
+				20591C711D2247BA003271EC /* JGHRefundDetailsViewController.h */,
+				20591C721D2247BA003271EC /* JGHRefundDetailsViewController.m */,
+				20591C741D224DF1003271EC /* JGHWithdrawViewController.h */,
+				20591C751D224DF1003271EC /* JGHWithdrawViewController.m */,
 			);
 			path = "交易记录";
 			sourceTree = "<group>";
@@ -6661,6 +6699,7 @@
 				36BFFE811BC76CDC005B3CE2 /* xinxi@2x.png in Resources */,
 				3623172F1BDA12F500257862 /* guide_04@2x.png in Resources */,
 				3660E0921BFC48B00033B4D7 /* Default@3x.png in Resources */,
+				20591C701D221B0B003271EC /* JGHWithdrawDetailsCell.xib in Resources */,
 				367E32001C1EBAC00007BD32 /* YueHallPeoTableViewCell.xib in Resources */,
 				36DD4DB21BFDB68E008D3424 /* TeamCreateTableViewCell.xib in Resources */,
 				36BFFE321BC76CDC005B3CE2 /* home.png in Resources */,
@@ -6733,6 +6772,7 @@
 				2067C6D41CE30CC0002900C8 /* JGTeamActivityDetailsCell.m in Sources */,
 				36E300F81C3FF3F9005C3F08 /* MJRefreshStateHeader.m in Sources */,
 				366884961C4DE40B00B81E04 /* RewordCheckModel.m in Sources */,
+				20591C651D22187C003271EC /* JGHWithdrawMoneyCell.m in Sources */,
 				828A99E71CE325BB00AF9860 /* JGPhotoAlbumViewController.m in Sources */,
 				20F6A5CE1CF459D400DD9383 /* JGActivityBaseInfoCell.m in Sources */,
 				363053271BDE3DEB00B02C68 /* ShareAlert.m in Sources */,
@@ -6808,6 +6848,7 @@
 				36E300FB1C3FF3F9005C3F08 /* UIScrollView+MJExtension.m in Sources */,
 				36BF00AA1BC77326005B3CE2 /* NewsModel.m in Sources */,
 				369E6B011C4FCAB700ED6684 /* ManageOtherTableViewCell.m in Sources */,
+				20591C731D2247BB003271EC /* JGHRefundDetailsViewController.m in Sources */,
 				36DF09B91C040697007A8A4E /* TeamNameTableViewCell.m in Sources */,
 				208837991D17D206004C7B5D /* JGHActicityDetailsViewController.m in Sources */,
 				36B9B5981C3E00200053B227 /* CollectViewController.m in Sources */,
@@ -6881,6 +6922,7 @@
 				65B596EB1CAD43AC007AB83A /* YMButton.m in Sources */,
 				828A99F51CE3481D00AF9860 /* JGMemManageController.m in Sources */,
 				F55597251CF53FF900F33099 /* JGTeamMemberORManagerViewController.m in Sources */,
+				20591C761D224DF1003271EC /* JGHWithdrawViewController.m in Sources */,
 				20F6A5D71CF498E600DD9383 /* JGHApplyModel.m in Sources */,
 				F50B7FB71CE5DBB70065069D /* JGTeamMainhallViewController.m in Sources */,
 				36B08F701C2D322600CD660E /* UITableViewCell+JZExtension.m in Sources */,
@@ -6979,6 +7021,7 @@
 				3660E1491BFC55C30033B4D7 /* ManageForMeController.m in Sources */,
 				36BFFF7F1BC76D09005B3CE2 /* UIImageView+HighlightedWebCache.m in Sources */,
 				36B9B59B1C3E004C0053B227 /* ProFileViewController.m in Sources */,
+				20591C6F1D221B0B003271EC /* JGHWithdrawDetailsCell.m in Sources */,
 				F5EB44701C9957A7008ACD73 /* pinyin.m in Sources */,
 				F5843DF91CFCF5EA00547812 /* JGSelfSetViewController.m in Sources */,
 				36E300F21C3FF3F9005C3F08 /* MJRefreshAutoStateFooter.m in Sources */,
@@ -7002,6 +7045,7 @@
 				36BF01F61BC77C71005B3CE2 /* MyselfChooseViewCell.m in Sources */,
 				368B73371C103B230002A618 /* ScoreSimpleTableViewCell.m in Sources */,
 				36067BAF1C96AA31001AE22C /* InformViewController.m in Sources */,
+				20591C681D221972003271EC /* JGHWithdrawCatoryCell.m in Sources */,
 				36BFFF681BC76D09005B3CE2 /* UIImageView+AFNetworking.m in Sources */,
 				36A396291BE34DB100CBF455 /* MyFootBodyTableViewCell.m in Sources */,
 				36BFFFAF1BC76FF3005B3CE2 /* ForgetViewController.m in Sources */,
@@ -7085,6 +7129,7 @@
 				36067BCE1C97F915001AE22C /* NewFriendTableViewCell.m in Sources */,
 				20513B5C1CF69F3B003233FB /* JGHPlayersModel.m in Sources */,
 				3660E0F41BFC54680033B4D7 /* MyTeamViewController.m in Sources */,
+				20591C621D22139D003271EC /* JGHWithdrawDetailsViewController.m in Sources */,
 				828A99FC1CE3549900AF9860 /* JGMemDataTableViewCell.m in Sources */,
 				82E6A6F21CF55313009DD179 /* JGLTeamAdviceTableViewCell.m in Sources */,
 				368B73341C102A710002A618 /* ScoreProfessViewController.m in Sources */,
@@ -7144,6 +7189,7 @@
 				36BF01AB1BC77A6B005B3CE2 /* TeamMessageController.m in Sources */,
 				F543ACC71CF42E1200C6B111 /* JGDisplayInfoTableViewCell.m in Sources */,
 				36BF00931BC772EF005B3CE2 /* NewsDetailController.m in Sources */,
+				20591C6B1D2219A4003271EC /* JGHWithdrawTimeCell.m in Sources */,
 				65B596E61CAD43AC007AB83A /* UIView+Extension.m in Sources */,
 				82AAB7B11CE5C18E005F5633 /* JGSelfSetTableViewCell.m in Sources */,
 				827AA0141D1D1BFF00F6B80B /* JGHCancelApplyViewController.m in Sources */,

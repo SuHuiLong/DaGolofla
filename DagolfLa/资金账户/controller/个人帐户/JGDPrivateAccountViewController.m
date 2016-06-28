@@ -7,6 +7,7 @@
 //
 
 #import "JGDPrivateAccountViewController.h"
+#import "JGHTradRecordViewController.h"
 
 @interface JGDPrivateAccountViewController ()<UITableViewDelegate,UITableViewDataSource>
 
@@ -106,7 +107,8 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 0) {
-        
+        JGHTradRecordViewController *tradRecordCtrl = [[JGHTradRecordViewController alloc]init];
+        [self.navigationController pushViewController:tradRecordCtrl animated:YES];
     }else{
         
     }

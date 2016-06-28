@@ -8,6 +8,7 @@
 
 #import "JGHTradRecordViewController.h"
 #import "JGHTradRecordCell.h"
+#import "JGHWithdrawDetailsViewController.h"
 
 @interface JGHTradRecordViewController ()<UITableViewDelegate, UITableViewDataSource>
 
@@ -41,6 +42,9 @@
     return 5;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return 70 * ProportionAdapter;
+}
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     static NSString *tradRecordCell = @"JGHTradRecordCell";
@@ -50,12 +54,14 @@
     }
     
     tradCell.selectionStyle = UITableViewCellSelectionStyleNone;
+    [tradCell configModel];
     
     return tradCell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    
+    JGHWithdrawDetailsViewController *withdrawDetailsCtrl = [[JGHWithdrawDetailsViewController alloc]init];
+    [self.navigationController pushViewController:withdrawDetailsCtrl animated:YES];
 }
 
 - (void)didReceiveMemoryWarning {

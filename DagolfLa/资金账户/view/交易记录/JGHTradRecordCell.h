@@ -16,7 +16,7 @@
 
 @property (nonatomic, strong)UILabel *tradTime;//银行名称
 
-
+- (void)configModel;
 
 
 @end

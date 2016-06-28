@@ -29,6 +29,12 @@
     return self;
 }
 
+- (void)configModel{
+    _bankName.text = @"中国工商银行";
+    
+    _tradTime.text = @"2016-06-30";
+}
+
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
