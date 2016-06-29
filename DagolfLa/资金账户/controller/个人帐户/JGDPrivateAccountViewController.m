@@ -13,7 +13,7 @@
 @interface JGDPrivateAccountViewController ()<UITableViewDelegate,UITableViewDataSource>
 
 @property (nonatomic, strong) UITableView *tableView;
-@property (nonatomic, strong, readonly) NSNumber *money;
+@property (nonatomic, strong) NSNumber *money;
 
 @end
 
