@@ -13,10 +13,27 @@
 @interface JGDPrivateAccountViewController ()<UITableViewDelegate,UITableViewDataSource>
 
 @property (nonatomic, strong) UITableView *tableView;
+@property (nonatomic, strong) NSNumber *money;
 
 @end
 
 @implementation JGDPrivateAccountViewController
+
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:YES];
+
+    NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
+    [dic setObject:DEFAULF_USERID forKey:@"userKey"];
+    
+    [[JsonHttp jsonHttp]httpRequest:@"user/getUserBalance" JsonKey:nil withData:dic requestMethod:@"GET" failedBlock:^(id errType) {
+        NSLog(@"errtype == %@", errType);
+    } completionBlock:^(id data) {
+        
+        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+            self.money = [data objectForKey:@"money"] ;
+        }
+    }];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -132,6 +149,7 @@
 
 - (void)takeMoney{
     JGHWithdrawViewController *withdrawCtrl = [[JGHWithdrawViewController alloc]init];
+//    withdrawCtrl.balance = self.money;
     
     [self.navigationController pushViewController:withdrawCtrl animated:YES];
 }
