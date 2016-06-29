@@ -10,4 +10,6 @@
 
 @interface JGHWithdrawViewController : ViewController
 
+@property (nonatomic, strong, readonly)NSNumber *balance;
+
 @end
