@@ -114,4 +114,8 @@ typedef NS_ENUM(NSInteger, GestureType) {
 #import "UMSocialSinaHandler.h"
 #import "UMSocialWechatHandler.h"
 
+#import "MJRefresh.h"
+#import "MJDIYBackFooter.h"
+#import "MJDIYHeader.h"
+
 #endif

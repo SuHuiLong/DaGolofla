@@ -8,6 +8,7 @@
 
 #import "JGDPrivateAccountViewController.h"
 #import "JGHTradRecordViewController.h"
+#import "JGHWithdrawViewController.h"
 
 @interface JGDPrivateAccountViewController ()<UITableViewDelegate,UITableViewDataSource>
 
@@ -26,7 +27,6 @@
     UINavigationBar *navigationBar = self.navigationController.navigationBar;
     [navigationBar setBackgroundImage:[UIImage imageNamed:@"parentTopBackgroupd"] forBarPosition:UIBarPositionAny barMetrics:UIBarMetricsDefault];
     [navigationBar setShadowImage:[UIImage new]];
-    
     
     // Do any additional setup after loading the view.
 }
@@ -130,7 +130,9 @@
 #pragma mark -----提现
 
 - (void)takeMoney{
+    JGHWithdrawViewController *withdrawCtrl = [[JGHWithdrawViewController alloc]init];
     
+    [self.navigationController pushViewController:withdrawCtrl animated:YES];
 }
 
 #pragma mark -----添加银行卡

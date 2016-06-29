@@ -7,9 +7,13 @@
 //
 
 #import "JGHRefundDetailsViewController.h"
-#import "JGHWithdrawMoneyCell.h"
 #import "JGHWithdrawCatoryCell.h"
-#import "JGHWithdrawTimeCell.h"
+#import "JGHWithdrawCell.h"
+#import "JGHWithdrawMoneyCell.h"
+
+static NSString *const JGHWithdrawMoneyCellIdentifier = @"JGHWithdrawMoneyCell";
+static NSString *const JGHWithdrawCatoryCellIdentifier = @"JGHWithdrawCatoryCell";
+static NSString *const JGHWithdrawCellIdentifier = @"JGHWithdrawCell";
 
 @interface JGHRefundDetailsViewController ()<UITableViewDelegate, UITableViewDataSource>
 
@@ -40,6 +44,16 @@
     self.refoundTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight - 64) style:UITableViewStyleGrouped];
     self.refoundTableView.delegate = self;
     self.refoundTableView.dataSource = self;
+    
+    UINib *monayNib = [UINib nibWithNibName:@"JGHWithdrawMoneyCell" bundle: [NSBundle mainBundle]];
+    [self.refoundTableView registerNib:monayNib forCellReuseIdentifier:JGHWithdrawMoneyCellIdentifier];
+    
+    UINib *catoryNib = [UINib nibWithNibName:@"JGHWithdrawCatoryCell" bundle: [NSBundle mainBundle]];
+    [self.refoundTableView registerNib:catoryNib forCellReuseIdentifier:JGHWithdrawCatoryCellIdentifier];
+    
+    UINib *cellNib = [UINib nibWithNibName:@"JGHWithdrawCell" bundle: [NSBundle mainBundle]];
+    [self.refoundTableView registerNib:cellNib forCellReuseIdentifier:JGHWithdrawCellIdentifier];
+    
     [self.view addSubview:self.refoundTableView];
 }
 
@@ -72,23 +86,15 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    static NSString *withdrawMonayCellIdef = @"JGHWithdrawMoneyCell";
-    static NSString *withdrawCatoryCellIdef = @"JGHWithdrawCatoryCell";
-    static NSString *withdrawTimeCellIdef = @"JGHWithdrawTimeCell";
+
     if (indexPath.section == 0) {
-        JGHWithdrawMoneyCell *withdrawMonayCell = [tableView dequeueReusableCellWithIdentifier:withdrawMonayCellIdef];
-        if (withdrawMonayCell == nil) {
-            withdrawMonayCell = [[JGHWithdrawMoneyCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:withdrawMonayCellIdef];
-        }
+        JGHWithdrawMoneyCell *withdrawMonayCell = [tableView dequeueReusableCellWithIdentifier:JGHWithdrawMoneyCellIdentifier];
         
         withdrawMonayCell.selectionStyle = UITableViewCellSelectionStyleNone;
         
         return withdrawMonayCell;
     }else if (indexPath.section == 1){
-        JGHWithdrawCatoryCell *withdrawCatoryCell = [tableView dequeueReusableCellWithIdentifier:withdrawCatoryCellIdef];
-        if (withdrawCatoryCell == nil) {
-            withdrawCatoryCell = [[JGHWithdrawCatoryCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:withdrawCatoryCellIdef];
-        }
+        JGHWithdrawCatoryCell *withdrawCatoryCell = [tableView dequeueReusableCellWithIdentifier:JGHWithdrawCatoryCellIdentifier];
         
         withdrawCatoryCell.selectionStyle = UITableViewCellSelectionStyleNone;
         if (indexPath.row == 0) {
@@ -99,14 +105,11 @@
         
         return withdrawCatoryCell;
     }else{
-        JGHWithdrawTimeCell *withdrawtimeCell = [tableView dequeueReusableCellWithIdentifier:withdrawTimeCellIdef];
-        if (withdrawtimeCell == nil) {
-            withdrawtimeCell = [[JGHWithdrawTimeCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:withdrawTimeCellIdef];
-        }
+        JGHWithdrawCell *withdrawCell = [tableView dequeueReusableCellWithIdentifier:JGHWithdrawCellIdentifier];
+
+        withdrawCell.selectionStyle = UITableViewCellSelectionStyleNone;
         
-        withdrawtimeCell.selectionStyle = UITableViewCellSelectionStyleNone;
-        
-        return withdrawtimeCell;
+        return withdrawCell;
     }
 }
 

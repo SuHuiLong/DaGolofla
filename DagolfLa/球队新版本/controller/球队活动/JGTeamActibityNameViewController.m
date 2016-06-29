@@ -700,6 +700,11 @@ static CGFloat ImageHeight  = 210.0;
 
 #pragma mark -- 查看成绩
 - (void)getTeamActivityResults:(UIButton *)btn{
+    if (_isTeamMember == 1) {
+        [[ShowHUD showHUD]showToastWithText:@"您不是该球队队员！" FromView:self.view];
+        return;
+    }
+    
     NSInteger timeKey;
     JGTeamDeatilWKwebViewController *wkVC = [[JGTeamDeatilWKwebViewController alloc] init];
     if (_model.teamActivityKey == 0) {

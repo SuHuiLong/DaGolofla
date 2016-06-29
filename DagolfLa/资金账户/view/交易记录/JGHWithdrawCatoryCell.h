@@ -10,4 +10,12 @@
 
 @interface JGHWithdrawCatoryCell : UITableViewCell
 
+@property (weak, nonatomic) IBOutlet UILabel *titles;
+
+@property (weak, nonatomic) IBOutlet UIImageView *blankImageView;
+
+@property (weak, nonatomic) IBOutlet UILabel *values;
+
+- (void)configModelTitles:(NSString *)titles andBlankImage:(NSString *)blankImage andBlankName:(NSString *)blankName;
+
 @end

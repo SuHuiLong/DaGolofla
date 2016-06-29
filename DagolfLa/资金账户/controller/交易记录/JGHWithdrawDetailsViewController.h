@@ -7,7 +7,10 @@
 //
 
 #import "ViewController.h"
+@class JGHWithDrawModel;
 
 @interface JGHWithdrawDetailsViewController : ViewController
+
+@property (nonatomic, strong)JGHWithDrawModel *model;
 
 @end

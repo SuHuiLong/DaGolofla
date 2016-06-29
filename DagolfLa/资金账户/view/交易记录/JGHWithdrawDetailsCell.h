@@ -10,4 +10,16 @@
 
 @interface JGHWithdrawDetailsCell : UITableViewCell
 
+@property (weak, nonatomic) IBOutlet UILabel *applyforTime;
+
+@property (weak, nonatomic) IBOutlet UILabel *dealwithTime;
+
+@property (weak, nonatomic) IBOutlet UILabel *seccessful;
+
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *lineTop;
+
+
+
+- (void)configApplyforTime:(NSString *)applyforTime andDealwithTime:(NSString *)dealwithTime andSeccessful:(NSString *)seccessful;
+
 @end

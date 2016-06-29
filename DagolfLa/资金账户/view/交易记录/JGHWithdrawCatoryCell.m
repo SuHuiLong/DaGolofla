@@ -21,4 +21,15 @@
     // Configure the view for the selected state
 }
 
+- (void)configModelTitles:(NSString *)titles andBlankImage:(NSString *)blankImage andBlankName:(NSString *)blankName{
+//    @property (weak, nonatomic) IBOutlet UILabel *titles;
+    self.titles.text = titles;
+    
+//    @property (weak, nonatomic) IBOutlet UIImageView *blankImageView;
+    self.blankImageView.image = [UIImage imageNamed:blankImage];
+    
+//    @property (weak, nonatomic) IBOutlet UILabel *values;
+    self.values.text = blankName;
+}
+
 @end
