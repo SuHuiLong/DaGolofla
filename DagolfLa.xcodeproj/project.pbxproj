@@ -867,6 +867,9 @@
 		828A99F51CE3481D00AF9860 /* JGMemManageController.m in Sources */ = {isa = PBXBuildFile; fileRef = 828A99F41CE3481D00AF9860 /* JGMemManageController.m */; };
 		828A99F91CE348D500AF9860 /* JGMemTitleTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 828A99F81CE348D500AF9860 /* JGMemTitleTableViewCell.m */; };
 		828A99FC1CE3549900AF9860 /* JGMemDataTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 828A99FB1CE3549900AF9860 /* JGMemDataTableViewCell.m */; };
+		829960D41D23727C00E121A8 /* JGLBankModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 829960D31D23727C00E121A8 /* JGLBankModel.m */; };
+		829960DA1D23729C00E121A8 /* JGLAddBankNewsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 829960D71D23729C00E121A8 /* JGLAddBankNewsTableViewCell.m */; };
+		829960DB1D23729C00E121A8 /* JGLBankCardTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 829960D91D23729C00E121A8 /* JGLBankCardTableViewCell.m */; };
 		82AAB7AE1CE5BEB8005F5633 /* JGLSelfSetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 82AAB7AD1CE5BEB8005F5633 /* JGLSelfSetViewController.m */; };
 		82AAB7B11CE5C18E005F5633 /* JGSelfSetTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 82AAB7B01CE5C18E005F5633 /* JGSelfSetTableViewCell.m */; };
 		82ABF1B01D1BC0B3004493DB /* JGLActiveCancelMemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 82ABF1AF1D1BC0B3004493DB /* JGLActiveCancelMemViewController.m */; };
@@ -2397,6 +2400,12 @@
 		8294872A1CE9B8FE0018D3F6 /* JGPhotoTimeReusableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGPhotoTimeReusableView.m; sourceTree = "<group>"; };
 		8294872C1CE9C92A0018D3F6 /* JGLUpdataPhotoController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGLUpdataPhotoController.h; sourceTree = "<group>"; };
 		8294872D1CE9C92A0018D3F6 /* JGLUpdataPhotoController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGLUpdataPhotoController.m; sourceTree = "<group>"; };
+		829960D21D23727C00E121A8 /* JGLBankModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGLBankModel.h; sourceTree = "<group>"; };
+		829960D31D23727C00E121A8 /* JGLBankModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGLBankModel.m; sourceTree = "<group>"; };
+		829960D61D23729C00E121A8 /* JGLAddBankNewsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGLAddBankNewsTableViewCell.h; sourceTree = "<group>"; };
+		829960D71D23729C00E121A8 /* JGLAddBankNewsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGLAddBankNewsTableViewCell.m; sourceTree = "<group>"; };
+		829960D81D23729C00E121A8 /* JGLBankCardTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGLBankCardTableViewCell.h; sourceTree = "<group>"; };
+		829960D91D23729C00E121A8 /* JGLBankCardTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGLBankCardTableViewCell.m; sourceTree = "<group>"; };
 		82AAB7A81CE57589005F5633 /* JGLMyTeamViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGLMyTeamViewController.h; sourceTree = "<group>"; };
 		82AAB7A91CE57589005F5633 /* JGLMyTeamViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGLMyTeamViewController.m; sourceTree = "<group>"; };
 		82AAB7AC1CE5BEB8005F5633 /* JGLSelfSetViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGLSelfSetViewController.h; sourceTree = "<group>"; };
@@ -2765,6 +2774,7 @@
 		20591C471D215BCD003271EC /* model */ = {
 			isa = PBXGroup;
 			children = (
+				829960D11D23727C00E121A8 /* 添加银行卡 */,
 				20591C481D215BCD003271EC /* 个人帐户 */,
 			);
 			path = model;
@@ -2782,6 +2792,7 @@
 		20591C4B1D215BCD003271EC /* view */ = {
 			isa = PBXGroup;
 			children = (
+				829960D51D23729C00E121A8 /* 添加银行卡 */,
 				F554266F1D22531200233B20 /* 设置支付密码 */,
 				20591C4C1D215BCD003271EC /* 个人帐户 */,
 				20591C4F1D215BCD003271EC /* 交易记录 */,
@@ -5929,6 +5940,26 @@
 			path = "球队成员管理";
 			sourceTree = "<group>";
 		};
+		829960D11D23727C00E121A8 /* 添加银行卡 */ = {
+			isa = PBXGroup;
+			children = (
+				829960D21D23727C00E121A8 /* JGLBankModel.h */,
+				829960D31D23727C00E121A8 /* JGLBankModel.m */,
+			);
+			path = "添加银行卡";
+			sourceTree = "<group>";
+		};
+		829960D51D23729C00E121A8 /* 添加银行卡 */ = {
+			isa = PBXGroup;
+			children = (
+				829960D61D23729C00E121A8 /* JGLAddBankNewsTableViewCell.h */,
+				829960D71D23729C00E121A8 /* JGLAddBankNewsTableViewCell.m */,
+				829960D81D23729C00E121A8 /* JGLBankCardTableViewCell.h */,
+				829960D91D23729C00E121A8 /* JGLBankCardTableViewCell.m */,
+			);
+			path = "添加银行卡";
+			sourceTree = "<group>";
+		};
 		82AAB7A71CE57571005F5633 /* 我的球队 */ = {
 			isa = PBXGroup;
 			children = (
@@ -6813,6 +6844,7 @@
 				36DF6DEE1C07FDBD00B60B67 /* TeamCreatePhotoController.m in Sources */,
 				36BF00A81BC77326005B3CE2 /* MyfootModel.m in Sources */,
 				209B3FE61D0FCB0300A6FF72 /* JGHSaveAndSubmitBtnCell.m in Sources */,
+				829960DB1D23729C00E121A8 /* JGLBankCardTableViewCell.m in Sources */,
 				36BF00891BC772EF005B3CE2 /* MySetBindViewController.m in Sources */,
 				36BF00FD1BC7750D005B3CE2 /* SpeciallOfferViewController.m in Sources */,
 				36BFFF691BC76D09005B3CE2 /* UIProgressView+AFNetworking.m in Sources */,
@@ -6939,6 +6971,7 @@
 				36695E311C55E5C1003130F4 /* ActiveManageController.m in Sources */,
 				20513BDA1CF7050A003233FB /* RSADataSigner.m in Sources */,
 				36BF004D1BC77213005B3CE2 /* CommunityModel.m in Sources */,
+				829960D41D23727C00E121A8 /* JGLBankModel.m in Sources */,
 				20CA137F1CE574A400DA15B9 /* JGHConcentTextViewController.m in Sources */,
 				20BA61411CDCA180004B61F5 /* VedioPlayViewController.m in Sources */,
 				36BF00E01BC77428005B3CE2 /* PracticeViewController.m in Sources */,
@@ -7307,6 +7340,7 @@
 				369B2B671C61B23F00366AA2 /* NewsDetailViewCell.m in Sources */,
 				36BF01911BC7766B005B3CE2 /* MeWonderViewCell.m in Sources */,
 				F566EFAB1CA0F01B008BB328 /* InformSetmodel.m in Sources */,
+				829960DA1D23729C00E121A8 /* JGLAddBankNewsTableViewCell.m in Sources */,
 				3660E1DF1BFC64020033B4D7 /* ScoredCardViewController.m in Sources */,
 				65B801001CD04D150077A324 /* DeatilModel.m in Sources */,
 				3684FDA31C4A206E002A14FC /* TeamJoinReasonViewController.m in Sources */,
