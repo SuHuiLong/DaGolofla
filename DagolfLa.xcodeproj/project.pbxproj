@@ -872,6 +872,11 @@
 		828A99F51CE3481D00AF9860 /* JGMemManageController.m in Sources */ = {isa = PBXBuildFile; fileRef = 828A99F41CE3481D00AF9860 /* JGMemManageController.m */; };
 		828A99F91CE348D500AF9860 /* JGMemTitleTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 828A99F81CE348D500AF9860 /* JGMemTitleTableViewCell.m */; };
 		828A99FC1CE3549900AF9860 /* JGMemDataTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 828A99FB1CE3549900AF9860 /* JGMemDataTableViewCell.m */; };
+		829960D41D23727C00E121A8 /* JGLBankModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 829960D31D23727C00E121A8 /* JGLBankModel.m */; };
+		829960DA1D23729C00E121A8 /* JGLAddBankNewsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 829960D71D23729C00E121A8 /* JGLAddBankNewsTableViewCell.m */; };
+		829960DB1D23729C00E121A8 /* JGLBankCardTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 829960D91D23729C00E121A8 /* JGLBankCardTableViewCell.m */; };
+		829960E01D23732000E121A8 /* JGLBankListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 829960DD1D23732000E121A8 /* JGLBankListViewController.m */; };
+		829960E11D23732000E121A8 /* JGLBankTypeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 829960DF1D23732000E121A8 /* JGLBankTypeView.m */; };
 		82AAB7AE1CE5BEB8005F5633 /* JGLSelfSetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 82AAB7AD1CE5BEB8005F5633 /* JGLSelfSetViewController.m */; };
 		82AAB7B11CE5C18E005F5633 /* JGSelfSetTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 82AAB7B01CE5C18E005F5633 /* JGSelfSetTableViewCell.m */; };
 		82ABF1B01D1BC0B3004493DB /* JGLActiveCancelMemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 82ABF1AF1D1BC0B3004493DB /* JGLActiveCancelMemViewController.m */; };
@@ -2408,6 +2413,16 @@
 		8294872A1CE9B8FE0018D3F6 /* JGPhotoTimeReusableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGPhotoTimeReusableView.m; sourceTree = "<group>"; };
 		8294872C1CE9C92A0018D3F6 /* JGLUpdataPhotoController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGLUpdataPhotoController.h; sourceTree = "<group>"; };
 		8294872D1CE9C92A0018D3F6 /* JGLUpdataPhotoController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGLUpdataPhotoController.m; sourceTree = "<group>"; };
+		829960D21D23727C00E121A8 /* JGLBankModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGLBankModel.h; sourceTree = "<group>"; };
+		829960D31D23727C00E121A8 /* JGLBankModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGLBankModel.m; sourceTree = "<group>"; };
+		829960D61D23729C00E121A8 /* JGLAddBankNewsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGLAddBankNewsTableViewCell.h; sourceTree = "<group>"; };
+		829960D71D23729C00E121A8 /* JGLAddBankNewsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGLAddBankNewsTableViewCell.m; sourceTree = "<group>"; };
+		829960D81D23729C00E121A8 /* JGLBankCardTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGLBankCardTableViewCell.h; sourceTree = "<group>"; };
+		829960D91D23729C00E121A8 /* JGLBankCardTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGLBankCardTableViewCell.m; sourceTree = "<group>"; };
+		829960DC1D23732000E121A8 /* JGLBankListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGLBankListViewController.h; sourceTree = "<group>"; };
+		829960DD1D23732000E121A8 /* JGLBankListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGLBankListViewController.m; sourceTree = "<group>"; };
+		829960DE1D23732000E121A8 /* JGLBankTypeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGLBankTypeView.h; sourceTree = "<group>"; };
+		829960DF1D23732000E121A8 /* JGLBankTypeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGLBankTypeView.m; sourceTree = "<group>"; };
 		82AAB7A81CE57589005F5633 /* JGLMyTeamViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGLMyTeamViewController.h; sourceTree = "<group>"; };
 		82AAB7A91CE57589005F5633 /* JGLMyTeamViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGLMyTeamViewController.m; sourceTree = "<group>"; };
 		82AAB7AC1CE5BEB8005F5633 /* JGLSelfSetViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGLSelfSetViewController.h; sourceTree = "<group>"; };
@@ -2794,6 +2809,7 @@
 		20591C4B1D215BCD003271EC /* view */ = {
 			isa = PBXGroup;
 			children = (
+				829960D51D23729C00E121A8 /* 添加银行卡 */,
 				F554266F1D22531200233B20 /* 设置支付密码 */,
 				20591C4C1D215BCD003271EC /* 个人帐户 */,
 				20591C4F1D215BCD003271EC /* 交易记录 */,
@@ -5862,6 +5878,10 @@
 		827BD52C1D214A01009AF9CA /* 添加银行卡 */ = {
 			isa = PBXGroup;
 			children = (
+				829960DC1D23732000E121A8 /* JGLBankListViewController.h */,
+				829960DD1D23732000E121A8 /* JGLBankListViewController.m */,
+				829960DE1D23732000E121A8 /* JGLBankTypeView.h */,
+				829960DF1D23732000E121A8 /* JGLBankTypeView.m */,
 				827BD52D1D214A42009AF9CA /* JGLAddBankCardViewController.h */,
 				827BD52E1D214A42009AF9CA /* JGLAddBankCardViewController.m */,
 			);
@@ -5952,6 +5972,26 @@
 				8294872A1CE9B8FE0018D3F6 /* JGPhotoTimeReusableView.m */,
 			);
 			path = "球队成员管理";
+			sourceTree = "<group>";
+		};
+		829960D11D23727C00E121A8 /* 添加银行卡 */ = {
+			isa = PBXGroup;
+			children = (
+				829960D21D23727C00E121A8 /* JGLBankModel.h */,
+				829960D31D23727C00E121A8 /* JGLBankModel.m */,
+			);
+			path = "添加银行卡";
+			sourceTree = "<group>";
+		};
+		829960D51D23729C00E121A8 /* 添加银行卡 */ = {
+			isa = PBXGroup;
+			children = (
+				829960D61D23729C00E121A8 /* JGLAddBankNewsTableViewCell.h */,
+				829960D71D23729C00E121A8 /* JGLAddBankNewsTableViewCell.m */,
+				829960D81D23729C00E121A8 /* JGLBankCardTableViewCell.h */,
+				829960D91D23729C00E121A8 /* JGLBankCardTableViewCell.m */,
+			);
+			path = "添加银行卡";
 			sourceTree = "<group>";
 		};
 		82AAB7A71CE57571005F5633 /* 我的球队 */ = {
@@ -6841,6 +6881,7 @@
 				36DF6DEE1C07FDBD00B60B67 /* TeamCreatePhotoController.m in Sources */,
 				36BF00A81BC77326005B3CE2 /* MyfootModel.m in Sources */,
 				209B3FE61D0FCB0300A6FF72 /* JGHSaveAndSubmitBtnCell.m in Sources */,
+				829960DB1D23729C00E121A8 /* JGLBankCardTableViewCell.m in Sources */,
 				36BF00891BC772EF005B3CE2 /* MySetBindViewController.m in Sources */,
 				36BF00FD1BC7750D005B3CE2 /* SpeciallOfferViewController.m in Sources */,
 				36BFFF691BC76D09005B3CE2 /* UIProgressView+AFNetworking.m in Sources */,
@@ -6968,6 +7009,7 @@
 				36695E311C55E5C1003130F4 /* ActiveManageController.m in Sources */,
 				20513BDA1CF7050A003233FB /* RSADataSigner.m in Sources */,
 				36BF004D1BC77213005B3CE2 /* CommunityModel.m in Sources */,
+				829960D41D23727C00E121A8 /* JGLBankModel.m in Sources */,
 				20CA137F1CE574A400DA15B9 /* JGHConcentTextViewController.m in Sources */,
 				20BA61411CDCA180004B61F5 /* VedioPlayViewController.m in Sources */,
 				36BF00E01BC77428005B3CE2 /* PracticeViewController.m in Sources */,
@@ -7272,6 +7314,7 @@
 				36DF6DFC1C08235900B60B67 /* TeamPhotoCollectionViewCell.m in Sources */,
 				36BFFF611BC76D09005B3CE2 /* AFURLSessionManager.m in Sources */,
 				208030491CF828D000448BFC /* JGHAddAddressViewController.m in Sources */,
+				829960E11D23732000E121A8 /* JGLBankTypeView.m in Sources */,
 				36067BD11C982791001AE22C /* ShieldingTableViewCell.m in Sources */,
 				36BFFF781BC76D09005B3CE2 /* SDWebImageDownloader.m in Sources */,
 				821F51071D0ECF4700AF0E93 /* JGLTeamChoiseViewController.m in Sources */,
@@ -7286,6 +7329,7 @@
 				208837A31D1A9D88004C7B5D /* JGHActivityBaseInfoCell.m in Sources */,
 				36BFFD311BC76C8D005B3CE2 /* AppDelegate.mm in Sources */,
 				36BF015C1BC77611005B3CE2 /* MineRewardViewController.m in Sources */,
+				829960E01D23732000E121A8 /* JGLBankListViewController.m in Sources */,
 				36BFFF641BC76D09005B3CE2 /* AFNetworkActivityIndicatorManager.m in Sources */,
 				36BFFF771BC76D09005B3CE2 /* SDWebImageDecoder.m in Sources */,
 				F56F0B901CC637A200A222F3 /* AddNoteViewController.m in Sources */,
