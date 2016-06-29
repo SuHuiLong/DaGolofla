@@ -176,8 +176,8 @@
     [self.view addSubview:_progress];
     [_progress show:YES];
     
-    
-    [Helper alertViewWithTitle:@"您是否确定要删除这张银行卡？" withBlockCancle:^{
+    NSString* strDet = [NSString stringWithFormat:@"您确定要删除此%@卡",[_dataArray[btn.tag - 100] backName]];
+    [Helper alertViewWithTitle:strDet withBlockCancle:^{
         
     } withBlockSure:^{
         NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
