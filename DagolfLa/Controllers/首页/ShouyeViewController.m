@@ -22,7 +22,7 @@
 
 #import "HomeHeadView.h"
 
-#import "JGLAddBankCardViewController.h"
+#import "JGLBankListViewController.h"
 
 @interface ShouyeViewController ()<UIApplicationDelegate,CLLocationManagerDelegate>
 {
@@ -218,7 +218,7 @@
                 NSLog(@"shangchen");
 //                UseMallViewController
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
-                JGLAddBankCardViewController* userVc = [[JGLAddBankCardViewController alloc]init];
+                JGLBankListViewController* userVc = [[JGLBankListViewController alloc]init];
                 [self.navigationController pushViewController:userVc animated:YES];
             }
                 break;

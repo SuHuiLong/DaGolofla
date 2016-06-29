@@ -143,13 +143,7 @@
 }
 
 
-//
-- (void)show
-{
-    UIViewController *topVC = [self appRootViewController];
-    //self.frame = CGRectMake((CGRectGetWidth(topVC.view.bounds) - kAlertWidth) * 0.5, - kAlertHeight - 30, 200, 550);
-    [topVC.view addSubview:self];
-}
+
 
 - (void)dismissAlert
 {
@@ -158,6 +152,14 @@
     }];
    
     
+}
+
+
+- (void)show
+{
+    UIViewController *topVC = [self appRootViewController];
+    //self.frame = CGRectMake((CGRectGetWidth(topVC.view.bounds) - kAlertWidth) * 0.5, - kAlertHeight - 30, 200, 550);
+    [topVC.view addSubview:self];
 }
 
 - (UIViewController *)appRootViewController
