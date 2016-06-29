@@ -40,7 +40,7 @@
 - (void)configJGHWithDrawModelWithDraw:(JGHWithDrawModel *)model{
     self.monay.hidden = YES;
     self.name.text = model.name;
-    self.time.text = [Helper formateDate:[Helper returnCurrentDateString] withFormate:model.exchangeTime];
+//    self.time.text = [Helper formateDate:[Helper returnCurrentDateString] withFormate:model.exchangeTime];
     self.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 }
 

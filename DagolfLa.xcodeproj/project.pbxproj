@@ -46,7 +46,7 @@
 		20591C881D22630A003271EC /* JGHWithdrawCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 20591C861D22630A003271EC /* JGHWithdrawCell.xib */; };
 		20591C8C1D227A0D003271EC /* JGHTradRecordCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 20591C8A1D227A0D003271EC /* JGHTradRecordCell.m */; };
 		20591C8D1D227A0D003271EC /* JGHTradRecordCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 20591C8B1D227A0D003271EC /* JGHTradRecordCell.xib */; };
-		20591C941D229883003271EC /* JGHWithDrawModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 20591C931D229883003271EC /* JGHWithDrawModel.m */; };
+		20591C981D239BED003271EC /* JGHWithDrawModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 20591C971D239BED003271EC /* JGHWithDrawModel.m */; };
 		2067C6B81CE30CA4002900C8 /* JGTeamActibityNameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2067C6B51CE30CA4002900C8 /* JGTeamActibityNameViewController.m */; };
 		2067C6B91CE30CA4002900C8 /* JGTeamActivityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2067C6B71CE30CA4002900C8 /* JGTeamActivityViewController.m */; };
 		2067C6CE1CE30CC0002900C8 /* JGActivityNameBaseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2067C6C01CE30CC0002900C8 /* JGActivityNameBaseCell.m */; };
@@ -1119,8 +1119,8 @@
 		20591C891D227A0D003271EC /* JGHTradRecordCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHTradRecordCell.h; sourceTree = "<group>"; };
 		20591C8A1D227A0D003271EC /* JGHTradRecordCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHTradRecordCell.m; sourceTree = "<group>"; };
 		20591C8B1D227A0D003271EC /* JGHTradRecordCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JGHTradRecordCell.xib; sourceTree = "<group>"; };
-		20591C921D229883003271EC /* JGHWithDrawModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHWithDrawModel.h; sourceTree = "<group>"; };
-		20591C931D229883003271EC /* JGHWithDrawModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHWithDrawModel.m; sourceTree = "<group>"; };
+		20591C961D239BED003271EC /* JGHWithDrawModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHWithDrawModel.h; sourceTree = "<group>"; };
+		20591C971D239BED003271EC /* JGHWithDrawModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHWithDrawModel.m; sourceTree = "<group>"; };
 		2067C6B41CE30CA4002900C8 /* JGTeamActibityNameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGTeamActibityNameViewController.h; sourceTree = "<group>"; };
 		2067C6B51CE30CA4002900C8 /* JGTeamActibityNameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGTeamActibityNameViewController.m; sourceTree = "<group>"; };
 		2067C6B61CE30CA4002900C8 /* JGTeamActivityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGTeamActivityViewController.h; sourceTree = "<group>"; };
@@ -2791,7 +2791,8 @@
 		20591C471D215BCD003271EC /* model */ = {
 			isa = PBXGroup;
 			children = (
-				20591C8E1D22981E003271EC /* 交易记录 */,
+				20591C951D239BED003271EC /* 交易记录 */,
+				829960D11D23727C00E121A8 /* 添加银行卡 */,
 				20591C481D215BCD003271EC /* 个人帐户 */,
 			);
 			path = model;
@@ -2872,11 +2873,11 @@
 			path = "交易记录";
 			sourceTree = "<group>";
 		};
-		20591C8E1D22981E003271EC /* 交易记录 */ = {
+		20591C951D239BED003271EC /* 交易记录 */ = {
 			isa = PBXGroup;
 			children = (
-				20591C921D229883003271EC /* JGHWithDrawModel.h */,
-				20591C931D229883003271EC /* JGHWithDrawModel.m */,
+				20591C961D239BED003271EC /* JGHWithDrawModel.h */,
+				20591C971D239BED003271EC /* JGHWithDrawModel.m */,
 			);
 			path = "交易记录";
 			sourceTree = "<group>";
@@ -7096,6 +7097,7 @@
 				65B596F21CAD43AC007AB83A /* JKSlideViewController.m in Sources */,
 				36DF562F1C1519B40006D9BA /* ScoreWriteProController.m in Sources */,
 				20513BD61CF7050A003233FB /* DataVerifier.m in Sources */,
+				20591C981D239BED003271EC /* JGHWithDrawModel.m in Sources */,
 				F569A1491CE35AA500CD0FD5 /* JGTeamChannelTableView.m in Sources */,
 				36BFFF8B1BC76D09005B3CE2 /* FDCalendarItem.m in Sources */,
 				36BFFF9E1BC76FD4005B3CE2 /* CommunityViewController.m in Sources */,
@@ -7184,7 +7186,6 @@
 				36D39B371BCCD8D000C0B197 /* RewordModel.m in Sources */,
 				36DD4DB11BFDB68E008D3424 /* TeamCreateTableViewCell.m in Sources */,
 				3660E13D1BFC55AC0033B4D7 /* MineTeamController.m in Sources */,
-				20591C941D229883003271EC /* JGHWithDrawModel.m in Sources */,
 				36DBCAC31C27DD6300C374C8 /* ManageWatchViewController.m in Sources */,
 				368394821C09A67E00F162F6 /* GameModel.m in Sources */,
 				36067BBD1C96B43B001AE22C /* ChatListViewController.m in Sources */,
@@ -7381,6 +7382,7 @@
 				36BF01911BC7766B005B3CE2 /* MeWonderViewCell.m in Sources */,
 				F566EFAB1CA0F01B008BB328 /* InformSetmodel.m in Sources */,
 				20591C871D22630A003271EC /* JGHWithdrawCell.m in Sources */,
+				829960DA1D23729C00E121A8 /* JGLAddBankNewsTableViewCell.m in Sources */,
 				3660E1DF1BFC64020033B4D7 /* ScoredCardViewController.m in Sources */,
 				65B801001CD04D150077A324 /* DeatilModel.m in Sources */,
 				3684FDA31C4A206E002A14FC /* TeamJoinReasonViewController.m in Sources */,

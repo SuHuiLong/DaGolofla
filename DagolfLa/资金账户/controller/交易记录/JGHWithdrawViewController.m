@@ -11,13 +11,14 @@
 #import "JGHWithdrawCell.h"
 #import "JGSignUoPromptCell.h"
 #import "JGHButtonCell.h"
+#import "JGLBankModel.h"
 
 static NSString *const JGHButtonCellIdentifier = @"JGHButtonCell";
 static NSString *const JGSignUoPromptCellIdentifier = @"JGSignUoPromptCell";
 static NSString *const JGHWithdrawCellIdentifier = @"JGHWithdrawCell";
 static NSString *const JGHTradRecordCellIdentifier = @"JGHTradRecordCell";
 
-@interface JGHWithdrawViewController ()<UITableViewDataSource, UITableViewDelegate>
+@interface JGHWithdrawViewController ()<UITableViewDataSource, UITableViewDelegate, JGHButtonCellDelegate>
 
 @property (nonatomic, strong)UITableView *withdrawTableView;
 
@@ -26,6 +27,13 @@ static NSString *const JGHTradRecordCellIdentifier = @"JGHTradRecordCell";
 @end
 
 @implementation JGHWithdrawViewController
+
+- (instancetype)init{
+    if (self == [super init]) {
+        self.dataArray = [NSMutableArray array];
+    }
+    return self;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -46,12 +54,18 @@ static NSString *const JGHTradRecordCellIdentifier = @"JGHTradRecordCell";
     } completionBlock:^(id data) {
         NSLog(@"data == %@", data);
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
-            if ([data objectForKey:@"userBankCardList"]) {
-                
+            NSMutableArray *array = [NSMutableArray array];
+            array = [data objectForKey:@"userBankCardList"];
+            for (NSMutableDictionary *dict in array) {
+                JGLBankModel *model = [[JGLBankModel alloc]init];
+                [model setValuesForKeysWithDictionary:dict];
+                [self.dataArray addObject:model];
             }
         }else{
             
         }
+        
+        [self.withdrawTableView reloadData];
     }];
 }
 
@@ -103,14 +117,17 @@ static NSString *const JGHTradRecordCellIdentifier = @"JGHTradRecordCell";
     if (indexPath.section == 0) {
         JGHTradRecordCell *tradCell = [tableView dequeueReusableCellWithIdentifier:JGHTradRecordCellIdentifier];
         tradCell.selectionStyle = UITableViewCellSelectionStyleNone;
-//        tradCell configJGHWithDrawModelWithDraw:
+        if (_dataArray.count > 0) {
+            [tradCell configJGHWithDrawModelWithDraw:_dataArray[indexPath.section]];
+        }
+        
         return tradCell;
     }else if (indexPath.section == 1){
         
         JGSignUoPromptCell *promptCell = [tableView dequeueReusableCellWithIdentifier:JGSignUoPromptCellIdentifier];
         
         promptCell.selectionStyle = UITableViewCellSelectionStyleNone;
-//        labeltextCell.textLabel.text = @"每笔金额提现最少为10元，预计两小时到账";
+        [promptCell configPromptString:@"每笔金额提现最少为10元，预计两小时到账"];
         return promptCell;
     }else if (indexPath.section == 2){
         JGHWithdrawCell *withdrawCell = [tableView dequeueReusableCellWithIdentifier:JGHWithdrawCellIdentifier];
@@ -122,11 +139,17 @@ static NSString *const JGHTradRecordCellIdentifier = @"JGHTradRecordCell";
         JGHButtonCell *btnCell = [tableView dequeueReusableCellWithIdentifier:JGHButtonCellIdentifier];
         
         btnCell.selectionStyle = UITableViewCellSelectionStyleNone;
-        //        labeltextCell.textLabel.text = @"每笔金额提现最少为10元，预计两小时到账";
+        btnCell.delegate = self;
+        [btnCell.clickBtn setTitle:@"下一步" forState:UIControlStateNormal];
         return btnCell;
     }
 }
 
+
+#pragma mark -- 下一步
+- (void)selectCommitBtnClick:(UIButton *)btn{
+    NSLog(@"下一步");
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
