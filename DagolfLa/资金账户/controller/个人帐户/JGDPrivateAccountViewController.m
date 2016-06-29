@@ -13,7 +13,7 @@
 @interface JGDPrivateAccountViewController ()<UITableViewDelegate,UITableViewDataSource>
 
 @property (nonatomic, strong) UITableView *tableView;
-@property (nonatomic, strong) NSNumber *money;
+@property (nonatomic, strong, readonly) NSNumber *money;
 
 @end
 
@@ -149,7 +149,7 @@
 
 - (void)takeMoney{
     JGHWithdrawViewController *withdrawCtrl = [[JGHWithdrawViewController alloc]init];
-//    withdrawCtrl.balance = self.money;
+    withdrawCtrl.balance = self.money;
     
     [self.navigationController pushViewController:withdrawCtrl animated:YES];
 }
