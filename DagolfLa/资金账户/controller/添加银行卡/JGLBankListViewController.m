@@ -15,12 +15,17 @@
 #import "MJDIYBackFooter.h"
 
 #import "JGLBankModel.h"
+
+#import "MBProgressHUD.h"
 @interface JGLBankListViewController ()<UITableViewDelegate,UITableViewDataSource>
 {
     UIView* _viewHeader;
     UITableView* _tableView;
     NSMutableArray* _dataArray;
     NSInteger _page;
+    MBProgressHUD* _progress;
+    
+    NSInteger _isClick;
 }
 @end
 
@@ -164,6 +169,14 @@
 -(void)deleteClick:(UIButton *)btn
 {
     NSLog(@"%td",btn.tag);
+    
+    _progress = [[MBProgressHUD alloc] initWithView:self.view];
+    _progress.mode = MBProgressHUDModeIndeterminate;
+    _progress.labelText = @"正在删除...";
+    [self.view addSubview:_progress];
+    [_progress show:YES];
+    
+    
     [Helper alertViewWithTitle:@"您是否确定要删除这张银行卡？" withBlockCancle:^{
         
     } withBlockSure:^{
@@ -172,7 +185,9 @@
         [dict setObject:[_dataArray[btn.tag - 100] timeKey] forKey:@"bankCardKey"];
         [[JsonHttp jsonHttp] httpRequest:@"user/deleteUserBankCard" JsonKey:nil withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
             NSLog(@"%@",errType);
+            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
         } completionBlock:^(id data) {
+            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
             if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
                 [_tableView.header endRefreshing];
                 [_tableView.footer endRefreshing];
@@ -185,6 +200,7 @@
             }
         }];
     } withBlock:^(UIAlertController *alertView) {
+        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
         [self.navigationController presentViewController:alertView animated:YES completion:nil];
     }];
     

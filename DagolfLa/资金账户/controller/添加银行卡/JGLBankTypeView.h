@@ -13,7 +13,7 @@
     UICollectionView* _collectionView;
 }
 
-
+- (void)dismissAlert;
 -(id) initBankAlert;
 
 //-(void) show;

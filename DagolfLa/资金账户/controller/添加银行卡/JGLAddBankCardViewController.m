@@ -11,6 +11,8 @@
 #import "JGLAddBankNewsTableViewCell.h"
 #import "JGLBankTypeView.h"
 
+#import "MBProgressHUD.h"
+
 @interface JGLAddBankCardViewController ()<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate>
 {
     UITableView* _tableView;
@@ -21,6 +23,12 @@
     //银行名
     NSString* _strBank;
     NSInteger _cardType;
+    
+    MBProgressHUD* _progress;
+    
+    NSInteger _isClick;
+    
+    JGLBankTypeView* _alert;
 }
 @end
 
@@ -32,6 +40,8 @@
     _arrayTitle = @[@[@"持卡人姓名"],@[@"选择银行",@"银行卡号"]];
     _arrayPlaceHolder = @[@"请填写真实姓名",@"请填写银行卡号"];
     self.title = @"添加银行卡";
+    
+    _isClick = NO;
     [self uiConfig];
     [self createBtn];
     
@@ -54,6 +64,11 @@
 #pragma mark --添加提交的点击事件
 -(void)addBankCardClick
 {
+    if (_isClick == YES) {
+        [_alert dismissAlert];
+        _isClick = NO;
+    }
+    
     [self.view endEditing:YES];
     NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
     [dict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:userID] forKey:@"userKey"];
@@ -93,9 +108,18 @@
     }
     
     
+    
+    _progress = [[MBProgressHUD alloc] initWithView:self.view];
+    _progress.mode = MBProgressHUDModeIndeterminate;
+    _progress.labelText = @"正在添加...";
+    [self.view addSubview:_progress];
+    [_progress show:YES];
+    
     [[JsonHttp jsonHttp] httpRequest:@"user/addBankCard" JsonKey:@"userBankCard" withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
         NSLog(@"%@",errType);
+        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
     } completionBlock:^(id data) {
+        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
             _refreshBlock();
             [self.navigationController popViewControllerAnimated:YES];
@@ -170,6 +194,7 @@
         }
         else{
             cell.textField.tag = 1002;
+            cell.textField.keyboardType = UIKeyboardTypeNumberPad;
         }
     }
     
@@ -183,28 +208,30 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
 
     if (indexPath.section == 1 && indexPath.row == 0) {
-        NSInteger height ;
-        if (screenWidth == 320) {
-            height = 25;
+        if (_isClick == NO) {
+            NSInteger height ;
+            if (screenWidth == 320) {
+                height = 25;
+            }
+            else if (screenWidth == 375)
+            {
+                height = 20;
+            }
+            else{
+                height = 15;
+            }
+            _isClick = YES;
+            _alert = [[JGLBankTypeView alloc]initWithFrame:CGRectMake(0, screenHeight - 44*screenWidth/375*8-height, screenWidth, screenHeight)];
+            [self.view addSubview:_alert];
+            [_alert setCallBackTitle:^(NSInteger index,NSString* strBank) {
+                _cardType = index;
+                _strBank = strBank;
+                _isClick = NO;
+                NSIndexPath *indexPath=[NSIndexPath indexPathForRow:0 inSection:1];
+                [tableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath,nil] withRowAnimation:UITableViewRowAnimationNone];
+                
+            }];
         }
-        else if (screenWidth == 375)
-        {
-            height = 20;
-        }
-        else{
-            height = 15;
-        }
-        JGLBankTypeView* alert = [[JGLBankTypeView alloc]initWithFrame:CGRectMake(0, screenHeight - 44*screenWidth/375*8-height, screenWidth, screenHeight)];
-        [self.view addSubview:alert];
-        [alert setCallBackTitle:^(NSInteger index,NSString* strBank) {
-            _cardType = index;
-            _strBank = strBank;
-            
-            NSIndexPath *indexPath=[NSIndexPath indexPathForRow:0 inSection:1];
-            [tableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath,nil] withRowAnimation:UITableViewRowAnimationNone];
-            
-        }];
-
     }
 }
 
@@ -212,6 +239,11 @@
 #pragma mark --textfield
 -(void)textFieldDidEndEditing:(UITextField *)textField
 {
+    if (_isClick == YES) {
+        [_alert dismissAlert];
+        _isClick = NO;
+    }
+    
     if (textField.tag == 1001) {
         _strName = textField.text;
     }
