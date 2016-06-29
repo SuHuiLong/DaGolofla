@@ -33,7 +33,7 @@
 
 
 - (void)creatTableV{
-    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 287 * ScreenWidth / 375) style:(UITableViewStylePlain)];
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 293 * ScreenWidth / 375) style:(UITableViewStylePlain)];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.scrollEnabled = NO;
@@ -57,8 +57,9 @@
     [view addSubview:balanceLB];
     
     UIButton *button = [UIButton buttonWithType:(UIButtonTypeSystem)];
-    button.frame = CGRectMake(120 * ScreenWidth / 375, 136 * ScreenWidth / 375, 135 * ScreenWidth / 375, 47 * ScreenWidth / 375) ;
-    button.backgroundColor = [UIColor orangeColor];
+    button.frame = CGRectMake(120 * ScreenWidth / 375, 136 * ScreenWidth / 375, 135 * ScreenWidth / 375, 48 * ScreenWidth / 375) ;
+    [button setBackgroundImage:[UIImage imageNamed:@"tixiananniu"] forState:(UIControlStateNormal)];
+//    [button setImage:[UIImage imageNamed:@"tixiananniu"] forState:(UIControlStateNormal)];
     [button addTarget:self action:@selector(takeMoney) forControlEvents:(UIControlEventTouchUpInside)];
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"sysCell"];
     
@@ -87,7 +88,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     if (section == 0) {
-        return 30;
+        return 40;
     }else{
         return 10;
     }

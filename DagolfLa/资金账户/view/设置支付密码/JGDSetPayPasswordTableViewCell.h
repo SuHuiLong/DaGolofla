@@ -10,4 +10,8 @@
 
 @interface JGDSetPayPasswordTableViewCell : UITableViewCell
 
+@property (nonatomic, strong) UILabel *LB;
+@property (nonatomic, strong) UITextField *txFD;
+@property (nonatomic, strong) UIButton *takeBtn;
+
 @end
