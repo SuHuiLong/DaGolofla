@@ -4,41 +4,62 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="75" id="KGk-i7-Jjw" customClass="JGHTradRecordImageCell">
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" rowHeight="75" id="KGk-i7-Jjw" customClass="JGHTradRecordImageCell">
             <rect key="frame" x="0.0" y="0.0" width="320" height="75"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="74.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="287" height="74.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="zhaohang_color" translatesAutoresizingMaskIntoConstraints="NO" id="BQa-a3-f2D">
-                        <rect key="frame" x="20" y="25.5" width="24" height="24"/>
+                        <rect key="frame" x="20" y="26" width="24" height="24"/>
                         <constraints>
                             <constraint firstAttribute="width" secondItem="BQa-a3-f2D" secondAttribute="height" multiplier="1:1" id="ama-cb-wEi"/>
                         </constraints>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="A8l-TO-HUX">
-                        <rect key="frame" x="72" y="15" width="42" height="21"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="A8l-TO-HUX">
+                        <rect key="frame" x="64" y="16" width="42" height="21"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2DH-zx-Z5I">
-                        <rect key="frame" x="72" y="45" width="42" height="21"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2DH-zx-Z5I">
+                        <rect key="frame" x="64" y="45" width="42" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="2DH-zx-Z5I" firstAttribute="width" secondItem="A8l-TO-HUX" secondAttribute="width" id="DiD-yM-VAM"/>
+                    <constraint firstItem="A8l-TO-HUX" firstAttribute="leading" secondItem="BQa-a3-f2D" secondAttribute="trailing" constant="20" id="RlI-wi-sxz"/>
+                    <constraint firstItem="A8l-TO-HUX" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="UjW-tH-dFe"/>
                     <constraint firstItem="BQa-a3-f2D" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="VDb-8K-gI0"/>
+                    <constraint firstItem="A8l-TO-HUX" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="8" id="hkM-SD-7hn"/>
+                    <constraint firstItem="2DH-zx-Z5I" firstAttribute="height" secondItem="A8l-TO-HUX" secondAttribute="height" id="js6-xr-eR2"/>
+                    <constraint firstItem="2DH-zx-Z5I" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="lgb-R4-2Tl"/>
+                    <constraint firstItem="2DH-zx-Z5I" firstAttribute="leading" secondItem="BQa-a3-f2D" secondAttribute="trailing" constant="20" id="oAx-M1-nKa"/>
                     <constraint firstItem="BQa-a3-f2D" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="tjX-0J-W8p"/>
+                    <constraint firstItem="2DH-zx-Z5I" firstAttribute="top" secondItem="A8l-TO-HUX" secondAttribute="bottom" constant="8" id="v6L-nN-MY7"/>
                 </constraints>
+                <variation key="default">
+                    <mask key="constraints">
+                        <exclude reference="UjW-tH-dFe"/>
+                        <exclude reference="lgb-R4-2Tl"/>
+                    </mask>
+                </variation>
             </tableViewCellContentView>
+            <connections>
+                <outlet property="blankImageView" destination="BQa-a3-f2D" id="8U5-4u-eOY"/>
+                <outlet property="imageLeft" destination="VDb-8K-gI0" id="XEu-2v-M7z"/>
+                <outlet property="titles" destination="A8l-TO-HUX" id="uHe-gc-U2D"/>
+                <outlet property="values" destination="2DH-zx-Z5I" id="Rf6-ht-Mhf"/>
+            </connections>
             <point key="canvasLocation" x="300" y="233.5"/>
         </tableViewCell>
     </objects>
