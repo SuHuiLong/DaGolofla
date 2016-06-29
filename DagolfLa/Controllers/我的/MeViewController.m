@@ -364,6 +364,8 @@
         }
         else
         {
+            
+            
             [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
             [self.navigationController pushViewController:arr[7] animated:YES];
         }

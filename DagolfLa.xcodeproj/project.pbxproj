@@ -914,6 +914,9 @@
 		F543ACCA1CF476D400C6B111 /* JGNewCreateTeamTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F543ACC91CF476D400C6B111 /* JGNewCreateTeamTableViewController.m */; };
 		F554266E1D224A2A00233B20 /* JGDSetPayPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F554266D1D224A2A00233B20 /* JGDSetPayPasswordViewController.m */; };
 		F55426721D22533300233B20 /* JGDSetPayPasswordTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F55426711D22533300233B20 /* JGDSetPayPasswordTableViewCell.m */; };
+		F55426751D225E6A00233B20 /* JGDSubMitPayPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F55426741D225E6A00233B20 /* JGDSubMitPayPasswordViewController.m */; };
+		F55426781D226DBD00233B20 /* JGDChangePasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F55426771D226DBD00233B20 /* JGDChangePasswordViewController.m */; };
+		F554267C1D2277B900233B20 /* JGDCertificationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F554267B1D2277B900233B20 /* JGDCertificationViewController.m */; };
 		F55597221CF5328C00F33099 /* JGPreviewTeamViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F55597211CF5328C00F33099 /* JGPreviewTeamViewController.m */; };
 		F55597251CF53FF900F33099 /* JGTeamMemberORManagerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F55597241CF53FF900F33099 /* JGTeamMemberORManagerViewController.m */; };
 		F55597281CF6DB0F00F33099 /* JGTeamInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F55597271CF6DB0F00F33099 /* JGTeamInfoViewController.m */; };
@@ -2470,6 +2473,12 @@
 		F554266D1D224A2A00233B20 /* JGDSetPayPasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGDSetPayPasswordViewController.m; sourceTree = "<group>"; };
 		F55426701D22533300233B20 /* JGDSetPayPasswordTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGDSetPayPasswordTableViewCell.h; sourceTree = "<group>"; };
 		F55426711D22533300233B20 /* JGDSetPayPasswordTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGDSetPayPasswordTableViewCell.m; sourceTree = "<group>"; };
+		F55426731D225E6900233B20 /* JGDSubMitPayPasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGDSubMitPayPasswordViewController.h; sourceTree = "<group>"; };
+		F55426741D225E6A00233B20 /* JGDSubMitPayPasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGDSubMitPayPasswordViewController.m; sourceTree = "<group>"; };
+		F55426761D226DBC00233B20 /* JGDChangePasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGDChangePasswordViewController.h; sourceTree = "<group>"; };
+		F55426771D226DBD00233B20 /* JGDChangePasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGDChangePasswordViewController.m; sourceTree = "<group>"; };
+		F554267A1D2277B900233B20 /* JGDCertificationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGDCertificationViewController.h; sourceTree = "<group>"; };
+		F554267B1D2277B900233B20 /* JGDCertificationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGDCertificationViewController.m; sourceTree = "<group>"; };
 		F55597201CF5328C00F33099 /* JGPreviewTeamViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGPreviewTeamViewController.h; sourceTree = "<group>"; };
 		F55597211CF5328C00F33099 /* JGPreviewTeamViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGPreviewTeamViewController.m; sourceTree = "<group>"; };
 		F55597231CF53FF900F33099 /* JGTeamMemberORManagerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGTeamMemberORManagerViewController.h; sourceTree = "<group>"; };
@@ -2731,6 +2740,7 @@
 		20591C3E1D215BCD003271EC /* controller */ = {
 			isa = PBXGroup;
 			children = (
+				F55426791D22777900233B20 /* 实名认证 */,
 				F554266B1D2249E000233B20 /* 设置支付密码 */,
 				20591C581D220EE0003271EC /* 个人帐户 */,
 				20591C5B1D220EE0003271EC /* 交易记录 */,
@@ -6058,6 +6068,10 @@
 			children = (
 				F554266C1D224A2A00233B20 /* JGDSetPayPasswordViewController.h */,
 				F554266D1D224A2A00233B20 /* JGDSetPayPasswordViewController.m */,
+				F55426731D225E6900233B20 /* JGDSubMitPayPasswordViewController.h */,
+				F55426741D225E6A00233B20 /* JGDSubMitPayPasswordViewController.m */,
+				F55426761D226DBC00233B20 /* JGDChangePasswordViewController.h */,
+				F55426771D226DBD00233B20 /* JGDChangePasswordViewController.m */,
 			);
 			path = "设置支付密码";
 			sourceTree = "<group>";
@@ -6069,6 +6083,15 @@
 				F55426711D22533300233B20 /* JGDSetPayPasswordTableViewCell.m */,
 			);
 			path = "设置支付密码";
+			sourceTree = "<group>";
+		};
+		F55426791D22777900233B20 /* 实名认证 */ = {
+			isa = PBXGroup;
+			children = (
+				F554267A1D2277B900233B20 /* JGDCertificationViewController.h */,
+				F554267B1D2277B900233B20 /* JGDCertificationViewController.m */,
+			);
+			path = "实名认证";
 			sourceTree = "<group>";
 		};
 		F569A1321CE3334F00CD0FD5 /* 球队详情 */ = {
@@ -6935,6 +6958,7 @@
 				36D39B3E1BCCE23100C0B197 /* MBProgressHUD.m in Sources */,
 				3660E1851BFC56DD0033B4D7 /* ScoreDetailTableViewCell.m in Sources */,
 				36DF6DF41C07FEAD00B60B67 /* TeamPhotoDetViewController.m in Sources */,
+				F554267C1D2277B900233B20 /* JGDCertificationViewController.m in Sources */,
 				360C6A011C46910200798C8A /* TeamAreaChooseView.m in Sources */,
 				20591C571D215BCD003271EC /* JGHTradRecordCell.m in Sources */,
 				36BFFF5A1BC76D09005B3CE2 /* AFHTTPRequestOperationManager.m in Sources */,
@@ -6952,6 +6976,7 @@
 				F56F0B8D1CC613E100A222F3 /* NoteModel.m in Sources */,
 				3660E1411BFC55AC0033B4D7 /* ActiveNumViewController.m in Sources */,
 				36BF01071BC775AC005B3CE2 /* MallView.m in Sources */,
+				F55426751D225E6A00233B20 /* JGDSubMitPayPasswordViewController.m in Sources */,
 				82ABF1BD1D1BFDB0004493DB /* JGLPaySignUpViewController.m in Sources */,
 				36BF01661BC77611005B3CE2 /* RewardAreaViewController.m in Sources */,
 				36747C441BE0AE3B0052A1B0 /* CityHighChooseView.m in Sources */,
@@ -7109,6 +7134,7 @@
 				8281BE551CEC41D200C5BD31 /* JGTeamPhotoModel.m in Sources */,
 				20CA14021CEB086600DA15B9 /* JsonHttp.m in Sources */,
 				36BFFFFD1BC770C4005B3CE2 /* ChartCellFrame.m in Sources */,
+				F55426781D226DBD00233B20 /* JGDChangePasswordViewController.m in Sources */,
 				36BF00851BC772EF005B3CE2 /* MyTradeViewController.m in Sources */,
 				36067BCE1C97F915001AE22C /* NewFriendTableViewCell.m in Sources */,
 				20513B5C1CF69F3B003233FB /* JGHPlayersModel.m in Sources */,

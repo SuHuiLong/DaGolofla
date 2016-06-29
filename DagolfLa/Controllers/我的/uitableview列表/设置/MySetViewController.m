@@ -29,6 +29,10 @@
 #import <RongIMKit/RongIMKit.h>
 #import "UITabBar+badge.h"
 
+#import "JGDSetPayPasswordViewController.h" // 设置支付密码
+#import "JGDChangePasswordViewController.h"  // 修改支付密码
+#import "JGDCertificationViewController.h" // 实名认证
+
 @interface MySetViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
     UITableView* _tableView;
@@ -303,12 +307,36 @@
     }
     else if (indexPath.row == 4) {
         
+        JGDCertificationViewController *cerVc = [[JGDCertificationViewController alloc] init];
+        [self.navigationController pushViewController:cerVc animated:YES];
+
     }
     else if (indexPath.row == 5) {
         
     }
     else if (indexPath.row == 6) {
         
+        NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
+        [dict setObject:DEFAULF_USERID forKey:@"userKey"];
+        [[JsonHttp jsonHttp]httpRequest:@"user/isSetPayPassWord" JsonKey:nil withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
+            
+        } completionBlock:^(id data) {
+            if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+                if ([[data objectForKey:@"isSetPayPassWord"] integerValue]== 1) {
+                    JGDChangePasswordViewController *change = [[JGDChangePasswordViewController alloc] init];
+                    [self.navigationController pushViewController:change animated:YES];
+                }else{
+                    JGDSetPayPasswordViewController *setPassVC = [[JGDSetPayPasswordViewController alloc] init];
+                    [self.navigationController pushViewController:setPassVC animated:YES];
+                }
+            }
+            else
+            {
+                [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+            }
+        }];
+
+
     }
 
 }
