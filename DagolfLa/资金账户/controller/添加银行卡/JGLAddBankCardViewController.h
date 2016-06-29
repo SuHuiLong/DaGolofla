@@ -10,4 +10,7 @@
 
 @interface JGLAddBankCardViewController : ViewController
 
+
+@property (copy, nonatomic) void (^refreshBlock)();
+
 @end

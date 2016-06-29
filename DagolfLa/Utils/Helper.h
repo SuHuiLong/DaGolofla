@@ -81,4 +81,6 @@
 //nsstring 转成 nsnumber类型
 + (NSNumber *)returnNumberForString:(NSString *)string;
 
++ (NSString *)formateDate:(NSString *)dateString withFormate:(NSString *) formate;
+
 @end

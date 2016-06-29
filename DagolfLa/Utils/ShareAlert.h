@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface ShareAlert : UIView
-@property(nonatomic,strong) UINavigationController* myNav;
+//@property(nonatomic,strong) UINavigationController* myNav;
 - (id)initMyAlert;
 @property(strong,nonatomic)void(^callBackTitle)(NSInteger);
 - (void)show;
