@@ -149,7 +149,7 @@
 
 - (void)takeMoney{
     JGHWithdrawViewController *withdrawCtrl = [[JGHWithdrawViewController alloc]init];
-//    withdrawCtrl.balance = self.money;
+    withdrawCtrl.balance = self.money;
     
     [self.navigationController pushViewController:withdrawCtrl animated:YES];
 }
