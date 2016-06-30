@@ -88,6 +88,9 @@
 +(NSString *)md5HexDigest:(NSString*)Des_str;
 
 // 字典转字符串
-
 + (NSString*)dictionaryToJson:(NSDictionary *)dic;
+
+// 返回距离当前时间。。。
++ (NSString *)distanceTimeWithBeforeTime:(NSString *)strTime;
+
 @end
