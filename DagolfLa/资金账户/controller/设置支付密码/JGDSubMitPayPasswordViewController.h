@@ -12,4 +12,7 @@
 
 @property (nonatomic, copy) NSString *code;
 
+// 判断是否是从支付页面跳过来的
+@property (nonatomic, assign) BOOL isPayVC;
+
 @end

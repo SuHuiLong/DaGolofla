@@ -107,9 +107,9 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     if (section == 0) {
-        return 40;
+        return 40 * ScreenWidth / 375;
     }else{
-        return 10;
+        return 10 * ScreenWidth / 375;
     }
 }
 
