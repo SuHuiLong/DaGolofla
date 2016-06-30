@@ -83,4 +83,11 @@
 
 + (NSString *)formateDate:(NSString *)dateString withFormate:(NSString *) formate;
 
+
+// md5 
++(NSString *)md5HexDigest:(NSString*)Des_str;
+
+// 字典转字符串
+
++ (NSString*)dictionaryToJson:(NSDictionary *)dic;
 @end

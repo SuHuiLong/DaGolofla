@@ -101,6 +101,8 @@ typedef NS_ENUM(NSInteger, GestureType) {
 #define TYPE_MEDIA_IMAGE     @3   // 相册的媒介图像
 #define TYPE_MEDIA_VIDEO     @4   // 相册的媒介视频
 #define TYPE_USER_HEAD       @5   // 用户头像
+#define TYPE_USER_CERTIFICATION       @9   // 实名认证
+
 
 #import "UIColor+ColorTransfer.h"
 #import "JsonHttp.h"

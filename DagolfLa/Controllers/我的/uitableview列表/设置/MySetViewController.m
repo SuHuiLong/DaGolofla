@@ -32,6 +32,8 @@
 #import "JGDSetPayPasswordViewController.h" // 设置支付密码
 #import "JGDChangePasswordViewController.h"  // 修改支付密码
 #import "JGDCertificationViewController.h" // 实名认证
+#import "JGDShowCertViewController.h"
+
 
 @interface MySetViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
@@ -307,8 +309,24 @@
     }
     else if (indexPath.row == 4) {
         
-        JGDCertificationViewController *cerVc = [[JGDCertificationViewController alloc] init];
-        [self.navigationController pushViewController:cerVc animated:YES];
+        NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
+        [dic setObject:DEFAULF_USERID forKey:@"userKey"];
+        
+        [[JsonHttp jsonHttp]httpRequest:@"user/getUserRealName" JsonKey:nil withData:dic requestMethod:@"GET" failedBlock:^(id errType) {
+            NSLog(@"errtype == %@", errType);
+        } completionBlock:^(id data) {
+            
+            if (![data objectForKey:@"userReal"]) {
+                
+                JGDCertificationViewController *cerVc = [[JGDCertificationViewController alloc] init];
+                [self.navigationController pushViewController:cerVc animated:YES];
+                
+            }else{
+                JGDShowCertViewController *showCertVC = [[JGDShowCertViewController alloc] init];
+                showCertVC.userRealDic = [data objectForKey:@"userReal"];
+                [self.navigationController pushViewController:showCertVC animated:YES];
+            }
+        }];
 
     }
     else if (indexPath.row == 5) {
@@ -319,7 +337,7 @@
         NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
         [dict setObject:DEFAULF_USERID forKey:@"userKey"];
         [[JsonHttp jsonHttp]httpRequest:@"user/isSetPayPassWord" JsonKey:nil withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
-            
+            [[ShowHUD showHUD]showToastWithText:@"当前服务器繁忙，请稍后再试" FromView:self.view];
         } completionBlock:^(id data) {
             if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
                 if ([[data objectForKey:@"isSetPayPassWord"] integerValue]== 1) {

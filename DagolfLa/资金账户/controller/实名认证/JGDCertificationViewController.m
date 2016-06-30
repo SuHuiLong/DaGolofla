@@ -20,6 +20,8 @@
 @property (nonatomic, strong) NSTimer *timer;
 @property (nonatomic,strong)SXPickPhoto * pickPhoto;//相册类
 
+@property (nonatomic, strong) UIButton *frontBtn;
+@property (nonatomic, strong) UIButton *behindBtn;
 @end
 
 @implementation JGDCertificationViewController
@@ -32,7 +34,7 @@
 }
 
 - (void)creatTable{
-   
+    
     self.pickPhoto = [[SXPickPhoto alloc]init];
     
     self.tableV = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 550 * screenWidth / 375)];
@@ -50,7 +52,7 @@
     nextBtn.clipsToBounds = YES;
     nextBtn.layer.cornerRadius = 6.f * screenWidth / 375;
     view.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];
-
+    
     [view addSubview:nextBtn];
     
     self.tableV.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];
@@ -80,42 +82,44 @@
         cell.txFD.placeholder = @"请如实填写";
     }else{
         cell.LB.text = @"证件照片";
-        cell.txFD = nil;
+        [cell.txFD removeFromSuperview];
+        cell.userInteractionEnabled = YES;
         
-        UIImageView *frontImageV = [[UIImageView alloc] initWithFrame:CGRectMake(110 * screenWidth / 375, 17 * screenWidth / 375, 180 * screenWidth / 375, 113 * screenWidth / 375)];
-        frontImageV.tag = 601;
-        frontImageV.backgroundColor = [UIColor orangeColor];
-        [cell.contentView addSubview:frontImageV];
-        UIGestureRecognizer *gR1 =[[UIGestureRecognizer alloc] initWithTarget:self action:@selector(addPhoto:)];
-        [frontImageV addGestureRecognizer:gR1];
+        self.frontBtn = [UIButton buttonWithType:(UIButtonTypeCustom)];
+        self.frontBtn.frame = CGRectMake(110 * screenWidth / 375, 17 * screenWidth / 375, 180 * screenWidth / 375, 113 * screenWidth / 375);
+        self.frontBtn.tag = 601;
         
-        UIImageView *behindImageV = [[UIImageView alloc] initWithFrame:CGRectMake(110 * screenWidth / 375, 157 * screenWidth / 375, 180 * screenWidth / 375, 113 * screenWidth / 375)];
-        behindImageV.tag = 602;
-        behindImageV.backgroundColor = [UIColor orangeColor];
-        [cell.contentView addSubview:behindImageV];
-        UIGestureRecognizer *gR2 =[[UIGestureRecognizer alloc] initWithTarget:self action:@selector(addPhoto:)];
-        [behindImageV addGestureRecognizer:gR2];
+        [self.frontBtn addTarget:self action:@selector(addPhoto:) forControlEvents:(UIControlEventTouchUpInside)];
+        [cell.contentView addSubview:self.frontBtn];
+        
+        self.behindBtn = [UIButton buttonWithType:(UIButtonTypeCustom)];
+        self.behindBtn.frame = CGRectMake(110 * screenWidth / 375, 157 * screenWidth / 375, 180 * screenWidth / 375, 113 * screenWidth / 375);
+        self.behindBtn.tag = 602;
+        
+        [self.behindBtn addTarget:self action:@selector(addPhoto:) forControlEvents:(UIControlEventTouchUpInside)];
+        [cell.contentView addSubview:self.behindBtn];
+        
     }
     return cell;
 }
 
-
-
-- (void)addPhoto:(UIGestureRecognizer *)gestureR{
+- (void)addPhoto:(UIButton *)gestureR{
     
-    if (gestureR.view.tag == 601) {
-
-    }else if (gestureR.view.tag == 602){
-        //更换背景
-        [self SelectPhotoImage:gestureR.view];
-    }else if (gestureR.view.tag == 740){
+    if (gestureR.tag == 601) {
         
-        [self SelectPhotoImage:gestureR.view];
+        [self SelectPhotoImage:gestureR];
+    }else if (gestureR.tag == 602){
+        
+        [self SelectPhotoImage:gestureR];
     }
 }
 
-#pragma mark --添加活动头像
--(void)SelectPhotoImage:(UIView *)imageV{
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+}
+
+#pragma mark --添加身份证照片
+-(void)SelectPhotoImage:(UIButton *)imageV{
     //    _photos = 10;
     UIAlertAction * act1 = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
         //        _photos = 1;
@@ -127,22 +131,14 @@
         [_pickPhoto ShowTakePhotoWithController:self andWithBlock:^(NSObject *Data) {
             if ([Data isKindOfClass:[UIImage class]])
             {
-//                _headerImage = (UIImage *)Data;
                 if (imageV.tag == 601) {
-//                    self.imgProfile.image = _headerImage;
-//                    
-//                    [_dictPhoto setObject:[NSArray arrayWithObject:UIImageJPEGRepresentation(_headerImage, 0.7)] forKey:@"headerImage"];
+                    self.frontBtn.imageView.image = (UIImage *)Data;
+                    
                     
                 }else if (imageV.tag == 602){
-//                    [self.headPortraitBtn setImage:_headerImage forState:UIControlStateNormal];
-//                    self.headPortraitBtn.layer.masksToBounds = YES;
-//                    self.headPortraitBtn.layer.cornerRadius = 8.0;
-//                    [_dictPhoto setObject:[NSArray arrayWithObject:UIImageJPEGRepresentation(_headerImage, 0.7)] forKey:@"headPortraitBtn"];
+                    
                     
                 }
-                
-//                [self.launchActivityTableView reloadData];
-                //                _photos = 1;
             }
         }];
     }];
@@ -153,26 +149,18 @@
         [_pickPhoto SHowLocalPhotoWithController:self andWithBlock:^(NSObject *Data) {
             if ([Data isKindOfClass:[UIImage class]])
             {
-//                _headerImage = (UIImage *)Data;
                 
-                //设置背景
                 if (imageV.tag == 601) {
-//                    self.imgProfile.image = _headerImage;
-//                    self.imgProfile.contentMode = UIViewContentModeScaleAspectFill;
-//                    self.imgProfile.layer.masksToBounds = YES;
-//                    [_dictPhoto setObject:[NSArray arrayWithObject:UIImageJPEGRepresentation(_headerImage, 1.0)] forKey:@"headerImage"];
+                    [self.frontBtn setImage:(UIImage *)Data forState:(UIControlStateNormal)];
+                    //                    [_dictPhoto setObject:[NSArray arrayWithObject:UIImageJPEGRepresentation(_headerImage, 1.0)] forKey:@"headerImage"];
                     
                 }else if (imageV.tag == 602){
-                    //头像
-//                    [self.headPortraitBtn setImage:_headerImage forState:UIControlStateNormal];
-//                    self.headPortraitBtn.layer.masksToBounds = YES;
-//                    self.headPortraitBtn.layer.cornerRadius = 8.0;
-//                    [_dictPhoto setObject:[NSArray arrayWithObject:UIImageJPEGRepresentation(_headerImage, 1.0)] forKey:@"headPortraitBtn"];
+                    [self.behindBtn setImage:(UIImage *)Data forState:(UIControlStateNormal)];
+                    //                    [_dictPhoto setObject:[NSArray arrayWithObject:UIImageJPEGRepresentation(_headerImage, 1.0)] forKey:@"headPortraitBtn"];
                     
                 }
                 
             }
-            //            _photos = 1;
         }];
     }];
     
@@ -203,37 +191,85 @@
     
     
     JGDSetPayPasswordTableViewCell *cell1 = [self.tableV cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
-    JGDSetPayPasswordTableViewCell *cell2 = [self.tableV cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
     JGDSetPayPasswordTableViewCell *cell3 = [self.tableV cellForRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]];
-    JGDSetPayPasswordTableViewCell *cell4 = [self.tableV cellForRowAtIndexPath:[NSIndexPath indexPathForRow:3 inSection:0]];
-    if (![cell3.txFD.text isEqualToString:cell4.txFD.text]) {
-        [[ShowHUD showHUD]showToastWithText:@"密码输入不一致" FromView:self.view];
+    
+    
+    if ([cell1.txFD.text length] < 1) {
+        [[ShowHUD showHUD]showToastWithText:@"姓名不能为空" FromView:self.view];
         return;
     }
-    if ([cell3.txFD.text length] < 6) {
-        [[ShowHUD showHUD]showToastWithText:@"密码长度不能小于六位" FromView:self.view];
+    if ([cell3.txFD.text length] < 1) {
+        [[ShowHUD showHUD]showToastWithText:@"身份证号不能为空" FromView:self.view];
         return;
     }
+    
+    MBProgressHUD *progress = [[MBProgressHUD alloc] initWithView:self.view];
+    progress.mode = MBProgressHUDModeIndeterminate;
+    progress.labelText = @"正在上传...";
+    [self.view addSubview:progress];
+    [progress show:YES];
+    
     
     NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
-    [dict setObject:DEFAULF_USERID forKey:@"userKey"];
-    [dict setObject:cell1.txFD.text forKey:@"checkCode"];
-    [dict setObject:[JGDCertificationViewController md5HexDigest:cell2.txFD.text] forKey:@"oldPassWord"];
-    [dict setObject:[JGDCertificationViewController md5HexDigest:cell3.txFD.text] forKey:@"newPassWord"];
+    [dict setObject:@1 forKey:@"type"];
+    [dict setObject:cell1.txFD.text forKey:@"name"];
+    [dict setObject:cell3.txFD.text forKey:@"cardNumber"];
+    [dict setObject:DEFAULF_USERID forKey:@"timeKey"];
     
-     [[JsonHttp jsonHttp]httpRequest:[NSString stringWithFormat:@"user/updatePayPassWord"] JsonKey:nil withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
-        
+    [[JsonHttp jsonHttp]httpRequest:[NSString stringWithFormat:@"user/doRealName"] JsonKey:@"UserRealName" withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
+        [[ShowHUD showHUD]showToastWithText:@"提交失败" FromView:self.view];
+        return ;
     } completionBlock:^(id data) {
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
-            [[ShowHUD showHUD]showToastWithText:@"恭喜您提交成功" FromView:self.view];
-            [self performSelector:@selector(pop) withObject:self afterDelay:1];
+            
+            NSMutableDictionary *dicts = [NSMutableDictionary dictionary];
+            [dicts setObject:[NSString stringWithFormat:@"%@_positive", DEFAULF_USERID] forKey:@"data"];
+            [dicts setObject:TYPE_USER_CERTIFICATION forKey:@"nType"];
+            [dicts setObject:PHOTO_DAGOLFLA forKey:@"tag"];
+            
+            [[JsonHttp jsonHttp]httpRequestImageOrVedio:@"1" withData:dicts andDataArray:[NSArray arrayWithObject:UIImageJPEGRepresentation(self.frontBtn.imageView.image, 1.0)] failedBlock:^(id errType) {
+                [MBProgressHUD hideAllHUDsForView:self.view animated:NO];
+                [[ShowHUD showHUD]showToastWithText:@"上传图片失败" FromView:self.view];
+                return ;
+            } completionBlock:^(id data) {
+                
+                [dicts setObject:[NSString stringWithFormat:@"%@_back", DEFAULF_USERID] forKey:@"data"];
+                
+                [[JsonHttp jsonHttp] httpRequestImageOrVedio:@"1" withData:dicts andDataArray:[NSArray arrayWithObject:UIImageJPEGRepresentation(self.behindBtn.imageView.image, 1.0)] failedBlock:^(id errType) {
+                    [MBProgressHUD hideAllHUDsForView:self.view animated:NO];
+                    [[ShowHUD showHUD]showToastWithText:@"上传图片失败" FromView:self.view];
+                    return ;
+                } completionBlock:^(id data) {
+                    if ([NSThread isMainThread]) {
+                        [MBProgressHUD hideAllHUDsForView:self.view animated:NO];
+                        [[ShowHUD showHUD]showToastWithText:@"上传成功" FromView:self.view];
+                        [self performSelector:@selector(pop) withObject:self afterDelay:1];
+                        
+                        [self.navigationController popViewControllerAnimated:YES];
+                    } else {
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            [MBProgressHUD hideAllHUDsForView:self.view animated:NO];
+                            [[ShowHUD showHUD]showToastWithText:@"上传成功" FromView:self.view];
+                            [self performSelector:@selector(pop) withObject:self afterDelay:1];
+                        });
+                    }
+                }];
+                
+            }];
+            
         }
         else
         {
+            [MBProgressHUD hideAllHUDsForView:self.view animated:NO];
             [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
         }
     }];
+    
+    
+    
+    
 }
+
 
 
 - (void)pop{
