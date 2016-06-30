@@ -7,7 +7,7 @@
 //
 
 #import "JGHWithdrawViewController.h"
-#import "JGHTradRecordCell.h"
+#import "JGHTradRecordImageCell.h"
 #import "JGHWithdrawCell.h"
 #import "JGSignUoPromptCell.h"
 #import "JGHButtonCell.h"
@@ -16,7 +16,7 @@
 static NSString *const JGHButtonCellIdentifier = @"JGHButtonCell";
 static NSString *const JGSignUoPromptCellIdentifier = @"JGSignUoPromptCell";
 static NSString *const JGHWithdrawCellIdentifier = @"JGHWithdrawCell";
-static NSString *const JGHTradRecordCellIdentifier = @"JGHTradRecordCell";
+static NSString *const JGHTradRecordImageCellIdentifier = @"JGHTradRecordImageCell";
 
 @interface JGHWithdrawViewController ()<UITableViewDataSource, UITableViewDelegate, JGHButtonCellDelegate>
 
@@ -84,8 +84,8 @@ static NSString *const JGHTradRecordCellIdentifier = @"JGHTradRecordCell";
     UINib *cellNib = [UINib nibWithNibName:@"JGHWithdrawCell" bundle: [NSBundle mainBundle]];
     [self.withdrawTableView registerNib:cellNib forCellReuseIdentifier:JGHWithdrawCellIdentifier];
     
-    UINib *recordNib = [UINib nibWithNibName:@"JGHTradRecordCell" bundle: [NSBundle mainBundle]];
-    [self.withdrawTableView registerNib:recordNib forCellReuseIdentifier:JGHTradRecordCellIdentifier];
+    UINib *recordNib = [UINib nibWithNibName:@"JGHTradRecordImageCell" bundle: [NSBundle mainBundle]];
+    [self.withdrawTableView registerNib:recordNib forCellReuseIdentifier:JGHTradRecordImageCellIdentifier];
     
     [self.view addSubview:self.withdrawTableView];
 }
@@ -115,10 +115,10 @@ static NSString *const JGHTradRecordCellIdentifier = @"JGHTradRecordCell";
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 0) {
-        JGHTradRecordCell *tradCell = [tableView dequeueReusableCellWithIdentifier:JGHTradRecordCellIdentifier];
+        JGHTradRecordImageCell *tradCell = [tableView dequeueReusableCellWithIdentifier:JGHTradRecordImageCellIdentifier];
         tradCell.selectionStyle = UITableViewCellSelectionStyleNone;
         if (_dataArray.count > 0) {
-            [tradCell configJGHWithDrawModelWithDraw:_dataArray[indexPath.section]];
+//            [tradCell configJGHWithDrawModelWithDraw:_dataArray[indexPath.section]];
         }
         
         return tradCell;
