@@ -7,12 +7,10 @@
 //
 
 #import "JGHNOBlankPasswordViewController.h"
-#import "JGHButtonCell.h"
 #import "JGHWithdrawCell.h"
 #import "JGSignUoPromptCell.h"
 #import "JGDSetPayPasswordViewController.h"
 
-static NSString *const JGHButtonCellIdentifier = @"JGHButtonCell";
 static NSString *const JGSignUoPromptCellIdentifier = @"JGSignUoPromptCell";
 static NSString *const JGHWithdrawCellIdentifier = @"JGHWithdrawCell";
 
@@ -52,9 +50,6 @@ static NSString *const JGHWithdrawCellIdentifier = @"JGHWithdrawCell";
     UINib *promptNib = [UINib nibWithNibName:@"JGSignUoPromptCell" bundle: [NSBundle mainBundle]];
     [self.setBlankPassTableView registerNib:promptNib forCellReuseIdentifier:JGSignUoPromptCellIdentifier];
     
-    UINib *catoryNib = [UINib nibWithNibName:@"JGHButtonCell" bundle: [NSBundle mainBundle]];
-    [self.setBlankPassTableView registerNib:catoryNib forCellReuseIdentifier:JGHButtonCellIdentifier];
-    
     UINib *drawNib = [UINib nibWithNibName:@"JGHWithdrawCell" bundle: [NSBundle mainBundle]];
     [self.setBlankPassTableView registerNib:drawNib forCellReuseIdentifier:JGHWithdrawCellIdentifier];
 
@@ -64,7 +59,7 @@ static NSString *const JGHWithdrawCellIdentifier = @"JGHWithdrawCell";
 
 #pragma mark -- tableView代理
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 4;
+    return 3;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return 1;
@@ -106,21 +101,12 @@ static NSString *const JGHWithdrawCellIdentifier = @"JGHWithdrawCell";
         [promptCell configPromptSetPasswordString:@"提示：您当前未设置支付密码，请前去设置密码保障账户安全。"];
         return promptCell;
         
-    }else if (indexPath.section == 2){
+    }else{
         JGHWithdrawCell *tradCell = [tableView dequeueReusableCellWithIdentifier:JGHWithdrawCellIdentifier];
         tradCell.selectionStyle = UITableViewCellSelectionStyleNone;
         [tradCell configSetPassword];
         
         return tradCell;
-        
-    }else{
-        JGHButtonCell *btnCell = [tableView dequeueReusableCellWithIdentifier:JGHButtonCellIdentifier];
-        
-        btnCell.selectionStyle = UITableViewCellSelectionStyleNone;
-        //        btnCell.delegate = self;
-        btnCell.backgroundColor = [UIColor colorWithHexString:BG_color];
-        [btnCell.clickBtn setTitle:@"确认" forState:UIControlStateNormal];
-        return btnCell;
     }
 }
 
@@ -128,7 +114,7 @@ static NSString *const JGHWithdrawCellIdentifier = @"JGHWithdrawCell";
     if (indexPath.section == 2) {
         //设置密码页面
         JGDSetPayPasswordViewController *payCtrl = [[JGDSetPayPasswordViewController alloc]init];
-        
+//        payCtrl.isPayVC = YES;
         [self.navigationController pushViewController:payCtrl animated:YES];
     }
 }

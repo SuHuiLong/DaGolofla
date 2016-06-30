@@ -24,6 +24,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];
+    
+    self.navigationItem.title = @"设置支付密码";
+    
     [self creatTable];
     // Do any additional setup after loading the view.
 }

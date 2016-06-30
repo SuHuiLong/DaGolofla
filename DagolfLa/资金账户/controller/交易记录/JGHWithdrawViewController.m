@@ -264,10 +264,16 @@ static NSString *const JGHTradRecordImageCellIdentifier = @"JGHTradRecordImageCe
                 passCtrl.bankCardKey = [_model.timeKey floatValue];
                 [self.navigationController pushViewController:passCtrl animated:YES];
             }else{
-                //
-                JGHNOBlankPasswordViewController *passNOCtrl = [[JGHNOBlankPasswordViewController alloc]init];
-                passNOCtrl.reaplyBalance = [_reaplyBalance floatValue];
-                [self.navigationController pushViewController:passNOCtrl animated:YES];
+                
+                [Helper alertViewWithTitle:@"您还没有支付密码，无法提现，是否现在设置？" withBlockCancle:^{
+                    
+                } withBlockSure:^{
+                    JGHNOBlankPasswordViewController *passNOCtrl = [[JGHNOBlankPasswordViewController alloc]init];
+                    passNOCtrl.reaplyBalance = [_reaplyBalance floatValue];
+                    [self.navigationController pushViewController:passNOCtrl animated:YES];
+                } withBlock:^(UIAlertController *alertView) {
+                    [self presentViewController:alertView animated:YES completion:nil];
+                }];
             }
         }
     }];
