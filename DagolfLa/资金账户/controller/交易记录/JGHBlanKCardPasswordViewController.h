@@ -12,4 +12,6 @@
 
 @property (nonatomic, assign)float reaplyBalance;
 
+@property (nonatomic, assign)NSInteger bankCardKey;
+
 @end

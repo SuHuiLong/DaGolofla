@@ -453,11 +453,18 @@
 {
     
     NSError *parseError = nil;
+    NSString *paraStr;
     
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dic options:NSJSONWritingPrettyPrinted error:&parseError];
+    paraStr = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
     
-    return [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+    paraStr = [paraStr stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     
+    paraStr = [paraStr stringByReplacingOccurrencesOfString:@"\r" withString:@""];
+    paraStr = [paraStr stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+    paraStr = [paraStr stringByReplacingOccurrencesOfString:@" " withString:@""];
+    
+    return paraStr;
 }
 
 
