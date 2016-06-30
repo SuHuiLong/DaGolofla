@@ -30,6 +30,7 @@ static NSString *const JGHSelectBlankCatoryCellIdentifier = @"JGHSelectBlankCato
 
 - (instancetype)init{
     if (self == [super init]) {
+        self.userInteractionEnabled = YES;
         self.dataArray = [NSMutableArray array];
         self.blankCatoryTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, self.frame.size.height - 44 -30*ProportionAdapter) style:UITableViewStyleGrouped];
         self.blankCatoryTableView.delegate = self;
@@ -116,10 +117,21 @@ static NSString *const JGHSelectBlankCatoryCellIdentifier = @"JGHSelectBlankCato
             NSLog(@" _submitBtn.tag == %td", _submitBtn.tag);
             [self.blankCatoryTableView reloadData];
             NSLog(@"选中");
+        }else{
+            NSLog(@"添加银行卡");
+            [self addBlankCardClick];
         }
+    }else{
+        NSLog(@"添加银行卡");
+        [self addBlankCardClick];
     }
 }
-
+#pragma mark -- 添加银行卡
+- (void)addBlankCardClick{
+    if (self.delegate) {
+        [self.delegate addBlankCard];
+    }
+}
 #pragma mark -- 刷新页面数据
 - (void)configViewData:(NSMutableArray *)array{
     self.dataArray = array;

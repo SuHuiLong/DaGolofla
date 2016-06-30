@@ -16,20 +16,20 @@
                 <rect key="frame" x="0.0" y="0.0" width="287" height="74.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="zhaohang_color" translatesAutoresizingMaskIntoConstraints="NO" id="BQa-a3-f2D">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="gonghang_color" translatesAutoresizingMaskIntoConstraints="NO" id="BQa-a3-f2D">
                         <rect key="frame" x="20" y="26" width="24" height="24"/>
                         <constraints>
                             <constraint firstAttribute="width" secondItem="BQa-a3-f2D" secondAttribute="height" multiplier="1:1" id="ama-cb-wEi"/>
                         </constraints>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="A8l-TO-HUX">
-                        <rect key="frame" x="64" y="16" width="42" height="21"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="A8l-TO-HUX">
+                        <rect key="frame" x="64" y="16" width="0.0" height="0.0"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2DH-zx-Z5I">
-                        <rect key="frame" x="64" y="45" width="42" height="21"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2DH-zx-Z5I">
+                        <rect key="frame" x="64" y="24" width="0.0" height="0.0"/>
                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                         <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
@@ -60,10 +60,10 @@
                 <outlet property="titles" destination="A8l-TO-HUX" id="uHe-gc-U2D"/>
                 <outlet property="values" destination="2DH-zx-Z5I" id="Rf6-ht-Mhf"/>
             </connections>
-            <point key="canvasLocation" x="197" y="221.5"/>
+            <point key="canvasLocation" x="102" y="195.5"/>
         </tableViewCell>
     </objects>
     <resources>
-        <image name="zhaohang_color" width="24" height="24"/>
+        <image name="gonghang_color" width="24" height="24"/>
     </resources>
 </document>

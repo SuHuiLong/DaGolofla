@@ -20,6 +20,7 @@
 
 - (void)configPromptString:(NSString *)string{
     self.pamaptLabel.text = string;
+    self.backgroundColor = [UIColor colorWithHexString:BG_color];
 }
 
 - (void)configPromptPasswordString:(NSString *)string{

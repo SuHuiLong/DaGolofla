@@ -27,7 +27,7 @@ static NSString *const JGHTradRecordCellIdentifier = @"JGHTradRecordCell";
 
 - (instancetype)init{
     if (self == [super init]) {
-        self.tradRecordTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight) style:UITableViewStylePlain];
+        self.tradRecordTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight-64) style:UITableViewStylePlain];
         self.tradRecordTableView.delegate = self;
         self.tradRecordTableView.dataSource = self;
         self.tradRecordTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -66,13 +66,16 @@ static NSString *const JGHTradRecordCellIdentifier = @"JGHTradRecordCell";
 }
 
 - (void)loadData{
+    [[ShowHUD showHUD]showAnimationWithText:@"加载中..." FromView:self.view];
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    [dict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:userID] forKey:@"userKey"];
+    [dict setObject:DEFAULF_USERID forKey:@"userKey"];
     [dict setObject:[NSString stringWithFormat:@"%td", _page] forKey:@"offset"];
     [[JsonHttp jsonHttp]httpRequest:@"user/getUserTransDetailList" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
         NSLog(@"errtype == %@", errType);
+        [[ShowHUD showHUD]hideAnimationFromView:self.view];
     } completionBlock:^(id data) {
         NSLog(@"data == %@", data);
+        
         if (_page == 0) {
             [self.dataArray removeAllObjects];
         }
@@ -95,6 +98,8 @@ static NSString *const JGHTradRecordCellIdentifier = @"JGHTradRecordCell";
         }else {
             [self.tradRecordTableView.footer endRefreshing];
         }
+        
+        [[ShowHUD showHUD]hideAnimationFromView:self.view];
     }];
 }
 

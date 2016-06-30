@@ -162,22 +162,23 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
             [applyDict setObject:self.userName forKey:@"name"];//姓名
         }
         
-        [applyDict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"mobile"] forKey:@"mobile"];//手机号
+        if ([self.teamMember objectForKey:@"mobile"]) {
+            [applyDict setObject:[self.teamMember objectForKey:@"mobile"] forKey:@"mobile"];//手机号
+        }
+        
+        
         [applyDict setObject:@"1" forKey:@"isOnlinePay"];//是否线上付款 1-线上
         [applyDict setObject:@0 forKey:@"signUpInfoKey"];//报名信息的timeKey
         [applyDict setObject:@0 forKey:@"timeKey"];//timeKey
         [applyDict setObject:@"1" forKey:@"select"];//付款勾选默认勾
-        if ([[NSUserDefaults standardUserDefaults]objectForKey:@"almost"]) {
-            [applyDict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"almost"] forKey:@"almost"];
-        }else{
-            [applyDict setObject:@"0" forKey:@"almost"];
+        
+        if ([self.teamMember objectForKey:@"almost"]) {
+            [applyDict setObject:[self.teamMember objectForKey:@"almost"] forKey:@"almost"];
         }
+        
         //性别
-        NSLog(@"%@", [[NSUserDefaults standardUserDefaults]objectForKey:@"sex"]);
-        if ([[NSUserDefaults standardUserDefaults]objectForKey:@"sex"]) {
-            [applyDict setObject:[[NSUserDefaults standardUserDefaults]objectForKey:@"sex"] forKey:@"sex"];
-        }else{
-            [applyDict setObject:@"1" forKey:@"almost"];
+        if ([self.teamMember objectForKey:@"sex"]) {
+            [applyDict setObject:[self.teamMember objectForKey:@"sex"] forKey:@"sex"];
         }
         
         [self.applyArray addObject:applyDict];

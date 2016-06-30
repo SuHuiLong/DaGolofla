@@ -15,6 +15,8 @@
 
 - (void)selectSubmitBtn:(UIButton *)btn;
 
+- (void)addBlankCard;
+
 @end
 
 @interface JGHSelectBlanKCardView : UIView

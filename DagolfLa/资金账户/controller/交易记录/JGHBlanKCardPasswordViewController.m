@@ -11,6 +11,7 @@
 #import "JGHButtonCell.h"
 #import "JGHWithdrawCell.h"
 #import "JGSignUoPromptCell.h"
+#import "JGDPrivateAccountViewController.h"
 
 static NSString *const JGHButtonCellIdentifier = @"JGHButtonCell";
 static NSString *const JGSignUoPromptCellIdentifier = @"JGSignUoPromptCell";
@@ -119,6 +120,7 @@ static NSString *const JGHWithdrawCellIdentifier = @"JGHWithdrawCell";
         promptCell.selectionStyle = UITableViewCellSelectionStyleNone;
        
         [promptCell configPromptPasswordString:@""];//忘记密码？
+//        promptCell.backgroundColor = [UIColor colorWithHexString:BG_color];
         /**
         UIButton *passBtn = [[UIButton alloc]initWithFrame:CGRectMake(screenWidth - 70 - 20*ProportionAdapter, 10, 70, promptCell.pamaptLabel.frame.size.height - 20)];
         passBtn.backgroundColor = [UIColor redColor];
@@ -153,30 +155,53 @@ static NSString *const JGHWithdrawCellIdentifier = @"JGHWithdrawCell";
     [self.view endEditing:YES];
     
     if (_editor == 1) {
+        [[ShowHUD showHUD]showToastWithText:@"提现中..." FromView:self.view];
         NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
         [dict setObject:DEFAULF_USERID forKey:@"userKey"];
         [dict setObject:[NSString stringWithFormat:@"%.2f", _reaplyBalance] forKey:@"money"];
-        [dict setObject:[NSString stringWithFormat:@"%td", _bankCardKey] forKey:@"bankCardKey"];
+        [dict setObject:@(_bankCardKey) forKey:@"bankCardKey"];
         [dict setObject:[Helper md5HexDigest:_password] forKey:@"payPassword"];
         NSString *paraStr = [Helper dictionaryToJson:dict];
         
         NSString *str = [Helper md5HexDigest:[NSString stringWithFormat:@"%@dagolfla.com", paraStr]];
         
         [[JsonHttp jsonHttp]httpRequest:[NSString stringWithFormat:@"user/doUserWithDraw?md5=%@",str] JsonKey:nil withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
-            
+            [[ShowHUD showHUD]hideAnimationFromView:self.view];
         } completionBlock:^(id data) {
             if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
-                [[ShowHUD showHUD]showToastWithText:@"恭喜您支付密码设置成功" FromView:self.view];
-                [self performSelector:@selector(pop) withObject:self afterDelay:1];
+                [[ShowHUD showHUD]showToastWithText:@"提现成功！" FromView:self.view];
                 
-                [self.navigationController popToRootViewControllerAnimated:YES];
+                if ([NSThread isMainThread]) {
+                    NSLog(@"Yay!");
+                    [self performSelector:@selector(pushCtrl) withObject:self afterDelay:1.0];
+                } else {
+                    NSLog(@"Humph, switching to main");
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [self performSelector:@selector(pushCtrl) withObject:self afterDelay:1.0];
+                    });
+                }
+                
+                
             }
             else
             {
+                [[ShowHUD showHUD]hideAnimationFromView:self.view];
                 [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
                 
             }
         }];
+    }
+}
+
+#pragma mark -- 返回个人账户
+- (void)pushCtrl{
+    [[ShowHUD showHUD]hideAnimationFromView:self.view];
+
+    for (UIViewController *controller in self.navigationController.viewControllers) {
+        if ([controller isKindOfClass:[JGDPrivateAccountViewController class]]) {
+            
+            [self.navigationController popToViewController:controller animated:YES];
+        }
     }
 }
 

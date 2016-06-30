@@ -30,4 +30,6 @@
 //当前登录用户是否已经报名 0 - 未报名  1 － 已报名
 @property (nonatomic, assign)BOOL isApply;
 
+@property (nonatomic, strong)NSDictionary *teamMember;
+
 @end

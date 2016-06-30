@@ -10,7 +10,7 @@
 #import "JGHButtonCell.h"
 #import "JGHWithdrawCell.h"
 #import "JGSignUoPromptCell.h"
-#import "JGDSubMitPayPasswordViewController.h"
+#import "JGDSetPayPasswordViewController.h"
 
 static NSString *const JGHButtonCellIdentifier = @"JGHButtonCell";
 static NSString *const JGSignUoPromptCellIdentifier = @"JGSignUoPromptCell";
@@ -127,7 +127,7 @@ static NSString *const JGHWithdrawCellIdentifier = @"JGHWithdrawCell";
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 2) {
         //设置密码页面
-        JGDSubMitPayPasswordViewController *payCtrl = [[JGDSubMitPayPasswordViewController alloc]init];
+        JGDSetPayPasswordViewController *payCtrl = [[JGDSetPayPasswordViewController alloc]init];
         
         [self.navigationController pushViewController:payCtrl animated:YES];
     }

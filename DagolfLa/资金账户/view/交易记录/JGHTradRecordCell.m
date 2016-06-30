@@ -28,7 +28,7 @@
 
 - (void)congifData:(JGHWithDrawModel *)model{
     self.name.text = model.name;
-    self.time.text = [Helper formateDate:[Helper returnCurrentDateString] withFormate:model.exchangeTime];
+    self.time.text = [Helper distanceTimeWithBeforeTime:model.exchangeTime];
     if (model.transType == 1) {
         self.monay.text = [NSString stringWithFormat:@"-%.2f", [model.amount floatValue]];
     }else{

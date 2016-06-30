@@ -14,6 +14,8 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
+    
+    
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -24,18 +26,57 @@
 
 - (void)configJGLBankModel:(JGLBankModel *)model andSelectBlank:(NSInteger)selectBlank andCurrentSelect:(NSInteger)currentSelect{
     
+    self.selectImageView.hidden = NO;
+    self.blankImageView.image = nil;
+    /**
+     public  static  final   Integer   OTHER                  =    0;  //  其他银行
+     public  static  final   Integer   BOC                    =    1;  //  中国银行
+     public  static  final   Integer   ABC                    =    2;  //  农业银行
+     public  static  final   Integer   CCB                    =    3;  //  建设银行
+     public  static  final   Integer   ICBC                   =    4;  //  工商银行
+     public  static  final   Integer   BCM                    =    5;  //  交通银行
+     public  static  final   Integer   PSBC                   =    6;  //  邮政银行
+     public  static  final   Integer   CMB                    =    7;  //  招商银行
+     public  static  final   Integer   CHINACITICBANK         =    8;  //  中信银行
+     public  static  final   Integer   CMBC                   =    9;  //  民生银行
+     public  static  final   Integer   CIB                    =    10; //  兴业银行
+     
+     */
+    
+    if ([model.cardType integerValue] == 1) {
+        self.blankImageView.image = [UIImage imageNamed:@"zhonghang_color"];
+    }else if ([model.cardType integerValue] == 2){
+        self.blankImageView.image = [UIImage imageNamed:@"nonghang_color"];
+    }else if ([model.cardType integerValue] == 3){
+        self.blankImageView.image = [UIImage imageNamed:@"jianhang_color"];
+    }else if ([model.cardType integerValue] == 4){
+        self.blankImageView.image = [UIImage imageNamed:@"gonghang_color"];
+    }else if ([model.cardType integerValue] == 5){
+        self.blankImageView.image = [UIImage imageNamed:@"jiaohang_color"];
+    }else if ([model.cardType integerValue] == 6){
+        self.blankImageView.image = [UIImage imageNamed:@"youzheng_color"];
+    }else if ([model.cardType integerValue] == 7){
+        self.blankImageView.image = [UIImage imageNamed:@"zhaohang_color"];
+    }else if ([model.cardType integerValue] == 8){
+        self.blankImageView.image = [UIImage imageNamed:@"zhongxin_color"];
+    }else if ([model.cardType integerValue] == 9){
+        self.blankImageView.image = [UIImage imageNamed:@"minsheng_color"];
+    }else{
+        self.blankImageView.image = [UIImage imageNamed:@"xingye_color"];
+    }
+    
     if (selectBlank == currentSelect) {
         self.selectImageView.image = [UIImage imageNamed:@"kuangwx"];
     }else{
         self.selectImageView.image = [UIImage imageNamed:@"kuang"];
     }
-    
-    
-    self.name.text = model.name;
+        
+    self.name.text = model.backName;
 }
 
 - (void)configAddBlankCatory{
     self.selectImageView.hidden = YES;
+    self.blankImageView.image = nil;
     self.blankImageView.image = [UIImage imageNamed:@"plussign"];
     self.name.text = @"添加银行卡";
 }

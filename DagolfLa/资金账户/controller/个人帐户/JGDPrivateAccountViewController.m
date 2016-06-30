@@ -9,6 +9,7 @@
 #import "JGDPrivateAccountViewController.h"
 #import "JGHTradRecordViewController.h"
 #import "JGHWithdrawViewController.h"
+#import "JGLBankListViewController.h"
 
 @interface JGDPrivateAccountViewController ()<UITableViewDelegate,UITableViewDataSource>
 
@@ -49,7 +50,6 @@
     
     // Do any additional setup after loading the view.
 }
-
 
 - (void)creatTableV{
     self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 298 * ScreenWidth / 375) style:(UITableViewStylePlain)];
@@ -142,7 +142,8 @@
         JGHTradRecordViewController *tradRecordCtrl = [[JGHTradRecordViewController alloc]init];
         [self.navigationController pushViewController:tradRecordCtrl animated:YES];
     }else{
-        
+        JGLBankListViewController* userVc = [[JGLBankListViewController alloc]init];
+        [self.navigationController pushViewController:userVc animated:YES];
     }
 }
 

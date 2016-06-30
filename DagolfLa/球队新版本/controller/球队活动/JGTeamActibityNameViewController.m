@@ -575,6 +575,7 @@ static CGFloat ImageHeight  = 210.0;
             teamApplyCtrl.isTeamChannal = self.isTeamChannal;
             teamApplyCtrl.userName = _userName;
             teamApplyCtrl.isApply = (BOOL)[_isApply floatValue];
+            teamApplyCtrl.teamMember = self.teamMemberDic;
             [self.navigationController pushViewController:teamApplyCtrl animated:YES];
         }
     }
