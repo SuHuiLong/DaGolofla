@@ -53,7 +53,7 @@
     if ([[self.userRealDic objectForKey:@"state"] integerValue]== 1) {
         imageV.image = [UIImage imageNamed:@"yigouxuan16"];
         label.text = @"您已通过实名认证";
-   
+        
     }else if ([[self.userRealDic objectForKey:@"state"] integerValue]== 2) {
         view.frame = CGRectMake(0, 0, screenWidth, 110 * screenWidth / 375);
         self.tableView.frame = CGRectMake(0, 0, screenWidth, 324 * screenWidth / 375);
@@ -129,13 +129,13 @@
         UIVisualEffectView *visaV1 = [[UIVisualEffectView alloc] initWithEffect:[UIBlurEffect effectWithStyle:(UIBlurEffectStyleDark)]];
         [imageBurl1 addSubview:visaV1];
         visaV1.frame = imageBurl1.bounds;
-        imageBurl1.alpha = 0.9;
+        imageBurl1.alpha = 0.95;
         
         UIImageView *imageBurl2 = [[UIImageView alloc] initWithFrame:CGRectMake(193 * screenWidth / 375, 44 * screenWidth / 375, 173 * screenWidth / 375, 113 * screenWidth / 375)];
         UIVisualEffectView *visaV2 = [[UIVisualEffectView alloc] initWithEffect:[UIBlurEffect effectWithStyle:(UIBlurEffectStyleDark)]];
         [imageBurl2 addSubview:visaV2];
         visaV2.frame = imageBurl2.bounds;
-        imageBurl2.alpha = 0.9;
+        imageBurl2.alpha = 0.95;
         
         [cell addSubview:imageBurl1];
         [cell addSubview:imageBurl2];
