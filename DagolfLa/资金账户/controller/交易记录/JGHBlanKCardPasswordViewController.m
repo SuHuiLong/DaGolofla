@@ -149,8 +149,35 @@ static NSString *const JGHWithdrawCellIdentifier = @"JGHWithdrawCell";
 
 #pragma mark --确定
 - (void)selectCommitBtnClick:(UIButton *)btn{
-    
+    NSLog(@"确定");
     [self.view endEditing:YES];
+    
+    if (_editor == 1) {
+        NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
+        [dict setObject:DEFAULF_USERID forKey:@"userKey"];
+        [dict setObject:[NSString stringWithFormat:@"%.2f", _reaplyBalance] forKey:@"money"];
+        [dict setObject:[NSString stringWithFormat:@"%td", _bankCardKey] forKey:@"bankCardKey"];
+        [dict setObject:[Helper md5HexDigest:_password] forKey:@"payPassword"];
+        NSString *paraStr = [Helper dictionaryToJson:dict];
+        
+        NSString *str = [Helper md5HexDigest:[NSString stringWithFormat:@"%@dagolfla.com", paraStr]];
+        
+        [[JsonHttp jsonHttp]httpRequest:[NSString stringWithFormat:@"user/doUserWithDraw?md5=%@",str] JsonKey:nil withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
+            
+        } completionBlock:^(id data) {
+            if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+                [[ShowHUD showHUD]showToastWithText:@"恭喜您支付密码设置成功" FromView:self.view];
+                [self performSelector:@selector(pop) withObject:self afterDelay:1];
+                
+                [self.navigationController popToRootViewControllerAnimated:YES];
+            }
+            else
+            {
+                [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+                
+            }
+        }];
+    }
 }
 
 - (void)didReceiveMemoryWarning {

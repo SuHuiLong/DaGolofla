@@ -240,6 +240,7 @@ static NSString *const JGHTradRecordImageCellIdentifier = @"JGHTradRecordImageCe
             if ([[data objectForKey:@"isSetPayPassWord"] integerValue] == 1) {
                 JGHBlanKCardPasswordViewController *passCtrl = [[JGHBlanKCardPasswordViewController alloc]init];
                 passCtrl.reaplyBalance = [_reaplyBalance floatValue];
+                passCtrl.bankCardKey = _model.timeKey;
                 [self.navigationController pushViewController:passCtrl animated:YES];
             }else{
                 //
