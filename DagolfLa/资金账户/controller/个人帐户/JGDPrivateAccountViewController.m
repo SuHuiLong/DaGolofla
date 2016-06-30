@@ -14,6 +14,7 @@
 
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) NSNumber *money;
+@property (nonatomic, strong) UILabel *moneyLabel;
 
 @end
 
@@ -31,6 +32,7 @@
         
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
             self.money = [data objectForKey:@"money"] ;
+            self.moneyLabel.text = [NSString stringWithFormat:@"¥%.2f",[self.money floatValue]];
         }
     }];
 }
@@ -50,7 +52,7 @@
 
 
 - (void)creatTableV{
-    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 293 * ScreenWidth / 375) style:(UITableViewStylePlain)];
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 298 * ScreenWidth / 375) style:(UITableViewStylePlain)];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.scrollEnabled = NO;
@@ -59,19 +61,19 @@
 //    view.backgroundColor = [UIColor colorWithHexString:@"#32B14D"];
     self.tableView.tableHeaderView = view;
     self.tableView.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];
-
+    
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(20 * ScreenWidth / 375, 20 * ScreenWidth / 375, 100 * ScreenWidth / 375, 30 * ScreenWidth / 375)];
     label.text = @"帐户余额（元）";
     label.font = [UIFont systemFontOfSize:14 * ScreenWidth / 375];
     label.textColor = [UIColor whiteColor];
     [view addSubview:label];
     
-    UILabel *balanceLB = [[UILabel alloc] initWithFrame:CGRectMake(10 * ScreenWidth / 375, 40 * ScreenWidth / 375, screenWidth - 20 * ScreenWidth / 375, 80 * ScreenWidth / 375)];
-    balanceLB.text = @"$99999.99";
-    balanceLB.textAlignment = NSTextAlignmentCenter;
-    balanceLB.font = [UIFont systemFontOfSize:40 * ScreenWidth / 375];
-    balanceLB.textColor = [UIColor whiteColor];
-    [view addSubview:balanceLB];
+    self.moneyLabel = [[UILabel alloc] initWithFrame:CGRectMake(10 * ScreenWidth / 375, 40 * ScreenWidth / 375, screenWidth - 20 * ScreenWidth / 375, 80 * ScreenWidth / 375)];
+    self.moneyLabel.text = @"¥0.00";
+    self.moneyLabel.textAlignment = NSTextAlignmentCenter;
+    self.moneyLabel.font = [UIFont systemFontOfSize:40 * ScreenWidth / 375];
+    self.moneyLabel.textColor = [UIColor whiteColor];
+    [view addSubview:self.moneyLabel];
     
     UIButton *button = [UIButton buttonWithType:(UIButtonTypeSystem)];
     button.frame = CGRectMake(120 * ScreenWidth / 375, 136 * ScreenWidth / 375, 135 * ScreenWidth / 375, 48 * ScreenWidth / 375) ;

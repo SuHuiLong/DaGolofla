@@ -8,6 +8,7 @@
 
 #import "Helper.h"
 #import "EnterViewController.h"
+#import "CommonCrypto/CommonDigest.h"
 
 @implementation Helper
 
@@ -420,5 +421,48 @@
         return @"";
     }
 }
+
+
+
+#pragma mark  -----MD5
+
++(NSString *)md5HexDigest:(NSString*)Des_str
+{
+    
+    const char *original_str = [Des_str UTF8String];
+    unsigned char result[CC_MD5_DIGEST_LENGTH];
+    CC_MD5(original_str, (CC_LONG)strlen(original_str), result);
+    
+    NSMutableString *hash = [NSMutableString string];
+    
+    for (int i = 0; i < 16; i++)
+    {
+        [hash appendFormat:@"%02X", result[i]];
+    }
+    NSString *mdfiveString = [hash uppercaseString];
+    
+    return mdfiveString;
+    
+}
+
+
+// 字典转字符串
+
++ (NSString*)dictionaryToJson:(NSDictionary *)dic
+
+{
+    
+    NSError *parseError = nil;
+    
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dic options:NSJSONWritingPrettyPrinted error:&parseError];
+    
+    return [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+    
+}
+
+
+
+
+
 
 @end

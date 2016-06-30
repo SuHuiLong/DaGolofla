@@ -937,6 +937,7 @@
 		F55426751D225E6A00233B20 /* JGDSubMitPayPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F55426741D225E6A00233B20 /* JGDSubMitPayPasswordViewController.m */; };
 		F55426781D226DBD00233B20 /* JGDChangePasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F55426771D226DBD00233B20 /* JGDChangePasswordViewController.m */; };
 		F554267C1D2277B900233B20 /* JGDCertificationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F554267B1D2277B900233B20 /* JGDCertificationViewController.m */; };
+		F554267F1D23E82400233B20 /* JGDShowCertViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F554267E1D23E82400233B20 /* JGDShowCertViewController.m */; };
 		F55597221CF5328C00F33099 /* JGPreviewTeamViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F55597211CF5328C00F33099 /* JGPreviewTeamViewController.m */; };
 		F55597251CF53FF900F33099 /* JGTeamMemberORManagerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F55597241CF53FF900F33099 /* JGTeamMemberORManagerViewController.m */; };
 		F55597281CF6DB0F00F33099 /* JGTeamInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F55597271CF6DB0F00F33099 /* JGTeamInfoViewController.m */; };
@@ -2533,6 +2534,8 @@
 		F55426771D226DBD00233B20 /* JGDChangePasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGDChangePasswordViewController.m; sourceTree = "<group>"; };
 		F554267A1D2277B900233B20 /* JGDCertificationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGDCertificationViewController.h; sourceTree = "<group>"; };
 		F554267B1D2277B900233B20 /* JGDCertificationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGDCertificationViewController.m; sourceTree = "<group>"; };
+		F554267D1D23E82400233B20 /* JGDShowCertViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGDShowCertViewController.h; sourceTree = "<group>"; };
+		F554267E1D23E82400233B20 /* JGDShowCertViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGDShowCertViewController.m; sourceTree = "<group>"; };
 		F55597201CF5328C00F33099 /* JGPreviewTeamViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGPreviewTeamViewController.h; sourceTree = "<group>"; };
 		F55597211CF5328C00F33099 /* JGPreviewTeamViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGPreviewTeamViewController.m; sourceTree = "<group>"; };
 		F55597231CF53FF900F33099 /* JGTeamMemberORManagerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGTeamMemberORManagerViewController.h; sourceTree = "<group>"; };
@@ -6202,6 +6205,8 @@
 			children = (
 				F554267A1D2277B900233B20 /* JGDCertificationViewController.h */,
 				F554267B1D2277B900233B20 /* JGDCertificationViewController.m */,
+				F554267D1D23E82400233B20 /* JGDShowCertViewController.h */,
+				F554267E1D23E82400233B20 /* JGDShowCertViewController.m */,
 			);
 			path = "实名认证";
 			sourceTree = "<group>";
@@ -7057,6 +7062,7 @@
 				20F6A5D71CF498E600DD9383 /* JGHApplyModel.m in Sources */,
 				F50B7FB71CE5DBB70065069D /* JGTeamMainhallViewController.m in Sources */,
 				36B08F701C2D322600CD660E /* UITableViewCell+JZExtension.m in Sources */,
+				F554267F1D23E82400233B20 /* JGDShowCertViewController.m in Sources */,
 				36BF00911BC772EF005B3CE2 /* MyAccountViewController.m in Sources */,
 				F569A1401CE35A9C00CD0FD5 /* JGTeamDetailViewController.m in Sources */,
 				36BFFFFC1BC770C4005B3CE2 /* ChartCell.m in Sources */,
