@@ -60,7 +60,7 @@
                 <outlet property="titles" destination="A8l-TO-HUX" id="uHe-gc-U2D"/>
                 <outlet property="values" destination="2DH-zx-Z5I" id="Rf6-ht-Mhf"/>
             </connections>
-            <point key="canvasLocation" x="300" y="233.5"/>
+            <point key="canvasLocation" x="197" y="221.5"/>
         </tableViewCell>
     </objects>
     <resources>

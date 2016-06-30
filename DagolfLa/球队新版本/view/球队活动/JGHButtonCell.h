@@ -22,4 +22,6 @@
 
 @property (weak, nonatomic)id <JGHButtonCellDelegate> delegate;
 
+- (void)configPassword:(NSInteger)editor;
+
 @end

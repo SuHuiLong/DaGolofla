@@ -49,6 +49,11 @@
 		20591C981D239BED003271EC /* JGHWithDrawModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 20591C971D239BED003271EC /* JGHWithDrawModel.m */; };
 		20591C9F1D23A64D003271EC /* JGHTradRecordImageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 20591C9D1D23A64D003271EC /* JGHTradRecordImageCell.m */; };
 		20591CA01D23A64D003271EC /* JGHTradRecordImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 20591C9E1D23A64D003271EC /* JGHTradRecordImageCell.xib */; };
+		20591CA31D23C22F003271EC /* JGHBlanKCardPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 20591CA21D23C22F003271EC /* JGHBlanKCardPasswordViewController.m */; };
+		20591CA61D23C2A4003271EC /* JGHSelectBlanKCardView.m in Sources */ = {isa = PBXBuildFile; fileRef = 20591CA51D23C2A4003271EC /* JGHSelectBlanKCardView.m */; };
+		20591CAA1D23C308003271EC /* JGHSelectBlankCatoryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 20591CA81D23C308003271EC /* JGHSelectBlankCatoryCell.m */; };
+		20591CAB1D23C308003271EC /* JGHSelectBlankCatoryCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 20591CA91D23C308003271EC /* JGHSelectBlankCatoryCell.xib */; };
+		20591CAE1D23FDD3003271EC /* JGHNOBlankPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 20591CAD1D23FDD3003271EC /* JGHNOBlankPasswordViewController.m */; };
 		2067C6B81CE30CA4002900C8 /* JGTeamActibityNameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2067C6B51CE30CA4002900C8 /* JGTeamActibityNameViewController.m */; };
 		2067C6B91CE30CA4002900C8 /* JGTeamActivityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2067C6B71CE30CA4002900C8 /* JGTeamActivityViewController.m */; };
 		2067C6CE1CE30CC0002900C8 /* JGActivityNameBaseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2067C6C01CE30CC0002900C8 /* JGActivityNameBaseCell.m */; };
@@ -1129,6 +1134,15 @@
 		20591C9C1D23A64D003271EC /* JGHTradRecordImageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHTradRecordImageCell.h; sourceTree = "<group>"; };
 		20591C9D1D23A64D003271EC /* JGHTradRecordImageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHTradRecordImageCell.m; sourceTree = "<group>"; };
 		20591C9E1D23A64D003271EC /* JGHTradRecordImageCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JGHTradRecordImageCell.xib; sourceTree = "<group>"; };
+		20591CA11D23C22F003271EC /* JGHBlanKCardPasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHBlanKCardPasswordViewController.h; sourceTree = "<group>"; };
+		20591CA21D23C22F003271EC /* JGHBlanKCardPasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHBlanKCardPasswordViewController.m; sourceTree = "<group>"; };
+		20591CA41D23C2A4003271EC /* JGHSelectBlanKCardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHSelectBlanKCardView.h; sourceTree = "<group>"; };
+		20591CA51D23C2A4003271EC /* JGHSelectBlanKCardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHSelectBlanKCardView.m; sourceTree = "<group>"; };
+		20591CA71D23C308003271EC /* JGHSelectBlankCatoryCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHSelectBlankCatoryCell.h; sourceTree = "<group>"; };
+		20591CA81D23C308003271EC /* JGHSelectBlankCatoryCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHSelectBlankCatoryCell.m; sourceTree = "<group>"; };
+		20591CA91D23C308003271EC /* JGHSelectBlankCatoryCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JGHSelectBlankCatoryCell.xib; sourceTree = "<group>"; };
+		20591CAC1D23FDD3003271EC /* JGHNOBlankPasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHNOBlankPasswordViewController.h; sourceTree = "<group>"; };
+		20591CAD1D23FDD3003271EC /* JGHNOBlankPasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHNOBlankPasswordViewController.m; sourceTree = "<group>"; };
 		2067C6B41CE30CA4002900C8 /* JGTeamActibityNameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGTeamActibityNameViewController.h; sourceTree = "<group>"; };
 		2067C6B51CE30CA4002900C8 /* JGTeamActibityNameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGTeamActibityNameViewController.m; sourceTree = "<group>"; };
 		2067C6B61CE30CA4002900C8 /* JGTeamActivityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGTeamActivityViewController.h; sourceTree = "<group>"; };
@@ -2845,6 +2859,11 @@
 		20591C4F1D215BCD003271EC /* 交易记录 */ = {
 			isa = PBXGroup;
 			children = (
+				20591CA41D23C2A4003271EC /* JGHSelectBlanKCardView.h */,
+				20591CA51D23C2A4003271EC /* JGHSelectBlanKCardView.m */,
+				20591CA71D23C308003271EC /* JGHSelectBlankCatoryCell.h */,
+				20591CA81D23C308003271EC /* JGHSelectBlankCatoryCell.m */,
+				20591CA91D23C308003271EC /* JGHSelectBlankCatoryCell.xib */,
 				20591C9C1D23A64D003271EC /* JGHTradRecordImageCell.h */,
 				20591C9D1D23A64D003271EC /* JGHTradRecordImageCell.m */,
 				20591C9E1D23A64D003271EC /* JGHTradRecordImageCell.xib */,
@@ -2887,6 +2906,10 @@
 				20591C721D2247BA003271EC /* JGHRefundDetailsViewController.m */,
 				20591C741D224DF1003271EC /* JGHWithdrawViewController.h */,
 				20591C751D224DF1003271EC /* JGHWithdrawViewController.m */,
+				20591CA11D23C22F003271EC /* JGHBlanKCardPasswordViewController.h */,
+				20591CA21D23C22F003271EC /* JGHBlanKCardPasswordViewController.m */,
+				20591CAC1D23FDD3003271EC /* JGHNOBlankPasswordViewController.h */,
+				20591CAD1D23FDD3003271EC /* JGHNOBlankPasswordViewController.m */,
 			);
 			path = "交易记录";
 			sourceTree = "<group>";
@@ -6808,6 +6831,7 @@
 				36BFFE431BC76CDC005B3CE2 /* nes@3x.png in Resources */,
 				36BFFE6F1BC76CDC005B3CE2 /* tx3.png in Resources */,
 				36A269891BE879A50016C545 /* huiji.jpg in Resources */,
+				20591CAB1D23C308003271EC /* JGHSelectBlankCatoryCell.xib in Resources */,
 				20F6A5E11CF53A4400DD9383 /* JGHCostListTableViewCell.xib in Resources */,
 				36BFFE251BC76CDC005B3CE2 /* chenggong@3x.png in Resources */,
 				36BFFFFF1BC770C4005B3CE2 /* chat_bg_default.jpg in Resources */,
@@ -6923,6 +6947,7 @@
 				20513B581CF67EED003233FB /* JGHAddressCell.m in Sources */,
 				82E6A7071CF59F2E009DD179 /* ApiXml.mm in Sources */,
 				369F7D1E1CB62BAA000BC13D /* MeHeadTableViewCell.m in Sources */,
+				20591CA31D23C22F003271EC /* JGHBlanKCardPasswordViewController.m in Sources */,
 				36BFFF951BC76D6B005B3CE2 /* TabBarItem.m in Sources */,
 				36BFFFC81BC770B1005B3CE2 /* AreaViewController.m in Sources */,
 				36BF004F1BC77213005B3CE2 /* UserAssistModel.m in Sources */,
@@ -7042,6 +7067,7 @@
 				36695E311C55E5C1003130F4 /* ActiveManageController.m in Sources */,
 				20513BDA1CF7050A003233FB /* RSADataSigner.m in Sources */,
 				36BF004D1BC77213005B3CE2 /* CommunityModel.m in Sources */,
+				20591CA61D23C2A4003271EC /* JGHSelectBlanKCardView.m in Sources */,
 				829960D41D23727C00E121A8 /* JGLBankModel.m in Sources */,
 				20CA137F1CE574A400DA15B9 /* JGHConcentTextViewController.m in Sources */,
 				20BA61411CDCA180004B61F5 /* VedioPlayViewController.m in Sources */,
@@ -7140,6 +7166,7 @@
 				36BF00C81BC773EF005B3CE2 /* YueWaitViewController.m in Sources */,
 				36BFFFAE1BC76FF3005B3CE2 /* EnterViewController.m in Sources */,
 				82AAB7AE1CE5BEB8005F5633 /* JGLSelfSetViewController.m in Sources */,
+				20591CAE1D23FDD3003271EC /* JGHNOBlankPasswordViewController.m in Sources */,
 				36B08F721C2D322600CD660E /* UITableViewRowAction.m in Sources */,
 				3660E1281BFC553A0033B4D7 /* ManageCreateController.m in Sources */,
 				36D39B361BCCD8D000C0B197 /* AppraiseModel.m in Sources */,
@@ -7194,6 +7221,7 @@
 				36BF00531BC7726D005B3CE2 /* SelfViewController.m in Sources */,
 				36E300EC1C3FF3F9005C3F08 /* MJRefreshBackFooter.m in Sources */,
 				36603F0F1C45330200AF0446 /* YuePriceTableViewCell.m in Sources */,
+				20591CAA1D23C308003271EC /* JGHSelectBlankCatoryCell.m in Sources */,
 				36DC9D5C1C994E6E003E4FCC /* RecomeFriendViewController.m in Sources */,
 				36BF01DB1BC77BB0005B3CE2 /* EnrollModel.m in Sources */,
 				2088379F1D1A2600004C7B5D /* JGHJustApplyListView.m in Sources */,

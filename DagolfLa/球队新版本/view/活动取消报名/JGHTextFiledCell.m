@@ -27,4 +27,23 @@
     self.titlefileds.placeholder = @"请输入退款理由";
 }
 
+- (void)configViewWithDraw:(NSNumber *)monay{
+    self.titles.text = @"金额";
+    self.titles.textColor = [UIColor blackColor];
+    self.titleLeft.constant = 20 *ProportionAdapter;
+    
+    self.titlefiledsRight.constant = 20 *ProportionAdapter;
+    
+    self.titlefileds.keyboardType = UIKeyboardTypeWebSearch;
+    self.titlefileds.placeholder = [NSString stringWithFormat:@"当前可提现金额为%.2f元", [monay floatValue]];
+}
+
+- (void)configPayPassword{
+    self.titles.text = @"支付密码";
+    self.titlefileds.placeholder = @"输入付款时的支付密码";
+    self.titleLeft.constant = 20 *ProportionAdapter;
+    
+    self.titlefiledsRight.constant = 20 *ProportionAdapter;
+}
+
 @end

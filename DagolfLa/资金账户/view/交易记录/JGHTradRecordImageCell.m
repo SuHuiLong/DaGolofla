@@ -24,9 +24,16 @@
     // Configure the view for the selected state
 }
 
+//
+//- (IBAction)blankCatoryBtn:(UIButton *)sender {
+//    if (self.delegate) {
+//        [self.delegate selectBlankCatoryBtn:sender];
+//    }
+//}
 
 - (void)configJGLBankModel:(JGLBankModel *)model{
-    
+    self.titles.text = model.name;
+    self.values.text = [NSString stringWithFormat:@"%.2f", [model.cardType floatValue]];
 }
 
 @end

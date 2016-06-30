@@ -15,4 +15,8 @@
 
 - (void)configPromptString:(NSString *)string;
 
+- (void)configPromptPasswordString:(NSString *)string;
+
+- (void)configPromptSetPasswordString:(NSString *)string;
+
 @end

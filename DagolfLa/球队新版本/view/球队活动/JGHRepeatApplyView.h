@@ -26,4 +26,6 @@
 
 @property (nonatomic, assign)float subsidiesPrice;//补贴金额
 
+
+
 @end
