@@ -36,5 +36,17 @@
     self.values.text = blankName;
 }
 
+- (void)configSetPassword{
+    self.titles.text = @"设置支付密码";
+    self.values.hidden = YES;
+    self.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+}
+
+
+- (void)configWithdrawBalance:(float)balance{
+    self.titles.text = @"提现金额";
+    self.values.text = [NSString stringWithFormat:@"%.2f", balance];
+    self.values.textAlignment = NSTextAlignmentCenter;
+}
 
 @end

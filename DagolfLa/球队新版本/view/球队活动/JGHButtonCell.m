@@ -29,5 +29,15 @@
     }
 }
 
+- (void)configPassword:(NSInteger)editor{
+    self.backgroundColor = [UIColor colorWithHexString:BG_color];
+    [self.clickBtn setTitle:@"确认" forState:UIControlStateNormal];
+    if (editor == 1) {
+        self.clickBtn.backgroundColor = [UIColor colorWithHexString:Click_Color];
+    }else{
+        self.clickBtn.backgroundColor = [UIColor colorWithHexString:NoClick_Color];
+    }
+    
+}
 
 @end

@@ -22,6 +22,19 @@
     self.pamaptLabel.text = string;
 }
 
+- (void)configPromptPasswordString:(NSString *)string{
+    self.pamaptLabel.text = string;
+    self.pamaptLabel.textAlignment = NSTextAlignmentRight;
+    self.backgroundColor = [UIColor colorWithHexString:BG_color];
+}
+
+- (void)configPromptSetPasswordString:(NSString *)string{
+    self.pamaptLabel.text = string;
+    self.pamaptLabel.textAlignment = NSTextAlignmentLeft;
+    self.backgroundColor = [UIColor colorWithHexString:BG_color];
+}
+
+
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
 

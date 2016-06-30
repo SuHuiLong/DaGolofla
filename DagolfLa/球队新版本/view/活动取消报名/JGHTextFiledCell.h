@@ -14,6 +14,15 @@
 
 @property (weak, nonatomic) IBOutlet UITextField *titlefileds;
 
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *titlefiledsRight;
+
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *titleLeft;
+
+
 - (void)configViewTitles;
+
+- (void)configViewWithDraw:(NSNumber *)monay;
+
+- (void)configPayPassword;
 
 @end

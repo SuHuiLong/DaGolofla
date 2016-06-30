@@ -21,4 +21,8 @@
 
 - (void)configJGHWithdrawModelBlankName:(NSString *)blankName;
 
+- (void)configSetPassword;
+
+- (void)configWithdrawBalance:(float)balance;
+
 @end

@@ -8,21 +8,33 @@
 
 #import "JGHWithdrawViewController.h"
 #import "JGHTradRecordImageCell.h"
-#import "JGHWithdrawCell.h"
 #import "JGSignUoPromptCell.h"
 #import "JGHButtonCell.h"
 #import "JGLBankModel.h"
+#import "JGHTextFiledCell.h"
+#import "JGHSelectBlanKCardView.h"
+#import "JGHBlanKCardPasswordViewController.h"
+#import "JGHNOBlankPasswordViewController.h"
 
 static NSString *const JGHButtonCellIdentifier = @"JGHButtonCell";
 static NSString *const JGSignUoPromptCellIdentifier = @"JGSignUoPromptCell";
-static NSString *const JGHWithdrawCellIdentifier = @"JGHWithdrawCell";
+static NSString *const JGHTextFiledCellIdentifier = @"JGHTextFiledCell";
 static NSString *const JGHTradRecordImageCellIdentifier = @"JGHTradRecordImageCell";
 
-@interface JGHWithdrawViewController ()<UITableViewDataSource, UITableViewDelegate, JGHButtonCellDelegate>
+@interface JGHWithdrawViewController ()<UITableViewDataSource, UITableViewDelegate, JGHButtonCellDelegate, UITextFieldDelegate, JGHSelectBlanKCardViewDelegate>
+{
+    NSString *_reaplyBalance;
+}
 
 @property (nonatomic, strong)UITableView *withdrawTableView;
 
 @property (nonatomic, strong)NSMutableArray *dataArray;
+
+@property (nonatomic, strong)JGLBankModel *model;
+
+@property (nonatomic, strong)JGHSelectBlanKCardView *blankCatoryView;
+
+@property (nonatomic, strong)UIView *tranView;//遮照
 
 @end
 
@@ -31,8 +43,29 @@ static NSString *const JGHTradRecordImageCellIdentifier = @"JGHTradRecordImageCe
 - (instancetype)init{
     if (self == [super init]) {
         self.dataArray = [NSMutableArray array];
+        self.model = [[JGLBankModel alloc]init];
     }
     return self;
+}
+
+- (UIView *)tranView{
+    if (_tranView == nil) {
+        self.tranView = [[UIView alloc]init];
+        self.tranView.backgroundColor = [UIColor lightGrayColor];
+        self.tranView.alpha = 0.4;
+        [self.view addSubview:_tranView];
+    }
+    return _tranView;
+}
+
+- (JGHSelectBlanKCardView *)blankCatoryView{
+    if (_blankCatoryView == nil) {
+        self.blankCatoryView = [[JGHSelectBlanKCardView alloc]init];
+        self.blankCatoryView.delegate = self;
+//        self.applyListView.subsidiesPrice = [_modelss.subsidyPrice floatValue];
+        [self.view addSubview:_blankCatoryView];
+    }
+    return _blankCatoryView;
 }
 
 - (void)viewDidLoad {
@@ -53,6 +86,7 @@ static NSString *const JGHTradRecordImageCellIdentifier = @"JGHTradRecordImageCe
         NSLog(@"errType == %@", errType);
     } completionBlock:^(id data) {
         NSLog(@"data == %@", data);
+        [self.dataArray removeAllObjects];
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
             NSMutableArray *array = [NSMutableArray array];
             array = [data objectForKey:@"userBankCardList"];
@@ -61,8 +95,10 @@ static NSString *const JGHTradRecordImageCellIdentifier = @"JGHTradRecordImageCe
                 [model setValuesForKeysWithDictionary:dict];
                 [self.dataArray addObject:model];
             }
-        }else{
-            
+        }
+        
+        if (_dataArray.count > 0) {
+            _model = [_dataArray objectAtIndex:0];
         }
         
         [self.withdrawTableView reloadData];
@@ -81,8 +117,8 @@ static NSString *const JGHTradRecordImageCellIdentifier = @"JGHTradRecordImageCe
     UINib *catoryNib = [UINib nibWithNibName:@"JGHButtonCell" bundle: [NSBundle mainBundle]];
     [self.withdrawTableView registerNib:catoryNib forCellReuseIdentifier:JGHButtonCellIdentifier];
     
-    UINib *cellNib = [UINib nibWithNibName:@"JGHWithdrawCell" bundle: [NSBundle mainBundle]];
-    [self.withdrawTableView registerNib:cellNib forCellReuseIdentifier:JGHWithdrawCellIdentifier];
+    UINib *cellNib = [UINib nibWithNibName:@"JGHTextFiledCell" bundle: [NSBundle mainBundle]];
+    [self.withdrawTableView registerNib:cellNib forCellReuseIdentifier:JGHTextFiledCellIdentifier];
     
     UINib *recordNib = [UINib nibWithNibName:@"JGHTradRecordImageCell" bundle: [NSBundle mainBundle]];
     [self.withdrawTableView registerNib:recordNib forCellReuseIdentifier:JGHTradRecordImageCellIdentifier];
@@ -118,7 +154,7 @@ static NSString *const JGHTradRecordImageCellIdentifier = @"JGHTradRecordImageCe
         JGHTradRecordImageCell *tradCell = [tableView dequeueReusableCellWithIdentifier:JGHTradRecordImageCellIdentifier];
         tradCell.selectionStyle = UITableViewCellSelectionStyleNone;
         if (_dataArray.count > 0) {
-//            [tradCell configJGHWithDrawModelWithDraw:_dataArray[indexPath.section]];
+            [tradCell configJGLBankModel:_model];
         }
         
         return tradCell;
@@ -127,12 +163,14 @@ static NSString *const JGHTradRecordImageCellIdentifier = @"JGHTradRecordImageCe
         JGSignUoPromptCell *promptCell = [tableView dequeueReusableCellWithIdentifier:JGSignUoPromptCellIdentifier];
         
         promptCell.selectionStyle = UITableViewCellSelectionStyleNone;
-        [promptCell configPromptString:@"每笔金额提现最少为10元，预计两小时到账"];
+        [promptCell configPromptString:@"提示：每笔金额提现最少为10元，预计两小时到账"];
         return promptCell;
     }else if (indexPath.section == 2){
-        JGHWithdrawCell *withdrawCell = [tableView dequeueReusableCellWithIdentifier:JGHWithdrawCellIdentifier];
+        JGHTextFiledCell *withdrawCell = [tableView dequeueReusableCellWithIdentifier:JGHTextFiledCellIdentifier];
         
         withdrawCell.selectionStyle = UITableViewCellSelectionStyleNone;
+        withdrawCell.titlefileds.delegate = self;
+        [withdrawCell configViewWithDraw:_balance];
         
         return withdrawCell;
     }else{
@@ -140,16 +178,102 @@ static NSString *const JGHTradRecordImageCellIdentifier = @"JGHTradRecordImageCe
         
         btnCell.selectionStyle = UITableViewCellSelectionStyleNone;
         btnCell.delegate = self;
+        btnCell.backgroundColor = [UIColor colorWithHexString:BG_color];
         [btnCell.clickBtn setTitle:@"下一步" forState:UIControlStateNormal];
         return btnCell;
     }
 }
-
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (indexPath.section == 0) {
+        self.tranView.hidden = NO;
+        self.blankCatoryView.hidden = NO;
+        if (screenHeight < (((_dataArray.count +1) * 60) + 108 + 30*ProportionAdapter)){
+            self.tranView.frame = CGRectMake(0, 0, screenWidth, 0);
+            self.blankCatoryView.frame = CGRectMake(0, 0, screenWidth, screenHeight - 44-64);
+            [_blankCatoryView configViewData:_dataArray];
+        }else{
+            self.tranView.frame = CGRectMake(0, 0, screenWidth, screenHeight - ((_dataArray.count+1) * 60)*ProportionAdapter-64 -44-30*ProportionAdapter);
+            NSLog(@"%f", 30*ProportionAdapter);
+            self.blankCatoryView.frame = CGRectMake(0, screenHeight - ((_dataArray.count+1) * 60)*ProportionAdapter-64-44-30*ProportionAdapter, screenWidth, 30*ProportionAdapter + 44 + ((_dataArray.count+1) * 60)*ProportionAdapter);
+            [_blankCatoryView configViewData:_dataArray];
+        }
+    }
+}
 
 #pragma mark -- 下一步
 - (void)selectCommitBtnClick:(UIButton *)btn{
     NSLog(@"下一步");
+    [self.view endEditing:YES];
+    
+    if (_reaplyBalance.length == 0) {
+        [[ShowHUD showHUD]showToastWithText:@"请输入提现金额！" FromView:self.view];
+        return;
+    }
+    
+    if (![Helper isPureNumandCharacters:_reaplyBalance]) {
+        [[ShowHUD showHUD]showToastWithText:@"提现金额必须为纯数字！" FromView:self.view];
+        return;
+    }
+    
+    /**
+    if ([_reaplyBalance floatValue] < 10.0) {
+        [[ShowHUD showHUD]showToastWithText:@"提现金额最少为10元！" FromView:self.view];
+        return;
+    }
+     */
+    
+    if ([_reaplyBalance floatValue] > [_balance floatValue]) {
+        [[ShowHUD showHUD]showToastWithText:@"提现金额大于账户余额！" FromView:self.view];
+        return;
+    }
+    
+    [[ShowHUD showHUD]showAnimationWithText:@"提交中..." FromView:self.view];
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    [dict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:userID] forKey:@"userKey"];
+    [[JsonHttp jsonHttp]httpRequest:@"user/isSetPayPassWord" JsonKey:nil withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
+        NSLog(@"errType == %@", errType);
+        [[ShowHUD showHUD]hideAnimationFromView:self.view];
+    } completionBlock:^(id data) {
+        NSLog(@"data == %@", data);
+        [[ShowHUD showHUD]hideAnimationFromView:self.view];
+        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+            if ([[data objectForKey:@"isSetPayPassWord"] integerValue] == 1) {
+                JGHBlanKCardPasswordViewController *passCtrl = [[JGHBlanKCardPasswordViewController alloc]init];
+                passCtrl.reaplyBalance = [_reaplyBalance floatValue];
+                [self.navigationController pushViewController:passCtrl animated:YES];
+            }else{
+                //
+                JGHNOBlankPasswordViewController *passNOCtrl = [[JGHNOBlankPasswordViewController alloc]init];
+                passNOCtrl.reaplyBalance = [_reaplyBalance floatValue];
+                [self.navigationController pushViewController:passNOCtrl animated:YES];
+            }
+        }
+    }];
 }
+
+#pragma mark -- 选择银行卡－－取消
+- (void)seleCancelBtn:(UIButton *)btn{
+    NSLog(@"取消");
+    _tranView.hidden = YES;
+    _blankCatoryView.hidden = YES;
+}
+#pragma mark -- 选择银行卡－－确定
+- (void)selectSubmitBtn:(UIButton *)btn{
+    NSLog(@"确定");
+    _tranView.hidden = YES;
+    _blankCatoryView.hidden = YES;
+    if (_dataArray.count > 0) {
+        _model = [_dataArray objectAtIndex:btn.tag];
+    }
+    
+    [self.withdrawTableView reloadData];
+}
+
+#pragma mark -- UITextFliaView
+- (void)textFieldDidEndEditing:(UITextField *)textField{
+    _reaplyBalance = textField.text;
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
