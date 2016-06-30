@@ -15,7 +15,11 @@
     [super awakeFromNib];
     // Initialization code
     
+    self.titleTop.constant = 16 * ProportionAdapter;
     self.imageLeft.constant = 20 * ProportionAdapter;
+    
+    self.titles.font = [UIFont systemFontOfSize:17.0 * ProportionAdapter];
+    self.values.font = [UIFont systemFontOfSize:15.0 * ProportionAdapter];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -56,11 +60,15 @@
         self.blankImageView.image = [UIImage imageNamed:@"xingye_color"];
     }
     
+    self.titles.text = @"";
     self.titles.text = model.backName;
     NSString *cardNumber = [NSString stringWithFormat:@"%@", model.cardNumber];
     
-    self.values.text = [NSString stringWithFormat:@"储蓄卡  尾号%@", [cardNumber substringWithRange:NSMakeRange(3, 4)]];
-    
+    if (cardNumber.length >= 4) {
+        self.values.text = [NSString stringWithFormat:@"储蓄卡  尾号%@", [cardNumber substringWithRange:NSMakeRange(cardNumber.length - 4, 4)]];
+    }else{
+        self.values.text = [NSString stringWithFormat:@"储蓄卡  尾号%@", cardNumber];
+    }
 }
 
 @end

@@ -95,7 +95,7 @@ static NSString *const JGHSelectBlankCatoryCellIdentifier = @"JGHSelectBlankCato
         if (_dataArray.count == indexPath.row) {
             [blankCatoryCell configAddBlankCatory];
         }else{
-            [blankCatoryCell configJGLBankModel:_dataArray[indexPath.section] andSelectBlank:indexPath.row andCurrentSelect:_selectBlank];
+            [blankCatoryCell configJGLBankModel:_dataArray[indexPath.row] andSelectBlank:indexPath.row andCurrentSelect:_selectBlank];
         }
     }
     
@@ -140,6 +140,7 @@ static NSString *const JGHSelectBlankCatoryCellIdentifier = @"JGHSelectBlankCato
 
 #pragma mark -- 更新页面
 - (void)updateView{
+    [self.blankCatoryTableView reloadData];
     if (screenHeight < ((_dataArray.count * 60) + 108 + 30*ProportionAdapter)) {
         self.blankCatoryTableView.frame = CGRectMake(0, 0, screenWidth, screenHeight - 64 - 44);
         self.cancelBtn.frame = CGRectMake(0, screenHeight -64 -44, screenWidth/2, 44);

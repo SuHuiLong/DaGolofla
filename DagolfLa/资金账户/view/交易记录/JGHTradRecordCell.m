@@ -15,6 +15,10 @@
     [super awakeFromNib];
     // Initialization code
     
+    self.time.font = [UIFont systemFontOfSize:15.0 * ProportionAdapter];
+    self.time.font = [UIFont systemFontOfSize:17.0 * ProportionAdapter];
+    self.monay.font = [UIFont systemFontOfSize:17.0 * ProportionAdapter];
+    
     self.nameLeft.constant = 20 * ProportionAdapter;
     
     self.monayRight.constant = 20 * ProportionAdapter;

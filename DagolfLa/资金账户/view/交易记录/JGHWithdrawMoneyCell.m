@@ -15,6 +15,9 @@
     [super awakeFromNib];
     // Initialization code
     
+    self.prices.font = [UIFont systemFontOfSize:17.0 * ProportionAdapter];
+    self.propontLabel.font = [UIFont systemFontOfSize:15.0 * ProportionAdapter];
+    
     self.pricesTop.constant = 20*ProportionAdapter;
 }
 

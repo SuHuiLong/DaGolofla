@@ -86,6 +86,10 @@ static NSString *const JGHTradRecordImageCellIdentifier = @"JGHTradRecordImageCe
     
     [self createRefoundTableView];
     
+}
+
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:YES];
     [self loadData];
 }
 
@@ -110,6 +114,8 @@ static NSString *const JGHTradRecordImageCellIdentifier = @"JGHTradRecordImageCe
         if (_dataArray.count > 0) {
             _model = [_dataArray objectAtIndex:0];
         }
+        
+        [_blankCatoryView configViewData:_dataArray];
         
         [self.withdrawTableView reloadData];
     }];
@@ -232,15 +238,15 @@ static NSString *const JGHTradRecordImageCellIdentifier = @"JGHTradRecordImageCe
         return;
     }
     
-//    if ([_reaplyBalance floatValue] < 10.0) {
-//        [[ShowHUD showHUD]showToastWithText:@"提现金额最少为10元！" FromView:self.view];
-//        return;
-//    }
+    if ([_reaplyBalance floatValue] < 10.0) {
+        [[ShowHUD showHUD]showToastWithText:@"提现金额最少为10元！" FromView:self.view];
+        return;
+    }
     
-//    if ([_reaplyBalance floatValue] > [_balance floatValue]) {
-//        [[ShowHUD showHUD]showToastWithText:@"提现金额大于账户余额！" FromView:self.view];
-//        return;
-//    }
+    if ([_reaplyBalance floatValue] > [_balance floatValue]) {
+        [[ShowHUD showHUD]showToastWithText:@"提现金额大于账户余额！" FromView:self.view];
+        return;
+    }
     
     [[ShowHUD showHUD]showAnimationWithText:@"提交中..." FromView:self.view];
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
@@ -287,6 +293,8 @@ static NSString *const JGHTradRecordImageCellIdentifier = @"JGHTradRecordImageCe
 #pragma mark -- 添加银行卡
 - (void)addBlankCard{
     JGLBankListViewController* userVc = [[JGLBankListViewController alloc]init];
+    _tranView.hidden = YES;
+    _blankCatoryView.hidden = YES;
     [self.navigationController pushViewController:userVc animated:YES];
 }
 #pragma mark -- UITextFliaView

@@ -69,11 +69,11 @@
 
 -(void)showData:(JGLBankModel *)model
 {
-    NSArray* arrIcon = @[@"",@"zhonghang",@"nonghang",@"jianhang",@"gonghang",@"jiaohang",@"youzheng",@"zhaohang",@"zhongxin",@"minsheng",@"xingye"];
+    NSArray* arrIcon = @[@"zhonghang",@"nonghang",@"jianhang",@"gonghang",@"jiaohang",@"youzheng",@"zhaohang",@"zhongxin",@"minsheng",@"xingye"];
     NSArray* arrColor = @[@"#a71e32",@"#408f73",@"#0092dd",@"#b32032",@"#0f4282",@"#018263",@"#c8271d",@"#c82316",@"#1c69c0",@"#014299"];
 
-    [_iconImg setImage:[UIImage imageNamed:arrIcon[[model.cardType integerValue]]]];
-    _viewBack.backgroundColor = [UITool colorWithHexString:arrColor[[model.cardType integerValue]] alpha:1];
+    [_iconImg setImage:[UIImage imageNamed:arrIcon[[model.cardType integerValue]-1]]];
+    _viewBack.backgroundColor = [UITool colorWithHexString:arrColor[[model.cardType integerValue]-1] alpha:1];
     if (![Helper isBlankString:model.backName]) {
         _titleName.text = model.backName;
     }

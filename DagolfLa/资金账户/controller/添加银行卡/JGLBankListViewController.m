@@ -48,7 +48,7 @@
     [self.view addSubview:_viewHeader];
     
     UIButton* btnDelete = [UIButton buttonWithType:UIButtonTypeCustom];
-    btnDelete.backgroundColor = [UIColor orangeColor];
+    btnDelete.backgroundColor = [UIColor colorWithHexString:Click_Color];
     [btnDelete setTitle:@"添加银行卡" forState:UIControlStateNormal];
     [btnDelete setTintColor:[UIColor whiteColor]];
     [_viewHeader addSubview:btnDelete];

@@ -23,6 +23,7 @@
 
 @property (weak, nonatomic) IBOutlet UIImageView *blankImageView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *imageLeft;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *titleTop;
 
 //@property (weak, nonatomic) IBOutlet UIButton *blankCatoryBtn;
 //

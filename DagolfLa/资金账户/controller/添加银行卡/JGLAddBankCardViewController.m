@@ -51,7 +51,7 @@
 -(void)createBtn
 {
     UIButton* btnDelete = [UIButton buttonWithType:UIButtonTypeCustom];
-    btnDelete.backgroundColor = [UIColor orangeColor];
+    btnDelete.backgroundColor = [UIColor colorWithHexString:Click_Color];
     [btnDelete setTitle:@"提交" forState:UIControlStateNormal];
     [btnDelete setTintColor:[UIColor whiteColor]];
     [self.view addSubview:btnDelete];
@@ -72,7 +72,6 @@
     [self.view endEditing:YES];
     NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
     [dict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:userID] forKey:@"userKey"];
-    
     
     
     [dict setObject:@0 forKey:@"timeKey"];
@@ -221,7 +220,7 @@
                 height = 15;
             }
             _isClick = YES;
-            _alert = [[JGLBankTypeView alloc]initWithFrame:CGRectMake(0, screenHeight - 44*screenWidth/375*8-height, screenWidth, screenHeight)];
+            _alert = [[JGLBankTypeView alloc]initWithFrame:CGRectMake(0, screenHeight - 44*screenWidth/375*7-height, screenWidth, screenHeight)];
             [self.view addSubview:_alert];
             [_alert setCallBackTitle:^(NSInteger index,NSString* strBank) {
                 _cardType = index;
