@@ -112,7 +112,7 @@
             [[ShowHUD showHUD]showToastWithText:@"恭喜您支付密码设置成功" FromView:self.view];
             [self performSelector:@selector(pop) withObject:self afterDelay:1];
             
-            [self.navigationController popToRootViewControllerAnimated:YES];
+//            [self.navigationController popToRootViewControllerAnimated:YES];
         }
         else
         {
@@ -157,6 +157,7 @@
 }
 
 - (void)pop{
+    
     [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
