@@ -166,8 +166,7 @@
     JGMenberTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"JGMenberTableViewCell" forIndexPath:indexPath];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
 //    [cell showData:_dataArray[indexPath.row]];
-    cell.iconImgv.layer.masksToBounds = YES;
-    cell.iconImgv.layer.cornerRadius = 8*screenWidth/375;
+    
     if (_listArray.count != 0) {
         [cell showData:_listArray[indexPath.section][indexPath.row] andPower:_power];
     }

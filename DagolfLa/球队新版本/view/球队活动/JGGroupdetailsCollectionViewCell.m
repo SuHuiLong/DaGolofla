@@ -174,7 +174,7 @@
                 [self.section4 setImage:[UIImage imageNamed:@"addGroup"] forState:UIControlStateNormal];
             }else{
                 if (model.sortIndex == 0) {
-                    [self.sction1 sd_setImageWithURL:[Helper setImageIconUrl:@"user" andTeamKey:model.userKey andIsSetWidth:YES andIsBackGround:NO] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"addGroup"]];
+                    [self.sction1 sd_setImageWithURL:[Helper setImageIconUrl:@"user" andTeamKey:model.userKey andIsSetWidth:YES andIsBackGround:NO] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
                     self.sction1.layer.masksToBounds = YES;
                     self.sction1.layer.cornerRadius = self.sction1.frame.size.width/2;
                     
@@ -187,7 +187,7 @@
                 
                 if (model.sortIndex == 1){
                     
-                    [self.sction2 sd_setImageWithURL:[Helper setImageIconUrl:@"user" andTeamKey:model.userKey andIsSetWidth:YES andIsBackGround:NO] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"addGroup"]];
+                    [self.sction2 sd_setImageWithURL:[Helper setImageIconUrl:@"user" andTeamKey:model.userKey andIsSetWidth:YES andIsBackGround:NO] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
                     self.sction2.layer.masksToBounds = YES;
                     self.sction2.layer.cornerRadius = self.sction1.frame.size.width/2;
                     
@@ -201,7 +201,7 @@
                 
                 if (model.sortIndex == 2){
                     
-                    [self.section3 sd_setImageWithURL:[Helper setImageIconUrl:@"user" andTeamKey:model.userKey andIsSetWidth:YES andIsBackGround:NO] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"addGroup"]];
+                    [self.section3 sd_setImageWithURL:[Helper setImageIconUrl:@"user" andTeamKey:model.userKey andIsSetWidth:YES andIsBackGround:NO] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
                     self.section3.layer.masksToBounds = YES;
                     self.section3.layer.cornerRadius = self.sction1.frame.size.width/2;
                     
@@ -215,7 +215,7 @@
                 
                 if (model.sortIndex == 3){
                     
-                    [self.section4 sd_setImageWithURL:[Helper setImageIconUrl:@"user" andTeamKey:model.userKey andIsSetWidth:YES andIsBackGround:NO] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"addGroup"]];
+                    [self.section4 sd_setImageWithURL:[Helper setImageIconUrl:@"user" andTeamKey:model.userKey andIsSetWidth:YES andIsBackGround:NO] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
                     self.section4.layer.masksToBounds = YES;
                     self.section4.layer.cornerRadius = self.sction1.frame.size.width/2;
                     

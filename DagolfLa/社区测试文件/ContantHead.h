@@ -96,6 +96,9 @@ typedef NS_ENUM(NSInteger, GestureType) {
 //上传图片的打高尔夫啦tag
 #define PHOTO_DAGOLFLA @"dagolfla"
 
+//默认头像
+#define DefaultHeaderImage @"moren.jpg"
+
 #define TYPE_TEAM_HEAD       @1   // 球队头像类型
 #define TYPE_TEAM_BACKGROUND @2   // 球队背景类型
 #define TYPE_MEDIA_IMAGE     @3   // 相册的媒介图像

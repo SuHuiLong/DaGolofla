@@ -105,23 +105,21 @@
     
 }
 
-
-
 #pragma mark --没有权限只能保存图片
 -(void)saveClick
 {
     
-    [Helper alertViewWithTitle:@"是否确定要保存照片" withBlockCancle:^{
-        
-    } withBlockSure:^{
-        if (_svIndex < 3) {
-            _svIndex = self.index;
-        }
-        UIImageView *svView = [self.view viewWithTag:_svIndex+11];
-        UIImageWriteToSavedPhotosAlbum(svView.image ,self,@selector(image:didFinishSavingWithError:contextInfo:),NULL);
-    } withBlock:^(UIAlertController *alertView) {
-        [self.navigationController presentViewController:alertView animated:YES completion:nil];
-    }];
+//    [Helper alertViewWithTitle:@"是否确定要保存照片" withBlockCancle:^{
+//        
+//    } withBlockSure:^{
+    if (_svIndex < 3) {
+        _svIndex = self.index;
+    }
+    UIImageView *svView = [self.view viewWithTag:_svIndex+11];
+    UIImageWriteToSavedPhotosAlbum(svView.image ,self,@selector(image:didFinishSavingWithError:contextInfo:),NULL);
+//    } withBlock:^(UIAlertController *alertView) {
+//        [self.navigationController presentViewController:alertView animated:YES completion:nil];
+//    }];
 }
 #pragma mark --有权限可以删除图片
 -(void)editImageClick {
@@ -132,17 +130,13 @@
     }];
     //保存
     UIAlertAction * act2 = [UIAlertAction actionWithTitle:@"保存照片" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        [Helper alertViewWithTitle:@"是否确定要保存照片" withBlockCancle:^{
-            
-        } withBlockSure:^{
-            if (_svIndex < 3) {
-                _svIndex = self.index;
-            }
-            UIImageView *svView = [self.view viewWithTag:_svIndex+11];
-            UIImageWriteToSavedPhotosAlbum(svView.image ,self,@selector(image:didFinishSavingWithError:contextInfo:),NULL);
-        } withBlock:^(UIAlertController *alertView) {
-            [self.navigationController presentViewController:alertView animated:YES completion:nil];
-        }];
+        
+        if (_svIndex < 3) {
+            _svIndex = self.index;
+        }
+        UIImageView *svView = [self.view viewWithTag:_svIndex+11];
+        UIImageWriteToSavedPhotosAlbum(svView.image ,self,@selector(image:didFinishSavingWithError:contextInfo:),NULL);
+
     }];
     //删除
     UIAlertAction * act3 = [UIAlertAction actionWithTitle:@"删除照片" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
@@ -187,7 +181,7 @@
                 }
                 [self.selectImages removeObjectAtIndex:self.index + flag];
                 [self.scrollView.subviews[self.index + flag] removeFromSuperview];
-                self.title = [NSString stringWithFormat:@"第%d/%lu张", (long)self.index + 1, (unsigned long)self.selectImages.count];
+                self.title = [NSString stringWithFormat:@"第%ld/%lu张", (long)self.index + 1, (unsigned long)self.selectImages.count];
                 self.scrollView.contentSize = CGSizeMake(_scrollView.bounds.size.width * self.selectImages.count, _scrollView.bounds.size.height);
             }];
         } withBlock:^(UIAlertController *alertView) {
@@ -206,13 +200,9 @@
 -(void)image:(UIImage*)image didFinishSavingWithError:(NSError*)error contextInfo:(void*)contextInfo{
     
     if(!error){
-        [Helper alertViewWithTitle:@"照片保存成功!" withBlock:^(UIAlertController *alertView) {
-            [self.navigationController presentViewController:alertView animated:YES completion:nil];
-        }];
+        [[ShowHUD showHUD]showToastWithText:@"照片保存成功!" FromView:self.view];
     }else{
-        [Helper alertViewWithTitle:@"照片保存失败!" withBlock:^(UIAlertController *alertView) {
-            [self.navigationController presentViewController:alertView animated:YES completion:nil];
-        }];
+        [[ShowHUD showHUD]showToastWithText:@"照片保存失败!" FromView:self.view];
     }
 }
 
