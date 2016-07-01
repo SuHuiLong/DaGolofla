@@ -176,12 +176,12 @@ static NSString *const JGHWithdrawCellIdentifier = @"JGHWithdrawCell";
         [dict setObject:[NSString stringWithFormat:@"%.2f", _reaplyBalance] forKey:@"money"];
         [dict setObject:@(_bankCardKey) forKey:@"bankCardKey"];
         [dict setObject:[Helper md5HexDigest:_password] forKey:@"payPassword"];
-        NSString *paraStr = [Helper dictionaryToJson:dict];
         
-        NSString *str = [Helper md5HexDigest:[NSString stringWithFormat:@"%@dagolfla.com", paraStr]];
         
-        [[JsonHttp jsonHttp]httpRequest:[NSString stringWithFormat:@"user/doUserWithDraw?md5=%@",str] JsonKey:nil withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
+        
+        [[JsonHttp jsonHttp]httpRequestWithMD5:@"user/doUserWithDraw" JsonKey:nil withData:dict failedBlock:^(id errType) {
             [[ShowHUD showHUD]hideAnimationFromView:self.view];
+
         } completionBlock:^(id data) {
             [[ShowHUD showHUD]hideAnimationFromView:self.view];
             if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
@@ -206,6 +206,38 @@ static NSString *const JGHWithdrawCellIdentifier = @"JGHWithdrawCell";
                 
             }
         }];
+        
+        
+//        NSString *paraStr = [Helper dictionaryToJson:dict];
+//        
+//        NSString *str = [Helper md5HexDigest:[NSString stringWithFormat:@"%@dagolfla.com", paraStr]];
+//        
+//        [[JsonHttp jsonHttp]httpRequest:[NSString stringWithFormat:@"user/doUserWithDraw?md5=%@",str] JsonKey:nil withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
+//            [[ShowHUD showHUD]hideAnimationFromView:self.view];
+//        } completionBlock:^(id data) {
+//            [[ShowHUD showHUD]hideAnimationFromView:self.view];
+//            if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+//                [[ShowHUD showHUD]showToastWithText:@"提现成功！" FromView:self.view];
+//                
+//                if ([NSThread isMainThread]) {
+//                    NSLog(@"Yay!");
+//                    [self performSelector:@selector(pushCtrl) withObject:self afterDelay:1.0];
+//                } else {
+//                    NSLog(@"Humph, switching to main");
+//                    dispatch_async(dispatch_get_main_queue(), ^{
+//                        [self performSelector:@selector(pushCtrl) withObject:self afterDelay:1.0];
+//                    });
+//                }
+//                
+//                
+//            }
+//            else
+//            {
+//                
+//                [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+//                
+//            }
+//        }];
     }
 }
 
