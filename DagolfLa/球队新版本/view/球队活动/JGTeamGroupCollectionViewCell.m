@@ -29,7 +29,7 @@
 - (void)configJGHPlayersModel:(JGHPlayersModel *)model{
     
     //image
-    [_headImageView sd_setImageWithURL:[Helper setImageIconUrl:@"user" andTeamKey:model.userKey andIsSetWidth:YES andIsBackGround:NO] placeholderImage:[UIImage imageNamed:@"addGroup"]];
+    [_headImageView sd_setImageWithURL:[Helper setImageIconUrl:@"user" andTeamKey:model.userKey andIsSetWidth:YES andIsBackGround:NO] placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
 //    [_headImageView sd_setImageWithURL:[Helper setImageIconUrl:@"user" andTeamKey:model.userKey andIsSetWidth:YES andIsBackGround:NO]];
 //    @property (weak, nonatomic) IBOutlet UIImageView *headImageView;
     //名字
