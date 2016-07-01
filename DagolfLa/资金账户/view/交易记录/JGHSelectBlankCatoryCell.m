@@ -15,7 +15,7 @@
     [super awakeFromNib];
     // Initialization code
     
-    
+    self.name.font = [UIFont systemFontOfSize:17 * ProportionAdapter];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -45,23 +45,41 @@
     
     if ([model.cardType integerValue] == 1) {
         self.blankImageView.image = [UIImage imageNamed:@"zhonghang_color"];
-    }else if ([model.cardType integerValue] == 2){
+    }
+    
+    if ([model.cardType integerValue] == 2){
         self.blankImageView.image = [UIImage imageNamed:@"nonghang_color"];
-    }else if ([model.cardType integerValue] == 3){
+    }
+    
+    if ([model.cardType integerValue] == 3){
         self.blankImageView.image = [UIImage imageNamed:@"jianhang_color"];
-    }else if ([model.cardType integerValue] == 4){
+    }
+    
+    if ([model.cardType integerValue] == 4){
         self.blankImageView.image = [UIImage imageNamed:@"gonghang_color"];
-    }else if ([model.cardType integerValue] == 5){
+    }
+    
+    if ([model.cardType integerValue] == 5){
         self.blankImageView.image = [UIImage imageNamed:@"jiaohang_color"];
-    }else if ([model.cardType integerValue] == 6){
+    }
+    
+    if ([model.cardType integerValue] == 6){
         self.blankImageView.image = [UIImage imageNamed:@"youzheng_color"];
-    }else if ([model.cardType integerValue] == 7){
+    }
+    
+    if ([model.cardType integerValue] == 7){
         self.blankImageView.image = [UIImage imageNamed:@"zhaohang_color"];
-    }else if ([model.cardType integerValue] == 8){
+    }
+    
+    if ([model.cardType integerValue] == 8){
         self.blankImageView.image = [UIImage imageNamed:@"zhongxin_color"];
-    }else if ([model.cardType integerValue] == 9){
+    }
+    
+    if ([model.cardType integerValue] == 9){
         self.blankImageView.image = [UIImage imageNamed:@"minsheng_color"];
-    }else{
+    }
+    
+    if ([model.cardType integerValue] == 10){
         self.blankImageView.image = [UIImage imageNamed:@"xingye_color"];
     }
     
@@ -70,11 +88,18 @@
     }else{
         self.selectImageView.image = [UIImage imageNamed:@"kuang"];
     }
-        
-    self.name.text = model.backName;
+    
+    self.name.text = @"";
+    NSString *cardNumber = [NSString stringWithFormat:@"%@", model.cardNumber];
+    if (cardNumber.length >= 4) {
+        self.name.text = [NSString stringWithFormat:@"%@（%@）", model.backName, [cardNumber substringWithRange:NSMakeRange(cardNumber.length - 4, 4)]];
+    }else{
+        self.name.text = [NSString stringWithFormat:@"%@（%@）", model.backName, cardNumber];
+    }
 }
 
 - (void)configAddBlankCatory{
+    self.selectImageView.image = nil;
     self.selectImageView.hidden = YES;
     self.blankImageView.image = nil;
     self.blankImageView.image = [UIImage imageNamed:@"plussign"];

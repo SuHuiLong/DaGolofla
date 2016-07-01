@@ -13,6 +13,13 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
+    self.applyforTime.font = [UIFont systemFontOfSize:12.0 * ProportionAdapter];
+    self.dealwithTime.font = [UIFont systemFontOfSize:12.0 * ProportionAdapter];
+    self.seccessful.font = [UIFont systemFontOfSize:12.0 * ProportionAdapter];
+    
+    self.withdrawful.font = [UIFont systemFontOfSize:17.0 * ProportionAdapter];
+    self.balnkful.font = [UIFont systemFontOfSize:17.0 * ProportionAdapter];
+    self.tradSuf.font = [UIFont systemFontOfSize:17.0 * ProportionAdapter];
     
     self.lineTop.constant = 40*ProportionAdapter;
 }

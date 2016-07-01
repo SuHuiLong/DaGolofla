@@ -10,6 +10,7 @@
 #import "JGDSetPayPasswordTableViewCell.h"
 
 #import "CommonCrypto/CommonDigest.h"
+#import "JGHWithdrawViewController.h"
 
 
 @interface JGDChangePasswordViewController ()<UITableViewDelegate, UITableViewDataSource>
@@ -25,8 +26,24 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];
+    
+    if (_isWithdrawSetPassword == 1) {
+        UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"backL"] style:UIBarButtonItemStylePlain target:self action:@selector(withdrawBackButtonClcik)];
+        item.tintColor=[UIColor whiteColor];
+        self.navigationItem.leftBarButtonItem = item;
+    }
+    
     [self creatTable];
     // Do any additional setup after loading the view.
+}
+
+-(void)withdrawBackButtonClcik{
+    for (UIViewController *controller in self.navigationController.viewControllers) {
+        if ([controller isKindOfClass:[JGHWithdrawViewController class]]) {
+            
+            [self.navigationController popToViewController:controller animated:YES];
+        }
+    }
 }
 
 - (void)creatTable{

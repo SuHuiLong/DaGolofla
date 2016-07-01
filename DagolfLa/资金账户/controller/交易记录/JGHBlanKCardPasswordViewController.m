@@ -138,6 +138,21 @@ static NSString *const JGHWithdrawCellIdentifier = @"JGHWithdrawCell";
 }
 
 #pragma mark -- UITextFliaView
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    NSUInteger length = textField.text.length + string.length - range.length;
+    if (length >= 6) {
+        _editor = 1;
+        NSIndexPath *indexPath=[NSIndexPath indexPathForRow:0 inSection:2];
+        [self.passwordTableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath,nil] withRowAnimation:UITableViewRowAnimationNone];
+        return YES;
+    }else{
+        if (length < 6) {
+            return YES;
+        }
+        return NO;
+    }
+}
 - (void)textFieldDidEndEditing:(UITextField *)textField{
     _password = textField.text;
     if (_password.length >= 6 ) {
@@ -168,6 +183,7 @@ static NSString *const JGHWithdrawCellIdentifier = @"JGHWithdrawCell";
         [[JsonHttp jsonHttp]httpRequest:[NSString stringWithFormat:@"user/doUserWithDraw?md5=%@",str] JsonKey:nil withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
             [[ShowHUD showHUD]hideAnimationFromView:self.view];
         } completionBlock:^(id data) {
+            [[ShowHUD showHUD]hideAnimationFromView:self.view];
             if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
                 [[ShowHUD showHUD]showToastWithText:@"提现成功！" FromView:self.view];
                 
@@ -185,7 +201,7 @@ static NSString *const JGHWithdrawCellIdentifier = @"JGHWithdrawCell";
             }
             else
             {
-                [[ShowHUD showHUD]hideAnimationFromView:self.view];
+                
                 [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
                 
             }
@@ -195,7 +211,6 @@ static NSString *const JGHWithdrawCellIdentifier = @"JGHWithdrawCell";
 
 #pragma mark -- 返回个人账户
 - (void)pushCtrl{
-    [[ShowHUD showHUD]hideAnimationFromView:self.view];
 
     for (UIViewController *controller in self.navigationController.viewControllers) {
         if ([controller isKindOfClass:[JGDPrivateAccountViewController class]]) {

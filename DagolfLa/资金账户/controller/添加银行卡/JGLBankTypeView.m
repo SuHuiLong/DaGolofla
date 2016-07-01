@@ -30,10 +30,10 @@
 
 -(void)uiConfig
 {
-    NSArray* arrIcon = @[@"zhonghang_color",@"nonghang_color",@"jianhang_color",@"gonghang_color",@"jiaohang_color",@"youzheng_color",@"zhaohang_color",@"zhongxin_color",@"minsheng_color",@"xingye_color",@""];
-    NSArray* arrTitle = @[@"中国银行",@"农业银行",@"建设银行",@"工商银行",@"交通银行",@"邮政储蓄",@"招商银行",@"中信银行",@"民生银行",@"兴业银行",@"其他银行"];
+    NSArray* arrIcon = @[@"zhonghang_color",@"nonghang_color",@"jianhang_color",@"gonghang_color",@"jiaohang_color",@"youzheng_color",@"zhaohang_color",@"zhongxin_color",@"minsheng_color",@"xingye_color"];
+    NSArray* arrTitle = @[@"中国银行",@"农业银行",@"建设银行",@"工商银行",@"交通银行",@"邮政储蓄",@"招商银行",@"中信银行",@"民生银行",@"兴业银行"];
     
-    for (int i = 0; i < 11; i++) {
+    for (int i = 0; i < 10; i++) {
        
         _btnChoose = [UIButton buttonWithType:UIButtonTypeCustom];
         _btnChoose.frame = CGRectMake(screenWidth/2*(i%2), 44*ScreenWidth/375*(i/2), screenWidth/2, 44*ScreenWidth/375);
@@ -65,18 +65,19 @@
  
     UIButton* cancle=[UIButton buttonWithType:UIButtonTypeCustom];
     [cancle setTitle:@"取消" forState:UIControlStateNormal];
-    [cancle setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    cancle.frame=CGRectMake(0, 44*ScreenWidth/375*(10/2) + 44*screenWidth/375, ScreenWidth/2, 44*screenWidth/375);
-    cancle.backgroundColor=[UIColor orangeColor];
-    [cancle addTarget:self action:@selector(dismissAlert) forControlEvents:UIControlEventTouchUpInside];
+    // + 44*screenWidth/375
+    [cancle setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    cancle.frame=CGRectMake(0, 44*ScreenWidth/375*(10/2), ScreenWidth/2, 44*screenWidth/375);
+    cancle.backgroundColor = [UIColor colorWithHexString:@"#F19725"];
+    [cancle addTarget:self action:@selector(cancelAlert) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:cancle];
     
     
     UIButton* sure=[UIButton buttonWithType:UIButtonTypeCustom];
     [sure setTitle:@"确定" forState:UIControlStateNormal];
-    [sure setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    sure.frame=CGRectMake(screenWidth/2, 44*ScreenWidth/375*(10/2) + 44*screenWidth/375, ScreenWidth/2, 44*screenWidth/375);
-    sure.backgroundColor=[UIColor orangeColor];
+    [sure setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    sure.frame=CGRectMake(screenWidth/2, 44*ScreenWidth/375*(10/2), ScreenWidth/2, 44*screenWidth/375);
+    sure.backgroundColor = [UIColor colorWithHexString:@"#E8611D"];
     [sure addTarget:self action:@selector(sureAlert) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:sure];
     
@@ -116,6 +117,11 @@
         _indexChoose = _indexChoose + 1;
     }
     _callBackTitle(_indexChoose,str);
+    [self dismissAlert];
+}
+#pragma mark -- 取消按钮
+- (void)cancelAlert{
+    _cancelClick();
     [self dismissAlert];
 }
 

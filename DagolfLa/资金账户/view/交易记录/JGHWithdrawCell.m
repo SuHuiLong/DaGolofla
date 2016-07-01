@@ -13,6 +13,9 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
+    
+    self.titles.font = [UIFont systemFontOfSize:17.0 * ProportionAdapter];
+    self.values.font = [UIFont systemFontOfSize:15.0 * ProportionAdapter];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

@@ -19,4 +19,8 @@
 //-(void) show;
 
 @property(strong,nonatomic)void(^callBackTitle)(NSInteger,NSString* );
+
+@property(copy,nonatomic)void(^cancelClick)();
+
+
 @end

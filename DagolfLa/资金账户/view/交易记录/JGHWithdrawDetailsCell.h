@@ -18,6 +18,11 @@
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *lineTop;
 
+@property (weak, nonatomic) IBOutlet UILabel *withdrawful;
+
+@property (weak, nonatomic) IBOutlet UILabel *balnkful;
+
+@property (weak, nonatomic) IBOutlet UILabel *tradSuf;
 
 
 - (void)configApplyforTime:(NSString *)applyforTime andDealwithTime:(NSString *)dealwithTime andSeccessful:(NSString *)seccessful;

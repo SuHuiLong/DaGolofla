@@ -178,9 +178,12 @@
             </tableViewCellContentView>
             <connections>
                 <outlet property="applyforTime" destination="sI4-Eg-762" id="hSi-gM-AEV"/>
+                <outlet property="balnkful" destination="lN8-zX-PcG" id="SGa-Jd-DY5"/>
                 <outlet property="dealwithTime" destination="V6Y-7L-thN" id="Sfn-BK-HnW"/>
                 <outlet property="lineTop" destination="iuq-2X-W0O" id="Pdy-ZO-RrH"/>
                 <outlet property="seccessful" destination="rRt-LN-ouP" id="JzR-WL-DF1"/>
+                <outlet property="tradSuf" destination="hSM-Wx-0hc" id="oER-ec-fYj"/>
+                <outlet property="withdrawful" destination="B1c-Im-c46" id="Ymk-UH-twm"/>
             </connections>
             <point key="canvasLocation" x="194" y="155"/>
         </tableViewCell>

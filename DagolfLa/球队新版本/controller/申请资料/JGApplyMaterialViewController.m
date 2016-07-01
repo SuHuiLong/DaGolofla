@@ -351,16 +351,27 @@
             }];
             
         }else{
-        
-        [[JsonHttp jsonHttp] httpRequest:@"team/reqJoinTeam" JsonKey:@"teamMemeber" withData:self.paraDic requestMethod:@"POST" failedBlock:^(id errType) {
-            [Helper alertViewNoHaveCancleWithTitle:@"提交失败 请稍后再试" withBlock:^(UIAlertController *alertView) {
-                [self.navigationController presentViewController:alertView animated:YES completion:nil];
-            }];
-        } completionBlock:^(id data) {
-            NSLog(@"%@", data);
-            [self.navigationController popViewControllerAnimated:YES];
             
-        }];
+            [[JsonHttp jsonHttp] httpRequest:@"team/reqJoinTeam" JsonKey:@"teamMemeber" withData:self.paraDic requestMethod:@"POST" failedBlock:^(id errType) {
+                [Helper alertViewNoHaveCancleWithTitle:@"提交失败 请稍后再试" withBlock:^(UIAlertController *alertView) {
+                    [self.navigationController presentViewController:alertView animated:YES completion:nil];
+                }];
+            } completionBlock:^(id data) {
+                NSLog(@"%@", data);
+                if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+                    [Helper alertViewNoHaveCancleWithTitle:@"提交成功" withBlock:^(UIAlertController *alertView) {
+                        [self.navigationController popViewControllerAnimated:YES];
+                        [self.navigationController presentViewController:alertView animated:YES completion:nil];
+                        
+                    }];
+                }else{
+                    [Helper alertViewNoHaveCancleWithTitle:@"提交失败" withBlock:^(UIAlertController *alertView) {
+                        [self.navigationController popViewControllerAnimated:YES];
+                        [self.navigationController presentViewController:alertView animated:YES completion:nil];
+                        
+                    }];
+                }
+            }];
         }
         
         
@@ -410,7 +421,6 @@
         return;
     }
 }
-
 - (void)creatTableView{
     
     self.tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:(UITableViewStylePlain)];
