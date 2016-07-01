@@ -943,6 +943,9 @@
 		F55426781D226DBD00233B20 /* JGDChangePasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F55426771D226DBD00233B20 /* JGDChangePasswordViewController.m */; };
 		F554267C1D2277B900233B20 /* JGDCertificationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F554267B1D2277B900233B20 /* JGDCertificationViewController.m */; };
 		F554267F1D23E82400233B20 /* JGDShowCertViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F554267E1D23E82400233B20 /* JGDShowCertViewController.m */; };
+		F55426831D25100E00233B20 /* JGDWithDrawTeamMoneyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F55426821D25100E00233B20 /* JGDWithDrawTeamMoneyViewController.m */; };
+		F55426861D2516DD00233B20 /* JGLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = F55426851D2516DD00233B20 /* JGLabel.m */; };
+		F55426891D2534D400233B20 /* JGDTakeTeamMoneyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F55426881D2534D400233B20 /* JGDTakeTeamMoneyViewController.m */; };
 		F55597221CF5328C00F33099 /* JGPreviewTeamViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F55597211CF5328C00F33099 /* JGPreviewTeamViewController.m */; };
 		F55597251CF53FF900F33099 /* JGTeamMemberORManagerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F55597241CF53FF900F33099 /* JGTeamMemberORManagerViewController.m */; };
 		F55597281CF6DB0F00F33099 /* JGTeamInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F55597271CF6DB0F00F33099 /* JGTeamInfoViewController.m */; };
@@ -2550,6 +2553,12 @@
 		F554267B1D2277B900233B20 /* JGDCertificationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGDCertificationViewController.m; sourceTree = "<group>"; };
 		F554267D1D23E82400233B20 /* JGDShowCertViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGDShowCertViewController.h; sourceTree = "<group>"; };
 		F554267E1D23E82400233B20 /* JGDShowCertViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGDShowCertViewController.m; sourceTree = "<group>"; };
+		F55426811D25100E00233B20 /* JGDWithDrawTeamMoneyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGDWithDrawTeamMoneyViewController.h; sourceTree = "<group>"; };
+		F55426821D25100E00233B20 /* JGDWithDrawTeamMoneyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGDWithDrawTeamMoneyViewController.m; sourceTree = "<group>"; };
+		F55426841D2516DD00233B20 /* JGLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGLabel.h; sourceTree = "<group>"; };
+		F55426851D2516DD00233B20 /* JGLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGLabel.m; sourceTree = "<group>"; };
+		F55426871D2534D400233B20 /* JGDTakeTeamMoneyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGDTakeTeamMoneyViewController.h; sourceTree = "<group>"; };
+		F55426881D2534D400233B20 /* JGDTakeTeamMoneyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGDTakeTeamMoneyViewController.m; sourceTree = "<group>"; };
 		F55597201CF5328C00F33099 /* JGPreviewTeamViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGPreviewTeamViewController.h; sourceTree = "<group>"; };
 		F55597211CF5328C00F33099 /* JGPreviewTeamViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGPreviewTeamViewController.m; sourceTree = "<group>"; };
 		F55597231CF53FF900F33099 /* JGTeamMemberORManagerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGTeamMemberORManagerViewController.h; sourceTree = "<group>"; };
@@ -2811,6 +2820,7 @@
 		20591C3E1D215BCD003271EC /* controller */ = {
 			isa = PBXGroup;
 			children = (
+				F55426801D250FC300233B20 /* 球队资金提现 */,
 				F55426791D22777900233B20 /* 实名认证 */,
 				F554266B1D2249E000233B20 /* 设置支付密码 */,
 				20591C581D220EE0003271EC /* 个人帐户 */,
@@ -6234,6 +6244,19 @@
 			path = "实名认证";
 			sourceTree = "<group>";
 		};
+		F55426801D250FC300233B20 /* 球队资金提现 */ = {
+			isa = PBXGroup;
+			children = (
+				F55426811D25100E00233B20 /* JGDWithDrawTeamMoneyViewController.h */,
+				F55426821D25100E00233B20 /* JGDWithDrawTeamMoneyViewController.m */,
+				F55426871D2534D400233B20 /* JGDTakeTeamMoneyViewController.h */,
+				F55426881D2534D400233B20 /* JGDTakeTeamMoneyViewController.m */,
+				F55426841D2516DD00233B20 /* JGLabel.h */,
+				F55426851D2516DD00233B20 /* JGLabel.m */,
+			);
+			path = "球队资金提现";
+			sourceTree = "<group>";
+		};
 		F569A1321CE3334F00CD0FD5 /* 球队详情 */ = {
 			isa = PBXGroup;
 			children = (
@@ -7012,7 +7035,9 @@
 				36DF09B91C040697007A8A4E /* TeamNameTableViewCell.m in Sources */,
 				208837991D17D206004C7B5D /* JGHActicityDetailsViewController.m in Sources */,
 				36B9B5981C3E00200053B227 /* CollectViewController.m in Sources */,
+				F55426861D2516DD00233B20 /* JGLabel.m in Sources */,
 				360148F81C1FFE5E0074C395 /* ManageFinfishModel.m in Sources */,
+				F55426891D2534D400233B20 /* JGDTakeTeamMoneyViewController.m in Sources */,
 				36DCEEC41C0BEF1100AA862C /* ManageCreateLogoTableViewCell.m in Sources */,
 				2067C6B91CE30CA4002900C8 /* JGTeamActivityViewController.m in Sources */,
 				36EA30CF1C1D52A3008BD2B4 /* YueBallDetailModel.m in Sources */,
@@ -7453,6 +7478,7 @@
 				F566EFAB1CA0F01B008BB328 /* InformSetmodel.m in Sources */,
 				20591C871D22630A003271EC /* JGHWithdrawCell.m in Sources */,
 				829960DA1D23729C00E121A8 /* JGLAddBankNewsTableViewCell.m in Sources */,
+				F55426831D25100E00233B20 /* JGDWithDrawTeamMoneyViewController.m in Sources */,
 				3660E1DF1BFC64020033B4D7 /* ScoredCardViewController.m in Sources */,
 				65B801001CD04D150077A324 /* DeatilModel.m in Sources */,
 				3684FDA31C4A206E002A14FC /* TeamJoinReasonViewController.m in Sources */,
