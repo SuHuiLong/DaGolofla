@@ -84,12 +84,12 @@
                   moduleName = "DagolfLa"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/dong/Desktop/dagolfla_ios511/DagolfLa/%E7%90%83%E9%98%9F%E6%96%B0%E7%89%88%E6%9C%AC/controller/%E5%88%9B%E5%BB%BA%E7%90%83%E9%98%9F/JGNewCreateTeamTableViewController.m"
-                  timestampString = "488104219.892357"
+                  timestampString = "489050468.346948"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "411"
                   endingLineNumber = "411"
-                  offsetFromSymbolStart = "372">
+                  offsetFromSymbolStart = "348">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
@@ -99,12 +99,12 @@
                   moduleName = "DagolfLa"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/dong/Desktop/dagolfla_ios511/DagolfLa/%E7%90%83%E9%98%9F%E6%96%B0%E7%89%88%E6%9C%AC/controller/%E5%88%9B%E5%BB%BA%E7%90%83%E9%98%9F/JGNewCreateTeamTableViewController.m"
-                  timestampString = "488104219.892509"
+                  timestampString = "489050468.347272"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "412"
                   endingLineNumber = "412"
-                  offsetFromSymbolStart = "48">
+                  offsetFromSymbolStart = "65">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -122,6 +122,85 @@
             startingLineNumber = "408"
             endingLineNumber = "408"
             landmarkName = "-previewBtnClick:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "DagolfLa/&#x7403;&#x961f;&#x65b0;&#x7248;&#x672c;/controller/&#x6211;&#x7684;&#x7403;&#x961f;/JGLJoinManageViewController.m"
+            timestampString = "489038479.087581"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "143"
+            endingLineNumber = "143"
+            landmarkName = "-agreeClick:"
+            landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[JGLJoinManageViewController agreeClick:]"
+                  moduleName = "DagolfLa"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/dong/Desktop/dagolfla_ios511/DagolfLa/%E7%90%83%E9%98%9F%E6%96%B0%E7%89%88%E6%9C%AC/controller/%E6%88%91%E7%9A%84%E7%90%83%E9%98%9F/JGLJoinManageViewController.m"
+                  timestampString = "489050468.354126"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "143"
+                  endingLineNumber = "143"
+                  offsetFromSymbolStart = "810">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__42-[JGLJoinManageViewController agreeClick:]_block_invoke"
+                  moduleName = "DagolfLa"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/dong/Desktop/dagolfla_ios511/DagolfLa/%E7%90%83%E9%98%9F%E6%96%B0%E7%89%88%E6%9C%AC/controller/%E6%88%91%E7%9A%84%E7%90%83%E9%98%9F/JGLJoinManageViewController.m"
+                  timestampString = "489050468.360056"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "143"
+                  endingLineNumber = "143"
+                  offsetFromSymbolStart = "51">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__42-[JGLJoinManageViewController agreeClick:]_block_invoke_2"
+                  moduleName = "DagolfLa"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/dong/Desktop/dagolfla_ios511/DagolfLa/%E7%90%83%E9%98%9F%E6%96%B0%E7%89%88%E6%9C%AC/controller/%E6%88%91%E7%9A%84%E7%90%83%E9%98%9F/JGLJoinManageViewController.m"
+                  timestampString = "489050468.360244"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "143"
+                  endingLineNumber = "143"
+                  offsetFromSymbolStart = "26">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "DagolfLa/&#x7403;&#x961f;&#x65b0;&#x7248;&#x672c;/controller/&#x6211;&#x7684;&#x7403;&#x961f;/JGLJoinManageViewController.m"
+            timestampString = "489038561.309476"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "138"
+            endingLineNumber = "138"
+            landmarkName = "-agreeClick:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

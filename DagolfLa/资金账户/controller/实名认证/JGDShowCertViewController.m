@@ -22,12 +22,6 @@
 
 - (void)viewWillAppear:(BOOL)animated{
         [super viewWillAppear:YES];
-
-//    if ([[self.userRealDic objectForKey:@"state"] integerValue]== 2) {
-//        self.tableView.frame = CGRectMake(0, 0, screenWidth, 368 * screenWidth / 375);
-//        self.tableView.tableHeaderView.frame = CGRectMake(0, 0, screenWidth, 110 * screenWidth / 375);
-//        [self.tableView reloadData];
-//    }
 }
 
 - (void)viewDidLoad {
@@ -86,7 +80,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 2    ;
+    return 2;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -105,10 +99,7 @@
         cell.promptLB.text = @"真实姓名";
         cell.contentLB.text = [self.userRealDic objectForKey:@"name"];
         cell.contentLB.textAlignment = NSTextAlignmentRight;
-//    }else if (indexPath.row == 1) {
-//        cell.promptLB.text = @"身份证号";
-//        cell.contentLB.text = [self.userRealDic objectForKey:@"cardNumber"];
-//        cell.contentLB.textAlignment = NSTextAlignmentRight;
+
     }else{
         cell.promptLB.text = @"证件照片";
         [cell.contentLB removeFromSuperview];
@@ -126,16 +117,16 @@
         [self.imageVTwo sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://imgcache.dagolfla.com/userReal/%@_back.jpg", DEFAULF_USERID]]];
         
         UIImageView *imageBurl1 = [[UIImageView alloc] initWithFrame:CGRectMake(10 * screenWidth / 375, 44 * screenWidth / 375, 173 * screenWidth / 375, 113 * screenWidth / 375)];
-        UIVisualEffectView *visaV1 = [[UIVisualEffectView alloc] initWithEffect:[UIBlurEffect effectWithStyle:(UIBlurEffectStyleDark)]];
+        UIVisualEffectView *visaV1 = [[UIVisualEffectView alloc] initWithEffect:[UIBlurEffect effectWithStyle:(UIBlurEffectStyleLight)]];
         [imageBurl1 addSubview:visaV1];
         visaV1.frame = imageBurl1.bounds;
-        imageBurl1.alpha = 0.95;
+        imageBurl1.alpha = 0.9;
         
         UIImageView *imageBurl2 = [[UIImageView alloc] initWithFrame:CGRectMake(193 * screenWidth / 375, 44 * screenWidth / 375, 173 * screenWidth / 375, 113 * screenWidth / 375)];
-        UIVisualEffectView *visaV2 = [[UIVisualEffectView alloc] initWithEffect:[UIBlurEffect effectWithStyle:(UIBlurEffectStyleDark)]];
+        UIVisualEffectView *visaV2 = [[UIVisualEffectView alloc] initWithEffect:[UIBlurEffect effectWithStyle:(UIBlurEffectStyleLight)]];
         [imageBurl2 addSubview:visaV2];
         visaV2.frame = imageBurl2.bounds;
-        imageBurl2.alpha = 0.95;
+        imageBurl2.alpha = 0.9;
         
         [cell addSubview:imageBurl1];
         [cell addSubview:imageBurl2];
@@ -143,6 +134,34 @@
         [cell.contentView addSubview:self.imageVOne];
         [cell.contentView addSubview:self.imageVTwo];
     }
+    
+    if ([[self.userRealDic objectForKey:@"state"] integerValue]== 1) {
+
+    }else if ([[self.userRealDic objectForKey:@"state"] integerValue]== 2) {
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 173 * ProportionAdapter, 60 * ProportionAdapter)];
+        label.text = @"未通过";
+        label.textAlignment = NSTextAlignmentCenter;
+        label.textColor = [UIColor whiteColor];
+        UILabel *labell = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 173 * ProportionAdapter, 60 * ProportionAdapter)];
+        labell.text = @"未通过";
+        labell.textAlignment = NSTextAlignmentCenter;
+        labell.textColor = [UIColor whiteColor];
+//        [self.imageVTwo addSubview:label];
+//        [self.imageVOne addSubview:labell];
+    }else if ([[self.userRealDic objectForKey:@"state"] integerValue]== 0){
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 173 * ProportionAdapter, 60 * ProportionAdapter)];
+        label.text = @"审核中";
+        label.textAlignment = NSTextAlignmentCenter;
+        label.textColor = [UIColor whiteColor];
+        UILabel *labell = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 173 * ProportionAdapter, 60 * ProportionAdapter)];
+        labell.text = @"审核中";
+        labell.textColor = [UIColor whiteColor];
+        labell.textAlignment = NSTextAlignmentCenter;
+//        [self.imageVTwo addSubview:label];
+//        [self.imageVOne addSubview:labell];
+}
+
+    
     return cell;
 }
 

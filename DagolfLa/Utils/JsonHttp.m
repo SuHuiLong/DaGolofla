@@ -27,99 +27,39 @@ static JsonHttp *jsonHttp = nil;
 
 #pragma mark ----- MD5
 
-- (void)httpRequestWithMD5:(NSString *)url JsonKey:(NSString *)jsonKey withData:(NSDictionary *)postData requestMethod:(NSString *)httpMethod failedBlock:(GBHEFailedBlock)failedBlock completionBlock:(GBHECompletionBlock)completionBlock
+- (void)httpRequestWithMD5:(NSString *)url JsonKey:(NSString *)jsonKey withData:(NSDictionary *)postData failedBlock:(GBHEFailedBlock)failedBlock completionBlock:(GBHECompletionBlock)completionBlock
 {
+   
     url = [NSString stringWithFormat:@"%@%@",PORTOCOL_APP_ROOT_URL,url];
-    NSLog(@"%@",url);
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    NSMutableDictionary *postDict = [NSMutableDictionary dictionary];
-    if (jsonKey == nil) {
-        postDict = [NSMutableDictionary dictionaryWithDictionary:postData];
-    }else{
-        [postDict setObject:postData forKey:jsonKey];
-    }
-    //申明请求的数据是json类型
-    manager.requestSerializer=[AFJSONRequestSerializer serializer];
-    //返回数据格式
-    manager.responseSerializer = [AFJSONResponseSerializer serializer];
-    //    [AFJSONResponseSerializer serializerWithReadingOptions:NSJSONReadingMutableContainers];
-    //https安全策略
-    //    manager.securityPolicy.allowInvalidCertificates = YES;
-    //    manager.securityPolicy.validatesDomainName = NO;
+
+     NSString *paraStr = [Helper dictionaryToJson:postData];
     
-    NSComparisonResult comparison1 = [httpMethod caseInsensitiveCompare:@"GET"];
-    NSComparisonResult comparisonResult2 = [httpMethod caseInsensitiveCompare:@"POST"];
-    if (comparison1 == NSOrderedSame)
-    {
-        [manager GET:url parameters:postDict success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            if (completionBlock) {
-                completionBlock(responseObject);
-            }
-        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            if (failedBlock) {
-                failedBlock(error);
-            }
-        }];
-    }
+    paraStr = [paraStr stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     
-    if (comparisonResult2 == NSOrderedSame)
-    {
-        BOOL isFile = NO;
-        for (NSString *key in postData.allKeys) {
-            id value = postData[key];
-            if ([value isKindOfClass:[NSData class]]) {
-                
-                isFile = YES;
-                break;
-            }
-        }
+    paraStr = [paraStr stringByReplacingOccurrencesOfString:@"\r" withString:@""];
+    paraStr = [paraStr stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+    paraStr = [paraStr stringByReplacingOccurrencesOfString:@" " withString:@""];
+    
+    NSString *str = [Helper md5HexDigest:[NSString stringWithFormat:@"%@dagolfla.com", paraStr]];
+    
+    // 1.创建请求
+    NSURL *urls = [NSURL URLWithString:[NSString stringWithFormat:@"%@?md5=%@",url ,str]];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:urls];
+    request.HTTPMethod = @"POST";
+    
+    // 2.设置请求头
+    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    
+    NSData *data2 =[paraStr dataUsingEncoding:NSUTF8StringEncoding];
+    
+    request.HTTPBody = data2;
+    // 4.发送请求
+    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
         
-        if (!isFile) {//判断是上传数据还是下请求数据
-            [manager POST:url parameters:postDict success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                if (completionBlock) {
-                    completionBlock(responseObject);
-                }
-            } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                if ([[error.userInfo objectForKey:@"_kCFStreamErrorCodeKey"] integerValue] == 61) {
-                    [Helper downLoadDataOverrun];
-                }else if ([[error.userInfo objectForKey:@"_kCFStreamErrorCodeKey"] integerValue] == 51) {
-                    [Helper netWorkError];
-                }
-                if (failedBlock) {
-                    failedBlock(error);
-                }
-            }];
-        }else
-        {
-            [manager POST:url parameters:postDict constructingBodyWithBlock:^(id formData) {
-                //取出需要上传的图片数据
-                for (NSString *key in postData) {
-                    
-                    id value = postData[key];
-                    
-                    if ([value isKindOfClass:[NSData class]]) {
-                        
-                        [formData appendPartWithFileData:value
-                         
-                                                    name:key
-                         
-                                                fileName:key
-                         
-                                                mimeType:@"image/png"];
-                        
-                    }
-                }
-            } success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                if (completionBlock) {
-                    completionBlock(responseObject);
-                }
-            } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                if (failedBlock) {
-                    failedBlock(error);
-                }
-            }];
-        }
-    }
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+        completionBlock(dic);
+    }];
+    
 }
 
 

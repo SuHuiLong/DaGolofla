@@ -33,6 +33,7 @@
 #import "JGDChangePasswordViewController.h"  // 修改支付密码
 #import "JGDCertificationViewController.h" // 实名认证
 #import "JGDShowCertViewController.h"
+#import "JGDSubMitPayPasswordViewController.h"
 
 
 @interface MySetViewController ()<UITableViewDataSource,UITableViewDelegate>
@@ -341,7 +342,7 @@
                     JGDChangePasswordViewController *change = [[JGDChangePasswordViewController alloc] init];
                     [self.navigationController pushViewController:change animated:YES];
                 }else{
-                    JGDSetPayPasswordViewController *setPassVC = [[JGDSetPayPasswordViewController alloc] init];
+                    JGDSubMitPayPasswordViewController *setPassVC = [[JGDSubMitPayPasswordViewController alloc] init];
                     [self.navigationController pushViewController:setPassVC animated:YES];
                 }
             }
@@ -350,8 +351,6 @@
                 [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
             }
         }];
-
-
     }
 
 }

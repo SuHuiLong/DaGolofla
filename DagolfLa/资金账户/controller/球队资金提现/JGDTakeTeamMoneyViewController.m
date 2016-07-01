@@ -6,44 +6,52 @@
 //  Copyright © 2016年 bhxx. All rights reserved.
 //
 
-#import "JGDChangePasswordViewController.h"
+#import "JGDTakeTeamMoneyViewController.h"
 #import "JGDSetPayPasswordTableViewCell.h"
 
 #import "CommonCrypto/CommonDigest.h"
-#import "JGHWithdrawViewController.h"
 
 
-@interface JGDChangePasswordViewController ()<UITableViewDelegate, UITableViewDataSource>
+@interface JGDTakeTeamMoneyViewController ()<UITableViewDelegate, UITableViewDataSource, NSXMLParserDelegate>
 
 @property (nonatomic, strong) UITableView *tableV;
 @property (nonatomic, strong) UIButton *codeBtn;
 @property (nonatomic, strong) NSTimer *timer;
 
+@property (nonatomic, copy) NSString *mobile;
+@property (nonatomic, copy) NSString *money;
+
 @end
 
-@implementation JGDChangePasswordViewController
+@implementation JGDTakeTeamMoneyViewController
+
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:YES];
+    NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
+    [dic setObject:DEFAULF_USERID forKey:@"userKey"];
+    [dic setObject:self.teamKey forKey:@"teamKey"];
+    
+    [[JsonHttp jsonHttp]httpRequest:[NSString stringWithFormat:@"team/getTeamBalance"] JsonKey:nil withData:dic requestMethod:@"GET" failedBlock:^(id errType) {
+        
+    } completionBlock:^(id data) {
+        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+            self.mobile = [data objectForKey:@"mobile"];
+            self.money = [data objectForKey:@"money"];
+            [self.tableV reloadData];
+        }
+        else
+        {
+            [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+        }
+    }];
+}
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];
-    
-    if (_isWithdrawSetPassword == 1) {
-        UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"backL"] style:UIBarButtonItemStylePlain target:self action:@selector(withdrawBackButtonClcik)];
-        item.tintColor=[UIColor whiteColor];
-        self.navigationItem.leftBarButtonItem = item;
-    }
-    
     [self creatTable];
     // Do any additional setup after loading the view.
-}
-
--(void)withdrawBackButtonClcik{
-    for (UIViewController *controller in self.navigationController.viewControllers) {
-        if ([controller isKindOfClass:[JGHWithdrawViewController class]]) {
-            
-            [self.navigationController popToViewController:controller animated:YES];
-        }
-    }
 }
 
 - (void)creatTable{
@@ -62,13 +70,7 @@
     nextBtn.clipsToBounds = YES;
     nextBtn.layer.cornerRadius = 6.f * screenWidth / 375;
     view.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];
-   
-//    UIButton *forgetBtn = [UIButton buttonWithType:(UIButtonTypeSystem)];
-//    forgetBtn.frame = CGRectMake(280 * screenWidth / 375, 80 * screenWidth / 375, 100 * screenWidth / 375, 30 * screenWidth / 375);
-//    [forgetBtn setTitle:@"忘记密码？" forState:(UIControlStateNormal)];
-//    [forgetBtn setTitleColor:[UIColor colorWithHexString:@"#f39800"] forState:(UIControlStateNormal)];
-//    forgetBtn.titleLabel.font = [UIFont systemFontOfSize:14 * screenWidth / 375];
-//    [view addSubview:forgetBtn];
+    
     [view addSubview:nextBtn];
     
     self.tableV.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];
@@ -78,34 +80,44 @@
 
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 4;
+    if (section == 0) {
+        return 1;
+    }else{
+        return 2;
+    };
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     JGDSetPayPasswordTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"setPayPass"];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    cell.txFD.secureTextEntry = YES;
     cell.txFD.frame = CGRectMake(110 * screenWidth / 375, 0, screenWidth - 160 * screenWidth / 375, 44 * screenWidth / 375);
-    if (indexPath.row == 0) {
-        cell.LB.text = @"验证码";
-        cell.txFD.placeholder = @"请输入验证码";
-        [cell addSubview:cell.takeBtn];
-        self.codeBtn = cell.takeBtn;
-        [cell.takeBtn addTarget:self action:@selector(codeClick) forControlEvents:UIControlEventTouchUpInside];
-        cell.txFD.secureTextEntry = NO;
-
-    }else if (indexPath.row == 1) {
-        cell.LB.text = @"原支付密码";
-        cell.txFD.placeholder = @"请填写您的原支付密码";
-    }else if (indexPath.row == 2) {
-        cell.LB.text = @"新支付密码";
-        cell.txFD.placeholder = @"请输入您的新支付密码";
+    
+    if (indexPath.section == 0) {
+        cell.LB.text = @"提现金额";
+        cell.txFD.placeholder = [NSString stringWithFormat:@"当前可提现金额为%@元" ,self.money];
+        cell.txFD.keyboardType = UIKeyboardTypeWebSearch;
     }else{
-        cell.LB.text = @"再输一次";
-        cell.txFD.placeholder = @"再输入一次新支付密码";
+        if (indexPath.row == 1) {
+            cell.LB.text = @"验证码";
+            cell.txFD.placeholder = @"输入验证码";
+            [cell addSubview:cell.takeBtn];
+            self.codeBtn = cell.takeBtn;
+            [cell.takeBtn addTarget:self action:@selector(codeClick) forControlEvents:UIControlEventTouchUpInside];
+            cell.txFD.secureTextEntry = NO;
+            
+        }else if (indexPath.row == 0) {
+            cell.LB.text = @"手机验证";
+            cell.txFD.placeholder = [NSString stringWithFormat:@"发送验证码至%@", self.mobile];
+            cell.txFD.userInteractionEnabled = NO;
+        }
     }
     return cell;
 }
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+    return 2;
+}
+
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     return 10  * screenWidth / 375;
@@ -114,47 +126,35 @@
 - (void)comitBtnClick{
     
     JGDSetPayPasswordTableViewCell *cell1 = [self.tableV cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
-    JGDSetPayPasswordTableViewCell *cell2 = [self.tableV cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
-    JGDSetPayPasswordTableViewCell *cell3 = [self.tableV cellForRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]];
-    JGDSetPayPasswordTableViewCell *cell4 = [self.tableV cellForRowAtIndexPath:[NSIndexPath indexPathForRow:3 inSection:0]];
-    if (![cell3.txFD.text isEqualToString:cell4.txFD.text]) {
-        [[ShowHUD showHUD]showToastWithText:@"密码输入不一致" FromView:self.view];
+    JGDSetPayPasswordTableViewCell *cell2 = [self.tableV cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:1]];
+    
+    if ([cell2.txFD.text length] < 3) {
+        [[ShowHUD showHUD]showToastWithText:@"请输入正确的验证码" FromView:self.view];
         return;
     }
-    if ([cell3.txFD.text length] < 6) {
-        [[ShowHUD showHUD]showToastWithText:@"密码长度不能小于六位" FromView:self.view];
+    if ([cell1.txFD.text integerValue] > [self.money integerValue]) {
+        [[ShowHUD showHUD]showToastWithText:@"提现金额不能大于帐户余额" FromView:self.view];
         return;
     }
     
     NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
     [dict setObject:DEFAULF_USERID forKey:@"userKey"];
-    [dict setObject:cell1.txFD.text forKey:@"checkCode"];
-    [dict setObject:[JGDChangePasswordViewController md5HexDigest:cell2.txFD.text] forKey:@"oldPassWord"];
-    [dict setObject:[JGDChangePasswordViewController md5HexDigest:cell3.txFD.text] forKey:@"newPassWord"];
+    [dict setObject:cell1.txFD.text forKey:@"money"];
+    [dict setObject:cell2.txFD.text forKey:@"checkCode"];
+    [dict setObject:self.teamKey forKey:@"teamKey"];
     
-    NSString *paraStr = [JGDChangePasswordViewController dictionaryToJson:dict];
-    ;
-
-    paraStr = [paraStr stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-
-    paraStr = [paraStr stringByReplacingOccurrencesOfString:@"\r" withString:@""];
-    paraStr = [paraStr stringByReplacingOccurrencesOfString:@"\n" withString:@""];
-    paraStr = [paraStr stringByReplacingOccurrencesOfString:@" " withString:@""];
-
-    
-    [[JsonHttp jsonHttp]httpRequestWithMD5:@"user/updatePayPassWord" JsonKey:nil withData:dict failedBlock:^(id errType) {
+    [[JsonHttp jsonHttp]httpRequestWithMD5:@"team/doTeamWithDraw" JsonKey:nil withData:dict failedBlock:^(id errType) {
         
     } completionBlock:^(id data) {
-        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
-            [[ShowHUD showHUD]showToastWithText:@"恭喜您修改密码成功" FromView:self.view];
+        if ([data objectForKey:@"packSuccess"]) {
+            [[ShowHUD showHUD]showToastWithText:@"提现成功" FromView:self.view];
             [self performSelector:@selector(pop) withObject:self afterDelay:1];
         }
-        else
-        {
-            [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
-        }
     }];
-    
+}
+
+- (void)pop{
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 + (NSString*)dictionaryToJson:(NSDictionary *)dic
@@ -169,12 +169,8 @@
     
 }
 
-- (void)pop{
-    [self.navigationController popToRootViewControllerAnimated:YES];
-}
 
 static int timeNumber = 60;
-
 
 //设置使用的验证码
 -(void)codeClick
@@ -182,7 +178,8 @@ static int timeNumber = 60;
     self.codeBtn.userInteractionEnabled = NO;
     NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
     [dict setObject:DEFAULF_USERID forKey:@"userKey"];
-    NSString *paraStr = [JGDChangePasswordViewController dictionaryToJson:dict];
+    [dict setObject:self.teamKey forKey:@"teamKey"];
+    NSString *paraStr = [JGDTakeTeamMoneyViewController dictionaryToJson:dict];
     ;
     
     paraStr = [paraStr stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
@@ -190,9 +187,9 @@ static int timeNumber = 60;
     paraStr = [paraStr stringByReplacingOccurrencesOfString:@"\n" withString:@""];
     paraStr = [paraStr stringByReplacingOccurrencesOfString:@" " withString:@""];
     
-    NSString *str = [JGDChangePasswordViewController md5HexDigest:[NSString stringWithFormat:@"%@dagolfla.com", paraStr]];
+    NSString *str = [JGDTakeTeamMoneyViewController md5HexDigest:[NSString stringWithFormat:@"%@dagolfla.com", paraStr]];
     
-    [[JsonHttp jsonHttp]httpRequest:[NSString stringWithFormat:@"user/doSendUpdatePayPassWordSms?md5=%@",str] JsonKey:nil withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
+    [[JsonHttp jsonHttp]httpRequest:[NSString stringWithFormat:@"team/doSendTeamWithDrawCheckCode?md5=%@",str] JsonKey:nil withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
         
     } completionBlock:^(id data) {
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {

@@ -48,7 +48,7 @@
 #import "TeamMessageController.h"//发送信息
 //球队照片
 #import "JGTeamPhotoViewController.h"
-
+#import "JGDWithDrawTeamMoneyViewController.h"
 
 static NSString *const JGTableViewCellIdentifier = @"JGTableViewCell";
 static NSString *const JGHTeamContactCellIdentifier = @"JGHTeamContactTableViewCell";
@@ -675,14 +675,15 @@ static CGFloat ImageHeight  = 210.0;
     }
     else if (indexPath.section == 3){
         if (indexPath.row == 0) {
+            
             JGSelfSetViewController *meter = [[JGSelfSetViewController alloc] init];
             meter.isSelfSet = YES;
             meter.detailDic = self.detailDic;
             meter.memeDic = self.memBerDic;
             [self.navigationController pushViewController:meter animated:YES];
-//            JGLSelfSetViewController *costView = [[JGLSelfSetViewController alloc]init];
-//               costView.teamKey = [[self.detailDic objectForKey:@"timeKey"] integerValue];
-//            [self.navigationController pushViewController:costView animated:YES];
+            //            JGLSelfSetViewController *costView = [[JGLSelfSetViewController alloc]init];
+            //               costView.teamKey = [[self.detailDic objectForKey:@"timeKey"] integerValue];
+            //            [self.navigationController pushViewController:costView animated:YES];
         }
     }
     else

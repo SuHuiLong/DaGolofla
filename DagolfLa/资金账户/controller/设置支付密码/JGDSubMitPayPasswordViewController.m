@@ -16,6 +16,8 @@
 @interface JGDSubMitPayPasswordViewController ()<UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic, strong) UITableView *tableV;
+@property (nonatomic, strong) NSTimer *timer;
+@property (nonatomic, strong) UIButton *codeBtn;
 
 @end
 
@@ -32,7 +34,7 @@
 }
 
 - (void)creatTable{
-    self.tableV = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 180 * screenWidth / 375)];
+    self.tableV = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 276 * screenWidth / 375)];
     self.tableV.delegate = self;
     self.tableV.dataSource = self;
     [self.tableV registerClass:[JGDSetPayPasswordTableViewCell class] forCellReuseIdentifier:@"setPayPass"];
@@ -55,17 +57,29 @@
 
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 2;
+    return 4;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     JGDSetPayPasswordTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"setPayPass"];
     cell.txFD.secureTextEntry = YES;
-    
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     if (indexPath.row == 0) {
+        cell.LB.text = @"验证码";
+        cell.txFD.placeholder = @"输入验证码";
+        [cell addSubview:cell.takeBtn];
+        cell.txFD.secureTextEntry = NO;
+        self.codeBtn = cell.takeBtn;
+        [cell.takeBtn addTarget:self action:@selector(codeClick) forControlEvents:UIControlEventTouchUpInside];
+    }else if (indexPath.row == 1){
+        NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
+        cell.LB.text = @"手机验证";
+        cell.txFD.placeholder = [NSString stringWithFormat:@"发送验证码至%@", [def objectForKey:@"mobile"]];
+        cell.txFD.userInteractionEnabled = NO;
+    }else if (indexPath.row == 2) {
         cell.LB.text = @"设置密码";
         cell.txFD.placeholder = @"设置您的支付密码";
-    }else{
+    }else if (indexPath.row == 3) {
         cell.LB.text = @"再输一次";
         cell.txFD.placeholder = @"再输入一次支付密码";
     }
@@ -78,8 +92,9 @@
 
 - (void)comitBtnClick{
     
-    JGDSetPayPasswordTableViewCell *cell1 = [self.tableV cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
-    JGDSetPayPasswordTableViewCell *cell2= [self.tableV cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
+    JGDSetPayPasswordTableViewCell *cell0 = [self.tableV cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+    JGDSetPayPasswordTableViewCell *cell1 = [self.tableV cellForRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]];
+    JGDSetPayPasswordTableViewCell *cell2= [self.tableV cellForRowAtIndexPath:[NSIndexPath indexPathForRow:3 inSection:0]];
     
     if (![cell1.txFD.text isEqualToString:cell2.txFD.text]) {
         [[ShowHUD showHUD]showToastWithText:@"密码输入不一致" FromView:self.view];
@@ -90,39 +105,56 @@
         [[ShowHUD showHUD]showToastWithText:@"密码长度不能小于六位" FromView:self.view];
         return;
     }
-        
+    
+    if ([cell0.txFD.text length] < 3) {
+        [[ShowHUD showHUD]showToastWithText:@"请输入正确的验证码" FromView:self.view];
+        return;
+    }
     
     NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
     [dict setObject:DEFAULF_USERID forKey:@"userKey"];
-    [dict setObject:self.code forKey:@"checkCode"];
+    [dict setObject:cell0.txFD.text forKey:@"checkCode"];
     [dict setObject:[JGDSubMitPayPasswordViewController md5HexDigest:cell1.txFD.text] forKey:@"passWord"];
     
-    NSString *paraStr = [JGDSubMitPayPasswordViewController dictionaryToJson:dict];
-    ;
     
-    paraStr = [paraStr stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-    
-    paraStr = [paraStr stringByReplacingOccurrencesOfString:@"\r" withString:@""];
-    paraStr = [paraStr stringByReplacingOccurrencesOfString:@"\n" withString:@""];
-    paraStr = [paraStr stringByReplacingOccurrencesOfString:@" " withString:@""];
-    
-    NSString *str = [JGDSubMitPayPasswordViewController md5HexDigest:[NSString stringWithFormat:@"%@dagolfla.com", paraStr]];
-    
-    [[JsonHttp jsonHttp]httpRequest:[NSString stringWithFormat:@"user/setPayPassWord?md5=%@",str] JsonKey:nil withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
+    [[JsonHttp jsonHttp]httpRequestWithMD5:@"user/setPayPassWord" JsonKey:nil withData:dict failedBlock:^(id errType) {
         
     } completionBlock:^(id data) {
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
             [[ShowHUD showHUD]showToastWithText:@"恭喜您支付密码设置成功" FromView:self.view];
             [self performSelector:@selector(pop) withObject:self afterDelay:1];
-            
-//            [self.navigationController popToRootViewControllerAnimated:YES];
-        }
-        else
+        } else
         {
             [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
-            
         }
     }];
+    
+    
+//    NSString *paraStr = [JGDSubMitPayPasswordViewController dictionaryToJson:dict];
+//    
+//    paraStr = [paraStr stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+//    
+//    paraStr = [paraStr stringByReplacingOccurrencesOfString:@"\r" withString:@""];
+//    paraStr = [paraStr stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+//    paraStr = [paraStr stringByReplacingOccurrencesOfString:@" " withString:@""];
+//    
+//    NSString *str = [JGDSubMitPayPasswordViewController md5HexDigest:[NSString stringWithFormat:@"%@dagolfla.com", paraStr]];
+//    
+//    [[JsonHttp jsonHttp]httpRequest:[NSString stringWithFormat:@"user/setPayPassWord?md5=%@",str] JsonKey:nil withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
+//        
+//    } completionBlock:^(id data) {
+//        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+//            [[ShowHUD showHUD]showToastWithText:@"恭喜您支付密码设置成功" FromView:self.view];
+//            [self performSelector:@selector(pop) withObject:self afterDelay:1];
+//            
+////            [self.navigationController popToRootViewControllerAnimated:YES];
+//        }
+//        else
+//        {
+//            [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+//            
+//        }
+//    }];
     
 }
 
@@ -163,6 +195,59 @@
     
     [self.navigationController popToRootViewControllerAnimated:YES];
 }
+
+
+//设置使用的验证码
+-(void)codeClick
+{
+    
+    self.codeBtn.userInteractionEnabled = NO;
+    NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
+    [dict setObject:DEFAULF_USERID forKey:@"userKey"];
+    NSString *paraStr = [JGDSubMitPayPasswordViewController dictionaryToJson:dict];
+    ;
+    
+    paraStr = [paraStr stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    paraStr = [paraStr stringByReplacingOccurrencesOfString:@"\r" withString:@""];
+    paraStr = [paraStr stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+    paraStr = [paraStr stringByReplacingOccurrencesOfString:@" " withString:@""];
+    
+    NSString *str = [JGDSubMitPayPasswordViewController md5HexDigest:[NSString stringWithFormat:@"%@dagolfla.com", paraStr]];
+    
+    [[JsonHttp jsonHttp]httpRequest:[NSString stringWithFormat:@"user/doSendUpdatePayPassWordSms?md5=%@",str] JsonKey:nil withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
+        
+    } completionBlock:^(id data) {
+        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+            timeNumber = 60;
+            _timer=[NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(autoMove) userInfo:nil repeats:YES];
+            [[NSRunLoop currentRunLoop] addTimer:_timer forMode:NSRunLoopCommonModes];
+        }
+        else
+        {
+            [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+        }
+    }];
+}
+
+static int timeNumber = 60;
+
+
+/**
+ *  定时器
+ */
+- (void)autoMove {
+    timeNumber--;
+    self.codeBtn.titleLabel.font = [UIFont systemFontOfSize:11];
+    [self.codeBtn setTitle:[NSString stringWithFormat:@"(%d)后重新获取",timeNumber] forState:UIControlStateNormal];
+    if (timeNumber == 0) {
+        self.codeBtn.titleLabel.font = [UIFont systemFontOfSize:14*screenWidth/375];
+        [self.codeBtn setTitle:@"获取验证码" forState:UIControlStateNormal];
+        [_timer invalidate];
+        self.codeBtn.userInteractionEnabled = YES;
+    }
+}
+
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
