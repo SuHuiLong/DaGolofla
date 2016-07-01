@@ -54,23 +54,23 @@ static NSString *const JGHSelectBlankCatoryCellIdentifier = @"JGHSelectBlankCato
     self.cancelBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 30*ProportionAdapter, screenWidth/2, 44)];
     [self.cancelBtn setTitle:@"取消" forState:UIControlStateNormal];
     [self.cancelBtn setBackgroundColor:[UIColor colorWithHexString:@"#F19725"]];
-    [self.cancelBtn addTarget:self action:@selector(cancelBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    [self.cancelBtn addTarget:self action:@selector(cancelWithdrawBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:self.cancelBtn];
     
     self.submitBtn = [[UIButton alloc]initWithFrame:CGRectMake(screenWidth/2, 30*ProportionAdapter, screenWidth/2, 44)];
     [self.submitBtn setTitle:@"确定" forState:UIControlStateNormal];
     [self.submitBtn setBackgroundColor:[UIColor colorWithHexString:@"#E8611D"]];
-    [self.submitBtn addTarget:self action:@selector(submitBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    [self.submitBtn addTarget:self action:@selector(submitWithdrawBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:self.submitBtn];
 }
 #pragma mark -- cancelBtnClick
-- (void)cancelBtnClick:(UIButton *)btn{
+- (void)cancelWithdrawBtnClick:(UIButton *)btn{
     if (self.delegate) {
         [self.delegate seleCancelBtn:btn];
     }
 }
 #pragma mark -- submitBtnClick
-- (void)submitBtnClick:(UIButton *)btn{
+- (void)submitWithdrawBtnClick:(UIButton *)btn{
     if (self.delegate) {
         [self.delegate selectSubmitBtn:btn];
     }
@@ -141,7 +141,7 @@ static NSString *const JGHSelectBlankCatoryCellIdentifier = @"JGHSelectBlankCato
 #pragma mark -- 更新页面
 - (void)updateView{
     [self.blankCatoryTableView reloadData];
-    if (screenHeight < ((_dataArray.count * 60) + 108 + 30*ProportionAdapter)) {
+    if (screenHeight <= (((_dataArray.count +1) * 60)*ProportionAdapter + 108 + 30*ProportionAdapter)) {
         self.blankCatoryTableView.frame = CGRectMake(0, 0, screenWidth, screenHeight - 64 - 44);
         self.cancelBtn.frame = CGRectMake(0, screenHeight -64 -44, screenWidth/2, 44);
         self.submitBtn.frame = CGRectMake(screenWidth/2, screenHeight -44 -64, screenWidth/2, 44);

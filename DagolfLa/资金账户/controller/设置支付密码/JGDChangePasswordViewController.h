@@ -10,4 +10,6 @@
 
 @interface JGDChangePasswordViewController : ViewController
 
+@property (nonatomic, assign)NSInteger isWithdrawSetPassword;
+
 @end

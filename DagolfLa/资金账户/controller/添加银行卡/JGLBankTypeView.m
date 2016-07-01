@@ -69,7 +69,7 @@
     [cancle setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     cancle.frame=CGRectMake(0, 44*ScreenWidth/375*(10/2), ScreenWidth/2, 44*screenWidth/375);
     cancle.backgroundColor = [UIColor colorWithHexString:@"#F19725"];
-    [cancle addTarget:self action:@selector(dismissAlert) forControlEvents:UIControlEventTouchUpInside];
+    [cancle addTarget:self action:@selector(cancelAlert) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:cancle];
     
     
@@ -117,6 +117,11 @@
         _indexChoose = _indexChoose + 1;
     }
     _callBackTitle(_indexChoose,str);
+    [self dismissAlert];
+}
+#pragma mark -- 取消按钮
+- (void)cancelAlert{
+    _cancelClick();
     [self dismissAlert];
 }
 

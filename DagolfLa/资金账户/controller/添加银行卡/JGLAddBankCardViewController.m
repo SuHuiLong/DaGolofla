@@ -19,7 +19,7 @@
     NSArray* _arrayTitle;
     NSArray* _arrayPlaceHolder;
     //输入的姓名和银行卡号
-    NSString* _strName, *_strNum;
+    NSString *_strNum;
     //银行名
     NSString* _strBank;
     NSInteger _cardType;
@@ -37,8 +37,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    _arrayTitle = @[@[@"持卡人姓名"],@[@"选择银行",@"银行卡号"]];
-    _arrayPlaceHolder = @[@"请填写真实姓名",@"请填写银行卡号"];
+    _arrayTitle = @[@[@"选择银行"],@[@"银行卡号"]];
+    _arrayPlaceHolder = @[@"",@"请填写银行卡号"];
     self.title = @"添加银行卡";
     
     _isClick = NO;
@@ -56,7 +56,7 @@
     [btnDelete setTintColor:[UIColor whiteColor]];
     [self.view addSubview:btnDelete];
     btnDelete.titleLabel.font = [UIFont systemFontOfSize:17];
-    btnDelete.frame = CGRectMake(10*screenWidth/375, 44*3*screenWidth/375 + 30*screenWidth/375, screenWidth-20*screenWidth/375, 44*screenWidth/375);
+    btnDelete.frame = CGRectMake(10*screenWidth/375, 44*2*screenWidth/375 + 30*screenWidth/375, screenWidth-20*screenWidth/375, 44*screenWidth/375);
     btnDelete.layer.cornerRadius = 8*screenWidth/375;
     btnDelete.layer.masksToBounds = YES;
     [btnDelete addTarget:self action:@selector(addBankCardClick) forControlEvents:UIControlEventTouchUpInside];
@@ -76,13 +76,7 @@
     
     [dict setObject:@0 forKey:@"timeKey"];
     //isPureNumandCharacters
-    if (![Helper isBlankString:_strName]) {
-        [dict setObject:_strName forKey:@"name"];
-    }
-    else{
-        [[ShowHUD showHUD]showToastWithText:@"请重新输入您的姓名" FromView:self.view];
-        return;
-    }
+
     if (![Helper isBlankString:_strNum]) {
         if ([Helper isPureNumandCharacters:_strNum]) {
             [dict setObject:_strNum forKey:@"cardNumber"];
@@ -155,13 +149,7 @@
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (section == 0) {
-        return 1;
-    }
-    else
-    {
-        return 2;
-    }
+    return 1;
 }
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -175,7 +163,7 @@
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.labelTitle.text = _arrayTitle[indexPath.section][indexPath.row];
     
-    if (indexPath.section == 1 && indexPath.row == 0) {
+    if (indexPath.section == 0 && indexPath.row == 0) {
         cell.textField.userInteractionEnabled = NO;
         if ([Helper isBlankString:_strBank]) {
             cell.textField.text = @"选择您要添加的银行";
@@ -188,13 +176,8 @@
     else{
         cell.textField.hidden = NO;
         cell.textField.userInteractionEnabled = YES;
-        if (indexPath.row == 0) {
-            cell.textField.tag = 1001;
-        }
-        else{
-            cell.textField.tag = 1002;
-            cell.textField.keyboardType = UIKeyboardTypeNumberPad;
-        }
+        cell.textField.tag = 1002;
+        cell.textField.keyboardType = UIKeyboardTypeNumberPad;
     }
     
     cell.textField.placeholder = _arrayPlaceHolder[indexPath.section];
@@ -206,9 +189,9 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
 
-    if (indexPath.section == 1 && indexPath.row == 0) {
+    if (indexPath.section == 0 && indexPath.row == 0) {
         if (_isClick == NO) {
-            NSInteger height ;
+            NSInteger height;
             if (screenWidth == 320) {
                 height = 25;
             }
@@ -226,10 +209,16 @@
                 _cardType = index;
                 _strBank = strBank;
                 _isClick = NO;
-                NSIndexPath *indexPath=[NSIndexPath indexPathForRow:0 inSection:1];
+                NSIndexPath *indexPath=[NSIndexPath indexPathForRow:0 inSection:0];
                 [tableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath,nil] withRowAnimation:UITableViewRowAnimationNone];
                 
             }];
+            
+            _alert.cancelClick = ^(){
+                _isClick = NO;
+                NSIndexPath *indexPath=[NSIndexPath indexPathForRow:0 inSection:0];
+                [tableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath,nil] withRowAnimation:UITableViewRowAnimationNone];
+            };
         }
     }
 }
@@ -243,10 +232,7 @@
         _isClick = NO;
     }
     
-    if (textField.tag == 1001) {
-        _strName = textField.text;
-    }
-    else{
+    if (textField.tag == 1002) {
         _strNum = textField.text;
     }
 }

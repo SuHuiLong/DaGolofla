@@ -209,10 +209,10 @@ static NSString *const JGHTradRecordImageCellIdentifier = @"JGHTradRecordImageCe
     if (indexPath.section == 0) {
         self.tranView.hidden = NO;
         self.blankCatoryView.hidden = NO;
-        if (screenHeight < (((_dataArray.count +1) * 60) + 108 + 30*ProportionAdapter)){
+        if (screenHeight <= (((_dataArray.count +1) * 60)*ProportionAdapter + 108 + 30*ProportionAdapter)){
             self.tranView.frame = CGRectMake(0, 0, screenWidth, 0);
             self.tranView.hidden = YES;
-            self.blankCatoryView.frame = CGRectMake(0, 0, screenWidth, screenHeight - 44-64);
+            self.blankCatoryView.frame = CGRectMake(0, 0, screenWidth, screenHeight -64);
             [_blankCatoryView configViewData:_dataArray];
         }else{
             self.tranView.frame = CGRectMake(0, 0, screenWidth, screenHeight - ((_dataArray.count+1) * 60)*ProportionAdapter-64 -44-30*ProportionAdapter);
@@ -247,7 +247,7 @@ static NSString *const JGHTradRecordImageCellIdentifier = @"JGHTradRecordImageCe
         [[ShowHUD showHUD]showToastWithText:@"提现金额大于账户余额！" FromView:self.view];
         return;
     }
-    
+        
     [[ShowHUD showHUD]showAnimationWithText:@"提交中..." FromView:self.view];
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     [dict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:userID] forKey:@"userKey"];
