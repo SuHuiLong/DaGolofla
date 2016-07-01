@@ -98,6 +98,8 @@ static CGFloat ImageHeight  = 210.0;
 
 @property (nonatomic, strong) UIView *footBackView;
 
+@property (nonatomic, strong) NSNumber *memberState;
+
 @end
 
 @implementation JGTeamMemberORManagerViewController
@@ -141,6 +143,12 @@ static CGFloat ImageHeight  = 210.0;
         [[NSUserDefaults standardUserDefaults] setObject:self.power forKey:@"power"];
         [[NSUserDefaults standardUserDefaults]  synchronize];
         self.memBerDic = [data objectForKey:@"teamMember"];
+        
+        self.memberState = [self.memBerDic objectForKey:@"state"];
+        
+        if ([self.memberState integerValue] == 0) {
+            return;
+        }
         
         if ([[self.detailDic objectForKey:@"state"] integerValue] == 0) {
             [self.previewBtn setTitle:@"正在等待审核" forState:UIControlStateNormal];
@@ -386,18 +394,34 @@ static CGFloat ImageHeight  = 210.0;
 //}
 - (void)createPreviewBtn{
 //    self.previewBtn = [[UIButton alloc]initWithFrame:CGRectMake(10 * screenWidth / 320, screenHeight - 54 * screenWidth / 320, screenWidth - 20 * screenWidth / 320, 44 * screenWidth / 320)];
+    
     self.footBackView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 60 * screenWidth / 320)];
     self.previewBtn = [[UIButton alloc]initWithFrame:CGRectMake(10 * screenWidth / 320, 10 * screenWidth / 320, screenWidth - 20 * screenWidth / 320, 44 * screenWidth / 320)];
-    [self.previewBtn setTitle:@"邀请好友" forState:UIControlStateNormal];
-    self.previewBtn.backgroundColor = [UIColor colorWithHexString:@"#F59826"];
-    [self.previewBtn addTarget:self action:@selector(previewBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+ 
     self.previewBtn.clipsToBounds = YES;
     self.previewBtn.layer.cornerRadius = 6.f;
     [self.footBackView addSubview:self.previewBtn];
+    
+    if ([self.memberState integerValue] == 0) {
+        [self.previewBtn setTitle:@"等待管理员审批" forState:UIControlStateNormal];
+        self.previewBtn.backgroundColor = [UIColor lightGrayColor];
+
+    }else{
+        [self.previewBtn setTitle:@"邀请好友" forState:UIControlStateNormal];
+        self.previewBtn.backgroundColor = [UIColor colorWithHexString:@"#F59826"];
+        [self.previewBtn addTarget:self action:@selector(previewBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    }
+    
+    
 //    [self.launchActivityTableView addSubview:self.previewBtn];
 }
 #pragma mark -- 邀请好友
 - (void)previewBtnClick:(UIButton *)btn{
+    
+    
+    if ([self.memberState integerValue] == 0) {
+        return;
+    }
     
     if ([[self.detailDic objectForKey:@"state"] integerValue] == 0) {
         return;
@@ -614,6 +638,11 @@ static CGFloat ImageHeight  = 210.0;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    
+    if ([self.memberState integerValue] == 0) {
+        return;
+    }
     
     if ([[self.detailDic objectForKey:@"state"] integerValue] == 0) {
         return;
