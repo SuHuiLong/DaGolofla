@@ -8,6 +8,7 @@
 #import <WebKit/WebKit.h>
 #import "JGTeamDeatilWKwebViewController.h"
 #import "JGDWithDrawTeamMoneyViewController.h"
+#import "JGTeamMemberController.h"
 
 @interface JGTeamDeatilWKwebViewController ()<WKNavigationDelegate,WKUIDelegate>
 @property (strong, nonatomic) WKWebView *webView;
@@ -119,7 +120,7 @@
                                                                     }];
                              //                             }
                          }
-                     }];
+        }];
     
 }
 
@@ -131,75 +132,51 @@
     
     urlString = [urlString stringByRemovingPercentEncoding];
     NSLog(@"%@", urlString);
-    //    NSLog(@"urlString=%@",urlString);
-    // 用://截取字符串
-    // 成员管理
-    //dagolfla://weblink/teamMemberMgr?teamKey=xx&userKey=xx
-    // 球队提现
-    //dagolfla://weblink/teamWithDraw?teamKey=xx&userKey=xx
-    //dagolfla://weblink/teamWithDraw?teamKey=4372&userKey=244
-    
     
     NSArray  * array= [urlString componentsSeparatedByString:@":"];
-//    NSArray  * arrayUrl= [urlString componentsSeparatedByString:@"privatemsg:"];
-//    NSString *xinWenURL = @"privatemsg";
-    
-    NSArray *urlComps = [urlString componentsSeparatedByString:@"://"];
     
     if ([array[0] isEqualToString:@"dagolfla"]) {
         //球队提现
         if ([urlString containsString:@"teamWithDraw"]) {
-            JGDWithDrawTeamMoneyViewController *vc = [[JGDWithDrawTeamMoneyViewController alloc] init];
-//            vc.teamKey = [self.detailDic objectForKey:@"timeKey"];
-            [self.navigationController pushViewController:vc animated:YES];
+            if ([urlString containsString:@"?"]) {
+                JGDWithDrawTeamMoneyViewController *vc = [[JGDWithDrawTeamMoneyViewController alloc] init];
+                vc.teamKey = [NSNumber numberWithInteger:[[self returnTimeKeyWithUrlString:urlString] integerValue]];
+                [self.navigationController pushViewController:vc animated:YES];
+            }
         }
-        
+        // 成员管理
         if ([urlString containsString:@"teamMemberMgr"]) {
-            JGDWithDrawTeamMoneyViewController *vc = [[JGDWithDrawTeamMoneyViewController alloc] init];
-            //            vc.teamKey = [self.detailDic objectForKey:@"timeKey"];
-            [self.navigationController pushViewController:vc animated:YES];
+            if ([urlString containsString:@"?"]) {
+                JGTeamMemberController *tmVc = [[JGTeamMemberController alloc] init];
+                
+                tmVc.teamKey = [NSNumber numberWithInteger:[[self returnTimeKeyWithUrlString:urlString] integerValue]];
+                
+                tmVc.teamManagement = 1;
+                [self.navigationController pushViewController:tmVc animated:YES];
+            }
         }
     }
     
-    
-//    if ([urlComps count]) {
-//        // 获取协议头
-//        NSString *protocolHead = [urlComps objectAtIndex:0];
-//        NSLog(@"protocolHead=%@",protocolHead);
-//    }
+
     decisionHandler(WKNavigationActionPolicyAllow);
 }
 
-/**
-func webView(webView: WKWebView, decidePolicyForNavigationAction navigationAction: WKNavigationAction, decisionHandler: (WKNavigationActionPolicy) -> Void) {
-    
-    if let url = navigationAction.request.URL{
-        if let host = url.host{  //获取域名
-            print(host.lowercaseString)
-        }
-        if let url = url.absoluteString{
-            print(url)
-            if url.contain("tel"){<span style="font-family: Arial, Helvetica, sans-serif;">//自己给String做的一个扩展方法,实现判断是否包含 </span>
-                
-                let tel = url.replace("tel:", to: "") //自己给String做的一个扩展方法,实现替换
-                let url1 = NSURL(string: "tel://" + tel)
-                //自己封装的一个简易的的对话框弹框
-                HUDialog.showDiaLoge("是否拨打:\(tel)", message: "", BtnTitle1: "取消", BtnBlock1: { () -> () in
-                    
-                }, BtnTitle2: "确认", BtnBlock2: { () -> () in
-                    
-                    UIApplication.sharedApplication().openURL(url1!)//打电话
-                })
-                
+- (NSString *)returnTimeKeyWithUrlString:(NSString *)string{
+    NSArray *parameterArray = [NSArray array];
+    NSString *timeKey;
+    NSArray *timeKeyArray = [string componentsSeparatedByString:@"?"];
+    if ([timeKeyArray count] == 2) {
+        NSString *parameterStr = [timeKeyArray objectAtIndex:1];
+        if ([parameterStr containsString:@"&"]) {
+            parameterArray = [parameterStr componentsSeparatedByString:@"&"];
+            if ([[parameterArray objectAtIndex:0]containsString:@"teamKey"]) {
+                timeKey = [[[parameterArray objectAtIndex:0]componentsSeparatedByString:@"="] objectAtIndex:1];
             }
-            
         }
     }
     
-    decisionHandler(WKNavigationActionPolicy.Allow) //决定是否加载这个请求, .Cancel则会取消这个加载 这个方法必须是同步的,且必须在本代理方法结束前调用
-    
+    return timeKey;
 }
- */
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
