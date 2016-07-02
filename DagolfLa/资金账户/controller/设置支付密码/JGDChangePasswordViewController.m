@@ -27,6 +27,8 @@
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];
     
+    self.navigationItem.title = @"设置支付密码";
+    
     if (_isWithdrawSetPassword == 1) {
         UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"backL"] style:UIBarButtonItemStylePlain target:self action:@selector(withdrawBackButtonClcik)];
         item.tintColor=[UIColor whiteColor];
@@ -47,7 +49,7 @@
 }
 
 - (void)creatTable{
-    self.tableV = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 310 * screenWidth / 375)];
+    self.tableV = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight - 64)];
     self.tableV.delegate = self;
     self.tableV.dataSource = self;
     [self.tableV registerClass:[JGDSetPayPasswordTableViewCell class] forCellReuseIdentifier:@"setPayPass"];

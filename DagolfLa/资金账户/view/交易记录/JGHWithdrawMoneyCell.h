@@ -19,8 +19,6 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *pricesTop;
 
 
-- (void)configJGHWithDrawModelWithMonay:(JGHWithDrawModel *)model;
-
 - (void)configJGHWithDrawModelWithMonay:(NSNumber *)monay andTradeCatory:(NSInteger)tradeCatory;
 
 @end

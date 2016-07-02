@@ -126,7 +126,7 @@ static NSString *const JGHTradRecordCellIdentifier = @"JGHTradRecordCell";
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     JGHWithdrawDetailsViewController *withdrawDetailsCtrl = [[JGHWithdrawDetailsViewController alloc]init];
-    withdrawDetailsCtrl.model = _dataArray[indexPath.section];
+    withdrawDetailsCtrl.model = _dataArray[indexPath.row];
     [self.navigationController pushViewController:withdrawDetailsCtrl animated:YES];
 }
 

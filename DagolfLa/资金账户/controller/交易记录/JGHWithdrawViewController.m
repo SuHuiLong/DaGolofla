@@ -159,6 +159,9 @@ static NSString *const JGHTradRecordImageCellIdentifier = @"JGHTradRecordImageCe
     return 45 * ProportionAdapter;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    if (section == 3) {
+        return 25 * ProportionAdapter;
+    }
     return 10;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
@@ -247,7 +250,8 @@ static NSString *const JGHTradRecordImageCellIdentifier = @"JGHTradRecordImageCe
         [[ShowHUD showHUD]showToastWithText:@"提现金额大于账户余额！" FromView:self.view];
         return;
     }
-        
+    
+    btn.enabled = NO;
     [[ShowHUD showHUD]showAnimationWithText:@"提交中..." FromView:self.view];
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     [dict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:userID] forKey:@"userKey"];
@@ -277,6 +281,8 @@ static NSString *const JGHTradRecordImageCellIdentifier = @"JGHTradRecordImageCe
             }
         }
     }];
+    
+    btn.enabled = YES;
 }
 
 #pragma mark -- 选择银行卡－－取消
