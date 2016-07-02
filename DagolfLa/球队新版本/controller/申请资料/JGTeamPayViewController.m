@@ -103,18 +103,28 @@
     } completionBlock:^(id data) {
         NSDictionary *dict = [data objectForKey:@"pay"];
         //微信
-        if (dict) {
-            PayReq *request = [[PayReq alloc] init];
-            request.openID       = [dict objectForKey:@"appid"];
-            request.partnerId    = [dict objectForKey:@"partnerid"];
-            request.prepayId     = [dict objectForKey:@"prepayid"];
-            request.package      = [dict objectForKey:@"Package"];
-            request.nonceStr     = [dict objectForKey:@"noncestr"];
-            request.timeStamp    =[[dict objectForKey:@"timestamp"] intValue];
-            request.sign         = [dict objectForKey:@"sign"];
+
+        if ([data objectForKey:@"packSuccess"]) {
             
-            [WXApi sendReq:request];
+            if (dict) {
+                PayReq *request = [[PayReq alloc] init];
+                request.openID       = [dict objectForKey:@"appid"];
+                request.partnerId    = [dict objectForKey:@"partnerid"];
+                request.prepayId     = [dict objectForKey:@"prepayid"];
+                request.package      = [dict objectForKey:@"Package"];
+                request.nonceStr     = [dict objectForKey:@"noncestr"];
+                request.timeStamp    =[[dict objectForKey:@"timestamp"] intValue];
+                request.sign         = [dict objectForKey:@"sign"];
+                
+                [WXApi sendReq:request];
+            }
         }
+        else
+        {
+            [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+        }
+        
+
     }];
 }
 
