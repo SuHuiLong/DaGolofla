@@ -241,6 +241,11 @@ static CGFloat ImageHeight  = 210.0;
 
     [self dataSet];
 }
+
+- (void)dealloc{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 #pragma mark -- 下载数据 －－－
 - (void)dataSet{
     [[ShowHUD showHUD]showAnimationWithText:@"加载中..." FromView:self.view];

@@ -35,9 +35,6 @@
 
 #import "UMMobClick/MobClick.h"
 
-#import "JGTeamActibityNameViewController.h"
-#import "JGTeamAcitivtyModel.h"
-
 @interface AppDelegate ()
 {
     BMKMapManager* _mapManager;
@@ -329,10 +326,17 @@
 -(void)gotoAppPage:(NSString *)timekey
 {
     if ([timekey integerValue]>0) {
-        JGTeamActibityNameViewController *activityCtrl = [[JGTeamActibityNameViewController alloc]init];
-        activityCtrl.teamKey = [timekey integerValue];
-        [self.window.rootViewController.navigationController pushViewController:activityCtrl animated:YES];
-//        [self.window.rootViewController presentViewController:activityCtrl animated:YES completion:nil];
+//        JGTeamActibityNameViewController *activityCtrl = [[JGTeamActibityNameViewController alloc]init];
+//        activityCtrl.teamKey = [timekey integerValue];
+//        
+        NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+        [dict setObject:[NSString stringWithFormat:@"%td", [timekey integerValue]] forKey:@"timekey"];
+        //创建一个消息对象
+        NSNotification * notice = [NSNotification notificationWithName:@"PushJGTeamActibityNameViewController" object:nil userInfo:dict];
+        //发送消息
+        [[NSNotificationCenter defaultCenter]postNotification:notice];
+        
+        //        [self.window.rootViewController presentViewController:activityCtrl animated:YES completion:nil];
     }
 }
 
