@@ -21,6 +21,7 @@
 #import "JGLNewShopDetailViewController.h"
 
 #import "HomeHeadView.h"
+#import "JGTeamActibityNameViewController.h"
 
 @interface ShouyeViewController ()<UIApplicationDelegate,CLLocationManagerDelegate>
 {
@@ -52,8 +53,6 @@
         [RCIM sharedRCIM].receiveMessageDelegate=self;
     }
     
-    
-    
     [self getCurPosition];
 }
 
@@ -73,6 +72,10 @@
     self.navigationItem.title = @"打高尔夫啦";
     self.view.backgroundColor = [UIColor whiteColor];
     
+    //监听分组页面返回，刷新数据
+    NSNotificationCenter * center = [NSNotificationCenter defaultCenter];
+    //添加当前类对象为一个观察者，name和object设置为nil，表示接收一切通知
+    [center addObserver:self selector:@selector(PushJGTeamActibityNameViewController:) name:@"PushJGTeamActibityNameViewController" object:nil];
 
     _scrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight)];
     [self.view addSubview:_scrollView];
@@ -85,8 +88,16 @@
     [self createTeamOrder];
     //投票和球场预定
     [self createFieldAndVote];
-    
-    
+}
+#pragma mark -- 网页 跳转活动详情
+- (void)PushJGTeamActibityNameViewController:(NSNotification *)not{
+    JGTeamActibityNameViewController *teamCtrl= [[JGTeamActibityNameViewController alloc]init];
+    teamCtrl.teamKey = [not.userInfo[@"timekey"] integerValue];
+    teamCtrl.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:teamCtrl animated:YES];
+}
+- (void)dealloc{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 -(void)createBanner

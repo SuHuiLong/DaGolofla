@@ -113,12 +113,10 @@ static CGFloat ImageHeight  = 210.0;
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor colorWithHexString:BG_color];
     self.automaticallyAdjustsScrollViewInsets = NO;
-    UIImage *bgImage = nil;
-    UIImage *headerImage = nil;
     _isEditor = 0;
     _titleArray = @[@"活动开始时间", @"活动结束时间", @"报名截止时间"];
     
-    self.imgProfile = [[UIImageView alloc] initWithImage:bgImage];
+    self.imgProfile = [[UIImageView alloc] initWithImage:[UIImage imageNamed:ActivityBGImage]];
     self.imgProfile.frame = CGRectMake(0, 0, screenWidth, ImageHeight);
     self.imgProfile.userInteractionEnabled = YES;
     self.teamActibityNameTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight - 44)];
@@ -179,7 +177,7 @@ static CGFloat ImageHeight  = 210.0;
     [self.titleView addSubview:replaceBtn];
     //头像
     self.headPortraitBtn = [[UIButton alloc]initWithFrame:CGRectMake(10, 135, 65, 65)];
-    [self.headPortraitBtn setImage:headerImage forState:UIControlStateNormal];
+    [self.headPortraitBtn setImage:[UIImage imageNamed:TeamLogoImage] forState:UIControlStateNormal];
     self.headPortraitBtn.layer.cornerRadius = 8.0;
     self.headPortraitBtn.layer.masksToBounds = YES;
     self.headPortraitBtn.tag = 740;
