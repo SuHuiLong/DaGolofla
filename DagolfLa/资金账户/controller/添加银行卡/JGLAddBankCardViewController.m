@@ -237,6 +237,14 @@
     }
 }
 
+-(BOOL)textFieldShouldBeginEditing:(UITextField *)textField
+{
+    if (_isClick == YES) {
+        [_alert dismissAlert];
+        _isClick = NO;
+    }
+    return YES;
+}
 
 
 - (void)didReceiveMemoryWarning {
