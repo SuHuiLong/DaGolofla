@@ -146,11 +146,11 @@ static CGFloat ImageHeight  = 210.0;
         
         self.memberState = [self.memBerDic objectForKey:@"state"];
         
-        if ([self.memberState integerValue] == 0) {
-            return;
-        }
+//        if ([self.memberState integerValue] == 0) {
+//            return;
+//        }
         
-        if ([[self.detailDic objectForKey:@"state"] integerValue] == 0) {
+        if ([[self.memBerDic objectForKey:@"state"] integerValue] == 0) {
             [self.previewBtn setTitle:@"正在等待审核" forState:UIControlStateNormal];
             self.previewBtn.backgroundColor = [UIColor lightGrayColor];
         }else if ([[self.detailDic objectForKey:@"state"] integerValue] == 2){
@@ -402,15 +402,15 @@ static CGFloat ImageHeight  = 210.0;
     self.previewBtn.layer.cornerRadius = 6.f;
     [self.footBackView addSubview:self.previewBtn];
     
-    if ([self.memberState integerValue] == 0) {
-        [self.previewBtn setTitle:@"等待管理员审批" forState:UIControlStateNormal];
-        self.previewBtn.backgroundColor = [UIColor lightGrayColor];
-
-    }else{
+//    if ([self.memberState integerValue] == 0) {
+//        [self.previewBtn setTitle:@"等待管理员审批" forState:UIControlStateNormal];
+//        self.previewBtn.backgroundColor = [UIColor lightGrayColor];
+//
+//    }else{
         [self.previewBtn setTitle:@"邀请好友" forState:UIControlStateNormal];
         self.previewBtn.backgroundColor = [UIColor colorWithHexString:@"#F59826"];
         [self.previewBtn addTarget:self action:@selector(previewBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-    }
+//    }
     
     
 //    [self.launchActivityTableView addSubview:self.previewBtn];

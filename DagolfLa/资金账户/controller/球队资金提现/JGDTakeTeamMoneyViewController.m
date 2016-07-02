@@ -150,6 +150,10 @@
             [[ShowHUD showHUD]showToastWithText:@"提现成功" FromView:self.view];
             [self performSelector:@selector(pop) withObject:self afterDelay:1];
         }
+        else
+        {
+            [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+        }
     }];
 }
 
@@ -179,17 +183,9 @@ static int timeNumber = 60;
     NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
     [dict setObject:DEFAULF_USERID forKey:@"userKey"];
     [dict setObject:self.teamKey forKey:@"teamKey"];
-    NSString *paraStr = [JGDTakeTeamMoneyViewController dictionaryToJson:dict];
-    ;
     
-    paraStr = [paraStr stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-    paraStr = [paraStr stringByReplacingOccurrencesOfString:@"\r" withString:@""];
-    paraStr = [paraStr stringByReplacingOccurrencesOfString:@"\n" withString:@""];
-    paraStr = [paraStr stringByReplacingOccurrencesOfString:@" " withString:@""];
     
-    NSString *str = [JGDTakeTeamMoneyViewController md5HexDigest:[NSString stringWithFormat:@"%@dagolfla.com", paraStr]];
-    
-    [[JsonHttp jsonHttp]httpRequest:[NSString stringWithFormat:@"team/doSendTeamWithDrawCheckCode?md5=%@",str] JsonKey:nil withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
+    [[JsonHttp jsonHttp]httpRequestWithMD5:@"team/doSendTeamWithDrawCheckCode" JsonKey:nil withData:dict failedBlock:^(id errType) {
         
     } completionBlock:^(id data) {
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
@@ -202,6 +198,31 @@ static int timeNumber = 60;
             [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
         }
     }];
+
+    
+    
+    
+//    NSString *paraStr = [JGDTakeTeamMoneyViewController dictionaryToJson:dict];
+//    
+//    paraStr = [paraStr stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+//    paraStr = [paraStr stringByReplacingOccurrencesOfString:@"\r" withString:@""];
+//    paraStr = [paraStr stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+//    paraStr = [paraStr stringByReplacingOccurrencesOfString:@" " withString:@""];
+//    
+//    NSString *str = [JGDTakeTeamMoneyViewController md5HexDigest:[NSString stringWithFormat:@"%@dagolfla.com", paraStr]];
+//    [[JsonHttp jsonHttp]httpRequest:[NSString stringWithFormat:@"team/doSendTeamWithDrawCheckCode?md5=%@",str] JsonKey:nil withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
+//        
+//    } completionBlock:^(id data) {
+//        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+//            timeNumber = 60;
+//            _timer=[NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(autoMove) userInfo:nil repeats:YES];
+//            [[NSRunLoop currentRunLoop] addTimer:_timer forMode:NSRunLoopCommonModes];
+//        }
+//        else
+//        {
+//            [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+//        }
+//    }];
 }
 
 

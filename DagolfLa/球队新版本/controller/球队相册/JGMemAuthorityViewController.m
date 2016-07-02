@@ -126,10 +126,12 @@
             NSLog(@"errType == %@", errType);
         } completionBlock:^(id data) {
             if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
-                [Helper alertViewNoHaveCancleWithTitle:@"设置成功" withBlock:^(UIAlertController *alertView) {
-                    [self.navigationController presentViewController:alertView animated:YES completion:nil];
-                }];
-                [self.navigationController popViewControllerAnimated:YES];
+//                [Helper alertViewNoHaveCancleWithTitle:@"设置成功" withBlock:^(UIAlertController *alertView) {
+//                    [self.navigationController presentViewController:alertView animated:YES completion:nil];
+//                }];
+//                [self.navigationController popViewControllerAnimated:YES];
+                [[ShowHUD showHUD]showToastWithText:@"设置成功" FromView:self.view];
+                [self performSelector:@selector(pop) withObject:self afterDelay:1];
 
             }
             else
@@ -150,6 +152,10 @@
     
     
     
+}
+
+- (void)pop{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 -(void)uiConfig

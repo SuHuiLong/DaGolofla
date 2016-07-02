@@ -117,7 +117,7 @@ static NSString *const JGHTradRecordCellIdentifier = @"JGHTradRecordCell";
     
     tradCell.selectionStyle = UITableViewCellSelectionStyleNone;
     if (_dataArray.count > 0) {
-        [tradCell congifData:_dataArray[indexPath.section]];
+        [tradCell congifData:_dataArray[indexPath.row]];
     }
     
     
