@@ -35,6 +35,9 @@
 
 #import "UMMobClick/MobClick.h"
 
+#import "JGTeamActibityNameViewController.h"
+#import "JGTeamAcitivtyModel.h"
+
 @interface AppDelegate ()
 {
     BMKMapManager* _mapManager;
@@ -288,19 +291,29 @@
 }
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
 {
+    
     if ([url.scheme isEqualToString:@"sina.561e0d97e0f55a66640014e2"])
     {
         return  [UMSocialSnsService handleOpenURL:url wxApiDelegate:nil];
-    }
-    if ([url.scheme isEqualToString:@"wxdcdc4e20544ed728"]) {
+    }else if ([url.scheme isEqualToString:@"wxdcdc4e20544ed728"]) {
         BOOL result = [UMSocialSnsService handleOpenURL:url];
         if (result == FALSE) {
             //调用其他SDK，例如支付宝SDK等
             return [WXApi handleOpenURL:url delegate:self];
         }
         return result;
-    }
-    else
+    }else if ([url.scheme isEqualToString:@"dagolfla"] && [[NSString stringWithFormat:@"%@", url] containsString:@"teamActivityDetail"]){
+        NSLog(@"Calling Application Bundle ID: %@", sourceApplication);
+        NSLog(@"URL scheme:%@", [url scheme]);
+        NSLog(@"URL query: %@", [url query]);
+        NSString *activityKey = @"";
+        if ([url query]) {
+            activityKey = [[[NSString stringWithFormat:@"%@", [url query]] componentsSeparatedByString:@"="] objectAtIndex:1];
+        }
+        
+        [self gotoAppPage:activityKey];
+        return YES;
+    }else
     {
         //跳转支付宝钱包进行支付，处理支付结果
         [[AlipaySDK defaultService] processOrderWithPaymentResult:url standbyCallback:^(NSDictionary *resultDic) {
@@ -312,6 +325,16 @@
     }
 }
 
+#pragma mark -- 跳转到指定活动详情页面
+-(void)gotoAppPage:(NSString *)timekey
+{
+    if ([timekey integerValue]>0) {
+        JGTeamActibityNameViewController *activityCtrl = [[JGTeamActibityNameViewController alloc]init];
+        activityCtrl.teamKey = [timekey integerValue];
+        [self.window.rootViewController.navigationController pushViewController:activityCtrl animated:YES];
+//        [self.window.rootViewController presentViewController:activityCtrl animated:YES completion:nil];
+    }
+}
 
 -(void)startApp
 {

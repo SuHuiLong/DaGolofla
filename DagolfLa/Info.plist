@@ -47,8 +47,8 @@
 			</array>
 		</dict>
 		<dict>
-			<key>CFBundleTypeRole</key>
-			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>com.jungao.dagolfla</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>dagolfla</string>
