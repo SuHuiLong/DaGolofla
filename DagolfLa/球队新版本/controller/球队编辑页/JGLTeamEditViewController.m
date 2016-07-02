@@ -14,7 +14,6 @@
 #import "DateTimeViewController.h"
 #import "TeamAreaViewController.h"
 
-#import "JGTeamActibityNameViewController.h"
 #import "SXPickPhoto.h"
 #import "JGCostSetViewController.h"
 

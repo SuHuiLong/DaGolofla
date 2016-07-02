@@ -14,7 +14,6 @@
 #import "JGHConcentTextViewController.h"
 #import "DateTimeViewController.h"
 #import "TeamAreaViewController.h"
-#import "JGTeamActibityNameViewController.h"
 #import "SXPickPhoto.h"
 #import "JGHTeamContactTableViewCell.h"
 #import "JGCostSetViewController.h"

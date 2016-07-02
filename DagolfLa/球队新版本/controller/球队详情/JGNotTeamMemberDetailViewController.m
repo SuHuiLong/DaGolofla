@@ -18,7 +18,6 @@
 #import "ChatDetailViewController.h"
 #import "JGTeamDeatilWKwebViewController.h"
 
-#import "JGTeamActibityNameViewController.h"
 #import "SXPickPhoto.h"
 #import "JGHTeamContactTableViewCell.h"
 #import "JGCostSetViewController.h"

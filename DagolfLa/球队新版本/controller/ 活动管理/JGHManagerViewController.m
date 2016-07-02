@@ -9,7 +9,6 @@
 #import "JGHManagerViewController.h"
 #import "JGTeamAcitivtyModel.h"
 #import "JGTeamActivityCell.h"
-#import "JGTeamActibityNameViewController.h"
 #import "JGHLaunchActivityViewController.h"
 #import "JGTeamGroupViewController.h"
 #import "JGHActicityDetailsViewController.h"

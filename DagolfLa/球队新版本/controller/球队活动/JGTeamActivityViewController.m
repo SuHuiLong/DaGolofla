@@ -253,11 +253,11 @@
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     JGTeamActibityNameViewController *activityNameCtrl = [[JGTeamActibityNameViewController alloc]init];
-    activityNameCtrl.isTeamChannal = 2;
+//    activityNameCtrl.isTeamChannal = 2;
     JGTeamAcitivtyModel *model = [[JGTeamAcitivtyModel alloc]init];
     model = self.dataArray[indexPath.section];
-    activityNameCtrl.teamKey = [model.timeKey integerValue];
-    activityNameCtrl.model = model;
+    activityNameCtrl.teamKey = model.teamActivityKey;
+//    activityNameCtrl.model = model;
     [self.navigationController pushViewController:activityNameCtrl animated:YES];
 }
 - (void)didReceiveMemoryWarning {

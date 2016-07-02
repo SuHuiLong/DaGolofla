@@ -22,7 +22,7 @@
 @property (copy, nonatomic)NSString *addressKey;//地址
 
 
-@property (assign, nonatomic)NSInteger isTeamChannal;
+//@property (assign, nonatomic)NSInteger isTeamChannal;
 
 //用户在球队的真实姓名
 @property (nonatomic, strong)NSString *userName;
