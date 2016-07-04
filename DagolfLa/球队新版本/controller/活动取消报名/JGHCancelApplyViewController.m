@@ -293,15 +293,33 @@ static NSString *const JGHButtonCellIdentifier = @"JGHButtonCell";
 }
 
 - (void)popCtrl{
+    //创建一个消息对象
+    NSNotification * notice = [NSNotification notificationWithName:@"reloadActivityData" object:nil userInfo:nil];
+    //            发送消息
+    [[NSNotificationCenter defaultCenter]postNotification:notice];
+    [self.navigationController popViewControllerAnimated:YES];
+//    if ([NSThread isMainThread]) {
+//        NSLog(@"Yay!");
+//        [self pushCtrl];
+//    } else {
+//        NSLog(@"Humph, switching to main");
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//            [self pushCtrl];
+//        });
+//    }
+}
+
+- (void)pushCtrl{
     for (UIViewController *controller in self.navigationController.viewControllers) {
         if ([controller isKindOfClass:[JGTeamActivityViewController class]]) {
             //创建一个消息对象
             NSNotification * notice = [NSNotification notificationWithName:@"reloadActivityData" object:nil userInfo:nil];
-            //发送消息
-//            [[NSNotificationCenter defaultCenter]postNotification:notice];
+            //            发送消息
+            [[NSNotificationCenter defaultCenter]postNotification:notice];
             [self.navigationController popToViewController:controller animated:YES];
         }
-    }}
+    }
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

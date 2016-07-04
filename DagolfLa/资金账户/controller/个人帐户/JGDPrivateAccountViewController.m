@@ -56,6 +56,7 @@
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.scrollEnabled = NO;
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     UIImageView *view = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 160 *ScreenWidth / 375)];
     view.image = [UIImage imageNamed:@"account_bg"];
 //    view.backgroundColor = [UIColor colorWithHexString:@"#32B14D"];
@@ -79,7 +80,7 @@
     button.frame = CGRectMake(120 * ScreenWidth / 375, 136 * ScreenWidth / 375, 135 * ScreenWidth / 375, 48 * ScreenWidth / 375) ;
     [button setBackgroundImage:[UIImage imageNamed:@"tixiananniu"] forState:(UIControlStateNormal)];
 //    [button setImage:[UIImage imageNamed:@"tixiananniu"] forState:(UIControlStateNormal)];
-    [button addTarget:self action:@selector(takeMoney) forControlEvents:(UIControlEventTouchUpInside)];
+    [button addTarget:self action:@selector(takeMoney:) forControlEvents:(UIControlEventTouchUpInside)];
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"sysCell"];
     
     
@@ -150,11 +151,13 @@
 
 #pragma mark -----提现
 
-- (void)takeMoney{
+- (void)takeMoney:(UIButton *)btn{
+    btn.enabled = NO;
     JGHWithdrawViewController *withdrawCtrl = [[JGHWithdrawViewController alloc]init];
     withdrawCtrl.balance = self.money;
     
     [self.navigationController pushViewController:withdrawCtrl animated:YES];
+    btn.enabled = YES;
 }
 
 #pragma mark -----添加银行卡

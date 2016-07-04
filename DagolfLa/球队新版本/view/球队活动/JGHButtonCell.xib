@@ -15,7 +15,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="t3M-kd-Xe4">
-                        <rect key="frame" x="10" y="5.5" width="300" height="33"/>
+                        <rect key="frame" x="10" y="1" width="300" height="41.5"/>
                         <color key="backgroundColor" red="0.94117647059999998" green="0.53725490200000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <state key="normal">
@@ -27,13 +27,16 @@
                     </button>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="t3M-kd-Xe4" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="D0P-Kq-LAn"/>
+                    <constraint firstItem="t3M-kd-Xe4" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="1" id="ScQ-Kb-HeS"/>
+                    <constraint firstAttribute="bottom" secondItem="t3M-kd-Xe4" secondAttribute="bottom" constant="1" id="geQ-La-uuq"/>
                     <constraint firstItem="t3M-kd-Xe4" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="mfd-4c-ksf"/>
                     <constraint firstAttribute="trailing" secondItem="t3M-kd-Xe4" secondAttribute="trailing" constant="10" id="pg5-4F-6m6"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
                 <outlet property="clickBtn" destination="t3M-kd-Xe4" id="fhJ-3j-alP"/>
+                <outlet property="down" destination="geQ-La-uuq" id="emX-7z-GW8"/>
+                <outlet property="top" destination="ScQ-Kb-HeS" id="p03-AW-hni"/>
             </connections>
         </tableViewCell>
     </objects>

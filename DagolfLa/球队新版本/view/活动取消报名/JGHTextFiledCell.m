@@ -45,7 +45,7 @@
     
     self.titlefiledsRight.constant = 20 *ProportionAdapter;
     
-    self.titles.font = [UIFont systemFontOfSize:17.0];
+    self.titles.font = [UIFont systemFontOfSize:17.0*ProportionAdapter];
     self.titles.textColor = [UIColor blackColor];
     self.titlefileds.secureTextEntry = YES;
 }

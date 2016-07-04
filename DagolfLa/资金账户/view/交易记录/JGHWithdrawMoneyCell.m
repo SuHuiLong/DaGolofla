@@ -15,7 +15,7 @@
     [super awakeFromNib];
     // Initialization code
     
-    self.prices.font = [UIFont systemFontOfSize:25.0 * ProportionAdapter];
+    self.prices.font = [UIFont systemFontOfSize:35.0 * ProportionAdapter];
     self.propontLabel.font = [UIFont systemFontOfSize:17.0 * ProportionAdapter];
     
     self.pricesTop.constant = 20*ProportionAdapter;
@@ -25,10 +25,6 @@
     [super setSelected:selected animated:animated];
 
     // Configure the view for the selected state
-}
-
-- (void)configJGHWithDrawModelWithMonay:(JGHWithDrawModel *)model{
-    
 }
 
 - (void)configJGHWithDrawModelWithMonay:(NSNumber *)monay andTradeCatory:(NSInteger)tradeCatory{

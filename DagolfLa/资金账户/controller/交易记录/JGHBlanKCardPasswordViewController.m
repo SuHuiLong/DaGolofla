@@ -168,9 +168,10 @@ static NSString *const JGHWithdrawCellIdentifier = @"JGHWithdrawCell";
 - (void)selectCommitBtnClick:(UIButton *)btn{
     NSLog(@"确定");
     [self.view endEditing:YES];
+    btn.enabled = NO;
     
     if (_editor == 1) {
-        [[ShowHUD showHUD]showToastWithText:@"提现中..." FromView:self.view];
+//        [[ShowHUD showHUD]showToastWithText:@"提现中..." FromView:self.view];
         NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
         [dict setObject:DEFAULF_USERID forKey:@"userKey"];
         [dict setObject:[NSString stringWithFormat:@"%.2f", _reaplyBalance] forKey:@"money"];
@@ -180,10 +181,10 @@ static NSString *const JGHWithdrawCellIdentifier = @"JGHWithdrawCell";
         
         
         [[JsonHttp jsonHttp]httpRequestWithMD5:@"user/doUserWithDraw" JsonKey:nil withData:dict failedBlock:^(id errType) {
-            [[ShowHUD showHUD]hideAnimationFromView:self.view];
+//            [[ShowHUD showHUD]hideAnimationFromView:self.view];
 
         } completionBlock:^(id data) {
-            [[ShowHUD showHUD]hideAnimationFromView:self.view];
+//            [[ShowHUD showHUD]hideAnimationFromView:self.view];
             if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
                 [[ShowHUD showHUD]showToastWithText:@"提现成功！" FromView:self.view];
                 
@@ -239,6 +240,8 @@ static NSString *const JGHWithdrawCellIdentifier = @"JGHWithdrawCell";
 //            }
 //        }];
     }
+    
+    btn.enabled = YES;
 }
 
 #pragma mark -- 返回个人账户

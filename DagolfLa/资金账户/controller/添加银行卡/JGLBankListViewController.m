@@ -33,7 +33,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    self.view.backgroundColor = [UIColor colorWithHexString:BG_color];
     self.title = @"银行卡";
     _page = 0;
     _dataArray = [[NSMutableArray alloc]init];
@@ -45,6 +45,7 @@
 -(void)createHeader
 {
     _viewHeader = [[UIView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, 64*screenWidth/375)];
+    _viewHeader.backgroundColor = [UIColor colorWithHexString:BG_color];
     [self.view addSubview:_viewHeader];
     
     UIButton* btnDelete = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -80,6 +81,7 @@
     [self.view addSubview:_tableView];
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     _tableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
+    _tableView.backgroundColor = [UIColor colorWithHexString:BG_color];
     [_tableView.header beginRefreshing];
 }
 
@@ -138,6 +140,11 @@
 {
     return 10*screenWidth/375;
 }
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
+    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, 10*screenWidth/375)];
+    view.backgroundColor = [UIColor colorWithHexString:BG_color];
+    return view;
+}
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return 140*ScreenWidth/375;
@@ -162,8 +169,8 @@
     cell.deleteBtn.tag = 100+indexPath.section;
     [cell.deleteBtn addTarget:self action:@selector(deleteClick:) forControlEvents:UIControlEventTouchUpInside];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    cell.backgroundColor = [UIColor colorWithHexString:BG_color];
     return cell;
-    
 }
 #pragma mark --删除银行卡
 -(void)deleteClick:(UIButton *)btn

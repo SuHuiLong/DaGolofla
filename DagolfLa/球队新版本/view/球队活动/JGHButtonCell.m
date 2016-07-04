@@ -15,6 +15,11 @@
     // Initialization code
     self.clickBtn.layer.masksToBounds = YES;
     self.clickBtn.layer.cornerRadius = 8.0;
+    
+    if (iPhone5) {
+        self.top.constant = 5.0;
+        self.down.constant = 5.0;
+    }
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
