@@ -404,9 +404,14 @@
             }else{
                 JGTeamMemberORManagerViewController *detailVC = [[JGTeamMemberORManagerViewController alloc] init];
                 if (self.searchController.active) {
-                    detailVC.detailDic = self.searchArray[indexPath.row];
+                    
+                    if ([self.searchArray count] > 0) {
+                        detailVC.detailDic = self.searchArray[indexPath.row];
+                    }
                 }else{
-                    detailVC.detailDic = self.modelArray[indexPath.row];
+                    if ([self.modelArray count] > 0) {
+                        detailVC.detailDic = self.modelArray[indexPath.row];
+                    }
                 }
                 detailVC.isManager = NO;
                 [self.navigationController pushViewController:detailVC animated:YES];
