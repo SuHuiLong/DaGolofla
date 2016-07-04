@@ -14,11 +14,11 @@
 #import "MJDIYBackFooter.h"
 #import "Helper.h"
 #import "BallParkModel.h"
-
+#import <RongIMKit/RongIMKit.h>
 #define kBallPark_URL @"ballInfo/queryPage.do"
 
 
-@interface BallParkViewController ()<UITableViewDataSource,UITableViewDelegate>
+@interface BallParkViewController ()<UITableViewDataSource,UITableViewDelegate,UIApplicationDelegate,CLLocationManagerDelegate>
 {
     UITableView* _tableView;
     NSMutableArray* _dataArray;
@@ -26,8 +26,10 @@
     UITextField *_textField;
     
     NSInteger _page;
+    
+    BOOL _isCor;
 }
-
+@property (strong, nonatomic) CLLocationManager* locationManager;
 @end
 
 @implementation BallParkViewController
@@ -46,15 +48,104 @@
     self.title = @"地区选择";
     
     _page = 1;
-    //搜索栏
-    [self createSeachBar];
-    //表
-    [self createTableView];
+    _isCor = NO;
     
+    [self getCurPosition];
     
+    if (_isCor == NO) {
+        //搜索栏
+        [self createSeachBar];
+        //表
+        [self createTableView];
+    }
 }
 
+
+
+
+#pragma MARK --定位方法
+-(void)getCurPosition{
+    
+    if (_locationManager==nil) {
+        _locationManager=[[CLLocationManager alloc] init];
+    }
+    if ([CLLocationManager locationServicesEnabled]) {
+        _locationManager.delegate=self;
+        _locationManager.desiredAccuracy=kCLLocationAccuracyBest;
+        _locationManager.distanceFilter=10.0f;
+        if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0)
+        {
+            [_locationManager requestWhenInUseAuthorization];  //调用了这句,就会弹出允许框了.
+        }
+        [_locationManager startUpdatingLocation];
+    }
+    
+}
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
+{
+    CLLocation *currLocation = [locations lastObject];
+    //NSLog(@"经度=%f 纬度=%f 高度=%f", currLocation.coordinate.latitude, currLocation.coordinate.longitude, currLocation.altitude);
+    NSUserDefaults *user=[NSUserDefaults standardUserDefaults];
+    // 获取当前所在的城市名
+    
+    CLGeocoder *geocoder = [[CLGeocoder alloc] init];
+    
+    //根据经纬度反向地理编译出地址信息
+    
+    [geocoder reverseGeocodeLocation:currLocation completionHandler:^(NSArray *array, NSError *error)
+     {
+         if (array.count > 0)
+         {
+             CLPlacemark *placemark = [array objectAtIndex:0];
+             //将获得的所有信息显示到label上
+             NSLog(@"%@",placemark.name);
+             //获取城市
+             NSString *city = placemark.locality;
+             if (!city) {
+                 //四大直辖市的城市信息无法通过locality获得，只能通过获取省份的方法来获得（如果city为空，则可知为直辖市）
+                 city = placemark.administrativeArea;
+             }
+             [user setObject:city forKey:@"currentCity"];
+             [user synchronize];
+             
+             //搜索栏
+             [self createSeachBar];
+             //表
+             [self createTableView];
+         }
+         else if (error == nil && [array count] == 0)
+         {
+             NSLog(@"No results were returned.");
+         }
+         else if (error != nil)
+         {
+             NSLog(@"An error occurred = %@", error);
+         }
+     }];
+    
+    
+    [user setObject:[NSNumber numberWithFloat:currLocation.coordinate.latitude] forKey:@"lat"];
+    [user setObject:[NSNumber numberWithFloat:currLocation.coordinate.longitude] forKey:@"lng"];
+    [_locationManager stopUpdatingLocation];
+    [user synchronize];
+}
+- (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
+{
+    if ([error code] == kCLErrorDenied)
+    {
+        //访问被拒绝
+        //NSLog(@"访问被拒绝");
+    }
+    if ([error code] == kCLErrorLocationUnknown) {
+        //无法获取位置信息
+        //NSLog(@"无法获取位置信息");
+    }
+}
+
+
+
 -(void)createSeachBar{
+    _isCor = YES;
     UIView *view=[[UIView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 44*ScreenWidth/375)];
     view.backgroundColor=[UIColor lightGrayColor];
     [self.view addSubview:view];

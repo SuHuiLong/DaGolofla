@@ -59,7 +59,7 @@
 
 -(void)showData:(JGHPlayersModel *)model
 {
-    [_iconImg sd_setImageWithURL:[Helper setImageIconUrl:@"user" andTeamKey:model.userKey andIsSetWidth:YES andIsBackGround:NO] placeholderImage:[UIImage imageNamed:TeamLogoImage]];
+    [_iconImg sd_setImageWithURL:[Helper setImageIconUrl:@"user" andTeamKey:model.userKey andIsSetWidth:YES andIsBackGround:NO] placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
     
     _iconImg.layer.cornerRadius = 20;
     _iconImg.clipsToBounds = YES;

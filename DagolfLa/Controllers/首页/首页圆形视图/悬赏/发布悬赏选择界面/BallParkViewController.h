@@ -7,7 +7,7 @@
 //
 
 #import "ViewController.h"
-
+#import <UIKit/UIKit.h>
 @interface BallParkViewController : ViewController
 @property(nonatomic,assign)NSInteger type1;
 @property (nonatomic,copy) void(^callback)(NSString *,NSInteger);
