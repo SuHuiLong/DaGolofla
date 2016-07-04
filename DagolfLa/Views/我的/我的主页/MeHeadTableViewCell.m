@@ -22,7 +22,7 @@
         _iconImgv = [[UIImageView alloc]initWithFrame:CGRectMake(10*ScreenWidth/375, 10*ScreenWidth/375, 70*ScreenWidth/375, 70*ScreenWidth/375)];
         _iconImgv.layer.cornerRadius = 8*ScreenWidth/375;
         _iconImgv.layer.masksToBounds = YES;
-        _iconImgv.image = [UIImage imageNamed:@"tu2"];
+        _iconImgv.image = [UIImage imageNamed:@"moren.jpg"];
         [self addSubview:_iconImgv];
         
         _imgvSex = [[UIImageView alloc]initWithFrame:CGRectMake(90*ScreenWidth/375, 24*ScreenWidth/375, 10*ScreenWidth/375, 13*ScreenWidth/375)];

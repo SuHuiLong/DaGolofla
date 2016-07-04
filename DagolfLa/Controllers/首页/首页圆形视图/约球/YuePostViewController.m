@@ -385,7 +385,7 @@
         }
         else
         {
-            [btnImgv setImage:[UIImage imageNamed:@"tx4"] forState:UIControlStateNormal];
+            [btnImgv setImage:[UIImage imageNamed:@"moren.jpg"] forState:UIControlStateNormal];
         }
         
         [_viewPeople addSubview:btnImgv];

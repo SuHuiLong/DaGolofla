@@ -762,7 +762,7 @@
                     NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:respondsData options:NSJSONReadingMutableContainers error:nil];
                     if ([[dict objectForKey:@"success"]integerValue] == 1) {
 //                        [btn setImage:[UIImage imageNamed:[[NSUserDefaults standardUserDefaults] objectForKey:@"pic"]] forState:UIControlStateNormal];
-                        [btn setImage:[UIImage imageNamed:@"tx4"] forState:UIControlStateNormal];
+                        [btn setImage:[UIImage imageNamed:@"moren.jpg"] forState:UIControlStateNormal];
                     }
                     
                 } failed:^(NSError *error) {
@@ -787,7 +787,7 @@
                     NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:respondsData options:NSJSONReadingMutableContainers error:nil];
                     if ([[dict objectForKey:@"success"]integerValue] == 1) {
 //                        [btn setImage:[UIImage imageNamed:[[NSUserDefaults standardUserDefaults] objectForKey:@"pic"]] forState:UIControlStateNormal];
-                        [btn setImage:[UIImage imageNamed:@"tx4"] forState:UIControlStateNormal];
+                        [btn setImage:[UIImage imageNamed:@"moren.jpg"] forState:UIControlStateNormal];
                     }
                     
                 } failed:^(NSError *error) {
@@ -812,7 +812,7 @@
                     NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:respondsData options:NSJSONReadingMutableContainers error:nil];
                     if ([[dict objectForKey:@"success"]integerValue] == 1) {
 //                        [btn setImage:[UIImage imageNamed:[[NSUserDefaults standardUserDefaults] objectForKey:@"pic"]] forState:UIControlStateNormal];
-                        [btn setImage:[UIImage imageNamed:@"tx4"] forState:UIControlStateNormal];
+                        [btn setImage:[UIImage imageNamed:@"moren.jpg"] forState:UIControlStateNormal];
                     }
                     
                 } failed:^(NSError *error) {
@@ -837,7 +837,7 @@
                     NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:respondsData options:NSJSONReadingMutableContainers error:nil];
                     if ([[dict objectForKey:@"success"]integerValue] == 1) {
 //                        [btn setImage:[UIImage imageNamed:[[NSUserDefaults standardUserDefaults] objectForKey:@"pic"]] forState:UIControlStateNormal];
-                        [btn setImage:[UIImage imageNamed:@"tx4"] forState:UIControlStateNormal];
+                        [btn setImage:[UIImage imageNamed:@"moren.jpg"] forState:UIControlStateNormal];
                     }
                     
                 } failed:^(NSError *error) {

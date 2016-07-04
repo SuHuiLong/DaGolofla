@@ -66,7 +66,7 @@
         [self addSubview:_pageControl];
         
         _imageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, self.bounds.size.width,self.bounds.size.height)];
-        [_imageView setImage:[UIImage imageNamed:@"bannerS.jpg"]];
+        [_imageView setImage:[UIImage imageNamed:@"selfBackPic.jpg"]];
         [_scrollView addSubview:_imageView];
     }
     return self;
@@ -93,12 +93,12 @@
             if (i == 0) {
 //                NSURL *imageUrl = [NSURL URLWithString:[NSString stringWithFormat:@"http://imgcache.dagolfla.com/adver/%@.jpg",dataArray[i-1]]];
 
-                [_imageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://imgcache.dagolfla.com/adver/%@.jpg?ts=%@",dataArray[dataArray.count - 1], ts[ts.count - 1]]] placeholderImage:[UIImage imageNamed:@"bannerS.jpg"]];
+                [_imageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://imgcache.dagolfla.com/adver/%@.jpg?ts=%@",dataArray[dataArray.count - 1], ts[ts.count - 1]]] placeholderImage:[UIImage imageNamed:@"selfBackPic.jpg"]];
                 
             }else if (i == dataArray.count+1) {
-                [_imageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://imgcache.dagolfla.com/adver/%@.jpg?ts=%@",dataArray[0], ts[0]]] placeholderImage:[UIImage imageNamed:@"bannerS.jpg"]];
+                [_imageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://imgcache.dagolfla.com/adver/%@.jpg?ts=%@",dataArray[0], ts[0]]] placeholderImage:[UIImage imageNamed:@"selfBackPic.jpg"]];
             } else {
-                [_imageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://imgcache.dagolfla.com/adver/%@.jpg?ts=%@",dataArray[i-1], ts[i - 1]]] placeholderImage:[UIImage imageNamed:@"bannerS.jpg"]];
+                [_imageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://imgcache.dagolfla.com/adver/%@.jpg?ts=%@",dataArray[i-1], ts[i - 1]]] placeholderImage:[UIImage imageNamed:@"selfBackPic.jpg"]];
             }
             [_scrollView addSubview:_imageView];
             

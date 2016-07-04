@@ -24,7 +24,7 @@
     if (self) {
         
         _iconImage = [[UIImageView alloc]initWithFrame:CGRectMake(8*ScreenWidth/375, 15*ScreenWidth/375, 70*ScreenWidth/375, 70*ScreenWidth/375)];
-        _iconImage.image = [UIImage imageNamed:@"tu1"];
+        _iconImage.image = [UIImage imageNamed:@"moren.jpg"];
         _iconImage.layer.cornerRadius = 8*ScreenWidth/375;
         _iconImage.layer.masksToBounds = YES;
         [self.contentView addSubview:_iconImage];

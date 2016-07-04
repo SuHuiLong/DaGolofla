@@ -464,7 +464,6 @@
     NSMutableArray* arrayId = [[NSMutableArray alloc]init];
     for (int i = 0; i < _arrayData.count; i++) {
         UIButton* btnImgv = [UIButton buttonWithType:UIButtonTypeCustom];
-        //        [btnImgv setImage:[UIImage imageNamed:@"tx4"] forState:UIControlStateNormal];
         [btnImgv sd_setImageWithURL:[Helper imageIconUrl:_arrayData[i]] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"zwt"]];
         [_viewBasePeople addSubview:btnImgv];
         //60*ScreenWidth/375*((_nameAgreeArr.count-1)/6+1)

@@ -34,7 +34,7 @@
 -(void)createView
 {
     _imgvIcon = [[UIImageView alloc]initWithFrame:CGRectMake(8*ScreenWidth/320, 10*ScreenWidth/320, 54*ScreenWidth/320, 54*ScreenWidth/320)];
-    _imgvIcon.image = [UIImage imageNamed:@"tu1"];
+    _imgvIcon.image = [UIImage imageNamed:@"moren.jpg"];
     [self.contentView addSubview:_imgvIcon];
     _imgvIcon.layer.masksToBounds = YES;
     _imgvIcon.layer.cornerRadius = 8*ScreenWidth/375;

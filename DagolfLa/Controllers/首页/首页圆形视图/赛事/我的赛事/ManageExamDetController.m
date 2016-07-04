@@ -201,7 +201,7 @@
     [_scrollView addSubview:item];
     item.titleLabel.font = [UIFont systemFontOfSize:14*ScreenWidth/375];
     [item setTitle:@"清风" forState:UIControlStateNormal];
-    [item setImage:[UIImage imageNamed:@"tx4"] forState:UIControlStateNormal];
+    [item setImage:[UIImage imageNamed:@"moren.jpg"] forState:UIControlStateNormal];
     item.tag = 100;
     [item setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [item addTarget:self action:@selector(selfDetailClick) forControlEvents:UIControlEventTouchUpInside];
@@ -223,7 +223,7 @@
         item.frame = CGRectMake(10*ScreenWidth/375 + 60*ScreenWidth/375*i, 504*ScreenWidth/375, 60*ScreenWidth/375, 60*ScreenWidth/375);
         [_scrollView addSubview:item];
         [item setTitle:titleArr[i] forState:UIControlStateNormal];
-        [item setImage:[UIImage imageNamed:@"tx4"] forState:UIControlStateNormal];
+        [item setImage:[UIImage imageNamed:@"moren.jpg"] forState:UIControlStateNormal];
         item.tag = 101 + i;
         item.titleLabel.font = [UIFont systemFontOfSize:14*ScreenWidth/375];
         [item addTarget:self action:@selector(selfDetailClick) forControlEvents:UIControlEventTouchUpInside];

@@ -21,7 +21,7 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         _iconImage = [[UIImageView alloc]initWithFrame:CGRectMake(8*ScreenWidth/375, 5*ScreenWidth/375, 70*ScreenWidth/375, 70*ScreenWidth/375)];
-        _iconImage.image = [UIImage imageNamed:@"tu1"];
+        _iconImage.image = [UIImage imageNamed:@"moren.jpg"];
         [self.contentView addSubview:_iconImage];
         
         _titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(86*ScreenWidth/375, 8*ScreenWidth/375, 262*ScreenWidth/375, 21*ScreenWidth/375)];
