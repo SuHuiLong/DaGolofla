@@ -86,31 +86,6 @@ static CGFloat ImageHeight  = 210.0;
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:YES];
     self.navigationController.navigationBarHidden = YES;
-    /**
-    [self setData];
-//    if (self.isTeamChannal == 2){
-        if (_model.teamActivityKey == 0) {
-            //我的球队活动
-            [self.imgProfile sd_setImageWithURL:[Helper setImageIconUrl:@"activity" andTeamKey:[_model.timeKey integerValue] andIsSetWidth:NO andIsBackGround:YES] placeholderImage:[UIImage imageNamed:ActivityBGImage]];
-            [self.headPortraitBtn sd_setImageWithURL:[Helper setImageIconUrl:@"team" andTeamKey:_model.teamKey andIsSetWidth:YES andIsBackGround:NO] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:TeamLogoImage]];
-        }else{
-            //球队活动
-            [self.imgProfile sd_setImageWithURL:[Helper setImageIconUrl:@"activity" andTeamKey:_model.teamActivityKey andIsSetWidth:NO andIsBackGround:YES] placeholderImage:[UIImage imageNamed:ActivityBGImage]];
-            [self.headPortraitBtn sd_setImageWithURL:[Helper setImageIconUrl:@"team" andTeamKey:_model.teamKey andIsSetWidth:YES andIsBackGround:NO] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:TeamLogoImage]];
-        }
-
-        self.imgProfile.contentMode = UIViewContentModeScaleAspectFill;
-        self.imgProfile.layer.masksToBounds = YES;
-    　*/
-//    }else if (self.isTeamChannal == 1){
-//        //近期活动过来的数据---其他走上面
-//        [self.imgProfile sd_setImageWithURL:[Helper setImageIconUrl:@"activity" andTeamKey:[_model.timeKey integerValue] andIsSetWidth:NO andIsBackGround:YES] placeholderImage:[UIImage imageNamed:ActivityBGImage]];
-//        self.imgProfile.contentMode = UIViewContentModeScaleAspectFill;
-//        self.imgProfile.layer.masksToBounds = YES;
-//        
-//        [self.headPortraitBtn sd_setImageWithURL:[Helper setImageIconUrl:@"team" andTeamKey:_model.teamKey andIsSetWidth:YES andIsBackGround:NO] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:TeamLogoImage]];
-//        
-//    }
 }
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:YES];
@@ -140,7 +115,6 @@ static CGFloat ImageHeight  = 210.0;
         self.dataArray = [NSMutableArray array];
         self.subDataArray = [NSMutableArray array];
         self.model = [[JGTeamAcitivtyModel alloc]init];
-//        self.activityDict = [NSMutableDictionary dictionary];
         self.pickPhoto = [[SXPickPhoto alloc]init];
         self.titleView = [[UIView alloc]init];
             }
@@ -151,14 +125,6 @@ static CGFloat ImageHeight  = 210.0;
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor colorWithHexString:BG_color];
     self.automaticallyAdjustsScrollViewInsets = NO;
-//    UIImage *bgImage = nil;
-//    UIImage *headerImage = nil;
-//    if (self.isTeamChannal == 2) {
-//        NSLog(@"我的球队过来的数据");
-//    }else{
-//        bgImage = _model.bgImage;
-//        headerImage = _model.headerImage;
-//    }
     
     //监听分组页面返回，刷新数据
     NSNotificationCenter * center = [NSNotificationCenter defaultCenter];
@@ -251,20 +217,6 @@ static CGFloat ImageHeight  = 210.0;
     [[ShowHUD showHUD]showAnimationWithText:@"加载中..." FromView:self.view];
     
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-//    if (self.isTeamChannal == 1) {
-//        //近期活动
-//        [dict setValue:[NSString stringWithFormat:@"%td", [_model.timeKey integerValue]] forKey:@"activityKey"];
-//    }else{
-//        if (self.isTeamChannal == 2) {
-//            if (_model.teamActivityKey == 0) {
-//                //球队活动
-//                [dict setValue:[NSString stringWithFormat:@"%td", [_model.timeKey integerValue]] forKey:@"activityKey"];
-//            }else{
-//                //我的球队
-//                [dict setValue:[NSString stringWithFormat:@"%td", _model.teamActivityKey] forKey:@"activityKey"];
-//            }
-//        }
-//    }
     [dict setValue:@(_teamKey) forKey:@"activityKey"];
 
     [dict setValue:DEFAULF_USERID forKey:@"userKey"];
@@ -401,13 +353,7 @@ static CGFloat ImageHeight  = 210.0;
 #pragma mark -- 跳转分组页面
 - (void)pushGroupCtrl:(UIButton *)btn{
     JGTeamGroupViewController *teamCtrl = [[JGTeamGroupViewController alloc]init];
-    /**
-    if (_isTeamChannal == 2) {
-        teamCtrl.teamActivityKey = [_model.timeKey integerValue];
-    }else{
-        teamCtrl.teamActivityKey = _teamActivityKey;
-    }
-     */
+
     if (_model.teamActivityKey == 0) {
         teamCtrl.teamActivityKey = [_model.timeKey integerValue];
     }else{
@@ -530,20 +476,13 @@ static CGFloat ImageHeight  = 210.0;
 - (void)applyOrPayBtnClick:(UIButton *)btn{
     JGLPaySignUpViewController *paySignUpCtrl = [[JGLPaySignUpViewController alloc]init];
     paySignUpCtrl.dictRealDetail = self.teamMemberDic;
-//    if (self.isTeamChannal == 1) {
-//        //近期活动
-//        paySignUpCtrl.activityKey = [_model.timeKey integerValue];
-//    }else{
-//        if (self.isTeamChannal == 2) {
-            if (_model.teamActivityKey == 0) {
-                //球队活动
-                paySignUpCtrl.activityKey = [_model.timeKey integerValue];
-            }else{
-                //我的球队
-                paySignUpCtrl.activityKey = _model.teamActivityKey;
-            }
-//        }
-//    }
+    if (_model.teamActivityKey == 0) {
+        //球队活动
+        paySignUpCtrl.activityKey = [_model.timeKey integerValue];
+    }else{
+        //我的球队
+        paySignUpCtrl.activityKey = _model.teamActivityKey;
+    }
     
     paySignUpCtrl.model = _model;
     paySignUpCtrl.isApply = (BOOL)[_isApply floatValue];
@@ -554,20 +493,13 @@ static CGFloat ImageHeight  = 210.0;
 - (void)cancelApplyBtnClick:(UIButton *)btn{
     
     JGHCancelApplyViewController *cancelApplyCtrl = [[JGHCancelApplyViewController alloc]init];
-//    if (self.isTeamChannal == 1) {
-//        //近期活动
-//        cancelApplyCtrl.activityKey = [_model.timeKey integerValue];
-//    }else{
-//        if (self.isTeamChannal == 2) {
-            if (_model.teamActivityKey == 0) {
-                //球队活动
-                cancelApplyCtrl.activityKey = [_model.timeKey integerValue];
-            }else{
-                //我的球队
-                cancelApplyCtrl.activityKey = _model.teamActivityKey;
-            }
-//        }
-//    }
+    if (_model.teamActivityKey == 0) {
+        //球队活动
+        cancelApplyCtrl.activityKey = [_model.timeKey integerValue];
+    }else{
+        //我的球队
+        cancelApplyCtrl.activityKey = _model.teamActivityKey;
+    }
     
     cancelApplyCtrl.model = _model;
     [self.navigationController pushViewController:cancelApplyCtrl animated:YES];
@@ -604,7 +536,6 @@ static CGFloat ImageHeight  = 210.0;
         }else{
             JGTeamApplyViewController *teamApplyCtrl = [[JGTeamApplyViewController alloc]initWithNibName:@"JGTeamApplyViewController" bundle:nil];
             teamApplyCtrl.modelss = self.model;
-//            teamApplyCtrl.isTeamChannal = self.isTeamChannal;
             teamApplyCtrl.userName = _userName;
             teamApplyCtrl.isApply = (BOOL)[_isApply floatValue];
             teamApplyCtrl.teamMember = self.teamMemberDic;
@@ -715,13 +646,20 @@ static CGFloat ImageHeight  = 210.0;
         [headerCell addSubview:applyListBtn];
         [headerCell congiftitles:@"查看成绩"];
         return (UIView *)headerCell;
-    }else{
+    }else if (section == 5) {
         JGTeamActivityDetailsCell *detailsCell = [tableView dequeueReusableCellWithIdentifier:JGTeamActivityDetailsCellIdentifier];
         UIButton *detailsBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, screenWidth, detailsCell.frame.size.height)];
         [detailsBtn addTarget:self action:@selector(pushDetailSCtrl:) forControlEvents:UIControlEventTouchUpInside];
         [detailsCell addSubview:detailsBtn];
         [detailsCell configDetailsText:@"活动详情" AndActivityDetailsText:self.model.info];
         return (UIView *)detailsCell;
+    }else{
+        JGHHeaderLabelCell *headerCell = [tableView dequeueReusableCellWithIdentifier:JGHHeaderLabelCellIdentifier];
+        UIButton *awardBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, screenWidth, headerCell.frame.size.height)];
+        [awardBtn addTarget:self action:@selector(getTeamActivityAward:) forControlEvents:UIControlEventTouchUpInside];
+        [headerCell addSubview:awardBtn];
+        [headerCell congiftitles:@"查看奖项"];
+        return (UIView *)headerCell;
     }
 }
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
@@ -729,8 +667,10 @@ static CGFloat ImageHeight  = 210.0;
     footView.backgroundColor = [UIColor colorWithHexString:BG_color];
     return footView;
 }
-
-
+#pragma mark -- 查看奖项
+- (void)getTeamActivityAward:(UIButton *)btn{
+    
+}
 #pragma mark -- 查看成绩
 - (void)getTeamActivityResults:(UIButton *)btn{
     if (_isTeamMember == 1) {

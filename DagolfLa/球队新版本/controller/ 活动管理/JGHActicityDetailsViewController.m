@@ -529,7 +529,7 @@ static CGFloat ImageHeight  = 210.0;
     return 0;
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 9;
+    return 10;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 3) {
@@ -652,7 +652,7 @@ static CGFloat ImageHeight  = 210.0;
         contactCell.tetfileView.placeholder = @"请输入联系人";
         contactCell.tetfileView.keyboardType = UIKeyboardTypeDefault;
         return contactCell.contentView;
-    }else{
+    }else if (section == 8){
         JGHTeamContactTableViewCell *contactCell = [tableView dequeueReusableCellWithIdentifier:JGHTeamContactCellIdentifier];
         contactCell.tetfileView.tag = 456;
         contactCell.tetfileView.delegate = self;
@@ -664,12 +664,27 @@ static CGFloat ImageHeight  = 210.0;
         
         contactCell.tetfileView.placeholder = @"请输入最大人员限制数";
         return contactCell.contentView;
+    }else{
+        JGHTeamContactTableViewCell *contactCell = [tableView dequeueReusableCellWithIdentifier:JGHTeamContactCellIdentifier];
+        contactCell.tetfileView.enabled = NO;
+        contactCell.tetfileView.placeholder = @"";
+        contactCell.contactLabel.text = @"奖项设置";
+        contactCell.contentView.backgroundColor = [UIColor whiteColor];
+        UIButton *btn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, screenWidth, contactCell.frame.size.height)];
+        [btn addTarget:self action:@selector(setAward:) forControlEvents:UIControlEventTouchUpInside];
+        [contactCell addSubview:btn];
+        
+        return contactCell.contentView;
     }
 }
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
     UIView *footView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, 10)];
     footView.backgroundColor = [UIColor colorWithHexString:BG_color];
     return footView;
+}
+#pragma mark -- 奖项设置
+- (void)setAward:(UIButton *)btn{
+
 }
 #pragma mark -- 修改时间地点
 - (void)getTimeAndAddressClick:(UIButton *)btn{
