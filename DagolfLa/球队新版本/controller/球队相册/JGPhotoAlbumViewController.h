@@ -24,6 +24,8 @@
 
 @property (strong, nonatomic) NSNumber* state;
 
+@property (strong, nonnull) NSDictionary* dictMember;
+
 @property (copy, nonatomic) void (^blockRefresh)();
 
 @end

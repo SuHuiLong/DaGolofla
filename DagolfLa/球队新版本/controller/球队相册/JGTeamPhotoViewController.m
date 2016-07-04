@@ -197,7 +197,7 @@
         }
     }
     if (_powerPho != nil) {
-        if ([_powerPho containsString:@"1005"] == YES || [DEFAULF_USERID integerValue] == [[_dataArray[indexPath.row] userKey] integerValue]) {
+        if ([_powerPho containsString:@"1005"] == YES) {
             cell.manageBtn.hidden = NO;
             cell.manageBtn.tag = 10000 + indexPath.row;
             [cell.manageBtn addTarget:self action:@selector(manageClick:) forControlEvents:UIControlEventTouchUpInside];
@@ -251,6 +251,7 @@
     phoVc.power = _powerPho;
     phoVc.state = [_dictMember objectForKey:@"state"];
     phoVc.teamTimeKey = _teamKey;
+    phoVc.dictMember = _dictMember;
     phoVc.userKey = [_dataArray[indexPath.row] userKey];
     phoVc.blockRefresh = ^(){
         _collectionView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
