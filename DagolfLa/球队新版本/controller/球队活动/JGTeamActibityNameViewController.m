@@ -671,7 +671,7 @@ static CGFloat ImageHeight  = 210.0;
 #pragma mark -- 查看奖项
 - (void)getTeamActivityAward:(UIButton *)btn{
     JGDPrizeViewController *prizeCtrl = [[JGDPrizeViewController alloc]init];
-//    prizeCtrl
+    prizeCtrl.activityKey = _teamKey;
     [self.navigationController pushViewController:prizeCtrl animated:YES];
 }
 #pragma mark -- 查看成绩
