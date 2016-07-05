@@ -144,6 +144,7 @@
 
 
 
+
 -(void)createSeachBar{
     _isCor = YES;
     UIView *view=[[UIView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 44*ScreenWidth/375)];

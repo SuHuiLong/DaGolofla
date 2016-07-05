@@ -558,7 +558,7 @@ static CGFloat ImageHeight  = 210.0;
     return 0;
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 6;//详情页面
+    return 7;//详情页面
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 2) {
@@ -655,9 +655,9 @@ static CGFloat ImageHeight  = 210.0;
         return (UIView *)detailsCell;
     }else{
         JGHHeaderLabelCell *headerCell = [tableView dequeueReusableCellWithIdentifier:JGHHeaderLabelCellIdentifier];
-        UIButton *awardBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, screenWidth, headerCell.frame.size.height)];
-        [awardBtn addTarget:self action:@selector(getTeamActivityAward:) forControlEvents:UIControlEventTouchUpInside];
-        [headerCell addSubview:awardBtn];
+        UIButton *applyListBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, screenWidth, headerCell.frame.size.height)];
+        [applyListBtn addTarget:self action:@selector(getTeamActivityAward:) forControlEvents:UIControlEventTouchUpInside];
+        [headerCell addSubview:applyListBtn];
         [headerCell congiftitles:@"查看奖项"];
         return (UIView *)headerCell;
     }

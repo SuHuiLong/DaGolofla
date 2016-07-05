@@ -86,6 +86,8 @@ typedef NS_ENUM(NSInteger, GestureType) {
 
 #define ProportionAdapter screenWidth/375
 
+#define NUMBERS @"0123456789\n"
+
 //正式环境图片基础地址
 #define imageBaseUrl @"http://139.196.9.49:8081/"
 //测试环境图片基础地址//#define IMAGE_VEDIO_BASEURL @""

@@ -18,7 +18,7 @@
 
 #import "EnterViewController.h"
 //跳转详情界面
-#import "JGLNewShopDetailViewController.h"
+#import "JGLWinnersShareViewController.h"
 
 #import "HomeHeadView.h"
 #import "JGTeamActibityNameViewController.h"
@@ -230,14 +230,8 @@
                 NSLog(@"shangchen");
 //                UseMallViewController
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
-                
-                
-#warning delete-----------------
-                JGDPrizeViewController *vc = [[JGDPrizeViewController alloc] init];
-                [self.navigationController pushViewController:vc animated:YES];
-                
-//                UseMallViewController* userVc = [[UseMallViewController alloc]init];
-//                [self.navigationController pushViewController:userVc animated:YES];
+                JGLWinnersShareViewController* userVc = [[JGLWinnersShareViewController alloc]init];
+                [self.navigationController pushViewController:userVc animated:YES];
             }
                 break;
             case 1002:

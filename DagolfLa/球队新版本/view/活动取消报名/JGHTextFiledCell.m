@@ -13,6 +13,8 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
+    
+    self.selectionStyle = UITableViewCellSelectionStyleNone;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -48,6 +50,17 @@
     self.titles.font = [UIFont systemFontOfSize:17.0*ProportionAdapter];
     self.titles.textColor = [UIColor blackColor];
     self.titlefileds.secureTextEntry = YES;
+}
+
+- (void)conFigAllTitle:(NSString *)title andPlacerString:(NSString *)placerstring{
+    self.titles.text = title;
+    self.titlefileds.placeholder = placerstring;
+    self.titleLeft.constant = 10 *ProportionAdapter;
+    self.titlefiledsRight.constant = 10 *ProportionAdapter;
+    self.titlefiledsLeft.constant = 40 * ProportionAdapter;
+    self.titlefileds.textAlignment = NSTextAlignmentLeft;
+    self.titles.font = [UIFont systemFontOfSize:17.0*ProportionAdapter];
+    self.titles.textColor = [UIColor blackColor];
 }
 
 @end
