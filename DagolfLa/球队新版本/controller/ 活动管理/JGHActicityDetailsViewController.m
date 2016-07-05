@@ -683,7 +683,7 @@ static CGFloat ImageHeight  = 210.0;
 #pragma mark -- 奖项设置
 - (void)setAward:(UIButton *)btn{
     JGHSetAwardViewController *setAwardCtrl = [[JGHSetAwardViewController alloc]init];
-    
+    setAwardCtrl.activityKey = _activityKey;
     [self.navigationController pushViewController:setAwardCtrl animated:YES];
 }
 #pragma mark -- 修改时间地点

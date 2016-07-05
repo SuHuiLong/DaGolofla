@@ -10,4 +10,6 @@
 
 @interface JGHSetAwardViewController : ViewController
 
+@property (nonatomic, assign)NSInteger activityKey;
+
 @end

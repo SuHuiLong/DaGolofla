@@ -43,11 +43,17 @@ static NSString *const JGHActivityBaseCellIdentifier = @"JGHActivityBaseCell";
     
     [self createAwardTableView];
     
-    
+    [self loadData];
 }
 #pragma mark -- 下载数据
 - (void)loadData{
-    
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    [dict setObject:@(_activityKey) forKey:@"activityKey"];
+    [[JsonHttp jsonHttp]httpRequest:@"team/getTeamActivityPrizeList" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
+        
+    } completionBlock:^(id data) {
+        
+    }];
 }
 #pragma mark -- 创建工具栏
 #pragma mark -- 创建TB

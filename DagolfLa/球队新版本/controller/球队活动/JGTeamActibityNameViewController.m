@@ -41,6 +41,7 @@
 #import "JGLActiveCancelMemViewController.h"
 #import "JGLPaySignUpViewController.h"
 #import "JGLActiveCancelMemViewController.h"
+#import "JGDPrizeViewController.h"
 
 static NSString *const JGTeamActivityWithAddressCellIdentifier = @"JGTeamActivityWithAddressCell";
 static NSString *const JGTeamActivityDetailsCellIdentifier = @"JGTeamActivityDetailsCell";
@@ -669,7 +670,9 @@ static CGFloat ImageHeight  = 210.0;
 }
 #pragma mark -- 查看奖项
 - (void)getTeamActivityAward:(UIButton *)btn{
-    
+    JGDPrizeViewController *prizeCtrl = [[JGDPrizeViewController alloc]init];
+//    prizeCtrl
+    [self.navigationController pushViewController:prizeCtrl animated:YES];
 }
 #pragma mark -- 查看成绩
 - (void)getTeamActivityResults:(UIButton *)btn{
