@@ -14,7 +14,7 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     
     self.iconImage = [[UIImageView alloc] initWithFrame:CGRectMake(8 * ProportionAdapter, 8 * ProportionAdapter, 64 * ProportionAdapter, 64 * ProportionAdapter)];
-    self.iconImage.backgroundColor = [UIColor orangeColor];
+    self.iconImage.image = [UIImage imageNamed:@"jiangbei"];
     self.iconImage.contentMode = UIViewContentModeScaleAspectFill;
     [self.contentView addSubview:self.iconImage];
     

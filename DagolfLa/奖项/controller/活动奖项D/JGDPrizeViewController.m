@@ -10,6 +10,8 @@
 #import "JGDtopTableViewCell.h"
 #import "JGDprizeTableViewCell.h"
 #import "JGDActvityPriziSetTableViewCell.h"
+#import "JGLPresentAwardViewController.h"
+#import "JGHSetAwardViewController.h"
 
 @interface JGDPrizeViewController ()<UITableViewDelegate, UITableViewDataSource>
 
@@ -17,15 +19,31 @@
 
 @end
 
+
 @implementation JGDPrizeViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];
     [self createTableView];
+    [self setdata];
     
     // Do any additional setup after loading the view.
 }
+
+- (void)setdata{
+    NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
+    [dic setObject:[NSNumber numberWithInteger:self.activityKey] forKey:@"activityKey"];
+    
+    [[JsonHttp jsonHttp]httpRequest:@"team/getTeamActivityPrizeList" JsonKey:nil withData:dic requestMethod:@"GET" failedBlock:^(id errType) {
+        NSLog(@"errtype == %@", errType);
+    } completionBlock:^(id data) {
+        
+        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+        }
+    }];
+}
+
 
 - (void)createTableView{
     
@@ -43,20 +61,44 @@
     
     if (indexPath.section == 0) {
         JGDtopTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"topCell"];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
         
     }else{
         
         if (indexPath.row == 0) {
             JGDActvityPriziSetTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"setCell"];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            [cell.presentationBtn addTarget:self action:@selector(present) forControlEvents:(UIControlEventTouchUpInside)];
+            [cell.prizeBtn addTarget:self action:@selector(prizeSet) forControlEvents:(UIControlEventTouchUpInside)];
             return cell;
         }else{
             
             JGDprizeTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"prizeCell"];
+            cell.nameLabel.text = @"寂寞的人总是会用心地记住在他生命中出现过的每一个人";
+            cell.prizeLbel.text = @"寂寞的人总是会用心地记住在他生命中出现过的每一个人";
+            cell.numberLabel.text = @"122";
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+
             return cell;
         }
     }
     
+
+}
+
+//
+- (void)prizeSet{
+    JGHSetAwardViewController *setAwardVC = [[JGHSetAwardViewController alloc] init];
+    [self.navigationController pushViewController:setAwardVC animated:YES];
+}
+
+
+//立即颁奖
+- (void)present{
+
+    JGLPresentAwardViewController *preVC = [[JGLPresentAwardViewController alloc] init];
+    [self.navigationController pushViewController:preVC animated:YES];
 
 }
 
