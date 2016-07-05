@@ -122,11 +122,7 @@
             JGNewCreateTeamTableViewController *creatteamVc = [[JGNewCreateTeamTableViewController alloc] init];
             creatteamVc.detailDic = [user objectForKey:@"cacheCreatTeamDic"];
             creatteamVc.titleField.text = [[user objectForKey:@"cacheCreatTeamDic"] objectForKey:@"name"];
-            
-            
-            //        @property (nonatomic, retain) UIImageView *imgProfile;
-            //        @property (nonatomic, strong)UIButton *headPortraitBtn;//头像
-            //        @property (nonatomic, strong)UITextField *titleField;//球队名称输入框
+        
             [self.navigationController pushViewController:creatteamVc animated:YES];
         }];
         

@@ -23,6 +23,9 @@
 #import "HomeHeadView.h"
 #import "JGTeamActibityNameViewController.h"
 
+#import "JGDActivityListViewController.h"
+#import "JGDPrizeViewController.h"
+
 @interface ShouyeViewController ()<UIApplicationDelegate,CLLocationManagerDelegate>
 {
 //    UITableView *_tableView;
@@ -227,15 +230,24 @@
                 NSLog(@"shangchen");
 //                UseMallViewController
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
-                UseMallViewController* userVc = [[UseMallViewController alloc]init];
-                [self.navigationController pushViewController:userVc animated:YES];
+                
+                
+#warning delete-----------------
+                JGDPrizeViewController *vc = [[JGDPrizeViewController alloc] init];
+                [self.navigationController pushViewController:vc animated:YES];
+                
+//                UseMallViewController* userVc = [[UseMallViewController alloc]init];
+//                [self.navigationController pushViewController:userVc animated:YES];
             }
                 break;
             case 1002:
             {
                 NSLog(@"taocan");
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
-                PackageViewController* pacVc = [[PackageViewController alloc]init];
+#warning delete-----------------
+                JGDActivityListViewController * pacVc = [[JGDActivityListViewController alloc]init];
+
+//                PackageViewController* pacVc = [[PackageViewController alloc]init];
                 [self.navigationController pushViewController:pacVc animated:YES];
             }
                 break;
