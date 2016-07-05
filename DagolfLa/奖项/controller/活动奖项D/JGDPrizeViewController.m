@@ -16,6 +16,7 @@
 @interface JGDPrizeViewController ()<UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic, strong) UITableView *tableView;
+@property (nonatomic, strong) NSMutableArray *dataArray;
 
 @end
 
@@ -34,13 +35,16 @@
 - (void)setdata{
     NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
     [dic setObject:[NSNumber numberWithInteger:self.activityKey] forKey:@"activityKey"];
-    [dic setObject:[NSNumber numberWithInteger:self.activityKey] forKey:@"teamKey"];
+    [dic setObject:[NSNumber numberWithInteger:self.teamKey] forKey:@"teamKey"];
 
     [[JsonHttp jsonHttp]httpRequest:@"team/getTeamActivityPrizeList" JsonKey:nil withData:dic requestMethod:@"GET" failedBlock:^(id errType) {
         NSLog(@"errtype == %@", errType);
     } completionBlock:^(id data) {
         
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+            
+            self.dataArray = [data objectForKey:@"list"];
+            [self.tableView reloadData];
         }
     }];
 }
@@ -70,13 +74,14 @@
         if (indexPath.row == 0) {
             JGDActvityPriziSetTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"setCell"];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            cell.titleLB.text = [NSString stringWithFormat:@"活动奖项（%td）",self.dataArray.count];
             [cell.presentationBtn addTarget:self action:@selector(present) forControlEvents:(UIControlEventTouchUpInside)];
             [cell.prizeBtn addTarget:self action:@selector(prizeSet) forControlEvents:(UIControlEventTouchUpInside)];
             return cell;
         }else{
             
             JGDprizeTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"prizeCell"];
-            cell.nameLabel.text = @"寂寞的人总是会用心地记住在他生命中出现过的每一个人";
+            cell.nameLabel.text = [self.dataArray[indexPath.row - 1] objectForKey:@"name"];
             cell.prizeLbel.text = @"寂寞的人总是会用心地记住在他生命中出现过的每一个人";
             cell.numberLabel.text = @"122";
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -91,6 +96,8 @@
 //
 - (void)prizeSet{
     JGHSetAwardViewController *setAwardVC = [[JGHSetAwardViewController alloc] init];
+    setAwardVC.activityKey = self.activityKey;
+    setAwardVC.teamKey = self.teamKey;
     [self.navigationController pushViewController:setAwardVC animated:YES];
 }
 
@@ -112,7 +119,7 @@
     if (section == 0) {
         return 1;
     }else{
-        return 10;
+        return self.dataArray.count + 1;
     }
 }
 
