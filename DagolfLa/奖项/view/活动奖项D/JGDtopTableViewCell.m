@@ -35,10 +35,14 @@
     
     self.timeLB = [[UILabel alloc] initWithFrame:CGRectMake(108 * ProportionAdapter, 30 * ProportionAdapter, 200 * ProportionAdapter, 18 * ProportionAdapter)];
     self.timeLB.text = @"一遍一遍，数我的寂寞。";
+    self.timeLB.textColor = [UIColor colorWithHexString:@"#626262"];
+    self.timeLB.font = [UIFont systemFontOfSize:10 * ProportionAdapter];
     [self.contentView addSubview:self.timeLB];
     
     self.adressLB = [[UILabel alloc] initWithFrame:CGRectMake(108 * ProportionAdapter, 50 * ProportionAdapter, 200 * ProportionAdapter, 18 * ProportionAdapter)];
     self.adressLB.text = @"在每个星光坠落的晚上";
+    self.adressLB.font = [UIFont systemFontOfSize:12 * ProportionAdapter];
+    self.adressLB.textColor = [UIColor colorWithHexString:@"#313131"];
     [self.contentView addSubview:self.adressLB];
     
     return self;
