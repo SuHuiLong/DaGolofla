@@ -86,13 +86,14 @@
                 //清除数组数据  signUpInfoKey
                 [self.dataArray removeAllObjects];
             }
-            
-            for (NSDictionary *dic in [data objectForKey:@"teamSignUpList"]) {
-                JGDActivityList *model = [[JGDActivityList alloc] init];
-                [model setValuesForKeysWithDictionary:dic];
-                [self.dataArray addObject:model];
+            if ([data objectForKey:@"teamSignUpList"]) {
+                for (NSDictionary *dic in [data objectForKey:@"teamSignUpList"]) {
+                    JGDActivityList *model = [[JGDActivityList alloc] init];
+                    [model setValuesForKeysWithDictionary:dic];
+                    [self.dataArray addObject:model];
+                }
             }
-            
+       
             self.sumCount = [[data objectForKey:@"sumCount"] integerValue];
             _page++;
             [_tableView reloadData];
@@ -115,7 +116,7 @@
     
     JGDactivityListTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"listCell"];
     cell.listModel = self.dataArray[indexPath.row];
-      cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
 }
 

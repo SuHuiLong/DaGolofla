@@ -10,4 +10,6 @@
 
 @interface JGDPrizeViewController : ViewController
 
+@property (nonatomic, assign) NSInteger activityKey;
+
 @end

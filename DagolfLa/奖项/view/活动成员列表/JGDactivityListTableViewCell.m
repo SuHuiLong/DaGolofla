@@ -17,7 +17,6 @@
         
         self.selectImage = [[UIImageView alloc] initWithFrame:CGRectMake(10, 10, 30, 30)];
         self.selectImage.userInteractionEnabled = YES;
-        self.selectImage.image = [UIImage imageNamed:@"kuang"];
         [self.contentView addSubview:self.selectImage];
         
         self.headIconV = [[UIImageView alloc] initWithFrame:CGRectMake(50 * screenWidth / 375, 5 * screenWidth / 375, 40 * screenWidth / 375, 40 * screenWidth / 375)];
@@ -45,7 +44,11 @@
     [muatbleStr replaceCharactersInRange:NSMakeRange(3, 5) withString:@"*****"];
     self.phoneLB.text = muatbleStr;
     [self.headIconV sd_setImageWithURL:[Helper setImageIconUrl:@"user" andTeamKey:[listModel.userKey integerValue] andIsSetWidth:YES andIsBackGround:NO] placeholderImage:[UIImage imageNamed:@"selfBackPic.jpg"]];
-    
+    if (listModel.isSelect) {
+        self.selectImage.image = [UIImage imageNamed:@"kuang_xz"];
+    }else{
+        self.selectImage.image = [UIImage imageNamed:@"kuang"];
+    }
 
 }
 
