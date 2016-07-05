@@ -46,6 +46,7 @@ static NSString *const JGHTextFiledCellIdentifier = @"JGHTextFiledCell";
 #pragma mark -- 保存
 - (void)saveBtnClick{
     NSLog(@"保存");
+    [self setEditing:YES];
     if (_awardName.length == 0) {
         [[ShowHUD showHUD]showToastWithText:@"请输入奖项名称" FromView:self.view];
         return;
@@ -61,6 +62,18 @@ static NSString *const JGHTextFiledCellIdentifier = @"JGHTextFiledCell";
         return;
     }
     
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    [dict setObject:@(_teamKey) forKey:@"teamKey"];
+    [dict setObject:@(_activityKey) forKey:@"teamActivityKey"];
+    [dict setObject:_awardName forKey:@"name"];
+    [dict setObject:_prizeName forKey:@"prizeName"];
+    [dict setObject:[NSString stringWithFormat:@"%td", _prizeNumber] forKey:@"prizeSize"];
+    [[JsonHttp jsonHttp]httpRequest:@"team/doAddCustomPrize" JsonKey:@"prize" withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
+        NSLog(@"errType == %@", errType);
+    } completionBlock:^(id data) {
+        NSLog(@"data == %@", data);
+        
+    }];
 }
 #pragma mark -- 创建TB
 - (void)createCustomAwardTableView{
