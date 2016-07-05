@@ -10,4 +10,9 @@
 
 @interface JGHChooseAwardViewController : ViewController
 
+
+@property (nonatomic, assign)NSInteger activityKey;
+
+@property (nonatomic, assign)NSInteger teamKey;
+
 @end

@@ -117,6 +117,8 @@ static NSString *const JGSignUoPromptCellIdentifier = @"JGSignUoPromptCell";
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 0) {
         JGHCustomAwardViewController *customAwardCtrl = [[JGHCustomAwardViewController alloc]init];
+        customAwardCtrl.teamKey = _teamKey;
+        customAwardCtrl.activityKey = _activityKey;
         [self.navigationController pushViewController:customAwardCtrl animated:YES];
     }
 }

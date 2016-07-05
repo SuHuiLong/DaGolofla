@@ -43,6 +43,8 @@ static NSString *const JGHActivityBaseCellIdentifier = @"JGHActivityBaseCell";
     
     [self createAwardTableView];
     
+    [self createPushAwardBtn];
+    
     [self loadData];
 }
 #pragma mark -- 下载数据
@@ -50,15 +52,34 @@ static NSString *const JGHActivityBaseCellIdentifier = @"JGHActivityBaseCell";
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     [dict setObject:@(_activityKey) forKey:@"activityKey"];
     [[JsonHttp jsonHttp]httpRequest:@"team/getTeamActivityPrizeList" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
-        
+        NSLog(@"errType = %@", errType);
     } completionBlock:^(id data) {
-        
+        NSLog(@"data = %@", data);
+        if ([data objectForKey:@"packSuccess"]) {
+            
+        }
     }];
 }
 #pragma mark -- 创建工具栏
+- (void)createPushAwardBtn{
+    UIView *psuhView = [[UIView alloc]initWithFrame:CGRectMake(0, screenHeight - 65*ProportionAdapter - 64, screenWidth, 65*ProportionAdapter)];
+    psuhView.backgroundColor = [UIColor whiteColor];
+    UIButton *psuhBtn = [[UIButton alloc]initWithFrame:CGRectMake(10*ProportionAdapter, 10*ProportionAdapter, screenWidth - 20*ProportionAdapter, 65*ProportionAdapter - 20*ProportionAdapter)];
+    [psuhBtn setTitle:@"发布奖项" forState:UIControlStateNormal];
+    [psuhBtn setBackgroundColor:[UIColor colorWithHexString:Click_Color]];
+    psuhBtn.titleLabel.font = [UIFont systemFontOfSize:20*ProportionAdapter];
+    psuhBtn.layer.masksToBounds = YES;
+    psuhBtn.layer.cornerRadius = 8.0;
+    [psuhBtn addTarget:self action:@selector(psuhAwardBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    [psuhView addSubview:psuhBtn];
+    [self.view addSubview:psuhView];
+}
+- (void)psuhAwardBtnClick:(UIButton *)btn{
+    
+}
 #pragma mark -- 创建TB
 - (void)createAwardTableView{
-    self.awardTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight - 64) style:UITableViewStylePlain];
+    self.awardTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight - 65*ProportionAdapter - 64) style:UITableViewStylePlain];
     self.awardTableView.delegate = self;
     self.awardTableView.dataSource = self;
     
@@ -128,6 +149,8 @@ static NSString *const JGHActivityBaseCellIdentifier = @"JGHActivityBaseCell";
         if (indexPath.section == _dataArray.count + 1) {
             NSLog(@"添加奖项");
             JGHChooseAwardViewController *chooseAwardCtrl = [[JGHChooseAwardViewController alloc]init];
+            chooseAwardCtrl.teamKey = _teamKey;
+            chooseAwardCtrl.activityKey = _activityKey;
             [self.navigationController pushViewController:chooseAwardCtrl animated:YES];
         }
     }
