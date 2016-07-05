@@ -13,6 +13,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *titles;
 
 @property (weak, nonatomic) IBOutlet UITextField *titlefileds;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *titlefiledsLeft;
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *titlefiledsRight;
 
@@ -24,5 +25,7 @@
 - (void)configViewWithDraw:(NSNumber *)monay;
 
 - (void)configPayPassword;
+
+- (void)conFigAllTitle:(NSString *)title andPlacerString:(NSString *)placerstring;
 
 @end

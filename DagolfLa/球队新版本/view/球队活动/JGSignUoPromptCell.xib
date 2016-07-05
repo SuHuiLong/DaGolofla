@@ -14,28 +14,23 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="37.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="label" textAlignment="natural" lineBreakMode="characterWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="fwH-gf-mdB">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="characterWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="fwH-gf-mdB">
                         <rect key="frame" x="20" y="0.0" width="280" height="37.5"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="13"/>
                         <color key="textColor" red="0.94117647058823528" green="0.53725490196078429" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="bottom" secondItem="fwH-gf-mdB" secondAttribute="bottom" id="0vz-Je-n59"/>
                     <constraint firstItem="fwH-gf-mdB" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="FBg-3B-RsP"/>
-                    <constraint firstItem="fwH-gf-mdB" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="aIr-Zr-4pw"/>
-                    <constraint firstItem="fwH-gf-mdB" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="ekK-Mn-rXv"/>
-                    <constraint firstItem="fwH-gf-mdB" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="nQZ-0a-eXF"/>
+                    <constraint firstAttribute="bottom" secondItem="fwH-gf-mdB" secondAttribute="bottom" id="LrW-OF-1QV"/>
+                    <constraint firstItem="fwH-gf-mdB" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="fHP-g6-oc0"/>
                     <constraint firstAttribute="trailing" secondItem="fwH-gf-mdB" secondAttribute="trailing" constant="20" id="veC-hd-H8t"/>
                 </constraints>
-                <variation key="default">
-                    <mask key="constraints">
-                        <exclude reference="aIr-Zr-4pw"/>
-                    </mask>
-                </variation>
             </tableViewCellContentView>
             <connections>
+                <outlet property="pamapLabelLeft" destination="FBg-3B-RsP" id="Bsr-DF-Kjy"/>
+                <outlet property="pamapLabelRight" destination="veC-hd-H8t" id="QAi-HG-Nyj"/>
                 <outlet property="pamaptLabel" destination="fwH-gf-mdB" id="wpc-U0-ILI"/>
             </connections>
             <point key="canvasLocation" x="226" y="260"/>

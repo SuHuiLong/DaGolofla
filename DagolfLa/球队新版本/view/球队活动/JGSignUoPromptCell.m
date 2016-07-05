@@ -15,7 +15,7 @@
     // Initialization code
     
     
-    
+    self.selectionStyle = UITableViewCellSelectionStyleNone;
 }
 
 - (void)configPromptString:(NSString *)string{
@@ -32,6 +32,15 @@
 - (void)configPromptSetPasswordString:(NSString *)string{
     self.pamaptLabel.text = string;
     self.pamaptLabel.textAlignment = NSTextAlignmentLeft;
+    self.backgroundColor = [UIColor colorWithHexString:BG_color];
+}
+
+- (void)configAllPromptString:(NSString *)str andLeftCon:(NSInteger)leftCon andRightCon:(NSInteger)rightCon{
+    self.pamapLabelLeft.constant = leftCon * ProportionAdapter;
+    self.pamapLabelRight.constant = rightCon * ProportionAdapter;
+    
+    self.pamaptLabel.text = str;
+    self.pamaptLabel.font = [UIFont systemFontOfSize:13 *ProportionAdapter];
     self.backgroundColor = [UIColor colorWithHexString:BG_color];
 }
 

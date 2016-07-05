@@ -7,6 +7,21 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2012AD201D2A684900F70E40 /* JGDPrizeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2012AD1F1D2A684900F70E40 /* JGDPrizeViewController.m */; };
+		2012AD231D2A685700F70E40 /* JGDPrize.m in Sources */ = {isa = PBXBuildFile; fileRef = 2012AD221D2A685700F70E40 /* JGDPrize.m */; };
+		2012AD261D2A686300F70E40 /* JGDprizeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2012AD251D2A686300F70E40 /* JGDprizeTableViewCell.m */; };
+		2012AD2C1D2A695E00F70E40 /* JGHSetAwardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2012AD2B1D2A695E00F70E40 /* JGHSetAwardViewController.m */; };
+		2012AD301D2A699600F70E40 /* JGHAwardCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2012AD2E1D2A699600F70E40 /* JGHAwardCell.m */; };
+		2012AD311D2A699600F70E40 /* JGHAwardCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2012AD2F1D2A699600F70E40 /* JGHAwardCell.xib */; };
+		2012AD341D2B4E3300F70E40 /* JGHAwardModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2012AD331D2B4E3300F70E40 /* JGHAwardModel.m */; };
+		2012AD381D2B510A00F70E40 /* JGHActivityBaseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2012AD361D2B510A00F70E40 /* JGHActivityBaseCell.m */; };
+		2012AD391D2B510A00F70E40 /* JGHActivityBaseCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2012AD371D2B510A00F70E40 /* JGHActivityBaseCell.xib */; };
+		2012AD3D1D2B5F4100F70E40 /* JGHAddAwardImageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2012AD3B1D2B5F4100F70E40 /* JGHAddAwardImageCell.m */; };
+		2012AD3E1D2B5F4100F70E40 /* JGHAddAwardImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2012AD3C1D2B5F4100F70E40 /* JGHAddAwardImageCell.xib */; };
+		2012AD411D2B7CD300F70E40 /* JGHChooseAwardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2012AD401D2B7CD300F70E40 /* JGHChooseAwardViewController.m */; };
+		2012AD451D2B7E7900F70E40 /* JGHChooseAwardCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2012AD431D2B7E7900F70E40 /* JGHChooseAwardCell.m */; };
+		2012AD461D2B7E7900F70E40 /* JGHChooseAwardCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2012AD441D2B7E7900F70E40 /* JGHChooseAwardCell.xib */; };
+		2012AD491D2B929600F70E40 /* JGHCustomAwardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2012AD481D2B929600F70E40 /* JGHCustomAwardViewController.m */; };
 		20513B481CF5D1D8003233FB /* JGHInvoiceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 20513B461CF5D1D8003233FB /* JGHInvoiceCell.m */; };
 		20513B491CF5D1D8003233FB /* JGHInvoiceCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 20513B471CF5D1D8003233FB /* JGHInvoiceCell.xib */; };
 		20513B4C1CF5D448003233FB /* InvoiceModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 20513B4B1CF5D448003233FB /* InvoiceModel.m */; };
@@ -759,9 +774,6 @@
 		F55597221CF5328C00F33099 /* JGPreviewTeamViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F55597211CF5328C00F33099 /* JGPreviewTeamViewController.m */; };
 		F55597251CF53FF900F33099 /* JGTeamMemberORManagerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F55597241CF53FF900F33099 /* JGTeamMemberORManagerViewController.m */; };
 		F55597281CF6DB0F00F33099 /* JGTeamInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F55597271CF6DB0F00F33099 /* JGTeamInfoViewController.m */; };
-		F55DB38A1D2A375C0054F251 /* JGDPrizeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F55DB3891D2A375C0054F251 /* JGDPrizeViewController.m */; };
-		F55DB38D1D2A376D0054F251 /* JGDPrize.m in Sources */ = {isa = PBXBuildFile; fileRef = F55DB38C1D2A376D0054F251 /* JGDPrize.m */; };
-		F55DB3901D2A37800054F251 /* JGDprizeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F55DB38F1D2A37800054F251 /* JGDprizeTableViewCell.m */; };
 		F566EFAB1CA0F01B008BB328 /* InformSetmodel.m in Sources */ = {isa = PBXBuildFile; fileRef = F566EFAA1CA0F01B008BB328 /* InformSetmodel.m */; };
 		F569A13F1CE35A9C00CD0FD5 /* JGTeamChannelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F569A13B1CE35A9C00CD0FD5 /* JGTeamChannelViewController.m */; };
 		F569A1401CE35A9C00CD0FD5 /* JGTeamDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F569A13E1CE35A9C00CD0FD5 /* JGTeamDetailViewController.m */; };
@@ -804,6 +816,32 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2012AD1E1D2A684900F70E40 /* JGDPrizeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGDPrizeViewController.h; sourceTree = "<group>"; };
+		2012AD1F1D2A684900F70E40 /* JGDPrizeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGDPrizeViewController.m; sourceTree = "<group>"; };
+		2012AD211D2A685700F70E40 /* JGDPrize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGDPrize.h; sourceTree = "<group>"; };
+		2012AD221D2A685700F70E40 /* JGDPrize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGDPrize.m; sourceTree = "<group>"; };
+		2012AD241D2A686300F70E40 /* JGDprizeTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGDprizeTableViewCell.h; sourceTree = "<group>"; };
+		2012AD251D2A686300F70E40 /* JGDprizeTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGDprizeTableViewCell.m; sourceTree = "<group>"; };
+		2012AD2A1D2A695E00F70E40 /* JGHSetAwardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHSetAwardViewController.h; sourceTree = "<group>"; };
+		2012AD2B1D2A695E00F70E40 /* JGHSetAwardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHSetAwardViewController.m; sourceTree = "<group>"; };
+		2012AD2D1D2A699600F70E40 /* JGHAwardCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHAwardCell.h; sourceTree = "<group>"; };
+		2012AD2E1D2A699600F70E40 /* JGHAwardCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHAwardCell.m; sourceTree = "<group>"; };
+		2012AD2F1D2A699600F70E40 /* JGHAwardCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JGHAwardCell.xib; sourceTree = "<group>"; };
+		2012AD321D2B4E3300F70E40 /* JGHAwardModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHAwardModel.h; sourceTree = "<group>"; };
+		2012AD331D2B4E3300F70E40 /* JGHAwardModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHAwardModel.m; sourceTree = "<group>"; };
+		2012AD351D2B510A00F70E40 /* JGHActivityBaseCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHActivityBaseCell.h; sourceTree = "<group>"; };
+		2012AD361D2B510A00F70E40 /* JGHActivityBaseCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHActivityBaseCell.m; sourceTree = "<group>"; };
+		2012AD371D2B510A00F70E40 /* JGHActivityBaseCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JGHActivityBaseCell.xib; sourceTree = "<group>"; };
+		2012AD3A1D2B5F4100F70E40 /* JGHAddAwardImageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHAddAwardImageCell.h; sourceTree = "<group>"; };
+		2012AD3B1D2B5F4100F70E40 /* JGHAddAwardImageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHAddAwardImageCell.m; sourceTree = "<group>"; };
+		2012AD3C1D2B5F4100F70E40 /* JGHAddAwardImageCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JGHAddAwardImageCell.xib; sourceTree = "<group>"; };
+		2012AD3F1D2B7CD300F70E40 /* JGHChooseAwardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHChooseAwardViewController.h; sourceTree = "<group>"; };
+		2012AD401D2B7CD300F70E40 /* JGHChooseAwardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHChooseAwardViewController.m; sourceTree = "<group>"; };
+		2012AD421D2B7E7900F70E40 /* JGHChooseAwardCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHChooseAwardCell.h; sourceTree = "<group>"; };
+		2012AD431D2B7E7900F70E40 /* JGHChooseAwardCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHChooseAwardCell.m; sourceTree = "<group>"; };
+		2012AD441D2B7E7900F70E40 /* JGHChooseAwardCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JGHChooseAwardCell.xib; sourceTree = "<group>"; };
+		2012AD471D2B929600F70E40 /* JGHCustomAwardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHCustomAwardViewController.h; sourceTree = "<group>"; };
+		2012AD481D2B929600F70E40 /* JGHCustomAwardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHCustomAwardViewController.m; sourceTree = "<group>"; };
 		20513B451CF5D1D8003233FB /* JGHInvoiceCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHInvoiceCell.h; sourceTree = "<group>"; };
 		20513B461CF5D1D8003233FB /* JGHInvoiceCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHInvoiceCell.m; sourceTree = "<group>"; };
 		20513B471CF5D1D8003233FB /* JGHInvoiceCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JGHInvoiceCell.xib; sourceTree = "<group>"; };
@@ -2188,12 +2226,6 @@
 		F55597241CF53FF900F33099 /* JGTeamMemberORManagerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGTeamMemberORManagerViewController.m; sourceTree = "<group>"; };
 		F55597261CF6DB0F00F33099 /* JGTeamInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGTeamInfoViewController.h; sourceTree = "<group>"; };
 		F55597271CF6DB0F00F33099 /* JGTeamInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGTeamInfoViewController.m; sourceTree = "<group>"; };
-		F55DB3881D2A375C0054F251 /* JGDPrizeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGDPrizeViewController.h; sourceTree = "<group>"; };
-		F55DB3891D2A375C0054F251 /* JGDPrizeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGDPrizeViewController.m; sourceTree = "<group>"; };
-		F55DB38B1D2A376D0054F251 /* JGDPrize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGDPrize.h; sourceTree = "<group>"; };
-		F55DB38C1D2A376D0054F251 /* JGDPrize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGDPrize.m; sourceTree = "<group>"; };
-		F55DB38E1D2A37800054F251 /* JGDprizeTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGDprizeTableViewCell.h; sourceTree = "<group>"; };
-		F55DB38F1D2A37800054F251 /* JGDprizeTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGDprizeTableViewCell.m; sourceTree = "<group>"; };
 		F566EFA91CA0F01B008BB328 /* InformSetmodel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InformSetmodel.h; sourceTree = "<group>"; };
 		F566EFAA1CA0F01B008BB328 /* InformSetmodel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InformSetmodel.m; sourceTree = "<group>"; };
 		F569A13A1CE35A9C00CD0FD5 /* JGTeamChannelViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGTeamChannelViewController.h; sourceTree = "<group>"; };
@@ -2313,6 +2345,47 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2012AD271D2A690200F70E40 /* 奖项设置 */ = {
+			isa = PBXGroup;
+			children = (
+				2012AD2A1D2A695E00F70E40 /* JGHSetAwardViewController.h */,
+				2012AD2B1D2A695E00F70E40 /* JGHSetAwardViewController.m */,
+				2012AD3F1D2B7CD300F70E40 /* JGHChooseAwardViewController.h */,
+				2012AD401D2B7CD300F70E40 /* JGHChooseAwardViewController.m */,
+				2012AD471D2B929600F70E40 /* JGHCustomAwardViewController.h */,
+				2012AD481D2B929600F70E40 /* JGHCustomAwardViewController.m */,
+			);
+			path = "奖项设置";
+			sourceTree = "<group>";
+		};
+		2012AD281D2A692F00F70E40 /* 奖项设置 */ = {
+			isa = PBXGroup;
+			children = (
+				2012AD2D1D2A699600F70E40 /* JGHAwardCell.h */,
+				2012AD2E1D2A699600F70E40 /* JGHAwardCell.m */,
+				2012AD2F1D2A699600F70E40 /* JGHAwardCell.xib */,
+				2012AD351D2B510A00F70E40 /* JGHActivityBaseCell.h */,
+				2012AD361D2B510A00F70E40 /* JGHActivityBaseCell.m */,
+				2012AD371D2B510A00F70E40 /* JGHActivityBaseCell.xib */,
+				2012AD3A1D2B5F4100F70E40 /* JGHAddAwardImageCell.h */,
+				2012AD3B1D2B5F4100F70E40 /* JGHAddAwardImageCell.m */,
+				2012AD3C1D2B5F4100F70E40 /* JGHAddAwardImageCell.xib */,
+				2012AD421D2B7E7900F70E40 /* JGHChooseAwardCell.h */,
+				2012AD431D2B7E7900F70E40 /* JGHChooseAwardCell.m */,
+				2012AD441D2B7E7900F70E40 /* JGHChooseAwardCell.xib */,
+			);
+			path = "奖项设置";
+			sourceTree = "<group>";
+		};
+		2012AD291D2A693900F70E40 /* 奖项设置 */ = {
+			isa = PBXGroup;
+			children = (
+				2012AD321D2B4E3300F70E40 /* JGHAwardModel.h */,
+				2012AD331D2B4E3300F70E40 /* JGHAwardModel.m */,
+			);
+			path = "奖项设置";
+			sourceTree = "<group>";
+		};
 		20513B671CF7050A003233FB /* zhifu */ = {
 			isa = PBXGroup;
 			children = (
@@ -5694,8 +5767,9 @@
 		F55DB3851D2A373B0054F251 /* controller */ = {
 			isa = PBXGroup;
 			children = (
-				F55DB3881D2A375C0054F251 /* JGDPrizeViewController.h */,
-				F55DB3891D2A375C0054F251 /* JGDPrizeViewController.m */,
+				2012AD271D2A690200F70E40 /* 奖项设置 */,
+				2012AD1E1D2A684900F70E40 /* JGDPrizeViewController.h */,
+				2012AD1F1D2A684900F70E40 /* JGDPrizeViewController.m */,
 			);
 			path = controller;
 			sourceTree = "<group>";
@@ -5703,8 +5777,9 @@
 		F55DB3861D2A373B0054F251 /* model */ = {
 			isa = PBXGroup;
 			children = (
-				F55DB38B1D2A376D0054F251 /* JGDPrize.h */,
-				F55DB38C1D2A376D0054F251 /* JGDPrize.m */,
+				2012AD291D2A693900F70E40 /* 奖项设置 */,
+				2012AD211D2A685700F70E40 /* JGDPrize.h */,
+				2012AD221D2A685700F70E40 /* JGDPrize.m */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -5712,8 +5787,9 @@
 		F55DB3871D2A373B0054F251 /* view */ = {
 			isa = PBXGroup;
 			children = (
-				F55DB38E1D2A37800054F251 /* JGDprizeTableViewCell.h */,
-				F55DB38F1D2A37800054F251 /* JGDprizeTableViewCell.m */,
+				2012AD281D2A692F00F70E40 /* 奖项设置 */,
+				2012AD241D2A686300F70E40 /* JGDprizeTableViewCell.h */,
+				2012AD251D2A686300F70E40 /* JGDprizeTableViewCell.m */,
 			);
 			path = view;
 			sourceTree = "<group>";
@@ -6078,6 +6154,7 @@
 				3660E08F1BFC48B00033B4D7 /* Default@2x-568.png in Resources */,
 				362317251BDA12F500257862 /* guide_01.png in Resources */,
 				36D0B0F31C80151C00C7245E /* RongCloudKit.strings in Resources */,
+				2012AD3E1D2B5F4100F70E40 /* JGHAddAwardImageCell.xib in Resources */,
 				82E6A7161CF68190009DD179 /* JGLTeamEditTableViewCell.xib in Resources */,
 				36BF00421BC771FB005B3CE2 /* ZanNumTableViewCell.xib in Resources */,
 				654332081BD5D9B900363947 /* UMShareEditViewController.xib in Resources */,
@@ -6115,6 +6192,7 @@
 				654332201BD630E500363947 /* PostRewordTableViewCell.xib in Resources */,
 				3660E17D1BFC56C20033B4D7 /* ScoreCommentOtherViewCell.xib in Resources */,
 				36BFFEE61BC76CDC005B3CE2 /* xiaoxidian@3x.png in Resources */,
+				2012AD311D2A699600F70E40 /* JGHAwardCell.xib in Resources */,
 				208837A41D1A9D88004C7B5D /* JGHActivityBaseInfoCell.xib in Resources */,
 				20CA139B1CE984C500DA15B9 /* JGGroupdetailsCollectionViewCell.xib in Resources */,
 				36BF00BE1BC77383005B3CE2 /* MyNewsBoxTableCell.xib in Resources */,
@@ -6188,12 +6266,14 @@
 				209B3FE71D0FCB0300A6FF72 /* JGHSaveAndSubmitBtnCell.xib in Resources */,
 				36BF00011BC770C4005B3CE2 /* chat_bottom_keyboard_press.png in Resources */,
 				36BFFEB81BC76CDC005B3CE2 /* tab_bg2@2x.png in Resources */,
+				2012AD461D2B7E7900F70E40 /* JGHChooseAwardCell.xib in Resources */,
 				20F6A5CF1CF459D400DD9383 /* JGActivityBaseInfoCell.xib in Resources */,
 				F5E3F7F11CAA54BC00B24C77 /* dz@2x.png in Resources */,
 				36BFFEDF1BC76CDC005B3CE2 /* xiaoxidian2.png in Resources */,
 				36BF01F31BC77C71005B3CE2 /* MySelfTableViewCell.xib in Resources */,
 				6543320C1BD5D9B900363947 /* UMSShareListController.xib in Resources */,
 				36BFFEC51BC76CDC005B3CE2 /* tab_sy@3x.png in Resources */,
+				2012AD391D2B510A00F70E40 /* JGHActivityBaseCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6223,7 +6303,7 @@
 				2067C6D41CE30CC0002900C8 /* JGTeamActivityDetailsCell.m in Sources */,
 				36E300F81C3FF3F9005C3F08 /* MJRefreshStateHeader.m in Sources */,
 				366884961C4DE40B00B81E04 /* RewordCheckModel.m in Sources */,
-				F55DB3901D2A37800054F251 /* JGDprizeTableViewCell.m in Sources */,
+				2012AD261D2A686300F70E40 /* JGDprizeTableViewCell.m in Sources */,
 				828A99E71CE325BB00AF9860 /* JGPhotoAlbumViewController.m in Sources */,
 				20F6A5CE1CF459D400DD9383 /* JGActivityBaseInfoCell.m in Sources */,
 				363053271BDE3DEB00B02C68 /* ShareAlert.m in Sources */,
@@ -6250,7 +6330,6 @@
 				20591CA31D23C22F003271EC /* JGHBlanKCardPasswordViewController.m in Sources */,
 				36BFFF951BC76D6B005B3CE2 /* TabBarItem.m in Sources */,
 				36BFFFC81BC770B1005B3CE2 /* AreaViewController.m in Sources */,
-				F55DB38D1D2A376D0054F251 /* JGDPrize.m in Sources */,
 				36BF004F1BC77213005B3CE2 /* UserAssistModel.m in Sources */,
 				36BFFFCF1BC770B1005B3CE2 /* ZYQAssetPickerController.m in Sources */,
 				828A99F91CE348D500AF9860 /* JGMemTitleTableViewCell.m in Sources */,
@@ -6341,6 +6420,7 @@
 				20513BD31CF7050A003233FB /* Order.m in Sources */,
 				82D595ED1CE4654C00CD9587 /* JGTeamPhotoCollectionViewCell.m in Sources */,
 				F5B647101CE41E7E00A7A056 /* JGTeamDetailView.m in Sources */,
+				2012AD301D2A699600F70E40 /* JGHAwardCell.m in Sources */,
 				36BFFF851BC76D09005B3CE2 /* LazyPageScrollView.m in Sources */,
 				36BF00C11BC77383005B3CE2 /* MeTableViewCell.m in Sources */,
 				36BFFF7B1BC76D09005B3CE2 /* SDWebImagePrefetcher.m in Sources */,
@@ -6376,6 +6456,7 @@
 				20BA61411CDCA180004B61F5 /* VedioPlayViewController.m in Sources */,
 				36BF00E01BC77428005B3CE2 /* PracticeViewController.m in Sources */,
 				20CA13691CE44CCB00DA15B9 /* JGAlreadyAddGuestCell.m in Sources */,
+				2012AD491D2B929600F70E40 /* JGHCustomAwardViewController.m in Sources */,
 				364F81411C0705B700DEE016 /* TeamPhotoModel.m in Sources */,
 				20513BD51CF7050A003233FB /* DataSigner.m in Sources */,
 				362317121BD9D31500257862 /* PageViewController.m in Sources */,
@@ -6384,9 +6465,9 @@
 				F55597251CF53FF900F33099 /* JGTeamMemberORManagerViewController.m in Sources */,
 				20591C761D224DF1003271EC /* JGHWithdrawViewController.m in Sources */,
 				20F6A5D71CF498E600DD9383 /* JGHApplyModel.m in Sources */,
+				2012AD411D2B7CD300F70E40 /* JGHChooseAwardViewController.m in Sources */,
 				F50B7FB71CE5DBB70065069D /* JGTeamMainhallViewController.m in Sources */,
 				36B08F701C2D322600CD660E /* UITableViewCell+JZExtension.m in Sources */,
-				F55DB38A1D2A375C0054F251 /* JGDPrizeViewController.m in Sources */,
 				F554267F1D23E82400233B20 /* JGDShowCertViewController.m in Sources */,
 				36BF00911BC772EF005B3CE2 /* MyAccountViewController.m in Sources */,
 				F569A1401CE35A9C00CD0FD5 /* JGTeamDetailViewController.m in Sources */,
@@ -6406,6 +6487,7 @@
 				36BF01C71BC77ABE005B3CE2 /* YueHallTableViewCell.m in Sources */,
 				36BF005D1BC77296005B3CE2 /* AddFootViewController.m in Sources */,
 				36BF01641BC77611005B3CE2 /* CustomIOSAlertView.m in Sources */,
+				2012AD341D2B4E3300F70E40 /* JGHAwardModel.m in Sources */,
 				36BF003C1BC771FB005B3CE2 /* ComDetailViewCell.m in Sources */,
 				36BF008B1BC772EF005B3CE2 /* MySetPasswordController.m in Sources */,
 				36DCA73C1C22630500E12DF7 /* ScoreProStandedModel.m in Sources */,
@@ -6455,6 +6537,8 @@
 				36BFFF7C1BC76D09005B3CE2 /* UIButton+WebCache.m in Sources */,
 				36DF09B21C03EFFB007A8A4E /* TeamLogoHeadCell.m in Sources */,
 				36BFFF831BC76D09005B3CE2 /* HorButtonSet.m in Sources */,
+				2012AD201D2A684900F70E40 /* JGDPrizeViewController.m in Sources */,
+				2012AD381D2B510A00F70E40 /* JGHActivityBaseCell.m in Sources */,
 				36067BC11C97EED2001AE22C /* TeamFriListViewController.m in Sources */,
 				36BFFF7D1BC76D09005B3CE2 /* UIImage+GIF.m in Sources */,
 				F52A49E51C969F79002A4973 /* ScreenTableViewCell.m in Sources */,
@@ -6542,6 +6626,7 @@
 				36E300F11C3FF3F9005C3F08 /* MJRefreshAutoNormalFooter.m in Sources */,
 				36BF01611BC77611005B3CE2 /* AreaChooseViewController.m in Sources */,
 				3657369A1C16872B00D2BC10 /* ScoreProListModel.m in Sources */,
+				2012AD2C1D2A695E00F70E40 /* JGHSetAwardViewController.m in Sources */,
 				36BF01631BC77611005B3CE2 /* BallParkViewController.m in Sources */,
 				207FEC9B1D1BDDB10098E23C /* JGHButtonCell.m in Sources */,
 				36DF6DF71C0809B400B60B67 /* TeamBrowseViewController.m in Sources */,
@@ -6570,6 +6655,7 @@
 				20CA13651CE4276500DA15B9 /* JGTeamAcitivtyModel.m in Sources */,
 				3660E12A1BFC553A0033B4D7 /* ManageMineController.m in Sources */,
 				366E6EFB1C117BC200FD65B3 /* ScoreModel.m in Sources */,
+				2012AD231D2A685700F70E40 /* JGDPrize.m in Sources */,
 				3660E2011BFC64DD0033B4D7 /* ScoreByActiveViewController.m in Sources */,
 				36BFFF601BC76D09005B3CE2 /* AFURLResponseSerialization.m in Sources */,
 				20CA139A1CE984C500DA15B9 /* JGGroupdetailsCollectionViewCell.m in Sources */,
@@ -6585,6 +6671,7 @@
 				F50B7FB31CE59E050065069D /* JGTeamDetailStylelTwoViewController.m in Sources */,
 				208030531CF9A79800448BFC /* JGHTotalPriceCell.m in Sources */,
 				3669C28C1C48AAC9006CBAAA /* PublishViewController.m in Sources */,
+				2012AD451D2B7E7900F70E40 /* JGHChooseAwardCell.m in Sources */,
 				20513BD41CF7050A003233FB /* base64.m in Sources */,
 				36067BBC1C96B43B001AE22C /* ChatDetailViewController.m in Sources */,
 				36067BC41C97EF16001AE22C /* ContactViewController.m in Sources */,
@@ -6703,6 +6790,7 @@
 				36BFFF641BC76D09005B3CE2 /* AFNetworkActivityIndicatorManager.m in Sources */,
 				36BFFF771BC76D09005B3CE2 /* SDWebImageDecoder.m in Sources */,
 				F56F0B901CC637A200A222F3 /* AddNoteViewController.m in Sources */,
+				2012AD3D1D2B5F4100F70E40 /* JGHAddAwardImageCell.m in Sources */,
 				3623174B1BDA6B2800257862 /* CommunMessageViewCell.m in Sources */,
 				36DFD9151C0E9F4E004DC690 /* HistoryLeftTableViewCell.m in Sources */,
 				36E300F51C3FF3F9005C3F08 /* MJRefreshBackStateFooter.m in Sources */,

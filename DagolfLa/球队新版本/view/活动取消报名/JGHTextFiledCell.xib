@@ -37,6 +37,7 @@
             <connections>
                 <outlet property="titleLeft" destination="wL4-UO-UXm" id="ICM-xa-2Oa"/>
                 <outlet property="titlefileds" destination="21w-RG-ZJn" id="RLC-ER-Q2F"/>
+                <outlet property="titlefiledsLeft" destination="hwE-5G-9Yi" id="oaD-sN-OGo"/>
                 <outlet property="titlefiledsRight" destination="ACB-6Z-L0b" id="pyH-hS-wlR"/>
                 <outlet property="titles" destination="T1o-Dl-bdD" id="HUV-zV-cQy"/>
             </connections>

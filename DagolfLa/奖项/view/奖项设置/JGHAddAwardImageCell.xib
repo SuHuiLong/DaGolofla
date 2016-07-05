@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="KGk-i7-Jjw" customClass="JGHAddAwardImageCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tianjiaanniu" translatesAutoresizingMaskIntoConstraints="NO" id="nCY-KJ-qnm">
+                        <rect key="frame" x="10" y="10" width="24" height="24"/>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MMI-2S-brA">
+                        <rect key="frame" x="44" y="11" width="4.5" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="nCY-KJ-qnm" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="DQf-6o-bEi"/>
+                    <constraint firstItem="nCY-KJ-qnm" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="GLL-gd-cmm"/>
+                    <constraint firstItem="MMI-2S-brA" firstAttribute="centerY" secondItem="nCY-KJ-qnm" secondAttribute="centerY" id="OOH-AO-4eX"/>
+                    <constraint firstItem="MMI-2S-brA" firstAttribute="leading" secondItem="nCY-KJ-qnm" secondAttribute="trailing" constant="10" id="Qum-wo-fUh"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="headerImageView" destination="nCY-KJ-qnm" id="BUk-Re-f1n"/>
+                <outlet property="headerImageViewLeft" destination="DQf-6o-bEi" id="Y5Z-cu-lqh"/>
+                <outlet property="vlaue" destination="MMI-2S-brA" id="Bkq-tZ-NXY"/>
+                <outlet property="vlaueLeft" destination="Qum-wo-fUh" id="DVF-CM-dQs"/>
+            </connections>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="tianjiaanniu" width="24" height="24"/>
+    </resources>
+</document>

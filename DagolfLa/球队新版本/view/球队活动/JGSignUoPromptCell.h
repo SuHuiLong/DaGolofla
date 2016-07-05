@@ -11,6 +11,10 @@
 @interface JGSignUoPromptCell : UITableViewCell
 
 
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *pamapLabelLeft;
+
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *pamapLabelRight;
+
 @property (weak, nonatomic) IBOutlet UILabel *pamaptLabel;
 
 - (void)configPromptString:(NSString *)string;
@@ -18,5 +22,7 @@
 - (void)configPromptPasswordString:(NSString *)string;
 
 - (void)configPromptSetPasswordString:(NSString *)string;
+
+- (void)configAllPromptString:(NSString *)str andLeftCon:(NSInteger)leftCon andRightCon:(NSInteger)rightCon;
 
 @end
