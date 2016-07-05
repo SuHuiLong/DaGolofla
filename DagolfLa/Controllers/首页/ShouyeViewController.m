@@ -230,7 +230,7 @@
                 NSLog(@"shangchen");
 //                UseMallViewController
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
-                JGLWinnersShareViewController* userVc = [[JGLWinnersShareViewController alloc]init];
+                UseMallViewController* userVc = [[UseMallViewController alloc]init];
                 [self.navigationController pushViewController:userVc animated:YES];
             }
                 break;
@@ -238,10 +238,7 @@
             {
                 NSLog(@"taocan");
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
-#warning delete-----------------
-                JGDActivityListViewController * pacVc = [[JGDActivityListViewController alloc]init];
-
-//                PackageViewController* pacVc = [[PackageViewController alloc]init];
+                PackageViewController* pacVc = [[PackageViewController alloc]init];
                 [self.navigationController pushViewController:pacVc animated:YES];
             }
                 break;
