@@ -34,7 +34,8 @@
 - (void)setdata{
     NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
     [dic setObject:[NSNumber numberWithInteger:self.activityKey] forKey:@"activityKey"];
-    
+    [dic setObject:[NSNumber numberWithInteger:self.activityKey] forKey:@"teamKey"];
+
     [[JsonHttp jsonHttp]httpRequest:@"team/getTeamActivityPrizeList" JsonKey:nil withData:dic requestMethod:@"GET" failedBlock:^(id errType) {
         NSLog(@"errtype == %@", errType);
     } completionBlock:^(id data) {
