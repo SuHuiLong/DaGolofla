@@ -665,6 +665,10 @@
 		65CD8E4B1BEA067F006984F3 /* AddressBookViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 65CD8E491BEA067F006984F3 /* AddressBookViewCell.m */; };
 		65CD8E4C1BEA067F006984F3 /* AddressBookViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 65CD8E4A1BEA067F006984F3 /* AddressBookViewCell.xib */; };
 		8200F31B1D17BF4C00BAF7A9 /* JGLManageCancelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8200F31A1D17BF4C00BAF7A9 /* JGLManageCancelViewController.m */; };
+		8205D6891D2B5E2100BC79E0 /* JGLWinnersShareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8205D6881D2B5E2100BC79E0 /* JGLWinnersShareViewController.m */; };
+		8205D68D1D2B5EC500BC79E0 /* JGLWinnersShareTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8205D68C1D2B5EC500BC79E0 /* JGLWinnersShareTableViewCell.m */; };
+		8205D6901D2B831D00BC79E0 /* JGLPresentAwardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8205D68F1D2B831D00BC79E0 /* JGLPresentAwardViewController.m */; };
+		8205D6931D2B8A6D00BC79E0 /* JGLPresentAwardTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8205D6921D2B8A6D00BC79E0 /* JGLPresentAwardTableViewCell.m */; };
 		8215EE121D0FD9F90099F161 /* JGTeamMemberManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8215EE111D0FD9F90099F161 /* JGTeamMemberManager.m */; };
 		821A130F1CED5F9C00694E49 /* JGLPhotoAlbumModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 821A130E1CED5F9C00694E49 /* JGLPhotoAlbumModel.m */; };
 		821A13131CEDE04400694E49 /* JGLMyTeamModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 821A13121CEDE04400694E49 /* JGLMyTeamModel.m */; };
@@ -2009,6 +2013,14 @@
 		65CD8E4A1BEA067F006984F3 /* AddressBookViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddressBookViewCell.xib; sourceTree = "<group>"; };
 		8200F3191D17BF4C00BAF7A9 /* JGLManageCancelViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGLManageCancelViewController.h; sourceTree = "<group>"; };
 		8200F31A1D17BF4C00BAF7A9 /* JGLManageCancelViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGLManageCancelViewController.m; sourceTree = "<group>"; };
+		8205D6871D2B5E2100BC79E0 /* JGLWinnersShareViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGLWinnersShareViewController.h; sourceTree = "<group>"; };
+		8205D6881D2B5E2100BC79E0 /* JGLWinnersShareViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGLWinnersShareViewController.m; sourceTree = "<group>"; };
+		8205D68B1D2B5EC500BC79E0 /* JGLWinnersShareTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGLWinnersShareTableViewCell.h; sourceTree = "<group>"; };
+		8205D68C1D2B5EC500BC79E0 /* JGLWinnersShareTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGLWinnersShareTableViewCell.m; sourceTree = "<group>"; };
+		8205D68E1D2B831D00BC79E0 /* JGLPresentAwardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGLPresentAwardViewController.h; sourceTree = "<group>"; };
+		8205D68F1D2B831D00BC79E0 /* JGLPresentAwardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGLPresentAwardViewController.m; sourceTree = "<group>"; };
+		8205D6911D2B8A6D00BC79E0 /* JGLPresentAwardTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGLPresentAwardTableViewCell.h; sourceTree = "<group>"; };
+		8205D6921D2B8A6D00BC79E0 /* JGLPresentAwardTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGLPresentAwardTableViewCell.m; sourceTree = "<group>"; };
 		8215EE101D0FD9F90099F161 /* JGTeamMemberManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGTeamMemberManager.h; sourceTree = "<group>"; };
 		8215EE111D0FD9F90099F161 /* JGTeamMemberManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGTeamMemberManager.m; sourceTree = "<group>"; };
 		821A130D1CED5F9C00694E49 /* JGLPhotoAlbumModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGLPhotoAlbumModel.h; sourceTree = "<group>"; };
@@ -5343,6 +5355,29 @@
 			path = "社区导航文件";
 			sourceTree = "<group>";
 		};
+		8205D6861D2B5C6B00BC79E0 /* 获奖名单分享 */ = {
+			isa = PBXGroup;
+			children = (
+				8205D6871D2B5E2100BC79E0 /* JGLWinnersShareViewController.h */,
+				8205D6881D2B5E2100BC79E0 /* JGLWinnersShareViewController.m */,
+				8205D68E1D2B831D00BC79E0 /* JGLPresentAwardViewController.h */,
+				8205D68F1D2B831D00BC79E0 /* JGLPresentAwardViewController.m */,
+			);
+			name = "获奖名单分享";
+			path = "获奖名单";
+			sourceTree = "<group>";
+		};
+		8205D68A1D2B5EAC00BC79E0 /* 获奖名单分享 */ = {
+			isa = PBXGroup;
+			children = (
+				8205D68B1D2B5EC500BC79E0 /* JGLWinnersShareTableViewCell.h */,
+				8205D68C1D2B5EC500BC79E0 /* JGLWinnersShareTableViewCell.m */,
+				8205D6911D2B8A6D00BC79E0 /* JGLPresentAwardTableViewCell.h */,
+				8205D6921D2B8A6D00BC79E0 /* JGLPresentAwardTableViewCell.m */,
+			);
+			path = "获奖名单分享";
+			sourceTree = "<group>";
+		};
 		821A13101CEDE02E00694E49 /* 我的球队 */ = {
 			isa = PBXGroup;
 			children = (
@@ -5694,6 +5729,7 @@
 		F55DB3851D2A373B0054F251 /* controller */ = {
 			isa = PBXGroup;
 			children = (
+				8205D6861D2B5C6B00BC79E0 /* 获奖名单分享 */,
 				F55DB3881D2A375C0054F251 /* JGDPrizeViewController.h */,
 				F55DB3891D2A375C0054F251 /* JGDPrizeViewController.m */,
 			);
@@ -5712,6 +5748,7 @@
 		F55DB3871D2A373B0054F251 /* view */ = {
 			isa = PBXGroup;
 			children = (
+				8205D68A1D2B5EAC00BC79E0 /* 获奖名单分享 */,
 				F55DB38E1D2A37800054F251 /* JGDprizeTableViewCell.h */,
 				F55DB38F1D2A37800054F251 /* JGDprizeTableViewCell.m */,
 			);
@@ -6236,6 +6273,7 @@
 				65B596EE1CAD43AC007AB83A /* YMTableViewCell.m in Sources */,
 				36E300F01C3FF3F9005C3F08 /* MJRefreshAutoGifFooter.m in Sources */,
 				36DF6DEE1C07FDBD00B60B67 /* TeamCreatePhotoController.m in Sources */,
+				8205D6891D2B5E2100BC79E0 /* JGLWinnersShareViewController.m in Sources */,
 				36BF00A81BC77326005B3CE2 /* MyfootModel.m in Sources */,
 				209B3FE61D0FCB0300A6FF72 /* JGHSaveAndSubmitBtnCell.m in Sources */,
 				829960DB1D23729C00E121A8 /* JGLBankCardTableViewCell.m in Sources */,
@@ -6276,6 +6314,7 @@
 				36BF003F1BC771FB005B3CE2 /* OtherDataTableViewCell.m in Sources */,
 				F543ACC41CF4269D00C6B111 /* JGLableAndLableTableViewCell.m in Sources */,
 				3684FDAB1C4A35F4002A14FC /* TeamApplyViewCell.m in Sources */,
+				8205D68D1D2B5EC500BC79E0 /* JGLWinnersShareTableViewCell.m in Sources */,
 				F543ACC11CF4246000C6B111 /* JGNotTeamMemberDetailViewController.m in Sources */,
 				36BF00861BC772EF005B3CE2 /* MySetViewController.m in Sources */,
 				F569A1481CE35AA500CD0FD5 /* JGTeamChannelActivityTableViewCell.m in Sources */,
@@ -6604,6 +6643,7 @@
 				368B73341C102A710002A618 /* ScoreProfessViewController.m in Sources */,
 				36BF01A41BC779EA005B3CE2 /* BaseModel.m in Sources */,
 				36BFFF871BC76D09005B3CE2 /* Setbutton.m in Sources */,
+				8205D6931D2B8A6D00BC79E0 /* JGLPresentAwardTableViewCell.m in Sources */,
 				3660E0C31BFC530B0033B4D7 /* ScoreViewController.m in Sources */,
 				36BF00101BC770C4005B3CE2 /* ChartMessage.m in Sources */,
 				36BF01F21BC77C71005B3CE2 /* MySelfTableViewCell.m in Sources */,
@@ -6748,6 +6788,7 @@
 				368B73281C100A390002A618 /* ScoreTableViewCell.m in Sources */,
 				827AA01D1D1D1C5500F6B80B /* JGLActiveMemTableViewCell.m in Sources */,
 				369B2B671C61B23F00366AA2 /* NewsDetailViewCell.m in Sources */,
+				8205D6901D2B831D00BC79E0 /* JGLPresentAwardViewController.m in Sources */,
 				36BF01911BC7766B005B3CE2 /* MeWonderViewCell.m in Sources */,
 				F566EFAB1CA0F01B008BB328 /* InformSetmodel.m in Sources */,
 				20591C871D22630A003271EC /* JGHWithdrawCell.m in Sources */,
