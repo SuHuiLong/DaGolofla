@@ -10,12 +10,17 @@
 #import "JGHTradRecordViewController.h"
 #import "JGHWithdrawViewController.h"
 #import "JGLBankListViewController.h"
+#import "JGDCertificationViewController.h"
+#import "JGDSubMitPayPasswordViewController.h"
 
 @interface JGDPrivateAccountViewController ()<UITableViewDelegate,UITableViewDataSource>
 
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) NSNumber *money;
 @property (nonatomic, strong) UILabel *moneyLabel;
+@property (nonatomic, strong) NSNumber *hasUserRealName;
+@property (nonatomic, strong) NSNumber *isSetPayPassWord;
+
 
 @end
 
@@ -33,9 +38,36 @@
         
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
             self.money = [data objectForKey:@"money"] ;
+            self.hasUserRealName = [data objectForKey:@"hasUserRealName"] ;
+            self.isSetPayPassWord = [data objectForKey:@"isSetPayPassWord"] ;
+
             self.moneyLabel.text = [NSString stringWithFormat:@"¥%.2f",[self.money floatValue]];
+        
+            
+            UITapGestureRecognizer *gest = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(removeView:)];
+            if ([[data objectForKey:@"hasUserRealName"] integerValue] == 0) {
+                UIImageView *imageV = [[UIImageView alloc] initWithFrame:[UIScreen mainScreen].bounds];
+                imageV.image = [UIImage imageNamed:@"zhezhao1"];
+                imageV.userInteractionEnabled = YES;
+                [imageV addGestureRecognizer:gest];
+                [self.view addSubview:imageV];
+            
+            }else if ( [[data objectForKey:@"isSetPayPassWord"] integerValue] == 0){
+                UIImageView *imageV = [[UIImageView alloc] initWithFrame:[UIScreen mainScreen].bounds];
+                imageV.image = [UIImage imageNamed:@"zhezhao2"];
+                imageV.userInteractionEnabled = YES;
+                [imageV addGestureRecognizer:gest];
+                [self.view addSubview:imageV];
+
+            }else{
+                
+            }
         }
     }];
+}
+
+- (void)removeView:(UITapGestureRecognizer *)gest{
+    [gest.view removeFromSuperview];
 }
 
 - (void)viewDidLoad {
@@ -152,12 +184,50 @@
 #pragma mark -----提现
 
 - (void)takeMoney:(UIButton *)btn{
-    btn.enabled = NO;
-    JGHWithdrawViewController *withdrawCtrl = [[JGHWithdrawViewController alloc]init];
-    withdrawCtrl.balance = self.money;
     
-    [self.navigationController pushViewController:withdrawCtrl animated:YES];
-    btn.enabled = YES;
+    
+    if ([self.hasUserRealName integerValue] == 0) {
+        UIAlertController *alert=[UIAlertController alertControllerWithTitle:@"提示" message:@"是否前往实名认证" preferredStyle:UIAlertControllerStyleAlert];
+        
+        UIAlertAction *action1=[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            [alert dismissViewControllerAnimated:YES completion:nil];
+            
+        }];
+        UIAlertAction* action2=[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            JGDCertificationViewController *createCertVc = [[JGDCertificationViewController alloc] init];
+            [self.navigationController pushViewController:createCertVc animated:YES];
+        }];
+        
+        [alert addAction:action1];
+        [alert addAction:action2];
+        [self presentViewController:alert animated:YES completion:nil];
+        
+    }else if ( [self.isSetPayPassWord integerValue] == 0){
+        UIAlertController *alert=[UIAlertController alertControllerWithTitle:@"提示" message:@"是否前往设置支付密码" preferredStyle:UIAlertControllerStyleAlert];
+        
+        UIAlertAction *action1=[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            [alert dismissViewControllerAnimated:YES completion:nil];
+            
+        }];
+        UIAlertAction* action2=[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            JGDSubMitPayPasswordViewController *setPassWord = [[JGDSubMitPayPasswordViewController alloc] init];
+            [self.navigationController pushViewController:setPassWord animated:YES];
+        }];
+        
+        [alert addAction:action1];
+        [alert addAction:action2];
+        [self presentViewController:alert animated:YES completion:nil];
+        
+        
+    }else{
+        btn.enabled = NO;
+        JGHWithdrawViewController *withdrawCtrl = [[JGHWithdrawViewController alloc]init];
+        withdrawCtrl.balance = self.money;
+        
+        [self.navigationController pushViewController:withdrawCtrl animated:YES];
+        btn.enabled = YES;
+    }
+    
 }
 
 #pragma mark -----添加银行卡

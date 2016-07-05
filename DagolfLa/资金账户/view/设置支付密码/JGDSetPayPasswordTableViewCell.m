@@ -37,7 +37,8 @@
         CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
         CGColorRef borderColorRef = CGColorCreate(colorSpace,(CGFloat[]){ 0.48, 0.76, 1.00, 1.00 });
         self.takeBtn.layer.borderColor = borderColorRef;
-//        [self.takeBtn addTarget:self action:@selector(addBank) forControlEvents:(UIControlEventTouchUpInside)];
+
+        //        [self.takeBtn addTarget:self action:@selector(addBank) forControlEvents:(UIControlEventTouchUpInside)];
 
         [self.contentView addSubview:self.LB];
         [self.contentView addSubview:self.txFD];

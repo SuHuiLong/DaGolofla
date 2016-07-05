@@ -52,6 +52,9 @@
 #import "JGDPrivateAccountViewController.h"
 #import "JGDWithDrawTeamMoneyViewController.h"
 
+#import "JGDPrizeViewController.h"
+
+
 @interface MeViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
     UITableView* _tableView;
@@ -269,13 +272,9 @@
 {
     
     
-//    JGDWithDrawTeamMoneyViewController *vc = [[JGDWithDrawTeamMoneyViewController alloc] init];
-//    [self.navigationController pushViewController:vc animated:YES];
-//    return;
-    
     if ([[NSUserDefaults standardUserDefaults] objectForKey:@"userId"]) {
 //        NSArray *titleArr = @[@"我的聊天",@"我的消息",@"交易中心",@"我的活动",@"推荐有礼",@"设置"];
-        NSArray *titleArr = @[@"个人资料",@"球友",@"足迹",@"交易中心",@"我的活动",@"推荐有礼",@"关于我们",@"产品评价",@"设置"];
+        NSArray *titleArr = @[@"个人资料",@"球友",@"足迹",@"交易中心",@"交易中心",@"推荐有礼",@"关于我们",@"产品评价",@"设置"];
 //PersonHomeController   PersonHomeController
         NSArray* VcArr = @[@"PersonHomeController",@"ContactViewController",@"MyFootViewController",@"JGDPrivateAccountViewController",@"MyTradeViewController",@"MyRecomViewController",@"MySetAboutController",@"",@"MySetViewController"];
         NSMutableArray *arr = [[NSMutableArray alloc]init];

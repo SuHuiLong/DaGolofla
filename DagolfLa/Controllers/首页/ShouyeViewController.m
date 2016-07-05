@@ -18,10 +18,13 @@
 
 #import "EnterViewController.h"
 //跳转详情界面
-#import "JGLNewShopDetailViewController.h"
+#import "JGLWinnersShareViewController.h"
 
 #import "HomeHeadView.h"
 #import "JGTeamActibityNameViewController.h"
+
+#import "JGDActivityListViewController.h"
+#import "JGDPrizeViewController.h"
 
 @interface ShouyeViewController ()<UIApplicationDelegate,CLLocationManagerDelegate>
 {
@@ -227,7 +230,7 @@
                 NSLog(@"shangchen");
 //                UseMallViewController
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
-                UseMallViewController* userVc = [[UseMallViewController alloc]init];
+                JGLWinnersShareViewController* userVc = [[JGLWinnersShareViewController alloc]init];
                 [self.navigationController pushViewController:userVc animated:YES];
             }
                 break;
@@ -235,7 +238,10 @@
             {
                 NSLog(@"taocan");
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
-                PackageViewController* pacVc = [[PackageViewController alloc]init];
+#warning delete-----------------
+                JGDActivityListViewController * pacVc = [[JGDActivityListViewController alloc]init];
+
+//                PackageViewController* pacVc = [[PackageViewController alloc]init];
                 [self.navigationController pushViewController:pacVc animated:YES];
             }
                 break;
