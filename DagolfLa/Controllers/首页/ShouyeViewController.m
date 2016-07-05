@@ -23,6 +23,9 @@
 #import "HomeHeadView.h"
 #import "JGTeamActibityNameViewController.h"
 
+#import "JGDActivityListViewController.h"
+#import "JGDPrizeViewController.h"
+
 @interface ShouyeViewController ()<UIApplicationDelegate,CLLocationManagerDelegate>
 {
 //    UITableView *_tableView;
@@ -235,7 +238,10 @@
             {
                 NSLog(@"taocan");
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
-                PackageViewController* pacVc = [[PackageViewController alloc]init];
+#warning delete-----------------
+                JGDActivityListViewController * pacVc = [[JGDActivityListViewController alloc]init];
+
+//                PackageViewController* pacVc = [[PackageViewController alloc]init];
                 [self.navigationController pushViewController:pacVc animated:YES];
             }
                 break;
