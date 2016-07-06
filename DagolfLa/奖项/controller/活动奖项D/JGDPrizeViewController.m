@@ -12,6 +12,7 @@
 #import "JGDActvityPriziSetTableViewCell.h"
 #import "JGLPresentAwardViewController.h"
 #import "JGHSetAwardViewController.h"
+#import "JGHActivityBaseCell.h"
 
 @interface JGDPrizeViewController ()<UITableViewDelegate, UITableViewDataSource>
 
@@ -25,6 +26,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.title = @"活动奖项";
     self.view.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];
     [self createTableView];
     [self setdata];
@@ -56,7 +58,8 @@
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     [self.tableView registerClass:[JGDprizeTableViewCell class] forCellReuseIdentifier:@"prizeCell"];
-    [self.tableView registerClass:[JGDtopTableViewCell class] forCellReuseIdentifier:@"topCell"];
+    UINib *activityBaseCellNib = [UINib nibWithNibName:@"JGHActivityBaseCell" bundle: [NSBundle mainBundle]];
+    [self.tableView registerNib:activityBaseCellNib forCellReuseIdentifier:@"topCell"];
     [self.tableView registerClass:[JGDActvityPriziSetTableViewCell class] forCellReuseIdentifier:@"setCell"];
 
     [self.view addSubview:self.tableView];
@@ -65,7 +68,8 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
     if (indexPath.section == 0) {
-        JGDtopTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"topCell"];
+        JGHActivityBaseCell *cell = [tableView dequeueReusableCellWithIdentifier:@"topCell"];
+        [cell configJGTeamActivityModel:self.model];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
         
