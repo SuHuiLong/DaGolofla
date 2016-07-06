@@ -23,12 +23,12 @@
         self.nameLabel.font = [UIFont systemFontOfSize:15 * ProportionAdapter];
         [self.contentView addSubview:self.nameLabel];
         
-        self.prizeLbel = [[UILabel alloc] initWithFrame:CGRectMake(180 * ProportionAdapter, 0, 120 * ProportionAdapter, 44 * ProportionAdapter)];
+        self.prizeLbel = [[UILabel alloc] initWithFrame:CGRectMake(170 * ProportionAdapter, 0, 150 * ProportionAdapter, 44 * ProportionAdapter)];
         self.prizeLbel.font = [UIFont systemFontOfSize:13 * ProportionAdapter];
         self.prizeLbel.textColor = [UIColor colorWithHexString:@"#666666"];
         [self.contentView addSubview:self.prizeLbel];
         
-        self.numberLabel = [[UILabel alloc] initWithFrame:CGRectMake(320 * ProportionAdapter, 0, 30 * ProportionAdapter, 44 * ProportionAdapter)];
+        self.numberLabel = [[UILabel alloc] initWithFrame:CGRectMake(335 * ProportionAdapter, 0, 30 * ProportionAdapter, 44 * ProportionAdapter)];
         self.numberLabel.font = [UIFont systemFontOfSize:15 * ProportionAdapter];
         self.numberLabel.textColor = [UIColor colorWithHexString:@"#666666"];
         [self.contentView addSubview:self.numberLabel];

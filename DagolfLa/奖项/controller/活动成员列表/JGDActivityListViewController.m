@@ -42,7 +42,7 @@
     
     [self.view addSubview:self.tableView];
     
-    UIBarButtonItem *barItm = [[UIBarButtonItem alloc] initWithTitle:@"完成" style:(UIBarButtonItemStylePlain) target:self action:@selector(check)];
+    UIBarButtonItem *barItm = [[UIBarButtonItem alloc] initWithTitle:@"保存" style:(UIBarButtonItemStylePlain) target:self action:@selector(check)];
     barItm.tintColor = [UIColor whiteColor];
     self.navigationItem.rightBarButtonItem = barItm;
     
@@ -50,7 +50,28 @@
 }
 
 - (void)check{
+/*
+ 
+ * 保存选择获奖人
+ * @Title: doSavePrizeUser
+ * @param teamKey
+ * @param activityKey
+ * @param userKey
+ * @param prizeKey
+ * @param signupKeyList
+ * @param response
+ * @throws Throwable
+ * @author lyh
 
+    @HttpService(RequestURL="/doSavePrizeUser" , method="post")
+    public void doSavePrizeUser(
+                                @Param(value="teamKey", require=true)                                    Long        teamKey,
+                                @Param(value="activityKey", require=true)                                Long        activityKey,
+                                @Param(value="userKey"     , require = true)                             Long        userKey,
+                                @Param(value="prizeKey",     require=true)                               Long        prizeKey,
+                                @Param(value="signupKeyList", require=true, genricType=Long.class)       List<Long>  signupKeyList,
+                                TcpResponse response) throws Throwable {
+ */
     
 }
 

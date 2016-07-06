@@ -14,4 +14,6 @@
 
 @property (nonatomic, assign) NSInteger teamKey;
 
+@property (nonatomic, assign) NSInteger isManager;
+
 @end

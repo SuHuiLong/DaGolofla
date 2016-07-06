@@ -77,94 +77,96 @@
         cell.LB.text = @"证件类型";
         cell.txFD.text = @"身份证";
         cell.txFD.userInteractionEnabled = NO;
-//    }else if (indexPath.row == 2) {
-//        cell.LB.text = @"证件号码";
-//        cell.txFD.placeholder = @"请如实填写";
+        //    }else if (indexPath.row == 2) {
+        //        cell.LB.text = @"证件号码";
+        //        cell.txFD.placeholder = @"请如实填写";
     }else{
-        cell.LB.text = @"证件照片";
-        [cell.txFD removeFromSuperview];
-        cell.userInteractionEnabled = YES;
-        
-        self.frontBtn = [UIButton buttonWithType:(UIButtonTypeCustom)];
-        self.frontBtn.frame = CGRectMake(110 * screenWidth / 375, 17 * screenWidth / 375, 180 * screenWidth / 375, 113 * screenWidth / 375);
-        self.frontBtn.tag = 601;
-        [self.frontBtn setImage:[UIImage imageNamed:@"positive"] forState:(UIControlStateNormal)];
-
-        [self.frontBtn addTarget:self action:@selector(addPhoto:) forControlEvents:(UIControlEventTouchUpInside)];
-        [cell.contentView addSubview:self.frontBtn];
-        
-        self.behindBtn = [UIButton buttonWithType:(UIButtonTypeCustom)];
-        self.behindBtn.frame = CGRectMake(110 * screenWidth / 375, 157 * screenWidth / 375, 180 * screenWidth / 375, 113 * screenWidth / 375);
-        self.behindBtn.tag = 602;
-        [self.behindBtn setImage:[UIImage imageNamed:@"reverse"] forState:(UIControlStateNormal)];
-        [self.behindBtn addTarget:self action:@selector(addPhoto:) forControlEvents:(UIControlEventTouchUpInside)];
-        [cell.contentView addSubview:self.behindBtn];
+        cell.LB.text = @"证件号码";
+        cell.txFD.placeholder = @"请如实填写";
+        //        cell.LB.text = @"证件照片";
+        //        [cell.txFD removeFromSuperview];
+        //        cell.userInteractionEnabled = YES;
+        //
+        //        self.frontBtn = [UIButton buttonWithType:(UIButtonTypeCustom)];
+        //        self.frontBtn.frame = CGRectMake(110 * screenWidth / 375, 17 * screenWidth / 375, 180 * screenWidth / 375, 113 * screenWidth / 375);
+        //        self.frontBtn.tag = 601;
+        //        [self.frontBtn setImage:[UIImage imageNamed:@"positive"] forState:(UIControlStateNormal)];
+        //
+        //        [self.frontBtn addTarget:self action:@selector(addPhoto:) forControlEvents:(UIControlEventTouchUpInside)];
+        //        [cell.contentView addSubview:self.frontBtn];
+        //
+        //        self.behindBtn = [UIButton buttonWithType:(UIButtonTypeCustom)];
+        //        self.behindBtn.frame = CGRectMake(110 * screenWidth / 375, 157 * screenWidth / 375, 180 * screenWidth / 375, 113 * screenWidth / 375);
+        //        self.behindBtn.tag = 602;
+        //        [self.behindBtn setImage:[UIImage imageNamed:@"reverse"] forState:(UIControlStateNormal)];
+        //        [self.behindBtn addTarget:self action:@selector(addPhoto:) forControlEvents:(UIControlEventTouchUpInside)];
+        //        [cell.contentView addSubview:self.behindBtn];
         
     }
     return cell;
 }
 
-- (void)addPhoto:(UIButton *)gestureR{
-    
-    if (gestureR.tag == 601) {
-        
-        [self SelectPhotoImage:gestureR];
-    }else if (gestureR.tag == 602){
-        
-        [self SelectPhotoImage:gestureR];
-    }
-}
+//- (void)addPhoto:(UIButton *)gestureR{
+//    
+//    if (gestureR.tag == 601) {
+//        
+//        [self SelectPhotoImage:gestureR];
+//    }else if (gestureR.tag == 602){
+//        
+//        [self SelectPhotoImage:gestureR];
+//    }
+//}
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
 }
 
-#pragma mark --添加身份证照片
--(void)SelectPhotoImage:(UIButton *)imageV{
-    //    _photos = 10;
-    UIAlertAction * act1 = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-        //        _photos = 1;
-    }];
-    //拍照：
-    UIAlertAction * act2 = [UIAlertAction actionWithTitle:@"拍照" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        
-        //打开相机
-        [_pickPhoto ShowTakePhotoWithController:self andWithBlock:^(NSObject *Data) {
-            if ([Data isKindOfClass:[UIImage class]])
-            {
-                if (imageV.tag == 601) {
-                    [self.frontBtn setImage:(UIImage *)Data forState:(UIControlStateNormal)];
-                }else if (imageV.tag == 602){
-                    [self.behindBtn setImage:(UIImage *)Data forState:(UIControlStateNormal)];
-                }
-            }
-        }];
-    }];
-    //相册
-    UIAlertAction * act3 = [UIAlertAction actionWithTitle:@"相册" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        
-        //打开相册
-        [_pickPhoto SHowLocalPhotoWithController:self andWithBlock:^(NSObject *Data) {
-            if ([Data isKindOfClass:[UIImage class]])
-            {
-                
-                if (imageV.tag == 601) {
-                    [self.frontBtn setImage:(UIImage *)Data forState:(UIControlStateNormal)];
-                }else if (imageV.tag == 602){
-                    [self.behindBtn setImage:(UIImage *)Data forState:(UIControlStateNormal)];
-                }
-                
-            }
-        }];
-    }];
-    
-    UIAlertController * aleVC = [UIAlertController alertControllerWithTitle:@"提示" message:@"选择图片" preferredStyle:UIAlertControllerStyleActionSheet];
-    [aleVC addAction:act1];
-    [aleVC addAction:act2];
-    [aleVC addAction:act3];
-    
-    [self presentViewController:aleVC animated:YES completion:nil];
-}
+//#pragma mark --添加身份证照片
+//-(void)SelectPhotoImage:(UIButton *)imageV{
+//    //    _photos = 10;
+//    UIAlertAction * act1 = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+//        //        _photos = 1;
+//    }];
+//    //拍照：
+//    UIAlertAction * act2 = [UIAlertAction actionWithTitle:@"拍照" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+//        
+//        //打开相机
+//        [_pickPhoto ShowTakePhotoWithController:self andWithBlock:^(NSObject *Data) {
+//            if ([Data isKindOfClass:[UIImage class]])
+//            {
+//                if (imageV.tag == 601) {
+//                    [self.frontBtn setImage:(UIImage *)Data forState:(UIControlStateNormal)];
+//                }else if (imageV.tag == 602){
+//                    [self.behindBtn setImage:(UIImage *)Data forState:(UIControlStateNormal)];
+//                }
+//            }
+//        }];
+//    }];
+//    //相册
+//    UIAlertAction * act3 = [UIAlertAction actionWithTitle:@"相册" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+//        
+//        //打开相册
+//        [_pickPhoto SHowLocalPhotoWithController:self andWithBlock:^(NSObject *Data) {
+//            if ([Data isKindOfClass:[UIImage class]])
+//            {
+//                
+//                if (imageV.tag == 601) {
+//                    [self.frontBtn setImage:(UIImage *)Data forState:(UIControlStateNormal)];
+//                }else if (imageV.tag == 602){
+//                    [self.behindBtn setImage:(UIImage *)Data forState:(UIControlStateNormal)];
+//                }
+//                
+//            }
+//        }];
+//    }];
+//    
+//    UIAlertController * aleVC = [UIAlertController alertControllerWithTitle:@"提示" message:@"选择图片" preferredStyle:UIAlertControllerStyleActionSheet];
+//    [aleVC addAction:act1];
+//    [aleVC addAction:act2];
+//    [aleVC addAction:act3];
+//    
+//    [self presentViewController:aleVC animated:YES completion:nil];
+//}
 
 
 
@@ -175,7 +177,7 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     
     if (indexPath.row == 2) {
-        return 280 * screenWidth / 375;
+        return 44 * screenWidth / 375;
     }else{
         return 44 * screenWidth / 375;
     }
@@ -185,17 +187,17 @@
     
     
     JGDSetPayPasswordTableViewCell *cell1 = [self.tableV cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
-//    JGDSetPayPasswordTableViewCell *cell3 = [self.tableV cellForRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]];
+    JGDSetPayPasswordTableViewCell *cell3 = [self.tableV cellForRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]];
     
     
     if ([cell1.txFD.text length] < 1) {
         [[ShowHUD showHUD]showToastWithText:@"姓名不能为空" FromView:self.view];
         return;
     }
-//    if ([cell3.txFD.text length] < 1) {
-//        [[ShowHUD showHUD]showToastWithText:@"身份证号不能为空" FromView:self.view];
-//        return;
-//    }
+    if ([cell3.txFD.text length] < 1) {
+        [[ShowHUD showHUD]showToastWithText:@"身份证号不能为空" FromView:self.view];
+        return;
+    }
     
     MBProgressHUD *progress = [[MBProgressHUD alloc] initWithView:self.view];
     progress.mode = MBProgressHUDModeIndeterminate;
@@ -207,50 +209,21 @@
     NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
     [dict setObject:@1 forKey:@"type"];
     [dict setObject:cell1.txFD.text forKey:@"name"];
-//    [dict setObject:cell3.txFD.text forKey:@"cardNumber"];
+    [dict setObject:cell3.txFD.text forKey:@"idCard"];
     [dict setObject:DEFAULF_USERID forKey:@"timeKey"];
     
     [[JsonHttp jsonHttp]httpRequest:[NSString stringWithFormat:@"user/doRealName"] JsonKey:@"UserRealName" withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
+        
+        [MBProgressHUD hideAllHUDsForView:self.view animated:NO];
         [[ShowHUD showHUD]showToastWithText:@"提交失败" FromView:self.view];
         return ;
     } completionBlock:^(id data) {
+        
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
             
-            NSMutableDictionary *dicts = [NSMutableDictionary dictionary];
-            [dicts setObject:[NSString stringWithFormat:@"%@_positive", DEFAULF_USERID] forKey:@"data"];
-            [dicts setObject:TYPE_USER_CERTIFICATION forKey:@"nType"];
-            [dicts setObject:PHOTO_DAGOLFLA forKey:@"tag"];
-            
-            [[JsonHttp jsonHttp]httpRequestImageOrVedio:@"1" withData:dicts andDataArray:[NSArray arrayWithObject:UIImageJPEGRepresentation(self.frontBtn.imageView.image, 1.0)] failedBlock:^(id errType) {
-                [MBProgressHUD hideAllHUDsForView:self.view animated:NO];
-                [[ShowHUD showHUD]showToastWithText:@"上传图片失败" FromView:self.view];
-                return ;
-            } completionBlock:^(id data) {
-                
-                [dicts setObject:[NSString stringWithFormat:@"%@_back", DEFAULF_USERID] forKey:@"data"];
-                
-                [[JsonHttp jsonHttp] httpRequestImageOrVedio:@"1" withData:dicts andDataArray:[NSArray arrayWithObject:UIImageJPEGRepresentation(self.behindBtn.imageView.image, 1.0)] failedBlock:^(id errType) {
-                    [MBProgressHUD hideAllHUDsForView:self.view animated:NO];
-                    [[ShowHUD showHUD]showToastWithText:@"上传图片失败" FromView:self.view];
-                    return ;
-                } completionBlock:^(id data) {
-                    if ([NSThread isMainThread]) {
-                        [MBProgressHUD hideAllHUDsForView:self.view animated:NO];
-                        [[ShowHUD showHUD]showToastWithText:@"上传成功" FromView:self.view];
-                        [self performSelector:@selector(pop) withObject:self afterDelay:1];
-                        
-                        [self.navigationController popViewControllerAnimated:YES];
-                    } else {
-                        dispatch_async(dispatch_get_main_queue(), ^{
-                            [MBProgressHUD hideAllHUDsForView:self.view animated:NO];
-                            [[ShowHUD showHUD]showToastWithText:@"上传成功" FromView:self.view];
-                            [self performSelector:@selector(pop) withObject:self afterDelay:1];
-                        });
-                    }
-                }];
-                
-            }];
-            
+            [MBProgressHUD hideAllHUDsForView:self.view animated:NO];
+            [[ShowHUD showHUD]showToastWithText:@"提交成功" FromView:self.view];
+            [self performSelector:@selector(pop) withObject:self afterDelay:1];
         }
         else
         {
@@ -258,10 +231,6 @@
             [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
         }
     }];
-    
-    
-    
-    
 }
 
 

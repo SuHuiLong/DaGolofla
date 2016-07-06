@@ -70,21 +70,24 @@ static CGFloat ImageHeight  = 210.0;
         self.paraDic = self.detailDic;
     }
     
-//    _wasKeyboardManagerEnabled = [[IQKeyboardManager sharedManager] isEnabled];
-//    [[IQKeyboardManager sharedManager] setEnable:NO];
+    //    _wasKeyboardManagerEnabled = [[IQKeyboardManager sharedManager] isEnabled];
+    //    [[IQKeyboardManager sharedManager] setEnable:NO];
     
 }
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:YES];
     self.navigationController.navigationBarHidden = NO;
-//     [[IQKeyboardManager sharedManager] setEnable:_wasKeyboardManagerEnabled];
+    //     [[IQKeyboardManager sharedManager] setEnable:_wasKeyboardManagerEnabled];
 }
 
 - (instancetype)init{
     if (self == [super init]) {
-
+        
         self.dataDict = [NSMutableDictionary dictionary];
         _dictPhoto = [[NSMutableDictionary alloc]init];
+        [_dictPhoto setObject:[NSArray arrayWithObject:UIImageJPEGRepresentation([UIImage imageNamed:TeamLogoImage], 0.7)] forKey:@"headPortraitBtn"];
+        [_dictPhoto setObject:[NSArray arrayWithObject:UIImageJPEGRepresentation([UIImage imageNamed:TeamBGImage], 0.7)] forKey:@"headerImage"];
+
         self.pickPhoto = [[SXPickPhoto alloc]init];
         self.titleView = [[UIView alloc]init];
         UIImage *image = [UIImage imageNamed:TeamBGImage];
@@ -105,8 +108,8 @@ static CGFloat ImageHeight  = 210.0;
         
         self.launchActivityTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         self.launchActivityTableView.backgroundColor = [UIColor colorWithHexString:@"#EAEAEB"];
-//        label.backgroundColor = [UIColor colorWithHexString:@"#EAEAEB"];
-
+        //        label.backgroundColor = [UIColor colorWithHexString:@"#EAEAEB"];
+        
         [self.view addSubview:self.launchActivityTableView];
         [self.view addSubview:self.imgProfile];
         self.titleView.frame = CGRectMake(0, 0, screenWidth, 44);
@@ -162,7 +165,7 @@ static CGFloat ImageHeight  = 210.0;
     self.headPortraitBtn = [[UIButton alloc]initWithFrame:CGRectMake(20 * screenWidth / 320, 150 * screenWidth / 320, 50 * screenWidth / 320, 50 * screenWidth / 320)];
     [self.headPortraitBtn setImage:[UIImage imageNamed:TeamLogoImage] forState:UIControlStateNormal];
     [self.headPortraitBtn addTarget:self action:@selector(initItemsBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-//    self.headPortraitBtn.backgroundColor = [UIColor redColor];
+    //    self.headPortraitBtn.backgroundColor = [UIColor redColor];
     self.headPortraitBtn.layer.cornerRadius = 8.0;
     self.headPortraitBtn.tag = 740;
     [self.imgProfile addSubview:self.headPortraitBtn];
@@ -219,13 +222,13 @@ static CGFloat ImageHeight  = 210.0;
                     self.imgProfile.image = _headerImage;
                     
                     [_dictPhoto setObject:[NSArray arrayWithObject:UIImageJPEGRepresentation(_headerImage, 0.7)] forKey:@"headerImage"];
-
+                    
                 }else if (btn.tag == 740){
                     [self.headPortraitBtn setImage:_headerImage forState:UIControlStateNormal];
                     self.headPortraitBtn.layer.masksToBounds = YES;
                     self.headPortraitBtn.layer.cornerRadius = 8.0;
                     [_dictPhoto setObject:[NSArray arrayWithObject:UIImageJPEGRepresentation(_headerImage, 0.7)] forKey:@"headPortraitBtn"];
-
+                    
                 }
                 
                 [self.launchActivityTableView reloadData];
@@ -256,7 +259,7 @@ static CGFloat ImageHeight  = 210.0;
                     self.headPortraitBtn.layer.masksToBounds = YES;
                     self.headPortraitBtn.layer.cornerRadius = 8.0;
                     [_dictPhoto setObject:[NSArray arrayWithObject:UIImageJPEGRepresentation(_headerImage, 1.0)] forKey:@"headPortraitBtn"];
-
+                    
                 }
                 
             }
@@ -283,7 +286,7 @@ static CGFloat ImageHeight  = 210.0;
     previewBtn.tag = 2001;
     previewBtn.backgroundColor = [UIColor colorWithHexString:@"#f39800"];
     [previewBtn addTarget:self action:@selector(previewBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-
+    
     [view addSubview:previewBtn];
     
     UIButton *commitBtn = [[UIButton alloc]initWithFrame:CGRectMake(screenWidth / 2 - 10 , 0, screenWidth / 2, 40 * screenWidth / 320)];
@@ -293,21 +296,21 @@ static CGFloat ImageHeight  = 210.0;
     [commitBtn addTarget:self action:@selector(previewBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [view addSubview:commitBtn];
     
-        view.clipsToBounds = YES;
-        view.layer.cornerRadius = 6.f;
+    view.clipsToBounds = YES;
+    view.layer.cornerRadius = 6.f;
     [self.launchActivityTableView addSubview:view];
     
 }
 
-#pragma mark -- 预览界面
+#pragma mark -- 提交创建球队
 - (void)previewBtnClick:(UIButton *)btn{
     
     [self.view endEditing:YES];
     
     NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
-
-    if (btn.tag == 2001) {
     
+    if (btn.tag == 2001) {
+        
         [user setObject:self.paraDic forKey:@"cacheCreatTeamDic"];
         [user synchronize];
         [Helper alertViewNoHaveCancleWithTitle:@"保存成功" withBlock:^(UIAlertController *alertView) {
@@ -315,80 +318,70 @@ static CGFloat ImageHeight  = 210.0;
         }];
         
     }else{
-    
-    
-    if (!self.titleField.text || ([self.titleField.text length] == 0)) {
-        //    if ([[self.paraDic objectForKey:@"name"] length] > 0) {
-        [Helper alertViewNoHaveCancleWithTitle:@"请填写球队名称" withBlock:^(UIAlertController *alertView) {
-            [self.navigationController presentViewController:alertView animated:YES completion:nil];
-        }];
-        return;
-    }else{
-        NSString *name = self.titleField.text;
-        [self.paraDic setObject:name forKey:@"name"];
-    }
-
-
-    if ([[self.paraDic objectForKey:@"establishTime"] length] == 0) {
-        [Helper alertViewNoHaveCancleWithTitle:@"请填写球队创建时间" withBlock:^(UIAlertController *alertView) {
-            [self.navigationController presentViewController:alertView animated:YES completion:nil];
-        }];
-        return;
-    }
-    
-
-    if ([[self.paraDic objectForKey:@"crtyName"] length] == 0) {
-        [Helper alertViewNoHaveCancleWithTitle:@"请填写球队所在地区" withBlock:^(UIAlertController *alertView) {
-            [self.navigationController presentViewController:alertView animated:YES completion:nil];
-        }];
-        return;
-    }
-    
-
-    if ([[self.paraDic objectForKey:@"userName"] length] == 0) {
-        [Helper alertViewNoHaveCancleWithTitle:@"请填写真实姓名" withBlock:^(UIAlertController *alertView) {
-            [self.navigationController presentViewController:alertView animated:YES completion:nil];
-        }];
-        return;
-    }
-
-    if ([[self.paraDic objectForKey:@"userMobile"] length] == 0) {
-        
-        [Helper alertViewNoHaveCancleWithTitle:@"请填写联系方式" withBlock:^(UIAlertController *alertView) {
-            [self.navigationController presentViewController:alertView animated:YES completion:nil];
-        }];
-        return;
-    }
-
-    if (![self.paraDic objectForKey:@"info"] || ([[self.paraDic objectForKey:@"info"] length] == 0)) {
-        [Helper alertViewNoHaveCancleWithTitle:@"请完善球队信息" withBlock:^(UIAlertController *alertView) {
-            [self.navigationController presentViewController:alertView animated:YES completion:nil];
-        }];
-        return;
-    }
-    
-    /*
-     self.imgProfile.image = _headerImage;
-     [self.paraDic setObject:[NSArray arrayWithObject:UIImageJPEGRepresentation(_headerImage, 0.7)] forKey:@"headerImage"];
-     
-     }else if (btn.tag == 740){
-     [self.headPortraitBtn setImage:_headerImage forState:UIControlStateNormal];
-     */
-    [self.paraDic setObject:@"" forKey:@"notice"];
-    [self.paraDic setObject:@0 forKey:@"timeKey"];
-    [self.paraDic setObject:[user objectForKey:@"userId"] forKey:@"createUserKey"];
-    [self.paraDic setObject:@"1" forKey:@"check"];
-    [self.paraDic setObject:[user objectForKey:@"userName"] forKey:@"createUserName"];
-    NSDate *dateNew = [NSDate dateWithTimeIntervalSinceNow:0];
-    NSDateFormatter * dm = [[NSDateFormatter alloc]init];
-    [dm setDateFormat:@"yyyy-MM-dd 00:00:00"];
-    NSString * dateString = [dm stringFromDate:dateNew];
-    [self.paraDic setObject:dateString forKey:@"createtime"];
-    [user setObject:self.paraDic forKey:@"cacheCreatTeamDic"];
-    [user setObject:_dictPhoto forKey:@"teamPhotoDic"];
-    
         
         
+        if (!self.titleField.text || ([self.titleField.text length] == 0)) {
+            //    if ([[self.paraDic objectForKey:@"name"] length] > 0) {
+            [Helper alertViewNoHaveCancleWithTitle:@"请填写球队名称" withBlock:^(UIAlertController *alertView) {
+                [self.navigationController presentViewController:alertView animated:YES completion:nil];
+            }];
+            return;
+        }else{
+            NSString *name = self.titleField.text;
+            [self.paraDic setObject:name forKey:@"name"];
+        }
+        
+        
+        if ([[self.paraDic objectForKey:@"establishTime"] length] == 0) {
+            [Helper alertViewNoHaveCancleWithTitle:@"请填写球队创建时间" withBlock:^(UIAlertController *alertView) {
+                [self.navigationController presentViewController:alertView animated:YES completion:nil];
+            }];
+            return;
+        }
+        
+        
+        if ([[self.paraDic objectForKey:@"crtyName"] length] == 0) {
+            [Helper alertViewNoHaveCancleWithTitle:@"请填写球队所在地区" withBlock:^(UIAlertController *alertView) {
+                [self.navigationController presentViewController:alertView animated:YES completion:nil];
+            }];
+            return;
+        }
+        
+        
+        if ([[self.paraDic objectForKey:@"userName"] length] == 0) {
+            [Helper alertViewNoHaveCancleWithTitle:@"请填写真实姓名" withBlock:^(UIAlertController *alertView) {
+                [self.navigationController presentViewController:alertView animated:YES completion:nil];
+            }];
+            return;
+        }
+        
+        if ([[self.paraDic objectForKey:@"userMobile"] length] == 0) {
+            
+            [Helper alertViewNoHaveCancleWithTitle:@"请填写联系方式" withBlock:^(UIAlertController *alertView) {
+                [self.navigationController presentViewController:alertView animated:YES completion:nil];
+            }];
+            return;
+        }
+        
+        if (![self.paraDic objectForKey:@"info"] || ([[self.paraDic objectForKey:@"info"] length] == 0)) {
+            [Helper alertViewNoHaveCancleWithTitle:@"请完善球队信息" withBlock:^(UIAlertController *alertView) {
+                [self.navigationController presentViewController:alertView animated:YES completion:nil];
+            }];
+            return;
+        }
+        
+        [self.paraDic setObject:@"" forKey:@"notice"];
+        [self.paraDic setObject:@0 forKey:@"timeKey"];
+        [self.paraDic setObject:[user objectForKey:@"userId"] forKey:@"createUserKey"];
+        [self.paraDic setObject:@"1" forKey:@"check"];
+        [self.paraDic setObject:[user objectForKey:@"userName"] forKey:@"createUserName"];
+        NSDate *dateNew = [NSDate dateWithTimeIntervalSinceNow:0];
+        NSDateFormatter * dm = [[NSDateFormatter alloc]init];
+        [dm setDateFormat:@"yyyy-MM-dd 00:00:00"];
+        NSString * dateString = [dm stringFromDate:dateNew];
+        [self.paraDic setObject:dateString forKey:@"createtime"];
+        [user setObject:self.paraDic forKey:@"cacheCreatTeamDic"];
+        [user setObject:_dictPhoto forKey:@"teamPhotoDic"];
         
         MBProgressHUD *progress = [[MBProgressHUD alloc] initWithView:self.view];
         progress.mode = MBProgressHUDModeIndeterminate;
@@ -396,82 +389,140 @@ static CGFloat ImageHeight  = 210.0;
         [self.view addSubview:progress];
         [progress show:YES];
         
+        
+        
+        
         [[JsonHttp jsonHttp] httpRequest:@"globalCode/createTimeKey" JsonKey:nil withData:nil requestMethod:@"GET" failedBlock:^(id errType) {
-            
+            if ([NSThread isMainThread]) {
+                [MBProgressHUD hideAllHUDsForView:self.view animated:NO];
+                [[ShowHUD showHUD]showToastWithText:@"球队创建失败，请稍后再试" FromView:self.view];
+            } else {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [MBProgressHUD hideAllHUDsForView:self.view animated:NO];
+                    [[ShowHUD showHUD]showToastWithText:@"球队创建失败，请稍后再试" FromView:self.view];
+                });
+            }
         } completionBlock:^(id data) {
             
+            
             NSNumber* strTimeKey = [data objectForKey:@"timeKey"];
-            // 上传图片
             NSMutableDictionary *dict = [NSMutableDictionary dictionary];
             [dict setObject:strTimeKey forKey:@"data"];
             [dict setObject:TYPE_TEAM_HEAD forKey:@"nType"];
             [dict setObject:PHOTO_DAGOLFLA forKey:@"tag"];
-            
+            // 上传头像
             [[JsonHttp jsonHttp]httpRequestImageOrVedio:@"1" withData:dict andDataArray:[_dictPhoto objectForKey:@"headPortraitBtn"] failedBlock:^(id errType) {
                 NSLog(@"errType===%@", errType);
+                
+                if ([NSThread isMainThread]) {
+                    [MBProgressHUD hideAllHUDsForView:self.view animated:NO];
+                    [[ShowHUD showHUD]showToastWithText:@"球队创建失败，请稍后再试" FromView:self.view];
+                } else {
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [MBProgressHUD hideAllHUDsForView:self.view animated:NO];
+                        [[ShowHUD showHUD]showToastWithText:@"球队创建失败，请稍后再试" FromView:self.view];
+                    });
+                }
+                
             } completionBlock:^(id data) {
                 
-                [dict setObject:[NSString stringWithFormat:@"%@_background" ,strTimeKey] forKey:@"data"];
-                [dict setObject:TYPE_TEAM_HEAD forKey:@"nType"];
-                [[JsonHttp jsonHttp] httpRequestImageOrVedio:@"1" withData:dict andDataArray:[_dictPhoto objectForKey:@"headerImage"] failedBlock:^(id errType) {
-                    NSLog(@"errType===%@", errType);
-                } completionBlock:^(id data) {
+                if ([[data objectForKey:@"code"] integerValue] == 1) {
                     
-                }];
-                
-                NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
-                
-                //            NSMutableDictionary *Dic =[user objectForKey:@"cacheCreatTeamDic"];
-                //            [Dic setObject:strTimeKey forKey:@"timeKey"];
-                [self.paraDic setObject:strTimeKey forKey:@"timeKey"];
-                
-                
-                [[JsonHttp jsonHttp] httpRequest:@"team/createTeam" JsonKey:@"team" withData:self.paraDic requestMethod:@"POST" failedBlock:^(id errType) {
-                    
-                } completionBlock:^(id data) {
-                    
-                    [MBProgressHUD hideAllHUDsForView:self.view animated:NO];
-                    
-                    
-                    [Helper alertViewNoHaveCancleWithTitle:@"球队创建成功" withBlock:^(UIAlertController *alertView) {
-                        [self.navigationController popViewControllerAnimated:YES];
-                        [self.navigationController presentViewController:alertView animated:YES completion:nil];
+                    [dict setObject:[NSString stringWithFormat:@"%@_background" ,strTimeKey] forKey:@"data"];
+                    [dict setObject:TYPE_TEAM_HEAD forKey:@"nType"];
+                    // 上传背景
+                    [[JsonHttp jsonHttp] httpRequestImageOrVedio:@"1" withData:dict andDataArray:[_dictPhoto objectForKey:@"headerImage"] failedBlock:^(id errType) {
+                        NSLog(@"errType===%@", errType);
+                        if ([NSThread isMainThread]) {
+                            [MBProgressHUD hideAllHUDsForView:self.view animated:NO];
+                            [[ShowHUD showHUD]showToastWithText:@"球队创建失败，请稍后再试" FromView:self.view];
+                        } else {
+                            dispatch_async(dispatch_get_main_queue(), ^{
+                                [MBProgressHUD hideAllHUDsForView:self.view animated:NO];
+                                [[ShowHUD showHUD]showToastWithText:@"球队创建失败，请稍后再试" FromView:self.view];
+                            });
+                        }
+                    } completionBlock:^(id data) {
+                        
+                        if ([[data objectForKey:@"code"] integerValue] == 1) {
+                            
+                            NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
+                            
+                            [self.paraDic setObject:strTimeKey forKey:@"timeKey"];
+                            //  创建球队
+                            [[JsonHttp jsonHttp] httpRequest:@"team/createTeam" JsonKey:@"team" withData:self.paraDic requestMethod:@"POST" failedBlock:^(id errType) {
+                                if ([NSThread isMainThread]) {
+                                    [MBProgressHUD hideAllHUDsForView:self.view animated:NO];
+                                    [[ShowHUD showHUD]showToastWithText:@"球队创建失败，请稍后再试" FromView:self.view];
+                                } else {
+                                    dispatch_async(dispatch_get_main_queue(), ^{
+                                        [MBProgressHUD hideAllHUDsForView:self.view animated:NO];
+                                        [[ShowHUD showHUD]showToastWithText:@"球队创建失败，请稍后再试" FromView:self.view];
+                                    });
+                                }
+                            } completionBlock:^(id data) {
+                                
+                                if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+                                    if ([NSThread isMainThread]) {
+                                        [MBProgressHUD hideAllHUDsForView:self.view animated:NO];
+                                    } else {
+                                        dispatch_async(dispatch_get_main_queue(), ^{
+                                            [MBProgressHUD hideAllHUDsForView:self.view animated:NO];
+                                        });
+                                    }
+                                    
+                                    [Helper alertViewNoHaveCancleWithTitle:@"球队创建成功" withBlock:^(UIAlertController *alertView) {
+                                        [self.navigationController popViewControllerAnimated:YES];
+                                        [self.navigationController presentViewController:alertView animated:YES completion:nil];
+                                        
+                                    }];
+                                    [user setObject:0 forKey:@"cacheCreatTeamDic"];
+                                    [user synchronize];
+                                    
+                                }else{
+                                    if ([NSThread isMainThread]) {
+                                        [MBProgressHUD hideAllHUDsForView:self.view animated:NO];
+                                    } else {
+                                        dispatch_async(dispatch_get_main_queue(), ^{
+                                            [MBProgressHUD hideAllHUDsForView:self.view animated:NO];
+                                        });
+                                    }
+                                    if ([data objectForKey:@"packResultMsg"]) {
+                                        [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+                                    }
+                                }
+                            }];
+                            
+                        }else{
+                            if ([NSThread isMainThread]) {
+                                [MBProgressHUD hideAllHUDsForView:self.view animated:NO];
+                            } else {
+                                dispatch_async(dispatch_get_main_queue(), ^{
+                                    [MBProgressHUD hideAllHUDsForView:self.view animated:NO];
+                                });
+                            }
+                            if ([data objectForKey:@"packResultMsg"]) {
+                                [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+                            }
+                        }
                         
                     }];
                     
-//                    
-//                    UIAlertController *alert=[UIAlertController alertControllerWithTitle:@"提示" message:@"球队创建成功" preferredStyle:UIAlertControllerStyleAlert];
-//                    
-//                    UIAlertAction *action1=[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-//                        
-//                    }];
-//                    
-//                    UIAlertAction* action2=[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-//                        
-//                        [self.navigationController popToRootViewControllerAnimated:YES];
-//                        
-//                    }];
-//                    
-//                    [alert addAction:action1];
-//                    [alert addAction:action2];
-//                    [self presentViewController:alert animated:YES completion:nil];
-                    
-                    if ([data objectForKey:@"packSuccess"]) {
-                        [user setObject:0 forKey:@"cacheCreatTeamDic"];
-                        //  [user removeObjectForKey:@"cacheCreatTeamDic"];
-                        [user synchronize];
+                }else{
+                    if ([NSThread isMainThread]) {
+                        [MBProgressHUD hideAllHUDsForView:self.view animated:NO];
+                    } else {
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            [MBProgressHUD hideAllHUDsForView:self.view animated:NO];
+                        });
                     }
-                }];
+                    if ([data objectForKey:@"packResultMsg"]) {
+                        [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+                    }
+                }
+                
             }];
         }];
-           
-
-//    JGPreviewTeamViewController *preVC = [[JGPreviewTeamViewController alloc] init];
-//    preVC.detailDic = self.paraDic;
-//    preVC.dictPhoto = _dictPhoto;
-//    preVC.imgProfile.image = self.imgProfile.image;
-//    [preVC.headPortraitBtn setImage:self.headPortraitBtn.imageView.image forState:(UIControlStateNormal)];
-//    [self.navigationController pushViewController:preVC animated:YES];
     }
 }
 
@@ -540,7 +591,7 @@ static CGFloat ImageHeight  = 210.0;
 #pragma mark - Table View Delegate
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     [self updateImg];
-
+    
 }
 #pragma mark -- tableView 代理
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
@@ -560,13 +611,13 @@ static CGFloat ImageHeight  = 210.0;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-
+    
     if (indexPath.section == 0) {
         return (ImageHeight * screenWidth / 320) -10 * screenWidth / 320;
     }else if (indexPath.section == 2){
-//        return [self calculationLabelHeight:[self.paraDic objectForKey:@"info"]] + 40 * screenWidth / 320;
+        //        return [self calculationLabelHeight:[self.paraDic objectForKey:@"info"]] + 40 * screenWidth / 320;
         return 45 * screenWidth / 320;
-
+        
     }else{
         return 45 * screenWidth / 320;
     }
@@ -595,21 +646,21 @@ static CGFloat ImageHeight  = 210.0;
     
     
     if (section == 2) {
-//        NSString *sectionTitle=[self tableView:tableView titleForFooterInSection:section];
+        //        NSString *sectionTitle=[self tableView:tableView titleForFooterInSection:section];
         
-//        UILabel *label=[[UILabel alloc] init] ;
-//        label.frame=CGRectMake(10 * screenWidth / 320, 20 * screenWidth / 320, 300 * screenWidth / 320, 15 * screenWidth / 320);
-//        label.backgroundColor=[UIColor colorWithHexString:@"#EAEAEB"];
-//        label.textColor=[UIColor lightGrayColor];
-//        label.font=[UIFont systemFontOfSize:15 * screenWidth / 320];
-//        label.text=@"申请人资料";
-//        
-//        UIView *sectionView=[[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.bounds.size.width, 45 * screenWidth / 320)];
-////        [sectionView setBackgroundColor:[UIColor colorWithHexString:@"#EAEAEB"]];
-//        sectionView.backgroundColor = [UIColor colorWithHexString:@"#EAEAEB"];
-//
-//        [sectionView addSubview:label];
-//        return sectionView;
+        //        UILabel *label=[[UILabel alloc] init] ;
+        //        label.frame=CGRectMake(10 * screenWidth / 320, 20 * screenWidth / 320, 300 * screenWidth / 320, 15 * screenWidth / 320);
+        //        label.backgroundColor=[UIColor colorWithHexString:@"#EAEAEB"];
+        //        label.textColor=[UIColor lightGrayColor];
+        //        label.font=[UIFont systemFontOfSize:15 * screenWidth / 320];
+        //        label.text=@"申请人资料";
+        //
+        //        UIView *sectionView=[[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.bounds.size.width, 45 * screenWidth / 320)];
+        ////        [sectionView setBackgroundColor:[UIColor colorWithHexString:@"#EAEAEB"]];
+        //        sectionView.backgroundColor = [UIColor colorWithHexString:@"#EAEAEB"];
+        //
+        //        [sectionView addSubview:label];
+        //        return sectionView;
         return nil;
     }else if (section == 4) {
         UILabel *label=[[UILabel alloc] init] ;
@@ -618,7 +669,7 @@ static CGFloat ImageHeight  = 210.0;
         label.textColor=[UIColor colorWithHexString:@"#f39800"];
         label.font=[UIFont systemFontOfSize:12 * screenWidth / 320];
         label.text=@"注：为了球队能够顺利创建，请务必输入真实信息";
-
+        
         
         UIView *sectionView=[[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.bounds.size.width, 18 * screenWidth / 320)];
         //        [sectionView setBackgroundColor:[UIColor colorWithHexString:@"#EAEAEB"]];
@@ -631,14 +682,6 @@ static CGFloat ImageHeight  = 210.0;
     }
 }
 
-//- (NSString *) tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section{
-//    if (section == 3) {
-//        
-//        return @"注：为了球队能够顺利创建，请务必输入真实信息";
-//    }else{
-//        return @"";
-//    }
-//}
 
 
 #pragma mark -------cellForROwAtIndexPath
@@ -758,11 +801,11 @@ static CGFloat ImageHeight  = 210.0;
 - (void)didSelectSaveBtnClick:(NSString *)text{
     
     JGLableAndLableTableViewCell *launchActivityCell = [self.launchActivityTableView cellForRowAtIndexPath:[NSIndexPath  indexPathForRow:0 inSection:2]];
-
+    
     launchActivityCell.contentLB.text = text;
     
     [self.paraDic setObject:text forKey:@"info"];
- 
+    
     
 }
 

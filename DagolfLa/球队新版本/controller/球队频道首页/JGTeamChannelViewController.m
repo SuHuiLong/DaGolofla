@@ -117,7 +117,7 @@
     [gradientImage addSubview:backBtn];
     [gradientImage addSubview:creatTeam];
     
-    self.buttonArray = [NSMutableArray arrayWithObjects:@"我的球队", @"球队活动", @"球队大厅", nil];
+    self.buttonArray = [NSMutableArray arrayWithObjects:@"我的球队", @"我的活动", @"球队大厅", nil];
     
     for (int i = 0; i < 3; i ++) {
         

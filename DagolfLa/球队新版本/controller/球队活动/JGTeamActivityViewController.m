@@ -44,7 +44,7 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.navigationItem.title = @"球队活动";
+    self.navigationItem.title = @"我的活动";
     self.page = 1;
     [self createTeamActivityTabelView];
     
