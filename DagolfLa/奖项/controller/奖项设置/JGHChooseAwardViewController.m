@@ -59,6 +59,7 @@ static NSString *const JGSignUoPromptCellIdentifier = @"JGSignUoPromptCell";
 }
 #pragma mark -- 创建数据
 - (void)createData{
+    [_selectArray removeAllObjects];
     for (int i=0; i<_titleArray.count; i++) {
         JGHAwardModel *model = [[JGHAwardModel alloc]init];
         model.name = _titleArray[i];
@@ -68,6 +69,9 @@ static NSString *const JGSignUoPromptCellIdentifier = @"JGSignUoPromptCell";
             modelChoose = _selectChooseArray[j];
             if ([model.name isEqualToString:modelChoose.name]) {
                 model.select = 1;
+                [_selectArray addObject:model.name];
+                NSLog(@"select == %td", model.select);
+                break;
             }else{
                 model.select = 0;
             }
@@ -141,7 +145,7 @@ static NSString *const JGSignUoPromptCellIdentifier = @"JGSignUoPromptCell";
 }
 #pragma mark -- 创建TB
 - (void)createChooseTableView{
-    self.chooseTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight -65*ProportionAdapter) style:UITableViewStylePlain];
+    self.chooseTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight -65*ProportionAdapter- 10 *ProportionAdapter) style:UITableViewStylePlain];
     self.chooseTableView.delegate = self;
     self.chooseTableView.dataSource = self;
     
