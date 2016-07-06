@@ -15,4 +15,6 @@
 
 @property (nonatomic, strong) UIButton *presentationBtn; // 颁奖
 
+@property (nonatomic, strong) UILabel *titleLB;
+
 @end

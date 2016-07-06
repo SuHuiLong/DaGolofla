@@ -10,7 +10,6 @@
 
 @interface JGDActvityPriziSetTableViewCell ()
 
-@property (nonatomic, strong) UILabel *titleLB;
 
 @end
 
