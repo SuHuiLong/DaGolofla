@@ -86,6 +86,7 @@ static NSString *const JGHActivityBaseCellIdentifier = @"JGHActivityBaseCell";
         [[ShowHUD showHUD]hideAnimationFromView:self.view];
     } completionBlock:^(id data) {
         NSLog(@"data = %@", data);
+        [[ShowHUD showHUD]hideAnimationFromView:self.view];
         [self.dataArray removeAllObjects];
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
             NSArray *array = [data objectForKey:@"list"];
@@ -100,7 +101,6 @@ static NSString *const JGHActivityBaseCellIdentifier = @"JGHActivityBaseCell";
             }
         }
         
-        [[ShowHUD showHUD]hideAnimationFromView:self.view];
         
         if (_dataArray.count == 0) {
             [self createNoData];
@@ -138,13 +138,18 @@ static NSString *const JGHActivityBaseCellIdentifier = @"JGHActivityBaseCell";
             JGDPrizeViewController *prizeCtrl = [[JGDPrizeViewController alloc]init];
             prizeCtrl.activityKey = _activityKey;
             prizeCtrl.teamKey = _teamKey;
+            
             [self.navigationController pushViewController:prizeCtrl animated:YES];
+        }else{
+            if ([data objectForKey:@"packResultMsg"]) {
+                [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+            }
         }
     }];
 }
 #pragma mark -- 创建TB
 - (void)createAwardTableView{
-    self.awardTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight - 65*ProportionAdapter) style:UITableViewStylePlain];
+    self.awardTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight - 65*ProportionAdapter - 20 *ProportionAdapter) style:UITableViewStylePlain];
     self.awardTableView.delegate = self;
     self.awardTableView.dataSource = self;
     
@@ -177,7 +182,7 @@ static NSString *const JGHActivityBaseCellIdentifier = @"JGHActivityBaseCell";
         if (indexPath.section == _dataArray.count + 1) {
             return 45 * ProportionAdapter;
         }else{
-            return 110 * ProportionAdapter;
+            return 115 * ProportionAdapter;
         }
     }
 }
@@ -224,6 +229,7 @@ static NSString *const JGHActivityBaseCellIdentifier = @"JGHActivityBaseCell";
             JGHChooseAwardViewController *chooseAwardCtrl = [[JGHChooseAwardViewController alloc]init];
             chooseAwardCtrl.teamKey = _teamKey;
             chooseAwardCtrl.activityKey = _activityKey;
+            chooseAwardCtrl.selectChooseArray = _dataArray;
             [self.navigationController pushViewController:chooseAwardCtrl animated:YES];
         }
     }
@@ -239,8 +245,8 @@ static NSString *const JGHActivityBaseCellIdentifier = @"JGHActivityBaseCell";
     } completionBlock:^(id data) {
         NSLog(@"%@", data);
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
-            [self loadData];
             [[ShowHUD showHUD]showToastWithText:@"删除成功！" FromView:self.view];
+            [self loadData];
         }else{
             if ([data objectForKey:@"packResultMsg"]) {
                 [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];

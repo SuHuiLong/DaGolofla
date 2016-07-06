@@ -61,13 +61,13 @@
     self.name.text = model.name;
     
     if (model.prizeName == nil) {
-        self.award.text = @"奖品：%@";
+        self.award.text = @"奖品：";
     }else{
         self.award.text = [NSString stringWithFormat:@"奖品：%@", model.prizeName];
     }
 
     if (model.prizeSize == nil) {
-        self.awardNumber.text = @"奖品数量：%@";
+        self.awardNumber.text = @"奖品数量：";
     }else{
         self.awardNumber.text = [NSString stringWithFormat:@"奖品数量：%@", model.prizeSize];
     }

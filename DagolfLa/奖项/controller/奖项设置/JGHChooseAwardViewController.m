@@ -35,6 +35,7 @@ static NSString *const JGSignUoPromptCellIdentifier = @"JGSignUoPromptCell";
     if (self == [super init]) {
         self.dataArray = [NSMutableArray array];
         _selectArray = [NSMutableArray array];
+        self.selectChooseArray = [NSMutableArray array];
     }
     return self;
 }
@@ -60,8 +61,18 @@ static NSString *const JGSignUoPromptCellIdentifier = @"JGSignUoPromptCell";
 - (void)createData{
     for (int i=0; i<_titleArray.count; i++) {
         JGHAwardModel *model = [[JGHAwardModel alloc]init];
-        model.select = 0;
         model.name = _titleArray[i];
+        
+        for (int j=0; j<_selectChooseArray.count; j++) {
+            JGHAwardModel *modelChoose = [[JGHAwardModel alloc]init];
+            modelChoose = _selectChooseArray[i];
+            if ([model.name isEqualToString:modelChoose.name]) {
+                model.select = 1;
+            }else{
+                model.select = 0;
+            }
+        }
+        
         [self.dataArray addObject:model];
     }
     
