@@ -7,11 +7,14 @@
 //
 
 #import "ViewController.h"
+@class JGTeamAcitivtyModel;
 
 @interface JGHSetAwardViewController : ViewController
 
 @property (nonatomic, assign)NSInteger activityKey;
 
 @property (nonatomic, assign)NSInteger teamKey;
+
+@property (nonatomic, strong)JGTeamAcitivtyModel *model;
 
 @end

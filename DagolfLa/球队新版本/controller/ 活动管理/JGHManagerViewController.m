@@ -48,7 +48,9 @@
     self.page = 1;
     [self createTeamActivityTabelView];
     
-    [self createAdminBtn];
+    if ([_power containsString:@"1001"]) {
+        [self createAdminBtn];
+    }
     
     [self loadData];
     
@@ -72,7 +74,6 @@
     } completionBlock:^(id data) {
         NSLog(@"data == %@", data);
         [self.dataArray removeAllObjects];
-        
         NSArray *array = [data objectForKey:@"activityList"];
         
         for (NSDictionary *dict in array) {

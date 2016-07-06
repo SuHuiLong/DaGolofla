@@ -7,6 +7,7 @@
 //
 
 #import "JGHChooseAwardCell.h"
+#import "JGHAwardModel.h"
 
 @implementation JGHChooseAwardCell
 
@@ -30,16 +31,20 @@
     }
 }
 
--(void)config{
+-(void)configJGHAwardModel:(JGHAwardModel *)model{
     self.jiangbeiLeft.constant = 10 *ProportionAdapter;
     self.awardName.font = [UIFont systemFontOfSize:17*ProportionAdapter];
     self.awardNameLeft.constant = 10 *ProportionAdapter;
     self.chooseBtnRight.constant = 10 *ProportionAdapter;
     
-    if (1) {
+    self.awardName.text = model.name;
+    
+    //
+    
+    if (model.select == 0) {
         [self.chooseBtn setImage:[UIImage imageNamed:@"kuang"] forState:UIControlStateNormal];
     }else{
-        
+        [self.chooseBtn setImage:[UIImage imageNamed:@"kuangwx"] forState:UIControlStateNormal];
     }
 
 }

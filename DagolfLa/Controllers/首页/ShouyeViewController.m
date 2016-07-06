@@ -230,7 +230,7 @@
                 NSLog(@"shangchen");
 //                UseMallViewController
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
-                UseMallViewController* userVc = [[UseMallViewController alloc]init];
+                JGLWinnersShareViewController* userVc = [[JGLWinnersShareViewController alloc]init];
                 [self.navigationController pushViewController:userVc animated:YES];
             }
                 break;

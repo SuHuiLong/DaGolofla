@@ -118,6 +118,7 @@
         }else if (indexPath.row == 1) {
             JGHManagerViewController *mangerCtrl = [[JGHManagerViewController alloc]init];
             mangerCtrl.timeKey = self.teamKey;
+            mangerCtrl.power = _power;
             [self.navigationController pushViewController:mangerCtrl animated:YES];
         }else{
             JGTeamPhotoViewController* phoVc = [[JGTeamPhotoViewController alloc]init];

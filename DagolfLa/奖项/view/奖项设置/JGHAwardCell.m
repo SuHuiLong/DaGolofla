@@ -27,14 +27,14 @@
     self.editorBtnRight.constant = 20*ProportionAdapter;
     
     self.bluequanTop.constant = 20*ProportionAdapter;
-    self.bluequanLeft.constant = 10*ProportionAdapter;
+    self.bluequanLeft.constant = 10*ProportionAdapter + 5;
     
     self.award.font = [UIFont systemFontOfSize:17.0 *ProportionAdapter];
     self.awardLeft.constant = 5*ProportionAdapter;
     
     
     self.awardNumberLeft.constant = 10*ProportionAdapter;
-    self.awardNumberRight.constant = 5*ProportionAdapter;
+    self.awardNumberRight.constant = 20*ProportionAdapter;
     self.awardNumber.font = [UIFont systemFontOfSize:17.0 *ProportionAdapter];
     
     self.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -58,6 +58,19 @@
 }
 
 - (void)configJGHAwardModel:(JGHAwardModel *)model{
+    self.name.text = model.name;
+    
+    if (model.prizeName == nil) {
+        self.award.text = @"奖品：%@";
+    }else{
+        self.award.text = [NSString stringWithFormat:@"奖品：%@", model.prizeName];
+    }
+
+    if (model.prizeSize == nil) {
+        self.awardNumber.text = @"奖品数量：%@";
+    }else{
+        self.awardNumber.text = [NSString stringWithFormat:@"奖品数量：%@", model.prizeSize];
+    }
     
 }
 

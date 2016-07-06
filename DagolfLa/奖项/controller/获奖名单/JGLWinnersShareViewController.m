@@ -15,6 +15,7 @@
     NSArray* _arrayName;
     UITableView* _tableView;
     UIView* _viewBack;
+    NSInteger _page;
 }
 @end
 
@@ -24,6 +25,7 @@
     [super viewDidLoad];
     
     _dataArray = [[NSMutableArray alloc]init];
+    _page = 0;
     _arrayName = @[@"获奖人：奥查呀/奥查亚/查得-坎贝尔/宫里圣志/杰欧夫-奥格威/古斯塔娜",@"获奖人：奥查呀/sdfsdfsdfsdfsdfsdfhrthrhrtgwefgdvssdfs奥查亚/查得-坎贝尔/宫里圣志/杰欧夫-奥格威/古斯塔娜",@"获奖人：奥查呀/奥查亚affsdfsdfdfdfddf/查得-坎贝尔/宫里圣志/杰欧夫-奥格威/古斯塔娜",@"获奖人：奥查呀/奥查亚/查得qr3tgrdfgfdgdfgdfgdfg-坎贝尔/宫里圣志/杰欧夫-奥格威/古斯塔-坎贝尔/宫里圣志/杰欧夫-奥格威/古斯塔-坎贝尔/宫里圣志/杰欧夫-奥格威/古斯塔-坎贝尔/宫里圣志/杰欧夫-奥格威/古斯塔-坎贝尔/宫里圣志/杰欧夫-奥格威/古斯塔-坎贝尔/宫里圣志/杰欧夫-奥格威/古斯塔-坎贝尔/宫里圣志/杰欧夫-奥格威/古斯塔-坎贝尔/宫里圣志/杰欧夫-奥格威/古斯塔娜"];
     
     UIBarButtonItem* item = [[UIBarButtonItem alloc]initWithTitle:@"分享" style:UIBarButtonItemStylePlain target:self action:@selector(shareBarItemClick)];
@@ -88,12 +90,60 @@
     
     [_tableView registerClass:[JGLWinnersShareTableViewCell class] forCellReuseIdentifier:@"JGLWinnersShareTableViewCell"];
     
-    //    _tableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
-    //    _tableView.backgroundColor = [UIColor colorWithHexString:BG_color];
-    //    [_tableView.header beginRefreshing];
+    _tableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
+    _tableView.backgroundColor = [UIColor colorWithHexString:BG_color];
+    [_tableView.header beginRefreshing];
     
 }
 
+#pragma mark - 下载数据
+- (void)downLoadData:(int)page isReshing:(BOOL)isReshing{
+    //587857      587860
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    [dict setObject:@587857 forKey:@"teamKey"];
+    [dict setObject:@587860 forKey:@"activityKey"];
+    [[JsonHttp jsonHttp]httpRequest:@"team/getTeamActivityPrizeList" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
+        if (isReshing) {
+            [_tableView.header endRefreshing];
+        }
+    } completionBlock:^(id data) {
+        if ([[data objectForKey:@"packSuccess"] boolValue]) {
+            if (page == 0)
+            {
+                //清除数组数据
+                [_dataArray removeAllObjects];
+            }
+            //数据解析
+            for (NSDictionary *dicList in [data objectForKey:@"list"])
+            {
+//                JGLBankModel *model = [[JGLBankModel alloc] init];
+//                [model setValuesForKeysWithDictionary:dicList];
+//                [_dataArray addObject:model];
+            }
+            _page++;
+            [_tableView reloadData];
+        }else {
+            [Helper alertViewWithTitle:[data objectForKey:@"message"] withBlock:^(UIAlertController *alertView) {
+                [self presentViewController:alertView animated:YES completion:nil];
+            }];
+        }
+        [_tableView reloadData];
+        if (isReshing) {
+            [_tableView.header endRefreshing];
+        }
+    }];
+}
+#pragma mark 开始进入刷新状态
+- (void)headerRereshing
+{
+    _page = 0;
+    [self downLoadData:_page isReshing:YES];
+}
+
+- (void)footerRereshing
+{
+    [self downLoadData:_page isReshing:NO];
+}
 
 
 #pragma MARK -- tableview
