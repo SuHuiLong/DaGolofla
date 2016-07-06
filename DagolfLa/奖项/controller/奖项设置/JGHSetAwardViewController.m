@@ -138,7 +138,7 @@ static NSString *const JGHActivityBaseCellIdentifier = @"JGHActivityBaseCell";
             JGDPrizeViewController *prizeCtrl = [[JGDPrizeViewController alloc]init];
             prizeCtrl.activityKey = _activityKey;
             prizeCtrl.teamKey = _teamKey;
-            
+            prizeCtrl.model = _model;
             [self.navigationController pushViewController:prizeCtrl animated:YES];
         }else{
             if ([data objectForKey:@"packResultMsg"]) {
