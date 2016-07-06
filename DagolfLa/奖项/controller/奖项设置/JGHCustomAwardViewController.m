@@ -9,6 +9,8 @@
 #import "JGHCustomAwardViewController.h"
 #import "JGSignUoPromptCell.h"
 #import "JGHTextFiledCell.h"
+#import "JGHAwardModel.h"
+#import "JGHSetAwardViewController.h"
 
 static NSString *const JGSignUoPromptCellIdentifier = @"JGSignUoPromptCell";
 static NSString *const JGHTextFiledCellIdentifier = @"JGHTextFiledCell";
@@ -41,12 +43,20 @@ static NSString *const JGHTextFiledCellIdentifier = @"JGHTextFiledCell";
     item.tintColor=[UIColor whiteColor];
     self.navigationItem.rightBarButtonItem = item;
     
+    if (_model.timeKey != nil) {
+        _awardName = _model.name;
+        _prizeName = _model.prizeName;//奖品名称
+        _prizeNumber = [_model.prizeSize integerValue];//奖品数量
+        _teamKey = [_model.teamKey integerValue];
+        _activityKey = [_model.teamActivityKey integerValue];
+    }
+    
     [self createCustomAwardTableView];
 }
 #pragma mark -- 保存
 - (void)saveBtnClick{
     NSLog(@"保存");
-    [self setEditing:YES];
+    [self.view endEditing:YES];
     if (_awardName.length == 0) {
         [[ShowHUD showHUD]showToastWithText:@"请输入奖项名称" FromView:self.view];
         return;
@@ -68,11 +78,37 @@ static NSString *const JGHTextFiledCellIdentifier = @"JGHTextFiledCell";
     [dict setObject:_awardName forKey:@"name"];
     [dict setObject:_prizeName forKey:@"prizeName"];
     [dict setObject:[NSString stringWithFormat:@"%td", _prizeNumber] forKey:@"prizeSize"];
-    [[JsonHttp jsonHttp]httpRequest:@"team/doAddCustomPrize" JsonKey:@"prize" withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
+    
+    if (_model.timeKey > 0) {
+        [dict setObject:_model.timeKey forKey:@"timeKey"];
+    }else{
+        [dict setObject:@0 forKey:@"timeKey"];
+    }
+    [[JsonHttp jsonHttp]httpRequest:@"team/doSavePrize" JsonKey:@"prize" withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
         NSLog(@"errType == %@", errType);
     } completionBlock:^(id data) {
         NSLog(@"data == %@", data);
-        
+        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+            [[ShowHUD showHUD]showToastWithText:@"添加成功！" FromView:self.view];
+            for (UIViewController *controller in self.navigationController.viewControllers) {
+                if ([controller isKindOfClass:[JGHSetAwardViewController class]]) {
+                    //创建一个消息对象
+                    NSNotification * notice = [NSNotification notificationWithName:@"reloadAwardData" object:nil userInfo:nil];
+                    //发送消息
+                    [[NSNotificationCenter defaultCenter]postNotification:notice];
+                    [self.navigationController popToViewController:controller animated:YES];
+                }
+            }
+//            _awardName = @"";
+//            _prizeName = @"";
+//            _prizeNumber = 0;
+//            
+//            [self.customAwardTableView reloadData];
+        }else{
+            if ([data objectForKey:@"packResultMsg"]) {
+                [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+            }
+        }
     }];
 }
 #pragma mark -- 创建TB
@@ -119,6 +155,18 @@ static NSString *const JGHTextFiledCellIdentifier = @"JGHTextFiledCell";
         [chooseAwardCell conFigAllTitle:_titleArray[indexPath.section] andPlacerString:_placerArray[indexPath.section]];
         chooseAwardCell.titlefileds.tag = indexPath.section + 100;
         chooseAwardCell.titlefileds.delegate = self;
+        if (_model.timeKey == nil) {
+            chooseAwardCell.titlefileds.text = nil;
+        }else{
+            if (indexPath.section == 0) {
+                chooseAwardCell.titlefileds.text = _model.name;
+            }else if (indexPath.section == 2){
+                chooseAwardCell.titlefileds.text = [NSString stringWithFormat:@"%@", _model.prizeName];
+            }else if (indexPath.section == 3){
+                chooseAwardCell.titlefileds.text = [NSString stringWithFormat:@"%@", _model.prizeSize];
+            }
+        }
+        
         return chooseAwardCell;
     }
 }
@@ -150,12 +198,24 @@ static NSString *const JGHTextFiledCellIdentifier = @"JGHTextFiledCell";
     if (textField.tag == 100) {
         NSLog(@"奖项名称");
         _awardName = textField.text;
+        if (_model.timeKey != nil) {
+            _model.name = _awardName;
+        }
+        
     }else if (textField.tag == 102){
         NSLog(@"奖品名称");
         _prizeName = textField.text;
+        if (_model.timeKey != nil) {
+            _model.prizeName = _prizeName;
+        }
+        
     }else if (textField.tag == 103){
         NSLog(@"奖品数量");
         _prizeNumber = [textField.text integerValue];
+        if (_model.timeKey != nil) {
+            _model.prizeSize = [NSNumber numberWithChar:_prizeNumber];
+        }
+        
     }
 }
 //实现UITextField的代理方法

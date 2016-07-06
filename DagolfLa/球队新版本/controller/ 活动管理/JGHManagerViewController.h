@@ -12,4 +12,6 @@
 
 @property (nonatomic, assign)NSInteger timeKey;//球队key
 
+@property (nonatomic, strong)NSString *power;//权限
+
 @end
