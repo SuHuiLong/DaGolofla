@@ -65,7 +65,7 @@ static NSString *const JGSignUoPromptCellIdentifier = @"JGSignUoPromptCell";
         
         for (int j=0; j<_selectChooseArray.count; j++) {
             JGHAwardModel *modelChoose = [[JGHAwardModel alloc]init];
-            modelChoose = _selectChooseArray[i];
+            modelChoose = _selectChooseArray[j];
             if ([model.name isEqualToString:modelChoose.name]) {
                 model.select = 1;
             }else{

@@ -673,7 +673,10 @@ static CGFloat ImageHeight  = 210.0;
     JGDPrizeViewController *prizeCtrl = [[JGDPrizeViewController alloc]init];
     prizeCtrl.activityKey = _teamKey;
     prizeCtrl.teamKey = _model.teamKey;
-    prizeCtrl.isManager = 1;
+    if (![_power containsString:@"1001"]) {
+        prizeCtrl.isManager = 1;
+    }
+    
     prizeCtrl.model = _model;
     [self.navigationController pushViewController:prizeCtrl animated:YES];
 }
