@@ -7,6 +7,7 @@
 //
 
 #import "ViewController.h"
+#import "JGTeamAcitivtyModel.h"
 
 @interface JGDPrizeViewController : ViewController
 
@@ -15,5 +16,7 @@
 @property (nonatomic, assign) NSInteger teamKey;
 
 @property (nonatomic, assign) NSInteger isManager;
+
+@property (nonatomic, strong) JGTeamAcitivtyModel *model;
 
 @end
