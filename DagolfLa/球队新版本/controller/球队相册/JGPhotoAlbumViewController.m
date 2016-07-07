@@ -442,6 +442,9 @@
     if (index >= _dataArray.count) {
         index = _dataArray.count-1;
     }
+    if (_dataArray.count == 0) {
+        return nil;
+    }
     return [Helper setImageIconUrl:@"album/media" andTeamKey:[[_dataArray[index]timeKey] integerValue] andIsSetWidth:NO andIsBackGround:NO];
 }
 -(UIImage *)photoBrowser:(SDPhotoBrowser *)browser placeholderImageForIndex:(NSInteger)index
