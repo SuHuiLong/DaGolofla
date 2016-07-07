@@ -50,8 +50,10 @@
 }
 
 - (void)check{
+
 /*
- 
+ self.block(key, name, mobie);
+
  * 保存选择获奖人
  * @Title: doSavePrizeUser
  * @param teamKey

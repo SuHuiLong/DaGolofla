@@ -10,4 +10,6 @@
 
 @interface JGDActivityListViewController : ViewController
 
+@property(nonatomic,copy)void(^block)(NSInteger str,NSString *str1,NSString *str2);
+
 @end
