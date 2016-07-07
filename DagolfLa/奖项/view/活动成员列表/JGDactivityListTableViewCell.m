@@ -15,7 +15,7 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         
-        self.selectImage = [[UIImageView alloc] initWithFrame:CGRectMake(10, 10, 30, 30)];
+        self.selectImage = [[UIImageView alloc] initWithFrame:CGRectMake(10, 17, 15, 15)];
         self.selectImage.userInteractionEnabled = YES;
         [self.contentView addSubview:self.selectImage];
         

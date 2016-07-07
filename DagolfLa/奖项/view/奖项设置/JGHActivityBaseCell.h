@@ -23,7 +23,6 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *timevlaue;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *timevalueLeft;
-
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *addressLeft;
 @property (weak, nonatomic) IBOutlet UILabel *addressVlaue;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *addressVlaueLeft;

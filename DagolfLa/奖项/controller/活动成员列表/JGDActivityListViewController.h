@@ -10,4 +10,10 @@
 
 @interface JGDActivityListViewController : ViewController
 
+@property(nonatomic,copy)void(^block)(NSInteger str,NSString *str1,NSString *str2);
+
+@property (nonatomic, assign) NSInteger activityKey;
+
+@property (nonatomic, strong) NSMutableArray *checkArray;
+
 @end

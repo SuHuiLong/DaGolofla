@@ -147,18 +147,32 @@ static CGFloat ImageHeight  = 210.0;
         
 //        if ([self.memberState integerValue] == 0) {
 //            return;
-//        }
-        
-        if ([[self.memBerDic objectForKey:@"state"] integerValue] == 0) {
+        //        }
+        if (self.state == 1) {
+            
+            if ([[self.memBerDic objectForKey:@"state"] integerValue] == 0) {
+                [self.previewBtn setTitle:@"正在等待管理员审核" forState:UIControlStateNormal];
+                self.previewBtn.backgroundColor = [UIColor lightGrayColor];
+            }else if ([[self.detailDic objectForKey:@"state"] integerValue] == 2){
+                [self.previewBtn setTitle:@"审核未通过" forState:UIControlStateNormal];
+                self.previewBtn.backgroundColor = [UIColor lightGrayColor];
+            }else{
+                [self.previewBtn setTitle:@"邀请好友" forState:UIControlStateNormal];
+                self.previewBtn.backgroundColor = [UIColor colorWithHexString:@"#F59826"];
+            }
+            
+        }else if (self.state == 0) {
+            
             [self.previewBtn setTitle:@"正在等待审核" forState:UIControlStateNormal];
             self.previewBtn.backgroundColor = [UIColor lightGrayColor];
-        }else if ([[self.detailDic objectForKey:@"state"] integerValue] == 2){
+        
+        }else if (self.state == 2) {
+            
             [self.previewBtn setTitle:@"审核未通过" forState:UIControlStateNormal];
             self.previewBtn.backgroundColor = [UIColor lightGrayColor];
-        }else{
-            [self.previewBtn setTitle:@"邀请好友" forState:UIControlStateNormal];
-            self.previewBtn.backgroundColor = [UIColor colorWithHexString:@"#F59826"];
         }
+        
+        
     }];
 }
 
