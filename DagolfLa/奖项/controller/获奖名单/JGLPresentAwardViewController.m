@@ -154,10 +154,21 @@
     UIImageView* iconImgv = [[UIImageView alloc]initWithFrame:CGRectMake(10*screenWidth/375, 10*screenWidth/375, 64*screenWidth/375, 64*screenWidth/375)];
     iconImgv.image = [UIImage imageNamed:DefaultHeaderImage];
     [_viewBack addSubview:iconImgv];
+    //头像
+    if (_model.teamActivityKey == 0) {
+        [iconImgv sd_setImageWithURL:[Helper setImageIconUrl:@"activity" andTeamKey:[_model.timeKey integerValue] andIsSetWidth:YES andIsBackGround:YES] placeholderImage:[UIImage imageNamed:ActivityBGImage]];
+    }else{
+        [iconImgv sd_setImageWithURL:[Helper setImageIconUrl:@"activity" andTeamKey:_model.teamActivityKey andIsSetWidth:YES andIsBackGround:YES] placeholderImage:[UIImage imageNamed:ActivityBGImage]];
+    }
     
     UILabel* titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(94*screenWidth/375, 10*screenWidth/375, 200*screenWidth/375, 25*screenWidth/375)];
     titleLabel.font = [UIFont systemFontOfSize:16*screenWidth/375];
-    titleLabel.text = @"上海球队活动";
+    if (![Helper isBlankString:_model.name]) {
+        titleLabel.text = _model.name;
+    }
+    else{
+        titleLabel.text = @"暂无活动名称";
+    }
     [_viewBack addSubview:titleLabel];
     
     UIImageView* timeImgv = [[UIImageView alloc]initWithFrame:CGRectMake(93*screenWidth/375, 35*screenWidth/375, 18*screenWidth/375, 18*screenWidth/375)];
@@ -166,7 +177,11 @@
     
     UILabel* timeLabel = [[UILabel alloc]initWithFrame:CGRectMake(115*screenWidth/375, 35*screenWidth/375, 200*screenWidth/375, 20*screenWidth/375)];
     timeLabel.font = [UIFont systemFontOfSize:14*screenWidth/375];
-    timeLabel.text = @"6月1日";
+    //活动时间componentsSeparatedByString
+    NSString *timeString = [[_model.beginDate componentsSeparatedByString:@" "]firstObject];
+    NSString *monthTimeString = [[timeString componentsSeparatedByString:@"-"]objectAtIndex:1];
+    NSString *dataTimeString = [[timeString componentsSeparatedByString:@"-"]objectAtIndex:2];
+    timeLabel.text = [NSString stringWithFormat:@"%@月%@日", monthTimeString, dataTimeString];
     timeLabel.textColor = [UIColor lightGrayColor];
     [_viewBack addSubview:timeLabel];
     
@@ -176,7 +191,13 @@
     
     UILabel* distanceLabel = [[UILabel alloc]initWithFrame:CGRectMake(115*screenWidth/375, 55*screenWidth/375, 200*screenWidth/375, 20*screenWidth/375)];
     distanceLabel.font = [UIFont systemFontOfSize:14*screenWidth/375];
-    distanceLabel.text = @"上海佘山高尔夫球场";
+    if (![Helper isBlankString:_model.ballAddress]) {
+        distanceLabel.text = _model.ballAddress;
+    }
+    else{
+        distanceLabel.text = @"暂无活动地址";
+    }
+
     [_viewBack addSubview:distanceLabel];
 }
 
