@@ -7,9 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+@class JGHAwardModel;
+
 
 @interface JGLPresentAwardTableViewCell : UITableViewCell
-
 
 
 @property (strong, nonatomic) UIImageView* iconImgv;
@@ -24,6 +25,8 @@
 
 @property (strong, nonatomic) UIButton*    chooseBtn;
 
+
+- (void)configJGHAwardModel:(JGHAwardModel *)model;
 
 
 @end

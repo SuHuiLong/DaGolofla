@@ -41,7 +41,11 @@
     self.nameLB.text = listModel.name;
     NSString *str = [NSString stringWithFormat:@"%@", listModel.mobile];
     NSMutableString *muatbleStr = [str mutableCopy];
-    [muatbleStr replaceCharactersInRange:NSMakeRange(3, 5) withString:@"*****"];
+    
+    if (muatbleStr.length > 10) {
+        [muatbleStr replaceCharactersInRange:NSMakeRange(3, 5) withString:@"*****"];
+    }
+    
     self.phoneLB.text = muatbleStr;
     [self.headIconV sd_setImageWithURL:[Helper setImageIconUrl:@"user" andTeamKey:[listModel.userKey integerValue] andIsSetWidth:YES andIsBackGround:NO] placeholderImage:[UIImage imageNamed:@"selfBackPic.jpg"]];
     if (listModel.isSelect) {
@@ -55,6 +59,8 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
+    
+    self.selectionStyle = UITableViewCellSelectionStyleNone;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

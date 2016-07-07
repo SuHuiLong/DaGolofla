@@ -115,8 +115,9 @@
 
 //立即颁奖
 - (void)present{
-
+    
     JGLPresentAwardViewController *preVC = [[JGLPresentAwardViewController alloc] init];
+    preVC.activityKey = _activityKey;
     [self.navigationController pushViewController:preVC animated:YES];
 
 }
