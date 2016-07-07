@@ -35,7 +35,7 @@
         self.prizeBtn.layer.borderColor = borderColorRef;
         self.prizeBtn.layer.borderWidth = 1.00 * ScreenWidth / 375;
         self.prizeBtn.layer.cornerRadius = 3.5 * ScreenWidth / 375;
-        [self.contentView addSubview:self.prizeBtn];
+//        [self.contentView addSubview:self.prizeBtn];
         
         self.presentationBtn = [UIButton buttonWithType:(UIButtonTypeCustom)];
         self.presentationBtn.frame = CGRectMake(300 * ProportionAdapter, 10 * ProportionAdapter, 70 * ProportionAdapter, 25 * ProportionAdapter);
@@ -47,7 +47,7 @@
         self.presentationBtn.layer.cornerRadius = 3.5 * ScreenWidth / 375;
         self.presentationBtn.layer.borderColor = borderColorRef;
         
-        [self.contentView addSubview:self.presentationBtn];
+//        [self.contentView addSubview:self.presentationBtn];
         
 
     }

@@ -12,6 +12,7 @@
 #import "JGDActvityPriziSetTableViewCell.h"
 #import "JGLPresentAwardViewController.h"
 #import "JGHSetAwardViewController.h"
+#import "JGHActivityBaseCell.h"
 
 @interface JGDPrizeViewController ()<UITableViewDelegate, UITableViewDataSource>
 
@@ -25,6 +26,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.title = @"活动奖项";
     self.view.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];
     [self createTableView];
     [self setdata];
@@ -35,9 +37,9 @@
 - (void)setdata{
     NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
     [dic setObject:[NSNumber numberWithInteger:self.activityKey] forKey:@"activityKey"];
-    [dic setObject:[NSNumber numberWithInteger:self.teamKey] forKey:@"teamKey"];
+    [dic setObject:DEFAULF_USERID forKey:@"userKey"];
 
-    [[JsonHttp jsonHttp]httpRequest:@"team/getTeamActivityPrizeList" JsonKey:nil withData:dic requestMethod:@"GET" failedBlock:^(id errType) {
+    [[JsonHttp jsonHttp]httpRequest:@"team/getPublishPrizeList" JsonKey:nil withData:dic requestMethod:@"GET" failedBlock:^(id errType) {
         NSLog(@"errtype == %@", errType);
     } completionBlock:^(id data) {
         
@@ -56,7 +58,8 @@
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     [self.tableView registerClass:[JGDprizeTableViewCell class] forCellReuseIdentifier:@"prizeCell"];
-    [self.tableView registerClass:[JGDtopTableViewCell class] forCellReuseIdentifier:@"topCell"];
+    UINib *activityBaseCellNib = [UINib nibWithNibName:@"JGHActivityBaseCell" bundle: [NSBundle mainBundle]];
+    [self.tableView registerNib:activityBaseCellNib forCellReuseIdentifier:@"topCell"];
     [self.tableView registerClass:[JGDActvityPriziSetTableViewCell class] forCellReuseIdentifier:@"setCell"];
 
     [self.view addSubview:self.tableView];
@@ -65,7 +68,8 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
     if (indexPath.section == 0) {
-        JGDtopTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"topCell"];
+        JGHActivityBaseCell *cell = [tableView dequeueReusableCellWithIdentifier:@"topCell"];
+        [cell configJGTeamActivityModel:self.model];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
         
@@ -75,15 +79,22 @@
             JGDActvityPriziSetTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"setCell"];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             cell.titleLB.text = [NSString stringWithFormat:@"活动奖项（%td）",self.dataArray.count];
-            [cell.presentationBtn addTarget:self action:@selector(present) forControlEvents:(UIControlEventTouchUpInside)];
-            [cell.prizeBtn addTarget:self action:@selector(prizeSet) forControlEvents:(UIControlEventTouchUpInside)];
+            
+            if (self.isManager != 1) {
+                
+                [cell.contentView addSubview:cell.presentationBtn];
+                [cell.contentView addSubview:cell.prizeBtn];
+                
+                [cell.presentationBtn addTarget:self action:@selector(present) forControlEvents:(UIControlEventTouchUpInside)];
+                [cell.prizeBtn addTarget:self action:@selector(prizeSet) forControlEvents:(UIControlEventTouchUpInside)];
+            }
             return cell;
         }else{
             
             JGDprizeTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"prizeCell"];
             cell.nameLabel.text = [self.dataArray[indexPath.row - 1] objectForKey:@"name"];
-            cell.prizeLbel.text = @"寂寞的人总是会用心地记住在他生命中出现过的每一个人";
-            cell.numberLabel.text = @"122";
+            cell.prizeLbel.text = [self.dataArray[indexPath.row - 1] objectForKey:@"prizeName"];
+            cell.numberLabel.text = [[self.dataArray[indexPath.row - 1] objectForKey:@"prizeSize"] stringValue];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
 
             return cell;

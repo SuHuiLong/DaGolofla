@@ -24,7 +24,7 @@
         UIBarButtonItem *bar = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"iconfont-fenxiang"] style:(UIBarButtonItemStylePlain) target:self action:@selector(shareBtn)];
         bar.tintColor = [UIColor whiteColor];
         self.navigationItem.rightBarButtonItem = bar;
-
+        
     }
     
     self.title = self.teamName;
@@ -36,15 +36,15 @@
     [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.detailString]]];
     
     
-//    [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"http://imgcache.dagolfla.com/html/index.html"]]];
+    //    [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"http://imgcache.dagolfla.com/html/index.html"]]];
     
-//    if (self.detailString) {
-//        [self.webView loadHTMLString:self.detailString baseURL:nil];
-//    }else{
-//        [Helper alertViewNoHaveCancleWithTitle:@"球队暂无简介" withBlock:^(UIAlertController *alertView) {
-//            [self.navigationController presentViewController:alertView animated:YES completion:nil];
-//        }];
-//    }
+    //    if (self.detailString) {
+    //        [self.webView loadHTMLString:self.detailString baseURL:nil];
+    //    }else{
+    //        [Helper alertViewNoHaveCancleWithTitle:@"球队暂无简介" withBlock:^(UIAlertController *alertView) {
+    //            [self.navigationController presentViewController:alertView animated:YES completion:nil];
+    //        }];
+    //    }
     
     // Do any additional setup after loading the view.
 }
@@ -120,7 +120,7 @@
                                                                     }];
                              //                             }
                          }
-        }];
+                     }];
     
 }
 
@@ -157,7 +157,7 @@
         }
     }
     
-
+    
     decisionHandler(WKNavigationActionPolicyAllow);
 }
 
@@ -184,13 +184,13 @@
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

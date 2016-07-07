@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+@class JGHAwardModel;
 
 @protocol JGHChooseAwardCellDelegate <NSObject>
 
@@ -30,6 +31,6 @@
 
 - (IBAction)chooseBtnClick:(UIButton *)sender;
 
-- (void)config;
+- (void)configJGHAwardModel:(JGHAwardModel *)model;
 
 @end

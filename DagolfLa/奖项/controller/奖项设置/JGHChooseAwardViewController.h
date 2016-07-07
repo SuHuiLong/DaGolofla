@@ -15,4 +15,6 @@
 
 @property (nonatomic, assign)NSInteger teamKey;
 
+@property (nonatomic, strong)NSMutableArray *selectChooseArray;
+
 @end

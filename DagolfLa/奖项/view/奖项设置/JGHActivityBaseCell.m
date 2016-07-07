@@ -19,20 +19,21 @@
     
     NSArray *array2 = [NSArray arrayWithObjects:sConstraint, nil];
     [self addConstraints: array2];
-//    @property (weak, nonatomic) IBOutlet UIImageView *activityimageView;
+    self.activityimageView.layer.masksToBounds = YES;
+    self.activityimageView.layer.cornerRadius = 8.0;
     self.activityimageViewLeft.constant = 10 *ProportionAdapter;
 
-    self.nameLeft.constant = 20 *ProportionAdapter;
+    self.nameLeft.constant = 10 *ProportionAdapter;
     self.name.font = [UIFont systemFontOfSize:17*ProportionAdapter];
     
-    self.timeLeft.constant = 20 *ProportionAdapter;
+    self.timeLeft.constant = 10 *ProportionAdapter;
     self.timeTop.constant = 7.5 *ProportionAdapter;
     self.timeDown.constant = 7.5 *ProportionAdapter;
     
     self.timevalueLeft.constant = 8 *ProportionAdapter;
     self.timevlaue.font = [UIFont systemFontOfSize:12*ProportionAdapter];
     
-    self.addressLeft.constant = 20 *ProportionAdapter;
+    self.addressLeft.constant = 10 *ProportionAdapter;
     self.addressVlaueLeft.constant = 8 *ProportionAdapter;
     self.addressVlaue.font = [UIFont systemFontOfSize:15*ProportionAdapter];
     
@@ -47,7 +48,11 @@
 
 - (void)configJGTeamActivityModel:(JGTeamAcitivtyModel *)model{
     //头像
-    [self.activityimageView sd_setImageWithURL:[Helper setImageIconUrl:@"activity" andTeamKey:model.teamActivityKey andIsSetWidth:YES andIsBackGround:YES] placeholderImage:[UIImage imageNamed:ActivityBGImage]];
+    if (model.teamActivityKey == 0) {
+        [self.activityimageView sd_setImageWithURL:[Helper setImageIconUrl:@"activity" andTeamKey:[model.timeKey integerValue] andIsSetWidth:YES andIsBackGround:YES] placeholderImage:[UIImage imageNamed:ActivityBGImage]];
+    }else{
+        [self.activityimageView sd_setImageWithURL:[Helper setImageIconUrl:@"activity" andTeamKey:model.teamActivityKey andIsSetWidth:YES andIsBackGround:YES] placeholderImage:[UIImage imageNamed:ActivityBGImage]];
+    }
     //活动名称
     self.name.text = model.name;
 

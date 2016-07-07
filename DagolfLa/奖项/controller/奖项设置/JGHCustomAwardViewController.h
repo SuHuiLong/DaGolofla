@@ -7,11 +7,16 @@
 //
 
 #import "ViewController.h"
+@class JGHAwardModel;
 
 @interface JGHCustomAwardViewController : ViewController
 
 @property (nonatomic, assign)NSInteger activityKey;
 
 @property (nonatomic, assign)NSInteger teamKey;
+
+//@property (nonatomic, assign)NSInteger prizeKey;
+
+@property (nonatomic, strong)JGHAwardModel *model;
 
 @end

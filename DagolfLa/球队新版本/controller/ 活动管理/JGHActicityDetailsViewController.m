@@ -686,10 +686,12 @@ static CGFloat ImageHeight  = 210.0;
     if (_model.teamActivityKey != 0) {
         setAwardCtrl.activityKey = _model.teamActivityKey;
     }else{
-        setAwardCtrl.activityKey = _model.teamKey;
+        setAwardCtrl.activityKey = [_model.timeKey integerValue];
     }
-    //587860
-    setAwardCtrl.activityKey = 587860;
+    
+    setAwardCtrl.teamKey = _model.teamKey;
+    
+    setAwardCtrl.model = _model;
     
     [self.navigationController pushViewController:setAwardCtrl animated:YES];
 }
