@@ -40,6 +40,24 @@
     return self;
 }
 
+
+-(void)showData:(JGLWinnerShareModel *)model
+{
+    if (![Helper isBlankString:model.name]) {
+        _titleLabel.text = model.name;
+    }
+    else{
+        _titleLabel.text = @"暂无奖项名称";
+    }
+    if (![Helper isBlankString:model.userInfo]) {
+        _nameLabel.text = model.userInfo;
+    }
+    else{
+        _nameLabel.text = @"暂无获奖人名单";
+    }
+}
+
+
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
 

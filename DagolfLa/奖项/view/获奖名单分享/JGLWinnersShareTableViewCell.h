@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "JGLWinnerShareModel.h"
 @interface JGLWinnersShareTableViewCell : UITableViewCell
 
 
@@ -17,5 +17,6 @@
 
 @property (strong, nonatomic) UILabel* nameLabel;
 
+-(void)showData:(JGLWinnerShareModel *)model;
 
 @end

@@ -8,12 +8,22 @@
 
 #import "ViewController.h"
 
+@protocol JGDActivityListViewControllerDelegate <NSObject>
+
+- (void)saveBtnDict:(NSMutableDictionary *)dict andAwardId:(NSInteger)awardId;
+
+@end
+
 @interface JGDActivityListViewController : ViewController
+
+@property (nonatomic, weak)id <JGDActivityListViewControllerDelegate> delegate;
 
 @property(nonatomic,copy)void(^block)(NSInteger str,NSString *str1,NSString *str2);
 
 @property (nonatomic, assign) NSInteger activityKey;
 
-@property (nonatomic, strong) NSMutableArray *checkArray;
+@property (nonatomic, strong) NSMutableDictionary *checkdict;
+
+@property (nonatomic, assign)NSInteger awardId;
 
 @end
