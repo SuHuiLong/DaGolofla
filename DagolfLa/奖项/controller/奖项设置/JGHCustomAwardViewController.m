@@ -161,9 +161,17 @@ static NSString *const JGHTextFiledCellIdentifier = @"JGHTextFiledCell";
             if (indexPath.section == 0) {
                 chooseAwardCell.titlefileds.text = _model.name;
             }else if (indexPath.section == 2){
-                chooseAwardCell.titlefileds.text = [NSString stringWithFormat:@"%@", _model.prizeName];
+                if (_model.prizeName == nil) {
+                    chooseAwardCell.titlefileds.text = @"";
+                }else{
+                    chooseAwardCell.titlefileds.text = [NSString stringWithFormat:@"%@", _model.prizeName];
+                }
             }else if (indexPath.section == 3){
-                chooseAwardCell.titlefileds.text = [NSString stringWithFormat:@"%@", _model.prizeSize];
+                if (_model.prizeSize > 0) {
+                    chooseAwardCell.titlefileds.text = @"";
+                }else{
+                    chooseAwardCell.titlefileds.text = [NSString stringWithFormat:@"%@", _model.prizeSize];
+                }
             }
         }
         

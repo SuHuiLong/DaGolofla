@@ -102,6 +102,8 @@ static NSString *const JGHActivityBaseCellIdentifier = @"JGHActivityBaseCell";
         }
         
         
+        [self.awardTableView.header endRefreshing];
+        
         if (_dataArray.count == 0) {
             [self createNoData];
         }else{
@@ -162,9 +164,15 @@ static NSString *const JGHActivityBaseCellIdentifier = @"JGHActivityBaseCell";
     UINib *activityBaseCellNib = [UINib nibWithNibName:@"JGHActivityBaseCell" bundle: [NSBundle mainBundle]];
     [self.awardTableView registerNib:activityBaseCellNib forCellReuseIdentifier:JGHActivityBaseCellIdentifier];
     
+    self.awardTableView.header = [MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(refreahData)];
+    [self.awardTableView.header beginRefreshing];
+
     self.awardTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.awardTableView.backgroundColor = [UIColor colorWithHexString:BG_color];
     [self.view addSubview:self.awardTableView];
+}
+- (void)refreahData{
+    [self loadData];
 }
 #pragma mark -- tableView代理
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{

@@ -20,7 +20,7 @@
 @property (assign, nonatomic) CGPoint offset;
 @property (strong, nonatomic) UIScrollView *scrollView;
 
-@property (assign, nonatomic) NSInteger svIndex;
+@property (assign, nonatomic) NSInteger svIndex;//滑动后所展示图的比例，width/screenwidth
 
 
 @property (strong, nonatomic) UIImageView *imageView;
@@ -109,17 +109,17 @@
 -(void)saveClick
 {
     
-//    [Helper alertViewWithTitle:@"是否确定要保存照片" withBlockCancle:^{
-//        
-//    } withBlockSure:^{
+    [Helper alertViewWithTitle:@"是否确定要保存照片" withBlockCancle:^{
+        
+    } withBlockSure:^{
     if (_svIndex < 3) {
         _svIndex = self.index;
     }
     UIImageView *svView = [self.view viewWithTag:_svIndex+11];
     UIImageWriteToSavedPhotosAlbum(svView.image ,self,@selector(image:didFinishSavingWithError:contextInfo:),NULL);
-//    } withBlock:^(UIAlertController *alertView) {
-//        [self.navigationController presentViewController:alertView animated:YES completion:nil];
-//    }];
+    } withBlock:^(UIAlertController *alertView) {
+        [self.navigationController presentViewController:alertView animated:YES completion:nil];
+    }];
 }
 #pragma mark --有权限可以删除图片
 -(void)editImageClick {

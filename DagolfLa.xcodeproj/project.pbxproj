@@ -693,6 +693,9 @@
 		821A13131CEDE04400694E49 /* JGLMyTeamModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 821A13121CEDE04400694E49 /* JGLMyTeamModel.m */; };
 		821F51041D0E89D700AF0E93 /* JGLMyTeamTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 821F51031D0E89D700AF0E93 /* JGLMyTeamTableViewCell.m */; };
 		821F51071D0ECF4700AF0E93 /* JGLTeamChoiseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 821F51061D0ECF4700AF0E93 /* JGLTeamChoiseViewController.m */; };
+		8225626F1D2DFB8400ABA7F3 /* SDBrowserImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 822562691D2DFB8400ABA7F3 /* SDBrowserImageView.m */; };
+		822562701D2DFB8400ABA7F3 /* SDPhotoBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = 8225626B1D2DFB8400ABA7F3 /* SDPhotoBrowser.m */; };
+		822562711D2DFB8400ABA7F3 /* SDWaitingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8225626E1D2DFB8400ABA7F3 /* SDWaitingView.m */; };
 		822DC40A1D1944A4000F825D /* JGLPowerSettTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 822DC4081D1944A4000F825D /* JGLPowerSettTableViewCell.m */; };
 		822DC40B1D1944A4000F825D /* JGLPowerSettTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 822DC4091D1944A4000F825D /* JGLPowerSettTableViewCell.xib */; };
 		823C149D1CEEF0B5000AB612 /* JGLTeamMemberModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 823C149C1CEEF0B5000AB612 /* JGLTeamMemberModel.m */; };
@@ -2083,6 +2086,13 @@
 		821F51031D0E89D700AF0E93 /* JGLMyTeamTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGLMyTeamTableViewCell.m; sourceTree = "<group>"; };
 		821F51051D0ECF4700AF0E93 /* JGLTeamChoiseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGLTeamChoiseViewController.h; sourceTree = "<group>"; };
 		821F51061D0ECF4700AF0E93 /* JGLTeamChoiseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGLTeamChoiseViewController.m; sourceTree = "<group>"; };
+		822562681D2DFB8400ABA7F3 /* SDBrowserImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDBrowserImageView.h; sourceTree = "<group>"; };
+		822562691D2DFB8400ABA7F3 /* SDBrowserImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDBrowserImageView.m; sourceTree = "<group>"; };
+		8225626A1D2DFB8400ABA7F3 /* SDPhotoBrowser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDPhotoBrowser.h; sourceTree = "<group>"; };
+		8225626B1D2DFB8400ABA7F3 /* SDPhotoBrowser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDPhotoBrowser.m; sourceTree = "<group>"; };
+		8225626C1D2DFB8400ABA7F3 /* SDPhotoBrowserConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDPhotoBrowserConfig.h; sourceTree = "<group>"; };
+		8225626D1D2DFB8400ABA7F3 /* SDWaitingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDWaitingView.h; sourceTree = "<group>"; };
+		8225626E1D2DFB8400ABA7F3 /* SDWaitingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDWaitingView.m; sourceTree = "<group>"; };
 		822DC4071D1944A4000F825D /* JGLPowerSettTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGLPowerSettTableViewCell.h; sourceTree = "<group>"; };
 		822DC4081D1944A4000F825D /* JGLPowerSettTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGLPowerSettTableViewCell.m; sourceTree = "<group>"; };
 		822DC4091D1944A4000F825D /* JGLPowerSettTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JGLPowerSettTableViewCell.xib; sourceTree = "<group>"; };
@@ -5528,6 +5538,20 @@
 			path = "我的球队";
 			sourceTree = "<group>";
 		};
+		822562671D2DFB8400ABA7F3 /* SDPhotoBrowser */ = {
+			isa = PBXGroup;
+			children = (
+				822562681D2DFB8400ABA7F3 /* SDBrowserImageView.h */,
+				822562691D2DFB8400ABA7F3 /* SDBrowserImageView.m */,
+				8225626A1D2DFB8400ABA7F3 /* SDPhotoBrowser.h */,
+				8225626B1D2DFB8400ABA7F3 /* SDPhotoBrowser.m */,
+				8225626C1D2DFB8400ABA7F3 /* SDPhotoBrowserConfig.h */,
+				8225626D1D2DFB8400ABA7F3 /* SDWaitingView.h */,
+				8225626E1D2DFB8400ABA7F3 /* SDWaitingView.m */,
+			);
+			path = SDPhotoBrowser;
+			sourceTree = "<group>";
+		};
 		827BD52C1D214A01009AF9CA /* 添加银行卡 */ = {
 			isa = PBXGroup;
 			children = (
@@ -5557,6 +5581,7 @@
 		828A99E11CE3165B00AF9860 /* 球队相册 */ = {
 			isa = PBXGroup;
 			children = (
+				822562671D2DFB8400ABA7F3 /* SDPhotoBrowser */,
 				82D595E71CE4604500CD9587 /* JGTeamPhotoViewController.h */,
 				82D595E81CE4604500CD9587 /* JGTeamPhotoViewController.m */,
 				828A99E21CE3167800AF9860 /* JGTeamCreatePhotoController.h */,
@@ -6562,6 +6587,7 @@
 				36BFFF811BC76D09005B3CE2 /* UIView+WebCacheOperation.m in Sources */,
 				82E6A6F61CF5812C009DD179 /* JGLAuthorityTableViewCell.m in Sources */,
 				65B596EC1CAD43AC007AB83A /* YMReplyInputView.m in Sources */,
+				822562711D2DFB8400ABA7F3 /* SDWaitingView.m in Sources */,
 				36BF01861BC77611005B3CE2 /* CityChooseView.m in Sources */,
 				36BF00111BC770C4005B3CE2 /* ChartContentView.m in Sources */,
 				36D012F91BC8A2C200ED4788 /* YuePeopleModel.m in Sources */,
@@ -6833,6 +6859,7 @@
 				36BFFF891BC76D09005B3CE2 /* UserDataInformation.m in Sources */,
 				3660E1BB1BFC58B70033B4D7 /* TeamNumViewController.m in Sources */,
 				36BF00FE1BC7750D005B3CE2 /* VoteViewController.m in Sources */,
+				822562701D2DFB8400ABA7F3 /* SDPhotoBrowser.m in Sources */,
 				82E6A7151CF68190009DD179 /* JGLTeamEditTableViewCell.m in Sources */,
 				3660E0EB1BFC53B70033B4D7 /* SelfScoreTableViewCell.m in Sources */,
 				362BCD911C048803001E2818 /* TeamActivePostController.m in Sources */,
@@ -6950,6 +6977,7 @@
 				36BFFF821BC76D09005B3CE2 /* Helper.m in Sources */,
 				36BF00DF1BC77428005B3CE2 /* PackageViewController.m in Sources */,
 				36BF008F1BC772EF005B3CE2 /* MyAwardViewController.m in Sources */,
+				8225626F1D2DFB8400ABA7F3 /* SDBrowserImageView.m in Sources */,
 				20CA13961CE97C9C00DA15B9 /* JGHTeamMembersViewController.m in Sources */,
 				36BF00411BC771FB005B3CE2 /* ZanNumTableViewCell.m in Sources */,
 				82636E901D06D18100216DC1 /* JGTeamPhotoShowViewController.m in Sources */,
