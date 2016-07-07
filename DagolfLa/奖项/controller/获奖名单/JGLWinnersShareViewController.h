@@ -8,6 +8,7 @@
 
 #import "ViewController.h"
 #import "JGTeamAcitivtyModel.h"
+
 @interface JGLWinnersShareViewController : ViewController
 
 

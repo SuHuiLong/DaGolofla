@@ -164,6 +164,7 @@
     
     JGLPresentAwardViewController *preVC = [[JGLPresentAwardViewController alloc] init];
     preVC.activityKey = _activityKey;
+    preVC.model = _model;
     [self.navigationController pushViewController:preVC animated:YES];
 
 }

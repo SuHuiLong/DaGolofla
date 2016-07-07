@@ -7,6 +7,7 @@
 //
 
 #import "ViewController.h"
+@class JGTeamAcitivtyModel;
 
 @interface JGLPresentAwardViewController : ViewController
 

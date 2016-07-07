@@ -11,6 +11,7 @@
 #import "JGHAwardModel.h"
 #import "JGDActivityListViewController.h"
 #import "JGLWinnersShareViewController.h"
+#import "JGTeamAcitivtyModel.h"
 
 @interface JGLPresentAwardViewController ()<UITableViewDelegate,UITableViewDataSource, JGDActivityListViewControllerDelegate>
 {
@@ -66,7 +67,8 @@
 #pragma mark -- 跳转
 - (void)pushCtrl{
     JGLWinnersShareViewController *winnerCtrl = [[JGLWinnersShareViewController alloc]init];
-    
+    winnerCtrl.model = _model;
+    winnerCtrl.activeKey = [NSNumber numberWithInteger:_activityKey];
     [self.navigationController pushViewController:winnerCtrl animated:YES];
 }
 #pragma mark -- 创建工具栏
