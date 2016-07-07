@@ -7,7 +7,13 @@
 //
 
 #import "ViewController.h"
-
+#import "JGTeamAcitivtyModel.h"
 @interface JGLWinnersShareViewController : ViewController
+
+
+//cell头视图
+@property (nonatomic, strong)JGTeamAcitivtyModel *model;
+
+@property (strong, nonatomic) NSNumber* activeKey;
 
 @end

@@ -13,8 +13,29 @@
 
 
 
+@property (strong, nonatomic) NSNumber* teamKey;
 
+@property (strong, nonatomic) NSNumber* index;
 
+@property (strong, nonatomic) NSNumber* isDefault;//是否是默认的奖项 0: 不是  1: 是
+
+@property (strong, nonatomic) NSString* name;
+
+@property (strong, nonatomic) NSString* prizeName;
+
+@property (strong, nonatomic) NSNumber* prizeSize;
+
+@property (strong, nonatomic) NSNumber* teamActivityKey;
+
+@property (strong, nonatomic) NSString* createTime;
+
+@property (strong, nonatomic) NSString* ts;
+
+@property (strong, nonatomic) NSString* userInfo;
+
+@property (strong, nonatomic) NSString* signupKeyInfo;
+
+@property (strong, nonatomic) NSNumber* isPublish;//是否该奖项已经发布 0: 未发布  1: 已发布
 
 /*
  createTime = "2016-07-05 00:00:00";
