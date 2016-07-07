@@ -15,5 +15,6 @@
 @property (nonatomic, strong) NSNumber *mobile;
 @property (nonatomic, strong) NSNumber *userKey;
 @property (nonatomic, assign) BOOL isSelect;
+@property (nonatomic, strong) NSNumber *timeKey;
 
 @end

@@ -15,6 +15,9 @@
 #import "JGDActivityList.h"
 
 @interface JGDActivityListViewController ()<UITableViewDelegate, UITableViewDataSource>
+{
+    NSMutableString *_signupKeyInfo;
+}
 
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, assign) NSInteger page;
@@ -28,6 +31,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    _signupKeyInfo =[NSMutableString stringWithString:@""];
     
     self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight) style:(UITableViewStylePlain)];
     self.tableView.delegate = self;
@@ -73,7 +78,14 @@
                                 @Param(value="prizeKey",     require=true)                               Long        prizeKey,
                                 @Param(value="signupKeyList", require=true, genricType=Long.class)       List<Long>  signupKeyList,
                                 TcpResponse response) throws Throwable {
+
  */
+    
+    
+    
+    if (self.delegate) {
+        [self.delegate saveBtnDict:_checkdict andAwardId:_awardId];
+    }
     
 }
 
@@ -165,10 +177,17 @@
     if (model.isSelect) {
         cell.selectImage.image = [UIImage imageNamed:@"kuang"];
         model.isSelect = NO;
+        if ([_signupKeyInfo containsString:[NSString stringWithFormat:@"%@", model.timeKey]]) {
+            _signupKeyInfo = [NSMutableString stringWithString:[_signupKeyInfo stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"%@,", model.timeKey] withString:@""]];
+        }
+        
     }else{
         cell.selectImage.image = [UIImage imageNamed:@"kuang_xz"];
         model.isSelect = YES;
+        _signupKeyInfo = [NSMutableString stringWithString:[_signupKeyInfo stringByAppendingString:[NSString stringWithFormat:@"%@,", model.timeKey]]];
     }
+    
+    [_checkdict setObject:_signupKeyInfo forKey:@"signupKeyInfo"];
     
     if (cell.listModel.isSelect == NO) {
         [self.selectedArray addObject:model];

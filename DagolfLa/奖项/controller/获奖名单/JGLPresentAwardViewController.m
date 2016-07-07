@@ -10,8 +10,9 @@
 #import "JGLPresentAwardTableViewCell.h"
 #import "JGHAwardModel.h"
 #import "JGDActivityListViewController.h"
+#import "JGLWinnersShareViewController.h"
 
-@interface JGLPresentAwardViewController ()<UITableViewDelegate,UITableViewDataSource>
+@interface JGLPresentAwardViewController ()<UITableViewDelegate,UITableViewDataSource, JGDActivityListViewControllerDelegate>
 {
     NSMutableArray* _dataArray;
     UITableView* _tableView;
@@ -27,7 +28,7 @@
     self.view.backgroundColor = [UIColor colorWithHexString:BG_color];
     self.title = @"颁奖";
     
-    UIBarButtonItem *item = [[UIBarButtonItem alloc]initWithTitle:@"保存" style:UIBarButtonItemStylePlain target:self action:@selector(saveAwardNameClick)];
+    UIBarButtonItem *item = [[UIBarButtonItem alloc]initWithTitle:@"保存" style:UIBarButtonItemStylePlain target:self action:@selector(saveAwardNameClick:)];
     item.tintColor=[UIColor whiteColor];
     self.navigationItem.rightBarButtonItem = item;
     
@@ -41,7 +42,8 @@
     [self loadData];
 }
 #pragma mark -- 保存
-- (void)saveAwardNameClick{
+- (void)saveAwardNameClick:(UIBarButtonItem *)item{
+    item.enabled = NO;
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     [dict setObject:@(_activityKey) forKey:@"activityKey"];
     [dict setObject:DEFAULF_USERID forKey:@"userKey"];
@@ -50,7 +52,22 @@
         NSLog(@"errType == %@", errType);
     } completionBlock:^(id data) {
         NSLog(@"data == %@", data);
+        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+            [[ShowHUD showHUD]showToastWithText:@"保存成功！" FromView:self.view];
+        }else{
+            if ([data objectForKey:@"packResultMsg"]) {
+                [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+            }
+        }
     }];
+    
+    item.enabled = YES;
+}
+#pragma mark -- 跳转
+- (void)pushCtrl{
+    JGLWinnersShareViewController *winnerCtrl = [[JGLWinnersShareViewController alloc]init];
+    
+    [self.navigationController pushViewController:winnerCtrl animated:YES];
 }
 #pragma mark -- 创建工具栏
 - (void)createPushAwardBtn{
@@ -76,6 +93,14 @@
         NSLog(@"errType == %@", errType);
     } completionBlock:^(id data) {
         NSLog(@"data == %@", data);
+        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+            [[ShowHUD showHUD]showToastWithText:@"发布成功！" FromView:self.view];
+            [self performSelector:@selector(pushCtrl) withObject:self afterDelay:1.0];
+        }else{
+            if ([data objectForKey:@"packResultMsg"]) {
+                [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+            }
+        }
     }];
 }
 #pragma mark -- 下载数据
@@ -100,7 +125,14 @@
                 [_dataArray addObject:model];
                 
                 //提交的参数
-                
+                NSMutableDictionary *prizeDict = [NSMutableDictionary dictionary];
+                [prizeDict setObject:@(_teamKey) forKey:@"teamKey"];
+                [prizeDict setObject:@(_activityKey) forKey:@"teamActivityKey"];
+                [prizeDict setObject:model.name forKey:@"name"];
+                [prizeDict setObject:model.prizeName forKey:@"prizeName"];
+                [prizeDict setObject:model.prizeSize forKey:@"prizeSize"];
+
+                [_prizeListArray addObject:prizeDict];
             }
         }else{
             if ([data objectForKey:@"packResultMsg"]) {
@@ -108,7 +140,7 @@
             }
         }
         
-        [_tableView.header endRefreshing];
+//        [_tableView.header endRefreshing];
         [_tableView reloadData];
     }];
 }
@@ -158,15 +190,15 @@
     [_tableView registerClass:[JGLPresentAwardTableViewCell class] forCellReuseIdentifier:@"JGLPresentAwardTableViewCell"];
     _tableView.backgroundColor = [UIColor colorWithHexString:BG_color];
     
-    _tableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
-    
-    [_tableView.header beginRefreshing];
+//    _tableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
+//    
+//    [_tableView.header beginRefreshing];
     
 }
 #pragma mark -- 刷新数据
-- (void)headerRereshing{
-    [self loadData];
-}
+//- (void)headerRereshing{
+//    [self loadData];
+//}
 
 #pragma MARK -- tableview
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
@@ -212,10 +244,17 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     JGDActivityListViewController *listerErctrl = [[JGDActivityListViewController alloc]init];
-    
+    listerErctrl.activityKey = _activityKey;
+    listerErctrl.checkdict = _prizeListArray[indexPath.section];
+    listerErctrl.delegate = self;
+    listerErctrl.awardId = indexPath.section;
     [self.navigationController pushViewController:listerErctrl animated:YES];
 }
 
+#pragma mark -- 选择颁奖人后返回的代理
+- (void)saveBtnDict:(NSMutableDictionary *)dict andAwardId:(NSInteger)awardId{
+    [_prizeListArray replaceObjectAtIndex:awardId withObject:dict];
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
