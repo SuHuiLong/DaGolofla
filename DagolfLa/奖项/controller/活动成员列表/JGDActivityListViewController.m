@@ -50,8 +50,10 @@
 }
 
 - (void)check{
+
 /*
- 
+ self.block(key, name, mobie);
+
  * 保存选择获奖人
  * @Title: doSavePrizeUser
  * @param teamKey
@@ -89,10 +91,8 @@
 #pragma mark - 下载数据
 - (void)downLoadData:(NSInteger)page isReshing:(BOOL)isReshing{
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-
-#warning change---------------
     
-    [dict setObject:@5429 forKey:@"activityKey"];
+    [dict setObject:[NSNumber numberWithInteger:self.activityKey] forKey:@"activityKey"];
     [dict setObject:[NSNumber numberWithInteger:_page]forKey:@"offset"];
     [[JsonHttp jsonHttp]httpRequest:@"team/getTeamActivitySignUpList" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
         if (isReshing) {

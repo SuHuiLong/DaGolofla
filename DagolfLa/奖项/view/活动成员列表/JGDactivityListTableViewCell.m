@@ -15,7 +15,7 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         
-        self.selectImage = [[UIImageView alloc] initWithFrame:CGRectMake(10, 10, 30, 30)];
+        self.selectImage = [[UIImageView alloc] initWithFrame:CGRectMake(10, 17, 15, 15)];
         self.selectImage.userInteractionEnabled = YES;
         [self.contentView addSubview:self.selectImage];
         
@@ -39,22 +39,33 @@
 
 - (void)setListModel:(JGDActivityList *)listModel{
     self.nameLB.text = listModel.name;
-    NSString *str = [NSString stringWithFormat:@"%@", listModel.mobile];
-    NSMutableString *muatbleStr = [str mutableCopy];
-    [muatbleStr replaceCharactersInRange:NSMakeRange(3, 5) withString:@"*****"];
-    self.phoneLB.text = muatbleStr;
+    
+    
+    if ([[listModel.mobile stringValue] isEqualToString:@"(null)"] || [[listModel.mobile stringValue] isEqualToString:@""] || listModel.mobile == nil) {
+    }else{
+        NSString *str = [NSString stringWithFormat:@"%@", listModel.mobile];
+        NSMutableString *muatbleStr = [str mutableCopy];
+        
+        if (muatbleStr.length > 10) {
+            [muatbleStr replaceCharactersInRange:NSMakeRange(3, 5) withString:@"*****"];
+        }
+        self.phoneLB.text = muatbleStr;
+    }
+    
     [self.headIconV sd_setImageWithURL:[Helper setImageIconUrl:@"user" andTeamKey:[listModel.userKey integerValue] andIsSetWidth:YES andIsBackGround:NO] placeholderImage:[UIImage imageNamed:@"selfBackPic.jpg"]];
     if (listModel.isSelect) {
         self.selectImage.image = [UIImage imageNamed:@"kuang_xz"];
     }else{
         self.selectImage.image = [UIImage imageNamed:@"kuang"];
     }
-
+    
 }
 
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
+    
+    self.selectionStyle = UITableViewCellSelectionStyleNone;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

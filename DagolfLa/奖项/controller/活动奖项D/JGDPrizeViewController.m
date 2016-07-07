@@ -14,10 +14,15 @@
 #import "JGHSetAwardViewController.h"
 #import "JGHActivityBaseCell.h"
 
+#import "MJRefresh.h"
+#import "MJDIYBackFooter.h"
+#import "MJDIYHeader.h"
+
 @interface JGDPrizeViewController ()<UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) NSMutableArray *dataArray;
+@property (nonatomic, assign) NSInteger page;
 
 @end
 
@@ -29,26 +34,16 @@
     self.title = @"活动奖项";
     self.view.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];
     [self createTableView];
-    [self setdata];
     
+    UIBarButtonItem *barBtn = [[UIBarButtonItem alloc] initWithTitle:@"分享" style:(UIBarButtonItemStyleDone) target:self action:@selector(shareAct)];
+    barBtn.tintColor = [UIColor whiteColor];
+    self.navigationItem.rightBarButtonItem = barBtn;
     // Do any additional setup after loading the view.
 }
 
-- (void)setdata{
-    NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
-    [dic setObject:[NSNumber numberWithInteger:self.activityKey] forKey:@"activityKey"];
-    [dic setObject:DEFAULF_USERID forKey:@"userKey"];
-
-    [[JsonHttp jsonHttp]httpRequest:@"team/getPublishPrizeList" JsonKey:nil withData:dic requestMethod:@"GET" failedBlock:^(id errType) {
-        NSLog(@"errtype == %@", errType);
-    } completionBlock:^(id data) {
-        
-        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
-            
-            self.dataArray = [data objectForKey:@"list"];
-            [self.tableView reloadData];
-        }
-    }];
+// 分享
+- (void)shareAct{
+    
 }
 
 
@@ -61,9 +56,61 @@
     UINib *activityBaseCellNib = [UINib nibWithNibName:@"JGHActivityBaseCell" bundle: [NSBundle mainBundle]];
     [self.tableView registerNib:activityBaseCellNib forCellReuseIdentifier:@"topCell"];
     [self.tableView registerClass:[JGDActvityPriziSetTableViewCell class] forCellReuseIdentifier:@"setCell"];
+    _page = 0;
+    _tableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
+    _tableView.footer=[MJDIYBackFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRereshing)];
+    [_tableView.header beginRefreshing];
 
     [self.view addSubview:self.tableView];
 }
+
+// 刷新
+- (void)headRereshing
+{
+    [self downLoadData:_page isReshing:YES];
+}
+
+- (void)footRereshing
+{
+    [self downLoadData:_page isReshing:NO];
+}
+
+#pragma mark - 下载数据
+- (void)downLoadData:(NSInteger)page isReshing:(BOOL)isReshing{
+
+    NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
+    [dic setObject:[NSNumber numberWithInteger:self.activityKey] forKey:@"activityKey"];
+    [dic setObject:DEFAULF_USERID forKey:@"userKey"];
+    
+    [[JsonHttp jsonHttp]httpRequest:@"team/getPublishPrizeList" JsonKey:nil withData:dic requestMethod:@"GET" failedBlock:^(id errType) {
+        NSLog(@"errtype == %@", errType);
+        if (isReshing) {
+            [_tableView.header endRefreshing];
+        }else {
+            [_tableView.footer endRefreshing];
+        }
+    } completionBlock:^(id data) {
+        
+        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+            
+            self.dataArray = [data objectForKey:@"list"];
+            [self.tableView reloadData];
+        }else{
+            if ([data objectForKey:@"packResultMsg"]) {
+                [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+            }
+        }
+        if (isReshing) {
+            [_tableView.header endRefreshing];
+        }else {
+            [_tableView.footer endRefreshing];
+        }
+
+    }];
+}
+
+
+
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
@@ -100,8 +147,6 @@
             return cell;
         }
     }
-    
-
 }
 
 //
@@ -109,14 +154,16 @@
     JGHSetAwardViewController *setAwardVC = [[JGHSetAwardViewController alloc] init];
     setAwardVC.activityKey = self.activityKey;
     setAwardVC.teamKey = self.teamKey;
+    setAwardVC.model = self.model;
     [self.navigationController pushViewController:setAwardVC animated:YES];
 }
 
 
 //立即颁奖
 - (void)present{
-
+    
     JGLPresentAwardViewController *preVC = [[JGLPresentAwardViewController alloc] init];
+    preVC.activityKey = _activityKey;
     [self.navigationController pushViewController:preVC animated:YES];
 
 }
