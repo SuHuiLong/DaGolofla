@@ -31,15 +31,12 @@
         self.phoneLB = [[UILabel alloc] initWithFrame:CGRectMake(190 * screenWidth / 375, 0, 200 * screenWidth / 375, 50 * screenWidth / 375l)];
         self.phoneLB.font = [UIFont systemFontOfSize:16 * screenWidth / 375];
         [self.contentView addSubview:self.phoneLB];
-        
-        
     }
     return self;
 }
 
 - (void)setListModel:(JGDActivityList *)listModel{
     self.nameLB.text = listModel.name;
-    
     
     if ([[listModel.mobile stringValue] isEqualToString:@"(null)"] || [[listModel.mobile stringValue] isEqualToString:@""] || listModel.mobile == nil) {
     }else{
@@ -58,7 +55,6 @@
     }else{
         self.selectImage.image = [UIImage imageNamed:@"kuang"];
     }
-    
 }
 
 - (void)awakeFromNib {
@@ -70,7 +66,7 @@
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
-
+    
     // Configure the view for the selected state
 }
 

@@ -94,7 +94,28 @@
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
             
             self.dataArray = [data objectForKey:@"list"];
+            
+            if (self.dataArray.count == 0) {
+
+                self.tableView.frame = CGRectMake(0, 0, screenWidth, 144 * ProportionAdapter);
+                self.tableView.scrollEnabled = NO;
+              
+                UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake(150 * ProportionAdapter, 200 * ProportionAdapter, 76 * ProportionAdapter, 76 * ProportionAdapter)];
+                imageV.image = [UIImage imageNamed:@"weifabutishi"];
+                [self.view addSubview:imageV];
+               
+                UILabel *lable = [[UILabel alloc] initWithFrame:CGRectMake(143 * ProportionAdapter, 280 * ProportionAdapter, 200 * ProportionAdapter, 76 * ProportionAdapter)];
+                lable.font = [UIFont systemFontOfSize:15 * ProportionAdapter];
+                lable.textColor = [UIColor colorWithHexString:@"#999999"];
+                lable.text = @"暂未发布奖项";
+                [self.view addSubview:lable];
+                
+            }else{
+                
+            }
+            
             [self.tableView reloadData];
+            
         }else{
             if ([data objectForKey:@"packResultMsg"]) {
                 [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
