@@ -22,7 +22,9 @@
 
 #import "JGPhotoListModel.h"
 #import "JGTeamPhotoShowViewController.h"
-@interface JGPhotoAlbumViewController ()<UICollectionViewDelegate,UICollectionViewDataSource>
+
+#import "SDPhotoBrowser.h"
+@interface JGPhotoAlbumViewController ()<UICollectionViewDelegate,UICollectionViewDataSource,SDPhotoBrowserDelegate>
 {
     UICollectionView* _collectionView;
     
@@ -80,7 +82,7 @@
         rightBtn.tintColor = [UIColor whiteColor];
         self.navigationItem.rightBarButtonItem = rightBtn;
     }
-
+    
     [self uiConfig];
     
 }
@@ -118,7 +120,7 @@
     [aleVC addAction:act3];
     
     [self presentViewController:aleVC animated:YES completion:nil];
-
+    
     
 }
 #pragma mark --上传图片方法
@@ -186,9 +188,9 @@
                     [self.navigationController presentViewController:alertView animated:YES completion:nil];
                 }];
             }
-           
+            
         }];
-
+        
     }];
 }
 
@@ -300,12 +302,12 @@
 
 
 //- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath{
-//    
+//
 //    //设置SectionHeader
 //    if ([kind isEqualToString: UICollectionElementKindSectionHeader]) {
 //        _headView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"JGPhotoTimeReusableView"forIndexPath:indexPath];
-//        
-//        
+//
+//
 //        _headView.timeLabel.text = [NSString stringWithFormat:@"2016年5月%ld号",(long)indexPath.section];
 //        _headView.backgroundColor = [UIColor lightGrayColor];
 //        return _headView;
@@ -316,16 +318,16 @@
 //每个UICollectionView展示的内容
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-//    if (indexPath.row == 7) {
-//        JGPhotoShowCollectionViewCell *cell = [[JGPhotoShowCollectionViewCell alloc]init];
-//        cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"JGPhotoShowCollectionViewCell" forIndexPath:indexPath];
-//        cell.backgroundColor = [UIColor whiteColor];
-//        cell.iconImgv.hidden = YES;
-//        cell.addBtn.hidden = NO;
-//        return cell;
-//    }
-//    else
-//    {
+    //    if (indexPath.row == 7) {
+    //        JGPhotoShowCollectionViewCell *cell = [[JGPhotoShowCollectionViewCell alloc]init];
+    //        cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"JGPhotoShowCollectionViewCell" forIndexPath:indexPath];
+    //        cell.backgroundColor = [UIColor whiteColor];
+    //        cell.iconImgv.hidden = YES;
+    //        cell.addBtn.hidden = NO;
+    //        return cell;
+    //    }
+    //    else
+    //    {
     JGPhotoShowCollectionViewCell *cell = [[JGPhotoShowCollectionViewCell alloc]init];
     cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"JGPhotoShowCollectionViewCell" forIndexPath:indexPath];
     cell.backgroundColor = [UIColor whiteColor];
@@ -335,7 +337,7 @@
     cell.addBtn.hidden = YES;
     [cell.iconImgv sd_setImageWithURL:[Helper setImageIconUrl:@"album/media" andTeamKey:[[_dataArray[indexPath.row] timeKey] integerValue] andIsSetWidth:YES andIsBackGround:NO] placeholderImage:[UIImage imageNamed:@"xcback"]];
     return cell;
-//    }
+    //    }
     
     
 }
@@ -352,33 +354,100 @@
 //UICollectionView被选中时调用的方法
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
+    //    NSMutableArray * arr = [[NSMutableArray alloc]init];
+    //    for (int i = 0; i < _dataArray.count; i++) {
+    //        [arr addObject:[_dataArray[i]timeKey]];
+    //    }
+    //    JGTeamPhotoShowViewController *picVC = [[JGTeamPhotoShowViewController alloc]initWithIndex:indexPath.row];
+    //    picVC.selectImages = arr;
+    //    picVC.power = _power;
+    //    picVC.dataArray = [[NSMutableArray alloc]init];
+    //    for (int i = 0;  i < _dataArray.count; i ++) {
+    //        [picVC.dataArray addObject:_dataArray[i]];
+    //    }
+    //    picVC.state = _state;
+    //    picVC.teamTimeKey = _teamTimeKey;
+    //    picVC.userKey = _userKey;
+    //    picVC.teamName = _teamName;
+    //    picVC.strTitle = _strTitle;
+    //    picVC.deleteBlock = ^(NSInteger index) {
+    //        _collectionView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
+    //        [_collectionView.header beginRefreshing];
+    //        [_collectionView reloadData];
+    //    };
+    //
+    //    [self.navigationController pushViewController:picVC animated:YES];
+    
+    
+    //    SDBrowserImageView *ymImageV = [[SDBrowserImageView alloc] initWithFrame:self.view.bounds byClick:clickTag appendArray:imageViews withLittleArray:littleArray];
     NSMutableArray * arr = [[NSMutableArray alloc]init];
     for (int i = 0; i < _dataArray.count; i++) {
         [arr addObject:[_dataArray[i]timeKey]];
     }
-    JGTeamPhotoShowViewController *picVC = [[JGTeamPhotoShowViewController alloc]initWithIndex:indexPath.row];
-    picVC.selectImages = arr;
-    picVC.power = _power;
-    picVC.dataArray = [[NSMutableArray alloc]init];
-    for (int i = 0;  i < _dataArray.count; i ++) {
-        [picVC.dataArray addObject:_dataArray[i]];
-    }
-    picVC.state = _state;
-    picVC.teamTimeKey = _teamTimeKey;
-    picVC.userKey = _userKey;
-    picVC.teamName = _teamName;
-    picVC.strTitle = _strTitle;
-    picVC.deleteBlock = ^(NSInteger index) {
+    SDPhotoBrowser *browser = [[SDPhotoBrowser alloc] init];
+    
+    JGPhotoShowCollectionViewCell *cell = (JGPhotoShowCollectionViewCell *)[self collectionView:collectionView cellForItemAtIndexPath:indexPath];
+    browser.sourceImagesContainerView = _collectionView;
+    
+    browser.imageCount = _dataArray.count;
+    
+    browser.currentImageIndex = (int)indexPath.row;
+    browser.teamTimeKey = _teamTimeKey;
+    browser.delegate = self;
+    browser.state = _state;
+    browser.arrayData = arr;
+    browser.power = _power;
+    browser.strTitle = _strTitle;
+    browser.teamName = _teamName;
+    browser.userKey = _userKey;
+    browser.blockRef = ^(){
+        
+        [_collectionView.header endRefreshing];
         _collectionView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
         [_collectionView.header beginRefreshing];
         [_collectionView reloadData];
     };
+    [browser show];
     
-    [self.navigationController pushViewController:picVC animated:YES];
     
-
+    //    [sdImgV show:maskview didFinish:^(){
+    //
+    //        [UIView animateWithDuration:0.5f animations:^{
+    //
+    //            ymImageV.alpha = 0.0f;
+    //            maskview.alpha = 0.0f;
+    //
+    //            JKSlideViewController *jks = self.navc.viewControllers[0];
+    //            [UIApplication sharedApplication].windows[0].backgroundColor = [UIColor blackColor];
+    //            jks.leftBtn.hidden = NO;
+    //            jks.rightBtn.hidden = NO;
+    //            jks.slideSwitchView.topView.hidden = NO;
+    //
+    //        } completion:^(BOOL finished) {
+    //
+    //            scrol.scrollEnabled = YES;
+    //            [ymImageV removeFromSuperview];
+    //            [maskview removeFromSuperview];
+    //        }];
+    //
+    //    }];
+    
+    
+    
 }
 
+-(NSURL *)photoBrowser:(SDPhotoBrowser *)browser highQualityImageURLForIndex:(NSInteger)index
+{
+    NSLog(@"%td",index);
+    if (index >= _dataArray.count) {
+        index = _dataArray.count-1;
+    }
+    return [Helper setImageIconUrl:@"album/media" andTeamKey:[[_dataArray[index]timeKey] integerValue] andIsSetWidth:NO andIsBackGround:NO];
+}
+-(UIImage *)photoBrowser:(SDPhotoBrowser *)browser placeholderImageForIndex:(NSInteger)index
+{
+    return [UIImage imageNamed:@"xiangcemoren"];
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
