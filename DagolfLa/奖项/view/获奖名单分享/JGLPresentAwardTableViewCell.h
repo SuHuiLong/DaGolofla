@@ -19,6 +19,8 @@
 
 @property (strong, nonatomic) UILabel*     awardLabel;
 
+@property (strong, nonatomic) UILabel*     countLabel;
+
 @property (strong, nonatomic) UIView*      viewLine;
 
 @property (strong, nonatomic) UILabel*     nameLabel;
