@@ -378,71 +378,55 @@
 
     } completionBlock:^(id data) {
 
-        if (![data objectForKey:@"teamMember"]) {
-            JGNotTeamMemberDetailViewController *detailVC = [[JGNotTeamMemberDetailViewController alloc] init];
-            if (self.searchController.active) {
-                detailVC.detailDic = self.searchArray[indexPath.row];
-            }else{
-                detailVC.detailDic = self.modelArray[indexPath.row];
-            }
-            [self.navigationController pushViewController:detailVC animated:YES];
-        }else{            
-            
-            if ([[[data objectForKey:@"teamMember"] objectForKey:@"power"] containsString:@"1005"]){
-                JGTeamMemberORManagerViewController *detailVC = [[JGTeamMemberORManagerViewController alloc] init];
+        
+        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+
+            if (![data objectForKey:@"teamMember"]) {
+                JGNotTeamMemberDetailViewController *detailVC = [[JGNotTeamMemberDetailViewController alloc] init];
                 if (self.searchController.active) {
                     detailVC.detailDic = self.searchArray[indexPath.row];
                 }else{
                     detailVC.detailDic = self.modelArray[indexPath.row];
                 }
-                detailVC.isManager = YES;
                 [self.navigationController pushViewController:detailVC animated:YES];
             }else{
-                JGTeamMemberORManagerViewController *detailVC = [[JGTeamMemberORManagerViewController alloc] init];
-                if (self.searchController.active) {
-                    
-                    if ([self.searchArray count] > 0) {
+                
+                if ([[[data objectForKey:@"teamMember"] objectForKey:@"power"] containsString:@"1005"]){
+                    JGTeamMemberORManagerViewController *detailVC = [[JGTeamMemberORManagerViewController alloc] init];
+                    if (self.searchController.active) {
                         detailVC.detailDic = self.searchArray[indexPath.row];
-                    }
-                }else{
-                    if ([self.modelArray count] > 0) {
+                    }else{
                         detailVC.detailDic = self.modelArray[indexPath.row];
                     }
+                    detailVC.isManager = YES;
+                    [self.navigationController pushViewController:detailVC animated:YES];
+                }else{
+                    JGTeamMemberORManagerViewController *detailVC = [[JGTeamMemberORManagerViewController alloc] init];
+                    if (self.searchController.active) {
+                        
+                        if ([self.searchArray count] > 0) {
+                            detailVC.detailDic = self.searchArray[indexPath.row];
+                        }
+                    }else{
+                        if ([self.modelArray count] > 0) {
+                            detailVC.detailDic = self.modelArray[indexPath.row];
+                        }
+                    }
+                    detailVC.isManager = NO;
+                    [self.navigationController pushViewController:detailVC animated:YES];
                 }
-                detailVC.isManager = NO;
-                [self.navigationController pushViewController:detailVC animated:YES];
+                
+                
             }
             
-//            if ([[data objectForKey:@"teamMember"] objectForKey:@"identity"] == 0){
-//                
-//                JGTeamMemberORManagerViewController *detailVC = [[JGTeamMemberORManagerViewController alloc] init];
-//                detailVC.detailDic = [data objectForKey:@"team"];
-//                 [self.navigationController pushViewController:detailVC animated:YES];
-//            }else{
-//                JGTeamMemberORManagerViewController *detailVC = [[JGTeamMemberORManagerViewController alloc] init];
-//                detailVC.detailDic = [data objectForKey:@"team"];
-//                [self.navigationController pushViewController:detailVC animated:YES];
-//            }
+        }else{
+            if ([data objectForKey:@"packResultMsg"]) {
+                [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+            }
         }
+
     }];
-    
-//    JGTeamDetailViewController *teamDetailVC = [[JGTeamDetailViewController alloc] init];
-//    teamDetailVC.teamDetailDic = self.modelArray[indexPath.row];
-//    [self.navigationController  pushViewController:teamDetailVC animated:YES];
-    
-//    if (self.searchController.active == NO) {
-//        if (indexPath.row == 1) {
-//            RecomeFriendViewController* reVc = [[RecomeFriendViewController alloc]init];
-//            [self.navigationController pushViewController:reVc animated:YES];
-//        }
-//    }
-//    else
-//    {
-//        PersonHomeController *selfVC = [[PersonHomeController alloc] init];
-//        MyattenModel *myModel = self.searchArray[indexPath.row];
-//        selfVC.strMoodId = myModel.userId;
-//        [self.navigationController pushViewController:selfVC animated:YES];
-//    }
+
 }
 
 
