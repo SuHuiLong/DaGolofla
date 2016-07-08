@@ -167,7 +167,7 @@ static NSString *const JGHTextFiledCellIdentifier = @"JGHTextFiledCell";
                     chooseAwardCell.titlefileds.text = [NSString stringWithFormat:@"%@", _model.prizeName];
                 }
             }else if (indexPath.section == 3){
-                if (_model.prizeSize > 0) {
+                if (_model.prizeSize <= 0) {
                     chooseAwardCell.titlefileds.text = @"";
                 }else{
                     chooseAwardCell.titlefileds.text = [NSString stringWithFormat:@"%@", _model.prizeSize];
