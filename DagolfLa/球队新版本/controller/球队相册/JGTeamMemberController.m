@@ -32,6 +32,7 @@
 
 @property (strong, nonatomic)NSMutableArray *keyArray;
 @property (strong, nonatomic)NSMutableArray *listArray;
+
 @end
 
 @implementation JGTeamMemberController
@@ -39,7 +40,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.navigationItem.title = @"成员列表";
+    self.navigationItem.title = @"球队成员";
     _keyArray = [[NSMutableArray alloc]init];
     _listArray = [[NSMutableArray alloc]init];
     _dataArray = [[NSMutableArray alloc]init];

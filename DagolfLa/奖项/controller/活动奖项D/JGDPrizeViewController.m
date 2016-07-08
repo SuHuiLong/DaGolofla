@@ -18,6 +18,7 @@
 #import "MJDIYBackFooter.h"
 #import "MJDIYHeader.h"
 #import "JGTeamDeatilWKwebViewController.h"
+#import "EnterViewController.h"
 
 @interface JGDPrizeViewController ()<UITableViewDelegate, UITableViewDataSource>
 
@@ -41,12 +42,85 @@
     // Do any additional setup after loading the view.
 }
 
-// 分享
+
+
+#pragma mark -分享
+
 - (void)shareAct{
-    JGTeamDeatilWKwebViewController *shareVC = [[JGTeamDeatilWKwebViewController alloc] init];
-//    [Helper md5HexDigest:<#(NSString *)#>]
-    shareVC.detailString = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/team/teamPrize.html?activityKey=%ld&userKey=%@&md5=%@",(long)self.activityKey,DEFAULF_USERID,@""];
-    [self.navigationController pushViewController:shareVC animated:YES];
+
+    
+    if ([[NSUserDefaults standardUserDefaults]objectForKey:@"userId"]) {
+        //        self.ymData = (YMTextData *)[_tableDataSource objectAtIndex:indexRow];
+        
+        ShareAlert* alert = [[ShareAlert alloc]initMyAlert];
+        alert.frame = CGRectMake(0, ScreenHeight, ScreenWidth, ScreenWidth);
+        [alert setCallBackTitle:^(NSInteger index) {
+            [self shareInfo:index];
+        }];
+        [UIView animateWithDuration:0.2 animations:^{
+            [alert show];
+        }];
+        
+        
+    }else {
+        [Helper alertViewWithTitle:@"是否立即登录?" withBlockCancle:^{
+        } withBlockSure:^{
+            EnterViewController *vc = [[EnterViewController alloc] init];
+            [self.navigationController pushViewController:vc animated:YES];
+        } withBlock:^(UIAlertController *alertView) {
+            [self presentViewController:alertView animated:YES completion:nil];
+        }];
+    }
+    
+}
+#pragma mark -- 分享
+-(void)shareInfo:(NSInteger)index{
+
+    
+    NSData *fiData = [[NSData alloc]init];
+    NSString*  shareUrl;
+    if ([_model.timeKey integerValue] == 0) {
+        fiData = [NSData dataWithContentsOfURL:[Helper setImageIconUrl:@"activity" andTeamKey:_model.teamActivityKey andIsSetWidth:YES andIsBackGround:YES]];
+        
+        shareUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/team/teamPrize.html?activityKey=%ld&userKey=%@",(long)self.activityKey,DEFAULF_USERID];
+    }
+    else
+    {
+        fiData = [NSData dataWithContentsOfURL:[Helper setImageIconUrl:@"activity" andTeamKey:[_model.timeKey integerValue]andIsSetWidth:YES andIsBackGround:YES]];
+        shareUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/team/teamPrize.html?activityKey=%ld&userKey=%@",(long)self.activityKey,DEFAULF_USERID];
+    }
+    
+    
+    [UMSocialData defaultData].extConfig.title=[NSString stringWithFormat:@"%@ 奖品", _model.name];
+    
+    if (index == 0){
+        //微信
+        [UMSocialWechatHandler setWXAppId:@"wxdcdc4e20544ed728" appSecret:@"fdc75aae5a98f2aa0f62ef8cba2b08e9" url:shareUrl];
+        [UMSocialConfig hiddenNotInstallPlatforms:@[UMShareToWechatSession,UMShareToWechatTimeline,UMShareToSina]];
+        [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatSession] content:[NSString stringWithFormat:@"%@ 奖品", _model.name]  image:(fiData != nil && fiData.length > 0) ?fiData : [UIImage imageNamed:TeamBGImage] location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
+            if (response.responseCode == UMSResponseCodeSuccess) {
+                //                [self shareS:indexRow];
+            }
+        }];
+        
+    }else if (index==1){
+        //朋友圈
+        [UMSocialWechatHandler setWXAppId:@"wxdcdc4e20544ed728" appSecret:@"fdc75aae5a98f2aa0f62ef8cba2b08e9" url:shareUrl];
+        [UMSocialConfig hiddenNotInstallPlatforms:@[UMShareToWechatSession,UMShareToWechatTimeline,UMShareToSina]];
+        [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatTimeline] content:[NSString stringWithFormat:@"%@ 奖品", _model.name] image:(fiData != nil && fiData.length > 0) ?fiData : [UIImage imageNamed:TeamBGImage] location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
+            if (response.responseCode == UMSResponseCodeSuccess) {
+                //                [self shareS:indexRow];
+            }
+        }];
+    }else{
+        UMSocialData *data = [UMSocialData defaultData];
+        data.shareImage = [UIImage imageNamed:@"logo"];
+        data.shareText = [NSString stringWithFormat:@"%@%@",@"打高尔夫啦",shareUrl];
+        [[UMSocialControllerService defaultControllerService] setSocialData:data];
+        //2.设置分享平台
+        [UMSocialSnsPlatformManager getSocialPlatformWithName:UMShareToSina].snsClickHandler(self,[UMSocialControllerService defaultControllerService],YES);
+    }
+    
 }
 
 
