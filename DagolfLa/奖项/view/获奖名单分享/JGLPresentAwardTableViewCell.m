@@ -69,7 +69,12 @@
     _countLabel.text = [NSString stringWithFormat:@"奖品数量：%@",model.prizeSize];
     _awardLabel.text = [NSString stringWithFormat:@"奖品：%@", model.prizeName];
     
-//    _nameLabel.text
+    if (model.userInfo) {
+        _nameLabel.text = [NSString stringWithFormat:@"获奖人：%@", model.userInfo];
+    }else{
+         _nameLabel.text = @"获奖人：";
+    }
+   
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

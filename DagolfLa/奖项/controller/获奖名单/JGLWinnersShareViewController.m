@@ -10,8 +10,10 @@
 #import "JGLWinnersShareTableViewCell.h"
 #import "JGHActivityBaseCell.h"
 #import "JGLPresentAwardViewController.h"
-
+#import "JGDPrizeViewController.h"
 #import "JGLWinnerShareModel.h"
+#import "EnterViewController.h"
+
 @interface JGLWinnersShareViewController ()<UITableViewDelegate,UITableViewDataSource>
 {
     NSMutableArray* _dataArray;
@@ -26,8 +28,16 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    UIBarButtonItem *itemleft = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"backL"] style:UIBarButtonItemStylePlain target:self action:@selector(backButtonClcik)];
+    itemleft.tintColor=[UIColor whiteColor];
+    self.navigationItem.leftBarButtonItem = itemleft;
+    
+    self.navigationItem.title = @"获奖名单";
+    
     _dataArray = [[NSMutableArray alloc]init];
     _page = 0;
+    
+    
     
     UIBarButtonItem* item = [[UIBarButtonItem alloc]initWithTitle:@"分享" style:UIBarButtonItemStylePlain target:self action:@selector(shareBarItemClick)];
     item.tintColor = [UIColor whiteColor];
@@ -39,12 +49,88 @@
     
   
 }
+#pragma mark --返回
+- (void)backButtonClcik{
+    for (UIViewController *controller in self.navigationController.viewControllers) {
+        if ([controller isKindOfClass:[JGDPrizeViewController class]]) {
+//            JGDPrizeViewController *prizeCtrl = [[JGDPrizeViewController alloc]init];
+//            prizeCtrl.model = _model;
+//            prizeCtrl.activityKey = [_activeKey integerValue];
+//            prizeCtrl.teamKey = _teamKey;
+            [self.navigationController popToViewController:controller animated:YES];
+        }
+    }
+}
 
 -(void)shareBarItemClick
 {
-    JGLPresentAwardViewController* preVc = [[JGLPresentAwardViewController alloc]init];
-    [self.navigationController pushViewController:preVc animated:YES];
+    if ([[NSUserDefaults standardUserDefaults]objectForKey:@"userId"]) {
+        //        self.ymData = (YMTextData *)[_tableDataSource objectAtIndex:indexRow];
+        
+        ShareAlert* alert = [[ShareAlert alloc]initMyAlert];
+        alert.frame = CGRectMake(0, ScreenHeight, ScreenWidth, ScreenWidth);
+        [alert setCallBackTitle:^(NSInteger index) {
+            [self shareInfo:index];
+        }];
+        [UIView animateWithDuration:0.2 animations:^{
+            [alert show];
+        }];
+        
+        
+    }else {
+        [Helper alertViewWithTitle:@"是否立即登录?" withBlockCancle:^{
+        } withBlockSure:^{
+            EnterViewController *vc = [[EnterViewController alloc] init];
+            [self.navigationController pushViewController:vc animated:YES];
+        } withBlock:^(UIAlertController *alertView) {
+            [self presentViewController:alertView animated:YES completion:nil];
+        }];
+    }
+
 }
+
+#pragma mark -- 分享
+-(void)shareInfo:(NSInteger)index{
+    
+    
+    NSData *fiData = [[NSData alloc]init];
+    NSString*  shareUrl;
+    fiData = [NSData dataWithContentsOfURL:[Helper setImageIconUrl:@"activity" andTeamKey:[self.activeKey integerValue] andIsSetWidth:YES andIsBackGround:YES]];
+    
+    shareUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/team/teamPrize.html?activityKey=%td", [self.activeKey integerValue]];
+    
+    [UMSocialData defaultData].extConfig.title=[NSString stringWithFormat:@"%@ 奖品", _model.name];
+    
+    if (index == 0){
+        //微信
+        [UMSocialWechatHandler setWXAppId:@"wxdcdc4e20544ed728" appSecret:@"fdc75aae5a98f2aa0f62ef8cba2b08e9" url:shareUrl];
+        [UMSocialConfig hiddenNotInstallPlatforms:@[UMShareToWechatSession,UMShareToWechatTimeline,UMShareToSina]];
+        [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatSession] content:[NSString stringWithFormat:@"%@ 奖品", _model.name]  image:(fiData != nil && fiData.length > 0) ?fiData : [UIImage imageNamed:TeamBGImage] location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
+            if (response.responseCode == UMSResponseCodeSuccess) {
+                //                [self shareS:indexRow];
+            }
+        }];
+        
+    }else if (index==1){
+        //朋友圈
+        [UMSocialWechatHandler setWXAppId:@"wxdcdc4e20544ed728" appSecret:@"fdc75aae5a98f2aa0f62ef8cba2b08e9" url:shareUrl];
+        [UMSocialConfig hiddenNotInstallPlatforms:@[UMShareToWechatSession,UMShareToWechatTimeline,UMShareToSina]];
+        [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatTimeline] content:[NSString stringWithFormat:@"%@ 奖品", _model.name] image:(fiData != nil && fiData.length > 0) ?fiData : [UIImage imageNamed:TeamBGImage] location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
+            if (response.responseCode == UMSResponseCodeSuccess) {
+                //                [self shareS:indexRow];
+            }
+        }];
+    }else{
+        UMSocialData *data = [UMSocialData defaultData];
+        data.shareImage = [UIImage imageNamed:@"logo"];
+        data.shareText = [NSString stringWithFormat:@"%@%@",@"打高尔夫啦",shareUrl];
+        [[UMSocialControllerService defaultControllerService] setSocialData:data];
+        //2.设置分享平台
+        [UMSocialSnsPlatformManager getSocialPlatformWithName:UMShareToSina].snsClickHandler(self,[UMSocialControllerService defaultControllerService],YES);
+    }
+    
+}
+
 
 //-(void)createHeader
 //{
@@ -173,7 +259,7 @@ static CGFloat height;
     if (_dataArray.count != 0) {
         height = [Helper textHeightFromTextString:[_dataArray[indexPath.row] userInfo] width:screenWidth - 54*screenWidth/375 fontSize:14*screenWidth/375];
     }
-    return indexPath.section == 0 ? 80*screenWidth/375 : 44*screenWidth/375 + height;
+    return indexPath.section == 0 ? 80*screenWidth/375 : 44*screenWidth/375 + height + 10;
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -192,6 +278,7 @@ static CGFloat height;
         cell.nameLabel.frame = CGRectMake(44*screenWidth/375, 44*screenWidth/375, screenWidth - 54*screenWidth/375, height);
         cell.nameLabel.font = [UIFont systemFontOfSize:14*screenWidth/375];
         [cell showData:_dataArray[indexPath.row]];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
     }
 }

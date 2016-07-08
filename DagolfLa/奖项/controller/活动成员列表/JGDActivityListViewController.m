@@ -39,8 +39,9 @@
     _signupKeyInfo =[NSMutableString stringWithString:@""];
     _signupNameInfo =[NSMutableString stringWithString:@""];
     
-    if ([[_checkdict allKeys]containsObject:@"signupKeyInfo"]) {
-        _signupKeyInfo = [NSMutableString stringWithFormat:@"%@", [_checkdict objectForKey:@"signupKeyInfo"]];
+    if (_awardModel.userInfo) {
+        _signupKeyInfo = [NSMutableString stringWithString:_awardModel.signupKeyInfo];
+        _signupNameInfo = [NSMutableString stringWithString:_awardModel.userInfo];
     }
     
     self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight) style:(UITableViewStylePlain)];
@@ -64,35 +65,9 @@
 }
 
 - (void)check{
-
-/*
- self.block(key, name, mobie);
-
- * 保存选择获奖人
- * @Title: doSavePrizeUser
- * @param teamKey
- * @param activityKey
- * @param userKey
- * @param prizeKey
- * @param signupKeyList
- * @param response
- * @throws Throwable
- * @author lyh
-
-    @HttpService(RequestURL="/doSavePrizeUser" , method="post")
-    public void doSavePrizeUser(
-                                @Param(value="teamKey", require=true)                                    Long        teamKey,
-                                @Param(value="activityKey", require=true)                                Long        activityKey,
-                                @Param(value="userKey"     , require = true)                             Long        userKey,
-                                @Param(value="prizeKey",     require=true)                               Long        prizeKey,
-                                @Param(value="signupKeyList", require=true, genricType=Long.class)       List<Long>  signupKeyList,
-                                TcpResponse response) throws Throwable {
-
- */
-    
-    
-    
     if (self.delegate) {
+        [_checkdict setObject:_signupNameInfo forKey:@"userInfo"];
+        [_checkdict setObject:_signupKeyInfo forKey:@"signupKeyInfo"];
         [self.delegate saveBtnDict:_checkdict andAwardId:_awardId];
         [self.navigationController popViewControllerAnimated:YES];
     }
@@ -218,7 +193,7 @@
         _signupNameInfo = [NSMutableString stringWithString:[_signupNameInfo stringByAppendingString:[NSString stringWithFormat:@"%@/", model.name]]];
     }
     
-    [_checkdict setObject:_signupKeyInfo forKey:@"signupKeyInfo"];
+    
     
     if (cell.listModel.isSelect == NO) {
         [self.selectedArray addObject:model];

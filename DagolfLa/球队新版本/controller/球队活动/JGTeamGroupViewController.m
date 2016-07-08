@@ -256,7 +256,7 @@ static NSString *const JGGroupdetailsCollectionViewCellIdentifier = @"JGGroupdet
 #pragma mark -- 获取报名人员列表信息 1－表示分组
 - (void)loadData:(NSInteger)fenzu{
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    [dict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:userID] forKey:@"userKey"];
+    [dict setObject:DEFAULF_USERID forKey:@"userKey"];
     [dict setObject:[NSString stringWithFormat:@"%td", self.teamActivityKey] forKey:@"activityKey"];
     [dict setObject:@0 forKey:@"teamKey"];
     
