@@ -81,7 +81,7 @@
         _labelDetail.text = [NSString stringWithFormat:@"备注信息：%@",model.remark];
     }
     else{
-        _labelDetail.text = [NSString stringWithFormat:@"备注信息：备注信息"];
+        _labelDetail.text = [NSString stringWithFormat:@"备注信息：暂无备注信息"];
     }
     
 }
