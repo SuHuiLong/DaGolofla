@@ -38,24 +38,24 @@
 }
 
 
-+ (NSString *)getTeamBillInfoWithTeamKey:(NSInteger) userKey:(NSInteger)userKey{
-    return @"";
++ (NSString *)getTeamBillInfoWithTeamKey:(NSInteger)teamKey userKey:(NSInteger)userKey{
+    return [Helper md5HexDigest:[NSString stringWithFormat:@"teamKey=%td&userKey=%tddagolfla.com",teamKey, userKey]];
 }
 
 
++ (NSString *)getTeamBillYearInfoWithTeamKey:(NSInteger)teamKey userKey:(NSInteger)userKey{
+    return [Helper md5HexDigest:[NSString stringWithFormat:@"teamKey=%td&userKey=%tddagolfla.com",teamKey, userKey]];
+}
 
 
++ (NSString *)getTeamAccountInfoWithTeamKey:(NSInteger)teamKey userKey:(NSInteger)userKey{
+    return [Helper md5HexDigest:[NSString stringWithFormat:@"teamKey=%td&userKey=%tddagolfla.com", teamKey, userKey]];
+}
 
 
 + (NSString *)getTeamWithDrawListWithTeamKey:(NSInteger)teamKey userKey:(NSInteger)userKey {
     return [Helper md5HexDigest:[NSString stringWithFormat:@"teamKey=%td&userKey=%tddagolfla.com",teamKey, userKey]];
 }
-
-
-
-
-
-
 
 
 
@@ -66,6 +66,7 @@
  2. /team/getTeamMemberList?teamKey=1&userKey=1  MD5加密
  3. /team/getAuditTeamMemberList?teamKey=1&userKey=1  MD5加密
  4. /team/getTeamMember?memberKey=1  MD5加密
+ 
  5. /score/scorePolenumberRanking?userKey=1&srcKey=1&srcType=1  MD5加密
  6. /score/getUserScore?userKey=1&srcKey=1&srcType=1  MD5加密
  7. /team/getTeamBillInfo?teamKey=1&userKey=1  MD5加密

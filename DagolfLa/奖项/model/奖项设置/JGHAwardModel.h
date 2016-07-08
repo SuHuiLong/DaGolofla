@@ -24,6 +24,6 @@
 
 @property (nonatomic, assign)NSInteger select;
 
-
+@property (nonatomic, strong)NSString *nameList;
 
 @end

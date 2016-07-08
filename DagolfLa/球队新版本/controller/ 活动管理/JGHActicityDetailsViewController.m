@@ -645,6 +645,7 @@ static CGFloat ImageHeight  = 210.0;
         contactCell.tetfileView.tag = 345;
         contactCell.tetfileView.delegate = self;
         contactCell.contactLabel.text = @"联系人";
+        [contactCell configConstraint];
         contactCell.contentView.backgroundColor = [UIColor whiteColor];
         if (self.model.name != nil) {
             contactCell.tetfileView.text = self.model.userName;
@@ -657,6 +658,7 @@ static CGFloat ImageHeight  = 210.0;
         JGHTeamContactTableViewCell *contactCell = [tableView dequeueReusableCellWithIdentifier:JGHTeamContactCellIdentifier];
         contactCell.tetfileView.tag = 456;
         contactCell.tetfileView.delegate = self;
+        [contactCell configConstraint];
         contactCell.contactLabel.text = @"联系人电话";
         contactCell.contentView.backgroundColor = [UIColor whiteColor];
         if (self.model.name != nil) {

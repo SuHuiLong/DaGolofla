@@ -36,4 +36,8 @@
 //    NSLog(@"qqqq");
 //}
 
+- (void)configConstraint{
+    self.contactLabelLeft.constant = 10.0;
+}
+
 @end

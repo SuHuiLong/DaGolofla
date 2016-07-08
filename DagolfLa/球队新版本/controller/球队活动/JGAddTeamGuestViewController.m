@@ -30,10 +30,12 @@
 - (UIView *)catoryView{
     if (_catoryView == nil) {
         self.catoryView = [[UIView alloc]init];
+        self.catoryView.backgroundColor = [UIColor redColor];
         self.catoryView.backgroundColor = [UIColor whiteColor];
-        _catoryView.frame = CGRectMake(_catoryBtn.frame.origin.x, _catoryBtn.frame.origin.y, _catoryBtn.frame.size.width + 50, _catoryArray.count * 44);
+        _catoryView.frame = CGRectMake( 10, _catoryBtn.frame.origin.y, screenWidth - 20, _catoryArray.count * 44);
         for (int i=0; i<_catoryArray.count; i++) {
-            UIButton *catoryBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 44*i, _catoryBtn.frame.size.width+50, 44)];
+            UIButton *catoryBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 44*i, _catoryView.frame.size.width, 44)];
+            
             catoryBtn.tag = 200 + i;
             catoryBtn.backgroundColor = [UIColor whiteColor];
             [catoryBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
@@ -188,7 +190,6 @@
 - (IBAction)catoryBtn:(UIButton *)sender {
     
     self.catoryView.hidden = NO;
-    self.catoryImageView.image = [UIImage imageNamed:@")-1"];
     
 }
 

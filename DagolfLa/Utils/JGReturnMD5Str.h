@@ -15,4 +15,22 @@
 
 + (NSString *)getTeamWithDrawListWithTeamKey:(NSInteger)teamKey userKey:(NSInteger)userKey;
 
++ (NSString *)getTeamActivitySignUpListWithTeamKey:(NSInteger)teamkey activityKey:(NSInteger)activityKey userKey:(NSInteger)uerKey;
+
++ (NSString *)getAuditTeamMemberListWithTeamKey:(NSInteger)teamKey userKey:(NSInteger)userKey;
+
++ (NSString *)getTeamMemberWithMemberKey:(NSInteger)memberKey;
+
++ (NSString *)scorePolenumberRankingWithUserKey:(NSInteger)userKey srcKey:(NSInteger)srcKey srcType:(NSInteger)srcType;
+
++ (NSString *)getUserScoreWithUserKey:(NSInteger)userKey srcKey:(NSInteger)srcKey srcType:(NSInteger)srcType;
+
++ (NSString *)getTeamBillInfoWithTeamKey:(NSInteger)teamKey userKey:(NSInteger)userKey;
+
++ (NSString *)getTeamBillYearInfoWithTeamKey:(NSInteger)teamKey userKey:(NSInteger)userKey;
+
++ (NSString *)getTeamAccountInfoWithTeamKey:(NSInteger)teamKey userKey:(NSInteger)userKey;
+
+
+
 @end

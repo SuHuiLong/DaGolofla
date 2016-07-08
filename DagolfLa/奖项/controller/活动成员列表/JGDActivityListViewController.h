@@ -7,6 +7,7 @@
 //
 
 #import "ViewController.h"
+@class JGHAwardModel;
 
 @protocol JGDActivityListViewControllerDelegate <NSObject>
 
@@ -25,5 +26,7 @@
 @property (nonatomic, strong) NSMutableDictionary *checkdict;
 
 @property (nonatomic, assign)NSInteger awardId;
+
+@property (nonatomic, strong)JGHAwardModel *awardModel;
 
 @end
