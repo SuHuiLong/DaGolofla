@@ -66,7 +66,6 @@
         _labelName.text = [NSString stringWithFormat:@"提现人：暂无提现人"];
     }
     
-    
     if (![Helper isBlankString:model.exchangeTime]) {
         _labelTime.text = [NSString stringWithFormat:@"%@",model.exchangeTime];
     }
