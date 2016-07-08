@@ -40,6 +40,8 @@
     
     [self uiConfig];
     
+    [self createPushAwardBtn];
+    
     [self loadData];
 }
 #pragma mark -- 保存
@@ -73,7 +75,7 @@
 }
 #pragma mark -- 创建工具栏
 - (void)createPushAwardBtn{
-    UIView *psuhView = [[UIView alloc]initWithFrame:CGRectMake(0, screenHeight - 65*ProportionAdapter - 64, screenWidth, 65*ProportionAdapter)];
+    UIView *psuhView = [[UIView alloc]initWithFrame:CGRectMake(0, screenHeight - 65*ProportionAdapter, screenWidth, 65*ProportionAdapter)];
     psuhView.backgroundColor = [UIColor whiteColor];
     UIButton *psuhBtn = [[UIButton alloc]initWithFrame:CGRectMake(10*ProportionAdapter, 10*ProportionAdapter, screenWidth - 20*ProportionAdapter, 65*ProportionAdapter - 20*ProportionAdapter)];
     [psuhBtn setTitle:@"公布获奖名单" forState:UIControlStateNormal];
@@ -142,7 +144,6 @@
             }
         }
         
-//        [_tableView.header endRefreshing];
         [_tableView reloadData];
     }];
 }
@@ -203,7 +204,7 @@
 
 -(void)uiConfig
 {
-    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight-15 - 64 - 65*ProportionAdapter) style:UITableViewStyleGrouped];
+    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight - 65*ProportionAdapter) style:UITableViewStyleGrouped];
     _tableView.delegate = self;
     _tableView.dataSource = self;
     _tableView.tableHeaderView = _viewBack;
@@ -212,17 +213,7 @@
     
     [_tableView registerClass:[JGLPresentAwardTableViewCell class] forCellReuseIdentifier:@"JGLPresentAwardTableViewCell"];
     _tableView.backgroundColor = [UIColor colorWithHexString:BG_color];
-    
-//    _tableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
-//    
-//    [_tableView.header beginRefreshing];
-    
 }
-#pragma mark -- 刷新数据
-//- (void)headerRereshing{
-//    [self loadData];
-//}
-
 #pragma MARK -- tableview
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {

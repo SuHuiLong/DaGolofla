@@ -18,9 +18,8 @@
     self.jiangbeiLeft.constant = 10*ProportionAdapter;
     self.jiangbeiTop.constant = 20*ProportionAdapter;
     
-    self.name.font = [UIFont systemFontOfSize:20 *ProportionAdapter];
-    self.nameLeft.constant = 20*ProportionAdapter;
-    
+    self.name.font = [UIFont systemFontOfSize:18 *ProportionAdapter];
+    self.nameLeft.constant = 10*ProportionAdapter;
     
     self.deleBtnRight.constant = 30*ProportionAdapter;
 

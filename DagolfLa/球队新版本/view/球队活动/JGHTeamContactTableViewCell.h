@@ -19,9 +19,12 @@
 //联系人电话
 @property (weak, nonatomic) IBOutlet UILabel *contactLabel;
 
-@property (weak, nonatomic) IBOutlet UIImageView *headImage;
-
 @property (weak, nonatomic) IBOutlet UITextField *tetfileView;
+
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *contactLabelLeft;
+
+- (void)configConstraint;
+
 
 //@property (weak, nonatomic) id <JGHTeamContactTableViewCellDelegate> delegate;
 

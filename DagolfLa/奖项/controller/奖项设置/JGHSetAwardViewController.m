@@ -246,6 +246,19 @@ static NSString *const JGHActivityBaseCellIdentifier = @"JGHActivityBaseCell";
 - (void)selectAwardDeleBtn:(UIButton *)btn{
     NSLog(@"%td", btn.tag);
     btn.enabled = NO;
+    
+    [Helper alertViewWithTitle:@"确定删除该奖项？" withBlockCancle:^{
+        
+    } withBlockSure:^{
+        [self todoDeleClick:btn];
+    } withBlock:^(UIAlertController *alertView) {
+        [self presentViewController:alertView animated:YES completion:nil];
+    }];    
+    
+    btn.enabled = YES;
+}
+#pragma mark -- 删除
+- (void)todoDeleClick:(UIButton *)btn{
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     [dict setObject:@(btn.tag) forKey:@"prizeKey"];
     [[JsonHttp jsonHttp]httpRequest:@"team/doDeletePrize" JsonKey:nil withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
@@ -261,8 +274,6 @@ static NSString *const JGHActivityBaseCellIdentifier = @"JGHActivityBaseCell";
             }
         }
     }];
-    
-    btn.enabled = YES;
 }
 #pragma mark -- 编辑
 - (void)selectAwardEditorBtn:(UIButton *)btn{

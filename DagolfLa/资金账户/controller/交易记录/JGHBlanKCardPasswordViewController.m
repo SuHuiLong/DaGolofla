@@ -178,8 +178,6 @@ static NSString *const JGHWithdrawCellIdentifier = @"JGHWithdrawCell";
         [dict setObject:@(_bankCardKey) forKey:@"bankCardKey"];
         [dict setObject:[Helper md5HexDigest:_password] forKey:@"payPassword"];
         
-        
-        
         [[JsonHttp jsonHttp]httpRequestWithMD5:@"user/doUserWithDraw" JsonKey:nil withData:dict failedBlock:^(id errType) {
 //            [[ShowHUD showHUD]hideAnimationFromView:self.view];
 

@@ -3,7 +3,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
-        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -15,38 +14,29 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="B6N-97-idM">
-                        <rect key="frame" x="8" y="19" width="5" height="4.5"/>
-                        <constraints>
-                            <constraint firstAttribute="width" secondItem="B6N-97-idM" secondAttribute="height" multiplier="1:1" id="Pao-m0-ksU"/>
-                            <constraint firstAttribute="width" constant="5" id="Z9T-rT-COF"/>
-                        </constraints>
-                    </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="联系人电话" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t0j-QG-XY6">
-                        <rect key="frame" x="18" y="12" width="75" height="18"/>
+                        <rect key="frame" x="20" y="12" width="75" height="18"/>
                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入联系人电话" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="MBb-6c-PEW">
-                        <rect key="frame" x="113" y="13" width="197" height="17"/>
+                        <rect key="frame" x="115" y="13" width="195" height="17"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                     </textField>
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="trailing" secondItem="MBb-6c-PEW" secondAttribute="trailing" constant="10" id="0bC-pv-Hnr"/>
-                    <constraint firstItem="B6N-97-idM" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="AkK-0Q-TVP"/>
-                    <constraint firstItem="t0j-QG-XY6" firstAttribute="leading" secondItem="B6N-97-idM" secondAttribute="trailing" constant="5" id="Ao0-bd-xR0"/>
                     <constraint firstItem="t0j-QG-XY6" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="CyW-Ls-R0S"/>
                     <constraint firstItem="MBb-6c-PEW" firstAttribute="leading" secondItem="t0j-QG-XY6" secondAttribute="trailing" constant="20" id="LuO-iL-1ZY"/>
-                    <constraint firstItem="B6N-97-idM" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="hY0-Dq-0W4"/>
+                    <constraint firstItem="t0j-QG-XY6" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="elu-1k-vwG"/>
                     <constraint firstItem="MBb-6c-PEW" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="z1V-f4-BeW"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
                 <outlet property="contactLabel" destination="t0j-QG-XY6" id="fNU-GW-JpH"/>
-                <outlet property="headImage" destination="B6N-97-idM" id="Kb3-ug-hql"/>
+                <outlet property="contactLabelLeft" destination="elu-1k-vwG" id="vdm-Va-ttv"/>
                 <outlet property="tetfileView" destination="MBb-6c-PEW" id="GH6-zA-Exv"/>
             </connections>
         </tableViewCell>

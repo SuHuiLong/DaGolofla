@@ -13,10 +13,12 @@
 #import "MJDIYBackFooter.h"
 #import "MJDIYHeader.h"
 #import "JGDActivityList.h"
+#import "JGHAwardModel.h"
 
 @interface JGDActivityListViewController ()<UITableViewDelegate, UITableViewDataSource>
 {
-    NSMutableString *_signupKeyInfo;
+    NSMutableString *_signupKeyInfo;//key,拼接
+    NSMutableString *_signupNameInfo;//name,拼接
 }
 
 @property (nonatomic, strong) UITableView *tableView;
@@ -33,6 +35,11 @@
     [super viewDidLoad];
     
     _signupKeyInfo =[NSMutableString stringWithString:@""];
+    _signupNameInfo =[NSMutableString stringWithString:@""];
+    
+    if ([[_checkdict allKeys]containsObject:@"signupKeyInfo"]) {
+        _signupKeyInfo = [NSMutableString stringWithFormat:@"%@", [_checkdict objectForKey:@"signupKeyInfo"]];
+    }
     
     self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight) style:(UITableViewStylePlain)];
     self.tableView.delegate = self;
@@ -85,6 +92,7 @@
     
     if (self.delegate) {
         [self.delegate saveBtnDict:_checkdict andAwardId:_awardId];
+        [self.navigationController popViewControllerAnimated:YES];
     }
     
 }
@@ -148,7 +156,19 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
     JGDactivityListTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"listCell"];
-    cell.listModel = self.dataArray[indexPath.row];
+    
+    if (_signupKeyInfo.length > 0) {
+        JGDActivityList *model = [[JGDActivityList alloc]init];
+        model = self.dataArray[indexPath.row];
+        if ([_signupKeyInfo containsString:[NSString stringWithFormat:@"%@", model.timeKey]]) {
+            model.isSelect = YES;
+        }
+        
+        cell.listModel = model;
+    }else{
+        cell.listModel = self.dataArray[indexPath.row];
+    }
+    
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
 }
@@ -178,13 +198,17 @@
         cell.selectImage.image = [UIImage imageNamed:@"kuang"];
         model.isSelect = NO;
         if ([_signupKeyInfo containsString:[NSString stringWithFormat:@"%@", model.timeKey]]) {
-            _signupKeyInfo = [NSMutableString stringWithString:[_signupKeyInfo stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"%@,", model.timeKey] withString:@""]];
+            _signupKeyInfo = [NSMutableString stringWithString:[_signupKeyInfo stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"%@/", model.timeKey] withString:@""]];
+            
+            _signupNameInfo = [NSMutableString stringWithString:[_signupNameInfo stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"%@/", model.name] withString:@""]];
         }
         
     }else{
         cell.selectImage.image = [UIImage imageNamed:@"kuang_xz"];
         model.isSelect = YES;
         _signupKeyInfo = [NSMutableString stringWithString:[_signupKeyInfo stringByAppendingString:[NSString stringWithFormat:@"%@,", model.timeKey]]];
+        
+        _signupNameInfo = [NSMutableString stringWithString:[_signupNameInfo stringByAppendingString:[NSString stringWithFormat:@"%@/", model.name]]];
     }
     
     [_checkdict setObject:_signupKeyInfo forKey:@"signupKeyInfo"];
