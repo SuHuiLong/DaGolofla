@@ -38,24 +38,24 @@
 }
 
 
-+ (NSString *)getTeamBillInfoWithTeamKey:(NSInteger) userKey:(NSInteger)userKey{
-    return @"";
++ (NSString *)getTeamBillInfoWithTeamKey:(NSInteger)teamKey userKey:(NSInteger)userKey{
+    return [Helper md5HexDigest:[NSString stringWithFormat:@"teamKey=%td&userKey=%tddagolfla.com",teamKey, userKey]];
 }
 
 
++ (NSString *)getTeamBillYearInfoWithTeamKey:(NSInteger)teamKey userKey:(NSInteger)userKey{
+    return [Helper md5HexDigest:[NSString stringWithFormat:@"teamKey=%td&userKey=%tddagolfla.com",teamKey, userKey]];
+}
 
 
++ (NSString *)getTeamAccountInfoWithTeamKey:(NSInteger)teamKey userKey:(NSInteger)userKey{
+    return [Helper md5HexDigest:[NSString stringWithFormat:@"teamKey=%td&userKey=%tddagolfla.com", teamKey, userKey]];
+}
 
 
 + (NSString *)getTeamWithDrawListWithTeamKey:(NSInteger)teamKey userKey:(NSInteger)userKey {
     return [Helper md5HexDigest:[NSString stringWithFormat:@"teamKey=%td&userKey=%tddagolfla.com",teamKey, userKey]];
 }
-
-
-
-
-
-
 
 
 
