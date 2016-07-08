@@ -184,6 +184,7 @@ static CGFloat height;
 {
     if (indexPath.section == 0) {
         JGHActivityBaseCell* cell = [tableView dequeueReusableCellWithIdentifier:@"JGHActivityBaseCell" forIndexPath:indexPath];
+        [cell configJGTeamActivityModel:_model];
         return cell;
     }
     else{
