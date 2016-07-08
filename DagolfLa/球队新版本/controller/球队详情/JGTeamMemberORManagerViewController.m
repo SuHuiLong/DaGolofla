@@ -137,41 +137,47 @@ static CGFloat ImageHeight  = 210.0;
         
     } completionBlock:^(id data) {
         
-        self.state = [[[data objectForKey:@"team"] objectForKey:@"state"] integerValue];
-           self.power = [[data objectForKey:@"teamMember" ] objectForKey:@"power"];
-        [[NSUserDefaults standardUserDefaults] setObject:self.power forKey:@"power"];
-        [[NSUserDefaults standardUserDefaults]  synchronize];
-        self.memBerDic = [data objectForKey:@"teamMember"];
-        
-        self.memberState = [self.memBerDic objectForKey:@"state"];
-        
-//        if ([self.memberState integerValue] == 0) {
-//            return;
-        //        }
-        if (self.state == 1) {
+        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
             
-            if ([[self.memBerDic objectForKey:@"state"] integerValue] == 0) {
-                [self.previewBtn setTitle:@"正在等待管理员审核" forState:UIControlStateNormal];
+            
+            self.state = [[[data objectForKey:@"team"] objectForKey:@"state"] integerValue];
+            self.power = [[data objectForKey:@"teamMember" ] objectForKey:@"power"];
+            [[NSUserDefaults standardUserDefaults] setObject:self.power forKey:@"power"];
+            [[NSUserDefaults standardUserDefaults]  synchronize];
+            self.memBerDic = [data objectForKey:@"teamMember"];
+            
+            self.memberState = [self.memBerDic objectForKey:@"state"];
+            
+            if (self.state == 1) {
+                
+                if ([[self.memBerDic objectForKey:@"state"] integerValue] == 0) {
+                    [self.previewBtn setTitle:@"正在等待管理员审核" forState:UIControlStateNormal];
+                    self.previewBtn.backgroundColor = [UIColor lightGrayColor];
+                }else if ([[self.detailDic objectForKey:@"state"] integerValue] == 2){
+                    [self.previewBtn setTitle:@"审核未通过" forState:UIControlStateNormal];
+                    self.previewBtn.backgroundColor = [UIColor lightGrayColor];
+                }else{
+                    [self.previewBtn setTitle:@"邀请好友" forState:UIControlStateNormal];
+                    self.previewBtn.backgroundColor = [UIColor colorWithHexString:@"#F59826"];
+                }
+                
+            }else if (self.state == 0) {
+                
+                [self.previewBtn setTitle:@"正在等待审核" forState:UIControlStateNormal];
                 self.previewBtn.backgroundColor = [UIColor lightGrayColor];
-            }else if ([[self.detailDic objectForKey:@"state"] integerValue] == 2){
+                
+            }else if (self.state == 2) {
+                
                 [self.previewBtn setTitle:@"审核未通过" forState:UIControlStateNormal];
                 self.previewBtn.backgroundColor = [UIColor lightGrayColor];
-            }else{
-                [self.previewBtn setTitle:@"邀请好友" forState:UIControlStateNormal];
-                self.previewBtn.backgroundColor = [UIColor colorWithHexString:@"#F59826"];
             }
-            
-        }else if (self.state == 0) {
-            
-            [self.previewBtn setTitle:@"正在等待审核" forState:UIControlStateNormal];
-            self.previewBtn.backgroundColor = [UIColor lightGrayColor];
         
-        }else if (self.state == 2) {
-            
-            [self.previewBtn setTitle:@"审核未通过" forState:UIControlStateNormal];
-            self.previewBtn.backgroundColor = [UIColor lightGrayColor];
-        }
-        
+                
+            }else{
+                if ([data objectForKey:@"packResultMsg"]) {
+                    [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+                }
+            }
         
     }];
 }

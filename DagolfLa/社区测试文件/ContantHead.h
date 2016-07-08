@@ -112,6 +112,7 @@ typedef NS_ENUM(NSInteger, GestureType) {
 #import "UIColor+ColorTransfer.h"
 #import "JsonHttp.h"
 #import "Helper.h"
+#import "JGReturnMD5Str.h"
 
 #import "UIImageView+WebCache.h"
 #import "UIButton+WebCache.h"
@@ -126,5 +127,6 @@ typedef NS_ENUM(NSInteger, GestureType) {
 #import "MJRefresh.h"
 #import "MJDIYBackFooter.h"
 #import "MJDIYHeader.h"
+
 
 #endif
