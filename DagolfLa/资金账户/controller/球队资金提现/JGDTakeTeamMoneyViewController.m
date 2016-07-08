@@ -80,10 +80,10 @@
 
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    if (section == 0) {
-        return 1;
-    }else{
+    if (section == 2) {
         return 2;
+    }else{
+        return 1;
     };
 }
 
@@ -96,6 +96,9 @@
         cell.LB.text = @"提现金额";
         cell.txFD.placeholder = [NSString stringWithFormat:@"当前可提现金额为%@元" ,self.money];
         cell.txFD.keyboardType = UIKeyboardTypeWebSearch;
+    }else if (indexPath.section == 1){
+        cell.LB.text = @"备注";
+        cell.txFD.placeholder = [NSString stringWithFormat:@"请输入备注内容"];
     }else{
         if (indexPath.row == 1) {
             cell.LB.text = @"验证码";
@@ -110,12 +113,13 @@
             cell.txFD.placeholder = [NSString stringWithFormat:@"发送验证码至%@", self.mobile];
             cell.txFD.userInteractionEnabled = NO;
         }
+        
     }
     return cell;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 2;
+    return 3;
 }
 
 
@@ -126,7 +130,8 @@
 - (void)comitBtnClick{
     
     JGDSetPayPasswordTableViewCell *cell1 = [self.tableV cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
-    JGDSetPayPasswordTableViewCell *cell2 = [self.tableV cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:1]];
+    JGDSetPayPasswordTableViewCell *cell3 = [self.tableV cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1]];
+    JGDSetPayPasswordTableViewCell *cell2 = [self.tableV cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:2]];
     
     if ([cell2.txFD.text length] < 3) {
         [[ShowHUD showHUD]showToastWithText:@"请输入正确的验证码" FromView:self.view];
@@ -137,16 +142,21 @@
         return;
     }
     
+    
     NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
     [dict setObject:DEFAULF_USERID forKey:@"userKey"];
     [dict setObject:cell1.txFD.text forKey:@"money"];
     [dict setObject:cell2.txFD.text forKey:@"checkCode"];
     [dict setObject:self.teamKey forKey:@"teamKey"];
     
+    if (cell3.txFD.text) {
+        [dict setObject:cell3.txFD.text forKey:@"remark"];
+    }
+    
     [[JsonHttp jsonHttp]httpRequestWithMD5:@"team/doTeamWithDraw" JsonKey:nil withData:dict failedBlock:^(id errType) {
         
     } completionBlock:^(id data) {
-        if ([data objectForKey:@"packSuccess"]) {
+        if ([[data objectForKey:@"packSuccess"] integerValue] == 1 ) {
             [[ShowHUD showHUD]showToastWithText:@"提现成功" FromView:self.view];
             [self performSelector:@selector(pop) withObject:self afterDelay:1];
         }

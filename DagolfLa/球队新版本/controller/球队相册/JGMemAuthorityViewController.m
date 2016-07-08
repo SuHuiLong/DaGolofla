@@ -50,6 +50,8 @@
     
     NSMutableDictionary* dic = [[NSMutableDictionary alloc]init];
     [dic setObject:_memberKey forKey:@"memberKey"];
+    NSString *para = [JGReturnMD5Str getTeamMemberWithMemberKey:[_memberKey integerValue]];
+    [dic setObject:para forKey:@"md5"];
     [[JsonHttp jsonHttp]httpRequest:@"team/getTeamMember" JsonKey:nil withData:dic requestMethod:@"GET" failedBlock:^(id errType) {
         NSLog(@"errType == %@", errType);
     } completionBlock:^(id data) {
@@ -361,6 +363,8 @@
                 [dict setObject:_teamKey forKey:@"teamKey"];
                 [dict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:userID] forKey:@"userKey"];
                 [dict setObject:@1 forKey:@"offset"];
+                NSString *para = [JGReturnMD5Str getTeamMemberListWithTeamKey:[_teamKey integerValue] userKey:[DEFAULF_USERID integerValue]];
+                [dict setObject:para forKey:@"md5"];
                 [[JsonHttp jsonHttp]httpRequest:@"team/getTeamMemberList" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
                     
                 } completionBlock:^(id data) {

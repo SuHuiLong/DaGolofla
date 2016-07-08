@@ -56,6 +56,8 @@
     [dict setObject:_teamKey forKey:@"teamKey"];
     [dict setObject:DEFAULF_USERID forKey:@"userKey"];
     [dict setObject:[NSNumber numberWithInt:page] forKey:@"offset"];
+    NSString *para = [JGReturnMD5Str getAuditTeamMemberListWithTeamKey:[_teamKey integerValue] userKey:[DEFAULF_USERID integerValue]];
+    [dict setObject:para forKey:@"md5"];
     [[JsonHttp jsonHttp]httpRequest:@"team/getAuditTeamMemberList" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
         if (isReshing) {
             [_tableView.header endRefreshing];
