@@ -8,10 +8,13 @@
 
 #import "JGLDrawalRecordViewController.h"
 #import "JGLDrawalRewardTableViewCell.h"
+#import "JGLDrawalRecordModel.h"
+
 @interface JGLDrawalRecordViewController ()<UITableViewDelegate,UITableViewDataSource>
 {
     UITableView* _tableView;
     NSMutableArray* _dataArray;
+    NSInteger _page;
 }
 @end
 
@@ -21,6 +24,7 @@
     [super viewDidLoad];
     
     self.title = @"提现记录";
+    _page = 0;
     _dataArray = [[NSMutableArray alloc]init];
     [self uiConfig];
     
@@ -28,12 +32,65 @@
 
 -(void)uiConfig
 {
-    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, 45*6*ScreenWidth/375 + 30*ScreenWidth/375) style:UITableViewStylePlain];
+    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, screenHeight) style:UITableViewStylePlain];
     _tableView.delegate = self;
     _tableView.dataSource = self;
     //    _tableView.scrollEnabled = NO;
     [self.view addSubview:_tableView];
     [_tableView registerClass:[JGLDrawalRewardTableViewCell class] forCellReuseIdentifier:@"JGLDrawalRewardTableViewCell"];
+    
+    _tableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
+    _tableView.backgroundColor = [UIColor colorWithHexString:BG_color];
+    [_tableView.header beginRefreshing];
+}
+
+
+#pragma mark - 下载数据
+- (void)downLoadData:(int)page isReshing:(BOOL)isReshing{
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    [dict setObject:DEFAULF_USERID forKey:@"userKey"];
+    [dict setObject:[NSNumber numberWithInteger:_page] forKey:@"offset"];
+    [dict setObject:[NSNumber numberWithInteger:_teamKey] forKey:@"teamKey"];
+    [dict setObject:[JGReturnMD5Str getTeamWithDrawListWithTeamKey:_teamKey userKey:[DEFAULF_USERID integerValue]] forKey:@"md5"];
+    [[JsonHttp jsonHttp]httpRequest:@"team/getTeamWithDrawList" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
+        if (isReshing) {
+            [_tableView.header endRefreshing];
+        }
+    } completionBlock:^(id data) {
+        if ([[data objectForKey:@"packSuccess"] boolValue]) {
+            if (page == 0)
+            {
+                //清除数组数据
+                [_dataArray removeAllObjects];
+            }
+            //数据解析
+            for (NSDictionary *dicList in [data objectForKey:@"list"])
+            {
+                JGLDrawalRecordModel *model = [[JGLDrawalRecordModel alloc] init];
+                [model setValuesForKeysWithDictionary:dicList];
+                [_dataArray addObject:model];
+            }
+            _page++;
+            [_tableView reloadData];
+        }else {
+            [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+        }
+        [_tableView reloadData];
+        if (isReshing) {
+            [_tableView.header endRefreshing];
+        }
+    }];
+}
+#pragma mark 开始进入刷新状态
+- (void)headerRereshing
+{
+    _page = 0;
+    [self downLoadData:_page isReshing:YES];
+}
+
+- (void)footerRereshing
+{
+    [self downLoadData:_page isReshing:NO];
 }
 
 
@@ -48,7 +105,7 @@
 
 //指定有多少个分区(Section)，默认为1
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 10;
+    return _dataArray.count;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -58,11 +115,8 @@
 {
     
     JGLDrawalRewardTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"JGLDrawalRewardTableViewCell" forIndexPath:indexPath];
-    cell.labelName.text   = @"提现人：罗小安";
-    cell.labelAccept.text = @"收款人：罗大安";
-    cell.labelTime.text   = @"2015年5月21日 09：55";
-    cell.labelMoney.text  = @"1800元";
-    cell.labelDetail.text = @"备注信息：这笔钱用于球场遇到过呢和啪啪啪。。。设呢";
+
+    [cell showData:_dataArray[indexPath.section]];
     return cell;
 }
 

@@ -10,4 +10,8 @@
 //提现记录
 @interface JGLDrawalRecordViewController : ViewController
 
+
+@property (nonatomic, assign) NSInteger teamKey;
+
+
 @end

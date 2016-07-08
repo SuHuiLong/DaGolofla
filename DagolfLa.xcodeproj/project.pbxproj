@@ -755,6 +755,7 @@
 		82E6A71B1CF68229009DD179 /* JGTeamAdressTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 82E6A7191CF68229009DD179 /* JGTeamAdressTableViewCell.xib */; };
 		82E6A71F1CF682BC009DD179 /* JGTeamEIntroTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 82E6A71D1CF682BC009DD179 /* JGTeamEIntroTableViewCell.m */; };
 		82E6A7201CF682BC009DD179 /* JGTeamEIntroTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 82E6A71E1CF682BC009DD179 /* JGTeamEIntroTableViewCell.xib */; };
+		82F566E11D2F4BC20089B617 /* JGLDrawalRecordModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 82F566E01D2F4BC20089B617 /* JGLDrawalRecordModel.m */; };
 		AA857EE01C5F48AA0034B4C8 /* SelfDataViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA857EDF1C5F48AA0034B4C8 /* SelfDataViewController.m */; };
 		AA91C7861C4201B80078DA17 /* IQButtonBarArrowLeft@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AA91C7821C4201B80078DA17 /* IQButtonBarArrowLeft@2x.png */; };
 		AA91C7871C4201B80078DA17 /* IQButtonBarArrowRight@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AA91C7831C4201B80078DA17 /* IQButtonBarArrowRight@2x.png */; };
@@ -2212,6 +2213,8 @@
 		82E6A71C1CF682BC009DD179 /* JGTeamEIntroTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGTeamEIntroTableViewCell.h; sourceTree = "<group>"; };
 		82E6A71D1CF682BC009DD179 /* JGTeamEIntroTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGTeamEIntroTableViewCell.m; sourceTree = "<group>"; };
 		82E6A71E1CF682BC009DD179 /* JGTeamEIntroTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JGTeamEIntroTableViewCell.xib; sourceTree = "<group>"; };
+		82F566DF1D2F4BC20089B617 /* JGLDrawalRecordModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGLDrawalRecordModel.h; sourceTree = "<group>"; };
+		82F566E01D2F4BC20089B617 /* JGLDrawalRecordModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGLDrawalRecordModel.m; sourceTree = "<group>"; };
 		AA857EDF1C5F48AA0034B4C8 /* SelfDataViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = SelfDataViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		AA91C7821C4201B80078DA17 /* IQButtonBarArrowLeft@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "IQButtonBarArrowLeft@2x.png"; sourceTree = "<group>"; };
 		AA91C7831C4201B80078DA17 /* IQButtonBarArrowRight@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "IQButtonBarArrowRight@2x.png"; sourceTree = "<group>"; };
@@ -5957,6 +5960,8 @@
 			children = (
 				F5BDF09F1CEC1B750020175A /* JGTeamDetail.h */,
 				F5BDF0A01CEC1B750020175A /* JGTeamDetail.m */,
+				82F566DF1D2F4BC20089B617 /* JGLDrawalRecordModel.h */,
+				82F566E01D2F4BC20089B617 /* JGLDrawalRecordModel.m */,
 			);
 			path = "球队详情";
 			sourceTree = "<group>";
@@ -6771,6 +6776,7 @@
 				368B73371C103B230002A618 /* ScoreSimpleTableViewCell.m in Sources */,
 				36067BAF1C96AA31001AE22C /* InformViewController.m in Sources */,
 				36BFFF681BC76D09005B3CE2 /* UIImageView+AFNetworking.m in Sources */,
+				82F566E11D2F4BC20089B617 /* JGLDrawalRecordModel.m in Sources */,
 				36A396291BE34DB100CBF455 /* MyFootBodyTableViewCell.m in Sources */,
 				36BFFFAF1BC76FF3005B3CE2 /* ForgetViewController.m in Sources */,
 				20CA137B1CE56B6100DA15B9 /* JGHLaunchActivityViewController.m in Sources */,
