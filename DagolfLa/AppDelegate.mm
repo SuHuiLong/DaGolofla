@@ -124,7 +124,7 @@
     
     // Required
     //如需兼容旧版本的方式，请依旧使用[JPUSHService setupWithOption:launchOptions]方式初始化和同时使用pushConfig.plist文件声明appKey等配置内容。
-    [JPUSHService setupWithOption:launchOptions appKey:@"831cd22faea3454090c15bbe" channel:nil apsForProduction:YES];
+    [JPUSHService setupWithOption:launchOptions appKey:@"831cd22faea3454090c15bbe" channel:nil apsForProduction:NO];
     NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
     [defaultCenter addObserver:self selector:@selector(networkDidReceiveMessage:) name:kJPFNetworkDidReceiveMessageNotification object:nil];
     
@@ -299,18 +299,21 @@
             return [WXApi handleOpenURL:url delegate:self];
         }
         return result;
-    }else if ([url.scheme isEqualToString:@"dagolfla"] && [[NSString stringWithFormat:@"%@", url] containsString:@"teamActivityDetail"]){
+    }else if ([url.scheme isEqualToString:@"dagolfla"]){
         NSLog(@"Calling Application Bundle ID: %@", sourceApplication);
         NSLog(@"URL scheme:%@", [url scheme]);
         NSLog(@"URL query: %@", [url query]);
-        NSString *activityKey = @"";
+        NSString *actKey = @"";
+        NSString *actDetail = @"";
         if ([url query]) {
-            activityKey = [[[NSString stringWithFormat:@"%@", [url query]] componentsSeparatedByString:@"="] objectAtIndex:1];
+            actKey = [[[NSString stringWithFormat:@"%@", [url query]] componentsSeparatedByString:@"="] objectAtIndex:1];
+            actDetail = [[[NSString stringWithFormat:@"%@", [url query]] componentsSeparatedByString:@"="] objectAtIndex:0];
         }
         
-        [self gotoAppPage:activityKey];
+        [self gotoAppPage:actKey switchDetails:actDetail];
         return YES;
-    }else
+    }
+    else
     {
         //跳转支付宝钱包进行支付，处理支付结果
         [[AlipaySDK defaultService] processOrderWithPaymentResult:url standbyCallback:^(NSDictionary *resultDic) {
@@ -323,20 +326,32 @@
 }
 
 #pragma mark -- 跳转到指定活动详情页面
--(void)gotoAppPage:(NSString *)timekey
+-(void)gotoAppPage:(NSString *)timekey switchDetails:(NSString *)details
 {
     if ([timekey integerValue]>0) {
-//        JGTeamActibityNameViewController *activityCtrl = [[JGTeamActibityNameViewController alloc]init];
-//        activityCtrl.teamKey = [timekey integerValue];
-//        
         NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+        
         [dict setObject:[NSString stringWithFormat:@"%td", [timekey integerValue]] forKey:@"timekey"];
+        [dict setObject:[NSString stringWithFormat:@"%@", details] forKey:@"details"];
         //创建一个消息对象
         NSNotification * notice = [NSNotification notificationWithName:@"PushJGTeamActibityNameViewController" object:nil userInfo:dict];
         //发送消息
         [[NSNotificationCenter defaultCenter]postNotification:notice];
-        
-        //        [self.window.rootViewController presentViewController:activityCtrl animated:YES completion:nil];
+
+    }
+    else{
+        if (![Helper isBlankString:timekey]) {
+            NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+            
+            timekey = [timekey stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+            [dict setObject:[NSString stringWithFormat:@"%@", timekey] forKey:@"timekey"];
+            
+            [dict setObject:[NSString stringWithFormat:@"%@", details] forKey:@"details"];
+            //创建一个消息对象
+            NSNotification * notice = [NSNotification notificationWithName:@"PushJGTeamActibityNameViewController" object:nil userInfo:dict];
+            //发送消息
+            [[NSNotificationCenter defaultCenter]postNotification:notice];
+        }
     }
 }
 
@@ -425,11 +440,27 @@
     [JPUSHService handleRemoteNotification:userInfo];
     completionHandler(UIBackgroundFetchResultNewData);
     
-    NewsDetailController * VC = [[NewsDetailController alloc]init];
-    //    VC.pushType = 1;
-    UINavigationController * Nav = [[UINavigationController alloc]initWithRootViewController:VC];//这里加导航栏是因为我跳转的页面带导航栏，如果跳转的页面不带导航，那这句话请省去。
-    //    [self.window.rootViewController presentViewController:Nav animated:YES completion:nil];
-    [self.window.rootViewController.navigationController pushViewController:VC animated:YES];
+//    NewsDetailController * VC = [[NewsDetailController alloc]init];
+//    //    VC.pushType = 1;
+//    UINavigationController * Nav = [[UINavigationController alloc]initWithRootViewController:VC];//这里加导航栏是因为我跳转的页面带导航栏，如果跳转的页面不带导航，那这句话请省去。
+//    //    [self.window.rootViewController presentViewController:Nav animated:YES completion:nil];
+//    [self.window.rootViewController.navigationController pushViewController:VC animated:YES];
+    NSString* str = [userInfo objectForKey:@"url"];
+    NSURL *url = [NSURL URLWithString:str];
+    if ([url.scheme isEqualToString:@"dagolfla"]){
+        NSLog(@"URL scheme:%@", [url scheme]);
+        NSLog(@"URL query: %@", [url query]);
+        NSString *actKey = @"";
+        NSString *actDetail = @"";
+        if ([url query]) {
+            actKey = [[[NSString stringWithFormat:@"%@", [url query]] componentsSeparatedByString:@"="] objectAtIndex:1];
+            actDetail = [[[NSString stringWithFormat:@"%@", [url query]] componentsSeparatedByString:@"="] objectAtIndex:0];
+        }
+        
+        [self gotoAppPage:actKey switchDetails:actDetail];
+    }
+
+    
     
 }
 

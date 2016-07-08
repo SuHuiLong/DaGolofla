@@ -62,6 +62,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    //如果为空就直接赋值，否则从推送或者分享跳转页面中调取
+    if ([Helper isBlankString:_linkUrl]) {
+        _linkUrl = @"http://www.dagolfla.com/app/index.html";
+    }
     _dictCan = [[NSMutableDictionary alloc]init];
     self.webView.frame=CGRectMake(0, 0, ScreenWidth, ScreenHeight-10*ScreenWidth/375+64);
     self.webView.delegate=self;
@@ -106,7 +111,7 @@
     [[PostDataRequest sharedInstance] getDataRequest:strUrl success:^(id respondsData) {
         //        NSDictionary* dict = [NSJSONSerialization JSONObjectWithData:respondsData options:NSJSONReadingMutableContainers error:nil];
         
-        NSURL* url = [NSURL URLWithString:@"http://www.dagolfla.com/app/index.html"];
+        NSURL* url = [NSURL URLWithString:_linkUrl];
         //设置页面禁止滚动
         _webView.scrollView.bounces = NO ;
         //设置web占满屏幕
