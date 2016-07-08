@@ -633,6 +633,7 @@ static CGFloat ImageHeight  = 210.0;
         contactCell.tetfileView.tag = 234;
         contactCell.tetfileView.delegate = self;
         contactCell.contactLabel.text = @"人员限制";
+        [contactCell configConstraint];
         contactCell.contentView.backgroundColor = [UIColor whiteColor];
         if (self.model.name != nil) {
             contactCell.tetfileView.text = [NSString stringWithFormat:@"%td", self.model.maxCount];

@@ -38,6 +38,10 @@
 - (void)loadData{
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     [dict setObject:[NSString stringWithFormat:@"%ld", (long)_activityKey] forKey:@"activityKey"];
+    [dict setObject:@0 forKey:@"teamKey"];
+    [dict setObject:DEFAULF_USERID forKey:@"userKey"];
+    NSString *strMD = [JGReturnMD5Str getTeamActivitySignUpListWithTeamKey:0 activityKey:_activityKey userKey:[DEFAULF_USERID integerValue]];
+    [dict setObject:strMD forKey:@"md5"];
     [[JsonHttp jsonHttp]httpRequest:@"team/getTeamActivitySignUpList" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
         NSLog(@"%@", errType);
     } completionBlock:^(id data) {

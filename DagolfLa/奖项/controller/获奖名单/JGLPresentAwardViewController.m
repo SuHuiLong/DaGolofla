@@ -75,7 +75,7 @@
 }
 #pragma mark -- 创建工具栏
 - (void)createPushAwardBtn{
-    UIView *psuhView = [[UIView alloc]initWithFrame:CGRectMake(0, screenHeight - 65*ProportionAdapter, screenWidth, 65*ProportionAdapter)];
+    UIView *psuhView = [[UIView alloc]initWithFrame:CGRectMake(0, screenHeight - 65*ProportionAdapter-64, screenWidth, 65*ProportionAdapter)];
     psuhView.backgroundColor = [UIColor whiteColor];
     UIButton *psuhBtn = [[UIButton alloc]initWithFrame:CGRectMake(10*ProportionAdapter, 10*ProportionAdapter, screenWidth - 20*ProportionAdapter, 65*ProportionAdapter - 20*ProportionAdapter)];
     [psuhBtn setTitle:@"公布获奖名单" forState:UIControlStateNormal];
@@ -154,6 +154,8 @@
     
     UIImageView* iconImgv = [[UIImageView alloc]initWithFrame:CGRectMake(10*screenWidth/375, 10*screenWidth/375, 64*screenWidth/375, 64*screenWidth/375)];
     iconImgv.image = [UIImage imageNamed:DefaultHeaderImage];
+    iconImgv.layer.masksToBounds = YES;
+    iconImgv.layer.cornerRadius = 8*screenWidth/375;
     [_viewBack addSubview:iconImgv];
     //头像
     if (_model.teamActivityKey == 0) {
@@ -217,13 +219,13 @@
 #pragma MARK -- tableview
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    return 10*screenWidth/375;
+    return 10*screenWidth/320;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
     return 0.1;
 }
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
-    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, 10*screenWidth/375)];
+    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, 10*screenWidth/320)];
     view.backgroundColor = [UIColor colorWithHexString:BG_color];
     return view;
 }
@@ -233,8 +235,8 @@
     CGFloat height;
     JGHAwardModel *model = [[JGHAwardModel alloc]init];
     model = _dataArray[indexPath.section];
-    height = [Helper textHeightFromTextString:model.name width:screenWidth - 54*screenWidth/375 fontSize:15*screenWidth/375];
-    return 64*screenWidth/375 + height;
+    height = [Helper textHeightFromTextString:model.name width:screenWidth - 54*screenWidth/320 fontSize:15*screenWidth/320];
+    return 85*screenWidth/320 + height;
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section

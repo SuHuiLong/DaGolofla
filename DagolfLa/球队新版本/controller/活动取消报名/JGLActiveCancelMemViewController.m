@@ -76,6 +76,10 @@
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     [dict setObject:self.activityKey forKey:@"activityKey"];
     [dict setObject:[NSNumber numberWithInteger:_page] forKey:@"offset"];
+    [dict setObject:@(_teamKey) forKey:@"teamKey"];
+    [dict setObject:DEFAULF_USERID forKey:@"userKey"];
+    NSString *strMD = [JGReturnMD5Str getTeamActivitySignUpListWithTeamKey:_teamKey activityKey:[_activityKey integerValue] userKey:[DEFAULF_USERID integerValue]];
+    [dict setObject:strMD forKey:@"md5"];
     [[JsonHttp jsonHttp]httpRequest:@"team/getTeamActivitySignUpList" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
         if (isReshing) {
             [_tableView.header endRefreshing];

@@ -34,6 +34,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.navigationItem.title = @"成员列表";
+    
     _signupKeyInfo =[NSMutableString stringWithString:@""];
     _signupNameInfo =[NSMutableString stringWithString:@""];
     
@@ -113,7 +115,11 @@
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     
     [dict setObject:[NSNumber numberWithInteger:self.activityKey] forKey:@"activityKey"];
+    [dict setObject:DEFAULF_USERID forKey:@"userKey"];
     [dict setObject:[NSNumber numberWithInteger:_page]forKey:@"offset"];
+    [dict setObject:@0 forKey:@"teamKey"];
+    NSString *strMD = [JGReturnMD5Str getTeamActivitySignUpListWithTeamKey:0 activityKey:self.activityKey userKey:[DEFAULF_USERID integerValue]];
+    [dict setObject:strMD forKey:@"md5"];
     [[JsonHttp jsonHttp]httpRequest:@"team/getTeamActivitySignUpList" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
         if (isReshing) {
             [_tableView.header endRefreshing];
@@ -121,6 +127,7 @@
             [_tableView.footer endRefreshing];
         }
     } completionBlock:^(id data) {
+        NSLog(@"%@", data);
         if ([data objectForKey:@"packSuccess"]) {
             if (page == 0)
             {

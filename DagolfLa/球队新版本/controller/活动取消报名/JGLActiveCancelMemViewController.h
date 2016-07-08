@@ -13,4 +13,6 @@
 //活动key
 @property (strong, nonatomic) NSNumber * activityKey;
 
+@property (nonatomic, assign)NSInteger teamKey;
+
 @end

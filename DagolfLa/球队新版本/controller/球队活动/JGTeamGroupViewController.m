@@ -256,8 +256,12 @@ static NSString *const JGGroupdetailsCollectionViewCellIdentifier = @"JGGroupdet
 #pragma mark -- 获取报名人员列表信息 1－表示分组
 - (void)loadData:(NSInteger)fenzu{
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    [dict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:userID] forKey:@"userKey"];
+    [dict setObject:DEFAULF_USERID forKey:@"userKey"];
     [dict setObject:[NSString stringWithFormat:@"%td", self.teamActivityKey] forKey:@"activityKey"];
+    [dict setObject:@0 forKey:@"teamKey"];
+    
+    NSString *strMD = [JGReturnMD5Str getTeamActivitySignUpListWithTeamKey:0 activityKey:_teamActivityKey userKey:[DEFAULF_USERID integerValue]];
+    [dict setObject:strMD forKey:@"md5"];
     [[JsonHttp jsonHttp]httpRequest:@"team/getTeamActivitySignUpList" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
         NSLog(@"errType == %@", errType);
     } completionBlock:^(id data) {
@@ -272,10 +276,7 @@ static NSString *const JGGroupdetailsCollectionViewCellIdentifier = @"JGGroupdet
             _power = [[data objectForKey:@"member"] objectForKey:@"power"];
             _maxGroup = [[data objectForKey:@"maxGroup"] integerValue];//获取分组数
         }else{
-            [Helper alertViewNoHaveCancleWithTitle:@"暂无报名信息！" withBlock:^(UIAlertController *alertView) {
-                [self.navigationController presentViewController:alertView animated:YES completion:^{
-                }];
-            }];
+            [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
             
             return ;
         }
