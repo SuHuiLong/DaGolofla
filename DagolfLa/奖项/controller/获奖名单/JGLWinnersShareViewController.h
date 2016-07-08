@@ -17,4 +17,6 @@
 
 @property (strong, nonatomic) NSNumber* activeKey;
 
+@property (assign, nonatomic)NSInteger teamKey;
+
 @end

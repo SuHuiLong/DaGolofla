@@ -24,6 +24,8 @@
 
 @property (nonatomic, assign)NSInteger select;
 
-@property (nonatomic, strong)NSString *nameList;
+@property (nonatomic, strong)NSString *signupKeyInfo;
+
+@property (nonatomic, strong)NSString *userInfo;
 
 @end

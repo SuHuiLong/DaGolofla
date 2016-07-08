@@ -10,8 +10,9 @@
 #import "JGLWinnersShareTableViewCell.h"
 #import "JGHActivityBaseCell.h"
 #import "JGLPresentAwardViewController.h"
-
+#import "JGDPrizeViewController.h"
 #import "JGLWinnerShareModel.h"
+
 @interface JGLWinnersShareViewController ()<UITableViewDelegate,UITableViewDataSource>
 {
     NSMutableArray* _dataArray;
@@ -26,8 +27,16 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    UIBarButtonItem *itemleft = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"backL"] style:UIBarButtonItemStylePlain target:self action:@selector(backButtonClcik)];
+    itemleft.tintColor=[UIColor whiteColor];
+    self.navigationItem.leftBarButtonItem = itemleft;
+    
+    self.navigationItem.title = @"获奖名单";
+    
     _dataArray = [[NSMutableArray alloc]init];
     _page = 0;
+    
+    
     
     UIBarButtonItem* item = [[UIBarButtonItem alloc]initWithTitle:@"分享" style:UIBarButtonItemStylePlain target:self action:@selector(shareBarItemClick)];
     item.tintColor = [UIColor whiteColor];
@@ -38,6 +47,18 @@
     [self uiConfig];
     
   
+}
+#pragma mark --返回
+- (void)backButtonClcik{
+    for (UIViewController *controller in self.navigationController.viewControllers) {
+        if ([controller isKindOfClass:[JGDPrizeViewController class]]) {
+//            JGDPrizeViewController *prizeCtrl = [[JGDPrizeViewController alloc]init];
+//            prizeCtrl.model = _model;
+//            prizeCtrl.activityKey = [_activeKey integerValue];
+//            prizeCtrl.teamKey = _teamKey;
+            [self.navigationController popToViewController:controller animated:YES];
+        }
+    }
 }
 
 -(void)shareBarItemClick
@@ -173,7 +194,7 @@ static CGFloat height;
     if (_dataArray.count != 0) {
         height = [Helper textHeightFromTextString:[_dataArray[indexPath.row] userInfo] width:screenWidth - 54*screenWidth/375 fontSize:14*screenWidth/375];
     }
-    return indexPath.section == 0 ? 80*screenWidth/375 : 44*screenWidth/375 + height;
+    return indexPath.section == 0 ? 80*screenWidth/375 : 44*screenWidth/375 + height + 10;
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -192,6 +213,7 @@ static CGFloat height;
         cell.nameLabel.frame = CGRectMake(44*screenWidth/375, 44*screenWidth/375, screenWidth - 54*screenWidth/375, height);
         cell.nameLabel.font = [UIFont systemFontOfSize:14*screenWidth/375];
         [cell showData:_dataArray[indexPath.row]];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
     }
 }

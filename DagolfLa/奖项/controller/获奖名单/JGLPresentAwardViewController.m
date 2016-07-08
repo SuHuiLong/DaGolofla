@@ -51,7 +51,7 @@
     [dict setObject:@(_activityKey) forKey:@"activityKey"];
     [dict setObject:DEFAULF_USERID forKey:@"userKey"];
     [dict setObject:_prizeListArray forKey:@"prizeList"];
-    [[JsonHttp jsonHttp]httpRequest:@"team/doPublishNameList" JsonKey:nil withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
+    [[JsonHttp jsonHttp]httpRequest:@"team/doSavePublishPrize" JsonKey:nil withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
         NSLog(@"errType == %@", errType);
     } completionBlock:^(id data) {
         NSLog(@"data == %@", data);
@@ -71,6 +71,7 @@
     JGLWinnersShareViewController *winnerCtrl = [[JGLWinnersShareViewController alloc]init];
     winnerCtrl.model = _model;
     winnerCtrl.activeKey = [NSNumber numberWithInteger:_activityKey];
+    winnerCtrl.teamKey = _teamKey;
     [self.navigationController pushViewController:winnerCtrl animated:YES];
 }
 #pragma mark -- 创建工具栏
@@ -87,25 +88,38 @@
     [psuhView addSubview:psuhBtn];
     [self.view addSubview:psuhView];
 }
-#pragma mark -- 获奖名单
+#pragma mark -- 公布获奖名单
 - (void)publishedAwardNameBtnClick:(UIButton *)btn{
-    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    [dict setObject:@(_activityKey) forKey:@"activityKey"];
-    [dict setObject:DEFAULF_USERID forKey:@"userKey"];
-    [dict setObject:_prizeListArray forKey:@"prizeList"];
-    [[JsonHttp jsonHttp]httpRequest:@"team/doPublishNameList" JsonKey:nil withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
-        NSLog(@"errType == %@", errType);
-    } completionBlock:^(id data) {
-        NSLog(@"data == %@", data);
-        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
-            [[ShowHUD showHUD]showToastWithText:@"发布成功！" FromView:self.view];
-            [self performSelector:@selector(pushCtrl) withObject:self afterDelay:1.0];
-        }else{
-            if ([data objectForKey:@"packResultMsg"]) {
-                [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+    btn.enabled = NO;
+    [Helper alertViewWithTitle:@"确定公布获奖名单?" withBlockCancle:^{
+        
+    } withBlockSure:^{
+        btn.enabled = NO;
+        NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+        [dict setObject:@(_activityKey) forKey:@"activityKey"];
+        [dict setObject:DEFAULF_USERID forKey:@"userKey"];
+        [dict setObject:_prizeListArray forKey:@"prizeList"];
+        [[JsonHttp jsonHttp]httpRequest:@"team/doPublishNameList" JsonKey:nil withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
+            NSLog(@"errType == %@", errType);
+            btn.enabled = YES;
+        } completionBlock:^(id data) {
+            NSLog(@"data == %@", data);
+            if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+                [[ShowHUD showHUD]showToastWithText:@"发布成功！" FromView:self.view];
+                [self performSelector:@selector(pushCtrl) withObject:self afterDelay:1.0];
+            }else{
+                if ([data objectForKey:@"packResultMsg"]) {
+                    [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+                }
             }
-        }
+            
+            btn.enabled = YES;
+        }];
+    } withBlock:^(UIAlertController *alertView) {
+        [self presentViewController:alertView animated:YES completion:nil];
     }];
+    
+    btn.enabled = YES;
 }
 #pragma mark -- 下载数据
 - (void)loadData{
@@ -135,7 +149,15 @@
                 [prizeDict setObject:model.name forKey:@"name"];
                 [prizeDict setObject:model.prizeName forKey:@"prizeName"];
                 [prizeDict setObject:model.prizeSize forKey:@"prizeSize"];
+                if (model.signupKeyInfo) {
+                    [prizeDict setObject:model.signupKeyInfo forKey:@"signupKeyInfo"];
+                }
+                
+                if (model.userInfo) {
+                    [prizeDict setObject:model.userInfo forKey:@"userInfo"];
 
+                }
+                
                 [_prizeListArray addObject:prizeDict];
             }
         }else{
@@ -254,6 +276,10 @@
         [cell configJGHAwardModel:_dataArray[indexPath.section]];
     }
     
+    cell.chooseBtn.tag = indexPath.section + 100;
+    [cell.chooseBtn addTarget:self action:@selector(chooseAwarderClick:) forControlEvents:UIControlEventTouchUpInside];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    
     return cell;
 }
 
@@ -266,10 +292,27 @@
     listerErctrl.awardId = indexPath.section;
     [self.navigationController pushViewController:listerErctrl animated:YES];
 }
-
+#pragma mark -- 选择获奖者
+- (void)chooseAwarderClick:(UIButton *)btn{
+    JGDActivityListViewController *listerErctrl = [[JGDActivityListViewController alloc]init];
+    listerErctrl.activityKey = _activityKey;
+    listerErctrl.checkdict = _prizeListArray[btn.tag - 100];
+    listerErctrl.delegate = self;
+    listerErctrl.awardId = btn.tag - 100;
+    [self.navigationController pushViewController:listerErctrl animated:YES];
+}
 #pragma mark -- 选择颁奖人后返回的代理
 - (void)saveBtnDict:(NSMutableDictionary *)dict andAwardId:(NSInteger)awardId{
     [_prizeListArray replaceObjectAtIndex:awardId withObject:dict];
+    
+    JGHAwardModel *model = [[JGHAwardModel alloc]init];
+    model = _dataArray[awardId];
+    model.signupKeyInfo = [dict objectForKey:@"signupKeyInfo"];
+    model.userInfo = [dict objectForKey:@"userInfo"];
+    
+    [_dataArray replaceObjectAtIndex:awardId withObject:model];
+    
+    [_tableView reloadData];
 }
 
 - (void)didReceiveMemoryWarning {
