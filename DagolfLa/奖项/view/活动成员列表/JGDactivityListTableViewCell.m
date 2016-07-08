@@ -37,8 +37,9 @@
 
 - (void)setListModel:(JGDActivityList *)listModel{
     self.nameLB.text = listModel.name;
-    
-    if ([[listModel.mobile stringValue] isEqualToString:@"(null)"] || [[listModel.mobile stringValue] isEqualToString:@""] || listModel.mobile == nil) {
+    //[[listModel.mobile stringValue] isEqualToString:@"(null)"] || [[listModel.mobile stringValue] isEqualToString:@""] ||
+    if (listModel.mobile == nil) {
+        self.phoneLB.text = @"";
     }else{
         NSString *str = [NSString stringWithFormat:@"%@", listModel.mobile];
         NSMutableString *muatbleStr = [str mutableCopy];
@@ -61,7 +62,6 @@
     [super awakeFromNib];
     // Initialization code
     
-    self.selectionStyle = UITableViewCellSelectionStyleNone;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
