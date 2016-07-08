@@ -199,30 +199,6 @@ static int timeNumber = 60;
         }
     }];
 
-    
-    
-    
-//    NSString *paraStr = [JGDTakeTeamMoneyViewController dictionaryToJson:dict];
-//    
-//    paraStr = [paraStr stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-//    paraStr = [paraStr stringByReplacingOccurrencesOfString:@"\r" withString:@""];
-//    paraStr = [paraStr stringByReplacingOccurrencesOfString:@"\n" withString:@""];
-//    paraStr = [paraStr stringByReplacingOccurrencesOfString:@" " withString:@""];
-//    
-//    NSString *str = [JGDTakeTeamMoneyViewController md5HexDigest:[NSString stringWithFormat:@"%@dagolfla.com", paraStr]];
-//    [[JsonHttp jsonHttp]httpRequest:[NSString stringWithFormat:@"team/doSendTeamWithDrawCheckCode?md5=%@",str] JsonKey:nil withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
-//        
-//    } completionBlock:^(id data) {
-//        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
-//            timeNumber = 60;
-//            _timer=[NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(autoMove) userInfo:nil repeats:YES];
-//            [[NSRunLoop currentRunLoop] addTimer:_timer forMode:NSRunLoopCommonModes];
-//        }
-//        else
-//        {
-//            [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
-//        }
-//    }];
 }
 
 

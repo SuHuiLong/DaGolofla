@@ -146,20 +146,28 @@
         }];
         
     } completionBlock:^(id data) {
-        JGTeamMemberORManagerViewController *detailVC = [[JGTeamMemberORManagerViewController alloc] init];
-        if ([[[data objectForKey:@"teamMember"] objectForKey:@"power"] containsString:@"1005"]){
-            detailVC.detailDic = [data objectForKey:@"team"];
-            //                detailVC.detailModel.manager = 1;
-            detailVC.isManager = YES;
+        
+        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+            JGTeamMemberORManagerViewController *detailVC = [[JGTeamMemberORManagerViewController alloc] init];
+            if ([[[data objectForKey:@"teamMember"] objectForKey:@"power"] containsString:@"1005"]){
+                detailVC.detailDic = [data objectForKey:@"team"];
+                //                detailVC.detailModel.manager = 1;
+                detailVC.isManager = YES;
+                
+                [self.navigationController pushViewController:detailVC animated:YES];
+            }else{
+                
+                detailVC.detailDic = [data objectForKey:@"team"];
+                //                detailVC.detailModel.manager = 0;
+                detailVC.isManager = NO;
+                
+                [self.navigationController pushViewController:detailVC animated:YES];
+            }
             
-            [self.navigationController pushViewController:detailVC animated:YES];
         }else{
-            
-            detailVC.detailDic = [data objectForKey:@"team"];
-            //                detailVC.detailModel.manager = 0;
-            detailVC.isManager = NO;
-            
-            [self.navigationController pushViewController:detailVC animated:YES];
+            if ([data objectForKey:@"packResultMsg"]) {
+                [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+            }
         }
         
     }];

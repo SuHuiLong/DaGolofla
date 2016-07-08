@@ -19,6 +19,7 @@
 
 #import "ChatDetailViewController.h"
 #import "JGTeamMemberManager.h"
+#import "JGReturnMD5Str.h"
 
 @interface JGTeamMemberController ()<UITableViewDelegate, UITableViewDataSource>
 {
@@ -76,6 +77,9 @@
     [dict setObject:_teamKey forKey:@"teamKey"];
     [dict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:userID] forKey:@"userKey"];
     [dict setObject:[NSNumber numberWithInt:page] forKey:@"offset"];
+   NSString *para = [JGReturnMD5Str getTeamMemberListWithTeamKey:[_teamKey integerValue] userKey:[DEFAULF_USERID integerValue]];
+    [dict setObject:para forKey:@"md5"];
+    
     [[JsonHttp jsonHttp]httpRequest:@"team/getTeamMemberList" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
         if (isReshing) {
             [_tableView.header endRefreshing];

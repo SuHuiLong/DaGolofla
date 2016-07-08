@@ -17,6 +17,7 @@
 #import "MJRefresh.h"
 #import "MJDIYBackFooter.h"
 #import "MJDIYHeader.h"
+#import "JGTeamDeatilWKwebViewController.h"
 
 @interface JGDPrizeViewController ()<UITableViewDelegate, UITableViewDataSource>
 
@@ -25,7 +26,6 @@
 @property (nonatomic, assign) NSInteger page;
 
 @end
-
 
 @implementation JGDPrizeViewController
 
@@ -43,7 +43,10 @@
 
 // 分享
 - (void)shareAct{
-    
+    JGTeamDeatilWKwebViewController *shareVC = [[JGTeamDeatilWKwebViewController alloc] init];
+//    [Helper md5HexDigest:<#(NSString *)#>]
+    shareVC.detailString = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/team/teamPrize.html?activityKey=%ld&userKey=%@&md5=%@",(long)self.activityKey,DEFAULF_USERID,@""];
+    [self.navigationController pushViewController:shareVC animated:YES];
 }
 
 
