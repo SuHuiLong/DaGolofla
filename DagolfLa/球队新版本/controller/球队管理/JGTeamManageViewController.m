@@ -132,6 +132,8 @@
         JGTeamDeatilWKwebViewController *teamDetailCtrl = [[JGTeamDeatilWKwebViewController alloc]init];
         teamDetailCtrl.teamName = @"账户详情";
         teamDetailCtrl.detailString = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/team/accountManage.html?teamKey=%td&userKey=%@", self.teamKey, [[NSUserDefaults standardUserDefaults] objectForKey:userID]];
+        teamDetailCtrl.teamKey = self.teamKey;
+        teamDetailCtrl.isManage = YES;
         [self.navigationController pushViewController:teamDetailCtrl animated:YES];
     }
         

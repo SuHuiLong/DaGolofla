@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "JGLDrawalRecordModel.h"
 //提现记录
 @interface JGLDrawalRewardTableViewCell : UITableViewCell
 
@@ -22,7 +23,7 @@
 @property (strong, nonatomic) UILabel* labelMoney;
 
 
-
+-(void)showData:(JGLDrawalRecordModel *)model;
 
 
 @end

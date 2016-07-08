@@ -21,12 +21,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-//    if (_isShareBtn == 1) {
+    if (_isManage == YES) {
     UIBarButtonItem* bar = [[UIBarButtonItem alloc]initWithTitle:@"提现记录" style:UIBarButtonItemStylePlain target:self action:@selector(recordBtn)];
     bar.tintColor = [UIColor whiteColor];
     self.navigationItem.rightBarButtonItem = bar;
         
-//    }
+    }
     
     self.title = self.teamName;
     self.webView = [[WKWebView alloc]initWithFrame:self.view.bounds];
@@ -41,6 +41,7 @@
 #pragma mark -- 账户体现
 - (void)recordBtn{
     JGLDrawalRecordViewController* dwVc = [[JGLDrawalRecordViewController alloc]init];
+    dwVc.teamKey = _teamKey;
     [self.navigationController pushViewController:dwVc animated:YES];
 }
 
