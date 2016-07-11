@@ -15,10 +15,6 @@
 @property (nonatomic, assign) NSInteger teamKey;
 
 
-
-
-
-
 @property (assign, nonatomic) BOOL isManage;//账户管理
 
 

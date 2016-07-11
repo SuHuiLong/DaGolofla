@@ -714,6 +714,7 @@ static CGFloat ImageHeight  = 210.0;
     wkVC.activeName = _model.name;
     wkVC.detailString = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/score/scoreRanking.html?teamKey=%td&userKey=%@&srcKey=%td&srcType=1&share=1", _model.teamKey,DEFAULF_USERID, timeKey];
     wkVC.teamName = @"活动成绩";
+//    wkVC.realName = _model.teamName;
     [self.navigationController pushViewController:wkVC animated:YES];
 }
 #pragma mark -- 详情页面
