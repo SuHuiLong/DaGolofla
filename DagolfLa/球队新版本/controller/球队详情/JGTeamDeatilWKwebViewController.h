@@ -15,7 +15,18 @@
 @property (nonatomic, assign) NSInteger teamKey;
 
 
+
+
+
+
 @property (assign, nonatomic) BOOL isManage;
+
+
+@property (assign, nonatomic) BOOL isScore;
+@property (assign, nonatomic) NSInteger activeTimeKey;//分享成绩的活动timekey
+@property (assign, nonatomic) NSInteger teamTimeKey;//分享成绩的球队timekey
+
+
 @property (nonatomic, assign)NSInteger isShareBtn;//是否创建分享按钮 1-创建
 
 @end
