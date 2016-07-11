@@ -154,7 +154,7 @@
     btn.enabled = NO;
     
     [Helper alertViewWithTitle:@"确定公布获奖名单？" withBlockCancle:^{
-        
+        //
     } withBlockSure:^{
         NSMutableDictionary *dict = [NSMutableDictionary dictionary];
         [dict setObject:@(_activityKey) forKey:@"activityKey"];
