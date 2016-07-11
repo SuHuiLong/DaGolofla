@@ -61,7 +61,9 @@
     return [Helper md5HexDigest:[NSString stringWithFormat:@"teamKey=%td&userKey=%tddagolfla.com",teamKey, userKey]];
 }
 
-
++ (NSString *)getTeamGroupNameListTeamKey:(NSInteger)teamKey activityKey:(NSInteger)activityKey userKey:(NSInteger)userKey{
+    return [Helper md5HexDigest:[NSString stringWithFormat:@"teamKey=%td&activityKey=%td&userKey=%tddagolfla.com",teamKey, activityKey, userKey]];
+}
 
 
 /*

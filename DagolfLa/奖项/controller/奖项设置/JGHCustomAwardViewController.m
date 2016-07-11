@@ -85,8 +85,10 @@ static NSString *const JGHTextFiledCellIdentifier = @"JGHTextFiledCell";
         [dict setObject:@0 forKey:@"timeKey"];
     }
     
-    [dict setObject:DEFAULF_USERID forKey:@"userKey"];
-    [[JsonHttp jsonHttp]httpRequest:@"team/doSavePrize" JsonKey:@"prize" withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
+    NSMutableDictionary *pataDict = [NSMutableDictionary dictionary];
+    [pataDict setObject:dict forKey:@"prize"];
+    [pataDict setObject:DEFAULF_USERID forKey:@"userKey"];
+    [[JsonHttp jsonHttp]httpRequest:@"team/doSavePrize" JsonKey:nil withData:pataDict requestMethod:@"POST" failedBlock:^(id errType) {
         NSLog(@"errType == %@", errType);
     } completionBlock:^(id data) {
         NSLog(@"data == %@", data);
