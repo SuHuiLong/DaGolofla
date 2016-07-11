@@ -45,13 +45,8 @@
     // Do any additional setup after loading the view.
 }
 
-
-
 #pragma mark -分享
-
 - (void)shareAct{
-
-    
     if ([[NSUserDefaults standardUserDefaults]objectForKey:@"userId"]) {
         //        self.ymData = (YMTextData *)[_tableDataSource objectAtIndex:indexRow];
         
@@ -63,8 +58,6 @@
         [UIView animateWithDuration:0.2 animations:^{
             [alert show];
         }];
-        
-        
     }else {
         [Helper alertViewWithTitle:@"是否立即登录?" withBlockCancle:^{
         } withBlockSure:^{
@@ -176,8 +169,6 @@
                 [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
             }
         }
-        
-        
     }];
     
     btn.enabled = YES;
@@ -302,6 +293,11 @@
     setAwardVC.activityKey = self.activityKey;
     setAwardVC.teamKey = self.teamKey;
     setAwardVC.model = self.model;
+    setAwardVC.refreshBlock = ^(){
+        [_tableView.header endRefreshing];
+        _tableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
+        [_tableView.header beginRefreshing];
+    };
     [self.navigationController pushViewController:setAwardVC animated:YES];
 }
 
@@ -312,6 +308,11 @@
     JGLPresentAwardViewController *preVC = [[JGLPresentAwardViewController alloc] init];
     preVC.activityKey = _activityKey;
     preVC.model = _model;
+    preVC.refreshBlock = ^(){
+        [_tableView.header endRefreshing];
+        _tableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
+        [_tableView.header beginRefreshing];
+    };
     [self.navigationController pushViewController:preVC animated:YES];
 
 }

@@ -135,41 +135,6 @@
     
 }
 
-
-//-(void)createHeader
-//{
-//    _viewBack = [[UIView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, 84*screenWidth/375)];
-//    _viewBack.backgroundColor = [UIColor whiteColor];
-//    
-//    UIImageView* iconImgv = [[UIImageView alloc]initWithFrame:CGRectMake(10*screenWidth/375, 10*screenWidth/375, 64*screenWidth/375, 64*screenWidth/375)];
-//    iconImgv.image = [UIImage imageNamed:@"moren.jpg"];
-//    [_viewBack addSubview:iconImgv];
-//    
-//    UILabel* titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(94*screenWidth/375, 10*screenWidth/375, 200*screenWidth/375, 25*screenWidth/375)];
-//    titleLabel.font = [UIFont systemFontOfSize:16*screenWidth/375];
-//    titleLabel.text = @"上海球队活动";
-//    [_viewBack addSubview:titleLabel];
-//    
-//    UIImageView* timeImgv = [[UIImageView alloc]initWithFrame:CGRectMake(93*screenWidth/375, 35*screenWidth/375, 18*screenWidth/375, 18*screenWidth/375)];
-//    timeImgv.image = [UIImage imageNamed:@"time"];
-//    [_viewBack addSubview:timeImgv];
-//    
-//    UILabel* timeLabel = [[UILabel alloc]initWithFrame:CGRectMake(115*screenWidth/375, 35*screenWidth/375, 200*screenWidth/375, 20*screenWidth/375)];
-//    timeLabel.font = [UIFont systemFontOfSize:14*screenWidth/375];
-//    timeLabel.text = @"6月1日";
-//    timeLabel.textColor = [UIColor lightGrayColor];
-//    [_viewBack addSubview:timeLabel];
-//    
-//    UIImageView* distanceImgv = [[UIImageView alloc]initWithFrame:CGRectMake(95*screenWidth/375, 55*screenWidth/375, 14*screenWidth/375, 18*screenWidth/375)];
-//    distanceImgv.image = [UIImage imageNamed:@"juli"];
-//    [_viewBack addSubview:distanceImgv];
-//    
-//    UILabel* distanceLabel = [[UILabel alloc]initWithFrame:CGRectMake(115*screenWidth/375, 55*screenWidth/375, 200*screenWidth/375, 20*screenWidth/375)];
-//    distanceLabel.font = [UIFont systemFontOfSize:14*screenWidth/375];
-//    distanceLabel.text = @"上海佘山高尔夫球场";
-//    [_viewBack addSubview:distanceLabel];
-//}
-
 -(void)uiConfig
 {
     _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight-15) style:UITableViewStylePlain];

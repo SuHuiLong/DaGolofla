@@ -143,25 +143,34 @@ static NSString *const JGHActivityBaseCellIdentifier = @"JGHActivityBaseCell";
 }
 - (void)psuhAwardBtnClick:(UIButton *)btn{
     //doPublishPrize
-    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    [dict setObject:DEFAULF_USERID forKey:@"userKey"];
-    [dict setObject:@(_activityKey) forKey:@"activityKey"];
-    [[JsonHttp jsonHttp]httpRequest:@"team/doPublishPrize" JsonKey:nil withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
-        NSLog(@"%@", errType);
-    } completionBlock:^(id data) {
-        NSLog(@"%@", data);
-        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
-            JGDPrizeViewController *prizeCtrl = [[JGDPrizeViewController alloc]init];
-            prizeCtrl.activityKey = _activityKey;
-            prizeCtrl.teamKey = _teamKey;
-            prizeCtrl.model = _model;
-            [self.navigationController pushViewController:prizeCtrl animated:YES];
-        }else{
-            if ([data objectForKey:@"packResultMsg"]) {
-                [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+    if (_publishPrize == 1) {
+        [[ShowHUD showHUD]showToastWithText:@"保存成功！" FromView:self.view];
+        [self performSelector:@selector(backCtrl) withObject:self afterDelay:1.0];
+    }else{
+        NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+        [dict setObject:DEFAULF_USERID forKey:@"userKey"];
+        [dict setObject:@(_activityKey) forKey:@"activityKey"];
+        [[JsonHttp jsonHttp]httpRequest:@"team/doPublishPrize" JsonKey:nil withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
+            NSLog(@"%@", errType);
+        } completionBlock:^(id data) {
+            NSLog(@"%@", data);
+            if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+                if (_publishPrize == 0) {
+                    _refreshBlock();
+                }
+                
+                [self.navigationController popViewControllerAnimated:YES];
+            }else{
+                if ([data objectForKey:@"packResultMsg"]) {
+                    [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+                }
             }
-        }
-    }];
+        }];
+    }
+}
+#pragma mark -- 返回
+- (void)backCtrl{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 #pragma mark -- 创建TB
 - (void)createAwardTableView{

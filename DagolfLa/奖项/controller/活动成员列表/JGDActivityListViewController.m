@@ -39,7 +39,7 @@
     _signupKeyInfo =[NSMutableString stringWithString:@""];
     _signupNameInfo =[NSMutableString stringWithString:@""];
     
-    if (_checkdict.count > 5) {
+    if ([[_checkdict allKeys]containsObject:@"userInfo"]) {
         _signupKeyInfo = [NSMutableString stringWithString:[_checkdict objectForKey:@"signupKeyInfo"]];
         _signupNameInfo = [NSMutableString stringWithString:[_checkdict objectForKey:@"userInfo"]];
     }
