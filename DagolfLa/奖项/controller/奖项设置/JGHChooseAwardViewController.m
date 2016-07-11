@@ -113,11 +113,6 @@ static NSString *const JGSignUoPromptCellIdentifier = @"JGSignUoPromptCell";
 }
 #pragma mark -- 保存奖项
 - (void)saveAwardBtnClick:(UIButton *)btn{
-//    if (_selectArray.count == 0) {
-//        [[ShowHUD showHUD]showToastWithText:@"请选择奖项！" FromView:self.view];
-//        return;
-//    }
-    
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     [dict setObject:@(_teamKey) forKey:@"teamKey"];
     [dict setObject:@(_activityKey) forKey:@"activityKey"];

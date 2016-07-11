@@ -67,7 +67,13 @@
 - (void)configJGHAwardModel:(JGHAwardModel *)model{
     _titleLabel.text = model.name;
     _countLabel.text = [NSString stringWithFormat:@"奖品数量：%@",model.prizeSize];
-    _awardLabel.text = [NSString stringWithFormat:@"奖品：%@", model.prizeName];
+    
+    if (model.prizeName) {
+        _awardLabel.text = [NSString stringWithFormat:@"奖品：%@", model.prizeName];
+    }else{
+        _awardLabel.text = @"奖品";
+    }
+    
     
     if (model.userInfo) {
         _nameLabel.text = [NSString stringWithFormat:@"获奖人：%@", model.userInfo];

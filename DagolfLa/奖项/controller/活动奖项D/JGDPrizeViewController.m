@@ -19,6 +19,7 @@
 #import "MJDIYHeader.h"
 #import "JGTeamDeatilWKwebViewController.h"
 #import "EnterViewController.h"
+#import "JGLWinnersShareViewController.h"
 
 @interface JGDPrizeViewController ()<UITableViewDelegate, UITableViewDataSource>
 
@@ -36,19 +37,16 @@
     self.view.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];
     [self createTableView];
     
+    [self createPublishAwardNameListBtn];
+    
     UIBarButtonItem *barBtn = [[UIBarButtonItem alloc] initWithTitle:@"分享" style:(UIBarButtonItemStyleDone) target:self action:@selector(shareAct)];
     barBtn.tintColor = [UIColor whiteColor];
     self.navigationItem.rightBarButtonItem = barBtn;
     // Do any additional setup after loading the view.
 }
 
-
-
 #pragma mark -分享
-
 - (void)shareAct{
-
-    
     if ([[NSUserDefaults standardUserDefaults]objectForKey:@"userId"]) {
         //        self.ymData = (YMTextData *)[_tableDataSource objectAtIndex:indexRow];
         
@@ -60,8 +58,6 @@
         [UIView animateWithDuration:0.2 animations:^{
             [alert show];
         }];
-        
-        
     }else {
         [Helper alertViewWithTitle:@"是否立即登录?" withBlockCancle:^{
         } withBlockSure:^{
@@ -123,10 +119,9 @@
     
 }
 
-
 - (void)createTableView{
     
-    self.tableView = [[UITableView alloc] initWithFrame:[UIScreen mainScreen].bounds style:(UITableViewStylePlain)];
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight -65*ProportionAdapter) style:(UITableViewStylePlain)];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     [self.tableView registerClass:[JGDprizeTableViewCell class] forCellReuseIdentifier:@"prizeCell"];
@@ -140,7 +135,52 @@
 
     [self.view addSubview:self.tableView];
 }
-
+#pragma mark -- 创建工具栏
+- (void)createPublishAwardNameListBtn{
+    UIView *psuhView = [[UIView alloc]initWithFrame:CGRectMake(0, screenHeight - 65*ProportionAdapter - 64, screenWidth, 65*ProportionAdapter)];
+    psuhView.backgroundColor = [UIColor whiteColor];
+    UIButton *psuhBtn = [[UIButton alloc]initWithFrame:CGRectMake(10*ProportionAdapter, 10*ProportionAdapter, screenWidth - 20*ProportionAdapter, 65*ProportionAdapter - 20*ProportionAdapter)];
+    [psuhBtn setTitle:@"公布获奖名单" forState:UIControlStateNormal];
+    [psuhBtn setBackgroundColor:[UIColor colorWithHexString:Click_Color]];
+    psuhBtn.titleLabel.font = [UIFont systemFontOfSize:20*ProportionAdapter];
+    psuhBtn.layer.masksToBounds = YES;
+    psuhBtn.layer.cornerRadius = 8.0;
+    [psuhBtn addTarget:self action:@selector(publishAwardNameListClick:) forControlEvents:UIControlEventTouchUpInside];
+    [psuhView addSubview:psuhBtn];
+    [self.view addSubview:psuhView];
+}
+#pragma mark -- 公布获奖名单
+- (void)publishAwardNameListClick:(UIButton *)btn{
+    btn.enabled = NO;
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    [dict setObject:@(_activityKey) forKey:@"activityKey"];
+    [dict setObject:DEFAULF_USERID forKey:@"userKey"];
+//    [dict setObject:_prizeListArray forKey:@"prizeList"];
+    [[JsonHttp jsonHttp]httpRequest:@"team/doPublishNameList" JsonKey:nil withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
+        NSLog(@"errType == %@", errType);
+        btn.enabled = YES;
+    } completionBlock:^(id data) {
+        NSLog(@"data == %@", data);
+        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+            [[ShowHUD showHUD]showToastWithText:@"发布成功！" FromView:self.view];
+            [self performSelector:@selector(pushCtrl) withObject:self afterDelay:1.0];
+        }else{
+            if ([data objectForKey:@"packResultMsg"]) {
+                [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+            }
+        }
+    }];
+    
+    btn.enabled = YES;
+}
+#pragma mark -- 跳转
+- (void)pushCtrl{
+    JGLWinnersShareViewController *winnerCtrl = [[JGLWinnersShareViewController alloc]init];
+    winnerCtrl.model = _model;
+    winnerCtrl.activeKey = [NSNumber numberWithInteger:_activityKey];
+    winnerCtrl.teamKey = _teamKey;
+    [self.navigationController pushViewController:winnerCtrl animated:YES];
+}
 // 刷新
 - (void)headRereshing
 {
@@ -253,6 +293,11 @@
     setAwardVC.activityKey = self.activityKey;
     setAwardVC.teamKey = self.teamKey;
     setAwardVC.model = self.model;
+    setAwardVC.refreshBlock = ^(){
+        [_tableView.header endRefreshing];
+        _tableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
+        [_tableView.header beginRefreshing];
+    };
     [self.navigationController pushViewController:setAwardVC animated:YES];
 }
 
@@ -263,6 +308,11 @@
     JGLPresentAwardViewController *preVC = [[JGLPresentAwardViewController alloc] init];
     preVC.activityKey = _activityKey;
     preVC.model = _model;
+    preVC.refreshBlock = ^(){
+        [_tableView.header endRefreshing];
+        _tableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
+        [_tableView.header beginRefreshing];
+    };
     [self.navigationController pushViewController:preVC animated:YES];
 
 }
