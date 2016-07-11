@@ -48,17 +48,20 @@
     self.webView.navigationDelegate = self;
     self.webView.allowsBackForwardNavigationGestures =YES;
     if (_isScore == YES) {
-//        NSString* strU = @"http://imgcache.dagolfla.com/share/score/scoreRanking.html?userKey=191&srcType=1&srcKey=5700";
-//        NSString* strMd = [JGReturnMD5Str getUserScoreWithUserKey:[DEFAULF_USERID integerValue] srcKey:_activeTimeKey srcType:1];
         NSString* strMd = [JGReturnMD5Str getUserScoreWithTeamKey:_teamTimeKey userKey:[DEFAULF_USERID integerValue] srcKey:_activeTimeKey srcType:1];
         NSString* strU = [NSString stringWithFormat:@"%@&md5=%@",self.detailString,strMd];
         _strShareMd = strU;
         [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:strU]]];
     }
+    else if (_isManage == YES){
+//        NSString* strMd = [JGReturnMD5Str getUserScoreWithTeamKey:_teamTimeKey userKey:[DEFAULF_USERID integerValue] srcKey:_activeTimeKey srcType:1];
+        NSString* strMd = [JGReturnMD5Str getTeamBillInfoWithTeamKey:_teamKey userKey:[DEFAULF_USERID integerValue]];
+        NSString* strU = [NSString stringWithFormat:@"%@&md5=%@",self.detailString,strMd];
+        [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:strU]]];
+    }
     else{
         [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.detailString]]];
     }
-    
     
 }
 
@@ -80,7 +83,7 @@
 {
     NSData *fxData;
     UIImage* fxImg;
-    if ([NSNumber numberWithInteger:_teamTimeKey] != nil) {
+    if ([fxData isEqual:nil] != NO) {
         fxData = [NSData dataWithContentsOfURL:[Helper setImageIconUrl:@"team" andTeamKey:_teamTimeKey andIsSetWidth:YES andIsBackGround:NO] ];
     }
     else
@@ -92,13 +95,26 @@
     [UMSocialData defaultData].extConfig.title = [NSString stringWithFormat:@"%@奖品/获奖名单",_activeName];
     if(index==0)
     {
-        //微信
-        [UMSocialWechatHandler setWXAppId:@"wxdcdc4e20544ed728" appSecret:@"fdc75aae5a98f2aa0f62ef8cba2b08e9" url:shareUrl];
-        [UMSocialConfig hiddenNotInstallPlatforms:@[UMShareToWechatSession,UMShareToWechatTimeline,UMShareToSina]];
-        [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatSession] content:[NSString stringWithFormat:@"%@%@的奖品/获奖名单",_teamName,_activeName] image:[NSNumber numberWithInteger:_teamTimeKey] != nil ? fxData : fxImg location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
+        
+        if ([fxData isEqual:nil] != NO) {
+            //微信
+            [UMSocialWechatHandler setWXAppId:@"wxdcdc4e20544ed728" appSecret:@"fdc75aae5a98f2aa0f62ef8cba2b08e9" url:shareUrl];
+            [UMSocialConfig hiddenNotInstallPlatforms:@[UMShareToWechatSession,UMShareToWechatTimeline,UMShareToSina]];
+            [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatSession] content:[NSString stringWithFormat:@"%@%@的奖品/获奖名单",_teamName,_activeName] image:fxData location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
                 if (response.responseCode == UMSResponseCodeSuccess) {
                 }
-        }];
+            }];
+        }
+        else{
+            //微信
+            [UMSocialWechatHandler setWXAppId:@"wxdcdc4e20544ed728" appSecret:@"fdc75aae5a98f2aa0f62ef8cba2b08e9" url:shareUrl];
+            [UMSocialConfig hiddenNotInstallPlatforms:@[UMShareToWechatSession,UMShareToWechatTimeline,UMShareToSina]];
+            [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatSession] content:[NSString stringWithFormat:@"%@%@的奖品/获奖名单",_teamName,_activeName] image:fxImg location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
+                if (response.responseCode == UMSResponseCodeSuccess) {
+                }
+            }];
+        }
+        
         
         
     }
@@ -107,7 +123,7 @@
         //微信
         [UMSocialWechatHandler setWXAppId:@"wxdcdc4e20544ed728" appSecret:@"fdc75aae5a98f2aa0f62ef8cba2b08e9" url:shareUrl];
         [UMSocialConfig hiddenNotInstallPlatforms:@[UMShareToWechatSession,UMShareToWechatTimeline,UMShareToSina]];
-        [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatSession] content:[NSString stringWithFormat:@"%@%@的奖品/获奖名单",_teamName,_activeName] image:[NSNumber numberWithInteger:_teamTimeKey] != nil ? fxData : fxImg location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
+        [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatSession] content:[NSString stringWithFormat:@"%@%@的奖品/获奖名单",_teamName,_activeName] image:[fxData length] > 0 ? fxData : fxImg location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
             if (response.responseCode == UMSResponseCodeSuccess) {
             }
         }];
@@ -117,7 +133,7 @@
     {
         
         UMSocialData *data = [UMSocialData defaultData];
-        data.shareImage = [NSNumber numberWithInteger:_teamTimeKey] != nil ? fxData : fxImg;
+        data.shareImage = [fxData length] > 0 ? fxData : fxImg;
         data.shareText = [NSString stringWithFormat:@"%@奖品/获奖名单",_activeName];
         [[UMSocialControllerService defaultControllerService] setSocialData:data];
         //2.设置分享平台
