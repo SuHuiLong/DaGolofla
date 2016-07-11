@@ -89,7 +89,7 @@
     
     self.title = @"权限设置";
     
-    _arrayTitle = @[@[@"队长",@"会长",@"副会长",@"队长秘书长",@"球队秘书",@"干事"],@[@"活动管理",@"权限管理"]];
+    _arrayTitle = @[@[@"队长",@"会长",@"副会长",@"队长秘书长",@"球队秘书",@"干事",@"普通成员"],@[@"活动管理",@"权限管理"]];
     _arraySection = @[@"身份设置",@"职责设置",@"资金管理"];
     _arrayDetail = @[@"活动发布和对活动成员的管理",@"设置队员身份和职责"];
     _chooseID = 666;
@@ -112,14 +112,21 @@
         [_arrayNum addObject:@1002];
     }
     //把数组转换成字符串
-    NSString *strNum=[_arrayNum componentsJoinedByString:@","];
-    NSString* strPower = [NSString stringWithFormat:@"%@,1004,1005",strNum];
-    [dict setObject:strPower forKey:@"power"];
+    if (_chooseID == 7) {
+        [dict setObject:@"" forKey:@"power"];
+    }else{
+        NSString *strNum=[_arrayNum componentsJoinedByString:@","];
+        NSString* strPower = [NSString stringWithFormat:@"%@,1004,1005",strNum];
+        [dict setObject:strPower forKey:@"power"];
+       
+    }
     [dict setObject:_memberKey forKey:@"memberKey"];
+    
+
     [dict setObject:[NSNumber numberWithInteger:_chooseID] forKey:@"identity"];
 
     
-    if (_chooseID >= 0 && _chooseID <= 6) {
+    if (_chooseID >= 0 && _chooseID <= 7) {
         [[JsonHttp jsonHttp]httpRequest:@"team/updateTeamMemberPower" JsonKey:nil withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
             NSLog(@"errType == %@", errType);
         } completionBlock:^(id data) {
@@ -170,7 +177,7 @@
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if (section == 0) {
-        return 7;
+        return 8;
     }
     else if (section == 1)
     {
@@ -269,7 +276,20 @@
             cell.titleLabel.text = _arrayTitle[indexPath.section][indexPath.row - 1];
             cell.titleLabel.font = [UIFont systemFontOfSize:14*screenWidth/375];
             cell.detailLabel.text = _arrayDetail[indexPath.row - 1];
+            cell.detailLabel.textColor = [UIColor lightGrayColor];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
             if (_isClick == NO) {
+                if (_identity == 7) {
+                    cell.userInteractionEnabled = NO;
+                    cell.iconImgv.hidden = YES;
+                    return cell;
+                }
+                else{
+                    cell.userInteractionEnabled = YES;
+                    cell.iconImgv.hidden = NO;
+                    
+                }
+                
                 if (_memberArray.count != 0) {
                     if ([[_memberArray objectAtIndex:indexPath.row-1]integerValue] == 1) {
                         cell.iconImgv.image = [UIImage imageNamed:@"kuang_xz"];
@@ -283,6 +303,16 @@
             }
             else
             {
+                if (_chooseID == 7) {
+                    cell.userInteractionEnabled = NO;
+                    cell.iconImgv.hidden = YES;
+                    return cell;
+                }
+                else{
+                    cell.userInteractionEnabled = YES;
+                    cell.iconImgv.hidden = NO;
+                    
+                }
                 if (_chooseJob[indexPath.row - 1] == 0) {
                     cell.iconImgv.image = [UIImage imageNamed:@"kuang"];
                 }
@@ -294,9 +324,7 @@
             
             
         }
-        
-        cell.detailLabel.textColor = [UIColor lightGrayColor];
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+
         return cell;
     }
     return nil;
@@ -332,6 +360,7 @@
         _chooseID = indexPath.row;
         NSLog(@"%td",_chooseID);
         [_tableView reloadData];
+        
     }
     else if (indexPath.section == 1)
     {

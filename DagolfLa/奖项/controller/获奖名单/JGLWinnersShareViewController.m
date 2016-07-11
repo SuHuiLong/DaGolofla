@@ -101,7 +101,9 @@
     NSString*  shareUrl;
     fiData = [NSData dataWithContentsOfURL:[Helper setImageIconUrl:@"activity" andTeamKey:[self.activeKey integerValue] andIsSetWidth:YES andIsBackGround:YES]];
     
-    shareUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/team/teamPrize.html?activityKey=%td", [self.activeKey integerValue]];
+    
+    //
+    shareUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/team/awardedPrize.html?teamKey=%td&activityKey=%td&userKey=%@", _teamKey,[self.activeKey integerValue],DEFAULF_USERID];
     
     [UMSocialData defaultData].extConfig.title=[NSString stringWithFormat:@"%@ 奖品", _model.name];
     

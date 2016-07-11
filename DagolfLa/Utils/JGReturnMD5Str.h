@@ -23,6 +23,8 @@
 
 + (NSString *)scorePolenumberRankingWithUserKey:(NSInteger)userKey srcKey:(NSInteger)srcKey srcType:(NSInteger)srcType;
 
++ (NSString *)getUserScoreWithTeamKey:(NSInteger)teamKey  userKey:(NSInteger)userKey srcKey:(NSInteger)srcKey srcType:(NSInteger)srcType;
+
 + (NSString *)getUserScoreWithUserKey:(NSInteger)userKey srcKey:(NSInteger)srcKey srcType:(NSInteger)srcType;
 
 + (NSString *)getTeamBillInfoWithTeamKey:(NSInteger)teamKey userKey:(NSInteger)userKey;

@@ -16,6 +16,9 @@
 #import "UMSocialSinaHandler.h"
 #import "UMSocialWechatHandler.h"
 @interface JGTeamDeatilWKwebViewController ()<WKNavigationDelegate,WKUIDelegate>
+{
+    NSString* _strShareMd;
+}
 @property (strong, nonatomic) WKWebView *webView;
 
 @end
@@ -44,7 +47,18 @@
     self.webView.UIDelegate = self;
     self.webView.navigationDelegate = self;
     self.webView.allowsBackForwardNavigationGestures =YES;
-    [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.detailString]]];
+    if (_isScore == YES) {
+//        NSString* strU = @"http://imgcache.dagolfla.com/share/score/scoreRanking.html?userKey=191&srcType=1&srcKey=5700";
+//        NSString* strMd = [JGReturnMD5Str getUserScoreWithUserKey:[DEFAULF_USERID integerValue] srcKey:_activeTimeKey srcType:1];
+        NSString* strMd = [JGReturnMD5Str getUserScoreWithTeamKey:_teamTimeKey userKey:[DEFAULF_USERID integerValue] srcKey:_activeTimeKey srcType:1];
+        NSString* strU = [NSString stringWithFormat:@"%@&md5=%@",self.detailString,strMd];
+        _strShareMd = strU;
+        [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:strU]]];
+    }
+    else{
+        [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.detailString]]];
+    }
+    
     
 }
 
@@ -74,7 +88,7 @@
         fxImg = [UIImage imageNamed:@"logo"];
     }
 
-    NSString * shareUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/team/PrizeList.html?activityKey=%td&teamKey=%td&userKey=%@",_activeTimeKey,_teamTimeKey,DEFAULF_USERID];
+    NSString * shareUrl = _strShareMd;
     [UMSocialData defaultData].extConfig.title = [NSString stringWithFormat:@"%@奖品/获奖名单",_activeName];
     if(index==0)
     {
