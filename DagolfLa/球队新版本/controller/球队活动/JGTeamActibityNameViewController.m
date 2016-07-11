@@ -42,7 +42,7 @@
 #import "JGLPaySignUpViewController.h"
 #import "JGLActiveCancelMemViewController.h"
 #import "JGLPresentAwardViewController.h"
-#import "JGLWinnersShareViewController.h"
+//#import "JGLWinnersShareViewController.h"
 
 static NSString *const JGTeamActivityWithAddressCellIdentifier = @"JGTeamActivityWithAddressCell";
 static NSString *const JGTeamActivityDetailsCellIdentifier = @"JGTeamActivityDetailsCell";

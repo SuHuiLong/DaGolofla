@@ -52,7 +52,7 @@
 #import "JGDPrivateAccountViewController.h"
 #import "JGDWithDrawTeamMoneyViewController.h"
 
-#import "JGDPrizeViewController.h"
+//#import "JGDPrizeViewController.h"
 
 
 #import "JGTeamActibityNameViewController.h"
