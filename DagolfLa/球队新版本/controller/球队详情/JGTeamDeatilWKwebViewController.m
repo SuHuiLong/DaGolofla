@@ -48,17 +48,20 @@
     self.webView.navigationDelegate = self;
     self.webView.allowsBackForwardNavigationGestures =YES;
     if (_isScore == YES) {
-//        NSString* strU = @"http://imgcache.dagolfla.com/share/score/scoreRanking.html?userKey=191&srcType=1&srcKey=5700";
-//        NSString* strMd = [JGReturnMD5Str getUserScoreWithUserKey:[DEFAULF_USERID integerValue] srcKey:_activeTimeKey srcType:1];
         NSString* strMd = [JGReturnMD5Str getUserScoreWithTeamKey:_teamTimeKey userKey:[DEFAULF_USERID integerValue] srcKey:_activeTimeKey srcType:1];
         NSString* strU = [NSString stringWithFormat:@"%@&md5=%@",self.detailString,strMd];
         _strShareMd = strU;
         [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:strU]]];
     }
+    else if (_isManage == YES){
+//        NSString* strMd = [JGReturnMD5Str getUserScoreWithTeamKey:_teamTimeKey userKey:[DEFAULF_USERID integerValue] srcKey:_activeTimeKey srcType:1];
+        NSString* strMd = [JGReturnMD5Str getTeamBillInfoWithTeamKey:_teamKey userKey:[DEFAULF_USERID integerValue]];
+        NSString* strU = [NSString stringWithFormat:@"%@&md5=%@",self.detailString,strMd];
+        [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:strU]]];
+    }
     else{
         [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.detailString]]];
     }
-    
     
 }
 

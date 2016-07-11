@@ -711,7 +711,7 @@ static CGFloat ImageHeight  = 210.0;
     wkVC.teamTimeKey = _model.teamKey;
     wkVC.isScore = YES;
     wkVC.activeName = _model.name;
-    wkVC.detailString = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/score/scoreRanking.html?teamKey=%td&userKey=%@&srcKey=%td&srcType=1", _model.teamKey,DEFAULF_USERID, timeKey];
+    wkVC.detailString = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/score/scoreRanking.html?teamKey=%td&userKey=%@&srcKey=%td&srcType=1&share=1", _model.teamKey,DEFAULF_USERID, timeKey];
     wkVC.teamName = @"活动成绩";
     [self.navigationController pushViewController:wkVC animated:YES];
 }
