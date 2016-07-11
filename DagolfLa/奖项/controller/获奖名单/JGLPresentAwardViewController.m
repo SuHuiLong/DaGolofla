@@ -104,7 +104,13 @@
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     [dict setObject:@(_activityKey) forKey:@"activityKey"];    
     [dict setObject:@(_teamKey) forKey:@"teamKey"];
-    [[JsonHttp jsonHttp]httpRequest:@"team/getTeamActivityPrizeAllList" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
+    NSString *urlString = nil;
+    if (_isManager == 1) {
+        urlString = @"getTeamActivityPrizeAllList";
+    }else{
+        urlString = @"getAwardedInfo";
+    }
+    [[JsonHttp jsonHttp]httpRequest:[NSString stringWithFormat:@"team/%@", urlString] JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
         NSLog(@"errType == %@", errType);
         [[ShowHUD showHUD]hideAnimationFromView:self.view];
     } completionBlock:^(id data) {

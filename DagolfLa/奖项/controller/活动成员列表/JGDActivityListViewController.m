@@ -66,8 +66,18 @@
 
 - (void)check{
     if (self.delegate) {
-        [_checkdict setObject:_signupNameInfo forKey:@"userInfo"];
-        [_checkdict setObject:_signupKeyInfo forKey:@"signupKeyInfo"];
+        if (_signupKeyInfo.length == 0) {
+            [_checkdict setObject:@"" forKey:@"signupKeyInfo"];
+        }else{
+            [_checkdict setObject:_signupKeyInfo forKey:@"signupKeyInfo"];
+        }
+        
+        if (_signupNameInfo.length == 0) {
+            [_checkdict setObject:@"" forKey:@"userInfo"];
+        }else{
+            [_checkdict setObject:_signupNameInfo forKey:@"userInfo"];
+        }
+        
         [self.delegate saveBtnDict:_checkdict andAwardId:_awardId];
         [self.navigationController popViewControllerAnimated:YES];
     }
@@ -103,6 +113,7 @@
         }
     } completionBlock:^(id data) {
         NSLog(@"%@", data);
+        [self.dataArray removeAllObjects];
         if ([data objectForKey:@"packSuccess"]) {
             if (page == 0)
             {
