@@ -15,7 +15,7 @@
 #import "JGHChooseAwardViewController.h"
 #import "JGTeamAcitivtyModel.h"
 #import "JGHCustomAwardViewController.h"
-#import "JGDPrizeViewController.h"
+//#import "JGDPrizeViewController.h"
 
 static NSString *const JGHAddAwardImageCellIdentifier = @"JGHAddAwardImageCell";
 static NSString *const JGHAwardCellIdentifier = @"JGHAwardCell";
