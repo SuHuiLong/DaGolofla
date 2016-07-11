@@ -64,7 +64,7 @@ static NSString *const JGHActivityBaseCellIdentifier = @"JGHActivityBaseCell";
     
     [self createPushAwardBtn];
     
-    [self loadData];
+//    [self loadData];
 }
 #pragma mark --未发布
 - (void)createNoData{
@@ -87,6 +87,7 @@ static NSString *const JGHActivityBaseCellIdentifier = @"JGHActivityBaseCell";
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     [dict setObject:@(_activityKey) forKey:@"activityKey"];
     [dict setObject:@(_teamKey) forKey:@"teamKey"];
+    [dict setObject:DEFAULF_USERID forKey:@"userKey"];
     [[JsonHttp jsonHttp]httpRequest:@"team/getTeamActivityPrizeAllList" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
         NSLog(@"errType = %@", errType);
         [[ShowHUD showHUD]hideAnimationFromView:self.view];
@@ -284,6 +285,7 @@ static NSString *const JGHActivityBaseCellIdentifier = @"JGHActivityBaseCell";
 - (void)todoDeleClick:(UIButton *)btn{
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     [dict setObject:@(btn.tag) forKey:@"prizeKey"];
+    [dict setObject:DEFAULF_USERID forKey:@"userKey"];
     [[JsonHttp jsonHttp]httpRequest:@"team/doDeletePrize" JsonKey:nil withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
         
     } completionBlock:^(id data) {

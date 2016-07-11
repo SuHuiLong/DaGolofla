@@ -113,11 +113,12 @@ static NSString *const JGSignUoPromptCellIdentifier = @"JGSignUoPromptCell";
 }
 #pragma mark -- 保存奖项
 - (void)saveAwardBtnClick:(UIButton *)btn{
+    btn.enabled = NO;
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     [dict setObject:@(_teamKey) forKey:@"teamKey"];
     [dict setObject:@(_activityKey) forKey:@"activityKey"];
     [dict setObject:_selectArray forKey:@"defaultList"];
-    
+    [dict setObject:DEFAULF_USERID forKey:@"userKey"];
     [[JsonHttp jsonHttp]httpRequest:@"team/doSaveDefaultPrize" JsonKey:nil withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
         
     } completionBlock:^(id data) {
@@ -129,8 +130,14 @@ static NSString *const JGSignUoPromptCellIdentifier = @"JGSignUoPromptCell";
             [[NSNotificationCenter defaultCenter]postNotification:notice];
             
             [self performSelector:@selector(pushCtrl) withObject:self afterDelay:1.0];
+        }else{
+            if ([data objectForKey:@"packResultMsg"]) {
+                [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+            }
         }
     }];
+    
+    btn.enabled = YES;
 }
 - (void)pushCtrl{
     [self.navigationController popViewControllerAnimated:YES];

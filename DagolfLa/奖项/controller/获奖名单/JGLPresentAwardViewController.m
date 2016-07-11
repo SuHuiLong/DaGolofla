@@ -22,6 +22,9 @@
     UIView* _viewBack;
     NSMutableArray *_prizeListArray;
 }
+
+@property (nonatomic, strong)UIView *bgView;
+
 @end
 
 @implementation JGLPresentAwardViewController
@@ -46,7 +49,7 @@
         [self createPublishAwardNameListBtn];
     }
     
-    [self loadData];
+//    [self loadData];
 }
 #pragma mark -- 创建工具栏
 - (void)createPublishAwardNameListBtn{
@@ -110,6 +113,8 @@
     }else{
         urlString = @"getAwardedInfo";
     }
+    
+    [dict setObject:DEFAULF_USERID forKey:@"userKey"];
     [[JsonHttp jsonHttp]httpRequest:[NSString stringWithFormat:@"team/%@", urlString] JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
         NSLog(@"errType == %@", errType);
         [[ShowHUD showHUD]hideAnimationFromView:self.view];
@@ -157,11 +162,35 @@
             }
         }
         
+        if (_dataArray.count == 0) {
+            [self createNoData];
+        }else{
+            for(UIView *view in [self.bgView subviews])
+            {
+                [view removeFromSuperview];
+            }
+        }
+        
         [_tableView.header endRefreshing];
         
         [_tableView reloadData];
         
     }];
+}
+#pragma mark --未发布
+- (void)createNoData{
+    self.bgView = [[UIView alloc]initWithFrame:CGRectMake(screenWidth/2 - 45*ProportionAdapter, screenHeight/2 - 110*ProportionAdapter, 80*ProportionAdapter, 100*ProportionAdapter)];
+    UIImageView *weifabuImageview = [[UIImageView alloc]initWithFrame:CGRectMake(10*ProportionAdapter, 10*ProportionAdapter, self.bgView.frame.size.width-20*ProportionAdapter, self.bgView.frame.size.height - 40*ProportionAdapter)];
+    weifabuImageview.image = [UIImage imageNamed:@"weifabutishi"];
+    [self.bgView addSubview:weifabuImageview];
+    
+    UILabel *weifaLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, weifabuImageview.frame.size.height + 15*ProportionAdapter, self.bgView.frame.size.width, 20*ProportionAdapter)];
+    weifaLabel.text = @"暂未发布奖项";
+    weifaLabel.textAlignment = NSTextAlignmentCenter;
+    weifaLabel.font = [UIFont systemFontOfSize:13.0*ProportionAdapter];
+    weifaLabel.textColor = [UIColor lightGrayColor];
+    [self.bgView addSubview:weifaLabel];
+    [_tableView addSubview:self.bgView];
 }
 -(void)createHeader
 {
@@ -307,8 +336,13 @@
             cell = [[JGLPresentAwardTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:JGLPresentAwardTableViewCellID];
         }
         
-        cell.chooseBtn.tag = indexPath.section + 100 -1;
-        [cell.chooseBtn addTarget:self action:@selector(chooseAwarderClick:) forControlEvents:UIControlEventTouchUpInside];
+        if (self.isManager == 1) {
+            cell.chooseBtn.tag = indexPath.section + 100 -1;
+            [cell.chooseBtn addTarget:self action:@selector(chooseAwarderClick:) forControlEvents:UIControlEventTouchUpInside];
+        }else{
+            cell.chooseBtn.hidden = YES;
+        }
+        
         [cell configJGHAwardModel:_dataArray[indexPath.section -1]];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
