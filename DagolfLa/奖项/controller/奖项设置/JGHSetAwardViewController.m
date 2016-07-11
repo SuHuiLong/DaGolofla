@@ -99,7 +99,7 @@ static NSString *const JGHActivityBaseCellIdentifier = @"JGHActivityBaseCell";
             if (_publishPrize == 0) {
                 [self.psuhBtn setTitle:@"发布奖项" forState:UIControlStateNormal];
             }else{
-                [self.psuhBtn setTitle:@"保存" forState:UIControlStateNormal];
+                [self.psuhBtn setTitle:@"保存奖项" forState:UIControlStateNormal];
             }
             NSArray *array = [data objectForKey:@"list"];
             for (NSDictionary *dict in array) {

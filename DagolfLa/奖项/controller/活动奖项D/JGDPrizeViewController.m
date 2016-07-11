@@ -152,23 +152,30 @@
 #pragma mark -- 公布获奖名单
 - (void)publishAwardNameListClick:(UIButton *)btn{
     btn.enabled = NO;
-    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    [dict setObject:@(_activityKey) forKey:@"activityKey"];
-    [dict setObject:DEFAULF_USERID forKey:@"userKey"];
-//    [dict setObject:_prizeListArray forKey:@"prizeList"];
-    [[JsonHttp jsonHttp]httpRequest:@"team/doPublishNameList" JsonKey:nil withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
-        NSLog(@"errType == %@", errType);
-        btn.enabled = YES;
-    } completionBlock:^(id data) {
-        NSLog(@"data == %@", data);
-        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
-            [[ShowHUD showHUD]showToastWithText:@"发布成功！" FromView:self.view];
-            [self performSelector:@selector(pushCtrl) withObject:self afterDelay:1.0];
-        }else{
-            if ([data objectForKey:@"packResultMsg"]) {
-                [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+    
+    [Helper alertViewWithTitle:@"确定公布获奖名单？" withBlockCancle:^{
+        
+    } withBlockSure:^{
+        NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+        [dict setObject:@(_activityKey) forKey:@"activityKey"];
+        [dict setObject:DEFAULF_USERID forKey:@"userKey"];
+        //    [dict setObject:_prizeListArray forKey:@"prizeList"];
+        [[JsonHttp jsonHttp]httpRequest:@"team/doPublishNameList" JsonKey:nil withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
+            NSLog(@"errType == %@", errType);
+            btn.enabled = YES;
+        } completionBlock:^(id data) {
+            NSLog(@"data == %@", data);
+            if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+                [[ShowHUD showHUD]showToastWithText:@"发布成功！" FromView:self.view];
+                [self performSelector:@selector(pushCtrl) withObject:self afterDelay:1.0];
+            }else{
+                if ([data objectForKey:@"packResultMsg"]) {
+                    [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+                }
             }
-        }
+        }];
+    } withBlock:^(UIAlertController *alertView) {
+        [self presentViewController:alertView animated:YES completion:nil];
     }];
     
     btn.enabled = YES;
