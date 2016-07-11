@@ -180,7 +180,7 @@
         cell.selectImage.image = [UIImage imageNamed:@"kuang"];
         model.isSelect = NO;
         if ([_signupKeyInfo containsString:[NSString stringWithFormat:@"%@", model.timeKey]]) {
-            _signupKeyInfo = [NSMutableString stringWithString:[_signupKeyInfo stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"%@/", model.timeKey] withString:@""]];
+            _signupKeyInfo = [NSMutableString stringWithString:[_signupKeyInfo stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"%@,", model.timeKey] withString:@""]];
             
             _signupNameInfo = [NSMutableString stringWithString:[_signupNameInfo stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"%@/", model.name] withString:@""]];
         }

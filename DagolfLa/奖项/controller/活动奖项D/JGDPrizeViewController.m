@@ -159,7 +159,7 @@
         NSMutableDictionary *dict = [NSMutableDictionary dictionary];
         [dict setObject:@(_activityKey) forKey:@"activityKey"];
         [dict setObject:DEFAULF_USERID forKey:@"userKey"];
-        //    [dict setObject:_prizeListArray forKey:@"prizeList"];
+//        [dict setObject:_prizeListArray forKey:@"prizeList"];
         [[JsonHttp jsonHttp]httpRequest:@"team/doPublishNameList" JsonKey:nil withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
             NSLog(@"errType == %@", errType);
             btn.enabled = YES;
@@ -275,10 +275,10 @@
             if (self.isManager != 1) {
                 
                 [cell.contentView addSubview:cell.presentationBtn];
-                [cell.contentView addSubview:cell.prizeBtn];
+//                [cell.contentView addSubview:cell.prizeBtn];
                 
                 [cell.presentationBtn addTarget:self action:@selector(present) forControlEvents:(UIControlEventTouchUpInside)];
-                [cell.prizeBtn addTarget:self action:@selector(prizeSet) forControlEvents:(UIControlEventTouchUpInside)];
+//                [cell.prizeBtn addTarget:self action:@selector(prizeSet) forControlEvents:(UIControlEventTouchUpInside)];
             }
             return cell;
         }else{

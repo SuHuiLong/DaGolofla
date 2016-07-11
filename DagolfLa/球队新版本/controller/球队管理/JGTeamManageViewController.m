@@ -43,6 +43,7 @@
     [self.tableView registerClass:[JGImageAndLabelAndLabelTableViewCell class] forCellReuseIdentifier:@"imageVSlabel"];
 //    self.array = [NSArray arrayWithObjects:@"入队审核",@[@"队员管理",@"活动管理", @"相册管理"],@"发布公告",@"球队资料编辑", nil];
     self.array = [NSArray arrayWithObjects:@"发布公告",@[@"球队资料编辑",@"入队审核"],@[@"队员管理",@"活动管理", @"相册管理"],@"账户管理", nil];
+    
 
     self.imageArray = [NSArray arrayWithObjects:@"fbgg", @[@"qdzl", @"rd"], @[@"dy", @"hd-2", @"xcgl"],@"zhgl", nil];
     [self.view addSubview: self.tableView];

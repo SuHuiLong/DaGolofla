@@ -11,7 +11,7 @@
 @interface JGDActvityPriziSetTableViewCell : UITableViewCell
 
 
-@property (nonatomic, strong) UIButton *prizeBtn; // 奖项设置
+//@property (nonatomic, strong) UIButton *prizeBtn; // 奖项设置
 
 @property (nonatomic, strong) UIButton *presentationBtn; // 颁奖
 

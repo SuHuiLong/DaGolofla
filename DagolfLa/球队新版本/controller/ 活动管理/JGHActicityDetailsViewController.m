@@ -39,7 +39,7 @@
 #import "JGCostSetViewController.h"
 #import "JGHConcentTextViewController.h"
 #import "JGHSetAwardViewController.h"
-#import "JGDPrizeViewController.h"
+#import "JGLPresentAwardViewController.h"
 
 static NSString *const JGTableViewCellIdentifier = @"JGTableViewCell";
 static NSString *const JGTeamActivityWithAddressCellIdentifier = @"JGTeamActivityWithAddressCell";
@@ -688,7 +688,7 @@ static CGFloat ImageHeight  = 210.0;
 - (void)setAward:(UIButton *)btn{
     
     if (![Helper isBlankString:_model.awardedInfo]) {
-        JGDPrizeViewController *prizeCtrl = [[JGDPrizeViewController alloc]init];
+        JGLPresentAwardViewController *prizeCtrl = [[JGLPresentAwardViewController alloc]init];
         if (_model.teamActivityKey != 0) {
             prizeCtrl.activityKey = _model.teamActivityKey;
         }else{
@@ -696,7 +696,7 @@ static CGFloat ImageHeight  = 210.0;
         }
 
         prizeCtrl.teamKey = _model.teamKey;
-//        prizeCtrl.isManager = 1;
+        prizeCtrl.isManager = 1;
         
         prizeCtrl.model = _model;
         [self.navigationController pushViewController:prizeCtrl animated:YES];

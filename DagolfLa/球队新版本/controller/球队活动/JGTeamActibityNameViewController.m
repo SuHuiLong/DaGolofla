@@ -41,8 +41,7 @@
 #import "JGLActiveCancelMemViewController.h"
 #import "JGLPaySignUpViewController.h"
 #import "JGLActiveCancelMemViewController.h"
-#import "JGDPrizeViewController.h"
-
+#import "JGLPresentAwardViewController.h"
 #import "JGLWinnersShareViewController.h"
 
 static NSString *const JGTeamActivityWithAddressCellIdentifier = @"JGTeamActivityWithAddressCell";
@@ -672,24 +671,26 @@ static CGFloat ImageHeight  = 210.0;
 }
 #pragma mark -- 查看奖项
 - (void)getTeamActivityAward:(UIButton *)btn{
-    if (![Helper isBlankString:_model.awardedInfo]) {
-        JGLWinnersShareViewController *winnerCtrl = [[JGLWinnersShareViewController alloc]init];
-        winnerCtrl.model = _model;
-        winnerCtrl.activeKey = [NSNumber numberWithInteger:[_model.timeKey integerValue]];
-        winnerCtrl.teamKey = _teamKey;
-        [self.navigationController pushViewController:winnerCtrl animated:YES];
-    }
-    else{
-        JGDPrizeViewController *prizeCtrl = [[JGDPrizeViewController alloc]init];
+//    if (![Helper isBlankString:_model.awardedInfo]) {
+//        JGLWinnersShareViewController *winnerCtrl = [[JGLWinnersShareViewController alloc]init];
+//        winnerCtrl.model = _model;
+//        winnerCtrl.activeKey = [NSNumber numberWithInteger:[_model.timeKey integerValue]];
+//        winnerCtrl.teamKey = _teamKey;
+//        [self.navigationController pushViewController:winnerCtrl animated:YES];
+//    }
+//    else{
+        JGLPresentAwardViewController *prizeCtrl = [[JGLPresentAwardViewController alloc]init];
         prizeCtrl.activityKey = _teamKey;
         prizeCtrl.teamKey = _model.teamKey;
-        if (![_power containsString:@"1001"]) {
+        if ([_power containsString:@"1001"]) {
             prizeCtrl.isManager = 1;
+        }else{
+            prizeCtrl.isManager = 0;
         }
         
         prizeCtrl.model = _model;
         [self.navigationController pushViewController:prizeCtrl animated:YES];
-    }
+//    }
     
 }
 #pragma mark -- 查看成绩
