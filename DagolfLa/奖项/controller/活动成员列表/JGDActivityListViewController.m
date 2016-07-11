@@ -39,9 +39,9 @@
     _signupKeyInfo =[NSMutableString stringWithString:@""];
     _signupNameInfo =[NSMutableString stringWithString:@""];
     
-    if (_awardModel.userInfo) {
-        _signupKeyInfo = [NSMutableString stringWithString:_awardModel.signupKeyInfo];
-        _signupNameInfo = [NSMutableString stringWithString:_awardModel.userInfo];
+    if (_checkdict.count > 5) {
+        _signupKeyInfo = [NSMutableString stringWithString:[_checkdict objectForKey:@"signupKeyInfo"]];
+        _signupNameInfo = [NSMutableString stringWithString:[_checkdict objectForKey:@"userInfo"]];
     }
     
     self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight) style:(UITableViewStylePlain)];

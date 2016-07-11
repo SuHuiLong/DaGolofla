@@ -50,7 +50,7 @@
         self.phoneLB.text = muatbleStr;
     }
     
-    [self.headIconV sd_setImageWithURL:[Helper setImageIconUrl:@"user" andTeamKey:[listModel.userKey integerValue] andIsSetWidth:YES andIsBackGround:NO] placeholderImage:[UIImage imageNamed:@"selfBackPic.jpg"]];
+    [self.headIconV sd_setImageWithURL:[Helper setImageIconUrl:@"user" andTeamKey:[listModel.userKey integerValue] andIsSetWidth:YES andIsBackGround:NO] placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
     if (listModel.isSelect) {
         self.selectImage.image = [UIImage imageNamed:@"kuang_xz"];
     }else{

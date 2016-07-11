@@ -575,7 +575,7 @@ static CGFloat ImageHeight  = 210.0;
         return ImageHeight;
     }else if (section == 1){
         return 110;
-    }else if (section == 5){
+    }else if (section == 6){
         static JGTeamActivityDetailsCell *cell;
         if (!cell) {
             cell = [self.teamActibityNameTableView dequeueReusableCellWithIdentifier:JGTeamActivityDetailsCellIdentifier];
@@ -648,19 +648,19 @@ static CGFloat ImageHeight  = 210.0;
         [headerCell congiftitles:@"查看成绩"];
         return (UIView *)headerCell;
     }else if (section == 5) {
-        JGTeamActivityDetailsCell *detailsCell = [tableView dequeueReusableCellWithIdentifier:JGTeamActivityDetailsCellIdentifier];
-        UIButton *detailsBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, screenWidth, detailsCell.frame.size.height)];
-        [detailsBtn addTarget:self action:@selector(pushDetailSCtrl:) forControlEvents:UIControlEventTouchUpInside];
-        [detailsCell addSubview:detailsBtn];
-        [detailsCell configDetailsText:@"活动详情" AndActivityDetailsText:self.model.info];
-        return (UIView *)detailsCell;
-    }else{
         JGHHeaderLabelCell *headerCell = [tableView dequeueReusableCellWithIdentifier:JGHHeaderLabelCellIdentifier];
         UIButton *applyListBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, screenWidth, headerCell.frame.size.height)];
         [applyListBtn addTarget:self action:@selector(getTeamActivityAward:) forControlEvents:UIControlEventTouchUpInside];
         [headerCell addSubview:applyListBtn];
         [headerCell congiftitles:@"查看奖项"];
         return (UIView *)headerCell;
+    }else{
+        JGTeamActivityDetailsCell *detailsCell = [tableView dequeueReusableCellWithIdentifier:JGTeamActivityDetailsCellIdentifier];
+        UIButton *detailsBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, screenWidth, detailsCell.frame.size.height)];
+        [detailsBtn addTarget:self action:@selector(pushDetailSCtrl:) forControlEvents:UIControlEventTouchUpInside];
+        [detailsCell addSubview:detailsBtn];
+        [detailsCell configDetailsText:@"活动详情" AndActivityDetailsText:self.model.info];
+        return (UIView *)detailsCell;
     }
 }
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
