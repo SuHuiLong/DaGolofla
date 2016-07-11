@@ -111,10 +111,6 @@
     if (_chooseJob[1] == 1) {
         [_arrayNum addObject:@1002];
     }
-//    if (_chooseJob[2] == 1) {
-//        [_arrayNum addObject:@1003];
-//    }
-
     //把数组转换成字符串
     NSString *strNum=[_arrayNum componentsJoinedByString:@","];
     NSString* strPower = [NSString stringWithFormat:@"%@,1004,1005",strNum];
@@ -128,10 +124,7 @@
             NSLog(@"errType == %@", errType);
         } completionBlock:^(id data) {
             if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
-//                [Helper alertViewNoHaveCancleWithTitle:@"设置成功" withBlock:^(UIAlertController *alertView) {
-//                    [self.navigationController presentViewController:alertView animated:YES completion:nil];
-//                }];
-//                [self.navigationController popViewControllerAnimated:YES];
+                
                 [[ShowHUD showHUD]showToastWithText:@"设置成功" FromView:self.view];
                 [self performSelector:@selector(pop) withObject:self afterDelay:1];
 
