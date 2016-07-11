@@ -79,7 +79,7 @@
     UIView *psuhView = [[UIView alloc]initWithFrame:CGRectMake(0, screenHeight - 65*ProportionAdapter-64, screenWidth, 65*ProportionAdapter)];
     psuhView.backgroundColor = [UIColor whiteColor];
     UIButton *psuhBtn = [[UIButton alloc]initWithFrame:CGRectMake(10*ProportionAdapter, 10*ProportionAdapter, screenWidth - 20*ProportionAdapter, 65*ProportionAdapter - 20*ProportionAdapter)];
-    [psuhBtn setTitle:@"公布获奖名单" forState:UIControlStateNormal];
+    [psuhBtn setTitle:@"保存获奖名单" forState:UIControlStateNormal];
     [psuhBtn setBackgroundColor:[UIColor colorWithHexString:Click_Color]];
     psuhBtn.titleLabel.font = [UIFont systemFontOfSize:20*ProportionAdapter];
     psuhBtn.layer.masksToBounds = YES;
@@ -91,33 +91,33 @@
 #pragma mark -- 公布获奖名单
 - (void)publishedAwardNameBtnClick:(UIButton *)btn{
     btn.enabled = NO;
-    [Helper alertViewWithTitle:@"确定公布获奖名单?" withBlockCancle:^{
-        
-    } withBlockSure:^{
-        btn.enabled = NO;
-        NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-        [dict setObject:@(_activityKey) forKey:@"activityKey"];
-        [dict setObject:DEFAULF_USERID forKey:@"userKey"];
-        [dict setObject:_prizeListArray forKey:@"prizeList"];
-        [[JsonHttp jsonHttp]httpRequest:@"team/doPublishNameList" JsonKey:nil withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
-            NSLog(@"errType == %@", errType);
-            btn.enabled = YES;
-        } completionBlock:^(id data) {
-            NSLog(@"data == %@", data);
-            if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+//    [Helper alertViewWithTitle:@"确定公布获奖名单?" withBlockCancle:^{
+//        
+//    } withBlockSure:^{
+//        btn.enabled = NO;
+//        NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+//        [dict setObject:@(_activityKey) forKey:@"activityKey"];
+//        [dict setObject:DEFAULF_USERID forKey:@"userKey"];
+//        [dict setObject:_prizeListArray forKey:@"prizeList"];
+//        [[JsonHttp jsonHttp]httpRequest:@"team/doPublishNameList" JsonKey:nil withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
+//            NSLog(@"errType == %@", errType);
+//            btn.enabled = YES;
+//        } completionBlock:^(id data) {
+//            NSLog(@"data == %@", data);
+//            if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
                 [[ShowHUD showHUD]showToastWithText:@"发布成功！" FromView:self.view];
                 [self performSelector:@selector(pushCtrl) withObject:self afterDelay:1.0];
-            }else{
-                if ([data objectForKey:@"packResultMsg"]) {
-                    [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
-                }
-            }
-            
-            btn.enabled = YES;
-        }];
-    } withBlock:^(UIAlertController *alertView) {
-        [self presentViewController:alertView animated:YES completion:nil];
-    }];
+//            }else{
+//                if ([data objectForKey:@"packResultMsg"]) {
+//                    [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+//                }
+//            }
+//            
+//            btn.enabled = YES;
+//        }];
+//    } withBlock:^(UIAlertController *alertView) {
+//        [self presentViewController:alertView animated:YES completion:nil];
+//    }];
     
     btn.enabled = YES;
 }
@@ -147,7 +147,12 @@
                 [prizeDict setObject:@(_teamKey) forKey:@"teamKey"];
                 [prizeDict setObject:@(_activityKey) forKey:@"teamActivityKey"];
                 [prizeDict setObject:model.name forKey:@"name"];
-                [prizeDict setObject:model.prizeName forKey:@"prizeName"];
+                if (model.prizeName == nil) {
+                    [prizeDict setObject:@"" forKey:@"prizeName"];
+                }else{
+                    [prizeDict setObject:model.prizeName forKey:@"prizeName"];
+                }
+                
                 [prizeDict setObject:model.prizeSize forKey:@"prizeSize"];
                 if (model.signupKeyInfo) {
                     [prizeDict setObject:model.signupKeyInfo forKey:@"signupKeyInfo"];

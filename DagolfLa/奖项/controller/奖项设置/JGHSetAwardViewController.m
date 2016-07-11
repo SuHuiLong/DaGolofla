@@ -23,11 +23,17 @@ static NSString *const JGHActivityBaseCellIdentifier = @"JGHActivityBaseCell";
 
 @interface JGHSetAwardViewController ()<UITableViewDelegate, UITableViewDataSource, JGHAwardCellDelegate>
 
+{
+    NSInteger _publishPrize;
+}
+
 @property (nonatomic, strong)UITableView *awardTableView;
 
 @property (nonatomic, strong)NSMutableArray *dataArray;
 
 @property (nonatomic, strong)UIView *bgView;
+
+@property (nonatomic, strong)UIButton *psuhBtn;
 
 @end
 
@@ -89,6 +95,12 @@ static NSString *const JGHActivityBaseCellIdentifier = @"JGHActivityBaseCell";
         [[ShowHUD showHUD]hideAnimationFromView:self.view];
         [self.dataArray removeAllObjects];
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+            _publishPrize = [[data objectForKey:@"publishPrize"] integerValue];
+            if (_publishPrize == 0) {
+                [self.psuhBtn setTitle:@"发布奖项" forState:UIControlStateNormal];
+            }else{
+                [self.psuhBtn setTitle:@"保存" forState:UIControlStateNormal];
+            }
             NSArray *array = [data objectForKey:@"list"];
             for (NSDictionary *dict in array) {
                 JGHAwardModel *model = [[JGHAwardModel alloc]init];
@@ -119,14 +131,14 @@ static NSString *const JGHActivityBaseCellIdentifier = @"JGHActivityBaseCell";
 - (void)createPushAwardBtn{
     UIView *psuhView = [[UIView alloc]initWithFrame:CGRectMake(0, screenHeight - 65*ProportionAdapter - 64, screenWidth, 65*ProportionAdapter)];
     psuhView.backgroundColor = [UIColor whiteColor];
-    UIButton *psuhBtn = [[UIButton alloc]initWithFrame:CGRectMake(10*ProportionAdapter, 10*ProportionAdapter, screenWidth - 20*ProportionAdapter, 65*ProportionAdapter - 20*ProportionAdapter)];
-    [psuhBtn setTitle:@"发布奖项" forState:UIControlStateNormal];
-    [psuhBtn setBackgroundColor:[UIColor colorWithHexString:Click_Color]];
-    psuhBtn.titleLabel.font = [UIFont systemFontOfSize:20*ProportionAdapter];
-    psuhBtn.layer.masksToBounds = YES;
-    psuhBtn.layer.cornerRadius = 8.0;
-    [psuhBtn addTarget:self action:@selector(psuhAwardBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-    [psuhView addSubview:psuhBtn];
+    self.psuhBtn = [[UIButton alloc]initWithFrame:CGRectMake(10*ProportionAdapter, 10*ProportionAdapter, screenWidth - 20*ProportionAdapter, 65*ProportionAdapter - 20*ProportionAdapter)];
+    [self.psuhBtn setTitle:@"发布奖项" forState:UIControlStateNormal];
+    [self.psuhBtn setBackgroundColor:[UIColor colorWithHexString:Click_Color]];
+    self.psuhBtn.titleLabel.font = [UIFont systemFontOfSize:20*ProportionAdapter];
+    self.psuhBtn.layer.masksToBounds = YES;
+    self.psuhBtn.layer.cornerRadius = 8.0;
+    [self.psuhBtn addTarget:self action:@selector(psuhAwardBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    [psuhView addSubview:self.psuhBtn];
     [self.view addSubview:psuhView];
 }
 - (void)psuhAwardBtnClick:(UIButton *)btn{
