@@ -101,13 +101,15 @@ static NSString *const JGHActivityBaseCellIdentifier = @"JGHActivityBaseCell";
             }
         }
         
-        
         [self.awardTableView.header endRefreshing];
         
         if (_dataArray.count == 0) {
             [self createNoData];
         }else{
-            [_bgView removeFromSuperview];
+            for(UIView *view in [self.bgView subviews])
+            {
+                [view removeFromSuperview];
+            }
         }
         
         [self.awardTableView reloadData];
