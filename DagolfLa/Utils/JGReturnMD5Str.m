@@ -38,7 +38,7 @@
 }
 
 + (NSString *)getUserScoreWithTeamKey:(NSInteger)teamKey  userKey:(NSInteger)userKey srcKey:(NSInteger)srcKey srcType:(NSInteger)srcType {
-    return [Helper md5HexDigest:[NSString stringWithFormat:@"teamKey=%tduserKey=%td&srcKey=%td&srcType=%tddagolfla.com",teamKey , userKey, srcKey, srcType]];
+    return [Helper md5HexDigest:[NSString stringWithFormat:@"teamKey=%td&userKey=%td&srcKey=%td&srcType=%tddagolfla.com",teamKey , userKey, srcKey, srcType]];
 }
 
 
