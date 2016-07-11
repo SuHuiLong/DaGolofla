@@ -47,7 +47,7 @@
         _viewLine.backgroundColor = [UIColor lightGrayColor];
         [self addSubview:_viewLine];
         
-        _nameLabel = [[UILabel alloc]initWithFrame:CGRectMake(10*screenWidth/320, 60*screenWidth/320, screenWidth - 60*screenWidth/320, 45*screenWidth/320)];
+        _nameLabel = [[UILabel alloc]initWithFrame:CGRectMake(10*screenWidth/320, 60*screenWidth/320, screenWidth - 100*screenWidth/320, 45*screenWidth/320)];
         _nameLabel.text = @"获奖人：";
         _nameLabel.font = [UIFont systemFontOfSize:15*screenWidth/320];
         [self addSubview:_nameLabel];

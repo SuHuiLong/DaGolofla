@@ -90,5 +90,7 @@
 //用来记录是否选中
 @property (nonatomic, assign) BOOL isClick;
 
+@property (nonatomic, strong) NSString* awardedInfo;
+
 
 @end

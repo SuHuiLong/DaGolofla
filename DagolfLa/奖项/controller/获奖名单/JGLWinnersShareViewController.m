@@ -59,6 +59,10 @@
 //            prizeCtrl.teamKey = _teamKey;
             [self.navigationController popToViewController:controller animated:YES];
         }
+        else{
+            [self.navigationController popViewControllerAnimated:YES];
+            return;
+        }
     }
 }
 

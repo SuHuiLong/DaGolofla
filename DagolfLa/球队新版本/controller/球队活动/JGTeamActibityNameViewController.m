@@ -43,6 +43,8 @@
 #import "JGLActiveCancelMemViewController.h"
 #import "JGDPrizeViewController.h"
 
+#import "JGLWinnersShareViewController.h"
+
 static NSString *const JGTeamActivityWithAddressCellIdentifier = @"JGTeamActivityWithAddressCell";
 static NSString *const JGTeamActivityDetailsCellIdentifier = @"JGTeamActivityDetailsCell";
 static NSString *const JGHHeaderLabelCellIdentifier = @"JGHHeaderLabelCell";
@@ -670,15 +672,25 @@ static CGFloat ImageHeight  = 210.0;
 }
 #pragma mark -- 查看奖项
 - (void)getTeamActivityAward:(UIButton *)btn{
-    JGDPrizeViewController *prizeCtrl = [[JGDPrizeViewController alloc]init];
-    prizeCtrl.activityKey = _teamKey;
-    prizeCtrl.teamKey = _model.teamKey;
-    if (![_power containsString:@"1001"]) {
-        prizeCtrl.isManager = 1;
+    if (![Helper isBlankString:_model.awardedInfo]) {
+        JGLWinnersShareViewController *winnerCtrl = [[JGLWinnersShareViewController alloc]init];
+        winnerCtrl.model = _model;
+        winnerCtrl.activeKey = [NSNumber numberWithInteger:[_model.timeKey integerValue]];
+        winnerCtrl.teamKey = _teamKey;
+        [self.navigationController pushViewController:winnerCtrl animated:YES];
+    }
+    else{
+        JGDPrizeViewController *prizeCtrl = [[JGDPrizeViewController alloc]init];
+        prizeCtrl.activityKey = _teamKey;
+        prizeCtrl.teamKey = _model.teamKey;
+        if (![_power containsString:@"1001"]) {
+            prizeCtrl.isManager = 1;
+        }
+        
+        prizeCtrl.model = _model;
+        [self.navigationController pushViewController:prizeCtrl animated:YES];
     }
     
-    prizeCtrl.model = _model;
-    [self.navigationController pushViewController:prizeCtrl animated:YES];
 }
 #pragma mark -- 查看成绩
 - (void)getTeamActivityResults:(UIButton *)btn{
@@ -691,10 +703,13 @@ static CGFloat ImageHeight  = 210.0;
     JGTeamDeatilWKwebViewController *wkVC = [[JGTeamDeatilWKwebViewController alloc] init];
     if (_model.teamActivityKey == 0) {
         timeKey = [_model.timeKey integerValue];
+        wkVC.activeTimeKey = [_model.timeKey integerValue];
     }else{
         timeKey = _model.teamActivityKey;
+        wkVC.activeTimeKey = _model.teamActivityKey;;
     }
-
+    wkVC.teamTimeKey = _model.teamKey;
+    wkVC.isScore = YES;
     wkVC.detailString = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/score/scoreRanking.html?userKey=%@&srcType=1&srcKey=%td", DEFAULF_USERID, timeKey];
     wkVC.teamName = @"活动成绩";
     [self.navigationController pushViewController:wkVC animated:YES];

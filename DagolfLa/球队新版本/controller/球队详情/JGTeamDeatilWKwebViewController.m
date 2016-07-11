@@ -11,6 +11,10 @@
 #import "JGTeamMemberController.h"
 #import "JGLDrawalRecordViewController.h"
 
+#import "ShareAlert.h"
+#import "UMSocial.h"
+#import "UMSocialSinaHandler.h"
+#import "UMSocialWechatHandler.h"
 @interface JGTeamDeatilWKwebViewController ()<WKNavigationDelegate,WKUIDelegate>
 @property (strong, nonatomic) WKWebView *webView;
 
@@ -27,6 +31,12 @@
     self.navigationItem.rightBarButtonItem = bar;
         
     }
+    if (_isScore == YES) {
+        UIBarButtonItem* bar = [[UIBarButtonItem alloc]initWithTitle:@"分享" style:UIBarButtonItemStylePlain target:self action:@selector(shareBtn)];
+        bar.tintColor = [UIColor whiteColor];
+        self.navigationItem.rightBarButtonItem = bar;
+        
+    }
     
     self.title = self.teamName;
     self.webView = [[WKWebView alloc]initWithFrame:self.view.bounds];
@@ -37,6 +47,76 @@
     [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.detailString]]];
     
 }
+
+#pragma 查看成绩时需要分享
+//分享点击事件
+-(void)shareBtn
+{
+    ShareAlert* alert = [[ShareAlert alloc]initMyAlert];
+    alert.frame = CGRectMake(0, ScreenHeight, ScreenWidth, ScreenWidth);
+    [alert setCallBackTitle:^(NSInteger index) {
+        [self shareInfo:index];
+    }];
+    [UIView animateWithDuration:0.2 animations:^{
+        [alert show];
+    }];
+}
+
+-(void)shareInfo:(NSInteger)index
+{
+    NSData *fxData;
+    UIImage* fxImg;
+//    if (![Helper isBlankString:_model.userPic]) {
+//        fxData = [NSData dataWithContentsOfURL:[Helper imageUrl:_model.userPic]];
+//    }
+//    else
+//    {
+        fxImg = [UIImage imageNamed:@"logo"];
+//    }
+    
+    NSString * shareUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/team/PrizeList.html?activityKey=%td&teamKey=%td&userKey=%@",_activeTimeKey,_teamTimeKey,DEFAULF_USERID];
+    [UMSocialData defaultData].extConfig.title = _teamName;
+    if(index==0)
+    {
+        //微信
+        [UMSocialWechatHandler setWXAppId:@"wxdcdc4e20544ed728" appSecret:@"fdc75aae5a98f2aa0f62ef8cba2b08e9" url:shareUrl];
+        [UMSocialConfig hiddenNotInstallPlatforms:@[UMShareToWechatSession,UMShareToWechatTimeline,UMShareToSina]];
+        [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatSession] content:_teamName image:fxImg location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
+                if (response.responseCode == UMSResponseCodeSuccess) {
+                }
+        }];
+        
+        
+    }
+    else if (index==1)
+    {
+        //朋友圈
+        [UMSocialWechatHandler setWXAppId:@"wxdcdc4e20544ed728" appSecret:@"fdc75aae5a98f2aa0f62ef8cba2b08e9" url:shareUrl];
+        [UMSocialConfig hiddenNotInstallPlatforms:@[UMShareToWechatSession,UMShareToWechatTimeline,UMShareToSina]];
+        
+        
+        [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatTimeline] content:_teamName image:fxImg location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
+                if (response.responseCode == UMSResponseCodeSuccess) {
+                }
+        }];
+        
+    }
+    else
+    {
+        
+        UMSocialData *data = [UMSocialData defaultData];
+        data.shareImage = [UIImage imageNamed:@"logo"];
+        data.shareText = _teamName;
+        [[UMSocialControllerService defaultControllerService] setSocialData:data];
+        //2.设置分享平台
+        [UMSocialSnsPlatformManager getSocialPlatformWithName:UMShareToSina].snsClickHandler(self,[UMSocialControllerService defaultControllerService],YES);
+        
+        
+    }
+}
+
+
+
 
 #pragma mark -- 账户体现
 - (void)recordBtn{
