@@ -54,7 +54,14 @@ static NSString *const JGSignUoPromptCellIdentifier = @"JGSignUoPromptCell";
     self.item.frame = CGRectMake(0, 0, 64, 44);
     self.item.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
     self.item.titleLabel.font = [UIFont systemFontOfSize:FontSize_Normal];
-    [self.item setTitle:@"全选" forState:UIControlStateNormal];
+    if (self.selectChooseArray.count == 8) {
+        [self.item setTitle:@"取消全选" forState:UIControlStateNormal];
+        _select = 1;
+    }else{
+        _select = 0;
+        [self.item setTitle:@"全选" forState:UIControlStateNormal];
+    }
+    
     [self.item addTarget:self action:@selector(chooseAll:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *leftItem = [[UIBarButtonItem alloc]initWithCustomView:self.item];
     self.navigationItem.rightBarButtonItem = leftItem;
@@ -106,10 +113,10 @@ static NSString *const JGSignUoPromptCellIdentifier = @"JGSignUoPromptCell";
 }
 #pragma mark -- 保存奖项
 - (void)saveAwardBtnClick:(UIButton *)btn{
-    if (_selectArray.count == 0) {
-        [[ShowHUD showHUD]showToastWithText:@"请选择奖项！" FromView:self.view];
-        return;
-    }
+//    if (_selectArray.count == 0) {
+//        [[ShowHUD showHUD]showToastWithText:@"请选择奖项！" FromView:self.view];
+//        return;
+//    }
     
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     [dict setObject:@(_teamKey) forKey:@"teamKey"];
@@ -140,18 +147,14 @@ static NSString *const JGSignUoPromptCellIdentifier = @"JGSignUoPromptCell";
         JGHAwardModel *model = [[JGHAwardModel alloc]init];
         model = _dataArray[i];
         if (_select == 0) {
-            if (model.select != 1) {
-                model.select = 1;
-                [_dataArray replaceObjectAtIndex:i withObject:model];
-            }
+            model.select = 1;
+            [_dataArray replaceObjectAtIndex:i withObject:model];
+            [_selectArray addObject:model.name];
         }else{
-            if (model.select != 0) {
-                model.select = 0;
-                [_dataArray replaceObjectAtIndex:i withObject:model];
-            }
+            model.select = 0;
+            [_dataArray replaceObjectAtIndex:i withObject:model];
+            [_selectArray removeAllObjects];
         }
-        
-        [_selectArray addObject:model.name];
     }
     
     if (_select == 0) {
