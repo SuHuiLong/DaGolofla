@@ -180,7 +180,6 @@
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     [_tableView registerClass:[JGLWinnersShareTableViewCell class] forCellReuseIdentifier:@"JGLWinnersShareTableViewCell"];
-    [_tableView registerNib:[UINib nibWithNibName:@"JGHActivityBaseCell" bundle:nil] forCellReuseIdentifier:@"JGHActivityBaseCell"];
     
     _tableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
     _tableView.backgroundColor = [UIColor colorWithHexString:BG_color];
@@ -273,9 +272,14 @@ static CGFloat height;
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section == 0) {
-        JGHActivityBaseCell* cell = [tableView dequeueReusableCellWithIdentifier:@"JGHActivityBaseCell" forIndexPath:indexPath];
-        [cell configJGTeamActivityModel:_model];
-        return cell;
+        static NSString *JGHActivityBaseCellIdentifier = @"JGHActivityBaseCell";
+        JGHActivityBaseCell *activityBaseCell = [tableView dequeueReusableCellWithIdentifier:JGHActivityBaseCellIdentifier];
+        if (activityBaseCell == nil) {
+            activityBaseCell = [[[NSBundle mainBundle]loadNibNamed:@"JGHActivityBaseCell" owner:self options:nil] lastObject];
+        }
+
+        [activityBaseCell configJGTeamActivityModel:_model];
+        return activityBaseCell;
     }
     else{
         JGLWinnersShareTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"JGLWinnersShareTableViewCell" forIndexPath:indexPath];

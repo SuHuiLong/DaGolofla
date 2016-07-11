@@ -21,11 +21,14 @@ static NSString *const JGSignUoPromptCellIdentifier = @"JGSignUoPromptCell";
 {
     NSMutableArray *_selectArray;;//选择的数组
     NSArray *_titleArray;
+    NSInteger _select;//0-全选， 1- 取消全选
 }
 
 @property (nonatomic, strong)UITableView *chooseTableView;
 
 @property (nonatomic, strong)NSMutableArray *dataArray;
+
+@property (nonatomic, strong)UIButton *item;
 
 @end
 
@@ -47,9 +50,14 @@ static NSString *const JGSignUoPromptCellIdentifier = @"JGSignUoPromptCell";
     self.navigationItem.title = @"选择奖项";
     _titleArray = @[@"一杆进洞奖", @"总杆冠军", @"总杆亚军", @"总杆季军", @"净杆冠军", @"净杆亚军", @"净杆季军", @"远距奖"];
     
-    UIBarButtonItem *item = [[UIBarButtonItem alloc]initWithTitle:@"全选" style:UIBarButtonItemStylePlain target:self action:@selector(chooseAll)];
-    item.tintColor=[UIColor whiteColor];
-    self.navigationItem.rightBarButtonItem = item;
+    self.item = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.item.frame = CGRectMake(0, 0, 64, 44);
+    self.item.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
+    self.item.titleLabel.font = [UIFont systemFontOfSize:FontSize_Normal];
+    [self.item setTitle:@"全选" forState:UIControlStateNormal];
+    [self.item addTarget:self action:@selector(chooseAll:) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc]initWithCustomView:self.item];
+    self.navigationItem.rightBarButtonItem = leftItem;
     
     [self createChooseTableView];
     
@@ -126,19 +134,32 @@ static NSString *const JGSignUoPromptCellIdentifier = @"JGSignUoPromptCell";
     [self.navigationController popViewControllerAnimated:YES];
 }
 #pragma mark -- 全选
-- (void)chooseAll{
+- (void)chooseAll:(UIButton *)btn{
     [_selectArray removeAllObjects];
     for (int i =0; i<_dataArray.count; i++) {
         JGHAwardModel *model = [[JGHAwardModel alloc]init];
         model = _dataArray[i];
-        if (model.select == 1) {
-            continue;
+        if (_select == 0) {
+            if (model.select != 1) {
+                model.select = 1;
+                [_dataArray replaceObjectAtIndex:i withObject:model];
+            }
         }else{
-            model.select = 1;
-            [_dataArray replaceObjectAtIndex:i withObject:model];
+            if (model.select != 0) {
+                model.select = 0;
+                [_dataArray replaceObjectAtIndex:i withObject:model];
+            }
         }
         
         [_selectArray addObject:model.name];
+    }
+    
+    if (_select == 0) {
+        _select = 1;
+        [self.item setTitle:@"取消全选" forState:UIControlStateNormal];
+    }else{
+        _select = 0;
+        [self.item setTitle:@"全选" forState:UIControlStateNormal];
     }
     
     [self.chooseTableView reloadData];

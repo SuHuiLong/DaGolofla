@@ -365,7 +365,13 @@
                         
                     }];
                 }else{
-                    [Helper alertViewNoHaveCancleWithTitle:@"提交失败" withBlock:^(UIAlertController *alertView) {
+                    NSString *errorStr = nil;
+                    if ([data objectForKey:@"packResultMsg"]) {
+                        errorStr = [data objectForKey:@"packResultMsg"];
+                    }else{
+                        errorStr = @"提交失败！";
+                    }
+                    [Helper alertViewNoHaveCancleWithTitle:errorStr withBlock:^(UIAlertController *alertView) {
                         [self.navigationController popViewControllerAnimated:YES];
                         [self.navigationController presentViewController:alertView animated:YES completion:nil];
                         

@@ -40,6 +40,7 @@
     self.awardName.text = model.name;
     
     //
+    [self.chooseBtn setImage:nil forState:UIControlStateNormal];
     
     if (model.select == 0) {
         [self.chooseBtn setImage:[UIImage imageNamed:@"kuang"] forState:UIControlStateNormal];
