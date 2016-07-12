@@ -62,22 +62,17 @@ static NSString *const JGHTextFiledCellIdentifier = @"JGHTextFiledCell";
         return;
     }
     
-    if (_prizeName.length == 0) {
-        [[ShowHUD showHUD]showToastWithText:@"请输入奖品名称" FromView:self.view];
-        return;
-    }
-    
-    if (_prizeNumber == 0) {
-        [[ShowHUD showHUD]showToastWithText:@"请输入奖品数量" FromView:self.view];
-        return;
-    }
-    
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     [dict setObject:@(_teamKey) forKey:@"teamKey"];
     [dict setObject:@(_activityKey) forKey:@"teamActivityKey"];
     [dict setObject:_awardName forKey:@"name"];
-    [dict setObject:_prizeName forKey:@"prizeName"];
-    [dict setObject:[NSString stringWithFormat:@"%td", _prizeNumber] forKey:@"prizeSize"];
+    if (_prizeName.length > 0) {
+        [dict setObject:_prizeName forKey:@"prizeName"];
+    }
+    
+    if (_prizeNumber != 0) {
+        [dict setObject:[NSString stringWithFormat:@"%td", _prizeNumber] forKey:@"prizeSize"];
+    }
     
     if (_model.timeKey > 0) {
         [dict setObject:_model.timeKey forKey:@"timeKey"];
@@ -93,16 +88,8 @@ static NSString *const JGHTextFiledCellIdentifier = @"JGHTextFiledCell";
     } completionBlock:^(id data) {
         NSLog(@"data == %@", data);
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
-            [[ShowHUD showHUD]showToastWithText:@"添加成功！" FromView:self.view];
-            for (UIViewController *controller in self.navigationController.viewControllers) {
-                if ([controller isKindOfClass:[JGHSetAwardViewController class]]) {
-                    //创建一个消息对象
-                    NSNotification * notice = [NSNotification notificationWithName:@"reloadAwardData" object:nil userInfo:nil];
-                    //发送消息
-                    [[NSNotificationCenter defaultCenter]postNotification:notice];
-                    [self.navigationController popToViewController:controller animated:YES];
-                }
-            }
+            [[ShowHUD showHUD]showToastWithText:@"保存成功！" FromView:self.view];
+            [self performSelector:@selector(pushCtrl) withObject:self afterDelay:1.0];
 //            _awardName = @"";
 //            _prizeName = @"";
 //            _prizeNumber = 0;
@@ -114,6 +101,18 @@ static NSString *const JGHTextFiledCellIdentifier = @"JGHTextFiledCell";
             }
         }
     }];
+}
+
+- (void)pushCtrl{
+    for (UIViewController *controller in self.navigationController.viewControllers) {
+        if ([controller isKindOfClass:[JGHSetAwardViewController class]]) {
+            //创建一个消息对象
+            NSNotification * notice = [NSNotification notificationWithName:@"reloadAwardData" object:nil userInfo:nil];
+            //发送消息
+            [[NSNotificationCenter defaultCenter]postNotification:notice];
+            [self.navigationController popToViewController:controller animated:YES];
+        }
+    }
 }
 #pragma mark -- 创建TB
 - (void)createCustomAwardTableView{

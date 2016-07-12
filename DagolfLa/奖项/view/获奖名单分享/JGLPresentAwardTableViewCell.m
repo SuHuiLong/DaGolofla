@@ -66,19 +66,26 @@
 
 - (void)configJGHAwardModel:(JGHAwardModel *)model{
     _titleLabel.text = model.name;
-    _countLabel.text = [NSString stringWithFormat:@"奖品数量：%@",model.prizeSize];
+    
+    if ([model.prizeSize integerValue] == 0) {
+        _countLabel.text = @"";
+    }else{
+        _countLabel.text = [NSString stringWithFormat:@"获奖名额：%@",model.prizeSize];
+    }
     
     if (model.prizeName) {
         _awardLabel.text = [NSString stringWithFormat:@"奖品：%@", model.prizeName];
+        _titleLabel.frame = CGRectMake(50*screenWidth/320, 9*screenWidth/320, 250*screenWidth/320, 20*screenWidth/320);
     }else{
-        _awardLabel.text = @"奖品";
+        _awardLabel.text = @"";
+        _titleLabel.frame = CGRectMake(50*screenWidth/320, 20*screenWidth/320, 150*screenWidth/320, 20*screenWidth/320);
     }
     
     
     if (model.userInfo) {
         _nameLabel.text = [NSString stringWithFormat:@"获奖人：%@", model.userInfo];
     }else{
-         _nameLabel.text = @"获奖人：";
+         _nameLabel.text = @"";
     }
    
 }

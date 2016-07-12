@@ -52,7 +52,7 @@
     
     _page = 0;
     _tableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
-//    _tableView.footer=[MJDIYBackFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRereshing)];
+    _tableView.footer=[MJDIYBackFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRereshing)];
     [_tableView.header beginRefreshing];
     
     [self.view addSubview:self.tableView];
@@ -90,6 +90,11 @@
     [self downLoadData:_page isReshing:YES];
 }
 
+- (void)footRereshing
+{
+    [self downLoadData:_page isReshing:NO];
+}
+
 #pragma mark - 下载数据
 - (void)downLoadData:(NSInteger)page isReshing:(BOOL)isReshing{
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
@@ -103,15 +108,19 @@
     [[JsonHttp jsonHttp]httpRequest:@"team/getTeamActivitySignUpList" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
         if (isReshing) {
             [_tableView.header endRefreshing];
+        }else {
+            [_tableView.footer endRefreshing];
         }
     } completionBlock:^(id data) {
         NSLog(@"%@", data);
         if ([data objectForKey:@"packSuccess"]) {
-            if (page == 0)
+            if (_page == 0)
             {
                 //清除数组数据  signUpInfoKey
                 [self.dataArray removeAllObjects];
             }
+            
+            _page++;
             if ([data objectForKey:@"teamSignUpList"]) {
                 for (NSDictionary *dic in [data objectForKey:@"teamSignUpList"]) {
                     JGDActivityList *model = [[JGDActivityList alloc] init];
@@ -125,15 +134,14 @@
         }else {
             
         }
+        
         [_tableView reloadData];
         if (isReshing) {
             [_tableView.header endRefreshing];
+            [_tableView.footer endRefreshing];
         }
     }];
 }
-
-
-
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
