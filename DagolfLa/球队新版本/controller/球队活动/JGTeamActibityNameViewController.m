@@ -96,7 +96,12 @@ static CGFloat ImageHeight  = 210.0;
 
 - (void)setData{
     self.titleField.text = self.model.name;
-    [self.addressBtn setTitle:self.model.ballName forState:(UIControlStateNormal)];
+    self.addressBtn.hidden = NO;
+    NSDictionary *attribute = @{NSFontAttributeName: [UIFont systemFontOfSize:13]};
+    CGSize size = [self.model.ballName boundingRectWithSize:CGSizeMake(screenWidth - 100, 0) options: NSStringDrawingTruncatesLastVisibleLine | NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading attributes:attribute context:nil].size;
+    CGRect address = self.addressBtn.frame;
+    self.addressBtn.frame = CGRectMake(address.origin.x, address.origin.y, size.width, 25);
+    [self.addressBtn setTitle:self.model.ballName forState:UIControlStateNormal];
     
     if (_model.teamActivityKey == 0) {
         //我的球队活动
@@ -191,13 +196,13 @@ static CGFloat ImageHeight  = 210.0;
     //地址
     self.addressBtn = [[UIButton alloc]initWithFrame:CGRectMake(85, 180, 70, 25)];
     self.addressBtn.tag = 333;
-    [self.addressBtn setTitle:_model.ballName forState:UIControlStateNormal];
+    [self.addressBtn setTitle:@"地址" forState:UIControlStateNormal];
     self.addressBtn.titleLabel.font = [UIFont systemFontOfSize:13];
     self.addressBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-    NSDictionary *attribute = @{NSFontAttributeName: [UIFont systemFontOfSize:13]};
-    CGSize size = [self.model.ballName boundingRectWithSize:CGSizeMake(screenWidth - 100, 0) options: NSStringDrawingTruncatesLastVisibleLine | NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading attributes:attribute context:nil].size;
-    CGRect address = self.addressBtn.frame;
-    self.addressBtn.frame = CGRectMake(address.origin.x, address.origin.y, size.width, 25);
+//    NSDictionary *attribute = @{NSFontAttributeName: [UIFont systemFontOfSize:13]};
+//    CGSize size = [self.model.ballName boundingRectWithSize:CGSizeMake(screenWidth - 100, 0) options: NSStringDrawingTruncatesLastVisibleLine | NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading attributes:attribute context:nil].size;
+//    CGRect address = self.addressBtn.frame;
+//    self.addressBtn.frame = CGRectMake(address.origin.x, address.origin.y, size.width, 25);
     
     [self.imgProfile addSubview:self.addressBtn];
 
