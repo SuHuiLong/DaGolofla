@@ -23,7 +23,10 @@
 #import "JGPhotoListModel.h"
 #import "JGTeamPhotoShowViewController.h"
 
+
 #import "SDPhotoBrowser.h"
+#define SDPhotoBrowserShowImageAnimationDuration 0.8f
+
 @interface JGPhotoAlbumViewController ()<UICollectionViewDelegate,UICollectionViewDataSource,SDPhotoBrowserDelegate>
 {
     UICollectionView* _collectionView;
@@ -254,7 +257,7 @@
                 [_dataArray addObject:model];
             }
             _teamName = [data objectForKey:@"teamName"];
-            
+            NSLog(@"%ld",_dataArray.count);
             _page++;
             [_collectionView reloadData];
         }else {
@@ -386,8 +389,8 @@
     }
     SDPhotoBrowser *browser = [[SDPhotoBrowser alloc] init];
     
-    JGPhotoShowCollectionViewCell *cell = (JGPhotoShowCollectionViewCell *)[self collectionView:collectionView cellForItemAtIndexPath:indexPath];
-    browser.sourceImagesContainerView = _collectionView;
+//    JGPhotoShowCollectionViewCell *cell = (JGPhotoShowCollectionViewCell *)[self collectionView:collectionView cellForItemAtIndexPath:indexPath];
+//    browser.sourceImagesContainerView = cell;
     
     browser.imageCount = _dataArray.count;
     
@@ -407,7 +410,12 @@
         [_collectionView.header beginRefreshing];
         [_collectionView reloadData];
     };
-    [browser show];
+    [UIView animateWithDuration:SDPhotoBrowserShowImageAnimationDuration animations:^{
+        
+    } completion:^(BOOL finished) {
+        [browser show];
+    }];
+    
     
     
     //    [sdImgV show:maskview didFinish:^(){

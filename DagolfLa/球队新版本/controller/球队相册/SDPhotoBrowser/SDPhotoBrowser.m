@@ -304,37 +304,46 @@ static int _indexScroll = 0;
 
 - (void)photoClick:(UITapGestureRecognizer *)recognizer
 {
-    _scrollView.hidden = YES;
     
-    SDBrowserImageView *currentImageView = (SDBrowserImageView *)recognizer.view;
-    NSInteger currentIndex = currentImageView.tag;
     
-    UIView *sourceView = self.sourceImagesContainerView.subviews[currentIndex];
-    CGRect targetTemp = [self.sourceImagesContainerView convertRect:sourceView.frame toView:self];
-    
-    UIImageView *tempView = [[UIImageView alloc] init];
-    tempView.image = currentImageView.image;
-    CGFloat h = (self.bounds.size.width / currentImageView.image.size.width) * currentImageView.image.size.height;
-    
-    if (!currentImageView.image) { // 防止 因imageview的image加载失败 导致 崩溃
-        h = self.bounds.size.height;
-    }
-    
-    tempView.bounds = CGRectMake(0, 0, self.bounds.size.width, h);
-    tempView.center = self.center;
-    
-    [self addSubview:tempView];
-
-    _saveButton.hidden = YES;
-    _shareButton.hidden = YES;
-    _deleteButton.hidden = YES;
-    
-    [UIView animateWithDuration:SDPhotoBrowserHideImageAnimationDuration animations:^{
-        tempView.frame = targetTemp;
-        self.backgroundColor = [UIColor clearColor];
+    [UIView animateWithDuration:SDPhotoBrowserShowImageAnimationDuration animations:^{
+        
     } completion:^(BOOL finished) {
         [self removeFromSuperview];
     }];
+    
+    
+//    _scrollView.hidden = YES;
+//    
+//    SDBrowserImageView *currentImageView = (SDBrowserImageView *)recognizer.view;
+//    NSInteger currentIndex = currentImageView.tag;
+//    
+//    UIView *sourceView = self.sourceImagesContainerView.subviews[currentIndex];
+//    CGRect targetTemp = [self.sourceImagesContainerView convertRect:sourceView.frame toView:self];
+//    
+//    UIImageView *tempView = [[UIImageView alloc] init];
+//    tempView.image = currentImageView.image;
+//    CGFloat h = (self.bounds.size.width / currentImageView.image.size.width) * currentImageView.image.size.height;
+//    
+//    if (!currentImageView.image) { // 防止 因imageview的image加载失败 导致 崩溃
+//        h = self.bounds.size.height;
+//    }
+//    
+//    tempView.bounds = CGRectMake(0, 0, self.bounds.size.width, h);
+//    tempView.center = self.center;
+//    
+//    [self addSubview:tempView];
+//
+//    _saveButton.hidden = YES;
+//    _shareButton.hidden = YES;
+//    _deleteButton.hidden = YES;
+//    
+//    [UIView animateWithDuration:SDPhotoBrowserHideImageAnimationDuration animations:^{
+//        tempView.frame = targetTemp;
+//        self.backgroundColor = [UIColor clearColor];
+//    } completion:^(BOOL finished) {
+//        [self removeFromSuperview];
+//    }];
 }
 
 - (void)layoutSubviews
@@ -363,9 +372,9 @@ static int _indexScroll = 0;
     _scrollView.contentOffset = CGPointMake(self.currentImageIndex * _scrollView.frame.size.width, 0);
     _scrollView.pagingEnabled = YES;
     
-    if (!_hasShowedFistView) {
-        [self showFirstImage];
-    }
+//    if (!_hasShowedFistView) {
+//        [self showFirstImage];
+//    }
     
 }
 

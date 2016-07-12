@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 #import "JGPhotoListModel.h"
+
 @class SDButton, SDPhotoBrowser;
 
 @protocol SDPhotoBrowserDelegate <NSObject>
