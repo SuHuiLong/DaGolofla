@@ -64,7 +64,8 @@
     if (_isScore == YES) {
         NSString* strMd = [JGReturnMD5Str getUserScoreWithTeamKey:_teamTimeKey userKey:[DEFAULF_USERID integerValue] srcKey:_activeTimeKey srcType:1];
         NSString* strU = [NSString stringWithFormat:@"%@&md5=%@",self.detailString,strMd];
-        _strShareMd = strU;
+        NSString* strU1 = [NSString stringWithFormat:@"%@&share=1&md5=%@",self.detailString,strMd];
+        _strShareMd = strU1;
         [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:strU]]];
     }
     else if (_isManage == YES){
