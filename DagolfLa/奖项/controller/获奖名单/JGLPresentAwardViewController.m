@@ -241,8 +241,8 @@
     
     UILabel* distanceLabel = [[UILabel alloc]initWithFrame:CGRectMake(115*screenWidth/375, 55*screenWidth/375, 200*screenWidth/375, 20*screenWidth/375)];
     distanceLabel.font = [UIFont systemFontOfSize:14*screenWidth/375];
-    if (![Helper isBlankString:_model.ballAddress]) {
-        distanceLabel.text = _model.ballAddress;
+    if (![Helper isBlankString:_model.ballName]) {
+        distanceLabel.text = _model.ballName;
     }
     else{
         distanceLabel.text = @"暂无活动地址";
