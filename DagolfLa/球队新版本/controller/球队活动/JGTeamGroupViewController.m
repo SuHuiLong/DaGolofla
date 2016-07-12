@@ -195,7 +195,8 @@ static NSString *const JGGroupdetailsCollectionViewCellIdentifier = @"JGGroupdet
     fiData = [NSData dataWithContentsOfURL:[Helper setImageIconUrl:@"activity" andTeamKey:_teamActivityKey andIsSetWidth:YES andIsBackGround:YES]];
     
     
-    NSString*  shareUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/team/group.html?key=%td&md5=%@", _teamActivityKey, [JGReturnMD5Str getTeamGroupNameListTeamKey:0 activityKey:_teamActivityKey userKey:[DEFAULF_USERID integerValue]]];
+    NSString* strMd = [JGReturnMD5Str getTeamGroupNameListTeamKey:0 activityKey:_teamActivityKey userKey:[DEFAULF_USERID integerValue]];
+    NSString*  shareUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/team/group.html?teamKey=0&activityKey=%td&userKey=%td&md5=%@", _teamActivityKey, [DEFAULF_USERID integerValue],strMd];
     
     [UMSocialData defaultData].extConfig.title=[NSString stringWithFormat:@"%@分组表",self.activityName];
     
