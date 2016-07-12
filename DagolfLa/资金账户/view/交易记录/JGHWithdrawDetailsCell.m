@@ -38,13 +38,31 @@
         self.applyforTime.text = [NSString stringWithFormat:@"%@\n%@", [arrayApply objectAtIndex:0], [arrayApply objectAtIndex:1]];
     }
     
-    if (dealwithTime.length > 0) {
+//    if ([dealwithTime containsString:@"1970"]) {
+//        self.dealwithTimeImageView.image = [UIImage imageNamed:@"dealWithFail"];
+//    }else{
+    if (seccessful.length > 0 && ![seccessful containsString:@"1970"]) {
+        
         NSArray *arrayDealwith = [NSArray array];
-        arrayDealwith = [dealwithTime componentsSeparatedByString:@" "];
+        arrayDealwith = [seccessful componentsSeparatedByString:@" "];
         self.dealwithTime.text = [NSString stringWithFormat:@"%@\n%@", [arrayDealwith objectAtIndex:0], [arrayDealwith objectAtIndex:1]];
+    }else{
+        if (dealwithTime.length == 0) {
+            self.dealwithTime.text = @"";
+            self.dealwithTimeImageView.image = [UIImage imageNamed:@"dealWithFail"];
+            self.balnkful.textColor = [UIColor lightGrayColor];
+        }else{
+            NSArray *arrayDealwith = [NSArray array];
+            arrayDealwith = [dealwithTime componentsSeparatedByString:@" "];
+            self.dealwithTime.text = [NSString stringWithFormat:@"%@\n%@", [arrayDealwith objectAtIndex:0], [arrayDealwith objectAtIndex:1]];
+        }
     }
+//    }
     
-    if (seccessful.length > 0) {
+    if ([seccessful containsString:@"1970"] || seccessful.length == 0) {
+        self.seccessfulImageView.image = [UIImage imageNamed:@"successfulFail"];
+        self.tradSuf.textColor = [UIColor lightGrayColor];
+    }else{
         NSArray *arraySeccessful = [NSArray array];
         arraySeccessful = [seccessful componentsSeparatedByString:@" "];
         self.seccessful.text = [NSString stringWithFormat:@"%@\n%@", [arraySeccessful objectAtIndex:0], [arraySeccessful objectAtIndex:1]];

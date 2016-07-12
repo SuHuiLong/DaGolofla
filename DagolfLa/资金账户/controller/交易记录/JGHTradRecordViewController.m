@@ -115,11 +115,12 @@ static NSString *const JGHTradRecordCellIdentifier = @"JGHTradRecordCell";
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     JGHTradRecordCell *tradCell = [tableView dequeueReusableCellWithIdentifier:JGHTradRecordCellIdentifier];
     
-    tradCell.selectionStyle = UITableViewCellSelectionStyleNone;
+    
     if (_dataArray.count > 0) {
         [tradCell congifData:_dataArray[indexPath.row]];
     }
     
+    tradCell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     return tradCell;
 }

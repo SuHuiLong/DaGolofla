@@ -20,7 +20,7 @@ static NSString *const JGSignUoPromptCellIdentifier = @"JGSignUoPromptCell";
 @interface JGHChooseAwardViewController ()<UITableViewDelegate, UITableViewDataSource, JGHChooseAwardCellDelegate>
 {
     NSMutableArray *_selectArray;;//选择的数组
-    NSArray *_titleArray;
+    NSMutableArray *_titleArray;
     NSInteger _select;//0-全选， 1- 取消全选
 }
 
@@ -48,19 +48,19 @@ static NSString *const JGSignUoPromptCellIdentifier = @"JGSignUoPromptCell";
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor colorWithHexString:BG_color];
     self.navigationItem.title = @"选择奖项";
-    _titleArray = @[@"一杆进洞奖", @"总杆冠军", @"总杆亚军", @"总杆季军", @"净杆冠军", @"净杆亚军", @"净杆季军", @"远距奖"];
-    
+//    _titleArray = @[@"一杆进洞奖", @"总杆冠军", @"总杆亚军", @"总杆季军", @"净杆冠军", @"净杆亚军", @"净杆季军", @"远距奖", @"最近洞奖", @"BB奖", @"大波奖", @"小波奖"];
+    _titleArray = [NSMutableArray array];
     self.item = [UIButton buttonWithType:UIButtonTypeCustom];
     self.item.frame = CGRectMake(0, 0, 64, 44);
     self.item.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
     self.item.titleLabel.font = [UIFont systemFontOfSize:FontSize_Normal];
-    if (self.selectChooseArray.count == 8) {
-        [self.item setTitle:@"取消全选" forState:UIControlStateNormal];
-        _select = 1;
-    }else{
+//    if (self.selectChooseArray.count == self.dataArray.count) {
+//        [self.item setTitle:@"取消全选" forState:UIControlStateNormal];
+//        _select = 1;
+//    }else{
         _select = 0;
         [self.item setTitle:@"全选" forState:UIControlStateNormal];
-    }
+//    }
     
     [self.item addTarget:self action:@selector(chooseAll:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *leftItem = [[UIBarButtonItem alloc]initWithCustomView:self.item];
@@ -74,6 +74,7 @@ static NSString *const JGSignUoPromptCellIdentifier = @"JGSignUoPromptCell";
 }
 #pragma mark -- 创建数据
 - (void)createData{
+    /**
     [_selectArray removeAllObjects];
     for (int i=0; i<_titleArray.count; i++) {
         JGHAwardModel *model = [[JGHAwardModel alloc]init];
@@ -96,6 +97,55 @@ static NSString *const JGSignUoPromptCellIdentifier = @"JGSignUoPromptCell";
     }
     
     [self.chooseTableView reloadData];
+     */
+    [[ShowHUD showHUD]showAnimationWithText:@"加载中..." FromView:self.view];
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    [dict setObject:@(_activityKey) forKey:@"activityKey"];
+    [dict setObject:DEFAULF_USERID forKey:@"userKey"];
+    [[JsonHttp jsonHttp]httpRequest:@"team/getDefaultPrizeList" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
+        [[ShowHUD showHUD]hideAnimationFromView:self.view];
+    } completionBlock:^(id data) {
+        NSLog(@"%@", data);
+        [[ShowHUD showHUD]hideAnimationFromView:self.view];
+        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+            [_selectArray removeAllObjects];
+            _titleArray = [data objectForKey:@"list"];
+            for (int i=0; i<_titleArray.count; i++) {
+                JGHAwardModel *model = [[JGHAwardModel alloc]init];
+                model.name = _titleArray[i];
+                
+                for (int j=0; j<_selectChooseArray.count; j++) {
+                    JGHAwardModel *modelChoose = [[JGHAwardModel alloc]init];
+                    modelChoose = _selectChooseArray[j];
+                    if ([model.name isEqualToString:modelChoose.name]) {
+                        model.select = 1;
+                        [_selectArray addObject:model.name];
+                        NSLog(@"select == %td", model.select);
+                        break;
+                    }else{
+                        model.select = 0;
+                    }
+                }
+                
+                [self.dataArray addObject:model];
+            }
+            
+            if (self.selectChooseArray.count >= self.dataArray.count) {
+                [self.item setTitle:@"取消全选" forState:UIControlStateNormal];
+                _select = 1;
+            }else{
+                _select = 0;
+                [self.item setTitle:@"全选" forState:UIControlStateNormal];
+            }
+
+        }else{
+            if ([data objectForKey:@"packResultMsg"]) {
+                [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+            }
+        }
+        
+        [self.chooseTableView reloadData];
+    }];
 }
 #pragma mark -- 创建工具栏
 - (void)createSaveAwardBtn{
