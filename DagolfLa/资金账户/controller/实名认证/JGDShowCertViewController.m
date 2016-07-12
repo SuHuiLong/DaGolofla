@@ -107,8 +107,13 @@
     }else{
         cell.promptLB.text = @"身份证号";
 //        cell.contentLB.text = [self.userRealDic objectForKey:@"idCard"];
-        NSMutableString *str = [[self.userRealDic objectForKey:@"idCard"] mutableCopy];
-        [str replaceCharactersInRange:NSMakeRange(3, 10) withString:@"**********"];
+        NSMutableString *str = [NSMutableString stringWithString:[self.userRealDic objectForKey:@"idCard"]];
+//        [[self.userRealDic objectForKey:@"idCard"] mutableCopy];
+        
+        if (str.length > 6) {
+            [str replaceCharactersInRange:NSMakeRange(3, str.length -6) withString:@"***"];
+        }
+        
         cell.contentLB.text = str;
         cell.contentLB.textAlignment = NSTextAlignmentRight;
     }
