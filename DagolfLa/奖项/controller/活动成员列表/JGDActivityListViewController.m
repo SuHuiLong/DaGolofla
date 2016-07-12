@@ -43,8 +43,10 @@
         _signupKeyInfo = [NSMutableString stringWithString:[_checkdict objectForKey:@"signupKeyInfo"]];
         _signupNameInfo = [NSMutableString stringWithString:[_checkdict objectForKey:@"userInfo"]];
     }
+    UIView* view = [[UIView alloc]initWithFrame:CGRectMake(1, 1, 1, 1)];
+    [self.view addSubview:view];
     
-    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight) style:(UITableViewStylePlain)];
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight-10) style:(UITableViewStylePlain)];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     
