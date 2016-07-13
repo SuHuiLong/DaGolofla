@@ -699,6 +699,9 @@
 		823277101D2E759C005F9BD3 /* JGLDrawalRecordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8232770F1D2E759C005F9BD3 /* JGLDrawalRecordViewController.m */; };
 		823277131D2E816E005F9BD3 /* JGLDrawalRewardTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 823277121D2E816E005F9BD3 /* JGLDrawalRewardTableViewCell.m */; };
 		823C149D1CEEF0B5000AB612 /* JGLTeamMemberModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 823C149C1CEEF0B5000AB612 /* JGLTeamMemberModel.m */; };
+		8252E8641D360D6200448404 /* JGLScoreNewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8252E8631D360D6200448404 /* JGLScoreNewViewController.m */; };
+		8252E8671D360D8E00448404 /* JGLScoreNewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8252E8661D360D8E00448404 /* JGLScoreNewModel.m */; };
+		8252E86A1D360DA500448404 /* JGLScoreNewTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8252E8691D360DA500448404 /* JGLScoreNewTableViewCell.m */; };
 		82636E8D1D06CB1600216DC1 /* JGPhotoListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 82636E8C1D06CB1600216DC1 /* JGPhotoListModel.m */; };
 		82636E901D06D18100216DC1 /* JGTeamPhotoShowViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 82636E8F1D06D18100216DC1 /* JGTeamPhotoShowViewController.m */; };
 		827AA0111D1D003C00F6B80B /* JGLPaySignModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 827AA0101D1D003C00F6B80B /* JGLPaySignModel.m */; };
@@ -2101,6 +2104,12 @@
 		823277121D2E816E005F9BD3 /* JGLDrawalRewardTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGLDrawalRewardTableViewCell.m; sourceTree = "<group>"; };
 		823C149B1CEEF0B5000AB612 /* JGLTeamMemberModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGLTeamMemberModel.h; sourceTree = "<group>"; };
 		823C149C1CEEF0B5000AB612 /* JGLTeamMemberModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGLTeamMemberModel.m; sourceTree = "<group>"; };
+		8252E8621D360D6200448404 /* JGLScoreNewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGLScoreNewViewController.h; sourceTree = "<group>"; };
+		8252E8631D360D6200448404 /* JGLScoreNewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGLScoreNewViewController.m; sourceTree = "<group>"; };
+		8252E8651D360D8E00448404 /* JGLScoreNewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGLScoreNewModel.h; sourceTree = "<group>"; };
+		8252E8661D360D8E00448404 /* JGLScoreNewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGLScoreNewModel.m; sourceTree = "<group>"; };
+		8252E8681D360DA500448404 /* JGLScoreNewTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGLScoreNewTableViewCell.h; sourceTree = "<group>"; };
+		8252E8691D360DA500448404 /* JGLScoreNewTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGLScoreNewTableViewCell.m; sourceTree = "<group>"; };
 		82636E8B1D06CB1600216DC1 /* JGPhotoListModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGPhotoListModel.h; sourceTree = "<group>"; };
 		82636E8C1D06CB1600216DC1 /* JGPhotoListModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGPhotoListModel.m; sourceTree = "<group>"; };
 		82636E8E1D06D18100216DC1 /* JGTeamPhotoShowViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGTeamPhotoShowViewController.h; sourceTree = "<group>"; };
@@ -4389,7 +4398,7 @@
 		36BFFD2A1BC76C8D005B3CE2 /* DagolfLa */ = {
 			isa = PBXGroup;
 			children = (
-				8252E8571D360A6700448404 /* 记分New */,
+				8252E85E1D360D1000448404 /* 记分New */,
 				F55DB3841D2A36FE0054F251 /* 奖项 */,
 				20591C3D1D215BCD003271EC /* 资金账户 */,
 				F5A105381CE300F80050461D /* 球队新版本 */,
@@ -5554,59 +5563,41 @@
 			path = SDPhotoBrowser;
 			sourceTree = "<group>";
 		};
-		8252E8571D360A6700448404 /* 记分New */ = {
+		8252E85E1D360D1000448404 /* 记分New */ = {
 			isa = PBXGroup;
 			children = (
-				8252E85A1D360B3D00448404 /* 记分首页 */,
-				8252E8581D360B3D00448404 /* 活动记分 */,
-				8252E8591D360B3D00448404 /* 活动选择页 */,
-				8252E85B1D360B3D00448404 /* 记分统计 */,
-				8252E85C1D360B3D00448404 /* 记分页面 */,
-				8252E85D1D360B3D00448404 /* 历史记分卡 */,
+				8252E85F1D360D1000448404 /* Controllers */,
+				8252E8601D360D1000448404 /* Models */,
+				8252E8611D360D1000448404 /* View */,
 			);
 			path = "记分New";
 			sourceTree = "<group>";
 		};
-		8252E8581D360B3D00448404 /* 活动记分 */ = {
+		8252E85F1D360D1000448404 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				8252E8621D360D6200448404 /* JGLScoreNewViewController.h */,
+				8252E8631D360D6200448404 /* JGLScoreNewViewController.m */,
 			);
-			path = "活动记分";
+			path = Controllers;
 			sourceTree = "<group>";
 		};
-		8252E8591D360B3D00448404 /* 活动选择页 */ = {
+		8252E8601D360D1000448404 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				8252E8651D360D8E00448404 /* JGLScoreNewModel.h */,
+				8252E8661D360D8E00448404 /* JGLScoreNewModel.m */,
 			);
-			path = "活动选择页";
+			path = Models;
 			sourceTree = "<group>";
 		};
-		8252E85A1D360B3D00448404 /* 记分首页 */ = {
+		8252E8611D360D1000448404 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				8252E8681D360DA500448404 /* JGLScoreNewTableViewCell.h */,
+				8252E8691D360DA500448404 /* JGLScoreNewTableViewCell.m */,
 			);
-			path = "记分首页";
-			sourceTree = "<group>";
-		};
-		8252E85B1D360B3D00448404 /* 记分统计 */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = "记分统计";
-			sourceTree = "<group>";
-		};
-		8252E85C1D360B3D00448404 /* 记分页面 */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = "记分页面";
-			sourceTree = "<group>";
-		};
-		8252E85D1D360B3D00448404 /* 历史记分卡 */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = "历史记分卡";
+			path = View;
 			sourceTree = "<group>";
 		};
 		827BD52C1D214A01009AF9CA /* 添加银行卡 */ = {
@@ -6719,6 +6710,7 @@
 				36BF008B1BC772EF005B3CE2 /* MySetPasswordController.m in Sources */,
 				36DCA73C1C22630500E12DF7 /* ScoreProStandedModel.m in Sources */,
 				36D39B3E1BCCE23100C0B197 /* MBProgressHUD.m in Sources */,
+				8252E8641D360D6200448404 /* JGLScoreNewViewController.m in Sources */,
 				3660E1851BFC56DD0033B4D7 /* ScoreDetailTableViewCell.m in Sources */,
 				36DF6DF41C07FEAD00B60B67 /* TeamPhotoDetViewController.m in Sources */,
 				F554267C1D2277B900233B20 /* JGDCertificationViewController.m in Sources */,
@@ -6797,6 +6789,7 @@
 				F5BDF0A11CEC1B750020175A /* JGTeamDetail.m in Sources */,
 				36F721161BE8ADEB001C02C6 /* FootDetailViewController.m in Sources */,
 				36BFFFCC1BC770B1005B3CE2 /* ZanNumViewController.m in Sources */,
+				8252E8671D360D8E00448404 /* JGLScoreNewModel.m in Sources */,
 				3660E1491BFC55C30033B4D7 /* ManageForMeController.m in Sources */,
 				36BFFF7F1BC76D09005B3CE2 /* UIImageView+HighlightedWebCache.m in Sources */,
 				36B9B59B1C3E004C0053B227 /* ProFileViewController.m in Sources */,
@@ -6815,6 +6808,7 @@
 				208030441CF7F32E00448BFC /* JGHIvoiceTypeCell.m in Sources */,
 				36BFFF5C1BC76D09005B3CE2 /* AFNetworkReachabilityManager.m in Sources */,
 				3660E1421BFC55AC0033B4D7 /* ActiveScoreController.m in Sources */,
+				8252E86A1D360DA500448404 /* JGLScoreNewTableViewCell.m in Sources */,
 				F569A14A1CE35AA500CD0FD5 /* JGTeamChannelTableViewCell.m in Sources */,
 				3644DBD91C522E4B0066842B /* ManageApplyModel.m in Sources */,
 				366409AC1CBF9BCE002FC920 /* InfoDataViewController.m in Sources */,
