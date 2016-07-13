@@ -355,12 +355,14 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (self.isManager == 1) {
-        JGDActivityListViewController *listerErctrl = [[JGDActivityListViewController alloc]init];
-        listerErctrl.activityKey = _activityKey;
-        listerErctrl.checkdict = _prizeListArray[indexPath.section-1];
-        listerErctrl.delegate = self;
-        listerErctrl.awardId = indexPath.section-1;
-        [self.navigationController pushViewController:listerErctrl animated:YES];
+        if (indexPath.section > 0) {
+            JGDActivityListViewController *listerErctrl = [[JGDActivityListViewController alloc]init];
+            listerErctrl.activityKey = _activityKey;
+            listerErctrl.checkdict = _prizeListArray[indexPath.section-1];
+            listerErctrl.delegate = self;
+            listerErctrl.awardId = indexPath.section-1;
+            [self.navigationController pushViewController:listerErctrl animated:YES];
+        }
     }
 }
 #pragma mark -- 奖项设置

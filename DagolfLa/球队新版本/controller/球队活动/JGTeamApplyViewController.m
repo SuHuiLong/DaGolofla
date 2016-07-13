@@ -123,7 +123,7 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
     _subsidiesPrice = 0;
     _amountPayable = 0;
 
-    [_baseInfoArray addObject:[NSString stringWithFormat:@"%@-球场名称", _modelss.name]];
+    [_baseInfoArray addObject:[NSString stringWithFormat:@"%@-活动名称", _modelss.name]];
     [_baseInfoArray addObject:[NSString stringWithFormat:@"%@-活动地址", _modelss.ballName]];
     [_baseInfoArray addObject:[NSString stringWithFormat:@"%@-活动日期", [Helper returnDateformatString:_modelss.endDate]]];
     //基础信息
