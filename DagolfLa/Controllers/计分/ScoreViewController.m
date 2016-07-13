@@ -566,32 +566,4 @@
 }
 
 
-
-
-//#pragma mark -- 圆形记分图片手势
-//
-////中间圆形记分图片手势
-//-(void) tapView:(UITapGestureRecognizer*) tapView
-//{
-//    if ([[NSUserDefaults standardUserDefaults]objectForKey:@"userId"]) {
-//        [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
-//        ScoreBySelfViewController* scenVc = [[ScoreBySelfViewController alloc]init];
-//        [self.navigationController pushViewController:scenVc animated:YES];
-//    }
-//    else
-//    {
-//        [Helper alertViewWithTitle:@"是否立即登录?" withBlockCancle:^{
-//            
-//        } withBlockSure:^{
-//            EnterViewController *vc = [[EnterViewController alloc] init];
-//            [self.navigationController pushViewController:vc animated:YES];
-//        } withBlock:^(UIAlertController *alertView) {
-//            [self presentViewController:alertView animated:YES completion:nil];
-//        }];
-//    }
-//    
-//    
-//}
-
-
 @end

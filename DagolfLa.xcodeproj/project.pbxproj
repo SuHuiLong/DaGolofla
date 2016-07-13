@@ -4389,6 +4389,7 @@
 		36BFFD2A1BC76C8D005B3CE2 /* DagolfLa */ = {
 			isa = PBXGroup;
 			children = (
+				8252E8571D360A6700448404 /* 记分New */,
 				F55DB3841D2A36FE0054F251 /* 奖项 */,
 				20591C3D1D215BCD003271EC /* 资金账户 */,
 				F5A105381CE300F80050461D /* 球队新版本 */,
@@ -5553,6 +5554,61 @@
 			path = SDPhotoBrowser;
 			sourceTree = "<group>";
 		};
+		8252E8571D360A6700448404 /* 记分New */ = {
+			isa = PBXGroup;
+			children = (
+				8252E85A1D360B3D00448404 /* 记分首页 */,
+				8252E8581D360B3D00448404 /* 活动记分 */,
+				8252E8591D360B3D00448404 /* 活动选择页 */,
+				8252E85B1D360B3D00448404 /* 记分统计 */,
+				8252E85C1D360B3D00448404 /* 记分页面 */,
+				8252E85D1D360B3D00448404 /* 历史记分卡 */,
+			);
+			path = "记分New";
+			sourceTree = "<group>";
+		};
+		8252E8581D360B3D00448404 /* 活动记分 */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "活动记分";
+			sourceTree = "<group>";
+		};
+		8252E8591D360B3D00448404 /* 活动选择页 */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "活动选择页";
+			sourceTree = "<group>";
+		};
+		8252E85A1D360B3D00448404 /* 记分首页 */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "记分首页";
+			sourceTree = "<group>";
+		};
+		8252E85B1D360B3D00448404 /* 记分统计 */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "记分统计";
+			sourceTree = "<group>";
+		};
+		8252E85C1D360B3D00448404 /* 记分页面 */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "记分页面";
+			sourceTree = "<group>";
+		};
+		8252E85D1D360B3D00448404 /* 历史记分卡 */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "历史记分卡";
+			sourceTree = "<group>";
+		};
 		827BD52C1D214A01009AF9CA /* 添加银行卡 */ = {
 			isa = PBXGroup;
 			children = (
@@ -6213,7 +6269,7 @@
 				TargetAttributes = {
 					36BFFD271BC76C8D005B3CE2 = {
 						CreatedOnToolsVersion = 6.3.2;
-						DevelopmentTeam = T8ML76W22A;
+						DevelopmentTeam = 5P6JNXBH3C;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -7201,7 +7257,7 @@
 					"$(SRCROOT)/DagolfLa",
 				);
 				INFOPLIST_FILE = DagolfLa/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -7250,7 +7306,7 @@
 					"$(SRCROOT)/DagolfLa",
 				);
 				INFOPLIST_FILE = DagolfLa/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
