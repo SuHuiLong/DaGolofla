@@ -684,17 +684,23 @@ static CGFloat ImageHeight  = 210.0;
 //        [self.navigationController pushViewController:winnerCtrl animated:YES];
 //    }
 //    else{
-        JGLPresentAwardViewController *prizeCtrl = [[JGLPresentAwardViewController alloc]init];
-        prizeCtrl.activityKey = _teamKey;
-        prizeCtrl.teamKey = _model.teamKey;
-        if ([_power containsString:@"1001"]) {
-            prizeCtrl.isManager = 1;
-        }else{
-            prizeCtrl.isManager = 0;
-        }
-        
-        prizeCtrl.model = _model;
-        [self.navigationController pushViewController:prizeCtrl animated:YES];
+    
+    if (_isTeamMember == 1) {
+        [[ShowHUD showHUD]showToastWithText:@"您不是该球队队员！" FromView:self.view];
+        return;
+    }
+    
+    JGLPresentAwardViewController *prizeCtrl = [[JGLPresentAwardViewController alloc]init];
+    prizeCtrl.activityKey = _teamKey;
+    prizeCtrl.teamKey = _model.teamKey;
+    if ([_power containsString:@"1001"]) {
+        prizeCtrl.isManager = 1;
+    }else{
+        prizeCtrl.isManager = 0;
+    }
+    
+    prizeCtrl.model = _model;
+    [self.navigationController pushViewController:prizeCtrl animated:YES];
 //    }
     
 }
