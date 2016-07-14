@@ -555,7 +555,7 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
     [dict setObject:@"活动微信订单" forKey:@"otherInfo"];
     
     [[JsonHttp jsonHttp]httpRequest:@"pay/doPayWeiXin" JsonKey:@"payInfo" withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
-        NSLog(@"errType == %@", errType);
+        [[ShowHUD showHUD]showToastWithText:@"请检查您的网络" FromView:self.view];
     } completionBlock:^(id data) {
         NSDictionary *dict = [data objectForKey:@"pay"];
         //微信
@@ -570,6 +570,10 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
             request.sign         = [dict objectForKey:@"sign"];
             
             [WXApi sendReq:request];
+        }
+        else
+        {
+            [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
         }
     }];
 }

@@ -7,7 +7,7 @@
 //
 
 #import "ViewController.h"
-
-@interface JGLScoreNewViewController : ViewController
+#import <RongIMKit/RongIMKit.h>
+@interface JGLScoreNewViewController : ViewController<RCIMReceiveMessageDelegate>
 
 @end

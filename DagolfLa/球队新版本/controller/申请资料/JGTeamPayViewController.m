@@ -99,7 +99,7 @@
     [dict setObject:[self.detailDic objectForKey:@"timeKey"] forKey:@"srcKey"]; // teammember's timekey
     
     [[JsonHttp jsonHttp]httpRequest:@"pay/doPayWeiXin" JsonKey:@"payInfo" withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
-        NSLog(@"errType == %@", errType);
+        [[ShowHUD showHUD]showToastWithText:@"请检查您的网络" FromView:self.view];
     } completionBlock:^(id data) {
         NSDictionary *dict = [data objectForKey:@"pay"];
         //微信
