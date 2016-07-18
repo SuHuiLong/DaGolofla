@@ -389,8 +389,8 @@
     }
     SDPhotoBrowser *browser = [[SDPhotoBrowser alloc] init];
     
-//    JGPhotoShowCollectionViewCell *cell = (JGPhotoShowCollectionViewCell *)[self collectionView:collectionView cellForItemAtIndexPath:indexPath];
-//    browser.sourceImagesContainerView = cell;
+    JGPhotoShowCollectionViewCell *cell = (JGPhotoShowCollectionViewCell *)[self collectionView:collectionView cellForItemAtIndexPath:indexPath];
+    browser.sourceImagesContainerView = cell;
     
     browser.imageCount = _dataArray.count;
     

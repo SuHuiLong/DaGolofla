@@ -8,27 +8,12 @@
 
 #import "JGLScoreNewViewController.h"
 #import "MeWonderViewCell.h"
-
-#import "DataViewController.h"
-#import "ScoreByActiveViewController.h"
-#import "HistoryViewController.h"
-#import "ScoreByGameViewController.h"
-#import "ScoreBySelfViewController.h"
-
-#import "Setbutton.h"
-
-#import "PostDataRequest.h"
-#import "Helper.h"
-#import "ScoreModel.h"
-
-#import "MBProgressHUD.h"
-#import "UITabBar+badge.h"
 #import "EnterViewController.h"
-#import "ScoreProfessViewController.h"
+#import "JGLSelfScoreViewController.h"
+
 @interface JGLScoreNewViewController ()<UIScrollViewDelegate,UICollectionViewDataSource,UICollectionViewDelegate>
 {
     UIScrollView* _scrollView;
-    ScoreModel *_model;
     
     UICollectionView* _collectionView;
     NSArray* _iconLabelArr;
@@ -55,7 +40,7 @@
 }
 - (void)onRCIMReceiveMessage:(RCMessage *)message left:(int)left
 {
-    [self.tabBarController.tabBar showBadgeOnItemIndex:3];
+//    [self.tabBarController.tabBar showBadgeOnItemIndex:3];
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -154,9 +139,8 @@
     
     if ([[NSUserDefaults standardUserDefaults]objectForKey:@"userId"]) {
         [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
-        
-        
-        
+        JGLSelfScoreViewController* SsVc = [[JGLSelfScoreViewController alloc]init];
+        [self.navigationController pushViewController:SsVc animated:YES];   
     }
     else
     {
@@ -232,7 +216,7 @@
     cell.iconLabel.textAlignment = NSTextAlignmentCenter;
     cell.iconLabel.font = [UIFont systemFontOfSize:14*ScreenWidth/375];
     NSArray* arrIcon = [[NSArray alloc]init];
-    arrIcon = @[@"shuju",@"lishi"];
+    arrIcon = @[@"graph",@"cardO"];
     cell.iconImage.image = [UIImage imageNamed:arrIcon[indexPath.row]];
     
     
