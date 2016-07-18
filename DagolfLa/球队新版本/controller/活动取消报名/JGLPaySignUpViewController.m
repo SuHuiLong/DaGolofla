@@ -182,7 +182,7 @@
                 JGTeamAcitivtyModel *model = [[JGTeamAcitivtyModel alloc] init];
                 [model setValuesForKeysWithDictionary:dicList];
                 model.isClick = NO;
-                if ([model.payMoney integerValue] > 0) {
+                if ([model.payMoney floatValue] > 0) {
                     [_dataArrayYet addObject:model];
                 }
                 else
@@ -512,7 +512,7 @@
     [center addObserver:self selector:@selector(notice:) name:@"weChatNotice" object:nil];
     
     [[JsonHttp jsonHttp]httpRequest:@"pay/doPayWeiXin" JsonKey:@"payInfo" withData:_payDict requestMethod:@"POST" failedBlock:^(id errType) {
-        NSLog(@"errType == %@", errType);
+        [[ShowHUD showHUD]showToastWithText:@"请检查您的网络" FromView:self.view];
     } completionBlock:^(id data) {
         NSDictionary *dict = [data objectForKey:@"pay"];
         //微信
@@ -527,6 +527,10 @@
             request.sign         = [dict objectForKey:@"sign"];
             
             [WXApi sendReq:request];
+        }
+        else
+        {
+            [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
         }
     }];
 }

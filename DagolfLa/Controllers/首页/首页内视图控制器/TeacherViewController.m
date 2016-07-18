@@ -261,7 +261,7 @@
     [dict setObject:[_dictCan objectForKey:@"protitle"] forKey:@"name"];
     
     [[JsonHttp jsonHttp]httpRequest:@"pay/doPayWeiXin" JsonKey:@"payInfo" withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
-        NSLog(@"errType == %@", errType);
+        [[ShowHUD showHUD]showToastWithText:@"请检查您的网络" FromView:self.view];
     } completionBlock:^(id data) {
         NSDictionary *dict = [data objectForKey:@"pay"];
         //微信
@@ -276,6 +276,9 @@
             request.sign         = [dict objectForKey:@"sign"];
             
             [WXApi sendReq:request];
+        }else
+        {
+            [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
         }
     }];
 }
