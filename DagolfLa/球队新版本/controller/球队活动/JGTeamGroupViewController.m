@@ -421,7 +421,8 @@ static NSString *const JGGroupdetailsCollectionViewCellIdentifier = @"JGGroupdet
             NSLog(@"%ld", (long)model.groupIndex);
             if (model.groupIndex == cell.tag) {
                 if (model.sortIndex == btn.tag) {
-                    teamMemberCtrl.oldSignUpKey = model.timeKey;
+                    teamMemberCtrl.oldSignUpKey = model.timeKey;//29242 29248
+                    break;
                 }
             }else{
                 teamMemberCtrl.oldSignUpKey = -1;
@@ -502,6 +503,10 @@ static NSString *const JGGroupdetailsCollectionViewCellIdentifier = @"JGGroupdet
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
             // 重新加载数据
             [self loadData:1];
+        }else{
+            if ([data objectForKey:@"packResultMsg"]) {
+                [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+            }
         }
     }];
 }
