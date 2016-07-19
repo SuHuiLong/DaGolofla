@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "JGLChooseScoreModel.h"
 /**
  *  选择记分对象
  */
@@ -26,5 +26,8 @@
 @property (strong, nonatomic) UILabel*      labelBall;
 
 @property (strong, nonatomic) UIView*       viewLine;
+
+
+-(void)showData:(JGLChooseScoreModel *)model;
 
 @end

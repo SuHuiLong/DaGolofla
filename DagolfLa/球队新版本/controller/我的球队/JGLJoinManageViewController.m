@@ -143,9 +143,15 @@
     [[JsonHttp jsonHttp]httpRequest:@"team/auditTeamMember" JsonKey:nil withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
         
     } completionBlock:^(id data) {
-        NSLog(@"%@",[data objectForKey:@"packResultMsg"]);
-        [_dataArray removeObjectAtIndex:btn.tag - 10000];
-        [_tableView reloadData];
+        if ([data objectForKey:@"packSuccess"]) {
+            if (_dataArray.count != 0) {
+                [_dataArray removeObjectAtIndex:btn.tag - 10000];
+            }
+            [_tableView reloadData];
+        }
+        else{
+            [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+        }
         
     }];
 }
@@ -159,9 +165,15 @@
     [[JsonHttp jsonHttp]httpRequest:@"team/auditTeamMember" JsonKey:nil withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
         
     } completionBlock:^(id data) {
-        NSLog(@"%@",[data objectForKey:@"packResultMsg"]);
-        [_dataArray removeObjectAtIndex:btn.tag - 100000];
-        [_tableView reloadData];
+        if ([data objectForKey:@"packSuccess"]) {
+            if (_dataArray.count != 0) {
+                [_dataArray removeObjectAtIndex:btn.tag - 100000];
+            }
+            [_tableView reloadData];
+        }
+        else{
+            [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+        }
     }];
 }
 

@@ -9,6 +9,8 @@
 #import "JGLAddPlayerViewController.h"
 #import "JGLAddPlayerTableViewCell.h"
 #import "JGLPlayerNumberTableViewCell.h"
+#import "JGLFriendAddViewController.h"
+#import "JGLAddressAddViewController.h"
 #import "UITool.h"
 @interface JGLAddPlayerViewController ()<UITableViewDelegate,UITableViewDataSource>
 {
@@ -35,7 +37,8 @@
     _viewHeader = [[UIView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, 100*screenWidth/375)];
     _viewHeader.backgroundColor = [UIColor whiteColor];
     _tableView.tableHeaderView = _viewHeader;
-    
+//    _tableView.tableHeaderView.userInteractionEnabled = YES;
+//    _viewHeader.userInteractionEnabled = YES;
     NSArray* arrTit = @[@"通讯录添加",@"扫描添加",@"球友列表添加"];
     NSArray* arrImg = @[@"addressBook",@"saomiao",@"tjdqr_qiuyou"];
     for (int i = 0; i < 3; i ++) {
@@ -44,6 +47,7 @@
         btnAdd.frame = CGRectMake(screenWidth/3*i, 0, screenWidth/3, 100*screenWidth/375);
         btnAdd.tag = 100 + i;
         [_viewHeader addSubview:btnAdd];
+        [btnAdd addTarget:self action:@selector(chooseStyleClick:) forControlEvents:UIControlEventTouchUpInside];
         
         if (i > 0) {
             UIView* vieeLine = [[UIView alloc]initWithFrame:CGRectMake(screenWidth/3*i - 1, 15*screenWidth/375, 2, 70*screenWidth/375)];
@@ -62,6 +66,22 @@
         [_viewHeader addSubview:labelN];
     }
     
+}
+
+-(void)chooseStyleClick:(UIButton *)btn
+{
+    if (btn.tag == 100) {
+        JGLFriendAddViewController* fVc = [[JGLFriendAddViewController alloc]init];
+        [self.navigationController pushViewController:fVc animated:YES];
+    }
+    else if (btn.tag == 101)
+    {
+        
+    }
+    else{
+        JGLAddressAddViewController* addVc = [[JGLAddressAddViewController alloc]init];
+        [self.navigationController pushViewController:addVc animated:YES];
+    }
 }
 
 -(void)uiConfig

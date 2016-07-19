@@ -10,7 +10,7 @@
 #import "MeWonderViewCell.h"
 #import "EnterViewController.h"
 #import "JGLSelfScoreViewController.h"
-
+#import "JGLAddPlayerViewController.h"
 @interface JGLScoreNewViewController ()<UIScrollViewDelegate,UICollectionViewDataSource,UICollectionViewDelegate>
 {
     UIScrollView* _scrollView;
@@ -237,7 +237,9 @@
 {
     if ([[NSUserDefaults standardUserDefaults]objectForKey:@"userId"])
     {
-        
+        JGLAddPlayerViewController* addVc = [[JGLAddPlayerViewController alloc]init];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
+        [self.navigationController pushViewController:addVc animated:YES];
     }
     else
     {
