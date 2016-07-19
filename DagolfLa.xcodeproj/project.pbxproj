@@ -81,6 +81,7 @@
 		2064DE8C1D367FEC00F0D52A /* JGHScoresHoleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2064DE8B1D367FEC00F0D52A /* JGHScoresHoleView.m */; };
 		2064DE961D3C715300F0D52A /* JGHRetrieveScoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2064DE941D3C715300F0D52A /* JGHRetrieveScoreViewController.m */; };
 		2064DE971D3C715300F0D52A /* JGHRetrieveScoreViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2064DE951D3C715300F0D52A /* JGHRetrieveScoreViewController.xib */; };
+		2064DE9A1D3E13FC00F0D52A /* JGHScoreListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2064DE991D3E13FC00F0D52A /* JGHScoreListModel.m */; };
 		2067C6B81CE30CA4002900C8 /* JGTeamActibityNameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2067C6B51CE30CA4002900C8 /* JGTeamActibityNameViewController.m */; };
 		2067C6B91CE30CA4002900C8 /* JGTeamActivityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2067C6B71CE30CA4002900C8 /* JGTeamActivityViewController.m */; };
 		2067C6CE1CE30CC0002900C8 /* JGActivityNameBaseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2067C6C01CE30CC0002900C8 /* JGActivityNameBaseCell.m */; };
@@ -1058,6 +1059,8 @@
 		2064DE931D3C715300F0D52A /* JGHRetrieveScoreViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHRetrieveScoreViewController.h; sourceTree = "<group>"; };
 		2064DE941D3C715300F0D52A /* JGHRetrieveScoreViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHRetrieveScoreViewController.m; sourceTree = "<group>"; };
 		2064DE951D3C715300F0D52A /* JGHRetrieveScoreViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JGHRetrieveScoreViewController.xib; sourceTree = "<group>"; };
+		2064DE981D3E13FC00F0D52A /* JGHScoreListModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHScoreListModel.h; sourceTree = "<group>"; };
+		2064DE991D3E13FC00F0D52A /* JGHScoreListModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHScoreListModel.m; sourceTree = "<group>"; };
 		2067C6B41CE30CA4002900C8 /* JGTeamActibityNameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGTeamActibityNameViewController.h; sourceTree = "<group>"; };
 		2067C6B51CE30CA4002900C8 /* JGTeamActibityNameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGTeamActibityNameViewController.m; sourceTree = "<group>"; };
 		2067C6B61CE30CA4002900C8 /* JGTeamActivityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGTeamActivityViewController.h; sourceTree = "<group>"; };
@@ -2557,6 +2560,8 @@
 		2012AD971D36156F00F70E40 /* 记分页 */ = {
 			isa = PBXGroup;
 			children = (
+				2064DE981D3E13FC00F0D52A /* JGHScoreListModel.h */,
+				2064DE991D3E13FC00F0D52A /* JGHScoreListModel.m */,
 			);
 			path = "记分页";
 			sourceTree = "<group>";
@@ -5710,6 +5715,8 @@
 			children = (
 				2064DE901D3C70BC00F0D52A /* 取回记分 */,
 				2012AD961D36156400F70E40 /* 记分页 */,
+				829C16E71D3735DD008ABB25 /* 自助记分 */,
+				8252E86B1D36204800448404 /* 添加打球人 */,
 				8252E8621D360D6200448404 /* JGLScoreNewViewController.h */,
 				8252E8631D360D6200448404 /* JGLScoreNewViewController.m */,
 			);
@@ -5732,6 +5739,8 @@
 			children = (
 				2064DE921D3C70EE00F0D52A /* 取回记分 */,
 				2012AD981D36157900F70E40 /* 记分页 */,
+				8201D5F01D387FC70049E07A /* 自助记分 */,
+				829C16EB1D377953008ABB25 /* 添加打球人 */,
 				8252E8681D360DA500448404 /* JGLScoreNewTableViewCell.h */,
 				8252E8691D360DA500448404 /* JGLScoreNewTableViewCell.m */,
 			);
@@ -7073,6 +7082,7 @@
 				654332211BD630E500363947 /* PostRewordTableViewCell.m in Sources */,
 				20CA13FF1CEAF07100DA15B9 /* SXPickPhoto.m in Sources */,
 				20C1B8B01CE3241C00508ABC /* JGTableViewCell.m in Sources */,
+				2064DE9A1D3E13FC00F0D52A /* JGHScoreListModel.m in Sources */,
 				36BFFF651BC76D09005B3CE2 /* UIActivityIndicatorView+AFNetworking.m in Sources */,
 				82D595E31CE42E7B00CD9587 /* JGMemHalfTableViewCell.m in Sources */,
 				36D9F7221C23BD4700699569 /* ScoreCardModel.m in Sources */,

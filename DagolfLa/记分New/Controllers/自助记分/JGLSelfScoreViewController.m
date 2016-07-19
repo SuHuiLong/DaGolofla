@@ -7,7 +7,7 @@
 //
 
 #import "JGLSelfScoreViewController.h"
-
+#import "JGHScoresViewController.h"
 
 #import "JGLAddPlayerViewController.h"
 #import "JGLChooseScoreViewController.h"
@@ -40,6 +40,23 @@
     [self uiConfig];
     [self createScoreBtn];
     
+    [self getBallCode];
+}
+
+#pragma mark -- 获取球场区和T台
+- (void)getBallCode{
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    [dict setObject:@"12" forKey:@"ballKey"];
+    [[JsonHttp jsonHttp]httpRequest:@"ball/getBallCode" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
+        
+    } completionBlock:^(id data) {
+        NSLog(@"%@", data);
+        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+            
+        }else{
+            
+        }
+    }];
 }
 
 -(void)activeItem
@@ -53,12 +70,50 @@
 {
     UIButton* btn = [UIButton buttonWithType:UIButtonTypeCustom];
     btn.backgroundColor = [UIColor orangeColor];
-    [btn setTitle:@"专业记分" forState:UIControlStateNormal];
+    [btn setTitle:@"开始记分" forState:UIControlStateNormal];
     [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     btn.layer.masksToBounds = YES;
+    [btn addTarget:self action:@selector(professionalScore:) forControlEvents:UIControlEventTouchUpInside];
     btn.layer.cornerRadius = 8*ScreenWidth/375;
     btn.frame = CGRectMake(10*ScreenWidth/375, screenHeight - 54*ScreenWidth/375 - 64, ScreenWidth-20*ScreenWidth/375, 44*ScreenWidth/375);
     [self.view addSubview:btn];
+}
+#pragma mark -- 专业记分
+- (void)professionalScore:(UIButton *)btn{
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    [dict setObject:@"244" forKey:@"userKey"];
+    [dict setObject:@"12" forKey:@"ballKey"];
+    [dict setObject:DEFAULF_USERID forKey:@"srcKey"];
+    [dict setObject:@(0) forKey:@"srcType"];
+    [dict setObject:@"A区" forKey:@"region1"];
+    [dict setObject:@"B区" forKey:@"region2"];
+    
+    NSMutableArray *userArray = [NSMutableArray array];
+    for (int i=0; i<3; i++) {
+        NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+        [dict setObject:@"白T" forKey:@"tTaiwan"];// T台
+        [dict setObject:[NSString stringWithFormat:@"%d", 244 + i] forKey:@"userKey"];//用户Key
+        [dict setObject:[NSString stringWithFormat:@"dsd%d", i] forKey:@"userName"];// 用户名称
+        [dict setObject:[NSString stringWithFormat:@"1872111036%d", i] forKey:@"userMobile"];// 手机号
+        [userArray addObject:dict];
+    }
+
+    [dict setObject:userArray forKey:@"userList"];
+//    [dict setObject:DEFAULF_USERID forKey:@"md5"];
+    [[JsonHttp jsonHttp]httpRequest:@"score/createScore" JsonKey:nil withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
+        
+    } completionBlock:^(id data) {
+        NSLog(@"%@", data);
+        if ([[data objectForKey:@"packSuccess"]integerValue] == 1) {
+            JGHScoresViewController *scoresCtrl = [[JGHScoresViewController alloc]init];
+            scoresCtrl.scorekey = [data objectForKey:@"scorekey"];
+            [self.navigationController pushViewController:scoresCtrl animated:YES];
+        }else{
+            if ([data objectForKey:@"packResultMsg"]) {
+                [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+            }
+        }
+    }];
 }
 
 -(void)uiConfig

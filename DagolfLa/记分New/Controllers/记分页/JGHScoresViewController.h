@@ -10,4 +10,6 @@
 
 @interface JGHScoresViewController : ViewController
 
+@property (nonatomic, strong)NSString *scorekey;
+
 @end

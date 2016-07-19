@@ -35,10 +35,31 @@ static NSString *const JGHScoresHoleCellIdentifier = @"JGHScoresHoleCell";
         
         self.scoreTableView.separatorStyle = UITableViewCellSelectionStyleNone;
         [self addSubview:self.scoreTableView];
+        
+//        [self getScoreList];
     }
     return self;
 }
 
+#pragma mark -- getScoreList 获取活动计分列表
+- (void)getScoreList:(NSString *)scorKey{
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    [dict setObject:DEFAULF_USERID forKey:@"userKey"];
+    [dict setObject:scorKey forKey:@"scoreKey"];
+    [dict setObject:[JGReturnMD5Str getScoreListUserKey:[DEFAULF_USERID integerValue] andScoreKey:[scorKey integerValue]] forKey:@"md5"];
+    [[JsonHttp jsonHttp]httpRequest:@"score/getScoreList" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
+        
+    } completionBlock:^(id data) {
+        NSLog(@"%@", data);
+        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+            
+        }else{
+            if ([data objectForKey:@"packResultMsg"]) {
+                [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:(UIView *)self];
+            }
+        }
+    }];
+}
 #pragma mark -- tableView代理
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return 4;
