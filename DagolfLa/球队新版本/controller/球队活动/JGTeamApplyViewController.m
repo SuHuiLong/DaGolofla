@@ -578,12 +578,19 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
     }];
 }
 #pragma mark -- 微信支付成功后返回的通知
-- (void)notice:(id)not{
-    //跳转分组页面
-    JGTeamGroupViewController *groupCtrl = [[JGTeamGroupViewController alloc]init];
-    groupCtrl.teamActivityKey = [_modelss.timeKey integerValue];
-    groupCtrl.activityFrom = 1;
-    [self.navigationController pushViewController:groupCtrl animated:YES];
+- (void)notice:(NSNotification *)not{
+    NSInteger secess = [[not.userInfo objectForKey:@"secess"] integerValue];
+    if (secess == 1) {
+        //跳转分组页面
+        JGTeamGroupViewController *groupCtrl = [[JGTeamGroupViewController alloc]init];
+        groupCtrl.teamActivityKey = [_modelss.timeKey integerValue];
+        groupCtrl.activityFrom = 1;
+        [self.navigationController pushViewController:groupCtrl animated:YES];
+    }else if (secess == 2){
+        [[ShowHUD showHUD]showToastWithText:@"支付已取消！" FromView:self.view];
+    }else{
+        [[ShowHUD showHUD]showToastWithText:@"支付失败！" FromView:self.view];
+    }
 }
 #pragma mark -- 支付宝
 - (void)zhifubaoPay{
@@ -604,23 +611,26 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
         NSLog(@"%@",[data objectForKey:@"query"]);
         [[AlipaySDK defaultService] payOrder:[data objectForKey:@"query"] fromScheme:@"dagolfla" callback:^(NSDictionary *resultDic) {
             
-            //跳转分组页面
-            JGTeamGroupViewController *groupCtrl = [[JGTeamGroupViewController alloc]init];
-            groupCtrl.activityFrom = 1;
-            groupCtrl.teamActivityKey = [_modelss.timeKey integerValue];
-            [self.navigationController pushViewController:groupCtrl animated:YES];
             NSLog(@"支付宝=====%@",resultDic[@"resultStatus"]);
             if ([resultDic[@"resultStatus"] isEqualToString:@"9000"]) {
-                NSLog(@"陈公");
-                
+                NSLog(@"成功！");
+                //跳转分组页面
+                JGTeamGroupViewController *groupCtrl = [[JGTeamGroupViewController alloc]init];
+                groupCtrl.activityFrom = 1;
+                groupCtrl.teamActivityKey = [_modelss.timeKey integerValue];
+                [self.navigationController pushViewController:groupCtrl animated:YES];
             } else if ([resultDic[@"resultStatus"] isEqualToString:@"4000"]) {
                 NSLog(@"失败");
+                [[ShowHUD showHUD]showToastWithText:@"支付失败！" FromView:self.view];
             } else if ([resultDic[@"resultStatus"] isEqualToString:@"6002"]) {
                 NSLog(@"网络错误");
+                [[ShowHUD showHUD]showToastWithText:@"网络异常，支付失败！" FromView:self.view];
             } else if ([resultDic[@"resultStatus"] isEqualToString:@"6001"]) {
                 NSLog(@"取消支付");
+                [[ShowHUD showHUD]showToastWithText:@"支付已取消！" FromView:self.view];
             } else {
                 NSLog(@"支付失败");
+                [[ShowHUD showHUD]showToastWithText:@"支付失败！" FromView:self.view];
             }
         }];
     }];
