@@ -15,7 +15,7 @@
 #import "CommunityViewController.h"
 #import "JKSlideViewController.h"
 #import "MeViewController.h"
-#import "ScoreViewController.h"
+#import "JGLScoreNewViewController.h"
 
 #import "UserDataInformation.h"
 #import "EnterViewController.h"
@@ -189,7 +189,7 @@
     comVc.title = @"社区";
     [self setUpOneChildViewController:comVc image:[UIImage imageNamed:@"sq"] selectImage:[[UIImage imageNamed:@"sq"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
     
-    ScoreViewController *scoVc = [[ScoreViewController alloc] init];
+    JGLScoreNewViewController *scoVc = [[JGLScoreNewViewController alloc] init];
     scoVc.title = @"记分";
     [self setUpOneChildViewController:scoVc image:[UIImage imageNamed:@"tab_jf"] selectImage:[[UIImage imageNamed:@"tab_jf"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
     

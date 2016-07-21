@@ -196,7 +196,16 @@
 #pragma mark -- 类型选择事件
 - (void)catoryBtnClick:(UIButton *)btn{
     NSLog(@"%@", btn.currentTitle);
-    _iscatoryVlaue = btn.tag - 200;
+    if ([btn.currentTitle containsString:@"普通嘉宾"]) {
+        _iscatoryVlaue = 0;
+    }else if ([btn.currentTitle containsString:@"球队队员"]){
+        _iscatoryVlaue = 1;
+    }else if ([btn.currentTitle containsString:@"无记名会员"]){
+        _iscatoryVlaue = 3;
+    }else{
+        _iscatoryVlaue = 2;
+    }
+    
     self.catoryName.text = btn.currentTitle;
     self.catoryView.hidden = YES;
 }

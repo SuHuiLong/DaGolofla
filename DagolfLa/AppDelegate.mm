@@ -303,23 +303,27 @@
         NSLog(@"Calling Application Bundle ID: %@", sourceApplication);
         NSLog(@"URL scheme:%@", [url scheme]);
         NSLog(@"URL query: %@", [url query]);
-        NSString *actKey = @"";
-        NSString *actDetail = @"";
-        if ([url query]) {
-            actKey = [[[NSString stringWithFormat:@"%@", [url query]] componentsSeparatedByString:@"="] objectAtIndex:1];
-            actDetail = [[[NSString stringWithFormat:@"%@", [url query]] componentsSeparatedByString:@"="] objectAtIndex:0];
+        if ([[url query] containsString:@"safepay"]) {
+            //跳转支付宝钱包进行支付，处理支付结果
+            [[AlipaySDK defaultService] processOrderWithPaymentResult:url standbyCallback:^(NSDictionary *resultDic) {
+                NSLog(@"result = %@",resultDic);
+                NSLog(@"客户端支付");
+            }];
+        }else{
+            NSString *actKey = @"";
+            NSString *actDetail = @"";
+            if ([url query]) {
+                actKey = [[[NSString stringWithFormat:@"%@", [url query]] componentsSeparatedByString:@"="] objectAtIndex:1];
+                actDetail = [[[NSString stringWithFormat:@"%@", [url query]] componentsSeparatedByString:@"="] objectAtIndex:0];
+            }
+            
+            [self gotoAppPage:actKey switchDetails:actDetail];
         }
         
-        [self gotoAppPage:actKey switchDetails:actDetail];
         return YES;
     }
     else
     {
-        //跳转支付宝钱包进行支付，处理支付结果
-        [[AlipaySDK defaultService] processOrderWithPaymentResult:url standbyCallback:^(NSDictionary *resultDic) {
-            NSLog(@"result = %@",resultDic);
-            NSLog(@"客户端支付");
-        }];
         
         return YES;
     }
@@ -375,6 +379,7 @@
 }
 
 -(void)onResp:(BaseResp *)resp{
+    NSInteger secessFlag = 0;// 0- 失败， 1- 成功, 2-取消
     NSString *strTitle;
     if ([resp isKindOfClass:[SendMessageToWXResp class]]) {
         strTitle = [NSString stringWithFormat:@"发送媒体消息结果"];
@@ -386,32 +391,37 @@
             case WXSuccess:
             {
                 NSLog(@"支付结果: 成功!");
+                secessFlag = 1;
             }
                 break;
             case WXErrCodeCommon:
             { //签名错误、未注册APPID、项目设置APPID不正确、注册的APPID与设置的不匹配、其他异常等
                 
                 NSLog(@"支付结果: 失败!");
+                secessFlag = 0;
             }
                 break;
             case WXErrCodeUserCancel:
             { //用户点击取消并返回
-                
+                secessFlag = 2;
             }
                 break;
             case WXErrCodeSentFail:
             { //发送失败
                 NSLog(@"发送失败");
+                secessFlag = 0;
             }
                 break;
             case WXErrCodeUnsupport:
             { //微信不支持
                 NSLog(@"微信不支持");
+                secessFlag = 0;
             }
                 break;
             case WXErrCodeAuthDeny:
             { //授权失败
                 NSLog(@"授权失败");
+                secessFlag = 0;
             }
                 break;
             default:
@@ -420,7 +430,7 @@
         //------------------------
         
         //创建一个消息对象
-        NSNotification * notice = [NSNotification notificationWithName:@"weChatNotice" object:nil userInfo:@{@"secess":@"1"}];
+        NSNotification * notice = [NSNotification notificationWithName:@"weChatNotice" object:nil userInfo:@{@"secess":@(secessFlag)}];
         //发送消息
         [[NSNotificationCenter defaultCenter]postNotification:notice];
     }

@@ -65,6 +65,9 @@
     return [Helper md5HexDigest:[NSString stringWithFormat:@"teamKey=%td&activityKey=%td&userKey=%tddagolfla.com",teamKey, activityKey, userKey]];
 }
 
++ (NSString *)getScoreListUserKey:(NSInteger)userKey andScoreKey:(NSInteger)scoreKey{
+    return [Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%td&scoreKey=%tddagolfla.com", userKey, scoreKey]];
+}
 
 /*
  // App分享的MD5签名规则

@@ -136,22 +136,25 @@
                 
                 //提交的参数
                 NSMutableDictionary *prizeDict = [NSMutableDictionary dictionary];
-                [prizeDict setObject:model.teamKey forKey:@"teamKey"];
+                if (_isManager == 1) {
+                    [prizeDict setObject:model.teamKey forKey:@"teamKey"];
+                }
+                
                 [prizeDict setObject:model.timeKey forKey:@"timeKey"];
                 [prizeDict setObject:@(_activityKey) forKey:@"teamActivityKey"];
                 [prizeDict setObject:model.name forKey:@"name"];
-                if (model.prizeName == nil) {
+                if (![Helper isBlankString:model.prizeName]) {
                     [prizeDict setObject:@"" forKey:@"prizeName"];
                 }else{
                     [prizeDict setObject:model.prizeName forKey:@"prizeName"];
                 }
                 
                 [prizeDict setObject:model.prizeSize forKey:@"prizeSize"];
-                if (model.signupKeyInfo) {
+                if (![Helper isBlankString:model.signupKeyInfo]) {
                     [prizeDict setObject:model.signupKeyInfo forKey:@"signupKeyInfo"];
                 }
                 
-                if (model.userInfo) {
+                if (![Helper isBlankString:model.userInfo]) {
                     [prizeDict setObject:model.userInfo forKey:@"userInfo"];
 
                 }

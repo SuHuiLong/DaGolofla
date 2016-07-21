@@ -146,7 +146,7 @@
     [dict setObject:@0 forKey:@"orderType"];
     [dict setObject:@527 forKey:@"srcKey"];
     [[JsonHttp jsonHttp]httpRequest:@"pay/doPayWeiXin" JsonKey:@"payInfo" withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
-        NSLog(@"errType == %@", errType);
+        [[ShowHUD showHUD]showToastWithText:@"请检查您的网络" FromView:self.view];
     } completionBlock:^(id data) {
         
         NSDictionary *dict = [data objectForKey:@"pay"];
@@ -171,6 +171,9 @@
             request.sign         = [dict objectForKey:@"sign"];
             
             [WXApi sendReq:request];
+        }else
+        {
+            [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
         }
         
         

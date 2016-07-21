@@ -35,4 +35,6 @@
 
 + (NSString *)getTeamGroupNameListTeamKey:(NSInteger)teamKey activityKey:(NSInteger)activityKey userKey:(NSInteger)userKey;
 
++ (NSString *)getScoreListUserKey:(NSInteger)userKey andScoreKey:(NSInteger)scoreKey;
+
 @end
