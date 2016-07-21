@@ -7,14 +7,19 @@
 //
 
 #import "BaseModel.h"
-
+#import "ChineseString.h"
 @interface TKAddressModel : BaseModel
 
 @property (assign, nonatomic) NSInteger sectionNumber;
 @property (assign, nonatomic) NSInteger recordID;
+@property (nonatomic, retain) NSString *userName;
 @property (nonatomic, retain) NSString *name;
+
 @property (nonatomic, retain) NSString *email;
 @property (nonatomic, retain) NSString *tel;
+@property (nonatomic, retain) NSString *mobile;
+@property (strong, nonatomic) ChineseString *chineseString;
+
 
 
 @property (nonatomic, assign) NSInteger isSelectNumber;

@@ -10,4 +10,9 @@
 
 @interface JGLFriendAddViewController : ViewController
 
+
+@property (copy, nonatomic) void (^blockFriendDict)(NSMutableDictionary *);
+@property (copy, nonatomic) NSMutableDictionary* dictFinish;
+
+
 @end

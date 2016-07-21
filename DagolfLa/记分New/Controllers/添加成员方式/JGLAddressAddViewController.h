@@ -7,7 +7,13 @@
 //
 
 #import "ViewController.h"
+#import "TKAddressModel.h"
+#import <AddressBook/AddressBook.h>
+#import <AddressBookUI/AddressBookUI.h>
+@interface JGLAddressAddViewController : ViewController<ABPeoplePickerNavigationControllerDelegate>
 
-@interface JGLAddressAddViewController : ViewController
+@property (copy, nonatomic) void (^blockAddressPeople)(NSMutableDictionary* dict);
+
+@property (copy, nonatomic) NSMutableDictionary* dictFinish;
 
 @end

@@ -28,7 +28,7 @@
         [self addSubview:_labelName];
         
         _imgvIcon = [[UIImageView alloc]initWithFrame:CGRectMake(screenWidth - 40*screenWidth/375, 10*screenWidth/375, 20*screenWidth/375, 20*screenWidth/375)];
-        _imgvIcon.image = [UIImage imageNamed:@"gou_x"];
+        _imgvIcon.image = [UIImage imageNamed:@"remove"];
         [self addSubview:_imgvIcon];
         
         

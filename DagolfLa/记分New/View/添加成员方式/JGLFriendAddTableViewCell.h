@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "MyattenModel.h"
 @interface JGLFriendAddTableViewCell : UITableViewCell
 
 
@@ -19,5 +19,9 @@
 @property (strong, nonatomic) UILabel*     labelTitle;
 
 @property (strong, nonatomic) UIImageView* imgvSex;
+
+@property (strong, nonatomic)MyattenModel *myModel;
+
+
 
 @end

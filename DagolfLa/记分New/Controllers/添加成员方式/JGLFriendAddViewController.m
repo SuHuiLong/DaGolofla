@@ -9,13 +9,15 @@
 #import "JGLFriendAddViewController.h"
 #import "JGMenberTableViewCell.h"
 
-#import "JGMemManageController.h"
+#import "PYTableViewIndexManager.h"
 
 #import "MJRefresh.h"
 #import "MJDIYBackFooter.h"
 #import "MJDIYHeader.h"
 
-#import "JGLTeamMemberModel.h"
+#import "MyattenModel.h"
+#import "NoteModel.h"
+#import "NoteHandlle.h"
 
 #import "ChatDetailViewController.h"
 #import "JGTeamMemberManager.h"
@@ -29,6 +31,7 @@
     NSMutableArray* _dataArray;
     
     NSMutableDictionary* _dataAccountDict;
+    
 }
 @property (nonatomic, strong) UISearchController *searchController;
 @property (strong, nonatomic)NSMutableArray *keyArray;
@@ -42,12 +45,38 @@
     [super viewDidLoad];
     
     self.navigationItem.title = @"球友添加";
-    _keyArray = [[NSMutableArray alloc]init];
-    _listArray = [[NSMutableArray alloc]init];
-    _dataArray = [[NSMutableArray alloc]init];
+    
+    UIBarButtonItem* item = [[UIBarButtonItem alloc]initWithTitle:@"完成" style:UIBarButtonItemStylePlain target:self action:@selector(finishAction)];
+    item.tintColor = [UIColor whiteColor];
+    self.navigationItem.rightBarButtonItem = item;
+    
+    _keyArray        = [[NSMutableArray alloc]init];
+    _listArray       = [[NSMutableArray alloc]init];
+    if (_dictFinish.count == 0) {
+        _dictFinish      = [[NSMutableDictionary alloc]init];
+    }
+    _dataArray       = [[NSMutableArray alloc]init];
     _dataAccountDict = [[NSMutableDictionary alloc]init];
     [self uiConfig];
     [self createHeadSearch];
+}
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    if (self.searchController.active) {
+        self.searchController.active = NO;
+        self.searchController.searchBar.hidden = YES;
+    }
+}
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    self.searchController.searchBar.hidden = NO;
+    [_tableView reloadData];
+}
+
+-(void)finishAction
+{
+    _blockFriendDict(_dictFinish);
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 -(void)createHeadSearch
@@ -59,10 +88,19 @@
     _searchController.hidesNavigationBarDuringPresentation = NO;
     _searchController.searchBar.frame = CGRectMake(self.searchController.searchBar.frame.origin.x, self.searchController.searchBar.frame.origin.y, self.searchController.searchBar.frame.size.width, 44.0);
     _searchController.searchBar.tintColor = [UIColor colorWithRed:0.36f green:0.66f blue:0.31f alpha:1.00f];
-    _searchController.searchBar.placeholder = @"输入球队昵称搜索";
+    _searchController.searchBar.placeholder = @"输入队友昵称搜索";
     _tableView.tableHeaderView = _searchController.searchBar;
     _searchController.searchBar.delegate = self;
 }
+-(void)updateSearchResultsForSearchController:(UISearchController *)searchController {
+}
+-(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
+
+}
+
+
+
+
 
 -(void)uiConfig
 {
@@ -82,47 +120,27 @@
 
 #pragma mark - 下载数据
 - (void)downLoadData:(int)page isReshing:(BOOL)isReshing{
-    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    
-    [dict setObject:@5823 forKey:@"teamKey"];
-    [dict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:userID] forKey:@"userKey"];
-    [dict setObject:[NSNumber numberWithInt:page] forKey:@"offset"];
-    NSString *para = [JGReturnMD5Str getTeamMemberListWithTeamKey:5823 userKey:[DEFAULF_USERID integerValue]];
-    [dict setObject:para forKey:@"md5"];
-    
-    [[JsonHttp jsonHttp]httpRequest:@"team/getTeamMemberList" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
-        if (isReshing) {
-            [_tableView.header endRefreshing];
-        }
-    } completionBlock:^(id data) {
-        if ([[data objectForKey:@"packSuccess"] boolValue]) {
-            if (page == 0)
-            {
-                //清除数组数据
-                [_dataArray removeAllObjects];
-                [_keyArray removeAllObjects];
-                [_listArray removeAllObjects];
-                [_dataAccountDict removeAllObjects];
+    [[PostDataRequest sharedInstance] postDataRequest:@"UserFollow/querbyUserFollowList.do" parameter:@{@"userId":[[NSUserDefaults standardUserDefaults] objectForKey:@"userId"],@"otherUserId":@0,@"page":@0,@"rows":@0} success:^(id respondsData) {
+        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:respondsData options:NSJSONReadingMutableContainers error:nil];
+        
+        if ([[dict objectForKey:@"success"] boolValue]) {
+            NSArray *array = [dict objectForKey:@"rows"];
+            NSMutableArray *allFriarr = [[NSMutableArray alloc] init];
+            for (NSDictionary *dic in array) {
+                MyattenModel *model = [[MyattenModel alloc] init];
+                [model setValuesForKeysWithDictionary:dic];
                 
-            }
-            //数据解析
-            for (NSDictionary *dataDic in [data objectForKey:@"teamMemberList"]) {
-                JGLTeamMemberModel *model = [[JGLTeamMemberModel alloc] init];
-                [model setValuesForKeysWithDictionary:dataDic];
-                [_dataArray addObject:model];
+                NoteModel *modell = [NoteHandlle selectNoteWithUID:model.otherUserId];
+                if ([modell.userremarks isEqualToString:@"(null)"] || [modell.userremarks isEqualToString:@""] || modell.userremarks == nil) {
+                    
+                }else{
+                    model.userName = modell.userremarks;
+                }
+                [allFriarr addObject:model];
+                //                [self.keyArray addObject:model.userName];
             }
             
-            self.listArray = [[NSMutableArray alloc]initWithArray:[JGTeamMemberManager archiveNumbers:_dataArray]];
-            
-            if (![Helper isBlankString:[data objectForKey:@"accountUserKey"]]) {
-                [_dataAccountDict setObject:[data objectForKey:@"accountUserKey"] forKey:@"accountUserKey"];
-            }
-            if (![Helper isBlankString:[data objectForKey:@"accountUserMobile"]]) {
-                [_dataAccountDict setObject:[data objectForKey:@"accountUserMobile"] forKey:@"accountUserMobile"];
-            }
-            if (![Helper isBlankString:[data objectForKey:@"accountUserName"]]) {
-                [_dataAccountDict setObject:[data objectForKey:@"accountUserName"] forKey:@"accountUserName"];
-            }
+            self.listArray = [[NSMutableArray alloc]initWithArray:[PYTableViewIndexManager archiveNumbers:allFriarr]];
             
             _keyArray = [[NSMutableArray alloc]initWithObjects:@"A",@"B",@"C",@"D",@"E",@"F",@"G",@"H",@"I",@"J",@"K",@"L",@"M",@"N",@"O",@"P",@"Q",@"R",@"S",@"T",@"U",@"V",@"W",@"X",@"Y",@"Z",@"#", nil];
             
@@ -133,18 +151,23 @@
                 }
             }
             
-            
-            _page++;
             [_tableView reloadData];
         }else {
-            [Helper alertViewNoHaveCancleWithTitle:[NSString stringWithFormat:@"%@",[data objectForKey:@"packResultMsg"]] withBlock:^(UIAlertController *alertView) {
-                [self.navigationController presentViewController:alertView animated:YES completion:nil];
-            }];
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:[dict objectForKey:@"message"] delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+            [alert show];
         }
-        [_tableView reloadData];
         if (isReshing) {
             [_tableView.header endRefreshing];
+        }else {
+            [_tableView.footer endRefreshing];
         }
+    } failed:^(NSError *error) {
+        if (isReshing) {
+            [_tableView.header endRefreshing];
+        }else {
+            [_tableView.footer endRefreshing];
+        }
+        
     }];
 }
 
@@ -177,30 +200,55 @@
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+
     JGLFriendAddTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"JGLFriendAddTableViewCell" forIndexPath:indexPath];
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    //    [cell showData:_dataArray[indexPath.row]];
     
-    if (_listArray.count != 0) {
-//        [cell showData:_listArray[indexPath.section][indexPath.row] andPower:@"1002,1003"];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    
+    MyattenModel *model = self.listArray[indexPath.section][indexPath.row];
+    NoteModel *modell = [NoteHandlle selectNoteWithUID:model.otherUserId];
+    if ([modell.userremarks isEqualToString:@"(null)"] || [modell.userremarks isEqualToString:@""] || modell.userremarks == nil) {
+        
+    }else{
+        model.userName = modell.userremarks;
     }
-//    if (screenWidth == 320) {
-//        cell.moneyLabel.frame = CGRectMake((screenWidth - 80)*screenWidth/320, 10*screenWidth/320, 60*screenWidth/320, 24*screenWidth/320);
-//    }
-//    else if (screenWidth == 375)
-//    {
-//        cell.moneyLabel.frame = CGRectMake((screenWidth - 80)*screenWidth/375, 13*screenWidth/375, 60*screenWidth/375, 24*screenWidth/375);
-//    }
-//    else
-//    {
-//        cell.moneyLabel.frame = CGRectMake((screenWidth - 130)*screenWidth/375, 13*screenWidth/375, 60*screenWidth/375, 24*screenWidth/375);
-//    }
+    cell.myModel = model;
+    
+    
+    
+    NSString *str=[_dictFinish objectForKey:[self.listArray[indexPath.section][indexPath.row] otherUserId]];
+    
+    if ([Helper isBlankString:str]==NO) {
+        cell.imgvState.image=[UIImage imageNamed:@"gou_x"];
+    }else{
+        cell.imgvState.image=[UIImage imageNamed:@"gou_w"];
+    }
     return cell;
+    
+
+    
+    
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-
+    if (_dictFinish.count < 3) {
+        NSString *str=[_dictFinish objectForKey:[self.listArray[indexPath.section][indexPath.row] otherUserId]];
+        if ([Helper isBlankString:str]==YES) {
+            
+            [_dictFinish setObject:[self.listArray[indexPath.section][indexPath.row] userName] forKey:[self.listArray[indexPath.section][indexPath.row] otherUserId]];
+            
+        }else{
+            [_dictFinish removeObjectForKey:[self.listArray[indexPath.section][indexPath.row] otherUserId]];
+        }
+        
+        NSIndexPath *indexPath_1=[NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section];
+        NSArray *indexArray=[NSArray arrayWithObject:indexPath_1];
+        [_tableView reloadRowsAtIndexPaths:indexArray withRowAnimation:UITableViewRowAnimationAutomatic];
+    }
+    else{
+        [[ShowHUD showHUD]showToastWithText:@"您最多只能选择3个人" FromView:self.view];
+    }
 }
 
 

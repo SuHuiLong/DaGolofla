@@ -11,20 +11,36 @@
 
 #import "JGLAddPlayerViewController.h"
 #import "JGLChooseScoreViewController.h"
+#import "BallParkViewController.h"
+#import "DateTimeViewController.h"
+#import "JGLAddPlayerViewController.h"
 
 #import "JGLChooseBallTableViewCell.h"
 #import "ScoreTableViewCell.h"
 #import "JGLPlayDateTableViewCell.h"
 #import "JGLPlayerNameTableViewCell.h"
 #import "JGLChangePlayerTableViewCell.h"
+
+#import "JGLTeeChooseView.h"//tee台视图
+
 #define HEADER_BUTTON1_TAG 100
 #define HEADER_BUTTON2_TAG 1000
 #define HEADER_BUTTON3_TAG 10000
 @interface JGLSelfScoreViewController ()<UITableViewDelegate,UITableViewDataSource>
 {
-    UITableView* _tableView;
     BOOL _isOpen[3];//控制表开合
+    NSString* _strBall;//球场名
+    NSInteger _ballId;//存球场id
+    NSMutableArray* _dataBallArray;//球场对应数据
+    NSString* _strDateBegin;//球场时间
+    JGLTeeChooseView* _chooseView;//tee台视图
+    BOOL _isTee;//是否选择了Tee台
+    NSString* _strTee;//用来记录选择的Tee台
+    
+    NSMutableDictionary *_dictPeo;
+
 }
+@property (strong, nonatomic) UITableView* tableView;
 @end
 
 @implementation JGLSelfScoreViewController
@@ -33,10 +49,14 @@
     [super viewDidLoad];
     
     self.title = @"记分";
-    
+    _dataBallArray = [[NSMutableArray alloc]init];
+    _dictPeo = [[NSMutableDictionary alloc]init];
+    _isTee = NO;
     UIBarButtonItem* item = [[UIBarButtonItem alloc]initWithTitle:@"qer" style:(UIBarButtonItemStylePlain) target:self action:@selector(activeItem)];
     self.navigationItem.rightBarButtonItem = item;
     item.tintColor = [UIColor whiteColor];
+    
+    
     [self uiConfig];
     [self createScoreBtn];
     
@@ -45,18 +65,7 @@
 
 #pragma mark -- 获取球场区和T台
 - (void)getBallCode{
-    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    [dict setObject:@"12" forKey:@"ballKey"];
-    [[JsonHttp jsonHttp]httpRequest:@"ball/getBallCode" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
-        
-    } completionBlock:^(id data) {
-        NSLog(@"%@", data);
-        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
-            
-        }else{
-            
-        }
-    }];
+    
 }
 
 -(void)activeItem
@@ -140,31 +149,86 @@
     if (indexPath.section == 0) {
         JGLChooseBallTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"JGLChooseBallTableViewCell"];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        if (![Helper isBlankString:_strBall]) {
+            cell.labelTitle.text = _strBall;
+        }
+        else{
+            cell.labelTitle.text = @"请选择球场";
+        }
         return cell;
     }
     else if (indexPath.section == 1 || indexPath.section == 2)
     {
         ScoreTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ScoreTableViewCell" forIndexPath:indexPath];
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        
+        NSArray *allValues = [_dataBallArray objectAtIndex:indexPath.section-1];
+        //将数组显示至每行
+        cell.textLabel.text = [allValues objectAtIndex:indexPath.row];
+        cell.textLabel.font = [UIFont systemFontOfSize:15*ScreenWidth/375];
+        cell.backgroundColor = [UIColor colorWithRed:0.93f green:0.93f blue:0.93f alpha:1.00f];
         return cell;
     }
     else if (indexPath.section == 3)
     {
         JGLPlayDateTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"JGLPlayDateTableViewCell" forIndexPath:indexPath];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        if ( [Helper isBlankString:_strDateBegin]) {
+            cell.labelDate.text = @"请选择打球时间";
+        }
+        else{
+            cell.labelDate.text = _strDateBegin;
+        }
         return cell;
     }
     else{
+        
         if (indexPath.row == 0) {
-            JGLPlayerNameTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"JGLPlayerNameTableViewCell" forIndexPath:indexPath];
+            JGLPlayDateTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"JGLPlayDateTableViewCell" forIndexPath:indexPath];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            cell.labelDate.hidden = YES;
+            cell.labelTitle.text = @"打球人";
             return cell;
+        }
+        else if (indexPath.row == 1)
+        {
+            JGLPlayerNameTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"JGLPlayerNameTableViewCell" forIndexPath:indexPath];
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            if (![Helper isBlankString:_strTee]) {
+                cell.iconImgv.hidden = NO;
+                [cell showTee:_strTee];
+            }
+            else{
+                cell.iconImgv.hidden = YES;
+                cell.labelTee.text = @"请选择tee台";
+            }
+            cell.labelName.text = [[NSUserDefaults standardUserDefaults] objectForKey:@"userName"];
+            return cell;
+
         }
         else{
             NSLog(@"%td",indexPath.row);
-            JGLChangePlayerTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"JGLChangePlayerTableViewCell" forIndexPath:indexPath];
-            cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            return cell;
+            if (indexPath.row - 2 < _dictPeo.count) {
+                JGLPlayerNameTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"JGLPlayerNameTableViewCell" forIndexPath:indexPath];
+                cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+                cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                if (![Helper isBlankString:_strTee]) {
+                    cell.iconImgv.hidden = NO;
+                    [cell showTee:_strTee];
+                }
+                else{
+                    cell.iconImgv.hidden = YES;
+                    cell.labelTee.text = @"请选择tee台";
+                }
+                cell.labelName.text = [_dictPeo allValues][indexPath.row-2];
+                return cell;
+            }
+            else{
+                JGLChangePlayerTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"JGLChangePlayerTableViewCell" forIndexPath:indexPath];
+                cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                return cell;
+            }
+            
         }
         
     }
@@ -186,7 +250,7 @@
        return  60* screenWidth / 375;
     }
     else if (indexPath.section == 4){
-        return indexPath.row == 0 ? 80* screenWidth / 375 : 50* screenWidth / 375;
+        return indexPath.row == 0 ? 44* screenWidth / 375 : 50* screenWidth / 375;
     }
     else{
         return 44 * screenWidth / 375;
@@ -197,17 +261,20 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if (section == 1 || section == 2) {
-        //如果当前区为打开状态
         if (_isOpen[section])
         {
-            return 3;
+            //取出字典中的所有值 一个数组中放着三个小数组
+            NSArray *allValues = [_dataBallArray objectAtIndex:section-1];
+            
+            //根据每个区 返回行数
+            return [allValues count];
         }
         else//如果不等于当前打开的区号 就是合闭状态 用返回0行来模拟出闭合状态
             return 0;
     }
     else if (section == 4)
     {
-        return section == 4 ? 2 : 1;
+        return section == 4 ? 3 + _dictPeo.count : 1;
     }
     else{
         return 1;
@@ -217,20 +284,35 @@
 #pragma mark -  表开合
 - (void)headerButtonClick:(id)sender
 {
-    UIButton *button = (UIButton *)sender;
-    //根据button 获取区号
-    NSInteger section = button.tag - HEADER_BUTTON1_TAG;
-    
-    //改变BOOL数组中 该区的开合状态
-    //    BOOL isOpen = [[_openOrCloses objectAtIndex:section] boolValue];
-    //    [_openOrCloses replaceObjectAtIndex:section withObject:[NSNumber numberWithBool:!isOpen]];
-    _isOpen[section] = !_isOpen[section];
-    
-    //刷新某些区
-    NSIndexSet *indexSet = [NSIndexSet indexSetWithIndex:section];
-    [_tableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationNone];
-    //刷新某些特定行
-
+    ////NSLog(@"%@",_strBall);
+    if (_isTee == YES)  {
+        [_chooseView removeFromSuperview];
+        _isTee = NO;
+    }
+    if (![Helper isBlankString:_strBall]) {
+        
+        UIButton *button = (UIButton *)sender;
+        //根据button 获取区号
+        NSInteger section = button.tag - HEADER_BUTTON1_TAG;
+        
+        //改变BOOL数组中 该区的开合状态
+        //    BOOL isOpen = [[_openOrCloses objectAtIndex:section] boolValue];
+        //    [_openOrCloses replaceObjectAtIndex:section withObject:[NSNumber numberWithBool:!isOpen]];
+        _isOpen[section] = !_isOpen[section];
+        
+        //刷新表  表的相关代理方法会重新执行
+        //    [_tableView reloadData];
+        //    NSIndexSet 索引集合 非负整数
+        //刷新某些区
+        NSIndexSet *indexSet = [NSIndexSet indexSetWithIndex:section];
+        [_tableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationNone];
+        //刷新某些特定行
+        
+    }
+    else
+    {
+        ////NSLog(@"1");
+    }
 }
 
 
@@ -296,7 +378,163 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if (indexPath.section == 0) {
+        if (_isTee == YES)  {
+            [_chooseView removeFromSuperview];
+            _isTee = NO;
+        }
+        //球场
+        BallParkViewController* ballVc = [[BallParkViewController alloc]init];
+        ballVc.type1=1;
+        ballVc.callback1=^(NSDictionary *dict){
+            [_dataBallArray removeAllObjects];
+            if (dict.count != 0) {
+                [_dataBallArray addObject:[dict objectForKey:@"ballAreas"]];
+                [_dataBallArray addObject:[dict objectForKey:@"ballAreas"]];
+                [_dataBallArray addObject:[dict objectForKey:@"tAll"]];
+                
+            }
+            [_tableView reloadData];
+        };
+        [ballVc setCallback:^(NSString *balltitle, NSInteger ballid) {
+//            _labelBallName.text = balltitle;
+            _strBall = balltitle;
+            _ballId = ballid;
+        }];
+        [self.navigationController pushViewController:ballVc animated:YES];
+    }
+    ////NSLog(@"3");
+    else if (indexPath.section == 1) {
+        if (_isTee == YES)  {
+            [_chooseView removeFromSuperview];
+            _isTee = NO;
+        }
+        UIButton *button = (UIButton *)[self.view viewWithTag:HEADER_BUTTON1_TAG + indexPath.section];
+        //根据button 获取区号
+        NSInteger section = button.tag - HEADER_BUTTON1_TAG;
+        
+        //改变BOOL数组中 该区的开合状态
+        //    BOOL isOpen = [[_openOrCloses objectAtIndex:section] boolValue];
+        //    [_openOrCloses replaceObjectAtIndex:section withObject:[NSNumber numberWithBool:!isOpen]];
+        _isOpen[section] = !_isOpen[section];
+        
+        //刷新表  表的相关代理方法会重新执行
+        //    [_tableView reloadData];
+        //    NSIndexSet 索引集合 非负整数
+        //刷新某些区
+        NSIndexSet *indexSet = [NSIndexSet indexSetWithIndex:section];
+        [_tableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationNone];
+        //刷新某些特定行
+        
+        UILabel* label = (UILabel *)[self.view viewWithTag:1234+section];
+        label.text = [NSString stringWithFormat:@"%@",_dataBallArray[indexPath.section-1][indexPath.row]];
+//        _strSite0 = _dataBallArray[indexPath.section][indexPath.row];
+        
+    }
     
+    else if (indexPath.section == 2)
+    {
+        if (_isTee == YES)  {
+            [_chooseView removeFromSuperview];
+            _isTee = NO;
+        }
+        UIButton *button = (UIButton *)[self.view viewWithTag:HEADER_BUTTON1_TAG + indexPath.section];
+        //根据button 获取区号
+        NSInteger section = button.tag - HEADER_BUTTON1_TAG;
+        
+        //改变BOOL数组中 该区的开合状态
+        //    BOOL isOpen = [[_openOrCloses objectAtIndex:section] boolValue];
+        //    [_openOrCloses replaceObjectAtIndex:section withObject:[NSNumber numberWithBool:!isOpen]];
+        _isOpen[section] = !_isOpen[section];
+        
+        //刷新表  表的相关代理方法会重新执行
+        //    [_tableView reloadData];
+        //    NSIndexSet 索引集合 非负整数
+        //刷新某些区
+        NSIndexSet *indexSet = [NSIndexSet indexSetWithIndex:section];
+        [_tableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationNone];
+        //刷新某些特定行
+        //    NSArray *indexPaths = @[[NSIndexPath indexPathForRow:1 inSection:0], [NSIndexPath indexPathForRow:1 inSection:1]];
+        //    [_tableView reloadRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
+        UILabel* label = (UILabel *)[self.view viewWithTag:1234+section];
+        label.text = [NSString stringWithFormat:@"%@",_dataBallArray[indexPath.section-1][indexPath.row]];
+//        _strSite1 = _dataBallArray[indexPath.section][indexPath.row];
+        
+    }
+    else if (indexPath.section == 3)
+    {
+        if (_isTee == YES)  {
+            [_chooseView removeFromSuperview];
+            _isTee = NO;
+        }
+        DateTimeViewController* dateVc = [[DateTimeViewController alloc]init];
+        dateVc.typeIndex = @1;
+        [dateVc setCallback:^(NSString *dateStr, NSString *dateWeek, NSString *str) {
+            _strDateBegin = dateStr;
+            NSIndexPath *indexPath_1=[NSIndexPath indexPathForRow:indexPath.row inSection:3];
+            NSArray *indexArray=[NSArray arrayWithObject:indexPath_1];
+            [_tableView reloadRowsAtIndexPaths:indexArray withRowAnimation:UITableViewRowAnimationAutomatic];
+        }];
+        [self.navigationController pushViewController:dateVc animated:YES];
+    }
+    else{
+        if (indexPath.row == 1) {
+//            [_chooseView show];
+            if (_isTee == NO) {
+                JGLPlayerNameTableViewCell* cell = [tableView cellForRowAtIndexPath:indexPath];
+                _chooseView = [[JGLTeeChooseView alloc]initWithFrame:CGRectMake(screenWidth - 120*screenWidth/375,  cell.frame.origin.y - [_dataBallArray[2] count]* 40*screenWidth/375, 100*screenWidth/375, [_dataBallArray[2] count]* 40*screenWidth/375) withArray:_dataBallArray[2]];
+                [tableView addSubview:_chooseView];
+                _chooseView.blockTeeName = ^(NSString *strT){
+                    _strTee = strT;
+                    [_chooseView removeFromSuperview];
+                    _isTee = NO;
+                    NSIndexPath *indexPath_1=[NSIndexPath indexPathForRow:indexPath.row inSection:4];
+                    NSArray *indexArray=[NSArray arrayWithObject:indexPath_1];
+                    [_tableView reloadRowsAtIndexPaths:indexArray withRowAnimation:UITableViewRowAnimationAutomatic];
+                };
+                _isTee = YES;
+            }
+            else{
+                [_chooseView removeFromSuperview];
+                _isTee = NO;
+            }
+            
+        }
+        else{
+            if (indexPath.row  == _dictPeo.count + 2) {
+                JGLAddPlayerViewController* addVc = [[JGLAddPlayerViewController alloc]init];
+                addVc.blockSurePlayer = ^(NSMutableDictionary *dict){
+                    _dictPeo = dict;
+                    NSIndexSet *indexSet=[[NSIndexSet alloc]initWithIndex:4];
+                    [_tableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationAutomatic];
+                };
+                addVc.dictFin = _dictPeo;
+                addVc.dictPeople = _dictPeo;
+                [self.navigationController pushViewController:addVc animated:YES];
+
+            }
+            else{
+                if (_isTee == NO) {
+                    JGLPlayerNameTableViewCell* cell = [tableView cellForRowAtIndexPath:indexPath];
+                    _chooseView = [[JGLTeeChooseView alloc]initWithFrame:CGRectMake(screenWidth - 120*screenWidth/375,  cell.frame.origin.y - [_dataBallArray[2] count]* 40*screenWidth/375, 100*screenWidth/375, [_dataBallArray[2] count]* 40*screenWidth/375) withArray:_dataBallArray[2]];
+                    [tableView addSubview:_chooseView];
+                    _chooseView.blockTeeName = ^(NSString *strT){
+                        _strTee = strT;
+                        [_chooseView removeFromSuperview];
+                        _isTee = NO;
+                        NSIndexPath *indexPath_1=[NSIndexPath indexPathForRow:indexPath.row inSection:4];
+                        NSArray *indexArray=[NSArray arrayWithObject:indexPath_1];
+                        [_tableView reloadRowsAtIndexPaths:indexArray withRowAnimation:UITableViewRowAnimationAutomatic];
+                    };
+                    _isTee = YES;
+                }
+                else{
+                    [_chooseView removeFromSuperview];
+                    _isTee = NO;
+                }
+            }
+        }
+    }
 }
 
 
