@@ -25,7 +25,7 @@ static JsonHttp *jsonHttp = nil;
     return jsonHttp;
 }
 
-#pragma mark ----- MD5
+#pragma mark ----- MD5 POST
 
 - (void)httpRequestWithMD5:(NSString *)url JsonKey:(NSString *)jsonKey withData:(NSDictionary *)postData failedBlock:(GBHEFailedBlock)failedBlock completionBlock:(GBHECompletionBlock)completionBlock
 {
@@ -63,6 +63,42 @@ static JsonHttp *jsonHttp = nil;
 }
 
 
+#pragma mark ----- MD5 GET
+
+- (void)httpRequestWithMD5GET:(NSString *)url JsonKey:(NSString *)jsonKey withData:(NSDictionary *)getData failedBlock:(GBHEFailedBlock)failedBlock completionBlock:(GBHECompletionBlock)completionBlock
+{
+    
+    url = [NSString stringWithFormat:@"%@%@",PORTOCOL_APP_ROOT_URL,url];
+    
+    NSString *paraStr = [Helper dictionaryToJson:getData];
+    
+    paraStr = [paraStr stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    
+    paraStr = [paraStr stringByReplacingOccurrencesOfString:@"\r" withString:@""];
+    paraStr = [paraStr stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+    paraStr = [paraStr stringByReplacingOccurrencesOfString:@" " withString:@""];
+    
+    NSString *str = [Helper md5HexDigest:[NSString stringWithFormat:@"%@dagolfla.com", paraStr]];
+    
+    // 1.创建请求
+    NSURL *urls = [NSURL URLWithString:[NSString stringWithFormat:@"%@?md5=%@",url ,str]];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:urls];
+    request.HTTPMethod = @"GET";
+    
+    // 2.设置请求头
+    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    
+    NSData *data2 =[paraStr dataUsingEncoding:NSUTF8StringEncoding];
+    
+    request.HTTPBody = data2;
+    // 4.发送请求
+    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+        
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+        completionBlock(dic);
+    }];
+    
+}
 
 - (void)httpRequest:(NSString *)url JsonKey:(NSString *)jsonKey withData:(NSDictionary *)postData requestMethod:(NSString *)httpMethod failedBlock:(GBHEFailedBlock)failedBlock completionBlock:(GBHECompletionBlock)completionBlock
 {
