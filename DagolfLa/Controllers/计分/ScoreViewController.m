@@ -25,6 +25,10 @@
 #import "UITabBar+badge.h"
 #import "EnterViewController.h"
 #import "ScoreProfessViewController.h"
+
+#import "JGDHistoryScoreViewController.h"   // 新 历史记分卡
+
+
 @interface ScoreViewController ()<UIScrollViewDelegate,UICollectionViewDataSource,UICollectionViewDelegate>
 {
     UIScrollView* _scrollView;
@@ -500,7 +504,7 @@
         NSArray* titleArr = [[NSArray alloc]init];
         
         vcArr = @[@"DataViewController",
-                  @"HistoryViewController",
+                  @"JGDHistoryScoreViewController",
                   @"ScoreByGameViewController",
                   @"ScoreByActiveViewController"];
         titleArr = @[@"数据统计",@"历史记分卡",@"赛事记分",@"活动记分"];

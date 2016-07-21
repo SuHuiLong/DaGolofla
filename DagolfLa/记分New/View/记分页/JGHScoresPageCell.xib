@@ -30,7 +30,7 @@
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="名称" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1L1-1Q-Mmj">
                         <rect key="frame" x="20" y="88" width="34" height="21"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="上球道" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dv7-Ke-Hpg">
@@ -203,8 +203,10 @@
                 <outlet property="totalPoleLeft" destination="jmT-NK-wBq" id="Kcd-pJ-5MI"/>
                 <outlet property="totalPoleRight" destination="Lj6-DW-V8D" id="Liv-0u-wh7"/>
                 <outlet property="totalPoleValue" destination="QjO-fJ-OLa" id="LRo-9b-h6o"/>
+                <outlet property="totalPushValue" destination="e6Q-r2-5Ib" id="Xcc-oK-Ldb"/>
                 <outlet property="upperTrackBtn" destination="iwx-qM-Dkm" id="i3e-RI-9fc"/>
                 <outlet property="upperTrackNoBtn" destination="P9L-gY-TCJ" id="byu-pc-s5L"/>
+                <outlet property="userName" destination="1L1-1Q-Mmj" id="AFY-Ae-N1L"/>
                 <outlet property="userNameDown" destination="K8u-ai-nVo" id="daw-vQ-gXw"/>
                 <outlet property="userNameLeft" destination="1e1-ph-gby" id="azD-5n-jTf"/>
             </connections>

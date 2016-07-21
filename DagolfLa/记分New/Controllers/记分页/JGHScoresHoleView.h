@@ -10,7 +10,7 @@
 
 @interface JGHScoresHoleView : UIView
 
-//@property (nonatomic, strong)NSString *scorekey;
+@property (nonatomic, strong)NSMutableArray *dataArray;
 
 
 - (void)getScoreList:(NSString *)scorKey;

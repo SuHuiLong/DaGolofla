@@ -285,38 +285,9 @@
 #pragma mark ------搜索框回调方法
 
 -(void)updateSearchResultsForSearchController:(UISearchController *)searchController {
-//    [self.searchArray removeAllObjects];
-//    
-//    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-//    [dict setObject:[self.searchController.searchBar text] forKey:@"likeName"];
-//    [dict setObject:[[NSUserDefaults standardUserDefaults]objectForKey:@"userId"] forKey:@"userKey"];
-////    [dict setObject:[NSNumber numberWithInteger:_page] forKey:@"offset"];
-//    [dict setObject:@0 forKey:@"offset"];
-//    [[JsonHttp jsonHttp]httpRequest:@"team/getTeamList" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
-//     
-//        
-//    } completionBlock:^(id data) {
-//        if ([data objectForKey:@"teamList"]) {
-//                //清除数组数据
-//                [self.searchArray removeAllObjects];
-//            
-////            [self.modelArray addObjectsFromArray:[data objectForKey:@"teamList"]];
-//            for (NSDictionary *dic in [data objectForKey:@"teamList"]) {
-//                [self.searchArray addObject:dic];
-//            }
-//            
-//            _page++;
-//            [_tableView reloadData];
-//        }else {
-////            [Helper alertViewWithTitle:@"失败" withBlock:^(UIAlertController *alertView) {
-////                [self presentViewController:alertView animated:YES completion:nil];
-////            }];
-//        }
-//        [_tableView reloadData];
-//    
-//        
-//    }];
-//
+    
+    [self.tableView reloadData];
+    
 }
 
 
@@ -372,7 +343,11 @@
 {
     NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
     [dic setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"userId"] forKey:@"userKey"];
-    [dic setObject:@([[self.modelArray[indexPath.row] objectForKey:@"timeKey"] integerValue]) forKey:@"teamKey"];
+    if (self.searchController.active) {
+        [dic setObject:@([[self.searchArray[indexPath.row] objectForKey:@"timeKey"] integerValue]) forKey:@"teamKey"];
+    }else{
+        [dic setObject:@([[self.modelArray[indexPath.row] objectForKey:@"timeKey"] integerValue]) forKey:@"teamKey"];
+    }
 
     [[JsonHttp jsonHttp] httpRequest:@"team/getTeamInfo" JsonKey:nil withData:dic requestMethod:@"GET" failedBlock:^(id errType) {
 
@@ -415,8 +390,6 @@
                     detailVC.isManager = NO;
                     [self.navigationController pushViewController:detailVC animated:YES];
                 }
-                
-                
             }
             
         }else{

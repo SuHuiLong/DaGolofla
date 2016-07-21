@@ -227,7 +227,7 @@ static CGFloat ImageHeight  = 210.0;
 - (void)askBtnClick:(UIButton *)btn{
     
     
-    NSMutableString * str=[[NSMutableString alloc] initWithFormat:@"telprompt://%@", [self.detailDic objectForKey:@"userMobile"]];
+    NSMutableString * str=[[NSMutableString alloc] initWithFormat:@"telprompt://%@", [self.detailDic objectForKey:@"answerMobile"]];
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:str]];
     
 //    ChatDetailViewController *vc = [[ChatDetailViewController alloc] init];

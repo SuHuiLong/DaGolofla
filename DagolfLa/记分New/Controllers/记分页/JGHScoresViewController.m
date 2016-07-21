@@ -23,6 +23,8 @@
     JGHScoresHoleView *_scoresView;
     
     UIView *_tranView;
+    
+//    JGHScoresMainViewController *_mainSubCtrl;
 }
 
 @property (nonatomic, strong)NSMutableArray *userScoreArray;
@@ -45,6 +47,8 @@
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor colorWithHexString:BG_color];
     
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(noticePushScoresCtrl:) name:@"noticePushScores" object:nil];
+    
     UIView *titleView = [[UIView alloc]initWithFrame:CGRectMake(80*ProportionAdapter, 0, 80*ProportionAdapter, 44)];
     self.titleBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 80*ProportionAdapter, 44)];
     [titleView addSubview:self.titleBtn];
@@ -61,26 +65,16 @@
         [_dataArray addObject:[NSString stringWithFormat:@"%d",i]];
     }
     
-    _currentPage = 0;
-    _pageViewController = [[UIPageViewController alloc]initWithTransitionStyle:1 navigationOrientation:0 options:nil];
-    
-    JGHScoresMainViewController *sub = [[JGHScoresMainViewController alloc]init];
-//    sub.d
-    [_pageViewController setViewControllers:@[sub] direction:0 animated:NO completion:nil];
-    
-    [self.view addSubview:_pageViewController.view];
-    
-    _pageViewController.delegate = self;
-    _pageViewController.dataSource = self;
-    
-    _pageControl = [[UIPageControl alloc]init];
-    _pageControl.numberOfPages = _dataArray.count;
-    _pageControl.currentPage = 0;
-    _pageControl.center = self.view.center;
-    [self.view addSubview:_pageControl];
-    _pageControl.pageIndicatorTintColor = [UIColor blueColor];
-    
     [self getScoreList];
+}
+- (void)noticePushScoresCtrl:(NSNotification *)not{
+    //
+    _selectHole = 0;
+    [_scoresView removeFromSuperview];
+    [_tranView removeFromSuperview];
+    _pageControl.currentPage = [[not.userInfo objectForKey:@"index"] integerValue];
+    [self.titleBtn setTitle:[NSString stringWithFormat:@"%td HOLE", [[not.userInfo objectForKey:@"index"] integerValue]+1] forState:UIControlStateNormal];
+    [[ShowHUD showHUD]showToastWithText:[NSString stringWithFormat:@"第-%td-洞", [[not.userInfo objectForKey:@"index"] integerValue]+1] FromView:self.view];
 }
 #pragma mark -- getScoreList 获取活动计分列表
 - (void)getScoreList{
@@ -101,6 +95,30 @@
                     [model setValuesForKeysWithDictionary:dcitData];
                     [self.userScoreArray addObject:model];
                 }
+                
+                _currentPage = 0;
+                _pageViewController = [[UIPageViewController alloc]initWithTransitionStyle:1 navigationOrientation:0 options:nil];
+                
+                JGHScoresMainViewController *sub = [[JGHScoresMainViewController alloc]init];
+                sub.dataArray = self.userScoreArray;
+                __weak JGHScoresViewController *weakSelf = self;
+                sub.returnScoresDataArray= ^(NSMutableArray *dataArray){
+                    weakSelf.userScoreArray = dataArray;
+                };
+                [_pageViewController setViewControllers:@[sub] direction:0 animated:NO completion:nil];
+                
+                [self.view addSubview:_pageViewController.view];
+                
+                _pageViewController.delegate = self;
+                _pageViewController.dataSource = self;
+                
+                _pageControl = [[UIPageControl alloc]init];
+                //    _pageControl.numberOfPages = _dataArray.count;
+                _pageControl.numberOfPages = 18;
+                _pageControl.currentPage = 0;
+                _pageControl.center = CGPointMake(ScreenWidth/2, screenHeight-64-5*ProportionAdapter);
+                [self.view addSubview:_pageControl];
+                _pageControl.pageIndicatorTintColor = [UIColor greenColor];
             }
         }else{
             if ([data objectForKey:@"packResultMsg"]) {
@@ -116,6 +134,7 @@
         _selectHole = 1;
         _scoresView = [[JGHScoresHoleView alloc]init];
         _scoresView.frame = CGRectMake(0, 0, screenWidth, screenHeight - 200);
+        _scoresView.dataArray = self.userScoreArray;
         [self.view addSubview:_scoresView];
         [_scoresView getScoreList:_scorekey];
         
@@ -144,7 +163,14 @@
     if (_currentPage <= 0) {
         _currentPage = _dataArray.count - 1;
         JGHScoresMainViewController *sub = [[JGHScoresMainViewController alloc]init];
+        
+        __weak JGHScoresViewController *weakSelf = self;
+        sub.returnScoresDataArray= ^(NSMutableArray *dataArray){
+            weakSelf.userScoreArray = dataArray;
+            NSLog(@"3333");
+        };
         sub.index = _currentPage;
+        sub.dataArray = self.userScoreArray;
 //        sub.text = _dataArray[_currentPage];
         return sub;
     }
@@ -152,7 +178,12 @@
     {
         _currentPage--;
         JGHScoresMainViewController *sub = [[JGHScoresMainViewController alloc]init];
+        __weak JGHScoresViewController *weakSelf = self;
+        sub.returnScoresDataArray= ^(NSMutableArray *dataArray){
+            weakSelf.userScoreArray = dataArray;
+        };
         sub.index = _currentPage;
+        sub.dataArray = self.userScoreArray;
 //        sub.text = _dataArray[_currentPage];
         return sub;
     }
@@ -166,7 +197,13 @@
     if (_currentPage >= _dataArray.count - 1) {
         _currentPage = 0;
         JGHScoresMainViewController *sub = [[JGHScoresMainViewController alloc]init];
+//        sub.returnScoresDataArray(self.userScoreArray);
+//        __weak JGHScoresViewController *weakSelf = self;
+//        sub.returnScoresDataArray= ^(NSMutableArray *dataArray){
+//            weakSelf.userScoreArray = dataArray;
+//        };
         sub.index = _currentPage;
+        sub.dataArray = self.userScoreArray;
 //        sub.text = _dataArray[_currentPage];
         return sub;
     }
@@ -174,7 +211,12 @@
     {
         _currentPage++;
         JGHScoresMainViewController *sub = [[JGHScoresMainViewController alloc]init];
+        __weak JGHScoresViewController *weakSelf = self;
+        sub.returnScoresDataArray= ^(NSMutableArray *dataArray){
+            weakSelf.userScoreArray = dataArray;
+        };
         sub.index = _currentPage;
+        sub.dataArray = self.userScoreArray;
 //        sub.text = _dataArray[_currentPage];
         NSLog(@"%@",sub);
         return sub;
@@ -186,6 +228,7 @@
     JGHScoresMainViewController *sub = (JGHScoresMainViewController *)pageViewController.viewControllers[0];
     NSInteger index = sub.index;
     _pageControl.currentPage = index;
+    
     [self.titleBtn setTitle:[NSString stringWithFormat:@"%td HOLE", sub.index+1] forState:UIControlStateNormal];
     [[ShowHUD showHUD]showToastWithText:[NSString stringWithFormat:@"第-%td-洞", sub.index+1] FromView:self.view];
 }
@@ -194,7 +237,21 @@
 - (void)saveScoresClick{
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     [dict setObject:DEFAULF_USERID forKey:@"userKey"];
+    NSMutableArray *listArray = [NSMutableArray array];
+    for (JGHScoreListModel *model in self.userScoreArray) {
+        NSMutableDictionary *listDict = [NSMutableDictionary dictionary];
+        [listDict setObject:model.invitationCode forKey:@"invitationCode"];//邀请码
+        [listDict setObject:model.userKey forKey:@"userKey"];// 用户Key
+        [listDict setObject:model.userName forKey:@"userName"];// 用户名称
+        [listDict setObject:model.userMobile forKey:@"userMobile"];// 手机号
+        [listDict setObject:model.tTaiwan forKey:@"tTaiwan"];// T台
+        [listDict setObject:model.poleNumber forKey:@"poleNumber"];// 球队杆数
+        [listDict setObject:model.pushrod forKey:@"pushrod"];// 推杆
+        [listDict setObject:model.onthefairway forKey:@"onthefairway"];// 是否上球道
+        [listArray addObject:listDict];
+    }
     
+    [dict setObject:listArray forKey:@"list"];
     
     [[JsonHttp jsonHttp]httpRequest:@"score/saveScore" JsonKey:nil withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
         
