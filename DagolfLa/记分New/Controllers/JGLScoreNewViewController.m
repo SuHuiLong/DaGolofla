@@ -10,6 +10,7 @@
 #import "MeWonderViewCell.h"
 #import "EnterViewController.h"
 #import "JGLSelfScoreViewController.h"
+#import "JGDHistoryScoreViewController.h"
 
 @interface JGLScoreNewViewController ()<UIScrollViewDelegate,UICollectionViewDataSource,UICollectionViewDelegate>
 {
@@ -237,6 +238,10 @@
 {
     if ([[NSUserDefaults standardUserDefaults]objectForKey:@"userId"])
     {
+        if (indexPath.item == 1) {
+            JGDHistoryScoreViewController *historyVC = [[JGDHistoryScoreViewController alloc] init];
+            [self.navigationController pushViewController:historyVC animated:YES];
+        }
         
     }
     else
