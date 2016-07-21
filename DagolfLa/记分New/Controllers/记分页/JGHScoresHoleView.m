@@ -8,10 +8,11 @@
 
 #import "JGHScoresHoleView.h"
 #import "JGHScoresHoleCell.h"
+#import "JGHScoreListModel.h"
 
 static NSString *const JGHScoresHoleCellIdentifier = @"JGHScoresHoleCell";
 
-@interface JGHScoresHoleView ()<UITableViewDelegate, UITableViewDataSource>
+@interface JGHScoresHoleView ()<UITableViewDelegate, UITableViewDataSource, JGHScoresHoleCellDelegate>
 {
     NSArray *_titleArray;
 }
@@ -62,7 +63,7 @@ static NSString *const JGHScoresHoleCellIdentifier = @"JGHScoresHoleCell";
 }
 #pragma mark -- tableView代理
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 4;
+    return self.dataArray.count +2;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
@@ -75,18 +76,36 @@ static NSString *const JGHScoresHoleCellIdentifier = @"JGHScoresHoleCell";
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     JGHScoresHoleCell *scoresPageCell = [tableView dequeueReusableCellWithIdentifier:JGHScoresHoleCellIdentifier];
+    scoresPageCell.delegate = self;
+    scoresPageCell.tag = indexPath.section*10 + indexPath.row*100;
     scoresPageCell.selectionStyle = UITableViewCellSelectionStyleNone;
     [scoresPageCell configAllViewBgColor:@"#FFFFFF"];
+    JGHScoreListModel *model = [[JGHScoreListModel alloc]init];
     
     if (indexPath.section == 0) {
         if (indexPath.row == 0) {
             [scoresPageCell configArray:_titleArray[indexPath.row ]];
+        }else if (indexPath.row == 1){
+            model = _dataArray[0];
+            [scoresPageCell configOneToNine:model.standardlever andUserName:@"PAR"];
+        }else{
+            NSLog(@"indexPath.row -1 == %td", indexPath.row -1);
+            model = _dataArray[indexPath.row -2];
+            [scoresPageCell configOneToNine:model.poleNumber andUserName:model.userName];
         }
     }else{
         if (indexPath.row == 0) {
             [scoresPageCell configArray:_titleArray[indexPath.section]];
+        }else if (indexPath.row == 1){
+            model = _dataArray[0];
+            [scoresPageCell configNineToEighteenth:model.standardlever andUserName:@"PAR"];
+        }else{
+            model = _dataArray[indexPath.row -2];
+            [scoresPageCell configNineToEighteenth:model.poleNumber andUserName:model.userName];
         }
     }
+    
+    
     
     return scoresPageCell;
 }
@@ -105,6 +124,23 @@ static NSString *const JGHScoresHoleCellIdentifier = @"JGHScoresHoleCell";
     return view;
 }
 
+#pragma mark -- 点击杆数跳转到指定的积分页面
+- (void)selectHoleCoresBtnTag:(NSInteger)btnTag andCellTag:(NSInteger)cellTag{
+    NSLog(@"%td", btnTag);//2
+    NSLog(@"%td", cellTag);//101
+    NSLog(@"cell10 = %td", cellTag%100/10);
+    NSLog(@"cell100  = %td", cellTag/100);
+    NSMutableDictionary *userDict = [NSMutableDictionary dictionary];
+    if ((cellTag%100/10) == 0) {
+        [userDict setObject:@(btnTag - 1) forKey:@"index"];
+    }else{
+        [userDict setObject:@(btnTag - 1 + 9) forKey:@"index"];
+    }
+    //创建一个消息对象
+    NSNotification * notice = [NSNotification notificationWithName:@"noticePushScores" object:nil userInfo:userDict];
+    //发送消息
+    [[NSNotificationCenter defaultCenter]postNotification:notice];
+}
 
 /*
 // Only override drawRect: if you perform custom drawing.

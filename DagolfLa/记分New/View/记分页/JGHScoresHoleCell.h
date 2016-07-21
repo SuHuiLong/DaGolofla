@@ -52,4 +52,8 @@
 
 - (void)configArray:(NSArray *)array;
 
+- (void)configOneToNine:(NSArray *)array andUserName:(NSString *)userName;
+
+- (void)configNineToEighteenth:(NSArray *)array andUserName:(NSString *)userName;
+
 @end

@@ -7,6 +7,7 @@
 //
 
 #import "JGHScoresPageCell.h"
+#import "JGHScoreListModel.h"
 
 @implementation JGHScoresPageCell
 
@@ -25,7 +26,7 @@
     
     self.userNameLeft.constant = 20*ProportionAdapter;
     self.userNameDown.constant = 23*ProportionAdapter;
-    self.upperTrackDown.constant = 8*ProportionAdapter;
+//    self.upperTrackDown.constant = 8*ProportionAdapter;
     
     NSLayoutConstraint *addScoresConstraint = [NSLayoutConstraint constraintWithItem:self.addScoresBtn attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationGreaterThanOrEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:50*ProportionAdapter];
 
@@ -51,6 +52,8 @@
     
     
     self.addScoresBtnRight.constant = 21*ProportionAdapter;
+    
+    self.userName.font = [UIFont systemFontOfSize:15.0 *ProportionAdapter];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -61,25 +64,67 @@
 
 #pragma mark -- 是 上道球
 - (IBAction)upperTrackBtnClick:(UIButton *)sender {
+    if (self.delegate) {
+        [self.delegate selectUpperTrackBtnClick:sender andCellTage:self.tag];
+    }
 }
 #pragma mark -- 否 上道球
 - (IBAction)upperTrackNoBtnClick:(UIButton *)sender {
+    if (self.delegate) {
+        [self.delegate selectUpperTrackNoBtnClick:sender andCellTage:self.tag];
+    }
 }
 
 #pragma mark -- -
 - (IBAction)reduntionScoresBtnClicK:(UIButton *)sender {
-    if (sender.tag == 50) {
-        NSLog(@"- 杆数");
-    }else{
-        NSLog(@"- 推杆");
+    if (self.delegate) {
+        [self.delegate selectReduntionScoresBtnClicK:sender andCellTage:self.tag];
     }
 }
 #pragma mark -- +
 - (IBAction)addScoresBtnClick:(UIButton *)sender {
-    if (sender.tag == 60) {
-        NSLog(@"+ 杆数");
+    if (self.delegate) {
+        [self.delegate selectAddScoresBtnClick:sender andCellTage:self.tag];
+    }    
+}
+
+- (void)configJGHScoreListModel:(JGHScoreListModel *)model andIndex:(NSInteger)index{
+    //poleNumber.count  总杆数
+    NSInteger poleCount = 0;
+    for (int i=0; i<model.poleNumber.count; i++) {
+        NSInteger pole = [[model.poleNumber objectAtIndex:i] integerValue];
+        NSLog(@"pole == %td", pole);
+        poleCount += pole;
+        NSLog(@"poleCount == %td", poleCount);
+    }
+    self.totalPoleValue.text = [NSString stringWithFormat:@"%td", poleCount];
+    //
+    NSInteger totalPoleCount = 0;
+    for (int i=0; i<model.pushrod.count; i++) {
+        NSInteger pole = [[model.pushrod objectAtIndex:i] integerValue];
+        NSLog(@"pole == %td", pole);
+        totalPoleCount += pole;
+        NSLog(@"totalPoleCount == %td", totalPoleCount);
+    }
+    self.totalPushValue.text = [NSString stringWithFormat:@"%td", totalPoleCount];
+    
+    self.poleValue.text = [NSString stringWithFormat:@"%@", [model.poleNumber objectAtIndex:index]];
+    
+    self.pushPoleValue.text = [NSString stringWithFormat:@"%@", [model.pushrod objectAtIndex:index]];
+    
+    self.userName.text = model.userName;
+    
+    //是否上球道
+    if ([[model.onthefairway objectAtIndex:index] integerValue] == 1){
+        [self.upperTrackBtn setBackgroundImage:[UIImage imageNamed:@"onballG"] forState:UIControlStateNormal];
+        [self.upperTrackNoBtn setBackgroundImage:[UIImage imageNamed:@"noballL"] forState:UIControlStateNormal];
+    }else if ([[model.onthefairway objectAtIndex:index] integerValue] == 0){
+        [self.upperTrackBtn setBackgroundImage:[UIImage imageNamed:@"onballL"] forState:UIControlStateNormal];
+        [self.upperTrackNoBtn setBackgroundImage:[UIImage imageNamed:@"noballG"] forState:UIControlStateNormal];
     }else{
-        NSLog(@"+ 推杆");
+        [self.upperTrackBtn setBackgroundImage:[UIImage imageNamed:@"onballL"] forState:UIControlStateNormal];
+        [self.upperTrackNoBtn setBackgroundImage:[UIImage imageNamed:@"noballL"] forState:UIControlStateNormal];
     }
 }
+
 @end

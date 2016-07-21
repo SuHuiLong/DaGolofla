@@ -78,7 +78,7 @@
     btn.frame = CGRectMake(10*ScreenWidth/375, screenHeight - 54*ScreenWidth/375 - 64, ScreenWidth-20*ScreenWidth/375, 44*ScreenWidth/375);
     [self.view addSubview:btn];
 }
-#pragma mark -- 专业记分
+#pragma mark -- 开始记分
 - (void)professionalScore:(UIButton *)btn{
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     [dict setObject:@"244" forKey:@"userKey"];
@@ -87,6 +87,7 @@
     [dict setObject:@(0) forKey:@"srcType"];
     [dict setObject:@"A区" forKey:@"region1"];
     [dict setObject:@"B区" forKey:@"region2"];
+    [dict setObject:@"2016-07-20 12:30:40" forKey:@"createTime"];
     
     NSMutableArray *userArray = [NSMutableArray array];
     for (int i=0; i<3; i++) {

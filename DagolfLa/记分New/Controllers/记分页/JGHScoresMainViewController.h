@@ -13,6 +13,8 @@
 
 @property (nonatomic,assign) NSInteger index;
 
-//@property (nonatomic,copy) NSString *text;
+@property (nonatomic, strong) NSMutableArray *dataArray;
+
+@property (nonatomic, copy)void (^returnScoresDataArray)(NSMutableArray *dataArray);
 
 @end
