@@ -11,6 +11,7 @@
 #import "JGHScoresHoleView.h"
 #import "JGHScoreListModel.h"
 #import "JGHEndScoresViewController.h"
+#import "JGDHistoryScoreViewController.h"
 
 @interface JGHScoresViewController ()<UIPageViewControllerDataSource,UIPageViewControllerDelegate>
 {
@@ -50,6 +51,8 @@
     
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(noticePushScoresCtrl:) name:@"noticePushScores" object:nil];
     
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(noticeAllScoresCtrl:) name:@"noticeAllScores" object:nil];
+    
     UIView *titleView = [[UIView alloc]initWithFrame:CGRectMake(80*ProportionAdapter, 0, 80*ProportionAdapter, 44)];
     self.titleBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 80*ProportionAdapter, 44)];
     [titleView addSubview:self.titleBtn];
@@ -69,6 +72,7 @@
     
     [self getScoreList];
 }
+#pragma mark -- 点击杆数跳转到指定的积分页面
 - (void)noticePushScoresCtrl:(NSNotification *)not{
     //
     _selectHole = 0;
@@ -77,6 +81,11 @@
     _pageControl.currentPage = [[not.userInfo objectForKey:@"index"] integerValue];
     [self.titleBtn setTitle:[NSString stringWithFormat:@"%td HOLE", [[not.userInfo objectForKey:@"index"] integerValue]+1] forState:UIControlStateNormal];
     [[ShowHUD showHUD]showToastWithText:[NSString stringWithFormat:@"第-%td-洞", [[not.userInfo objectForKey:@"index"] integerValue]+1] FromView:self.view];
+}
+#pragma mark -- 所有记分完成后
+- (void)noticeAllScoresCtrl:(NSNotification *)not{
+    _selectHole = 1;
+    [_item setTitle:@"结束记分"];
 }
 #pragma mark -- getScoreList 获取活动计分列表
 - (void)getScoreList{
@@ -133,8 +142,6 @@
 - (void)titleBtnClick:(UIButton *)btn{
     NSLog(@"XXX dong");
     if (_selectHole == 0) {
-        _selectHole = 1;
-        [_item setTitle:@"结束记分"];
         _scoresView = [[JGHScoresHoleView alloc]init];
         _scoresView.frame = CGRectMake(0, 0, screenWidth, (194 + self.userScoreArray.count * 60)*ProportionAdapter);
         _scoresView.dataArray = self.userScoreArray;
@@ -166,11 +173,13 @@
         _currentPage = _dataArray.count - 1;
         JGHScoresMainViewController *sub = [[JGHScoresMainViewController alloc]init];
         
+        /**
         __weak JGHScoresViewController *weakSelf = self;
         sub.returnScoresDataArray= ^(NSMutableArray *dataArray){
             weakSelf.userScoreArray = dataArray;
             NSLog(@"3333");
         };
+         */
         sub.index = _currentPage;
         sub.dataArray = self.userScoreArray;
         //        sub.text = _dataArray[_currentPage];
@@ -180,10 +189,12 @@
     {
         _currentPage--;
         JGHScoresMainViewController *sub = [[JGHScoresMainViewController alloc]init];
+        /**
         __weak JGHScoresViewController *weakSelf = self;
         sub.returnScoresDataArray= ^(NSMutableArray *dataArray){
             weakSelf.userScoreArray = dataArray;
         };
+         */
         sub.index = _currentPage;
         sub.dataArray = self.userScoreArray;
         //        sub.text = _dataArray[_currentPage];
@@ -213,10 +224,10 @@
     {
         _currentPage++;
         JGHScoresMainViewController *sub = [[JGHScoresMainViewController alloc]init];
-        __weak JGHScoresViewController *weakSelf = self;
-        sub.returnScoresDataArray= ^(NSMutableArray *dataArray){
-            weakSelf.userScoreArray = dataArray;
-        };
+//        __weak JGHScoresViewController *weakSelf = self;
+//        sub.returnScoresDataArray= ^(NSMutableArray *dataArray){
+//            weakSelf.userScoreArray = dataArray;
+//        };
         sub.index = _currentPage;
         sub.dataArray = self.userScoreArray;
         //        sub.text = _dataArray[_currentPage];
@@ -230,7 +241,10 @@
     JGHScoresMainViewController *sub = (JGHScoresMainViewController *)pageViewController.viewControllers[0];
     NSInteger index = sub.index;
     _pageControl.currentPage = index;
-    
+    __weak JGHScoresViewController *weakSelf = self;
+    sub.returnScoresDataArray= ^(NSMutableArray *dataArray){
+        weakSelf.userScoreArray = dataArray;
+    };
     [self.titleBtn setTitle:[NSString stringWithFormat:@"%td HOLE", sub.index+1] forState:UIControlStateNormal];
     [[ShowHUD showHUD]showToastWithText:[NSString stringWithFormat:@"第-%td-洞", sub.index+1] FromView:self.view];
 }
@@ -296,6 +310,10 @@
 - (void)pushJGHEndScoresViewController{
     JGHEndScoresViewController *endScoresCtrl = [[JGHEndScoresViewController alloc]init];
     [self.navigationController pushViewController:endScoresCtrl animated:YES];
+}
+
+- (void)dealloc{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)didReceiveMemoryWarning {

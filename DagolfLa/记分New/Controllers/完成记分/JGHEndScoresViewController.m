@@ -16,6 +16,7 @@
 #import "MBProgressHUD.h"
 #import "CommunityViewController.h"
 #import <TAESDK/TaeSDK.h>
+#import "JGDHistoryScoreViewController.h"
 //数据
 #define LINE_COUNT 4
 #define kUsersave_URL @"userMood/save.do"
@@ -28,8 +29,6 @@
     UIScrollView* _scrollView;
     CGFloat _contentSizeY;
     
-    UIView* _viewLine;
-    UIView* _viewArea;
     UIButton* _fabuBtn;
     
     int indexBtn;
@@ -42,7 +41,6 @@
     UILabel *_placeholder_label;
     UITextView * _textView;
     
-//    MBProgressHUD* _progress;
     NSData *_vedioData;
     
     UIButton *_pushToCommunityBtn;
@@ -82,12 +80,8 @@
     
     //图片选择
     [self initializeDataSource];
-    [self initializeUserInterface];
     
-    //地区
-//    [self createAreaChoose];
-    
-//    [self createFabu];
+    [self createFabu];
 }
 
 //文字设置
@@ -139,6 +133,9 @@
     _placeholder_label.layer.cornerRadius = 10;
     _placeholder_label.layer.masksToBounds = YES;
     [_bgView addSubview:_placeholder_label];
+    
+    [self initializeUserInterface];
+   
 }
 #pragma textViewDelegate
 -(void)textViewDidChange:(UITextView *)textView
@@ -233,6 +230,7 @@
     _pushToCommunityBtn.layer.cornerRadius = 3.0*ProportionAdapter;
     [_pushToCommunityBtn.layer setBorderWidth:1.0];
     _pushToCommunityBtn.layer.borderColor=[UIColor orangeColor].CGColor;
+    [_pushToCommunityBtn addTarget:self action:@selector(faClick) forControlEvents:UIControlEventTouchUpInside];
     [_bgView addSubview:_pushToCommunityBtn];
 }
 
@@ -266,7 +264,6 @@
     
     BrowseImagesViewController *vc = [[BrowseImagesViewController alloc] initWithIndex:[_selectButtons indexOfObject:sender] selectImages:_selectImages];
     __weak JGHEndScoresViewController *weakSelf = self;
-    _viewLine.frame = CGRectMake(10*ScreenWidth/375, _contentView.frame.size.height - 1, ScreenWidth -40*ScreenWidth/375, 1);
     
     vc.deleteBlock = ^(NSInteger index) {
         
@@ -446,11 +443,10 @@
         _addButton.frame = [self frameWithButtonIndex:_selectButtons.count];
         _contentView.frame = CGRectMake(_contentView.frame.origin.x, _contentView.frame.origin.y, ScreenWidth-20*ScreenWidth/375, _addButton.bounds.size.height + _addButton.frame.origin.y + 20*ScreenWidth/375);
         _contentSizeY = _contentSizeY + _addButton.bounds.size.height + _addButton.frame.origin.y + 20*ScreenWidth/375 - _imageWidth + 2 *10 *ScreenWidth/375;
+
+        _pushToCommunityBtn.frame = CGRectMake(screenWidth-120*ProportionAdapter, _contentView.frame.size.height + _contentView.frame.origin.y +1, 100*ProportionAdapter, 25*ProportionAdapter);
         
-        _viewLine.frame = CGRectMake(10*ScreenWidth/375, _contentView.frame.size.height - 1, ScreenWidth -40*ScreenWidth/375, 1);
-        _viewArea.frame = CGRectMake(10*ScreenWidth/375, 100*ScreenWidth/375 + _addButton.bounds.size.height + _addButton.frame.origin.y + 20*ScreenWidth/375, ScreenWidth - 20*ScreenWidth/375, 44*ScreenWidth/375);
-        
-        _fabuBtn.frame = CGRectMake(10*ScreenWidth/375, 174*ScreenWidth/375+ _addButton.bounds.size.height + _addButton.frame.origin.y, ScreenWidth - 20*ScreenWidth/375, 44);
+        _bgView.frame = CGRectMake(0, 0, ScreenWidth, _pushToCommunityBtn.frame.origin.y + _pushToCommunityBtn.frame.size.height + 20*ProportionAdapter);
     }
 }
 //重设图片的位置
@@ -464,7 +460,6 @@
         button.frame = [self frameWithButtonIndex:i];
     }
 }
-
 //增加一张照片，设置照片的位置
 - (CGRect)frameWithButtonIndex:(NSInteger)index {
     
@@ -481,35 +476,8 @@
     return CGRectMake(10*ScreenWidth/375 * cloumn + (_imageWidth+10*ScreenWidth/375) * (cloumn - 1), 10*ScreenWidth/375 * row + _imageWidth * (row - 1), _imageWidth, _imageWidth);
 }
 
-
--(void)createAreaChoose
-{
-    _viewArea = [[UIView alloc]initWithFrame:CGRectMake(10*ScreenWidth/375, 100*ScreenWidth/375 + _imageWidth + 2 *10 *ScreenWidth/375, ScreenWidth - 20*ScreenWidth/375, 44*ScreenWidth/375)];
-    _viewArea.backgroundColor = [UIColor whiteColor];
-    [_bgView addSubview:_viewArea];
-    
-    UIButton* btnArea = [UIButton buttonWithType:UIButtonTypeSystem];
-    btnArea.frame = CGRectMake(0, 0, _viewArea.frame.size.width, _viewArea.frame.size.height);
-    btnArea.backgroundColor = [UIColor clearColor];
-    [_viewArea addSubview:btnArea];
-    [btnArea addTarget:self action:@selector(areaClick) forControlEvents:UIControlEventTouchUpInside];
-    
-    _labelArea = [[UILabel alloc]initWithFrame:CGRectMake(5*ScreenWidth/375, 5*ScreenWidth/375,  _viewArea.frame.size.width -10*ScreenWidth/375, 35*ScreenWidth/375)];
-    _labelArea.text = @"请选择球场";
-    _labelArea.font = [UIFont systemFontOfSize:14*ScreenWidth/375];
-    [btnArea addSubview:_labelArea];
-    
-    
-    UIImageView* imgv = [[UIImageView alloc]initWithFrame:CGRectMake(_viewArea.frame.size.width - 30, 13*ScreenWidth/375, 13*ScreenWidth/375, 16*ScreenWidth/375)];
-    imgv.image = [UIImage imageNamed:@"left_jt"];
-    [btnArea addSubview:imgv];
-    
-    
-    
-}
 -(void)areaClick
 {
-    
     BallParkViewController* ballVc = [[BallParkViewController alloc]init];
     [ballVc setCallback:^(NSString *balltitle, NSInteger ballid) {
         [_dict setValue:[NSNumber numberWithInteger:ballid] forKey:@"placeId"];
@@ -518,20 +486,24 @@
     [self.navigationController pushViewController:ballVc animated:YES];
 }
 
-#pragma mark -- 发布按钮
+#pragma mark -- 查看成绩
 -(void)createFabu
 {
     _fabuBtn = [UIButton buttonWithType:UIButtonTypeSystem];
     _fabuBtn.backgroundColor = [UIColor orangeColor];
-    _fabuBtn.frame = CGRectMake(10*ScreenWidth/375, 174*ScreenWidth/375+_imageWidth, ScreenWidth - 20*ScreenWidth/375, 44*ScreenWidth/375);
-    [_fabuBtn setTitle:@"发布" forState:UIControlStateNormal];
+    _fabuBtn.frame = CGRectMake(10*ScreenWidth/375, screenHeight - 40*ProportionAdapter -64 - 44*ProportionAdapter, ScreenWidth - 20*ScreenWidth/375, 44*ScreenWidth/375);
+    [_fabuBtn setTitle:@"查看成绩" forState:UIControlStateNormal];
     [_fabuBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.view addSubview:_fabuBtn];
-    [_fabuBtn addTarget:self action:@selector(faClick) forControlEvents:UIControlEventTouchUpInside];
+    [_fabuBtn addTarget:self action:@selector(scoresResult) forControlEvents:UIControlEventTouchUpInside];
     
     _fabuBtn.layer.cornerRadius = 10;
     _fabuBtn.layer.masksToBounds = YES;
     
+}
+- (void)scoresResult{
+    JGDHistoryScoreViewController *historyCtrl = [[JGDHistoryScoreViewController alloc]init];
+    [self.navigationController pushViewController:historyCtrl animated:YES];
 }
 -(void)faClick{
     

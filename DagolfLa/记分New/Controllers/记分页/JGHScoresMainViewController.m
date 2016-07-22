@@ -112,8 +112,11 @@ static NSString *const JGHScoresPageCellIdentifier = @"JGHScoresPageCell";
         self.returnScoresDataArray(_dataArray);
     }
     
+    NSIndexPath *indexPath=[NSIndexPath indexPathForRow:0 inSection:cellTag-100];
+    [self.scoresTableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath,nil] withRowAnimation:UITableViewRowAnimationNone];
     btn.enabled = YES;
-    [self.scoresTableView reloadData];
+    
+    [self isAllScoresArray:_dataArray];
 }
 #pragma mark -- 未上球道
 - (void)selectUpperTrackNoBtnClick:(UIButton *)btn andCellTage:(NSInteger)cellTag{
@@ -136,7 +139,10 @@ static NSString *const JGHScoresPageCellIdentifier = @"JGHScoresPageCell";
         self.returnScoresDataArray(_dataArray);
     }
     
-    [self.scoresTableView reloadData];
+    NSIndexPath *indexPath=[NSIndexPath indexPathForRow:0 inSection:cellTag-100];
+    [self.scoresTableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath,nil] withRowAnimation:UITableViewRowAnimationNone];
+    
+    [self isAllScoresArray:_dataArray];
 }
 #pragma mark -- 减
 - (void)selectReduntionScoresBtnClicK:(UIButton *)btn andCellTage:(NSInteger)cellTag{
@@ -196,6 +202,7 @@ static NSString *const JGHScoresPageCellIdentifier = @"JGHScoresPageCell";
     NSIndexPath *indexPath=[NSIndexPath indexPathForRow:0 inSection:cellTag-100];
     [self.scoresTableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath,nil] withRowAnimation:UITableViewRowAnimationNone];
     btn.enabled = YES;
+    [self isAllScoresArray:_dataArray];
 }
 #pragma mark -- 加
 - (void)selectAddScoresBtnClick:(UIButton *)btn andCellTage:(NSInteger)cellTag{
@@ -253,8 +260,37 @@ static NSString *const JGHScoresPageCellIdentifier = @"JGHScoresPageCell";
     [self.scoresTableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath,nil] withRowAnimation:UITableViewRowAnimationNone];
     
     btn.enabled = YES;
+    
+    [self isAllScoresArray:_dataArray];
 }
-
+#pragma mark -- 判断是否完成所有的记分
+- (void)isAllScoresArray:(NSMutableArray *)dataArray{
+    for (int x=0; x<dataArray.count; x++) {
+        JGHScoreListModel *model = [[JGHScoreListModel alloc]init];
+        model = dataArray[x];
+        for (int i=0; i<18; i++) {
+            if ([[model.poleNumber objectAtIndex:i] integerValue] == -1) {
+                break;
+            }else if ([[model.pushrod objectAtIndex:i] integerValue] == -1){
+                break;
+            }else{
+                if ([[model.onthefairway objectAtIndex:i] integerValue] == -1) {
+                    break;
+                }
+            }
+            
+            if (x == dataArray.count -1 && i == 17) {
+                NSLog(@"model.poleNumber == %@", model.poleNumber);
+                NSLog(@"model.pushrod == %@", model.pushrod);
+                NSLog(@"model.onthefairway == %@", model.onthefairway);
+                //创建一个消息对象
+                NSNotification * notice = [NSNotification notificationWithName:@"noticeAllScores" object:nil userInfo:nil];
+                //发送消息
+                [[NSNotificationCenter defaultCenter]postNotification:notice];
+            }
+        }
+    }
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
