@@ -41,13 +41,13 @@
     if (listModel.mobile == nil) {
         self.phoneLB.text = @"";
     }else{
-        NSString *str = [NSString stringWithFormat:@"%@", listModel.mobile];
-        NSMutableString *muatbleStr = [str mutableCopy];
-        
-        if (muatbleStr.length > 10) {
-            [muatbleStr replaceCharactersInRange:NSMakeRange(3, 5) withString:@"*****"];
-        }
-        self.phoneLB.text = muatbleStr;
+//        NSString *str = [NSString stringWithFormat:@"%@", listModel.mobile];
+//        NSMutableString *muatbleStr = [str mutableCopy];
+//        
+//        if (muatbleStr.length > 10) {
+//            [muatbleStr replaceCharactersInRange:NSMakeRange(3, 5) withString:@"*****"];
+//        }
+        self.phoneLB.text = [NSString stringWithFormat:@"%@", listModel.mobile];
     }
     
     [self.headIconV sd_setImageWithURL:[Helper setImageIconUrl:@"user" andTeamKey:[listModel.userKey integerValue] andIsSetWidth:YES andIsBackGround:NO] placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];

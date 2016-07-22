@@ -113,12 +113,13 @@
     
     JGActivityMemNonmangerTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"memCell"];
     cell.nameLB.text = [self.dataArray[indexPath.row] objectForKey:@"name"];
-    NSMutableString *str = [[self.dataArray[indexPath.row] objectForKey:@"mobile"] mutableCopy];
-    if (str.length > 10) {
-        [str replaceCharactersInRange:NSMakeRange(3, 5) withString:@"*****"];
+    
+    if ([self.dataArray[indexPath.row] objectForKey:@"mobile"]) {
+        cell.phoneLB.text = [self.dataArray[indexPath.row] objectForKey:@"mobile"];
+    }else{
+        cell.phoneLB.text = @"";
     }
     
-    cell.phoneLB.text = str;
     [cell.headIconV sd_setImageWithURL:[Helper setImageIconUrl:@"user" andTeamKey:[[self.dataArray[indexPath.row] objectForKey:@"userKey"] integerValue] andIsSetWidth:YES andIsBackGround:NO] placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
 
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
