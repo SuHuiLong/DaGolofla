@@ -55,9 +55,13 @@
 
 @property (weak, nonatomic) IBOutlet UIButton *reduntionScoresBtn;
 - (IBAction)reduntionScoresBtnClicK:(UIButton *)sender;
+@property (weak, nonatomic) IBOutlet UIButton *downReduntionScoresBtn;
+
 
 @property (weak, nonatomic) IBOutlet UIButton *addScoresBtn;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *addScoresBtnRight;
+@property (weak, nonatomic) IBOutlet UIButton *downAddScoresBtn;
+
 
 - (IBAction)addScoresBtnClick:(UIButton *)sender;
 
