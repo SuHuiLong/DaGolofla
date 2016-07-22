@@ -495,8 +495,8 @@
                     NSIndexSet *indexSet=[[NSIndexSet alloc]initWithIndex:4];
                     [_tableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationAutomatic];
                 };
-                addVc.dictFin = _dictPeo;
-                addVc.dictPeople = _dictPeo;
+//                addVc.dictFin = _dictPeo;
+//                addVc.dictPeople = _dictPeo;
                 [self.navigationController pushViewController:addVc animated:YES];
 
             }

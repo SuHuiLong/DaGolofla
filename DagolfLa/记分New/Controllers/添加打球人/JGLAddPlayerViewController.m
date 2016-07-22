@@ -36,11 +36,8 @@
     UIView* view = [[UIView alloc]initWithFrame:CGRectMake(1, 1, 1, 1)];
     [self.view addSubview:view];
     
-    
-    if (_dictFin.count == 0) {
-        _dictFin    = [[NSMutableDictionary alloc]init];
-        _dictPeople = [[NSMutableDictionary alloc]init];
-    }
+    _dictFin    = [[NSMutableDictionary alloc]init];
+    _dictPeople = [[NSMutableDictionary alloc]init];
     
     [self uiConfig];
     [self createHeader];
