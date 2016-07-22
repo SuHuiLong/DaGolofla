@@ -78,6 +78,7 @@
 		2064DE961D3C715300F0D52A /* JGHRetrieveScoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2064DE941D3C715300F0D52A /* JGHRetrieveScoreViewController.m */; };
 		2064DE971D3C715300F0D52A /* JGHRetrieveScoreViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2064DE951D3C715300F0D52A /* JGHRetrieveScoreViewController.xib */; };
 		2064DEA21D41BD8300F0D52A /* JGHRetrieveScoreModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2064DEA11D41BD8300F0D52A /* JGHRetrieveScoreModel.m */; };
+		2064DEA61D4219BB00F0D52A /* JGHEndScoresViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2064DEA51D4219BB00F0D52A /* JGHEndScoresViewController.m */; };
 		2067C6B81CE30CA4002900C8 /* JGTeamActibityNameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2067C6B51CE30CA4002900C8 /* JGTeamActibityNameViewController.m */; };
 		2067C6B91CE30CA4002900C8 /* JGTeamActivityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2067C6B71CE30CA4002900C8 /* JGTeamActivityViewController.m */; };
 		2067C6CE1CE30CC0002900C8 /* JGActivityNameBaseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2067C6C01CE30CC0002900C8 /* JGActivityNameBaseCell.m */; };
@@ -1076,6 +1077,8 @@
 		2064DE951D3C715300F0D52A /* JGHRetrieveScoreViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JGHRetrieveScoreViewController.xib; sourceTree = "<group>"; };
 		2064DEA01D41BD8300F0D52A /* JGHRetrieveScoreModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHRetrieveScoreModel.h; sourceTree = "<group>"; };
 		2064DEA11D41BD8300F0D52A /* JGHRetrieveScoreModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHRetrieveScoreModel.m; sourceTree = "<group>"; };
+		2064DEA41D4219BB00F0D52A /* JGHEndScoresViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHEndScoresViewController.h; sourceTree = "<group>"; };
+		2064DEA51D4219BB00F0D52A /* JGHEndScoresViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHEndScoresViewController.m; sourceTree = "<group>"; };
 		2067C6B41CE30CA4002900C8 /* JGTeamActibityNameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGTeamActibityNameViewController.h; sourceTree = "<group>"; };
 		2067C6B51CE30CA4002900C8 /* JGTeamActibityNameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGTeamActibityNameViewController.m; sourceTree = "<group>"; };
 		2067C6B61CE30CA4002900C8 /* JGTeamActivityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGTeamActivityViewController.h; sourceTree = "<group>"; };
@@ -2889,6 +2892,15 @@
 				2064DEA11D41BD8300F0D52A /* JGHRetrieveScoreModel.m */,
 			);
 			path = "取回记分";
+			sourceTree = "<group>";
+		};
+		2064DEA31D42190B00F0D52A /* 完成记分 */ = {
+			isa = PBXGroup;
+			children = (
+				2064DEA41D4219BB00F0D52A /* JGHEndScoresViewController.h */,
+				2064DEA51D4219BB00F0D52A /* JGHEndScoresViewController.m */,
+			);
+			path = "完成记分";
 			sourceTree = "<group>";
 		};
 		2067C6B31CE30CA4002900C8 /* 球队活动 */ = {
@@ -5732,6 +5744,7 @@
 		8252E85F1D360D1000448404 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				2064DEA31D42190B00F0D52A /* 完成记分 */,
 				F5AEF6DB1D408F3F009A8C34 /* 历史积分卡 */,
 				2064DE901D3C70BC00F0D52A /* 取回记分 */,
 				2012AD961D36156400F70E40 /* 记分页 */,
@@ -7331,6 +7344,7 @@
 				F543ACC71CF42E1200C6B111 /* JGDisplayInfoTableViewCell.m in Sources */,
 				36BF00931BC772EF005B3CE2 /* NewsDetailController.m in Sources */,
 				65B596E61CAD43AC007AB83A /* UIView+Extension.m in Sources */,
+				2064DEA61D4219BB00F0D52A /* JGHEndScoresViewController.m in Sources */,
 				82AAB7B11CE5C18E005F5633 /* JGSelfSetTableViewCell.m in Sources */,
 				F5AEF6E71D408F3F009A8C34 /* JGDHistoryScoreShowViewController.m in Sources */,
 				827AA0141D1D1BFF00F6B80B /* JGHCancelApplyViewController.m in Sources */,

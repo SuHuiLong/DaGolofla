@@ -10,6 +10,7 @@
 #import "JGHScoresMainViewController.h"
 #import "JGHScoresHoleView.h"
 #import "JGHScoreListModel.h"
+#import "JGHEndScoresViewController.h"
 
 @interface JGHScoresViewController ()<UIPageViewControllerDataSource,UIPageViewControllerDelegate>
 {
@@ -280,6 +281,7 @@
             NSLog(@"%@", data);
             if ([[data objectForKey:@"packSuccess"]integerValue] == 1) {
                 [[ShowHUD showHUD]showToastWithText:@"记分结束！" FromView:self.view];
+                [self performSelector:@selector(pushJGHEndScoresViewController) withObject:self afterDelay:1.0];
             }else{
                 if ([data objectForKey:@"packResultMsg"]) {
                     [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
@@ -289,6 +291,11 @@
     }
     
     item.enabled = YES;
+}
+#pragma mark -- 完成记分
+- (void)pushJGHEndScoresViewController{
+    JGHEndScoresViewController *endScoresCtrl = [[JGHEndScoresViewController alloc]init];
+    [self.navigationController pushViewController:endScoresCtrl animated:YES];
 }
 
 - (void)didReceiveMemoryWarning {

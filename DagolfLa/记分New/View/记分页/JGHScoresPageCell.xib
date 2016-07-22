@@ -93,7 +93,7 @@
                         <constraints>
                             <constraint firstAttribute="width" secondItem="bZq-M0-hmi" secondAttribute="height" multiplier="25:16" id="zgG-XX-RYR"/>
                         </constraints>
-                        <state key="normal" backgroundImage="addScores"/>
+                        <state key="normal" image="addScores"/>
                         <connections>
                             <action selector="addScoresBtnClick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="3G5-gh-Uhc"/>
                         </connections>
@@ -103,7 +103,7 @@
                         <constraints>
                             <constraint firstAttribute="width" secondItem="DAe-Oj-5P1" secondAttribute="height" multiplier="25:16" id="f0G-Ub-KMn"/>
                         </constraints>
-                        <state key="normal" backgroundImage="reductionScores"/>
+                        <state key="normal" image="reductionScores"/>
                         <connections>
                             <action selector="reduntionScoresBtnClicK:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="gBv-Z7-s9X"/>
                         </connections>
@@ -113,7 +113,7 @@
                         <constraints>
                             <constraint firstAttribute="width" secondItem="6s0-ge-w2h" secondAttribute="height" multiplier="25:16" id="2fY-Gl-Zek"/>
                         </constraints>
-                        <state key="normal" backgroundImage="reductionScores"/>
+                        <state key="normal" image="reductionScores"/>
                         <connections>
                             <action selector="reduntionScoresBtnClicK:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="8VV-nq-NbQ"/>
                         </connections>
@@ -123,7 +123,7 @@
                         <constraints>
                             <constraint firstAttribute="width" secondItem="Sge-WI-0aC" secondAttribute="height" multiplier="25:16" id="scO-bA-Kdf"/>
                         </constraints>
-                        <state key="normal" backgroundImage="addScores"/>
+                        <state key="normal" image="addScores"/>
                         <connections>
                             <action selector="addScoresBtnClick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="P33-Ip-04q"/>
                         </connections>
@@ -190,6 +190,8 @@
             <connections>
                 <outlet property="addScoresBtn" destination="Sge-WI-0aC" id="Wez-ge-mGs"/>
                 <outlet property="addScoresBtnRight" destination="cps-ZF-OmM" id="1iC-ic-N56"/>
+                <outlet property="downAddScoresBtn" destination="bZq-M0-hmi" id="gtr-F6-hHX"/>
+                <outlet property="downReduntionScoresBtn" destination="DAe-Oj-5P1" id="d1x-cw-Mw6"/>
                 <outlet property="onballRight" destination="d3k-U0-44w" id="8ug-3A-2Lb"/>
                 <outlet property="poleTop" destination="xqg-CQ-owv" id="tGg-Y0-kn7"/>
                 <outlet property="poleValue" destination="rZo-5g-Ckk" id="jdB-8s-A4I"/>

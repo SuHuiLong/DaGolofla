@@ -251,6 +251,7 @@ static NSString *const JGHScoresPageCellIdentifier = @"JGHScoresPageCell";
     
     NSIndexPath *indexPath=[NSIndexPath indexPathForRow:0 inSection:cellTag-100];
     [self.scoresTableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath,nil] withRowAnimation:UITableViewRowAnimationNone];
+    
     btn.enabled = YES;
 }
 
