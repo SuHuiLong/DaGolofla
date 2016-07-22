@@ -232,7 +232,7 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (_dictFinish.count < 3) {
+    if (_dictFinish.count < _lastIndex) {
         NSString *str=[_dictFinish objectForKey:[self.listArray[indexPath.section][indexPath.row] otherUserId]];
         if ([Helper isBlankString:str]==YES) {
             

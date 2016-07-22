@@ -17,6 +17,8 @@
     UITableView* _tableView;
     UIView* _viewHeader;
     
+    NSMutableDictionary* _peoAddress;//通讯录返回数据
+    NSMutableDictionary* _peoFriend; //球友列表返回数据
     
     BOOL _isClick;
 }
@@ -38,6 +40,8 @@
     
     _dictFin    = [[NSMutableDictionary alloc]init];
     _dictPeople = [[NSMutableDictionary alloc]init];
+    _peoAddress = [[NSMutableDictionary alloc]init];
+    _peoFriend  = [[NSMutableDictionary alloc]init];
     
     [self uiConfig];
     [self createHeader];
@@ -93,10 +97,17 @@
         JGLAddressAddViewController* addVc = [[JGLAddressAddViewController alloc]init];
         //选择好的通讯录成员
         addVc.blockAddressPeople = ^(NSMutableDictionary* dict){
+            [_peoAddress addEntriesFromDictionary:dict];
             [_dictPeople addEntriesFromDictionary:dict];
             [_tableView reloadData];
         };
-        addVc.dictFinish = _dictFin;
+        addVc.dictFinish = _peoAddress;
+        if (_dictPeople.count != 0) {
+            addVc.lastIndex = _dictPeople.count - _peoAddress.count - _peoFriend.count;
+        }
+        else{
+            addVc.lastIndex = 3;
+        }
         _isClick = NO;
         [self.navigationController pushViewController:addVc animated:YES];
     }
@@ -106,12 +117,20 @@
     }
     else{
         JGLFriendAddViewController* fVc = [[JGLFriendAddViewController alloc]init];
-        //选择好的通讯录成员
+        //选择好的好友成员
         fVc.blockFriendDict = ^(NSMutableDictionary* dict){
+            [_peoFriend addEntriesFromDictionary:dict];
             [_dictPeople addEntriesFromDictionary:dict];
             [_tableView reloadData];
         };
-        fVc.dictFinish = _dictFin;
+        fVc.dictFinish = _peoFriend;
+        if (_dictPeople.count != 0) {
+            fVc.lastIndex = _dictPeople.count - _peoAddress.count - _peoFriend.count;
+        }
+        else{
+            fVc.lastIndex = 3;
+        }
+        
         _isClick = NO;
         [self.navigationController pushViewController:fVc animated:YES];
     }
