@@ -83,23 +83,27 @@
             NSInteger sum = 0;
             for (UILabel *lb in self.contentView.subviews) {
                 if (lb.tag) {
-                    lb.text = [NSString stringWithFormat:@"%@", model.poleNumber[lb.tag - 777]];
-                    NSInteger core = [model.poleNumber[lb.tag - 777] integerValue];
-                    NSInteger standardlever = [model.standardlever[lb.tag - 777] integerValue];
-                    sum += core;
-                    NSLog(@"sum = %td -------- core = %td", sum, core);
-                    if (standardlever - core >= 2) {
-                        lb.backgroundColor = [UIColor colorWithHexString:@"#7fffff"];
-                        
-                    }else if (standardlever - core == 1) {
-                        lb.backgroundColor = [UIColor colorWithHexString:@"#7fdfff"];
-
-                    }else if (standardlever == core) {
-                        lb.backgroundColor = [UIColor colorWithHexString:@"#ffd2a6"];
-
-                    }else if (core > standardlever) {
-                        lb.backgroundColor = [UIColor colorWithHexString:@"#ffaaa5"];
-
+                    if ([model.poleNumber[lb.tag - 777] integerValue] != -1) {
+                        lb.text = [NSString stringWithFormat:@"%@", model.poleNumber[lb.tag - 777]];
+                        NSInteger core = [model.poleNumber[lb.tag - 777] integerValue];
+                        NSInteger standardlever = [model.standardlever[lb.tag - 777] integerValue];
+                        sum += core;
+                        NSLog(@"sum = %td -------- core = %td", sum, core);
+                        if (standardlever - core >= 2) {
+                            lb.backgroundColor = [UIColor colorWithHexString:@"#7fffff"];
+                            
+                        }else if (standardlever - core == 1) {
+                            lb.backgroundColor = [UIColor colorWithHexString:@"#7fdfff"];
+                            
+                        }else if (standardlever == core) {
+                            lb.backgroundColor = [UIColor colorWithHexString:@"#ffd2a6"];
+                            
+                        }else if (core > standardlever) {
+                            lb.backgroundColor = [UIColor colorWithHexString:@"#ffaaa5"];
+                            
+                        }
+                    }else{
+                       lb.text = @"";
                     }
                 }
             }
@@ -136,31 +140,34 @@
             NSInteger sum = 0;
             for (UILabel *lb in self.contentView.subviews) {
                 if (lb.tag) {
-                    lb.text = [NSString stringWithFormat:@"%@", model.poleNumber[lb.tag - 776 + 8]];
-                    NSInteger core = [model.poleNumber[lb.tag - 776 + 8] integerValue];
-                    NSInteger standardlever = [model.standardlever[lb.tag - 776 + 8] integerValue];
-                    sum += core;
-                    NSLog(@"sum = %td -------- core = %td", sum, core);
-                    if (standardlever - core >= 2) {
-                        lb.backgroundColor = [UIColor colorWithHexString:@"#7fffff"];
-                        
-                    }else if (standardlever - core == 1) {
-                        lb.backgroundColor = [UIColor colorWithHexString:@"#7fbfff"];
-                        
-                    }else if (standardlever == core) {
-                        lb.backgroundColor = [UIColor colorWithHexString:@"#ffd2a6"];
-                        
-                    }else if (core > standardlever) {
-                        lb.backgroundColor = [UIColor colorWithHexString:@"#ffaaa5"];
-                        
+                    if ([model.poleNumber[lb.tag - 776 + 8] integerValue] != -1) {
+                        lb.text = [NSString stringWithFormat:@"%@", model.poleNumber[lb.tag - 776 + 8]];
+                        NSInteger core = [model.poleNumber[lb.tag - 776 + 8] integerValue];
+                        NSInteger standardlever = [model.standardlever[lb.tag - 776 + 8] integerValue];
+                        sum += core;
+                        NSLog(@"sum = %td -------- core = %td", sum, core);
+                        if (standardlever - core >= 2) {
+                            lb.backgroundColor = [UIColor colorWithHexString:@"#7fffff"];
+                            
+                        }else if (standardlever - core == 1) {
+                            lb.backgroundColor = [UIColor colorWithHexString:@"#7fbfff"];
+                            
+                        }else if (standardlever == core) {
+                            lb.backgroundColor = [UIColor colorWithHexString:@"#ffd2a6"];
+                            
+                        }else if (core > standardlever) {
+                            lb.backgroundColor = [UIColor colorWithHexString:@"#ffaaa5"];
+                        }
+                    }else{
+                        lb.text = @"";
                     }
                 }
             }
             self.sumLB.text = [NSString stringWithFormat:@"%td", sum];
         }
-
+        
     }
-
+    
 }
 
 - (void)takeDetailInfoWithModel:(JGDHistoryScoreShowModel *)model index:(NSIndexPath *)indexPath{
@@ -206,23 +213,27 @@
                 NSInteger sum = 0;
                 for (UILabel *lb in self.contentView.subviews) {
                     if (lb.tag) {
-                        lb.text = [NSString stringWithFormat:@"%@", model.poleNumber[lb.tag - 777]];
-                        NSInteger core = [model.poleNumber[lb.tag - 777] integerValue];
-                        NSInteger standardlever = [model.standardlever[lb.tag - 777] integerValue];
-                        sum += core;
-                        NSLog(@"sum = %td -------- core = %td", sum, core);
-                        if (standardlever - core >= 2) {
-                            lb.backgroundColor = [UIColor colorWithHexString:@"#7fffff"];
-                            
-                        }else if (standardlever - core == 1) {
-                            lb.backgroundColor = [UIColor colorWithHexString:@"#7fbfff"];
-                            
-                        }else if (standardlever == core) {
-                            lb.backgroundColor = [UIColor colorWithHexString:@"#ffd2a6"];
-                            
-                        }else if (core > standardlever) {
-                            lb.backgroundColor = [UIColor colorWithHexString:@"#ffaaa5"];
-                            
+                        if ([model.poleNumber[lb.tag - 777] integerValue] != -1) {
+                            lb.text = [NSString stringWithFormat:@"%@", model.poleNumber[lb.tag - 777]];
+                            NSInteger core = [model.poleNumber[lb.tag - 777] integerValue];
+                            NSInteger standardlever = [model.standardlever[lb.tag - 777] integerValue];
+                            sum += core;
+                            NSLog(@"sum = %td -------- core = %td", sum, core);
+                            if (standardlever - core >= 2) {
+                                lb.backgroundColor = [UIColor colorWithHexString:@"#7fffff"];
+                                
+                            }else if (standardlever - core == 1) {
+                                lb.backgroundColor = [UIColor colorWithHexString:@"#7fbfff"];
+                                
+                            }else if (standardlever == core) {
+                                lb.backgroundColor = [UIColor colorWithHexString:@"#ffd2a6"];
+                                
+                            }else if (core > standardlever) {
+                                lb.backgroundColor = [UIColor colorWithHexString:@"#ffaaa5"];
+                                
+                            }
+                        }else{
+                            lb.text = @"";
                         }
                     }
                 }
@@ -232,23 +243,27 @@
                 NSInteger sum = 0;
                 for (UILabel *lb in self.contentView.subviews) {
                     if (lb.tag) {
-                        lb.text = [NSString stringWithFormat:@"%@", model.poleNumber[lb.tag - 776 + 8]];
-                        NSInteger core = [model.poleNumber[lb.tag - 776 + 8] integerValue];
-                        NSInteger standardlever = [model.standardlever[lb.tag - 776 + 8] integerValue];
-                        sum += core;
-                        NSLog(@"sum = %td -------- core = %td", sum, core);
-                        if (standardlever - core >= 2) {
-                            lb.backgroundColor = [UIColor colorWithHexString:@"#7fffff"];
-                            
-                        }else if (standardlever - core == 1) {
-                            lb.backgroundColor = [UIColor colorWithHexString:@"#7fbfff"];
-                            
-                        }else if (standardlever == core) {
-                            lb.backgroundColor = [UIColor colorWithHexString:@"#ffd2a6"];
-                            
-                        }else if (core > standardlever) {
-                            lb.backgroundColor = [UIColor colorWithHexString:@"#ffaaa5"];
-                            
+                        if ([model.poleNumber[lb.tag - 776 + 8] integerValue] != -1) {
+                            lb.text = [NSString stringWithFormat:@"%@", model.poleNumber[lb.tag - 776 + 8]];
+                            NSInteger core = [model.poleNumber[lb.tag - 776 + 8] integerValue];
+                            NSInteger standardlever = [model.standardlever[lb.tag - 776 + 8] integerValue];
+                            sum += core;
+                            NSLog(@"sum = %td -------- core = %td", sum, core);
+                            if (standardlever - core >= 2) {
+                                lb.backgroundColor = [UIColor colorWithHexString:@"#7fffff"];
+                                
+                            }else if (standardlever - core == 1) {
+                                lb.backgroundColor = [UIColor colorWithHexString:@"#7fbfff"];
+                                
+                            }else if (standardlever == core) {
+                                lb.backgroundColor = [UIColor colorWithHexString:@"#ffd2a6"];
+                                
+                            }else if (core > standardlever) {
+                                lb.backgroundColor = [UIColor colorWithHexString:@"#ffaaa5"];
+                                
+                            }
+                        }else{
+                            lb.text = @"";
                         }
                     }
                 }
@@ -262,10 +277,14 @@
                 NSInteger sum = 0;
                 for (UILabel *lb in self.contentView.subviews) {
                     if (lb.tag) {
-                        lb.text = [NSString stringWithFormat:@"%@", model.pushrod[lb.tag - 777]];
-                        NSInteger core = [model.pushrod[lb.tag - 777] integerValue];
-                        sum += core;
-                        NSLog(@"sum = %td -------- core = %td", sum, core);
+                        if ([model.pushrod[lb.tag - 777] integerValue] != -1) {
+                            lb.text = [NSString stringWithFormat:@"%@", model.pushrod[lb.tag - 777]];
+                            NSInteger core = [model.pushrod[lb.tag - 777] integerValue];
+                            sum += core;
+                            NSLog(@"sum = %td -------- core = %td", sum, core);
+                        }else{
+                            lb.text = @"";
+                        }
                     }
                 }
                 self.sumLB.text = [NSString stringWithFormat:@"%td", sum];
@@ -274,10 +293,14 @@
                 NSInteger sum = 0;
                 for (UILabel *lb in self.contentView.subviews) {
                     if (lb.tag) {
-                        lb.text = [NSString stringWithFormat:@"%@", model.pushrod[lb.tag - 776 + 8]];
-                        NSInteger core = [model.pushrod[lb.tag - 776 + 8] integerValue];
-                        sum += core;
-                        NSLog(@"sum = %td -------- core = %td", sum, core);
+                        if ([model.pushrod[lb.tag - 776 + 8] integerValue] != -1) {
+                            lb.text = [NSString stringWithFormat:@"%@", model.pushrod[lb.tag - 776 + 8]];
+                            NSInteger core = [model.pushrod[lb.tag - 776 + 8] integerValue];
+                            sum += core;
+                            NSLog(@"sum = %td -------- core = %td", sum, core);
+                        }else{
+                            lb.text = @"";
+                        }
                     }
                 }
                 self.sumLB.text = [NSString stringWithFormat:@"%td", sum];

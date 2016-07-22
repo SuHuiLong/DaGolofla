@@ -141,7 +141,9 @@
 // 刷新
 - (void)headRereshing
 {
+    _page = 0;
     [self downLoadData:_page isReshing:YES];
+    
 }
 
 - (void)footRereshing
@@ -154,7 +156,7 @@
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     
     [dict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"userId"] forKey:@"userKey"];
-    [dict setObject:[NSNumber numberWithInteger:page] forKey:@"offset"];
+    [dict setObject:[NSNumber numberWithInteger:_page] forKey:@"offset"];
     [[JsonHttp jsonHttp]httpRequest:@"team/getTeamList" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
         if (isReshing) {
             [_tableView.header endRefreshing];
@@ -163,10 +165,11 @@
         }
     } completionBlock:^(id data) {
         if ([data objectForKey:@"teamList"]) {
-            if (page == 0)
+            if (_page == 0)
             {
                 //清除数组数据
                 [self.searchArray removeAllObjects];
+                [self.modelArray removeAllObjects];
             }
 
             [self.modelArray addObjectsFromArray:[data objectForKey:@"teamList"]];

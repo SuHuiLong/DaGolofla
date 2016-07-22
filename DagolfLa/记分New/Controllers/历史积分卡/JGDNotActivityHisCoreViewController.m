@@ -112,7 +112,7 @@
     [self.tableView registerClass:[JGDHistoryScoreShowTableViewCell class] forCellReuseIdentifier:@"cell"];
     self.tableView.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-
+    
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 150 * ProportionAdapter)];
     UIView *lightV = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 10 * ProportionAdapter)];
     lightV.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];
@@ -167,7 +167,7 @@
         ballNameLB.textColor = [UIColor colorWithHexString:@"#313131"];
         ballNameLB.font = [UIFont systemFontOfSize:15 * ProportionAdapter];
         [viewTitle addSubview:ballNameLB];
-
+        
         
         UILabel *timeLB = [[UILabel alloc] initWithFrame:CGRectMake(10 * ProportionAdapter, 50 * ProportionAdapter, 90 * ProportionAdapter, 30 * ProportionAdapter)];
         NSString *timeStr = [self.dataDic objectForKey:@"createtime"];
@@ -264,7 +264,7 @@
     if (indexPath.section == 0) {
         
         if (indexPath.row == 0) {
-            [cell.colorImageV removeFromSuperview];
+            cell.colorImageV.backgroundColor = [UIColor clearColor];
             cell.nameLB.text = @"Hole";
             cell.sumLB.text = @"Out";
             for (UILabel *lb in cell.contentView.subviews) {
@@ -272,11 +272,20 @@
                     lb.text = [NSString stringWithFormat:@"%td", lb.tag - 776];
                 }
             }
+        }else if (indexPath.row == 3) {
+            
+            cell.contentView.backgroundColor = [UIColor colorWithHexString:@"#FAFAFA"];
+            
+        }else if (indexPath.row == 5) {
+            
+            cell.contentView.backgroundColor = [UIColor colorWithHexString:@"#FAFAFA"];
+            
         }
         
     }else if (indexPath.section == 1) {
+        NSLog(@"%td", indexPath.row);
         if (indexPath.row == 0) {
-            [cell.colorImageV removeFromSuperview];
+            cell.colorImageV.backgroundColor = [UIColor clearColor];
             cell.nameLB.text = @"Hole";
             cell.sumLB.text = @"In";
             for (UILabel *lb in cell.contentView.subviews) {
@@ -284,11 +293,19 @@
                     lb.text = [NSString stringWithFormat:@"%td", lb.tag - 776 + 9];
                 }
             }
+        }else if (indexPath.row == 3) {
+            
+            cell.contentView.backgroundColor = [UIColor colorWithHexString:@"#FAFAFA"];
+            
+        }else if (indexPath.row == 5) {
+            
+            cell.contentView.backgroundColor = [UIColor colorWithHexString:@"#FAFAFA"];
+            
         }
     }
     
     return cell;
-
+    
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -309,11 +326,11 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.row > 1) {
-    JGDNotActivityHisDetailViewController *detailV = [[JGDNotActivityHisDetailViewController alloc] init];
-    JGDHistoryScoreShowModel *model = self.dataArray[indexPath.row - 2];
-    detailV.model = model;
-    detailV.dataDic = self.dataDic;
-    [self.navigationController pushViewController:detailV animated:YES];
+        JGDNotActivityHisDetailViewController *detailV = [[JGDNotActivityHisDetailViewController alloc] init];
+        JGDHistoryScoreShowModel *model = self.dataArray[indexPath.row - 2];
+        detailV.model = model;
+        detailV.dataDic = self.dataDic;
+        [self.navigationController pushViewController:detailV animated:YES];
     }
 }
 

@@ -25,7 +25,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = @"历史记分卡";
+    self.title = @"记分卡";
     
     [self createTableView];
     // Do any additional setup after loading the view.
@@ -54,7 +54,7 @@
     [lightV addSubview:allLB];
     
     UILabel *keyLB = [[UILabel alloc] initWithFrame:CGRectMake(170 * ProportionAdapter, 0 * ProportionAdapter, 100 * ProportionAdapter, 45 * ProportionAdapter)];
-    keyLB.text = @"123456";
+    keyLB.text = [NSString stringWithFormat:@"%@", self.model.invitationCode];
     keyLB.textAlignment = NSTextAlignmentLeft;
     keyLB.textColor = [UIColor colorWithHexString:@"#fe7a7a"];
     keyLB.font = [UIFont systemFontOfSize:15 * ProportionAdapter];
