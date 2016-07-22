@@ -11,6 +11,7 @@
 #import "EnterViewController.h"
 #import "JGLSelfScoreViewController.h"
 #import "JGDHistoryScoreViewController.h"
+#import "JGTeamDeatilWKwebViewController.h"
 
 @interface JGLScoreNewViewController ()<UIScrollViewDelegate,UICollectionViewDataSource,UICollectionViewDelegate>
 {
@@ -241,8 +242,12 @@
         if (indexPath.item == 1) {
             JGDHistoryScoreViewController *historyVC = [[JGDHistoryScoreViewController alloc] init];
             [self.navigationController pushViewController:historyVC animated:YES];
+        }else if (indexPath.item == 0) {
+            JGTeamDeatilWKwebViewController *wkVC = [[JGTeamDeatilWKwebViewController alloc] init];
+            wkVC.detailString = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/score/scoreList.html?userKey=%@&md5=%@&share=1",DEFAULF_USERID, [Helper md5HexDigest:[DEFAULF_USERID stringValue]]];
+            [self.navigationController pushViewController:wkVC animated:YES];
+            
         }
-        
     }
     else
     {

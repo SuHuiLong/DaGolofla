@@ -25,6 +25,7 @@
 @property (nonatomic, copy) NSString *tTaiwan;          // T 台
 @property (nonatomic, copy) NSString *title;
 @property (nonatomic, copy) NSString *ballName;
+@property (nonatomic, strong) NSNumber *invitationCode;   // 密钥
 
 
 @end

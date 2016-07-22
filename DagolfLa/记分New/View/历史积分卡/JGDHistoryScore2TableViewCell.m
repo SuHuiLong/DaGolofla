@@ -22,6 +22,7 @@
 
 @property (nonatomic, strong) UILabel *ballName;
 
+@property (nonatomic, strong) UIImageView *unfinishimageV;
 
 @end
 
@@ -32,21 +33,20 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         
-        self.timeLB = [[UILabel alloc] initWithFrame:CGRectMake(10 * ProportionAdapter, 0, 72 * ProportionAdapter, 85 * ProportionAdapter)];
+        self.timeLB = [[UILabel alloc] initWithFrame:CGRectMake(10 * ProportionAdapter, 0, 72 * ProportionAdapter, 65 * ProportionAdapter)];
         self.timeLB.font = [UIFont systemFontOfSize:12 * ProportionAdapter];
         self.timeLB.textColor = [UIColor colorWithHexString:@"#b8b8b8"];
-        self.timeLB.text = @"2010.10.10";
         [self.contentView addSubview:self.timeLB];
         
-        self.lineLimageV = [[UIImageView alloc] initWithFrame:CGRectMake(90 * ProportionAdapter, 0, 2 * ProportionAdapter, 85 * ProportionAdapter)];
+        self.lineLimageV = [[UIImageView alloc] initWithFrame:CGRectMake(90 * ProportionAdapter, 0, 2 * ProportionAdapter, 65 * ProportionAdapter)];
         self.lineLimageV.backgroundColor = [UIColor colorWithHexString:@"#58a9be"];
         [self.contentView addSubview:self.lineLimageV];
         
-        UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake(82 * ProportionAdapter, 36 * ProportionAdapter, 18 * ProportionAdapter, 18 * ProportionAdapter)];
+        UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake(82 * ProportionAdapter, 25 * ProportionAdapter, 18 * ProportionAdapter, 18 * ProportionAdapter)];
         imageV.image = [UIImage imageNamed:@"dot"];
         [self.contentView addSubview:imageV];
         
-        self.numberLB = [[UILabel alloc] initWithFrame:CGRectMake(110 * ProportionAdapter, 0, 60 * ProportionAdapter, 85 * ProportionAdapter)];
+        self.numberLB = [[UILabel alloc] initWithFrame:CGRectMake(110 * ProportionAdapter, 0, 60 * ProportionAdapter, 65 * ProportionAdapter)];
         [self.contentView addSubview:self.numberLB];
         
         
@@ -54,7 +54,9 @@
         self.holderImageV = [[UIImageView alloc] initWithFrame:CGRectMake(165 * ProportionAdapter, 10 * ProportionAdapter, 200 * ProportionAdapter, 45 * ProportionAdapter)];
         self.holderImageV.image = [UIImage imageNamed:@"yousaishi-nocolor"];
         [self.contentView addSubview:self.holderImageV];
-        
+       
+        self.unfinishimageV = [[UIImageView alloc] initWithFrame:CGRectMake(200 * ProportionAdapter - 35 * ProportionAdapter, 0, 35 * ProportionAdapter, 35 * ProportionAdapter)];
+        self.unfinishimageV.image = [UIImage imageNamed:@"weiwanchegn"];
         
         self.activityNameLB = [[UILabel alloc] initWithFrame:CGRectMake(20 * ProportionAdapter, 10 * ProportionAdapter, 170 * ProportionAdapter, 25 * ProportionAdapter)];
         self.activityNameLB.textColor = [UIColor colorWithHexString:@"#313131"];

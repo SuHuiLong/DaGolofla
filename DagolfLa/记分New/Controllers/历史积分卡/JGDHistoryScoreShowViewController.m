@@ -138,9 +138,9 @@
         [viewTitle addSubview:lightV];
         
         UIImageView *iconV = [[UIImageView alloc] initWithFrame:CGRectMake(10 * ProportionAdapter, 20 * ProportionAdapter, 68 * ProportionAdapter, 68 * ProportionAdapter)];
-        iconV.backgroundColor = [UIColor orangeColor];
         [iconV sd_setImageWithURL:[Helper setImageIconUrl:@"activity" andTeamKey:[[self.dataDic objectForKey:@"srcKey"] integerValue] andIsSetWidth:NO andIsBackGround:YES] placeholderImage:[UIImage imageNamed:ActivityBGImage]];
         iconV.contentMode = UIViewContentModeScaleAspectFill;
+        iconV.layer.cornerRadius = 8 * ProportionAdapter;
         iconV.layer.masksToBounds = YES;
         [viewTitle addSubview:iconV];
         
@@ -264,7 +264,6 @@
     if (indexPath.section == 0) {
         
         if (indexPath.row == 0) {
-//            [cell.colorImageV removeFromSuperview];
             cell.colorImageV.backgroundColor = [UIColor clearColor];
             cell.nameLB.text = @"Hole";
             cell.sumLB.text = @"Out";
@@ -285,7 +284,6 @@
         
     }else if (indexPath.section == 1) {
         if (indexPath.row == 0) {
-//            [cell.colorImageV removeFromSuperview];
             cell.colorImageV.backgroundColor = [UIColor clearColor];
             cell.nameLB.text = @"Hole";
             cell.sumLB.text = @"In";

@@ -17,6 +17,7 @@
 #import "MJDIYBackFooter.h"
 #import "MJDIYHeader.h"
 
+#import "JGHRetrieveScoreViewController.h" // 取回记分
 #import "JGDHistoryScoreShowViewController.h"
 
 @interface JGDHistoryScoreViewController ()<UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate,UISearchResultsUpdating>
@@ -30,6 +31,11 @@
 
 @implementation JGDHistoryScoreViewController
 
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    self.searchController.searchBar.hidden = NO;
+    [self.tableView reloadData];
+}
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
@@ -47,6 +53,8 @@
     
     UIBarButtonItem *rightBar = [[UIBarButtonItem alloc] initWithTitle:@"取回记分" style:(UIBarButtonItemStyleDone) target:self action:@selector(takeMyCode)];
     rightBar.tintColor = [UIColor whiteColor];
+    [rightBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:15 * ProportionAdapter], NSFontAttributeName, nil] forState:(UIControlStateNormal)];
+
     self.navigationItem.rightBarButtonItem = rightBar;
     // Do any additional setup after loading the view.
 }
@@ -88,8 +96,8 @@
 #pragma mark ----- 取回记分
 
 - (void)takeMyCode{
-    JGDHistoryScoreShowViewController *showVC = [[JGDHistoryScoreShowViewController alloc] init];
-    [self.navigationController pushViewController:showVC animated:YES];
+    JGHRetrieveScoreViewController *retriveveVC = [[JGHRetrieveScoreViewController alloc] init];
+    [self.navigationController pushViewController:retriveveVC animated:YES];
 }
 
 
@@ -106,7 +114,7 @@
             if (indexPath.row == 0) {
                 JGDHistoryScore2TableViewCell *cell = [[JGDHistoryScore2TableViewCell alloc] initWithStyle:(UITableViewCellStyleValue1) reuseIdentifier:@"123"];
                 cell.selectionStyle = UITableViewCellSelectionStyleNone;
-                cell.lineLimageV.frame = CGRectMake(90 * ProportionAdapter, 37 * ProportionAdapter, 2 * ProportionAdapter, 85 * ProportionAdapter);
+                cell.lineLimageV.frame = CGRectMake(90 * ProportionAdapter, 25 * ProportionAdapter, 2 * ProportionAdapter, 40 * ProportionAdapter);
                 if ([self.dataArray count] > indexPath.row) {
                     cell.model = self.dataArray[indexPath.row];
                 }
@@ -124,7 +132,7 @@
             if (indexPath.row == 0) {
                 JGDHistoryScoreTableViewCell *cell = [[JGDHistoryScoreTableViewCell alloc] initWithStyle:(UITableViewCellStyleValue1) reuseIdentifier:@"123"];
                 cell.selectionStyle = UITableViewCellSelectionStyleNone;
-                cell.lineLimageV.frame = CGRectMake(90 * ProportionAdapter, 37 * ProportionAdapter, 2 * ProportionAdapter, 85 * ProportionAdapter);
+                cell.lineLimageV.frame = CGRectMake(90 * ProportionAdapter, 35 * ProportionAdapter, 2 * ProportionAdapter, 50 * ProportionAdapter);
                 if ([self.dataArray count] > indexPath.row) {
                     cell.model = self.dataArray[indexPath.row];
                 }
@@ -157,6 +165,7 @@
 }
 
 -(void)updateSearchResultsForSearchController:(UISearchController *)searchController {
+    [self.tableView reloadData];
 }
 
 
@@ -255,11 +264,11 @@
     } completionBlock:^(id data) {
         
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
-            if ([data objectForKey:@"scoreInfoList"]) {
+            if ([data objectForKey:@"list"]) {
                 if (_page == 0) {
                     [self.dataArray removeAllObjects];
                 }
-                for (NSDictionary *dic in [data objectForKey:@"scoreInfoList"]) {
+                for (NSDictionary *dic in [data objectForKey:@"list"]) {
                     JGDHistoryScoreModel *model = [[JGDHistoryScoreModel alloc] init];
                     [model setValuesForKeysWithDictionary:dic];
                     [self.dataArray addObject:model];
