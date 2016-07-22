@@ -10,4 +10,10 @@
 
 @interface JGLAddPlayerViewController : ViewController
 
+
+@property (copy, nonatomic) void (^blockSurePlayer)(NSMutableDictionary *);
+
+@property (copy, nonatomic) NSMutableDictionary* dictFin,* dictPeople;
+;
+
 @end

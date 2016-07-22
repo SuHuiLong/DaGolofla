@@ -291,12 +291,6 @@
 }
 
 
-
-//-(void)prepareData
-//{
-//    _dataArray = [[NSMutableArray alloc]init];
-//}
-
 -(void)createHead
 {
     UIView* viewBase = [[UIView alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, 88*ScreenWidth/375)];
@@ -355,26 +349,25 @@
 //选择球场的点击事件
 -(void)btnBallClick
 {
-    
-        //球场
-        BallParkViewController* ballVc = [[BallParkViewController alloc]init];
-        ballVc.type1=1;
-        ballVc.callback1=^(NSDictionary *dict){
-            ////NSLog(@"%@",dict);
-            [_dataBallArray removeAllObjects];
-            if (dict.count != 0) {
-                [_dataBallArray addObject:[dict objectForKey:@"ballAreas"]];
-                [_dataBallArray addObject:[dict objectForKey:@"ballAreas"]];
-                [_dataBallArray addObject:[dict objectForKey:@"tAll"]];
-            }
-            [_tableView reloadData];
-        };
-        [ballVc setCallback:^(NSString *balltitle, NSInteger ballid) {
-            _labelBallName.text = balltitle;
-            _strBall = balltitle;
-            _ballId = ballid;
-        }];
-        [self.navigationController pushViewController:ballVc animated:YES];
+    //球场
+    BallParkViewController* ballVc = [[BallParkViewController alloc]init];
+    ballVc.type1=1;
+    ballVc.callback1=^(NSDictionary *dict){
+        ////NSLog(@"%@",dict);
+        [_dataBallArray removeAllObjects];
+        if (dict.count != 0) {
+            [_dataBallArray addObject:[dict objectForKey:@"ballAreas"]];
+            [_dataBallArray addObject:[dict objectForKey:@"ballAreas"]];
+            [_dataBallArray addObject:[dict objectForKey:@"tAll"]];
+        }
+        [_tableView reloadData];
+    };
+    [ballVc setCallback:^(NSString *balltitle, NSInteger ballid) {
+        _labelBallName.text = balltitle;
+        _strBall = balltitle;
+        _ballId = ballid;
+    }];
+    [self.navigationController pushViewController:ballVc animated:YES];
 }
 -(void)uiConfig
 {
@@ -488,7 +481,7 @@
     if (_isOpen[section])
     {
         //取出字典中的所有值 一个数组中放着三个小数组
-        NSArray *allValues = [_dataBallArray objectAtIndex:section];
+        NSArray *allValues = [_dataBallArray objectAtIndex:section-1];
         
         //根据每个区 返回行数
         return [allValues count];

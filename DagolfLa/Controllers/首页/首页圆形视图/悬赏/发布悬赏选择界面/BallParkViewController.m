@@ -327,11 +327,19 @@
         }else{
             if (_isClick == NO)
             {
-                [[PostDataRequest sharedInstance] postDataRequest:@"ball/getBallCode.do" parameter:@{@"ballId":@([[_dataArray[indexPath.row] ballId] integerValue])} success:^(id respondsData) {
-                    NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:respondsData options:NSJSONReadingMutableContainers error:nil];
-                    if ([[dict objectForKey:@"success"] integerValue] == 1) {
+                
+                NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+                [dict setObject:[_dataArray[indexPath.row] ballId] forKey:@"ballKey"];
+                [[JsonHttp jsonHttp]httpRequest:@"ball/getBallCode" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
+                    
+                } completionBlock:^(id data) {
+                    
+                    if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
                         //点击事件选中后传值
-                        _callback1([dict objectForKey:@"rows"]);
+                        NSMutableDictionary* dict1 = [[NSMutableDictionary alloc]init];
+                        [dict1 setObject:[data objectForKey:@"ballAreas"] forKey:@"ballAreas"];
+                        [dict1 setObject:[data objectForKey:@"tAll"] forKey:@"tAll"];
+                        _callback1(dict1);
                         _callback([_dataArray[indexPath.row] ballName],[[_dataArray[indexPath.row] ballId] integerValue]);
                         [self.navigationController popViewControllerAnimated:YES];
                     }
@@ -340,7 +348,22 @@
                             [self presentViewController:alertView animated:YES completion:nil];
                         }];
                     }
-                } failed:^(NSError *error) {
+
+                    NSLog(@"%@", data);
+                    if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+                        
+                    }else{
+                        
+                    }
+                }];
+                
+                
+                
+                
+                
+                [[PostDataRequest sharedInstance] postDataRequest:@"ball/getBallCode.do" parameter:@{@"ballId":@([[_dataArray[indexPath.row] ballId] integerValue])} success:^(id respondsData) {
+                    NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:respondsData options:NSJSONReadingMutableContainers error:nil];
+                                    } failed:^(NSError *error) {
                     
                 }];
                 

@@ -20,14 +20,14 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         _imgvIcon = [[UIImageView alloc]initWithFrame:CGRectMake(63*screenWidth/375, 10*screenWidth/375, 30*screenWidth/375, 30*screenWidth/375)];
-        _imgvIcon.image = [UIImage imageNamed:@""];
-        [self addSubview:_imgvIcon];
+        _imgvIcon.image = [UIImage imageNamed:@"addP"];
+        [self.contentView addSubview:_imgvIcon];
         
         
-        _labelTitle = [[UILabel alloc]initWithFrame:CGRectMake(80*screenWidth/375, 10*screenWidth/375, 150*screenWidth/375, 30*screenWidth/375)];
+        _labelTitle = [[UILabel alloc]initWithFrame:CGRectMake(100*screenWidth/375, 10*screenWidth/375, 150*screenWidth/375, 30*screenWidth/375)];
         _labelTitle.text = @"点击添加更换打球人";
-        _labelTitle.font = [UIFont systemFontOfSize:14*screenWidth/375];
-        [self addSubview:_labelTitle];
+        _labelTitle.font = [UIFont systemFontOfSize:15*screenWidth/375];
+        [self.contentView addSubview:_labelTitle];
     }
     return self;
 }

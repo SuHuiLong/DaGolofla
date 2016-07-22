@@ -9,10 +9,13 @@
 #import "JGLChooseScoreViewController.h"
 #import "UITool.h"
 #import "JGLChoosesScoreTableViewCell.h"
+#import "JGLChooseScoreModel.h"
 @interface JGLChooseScoreViewController ()<UITableViewDelegate,UITableViewDataSource>
 {
     UITableView* _tableView;
     UIView *_viewHeader;
+    NSInteger _page;
+    NSMutableArray* _dataArray;
 }
 @end
 
@@ -20,6 +23,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    _page = 0;
+    _dataArray = [[NSMutableArray alloc]init];
     self.title = @"选择记分对象";
     [self uiConfig];
     [self createHeader];
@@ -62,9 +68,67 @@
     _tableView.dataSource = self;
     [self.view addSubview:_tableView];
     [_tableView registerClass:[JGLChoosesScoreTableViewCell class] forCellReuseIdentifier:@"JGLChoosesScoreTableViewCell"];
+    
+    _tableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
+    _tableView.footer=[MJDIYBackFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRereshing)];
+    [_tableView.header beginRefreshing];
 
 }
 
+#pragma mark - 下载数据
+- (void)downLoadData:(int)page isReshing:(BOOL)isReshing{
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    
+    [dict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:userID] forKey:@"userKey"];
+    [dict setObject:[Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@dagolfla.com", DEFAULF_USERID]] forKey:@"md5"];
+    [[JsonHttp jsonHttp]httpRequest:@"score/getUserLatelyActivity" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
+        if (isReshing) {
+            [_tableView.header endRefreshing];
+        }else {
+            [_tableView.footer endRefreshing];
+        }
+    } completionBlock:^(id data) {
+        if ([[data objectForKey:@"packSuccess"] boolValue]) {
+            if (page == 0)
+            {
+                //清除数组数据
+                [_dataArray removeAllObjects];
+            }
+            //数据解析
+            //            self.TeamArray = [data objectForKey:@"teamList"];
+            for (NSDictionary *dataDic in [data objectForKey:@"teamList"]) {
+                JGLChooseScoreModel *model = [[JGLChooseScoreModel alloc] init];
+                [model setValuesForKeysWithDictionary:dataDic];
+                [_dataArray addObject:model];
+            }
+//            [self.TeamArray addObjectsFromArray:[data objectForKey:@"teamList"]];
+            _page++;
+            [_tableView reloadData];
+        }else {
+            [Helper alertViewWithTitle:@"获取列表信息失败" withBlock:^(UIAlertController *alertView) {
+                [self presentViewController:alertView animated:YES completion:nil];
+            }];
+        }
+        [_tableView reloadData];
+        if (isReshing) {
+            [_tableView.header endRefreshing];
+        }else {
+            [_tableView.footer endRefreshing];
+        }
+    }];
+}
+
+#pragma mark 开始进入刷新状态
+- (void)headRereshing
+{
+    _page = 0;
+    [self downLoadData:_page isReshing:YES];
+}
+
+- (void)footRereshing
+{
+    [self downLoadData:_page isReshing:NO];
+}
 
 
 
@@ -73,12 +137,13 @@
 }
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 5;
+    return _dataArray.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
 
     JGLChoosesScoreTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"JGLChoosesScoreTableViewCell" forIndexPath:indexPath];
+    [cell showData:_dataArray[indexPath.section]];
     return cell;
 }
 

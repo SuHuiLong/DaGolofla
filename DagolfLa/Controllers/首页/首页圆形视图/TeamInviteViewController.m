@@ -232,11 +232,7 @@
         TKAddressModel *addressBook = addressBookTemp[0];
         addressBook.isSelectNumber=1;
     }
-    
-    
-    
-    
-    
+
 }
 
 -(void)createPageView

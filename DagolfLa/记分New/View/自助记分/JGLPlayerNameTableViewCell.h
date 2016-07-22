@@ -20,4 +20,7 @@
 
 @property (strong, nonatomic) UILabel*     labelTee;
 
+-(void)showTee:(NSString *)str;
+
+
 @end
