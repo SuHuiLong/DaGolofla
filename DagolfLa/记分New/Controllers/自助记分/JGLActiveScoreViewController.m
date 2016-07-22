@@ -287,7 +287,12 @@
                 cell.iconImgv.hidden = YES;
                 cell.labelTee.text = @"请选择tee台";
             }
-            cell.labelName.text = [[NSUserDefaults standardUserDefaults] objectForKey:@"userName"];
+            if ([Helper isBlankString:_userN]) {
+                cell.labelName.text = [[NSUserDefaults standardUserDefaults] objectForKey:@"userName"];
+            }
+            else{
+                cell.labelName.text = _userN;
+            }
             return cell;
             
         }
@@ -572,7 +577,8 @@
             if (indexPath.row  == _dictPeo.count + 2) {
                 JGLAddActivePlayViewController* addVc = [[JGLAddActivePlayViewController alloc]init];
                 addVc.model = _model;
-                addVc.blockSurePlayer = ^(NSMutableDictionary *dict,NSMutableArray* dataPeo , NSMutableArray* dataKey, NSMutableArray* userKey, NSMutableArray* mobielArr){
+                addVc.blockSurePlayer = ^(NSMutableDictionary *dict,NSMutableArray* dataPeo , NSMutableArray* dataKey, NSMutableArray* userKey, NSMutableArray* mobielArr)
+                {
                     _dictPeo = dict;
                     _dataPeoBack = dataPeo;
                     _dataKeyBack = dataKey;

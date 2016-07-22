@@ -14,6 +14,8 @@
 
 @property (strong, nonatomic) NSNumber* userKey;
 
+//@property (strong, nonatomic) NSNumber* otherUserId;
+
 @property (strong, nonatomic) NSString* name;
 
 @property (strong, nonatomic) NSString* userName;

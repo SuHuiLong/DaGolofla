@@ -304,9 +304,9 @@
             if (_dataPeoArr.count != 0) {
                 NSString *str=[_dictFinish objectForKey:[NSString stringWithFormat:@"%td%td",indexPath.section,indexPath.row]];
                 if ([Helper isBlankString:str]==YES) {
-                    [_dictFinish setObject:[self.listArray[indexPath.section][indexPath.row] name] forKey:[NSString stringWithFormat:@"%td%td",indexPath.section,indexPath.row]];
+                    [_dictFinish setObject:[self.listArray[indexPath.section][indexPath.row] timeKey] forKey:[NSString stringWithFormat:@"%td%td",indexPath.section,indexPath.row]];
                     [_dataKey addObject:[NSString stringWithFormat:@"%td%td",indexPath.section,indexPath.row]];
-                    [_dataPeoArr addObject:[self.listArray[indexPath.section][indexPath.row] name]];
+                    [_dataPeoArr addObject:[self.listArray[indexPath.section][indexPath.row] timeKey]];
                     [_userKey addObject:[self.listArray[indexPath.section][indexPath.row] userKey]];
                     if (![Helper isBlankString:[self.listArray[indexPath.section][indexPath.row] mobile]]) {
                         [_mobileArr addObject:[self.listArray[indexPath.section][indexPath.row] mobile]];
@@ -340,7 +340,7 @@
                     [_mobileArr addObject:[self.listArray[indexPath.section][indexPath.row] mobile]];
                 }
                 else{
-                    [_mobileArr addObject:@"0"];
+                    [_mobileArr addObject:@""];
                 }
                 
             }
@@ -353,27 +353,30 @@
         }
     }
     else{
-        bool isChange1 = false;
-        for (int i = 0; i < _dataPeoArr.count; i ++) {
-            if (isChange1 == YES) {
-                continue;
+        if (indexPath.row - 1 < _dataPeoArr.count) {
+            bool isChange1 = false;
+            for (int i = 0; i < _dataPeoArr.count; i ++) {
+                if (isChange1 == YES) {
+                    continue;
+                }
+                NSLog(@"%@",_dataPeoArr[indexPath.row -1]);
+                if ([[_dictFinish objectForKey:_dataKey[i]] isEqualToString:_dataPeoArr[indexPath.row-1]] == YES) {
+                    NSLog(@"%@",[_dictFinish allValues][i]);
+                    [_dictFinish removeObjectForKey:_dataKey[i]];
+                    [_dataKey removeObjectAtIndex:indexPath.row-1];
+                    [_userKey removeObjectAtIndex:indexPath.row-1];
+                    [_mobileArr removeObjectAtIndex:indexPath.row - 1];
+                    [_dataPeoArr removeObjectAtIndex:indexPath.row-1];
+                    isChange1 = YES;
+                    continue;
+                }
+                
             }
-            NSLog(@"%@",_dataPeoArr[indexPath.row -1]);
-            if ([[_dictFinish objectForKey:_dataKey[i]] isEqualToString:_dataPeoArr[indexPath.row-1]] == YES) {
-                NSLog(@"%@",[_dictFinish allValues][i]);
-                [_dictFinish removeObjectForKey:_dataKey[i]];
-                [_dataKey removeObjectAtIndex:indexPath.row-1];
-                [_userKey removeObjectAtIndex:indexPath.row-1];
-                [_mobileArr removeObjectAtIndex:indexPath.row - 1];
-                isChange1 = YES;
-                continue;
-            }
-            
+            [_tableChoose reloadData];
+            [_tableView reloadData];
+            isChange1 = NO;
+
         }
-        [_dataPeoArr removeObjectAtIndex:indexPath.row-1];
-        [_tableChoose reloadData];
-        [_tableView reloadData];
-        isChange1 = NO;
     }
 
 }
