@@ -77,6 +77,7 @@
 		2064DE8C1D367FEC00F0D52A /* JGHScoresHoleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2064DE8B1D367FEC00F0D52A /* JGHScoresHoleView.m */; };
 		2064DE961D3C715300F0D52A /* JGHRetrieveScoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2064DE941D3C715300F0D52A /* JGHRetrieveScoreViewController.m */; };
 		2064DE971D3C715300F0D52A /* JGHRetrieveScoreViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2064DE951D3C715300F0D52A /* JGHRetrieveScoreViewController.xib */; };
+		2064DEA21D41BD8300F0D52A /* JGHRetrieveScoreModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2064DEA11D41BD8300F0D52A /* JGHRetrieveScoreModel.m */; };
 		2067C6B81CE30CA4002900C8 /* JGTeamActibityNameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2067C6B51CE30CA4002900C8 /* JGTeamActibityNameViewController.m */; };
 		2067C6B91CE30CA4002900C8 /* JGTeamActivityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2067C6B71CE30CA4002900C8 /* JGTeamActivityViewController.m */; };
 		2067C6CE1CE30CC0002900C8 /* JGActivityNameBaseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2067C6C01CE30CC0002900C8 /* JGActivityNameBaseCell.m */; };
@@ -1073,6 +1074,8 @@
 		2064DE931D3C715300F0D52A /* JGHRetrieveScoreViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHRetrieveScoreViewController.h; sourceTree = "<group>"; };
 		2064DE941D3C715300F0D52A /* JGHRetrieveScoreViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHRetrieveScoreViewController.m; sourceTree = "<group>"; };
 		2064DE951D3C715300F0D52A /* JGHRetrieveScoreViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JGHRetrieveScoreViewController.xib; sourceTree = "<group>"; };
+		2064DEA01D41BD8300F0D52A /* JGHRetrieveScoreModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHRetrieveScoreModel.h; sourceTree = "<group>"; };
+		2064DEA11D41BD8300F0D52A /* JGHRetrieveScoreModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHRetrieveScoreModel.m; sourceTree = "<group>"; };
 		2067C6B41CE30CA4002900C8 /* JGTeamActibityNameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGTeamActibityNameViewController.h; sourceTree = "<group>"; };
 		2067C6B51CE30CA4002900C8 /* JGTeamActibityNameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGTeamActibityNameViewController.m; sourceTree = "<group>"; };
 		2067C6B61CE30CA4002900C8 /* JGTeamActivityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGTeamActivityViewController.h; sourceTree = "<group>"; };
@@ -2875,6 +2878,15 @@
 				2064DE931D3C715300F0D52A /* JGHRetrieveScoreViewController.h */,
 				2064DE941D3C715300F0D52A /* JGHRetrieveScoreViewController.m */,
 				2064DE951D3C715300F0D52A /* JGHRetrieveScoreViewController.xib */,
+			);
+			path = "取回记分";
+			sourceTree = "<group>";
+		};
+		2064DE9F1D41BD8300F0D52A /* 取回记分 */ = {
+			isa = PBXGroup;
+			children = (
+				2064DEA01D41BD8300F0D52A /* JGHRetrieveScoreModel.h */,
+				2064DEA11D41BD8300F0D52A /* JGHRetrieveScoreModel.m */,
 			);
 			path = "取回记分";
 			sourceTree = "<group>";
@@ -5735,6 +5747,7 @@
 		8252E8601D360D1000448404 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				2064DE9F1D41BD8300F0D52A /* 取回记分 */,
 				F5AEF70D1D408FC8009A8C34 /* 记分页 */,
 				F589C65F1D360E5D002302E8 /* 历史积分卡 */,
 				82FD96201D3E142F0047D7A8 /* 自助记分 */,
@@ -6579,7 +6592,7 @@
 				TargetAttributes = {
 					36BFFD271BC76C8D005B3CE2 = {
 						CreatedOnToolsVersion = 6.3.2;
-						DevelopmentTeam = R269PG52XZ;
+						DevelopmentTeam = T8ML76W22A;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -7420,6 +7433,7 @@
 				20C1B8AB1CE313A200508ABC /* JGTeamApplyViewController.m in Sources */,
 				8215EE121D0FD9F90099F161 /* JGTeamMemberManager.m in Sources */,
 				36E300F31C3FF3F9005C3F08 /* MJRefreshBackGifFooter.m in Sources */,
+				2064DEA21D41BD8300F0D52A /* JGHRetrieveScoreModel.m in Sources */,
 				368B73281C100A390002A618 /* ScoreTableViewCell.m in Sources */,
 				827AA01D1D1D1C5500F6B80B /* JGLActiveMemTableViewCell.m in Sources */,
 				369B2B671C61B23F00366AA2 /* NewsDetailViewCell.m in Sources */,

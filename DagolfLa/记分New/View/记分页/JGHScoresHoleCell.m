@@ -61,28 +61,37 @@
 
 - (void)configOneToNine:(NSArray *)array andUserName:(NSString *)userName{
     self.name.text = userName;
-    [self.one setTitle:[NSString stringWithFormat:@"%@", array[0]] forState:UIControlStateNormal];
-    [self.two setTitle:[NSString stringWithFormat:@"%@", array[1]] forState:UIControlStateNormal];
-    [self.three setTitle:[NSString stringWithFormat:@"%@", array[2]] forState:UIControlStateNormal];
-    [self.four setTitle:[NSString stringWithFormat:@"%@", array[3]] forState:UIControlStateNormal];
-    [self.five setTitle:[NSString stringWithFormat:@"%@", array[4]] forState:UIControlStateNormal];
-    [self.six setTitle:[NSString stringWithFormat:@"%@", array[5]] forState:UIControlStateNormal];
-    [self.seven setTitle:[NSString stringWithFormat:@"%@", array[6]] forState:UIControlStateNormal];
-    [self.eight setTitle:[NSString stringWithFormat:@"%@", array[7]] forState:UIControlStateNormal];
-    [self.nine setTitle:[NSString stringWithFormat:@"%@", array[8]] forState:UIControlStateNormal];
+    [self.one setTitle:[NSString stringWithFormat:@"%@", [self returnValue:array[0]]] forState:UIControlStateNormal];
+    [self.two setTitle:[NSString stringWithFormat:@"%@", [self returnValue:array[1]]] forState:UIControlStateNormal];
+    [self.three setTitle:[NSString stringWithFormat:@"%@", [self returnValue:array[2]]] forState:UIControlStateNormal];
+    [self.four setTitle:[NSString stringWithFormat:@"%@", [self returnValue:array[3]]] forState:UIControlStateNormal];
+    [self.five setTitle:[NSString stringWithFormat:@"%@", [self returnValue:array[4]]] forState:UIControlStateNormal];
+    [self.six setTitle:[NSString stringWithFormat:@"%@", [self returnValue:array[5]]] forState:UIControlStateNormal];
+    [self.seven setTitle:[NSString stringWithFormat:@"%@", [self returnValue:array[6]]] forState:UIControlStateNormal];
+    [self.eight setTitle:[NSString stringWithFormat:@"%@", [self returnValue:array[7]]] forState:UIControlStateNormal];
+    [self.nine setTitle:[NSString stringWithFormat:@"%@", [self returnValue:array[8]]] forState:UIControlStateNormal];
 }
 
 - (void)configNineToEighteenth:(NSArray *)array andUserName:(NSString *)userName{
     self.name.text = userName;
-    [self.one setTitle:[NSString stringWithFormat:@"%@", array[9]] forState:UIControlStateNormal];
-    [self.two setTitle:[NSString stringWithFormat:@"%@", array[10]] forState:UIControlStateNormal];
-    [self.three setTitle:[NSString stringWithFormat:@"%@", array[11]] forState:UIControlStateNormal];
-    [self.four setTitle:[NSString stringWithFormat:@"%@", array[12]] forState:UIControlStateNormal];
-    [self.five setTitle:[NSString stringWithFormat:@"%@", array[13]] forState:UIControlStateNormal];
-    [self.six setTitle:[NSString stringWithFormat:@"%@", array[14]] forState:UIControlStateNormal];
-    [self.seven setTitle:[NSString stringWithFormat:@"%@", array[15]] forState:UIControlStateNormal];
-    [self.eight setTitle:[NSString stringWithFormat:@"%@", array[16]] forState:UIControlStateNormal];
-    [self.nine setTitle:[NSString stringWithFormat:@"%@", array[17]] forState:UIControlStateNormal];
+    [self.one setTitle:[NSString stringWithFormat:@"%@", [self returnValue:array[9]]] forState:UIControlStateNormal];
+    [self.two setTitle:[NSString stringWithFormat:@"%@", [self returnValue:array[10]]] forState:UIControlStateNormal];
+    [self.three setTitle:[NSString stringWithFormat:@"%@", [self returnValue:array[11]]] forState:UIControlStateNormal];
+    [self.four setTitle:[NSString stringWithFormat:@"%@", [self returnValue:array[12]]] forState:UIControlStateNormal];
+    [self.five setTitle:[NSString stringWithFormat:@"%@", [self returnValue:array[13]]] forState:UIControlStateNormal];
+    [self.six setTitle:[NSString stringWithFormat:@"%@", [self returnValue:array[14]]] forState:UIControlStateNormal];
+    [self.seven setTitle:[NSString stringWithFormat:@"%@", [self returnValue:array[15]]] forState:UIControlStateNormal];
+    [self.eight setTitle:[NSString stringWithFormat:@"%@",[self returnValue:array[16]]] forState:UIControlStateNormal];
+    [self.nine setTitle:[NSString stringWithFormat:@"%@", [self returnValue:array[17]]] forState:UIControlStateNormal];
+}
+
+- (NSString *)returnValue:(id)value{
+    
+    if ([value integerValue] == -1) {
+        return @"";
+    }else{
+        return value;
+    }
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

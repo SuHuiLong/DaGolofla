@@ -26,22 +26,22 @@
     
     self.userNameLeft.constant = 20*ProportionAdapter;
     self.userNameDown.constant = 23*ProportionAdapter;
-//    self.upperTrackDown.constant = 8*ProportionAdapter;
+    //    self.upperTrackDown.constant = 8*ProportionAdapter;
     
     NSLayoutConstraint *addScoresConstraint = [NSLayoutConstraint constraintWithItem:self.addScoresBtn attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationGreaterThanOrEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:50*ProportionAdapter];
-
+    
     NSArray *addScoreArray = [NSArray arrayWithObjects:addScoresConstraint, nil];
     [self addConstraints: addScoreArray];
     
     self.onballRight.constant = 8*ProportionAdapter;
-//    [self.upperTrackBtn.layer setBorderColor:[UIColor redColor].CGColor];
-//    [self.upperTrackBtn.layer setBorderWidth:1];
-//    [self.upperTrackBtn.layer setMasksToBounds:YES];
+    //    [self.upperTrackBtn.layer setBorderColor:[UIColor redColor].CGColor];
+    //    [self.upperTrackBtn.layer setBorderWidth:1];
+    //    [self.upperTrackBtn.layer setMasksToBounds:YES];
     
     self.upperTrackNoBtn.titleLabel.font = [UIFont systemFontOfSize:15*ProportionAdapter];
-//    [self.upperTrackNoBtn.layer setBorderColor:[UIColor redColor].CGColor];
-//    [self.upperTrackNoBtn.layer setBorderWidth:1];
-//    [self.upperTrackNoBtn.layer setMasksToBounds:YES];
+    //    [self.upperTrackNoBtn.layer setBorderColor:[UIColor redColor].CGColor];
+    //    [self.upperTrackNoBtn.layer setBorderWidth:1];
+    //    [self.upperTrackNoBtn.layer setMasksToBounds:YES];
     
     self.poleValue.font = [UIFont systemFontOfSize:21*ProportionAdapter];
     self.pushPoleValueRight.constant = 21*ProportionAdapter;
@@ -94,7 +94,10 @@
     for (int i=0; i<model.poleNumber.count; i++) {
         NSInteger pole = [[model.poleNumber objectAtIndex:i] integerValue];
         NSLog(@"pole == %td", pole);
-        poleCount += pole;
+        if (pole != -1) {
+            poleCount += pole;
+        }
+        
         NSLog(@"poleCount == %td", poleCount);
     }
     self.totalPoleValue.text = [NSString stringWithFormat:@"%td", poleCount];
@@ -103,14 +106,29 @@
     for (int i=0; i<model.pushrod.count; i++) {
         NSInteger pole = [[model.pushrod objectAtIndex:i] integerValue];
         NSLog(@"pole == %td", pole);
-        totalPoleCount += pole;
+        if (pole != -1) {
+            totalPoleCount += pole;
+        }
+        
         NSLog(@"totalPoleCount == %td", totalPoleCount);
     }
     self.totalPushValue.text = [NSString stringWithFormat:@"%td", totalPoleCount];
     
-    self.poleValue.text = [NSString stringWithFormat:@"%@", [model.poleNumber objectAtIndex:index]];
+    if ([[model.poleNumber objectAtIndex:index] integerValue] == -1) {
+        self.poleValue.text = [NSString stringWithFormat:@"%@", [model.standardlever objectAtIndex:index]];
+        self.poleValue.textColor = [UIColor lightGrayColor];
+    }else{
+        self.poleValue.text = [NSString stringWithFormat:@"%@", [model.poleNumber objectAtIndex:index]];
+        self.poleValue.textColor = [UIColor blackColor];
+    }
     
-    self.pushPoleValue.text = [NSString stringWithFormat:@"%@", [model.pushrod objectAtIndex:index]];
+    if ([[model.pushrod objectAtIndex:index] integerValue] == -1) {
+        self.pushPoleValue.text = @"2";
+        self.pushPoleValue.textColor = [UIColor lightGrayColor];
+    }else{
+        self.pushPoleValue.text = [NSString stringWithFormat:@"%@", [model.pushrod objectAtIndex:index]];
+        self.pushPoleValue.textColor = [UIColor blackColor];
+    }
     
     self.userName.text = model.userName;
     

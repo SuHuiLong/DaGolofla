@@ -1,4 +1,4 @@
-//
+ //
 //  JGHScoresMainViewController.m
 //  DagolfLa
 //
@@ -148,7 +148,15 @@ static NSString *const JGHScoresPageCellIdentifier = @"JGHScoresPageCell";
         NSMutableArray *poleNumberArray = [NSMutableArray array];
         for (int i=0; i<model.poleNumber.count; i++) {
             if (i == _index) {
-                [poleNumberArray addObject:@([model.poleNumber[i] integerValue]-1)];
+                if ([model.poleNumber[i] integerValue] == -1) {
+                    [poleNumberArray addObject:@([model.standardlever[i] integerValue])];
+                }else{
+                    if ([model.poleNumber[i] integerValue]-1 > 0) {
+                        [poleNumberArray addObject:@([model.poleNumber[i] integerValue]-1)];
+                    }else{
+                        [poleNumberArray addObject:@1];
+                    }
+                }
             }else{
                 [poleNumberArray addObject:model.poleNumber[i]];
             }
@@ -163,7 +171,15 @@ static NSString *const JGHScoresPageCellIdentifier = @"JGHScoresPageCell";
         NSMutableArray *pushrodArray = [NSMutableArray array];
         for (int i=0; i<model.pushrod.count; i++) {
             if (i == _index) {
-                [pushrodArray addObject:@([model.pushrod[i] integerValue]-1)];
+                if ([model.pushrod[i] integerValue] == -1) {
+                    [pushrodArray addObject:@2];
+                }else{
+                    if ([model.pushrod[i] integerValue]-1 > 0) {
+                        [pushrodArray addObject:@([model.pushrod[i] integerValue]-1)];
+                    }else{
+                        [pushrodArray addObject:@0];
+                    }
+                }
             }else{
                 [pushrodArray addObject:model.pushrod[i]];
             }
@@ -177,19 +193,29 @@ static NSString *const JGHScoresPageCellIdentifier = @"JGHScoresPageCell";
         self.returnScoresDataArray(_dataArray);
     }
     
-    [self.scoresTableView reloadData];
+    NSIndexPath *indexPath=[NSIndexPath indexPathForRow:0 inSection:cellTag-100];
+    [self.scoresTableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath,nil] withRowAnimation:UITableViewRowAnimationNone];
     btn.enabled = YES;
 }
 #pragma mark -- 加
 - (void)selectAddScoresBtnClick:(UIButton *)btn andCellTage:(NSInteger)cellTag{
     btn.enabled = NO;
     if (btn.tag == 60) {
+        NSLog(@"+ 杆数");
         JGHScoreListModel *model = [[JGHScoreListModel alloc]init];
         model = self.dataArray[cellTag-100];
         NSMutableArray *poleNumberArray = [NSMutableArray array];
         for (int i=0; i<model.poleNumber.count; i++) {
             if (i == _index) {
-                [poleNumberArray addObject:@([model.poleNumber[i] integerValue]+1)];
+                if ([model.poleNumber[i] integerValue] == -1) {
+                    [poleNumberArray addObject:@([model.standardlever[i] integerValue])];
+                }else{
+                    if ([model.poleNumber[i] integerValue]-1 >= 0) {
+                        [poleNumberArray addObject:@([model.poleNumber[i] integerValue]+1)];
+                    }else{
+                        [poleNumberArray addObject:@1];
+                    }
+                }
             }else{
                 [poleNumberArray addObject:model.poleNumber[i]];
             }
@@ -197,7 +223,7 @@ static NSString *const JGHScoresPageCellIdentifier = @"JGHScoresPageCell";
         
         model.poleNumber = poleNumberArray;
         [self.dataArray replaceObjectAtIndex:cellTag-100 withObject:model];
-        NSLog(@"+ 杆数");
+        
     }else{
         NSLog(@"+ 推杆");//pushrod
         JGHScoreListModel *model = [[JGHScoreListModel alloc]init];
@@ -205,7 +231,11 @@ static NSString *const JGHScoresPageCellIdentifier = @"JGHScoresPageCell";
         NSMutableArray *pushrodArray = [NSMutableArray array];
         for (int i=0; i<model.pushrod.count; i++) {
             if (i == _index) {
-                [pushrodArray addObject:@([model.pushrod[i] integerValue]+1)];
+                if ([model.pushrod[i] integerValue] == -1) {
+                    [pushrodArray addObject:@2];
+                }else{
+                    [pushrodArray addObject:@([model.pushrod[i] integerValue]+1)];
+                }
             }else{
                 [pushrodArray addObject:model.pushrod[i]];
             }
@@ -219,7 +249,8 @@ static NSString *const JGHScoresPageCellIdentifier = @"JGHScoresPageCell";
         self.returnScoresDataArray(_dataArray);
     }
     
-    [self.scoresTableView reloadData];
+    NSIndexPath *indexPath=[NSIndexPath indexPathForRow:0 inSection:cellTag-100];
+    [self.scoresTableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath,nil] withRowAnimation:UITableViewRowAnimationNone];
     btn.enabled = YES;
 }
 
@@ -229,13 +260,13 @@ static NSString *const JGHScoresPageCellIdentifier = @"JGHScoresPageCell";
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end
