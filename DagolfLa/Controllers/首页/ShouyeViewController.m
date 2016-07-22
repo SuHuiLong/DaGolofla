@@ -30,6 +30,7 @@
 #import "JGLPushDetailsViewController.h"
 
 #import "JGHScoresViewController.h"
+#import "JGHEndScoresViewController.h"
 
 @interface ShouyeViewController ()<UIApplicationDelegate,CLLocationManagerDelegate>
 {
@@ -352,9 +353,9 @@
             case 1003:
             {
                 NSLog(@"jiaolian");
-                //JGHScoresViewController   TeacherViewController
+                //JGHEndScoresViewController   TeacherViewController
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
-                TeacherViewController* teaVc = [[TeacherViewController alloc]init];
+                JGHEndScoresViewController* teaVc = [[JGHEndScoresViewController alloc]init];
                 [self.navigationController pushViewController:teaVc animated:YES];
             }
                 break;

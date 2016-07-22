@@ -44,6 +44,8 @@
     
 //    MBProgressHUD* _progress;
     NSData *_vedioData;
+    
+    UIButton *_pushToCommunityBtn;
 }
 
 @property (strong, nonatomic) UIView *contentView;
@@ -83,65 +85,54 @@
     [self initializeUserInterface];
     
     //地区
-    [self createAreaChoose];
+//    [self createAreaChoose];
     
-    [self createFabu];
+//    [self createFabu];
 }
 
 //文字设置
 -(void)createView
 {
     //主背景－－白
-    _bgView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, 290*ProportionAdapter)];
-    _viewBase.backgroundColor = [UIColor whiteColor];
+    _bgView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, 335*ProportionAdapter)];
+    _bgView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:_bgView];
-    
     //球场
-    UILabel *ballName = [[UILabel alloc]initWithFrame:CGRectMake(10*ProportionAdapter, 10*ProportionAdapter, screenWidth - 20*ProportionAdapter, 30*ProportionAdapter)];
+    UILabel *ballName = [[UILabel alloc]initWithFrame:CGRectMake(10*ProportionAdapter, 10*ProportionAdapter, screenWidth - 20*ProportionAdapter, 35*ProportionAdapter)];
     ballName.text = @"上海MMM高尔夫场";
     ballName.backgroundColor = [UIColor colorWithHexString:BG_color];
+    ballName.layer.cornerRadius = 3.0*ProportionAdapter;
+    ballName.layer.masksToBounds = YES;
+    ballName.font = [UIFont systemFontOfSize:17*ProportionAdapter];
     [_bgView addSubview:ballName];
     //日期
-    UILabel *timeLable = [[UILabel alloc]initWithFrame:CGRectMake(10*ProportionAdapter, 50*ProportionAdapter, (screenWidth -30*ProportionAdapter)/2, 25*ProportionAdapter)];
+    UILabel *timeLable = [[UILabel alloc]initWithFrame:CGRectMake(10*ProportionAdapter, 55*ProportionAdapter, (screenWidth -30*ProportionAdapter)/2, 25*ProportionAdapter)];
     timeLable.text = @"2016-07-11";
     timeLable.backgroundColor = [UIColor colorWithHexString:BG_color];
+    timeLable.layer.cornerRadius = 3.0*ProportionAdapter;
+    timeLable.layer.masksToBounds = YES;
+    timeLable.font = [UIFont systemFontOfSize:15*ProportionAdapter];
     [_bgView addSubview:timeLable];
     //杆数
-    UILabel *poleLable = [[UILabel alloc]initWithFrame:CGRectMake((screenWidth -30*ProportionAdapter)/2 + 20*ProportionAdapter, 50*ProportionAdapter, (screenWidth -30*ProportionAdapter)/2, 25*ProportionAdapter)];
+    UILabel *poleLable = [[UILabel alloc]initWithFrame:CGRectMake((screenWidth -30*ProportionAdapter)/2 + 20*ProportionAdapter, 55*ProportionAdapter, (screenWidth -30*ProportionAdapter)/2, 25*ProportionAdapter)];
     poleLable.text = @"88 杆";
     poleLable.backgroundColor = [UIColor colorWithHexString:BG_color];
+    poleLable.layer.cornerRadius = 3.0*ProportionAdapter;
+    poleLable.layer.masksToBounds = YES;
+    poleLable.font = [UIFont systemFontOfSize:15*ProportionAdapter];
     [_bgView addSubview:poleLable];
-    //说说背景 －－ 灰色
-//    _viewBase = [[UIView alloc]initWithFrame:CGRectMake(10*ScreenWidth/375, 75*ScreenWidth/375, ScreenWidth-20*ScreenWidth/375, 90*ScreenWidth/375)];
-//    _viewBase.backgroundColor = [UIColor whiteColor];
-//    _contentSizeY = 10*ScreenWidth/375 + 90*ScreenWidth/375;
-//    [_bgView addSubview:_viewBase];
     
-    //发布的文字
-    //    _textView = [[IWTextView alloc]initWithFrame:CGRectMake(5*ScreenWidth/375, 5*ScreenWidth/375, _viewBase.frame.size.width-10*ScreenWidth/375, 80*ScreenWidth/375)];
-    ////    _textView.backgroundColor=[UIColor redColor]; //背景色
-    //    //垂直方向上可以拖拽
-    //    _textView.alwaysBounceVertical = YES;
-    //    _textView.delegate = self;       //设置代理方法的实现类
-    //    _textView.placeholder = @"说点什么吧";
-    //    [_viewBase addSubview:_textView];
-    //    _textView.font = [UIFont systemFontOfSize:15*ScreenWidth/375];
-    //    _textView.tag = 100;
-    //    // 1.监听textView文字改变的通知
-    //    [IWNotificationCenter addObserver:self selector:@selector(textDidChange) name:UITextViewTextDidChangeNotification object:_textView];
-    
-    _textView = [[UITextView alloc]initWithFrame:CGRectMake(10*ScreenWidth/375, 10*ScreenWidth/375, ScreenWidth-20*ScreenWidth/375, 90*ScreenWidth/375)];
+    _textView = [[UITextView alloc]initWithFrame:CGRectMake(10*ProportionAdapter, 90*ProportionAdapter, ScreenWidth-20*ProportionAdapter, 90*ProportionAdapter)];
     _textView.delegate = self;
     _textView.backgroundColor = [UIColor whiteColor];
     _textView.tag = 100;
-    
     _textView.layer.borderWidth = 1.0;
     _textView.layer.borderColor = [UIColor grayColor].CGColor;
     _textView.layer.cornerRadius = 5.0;
-    _textView.font = [UIFont systemFontOfSize:14*ScreenWidth/375];
+    _textView.font = [UIFont systemFontOfSize:14*ProportionAdapter];
     [_bgView addSubview:_textView];
     
-    _placeholder_label = [[UILabel alloc] initWithFrame:CGRectMake(12, 25, 300, 30)];
+    _placeholder_label = [[UILabel alloc] initWithFrame:CGRectMake(_textView.frame.origin.x+3, _textView.frame.origin.y+5, 300, 30)];
     _placeholder_label.text = @"说点什么吧!";
     _placeholder_label.font =  [UIFont boldSystemFontOfSize:13];
     _placeholder_label.textColor = [UIColor lightGrayColor];
@@ -218,7 +209,7 @@
     
     _imageWidth = (ScreenWidth - ((LINE_COUNT + 1) * 20*ScreenWidth/375)) / LINE_COUNT;
     
-    _contentView = [[UIView alloc] initWithFrame:CGRectMake(10*ScreenWidth/375, 100*ScreenWidth/375, ScreenWidth-20*ScreenWidth/375, _imageWidth + 2 *10 *ScreenWidth/375)];
+    _contentView = [[UIView alloc] initWithFrame:CGRectMake(10*ScreenWidth/375, 180*ProportionAdapter, ScreenWidth-20*ScreenWidth/375, _imageWidth + 2 *10 *ScreenWidth/375)];
     _contentView.backgroundColor = [UIColor whiteColor];
     _contentView.clipsToBounds = YES;
     [_bgView addSubview:_contentView];
@@ -232,13 +223,17 @@
     //    _addButton.layer.borderColor = [UIColor orangeColor].CGColor;
     _addButton.tag = 11;//区分添加图片
     [_addButton addTarget:self action:@selector(addButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-    
-    
     [_contentView addSubview:_addButton];
     
-    _viewLine = [[UIView alloc]initWithFrame:CGRectMake(10*ScreenWidth/375, _contentView.frame.size.height - 1, ScreenWidth -40*ScreenWidth/375, 1)];
-    [_contentView addSubview:_viewLine];
-    _viewLine.backgroundColor = [UIColor lightGrayColor];
+    _pushToCommunityBtn = [[UIButton alloc]initWithFrame:CGRectMake(screenWidth-120*ProportionAdapter, _imageWidth + 40 *ProportionAdapter + _contentView.frame.origin.y, 100*ProportionAdapter, 25*ProportionAdapter)];
+    [_pushToCommunityBtn setTitle:@"发布到社区" forState:UIControlStateNormal];
+    [_pushToCommunityBtn setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
+    _pushToCommunityBtn.titleLabel.font = [UIFont systemFontOfSize:15*ProportionAdapter];
+    _pushToCommunityBtn.layer.masksToBounds = YES;
+    _pushToCommunityBtn.layer.cornerRadius = 3.0*ProportionAdapter;
+    [_pushToCommunityBtn.layer setBorderWidth:1.0];
+    _pushToCommunityBtn.layer.borderColor=[UIColor orangeColor].CGColor;
+    [_bgView addSubview:_pushToCommunityBtn];
 }
 
 #pragma mark --添加图片／拍照／视频点击事件
@@ -491,7 +486,7 @@
 {
     _viewArea = [[UIView alloc]initWithFrame:CGRectMake(10*ScreenWidth/375, 100*ScreenWidth/375 + _imageWidth + 2 *10 *ScreenWidth/375, ScreenWidth - 20*ScreenWidth/375, 44*ScreenWidth/375)];
     _viewArea.backgroundColor = [UIColor whiteColor];
-    [self.view addSubview:_viewArea];
+    [_bgView addSubview:_viewArea];
     
     UIButton* btnArea = [UIButton buttonWithType:UIButtonTypeSystem];
     btnArea.frame = CGRectMake(0, 0, _viewArea.frame.size.width, _viewArea.frame.size.height);
