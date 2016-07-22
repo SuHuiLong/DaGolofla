@@ -41,6 +41,7 @@
 }
 
 -(void)showTee:(NSString *)str{
+    
     if ([str isEqualToString:@"红T"] == YES) {
         _iconImgv.backgroundColor = [UITool colorWithHexString:@"e21f23" alpha:1];
     }
