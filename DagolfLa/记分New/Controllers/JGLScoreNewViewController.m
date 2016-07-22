@@ -10,7 +10,8 @@
 #import "MeWonderViewCell.h"
 #import "EnterViewController.h"
 #import "JGLSelfScoreViewController.h"
-#import "JGLAddPlayerViewController.h"
+#import "JGDHistoryScoreViewController.h"
+#import "JGLChooseScoreViewController.h"
 @interface JGLScoreNewViewController ()<UIScrollViewDelegate,UICollectionViewDataSource,UICollectionViewDelegate>
 {
     UIScrollView* _scrollView;
@@ -138,9 +139,31 @@
 {
     
     if ([[NSUserDefaults standardUserDefaults]objectForKey:@"userId"]) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
-        JGLSelfScoreViewController* SsVc = [[JGLSelfScoreViewController alloc]init];
-        [self.navigationController pushViewController:SsVc animated:YES];   
+        NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
+        [dict setObject:DEFAULF_USERID forKey:@"userKey"];
+        [dict setObject:[Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@dagolfla.com", DEFAULF_USERID]] forKey:@"md5"];
+        [[JsonHttp jsonHttp]httpRequest:@"score/getTodayScore" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
+            
+        } completionBlock:^(id data) {
+            NSLog(@"%@", data);
+            if ([[data objectForKey:@"acBoolean"] integerValue] == 1) {
+                JGLChooseScoreViewController* chooVc = [[JGLChooseScoreViewController alloc]init];
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
+                [self.navigationController pushViewController:chooVc animated:YES];
+            }
+            else{
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
+                JGLSelfScoreViewController* SsVc = [[JGLSelfScoreViewController alloc]init];
+                [self.navigationController pushViewController:SsVc animated:YES];
+            }
+            
+        }];
+
+        
+        
+        
+        
+        
     }
     else
     {
@@ -237,9 +260,11 @@
 {
     if ([[NSUserDefaults standardUserDefaults]objectForKey:@"userId"])
     {
-        JGLAddPlayerViewController* addVc = [[JGLAddPlayerViewController alloc]init];
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
-        [self.navigationController pushViewController:addVc animated:YES];
+        if (indexPath.item == 1) {
+            JGDHistoryScoreViewController *historyVC = [[JGDHistoryScoreViewController alloc] init];
+            [self.navigationController pushViewController:historyVC animated:YES];
+        }
+        
     }
     else
     {

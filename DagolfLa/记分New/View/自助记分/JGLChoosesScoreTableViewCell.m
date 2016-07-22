@@ -25,12 +25,12 @@
         _iconImgv.layer.cornerRadius = 8* screenWidth / 375;
         [self.contentView addSubview:_iconImgv];
         
-        _labelName = [[UILabel alloc]initWithFrame:CGRectMake(90*screenWidth/375, 10*screenWidth/375, 200*screenWidth/375, 36*screenWidth/375)];
+        _labelName = [[UILabel alloc]initWithFrame:CGRectMake(90*screenWidth/375, 10*screenWidth/375, 180*screenWidth/375, 36*screenWidth/375)];
         _labelName.text = @"上海宝马杯高尔夫球赛";
         _labelName.font = [UIFont systemFontOfSize:15*screenWidth/375];
         [self.contentView addSubview:_labelName];
         
-        _labelTime = [[UILabel alloc]initWithFrame:CGRectMake(300*screenWidth/375, 10*screenWidth/375, 55*screenWidth/375, 36*screenWidth/375)];
+        _labelTime = [[UILabel alloc]initWithFrame:CGRectMake(270*screenWidth/375, 10*screenWidth/375, 85*screenWidth/375, 36*screenWidth/375)];
         _labelTime.font = [UIFont systemFontOfSize:10*screenWidth/375];
         [self.contentView addSubview:_labelTime];
         _labelTime.textAlignment = NSTextAlignmentRight;
