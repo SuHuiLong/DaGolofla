@@ -80,7 +80,7 @@
     [_tableView registerClass:[JGLChoosesScoreTableViewCell class] forCellReuseIdentifier:@"JGLChoosesScoreTableViewCell"];
     
     _tableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
-    _tableView.footer=[MJDIYBackFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRereshing)];
+//    _tableView.footer=[MJDIYBackFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRereshing)];
     [_tableView.header beginRefreshing];
 
 }
@@ -94,9 +94,10 @@
     [[JsonHttp jsonHttp]httpRequest:@"score/getUserLatelyActivity" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
         if (isReshing) {
             [_tableView.header endRefreshing];
-        }else {
-            [_tableView.footer endRefreshing];
         }
+//        else {
+//            [_tableView.footer endRefreshing];
+//        }
     } completionBlock:^(id data) {
         if ([[data objectForKey:@"packSuccess"] boolValue]) {
             if (page == 0)
@@ -122,9 +123,10 @@
         [_tableView reloadData];
         if (isReshing) {
             [_tableView.header endRefreshing];
-        }else {
-            [_tableView.footer endRefreshing];
         }
+//        else {
+//            [_tableView.footer endRefreshing];
+//        }
     }];
 }
 
@@ -135,10 +137,10 @@
     [self downLoadData:_page isReshing:YES];
 }
 
-- (void)footRereshing
-{
-    [self downLoadData:_page isReshing:NO];
-}
+//- (void)footRereshing
+//{
+//    [self downLoadData:_page isReshing:NO];
+//}
 
 
 

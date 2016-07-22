@@ -281,7 +281,7 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (_dictFinish.count < 3) {
+    if (_dictFinish.count < _lastIndex) {
         NSString *str=[_dictFinish objectForKey:[NSNumber numberWithInteger:[self.listArray[indexPath.section][indexPath.row] recordID]]];
         if ([Helper isBlankString:str]==YES) {
             

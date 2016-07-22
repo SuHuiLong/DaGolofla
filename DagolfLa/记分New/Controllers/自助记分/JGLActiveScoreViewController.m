@@ -200,7 +200,8 @@
     
     [dict setObject:userArray forKey:@"userList"];
     //    [dict setObject:DEFAULF_USERID forKey:@"md5"];
-    [[JsonHttp jsonHttp]httpRequest:@"score/createScore" JsonKey:nil withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
+    
+    [[JsonHttp jsonHttp]httpRequestWithMD5:@"score/createScore" JsonKey:nil withData:dict failedBlock:^(id errType) {
         
     } completionBlock:^(id data) {
         NSLog(@"%@", data);
@@ -214,6 +215,8 @@
             }
         }
     }];
+    
+
 }
 
 -(void)uiConfig

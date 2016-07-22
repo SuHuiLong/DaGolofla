@@ -16,4 +16,6 @@
 
 @property (copy, nonatomic) NSMutableDictionary* dictFinish;
 
+@property (assign, nonatomic) NSInteger lastIndex;
+
 @end
