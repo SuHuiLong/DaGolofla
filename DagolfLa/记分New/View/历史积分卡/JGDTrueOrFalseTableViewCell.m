@@ -29,9 +29,18 @@
         // screemw - 120
         CGFloat width = (screenWidth - 120 * ProportionAdapter) / 9;
         for (int i = 0; i < 9; i ++) {
-            UIImageView *scoreLB = [[UIImageView alloc] initWithFrame:CGRectMake(80 * ProportionAdapter + i * width, 9 * ProportionAdapter, 13 * ProportionAdapter, 13 * ProportionAdapter)];
+            UIImageView *scoreLB = [[UIImageView alloc] initWithFrame:CGRectMake(88 * ProportionAdapter + i * width, 9 * ProportionAdapter, 13 * ProportionAdapter, 13 * ProportionAdapter)];
             scoreLB.tag = 777 + i;
+            UIView *lineV = [[UIView alloc] initWithFrame:CGRectMake(80 * ProportionAdapter + i * width, 0 * ProportionAdapter, 2 * ProportionAdapter, 30 * ProportionAdapter)];
+            lineV.backgroundColor = [UIColor colorWithHexString:@"#eeeeee"];
+            [self.contentView addSubview:lineV];
             [self.contentView addSubview:scoreLB];
+            
+            if (i == 8) {
+                UIView *lineV = [[UIView alloc] initWithFrame:CGRectMake(screenWidth - 40 * ProportionAdapter, 0 * ProportionAdapter, 2 * ProportionAdapter, 30 * ProportionAdapter)];
+                lineV.backgroundColor = [UIColor colorWithHexString:@"#eeeeee"];
+                [self.contentView addSubview:lineV];
+            }
         }
         
         self.sumLB = [[UILabel alloc] initWithFrame:CGRectMake(screenWidth - 50 * ProportionAdapter, 0, 40 * ProportionAdapter, 30 * ProportionAdapter)];

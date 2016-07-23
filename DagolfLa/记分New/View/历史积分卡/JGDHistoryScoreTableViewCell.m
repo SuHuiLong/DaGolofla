@@ -79,6 +79,10 @@
     self.activityNameLB.text = model.title;
     self.ballName.text = model.ballName;
     
+    if ([model.scoreFinish integerValue] == 0) {
+        [self.holderImageV addSubview:self.unfinishimageV];
+    }
+    
     NSString* strMoney = [NSString stringWithFormat:@"%@杆", [model.poleNumber stringValue]];
     NSMutableAttributedString *str = [[NSMutableAttributedString alloc] initWithString:strMoney];
     [str addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"#fe6424"] range:NSMakeRange(0, str.length - 1)];

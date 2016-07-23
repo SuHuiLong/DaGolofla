@@ -44,6 +44,7 @@
 
 @property (strong, nonatomic) NSNumber* userKey;
 
+@property (strong, nonatomic) NSString* cardName;
 
 
 @end

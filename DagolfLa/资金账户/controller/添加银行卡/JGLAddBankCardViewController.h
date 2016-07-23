@@ -10,6 +10,7 @@
 
 @interface JGLAddBankCardViewController : ViewController
 
+@property (nonatomic, copy) NSString *realName;
 
 @property (copy, nonatomic) void (^refreshBlock)();
 

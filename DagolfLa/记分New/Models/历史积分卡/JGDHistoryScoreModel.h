@@ -16,6 +16,6 @@
 @property (nonatomic, strong) NSNumber *poleNumber;
 @property (nonatomic, strong) NSNumber *timeKey;
 @property (nonatomic, strong) NSNumber *srcType; // 1 是活动记分     0 是个人
-
+@property (nonatomic, strong) NSNumber *scoreFinish; // 0 是未完成
 
 @end
