@@ -12,7 +12,7 @@
 
 
 @property (copy, nonatomic) void (^blockFriendDict)(NSMutableDictionary *);
-@property (copy, nonatomic) NSMutableDictionary* dictFinish;
+@property (strong, nonatomic) NSMutableDictionary* dictFinish;
 
 @property (assign, nonatomic) NSInteger lastIndex;
 

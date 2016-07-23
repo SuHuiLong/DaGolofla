@@ -13,7 +13,6 @@
 #import "JGLChooseScoreViewController.h"
 #import "BallParkViewController.h"
 #import "DateTimeViewController.h"
-#import "JGLAddPlayerViewController.h"
 
 #import "JGLChooseBallTableViewCell.h"
 #import "ScoreTableViewCell.h"
@@ -22,6 +21,8 @@
 #import "JGLChangePlayerTableViewCell.h"
 
 #import "JGLTeeChooseView.h"//tee台视图
+
+#import "JGLBarCodeViewController.h"
 
 #define HEADER_BUTTON1_TAG 100
 #define HEADER_BUTTON2_TAG 1000
@@ -36,8 +37,10 @@
     JGLTeeChooseView* _chooseView;//tee台视图
     BOOL _isTee;//是否选择了Tee台
     NSString* _strTee;//用来记录选择的Tee台
+    NSMutableDictionary* _teeDictChoose;//记录选择的t台存放数组
     
     NSMutableDictionary *_dictPeo;
+    NSString* _strHole1,* _strHole2;//九洞
 
 }
 @property (strong, nonatomic) UITableView* tableView;
@@ -50,7 +53,8 @@
     
     self.title = @"记分";
     _dataBallArray = [[NSMutableArray alloc]init];
-    _dictPeo = [[NSMutableDictionary alloc]init];
+    _dictPeo       = [[NSMutableDictionary alloc]init];
+    _teeDictChoose = [[NSMutableDictionary alloc]init];
     _isTee = NO;
     
     
@@ -75,28 +79,70 @@
 }
 #pragma mark -- 开始记分
 - (void)professionalScore:(UIButton *)btn{
+    
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    [dict setObject:@"244" forKey:@"userKey"];
-    [dict setObject:@"12" forKey:@"ballKey"];
-    [dict setObject:DEFAULF_USERID forKey:@"srcKey"];
-    [dict setObject:@(0) forKey:@"srcType"];
-    [dict setObject:@"A区" forKey:@"region1"];
-    [dict setObject:@"B区" forKey:@"region2"];
-    [dict setObject:@"2016-07-20 12:30:40" forKey:@"createTime"];
+    [dict setObject:DEFAULF_USERID forKey:@"userKey"];
+    [dict setObject:[NSNumber numberWithInteger:_ballId] forKey:@"ballKey"];
+    [dict setObject:@0 forKey:@"srcKey"];//
+    [dict setObject:@(0) forKey:@"srcType"];//活动传1，罗开创说的
+    if (![Helper isBlankString:_strHole1]) {
+        [dict setObject:_strHole1 forKey:@"region1"];
+    }
+    else{
+        [[ShowHUD showHUD]showToastWithText:@"请选择第一九洞" FromView:self.view];
+    }
+    if (![Helper isBlankString:_strHole2]) {
+        [dict setObject:_strHole2 forKey:@"region2"];
+    }
+    else{
+        [[ShowHUD showHUD]showToastWithText:@"请选择第二九洞" FromView:self.view];
+    }
+//    if (![Helper isBlankString:_strDateBegin]) {
+//        [dict setObject:[NSString stringWithFormat:@"%@ 00:00:00",_strDateBegin] forKey:@"createTime"];
+//    }
+//    else{
+//        [[ShowHUD showHUD]showToastWithText:@"请选择打球时间" FromView:self.view];
+//    }
+    
+    
     
     NSMutableArray *userArray = [NSMutableArray array];
-    for (int i=0; i<3; i++) {
-        NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-        [dict setObject:@"白T" forKey:@"tTaiwan"];// T台
-        [dict setObject:[NSString stringWithFormat:@"%d", 244 + i] forKey:@"userKey"];//用户Key
-        [dict setObject:[NSString stringWithFormat:@"dsd%d", i] forKey:@"userName"];// 用户名称
-        [dict setObject:[NSString stringWithFormat:@"1872111036%d", i] forKey:@"userMobile"];// 手机号
-        [userArray addObject:dict];
+    for (int i=0; i<_teeDictChoose.count; i++) {
+        NSMutableDictionary *dict1 = [NSMutableDictionary dictionary];
+        if (i == 0) {
+            if (![Helper isBlankString:[_teeDictChoose allValues][i]]) {
+                [dict1 setObject:[_teeDictChoose allValues][i] forKey:@"tTaiwan"];// T台
+            }
+            else{
+                [[ShowHUD showHUD]showToastWithText:@"请选择Tee台" FromView:self.view];
+                return;
+            }
+            [dict1 setObject:DEFAULF_USERID forKey:@"userKey"];//用户Key
+            
+            
+            [dict1 setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"userName"] forKey:@"userName"];// 用户名称
+            [dict1 setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"mobile"] forKey:@"userMobile"];// 手机号
+        }
+        else{
+            if (![Helper isBlankString:[_teeDictChoose allValues][i]]) {
+                [dict1 setObject:[_teeDictChoose allValues][i] forKey:@"tTaiwan"];// T台
+            }
+            else{
+                [[ShowHUD showHUD]showToastWithText:@"请选择Tee台" FromView:self.view];
+                return;
+            }
+            
+//            [dict1 setObject:_userKeyArr[i-1] forKey:@"userKey"];//用户Key
+            [dict1 setObject:[_dictPeo allValues][i-1] forKey:@"userName"];// 用户名称
+            [dict1 setObject:[_dictPeo allKeys][i -1] forKey:@"userMobile"];// 手机号
+        }
+        [userArray addObject:dict1];
     }
-
+    
     [dict setObject:userArray forKey:@"userList"];
-//    [dict setObject:DEFAULF_USERID forKey:@"md5"];
-    [[JsonHttp jsonHttp]httpRequest:@"score/createScore" JsonKey:nil withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
+    //    [dict setObject:DEFAULF_USERID forKey:@"md5"];
+    [dict setObject:@"2012-12-12 00:00:00" forKey:@"createTime"];
+    [[JsonHttp jsonHttp]httpRequestWithMD5:@"score/createScore" JsonKey:nil withData:dict failedBlock:^(id errType) {
         
     } completionBlock:^(id data) {
         NSLog(@"%@", data);
@@ -110,6 +156,7 @@
             }
         }
     }];
+
 }
 
 -(void)uiConfig
@@ -415,7 +462,7 @@
         
         UILabel* label = (UILabel *)[self.view viewWithTag:1234+section];
         label.text = [NSString stringWithFormat:@"%@",_dataBallArray[indexPath.section-1][indexPath.row]];
-//        _strSite0 = _dataBallArray[indexPath.section][indexPath.row];
+        _strHole1 = _dataBallArray[indexPath.section-1][indexPath.row];
         
     }
     
@@ -445,7 +492,7 @@
         //    [_tableView reloadRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
         UILabel* label = (UILabel *)[self.view viewWithTag:1234+section];
         label.text = [NSString stringWithFormat:@"%@",_dataBallArray[indexPath.section-1][indexPath.row]];
-//        _strSite1 = _dataBallArray[indexPath.section][indexPath.row];
+        _strHole2 = _dataBallArray[indexPath.section-1][indexPath.row];
         
     }
     else if (indexPath.section == 3)
@@ -458,9 +505,8 @@
         dateVc.typeIndex = @1;
         [dateVc setCallback:^(NSString *dateStr, NSString *dateWeek, NSString *str) {
             _strDateBegin = dateStr;
-            NSIndexPath *indexPath_1=[NSIndexPath indexPathForRow:indexPath.row inSection:3];
-            NSArray *indexArray=[NSArray arrayWithObject:indexPath_1];
-            [_tableView reloadRowsAtIndexPaths:indexArray withRowAnimation:UITableViewRowAnimationAutomatic];
+            NSIndexSet *indexSet = [NSIndexSet indexSetWithIndex:3];
+            [_tableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationNone];
         }];
         [self.navigationController pushViewController:dateVc animated:YES];
     }
@@ -474,6 +520,8 @@
                     [tableView addSubview:_chooseView];
                     _chooseView.blockTeeName = ^(NSString *strT){
                         _strTee = strT;
+                        NSLog(@"%td",indexPath.row);
+                        [_teeDictChoose setObject:_strTee forKey:[NSString stringWithFormat:@"%td",indexPath.row - 1]];
                         [_chooseView removeFromSuperview];
                         _isTee = NO;
                         NSIndexPath *indexPath_1=[NSIndexPath indexPathForRow:indexPath.row inSection:4];
@@ -490,7 +538,6 @@
             else{
                 [[ShowHUD showHUD]showToastWithText:@"请先选择球场" FromView:self.view];
             }
-            
             
         }
         else{
@@ -514,6 +561,7 @@
                         [tableView addSubview:_chooseView];
                         _chooseView.blockTeeName = ^(NSString *strT){
                             _strTee = strT;
+                            [_teeDictChoose setObject:_strTee forKey:[NSString stringWithFormat:@"%td",indexPath.row - 1]];
                             [_chooseView removeFromSuperview];
                             _isTee = NO;
                             NSIndexPath *indexPath_1=[NSIndexPath indexPathForRow:indexPath.row inSection:4];

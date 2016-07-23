@@ -246,26 +246,14 @@
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-//    JGLAddressAddTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"JGLAddressAddTableViewCell" forIndexPath:indexPath];
-//    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-//    cell.labelName.text = [addressBookTemp[indexPath.section] userName];
-//    
-//    cell.labelMobile.text = [addressBookTemp[indexPath.section] mobile];
-//    
-//    if (_listArray.count != 0) {
-//        //        [cell showData:_listArray[indexPath.section][indexPath.row] andPower:@"1002,1003"];
-//    }
-//       return cell;
-    
-    
-    
+
     JGLAddressAddTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"JGLAddressAddTableViewCell" forIndexPath:indexPath];
     
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.labelName.text = [self.listArray[indexPath.section][indexPath.row] userName];
     
     cell.labelMobile.text = [self.listArray[indexPath.section][indexPath.row] mobile];
-    NSString *str=[_dictFinish objectForKey:[NSNumber numberWithInteger:[self.listArray[indexPath.section][indexPath.row] recordID]]];
+    NSString *str=[_dictFinish objectForKey:[self.listArray[indexPath.section][indexPath.row] mobile]];
     
     if ([Helper isBlankString:str]==NO) {
         cell.imgvState.image=[UIImage imageNamed:@"gou_x"];
@@ -284,11 +272,11 @@
     if (_dictFinish.count < _lastIndex) {
         NSString *str=[_dictFinish objectForKey:[NSNumber numberWithInteger:[self.listArray[indexPath.section][indexPath.row] recordID]]];
         if ([Helper isBlankString:str]==YES) {
-            
-            [_dictFinish setObject:[self.listArray[indexPath.section][indexPath.row] userName] forKey:[NSNumber numberWithInteger:[self.listArray[indexPath.section][indexPath.row] recordID]]];
+            NSLog(@"%td   %td",indexPath.section,indexPath.row);
+            [_dictFinish setObject:[self.listArray[indexPath.section][indexPath.row] userName] forKey:[self.listArray[indexPath.section][indexPath.row] mobile]];
             
         }else{
-            [_dictFinish removeObjectForKey:[NSNumber numberWithInteger:[self.listArray[indexPath.section][indexPath.row] recordID]]];
+            [_dictFinish removeObjectForKey:[self.listArray[indexPath.section][indexPath.row] mobile]];
         }
         
         NSIndexPath *indexPath_1=[NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section];
