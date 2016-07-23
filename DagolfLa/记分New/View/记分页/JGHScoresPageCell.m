@@ -19,31 +19,24 @@
     
     self.totalPole.font = [UIFont systemFontOfSize:17*ProportionAdapter];
     
-    self.totalPoleValue.font = [UIFont systemFontOfSize:24*ProportionAdapter];
+    self.totalPoleValue.font = [UIFont systemFontOfSize:27*ProportionAdapter];
     
     self.rodTop.constant = 23*ProportionAdapter;
     self.rodtoTotalPoleTop.constant = -4*ProportionAdapter;
     
     self.userNameLeft.constant = 20*ProportionAdapter;
     self.userNameDown.constant = 23*ProportionAdapter;
-//    self.upperTrackDown.constant = 8*ProportionAdapter;
     
     NSLayoutConstraint *addScoresConstraint = [NSLayoutConstraint constraintWithItem:self.addScoresBtn attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationGreaterThanOrEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:50*ProportionAdapter];
-
+    
     NSArray *addScoreArray = [NSArray arrayWithObjects:addScoresConstraint, nil];
     [self addConstraints: addScoreArray];
     
     self.onballRight.constant = 8*ProportionAdapter;
-//    [self.upperTrackBtn.layer setBorderColor:[UIColor redColor].CGColor];
-//    [self.upperTrackBtn.layer setBorderWidth:1];
-//    [self.upperTrackBtn.layer setMasksToBounds:YES];
     
     self.upperTrackNoBtn.titleLabel.font = [UIFont systemFontOfSize:15*ProportionAdapter];
-//    [self.upperTrackNoBtn.layer setBorderColor:[UIColor redColor].CGColor];
-//    [self.upperTrackNoBtn.layer setBorderWidth:1];
-//    [self.upperTrackNoBtn.layer setMasksToBounds:YES];
     
-    self.poleValue.font = [UIFont systemFontOfSize:21*ProportionAdapter];
+    
     self.pushPoleValueRight.constant = 21*ProportionAdapter;
     self.poleTop.constant = 2*ProportionAdapter;
     
@@ -77,15 +70,45 @@
 
 #pragma mark -- -
 - (IBAction)reduntionScoresBtnClicK:(UIButton *)sender {
+    if (sender.tag == 50) {
+        [self.self.reduntionScoresBtn setImage:[UIImage imageNamed:@"reductionScoresPress"] forState:UIControlStateNormal];
+        [self performSelector:@selector(updateReduntionScoresBtnImage) withObject:self afterDelay:0.7];
+    }else{
+        [self.downReduntionScoresBtn setImage:[UIImage imageNamed:@"reductionScoresPress"] forState:UIControlStateNormal];
+        [self performSelector:@selector(updateDownReduntionScoresBtnImage) withObject:self afterDelay:0.7];
+    }
+
     if (self.delegate) {
         [self.delegate selectReduntionScoresBtnClicK:sender andCellTage:self.tag];
     }
 }
 #pragma mark -- +
 - (IBAction)addScoresBtnClick:(UIButton *)sender {
+    if (sender.tag == 60) {
+        [self.addScoresBtn setImage:[UIImage imageNamed:@"addScoresPress"] forState:UIControlStateNormal];
+        [self performSelector:@selector(updateAddScoresBtnImage) withObject:self afterDelay:0.7];
+    }else{
+        [self.downAddScoresBtn setImage:[UIImage imageNamed:@"addScoresPress"] forState:UIControlStateNormal];
+        [self performSelector:@selector(updateDownAddScoresBtnImage) withObject:self afterDelay:0.7];
+    }
+    
     if (self.delegate) {
         [self.delegate selectAddScoresBtnClick:sender andCellTage:self.tag];
     }    
+}
+#pragma mark -- 更换图片背景  + 上
+- (void)updateAddScoresBtnImage{
+    [self.addScoresBtn setImage:[UIImage imageNamed:@"addScores"] forState:UIControlStateNormal];
+}
+- (void)updateDownAddScoresBtnImage{
+    [self.downAddScoresBtn setImage:[UIImage imageNamed:@"addScores"] forState:UIControlStateNormal];
+}
+#pragma mark -- 更换图片背景  - 上
+- (void)updateReduntionScoresBtnImage{
+    [self.self.reduntionScoresBtn setImage:[UIImage imageNamed:@"reductionScores"] forState:UIControlStateNormal];
+}
+- (void)updateDownReduntionScoresBtnImage{
+    [self.downReduntionScoresBtn setImage:[UIImage imageNamed:@"reductionScores"] forState:UIControlStateNormal];
 }
 
 - (void)configJGHScoreListModel:(JGHScoreListModel *)model andIndex:(NSInteger)index{
@@ -94,7 +117,10 @@
     for (int i=0; i<model.poleNumber.count; i++) {
         NSInteger pole = [[model.poleNumber objectAtIndex:i] integerValue];
         NSLog(@"pole == %td", pole);
-        poleCount += pole;
+        if (pole != -1) {
+            poleCount += pole;
+        }
+        
         NSLog(@"poleCount == %td", poleCount);
     }
     self.totalPoleValue.text = [NSString stringWithFormat:@"%td", poleCount];
@@ -103,14 +129,33 @@
     for (int i=0; i<model.pushrod.count; i++) {
         NSInteger pole = [[model.pushrod objectAtIndex:i] integerValue];
         NSLog(@"pole == %td", pole);
-        totalPoleCount += pole;
+        if (pole != -1) {
+            totalPoleCount += pole;
+        }
+        
         NSLog(@"totalPoleCount == %td", totalPoleCount);
     }
     self.totalPushValue.text = [NSString stringWithFormat:@"%td", totalPoleCount];
     
-    self.poleValue.text = [NSString stringWithFormat:@"%@", [model.poleNumber objectAtIndex:index]];
+    if ([[model.poleNumber objectAtIndex:index] integerValue] == -1) {
+        self.poleValue.text = [NSString stringWithFormat:@"%@", [model.standardlever objectAtIndex:index]];
+        self.poleValue.font = [UIFont systemFontOfSize:20*ProportionAdapter];
+        self.poleValue.textColor = [UIColor lightGrayColor];
+    }else{
+        self.poleValue.text = [NSString stringWithFormat:@"%@", [model.poleNumber objectAtIndex:index]];
+        self.poleValue.font = [UIFont systemFontOfSize:25*ProportionAdapter];
+        self.poleValue.textColor = [UIColor blackColor];
+    }
     
-    self.pushPoleValue.text = [NSString stringWithFormat:@"%@", [model.pushrod objectAtIndex:index]];
+    if ([[model.pushrod objectAtIndex:index] integerValue] == -1) {
+        self.pushPoleValue.text = @"2";
+        self.pushPoleValue.font = [UIFont systemFontOfSize:20*ProportionAdapter];
+        self.pushPoleValue.textColor = [UIColor lightGrayColor];
+    }else{
+        self.pushPoleValue.text = [NSString stringWithFormat:@"%@", [model.pushrod objectAtIndex:index]];
+        self.pushPoleValue.font = [UIFont systemFontOfSize:25*ProportionAdapter];
+        self.pushPoleValue.textColor = [UIColor blackColor];
+    }
     
     self.userName.text = model.userName;
     

@@ -232,7 +232,7 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (_dictFinish.count < 3) {
+    if (_dictFinish.count < _lastIndex) {
         NSString *str=[_dictFinish objectForKey:[self.listArray[indexPath.section][indexPath.row] otherUserId]];
         if ([Helper isBlankString:str]==YES) {
             
@@ -249,6 +249,19 @@
     else{
         [[ShowHUD showHUD]showToastWithText:@"您最多只能选择3个人" FromView:self.view];
     }
+    
+    
+    /**
+     * 
+     NSString *str=[_dictFinish objectForKey:[NSString stringWithFormat:@"%td%td",indexPath.section,indexPath.row]];
+     if ([Helper isBlankString:str]==YES) {
+     [_dictFinish setObject:[self.listArray[indexPath.section][indexPath.row] userName] forKey:[NSString stringWithFormat:@"%td%td",indexPath.section,indexPath.row]];
+     
+     }else{
+     [_dictFinish removeObjectForKey:[NSString stringWithFormat:@"%td%td",indexPath.section,indexPath.row]];
+     }
+     [_tableView reloadData];
+     */
 }
 
 

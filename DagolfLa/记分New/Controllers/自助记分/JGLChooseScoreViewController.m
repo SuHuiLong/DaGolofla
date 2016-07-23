@@ -10,6 +10,8 @@
 #import "UITool.h"
 #import "JGLChoosesScoreTableViewCell.h"
 #import "JGLChooseScoreModel.h"
+#import "JGLSelfScoreViewController.h"//普通记分
+#import "JGLActiveScoreViewController.h"//活动记分
 @interface JGLChooseScoreViewController ()<UITableViewDelegate,UITableViewDataSource>
 {
     UITableView* _tableView;
@@ -35,17 +37,25 @@
 
 -(void)createBtn
 {
+    UIView* view = [[UIView alloc]initWithFrame:CGRectMake(0, screenHeight - 54*ScreenWidth/375 - 64, ScreenWidth, 54*ScreenWidth/375)];
+    [self.view addSubview:view];
+    view.backgroundColor = [UITool colorWithHexString:@"eeeeee" alpha:1];
+    
     UIButton* btn = [UIButton buttonWithType:UIButtonTypeCustom];
     btn.backgroundColor = [UIColor orangeColor];
-    [btn setTitle:@"完成" forState:UIControlStateNormal];
+    [btn setTitle:@"普通记分" forState:UIControlStateNormal];
     [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     btn.layer.masksToBounds = YES;
     btn.layer.cornerRadius = 8*ScreenWidth/375;
-    btn.frame = CGRectMake(10*ScreenWidth/375, screenHeight - 54*ScreenWidth/375 - 64, ScreenWidth-20*ScreenWidth/375, 44*ScreenWidth/375);
-    [self.view addSubview:btn];
-//    [btn addTarget:self action:@selector(finishClick) forControlEvents:UIControlEventTouchUpInside];
+    btn.frame = CGRectMake(10*ScreenWidth/375, 0, ScreenWidth-20*ScreenWidth/375, 44*ScreenWidth/375);
+    [view addSubview:btn];
+    [btn addTarget:self action:@selector(selfScoreClick) forControlEvents:UIControlEventTouchUpInside];
 }
-
+-(void)selfScoreClick
+{
+    JGLSelfScoreViewController* selfVc = [[JGLSelfScoreViewController alloc]init];
+    [self.navigationController pushViewController:selfVc animated:YES];
+}
 -(void)createHeader
 {
     _viewHeader = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 80 * screenWidth / 375)];
@@ -70,7 +80,7 @@
     [_tableView registerClass:[JGLChoosesScoreTableViewCell class] forCellReuseIdentifier:@"JGLChoosesScoreTableViewCell"];
     
     _tableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
-    _tableView.footer=[MJDIYBackFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRereshing)];
+//    _tableView.footer=[MJDIYBackFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRereshing)];
     [_tableView.header beginRefreshing];
 
 }
@@ -84,9 +94,10 @@
     [[JsonHttp jsonHttp]httpRequest:@"score/getUserLatelyActivity" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
         if (isReshing) {
             [_tableView.header endRefreshing];
-        }else {
-            [_tableView.footer endRefreshing];
         }
+//        else {
+//            [_tableView.footer endRefreshing];
+//        }
     } completionBlock:^(id data) {
         if ([[data objectForKey:@"packSuccess"] boolValue]) {
             if (page == 0)
@@ -96,7 +107,7 @@
             }
             //数据解析
             //            self.TeamArray = [data objectForKey:@"teamList"];
-            for (NSDictionary *dataDic in [data objectForKey:@"teamList"]) {
+            for (NSDictionary *dataDic in [data objectForKey:@"activityList"]) {
                 JGLChooseScoreModel *model = [[JGLChooseScoreModel alloc] init];
                 [model setValuesForKeysWithDictionary:dataDic];
                 [_dataArray addObject:model];
@@ -112,9 +123,10 @@
         [_tableView reloadData];
         if (isReshing) {
             [_tableView.header endRefreshing];
-        }else {
-            [_tableView.footer endRefreshing];
         }
+//        else {
+//            [_tableView.footer endRefreshing];
+//        }
     }];
 }
 
@@ -125,10 +137,10 @@
     [self downLoadData:_page isReshing:YES];
 }
 
-- (void)footRereshing
-{
-    [self downLoadData:_page isReshing:NO];
-}
+//- (void)footRereshing
+//{
+//    [self downLoadData:_page isReshing:NO];
+//}
 
 
 
@@ -147,11 +159,6 @@
     return cell;
 }
 
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    
-}
-
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     return 10* screenWidth / 375;
 }
@@ -159,6 +166,12 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     
     return 93 * screenWidth / 375;
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    JGLActiveScoreViewController* actVc = [[JGLActiveScoreViewController alloc]init];
+    actVc.model = _dataArray[indexPath.section];
+    [self.navigationController pushViewController:actVc animated:YES];
 }
 
 /*

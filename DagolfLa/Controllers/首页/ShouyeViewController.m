@@ -29,8 +29,6 @@
 
 #import "JGLPushDetailsViewController.h"
 
-#import "JGHScoresViewController.h"
-
 @interface ShouyeViewController ()<UIApplicationDelegate,CLLocationManagerDelegate>
 {
 //    UITableView *_tableView;
@@ -352,7 +350,7 @@
             case 1003:
             {
                 NSLog(@"jiaolian");
-                //JGHScoresViewController   TeacherViewController
+                //JGHEndScoresViewController   TeacherViewController
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
                 TeacherViewController* teaVc = [[TeacherViewController alloc]init];
                 [self.navigationController pushViewController:teaVc animated:YES];
@@ -378,7 +376,9 @@
             {
                 NSLog(@"qiuchan");
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
+                //StadiumViewController
                 StadiumViewController* staVC = [[StadiumViewController alloc]init];
+                staVC.scorekey = 0;
                 [self.navigationController pushViewController:staVC animated:YES];
                 
             }

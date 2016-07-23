@@ -13,6 +13,6 @@
 @property (nonatomic, strong)NSMutableArray *dataArray;
 
 
-- (void)getScoreList:(NSString *)scorKey;
+- (void)reloadScoreList;
 
 @end

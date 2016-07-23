@@ -356,16 +356,7 @@
                         
                     }
                 }];
-                
-                
-                
-                
-                
-                [[PostDataRequest sharedInstance] postDataRequest:@"ball/getBallCode.do" parameter:@{@"ballId":@([[_dataArray[indexPath.row] ballId] integerValue])} success:^(id respondsData) {
-                    NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:respondsData options:NSJSONReadingMutableContainers error:nil];
-                                    } failed:^(NSError *error) {
-                    
-                }];
+            
                 
             }
         }

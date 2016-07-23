@@ -41,5 +41,8 @@
 // 是否上球道
 @property (nonatomic, strong)NSArray *onthefairway;
 
+// timeKey
+@property (nonatomic, strong)NSNumber *timeKey;
+
 
 @end

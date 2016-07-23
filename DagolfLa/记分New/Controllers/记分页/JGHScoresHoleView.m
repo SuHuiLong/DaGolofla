@@ -15,6 +15,7 @@ static NSString *const JGHScoresHoleCellIdentifier = @"JGHScoresHoleCell";
 @interface JGHScoresHoleView ()<UITableViewDelegate, UITableViewDataSource, JGHScoresHoleCellDelegate>
 {
     NSArray *_titleArray;
+    NSArray *_colorArray;
 }
 
 @property (nonatomic, strong)UITableView *scoreTableView;
@@ -23,11 +24,13 @@ static NSString *const JGHScoresHoleCellIdentifier = @"JGHScoresHoleCell";
 
 @implementation JGHScoresHoleView
 
+
 - (instancetype)init{
     if (self == [super init]) {
         self.backgroundColor = [UIColor colorWithHexString:BG_color];
         _titleArray = @[@[@"1", @"2", @"3", @"4", @"5", @"6", @"7", @"8", @"9"], @[@"10", @"11", @"12", @"13", @"14", @"15", @"16", @"17", @"18"]];
-        self.scoreTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight - 200) style:UITableViewStylePlain];
+        _colorArray = @[@"#FFFFFF", @"#EEEEEE", @"#FFFFFF", @"#F9F9F9", @"#FFFFFF", @"#F9F9F9"];
+        self.scoreTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, (194+60)*ProportionAdapter) style:UITableViewStylePlain];
         self.scoreTableView.backgroundColor = [UIColor colorWithHexString:BG_color];
         self.scoreTableView.delegate = self;
         self.scoreTableView.dataSource = self;
@@ -36,30 +39,12 @@ static NSString *const JGHScoresHoleCellIdentifier = @"JGHScoresHoleCell";
         
         self.scoreTableView.separatorStyle = UITableViewCellSelectionStyleNone;
         [self addSubview:self.scoreTableView];
-        
-//        [self getScoreList];
     }
     return self;
 }
 
-#pragma mark -- getScoreList 获取活动计分列表
-- (void)getScoreList:(NSString *)scorKey{
-    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    [dict setObject:DEFAULF_USERID forKey:@"userKey"];
-    [dict setObject:scorKey forKey:@"scoreKey"];
-    [dict setObject:[JGReturnMD5Str getScoreListUserKey:[DEFAULF_USERID integerValue] andScoreKey:[scorKey integerValue]] forKey:@"md5"];
-    [[JsonHttp jsonHttp]httpRequest:@"score/getScoreList" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
-        
-    } completionBlock:^(id data) {
-        NSLog(@"%@", data);
-        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
-            
-        }else{
-            if ([data objectForKey:@"packResultMsg"]) {
-                [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:(UIView *)self];
-            }
-        }
-    }];
+- (void)reloadScoreList{
+    self.scoreTableView.frame = CGRectMake(0, 0, screenWidth, (194 + self.dataArray.count * 60)*ProportionAdapter);
 }
 #pragma mark -- tableView代理
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
@@ -79,7 +64,7 @@ static NSString *const JGHScoresHoleCellIdentifier = @"JGHScoresHoleCell";
     scoresPageCell.delegate = self;
     scoresPageCell.tag = indexPath.section*10 + indexPath.row*100;
     scoresPageCell.selectionStyle = UITableViewCellSelectionStyleNone;
-    [scoresPageCell configAllViewBgColor:@"#FFFFFF"];
+    [scoresPageCell configAllViewBgColor:_colorArray[indexPath.row]];
     JGHScoreListModel *model = [[JGHScoreListModel alloc]init];
     
     if (indexPath.section == 0) {
@@ -105,8 +90,6 @@ static NSString *const JGHScoresHoleCellIdentifier = @"JGHScoresHoleCell";
         }
     }
     
-    
-    
     return scoresPageCell;
 }
 
@@ -119,7 +102,7 @@ static NSString *const JGHScoresHoleCellIdentifier = @"JGHScoresHoleCell";
     view.backgroundColor = [UIColor colorWithHexString:BG_color];
     UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(5*ProportionAdapter, 4*ProportionAdapter, screenWidth -5*ProportionAdapter, view.frame.size.height - 8*ProportionAdapter)];
     titleLabel.text = [NSString stringWithFormat:@"第%@九洞", (section == 0)? @"一":@"二"];
-//    titleLabel.backgroundColor = [UIColor redColor];
+    //    titleLabel.backgroundColor = [UIColor redColor];
     [view addSubview:titleLabel];
     return view;
 }
@@ -143,11 +126,11 @@ static NSString *const JGHScoresHoleCellIdentifier = @"JGHScoresHoleCell";
 }
 
 /*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect {
-    // Drawing code
-}
-*/
+ // Only override drawRect: if you perform custom drawing.
+ // An empty implementation adversely affects performance during animation.
+ - (void)drawRect:(CGRect)rect {
+ // Drawing code
+ }
+ */
 
 @end

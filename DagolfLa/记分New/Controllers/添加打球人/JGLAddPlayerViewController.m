@@ -12,11 +12,14 @@
 #import "JGLFriendAddViewController.h"
 #import "JGLAddressAddViewController.h"
 #import "UITool.h"
+#import "JGLBarCodeViewController.h"
 @interface JGLAddPlayerViewController ()<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate>
 {
     UITableView* _tableView;
     UIView* _viewHeader;
     
+    NSMutableDictionary* _peoAddress;//通讯录返回数据
+    NSMutableDictionary* _peoFriend; //球友列表返回数据
     
     BOOL _isClick;
 }
@@ -36,11 +39,10 @@
     UIView* view = [[UIView alloc]initWithFrame:CGRectMake(1, 1, 1, 1)];
     [self.view addSubview:view];
     
-    
-    if (_dictFin.count == 0) {
-        _dictFin    = [[NSMutableDictionary alloc]init];
-        _dictPeople = [[NSMutableDictionary alloc]init];
-    }
+    _dictFin    = [[NSMutableDictionary alloc]init];
+    _dictPeople = [[NSMutableDictionary alloc]init];
+    _peoAddress = [[NSMutableDictionary alloc]init];
+    _peoFriend  = [[NSMutableDictionary alloc]init];
     
     [self uiConfig];
     [self createHeader];
@@ -96,25 +98,42 @@
         JGLAddressAddViewController* addVc = [[JGLAddressAddViewController alloc]init];
         //选择好的通讯录成员
         addVc.blockAddressPeople = ^(NSMutableDictionary* dict){
+            _peoAddress = dict;
             [_dictPeople addEntriesFromDictionary:dict];
             [_tableView reloadData];
         };
-        addVc.dictFinish = _dictFin;
+        addVc.dictFinish = _peoAddress;
+        if (_dictPeople.count != 0) {
+            addVc.lastIndex = 3 - _peoFriend.count - _peoAddress.count;
+
+        }
+        else{
+            addVc.lastIndex = 3;
+        }
         _isClick = NO;
         [self.navigationController pushViewController:addVc animated:YES];
     }
     else if (btn.tag == 101)
     {
-        
+        JGLBarCodeViewController* barVc = [[JGLBarCodeViewController alloc]init];
+        [self.navigationController pushViewController:barVc animated:YES];
     }
     else{
         JGLFriendAddViewController* fVc = [[JGLFriendAddViewController alloc]init];
-        //选择好的通讯录成员
+        //选择好的好友成员
         fVc.blockFriendDict = ^(NSMutableDictionary* dict){
+            _peoFriend = dict;
             [_dictPeople addEntriesFromDictionary:dict];
             [_tableView reloadData];
         };
-        fVc.dictFinish = _dictFin;
+        fVc.dictFinish = _peoFriend;
+        if (_dictPeople.count != 0) {
+            fVc.lastIndex = 3 - _peoFriend.count - _peoAddress.count;
+        }
+        else{
+            fVc.lastIndex = 3;
+        }
+        
         _isClick = NO;
         [self.navigationController pushViewController:fVc animated:YES];
     }
@@ -142,6 +161,8 @@
     [self.view addSubview:_tableView];
     [_tableView registerClass:[JGLAddPlayerTableViewCell class] forCellReuseIdentifier:@"JGLAddPlayerTableViewCell"];
     [_tableView registerClass:[JGLPlayerNumberTableViewCell class] forCellReuseIdentifier:@"JGLPlayerNumberTableViewCell"];
+    
+    
 }
 
 
@@ -231,16 +252,50 @@
 //        if (indexPath.row > 0) {
 //            
 //            if ([_dictFin allValues].count < 4) {
-//                if (indexPath.row-2 < [_dictFin allValues].count) {
+//                if (indexPath.row-2 < [_dictPeople allValues].count) {
+//                    NSLog(@"%td",indexPath.row);
 //                    NSLog(@"%@    %@",[_dictFin allKeys][indexPath.row-2],[_dictPeople allKeys][indexPath.row-2]);
-//                    [_dictFin removeObjectForKey:[_dictFin allKeys][indexPath.row-2]];
+////                    [_dictFin removeObjectForKey:[_dictFin allKeys][indexPath.row-2]];
 //                    [_dictPeople removeObjectForKey:[_dictPeople allKeys][indexPath.row-2]];
 //                    [_tableView reloadData];
 //                    _isClick = YES;
 //                }
 //            }
-//            
-//            
+//        }
+//    }
+    
+    
+    
+//            if (indexPath.row - 2 < _dictPeople.count) {
+//                bool isChange1 = false;
+//                for (int i = 0; i < _dictPeople.count; i ++) {
+//                    if (isChange1 == YES) {
+//                        continue;
+//                    }
+////                    if ([[_dictPeople objectForKey:_dataKey[i]] isEqualToString:_dataPeoArr[indexPath.row-1]] == YES) {
+////                        NSLog(@"%@",[_dictPeople allValues][i]);
+////                        [_dictPeople removeObjectForKey:_dataKey[i]];
+////                        [_dataKey removeObjectAtIndex:indexPath.row-1];
+////                        [_userKey removeObjectAtIndex:indexPath.row-1];
+////                        [_mobileArr removeObjectAtIndex:indexPath.row - 1];
+////                        [_dataPeoArr removeObjectAtIndex:indexPath.row-1];
+////                        isChange1 = YES;
+////                        continue;
+////                    }
+//                    if (indexPath.row-2 < [_dictFin allValues].count) {
+//                        NSLog(@"%@    %@",[_dictFin allKeys][indexPath.row-2],[_dictPeople allKeys][indexPath.row-2]);
+//                        [_dictPeople removeObjectForKey:[_dictPeople allKeys][indexPath.row-2]];
+//                        [_tableView reloadData];
+//                        _isClick = YES;
+//                        isChange1 = YES;
+//                        continue;
+//                    }
+//                    
+//                }
+//                [_tableView reloadData];
+//                isChange1 = NO;
+//                
+//            }
 //            
 //        }
 //    }
