@@ -213,6 +213,7 @@
         
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
             //32169
+            [[ShowHUD showHUD]showToastWithText:@"放入记分成功！" FromView:self.view];
         }else{
             if ([data objectForKey:@"packResultMsg"]) {
                 [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];

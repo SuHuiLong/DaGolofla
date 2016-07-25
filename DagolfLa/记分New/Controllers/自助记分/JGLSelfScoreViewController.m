@@ -37,6 +37,7 @@
     JGLTeeChooseView* _chooseView;//tee台视图
     BOOL _isTee;//是否选择了Tee台
     NSString* _strTee;//用来记录选择的Tee台
+    NSString* _strBallLogo;//记录球场头像
     NSMutableDictionary* _teeDictChoose;//记录选择的t台存放数组
     
     NSMutableDictionary *_dictPeo;
@@ -131,17 +132,27 @@
                 [[ShowHUD showHUD]showToastWithText:@"请选择Tee台" FromView:self.view];
                 return;
             }
-            
-            [dict1 setObject:[NSString stringWithFormat:@"%td",244+i] forKey:@"userKey"];//用户Key
+            if ([[_dictPeo allKeys][i -1]count] >= 11) {
+                 [dict1 setObject:[_dictPeo allKeys][i -1] forKey:@"userKey"];//用户Key
+            }
+            else{
+                [dict1 setObject:@0 forKey:@"userKey"];//用户Key
+            }
+           
             [dict1 setObject:[_dictPeo allValues][i-1] forKey:@"userName"];// 用户名称
-            [dict1 setObject:[_dictPeo allKeys][i -1] forKey:@"userMobile"];// 手机号
+            if ([Helper testMobileIsTrue:[_dictPeo allKeys][i -1]]) {
+                [dict1 setObject:[_dictPeo allKeys][i -1] forKey:@"userMobile"];// 手机号
+            }
+            else{
+                [dict1 setObject:@"" forKey:@"userMobile"];// 手机号
+            }
         }
         [userArray addObject:dict1];
     }
     
     [dict setObject:userArray forKey:@"userList"];
     //    [dict setObject:DEFAULF_USERID forKey:@"md5"];
-    [[JsonHttp jsonHttp]httpRequestWithMD5:@"score/createScore" JsonKey:nil withData:dict failedBlock:^(id errType) {
+    [[JsonHttp jsonHttp]httpRequestHaveSpaceWithMD5:@"score/createScore" JsonKey:nil withData:dict failedBlock:^(id errType) {
         
     } completionBlock:^(id data) {
         NSLog(@"%@", data);
@@ -184,6 +195,7 @@
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         if (![Helper isBlankString:_strBall]) {
             cell.labelTitle.text = _strBall;
+            [cell.iconImg sd_setImageWithURL:[Helper imageIconUrl:_strBallLogo] placeholderImage:[UIImage imageNamed:TeamLogoImage]];
         }
         else{
             cell.labelTitle.text = @"请选择球场";
@@ -419,13 +431,13 @@
         //球场
         BallParkViewController* ballVc = [[BallParkViewController alloc]init];
         ballVc.type1=1;
-        ballVc.callback1=^(NSDictionary *dict){
+        ballVc.callback1=^(NSDictionary *dict, NSString *str){
             [_dataBallArray removeAllObjects];
             if (dict.count != 0) {
                 [_dataBallArray addObject:[dict objectForKey:@"ballAreas"]];
                 [_dataBallArray addObject:[dict objectForKey:@"ballAreas"]];
                 [_dataBallArray addObject:[dict objectForKey:@"tAll"]];
-                
+                _strBallLogo = str;
             }
             [_tableView reloadData];
         };
@@ -548,7 +560,7 @@
                     [_tableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationAutomatic];
                 };
 //                addVc.dictFin = _dictPeo;
-//                addVc.dictPeople = _dictPeo;
+                addVc.dictPeople = _dictPeo;
                 [self.navigationController pushViewController:addVc animated:YES];
 
             }

@@ -39,7 +39,6 @@
     UIView* view = [[UIView alloc]initWithFrame:CGRectMake(1, 1, 1, 1)];
     [self.view addSubview:view];
     
-    _dictFin    = [[NSMutableDictionary alloc]init];
     _dictPeople = [[NSMutableDictionary alloc]init];
     _peoAddress = [[NSMutableDictionary alloc]init];
     _peoFriend  = [[NSMutableDictionary alloc]init];
@@ -51,7 +50,7 @@
 -(void)finishAction
 {
 //    [_dictFin setObject:[[NSUserDefaults standardUserDefaults]objectForKey:@"userName"] forKey:DEFAULF_USERID];
-    _blockSurePlayer(_dictFin);
+    _blockSurePlayer(_dictPeople);
     [self.navigationController popViewControllerAnimated:YES];
     
 }
@@ -208,18 +207,9 @@
                     NSLog(@"%td",indexPath.row);
                     if ([_dictPeople allValues].count < 4) {
                         if (indexPath.row-2 < [_dictPeople allValues].count) {
-                            if (_dictFin.count != 0) {
-                                [_dictFin removeAllObjects];
-                            }
-                            else{
-                                if (_isClick == NO) {
-                                    [_dictFin addEntriesFromDictionary:_dictPeople];
-
-                                }
-                            }
                             if (_isClick == YES) {
-                                if (indexPath.row-2 < [_dictFin allValues].count) {
-                                    cell.labelName.text = [_dictFin allValues][indexPath.row - 2];
+                                if (indexPath.row-2 < [_dictPeople allValues].count) {
+                                    cell.labelName.text = [_dictPeople allValues][indexPath.row - 2];
                                 }
                                 else{
                                     cell.labelName.text = @"暂无成员，请添加";
@@ -228,6 +218,9 @@
                             else{
                                 cell.labelName.text = [_dictPeople allValues][indexPath.row - 2];
                             }
+                        }
+                        else{
+                            cell.labelName.text = @"暂无成员，请添加";
                         }
                     }
                     else{
@@ -248,21 +241,21 @@
 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-//    if (indexPath.section == 1) {
-//        if (indexPath.row > 0) {
-//            
-//            if ([_dictFin allValues].count < 4) {
-//                if (indexPath.row-2 < [_dictPeople allValues].count) {
-//                    NSLog(@"%td",indexPath.row);
-//                    NSLog(@"%@    %@",[_dictFin allKeys][indexPath.row-2],[_dictPeople allKeys][indexPath.row-2]);
-////                    [_dictFin removeObjectForKey:[_dictFin allKeys][indexPath.row-2]];
-//                    [_dictPeople removeObjectForKey:[_dictPeople allKeys][indexPath.row-2]];
-//                    [_tableView reloadData];
-//                    _isClick = YES;
-//                }
-//            }
-//        }
-//    }
+    if (indexPath.section == 1) {
+        if (indexPath.row > 0) {
+            if ([_dictPeople allValues].count < 4) {
+                if (indexPath.row-2 < [_dictPeople allValues].count) {
+                    NSLog(@"%@",[_dictPeople allKeys][indexPath.row-2]);
+
+                    [_peoAddress removeObjectForKey:[_dictPeople allKeys][indexPath.row-2]];
+                    [_peoFriend removeObjectForKey:[_dictPeople allKeys][indexPath.row-2]];
+                    [_dictPeople removeObjectForKey:[_dictPeople allKeys][indexPath.row-2]];
+                    [_tableView reloadData];
+                    _isClick = YES;
+                }
+            }
+        }
+    }
     
     
     

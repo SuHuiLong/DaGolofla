@@ -24,6 +24,9 @@
     
     MBProgressHUD* _progressHud;
     
+    UILabel *_averageScores;//平均成绩
+    UILabel *_bestResult;//最佳成绩
+    UILabel *_scoresRanking;//成绩排名
 }
 @end
 
@@ -58,7 +61,31 @@
     //统计上传栏
     [self createUpLoad];
     
-    
+    [self loadData];
+}
+#pragma mark -- 下载数据
+- (void)loadData{
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    [dict setObject:DEFAULF_USERID forKey:@"userKey"];
+    [dict setObject:[Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@dagolfla.com", DEFAULF_USERID]] forKey:@"md5"];
+    [[JsonHttp jsonHttp]httpRequest:@"score/getUserScoreStatisticsMain" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
+        
+    } completionBlock:^(id data) {
+        NSLog(@"%@", data);
+        if ([[data objectForKey:@"packSuccess"]integerValue] == 1) {
+            NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+            if ([data objectForKey:@"bean"]) {
+                dict = [data objectForKey:@"bean"];
+                _averageScores.text = [NSString stringWithFormat:@"%@", [dict objectForKey:@"avgPoles"]];
+                _bestResult.text = [NSString stringWithFormat:@"%@", [dict objectForKey:@"minPoles"]];
+                _scoresRanking.text = [NSString stringWithFormat:@"%@", [dict objectForKey:@"ranking"]];
+            }
+        }else{
+            if ([data objectForKey:@"packResultMsg"]) {
+                [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+            }
+        }
+    }];
 }
 
 -(void)createScore
@@ -68,9 +95,6 @@
     [_scrollView addSubview:_viewMain];
     _viewMain.userInteractionEnabled = YES;
     
-    
-    
-    
     UIImageView* imgv = [[UIImageView alloc]initWithFrame:CGRectMake(ScreenWidth/2-ScreenWidth/4, ScreenWidth/11, ScreenWidth/2, ScreenWidth/2)];
     imgv.backgroundColor = [UIColor whiteColor];
     [_viewMain addSubview:imgv];
@@ -78,15 +102,12 @@
     imgv.layer.cornerRadius = ScreenWidth/4;
     imgv.layer.masksToBounds = YES;
     
-    
     //圆形视图上的图片
     UIButton* btnImage = [UIButton buttonWithType:UIButtonTypeCustom];
     btnImage.frame = CGRectMake(imgv.frame.size.width/4+10*ScreenWidth/375, imgv.frame.size.width/8+20*ScreenWidth/375, imgv.frame.size.width/2-20*ScreenWidth/375, imgv.frame.size.width/2-20*ScreenWidth/375);
     [imgv addSubview:btnImage];
     btnImage.backgroundColor = [UIColor clearColor];
     [btnImage addTarget:self action:@selector(btnImgvClick) forControlEvents:UIControlEventTouchUpInside];
-    
-    
     
     //圆形视图上的按钮
     UILabel* lableTitle = [[UILabel alloc]initWithFrame:CGRectMake(imgv.frame.size.width/4, imgv.frame.size.width/2+20*ScreenWidth/375, imgv.frame.size.width/2, imgv.frame.size.width/4)];
@@ -96,20 +117,43 @@
     lableTitle.textAlignment = NSTextAlignmentCenter;
     lableTitle.font = [UIFont systemFontOfSize:23*ScreenWidth/375];
     
-    
     lableTitle.text = @"自助记分";
     [btnImage setImage:[UIImage imageNamed:@"pen"] forState:UIControlStateNormal];
-    
+
+    //平均成绩
+    _averageScores = [[UILabel alloc]initWithFrame:CGRectMake(ScreenWidth/10 -15*ScreenWidth/375, ScreenWidth/16*11, ScreenWidth/5+30*ScreenWidth/375, ScreenWidth/8)];
+    _averageScores.backgroundColor = [UIColor clearColor];
+    _averageScores.textColor = [UIColor whiteColor];
+    _averageScores.textAlignment = NSTextAlignmentCenter;
+    _averageScores.font = [UIFont systemFontOfSize:30*ScreenWidth/375];
+    _averageScores.tag = 500;
+    [_viewMain addSubview:_averageScores];
+    //最佳成绩
+    _bestResult = [[UILabel alloc]initWithFrame:CGRectMake(ScreenWidth/10+ScreenWidth/10*3-15*ScreenWidth/375, ScreenWidth/16*11, ScreenWidth/5+30*ScreenWidth/375, ScreenWidth/8)];
+    _bestResult.backgroundColor = [UIColor clearColor];
+    _bestResult.textColor = [UIColor whiteColor];
+    _bestResult.textAlignment = NSTextAlignmentCenter;
+    _bestResult.font = [UIFont systemFontOfSize:30*ScreenWidth/375];
+    _bestResult.tag = 501;
+    [_viewMain addSubview:_bestResult];
+    //成绩排名
+    _scoresRanking = [[UILabel alloc]initWithFrame:CGRectMake(ScreenWidth/10+2*ScreenWidth/10*3-15*ScreenWidth/375, ScreenWidth/16*11, ScreenWidth/5+30*ScreenWidth/375, ScreenWidth/8)];
+    _scoresRanking.backgroundColor = [UIColor clearColor];
+    _scoresRanking.textColor = [UIColor whiteColor];
+    _scoresRanking.textAlignment = NSTextAlignmentCenter;
+    _scoresRanking.font = [UIFont systemFontOfSize:30*ScreenWidth/375];
+    _scoresRanking.tag = 502;
+    [_viewMain addSubview:_scoresRanking];
     
     for (int i = 0; i < 3; i++) {
         //记分数字
-        UILabel* labelCount = [[UILabel alloc]initWithFrame:CGRectMake(ScreenWidth/10+ i*ScreenWidth/10*3-15*ScreenWidth/375, ScreenWidth/16*11, ScreenWidth/5+30*ScreenWidth/375, ScreenWidth/8)];
-        labelCount.backgroundColor = [UIColor clearColor];
-        labelCount.textColor = [UIColor whiteColor];
-        labelCount.textAlignment = NSTextAlignmentCenter;
-        labelCount.font = [UIFont systemFontOfSize:30*ScreenWidth/375];
-        labelCount.tag = 500 + i;
-        [_viewMain addSubview:labelCount];
+//        UILabel* labelCount = [[UILabel alloc]initWithFrame:CGRectMake(ScreenWidth/10+ i*ScreenWidth/10*3-15*ScreenWidth/375, ScreenWidth/16*11, ScreenWidth/5+30*ScreenWidth/375, ScreenWidth/8)];
+//        labelCount.backgroundColor = [UIColor clearColor];
+//        labelCount.textColor = [UIColor whiteColor];
+//        labelCount.textAlignment = NSTextAlignmentCenter;
+//        labelCount.font = [UIFont systemFontOfSize:30*ScreenWidth/375];
+//        labelCount.tag = 500 + i;
+//        [_viewMain addSubview:labelCount];
         
         //标题
         UILabel* labelTint = [[UILabel alloc]initWithFrame:CGRectMake(ScreenWidth/10 + i*ScreenWidth/10*3, ScreenWidth/16*11+ScreenWidth/8, ScreenWidth/5, ScreenWidth/10)];
@@ -133,12 +177,10 @@
                 break;
         }
     }
-    
 }
 
 -(void)btnImgvClick
 {
-    
     if ([[NSUserDefaults standardUserDefaults]objectForKey:@"userId"]) {
         NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
         [dict setObject:DEFAULF_USERID forKey:@"userKey"];
@@ -159,12 +201,6 @@
             }
             
         }];
-
-        
-        
-        
-        
-        
     }
     else
     {
@@ -177,7 +213,6 @@
             [self presentViewController:alertView animated:YES completion:nil];
         }];
     }
-    
 }
 
 -(void)createUpLoad

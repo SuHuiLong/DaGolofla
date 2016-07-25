@@ -232,7 +232,26 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (_dictFinish.count < _lastIndex) {
+    if (_dictFinish.count != 0) {
+        if (2 - _dictFinish.count < _lastIndex) {
+            NSString *str=[_dictFinish objectForKey:[self.listArray[indexPath.section][indexPath.row] otherUserId]];
+            if ([Helper isBlankString:str]==YES) {
+                
+                [_dictFinish setObject:[self.listArray[indexPath.section][indexPath.row] userName] forKey:[self.listArray[indexPath.section][indexPath.row] otherUserId]];
+                
+            }else{
+                [_dictFinish removeObjectForKey:[self.listArray[indexPath.section][indexPath.row] otherUserId]];
+            }
+            
+            NSIndexPath *indexPath_1=[NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section];
+            NSArray *indexArray=[NSArray arrayWithObject:indexPath_1];
+            [_tableView reloadRowsAtIndexPaths:indexArray withRowAnimation:UITableViewRowAnimationAutomatic];
+        }
+        else{
+            [[ShowHUD showHUD]showToastWithText:@"您最多只能选择3个人" FromView:self.view];
+        }
+    }
+    else{
         NSString *str=[_dictFinish objectForKey:[self.listArray[indexPath.section][indexPath.row] otherUserId]];
         if ([Helper isBlankString:str]==YES) {
             
@@ -246,22 +265,6 @@
         NSArray *indexArray=[NSArray arrayWithObject:indexPath_1];
         [_tableView reloadRowsAtIndexPaths:indexArray withRowAnimation:UITableViewRowAnimationAutomatic];
     }
-    else{
-        [[ShowHUD showHUD]showToastWithText:@"您最多只能选择3个人" FromView:self.view];
-    }
-    
-    
-    /**
-     * 
-     NSString *str=[_dictFinish objectForKey:[NSString stringWithFormat:@"%td%td",indexPath.section,indexPath.row]];
-     if ([Helper isBlankString:str]==YES) {
-     [_dictFinish setObject:[self.listArray[indexPath.section][indexPath.row] userName] forKey:[NSString stringWithFormat:@"%td%td",indexPath.section,indexPath.row]];
-     
-     }else{
-     [_dictFinish removeObjectForKey:[NSString stringWithFormat:@"%td%td",indexPath.section,indexPath.row]];
-     }
-     [_tableView reloadData];
-     */
 }
 
 
