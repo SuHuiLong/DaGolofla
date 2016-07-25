@@ -132,7 +132,9 @@
                 [[ShowHUD showHUD]showToastWithText:@"请选择Tee台" FromView:self.view];
                 return;
             }
-            if ([[_dictPeo allKeys][i -1]count] >= 11) {
+            NSArray* arr = [_dictPeo allKeys];
+            NSString* str = [NSString stringWithFormat:@"%@",arr[i-1]];
+            if (str.length >= 11) {
                  [dict1 setObject:[_dictPeo allKeys][i -1] forKey:@"userKey"];//用户Key
             }
             else{
@@ -140,7 +142,7 @@
             }
            
             [dict1 setObject:[_dictPeo allValues][i-1] forKey:@"userName"];// 用户名称
-            if ([Helper testMobileIsTrue:[_dictPeo allKeys][i -1]]) {
+            if (str.length >= 11) {
                 [dict1 setObject:[_dictPeo allKeys][i -1] forKey:@"userMobile"];// 手机号
             }
             else{

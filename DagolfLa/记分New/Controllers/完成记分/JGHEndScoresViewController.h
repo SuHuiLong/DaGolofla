@@ -22,5 +22,7 @@
 typedef void(^BlockRereshingk)();
 @property(nonatomic,copy)BlockRereshingk blockRereshing;
 
+@property (nonatomic, strong)NSMutableDictionary *dict;
+
 
 @end
