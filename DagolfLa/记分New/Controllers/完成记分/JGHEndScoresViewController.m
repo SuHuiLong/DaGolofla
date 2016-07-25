@@ -105,11 +105,13 @@
     timeLable.backgroundColor = [UIColor colorWithHexString:BG_color];
     timeLable.layer.cornerRadius = 3.0*ProportionAdapter;
     timeLable.layer.masksToBounds = YES;
+    timeLable.textAlignment = NSTextAlignmentCenter;
     timeLable.font = [UIFont systemFontOfSize:15*ProportionAdapter];
     [_bgView addSubview:timeLable];
     //杆数
     UILabel *poleLable = [[UILabel alloc]initWithFrame:CGRectMake((screenWidth -30*ProportionAdapter)/2 + 20*ProportionAdapter, 55*ProportionAdapter, (screenWidth -30*ProportionAdapter)/2, 25*ProportionAdapter)];
     poleLable.text = @"88 杆";
+    poleLable.textAlignment = NSTextAlignmentCenter;
     poleLable.backgroundColor = [UIColor colorWithHexString:BG_color];
     poleLable.layer.cornerRadius = 3.0*ProportionAdapter;
     poleLable.layer.masksToBounds = YES;
@@ -525,6 +527,10 @@
     
     self.navigationItem.rightBarButtonItem.enabled = (_textView.text.length != 0);
     [_dict setValue:_textView.text forKey:@"moodContent"];
+    
+//    placeId
+//    poleNum
+//    playTimes
     
     if (![Helper isBlankString:_textView.text]) {
         if (_vedioData) {

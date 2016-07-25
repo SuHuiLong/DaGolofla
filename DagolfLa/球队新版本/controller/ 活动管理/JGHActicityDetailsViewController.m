@@ -818,7 +818,6 @@ static CGFloat ImageHeight  = 210.0;
     if (_isEditor == 1) {
         self.editorBtn.backgroundColor = [UIColor colorWithHexString:@"#F59A2C"];
     }
-    
 }
 #pragma mark - Table View Delegate
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
