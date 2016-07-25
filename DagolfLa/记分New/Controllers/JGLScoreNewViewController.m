@@ -13,6 +13,7 @@
 #import "JGDHistoryScoreViewController.h"
 #import "JGTeamDeatilWKwebViewController.h"
 #import "JGLChooseScoreViewController.h"
+#import "JGHScoresViewController.h"
 @interface JGLScoreNewViewController ()<UIScrollViewDelegate,UICollectionViewDataSource,UICollectionViewDelegate>
 {
     UIScrollView* _scrollView;
@@ -42,6 +43,7 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:@"show" object:nil];
     
     self.title = @"记分";
+    [self loadData];
 }
 - (void)onRCIMReceiveMessage:(RCMessage *)message left:(int)left
 {
@@ -61,7 +63,7 @@
     //统计上传栏
     [self createUpLoad];
     
-    [self loadData];
+    
 }
 #pragma mark -- 下载数据
 - (void)loadData{
@@ -204,16 +206,39 @@
             
         } completionBlock:^(id data) {
             NSLog(@"%@", data);
-            if ([[data objectForKey:@"acBoolean"] integerValue] == 1) {
-                JGLChooseScoreViewController* chooVc = [[JGLChooseScoreViewController alloc]init];
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
-                [self.navigationController pushViewController:chooVc animated:YES];
+            if ([[data objectForKey:@"scoreKey"] integerValue] != 0) {
+                [Helper alertViewWithTitle:@"您还有记分尚未完成，是否前往继续记分" withBlockCancle:^{
+                    JGHScoresViewController* scrVc = [[JGHScoresViewController alloc]init];
+                    scrVc.scorekey = [NSString stringWithFormat:@"%@",[data objectForKey:@"scoreKey"]];
+                    [self.navigationController pushViewController:scrVc animated:YES];
+                } withBlockSure:^{
+                    if ([[data objectForKey:@"acBoolean"] integerValue] == 1) {
+                        JGLChooseScoreViewController* chooVc = [[JGLChooseScoreViewController alloc]init];
+                        [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
+                        [self.navigationController pushViewController:chooVc animated:YES];
+                    }
+                    else{
+                        [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
+                        JGLSelfScoreViewController* SsVc = [[JGLSelfScoreViewController alloc]init];
+                        [self.navigationController pushViewController:SsVc animated:YES];
+                    }
+                } withBlock:^(UIAlertController *alertView) {
+                    [self.navigationController presentViewController:alertView animated:YES completion:nil];
+                }];
             }
             else{
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
-                JGLSelfScoreViewController* SsVc = [[JGLSelfScoreViewController alloc]init];
-                [self.navigationController pushViewController:SsVc animated:YES];
+                if ([[data objectForKey:@"acBoolean"] integerValue] == 1) {
+                    JGLChooseScoreViewController* chooVc = [[JGLChooseScoreViewController alloc]init];
+                    [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
+                    [self.navigationController pushViewController:chooVc animated:YES];
+                }
+                else{
+                    [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
+                    JGLSelfScoreViewController* SsVc = [[JGLSelfScoreViewController alloc]init];
+                    [self.navigationController pushViewController:SsVc animated:YES];
+                }
             }
+            
             
         }];
     }
