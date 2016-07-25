@@ -208,7 +208,7 @@
                     NSLog(@"%td",indexPath.row);
                     if ([_dictPeople allValues].count < 4) {
                         if (indexPath.row-2 < [_dictPeople allValues].count) {
-                            if (_dictFin.count != 0) {
+                            if (_dictPeople.count != 0) {
                                 [_dictFin removeAllObjects];
                             }
                             else{
@@ -218,8 +218,8 @@
                                 }
                             }
                             if (_isClick == YES) {
-                                if (indexPath.row-2 < [_dictFin allValues].count) {
-                                    cell.labelName.text = [_dictFin allValues][indexPath.row - 2];
+                                if (indexPath.row-2 < [_dictPeople allValues].count) {
+                                    cell.labelName.text = [_dictPeople allValues][indexPath.row - 2];
                                 }
                                 else{
                                     cell.labelName.text = @"暂无成员，请添加";
@@ -248,13 +248,12 @@
 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-//    if (indexPath.section == 1) {
+    if (indexPath.section == 1) {
 //        if (indexPath.row > 0) {
-//            
-//            if ([_dictFin allValues].count < 4) {
+//            if ([_dictPeople allValues].count < 4) {
 //                if (indexPath.row-2 < [_dictPeople allValues].count) {
 //                    NSLog(@"%td",indexPath.row);
-//                    NSLog(@"%@    %@",[_dictFin allKeys][indexPath.row-2],[_dictPeople allKeys][indexPath.row-2]);
+////                    NSLog(@"%@    %@",[_dictFin allKeys][indexPath.row-2],[_dictPeople allKeys][indexPath.row-2]);
 ////                    [_dictFin removeObjectForKey:[_dictFin allKeys][indexPath.row-2]];
 //                    [_dictPeople removeObjectForKey:[_dictPeople allKeys][indexPath.row-2]];
 //                    [_tableView reloadData];
@@ -262,7 +261,7 @@
 //                }
 //            }
 //        }
-//    }
+    }
     
     
     

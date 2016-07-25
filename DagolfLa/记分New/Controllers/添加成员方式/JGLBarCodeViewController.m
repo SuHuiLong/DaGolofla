@@ -1,39 +1,127 @@
 //
-//  JGLBarCodeViewController.m
-//  DagolfLa
+//  DPSweepCodeViewController.m
+//  24HMB
 //
-//  Created by 黄达明 on 16/7/19.
-//  Copyright © 2016年 bhxx. All rights reserved.
+//  Created by Mac on 16/3/9.
+//  Copyright © 2016年 24hmb. All rights reserved.
 //
-
-
-
-
-#import "JGLBarCodeViewController.h"
-#import <AVFoundation/AVFoundation.h>//原生二维码扫描必须导入这个框架
+#define KBARITEN_WH  (22.0f)
 #define QRCodeWidth  260.0   //正方形二维码的边长
 #define SCREENWidth  [UIScreenmainScreen].bounds.size.width   //设备屏幕的宽度
 #define SCREENHeight [UIScreen mainScreen].bounds.size.height //设备屏幕的高度
 
-
+#import <AVFoundation/AVFoundation.h>
+#import "JGLBarCodeViewController.h"
 @interface JGLBarCodeViewController ()<AVCaptureMetadataOutputObjectsDelegate>
-@property (nonatomic,strong)AVCaptureSession *session;
+{
+    AVCaptureSession *_session;//输入输出的中间桥梁
+}
+
+@property (nonatomic,strong) UIImageView      *line;
+@property (nonatomic,strong) NSTimer          *timer;
+
+@property (strong, nonatomic) AVCaptureMetadataOutput * output;
+@property (assign, nonatomic) BOOL cameraIsValid, cameraIsAuthorised;
+
 @end
 
 @implementation JGLBarCodeViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    self.title = @"二维码扫描";
-    self.navigationController.toolbarHidden = YES;//如果你的根视图有底部工具栏，这行代码可以隐藏底部的工具栏
-    
+    self.view.backgroundColor = [UIColor blackColor];
+    self.title = @"扫一扫";
+    [self.navigationController.navigationBar setBarTintColor:[UIColor blackColor]];
+    //    [self setNavigationBarItem];
     [self setupMaskView];//设置扫描区域之外的阴影视图
     
     [self setupScanWindowView];//设置扫描二维码区域的视图
+    [self sweepCode];
     
-    [self beginScanning];//开始扫二维码
+    //    [self checkCameraAuth];
+    
 }
+
+-(BOOL)validateCamera {
+    
+    return [UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera] &&
+    [UIImagePickerController isCameraDeviceAvailable:UIImagePickerControllerCameraDeviceRear];
+}
+
+//判断相机是否可用
+-(BOOL)canUseCamera {
+    
+    NSString *mediaType = AVMediaTypeVideo;
+    AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaType:mediaType];
+    if(authStatus == AVAuthorizationStatusRestricted || authStatus == AVAuthorizationStatusDenied){
+        
+        NSLog(@"相机权限受限");
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil message:@"请在设备的“设置-隐私-相机”中允许访问相机。" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+            [self.navigationController popViewControllerAnimated:YES];
+        }];
+        [alert addAction:cancelAction];
+        [self presentViewController:alert animated:YES completion:nil];
+        
+        return NO;
+    }
+    
+    return YES;
+}
+
+-(void)checkCameraAuth {
+    //判断相机权限
+    NSString *mediaType = AVMediaTypeVideo;//Or AVMediaTypeAudio
+    AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaType:mediaType];
+    if (authStatus == AVAuthorizationStatusRestricted || authStatus == AVAuthorizationStatusDenied) {//拒绝授权
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil message:@"请在设备的“设置-隐私-相机”中允许访问相机。" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+            [self.navigationController popViewControllerAnimated:YES];
+        }];
+        [alert addAction:cancelAction];
+        [self presentViewController:alert animated:YES completion:nil];
+        return;
+    }else if(authStatus == AVAuthorizationStatusAuthorized){//已经授权
+        //启动扫码
+        [self sweepCode];
+    }else if(authStatus == AVAuthorizationStatusNotDetermined){
+        // Explicit user permission is required for media capture, but the user has not yet granted or denied such permission.
+        [AVCaptureDevice requestAccessForMediaType:mediaType completionHandler:^(BOOL granted) {
+            if(granted){//点击允许访问时调用
+                //用户明确许可与否，媒体需要捕获，但用户尚未授予或拒绝许可。
+                NSLog(@"Granted access to %@", mediaType);
+                //启动扫码
+                [self sweepCode];
+            }
+            else {
+                NSLog(@"Not granted access to %@", mediaType);
+                [self.navigationController popViewControllerAnimated:YES];
+            }
+            
+        }];
+    }else {
+        NSLog(@"Unknown authorization status");
+    }
+}
+
+#pragma mark - 设置导航栏按钮
+//- (void)setNavigationBarItem {
+//
+//    UIButton *backBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, KBARITEN_WH, KBARITEN_WH)];
+//    [backBtn setImage:[UIImage imageNamed:@"btn_back"] forState:UIControlStateNormal];
+//
+//    @weakify(self)
+//    [[backBtn rac_signalForControlEvents:UIControlEventTouchUpInside]
+//     subscribeNext:^(id x) {
+//         @strongify(self);
+//         [self.timer invalidate];
+//         self.timer = nil;
+//         [self.navigationController popViewControllerAnimated:YES];
+//     }];
+//
+//    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc]initWithCustomView:backBtn];
+//    self.navigationItem.leftBarButtonItem = leftItem;
+//}
 
 - (void)setupMaskView
 {
@@ -43,25 +131,25 @@
     
     //设置扫描区域外部上部的视图
     UIView *topView = [[UIView alloc]init];
-    topView.frame = CGRectMake(0, 64, screenWidth, (screenHeight-64-QRCodeWidth)/2.0-64);
+    topView.frame = CGRectMake(0, 0, screenWidth, (screenHeight-QRCodeWidth)/2.0);
     topView.backgroundColor = color;
     topView.alpha = alpha;
     
     //设置扫描区域外部左边的视图
     UIView *leftView = [[UIView alloc]init];
-    leftView.frame = CGRectMake(0, 64+topView.frame.size.height, (screenWidth-QRCodeWidth)/2.0,QRCodeWidth);
+    leftView.frame = CGRectMake(0, topView.frame.size.height, (screenWidth-QRCodeWidth)/2.0,QRCodeWidth);
     leftView.backgroundColor = color;
     leftView.alpha = alpha;
     
     //设置扫描区域外部右边的视图
     UIView *rightView = [[UIView alloc]init];
-    rightView.frame = CGRectMake((screenWidth-QRCodeWidth)/2.0+QRCodeWidth,64+topView.frame.size.height, (screenWidth-QRCodeWidth)/2.0,QRCodeWidth);
+    rightView.frame = CGRectMake((screenWidth-QRCodeWidth)/2.0+QRCodeWidth,topView.frame.size.height, (screenWidth-QRCodeWidth)/2.0,QRCodeWidth);
     rightView.backgroundColor = color;
     rightView.alpha = alpha;
     
     //设置扫描区域外部底部的视图
     UIView *botView = [[UIView alloc]init];
-    botView.frame = CGRectMake(0, 64+QRCodeWidth+topView.frame.size.height,screenWidth,SCREENHeight-64-QRCodeWidth-topView.frame.size.height);
+    botView.frame = CGRectMake(0, QRCodeWidth+topView.frame.size.height,screenWidth,SCREENHeight-QRCodeWidth-topView.frame.size.height);
     botView.backgroundColor = color;
     botView.alpha = alpha;
     
@@ -112,58 +200,85 @@
     [bottomRight setImage:[UIImage imageNamed:@"scan_4"]forState:UIControlStateNormal];
     [scanWindow addSubview:bottomRight];
 }
-
-- (void)beginScanning
-{
+#pragma mark - 启动扫码
+- (BOOL)sweepCode {//初始化配置
+    NSError * error;
     //获取摄像设备
     AVCaptureDevice * device = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
-    //创建输入流
-    AVCaptureDeviceInput * input = [AVCaptureDeviceInput deviceInputWithDevice:device error:nil];
-    if (!input) return;
-    //创建输出流
-    AVCaptureMetadataOutput * output = [[AVCaptureMetadataOutput alloc]init];
+    self.cameraIsValid = [self validateCamera];
+    self.cameraIsAuthorised = [self canUseCamera];
+    if (self.cameraIsAuthorised && self.cameraIsValid) {
+        //创建输入流
+        AVCaptureDeviceInput * input = [AVCaptureDeviceInput deviceInputWithDevice:device error:&error];
+        if (!input) {
+            NSLog(@"%@", [error localizedDescription]);
+            return NO;
+        }
+        //创建输出流
+        _output = [[AVCaptureMetadataOutput alloc]init];
+        //设置代理 在主线程里刷新
+        [_output setMetadataObjectsDelegate:self queue:dispatch_get_main_queue()];
+        
+        //初始化链接对象
+        _session = [[AVCaptureSession alloc]init];
+        //高质量采集率
+        [_session setSessionPreset:AVCaptureSessionPresetHigh];
+        
+        [_session addInput:input];
+        [_session addOutput:_output];
+        //设置扫码支持的编码格式(如下设置条形码和二维码兼容)
+        _output.metadataObjectTypes=@[AVMetadataObjectTypeQRCode,AVMetadataObjectTypeEAN13Code, AVMetadataObjectTypeEAN8Code, AVMetadataObjectTypeCode128Code];
+        
+        AVCaptureVideoPreviewLayer * layer = [AVCaptureVideoPreviewLayer layerWithSession:_session];
+        layer.videoGravity=AVLayerVideoGravityResizeAspectFill;
+        layer.frame=self.view.layer.bounds;
+        [self.view.layer insertSublayer:layer atIndex:0];
+        //开始捕获
+        [_session startRunning];
+        
+        if (!_timer) {
+            _timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(lineAnimation) userInfo:nil repeats:YES];
+        } else {
+            [_timer setFireDate:[NSDate distantPast]];
+        }
+    }else {
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil message:@"没有摄像头或相机不可用" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+            [self.navigationController popViewControllerAnimated:YES];
+        }];
+        [alert addAction:cancelAction];
+        [self presentViewController:alert animated:YES completion:nil];
+    }
     
-    //特别注意的地方：有效的扫描区域，定位是以设置的右顶点为原点。屏幕宽所在的那条线为y轴，屏幕高所在的线为x轴
-    CGFloat x = ((screenWidth-QRCodeWidth-64)/2.0)/screenHeight;
-    CGFloat y = ((screenWidth-QRCodeWidth)/2.0)/screenWidth;
-    CGFloat width = QRCodeWidth/screenHeight;
-    CGFloat height = QRCodeWidth/screenWidth;
-    output.rectOfInterest = CGRectMake(x, y, width, height);
-    
-    //设置代理在主线程里刷新
-    [output setMetadataObjectsDelegate:self queue:dispatch_get_main_queue()];
-    
-    //初始化链接对象
-    _session = [[AVCaptureSession alloc]init];
-    //高质量采集率
-    [_session setSessionPreset:AVCaptureSessionPresetHigh];
-    
-    [_session addInput:input];
-    [_session addOutput:output];
-    //设置扫码支持的编码格式(如下设置条形码和二维码兼容)
-    output.metadataObjectTypes=@[AVMetadataObjectTypeQRCode,AVMetadataObjectTypeEAN13Code,AVMetadataObjectTypeEAN8Code,AVMetadataObjectTypeCode128Code];
-    
-    AVCaptureVideoPreviewLayer * layer = [AVCaptureVideoPreviewLayer layerWithSession:_session];
-    layer.videoGravity=AVLayerVideoGravityResizeAspectFill;
-    layer.frame=self.view.layer.bounds;
-    [self.view.layer insertSublayer:layer atIndex:0];
-    //开始捕获
-    [_session startRunning];
-    
+    return YES;
 }
 
+#pragma mark - lineAnimation
+- (void)lineAnimation {
+    CGFloat width = 250;
+    [UIView animateWithDuration:0.9 animations:^{
+        CGRect frame = self.line.frame;
+        frame.origin.y += width - 2;
+        self.line.frame = frame;
+    } completion:^(BOOL finished) {
+        CGRect frame = self.line.frame;
+        frame.origin.y = (self.view.frame.size.height - width) / 2;
+        self.line.frame = frame;
+    }];
+}
+
+
 #pragma mark - AVCaptureMetadataOutputObjectsDelegate
+
 -(void)captureOutput:(AVCaptureOutput *)captureOutput didOutputMetadataObjects:(NSArray *)metadataObjects fromConnection:(AVCaptureConnection *)connection{
     if (metadataObjects.count>0) {
         [_session stopRunning];
         //得到二维码上的所有数据
         AVMetadataMachineReadableCodeObject * metadataObject = [metadataObjects objectAtIndex :0 ];
         NSString *str = metadataObject.stringValue;
-        NSLog(@"%@",str);
+         [[ShowHUD showHUD]showToastWithText:str FromView:self.view];
     }
 }
-
-
 
 - (BOOL)regexGUID:(NSString *)result{
     NSString *GUID = @"[a-fA-F0-9]{8}(-[a-fA-F0-9]{4}){3}-[a-fA-F0-9]{12}";
@@ -178,14 +293,31 @@
     NSPredicate *numberPre = [NSPredicate predicateWithFormat:@"SELF MATCHES %@",number];
     return [numberPre evaluateWithObject:textString];
 }
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+
+-(void)pop
+{
+    [self.navigationController popViewControllerAnimated:YES];
 }
-*/
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [self.navigationController.navigationBar setBarTintColor:[UIColor colorWithRed:0.23 green:0.71 blue:0.29 alpha:1]];
+    
+}
+
+//- (UIAlertController *)alertController{
+//    if (!_alertController) {
+//        _alertController = [UIAlertController alertControllerWithTitle:nil message:@"" preferredStyle:UIAlertControllerStyleAlert];
+//    }
+//    return _alertController;
+//}
+//
+//- (SignInViewModel *)signInViewModel{
+//    if (!_signInViewModel) {
+//        _signInViewModel = [[SignInViewModel alloc]init];
+//    }
+//    return _signInViewModel;
+//}
 
 @end
