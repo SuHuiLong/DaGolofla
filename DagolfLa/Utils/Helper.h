@@ -79,12 +79,15 @@
 + (NSString *)returnDateformatString:(NSString *)dateString;
 
 //nsstring 转成 nsnumber类型
+
 + (NSNumber *)returnNumberForString:(NSString *)string;
 
 + (NSString *)formateDate:(NSString *)dateString withFormate:(NSString *) formate;
 
 
-// md5 
+// md5
++ (NSString*)dictionaryHaveSpaceToJson:(NSDictionary *)dic;
+
 +(NSString *)md5HexDigest:(NSString*)Des_str;
 
 // 字典转字符串

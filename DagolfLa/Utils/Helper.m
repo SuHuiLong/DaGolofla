@@ -447,6 +447,24 @@
 
 
 // 字典转字符串
++ (NSString*)dictionaryHaveSpaceToJson:(NSDictionary *)dic
+
+{
+    
+    NSError *parseError = nil;
+    NSString *paraStr;
+    
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dic options:NSJSONWritingPrettyPrinted error:&parseError];
+    paraStr = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+    
+    paraStr = [paraStr stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    
+    paraStr = [paraStr stringByReplacingOccurrencesOfString:@"\r" withString:@""];
+    paraStr = [paraStr stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+    
+    return paraStr;
+}
+
 
 + (NSString*)dictionaryToJson:(NSDictionary *)dic
 

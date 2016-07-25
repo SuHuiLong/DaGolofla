@@ -36,6 +36,7 @@ typedef void (^GBHEBytesRecvBlock)(unsigned long long length, unsigned long long
 
 
 #pragma mark ---- MD5
+- (void)httpRequestHaveSpaceWithMD5:(NSString *)url JsonKey:(NSString *)jsonKey withData:(NSDictionary *)postData failedBlock:(GBHEFailedBlock)failedBlock completionBlock:(GBHECompletionBlock)completionBlock;
 
 - (void)httpRequestWithMD5:(NSString *)url JsonKey:(NSString *)jsonKey withData:(NSDictionary *)postData failedBlock:(GBHEFailedBlock)failedBlock completionBlock:(GBHECompletionBlock)completionBlock;
 
