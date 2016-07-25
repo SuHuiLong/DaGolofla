@@ -152,6 +152,7 @@
     
 }
 
+#pragma mark - AVCaptureMetadataOutputObjectsDelegate
 -(void)captureOutput:(AVCaptureOutput *)captureOutput didOutputMetadataObjects:(NSArray *)metadataObjects fromConnection:(AVCaptureConnection *)connection{
     if (metadataObjects.count>0) {
         [_session stopRunning];
@@ -160,6 +161,22 @@
         NSString *str = metadataObject.stringValue;
         NSLog(@"%@",str);
     }
+}
+
+
+
+- (BOOL)regexGUID:(NSString *)result{
+    NSString *GUID = @"[a-fA-F0-9]{8}(-[a-fA-F0-9]{4}){3}-[a-fA-F0-9]{12}";
+    NSPredicate *pred = [NSPredicate predicateWithFormat:@"SELF MATCHES %@",GUID];
+    BOOL isMatch = [pred evaluateWithObject:result];
+    return isMatch;
+}
+
+- (BOOL)validateURL:(NSString *)textString
+{
+    NSString* number=@"(http|ftp|https):\\/\\/[\\w\\-_]+(\\.[\\w\\-_]+)+([\\w\\-\\.,@?^=%&amp;:/~\\+#]*[\\w\\-\\@?^=%&amp;/~\\+#])?";
+    NSPredicate *numberPre = [NSPredicate predicateWithFormat:@"SELF MATCHES %@",number];
+    return [numberPre evaluateWithObject:textString];
 }
 /*
 #pragma mark - Navigation
