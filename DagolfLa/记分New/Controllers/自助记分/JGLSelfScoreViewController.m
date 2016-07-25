@@ -97,12 +97,12 @@
     else{
         [[ShowHUD showHUD]showToastWithText:@"请选择第二九洞" FromView:self.view];
     }
-//    if (![Helper isBlankString:_strDateBegin]) {
-//        [dict setObject:[NSString stringWithFormat:@"%@ 00:00:00",_strDateBegin] forKey:@"createTime"];
-//    }
-//    else{
-//        [[ShowHUD showHUD]showToastWithText:@"请选择打球时间" FromView:self.view];
-//    }
+    if (![Helper isBlankString:_strDateBegin]) {
+        [dict setObject:[NSString stringWithFormat:@"%@ 00:00:00",_strDateBegin] forKey:@"createTime"];
+    }
+    else{
+        [[ShowHUD showHUD]showToastWithText:@"请选择打球时间" FromView:self.view];
+    }
     
     
     
@@ -132,7 +132,7 @@
                 return;
             }
             
-//            [dict1 setObject:_userKeyArr[i-1] forKey:@"userKey"];//用户Key
+            [dict1 setObject:[NSString stringWithFormat:@"%td",244+i] forKey:@"userKey"];//用户Key
             [dict1 setObject:[_dictPeo allValues][i-1] forKey:@"userName"];// 用户名称
             [dict1 setObject:[_dictPeo allKeys][i -1] forKey:@"userMobile"];// 手机号
         }
@@ -141,7 +141,6 @@
     
     [dict setObject:userArray forKey:@"userList"];
     //    [dict setObject:DEFAULF_USERID forKey:@"md5"];
-    [dict setObject:@"2012-12-12 00:00:00" forKey:@"createTime"];
     [[JsonHttp jsonHttp]httpRequestWithMD5:@"score/createScore" JsonKey:nil withData:dict failedBlock:^(id errType) {
         
     } completionBlock:^(id data) {
