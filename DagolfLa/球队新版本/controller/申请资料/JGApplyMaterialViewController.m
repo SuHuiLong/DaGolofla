@@ -290,10 +290,6 @@
                 }
             }
             
-            
-            
-            
-            
         }else{
             
             JGApplyMaterialTableViewCell *cell = self.secondTableView.visibleCells[i];
@@ -301,6 +297,12 @@
             if (!cell.textFD.text || ([cell.textFD.text length] == 0)) {
                 isLength = NO;
             }else{
+                
+                if (i == 2 && (cell.textFD.text.length < 11)) {
+                    [[ShowHUD showHUD]showToastWithText:@"请输入正确的手机号" FromView:self.view];
+                    return;
+                }
+                
                 [self.paraDic setObject:cell.textFD.text  forKey:array[i]];
             }
         }
