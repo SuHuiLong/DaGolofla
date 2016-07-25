@@ -272,17 +272,25 @@
 
 -(void)captureOutput:(AVCaptureOutput *)captureOutput didOutputMetadataObjects:(NSArray *)metadataObjects fromConnection:(AVCaptureConnection *)connection{
     if (metadataObjects.count>0) {
-        [_session stopRunning];
+        
         //得到二维码上的所有数据
         AVMetadataMachineReadableCodeObject * metadataObject = [metadataObjects objectAtIndex :0 ];
         NSString *str = metadataObject.stringValue;
-        NSArray *array = [str componentsSeparatedByString:@"?"]; //从字符A中分隔成2个元素的数组
-        NSArray *array1 = [array[1] componentsSeparatedByString:@"&"];
-        NSArray *array2 = [array1[0] componentsSeparatedByString:@"="];
-        NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
-        [dict setObject:array2[0] forKey:array2[1]];
-        _blockDict(dict);
-        [self.navigationController popViewControllerAnimated:YES];
+        if ([str containsString:@"dagolfla"] == YES) {
+            [_session stopRunning];
+            NSArray *array = [str componentsSeparatedByString:@"?"]; //从字符A中分隔成2个元素的数组
+            NSArray *array1 = [array[1] componentsSeparatedByString:@"&"];
+            NSArray *array2 = [array1[0] componentsSeparatedByString:@"="];
+            NSArray *array3 = [array1[1] componentsSeparatedByString:@"="];
+            NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
+            NSLog(@"%@    %@ ",array3[1], array2[1]);
+            
+            [dict setObject:array3[1] forKey:array2[1]];
+            NSLog(@"-------------%@",dict);
+            _blockDict(dict);
+            [self.navigationController popViewControllerAnimated:YES];
+        }
+        
     }
 }
 

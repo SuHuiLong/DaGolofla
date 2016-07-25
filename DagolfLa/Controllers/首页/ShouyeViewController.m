@@ -21,16 +21,12 @@
 
 #import "HomeHeadView.h"
 #import "JGTeamActibityNameViewController.h"
-
 #import "JGNotTeamMemberDetailViewController.h"
 #import "JGTeamMemberORManagerViewController.h"
-
 #import "DetailViewController.h"
-
 #import "JGLPushDetailsViewController.h"
-
 #import "JGHEndScoresViewController.h"
-
+#import "JGNewCreateTeamTableViewController.h"
 @interface ShouyeViewController ()<UIApplicationDelegate,CLLocationManagerDelegate>
 {
 //    UITableView *_tableView;
@@ -201,6 +197,36 @@
         
         [self.navigationController pushViewController:comDevc animated:YES];
         
+    }
+    //创建球队
+    else if ([not.userInfo[@"details"] isEqualToString:@"createTeam"]) {
+        NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
+        
+        if ([user objectForKey:@"cacheCreatTeamDic"]) {
+            UIAlertController *alert=[UIAlertController alertControllerWithTitle:@"提示" message:@"是否继续上次编辑" preferredStyle:UIAlertControllerStyleAlert];
+            
+            UIAlertAction *action1=[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                [user setObject:0 forKey:@"cacheCreatTeamDic"];
+                JGNewCreateTeamTableViewController *creatteamVc = [[JGNewCreateTeamTableViewController alloc] init];
+                [self.navigationController pushViewController:creatteamVc animated:YES];
+            }];
+            UIAlertAction* action2=[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                JGNewCreateTeamTableViewController *creatteamVc = [[JGNewCreateTeamTableViewController alloc] init];
+                creatteamVc.detailDic = [[user objectForKey:@"cacheCreatTeamDic"] mutableCopy];
+                creatteamVc.titleField.text = [[user objectForKey:@"cacheCreatTeamDic"] objectForKey:@"name"];
+                
+                
+                [self.navigationController pushViewController:creatteamVc animated:YES];
+            }];
+            
+            [alert addAction:action1];
+            [alert addAction:action2];
+            [self presentViewController:alert animated:YES completion:nil];
+            
+        }else{
+            JGNewCreateTeamTableViewController *creatteamVc = [[JGNewCreateTeamTableViewController alloc] init];
+            [self.navigationController pushViewController:creatteamVc animated:YES];
+        }
     }
     else{
         
