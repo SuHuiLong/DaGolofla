@@ -244,6 +244,32 @@
                 [self.navigationController pushViewController:creatteamVc animated:YES];
             }
         }
+        
+        // 年费设置  setYearMoney
+//        if ([urlString containsString:@"setYearMoney"]) {
+//            if ([urlString containsString:@"?"]) {
+//                JGTeamMemberController *tmVc = [[JGTeamMemberController alloc] init];
+//                
+//                tmVc.teamKey = [NSNumber numberWithInteger:[[self returnTimeKeyWithUrlString:urlString] integerValue]];
+//                
+//                tmVc.teamManagement = 1;
+//                [self.navigationController pushViewController:tmVc animated:YES];
+//            }
+//        }
+        
+        // 球队详情  teamDetail
+        
+        
+        // 球队活动详情  teamActivityDetail
+        
+        // 社区详情
+//    dagolfla://weblink/moodDetail?moodKey=xx
+        
+        // 商城商品详情
+//    dagolfla://weblink/goodDetail?goodKey=xx
+        
+        // H5详情
+//    dagolfla://weblink/openURL?url=xx(URLEncord)
     }
     
     decisionHandler(WKNavigationActionPolicyAllow);

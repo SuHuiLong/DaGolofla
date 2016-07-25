@@ -28,6 +28,8 @@
     
     UIBarButtonItem *_item;
     UIButton *_arrowBtn;
+    
+    NSMutableDictionary *_macthDict;//结束页面的参数
 }
 
 @property (nonatomic, strong)NSMutableArray *userScoreArray;
@@ -41,6 +43,7 @@
 - (instancetype)init{
     if (self == [super init]) {
         self.userScoreArray = [NSMutableArray array];
+        _macthDict = [NSMutableDictionary dictionary];
     }
     return self;
 }
@@ -59,12 +62,15 @@
     [titleView addSubview:self.titleBtn];
     [self.titleBtn setTitle:@"1 HOLE" forState:UIControlStateNormal];
     [self.titleBtn addTarget:self action:@selector(titleBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-    self.navigationItem.titleView = titleView;
+//    self.titleBtn.backgroundColor = [UIColor redColor];
     
     _arrowBtn = [[UIButton alloc]initWithFrame:CGRectMake(80*ProportionAdapter, 10, 30, 24)];
     [_arrowBtn addTarget:self action:@selector(titleBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [_arrowBtn setImage:[UIImage imageNamed:@"arrowDown"] forState:UIControlStateNormal];
+//    _arrowBtn.backgroundColor = [UIColor lightGrayColor];
     [titleView addSubview:_arrowBtn];
+    
+    self.navigationItem.titleView = titleView;
     
     _selectHole = 0;
     _item = [[UIBarButtonItem alloc]initWithTitle:@"保存" style:UIBarButtonItemStylePlain target:self action:@selector(saveScoresClick:)];
@@ -93,6 +99,7 @@
 - (void)noticeAllScoresCtrl:(NSNotification *)not{
     _selectHole = 1;
     [_item setTitle:@"结束记分"];
+    
 }
 #pragma mark -- getScoreList 获取活动计分列表
 - (void)getScoreList{
@@ -136,7 +143,14 @@
                 _pageControl.currentPage = 0;
                 _pageControl.center = CGPointMake(ScreenWidth/2, screenHeight-64-5*ProportionAdapter);
                 [self.view addSubview:_pageControl];
-                _pageControl.pageIndicatorTintColor = [UIColor greenColor];
+                _pageControl.pageIndicatorTintColor = [UIColor colorWithHexString:@"#32B14D"];
+                
+                if ([data objectForKey:@"score"]) {
+                    NSMutableDictionary *scoreDict = [data objectForKey:@"score"];
+                    [_macthDict setObject:[scoreDict objectForKey:@"ballName"] forKey:@"ballName"];
+                    [_macthDict setObject:[scoreDict objectForKey:@"ballKey"] forKey:@"ballKey"];
+                    [_macthDict setObject:[scoreDict objectForKey:@"createtime"] forKey:@"createtime"];
+                }
             }
         }else{
             if ([data objectForKey:@"packResultMsg"]) {
@@ -149,6 +163,7 @@
 - (void)titleBtnClick:(UIButton *)btn{
     NSLog(@"XXX dong");
     if (_selectHole == 0) {
+        _selectHole = 1;
         [_arrowBtn setImage:[UIImage imageNamed:@"arrowTop"] forState:UIControlStateNormal];
         _scoresView = [[JGHScoresHoleView alloc]init];
         _scoresView.frame = CGRectMake(0, 0, screenWidth, (194 + self.userScoreArray.count * 60)*ProportionAdapter);
@@ -181,32 +196,16 @@
     if (_currentPage <= 0) {
         _currentPage = _dataArray.count - 1;
         JGHScoresMainViewController *sub = [[JGHScoresMainViewController alloc]init];
-        
-        /**
-        __weak JGHScoresViewController *weakSelf = self;
-        sub.returnScoresDataArray= ^(NSMutableArray *dataArray){
-            weakSelf.userScoreArray = dataArray;
-            NSLog(@"3333");
-        };
-         */
         sub.index = _currentPage;
         sub.dataArray = self.userScoreArray;
-        //        sub.text = _dataArray[_currentPage];
         return sub;
     }
     else
     {
         _currentPage--;
         JGHScoresMainViewController *sub = [[JGHScoresMainViewController alloc]init];
-        /**
-        __weak JGHScoresViewController *weakSelf = self;
-        sub.returnScoresDataArray= ^(NSMutableArray *dataArray){
-            weakSelf.userScoreArray = dataArray;
-        };
-         */
         sub.index = _currentPage;
         sub.dataArray = self.userScoreArray;
-        //        sub.text = _dataArray[_currentPage];
         return sub;
     }
 }
@@ -219,24 +218,14 @@
     if (_currentPage >= _dataArray.count - 1) {
         _currentPage = 0;
         JGHScoresMainViewController *sub = [[JGHScoresMainViewController alloc]init];
-        //        sub.returnScoresDataArray(self.userScoreArray);
-        //        __weak JGHScoresViewController *weakSelf = self;
-        //        sub.returnScoresDataArray= ^(NSMutableArray *dataArray){
-        //            weakSelf.userScoreArray = dataArray;
-        //        };
         sub.index = _currentPage;
         sub.dataArray = self.userScoreArray;
-        //        sub.text = _dataArray[_currentPage];
         return sub;
     }
     else
     {
         _currentPage++;
         JGHScoresMainViewController *sub = [[JGHScoresMainViewController alloc]init];
-//        __weak JGHScoresViewController *weakSelf = self;
-//        sub.returnScoresDataArray= ^(NSMutableArray *dataArray){
-//            weakSelf.userScoreArray = dataArray;
-//        };
         sub.index = _currentPage;
         sub.dataArray = self.userScoreArray;
         //        sub.text = _dataArray[_currentPage];
@@ -255,7 +244,7 @@
         weakSelf.userScoreArray = dataArray;
     };
     [self.titleBtn setTitle:[NSString stringWithFormat:@"%td HOLE", sub.index+1] forState:UIControlStateNormal];
-    [[ShowHUD showHUD]showToastWithText:[NSString stringWithFormat:@"第-%td-洞", sub.index+1] FromView:self.view];
+//    [[ShowHUD showHUD]showToastWithText:[NSString stringWithFormat:@"第-%td-洞", sub.index+1] FromView:self.view];
 }
 
 #pragma mark -- 保存
@@ -317,7 +306,21 @@
 }
 #pragma mark -- 完成记分
 - (void)pushJGHEndScoresViewController{
+    NSInteger scoreCount = 0;
+    for (int i=0; i<_userScoreArray.count; i++) {
+        JGHScoreListModel *model = [[JGHScoreListModel alloc]init];
+        model = _userScoreArray[i];
+        if ([model.userKey integerValue] == [DEFAULF_USERID integerValue]) {
+            for (int i=0; i<model.poleNumber.count; i++) {
+                scoreCount += [model.poleNumber[i] integerValue];
+            }
+        }else{
+            break;
+        }
+    }
+    [_macthDict setObject:@(scoreCount) forKey:@"poleNum"];
     JGHEndScoresViewController *endScoresCtrl = [[JGHEndScoresViewController alloc]init];
+    endScoresCtrl.dict = _macthDict;
     [self.navigationController pushViewController:endScoresCtrl animated:YES];
 }
 
