@@ -13,7 +13,7 @@
 
 @property (copy, nonatomic) void (^blockSurePlayer)(NSMutableDictionary *);
 
-@property (copy, nonatomic) NSMutableDictionary* dictFin,* dictPeople;
+@property (copy, nonatomic) NSMutableDictionary* dictPeople;
 ;
 
 @end

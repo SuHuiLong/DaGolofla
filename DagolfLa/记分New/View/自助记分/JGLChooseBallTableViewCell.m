@@ -24,7 +24,7 @@
         [self.contentView addSubview:_iconImg];
         
         
-        _labelTitle = [[UILabel alloc]initWithFrame:CGRectMake(60*ScreenWidth/375, 10*ScreenWidth/375, 200*ScreenWidth/375, 40*ScreenWidth/375)];
+        _labelTitle = [[UILabel alloc]initWithFrame:CGRectMake(60*ScreenWidth/375, 10*ScreenWidth/375, 250*ScreenWidth/375, 40*ScreenWidth/375)];
         _labelTitle.text = @"请选择球场";
         _labelTitle.font = [UIFont systemFontOfSize:15*ScreenWidth/375];
         [self.contentView addSubview:_labelTitle];

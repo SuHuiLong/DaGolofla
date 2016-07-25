@@ -16,7 +16,7 @@
 
 @property (strong, nonatomic) NSNumber* yIndex;
 @property (strong, nonatomic) NSNumber* xIndex;
-
+@property (strong, nonatomic) NSString* loginpic;
 
 @end
 /*
