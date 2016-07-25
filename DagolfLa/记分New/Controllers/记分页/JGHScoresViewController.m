@@ -250,57 +250,77 @@
 #pragma mark -- 保存
 - (void)saveScoresClick:(UIBarButtonItem *)item{
     item.enabled = NO;
-    if (_selectHole == 0) {
-        //保存
-        NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-        [dict setObject:DEFAULF_USERID forKey:@"userKey"];
-        NSMutableArray *listArray = [NSMutableArray array];
-        for (JGHScoreListModel *model in self.userScoreArray) {
-            NSMutableDictionary *listDict = [NSMutableDictionary dictionary];
+    //保存
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    [dict setObject:DEFAULF_USERID forKey:@"userKey"];
+    NSMutableArray *listArray = [NSMutableArray array];
+    for (JGHScoreListModel *model in self.userScoreArray) {
+        NSMutableDictionary *listDict = [NSMutableDictionary dictionary];
+        if (model.userKey) {
             [listDict setObject:model.userKey forKey:@"userKey"];// 用户Key
-            [listDict setObject:model.userName forKey:@"userName"];// 用户名称
-            [listDict setObject:model.userMobile forKey:@"userMobile"];// 手机号
-            [listDict setObject:model.tTaiwan forKey:@"tTaiwan"];// T台
-            [listDict setObject:model.poleNumber forKey:@"poleNumber"];// 球队杆数
-            [listDict setObject:model.pushrod forKey:@"pushrod"];// 推杆
-            [listDict setObject:model.onthefairway forKey:@"onthefairway"];// 是否上球道
-            [listDict setObject:model.timeKey forKey:@"timeKey"];// 是否上球道
-            [listArray addObject:listDict];
+        }else{
+            [listDict setObject:@(0) forKey:@"userKey"];// 用户Key
         }
         
-        [dict setObject:listArray forKey:@"list"];
-        
-        [[JsonHttp jsonHttp]httpRequestWithMD5:@"score/saveScore" JsonKey:nil withData:dict failedBlock:^(id errType) {
-            
-        } completionBlock:^(id data) {
-            NSLog(@"%@", data);
-            if ([[data objectForKey:@"packSuccess"]integerValue] == 1) {
-                [[ShowHUD showHUD]showToastWithText:@"记分保存成功！" FromView:self.view];
-            }else{
-                if ([data objectForKey:@"packResultMsg"]) {
-                    [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
-                }
-            }
-        }];
-    }else{
-        //结束记分  finishScore
-        NSMutableDictionary *finishDict = [NSMutableDictionary dictionary];
-        [finishDict setObject:DEFAULF_USERID forKey:@"userKey"];
-        [finishDict setObject:_scorekey forKey:@"scoreKey"];
-        [[JsonHttp jsonHttp]httpRequestWithMD5:@"score/finishScore" JsonKey:nil withData:finishDict failedBlock:^(id errType) {
-            
-        } completionBlock:^(id data) {
-            NSLog(@"%@", data);
-            if ([[data objectForKey:@"packSuccess"]integerValue] == 1) {
-                [[ShowHUD showHUD]showToastWithText:@"记分结束！" FromView:self.view];
-                [self performSelector:@selector(pushJGHEndScoresViewController) withObject:self afterDelay:1.0];
-            }else{
-                if ([data objectForKey:@"packResultMsg"]) {
-                    [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
-                }
-            }
-        }];
+        [listDict setObject:model.userName forKey:@"userName"];// 用户名称
+        if (model.userMobile) {
+            [listDict setObject:model.userMobile forKey:@"userMobile"];// 手机号
+        }else{
+            [listDict setObject:@"" forKey:@"userMobile"];// 手机号
+        }
+        [listDict setObject:model.tTaiwan forKey:@"tTaiwan"];// T台
+        [listDict setObject:model.poleNumber forKey:@"poleNumber"];// 球队杆数
+        [listDict setObject:model.pushrod forKey:@"pushrod"];// 推杆
+        [listDict setObject:model.onthefairway forKey:@"onthefairway"];// 是否上球道
+        [listDict setObject:model.timeKey forKey:@"timeKey"];// 是否上球道
+        [listArray addObject:listDict];
     }
+    
+    [dict setObject:listArray forKey:@"list"];
+    
+    [[JsonHttp jsonHttp]httpRequestWithMD5:@"score/saveScore" JsonKey:nil withData:dict failedBlock:^(id errType) {
+        
+    } completionBlock:^(id data) {
+        NSLog(@"%@", data);
+        if ([[data objectForKey:@"packSuccess"]integerValue] == 1) {
+            if (_selectHole != 0) {
+                //结束记分  finishScore
+                NSMutableDictionary *finishDict = [NSMutableDictionary dictionary];
+                [finishDict setObject:DEFAULF_USERID forKey:@"userKey"];
+                [finishDict setObject:_scorekey forKey:@"scoreKey"];
+                [[JsonHttp jsonHttp]httpRequestWithMD5:@"score/finishScore" JsonKey:nil withData:finishDict failedBlock:^(id errType) {
+                    
+                } completionBlock:^(id data) {
+                    NSLog(@"%@", data);
+                    if ([[data objectForKey:@"packSuccess"]integerValue] == 1) {
+                        //获取主线层
+                        if ([NSThread isMainThread]) {
+                            NSLog(@"Yay!");
+                            [[ShowHUD showHUD]showToastWithText:@"记分结束！" FromView:self.view];
+                            [self performSelector:@selector(pushJGHEndScoresViewController) withObject:self afterDelay:1.0];
+                        } else {
+                            NSLog(@"Humph, switching to main");
+                            dispatch_async(dispatch_get_main_queue(), ^{
+                                [[ShowHUD showHUD]showToastWithText:@"记分结束！" FromView:self.view];
+                                [self performSelector:@selector(pushJGHEndScoresViewController) withObject:self afterDelay:1.0];
+                            });
+                        }
+                        
+                    }else{
+                        if ([data objectForKey:@"packResultMsg"]) {
+                            [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+                        }
+                    }
+                }];
+            }else{
+                [[ShowHUD showHUD]showToastWithText:@"记分保存成功！" FromView:self.view];
+            }
+        }else{
+            if ([data objectForKey:@"packResultMsg"]) {
+                [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+            }
+        }
+    }];
     
     item.enabled = YES;
 }

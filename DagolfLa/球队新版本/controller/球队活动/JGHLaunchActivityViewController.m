@@ -175,7 +175,7 @@ static CGFloat ImageHeight  = 210.0;
     }else{
          [self.titleField becomeFirstResponder];
     }
-    _titleArray = @[@[], @[@"活动开始时间", @"活动结束时间", @"报名截止时间"], @[@"费用说明", @"人员限制", @"活动说明"], @[@"联系电话"]];
+    _titleArray = @[@[], @[@"活动开球时间", @"活动结束时间", @"报名截止时间"], @[@"费用说明", @"人员限制", @"活动说明"], @[@"联系电话"]];
     
 //    [self.model setValuesForKeysWithDictionary:[[NSUserDefaults standardUserDefaults] objectForKey:@"TeamActivityArray"]];
     
