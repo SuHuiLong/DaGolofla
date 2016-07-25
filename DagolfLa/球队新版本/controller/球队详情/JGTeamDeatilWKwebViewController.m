@@ -244,6 +244,32 @@
                 [self.navigationController pushViewController:creatteamVc animated:YES];
             }
         }
+        
+        // 年费设置  setYearMoney
+//        if ([urlString containsString:@"setYearMoney"]) {
+//            if ([urlString containsString:@"?"]) {
+//                JGTeamMemberController *tmVc = [[JGTeamMemberController alloc] init];
+//                
+//                tmVc.teamKey = [NSNumber numberWithInteger:[[self returnTimeKeyWithUrlString:urlString] integerValue]];
+//                
+//                tmVc.teamManagement = 1;
+//                [self.navigationController pushViewController:tmVc animated:YES];
+//            }
+//        }
+        
+        // 球队详情  teamDetail
+        
+        
+        // 球队活动详情  teamActivityDetail
+        
+        // 社区详情
+//    dagolfla://weblink/moodDetail?moodKey=xx
+        
+        // 商城商品详情
+//    dagolfla://weblink/goodDetail?goodKey=xx
+        
+        // H5详情
+//    dagolfla://weblink/openURL?url=xx(URLEncord)
     }
     
     decisionHandler(WKNavigationActionPolicyAllow);
@@ -267,7 +293,7 @@
 }
 
 
-#pragma mark ----- tong ji
+#pragma mark ----- 统计
 
 // 分享
 //统计记分点击事件
@@ -285,7 +311,7 @@
 -(void)shareWithInfo:(NSInteger)index
 {
     
-    NSString*  shareUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/score/scoreList.html?userKey=%@&md5=%@&share=1",DEFAULF_USERID, [Helper md5HexDigest:DEFAULF_USERID]];
+    NSString*  shareUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/score/scoreList.html?userKey=%@&md5=%@&share=1",DEFAULF_USERID, [Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@dagolfla.com", DEFAULF_USERID]]];
     
     [UMSocialData defaultData].extConfig.title=[NSString stringWithFormat:@"打球数据统计分析"];
     if(index==0)
@@ -313,7 +339,6 @@
     }
     else
     {
-        
         UMSocialData *data = [UMSocialData defaultData];
         data.shareImage = [UIImage imageNamed:@"logo"];
         data.shareText = [NSString stringWithFormat:@"%@%@",@"数据很完整,分析的不错,值得一看",shareUrl];

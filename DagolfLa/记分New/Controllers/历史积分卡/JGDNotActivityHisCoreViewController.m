@@ -27,6 +27,10 @@
     [super viewDidLoad];
     self.title = @"历史记分卡";
     
+    UIBarButtonItem *rightBar = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"fenxiang"] style:(UIBarButtonItemStyleDone) target:self action:@selector(shareStatisticsDataClick)];
+    rightBar.tintColor = [UIColor whiteColor];
+    self.navigationItem.rightBarButtonItem = rightBar;
+    
     [self setData];
     [self createTableView];
     // Do any additional setup after loading the view.
@@ -333,6 +337,73 @@
         [self.navigationController pushViewController:detailV animated:YES];
     }
 }
+
+
+// 分享
+//统计记分点击事件
+-(void)shareStatisticsDataClick
+{
+    ShareAlert* alert = [[ShareAlert alloc]initMyAlert];
+    alert.frame = CGRectMake(0, ScreenHeight, ScreenWidth, ScreenWidth);
+    [alert setCallBackTitle:^(NSInteger index) {
+        [self shareInfo:index];
+    }];
+    [UIView animateWithDuration:0.2 animations:^{
+        [alert show];
+    }];
+}
+-(void)shareInfo:(NSInteger)index
+{
+    
+    
+    NSString*  shareUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/score/scoreTable.html?teamKey=0&userKey=%@&srcKey=%@&srcType=%@&scoreKey=%@&md5=%@", DEFAULF_USERID, [self.dataDic objectForKey:@"srcKey"], [self.dataDic objectForKey:@"srcType"], self.timeKey, [Helper md5HexDigest:[NSString stringWithFormat:@"teamKey=0&userKey=%@&srcKey=%@&srcType=%@dagolfla.com", DEFAULF_USERID, [self.dataDic objectForKey:@"srcKey"], [self.dataDic objectForKey:@"srcType"]]]];
+    
+    [UMSocialData defaultData].extConfig.title=[NSString stringWithFormat:@"打球数据统计分析"];
+    if(index==0)
+    {
+        //微信
+        [UMSocialWechatHandler setWXAppId:@"wxdcdc4e20544ed728" appSecret:@"fdc75aae5a98f2aa0f62ef8cba2b08e9" url:shareUrl];
+        [UMSocialConfig hiddenNotInstallPlatforms:@[UMShareToWechatSession,UMShareToWechatTimeline,UMShareToSina]];
+        [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatSession] content:@"数据很完整,分析的不错,值得一看" image:[UIImage imageNamed:@"logo"] location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
+            if (response.responseCode == UMSResponseCodeSuccess) {
+                ////NSLog(@"分享成功！");
+            }
+        }];
+    }
+    else if (index==1)
+    {
+        //朋友圈
+        [UMSocialWechatHandler setWXAppId:@"wxdcdc4e20544ed728" appSecret:@"fdc75aae5a98f2aa0f62ef8cba2b08e9" url:shareUrl];
+        [UMSocialConfig hiddenNotInstallPlatforms:@[UMShareToWechatSession,UMShareToWechatTimeline,UMShareToSina]];
+        [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatTimeline] content:@"数据很完整,分析的不错,值得一看" image:[UIImage imageNamed:@"logo"] location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
+            if (response.responseCode == UMSResponseCodeSuccess) {
+                ////NSLog(@"分享成功！");
+            }
+        }];
+        
+    }
+    else
+    {
+        
+        UMSocialData *data = [UMSocialData defaultData];
+        data.shareImage = [UIImage imageNamed:@"logo"];
+        data.shareText = [NSString stringWithFormat:@"%@%@",@"数据很完整,分析的不错,值得一看",shareUrl];
+        [[UMSocialControllerService defaultControllerService] setSocialData:data];
+        //2.设置分享平台
+        [UMSocialSnsPlatformManager getSocialPlatformWithName:UMShareToSina].snsClickHandler(self,[UMSocialControllerService defaultControllerService],YES);
+        
+        
+        //  [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToSina] content:@"打高尔夫啦" image:[UIImage imageNamed:@"logo"] location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *shareResponse){
+        //
+        //        if (shareResponse.responseCode == UMSResponseCodeSuccess) {
+        //              ////NSLog(@"分享成功！");
+        //        }
+        //   }];
+        //
+        
+    }
+}
+
 
 - (NSMutableArray *)dataArray{
     if (!_dataArray) {

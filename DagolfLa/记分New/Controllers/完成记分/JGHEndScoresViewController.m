@@ -33,7 +33,6 @@
     
     int indexBtn;
     
-    NSMutableDictionary* _dict;
     UILabel* _labelArea;
     
     NSMutableArray* _arrayCamera;
@@ -58,6 +57,13 @@
 @end
 
 @implementation JGHEndScoresViewController
+
+- (instancetype)init{
+    if (self == [super init]) {
+        self.dict = [NSMutableDictionary dictionary];
+    }
+    return self;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -93,7 +99,7 @@
     [self.view addSubview:_bgView];
     //球场
     UILabel *ballName = [[UILabel alloc]initWithFrame:CGRectMake(10*ProportionAdapter, 10*ProportionAdapter, screenWidth - 20*ProportionAdapter, 35*ProportionAdapter)];
-    ballName.text = @"上海MMM高尔夫场";
+    ballName.text = [NSString stringWithFormat:@"%@", [_dict objectForKey:@"ballName"]];
     ballName.backgroundColor = [UIColor colorWithHexString:BG_color];
     ballName.layer.cornerRadius = 3.0*ProportionAdapter;
     ballName.layer.masksToBounds = YES;
@@ -101,7 +107,7 @@
     [_bgView addSubview:ballName];
     //日期
     UILabel *timeLable = [[UILabel alloc]initWithFrame:CGRectMake(10*ProportionAdapter, 55*ProportionAdapter, (screenWidth -30*ProportionAdapter)/2, 25*ProportionAdapter)];
-    timeLable.text = @"2016-07-11";
+    timeLable.text = [NSString stringWithFormat:@"%@", [[[_dict objectForKey:@"createtime"] componentsSeparatedByString:@" "] firstObject]];;
     timeLable.backgroundColor = [UIColor colorWithHexString:BG_color];
     timeLable.layer.cornerRadius = 3.0*ProportionAdapter;
     timeLable.layer.masksToBounds = YES;
@@ -110,7 +116,7 @@
     [_bgView addSubview:timeLable];
     //杆数
     UILabel *poleLable = [[UILabel alloc]initWithFrame:CGRectMake((screenWidth -30*ProportionAdapter)/2 + 20*ProportionAdapter, 55*ProportionAdapter, (screenWidth -30*ProportionAdapter)/2, 25*ProportionAdapter)];
-    poleLable.text = @"88 杆";
+    poleLable.text = [NSString stringWithFormat:@"%@  杆", [_dict objectForKey:@"poleNum"]];
     poleLable.textAlignment = NSTextAlignmentCenter;
     poleLable.backgroundColor = [UIColor colorWithHexString:BG_color];
     poleLable.layer.cornerRadius = 3.0*ProportionAdapter;
