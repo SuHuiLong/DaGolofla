@@ -11,6 +11,7 @@
 #import "JGDHistoryScoreModel.h"
 #import "JGDHistoryScore2TableViewCell.h"
 #import "JGDNotActivityHisCoreViewController.h"
+#import "JGHScoresViewController.h"
 
 
 #import "MJRefresh.h"
@@ -73,7 +74,7 @@
     self.searchController.searchBar.placeholder = @"搜索你需要的内容";
     self.searchController.searchBar.delegate = self;
 
-    self.tableView = [[UITableView alloc] initWithFrame:[UIScreen mainScreen].bounds style:(UITableViewStylePlain)];
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight - 50.0 * ProportionAdapter) style:(UITableViewStylePlain)];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.backgroundColor = [UIColor clearColor];
@@ -293,20 +294,25 @@
     
     JGDHistoryScoreModel *model = self.dataArray[indexPath.row];
     
-    if ([model.srcType integerValue] == 0) {
-        
-        JGDNotActivityHisCoreViewController *notAciVC = [[JGDNotActivityHisCoreViewController alloc] init];
-        notAciVC.timeKey = model.timeKey;
-        [self.navigationController pushViewController:notAciVC animated:YES];
-        
+    if ([model.scoreFinish integerValue] == 0) {
+        JGHScoresViewController *scoreVC = [[JGHScoresViewController alloc] init];
+        scoreVC.scorekey = [NSString stringWithFormat:@"%@", model.timeKey];
+        [self.navigationController pushViewController:scoreVC animated:YES];
     }else{
         
-        JGDHistoryScoreShowViewController *showVC = [[JGDHistoryScoreShowViewController alloc] init];
-        showVC.timeKey = model.timeKey;
-        [self.navigationController pushViewController:showVC animated:YES];
-    }
-
-    
+        if ([model.srcType integerValue] == 0) {
+            
+            JGDNotActivityHisCoreViewController *notAciVC = [[JGDNotActivityHisCoreViewController alloc] init];
+            notAciVC.timeKey = model.timeKey;
+            [self.navigationController pushViewController:notAciVC animated:YES];
+            
+        }else{
+            
+            JGDHistoryScoreShowViewController *showVC = [[JGDHistoryScoreShowViewController alloc] init];
+            showVC.timeKey = model.timeKey;
+            [self.navigationController pushViewController:showVC animated:YES];
+        }
+    }    
 }
 
 - (NSMutableArray *)dataArray{

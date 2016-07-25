@@ -70,7 +70,6 @@
         
         self.contentView.backgroundColor = [UIColor colorWithHexString:@"#f4f4f4"];
         
-        
     }
     return self;
 }
@@ -79,7 +78,10 @@
         
         self.timeLB.text = [model.createtime substringWithRange:NSMakeRange(0, 10)];
         self.ballName.text = model.ballName;
-        
+    
+    if ([model.scoreFinish integerValue] == 0) {
+        [self.holderImageV addSubview:self.unfinishimageV];
+    }
         NSString* strMoney = [NSString stringWithFormat:@"%@杆", [model.poleNumber stringValue]];
         NSMutableAttributedString *str = [[NSMutableAttributedString alloc] initWithString:strMoney];
         [str addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"#fe6424"] range:NSMakeRange(0, str.length - 1)];

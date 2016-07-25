@@ -32,7 +32,11 @@
         // screemw - 120
         CGFloat width = (screenWidth - 120 * ProportionAdapter) / 9;
         for (int i = 0; i < 9; i ++) {
-            UILabel *scoreLB = [[UILabel alloc] initWithFrame:CGRectMake(80 * ProportionAdapter + i * width, 4 * ProportionAdapter, 22 * ProportionAdapter, 22 * ProportionAdapter)];
+            UIView *lineV = [[UIView alloc] initWithFrame:CGRectMake(80 * ProportionAdapter + i * width, 0 * ProportionAdapter, 2 * ProportionAdapter, 30 * ProportionAdapter)];
+            lineV.backgroundColor = [UIColor colorWithHexString:@"#eeeeee"];
+            [self.contentView addSubview:lineV];
+
+            UILabel *scoreLB = [[UILabel alloc] initWithFrame:CGRectMake(84.5 * ProportionAdapter + i * width, 4 * ProportionAdapter, 22 * ProportionAdapter, 22 * ProportionAdapter)];
             scoreLB.layer.cornerRadius = 11 * ProportionAdapter;
             scoreLB.layer.masksToBounds = YES;
             scoreLB.text = [NSString stringWithFormat:@"%d", i];
@@ -41,6 +45,12 @@
             scoreLB.textAlignment = NSTextAlignmentCenter;
             scoreLB.tag = 777 + i;
             [self.contentView addSubview:scoreLB];
+            
+            if (i == 8) {
+                UIView *lineV = [[UIView alloc] initWithFrame:CGRectMake(screenWidth - 40 * ProportionAdapter, 0 * ProportionAdapter, 2 * ProportionAdapter, 30 * ProportionAdapter)];
+                lineV.backgroundColor = [UIColor colorWithHexString:@"#eeeeee"];
+                [self.contentView addSubview:lineV];
+            }
         }
         
         self.sumLB = [[UILabel alloc] initWithFrame:CGRectMake(screenWidth - 50 * ProportionAdapter, 0, 40 * ProportionAdapter, 30 * ProportionAdapter)];

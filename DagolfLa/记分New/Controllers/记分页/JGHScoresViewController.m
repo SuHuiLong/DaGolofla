@@ -27,6 +27,7 @@
     UIView *_tranView;
     
     UIBarButtonItem *_item;
+    UIButton *_arrowBtn;
 }
 
 @property (nonatomic, strong)NSMutableArray *userScoreArray;
@@ -53,12 +54,17 @@
     
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(noticeAllScoresCtrl:) name:@"noticeAllScores" object:nil];
     
-    UIView *titleView = [[UIView alloc]initWithFrame:CGRectMake(80*ProportionAdapter, 0, 80*ProportionAdapter, 44)];
+    UIView *titleView = [[UIView alloc]initWithFrame:CGRectMake(110*ProportionAdapter, 0, 80*ProportionAdapter, 44)];
     self.titleBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 80*ProportionAdapter, 44)];
     [titleView addSubview:self.titleBtn];
     [self.titleBtn setTitle:@"1 HOLE" forState:UIControlStateNormal];
     [self.titleBtn addTarget:self action:@selector(titleBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     self.navigationItem.titleView = titleView;
+    
+    _arrowBtn = [[UIButton alloc]initWithFrame:CGRectMake(80*ProportionAdapter, 10, 30, 24)];
+    [_arrowBtn addTarget:self action:@selector(titleBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    [_arrowBtn setImage:[UIImage imageNamed:@"arrowDown"] forState:UIControlStateNormal];
+    [titleView addSubview:_arrowBtn];
     
     _selectHole = 0;
     _item = [[UIBarButtonItem alloc]initWithTitle:@"保存" style:UIBarButtonItemStylePlain target:self action:@selector(saveScoresClick:)];
@@ -70,7 +76,7 @@
         [_dataArray addObject:[NSString stringWithFormat:@"%d",i]];
     }
     
-    [self getScoreList];
+//    [self getScoreList];
 }
 #pragma mark -- 点击杆数跳转到指定的积分页面
 - (void)noticePushScoresCtrl:(NSNotification *)not{
@@ -80,6 +86,7 @@
     [_tranView removeFromSuperview];
     _pageControl.currentPage = [[not.userInfo objectForKey:@"index"] integerValue];
     [self.titleBtn setTitle:[NSString stringWithFormat:@"%td HOLE", [[not.userInfo objectForKey:@"index"] integerValue]+1] forState:UIControlStateNormal];
+    
     [[ShowHUD showHUD]showToastWithText:[NSString stringWithFormat:@"第-%td-洞", [[not.userInfo objectForKey:@"index"] integerValue]+1] FromView:self.view];
 }
 #pragma mark -- 所有记分完成后
@@ -142,6 +149,7 @@
 - (void)titleBtnClick:(UIButton *)btn{
     NSLog(@"XXX dong");
     if (_selectHole == 0) {
+        [_arrowBtn setImage:[UIImage imageNamed:@"arrowTop"] forState:UIControlStateNormal];
         _scoresView = [[JGHScoresHoleView alloc]init];
         _scoresView.frame = CGRectMake(0, 0, screenWidth, (194 + self.userScoreArray.count * 60)*ProportionAdapter);
         _scoresView.dataArray = self.userScoreArray;
@@ -158,6 +166,7 @@
         [self.view addSubview:_scoresView];
         
     }else{
+        [_arrowBtn setImage:[UIImage imageNamed:@"arrowDown"] forState:UIControlStateNormal];
         _selectHole = 0;
         [_item setTitle:@"保存"];
         [_scoresView removeFromSuperview];

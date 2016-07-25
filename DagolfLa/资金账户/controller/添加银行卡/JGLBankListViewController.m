@@ -9,6 +9,7 @@
 #import "JGLBankListViewController.h"
 #import "JGLBankCardTableViewCell.h"
 #import "JGLAddBankCardViewController.h"
+#import "JGDWrongViewViewController.h"
 
 #import "MJRefresh.h"
 #import "MJDIYHeader.h"
@@ -26,6 +27,10 @@
     MBProgressHUD* _progress;
     
     NSInteger _isClick;
+    NSString *_realName;
+    
+    UIButton *_btnDelete;
+    UIButton *_addBtn;
 }
 @end
 
@@ -38,32 +43,39 @@
     _page = 0;
     _dataArray = [[NSMutableArray alloc]init];
     
-    [self createHeader];
     [self uiConfig];
+    [self createHeader];
+
 }
 
 -(void)createHeader
 {
-    _viewHeader = [[UIView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, 64*screenWidth/375)];
-    _viewHeader.backgroundColor = [UIColor colorWithHexString:BG_color];
-    [self.view addSubview:_viewHeader];
+//    _viewHeader = [[UIView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, 64*screenWidth/375)];
+//    _viewHeader.backgroundColor = [UIColor colorWithHexString:BG_color];
+//    [self.view addSubview:_viewHeader];
     
-    UIButton* btnDelete = [UIButton buttonWithType:UIButtonTypeCustom];
-    btnDelete.backgroundColor = [UIColor colorWithHexString:Click_Color];
-    [btnDelete setTitle:@"添加银行卡" forState:UIControlStateNormal];
-    [btnDelete setTintColor:[UIColor whiteColor]];
-    [_viewHeader addSubview:btnDelete];
-    btnDelete.titleLabel.font = [UIFont systemFontOfSize:17];
-    btnDelete.frame = CGRectMake(10*screenWidth/375, 10*screenWidth/375, screenWidth-20*screenWidth/375, 44*screenWidth/375);
-    btnDelete.layer.cornerRadius = 8*screenWidth/375;
-    btnDelete.layer.masksToBounds = YES;
-    [btnDelete addTarget:self action:@selector(addBankCardClick) forControlEvents:UIControlEventTouchUpInside];
+    _btnDelete = [UIButton buttonWithType:UIButtonTypeCustom];
+    _btnDelete.backgroundColor = [UIColor whiteColor];
+    [_btnDelete setTitle:@"添加银行卡" forState:UIControlStateNormal];
+    [_btnDelete setImage:[UIImage imageNamed:@"tianjia2"] forState:(UIControlStateNormal)];
+    [_btnDelete setTintColor:[UIColor whiteColor]];
+    [_btnDelete setTitleColor:[UIColor blackColor] forState:(UIControlStateNormal)];
+    [self.view insertSubview:_btnDelete aboveSubview:_tableView];
+    [self.view addSubview:_btnDelete];
+    _btnDelete.titleLabel.font = [UIFont systemFontOfSize:17];
+    _btnDelete.frame = CGRectMake(10*screenWidth/375, 530*screenWidth/375, screenWidth-20*screenWidth/375, 44*screenWidth/375);
+    _btnDelete.layer.cornerRadius = 8*screenWidth/375;
+    _btnDelete.layer.masksToBounds = YES;
+    [_btnDelete addTarget:self action:@selector(addBankCardClick) forControlEvents:UIControlEventTouchUpInside];
     
 }
 #pragma mark --添加银行卡按钮
 -(void)addBankCardClick
 {
     JGLAddBankCardViewController* addVc = [[JGLAddBankCardViewController alloc]init];
+    if (_realName) {
+        addVc.realName = _realName;
+    }
     addVc.refreshBlock = ^(){
         [_tableView.header endRefreshing];
         _tableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
@@ -74,7 +86,7 @@
 
 -(void)uiConfig
 {
-    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight-15) style:UITableViewStylePlain];
+    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight-150) style:UITableViewStylePlain];
     _tableView.delegate = self;
     _tableView.dataSource = self;
     _tableView.tableHeaderView = _viewHeader;
@@ -97,6 +109,9 @@
         }
     } completionBlock:^(id data) {
         if ([[data objectForKey:@"packSuccess"] boolValue]) {
+            if ([data objectForKey:@"realName"]) {
+                _realName = [data objectForKey:@"realName"];
+            }
             if (page == 0)
             {
                 //清除数组数据
@@ -109,6 +124,32 @@
                 [model setValuesForKeysWithDictionary:dicList];
                 [_dataArray addObject:model];
             }
+            if ([_dataArray count] == 0) {
+                
+                [_tableView removeFromSuperview];
+                [_btnDelete removeFromSuperview];
+                
+                UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake((screenWidth - 107) / 2, 100 * ProportionAdapter, 107 * ProportionAdapter, 111 * ProportionAdapter)];
+                
+                imageV.image = [UIImage imageNamed:@"bg-shy"];
+                                
+                [self.view addSubview:imageV];
+                
+                UILabel *textLB = [[UILabel alloc] initWithFrame:CGRectMake(90 * ProportionAdapter, 230 * ProportionAdapter, screenWidth - 180 * ProportionAdapter, 30 * ProportionAdapter)];
+                textLB.numberOfLines = 0;
+                textLB.text = @"您还没有绑定银行卡哦！";
+                [self.view addSubview:textLB];
+                
+                
+                NSMutableAttributedString *str = [[NSMutableAttributedString alloc] initWithString:@"赶快添加吧！"];
+                [str addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"#32B14D"] range:NSMakeRange(2, 2)];
+                _addBtn = [[UIButton alloc] initWithFrame:CGRectMake(90 * ProportionAdapter, 260 * ProportionAdapter, screenWidth - 180 * ProportionAdapter, 30 * ProportionAdapter)];
+                [_addBtn setAttributedTitle:str forState:(UIControlStateNormal)];
+                [_addBtn addTarget:self action:@selector(addBankCardClick) forControlEvents:(UIControlEventTouchUpInside)];
+//                [_addBtn setTitle:str forState:(UIControlStateNormal)];
+                [self.view addSubview:_addBtn];
+            }
+            
             _page++;
             [_tableView reloadData];
         }else {

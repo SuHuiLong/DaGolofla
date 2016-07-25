@@ -63,6 +63,10 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
+    UIBarButtonItem *leftBar = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"backL"] style:(UIBarButtonItemStyleDone) target:self action:@selector(backBtn)];
+    leftBar.tintColor = [UIColor whiteColor];
+    self.navigationItem.leftBarButtonItem = leftBar;
     //[[NSNotificationCenter defaultCenter] postNotificationName:@"show" object:nil];
 }
 - (void)viewDidLoad {
@@ -86,6 +90,10 @@
     // 获取通知设置
     [self setinformMessege];
 
+}
+
+- (void)backBtn{
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 -(void)uiConfig

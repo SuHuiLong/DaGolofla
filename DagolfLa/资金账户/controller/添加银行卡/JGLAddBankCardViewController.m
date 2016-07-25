@@ -10,6 +10,7 @@
 
 #import "JGLAddBankNewsTableViewCell.h"
 #import "JGLBankTypeView.h"
+#import "JGDWrongViewViewController.h"
 
 #import "MBProgressHUD.h"
 
@@ -37,7 +38,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    _arrayTitle = @[@[@"选择银行"],@[@"银行卡号"]];
+    _arrayTitle = @[@[@"持卡人姓名"],@[@"银行卡号"]];
     _arrayPlaceHolder = @[@"",@"请填写银行卡号"];
     self.title = @"添加银行卡";
     
@@ -56,7 +57,7 @@
     [btnDelete setTintColor:[UIColor whiteColor]];
     [self.view addSubview:btnDelete];
     btnDelete.titleLabel.font = [UIFont systemFontOfSize:17];
-    btnDelete.frame = CGRectMake(10*screenWidth/375, 44*2*screenWidth/375 + 30*screenWidth/375, screenWidth-20*screenWidth/375, 44*screenWidth/375);
+    btnDelete.frame = CGRectMake(10*screenWidth/375, 44*2*screenWidth/375 + 70*screenWidth/375, screenWidth-20*screenWidth/375, 44*screenWidth/375);
     btnDelete.layer.cornerRadius = 8*screenWidth/375;
     btnDelete.layer.masksToBounds = YES;
     [btnDelete addTarget:self action:@selector(addBankCardClick) forControlEvents:UIControlEventTouchUpInside];
@@ -91,14 +92,14 @@
         return;
     }
     
-    if (![Helper isBlankString:_strBank]) {
-        [dict setObject:[NSNumber numberWithInteger:_cardType] forKey:@"cardType"];
-        [dict setObject:_strBank forKey:@"backName"];
-    }
-    else{
-        [[ShowHUD showHUD]showToastWithText:@"请选择银行" FromView:self.view];
-        return;
-    }
+//    if (![Helper isBlankString:_strBank]) {
+//        [dict setObject:[NSNumber numberWithInteger:_cardType] forKey:@"cardType"];
+//        [dict setObject:_strBank forKey:@"backName"];
+//    }
+//    else{
+//        [[ShowHUD showHUD]showToastWithText:@"请选择银行" FromView:self.view];
+//        return;
+//    }
     
     
     
@@ -120,17 +121,27 @@
         else
         {
             [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+            JGDWrongViewViewController *wrongVC = [[JGDWrongViewViewController alloc] init];
+            [self.navigationController pushViewController:wrongVC animated:YES];
         }
     }];
 }
 
 -(void)uiConfig
 {
-    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, 20*screenWidth/375 + 44*3*screenWidth/375) style:UITableViewStylePlain];
+    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 40*screenWidth/375, screenWidth, 20*screenWidth/375 + 44*3*screenWidth/375) style:UITableViewStylePlain];
     _tableView.delegate = self;
     _tableView.dataSource = self;
     [self.view addSubview:_tableView];
     _tableView.scrollEnabled = NO;
+    _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+
+    UILabel *tipLB = [[UILabel alloc] initWithFrame:CGRectMake(0 * ProportionAdapter, 0 * ProportionAdapter, screenWidth, 40 * ProportionAdapter)];
+    tipLB.text = @"     请添加持卡人本人的银行卡";
+    tipLB.font = [UIFont systemFontOfSize:16 * ProportionAdapter];
+    tipLB.textColor = [UIColor lightGrayColor];
+    tipLB.backgroundColor = [UIColor colorWithHexString:@"#F7F7F7"];
+    [self.view addSubview:tipLB];
 }
 
 
@@ -165,13 +176,15 @@
     
     if (indexPath.section == 0 && indexPath.row == 0) {
         cell.textField.userInteractionEnabled = NO;
-        if ([Helper isBlankString:_strBank]) {
-            cell.textField.text = @"选择您要添加的银行";
-        }
-        else{
-            cell.textField.text = _strBank;
-            
-        }
+        cell.textField.textColor = [UIColor lightGrayColor];
+        cell.textField.text = self.realName;
+//        if ([Helper isBlankString:_strBank]) {
+//            cell.textField.text = @"选择您要添加的银行";
+//        }
+//        else{
+//            cell.textField.text = _strBank;
+//            
+//        }
     }
     else{
         cell.textField.hidden = NO;
@@ -187,50 +200,50 @@
 }
 
 
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-
-    if (indexPath.section == 0 && indexPath.row == 0) {
-        if (_isClick == NO) {
-            NSInteger height;
-            if (screenWidth == 320) {
-                height = 25;
-            }
-            else if (screenWidth == 375)
-            {
-                height = 20;
-            }
-            else{
-                height = 15;
-            }
-            _isClick = YES;
-            _alert = [[JGLBankTypeView alloc]initWithFrame:CGRectMake(0, screenHeight - 44*screenWidth/375*7-height, screenWidth, screenHeight)];
-            [self.view addSubview:_alert];
-            [_alert setCallBackTitle:^(NSInteger index,NSString* strBank) {
-                _cardType = index;
-                _strBank = strBank;
-                _isClick = NO;
-                NSIndexPath *indexPath=[NSIndexPath indexPathForRow:0 inSection:0];
-                [tableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath,nil] withRowAnimation:UITableViewRowAnimationNone];
-                
-            }];
-            
-            _alert.cancelClick = ^(){
-                _isClick = NO;
-                NSIndexPath *indexPath=[NSIndexPath indexPathForRow:0 inSection:0];
-                [tableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath,nil] withRowAnimation:UITableViewRowAnimationNone];
-            };
-        }
-    }
-}
+//-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+//
+//    if (indexPath.section == 0 && indexPath.row == 0) {
+//        if (_isClick == NO) {
+//            NSInteger height;
+//            if (screenWidth == 320) {
+//                height = 25;
+//            }
+//            else if (screenWidth == 375)
+//            {
+//                height = 20;
+//            }
+//            else{
+//                height = 15;
+//            }
+//            _isClick = YES;
+//            _alert = [[JGLBankTypeView alloc]initWithFrame:CGRectMake(0, screenHeight - 44*screenWidth/375*7-height, screenWidth, screenHeight)];
+//            [self.view addSubview:_alert];
+//            [_alert setCallBackTitle:^(NSInteger index,NSString* strBank) {
+//                _cardType = index;
+//                _strBank = strBank;
+//                _isClick = NO;
+//                NSIndexPath *indexPath=[NSIndexPath indexPathForRow:0 inSection:0];
+//                [tableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath,nil] withRowAnimation:UITableViewRowAnimationNone];
+//                
+//            }];
+//            
+//            _alert.cancelClick = ^(){
+//                _isClick = NO;
+//                NSIndexPath *indexPath=[NSIndexPath indexPathForRow:0 inSection:0];
+//                [tableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath,nil] withRowAnimation:UITableViewRowAnimationNone];
+//            };
+//        }
+//    }
+//}
 
 
 #pragma mark --textfield
 -(void)textFieldDidEndEditing:(UITextField *)textField
 {
-    if (_isClick == YES) {
-        [_alert dismissAlert];
-        _isClick = NO;
-    }
+//    if (_isClick == YES) {
+//        [_alert dismissAlert];
+//        _isClick = NO;
+//    }
     
     if (textField.tag == 1002) {
         _strNum = textField.text;

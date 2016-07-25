@@ -8,6 +8,7 @@
 
 #import "JGDCertificationViewController.h"
 #import "JGDSetPayPasswordTableViewCell.h"
+#import "JGDShowCertViewController.h"
 
 #import "CommonCrypto/CommonDigest.h"
 #import "SXPickPhoto.h"
@@ -236,7 +237,9 @@
 
 
 - (void)pop{
-    [self.navigationController popToRootViewControllerAnimated:YES];
+    JGDShowCertViewController *showVC = [[JGDShowCertViewController alloc] init];
+    [self.navigationController pushViewController:showVC animated:YES];
+//    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 
