@@ -10,4 +10,7 @@
 
 @interface JGLBarCodeViewController : ViewController
 
+@property (copy, nonatomic) void (^blockDict)(NSMutableDictionary* );
+
+
 @end

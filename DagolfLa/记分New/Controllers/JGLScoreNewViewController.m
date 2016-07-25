@@ -66,26 +66,41 @@
 #pragma mark -- 下载数据
 - (void)loadData{
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    [dict setObject:DEFAULF_USERID forKey:@"userKey"];
-    [dict setObject:[Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@dagolfla.com", DEFAULF_USERID]] forKey:@"md5"];
-    [[JsonHttp jsonHttp]httpRequest:@"score/getUserScoreStatisticsMain" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
-        
-    } completionBlock:^(id data) {
-        NSLog(@"%@", data);
-        if ([[data objectForKey:@"packSuccess"]integerValue] == 1) {
-            NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-            if ([data objectForKey:@"bean"]) {
-                dict = [data objectForKey:@"bean"];
-                _averageScores.text = [NSString stringWithFormat:@"%@", [dict objectForKey:@"avgPoles"]];
-                _bestResult.text = [NSString stringWithFormat:@"%@", [dict objectForKey:@"minPoles"]];
-                _scoresRanking.text = [NSString stringWithFormat:@"%@", [dict objectForKey:@"ranking"]];
+    if ([[NSUserDefaults standardUserDefaults]objectForKey:@"userId"]) {
+        [dict setObject:DEFAULF_USERID forKey:@"userKey"];
+        [dict setObject:[Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@dagolfla.com", DEFAULF_USERID]] forKey:@"md5"];
+        [[JsonHttp jsonHttp]httpRequest:@"score/getUserScoreStatisticsMain" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
+            
+        } completionBlock:^(id data) {
+            NSLog(@"%@", data);
+            if ([[data objectForKey:@"packSuccess"]integerValue] == 1) {
+                NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+                if ([data objectForKey:@"bean"]) {
+                    dict = [data objectForKey:@"bean"];
+                    _averageScores.text = [NSString stringWithFormat:@"%@", [dict objectForKey:@"avgPoles"]];
+                    _bestResult.text = [NSString stringWithFormat:@"%@", [dict objectForKey:@"minPoles"]];
+                    _scoresRanking.text = [NSString stringWithFormat:@"%@", [dict objectForKey:@"ranking"]];
+                }
+            }else{
+                if ([data objectForKey:@"packResultMsg"]) {
+                    [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+                }
             }
-        }else{
-            if ([data objectForKey:@"packResultMsg"]) {
-                [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
-            }
-        }
-    }];
+        }];
+
+    }
+    else
+    {
+        [Helper alertViewWithTitle:@"是否立即登录?" withBlockCancle:^{
+            
+        } withBlockSure:^{
+            EnterViewController *vc = [[EnterViewController alloc] init];
+            [self.navigationController pushViewController:vc animated:YES];
+        } withBlock:^(UIAlertController *alertView) {
+            [self presentViewController:alertView animated:YES completion:nil];
+        }];
+    }
+    
 }
 
 -(void)createScore

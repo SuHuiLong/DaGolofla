@@ -276,7 +276,13 @@
         //得到二维码上的所有数据
         AVMetadataMachineReadableCodeObject * metadataObject = [metadataObjects objectAtIndex :0 ];
         NSString *str = metadataObject.stringValue;
-         [[ShowHUD showHUD]showToastWithText:str FromView:self.view];
+        NSArray *array = [str componentsSeparatedByString:@"?"]; //从字符A中分隔成2个元素的数组
+        NSArray *array1 = [array[1] componentsSeparatedByString:@"&"];
+        NSArray *array2 = [array1[0] componentsSeparatedByString:@"="];
+        NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
+        [dict setObject:array2[0] forKey:array2[1]];
+        _blockDict(dict);
+        [self.navigationController popViewControllerAnimated:YES];
     }
 }
 

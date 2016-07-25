@@ -115,6 +115,10 @@
     else if (btn.tag == 101)
     {
         JGLBarCodeViewController* barVc = [[JGLBarCodeViewController alloc]init];
+        barVc.blockDict = ^(NSMutableDictionary *dict){
+            [_dictPeople addEntriesFromDictionary:dict];
+            [_tableView reloadData];
+        };
         [self.navigationController pushViewController:barVc animated:YES];
     }
     else{
