@@ -378,7 +378,7 @@
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
                 //StadiumViewController
                 StadiumViewController* staVC = [[StadiumViewController alloc]init];
-                staVC.scorekey = 0;
+//                staVC.scorekey = 0;
                 [self.navigationController pushViewController:staVC animated:YES];
                 
             }

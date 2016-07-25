@@ -76,7 +76,7 @@
         [_dataArray addObject:[NSString stringWithFormat:@"%d",i]];
     }
     
-//    [self getScoreList];
+    [self getScoreList];
 }
 #pragma mark -- 点击杆数跳转到指定的积分页面
 - (void)noticePushScoresCtrl:(NSNotification *)not{
