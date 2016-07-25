@@ -103,7 +103,7 @@
                             lb.backgroundColor = [UIColor colorWithHexString:@"#7fffff"];
                             
                         }else if (standardlever - core == 1) {
-                            lb.backgroundColor = [UIColor colorWithHexString:@"#7fdfff"];
+                            lb.backgroundColor = [UIColor colorWithHexString:@"#7fbfff"];
                             
                         }else if (standardlever == core) {
                             lb.backgroundColor = [UIColor colorWithHexString:@"#ffd2a6"];

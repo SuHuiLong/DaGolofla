@@ -301,7 +301,7 @@
             [self.navigationController pushViewController:historyVC animated:YES];
         }else if (indexPath.item == 0) {
             JGTeamDeatilWKwebViewController *wkVC = [[JGTeamDeatilWKwebViewController alloc] init];
-            wkVC.detailString = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/score/scoreList.html?userKey=%@&md5=%@&share=1",DEFAULF_USERID, [Helper md5HexDigest:[DEFAULF_USERID stringValue]]];
+            wkVC.detailString = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/score/scoreList.html?userKey=%@&md5=%@",DEFAULF_USERID, [Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@dagolfla.com", DEFAULF_USERID]]];
             wkVC.fromWitchVC = 722;
             wkVC.teamName = @"统计数据";
             [self.navigationController pushViewController:wkVC animated:YES];

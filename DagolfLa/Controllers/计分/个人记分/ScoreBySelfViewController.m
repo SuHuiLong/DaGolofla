@@ -352,7 +352,7 @@
     //球场
     BallParkViewController* ballVc = [[BallParkViewController alloc]init];
     ballVc.type1=1;
-    ballVc.callback1=^(NSDictionary *dict){
+    ballVc.callback1=^(NSDictionary *dict,NSString *str){
         ////NSLog(@"%@",dict);
         [_dataBallArray removeAllObjects];
         if (dict.count != 0) {

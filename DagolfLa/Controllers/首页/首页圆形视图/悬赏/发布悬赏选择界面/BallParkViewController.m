@@ -84,7 +84,7 @@
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
 {
     CLLocation *currLocation = [locations lastObject];
-    //NSLog(@"经度=%f 纬度=%f 高度=%f", currLocation.coordinate.latitude, currLocation.coordinate.longitude, currLocation.altitude);
+    NSLog(@"经度=%f 纬度=%f 高度=%f", currLocation.coordinate.latitude, currLocation.coordinate.longitude, currLocation.altitude);
     NSUserDefaults *user=[NSUserDefaults standardUserDefaults];
     // 获取当前所在的城市名
     
@@ -186,8 +186,8 @@
 -(void)seachBtnClick{
     [_textField resignFirstResponder];
     UIImageView *imageView=(UIImageView *)[self.view viewWithTag:88];
-    UITextField *tf=(UITextField *)[imageView viewWithTag:888];
-    if ([self isBlankString:tf.text]==NO) {
+    NSLog(@"%@",_textField.text);
+    if ([Helper isBlankString:_textField.text]==NO) {
         
 //        [_dataArray removeAllObjects];
         _tableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
@@ -197,18 +197,6 @@
         [[ShowHUD showHUD]showToastWithText:@"请填写搜索信息" FromView:self.view];
     }
 
-}
--(BOOL)isBlankString:(NSString *)string{
-    if (string==nil||string==NULL) {
-        return YES;
-    }
-    if ([string isKindOfClass:[NSNull class]]) {
-        return YES;
-    }
-    if ([[string stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] length]==0) {
-        return YES;
-    }
-    return NO;
 }
 
 
@@ -339,7 +327,7 @@
                         NSMutableDictionary* dict1 = [[NSMutableDictionary alloc]init];
                         [dict1 setObject:[data objectForKey:@"ballAreas"] forKey:@"ballAreas"];
                         [dict1 setObject:[data objectForKey:@"tAll"] forKey:@"tAll"];
-                        _callback1(dict1);
+                        _callback1(dict1,[_dataArray[indexPath.row]loginpic]);
                         _callback([_dataArray[indexPath.row] ballName],[[_dataArray[indexPath.row] ballId] integerValue]);
                         [self.navigationController popViewControllerAnimated:YES];
                     }
