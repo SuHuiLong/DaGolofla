@@ -236,7 +236,7 @@
 }
 
 
-#pragma mark ----- tong ji
+#pragma mark ----- 统计
 
 // 分享
 //统计记分点击事件
@@ -254,7 +254,7 @@
 -(void)shareWithInfo:(NSInteger)index
 {
     
-    NSString*  shareUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/score/scoreList.html?userKey=%@&md5=%@&share=1",DEFAULF_USERID, [Helper md5HexDigest:DEFAULF_USERID]];
+    NSString*  shareUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/score/scoreList.html?userKey=%@&md5=%@&share=1",DEFAULF_USERID, [Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@dagolfla.com", DEFAULF_USERID]]];
     
     [UMSocialData defaultData].extConfig.title=[NSString stringWithFormat:@"打球数据统计分析"];
     if(index==0)
@@ -282,7 +282,6 @@
     }
     else
     {
-        
         UMSocialData *data = [UMSocialData defaultData];
         data.shareImage = [UIImage imageNamed:@"logo"];
         data.shareText = [NSString stringWithFormat:@"%@%@",@"数据很完整,分析的不错,值得一看",shareUrl];
