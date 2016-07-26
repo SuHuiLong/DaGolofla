@@ -364,23 +364,31 @@ static CGFloat ImageHeight  = 210.0;
     _photos = 1;
     if (indexPath.section == 1) {
         //时间选择
-        DateTimeViewController *dataCtrl = [[DateTimeViewController alloc]init];
-        [dataCtrl setCallback:^(NSString *dateStr, NSString *dateWeek, NSString *str) {
-            if (indexPath.row == 0) {
-                [self.model setValue:dateStr forKey:@"beginDate"];
-//                [_dataDict setObject:dateStr forKey:@"activityBeginDate"];
-            }else if(indexPath.row == 1){
-                [self.model setValue:dateStr forKey:@"endDate"];
-//                [_dataDict setObject:dateStr forKey:@"activityEndDate"];
-            }else{
-                [self.model setValue:[NSString stringWithFormat:@"%@ 23:59:59", dateStr] forKey:@"signUpEndTime"];
-//                [_dataDict setObject:dateStr forKey:@"activityEignUpEndTime"];
-            }
+        if (indexPath.row == 0) {
+            JGHDatePicksViewController *datePicksCrel = [[JGHDatePicksViewController alloc]init];
+            datePicksCrel.returnDateString = ^(NSString *dateString){
+                NSLog(@"%@", dateString);
+                [self.model setValue:dateString forKey:@"beginDate"];
+            };
+            [self.navigationController pushViewController:datePicksCrel animated:YES];
             
-            NSIndexPath *indPath = [NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section];
-            [self.launchActivityTableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indPath, nil] withRowAnimation:UITableViewRowAnimationNone];
-        }];
-        [self.navigationController pushViewController:dataCtrl animated:YES];
+            //                [_dataDict setObject:dateStr forKey:@"activityBeginDate"];
+        }else{
+            DateTimeViewController *dataCtrl = [[DateTimeViewController alloc]init];
+            [dataCtrl setCallback:^(NSString *dateStr, NSString *dateWeek, NSString *str) {
+                if(indexPath.row == 1){
+                    [self.model setValue:dateStr forKey:@"endDate"];
+                    //                [_dataDict setObject:dateStr forKey:@"activityEndDate"];
+                }else{
+                    [self.model setValue:[NSString stringWithFormat:@"%@ 23:59:59", dateStr] forKey:@"signUpEndTime"];
+                    //                [_dataDict setObject:dateStr forKey:@"activityEignUpEndTime"];
+                }
+                
+                NSIndexPath *indPath = [NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section];
+                [self.launchActivityTableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indPath, nil] withRowAnimation:UITableViewRowAnimationNone];
+            }];
+            [self.navigationController pushViewController:dataCtrl animated:YES];
+        }
     }else if (indexPath.section == 2){
         if (indexPath.row == 0) {
             JGCostSetViewController *costView = [[JGCostSetViewController alloc]initWithNibName:@"JGCostSetViewController" bundle:nil];

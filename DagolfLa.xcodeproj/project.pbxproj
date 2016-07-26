@@ -88,6 +88,9 @@
 		2067C6D51CE30CC0002900C8 /* JGTeamActivityDetailsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2067C6CA1CE30CC0002900C8 /* JGTeamActivityDetailsCell.xib */; };
 		2067C6D61CE30CC0002900C8 /* JGTeamActivityWithAddressCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2067C6CC1CE30CC0002900C8 /* JGTeamActivityWithAddressCell.m */; };
 		2067C6D71CE30CC0002900C8 /* JGTeamActivityWithAddressCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2067C6CD1CE30CC0002900C8 /* JGTeamActivityWithAddressCell.xib */; };
+		206ECF971D4756D900880234 /* UUDatePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 206ECF931D4756D900880234 /* UUDatePicker.m */; };
+		206ECF981D4756D900880234 /* UUDatePicker_DateModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 206ECF951D4756D900880234 /* UUDatePicker_DateModel.m */; };
+		206ECF9B1D4757A900880234 /* JGHDatePicksViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 206ECF9A1D4757A900880234 /* JGHDatePicksViewController.m */; };
 		207FEC961D1BC98F0098E23C /* JGHCancelApplyBaseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 207FEC941D1BC98F0098E23C /* JGHCancelApplyBaseCell.m */; };
 		207FEC971D1BC98F0098E23C /* JGHCancelApplyBaseCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 207FEC951D1BC98F0098E23C /* JGHCancelApplyBaseCell.xib */; };
 		207FEC9B1D1BDDB10098E23C /* JGHButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 207FEC991D1BDDB10098E23C /* JGHButtonCell.m */; };
@@ -1100,6 +1103,12 @@
 		2067C6CB1CE30CC0002900C8 /* JGTeamActivityWithAddressCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGTeamActivityWithAddressCell.h; sourceTree = "<group>"; };
 		2067C6CC1CE30CC0002900C8 /* JGTeamActivityWithAddressCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGTeamActivityWithAddressCell.m; sourceTree = "<group>"; };
 		2067C6CD1CE30CC0002900C8 /* JGTeamActivityWithAddressCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JGTeamActivityWithAddressCell.xib; sourceTree = "<group>"; };
+		206ECF931D4756D900880234 /* UUDatePicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UUDatePicker.m; sourceTree = "<group>"; };
+		206ECF941D4756D900880234 /* UUDatePicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UUDatePicker.h; sourceTree = "<group>"; };
+		206ECF951D4756D900880234 /* UUDatePicker_DateModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UUDatePicker_DateModel.m; sourceTree = "<group>"; };
+		206ECF961D4756D900880234 /* UUDatePicker_DateModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UUDatePicker_DateModel.h; sourceTree = "<group>"; };
+		206ECF991D4757A900880234 /* JGHDatePicksViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHDatePicksViewController.h; sourceTree = "<group>"; };
+		206ECF9A1D4757A900880234 /* JGHDatePicksViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHDatePicksViewController.m; sourceTree = "<group>"; };
 		207FEC931D1BC98F0098E23C /* JGHCancelApplyBaseCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHCancelApplyBaseCell.h; sourceTree = "<group>"; };
 		207FEC941D1BC98F0098E23C /* JGHCancelApplyBaseCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHCancelApplyBaseCell.m; sourceTree = "<group>"; };
 		207FEC951D1BC98F0098E23C /* JGHCancelApplyBaseCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JGHCancelApplyBaseCell.xib; sourceTree = "<group>"; };
@@ -3041,6 +3050,19 @@
 			path = "球队活动";
 			sourceTree = "<group>";
 		};
+		206ECF921D47568F00880234 /* datePicks */ = {
+			isa = PBXGroup;
+			children = (
+				206ECF941D4756D900880234 /* UUDatePicker.h */,
+				206ECF931D4756D900880234 /* UUDatePicker.m */,
+				206ECF951D4756D900880234 /* UUDatePicker_DateModel.m */,
+				206ECF961D4756D900880234 /* UUDatePicker_DateModel.h */,
+				206ECF991D4757A900880234 /* JGHDatePicksViewController.h */,
+				206ECF9A1D4757A900880234 /* JGHDatePicksViewController.m */,
+			);
+			path = datePicks;
+			sourceTree = "<group>";
+		};
 		209B3FE81D10175200A6FF72 /*  活动管理 */ = {
 			isa = PBXGroup;
 			children = (
@@ -4798,7 +4820,7 @@
 		36BFFF431BC76D09005B3CE2 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				F511DAAC1D1A5ABD00CB5530 /* datePicker */,
+				206ECF921D47568F00880234 /* datePicks */,
 				65B5969E1CAD43AC007AB83A /* ContantHead.h */,
 				20BA613D1CDCA04D004B61F5 /* PrefixHeader.pch */,
 				20FBD5F31D044E5900DEE48D /* ShowHUD.h */,
@@ -6106,13 +6128,6 @@
 			path = "球队大厅";
 			sourceTree = "<group>";
 		};
-		F511DAAC1D1A5ABD00CB5530 /* datePicker */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = datePicker;
-			sourceTree = "<group>";
-		};
 		F5321AE31CE4492800CAE1EF /* 创建球队 */ = {
 			isa = PBXGroup;
 			children = (
@@ -7103,6 +7118,7 @@
 				36DCA73C1C22630500E12DF7 /* ScoreProStandedModel.m in Sources */,
 				36D39B3E1BCCE23100C0B197 /* MBProgressHUD.m in Sources */,
 				8252E8641D360D6200448404 /* JGLScoreNewViewController.m in Sources */,
+				206ECF971D4756D900880234 /* UUDatePicker.m in Sources */,
 				3660E1851BFC56DD0033B4D7 /* ScoreDetailTableViewCell.m in Sources */,
 				36DF6DF41C07FEAD00B60B67 /* TeamPhotoDetViewController.m in Sources */,
 				F554267C1D2277B900233B20 /* JGDCertificationViewController.m in Sources */,
@@ -7471,6 +7487,8 @@
 				36BF00411BC771FB005B3CE2 /* ZanNumTableViewCell.m in Sources */,
 				82636E901D06D18100216DC1 /* JGTeamPhotoShowViewController.m in Sources */,
 				2012AD881D2BB1B200F70E40 /* JGDtopTableViewCell.m in Sources */,
+				206ECF9B1D4757A900880234 /* JGHDatePicksViewController.m in Sources */,
+				206ECF981D4756D900880234 /* UUDatePicker_DateModel.m in Sources */,
 				36BFFF741BC76D09005B3CE2 /* NSData+ImageContentType.m in Sources */,
 				3683947E1C0984C800F162F6 /* TeamPhotoAddViewController.m in Sources */,
 				82ABF1B01D1BC0B3004493DB /* JGLActiveCancelMemViewController.m in Sources */,

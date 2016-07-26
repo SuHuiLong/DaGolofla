@@ -222,6 +222,7 @@
                     
                 } withBlockSure:^{
                     JGHScoresViewController* scrVc = [[JGHScoresViewController alloc]init];
+                    [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
                     scrVc.scorekey = [NSString stringWithFormat:@"%@",[data objectForKey:@"scoreKey"]];
                     [self.navigationController pushViewController:scrVc animated:YES];
                 } withBlock:^(UIAlertController *alertView) {
@@ -319,6 +320,7 @@
     NSArray* arrIcon = [[NSArray alloc]init];
     arrIcon = @[@"graph",@"cardO"];
     cell.iconImage.image = [UIImage imageNamed:arrIcon[indexPath.row]];
+    
     
     return cell;
 }

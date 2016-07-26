@@ -15,69 +15,72 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hXY-d4-snT">
-                        <rect key="frame" x="65" y="0.0" width="30" height="43.5"/>
+                        <rect key="frame" x="85" y="0.0" width="27" height="43.5"/>
                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                         <connections>
                             <action selector="twoBtnClick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="Dgb-mN-8dC"/>
                         </connections>
                     </button>
                     <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KWu-hx-emW">
-                        <rect key="frame" x="96" y="0.0" width="30" height="43.5"/>
+                        <rect key="frame" x="113" y="0.0" width="27.5" height="43.5"/>
                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                         <connections>
                             <action selector="threeBtnClick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="Qzh-FH-hE0"/>
                         </connections>
                     </button>
                     <button opaque="NO" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="80c-nB-gAH">
-                        <rect key="frame" x="126" y="0.0" width="30.5" height="43.5"/>
+                        <rect key="frame" x="141" y="0.0" width="27.5" height="43.5"/>
                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                         <connections>
                             <action selector="fourBtnClick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="Gcs-sF-ihW"/>
                         </connections>
                     </button>
                     <button opaque="NO" tag="5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0fo-RE-RNG">
-                        <rect key="frame" x="157" y="0.0" width="30.5" height="43.5"/>
+                        <rect key="frame" x="170" y="0.0" width="27" height="43.5"/>
                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                         <connections>
                             <action selector="fiveBtnClick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="UGR-zS-Quz"/>
                         </connections>
                     </button>
                     <button opaque="NO" tag="6" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SX8-6H-zHh">
-                        <rect key="frame" x="188" y="0.0" width="30" height="43.5"/>
+                        <rect key="frame" x="198" y="0.0" width="27.5" height="43.5"/>
                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                         <connections>
                             <action selector="sixBtnClick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="Qmo-om-BWz"/>
                         </connections>
                     </button>
                     <button opaque="NO" tag="7" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DcS-xD-4uw">
-                        <rect key="frame" x="219" y="0.0" width="29" height="43.5"/>
+                        <rect key="frame" x="227" y="0.0" width="27.5" height="43.5"/>
                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                         <connections>
                             <action selector="sevenBtnClick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="eQ5-W9-0fV"/>
                         </connections>
                     </button>
                     <button opaque="NO" tag="8" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DfG-dj-LHT">
-                        <rect key="frame" x="250" y="0.0" width="29.5" height="43.5"/>
+                        <rect key="frame" x="255" y="0.0" width="27" height="43.5"/>
                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                         <connections>
                             <action selector="eightBtnClick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="sJo-bT-O5a"/>
                         </connections>
                     </button>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8cY-EJ-6WS">
-                        <rect key="frame" x="0.0" y="0.0" width="33" height="43.5"/>
+                        <rect key="frame" x="0.0" y="0.0" width="55.5" height="43.5"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="55.5" id="mYh-eZ-c2f"/>
+                        </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <button opaque="NO" tag="9" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eXu-dp-zZd">
-                        <rect key="frame" x="281" y="0.0" width="30" height="43.5"/>
+                        <rect key="frame" x="283" y="0.0" width="27.5" height="43.5"/>
                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                         <connections>
                             <action selector="nineBtnClick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="cEi-h5-r5d"/>
                         </connections>
                     </button>
                     <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dbl-Gm-u4h">
-                        <rect key="frame" x="34" y="0.0" width="30" height="43.5"/>
+                        <rect key="frame" x="56.5" y="0.0" width="27.5" height="43.5"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="71" id="6yJ-4d-7xf"/>
                         </constraints>
