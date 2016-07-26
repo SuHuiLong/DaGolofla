@@ -320,7 +320,6 @@
     arrIcon = @[@"graph",@"cardO"];
     cell.iconImage.image = [UIImage imageNamed:arrIcon[indexPath.row]];
     
-    
     return cell;
 }
 //定义每个UICollectionView 的大小
