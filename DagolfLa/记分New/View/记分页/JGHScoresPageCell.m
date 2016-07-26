@@ -47,6 +47,7 @@
     self.addScoresBtnRight.constant = 21*ProportionAdapter;
     
     self.userName.font = [UIFont systemFontOfSize:15.0 *ProportionAdapter];
+    self.userName.font = [UIFont systemFontOfSize:13.0*ProportionAdapter];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
