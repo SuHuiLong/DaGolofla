@@ -274,11 +274,12 @@ static NSString *const JGHScoresPageCellIdentifier = @"JGHScoresPageCell";
         for (int i=0; i<18; i++) {
             if ([[model.poleNumber objectAtIndex:i] integerValue] == -1) {
                 break;
-            }else{
-                if ([[model.onthefairway objectAtIndex:i] integerValue] == -1) {
-                    break;
-                }
             }
+//            else{
+//                if ([[model.onthefairway objectAtIndex:i] integerValue] == -1) {
+//                    break;
+//                }
+//            }
             
             if (x == dataArray.count -1 && i == 17) {
                 NSLog(@"model.poleNumber == %@", model.poleNumber);
