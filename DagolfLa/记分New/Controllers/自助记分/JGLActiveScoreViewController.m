@@ -67,7 +67,9 @@
     _dictPeo        = [[NSMutableDictionary alloc]init];
     _isTee          =  NO;
     
-    
+    NSString* str = [Helper returnCurrentDateString];
+    NSArray* arr = [str componentsSeparatedByString:@" "];
+    _strDateBegin = arr[0];
     [self uiConfig];
     [self createScoreBtn];
     [self getBallCode];
@@ -577,46 +579,48 @@
             
         }
         else{
-            if (indexPath.row  == _dictPeo.count + 2) {
-                JGLAddActivePlayViewController* addVc = [[JGLAddActivePlayViewController alloc]init];
-                addVc.model = _model;
-                addVc.blockSurePlayer = ^(NSMutableDictionary *dict,NSMutableArray* dataPeo , NSMutableArray* dataKey, NSMutableArray* userKey, NSMutableArray* mobielArr)
-                {
-                    _dictPeo = dict;
-                    _dataPeoBack = dataPeo;
-                    _dataKeyBack = dataKey;
-                    _userKeyArr  = userKey;
-                    _mobileArr   = mobielArr;
-                    NSIndexSet *indexSet=[[NSIndexSet alloc]initWithIndex:4];
-                    [_tableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationAutomatic];
-                };
-                addVc.dictFinish = _dictPeo;
-                addVc.dataKey    = _dataKeyBack;
-                addVc.dataPeoArr = _dataPeoBack;
-                addVc.userKey    = _userKeyArr;
-                addVc.mobileArr  = _mobileArr;
-                [self.navigationController pushViewController:addVc animated:YES];
-                
-            }
-            else{
-                if (_isTee == NO) {
-                    JGLPlayerNameTableViewCell* cell = [tableView cellForRowAtIndexPath:indexPath];
-                    _chooseView = [[JGLTeeChooseView alloc]initWithFrame:CGRectMake(screenWidth - 120*screenWidth/375,  cell.frame.origin.y - [_dataBallArray[2] count]* 40*screenWidth/375, 100*screenWidth/375, [_dataBallArray[2] count]* 40*screenWidth/375) withArray:_dataBallArray[2]];
-                    [tableView addSubview:_chooseView];
-                    _chooseView.blockTeeName = ^(NSString *strT){
-                        _strTee = strT;
-                        [_teeDictChoose setObject:_strTee forKey:[NSString stringWithFormat:@"%td",indexPath.row - 1]];
-                        [_chooseView removeFromSuperview];
-                        _isTee = NO;
-                        NSIndexPath *indexPath_1=[NSIndexPath indexPathForRow:indexPath.row inSection:4];
-                        NSArray *indexArray=[NSArray arrayWithObject:indexPath_1];
-                        [_tableView reloadRowsAtIndexPaths:indexArray withRowAnimation:UITableViewRowAnimationAutomatic];
+            if (indexPath.row > 0) {
+                if (indexPath.row  == _dictPeo.count + 2) {
+                    JGLAddActivePlayViewController* addVc = [[JGLAddActivePlayViewController alloc]init];
+                    addVc.model = _model;
+                    addVc.blockSurePlayer = ^(NSMutableDictionary *dict,NSMutableArray* dataPeo , NSMutableArray* dataKey, NSMutableArray* userKey, NSMutableArray* mobielArr)
+                    {
+                        _dictPeo = dict;
+                        _dataPeoBack = dataPeo;
+                        _dataKeyBack = dataKey;
+                        _userKeyArr  = userKey;
+                        _mobileArr   = mobielArr;
+                        NSIndexSet *indexSet=[[NSIndexSet alloc]initWithIndex:4];
+                        [_tableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationAutomatic];
                     };
-                    _isTee = YES;
+                    addVc.dictFinish = _dictPeo;
+                    addVc.dataKey    = _dataKeyBack;
+                    addVc.dataPeoArr = _dataPeoBack;
+                    addVc.userKey    = _userKeyArr;
+                    addVc.mobileArr  = _mobileArr;
+                    [self.navigationController pushViewController:addVc animated:YES];
+                    
                 }
                 else{
-                    [_chooseView removeFromSuperview];
-                    _isTee = NO;
+                    if (_isTee == NO) {
+                        JGLPlayerNameTableViewCell* cell = [tableView cellForRowAtIndexPath:indexPath];
+                        _chooseView = [[JGLTeeChooseView alloc]initWithFrame:CGRectMake(screenWidth - 120*screenWidth/375,  cell.frame.origin.y - [_dataBallArray[2] count]* 40*screenWidth/375, 100*screenWidth/375, [_dataBallArray[2] count]* 40*screenWidth/375) withArray:_dataBallArray[2]];
+                        [tableView addSubview:_chooseView];
+                        _chooseView.blockTeeName = ^(NSString *strT){
+                            _strTee = strT;
+                            [_teeDictChoose setObject:_strTee forKey:[NSString stringWithFormat:@"%td",indexPath.row - 1]];
+                            [_chooseView removeFromSuperview];
+                            _isTee = NO;
+                            NSIndexPath *indexPath_1=[NSIndexPath indexPathForRow:indexPath.row inSection:4];
+                            NSArray *indexArray=[NSArray arrayWithObject:indexPath_1];
+                            [_tableView reloadRowsAtIndexPaths:indexArray withRowAnimation:UITableViewRowAnimationAutomatic];
+                        };
+                        _isTee = YES;
+                    }
+                    else{
+                        [_chooseView removeFromSuperview];
+                        _isTee = NO;
+                    }
                 }
             }
         }

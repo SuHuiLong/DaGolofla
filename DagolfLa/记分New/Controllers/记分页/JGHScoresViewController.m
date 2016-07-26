@@ -32,6 +32,8 @@
     NSMutableDictionary *_macthDict;//结束页面的参数
     
     NSInteger _selectPage;
+    
+    NSInteger _selectcompleteHole;
 }
 
 @property (nonatomic, strong)NSMutableArray *userScoreArray;
@@ -91,6 +93,7 @@
     
     _selectHole = 0;
     _selectPage = 0;
+    _selectcompleteHole = 0;
     _item = [[UIBarButtonItem alloc]initWithTitle:@"保存" style:UIBarButtonItemStylePlain target:self action:@selector(saveScoresClick)];
     _item.tintColor=[UIColor whiteColor];
     self.navigationItem.rightBarButtonItem = _item;
@@ -163,8 +166,8 @@
 }
 #pragma mark -- 所有记分完成后
 - (void)noticeAllScoresCtrl{
-    _selectHole = 0;
-    [_item setTitle:@"结束记分"];
+    _selectcompleteHole = 1;
+    [_item setTitle:@"完成"];
     
 }
 #pragma mark -- getScoreList 获取活动计分列表
@@ -369,8 +372,8 @@
     } completionBlock:^(id data) {
         NSLog(@"%@", data);
         if ([[data objectForKey:@"packSuccess"]integerValue] == 1) {
-            if (_selectHole == 0) {
-                //结束记分  finishScore
+            if (_selectcompleteHole == 1) {
+                //完成  finishScore
                 NSMutableDictionary *finishDict = [NSMutableDictionary dictionary];
                 [finishDict setObject:DEFAULF_USERID forKey:@"userKey"];
                 [finishDict setObject:_scorekey forKey:@"scoreKey"];
@@ -399,7 +402,10 @@
                     }
                 }];
             }else{
-                [[ShowHUD showHUD]showToastWithText:@"记分保存成功！" FromView:self.view];
+                if (_selectcompleteHole != 1) {
+                    [[ShowHUD showHUD]showToastWithText:@"记分保存成功！" FromView:self.view];
+                }
+                
                 [self performSelector:@selector(scoresResult) withObject:self afterDelay:1.0];
             }
         }else{

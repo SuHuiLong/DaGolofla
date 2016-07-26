@@ -75,6 +75,15 @@
 
 -(void)finishAction
 {
+//    for (int i = 0; i < _dictFinish.count; i ++) {
+//        if ([DEFAULF_USERID integerValue] == [[_dictFinish allKeys][i] integerValue]) {
+//            [[ShowHUD showHUD]showToastWithText:@"您不能选择自己，请重新添加" FromView:self.view];
+//            [_dictFinish removeObjectForKey:[_dictFinish allKeys][i]];
+//            [_tableView reloadData];
+//            return;
+//        }
+//    }
+    
     _blockFriendDict(_dictFinish);
     [self.navigationController popViewControllerAnimated:YES];
 }
@@ -252,18 +261,23 @@
         }
     }
     else{
-        NSString *str=[_dictFinish objectForKey:[self.listArray[indexPath.section][indexPath.row] otherUserId]];
-        if ([Helper isBlankString:str]==YES) {
+        if (2 - _dictFinish.count < _lastIndex) {
+            NSString *str=[_dictFinish objectForKey:[self.listArray[indexPath.section][indexPath.row] otherUserId]];
+            if ([Helper isBlankString:str]==YES) {
+                
+                [_dictFinish setObject:[self.listArray[indexPath.section][indexPath.row] userName] forKey:[self.listArray[indexPath.section][indexPath.row] otherUserId]];
+                
+            }else{
+                [_dictFinish removeObjectForKey:[self.listArray[indexPath.section][indexPath.row] otherUserId]];
+            }
             
-            [_dictFinish setObject:[self.listArray[indexPath.section][indexPath.row] userName] forKey:[self.listArray[indexPath.section][indexPath.row] otherUserId]];
-            
-        }else{
-            [_dictFinish removeObjectForKey:[self.listArray[indexPath.section][indexPath.row] otherUserId]];
+            NSIndexPath *indexPath_1=[NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section];
+            NSArray *indexArray=[NSArray arrayWithObject:indexPath_1];
+            [_tableView reloadRowsAtIndexPaths:indexArray withRowAnimation:UITableViewRowAnimationAutomatic];
         }
-        
-        NSIndexPath *indexPath_1=[NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section];
-        NSArray *indexArray=[NSArray arrayWithObject:indexPath_1];
-        [_tableView reloadRowsAtIndexPaths:indexArray withRowAnimation:UITableViewRowAnimationAutomatic];
+        else{
+            [[ShowHUD showHUD]showToastWithText:@"您最多只能选择3个人" FromView:self.view];
+        }
     }
 }
 
