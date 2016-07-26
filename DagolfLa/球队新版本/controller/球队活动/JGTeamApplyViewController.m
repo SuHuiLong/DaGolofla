@@ -331,7 +331,7 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
     self.applyListView.hidden = NO;
     if (screenHeight < ((_applyArray.count * 30) + 108)){
         self.tranView.frame = CGRectMake(0, 0, screenWidth, 0);
-        self.applyListView.frame = CGRectMake(0, 0, screenWidth, screenHeight - 44-64);
+        self.applyListView.frame = CGRectMake(0, 0, screenWidth, screenHeight -64);
         [_applyListView configViewData:_applyArray];
     }else{
         self.tranView.frame = CGRectMake(0, 0, screenWidth, screenHeight - (152 + _applyArray.count * 30)-64 -44);
@@ -351,7 +351,7 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
     self.justApplyListView.hidden = NO;
     if (screenHeight < ((_applyArray.count * 30) + 108)){
         self.tranView.frame = CGRectMake(0, 0, screenWidth, 0);
-        self.justApplyListView.frame = CGRectMake(0, 0, screenWidth, screenHeight - 44-64);
+        self.justApplyListView.frame = CGRectMake(0, 0, screenWidth, screenHeight-64);
         [_justApplyListView configjustApplyViewData:_applyArray];
     }else{
         self.tranView.frame = CGRectMake(0, 0, screenWidth, screenHeight - (88 + _applyArray.count * 30)-64 -44);
