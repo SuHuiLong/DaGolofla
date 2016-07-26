@@ -715,25 +715,29 @@ static CGFloat ImageHeight  = 210.0;
         
         [self.navigationController pushViewController:setAwardCtrl animated:YES];
     }
-    
-    
-    
-    
 }
 #pragma mark -- 修改时间地点
 - (void)getTimeAndAddressClick:(UIButton *)btn{
-    DateTimeViewController *dataCtrl = [[DateTimeViewController alloc]init];
-    [dataCtrl setCallback:^(NSString *dateStr, NSString *dateWeek, NSString *str) {
-        if (btn.tag == 101) {
-            [self.model setValue:dateStr forKey:@"beginDate"];
-        }else{
-            [self.model setValue:[NSString stringWithFormat:@"%@ 23:59:59", dateStr] forKey:@"signUpEndTime"];
-        }
+    
+    if (btn.tag == 101) {
+        JGHDatePicksViewController *datePicksCrel = [[JGHDatePicksViewController alloc]init];
+        datePicksCrel.returnDateString = ^(NSString *dateString){
+            NSLog(@"%@", dateString);
+            [self.model setValue:dateString forKey:@"beginDate"];
+            _isEditor = 1;
+            [self.teamActibityNameTableView reloadData];
+        };
+        [self.navigationController pushViewController:datePicksCrel animated:YES];
+    }else{
         
-        _isEditor = 1;
-        [self.teamActibityNameTableView reloadData];
-    }];
-    [self.navigationController pushViewController:dataCtrl animated:YES];
+        DateTimeViewController *dataCtrl = [[DateTimeViewController alloc]init];
+        [dataCtrl setCallback:^(NSString *dateStr, NSString *dateWeek, NSString *str) {
+            [self.model setValue:[NSString stringWithFormat:@"%@ 23:59:59", dateStr] forKey:@"signUpEndTime"];
+            _isEditor = 1;
+            [self.teamActibityNameTableView reloadData];
+        }];
+        [self.navigationController pushViewController:dataCtrl animated:YES];
+    }
 }
 #pragma mark -- 修改价格
 - (void)editorCostClick:(UIButton *)btn{

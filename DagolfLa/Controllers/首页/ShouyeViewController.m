@@ -27,6 +27,9 @@
 #import "JGLPushDetailsViewController.h"
 #import "JGHEndScoresViewController.h"
 #import "JGNewCreateTeamTableViewController.h"
+
+#import "JGHDatePicksViewController.h"
+
 @interface ShouyeViewController ()<UIApplicationDelegate,CLLocationManagerDelegate>
 {
 //    UITableView *_tableView;
@@ -380,7 +383,7 @@
                 NSLog(@"jiaolian");
                 //JGHEndScoresViewController   TeacherViewController
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
-                JGHEndScoresViewController* teaVc = [[JGHEndScoresViewController alloc]init];
+                JGHDatePicksViewController* teaVc = [[JGHDatePicksViewController alloc]init];
                 [self.navigationController pushViewController:teaVc animated:YES];
             }
                 break;
