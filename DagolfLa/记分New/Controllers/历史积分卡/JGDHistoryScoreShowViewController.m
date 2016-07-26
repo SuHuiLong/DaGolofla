@@ -72,6 +72,7 @@
                     JGDHistoryScoreShowModel *model = self.dataArray[i];
                     label.text = [model.poles stringValue];
                     label.tag = 1000 + i;
+                    label.textColor = [UIColor colorWithHexString:@"#fe6424"];
                     label.textAlignment = NSTextAlignmentCenter;
                     label.font = [UIFont systemFontOfSize:30 * ProportionAdapter];
                     [view addSubview:label];

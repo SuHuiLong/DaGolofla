@@ -65,6 +65,25 @@
     return self;
 }
 
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    if (_backId != 1) {
+        UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+        btn.frame = BackBtnFrame;
+        btn.titleLabel.font = [UIFont systemFontOfSize:FontSize_Normal];
+        [btn setImage:[UIImage imageNamed:@"backL"] forState:UIControlStateNormal];
+        [btn addTarget:self action:@selector(endScoresAndBackClick:) forControlEvents:UIControlEventTouchUpInside];
+        UIBarButtonItem *leftItem = [[UIBarButtonItem alloc]initWithCustomView:btn];
+        self.navigationItem.leftBarButtonItem = leftItem;
+    }
+}
+
+- (void)endScoresAndBackClick:(UIButton *)btn{
+    [self.navigationController popToRootViewControllerAnimated:YES];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -519,7 +538,7 @@
 //    [[ShowHUD showHUD]showAnimationWithText:@"正在发布..." FromView:self.view];
 
     NSString* str = [[NSString alloc]init];
-    str = @"0";
+    str = @"1";
     //    BOOL type = 0;
     [_dict setValue:str forKey:@"moodType"];
     NSString* xIndex = [[NSString alloc]init];
@@ -533,10 +552,6 @@
     
     self.navigationItem.rightBarButtonItem.enabled = (_textView.text.length != 0);
     [_dict setValue:_textView.text forKey:@"moodContent"];
-    
-//    placeId
-//    poleNum
-//    playTimes
     
     if (![Helper isBlankString:_textView.text]) {
         if (_vedioData) {
@@ -577,8 +592,8 @@
                     if (_blockRereshing) {
                         _blockRereshing();
                     }
-                    [self.navigationController popViewControllerAnimated:YES];
                     
+                    [self.navigationController popToRootViewControllerAnimated:YES];
                 });
                 alertView.tag = 1000;
                 

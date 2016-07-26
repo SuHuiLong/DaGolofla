@@ -263,6 +263,9 @@ static NSString *const JGHScoresPageCellIdentifier = @"JGHScoresPageCell";
     
     [self isAllScoresArray:_dataArray];
 }
+//else if ([[model.pushrod objectAtIndex:i] integerValue] == -1){
+//break;
+//}
 #pragma mark -- 判断是否完成所有的记分
 - (void)isAllScoresArray:(NSMutableArray *)dataArray{
     for (int x=0; x<dataArray.count; x++) {
@@ -271,13 +274,12 @@ static NSString *const JGHScoresPageCellIdentifier = @"JGHScoresPageCell";
         for (int i=0; i<18; i++) {
             if ([[model.poleNumber objectAtIndex:i] integerValue] == -1) {
                 break;
-            }else if ([[model.pushrod objectAtIndex:i] integerValue] == -1){
-                break;
-            }else{
-                if ([[model.onthefairway objectAtIndex:i] integerValue] == -1) {
-                    break;
-                }
             }
+//            else{
+//                if ([[model.onthefairway objectAtIndex:i] integerValue] == -1) {
+//                    break;
+//                }
+//            }
             
             if (x == dataArray.count -1 && i == 17) {
                 NSLog(@"model.poleNumber == %@", model.poleNumber);

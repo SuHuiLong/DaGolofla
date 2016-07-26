@@ -80,7 +80,7 @@
 
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 4;
+    return 3;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -97,9 +97,6 @@
         cell.txFD.secureTextEntry = NO;
 
     }else if (indexPath.row == 1) {
-        cell.LB.text = @"原支付密码";
-        cell.txFD.placeholder = @"请填写您的原支付密码";
-    }else if (indexPath.row == 2) {
         cell.LB.text = @"新支付密码";
         cell.txFD.placeholder = @"请输入您的新支付密码";
     }else{
@@ -118,8 +115,8 @@
     JGDSetPayPasswordTableViewCell *cell1 = [self.tableV cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
     JGDSetPayPasswordTableViewCell *cell2 = [self.tableV cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
     JGDSetPayPasswordTableViewCell *cell3 = [self.tableV cellForRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]];
-    JGDSetPayPasswordTableViewCell *cell4 = [self.tableV cellForRowAtIndexPath:[NSIndexPath indexPathForRow:3 inSection:0]];
-    if (![cell3.txFD.text isEqualToString:cell4.txFD.text]) {
+
+    if (![cell3.txFD.text isEqualToString:cell2.txFD.text]) {
         [[ShowHUD showHUD]showToastWithText:@"密码输入不一致" FromView:self.view];
         return;
     }
@@ -131,7 +128,7 @@
     NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
     [dict setObject:DEFAULF_USERID forKey:@"userKey"];
     [dict setObject:cell1.txFD.text forKey:@"checkCode"];
-    [dict setObject:[JGDChangePasswordViewController md5HexDigest:cell2.txFD.text] forKey:@"oldPassWord"];
+//    [dict setObject:[JGDChangePasswordViewController md5HexDigest:cell2.txFD.text] forKey:@"oldPassWord"];
     [dict setObject:[JGDChangePasswordViewController md5HexDigest:cell3.txFD.text] forKey:@"newPassWord"];
     
     NSString *paraStr = [JGDChangePasswordViewController dictionaryToJson:dict];

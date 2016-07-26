@@ -8,6 +8,7 @@
 
 #import "JGHRetrieveScoreViewController.h"
 #import "JGHRetrieveScoreModel.h"
+#import "JGDHistoryScoreViewController.h"
 
 @interface JGHRetrieveScoreViewController ()<UITextFieldDelegate>
 {
@@ -200,6 +201,7 @@
     self.nameAndTime.text = [NSString stringWithFormat:@"%@  %@", _model.userName, _model.createtime];
     self.address.text = _model.ballName;
 }
+
 #pragma mark -- 放入记分卡
 - (IBAction)inScoressBtnClick:(UIButton *)sender {
     
@@ -214,6 +216,8 @@
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
             //32169
             [[ShowHUD showHUD]showToastWithText:@"放入记分成功！" FromView:self.view];
+            [self performSelector:@selector(pop) withObject:self afterDelay:1];
+
         }else{
             if ([data objectForKey:@"packResultMsg"]) {
                 [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
@@ -222,5 +226,8 @@
     }];
 }
 
+- (void)pop{
+    [self.navigationController popViewControllerAnimated:YES];
+}
 
 @end

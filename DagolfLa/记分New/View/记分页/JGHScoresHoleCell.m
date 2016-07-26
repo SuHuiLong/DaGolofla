@@ -8,6 +8,8 @@
 
 #import "JGHScoresHoleCell.h"
 
+#define BGScoreColor @"#B3E4BF"
+
 @implementation JGHScoresHoleCell
 
 - (void)awakeFromNib {
@@ -33,7 +35,7 @@
     
 }
 
-- (void)configAllViewBgColor:(NSString *)colorString{
+- (void)configAllViewBgColor:(NSString *)colorString andCellTag:(NSInteger)tag{
     self.name.backgroundColor = [UIColor colorWithHexString:colorString];
     self.one.backgroundColor = [UIColor colorWithHexString:colorString];
     self.two.backgroundColor = [UIColor colorWithHexString:colorString];
@@ -44,6 +46,13 @@
     self.seven.backgroundColor = [UIColor colorWithHexString:colorString];
     self.eight.backgroundColor = [UIColor colorWithHexString:colorString];
     self.nine.backgroundColor = [UIColor colorWithHexString:colorString];
+    if (self.tag == 0) {
+        UIButton * temp = [self viewWithTag:tag];
+        temp.backgroundColor = [UIColor colorWithHexString:BGScoreColor];
+    }else{
+        UIButton * temp = [self viewWithTag:tag];
+        temp.backgroundColor = [UIColor colorWithHexString:BGScoreColor];
+    }
 }
 
 - (void)configArray:(NSArray *)array{

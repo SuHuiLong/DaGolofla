@@ -10,6 +10,9 @@
 //#import "Helper.h"
 //#import "PostDataRequest.h"
 #import "RCDraggableButton.h"
+
+#import "JGNewCreateTeamTableViewController.h"
+
 @interface ChangePicViewController ()<UIWebViewDelegate>
 
 @property(nonatomic,retain)UIWebView *webView;
@@ -98,6 +101,39 @@
         return NO;
         
     }
+    
+    
+    NSString *str = [[request.URL absoluteString] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    // create
+    if ([str containsString:@"createTeam"]) {
+        NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
+        if ([user objectForKey:@"cacheCreatTeamDic"]) {
+            UIAlertController *alert=[UIAlertController alertControllerWithTitle:@"提示" message:@"是否继续上次编辑" preferredStyle:UIAlertControllerStyleAlert];
+            
+            UIAlertAction *action1=[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                [user setObject:0 forKey:@"cacheCreatTeamDic"];
+                JGNewCreateTeamTableViewController *creatteamVc = [[JGNewCreateTeamTableViewController alloc] init];
+                [self.navigationController pushViewController:creatteamVc animated:YES];
+            }];
+            UIAlertAction* action2=[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                JGNewCreateTeamTableViewController *creatteamVc = [[JGNewCreateTeamTableViewController alloc] init];
+                creatteamVc.detailDic = [user objectForKey:@"cacheCreatTeamDic"];
+                creatteamVc.titleField.text = [[user objectForKey:@"cacheCreatTeamDic"] objectForKey:@"name"];
+                
+                [self.navigationController pushViewController:creatteamVc animated:YES];
+            }];
+            
+            [alert addAction:action1];
+            [alert addAction:action2];
+            [self presentViewController:alert animated:YES completion:nil];
+            
+        }else{
+            JGNewCreateTeamTableViewController *creatteamVc = [[JGNewCreateTeamTableViewController alloc] init];
+            [self.navigationController pushViewController:creatteamVc animated:YES];
+        }
+        return NO;
+    }
+    
     return YES;
 }
 
