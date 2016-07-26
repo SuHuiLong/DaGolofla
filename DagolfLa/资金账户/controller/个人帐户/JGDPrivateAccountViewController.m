@@ -35,15 +35,13 @@
     [[JsonHttp jsonHttp]httpRequest:@"user/getUserBalance" JsonKey:nil withData:dic requestMethod:@"GET" failedBlock:^(id errType) {
         NSLog(@"errtype == %@", errType);
     } completionBlock:^(id data) {
-        
-        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+            if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
             self.money = [data objectForKey:@"money"] ;
             self.hasUserRealName = [data objectForKey:@"hasUserRealName"] ;
             self.isSetPayPassWord = [data objectForKey:@"isSetPayPassWord"] ;
 
             self.moneyLabel.text = [NSString stringWithFormat:@"¥%.2f",[self.money floatValue]];
         
-            
             UITapGestureRecognizer *gest = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(removeView:)];
             if ([[data objectForKey:@"hasUserRealName"] integerValue] == 0) {
                 UIImageView *imageV = [[UIImageView alloc] initWithFrame:[UIScreen mainScreen].bounds];
