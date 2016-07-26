@@ -32,7 +32,7 @@
     NSMutableArray* _dataArray;
     
     NSMutableDictionary* _dataAccountDict;
-    NSMutableDictionary* _dataName;//存放名字，通过key查找数组中key对应的name
+
     
 }
 @property (nonatomic, strong) UISearchController *searchController;
@@ -52,24 +52,22 @@
     _keyArray        = [[NSMutableArray alloc]init];
     _listArray       = [[NSMutableArray alloc]init];
     _dataArray       = [[NSMutableArray alloc]init];
-    
-    if (_dataPeoArr.count  == 0) {
-        _dataPeoArr        = [[NSMutableArray alloc]init];
+    if (_dataPeoArr.count == 0) {
+        _dataPeoArr      = [[NSMutableArray alloc]init];
     }
-    if (_mobileArr.count   == 0) {
-        _mobileArr         = [[NSMutableArray alloc]init];
+    if (_mobileArr.count == 0) {
+        _mobileArr      = [[NSMutableArray alloc]init];
     }
-    if (_dataKey.count     == 0) {
-        _dataKey           = [[NSMutableArray alloc]init];
+    if (_dataKey.count == 0) {
+        _dataKey         = [[NSMutableArray alloc]init];
     }
-    if (_userKey.count     == 0) {
-        _userKey           = [[NSMutableArray alloc]init];
+    if (_userKey.count == 0) {
+        _userKey      = [[NSMutableArray alloc]init];
     }
-    if (_dictFinish.count  == 0) {
-        _dictFinish        = [[NSMutableDictionary alloc]init];
+    if (_dictFinish.count == 0) {
+        _dictFinish      = [[NSMutableDictionary alloc]init];
     }
-    _dataAccountDict       = [[NSMutableDictionary alloc]init];
-    _dataName              = [[NSMutableDictionary alloc]init];
+    _dataAccountDict = [[NSMutableDictionary alloc]init];
     [self uiConfig];
     [self createHeadSearch];
     [self createBtn];
@@ -298,23 +296,17 @@
     
     
 }
-static int clickNum = 0;
+
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (tableView.tag == 1001) {
         if (_dataPeoArr.count < 3) {
             if (_dataPeoArr.count != 0) {
-                
                 NSString *str=[_dictFinish objectForKey:[NSString stringWithFormat:@"%td%td",indexPath.section,indexPath.row]];
-                
                 if ([Helper isBlankString:str]==YES) {
-                    clickNum ++;
                     [_dictFinish setObject:[self.listArray[indexPath.section][indexPath.row] timeKey] forKey:[NSString stringWithFormat:@"%td%td",indexPath.section,indexPath.row]];
                     [_dataKey addObject:[NSString stringWithFormat:@"%td%td",indexPath.section,indexPath.row]];
-                    [_dataPeoArr addObject:[self.listArray[indexPath.section][indexPath.row] userName]];
-//                    if (![Helper isBlankString:str]) {
-                        [_dataName setObject:[self.listArray[indexPath.section][indexPath.row] userName] forKey:[NSNumber numberWithInt:clickNum]];
-//                    }
+                    [_dataPeoArr addObject:[self.listArray[indexPath.section][indexPath.row] timeKey]];
                     [_userKey addObject:[self.listArray[indexPath.section][indexPath.row] userKey]];
                     if (![Helper isBlankString:[self.listArray[indexPath.section][indexPath.row] mobile]]) {
                         [_mobileArr addObject:[self.listArray[indexPath.section][indexPath.row] mobile]];
@@ -327,8 +319,7 @@ static int clickNum = 0;
                 }else{
                     [_dictFinish removeObjectForKey:[NSString stringWithFormat:@"%td%td",indexPath.section,indexPath.row]];
                     //            _dataPeoArr
-                    clickNum --;
-                    [_dataPeoArr removeObject:@(clickNum)];
+                    [_dataPeoArr removeObject:str];
                     for (int i = 0; i < _dataPeoArr.count; i++) {
                         if ([Helper isBlankString:str]) {
                             [_dataPeoArr removeObjectAtIndex:i];
@@ -341,9 +332,9 @@ static int clickNum = 0;
                 }
             }
             else{
-                [_dictFinish setObject:[self.listArray[indexPath.section][indexPath.row] timeKey] forKey:[NSString stringWithFormat:@"%td%td",indexPath.section,indexPath.row]];
+                [_dictFinish setObject:[self.listArray[indexPath.section][indexPath.row] name] forKey:[NSString stringWithFormat:@"%td%td",indexPath.section,indexPath.row]];
                 [_dataKey addObject:[NSString stringWithFormat:@"%td%td",indexPath.section,indexPath.row]];
-                [_dataPeoArr addObject:[self.listArray[indexPath.section][indexPath.row] userName]];
+                [_dataPeoArr addObject:[self.listArray[indexPath.section][indexPath.row] name]];
                 [_userKey addObject:[self.listArray[indexPath.section][indexPath.row] userKey]];
                 if (![Helper isBlankString:[self.listArray[indexPath.section][indexPath.row] mobile]]) {
                     [_mobileArr addObject:[self.listArray[indexPath.section][indexPath.row] mobile]];
@@ -369,8 +360,7 @@ static int clickNum = 0;
                     continue;
                 }
                 NSLog(@"%@",_dataPeoArr[indexPath.row -1]);
-                ;
-                if ([[_dataName objectForKey:[_dictFinish objectForKey:_dataKey[i]]] isEqualToString:_dataPeoArr[indexPath.row-1]] == YES) {
+                if ([[_dictFinish objectForKey:_dataKey[i]] isEqualToString:_dataPeoArr[indexPath.row-1]] == YES) {
                     NSLog(@"%@",[_dictFinish allValues][i]);
                     [_dictFinish removeObjectForKey:_dataKey[i]];
                     [_dataKey removeObjectAtIndex:indexPath.row-1];

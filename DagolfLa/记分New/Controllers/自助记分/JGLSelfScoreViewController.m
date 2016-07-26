@@ -139,8 +139,9 @@
             }
             NSArray* arr = [_dictPeo allKeys];
             NSString* str = [NSString stringWithFormat:@"%@",arr[i-1]];
-            if (str.length >= 11) {
-                 [dict1 setObject:[_dictPeo allKeys][i -1] forKey:@"userKey"];//用户Key
+//            if (str.length >= 11) {
+            if (![Helper isBlankString:[_dictPeo allKeys][i -1]]) {
+                [dict1 setObject:[_dictPeo allKeys][i -1] forKey:@"userKey"];//用户Key
             }
             else{
                 [dict1 setObject:@0 forKey:@"userKey"];//用户Key
@@ -200,6 +201,7 @@
     if (indexPath.section == 0) {
         JGLChooseBallTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"JGLChooseBallTableViewCell"];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         if (![Helper isBlankString:_strBall]) {
             cell.labelTitle.text = _strBall;
             [cell.iconImg sd_setImageWithURL:[Helper imageIconUrl:_strBallLogo] placeholderImage:[UIImage imageNamed:TeamLogoImage]];
