@@ -300,6 +300,11 @@
     
     if ([model.scoreFinish integerValue] == 0) {
         JGHScoresViewController *scoreVC = [[JGHScoresViewController alloc] init];
+        NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
+        if ([userdef objectForKey:@"currentScorePage"]) {
+            scoreVC.currentPage = [[userdef objectForKey:@"currentScorePage"] integerValue];
+        }
+        
         scoreVC.scorekey = [NSString stringWithFormat:@"%@", model.timeKey];
         [self.navigationController pushViewController:scoreVC animated:YES];
     }else{
