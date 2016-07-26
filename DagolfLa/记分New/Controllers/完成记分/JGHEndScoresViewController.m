@@ -592,8 +592,8 @@
                     if (_blockRereshing) {
                         _blockRereshing();
                     }
-                    [self.navigationController popViewControllerAnimated:YES];
                     
+                    [self.navigationController popToRootViewControllerAnimated:YES];
                 });
                 alertView.tag = 1000;
                 

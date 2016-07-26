@@ -222,6 +222,7 @@
                     JGHScoresViewController* scrVc = [[JGHScoresViewController alloc]init];
                     scrVc.scorekey = [NSString stringWithFormat:@"%@",[data objectForKey:@"scoreKey"]];
                     scrVc.backId = 1;
+                    [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
                     [self.navigationController pushViewController:scrVc animated:YES];
                     
                 } withBlock:^(UIAlertController *alertView) {
