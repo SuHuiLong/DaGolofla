@@ -169,6 +169,10 @@
     
     
     NSMutableArray *userArray = [NSMutableArray array];
+    if (_teeDictChoose.count < _dictPeo.count+1) {
+        [[ShowHUD showHUD]showToastWithText:@"请选择添加成员的Tee台" FromView:self.view];
+        return;
+    }
     for (int i=0; i<_teeDictChoose.count; i++) {
         NSMutableDictionary *dict1 = [NSMutableDictionary dictionary];
         if (i == 0) {
@@ -307,14 +311,30 @@
                 JGLPlayerNameTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"JGLPlayerNameTableViewCell" forIndexPath:indexPath];
                 cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
                 cell.selectionStyle = UITableViewCellSelectionStyleNone;
-                if (![Helper isBlankString:_strTee]) {
-                    cell.iconImgv.hidden = NO;
-                    [cell showTee:_strTee];
+                NSLog(@"%td",indexPath.row);
+                if (_teeDictChoose.count <= indexPath.row) {
+                    if (![Helper isBlankString:[_teeDictChoose objectForKey:[NSString stringWithFormat:@"%td",indexPath.row - 1]]]) {
+                        cell.iconImgv.hidden = NO;
+                        [cell showTee:_strTee];
+                    }
+                    else{
+                        cell.iconImgv.hidden = YES;
+                        cell.labelTee.text = @"请选择tee台";
+                    }
                 }
                 else{
                     cell.iconImgv.hidden = YES;
                     cell.labelTee.text = @"请选择tee台";
                 }
+               
+//                if (![Helper isBlankString:_strTee]) {
+//                    cell.iconImgv.hidden = NO;
+//                    [cell showTee:_strTee];
+//                }
+//                else{
+//                    cell.iconImgv.hidden = YES;
+//                    cell.labelTee.text = @"请选择tee台";
+//                }
                 cell.labelName.text = [_dictPeo allValues][indexPath.row-2];
                 return cell;
             }

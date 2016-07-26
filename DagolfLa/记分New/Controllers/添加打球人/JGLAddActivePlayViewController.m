@@ -327,6 +327,7 @@ static int clickNum = 0;
                 }else{
                     [_dictFinish removeObjectForKey:[NSString stringWithFormat:@"%td%td",indexPath.section,indexPath.row]];
                     //            _dataPeoArr
+                    clickNum --;
                     [_dataPeoArr removeObject:@(clickNum)];
                     for (int i = 0; i < _dataPeoArr.count; i++) {
                         if ([Helper isBlankString:str]) {
