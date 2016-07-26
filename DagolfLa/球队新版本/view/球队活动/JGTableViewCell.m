@@ -66,7 +66,7 @@
 
 - (void)configTimeString:(JGTeamAcitivtyModel *)model andTag:(NSInteger)tag{
     if (tag == 1) {
-        self.contions.text = [[model.beginDate componentsSeparatedByString:@" "] objectAtIndex:0];//活动开始时间
+        self.contions.text = model.beginDate;//活动开始时间
     }
     
     if (tag == 2) {
