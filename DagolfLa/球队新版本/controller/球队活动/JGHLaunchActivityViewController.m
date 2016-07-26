@@ -355,11 +355,13 @@ static CGFloat ImageHeight  = 210.0;
         }
     }
 }
+
 - (nullable UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     UIView *footView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, 10)];
     footView.backgroundColor = [UIColor colorWithHexString:BG_color];
     return footView;
 }
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     _photos = 1;
     if (indexPath.section == 1) {

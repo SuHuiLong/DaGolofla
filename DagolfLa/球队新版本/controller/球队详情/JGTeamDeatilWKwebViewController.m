@@ -308,6 +308,7 @@
         [alert show];
     }];
 }
+
 -(void)shareWithInfo:(NSInteger)index
 {
     
