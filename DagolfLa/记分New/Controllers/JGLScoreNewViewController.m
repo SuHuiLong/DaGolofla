@@ -225,10 +225,12 @@
                     [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
                     scrVc.scorekey = [NSString stringWithFormat:@"%@",[data objectForKey:@"scoreKey"]];
                     NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
-                    if ([userdef objectForKey:@"currentScorePage"]) {
-                        scrVc.currentPage = [[userdef objectForKey:@"currentScorePage"] integerValue];
+                    
+                    if ([userdef objectForKey:[NSString stringWithFormat:@"%@", [data objectForKey:@"scoreKey"]]]) {
+                        scrVc.currentPage = [[userdef objectForKey:[NSString stringWithFormat:@"%@", [data objectForKey:@"scoreKey"]]] integerValue];
                     }
                     
+                    NSLog(@"%@", [userdef objectForKey:[data objectForKey:@"scoreKey"]]);
                     [self.navigationController pushViewController:scrVc animated:YES];
                 } withBlock:^(UIAlertController *alertView) {
                     [self.navigationController presentViewController:alertView animated:YES completion:nil];

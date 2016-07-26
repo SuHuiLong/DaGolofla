@@ -452,12 +452,14 @@
 - (void)scoresResult{
     NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
     if (_selectPage > 0) {
-        [userdef setObject:@(_selectPage-1) forKey:@"currentScorePage"];
+        [userdef setObject:@(_selectPage-1) forKey:[NSString stringWithFormat:@"%@", _scorekey]];
     }else{
-        [userdef setObject:@(_selectPage) forKey:@"currentScorePage"];
+        [userdef setObject:@(_selectPage) forKey:[NSString stringWithFormat:@"%@", _scorekey]];
     }
     
     [userdef synchronize];
+    
+    NSLog(@"%@", [userdef objectForKey:[NSString stringWithFormat:@"%@", _scorekey]]);
     JGDHistoryScoreViewController *historyCtrl = [[JGDHistoryScoreViewController alloc]init];
     [self.navigationController pushViewController:historyCtrl animated:YES];
 }
