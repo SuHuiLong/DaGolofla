@@ -175,8 +175,27 @@
         JGHTradRecordViewController *tradRecordCtrl = [[JGHTradRecordViewController alloc]init];
         [self.navigationController pushViewController:tradRecordCtrl animated:YES];
     }else{
-        JGLBankListViewController* userVc = [[JGLBankListViewController alloc]init];
-        [self.navigationController pushViewController:userVc animated:YES];
+        
+        if (([self.hasUserRealName integerValue] == 0)||([self.hasUserRealName integerValue] == 2)) {
+            UIAlertController *alert=[UIAlertController alertControllerWithTitle:@"提示" message:@"是否前往实名认证" preferredStyle:UIAlertControllerStyleAlert];
+            
+            UIAlertAction *action1=[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                [alert dismissViewControllerAnimated:YES completion:nil];
+                
+            }];
+            UIAlertAction* action2=[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                JGDCertificationViewController *createCertVc = [[JGDCertificationViewController alloc] init];
+                [self.navigationController pushViewController:createCertVc animated:YES];
+            }];
+            
+            [alert addAction:action1];
+            [alert addAction:action2];
+            [self presentViewController:alert animated:YES completion:nil];
+            
+        }else{
+            JGLBankListViewController* userVc = [[JGLBankListViewController alloc]init];
+            [self.navigationController pushViewController:userVc animated:YES];
+        }
     }
 }
 
@@ -186,7 +205,7 @@
 - (void)takeMoney:(UIButton *)btn{
     
     
-    if ([self.hasUserRealName integerValue] == 0) {
+    if (([self.hasUserRealName integerValue] == 0)||([self.hasUserRealName integerValue] == 2)) {
         UIAlertController *alert=[UIAlertController alertControllerWithTitle:@"提示" message:@"是否前往实名认证" preferredStyle:UIAlertControllerStyleAlert];
         
         UIAlertAction *action1=[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
