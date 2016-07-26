@@ -208,10 +208,6 @@
             NSLog(@"%@", data);
             if ([[data objectForKey:@"scoreKey"] integerValue] != 0) {
                 [Helper alertViewWithTitle:@"您还有记分尚未完成，是否前往继续记分" withBlockCancle:^{
-                    JGHScoresViewController* scrVc = [[JGHScoresViewController alloc]init];
-                    scrVc.scorekey = [NSString stringWithFormat:@"%@",[data objectForKey:@"scoreKey"]];
-                    [self.navigationController pushViewController:scrVc animated:YES];
-                } withBlockSure:^{
                     if ([[data objectForKey:@"acBoolean"] integerValue] == 1) {
                         JGLChooseScoreViewController* chooVc = [[JGLChooseScoreViewController alloc]init];
                         [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
@@ -222,6 +218,12 @@
                         JGLSelfScoreViewController* SsVc = [[JGLSelfScoreViewController alloc]init];
                         [self.navigationController pushViewController:SsVc animated:YES];
                     }
+                } withBlockSure:^{
+                    JGHScoresViewController* scrVc = [[JGHScoresViewController alloc]init];
+                    scrVc.scorekey = [NSString stringWithFormat:@"%@",[data objectForKey:@"scoreKey"]];
+                    scrVc.backId = 1;
+                    [self.navigationController pushViewController:scrVc animated:YES];
+                    
                 } withBlock:^(UIAlertController *alertView) {
                     [self.navigationController presentViewController:alertView animated:YES completion:nil];
                 }];

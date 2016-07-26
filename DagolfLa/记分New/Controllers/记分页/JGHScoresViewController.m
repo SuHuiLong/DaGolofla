@@ -30,6 +30,8 @@
     UIButton *_arrowBtn;
     
     NSMutableDictionary *_macthDict;//结束页面的参数
+    
+    NSInteger _selectPage;
 }
 
 @property (nonatomic, strong)NSMutableArray *userScoreArray;
@@ -48,6 +50,21 @@
     return self;
 }
 
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    if (_backId != 1) {
+        UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+        btn.frame = BackBtnFrame;
+        btn.titleLabel.font = [UIFont systemFontOfSize:FontSize_Normal];
+        [btn setImage:[UIImage imageNamed:@"backL"] forState:UIControlStateNormal];
+        [btn addTarget:self action:@selector(saveScoresAndBackClick:) forControlEvents:UIControlEventTouchUpInside];
+        UIBarButtonItem *leftItem = [[UIBarButtonItem alloc]initWithCustomView:btn];
+        self.navigationItem.leftBarButtonItem = leftItem;
+    }
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -55,7 +72,7 @@
     
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(noticePushScoresCtrl:) name:@"noticePushScores" object:nil];
     
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(noticeAllScoresCtrl:) name:@"noticeAllScores" object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(noticeAllScoresCtrl) name:@"noticeAllScores" object:nil];
     
     UIView *titleView = [[UIView alloc]initWithFrame:CGRectMake(110*ProportionAdapter, 0, 80*ProportionAdapter, 44)];
     self.titleBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 80*ProportionAdapter, 44)];
@@ -73,7 +90,8 @@
     self.navigationItem.titleView = titleView;
     
     _selectHole = 0;
-    _item = [[UIBarButtonItem alloc]initWithTitle:@"保存" style:UIBarButtonItemStylePlain target:self action:@selector(saveScoresClick:)];
+    _selectPage = 0;
+    _item = [[UIBarButtonItem alloc]initWithTitle:@"保存" style:UIBarButtonItemStylePlain target:self action:@selector(saveScoresClick)];
     _item.tintColor=[UIColor whiteColor];
     self.navigationItem.rightBarButtonItem = _item;
     
@@ -83,6 +101,54 @@
     }
     
     [self getScoreList];
+}
+#pragma mark -- 返回 保存
+- (void)saveScoresAndBackClick:(UIButton *)btn{
+    btn.enabled = NO;
+    //保存
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    [dict setObject:DEFAULF_USERID forKey:@"userKey"];
+    NSMutableArray *listArray = [NSMutableArray array];
+    for (JGHScoreListModel *model in self.userScoreArray) {
+        NSMutableDictionary *listDict = [NSMutableDictionary dictionary];
+        if (model.userKey) {
+            [listDict setObject:model.userKey forKey:@"userKey"];// 用户Key
+        }else{
+            [listDict setObject:@(0) forKey:@"userKey"];// 用户Key
+        }
+        
+        [listDict setObject:model.userName forKey:@"userName"];// 用户名称
+        if (model.userMobile) {
+            [listDict setObject:model.userMobile forKey:@"userMobile"];// 手机号
+        }else{
+            [listDict setObject:@"" forKey:@"userMobile"];// 手机号
+        }
+        [listDict setObject:model.tTaiwan forKey:@"tTaiwan"];// T台
+        [listDict setObject:model.poleNumber forKey:@"poleNumber"];// 球队杆数
+        [listDict setObject:model.pushrod forKey:@"pushrod"];// 推杆
+        [listDict setObject:model.onthefairway forKey:@"onthefairway"];// 是否上球道
+        [listDict setObject:model.timeKey forKey:@"timeKey"];// 是否上球道
+        [listArray addObject:listDict];
+    }
+    
+    [dict setObject:listArray forKey:@"list"];
+    
+    [[JsonHttp jsonHttp]httpRequestWithMD5:@"score/saveScore" JsonKey:nil withData:dict failedBlock:^(id errType) {
+        
+    } completionBlock:^(id data) {
+        NSLog(@"%@", data);
+        if ([[data objectForKey:@"packSuccess"]integerValue] == 1) {
+
+            [[ShowHUD showHUD]showToastWithText:@"记分保存成功！" FromView:self.view];
+            [self performSelector:@selector(scoresResult) withObject:self afterDelay:1.0];
+        }else{
+            if ([data objectForKey:@"packResultMsg"]) {
+                [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+            }
+        }
+    }];
+    
+    btn.enabled = YES;
 }
 #pragma mark -- 点击杆数跳转到指定的积分页面
 - (void)noticePushScoresCtrl:(NSNotification *)not{
@@ -96,8 +162,8 @@
     [[ShowHUD showHUD]showToastWithText:[NSString stringWithFormat:@"第-%td-洞", [[not.userInfo objectForKey:@"index"] integerValue]+1] FromView:self.view];
 }
 #pragma mark -- 所有记分完成后
-- (void)noticeAllScoresCtrl:(NSNotification *)not{
-    _selectHole = 1;
+- (void)noticeAllScoresCtrl{
+    _selectHole = 0;
     [_item setTitle:@"结束记分"];
     
 }
@@ -151,6 +217,24 @@
                     [_macthDict setObject:[scoreDict objectForKey:@"ballKey"] forKey:@"ballKey"];
                     [_macthDict setObject:[scoreDict objectForKey:@"createtime"] forKey:@"createtime"];
                 }
+                
+                for (int x=0; x<dataArray.count; x++) {
+                    JGHScoreListModel *model = [[JGHScoreListModel alloc]init];
+                    model = self.userScoreArray[x];
+                    for (int i=0; i<18; i++) {
+                        if ([[model.poleNumber objectAtIndex:i] integerValue] == -1) {
+                            break;
+                        }else{
+                            if ([[model.onthefairway objectAtIndex:i] integerValue] == -1) {
+                                break;
+                            }
+                        }
+                        
+                        if (x == dataArray.count -1 && i == 17) {
+                            [self noticeAllScoresCtrl];
+                        }
+                    }
+                }
             }
         }else{
             if ([data objectForKey:@"packResultMsg"]) {
@@ -164,10 +248,12 @@
     NSLog(@"XXX dong");
     if (_selectHole == 0) {
         _selectHole = 1;
+        [_item setTitle:@"结束记分"];
         [_arrowBtn setImage:[UIImage imageNamed:@"arrowTop"] forState:UIControlStateNormal];
         _scoresView = [[JGHScoresHoleView alloc]init];
         _scoresView.frame = CGRectMake(0, 0, screenWidth, (194 + self.userScoreArray.count * 60)*ProportionAdapter);
         _scoresView.dataArray = self.userScoreArray;
+        _scoresView.curPage = _selectPage;
         [self.view addSubview:_scoresView];
         [_scoresView reloadScoreList];//更新UI位置
         _tranView = [[UIView alloc]initWithFrame:CGRectMake(0, _scoresView.frame.size.height, screenWidth, (screenHeight -64)-(194 + self.userScoreArray.count * 60)*ProportionAdapter)];
@@ -237,19 +323,19 @@
 - (void)pageViewController:(UIPageViewController *)pageViewController didFinishAnimating:(BOOL)finished previousViewControllers:(NSArray *)previousViewControllers transitionCompleted:(BOOL)completed
 {
     JGHScoresMainViewController *sub = (JGHScoresMainViewController *)pageViewController.viewControllers[0];
-    NSInteger index = sub.index;
-    _pageControl.currentPage = index;
+    
     __weak JGHScoresViewController *weakSelf = self;
     sub.returnScoresDataArray= ^(NSMutableArray *dataArray){
         weakSelf.userScoreArray = dataArray;
     };
     [self.titleBtn setTitle:[NSString stringWithFormat:@"%td HOLE", sub.index+1] forState:UIControlStateNormal];
+    _selectPage = sub.index+1;
 //    [[ShowHUD showHUD]showToastWithText:[NSString stringWithFormat:@"第-%td-洞", sub.index+1] FromView:self.view];
 }
 
 #pragma mark -- 保存
-- (void)saveScoresClick:(UIBarButtonItem *)item{
-    item.enabled = NO;
+- (void)saveScoresClick{
+    _item.enabled = NO;
     //保存
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     [dict setObject:DEFAULF_USERID forKey:@"userKey"];
@@ -283,7 +369,7 @@
     } completionBlock:^(id data) {
         NSLog(@"%@", data);
         if ([[data objectForKey:@"packSuccess"]integerValue] == 1) {
-            if (_selectHole != 0) {
+            if (_selectHole == 0) {
                 //结束记分  finishScore
                 NSMutableDictionary *finishDict = [NSMutableDictionary dictionary];
                 [finishDict setObject:DEFAULF_USERID forKey:@"userKey"];
@@ -314,6 +400,7 @@
                 }];
             }else{
                 [[ShowHUD showHUD]showToastWithText:@"记分保存成功！" FromView:self.view];
+                [self performSelector:@selector(scoresResult) withObject:self afterDelay:1.0];
             }
         }else{
             if ([data objectForKey:@"packResultMsg"]) {
@@ -322,7 +409,12 @@
         }
     }];
     
-    item.enabled = YES;
+    _item.enabled = YES;
+}
+#pragma mark --历史记分
+- (void)scoresResult{
+    JGDHistoryScoreViewController *historyCtrl = [[JGDHistoryScoreViewController alloc]init];
+    [self.navigationController pushViewController:historyCtrl animated:YES];
 }
 #pragma mark -- 完成记分
 - (void)pushJGHEndScoresViewController{

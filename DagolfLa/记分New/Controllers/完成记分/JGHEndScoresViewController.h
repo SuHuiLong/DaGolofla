@@ -25,4 +25,7 @@ typedef void(^BlockRereshingk)();
 @property (nonatomic, strong)NSMutableDictionary *dict;
 
 
+@property (nonatomic, assign)NSInteger backId;
+
+
 @end

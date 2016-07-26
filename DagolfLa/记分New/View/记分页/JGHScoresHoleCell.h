@@ -48,7 +48,7 @@
 - (IBAction)nineBtnClick:(UIButton *)sender;
 
 #pragma mark -- 设置颜色
-- (void)configAllViewBgColor:(NSString *)colorString;
+- (void)configAllViewBgColor:(NSString *)colorString andCellTag:(NSInteger)tag;
 
 - (void)configArray:(NSArray *)array;
 

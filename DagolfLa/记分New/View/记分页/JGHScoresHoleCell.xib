@@ -14,21 +14,6 @@
                 <rect key="frame" x="0.0" y="0.0" width="312" height="43.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dbl-Gm-u4h">
-                        <rect key="frame" x="34" y="0.0" width="30" height="43.5"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="71" id="6yJ-4d-7xf"/>
-                        </constraints>
-                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                        <variation key="default">
-                            <mask key="constraints">
-                                <exclude reference="6yJ-4d-7xf"/>
-                            </mask>
-                        </variation>
-                        <connections>
-                            <action selector="oneBtnClick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="BLL-ug-73o"/>
-                        </connections>
-                    </button>
                     <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hXY-d4-snT">
                         <rect key="frame" x="65" y="0.0" width="30" height="43.5"/>
                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
@@ -89,6 +74,21 @@
                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                         <connections>
                             <action selector="nineBtnClick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="cEi-h5-r5d"/>
+                        </connections>
+                    </button>
+                    <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dbl-Gm-u4h">
+                        <rect key="frame" x="34" y="0.0" width="30" height="43.5"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="71" id="6yJ-4d-7xf"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="6yJ-4d-7xf"/>
+                            </mask>
+                        </variation>
+                        <connections>
+                            <action selector="oneBtnClick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="BLL-ug-73o"/>
                         </connections>
                     </button>
                 </subviews>
