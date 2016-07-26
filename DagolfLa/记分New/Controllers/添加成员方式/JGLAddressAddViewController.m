@@ -92,22 +92,16 @@
     ABAddressBookRef addressBooks = nil;
     
     if ([[UIDevice currentDevice].systemVersion floatValue] >= 6.0)
-        
     {
         addressBooks =  ABAddressBookCreateWithOptions(NULL, NULL);
-        
         //获取通讯录权限
-        
         dispatch_semaphore_t sema = dispatch_semaphore_create(0);
-        
         ABAddressBookRequestAccessWithCompletion(addressBooks, ^(bool granted, CFErrorRef error){dispatch_semaphore_signal(sema);});
         
         dispatch_semaphore_wait(sema, DISPATCH_TIME_FOREVER);
-        
+
     }
-    
     else
-        
     {
         addressBooks = ABAddressBookCreate();
         
@@ -290,18 +284,24 @@
         }
     }
     else{
-        NSString *str=[_dictFinish objectForKey:[NSNumber numberWithInteger:[self.listArray[indexPath.section][indexPath.row] recordID]]];
-        if ([Helper isBlankString:str]==YES) {
-            NSLog(@"%td   %td",indexPath.section,indexPath.row);
-            [_dictFinish setObject:[self.listArray[indexPath.section][indexPath.row] userName] forKey:[self.listArray[indexPath.section][indexPath.row] mobile]];
+        if (2 - _dictFinish.count < _lastIndex) {
+            NSString *str=[_dictFinish objectForKey:[NSNumber numberWithInteger:[self.listArray[indexPath.section][indexPath.row] recordID]]];
+            if ([Helper isBlankString:str]==YES) {
+                NSLog(@"%td   %td",indexPath.section,indexPath.row);
+                [_dictFinish setObject:[self.listArray[indexPath.section][indexPath.row] userName] forKey:[self.listArray[indexPath.section][indexPath.row] mobile]];
+                
+            }else{
+                [_dictFinish removeObjectForKey:[self.listArray[indexPath.section][indexPath.row] mobile]];
+            }
             
-        }else{
-            [_dictFinish removeObjectForKey:[self.listArray[indexPath.section][indexPath.row] mobile]];
+            NSIndexPath *indexPath_1=[NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section];
+            NSArray *indexArray=[NSArray arrayWithObject:indexPath_1];
+            [_tableView reloadRowsAtIndexPaths:indexArray withRowAnimation:UITableViewRowAnimationAutomatic];
+        }
+        else{
+            [[ShowHUD showHUD]showToastWithText:@"您最多只能选择3个人" FromView:self.view];
         }
         
-        NSIndexPath *indexPath_1=[NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section];
-        NSArray *indexArray=[NSArray arrayWithObject:indexPath_1];
-        [_tableView reloadRowsAtIndexPaths:indexArray withRowAnimation:UITableViewRowAnimationAutomatic];
     }
     
 }

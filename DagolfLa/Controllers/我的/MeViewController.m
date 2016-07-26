@@ -333,7 +333,7 @@
     _arrayPic = [[NSArray alloc]init];
 //    _arrayTitle = @[@[@"我的聊天",@"我的消息",@"交易中心",@"我的活动",@"推荐有礼"],@[@"设置"]];
     _arrayTitle = @[@[@""],@[@"球友",@"我的二维码",@"足迹"],@[@"个人帐户",@"交易中心"],@[@"推荐有礼",@"关于我们",@"产品评价"],@[@"设置"]];
-    _arrayPic = @[@[@""],@[@"qyIcon",@"",@"zuji"],@[@"gerenzhanghu",@"jyIcon"],@[@"tjIcon",@"gyIcon",@"proIcon"],@[@"setIcon"]];
+    _arrayPic = @[@[@""],@[@"qyIcon",@"saomiao",@"zuji"],@[@"gerenzhanghu",@"jyIcon"],@[@"tjIcon",@"gyIcon",@"proIcon"],@[@"setIcon"]];
     _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, 44*9*ScreenWidth/375+40*ScreenWidth/375+90*ScreenWidth/375)];
     
     _tableView.delegate = self;
