@@ -58,6 +58,9 @@
     if (_dictFinish.count == 0) {
         _dictFinish      = [[NSMutableDictionary alloc]init];
     }
+    if (_arrMobile.count == 0) {
+        _arrMobile       = [[NSMutableArray alloc]init];
+    }
     _dataAccountDict = [[NSMutableDictionary alloc]init];
     [self uiConfig];
     [self createHeadSearch];
@@ -91,7 +94,7 @@
 
 -(void)finishClick
 {    
-    _blockSurePlayer(_dictFinish,_dataKey);
+    _blockSurePlayer(_dictFinish,_dataKey,_arrMobile);
     [self.navigationController popViewControllerAnimated:YES];
 }
 
@@ -299,6 +302,13 @@
                 if ([[[NSUserDefaults standardUserDefaults] objectForKey:@"userId"] integerValue] != [[self.listArray[indexPath.section][indexPath.row] userKey] integerValue]) {
                     [_dictFinish setObject:[self.listArray[indexPath.section][indexPath.row] userName] forKey:[self.listArray[indexPath.section][indexPath.row] timeKey]];
                     [_dataKey addObject:[self.listArray[indexPath.section][indexPath.row] timeKey]];
+                    if (![Helper isBlankString:[self.listArray[indexPath.section][indexPath.row] mobile]]) {
+                        [_arrMobile addObject:[self.listArray[indexPath.section][indexPath.row] mobile]];
+                    }
+                    else
+                    {
+                        [_arrMobile addObject:@"0"];
+                    }
                 }
                 else{
                     [[ShowHUD showHUD]showToastWithText:@"您不能添加自己" FromView:self.view];
@@ -311,6 +321,7 @@
         else{
             [_dictFinish removeObjectForKey:[self.listArray[indexPath.section][indexPath.row] timeKey]];
             [_dataKey removeObject:[self.listArray[indexPath.section][indexPath.row] timeKey]];
+            [_arrMobile removeObject:[self.listArray[indexPath.section][indexPath.row] mobile]];
         }
         [_tableView reloadData];
         [_tableChoose reloadData];
@@ -319,6 +330,7 @@
         if (indexPath.row - 1 < _dictFinish.count) {
             [_dictFinish removeObjectForKey:_dataKey[indexPath.row-1]];
             [_dataKey removeObjectAtIndex:indexPath.row-1];
+            [_arrMobile removeObjectAtIndex:indexPath.row-1];
             [_tableView reloadData];
             [_tableChoose reloadData];
         }

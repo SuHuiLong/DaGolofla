@@ -40,7 +40,7 @@
     NSMutableDictionary* _teeDictChoose;//记录选择的t台存放数组
     
     NSMutableDictionary *_dictPeo;//存放返回的人数字典
-    NSMutableArray* _dataPeoBack, *_dataKeyBack, *_userKeyArr, *_mobileArr;
+    NSMutableArray *_dataKeyBack, *_mobileArr;
     
     //传参
     NSString* _strHole1,* _strHole2;//九洞
@@ -60,8 +60,6 @@
     self.title = @"记分";
     _dataBallArray  = [[NSMutableArray alloc]init];
     _dataKeyBack    = [[NSMutableArray alloc]init];
-    _dataPeoBack    = [[NSMutableArray alloc]init];
-    _userKeyArr     = [[NSMutableArray alloc]init];
     _mobileArr      = [[NSMutableArray alloc]init];
     _teeDictChoose = [[NSMutableDictionary alloc]init];
     _dictPeo        = [[NSMutableDictionary alloc]init];
@@ -190,15 +188,17 @@
             [dict1 setObject:_userM forKey:@"userMobile"];// 手机号
         }
         else{
-            if (![Helper isBlankString:[_teeDictChoose allValues][i]]) {
-                [dict1 setObject:[_teeDictChoose allValues][i] forKey:@"tTaiwan"];// T台
+            if (![Helper isBlankString:[_teeDictChoose objectForKey:[NSString stringWithFormat:@"%d",i]]]) {
+                [dict1 setObject:[_teeDictChoose objectForKey:[NSString stringWithFormat:@"%d",i]] forKey:@"tTaiwan"];// T台
             }
             else{
                 [[ShowHUD showHUD]showToastWithText:@"请选择Tee台" FromView:self.view];
                 return;
             }
-            [dict1 setObject:_userKeyArr[i-1] forKey:@"userKey"];//用户Key
-            [dict1 setObject:[_dictPeo allValues][i-1] forKey:@"userName"];// 用户名称
+            
+            
+            [dict1 setObject:_dataKeyBack[i-1] forKey:@"userKey"];//用户Key
+            [dict1 setObject:[_dictPeo objectForKey:_dataKeyBack[i-1]] forKey:@"userName"];// 用户名称
             [dict1 setObject:_mobileArr[i-1] forKey:@"userMobile"];// 手机号
         }
         [userArray addObject:dict1];
@@ -296,6 +296,9 @@
                 cell.iconImgv.hidden = YES;
                 cell.labelTee.text = @"请选择tee台";
             }
+
+            
+            
             if ([Helper isBlankString:_userN]) {
                 cell.labelName.text = [[NSUserDefaults standardUserDefaults] objectForKey:@"userName"];
             }
@@ -312,15 +315,10 @@
                 cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
                 cell.selectionStyle = UITableViewCellSelectionStyleNone;
                 NSLog(@"%td",indexPath.row);
-                if (_teeDictChoose.count <= indexPath.row) {
-                    if (![Helper isBlankString:[_teeDictChoose objectForKey:[NSString stringWithFormat:@"%td",indexPath.row - 1]]]) {
-                        cell.iconImgv.hidden = NO;
-                        [cell showTee:_strTee];
-                    }
-                    else{
-                        cell.iconImgv.hidden = YES;
-                        cell.labelTee.text = @"请选择tee台";
-                    }
+                
+                if (![Helper isBlankString:[_teeDictChoose objectForKey:[NSString stringWithFormat:@"%td",indexPath.row - 1]]]) {
+                    cell.iconImgv.hidden = NO;
+                    [cell showTee:_strTee];
                 }
                 else{
                     cell.iconImgv.hidden = YES;
@@ -603,15 +601,17 @@
                 if (indexPath.row  == _dictPeo.count + 2) {
                     JGLAddActivePlayViewController* addVc = [[JGLAddActivePlayViewController alloc]init];
                     addVc.model = _model;
-                    addVc.blockSurePlayer = ^(NSMutableDictionary *dict, NSMutableArray* dataKey)
+                    addVc.blockSurePlayer = ^(NSMutableDictionary *dict, NSMutableArray* dataKey, NSMutableArray* arrMobile)
                     {
                         _dictPeo = dict;
                         _dataKeyBack = dataKey;
+                        _mobileArr = arrMobile;
                         NSIndexSet *indexSet=[[NSIndexSet alloc]initWithIndex:4];
                         [_tableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationAutomatic];
                     };
                     addVc.dictFinish = _dictPeo;
                     addVc.dataKey    = _dataKeyBack;
+                    addVc.arrMobile = _mobileArr;
                     [self.navigationController pushViewController:addVc animated:YES];
                     
                 }
