@@ -10,6 +10,8 @@
 #import "JGHScoresHoleCell.h"
 #import "JGHScoreListModel.h"
 
+#define BGScoreColor @"#B3E4BF"
+
 static NSString *const JGHScoresHoleCellIdentifier = @"JGHScoresHoleCell";
 
 @interface JGHScoresHoleView ()<UITableViewDelegate, UITableViewDataSource, JGHScoresHoleCellDelegate>
@@ -32,6 +34,7 @@ static NSString *const JGHScoresHoleCellIdentifier = @"JGHScoresHoleCell";
         _colorArray = @[@"#FFFFFF", @"#EEEEEE", @"#FFFFFF", @"#F9F9F9", @"#FFFFFF", @"#F9F9F9"];
         self.scoreTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, (194+60)*ProportionAdapter) style:UITableViewStylePlain];
         self.scoreTableView.backgroundColor = [UIColor colorWithHexString:BG_color];
+        self.scoreTableView.scrollEnabled = NO;
         self.scoreTableView.delegate = self;
         self.scoreTableView.dataSource = self;
         UINib *scoresPageCellNib = [UINib nibWithNibName:@"JGHScoresHoleCell" bundle: [NSBundle mainBundle]];
@@ -64,7 +67,24 @@ static NSString *const JGHScoresHoleCellIdentifier = @"JGHScoresHoleCell";
     scoresPageCell.delegate = self;
     scoresPageCell.tag = indexPath.section*10 + indexPath.row*100;
     scoresPageCell.selectionStyle = UITableViewCellSelectionStyleNone;
-    [scoresPageCell configAllViewBgColor:_colorArray[indexPath.row]];
+    NSLog(@"%td", self.tag);
+    if (_dataArray.count > 0) {
+        NSLog(@"%td", _curPage);
+        if (_curPage <= 9) {
+            if (indexPath.section == 0) {
+                [scoresPageCell configAllViewBgColor:_colorArray[indexPath.row] andCellTag:_curPage];
+            }else{
+                [scoresPageCell configAllViewBgColor:_colorArray[indexPath.row] andCellTag:10];
+            }
+        }else{
+            if (indexPath.section == 1) {
+                [scoresPageCell configAllViewBgColor:_colorArray[indexPath.row] andCellTag:_curPage-9];
+            }else{
+                [scoresPageCell configAllViewBgColor:_colorArray[indexPath.row] andCellTag:10];
+            }
+        }
+    }
+    
     JGHScoreListModel *model = [[JGHScoreListModel alloc]init];
     
     if (indexPath.section == 0) {
@@ -75,6 +95,7 @@ static NSString *const JGHScoresHoleCellIdentifier = @"JGHScoresHoleCell";
             [scoresPageCell configOneToNine:model.standardlever andUserName:@"PAR"];
         }else{
             NSLog(@"indexPath.row -1 == %td", indexPath.row -1);
+            NSLog(@"indexPath.section -1 == %td", indexPath.section -1);
             model = _dataArray[indexPath.row -2];
             [scoresPageCell configOneToNine:model.poleNumber andUserName:model.userName];
         }

@@ -316,38 +316,25 @@
 }
 
 
-- (NSArray<UITableViewRowAction *> *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath{
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
+    JGDHistoryScoreModel *model = self.dataArray[indexPath.row];
+    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+    [dic setValue:DEFAULF_USERID forKey:@"userKey"];
+    [dic setValue:model.timeKey forKey:@"scoreKey"];
     
-    　UITableViewCell *cell = [_tableView cellForRowAtIndexPath:indexPath];
-    
-    UITableViewRowAction *note = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleNormal title:@"删除" handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
-
-        JGDHistoryScoreModel *model = self.dataArray[indexPath.row];
-        NSMutableDictionary *dic = [NSMutableDictionary dictionary];
-        [dic setValue:DEFAULF_USERID forKey:@"userKey"];
-        [dic setValue:model.timeKey forKey:@"scoreKey"];
+    [[JsonHttp jsonHttp] httpRequestWithMD5:@"score/deleteScore" JsonKey:nil withData:dic failedBlock:^(id errType) {
         
-        [[JsonHttp jsonHttp] httpRequestWithMD5:@"score/deleteScore" JsonKey:nil withData:dic failedBlock:^(id errType) {
+    } completionBlock:^(id data) {
+        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+            [self.dataArray removeObjectAtIndex:indexPath.row];
+            [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:YES];
             
-        } completionBlock:^(id data) {
-            if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
-                [self.dataArray removeObjectAtIndex:indexPath.row];
-                [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:YES];
-                
-            }else{
-                if ([data objectForKey:@"packResultMsg"]) {
-                    [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
-                }
+        }else{
+            if ([data objectForKey:@"packResultMsg"]) {
+                [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
             }
-        }];
-        
-        tableView.editing = NO;
-
-        
+        }
     }];
-    
-    return @[note];
-    
 }
 
 - (NSMutableArray *)dataArray{

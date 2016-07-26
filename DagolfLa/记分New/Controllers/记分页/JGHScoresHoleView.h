@@ -12,6 +12,7 @@
 
 @property (nonatomic, strong)NSMutableArray *dataArray;
 
+@property (nonatomic, assign)NSInteger curPage;
 
 - (void)reloadScoreList;
 

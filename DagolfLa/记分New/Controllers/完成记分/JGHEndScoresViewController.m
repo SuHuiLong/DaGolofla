@@ -65,6 +65,25 @@
     return self;
 }
 
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    if (_backId != 1) {
+        UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+        btn.frame = BackBtnFrame;
+        btn.titleLabel.font = [UIFont systemFontOfSize:FontSize_Normal];
+        [btn setImage:[UIImage imageNamed:@"backL"] forState:UIControlStateNormal];
+        [btn addTarget:self action:@selector(endScoresAndBackClick:) forControlEvents:UIControlEventTouchUpInside];
+        UIBarButtonItem *leftItem = [[UIBarButtonItem alloc]initWithCustomView:btn];
+        self.navigationItem.leftBarButtonItem = leftItem;
+    }
+}
+
+- (void)endScoresAndBackClick:(UIButton *)btn{
+    [self.navigationController popToRootViewControllerAnimated:YES];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
