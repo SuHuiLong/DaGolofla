@@ -103,7 +103,7 @@
         };
         addVc.dictFinish = _peoAddress;
         if (_dictPeople.count != 0) {
-            addVc.lastIndex = 3 - _peoFriend.count - _peoAddress.count;
+            addVc.lastIndex = 3 - _dictPeople.count;
 
         }
         else{
@@ -131,7 +131,7 @@
         };
         fVc.dictFinish = _peoFriend;
         if (_dictPeople.count != 0) {
-            fVc.lastIndex = 3 - _peoFriend.count - _peoAddress.count;
+            fVc.lastIndex = 3 - _dictPeople.count;
         }
         else{
             fVc.lastIndex = 3;
