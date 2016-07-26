@@ -29,6 +29,7 @@
 
 #pragma mark --saveClick
 - (void)saveClick{
+    [self.navigationController popViewControllerAnimated:YES];
     _returnDateString(_dateString);
 }
 

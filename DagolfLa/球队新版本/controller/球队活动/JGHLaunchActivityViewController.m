@@ -369,6 +369,9 @@ static CGFloat ImageHeight  = 210.0;
             datePicksCrel.returnDateString = ^(NSString *dateString){
                 NSLog(@"%@", dateString);
                 [self.model setValue:dateString forKey:@"beginDate"];
+                
+                NSIndexPath *indPath = [NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section];
+                [self.launchActivityTableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indPath, nil] withRowAnimation:UITableViewRowAnimationNone];
             };
             [self.navigationController pushViewController:datePicksCrel animated:YES];
             
