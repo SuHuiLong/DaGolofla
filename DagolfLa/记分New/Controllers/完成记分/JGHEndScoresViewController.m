@@ -126,7 +126,7 @@
     [_bgView addSubview:ballName];
     //日期
     UILabel *timeLable = [[UILabel alloc]initWithFrame:CGRectMake(10*ProportionAdapter, 55*ProportionAdapter, (screenWidth -30*ProportionAdapter)/2, 25*ProportionAdapter)];
-    timeLable.text = [NSString stringWithFormat:@"%@", [[[_dict objectForKey:@"createtime"] componentsSeparatedByString:@" "] firstObject]];;
+    timeLable.text = [NSString stringWithFormat:@"%@", [[[_dict objectForKey:@"playTimes"] componentsSeparatedByString:@" "] firstObject]];;
     timeLable.backgroundColor = [UIColor colorWithHexString:BG_color];
     timeLable.layer.cornerRadius = 3.0*ProportionAdapter;
     timeLable.layer.masksToBounds = YES;
@@ -536,11 +536,10 @@
     
     [_textView resignFirstResponder];
 //    [[ShowHUD showHUD]showAnimationWithText:@"正在发布..." FromView:self.view];
-
-    NSString* str = [[NSString alloc]init];
-    str = @"1";
     //    BOOL type = 0;
-    [_dict setValue:str forKey:@"moodType"];
+    [_dict setValue:@1 forKey:@"moodType"];
+    //isSync
+    [_dict setValue:@1 forKey:@"isSync"];
     NSString* xIndex = [[NSString alloc]init];
     xIndex  = @"12";
     [_dict setValue:self.lat forKey:@"xIndex"];
@@ -567,7 +566,7 @@
                     if (_blockRereshing) {
                         _blockRereshing();
                     }
-                    [self.navigationController popViewControllerAnimated:YES];
+                    [self.navigationController popToRootViewControllerAnimated:YES];
                     
                 });
                 alertView.tag = 1000;
@@ -582,8 +581,8 @@
         }else{
             [[PostDataRequest sharedInstance]postDataAndImageRequest:kUsersave_URL parameter:_dict imageDataArr:_selectImages success:^(id respondsData) {
                 [MBProgressHUD hideHUDForView:self.view  animated:YES];
-                
-                //NSLog(@"%@",dict);
+                NSDictionary* dictData = [NSJSONSerialization JSONObjectWithData:respondsData options:NSJSONReadingMutableContainers error:nil];
+                NSLog(@"%@",dictData);
                 UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"发布成功" delegate:self cancelButtonTitle:nil otherButtonTitles:nil, nil];
                 [alertView show];
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{

@@ -126,7 +126,12 @@
         }else{
             [listDict setObject:@"" forKey:@"userMobile"];// 手机号
         }
-        [listDict setObject:model.tTaiwan forKey:@"tTaiwan"];// T台
+        
+        if (model.tTaiwan) {
+            [listDict setObject:model.tTaiwan forKey:@"tTaiwan"];// T台
+        }else{
+            [listDict setObject:@"" forKey:@"tTaiwan"];// T台
+        }
         [listDict setObject:model.poleNumber forKey:@"poleNumber"];// 球队杆数
         [listDict setObject:model.pushrod forKey:@"pushrod"];// 推杆
         [listDict setObject:model.onthefairway forKey:@"onthefairway"];// 是否上球道
@@ -217,8 +222,8 @@
                 if ([data objectForKey:@"score"]) {
                     NSMutableDictionary *scoreDict = [data objectForKey:@"score"];
                     [_macthDict setObject:[scoreDict objectForKey:@"ballName"] forKey:@"ballName"];
-                    [_macthDict setObject:[scoreDict objectForKey:@"ballKey"] forKey:@"ballKey"];
-                    [_macthDict setObject:[scoreDict objectForKey:@"createtime"] forKey:@"createtime"];
+                    [_macthDict setObject:[scoreDict objectForKey:@"ballKey"] forKey:@"placeId"];
+                    [_macthDict setObject:[scoreDict objectForKey:@"createtime"] forKey:@"playTimes"];
                 }
                 
                 for (int x=0; x<dataArray.count; x++) {
@@ -357,7 +362,12 @@
         }else{
             [listDict setObject:@"" forKey:@"userMobile"];// 手机号
         }
-        [listDict setObject:model.tTaiwan forKey:@"tTaiwan"];// T台
+        if (model.tTaiwan) {
+            [listDict setObject:model.tTaiwan forKey:@"tTaiwan"];// T台
+        }else{
+            [listDict setObject:@"" forKey:@"tTaiwan"];// T台
+        }
+        
         [listDict setObject:model.poleNumber forKey:@"poleNumber"];// 球队杆数
         [listDict setObject:model.pushrod forKey:@"pushrod"];// 推杆
         [listDict setObject:model.onthefairway forKey:@"onthefairway"];// 是否上球道
@@ -432,8 +442,6 @@
             for (int i=0; i<model.poleNumber.count; i++) {
                 scoreCount += [model.poleNumber[i] integerValue];
             }
-        }else{
-            break;
         }
     }
     [_macthDict setObject:@(scoreCount) forKey:@"poleNum"];
