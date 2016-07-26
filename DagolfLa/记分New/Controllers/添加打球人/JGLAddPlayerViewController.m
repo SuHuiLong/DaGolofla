@@ -18,8 +18,7 @@
     UITableView* _tableView;
     UIView* _viewHeader;
     
-    NSMutableDictionary* _peoAddress;//通讯录返回数据
-    NSMutableDictionary* _peoFriend; //球友列表返回数据
+    
     
     BOOL _isClick;
 }
@@ -38,10 +37,17 @@
     self.view.backgroundColor = [UITool colorWithHexString:@"eeeeee" alpha:1];
     UIView* view = [[UIView alloc]initWithFrame:CGRectMake(1, 1, 1, 1)];
     [self.view addSubview:view];
+//    if (_dictPeople.count == 0) {
+        _dictPeople = [[NSMutableDictionary alloc]init];
+//    }
+//    if (_peoFriend.count == 0) {
+        _peoFriend  = [[NSMutableDictionary alloc]init];
+//    }
+//    if (_peoAddress.count == 0) {
+        _peoAddress = [[NSMutableDictionary alloc]init];
+//    }
     
-    _dictPeople = [[NSMutableDictionary alloc]init];
-    _peoAddress = [[NSMutableDictionary alloc]init];
-    _peoFriend  = [[NSMutableDictionary alloc]init];
+    
     
     [self uiConfig];
     [self createHeader];
@@ -50,7 +56,7 @@
 -(void)finishAction
 {
 //    [_dictFin setObject:[[NSUserDefaults standardUserDefaults]objectForKey:@"userName"] forKey:DEFAULF_USERID];
-    _blockSurePlayer(_dictPeople);
+    _blockSurePlayer(_dictPeople,_peoAddress,_peoAddress);
     [self.navigationController popViewControllerAnimated:YES];
     
 }
@@ -99,6 +105,7 @@
         addVc.blockAddressPeople = ^(NSMutableDictionary* dict){
             _peoAddress = dict;
             [_dictPeople addEntriesFromDictionary:dict];
+            
             [_tableView reloadData];
         };
         addVc.dictFinish = _peoAddress;
