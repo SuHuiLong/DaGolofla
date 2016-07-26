@@ -12,6 +12,8 @@
 
 #import <AVFoundation/AVFoundation.h>
 #import "JGLBarCodeViewController.h"
+#import "JGMyBarCodeViewController.h"
+#import "UITool.h"
 @interface JGLBarCodeViewController ()<AVCaptureMetadataOutputObjectsDelegate>
 {
     AVCaptureSession *_session;//输入输出的中间桥梁
@@ -131,25 +133,25 @@
     
     //设置扫描区域外部上部的视图
     UIView *topView = [[UIView alloc]init];
-    topView.frame = CGRectMake(0, 0, screenWidth, (screenHeight-QRCodeWidth)/2.0);
+    topView.frame = CGRectMake(0, -64, screenWidth, (screenHeight-QRCodeWidth)/2.0);
     topView.backgroundColor = color;
     topView.alpha = alpha;
     
     //设置扫描区域外部左边的视图
     UIView *leftView = [[UIView alloc]init];
-    leftView.frame = CGRectMake(0, topView.frame.size.height, (screenWidth-QRCodeWidth)/2.0,QRCodeWidth);
+    leftView.frame = CGRectMake(0, topView.frame.size.height-64, (screenWidth-QRCodeWidth)/2.0,QRCodeWidth);
     leftView.backgroundColor = color;
     leftView.alpha = alpha;
     
     //设置扫描区域外部右边的视图
     UIView *rightView = [[UIView alloc]init];
-    rightView.frame = CGRectMake((screenWidth-QRCodeWidth)/2.0+QRCodeWidth,topView.frame.size.height, (screenWidth-QRCodeWidth)/2.0,QRCodeWidth);
+    rightView.frame = CGRectMake((screenWidth-QRCodeWidth)/2.0+QRCodeWidth,topView.frame.size.height-64, (screenWidth-QRCodeWidth)/2.0,QRCodeWidth);
     rightView.backgroundColor = color;
     rightView.alpha = alpha;
     
     //设置扫描区域外部底部的视图
     UIView *botView = [[UIView alloc]init];
-    botView.frame = CGRectMake(0, QRCodeWidth+topView.frame.size.height,screenWidth,SCREENHeight-QRCodeWidth-topView.frame.size.height);
+    botView.frame = CGRectMake(0, QRCodeWidth+topView.frame.size.height-64,screenWidth,SCREENHeight-QRCodeWidth-topView.frame.size.height);
     botView.backgroundColor = color;
     botView.alpha = alpha;
     
@@ -158,6 +160,24 @@
     [self.view addSubview:leftView];
     [self.view addSubview:rightView];
     [self.view addSubview:botView];
+    
+    
+    UILabel* label = [[UILabel alloc]initWithFrame:CGRectMake(0, QRCodeWidth+topView.frame.size.height-64 + 30*screenWidth/375, screenWidth, 30)];
+    label.text = @"请将二维码放入框内";
+    label.font = [UIFont systemFontOfSize:15*screenWidth/375];
+    label.textAlignment = NSTextAlignmentCenter;
+    label.textColor = [UIColor whiteColor];
+    [self.view addSubview:label];
+    
+    
+    UIButton* btn = [UIButton buttonWithType:UIButtonTypeSystem];
+    btn.frame = CGRectMake(0, QRCodeWidth+topView.frame.size.height-64 + 60*screenWidth/375, screenWidth, 40);
+    [btn setTintColor:[UITool colorWithHexString:@"#32b14d" alpha:1]];
+    [btn setTitle:@"我的二维码" forState:UIControlStateNormal];
+    btn.titleLabel.font = [UIFont systemFontOfSize:15*screenWidth/375];
+    [self.view addSubview:btn];
+    [btn addTarget:self action:@selector(myCodeBarClick) forControlEvents:UIControlEventTouchUpInside];
+    
 }
 
 
@@ -165,15 +185,16 @@
 - (void)setupScanWindowView
 {
     //设置扫描区域的位置(考虑导航栏和电池条的高度为64)
-    UIView *scanWindow = [[UIView alloc]initWithFrame:CGRectMake((screenWidth-QRCodeWidth)/2.0,(screenHeight-QRCodeWidth-64)/2.0,QRCodeWidth,QRCodeWidth)];
+    UIView *scanWindow = [[UIView alloc]initWithFrame:CGRectMake((screenWidth-QRCodeWidth)/2.0,(screenHeight-QRCodeWidth-64)/2.0-32*screenWidth/375,QRCodeWidth,QRCodeWidth+31*screenWidth/375)];
     scanWindow.clipsToBounds = YES;
     [self.view addSubview:scanWindow];
+//    scanWindow.backgroundColor = [UIColor redColor];
     
     //设置扫描区域的动画效果
     CGFloat scanNetImageViewH = 241;
     CGFloat scanNetImageViewW = scanWindow.frame.size.width;
-    UIImageView *scanNetImageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"scan_net"]];
-    scanNetImageView.frame = CGRectMake(0, -scanNetImageViewH, scanNetImageViewW, scanNetImageViewH);
+    UIImageView *scanNetImageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"saoma_tiao"]];
+    scanNetImageView.frame = CGRectMake(0, 0, QRCodeWidth, QRCodeWidth+30);
     CABasicAnimation *scanNetAnimation = [CABasicAnimation animation];
     scanNetAnimation.keyPath =@"transform.translation.y";
     scanNetAnimation.byValue = @(QRCodeWidth);
@@ -181,24 +202,38 @@
     scanNetAnimation.repeatCount = MAXFLOAT;
     [scanNetImageView.layer addAnimation:scanNetAnimation forKey:nil];
     [scanWindow addSubview:scanNetImageView];
+//    scanNetImageView.backgroundColor = [UIColor orangeColor];
     
-    //设置扫描区域的四个角的边框
-    CGFloat buttonWH = 18;
-    UIButton *topLeft = [[UIButton alloc]initWithFrame:CGRectMake(0,0, buttonWH, buttonWH)];
-    [topLeft setImage:[UIImage imageNamed:@"scan_1"]forState:UIControlStateNormal];
-    [scanWindow addSubview:topLeft];
+    UIImageView *backRoundImgv = [[UIImageView alloc]initWithFrame:CGRectMake( 0, 0, QRCodeWidth,QRCodeWidth)];
+    backRoundImgv.image = [UIImage imageNamed:@"saoma_kuang"];
+    [scanWindow addSubview:backRoundImgv];
+
     
-    UIButton *topRight = [[UIButton alloc]initWithFrame:CGRectMake(QRCodeWidth - buttonWH,0, buttonWH, buttonWH)];
-    [topRight setImage:[UIImage imageNamed:@"scan_2"]forState:UIControlStateNormal];
-    [scanWindow addSubview:topRight];
+//    //设置扫描区域的四个角的边框
+//    CGFloat buttonWH = 18;
+//    UIButton *topLeft = [[UIButton alloc]initWithFrame:CGRectMake(0,0, buttonWH, buttonWH)];
+//    [topLeft setImage:[UIImage imageNamed:@"scan_1"]forState:UIControlStateNormal];
+//    [scanWindow addSubview:topLeft];
+//    
+//    UIButton *topRight = [[UIButton alloc]initWithFrame:CGRectMake(QRCodeWidth - buttonWH,0, buttonWH, buttonWH)];
+//    [topRight setImage:[UIImage imageNamed:@"scan_2"]forState:UIControlStateNormal];
+//    [scanWindow addSubview:topRight];
+//    
+//    UIButton *bottomLeft = [[UIButton alloc]initWithFrame:CGRectMake(0,QRCodeWidth - buttonWH, buttonWH, buttonWH)];
+//    [bottomLeft setImage:[UIImage imageNamed:@"scan_3"]forState:UIControlStateNormal];
+//    [scanWindow addSubview:bottomLeft];
+//    
+//    UIButton *bottomRight = [[UIButton alloc]initWithFrame:CGRectMake(QRCodeWidth-buttonWH,QRCodeWidth-buttonWH, buttonWH, buttonWH)];
+//    [bottomRight setImage:[UIImage imageNamed:@"scan_4"]forState:UIControlStateNormal];
+//    [scanWindow addSubview:bottomRight];
     
-    UIButton *bottomLeft = [[UIButton alloc]initWithFrame:CGRectMake(0,QRCodeWidth - buttonWH, buttonWH, buttonWH)];
-    [bottomLeft setImage:[UIImage imageNamed:@"scan_3"]forState:UIControlStateNormal];
-    [scanWindow addSubview:bottomLeft];
     
-    UIButton *bottomRight = [[UIButton alloc]initWithFrame:CGRectMake(QRCodeWidth-buttonWH,QRCodeWidth-buttonWH, buttonWH, buttonWH)];
-    [bottomRight setImage:[UIImage imageNamed:@"scan_4"]forState:UIControlStateNormal];
-    [scanWindow addSubview:bottomRight];
+    
+}
+-(void)myCodeBarClick
+{
+    JGMyBarCodeViewController* barVc = [[JGMyBarCodeViewController alloc]init];
+    [self.navigationController pushViewController:barVc animated:YES];
 }
 #pragma mark - 启动扫码
 - (BOOL)sweepCode {//初始化配置
@@ -282,15 +317,34 @@
             NSArray *array1 = [array[1] componentsSeparatedByString:@"&"];
             NSArray *array2 = [array1[0] componentsSeparatedByString:@"="];
             NSArray *array3 = [array1[1] componentsSeparatedByString:@"="];
-            NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
-            NSLog(@"%@    %@ ",array3[1], array2[1]);
-            
-            [dict setObject:array3[1] forKey:array2[1]];
-            NSLog(@"-------------%@",dict);
-            _blockDict(dict);
-            [self.navigationController popViewControllerAnimated:YES];
+            NSMutableDictionary* dict =[[NSMutableDictionary alloc]init];
+            [dict setObject:array2[1] forKey:@"userKey"];
+            [dict setObject:array3[1] forKey:@"md5"];
+            [[JsonHttp jsonHttp]httpRequest:@"qcode/getUserInfo" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
+                
+            } completionBlock:^(id data) {
+                
+                if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+                    NSMutableDictionary* dictDa = [[NSMutableDictionary alloc]init];
+                    [dictDa setObject:[[data objectForKey:@"user"] objectForKey:@"userName"] forKey:array2[1]];
+                    _blockDict(dictDa);
+                    [self.navigationController popViewControllerAnimated:YES];
+                }
+                else{
+                    [_session startRunning];
+                    [Helper alertViewWithTitle:[data objectForKey:@"packResultMsg"] withBlock:^(UIAlertController *alertView) {
+                        [self presentViewController:alertView animated:YES completion:nil];
+                    }];
+                }
+                
+                NSLog(@"%@", data);
+                if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+                    
+                }else{
+                    
+                }
+            }];
         }
-        
     }
 }
 
