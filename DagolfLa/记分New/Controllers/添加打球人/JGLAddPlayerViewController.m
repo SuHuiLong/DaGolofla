@@ -318,11 +318,22 @@
 -(void)addClick
 {
     UITextField* textF = (UITextField *)[self.view viewWithTag:1234];
+    if (![Helper isBlankString:textF.text]) {
+        if (_dictPeople.count < 3) {
+            [_dictPeople setObject:textF.text forKey:textF.text];
+            textF.text = @"";
+            [_tableView reloadData];
+            _isClick = NO;
+        }
+        else{
+            [[ShowHUD showHUD]showToastWithText:@"您最多只能添加三个人" FromView:self.view];
+        }
+    }
+    else{
+        [[ShowHUD showHUD]showToastWithText:@"您添加的成员姓名不能为空" FromView:self.view];
+    }
     
-    [_dictPeople setObject:textF.text forKey:textF.text];
-    textF.text = @"";
-    [_tableView reloadData];
-    _isClick = NO;
+    
 }
 
 
