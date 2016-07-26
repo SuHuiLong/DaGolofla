@@ -40,7 +40,7 @@
     NSString* _strBallLogo;//记录球场头像
     NSMutableDictionary* _teeDictChoose;//记录选择的t台存放数组
     
-    NSMutableDictionary *_dictPeo;
+    NSMutableDictionary *_dictPeo,*_dictFri,*_dictAdd;
     NSString* _strHole1,* _strHole2;//九洞
 
 }
@@ -55,6 +55,8 @@
     self.title = @"记分";
     _dataBallArray = [[NSMutableArray alloc]init];
     _dictPeo       = [[NSMutableDictionary alloc]init];
+    _dictFri       = [[NSMutableDictionary alloc]init];
+    _dictAdd       = [[NSMutableDictionary alloc]init];
     _teeDictChoose = [[NSMutableDictionary alloc]init];
     _isTee = NO;
     
@@ -584,13 +586,15 @@
             if (indexPath.row > 0) {
                 if (indexPath.row  == _dictPeo.count + 2) {
                     JGLAddPlayerViewController* addVc = [[JGLAddPlayerViewController alloc]init];
-                    addVc.blockSurePlayer = ^(NSMutableDictionary *dict){
+                    addVc.blockSurePlayer = ^(NSMutableDictionary *dict,NSMutableDictionary* dict1,NSMutableDictionary* dict2){
                         _dictPeo = dict;
                         NSIndexSet *indexSet=[[NSIndexSet alloc]initWithIndex:4];
                         [_tableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationAutomatic];
                     };
                     //                addVc.dictFin = _dictPeo;
                     addVc.dictPeople = _dictPeo;
+                    addVc.peoAddress = _dictAdd;
+                    addVc.peoFriend  = _dictFri;
                     [self.navigationController pushViewController:addVc animated:YES];
                     
                 }

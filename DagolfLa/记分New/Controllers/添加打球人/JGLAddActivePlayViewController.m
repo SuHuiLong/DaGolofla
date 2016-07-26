@@ -314,8 +314,6 @@
                     else{
                         [_mobileArr addObject:@"0"];
                     }
-                    
-                    
                 }else{
                     [_dictFinish removeObjectForKey:[NSString stringWithFormat:@"%td%td",indexPath.section,indexPath.row]];
                     //            _dataPeoArr
