@@ -723,7 +723,7 @@ static CGFloat ImageHeight  = 210.0;
         JGHDatePicksViewController *datePicksCrel = [[JGHDatePicksViewController alloc]init];
         datePicksCrel.returnDateString = ^(NSString *dateString){
             NSLog(@"%@", dateString);
-            [self.model setValue:dateString forKey:@"beginDate"];
+            [self.model setValue:[NSString stringWithFormat:@"%@:00", dateString] forKey:@"beginDate"];
             _isEditor = 1;
             [self.teamActibityNameTableView reloadData];
         };

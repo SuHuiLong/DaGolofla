@@ -143,7 +143,7 @@
                 [prizeDict setObject:model.timeKey forKey:@"timeKey"];
                 [prizeDict setObject:@(_activityKey) forKey:@"teamActivityKey"];
                 [prizeDict setObject:model.name forKey:@"name"];
-                if (![Helper isBlankString:model.prizeName]) {
+                if ([Helper isBlankString:model.prizeName]) {
                     [prizeDict setObject:@"" forKey:@"prizeName"];
                 }else{
                     [prizeDict setObject:model.prizeName forKey:@"prizeName"];

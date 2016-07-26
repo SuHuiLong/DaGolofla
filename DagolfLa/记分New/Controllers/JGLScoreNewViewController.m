@@ -224,6 +224,11 @@
                     JGHScoresViewController* scrVc = [[JGHScoresViewController alloc]init];
                     [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
                     scrVc.scorekey = [NSString stringWithFormat:@"%@",[data objectForKey:@"scoreKey"]];
+                    NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
+                    if ([userdef objectForKey:@"currentScorePage"]) {
+                        scrVc.currentPage = [[userdef objectForKey:@"currentScorePage"] integerValue];
+                    }
+                    
                     [self.navigationController pushViewController:scrVc animated:YES];
                 } withBlock:^(UIAlertController *alertView) {
                     [self.navigationController presentViewController:alertView animated:YES completion:nil];
