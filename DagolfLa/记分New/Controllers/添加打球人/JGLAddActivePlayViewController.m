@@ -52,17 +52,8 @@
     _keyArray        = [[NSMutableArray alloc]init];
     _listArray       = [[NSMutableArray alloc]init];
     _dataArray       = [[NSMutableArray alloc]init];
-    if (_dataPeoArr.count == 0) {
-        _dataPeoArr      = [[NSMutableArray alloc]init];
-    }
-    if (_mobileArr.count == 0) {
-        _mobileArr      = [[NSMutableArray alloc]init];
-    }
     if (_dataKey.count == 0) {
         _dataKey         = [[NSMutableArray alloc]init];
-    }
-    if (_userKey.count == 0) {
-        _userKey      = [[NSMutableArray alloc]init];
     }
     if (_dictFinish.count == 0) {
         _dictFinish      = [[NSMutableDictionary alloc]init];
@@ -100,7 +91,7 @@
 
 -(void)finishClick
 {    
-    _blockSurePlayer(_dictFinish,_dataPeoArr,_dataKey,_userKey,_mobileArr);
+    _blockSurePlayer(_dictFinish,_dataKey);
     [self.navigationController popViewControllerAnimated:YES];
 }
 
@@ -252,7 +243,7 @@
         cell.imgvIcon.layer.masksToBounds = YES;
        
         
-        NSString *str=[_dictFinish objectForKey:[NSString stringWithFormat:@"%td%td",indexPath.section,indexPath.row]];
+        NSString *str=[_dictFinish objectForKey:[self.listArray[indexPath.section][indexPath.row] timeKey]];
         
         if ([Helper isBlankString:str]==NO) {
             cell.imgvState.image=[UIImage imageNamed:@"gou_x"];
@@ -273,10 +264,10 @@
             cell.labelTitle.font = [UIFont systemFontOfSize:14*screenWidth/375];
             cell.imgvDel.hidden = NO;
 
-            if (_dataPeoArr.count != 0) {
-                if (_dataPeoArr.count > indexPath.row - 1) {
-                    if (![Helper isBlankString:_dataPeoArr[indexPath.row-1]]) {
-                        cell.labelTitle.text = _dataPeoArr[indexPath.row-1];
+            if (_dataKey.count != 0) {
+                if (_dataKey.count > indexPath.row - 1) {
+                    if (![Helper isBlankString:_dataKey[indexPath.row-1]]) {
+                        cell.labelTitle.text = [_dictFinish objectForKey:_dataKey[indexPath.row-1]];
                     }else{
                         cell.labelTitle.text = @"请添加打球人";
                     }
@@ -300,82 +291,120 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (tableView.tag == 1001) {
-        if (_dataPeoArr.count < 3) {
-            if (_dataPeoArr.count != 0) {
-                NSString *str=[_dictFinish objectForKey:[NSString stringWithFormat:@"%td%td",indexPath.section,indexPath.row]];
-                if ([Helper isBlankString:str]==YES) {
-                    [_dictFinish setObject:[self.listArray[indexPath.section][indexPath.row] timeKey] forKey:[NSString stringWithFormat:@"%td%td",indexPath.section,indexPath.row]];
-                    [_dataKey addObject:[NSString stringWithFormat:@"%td%td",indexPath.section,indexPath.row]];
-                    [_dataPeoArr addObject:[self.listArray[indexPath.section][indexPath.row] timeKey]];
-                    [_userKey addObject:[self.listArray[indexPath.section][indexPath.row] userKey]];
-                    if (![Helper isBlankString:[self.listArray[indexPath.section][indexPath.row] mobile]]) {
-                        [_mobileArr addObject:[self.listArray[indexPath.section][indexPath.row] mobile]];
-                    }
-                    else{
-                        [_mobileArr addObject:@"0"];
-                    }
-                }else{
-                    [_dictFinish removeObjectForKey:[NSString stringWithFormat:@"%td%td",indexPath.section,indexPath.row]];
-                    //            _dataPeoArr
-                    [_dataPeoArr removeObject:str];
-                    for (int i = 0; i < _dataPeoArr.count; i++) {
-                        if ([Helper isBlankString:str]) {
-                            [_dataPeoArr removeObjectAtIndex:i];
-                            [_dataKey removeObjectAtIndex:i];
-                            [_userKey removeObjectAtIndex:i];
-                            [_mobileArr removeObjectAtIndex:i];
-                            
-                        }
-                    }
+        
+        NSString *str=[_dictFinish objectForKey:[self.listArray[indexPath.section][indexPath.row] timeKey]];
+        //选择当前行，查询对应的name，如果为空加入字典，否则删除
+        if ([Helper isBlankString:str]) {
+            if (_dictFinish.count < 3) {
+                if ([[[NSUserDefaults standardUserDefaults] objectForKey:@"userId"] integerValue] != [[self.listArray[indexPath.section][indexPath.row] userKey] integerValue]) {
+                    [_dictFinish setObject:[self.listArray[indexPath.section][indexPath.row] userName] forKey:[self.listArray[indexPath.section][indexPath.row] timeKey]];
+                    [_dataKey addObject:[self.listArray[indexPath.section][indexPath.row] timeKey]];
+                }
+                else{
+                    [[ShowHUD showHUD]showToastWithText:@"您不能添加自己" FromView:self.view];
                 }
             }
             else{
-                [_dictFinish setObject:[self.listArray[indexPath.section][indexPath.row] name] forKey:[NSString stringWithFormat:@"%td%td",indexPath.section,indexPath.row]];
-                [_dataKey addObject:[NSString stringWithFormat:@"%td%td",indexPath.section,indexPath.row]];
-                [_dataPeoArr addObject:[self.listArray[indexPath.section][indexPath.row] name]];
-                [_userKey addObject:[self.listArray[indexPath.section][indexPath.row] userKey]];
-                if (![Helper isBlankString:[self.listArray[indexPath.section][indexPath.row] mobile]]) {
-                    [_mobileArr addObject:[self.listArray[indexPath.section][indexPath.row] mobile]];
-                }
-                else{
-                    [_mobileArr addObject:@""];
-                }
-                
+                [[ShowHUD showHUD]showToastWithText:@"您最多只能添加四个人一起打球" FromView:self.view];
             }
-            
-            [_tableChoose reloadData];
-            [_tableView reloadData];
         }
         else{
-            [[ShowHUD showHUD]showToastWithText:@"您最多只能添加四个人一起打球" FromView:self.view];
+            [_dictFinish removeObjectForKey:[self.listArray[indexPath.section][indexPath.row] timeKey]];
+            [_dataKey removeObject:[self.listArray[indexPath.section][indexPath.row] timeKey]];
         }
+        [_tableView reloadData];
+        [_tableChoose reloadData];
     }
     else{
-        if (indexPath.row - 1 < _dataPeoArr.count) {
-            bool isChange1 = false;
-            for (int i = 0; i < _dataPeoArr.count; i ++) {
-                if (isChange1 == YES) {
-                    continue;
-                }
-                NSLog(@"%@",_dataPeoArr[indexPath.row -1]);
-                if ([[_dictFinish objectForKey:_dataKey[i]] isEqualToString:_dataPeoArr[indexPath.row-1]] == YES) {
-                    NSLog(@"%@",[_dictFinish allValues][i]);
-                    [_dictFinish removeObjectForKey:_dataKey[i]];
-                    [_dataKey removeObjectAtIndex:indexPath.row-1];
-                    [_userKey removeObjectAtIndex:indexPath.row-1];
-                    [_mobileArr removeObjectAtIndex:indexPath.row - 1];
-                    [_dataPeoArr removeObjectAtIndex:indexPath.row-1];
-                    isChange1 = YES;
-                    continue;
-                }
-                
-            }
-            [_tableChoose reloadData];
+        if (indexPath.row - 1 < _dictFinish.count) {
+            [_dictFinish removeObjectForKey:_dataKey[indexPath.row-1]];
+            [_dataKey removeObjectAtIndex:indexPath.row-1];
             [_tableView reloadData];
-            isChange1 = NO;
-
+            [_tableChoose reloadData];
         }
     }
+    
+    
+    
+    
+//    if (tableView.tag == 1001) {
+//
+//        if (_dataPeoArr.count < 3) {
+//            if (_dataPeoArr.count != 0) {
+//                NSString *str=[_dictFinish objectForKey:[NSString stringWithFormat:@"%td%td",indexPath.section,indexPath.row]];
+//                if ([Helper isBlankString:str]==YES) {
+//                    [_dictFinish setObject:[self.listArray[indexPath.section][indexPath.row] timeKey] forKey:[NSString stringWithFormat:@"%td%td",indexPath.section,indexPath.row]];
+//                    [_dataKey addObject:[NSString stringWithFormat:@"%td%td",indexPath.section,indexPath.row]];
+//                    [_dataPeoArr addObject:[self.listArray[indexPath.section][indexPath.row] timeKey]];
+//                    [_userKey addObject:[self.listArray[indexPath.section][indexPath.row] userKey]];
+//                    if (![Helper isBlankString:[self.listArray[indexPath.section][indexPath.row] mobile]]) {
+//                        [_mobileArr addObject:[self.listArray[indexPath.section][indexPath.row] mobile]];
+//                    }
+//                    else{
+//                        [_mobileArr addObject:@"0"];
+//                    }
+//                }else{
+//                    [_dictFinish removeObjectForKey:[NSString stringWithFormat:@"%td%td",indexPath.section,indexPath.row]];
+//                    //            _dataPeoArr
+//                    [_dataPeoArr removeObject:str];
+//                    for (int i = 0; i < _dataPeoArr.count; i++) {
+//                        if ([Helper isBlankString:str]) {
+//                            [_dataPeoArr removeObjectAtIndex:i];
+//                            [_dataKey removeObjectAtIndex:i];
+//                            [_userKey removeObjectAtIndex:i];
+//                            [_mobileArr removeObjectAtIndex:i];
+//                            
+//                        }
+//                    }
+//                }
+//            }
+//            else{
+//                [_dictFinish setObject:[self.listArray[indexPath.section][indexPath.row] name] forKey:[NSString stringWithFormat:@"%td%td",indexPath.section,indexPath.row]];
+//                [_dataKey addObject:[NSString stringWithFormat:@"%td%td",indexPath.section,indexPath.row]];
+//                [_dataPeoArr addObject:[self.listArray[indexPath.section][indexPath.row] name]];
+//                [_userKey addObject:[self.listArray[indexPath.section][indexPath.row] userKey]];
+//                if (![Helper isBlankString:[self.listArray[indexPath.section][indexPath.row] mobile]]) {
+//                    [_mobileArr addObject:[self.listArray[indexPath.section][indexPath.row] mobile]];
+//                }
+//                else{
+//                    [_mobileArr addObject:@""];
+//                }
+//                
+//            }
+//            
+//            [_tableChoose reloadData];
+//            [_tableView reloadData];
+//        }
+//        else{
+//            [[ShowHUD showHUD]showToastWithText:@"您最多只能添加四个人一起打球" FromView:self.view];
+//        }
+//    }
+//    else{
+//        if (indexPath.row - 1 < _dataPeoArr.count) {
+//            bool isChange1 = false;
+//            for (int i = 0; i < _dataPeoArr.count; i ++) {
+//                if (isChange1 == YES) {
+//                    continue;
+//                }
+//                NSLog(@"%@",_dataPeoArr[indexPath.row -1]);
+//                if ([[_dictFinish objectForKey:_dataKey[i]] isEqualToString:_dataPeoArr[indexPath.row-1]] == YES) {
+//                    NSLog(@"%@",[_dictFinish allValues][i]);
+//                    [_dictFinish removeObjectForKey:_dataKey[i]];
+//                    [_dataKey removeObjectAtIndex:indexPath.row-1];
+//                    [_userKey removeObjectAtIndex:indexPath.row-1];
+//                    [_mobileArr removeObjectAtIndex:indexPath.row - 1];
+//                    [_dataPeoArr removeObjectAtIndex:indexPath.row-1];
+//                    isChange1 = YES;
+//                    continue;
+//                }
+//                
+//            }
+//            [_tableChoose reloadData];
+//            [_tableView reloadData];
+//            isChange1 = NO;
+//
+//        }
+//    }
 
 }
 
