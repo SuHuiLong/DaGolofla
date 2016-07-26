@@ -543,7 +543,11 @@ static CGFloat ImageHeight  = 210.0;
     [dict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:userID] forKey:@"userKey"];//用户key
     [dict setObject:self.model.name forKey:@"name"];//活动名字
     [dict setObject:self.model.signUpEndTime forKey:@"signUpEndTime"];//活动报名截止时间
-    [dict setObject:self.model.beginDate forKey:@"beginDate"];//活动开始时间
+    if ([self.model.beginDate length] == 16) {
+        [dict setObject:[NSString stringWithFormat:@"%@:00", self.model.beginDate] forKey:@"beginDate"];//活动开始时间
+    }else{
+        [dict setObject:self.model.beginDate forKey:@"beginDate"];//活动开始时间
+    }
     [dict setObject:self.model.endDate forKey:@"endDate"];//活动结束时间
     [dict setObject:[NSString stringWithFormat:@"%ld", (long)self.model.ballKey] forKey:@"ballKey"];//球场id
     [dict setObject:self.model.ballName forKey:@"ballName"];//球场名称
