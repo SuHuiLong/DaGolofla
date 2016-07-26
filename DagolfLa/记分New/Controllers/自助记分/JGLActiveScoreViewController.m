@@ -603,21 +603,15 @@
                 if (indexPath.row  == _dictPeo.count + 2) {
                     JGLAddActivePlayViewController* addVc = [[JGLAddActivePlayViewController alloc]init];
                     addVc.model = _model;
-                    addVc.blockSurePlayer = ^(NSMutableDictionary *dict,NSMutableArray* dataPeo , NSMutableArray* dataKey, NSMutableArray* userKey, NSMutableArray* mobielArr)
+                    addVc.blockSurePlayer = ^(NSMutableDictionary *dict, NSMutableArray* dataKey)
                     {
                         _dictPeo = dict;
-                        _dataPeoBack = dataPeo;
                         _dataKeyBack = dataKey;
-                        _userKeyArr  = userKey;
-                        _mobileArr   = mobielArr;
                         NSIndexSet *indexSet=[[NSIndexSet alloc]initWithIndex:4];
                         [_tableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationAutomatic];
                     };
                     addVc.dictFinish = _dictPeo;
                     addVc.dataKey    = _dataKeyBack;
-                    addVc.dataPeoArr = _dataPeoBack;
-                    addVc.userKey    = _userKeyArr;
-                    addVc.mobileArr  = _mobileArr;
                     [self.navigationController pushViewController:addVc animated:YES];
                     
                 }
