@@ -40,7 +40,7 @@
     NSString* _strBallLogo;//记录球场头像
     NSMutableDictionary* _teeDictChoose;//记录选择的t台存放数组
     
-    NSMutableDictionary *_dictPeo;
+    NSMutableDictionary *_dictPeo,*_dictFri,*_dictAdd;
     NSString* _strHole1,* _strHole2;//九洞
 
 }
@@ -55,6 +55,8 @@
     self.title = @"记分";
     _dataBallArray = [[NSMutableArray alloc]init];
     _dictPeo       = [[NSMutableDictionary alloc]init];
+    _dictFri       = [[NSMutableDictionary alloc]init];
+    _dictAdd       = [[NSMutableDictionary alloc]init];
     _teeDictChoose = [[NSMutableDictionary alloc]init];
     _isTee = NO;
     
@@ -116,8 +118,8 @@
     for (int i=0; i<_teeDictChoose.count; i++) {
         NSMutableDictionary *dict1 = [NSMutableDictionary dictionary];
         if (i == 0) {
-            if (![Helper isBlankString:[_teeDictChoose allValues][i]]) {
-                [dict1 setObject:[_teeDictChoose allValues][i] forKey:@"tTaiwan"];// T台
+            if (![Helper isBlankString:[_teeDictChoose objectForKey:@"0"]]) {
+                [dict1 setObject:[_teeDictChoose objectForKey:@"0"] forKey:@"tTaiwan"];// T台
             }
             else{
                 [[ShowHUD showHUD]showToastWithText:@"请选择Tee台" FromView:self.view];
@@ -130,8 +132,8 @@
             [dict1 setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"mobile"] forKey:@"userMobile"];// 手机号
         }
         else{
-            if (![Helper isBlankString:[_teeDictChoose allValues][i]]) {
-                [dict1 setObject:[_teeDictChoose allValues][i] forKey:@"tTaiwan"];// T台
+            if (![Helper isBlankString:[_teeDictChoose objectForKey:[NSString stringWithFormat:@"%d",i]]]) {
+                [dict1 setObject:[_teeDictChoose objectForKey:[NSString stringWithFormat:@"%d",i]] forKey:@"tTaiwan"];// T台
             }
             else{
                 [[ShowHUD showHUD]showToastWithText:@"请选择Tee台" FromView:self.view];
@@ -140,16 +142,17 @@
             NSArray* arr = [_dictPeo allKeys];
             NSString* str = [NSString stringWithFormat:@"%@",arr[i-1]];
 //            if (str.length >= 11) {
-            if (![Helper isBlankString:[_dictPeo allKeys][i -1]]) {
-                [dict1 setObject:[_dictPeo allKeys][i -1] forKey:@"userKey"];//用户Key
+            if (![Helper isBlankString:str]) {
+                [dict1 setObject:str forKey:@"userKey"];//用户Key
             }
             else{
                 [dict1 setObject:@0 forKey:@"userKey"];//用户Key
             }
-           
-            [dict1 setObject:[_dictPeo allValues][i-1] forKey:@"userName"];// 用户名称
+            NSArray* arr1 = [_dictPeo allValues];
+            NSString* str1 = [NSString stringWithFormat:@"%@",arr1[i-1]];
+            [dict1 setObject:str1 forKey:@"userName"];// 用户名称
             if (str.length >= 11) {
-                [dict1 setObject:[_dictPeo allKeys][i -1] forKey:@"userMobile"];// 手机号
+                [dict1 setObject:str forKey:@"userMobile"];// 手机号
             }
             else{
                 [dict1 setObject:@"" forKey:@"userMobile"];// 手机号
@@ -270,7 +273,11 @@
                 cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
                 cell.selectionStyle = UITableViewCellSelectionStyleNone;
 
-                if (_teeDictChoose.count <= indexPath.row) {
+//                if (_teeDictChoose.count > indexPath.row) {
+//                    cell.iconImgv.hidden = YES;
+//                    cell.labelTee.text = @"请选择tee台";
+//                }
+//                else{
                     if (![Helper isBlankString:[_teeDictChoose objectForKey:[NSString stringWithFormat:@"%td",indexPath.row - 1]]]) {
                         cell.iconImgv.hidden = NO;
                         [cell showTee:_strTee];
@@ -279,11 +286,7 @@
                         cell.iconImgv.hidden = YES;
                         cell.labelTee.text = @"请选择tee台";
                     }
-                }
-                else{
-                    cell.iconImgv.hidden = YES;
-                    cell.labelTee.text = @"请选择tee台";
-                }
+//                }
                 
 //                if (![Helper isBlankString:_strTee]) {
 //                    cell.iconImgv.hidden = NO;
@@ -583,13 +586,15 @@
             if (indexPath.row > 0) {
                 if (indexPath.row  == _dictPeo.count + 2) {
                     JGLAddPlayerViewController* addVc = [[JGLAddPlayerViewController alloc]init];
-                    addVc.blockSurePlayer = ^(NSMutableDictionary *dict){
+                    addVc.blockSurePlayer = ^(NSMutableDictionary *dict,NSMutableDictionary* dict1,NSMutableDictionary* dict2){
                         _dictPeo = dict;
                         NSIndexSet *indexSet=[[NSIndexSet alloc]initWithIndex:4];
                         [_tableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationAutomatic];
                     };
                     //                addVc.dictFin = _dictPeo;
                     addVc.dictPeople = _dictPeo;
+                    addVc.peoAddress = _dictAdd;
+                    addVc.peoFriend  = _dictFri;
                     [self.navigationController pushViewController:addVc animated:YES];
                     
                 }

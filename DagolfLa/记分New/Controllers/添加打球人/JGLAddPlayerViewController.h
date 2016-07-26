@@ -11,9 +11,9 @@
 @interface JGLAddPlayerViewController : ViewController
 
 
-@property (copy, nonatomic) void (^blockSurePlayer)(NSMutableDictionary *);
+@property (copy, nonatomic) void (^blockSurePlayer)(NSMutableDictionary *,NSMutableDictionary*,NSMutableDictionary*);
 
-@property (copy, nonatomic) NSMutableDictionary* dictPeople;
-;
-
+@property (copy, nonatomic) NSMutableDictionary* dictPeople, *peoAddress,* peoFriend;
+//通讯录返回数据    peoAddress
+//球友列表返回数据;   _peoFriend
 @end

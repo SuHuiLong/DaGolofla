@@ -58,7 +58,7 @@
     
     //failKey
     self.failKeyTop.constant = 25*ProportionAdapter;
-    self.failKey.secureTextEntry = YES;
+//    self.failKey.secureTextEntry = YES;
     self.failKey.delegate = self;
     NSLayoutConstraint *failKeyHConstraint = [NSLayoutConstraint constraintWithItem:self.failKey attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationGreaterThanOrEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:36*ProportionAdapter];
     NSLayoutConstraint *failKeyWConstraint = [NSLayoutConstraint constraintWithItem:self.failKey attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationGreaterThanOrEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:160*ProportionAdapter];
