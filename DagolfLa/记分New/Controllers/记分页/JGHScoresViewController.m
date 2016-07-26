@@ -168,6 +168,7 @@
 - (void)noticePushScoresCtrl:(NSNotification *)not{
     //
     _selectHole = 0;
+    [_item setTitle:@"保存"];
     [_scoresView removeFromSuperview];
     [_tranView removeFromSuperview];
     _pageControl.currentPage = [[not.userInfo objectForKey:@"index"] integerValue];
