@@ -15,4 +15,6 @@
 
 @property (nonatomic, assign)NSInteger backId;//1-记分
 
+@property (nonatomic, assign)NSInteger currentPage;
+
 @end

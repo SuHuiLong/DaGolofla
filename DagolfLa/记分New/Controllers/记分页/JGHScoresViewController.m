@@ -17,7 +17,7 @@
 {
     UIPageViewController *_pageViewController;
     NSMutableArray *_dataArray;
-    NSInteger _currentPage;
+//    NSInteger _currentPage;
     UIPageControl *_pageControl;
     
     NSInteger _selectHole;
@@ -79,7 +79,12 @@
     UIView *titleView = [[UIView alloc]initWithFrame:CGRectMake(110*ProportionAdapter, 0, 80*ProportionAdapter, 44)];
     self.titleBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 80*ProportionAdapter, 44)];
     [titleView addSubview:self.titleBtn];
-    [self.titleBtn setTitle:@"1 HOLE" forState:UIControlStateNormal];
+    if (_currentPage > 0) {
+        [self.titleBtn setTitle:[NSString stringWithFormat:@"%td HOLE", _currentPage+1] forState:UIControlStateNormal];
+    }else{
+        [self.titleBtn setTitle:@"1 HOLE" forState:UIControlStateNormal];
+    }
+    
     [self.titleBtn addTarget:self action:@selector(titleBtnClick:) forControlEvents:UIControlEventTouchUpInside];
 //    self.titleBtn.backgroundColor = [UIColor redColor];
     
@@ -146,9 +151,10 @@
     } completionBlock:^(id data) {
         NSLog(@"%@", data);
         if ([[data objectForKey:@"packSuccess"]integerValue] == 1) {
-
-            [[ShowHUD showHUD]showToastWithText:@"记分保存成功！" FromView:self.view];
-            [self performSelector:@selector(scoresResult) withObject:self afterDelay:1.0];
+            
+            [self scoresResult];
+//            [[ShowHUD showHUD]showToastWithText:@"记分保存成功！" FromView:self.view];
+//            [self performSelector:@selector(scoresResult) withObject:self afterDelay:1.0];
         }else{
             if ([data objectForKey:@"packResultMsg"]) {
                 [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
@@ -195,10 +201,19 @@
                     [self.userScoreArray addObject:model];
                 }
                 
-                _currentPage = 0;
+//                if (_currentPage == 1) {
+//                    _currentPage = 0;
+//                }
+                
                 _pageViewController = [[UIPageViewController alloc]initWithTransitionStyle:1 navigationOrientation:0 options:nil];
                 
                 JGHScoresMainViewController *sub = [[JGHScoresMainViewController alloc]init];
+//                if (_currentPage > 1) {
+                    sub.index = _currentPage;
+//                } else{
+//                    sub.index = 0;
+//                }
+                
                 sub.dataArray = self.userScoreArray;
                 __weak JGHScoresViewController *weakSelf = self;
                 sub.returnScoresDataArray= ^(NSMutableArray *dataArray){
@@ -214,7 +229,12 @@
                 _pageControl = [[UIPageControl alloc]init];
                 //    _pageControl.numberOfPages = _dataArray.count;
                 _pageControl.numberOfPages = 18;
-                _pageControl.currentPage = 0;
+//                if (_currentPage >= 1) {
+                    _pageControl.currentPage = _currentPage;
+//                }else{
+//                    _pageControl.currentPage = 0;
+//                }
+                
                 _pageControl.center = CGPointMake(ScreenWidth/2, screenHeight-64-5*ProportionAdapter);
                 [self.view addSubview:_pageControl];
                 _pageControl.pageIndicatorTintColor = [UIColor colorWithHexString:@"#32B14D"];
@@ -338,6 +358,7 @@
     };
     [self.titleBtn setTitle:[NSString stringWithFormat:@"%td HOLE", sub.index+1] forState:UIControlStateNormal];
     _selectPage = sub.index+1;
+    _pageControl.currentPage = sub.index;
 //    [[ShowHUD showHUD]showToastWithText:[NSString stringWithFormat:@"第-%td-洞", sub.index+1] FromView:self.view];
 }
 
@@ -429,6 +450,14 @@
 }
 #pragma mark --历史记分
 - (void)scoresResult{
+    NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
+    if (_selectPage > 0) {
+        [userdef setObject:@(_selectPage-1) forKey:@"currentScorePage"];
+    }else{
+        [userdef setObject:@(_selectPage) forKey:@"currentScorePage"];
+    }
+    
+    [userdef synchronize];
     JGDHistoryScoreViewController *historyCtrl = [[JGDHistoryScoreViewController alloc]init];
     [self.navigationController pushViewController:historyCtrl animated:YES];
 }
