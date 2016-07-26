@@ -538,7 +538,7 @@
 //    [[ShowHUD showHUD]showAnimationWithText:@"正在发布..." FromView:self.view];
 
     NSString* str = [[NSString alloc]init];
-    str = @"0";
+    str = @"1";
     //    BOOL type = 0;
     [_dict setValue:str forKey:@"moodType"];
     NSString* xIndex = [[NSString alloc]init];
@@ -552,10 +552,6 @@
     
     self.navigationItem.rightBarButtonItem.enabled = (_textView.text.length != 0);
     [_dict setValue:_textView.text forKey:@"moodContent"];
-    
-//    placeId
-//    poleNum
-//    playTimes
     
     if (![Helper isBlankString:_textView.text]) {
         if (_vedioData) {
