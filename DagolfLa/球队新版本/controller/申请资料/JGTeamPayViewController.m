@@ -10,7 +10,7 @@
 #import "JGLableAndLableTableViewCell.h"
 #import "JGApplyMaterialTableViewCell.h"
 #import <AlipaySDK/AlipaySDK.h>
-
+#import "JGTeamGroupViewController.h"
 
 @interface JGTeamPayViewController ()<UITableViewDelegate, UITableViewDataSource>
 
@@ -130,12 +130,12 @@
 
 #pragma mark -- 微信支付成功后返回的通知
 
-- (void)notice:(id)not{
+- (void)notice:(NSNotification *)not{
 //    NSInteger secess = [[not.userInfo objectForKey:@"secess"] integerValue];
 //    if (secess == 1) {
 //        //跳转分组页面
 //        JGTeamGroupViewController *groupCtrl = [[JGTeamGroupViewController alloc]init];
-//        groupCtrl.teamActivityKey = [_modelss.timeKey integerValue];
+//        groupCtrl.teamActivityKey = [[self.detailDic objectForKey:@"timeKey"] integerValue];
 //        groupCtrl.activityFrom = 1;
 //        [self.navigationController pushViewController:groupCtrl animated:YES];
 //    }else if (secess == 2){
@@ -144,7 +144,9 @@
 //        [[ShowHUD showHUD]showToastWithText:@"支付失败！" FromView:self.view];
 //    }
 }
-
+- (void)dealloc{
+    [[NSNotificationCenter defaultCenter]removeObserver:self];
+}
 #pragma mark -- 支付宝
 
 - (void)zhifubaoPay{

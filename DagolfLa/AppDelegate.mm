@@ -274,18 +274,38 @@
     return YES;
 }
 
-
+- (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<NSString*, id> *)options
+{
+    //这里判断是否发起的请求为微信支付，如果是的话，用WXApi的方法调起微信客户端的支付页面（://pay 之前的那串字符串就是你的APPID，）
+    if ([[NSString stringWithFormat:@"%@",url] rangeOfString:[NSString stringWithFormat:@"wxdcdc4e20544ed728://pay"]].location != NSNotFound) {
+        return  [WXApi handleOpenURL:url delegate:self];
+        //不是上面的情况的话，就正常用shareSDK调起相应的分享页面
+    }else{
+        return [UMSocialSnsService handleOpenURL:url wxApiDelegate:self];
+//        [UMSocialSnsService handleOpenURL:url
+//                            wxDelegate:self];
+    }
+    
+}
+//- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
+//{
+//    return  [WXApi handleOpenURL:url delegate:self];
+//    
+//}
 //新浪微博的
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
 {
-    if ([url.scheme isEqualToString:@"wxdcdc4e20544ed728"]) {
-        [WXApi handleOpenURL:url delegate:self];
-    }
-    else{
-        return  [UMSocialSnsService handleOpenURL:url];
+    if ([[NSString stringWithFormat:@"%@",url] rangeOfString:[NSString stringWithFormat:@"wxdcdc4e20544ed728://pay"]].location != NSNotFound) {
+        return  [WXApi handleOpenURL:url delegate:self];
+        //不是上面的情况的话，就正常用shareSDK调起相应的分享页面
+    }else{
+        return [UMSocialSnsService handleOpenURL:url wxApiDelegate:self];
+        //        [UMSocialSnsService handleOpenURL:url
+        //                            wxDelegate:self];
     }
     return YES;
 }
+
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
 {
     
@@ -293,12 +313,20 @@
     {
         return  [UMSocialSnsService handleOpenURL:url wxApiDelegate:nil];
     }else if ([url.scheme isEqualToString:@"wxdcdc4e20544ed728"]) {
-        BOOL result = [UMSocialSnsService handleOpenURL:url];
-        if (result == FALSE) {
-            //调用其他SDK，例如支付宝SDK等
-            return [WXApi handleOpenURL:url delegate:self];
+//        BOOL result = [UMSocialSnsService handleOpenURL:url];
+//        if (result == FALSE) {
+//            //调用其他SDK，例如支付宝SDK等
+//            return [WXApi handleOpenURL:url delegate:self];
+//        }
+//        return result;
+        if ([[NSString stringWithFormat:@"%@",url] rangeOfString:[NSString stringWithFormat:@"wxdcdc4e20544ed728://pay"]].location != NSNotFound) {
+            return  [WXApi handleOpenURL:url delegate:self];
+            //不是上面的情况的话，就正常用shareSDK调起相应的分享页面
+        }else{
+            return [UMSocialSnsService handleOpenURL:url wxApiDelegate:self];
+            //        [UMSocialSnsService handleOpenURL:url
+            //                            wxDelegate:self];
         }
-        return result;
     }else if ([url.scheme isEqualToString:@"dagolfla"]){
         NSLog(@"Calling Application Bundle ID: %@", sourceApplication);
         NSLog(@"URL scheme:%@", [url scheme]);
@@ -435,7 +463,6 @@
         [[NSNotificationCenter defaultCenter]postNotification:notice];
     }
 }
-
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
