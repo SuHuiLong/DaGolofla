@@ -821,6 +821,7 @@
 		F56F0B8D1CC613E100A222F3 /* NoteModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F56F0B8C1CC613E100A222F3 /* NoteModel.m */; };
 		F56F0B901CC637A200A222F3 /* AddNoteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F56F0B8F1CC637A200A222F3 /* AddNoteViewController.m */; };
 		F5843DF91CFCF5EA00547812 /* JGSelfSetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5843DF81CFCF5EA00547812 /* JGSelfSetViewController.m */; };
+		F59229841D4892AD0002BA2E /* JGDActSelfHistoryScoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F59229831D4892AD0002BA2E /* JGDActSelfHistoryScoreViewController.m */; };
 		F5AEF6E61D408F3F009A8C34 /* JGDHIstoryScoreDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5AEF6DD1D408F3F009A8C34 /* JGDHIstoryScoreDetailViewController.m */; };
 		F5AEF6E71D408F3F009A8C34 /* JGDHistoryScoreShowViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5AEF6DF1D408F3F009A8C34 /* JGDHistoryScoreShowViewController.m */; };
 		F5AEF6E81D408F3F009A8C34 /* JGDHistoryScoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5AEF6E11D408F3F009A8C34 /* JGDHistoryScoreViewController.m */; };
@@ -2396,6 +2397,8 @@
 		F56F0B8F1CC637A200A222F3 /* AddNoteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddNoteViewController.m; sourceTree = "<group>"; };
 		F5843DF71CFCF5EA00547812 /* JGSelfSetViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGSelfSetViewController.h; sourceTree = "<group>"; };
 		F5843DF81CFCF5EA00547812 /* JGSelfSetViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGSelfSetViewController.m; sourceTree = "<group>"; };
+		F59229821D4892AD0002BA2E /* JGDActSelfHistoryScoreViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGDActSelfHistoryScoreViewController.h; sourceTree = "<group>"; };
+		F59229831D4892AD0002BA2E /* JGDActSelfHistoryScoreViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGDActSelfHistoryScoreViewController.m; sourceTree = "<group>"; };
 		F5AEF6DC1D408F3F009A8C34 /* JGDHIstoryScoreDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGDHIstoryScoreDetailViewController.h; sourceTree = "<group>"; };
 		F5AEF6DD1D408F3F009A8C34 /* JGDHIstoryScoreDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGDHIstoryScoreDetailViewController.m; sourceTree = "<group>"; };
 		F5AEF6DE1D408F3F009A8C34 /* JGDHistoryScoreShowViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGDHistoryScoreShowViewController.h; sourceTree = "<group>"; };
@@ -6388,6 +6391,8 @@
 				F5AEF6E31D408F3F009A8C34 /* JGDNotActivityHisCoreViewController.m */,
 				F5AEF6E41D408F3F009A8C34 /* JGDNotActivityHisDetailViewController.h */,
 				F5AEF6E51D408F3F009A8C34 /* JGDNotActivityHisDetailViewController.m */,
+				F59229821D4892AD0002BA2E /* JGDActSelfHistoryScoreViewController.h */,
+				F59229831D4892AD0002BA2E /* JGDActSelfHistoryScoreViewController.m */,
 			);
 			path = "历史积分卡";
 			sourceTree = "<group>";
@@ -7247,6 +7252,7 @@
 				F5EB44671C995788008ACD73 /* BallFriListCell.m in Sources */,
 				36BF004E1BC77213005B3CE2 /* OtherDataModel.m in Sources */,
 				20513BD81CF7050A003233FB /* NSDataEx.m in Sources */,
+				F59229841D4892AD0002BA2E /* JGDActSelfHistoryScoreViewController.m in Sources */,
 				F5321AEA1CE449C400CAE1EF /* JGCreateTeamView.m in Sources */,
 				AA857EE01C5F48AA0034B4C8 /* SelfDataViewController.m in Sources */,
 				20BA612C1CDC99D0004B61F5 /* ALMoviePlayerControls.m in Sources */,

@@ -57,11 +57,21 @@
     self.view.backgroundColor = [UIColor colorWithHexString:@"#f4f4f4"];
     [self createTableView];
     
-    UIBarButtonItem *rightBar = [[UIBarButtonItem alloc] initWithTitle:@"取回记分" style:(UIBarButtonItemStyleDone) target:self action:@selector(takeMyCode)];
-    rightBar.tintColor = [UIColor whiteColor];
-    [rightBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:15 * ProportionAdapter], NSFontAttributeName, nil] forState:(UIControlStateNormal)];
+    if (_fromTeam == 10) {
+        UIBarButtonItem *rightBar = [[UIBarButtonItem alloc] initWithTitle:@"成绩总揽" style:(UIBarButtonItemStyleDone) target:self action:@selector(takeMyCode)];
+        rightBar.tintColor = [UIColor whiteColor];
+        [rightBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:15 * ProportionAdapter], NSFontAttributeName, nil] forState:(UIControlStateNormal)];
+        
+        self.navigationItem.rightBarButtonItem = rightBar;
+    }else{
+        UIBarButtonItem *rightBar = [[UIBarButtonItem alloc] initWithTitle:@"取回记分" style:(UIBarButtonItemStyleDone) target:self action:@selector(takeMyCode)];
+        rightBar.tintColor = [UIColor whiteColor];
+        [rightBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:15 * ProportionAdapter], NSFontAttributeName, nil] forState:(UIControlStateNormal)];
+        
+        self.navigationItem.rightBarButtonItem = rightBar;
+    }
+    
 
-    self.navigationItem.rightBarButtonItem = rightBar;
     // Do any additional setup after loading the view.
 }
 
@@ -98,11 +108,20 @@
 }
 
 
-#pragma mark ----- 取回记分
+#pragma mark ----- 取回记分／成绩总揽
 
 - (void)takeMyCode{
-    JGHRetrieveScoreViewController *retriveveVC = [[JGHRetrieveScoreViewController alloc] init];
-    [self.navigationController pushViewController:retriveveVC animated:YES];
+    
+    if (self.fromTeam == 10) {
+        //成绩总揽
+        
+        
+    }else{
+        JGHRetrieveScoreViewController *retriveveVC = [[JGHRetrieveScoreViewController alloc] init];
+        [self.navigationController pushViewController:retriveveVC animated:YES];
+    }
+    
+
 }
 
 

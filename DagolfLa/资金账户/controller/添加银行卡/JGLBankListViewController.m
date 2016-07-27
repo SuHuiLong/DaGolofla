@@ -36,6 +36,21 @@
 
 @implementation JGLBankListViewController
 
+
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:YES];
+    
+    if (![self.view.subviews containsObject:_tableView]) {
+        [self.view addSubview: _tableView];
+        [self.view addSubview: _btnDelete];
+    }
+    
+    [_tableView.header endRefreshing];
+    _tableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
+    [_tableView.header beginRefreshing];
+}
+
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor colorWithHexString:BG_color];
@@ -76,11 +91,11 @@
     if (_realName) {
         addVc.realName = _realName;
     }
-    addVc.refreshBlock = ^(){
-        [_tableView.header endRefreshing];
-        _tableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
-        [_tableView.header beginRefreshing];
-    };
+//    addVc.refreshBlock = ^(){
+//        [_tableView.header endRefreshing];
+//        _tableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
+//        [_tableView.header beginRefreshing];
+//    };
     [self.navigationController pushViewController:addVc animated:YES];
 }
 

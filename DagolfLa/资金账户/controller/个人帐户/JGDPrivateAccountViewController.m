@@ -12,6 +12,7 @@
 #import "JGLBankListViewController.h"
 #import "JGDCertificationViewController.h"
 #import "JGDSubMitPayPasswordViewController.h"
+#import "JGLAddBankCardViewController.h"
 
 @interface JGDPrivateAccountViewController ()<UITableViewDelegate,UITableViewDataSource>
 
@@ -20,6 +21,8 @@
 @property (nonatomic, strong) UILabel *moneyLabel;
 @property (nonatomic, strong) NSNumber *hasUserRealName;
 @property (nonatomic, strong) NSNumber *isSetPayPassWord;
+@property (nonatomic, strong) NSNumber *hasUserBankCard;
+@property (nonatomic, copy) NSString *name;
 
 
 @end
@@ -35,13 +38,15 @@
     [[JsonHttp jsonHttp]httpRequest:@"user/getUserBalance" JsonKey:nil withData:dic requestMethod:@"GET" failedBlock:^(id errType) {
         NSLog(@"errtype == %@", errType);
     } completionBlock:^(id data) {
-            if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
-            self.money = [data objectForKey:@"money"] ;
-            self.hasUserRealName = [data objectForKey:@"hasUserRealName"] ;
-            self.isSetPayPassWord = [data objectForKey:@"isSetPayPassWord"] ;
+        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+            self.money = [data objectForKey:@"money"];
+            self.hasUserRealName = [data objectForKey:@"hasUserRealName"];
+            self.isSetPayPassWord = [data objectForKey:@"isSetPayPassWord"];
+            self.hasUserBankCard = [data objectForKey:@"hasUserBankCard"];
+            self.name = [data objectForKey:@"name"];
 
             self.moneyLabel.text = [NSString stringWithFormat:@"¥%.2f",[self.money floatValue]];
-        
+            
             UITapGestureRecognizer *gest = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(removeView:)];
             if ([[data objectForKey:@"hasUserRealName"] integerValue] == 0) {
                 UIImageView *imageV = [[UIImageView alloc] initWithFrame:[UIScreen mainScreen].bounds];
@@ -229,6 +234,24 @@
         UIAlertAction* action2=[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             JGDSubMitPayPasswordViewController *setPassWord = [[JGDSubMitPayPasswordViewController alloc] init];
             [self.navigationController pushViewController:setPassWord animated:YES];
+        }];
+        
+        [alert addAction:action1];
+        [alert addAction:action2];
+        [self presentViewController:alert animated:YES completion:nil];
+        
+        
+    }else if ( [self.hasUserBankCard integerValue] == 0){
+        UIAlertController *alert=[UIAlertController alertControllerWithTitle:@"提示" message:@"是否前往添加银行卡" preferredStyle:UIAlertControllerStyleAlert];
+        
+        UIAlertAction *action1=[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            [alert dismissViewControllerAnimated:YES completion:nil];
+            
+        }];
+        UIAlertAction* action2=[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            JGLAddBankCardViewController* addVc = [[JGLAddBankCardViewController alloc]init];
+            addVc.realName = self.name;
+            [self.navigationController pushViewController:addVc animated:YES];
         }];
         
         [alert addAction:action1];
