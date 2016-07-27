@@ -63,7 +63,7 @@
     }
     _dataAccountDict = [[NSMutableDictionary alloc]init];
     [self uiConfig];
-    [self createHeadSearch];
+//    [self createHeadSearch];
     [self createBtn];
 }
 - (void)viewWillDisappear:(BOOL)animated {
@@ -98,25 +98,25 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
--(void)createHeadSearch
-{
-    _searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
-    _searchController.searchResultsUpdater = self;
-    _searchController.searchBar.barTintColor = [UIColor colorWithRed:0.94 green:0.94 blue:0.94 alpha:1];
-    _searchController.dimsBackgroundDuringPresentation = NO;
-    _searchController.hidesNavigationBarDuringPresentation = NO;
-    _searchController.searchBar.frame = CGRectMake(self.searchController.searchBar.frame.origin.x, self.searchController.searchBar.frame.origin.y, self.searchController.searchBar.frame.size.width, 44.0);
-    _searchController.searchBar.tintColor = [UIColor colorWithRed:0.36f green:0.66f blue:0.31f alpha:1.00f];
-    _searchController.searchBar.placeholder = @"输入队友昵称搜索";
-    _tableView.tableHeaderView = _searchController.searchBar;
-    _searchController.searchBar.delegate = self;
-}
--(void)updateSearchResultsForSearchController:(UISearchController *)searchController {
-}
--(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
-    
-}
-
+//-(void)createHeadSearch
+//{
+//    _searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
+//    _searchController.searchResultsUpdater = self;
+//    _searchController.searchBar.barTintColor = [UIColor colorWithRed:0.94 green:0.94 blue:0.94 alpha:1];
+//    _searchController.dimsBackgroundDuringPresentation = NO;
+//    _searchController.hidesNavigationBarDuringPresentation = NO;
+//    _searchController.searchBar.frame = CGRectMake(self.searchController.searchBar.frame.origin.x, self.searchController.searchBar.frame.origin.y, self.searchController.searchBar.frame.size.width, 44.0);
+//    _searchController.searchBar.tintColor = [UIColor colorWithRed:0.36f green:0.66f blue:0.31f alpha:1.00f];
+//    _searchController.searchBar.placeholder = @"输入队友昵称搜索";
+//    _tableView.tableHeaderView = _searchController.searchBar;
+//    _searchController.searchBar.delegate = self;
+//}
+//-(void)updateSearchResultsForSearchController:(UISearchController *)searchController {
+//}
+//-(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
+//    
+//}
+//
 
 
 

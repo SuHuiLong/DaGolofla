@@ -151,6 +151,7 @@
     _labelDistance.textColor = [UIColor lightGrayColor];
     [_ClubView addSubview:_labelDistance];
     
+    
     //定位的城市
     _labelCities = [[UILabel alloc]initWithFrame:CGRectMake(125*ScreenWidth/375, 3*ScreenWidth/375, ScreenWidth-135*ScreenWidth/375, 20*ScreenWidth/375)];
     _labelCities.textColor = [UIColor lightGrayColor];
@@ -293,7 +294,7 @@
     _labelContent.frame = CGRectMake(10* ScreenWidth /375, _iconImgv.frame.origin.y + _iconImgv.frame.size.height+5*ScreenWidth/375, ScreenWidth- 20*ScreenWidth / 375, moodContentH);
     _labelContent.numberOfLines = 0;
     _labelContent.text = model.moodContent;
-    _labelDistance.text = [NSString stringWithFormat:@"%.2f公里",[model.distance doubleValue]];
+    _labelDistance.text = [NSString stringWithFormat:@"%.1f公里",[model.distance doubleValue]];
     _labelCities.text = model.golfName;
     
     // 取当前时间的秒数
