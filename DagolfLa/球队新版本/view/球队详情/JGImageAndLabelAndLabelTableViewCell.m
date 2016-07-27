@@ -17,7 +17,7 @@
         self.imageV.contentMode = UIViewContentModeScaleToFill;
         [self addSubview:self.imageV];
         
-        self.promptLB = [[UILabel alloc] initWithFrame:CGRectMake(40 * screenWidth / 320, 5 * screenWidth / 320, 100 * screenWidth / 320, 30 * screenWidth / 320)];
+        self.promptLB = [[UILabel alloc] initWithFrame:CGRectMake(40 * screenWidth / 320, 5 * screenWidth / 320, 200 * screenWidth / 320, 30 * screenWidth / 320)];
         
         self.promptLB.font = [UIFont systemFontOfSize:15 * screenWidth / 320];
         [self.contentView addSubview:self.promptLB];

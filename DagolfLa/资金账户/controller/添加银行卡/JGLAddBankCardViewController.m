@@ -115,7 +115,7 @@
     } completionBlock:^(id data) {
         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
-            _refreshBlock();
+//            _refreshBlock();
             [self.navigationController popViewControllerAnimated:YES];
         }
         else
