@@ -97,7 +97,12 @@
     self.navigationItem.titleView = titleView;
     
     _selectHole = 0;
-    _selectPage = 0;
+    if (_currentPage > 0) {
+        _selectPage = _currentPage + 1;
+    }else{
+        _selectPage = 1;
+    }
+    
     _selectcompleteHole = 0;
     _item = [[UIBarButtonItem alloc]initWithTitle:@"保存" style:UIBarButtonItemStylePlain target:self action:@selector(saveScoresClick)];
     _item.tintColor=[UIColor whiteColor];

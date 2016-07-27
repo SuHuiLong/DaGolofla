@@ -124,7 +124,7 @@
     btnImage.frame = CGRectMake(imgv.frame.size.width/4+10*ScreenWidth/375, imgv.frame.size.width/8+20*ScreenWidth/375, imgv.frame.size.width/2-20*ScreenWidth/375, imgv.frame.size.width/2-20*ScreenWidth/375);
     [imgv addSubview:btnImage];
     btnImage.backgroundColor = [UIColor clearColor];
-    [btnImage addTarget:self action:@selector(btnImgvClick) forControlEvents:UIControlEventTouchUpInside];
+    [btnImage addTarget:self action:@selector(btnImgvClick:) forControlEvents:UIControlEventTouchUpInside];
     
     //圆形视图上的按钮
     UILabel* lableTitle = [[UILabel alloc]initWithFrame:CGRectMake(imgv.frame.size.width/4, imgv.frame.size.width/2+20*ScreenWidth/375, imgv.frame.size.width/2, imgv.frame.size.width/4)];
@@ -196,8 +196,9 @@
     }
 }
 
--(void)btnImgvClick
+-(void)btnImgvClick:(UIButton *)btn
 {
+    btn.enabled = NO;
     if ([[NSUserDefaults standardUserDefaults]objectForKey:@"userId"]) {
         NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
         [dict setObject:DEFAULF_USERID forKey:@"userKey"];
@@ -263,6 +264,8 @@
             [self presentViewController:alertView animated:YES completion:nil];
         }];
     }
+    
+    btn.enabled = YES;
 }
 
 -(void)createUpLoad
