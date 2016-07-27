@@ -97,7 +97,12 @@
     self.navigationItem.titleView = titleView;
     
     _selectHole = 0;
-    _selectPage = 0;
+    if (_currentPage > 0) {
+        _selectPage = _currentPage + 1;
+    }else{
+        _selectPage = 1;
+    }
+    
     _selectcompleteHole = 0;
     _item = [[UIBarButtonItem alloc]initWithTitle:@"保存" style:UIBarButtonItemStylePlain target:self action:@selector(saveScoresClick)];
     _item.tintColor=[UIColor whiteColor];
@@ -168,6 +173,7 @@
 - (void)noticePushScoresCtrl:(NSNotification *)not{
     //
     _selectHole = 0;
+    [_item setTitle:@"保存"];
     [_scoresView removeFromSuperview];
     [_tranView removeFromSuperview];
     _pageControl.currentPage = [[not.userInfo objectForKey:@"index"] integerValue];
@@ -452,12 +458,14 @@
 - (void)scoresResult{
     NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
     if (_selectPage > 0) {
-        [userdef setObject:@(_selectPage-1) forKey:@"currentScorePage"];
+        [userdef setObject:@(_selectPage-1) forKey:[NSString stringWithFormat:@"%@", _scorekey]];
     }else{
-        [userdef setObject:@(_selectPage) forKey:@"currentScorePage"];
+        [userdef setObject:@(_selectPage) forKey:[NSString stringWithFormat:@"%@", _scorekey]];
     }
     
     [userdef synchronize];
+    
+    NSLog(@"%@", [userdef objectForKey:[NSString stringWithFormat:@"%@", _scorekey]]);
     JGDHistoryScoreViewController *historyCtrl = [[JGDHistoryScoreViewController alloc]init];
     [self.navigationController pushViewController:historyCtrl animated:YES];
 }

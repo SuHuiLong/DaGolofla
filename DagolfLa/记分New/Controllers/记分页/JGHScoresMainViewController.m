@@ -45,6 +45,7 @@ static NSString *const JGHScoresPageCellIdentifier = @"JGHScoresPageCell";
     self.scoresTableView.dataSource = self;
     self.scoresTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.scoresTableView.backgroundColor = [UIColor colorWithHexString:BG_color];
+    self.scoresTableView.scrollEnabled = NO;
     
     UINib *scoresPageCellNib = [UINib nibWithNibName:@"JGHScoresPageCell" bundle: [NSBundle mainBundle]];
     [self.scoresTableView registerNib:scoresPageCellNib forCellReuseIdentifier:JGHScoresPageCellIdentifier];

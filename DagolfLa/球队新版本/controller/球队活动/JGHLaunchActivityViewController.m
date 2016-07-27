@@ -501,8 +501,8 @@ static CGFloat ImageHeight  = 210.0;
         return;
     }
     
-    if ([[[self.model.signUpEndTime componentsSeparatedByString:@" "] objectAtIndex:0] compare:self.model.endDate] > 0) {
-        [[ShowHUD showHUD]showToastWithText:@"报名截止时间不能大于活动结束时间！" FromView:self.view];
+    if ([[[self.model.signUpEndTime componentsSeparatedByString:@" "] objectAtIndex:0] compare:self.model.beginDate] > 0) {
+        [[ShowHUD showHUD]showToastWithText:@"报名截止时间不能大于活动开始时间！" FromView:self.view];
         return;
     }
     

@@ -59,6 +59,8 @@ static CGFloat ImageHeight  = 210.0;
     id _isApply;//是否已经报名0未，1已
     
     NSString *_power;//权限
+    
+    UIButton *_viewResultsBtn;//查看成绩
 }
 
 @property (nonatomic, strong)UITableView *teamActibityNameTableView;
@@ -199,10 +201,6 @@ static CGFloat ImageHeight  = 210.0;
     [self.addressBtn setTitle:@"地址" forState:UIControlStateNormal];
     self.addressBtn.titleLabel.font = [UIFont systemFontOfSize:13];
     self.addressBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-//    NSDictionary *attribute = @{NSFontAttributeName: [UIFont systemFontOfSize:13]};
-//    CGSize size = [self.model.ballName boundingRectWithSize:CGSizeMake(screenWidth - 100, 0) options: NSStringDrawingTruncatesLastVisibleLine | NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading attributes:attribute context:nil].size;
-//    CGRect address = self.addressBtn.frame;
-//    self.addressBtn.frame = CGRectMake(address.origin.x, address.origin.y, size.width, 25);
     
     [self.imgProfile addSubview:self.addressBtn];
 
@@ -254,16 +252,19 @@ static CGFloat ImageHeight  = 210.0;
             
             [self setData];//设置名称 及 图片
             
-            if ([[Helper returnCurrentDateString] compare:_model.signUpEndTime] < 0) {
-                if ([_isApply integerValue] == 0) {
-                    [self createApplyBtn];//报名按钮
-                }else{
-                    [self createCancelBtnAndApplyOrPay];//已报名
-                }
+            if ([[Helper returnCurrentDateString] compare:_model.beginDate] > 0) {
+                [self createViewTheResults];
             }else{
-                self.teamActibityNameTableView.frame = CGRectMake(0, 0, ScreenWidth, ScreenHeight);
+                if ([[Helper returnCurrentDateString] compare:_model.signUpEndTime] < 0) {
+                    if ([_isApply integerValue] == 0) {
+                        [self createApplyBtn];//报名按钮
+                    }else{
+                        [self createCancelBtnAndApplyOrPay];//已报名
+                    }
+                }else{
+                    self.teamActibityNameTableView.frame = CGRectMake(0, 0, ScreenWidth, ScreenHeight);
+                }
             }
-            
             
             [_subDataArray removeAllObjects];
             if ([self.model.memberPrice floatValue] > 0) {
@@ -511,6 +512,15 @@ static CGFloat ImageHeight  = 210.0;
     cancelApplyCtrl.model = _model;
     [self.navigationController pushViewController:cancelApplyCtrl animated:YES];
 }
+#pragma mark -- 查看成绩
+- (void)createViewTheResults{
+    _viewResultsBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, screenHeight-44, screenWidth, 44)];
+    [_viewResultsBtn setTitle:@"查看成绩" forState:UIControlStateNormal];
+    _viewResultsBtn.backgroundColor = [UIColor colorWithHexString:Nav_Color];
+    [_viewResultsBtn addTarget:self action:@selector(getTeamActivityResults:) forControlEvents:UIControlEventTouchUpInside];
+    
+    [self.view addSubview:_viewResultsBtn];
+}
 #pragma mark -- 创建报名按钮
 - (void)createApplyBtn{
     self.headPortraitBtn.layer.masksToBounds = YES;
@@ -581,7 +591,7 @@ static CGFloat ImageHeight  = 210.0;
         return ImageHeight;
     }else if (section == 1){
         return 110;
-    }else if (section == 6){
+    }else if (section == 5){
         static JGTeamActivityDetailsCell *cell;
         if (!cell) {
             cell = [self.teamActibityNameTableView dequeueReusableCellWithIdentifier:JGTeamActivityDetailsCellIdentifier];
@@ -646,14 +656,7 @@ static CGFloat ImageHeight  = 210.0;
         [headerCell congiftitles:@"查看报名人"];
         [headerCell congifCount:self.model.sumCount andSum:self.model.maxCount];
         return (UIView *)headerCell;
-    }else if (section == 4){
-        JGHHeaderLabelCell *headerCell = [tableView dequeueReusableCellWithIdentifier:JGHHeaderLabelCellIdentifier];
-        UIButton *applyListBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, screenWidth, headerCell.frame.size.height)];
-        [applyListBtn addTarget:self action:@selector(getTeamActivityResults:) forControlEvents:UIControlEventTouchUpInside];
-        [headerCell addSubview:applyListBtn];
-        [headerCell congiftitles:@"查看成绩"];
-        return (UIView *)headerCell;
-    }else if (section == 5) {
+    }else if (section == 4) {
         JGHHeaderLabelCell *headerCell = [tableView dequeueReusableCellWithIdentifier:JGHHeaderLabelCellIdentifier];
         UIButton *applyListBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, screenWidth, headerCell.frame.size.height)];
         [applyListBtn addTarget:self action:@selector(getTeamActivityAward:) forControlEvents:UIControlEventTouchUpInside];
@@ -676,14 +679,6 @@ static CGFloat ImageHeight  = 210.0;
 }
 #pragma mark -- 查看奖项
 - (void)getTeamActivityAward:(UIButton *)btn{
-//    if (![Helper isBlankString:_model.awardedInfo]) {
-//        JGLWinnersShareViewController *winnerCtrl = [[JGLWinnersShareViewController alloc]init];
-//        winnerCtrl.model = _model;
-//        winnerCtrl.activeKey = [NSNumber numberWithInteger:[_model.timeKey integerValue]];
-//        winnerCtrl.teamKey = _teamKey;
-//        [self.navigationController pushViewController:winnerCtrl animated:YES];
-//    }
-//    else{
     
     if (_isTeamMember == 1) {
         [[ShowHUD showHUD]showToastWithText:@"您不是该球队队员！" FromView:self.view];
@@ -701,8 +696,6 @@ static CGFloat ImageHeight  = 210.0;
     
     prizeCtrl.model = _model;
     [self.navigationController pushViewController:prizeCtrl animated:YES];
-//    }
-    
 }
 #pragma mark -- 查看成绩
 - (void)getTeamActivityResults:(UIButton *)btn{
@@ -725,7 +718,6 @@ static CGFloat ImageHeight  = 210.0;
     wkVC.activeName = _model.name;
     wkVC.detailString = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/score/scoreRanking.html?teamKey=%td&userKey=%@&srcKey=%td&srcType=1", _model.teamKey,DEFAULF_USERID, timeKey];
     wkVC.teamName = @"活动成绩";
-//    wkVC.realName = _model.teamName;
     [self.navigationController pushViewController:wkVC animated:YES];
 }
 #pragma mark -- 详情页面
