@@ -121,10 +121,10 @@
     
 }
 
-
 -(void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+
     [_timer invalidate];
     _timer = nil;
 }

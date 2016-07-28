@@ -58,18 +58,18 @@ static NSString *const JGHScoresPageCellIdentifier = @"JGHScoresPageCell";
 
 - (void)creteSlidingView{
     UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, screenHeight - 64 - 20*ProportionAdapter, screenWidth, 20*ProportionAdapter)];
-    UIImageView *imageLeftView = [[UIImageView alloc]initWithFrame:CGRectMake((screenWidth-120*ProportionAdapter)/2 -20*ProportionAdapter, 4*ProportionAdapter, 10*ProportionAdapter, 12*ProportionAdapter)];
+    UIImageView *imageLeftView = [[UIImageView alloc]initWithFrame:CGRectMake((screenWidth-140*ProportionAdapter)/2 -20*ProportionAdapter, 4*ProportionAdapter, 10*ProportionAdapter, 12*ProportionAdapter)];
     imageLeftView.image = [UIImage imageNamed:@"sildLeft"];
     [view addSubview:imageLeftView];
     
-    UIImageView *imageRightView = [[UIImageView alloc]initWithFrame:CGRectMake(screenWidth/2 + 60*ProportionAdapter +10*ProportionAdapter, 4*ProportionAdapter, 10*ProportionAdapter, 12*ProportionAdapter)];
+    UIImageView *imageRightView = [[UIImageView alloc]initWithFrame:CGRectMake(screenWidth/2 + 70*ProportionAdapter +10*ProportionAdapter, 4*ProportionAdapter, 10*ProportionAdapter, 12*ProportionAdapter)];
     imageRightView.image = [UIImage imageNamed:@"sildRight"];
     [view addSubview:imageRightView];
     
-    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake((screenWidth-120*ProportionAdapter)/2, 0, 120*ProportionAdapter, 20*ProportionAdapter)];
+    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake((screenWidth-140*ProportionAdapter)/2, 0, 140*ProportionAdapter, 20*ProportionAdapter)];
     label.text = @"左右滑动可切换球洞";
     label.textAlignment = NSTextAlignmentCenter;
-    label.font = [UIFont systemFontOfSize:13.*ProportionAdapter];
+    label.font = [UIFont systemFontOfSize:15.0*ProportionAdapter];
 //    label.backgroundColor = [UIColor redColor];
     [view addSubview:label];
     
