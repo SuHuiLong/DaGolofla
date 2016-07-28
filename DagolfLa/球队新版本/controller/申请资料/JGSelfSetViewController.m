@@ -320,11 +320,21 @@
             
             JGApplyMaterialTableViewCell *cell = self.secondTableView.visibleCells[i];
             
-            if (!cell.textFD.text || ([cell.textFD.text length] == 0)) {
-                isLength = NO;
+            if (i == 2) {
+                if (cell.textFD.text.length == 11 && [Helper isPureNumandCharacters:cell.textFD.text]) {
+                    NSLog(@"11数字");
+                }else{
+                    [[ShowHUD showHUD]showToastWithText:@"请输入正确格式的手机号！" FromView:self.view];
+                    return;
+                }
             }else{
-                [self.paraDic setObject:cell.textFD.text  forKey:array[i]];
+                if (!cell.textFD.text || ([cell.textFD.text length] == 0)) {
+                    isLength = NO;
+                }else{
+                    [self.paraDic setObject:cell.textFD.text  forKey:array[i]];
+                }
             }
+
         }
     }
     

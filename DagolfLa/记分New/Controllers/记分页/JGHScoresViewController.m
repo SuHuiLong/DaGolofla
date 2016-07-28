@@ -18,7 +18,7 @@
     UIPageViewController *_pageViewController;
     NSMutableArray *_dataArray;
 //    NSInteger _currentPage;
-    UIPageControl *_pageControl;
+//    UIPageControl *_pageControl;
     
     NSInteger _selectHole;
     
@@ -34,11 +34,15 @@
     NSInteger _selectPage;
     
     NSInteger _selectcompleteHole;
+    
+    NSInteger _isEdtor;// 0-未修改， 1- 修改
 }
 
 @property (nonatomic, strong)NSMutableArray *userScoreArray;
 
 @property (nonatomic, strong)UIButton *titleBtn;
+
+@property (nonatomic, weak)NSTimer *timer;//计时器
 
 @end
 
@@ -86,12 +90,10 @@
     }
     
     [self.titleBtn addTarget:self action:@selector(titleBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-//    self.titleBtn.backgroundColor = [UIColor redColor];
     
     _arrowBtn = [[UIButton alloc]initWithFrame:CGRectMake(80*ProportionAdapter, 10, 30, 24)];
     [_arrowBtn addTarget:self action:@selector(titleBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [_arrowBtn setImage:[UIImage imageNamed:@"arrowDown"] forState:UIControlStateNormal];
-//    _arrowBtn.backgroundColor = [UIColor lightGrayColor];
     [titleView addSubview:_arrowBtn];
     
     self.navigationItem.titleView = titleView;
@@ -102,6 +104,8 @@
     }else{
         _selectPage = 1;
     }
+    
+    _isEdtor = 0;
     
     _selectcompleteHole = 0;
     _item = [[UIBarButtonItem alloc]initWithTitle:@"保存" style:UIBarButtonItemStylePlain target:self action:@selector(saveScoresClick)];
@@ -114,10 +118,77 @@
     }
     
     [self getScoreList];
+    
 }
-#pragma mark -- 返回 保存
+
+-(void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+
+    [_timer invalidate];
+    _timer = nil;
+}
+#pragma mark -- 计时器执行
+- (void)changeTimeAtTimeDoClick{
+    [[JsonHttp jsonHttp]cancelRequest];
+    
+    if (_isEdtor == 1) {
+        _isEdtor = 0;
+        NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+        [dict setObject:DEFAULF_USERID forKey:@"userKey"];
+        NSMutableArray *listArray = [NSMutableArray array];
+        for (JGHScoreListModel *model in self.userScoreArray) {
+            NSMutableDictionary *listDict = [NSMutableDictionary dictionary];
+            if (model.userKey) {
+                [listDict setObject:model.userKey forKey:@"userKey"];// 用户Key
+            }else{
+                [listDict setObject:@(0) forKey:@"userKey"];// 用户Key
+            }
+            
+            [listDict setObject:model.userName forKey:@"userName"];// 用户名称
+            if (model.userMobile) {
+                [listDict setObject:model.userMobile forKey:@"userMobile"];// 手机号
+            }else{
+                [listDict setObject:@"" forKey:@"userMobile"];// 手机号
+            }
+            
+            if (model.tTaiwan) {
+                [listDict setObject:model.tTaiwan forKey:@"tTaiwan"];// T台
+            }else{
+                [listDict setObject:@"" forKey:@"tTaiwan"];// T台
+            }
+            [listDict setObject:model.poleNumber forKey:@"poleNumber"];// 球队杆数
+            [listDict setObject:model.pushrod forKey:@"pushrod"];// 推杆
+            [listDict setObject:model.onthefairway forKey:@"onthefairway"];// 是否上球道
+            [listDict setObject:model.timeKey forKey:@"timeKey"];// 是否上球道
+            [listArray addObject:listDict];
+        }
+        
+        [dict setObject:listArray forKey:@"list"];
+        
+        [[JsonHttp jsonHttp]httpRequestWithMD5:@"score/saveScore" JsonKey:nil withData:dict failedBlock:^(id errType) {
+            _isEdtor = 1;
+        } completionBlock:^(id data) {
+            NSLog(@"%@", data);
+            
+            NSLog(@"5S  时间保存");
+            if ([[data objectForKey:@"packSuccess"]integerValue] == 1) {
+                
+                //                        [self scoresResult];
+            }else{
+                if ([data objectForKey:@"packResultMsg"]) {
+                    _isEdtor = 1;
+                }
+            }
+        }];
+    }
+}
+#pragma mark -- 返回
 - (void)saveScoresAndBackClick:(UIButton *)btn{
+    [_timer invalidate];
+    _timer = nil;
     btn.enabled = NO;
+    [[JsonHttp jsonHttp]cancelRequest];//取消所有请求
     //保存
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     [dict setObject:DEFAULF_USERID forKey:@"userKey"];
@@ -158,8 +229,6 @@
         if ([[data objectForKey:@"packSuccess"]integerValue] == 1) {
             
             [self scoresResult];
-//            [[ShowHUD showHUD]showToastWithText:@"记分保存成功！" FromView:self.view];
-//            [self performSelector:@selector(scoresResult) withObject:self afterDelay:1.0];
         }else{
             if ([data objectForKey:@"packResultMsg"]) {
                 [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
@@ -176,7 +245,7 @@
     [_item setTitle:@"保存"];
     [_scoresView removeFromSuperview];
     [_tranView removeFromSuperview];
-    _pageControl.currentPage = [[not.userInfo objectForKey:@"index"] integerValue];
+//    _pageControl.currentPage = [[not.userInfo objectForKey:@"index"] integerValue];
     [self.titleBtn setTitle:[NSString stringWithFormat:@"%td HOLE", [[not.userInfo objectForKey:@"index"] integerValue]+1] forState:UIControlStateNormal];
     
     [[ShowHUD showHUD]showToastWithText:[NSString stringWithFormat:@"第-%td-洞", [[not.userInfo objectForKey:@"index"] integerValue]+1] FromView:self.view];
@@ -207,23 +276,20 @@
                     [self.userScoreArray addObject:model];
                 }
                 
-//                if (_currentPage == 1) {
-//                    _currentPage = 0;
-//                }
+                self.timer =[NSTimer scheduledTimerWithTimeInterval:[[data objectForKey:@"interval"] floatValue] target:self
+                                                           selector:@selector(changeTimeAtTimeDoClick) userInfo:nil repeats:YES];
+                [self.timer fire];
                 
                 _pageViewController = [[UIPageViewController alloc]initWithTransitionStyle:1 navigationOrientation:0 options:nil];
                 
                 JGHScoresMainViewController *sub = [[JGHScoresMainViewController alloc]init];
-//                if (_currentPage > 1) {
-                    sub.index = _currentPage;
-//                } else{
-//                    sub.index = 0;
-//                }
+                sub.index = _currentPage;
                 
                 sub.dataArray = self.userScoreArray;
                 __weak JGHScoresViewController *weakSelf = self;
                 sub.returnScoresDataArray= ^(NSMutableArray *dataArray){
                     weakSelf.userScoreArray = dataArray;
+                    _isEdtor = 1;
                 };
                 [_pageViewController setViewControllers:@[sub] direction:0 animated:NO completion:nil];
                 
@@ -231,19 +297,6 @@
                 
                 _pageViewController.delegate = self;
                 _pageViewController.dataSource = self;
-                
-                _pageControl = [[UIPageControl alloc]init];
-                //    _pageControl.numberOfPages = _dataArray.count;
-                _pageControl.numberOfPages = 18;
-//                if (_currentPage >= 1) {
-                    _pageControl.currentPage = _currentPage;
-//                }else{
-//                    _pageControl.currentPage = 0;
-//                }
-                
-                _pageControl.center = CGPointMake(ScreenWidth/2, screenHeight-64-5*ProportionAdapter);
-                [self.view addSubview:_pageControl];
-                _pageControl.pageIndicatorTintColor = [UIColor colorWithHexString:@"#32B14D"];
                 
                 if ([data objectForKey:@"score"]) {
                     NSMutableDictionary *scoreDict = [data objectForKey:@"score"];
@@ -361,10 +414,11 @@
     __weak JGHScoresViewController *weakSelf = self;
     sub.returnScoresDataArray= ^(NSMutableArray *dataArray){
         weakSelf.userScoreArray = dataArray;
+        _isEdtor = 1;
     };
     [self.titleBtn setTitle:[NSString stringWithFormat:@"%td HOLE", sub.index+1] forState:UIControlStateNormal];
     _selectPage = sub.index+1;
-    _pageControl.currentPage = sub.index;
+//    _pageControl.currentPage = sub.index;
 //    [[ShowHUD showHUD]showToastWithText:[NSString stringWithFormat:@"第-%td-洞", sub.index+1] FromView:self.view];
 }
 
@@ -410,6 +464,8 @@
         NSLog(@"%@", data);
         if ([[data objectForKey:@"packSuccess"]integerValue] == 1) {
             if (_selectcompleteHole == 1) {
+                [_timer invalidate];
+                _timer = nil;
                 //完成  finishScore
                 NSMutableDictionary *finishDict = [NSMutableDictionary dictionary];
                 [finishDict setObject:DEFAULF_USERID forKey:@"userKey"];
@@ -485,10 +541,6 @@
     JGHEndScoresViewController *endScoresCtrl = [[JGHEndScoresViewController alloc]init];
     endScoresCtrl.dict = _macthDict;
     [self.navigationController pushViewController:endScoresCtrl animated:YES];
-}
-
-- (void)dealloc{
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)didReceiveMemoryWarning {

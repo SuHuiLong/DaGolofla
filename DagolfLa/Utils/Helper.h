@@ -96,4 +96,6 @@
 // 返回距离当前时间。。。
 + (NSString *)distanceTimeWithBeforeTime:(NSString *)strTime;
 
+- (BOOL)isPureNumandCharacters:(NSString *)string;//纯数字
+
 @end
