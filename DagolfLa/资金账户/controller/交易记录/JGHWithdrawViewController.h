@@ -12,4 +12,6 @@
 
 @property (nonatomic, strong)NSNumber *balance;
 
+@property (nonatomic, copy) NSString *realName;
+
 @end
