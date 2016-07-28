@@ -21,9 +21,11 @@
 
 @property (strong, nonatomic) NSMutableArray* dataKey;
 
+@property (strong, nonatomic) NSMutableArray* dataUserKey;
+
 @property (strong, nonatomic) NSMutableArray* arrMobile;
 
 
-@property (copy, nonatomic) void (^blockSurePlayer)(NSMutableDictionary *  , NSMutableArray*,NSMutableArray* );
+@property (copy, nonatomic) void (^blockSurePlayer)(NSMutableDictionary *  , NSMutableArray*,NSMutableArray* ,NSMutableArray*);
 
 @end

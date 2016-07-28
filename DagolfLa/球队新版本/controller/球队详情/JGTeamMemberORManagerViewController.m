@@ -49,6 +49,10 @@
 #import "JGTeamPhotoViewController.h"
 #import "JGDWithDrawTeamMoneyViewController.h"
 
+
+#import "JGDHistoryScoreViewController.h"
+
+
 static NSString *const JGTableViewCellIdentifier = @"JGTableViewCell";
 static NSString *const JGHTeamContactCellIdentifier = @"JGHTeamContactTableViewCell";
 static CGFloat ImageHeight  = 210.0;
@@ -529,7 +533,7 @@ static CGFloat ImageHeight  = 210.0;
     }else if (section == 1){
         return 1;
     }else if (section == 2){
-        return 4;
+        return 5;
     }else{
         return 1;
     }
@@ -592,9 +596,10 @@ static CGFloat ImageHeight  = 210.0;
     }else if (indexPath.section == 1){
         JGDisplayInfoTableViewCell *contactCell = [tableView dequeueReusableCellWithIdentifier:@"Display"];
         contactCell.promptLB.text = @"球队公告";
-        contactCell.promptLB.textColor = [UIColor lightGrayColor];
+        contactCell.promptLB.textColor = [UIColor blackColor];
         contactCell.promptLB.frame = CGRectMake(10 * screenWidth / 320, 0, 100 * screenWidth / 320, 30 * screenWidth / 320);
         contactCell.contentLB.lineBreakMode = NSLineBreakByWordWrapping;
+        contactCell.contentLB.textColor = [UIColor lightGrayColor];
         contactCell.contentLB.text = [self.detailDic objectForKey:@"notice"];
         contactCell.contentLB.frame = CGRectMake(10, 35  * screenWidth / 320, screenWidth - 20  * screenWidth / 320, [self calculationLabelHeight:[self.detailDic objectForKey:@"notice"]]);
         return contactCell;
@@ -606,7 +611,7 @@ static CGFloat ImageHeight  = 210.0;
         switch (indexPath.row) {
             case 0:
                 launchActivityCell.imageV.image = [UIImage imageNamed:@"hd-2"];
-                launchActivityCell.promptLB.text = @"赛事活动";
+                launchActivityCell.promptLB.text = @"球队活动";
                 break;
             case 1:
                 launchActivityCell.imageV.image = [UIImage imageNamed:@"qdcy"];
@@ -623,6 +628,11 @@ static CGFloat ImageHeight  = 210.0;
             case 3:
                 launchActivityCell.promptLB.text = @"球队简介";
                 launchActivityCell.imageV.image = [UIImage imageNamed:@"qdjj"];
+                //                launchActivityCell.contentLB.text = self.detailModel.establishTime;
+                break;
+            case 4:
+                launchActivityCell.promptLB.text = @"球队历史记分卡";
+                launchActivityCell.imageV.image = [UIImage imageNamed:@"qiuduilist"];
                 //                launchActivityCell.contentLB.text = self.detailModel.establishTime;
                 break;
             default:
@@ -715,7 +725,15 @@ static CGFloat ImageHeight  = 210.0;
                 [self.navigationController pushViewController:wkVC animated:YES];
             }
                 break;
+            case 4:
+            {
                 
+                JGDHistoryScoreViewController *histroyVC = [[JGDHistoryScoreViewController alloc] init];
+                histroyVC.fromTeam = 10;
+                [self.navigationController pushViewController:histroyVC animated:YES];
+                
+            }
+                break;
             default:
                 break;
         }

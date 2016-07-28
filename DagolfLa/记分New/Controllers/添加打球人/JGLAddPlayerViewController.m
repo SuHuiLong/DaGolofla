@@ -154,7 +154,7 @@
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 100 * screenWidth / 375)];
     view.backgroundColor = [UITool colorWithHexString:@"eeeeee" alpha:1];
     UILabel* label = [[UILabel alloc]initWithFrame:CGRectMake(10*screenWidth/375, 10*screenWidth/375, screenWidth - 20*screenWidth/375, 80*screenWidth/375)];
-    label.text = @"记分完成后会生成唯一秘钥，用户注册APP会员后，点击“历史记分卡”右上角”取回记分”，填写秘钥即可得到该成绩；通过“球友列表”与“扫描二维码”添加的打球人，记分完成后，成绩会自动同步到被添加人的历史记分卡。";
+    label.text = @"记分完成后会生成唯一秘钥，用户注册APP会员后，点击“历史记分卡”右上角”取回记分”，填写秘钥即可得到该成绩；通过“球友列表”与“扫描二维码”添加的打球人，记分开始后，成绩会自动同步到被添加人的历史记分卡。";
     [view addSubview:label];
     label.font = [UIFont systemFontOfSize:14*screenWidth/375];
     label.textColor = [UITool colorWithHexString:@"b8b8b8" alpha:1];

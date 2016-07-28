@@ -61,9 +61,12 @@
     if (_arrMobile.count == 0) {
         _arrMobile       = [[NSMutableArray alloc]init];
     }
+    if (_dataUserKey.count == 0) {
+        _dataUserKey     = [[NSMutableArray alloc]init];
+    }
     _dataAccountDict = [[NSMutableDictionary alloc]init];
     [self uiConfig];
-    [self createHeadSearch];
+//    [self createHeadSearch];
     [self createBtn];
 }
 - (void)viewWillDisappear:(BOOL)animated {
@@ -94,29 +97,29 @@
 
 -(void)finishClick
 {    
-    _blockSurePlayer(_dictFinish,_dataKey,_arrMobile);
+    _blockSurePlayer(_dictFinish,_dataKey,_arrMobile,_dataUserKey);
     [self.navigationController popViewControllerAnimated:YES];
 }
 
--(void)createHeadSearch
-{
-    _searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
-    _searchController.searchResultsUpdater = self;
-    _searchController.searchBar.barTintColor = [UIColor colorWithRed:0.94 green:0.94 blue:0.94 alpha:1];
-    _searchController.dimsBackgroundDuringPresentation = NO;
-    _searchController.hidesNavigationBarDuringPresentation = NO;
-    _searchController.searchBar.frame = CGRectMake(self.searchController.searchBar.frame.origin.x, self.searchController.searchBar.frame.origin.y, self.searchController.searchBar.frame.size.width, 44.0);
-    _searchController.searchBar.tintColor = [UIColor colorWithRed:0.36f green:0.66f blue:0.31f alpha:1.00f];
-    _searchController.searchBar.placeholder = @"输入队友昵称搜索";
-    _tableView.tableHeaderView = _searchController.searchBar;
-    _searchController.searchBar.delegate = self;
-}
--(void)updateSearchResultsForSearchController:(UISearchController *)searchController {
-}
--(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
-    
-}
-
+//-(void)createHeadSearch
+//{
+//    _searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
+//    _searchController.searchResultsUpdater = self;
+//    _searchController.searchBar.barTintColor = [UIColor colorWithRed:0.94 green:0.94 blue:0.94 alpha:1];
+//    _searchController.dimsBackgroundDuringPresentation = NO;
+//    _searchController.hidesNavigationBarDuringPresentation = NO;
+//    _searchController.searchBar.frame = CGRectMake(self.searchController.searchBar.frame.origin.x, self.searchController.searchBar.frame.origin.y, self.searchController.searchBar.frame.size.width, 44.0);
+//    _searchController.searchBar.tintColor = [UIColor colorWithRed:0.36f green:0.66f blue:0.31f alpha:1.00f];
+//    _searchController.searchBar.placeholder = @"输入队友昵称搜索";
+//    _tableView.tableHeaderView = _searchController.searchBar;
+//    _searchController.searchBar.delegate = self;
+//}
+//-(void)updateSearchResultsForSearchController:(UISearchController *)searchController {
+//}
+//-(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
+//    
+//}
+//
 
 
 
@@ -302,6 +305,7 @@
                 if ([[[NSUserDefaults standardUserDefaults] objectForKey:@"userId"] integerValue] != [[self.listArray[indexPath.section][indexPath.row] userKey] integerValue]) {
                     [_dictFinish setObject:[self.listArray[indexPath.section][indexPath.row] userName] forKey:[self.listArray[indexPath.section][indexPath.row] timeKey]];
                     [_dataKey addObject:[self.listArray[indexPath.section][indexPath.row] timeKey]];
+                    [_dataUserKey addObject:[self.listArray[indexPath.section][indexPath.row] userKey]];
                     if (![Helper isBlankString:[self.listArray[indexPath.section][indexPath.row] mobile]]) {
                         [_arrMobile addObject:[self.listArray[indexPath.section][indexPath.row] mobile]];
                     }
@@ -321,6 +325,7 @@
         else{
             [_dictFinish removeObjectForKey:[self.listArray[indexPath.section][indexPath.row] timeKey]];
             [_dataKey removeObject:[self.listArray[indexPath.section][indexPath.row] timeKey]];
+            [_dataUserKey removeObject:[self.listArray[indexPath.section][indexPath.row] userKey]];
             [_arrMobile removeObject:[self.listArray[indexPath.section][indexPath.row] mobile]];
         }
         [_tableView reloadData];
@@ -330,94 +335,14 @@
         if (indexPath.row - 1 < _dictFinish.count) {
             [_dictFinish removeObjectForKey:_dataKey[indexPath.row-1]];
             [_dataKey removeObjectAtIndex:indexPath.row-1];
+            [_dataUserKey removeObjectAtIndex:indexPath.row-1];
             [_arrMobile removeObjectAtIndex:indexPath.row-1];
+            
             [_tableView reloadData];
             [_tableChoose reloadData];
         }
     }
     
-    
-    
-    
-//    if (tableView.tag == 1001) {
-//
-//        if (_dataPeoArr.count < 3) {
-//            if (_dataPeoArr.count != 0) {
-//                NSString *str=[_dictFinish objectForKey:[NSString stringWithFormat:@"%td%td",indexPath.section,indexPath.row]];
-//                if ([Helper isBlankString:str]==YES) {
-//                    [_dictFinish setObject:[self.listArray[indexPath.section][indexPath.row] timeKey] forKey:[NSString stringWithFormat:@"%td%td",indexPath.section,indexPath.row]];
-//                    [_dataKey addObject:[NSString stringWithFormat:@"%td%td",indexPath.section,indexPath.row]];
-//                    [_dataPeoArr addObject:[self.listArray[indexPath.section][indexPath.row] timeKey]];
-//                    [_userKey addObject:[self.listArray[indexPath.section][indexPath.row] userKey]];
-//                    if (![Helper isBlankString:[self.listArray[indexPath.section][indexPath.row] mobile]]) {
-//                        [_mobileArr addObject:[self.listArray[indexPath.section][indexPath.row] mobile]];
-//                    }
-//                    else{
-//                        [_mobileArr addObject:@"0"];
-//                    }
-//                }else{
-//                    [_dictFinish removeObjectForKey:[NSString stringWithFormat:@"%td%td",indexPath.section,indexPath.row]];
-//                    //            _dataPeoArr
-//                    [_dataPeoArr removeObject:str];
-//                    for (int i = 0; i < _dataPeoArr.count; i++) {
-//                        if ([Helper isBlankString:str]) {
-//                            [_dataPeoArr removeObjectAtIndex:i];
-//                            [_dataKey removeObjectAtIndex:i];
-//                            [_userKey removeObjectAtIndex:i];
-//                            [_mobileArr removeObjectAtIndex:i];
-//                            
-//                        }
-//                    }
-//                }
-//            }
-//            else{
-//                [_dictFinish setObject:[self.listArray[indexPath.section][indexPath.row] name] forKey:[NSString stringWithFormat:@"%td%td",indexPath.section,indexPath.row]];
-//                [_dataKey addObject:[NSString stringWithFormat:@"%td%td",indexPath.section,indexPath.row]];
-//                [_dataPeoArr addObject:[self.listArray[indexPath.section][indexPath.row] name]];
-//                [_userKey addObject:[self.listArray[indexPath.section][indexPath.row] userKey]];
-//                if (![Helper isBlankString:[self.listArray[indexPath.section][indexPath.row] mobile]]) {
-//                    [_mobileArr addObject:[self.listArray[indexPath.section][indexPath.row] mobile]];
-//                }
-//                else{
-//                    [_mobileArr addObject:@""];
-//                }
-//                
-//            }
-//            
-//            [_tableChoose reloadData];
-//            [_tableView reloadData];
-//        }
-//        else{
-//            [[ShowHUD showHUD]showToastWithText:@"您最多只能添加四个人一起打球" FromView:self.view];
-//        }
-//    }
-//    else{
-//        if (indexPath.row - 1 < _dataPeoArr.count) {
-//            bool isChange1 = false;
-//            for (int i = 0; i < _dataPeoArr.count; i ++) {
-//                if (isChange1 == YES) {
-//                    continue;
-//                }
-//                NSLog(@"%@",_dataPeoArr[indexPath.row -1]);
-//                if ([[_dictFinish objectForKey:_dataKey[i]] isEqualToString:_dataPeoArr[indexPath.row-1]] == YES) {
-//                    NSLog(@"%@",[_dictFinish allValues][i]);
-//                    [_dictFinish removeObjectForKey:_dataKey[i]];
-//                    [_dataKey removeObjectAtIndex:indexPath.row-1];
-//                    [_userKey removeObjectAtIndex:indexPath.row-1];
-//                    [_mobileArr removeObjectAtIndex:indexPath.row - 1];
-//                    [_dataPeoArr removeObjectAtIndex:indexPath.row-1];
-//                    isChange1 = YES;
-//                    continue;
-//                }
-//                
-//            }
-//            [_tableChoose reloadData];
-//            [_tableView reloadData];
-//            isChange1 = NO;
-//
-//        }
-//    }
-
 }
 
 

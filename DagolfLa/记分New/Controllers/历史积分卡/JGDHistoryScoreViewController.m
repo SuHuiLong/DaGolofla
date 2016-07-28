@@ -20,6 +20,8 @@
 
 #import "JGHRetrieveScoreViewController.h" // 取回记分
 #import "JGDHistoryScoreShowViewController.h"
+#import "JGDActSelfHistoryScoreViewController.h"
+
 
 @interface JGDHistoryScoreViewController ()<UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate,UISearchResultsUpdating>
 
@@ -57,11 +59,21 @@
     self.view.backgroundColor = [UIColor colorWithHexString:@"#f4f4f4"];
     [self createTableView];
     
-    UIBarButtonItem *rightBar = [[UIBarButtonItem alloc] initWithTitle:@"取回记分" style:(UIBarButtonItemStyleDone) target:self action:@selector(takeMyCode)];
-    rightBar.tintColor = [UIColor whiteColor];
-    [rightBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:15 * ProportionAdapter], NSFontAttributeName, nil] forState:(UIControlStateNormal)];
+    if (_fromTeam == 10) {
+        UIBarButtonItem *rightBar = [[UIBarButtonItem alloc] initWithTitle:@"成绩总揽" style:(UIBarButtonItemStyleDone) target:self action:@selector(takeMyCode)];
+        rightBar.tintColor = [UIColor whiteColor];
+        [rightBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:15 * ProportionAdapter], NSFontAttributeName, nil] forState:(UIControlStateNormal)];
+        
+        self.navigationItem.rightBarButtonItem = rightBar;
+    }else{
+        UIBarButtonItem *rightBar = [[UIBarButtonItem alloc] initWithTitle:@"取回记分" style:(UIBarButtonItemStyleDone) target:self action:@selector(takeMyCode)];
+        rightBar.tintColor = [UIColor whiteColor];
+        [rightBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:15 * ProportionAdapter], NSFontAttributeName, nil] forState:(UIControlStateNormal)];
+        
+        self.navigationItem.rightBarButtonItem = rightBar;
+    }
+    
 
-    self.navigationItem.rightBarButtonItem = rightBar;
     // Do any additional setup after loading the view.
 }
 
@@ -98,11 +110,22 @@
 }
 
 
-#pragma mark ----- 取回记分
+#pragma mark ----- 取回记分／成绩总揽
 
 - (void)takeMyCode{
-    JGHRetrieveScoreViewController *retriveveVC = [[JGHRetrieveScoreViewController alloc] init];
-    [self.navigationController pushViewController:retriveveVC animated:YES];
+    
+    if (self.fromTeam == 10) {
+        //成绩总揽
+        JGDActSelfHistoryScoreViewController * VC = [[JGDActSelfHistoryScoreViewController alloc] init];
+        VC.timeKey = @32987;
+        [self.navigationController pushViewController:VC animated:YES];
+        
+    }else{
+        JGHRetrieveScoreViewController *retriveveVC = [[JGHRetrieveScoreViewController alloc] init];
+        [self.navigationController pushViewController:retriveveVC animated:YES];
+    }
+    
+
 }
 
 
@@ -328,22 +351,59 @@
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
     JGDHistoryScoreModel *model = self.dataArray[indexPath.row];
     NSMutableDictionary *dic = [NSMutableDictionary dictionary];
-    [dic setValue:DEFAULF_USERID forKey:@"userKey"];
-    [dic setValue:model.timeKey forKey:@"scoreKey"];
     
-    [[JsonHttp jsonHttp] httpRequestWithMD5:@"score/deleteScore" JsonKey:nil withData:dic failedBlock:^(id errType) {
+    if ([model.scoreFinish integerValue] == 2) {
+        UIAlertController *alert=[UIAlertController alertControllerWithTitle:@"提示" message:[NSString stringWithFormat:@"该记分卡由%@代记，是否删除", model.scoreUserName] preferredStyle:UIAlertControllerStyleAlert];
         
-    } completionBlock:^(id data) {
-        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
-            [self.dataArray removeObjectAtIndex:indexPath.row];
-            [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:YES];
+        UIAlertAction *action1=[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            [alert dismissViewControllerAnimated:YES completion:nil];
             
-        }else{
-            if ([data objectForKey:@"packResultMsg"]) {
-                [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+        }];
+        UIAlertAction* action2=[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            [dic setValue:DEFAULF_USERID forKey:@"userKey"];
+            [dic setValue:model.timeKey forKey:@"scoreKey"];
+            
+            [[JsonHttp jsonHttp] httpRequestWithMD5:@"score/deleteScore" JsonKey:nil withData:dic failedBlock:^(id errType) {
+                
+            } completionBlock:^(id data) {
+                if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+                    [self.dataArray removeObjectAtIndex:indexPath.row];
+                    [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:YES];
+                    
+                }else{
+                    if ([data objectForKey:@"packResultMsg"]) {
+                        [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+                    }
+                }
+            }];
+        }];
+        
+        [alert addAction:action1];
+        [alert addAction:action2];
+        [self presentViewController:alert animated:YES completion:nil];
+        
+    }else{
+        
+        [dic setValue:DEFAULF_USERID forKey:@"userKey"];
+        [dic setValue:model.timeKey forKey:@"scoreKey"];
+        
+        [[JsonHttp jsonHttp] httpRequestWithMD5:@"score/deleteScore" JsonKey:nil withData:dic failedBlock:^(id errType) {
+            
+        } completionBlock:^(id data) {
+            if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+                [self.dataArray removeObjectAtIndex:indexPath.row];
+                [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:YES];
+                
+            }else{
+                if ([data objectForKey:@"packResultMsg"]) {
+                    [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+                }
             }
-        }
-    }];
+        }];
+    }
+    
+    
+
 }
 
 - (void)backBtn{

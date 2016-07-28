@@ -372,7 +372,7 @@ static CGFloat ImageHeight  = 210.0;
         JGLableAndLableTableViewCell *launchActivityCell = [tableView dequeueReusableCellWithIdentifier:@"lbVSlb" forIndexPath:indexPath];
         launchActivityCell.selectionStyle = UITableViewCellSelectionStyleNone;
         if (indexPath.row == 0) {
-            launchActivityCell.promptLB.text = @"赛事活动";
+            launchActivityCell.promptLB.text = @"球队活动";
         }else{
             launchActivityCell.promptLB.text = @"球队相册";
         }

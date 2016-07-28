@@ -27,7 +27,7 @@
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];
     
-    self.navigationItem.title = @"设置支付密码";
+    self.navigationItem.title = @"设置交易密码";
     
     [self creatTable];
     // Do any additional setup after loading the view.
@@ -78,10 +78,10 @@
         cell.txFD.userInteractionEnabled = NO;
     }else if (indexPath.row == 2) {
         cell.LB.text = @"设置密码";
-        cell.txFD.placeholder = @"设置您的支付密码";
+        cell.txFD.placeholder = @"设置您的交易密码";
     }else if (indexPath.row == 3) {
         cell.LB.text = @"再输一次";
-        cell.txFD.placeholder = @"再输入一次支付密码";
+        cell.txFD.placeholder = @"再输入一次交易密码";
     }
     return cell;
 }
@@ -121,7 +121,7 @@
         
     } completionBlock:^(id data) {
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
-            [[ShowHUD showHUD]showToastWithText:@"恭喜您支付密码设置成功" FromView:self.view];
+            [[ShowHUD showHUD]showToastWithText:@"恭喜您交易密码设置成功" FromView:self.view];
             [self performSelector:@selector(pop) withObject:self afterDelay:1];
         } else
         {
