@@ -745,7 +745,12 @@ static CGFloat ImageHeight  = 210.0;
         
         DateTimeViewController *dataCtrl = [[DateTimeViewController alloc]init];
         [dataCtrl setCallback:^(NSString *dateStr, NSString *dateWeek, NSString *str) {
-            [self.model setValue:[NSString stringWithFormat:@"%@ 23:59:59", dateStr] forKey:@"signUpEndTime"];
+            if (btn.tag == 102) {
+                [self.model setValue:[NSString stringWithFormat:@"%@ 23:59:59", dateStr] forKey:@"endDate"];
+            }else{
+                [self.model setValue:[NSString stringWithFormat:@"%@ 23:59:59", dateStr] forKey:@"signUpEndTime"];//signUpEndTime
+            }
+            
             _isEditor = 1;
             [self.teamActibityNameTableView reloadData];
         }];
