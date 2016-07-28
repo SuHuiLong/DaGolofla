@@ -40,7 +40,7 @@
     NSMutableDictionary* _teeDictChoose;//记录选择的t台存放数组
     
     NSMutableDictionary *_dictPeo;//存放返回的人数字典
-    NSMutableArray *_dataKeyBack, *_mobileArr;
+    NSMutableArray *_dataKeyBack, *_mobileArr,*_dataUserKey;//timeKey用于标记，手机号，userkey
     
     //传参
     NSString* _strHole1,* _strHole2;//九洞
@@ -60,6 +60,7 @@
     self.title = @"记分";
     _dataBallArray  = [[NSMutableArray alloc]init];
     _dataKeyBack    = [[NSMutableArray alloc]init];
+    _dataUserKey    = [[NSMutableArray alloc]init];
     _mobileArr      = [[NSMutableArray alloc]init];
     _teeDictChoose = [[NSMutableDictionary alloc]init];
     _dictPeo        = [[NSMutableDictionary alloc]init];
@@ -87,6 +88,9 @@
                 _userN = [[data objectForKey:@"teamMember"] objectForKey:@"userName"];
                 _userM = [[data objectForKey:@"teamMember"] objectForKey:@"mobile"];
 //            }
+            NSIndexPath *indexPath_1=[NSIndexPath indexPathForRow:1 inSection:4];
+            NSArray *indexArray=[NSArray arrayWithObject:indexPath_1];
+            [_tableView reloadRowsAtIndexPaths:indexArray withRowAnimation:UITableViewRowAnimationAutomatic];
         }
     }];
 }
@@ -197,7 +201,7 @@
             }
             
             
-            [dict1 setObject:_dataKeyBack[i-1] forKey:@"userKey"];//用户Key
+            [dict1 setObject:_dataUserKey[i-1] forKey:@"userKey"];//用户Key
             [dict1 setObject:[_dictPeo objectForKey:_dataKeyBack[i-1]] forKey:@"userName"];// 用户名称
             [dict1 setObject:_mobileArr[i-1] forKey:@"userMobile"];// 手机号
         }
@@ -601,10 +605,11 @@
                 if (indexPath.row  == _dictPeo.count + 2) {
                     JGLAddActivePlayViewController* addVc = [[JGLAddActivePlayViewController alloc]init];
                     addVc.model = _model;
-                    addVc.blockSurePlayer = ^(NSMutableDictionary *dict, NSMutableArray* dataKey, NSMutableArray* arrMobile)
+                    addVc.blockSurePlayer = ^(NSMutableDictionary *dict, NSMutableArray* dataKey, NSMutableArray* arrMobile,NSMutableArray* arrUserKey)
                     {
                         _dictPeo = dict;
                         _dataKeyBack = dataKey;
+                        _dataUserKey = arrUserKey;
                         _mobileArr = arrMobile;
                         NSIndexSet *indexSet=[[NSIndexSet alloc]initWithIndex:4];
                         [_tableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationAutomatic];
@@ -612,6 +617,7 @@
                     addVc.dictFinish = _dictPeo;
                     addVc.dataKey    = _dataKeyBack;
                     addVc.arrMobile = _mobileArr;
+                    addVc.dataUserKey = _dataUserKey;
                     [self.navigationController pushViewController:addVc animated:YES];
                     
                 }

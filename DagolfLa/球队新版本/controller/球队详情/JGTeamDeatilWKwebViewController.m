@@ -23,14 +23,15 @@
     NSString* _teamRealName;
 }
 @property (strong, nonatomic) WKWebView *webView;
-
+@property (nonatomic, strong) UIBarButtonItem * backItem;
+@property (nonatomic, strong) UIBarButtonItem * closeItem;
 @end
 
 @implementation JGTeamDeatilWKwebViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    [self updateNavigationItems];
     if (_isManage == YES) {
     UIBarButtonItem* bar = [[UIBarButtonItem alloc]initWithTitle:@"提现记录" style:UIBarButtonItemStylePlain target:self action:@selector(recordBtn)];
     bar.tintColor = [UIColor whiteColor];
@@ -53,9 +54,8 @@
                 //错误
             }
         }];
-        
-        
     }
+    
     
     self.title = self.teamName;
     self.webView = [[WKWebView alloc]initWithFrame:self.view.bounds];
@@ -87,6 +87,30 @@
         self.navigationItem.rightBarButtonItem = bar;
     }
     
+}
+
+- (void)updateNavigationItems{
+    UIBarButtonItem *backItem = [[UIBarButtonItem alloc]initWithImage:[[UIImage imageNamed:@"btn_back"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:@selector(backToForward)];
+    
+    UIBarButtonItem *closeItem = [[UIBarButtonItem alloc]initWithTitle:@"关闭" style:UIBarButtonItemStylePlain target:self action:@selector(popViewController)];
+    [closeItem setTintColor:[UIColor whiteColor]];
+    self.navigationItem.leftBarButtonItems = @[backItem, closeItem];
+}
+
+
+#pragma mark - 返回
+- (void)clickedBackItem:(UIBarButtonItem *)btn{
+    UIWebView * webView = [self.view viewWithTag:100];
+    if (webView.canGoBack) {
+        [webView goBack];
+//        self.closeItem.hidden = NO;
+    }else{
+        [self clickedCloseItem:nil];
+    }
+}
+#pragma mark - 关闭
+- (void)clickedCloseItem:(UIButton *)btn{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 #pragma 查看成绩时需要分享

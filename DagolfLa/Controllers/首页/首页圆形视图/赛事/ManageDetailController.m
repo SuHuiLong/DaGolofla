@@ -1265,7 +1265,7 @@
     } withBlockSure:^{
         [_dictCancel setValue:[[NSUserDefaults standardUserDefaults] objectForKey:@"userId"] forKey:@"userId"];
         [_dictCancel setValue:_model.eventId forKey:@"ids"];
-        [_dictCancel setValue:@"您参加的赛事活动已被取消" forKey:@"context"];
+        [_dictCancel setValue:@"您参加的球队活动已被取消" forKey:@"context"];
         
         [[PostDataRequest sharedInstance] postDataRequest:@"tballevent/delete.do" parameter:_dictCancel success:^(id respondsData) {
             

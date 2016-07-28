@@ -72,7 +72,7 @@ static NSString *const JGHWithdrawCellIdentifier = @"JGHWithdrawCell";
             cell = [self.setBlankPassTableView dequeueReusableCellWithIdentifier:JGSignUoPromptCellIdentifier];
         }
         
-        cell.pamaptLabel.text = @"提示：您当前未设置支付密码，请前去设置密码保障账户安全。";
+        cell.pamaptLabel.text = @"提示：您当前未设置交易密码，请前去设置密码保障账户安全。";
         return ([cell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height + 1)*ProportionAdapter;
     }
     return 45 * ProportionAdapter;
@@ -98,7 +98,7 @@ static NSString *const JGHWithdrawCellIdentifier = @"JGHWithdrawCell";
         JGSignUoPromptCell *promptCell = [tableView dequeueReusableCellWithIdentifier:JGSignUoPromptCellIdentifier];
         
         promptCell.selectionStyle = UITableViewCellSelectionStyleNone;
-        [promptCell configPromptSetPasswordString:@"提示：您当前未设置支付密码，请前去设置密码保障账户安全。"];
+        [promptCell configPromptSetPasswordString:@"提示：您当前未设置交易密码，请前去设置密码保障账户安全。"];
         return promptCell;
         
     }else{

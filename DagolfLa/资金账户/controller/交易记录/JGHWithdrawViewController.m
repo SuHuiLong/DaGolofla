@@ -269,7 +269,7 @@ static NSString *const JGHTradRecordImageCellIdentifier = @"JGHTradRecordImageCe
                 [self.navigationController pushViewController:passCtrl animated:YES];
             }else{
                 
-                [Helper alertViewWithTitle:@"您还没有支付密码，无法提现，是否现在设置？" withBlockCancle:^{
+                [Helper alertViewWithTitle:@"您还没有交易密码，无法提现，是否现在设置？" withBlockCancle:^{
                     
                 } withBlockSure:^{
                     JGHNOBlankPasswordViewController *passNOCtrl = [[JGHNOBlankPasswordViewController alloc]init];

@@ -225,7 +225,7 @@
         [self presentViewController:alert animated:YES completion:nil];
         
     }else if ( [self.isSetPayPassWord integerValue] == 0){
-        UIAlertController *alert=[UIAlertController alertControllerWithTitle:@"提示" message:@"是否前往设置支付密码" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertController *alert=[UIAlertController alertControllerWithTitle:@"提示" message:@"是否前往设置交易密码" preferredStyle:UIAlertControllerStyleAlert];
         
         UIAlertAction *action1=[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             [alert dismissViewControllerAnimated:YES completion:nil];
