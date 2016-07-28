@@ -20,6 +20,8 @@
 
 #import "JGHRetrieveScoreViewController.h" // 取回记分
 #import "JGDHistoryScoreShowViewController.h"
+#import "JGDActSelfHistoryScoreViewController.h"
+
 
 @interface JGDHistoryScoreViewController ()<UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate,UISearchResultsUpdating>
 
@@ -114,7 +116,9 @@
     
     if (self.fromTeam == 10) {
         //成绩总揽
-        
+        JGDActSelfHistoryScoreViewController * VC = [[JGDActSelfHistoryScoreViewController alloc] init];
+        VC.timeKey = @32987;
+        [self.navigationController pushViewController:VC animated:YES];
         
     }else{
         JGHRetrieveScoreViewController *retriveveVC = [[JGHRetrieveScoreViewController alloc] init];
@@ -347,22 +351,59 @@
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
     JGDHistoryScoreModel *model = self.dataArray[indexPath.row];
     NSMutableDictionary *dic = [NSMutableDictionary dictionary];
-    [dic setValue:DEFAULF_USERID forKey:@"userKey"];
-    [dic setValue:model.timeKey forKey:@"scoreKey"];
     
-    [[JsonHttp jsonHttp] httpRequestWithMD5:@"score/deleteScore" JsonKey:nil withData:dic failedBlock:^(id errType) {
+    if ([model.scoreFinish integerValue] == 2) {
+        UIAlertController *alert=[UIAlertController alertControllerWithTitle:@"提示" message:[NSString stringWithFormat:@"该记分卡由%@代记，是否删除", model.scoreUserName] preferredStyle:UIAlertControllerStyleAlert];
         
-    } completionBlock:^(id data) {
-        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
-            [self.dataArray removeObjectAtIndex:indexPath.row];
-            [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:YES];
+        UIAlertAction *action1=[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            [alert dismissViewControllerAnimated:YES completion:nil];
             
-        }else{
-            if ([data objectForKey:@"packResultMsg"]) {
-                [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+        }];
+        UIAlertAction* action2=[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            [dic setValue:DEFAULF_USERID forKey:@"userKey"];
+            [dic setValue:model.timeKey forKey:@"scoreKey"];
+            
+            [[JsonHttp jsonHttp] httpRequestWithMD5:@"score/deleteScore" JsonKey:nil withData:dic failedBlock:^(id errType) {
+                
+            } completionBlock:^(id data) {
+                if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+                    [self.dataArray removeObjectAtIndex:indexPath.row];
+                    [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:YES];
+                    
+                }else{
+                    if ([data objectForKey:@"packResultMsg"]) {
+                        [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+                    }
+                }
+            }];
+        }];
+        
+        [alert addAction:action1];
+        [alert addAction:action2];
+        [self presentViewController:alert animated:YES completion:nil];
+        
+    }else{
+        
+        [dic setValue:DEFAULF_USERID forKey:@"userKey"];
+        [dic setValue:model.timeKey forKey:@"scoreKey"];
+        
+        [[JsonHttp jsonHttp] httpRequestWithMD5:@"score/deleteScore" JsonKey:nil withData:dic failedBlock:^(id errType) {
+            
+        } completionBlock:^(id data) {
+            if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+                [self.dataArray removeObjectAtIndex:indexPath.row];
+                [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:YES];
+                
+            }else{
+                if ([data objectForKey:@"packResultMsg"]) {
+                    [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+                }
             }
-        }
-    }];
+        }];
+    }
+    
+    
+
 }
 
 - (void)backBtn{

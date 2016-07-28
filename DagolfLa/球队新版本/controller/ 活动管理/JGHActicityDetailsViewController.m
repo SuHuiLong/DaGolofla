@@ -524,23 +524,23 @@ static CGFloat ImageHeight  = 210.0;
 }
 #pragma mark -- tableView 代理
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    if (section == 3) {
+    if (section == 4) {
         //参赛费用列表
         return _subDataArray.count;
     }
     return 0;
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 10;
+    return 11;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (indexPath.section == 3) {
+    if (indexPath.section == 4) {
         return 30;
     }
     return 0;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
-    if (section == 1) {
+    if (section == 1 || section == 2 ||section == 5 || section == 6 ||section == 9 || section == 10) {
         return 0;
     }else{
         return 10;
@@ -549,7 +549,7 @@ static CGFloat ImageHeight  = 210.0;
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     if (section == 0) {
         return ImageHeight;
-    }else if (section == 6){
+    }else if (section == 7){
         static JGTeamActivityDetailsCell *cell;
         if (!cell) {
             cell = [self.teamActibityNameTableView dequeueReusableCellWithIdentifier:JGTeamActivityDetailsCellIdentifier];
@@ -562,16 +562,16 @@ static CGFloat ImageHeight  = 210.0;
     return 44;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (indexPath.section == 3) {
-        JGHCostListTableViewCell *costListCell = [tableView dequeueReusableCellWithIdentifier:JGHCostListTableViewCellIdentifier];
+    JGHCostListTableViewCell *costListCell = [tableView dequeueReusableCellWithIdentifier:JGHCostListTableViewCellIdentifier];
+    if (indexPath.section == 4) {
+        
         costListCell.selectionStyle = UITableViewCellSelectionStyleNone;
         if (_subDataArray.count > 0) {
             [costListCell configCostData:_subDataArray[indexPath.row]];
         }
-        
-        return costListCell;
     }
-    return nil;
+   
+    return costListCell;
 }
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     NSString *windowReuseIdentifier = @"SectionOneCell";
@@ -586,7 +586,7 @@ static CGFloat ImageHeight  = 210.0;
         launchImageActivityCell.selectionStyle = UITableViewCellSelectionStyleNone;
         
         return (UIView *)launchImageActivityCell;
-    }else if (section == 1 || section == 2) {
+    }else if (section == 1 || section == 2 || section == 3) {
         
         JGTableViewCell *launchActivityCell = [tableView dequeueReusableCellWithIdentifier:JGTableViewCellIdentifier];
         launchActivityCell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -594,7 +594,7 @@ static CGFloat ImageHeight  = 210.0;
         timeCellBtn.tag = section + 100;
         [timeCellBtn addTarget:self action:@selector(getTimeAndAddressClick:) forControlEvents:UIControlEventTouchUpInside];
         [launchActivityCell addSubview:timeCellBtn];
-        if (section == 2) {
+        if (section == 3) {
             launchActivityCell.underline.hidden = YES;
         }else{
             launchActivityCell.underline.hidden = NO;
@@ -606,14 +606,14 @@ static CGFloat ImageHeight  = 210.0;
         
         return launchActivityCell;
 
-    }else if (section == 3){
+    }else if (section == 4){
         JGHHeaderLabelCell *headerCell = [tableView dequeueReusableCellWithIdentifier:JGHHeaderLabelCellIdentifier];
         UIButton *timeCellBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, screenWidth, headerCell.frame.size.height)];
         timeCellBtn.tag = section + 100;
         [timeCellBtn addTarget:self action:@selector(editorCostClick:) forControlEvents:UIControlEventTouchUpInside];
         [headerCell addSubview:timeCellBtn];
         return (UIView *)headerCell;
-    }else if (section == 4){
+    }else if (section == 5){
         JGHHeaderLabelCell *headerCell = [tableView dequeueReusableCellWithIdentifier:JGHHeaderLabelCellIdentifier];
         UIButton *applyListBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, screenWidth, headerCell.frame.size.height)];
         [applyListBtn addTarget:self action:@selector(getTeamActivitySignUpList:) forControlEvents:UIControlEventTouchUpInside];
@@ -621,14 +621,23 @@ static CGFloat ImageHeight  = 210.0;
         [headerCell congiftitles:@"分组管理"];
         [headerCell congifCount:self.model.sumCount andSum:self.model.maxCount];
         return (UIView *)headerCell;
-    }else if (section == 5){
+    }else if (section == 6){
         JGHHeaderLabelCell *headerCell = [tableView dequeueReusableCellWithIdentifier:JGHHeaderLabelCellIdentifier];
         UIButton *btn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, screenWidth, headerCell.frame.size.height)];
         [btn addTarget:self action:@selector(setAward:) forControlEvents:UIControlEventTouchUpInside];
         [headerCell addSubview:btn];
         [headerCell congiftitles:@"奖项设置"];
         return (UIView *)headerCell;
-    }else if (section == 6){
+    }
+//    else if (section == 7){
+//        JGHHeaderLabelCell *headerCell = [tableView dequeueReusableCellWithIdentifier:JGHHeaderLabelCellIdentifier];
+//        UIButton *btn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, screenWidth, headerCell.frame.size.height)];
+//        [btn addTarget:self action:@selector(PerformanceManagement:) forControlEvents:UIControlEventTouchUpInside];
+//        [headerCell addSubview:btn];
+//        [headerCell congiftitles:@"成绩管理"];
+//        return (UIView *)headerCell;
+//    }
+    else if (section == 7){
         JGTeamActivityDetailsCell *detailsCell = [tableView dequeueReusableCellWithIdentifier:JGTeamActivityDetailsCellIdentifier];
         UIButton *detailsBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, screenWidth, detailsCell.frame.size.height)];
         [detailsBtn addTarget:self action:@selector(pushDetailSCtrl:) forControlEvents:UIControlEventTouchUpInside];
@@ -636,7 +645,7 @@ static CGFloat ImageHeight  = 210.0;
         [detailsCell addSubview:detailsBtn];
         [detailsCell configDetailsText:@"活动详情" AndActivityDetailsText:self.model.info];
         return (UIView *)detailsCell;
-    }else if (section == 7){
+    }else if (section == 8){
         JGHTeamContactTableViewCell *contactCell = [tableView dequeueReusableCellWithIdentifier:JGHTeamContactCellIdentifier];
         contactCell.tetfileView.tag = 234;
         contactCell.tetfileView.delegate = self;
@@ -649,7 +658,7 @@ static CGFloat ImageHeight  = 210.0;
         
         contactCell.tetfileView.placeholder = @"请输入最大人员限制数";
         return contactCell.contentView;
-    }else if (section == 8){
+    }else if (section == 9){
         JGHTeamContactTableViewCell *contactCell = [tableView dequeueReusableCellWithIdentifier:JGHTeamContactCellIdentifier];
         contactCell.tetfileView.tag = 345;
         contactCell.tetfileView.delegate = self;
@@ -683,6 +692,10 @@ static CGFloat ImageHeight  = 210.0;
     UIView *footView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, 10)];
     footView.backgroundColor = [UIColor colorWithHexString:BG_color];
     return footView;
+}
+#pragma mark -- 成绩管理
+- (void)PerformanceManagement:(UIButton *)btn{
+    NSLog(@"Performance management");
 }
 #pragma mark -- 奖项设置
 - (void)setAward:(UIButton *)btn{

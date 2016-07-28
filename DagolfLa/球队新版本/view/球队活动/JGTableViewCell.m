@@ -70,6 +70,10 @@
     }
     
     if (tag == 2) {
+        self.contions.text = [[model.endDate componentsSeparatedByString:@" "] objectAtIndex:0];//报名截止时间
+    }
+    
+    if (tag == 3) {
         self.contions.text = [[model.signUpEndTime componentsSeparatedByString:@" "] objectAtIndex:0];//报名截止时间
     }
 }
