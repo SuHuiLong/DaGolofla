@@ -91,6 +91,7 @@
 		206ECF971D4756D900880234 /* UUDatePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 206ECF931D4756D900880234 /* UUDatePicker.m */; };
 		206ECF981D4756D900880234 /* UUDatePicker_DateModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 206ECF951D4756D900880234 /* UUDatePicker_DateModel.m */; };
 		206ECF9B1D4757A900880234 /* JGHDatePicksViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 206ECF9A1D4757A900880234 /* JGHDatePicksViewController.m */; };
+		206ECFC21D48D30C00880234 /* JGHActivityScoreManagerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 206ECFC11D48D30C00880234 /* JGHActivityScoreManagerViewController.m */; };
 		207FEC961D1BC98F0098E23C /* JGHCancelApplyBaseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 207FEC941D1BC98F0098E23C /* JGHCancelApplyBaseCell.m */; };
 		207FEC971D1BC98F0098E23C /* JGHCancelApplyBaseCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 207FEC951D1BC98F0098E23C /* JGHCancelApplyBaseCell.xib */; };
 		207FEC9B1D1BDDB10098E23C /* JGHButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 207FEC991D1BDDB10098E23C /* JGHButtonCell.m */; };
@@ -1109,6 +1110,8 @@
 		206ECF961D4756D900880234 /* UUDatePicker_DateModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UUDatePicker_DateModel.h; sourceTree = "<group>"; };
 		206ECF991D4757A900880234 /* JGHDatePicksViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHDatePicksViewController.h; sourceTree = "<group>"; };
 		206ECF9A1D4757A900880234 /* JGHDatePicksViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHDatePicksViewController.m; sourceTree = "<group>"; };
+		206ECFC01D48D30C00880234 /* JGHActivityScoreManagerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHActivityScoreManagerViewController.h; sourceTree = "<group>"; };
+		206ECFC11D48D30C00880234 /* JGHActivityScoreManagerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHActivityScoreManagerViewController.m; sourceTree = "<group>"; };
 		207FEC931D1BC98F0098E23C /* JGHCancelApplyBaseCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHCancelApplyBaseCell.h; sourceTree = "<group>"; };
 		207FEC941D1BC98F0098E23C /* JGHCancelApplyBaseCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHCancelApplyBaseCell.m; sourceTree = "<group>"; };
 		207FEC951D1BC98F0098E23C /* JGHCancelApplyBaseCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JGHCancelApplyBaseCell.xib; sourceTree = "<group>"; };
@@ -3063,9 +3066,19 @@
 			path = datePicks;
 			sourceTree = "<group>";
 		};
+		206ECFBF1D48D28100880234 /* 活动成绩管理 */ = {
+			isa = PBXGroup;
+			children = (
+				206ECFC01D48D30C00880234 /* JGHActivityScoreManagerViewController.h */,
+				206ECFC11D48D30C00880234 /* JGHActivityScoreManagerViewController.m */,
+			);
+			path = "活动成绩管理";
+			sourceTree = "<group>";
+		};
 		209B3FE81D10175200A6FF72 /*  活动管理 */ = {
 			isa = PBXGroup;
 			children = (
+				206ECFBF1D48D28100880234 /* 活动成绩管理 */,
 				208837971D17D206004C7B5D /* JGHActicityDetailsViewController.h */,
 				208837981D17D206004C7B5D /* JGHActicityDetailsViewController.m */,
 				209B3FE91D10182B00A6FF72 /* JGHManagerViewController.h */,
@@ -7420,6 +7433,7 @@
 				20BA612A1CDC99D0004B61F5 /* ALButton.m in Sources */,
 				207FECB41D1D27E40098E23C /* JGHRepeatApplyView.m in Sources */,
 				36E1FBB41C7D817A006B1456 /* ChangePicViewController.m in Sources */,
+				206ECFC21D48D30C00880234 /* JGHActivityScoreManagerViewController.m in Sources */,
 				82ABF1CD1D1C072E004493DB /* JGLSignPeoTableViewCell.m in Sources */,
 				36BF00921BC772EF005B3CE2 /* MyNewsBoxViewController.m in Sources */,
 				F56F0B871CC60B0400A222F3 /* NoteHandlle.m in Sources */,
