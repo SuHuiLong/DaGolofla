@@ -32,6 +32,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self updateNavigationItems];
+    
+    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"backL"] style:UIBarButtonItemStylePlain target:self action:@selector(backButtonClcik)];
+    item.tintColor=[UIColor whiteColor];
+    self.navigationItem.leftBarButtonItem = item;
+    
     if (_isManage == YES) {
     UIBarButtonItem* bar = [[UIBarButtonItem alloc]initWithTitle:@"提现记录" style:UIBarButtonItemStylePlain target:self action:@selector(recordBtn)];
     bar.tintColor = [UIColor whiteColor];
@@ -90,28 +95,24 @@
 }
 
 - (void)updateNavigationItems{
-    UIBarButtonItem *backItem = [[UIBarButtonItem alloc]initWithImage:[[UIImage imageNamed:@"btn_back"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:@selector(backToForward)];
+    UIBarButtonItem *backItem = [[UIBarButtonItem alloc]initWithImage:[[UIImage imageNamed:@"btn_back"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:@selector(backButtonClcik)];
     
     UIBarButtonItem *closeItem = [[UIBarButtonItem alloc]initWithTitle:@"关闭" style:UIBarButtonItemStylePlain target:self action:@selector(popViewController)];
     [closeItem setTintColor:[UIColor whiteColor]];
     self.navigationItem.leftBarButtonItems = @[backItem, closeItem];
 }
 
-
-#pragma mark - 返回
-- (void)clickedBackItem:(UIBarButtonItem *)btn{
-    UIWebView * webView = [self.view viewWithTag:100];
-    if (webView.canGoBack) {
-        [webView goBack];
-//        self.closeItem.hidden = NO;
-    }else{
-        [self clickedCloseItem:nil];
-    }
-}
-#pragma mark - 关闭
-- (void)clickedCloseItem:(UIButton *)btn{
+- (void)popViewController{
     [self.navigationController popViewControllerAnimated:YES];
 }
+- (void)backButtonClcik{
+    if (self.webView.canGoBack) {
+        [self.webView goBack];
+    }else{
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+}
+
 
 #pragma 查看成绩时需要分享
 //分享点击事件
