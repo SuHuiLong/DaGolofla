@@ -41,8 +41,8 @@
 }
 
 - (void)configPayPassword{
-    self.titles.text = @"支付密码";
-    self.titlefileds.placeholder = @"输入付款时的支付密码";
+    self.titles.text = @"交易密码";
+    self.titlefileds.placeholder = @"输入付款时的交易密码";
     self.titleLeft.constant = 20 *ProportionAdapter;
     
     self.titlefiledsRight.constant = 20 *ProportionAdapter;

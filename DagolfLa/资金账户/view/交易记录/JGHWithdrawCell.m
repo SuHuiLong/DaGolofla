@@ -40,7 +40,7 @@
 }
 
 - (void)configSetPassword{
-    self.titles.text = @"设置支付密码";
+    self.titles.text = @"设置交易密码";
     self.values.hidden = YES;
     self.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 }

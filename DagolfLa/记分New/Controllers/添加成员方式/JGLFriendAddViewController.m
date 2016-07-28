@@ -31,6 +31,7 @@
     NSMutableArray* _dataArray;
     
     NSMutableDictionary* _dataAccountDict;
+    NSMutableDictionary* _dictData;
     
 }
 @property (nonatomic, strong) UISearchController *searchController;
@@ -57,6 +58,7 @@
     }
     _dataArray       = [[NSMutableArray alloc]init];
     _dataAccountDict = [[NSMutableDictionary alloc]init];
+    _dictData        = [[NSMutableDictionary alloc]init];
     [self uiConfig];
     [self createHeadSearch];
 }
@@ -104,7 +106,9 @@
 -(void)updateSearchResultsForSearchController:(UISearchController *)searchController {
 }
 -(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
-
+    [_dictData setObject:searchBar.text forKey:@"userName"];
+    _tableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
+    [_tableView.header beginRefreshing];
 }
 
 
@@ -129,7 +133,11 @@
 
 #pragma mark - 下载数据
 - (void)downLoadData:(int)page isReshing:(BOOL)isReshing{
-    [[PostDataRequest sharedInstance] postDataRequest:@"UserFollow/querbyUserFollowList.do" parameter:@{@"userId":[[NSUserDefaults standardUserDefaults] objectForKey:@"userId"],@"otherUserId":@0,@"page":@0,@"rows":@0} success:^(id respondsData) {
+    [_dictData setObject:DEFAULF_USERID forKey:@"userId"];
+    [_dictData setObject:@0 forKey:@"otherUserId"];
+    [_dictData setObject:@0 forKey:@"page"];
+    [_dictData setObject:@0 forKey:@"rows"];
+    [[PostDataRequest sharedInstance] postDataRequest:@"UserFollow/querbyUserFollowList.do" parameter:_dictData success:^(id respondsData) {
         NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:respondsData options:NSJSONReadingMutableContainers error:nil];
         
         if ([[dict objectForKey:@"success"] boolValue]) {
@@ -146,6 +154,7 @@
                     model.userName = modell.userremarks;
                 }
                 [allFriarr addObject:model];
+                [_dictData removeObjectForKey:@"userName"];
                 //                [self.keyArray addObject:model.userName];
             }
             

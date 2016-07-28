@@ -34,12 +34,13 @@
         
         UILabel *teamIntroduction = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 30 * screenWidth / 320)];
         teamIntroduction.text = @" 球队公告";
-        teamIntroduction.textColor = [UIColor lightGrayColor];
+        teamIntroduction.textColor = [UIColor blackColor];
         teamIntroduction.backgroundColor = [UIColor whiteColor];
         [self.teamIntroductionBackView addSubview:teamIntroduction];
         
         self.teamIntroductionLB = [[UILabel alloc] initWithFrame:CGRectMake(6 * screenWidth / 320, 30 * screenWidth / 320, screenWidth - 12 * screenWidth / 320, 0)];
         self.teamIntroductionLB.numberOfLines = 0;
+        self.teamIntroductionLB.textColor = [UIColor lightGrayColor];
         self.teamIntroductionLB.backgroundColor = [UIColor whiteColor];
         self.teamIntroductionLB.font = [UIFont systemFontOfSize:15];
         [self.teamIntroductionBackView addSubview:self.teamIntroductionLB];

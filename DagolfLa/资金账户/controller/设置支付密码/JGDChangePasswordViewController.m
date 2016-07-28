@@ -97,11 +97,11 @@
         cell.txFD.secureTextEntry = NO;
 
     }else if (indexPath.row == 1) {
-        cell.LB.text = @"新支付密码";
-        cell.txFD.placeholder = @"请输入您的新支付密码";
+        cell.LB.text = @"新交易密码";
+        cell.txFD.placeholder = @"请输入您的新交易密码";
     }else{
         cell.LB.text = @"再输一次";
-        cell.txFD.placeholder = @"再输入一次新支付密码";
+        cell.txFD.placeholder = @"再输入一次新交易密码";
     }
     return cell;
 }

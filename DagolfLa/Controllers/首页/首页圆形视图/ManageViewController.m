@@ -717,7 +717,7 @@
         
         UILabel* label = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, 30*ScreenWidth/375)];
         label.textAlignment = NSTextAlignmentCenter;
-        label.text = @"以下为已经结束的赛事活动";
+        label.text = @"以下为已经结束的球队活动";
         [view addSubview:label];
         label.font = [UIFont systemFontOfSize:14*ScreenWidth/375];
         

@@ -596,9 +596,10 @@ static CGFloat ImageHeight  = 210.0;
     }else if (indexPath.section == 1){
         JGDisplayInfoTableViewCell *contactCell = [tableView dequeueReusableCellWithIdentifier:@"Display"];
         contactCell.promptLB.text = @"球队公告";
-        contactCell.promptLB.textColor = [UIColor lightGrayColor];
+        contactCell.promptLB.textColor = [UIColor blackColor];
         contactCell.promptLB.frame = CGRectMake(10 * screenWidth / 320, 0, 100 * screenWidth / 320, 30 * screenWidth / 320);
         contactCell.contentLB.lineBreakMode = NSLineBreakByWordWrapping;
+        contactCell.contentLB.textColor = [UIColor lightGrayColor];
         contactCell.contentLB.text = [self.detailDic objectForKey:@"notice"];
         contactCell.contentLB.frame = CGRectMake(10, 35  * screenWidth / 320, screenWidth - 20  * screenWidth / 320, [self calculationLabelHeight:[self.detailDic objectForKey:@"notice"]]);
         return contactCell;
@@ -610,7 +611,7 @@ static CGFloat ImageHeight  = 210.0;
         switch (indexPath.row) {
             case 0:
                 launchActivityCell.imageV.image = [UIImage imageNamed:@"hd-2"];
-                launchActivityCell.promptLB.text = @"赛事活动";
+                launchActivityCell.promptLB.text = @"球队活动";
                 break;
             case 1:
                 launchActivityCell.imageV.image = [UIImage imageNamed:@"qdcy"];
