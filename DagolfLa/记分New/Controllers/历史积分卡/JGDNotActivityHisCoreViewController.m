@@ -167,7 +167,7 @@
         [viewTitle addSubview:lightV];
         
         
-        UILabel *ballNameLB = [[UILabel alloc] initWithFrame:CGRectMake(10 * ProportionAdapter, 20 * ProportionAdapter, 250 * ProportionAdapter, 30 * ProportionAdapter)];
+        UILabel *ballNameLB = [[UILabel alloc] initWithFrame:CGRectMake(10 * ProportionAdapter, 20 * ProportionAdapter, 350 * ProportionAdapter, 30 * ProportionAdapter)];
         ballNameLB.text = [self.dataDic objectForKey:@"ballName"];
         ballNameLB.textColor = [UIColor colorWithHexString:@"#313131"];
         ballNameLB.font = [UIFont systemFontOfSize:15 * ProportionAdapter];

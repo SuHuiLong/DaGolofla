@@ -263,7 +263,7 @@
         btn.enabled = NO;
         JGHWithdrawViewController *withdrawCtrl = [[JGHWithdrawViewController alloc]init];
         withdrawCtrl.balance = self.money;
-        
+        withdrawCtrl.realName = self.name;
         [self.navigationController pushViewController:withdrawCtrl animated:YES];
         btn.enabled = YES;
     }

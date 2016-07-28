@@ -17,6 +17,9 @@
 #import "JGHNOBlankPasswordViewController.h"
 #import "JGLBankListViewController.h"
 
+#import "JGLAddBankCardViewController.h"
+
+
 static NSString *const JGHButtonCellIdentifier = @"JGHButtonCell";
 static NSString *const JGSignUoPromptCellIdentifier = @"JGSignUoPromptCell";
 static NSString *const JGHTextFiledCellIdentifier = @"JGHTextFiledCell";
@@ -304,10 +307,19 @@ static NSString *const JGHTradRecordImageCellIdentifier = @"JGHTradRecordImageCe
 }
 #pragma mark -- 添加银行卡
 - (void)addBlankCard{
-    JGLBankListViewController* userVc = [[JGLBankListViewController alloc]init];
+    
+    
+    JGLAddBankCardViewController *addVC = [[JGLAddBankCardViewController alloc] init];
     _tranView.hidden = YES;
     _blankCatoryView.hidden = YES;
-    [self.navigationController pushViewController:userVc animated:YES];
+    addVC.realName = self.realName;
+    [self.navigationController pushViewController:addVC animated:YES];
+
+    
+//    JGLBankListViewController* userVc = [[JGLBankListViewController alloc]init];
+//    _tranView.hidden = YES;
+//    _blankCatoryView.hidden = YES;
+//    [self.navigationController pushViewController:userVc animated:YES];
 }
 #pragma mark -- UITextFliaView
 - (void)textFieldDidEndEditing:(UITextField *)textField{
