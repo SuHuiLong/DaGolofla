@@ -54,7 +54,7 @@
         [self.contentView addSubview:self.holderImageV];
         
         self.unfinishimageV = [[UIImageView alloc] initWithFrame:CGRectMake(200 * ProportionAdapter - 35 * ProportionAdapter, 0, 35 * ProportionAdapter, 35 * ProportionAdapter)];
-        self.unfinishimageV.image = [UIImage imageNamed:@"weiwanchegn"];
+//        self.unfinishimageV.image = [UIImage imageNamed:@"weiwanchegn"];
         
         self.activityNameLB = [[UILabel alloc] initWithFrame:CGRectMake(20 * ProportionAdapter, 10 * ProportionAdapter, 170 * ProportionAdapter, 25 * ProportionAdapter)];
         self.activityNameLB.textColor = [UIColor colorWithHexString:@"#313131"];
@@ -79,7 +79,14 @@
     self.activityNameLB.text = model.title;
     self.ballName.text = model.ballName;
     
+//    if ([model.scoreFinish integerValue] == 0) {
+//        [self.holderImageV addSubview:self.unfinishimageV];
+//    }
     if ([model.scoreFinish integerValue] == 0) {
+        self.unfinishimageV.image = [UIImage imageNamed:@"weiwanchegn"];
+        [self.holderImageV addSubview:self.unfinishimageV];
+    }else if ([model.scoreFinish integerValue] == 2) {
+        self.unfinishimageV.image = [UIImage imageNamed:@"icn_daiji"];
         [self.holderImageV addSubview:self.unfinishimageV];
     }
     

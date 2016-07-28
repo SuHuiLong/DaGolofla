@@ -27,7 +27,7 @@
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];
     
-    self.navigationItem.title = @"设置支付密码";
+    self.navigationItem.title = @"修改支付密码";
     
     if (_isWithdrawSetPassword == 1) {
         UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"backL"] style:UIBarButtonItemStylePlain target:self action:@selector(withdrawBackButtonClcik)];

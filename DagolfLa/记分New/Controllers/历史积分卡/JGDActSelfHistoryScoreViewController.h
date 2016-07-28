@@ -10,4 +10,7 @@
 
 @interface JGDActSelfHistoryScoreViewController : ViewController
 
+@property (nonatomic, strong) NSNumber *timeKey;
+
+
 @end
