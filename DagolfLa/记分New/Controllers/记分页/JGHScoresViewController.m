@@ -185,6 +185,8 @@
 }
 #pragma mark -- 返回
 - (void)saveScoresAndBackClick:(UIButton *)btn{
+    [_timer invalidate];
+    _timer = nil;
     btn.enabled = NO;
     [[JsonHttp jsonHttp]cancelRequest];//取消所有请求
     //保存
@@ -295,14 +297,6 @@
                 
                 _pageViewController.delegate = self;
                 _pageViewController.dataSource = self;
-                
-//                _pageControl = [[UIPageControl alloc]init];
-//                _pageControl.numberOfPages = 18;
-//                _pageControl.currentPage = _currentPage;
-//                
-//                _pageControl.center = CGPointMake(ScreenWidth/2, screenHeight-64-5*ProportionAdapter);
-//                [self.view addSubview:_pageControl];
-//                _pageControl.pageIndicatorTintColor = [UIColor colorWithHexString:@"#32B14D"];
                 
                 if ([data objectForKey:@"score"]) {
                     NSMutableDictionary *scoreDict = [data objectForKey:@"score"];
@@ -470,6 +464,8 @@
         NSLog(@"%@", data);
         if ([[data objectForKey:@"packSuccess"]integerValue] == 1) {
             if (_selectcompleteHole == 1) {
+                [_timer invalidate];
+                _timer = nil;
                 //完成  finishScore
                 NSMutableDictionary *finishDict = [NSMutableDictionary dictionary];
                 [finishDict setObject:DEFAULF_USERID forKey:@"userKey"];
