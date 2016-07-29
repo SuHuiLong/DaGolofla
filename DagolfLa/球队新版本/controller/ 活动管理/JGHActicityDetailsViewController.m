@@ -41,6 +41,8 @@
 #import "JGHSetAwardViewController.h"
 #import "JGLPresentAwardViewController.h"
 
+#import "JGHActivityScoreManagerViewController.h"
+
 static NSString *const JGTableViewCellIdentifier = @"JGTableViewCell";
 static NSString *const JGTeamActivityWithAddressCellIdentifier = @"JGTeamActivityWithAddressCell";
 static NSString *const JGTeamActivityDetailsCellIdentifier = @"JGTeamActivityDetailsCell";
@@ -695,7 +697,10 @@ static CGFloat ImageHeight  = 210.0;
 }
 #pragma mark -- 成绩管理
 - (void)PerformanceManagement:(UIButton *)btn{
-    NSLog(@"Performance management");
+    NSLog(@"成绩管理");
+    JGHActivityScoreManagerViewController *activityScoreCtrl = [[JGHActivityScoreManagerViewController alloc]init];
+    
+    [self.navigationController pushViewController:activityScoreCtrl animated:YES];
 }
 #pragma mark -- 奖项设置
 - (void)setAward:(UIButton *)btn{
@@ -761,6 +766,26 @@ static CGFloat ImageHeight  = 210.0;
 - (void)editorCostClick:(UIButton *)btn{
     JGCostSetViewController *costView = [[JGCostSetViewController alloc]initWithNibName:@"JGCostSetViewController" bundle:nil];
     costView.delegate = self;
+    //球队队员费用
+    if ([self.model.memberPrice floatValue] > 0) {
+        costView.memberPrice = self.model.memberPrice;
+    }
+    
+    //嘉宾费用
+    if ([self.model.guestPrice floatValue] > 0) {
+        costView.guestPrice = self.model.guestPrice;
+    }
+    
+    //记名费
+    if ([self.model.billNamePrice floatValue] > 0) {
+        costView.billNamePrice = self.model.billNamePrice;
+    }
+    
+    //不记名费
+    if ([self.model.billPrice floatValue] > 0) {
+        costView.billPrice = self.model.billPrice;
+    }
+
     [self.navigationController pushViewController:costView animated:YES];
 }
 #pragma mark -- 添加内容详情代理  JGHConcentTextViewControllerDelegate

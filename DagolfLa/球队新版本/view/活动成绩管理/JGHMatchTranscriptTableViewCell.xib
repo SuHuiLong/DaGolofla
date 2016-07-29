@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="97" id="KGk-i7-Jjw" customClass="JGHMatchTranscriptTableViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="97"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="96.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FJh-I7-TtW">
+                        <rect key="frame" x="10" y="15" width="210" height="20.5"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="luW-lf-ADL">
+                        <rect key="frame" x="33" y="61" width="187" height="20.5"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gXl-1W-gWv">
+                        <rect key="frame" x="230" y="32.5" width="80" height="33"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="80" id="ShI-Jg-erC"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <state key="normal" title="差点设置"/>
+                        <connections>
+                            <action selector="setAlmostBtnClick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="B8L-7i-tjW"/>
+                        </connections>
+                    </button>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="time" translatesAutoresizingMaskIntoConstraints="NO" id="x8S-p2-AjH">
+                        <rect key="frame" x="10" y="64" width="13" height="14"/>
+                    </imageView>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="FJh-I7-TtW" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="15" id="1a8-uB-kyC"/>
+                    <constraint firstItem="x8S-p2-AjH" firstAttribute="centerY" secondItem="luW-lf-ADL" secondAttribute="centerY" id="29j-La-MZe"/>
+                    <constraint firstItem="gXl-1W-gWv" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="B3W-BI-hET"/>
+                    <constraint firstItem="luW-lf-ADL" firstAttribute="leading" secondItem="x8S-p2-AjH" secondAttribute="trailing" constant="10" id="RTR-FF-kSv"/>
+                    <constraint firstAttribute="bottom" secondItem="luW-lf-ADL" secondAttribute="bottom" constant="15" id="YKB-UA-Jmf"/>
+                    <constraint firstItem="FJh-I7-TtW" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="ahK-Ah-YWl"/>
+                    <constraint firstItem="gXl-1W-gWv" firstAttribute="leading" secondItem="luW-lf-ADL" secondAttribute="trailing" constant="10" id="ge3-Uo-Ow0"/>
+                    <constraint firstItem="gXl-1W-gWv" firstAttribute="leading" secondItem="FJh-I7-TtW" secondAttribute="trailing" constant="10" id="i0D-3r-jUr"/>
+                    <constraint firstItem="x8S-p2-AjH" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="m6Z-9c-pDL"/>
+                    <constraint firstAttribute="trailing" secondItem="gXl-1W-gWv" secondAttribute="trailing" constant="10" id="vkk-wl-1Nz"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="ballName" destination="FJh-I7-TtW" id="W5q-bZ-Ibw"/>
+                <outlet property="ballNameLeft" destination="ahK-Ah-YWl" id="2II-tM-v8J"/>
+                <outlet property="ballNameRight" destination="i0D-3r-jUr" id="roW-AB-fPL"/>
+                <outlet property="ballNameTop" destination="1a8-uB-kyC" id="Nxe-ay-4BY"/>
+                <outlet property="setAlmostBtn" destination="gXl-1W-gWv" id="0RS-YN-c37"/>
+                <outlet property="setAlmostBtnRight" destination="vkk-wl-1Nz" id="qmc-IR-MCI"/>
+                <outlet property="time" destination="luW-lf-ADL" id="3uc-fr-UD3"/>
+                <outlet property="timeDown" destination="YKB-UA-Jmf" id="8bp-Ym-dHj"/>
+                <outlet property="timeImageLeft" destination="m6Z-9c-pDL" id="Y9L-WG-4M1"/>
+                <outlet property="timeLeft" destination="RTR-FF-kSv" id="6Jt-Ll-dNF"/>
+                <outlet property="timeRight" destination="ge3-Uo-Ow0" id="ZPr-bC-oZo"/>
+            </connections>
+            <point key="canvasLocation" x="216" y="253.5"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="time" width="13" height="14"/>
+    </resources>
+</document>

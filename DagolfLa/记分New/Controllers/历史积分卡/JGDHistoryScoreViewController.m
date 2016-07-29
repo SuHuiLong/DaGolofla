@@ -55,7 +55,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = @"球队历史记分卡";
+    self.title = @"个人历史记分卡";
     self.view.backgroundColor = [UIColor colorWithHexString:@"#f4f4f4"];
     [self createTableView];
     

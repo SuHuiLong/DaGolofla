@@ -372,6 +372,7 @@ static CGFloat ImageHeight  = 210.0;
                 NSLog(@"%@", dateString);
                 [self.model setValue:dateString forKey:@"beginDate"];
                 
+                
                 NSIndexPath *indPath = [NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section];
                 [self.launchActivityTableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indPath, nil] withRowAnimation:UITableViewRowAnimationNone];
             };
@@ -382,8 +383,8 @@ static CGFloat ImageHeight  = 210.0;
             DateTimeViewController *dataCtrl = [[DateTimeViewController alloc]init];
             [dataCtrl setCallback:^(NSString *dateStr, NSString *dateWeek, NSString *str) {
                 if(indexPath.row == 1){
-                    [self.model setValue:dateStr forKey:@"endDate"];
-                    //                [_dataDict setObject:dateStr forKey:@"activityEndDate"];
+                    [self.model setValue:[NSString stringWithFormat:@"%@ 23:59:59", dateStr] forKey:@"endDate"];
+                    //                [_dataDict setObject:dateStr forKey:@"activityEndDate"];endDate
                 }else{
                     [self.model setValue:[NSString stringWithFormat:@"%@ 23:59:59", dateStr] forKey:@"signUpEndTime"];
                     //                [_dataDict setObject:dateStr forKey:@"activityEignUpEndTime"];
@@ -482,7 +483,7 @@ static CGFloat ImageHeight  = 210.0;
     }
     
     if (self.model.beginDate == nil) {
-        [[ShowHUD showHUD]showToastWithText:@"活动开始时间不能为空！" FromView:self.view];
+        [[ShowHUD showHUD]showToastWithText:@"活动开球时间不能为空！" FromView:self.view];
         return;
     }
     
@@ -497,11 +498,11 @@ static CGFloat ImageHeight  = 210.0;
     }
     
     if ([self.model.beginDate compare:self.model.endDate] > 0) {
-        [[ShowHUD showHUD]showToastWithText:@"活动开始时间不能大于结束时间！" FromView:self.view];
+        [[ShowHUD showHUD]showToastWithText:@"活动开球时间不能大于结束时间！" FromView:self.view];
         return;
     }
     
-    if ([[[self.model.signUpEndTime componentsSeparatedByString:@" "] objectAtIndex:0] compare:self.model.beginDate] > 0) {
+    if ([[[self.model.signUpEndTime componentsSeparatedByString:@"-"] lastObject] compare:self.model.beginDate] > 0) {
         [[ShowHUD showHUD]showToastWithText:@"报名截止时间不能大于活动开始时间！" FromView:self.view];
         return;
     }

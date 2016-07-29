@@ -130,7 +130,11 @@
     
     [applyDict setObject:[NSString stringWithFormat:@"%td", _iscatoryVlaue] forKey:@"type"];
     //payMoney
-    [applyDict setObject:[[_catoryArray[_iscatoryVlaue] componentsSeparatedByString:@"-"] objectAtIndex:0] forKey:@"payMoney"];
+    if (_iscatoryVlaue >= _catoryArray.count) {
+        [applyDict setObject:[[[_catoryArray lastObject] componentsSeparatedByString:@"-"] objectAtIndex:0] forKey:@"payMoney"];
+    }else{
+        [applyDict setObject:[[_catoryArray[_iscatoryVlaue] componentsSeparatedByString:@"-"] objectAtIndex:0] forKey:@"payMoney"];
+    }
     
     [applyDict setObject:@0 forKey:@"userKey"];//报名用户key , 没有则是嘉宾
     
