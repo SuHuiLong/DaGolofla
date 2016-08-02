@@ -119,9 +119,10 @@
             _page++;
             [_collectionView reloadData];
         }else {
-            [Helper alertViewWithTitle:[dict objectForKey:@"message"] withBlock:^(UIAlertController *alertView) {
-                [self presentViewController:alertView animated:YES completion:nil];
-            }];
+//            [Helper alertViewWithTitle:[dict objectForKey:@"message"] withBlock:^(UIAlertController *alertView) {
+//                [self presentViewController:alertView animated:YES completion:nil];
+//            }];
+            [[ShowHUD showHUD]showToastWithText:[dict objectForKey:@"message"] FromView:self.view];
         }
         [_collectionView reloadData];
         if (isReshing) {
@@ -271,9 +272,11 @@
             else
             {
                 //不要需要跳转
-                [Helper alertViewWithTitle:@"此相册仅对球队成员开放，请先加入球队再行观看" withBlock:^(UIAlertController *alertView) {
-                    [self.navigationController presentViewController:alertView animated:YES completion:nil];
-                }];
+//                [Helper alertViewWithTitle:@"此相册仅对球队成员开放，请先加入球队再行观看" withBlock:^(UIAlertController *alertView) {
+//                    [self.navigationController presentViewController:alertView animated:YES completion:nil];
+//                }];
+                [[ShowHUD showHUD]showToastWithText:@"此相册仅对球队成员开放，请先加入球队再行观看" FromView:self.view];
+                
             }
         }
     }
@@ -286,9 +289,10 @@
         else
         {
             //不要需要跳转
-            [Helper alertViewWithTitle:@"此相册仅对球队成员开放，请先加入球队再行观看" withBlock:^(UIAlertController *alertView) {
-                [self.navigationController presentViewController:alertView animated:YES completion:nil];
-            }];
+//            [Helper alertViewWithTitle:@"此相册仅对球队成员开放，请先加入球队再行观看" withBlock:^(UIAlertController *alertView) {
+//                [self.navigationController presentViewController:alertView animated:YES completion:nil];
+//            }];
+            [[ShowHUD showHUD]showToastWithText:@"此相册仅对球队成员开放，请先加入球队再行观看" FromView:self.view];
         }
     }
     
