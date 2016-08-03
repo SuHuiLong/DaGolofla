@@ -37,4 +37,6 @@
 
 + (NSString *)getScoreListUserKey:(NSInteger)userKey andScoreKey:(NSInteger)scoreKey;
 
++ (NSString *)getStandardleversBallKey:(NSInteger)ballKey andRegion1:(NSString *)region1 andRegion2:(NSString *)region2;
+
 @end

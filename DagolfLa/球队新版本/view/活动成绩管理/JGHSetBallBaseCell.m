@@ -62,5 +62,11 @@
     }
 }
 
+- (void)configRegist1:(NSString *)regist1 andRegist2:(NSString *)regist2{
+    [self.oneBtn setTitle:[NSString stringWithFormat:@" %@", regist1] forState:UIControlStateNormal];
+    
+    [self.twoBtn setTitle:[NSString stringWithFormat:@" %@", regist2] forState:UIControlStateNormal];
+}
+
 
 @end

@@ -50,5 +50,6 @@
 @property (weak, nonatomic) IBOutlet UIButton *startBtn;
 - (IBAction)startBtnClick:(UIButton *)sender;
 
+- (void)configRegist1:(NSString *)regist1 andRegist2:(NSString *)regist2;
 
 @end

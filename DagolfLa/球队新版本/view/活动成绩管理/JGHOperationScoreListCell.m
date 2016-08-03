@@ -11,13 +11,16 @@
 
 static NSString *const JGHOperScoreBtnListCellIdentifier = @"JGHOperScoreBtnListCell";
 
+@interface JGHOperationScoreListCell ()<JGHOperScoreBtnListCellDelegate>
+
+@end
+
 @implementation JGHOperationScoreListCell
 
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
     if (self == [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
-//        UINib *operScoreBtnListCellNib = [UINib nibWithNibName:@"JGHOperScoreBtnListCell" bundle: [NSBundle mainBundle]];
-//        [self.operationScoreListTable registerNib:operScoreBtnListCellNib forCellReuseIdentifier:JGHOperScoreBtnListCellIdentifier];
+//        self.poleArray = [NSMutableArray array];
         self.operationScoreListTable.scrollEnabled = NO;
         self.operationScoreListTable.separatorStyle = UITableViewCellSeparatorStyleNone;
     }
@@ -30,11 +33,11 @@ static NSString *const JGHOperScoreBtnListCellIdentifier = @"JGHOperScoreBtnList
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 9;
+    return 10;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return (screenWidth-25*ProportionAdapter)/9;
+    return (screenWidth-25*ProportionAdapter)/10;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -47,11 +50,37 @@ static NSString *const JGHOperScoreBtnListCellIdentifier = @"JGHOperScoreBtnList
     
     tranCell.selectionStyle = UITableViewCellSelectionStyleNone;
     
+    tranCell.delegate = self;
+    
+    tranCell.oneBtn.tag = 100 +indexPath.section;
+    tranCell.twoBtn.tag = 200 +indexPath.section;
+    tranCell.threeBtn.tag = 300 +indexPath.section;
+    tranCell.fourBtn.tag = 400 +indexPath.section;
+    
+    if (indexPath.section == 0) {
+        [tranCell confgiTitleString];
+    }else{
+        [tranCell configIndex:indexPath.section andOneHoel:[_poleArray[indexPath.section -1] integerValue] andTwoHole:[_poleArray[indexPath.section +8] integerValue]];
+    }
+    
     return tranCell;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     return 0;
+}
+
+#pragma mark -- 选择球洞的代理
+- (void)didSelectOneHole:(UIButton *)btn{
+    NSLog(@"%td", btn.tag);
+    NSInteger index = btn.tag % 100;
+    self.returnHoleId(index);
+}
+
+- (void)didSelectThreeHole:(UIButton *)btn{
+    NSLog(@"%td", btn.tag);
+    NSInteger index = (btn.tag % 100) +9;
+    self.returnHoleId(index);
 }
 
 - (void)awakeFromNib {

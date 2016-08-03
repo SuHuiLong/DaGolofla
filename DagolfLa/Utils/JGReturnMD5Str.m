@@ -69,6 +69,9 @@
     return [Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%td&scoreKey=%tddagolfla.com", userKey, scoreKey]];
 }
 
++ (NSString *)getStandardleversBallKey:(NSInteger)ballKey andRegion1:(NSString *)region1 andRegion2:(NSString *)region2{
+    return [Helper md5HexDigest:[NSString stringWithFormat:@"ballKey=%td&region1=%@&region2=%@dagolfla.com", ballKey, region1, region2]];
+}
 /*
  // App分享的MD5签名规则
  1. /team/getTeamActivitySignUpList?teamKey=1&activityKey=1&userKey=1 MD5加密

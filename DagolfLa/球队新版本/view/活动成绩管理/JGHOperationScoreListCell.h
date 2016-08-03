@@ -9,6 +9,12 @@
 #import <UIKit/UIKit.h>
 
 @interface JGHOperationScoreListCell : UITableViewCell
+
 @property (weak, nonatomic) IBOutlet UITableView *operationScoreListTable;
+
+@property (nonatomic, strong)NSMutableArray *poleArray;
+
+
+@property (nonatomic, copy)void (^returnHoleId)(NSInteger holeId);
 
 @end
