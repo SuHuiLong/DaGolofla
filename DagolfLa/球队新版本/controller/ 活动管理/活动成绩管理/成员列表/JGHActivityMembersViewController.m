@@ -13,6 +13,7 @@
 #import "NoteHandlle.h"
 #import "PYTableViewIndexManager.h"
 #import "JGHSimpleScoreViewController.h"
+#import "JGTeamAcitivtyModel.h"
 
 @interface JGHActivityMembersViewController ()<UITableViewDelegate, UITableViewDataSource,UISearchResultsUpdating>
 {
@@ -38,9 +39,7 @@
     
     _keyArray        = [[NSMutableArray alloc]init];
     _listArray       = [[NSMutableArray alloc]init];
-    if (_dictFinish.count == 0) {
-        _dictFinish      = [[NSMutableDictionary alloc]init];
-    }
+
     _dataArray       = [[NSMutableArray alloc]init];
     _dataAccountDict = [[NSMutableDictionary alloc]init];
     _dictData        = [[NSMutableDictionary alloc]init];
@@ -53,6 +52,7 @@
 
 - (void)saveBtnClick{
     JGHSimpleScoreViewController *simpleCtrl = [[JGHSimpleScoreViewController alloc]init];
+    simpleCtrl.actModel = _activityModel;
     [self.navigationController pushViewController:simpleCtrl animated:YES];
 }
 
@@ -72,10 +72,6 @@
     [_tableView.header beginRefreshing];
 }
 
-
-
-
-
 -(void)uiConfig
 {
     _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight-15*screenWidth/375)];
@@ -90,47 +86,10 @@
     [_tableView.header beginRefreshing];
     
 }
-/**
- [dict setObject:self.activityKey forKey:@"activityKey"];
- [dict setObject:[NSNumber numberWithInteger:_page]forKey:@"offset"];
- [dict setObject:@0 forKey:@"teamKey"];
- [dict setObject:DEFAULF_USERID forKey:@"userKey"];
- NSString *strMD = [JGReturnMD5Str getTeamActivitySignUpListWithTeamKey:0 activityKey:[self.activityKey integerValue] userKey:[DEFAULF_USERID integerValue]];
- [dict setObject:strMD forKey:@"md5"];
- [[JsonHttp jsonHttp]httpRequest:@"team/getTeamActivitySignUpList" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
- if (isReshing) {
- [_tableView.header endRefreshing];
- }else {
- [_tableView.footer endRefreshing];
- }
- } completionBlock:^(id data) {
- if ([data objectForKey:@"packSuccess"]) {
- if (page == 0)
- {
- //清除数组数据
- [self.dataArray removeAllObjects];
- }
- 
- [self.dataArray addObjectsFromArray:[data objectForKey:@"teamSignUpList"]];
- self.sumCount = [[data objectForKey:@"sumCount"] integerValue];
- _page++;
- [_tableView reloadData];
- }else {
- 
- }
- [_tableView reloadData];
- if (isReshing) {
- [_tableView.header endRefreshing];
- }else {
- [_tableView.footer endRefreshing];
- }
- }];
-
- */
 
 #pragma mark - 下载数据
 - (void)downLoadData:(int)page isReshing:(BOOL)isReshing{
-    [_dictData setObject:DEFAULF_USERID forKey:@"userId"];
+    [_dictData setObject:DEFAULF_USERID forKey:@"userKey"];
     [_dictData setObject:[NSNumber numberWithInteger:_activityKey] forKey:@"activityKey"];
     [_dictData setObject:[NSNumber numberWithInteger:_teamKey] forKey:@"teamKey"];
     [_dictData setObject:DEFAULF_USERID forKey:@"userKey"];

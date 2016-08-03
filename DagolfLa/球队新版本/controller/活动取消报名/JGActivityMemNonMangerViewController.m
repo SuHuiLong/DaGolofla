@@ -48,7 +48,9 @@
 
 - (void)check{
     JGTeamDeatilWKwebViewController *WKCtrl = [[JGTeamDeatilWKwebViewController alloc]init];
-    WKCtrl.detailString = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/team/group.html?key=%@", self.activityKey];;
+    NSString *str = [Helper md5HexDigest:[NSString stringWithFormat:@"teamKey=%td&activityKey=%@&userKey=%@dagolfla.com",self.teamKey, self.activityKey, DEFAULF_USERID]];
+    
+    WKCtrl.detailString = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/team/group.html?teamKey=%td&activityKey=%@&userKey=%@&md5=%@", self.teamKey, self.activityKey, DEFAULF_USERID, str];
     WKCtrl.teamName = @"报名人列表";
     WKCtrl.isShareBtn = 1;
     WKCtrl.teamKey = [self.activityKey integerValue];
@@ -113,7 +115,7 @@
     
     JGActivityMemNonmangerTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"memCell"];
     cell.nameLB.text = [self.dataArray[indexPath.row] objectForKey:@"name"];
-    
+
     if ([self.dataArray[indexPath.row] objectForKey:@"mobile"]) {
         cell.phoneLB.text = [self.dataArray[indexPath.row] objectForKey:@"mobile"];
     }else{

@@ -385,7 +385,7 @@
                 NSLog(@"jiaolian");
                 //JGHEndScoresViewController   TeacherViewController
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
-                JGHActivityScoreManagerViewController* teaVc = [[JGHActivityScoreManagerViewController alloc]init];
+                TeacherViewController* teaVc = [[TeacherViewController alloc]init];
                 [self.navigationController pushViewController:teaVc animated:YES];
             }
                 break;

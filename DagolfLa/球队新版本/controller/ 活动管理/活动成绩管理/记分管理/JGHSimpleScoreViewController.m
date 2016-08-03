@@ -14,6 +14,7 @@
 #import "JGHOperationScoreCell.h"
 #import "JGHScoreCalculateCell.h"
 #import "JGHOperationScoreListCell.h"
+#import "JGTeamAcitivtyModel.h"
 
 static NSString *const JGHSimpleScorePepoleBaseCellIdentifier = @"JGHSimpleScorePepoleBaseCell";
 static NSString *const JGHSimpleAndResultsCellIdentifier = @"JGHSimpleAndResultsCell";
@@ -35,6 +36,11 @@ static NSString *const JGHOperationScoreListCellIdentifier = @"JGHOperationScore
     UIView *_ballTwoView;
     
 //    NSMutableArray *_polesArray;//十八洞杆数
+    
+    NSMutableArray *_holeArray;
+    
+    NSString *_region1;
+    NSString *_region2;
 }
 
 @property (nonatomic, strong)NSMutableArray *polesArray;//十八洞杆数
@@ -54,6 +60,7 @@ static NSString *const JGHOperationScoreListCellIdentifier = @"JGHOperationScore
     _poles = 0;
     _userScoreBeanDict = [NSMutableDictionary dictionary];
     self.polesArray = [NSMutableArray array];
+    _holeArray = [NSMutableArray array];
     
     for (int i=0; i<18; i++) {
         [self.polesArray addObject:@(-1)];
@@ -90,31 +97,20 @@ static NSString *const JGHOperationScoreListCellIdentifier = @"JGHOperationScore
 }
 - (void)loadBallData{
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-//    [dict setObject:[_dataArray[indexPath.row] ballId] forKey:@"ballKey"];
+    [dict setObject:@(_actModel.ballKey) forKey:@"ballKey"];
     [[JsonHttp jsonHttp]httpRequest:@"ball/getBallCode" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
         
     } completionBlock:^(id data) {
-        
+        NSLog(@"%@", data);
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
-            //点击事件选中后传值
-            NSMutableDictionary* dict1 = [[NSMutableDictionary alloc]init];
-            [dict1 setObject:[data objectForKey:@"ballAreas"] forKey:@"ballAreas"];
-            [dict1 setObject:[data objectForKey:@"tAll"] forKey:@"tAll"];
-//            _callback1(dict1,[_dataArray[indexPath.row]loginpic]);
-//            _callback([_dataArray[indexPath.row] ballName],[[_dataArray[indexPath.row] ballId] integerValue]);
-            [self.navigationController popViewControllerAnimated:YES];
+            _holeArray = [data objectForKey:@"ballAreas"];
         }else{
             [Helper alertViewWithTitle:@"球场整修中" withBlock:^(UIAlertController *alertView) {
                 [self presentViewController:alertView animated:YES completion:nil];
             }];
         }
         
-        NSLog(@"%@", data);
-        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
-            
-        }else{
-            
-        }
+//        [self.simpleScoreTableView reloadData];
     }];
 }
 
@@ -246,9 +242,9 @@ static NSString *const JGHOperationScoreListCellIdentifier = @"JGHOperationScore
     NSLog(@"第一九洞");
     JGHSetBallBaseCell *setBallBaseCell = [self.simpleScoreTableView dequeueReusableCellWithIdentifier:JGHSetBallBaseCellIdentifier];
     _ballView = [[UIView alloc]initWithFrame:CGRectMake( setBallBaseCell.oneBtn.frame.origin.x, setBallBaseCell.oneBtn.frame.origin.y + 140 *ProportionAdapter + setBallBaseCell.oneBtn.frame.size.height, setBallBaseCell.oneBtn.frame.size.width, 30 * 4 *ProportionAdapter)];
-    for (int i=0; i<4; i++) {
+    for (int i=0; i< _holeArray.count; i++) {
         UIButton *btn = [[UIButton alloc]initWithFrame:CGRectMake(0, i * 30, _ballView.frame.size.width, 30*ProportionAdapter)];
-        [btn setTitle:@"A区" forState:UIControlStateNormal];
+        [btn setTitle:_holeArray[i] forState:UIControlStateNormal];
         btn.tag = 200 + i;
         [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [btn addTarget:self action:@selector(oneAndNineBtnSelectClick:) forControlEvents:UIControlEventTouchUpInside];
@@ -267,9 +263,9 @@ static NSString *const JGHOperationScoreListCellIdentifier = @"JGHOperationScore
     NSLog(@"第二九洞");
     JGHSetBallBaseCell *setBallBaseCell = [self.simpleScoreTableView dequeueReusableCellWithIdentifier:JGHSetBallBaseCellIdentifier];
     _ballTwoView = [[UIView alloc]initWithFrame:CGRectMake( setBallBaseCell.twoBtn.frame.origin.x, setBallBaseCell.twoBtn.frame.origin.y + 140 *ProportionAdapter + setBallBaseCell.twoBtn.frame.size.height, setBallBaseCell.twoBtn.frame.size.width, 30 * 4 *ProportionAdapter)];
-    for (int i=0; i<4; i++) {
+    for (int i=0; i< _holeArray.count; i++) {
         UIButton *btn = [[UIButton alloc]initWithFrame:CGRectMake(0, i * 30, _ballTwoView.frame.size.width, 30*ProportionAdapter)];
-        [btn setTitle:@"A区" forState:UIControlStateNormal];
+        [btn setTitle:_holeArray[i] forState:UIControlStateNormal];
         btn.tag = 300 + i;
         [btn addTarget:self action:@selector(twoAndNineBtnSelectClick:) forControlEvents:UIControlEventTouchUpInside];
         btn.backgroundColor = [UIColor redColor];

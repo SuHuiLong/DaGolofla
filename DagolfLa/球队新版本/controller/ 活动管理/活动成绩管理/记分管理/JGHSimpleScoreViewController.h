@@ -7,7 +7,10 @@
 //
 
 #import "ViewController.h"
+@class JGTeamAcitivtyModel;
 
 @interface JGHSimpleScoreViewController : ViewController
+
+@property (nonatomic, strong)JGTeamAcitivtyModel *actModel;
 
 @end

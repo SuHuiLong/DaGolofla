@@ -7,10 +7,11 @@
 //
 
 #import "ViewController.h"
+#import "JGLScoreLiveModel.h"
 
 @interface JGDActSelfHistoryScoreViewController : ViewController
 
-@property (nonatomic, strong) NSNumber *timeKey;
-
+@property (nonatomic, copy) NSString *timeKey;
+@property (nonatomic, strong) JGLScoreLiveModel *scoreModel;
 
 @end

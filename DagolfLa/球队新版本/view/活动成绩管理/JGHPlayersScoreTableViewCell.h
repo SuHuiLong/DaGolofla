@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "JGLScoreLiveModel.h"
+
 @interface JGHPlayersScoreTableViewCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UIImageView *imageScore;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *imageScoreLeft;//30

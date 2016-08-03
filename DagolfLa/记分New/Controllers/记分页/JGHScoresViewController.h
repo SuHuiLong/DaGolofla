@@ -8,7 +8,7 @@
 
 #import "ViewController.h"
 
-@interface JGHScoresViewController : ViewController
+@interface JGHScoresViewController : UIViewController
 
 @property (nonatomic, strong)NSString *scorekey;
 
