@@ -62,7 +62,14 @@
         self.fiveLabel.text = @"暂无净杆";
     }
     
-    
+    self.imageScore.hidden = NO;
+    self.imageScore.image = nil;
+    if (model.select == 0) {
+        self.imageScore.image = [UIImage imageNamed:@"gou_w"];
+    }
+    else{
+        self.imageScore.image = [UIImage imageNamed:@"gou_x"];
+    }
 }
 
 

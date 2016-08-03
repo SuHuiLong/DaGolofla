@@ -21,7 +21,7 @@
 
     self.timeImageLeft.constant = 10 *ProportionAdapter;
     
-    self.time.font = [UIFont systemFontOfSize:17*ProportionAdapter];
+    self.time.font = [UIFont systemFontOfSize:13*ProportionAdapter];
     self.timeLeft.constant = 10 *ProportionAdapter;
     self.timeDown.constant = 15 *ProportionAdapter;
     self.timeRight.constant = 10 *ProportionAdapter;
@@ -49,6 +49,12 @@
     if (self.delegate) {
         [self.delegate selectSetAlmostBtn];
     }
+}
+
+- (void)configActivityName:(NSString *)name andStartTime:(NSString *)startTime andEndTime:(NSString *)endTime{
+    self.ballName.text = name;
+    
+    self.time.text = [NSString stringWithFormat:@"%@~%@", [[startTime componentsSeparatedByString:@" "] firstObject], [[endTime componentsSeparatedByString:@" "] firstObject]];
 }
 
 @end

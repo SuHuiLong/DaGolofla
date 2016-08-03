@@ -16,7 +16,7 @@
 - (void)drawRect:(CGRect)rect {
     // Drawing code
  
-    self.backgroundColor = [UIColor redColor];
+//    self.backgroundColor = [UIColor redColor];
 }
 
 - (void)layoutSubviews{
@@ -37,12 +37,18 @@
     
     self.publishedBtnWith.constant = 60 *ProportionAdapter;
     
-    self.backgroundColor = [UIColor redColor];
+    self.backgroundColor = [UIColor whiteColor];
 }
 
 - (IBAction)selectAllBtnClick:(UIButton *)sender {
+    if (self.delegate) {
+        [self.delegate selectAll];
+    }
 }
 - (IBAction)publishedBtnClick:(UIButton *)sender {
+    if (self.delegate) {
+        [self.delegate publisBtn];
+    }
 }
 
 
