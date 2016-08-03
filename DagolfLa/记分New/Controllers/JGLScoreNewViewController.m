@@ -14,6 +14,9 @@
 #import "JGTeamDeatilWKwebViewController.h"
 #import "JGLChooseScoreViewController.h"
 #import "JGHScoresViewController.h"
+
+#import "JGLScoreLiveViewController.h"
+#import "JGLScoreRankViewController.h"
 @interface JGLScoreNewViewController ()<UIScrollViewDelegate,UICollectionViewDataSource,UICollectionViewDelegate>
 {
     UIScrollView* _scrollView;
@@ -350,7 +353,8 @@
     if ([[NSUserDefaults standardUserDefaults]objectForKey:@"userId"])
     {
         if (indexPath.item == 1) {
-            JGDHistoryScoreViewController *historyVC = [[JGDHistoryScoreViewController alloc] init];
+            //JGDHistoryScoreViewController
+            JGLScoreRankViewController *historyVC = [[JGLScoreRankViewController alloc] init];
             [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
             [self.navigationController pushViewController:historyVC animated:YES];
         }else if (indexPath.item == 0) {
