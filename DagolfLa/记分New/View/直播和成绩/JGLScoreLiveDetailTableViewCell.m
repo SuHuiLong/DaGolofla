@@ -59,15 +59,41 @@
 
 -(void)showData:(JGLScoreLiveModel *)model
 {
-    _labelName.text = model.userName;
+    if (![Helper isBlankString:model.userName]) {
+        _labelName.text = model.userName;
+    }
+    else{
+        _labelName.text = @"暂无姓名";
+    }
     
-    _labelScoreName.text = [NSString stringWithFormat:@"记分人：%@",model.scoreUserName];
+    if (![Helper isBlankString:model.scoreUserName]) {
+        _labelScoreName.text = [NSString stringWithFormat:@"记分人：%@",model.scoreUserName];
+    }
+    else{
+        _labelScoreName.text = [NSString stringWithFormat:@"记分人：暂无"];
+    }
     
-    _labelFinish.text = [NSString stringWithFormat:@"%@/18",model.tunnelNumber];
+    if (model.tunnelNumber != nil) {
+        _labelFinish.text = [NSString stringWithFormat:@"%@/18",model.tunnelNumber];
+    }
+    else{
+        _labelFinish.text = [NSString stringWithFormat:@"0/18"];
+    }
     
-    _labelPole.text = [NSString stringWithFormat:@"%@",model.poleNumber];
+    if (model.poleNumber != nil) {
+        _labelPole.text = [NSString stringWithFormat:@"%@",model.poleNumber];
+    }
+    else{
+        _labelPole.text = [NSString stringWithFormat:@"暂无"];
+    }
     
-    _labelAlmost.text = [NSString stringWithFormat:@"%@",model.poorBar];
+    if (model.poorBar != nil) {
+        _labelAlmost.text = [NSString stringWithFormat:@"%@",model.poorBar];
+    }
+    else{
+        _labelAlmost.text = [NSString stringWithFormat:@"暂无"];
+    }
+    
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

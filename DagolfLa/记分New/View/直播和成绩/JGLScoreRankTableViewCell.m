@@ -53,14 +53,34 @@
 -(void)showData:(JGLScoreRankModel *)model
 {
 //    _labelRank.text = model.userName;
+    if (![Helper isBlankString:model.userName]) {
+        _labelName.text = [NSString stringWithFormat:@"%@",model.userName];
+    }
+    else{
+        _labelName.text = [NSString stringWithFormat:@"暂无姓名"];
+    }
     
-    _labelName.text = [NSString stringWithFormat:@"%@",model.userName];
+    if (model.poleNumber != nil) {
+        _labelAll.text = [NSString stringWithFormat:@"%@",model.poleNumber];
+    }
+    else{
+        _labelAll.text = [NSString stringWithFormat:@"暂无"];
+    }
     
-    _labelAll.text = [NSString stringWithFormat:@"%@",model.poleNumber];
+    if (model.netbar != nil) {
+        _labelAlmost.text = [NSString stringWithFormat:@"%@",model.netbar];
+    }
+    else{
+        _labelAlmost.text = [NSString stringWithFormat:@"暂无"];
+    }
     
-    _labelAlmost.text = [NSString stringWithFormat:@"%@",model.netbar];
     
-    _labelTee.text = [NSString stringWithFormat:@"%@",model.almost];
+    if (model.almost != nil) {
+        _labelTee.text = [NSString stringWithFormat:@"%@",model.almost];
+    }
+    else{
+        _labelTee.text = [NSString stringWithFormat:@"暂无"];
+    }
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
