@@ -16,6 +16,8 @@
 #import "JGLScoreLiveModel.h"
 #import "JGTeamAcitivtyModel.h"
 
+#import "JGDActSelfHistoryScoreViewController.h"
+
 static NSString *const JGHMatchTranscriptTableViewCellIdentifier = @"JGHMatchTranscriptTableViewCell";
 static NSString *const JGHPlayersScoreTableViewCellIdentifier = @"JGHPlayersScoreTableViewCell";
 static NSString *const JGHCenterBtnTableViewCellIdentifier = @"JGHCenterBtnTableViewCell";
@@ -231,15 +233,20 @@ static NSString *const JGHCenterBtnTableViewCellIdentifier = @"JGHCenterBtnTable
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSString* str = [_dictChoose objectForKey:[NSString stringWithFormat:@"%td",indexPath.section-1]];
-    if ([Helper isBlankString:str]) {
-//        JGLScoreLiveModel* model = [self.dataArray[indexPath.section -1]];
-//        [_dictChoose setObject:model.userKey forKey:[NSString stringWithFormat:@"%td",indexPath.section-1]];
-    }
-    else{
-        [_dictChoose removeObjectForKey:[NSString stringWithFormat:@"%td",indexPath.section-1]];
-    }
-    [self.scoreManageTableView reloadData];
+    JGDActSelfHistoryScoreViewController *actVC = [[JGDActSelfHistoryScoreViewController alloc] init];
+    actVC.scoreModel = self.dataArray[indexPath.row];
+    actVC.timeKey = _activityBaseModel.timeKey;
+    [self.navigationController pushViewController:actVC animated:YES];
+    
+//    NSString* str = [_dictChoose objectForKey:[NSString stringWithFormat:@"%td",indexPath.section-1]];
+//    if ([Helper isBlankString:str]) {
+////        JGLScoreLiveModel* model = [self.dataArray[indexPath.section -1]];
+////        [_dictChoose setObject:model.userKey forKey:[NSString stringWithFormat:@"%td",indexPath.section-1]];
+//    }
+//    else{
+//        [_dictChoose removeObjectForKey:[NSString stringWithFormat:@"%td",indexPath.section-1]];
+//    }
+//    [self.scoreManageTableView reloadData];
 }
 
 #pragma mark -- 添加记录

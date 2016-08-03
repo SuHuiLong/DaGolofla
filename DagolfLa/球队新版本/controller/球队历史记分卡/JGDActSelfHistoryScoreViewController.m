@@ -18,6 +18,8 @@
 @property (nonatomic, strong) NSMutableArray *dataArray;
 @property (nonatomic, strong) NSMutableDictionary *dataDic;
 @property (nonatomic, strong) UITextField *chadianTF;
+@property (nonatomic, strong) JGDHistoryScoreShowModel *model;
+@property (nonatomic, strong) JGDHistoryScoreShowModel *dataModel;
 
 @end
 
@@ -30,7 +32,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = @"成绩历史记分表";
+    self.title = @"个人成绩简单记分表";
     
     UIBarButtonItem *rightBar = [[UIBarButtonItem alloc] initWithTitle:@"确定" style:(UIBarButtonItemStyleDone) target:self action:@selector(shareStatisticsDataClick)];
     rightBar.tintColor = [UIColor whiteColor];
@@ -42,32 +44,28 @@
 }
 
 - (void)setData{
+
     NSMutableDictionary *dic = [NSMutableDictionary dictionary];
-    [dic setObject:self.timeKey forKey:@"scoreKey"];
+    [dic setObject:self.scoreModel.scoreKey forKey:@"scoreKey"];
     [dic setObject:DEFAULF_USERID forKey:@"userKey"];
-    [dic setObject:[Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@&scoreKey=%@dagolfla.com", DEFAULF_USERID, self.timeKey]] forKey:@"md5"];
+    [dic setObject:@0 forKey:@"teamKey"];
+    [dic setObject:@1 forKey:@"srcType"];
+    [dic setObject:self.timeKey forKey:@"srcKey"];
+    [dic setObject:[Helper md5HexDigest:[NSString stringWithFormat:@"teamKey=0&userKey=%@&srcKey=%@&srcType=1dagolfla.com", DEFAULF_USERID, self.timeKey]] forKey:@"md5"];
     
-    [[JsonHttp jsonHttp] httpRequest:@"score/getScoreList" JsonKey:nil withData:dic requestMethod:@"GET" failedBlock:^(id errType) {
+    [[JsonHttp jsonHttp] httpRequest:@"score/getTeamScore" JsonKey:nil withData:dic requestMethod:@"GET" failedBlock:^(id errType) {
         
         [[ShowHUD showHUD]showToastWithText:[NSString stringWithFormat:@"%@",errType] FromView:self.view];
         
     } completionBlock:^(id data) {
         
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
-            if ([data objectForKey:@"list"]) {
-                NSArray *array = [data objectForKey:@"list"];
-                
-                for (NSDictionary *dic in array) {
-                    JGDHistoryScoreShowModel *model = [[JGDHistoryScoreShowModel alloc] init];
-                    [model setValuesForKeysWithDictionary:dic];
-                    [self.dataArray addObject:model];
-                }
+            self.dataModel = [[JGDHistoryScoreShowModel alloc] init];
+            [self.dataModel setValuesForKeysWithDictionary:data];
+            if ([data objectForKey:@"bean"]) {
+                self.model = [[JGDHistoryScoreShowModel alloc] init];
+                [self.model setValuesForKeysWithDictionary:[data objectForKey:@"bean"]];
             }
-            
-            if ([data objectForKey:@"score"]) {
-                self.dataDic = [data objectForKey:@"score"];
-            }
-            
         }else{
             if ([data objectForKey:@"packResultMsg"]) {
                 [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
@@ -89,28 +87,6 @@
     self.tableView.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
-//    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 75 * ProportionAdapter)];
-//    UIView *lightV = [[UIView alloc] initWithFrame:CGRectMake(37.5 * ProportionAdapter, 30 * ProportionAdapter, 300 * ProportionAdapter, 45 * ProportionAdapter)];
-//    view.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];
-//    lightV.backgroundColor = [UIColor whiteColor];
-//    lightV.layer.cornerRadius = 5 * ProportionAdapter;
-//    lightV.layer.masksToBounds = YES;
-//    
-//    UILabel *allLB = [[UILabel alloc] initWithFrame:CGRectMake(50 * ProportionAdapter,0 * ProportionAdapter, 120 * ProportionAdapter, 45 * ProportionAdapter)];
-//    allLB.text = @"成绩领取密钥：";
-//    allLB.font = [UIFont systemFontOfSize:15 * ProportionAdapter];
-//    [lightV addSubview:allLB];
-//    
-//    UILabel *keyLB = [[UILabel alloc] initWithFrame:CGRectMake(170 * ProportionAdapter, 0 * ProportionAdapter, 100 * ProportionAdapter, 45 * ProportionAdapter)];
-////    keyLB.text = [NSString stringWithFormat:@"%@", self.model.invitationCode];
-//    keyLB.textAlignment = NSTextAlignmentLeft;
-//    keyLB.textColor = [UIColor colorWithHexString:@"#fe7a7a"];
-//    keyLB.font = [UIFont systemFontOfSize:15 * ProportionAdapter];
-//    [lightV addSubview:keyLB];
-//    
-//    [view addSubview:lightV];
-//    
-//    self.tableView.tableFooterView = view;
     [self.view addSubview:self.tableView];
 }
 
@@ -128,29 +104,27 @@
         UIView *viewTitle = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 100 * ProportionAdapter)];
         viewTitle.backgroundColor = [UIColor whiteColor];
         
-        
-        
         UILabel *titleLB = [[UILabel alloc] initWithFrame:CGRectMake(0, 15 * ProportionAdapter, screenWidth, 30 * ProportionAdapter)];
         titleLB.font = [UIFont systemFontOfSize:18 * ProportionAdapter];
-        titleLB.text = @"決めつけばかり チープなhokoriで";
+        titleLB.text = self.dataModel.title;
         titleLB.textAlignment = NSTextAlignmentCenter;
         [viewTitle addSubview:titleLB];
         
         
         UILabel *nameLB = [[UILabel alloc] initWithFrame:CGRectMake(10 * ProportionAdapter, 45 * ProportionAdapter, 180 * ProportionAdapter, 25 * ProportionAdapter)];
-        nameLB.text = @"チープなhokoriで 音荒げても";
+        nameLB.text = self.dataModel.userName;
         nameLB.font = [UIFont systemFontOfSize:15 * ProportionAdapter];
         [viewTitle addSubview:nameLB];
-
+        
         
         UILabel *ballNameLB = [[UILabel alloc] initWithFrame:CGRectMake(10 * ProportionAdapter, 70 * ProportionAdapter, 260 * ProportionAdapter, 25 * ProportionAdapter)];
-        ballNameLB.text = [self.dataDic objectForKey:@"ballName"];
+        ballNameLB.text = self.dataModel.ballName;
         ballNameLB.textColor = [UIColor colorWithHexString:@"#a0a0a0"];
         ballNameLB.font = [UIFont systemFontOfSize:15 * ProportionAdapter];
         [viewTitle addSubview:ballNameLB];
         
         UILabel *timeLB = [[UILabel alloc] initWithFrame:CGRectMake(280 * ProportionAdapter, 70 * ProportionAdapter, 90 * ProportionAdapter, 30 * ProportionAdapter)];
-        NSString *timeStr = [self.dataDic objectForKey:@"createtime"];
+        NSString *timeStr = self.dataModel.date;
         if ([timeStr length] >= 10) {
             timeLB.text =  [timeStr substringWithRange:NSMakeRange(0, 10)];
         }        timeLB.font = [UIFont systemFontOfSize:13 * ProportionAdapter];
@@ -160,17 +134,14 @@
         
         UILabel *poleLB = [[UILabel alloc] initWithFrame:CGRectMake(200 * ProportionAdapter, 45 * ProportionAdapter, 80 * ProportionAdapter, 25 * ProportionAdapter)];
         poleLB.font = [UIFont systemFontOfSize:15 * ProportionAdapter];
-        if ([self.dataArray count] > 0) {
-            JGDHistoryScoreShowModel *model = self.dataArray[0];
-            NSString *pole = [NSString stringWithFormat:@"总杆：%@", model.poles];
+            NSString *pole = [NSString stringWithFormat:@"总杆：%@", self.model.poles];
             NSMutableAttributedString *str = [[NSMutableAttributedString alloc] initWithString:pole];
             [str addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"#fe6424"] range:NSMakeRange(3, str.length - 3)];
             [str addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:15 * ProportionAdapter] range:NSMakeRange(0, 3)];
             [str addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:18 * ProportionAdapter] range:NSMakeRange(3, str.length - 3)];
             poleLB.attributedText = str;
             [viewTitle addSubview:poleLB];
-        }
-
+        
         
         if (1) {
             
@@ -182,6 +153,7 @@
             self.chadianTF = [[UITextField alloc] initWithFrame:CGRectMake(330 * ProportionAdapter, 45 * ProportionAdapter, 50 * ProportionAdapter, 25 * ProportionAdapter)];
             self.chadianTF.font = [UIFont systemFontOfSize:15 * ProportionAdapter];
             self.chadianTF.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
+            self.chadianTF.text = [self.model.almost stringValue];
             [viewTitle addSubview:self.chadianTF];
             
             UIView *view = [[UIView alloc] initWithFrame:CGRectMake(315 * ProportionAdapter, 70 * ProportionAdapter, 50 * ProportionAdapter, 1 * ProportionAdapter)];
@@ -222,13 +194,13 @@
     JGDTeamShowTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
-
-    if (indexPath.row > 0 && ([self.dataArray count] >= (indexPath.row - 1)) && ([self.dataArray count] > 0)) {
+    
+    if (indexPath.row > 0) {
         NSLog(@"%td", indexPath.row);
         if (indexPath.row == 1) {
-            [cell takeInfoWithModel:self.dataArray[0] index:indexPath];
+            [cell takeInfoWithModel:self.model index:indexPath];
         }else{
-            [cell takeInfoWithModel:self.dataArray[indexPath.row - 2] index:indexPath];
+            [cell takeInfoWithModel:self.model index:indexPath];
         }
     }
     
@@ -321,7 +293,7 @@
     [dic setValue:@"" forKey:@"teamKey"];
     [dic setValue:@"" forKey:@"scoreKey"];
     [dic setValue:self.chadianTF.text forKey:@"almost"];
-
+    
     [[JsonHttp jsonHttp] httpRequestWithMD5:@"/saveAlmost" JsonKey:nil withData:dic failedBlock:^(id errType) {
         [[ShowHUD showHUD]showToastWithText:[NSString stringWithFormat:@"%@",errType] FromView:self.view];
     } completionBlock:^(id data) {
