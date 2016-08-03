@@ -7,7 +7,7 @@
 //
 
 #import "JGDActSelfHistoryScoreViewController.h"
-#import "JGDHistoryScoreShowTableViewCell.h"
+#import "JGDTeamShowTableViewCell.h"
 
 #import "JGDHIstoryScoreDetailViewController.h"
 #import "JGDNotActivityHisDetailViewController.h"
@@ -85,7 +85,7 @@
     self.tableView = [[UITableView alloc] initWithFrame:[UIScreen mainScreen].bounds style:(UITableViewStylePlain)];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
-    [self.tableView registerClass:[JGDHistoryScoreShowTableViewCell class] forCellReuseIdentifier:@"cell"];
+    [self.tableView registerClass:[JGDTeamShowTableViewCell class] forCellReuseIdentifier:@"cell"];
     self.tableView.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
@@ -219,7 +219,7 @@
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    JGDHistoryScoreShowTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
+    JGDTeamShowTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
 
@@ -310,7 +310,32 @@
 //保存差点
 -(void)shareStatisticsDataClick
 {
+    [self.chadianTF endEditing:YES];
+    
+    if (self.chadianTF.text.length == 0) {
+        [[ShowHUD showHUD]showToastWithText:@"请输入差点" FromView:self.view];
+        return;
+    }
+    NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
+    [dic setValue:DEFAULF_USERID forKey:@"userKey"];
+    [dic setValue:@"" forKey:@"teamKey"];
+    [dic setValue:@"" forKey:@"scoreKey"];
+    [dic setValue:self.chadianTF.text forKey:@"almost"];
 
+    [[JsonHttp jsonHttp] httpRequestWithMD5:@"/saveAlmost" JsonKey:nil withData:dic failedBlock:^(id errType) {
+        [[ShowHUD showHUD]showToastWithText:[NSString stringWithFormat:@"%@",errType] FromView:self.view];
+    } completionBlock:^(id data) {
+        
+        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+            [[ShowHUD showHUD]showToastWithText:@"差点保存成功" FromView:self.view];
+        }else{
+            if ([data objectForKey:@"packResultMsg"]) {
+                [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+            }
+        }
+    }];
+    
+    
 }
 -(void)shareInfo:(NSInteger)index
 {

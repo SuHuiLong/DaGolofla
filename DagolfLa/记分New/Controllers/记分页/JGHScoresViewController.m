@@ -64,7 +64,7 @@
         UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
         btn.frame = BackBtnFrame;
         btn.titleLabel.font = [UIFont systemFontOfSize:FontSize_Normal];
-        [btn setImage:[UIImage imageNamed:@"backL"] forState:UIControlStateNormal];
+        [btn setImage:[UIImage imageNamed:@")-2"] forState:UIControlStateNormal];
         [btn addTarget:self action:@selector(saveScoresAndBackClick:) forControlEvents:UIControlEventTouchUpInside];
         UIBarButtonItem *leftItem = [[UIBarButtonItem alloc]initWithCustomView:btn];
         self.navigationItem.leftBarButtonItem = leftItem;
@@ -76,24 +76,27 @@
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor colorWithHexString:BG_color];
     
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"bg_white"] forBarMetrics:UIBarMetricsDefault];
+    [self.navigationController.navigationBar setBackgroundColor:[UIColor whiteColor]];
+    
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(noticePushScoresCtrl:) name:@"noticePushScores" object:nil];
     
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(noticeAllScoresCtrl) name:@"noticeAllScores" object:nil];
     
     UIView *titleView = [[UIView alloc]initWithFrame:CGRectMake(110*ProportionAdapter, 0, 80*ProportionAdapter, 44)];
     self.titleBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 80*ProportionAdapter, 44)];
+    [self.titleBtn setTitleColor:[UIColor colorWithHexString:@"#32b14d"] forState:(UIControlStateNormal)];
     [titleView addSubview:self.titleBtn];
     if (_currentPage > 0) {
         [self.titleBtn setTitle:[NSString stringWithFormat:@"%td HOLE", _currentPage+1] forState:UIControlStateNormal];
     }else{
         [self.titleBtn setTitle:@"1 HOLE" forState:UIControlStateNormal];
     }
-    
     [self.titleBtn addTarget:self action:@selector(titleBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     
     _arrowBtn = [[UIButton alloc]initWithFrame:CGRectMake(80*ProportionAdapter, 10, 30, 24)];
     [_arrowBtn addTarget:self action:@selector(titleBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-    [_arrowBtn setImage:[UIImage imageNamed:@"arrowDown"] forState:UIControlStateNormal];
+    [_arrowBtn setImage:[UIImage imageNamed:@"zk"] forState:UIControlStateNormal];
     [titleView addSubview:_arrowBtn];
     
     self.navigationItem.titleView = titleView;
@@ -109,7 +112,7 @@
     
     _selectcompleteHole = 0;
     _item = [[UIBarButtonItem alloc]initWithTitle:@"保存" style:UIBarButtonItemStylePlain target:self action:@selector(saveScoresClick)];
-    _item.tintColor=[UIColor whiteColor];
+    _item.tintColor=[UIColor colorWithHexString:@"#32b14d"];
     self.navigationItem.rightBarButtonItem = _item;
     
     _dataArray = [[NSMutableArray alloc]init];
@@ -336,7 +339,7 @@
     if (_selectHole == 0) {
         _selectHole = 1;
         [_item setTitle:@"结束记分"];
-        [_arrowBtn setImage:[UIImage imageNamed:@"arrowTop"] forState:UIControlStateNormal];
+        [_arrowBtn setImage:[UIImage imageNamed:@"zk1"] forState:UIControlStateNormal];
         _scoresView = [[JGHScoresHoleView alloc]init];
         _scoresView.frame = CGRectMake(0, 0, screenWidth, (194 + self.userScoreArray.count * 60)*ProportionAdapter);
         _scoresView.dataArray = self.userScoreArray;
@@ -354,7 +357,7 @@
         [self.view addSubview:_scoresView];
         
     }else{
-        [_arrowBtn setImage:[UIImage imageNamed:@"arrowDown"] forState:UIControlStateNormal];
+        [_arrowBtn setImage:[UIImage imageNamed:@"zk"] forState:UIControlStateNormal];
         _selectHole = 0;
         [_item setTitle:@"保存"];
         [_scoresView removeFromSuperview];

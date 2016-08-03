@@ -756,7 +756,7 @@ static CGFloat ImageHeight  = 210.0;
         }else{
             timeKey = _model.teamActivityKey;
         }
-        
+        nonMangerVC.teamKey = _model.teamKey;
         nonMangerVC.activityKey = [NSNumber numberWithInteger:timeKey];
         nonMangerVC.title = self.model.name;
         [self.navigationController  pushViewController:nonMangerVC animated:YES];

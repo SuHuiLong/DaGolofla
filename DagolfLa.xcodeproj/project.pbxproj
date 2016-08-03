@@ -829,6 +829,7 @@
 		F53A056F1D518F32009DD489 /* JGHSimpleAndResultsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F53A05571D518F32009DD489 /* JGHSimpleAndResultsCell.xib */; };
 		F53A05701D518F32009DD489 /* JGHSimpleScorePepoleBaseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F53A05591D518F32009DD489 /* JGHSimpleScorePepoleBaseCell.m */; };
 		F53A05711D518F32009DD489 /* JGHSimpleScorePepoleBaseCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F53A055A1D518F32009DD489 /* JGHSimpleScorePepoleBaseCell.xib */; };
+		F53A05741D519BC7009DD489 /* JGDTeamShowTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F53A05731D519BC7009DD489 /* JGDTeamShowTableViewCell.m */; };
 		F54344621D2E82F7008C4D3C /* JGReturnMD5Str.m in Sources */ = {isa = PBXBuildFile; fileRef = F54344611D2E82F7008C4D3C /* JGReturnMD5Str.m */; };
 		F543ACB81CF3F89400C6B111 /* JGButtonTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F543ACB71CF3F89400C6B111 /* JGButtonTableViewCell.m */; };
 		F543ACC11CF4246000C6B111 /* JGNotTeamMemberDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F543ACC01CF4246000C6B111 /* JGNotTeamMemberDetailViewController.m */; };
@@ -2440,6 +2441,8 @@
 		F53A05581D518F32009DD489 /* JGHSimpleScorePepoleBaseCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHSimpleScorePepoleBaseCell.h; sourceTree = "<group>"; };
 		F53A05591D518F32009DD489 /* JGHSimpleScorePepoleBaseCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHSimpleScorePepoleBaseCell.m; sourceTree = "<group>"; };
 		F53A055A1D518F32009DD489 /* JGHSimpleScorePepoleBaseCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JGHSimpleScorePepoleBaseCell.xib; sourceTree = "<group>"; };
+		F53A05721D519BC7009DD489 /* JGDTeamShowTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGDTeamShowTableViewCell.h; sourceTree = "<group>"; };
+		F53A05731D519BC7009DD489 /* JGDTeamShowTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGDTeamShowTableViewCell.m; sourceTree = "<group>"; };
 		F54344601D2E82F7008C4D3C /* JGReturnMD5Str.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGReturnMD5Str.h; sourceTree = "<group>"; };
 		F54344611D2E82F7008C4D3C /* JGReturnMD5Str.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGReturnMD5Str.m; sourceTree = "<group>"; };
 		F543ACB61CF3F89400C6B111 /* JGButtonTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGButtonTableViewCell.h; sourceTree = "<group>"; };
@@ -6341,6 +6344,8 @@
 			children = (
 				F53A05341D5079E0009DD489 /* JGTeamHIsScoreTableViewCell.h */,
 				F53A05351D5079E0009DD489 /* JGTeamHIsScoreTableViewCell.m */,
+				F53A05721D519BC7009DD489 /* JGDTeamShowTableViewCell.h */,
+				F53A05731D519BC7009DD489 /* JGDTeamShowTableViewCell.m */,
 			);
 			path = "球队历史记分卡";
 			sourceTree = "<group>";
@@ -7691,6 +7696,7 @@
 				2064DEA61D4219BB00F0D52A /* JGHEndScoresViewController.m in Sources */,
 				82AAB7B11CE5C18E005F5633 /* JGSelfSetTableViewCell.m in Sources */,
 				F5AEF6E71D408F3F009A8C34 /* JGDHistoryScoreShowViewController.m in Sources */,
+				F53A05741D519BC7009DD489 /* JGDTeamShowTableViewCell.m in Sources */,
 				827AA0141D1D1BFF00F6B80B /* JGHCancelApplyViewController.m in Sources */,
 				F5EEB1571D1BC2BB009D37CE /* JGActivityMemNonmangerTableViewCell.m in Sources */,
 				36BF00871BC772EF005B3CE2 /* MySetAboutController.m in Sources */,
