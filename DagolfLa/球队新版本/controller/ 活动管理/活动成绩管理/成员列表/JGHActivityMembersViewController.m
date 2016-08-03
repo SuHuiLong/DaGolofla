@@ -131,16 +131,11 @@
 #pragma mark - 下载数据
 - (void)downLoadData:(int)page isReshing:(BOOL)isReshing{
     [_dictData setObject:DEFAULF_USERID forKey:@"userId"];
-    [_dictData setObject:@0 forKey:@"otherUserId"];
-    [_dictData setObject:@0 forKey:@"page"];
-    [_dictData setObject:@0 forKey:@"rows"];
-    
-    [_dictData setObject:@"self.activityKey" forKey:@"activityKey"];
-    [_dictData setObject:[NSNumber numberWithInteger:_page]forKey:@"offset"];
-    [_dictData setObject:@0 forKey:@"teamKey"];
+    [_dictData setObject:[NSNumber numberWithInteger:_activityKey] forKey:@"activityKey"];
+    [_dictData setObject:[NSNumber numberWithInteger:_teamKey] forKey:@"teamKey"];
     [_dictData setObject:DEFAULF_USERID forKey:@"userKey"];
-//    NSString *strMD = [JGReturnMD5Str getTeamActivitySignUpListWithTeamKey:0 activityKey:[self.activityKey integerValue] userKey:[DEFAULF_USERID integerValue]];
-//    [_dictData setObject:strMD forKey:@"md5"];
+    NSString *strMD = [JGReturnMD5Str getTeamActivitySignUpListWithTeamKey:_teamKey activityKey:_activityKey userKey:[DEFAULF_USERID integerValue]];
+    [_dictData setObject:strMD forKey:@"md5"];
     [[PostDataRequest sharedInstance] postDataRequest:@"team/getTeamActivitySignUpList" parameter:_dictData success:^(id respondsData) {
         NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:respondsData options:NSJSONReadingMutableContainers error:nil];
         

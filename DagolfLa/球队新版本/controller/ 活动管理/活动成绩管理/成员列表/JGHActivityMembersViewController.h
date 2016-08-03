@@ -15,4 +15,8 @@
 
 @property (assign, nonatomic) NSInteger lastIndex;
 
+@property (assign, nonatomic) NSInteger activityKey;//活动key
+
+@property (assign, nonatomic) NSInteger teamKey;//球队key
+
 @end
