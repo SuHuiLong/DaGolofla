@@ -26,7 +26,9 @@
 @property (nonatomic, copy) NSString *title;
 @property (nonatomic, copy) NSString *ballName;
 @property (nonatomic, strong) NSNumber *invitationCode;   // 密钥
-
+@property (nonatomic, copy) NSString *createtime;
+@property (nonatomic, strong) NSNumber *almost;
+@property (nonatomic, copy) NSString *date;
 
 @end
 
