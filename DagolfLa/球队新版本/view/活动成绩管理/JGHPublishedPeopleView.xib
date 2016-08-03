@@ -36,7 +36,9 @@
                         <constraint firstAttribute="width" constant="60" id="OBb-nF-pNL"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <state key="normal" title="发布"/>
+                    <state key="normal" title="发布">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </state>
                     <connections>
                         <action selector="publishedBtnClick:" destination="iN0-l3-epB" eventType="touchUpInside" id="ZUj-X1-6SL"/>
                     </connections>
@@ -54,7 +56,6 @@
                     <nil key="highlightedColor"/>
                 </label>
             </subviews>
-            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="my1-l8-8Em" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="3o6-WO-c9p"/>
                 <constraint firstItem="HUv-Ka-3Tb" firstAttribute="centerY" secondItem="6m1-yf-D5s" secondAttribute="centerY" id="7Nh-Ut-r6B"/>

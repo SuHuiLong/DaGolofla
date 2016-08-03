@@ -28,6 +28,52 @@
     self.fiveLabel.font= [UIFont systemFontOfSize:15 *ProportionAdapter];
 }
 
+-(void)showData:(JGLScoreLiveModel *)model
+{
+    if (![Helper isBlankString:model.userName]) {
+        self.fristLabel.text = model.userName;
+    }
+    else
+    {
+        self.fristLabel.text = @"暂无姓名";
+    }
+    if (model.poleNumber != nil) {
+        self.twoLabel.text = [NSString stringWithFormat:@"%@",model.poleNumber];
+    }
+    else
+    {
+        self.twoLabel.text = @"暂无总杆";
+    }
+    
+    
+    if (model.almost != nil) {
+        self.threeLabel.text = [NSString stringWithFormat:@"%@",model.almost];
+    }
+    else
+    {
+        self.threeLabel.text = @"暂无差点";
+    }
+    
+    if (model.netbar != nil) {
+        self.fiveLabel.text = [NSString stringWithFormat:@"%@",model.netbar];
+    }
+    else
+    {
+        self.fiveLabel.text = @"暂无净杆";
+    }
+    
+    self.imageScore.hidden = NO;
+    self.imageScore.image = nil;
+    if (model.select == 0) {
+        self.imageScore.image = [UIImage imageNamed:@"gou_w"];
+    }
+    else{
+        self.imageScore.image = [UIImage imageNamed:@"gou_x"];
+    }
+}
+
+
+
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
 

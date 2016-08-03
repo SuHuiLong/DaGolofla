@@ -697,7 +697,7 @@ static CGFloat ImageHeight  = 210.0;
 - (void)PerformanceManagement:(UIButton *)btn{
     NSLog(@"成绩管理");
     JGHActivityScoreManagerViewController *activityScoreCtrl = [[JGHActivityScoreManagerViewController alloc]init];
-    
+    activityScoreCtrl.activityBaseModel = _model;
     [self.navigationController pushViewController:activityScoreCtrl animated:YES];
 }
 #pragma mark -- 奖项设置

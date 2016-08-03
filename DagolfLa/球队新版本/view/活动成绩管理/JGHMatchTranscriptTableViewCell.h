@@ -39,5 +39,7 @@
 
 @property (nonatomic, weak)id <JGHMatchTranscriptTableViewCellDelegate> delegate;
 
+- (void)configActivityName:(NSString *)name andStartTime:(NSString *)startTime andEndTime:(NSString *)endTime;
+
 
 @end

@@ -8,7 +8,17 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol JGHPublishedPeopleViewDelegate <NSObject>
+
+- (void)publisBtn;
+
+- (void)selectAll;
+
+@end
+
 @interface JGHPublishedPeopleView : UIView
+
+@property (nonatomic, weak)id <JGHPublishedPeopleViewDelegate> delegate;
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *imageLeft;//13
 

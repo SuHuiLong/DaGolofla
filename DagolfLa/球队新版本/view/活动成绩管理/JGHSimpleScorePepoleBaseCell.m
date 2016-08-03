@@ -7,6 +7,7 @@
 //
 
 #import "JGHSimpleScorePepoleBaseCell.h"
+#import "JGTeamAcitivtyModel.h"
 
 @implementation JGHSimpleScorePepoleBaseCell
 
@@ -33,6 +34,16 @@
     [super setSelected:selected animated:animated];
 
     // Configure the view for the selected state
+}
+
+- (void)configScoreJGTeamAcitivtyModel:(JGTeamAcitivtyModel *)model{
+    if (model.userName) {
+        self.userName.text = model.userName;
+    }else{
+        self.userName.text = @"";
+    }
+    
+    self.almost.text = @"222";
 }
 
 @end

@@ -8,11 +8,12 @@
 
 #import "JGHActivityMembersViewController.h"
 #import "MyattenModel.h"
-#import "JGLFriendAddTableViewCell.h"
+#import "JGLActivityMemberNumTableViewCell.h"
 #import "NoteModel.h"
 #import "NoteHandlle.h"
 #import "PYTableViewIndexManager.h"
 #import "JGHSimpleScoreViewController.h"
+#import "JGTeamAcitivtyModel.h"
 
 @interface JGHActivityMembersViewController ()<UITableViewDelegate, UITableViewDataSource,UISearchResultsUpdating>
 {
@@ -38,13 +39,21 @@
     
     _keyArray        = [[NSMutableArray alloc]init];
     _listArray       = [[NSMutableArray alloc]init];
-    if (_dictFinish.count == 0) {
-        _dictFinish      = [[NSMutableDictionary alloc]init];
-    }
+
     _dataArray       = [[NSMutableArray alloc]init];
     _dataAccountDict = [[NSMutableDictionary alloc]init];
     _dictData        = [[NSMutableDictionary alloc]init];
     [self uiConfig];
+    
+    UIBarButtonItem *item = [[UIBarButtonItem alloc]initWithTitle:@"完成" style:UIBarButtonItemStylePlain target:self action:@selector(saveBtnClick)];
+    item.tintColor=[UIColor whiteColor];
+    self.navigationItem.rightBarButtonItem = item;
+}
+
+- (void)saveBtnClick{
+    JGHSimpleScoreViewController *simpleCtrl = [[JGHSimpleScoreViewController alloc]init];
+    simpleCtrl.actModel = _activityModel;
+    [self.navigationController pushViewController:simpleCtrl animated:YES];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -63,10 +72,6 @@
     [_tableView.header beginRefreshing];
 }
 
-
-
-
-
 -(void)uiConfig
 {
     _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight-15*screenWidth/375)];
@@ -74,7 +79,7 @@
     _tableView.dataSource = self;
     [self.view addSubview:_tableView];
     
-    [_tableView registerClass:[JGLFriendAddTableViewCell class] forCellReuseIdentifier:@"JGLFriendAddTableViewCell"];
+    [_tableView registerClass:[JGLActivityMemberNumTableViewCell class] forCellReuseIdentifier:@"JGLActivityMemberNumTableViewCell"];
     
     
     _tableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
@@ -82,14 +87,15 @@
     
 }
 
-
 #pragma mark - 下载数据
 - (void)downLoadData:(int)page isReshing:(BOOL)isReshing{
-    [_dictData setObject:DEFAULF_USERID forKey:@"userId"];
-    [_dictData setObject:@0 forKey:@"otherUserId"];
-    [_dictData setObject:@0 forKey:@"page"];
-    [_dictData setObject:@0 forKey:@"rows"];
-    [[PostDataRequest sharedInstance] postDataRequest:@"UserFollow/querbyUserFollowList.do" parameter:_dictData success:^(id respondsData) {
+    [_dictData setObject:DEFAULF_USERID forKey:@"userKey"];
+    [_dictData setObject:[NSNumber numberWithInteger:_activityKey] forKey:@"activityKey"];
+    [_dictData setObject:[NSNumber numberWithInteger:_teamKey] forKey:@"teamKey"];
+    [_dictData setObject:DEFAULF_USERID forKey:@"userKey"];
+    NSString *strMD = [JGReturnMD5Str getTeamActivitySignUpListWithTeamKey:_teamKey activityKey:_activityKey userKey:[DEFAULF_USERID integerValue]];
+    [_dictData setObject:strMD forKey:@"md5"];
+    [[PostDataRequest sharedInstance] postDataRequest:@"team/getTeamActivitySignUpList" parameter:_dictData success:^(id respondsData) {
         NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:respondsData options:NSJSONReadingMutableContainers error:nil];
         
         if ([[dict objectForKey:@"success"] boolValue]) {
@@ -171,7 +177,7 @@
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    JGLFriendAddTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"JGLFriendAddTableViewCell" forIndexPath:indexPath];
+    JGLActivityMemberNumTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"JGLActivityMemberNumTableViewCell" forIndexPath:indexPath];
     
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
@@ -184,15 +190,7 @@
     }
     cell.myModel = model;
     
-    
-    
-    NSString *str=[_dictFinish objectForKey:[self.listArray[indexPath.section][indexPath.row] otherUserId]];
-    
-    if ([Helper isBlankString:str]==NO) {
-        cell.imgvState.image=[UIImage imageNamed:@"gou_x"];
-    }else{
-        cell.imgvState.image=[UIImage imageNamed:@"gou_w"];
-    }
+
     return cell;
     
     
@@ -202,49 +200,7 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    /**
-    if (_dictFinish.count != 0) {
-        if (_dictFinish.count >= _lastIndex) {
-            [[ShowHUD showHUD]showToastWithText:@"您最多只能选择3个人" FromView:self.view];
-            
-        }
-        else{
-            NSString *str=[_dictFinish objectForKey:[self.listArray[indexPath.section][indexPath.row] otherUserId]];
-            if ([Helper isBlankString:str]==YES) {
-                
-                [_dictFinish setObject:[self.listArray[indexPath.section][indexPath.row] userName] forKey:[self.listArray[indexPath.section][indexPath.row] otherUserId]];
-                
-            }else{
-                [_dictFinish removeObjectForKey:[self.listArray[indexPath.section][indexPath.row] otherUserId]];
-            }
-            
-            NSIndexPath *indexPath_1=[NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section];
-            NSArray *indexArray=[NSArray arrayWithObject:indexPath_1];
-            [_tableView reloadRowsAtIndexPaths:indexArray withRowAnimation:UITableViewRowAnimationAutomatic];
-        }
-    }
-    else{
-        if (_dictFinish.count >= _lastIndex) {
-            [[ShowHUD showHUD]showToastWithText:@"您最多只能选择3个人" FromView:self.view];
-            
-        }
-        else{
-            NSString *str=[_dictFinish objectForKey:[self.listArray[indexPath.section][indexPath.row] otherUserId]];
-            if ([Helper isBlankString:str]==YES) {
-                
-                [_dictFinish setObject:[self.listArray[indexPath.section][indexPath.row] userName] forKey:[self.listArray[indexPath.section][indexPath.row] otherUserId]];
-                
-            }else{
-                [_dictFinish removeObjectForKey:[self.listArray[indexPath.section][indexPath.row] otherUserId]];
-            }
-            
-            NSIndexPath *indexPath_1=[NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section];
-            NSArray *indexArray=[NSArray arrayWithObject:indexPath_1];
-            [_tableView reloadRowsAtIndexPaths:indexArray withRowAnimation:UITableViewRowAnimationAutomatic];
-        }
-        
-    }
-     */
+
     
     JGHSimpleScoreViewController *simpleCtrl = [[JGHSimpleScoreViewController alloc]init];
     [self.navigationController pushViewController:simpleCtrl animated:YES];

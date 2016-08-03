@@ -80,9 +80,7 @@
             _page++;
             [_tableView reloadData];
         }else {
-            [Helper alertViewWithTitle:@"获取列表信息失败" withBlock:^(UIAlertController *alertView) {
-                [self presentViewController:alertView animated:YES completion:nil];
-            }];
+             [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
         }
         [_tableView reloadData];
         if (isReshing) {

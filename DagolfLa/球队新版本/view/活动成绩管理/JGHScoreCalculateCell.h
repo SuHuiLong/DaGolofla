@@ -10,9 +10,9 @@
 
 @protocol JGHScoreCalculateCellDelegate <NSObject>
 
-- (void)selectAddOperationBtn;
-
-- (void)selectRedOperationBtn;
+//- (void)selectAddOperationBtn;
+//
+//- (void)selectRedOperationBtn;
 
 - (void)selectScoreListBtn;
 
@@ -21,5 +21,10 @@
 @interface JGHScoreCalculateCell : UITableViewCell
 
 @property (nonatomic, weak)id <JGHScoreCalculateCellDelegate> delegate;
+
+@property (nonatomic, strong)NSMutableArray *poleNumberArray;
+
+@property (nonatomic, copy)void (^returnScoresCalculateDataArray)(NSMutableArray *dataArray);
+//@property (nonatomic, copy)void (^returnScoresDataArray)(NSMutableArray *dataArray);
 
 @end

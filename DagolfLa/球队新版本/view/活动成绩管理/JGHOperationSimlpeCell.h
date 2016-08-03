@@ -40,6 +40,6 @@
 - (IBAction)redBtnClick:(UIButton *)sender;
 
 
-
+- (void)configPoles:(NSInteger)poles;
 
 @end

@@ -36,6 +36,10 @@
     // Configure the view for the selected state
 }
 
+- (void)configPoles:(NSInteger)poles{
+    self.rodVlaue.text = [NSString stringWithFormat:@"%td", poles];
+}
+
 - (IBAction)addBtnClick:(UIButton *)sender {
     if (self.delegate) {
         [self.delegate addRodBtn];
