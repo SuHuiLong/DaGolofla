@@ -32,7 +32,7 @@
     [super viewDidLoad];
     self.title = @"成绩历史记分表";
     
-    UIBarButtonItem *rightBar = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"fenxiang"] style:(UIBarButtonItemStyleDone) target:self action:@selector(shareStatisticsDataClick)];
+    UIBarButtonItem *rightBar = [[UIBarButtonItem alloc] initWithTitle:@"确定" style:(UIBarButtonItemStyleDone) target:self action:@selector(shareStatisticsDataClick)];
     rightBar.tintColor = [UIColor whiteColor];
     self.navigationItem.rightBarButtonItem = rightBar;
     
@@ -306,18 +306,11 @@
 }
 
 
-// 分享
-//统计记分点击事件
+
+//保存差点
 -(void)shareStatisticsDataClick
 {
-    ShareAlert* alert = [[ShareAlert alloc]initMyAlert];
-    alert.frame = CGRectMake(0, ScreenHeight, ScreenWidth, ScreenWidth);
-    [alert setCallBackTitle:^(NSInteger index) {
-        [self shareInfo:index];
-    }];
-    [UIView animateWithDuration:0.2 animations:^{
-        [alert show];
-    }];
+
 }
 -(void)shareInfo:(NSInteger)index
 {
