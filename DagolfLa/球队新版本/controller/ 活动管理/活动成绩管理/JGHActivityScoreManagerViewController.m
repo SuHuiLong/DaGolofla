@@ -20,6 +20,8 @@ static NSString *const JGHCenterBtnTableViewCellIdentifier = @"JGHCenterBtnTable
 
 @interface JGHActivityScoreManagerViewController ()<UITableViewDelegate, UITableViewDataSource, JGHMatchTranscriptTableViewCellDelegate, JGHCenterBtnTableViewCellDelegate>
 
+//@property (nonatomic, strong)JGHPublishedPeopleView *publisView;
+
 @property (nonatomic, strong)UITableView *scoreManageTableView;
 
 @property (nonatomic, strong)NSMutableArray *dataArray;
@@ -27,6 +29,14 @@ static NSString *const JGHCenterBtnTableViewCellIdentifier = @"JGHCenterBtnTable
 @end
 
 @implementation JGHActivityScoreManagerViewController
+
+//- (JGHPublishedPeopleView *)publisView{
+//    if (_publisView == nil) {
+//        self.publisView = [[[NSBundle mainBundle]loadNibNamed:@"JGHPublishedPeopleView" owner:self options:nil]lastObject];
+//        self.publisView.frame = CGRectMake(0, screenHeight -44, screenWidth, 44);
+//    }
+//    return _publisView;
+//}
 
 - (instancetype)init{
     if (self == [super init]) {
@@ -46,11 +56,17 @@ static NSString *const JGHCenterBtnTableViewCellIdentifier = @"JGHCenterBtnTable
     item.tintColor=[UIColor whiteColor];
     self.navigationItem.rightBarButtonItem = item;
     
-    [self createTable];    
+    [self createTable];
+    
+    JGHPublishedPeopleView *publisView = [[[NSBundle mainBundle]loadNibNamed:@"JGHPublishedPeopleView" owner:self options:nil]lastObject];
+    publisView.frame = CGRectMake(0, screenHeight -44 -64, screenWidth, 44);
+    [publisView setNeedsLayout];
+    [publisView setNeedsDisplay];
+    [self.view addSubview:publisView];
 }
 
 - (void)createTable{
-    self.scoreManageTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight -64) style:UITableViewStylePlain];
+    self.scoreManageTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight -64 -44) style:UITableViewStylePlain];
     
     UINib *matchTranscriptNib = [UINib nibWithNibName:@"JGHMatchTranscriptTableViewCell" bundle: [NSBundle mainBundle]];
     [self.scoreManageTableView registerNib:matchTranscriptNib forCellReuseIdentifier:JGHMatchTranscriptTableViewCellIdentifier];

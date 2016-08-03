@@ -15,9 +15,14 @@
 // An empty implementation adversely affects performance during animation.
 - (void)drawRect:(CGRect)rect {
     // Drawing code
-    
-    self.imageLeft.constant = 13 *ProportionAdapter;
+ 
+    self.backgroundColor = [UIColor redColor];
+}
 
+- (void)layoutSubviews{
+//    self.backgroundColor = [UIColor redColor];
+    self.imageLeft.constant = 13 *ProportionAdapter;
+    
     self.selectAllBtn.titleLabel.font = [UIFont systemFontOfSize:15*ProportionAdapter];
     
     self.selectAllBtnWith.constant = 50 *ProportionAdapter;
@@ -28,12 +33,12 @@
     self.publishedBtn.backgroundColor = [UIColor colorWithHexString:@"#3AAF55"];
     self.publishedBtn.layer.masksToBounds = YES;
     self.publishedBtn.layer.cornerRadius = 5.0;
-    self.publishedBtn.titleLabel.font = [UIFont systemFontOfSize:17*ProportionAdapter];
+    self.publishedBtn.titleLabel.font = [UIFont systemFontOfSize:15*ProportionAdapter];
     
     self.publishedBtnWith.constant = 60 *ProportionAdapter;
     
+    self.backgroundColor = [UIColor redColor];
 }
-
 
 - (IBAction)selectAllBtnClick:(UIButton *)sender {
 }
