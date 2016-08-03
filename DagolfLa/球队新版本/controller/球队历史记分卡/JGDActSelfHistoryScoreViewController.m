@@ -15,19 +15,24 @@
 @interface JGDActSelfHistoryScoreViewController ()<UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic, strong) UITableView *tableView;
-
 @property (nonatomic, strong) NSMutableArray *dataArray;
 @property (nonatomic, strong) NSMutableDictionary *dataDic;
+@property (nonatomic, strong) UITextField *chadianTF;
 
 @end
 
 @implementation JGDActSelfHistoryScoreViewController
 
+- (void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:YES];
+    [self.chadianTF becomeFirstResponder];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = @"个人成绩历史记分表";
+    self.title = @"成绩历史记分表";
     
-    UIBarButtonItem *rightBar = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"fenxiang"] style:(UIBarButtonItemStyleDone) target:self action:@selector(shareStatisticsDataClick)];
+    UIBarButtonItem *rightBar = [[UIBarButtonItem alloc] initWithTitle:@"确定" style:(UIBarButtonItemStyleDone) target:self action:@selector(shareStatisticsDataClick)];
     rightBar.tintColor = [UIColor whiteColor];
     self.navigationItem.rightBarButtonItem = rightBar;
     
@@ -57,9 +62,6 @@
                     [model setValuesForKeysWithDictionary:dic];
                     [self.dataArray addObject:model];
                 }
-                
-
-                
             }
             
             if ([data objectForKey:@"score"]) {
@@ -87,7 +89,28 @@
     self.tableView.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
-
+//    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 75 * ProportionAdapter)];
+//    UIView *lightV = [[UIView alloc] initWithFrame:CGRectMake(37.5 * ProportionAdapter, 30 * ProportionAdapter, 300 * ProportionAdapter, 45 * ProportionAdapter)];
+//    view.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];
+//    lightV.backgroundColor = [UIColor whiteColor];
+//    lightV.layer.cornerRadius = 5 * ProportionAdapter;
+//    lightV.layer.masksToBounds = YES;
+//    
+//    UILabel *allLB = [[UILabel alloc] initWithFrame:CGRectMake(50 * ProportionAdapter,0 * ProportionAdapter, 120 * ProportionAdapter, 45 * ProportionAdapter)];
+//    allLB.text = @"成绩领取密钥：";
+//    allLB.font = [UIFont systemFontOfSize:15 * ProportionAdapter];
+//    [lightV addSubview:allLB];
+//    
+//    UILabel *keyLB = [[UILabel alloc] initWithFrame:CGRectMake(170 * ProportionAdapter, 0 * ProportionAdapter, 100 * ProportionAdapter, 45 * ProportionAdapter)];
+////    keyLB.text = [NSString stringWithFormat:@"%@", self.model.invitationCode];
+//    keyLB.textAlignment = NSTextAlignmentLeft;
+//    keyLB.textColor = [UIColor colorWithHexString:@"#fe7a7a"];
+//    keyLB.font = [UIFont systemFontOfSize:15 * ProportionAdapter];
+//    [lightV addSubview:keyLB];
+//    
+//    [view addSubview:lightV];
+//    
+//    self.tableView.tableFooterView = view;
     [self.view addSubview:self.tableView];
 }
 
@@ -120,7 +143,7 @@
         [viewTitle addSubview:nameLB];
 
         
-        UILabel *ballNameLB = [[UILabel alloc] initWithFrame:CGRectMake(10 * ProportionAdapter, 70 * ProportionAdapter, 200 * ProportionAdapter, 25 * ProportionAdapter)];
+        UILabel *ballNameLB = [[UILabel alloc] initWithFrame:CGRectMake(10 * ProportionAdapter, 70 * ProportionAdapter, 260 * ProportionAdapter, 25 * ProportionAdapter)];
         ballNameLB.text = [self.dataDic objectForKey:@"ballName"];
         ballNameLB.textColor = [UIColor colorWithHexString:@"#a0a0a0"];
         ballNameLB.font = [UIFont systemFontOfSize:15 * ProportionAdapter];
@@ -148,18 +171,24 @@
             [viewTitle addSubview:poleLB];
         }
 
-        UILabel *chaDianLB = [[UILabel alloc] initWithFrame:CGRectMake(280 * ProportionAdapter, 45 * ProportionAdapter, 50 * ProportionAdapter, 25 * ProportionAdapter)];
-        chaDianLB.text = @"差点：";
-        chaDianLB.font = [UIFont systemFontOfSize:15 * ProportionAdapter];
-        [viewTitle addSubview:chaDianLB];
-
-        UITextField *chadianTF = [[UITextField alloc] initWithFrame:CGRectMake(310 * ProportionAdapter, 45 * ProportionAdapter, 50 * ProportionAdapter, 25 * ProportionAdapter)];
-        chadianTF.font = [UIFont systemFontOfSize:15 * ProportionAdapter];
-        [viewTitle addSubview:chadianTF];
         
-        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(325, 70, 50, 1)];
-        view.backgroundColor = [UIColor blackColor];
-        [viewTitle addSubview:view];
+        if (1) {
+            
+            UILabel *chaDianLB = [[UILabel alloc] initWithFrame:CGRectMake(280 * ProportionAdapter, 45 * ProportionAdapter, 50 * ProportionAdapter, 25 * ProportionAdapter)];
+            chaDianLB.text = @"差点："; // saveAlmost
+            chaDianLB.font = [UIFont systemFontOfSize:15 * ProportionAdapter];
+            [viewTitle addSubview:chaDianLB];
+            
+            self.chadianTF = [[UITextField alloc] initWithFrame:CGRectMake(330 * ProportionAdapter, 45 * ProportionAdapter, 50 * ProportionAdapter, 25 * ProportionAdapter)];
+            self.chadianTF.font = [UIFont systemFontOfSize:15 * ProportionAdapter];
+            self.chadianTF.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
+            [viewTitle addSubview:self.chadianTF];
+            
+            UIView *view = [[UIView alloc] initWithFrame:CGRectMake(315 * ProportionAdapter, 70 * ProportionAdapter, 50 * ProportionAdapter, 1 * ProportionAdapter)];
+            view.backgroundColor = [UIColor blackColor];
+            [viewTitle addSubview:view];
+        }
+        
         
         UIView *greenView = [[UIView alloc] initWithFrame:CGRectMake(0, 98 * ProportionAdapter, screenWidth, 2 * ProportionAdapter)];
         greenView.backgroundColor = [UIColor colorWithHexString:@"#32b14d"];
@@ -188,11 +217,12 @@
 }
 
 
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     JGDHistoryScoreShowTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
-    
+
     if (indexPath.row > 0 && ([self.dataArray count] >= (indexPath.row - 1)) && ([self.dataArray count] > 0)) {
         NSLog(@"%td", indexPath.row);
         if (indexPath.row == 1) {
@@ -276,18 +306,11 @@
 }
 
 
-// 分享
-//统计记分点击事件
+
+//保存差点
 -(void)shareStatisticsDataClick
 {
-    ShareAlert* alert = [[ShareAlert alloc]initMyAlert];
-    alert.frame = CGRectMake(0, ScreenHeight, ScreenWidth, ScreenWidth);
-    [alert setCallBackTitle:^(NSInteger index) {
-        [self shareInfo:index];
-    }];
-    [UIView animateWithDuration:0.2 animations:^{
-        [alert show];
-    }];
+
 }
 -(void)shareInfo:(NSInteger)index
 {

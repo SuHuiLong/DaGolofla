@@ -10,4 +10,18 @@
 
 @implementation JGDHistoryScoreModel
 
+
+- (void)setValue:(id)value forKey:(NSString *)key{
+    if ([key isEqualToString:@"name"]) {
+        [super setValue:value forKey:@"title"];
+        
+    } else if ([key isEqualToString:@"beginDate"]) {
+        [super setValue:value forKey:@"createtime"];
+        
+    } else{
+        [super setValue:value forKey:key];
+    }
+}
+
+
 @end
