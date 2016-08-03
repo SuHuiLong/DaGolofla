@@ -13,19 +13,31 @@
 #import "JGHSetBallBaseCell.h"
 #import "JGHOperationScoreCell.h"
 #import "JGHScoreCalculateCell.h"
+#import "JGHOperationScoreListCell.h"
 
 static NSString *const JGHSimpleScorePepoleBaseCellIdentifier = @"JGHSimpleScorePepoleBaseCell";
 static NSString *const JGHSimpleAndResultsCellIdentifier = @"JGHSimpleAndResultsCell";
 static NSString *const JGHOperationSimlpeCellIdentifier = @"JGHOperationSimlpeCell";
 static NSString *const JGHSetBallBaseCellIdentifier = @"JGHSetBallBaseCell";
 static NSString *const JGHOperationScoreCellIdentifier = @"JGHOperationScoreCell";
-//static NSString *const JGHScoreCalculateCellIdentifier = @"JGHScoreCalculateCell";
+static NSString *const JGHOperationScoreListCellIdentifier = @"JGHOperationScoreListCell";
 
 @interface JGHSimpleScoreViewController ()<UITableViewDelegate, UITableViewDataSource, JGHSimpleAndResultsCellDelegate, JGHSetBallBaseCellDelegate, JGHOperationSimlpeCellDelegate, JGHScoreCalculateCellDelegate>
 {
     NSInteger _selectId;//0-简单记分；1-十八洞开始记分；2-记分；3-记分列表页
+    
+    NSInteger _poles;//总杆数默认0；
+    
+    NSMutableDictionary *_userScoreBeanDict;//用户成绩参数
+    
+    UIView *_ballView;
+    
+    UIView *_ballTwoView;
+    
+//    NSMutableArray *_polesArray;//十八洞杆数
 }
 
+@property (nonatomic, strong)NSMutableArray *polesArray;//十八洞杆数
 @property (nonatomic, strong)UITableView *simpleScoreTableView;
 
 @end
@@ -39,12 +51,71 @@ static NSString *const JGHOperationScoreCellIdentifier = @"JGHOperationScoreCell
     self.view.backgroundColor = [UIColor colorWithHexString:BG_color];
     self.navigationItem.title = @"添加记分";
     _selectId = 0;
+    _poles = 0;
+    _userScoreBeanDict = [NSMutableDictionary dictionary];
+    self.polesArray = [NSMutableArray array];
+    
+    for (int i=0; i<18; i++) {
+        [self.polesArray addObject:@(-1)];
+    }
     
     UIBarButtonItem *item = [[UIBarButtonItem alloc]initWithTitle:@"完成" style:UIBarButtonItemStylePlain target:self action:@selector(saveBtnClick)];
     item.tintColor=[UIColor whiteColor];
     self.navigationItem.rightBarButtonItem = item;
     
     [self createTable];
+    
+    [self loadBallData];
+}
+#pragma mark -- 获取标准杆
+- (void)getStandardlevers{
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    /**
+     @Param(value="ballKey" , require=true) Long    ballKey,
+     @Param(value="region1" , require=true) String  region1,// 第一九洞区域
+     @Param(value="region2" , require=true) String  region2,// 第二九洞区域
+     @Param(value="md5"     , require=true) String  md5,// md5
+     */
+    [dict setObject:@"" forKey:@"ballKey"];
+    [dict setObject:@"" forKey:@"region1"];
+    [dict setObject:@"" forKey:@"region2"];
+    [[JsonHttp jsonHttp]httpRequestWithMD5:@"ball/getStandardlevers" JsonKey:nil withData:dict failedBlock:^(id errType) {
+        
+    } completionBlock:^(id data) {
+        NSLog(@"%@", data);
+        
+        _selectId = 2;
+        [self.simpleScoreTableView reloadData];
+    }];
+}
+- (void)loadBallData{
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+//    [dict setObject:[_dataArray[indexPath.row] ballId] forKey:@"ballKey"];
+    [[JsonHttp jsonHttp]httpRequest:@"ball/getBallCode" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
+        
+    } completionBlock:^(id data) {
+        
+        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+            //点击事件选中后传值
+            NSMutableDictionary* dict1 = [[NSMutableDictionary alloc]init];
+            [dict1 setObject:[data objectForKey:@"ballAreas"] forKey:@"ballAreas"];
+            [dict1 setObject:[data objectForKey:@"tAll"] forKey:@"tAll"];
+//            _callback1(dict1,[_dataArray[indexPath.row]loginpic]);
+//            _callback([_dataArray[indexPath.row] ballName],[[_dataArray[indexPath.row] ballId] integerValue]);
+            [self.navigationController popViewControllerAnimated:YES];
+        }else{
+            [Helper alertViewWithTitle:@"球场整修中" withBlock:^(UIAlertController *alertView) {
+                [self presentViewController:alertView animated:YES completion:nil];
+            }];
+        }
+        
+        NSLog(@"%@", data);
+        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+            
+        }else{
+            
+        }
+    }];
 }
 
 - (void)createTable{
@@ -66,6 +137,9 @@ static NSString *const JGHOperationScoreCellIdentifier = @"JGHOperationScoreCell
     [self.simpleScoreTableView registerNib:operationScoreCellNib forCellReuseIdentifier:JGHOperationScoreCellIdentifier];
     
     [self.simpleScoreTableView registerClass:[JGHScoreCalculateCell class] forCellReuseIdentifier:@"JGHScoreCalculateCell"];
+    
+    UINib *operationScoreListCellNib = [UINib nibWithNibName:@"JGHOperationScoreListCell" bundle: [NSBundle mainBundle]];
+    [self.simpleScoreTableView registerNib:operationScoreListCellNib forCellReuseIdentifier:JGHOperationScoreListCellIdentifier];
     
     self.simpleScoreTableView.delegate = self;
     self.simpleScoreTableView.dataSource = self;
@@ -114,18 +188,28 @@ static NSString *const JGHOperationScoreCellIdentifier = @"JGHOperationScoreCell
         if (_selectId == 0) {
             JGHOperationSimlpeCell *operationSimlpeCell = [tableView dequeueReusableCellWithIdentifier:JGHOperationSimlpeCellIdentifier];
             operationSimlpeCell.delegate = self;
+            [operationSimlpeCell configPoles:_poles];
             return operationSimlpeCell;
         }else if (_selectId == 1){
             JGHSetBallBaseCell *setBallBaseCell = [tableView dequeueReusableCellWithIdentifier:JGHSetBallBaseCellIdentifier];
             setBallBaseCell.delegate = self;
             return setBallBaseCell;
-        }else{
-            JGHScoreCalculateCell *scoreCalculateCell = [tableView dequeueReusableCellWithIdentifier:@"JGHScoreCalculateCell" forIndexPath:indexPath];
+        }else if (_selectId == 2){
+            JGHScoreCalculateCell *scoreCalculateCell = [tableView dequeueReusableCellWithIdentifier:@"JGHScoreCalculateCell"];
             scoreCalculateCell.delegate = self;
-            scoreCalculateCell.backgroundColor = [UIColor redColor];
+            scoreCalculateCell.poleNumberArray = self.polesArray;
+//            scoreCalculateCell.backgroundColor = [UIColor redColor];
+            __weak JGHSimpleScoreViewController *weakSelf = self;
+            scoreCalculateCell.returnScoresCalculateDataArray= ^(NSMutableArray *dataArray){
+                weakSelf.polesArray = dataArray;
+            };
             scoreCalculateCell.selectionStyle = UITableViewCellSelectionStyleNone;
             
             return scoreCalculateCell;
+        }else{
+            JGHOperationScoreListCell *operationScoreListCell = [tableView dequeueReusableCellWithIdentifier:JGHOperationScoreListCellIdentifier];
+//            setBallBaseCell.delegate = self;
+            return operationScoreListCell;
         }
     }
 }
@@ -142,22 +226,68 @@ static NSString *const JGHOperationScoreCellIdentifier = @"JGHOperationScoreCell
 #pragma mark -- 简单记分 ＋
 - (void)addRodBtn{
     NSLog(@"简单记分 ＋");
+    _poles += 1;
+    
+    [self.simpleScoreTableView reloadData];
 }
 #pragma mark -- 简单记分 －
 - (void)redRodBtn{
     NSLog(@"简单记分 －");
+    if (_poles > 0) {
+        _poles -= 1;
+    }else{
+        _poles = 0;
+    }
+    
+    [self.simpleScoreTableView reloadData];
 }
 #pragma mark -- 第一九洞
 - (void)oneAndNineBtn{
     NSLog(@"第一九洞");
+    JGHSetBallBaseCell *setBallBaseCell = [self.simpleScoreTableView dequeueReusableCellWithIdentifier:JGHSetBallBaseCellIdentifier];
+    _ballView = [[UIView alloc]initWithFrame:CGRectMake( setBallBaseCell.oneBtn.frame.origin.x, setBallBaseCell.oneBtn.frame.origin.y + 140 *ProportionAdapter + setBallBaseCell.oneBtn.frame.size.height, setBallBaseCell.oneBtn.frame.size.width, 30 * 4 *ProportionAdapter)];
+    for (int i=0; i<4; i++) {
+        UIButton *btn = [[UIButton alloc]initWithFrame:CGRectMake(0, i * 30, _ballView.frame.size.width, 30*ProportionAdapter)];
+        [btn setTitle:@"A区" forState:UIControlStateNormal];
+        btn.tag = 200 + i;
+        [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [btn addTarget:self action:@selector(oneAndNineBtnSelectClick:) forControlEvents:UIControlEventTouchUpInside];
+        btn.backgroundColor = [UIColor redColor];
+        [_ballView addSubview:btn];
+    }
+    [self.view addSubview:_ballView];
+}
+#pragma mark -- 第一九洞选择事件
+- (void)oneAndNineBtnSelectClick:(UIButton *)btn{
+    NSLog(@"A区");
+    [_ballView removeFromSuperview];
 }
 #pragma mark -- 第二九洞
 - (void)twoAndNineBtn{
     NSLog(@"第二九洞");
+    JGHSetBallBaseCell *setBallBaseCell = [self.simpleScoreTableView dequeueReusableCellWithIdentifier:JGHSetBallBaseCellIdentifier];
+    _ballTwoView = [[UIView alloc]initWithFrame:CGRectMake( setBallBaseCell.twoBtn.frame.origin.x, setBallBaseCell.twoBtn.frame.origin.y + 140 *ProportionAdapter + setBallBaseCell.twoBtn.frame.size.height, setBallBaseCell.twoBtn.frame.size.width, 30 * 4 *ProportionAdapter)];
+    for (int i=0; i<4; i++) {
+        UIButton *btn = [[UIButton alloc]initWithFrame:CGRectMake(0, i * 30, _ballTwoView.frame.size.width, 30*ProportionAdapter)];
+        [btn setTitle:@"A区" forState:UIControlStateNormal];
+        btn.tag = 300 + i;
+        [btn addTarget:self action:@selector(twoAndNineBtnSelectClick:) forControlEvents:UIControlEventTouchUpInside];
+        btn.backgroundColor = [UIColor redColor];
+        [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [_ballTwoView addSubview:btn];
+    }
+    [self.view addSubview:_ballTwoView];
+}
+#pragma mark -- 第二九洞选择事件
+- (void)twoAndNineBtnSelectClick:(UIButton *)btn{
+    NSLog(@"A区");
+    [_ballTwoView removeFromSuperview];
 }
 #pragma mark -- 开始录入
 - (void)startScoreBtn{
     NSLog(@"开始录入");
+//    [self getStandardlevers];
+    
     _selectId = 2;
     [self.simpleScoreTableView reloadData];
 }
@@ -185,12 +315,39 @@ static NSString *const JGHOperationScoreCellIdentifier = @"JGHOperationScoreCell
 - (void)selectScoreListBtn{
     NSLog(@"十八洞记分 list");
     _selectId = 3;
-    
+    [self.simpleScoreTableView reloadData];
 }
 #pragma mark -- 完成
 - (void)saveBtnClick{
     NSLog(@"完成");
-    [self.simpleScoreTableView reloadData];
+    /**
+     @HttpService(RequestURL="/makeupTeamScore" , method="post")
+     public void makeupTeamScore(
+     @Param(value = "userKey"                                    , require = true) Long userKey, // 用户key
+     @Param(value = "activityKey"                                , require = true) Long activityKey, // 活动key
+     @Param(value = "region1"                                    , require = true) String region1, // 1-9球洞区域
+     @Param(value = "region2"                                    , require = true) String region2, // 10-18球洞区域
+     @Param(value = "userScoreBean" ,genricType=UserScoreBean.class ,require = true) UserScoreBean   userScoreBean,//  计分成绩
+     @Param(value = "md5"
+     */
+    
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    [dict setObject:DEFAULF_USERID forKey:@"userKey"];
+    [dict setObject:DEFAULF_USERID forKey:@"activityKey"];
+    if (_selectId != 0) {
+        [dict setObject:DEFAULF_USERID forKey:@"region1"];
+        [dict setObject:DEFAULF_USERID forKey:@"region2"];
+        [dict setObject:DEFAULF_USERID forKey:@"userScoreBean"];
+    }else{
+        [dict setObject:DEFAULF_USERID forKey:@"userScoreBean"];
+    }
+    
+    [[JsonHttp jsonHttp]httpRequestWithMD5:@"score/makeupTeamScore" JsonKey:nil withData:dict failedBlock:^(id errType) {
+        
+    } completionBlock:^(id data) {
+        NSLog(@"%@", data);
+        
+    }];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

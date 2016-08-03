@@ -45,6 +45,15 @@
     _dataAccountDict = [[NSMutableDictionary alloc]init];
     _dictData        = [[NSMutableDictionary alloc]init];
     [self uiConfig];
+    
+    UIBarButtonItem *item = [[UIBarButtonItem alloc]initWithTitle:@"完成" style:UIBarButtonItemStylePlain target:self action:@selector(saveBtnClick)];
+    item.tintColor=[UIColor whiteColor];
+    self.navigationItem.rightBarButtonItem = item;
+}
+
+- (void)saveBtnClick{
+    JGHSimpleScoreViewController *simpleCtrl = [[JGHSimpleScoreViewController alloc]init];
+    [self.navigationController pushViewController:simpleCtrl animated:YES];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -81,7 +90,43 @@
     [_tableView.header beginRefreshing];
     
 }
+/**
+ [dict setObject:self.activityKey forKey:@"activityKey"];
+ [dict setObject:[NSNumber numberWithInteger:_page]forKey:@"offset"];
+ [dict setObject:@0 forKey:@"teamKey"];
+ [dict setObject:DEFAULF_USERID forKey:@"userKey"];
+ NSString *strMD = [JGReturnMD5Str getTeamActivitySignUpListWithTeamKey:0 activityKey:[self.activityKey integerValue] userKey:[DEFAULF_USERID integerValue]];
+ [dict setObject:strMD forKey:@"md5"];
+ [[JsonHttp jsonHttp]httpRequest:@"team/getTeamActivitySignUpList" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
+ if (isReshing) {
+ [_tableView.header endRefreshing];
+ }else {
+ [_tableView.footer endRefreshing];
+ }
+ } completionBlock:^(id data) {
+ if ([data objectForKey:@"packSuccess"]) {
+ if (page == 0)
+ {
+ //清除数组数据
+ [self.dataArray removeAllObjects];
+ }
+ 
+ [self.dataArray addObjectsFromArray:[data objectForKey:@"teamSignUpList"]];
+ self.sumCount = [[data objectForKey:@"sumCount"] integerValue];
+ _page++;
+ [_tableView reloadData];
+ }else {
+ 
+ }
+ [_tableView reloadData];
+ if (isReshing) {
+ [_tableView.header endRefreshing];
+ }else {
+ [_tableView.footer endRefreshing];
+ }
+ }];
 
+ */
 
 #pragma mark - 下载数据
 - (void)downLoadData:(int)page isReshing:(BOOL)isReshing{
@@ -89,7 +134,14 @@
     [_dictData setObject:@0 forKey:@"otherUserId"];
     [_dictData setObject:@0 forKey:@"page"];
     [_dictData setObject:@0 forKey:@"rows"];
-    [[PostDataRequest sharedInstance] postDataRequest:@"UserFollow/querbyUserFollowList.do" parameter:_dictData success:^(id respondsData) {
+    
+    [_dictData setObject:@"self.activityKey" forKey:@"activityKey"];
+    [_dictData setObject:[NSNumber numberWithInteger:_page]forKey:@"offset"];
+    [_dictData setObject:@0 forKey:@"teamKey"];
+    [_dictData setObject:DEFAULF_USERID forKey:@"userKey"];
+//    NSString *strMD = [JGReturnMD5Str getTeamActivitySignUpListWithTeamKey:0 activityKey:[self.activityKey integerValue] userKey:[DEFAULF_USERID integerValue]];
+//    [_dictData setObject:strMD forKey:@"md5"];
+    [[PostDataRequest sharedInstance] postDataRequest:@"team/getTeamActivitySignUpList" parameter:_dictData success:^(id respondsData) {
         NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:respondsData options:NSJSONReadingMutableContainers error:nil];
         
         if ([[dict objectForKey:@"success"] boolValue]) {
