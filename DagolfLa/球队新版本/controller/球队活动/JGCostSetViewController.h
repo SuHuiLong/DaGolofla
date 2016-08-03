@@ -31,4 +31,14 @@
 
 @property (weak, nonatomic)id <JGCostSetViewControllerDelegate> delegate;
 
+//会员价
+@property (strong, nonatomic) NSNumber* memberPrice;
+//嘉宾价
+@property (strong, nonatomic) NSNumber* guestPrice;
+//球队会员记名价
+@property (strong, nonatomic) NSNumber* billNamePrice;
+//球队会员不记名价
+@property (strong, nonatomic) NSNumber* billPrice;
+
+
 @end

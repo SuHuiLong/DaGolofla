@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="321" id="KGk-i7-Jjw" customClass="JGHOperationScoreListCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="321"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="320.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg-column" translatesAutoresizingMaskIntoConstraints="NO" id="ttv-rC-pA5">
+                        <rect key="frame" x="20" y="5" width="280" height="315.5"/>
+                    </imageView>
+                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Zm6-Pm-iSu">
+                        <rect key="frame" x="20" y="25" width="280" height="295.5"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <connections>
+                            <outlet property="dataSource" destination="-1" id="lvU-Ir-Dav"/>
+                            <outlet property="delegate" destination="-1" id="rnH-7i-NVa"/>
+                        </connections>
+                    </tableView>
+                </subviews>
+                <color key="backgroundColor" red="0.91764705879999997" green="0.91764705879999997" blue="0.91764705879999997" alpha="1" colorSpace="calibratedRGB"/>
+                <constraints>
+                    <constraint firstAttribute="bottom" secondItem="ttv-rC-pA5" secondAttribute="bottom" id="2km-ym-16J"/>
+                    <constraint firstItem="ttv-rC-pA5" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="GGi-A2-6Xt"/>
+                    <constraint firstItem="ttv-rC-pA5" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="OXt-bn-oiM"/>
+                    <constraint firstItem="Zm6-Pm-iSu" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="25" id="epa-hu-ZUY"/>
+                    <constraint firstAttribute="trailing" secondItem="ttv-rC-pA5" secondAttribute="trailing" constant="20" id="kgZ-nT-qYf"/>
+                    <constraint firstAttribute="bottom" secondItem="Zm6-Pm-iSu" secondAttribute="bottom" id="qb4-QB-pGH"/>
+                    <constraint firstItem="Zm6-Pm-iSu" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="qsV-3k-F0v"/>
+                    <constraint firstAttribute="trailing" secondItem="Zm6-Pm-iSu" secondAttribute="trailing" constant="20" id="tXc-aQ-qdE"/>
+                </constraints>
+            </tableViewCellContentView>
+            <point key="canvasLocation" x="217" y="198.5"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="bg-column" width="335" height="310"/>
+    </resources>
+</document>

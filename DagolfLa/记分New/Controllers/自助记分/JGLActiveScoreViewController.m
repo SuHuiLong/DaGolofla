@@ -40,7 +40,7 @@
     NSMutableDictionary* _teeDictChoose;//记录选择的t台存放数组
     
     NSMutableDictionary *_dictPeo;//存放返回的人数字典
-    NSMutableArray *_dataKeyBack, *_mobileArr,*_dataUserKey;//timeKey用于标记，手机号，userkey
+    NSMutableArray *_dataKeyBack, *_mobileArr,*_dataUserKey,*_allmostArray;//timeKey用于标记，手机号，userkey
     
     //传参
     NSString* _strHole1,* _strHole2;//九洞
@@ -64,6 +64,7 @@
     _mobileArr      = [[NSMutableArray alloc]init];
     _teeDictChoose = [[NSMutableDictionary alloc]init];
     _dictPeo        = [[NSMutableDictionary alloc]init];
+    _allmostArray   = [[NSMutableArray alloc]init];
     _isTee          =  NO;
     
     NSString* str = [Helper returnCurrentDateString];
@@ -79,15 +80,15 @@
     NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
     [dict setObject:_model.timeKey forKey:@"activityKey"];
     [dict setObject:DEFAULF_USERID forKey:@"userKey"];
-//    [dict setObject:_model.teamKey forKey:@"teamKey"];
+    //    [dict setObject:_model.teamKey forKey:@"teamKey"];
     [[JsonHttp jsonHttp]httpRequest:@"team/getTeamActivity" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
         
     } completionBlock:^(id data) {
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
-//            for (NSDictionary* dict11 in [data objectForKey:@"teamMember"]) {
-                _userN = [[data objectForKey:@"teamMember"] objectForKey:@"userName"];
-                _userM = [[data objectForKey:@"teamMember"] objectForKey:@"mobile"];
-//            }
+            //            for (NSDictionary* dict11 in [data objectForKey:@"teamMember"]) {
+            _userN = [[data objectForKey:@"teamMember"] objectForKey:@"userName"];
+            _userM = [[data objectForKey:@"teamMember"] objectForKey:@"mobile"];
+            //            }
             NSIndexPath *indexPath_1=[NSIndexPath indexPathForRow:1 inSection:4];
             NSArray *indexArray=[NSArray arrayWithObject:indexPath_1];
             [_tableView reloadRowsAtIndexPaths:indexArray withRowAnimation:UITableViewRowAnimationAutomatic];
@@ -126,7 +127,7 @@
             
         }
     }];
-
+    
 }
 
 
@@ -179,7 +180,7 @@
         NSMutableDictionary *dict1 = [NSMutableDictionary dictionary];
         if (i == 0) {
             if (![Helper isBlankString:[_teeDictChoose allValues][i]]) {
-                 [dict1 setObject:[_teeDictChoose allValues][i] forKey:@"tTaiwan"];// T台
+                [dict1 setObject:[_teeDictChoose allValues][i] forKey:@"tTaiwan"];// T台
             }
             else{
                 [[ShowHUD showHUD]showToastWithText:@"请选择Tee台" FromView:self.view];
@@ -187,7 +188,7 @@
             }
             [dict1 setObject:DEFAULF_USERID forKey:@"userKey"];//用户Key
             
-
+            
             [dict1 setObject:_userN forKey:@"userName"];// 用户名称
             [dict1 setObject:_userM forKey:@"userMobile"];// 手机号
         }
@@ -200,7 +201,7 @@
                 return;
             }
             
-            
+            [dict1 setObject:_allmostArray[i-1] forKey:@"almost"];
             [dict1 setObject:_dataUserKey[i-1] forKey:@"userKey"];//用户Key
             [dict1 setObject:[_dictPeo objectForKey:_dataKeyBack[i-1]] forKey:@"userName"];// 用户名称
             [dict1 setObject:_mobileArr[i-1] forKey:@"userMobile"];// 手机号
@@ -226,7 +227,7 @@
         }
     }];
     
-
+    
 }
 
 -(void)uiConfig
@@ -300,7 +301,7 @@
                 cell.iconImgv.hidden = YES;
                 cell.labelTee.text = @"请选择tee台";
             }
-
+            
             
             
             if ([Helper isBlankString:_userN]) {
@@ -328,15 +329,15 @@
                     cell.iconImgv.hidden = YES;
                     cell.labelTee.text = @"请选择tee台";
                 }
-               
-//                if (![Helper isBlankString:_strTee]) {
-//                    cell.iconImgv.hidden = NO;
-//                    [cell showTee:_strTee];
-//                }
-//                else{
-//                    cell.iconImgv.hidden = YES;
-//                    cell.labelTee.text = @"请选择tee台";
-//                }
+                
+                //                if (![Helper isBlankString:_strTee]) {
+                //                    cell.iconImgv.hidden = NO;
+                //                    [cell showTee:_strTee];
+                //                }
+                //                else{
+                //                    cell.iconImgv.hidden = YES;
+                //                    cell.labelTee.text = @"请选择tee台";
+                //                }
                 cell.labelName.text = [_dictPeo allValues][indexPath.row-2];
                 return cell;
             }
@@ -500,7 +501,7 @@
             [_chooseView removeFromSuperview];
             _isTee = NO;
         }
-//        //球场
+        //        //球场
     }
     ////NSLog(@"3");
     else if (indexPath.section == 1) {
@@ -605,11 +606,12 @@
                 if (indexPath.row  == _dictPeo.count + 2) {
                     JGLAddActivePlayViewController* addVc = [[JGLAddActivePlayViewController alloc]init];
                     addVc.model = _model;
-                    addVc.blockSurePlayer = ^(NSMutableDictionary *dict, NSMutableArray* dataKey, NSMutableArray* arrMobile,NSMutableArray* arrUserKey)
+                    addVc.blockSurePlayer = ^(NSMutableDictionary *dict, NSMutableArray* dataKey, NSMutableArray* arrMobile,NSMutableArray* arrUserKey,NSMutableArray* arrAllMost)
                     {
                         _dictPeo = dict;
                         _dataKeyBack = dataKey;
                         _dataUserKey = arrUserKey;
+                        _allmostArray = arrAllMost;
                         _mobileArr = arrMobile;
                         NSIndexSet *indexSet=[[NSIndexSet alloc]initWithIndex:4];
                         [_tableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationAutomatic];
@@ -618,6 +620,7 @@
                     addVc.dataKey    = _dataKeyBack;
                     addVc.arrMobile = _mobileArr;
                     addVc.dataUserKey = _dataUserKey;
+                    addVc.allMostArray = _allmostArray;
                     [self.navigationController pushViewController:addVc animated:YES];
                     
                 }

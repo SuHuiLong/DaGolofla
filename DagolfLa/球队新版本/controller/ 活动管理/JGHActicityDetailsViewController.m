@@ -41,6 +41,8 @@
 #import "JGHSetAwardViewController.h"
 #import "JGLPresentAwardViewController.h"
 
+#import "JGHActivityScoreManagerViewController.h"
+
 static NSString *const JGTableViewCellIdentifier = @"JGTableViewCell";
 static NSString *const JGTeamActivityWithAddressCellIdentifier = @"JGTeamActivityWithAddressCell";
 static NSString *const JGTeamActivityDetailsCellIdentifier = @"JGTeamActivityDetailsCell";
@@ -531,7 +533,7 @@ static CGFloat ImageHeight  = 210.0;
     return 0;
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 11;
+    return 12;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 4) {
@@ -549,7 +551,7 @@ static CGFloat ImageHeight  = 210.0;
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     if (section == 0) {
         return ImageHeight;
-    }else if (section == 7){
+    }else if (section == 8){
         static JGTeamActivityDetailsCell *cell;
         if (!cell) {
             cell = [self.teamActibityNameTableView dequeueReusableCellWithIdentifier:JGTeamActivityDetailsCellIdentifier];
@@ -570,7 +572,7 @@ static CGFloat ImageHeight  = 210.0;
             [costListCell configCostData:_subDataArray[indexPath.row]];
         }
     }
-   
+    
     return costListCell;
 }
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
@@ -628,16 +630,14 @@ static CGFloat ImageHeight  = 210.0;
         [headerCell addSubview:btn];
         [headerCell congiftitles:@"奖项设置"];
         return (UIView *)headerCell;
-    }
-//    else if (section == 7){
-//        JGHHeaderLabelCell *headerCell = [tableView dequeueReusableCellWithIdentifier:JGHHeaderLabelCellIdentifier];
-//        UIButton *btn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, screenWidth, headerCell.frame.size.height)];
-//        [btn addTarget:self action:@selector(PerformanceManagement:) forControlEvents:UIControlEventTouchUpInside];
-//        [headerCell addSubview:btn];
-//        [headerCell congiftitles:@"成绩管理"];
-//        return (UIView *)headerCell;
-//    }
-    else if (section == 7){
+    }else if (section == 7){
+        JGHHeaderLabelCell *headerCell = [tableView dequeueReusableCellWithIdentifier:JGHHeaderLabelCellIdentifier];
+        UIButton *btn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, screenWidth, headerCell.frame.size.height)];
+        [btn addTarget:self action:@selector(PerformanceManagement:) forControlEvents:UIControlEventTouchUpInside];
+        [headerCell addSubview:btn];
+        [headerCell congiftitles:@"成绩管理"];
+        return (UIView *)headerCell;
+    }else if (section == 8){
         JGTeamActivityDetailsCell *detailsCell = [tableView dequeueReusableCellWithIdentifier:JGTeamActivityDetailsCellIdentifier];
         UIButton *detailsBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, screenWidth, detailsCell.frame.size.height)];
         [detailsBtn addTarget:self action:@selector(pushDetailSCtrl:) forControlEvents:UIControlEventTouchUpInside];
@@ -645,7 +645,7 @@ static CGFloat ImageHeight  = 210.0;
         [detailsCell addSubview:detailsBtn];
         [detailsCell configDetailsText:@"活动详情" AndActivityDetailsText:self.model.info];
         return (UIView *)detailsCell;
-    }else if (section == 8){
+    }else if (section == 9){
         JGHTeamContactTableViewCell *contactCell = [tableView dequeueReusableCellWithIdentifier:JGHTeamContactCellIdentifier];
         contactCell.tetfileView.tag = 234;
         contactCell.tetfileView.delegate = self;
@@ -658,7 +658,7 @@ static CGFloat ImageHeight  = 210.0;
         
         contactCell.tetfileView.placeholder = @"请输入最大人员限制数";
         return contactCell.contentView;
-    }else if (section == 9){
+    }else if (section == 10){
         JGHTeamContactTableViewCell *contactCell = [tableView dequeueReusableCellWithIdentifier:JGHTeamContactCellIdentifier];
         contactCell.tetfileView.tag = 345;
         contactCell.tetfileView.delegate = self;
@@ -695,7 +695,10 @@ static CGFloat ImageHeight  = 210.0;
 }
 #pragma mark -- 成绩管理
 - (void)PerformanceManagement:(UIButton *)btn{
-    NSLog(@"Performance management");
+    NSLog(@"成绩管理");
+    JGHActivityScoreManagerViewController *activityScoreCtrl = [[JGHActivityScoreManagerViewController alloc]init];
+    
+    [self.navigationController pushViewController:activityScoreCtrl animated:YES];
 }
 #pragma mark -- 奖项设置
 - (void)setAward:(UIButton *)btn{
@@ -745,7 +748,12 @@ static CGFloat ImageHeight  = 210.0;
         
         DateTimeViewController *dataCtrl = [[DateTimeViewController alloc]init];
         [dataCtrl setCallback:^(NSString *dateStr, NSString *dateWeek, NSString *str) {
-            [self.model setValue:[NSString stringWithFormat:@"%@ 23:59:59", dateStr] forKey:@"signUpEndTime"];
+            if (btn.tag == 102) {
+                [self.model setValue:[NSString stringWithFormat:@"%@ 23:59:59", dateStr] forKey:@"endDate"];
+            }else{
+                [self.model setValue:[NSString stringWithFormat:@"%@ 23:59:59", dateStr] forKey:@"signUpEndTime"];//signUpEndTime
+            }
+            
             _isEditor = 1;
             [self.teamActibityNameTableView reloadData];
         }];
@@ -756,6 +764,26 @@ static CGFloat ImageHeight  = 210.0;
 - (void)editorCostClick:(UIButton *)btn{
     JGCostSetViewController *costView = [[JGCostSetViewController alloc]initWithNibName:@"JGCostSetViewController" bundle:nil];
     costView.delegate = self;
+    //球队队员费用
+    if ([self.model.memberPrice floatValue] > 0) {
+        costView.memberPrice = self.model.memberPrice;
+    }
+    
+    //嘉宾费用
+    if ([self.model.guestPrice floatValue] > 0) {
+        costView.guestPrice = self.model.guestPrice;
+    }
+    
+    //记名费
+    if ([self.model.billNamePrice floatValue] > 0) {
+        costView.billNamePrice = self.model.billNamePrice;
+    }
+    
+    //不记名费
+    if ([self.model.billPrice floatValue] > 0) {
+        costView.billPrice = self.model.billPrice;
+    }
+
     [self.navigationController pushViewController:costView animated:YES];
 }
 #pragma mark -- 添加内容详情代理  JGHConcentTextViewControllerDelegate

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="KGk-i7-Jjw" customClass="JGHOperScoreBtnListCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CQ1-z3-zY5">
+                        <rect key="frame" x="0.0" y="7" width="80" height="30"/>
+                        <state key="normal" title="Button"/>
+                        <connections>
+                            <action selector="oneBtnClick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="xDH-Ax-0xd"/>
+                        </connections>
+                    </button>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oc0-QP-0lM">
+                        <rect key="frame" x="80" y="7" width="80" height="30"/>
+                        <state key="normal" title="Button"/>
+                        <connections>
+                            <action selector="twoBtnClick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="Qax-bQ-eNS"/>
+                        </connections>
+                    </button>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AiW-7I-dNa">
+                        <rect key="frame" x="160" y="7" width="80" height="30"/>
+                        <state key="normal" title="Button"/>
+                        <connections>
+                            <action selector="threeBtnClick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="iEb-C2-E7e"/>
+                        </connections>
+                    </button>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1pv-Sg-uJ7">
+                        <rect key="frame" x="240" y="7" width="80" height="30"/>
+                        <state key="normal" title="Button"/>
+                        <connections>
+                            <action selector="fourBtnClick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="oYU-Se-Dtb"/>
+                        </connections>
+                    </button>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="AiW-7I-dNa" firstAttribute="width" secondItem="CQ1-z3-zY5" secondAttribute="width" id="3OK-IS-BlN"/>
+                    <constraint firstItem="oc0-QP-0lM" firstAttribute="height" secondItem="CQ1-z3-zY5" secondAttribute="height" id="7tC-bv-5ID"/>
+                    <constraint firstItem="CQ1-z3-zY5" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="8zd-bJ-GmE"/>
+                    <constraint firstItem="AiW-7I-dNa" firstAttribute="height" secondItem="CQ1-z3-zY5" secondAttribute="height" id="CbU-9A-1lI"/>
+                    <constraint firstAttribute="trailing" secondItem="1pv-Sg-uJ7" secondAttribute="trailing" id="FR6-tt-4Fx"/>
+                    <constraint firstItem="AiW-7I-dNa" firstAttribute="leading" secondItem="oc0-QP-0lM" secondAttribute="trailing" id="Foa-jA-Q8H"/>
+                    <constraint firstItem="oc0-QP-0lM" firstAttribute="leading" secondItem="CQ1-z3-zY5" secondAttribute="trailing" id="OgZ-Fy-OBa"/>
+                    <constraint firstItem="1pv-Sg-uJ7" firstAttribute="leading" secondItem="AiW-7I-dNa" secondAttribute="trailing" id="Tjt-Go-8mq"/>
+                    <constraint firstItem="CQ1-z3-zY5" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="aDt-y1-19o"/>
+                    <constraint firstItem="1pv-Sg-uJ7" firstAttribute="centerY" secondItem="AiW-7I-dNa" secondAttribute="centerY" id="b3q-Jp-APP"/>
+                    <constraint firstItem="oc0-QP-0lM" firstAttribute="centerY" secondItem="CQ1-z3-zY5" secondAttribute="centerY" id="dLw-t3-Bb5"/>
+                    <constraint firstItem="oc0-QP-0lM" firstAttribute="width" secondItem="CQ1-z3-zY5" secondAttribute="width" id="hMj-xE-zDR"/>
+                    <constraint firstItem="AiW-7I-dNa" firstAttribute="leading" secondItem="oc0-QP-0lM" secondAttribute="trailing" id="kpj-T7-5Ki"/>
+                    <constraint firstItem="AiW-7I-dNa" firstAttribute="centerY" secondItem="oc0-QP-0lM" secondAttribute="centerY" id="o86-NX-JkU"/>
+                    <constraint firstItem="1pv-Sg-uJ7" firstAttribute="width" secondItem="CQ1-z3-zY5" secondAttribute="width" id="t17-i9-0sB"/>
+                    <constraint firstItem="1pv-Sg-uJ7" firstAttribute="height" secondItem="CQ1-z3-zY5" secondAttribute="height" id="u9g-OF-ozn"/>
+                    <constraint firstItem="oc0-QP-0lM" firstAttribute="leading" secondItem="CQ1-z3-zY5" secondAttribute="trailing" id="y9v-RV-uaE"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="fourBtn" destination="1pv-Sg-uJ7" id="wpf-kt-pyt"/>
+                <outlet property="oneBtn" destination="CQ1-z3-zY5" id="5tz-Kb-fXu"/>
+                <outlet property="threeBtn" destination="AiW-7I-dNa" id="k0i-QI-qHI"/>
+                <outlet property="twoBtn" destination="oc0-QP-0lM" id="9VN-Zs-e6T"/>
+            </connections>
+        </tableViewCell>
+    </objects>
+</document>

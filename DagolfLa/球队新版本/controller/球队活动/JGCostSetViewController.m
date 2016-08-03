@@ -20,6 +20,23 @@
     self.navigationItem.title = @"费用设置";
     
     [self createAdminBtn];
+    
+    if ([self.memberPrice floatValue] > 0) {
+        self.membersCost.text = [NSString stringWithFormat:@"%.2f", [self.memberPrice floatValue]];
+    }
+    
+    if ([self.guestPrice floatValue] > 0) {
+        self.guestCost.text = [NSString stringWithFormat:@"%.2f", [self.guestPrice floatValue]];
+    }
+    
+    if ([self.billNamePrice floatValue] > 0) {
+        self.registeredPrice.text = [NSString stringWithFormat:@"%.2f", [self.billNamePrice floatValue]];
+    }
+    
+    if ([self.billPrice floatValue] > 0) {
+        self.bearerPrice.text = [NSString stringWithFormat:@"%.2f", [self.billPrice floatValue]];
+    }
+    
 }
 
 #pragma mark -- 创建保存按钮

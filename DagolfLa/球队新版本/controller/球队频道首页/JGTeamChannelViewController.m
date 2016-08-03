@@ -412,6 +412,7 @@
     }else if (button.tag == 201) {
         JGTeamActivityViewController* teamVc = [[JGTeamActivityViewController alloc]init];
         teamVc.isMEActivity = 3;
+        teamVc.fromMine = 1;
         [self.navigationController pushViewController:teamVc animated:YES];
     
     }else if (button.tag == 202) {

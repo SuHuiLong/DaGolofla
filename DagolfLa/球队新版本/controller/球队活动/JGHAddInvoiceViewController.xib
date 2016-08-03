@@ -146,16 +146,16 @@
                                 <action selector="btn4:" destination="-1" eventType="touchUpInside" id="nOG-pw-PhS"/>
                             </connections>
                         </button>
-                        <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="duihao" translatesAutoresizingMaskIntoConstraints="NO" id="fZy-TD-FRv">
+                        <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="duihao" translatesAutoresizingMaskIntoConstraints="NO" id="fZy-TD-FRv">
                             <rect key="frame" x="295" y="55" width="9" height="9"/>
                         </imageView>
-                        <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="duihao" translatesAutoresizingMaskIntoConstraints="NO" id="x8p-YT-LEA">
+                        <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="duihao" translatesAutoresizingMaskIntoConstraints="NO" id="x8p-YT-LEA">
                             <rect key="frame" x="296" y="86" width="9" height="9"/>
                         </imageView>
-                        <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="duihao" translatesAutoresizingMaskIntoConstraints="NO" id="cc7-At-bkH">
+                        <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="duihao" translatesAutoresizingMaskIntoConstraints="NO" id="cc7-At-bkH">
                             <rect key="frame" x="295" y="117" width="9" height="9"/>
                         </imageView>
-                        <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="duihao" translatesAutoresizingMaskIntoConstraints="NO" id="WcE-ch-Khl">
+                        <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="duihao" translatesAutoresizingMaskIntoConstraints="NO" id="WcE-ch-Khl">
                             <rect key="frame" x="295" y="148" width="9" height="9"/>
                         </imageView>
                     </subviews>

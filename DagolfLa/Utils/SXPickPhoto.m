@@ -36,7 +36,7 @@
      
         //设置拍照后的图片可被编辑
       
-        _picker.allowsEditing = YES;
+//        _picker.allowsEditing = YES;
       
         _picker.sourceType = sourceType;
         
@@ -82,7 +82,7 @@
     if ([type isEqualToString:@"public.image"])
      {
          //图片可编辑
-          UIImage *newHeaderImage = [info objectForKey:@"UIImagePickerControllerEditedImage"];
+          UIImage *newHeaderImage = [info objectForKey:@"UIImagePickerControllerOriginalImage"];
 //          newHeaderImage = [newHeaderImage fixOrientation];
          
          if (_myblock)

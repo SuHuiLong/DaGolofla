@@ -19,13 +19,15 @@
 
 @property (strong, nonatomic) NSMutableDictionary* dictFinish;
 
-@property (strong, nonatomic) NSMutableArray* dataKey;
+@property (strong, nonatomic) NSMutableArray* dataKey;//timeKey
 
-@property (strong, nonatomic) NSMutableArray* dataUserKey;
+@property (strong, nonatomic) NSMutableArray* dataUserKey;//userkey
+
+@property (strong, nonatomic) NSMutableArray* allMostArray;
 
 @property (strong, nonatomic) NSMutableArray* arrMobile;
 
 
-@property (copy, nonatomic) void (^blockSurePlayer)(NSMutableDictionary *  , NSMutableArray*,NSMutableArray* ,NSMutableArray*);
+@property (copy, nonatomic) void (^blockSurePlayer)(NSMutableDictionary *  , NSMutableArray*,NSMutableArray* ,NSMutableArray*, NSMutableArray*);
 
 @end

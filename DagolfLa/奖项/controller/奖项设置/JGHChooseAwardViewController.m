@@ -313,6 +313,28 @@ static NSString *const JGSignUoPromptCellIdentifier = @"JGSignUoPromptCell";
         customAwardCtrl.teamKey = _teamKey;
         customAwardCtrl.activityKey = _activityKey;
         [self.navigationController pushViewController:customAwardCtrl animated:YES];
+    }else{
+        NSLog(@"%td", indexPath.section -1);
+        for (int i =0; i<_dataArray.count; i++) {
+            if (indexPath.section -1 == i) {
+                JGHAwardModel *model = [[JGHAwardModel alloc]init];
+                model = _dataArray[i];
+                if (model.select == 1) {
+                    model.select = 0;
+                }else{
+                    model.select = 1;
+                }
+                
+                [_dataArray replaceObjectAtIndex:i withObject:model];
+                if (![_selectArray containsObject:model.name]) {
+                    [_selectArray addObject:model.name];
+                }else{
+                    [_selectArray removeObject:model.name];
+                }
+            }
+        }
+        
+        [self.chooseTableView reloadData];
     }
 }
 #pragma mark -- 勾选

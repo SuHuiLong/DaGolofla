@@ -32,7 +32,7 @@
     NSMutableArray* _dataArray;
     
     NSMutableDictionary* _dataAccountDict;
-
+    
     
 }
 @property (nonatomic, strong) UISearchController *searchController;
@@ -47,7 +47,7 @@
     [super viewDidLoad];
     
     self.navigationItem.title = @"选择打球人";
-
+    
     
     _keyArray        = [[NSMutableArray alloc]init];
     _listArray       = [[NSMutableArray alloc]init];
@@ -64,9 +64,12 @@
     if (_dataUserKey.count == 0) {
         _dataUserKey     = [[NSMutableArray alloc]init];
     }
+    if (_allMostArray.count == 0) {
+        _allMostArray    = [[NSMutableArray alloc]init];
+    }
     _dataAccountDict = [[NSMutableDictionary alloc]init];
     [self uiConfig];
-//    [self createHeadSearch];
+    //    [self createHeadSearch];
     [self createBtn];
 }
 - (void)viewWillDisappear:(BOOL)animated {
@@ -96,8 +99,8 @@
 }
 
 -(void)finishClick
-{    
-    _blockSurePlayer(_dictFinish,_dataKey,_arrMobile,_dataUserKey);
+{
+    _blockSurePlayer(_dictFinish,_dataKey,_arrMobile,_dataUserKey,_allMostArray);
     [self.navigationController popViewControllerAnimated:YES];
 }
 
@@ -117,7 +120,7 @@
 //-(void)updateSearchResultsForSearchController:(UISearchController *)searchController {
 //}
 //-(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
-//    
+//
 //}
 //
 
@@ -150,7 +153,7 @@
 #pragma mark - 下载数据
 - (void)downLoadData:(int)page isReshing:(BOOL)isReshing{
     NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
-//    [dict setObject:[NSNumber numberWithInteger:] forKey:@"activityKey"];
+    //    [dict setObject:[NSNumber numberWithInteger:] forKey:@"activityKey"];
     [dict setObject:_model.timeKey forKey:@"activityKey"];
     [dict setObject:_model.userKey forKey:@"userKey"];
     [dict setObject:@0 forKey:@"offset"];
@@ -173,7 +176,7 @@
             for (NSDictionary *dic in [data objectForKey:@"teamSignUpList"]) {
                 JGLAddActiivePlayModel *model = [[JGLAddActiivePlayModel alloc]init];
                 [model setValuesForKeysWithDictionary:dic];
-//                [model setValue:[dict objectForKey:@"name"] forKey:@"userName"];
+                //                [model setValue:[dict objectForKey:@"name"] forKey:@"userName"];
                 model.userName = model.name;
                 [_dataArray addObject:model];
             }
@@ -247,7 +250,7 @@
         [cell.imgvIcon sd_setImageWithURL:[Helper setImageIconUrl:@"user" andTeamKey:[model.userKey integerValue] andIsSetWidth:YES andIsBackGround:NO] placeholderImage:[UIImage imageNamed:@"logo"]];
         cell.imgvIcon.layer.cornerRadius = 6*screenWidth/375;
         cell.imgvIcon.layer.masksToBounds = YES;
-       
+        
         
         NSString *str=[_dictFinish objectForKey:[self.listArray[indexPath.section][indexPath.row] timeKey]];
         
@@ -269,7 +272,7 @@
         else{
             cell.labelTitle.font = [UIFont systemFontOfSize:14*screenWidth/375];
             cell.imgvDel.hidden = NO;
-
+            
             if (_dataKey.count != 0) {
                 if (_dataKey.count > indexPath.row - 1) {
                     if (![Helper isBlankString:_dataKey[indexPath.row-1]]) {
@@ -306,6 +309,7 @@
                     [_dictFinish setObject:[self.listArray[indexPath.section][indexPath.row] userName] forKey:[self.listArray[indexPath.section][indexPath.row] timeKey]];
                     [_dataKey addObject:[self.listArray[indexPath.section][indexPath.row] timeKey]];
                     [_dataUserKey addObject:[self.listArray[indexPath.section][indexPath.row] userKey]];
+                    [_allMostArray addObject:[self.listArray[indexPath.section][indexPath.row] almost]];
                     if (![Helper isBlankString:[self.listArray[indexPath.section][indexPath.row] mobile]]) {
                         [_arrMobile addObject:[self.listArray[indexPath.section][indexPath.row] mobile]];
                     }
@@ -326,6 +330,7 @@
             [_dictFinish removeObjectForKey:[self.listArray[indexPath.section][indexPath.row] timeKey]];
             [_dataKey removeObject:[self.listArray[indexPath.section][indexPath.row] timeKey]];
             [_dataUserKey removeObject:[self.listArray[indexPath.section][indexPath.row] userKey]];
+            [_allMostArray removeObject:[self.listArray[indexPath.section][indexPath.row] almost]];
             [_arrMobile removeObject:[self.listArray[indexPath.section][indexPath.row] mobile]];
         }
         [_tableView reloadData];
@@ -337,6 +342,7 @@
             [_dataKey removeObjectAtIndex:indexPath.row-1];
             [_dataUserKey removeObjectAtIndex:indexPath.row-1];
             [_arrMobile removeObjectAtIndex:indexPath.row-1];
+            [_allMostArray removeObjectAtIndex:indexPath.row-1];
             
             [_tableView reloadData];
             [_tableChoose reloadData];

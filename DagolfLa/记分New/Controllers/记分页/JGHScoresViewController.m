@@ -463,7 +463,7 @@
     } completionBlock:^(id data) {
         NSLog(@"%@", data);
         if ([[data objectForKey:@"packSuccess"]integerValue] == 1) {
-            if (_selectcompleteHole == 1) {
+            if (_selectcompleteHole == 1 || _selectHole == 1) {
                 [_timer invalidate];
                 _timer = nil;
                 //完成  finishScore
