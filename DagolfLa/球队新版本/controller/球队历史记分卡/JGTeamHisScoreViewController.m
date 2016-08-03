@@ -6,10 +6,9 @@
 //  Copyright © 2016年 bhxx. All rights reserved.
 //
 
-#import "JGDHistoryScoreViewController.h"
-#import "JGDHistoryScoreTableViewCell.h"
+#import "JGTeamHisScoreViewController.h"
+#import "JGTeamHIsScoreTableViewCell.h"
 #import "JGDHistoryScoreModel.h"
-#import "JGDHistoryScore2TableViewCell.h"
 #import "JGDNotActivityHisCoreViewController.h"
 #import "JGHScoresViewController.h"
 
@@ -23,7 +22,7 @@
 #import "JGDActSelfHistoryScoreViewController.h"
 
 
-@interface JGDHistoryScoreViewController ()<UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate,UISearchResultsUpdating>
+@interface JGTeamHisScoreViewController ()<UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate,UISearchResultsUpdating>
 
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) UISearchController *searchController;
@@ -32,14 +31,14 @@
 
 @end
 
-@implementation JGDHistoryScoreViewController
+@implementation JGTeamHisScoreViewController
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     
-    UIBarButtonItem *leftBar = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"backL"] style:(UIBarButtonItemStyleDone) target:self action:@selector(backBtn)];
-    leftBar.tintColor = [UIColor whiteColor];
-    self.navigationItem.leftBarButtonItem = leftBar;
+    //    UIBarButtonItem *leftBar = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"backL"] style:(UIBarButtonItemStyleDone) target:self action:@selector(backBtn)];
+    //    leftBar.tintColor = [UIColor whiteColor];
+    //    self.navigationItem.leftBarButtonItem = leftBar;
     self.searchController.searchBar.hidden = NO;
     [self.tableView reloadData];
 }
@@ -54,16 +53,16 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = @"历史记分卡";
+    self.title = @"球队历史记分卡";
     self.view.backgroundColor = [UIColor colorWithHexString:@"#f4f4f4"];
     [self createTableView];
     
-    
-    UIBarButtonItem *rightBar = [[UIBarButtonItem alloc] initWithTitle:@"取回记分" style:(UIBarButtonItemStyleDone) target:self action:@selector(takeMyCode)];
+    UIBarButtonItem *rightBar = [[UIBarButtonItem alloc] initWithTitle:@"成绩总揽" style:(UIBarButtonItemStyleDone) target:self action:@selector(takeCode)];
     rightBar.tintColor = [UIColor whiteColor];
     [rightBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:15 * ProportionAdapter], NSFontAttributeName, nil] forState:(UIControlStateNormal)];
     
     self.navigationItem.rightBarButtonItem = rightBar;
+    
     
     
     // Do any additional setup after loading the view.
@@ -87,6 +86,8 @@
     self.tableView.dataSource = self;
     self.tableView.backgroundColor = [UIColor clearColor];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+//    self.tableView.showsVerticalScrollIndicator = NO;
+//    self.tableView.showsHorizontalScrollIndicator = NO;
     
     self.tableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
     self.tableView.footer=[MJDIYBackFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRereshing)];
@@ -96,20 +97,21 @@
     self.tableView.tableHeaderView = self.searchController.searchBar;
     [self.view addSubview:self.tableView];
     
-    [self.tableView registerClass:[JGDHistoryScoreTableViewCell class] forCellReuseIdentifier:@"cell"];
-    [self.tableView registerClass:[JGDHistoryScore2TableViewCell class] forCellReuseIdentifier:@"cell2"];
+    [self.tableView registerClass:[JGTeamHIsScoreTableViewCell class] forCellReuseIdentifier:@"cell"];
     
 }
 
 
-#pragma mark ----- 取回记分／成绩总揽
+#pragma mark ----- 成绩总揽
 
-- (void)takeMyCode{
+- (void)takeCode{
     
-    JGHRetrieveScoreViewController *retriveveVC = [[JGHRetrieveScoreViewController alloc] init];
-    [self.navigationController pushViewController:retriveveVC animated:YES];
+    //成绩总揽
+    JGDActSelfHistoryScoreViewController * VC = [[JGDActSelfHistoryScoreViewController alloc] init];
+    VC.timeKey = @33160;
+    [self.navigationController pushViewController:VC animated:YES];
+    
 }
-
 
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
@@ -123,7 +125,7 @@
         if ([model.srcType integerValue] == 0) {
             
             if (indexPath.row == 0) {
-                JGDHistoryScore2TableViewCell *cell = [[JGDHistoryScore2TableViewCell alloc] initWithStyle:(UITableViewCellStyleValue1) reuseIdentifier:@"123"];
+                JGTeamHIsScoreTableViewCell *cell = [[JGTeamHIsScoreTableViewCell alloc] initWithStyle:(UITableViewCellStyleValue1) reuseIdentifier:@"123"];
                 cell.selectionStyle = UITableViewCellSelectionStyleNone;
                 cell.lineLimageV.frame = CGRectMake(90 * ProportionAdapter, 25 * ProportionAdapter, 2 * ProportionAdapter, 40 * ProportionAdapter);
                 if ([self.dataArray count] > indexPath.row) {
@@ -131,7 +133,7 @@
                 }
                 return cell;
             }else{
-                JGDHistoryScore2TableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell2"];
+                JGTeamHIsScoreTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
                 cell.selectionStyle = UITableViewCellSelectionStyleNone;
                 if ([self.dataArray count] > indexPath.row) {
                     cell.model = self.dataArray[indexPath.row];
@@ -141,7 +143,7 @@
         }else{
             
             if (indexPath.row == 0) {
-                JGDHistoryScoreTableViewCell *cell = [[JGDHistoryScoreTableViewCell alloc] initWithStyle:(UITableViewCellStyleValue1) reuseIdentifier:@"123"];
+                JGTeamHIsScoreTableViewCell *cell = [[JGTeamHIsScoreTableViewCell alloc] initWithStyle:(UITableViewCellStyleValue1) reuseIdentifier:@"123"];
                 cell.selectionStyle = UITableViewCellSelectionStyleNone;
                 cell.lineLimageV.frame = CGRectMake(90 * ProportionAdapter, 35 * ProportionAdapter, 2 * ProportionAdapter, 50 * ProportionAdapter);
                 if ([self.dataArray count] > indexPath.row) {
@@ -149,7 +151,7 @@
                 }
                 return cell;
             }else{
-                JGDHistoryScoreTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
+                JGTeamHIsScoreTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
                 cell.selectionStyle = UITableViewCellSelectionStyleNone;
                 if ([self.dataArray count] > indexPath.row) {
                     cell.model = self.dataArray[indexPath.row];
@@ -198,10 +200,11 @@
     NSMutableDictionary *dic = [NSMutableDictionary dictionary];
     [dic setObject:[NSNumber numberWithInteger:page] forKey:@"offset"];
     [dic setObject:DEFAULF_USERID forKey:@"userKey"];
-    [dic setObject:[Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@dagolfla.com", DEFAULF_USERID]] forKey:@"md5"];
+    [dic setObject:self.teamKey forKey:@"teamKey"];
+    [dic setObject:[Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@&teamKey=%@dagolfla.com", DEFAULF_USERID, self.teamKey]] forKey:@"md5"];
     [dic setObject:@"" forKey:@"likeStr"];
     
-    [[JsonHttp jsonHttp] httpRequest:@"score/getScoreHistory" JsonKey:nil withData:dic requestMethod:@"GET" failedBlock:^(id errType) {
+    [[JsonHttp jsonHttp] httpRequest:@"score/getTeamActivityHistoryList" JsonKey:nil withData:dic requestMethod:@"GET" failedBlock:^(id errType) {
         
         [[ShowHUD showHUD]showToastWithText:[NSString stringWithFormat:@"%@",errType] FromView:self.view];
         
@@ -225,18 +228,19 @@
                     imageV.image = [UIImage imageNamed:@"bg-shy"];
                     [self.view addSubview:imageV];
                     
-                    UILabel *label1 = [[UILabel alloc] initWithFrame:CGRectMake(100 * ProportionAdapter, 251 * ProportionAdapter, 200 * ProportionAdapter, 30 * ProportionAdapter)];
-                    label1.text = @"您还没有记分记录哦";
+                    UILabel *label1 = [[UILabel alloc] initWithFrame:CGRectMake(30 * ProportionAdapter, 251 * ProportionAdapter, 300 * ProportionAdapter, 30 * ProportionAdapter)];
+                    label1.text = @"您的球队还没有成绩记录哦";
+                    label1.textAlignment = NSTextAlignmentCenter;
                     label1.font = [UIFont systemFontOfSize:18 * ProportionAdapter];
                     label1.textColor = [UIColor colorWithHexString:@"a0a0a0"];
                     [self.view addSubview:label1];
                     
-                    UILabel *label2 = [[UILabel alloc] initWithFrame:CGRectMake(20 * ProportionAdapter, 311 * ProportionAdapter, screenWidth - 40 * ProportionAdapter, 80 * ProportionAdapter)];
-                    label2.text = @"您所有的记分都会保留在此，点击右上角“取回记分”，可通过“秘钥”取回别人给你代记的成绩。";
-                    label2.font = [UIFont systemFontOfSize:15 * ProportionAdapter];
-                    label2.textColor = [UIColor colorWithHexString:@"a0a0a0"];
-                    label2.numberOfLines = 0;
-                    [self.view addSubview:label2];
+                    //                    UILabel *label2 = [[UILabel alloc] initWithFrame:CGRectMake(20 * ProportionAdapter, 311 * ProportionAdapter, screenWidth - 40 * ProportionAdapter, 80 * ProportionAdapter)];
+                    //                    label2.text = @"您所有的记分都会保留在此，点击右上角“取回记分”，可通过“秘钥”取回别人给你代记的成绩。";
+                    //                    label2.font = [UIFont systemFontOfSize:15 * ProportionAdapter];
+                    //                    label2.textColor = [UIColor colorWithHexString:@"a0a0a0"];
+                    //                    label2.numberOfLines = 0;
+                    //                    [self.view addSubview:label2];
                     
                     [self.tableView removeFromSuperview];
                 }
@@ -264,9 +268,9 @@
     NSMutableDictionary *dic = [NSMutableDictionary dictionary];
     [dic setObject:[NSNumber numberWithInteger:_page] forKey:@"offset"];
     [dic setObject:DEFAULF_USERID forKey:@"userKey"];
+    [dic setObject:self.teamKey forKey:@"teamKey"];
+    [dic setObject:[Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@&teamKey=%@dagolfla.com", DEFAULF_USERID, self.teamKey]] forKey:@"md5"];
     [dic setObject:[self.searchController.searchBar text] forKey:@"likeStr"];
-    
-    [dic setObject:[Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@dagolfla.com", DEFAULF_USERID]] forKey:@"md5"];
     
     [[JsonHttp jsonHttp] httpRequest:@"score/getScoreHistory" JsonKey:nil withData:dic requestMethod:@"GET" failedBlock:^(id errType) {
         

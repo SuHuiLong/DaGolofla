@@ -50,7 +50,7 @@
 #import "JGDWithDrawTeamMoneyViewController.h"
 
 
-#import "JGDHistoryScoreViewController.h"
+#import "JGTeamHisScoreViewController.h"
 
 
 static NSString *const JGTableViewCellIdentifier = @"JGTableViewCell";
@@ -533,7 +533,7 @@ static CGFloat ImageHeight  = 210.0;
     }else if (section == 1){
         return 1;
     }else if (section == 2){
-        return 4;
+        return 5;
     }else{
         return 1;
     }
@@ -728,8 +728,8 @@ static CGFloat ImageHeight  = 210.0;
             case 4:
             {
                 
-                JGDHistoryScoreViewController *histroyVC = [[JGDHistoryScoreViewController alloc] init];
-                histroyVC.fromTeam = 10;
+                JGTeamHisScoreViewController *histroyVC = [[JGTeamHisScoreViewController alloc] init];
+                histroyVC.teamKey = [self.detailDic objectForKey:@"timeKey"];
                 [self.navigationController pushViewController:histroyVC animated:YES];
                 
             }

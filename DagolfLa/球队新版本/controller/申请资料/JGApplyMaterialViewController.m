@@ -211,7 +211,7 @@
 
 - (void)creatNewTableView{
     
-    self.secondTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 4 * 40 * screenWidth / 320) style:UITableViewStylePlain];
+    self.secondTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 5 * 40 * screenWidth / 320) style:UITableViewStylePlain];
     self.secondTableView.delegate = self;
     self.secondTableView.dataSource = self;
     self.secondTableView.scrollEnabled = NO;
@@ -270,9 +270,9 @@
 #pragma mark ------提及
 - (void)complete{
     BOOL isLength = YES;
-    NSArray *array = [NSArray arrayWithObjects:@"userName", @"sex", @"mobile", nil];
+    NSArray *array = [NSArray arrayWithObjects:@"userName", @"sex", @"mobile", @"almost", nil];
     
-    for (int i = 0; i < 3; i ++) {
+    for (int i = 0; i < 4; i ++) {
         
         if (i == 1) {
             
@@ -308,34 +308,12 @@
         }
     }
     
-    NSArray *secArray = [NSArray arrayWithObjects:@"company", @"industry", @"occupation", @"address", @"size", @"hand", nil];
-    
-    for (int i = 0; i < 6; i ++) {
-        if (i == 5) {
-            
-            //            JGButtonTableViewCell *cell = [self.secondTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:1]];
-            //
-            //            [self.paraDic setObject:@([cell.button.titleLabel.text  integerValue]) forKey:array[i]];
-            
-        }else{
-            
-            JGApplyMaterialTableViewCell *cell = [self.secondTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:1]];
-            if (cell.textFD.text && ([cell.textFD.text length] != 0)) {
-                [self.paraDic setObject:cell.textFD.text  forKey:secArray[i]];
-            }
-        }
-    }
-    
+  
+
     if (isLength) {
         
         [[NSUserDefaults standardUserDefaults] setObject:[self.paraDic objectForKey:@"userName"]forKey: @"realUserName"];
         
-        //        [self.paraDic setObject:@83 forKey:@"userKey"];   // TEST
-        if ([[NSUserDefaults standardUserDefaults] objectForKey:@"almost"] != nil) {
-            [self.paraDic setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"almost"] forKey:@"almost"];
-        }else{
-            [self.paraDic setObject:@0 forKey:@"almost"];
-        }
         [self.paraDic setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"userId"] forKey:@"userKey"];
         
         [self.paraDic setObject:@(self.teamKey) forKey:@"teamKey"];
@@ -446,20 +424,15 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    if (section == 0) {
-        return 3;
-    }else{
-        return 6;
-    }
+
+    return 4;
+
 }
 
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
-    if (section == 0) {
+
         return @"";
-    }else{
-        return @"";
-    }
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
@@ -476,29 +449,25 @@
         NSLog(@"%@", [[NSUserDefaults standardUserDefaults] objectForKey:@"sex"]);
         NSInteger sex = [[[NSUserDefaults standardUserDefaults] objectForKey:@"sex"] integerValue];
         cell.contentLB.text = sex ? @"男" : @"女";
-//        if (sex == 0) {
-//            [self.paraDic setObject:@0 forKey:@"sex"];
-//        }else{
-//            [self.paraDic setObject:@1 forKey:@"sex"];
-//        }
-//        cell.contentLB.text = @"请选择";
+
         cell.contentLB.textAlignment = NSTextAlignmentRight;
-//        [cell.button addTarget:self action:@selector(cellBtn) forControlEvents:(UIControlEventTouchUpInside)];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 
         return cell;
-    }else if (indexPath.section == 1 && indexPath.row == 5){
-        JGLableAndLableTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellLB" forIndexPath:indexPath];
-        cell.promptLB.text = self.titleArray[indexPath.section][indexPath.row];
-        cell.promptLB.textColor = [UIColor lightGrayColor];
-        cell.contentLB.frame = CGRectMake(100  * screenWidth / 320, 15 * screenWidth / 320, screenWidth - 130  * screenWidth / 320, 15 * screenWidth / 320);
-        cell.contentLB.text = @"请选择";
-        cell.contentLB.textAlignment = NSTextAlignmentRight;
-//        [cell.button addTarget:self action:@selector(cellBtnSec) forControlEvents:(UIControlEventTouchUpInside)];
+    }else if (indexPath.section == 0 && indexPath.row == 3){
+        JGApplyMaterialTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
+        cell.labell.text = @"差点";
+        cell.labell.textColor = [UIColor lightGrayColor];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        return cell;
+        if ([self.memeDic objectForKey:@"almost"]) {
+            cell.textFD.text = [[self.memeDic objectForKey:@"almost"] stringValue];
+            return cell;
+        }else{
+            cell.textFD.placeholder = @"请输入你的差点";
+            return cell;
+        }
+        
     }else{
         JGApplyMaterialTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
         
