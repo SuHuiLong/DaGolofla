@@ -26,7 +26,6 @@ static NSString *const JGHCenterBtnTableViewCellIdentifier = @"JGHCenterBtnTable
     NSMutableDictionary* _dictChoose;
     NSMutableDictionary *_dict;
 }
-//@property (nonatomic, strong)JGHPublishedPeopleView *publisView;
 
 @property (nonatomic, strong)UITableView *scoreManageTableView;
 
@@ -35,14 +34,6 @@ static NSString *const JGHCenterBtnTableViewCellIdentifier = @"JGHCenterBtnTable
 @end
 
 @implementation JGHActivityScoreManagerViewController
-
-//- (JGHPublishedPeopleView *)publisView{
-//    if (_publisView == nil) {
-//        self.publisView = [[[NSBundle mainBundle]loadNibNamed:@"JGHPublishedPeopleView" owner:self options:nil]lastObject];
-//        self.publisView.frame = CGRectMake(0, screenHeight -44, screenWidth, 44);
-//    }
-//    return _publisView;
-//}
 
 - (instancetype)init{
     if (self == [super init]) {
@@ -254,6 +245,14 @@ static NSString *const JGHCenterBtnTableViewCellIdentifier = @"JGHCenterBtnTable
 #pragma mark -- 添加记录
 - (void)addScoreRecord{
     JGHActivityMembersViewController *friendCtrl = [[JGHActivityMembersViewController alloc]init];
+    friendCtrl.teamKey = _activityBaseModel.teamKey;
+    if (_activityBaseModel.teamActivityKey != 0) {
+        friendCtrl.activityKey = _activityBaseModel.teamActivityKey;
+    }else{
+        friendCtrl.activityKey = [_activityBaseModel.timeKey integerValue];
+    }
+    
+    friendCtrl.activityModel = _activityBaseModel;
     [self.navigationController pushViewController:friendCtrl animated:YES];
 }
 #pragma mark -- 设置差点
