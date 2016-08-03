@@ -27,11 +27,11 @@
 		2012AD8F1D2BB6E600F70E40 /* JGLPresentAwardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2012AD8C1D2BB6E600F70E40 /* JGLPresentAwardViewController.m */; };
 		2012AD9B1D3615AB00F70E40 /* JGHScoresViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2012AD9A1D3615AB00F70E40 /* JGHScoresViewController.m */; };
 		2012AD9E1D36192F00F70E40 /* JGHScoresMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2012AD9D1D36192F00F70E40 /* JGHScoresMainViewController.m */; };
-		202EC7F91D50B7740090FE4B /* JGHScoreCalculateCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 202EC7F81D50B7740090FE4B /* JGHScoreCalculateCell.m */; };
 		202EC7FD1D50C9360090FE4B /* JGHOperationScoreListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 202EC7FB1D50C9360090FE4B /* JGHOperationScoreListCell.m */; };
 		202EC7FE1D50C9360090FE4B /* JGHOperationScoreListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 202EC7FC1D50C9360090FE4B /* JGHOperationScoreListCell.xib */; };
 		202EC8021D50CCB20090FE4B /* JGHOperScoreBtnListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 202EC8001D50CCB20090FE4B /* JGHOperScoreBtnListCell.m */; };
 		202EC8031D50CCB20090FE4B /* JGHOperScoreBtnListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 202EC8011D50CCB20090FE4B /* JGHOperScoreBtnListCell.xib */; };
+		202EC8051D5188F20090FE4B /* JGHScoreCalculateCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 202EC8041D5188F20090FE4B /* JGHScoreCalculateCell.m */; };
 		2048E8D41D4A247700A2C024 /* JGHMatchTranscriptTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2048E8D21D4A247700A2C024 /* JGHMatchTranscriptTableViewCell.m */; };
 		2048E8D51D4A247700A2C024 /* JGHMatchTranscriptTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2048E8D31D4A247700A2C024 /* JGHMatchTranscriptTableViewCell.xib */; };
 		2048E8D91D4A2CB300A2C024 /* JGHPlayersScoreTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2048E8D71D4A2CB300A2C024 /* JGHPlayersScoreTableViewCell.m */; };
@@ -962,13 +962,13 @@
 		2012AD9A1D3615AB00F70E40 /* JGHScoresViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHScoresViewController.m; sourceTree = "<group>"; };
 		2012AD9C1D36192F00F70E40 /* JGHScoresMainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHScoresMainViewController.h; sourceTree = "<group>"; };
 		2012AD9D1D36192F00F70E40 /* JGHScoresMainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHScoresMainViewController.m; sourceTree = "<group>"; };
-		202EC7F81D50B7740090FE4B /* JGHScoreCalculateCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHScoreCalculateCell.m; sourceTree = "<group>"; };
 		202EC7FA1D50C9360090FE4B /* JGHOperationScoreListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHOperationScoreListCell.h; sourceTree = "<group>"; };
 		202EC7FB1D50C9360090FE4B /* JGHOperationScoreListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHOperationScoreListCell.m; sourceTree = "<group>"; };
 		202EC7FC1D50C9360090FE4B /* JGHOperationScoreListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JGHOperationScoreListCell.xib; sourceTree = "<group>"; };
 		202EC7FF1D50CCB20090FE4B /* JGHOperScoreBtnListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHOperScoreBtnListCell.h; sourceTree = "<group>"; };
 		202EC8001D50CCB20090FE4B /* JGHOperScoreBtnListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHOperScoreBtnListCell.m; sourceTree = "<group>"; };
 		202EC8011D50CCB20090FE4B /* JGHOperScoreBtnListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JGHOperScoreBtnListCell.xib; sourceTree = "<group>"; };
+		202EC8041D5188F20090FE4B /* JGHScoreCalculateCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHScoreCalculateCell.m; sourceTree = "<group>"; };
 		2048E8D11D4A247700A2C024 /* JGHMatchTranscriptTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHMatchTranscriptTableViewCell.h; sourceTree = "<group>"; };
 		2048E8D21D4A247700A2C024 /* JGHMatchTranscriptTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHMatchTranscriptTableViewCell.m; sourceTree = "<group>"; };
 		2048E8D31D4A247700A2C024 /* JGHMatchTranscriptTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JGHMatchTranscriptTableViewCell.xib; sourceTree = "<group>"; };
@@ -2758,7 +2758,7 @@
 				2048E8D21D4A247700A2C024 /* JGHMatchTranscriptTableViewCell.m */,
 				2048E8D31D4A247700A2C024 /* JGHMatchTranscriptTableViewCell.xib */,
 				2048E8FE1D4F715500A2C024 /* JGHScoreCalculateCell.h */,
-				202EC7F81D50B7740090FE4B /* JGHScoreCalculateCell.m */,
+				202EC8041D5188F20090FE4B /* JGHScoreCalculateCell.m */,
 				2048E8D61D4A2CB300A2C024 /* JGHPlayersScoreTableViewCell.h */,
 				2048E8D71D4A2CB300A2C024 /* JGHPlayersScoreTableViewCell.m */,
 				2048E8D81D4A2CB300A2C024 /* JGHPlayersScoreTableViewCell.xib */,
@@ -7245,7 +7245,6 @@
 				208837991D17D206004C7B5D /* JGHActicityDetailsViewController.m in Sources */,
 				36B9B5981C3E00200053B227 /* CollectViewController.m in Sources */,
 				2012AD801D2BB1B200F70E40 /* JGHAddAwardImageCell.m in Sources */,
-				202EC7F91D50B7740090FE4B /* JGHScoreCalculateCell.m in Sources */,
 				F55426861D2516DD00233B20 /* JGLabel.m in Sources */,
 				360148F81C1FFE5E0074C395 /* ManageFinfishModel.m in Sources */,
 				821724241D504896007BC63D /* JGLScoreLiveModel.m in Sources */,
@@ -7333,6 +7332,7 @@
 				364F81411C0705B700DEE016 /* TeamPhotoModel.m in Sources */,
 				20513BD51CF7050A003233FB /* DataSigner.m in Sources */,
 				362317121BD9D31500257862 /* PageViewController.m in Sources */,
+				202EC8051D5188F20090FE4B /* JGHScoreCalculateCell.m in Sources */,
 				65B596EB1CAD43AC007AB83A /* YMButton.m in Sources */,
 				828A99F51CE3481D00AF9860 /* JGMemManageController.m in Sources */,
 				F55597251CF53FF900F33099 /* JGTeamMemberORManagerViewController.m in Sources */,
