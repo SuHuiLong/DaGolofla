@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="302" id="KGk-i7-Jjw" customClass="JGHOperationSimlpeCell">
+            <rect key="frame" x="0.0" y="0.0" width="395" height="302"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="395" height="301.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg-column" translatesAutoresizingMaskIntoConstraints="NO" id="OHc-QM-VT3">
+                        <rect key="frame" x="20" y="5" width="355" height="296.5"/>
+                        <color key="backgroundColor" red="0.91764705882352937" green="0.91764705882352937" blue="0.91764705882352937" alpha="1" colorSpace="calibratedRGB"/>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="仅记录总杆" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ptj-7G-lDx">
+                        <rect key="frame" x="155" y="65" width="85" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="03" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wPZ-hA-5vu">
+                        <rect key="frame" x="167.5" y="136" width="61" height="60"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="50"/>
+                        <color key="textColor" red="0.93333333330000001" green="0.52156862749999999" blue="0.027450980390000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="杆数" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Ot-R2-8fR">
+                        <rect key="frame" x="35" y="155" width="36" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KyT-XP-HpI">
+                        <rect key="frame" x="260" y="150" width="50" height="32"/>
+                        <state key="normal" image="reductionScores"/>
+                        <connections>
+                            <action selector="redBtnClick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="P1f-qp-Hc3"/>
+                        </connections>
+                    </button>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a8U-Mu-PNa">
+                        <rect key="frame" x="310" y="150" width="50" height="32"/>
+                        <state key="normal" image="addScores"/>
+                        <connections>
+                            <action selector="addBtnClick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="WFN-iZ-sXj"/>
+                        </connections>
+                    </button>
+                </subviews>
+                <color key="backgroundColor" red="0.88235294117647056" green="0.88235294117647056" blue="0.88235294117647056" alpha="1" colorSpace="calibratedRGB"/>
+                <constraints>
+                    <constraint firstItem="4Ot-R2-8fR" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="35" id="2MK-nX-Aej"/>
+                    <constraint firstItem="OHc-QM-VT3" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="2cs-aj-N0O"/>
+                    <constraint firstItem="a8U-Mu-PNa" firstAttribute="centerY" secondItem="KyT-XP-HpI" secondAttribute="centerY" id="2h8-6s-fBi"/>
+                    <constraint firstAttribute="bottom" secondItem="OHc-QM-VT3" secondAttribute="bottom" id="JvP-Kz-xYq"/>
+                    <constraint firstItem="wPZ-hA-5vu" firstAttribute="top" secondItem="Ptj-7G-lDx" secondAttribute="bottom" constant="50" id="SI2-tq-H06"/>
+                    <constraint firstItem="4Ot-R2-8fR" firstAttribute="centerY" secondItem="wPZ-hA-5vu" secondAttribute="centerY" id="XqR-FE-GnS"/>
+                    <constraint firstItem="wPZ-hA-5vu" firstAttribute="centerX" secondItem="Ptj-7G-lDx" secondAttribute="centerX" id="dV2-CS-RQh"/>
+                    <constraint firstItem="Ptj-7G-lDx" firstAttribute="centerX" secondItem="OHc-QM-VT3" secondAttribute="centerX" id="f6a-UE-U8i"/>
+                    <constraint firstItem="Ptj-7G-lDx" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="65" id="fQ0-uI-mbe"/>
+                    <constraint firstItem="OHc-QM-VT3" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="oUI-s7-ApR"/>
+                    <constraint firstItem="KyT-XP-HpI" firstAttribute="centerY" secondItem="wPZ-hA-5vu" secondAttribute="centerY" id="pSf-23-d19"/>
+                    <constraint firstItem="a8U-Mu-PNa" firstAttribute="leading" secondItem="KyT-XP-HpI" secondAttribute="trailing" id="san-kW-s06"/>
+                    <constraint firstAttribute="trailing" secondItem="a8U-Mu-PNa" secondAttribute="trailing" constant="35" id="wwf-ce-niE"/>
+                    <constraint firstAttribute="trailing" secondItem="OHc-QM-VT3" secondAttribute="trailing" constant="20" id="yTg-xd-BQ1"/>
+                </constraints>
+            </tableViewCellContentView>
+            <color key="backgroundColor" red="0.91764705879999997" green="0.91764705879999997" blue="0.91764705879999997" alpha="1" colorSpace="calibratedRGB"/>
+            <connections>
+                <outlet property="addBtn" destination="a8U-Mu-PNa" id="4Ru-2K-hFg"/>
+                <outlet property="addBtnRight" destination="wwf-ce-niE" id="QbP-gI-G6R"/>
+                <outlet property="bgLeft" destination="oUI-s7-ApR" id="K2n-r5-ESq"/>
+                <outlet property="bgRight" destination="yTg-xd-BQ1" id="Trl-sU-NTu"/>
+                <outlet property="bgTop" destination="2cs-aj-N0O" id="7M2-oB-RmH"/>
+                <outlet property="onlyScoreTotal" destination="Ptj-7G-lDx" id="XUU-2C-KvU"/>
+                <outlet property="onlyScoreTotalTop" destination="fQ0-uI-mbe" id="jeL-ab-ycd"/>
+                <outlet property="redBtn" destination="KyT-XP-HpI" id="i1M-zi-Ema"/>
+                <outlet property="rodLabel" destination="4Ot-R2-8fR" id="WKp-UU-xSa"/>
+                <outlet property="rodLabelLeft" destination="2MK-nX-Aej" id="WAX-5R-f38"/>
+                <outlet property="rodVlaue" destination="wPZ-hA-5vu" id="Dmd-ok-IGN"/>
+                <outlet property="rodVlaueTop" destination="SI2-tq-H06" id="pMN-8s-xgb"/>
+            </connections>
+            <point key="canvasLocation" x="343.5" y="272"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="addScores" width="50" height="32"/>
+        <image name="bg-column" width="335" height="310"/>
+        <image name="reductionScores" width="50" height="32"/>
+    </resources>
+</document>

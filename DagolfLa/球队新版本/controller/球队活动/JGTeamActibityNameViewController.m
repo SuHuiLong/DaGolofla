@@ -251,20 +251,16 @@ static CGFloat ImageHeight  = 210.0;
             [self.model setValuesForKeysWithDictionary:[data objectForKey:@"activity"]];
             
             [self setData];//设置名称 及 图片
-            
-//            if ([[Helper returnCurrentDateString] compare:_model.beginDate] > 0) {
-//                [self createViewTheResults];
-//            }else{
-                if ([[Helper returnCurrentDateString] compare:_model.signUpEndTime] < 0) {
-                    if ([_isApply integerValue] == 0) {
-                        [self createApplyBtn];//报名按钮
-                    }else{
-                        [self createCancelBtnAndApplyOrPay];//已报名
-                    }
+
+            if ([[Helper returnCurrentDateString] compare:_model.signUpEndTime] < 0) {
+                if ([_isApply integerValue] == 0) {
+                    [self createApplyBtn];//报名按钮
                 }else{
-                    self.teamActibityNameTableView.frame = CGRectMake(0, 0, ScreenWidth, ScreenHeight);
+                    [self createCancelBtnAndApplyOrPay];//已报名
                 }
-//            }
+            }else{
+                self.teamActibityNameTableView.frame = CGRectMake(0, 0, ScreenWidth, ScreenHeight);
+            }
             
             [_subDataArray removeAllObjects];
             if ([self.model.memberPrice floatValue] > 0) {
@@ -512,15 +508,6 @@ static CGFloat ImageHeight  = 210.0;
     cancelApplyCtrl.model = _model;
     [self.navigationController pushViewController:cancelApplyCtrl animated:YES];
 }
-#pragma mark -- 查看成绩
-//- (void)createViewTheResults{
-//    _viewResultsBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, screenHeight-44, screenWidth, 44)];
-//    [_viewResultsBtn setTitle:@"查看成绩" forState:UIControlStateNormal];
-//    _viewResultsBtn.backgroundColor = [UIColor colorWithHexString:Nav_Color];
-//    [_viewResultsBtn addTarget:self action:@selector(getTeamActivityResults:) forControlEvents:UIControlEventTouchUpInside];
-//    
-//    [self.view addSubview:_viewResultsBtn];
-//}
 #pragma mark -- 创建报名按钮
 - (void)createApplyBtn{
     self.headPortraitBtn.layer.masksToBounds = YES;
@@ -656,6 +643,7 @@ static CGFloat ImageHeight  = 210.0;
         UIButton *applyListBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, screenWidth, headerCell.frame.size.height)];
         [applyListBtn addTarget:self action:@selector(getTeamActivitySignUpList:) forControlEvents:UIControlEventTouchUpInside];
         [headerCell addSubview:applyListBtn];
+        headerCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         [headerCell congiftitles:@"查看报名人"];
         [headerCell congifCount:self.model.sumCount andSum:self.model.maxCount];
         return (UIView *)headerCell;
@@ -664,12 +652,14 @@ static CGFloat ImageHeight  = 210.0;
         UIButton *applyListBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, screenWidth, headerCell.frame.size.height)];
         [applyListBtn addTarget:self action:@selector(getTeamActivityResults:) forControlEvents:UIControlEventTouchUpInside];
         [headerCell addSubview:applyListBtn];
+        headerCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         [headerCell congiftitles:@"查看成绩"];
         return (UIView *)headerCell;
     }else if (section == 5) {
         JGHHeaderLabelCell *headerCell = [tableView dequeueReusableCellWithIdentifier:JGHHeaderLabelCellIdentifier];
         UIButton *applyListBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, screenWidth, headerCell.frame.size.height)];
         [applyListBtn addTarget:self action:@selector(getTeamActivityAward:) forControlEvents:UIControlEventTouchUpInside];
+        headerCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         [headerCell addSubview:applyListBtn];
         [headerCell congiftitles:@"查看奖项"];
         return (UIView *)headerCell;
@@ -678,6 +668,7 @@ static CGFloat ImageHeight  = 210.0;
         UIButton *detailsBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, screenWidth, detailsCell.frame.size.height)];
         [detailsBtn addTarget:self action:@selector(pushDetailSCtrl:) forControlEvents:UIControlEventTouchUpInside];
         [detailsCell addSubview:detailsBtn];
+        detailsCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         [detailsCell configDetailsText:@"活动详情" AndActivityDetailsText:self.model.info];
         return (UIView *)detailsCell;
     }

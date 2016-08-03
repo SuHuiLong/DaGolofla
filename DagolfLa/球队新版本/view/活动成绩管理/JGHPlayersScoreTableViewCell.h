@@ -13,6 +13,14 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *imageScoreLeft;//30
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *imageScoreRight;//30
 
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *imageScoreWith;//18
 
+@property (weak, nonatomic) IBOutlet UILabel *fristLabel;
+
+@property (weak, nonatomic) IBOutlet UILabel *twoLabel;
+
+@property (weak, nonatomic) IBOutlet UILabel *threeLabel;
+
+@property (weak, nonatomic) IBOutlet UILabel *fiveLabel;
 
 @end

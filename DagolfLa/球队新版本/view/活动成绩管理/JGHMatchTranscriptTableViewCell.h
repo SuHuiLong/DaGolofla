@@ -8,6 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol JGHMatchTranscriptTableViewCellDelegate <NSObject>
+
+- (void)selectSetAlmostBtn;
+
+@end
+
 @interface JGHMatchTranscriptTableViewCell : UITableViewCell
 
 
@@ -30,6 +36,8 @@
 - (IBAction)setAlmostBtnClick:(UIButton *)sender;
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *setAlmostBtnRight;//10
+
+@property (nonatomic, weak)id <JGHMatchTranscriptTableViewCellDelegate> delegate;
 
 
 @end

@@ -63,6 +63,7 @@
                     <constraint firstItem="Lks-mL-WwH" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="QJo-Le-1AO"/>
                     <constraint firstItem="j5z-ms-kca" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="TZN-9Q-G3a"/>
                     <constraint firstItem="zY9-C1-Tum" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="VzW-qO-0A0"/>
+                    <constraint firstItem="zY9-C1-Tum" firstAttribute="centerY" secondItem="lcp-gv-kRg" secondAttribute="centerY" id="W3d-5m-cxV"/>
                     <constraint firstItem="j5z-ms-kca" firstAttribute="height" secondItem="lcp-gv-kRg" secondAttribute="height" id="aYj-wP-v0q"/>
                     <constraint firstItem="zY9-C1-Tum" firstAttribute="width" secondItem="lcp-gv-kRg" secondAttribute="width" id="eic-iX-rA2"/>
                     <constraint firstItem="lcp-gv-kRg" firstAttribute="leading" secondItem="y7P-rP-jXG" secondAttribute="trailing" constant="30" id="rpV-G9-bGL"/>
@@ -70,9 +71,14 @@
                 </constraints>
             </tableViewCellContentView>
             <connections>
+                <outlet property="fiveLabel" destination="j5z-ms-kca" id="HDr-Mb-pXS"/>
+                <outlet property="fristLabel" destination="lcp-gv-kRg" id="5bZ-lO-kZ5"/>
                 <outlet property="imageScore" destination="y7P-rP-jXG" id="VIC-RM-Chj"/>
                 <outlet property="imageScoreLeft" destination="DRu-pW-SyN" id="Nxn-eN-Dg0"/>
                 <outlet property="imageScoreRight" destination="rpV-G9-bGL" id="uNH-uW-CmN"/>
+                <outlet property="imageScoreWith" destination="yql-Pq-dfG" id="Z80-UV-ksu"/>
+                <outlet property="threeLabel" destination="Lks-mL-WwH" id="Lx7-Ik-rc7"/>
+                <outlet property="twoLabel" destination="zY9-C1-Tum" id="LLr-3N-vVB"/>
             </connections>
             <point key="canvasLocation" x="290" y="291.5"/>
         </tableViewCell>

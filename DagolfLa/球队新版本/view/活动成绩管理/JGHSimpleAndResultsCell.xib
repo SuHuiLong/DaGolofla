@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="KGk-i7-Jjw" customClass="JGHSimpleAndResultsCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="选择记分方式" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5um-cN-EqI">
+                        <rect key="frame" x="10" y="11" width="102" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9gn-4f-L9x">
+                        <rect key="frame" x="220" y="7" width="90" height="30"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="90" id="gSn-n5-RI4"/>
+                        </constraints>
+                        <state key="normal" title="十八洞成绩">
+                            <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                        <connections>
+                            <action selector="holeScoreBtnClick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="KsR-QF-a4b"/>
+                        </connections>
+                    </button>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xzt-Cf-0Qn">
+                        <rect key="frame" x="120" y="7" width="80" height="30"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="80" id="Isg-Sl-qe5"/>
+                        </constraints>
+                        <state key="normal" title="简单记分">
+                            <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                        <connections>
+                            <action selector="simpleScoreBtnClick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="anz-X1-HZO"/>
+                        </connections>
+                    </button>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="5um-cN-EqI" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="0Eg-kh-ROM"/>
+                    <constraint firstAttribute="trailing" secondItem="9gn-4f-L9x" secondAttribute="trailing" constant="10" id="2Ca-yo-aFT"/>
+                    <constraint firstItem="5um-cN-EqI" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="IyI-Su-FFd"/>
+                    <constraint firstItem="9gn-4f-L9x" firstAttribute="leading" secondItem="xzt-Cf-0Qn" secondAttribute="trailing" constant="20" id="U5Y-L2-hjp"/>
+                    <constraint firstItem="9gn-4f-L9x" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="V0b-Ai-Gat"/>
+                    <constraint firstItem="xzt-Cf-0Qn" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="qUG-Ef-xkA"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="holeScoreBtn" destination="9gn-4f-L9x" id="0Zb-py-wTo"/>
+                <outlet property="holeScoreBtnRight" destination="2Ca-yo-aFT" id="zoe-Mr-YnL"/>
+                <outlet property="holeScoreBtnW" destination="gSn-n5-RI4" id="9x0-Me-86r"/>
+                <outlet property="simpleScoreBtn" destination="xzt-Cf-0Qn" id="dJC-1n-nOa"/>
+                <outlet property="simpleScoreBtnRight" destination="U5Y-L2-hjp" id="6Kb-Fh-rz2"/>
+                <outlet property="simpleScoreBtnW" destination="Isg-Sl-qe5" id="nKw-gX-biU"/>
+                <outlet property="titleLable" destination="5um-cN-EqI" id="Xje-to-R1A"/>
+                <outlet property="titleLableLeft" destination="0Eg-kh-ROM" id="VyF-Ll-0JT"/>
+            </connections>
+        </tableViewCell>
+    </objects>
+</document>

@@ -257,7 +257,7 @@
     _pushToCommunityBtn.layer.cornerRadius = 3.0*ProportionAdapter;
     [_pushToCommunityBtn.layer setBorderWidth:1.0];
     _pushToCommunityBtn.layer.borderColor=[UIColor orangeColor].CGColor;
-    [_pushToCommunityBtn addTarget:self action:@selector(faClick) forControlEvents:UIControlEventTouchUpInside];
+    [_pushToCommunityBtn addTarget:self action:@selector(faClick:) forControlEvents:UIControlEventTouchUpInside];
     [_bgView addSubview:_pushToCommunityBtn];
 }
 
@@ -532,8 +532,8 @@
     JGDHistoryScoreViewController *historyCtrl = [[JGDHistoryScoreViewController alloc]init];
     [self.navigationController pushViewController:historyCtrl animated:YES];
 }
--(void)faClick{
-    
+-(void)faClick:(UIButton *)btn{
+    btn.enabled = NO;
     [_textView resignFirstResponder];
 //    [[ShowHUD showHUD]showAnimationWithText:@"正在发布..." FromView:self.view];
     //    BOOL type = 0;
@@ -558,6 +558,7 @@
                 [MBProgressHUD hideHUDForView:self.view  animated:YES];
                 
                 //NSLog(@"%@",dict);
+                btn.enabled = YES;
                 UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"发布成功" delegate:self cancelButtonTitle:nil otherButtonTitles:nil, nil];
                 [alertView show];
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
@@ -572,6 +573,7 @@
                 alertView.tag = 1000;
             } failed:^(NSError *error) {
                 [MBProgressHUD hideHUDForView:self.view  animated:YES];
+                btn.enabled = YES;
                 UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"\n链接超时！\n" delegate:self cancelButtonTitle:nil otherButtonTitles:nil, nil];
                 [alertView show];
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
@@ -583,6 +585,7 @@
                 [MBProgressHUD hideHUDForView:self.view  animated:YES];
                 NSDictionary* dictData = [NSJSONSerialization JSONObjectWithData:respondsData options:NSJSONReadingMutableContainers error:nil];
                 NSLog(@"%@",dictData);
+                btn.enabled = YES;
                 UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"发布成功" delegate:self cancelButtonTitle:nil otherButtonTitles:nil, nil];
                 [alertView show];
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
@@ -597,6 +600,7 @@
                 alertView.tag = 1000;
                 
             } failed:^(NSError *error) {
+                btn.enabled = YES;
                 [MBProgressHUD hideHUDForView:self.view  animated:YES];
                 UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"\n链接超时！\n" delegate:self cancelButtonTitle:nil otherButtonTitles:nil, nil];
                 [alertView show];
@@ -608,6 +612,7 @@
     }
     else
     {
+        btn.enabled = YES;
         [MBProgressHUD hideHUDForView:self.view  animated:YES];
         //
         //        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"请重新输入文字" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
@@ -616,6 +621,8 @@
             [self presentViewController:alertView animated:YES completion:nil];
         }];
     }
+    
+    btn.enabled = YES;
 }
 
 

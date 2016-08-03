@@ -46,5 +46,9 @@
 }
 
 - (IBAction)setAlmostBtnClick:(UIButton *)sender {
+    if (self.delegate) {
+        [self.delegate selectSetAlmostBtn];
+    }
 }
+
 @end

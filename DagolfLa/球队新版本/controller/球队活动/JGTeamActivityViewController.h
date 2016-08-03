@@ -22,4 +22,6 @@
 // 球队审核状态
 @property (nonatomic, assign)NSInteger state;
 
+@property (nonatomic, assign) NSInteger fromMine; // 从我的活动进入传 1
+
 @end
