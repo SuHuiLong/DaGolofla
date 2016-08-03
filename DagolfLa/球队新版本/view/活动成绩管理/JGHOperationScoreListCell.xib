@@ -21,8 +21,8 @@
                         <rect key="frame" x="20" y="25" width="280" height="295.5"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <connections>
-                            <outlet property="dataSource" destination="-1" id="lvU-Ir-Dav"/>
-                            <outlet property="delegate" destination="-1" id="rnH-7i-NVa"/>
+                            <outlet property="dataSource" destination="KGk-i7-Jjw" id="6gM-W5-Wgk"/>
+                            <outlet property="delegate" destination="KGk-i7-Jjw" id="QJu-1D-vAm"/>
                         </connections>
                     </tableView>
                 </subviews>
@@ -38,6 +38,9 @@
                     <constraint firstAttribute="trailing" secondItem="Zm6-Pm-iSu" secondAttribute="trailing" constant="20" id="tXc-aQ-qdE"/>
                 </constraints>
             </tableViewCellContentView>
+            <connections>
+                <outlet property="operationScoreListTable" destination="Zm6-Pm-iSu" id="IdR-ze-9JD"/>
+            </connections>
             <point key="canvasLocation" x="217" y="198.5"/>
         </tableViewCell>
     </objects>

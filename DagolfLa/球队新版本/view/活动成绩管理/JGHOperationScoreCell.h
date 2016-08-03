@@ -10,9 +10,9 @@
 
 @protocol JGHOperationScoreCellDelegate <NSObject>
 
-- (void)addOperationBtn;
+- (void)addOperationBtn:(UIButton *)btn;
 
-- (void)redOperationBtn;
+- (void)redOperationBtn:(UIButton *)btn;
 
 - (void)scoreListBtn;
 

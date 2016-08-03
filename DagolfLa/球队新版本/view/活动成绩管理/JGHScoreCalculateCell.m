@@ -11,7 +11,7 @@
 
 static NSString *const JGHOperationScoreCellIdentifier = @"JGHOperationScoreCell";
 
-@interface JGHScoreCalculateCell ()<UITableViewDelegate, UITableViewDataSource>
+@interface JGHScoreCalculateCell ()<UITableViewDelegate, UITableViewDataSource, JGHOperationScoreCellDelegate>
 
 @property (nonatomic, strong)UITableView *scoreCalculateTable;
 
@@ -23,11 +23,20 @@ static NSString *const JGHOperationScoreCellIdentifier = @"JGHOperationScoreCell
     [super awakeFromNib];
     // Initialization code
     
-    [self createScoreCalculateTable];
+    
+}
+
+- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
+    if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
+        self.poleNumberArray = [NSMutableArray array];
+        
+        [self createScoreCalculateTable];
+    }
+    return self;
 }
 
 - (void)createScoreCalculateTable{
-    self.scoreCalculateTable = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight -64) style:UITableViewStylePlain];
+    self.scoreCalculateTable = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, screenWidth) style:UITableViewStylePlain];
     
     UINib *operationScoreCellNib = [UINib nibWithNibName:@"JGHOperationScoreCell" bundle: [NSBundle mainBundle]];
     [self.scoreCalculateTable registerNib:operationScoreCellNib forCellReuseIdentifier:JGHOperationScoreCellIdentifier];
@@ -43,6 +52,10 @@ static NSString *const JGHOperationScoreCellIdentifier = @"JGHOperationScoreCell
     
     self.scoreCalculateTable.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.scoreCalculateTable.backgroundColor = [UIColor colorWithHexString:BG_color];
+    self.scoreCalculateTable.transform = CGAffineTransformMakeRotation(-M_PI/2);
+    self.scoreCalculateTable.pagingEnabled = YES;
+    self.scoreCalculateTable.showsHorizontalScrollIndicator = NO;
+    self.scoreCalculateTable.showsVerticalScrollIndicator = NO;
     [self addSubview:self.scoreCalculateTable];
 }
 
@@ -56,23 +69,62 @@ static NSString *const JGHOperationScoreCellIdentifier = @"JGHOperationScoreCell
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 280 *ProportionAdapter;
+    return screenWidth;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     JGHOperationScoreCell *tranCell = [tableView dequeueReusableCellWithIdentifier:JGHOperationScoreCellIdentifier];
+    tranCell.addScoreBtn.tag = 100 + indexPath.section;
+    tranCell.redScoreBtn.tag = 200 + indexPath.section;
+    tranCell.delegate = self;
+    tranCell.transform = CGAffineTransformMakeRotation(M_PI/2);
     return tranCell;
 
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    return 10*ProportionAdapter;
+    return 0;
 }
 
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
-    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, 10*ProportionAdapter)];
-    view.backgroundColor = [UIColor colorWithHexString:BG_color];
-    return view;
+#pragma mark -- +
+- (void)addOperationBtn:(UIButton *)btn{
+    for (int i=0; i<18; i++) {
+        if (i == btn.tag - 100) {
+            NSInteger poles = [[self.poleNumberArray objectAtIndex:i] integerValue];
+            if (poles > 0) {
+                poles += 1;
+            }else{
+                poles = 1;
+            }
+            
+            [self.poleNumberArray replaceObjectAtIndex:i withObject:@(poles)];
+        }
+    }
+    
+    self.returnScoresCalculateDataArray(_poleNumberArray);
+}
+#pragma mark -- -
+- (void)redOperationBtn:(UIButton *)btn{
+    for (int i=0; i<18; i++) {
+        if (i == btn.tag - 100) {
+            NSInteger poles = [[self.poleNumberArray objectAtIndex:i] integerValue];
+            if (poles > 1) {
+                poles -= 1;
+            }else{
+                poles = 0;
+            }
+            
+            [self.poleNumberArray replaceObjectAtIndex:i withObject:@(poles)];
+        }
+    }
+    
+    self.returnScoresCalculateDataArray(_poleNumberArray);
+}
+#pragma mark -- list
+- (void)scoreListBtn{
+    if (self.delegate) {
+        [self.delegate selectScoreListBtn];
+    }
 }
 
 
