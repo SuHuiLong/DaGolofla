@@ -20,6 +20,9 @@
 
 @interface JGHSetBallBaseCell : UITableViewCell
 
+@property (weak, nonatomic) IBOutlet UIImageView *bgImage;
+
+
 @property (nonatomic, weak)id <JGHSetBallBaseCellDelegate> delegate;
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *bgTop;//5
@@ -51,5 +54,7 @@
 - (IBAction)startBtnClick:(UIButton *)sender;
 
 - (void)configRegist1:(NSString *)regist1 andRegist2:(NSString *)regist2;
+
+- (void)configViewBallName:(NSString *)ballName andLoginpic:(NSString *)loginpic;
 
 @end

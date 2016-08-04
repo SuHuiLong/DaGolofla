@@ -184,20 +184,24 @@ static NSString *const JGHCenterBtnTableViewCellIdentifier = @"JGHCenterBtnTable
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    NSLog(@"%td", indexPath.section);
     if (indexPath.section == 0) {
         JGHMatchTranscriptTableViewCell *tranCell = [tableView dequeueReusableCellWithIdentifier:JGHMatchTranscriptTableViewCellIdentifier];
         tranCell.delegate = self;
         tranCell.selectionStyle = UITableViewCellSelectionStyleNone;
         [tranCell configActivityName:_activityBaseModel.ballName andStartTime:_activityBaseModel.beginDate andEndTime:_activityBaseModel.endDate];
+        tranCell.selectionStyle = UITableViewCellSelectionStyleNone;
         return tranCell;
-    }else if (indexPath.section == _dataArray.count + 1){
+    }else if (indexPath.section == _dataArray.count + 2){
         JGHCenterBtnTableViewCell *centerBtnCell = [tableView dequeueReusableCellWithIdentifier:JGHCenterBtnTableViewCellIdentifier];
         centerBtnCell.delegate = self;
+        centerBtnCell.selectionStyle = UITableViewCellSelectionStyleNone;
         centerBtnCell.selectionStyle = UITableViewCellSelectionStyleNone;
         return centerBtnCell;
     }else{
         if (indexPath.section == 1) {
             JGHPlayersScoreTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:JGHPlayersScoreTableViewCellIdentifier];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
             cell.imageScore.hidden = YES;
             cell.fristLabel.text = @"姓名";
             cell.fristLabel.textColor = [UIColor lightGrayColor];
@@ -213,9 +217,9 @@ static NSString *const JGHCenterBtnTableViewCellIdentifier = @"JGHCenterBtnTable
             JGHPlayersScoreTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:JGHPlayersScoreTableViewCellIdentifier];
             cell.selectBtn.tag = indexPath.section -1 + 100;
             cell.delegate = self;
-            [cell showData:_dataArray[indexPath.section-1]];
+            [cell showData:_dataArray[indexPath.section-2]];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
             return cell;
         }
     }
