@@ -74,14 +74,15 @@
      @Param(value="md5"
      */
     [dict setObject:DEFAULF_USERID forKey:@"userKey"];
-    [dict setObject:@"" forKey:@"teamKey"];
-    [dict setObject:@"" forKey:@"teamActivityKey"];
+    [dict setObject:@(_teamKey) forKey:@"teamKey"];
+    [dict setObject:@(_teamActivityKey) forKey:@"teamActivityKey"];
     [dict setObject:@(_selectId) forKey:@"almostType"];
     [[JsonHttp jsonHttp]httpRequestWithMD5:@"score/setAlmost" JsonKey:nil withData:dict failedBlock:^(id errType) {
         
     } completionBlock:^(id data) {
         NSLog(@"%@", data);
-        if ([[data objectForKey:@"packSuccess"] boolValue] == YES) {
+        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+            _refreshBlock();
             [self.navigationController popViewControllerAnimated:YES];
         }else{
             if ([data objectForKey:@"packResultMsg"]) {

@@ -44,16 +44,6 @@
     _dataAccountDict = [[NSMutableDictionary alloc]init];
     _dictData        = [[NSMutableDictionary alloc]init];
     [self uiConfig];
-    
-    UIBarButtonItem *item = [[UIBarButtonItem alloc]initWithTitle:@"完成" style:UIBarButtonItemStylePlain target:self action:@selector(saveBtnClick)];
-    item.tintColor=[UIColor whiteColor];
-    self.navigationItem.rightBarButtonItem = item;
-}
-
-- (void)saveBtnClick{
-    JGHSimpleScoreViewController *simpleCtrl = [[JGHSimpleScoreViewController alloc]init];
-    simpleCtrl.actModel = _activityModel;
-    [self.navigationController pushViewController:simpleCtrl animated:YES];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -89,6 +79,7 @@
 
 #pragma mark - 下载数据
 - (void)downLoadData:(int)page isReshing:(BOOL)isReshing{
+    
     NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
     [dict setObject:DEFAULF_USERID forKey:@"userKey"];
     [dict setObject:[NSNumber numberWithInteger:_activityKey] forKey:@"activityKey"];
@@ -182,17 +173,14 @@
     cell.imgvIcon.layer.masksToBounds = YES;
     
     return cell;
-    
-    
-    
-    
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-
-    
     JGHSimpleScoreViewController *simpleCtrl = [[JGHSimpleScoreViewController alloc]init];
+    NSLog(@"%td", indexPath.section);
+    simpleCtrl.playModel = self.listArray[indexPath.section][indexPath.row];
+    simpleCtrl.actModel = _activityModel;
     [self.navigationController pushViewController:simpleCtrl animated:YES];
 }
 

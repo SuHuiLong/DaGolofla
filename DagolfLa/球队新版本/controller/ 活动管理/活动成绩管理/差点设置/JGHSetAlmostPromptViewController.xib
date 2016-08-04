@@ -91,10 +91,10 @@
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MN6-Ir-6ic">
-                    <rect key="frame" x="10" y="204" width="300" height="169"/>
+                    <rect key="frame" x="10" y="204" width="300" height="133"/>
                     <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="新新贝利亚算法自动计算差点" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qw5-fY-4P9">
-                            <rect key="frame" x="10" y="15" width="195" height="18"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="采用成员自报差点" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qw5-fY-4P9">
+                            <rect key="frame" x="10" y="15" width="120" height="18"/>
                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
                             <color key="textColor" red="0.24313725489999999" green="0.70588235290000001" blue="0.30196078430000001" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
@@ -112,14 +112,14 @@
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="xiao_dan" translatesAutoresizingMaskIntoConstraints="NO" id="Ruk-5D-NIp">
                             <rect key="frame" x="275" y="16" width="15" height="15"/>
                         </imageView>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="系统从18洞中随机抽取6个洞不计分，按新新比利亚算法计算出每个成员当场活动的差点。补录记分时，如采用“简单记分”未填18洞成绩，新新贝利亚算法无法计算该成员差点，需手动添加；" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HKH-mq-49U">
-                            <rect key="frame" x="10" y="64" width="280" height="90"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="采用队员历史差点数据或嘉宾报名时填写的差点作为当场活动的差点。如成员无差点数据，需手动添加。" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HKH-mq-49U">
+                            <rect key="frame" x="10" y="64" width="280" height="54"/>
                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7Ih-TF-Fun">
-                            <rect key="frame" x="0.0" y="0.0" width="300" height="169"/>
+                            <rect key="frame" x="0.0" y="0.0" width="300" height="133"/>
                             <connections>
                                 <action selector="twoBtnClick:" destination="-1" eventType="touchUpInside" id="YtM-eS-OVA"/>
                             </connections>
@@ -145,7 +145,7 @@
                     </constraints>
                 </view>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EC3-zB-wHR">
-                    <rect key="frame" x="10" y="383" width="300" height="78"/>
+                    <rect key="frame" x="10" y="347" width="300" height="78"/>
                     <string key="text">注：两种情况需要手动添加差点
 a、采用成员自报差点时，如成员无差点数据，需手动添加；
 b、补录记分时如未填18洞成绩，新新贝利亚算法无法计算差点，需手动添加；</string>

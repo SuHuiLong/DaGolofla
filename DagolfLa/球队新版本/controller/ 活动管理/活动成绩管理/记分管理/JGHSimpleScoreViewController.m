@@ -15,6 +15,8 @@
 #import "JGHScoreCalculateCell.h"
 #import "JGHOperationScoreListCell.h"
 #import "JGTeamAcitivtyModel.h"
+#import "JGLAddActiivePlayModel.h"
+#import "JGHActivityScoreManagerViewController.h"
 
 static NSString *const JGHSimpleScorePepoleBaseCellIdentifier = @"JGHSimpleScorePepoleBaseCell";
 static NSString *const JGHSimpleAndResultsCellIdentifier = @"JGHSimpleAndResultsCell";
@@ -60,7 +62,7 @@ static NSString *const JGHOperationScoreListCellIdentifier = @"JGHOperationScore
     self.view.backgroundColor = [UIColor colorWithHexString:BG_color];
     self.navigationItem.title = @"添加记分";
     _selectId = 0;
-    _poles = 0;
+    _poles = 72;
     _holeListId = 0;
     _userScoreBeanDict = [NSMutableDictionary dictionary];
     self.polesArray = [NSMutableArray array];
@@ -81,12 +83,6 @@ static NSString *const JGHOperationScoreListCellIdentifier = @"JGHOperationScore
 #pragma mark -- 获取标准杆
 - (void)getStandardlevers{
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    /**
-     @Param(value="ballKey" , require=true) Long    ballKey,
-     @Param(value="region1" , require=true) String  region1,// 第一九洞区域
-     @Param(value="region2" , require=true) String  region2,// 第二九洞区域
-     @Param(value="md5"     , require=true) String  md5,// md5
-     */
     [dict setObject:@(_actModel.ballKey) forKey:@"ballKey"];
     [dict setObject:_region1 forKey:@"region1"];
     [dict setObject:_region2 forKey:@"region2"];
@@ -122,8 +118,6 @@ static NSString *const JGHOperationScoreListCellIdentifier = @"JGHOperationScore
                 [self presentViewController:alertView animated:YES completion:nil];
             }];
         }
-        
-//        [self.simpleScoreTableView reloadData];
     }];
 }
 
@@ -187,6 +181,7 @@ static NSString *const JGHOperationScoreListCellIdentifier = @"JGHOperationScore
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 0) {
         JGHSimpleScorePepoleBaseCell *tranCell = [tableView dequeueReusableCellWithIdentifier:JGHSimpleScorePepoleBaseCellIdentifier];
+        [tranCell configScoreJGLAddActiivePlayModel:_playModel];
         return tranCell;
     }else if (indexPath.section == 1) {
         JGHSimpleAndResultsCell *centerBtnCell = [tableView dequeueReusableCellWithIdentifier:JGHSimpleAndResultsCellIdentifier];
@@ -332,7 +327,7 @@ static NSString *const JGHOperationScoreListCellIdentifier = @"JGHOperationScore
 #pragma mark -- 完成
 - (void)saveBtnClick:(UIBarButtonItem *)item{
     NSLog(@"完成");
-
+    [[ShowHUD showHUD]showAnimationWithText:@"提交中" FromView:self.view];
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     [dict setObject:DEFAULF_USERID forKey:@"userKey"];
     if (_actModel.teamActivityKey != 0) {
@@ -346,27 +341,79 @@ static NSString *const JGHOperationScoreListCellIdentifier = @"JGHOperationScore
     if (_selectId != 0) {
         [dict setObject:_region1 forKey:@"region1"];
         [dict setObject:_region2 forKey:@"region2"];
-        [userScoreDict setObject:@"" forKey:@"userKey"];
-        [userScoreDict setObject:@"" forKey:@"userName"];
-        [userScoreDict setObject:@"" forKey:@"userMobile"];
-        [userScoreDict setObject:@"" forKey:@"almost"];
+        if ([_playModel.userKey integerValue] != 0) {
+            [userScoreDict setObject:_playModel.userKey forKey:@"userKey"];
+        }else{
+            [userScoreDict setObject:@0 forKey:@"userKey"];
+        }
+        
+        if (_playModel.userName) {
+            [userScoreDict setObject:_playModel.userName forKey:@"userName"];
+        }
+        
+        if (_playModel.mobile) {
+            [userScoreDict setObject:_playModel.mobile forKey:@"userMobile"];
+        }
+        
+        if (_playModel.almost) {
+            [userScoreDict setObject:@"" forKey:@"almost"];
+        }
+        
         [userScoreDict setObject:_polesArray forKey:@"poleNumber"];
         [dict setObject:userScoreDict forKey:@"userScoreBean"];
     }else{
-        [userScoreDict setObject:@"" forKey:@"userKey"];
-        [userScoreDict setObject:@"" forKey:@"userName"];
-        [userScoreDict setObject:@"" forKey:@"userMobile"];
-        [userScoreDict setObject:@"" forKey:@"almost"];
+        if ([_playModel.userKey integerValue] != 0) {
+            [userScoreDict setObject:_playModel.userKey forKey:@"userKey"];
+        }else{
+            [userScoreDict setObject:@0 forKey:@"userKey"];
+        }
+        
+        if (_playModel.userName) {
+            [userScoreDict setObject:_playModel.userName forKey:@"userName"];
+        }
+        
+        if (_playModel.mobile) {
+            [userScoreDict setObject:_playModel.mobile forKey:@"userMobile"];
+        }
+        
+        if (_playModel.almost) {
+            [userScoreDict setObject:@"" forKey:@"almost"];
+        }
+        
         [userScoreDict setObject:@(_poles) forKey:@"poles"];
         [dict setObject:userScoreDict forKey:@"userScoreBean"];
     }
     
     [[JsonHttp jsonHttp]httpRequestWithMD5:@"score/makeupTeamScore" JsonKey:nil withData:dict failedBlock:^(id errType) {
-        
+        [[ShowHUD showHUD]hideAnimationFromView:self.view];
     } completionBlock:^(id data) {
+        [[ShowHUD showHUD]hideAnimationFromView:self.view];
         NSLog(@"%@", data);
-        
+        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+            
+            if ([NSThread isMainThread]) {
+                NSLog(@"Yay!");
+                [self performSelector:@selector(pushCtrl) withObject:self afterDelay:1.0];
+            } else {
+                NSLog(@"Humph, switching to main");
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self performSelector:@selector(pushCtrl) withObject:self afterDelay:1.0];
+                });
+            }
+        }else{
+            if ([data objectForKey:@"packResultMsg"]) {
+                [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+            }
+        }
     }];
+}
+- (void)pushCtrl{
+    for (UIViewController *controller in self.navigationController.viewControllers) {
+        if ([controller isKindOfClass:[JGHActivityScoreManagerViewController class]]) {
+            
+            [self.navigationController popToViewController:controller animated:YES];
+        }
+    }
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

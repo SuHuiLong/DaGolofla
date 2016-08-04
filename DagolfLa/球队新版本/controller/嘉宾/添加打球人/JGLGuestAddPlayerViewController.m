@@ -1,29 +1,22 @@
 //
-//  JGLScoreOverViewViewController.m
+//  JGLGuestAddPlayerViewController.m
 //  DagolfLa
 //
-//  Created by 黄达明 on 16/7/28.
+//  Created by 黄达明 on 16/8/4.
 //  Copyright © 2016年 bhxx. All rights reserved.
 //
 
-#import "JGLScoreOverViewViewController.h"
+#import "JGLGuestAddPlayerViewController.h"
 
-@interface JGLScoreOverViewViewController ()<UIScrollViewDelegate>
-{
-    UIScrollView* _scrollView;
-}
+@interface JGLGuestAddPlayerViewController ()
+
 @end
 
-@implementation JGLScoreOverViewViewController
+@implementation JGLGuestAddPlayerViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    self.title = @"球队成绩总览";
-    
-    
-    
-    
+    // Do any additional setup after loading the view.
 }
 
 - (void)didReceiveMemoryWarning {

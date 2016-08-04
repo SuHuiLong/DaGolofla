@@ -52,9 +52,8 @@
     NSMutableDictionary *dict = [[NSMutableDictionary alloc]init];
     
     [dict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:userID] forKey:@"userKey"];
-    [dict setObject:@625801 forKey:@"teamActivityKey"];
-    NSString* str = @"625801";
-    [dict setObject:[Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@&teamActivityKey=%@dagolfla.com", DEFAULF_USERID,str]] forKey:@"md5"];
+    [dict setObject:_activity forKey:@"teamActivityKey"];
+    [dict setObject:[Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@&teamActivityKey=%@dagolfla.com", DEFAULF_USERID,_activity]] forKey:@"md5"];
     [[JsonHttp jsonHttp]httpRequest:@"score/getScoreDirectSeeding" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
         if (isReshing) {
             [_tableView.header endRefreshing];
