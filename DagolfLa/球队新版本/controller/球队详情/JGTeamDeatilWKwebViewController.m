@@ -82,7 +82,8 @@
         [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:strU]]];
     }
     else if (_isScoreAll == YES){
-        NSString* strMd = [JGReturnMD5Str getTeamBillInfoWithTeamKey:_teamKey userKey:[DEFAULF_USERID integerValue]];
+//        NSString* strMd = [JGReturnMD5Str getTeamBillInfoWithTeamKey:_teamKey userKey:[DEFAULF_USERID integerValue]];
+        NSString* strMd = [Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@&teamKey=%tddagolfla.com", DEFAULF_USERID, _teamKey]];
         NSString* strU = [NSString stringWithFormat:@"%@&md5=%@",self.detailString,strMd];
         [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:strU]]];
     }

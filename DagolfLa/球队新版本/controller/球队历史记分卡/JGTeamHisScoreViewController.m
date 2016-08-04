@@ -19,7 +19,7 @@
 
 #import "JGHRetrieveScoreViewController.h" // 取回记分
 #import "JGDHistoryScoreShowViewController.h"
-#import "JGDActSelfHistoryScoreViewController.h"
+#import "JGTeamDeatilWKwebViewController.h"
 
 
 @interface JGTeamHisScoreViewController ()<UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate,UISearchResultsUpdating>
@@ -57,7 +57,7 @@
     self.view.backgroundColor = [UIColor colorWithHexString:@"#f4f4f4"];
     [self createTableView];
     
-    UIBarButtonItem *rightBar = [[UIBarButtonItem alloc] initWithTitle:@"成绩总揽" style:(UIBarButtonItemStyleDone) target:self action:@selector(takeCode)];
+    UIBarButtonItem *rightBar = [[UIBarButtonItem alloc] initWithTitle:@"成绩总览" style:(UIBarButtonItemStyleDone) target:self action:@selector(takeCode)];
     rightBar.tintColor = [UIColor whiteColor];
     [rightBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:15 * ProportionAdapter], NSFontAttributeName, nil] forState:(UIControlStateNormal)];
     
@@ -102,13 +102,16 @@
 }
 
 
-#pragma mark ----- 成绩总揽
+#pragma mark ----- 成绩总览
 
 - (void)takeCode{
     
-    //成绩总揽
-    JGDActSelfHistoryScoreViewController * VC = [[JGDActSelfHistoryScoreViewController alloc] init];
-    VC.timeKey = @33160;
+    //成绩总览
+    JGTeamDeatilWKwebViewController * VC = [[JGTeamDeatilWKwebViewController alloc] init];
+//    VC.timeKey = @33160;
+    VC.isScoreAll = YES;
+    VC.detailString = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/score/teamYearScoreOverview.html?userKey=222&teamKey=1?userKey=%@&teamKey=%@",DEFAULF_USERID,_teamKey];
+    VC.teamKey = [_teamKey integerValue];
     [self.navigationController pushViewController:VC animated:YES];
     
 }
