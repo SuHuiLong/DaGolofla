@@ -27,6 +27,7 @@
 		2012AD8F1D2BB6E600F70E40 /* JGLPresentAwardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2012AD8C1D2BB6E600F70E40 /* JGLPresentAwardViewController.m */; };
 		2012AD9B1D3615AB00F70E40 /* JGHScoresViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2012AD9A1D3615AB00F70E40 /* JGHScoresViewController.m */; };
 		2012AD9E1D36192F00F70E40 /* JGHScoresMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2012AD9D1D36192F00F70E40 /* JGHScoresMainViewController.m */; };
+		202EC8071D5360990090FE4B /* JGHOperationScoreCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 202EC8061D5360990090FE4B /* JGHOperationScoreCell.xib */; };
 		2048E8EA1D4B369E00A2C024 /* JGHSetAlmostPromptViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2048E8E81D4B369E00A2C024 /* JGHSetAlmostPromptViewController.m */; };
 		2048E8EB1D4B369E00A2C024 /* JGHSetAlmostPromptViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2048E8E91D4B369E00A2C024 /* JGHSetAlmostPromptViewController.xib */; };
 		2048E8EF1D4B528E00A2C024 /* JGHSimpleScoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2048E8EE1D4B528E00A2C024 /* JGHSimpleScoreViewController.m */; };
@@ -812,7 +813,6 @@
 		F53A055D1D518F32009DD489 /* JGHMatchTranscriptTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F53A053C1D518F32009DD489 /* JGHMatchTranscriptTableViewCell.m */; };
 		F53A055E1D518F32009DD489 /* JGHMatchTranscriptTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F53A053D1D518F32009DD489 /* JGHMatchTranscriptTableViewCell.xib */; };
 		F53A055F1D518F32009DD489 /* JGHOperationScoreCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F53A053F1D518F32009DD489 /* JGHOperationScoreCell.m */; };
-		F53A05601D518F32009DD489 /* JGHOperationScoreCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F53A05401D518F32009DD489 /* JGHOperationScoreCell.xib */; };
 		F53A05611D518F32009DD489 /* JGHOperationScoreListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F53A05421D518F32009DD489 /* JGHOperationScoreListCell.m */; };
 		F53A05621D518F32009DD489 /* JGHOperationScoreListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F53A05431D518F32009DD489 /* JGHOperationScoreListCell.xib */; };
 		F53A05631D518F32009DD489 /* JGHOperationSimlpeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F53A05451D518F32009DD489 /* JGHOperationSimlpeCell.m */; };
@@ -967,6 +967,7 @@
 		2012AD9A1D3615AB00F70E40 /* JGHScoresViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHScoresViewController.m; sourceTree = "<group>"; };
 		2012AD9C1D36192F00F70E40 /* JGHScoresMainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHScoresMainViewController.h; sourceTree = "<group>"; };
 		2012AD9D1D36192F00F70E40 /* JGHScoresMainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHScoresMainViewController.m; sourceTree = "<group>"; };
+		202EC8061D5360990090FE4B /* JGHOperationScoreCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JGHOperationScoreCell.xib; sourceTree = "<group>"; };
 		2048E8E71D4B369E00A2C024 /* JGHSetAlmostPromptViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHSetAlmostPromptViewController.h; sourceTree = "<group>"; };
 		2048E8E81D4B369E00A2C024 /* JGHSetAlmostPromptViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHSetAlmostPromptViewController.m; sourceTree = "<group>"; };
 		2048E8E91D4B369E00A2C024 /* JGHSetAlmostPromptViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JGHSetAlmostPromptViewController.xib; sourceTree = "<group>"; };
@@ -2418,7 +2419,6 @@
 		F53A053D1D518F32009DD489 /* JGHMatchTranscriptTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JGHMatchTranscriptTableViewCell.xib; sourceTree = "<group>"; };
 		F53A053E1D518F32009DD489 /* JGHOperationScoreCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHOperationScoreCell.h; sourceTree = "<group>"; };
 		F53A053F1D518F32009DD489 /* JGHOperationScoreCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHOperationScoreCell.m; sourceTree = "<group>"; };
-		F53A05401D518F32009DD489 /* JGHOperationScoreCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JGHOperationScoreCell.xib; sourceTree = "<group>"; };
 		F53A05411D518F32009DD489 /* JGHOperationScoreListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHOperationScoreListCell.h; sourceTree = "<group>"; };
 		F53A05421D518F32009DD489 /* JGHOperationScoreListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHOperationScoreListCell.m; sourceTree = "<group>"; };
 		F53A05431D518F32009DD489 /* JGHOperationScoreListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JGHOperationScoreListCell.xib; sourceTree = "<group>"; };
@@ -6376,7 +6376,7 @@
 				F53A05511D518F32009DD489 /* JGHScoreCalculateCell.m */,
 				F53A053E1D518F32009DD489 /* JGHOperationScoreCell.h */,
 				F53A053F1D518F32009DD489 /* JGHOperationScoreCell.m */,
-				F53A05401D518F32009DD489 /* JGHOperationScoreCell.xib */,
+				202EC8061D5360990090FE4B /* JGHOperationScoreCell.xib */,
 				F53A05411D518F32009DD489 /* JGHOperationScoreListCell.h */,
 				F53A05421D518F32009DD489 /* JGHOperationScoreListCell.m */,
 				F53A05431D518F32009DD489 /* JGHOperationScoreListCell.xib */,
@@ -6988,6 +6988,7 @@
 				36D0B0F51C80151C00C7245E /* release_notes_ios.txt in Resources */,
 				F53A055C1D518F32009DD489 /* JGHCenterBtnTableViewCell.xib in Resources */,
 				3684FDAC1C4A35F4002A14FC /* TeamApplyViewCell.xib in Resources */,
+				202EC8071D5360990090FE4B /* JGHOperationScoreCell.xib in Resources */,
 				82E6A6F71CF5812C009DD179 /* JGLAuthorityTableViewCell.xib in Resources */,
 				20BA61421CDCA180004B61F5 /* VedioPlayViewController.xib in Resources */,
 				3623172B1BDA12F500257862 /* guide_03.png in Resources */,
@@ -7063,7 +7064,6 @@
 				20591C831D226126003271EC /* JGHWithdrawMoneyCell.xib in Resources */,
 				36BF000A1BC770C4005B3CE2 /* chatfrom_bg_normal.png in Resources */,
 				36DF6DFD1C08235900B60B67 /* TeamPhotoCollectionViewCell.xib in Resources */,
-				F53A05601D518F32009DD489 /* JGHOperationScoreCell.xib in Resources */,
 				82E6A71B1CF68229009DD179 /* JGTeamAdressTableViewCell.xib in Resources */,
 				36BF01C21BC77ABD005B3CE2 /* FabuPostTableViewCell.xib in Resources */,
 				36BFFEC01BC76CDC005B3CE2 /* tab_sq.png in Resources */,
