@@ -50,4 +50,10 @@
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *propmtLabelLeftAndRight;//10
 
+@property (nonatomic, assign)NSInteger teamKey;
+
+@property (nonatomic, assign)NSInteger teamActivityKey;
+
+@property (copy, nonatomic) void (^refreshBlock)();
+
 @end

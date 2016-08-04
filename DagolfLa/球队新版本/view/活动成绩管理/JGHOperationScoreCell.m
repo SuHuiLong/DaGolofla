@@ -14,7 +14,7 @@
     [super awakeFromNib];
     // Initialization code
     self.holeNameTop.constant = 65 *ProportionAdapter;
-    self.holeName.font = [UIFont systemFontOfSize:15*ProportionAdapter];
+    self.holeName.font = [UIFont systemFontOfSize:17*ProportionAdapter];
     
     self.pushNumberLeft.constant = 35 *ProportionAdapter;
     self.pushNumber.font = [UIFont systemFontOfSize:17*ProportionAdapter];

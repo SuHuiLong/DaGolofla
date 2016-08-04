@@ -383,15 +383,15 @@ static CGFloat ImageHeight  = 210.0;
             return;
         }
         
-        if (self.model.signUpEndTime == nil) {
-            [[ShowHUD showHUD]showToastWithText:@"活动报名截止时间不能为空！" FromView:self.view];
-            return;
-        }
-        
-        if ([self.model.beginDate compare:self.model.endDate] > 0) {
-            [[ShowHUD showHUD]showToastWithText:@"活动开始时间不能大于结束时间！" FromView:self.view];
-            return;
-        }
+//        if (self.model.signUpEndTime == nil) {
+//            [[ShowHUD showHUD]showToastWithText:@"活动报名截止时间不能为空！" FromView:self.view];
+//            return;
+//        }
+//        
+//        if ([self.model.beginDate compare:self.model.endDate] > 0) {
+//            [[ShowHUD showHUD]showToastWithText:@"活动开始时间不能大于结束时间！" FromView:self.view];
+//            return;
+//        }
         
         if (self.model.userMobile.length != 11) {
             [[ShowHUD showHUD]showToastWithText:@"手机号码格式不正确！" FromView:self.view];
@@ -465,7 +465,7 @@ static CGFloat ImageHeight  = 210.0;
             NSLog(@"%@", data);
             [[ShowHUD showHUD]hideAnimationFromView:self.view];
             if ([[data objectForKey:@"packSuccess"] integerValue] == 0) {
-                [Helper alertViewWithTitle:@"活动更新失败！" withBlock:^(UIAlertController *alertView) {
+                [Helper alertViewWithTitle:[data objectForKey:@"packResultMsg"] withBlock:^(UIAlertController *alertView) {
                     [self.navigationController presentViewController:alertView animated:YES completion:nil];
                 }];
                 return ;

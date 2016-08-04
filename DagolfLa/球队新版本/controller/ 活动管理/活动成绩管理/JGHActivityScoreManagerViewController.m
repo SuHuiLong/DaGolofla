@@ -111,8 +111,13 @@ static NSString *const JGHCenterBtnTableViewCellIdentifier = @"JGHCenterBtnTable
     NSMutableDictionary *dict = [[NSMutableDictionary alloc]init];
     
     [dict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:userID] forKey:@"userKey"];
-    [dict setObject:@625801 forKey:@"teamActivityKey"];
-    NSString* str = @"625801";
+    if (_activityBaseModel.teamActivityKey != 0) {
+        [dict setObject:@(_activityBaseModel.teamActivityKey) forKey:@"teamActivityKey"];
+    }else{
+        [dict setObject:@([_activityBaseModel.timeKey integerValue]) forKey:@"teamActivityKey"];
+    }
+    
+    NSString* str = [dict objectForKey:@"teamActivityKey"];
     [dict setObject:[Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@&teamActivityKey=%@dagolfla.com", DEFAULF_USERID,str]] forKey:@"md5"];
     [[JsonHttp jsonHttp]httpRequest:@"score/getTeamActivityScoreMgrList" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
         if (isReshing) {
@@ -232,10 +237,13 @@ static NSString *const JGHCenterBtnTableViewCellIdentifier = @"JGHCenterBtnTable
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    JGDActSelfHistoryScoreViewController *actVC = [[JGDActSelfHistoryScoreViewController alloc] init];
-    actVC.scoreModel = self.dataArray[indexPath.row];
-    actVC.timeKey = _activityBaseModel.timeKey;
-    [self.navigationController pushViewController:actVC animated:YES];
+    NSLog(@"%td", indexPath.section);
+    if (indexPath.section < 2 + _dataArray.count -1 && indexPath.section != 0) {
+        JGDActSelfHistoryScoreViewController *actVC = [[JGDActSelfHistoryScoreViewController alloc] init];
+        actVC.scoreModel = self.dataArray[indexPath.row];
+        actVC.timeKey = _activityBaseModel.timeKey;
+        [self.navigationController pushViewController:actVC animated:YES];
+    }
 }
 
 #pragma mark -- 添加记录
@@ -255,6 +263,17 @@ static NSString *const JGHCenterBtnTableViewCellIdentifier = @"JGHCenterBtnTable
 - (void)selectSetAlmostBtn{
     NSLog(@"设置差点");
     JGHSetAlmostPromptViewController *setAlmostCtrl = [[JGHSetAlmostPromptViewController alloc]initWithNibName:@"JGHSetAlmostPromptViewController" bundle:nil];
+    setAlmostCtrl.teamKey = _activityBaseModel.teamKey;
+    if (_activityBaseModel.teamActivityKey != 0) {
+        setAlmostCtrl.teamActivityKey = _activityBaseModel.teamActivityKey;
+    }else{
+        setAlmostCtrl.teamActivityKey = [_activityBaseModel.timeKey integerValue];
+    }
+    
+    setAlmostCtrl.refreshBlock = ^(){
+        [self headRereshing];
+    };
+    
     [self.navigationController pushViewController:setAlmostCtrl animated:YES];
 }
 #pragma mark -- 保存
