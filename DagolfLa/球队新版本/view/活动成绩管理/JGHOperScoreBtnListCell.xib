@@ -16,28 +16,24 @@
                 <subviews>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CQ1-z3-zY5">
                         <rect key="frame" x="0.0" y="7" width="80" height="30"/>
-                        <state key="normal" title="Button"/>
                         <connections>
                             <action selector="oneBtnClick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="xDH-Ax-0xd"/>
                         </connections>
                     </button>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oc0-QP-0lM">
                         <rect key="frame" x="80" y="7" width="80" height="30"/>
-                        <state key="normal" title="Button"/>
                         <connections>
                             <action selector="twoBtnClick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="Qax-bQ-eNS"/>
                         </connections>
                     </button>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AiW-7I-dNa">
                         <rect key="frame" x="160" y="7" width="80" height="30"/>
-                        <state key="normal" title="Button"/>
                         <connections>
                             <action selector="threeBtnClick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="iEb-C2-E7e"/>
                         </connections>
                     </button>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1pv-Sg-uJ7">
                         <rect key="frame" x="240" y="7" width="80" height="30"/>
-                        <state key="normal" title="Button"/>
                         <connections>
                             <action selector="fourBtnClick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="oYU-Se-Dtb"/>
                         </connections>

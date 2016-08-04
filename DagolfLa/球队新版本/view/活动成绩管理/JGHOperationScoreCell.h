@@ -50,4 +50,10 @@
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *propmLabelRight;//15
 
+- (void)configStandPar:(NSInteger)par andHole:(NSInteger)hole andPole:(NSInteger)pole;
+
+@property (weak, nonatomic) IBOutlet UIImageView *sildLeft;
+
+@property (weak, nonatomic) IBOutlet UIImageView *sildRight;
+
 @end

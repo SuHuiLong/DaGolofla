@@ -8,7 +8,17 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol JGHOperScoreBtnListCellDelegate <NSObject>
+
+- (void)didSelectOneHole:(UIButton *)btn;
+
+- (void)didSelectThreeHole:(UIButton *)btn;
+
+@end
+
 @interface JGHOperScoreBtnListCell : UITableViewCell
+
+@property (nonatomic, weak)id <JGHOperScoreBtnListCellDelegate> delegate;
 
 @property (weak, nonatomic) IBOutlet UIButton *oneBtn;
 - (IBAction)oneBtnClick:(UIButton *)sender;
@@ -21,5 +31,9 @@
 
 @property (weak, nonatomic) IBOutlet UIButton *fourBtn;
 - (IBAction)fourBtnClick:(UIButton *)sender;
+
+- (void)configIndex:(NSInteger)index andOneHoel:(NSInteger)oneHole andTwoHole:(NSInteger)twoHole;
+
+- (void)confgiTitleString;
 
 @end

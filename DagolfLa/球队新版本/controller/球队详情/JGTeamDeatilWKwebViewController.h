@@ -26,5 +26,8 @@
 
 @property (nonatomic, assign) NSInteger fromWitchVC; // 判断是哪个控制器
 
+@property (assign, nonatomic) BOOL isScoreAll;//成绩总览
+
+
 
 @end

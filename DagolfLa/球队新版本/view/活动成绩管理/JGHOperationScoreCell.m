@@ -42,6 +42,27 @@
     // Configure the view for the selected state
 }
 
+- (void)configStandPar:(NSInteger)par andHole:(NSInteger)hole andPole:(NSInteger)pole{
+    self.holeName.text = [NSString stringWithFormat:@"%td Hole PAR %td", hole, par];
+    
+    self.sildLeft.image = [UIImage imageNamed:@"sildLeft"];
+    self.sildRight.image = [UIImage imageNamed:@"sildRight"];
+    
+    if (hole == 0) {
+        self.sildLeft.image = [UIImage imageNamed:@"sildLefth"];
+    }
+    
+    if (hole == 17) {
+        self.sildRight.image = [UIImage imageNamed:@"sildRighth"];
+    }
+    
+    if (pole == -1) {
+        self.pushScore.text = [NSString stringWithFormat:@"%td", par];
+    }else{
+        self.pushScore.text = [NSString stringWithFormat:@"%td", pole];
+    }
+}
+
 - (IBAction)addScoreBtnClick:(UIButton *)sender {
     if (self.delegate) {
         [self.delegate addOperationBtn:sender];
