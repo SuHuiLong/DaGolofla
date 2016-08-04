@@ -15,7 +15,7 @@
 #import "JGHPublishedPeopleView.h"
 #import "JGLScoreLiveModel.h"
 #import "JGTeamAcitivtyModel.h"
-
+#import "JGLScoreLiveViewController.h"
 #import "JGDActSelfHistoryScoreViewController.h"
 
 static NSString *const JGHMatchTranscriptTableViewCellIdentifier = @"JGHMatchTranscriptTableViewCell";
@@ -30,6 +30,8 @@ static NSString *const JGHCenterBtnTableViewCellIdentifier = @"JGHCenterBtnTable
     
     JGHPublishedPeopleView *_publisView;
     NSInteger _selectAll;
+    
+    NSInteger _selectNumber;//选择的人数
 }
 
 @property (nonatomic, strong)UITableView *scoreManageTableView;
@@ -53,6 +55,7 @@ static NSString *const JGHCenterBtnTableViewCellIdentifier = @"JGHCenterBtnTable
     // Do any additional setup after loading the view.
     _page = 0;
     _selectAll = 0;
+    _selectNumber = 0;
     self.view.backgroundColor = [UIColor colorWithHexString:BG_color];
     self.navigationItem.title = _activityBaseModel.name;
     _dict = [NSMutableDictionary dictionary];
@@ -329,11 +332,24 @@ static NSString *const JGHCenterBtnTableViewCellIdentifier = @"JGHCenterBtnTable
                 NSLog(@"%@", data);
                 if ([[data objectForKey:@"packSuccess"]integerValue] == 1) {
                     [[ShowHUD showHUD]showToastWithText:@"公布成功！" FromView:self.view];
+                    [self performSelector:@selector(pushCtrl) withObject:self afterDelay:1.0];
+                }else{
+                    
                 }
             }];
         }
     }];
+}
+#pragma mark -- 公布跳转
+- (void)pushCtrl{
+    JGLScoreLiveViewController *scoreLive = [[JGLScoreLiveViewController alloc]init];
+    if (_activityBaseModel.teamActivityKey != 0) {
+        scoreLive.activity = [NSNumber numberWithInteger:_activityBaseModel.teamActivityKey];
+    }else{
+        scoreLive.activity = [NSNumber numberWithInteger:[_activityBaseModel.timeKey integerValue]];
+    }
     
+    [self.navigationController pushViewController:scoreLive animated:YES];
 }
 #pragma mark -- 全选
 - (void)selectAll{
@@ -349,6 +365,8 @@ static NSString *const JGHCenterBtnTableViewCellIdentifier = @"JGHCenterBtnTable
                 [_dataArray replaceObjectAtIndex:i withObject:model];
             }
         }
+        
+        _selectNumber = _dataArray.count;
         [_publisView.imageBtn setImage:[UIImage imageNamed:@"gou_x"] forState:UIControlStateNormal];
         [_publisView.selectAllBtn setTitle:@"取消全选" forState:UIControlStateNormal];
     }else{
@@ -361,10 +379,13 @@ static NSString *const JGHCenterBtnTableViewCellIdentifier = @"JGHCenterBtnTable
                 [_dataArray replaceObjectAtIndex:i withObject:model];
             }
         }
+        
+        _selectNumber = 0;
         [_publisView.imageBtn setImage:[UIImage imageNamed:@"gou_w"] forState:UIControlStateNormal];
         [_publisView.selectAllBtn setTitle:@"全选" forState:UIControlStateNormal];
     }
     
+    _publisView.provalue.text = [NSString stringWithFormat:@"%td", _selectNumber];
     [self.scoreManageTableView reloadData];
 }
 
@@ -373,16 +394,24 @@ static NSString *const JGHCenterBtnTableViewCellIdentifier = @"JGHCenterBtnTable
     NSLog(@"%td", btn.tag);
     for (int i=0; i<_dataArray.count; i++) {
         JGLScoreLiveModel *model = [[JGLScoreLiveModel alloc] init];
-        model = _dataArray[btn.tag -100];
-        if (model.select == 0) {
-            model.select = 1;
+        if (btn.tag-100 == i) {
+            model = _dataArray[btn.tag -100];
+            if (model.select == 0) {
+                model.select = 1;
+                _selectNumber += 1;
+            }else{
+                model.select = 0;
+            }
+            
+            [_dataArray replaceObjectAtIndex:i withObject:model];
         }else{
-            model.select = 0;
+            if (model.select == 1) {
+                _selectNumber += 1;
+            }
         }
-        
-        [_dataArray replaceObjectAtIndex:i withObject:model];
     }
     
+    _publisView.provalue.text = [NSString stringWithFormat:@"%td", _selectNumber];
     [self.scoreManageTableView reloadData];
 }
 
