@@ -75,38 +75,6 @@
             endingLineNumber = "410"
             landmarkName = "-previewBtnClick:"
             landmarkType = "5">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "__54-[JGNewCreateTeamTableViewController previewBtnClick:]_block_invoke_2"
-                  moduleName = "DagolfLa"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/dong/Desktop/dagolfla_ios511/DagolfLa/%E7%90%83%E9%98%9F%E6%96%B0%E7%89%88%E6%9C%AC/controller/%E5%88%9B%E5%BB%BA%E7%90%83%E9%98%9F/JGNewCreateTeamTableViewController.m"
-                  timestampString = "489050468.346948"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "411"
-                  endingLineNumber = "411"
-                  offsetFromSymbolStart = "348">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "__54-[JGNewCreateTeamTableViewController previewBtnClick:]_block_invoke_3"
-                  moduleName = "DagolfLa"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/dong/Desktop/dagolfla_ios511/DagolfLa/%E7%90%83%E9%98%9F%E6%96%B0%E7%89%88%E6%9C%AC/controller/%E5%88%9B%E5%BB%BA%E7%90%83%E9%98%9F/JGNewCreateTeamTableViewController.m"
-                  timestampString = "489050468.347272"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "412"
-                  endingLineNumber = "412"
-                  offsetFromSymbolStart = "65">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -148,12 +116,12 @@
                   moduleName = "DagolfLa"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/dong/Desktop/dagolfla_ios511/DagolfLa/%E7%90%83%E9%98%9F%E6%96%B0%E7%89%88%E6%9C%AC/controller/%E6%88%91%E7%9A%84%E7%90%83%E9%98%9F/JGLJoinManageViewController.m"
-                  timestampString = "489050468.354126"
+                  timestampString = "491970219.793912"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "143"
                   endingLineNumber = "143"
-                  offsetFromSymbolStart = "810">
+                  offsetFromSymbolStart = "737">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
@@ -163,27 +131,12 @@
                   moduleName = "DagolfLa"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/dong/Desktop/dagolfla_ios511/DagolfLa/%E7%90%83%E9%98%9F%E6%96%B0%E7%89%88%E6%9C%AC/controller/%E6%88%91%E7%9A%84%E7%90%83%E9%98%9F/JGLJoinManageViewController.m"
-                  timestampString = "489050468.360056"
+                  timestampString = "491970219.794157"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "143"
-                  endingLineNumber = "143"
+                  startingLineNumber = "145"
+                  endingLineNumber = "145"
                   offsetFromSymbolStart = "51">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "__42-[JGLJoinManageViewController agreeClick:]_block_invoke_2"
-                  moduleName = "DagolfLa"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/dong/Desktop/dagolfla_ios511/DagolfLa/%E7%90%83%E9%98%9F%E6%96%B0%E7%89%88%E6%9C%AC/controller/%E6%88%91%E7%9A%84%E7%90%83%E9%98%9F/JGLJoinManageViewController.m"
-                  timestampString = "489050468.360244"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "143"
-                  endingLineNumber = "143"
-                  offsetFromSymbolStart = "26">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -201,6 +154,22 @@
             startingLineNumber = "138"
             endingLineNumber = "138"
             landmarkName = "-agreeClick:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "DagolfLa/&#x7403;&#x961f;&#x65b0;&#x7248;&#x672c;/controller/ &#x6d3b;&#x52a8;&#x7ba1;&#x7406;/&#x6d3b;&#x52a8;&#x6210;&#x7ee9;&#x7ba1;&#x7406;/&#x6210;&#x5458;&#x5217;&#x8868;/JGHActivityMembersViewController.m"
+            timestampString = "491924622.022576"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "141"
+            endingLineNumber = "141"
+            landmarkName = "-downLoadData:isReshing:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
