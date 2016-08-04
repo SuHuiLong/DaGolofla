@@ -14,10 +14,6 @@
                 <rect key="frame" x="0.0" y="0.0" width="346" height="314.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg-column" translatesAutoresizingMaskIntoConstraints="NO" id="idh-6V-v0b">
-                        <rect key="frame" x="20" y="5" width="306" height="309.5"/>
-                        <color key="backgroundColor" red="0.91764705879999997" green="0.91764705879999997" blue="0.91764705879999997" alpha="1" colorSpace="calibratedRGB"/>
-                    </imageView>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="sildRight" translatesAutoresizingMaskIntoConstraints="NO" id="D9D-Iz-8Rk">
                         <rect key="frame" x="263" y="283" width="7" height="12"/>
                     </imageView>
@@ -70,6 +66,10 @@
                             <action selector="redScoreBtnClick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="dzS-4L-bAG"/>
                         </connections>
                     </button>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg-column" translatesAutoresizingMaskIntoConstraints="NO" id="idh-6V-v0b">
+                        <rect key="frame" x="20" y="5" width="306" height="309.5"/>
+                        <color key="backgroundColor" red="0.91764705879999997" green="0.91764705879999997" blue="0.91764705879999997" alpha="1" colorSpace="calibratedRGB"/>
+                    </imageView>
                 </subviews>
                 <color key="backgroundColor" red="0.91764705879999997" green="0.91764705879999997" blue="0.91764705879999997" alpha="1" colorSpace="calibratedRGB"/>
                 <constraints>
@@ -100,6 +100,7 @@
             <connections>
                 <outlet property="addScoreBtn" destination="83C-zQ-MTA" id="VOn-va-iWd"/>
                 <outlet property="addScoreBtnRight" destination="TKZ-1w-tDg" id="Jh5-zT-VT1"/>
+                <outlet property="bgImage" destination="idh-6V-v0b" id="CJ5-X5-ac6"/>
                 <outlet property="holeName" destination="PRA-q5-PFb" id="eUk-Gt-F2R"/>
                 <outlet property="holeNameTop" destination="qcl-ah-zP0" id="eyh-ZP-lVm"/>
                 <outlet property="propmLabel" destination="YfQ-wA-hYo" id="CBE-Cl-xfJ"/>

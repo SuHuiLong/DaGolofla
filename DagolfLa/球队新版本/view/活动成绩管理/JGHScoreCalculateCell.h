@@ -30,4 +30,8 @@
 
 @property (nonatomic, assign)NSInteger holeId;
 
+@property (nonatomic, strong)NSString *ballName;//球场名称
+
+@property (nonatomic, strong)NSString *loginpic;//图片路径
+
 @end

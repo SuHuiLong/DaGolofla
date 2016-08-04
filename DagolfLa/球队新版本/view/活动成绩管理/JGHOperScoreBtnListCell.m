@@ -21,6 +21,7 @@
     self.threeBtn.titleLabel.font = [UIFont systemFontOfSize:15*ProportionAdapter];
     
     self.fourBtn.titleLabel.font = [UIFont systemFontOfSize:15*ProportionAdapter];
+    
 }
 
 - (void)confgiTitleString{
@@ -38,9 +39,19 @@
 
 - (void)configIndex:(NSInteger)index andOneHoel:(NSInteger)oneHole andTwoHole:(NSInteger)twoHole{
     [self.oneBtn setTitle:[NSString stringWithFormat:@"0%td", index] forState:UIControlStateNormal];
-    [self.twoBtn setTitle:[NSString stringWithFormat:@"%td", oneHole] forState:UIControlStateNormal];
+    if (oneHole > 0) {
+        [self.twoBtn setTitle:[NSString stringWithFormat:@"%td", oneHole] forState:UIControlStateNormal];
+    }else{
+        [self.twoBtn setTitle:@"" forState:UIControlStateNormal];
+    }
+    
     [self.threeBtn setTitle:[NSString stringWithFormat:@"%td", index+9] forState:UIControlStateNormal];
-    [self.fourBtn setTitle:[NSString stringWithFormat:@"%td", twoHole] forState:UIControlStateNormal];
+    if (twoHole >0) {
+        [self.fourBtn setTitle:[NSString stringWithFormat:@"%td", twoHole] forState:UIControlStateNormal];
+    }else{
+        [self.fourBtn setTitle:@"" forState:UIControlStateNormal];
+    }
+    
     
     [self.oneBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [self.twoBtn setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];

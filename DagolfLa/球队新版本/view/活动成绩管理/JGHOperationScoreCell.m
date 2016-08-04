@@ -13,6 +13,12 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
+    self.backgroundColor = [UIColor colorWithHexString:BG_color];
+    self.bgImage.backgroundColor = [UIColor colorWithHexString:BG_color];
+//    [self.bgImage sendSubviewToBack:self];
+    [self.contentView insertSubview:self.bgImage atIndex:0];
+    self.backgroundColor = [UIColor colorWithHexString:BG_color];
+    
     self.holeNameTop.constant = 65 *ProportionAdapter;
     self.holeName.font = [UIFont systemFontOfSize:17*ProportionAdapter];
     
@@ -30,10 +36,11 @@
     self.scoreListBtnTop.constant = 25 *ProportionAdapter;
     self.scoreListBtnRight.constant = 30 *ProportionAdapter;
     self.scoreListBtn.titleLabel.font = [UIFont systemFontOfSize:15*ProportionAdapter];
-
+    
     self.propmLabelLeft.constant = 15 *ProportionAdapter;
     self.propmLabelRight.constant = 15 *ProportionAdapter;
     self.propmLabel.font = [UIFont systemFontOfSize:15*ProportionAdapter];
+    
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -43,7 +50,7 @@
 }
 
 - (void)configStandPar:(NSInteger)par andHole:(NSInteger)hole andPole:(NSInteger)pole{
-    self.holeName.text = [NSString stringWithFormat:@"%td Hole PAR %td", hole, par];
+    self.holeName.text = [NSString stringWithFormat:@"%td Hole PAR %td", hole+1, par];
     
     self.sildLeft.image = [UIImage imageNamed:@"sildLeft"];
     self.sildRight.image = [UIImage imageNamed:@"sildRight"];
@@ -62,6 +69,8 @@
         self.pushScore.text = [NSString stringWithFormat:@"%td", pole];
     }
 }
+
+
 
 - (IBAction)addScoreBtnClick:(UIButton *)sender {
     if (self.delegate) {

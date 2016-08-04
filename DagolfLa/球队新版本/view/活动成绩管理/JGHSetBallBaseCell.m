@@ -19,6 +19,8 @@
     self.bgRight.constant = 20 *ProportionAdapter;
     
     self.headerImageView.image = [UIImage imageNamed:DefaultHeaderImage];
+    self.headerImageView.layer.masksToBounds = YES;
+    self.headerImageView.layer.cornerRadius = self.headerImageView.frame.size.width/2;
     self.headerImageViewTop.constant = 30 *ProportionAdapter;
     self.headerImageViewLeft.constant = 35 *ProportionAdapter;
     self.headerImageViewWith.constant = 40 *ProportionAdapter;
@@ -38,6 +40,9 @@
     self.twoBtn.titleLabel.font = [UIFont systemFontOfSize:15*ProportionAdapter];
  
     self.startBtn.titleLabel.font = [UIFont systemFontOfSize:15*ProportionAdapter];
+    
+    self.bgImage.backgroundColor = [UIColor colorWithHexString:BG_color];
+    self.backgroundColor = [UIColor colorWithHexString:BG_color];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -63,10 +68,14 @@
 }
 
 - (void)configRegist1:(NSString *)regist1 andRegist2:(NSString *)regist2{
-    [self.oneBtn setTitle:[NSString stringWithFormat:@" %@", regist1] forState:UIControlStateNormal];
+    [self.oneBtn setTitle:[NSString stringWithFormat:@"  %@", regist1] forState:UIControlStateNormal];
     
-    [self.twoBtn setTitle:[NSString stringWithFormat:@" %@", regist2] forState:UIControlStateNormal];
+    [self.twoBtn setTitle:[NSString stringWithFormat:@"  %@", regist2] forState:UIControlStateNormal];
 }
 
+- (void)configViewBallName:(NSString *)ballName andLoginpic:(NSString *)loginpic{
+    [self.headerImageView sd_setImageWithURL:[Helper imageIconUrl:loginpic] placeholderImage:[UIImage imageNamed:TeamLogoImage]];
+    self.ballName.text = ballName;
+}
 
 @end

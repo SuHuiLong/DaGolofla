@@ -45,6 +45,9 @@ static NSString *const JGHOperationScoreListCellIdentifier = @"JGHOperationScore
     NSString *_region2;
     
     NSMutableArray *_standardParArray;
+    
+    NSString *_ballName;//球场名
+    NSString *_loginpic;//球场图片地址
 }
 
 @property (nonatomic, strong)NSMutableArray *polesArray;//十八洞杆数
@@ -64,6 +67,8 @@ static NSString *const JGHOperationScoreListCellIdentifier = @"JGHOperationScore
     _selectId = 0;
     _poles = 72;
     _holeListId = 0;
+    _ballName = @"";
+    _loginpic = @"";
     _userScoreBeanDict = [NSMutableDictionary dictionary];
     self.polesArray = [NSMutableArray array];
     _holeArray = [NSMutableArray array];
@@ -102,6 +107,7 @@ static NSString *const JGHOperationScoreListCellIdentifier = @"JGHOperationScore
         }
     }];
 }
+#pragma mark -- 球场信息
 - (void)loadBallData{
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     [dict setObject:@(_actModel.ballKey) forKey:@"ballKey"];
@@ -113,10 +119,12 @@ static NSString *const JGHOperationScoreListCellIdentifier = @"JGHOperationScore
             _holeArray = [data objectForKey:@"ballAreas"];
             _region1 = [_holeArray objectAtIndex:0];
             _region2 = [_holeArray objectAtIndex:0];
+            _ballName = [data objectForKey:@"ballName"];
+            _loginpic = [data objectForKey:@"loginpic"];
         }else{
-            [Helper alertViewWithTitle:@"球场整修中" withBlock:^(UIAlertController *alertView) {
-                [self presentViewController:alertView animated:YES completion:nil];
-            }];
+            if ([data objectForKey:@"packResultMsg"]) {
+                [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+            }
         }
     }];
 }
@@ -182,22 +190,27 @@ static NSString *const JGHOperationScoreListCellIdentifier = @"JGHOperationScore
     if (indexPath.section == 0) {
         JGHSimpleScorePepoleBaseCell *tranCell = [tableView dequeueReusableCellWithIdentifier:JGHSimpleScorePepoleBaseCellIdentifier];
         [tranCell configScoreJGLAddActiivePlayModel:_playModel];
+        tranCell.selectionStyle = UITableViewCellSelectionStyleNone;
         return tranCell;
     }else if (indexPath.section == 1) {
         JGHSimpleAndResultsCell *centerBtnCell = [tableView dequeueReusableCellWithIdentifier:JGHSimpleAndResultsCellIdentifier];
         centerBtnCell.delegate = self;
         [centerBtnCell configUIBtn:_selectId];
+        centerBtnCell.selectionStyle = UITableViewCellSelectionStyleNone;
         return centerBtnCell;
     }else {
         if (_selectId == 0) {
             JGHOperationSimlpeCell *operationSimlpeCell = [tableView dequeueReusableCellWithIdentifier:JGHOperationSimlpeCellIdentifier];
             operationSimlpeCell.delegate = self;
             [operationSimlpeCell configPoles:_poles];
+            operationSimlpeCell.selectionStyle = UITableViewCellSelectionStyleNone;
             return operationSimlpeCell;
         }else if (_selectId == 1){
             JGHSetBallBaseCell *setBallBaseCell = [tableView dequeueReusableCellWithIdentifier:JGHSetBallBaseCellIdentifier];
             setBallBaseCell.delegate = self;
             [setBallBaseCell configRegist1:_region1 andRegist2:_region2];
+            [setBallBaseCell configViewBallName:_ballName andLoginpic:_loginpic];
+            setBallBaseCell.selectionStyle = UITableViewCellSelectionStyleNone;
             return setBallBaseCell;
         }else if (_selectId == 2){
             JGHScoreCalculateCell *scoreCalculateCell = [tableView dequeueReusableCellWithIdentifier:@"JGHScoreCalculateCell"];
@@ -205,7 +218,9 @@ static NSString *const JGHOperationScoreListCellIdentifier = @"JGHOperationScore
             scoreCalculateCell.poleNumberArray = self.polesArray;
             scoreCalculateCell.parArray = _standardParArray;
             scoreCalculateCell.holeId = _holeListId;
-            [scoreCalculateCell setNeedsLayout];
+            scoreCalculateCell.ballName = _ballName;
+            scoreCalculateCell.loginpic = _loginpic;
+//            [scoreCalculateCell setNeedsLayout];
             __weak JGHSimpleScoreViewController *weakSelf = self;
             scoreCalculateCell.returnScoresCalculateDataArray= ^(NSMutableArray *dataArray){
                 weakSelf.polesArray = dataArray;
@@ -223,6 +238,7 @@ static NSString *const JGHOperationScoreListCellIdentifier = @"JGHOperationScore
             };
 
             operationScoreListCell.poleArray = self.polesArray;
+            operationScoreListCell.selectionStyle = UITableViewCellSelectionStyleNone;
             return operationScoreListCell;
         }
     }

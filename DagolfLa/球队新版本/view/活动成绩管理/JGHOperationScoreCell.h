@@ -20,6 +20,10 @@
 
 @interface JGHOperationScoreCell : UITableViewCell
 
+
+@property (weak, nonatomic) IBOutlet UIImageView *bgImage;
+
+
 @property (nonatomic, weak)id <JGHOperationScoreCellDelegate> delegate;
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *holeNameTop;//65
@@ -55,5 +59,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *sildLeft;
 
 @property (weak, nonatomic) IBOutlet UIImageView *sildRight;
+
+
 
 @end

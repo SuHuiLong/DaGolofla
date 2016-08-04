@@ -22,7 +22,7 @@ static NSString *const JGHOperationScoreCellIdentifier = @"JGHOperationScoreCell
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
-    
+    self.backgroundColor = [UIColor colorWithHexString:BG_color];
     
 }
 
@@ -30,7 +30,7 @@ static NSString *const JGHOperationScoreCellIdentifier = @"JGHOperationScoreCell
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
         self.poleNumberArray = [NSMutableArray array];
         self.parArray = [NSMutableArray array];
-        
+        self.backgroundColor = [UIColor colorWithHexString:BG_color];
         [self createScoreCalculateTable];
     }
     return self;
@@ -56,7 +56,12 @@ static NSString *const JGHOperationScoreCellIdentifier = @"JGHOperationScoreCell
 }
 
 - (void)layoutSubviews{
-    [self.scoreCalculateTable setContentOffset:CGPointMake(0, screenWidth*_holeId) animated:YES];
+    if (_holeId > 1) {
+        [self.scoreCalculateTable setContentOffset:CGPointMake(0, screenWidth*(_holeId-1)) animated:YES];
+    }else{
+        [self.scoreCalculateTable setContentOffset:CGPointMake(0, 0) animated:YES];
+    }
+    
 }
 
 #pragma mark -- tableView代理
@@ -84,8 +89,9 @@ static NSString *const JGHOperationScoreCellIdentifier = @"JGHOperationScoreCell
         [tranCell configStandPar:-1 andHole:indexPath.section andPole:[_poleNumberArray[indexPath.section] integerValue]];
     }
     
+    tranCell.selectionStyle = UITableViewCellSelectionStyleNone;
+    
     return tranCell;
-
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
@@ -120,8 +126,8 @@ static NSString *const JGHOperationScoreCellIdentifier = @"JGHOperationScoreCell
             if (poles == -1) {
                 poles = [_parArray[btn.tag - 200] integerValue];
             }else{
-                if (poles == 0) {
-                    poles = 0;
+                if (poles <= 1) {
+                    poles = 1;
                 }else{
                     poles -= 1;
                 }
