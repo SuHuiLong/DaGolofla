@@ -102,7 +102,7 @@
 }
 
 
-#pragma mark ----- 取回记分／成绩总揽
+#pragma mark ----- 取回记分／成绩总览
 
 - (void)takeMyCode{
     
