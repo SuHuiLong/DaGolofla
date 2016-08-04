@@ -56,7 +56,7 @@
     }
     
     if (model.netbar != nil) {
-        self.fiveLabel.text = [NSString stringWithFormat:@"%.f",[model.netbar floatValue]];
+        self.fiveLabel.text = [NSString stringWithFormat:@"%.1f",[model.netbar floatValue]];
     }
     else
     {
