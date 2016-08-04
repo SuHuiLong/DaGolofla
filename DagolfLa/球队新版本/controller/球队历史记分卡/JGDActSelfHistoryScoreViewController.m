@@ -153,7 +153,7 @@
             self.chadianTF = [[UITextField alloc] initWithFrame:CGRectMake(330 * ProportionAdapter, 45 * ProportionAdapter, 50 * ProportionAdapter, 25 * ProportionAdapter)];
             self.chadianTF.font = [UIFont systemFontOfSize:15 * ProportionAdapter];
             self.chadianTF.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
-            self.chadianTF.text = [self.model.almost stringValue];
+            self.chadianTF.text = [NSString stringWithFormat:@"%.2f", [self.model.almost floatValue]];
             [viewTitle addSubview:self.chadianTF];
             
             UIView *view = [[UIView alloc] initWithFrame:CGRectMake(315 * ProportionAdapter, 70 * ProportionAdapter, 50 * ProportionAdapter, 1 * ProportionAdapter)];
