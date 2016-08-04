@@ -26,6 +26,8 @@
 //
 @property (strong, nonatomic) NSString* mobile;
 
+@property (strong, nonatomic) NSNumber* almost;
+
 /**
  *  activityKey = 5456;
  almost = 0;

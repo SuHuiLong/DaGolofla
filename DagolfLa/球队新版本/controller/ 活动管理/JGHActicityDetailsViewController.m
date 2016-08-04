@@ -620,7 +620,7 @@ static CGFloat ImageHeight  = 210.0;
         UIButton *applyListBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, screenWidth, headerCell.frame.size.height)];
         [applyListBtn addTarget:self action:@selector(getTeamActivitySignUpList:) forControlEvents:UIControlEventTouchUpInside];
         [headerCell addSubview:applyListBtn];
-        [headerCell congiftitles:@"分组管理"];
+        [headerCell congiftitles:@"活动成员管理"];
         [headerCell congifCount:self.model.sumCount andSum:self.model.maxCount];
         return (UIView *)headerCell;
     }else if (section == 6){

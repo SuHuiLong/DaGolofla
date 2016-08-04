@@ -7,7 +7,7 @@
 //
 
 #import "JGHSimpleScorePepoleBaseCell.h"
-#import "JGTeamAcitivtyModel.h"
+#import "JGLAddActiivePlayModel.h"
 
 @implementation JGHSimpleScorePepoleBaseCell
 
@@ -36,14 +36,18 @@
     // Configure the view for the selected state
 }
 
-- (void)configScoreJGTeamAcitivtyModel:(JGTeamAcitivtyModel *)model{
+- (void)configScoreJGLAddActiivePlayModel:(JGLAddActiivePlayModel *)model{
+    self.userImageView.image = nil;
+    
+    [self.userImageView sd_setImageWithURL:[Helper setImageIconUrl:@"user" andTeamKey:[model.userKey integerValue] andIsSetWidth:YES andIsBackGround:NO] placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
+    
     if (model.userName) {
-        self.userName.text = model.userName;
+        self.userName.text = model.name;
     }else{
         self.userName.text = @"";
     }
     
-    self.almost.text = @"222";
+    self.almost.text = [NSString stringWithFormat:@"差点：%.f", [model.almost floatValue]];
 }
 
 @end
