@@ -62,7 +62,7 @@
     _seg.backgroundColor = [UIColor whiteColor];
     _seg.tintColor = [UITool colorWithHexString:@"#32b14d" alpha:1];
     [_viewHeader addSubview:_seg];
-    UIFont *font = [UIFont boldSystemFontOfSize:13.0f];
+    UIFont *font = [UIFont boldSystemFontOfSize:13.0f*ScreenWidth/375];
     NSDictionary *attributes = [NSDictionary dictionaryWithObject:font forKey:UITextAttributeFont];
     [_seg setTitleTextAttributes:attributes forState:UIControlStateNormal];
     [_seg addTarget:self action:@selector(segTypeClick:) forControlEvents:UIControlEventValueChanged];
@@ -94,14 +94,12 @@
     NSMutableDictionary *dict = [[NSMutableDictionary alloc]init];
     
     [dict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:userID] forKey:@"userKey"];
-    [dict setObject:@563276 forKey:@"teamKey"];
-    [dict setObject:@625801 forKey:@"srcKey"];
+    [dict setObject:_teamKey forKey:@"teamKey"];
+    [dict setObject:_activity forKey:@"srcKey"];
     [dict setObject:@1 forKey:@"srcType"];
     NSLog(@"%@",[NSNumber numberWithInteger:_seg.selectedSegmentIndex]);
     [dict setObject:[NSNumber numberWithInteger:_seg.selectedSegmentIndex] forKey:@"rankingType"];
-    NSString* str = @"625801";
-    NSString* strT = @"563276";
-    [dict setObject:[Helper md5HexDigest:[NSString stringWithFormat:@"teamKey=%@&userKey=%@&srcKey=%@&srcType=1dagolfla.com",strT,DEFAULF_USERID,str]] forKey:@"md5"];
+    [dict setObject:[Helper md5HexDigest:[NSString stringWithFormat:@"teamKey=%@&userKey=%@&srcKey=%@&srcType=1dagolfla.com",_teamKey,DEFAULF_USERID,_activity]] forKey:@"md5"];
     [[JsonHttp jsonHttp]httpRequest:@"score/scorePolenumberRanking" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
         if (isReshing) {
             [_tableView.header endRefreshing];

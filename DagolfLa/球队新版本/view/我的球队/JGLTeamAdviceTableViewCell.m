@@ -82,7 +82,7 @@
 -(void)showData:(JGLTeamMemberModel *)model
 {
 
-    [_iconImage sd_setImageWithURL:[Helper setImageIconUrl:@"user" andTeamKey:[model.userKey integerValue] andIsSetWidth:YES andIsBackGround:NO] placeholderImage:[UIImage imageNamed:@"logo"]];
+    [_iconImage sd_setImageWithURL:[Helper setImageIconUrl:@"user" andTeamKey:[model.userKey integerValue] andIsSetWidth:YES andIsBackGround:NO] placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
     _nameLabel.text = model.userName;
     if (model.ballage) {
         _ageLabel.text = [NSString stringWithFormat:@"%@岁",model.ballage];
