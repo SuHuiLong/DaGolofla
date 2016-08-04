@@ -66,7 +66,7 @@
 
 - (void)showData:(JGLTeamMemberModel *)model andPower:(NSString *)power
 {
-    [_iconImgv sd_setImageWithURL:[Helper setImageIconUrl:@"user" andTeamKey:[model.userKey integerValue] andIsSetWidth:YES andIsBackGround:NO] placeholderImage:[UIImage imageNamed:@"logo"]];
+    [_iconImgv sd_setImageWithURL:[Helper setImageIconUrl:@"user" andTeamKey:[model.userKey integerValue] andIsSetWidth:YES andIsBackGround:NO] placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
     
     _nameLabel.text = [NSString stringWithFormat:@"%@",model.userName];
     

@@ -177,8 +177,8 @@
     
     JGLAddActiivePlayModel *model = self.listArray[indexPath.section][indexPath.row];
     cell.labelTitle.text = model.userName;
-    [cell.imgvIcon sd_setImageWithURL:[Helper setImageIconUrl:@"user" andTeamKey:[model.userKey integerValue] andIsSetWidth:YES andIsBackGround:NO] placeholderImage:[UIImage imageNamed:@"logo"]];
-    cell.imgvIcon.layer.cornerRadius = 6*screenWidth/375;
+    [cell.imgvIcon sd_setImageWithURL:[Helper setImageIconUrl:@"user" andTeamKey:[model.userKey integerValue] andIsSetWidth:YES andIsBackGround:NO] placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
+    cell.imgvIcon.layer.cornerRadius = cell.imgvIcon.frame.size.height/2;
     cell.imgvIcon.layer.masksToBounds = YES;
     
     return cell;
