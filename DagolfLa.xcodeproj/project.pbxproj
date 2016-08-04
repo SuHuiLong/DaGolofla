@@ -706,6 +706,7 @@
 		821A130F1CED5F9C00694E49 /* JGLPhotoAlbumModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 821A130E1CED5F9C00694E49 /* JGLPhotoAlbumModel.m */; };
 		821A13131CEDE04400694E49 /* JGLMyTeamModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 821A13121CEDE04400694E49 /* JGLMyTeamModel.m */; };
 		821C0D8D1D51EE59001BB913 /* JGLActivityMemberNumTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 821C0D8C1D51EE59001BB913 /* JGLActivityMemberNumTableViewCell.m */; };
+		821C0D911D52EDC2001BB913 /* JGLGuestAddPlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 821C0D901D52EDC2001BB913 /* JGLGuestAddPlayerViewController.m */; };
 		821F51041D0E89D700AF0E93 /* JGLMyTeamTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 821F51031D0E89D700AF0E93 /* JGLMyTeamTableViewCell.m */; };
 		821F51071D0ECF4700AF0E93 /* JGLTeamChoiseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 821F51061D0ECF4700AF0E93 /* JGLTeamChoiseViewController.m */; };
 		8225626F1D2DFB8400ABA7F3 /* SDBrowserImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 822562691D2DFB8400ABA7F3 /* SDBrowserImageView.m */; };
@@ -2211,6 +2212,8 @@
 		821A13121CEDE04400694E49 /* JGLMyTeamModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGLMyTeamModel.m; sourceTree = "<group>"; };
 		821C0D8B1D51EE59001BB913 /* JGLActivityMemberNumTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGLActivityMemberNumTableViewCell.h; sourceTree = "<group>"; };
 		821C0D8C1D51EE59001BB913 /* JGLActivityMemberNumTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGLActivityMemberNumTableViewCell.m; sourceTree = "<group>"; };
+		821C0D8F1D52EDC2001BB913 /* JGLGuestAddPlayerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGLGuestAddPlayerViewController.h; sourceTree = "<group>"; };
+		821C0D901D52EDC2001BB913 /* JGLGuestAddPlayerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGLGuestAddPlayerViewController.m; sourceTree = "<group>"; };
 		821F51021D0E89D700AF0E93 /* JGLMyTeamTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGLMyTeamTableViewCell.h; sourceTree = "<group>"; };
 		821F51031D0E89D700AF0E93 /* JGLMyTeamTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGLMyTeamTableViewCell.m; sourceTree = "<group>"; };
 		821F51051D0ECF4700AF0E93 /* JGLTeamChoiseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGLTeamChoiseViewController.h; sourceTree = "<group>"; };
@@ -5913,6 +5916,15 @@
 			path = "我的球队";
 			sourceTree = "<group>";
 		};
+		821C0D8E1D52E866001BB913 /* 添加打球人 */ = {
+			isa = PBXGroup;
+			children = (
+				821C0D8F1D52EDC2001BB913 /* JGLGuestAddPlayerViewController.h */,
+				821C0D901D52EDC2001BB913 /* JGLGuestAddPlayerViewController.m */,
+			);
+			path = "添加打球人";
+			sourceTree = "<group>";
+		};
 		822562671D2DFB8400ABA7F3 /* SDPhotoBrowser */ = {
 			isa = PBXGroup;
 			children = (
@@ -6745,6 +6757,7 @@
 		F5B646D51D52E17000F30672 /* 嘉宾 */ = {
 			isa = PBXGroup;
 			children = (
+				821C0D8E1D52E866001BB913 /* 添加打球人 */,
 				F5B646D61D52E1B500F30672 /* JGGuestViewController.h */,
 				F5B646D71D52E1B500F30672 /* JGGuestViewController.m */,
 			);
@@ -7260,6 +7273,7 @@
 				3660E1251BFC553A0033B4D7 /* TeamSuccessController.m in Sources */,
 				3660E1261BFC553A0033B4D7 /* ManageDetailController.m in Sources */,
 				36C05BB91BD872F900B3DD2D /* YueBallHallView.m in Sources */,
+				821C0D911D52EDC2001BB913 /* JGLGuestAddPlayerViewController.m in Sources */,
 				2080304E1CF9A70800448BFC /* JGSignUoPromptCell.m in Sources */,
 				3660E17E1BFC56C20033B4D7 /* ScoreCommentSelfViewCell.m in Sources */,
 				20591C7E1D2260CE003271EC /* JGHWithdrawCatoryCell.m in Sources */,

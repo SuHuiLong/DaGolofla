@@ -10,4 +10,9 @@
 
 @interface JGLScoreLiveViewController : ViewController
 
+@property (strong, nonatomic) NSNumber* activity;//key,srcKey
+
+
+
+
 @end
