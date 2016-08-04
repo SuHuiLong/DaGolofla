@@ -9,7 +9,7 @@
 #import "JGHActivityMembersViewController.h"
 #import "MyattenModel.h"
 #import "JGLActivityMemberNumTableViewCell.h"
-#import "NoteModel.h"
+#import "JGLAddActiivePlayModel.h"
 #import "NoteHandlle.h"
 #import "PYTableViewIndexManager.h"
 #import "JGHSimpleScoreViewController.h"
@@ -89,61 +89,54 @@
 
 #pragma mark - 下载数据
 - (void)downLoadData:(int)page isReshing:(BOOL)isReshing{
-    [_dictData setObject:DEFAULF_USERID forKey:@"userKey"];
-    [_dictData setObject:[NSNumber numberWithInteger:_activityKey] forKey:@"activityKey"];
-    [_dictData setObject:[NSNumber numberWithInteger:_teamKey] forKey:@"teamKey"];
-    [_dictData setObject:DEFAULF_USERID forKey:@"userKey"];
+    NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
+    [dict setObject:DEFAULF_USERID forKey:@"userKey"];
+    [dict setObject:[NSNumber numberWithInteger:_activityKey] forKey:@"activityKey"];
+    [dict setObject:[NSNumber numberWithInteger:_teamKey] forKey:@"teamKey"];
     NSString *strMD = [JGReturnMD5Str getTeamActivitySignUpListWithTeamKey:_teamKey activityKey:_activityKey userKey:[DEFAULF_USERID integerValue]];
-    [_dictData setObject:strMD forKey:@"md5"];
-    [[PostDataRequest sharedInstance] postDataRequest:@"team/getTeamActivitySignUpList" parameter:_dictData success:^(id respondsData) {
-        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:respondsData options:NSJSONReadingMutableContainers error:nil];
-        
-        if ([[dict objectForKey:@"success"] boolValue]) {
-            NSArray *array = [dict objectForKey:@"rows"];
-            NSMutableArray *allFriarr = [[NSMutableArray alloc] init];
-            for (NSDictionary *dic in array) {
-                MyattenModel *model = [[MyattenModel alloc] init];
+    [dict setObject:strMD forKey:@"md5"];
+    
+    [[JsonHttp jsonHttp]httpRequest:@"team/getTeamActivitySignUpList" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
+        if (isReshing) {
+            [_tableView.header endRefreshing];
+        }else {
+            [_tableView.footer endRefreshing];
+        }
+    } completionBlock:^(id data) {
+        if (_page == 0)
+        {
+            //清除数组数据  signUpInfoKey
+            [_dataArray removeAllObjects];
+        }
+        if ([[data objectForKey:@"packSuccess"]integerValue] == 1) {
+            for (NSDictionary *dic in [data objectForKey:@"teamSignUpList"]) {
+                JGLAddActiivePlayModel *model = [[JGLAddActiivePlayModel alloc]init];
                 [model setValuesForKeysWithDictionary:dic];
-                
-                NoteModel *modell = [NoteHandlle selectNoteWithUID:model.otherUserId];
-                if ([modell.userremarks isEqualToString:@"(null)"] || [modell.userremarks isEqualToString:@""] || modell.userremarks == nil) {
-                    
-                }else{
-                    model.userName = modell.userremarks;
-                }
-                [allFriarr addObject:model];
-                [_dictData removeObjectForKey:@"userName"];
-                //                [self.keyArray addObject:model.userName];
+                //                [model setValue:[dict objectForKey:@"name"] forKey:@"userName"];
+                model.userName = model.name;
+                [_dataArray addObject:model];
             }
-            
-            self.listArray = [[NSMutableArray alloc]initWithArray:[PYTableViewIndexManager archiveNumbers:allFriarr]];
+            self.listArray = [[NSMutableArray alloc]initWithArray:[PYTableViewIndexManager archiveNumbers:_dataArray]];
             
             _keyArray = [[NSMutableArray alloc]initWithObjects:@"A",@"B",@"C",@"D",@"E",@"F",@"G",@"H",@"I",@"J",@"K",@"L",@"M",@"N",@"O",@"P",@"Q",@"R",@"S",@"T",@"U",@"V",@"W",@"X",@"Y",@"Z",@"#", nil];
-            
             for (int i = (int)self.listArray.count-1; i>=0; i--) {
                 if ([self.listArray[i] count] == 0) {
                     [self.keyArray removeObjectAtIndex:i];
                     [self.listArray removeObjectAtIndex:i];
                 }
             }
-            
             [_tableView reloadData];
-        }else {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:[dict objectForKey:@"message"] delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-            [alert show];
+            
+        }else{
+            if ([data objectForKey:@"packResultMsg"]) {
+                [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+            }
         }
         if (isReshing) {
             [_tableView.header endRefreshing];
         }else {
             [_tableView.footer endRefreshing];
         }
-    } failed:^(NSError *error) {
-        if (isReshing) {
-            [_tableView.header endRefreshing];
-        }else {
-            [_tableView.footer endRefreshing];
-        }
-        
     }];
 }
 
@@ -180,17 +173,14 @@
     JGLActivityMemberNumTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"JGLActivityMemberNumTableViewCell" forIndexPath:indexPath];
     
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    
-    MyattenModel *model = self.listArray[indexPath.section][indexPath.row];
-    NoteModel *modell = [NoteHandlle selectNoteWithUID:model.otherUserId];
-    if ([modell.userremarks isEqualToString:@"(null)"] || [modell.userremarks isEqualToString:@""] || modell.userremarks == nil) {
-        
-    }else{
-        model.userName = modell.userremarks;
-    }
-    cell.myModel = model;
-    
 
+    
+    JGLAddActiivePlayModel *model = self.listArray[indexPath.section][indexPath.row];
+    cell.labelTitle.text = model.userName;
+    [cell.imgvIcon sd_setImageWithURL:[Helper setImageIconUrl:@"user" andTeamKey:[model.userKey integerValue] andIsSetWidth:YES andIsBackGround:NO] placeholderImage:[UIImage imageNamed:@"logo"]];
+    cell.imgvIcon.layer.cornerRadius = 6*screenWidth/375;
+    cell.imgvIcon.layer.masksToBounds = YES;
+    
     return cell;
     
     

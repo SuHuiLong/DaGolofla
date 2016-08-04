@@ -24,7 +24,7 @@
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zY9-C1-Tum">
-                        <rect key="frame" x="138" y="24.5" width="60.5" height="18"/>
+                        <rect key="frame" x="138" y="24" width="60.5" height="18"/>
                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
@@ -47,6 +47,13 @@
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ogm-Rn-LkK">
+                        <rect key="frame" x="0.0" y="18" width="78" height="30"/>
+                        <state key="normal" title=" "/>
+                        <connections>
+                            <action selector="selectBtnClick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="3T6-oH-H9I"/>
+                        </connections>
+                    </button>
                 </subviews>
                 <constraints>
                     <constraint firstItem="y7P-rP-jXG" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="1Rq-uC-Eir"/>
@@ -62,9 +69,12 @@
                     <constraint firstItem="zY9-C1-Tum" firstAttribute="height" secondItem="lcp-gv-kRg" secondAttribute="height" id="Q7w-eq-cOM"/>
                     <constraint firstItem="Lks-mL-WwH" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="QJo-Le-1AO"/>
                     <constraint firstItem="j5z-ms-kca" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="TZN-9Q-G3a"/>
+                    <constraint firstItem="Ogm-Rn-LkK" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="Uoz-Lg-SMT"/>
                     <constraint firstItem="zY9-C1-Tum" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="VzW-qO-0A0"/>
                     <constraint firstItem="zY9-C1-Tum" firstAttribute="centerY" secondItem="lcp-gv-kRg" secondAttribute="centerY" id="W3d-5m-cxV"/>
+                    <constraint firstItem="lcp-gv-kRg" firstAttribute="leading" secondItem="Ogm-Rn-LkK" secondAttribute="trailing" id="ZNk-pf-br2"/>
                     <constraint firstItem="j5z-ms-kca" firstAttribute="height" secondItem="lcp-gv-kRg" secondAttribute="height" id="aYj-wP-v0q"/>
+                    <constraint firstItem="Ogm-Rn-LkK" firstAttribute="centerY" secondItem="lcp-gv-kRg" secondAttribute="centerY" id="bcR-yQ-hMz"/>
                     <constraint firstItem="zY9-C1-Tum" firstAttribute="width" secondItem="lcp-gv-kRg" secondAttribute="width" id="eic-iX-rA2"/>
                     <constraint firstItem="lcp-gv-kRg" firstAttribute="leading" secondItem="y7P-rP-jXG" secondAttribute="trailing" constant="30" id="rpV-G9-bGL"/>
                     <constraint firstItem="j5z-ms-kca" firstAttribute="width" secondItem="lcp-gv-kRg" secondAttribute="width" id="sgA-WY-az6"/>
@@ -77,6 +87,7 @@
                 <outlet property="imageScoreLeft" destination="DRu-pW-SyN" id="Nxn-eN-Dg0"/>
                 <outlet property="imageScoreRight" destination="rpV-G9-bGL" id="uNH-uW-CmN"/>
                 <outlet property="imageScoreWith" destination="yql-Pq-dfG" id="Z80-UV-ksu"/>
+                <outlet property="selectBtn" destination="Ogm-Rn-LkK" id="fU0-FT-EfX"/>
                 <outlet property="threeLabel" destination="Lks-mL-WwH" id="Lx7-Ik-rc7"/>
                 <outlet property="twoLabel" destination="zY9-C1-Tum" id="LLr-3N-vVB"/>
             </connections>
