@@ -74,9 +74,13 @@
             NSInteger sum = 0;
             for (UILabel *lb in self.contentView.subviews) {
                 if (lb.tag) {
-                    lb.text = [NSString stringWithFormat:@"%@", model.standardlever[lb.tag - 777]];
-                    NSInteger core = [model.standardlever[lb.tag - 777] integerValue];
-                    sum += core;
+                    if ([model.standardlever[lb.tag - 777] integerValue] != -1) {
+                        lb.text = [NSString stringWithFormat:@"%@", model.standardlever[lb.tag - 777]];
+                        NSInteger core = [model.standardlever[lb.tag - 777] integerValue];
+                        sum += core;
+                    }else{
+                        lb.text = @"";
+                    }
                 }
             }
             self.sumLB.text = [NSString stringWithFormat:@"%td", sum];
@@ -109,17 +113,20 @@
             NSInteger sum = 0;
             for (UILabel *lb in self.contentView.subviews) {
                 if (lb.tag) {
-                    lb.text = [NSString stringWithFormat:@"%@", model.standardlever[lb.tag - 776 + 8]];
-                    NSInteger core = [model.standardlever[lb.tag - 776 + 8] integerValue];
-                    sum += core;
-                    NSLog(@"sum = %td -------- core = %td", sum, core);
-                    
+                    if ([model.standardlever[lb.tag - 776 + 8] integerValue] != -1) {
+                        lb.text = [NSString stringWithFormat:@"%@", model.standardlever[lb.tag - 776 + 8]];
+                        NSInteger core = [model.standardlever[lb.tag - 776 + 8] integerValue];
+                        sum += core;
+                        NSLog(@"sum = %td -------- core = %td", sum, core);
+                    }else{
+                        lb.text = @"";
+                    }
                 }
             }
             self.sumLB.text = [NSString stringWithFormat:@"%td", sum];
         }else{
             self.nameLB.text = model.userName;
-
+            
             NSInteger sum = 0;
             for (UILabel *lb in self.contentView.subviews) {
                 if (lb.tag) {
@@ -128,7 +135,7 @@
                         NSInteger core = [model.poleNumber[lb.tag - 776 + 8] integerValue];
                         sum += core;
                         NSLog(@"sum = %td -------- core = %td", sum, core);
-
+                        
                     }else{
                         lb.text = @"";
                     }
