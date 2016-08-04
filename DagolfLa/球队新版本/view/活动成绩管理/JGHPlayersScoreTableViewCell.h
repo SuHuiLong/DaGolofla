@@ -9,7 +9,16 @@
 #import <UIKit/UIKit.h>
 #import "JGLScoreLiveModel.h"
 
+@protocol JGHPlayersScoreTableViewCellDelegate <NSObject>
+
+- (void)selectMembers:(UIButton *)btn;
+
+@end
+
 @interface JGHPlayersScoreTableViewCell : UITableViewCell
+
+@property (nonatomic, weak)id <JGHPlayersScoreTableViewCellDelegate> delegate;
+
 @property (weak, nonatomic) IBOutlet UIImageView *imageScore;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *imageScoreLeft;//30
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *imageScoreRight;//30
@@ -25,5 +34,9 @@
 @property (weak, nonatomic) IBOutlet UILabel *fiveLabel;
 
 -(void)showData:(JGLScoreLiveModel *)model;
+
+@property (weak, nonatomic) IBOutlet UIButton *selectBtn;
+- (IBAction)selectBtnClick:(UIButton *)sender;
+
 
 @end

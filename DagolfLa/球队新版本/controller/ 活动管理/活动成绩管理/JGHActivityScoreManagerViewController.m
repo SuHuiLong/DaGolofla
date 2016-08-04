@@ -22,7 +22,7 @@ static NSString *const JGHMatchTranscriptTableViewCellIdentifier = @"JGHMatchTra
 static NSString *const JGHPlayersScoreTableViewCellIdentifier = @"JGHPlayersScoreTableViewCell";
 static NSString *const JGHCenterBtnTableViewCellIdentifier = @"JGHCenterBtnTableViewCell";
 
-@interface JGHActivityScoreManagerViewController ()<UITableViewDelegate, UITableViewDataSource, JGHMatchTranscriptTableViewCellDelegate, JGHCenterBtnTableViewCellDelegate, JGHPublishedPeopleViewDelegate>
+@interface JGHActivityScoreManagerViewController ()<UITableViewDelegate, UITableViewDataSource, JGHMatchTranscriptTableViewCellDelegate, JGHCenterBtnTableViewCellDelegate, JGHPublishedPeopleViewDelegate, JGHPlayersScoreTableViewCellDelegate>
 {
     NSInteger _page;
     NSMutableDictionary* _dictChoose;
@@ -199,16 +199,11 @@ static NSString *const JGHCenterBtnTableViewCellIdentifier = @"JGHCenterBtnTable
             return cell;
         }else{
             JGHPlayersScoreTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:JGHPlayersScoreTableViewCellIdentifier];
+            cell.selectBtn.tag = indexPath.section -1 + 100;
+            cell.delegate = self;
             [cell showData:_dataArray[indexPath.section-1]];
-//            cell.imageScore.hidden = NO;
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
-//            NSString* str = [_dictChoose objectForKey:[NSString stringWithFormat:@"%td",indexPath.section-1]];
-//            if ([Helper isBlankString:str]) {
-//                cell.imageScore.image = [UIImage imageNamed:@"gou_w"];
-//            }
-//            else{
-//                cell.imageScore.image = [UIImage imageNamed:@"gou_x"];
-//            }
+            
             return cell;
         }
     }
@@ -237,16 +232,6 @@ static NSString *const JGHCenterBtnTableViewCellIdentifier = @"JGHCenterBtnTable
     actVC.scoreModel = self.dataArray[indexPath.row];
     actVC.timeKey = _activityBaseModel.timeKey;
     [self.navigationController pushViewController:actVC animated:YES];
-    
-//    NSString* str = [_dictChoose objectForKey:[NSString stringWithFormat:@"%td",indexPath.section-1]];
-//    if ([Helper isBlankString:str]) {
-////        JGLScoreLiveModel* model = [self.dataArray[indexPath.section -1]];
-////        [_dictChoose setObject:model.userKey forKey:[NSString stringWithFormat:@"%td",indexPath.section-1]];
-//    }
-//    else{
-//        [_dictChoose removeObjectForKey:[NSString stringWithFormat:@"%td",indexPath.section-1]];
-//    }
-//    [self.scoreManageTableView reloadData];
 }
 
 #pragma mark -- 添加记录
@@ -330,6 +315,21 @@ static NSString *const JGHCenterBtnTableViewCellIdentifier = @"JGHCenterBtnTable
 #pragma mark -- 全选
 - (void)selectAll{
     NSLog(@"全选");
+    for (int i=0; i<_dataArray.count; i++) {
+        JGLScoreLiveModel *model = [[JGLScoreLiveModel alloc] init];
+        model = _dataArray[i];
+        if (model.select == 0) {
+            model.select = 1;
+            [_dataArray replaceObjectAtIndex:i withObject:model];
+        }
+    }
+    
+    [self.scoreManageTableView reloadData];
+}
+
+#pragma mark -- 选择
+- (void)selectMembers:(UIButton *)btn{
+    NSLog(@"%td", btn.tag);
     for (int i=0; i<_dataArray.count; i++) {
         JGLScoreLiveModel *model = [[JGLScoreLiveModel alloc] init];
         model = _dataArray[i];
