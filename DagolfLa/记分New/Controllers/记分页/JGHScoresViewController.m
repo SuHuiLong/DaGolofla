@@ -36,6 +36,8 @@
     NSInteger _selectcompleteHole;
     
     NSInteger _isEdtor;// 0-未修改， 1- 修改
+    
+    NSInteger _isFinishScore;//是否完成记分0 1
 }
 
 @property (nonatomic, strong)NSMutableArray *userScoreArray;
@@ -92,12 +94,16 @@
     }else{
         [self.titleBtn setTitle:@"1 HOLE" forState:UIControlStateNormal];
     }
-    [self.titleBtn addTarget:self action:@selector(titleBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    [self.titleBtn addTarget:self action:@selector(titleBtnClick) forControlEvents:UIControlEventTouchUpInside];
     
     _arrowBtn = [[UIButton alloc]initWithFrame:CGRectMake(80*ProportionAdapter, 10, 30, 24)];
-    [_arrowBtn addTarget:self action:@selector(titleBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    [_arrowBtn addTarget:self action:@selector(titleBtnClick) forControlEvents:UIControlEventTouchUpInside];
     [_arrowBtn setImage:[UIImage imageNamed:@"zk"] forState:UIControlStateNormal];
     [titleView addSubview:_arrowBtn];
+    
+    UILabel *bgLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 42, 80*ProportionAdapter, 2)];
+    bgLabel.backgroundColor = [UIColor colorWithHexString:@"#50BD67"];
+    [titleView addSubview:bgLabel];
     
     self.navigationItem.titleView = titleView;
     
@@ -109,7 +115,7 @@
     }
     
     _isEdtor = 0;
-    
+    _isFinishScore = 0;
     _selectcompleteHole = 0;
     _item = [[UIBarButtonItem alloc]initWithTitle:@"保存" style:UIBarButtonItemStylePlain target:self action:@selector(saveScoresClick)];
     _item.tintColor=[UIColor colorWithHexString:@"#32b14d"];
@@ -256,8 +262,8 @@
 #pragma mark -- 所有记分完成后
 - (void)noticeAllScoresCtrl{
     _selectcompleteHole = 1;
+//    _isFinishScore = 1;
     [_item setTitle:@"完成"];
-    
 }
 #pragma mark -- getScoreList 获取活动计分列表
 - (void)getScoreList{
@@ -325,6 +331,8 @@
                         }
                     }
                 }
+                
+                [self titleBtnClick];
             }
         }else{
             if ([data objectForKey:@"packResultMsg"]) {
@@ -334,7 +342,7 @@
     }];
 }
 #pragma mark -- titleBtn 点击事件
-- (void)titleBtnClick:(UIButton *)btn{
+- (void)titleBtnClick{
     NSLog(@"XXX dong");
     if (_selectHole == 0) {
         _selectHole = 1;
@@ -351,7 +359,7 @@
         _tranView.alpha = 0.3;
         
         UITapGestureRecognizer *tag = [[UITapGestureRecognizer alloc]init];
-        [tag addTarget:self action:@selector(titleBtnClick:)];
+        [tag addTarget:self action:@selector(titleBtnClick)];
         [_tranView addGestureRecognizer:tag];
         [self.view addSubview:_tranView];
         [self.view addSubview:_scoresView];
