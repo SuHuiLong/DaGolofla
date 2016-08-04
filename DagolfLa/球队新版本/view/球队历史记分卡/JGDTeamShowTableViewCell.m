@@ -69,7 +69,7 @@
         NSLog(@"%td", indexPath.row);
         if (indexPath.row == 1) {
             self.contentView.backgroundColor = [UIColor colorWithHexString:@"#ecf7ef"];
-            self.nameLB.text = @"Par";
+            self.nameLB.text = @"PAR";
             self.colorImageV.backgroundColor = [UIColor clearColor];
             NSInteger sum = 0;
             for (UILabel *lb in self.contentView.subviews) {
@@ -104,7 +104,7 @@
         
         if (indexPath.row == 1) {
             self.contentView.backgroundColor = [UIColor colorWithHexString:@"#ecf7ef"];
-            self.nameLB.text = @"Par";
+            self.nameLB.text = @"PAR";
             self.colorImageV.backgroundColor = [UIColor clearColor];
             NSInteger sum = 0;
             for (UILabel *lb in self.contentView.subviews) {

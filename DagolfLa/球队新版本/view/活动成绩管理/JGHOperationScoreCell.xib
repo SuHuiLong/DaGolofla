@@ -113,6 +113,8 @@
                 <outlet property="scoreListBtn" destination="YPd-Mv-ydS" id="JKC-VQ-FoN"/>
                 <outlet property="scoreListBtnRight" destination="j6T-s6-QYa" id="CAB-6C-oEp"/>
                 <outlet property="scoreListBtnTop" destination="b5w-Ox-FXS" id="jBU-Wc-fBV"/>
+                <outlet property="sildLeft" destination="kAD-Fm-sp7" id="wWU-NP-coS"/>
+                <outlet property="sildRight" destination="D9D-Iz-8Rk" id="XeK-y0-Imc"/>
             </connections>
             <point key="canvasLocation" x="253" y="291.5"/>
         </tableViewCell>

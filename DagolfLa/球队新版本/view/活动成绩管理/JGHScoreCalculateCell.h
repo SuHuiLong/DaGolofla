@@ -25,6 +25,9 @@
 @property (nonatomic, strong)NSMutableArray *poleNumberArray;
 
 @property (nonatomic, copy)void (^returnScoresCalculateDataArray)(NSMutableArray *dataArray);
-//@property (nonatomic, copy)void (^returnScoresDataArray)(NSMutableArray *dataArray);
+
+@property (nonatomic, strong)NSMutableArray *parArray;
+
+@property (nonatomic, assign)NSInteger holeId;
 
 @end

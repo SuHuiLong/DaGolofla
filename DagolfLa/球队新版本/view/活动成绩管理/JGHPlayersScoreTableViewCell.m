@@ -80,4 +80,9 @@
     // Configure the view for the selected state
 }
 
+- (IBAction)selectBtnClick:(UIButton *)sender {
+    if (self.delegate) {
+        [self.delegate selectMembers:sender];
+    }
+}
 @end

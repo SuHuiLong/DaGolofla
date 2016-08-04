@@ -29,6 +29,7 @@ static NSString *const JGHOperationScoreCellIdentifier = @"JGHOperationScoreCell
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
         self.poleNumberArray = [NSMutableArray array];
+        self.parArray = [NSMutableArray array];
         
         [self createScoreCalculateTable];
     }
@@ -40,12 +41,6 @@ static NSString *const JGHOperationScoreCellIdentifier = @"JGHOperationScoreCell
     
     UINib *operationScoreCellNib = [UINib nibWithNibName:@"JGHOperationScoreCell" bundle: [NSBundle mainBundle]];
     [self.scoreCalculateTable registerNib:operationScoreCellNib forCellReuseIdentifier:JGHOperationScoreCellIdentifier];
-//
-//    UINib *playersScoreNib = [UINib nibWithNibName:@"JGHPlayersScoreTableViewCell" bundle: [NSBundle mainBundle]];
-//    [self.scoreCalculateTable registerNib:playersScoreNib forCellReuseIdentifier:JGHPlayersScoreTableViewCellIdentifier];
-//    
-//    UINib *centerBtnNib = [UINib nibWithNibName:@"JGHCenterBtnTableViewCell" bundle: [NSBundle mainBundle]];
-//    [self.scoreCalculateTable registerNib:centerBtnNib forCellReuseIdentifier:JGHCenterBtnTableViewCellIdentifier];
     
     self.scoreCalculateTable.delegate = self;
     self.scoreCalculateTable.dataSource = self;
@@ -56,7 +51,12 @@ static NSString *const JGHOperationScoreCellIdentifier = @"JGHOperationScoreCell
     self.scoreCalculateTable.pagingEnabled = YES;
     self.scoreCalculateTable.showsHorizontalScrollIndicator = NO;
     self.scoreCalculateTable.showsVerticalScrollIndicator = NO;
+    
     [self addSubview:self.scoreCalculateTable];
+}
+
+- (void)layoutSubviews{
+    [self.scoreCalculateTable setContentOffset:CGPointMake(0, screenWidth*_holeId) animated:YES];
 }
 
 #pragma mark -- tableView代理
@@ -78,6 +78,12 @@ static NSString *const JGHOperationScoreCellIdentifier = @"JGHOperationScoreCell
     tranCell.redScoreBtn.tag = 200 + indexPath.section;
     tranCell.delegate = self;
     tranCell.transform = CGAffineTransformMakeRotation(M_PI/2);
+    if (_parArray.count > 0) {
+        [tranCell configStandPar:[_parArray[indexPath.section] integerValue] andHole:indexPath.section andPole:[_poleNumberArray[indexPath.section] integerValue]];
+    }else{
+        [tranCell configStandPar:-1 andHole:indexPath.section andPole:[_poleNumberArray[indexPath.section] integerValue]];
+    }
+    
     return tranCell;
 
 }
@@ -88,36 +94,44 @@ static NSString *const JGHOperationScoreCellIdentifier = @"JGHOperationScoreCell
 
 #pragma mark -- +
 - (void)addOperationBtn:(UIButton *)btn{
+    NSLog(@"%td", btn.tag);
     for (int i=0; i<18; i++) {
         if (i == btn.tag - 100) {
             NSInteger poles = [[self.poleNumberArray objectAtIndex:i] integerValue];
-            if (poles > 0) {
-                poles += 1;
+            if (poles == -1) {
+                poles = [_parArray[btn.tag - 100] integerValue];
             }else{
-                poles = 1;
+                poles += 1;
             }
             
             [self.poleNumberArray replaceObjectAtIndex:i withObject:@(poles)];
         }
     }
     
+    [self.scoreCalculateTable reloadData];
     self.returnScoresCalculateDataArray(_poleNumberArray);
 }
 #pragma mark -- -
 - (void)redOperationBtn:(UIButton *)btn{
+    NSLog(@"%td", btn.tag);
     for (int i=0; i<18; i++) {
-        if (i == btn.tag - 100) {
+        if (i == btn.tag - 200) {
             NSInteger poles = [[self.poleNumberArray objectAtIndex:i] integerValue];
-            if (poles > 1) {
-                poles -= 1;
+            if (poles == -1) {
+                poles = [_parArray[btn.tag - 200] integerValue];
             }else{
-                poles = 0;
+                if (poles == 0) {
+                    poles = 0;
+                }else{
+                    poles -= 1;
+                }
             }
             
             [self.poleNumberArray replaceObjectAtIndex:i withObject:@(poles)];
         }
     }
     
+    [self.scoreCalculateTable reloadData];
     self.returnScoresCalculateDataArray(_poleNumberArray);
 }
 #pragma mark -- list
