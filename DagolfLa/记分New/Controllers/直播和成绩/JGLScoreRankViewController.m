@@ -21,6 +21,7 @@
     
     NSMutableArray* _dataArray;
     NSInteger _page;
+    UILabel* _labelNoData;
 }
 @end
 
@@ -113,6 +114,7 @@
             {
                 //清除数组数据
                 [_dataArray removeAllObjects];
+    
             }
             //数据解析
             //            self.TeamArray = [data objectForKey:@"teamList"];
@@ -137,13 +139,23 @@
             if (![Helper isBlankString:[data objectForKey:@"title"]]) {
                 self.title = [data objectForKey:@"title"];
             }
-            
+            _labelNoData.hidden = YES;
             _page++;
             [_tableView reloadData];
         }else {
-            [Helper alertViewWithTitle:[data objectForKey:@"packResultMsg"] withBlock:^(UIAlertController *alertView) {
-                [self presentViewController:alertView animated:YES completion:nil];
-            }];
+            if ([_tableView.subviews containsObject:_labelNoData] == NO) {
+                _labelNoData = [[UILabel alloc]initWithFrame:CGRectMake(0, 250, screenWidth, 30)];
+                _labelNoData.font = [UIFont systemFontOfSize:30];
+                _labelNoData.text = @"暂无成绩";
+                _labelNoData.textColor = [UIColor lightGrayColor];
+                _labelNoData.textAlignment = NSTextAlignmentCenter;
+                [_tableView addSubview:_labelNoData];
+                _labelNoData.tag = 777;
+            }
+            else{
+                _labelNoData.hidden = NO;
+            }
+            
         }
         [_tableView reloadData];
         if (isReshing) {
