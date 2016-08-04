@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-@class JGTeamAcitivtyModel;
+@class JGLAddActiivePlayModel;
 
 @interface JGHSimpleScorePepoleBaseCell : UITableViewCell
 
@@ -22,7 +22,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *almost;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *almostLeft;//10
 
-- (void)configScoreJGTeamAcitivtyModel:(JGTeamAcitivtyModel *)model;
+- (void)configScoreJGLAddActiivePlayModel:(JGLAddActiivePlayModel *)model;
 
 
 @end

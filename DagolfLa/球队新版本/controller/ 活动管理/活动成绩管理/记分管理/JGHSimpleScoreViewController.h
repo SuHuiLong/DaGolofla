@@ -8,9 +8,12 @@
 
 #import "ViewController.h"
 @class JGTeamAcitivtyModel;
+@class JGLAddActiivePlayModel;
 
 @interface JGHSimpleScoreViewController : ViewController
 
 @property (nonatomic, strong)JGTeamAcitivtyModel *actModel;
+
+@property (nonatomic, strong)JGLAddActiivePlayModel *playModel;
 
 @end
