@@ -21,6 +21,8 @@
 #import "JGDHistoryScoreShowViewController.h"
 #import "JGDActSelfHistoryScoreViewController.h"
 
+#import "JGLScoreRankViewController.h"
+
 
 @interface JGTeamHisScoreViewController ()<UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate,UISearchResultsUpdating>
 
@@ -307,31 +309,38 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
     JGDHistoryScoreModel *model = self.dataArray[indexPath.row];
+
+    JGLScoreRankViewController *rankVC = [[JGLScoreRankViewController alloc] init];
+    rankVC.teamKey = self.teamKey;
+    rankVC.activity = [NSNumber numberWithInteger:[model.teamActivityKey integerValue]];
+
+    [self.navigationController pushViewController:rankVC animated:YES];
     
-    if ([model.scoreFinish integerValue] == 0) {
-        JGHScoresViewController *scoreVC = [[JGHScoresViewController alloc] init];
-        NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
-        if ([userdef objectForKey:[NSString stringWithFormat:@"%@", model.timeKey]]) {
-            scoreVC.currentPage = [[userdef objectForKey:[NSString stringWithFormat:@"%@", model.timeKey]] integerValue];
-        }
-        NSLog(@"%@", [userdef objectForKey:[NSString stringWithFormat:@"%@", model.timeKey]]);
-        scoreVC.scorekey = [NSString stringWithFormat:@"%@", model.timeKey];
-        [self.navigationController pushViewController:scoreVC animated:YES];
-    }else{
-        
-        if ([model.srcType integerValue] == 0) {
-            
-            JGDNotActivityHisCoreViewController *notAciVC = [[JGDNotActivityHisCoreViewController alloc] init];
-            notAciVC.timeKey = model.timeKey;
-            [self.navigationController pushViewController:notAciVC animated:YES];
-            
-        }else{
-            
-            JGDHistoryScoreShowViewController *showVC = [[JGDHistoryScoreShowViewController alloc] init];
-            showVC.timeKey = model.timeKey;
-            [self.navigationController pushViewController:showVC animated:YES];
-        }
-    }
+//
+//    if ([model.scoreFinish integerValue] == 0) {
+//        JGHScoresViewController *scoreVC = [[JGHScoresViewController alloc] init];
+//        NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
+//        if ([userdef objectForKey:[NSString stringWithFormat:@"%@", model.timeKey]]) {
+//            scoreVC.currentPage = [[userdef objectForKey:[NSString stringWithFormat:@"%@", model.timeKey]] integerValue];
+//        }
+//        NSLog(@"%@", [userdef objectForKey:[NSString stringWithFormat:@"%@", model.timeKey]]);
+//        scoreVC.scorekey = [NSString stringWithFormat:@"%@", model.timeKey];
+//        [self.navigationController pushViewController:scoreVC animated:YES];
+//    }else{
+//        
+//        if ([model.srcType integerValue] == 0) {
+//            
+//            JGDNotActivityHisCoreViewController *notAciVC = [[JGDNotActivityHisCoreViewController alloc] init];
+//            notAciVC.timeKey = model.timeKey;
+//            [self.navigationController pushViewController:notAciVC animated:YES];
+//            
+//        }else{
+//            
+//            JGDHistoryScoreShowViewController *showVC = [[JGDHistoryScoreShowViewController alloc] init];
+//            showVC.timeKey = model.timeKey;
+//            [self.navigationController pushViewController:showVC animated:YES];
+//        }
+//    }
 }
 
 

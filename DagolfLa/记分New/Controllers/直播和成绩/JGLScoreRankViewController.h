@@ -10,4 +10,8 @@
 
 @interface JGLScoreRankViewController : ViewController
 
+@property (nonatomic, strong) NSNumber *activity;
+@property (nonatomic, strong) NSNumber *teamKey;
+
+
 @end
