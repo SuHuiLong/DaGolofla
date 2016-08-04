@@ -247,7 +247,7 @@ static NSString *const JGHCenterBtnTableViewCellIdentifier = @"JGHCenterBtnTable
     NSLog(@"%td", indexPath.section);
     if (indexPath.section < 2 + _dataArray.count -1 && indexPath.section != 0) {
         JGDActSelfHistoryScoreViewController *actVC = [[JGDActSelfHistoryScoreViewController alloc] init];
-        actVC.scoreModel = self.dataArray[indexPath.row];
+        actVC.scoreModel = self.dataArray[indexPath.section - 2];
         actVC.timeKey = _activityBaseModel.timeKey;
         [self.navigationController pushViewController:actVC animated:YES];
     }

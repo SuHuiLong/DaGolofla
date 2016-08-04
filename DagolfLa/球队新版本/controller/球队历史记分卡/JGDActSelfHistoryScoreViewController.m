@@ -27,14 +27,16 @@
 
 - (void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:YES];
-    [self.chadianTF becomeFirstResponder];
+    if ([self.model.almost integerValue] == 0) {
+        [self.chadianTF becomeFirstResponder];
+    }
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"个人成绩简单记分表";
     
-    UIBarButtonItem *rightBar = [[UIBarButtonItem alloc] initWithTitle:@"确定" style:(UIBarButtonItemStyleDone) target:self action:@selector(shareStatisticsDataClick)];
+    UIBarButtonItem *rightBar = [[UIBarButtonItem alloc] initWithTitle:@"保存" style:(UIBarButtonItemStyleDone) target:self action:@selector(shareStatisticsDataClick)];
     rightBar.tintColor = [UIColor whiteColor];
     self.navigationItem.rightBarButtonItem = rightBar;
     
@@ -47,11 +49,12 @@
 
     NSMutableDictionary *dic = [NSMutableDictionary dictionary];
     [dic setObject:self.scoreModel.scoreKey forKey:@"scoreKey"];
-    [dic setObject:DEFAULF_USERID forKey:@"userKey"];
+    [dic setObject:self.scoreModel.userKey forKey:@"userKey"];
     [dic setObject:@0 forKey:@"teamKey"];
     [dic setObject:@1 forKey:@"srcType"];
     [dic setObject:self.timeKey forKey:@"srcKey"];
-    [dic setObject:[Helper md5HexDigest:[NSString stringWithFormat:@"teamKey=0&userKey=%@&srcKey=%@&srcType=1dagolfla.com", DEFAULF_USERID, self.timeKey]] forKey:@"md5"];
+
+    [dic setObject:[Helper md5HexDigest:[NSString stringWithFormat:@"teamKey=0&userKey=%@&srcKey=%@&srcType=1dagolfla.com", self.scoreModel.userKey, self.timeKey]] forKey:@"md5"];
     
     [[JsonHttp jsonHttp] httpRequest:@"score/getTeamScore" JsonKey:nil withData:dic requestMethod:@"GET" failedBlock:^(id errType) {
         
@@ -62,6 +65,8 @@
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
             self.dataModel = [[JGDHistoryScoreShowModel alloc] init];
             [self.dataModel setValuesForKeysWithDictionary:data];
+            NSLog(@"-------******%@", [data objectForKey:@"almost"]);
+
             if ([data objectForKey:@"bean"]) {
                 self.model = [[JGDHistoryScoreShowModel alloc] init];
                 [self.model setValuesForKeysWithDictionary:[data objectForKey:@"bean"]];
@@ -150,10 +155,13 @@
             chaDianLB.font = [UIFont systemFontOfSize:15 * ProportionAdapter];
             [viewTitle addSubview:chaDianLB];
             
-            self.chadianTF = [[UITextField alloc] initWithFrame:CGRectMake(330 * ProportionAdapter, 45 * ProportionAdapter, 50 * ProportionAdapter, 25 * ProportionAdapter)];
+            self.chadianTF = [[UITextField alloc] initWithFrame:CGRectMake(320 * ProportionAdapter, 45 * ProportionAdapter, 50 * ProportionAdapter, 25 * ProportionAdapter)];
             self.chadianTF.font = [UIFont systemFontOfSize:15 * ProportionAdapter];
             self.chadianTF.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
             self.chadianTF.text = [NSString stringWithFormat:@"%.2f", [self.model.almost floatValue]];
+            if ([self.model.almost integerValue] != 0) {
+                self.chadianTF.userInteractionEnabled = NO;
+            }
             [viewTitle addSubview:self.chadianTF];
             
             UIView *view = [[UIView alloc] initWithFrame:CGRectMake(315 * ProportionAdapter, 70 * ProportionAdapter, 50 * ProportionAdapter, 1 * ProportionAdapter)];
@@ -196,7 +204,7 @@
     
     
     if (indexPath.row > 0) {
-        NSLog(@"%td", indexPath.row);
+
         if (indexPath.row == 1) {
             [cell takeInfoWithModel:self.model index:indexPath];
         }else{
@@ -226,7 +234,6 @@
         }
         
     }else if (indexPath.section == 1) {
-        NSLog(@"%td", indexPath.row);
         if (indexPath.row == 0) {
             cell.colorImageV.backgroundColor = [UIColor clearColor];
             cell.nameLB.text = @"Hole";
@@ -267,18 +274,15 @@
     }
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (indexPath.row > 1) {
-        JGDNotActivityHisDetailViewController *detailV = [[JGDNotActivityHisDetailViewController alloc] init];
-        JGDHistoryScoreShowModel *model = self.dataArray[indexPath.row - 2];
-        detailV.model = model;
-        detailV.dataDic = self.dataDic;
-        [self.navigationController pushViewController:detailV animated:YES];
-    }
-}
-
-
-
+//- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+//    if (indexPath.row > 1) {
+//        JGDNotActivityHisDetailViewController *detailV = [[JGDNotActivityHisDetailViewController alloc] init];
+//        JGDHistoryScoreShowModel *model = self.dataArray[indexPath.row - 2];
+//        detailV.model = model;
+//        detailV.dataDic = self.dataDic;
+//        [self.navigationController pushViewController:detailV animated:YES];
+//    }
+//}
 //保存差点
 -(void)shareStatisticsDataClick
 {
