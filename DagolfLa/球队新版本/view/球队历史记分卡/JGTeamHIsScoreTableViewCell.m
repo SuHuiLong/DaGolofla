@@ -88,8 +88,8 @@
 //    }
     
     NSString* strMoney;
-    if (model.poleNumber) {
-        strMoney = [NSString stringWithFormat:@"%@人", [model.poleNumber stringValue]];
+    if (model.scoreSum) {
+        strMoney = [NSString stringWithFormat:@"%@人", [model.scoreSum stringValue]];
     }else{
         strMoney = [NSString stringWithFormat:@"0人"];
     }

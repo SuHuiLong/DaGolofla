@@ -32,6 +32,7 @@ static NSString *const JGHCenterBtnTableViewCellIdentifier = @"JGHCenterBtnTable
     NSInteger _selectAll;
     
     NSInteger _selectNumber;//选择的人数
+    NSNumber *_teamKey;
 }
 
 @property (nonatomic, strong)UITableView *scoreManageTableView;
@@ -142,6 +143,9 @@ static NSString *const JGHCenterBtnTableViewCellIdentifier = @"JGHCenterBtnTable
                 [_dataArray addObject:model];
             }
             //            [self.TeamArray addObjectsFromArray:[data objectForKey:@"teamList"]];
+            if ([data objectForKey:@"teamKey"]) {
+                _teamKey = [data objectForKey:@"teamKey"];
+            }
             _page++;
             [self.scoreManageTableView reloadData];
         }else {
@@ -249,6 +253,7 @@ static NSString *const JGHCenterBtnTableViewCellIdentifier = @"JGHCenterBtnTable
         JGDActSelfHistoryScoreViewController *actVC = [[JGDActSelfHistoryScoreViewController alloc] init];
         actVC.scoreModel = self.dataArray[indexPath.section - 2];
         actVC.timeKey = _activityBaseModel.timeKey;
+        actVC.teamKey = _teamKey;
         [self.navigationController pushViewController:actVC animated:YES];
     }
 }

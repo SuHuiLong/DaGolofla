@@ -11,6 +11,10 @@
 
 #import "JGLScoreRankModel.h"
 #import "UITool.h"
+
+#import "JGDActSelfHistoryScoreViewController.h"
+
+
 @interface JGLScoreRankViewController ()<UITableViewDelegate,UITableViewDataSource>
 {
     UITableView *_tableView;
@@ -224,7 +228,21 @@
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    
+   /*
+    [dic setObject:self.scoreModel.scoreKey forKey:@"scoreKey"];
+    [dic setObject:self.scoreModel.userKey forKey:@"userKey"];
+    [dic setObject:_activity forKey:@"srcKey"];
+    */
+    if (indexPath.row > 0) {
+        JGLScoreRankModel *model = _dataArray[indexPath.row - 1];
+        JGDActSelfHistoryScoreViewController *actVC = [[JGDActSelfHistoryScoreViewController alloc] init];
+        actVC.userKey = model.userKey;
+        actVC.scoreKey = model.scoreKey;
+        actVC.srcKey = _activity;
+        actVC.fromManeger = 6;
+        [self.navigationController pushViewController:actVC animated:YES];
+    }
+
 }
 
 
