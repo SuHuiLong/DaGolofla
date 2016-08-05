@@ -277,7 +277,8 @@
     [dic setObject:[Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@&teamKey=%@dagolfla.com", DEFAULF_USERID, self.teamKey]] forKey:@"md5"];
     [dic setObject:[self.searchController.searchBar text] forKey:@"likeStr"];
     
-    [[JsonHttp jsonHttp] httpRequest:@"score/getScoreHistory" JsonKey:nil withData:dic requestMethod:@"GET" failedBlock:^(id errType) {
+    
+    [[JsonHttp jsonHttp] httpRequest:@"score/getTeamActivityHistoryList" JsonKey:nil withData:dic requestMethod:@"GET" failedBlock:^(id errType) {
         
         [[ShowHUD showHUD]showToastWithText:[NSString stringWithFormat:@"%@",errType] FromView:self.view];
         

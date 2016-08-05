@@ -48,7 +48,7 @@
         [self.chaDianLB removeFromSuperview];
         [self.lineView removeFromSuperview];
         [self.viewTitle addSubview:self.poleLB];
-        UIBarButtonItem *rightBar = [[UIBarButtonItem alloc] initWithTitle:@"分享" style:(UIBarButtonItemStyleDone) target:self action:@selector(shareStatisticsDataClick)];
+        UIBarButtonItem *rightBar = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"fenxiang"] style:(UIBarButtonItemStyleDone) target:self action:@selector(realShareStatisticsDataClick)];
         rightBar.tintColor = [UIColor whiteColor];
         self.navigationItem.rightBarButtonItem = rightBar;
         
@@ -139,8 +139,8 @@
         lightV.layer.cornerRadius = 5 * ProportionAdapter;
         lightV.layer.masksToBounds = YES;
         
-        UILabel *allLB = [[UILabel alloc] initWithFrame:CGRectMake(50 * ProportionAdapter,0 * ProportionAdapter, 120 * ProportionAdapter, 45 * ProportionAdapter)];
-        allLB.text = @"成绩领取密钥：";
+        UILabel *allLB = [[UILabel alloc] initWithFrame:CGRectMake(30 * ProportionAdapter,0 * ProportionAdapter, 135 * ProportionAdapter, 45 * ProportionAdapter)];
+        allLB.text = @"记分成绩领取密钥：";
         allLB.font = [UIFont systemFontOfSize:15 * ProportionAdapter];
         [lightV addSubview:allLB];
         
@@ -381,6 +381,19 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
+-(void)realShareStatisticsDataClick
+{
+    ShareAlert* alert = [[ShareAlert alloc]initMyAlert];
+    alert.frame = CGRectMake(0, ScreenHeight, ScreenWidth, ScreenWidth);
+    [alert setCallBackTitle:^(NSInteger index) {
+        [self shareInfo:index];
+    }];
+    [UIView animateWithDuration:0.2 animations:^{
+        [alert show];
+    }];
+}
+
+
 -(void)shareInfo:(NSInteger)index
 {
     
@@ -394,8 +407,6 @@
     
     NSString*  shareUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/score/scoreDetail.html?teamKey=0&userKey=%@&srcKey=%@&srcType=1&key=%@&share=1&md5=%@", self.userKey, self.srcKey, self.scoreKey, [Helper md5HexDigest:[NSString stringWithFormat:@"teamKey=0&userKey=%@&srcKey=%@&srcType=1dagolfla.com", self.userKey, self.srcKey]]];
 
-    
-    NSString*  shareUrl1 = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/score/scoreTable.html?teamKey=0&userKey=%@&srcKey=%@&srcType=%@&scoreKey=%@&md5=%@&share=1", DEFAULF_USERID, [self.dataDic objectForKey:@"srcKey"], [self.dataDic objectForKey:@"srcType"], self.timeKey, [Helper md5HexDigest:[NSString stringWithFormat:@"teamKey=0&userKey=%@&srcKey=%@&srcType=%@dagolfla.com", DEFAULF_USERID, [self.dataDic objectForKey:@"srcKey"], [self.dataDic objectForKey:@"srcType"]]]];
     
     [UMSocialData defaultData].extConfig.title=[NSString stringWithFormat:@"个人成绩简单记分表"];
     if(index==0)
