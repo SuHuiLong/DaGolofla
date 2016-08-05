@@ -67,16 +67,16 @@
         _labelAll.text = [NSString stringWithFormat:@"暂无"];
     }
     
-    if (model.netbar != nil) {
-        _labelAlmost.text = [NSString stringWithFormat:@"%@",model.netbar];
+    if (model.almost != nil) {
+        _labelAlmost.text = [NSString stringWithFormat:@"%@",model.almost];
     }
     else{
         _labelAlmost.text = [NSString stringWithFormat:@"暂无"];
     }
     
     
-    if (model.almost != nil) {
-        _labelTee.text = [NSString stringWithFormat:@"%@",model.almost];
+    if (model.netbar != nil) {
+        _labelTee.text = [NSString stringWithFormat:@"%@",model.netbar];
     }
     else{
         _labelTee.text = [NSString stringWithFormat:@"暂无"];
