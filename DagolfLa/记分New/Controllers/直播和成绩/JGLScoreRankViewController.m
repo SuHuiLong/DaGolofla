@@ -71,7 +71,82 @@
     NSDictionary *attributes = [NSDictionary dictionaryWithObject:font forKey:UITextAttributeFont];
     [_seg setTitleTextAttributes:attributes forState:UIControlStateNormal];
     [_seg addTarget:self action:@selector(segTypeClick:) forControlEvents:UIControlEventValueChanged];
+    
+    //分享按钮
+    UIBarButtonItem *bar = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"iconfont-fenxiang"] style:(UIBarButtonItemStylePlain) target:self action:@selector(addShare)];
+    bar.tintColor = [UIColor whiteColor];
+    self.navigationItem.rightBarButtonItem = bar;
 }
+#pragma mark -分享
+- (void)addShare{
+    if ([[NSUserDefaults standardUserDefaults]objectForKey:@"userId"]) {
+        
+        ShareAlert* alert = [[ShareAlert alloc]initMyAlert];
+        
+        [self.view addSubview:alert];
+        [alert setCallBackTitle:^(NSInteger index) {
+            [self shareInfo:index];
+        }];
+        [UIView animateWithDuration:0.2 animations:^{
+            [alert show];
+        }];
+    }else {
+        [Helper alertViewWithTitle:@"是否立即登录?" withBlockCancle:^{
+        } withBlockSure:^{
+            EnterViewController *vc = [[EnterViewController alloc] init];
+            [self.navigationController pushViewController:vc animated:YES];
+        } withBlock:^(UIAlertController *alertView) {
+            [self presentViewController:alertView animated:YES completion:nil];
+        }];
+    }
+}
+#pragma mark - 分享
+-(void)shareInfo:(NSInteger)index{
+    //http://imgcache.dagolfla.com/share/score/scoreRanking.html?teamKey=222&userKey=1&srcKey=1&srcType=1&share=1                  球队计分分享
+    NSData *fiData = [[NSData alloc]init];
+    NSString*  shareUrl;
+//    if ([_model.timeKey integerValue] == 0) {
+        fiData = [NSData dataWithContentsOfURL:[Helper setImageIconUrl:@"activity" andTeamKey:[_activity integerValue] andIsSetWidth:YES andIsBackGround:YES]];
+        shareUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/score/scoreRanking.html?teamKey=%@&userKey=%@&srcKey=%@&srcType=1&share=1", _teamKey, DEFAULF_USERID, _activity];
+//    }
+//    else
+//    {
+//        fiData = [NSData dataWithContentsOfURL:[Helper setImageIconUrl:@"activity" andTeamKey:[_model.timeKey integerValue]andIsSetWidth:YES andIsBackGround:YES]];
+//        shareUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/team/teamac.html?key=%@", _model.timeKey];
+//    }
+    
+    
+    [UMSocialData defaultData].extConfig.title=[NSString stringWithFormat:@"%@报名", _labelTitle.text];
+    
+    if (index == 0){
+        //微信
+        [UMSocialWechatHandler setWXAppId:@"wxdcdc4e20544ed728" appSecret:@"fdc75aae5a98f2aa0f62ef8cba2b08e9" url:shareUrl];
+        [UMSocialConfig hiddenNotInstallPlatforms:@[UMShareToWechatSession,UMShareToWechatTimeline,UMShareToSina]];
+        [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatSession] content:[NSString stringWithFormat:@"活动记分分享%@", _activity] image:(fiData != nil && fiData.length > 0) ?fiData : [UIImage imageNamed:TeamBGImage] location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
+            if (response.responseCode == UMSResponseCodeSuccess) {
+                //                [self shareS:indexRow];
+            }
+        }];
+        
+    }else if (index==1){
+        //朋友圈
+        [UMSocialWechatHandler setWXAppId:@"wxdcdc4e20544ed728" appSecret:@"fdc75aae5a98f2aa0f62ef8cba2b08e9" url:shareUrl];
+        [UMSocialConfig hiddenNotInstallPlatforms:@[UMShareToWechatSession,UMShareToWechatTimeline,UMShareToSina]];
+        [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatTimeline] content:[NSString stringWithFormat:@"活动记分分享%@", _activity] image:(fiData != nil && fiData.length > 0) ?fiData : [UIImage imageNamed:TeamBGImage] location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
+            if (response.responseCode == UMSResponseCodeSuccess) {
+                //                [self shareS:indexRow];
+            }
+        }];
+    }else{
+        UMSocialData *data = [UMSocialData defaultData];
+        data.shareImage = [UIImage imageNamed:@"logo"];
+        data.shareText = [NSString stringWithFormat:@"%@%@",@"打高尔夫啦",shareUrl];
+        [[UMSocialControllerService defaultControllerService] setSocialData:data];
+        //2.设置分享平台
+        [UMSocialSnsPlatformManager getSocialPlatformWithName:UMShareToSina].snsClickHandler(self,[UMSocialControllerService defaultControllerService],YES);
+    }
+}
+
 -(void)segTypeClick:(UISegmentedControl *)sender
 {
     if ([_tableView.header isRefreshing] == YES) {
