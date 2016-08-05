@@ -30,7 +30,7 @@
 
 #import "JGHDatePicksViewController.h"
 
-#import "JGHActivityScoreManagerViewController.h"
+#import "JGLActivityMemberSetViewController.h"
 
 
 #import "JGGuestViewController.h" // 嘉宾
@@ -372,10 +372,8 @@
                 NSLog(@"shangchen");
 //                UseMallViewController
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
-//                UseMallViewController* userVc = [[UseMallViewController alloc]init];
-//                [self.navigationController pushViewController:userVc animated:YES];
-                JGGuestViewController *guVC = [[JGGuestViewController alloc] init];
-                [self.navigationController pushViewController:guVC animated:YES];
+                JGLActivityMemberSetViewController* userVc = [[JGLActivityMemberSetViewController alloc]init];
+                [self.navigationController pushViewController:userVc animated:YES];
             }
                 break;
             case 1002:
