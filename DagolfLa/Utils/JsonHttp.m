@@ -302,7 +302,13 @@ static JsonHttp *jsonHttp = nil;
     NSOperationQueue *queue = [[NSOperationQueue alloc]init];
     //发送请求
    [NSURLConnection sendAsynchronousRequest:request queue:queue completionHandler:^(NSURLResponse * _Nullable response, NSData * _Nullable data, NSError * _Nullable connectionError) {
-       NSDictionary *dataDict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+       NSDictionary *dataDict = nil;
+       if ([NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil]) {
+           dataDict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+       }else{
+           return ;
+       }
+       
        if ([[NSString stringWithFormat:@"%@", [dataDict objectForKey:@"code"]] isEqualToString:@"1"]) {
            completionBlock(dataDict);
        }else{

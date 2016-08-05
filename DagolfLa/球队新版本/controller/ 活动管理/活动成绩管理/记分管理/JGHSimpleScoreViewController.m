@@ -244,6 +244,11 @@ static NSString *const JGHOperationScoreListCellIdentifier = @"JGHOperationScore
     }
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (indexPath.section == 0) {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+}
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     return 10*ProportionAdapter;
 }
@@ -427,6 +432,10 @@ static NSString *const JGHOperationScoreListCellIdentifier = @"JGHOperationScore
     for (UIViewController *controller in self.navigationController.viewControllers) {
         if ([controller isKindOfClass:[JGHActivityScoreManagerViewController class]]) {
             
+            //创建一个消息对象
+            NSNotification * notice = [NSNotification notificationWithName:@"redloadActivityScoreManagerData" object:nil userInfo:nil];
+            //发送消息
+            [[NSNotificationCenter defaultCenter]postNotification:notice];
             [self.navigationController popToViewController:controller animated:YES];
         }
     }

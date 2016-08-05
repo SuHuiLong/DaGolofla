@@ -17,6 +17,82 @@
     //清楚缓存
 //    [[SDImageCache sharedImageCache] clearDisk];
     
+    self.almostTop1.constant = 25 *ProportionAdapter;
+    self.almostLeft1.constant = 25 *ProportionAdapter;
+    self.almostRight1.constant = 5 *ProportionAdapter;
+    self.conViewTop1.constant = -25 *ProportionAdapter;
+    self.conViewLeft1.constant = -25 *ProportionAdapter;
+    self.conViewW1.constant = 55 *ProportionAdapter;
+    
+    self.almostTop2.constant = 25 *ProportionAdapter;
+    self.almostLeft2.constant = 25 *ProportionAdapter;
+    self.almostRight2.constant = 5 *ProportionAdapter;
+    self.conViewTop2.constant = -25 *ProportionAdapter;
+    self.conViewLeft2.constant = -25 *ProportionAdapter;
+    self.conViewW2.constant = 55 *ProportionAdapter;
+
+    self.almostTop3.constant = 25 *ProportionAdapter;
+    self.almostLeft3.constant = 25 *ProportionAdapter;
+    self.almostRight3.constant = 5 *ProportionAdapter;
+    self.conViewTop3.constant = -25 *ProportionAdapter;
+    self.conViewLeft3.constant = -25 *ProportionAdapter;
+    self.conViewW3.constant = 55 *ProportionAdapter;
+    
+    self.almostTop4.constant = 25 *ProportionAdapter;
+    self.almostLeft4.constant = 25 *ProportionAdapter;
+    self.almostRight4.constant = 5 *ProportionAdapter;
+    self.conViewTop4.constant = -25 *ProportionAdapter;
+    self.conViewLeft4.constant = -25 *ProportionAdapter;
+    self.conViewW4.constant = 55 *ProportionAdapter;
+    
+//    [self insertSubview:self.leftTopView atIndex:0];
+    self.leftTopView.layer.masksToBounds = YES;
+    self.leftTopView.layer.cornerRadius = self.RightTopView.frame.size.width/2;
+    
+    self.leftTopValue.text = @" ";
+    self.leftTopValue.tintColor = [UIColor colorWithHexString:@"#00d3bc"];
+    self.leftTopAlmost.font = [UIFont systemFontOfSize:8*ProportionAdapter];
+    self.leftTopAlmost.tintColor = [UIColor colorWithHexString:@"#a0a0a0"];
+    
+//    [self insertSubview:self.RightTopView atIndex:0];
+    self.RightTopView.layer.masksToBounds = YES;
+    self.RightTopView.layer.cornerRadius = self.RightTopView.frame.size.width/2;
+    
+    self.rightTopValue.text = @" ";
+    self.rightTopValue.tintColor = [UIColor colorWithHexString:@"#00d3bc"];
+    self.rightTopAlmost.font = [UIFont systemFontOfSize:8*ProportionAdapter];
+    self.rightTopAlmost.tintColor = [UIColor colorWithHexString:@"#a0a0a0"];
+
+//    [self insertSubview:self.leftDownView atIndex:0];
+    self.leftDownView.layer.masksToBounds = YES;
+    self.leftDownView.layer.cornerRadius = self.RightTopView.frame.size.width/2;
+    
+    self.leftDownValue.text = @" ";
+    self.leftDownValue.tintColor = [UIColor colorWithHexString:@"#00d3bc"];
+    self.leftDownAlmost.font = [UIFont systemFontOfSize:8*ProportionAdapter];
+    self.leftDownAlmost.tintColor = [UIColor colorWithHexString:@"#a0a0a0"];
+
+//    [self insertSubview:self.rightDownView atIndex:0];
+    self.rightDownView.layer.masksToBounds = YES;
+    self.rightDownView.layer.cornerRadius = self.RightTopView.frame.size.width/2;
+    
+    self.rightDownVlaue.text = @" ";
+    self.rightDownVlaue.tintColor = [UIColor colorWithHexString:@"#00d3bc"];
+    self.rightDownAlmost.font = [UIFont systemFontOfSize:8*ProportionAdapter];
+    self.rightDownAlmost.tintColor = [UIColor colorWithHexString:@"#a0a0a0"];
+    
+    if (iPhone5) {
+        self.leftTopValue.font = [UIFont systemFontOfSize:11*ProportionAdapter];
+        self.rightTopValue.font = [UIFont systemFontOfSize:11*ProportionAdapter];
+        self.leftDownValue.font = [UIFont systemFontOfSize:11*ProportionAdapter];
+        self.rightDownVlaue.font = [UIFont systemFontOfSize:11*ProportionAdapter];
+    }else{
+        self.leftTopValue.font = [UIFont systemFontOfSize:13*ProportionAdapter];
+        self.rightTopValue.font = [UIFont systemFontOfSize:13*ProportionAdapter];
+        self.leftDownValue.font = [UIFont systemFontOfSize:13*ProportionAdapter];
+        self.rightDownVlaue.font = [UIFont systemFontOfSize:13*ProportionAdapter];
+    }
+
     self.bgView.layer.masksToBounds = YES;
     self.bgView.layer.cornerRadius = 5;
     
@@ -183,6 +259,10 @@
                     if ([model.payMoney floatValue] != 0) {
                         [self.money1 setImage:[UIImage imageNamed:@"payMoney"]];
                     }
+                    
+                    if (model.almost) {
+                        self.leftTopValue.text = [NSString stringWithFormat:@"%td",model.almost];
+                    }
                 }
                 
                 if (model.sortIndex == 1){
@@ -196,6 +276,10 @@
                     //金钱按钮
                     if ([model.payMoney floatValue] != 0) {
                         [self.money2 setImage:[UIImage imageNamed:@"payMoney"]];
+                    }
+                    
+                    if (model.almost) {
+                        self.rightTopValue.text = [NSString stringWithFormat:@"%td",model.almost];
                     }
                 }
                 
@@ -211,6 +295,10 @@
                     if ([model.payMoney floatValue] != 0) {
                         [self.money3 setImage:[UIImage imageNamed:@"payMoney"]];
                     }
+                    
+                    if (model.almost) {
+                        self.leftDownValue.text = [NSString stringWithFormat:@"%td",model.almost];
+                    }
                 }
                 
                 if (model.sortIndex == 3){
@@ -224,6 +312,10 @@
                     //金钱按钮
                     if ([model.payMoney floatValue] != 0) {
                         [self.money4 setImage:[UIImage imageNamed:@"payMoney"]];
+                    }
+                    
+                    if (model.almost) {
+                        self.rightDownVlaue.text = [NSString stringWithFormat:@"%td",model.almost];
                     }
                 }
             }

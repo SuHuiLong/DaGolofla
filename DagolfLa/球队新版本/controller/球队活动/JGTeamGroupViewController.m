@@ -95,6 +95,19 @@ static NSString *const JGGroupdetailsCollectionViewCellIdentifier = @"JGGroupdet
     _waitGroupLabel.font = [UIFont systemFontOfSize:15];
     [self.view addSubview:_waitGroupLabel];
     
+    //添加分组
+    UIButton *autoGroupBtn = [[UIButton alloc]initWithFrame:CGRectMake(screenWidth - 90, 14.5, 60, 21)];
+    [autoGroupBtn setTitle:@"按差点分组" forState:UIControlStateNormal];
+    autoGroupBtn.layer.masksToBounds = YES;
+    [autoGroupBtn setTitleColor:[UIColor colorWithHexString:@"#7DDFFD"] forState:UIControlStateNormal];
+    autoGroupBtn.backgroundColor = [UIColor colorWithHexString:BG_color];
+    autoGroupBtn.layer.borderWidth = 1.0;
+    autoGroupBtn.layer.borderColor = [UIColor colorWithHexString:@"#7DDFFD"].CGColor;
+    autoGroupBtn.titleLabel.font = [UIFont systemFontOfSize:12];
+    [autoGroupBtn addTarget:self action:@selector(autoGroupBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    [autoGroupBtn setBackgroundColor:[UIColor whiteColor]];
+    [self.view addSubview:autoGroupBtn];
+    
     UILabel *lineLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 29, screenWidth - 20, 1)];
     lineLabel.backgroundColor = [UIColor redColor];
     [_waitGroupLabel addSubview:lineLabel];
@@ -159,6 +172,28 @@ static NSString *const JGGroupdetailsCollectionViewCellIdentifier = @"JGGroupdet
     [self.view addSubview:self.groupDetailsCollectionView];
     
     [self loadData:0];
+}
+#pragma mark -- 自动分组
+- (void)autoGroupBtnClick:(UIButton *)btn{
+    btn.enabled = NO;
+    [[ShowHUD showHUD]showAnimationWithText:@"分组中..." FromView:self.view];
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    [dict setObject:@(_teamActivityKey) forKey:@"activity"];
+    [dict setObject:DEFAULF_USERID forKey:@"userKey"];
+    [[JsonHttp jsonHttp]httpRequestWithMD5:@"team/automaticGroup" JsonKey:nil withData:dict failedBlock:^(id errType) {
+        [[ShowHUD showHUD]hideAnimationFromView:self.view];
+        [[ShowHUD showHUD]showToastWithText:@"分组失败" FromView:self.view];
+    } completionBlock:^(id data) {
+        [[ShowHUD showHUD]hideAnimationFromView:self.view];
+        NSLog(@"%@", data);
+        if ([[data objectForKey:@"packSuccess"] integerValue]==1) {
+            [self loadData:1];
+        }else{
+            [[ShowHUD showHUD]showToastWithText:@"分组失败" FromView:self.view];
+        }
+    }];
+    
+    btn.enabled = YES;
 }
 #pragma mark -- 返回事件
 - (void)backButtonClcik:(UIButton *)btn{

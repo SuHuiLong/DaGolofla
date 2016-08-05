@@ -54,6 +54,8 @@
 
 @property (nonatomic, assign)NSInteger teamActivityKey;
 
-@property (copy, nonatomic) void (^refreshBlock)();
+@property (copy, nonatomic) void (^refreshBlock)(NSInteger almostType);
+
+@property (nonatomic, assign)NSInteger almostType;
 
 @end

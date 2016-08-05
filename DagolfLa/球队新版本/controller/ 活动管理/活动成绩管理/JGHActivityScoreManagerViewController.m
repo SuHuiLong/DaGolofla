@@ -39,6 +39,8 @@ static NSString *const JGHCenterBtnTableViewCellIdentifier = @"JGHCenterBtnTable
 
 @property (nonatomic, strong)NSMutableArray *dataArray;
 
+@property (nonatomic, assign)NSInteger almostType;//差点计算类型
+
 @end
 
 @implementation JGHActivityScoreManagerViewController
@@ -54,9 +56,13 @@ static NSString *const JGHCenterBtnTableViewCellIdentifier = @"JGHCenterBtnTable
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(relodDate) name:@"redloadActivityScoreManagerData" object:nil];
+    
     _page = 0;
     _selectAll = 0;
     _selectNumber = 0;
+    _almostType = 0;
     self.view.backgroundColor = [UIColor colorWithHexString:BG_color];
     self.navigationItem.title = _activityBaseModel.name;
     _dict = [NSMutableDictionary dictionary];
@@ -85,7 +91,10 @@ static NSString *const JGHCenterBtnTableViewCellIdentifier = @"JGHCenterBtnTable
     [view addSubview:_publisView];
     [self.view addSubview:view];
 }
-
+#pragma mark -- 刷新数据通知
+- (void)relodDate{
+    [self headRereshing];
+}
 - (void)createTable{
     self.scoreManageTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight -64 -44) style:UITableViewStylePlain];
     
@@ -136,6 +145,8 @@ static NSString *const JGHCenterBtnTableViewCellIdentifier = @"JGHCenterBtnTable
             }
             //数据解析
             //            self.TeamArray = [data objectForKey:@"teamList"];
+            _almostType = [[data objectForKey:@"almostType"] integerValue];
+            
             for (NSDictionary *dataDic in [data objectForKey:@"list"]) {
                 JGLScoreLiveModel *model = [[JGLScoreLiveModel alloc] init];
                 [model setValuesForKeysWithDictionary:dataDic];
@@ -276,13 +287,16 @@ static NSString *const JGHCenterBtnTableViewCellIdentifier = @"JGHCenterBtnTable
     NSLog(@"设置差点");
     JGHSetAlmostPromptViewController *setAlmostCtrl = [[JGHSetAlmostPromptViewController alloc]initWithNibName:@"JGHSetAlmostPromptViewController" bundle:nil];
     setAlmostCtrl.teamKey = _activityBaseModel.teamKey;
+    setAlmostCtrl.almostType = _almostType;
     if (_activityBaseModel.teamActivityKey != 0) {
         setAlmostCtrl.teamActivityKey = _activityBaseModel.teamActivityKey;
     }else{
         setAlmostCtrl.teamActivityKey = [_activityBaseModel.timeKey integerValue];
     }
     
-    setAlmostCtrl.refreshBlock = ^(){
+    __weak JGHActivityScoreManagerViewController *weakSlef = self;
+    setAlmostCtrl.refreshBlock = ^(NSInteger almostType){
+        weakSlef.almostType = almostType;
         [self headRereshing];
     };
     
@@ -403,8 +417,8 @@ static NSString *const JGHCenterBtnTableViewCellIdentifier = @"JGHCenterBtnTable
     NSLog(@"%td", btn.tag);
     for (int i=0; i<_dataArray.count; i++) {
         JGLScoreLiveModel *model = [[JGLScoreLiveModel alloc] init];
-        if (btn.tag-100 == i) {
-            model = _dataArray[btn.tag -100];
+        if (btn.tag-101 == i) {
+            model = _dataArray[btn.tag -101];
             if (model.select == 0) {
                 model.select = 1;
                 _selectNumber += 1;

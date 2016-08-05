@@ -118,6 +118,7 @@ static CGFloat ImageHeight  = 210.0;
     self.view.backgroundColor = [UIColor colorWithHexString:BG_color];
     self.automaticallyAdjustsScrollViewInsets = NO;
     _isEditor = 0;
+    
     _titleArray = @[@"活动开始时间", @"活动结束时间", @"报名截止时间"];
     
     self.imgProfile = [[UIImageView alloc] initWithImage:[UIImage imageNamed:ActivityBGImage]];
@@ -220,7 +221,8 @@ static CGFloat ImageHeight  = 210.0;
         NSLog(@"%@", data);
         [[ShowHUD showHUD]hideAnimationFromView:self.view];
         
-        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {            
+            
             NSMutableDictionary *dict = [NSMutableDictionary dictionary];
             
             if ([data objectForKey:@"teamMember"]) {
@@ -470,6 +472,8 @@ static CGFloat ImageHeight  = 210.0;
                 }];
                 return ;
             }
+            
+            _refreshBlock();
             
             if (self.model.bgImage) {
                 NSMutableArray *imageArray = [NSMutableArray array];
