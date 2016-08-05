@@ -43,6 +43,7 @@
 #import "JGLActiveCancelMemViewController.h"
 #import "JGLPresentAwardViewController.h"
 #import "JGLScoreLiveViewController.h"
+#import "JGLActivityMemberSetViewController.h"
 
 static NSString *const JGTeamActivityWithAddressCellIdentifier = @"JGTeamActivityWithAddressCell";
 static NSString *const JGTeamActivityDetailsCellIdentifier = @"JGTeamActivityDetailsCell";
@@ -760,8 +761,10 @@ static CGFloat ImageHeight  = 210.0;
     }
     
     if ([_power containsString:@"1001"]) {
-        JGLActiveCancelMemViewController *powerCtrl = [[JGLActiveCancelMemViewController alloc]init];
-        powerCtrl.title = self.model.name;
+        //JGLActivityMemberSetViewController  JGLActiveCancelMemViewController
+        JGLActivityMemberSetViewController *powerCtrl = [[JGLActivityMemberSetViewController alloc]init];
+        powerCtrl.teamKey = [NSNumber numberWithInteger:_teamKey];
+
         powerCtrl.activityKey = [NSNumber numberWithInteger:timeKey];
         [self.navigationController pushViewController:powerCtrl animated:YES];
     }else{
