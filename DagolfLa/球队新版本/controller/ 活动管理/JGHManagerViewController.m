@@ -19,6 +19,8 @@
 @interface JGHManagerViewController ()<UITableViewDelegate, UITableViewDataSource>
 {
     NSString *_urlString;
+    
+    NSInteger _page;
 }
 @property (nonatomic, strong)UITableView *teamActivityTableView;
 @property (nonatomic, strong)NSMutableArray *dataArray;//数据模型数组
@@ -52,8 +54,9 @@
         [self createAdminBtn];
     }
     
-    [self loadData];
+    _page = 0;
     
+    [self loadData];
 }
 
 #pragma mark -- 下载数据
@@ -63,7 +66,7 @@
     
     [dict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:userID] forKey:@"userKey"];//3619
     //189781710290821120  http://192.168.2.6:8888
-    [dict setObject:@"0" forKey:@"offset"];
+    [dict setObject:@0 forKey:@"offset"];
     [dict setObject:[NSString stringWithFormat:@"%td", _timeKey] forKey:@"teamKey"];
     
     //球队活动
@@ -103,6 +106,9 @@
 - (void)launchActivityBtnClick:(UIButton *)btn{
     JGHLaunchActivityViewController * launchCtrl = [[JGHLaunchActivityViewController alloc]init];
     launchCtrl.teamKey = _timeKey;
+    launchCtrl.refreshBlock = ^(){
+        [self loadData];
+    };
     NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
     NSLog(@"%@", [userdef objectForKey:@"TeamActivityArray"]);
     NSMutableArray *activityArray = [NSMutableArray array];
@@ -239,6 +245,10 @@
     JGTeamAcitivtyModel *model = [[JGTeamAcitivtyModel alloc]init];
     model = self.dataArray[indexPath.section];
     detailsCtrl.model = model;
+    detailsCtrl.refreshBlock = ^(){
+        [self loadData];
+    };
+    
     [self.navigationController pushViewController:detailsCtrl animated:YES];
 }
 

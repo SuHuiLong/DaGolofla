@@ -26,6 +26,7 @@
     self.threeLabel.font= [UIFont systemFontOfSize:15 *ProportionAdapter];
     
     self.fiveLabel.font= [UIFont systemFontOfSize:15 *ProportionAdapter];
+    
 }
 
 -(void)showData:(JGLScoreLiveModel *)model
@@ -38,7 +39,7 @@
         self.fristLabel.text = @"暂无姓名";
     }
     if (model.poleNumber != nil) {
-        self.twoLabel.text = [NSString stringWithFormat:@"%@",model.poleNumber];
+        self.twoLabel.text = [NSString stringWithFormat:@"%.f",[model.poleNumber floatValue]];
     }
     else
     {
@@ -47,7 +48,7 @@
     
     
     if (model.almost != nil) {
-        self.threeLabel.text = [NSString stringWithFormat:@"%@",model.almost];
+        self.threeLabel.text = [NSString stringWithFormat:@"%.f",[model.almost floatValue]];
     }
     else
     {
@@ -55,7 +56,7 @@
     }
     
     if (model.netbar != nil) {
-        self.fiveLabel.text = [NSString stringWithFormat:@"%@",model.netbar];
+        self.fiveLabel.text = [NSString stringWithFormat:@"%.1f",[model.netbar floatValue]];
     }
     else
     {

@@ -32,6 +32,10 @@
 
 #import "JGLActivityMemberSetViewController.h"
 
+
+#import "JGGuestViewController.h" // 嘉宾
+
+
 @interface ShouyeViewController ()<UIApplicationDelegate,CLLocationManagerDelegate>
 {
 //    UITableView *_tableView;

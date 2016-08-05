@@ -73,6 +73,7 @@
             <connections>
                 <outlet property="addBtn" destination="a8U-Mu-PNa" id="4Ru-2K-hFg"/>
                 <outlet property="addBtnRight" destination="wwf-ce-niE" id="QbP-gI-G6R"/>
+                <outlet property="bgImage" destination="OHc-QM-VT3" id="GHD-jZ-Bod"/>
                 <outlet property="bgLeft" destination="oUI-s7-ApR" id="K2n-r5-ESq"/>
                 <outlet property="bgRight" destination="yTg-xd-BQ1" id="Trl-sU-NTu"/>
                 <outlet property="bgTop" destination="2cs-aj-N0O" id="7M2-oB-RmH"/>

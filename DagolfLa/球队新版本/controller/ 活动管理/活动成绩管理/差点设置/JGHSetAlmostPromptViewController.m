@@ -10,10 +10,6 @@
 
 @interface JGHSetAlmostPromptViewController ()
 
-{
-    NSInteger _selectId;// 0 1
-}
-
 @end
 
 @implementation JGHSetAlmostPromptViewController
@@ -53,9 +49,13 @@
     self.propmtLabel.font = [UIFont systemFontOfSize:13 *ProportionAdapter];
     self.propmtLabel.textColor = [UIColor colorWithHexString:Click_Color];
     
-    _selectId = 0;
-    self.imageNoSelect.image = [UIImage imageNamed:@"xiao_danx"];//xiao_dan
-    self.imageNoSelectTwo.image = [UIImage imageNamed:@"xiao_dan"];
+    if (_almostType == 0) {
+        self.imageNoSelect.image = [UIImage imageNamed:@"xiao_danx"];//xiao_dan
+        self.imageNoSelectTwo.image = [UIImage imageNamed:@"xiao_dan"];
+    }else{
+        self.imageNoSelectTwo.image = [UIImage imageNamed:@"xiao_danx"];
+        self.imageNoSelect.image = [UIImage imageNamed:@"xiao_dan"];
+    }
     
     UIBarButtonItem *item = [[UIBarButtonItem alloc]initWithTitle:@"确定" style:UIBarButtonItemStylePlain target:self action:@selector(saveBtnClick)];
     item.tintColor=[UIColor whiteColor];
@@ -66,22 +66,16 @@
 - (void)saveBtnClick{
     NSLog(@"确定");
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    /*
-     Param(value="userKey"         ,require =true )  Long     userKey,  // 用户key
-     @Param(value="teamKey"         ,require =true )  Long     teamKey,  // 球队key
-     @Param(value="teamActivityKey" ,require =true )  Long     teamActivityKey,// 球队活动key
-     @Param(value="almostType"      ,require =true )  Integer  almostType,  // 类型 TeamActivity.almostType   0 : 新新贝利亚计算公式  , 1: 自报差点
-     @Param(value="md5"
-     */
     [dict setObject:DEFAULF_USERID forKey:@"userKey"];
-    [dict setObject:@"" forKey:@"teamKey"];
-    [dict setObject:@"" forKey:@"teamActivityKey"];
-    [dict setObject:@(_selectId) forKey:@"almostType"];
+    [dict setObject:@(_teamKey) forKey:@"teamKey"];
+    [dict setObject:@(_teamActivityKey) forKey:@"teamActivityKey"];
+    [dict setObject:@(_almostType) forKey:@"almostType"];
     [[JsonHttp jsonHttp]httpRequestWithMD5:@"score/setAlmost" JsonKey:nil withData:dict failedBlock:^(id errType) {
         
     } completionBlock:^(id data) {
         NSLog(@"%@", data);
-        if ([[data objectForKey:@"packSuccess"] boolValue] == YES) {
+        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+            _refreshBlock(_almostType);
             [self.navigationController popViewControllerAnimated:YES];
         }else{
             if ([data objectForKey:@"packResultMsg"]) {
@@ -107,12 +101,12 @@
 */
 
 - (IBAction)oneBtnClick:(UIButton *)sender {
-    _selectId = 0;
+    _almostType = 0;
     self.imageNoSelect.image = [UIImage imageNamed:@"xiao_danx"];//xiao_dan
     self.imageNoSelectTwo.image = [UIImage imageNamed:@"xiao_dan"];
 }
 - (IBAction)twoBtnClick:(UIButton *)sender {
-    _selectId = 1;
+    _almostType = 1;
     self.imageNoSelectTwo.image = [UIImage imageNamed:@"xiao_danx"];
     self.imageNoSelect.image = [UIImage imageNamed:@"xiao_dan"];
 }

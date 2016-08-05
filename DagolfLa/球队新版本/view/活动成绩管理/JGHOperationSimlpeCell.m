@@ -13,14 +13,14 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
-    self.contentView.backgroundColor = [UIColor colorWithHexString:BG_color];
+    
     self.bgTop.constant = 5*ProportionAdapter;
     self.bgLeft.constant = 20*ProportionAdapter;
     self.bgRight.constant = 20*ProportionAdapter;
     
-    self.onlyScoreTotal.font = [UIFont systemFontOfSize:15*ProportionAdapter];
+    self.onlyScoreTotal.font = [UIFont systemFontOfSize:18*ProportionAdapter];
     self.onlyScoreTotalTop.constant = 65*ProportionAdapter;
-
+    
     self.rodLabel.font = [UIFont systemFontOfSize:18*ProportionAdapter];
     self.rodLabelLeft.constant = 35*ProportionAdapter;
 
@@ -28,6 +28,10 @@
     self.rodVlaueTop.constant = 50*ProportionAdapter;
 
     self.addBtnRight.constant = 35*ProportionAdapter;
+    
+    self.backgroundColor = [UIColor colorWithHexString:BG_color];
+    self.contentView.backgroundColor = [UIColor colorWithHexString:BG_color];
+    self.bgImage.backgroundColor = [UIColor colorWithHexString:BG_color];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

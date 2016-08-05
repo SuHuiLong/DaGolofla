@@ -20,6 +20,9 @@
 
 @property (nonatomic, weak)id <JGHOperationSimlpeCellDelegate> delegate;
 
+@property (weak, nonatomic) IBOutlet UIImageView *bgImage;
+
+
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *bgTop;//5
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *bgLeft;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *bgRight;

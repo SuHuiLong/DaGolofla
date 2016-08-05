@@ -57,5 +57,51 @@
 - (void)configCellWithModelArray:(NSMutableArray *)modelArray;
 
 
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *almostTop1;//25
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *almostLeft1;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *almostRight1;
+
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *conViewTop1;//-25
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *conViewLeft1;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *conViewW1;//60
+
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *almostTop2;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *almostLeft2;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *almostRight2;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *conViewTop2;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *conViewLeft2;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *conViewW2;
+
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *almostTop3;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *almostLeft3;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *almostRight3;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *conViewTop3;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *conViewLeft3;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *conViewW3;
+
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *almostTop4;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *almostLeft4;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *almostRight4;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *conViewTop4;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *conViewLeft4;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *conViewW4;
+
+
+@property (weak, nonatomic) IBOutlet UIView *leftTopView;
+@property (weak, nonatomic) IBOutlet UILabel *leftTopValue;
+@property (weak, nonatomic) IBOutlet UILabel *leftTopAlmost;
+
+@property (weak, nonatomic) IBOutlet UIView *RightTopView;
+@property (weak, nonatomic) IBOutlet UILabel *rightTopValue;
+@property (weak, nonatomic) IBOutlet UILabel *rightTopAlmost;
+
+@property (weak, nonatomic) IBOutlet UIView *leftDownView;
+@property (weak, nonatomic) IBOutlet UILabel *leftDownValue;
+@property (weak, nonatomic) IBOutlet UILabel *leftDownAlmost;
+
+@property (weak, nonatomic) IBOutlet UIView *rightDownView;
+@property (weak, nonatomic) IBOutlet UILabel *rightDownVlaue;
+@property (weak, nonatomic) IBOutlet UILabel *rightDownAlmost;
+
 
 @end

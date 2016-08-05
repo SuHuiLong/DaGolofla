@@ -171,7 +171,7 @@
     [cell.imgvIcon sd_setImageWithURL:[Helper setImageIconUrl:@"user" andTeamKey:[model.userKey integerValue] andIsSetWidth:YES andIsBackGround:NO] placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
     cell.imgvIcon.layer.cornerRadius = cell.imgvIcon.frame.size.height/2;
     cell.imgvIcon.layer.masksToBounds = YES;
-    
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
 }
 

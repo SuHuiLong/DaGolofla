@@ -137,6 +137,7 @@
             <connections>
                 <outlet property="ballName" destination="kB1-8e-RzC" id="9Aw-9L-l3z"/>
                 <outlet property="ballNameLeft" destination="7Ji-yx-4WU" id="OLM-Vr-fN5"/>
+                <outlet property="bgImage" destination="9ua-zQ-Bh1" id="RtN-qI-pjz"/>
                 <outlet property="bgLeft" destination="2bk-KQ-z9T" id="7Iy-Qf-ed9"/>
                 <outlet property="bgRight" destination="j0F-pd-rqu" id="Hpw-vj-gFT"/>
                 <outlet property="bgTop" destination="tep-sv-b7P" id="e8h-dz-fGw"/>

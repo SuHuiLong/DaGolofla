@@ -497,15 +497,15 @@ static CGFloat ImageHeight  = 210.0;
         return;
     }
     
-    if ([self.model.beginDate compare:self.model.endDate] > 0) {
-        [[ShowHUD showHUD]showToastWithText:@"活动开球时间不能大于结束时间！" FromView:self.view];
-        return;
-    }
-    
-    if ([[[self.model.signUpEndTime componentsSeparatedByString:@"-"] lastObject] compare:self.model.beginDate] > 0) {
-        [[ShowHUD showHUD]showToastWithText:@"报名截止时间不能大于活动开始时间！" FromView:self.view];
-        return;
-    }
+//    if ([self.model.beginDate compare:self.model.endDate] > 0) {
+//        [[ShowHUD showHUD]showToastWithText:@"活动开球时间不能大于结束时间！" FromView:self.view];
+//        return;
+//    }
+//    
+//    if ([[[self.model.signUpEndTime componentsSeparatedByString:@" "] firstObject] compare:self.model.beginDate] > 0) {
+//        [[ShowHUD showHUD]showToastWithText:@"报名截止时间不能大于活动开始时间！" FromView:self.view];
+//        return;
+//    }
     
     if (self.model.userMobile.length != 11) {
         [[ShowHUD showHUD]showToastWithText:@"手机号码格式不正确！" FromView:self.view];
@@ -574,12 +574,14 @@ static CGFloat ImageHeight  = 210.0;
         NSLog(@"%@", data);
         [[ShowHUD showHUD]hideAnimationFromView:self.view];
         if ([[data objectForKey:@"packSuccess"] integerValue] == 0) {
-            [Helper alertViewWithTitle:@"活动发布失败！" withBlock:^(UIAlertController *alertView) {
+            [Helper alertViewWithTitle:[data objectForKey:@"packResultMsg"] withBlock:^(UIAlertController *alertView) {
                 [self.navigationController presentViewController:alertView animated:YES completion:nil];
             }];
             
             return ;
         }
+        
+        self.refreshBlock();
         
         NSMutableArray *imageArray = [NSMutableArray array];
         
@@ -615,6 +617,8 @@ static CGFloat ImageHeight  = 210.0;
                         [self presentViewController:alertController animated:YES completion:nil];
                     });
                 }
+                
+            }else{
                 
             }
         }];

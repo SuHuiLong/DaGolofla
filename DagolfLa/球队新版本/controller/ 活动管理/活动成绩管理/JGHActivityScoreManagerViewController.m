@@ -15,7 +15,7 @@
 #import "JGHPublishedPeopleView.h"
 #import "JGLScoreLiveModel.h"
 #import "JGTeamAcitivtyModel.h"
-
+#import "JGLScoreLiveViewController.h"
 #import "JGDActSelfHistoryScoreViewController.h"
 
 static NSString *const JGHMatchTranscriptTableViewCellIdentifier = @"JGHMatchTranscriptTableViewCell";
@@ -30,11 +30,16 @@ static NSString *const JGHCenterBtnTableViewCellIdentifier = @"JGHCenterBtnTable
     
     JGHPublishedPeopleView *_publisView;
     NSInteger _selectAll;
+    
+    NSInteger _selectNumber;//选择的人数
+    NSNumber *_teamKey;
 }
 
 @property (nonatomic, strong)UITableView *scoreManageTableView;
 
 @property (nonatomic, strong)NSMutableArray *dataArray;
+
+@property (nonatomic, assign)NSInteger almostType;//差点计算类型
 
 @end
 
@@ -51,8 +56,13 @@ static NSString *const JGHCenterBtnTableViewCellIdentifier = @"JGHCenterBtnTable
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(relodDate) name:@"redloadActivityScoreManagerData" object:nil];
+    
     _page = 0;
     _selectAll = 0;
+    _selectNumber = 0;
+    _almostType = 0;
     self.view.backgroundColor = [UIColor colorWithHexString:BG_color];
     self.navigationItem.title = _activityBaseModel.name;
     _dict = [NSMutableDictionary dictionary];
@@ -81,7 +91,10 @@ static NSString *const JGHCenterBtnTableViewCellIdentifier = @"JGHCenterBtnTable
     [view addSubview:_publisView];
     [self.view addSubview:view];
 }
-
+#pragma mark -- 刷新数据通知
+- (void)relodDate{
+    [self headRereshing];
+}
 - (void)createTable{
     self.scoreManageTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight -64 -44) style:UITableViewStylePlain];
     
@@ -111,8 +124,13 @@ static NSString *const JGHCenterBtnTableViewCellIdentifier = @"JGHCenterBtnTable
     NSMutableDictionary *dict = [[NSMutableDictionary alloc]init];
     
     [dict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:userID] forKey:@"userKey"];
-    [dict setObject:@625801 forKey:@"teamActivityKey"];
-    NSString* str = @"625801";
+    if (_activityBaseModel.teamActivityKey != 0) {
+        [dict setObject:@(_activityBaseModel.teamActivityKey) forKey:@"teamActivityKey"];
+    }else{
+        [dict setObject:@([_activityBaseModel.timeKey integerValue]) forKey:@"teamActivityKey"];
+    }
+    
+    NSString* str = [dict objectForKey:@"teamActivityKey"];
     [dict setObject:[Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@&teamActivityKey=%@dagolfla.com", DEFAULF_USERID,str]] forKey:@"md5"];
     [[JsonHttp jsonHttp]httpRequest:@"score/getTeamActivityScoreMgrList" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
         if (isReshing) {
@@ -127,6 +145,8 @@ static NSString *const JGHCenterBtnTableViewCellIdentifier = @"JGHCenterBtnTable
             }
             //数据解析
             //            self.TeamArray = [data objectForKey:@"teamList"];
+            _almostType = [[data objectForKey:@"almostType"] integerValue];
+            
             for (NSDictionary *dataDic in [data objectForKey:@"list"]) {
                 JGLScoreLiveModel *model = [[JGLScoreLiveModel alloc] init];
                 [model setValuesForKeysWithDictionary:dataDic];
@@ -134,6 +154,9 @@ static NSString *const JGHCenterBtnTableViewCellIdentifier = @"JGHCenterBtnTable
                 [_dataArray addObject:model];
             }
             //            [self.TeamArray addObjectsFromArray:[data objectForKey:@"teamList"]];
+            if ([data objectForKey:@"teamKey"]) {
+                _teamKey = [data objectForKey:@"teamKey"];
+            }
             _page++;
             [self.scoreManageTableView reloadData];
         }else {
@@ -163,7 +186,7 @@ static NSString *const JGHCenterBtnTableViewCellIdentifier = @"JGHCenterBtnTable
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 2 + _dataArray.count;
+    return 3 + _dataArray.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -176,20 +199,24 @@ static NSString *const JGHCenterBtnTableViewCellIdentifier = @"JGHCenterBtnTable
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    NSLog(@"%td", indexPath.section);
     if (indexPath.section == 0) {
         JGHMatchTranscriptTableViewCell *tranCell = [tableView dequeueReusableCellWithIdentifier:JGHMatchTranscriptTableViewCellIdentifier];
         tranCell.delegate = self;
         tranCell.selectionStyle = UITableViewCellSelectionStyleNone;
         [tranCell configActivityName:_activityBaseModel.ballName andStartTime:_activityBaseModel.beginDate andEndTime:_activityBaseModel.endDate];
+        tranCell.selectionStyle = UITableViewCellSelectionStyleNone;
         return tranCell;
-    }else if (indexPath.section == _dataArray.count + 1){
+    }else if (indexPath.section == _dataArray.count + 2){
         JGHCenterBtnTableViewCell *centerBtnCell = [tableView dequeueReusableCellWithIdentifier:JGHCenterBtnTableViewCellIdentifier];
         centerBtnCell.delegate = self;
+        centerBtnCell.selectionStyle = UITableViewCellSelectionStyleNone;
         centerBtnCell.selectionStyle = UITableViewCellSelectionStyleNone;
         return centerBtnCell;
     }else{
         if (indexPath.section == 1) {
             JGHPlayersScoreTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:JGHPlayersScoreTableViewCellIdentifier];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
             cell.imageScore.hidden = YES;
             cell.fristLabel.text = @"姓名";
             cell.fristLabel.textColor = [UIColor lightGrayColor];
@@ -205,9 +232,9 @@ static NSString *const JGHCenterBtnTableViewCellIdentifier = @"JGHCenterBtnTable
             JGHPlayersScoreTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:JGHPlayersScoreTableViewCellIdentifier];
             cell.selectBtn.tag = indexPath.section -1 + 100;
             cell.delegate = self;
-            [cell showData:_dataArray[indexPath.section-1]];
+            [cell showData:_dataArray[indexPath.section-2]];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
             return cell;
         }
     }
@@ -232,10 +259,14 @@ static NSString *const JGHCenterBtnTableViewCellIdentifier = @"JGHCenterBtnTable
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    JGDActSelfHistoryScoreViewController *actVC = [[JGDActSelfHistoryScoreViewController alloc] init];
-    actVC.scoreModel = self.dataArray[indexPath.row];
-    actVC.timeKey = _activityBaseModel.timeKey;
-    [self.navigationController pushViewController:actVC animated:YES];
+    NSLog(@"%td", indexPath.section);
+    if (indexPath.section < 2 + _dataArray.count -1 && indexPath.section != 0) {
+        JGDActSelfHistoryScoreViewController *actVC = [[JGDActSelfHistoryScoreViewController alloc] init];
+        actVC.scoreModel = self.dataArray[indexPath.section - 2];
+        actVC.timeKey = _activityBaseModel.timeKey;
+        actVC.teamKey = _teamKey;
+        [self.navigationController pushViewController:actVC animated:YES];
+    }
 }
 
 #pragma mark -- 添加记录
@@ -255,6 +286,20 @@ static NSString *const JGHCenterBtnTableViewCellIdentifier = @"JGHCenterBtnTable
 - (void)selectSetAlmostBtn{
     NSLog(@"设置差点");
     JGHSetAlmostPromptViewController *setAlmostCtrl = [[JGHSetAlmostPromptViewController alloc]initWithNibName:@"JGHSetAlmostPromptViewController" bundle:nil];
+    setAlmostCtrl.teamKey = _activityBaseModel.teamKey;
+    setAlmostCtrl.almostType = _almostType;
+    if (_activityBaseModel.teamActivityKey != 0) {
+        setAlmostCtrl.teamActivityKey = _activityBaseModel.teamActivityKey;
+    }else{
+        setAlmostCtrl.teamActivityKey = [_activityBaseModel.timeKey integerValue];
+    }
+    
+    __weak JGHActivityScoreManagerViewController *weakSlef = self;
+    setAlmostCtrl.refreshBlock = ^(NSInteger almostType){
+        weakSlef.almostType = almostType;
+        [self headRereshing];
+    };
+    
     [self.navigationController pushViewController:setAlmostCtrl animated:YES];
 }
 #pragma mark -- 保存
@@ -310,11 +355,24 @@ static NSString *const JGHCenterBtnTableViewCellIdentifier = @"JGHCenterBtnTable
                 NSLog(@"%@", data);
                 if ([[data objectForKey:@"packSuccess"]integerValue] == 1) {
                     [[ShowHUD showHUD]showToastWithText:@"公布成功！" FromView:self.view];
+                    [self performSelector:@selector(pushCtrl) withObject:self afterDelay:1.0];
+                }else{
+                    
                 }
             }];
         }
     }];
+}
+#pragma mark -- 公布跳转
+- (void)pushCtrl{
+    JGLScoreLiveViewController *scoreLive = [[JGLScoreLiveViewController alloc]init];
+    if (_activityBaseModel.teamActivityKey != 0) {
+        scoreLive.activity = [NSNumber numberWithInteger:_activityBaseModel.teamActivityKey];
+    }else{
+        scoreLive.activity = [NSNumber numberWithInteger:[_activityBaseModel.timeKey integerValue]];
+    }
     
+    [self.navigationController pushViewController:scoreLive animated:YES];
 }
 #pragma mark -- 全选
 - (void)selectAll{
@@ -330,6 +388,8 @@ static NSString *const JGHCenterBtnTableViewCellIdentifier = @"JGHCenterBtnTable
                 [_dataArray replaceObjectAtIndex:i withObject:model];
             }
         }
+        
+        _selectNumber = _dataArray.count;
         [_publisView.imageBtn setImage:[UIImage imageNamed:@"gou_x"] forState:UIControlStateNormal];
         [_publisView.selectAllBtn setTitle:@"取消全选" forState:UIControlStateNormal];
     }else{
@@ -342,10 +402,13 @@ static NSString *const JGHCenterBtnTableViewCellIdentifier = @"JGHCenterBtnTable
                 [_dataArray replaceObjectAtIndex:i withObject:model];
             }
         }
+        
+        _selectNumber = 0;
         [_publisView.imageBtn setImage:[UIImage imageNamed:@"gou_w"] forState:UIControlStateNormal];
         [_publisView.selectAllBtn setTitle:@"全选" forState:UIControlStateNormal];
     }
     
+    _publisView.provalue.text = [NSString stringWithFormat:@"%td", _selectNumber];
     [self.scoreManageTableView reloadData];
 }
 
@@ -354,16 +417,24 @@ static NSString *const JGHCenterBtnTableViewCellIdentifier = @"JGHCenterBtnTable
     NSLog(@"%td", btn.tag);
     for (int i=0; i<_dataArray.count; i++) {
         JGLScoreLiveModel *model = [[JGLScoreLiveModel alloc] init];
-        model = _dataArray[btn.tag -100];
-        if (model.select == 0) {
-            model.select = 1;
+        if (btn.tag-101 == i) {
+            model = _dataArray[btn.tag -101];
+            if (model.select == 0) {
+                model.select = 1;
+                _selectNumber += 1;
+            }else{
+                model.select = 0;
+            }
+            
+            [_dataArray replaceObjectAtIndex:i withObject:model];
         }else{
-            model.select = 0;
+            if (model.select == 1) {
+                _selectNumber += 1;
+            }
         }
-        
-        [_dataArray replaceObjectAtIndex:i withObject:model];
     }
     
+    _publisView.provalue.text = [NSString stringWithFormat:@"%td", _selectNumber];
     [self.scoreManageTableView reloadData];
 }
 

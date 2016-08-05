@@ -18,6 +18,8 @@
 
 @property (nonatomic, strong) UILabel *nameLB;
 
+@property (nonatomic, strong) UILabel *keyLB;
+
 @end
 
 @implementation JGDHIstoryScoreDetailViewController
@@ -31,7 +33,52 @@
     self.navigationItem.rightBarButtonItem = rightBar;
     
     [self createTableView];
+    
+    if (_fromLive == 5) {
+        [self setData];
+    }
+    
     // Do any additional setup after loading the view.
+}
+
+
+- (void)setData{
+    
+    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+    [dic setObject:self.scoreKey forKey:@"scoreKey"];
+    [dic setObject:DEFAULF_USERID forKey:@"userKey"];
+    [dic setObject:self.srcKey forKey:@"srcKey"];
+    [dic setObject:[Helper md5HexDigest:[NSString stringWithFormat:@"teamKey=0&userKey=%@&srcKey=%@&srcType=1dagolfla.com", DEFAULF_USERID, self.srcKey]] forKey:@"md5"];
+    [dic setObject:@0 forKey:@"teamKey"];
+    [dic setObject:@1 forKey:@"srcType"];
+    
+    
+    [[JsonHttp jsonHttp] httpRequest:@"score/getTeamScore" JsonKey:nil withData:dic requestMethod:@"GET" failedBlock:^(id errType) {
+        
+        [[ShowHUD showHUD]showToastWithText:[NSString stringWithFormat:@"%@",errType] FromView:self.view];
+        
+    } completionBlock:^(id data) {
+        
+        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+            
+            self.dataDic = data;
+            
+            if ([data objectForKey:@"bean"]) {
+                self.model = [[JGDHistoryScoreShowModel alloc] init];
+                [self.model setValuesForKeysWithDictionary:[data objectForKey:@"bean"]];
+            }
+            self.keyLB.text =  [NSString stringWithFormat:@"%@", self.model.invitationCode];
+
+            [self.tableView reloadData];
+        }else{
+            if ([data objectForKey:@"packResultMsg"]) {
+                [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+            }
+        }
+        
+        [self.tableView reloadData];
+        
+    }];
 }
 
 - (void)createTableView{
@@ -42,7 +89,7 @@
     [self.tableView registerClass:[JGDHistoryScoreShowTableViewCell class] forCellReuseIdentifier:@"cell"];
     [self.tableView registerClass:[JGDTrueOrFalseTableViewCell class] forCellReuseIdentifier:@"TrueOrFalsecell"];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-
+    
     self.tableView.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];
     
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 75 * ProportionAdapter)];
@@ -57,12 +104,12 @@
     allLB.font = [UIFont systemFontOfSize:15 * ProportionAdapter];
     [lightV addSubview:allLB];
     
-    UILabel *keyLB = [[UILabel alloc] initWithFrame:CGRectMake(170 * ProportionAdapter, 0 * ProportionAdapter, 100 * ProportionAdapter, 45 * ProportionAdapter)];
-    keyLB.text = [NSString stringWithFormat:@"%@", self.model.invitationCode];
-    keyLB.textAlignment = NSTextAlignmentLeft;
-    keyLB.textColor = [UIColor colorWithHexString:@"#fe7a7a"];
-    keyLB.font = [UIFont systemFontOfSize:15 * ProportionAdapter];
-    [lightV addSubview:keyLB];
+    self.keyLB = [[UILabel alloc] initWithFrame:CGRectMake(170 * ProportionAdapter, 0 * ProportionAdapter, 100 * ProportionAdapter, 45 * ProportionAdapter)];
+    self.keyLB.text = [NSString stringWithFormat:@"%@", self.model.invitationCode];
+    self.keyLB.textAlignment = NSTextAlignmentLeft;
+    self.keyLB.textColor = [UIColor colorWithHexString:@"#fe7a7a"];
+    self.keyLB.font = [UIFont systemFontOfSize:15 * ProportionAdapter];
+    [lightV addSubview:self.keyLB];
     
     [view addSubview:lightV];
     
@@ -89,7 +136,11 @@
         [viewTitle addSubview:lightV];
         
         UIImageView *iconV = [[UIImageView alloc] initWithFrame:CGRectMake(10 * ProportionAdapter, 20 * ProportionAdapter, 68 * ProportionAdapter, 68 * ProportionAdapter)];
-        [iconV sd_setImageWithURL:[Helper setImageIconUrl:@"activity" andTeamKey:[[self.dataDic objectForKey:@"srcKey"] integerValue] andIsSetWidth:NO andIsBackGround:YES] placeholderImage:[UIImage imageNamed:ActivityBGImage]];
+        if (_fromLive == 5) {
+            [iconV sd_setImageWithURL:[Helper setImageIconUrl:@"activity" andTeamKey:[self.srcKey integerValue] andIsSetWidth:NO andIsBackGround:YES] placeholderImage:[UIImage imageNamed:ActivityBGImage]];
+        }else{
+            [iconV sd_setImageWithURL:[Helper setImageIconUrl:@"activity" andTeamKey:[[self.dataDic objectForKey:@"srcKey"] integerValue] andIsSetWidth:NO andIsBackGround:YES] placeholderImage:[UIImage imageNamed:ActivityBGImage]];
+        }
         iconV.contentMode = UIViewContentModeScaleAspectFill;
         iconV.layer.cornerRadius = 8 * ProportionAdapter;
         iconV.layer.masksToBounds = YES;
@@ -97,7 +148,7 @@
         
         UILabel *nameLB = [[UILabel alloc] initWithFrame:CGRectMake(98 * ProportionAdapter, 26 * ProportionAdapter, 270 * ProportionAdapter, 30 * ProportionAdapter)];
         nameLB.text = [self.dataDic objectForKey:@"title"];
-
+        
         nameLB.font = [UIFont systemFontOfSize:15 * ProportionAdapter];
         nameLB.textColor = [UIColor colorWithHexString:@"313131"];
         [viewTitle addSubview:nameLB];
@@ -220,7 +271,7 @@
     
     JGDHistoryScoreShowTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-   
+    
     if (indexPath.row > 0) {
         NSLog(@"%td", indexPath.row);
         if (indexPath.row == 4) {
@@ -229,17 +280,17 @@
             trueCell.selectionStyle = UITableViewCellSelectionStyleNone;
             return trueCell;
         }else{
-//            [cell.colorImageV removeFromSuperview];
+            //            [cell.colorImageV removeFromSuperview];
             cell.colorImageV.backgroundColor = [UIColor clearColor];
             [cell takeDetailInfoWithModel:self.model index:indexPath];
         }
     }
-
+    
     
     if (indexPath.section == 0) {
         
         if (indexPath.row == 0) {
-//            [cell.colorImageV removeFromSuperview];
+            //            [cell.colorImageV removeFromSuperview];
             cell.colorImageV.backgroundColor = [UIColor clearColor];
             cell.nameLB.text = @"Hole";
             cell.sumLB.text = @"Out";
@@ -254,7 +305,7 @@
         
     }else if (indexPath.section == 1) {
         if (indexPath.row == 0) {
-//            [cell.colorImageV removeFromSuperview];
+            //            [cell.colorImageV removeFromSuperview];
             cell.colorImageV.backgroundColor = [UIColor clearColor];
             cell.nameLB.text = @"Hole";
             cell.sumLB.text = @"In";
@@ -288,7 +339,7 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-
+    
     
 }
 
@@ -308,10 +359,15 @@
 
 -(void)shareInfo:(NSInteger)index
 {
-
-    //    NSString*  shareUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/score/scoreCard.html?teamKey=%@&userKey=%@&srcKey=1&srcType=1&scoreKey=0&md5=%@", _model.timeKey,DEFAULF_USERID, [Helper md5HexDigest:[NSString stringWithFormat:@"teamKey=%@&userKey=%@&srcKey=1&srcType=1dagolfla.com", _model.timeKey, DEFAULF_USERID]]];
     
-    NSString*  shareUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/score/scoreCard.html?teamKey=0&userKey=%@&srcKey=%@&srcType=%@&scoreKey=%@&md5=%@&share=1", DEFAULF_USERID, [self.dataDic objectForKey:@"srcKey"], [self.dataDic objectForKey:@"srcType"], _model.timeKey, [Helper md5HexDigest:[NSString stringWithFormat:@"teamKey=0&userKey=%@&srcKey=%@&srcType=%@dagolfla.com", DEFAULF_USERID, [self.dataDic objectForKey:@"srcKey"], [self.dataDic objectForKey:@"srcType"]]]];
+    //    NSString*  shareUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/score/scoreCard.html?teamKey=%@&userKey=%@&srcKey=1&srcType=1&scoreKey=0&md5=%@", _model.timeKey,DEFAULF_USERID, [Helper md5HexDigest:[NSString stringWithFormat:@"teamKey=%@&userKey=%@&srcKey=1&srcType=1dagolfla.com", _model.timeKey, DEFAULF_USERID]]];
+    NSString*  shareUrl;
+    if (_fromLive == 5) {
+        shareUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/score/scoreCard.html?teamKey=0&userKey=%@&srcKey=%@&srcType=1&scoreKey=%@&md5=%@&share=1", DEFAULF_USERID, self.srcKey, self.scoreKey, [Helper md5HexDigest:[NSString stringWithFormat:@"teamKey=0&userKey=%@&srcKey=%@&srcType=%@dagolfla.com", DEFAULF_USERID, [self.dataDic objectForKey:@"srcKey"], [self.dataDic objectForKey:@"srcType"]]]];
+
+    }else{
+        shareUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/score/scoreCard.html?teamKey=0&userKey=%@&srcKey=%@&srcType=%@&scoreKey=%@&md5=%@&share=1", DEFAULF_USERID, [self.dataDic objectForKey:@"srcKey"], [self.dataDic objectForKey:@"srcType"], _model.timeKey, [Helper md5HexDigest:[NSString stringWithFormat:@"teamKey=0&userKey=%@&srcKey=%@&srcType=%@dagolfla.com", DEFAULF_USERID, [self.dataDic objectForKey:@"srcKey"], [self.dataDic objectForKey:@"srcType"]]]];
+    }
     
     
     [UMSocialData defaultData].extConfig.title=[NSString stringWithFormat:@"历史记分卡"];

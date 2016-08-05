@@ -100,6 +100,7 @@
             <connections>
                 <outlet property="addScoreBtn" destination="83C-zQ-MTA" id="VOn-va-iWd"/>
                 <outlet property="addScoreBtnRight" destination="TKZ-1w-tDg" id="Jh5-zT-VT1"/>
+                <outlet property="bgImage" destination="idh-6V-v0b" id="gCO-A8-8cW"/>
                 <outlet property="holeName" destination="PRA-q5-PFb" id="eUk-Gt-F2R"/>
                 <outlet property="holeNameTop" destination="qcl-ah-zP0" id="eyh-ZP-lVm"/>
                 <outlet property="propmLabel" destination="YfQ-wA-hYo" id="CBE-Cl-xfJ"/>

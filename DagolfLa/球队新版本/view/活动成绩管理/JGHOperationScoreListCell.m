@@ -63,6 +63,8 @@ static NSString *const JGHOperScoreBtnListCellIdentifier = @"JGHOperScoreBtnList
         [tranCell configIndex:indexPath.section andOneHoel:[_poleArray[indexPath.section -1] integerValue] andTwoHole:[_poleArray[indexPath.section +8] integerValue]];
     }
     
+    tranCell.selectionStyle = UITableViewCellSelectionStyleNone;
+    
     return tranCell;
 }
 
