@@ -91,6 +91,13 @@
 -(void)finishClick
 {
     JGLGuestAddPlayerViewController* addVc = [[JGLGuestAddPlayerViewController alloc]init];
+    addVc.teamKey = _teamKey;
+    addVc.activityKey = _activityKey;
+    addVc.blockRefresh = ^(){
+        [_tableView.header endRefreshing];
+        _tableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
+        [_tableView.header beginRefreshing];
+    };
     [self.navigationController pushViewController:addVc animated:YES];
 }
 
@@ -113,11 +120,11 @@
 - (void)downLoadData:(int)page isReshing:(BOOL)isReshing{
     NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
     //    [dict setObject:[NSNumber numberWithInteger:] forKey:@"activityKey"];
-    [dict setObject:@666840 forKey:@"activityKey"];
-    [dict setObject:@244 forKey:@"userKey"];
+    [dict setObject:_activityKey forKey:@"activityKey"];
+    [dict setObject:DEFAULF_USERID forKey:@"userKey"];
     [dict setObject:@0 forKey:@"offset"];
-    [dict setObject:@563276 forKey:@"teamKey"];
-    NSString *strMD = [JGReturnMD5Str getTeamActivitySignUpListWithTeamKey:563276 activityKey:666840 userKey:244];
+    [dict setObject:_teamKey forKey:@"teamKey"];
+    NSString *strMD = [JGReturnMD5Str getTeamActivitySignUpListWithTeamKey:[_teamKey integerValue] activityKey:[_activityKey integerValue] userKey:[DEFAULF_USERID integerValue]];
     [dict setObject:strMD forKey:@"md5"];
     [[JsonHttp jsonHttp]httpRequest:@"team/getTeamActivitySignUpList" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
         if (isReshing) {

@@ -13,5 +13,7 @@
 
 @property (copy, nonatomic) void (^blockRefresh)();
 
+@property (strong, nonatomic) NSNumber* teamKey;
 
+@property (strong, nonatomic) NSNumber* activityKey;
 @end

@@ -23,6 +23,8 @@
     NSString* _strMobile;
     NSNumber* _sexNum;
     
+    NSNumber* _userKey;//添加的成员的userkey
+    
 }
 @end
 
@@ -31,6 +33,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     _sexNum = @2;//其他
+    _userKey = @0;//默认为嘉宾，传0
     UIBarButtonItem* bar = [[UIBarButtonItem alloc]initWithTitle:@"完成" style:UIBarButtonItemStylePlain target:self action:@selector(finishClick:)];
     bar.tintColor = [UIColor whiteColor];
     self.navigationItem.rightBarButtonItem = bar;
@@ -41,11 +44,44 @@
     
 }
 
--(void)finishClick:(UIButton *)btn
+-(void)finishClick:(UIBarButtonItem *)btn
 {
     if ([Helper isBlankString:_strName]) {
-        
+        [[ShowHUD showHUD]showToastWithText:@"请填写姓名或者选择意向成员" FromView:self.view];
+        return;
     }
+    if ([Helper isBlankString:_strMobile]) {
+        [[ShowHUD showHUD]showToastWithText:@"请填写手机或者选择意向成员" FromView:self.view];
+        return;
+    }
+    if ([Helper isBlankString:_strAlmost]) {
+        [[ShowHUD showHUD]showToastWithText:@"请填写意向成员差点" FromView:self.view];
+        return;
+    }
+    if ([_sexNum integerValue] == 2) {
+        [[ShowHUD showHUD]showToastWithText:@"请选择意向成员性别" FromView:self.view];
+        return;
+    }
+    
+    NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
+    [dict setObject:_teamKey forKey:@"teamKey"];
+    [dict setObject:_activityKey forKey:@"activityKey"];
+    [dict setObject:_userKey forKey:@"userKey"];
+    [dict setObject:_strName forKey:@"name"];
+    [dict setObject:_strMobile forKey:@"mobile"];
+    [dict setObject:_strAlmost forKey:@"almost"];
+    [dict setObject:_sexNum forKey:@"sex"];
+    [[JsonHttp jsonHttp]httpRequestWithMD5:@"team/addLineTeamActivitySignUp" JsonKey:@"teamActivitySignUp" withData:dict failedBlock:^(id errType) {
+    } completionBlock:^(id data) {
+        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+            _blockRefresh();
+            [self.navigationController popViewControllerAnimated:YES];
+        }
+        else{
+            [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+        }
+    }];
+    
 }
 
 -(void)createHeader
@@ -94,6 +130,7 @@
             _strMobile = model.mobile;
             _strAlmost = [NSString stringWithFormat:@"%@",model.almost];
             _sexNum = model.sex;
+            _userKey = model.userKey;
             [_tableView reloadData];
         };
         [self.navigationController pushViewController:teamVc animated:YES];
