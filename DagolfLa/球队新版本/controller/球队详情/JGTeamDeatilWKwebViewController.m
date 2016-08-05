@@ -60,6 +60,22 @@
             }
         }];
     }
+    if (_isScoreAll == YES) {
+        UIBarButtonItem* bar = [[UIBarButtonItem alloc]initWithTitle:@"分享" style:UIBarButtonItemStylePlain target:self action:@selector(shareBtn)];
+        bar.tintColor = [UIColor whiteColor];
+        self.navigationItem.rightBarButtonItem = bar;
+        NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
+        [dict setObject:@(_teamKey) forKey:@"teamKey"];
+        [[JsonHttp jsonHttp]httpRequest:@"team/getTeamName" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
+        } completionBlock:^(id data) {
+            NSLog(@"data == %@", data);
+            if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+                _teamRealName = [data objectForKey:@"teamName"];
+            }else{
+                //错误
+            }
+        }];
+    }
     
     
     self.title = self.teamName;
@@ -82,7 +98,7 @@
         [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:strU]]];
     }
     else if (_isScoreAll == YES){
-//        NSString* strMd = [JGReturnMD5Str getTeamBillInfoWithTeamKey:_teamKey userKey:[DEFAULF_USERID integerValue]];
+        //成绩总览
         NSString* strMd = [Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@&teamKey=%tddagolfla.com", DEFAULF_USERID, _teamKey]];
         NSString* strU = [NSString stringWithFormat:@"%@&md5=%@",self.detailString,strMd];
         [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:strU]]];
@@ -138,25 +154,48 @@
 {
     NSData *fxData;
     UIImage* fxImg;
-    if ([fxData isEqual:nil] != NO) {
-        fxData = [NSData dataWithContentsOfURL:[Helper setImageIconUrl:@"team" andTeamKey:_teamTimeKey andIsSetWidth:YES andIsBackGround:NO] ];
+    NSString * shareUrl;
+    if (_isScoreAll == YES) {
+        if ([fxData isEqual:nil] != NO) {
+            fxData = [NSData dataWithContentsOfURL:[Helper setImageIconUrl:@"team" andTeamKey:_teamKey andIsSetWidth:YES andIsBackGround:NO] ];
+        }
+        else
+        {
+            fxImg = [UIImage imageNamed:DefaultHeaderImage];
+        }
+        shareUrl = _detailString;
+        [UMSocialData defaultData].extConfig.title = [NSString stringWithFormat:@"成绩总览"];//这边标题要改
     }
-    else
-    {
-        fxImg = [UIImage imageNamed:@"logo"];
+    else{
+        if ([fxData isEqual:nil] != NO) {
+            fxData = [NSData dataWithContentsOfURL:[Helper setImageIconUrl:@"team" andTeamKey:_teamTimeKey andIsSetWidth:YES andIsBackGround:NO] ];
+        }
+        else
+        {
+            fxImg = [UIImage imageNamed:DefaultHeaderImage];
+        }
+        shareUrl = _strShareMd;
+        [UMSocialData defaultData].extConfig.title = [NSString stringWithFormat:@"%@",_activeName];
     }
-
-    NSString * shareUrl = _strShareMd;
-    [UMSocialData defaultData].extConfig.title = [NSString stringWithFormat:@"%@",_activeName];
+    
+   
     if(index==0)
     {
             //微信
             [UMSocialWechatHandler setWXAppId:@"wxdcdc4e20544ed728" appSecret:@"fdc75aae5a98f2aa0f62ef8cba2b08e9" url:shareUrl];
             [UMSocialConfig hiddenNotInstallPlatforms:@[UMShareToWechatSession,UMShareToWechatTimeline,UMShareToSina]];
+        if (_isScoreAll == YES) {
+            [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatSession] content:[NSString stringWithFormat:@"%@成绩总览",_teamRealName] image:[fxData isEqual:nil] != NO ? fxData : fxImg location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
+                if (response.responseCode == UMSResponseCodeSuccess) {
+                }
+            }];
+        }
+        else{
             [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatSession] content:[NSString stringWithFormat:@"%@%@的成绩",_teamRealName,_activeName] image:[fxData isEqual:nil] != NO ? fxData : fxImg location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
                 if (response.responseCode == UMSResponseCodeSuccess) {
                 }
             }];
+        }
    
     }
     else if (index==1)
@@ -164,10 +203,19 @@
         //微信
         [UMSocialWechatHandler setWXAppId:@"wxdcdc4e20544ed728" appSecret:@"fdc75aae5a98f2aa0f62ef8cba2b08e9" url:shareUrl];
         [UMSocialConfig hiddenNotInstallPlatforms:@[UMShareToWechatSession,UMShareToWechatTimeline,UMShareToSina]];
-        [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatSession] content:[NSString stringWithFormat:@"%@%@的成绩",_teamRealName,_activeName] image:[fxData length] > 0 ? fxData : fxImg location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
-            if (response.responseCode == UMSResponseCodeSuccess) {
-            }
-        }];
+        if (_isScoreAll == YES) {
+            [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatSession] content:[NSString stringWithFormat:@"%@成绩总览",_teamRealName] image:[fxData isEqual:nil] != NO ? fxData : fxImg location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
+                if (response.responseCode == UMSResponseCodeSuccess) {
+                }
+            }];
+        }
+        else{
+            [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatSession] content:[NSString stringWithFormat:@"%@%@的成绩",_teamRealName,_activeName] image:[fxData length] > 0 ? fxData : fxImg location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
+                if (response.responseCode == UMSResponseCodeSuccess) {
+                }
+            }];
+        }
+        
         
     }
     else
@@ -175,8 +223,14 @@
         
         UMSocialData *data = [UMSocialData defaultData];
         data.shareImage = [fxData length] > 0 ? fxData : fxImg;
-        data.shareText = [NSString stringWithFormat:@"%@%@的成绩",_teamRealName,_activeName];
-        [[UMSocialControllerService defaultControllerService] setSocialData:data];
+        if (_isScoreAll == YES) {
+            data.shareText = [NSString stringWithFormat:@"%@的成绩总览",_teamRealName];
+            [[UMSocialControllerService defaultControllerService] setSocialData:data];
+        }
+        else{
+            data.shareText = [NSString stringWithFormat:@"%@%@的成绩",_teamRealName,_activeName];
+            [[UMSocialControllerService defaultControllerService] setSocialData:data];
+        }
         //2.设置分享平台
         [UMSocialSnsPlatformManager getSocialPlatformWithName:UMShareToSina].snsClickHandler(self,[UMSocialControllerService defaultControllerService],YES);
         

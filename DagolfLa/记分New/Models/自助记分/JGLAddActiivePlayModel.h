@@ -28,6 +28,10 @@
 
 @property (strong, nonatomic) NSNumber* almost;
 
+@property (strong, nonatomic) NSNumber* signUpInfoKey;
+
+@property (strong, nonatomic) NSNumber* payMoney;
+
 /**
  *  activityKey = 5456;
  almost = 0;

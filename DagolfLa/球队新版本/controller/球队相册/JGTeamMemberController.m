@@ -15,7 +15,7 @@
 #import "MJDIYBackFooter.h"
 #import "MJDIYHeader.h"
 
-#import "JGLTeamMemberModel.h"
+
 
 #import "ChatDetailViewController.h"
 #import "JGTeamMemberManager.h"
@@ -45,9 +45,7 @@
     _listArray = [[NSMutableArray alloc]init];
     _dataArray = [[NSMutableArray alloc]init];
     _dataAccountDict = [[NSMutableDictionary alloc]init];
-//    UIBarButtonItem* rightBtn = [[UIBarButtonItem alloc]initWithTitle:@"管理" style:UIBarButtonItemStylePlain target:self action:@selector(manageClick)];
-//    rightBtn.tintColor = [UIColor whiteColor];
-//    self.navigationItem.rightBarButtonItem = rightBtn;
+
     
     
     [self uiConfig];
@@ -191,47 +189,55 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if ([_power rangeOfString:@"1002"].location != NSNotFound) {
-        if (_isEdit) {
-            
-            JGLTeamMemberModel *model = _listArray[indexPath.section][indexPath.row];
-            NSInteger key = [model.userKey integerValue];
-            NSString *name = model.userName;
-            NSString *mobie = model.mobile;
-            self.block(key, name, mobie);
-            [self.navigationController popViewControllerAnimated:YES];
-        }else{
-            if (_teamMembers == 1) {
+    //嘉宾回调
+    if (_isGest == YES) {
+        _blockTMemberPeople(_listArray[indexPath.section][indexPath.row]);
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+    //其他
+    else{
+        if ([_power rangeOfString:@"1002"].location != NSNotFound) {
+            if (_isEdit) {
+                
                 JGLTeamMemberModel *model = _listArray[indexPath.section][indexPath.row];
-                ChatDetailViewController *vc = [[ChatDetailViewController alloc] init];
-                //设置聊天类型
-                vc.conversationType = ConversationType_PRIVATE;
-                //设置对方的id
-                vc.targetId = [NSString stringWithFormat:@"%@", model.userKey];
-                //设置对方的名字
-                //            vc.userName = model.userName;
-                //设置聊天标题
-                vc.title = model.userName;
-                //设置不现实自己的名称  NO表示不现实
-                vc.displayUserNameInCell = NO;
-                [self.navigationController pushViewController:vc animated:YES];
-            }else if (_teamManagement == 1){
-                JGMemManageController* menVc = [[JGMemManageController alloc]init];
-                menVc.model = _listArray[indexPath.section][indexPath.row];
-                menVc.power = _power;
-                menVc.teamKey = _teamKey;
-                menVc.dictAccount = _dataAccountDict;
-                menVc.deleteBlock = ^(){
-                    _tableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
-                    [_tableView.header beginRefreshing];
-                    [_tableView reloadData];
-                };
-                [self.navigationController pushViewController:menVc animated:YES];
+                NSInteger key = [model.userKey integerValue];
+                NSString *name = model.userName;
+                NSString *mobie = model.mobile;
+                self.block(key, name, mobie);
+                [self.navigationController popViewControllerAnimated:YES];
+            }else{
+                if (_teamMembers == 1) {
+                    JGLTeamMemberModel *model = _listArray[indexPath.section][indexPath.row];
+                    ChatDetailViewController *vc = [[ChatDetailViewController alloc] init];
+                    //设置聊天类型
+                    vc.conversationType = ConversationType_PRIVATE;
+                    //设置对方的id
+                    vc.targetId = [NSString stringWithFormat:@"%@", model.userKey];
+                    //设置对方的名字
+                    //            vc.userName = model.userName;
+                    //设置聊天标题
+                    vc.title = model.userName;
+                    //设置不现实自己的名称  NO表示不现实
+                    vc.displayUserNameInCell = NO;
+                    [self.navigationController pushViewController:vc animated:YES];
+                }else if (_teamManagement == 1){
+                    JGMemManageController* menVc = [[JGMemManageController alloc]init];
+                    menVc.model = _listArray[indexPath.section][indexPath.row];
+                    menVc.power = _power;
+                    menVc.teamKey = _teamKey;
+                    menVc.dictAccount = _dataAccountDict;
+                    menVc.deleteBlock = ^(){
+                        _tableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
+                        [_tableView.header beginRefreshing];
+                        [_tableView reloadData];
+                    };
+                    [self.navigationController pushViewController:menVc animated:YES];
+                }
             }
+        }else{
+            
         }
-    }else{
-        
-    }    
+    }
 }
 
 

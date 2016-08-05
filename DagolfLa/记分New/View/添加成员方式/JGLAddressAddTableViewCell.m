@@ -21,10 +21,12 @@
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
+        if (_isGest == NO) {
+            _imgvState = [[UIImageView alloc]initWithFrame:CGRectMake(10*screenWidth/375, 15*screenWidth/375, 20*screenWidth/375, 20*screenWidth/375)];
+            [self addSubview:_imgvState];
+            _imgvState.image = [UIImage imageNamed:@"dot_wu"];
+        }
         
-        _imgvState = [[UIImageView alloc]initWithFrame:CGRectMake(10*screenWidth/375, 15*screenWidth/375, 20*screenWidth/375, 20*screenWidth/375)];
-        [self addSubview:_imgvState];
-        _imgvState.image = [UIImage imageNamed:@"dot_wu"];
         
         _labelName = [[UILabel alloc]initWithFrame:CGRectMake(40*screenWidth/375, 15*screenWidth/375, 100*screenWidth/375, 20*screenWidth/375)];
         _labelName.font = [UIFont systemFontOfSize:15*screenWidth/375];

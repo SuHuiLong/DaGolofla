@@ -112,7 +112,7 @@
     JGTeamDeatilWKwebViewController * VC = [[JGTeamDeatilWKwebViewController alloc] init];
 //    VC.timeKey = @33160;
     VC.isScoreAll = YES;
-    VC.detailString = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/score/teamYearScoreOverview.html?userKey=222&teamKey=1?userKey=%@&teamKey=%@",DEFAULF_USERID,_teamKey];
+    VC.detailString = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/score/teamYearScoreOverview.html?userKey=%@&teamKey=%@",DEFAULF_USERID,_teamKey];
     VC.teamKey = [_teamKey integerValue];
     [self.navigationController pushViewController:VC animated:YES];
     

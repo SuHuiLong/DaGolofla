@@ -7,7 +7,7 @@
 //
 
 #import "ViewController.h"
-
+#import "JGLTeamMemberModel.h"
 
 @interface JGTeamMemberController : ViewController
 
@@ -17,6 +17,9 @@
 @property (assign, nonatomic) BOOL isEdit;
 
 @property (assign, nonatomic) BOOL isManager;
+
+@property (assign, nonatomic) BOOL isGest;//判断是否是嘉宾，嘉宾不需要标记
+@property (copy, nonatomic) void (^blockTMemberPeople)(JGLTeamMemberModel*);//嘉宾的回调方法
 
 @property (copy ,nonatomic) NSString *power;
 

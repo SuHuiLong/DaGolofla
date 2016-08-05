@@ -16,5 +16,6 @@
 
 @property (strong, nonatomic) UILabel*     labelMobile;
 
+@property (assign, nonatomic) BOOL isGest;//判断是否是嘉宾，嘉宾不需要标记
 
 @end

@@ -10,4 +10,8 @@
 
 @interface JGLGuestAddPlayerViewController : ViewController
 
+
+@property (copy, nonatomic) void (^blockRefresh)();
+
+
 @end

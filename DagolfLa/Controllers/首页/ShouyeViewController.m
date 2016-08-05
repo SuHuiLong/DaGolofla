@@ -30,7 +30,7 @@
 
 #import "JGHDatePicksViewController.h"
 
-#import "JGHActivityScoreManagerViewController.h"
+#import "JGLActivityMemberSetViewController.h"
 
 @interface ShouyeViewController ()<UIApplicationDelegate,CLLocationManagerDelegate>
 {
@@ -368,7 +368,7 @@
                 NSLog(@"shangchen");
 //                UseMallViewController
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
-                UseMallViewController* userVc = [[UseMallViewController alloc]init];
+                JGLActivityMemberSetViewController* userVc = [[JGLActivityMemberSetViewController alloc]init];
                 [self.navigationController pushViewController:userVc animated:YES];
             }
                 break;
