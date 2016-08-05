@@ -12,6 +12,9 @@
 #import "JGLScoreLiveDetailTableViewCell.h"
 #import "JGLScoreLiveModel.h"
 #import "UITool.h"
+
+#import "JGDHIstoryScoreDetailViewController.h"
+
 @interface JGLScoreLiveViewController ()<UITableViewDelegate,UITableViewDataSource>
 {
     UITableView* _tableView;
@@ -141,7 +144,12 @@
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-
+    JGDHIstoryScoreDetailViewController *hisVC = [[JGDHIstoryScoreDetailViewController alloc] init];
+    hisVC.srcKey = _activity;
+    JGLScoreLiveModel *model = _dataArray[indexPath.row];
+    hisVC.scoreKey = model.timeKey;
+    hisVC.fromLive = 5;
+    [self.navigationController pushViewController:hisVC animated:YES];
 }
 
 
