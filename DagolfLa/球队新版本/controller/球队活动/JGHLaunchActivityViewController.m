@@ -581,6 +581,8 @@ static CGFloat ImageHeight  = 210.0;
             return ;
         }
         
+        self.refreshBlock();
+        
         NSMutableArray *imageArray = [NSMutableArray array];
         
         [imageArray addObject:UIImageJPEGRepresentation(self.model.bgImage, 0.7)];

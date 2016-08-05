@@ -61,6 +61,8 @@ static CGFloat ImageHeight  = 210.0;
     NSString *_power;//权限
     
     UIButton *_viewResultsBtn;//查看成绩
+    
+    NSInteger _hasReleaseScore;//是否公布成绩0，1-已公布
 }
 
 @property (nonatomic, strong)UITableView *teamActibityNameTableView;
@@ -234,6 +236,9 @@ static CGFloat ImageHeight  = 210.0;
         _isApply = [data objectForKey:@"hasSignUp"];//是否报名
 
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+            
+            _hasReleaseScore = [[data objectForKey:@"hasReleaseScore"] integerValue];
+            
             NSMutableDictionary *dict = [NSMutableDictionary dictionary];
             
             if ([data objectForKey:@"teamMember"]) {
@@ -705,27 +710,33 @@ static CGFloat ImageHeight  = 210.0;
         return;
     }
     
-    JGLScoreLiveViewController *scoreLiveCtrl = [[JGLScoreLiveViewController alloc]init];
-    scoreLiveCtrl.activity = [NSNumber numberWithInteger:_teamKey];
-    
-    [self.navigationController pushViewController:scoreLiveCtrl animated:YES];
-    /**
-     NSInteger timeKey;
-     JGTeamDeatilWKwebViewController *wkVC = [[JGTeamDeatilWKwebViewController alloc] init];
-     if (_model.teamActivityKey == 0) {
-     timeKey = [_model.timeKey integerValue];
-     wkVC.activeTimeKey = [_model.timeKey integerValue];
-     }else{
-     timeKey = _model.teamActivityKey;
-     wkVC.activeTimeKey = _model.teamActivityKey;;
-     }
-     wkVC.teamTimeKey = _model.teamKey;
-     wkVC.isScore = YES;
-     wkVC.activeName = _model.name;
-     wkVC.detailString = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/score/scoreRanking.html?teamKey=%td&userKey=%@&srcKey=%td&srcType=1", _model.teamKey,DEFAULF_USERID, timeKey];
-     wkVC.teamName = @"活动成绩";
-     [self.navigationController pushViewController:wkVC animated:YES];
-     */
+    if (_hasReleaseScore == 0) {
+        //记分直播
+        JGLScoreLiveViewController *scoreLiveCtrl = [[JGLScoreLiveViewController alloc]init];
+        scoreLiveCtrl.activity = [NSNumber numberWithInteger:_teamKey];
+        
+        [self.navigationController pushViewController:scoreLiveCtrl animated:YES];
+    }else{
+        //成绩纵览
+        //http://imgcache.dagolfla.com/share/score/teamYearScoreOverview.html?userKey=222&teamKey=1
+        
+        NSInteger timeKey;
+        JGTeamDeatilWKwebViewController *wkVC = [[JGTeamDeatilWKwebViewController alloc] init];
+        if (_model.teamActivityKey == 0) {
+            timeKey = [_model.timeKey integerValue];
+            wkVC.activeTimeKey = [_model.timeKey integerValue];
+        }else{
+            timeKey = _model.teamActivityKey;
+            wkVC.activeTimeKey = _model.teamActivityKey;;
+        }
+        wkVC.teamTimeKey = _model.teamKey;
+        wkVC.isScore = YES;
+        wkVC.activeName = _model.name;
+        wkVC.detailString = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/score/teamYearScoreOverview.html?userKey=%@&teamKey=%td", DEFAULF_USERID, timeKey];
+        wkVC.teamName = @"活动成绩";
+        [self.navigationController pushViewController:wkVC animated:YES];
+        
+    }
 }
 #pragma mark -- 详情页面
 - (void)pushDetailSCtrl:(UIButton *)btn{
