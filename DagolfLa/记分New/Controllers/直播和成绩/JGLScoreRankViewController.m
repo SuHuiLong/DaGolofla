@@ -179,7 +179,13 @@
     [dict setObject:_activity forKey:@"srcKey"];
     [dict setObject:@1 forKey:@"srcType"];
     NSLog(@"%@",[NSNumber numberWithInteger:_seg.selectedSegmentIndex]);
-    [dict setObject:[NSNumber numberWithInteger:_seg.selectedSegmentIndex] forKey:@"rankingType"];
+    if (_seg.selectedSegmentIndex == 0) {
+        [dict setObject:@1 forKey:@"rankingType"];
+
+    }else if (_seg.selectedSegmentIndex == 1) {
+        [dict setObject:@0 forKey:@"rankingType"];
+
+    }
     [dict setObject:[Helper md5HexDigest:[NSString stringWithFormat:@"teamKey=%@&userKey=%@&srcKey=%@&srcType=1dagolfla.com",_teamKey,DEFAULF_USERID,_activity]] forKey:@"md5"];
     [[JsonHttp jsonHttp]httpRequest:@"score/getReleasePolenumberRanking" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
         if (isReshing) {
