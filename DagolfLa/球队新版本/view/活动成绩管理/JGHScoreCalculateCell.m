@@ -98,6 +98,25 @@ static NSString *const JGHOperationScoreCellIdentifier = @"JGHOperationScoreCell
     return 0;
 }
 
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
+    NSLog(@"contentOffset.y == %f", scrollView.contentOffset.y);
+    NSLog(@"contentOffset.x == %f", scrollView.contentOffset.x);
+    
+    if (scrollView.contentOffset.y < -screenWidth/4 && scrollView.contentOffset.y < 0) {
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:17];
+        [self.scoreCalculateTable scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionNone animated:NO];
+        self.scoreCalculateTable.pagingEnabled = YES;
+    }
+    
+    if (scrollView.contentOffset.y > screenWidth/4 + 17*screenWidth && scrollView.contentOffset.y > 0) {
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+        [self.scoreCalculateTable scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionNone animated:NO];
+        self.scoreCalculateTable.pagingEnabled = YES;
+    }
+    
+    self.scoreCalculateTable.pagingEnabled = YES;
+}
+
 #pragma mark -- +
 - (void)addOperationBtn:(UIButton *)btn{
     NSLog(@"%td", btn.tag);

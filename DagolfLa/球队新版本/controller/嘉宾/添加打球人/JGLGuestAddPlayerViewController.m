@@ -46,6 +46,7 @@
 
 -(void)finishClick:(UIBarButtonItem *)btn
 {
+    [self.view endEditing:YES];
     if ([Helper isBlankString:_strName]) {
         [[ShowHUD showHUD]showToastWithText:@"请填写姓名或者选择意向成员" FromView:self.view];
         return;

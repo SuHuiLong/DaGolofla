@@ -65,8 +65,10 @@
     
     if (pole == -1) {
         self.pushScore.text = [NSString stringWithFormat:@"%td", par];
+        self.pushScore.textColor = [UIColor lightGrayColor];
     }else{
         self.pushScore.text = [NSString stringWithFormat:@"%td", pole];
+        self.pushScore.textColor = [UIColor orangeColor];
     }
 }
 

@@ -19,7 +19,6 @@
     NSMutableArray *addressBookTemp;
     BOOL _isSearch;//是否搜索
     
-    
 }
 @property (nonatomic, strong) UISearchController *searchController;
 @property (strong, nonatomic)NSMutableArray *keyArray;
