@@ -26,6 +26,7 @@
     NSMutableArray* _dataArray;
     NSInteger _page;
     UILabel* _labelNoData;
+    NSString* _strTitleShare;
 }
 @end
 
@@ -33,7 +34,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    _page = 0;
     _dataArray = [[NSMutableArray alloc]init];
     [self createHeader];
     [self uiConfig];
@@ -116,7 +117,7 @@
 //    }
     
     
-    [UMSocialData defaultData].extConfig.title=[NSString stringWithFormat:@"%@报名", _labelTitle.text];
+    [UMSocialData defaultData].extConfig.title=[NSString stringWithFormat:@"%@报名", _strTitleShare];
     
     if (index == 0){
         //微信
@@ -180,7 +181,7 @@
     NSLog(@"%@",[NSNumber numberWithInteger:_seg.selectedSegmentIndex]);
     [dict setObject:[NSNumber numberWithInteger:_seg.selectedSegmentIndex] forKey:@"rankingType"];
     [dict setObject:[Helper md5HexDigest:[NSString stringWithFormat:@"teamKey=%@&userKey=%@&srcKey=%@&srcType=1dagolfla.com",_teamKey,DEFAULF_USERID,_activity]] forKey:@"md5"];
-    [[JsonHttp jsonHttp]httpRequest:@"score/scorePolenumberRanking" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
+    [[JsonHttp jsonHttp]httpRequest:@"score/getReleasePolenumberRanking" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
         if (isReshing) {
             [_tableView.header endRefreshing];
         }
@@ -209,14 +210,17 @@
             else{
                 _labelTitle.text = @"暂无球场名称";
             }
-            if (![Helper isBlankString:[data objectForKey:@"date"]]) {
-                _labelTime.text = [data objectForKey:@"date"];
+            if (![Helper isBlankString:[data objectForKey:@"date"]] && ![Helper isBlankString:[data objectForKey:@"endDate"]]) {
+                NSArray *array1 = [[data objectForKey:@"date"] componentsSeparatedByString:@" "];
+                NSArray *array2 = [[data objectForKey:@"endDate"] componentsSeparatedByString:@" "];
+                _labelTime.text = [NSString stringWithFormat:@"%@~%@",array1[0],array2[0]];
             }
             else{
                 _labelTime.text = @"暂无时间";
             }
             if (![Helper isBlankString:[data objectForKey:@"title"]]) {
                 self.title = [data objectForKey:@"title"];
+                _strTitleShare = [data objectForKey:@"title"];
             }
             _labelNoData.hidden = YES;
             _page++;

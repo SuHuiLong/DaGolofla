@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "JGLChooseScoreModel.h"
+#import "JGTeamAcitivtyModel.h"
 /**
  *  选择记分对象
  */
@@ -29,5 +30,6 @@
 
 
 -(void)showData:(JGLChooseScoreModel *)model;
+-(void)showLiveData:(JGTeamAcitivtyModel *)model;
 
 @end

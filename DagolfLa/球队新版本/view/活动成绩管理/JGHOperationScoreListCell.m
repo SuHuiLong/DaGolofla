@@ -18,6 +18,7 @@ static NSString *const JGHOperScoreBtnListCellIdentifier = @"JGHOperScoreBtnList
 @implementation JGHOperationScoreListCell
 
 
+
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
     if (self == [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
 //        self.poleArray = [NSMutableArray array];
@@ -56,7 +57,8 @@ static NSString *const JGHOperScoreBtnListCellIdentifier = @"JGHOperScoreBtnList
     tranCell.twoBtn.tag = 200 +indexPath.section;
     tranCell.threeBtn.tag = 300 +indexPath.section;
     tranCell.fourBtn.tag = 400 +indexPath.section;
-    
+    NSLog(@"section == %td", indexPath.section);
+    NSLog(@"row == %td", indexPath.row);
     if (indexPath.section == 0) {
         [tranCell confgiTitleString];
     }else{
@@ -94,6 +96,10 @@ static NSString *const JGHOperScoreBtnListCellIdentifier = @"JGHOperScoreBtnList
     [super setSelected:selected animated:animated];
 
     // Configure the view for the selected state
+}
+
+- (void)reloadOperScoreBtnListCellData{
+    [self.operationScoreListTable reloadData];
 }
 
 @end

@@ -76,7 +76,21 @@
     
 }
 
-
+-(void)showLiveData:(JGTeamAcitivtyModel *)model
+{
+    [_iconImgv sd_setImageWithURL:[Helper setImageIconUrl:@"activity" andTeamKey:[model.timeKey integerValue] andIsSetWidth:YES andIsBackGround:YES] placeholderImage:[UIImage imageNamed:ActivityBGImage]];
+    if (![Helper isBlankString:model.name]) {
+        _labelName.text = model.name;
+    }
+    else{
+        _labelName.text = [NSString stringWithFormat:@"暂无活动名"];
+    }
+    
+    NSArray* arr = [model.beginDate componentsSeparatedByString:@" "];
+    _labelTime.text = arr[0];
+    
+    _labelBall.text = model.ballName;
+}
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
