@@ -76,7 +76,7 @@
     
     
     if (model.netbar != nil) {
-        _labelTee.text = [NSString stringWithFormat:@"%@",model.netbar];
+        _labelTee.text = [NSString stringWithFormat:@"%.1f",[model.netbar floatValue]];
     }
     else{
         _labelTee.text = [NSString stringWithFormat:@"暂无"];
