@@ -71,6 +71,7 @@
                             imageV.image = [UIImage imageNamed:@"jifen_right"];
                             sum ++;
                         }else {
+                            [imageV removeFromSuperview];
                         }
                         
                         NSLog(@"sum = %td -------- core = %td", sum, core);
@@ -91,6 +92,7 @@
                             imageV.image = [UIImage imageNamed:@"jifen_right"];
                             sum ++;
                         }else {
+                            [imageV removeFromSuperview];
                         }
                         NSLog(@"sum = %td -------- core = %td", sum, core);
                     }

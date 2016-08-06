@@ -306,6 +306,7 @@
     }else if (indexPath.section == 1) {
         if (indexPath.row == 0) {
             //            [cell.colorImageV removeFromSuperview];
+            cell.contentView.backgroundColor = [UIColor clearColor];
             cell.colorImageV.backgroundColor = [UIColor clearColor];
             cell.nameLB.text = @"Hole";
             cell.sumLB.text = @"In";
@@ -316,6 +317,8 @@
             }
         }else if (indexPath.row == 3) {
             cell.contentView.backgroundColor = [UIColor colorWithHexString:@"#FAFAFA"];
+        }else if (indexPath.row == 2) {
+            cell.contentView.backgroundColor = [UIColor clearColor];
         }
     }
     
