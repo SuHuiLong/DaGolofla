@@ -140,7 +140,12 @@
         JGLGuestAddressViewController* gesVc = [[JGLGuestAddressViewController alloc]init];
         gesVc.blockAddressPeople = ^(TKAddressModel * model){
             _strName   = model.userName;
-            _strMobile = model.mobile;
+            
+            //去除数字以外的所有字符
+            NSCharacterSet *setToRemove = [[ NSCharacterSet characterSetWithCharactersInString:@"0123456789"]
+                                           invertedSet ];
+            _strMobile = [[model.mobile componentsSeparatedByCharactersInSet:setToRemove] componentsJoinedByString:@""];
+            
             [_tableView reloadData];
         };
         gesVc.isGest = YES;
