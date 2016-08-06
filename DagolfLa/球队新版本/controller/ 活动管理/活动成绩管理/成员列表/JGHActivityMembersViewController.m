@@ -15,6 +15,8 @@
 #import "JGHSimpleScoreViewController.h"
 #import "JGTeamAcitivtyModel.h"
 
+#import "JGActivityMemNonmangerTableViewCell.h"
+
 @interface JGHActivityMembersViewController ()<UITableViewDelegate, UITableViewDataSource,UISearchResultsUpdating>
 {
     UITableView* _tableView;
@@ -71,7 +73,8 @@
     
     [_tableView registerClass:[JGLActivityMemberNumTableViewCell class] forCellReuseIdentifier:@"JGLActivityMemberNumTableViewCell"];
     
-    
+    [_tableView registerClass:[JGActivityMemNonmangerTableViewCell class] forCellReuseIdentifier:@"JGActivityMemNonmangerTableViewCell"];
+
     _tableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
     [_tableView.header beginRefreshing];
     
@@ -161,16 +164,21 @@
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    JGLActivityMemberNumTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"JGLActivityMemberNumTableViewCell" forIndexPath:indexPath];
+    JGActivityMemNonmangerTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"JGActivityMemNonmangerTableViewCell" forIndexPath:indexPath];
     
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
 
     
     JGLAddActiivePlayModel *model = self.listArray[indexPath.section][indexPath.row];
-    cell.labelTitle.text = model.userName;
-    [cell.imgvIcon sd_setImageWithURL:[Helper setImageIconUrl:@"user" andTeamKey:[model.userKey integerValue] andIsSetWidth:YES andIsBackGround:NO] placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
-    cell.imgvIcon.layer.cornerRadius = cell.imgvIcon.frame.size.height/2;
-    cell.imgvIcon.layer.masksToBounds = YES;
+    cell.nameLB.text = model.userName;
+    [cell.headIconV sd_setImageWithURL:[Helper setImageIconUrl:@"user" andTeamKey:[model.userKey integerValue] andIsSetWidth:YES andIsBackGround:NO] placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
+    cell.headIconV.layer.cornerRadius = cell.headIconV.frame.size.height/2;
+    cell.headIconV.layer.masksToBounds = YES;
+    if (model.mobile) {
+        cell.phoneLB.text = model.mobile;
+        cell.phoneLB.textColor = [UIColor colorWithHexString:@"#a0a0a0"];
+        cell.phoneLB.font = [UIFont systemFontOfSize:15 * screenWidth / 375];
+    }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
 }
