@@ -236,9 +236,10 @@ static NSString *const JGHOperationScoreListCellIdentifier = @"JGHOperationScore
                 _selectId = 2;
                 [self.simpleScoreTableView reloadData];
             };
-
+            
             operationScoreListCell.poleArray = self.polesArray;
             operationScoreListCell.selectionStyle = UITableViewCellSelectionStyleNone;
+            [operationScoreListCell reloadOperScoreBtnListCellData];
             return operationScoreListCell;
         }
     }

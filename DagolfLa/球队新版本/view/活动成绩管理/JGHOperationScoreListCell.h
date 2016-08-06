@@ -17,4 +17,6 @@
 
 @property (nonatomic, copy)void (^returnHoleId)(NSInteger holeId);
 
+- (void)reloadOperScoreBtnListCellData;
+
 @end
