@@ -229,7 +229,7 @@
     
     cell.mobileLabel.text = [self.listArray[indexPath.section][indexPath.row]mobile];
     
-    if ([model.signUpInfoKey integerValue] == 0) {
+    if ([model.signUpInfoKey integerValue] == -1) {
         cell.moneyLabel.text = @"意向成员";
         cell.moneyLabel.textColor = [UIColor colorWithHexString:@"#7fc1ff"];
     }
@@ -312,7 +312,7 @@
     UITableViewRowAction *deleteRoWAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive title:type handler:^(UITableViewRowAction *action, NSIndexPath *indexPath) {
         
         NSLog(@"00000");
-        [self cancelAndDeleateApply:model];
+        [self cancelAndDeleateApplyIndex:indexPath.section andRow:indexPath.row];
     }];//此处是iOS8.0以后苹果最新推出的api，UITableViewRowAction，Style是划出的标签颜色等状态的定义，这里也可自行定义
     /*
     UITableViewRowAction *editRowAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleNormal title:@"编辑" handler:^(UITableViewRowAction *action, NSIndexPath *indexPath) {
@@ -323,7 +323,7 @@
     return @[deleteRoWAction];//最后返回这俩个RowAction 的数组
 }
 #pragma mark -- 取消报名－－取消意向
-- (void)cancelAndDeleateApply:(JGLAddActiivePlayModel *)model{
+- (void)cancelAndDeleateApplyIndex:(NSInteger)index andRow:(NSInteger)row{
     NSString *alertString = nil;
     if (_signUpInfoKey == 0) {
         alertString = @"确定取消意向？";
@@ -334,6 +334,7 @@
     [Helper alertViewWithTitle:alertString withBlockCancle:^{
         NSLog(@"取消");
     } withBlockSure:^{
+        JGLAddActiivePlayModel *model = self.listArray[index][row];
         if (_signUpInfoKey == 0) {
             //deleteLineTeamActivitySignUp
             [[ShowHUD showHUD]showAnimationWithText:@"提交中..." FromView:self.view];
@@ -343,9 +344,9 @@
              @Param(value="signupKey"             , require=true) Long signupKey,  // 报名timeKey
              */
             NSMutableDictionary *postDict = [NSMutableDictionary dictionary];
-            [postDict setObject:_model.timeKey forKey:@"signupKey"];
+            [postDict setObject:model.timeKey forKey:@"signupKey"];
             //activityKey
-            [postDict setObject:[NSString stringWithFormat:@"%@", _activityKey] forKey:@"activityKey"];
+            [postDict setObject:[NSString stringWithFormat:@"%@", _teamKey] forKey:@"teamKey"];
             [postDict setObject:DEFAULF_USERID forKey:@"userKey"];
             
             [[JsonHttp jsonHttp]httpRequestWithMD5:@"team/deleteLineTeamActivitySignUp" JsonKey:nil withData:postDict failedBlock:^(id errType) {
@@ -355,7 +356,8 @@
                 NSLog(@"data == %@", data);
                 [[ShowHUD showHUD]hideAnimationFromView:self.view];
                 if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
-                    [[ShowHUD showHUD]showToastWithText:@"取消报名成功！" FromView:self.view];
+                    [[ShowHUD showHUD]showToastWithText:@"删除意向成功！" FromView:self.view];
+                    [self headRereshing];
                 }else{
                     if ([data objectForKey:@"packResultMsg"]) {
                         [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
@@ -367,13 +369,13 @@
             [[ShowHUD showHUD]showAnimationWithText:@"提交中..." FromView:self.view];
             NSMutableDictionary *postDict = [NSMutableDictionary dictionary];
             NSMutableArray *signupKeyArray = [NSMutableArray array];
-            [signupKeyArray addObject:_model.timeKey];
+            [signupKeyArray addObject:model.timeKey];
             //signupKeyList
             [postDict setObject:signupKeyArray forKey:@"signupKeyList"];
             //activityKey
             [postDict setObject:[NSString stringWithFormat:@"%@", _activityKey] forKey:@"activityKey"];
             
-            [[JsonHttp jsonHttp]httpRequestWithMD5:@"" JsonKey:nil withData:postDict failedBlock:^(id errType) {
+            [[JsonHttp jsonHttp]httpRequestWithMD5:@"team/doUnSignUpTeamActivity" JsonKey:nil withData:postDict failedBlock:^(id errType) {
                 NSLog(@"errType == %@", errType);
                 [[ShowHUD showHUD]hideAnimationFromView:self.view];
             } completionBlock:^(id data) {
@@ -381,6 +383,7 @@
                 [[ShowHUD showHUD]hideAnimationFromView:self.view];
                 if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
                     [[ShowHUD showHUD]showToastWithText:@"取消报名成功！" FromView:self.view];
+                    [self headRereshing];
                 }else{
                     if ([data objectForKey:@"packResultMsg"]) {
                         [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
