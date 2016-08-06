@@ -152,7 +152,7 @@ static NSString *const JGHCenterBtnTableViewCellIdentifier = @"JGHCenterBtnTable
             for (NSDictionary *dataDic in [data objectForKey:@"list"]) {
                 JGLScoreLiveModel *model = [[JGLScoreLiveModel alloc] init];
                 [model setValuesForKeysWithDictionary:dataDic];
-                model.select = 0;
+//                model.select = 0;
                 [_dataArray addObject:model];
             }
             //            [self.TeamArray addObjectsFromArray:[data objectForKey:@"teamList"]];
@@ -311,7 +311,7 @@ static NSString *const JGHCenterBtnTableViewCellIdentifier = @"JGHCenterBtnTable
     for (int i=0; i<_dataArray.count; i++) {
         JGLScoreLiveModel *model = [[JGLScoreLiveModel alloc]init];
         model = _dataArray[i];
-        if (model.select == 1) {
+        if ([model.publish integerValue] == 1) {
             [array addObject:model.scoreKey];
         }
     }
@@ -387,22 +387,22 @@ static NSString *const JGHCenterBtnTableViewCellIdentifier = @"JGHCenterBtnTable
         for (int i=0; i<_dataArray.count; i++) {
             JGLScoreLiveModel *model = [[JGLScoreLiveModel alloc] init];
             model = _dataArray[i];
-            if (model.select == 0) {
-                model.select = 1;
+            if ([model.publish integerValue] == 0) {
+                model.publish = [NSNumber numberWithInteger:1];
                 [_dataArray replaceObjectAtIndex:i withObject:model];
             }
         }
         
         _selectNumber = _dataArray.count;
         [_publisView.imageBtn setImage:[UIImage imageNamed:@"gou_x"] forState:UIControlStateNormal];
-        [_publisView.selectAllBtn setTitle:@"取消全选" forState:UIControlStateNormal];
+        [_publisView.selectAllBtn setTitle:@"取消" forState:UIControlStateNormal];
     }else{
         _selectAll = 0;
         for (int i=0; i<_dataArray.count; i++) {
             JGLScoreLiveModel *model = [[JGLScoreLiveModel alloc] init];
             model = _dataArray[i];
-            if (model.select == 1) {
-                model.select = 0;
+            if ([model.publish integerValue] == 1) {
+                model.publish = [NSNumber numberWithInteger:0];
                 [_dataArray replaceObjectAtIndex:i withObject:model];
             }
         }
@@ -423,16 +423,16 @@ static NSString *const JGHCenterBtnTableViewCellIdentifier = @"JGHCenterBtnTable
         JGLScoreLiveModel *model = [[JGLScoreLiveModel alloc] init];
         if (btn.tag-101 == i) {
             model = _dataArray[btn.tag -101];
-            if (model.select == 0) {
-                model.select = 1;
+            if ([model.publish integerValue] == 0) {
+                model.publish = [NSNumber numberWithInteger:1];
                 _selectNumber += 1;
             }else{
-                model.select = 0;
+                model.publish = [NSNumber numberWithInteger:0];
             }
             
             [_dataArray replaceObjectAtIndex:i withObject:model];
         }else{
-            if (model.select == 1) {
+            if (model.publish == [NSNumber numberWithInteger:1]) {
                 _selectNumber += 1;
             }
         }

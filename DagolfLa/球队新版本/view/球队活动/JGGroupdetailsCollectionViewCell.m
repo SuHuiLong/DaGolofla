@@ -48,6 +48,7 @@
 //    [self insertSubview:self.leftTopView atIndex:0];
     self.leftTopView.layer.masksToBounds = YES;
     self.leftTopView.layer.cornerRadius = self.RightTopView.frame.size.width/2;
+    self.leftTopView.backgroundColor = [UIColor colorWithHexString:@"#edfaf8"];
     
     self.leftTopValue.text = @" ";
     self.leftTopValue.tintColor = [UIColor colorWithHexString:@"#00d3bc"];
@@ -57,6 +58,7 @@
 //    [self insertSubview:self.RightTopView atIndex:0];
     self.RightTopView.layer.masksToBounds = YES;
     self.RightTopView.layer.cornerRadius = self.RightTopView.frame.size.width/2;
+    self.RightTopView.backgroundColor = [UIColor colorWithHexString:@"#edfaf8"];
     
     self.rightTopValue.text = @" ";
     self.rightTopValue.tintColor = [UIColor colorWithHexString:@"#00d3bc"];
@@ -66,6 +68,7 @@
 //    [self insertSubview:self.leftDownView atIndex:0];
     self.leftDownView.layer.masksToBounds = YES;
     self.leftDownView.layer.cornerRadius = self.RightTopView.frame.size.width/2;
+    self.leftDownView.backgroundColor = [UIColor colorWithHexString:@"#edfaf8"];
     
     self.leftDownValue.text = @" ";
     self.leftDownValue.tintColor = [UIColor colorWithHexString:@"#00d3bc"];
@@ -75,6 +78,7 @@
 //    [self insertSubview:self.rightDownView atIndex:0];
     self.rightDownView.layer.masksToBounds = YES;
     self.rightDownView.layer.cornerRadius = self.RightTopView.frame.size.width/2;
+    self.rightDownView.backgroundColor = [UIColor colorWithHexString:@"#edfaf8"];
     
     self.rightDownVlaue.text = @" ";
     self.rightDownVlaue.tintColor = [UIColor colorWithHexString:@"#00d3bc"];

@@ -11,7 +11,7 @@
 @interface JGLActivityMemberSetViewController : ViewController
 
 
-@property (strong, nonatomic) JGLChooseScoreModel* model;
+@property (strong, nonatomic) JGLChooseScoreModel* model;//
 @property (strong, nonatomic) NSNumber* teamKey;
 
 @property (strong, nonatomic) NSNumber* activityKey;

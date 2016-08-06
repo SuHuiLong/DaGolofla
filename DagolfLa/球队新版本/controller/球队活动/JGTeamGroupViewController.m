@@ -96,7 +96,7 @@ static NSString *const JGGroupdetailsCollectionViewCellIdentifier = @"JGGroupdet
     [self.view addSubview:_waitGroupLabel];
     
     //添加分组
-    UIButton *autoGroupBtn = [[UIButton alloc]initWithFrame:CGRectMake(screenWidth - 90, 14.5, 60, 21)];
+    UIButton *autoGroupBtn = [[UIButton alloc]initWithFrame:CGRectMake(screenWidth - 110, 14.5, 80, 21)];
     [autoGroupBtn setTitle:@"按差点分组" forState:UIControlStateNormal];
     autoGroupBtn.layer.masksToBounds = YES;
     [autoGroupBtn setTitleColor:[UIColor colorWithHexString:@"#7DDFFD"] forState:UIControlStateNormal];

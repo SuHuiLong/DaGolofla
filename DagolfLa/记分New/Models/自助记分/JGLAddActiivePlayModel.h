@@ -28,7 +28,7 @@
 
 @property (strong, nonatomic) NSNumber* almost;
 
-@property (strong, nonatomic) NSNumber* signUpInfoKey;
+@property (strong, nonatomic) NSNumber* signUpInfoKey;//-1 意向成员
 
 @property (strong, nonatomic) NSNumber* payMoney;
 

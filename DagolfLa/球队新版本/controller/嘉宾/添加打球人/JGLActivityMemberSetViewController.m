@@ -20,6 +20,8 @@
 
 #import "JGLAddActiivePlayModel.h"
 #import "JGLGuestActiveMemberTableViewCell.h"
+#import "JGTeamGroupViewController.h"
+
 @interface JGLActivityMemberSetViewController ()<UITableViewDelegate, UITableViewDataSource,UISearchBarDelegate,UISearchResultsUpdating>
 {
     UITableView* _tableView;
@@ -28,7 +30,7 @@
     
     NSMutableDictionary* _dataAccountDict;
     
-    
+    NSInteger _signUpInfoKey;//0-意向成员，1-报名成员
 }
 @property (nonatomic, strong) UISearchController *searchController;
 @property (strong, nonatomic)NSMutableArray *keyArray;
@@ -41,13 +43,18 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.navigationItem.title = @"选择打球人";
-    
+    self.navigationItem.title = @"活动成员";
+    _signUpInfoKey = 0;
     
     _keyArray        = [[NSMutableArray alloc]init];
     _listArray       = [[NSMutableArray alloc]init];
     _dataArray       = [[NSMutableArray alloc]init];
     _dataAccountDict = [[NSMutableDictionary alloc]init];
+    
+    UIBarButtonItem *item = [[UIBarButtonItem alloc]initWithTitle:@"分组管理" style:UIBarButtonItemStylePlain target:self action:@selector(activityGroupManager)];
+    item.tintColor=[UIColor whiteColor];
+    self.navigationItem.rightBarButtonItem = item;
+    
     [self uiConfig];
     //    [self createHeadSearch];
     [self createBtn];
@@ -64,7 +71,12 @@
     self.searchController.searchBar.hidden = NO;
     [_tableView reloadData];
 }
-
+#pragma mark -- 分组管理
+- (void)activityGroupManager{
+    JGTeamGroupViewController *groupCtrl = [[JGTeamGroupViewController alloc]init];
+    groupCtrl.teamActivityKey = [_activityKey integerValue];
+    [self.navigationController pushViewController:groupCtrl animated:YES];
+}
 -(void)createBtn
 {
     UIButton* btn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -285,15 +297,100 @@
 
 -(NSArray *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewRowAction *deleteRoWAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive title:@"删除" handler:^(UITableViewRowAction *action, NSIndexPath *indexPath) {//title可自已定义
-        
-    }];//此处是iOS8.0以后苹果最新推出的api，UITableViewRowAction，Style是划出的标签颜色等状态的定义，这里也可自行定义
+    NSLog(@"indexPath.section == %td", indexPath.section);
+    NSLog(@"indexPath.row == %td", indexPath.row);
+    NSString *type = nil;
+    JGLAddActiivePlayModel *model = self.listArray[indexPath.section][indexPath.row];
+    if ([model.signUpInfoKey integerValue] == -1) {
+        type = @"删除意向";
+        _signUpInfoKey = 0;
+    }else{
+        _signUpInfoKey = 1;
+        type = @"取消报名";
+    }
     
+    UITableViewRowAction *deleteRoWAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive title:type handler:^(UITableViewRowAction *action, NSIndexPath *indexPath) {
+        
+        NSLog(@"00000");
+        [self cancelAndDeleateApply:model];
+    }];//此处是iOS8.0以后苹果最新推出的api，UITableViewRowAction，Style是划出的标签颜色等状态的定义，这里也可自行定义
+    /*
     UITableViewRowAction *editRowAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleNormal title:@"编辑" handler:^(UITableViewRowAction *action, NSIndexPath *indexPath) {
         
     }];
     editRowAction.backgroundColor = [UIColor colorWithRed:0 green:124/255.0 blue:223/255.0 alpha:1];//可以定义RowAction的颜色
-    return @[deleteRoWAction, editRowAction];//最后返回这俩个RowAction 的数组
+     */
+    return @[deleteRoWAction];//最后返回这俩个RowAction 的数组
+}
+#pragma mark -- 取消报名－－取消意向
+- (void)cancelAndDeleateApply:(JGLAddActiivePlayModel *)model{
+    NSString *alertString = nil;
+    if (_signUpInfoKey == 0) {
+        alertString = @"确定取消意向？";
+    }else{
+        alertString = @"确定取消报名？";
+    }
+    
+    [Helper alertViewWithTitle:alertString withBlockCancle:^{
+        NSLog(@"取消");
+    } withBlockSure:^{
+        if (_signUpInfoKey == 0) {
+            //deleteLineTeamActivitySignUp
+            [[ShowHUD showHUD]showAnimationWithText:@"提交中..." FromView:self.view];
+            /**
+             @Param(value="teamKey"               , require=true) Long teamKey,    // 球队key
+             @Param(value="userKey"               , require=true) Long userKey,    // 用户Key
+             @Param(value="signupKey"             , require=true) Long signupKey,  // 报名timeKey
+             */
+            NSMutableDictionary *postDict = [NSMutableDictionary dictionary];
+            [postDict setObject:_model.timeKey forKey:@"signupKey"];
+            //activityKey
+            [postDict setObject:[NSString stringWithFormat:@"%@", _activityKey] forKey:@"activityKey"];
+            [postDict setObject:DEFAULF_USERID forKey:@"userKey"];
+            
+            [[JsonHttp jsonHttp]httpRequestWithMD5:@"team/deleteLineTeamActivitySignUp" JsonKey:nil withData:postDict failedBlock:^(id errType) {
+                NSLog(@"errType == %@", errType);
+                [[ShowHUD showHUD]hideAnimationFromView:self.view];
+            } completionBlock:^(id data) {
+                NSLog(@"data == %@", data);
+                [[ShowHUD showHUD]hideAnimationFromView:self.view];
+                if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+                    [[ShowHUD showHUD]showToastWithText:@"取消报名成功！" FromView:self.view];
+                }else{
+                    if ([data objectForKey:@"packResultMsg"]) {
+                        [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+                    }
+                }
+            }];
+        }else{
+            //doUnSignUpTeamActivity
+            [[ShowHUD showHUD]showAnimationWithText:@"提交中..." FromView:self.view];
+            NSMutableDictionary *postDict = [NSMutableDictionary dictionary];
+            NSMutableArray *signupKeyArray = [NSMutableArray array];
+            [signupKeyArray addObject:_model.timeKey];
+            //signupKeyList
+            [postDict setObject:signupKeyArray forKey:@"signupKeyList"];
+            //activityKey
+            [postDict setObject:[NSString stringWithFormat:@"%@", _activityKey] forKey:@"activityKey"];
+            
+            [[JsonHttp jsonHttp]httpRequestWithMD5:@"" JsonKey:nil withData:postDict failedBlock:^(id errType) {
+                NSLog(@"errType == %@", errType);
+                [[ShowHUD showHUD]hideAnimationFromView:self.view];
+            } completionBlock:^(id data) {
+                NSLog(@"data == %@", data);
+                [[ShowHUD showHUD]hideAnimationFromView:self.view];
+                if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+                    [[ShowHUD showHUD]showToastWithText:@"取消报名成功！" FromView:self.view];
+                }else{
+                    if ([data objectForKey:@"packResultMsg"]) {
+                        [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+                    }
+                }
+            }];
+        }
+    } withBlock:^(UIAlertController *alertView) {
+       [self presentViewController:alertView animated:YES completion:nil];
+    }];
 }
 
 @end

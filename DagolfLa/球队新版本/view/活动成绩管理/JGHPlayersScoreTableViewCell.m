@@ -65,7 +65,7 @@
     
     self.imageScore.hidden = NO;
     self.imageScore.image = nil;
-    if (model.select == 0) {
+    if ([model.publish integerValue] == 0) {
         self.imageScore.image = [UIImage imageNamed:@"gou_w"];
     }
     else{

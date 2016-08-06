@@ -43,7 +43,8 @@
 #import "JGLActiveCancelMemViewController.h"
 #import "JGLPresentAwardViewController.h"
 #import "JGLScoreLiveViewController.h"
-#import "JGLActivityMemberSetViewController.h"
+//#import "JGLActivityMemberSetViewController.h"
+#import "JGLScoreRankViewController.h"
 
 static NSString *const JGTeamActivityWithAddressCellIdentifier = @"JGTeamActivityWithAddressCell";
 static NSString *const JGTeamActivityDetailsCellIdentifier = @"JGTeamActivityDetailsCell";
@@ -718,9 +719,19 @@ static CGFloat ImageHeight  = 210.0;
         scoreLiveCtrl.model = _model;
         [self.navigationController pushViewController:scoreLiveCtrl animated:YES];
     }else{
+        JGLScoreRankViewController *rankCtrl = [[JGLScoreRankViewController alloc]init];
+        rankCtrl.activity = [NSNumber numberWithInteger:_teamKey];
+        rankCtrl.teamKey = [NSNumber numberWithInteger:_model.teamKey];
+//        @property (strong, nonatomic) NSNumber* activity;//key,srcKey
+        
+//        @property (strong, nonatomic) NSNumber* teamKey;
+        
+        [self.navigationController pushViewController:rankCtrl animated:YES];
         //成绩纵览
         //http://imgcache.dagolfla.com/share/score/teamYearScoreOverview.html?userKey=222&teamKey=1
         
+        
+        /*
         NSInteger timeKey;
         JGTeamDeatilWKwebViewController *wkVC = [[JGTeamDeatilWKwebViewController alloc] init];
         if (_model.teamActivityKey == 0) {
@@ -736,7 +747,7 @@ static CGFloat ImageHeight  = 210.0;
         wkVC.detailString = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/score/teamYearScoreOverview.html?userKey=%@&teamKey=%td", DEFAULF_USERID, timeKey];
         wkVC.teamName = @"活动成绩";
         [self.navigationController pushViewController:wkVC animated:YES];
-        
+        */
     }
 }
 #pragma mark -- 详情页面
@@ -753,21 +764,21 @@ static CGFloat ImageHeight  = 210.0;
         return;
     }
     
-    NSInteger timeKey;
-    if (_model.teamActivityKey == 0) {
-        timeKey = [_model.timeKey integerValue];
-    }else{
-        timeKey = _model.teamActivityKey;
-    }
+//    NSInteger timeKey;
+//    if (_model.teamActivityKey == 0) {
+//        timeKey = [_model.timeKey integerValue];
+//    }else{
+//        timeKey = _model.teamActivityKey;
+//    }
     
-    if ([_power containsString:@"1001"]) {
-        //JGLActivityMemberSetViewController  JGLActiveCancelMemViewController
-        JGLActivityMemberSetViewController *powerCtrl = [[JGLActivityMemberSetViewController alloc]init];
-        powerCtrl.teamKey = [NSNumber numberWithInteger:_teamKey];
-
-        powerCtrl.activityKey = [NSNumber numberWithInteger:timeKey];
-        [self.navigationController pushViewController:powerCtrl animated:YES];
-    }else{
+//    if ([_power containsString:@"1001"]) {
+//        //JGLActivityMemberSetViewController  JGLActiveCancelMemViewController
+//        JGLActivityMemberSetViewController *powerCtrl = [[JGLActivityMemberSetViewController alloc]init];
+//        powerCtrl.teamKey = [NSNumber numberWithInteger:_teamKey];
+//
+//        powerCtrl.activityKey = [NSNumber numberWithInteger:timeKey];
+//        [self.navigationController pushViewController:powerCtrl animated:YES];
+//    }else{
         NSInteger timeKey;
         JGActivityMemNonMangerViewController *nonMangerVC = [[JGActivityMemNonMangerViewController alloc] init];
         
@@ -780,7 +791,7 @@ static CGFloat ImageHeight  = 210.0;
         nonMangerVC.activityKey = [NSNumber numberWithInteger:timeKey];
         nonMangerVC.title = self.model.name;
         [self.navigationController  pushViewController:nonMangerVC animated:YES];
-    }
+//    }
 }
 #pragma mark - Table View Delegate
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
