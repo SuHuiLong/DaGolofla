@@ -32,6 +32,9 @@
 
 @property (strong, nonatomic) NSNumber* payMoney;
 
+@property (strong, nonatomic) NSNumber* sex; // 1 男   0女
+
+
 /**
  *  activityKey = 5456;
  almost = 0;

@@ -56,7 +56,7 @@
     [[JsonHttp jsonHttp] httpRequest:@"score/getUserScore" JsonKey:nil withData:dic requestMethod:@"GET" failedBlock:^(id errType) {
         
         [[ShowHUD showHUD]showToastWithText:[NSString stringWithFormat:@"%@",errType] FromView:self.view];
-        
+
     } completionBlock:^(id data) {
         
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
