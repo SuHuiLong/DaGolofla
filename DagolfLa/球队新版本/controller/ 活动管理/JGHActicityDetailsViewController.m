@@ -42,6 +42,7 @@
 #import "JGLPresentAwardViewController.h"
 
 #import "JGHActivityScoreManagerViewController.h"
+#import "JGLActivityMemberSetViewController.h"
 
 static NSString *const JGTableViewCellIdentifier = @"JGTableViewCell";
 static NSString *const JGTeamActivityWithAddressCellIdentifier = @"JGTeamActivityWithAddressCell";
@@ -837,9 +838,17 @@ static CGFloat ImageHeight  = 210.0;
 }
 #pragma mark -- 查看已报名人列表
 - (void)getTeamActivitySignUpList:(UIButton *)btn{
-    JGTeamGroupViewController *groupCtrl = [[JGTeamGroupViewController alloc]init];
-    groupCtrl.teamActivityKey = [_model.timeKey integerValue];
-    [self.navigationController pushViewController:groupCtrl animated:YES];
+    //JGLActivityMemberSetViewController
+    
+    JGLActivityMemberSetViewController *activityMemberCtrl = [[JGLActivityMemberSetViewController alloc]init];
+    if (_model.teamActivityKey != 0) {
+        activityMemberCtrl.activityKey = [NSNumber numberWithInteger:_model.teamActivityKey];
+    }else{
+        activityMemberCtrl.activityKey = [NSNumber numberWithInteger:[_model.timeKey integerValue]];
+    }
+    
+    activityMemberCtrl.teamKey = [NSNumber numberWithInteger:_model.teamKey];
+    [self.navigationController pushViewController:activityMemberCtrl animated:YES];
 }
 #pragma mark -- UITextFliaView
 - (void)textFieldDidEndEditing:(UITextField *)textField{

@@ -17,6 +17,7 @@
 #import "JGTeamAcitivtyModel.h"
 #import "JGLScoreLiveViewController.h"
 #import "JGDActSelfHistoryScoreViewController.h"
+#import "JGLScoreRankViewController.h"
 
 static NSString *const JGHMatchTranscriptTableViewCellIdentifier = @"JGHMatchTranscriptTableViewCell";
 static NSString *const JGHPlayersScoreTableViewCellIdentifier = @"JGHPlayersScoreTableViewCell";
@@ -152,7 +153,7 @@ static NSString *const JGHCenterBtnTableViewCellIdentifier = @"JGHCenterBtnTable
             for (NSDictionary *dataDic in [data objectForKey:@"list"]) {
                 JGLScoreLiveModel *model = [[JGLScoreLiveModel alloc] init];
                 [model setValuesForKeysWithDictionary:dataDic];
-                model.select = 0;
+//                model.select = 0;
                 [_dataArray addObject:model];
             }
             //            [self.TeamArray addObjectsFromArray:[data objectForKey:@"teamList"]];
@@ -161,6 +162,22 @@ static NSString *const JGHCenterBtnTableViewCellIdentifier = @"JGHCenterBtnTable
             }
             _page++;
             [self.scoreManageTableView reloadData];
+            
+            
+            for (int i=0; i<_dataArray.count; i++) {
+                JGLScoreLiveModel *model = [[JGLScoreLiveModel alloc] init];
+                model = _dataArray[i];
+                if ([model.publish integerValue] == 0) {
+                    break;
+                }else{
+                    if (i == _dataArray.count-1) {
+                        [_publisView.imageBtn setImage:[UIImage imageNamed:@"gou_x"] forState:UIControlStateNormal];
+                        [_publisView.selectAllBtn setTitle:@"取消" forState:UIControlStateNormal];
+                        _selectAll = 1;
+                    }
+                }
+            }
+            
         }else {
             [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
         }
@@ -168,9 +185,7 @@ static NSString *const JGHCenterBtnTableViewCellIdentifier = @"JGHCenterBtnTable
         if (isReshing) {
             [self.scoreManageTableView.header endRefreshing];
         }
-        //        else {
-        //            [_tableView.footer endRefreshing];
-        //        }
+
     }];
 }
 
@@ -311,10 +326,18 @@ static NSString *const JGHCenterBtnTableViewCellIdentifier = @"JGHCenterBtnTable
     for (int i=0; i<_dataArray.count; i++) {
         JGLScoreLiveModel *model = [[JGLScoreLiveModel alloc]init];
         model = _dataArray[i];
-        if (model.select == 1) {
+        if ([model.publish integerValue] == 1) {
             [array addObject:model.scoreKey];
         }
     }
+    
+    /**
+     @Param(value = "userKey"                                            , require = true) Long userKey, // 用户key
+     @Param(value = "teamKey"                                            , require = true) Long teamKey, // 球队Key
+     @Param(value = "activityKey"                                        , require = true) Long activityKey, // 活动Key
+     @Param(value = "scoreKeyList"                , genricType=Long.class, require = true) List<Long> scoreKeyList, // 活动计分scoreKey
+     @Param(value = "md5"
+     */
     
     [_dict setObject:array forKey:@"scoreKeyList"];
     [[JsonHttp jsonHttp]httpRequestWithMD5:@"score/saveTeamActivityScore" JsonKey:nil withData:_dict failedBlock:^(id errType) {
@@ -324,8 +347,8 @@ static NSString *const JGHCenterBtnTableViewCellIdentifier = @"JGHCenterBtnTable
         if ([[data objectForKey:@"packSuccess"]integerValue] == 1) {
             [[ShowHUD showHUD]showToastWithText:@"保存成功！" FromView:self.view];
         }else{
-            if ([data objectForKey:@"packID"]) {
-                [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packID"] FromView:self.view];
+            if ([data objectForKey:@"packResultMsg"]) {
+                [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
             }
         }
     }];
@@ -337,7 +360,9 @@ static NSString *const JGHCenterBtnTableViewCellIdentifier = @"JGHCenterBtnTable
     for (int i=0; i<_dataArray.count; i++) {
         JGLScoreLiveModel *model = [[JGLScoreLiveModel alloc]init];
         model = _dataArray[i];
-        [array addObject:model.scoreKey];
+        if ([model.publish integerValue] == 1) {
+            [array addObject:model.scoreKey];
+        }
     }
     
     [_dict setObject:array forKey:@"scoreKeyList"];
@@ -359,7 +384,9 @@ static NSString *const JGHCenterBtnTableViewCellIdentifier = @"JGHCenterBtnTable
                     [[ShowHUD showHUD]showToastWithText:@"公布成功！" FromView:self.view];
                     [self performSelector:@selector(pushCtrl) withObject:self afterDelay:1.0];
                 }else{
-                    
+                    if ([data objectForKey:@"packResultMsg"]) {
+                        [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+                    }
                 }
             }];
         }
@@ -367,16 +394,16 @@ static NSString *const JGHCenterBtnTableViewCellIdentifier = @"JGHCenterBtnTable
 }
 #pragma mark -- 公布跳转
 - (void)pushCtrl{
-    JGLScoreLiveViewController *scoreLive = [[JGLScoreLiveViewController alloc]init];
+    JGLScoreRankViewController *rankCtrl = [[JGLScoreRankViewController alloc]init];
     if (_activityBaseModel.teamActivityKey != 0) {
-        scoreLive.activity = [NSNumber numberWithInteger:_activityBaseModel.teamActivityKey];
+        rankCtrl.activity = [NSNumber numberWithInteger:_activityBaseModel.teamActivityKey];
     }else{
-        scoreLive.activity = [NSNumber numberWithInteger:[_activityBaseModel.timeKey integerValue]];
+        rankCtrl.activity = [NSNumber numberWithInteger:[_activityBaseModel.timeKey integerValue]];
     }
     
-    scoreLive.model = _activityBaseModel;
+    rankCtrl.teamKey = [NSNumber numberWithInteger:_activityBaseModel.teamKey];
     
-    [self.navigationController pushViewController:scoreLive animated:YES];
+    [self.navigationController pushViewController:rankCtrl animated:YES];
 }
 #pragma mark -- 全选
 - (void)selectAll{
@@ -387,22 +414,22 @@ static NSString *const JGHCenterBtnTableViewCellIdentifier = @"JGHCenterBtnTable
         for (int i=0; i<_dataArray.count; i++) {
             JGLScoreLiveModel *model = [[JGLScoreLiveModel alloc] init];
             model = _dataArray[i];
-            if (model.select == 0) {
-                model.select = 1;
+            if ([model.publish integerValue] == 0) {
+                model.publish = [NSNumber numberWithInteger:1];
                 [_dataArray replaceObjectAtIndex:i withObject:model];
             }
         }
         
         _selectNumber = _dataArray.count;
         [_publisView.imageBtn setImage:[UIImage imageNamed:@"gou_x"] forState:UIControlStateNormal];
-        [_publisView.selectAllBtn setTitle:@"取消全选" forState:UIControlStateNormal];
+        [_publisView.selectAllBtn setTitle:@"取消" forState:UIControlStateNormal];
     }else{
         _selectAll = 0;
         for (int i=0; i<_dataArray.count; i++) {
             JGLScoreLiveModel *model = [[JGLScoreLiveModel alloc] init];
             model = _dataArray[i];
-            if (model.select == 1) {
-                model.select = 0;
+            if ([model.publish integerValue] == 1) {
+                model.publish = [NSNumber numberWithInteger:0];
                 [_dataArray replaceObjectAtIndex:i withObject:model];
             }
         }
@@ -423,16 +450,16 @@ static NSString *const JGHCenterBtnTableViewCellIdentifier = @"JGHCenterBtnTable
         JGLScoreLiveModel *model = [[JGLScoreLiveModel alloc] init];
         if (btn.tag-101 == i) {
             model = _dataArray[btn.tag -101];
-            if (model.select == 0) {
-                model.select = 1;
+            if ([model.publish integerValue] == 0) {
+                model.publish = [NSNumber numberWithInteger:1];
                 _selectNumber += 1;
             }else{
-                model.select = 0;
+                model.publish = [NSNumber numberWithInteger:0];
             }
             
             [_dataArray replaceObjectAtIndex:i withObject:model];
         }else{
-            if (model.select == 1) {
+            if (model.publish == [NSNumber numberWithInteger:1]) {
                 _selectNumber += 1;
             }
         }

@@ -38,7 +38,7 @@
 
 @property (strong, nonatomic) NSString* userName;
 
-@property (strong, nonatomic) NSNumber* publish;
+@property (strong, nonatomic) NSNumber* publish;//是否公布
 
 @property (strong, nonatomic) NSNumber* scoreKey;
 
@@ -48,7 +48,7 @@
 
 @property (strong, nonatomic) NSNumber* netbar;//净杆
 
-@property (nonatomic, assign) NSInteger select;// 0 1
+//@property (nonatomic, assign) NSInteger select;// 0 1
 
 
 @end
