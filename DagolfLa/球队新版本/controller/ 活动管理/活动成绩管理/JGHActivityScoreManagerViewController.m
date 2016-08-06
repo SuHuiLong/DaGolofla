@@ -41,6 +41,8 @@ static NSString *const JGHCenterBtnTableViewCellIdentifier = @"JGHCenterBtnTable
 
 @property (nonatomic, assign)NSInteger almostType;//差点计算类型
 
+
+
 @end
 
 @implementation JGHActivityScoreManagerViewController
@@ -371,6 +373,8 @@ static NSString *const JGHCenterBtnTableViewCellIdentifier = @"JGHCenterBtnTable
     }else{
         scoreLive.activity = [NSNumber numberWithInteger:[_activityBaseModel.timeKey integerValue]];
     }
+    
+    scoreLive.model = _activityBaseModel;
     
     [self.navigationController pushViewController:scoreLive animated:YES];
 }

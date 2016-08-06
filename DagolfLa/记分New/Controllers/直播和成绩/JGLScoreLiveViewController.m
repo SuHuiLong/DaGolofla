@@ -144,12 +144,16 @@
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    JGDHIstoryScoreDetailViewController *hisVC = [[JGDHIstoryScoreDetailViewController alloc] init];
-    hisVC.srcKey = _activity;
-    JGLScoreLiveModel *model = _dataArray[indexPath.row];
-    hisVC.scoreKey = model.timeKey;
-    hisVC.fromLive = 5;
-    [self.navigationController pushViewController:hisVC animated:YES];
+    NSLog(@"%td", indexPath.row);
+    NSLog(@"section == %td", indexPath.section);
+    if (indexPath.section == 1 && indexPath.row > 0) {
+        JGDHIstoryScoreDetailViewController *hisVC = [[JGDHIstoryScoreDetailViewController alloc] init];
+        hisVC.srcKey = _activity;
+        JGLScoreLiveModel *model = _dataArray[indexPath.row -1];
+        hisVC.scoreKey = model.timeKey;
+        hisVC.fromLive = 5;
+        [self.navigationController pushViewController:hisVC animated:YES];
+    }
 }
 
 

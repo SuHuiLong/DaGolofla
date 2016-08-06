@@ -88,7 +88,11 @@
     }
     
     if (model.poorBar != nil) {
-        _labelAlmost.text = [NSString stringWithFormat:@"%@",model.poorBar];
+        if ([model.poorBar integerValue] > 0) {
+            _labelAlmost.text = [NSString stringWithFormat:@"+%@",model.poorBar];
+        }else{
+            _labelAlmost.text = [NSString stringWithFormat:@"%@",model.poorBar];
+        }
     }
     else{
         _labelAlmost.text = [NSString stringWithFormat:@"暂无"];
