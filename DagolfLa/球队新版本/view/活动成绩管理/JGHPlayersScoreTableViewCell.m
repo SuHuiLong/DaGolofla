@@ -31,6 +31,11 @@
 
 -(void)showData:(JGLScoreLiveModel *)model
 {
+    self.fristLabel.textColor = [UIColor blackColor];
+    self.twoLabel.textColor = [UIColor blackColor];
+    self.threeLabel.textColor = [UIColor blackColor];
+    self.fiveLabel.textColor = [UIColor blackColor];
+    
     if (![Helper isBlankString:model.userName]) {
         self.fristLabel.text = model.userName;
     }
@@ -48,7 +53,7 @@
     
     
     if (model.almost != nil) {
-        self.threeLabel.text = [NSString stringWithFormat:@"%.f",[model.almost floatValue]];
+        self.threeLabel.text = [NSString stringWithFormat:@"%.1f",[model.almost floatValue]];
     }
     else
     {
@@ -64,11 +69,10 @@
     }
     
     self.imageScore.hidden = NO;
-    self.imageScore.image = nil;
+//    self.imageScore.image = nil;
     if ([model.publish integerValue] == 0) {
         self.imageScore.image = [UIImage imageNamed:@"gou_w"];
-    }
-    else{
+    }else{
         self.imageScore.image = [UIImage imageNamed:@"gou_x"];
     }
 }

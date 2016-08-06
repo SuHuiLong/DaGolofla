@@ -246,6 +246,12 @@
         cell.moneyLabel.attributedText = attributedString;
     }
     
+    if (model.almost) {
+        cell.almostLabel.text = [NSString stringWithFormat:@"差点  %@", model.almost];
+    }else{
+        cell.almostLabel.text = @"差点";
+    }
+    
     return cell;
     
 }

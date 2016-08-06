@@ -46,6 +46,7 @@
 
 -(void)finishClick:(UIBarButtonItem *)btn
 {
+    [self.view endEditing:YES];
     if ([Helper isBlankString:_strName]) {
         [[ShowHUD showHUD]showToastWithText:@"请填写姓名或者选择意向成员" FromView:self.view];
         return;
@@ -139,7 +140,12 @@
         JGLGuestAddressViewController* gesVc = [[JGLGuestAddressViewController alloc]init];
         gesVc.blockAddressPeople = ^(TKAddressModel * model){
             _strName   = model.userName;
-            _strMobile = model.mobile;
+            
+            //去除数字以外的所有字符
+            NSCharacterSet *setToRemove = [[ NSCharacterSet characterSetWithCharactersInString:@"0123456789"]
+                                           invertedSet ];
+            _strMobile = [[model.mobile componentsSeparatedByCharactersInSet:setToRemove] componentsJoinedByString:@""];
+            
             [_tableView reloadData];
         };
         gesVc.isGest = YES;

@@ -32,6 +32,7 @@
     self.backgroundColor = [UIColor colorWithHexString:BG_color];
     self.contentView.backgroundColor = [UIColor colorWithHexString:BG_color];
     self.bgImage.backgroundColor = [UIColor colorWithHexString:BG_color];
+    
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

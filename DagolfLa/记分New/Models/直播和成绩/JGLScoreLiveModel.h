@@ -48,7 +48,7 @@
 
 @property (strong, nonatomic) NSNumber* netbar;//净杆
 
-//@property (nonatomic, assign) NSInteger select;// 0 1
+@property (nonatomic, assign) NSInteger select;// 0 1
 
 
 @end

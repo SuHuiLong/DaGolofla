@@ -153,7 +153,7 @@ static NSString *const JGHCenterBtnTableViewCellIdentifier = @"JGHCenterBtnTable
             for (NSDictionary *dataDic in [data objectForKey:@"list"]) {
                 JGLScoreLiveModel *model = [[JGLScoreLiveModel alloc] init];
                 [model setValuesForKeysWithDictionary:dataDic];
-//                model.select = 0;
+                model.select = 0;
                 [_dataArray addObject:model];
             }
             //            [self.TeamArray addObjectsFromArray:[data objectForKey:@"teamList"]];
@@ -177,6 +177,8 @@ static NSString *const JGHCenterBtnTableViewCellIdentifier = @"JGHCenterBtnTable
                     }
                 }
             }
+            
+            [self countProple];
             
         }else {
             [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
@@ -222,12 +224,10 @@ static NSString *const JGHCenterBtnTableViewCellIdentifier = @"JGHCenterBtnTable
         tranCell.delegate = self;
         tranCell.selectionStyle = UITableViewCellSelectionStyleNone;
         [tranCell configActivityName:_activityBaseModel.ballName andStartTime:_activityBaseModel.beginDate andEndTime:_activityBaseModel.endDate];
-        tranCell.selectionStyle = UITableViewCellSelectionStyleNone;
         return tranCell;
     }else if (indexPath.section == _dataArray.count + 2){
         JGHCenterBtnTableViewCell *centerBtnCell = [tableView dequeueReusableCellWithIdentifier:JGHCenterBtnTableViewCellIdentifier];
         centerBtnCell.delegate = self;
-        centerBtnCell.selectionStyle = UITableViewCellSelectionStyleNone;
         centerBtnCell.selectionStyle = UITableViewCellSelectionStyleNone;
         return centerBtnCell;
     }else{
@@ -243,14 +243,12 @@ static NSString *const JGHCenterBtnTableViewCellIdentifier = @"JGHCenterBtnTable
             cell.threeLabel.textColor = [UIColor lightGrayColor];
             cell.fiveLabel.text = @"净杆";
             cell.fiveLabel.textColor = [UIColor lightGrayColor];
-            cell.selectionStyle = UITableViewCellSelectionStyleNone;
             return cell;
         }else{
             JGHPlayersScoreTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:JGHPlayersScoreTableViewCellIdentifier];
             cell.selectBtn.tag = indexPath.section -1 + 100;
             cell.delegate = self;
             [cell showData:_dataArray[indexPath.section-2]];
-            cell.selectionStyle = UITableViewCellSelectionStyleNone;
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             return cell;
         }
@@ -277,7 +275,8 @@ static NSString *const JGHCenterBtnTableViewCellIdentifier = @"JGHCenterBtnTable
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSLog(@"%td", indexPath.section);
-    if (indexPath.section < 2 + _dataArray.count -1 && indexPath.section != 0) {
+    NSLog(@"%td", indexPath.row);
+    if (indexPath.section < 2 + _dataArray.count && indexPath.section != 0 && indexPath.section != 1) {
         JGDActSelfHistoryScoreViewController *actVC = [[JGDActSelfHistoryScoreViewController alloc] init];
         actVC.scoreModel = self.dataArray[indexPath.section - 2];
         actVC.timeKey = _activityBaseModel.timeKey;
@@ -330,14 +329,6 @@ static NSString *const JGHCenterBtnTableViewCellIdentifier = @"JGHCenterBtnTable
             [array addObject:model.scoreKey];
         }
     }
-    
-    /**
-     @Param(value = "userKey"                                            , require = true) Long userKey, // 用户key
-     @Param(value = "teamKey"                                            , require = true) Long teamKey, // 球队Key
-     @Param(value = "activityKey"                                        , require = true) Long activityKey, // 活动Key
-     @Param(value = "scoreKeyList"                , genricType=Long.class, require = true) List<Long> scoreKeyList, // 活动计分scoreKey
-     @Param(value = "md5"
-     */
     
     [_dict setObject:array forKey:@"scoreKeyList"];
     [[JsonHttp jsonHttp]httpRequestWithMD5:@"score/saveTeamActivityScore" JsonKey:nil withData:_dict failedBlock:^(id errType) {
@@ -445,28 +436,34 @@ static NSString *const JGHCenterBtnTableViewCellIdentifier = @"JGHCenterBtnTable
 
 #pragma mark -- 选择
 - (void)selectMembers:(UIButton *)btn{
+    _selectNumber = 0;
     NSLog(@"%td", btn.tag);
+    JGLScoreLiveModel *model = [[JGLScoreLiveModel alloc] init];
+    model = _dataArray[btn.tag -101];
+    
+    NSLog(@"%td", btn.tag - 101);
+    
+    if ([model.publish integerValue] == 0) {
+        model.publish = [NSNumber numberWithInteger:1];
+    }else{
+        model.publish = [NSNumber numberWithInteger:0];
+    }
+    
+    [self countProple];
+    [self.scoreManageTableView reloadData];
+}
+#pragma mark -- 统计选择人数
+- (void)countProple{
+    _selectNumber = 0;
     for (int i=0; i<_dataArray.count; i++) {
         JGLScoreLiveModel *model = [[JGLScoreLiveModel alloc] init];
-        if (btn.tag-101 == i) {
-            model = _dataArray[btn.tag -101];
-            if ([model.publish integerValue] == 0) {
-                model.publish = [NSNumber numberWithInteger:1];
-                _selectNumber += 1;
-            }else{
-                model.publish = [NSNumber numberWithInteger:0];
-            }
-            
-            [_dataArray replaceObjectAtIndex:i withObject:model];
-        }else{
-            if (model.publish == [NSNumber numberWithInteger:1]) {
-                _selectNumber += 1;
-            }
+        model = _dataArray[i];
+        if ([model.publish integerValue] == 1) {
+            _selectNumber += 1;
         }
     }
     
     _publisView.provalue.text = [NSString stringWithFormat:@"%td", _selectNumber];
-    [self.scoreManageTableView reloadData];
 }
 
 - (void)didReceiveMemoryWarning {

@@ -378,7 +378,7 @@ static NSString *const JGHOperationScoreListCellIdentifier = @"JGHOperationScore
         }
         
         if (_playModel.almost) {
-            [userScoreDict setObject:@"" forKey:@"almost"];
+            [userScoreDict setObject:_playModel.almost forKey:@"almost"];
         }
         
         [userScoreDict setObject:_polesArray forKey:@"poleNumber"];
@@ -399,7 +399,7 @@ static NSString *const JGHOperationScoreListCellIdentifier = @"JGHOperationScore
         }
         
         if (_playModel.almost) {
-            [userScoreDict setObject:@"" forKey:@"almost"];
+            [userScoreDict setObject:_playModel.almost forKey:@"almost"];
         }
         
         [userScoreDict setObject:@(_poles) forKey:@"poles"];
