@@ -286,6 +286,7 @@
         cell.labelAlmost.textColor = [UIColor lightGrayColor];
         cell.labelTee.text    = @"净杆";
         cell.labelTee.textColor = [UIColor lightGrayColor];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
     }
     else{
@@ -293,6 +294,7 @@
         cell.labelRank.textColor = [UITool colorWithHexString:@"32b14d" alpha:1];
         cell.labelRank.text = [NSString stringWithFormat:@"%td",indexPath.row];
         [cell showData:_dataArray[indexPath.row-1]];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
         
     }

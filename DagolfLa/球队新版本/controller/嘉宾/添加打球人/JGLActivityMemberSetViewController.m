@@ -229,6 +229,12 @@
     
     cell.mobileLabel.text = [self.listArray[indexPath.section][indexPath.row]mobile];
     
+    if ([model.sex integerValue] == 1) {
+        [cell.sexImgv setImage: [UIImage imageNamed:@"xb_nn"]];
+    }else if ([model.sex integerValue] == 0) {
+        [cell.sexImgv setImage: [UIImage imageNamed:@"xb_n"]];
+    }
+    
     if ([model.signUpInfoKey integerValue] == -1) {
         cell.moneyLabel.text = @"意向成员";
         cell.moneyLabel.textColor = [UIColor colorWithHexString:@"#7fc1ff"];
