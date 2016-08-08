@@ -163,7 +163,7 @@
         {
             fxImg = [UIImage imageNamed:DefaultHeaderImage];
         }
-        shareUrl = _detailString;
+        shareUrl = [NSString stringWithFormat:@"%@&md5=%@", _detailString, [Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@&teamKey=%tddagolfla.com", DEFAULF_USERID, _teamKey]]];
         [UMSocialData defaultData].extConfig.title = [NSString stringWithFormat:@"成绩总览"];//这边标题要改
     }
     else{

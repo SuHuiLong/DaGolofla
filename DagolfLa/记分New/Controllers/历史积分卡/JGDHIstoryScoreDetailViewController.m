@@ -364,9 +364,20 @@
 {
     
     //    NSString*  shareUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/score/scoreCard.html?teamKey=%@&userKey=%@&srcKey=1&srcType=1&scoreKey=0&md5=%@", _model.timeKey,DEFAULF_USERID, [Helper md5HexDigest:[NSString stringWithFormat:@"teamKey=%@&userKey=%@&srcKey=1&srcType=1dagolfla.com", _model.timeKey, DEFAULF_USERID]]];
+    
+    /*
+     [dic setObject:self.scoreKey forKey:@"scoreKey"];
+     [dic setObject:DEFAULF_USERID forKey:@"userKey"];
+     [dic setObject:self.srcKey forKey:@"srcKey"];
+     [dic setObject:[Helper md5HexDigest:[NSString stringWithFormat:@"teamKey=0&userKey=%@&srcKey=%@&srcType=1dagolfla.com", DEFAULF_USERID, self.srcKey]] forKey:@"md5"];
+     [dic setObject:@0 forKey:@"teamKey"];
+     [dic setObject:@1 forKey:@"srcType"];
+     */
+    
+    
     NSString*  shareUrl;
     if (_fromLive == 5) {
-        shareUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/score/scoreCard.html?teamKey=0&userKey=%@&srcKey=%@&srcType=1&scoreKey=%@&md5=%@&share=1", DEFAULF_USERID, self.srcKey, self.scoreKey, [Helper md5HexDigest:[NSString stringWithFormat:@"teamKey=0&userKey=%@&srcKey=%@&srcType=%@dagolfla.com", DEFAULF_USERID, [self.dataDic objectForKey:@"srcKey"], [self.dataDic objectForKey:@"srcType"]]]];
+        shareUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/score/scoreCard.html?teamKey=0&userKey=%@&srcKey=%@&srcType=1&scoreKey=%@&md5=%@&share=1", DEFAULF_USERID, self.srcKey, self.scoreKey, [Helper md5HexDigest:[NSString stringWithFormat:@"teamKey=0&userKey=%@&srcKey=%@&srcType=1dagolfla.com", DEFAULF_USERID, self.srcKey]]];
 
     }else{
         shareUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/score/scoreCard.html?teamKey=0&userKey=%@&srcKey=%@&srcType=%@&scoreKey=%@&md5=%@&share=1", DEFAULF_USERID, [self.dataDic objectForKey:@"srcKey"], [self.dataDic objectForKey:@"srcType"], _model.timeKey, [Helper md5HexDigest:[NSString stringWithFormat:@"teamKey=0&userKey=%@&srcKey=%@&srcType=%@dagolfla.com", DEFAULF_USERID, [self.dataDic objectForKey:@"srcKey"], [self.dataDic objectForKey:@"srcType"]]]];
