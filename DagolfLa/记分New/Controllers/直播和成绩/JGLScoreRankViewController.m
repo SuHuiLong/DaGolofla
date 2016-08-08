@@ -27,6 +27,8 @@
     NSInteger _page;
     UILabel* _labelNoData;
     NSString* _strTitleShare;
+    NSString* _teamName;
+
 }
 @end
 
@@ -117,13 +119,13 @@
 //    }
     
     
-    [UMSocialData defaultData].extConfig.title=[NSString stringWithFormat:@"%@报名", _strTitleShare];
+    [UMSocialData defaultData].extConfig.title=[NSString stringWithFormat:@"%@", _strTitleShare];
     
     if (index == 0){
         //微信
         [UMSocialWechatHandler setWXAppId:@"wxdcdc4e20544ed728" appSecret:@"fdc75aae5a98f2aa0f62ef8cba2b08e9" url:shareUrl];
         [UMSocialConfig hiddenNotInstallPlatforms:@[UMShareToWechatSession,UMShareToWechatTimeline,UMShareToSina]];
-        [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatSession] content:[NSString stringWithFormat:@"活动记分分享%@", _activity] image:(fiData != nil && fiData.length > 0) ?fiData : [UIImage imageNamed:TeamBGImage] location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
+        [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatSession] content:[NSString stringWithFormat:@"%@%@的成绩", _teamName, _strTitleShare] image:(fiData != nil && fiData.length > 0) ?fiData : [UIImage imageNamed:TeamBGImage] location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
             if (response.responseCode == UMSResponseCodeSuccess) {
                 //                [self shareS:indexRow];
             }
@@ -208,6 +210,10 @@
                 JGLScoreRankModel *model = [[JGLScoreRankModel alloc] init];
                 [model setValuesForKeysWithDictionary:dataDic];
                 [_dataArray addObject:model];
+            }
+            
+            if (![Helper isBlankString:[data objectForKey:@"teamName"]]) {
+                _teamName = [data objectForKey:@"teamName"];
             }
             
             if (![Helper isBlankString:[data objectForKey:@"ballName"]]) {
