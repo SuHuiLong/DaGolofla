@@ -47,7 +47,10 @@
         sexStr = @"保密";
     }
     
-    self.sexAndValue.text = [NSString stringWithFormat:@"%@ 差点:%ld", sexStr, (long)model.almost];
+    if (model.almost) {
+        self.sexAndValue.text = [NSString stringWithFormat:@"%@ 差点:%@", sexStr, model.almost];
+    }
+    
 }
 
 @end

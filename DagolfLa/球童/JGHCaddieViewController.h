@@ -10,4 +10,16 @@
 
 @interface JGHCaddieViewController : ViewController
 
+@property (weak, nonatomic) IBOutlet UIButton *backBtn;
+- (IBAction)backBtn:(UIButton *)sender;
+
+@property (weak, nonatomic) IBOutlet UILabel *titleLable;
+
+@property (weak, nonatomic) IBOutlet UIButton *playBtn;
+- (IBAction)playBtn:(UIButton *)sender;
+
+@property (weak, nonatomic) IBOutlet UIButton *caddieBtn;
+- (IBAction)caddieBtn:(UIButton *)sender;
+
+
 @end

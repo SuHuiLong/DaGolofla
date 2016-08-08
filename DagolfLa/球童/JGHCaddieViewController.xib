@@ -7,32 +7,76 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="JGHCaddieViewController">
             <connections>
+                <outlet property="backBtn" destination="oly-nS-rdx" id="DqN-7J-Jdl"/>
+                <outlet property="caddieBtn" destination="pwg-GM-KPi" id="V2s-mi-KbN"/>
+                <outlet property="playBtn" destination="zNl-Vf-EgZ" id="zkZ-tR-Vlv"/>
+                <outlet property="titleLable" destination="8Oi-p5-WIu" id="jTy-iv-Srs"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="caddiestart" translatesAutoresizingMaskIntoConstraints="NO" id="ilj-5A-e2v">
-                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                </imageView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oly-nS-rdx">
                     <rect key="frame" x="20" y="27" width="27" height="28"/>
                     <state key="normal" image="backL"/>
+                    <connections>
+                        <action selector="backBtn:" destination="-1" eventType="touchUpInside" id="euD-na-RBg"/>
+                    </connections>
                 </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zNl-Vf-EgZ">
+                    <rect key="frame" x="20" y="558" width="120" height="36"/>
+                    <color key="backgroundColor" red="1" green="0.56180099939999995" blue="0.048059914199999998" alpha="1" colorSpace="calibratedRGB"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                    <state key="normal" title="我是打球人">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="playBtn:" destination="-1" eventType="touchUpInside" id="XQC-P1-g6D"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pwg-GM-KPi">
+                    <rect key="frame" x="215" y="558" width="120" height="36"/>
+                    <color key="backgroundColor" red="1" green="0.56180099943798134" blue="0.048059914200913267" alpha="1" colorSpace="calibratedRGB"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                    <state key="normal" title="我是球童">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="caddieBtn:" destination="-1" eventType="touchUpInside" id="4bF-kJ-iAm"/>
+                    </connections>
+                </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="球童记分" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Oi-p5-WIu">
+                    <rect key="frame" x="153" y="30.5" width="68" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="caddiestart" translatesAutoresizingMaskIntoConstraints="NO" id="ilj-5A-e2v">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                </imageView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstAttribute="bottom" secondItem="ilj-5A-e2v" secondAttribute="bottom" id="2dc-fa-NJ8"/>
+                <constraint firstAttribute="bottom" secondItem="zNl-Vf-EgZ" secondAttribute="bottom" constant="73" id="2hc-pe-iHn"/>
+                <constraint firstItem="pwg-GM-KPi" firstAttribute="leading" secondItem="zNl-Vf-EgZ" secondAttribute="trailing" constant="75" id="FYL-e6-v6S"/>
+                <constraint firstItem="zNl-Vf-EgZ" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="20" id="G6W-Ff-WLO"/>
                 <constraint firstItem="oly-nS-rdx" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="20" id="GgX-lw-yoP"/>
+                <constraint firstAttribute="trailing" secondItem="pwg-GM-KPi" secondAttribute="trailing" constant="40" id="H2u-ze-oUG"/>
+                <constraint firstItem="pwg-GM-KPi" firstAttribute="height" secondItem="zNl-Vf-EgZ" secondAttribute="height" id="JMX-bf-wvS"/>
                 <constraint firstAttribute="trailing" secondItem="ilj-5A-e2v" secondAttribute="trailing" id="Pwp-vC-vZs"/>
+                <constraint firstItem="8Oi-p5-WIu" firstAttribute="centerY" secondItem="oly-nS-rdx" secondAttribute="centerY" id="QgS-sn-0NQ"/>
                 <constraint firstItem="oly-nS-rdx" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="27" id="Rl3-H9-3SC"/>
+                <constraint firstItem="8Oi-p5-WIu" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="dmC-3q-gVW"/>
                 <constraint firstItem="ilj-5A-e2v" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="exc-qU-RjQ"/>
+                <constraint firstItem="pwg-GM-KPi" firstAttribute="width" secondItem="zNl-Vf-EgZ" secondAttribute="width" id="hdK-I1-oAn"/>
                 <constraint firstItem="ilj-5A-e2v" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="mcp-Gy-bXG"/>
+                <constraint firstItem="pwg-GM-KPi" firstAttribute="centerY" secondItem="zNl-Vf-EgZ" secondAttribute="centerY" id="sTY-I0-JlN"/>
             </constraints>
-            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
         </view>
     </objects>
     <resources>

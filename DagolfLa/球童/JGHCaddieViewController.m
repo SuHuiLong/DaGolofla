@@ -34,4 +34,10 @@
 }
 */
 
+- (IBAction)backBtn:(UIButton *)sender {
+}
+- (IBAction)playBtn:(UIButton *)sender {
+}
+- (IBAction)caddieBtn:(UIButton *)sender {
+}
 @end
