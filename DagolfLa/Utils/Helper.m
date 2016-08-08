@@ -547,5 +547,19 @@
     return YES;
 }
 
++ (NSString *)returnUrlString:(NSString *)url WithKey:(NSString *)key{
+    NSArray *array = [url componentsSeparatedByString:@"?"]; //从字符A中分隔成2个元素的数组
+    NSArray *array1 = [[array objectAtIndex:1] componentsSeparatedByString:@"&"];
+    
+    for (int i=0; i<array1.count; i++) {
+        NSString *conString = array1[i];
+        if ([conString containsString:key]) {
+            return [[[array1 objectAtIndex:i]componentsSeparatedByString:@"="] lastObject];
+        }
+    }
+    
+    return @"error";
+}
+
 
 @end

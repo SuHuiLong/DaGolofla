@@ -28,6 +28,8 @@
 		2012AD9B1D3615AB00F70E40 /* JGHScoresViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2012AD9A1D3615AB00F70E40 /* JGHScoresViewController.m */; };
 		2012AD9E1D36192F00F70E40 /* JGHScoresMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2012AD9D1D36192F00F70E40 /* JGHScoresMainViewController.m */; };
 		202EC8071D5360990090FE4B /* JGHOperationScoreCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 202EC8061D5360990090FE4B /* JGHOperationScoreCell.xib */; };
+		202EC80C1D5852F80090FE4B /* JGHCaddieViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 202EC80A1D5852F80090FE4B /* JGHCaddieViewController.m */; };
+		202EC80D1D5852F80090FE4B /* JGHCaddieViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 202EC80B1D5852F80090FE4B /* JGHCaddieViewController.xib */; };
 		2048E8EA1D4B369E00A2C024 /* JGHSetAlmostPromptViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2048E8E81D4B369E00A2C024 /* JGHSetAlmostPromptViewController.m */; };
 		2048E8EB1D4B369E00A2C024 /* JGHSetAlmostPromptViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2048E8E91D4B369E00A2C024 /* JGHSetAlmostPromptViewController.xib */; };
 		2048E8EF1D4B528E00A2C024 /* JGHSimpleScoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2048E8EE1D4B528E00A2C024 /* JGHSimpleScoreViewController.m */; };
@@ -972,6 +974,9 @@
 		2012AD9C1D36192F00F70E40 /* JGHScoresMainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHScoresMainViewController.h; sourceTree = "<group>"; };
 		2012AD9D1D36192F00F70E40 /* JGHScoresMainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHScoresMainViewController.m; sourceTree = "<group>"; };
 		202EC8061D5360990090FE4B /* JGHOperationScoreCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JGHOperationScoreCell.xib; sourceTree = "<group>"; };
+		202EC8091D5852F80090FE4B /* JGHCaddieViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHCaddieViewController.h; sourceTree = "<group>"; };
+		202EC80A1D5852F80090FE4B /* JGHCaddieViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHCaddieViewController.m; sourceTree = "<group>"; };
+		202EC80B1D5852F80090FE4B /* JGHCaddieViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JGHCaddieViewController.xib; sourceTree = "<group>"; };
 		2048E8E71D4B369E00A2C024 /* JGHSetAlmostPromptViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHSetAlmostPromptViewController.h; sourceTree = "<group>"; };
 		2048E8E81D4B369E00A2C024 /* JGHSetAlmostPromptViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHSetAlmostPromptViewController.m; sourceTree = "<group>"; };
 		2048E8E91D4B369E00A2C024 /* JGHSetAlmostPromptViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JGHSetAlmostPromptViewController.xib; sourceTree = "<group>"; };
@@ -2776,6 +2781,16 @@
 				2064DE8B1D367FEC00F0D52A /* JGHScoresHoleView.m */,
 			);
 			path = "记分页";
+			sourceTree = "<group>";
+		};
+		202EC8081D5852BD0090FE4B /* 球童 */ = {
+			isa = PBXGroup;
+			children = (
+				202EC8091D5852F80090FE4B /* JGHCaddieViewController.h */,
+				202EC80A1D5852F80090FE4B /* JGHCaddieViewController.m */,
+				202EC80B1D5852F80090FE4B /* JGHCaddieViewController.xib */,
+			);
+			path = "球童";
 			sourceTree = "<group>";
 		};
 		2048E8E61D4B364C00A2C024 /* 差点设置 */ = {
@@ -4766,6 +4781,7 @@
 		36BFFD2A1BC76C8D005B3CE2 /* DagolfLa */ = {
 			isa = PBXGroup;
 			children = (
+				202EC8081D5852BD0090FE4B /* 球童 */,
 				8252E85E1D360D1000448404 /* 记分New */,
 				F55DB3841D2A36FE0054F251 /* 奖项 */,
 				20591C3D1D215BCD003271EC /* 资金账户 */,
@@ -5969,9 +5985,9 @@
 		8252E85E1D360D1000448404 /* 记分New */ = {
 			isa = PBXGroup;
 			children = (
+				8252E8611D360D1000448404 /* View */,
 				F5EE48741D462625001D5E44 /* Models */,
 				8252E85F1D360D1000448404 /* Controllers */,
-				8252E8611D360D1000448404 /* View */,
 			);
 			path = "记分New";
 			sourceTree = "<group>";
@@ -7095,6 +7111,7 @@
 				82E6A71B1CF68229009DD179 /* JGTeamAdressTableViewCell.xib in Resources */,
 				36BF01C21BC77ABD005B3CE2 /* FabuPostTableViewCell.xib in Resources */,
 				36BFFEC01BC76CDC005B3CE2 /* tab_sq.png in Resources */,
+				202EC80D1D5852F80090FE4B /* JGHCaddieViewController.xib in Resources */,
 				36BFFEBB1BC76CDC005B3CE2 /* tab_jf@2x.png in Resources */,
 				362317291BDA12F500257862 /* guide_02@2x.png in Resources */,
 				36BFFF621BC76D09005B3CE2 /* LICENSE in Resources */,
@@ -7265,6 +7282,7 @@
 				36BFFFC81BC770B1005B3CE2 /* AreaViewController.m in Sources */,
 				F55DB39E1D2B8D0E0054F251 /* JGDPrize.m in Sources */,
 				36BF004F1BC77213005B3CE2 /* UserAssistModel.m in Sources */,
+				202EC80C1D5852F80090FE4B /* JGHCaddieViewController.m in Sources */,
 				36BFFFCF1BC770B1005B3CE2 /* ZYQAssetPickerController.m in Sources */,
 				828A99F91CE348D500AF9860 /* JGMemTitleTableViewCell.m in Sources */,
 				36E300F61C3FF3F9005C3F08 /* MJRefreshGifHeader.m in Sources */,

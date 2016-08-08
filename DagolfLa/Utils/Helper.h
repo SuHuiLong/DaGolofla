@@ -98,4 +98,8 @@
 
 - (BOOL)isPureNumandCharacters:(NSString *)string;//纯数字
 
+
+//解析URL，返回需要的字段值，没有返回error
++ (NSString *)returnUrlString:(NSString *)url WithKey:(NSString *)key;
+
 @end
