@@ -313,20 +313,30 @@
         NSString *str = metadataObject.stringValue;
         if ([str containsString:@"dagolfla"] == YES) {
             [_session stopRunning];
-            NSArray *array = [str componentsSeparatedByString:@"?"]; //从字符A中分隔成2个元素的数组
-            NSArray *array1 = [array[1] componentsSeparatedByString:@"&"];
-            NSArray *array2 = [array1[0] componentsSeparatedByString:@"="];
-            NSArray *array3 = [array1[1] componentsSeparatedByString:@"="];
+            
+            
+//           NSString *ssss = [Helper returnUrlString:str WithKey:@"md5"];
+//            NSLog(@"%@", ssss);
+//            NSString *sssss = [Helper returnUrlString:str WithKey:@"md6"];
+//            NSLog(@"%@", sssss);
+//            
+//            
+//            NSArray *array = [str componentsSeparatedByString:@"?"]; //从字符A中分隔成2个元素的数组
+//            NSArray *array1 = [array[1] componentsSeparatedByString:@"&"];
+//            NSArray *array2 = [array1[0] componentsSeparatedByString:@"="];
+//            NSArray *array3 = ;
             NSMutableDictionary* dict =[[NSMutableDictionary alloc]init];
-            [dict setObject:array2[1] forKey:@"userKey"];
-            [dict setObject:array3[1] forKey:@"md5"];
+            [dict setObject:[Helper returnUrlString:str WithKey:@"userKey"] forKey:@"userKey"];
+            [dict setObject:[Helper returnUrlString:str WithKey:@"md5"] forKey:@"md5"];
+        
+            
             [[JsonHttp jsonHttp]httpRequest:@"qcode/getUserInfo" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
                 
             } completionBlock:^(id data) {
                 
                 if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
                     NSMutableDictionary* dictDa = [[NSMutableDictionary alloc]init];
-                    [dictDa setObject:[[data objectForKey:@"user"] objectForKey:@"userName"] forKey:array2[1]];
+                    [dictDa setObject:[[data objectForKey:@"user"] objectForKey:@"userName"] forKey:[Helper returnUrlString:str WithKey:@"userKey"]];
                     _blockDict(dictDa);
                     [self.navigationController popViewControllerAnimated:YES];
                 }
