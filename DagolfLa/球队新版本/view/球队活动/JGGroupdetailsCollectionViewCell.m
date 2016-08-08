@@ -265,7 +265,7 @@
                     }
                     
                     if (model.almost) {
-                        self.leftTopValue.text = [NSString stringWithFormat:@"%td",model.almost];
+                        self.leftTopValue.text = [NSString stringWithFormat:@"%@", model.almost];
                     }
                 }
                 
@@ -283,7 +283,7 @@
                     }
                     
                     if (model.almost) {
-                        self.rightTopValue.text = [NSString stringWithFormat:@"%td",model.almost];
+                        self.rightTopValue.text = [NSString stringWithFormat:@"%@" ,model.almost];
                     }
                 }
                 
@@ -301,7 +301,7 @@
                     }
                     
                     if (model.almost) {
-                        self.leftDownValue.text = [NSString stringWithFormat:@"%td",model.almost];
+                        self.leftDownValue.text = [NSString stringWithFormat:@"%@", model.almost];
                     }
                 }
                 
@@ -319,7 +319,7 @@
                     }
                     
                     if (model.almost) {
-                        self.rightDownVlaue.text = [NSString stringWithFormat:@"%td",model.almost];
+                        self.rightDownVlaue.text = [NSString stringWithFormat:@"%@", model.almost];
                     }
                 }
             }

@@ -94,7 +94,7 @@
     self.navigationItem.hidesBackButton = YES;
     self.navigationItem.leftBarButtonItems = nil;
     
-    
+  
     
     //监听分组页面返回，刷新数据
     NSNotificationCenter * center = [NSNotificationCenter defaultCenter];

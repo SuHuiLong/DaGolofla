@@ -619,6 +619,7 @@ static CGFloat ImageHeight  = 210.0;
         timeCellBtn.tag = section + 100;
         [timeCellBtn addTarget:self action:@selector(editorCostClick:) forControlEvents:UIControlEventTouchUpInside];
         [headerCell addSubview:timeCellBtn];
+        headerCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         return (UIView *)headerCell;
     }else if (section == 5){
         JGHHeaderLabelCell *headerCell = [tableView dequeueReusableCellWithIdentifier:JGHHeaderLabelCellIdentifier];
@@ -627,6 +628,7 @@ static CGFloat ImageHeight  = 210.0;
         [headerCell addSubview:applyListBtn];
         [headerCell congiftitles:@"活动成员管理"];
         [headerCell congifCount:self.model.sumCount andSum:self.model.maxCount];
+        headerCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         return (UIView *)headerCell;
     }else if (section == 6){
         JGHHeaderLabelCell *headerCell = [tableView dequeueReusableCellWithIdentifier:JGHHeaderLabelCellIdentifier];
@@ -634,6 +636,7 @@ static CGFloat ImageHeight  = 210.0;
         [btn addTarget:self action:@selector(setAward:) forControlEvents:UIControlEventTouchUpInside];
         [headerCell addSubview:btn];
         [headerCell congiftitles:@"奖项设置"];
+        headerCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         return (UIView *)headerCell;
     }else if (section == 7){
         JGHHeaderLabelCell *headerCell = [tableView dequeueReusableCellWithIdentifier:JGHHeaderLabelCellIdentifier];
@@ -641,6 +644,7 @@ static CGFloat ImageHeight  = 210.0;
         [btn addTarget:self action:@selector(PerformanceManagement:) forControlEvents:UIControlEventTouchUpInside];
         [headerCell addSubview:btn];
         [headerCell congiftitles:@"成绩管理"];
+        headerCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         return (UIView *)headerCell;
     }else if (section == 8){
         JGTeamActivityDetailsCell *detailsCell = [tableView dequeueReusableCellWithIdentifier:JGTeamActivityDetailsCellIdentifier];
@@ -649,6 +653,7 @@ static CGFloat ImageHeight  = 210.0;
         detailsBtn.tag = section + 100;
         [detailsCell addSubview:detailsBtn];
         [detailsCell configDetailsText:@"活动详情" AndActivityDetailsText:self.model.info];
+        detailsCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         return (UIView *)detailsCell;
     }else if (section == 9){
         JGHTeamContactTableViewCell *contactCell = [tableView dequeueReusableCellWithIdentifier:JGHTeamContactCellIdentifier];

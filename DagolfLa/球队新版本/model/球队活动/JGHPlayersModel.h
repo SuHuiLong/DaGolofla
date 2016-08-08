@@ -21,7 +21,7 @@
 
 @property (nonatomic, copy)NSString *mobile;//手机号
 
-@property (nonatomic, assign)NSInteger almost;//差点
+@property (nonatomic, strong)NSNumber *almost;//差点
 
 @property (nonatomic, assign)NSInteger isOnlinePay;//是否线上 付款 0-否，是－1
 

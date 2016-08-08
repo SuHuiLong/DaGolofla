@@ -15,6 +15,12 @@
 
 @implementation JGMyBarCodeViewController
 
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    
+    
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -61,9 +67,17 @@
     [viewBack addSubview:labelName];
     
     
+    
+    
     UIImageView* imgvBar = [[UIImageView alloc]initWithFrame:CGRectMake(viewBack.frame.size.width/2 - 125*screenWidth/375, 130*screenWidth/375, 250*screenWidth/375, 250*screenWidth/375)];
     [viewBack addSubview:imgvBar];
     NSString* strMd = [Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%tddagolfla.com",[DEFAULF_USERID integerValue] ]];
+    //清楚缓存
+    NSString *bgUrl = [NSString stringWithFormat:@"http://mobile.dagolfla.com/qcode/userQCode?userKey=%@&md5=%@",DEFAULF_USERID,strMd];
+    
+    [[SDImageCache sharedImageCache] removeImageForKey:bgUrl fromDisk:YES];
+    
+    
     NSString* strUrl = [NSString stringWithFormat:@"http://mobile.dagolfla.com/qcode/userQCode?userKey=%@&md5=%@",DEFAULF_USERID,strMd];
     [imgvBar sd_setImageWithURL:[NSURL URLWithString:strUrl] placeholderImage:[UIImage imageNamed:TeamBGImage]];
 
