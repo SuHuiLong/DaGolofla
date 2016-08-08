@@ -204,16 +204,18 @@
             for (NSDictionary *dic in array) {
                 MyattenModel *model = [[MyattenModel alloc] init];
                 [model setValuesForKeysWithDictionary:dic];
-
-                NoteModel *modell = [NoteHandlle selectNoteWithUID:model.otherUserId];
-                if ([modell.userremarks isEqualToString:@"(null)"] || [modell.userremarks isEqualToString:@""] || modell.userremarks == nil) {
+                if (![model.userName isEqualToString:@""]) {
+                    NoteModel *modell = [NoteHandlle selectNoteWithUID:model.otherUserId];
+                    if ([modell.userremarks isEqualToString:@"(null)"] || [modell.userremarks isEqualToString:@""] || modell.userremarks == nil) {
+                        
+                    }else{
+                        model.userName = modell.userremarks;
+                    }
                     
-                }else{
-                    model.userName = modell.userremarks;
+                    [allFriarr addObject:model];
+                    //                [self.keyArray addObject:model.userName];
                 }
-                
-                [allFriarr addObject:model];
-//                [self.keyArray addObject:model.userName];
+
             }
             
             self.listArray = [[NSMutableArray alloc]initWithArray:[PYTableViewIndexManager archiveNumbers:allFriarr]];

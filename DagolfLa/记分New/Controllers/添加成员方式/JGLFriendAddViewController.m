@@ -146,18 +146,19 @@
             for (NSDictionary *dic in array) {
                 MyattenModel *model = [[MyattenModel alloc] init];
                 [model setValuesForKeysWithDictionary:dic];
-                
-                NoteModel *modell = [NoteHandlle selectNoteWithUID:model.otherUserId];
-                if ([modell.userremarks isEqualToString:@"(null)"] || [modell.userremarks isEqualToString:@""] || modell.userremarks == nil) {
+                if (![model.userName isEqualToString:@""]) {
                     
-                }else{
-                    model.userName = modell.userremarks;
+                    NoteModel *modell = [NoteHandlle selectNoteWithUID:model.otherUserId];
+                    if ([modell.userremarks isEqualToString:@"(null)"] || [modell.userremarks isEqualToString:@""] || modell.userremarks == nil) {
+                        
+                    }else{
+                        model.userName = modell.userremarks;
+                    }
+                    [allFriarr addObject:model];
+                    [_dictData removeObjectForKey:@"userName"];
+                    //                [self.keyArray addObject:model.userName];
                 }
-                [allFriarr addObject:model];
-                [_dictData removeObjectForKey:@"userName"];
-                //                [self.keyArray addObject:model.userName];
             }
-            
             self.listArray = [[NSMutableArray alloc]initWithArray:[PYTableViewIndexManager archiveNumbers:allFriarr]];
             
             _keyArray = [[NSMutableArray alloc]initWithObjects:@"A",@"B",@"C",@"D",@"E",@"F",@"G",@"H",@"I",@"J",@"K",@"L",@"M",@"N",@"O",@"P",@"Q",@"R",@"S",@"T",@"U",@"V",@"W",@"X",@"Y",@"Z",@"#", nil];
