@@ -125,7 +125,7 @@
     if (btn.tag == 100) {
         JGTeamMemberController* teamVc = [[JGTeamMemberController alloc]init];
         teamVc.isGest = YES;
-        teamVc.teamKey = @30053;
+        teamVc.teamKey = _teamKey;
         teamVc.blockTMemberPeople = ^(JGLTeamMemberModel *model){
             _strName = model.userName;
             _strMobile = model.mobile;
