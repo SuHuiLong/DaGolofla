@@ -75,6 +75,7 @@ static CGFloat ImageHeight  = 210.0;
     NSMutableArray* _telArray;
 
 }
+
 @property (nonatomic,strong)SXPickPhoto * pickPhoto;//相册类
 @property (nonatomic, strong)UITableView *launchActivityTableView;
 

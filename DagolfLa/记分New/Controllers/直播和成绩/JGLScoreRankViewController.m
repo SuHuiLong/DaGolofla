@@ -110,7 +110,8 @@
     NSString*  shareUrl;
 //    if ([_model.timeKey integerValue] == 0) {
         fiData = [NSData dataWithContentsOfURL:[Helper setImageIconUrl:@"activity" andTeamKey:[_activity integerValue] andIsSetWidth:YES andIsBackGround:YES]];
-        shareUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/score/scoreRanking.html?teamKey=%@&userKey=%@&srcKey=%@&srcType=1&share=1", _teamKey, DEFAULF_USERID, _activity];
+    NSString *md5Str = [Helper md5HexDigest:[NSString stringWithFormat:@"teamKey=%@&userKey=%@&srcKey=%@&srcType=1dagolfla.com", _teamKey, DEFAULF_USERID, _activity]];
+        shareUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/score/scoreRanking.html?teamKey=%@&userKey=%@&srcKey=%@&srcType=1&share=1&md5=%@", _teamKey, DEFAULF_USERID, _activity, md5Str];
 //    }
 //    else
 //    {
