@@ -280,6 +280,10 @@ static NSString *const JGHOperationScoreListCellIdentifier = @"JGHOperationScore
 #pragma mark -- 第一九洞
 - (void)oneAndNineBtn{
     NSLog(@"第一九洞");
+    if (_ballView != nil) {
+        [_ballView removeFromSuperview];
+    }
+    
     JGHSetBallBaseCell *setBallBaseCell = [self.simpleScoreTableView dequeueReusableCellWithIdentifier:JGHSetBallBaseCellIdentifier];
     _ballView = [[UIView alloc]initWithFrame:CGRectMake( setBallBaseCell.oneBtn.frame.origin.x, setBallBaseCell.oneBtn.frame.origin.y + 140 *ProportionAdapter + setBallBaseCell.oneBtn.frame.size.height, setBallBaseCell.oneBtn.frame.size.width, 30 * 4 *ProportionAdapter)];
     for (int i=0; i< _holeArray.count; i++) {
@@ -303,6 +307,10 @@ static NSString *const JGHOperationScoreListCellIdentifier = @"JGHOperationScore
 #pragma mark -- 第二九洞
 - (void)twoAndNineBtn{
     NSLog(@"第二九洞");
+    if (_ballTwoView != nil) {
+        [_ballTwoView removeFromSuperview];
+    }
+    
     JGHSetBallBaseCell *setBallBaseCell = [self.simpleScoreTableView dequeueReusableCellWithIdentifier:JGHSetBallBaseCellIdentifier];
     _ballTwoView = [[UIView alloc]initWithFrame:CGRectMake( setBallBaseCell.twoBtn.frame.origin.x, setBallBaseCell.twoBtn.frame.origin.y + 140 *ProportionAdapter + setBallBaseCell.twoBtn.frame.size.height, setBallBaseCell.twoBtn.frame.size.width, 30 * 4 *ProportionAdapter)];
     for (int i=0; i< _holeArray.count; i++) {

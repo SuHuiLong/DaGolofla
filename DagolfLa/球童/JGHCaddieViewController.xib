@@ -26,22 +26,18 @@
                         <action selector="backBtn:" destination="-1" eventType="touchUpInside" id="euD-na-RBg"/>
                     </connections>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zNl-Vf-EgZ">
-                    <rect key="frame" x="20" y="558" width="120" height="36"/>
-                    <color key="backgroundColor" red="1" green="0.56180099939999995" blue="0.048059914199999998" alpha="1" colorSpace="calibratedRGB"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                    <state key="normal" title="我是打球人">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zNl-Vf-EgZ">
+                    <rect key="frame" x="20" y="539" width="120" height="55"/>
+                    <state key="normal" title="我是打球人" backgroundImage="caddiebg">
                         <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </state>
                     <connections>
                         <action selector="playBtn:" destination="-1" eventType="touchUpInside" id="XQC-P1-g6D"/>
                     </connections>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pwg-GM-KPi">
-                    <rect key="frame" x="215" y="558" width="120" height="36"/>
-                    <color key="backgroundColor" red="1" green="0.56180099943798134" blue="0.048059914200913267" alpha="1" colorSpace="calibratedRGB"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                    <state key="normal" title="我是球童">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pwg-GM-KPi">
+                    <rect key="frame" x="215" y="539" width="120" height="55"/>
+                    <state key="normal" title="我是球童" backgroundImage="caddiebg">
                         <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </state>
                     <connections>
@@ -49,7 +45,7 @@
                     </connections>
                 </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="球童记分" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Oi-p5-WIu">
-                    <rect key="frame" x="153" y="30.5" width="68" height="21"/>
+                    <rect key="frame" x="153" y="30" width="68" height="21"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
@@ -81,6 +77,7 @@
     </objects>
     <resources>
         <image name="backL" width="27" height="28"/>
+        <image name="caddiebg" width="139" height="55"/>
         <image name="caddiestart" width="375" height="667"/>
     </resources>
 </document>
