@@ -187,7 +187,6 @@
             if (indexPath.section == 0) {
                 self.contentView.backgroundColor = [UIColor colorWithHexString:@"#ecf7ef"];
                 self.nameLB.text = @"Par";
-//                [self.colorImageV removeFromSuperview];
                 self.colorImageV.backgroundColor = [UIColor clearColor];
                 NSInteger sum = 0;
                 for (UILabel *lb in self.contentView.subviews) {
@@ -202,11 +201,11 @@
             }else if (indexPath.section == 1) {
                 self.contentView.backgroundColor = [UIColor colorWithHexString:@"#ecf7ef"];
                 self.nameLB.text = @"Par";
-//                [self.colorImageV removeFromSuperview];
                 self.colorImageV.backgroundColor = [UIColor clearColor];
                 NSInteger sum = 0;
                 for (UILabel *lb in self.contentView.subviews) {
                     if (lb.tag) {
+                        lb.backgroundColor = [UIColor clearColor];
                         lb.text = [NSString stringWithFormat:@"%@", model.standardlever[lb.tag - 776 + 8]];
                         NSInteger core = [model.standardlever[lb.tag - 776 + 8] integerValue];
                         sum += core;
@@ -244,6 +243,7 @@
                             }
                         }else{
                             lb.text = @"";
+                            lb.backgroundColor = [UIColor clearColor];
                         }
                     }
                 }
@@ -274,6 +274,7 @@
                             }
                         }else{
                             lb.text = @"";
+                            lb.backgroundColor = [UIColor clearColor];
                         }
                     }
                 }
@@ -294,6 +295,7 @@
                             NSLog(@"sum = %td -------- core = %td", sum, core);
                         }else{
                             lb.text = @"";
+                            lb.backgroundColor = [UIColor clearColor];
                         }
                     }
                 }
@@ -310,6 +312,7 @@
                             NSLog(@"sum = %td -------- core = %td", sum, core);
                         }else{
                             lb.text = @"";
+                            lb.backgroundColor = [UIColor clearColor];
                         }
                     }
                 }
