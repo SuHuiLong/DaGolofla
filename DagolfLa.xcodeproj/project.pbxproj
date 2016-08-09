@@ -869,6 +869,7 @@
 		F5838D8D1D4B26EE00A7FFC6 /* JGDActSelfHistoryScoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5838D8C1D4B26EE00A7FFC6 /* JGDActSelfHistoryScoreViewController.m */; };
 		F5838D901D4B271200A7FFC6 /* JGTeamHisScoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5838D8F1D4B271200A7FFC6 /* JGTeamHisScoreViewController.m */; };
 		F5843DF91CFCF5EA00547812 /* JGSelfSetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5843DF81CFCF5EA00547812 /* JGSelfSetViewController.m */; };
+		F5AAAA251D58A64A0016E6F6 /* JGMeMoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5AAAA241D58A64A0016E6F6 /* JGMeMoreViewController.m */; };
 		F5AEF6E61D408F3F009A8C34 /* JGDHIstoryScoreDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5AEF6DD1D408F3F009A8C34 /* JGDHIstoryScoreDetailViewController.m */; };
 		F5AEF6E71D408F3F009A8C34 /* JGDHistoryScoreShowViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5AEF6DF1D408F3F009A8C34 /* JGDHistoryScoreShowViewController.m */; };
 		F5AEF6E81D408F3F009A8C34 /* JGDHistoryScoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5AEF6E11D408F3F009A8C34 /* JGDHistoryScoreViewController.m */; };
@@ -2528,6 +2529,8 @@
 		F5838D8F1D4B271200A7FFC6 /* JGTeamHisScoreViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGTeamHisScoreViewController.m; sourceTree = "<group>"; };
 		F5843DF71CFCF5EA00547812 /* JGSelfSetViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGSelfSetViewController.h; sourceTree = "<group>"; };
 		F5843DF81CFCF5EA00547812 /* JGSelfSetViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGSelfSetViewController.m; sourceTree = "<group>"; };
+		F5AAAA231D58A64A0016E6F6 /* JGMeMoreViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGMeMoreViewController.h; sourceTree = "<group>"; };
+		F5AAAA241D58A64A0016E6F6 /* JGMeMoreViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGMeMoreViewController.m; sourceTree = "<group>"; };
 		F5AEF6DC1D408F3F009A8C34 /* JGDHIstoryScoreDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGDHIstoryScoreDetailViewController.h; sourceTree = "<group>"; };
 		F5AEF6DD1D408F3F009A8C34 /* JGDHIstoryScoreDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGDHIstoryScoreDetailViewController.m; sourceTree = "<group>"; };
 		F5AEF6DE1D408F3F009A8C34 /* JGDHistoryScoreShowViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGDHistoryScoreShowViewController.h; sourceTree = "<group>"; };
@@ -5152,6 +5155,8 @@
 				36BF005F1BC772C0005B3CE2 /* uitableview列表 */,
 				36BFFF9F1BC76FE3005B3CE2 /* MeViewController.h */,
 				36BFFFA01BC76FE3005B3CE2 /* MeViewController.m */,
+				F5AAAA231D58A64A0016E6F6 /* JGMeMoreViewController.h */,
+				F5AAAA241D58A64A0016E6F6 /* JGMeMoreViewController.m */,
 				654A03191CC89F6F007F5243 /* PersonHomeController.h */,
 				654A031A1CC89F6F007F5243 /* PersonHomeController.m */,
 			);
@@ -7482,6 +7487,7 @@
 				36BF004C1BC77213005B3CE2 /* ComDeatailModel.m in Sources */,
 				65B596E81CAD43AC007AB83A /* WFHudView.m in Sources */,
 				F5EE48891D462625001D5E44 /* JGLScoreNewModel.m in Sources */,
+				F5AAAA251D58A64A0016E6F6 /* JGMeMoreViewController.m in Sources */,
 				65B596E71CAD43AC007AB83A /* WFActionSheet.m in Sources */,
 				36BF00BB1BC77383005B3CE2 /* MyAttentionViewCell.m in Sources */,
 				36BF008E1BC772EF005B3CE2 /* MyRecomViewController.m in Sources */,
