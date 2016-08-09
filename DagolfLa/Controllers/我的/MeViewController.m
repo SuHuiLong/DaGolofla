@@ -64,6 +64,10 @@
 
 #import "JGMyBarCodeViewController.h"
 #import "JGNewCreateTeamTableViewController.h"
+
+#import "JGMeMoreViewController.h" // 更多
+
+
 @interface MeViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
     UITableView* _tableView;
@@ -332,9 +336,9 @@
     _arrayTitle = [[NSArray alloc]init];
     _arrayPic = [[NSArray alloc]init];
 //    _arrayTitle = @[@[@"我的聊天",@"我的消息",@"交易中心",@"我的活动",@"推荐有礼"],@[@"设置"]];
-    _arrayTitle = @[@[@""],@[@"球友",@"我的二维码",@"足迹"],@[@"个人帐户",@"交易中心"],@[@"推荐有礼",@"关于我们",@"产品评价"],@[@"设置"]];
-    _arrayPic = @[@[@""],@[@"qyIcon",@"saomiao",@"zuji"],@[@"gerenzhanghu",@"jyIcon"],@[@"tjIcon",@"gyIcon",@"proIcon"],@[@"setIcon"]];
-    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, 44*9*ScreenWidth/375+40*ScreenWidth/375+90*ScreenWidth/375)];
+    _arrayTitle = @[@[@""],@[@"球友",@"我的二维码",@"足迹"],@[@"个人帐户",@"交易中心"],@[@"推荐有礼",@"设置",@"更多"]];
+    _arrayPic = @[@[@""],@[@"qyIcon",@"saomiao",@"zuji"],@[@"gerenzhanghu",@"jyIcon"],@[@"tjIcon",@"setIcon",@"proIcon"]];
+    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, 44*8*ScreenWidth/375+40*ScreenWidth/375+90*ScreenWidth/375)];
     
     _tableView.delegate = self;
     _tableView.dataSource = self;
@@ -348,7 +352,7 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     
-    return 5;//返回标题数组中元素的个数来确定分区的个数
+    return 4;//返回标题数组中元素的个数来确定分区的个数
     
 }
 //返回各个分区的头高度
@@ -379,10 +383,7 @@
     {
         count = 3;
     }
-    else
-    {
-        count = 1;
-    }
+    
     return count;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -442,16 +443,16 @@
     
     if ([[NSUserDefaults standardUserDefaults] objectForKey:@"userId"]) {
 //        NSArray *titleArr = @[@"我的聊天",@"我的消息",@"交易中心",@"我的活动",@"推荐有礼",@"设置"];
-        NSArray *titleArr = @[@"个人资料",@"球友",@"我的二维码",@"足迹",@"交易中心",@"交易中心",@"推荐有礼",@"关于我们",@"产品评价",@"设置"];
+        NSArray *titleArr = @[@"个人资料",@"球友",@"我的二维码",@"足迹",@"交易中心",@"交易中心",@"推荐有礼",@"设置", @"更多"];
 //PersonHomeController   PersonHomeController
-        NSArray* VcArr = @[@"PersonHomeController",@"ContactViewController",@"JGMyBarCodeViewController",@"MyFootViewController",@"JGDPrivateAccountViewController",@"MyTradeViewController",@"MyRecomViewController",@"MySetAboutController",@"",@"MySetViewController"];
+        NSArray* VcArr = @[@"PersonHomeController",@"ContactViewController",@"JGMyBarCodeViewController",@"MyFootViewController",@"JGDPrivateAccountViewController",@"MyTradeViewController",@"MyRecomViewController",@"MySetViewController", @"JGMeMoreViewController"];
         NSMutableArray *arr = [[NSMutableArray alloc]init];
         for (int i = 0; i < VcArr.count; i++) {
-            if (i != 8) {
+//            if (i != 8) {
                 ViewController* vc = [[NSClassFromString(VcArr[i]) alloc]init];
                 vc.title = titleArr[i];
                 [arr addObject:vc];
-            }
+//            }
             
         }
         
@@ -527,13 +528,9 @@
                     
                 case 2:
                 {
-                    [Helper alertViewWithTitle:@"是否立即前往appStore进行评价" withBlockCancle:^{
-                        
-                    } withBlockSure:^{
-                        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://itunes.apple.com/cn/app/da-gao-er-fu-la-guo-nei-ling/id1056048082?l=en&mt=8"]];
-                    } withBlock:^(UIAlertController *alertView) {
-                        [self presentViewController:alertView animated:YES completion:nil];
-                    }];
+                    [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
+                    [self.navigationController pushViewController:arr[8] animated:YES];
+
                     break;
                 }
                 default:
