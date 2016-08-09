@@ -14,9 +14,19 @@
 
 @implementation JGHCaddieViewController
 
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:YES];
+    self.navigationController.navigationBarHidden = YES;
+}
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:YES];
+    self.navigationController.navigationBarHidden = NO;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -35,6 +45,7 @@
 */
 
 - (IBAction)backBtn:(UIButton *)sender {
+    [self.navigationController popViewControllerAnimated:YES];
 }
 - (IBAction)playBtn:(UIButton *)sender {
 }

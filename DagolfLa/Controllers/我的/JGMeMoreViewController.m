@@ -9,6 +9,7 @@
 #import "JGMeMoreViewController.h"
 #import "MeDetailTableViewCell.h"
 #import "MySetAboutController.h"
+#import "JGHCaddieViewController.h"
 
 @interface JGMeMoreViewController ()<UITableViewDelegate, UITableViewDataSource>
 
@@ -48,6 +49,10 @@
     
     switch (indexPath.row) {
         case 0:
+        {
+            JGHCaddieViewController *caddieCtrl = [[JGHCaddieViewController alloc]initWithNibName:@"JGHCaddieViewController" bundle:nil];
+            [self.navigationController pushViewController:caddieCtrl animated:YES];
+        }
             
             break;
             
