@@ -80,7 +80,7 @@
 //拼接图片路径
 + (NSURL *)imageUrl:(NSString *)downloadImageUrl {
 //    NSString *imageStr = [NSString stringWithFormat:@"http://192.168.2.18:8080/%@",downloadImageUrl];
-     NSString *imageStr = [NSString stringWithFormat:@"http://139.196.9.49:8081/%@",downloadImageUrl];
+     NSString *imageStr = [NSString stringWithFormat:@"http://www.dagolfla.com:8081/%@",downloadImageUrl];
     NSURL *imageUrl = [NSURL URLWithString:imageStr];
     return imageUrl;
 }
@@ -88,7 +88,7 @@
 //拼接头像路径
 + (NSURL *)imageIconUrl:(NSString *)downloadImageUrl {
 //        NSString *imageStr = [NSString stringWithFormat:@"http://192.168.2.18:8080/%@",downloadImageUrl];
-    NSString *imageStr = [NSString stringWithFormat:@"http://139.196.9.49:8081/small_%@",downloadImageUrl];
+    NSString *imageStr = [NSString stringWithFormat:@"http://www.dagolfla.com:8081/small_%@",downloadImageUrl];
     NSURL *imageUrl = [NSURL URLWithString:imageStr];
     return imageUrl;
 }

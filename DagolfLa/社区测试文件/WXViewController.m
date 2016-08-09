@@ -265,7 +265,7 @@
                 if (![Helper isBlankString:[dataDict objectForKey:@"userName"]]) {
                     messBody.posterName = [dataDict objectForKey:@"userName"];
                 }
-                messBody.posterImgstr = [NSString stringWithFormat:@"http://139.196.9.49:8081/%@",[dataDict objectForKey:@"uPic"]];
+                messBody.posterImgstr = [NSString stringWithFormat:@"http://www.dagolfla.com:8081/%@",[dataDict objectForKey:@"uPic"]];
                 //视频缩略图
                 messBody.thumbnailImageURL = [NSString stringWithFormat:@"%@%@", imageBaseUrl, [dataDict objectForKey:@"videosmall_img"]];
                 //http://192.168.2.38:8088/image/userMoodVideoimage/20160504/20160504140482206512.png

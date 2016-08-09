@@ -89,7 +89,7 @@ typedef NS_ENUM(NSInteger, GestureType) {
 #define NUMBERS @"0123456789\n"
 
 //正式环境图片基础地址
-#define imageBaseUrl @"http://139.196.9.49:8081/"
+#define imageBaseUrl @"http://www.dagolfla.com:8081/"
 //测试环境图片基础地址//#define IMAGE_VEDIO_BASEURL @""
 //#define imageBaseUrl @"http://192.168.2.38:8088/"
 

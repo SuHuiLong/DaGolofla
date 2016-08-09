@@ -59,7 +59,7 @@
     
     [self.view addSubview:self.webView];
     
-    NSURL* url = [NSURL URLWithString:[NSString stringWithFormat:@"http://139.196.9.49:8081/dagaoerfu/html5/AppInfo/appinfo.html?type=0"]];
+    NSURL* url = [NSURL URLWithString:[NSString stringWithFormat:@"http://www.dagolfla.com:8081/dagaoerfu/html5/AppInfo/appinfo.html?type=0"]];
     
     //设置页面禁止滚动
     _webView.scrollView.bounces = NO ;

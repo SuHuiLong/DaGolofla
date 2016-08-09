@@ -213,7 +213,7 @@
                 if (![Helper isBlankString:[dataDict objectForKey:@"userName"]]) {
                     messBody.posterName = [dataDict objectForKey:@"userName"];
                 }
-                messBody.posterImgstr = [NSString stringWithFormat:@"http://139.196.9.49:8081/%@",[dataDict objectForKey:@"uPic"]];
+                messBody.posterImgstr = [NSString stringWithFormat:@"http://www.dagolfla.com:8081/%@",[dataDict objectForKey:@"uPic"]];
                 
                 messBody.posterIntro = [dataDict objectForKey:@"createTime"];
                 messBody.posterContent = [dataDict objectForKey:@"moodContent"];

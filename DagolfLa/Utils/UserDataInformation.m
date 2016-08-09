@@ -73,7 +73,7 @@
 //                    userInfo.name = [[[dict objectForKey:@"rows"] objectForKey:@"other"]objectForKey:@"userName"];
                 }
                 if(![Helper isBlankString:[[[dict objectForKey:@"rows"] objectForKey:@"other"]objectForKey:@"pic"]])
-                    userInfo.portraitUri = [NSString stringWithFormat:@"http://139.196.9.49:8081/small_%@",[[[dict objectForKey:@"rows"] objectForKey:@"other"]objectForKey:@"pic"]];
+                    userInfo.portraitUri = [NSString stringWithFormat:@"http://www.dagolfla.com:8081/small_%@",[[[dict objectForKey:@"rows"] objectForKey:@"other"]objectForKey:@"pic"]];
             }
             
             

@@ -1111,7 +1111,7 @@
         fxImg = [UIImage imageNamed:@"logo"];
     }
     
-    NSString * shareUrl = [NSString stringWithFormat:@"http://139.196.9.49:8081/dagaoerfu/html5/team/Event_details.html?id=%@",_model.eventId];
+    NSString * shareUrl = [NSString stringWithFormat:@"http://www.dagolfla.com:8081/dagaoerfu/html5/team/Event_details.html?id=%@",_model.eventId];
     [UMSocialData defaultData].extConfig.title=_model.eventTite;
     if(index==0)
     {
