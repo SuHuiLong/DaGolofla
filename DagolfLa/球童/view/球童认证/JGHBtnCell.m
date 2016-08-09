@@ -1,14 +1,14 @@
 //
-//  JGHSexCell.m
+//  JGHBtnCell.m
 //  DagolfLa
 //
 //  Created by 黄安 on 16/8/9.
 //  Copyright © 2016年 bhxx. All rights reserved.
 //
 
-#import "JGHSexCell.h"
+#import "JGHBtnCell.h"
 
-@implementation JGHSexCell
+@implementation JGHBtnCell
 
 - (void)awakeFromNib {
     [super awakeFromNib];
@@ -21,8 +21,6 @@
     // Configure the view for the selected state
 }
 
-- (IBAction)manBtn:(UIButton *)sender {
-}
-- (IBAction)womanBtn:(UIButton *)sender {
+- (IBAction)titleBtn:(UIButton *)sender {
 }
 @end

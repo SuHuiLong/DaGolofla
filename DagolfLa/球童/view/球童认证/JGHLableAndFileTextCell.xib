@@ -33,6 +33,12 @@
                     <constraint firstItem="vUl-I6-5pE" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="b8v-2a-9hU"/>
                 </constraints>
             </tableViewCellContentView>
+            <connections>
+                <outlet property="fielText" destination="BdM-Ra-NSG" id="3bS-Sc-hFr"/>
+                <outlet property="fielTextLeft" destination="EXa-aH-T5V" id="xCB-am-RNe"/>
+                <outlet property="titleLable" destination="vUl-I6-5pE" id="49n-xy-BdF"/>
+                <outlet property="titleLableLeft" destination="a95-C2-1kW" id="SM6-ux-dtd"/>
+            </connections>
         </tableViewCell>
     </objects>
 </document>

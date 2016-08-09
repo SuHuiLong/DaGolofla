@@ -15,28 +15,34 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d14-Eh-XF0">
-                        <rect key="frame" x="20" y="11" width="42" height="21"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <rect key="frame" x="20" y="12" width="37.5" height="18"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Cv-Fj-hff">
-                        <rect key="frame" x="102" y="11" width="36" height="20"/>
+                        <rect key="frame" x="97" y="11" width="36" height="20"/>
                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                         <inset key="titleEdgeInsets" minX="-40" minY="0.0" maxX="0.0" maxY="0.0"/>
                         <inset key="imageEdgeInsets" minX="15" minY="0.0" maxX="0.0" maxY="0.0"/>
                         <state key="normal" title="男" image="xuan_w">
                             <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         </state>
+                        <connections>
+                            <action selector="manBtn:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="dbY-BS-xQa"/>
+                        </connections>
                     </button>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CwY-Mz-pAc">
-                        <rect key="frame" x="168" y="11" width="35" height="20"/>
+                        <rect key="frame" x="163.5" y="11" width="35" height="20"/>
                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                         <inset key="titleEdgeInsets" minX="-40" minY="0.0" maxX="0.0" maxY="0.0"/>
                         <inset key="imageEdgeInsets" minX="15" minY="0.0" maxX="0.0" maxY="0.0"/>
                         <state key="normal" title="女" image="xuan_z">
                             <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         </state>
+                        <connections>
+                            <action selector="womanBtn:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="h12-HG-GLI"/>
+                        </connections>
                     </button>
                 </subviews>
                 <constraints>
@@ -48,6 +54,15 @@
                     <constraint firstItem="d14-Eh-XF0" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="zAk-Uh-j7m"/>
                 </constraints>
             </tableViewCellContentView>
+            <connections>
+                <outlet property="manBtn" destination="0Cv-Fj-hff" id="vVz-jI-HUt"/>
+                <outlet property="manBtnLeft" destination="igf-30-vr1" id="GKk-PO-uXt"/>
+                <outlet property="titleLable" destination="d14-Eh-XF0" id="adf-Qs-Tgv"/>
+                <outlet property="titleLableLeft" destination="7cu-4r-iu0" id="N0p-xj-ayX"/>
+                <outlet property="womanBtn" destination="CwY-Mz-pAc" id="tNc-WW-6kK"/>
+                <outlet property="womanBtnLeft" destination="H2p-sc-9uM" id="6zj-Qd-YW1"/>
+            </connections>
+            <point key="canvasLocation" x="120" y="241"/>
         </tableViewCell>
     </objects>
     <resources>

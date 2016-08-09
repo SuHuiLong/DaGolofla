@@ -25,7 +25,7 @@
     
     self.view.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];
     
-    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, (130-44) * ProportionAdapter) style:(UITableViewStylePlain)];
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 130 * ProportionAdapter) style:(UITableViewStylePlain)];
     self.tableView.rowHeight = 44 * ProportionAdapter;
     [self.tableView registerClass:[MeDetailTableViewCell class] forCellReuseIdentifier:@"MeDetailTableViewCell"];
     self.tableView.dataSource = self;
@@ -48,22 +48,22 @@
     
     
     switch (indexPath.row) {
-//        case 0:
-//        {
-//            JGHCaddieViewController *caddieCtrl = [[JGHCaddieViewController alloc]initWithNibName:@"JGHCaddieViewController" bundle:nil];
-//            [self.navigationController pushViewController:caddieCtrl animated:YES];
-//        }
-//            
-//            break;
-            
         case 0:
+        {
+            JGHCaddieViewController *caddieCtrl = [[JGHCaddieViewController alloc]initWithNibName:@"JGHCaddieViewController" bundle:nil];
+            [self.navigationController pushViewController:caddieCtrl animated:YES];
+        }
+            
+            break;
+            
+        case 1:
         {
             MySetAboutController *abVC = [[MySetAboutController alloc] init];
             [self.navigationController pushViewController:abVC animated:YES];
         }
             break;
             
-        case 1:
+        case 2:
         {
             [Helper alertViewWithTitle:@"是否立即前往appStore进行评价" withBlockCancle:^{
                 
@@ -83,12 +83,12 @@
 
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 2;
+    return 3;
 }
 
 - (NSMutableArray *)titleArray{
     if (!_titleArray) {
-        _titleArray = [NSMutableArray arrayWithObjects:@"关于我们",@"产品评价",nil];
+        _titleArray = [NSMutableArray arrayWithObjects:@"球童记分", @"关于我们",@"产品评价",nil];
     }
     return _titleArray;
 }

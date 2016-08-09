@@ -13,6 +13,11 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
+    self.titleLable.font = [UIFont systemFontOfSize:15*ProportionAdapter];
+    self.titleLableLeft.constant = 20 *ProportionAdapter;
+    
+    self.valueLable.font = [UIFont systemFontOfSize:15*ProportionAdapter];
+    self.valueLableLeft.constant = 40 *ProportionAdapter;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

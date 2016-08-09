@@ -34,6 +34,12 @@
                     <constraint firstItem="u8x-Pp-z3z" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="rjN-EH-WCs"/>
                 </constraints>
             </tableViewCellContentView>
+            <connections>
+                <outlet property="titleLable" destination="u8x-Pp-z3z" id="Ts8-l9-Hvm"/>
+                <outlet property="titleLableLeft" destination="rjN-EH-WCs" id="D6x-GT-geV"/>
+                <outlet property="valueLable" destination="FRN-Fq-jjz" id="EFH-Tl-eB9"/>
+                <outlet property="valueLableLeft" destination="ZIo-79-m1m" id="GWC-xB-4Vb"/>
+            </connections>
         </tableViewCell>
     </objects>
 </document>

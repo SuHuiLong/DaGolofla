@@ -9,5 +9,11 @@
 #import <UIKit/UIKit.h>
 
 @interface JGHLableAndLableCell : UITableViewCell
+@property (weak, nonatomic) IBOutlet UILabel *titleLable;
+
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *titleLableLeft;//20
+
+@property (weak, nonatomic) IBOutlet UILabel *valueLable;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *valueLableLeft;//40
 
 @end
