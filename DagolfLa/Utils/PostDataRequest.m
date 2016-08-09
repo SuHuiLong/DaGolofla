@@ -5,14 +5,14 @@
 //  Created by bhxx on 15/6/16.
 //  Copyright (c) 2015年 bhxx. All rights reserved.
 
-#define urlStr [NSString stringWithFormat:@"http://139.196.9.49:8081/dagaoerfu/%@",port]
+#define urlStr [NSString stringWithFormat:@"http://www.dagolfla.com:8081/dagaoerfu/%@",port]
 //#define urlStr [NSString stringWithFormat:@"http://192.168.2.38:8088/dagaoerfu/%@",port]
 //#define urlStr [NSString stringWithFormat:@"http://xiaoar.oicp.net:16681/dagaoerfu/%@",port]
 //#define urlStr [NSString stringWithFormat:@"http://192.168.2.38:8088/dagaoerfu/%@",port]
 //#define urlStr [NSString stringWithFormat:@"http://139.196.58.35:8080/dagaoerfu/%@",port]
 
 #define TEST  YES   //可自由切-换生产和测试环境
-#define BaseUrl TEST?@"http://139.196.9.49:8081/dagaoerfu/":@"http://139.196.9.49:8081/dagaoerfu/"
+#define BaseUrl TEST?@"http://www.dagolfla.com:8081/dagaoerfu/":@"http://www.dagolfla.com:8081/dagaoerfu/"
 
 
 #import "PostDataRequest.h"

@@ -155,7 +155,7 @@
                 NSString *str1=[NSString stringWithFormat:@"%@",[user objectForKey:@"userId"]];
                 NSString *str2=[NSString stringWithFormat:@"%@",[user objectForKey:@"userName"]];
                 //完整的图片请求路径
-                NSString *str3=[NSString stringWithFormat:@"http://139.196.9.49:8081/small_%@",[user objectForKey:@"pic"]];
+                NSString *str3=[NSString stringWithFormat:@"http://www.dagolfla.com:8081/small_%@",[user objectForKey:@"pic"]];
                 //                NSLog(@"%@",[user objectForKey:@"pic"]);
                 RCUserInfo *userInfo=[[RCUserInfo alloc] initWithUserId:str1 name:str2 portrait:str3];
                 [RCIM sharedRCIM].currentUserInfo=userInfo;

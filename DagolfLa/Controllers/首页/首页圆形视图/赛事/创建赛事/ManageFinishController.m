@@ -124,7 +124,7 @@
 
 -(void)shareInfoo:(NSInteger)index showBtn:(UIButton *)btn
 {
-    NSString * shareUrl = [NSString stringWithFormat:@"http://139.196.9.49:8081/dagaoerfu/html5/tujian/down.html?eventid=%@",_model.eventId];
+    NSString * shareUrl = [NSString stringWithFormat:@"http://www.dagolfla.com:8081/dagaoerfu/html5/tujian/down.html?eventid=%@",_model.eventId];
 
     [UMSocialData defaultData].extConfig.title= [NSString stringWithFormat:@"邀请您参与%@",_model.eventTite];
     

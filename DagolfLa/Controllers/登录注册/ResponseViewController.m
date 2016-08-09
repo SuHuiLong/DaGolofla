@@ -47,7 +47,7 @@
     self.webView.delegate=self;
     
     [self.view addSubview:self.webView];
-    NSURL* url = [NSURL URLWithString:@"http://139.196.9.49:8081/dagaoerfu/html5/AppInfo/appinfo.html?type=1"];
+    NSURL* url = [NSURL URLWithString:@"http://www.dagolfla.com:8081/dagaoerfu/html5/AppInfo/appinfo.html?type=1"];
     //设置页面禁止滚动
     _webView.scrollView.bounces = NO ;
     //设置web占满屏幕
