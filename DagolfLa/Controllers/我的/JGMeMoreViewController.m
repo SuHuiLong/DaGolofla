@@ -15,6 +15,7 @@
 
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) NSMutableArray *titleArray;
+@property (nonatomic, strong) NSMutableArray *imageArray;
 
 @end
 
@@ -40,6 +41,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     MeDetailTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"MeDetailTableViewCell"];
     cell.titleLabel.text = self.titleArray[indexPath.row];
+    cell.iconImgv.image = [UIImage imageNamed:self.imageArray[indexPath.row]];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
 }
@@ -91,6 +93,13 @@
         _titleArray = [NSMutableArray arrayWithObjects:@"我是球童", @"关于我们",@"产品评价",nil];
     }
     return _titleArray;
+}
+
+- (NSMutableArray *)imageArray{
+    if (!_imageArray) {
+        _imageArray = [NSMutableArray arrayWithObjects:@"icn_qiutong", @"icn_about", @"icn_pingjia", nil];
+    }
+    return _imageArray;
 }
 
 - (void)didReceiveMemoryWarning {
