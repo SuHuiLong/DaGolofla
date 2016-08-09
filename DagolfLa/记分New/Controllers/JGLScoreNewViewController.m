@@ -15,6 +15,8 @@
 #import "JGLChooseScoreViewController.h"
 #import "JGHScoresViewController.h"
 
+#import "JGHCaddieViewController.h"
+
 //#import "JGLScoreLiveViewController.h"
 //#import "JGLScoreRankViewController.h"
 @interface JGLScoreNewViewController ()<UIScrollViewDelegate,UICollectionViewDataSource,UICollectionViewDelegate>
@@ -299,7 +301,7 @@
     //注册cell
     [_collectionView registerNib: [UINib nibWithNibName:@"MeWonderViewCell" bundle:nil] forCellWithReuseIdentifier:@"MeWonderViewCell"];
     
-    _iconLabelArr = @[@"统计数据",@"历史记分卡"];
+    _iconLabelArr = @[@"统计数据",@"历史记分卡", @"球童记分"];
     
     
 }
@@ -310,7 +312,7 @@
 //定义展示的UICollectionViewCell的个数
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return 2;
+    return 3;
 }
 //定义展示的Section的个数
 -(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
@@ -331,9 +333,8 @@
     cell.iconLabel.textAlignment = NSTextAlignmentCenter;
     cell.iconLabel.font = [UIFont systemFontOfSize:14*ScreenWidth/375];
     NSArray* arrIcon = [[NSArray alloc]init];
-    arrIcon = @[@"graph",@"cardO"];
+    arrIcon = @[@"graph",@"cardO", @"icn_qiutong"];
     cell.iconImage.image = [UIImage imageNamed:arrIcon[indexPath.row]];
-    
     
     return cell;
 }
@@ -357,12 +358,16 @@
             [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
             [self.navigationController pushViewController:historyVC animated:YES];
         }else if (indexPath.item == 0) {
-            JGTeamDeatilWKwebViewController *wkVC = [[JGTeamDeatilWKwebViewController alloc] init];
-            wkVC.detailString = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/score/scoreList.html?userKey=%@&md5=%@",DEFAULF_USERID, [Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@dagolfla.com", DEFAULF_USERID]]];
-            wkVC.fromWitchVC = 722;
-            wkVC.teamName = @"统计数据";
+//            JGTeamDeatilWKwebViewController *wkVC = [[JGTeamDeatilWKwebViewController alloc] init];
+//            wkVC.detailString = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/score/scoreList.html?userKey=%@&md5=%@",DEFAULF_USERID, [Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@dagolfla.com", DEFAULF_USERID]]];
+//            wkVC.fromWitchVC = 722;
+//            wkVC.teamName = @"统计数据";
+//            [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
+//            [self.navigationController pushViewController:wkVC animated:YES];
+#warning -------- TEST
+            JGHCaddieViewController *caddieCtrl = [[JGHCaddieViewController alloc]initWithNibName:@"JGHCaddieViewController" bundle:nil];
             [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
-            [self.navigationController pushViewController:wkVC animated:YES];
+            [self.navigationController pushViewController:caddieCtrl animated:YES];
             
         }
     }

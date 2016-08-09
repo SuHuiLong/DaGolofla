@@ -7,6 +7,7 @@
 //
 
 #import "JGHCaddieViewController.h"
+#import "JGDPlayPersonViewController.h"
 
 @interface JGHCaddieViewController ()
 
@@ -48,6 +49,8 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 - (IBAction)playBtn:(UIButton *)sender {
+    JGDPlayPersonViewController * playVC = [[JGDPlayPersonViewController alloc] init];
+    [self.navigationController pushViewController:playVC animated:YES];
 }
 - (IBAction)caddieBtn:(UIButton *)sender {
 }
