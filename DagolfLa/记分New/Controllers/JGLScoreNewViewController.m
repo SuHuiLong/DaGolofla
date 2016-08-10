@@ -333,7 +333,7 @@
     cell.iconLabel.textAlignment = NSTextAlignmentCenter;
     cell.iconLabel.font = [UIFont systemFontOfSize:14*ScreenWidth/375];
     NSArray* arrIcon = [[NSArray alloc]init];
-    arrIcon = @[@"graph",@"cardO", @"icn_qiutong"];
+    arrIcon = @[@"graph",@"cardO", @""]; // icn_qiutong
     cell.iconImage.image = [UIImage imageNamed:arrIcon[indexPath.row]];
     
     return cell;
@@ -358,16 +358,16 @@
             [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
             [self.navigationController pushViewController:historyVC animated:YES];
         }else if (indexPath.item == 0) {
-//            JGTeamDeatilWKwebViewController *wkVC = [[JGTeamDeatilWKwebViewController alloc] init];
-//            wkVC.detailString = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/score/scoreList.html?userKey=%@&md5=%@",DEFAULF_USERID, [Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@dagolfla.com", DEFAULF_USERID]]];
-//            wkVC.fromWitchVC = 722;
-//            wkVC.teamName = @"统计数据";
-//            [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
-//            [self.navigationController pushViewController:wkVC animated:YES];
-#warning -------- TEST
-            JGHCaddieViewController *caddieCtrl = [[JGHCaddieViewController alloc]initWithNibName:@"JGHCaddieViewController" bundle:nil];
+            JGTeamDeatilWKwebViewController *wkVC = [[JGTeamDeatilWKwebViewController alloc] init];
+            wkVC.detailString = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/score/scoreList.html?userKey=%@&md5=%@",DEFAULF_USERID, [Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@dagolfla.com", DEFAULF_USERID]]];
+            wkVC.fromWitchVC = 722;
+            wkVC.teamName = @"统计数据";
             [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
-            [self.navigationController pushViewController:caddieCtrl animated:YES];
+            [self.navigationController pushViewController:wkVC animated:YES];
+//#warning -------- TEST
+//            JGHCaddieViewController *caddieCtrl = [[JGHCaddieViewController alloc]initWithNibName:@"JGHCaddieViewController" bundle:nil];
+//            [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
+//            [self.navigationController pushViewController:caddieCtrl animated:YES];
             
         }
     }
