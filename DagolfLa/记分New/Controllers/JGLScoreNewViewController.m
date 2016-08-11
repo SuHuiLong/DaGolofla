@@ -50,7 +50,7 @@
 }
 - (void)onRCIMReceiveMessage:(RCMessage *)message left:(int)left
 {
-//    [self.tabBarController.tabBar showBadgeOnItemIndex:3];
+    //    [self.tabBarController.tabBar showBadgeOnItemIndex:3];
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -92,7 +92,7 @@
                 }
             }
         }];
-
+        
     }
     else
     {
@@ -139,7 +139,7 @@
     
     lableTitle.text = @"自助记分";
     [btnImage setImage:[UIImage imageNamed:@"pen"] forState:UIControlStateNormal];
-
+    
     //平均成绩
     _averageScores = [[UILabel alloc]initWithFrame:CGRectMake(ScreenWidth/10 -15*ScreenWidth/375, ScreenWidth/16*11, ScreenWidth/5+30*ScreenWidth/375, ScreenWidth/8)];
     _averageScores.backgroundColor = [UIColor clearColor];
@@ -167,13 +167,13 @@
     
     for (int i = 0; i < 3; i++) {
         //记分数字
-//        UILabel* labelCount = [[UILabel alloc]initWithFrame:CGRectMake(ScreenWidth/10+ i*ScreenWidth/10*3-15*ScreenWidth/375, ScreenWidth/16*11, ScreenWidth/5+30*ScreenWidth/375, ScreenWidth/8)];
-//        labelCount.backgroundColor = [UIColor clearColor];
-//        labelCount.textColor = [UIColor whiteColor];
-//        labelCount.textAlignment = NSTextAlignmentCenter;
-//        labelCount.font = [UIFont systemFontOfSize:30*ScreenWidth/375];
-//        labelCount.tag = 500 + i;
-//        [_viewMain addSubview:labelCount];
+        //        UILabel* labelCount = [[UILabel alloc]initWithFrame:CGRectMake(ScreenWidth/10+ i*ScreenWidth/10*3-15*ScreenWidth/375, ScreenWidth/16*11, ScreenWidth/5+30*ScreenWidth/375, ScreenWidth/8)];
+        //        labelCount.backgroundColor = [UIColor clearColor];
+        //        labelCount.textColor = [UIColor whiteColor];
+        //        labelCount.textAlignment = NSTextAlignmentCenter;
+        //        labelCount.font = [UIFont systemFontOfSize:30*ScreenWidth/375];
+        //        labelCount.tag = 500 + i;
+        //        [_viewMain addSubview:labelCount];
         
         //标题
         UILabel* labelTint = [[UILabel alloc]initWithFrame:CGRectMake(ScreenWidth/10 + i*ScreenWidth/10*3, ScreenWidth/16*11+ScreenWidth/8, ScreenWidth/5, ScreenWidth/10)];
@@ -320,7 +320,7 @@
 //每个UICollectionView展示的内容
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-
+    
     MeWonderViewCell *cell = [[MeWonderViewCell alloc]init];
     
     // Set up the reuse identifier
@@ -362,11 +362,10 @@
             wkVC.teamName = @"统计数据";
             [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
             [self.navigationController pushViewController:wkVC animated:YES];
-//#warning -------- TEST
-//            JGHCaddieViewController *caddieCtrl = [[JGHCaddieViewController alloc]initWithNibName:@"JGHCaddieViewController" bundle:nil];
-//            [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
-//            [self.navigationController pushViewController:caddieCtrl animated:YES];
-            
+        }else if (indexPath.item == 2) {
+            JGHCaddieViewController *caddieCtrl = [[JGHCaddieViewController alloc]initWithNibName:@"JGHCaddieViewController" bundle:nil];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
+            [self.navigationController pushViewController:caddieCtrl animated:YES];
         }
     }
     else
