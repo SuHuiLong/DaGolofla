@@ -12,6 +12,7 @@
 #import "JGDPlayPersonTableViewCell.h"
 
 #import "JGDHistoryScoreViewController.h"
+#import "JGDPlayerHisScoreCardViewController.h" // 活动记分
 
 
 @interface JGDPlayPersonViewController ()<UITableViewDelegate, UITableViewDataSource>
@@ -27,11 +28,32 @@
     [super viewDidLoad];
     self.title = @"球童记分";
     [self createTable];
+//    [self setData];
     // Do any additional setup after loading the view.
 }
 
 - (void)setData{
-    
+    if (1) {
+        self.tipLabel.hidden = YES;
+        self.tableView.tableFooterView.hidden = YES;
+        UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake(134 * ProportionAdapter, 200 * ProportionAdapter, 107 * ProportionAdapter, 107 * ProportionAdapter)];
+        imageV.image = [UIImage imageNamed:@"bg-shy"];
+        [self.view addSubview:imageV];
+        
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 330, screenWidth, 30 * ProportionAdapter)];
+        label.text = @"您还没有球童记分记录哦";
+        label.textAlignment = NSTextAlignmentCenter;
+        label.textColor = [UIColor colorWithHexString:@"#a0a0a0"];
+        label.font = [UIFont systemFontOfSize:18 * ProportionAdapter];
+        [self.view addSubview:label];
+        
+        UILabel *detailLB = [[UILabel alloc] initWithFrame:CGRectMake(20 * ProportionAdapter, 370 * ProportionAdapter, screenWidth - 40 * ProportionAdapter, 50 * ProportionAdapter)];
+        detailLB.text = @"扫描球童二维码，可指定球童为您记分，记分完成后，成绩自动存入您的历史记分卡中。";
+        detailLB.font = [UIFont systemFontOfSize:14 * ProportionAdapter];
+        detailLB.textColor = [UIColor colorWithHexString:@"#a0a0a0"];
+        detailLB.numberOfLines = 0;
+        [self.view addSubview:detailLB];
+    }
 }
 
 #pragma mark ----- 创建 tableView
@@ -92,7 +114,7 @@
     
     self.tableView.tableHeaderView = headerView;
     
-    UIView *footView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 60 * screenWidth / 320)];
+    UIView *footView = [[UIView alloc] initWithFrame:CGRectMake(0, 500 * ProportionAdapter, screenWidth, 60 * screenWidth / 320)];
     UIButton *footBtn = [[UIButton alloc]initWithFrame:CGRectMake(10 * screenWidth / 320, 10 * screenWidth / 320, screenWidth - 20 * screenWidth / 320, 44 * screenWidth / 320)];
     footBtn.clipsToBounds = YES;
     footBtn.layer.cornerRadius = 6.f;
@@ -100,9 +122,14 @@
     [footBtn setTitle:@"查看更多" forState:UIControlStateNormal];
     footBtn.backgroundColor = [UIColor colorWithHexString:@"#F59826"];
     [footBtn addTarget:self action:@selector(checkBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-    
-    self.tableView.tableFooterView = footView;
+    [self.view addSubview:footView];
 }
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    JGDPlayerHisScoreCardViewController *DPHVC = [[JGDPlayerHisScoreCardViewController alloc] init];
+    [self.navigationController pushViewController:DPHVC animated:YES];
+}
+
 
 
 #pragma mark ---查看更多
@@ -118,7 +145,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
-    return 10 * ProportionAdapter;
+    return 5 * ProportionAdapter;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
