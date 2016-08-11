@@ -46,7 +46,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:YES];
-
+    self.isShowNetworkIndicatorView = NO;
     //    [self.tabBarController.tabBar hideBadgeOnItemIndex:3];
 //    [self.tabBarController.tabBar showBadgeOnItemIndex:3];
     if ([[NSUserDefaults standardUserDefaults] objectForKey:@"userId"])

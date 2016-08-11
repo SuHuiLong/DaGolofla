@@ -17,8 +17,6 @@
 
 #import "JGHCaddieViewController.h"
 
-//#import "JGLScoreLiveViewController.h"
-//#import "JGLScoreRankViewController.h"
 @interface JGLScoreNewViewController ()<UIScrollViewDelegate,UICollectionViewDataSource,UICollectionViewDelegate>
 {
     UIScrollView* _scrollView;
@@ -288,7 +286,7 @@
     UICollectionViewFlowLayout *flowLayout=[[UICollectionViewFlowLayout alloc] init];
     flowLayout.minimumInteritemSpacing=ScreenWidth / 8;//左右间隔
     flowLayout.minimumLineSpacing=0.f;
-    _collectionView = [[UICollectionView alloc]initWithFrame:CGRectMake(ScreenWidth / 8, 0, _viewSec.frame.size.width, _viewSec.frame.size.height) collectionViewLayout:flowLayout];
+    _collectionView = [[UICollectionView alloc]initWithFrame:CGRectMake(0, 0, _viewSec.frame.size.width, _viewSec.frame.size.height) collectionViewLayout:flowLayout];
     //    _collectionView.frame = _yuansuScrollview.frame;
     [_viewSec addSubview:_collectionView];
     _collectionView.delegate=self;
@@ -333,7 +331,7 @@
     cell.iconLabel.textAlignment = NSTextAlignmentCenter;
     cell.iconLabel.font = [UIFont systemFontOfSize:14*ScreenWidth/375];
     NSArray* arrIcon = [[NSArray alloc]init];
-    arrIcon = @[@"graph",@"cardO", @"icn_qiutong"];
+    arrIcon = @[@"main_shuju",@"main_jifenka", @"main_qiutong"]; // icn_qiutong
     cell.iconImage.image = [UIImage imageNamed:arrIcon[indexPath.row]];
     
     return cell;
@@ -341,12 +339,12 @@
 //定义每个UICollectionView 的大小
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    return CGSizeMake(90*ScreenWidth/375, 120*ScreenWidth/375);
+    return CGSizeMake(80*ScreenWidth/375, 120*ScreenWidth/375);
 }
 ////定义每个UICollectionView 的 margin
 -(UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
 {
-    return UIEdgeInsetsMake(30*ScreenWidth/375, 8*ScreenWidth/375, 20*ScreenWidth/375, 100*ScreenWidth/375);
+    return UIEdgeInsetsMake(30*ScreenWidth/375, 15*ScreenWidth/375, 10*ScreenWidth/375, 15*ScreenWidth/375);
 }
 //UICollectionView被选中时调用的方法
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
@@ -358,16 +356,16 @@
             [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
             [self.navigationController pushViewController:historyVC animated:YES];
         }else if (indexPath.item == 0) {
-//            JGTeamDeatilWKwebViewController *wkVC = [[JGTeamDeatilWKwebViewController alloc] init];
-//            wkVC.detailString = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/score/scoreList.html?userKey=%@&md5=%@",DEFAULF_USERID, [Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@dagolfla.com", DEFAULF_USERID]]];
-//            wkVC.fromWitchVC = 722;
-//            wkVC.teamName = @"统计数据";
-//            [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
-//            [self.navigationController pushViewController:wkVC animated:YES];
-#warning -------- TEST
-            JGHCaddieViewController *caddieCtrl = [[JGHCaddieViewController alloc]initWithNibName:@"JGHCaddieViewController" bundle:nil];
+            JGTeamDeatilWKwebViewController *wkVC = [[JGTeamDeatilWKwebViewController alloc] init];
+            wkVC.detailString = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/score/scoreList.html?userKey=%@&md5=%@",DEFAULF_USERID, [Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@dagolfla.com", DEFAULF_USERID]]];
+            wkVC.fromWitchVC = 722;
+            wkVC.teamName = @"统计数据";
             [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
-            [self.navigationController pushViewController:caddieCtrl animated:YES];
+            [self.navigationController pushViewController:wkVC animated:YES];
+//#warning -------- TEST
+//            JGHCaddieViewController *caddieCtrl = [[JGHCaddieViewController alloc]initWithNibName:@"JGHCaddieViewController" bundle:nil];
+//            [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
+//            [self.navigationController pushViewController:caddieCtrl animated:YES];
             
         }
     }
