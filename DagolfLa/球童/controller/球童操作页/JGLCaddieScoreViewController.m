@@ -18,6 +18,7 @@
 #import "JGLAddClientViewController.h"
 #import "JGMyBarCodeViewController.h"
 
+#import "JGLCaddieModel.h"
 @interface JGLCaddieScoreViewController ()<UITableViewDelegate, UITableViewDataSource>
 {
     NSMutableArray* _dataArray;
@@ -171,9 +172,9 @@
                 [_dataArray removeAllObjects];
             }
             for (NSDictionary *dic in [data objectForKey:@"list"]) {
-//                JGLAddActiivePlayModel *model = [[JGLAddActiivePlayModel alloc]init];
-//                [model setValuesForKeysWithDictionary:dic];
-//                [_dataArray addObject:model];
+                JGLCaddieModel *model = [[JGLCaddieModel alloc]init];
+                [model setValuesForKeysWithDictionary:dic];
+                [_dataArray addObject:model];
             }
             [_dataArray addObjectsFromArray:[data objectForKey:@"teamSignUpList"]];
             _page++;
@@ -232,26 +233,36 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    
-//    if (indexPath.section == 3) {
-//        JGDPlayPersonTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"JGDPlayPersonTableViewCell"];
-//        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-//        NSMutableAttributedString * str = [[NSMutableAttributedString alloc] initWithString:@"球童 あそば 已完成记分并推送到您的 历史记分卡"];
-//        [str addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"#32b14d"] range:NSMakeRange(str.length - 5, 5)];
-//        cell.textLB.attributedText = str;
-//        return cell;
-//    }else{
-        JGLCaddieScoreTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"JGLCaddieScoreTableViewCell"];
+    JGLCaddieScoreTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"JGLCaddieScoreTableViewCell"];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    [cell showData:_dataArray[indexPath.row]];
+    if ([[_dataArray[indexPath.row] scoreFinish] integerValue] == 0) {
+        [cell.checkBtn addTarget:self action:@selector(continueClick) forControlEvents:UIControlEventTouchUpInside];
+    }
+    else if ([[_dataArray[indexPath.row] scoreFinish] integerValue] == 1)
+    {
+        [cell.checkBtn addTarget:self action:@selector(finishClick) forControlEvents:UIControlEventTouchUpInside];
+    }
+    else{
         
-        
-        return cell;
-//    }
+    }
+    return cell;
     
 }
 
+-(void)continueClick
+{
+    
+}
+
+-(void)finishClick
+{
+    
+}
+
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 5;
+    return _dataArray.count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{

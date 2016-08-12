@@ -7,12 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "JGLCaddieModel.h"
 @interface JGLCaddieScoreTableViewCell : UITableViewCell
 
 @property (nonatomic, strong) UILabel* timeLabel;
 @property (nonatomic, strong) UILabel *titleLabel;
 @property (nonatomic, strong) UIButton *checkBtn;
 
+
+-(void)showData:(JGLCaddieModel *)model;
 
 @end
