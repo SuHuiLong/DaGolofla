@@ -72,6 +72,14 @@
 + (NSString *)getStandardleversBallKey:(NSInteger)ballKey andRegion1:(NSString *)region1 andRegion2:(NSString *)region2{
     return [Helper md5HexDigest:[NSString stringWithFormat:@"ballKey=%td&region1=%@&region2=%@dagolfla.com", ballKey, region1, region2]];
 }
+
++ (NSString *)getCaddieAuthUserKey:(NSInteger)userKey{
+    return [Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%tddagolfla.com", userKey]];
+}
+
++ (NSString *)getUserTransDetailOrderTypeListUserKey:(NSInteger)userKey andOrderType:(NSInteger)orderType{
+    return [Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%td&orderType=%tddagolfla.com", userKey, orderType]];
+}
 /*
  // App分享的MD5签名规则
  1. /team/getTeamActivitySignUpList?teamKey=1&activityKey=1&userKey=1 MD5加密
@@ -80,7 +88,7 @@
  4. /team/getTeamMember?memberKey=1  MD5加密
 
  
- 
+ 24./score/getCaddieAuth?userKey=11   
  
  5. /score/scorePolenumberRanking?userKey=1&srcKey=1&srcType=1  MD5加密
  6. /score/getUserScore?userKey=1&srcKey=1&srcType=1  MD5加密

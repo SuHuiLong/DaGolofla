@@ -10,7 +10,7 @@
 #import "JGDHistoryScoreShowTableViewCell.h"
 
 #import "JGDHIstoryScoreDetailViewController.h"
-#import "JGDNotActivityHisDetailViewController.h"
+#import "JGDNotActScoreDetailViewController.h"
 
 @interface JGDNotActScoreViewController ()<UITableViewDelegate, UITableViewDataSource>
 
@@ -38,9 +38,10 @@
 
 - (void)setData{
     NSMutableDictionary *dic = [NSMutableDictionary dictionary];
-    [dic setObject:self.timeKey forKey:@"scoreKey"];
+#warning --------- TEST
+    [dic setObject:@33261 forKey:@"scoreKey"];
     [dic setObject:DEFAULF_USERID forKey:@"userKey"];
-    [dic setObject:[Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@&scoreKey=%@dagolfla.com", DEFAULF_USERID, self.timeKey]] forKey:@"md5"];
+    [dic setObject:[Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@&scoreKey=%@dagolfla.com", DEFAULF_USERID, @33261]] forKey:@"md5"];
     
     [[JsonHttp jsonHttp] httpRequest:@"score/getScoreList" JsonKey:nil withData:dic requestMethod:@"GET" failedBlock:^(id errType) {
         
@@ -159,7 +160,19 @@
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     
     if (section == 0) {
-        UIView *viewTitle = [[UIView alloc] initWithFrame:CGRectMake(0, 10 * ProportionAdapter, screenWidth, 92 * ProportionAdapter)];
+        
+        UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 152 * ProportionAdapter)];
+        headerView.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];
+        
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 10 * ProportionAdapter, screenWidth, 50 * ProportionAdapter)];
+        label.backgroundColor = [UIColor whiteColor];
+        NSMutableAttributedString *lbStr = [[NSMutableAttributedString alloc] initWithString:@"球童 王二狗 正在为您记分"];
+        [lbStr addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"#32b14d"] range:NSMakeRange(3, lbStr.length - 10)];
+        label.attributedText = lbStr;
+        label.textAlignment = NSTextAlignmentCenter;
+        [headerView addSubview:label];
+        
+        UIView *viewTitle = [[UIView alloc] initWithFrame:CGRectMake(0, 60 * ProportionAdapter, screenWidth, 92 * ProportionAdapter)];
         viewTitle.backgroundColor = [UIColor whiteColor];
         
         UIView *lightV = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 10 * ProportionAdapter)];
@@ -228,8 +241,9 @@
         UIView *greenView = [[UIView alloc] initWithFrame:CGRectMake(0, 90 * ProportionAdapter, screenWidth, 2 * ProportionAdapter)];
         greenView.backgroundColor = [UIColor colorWithHexString:@"#32b14d"];
         [viewTitle addSubview:greenView];
+        [headerView addSubview:viewTitle];
         
-        return viewTitle;
+        return headerView;
     }else{
         
         UIView *lightV = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 12 * ProportionAdapter)];
@@ -245,7 +259,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     if (section == 0) {
-        return 92 * ProportionAdapter;
+        return 152 * ProportionAdapter;
     }else{
         return 12 * ProportionAdapter;
     }
@@ -331,7 +345,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.row > 1) {
-        JGDNotActivityHisDetailViewController *detailV = [[JGDNotActivityHisDetailViewController alloc] init];
+        JGDNotActScoreDetailViewController *detailV = [[JGDNotActScoreDetailViewController alloc] init];
         JGDHistoryScoreShowModel *model = self.dataArray[indexPath.row - 2];
         detailV.model = model;
         detailV.dataDic = self.dataDic;

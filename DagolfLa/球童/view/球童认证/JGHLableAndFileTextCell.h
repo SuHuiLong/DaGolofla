@@ -15,5 +15,16 @@
 @property (weak, nonatomic) IBOutlet UITextField *fielText;
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *fielTextLeft;//40
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *titleLableW;
+
+
+- (void)configCabbieName;
+
+- (void)configCabbieNumber;
+
+- (void)configCabbieLenghtService;
+
+
+- (void)configCabbieTitleString:(NSString *)string andVlaueString:(NSString *)valueString;
 
 @end

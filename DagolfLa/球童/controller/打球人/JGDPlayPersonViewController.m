@@ -13,13 +13,17 @@
 
 #import "JGDHistoryScoreViewController.h"
 #import "JGDPlayerHisScoreCardViewController.h" // 活动记分
+#import "JGDNotActScoreViewController.h" // 非活动记分
 
+#import "JGDPlayerQRCodeViewController.h" // 我的二维码
+#import "JGDResultViewController.h" // 扫描结果
 
 @interface JGDPlayPersonViewController ()<UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic ,strong) UILabel *tipLabel;
-
+@property (nonatomic, strong) NSMutableArray *dataArray;
+@property (nonatomic, strong) UIView *footView;
 @end
 
 @implementation JGDPlayPersonViewController
@@ -28,32 +32,54 @@
     [super viewDidLoad];
     self.title = @"球童记分";
     [self createTable];
-//    [self setData];
+    [self setData];
     // Do any additional setup after loading the view.
 }
 
 - (void)setData{
-    if (1) {
-        self.tipLabel.hidden = YES;
-        self.tableView.tableFooterView.hidden = YES;
-        UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake(134 * ProportionAdapter, 200 * ProportionAdapter, 107 * ProportionAdapter, 107 * ProportionAdapter)];
-        imageV.image = [UIImage imageNamed:@"bg-shy"];
-        [self.view addSubview:imageV];
-        
-        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 330, screenWidth, 30 * ProportionAdapter)];
-        label.text = @"您还没有球童记分记录哦";
-        label.textAlignment = NSTextAlignmentCenter;
-        label.textColor = [UIColor colorWithHexString:@"#a0a0a0"];
-        label.font = [UIFont systemFontOfSize:18 * ProportionAdapter];
-        [self.view addSubview:label];
-        
-        UILabel *detailLB = [[UILabel alloc] initWithFrame:CGRectMake(20 * ProportionAdapter, 370 * ProportionAdapter, screenWidth - 40 * ProportionAdapter, 50 * ProportionAdapter)];
-        detailLB.text = @"扫描球童二维码，可指定球童为您记分，记分完成后，成绩自动存入您的历史记分卡中。";
-        detailLB.font = [UIFont systemFontOfSize:14 * ProportionAdapter];
-        detailLB.textColor = [UIColor colorWithHexString:@"#a0a0a0"];
-        detailLB.numberOfLines = 0;
-        [self.view addSubview:detailLB];
-    }
+    
+    NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
+    [dic setObject:DEFAULF_USERID forKey:@"userKey"];
+    [dic setObject:[Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@dagolfla.com", DEFAULF_USERID]] forKey:@"md5"];
+    
+    [[JsonHttp jsonHttp] httpRequest:@"score/getUserCaddieRecordHome" JsonKey:nil withData:dic requestMethod:@"GET" failedBlock:^(id errType) {
+        [[ShowHUD showHUD]showToastWithText:[NSString stringWithFormat:@"%@",errType] FromView:self.view];
+    } completionBlock:^(id data) {
+        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+            
+            if ([data objectForKey:@"list"]) {
+                
+            }else{
+                self.tipLabel.hidden = YES;
+                self.tableView.tableFooterView.hidden = YES;
+                self.footView.hidden = YES;
+                UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake(134 * ProportionAdapter, 200 * ProportionAdapter, 107 * ProportionAdapter, 107 * ProportionAdapter)];
+                imageV.image = [UIImage imageNamed:@"bg-shy"];
+                [self.view addSubview:imageV];
+                
+                UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 330, screenWidth, 30 * ProportionAdapter)];
+                label.text = @"您还没有球童记分记录哦";
+                label.textAlignment = NSTextAlignmentCenter;
+                label.textColor = [UIColor colorWithHexString:@"#a0a0a0"];
+                label.font = [UIFont systemFontOfSize:18 * ProportionAdapter];
+                [self.view addSubview:label];
+                
+                UILabel *detailLB = [[UILabel alloc] initWithFrame:CGRectMake(20 * ProportionAdapter, 370 * ProportionAdapter, screenWidth - 40 * ProportionAdapter, 50 * ProportionAdapter)];
+                detailLB.text = @"扫描球童二维码，可指定球童为您记分，记分完成后，成绩自动存入您的历史记分卡中。";
+                detailLB.font = [UIFont systemFontOfSize:14 * ProportionAdapter];
+                detailLB.textColor = [UIColor colorWithHexString:@"#a0a0a0"];
+                detailLB.numberOfLines = 0;
+                [self.view addSubview:detailLB];
+
+            }
+            
+        }else{
+            if ([data objectForKey:@"packResultMsg"]) {
+                [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+            }
+        }
+    }];
+
 }
 
 #pragma mark ----- 创建 tableView
@@ -78,10 +104,12 @@
     UIButton *erweimaBtn = [UIButton buttonWithType:(UIButtonTypeCustom)];
     [erweimaBtn setImage:[UIImage imageNamed:@"erweima"] forState:(UIControlStateNormal)];
     erweimaBtn.frame = CGRectMake(screenWidth / 2 + 73 * ProportionAdapter, 25 * ProportionAdapter, 40 * ProportionAdapter, 40 * ProportionAdapter);
+    [erweimaBtn addTarget:self action:@selector(qrCodeAct) forControlEvents:(UIControlEventTouchUpInside)];
     
     UIButton *saomaBtn = [UIButton buttonWithType:(UIButtonTypeCustom)];
     [saomaBtn setImage:[UIImage imageNamed:@"saoma"] forState:(UIControlStateNormal)];
     saomaBtn.frame = CGRectMake(71 * ProportionAdapter, 25 * ProportionAdapter, 40 * ProportionAdapter, 40 * ProportionAdapter);
+    [saomaBtn addTarget:self action:@selector(scanAct) forControlEvents:(UIControlEventTouchUpInside)];
     
     UILabel *labelerweima = [[UILabel alloc] initWithFrame:CGRectMake(screenWidth / 2 + 2 * ProportionAdapter, 80 * ProportionAdapter, screenWidth / 2, 30)];
     labelerweima.text = @"我的二维码";
@@ -114,23 +142,40 @@
     
     self.tableView.tableHeaderView = headerView;
     
-    UIView *footView = [[UIView alloc] initWithFrame:CGRectMake(0, 500 * ProportionAdapter, screenWidth, 60 * screenWidth / 320)];
+    self.footView = [[UIView alloc] initWithFrame:CGRectMake(0, 500 * ProportionAdapter, screenWidth, 60 * screenWidth / 320)];
     UIButton *footBtn = [[UIButton alloc]initWithFrame:CGRectMake(10 * screenWidth / 320, 10 * screenWidth / 320, screenWidth - 20 * screenWidth / 320, 44 * screenWidth / 320)];
     footBtn.clipsToBounds = YES;
     footBtn.layer.cornerRadius = 6.f;
-    [footView addSubview:footBtn];
+    [self.footView addSubview:footBtn];
     [footBtn setTitle:@"查看更多" forState:UIControlStateNormal];
     footBtn.backgroundColor = [UIColor colorWithHexString:@"#F59826"];
     [footBtn addTarget:self action:@selector(checkBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:footView];
+    [self.view addSubview:self.footView];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    JGDPlayerHisScoreCardViewController *DPHVC = [[JGDPlayerHisScoreCardViewController alloc] init];
-    [self.navigationController pushViewController:DPHVC animated:YES];
+    if (indexPath.section == 3) {
+        JGDNotActScoreViewController *noActVC = [[JGDNotActScoreViewController alloc] init];
+        [self.navigationController pushViewController:noActVC animated:YES];
+    }else{
+        JGDPlayerHisScoreCardViewController *DPHVC = [[JGDPlayerHisScoreCardViewController alloc] init];
+        [self.navigationController pushViewController:DPHVC animated:YES];
+    }
+
 }
 
 
+#pragma mark ------- 我的二维码
+
+- (void)qrCodeAct{
+    JGDPlayerQRCodeViewController *codeVC = [[JGDPlayerQRCodeViewController alloc] init];
+    [self.navigationController pushViewController:codeVC animated:YES];
+}
+
+- (void)scanAct{
+    JGDResultViewController *resultVC = [[JGDResultViewController alloc] init];
+    [self.navigationController pushViewController:resultVC animated:YES];
+}
 
 #pragma mark ---查看更多
 
@@ -168,11 +213,18 @@
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 5;
+    return [self.dataArray count];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return 1;
+}
+
+- (NSMutableArray *)dataArray{
+    if (!_dataArray) {
+        _dataArray = [[NSMutableArray alloc] init];
+    }
+    return _dataArray;
 }
 
 - (void)didReceiveMemoryWarning {

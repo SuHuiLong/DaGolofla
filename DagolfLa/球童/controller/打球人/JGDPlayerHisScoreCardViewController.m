@@ -9,7 +9,7 @@
 #import "JGDPlayerHisScoreCardViewController.h"
 #import "JGDHistoryScoreShowTableViewCell.h"
 
-#import "JGDHIstoryScoreDetailViewController.h"
+#import "JGDPlayerHisScoreDetailViewController.h"
 #import "JGDHistoryScoreShowModel.h"
 
 @interface JGDPlayerHisScoreCardViewController ()<UITableViewDelegate, UITableViewDataSource>
@@ -142,8 +142,8 @@
         
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 10 * ProportionAdapter, screenWidth, 50 * ProportionAdapter)];
         label.backgroundColor = [UIColor whiteColor];
-        NSMutableAttributedString *lbStr = [[NSMutableAttributedString alloc] initWithString:@"球童王二狗正在为您记分"];
-        [lbStr addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"#32b14d"] range:NSMakeRange(3, lbStr.length - 8)];
+        NSMutableAttributedString *lbStr = [[NSMutableAttributedString alloc] initWithString:@"球童 王二狗 正在为您记分"];
+        [lbStr addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"#32b14d"] range:NSMakeRange(3, lbStr.length - 10)];
         label.attributedText = lbStr;
         label.textAlignment = NSTextAlignmentCenter;
         [headerView addSubview:label];
@@ -239,7 +239,7 @@
         Label4.text = @"Bogey";
         [viewTitle addSubview:Label4];
         
-        UIView *greenView = [[UIView alloc] initWithFrame:CGRectMake(0, 137 * ProportionAdapter, screenWidth, 2 * ProportionAdapter)];
+        UIView *greenView = [[UIView alloc] initWithFrame:CGRectMake(0, 136 * ProportionAdapter, screenWidth, 2 * ProportionAdapter)];
         greenView.backgroundColor = [UIColor colorWithHexString:@"#32b14d"];
         [viewTitle addSubview:greenView];
         [headerView addSubview:viewTitle];
@@ -344,7 +344,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
     if (indexPath.row > 1) {
-        JGDHIstoryScoreDetailViewController *detailV = [[JGDHIstoryScoreDetailViewController alloc] init];
+        JGDPlayerHisScoreDetailViewController *detailV = [[JGDPlayerHisScoreDetailViewController alloc] init];
         JGDHistoryScoreShowModel *model = self.dataArray[indexPath.row - 2];
         detailV.model = model;
         detailV.dataDic = self.dataDic;

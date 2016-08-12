@@ -8,6 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol JGHCabbiePhotoCellDelegate <NSObject>
+
+- (void)selectCabbieImageBtn:(UIButton *)btn;
+
+@end
+
 @interface JGHCabbiePhotoCell : UITableViewCell
 
 @property (weak, nonatomic) IBOutlet UILabel *titleLable;
@@ -22,5 +28,12 @@
 @property (weak, nonatomic) IBOutlet UILabel *promptLable;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *promptLableTop;//10
 
+@property (weak, nonatomic)id <JGHCabbiePhotoCellDelegate> delegate;
+
+- (IBAction)imageViewBtn:(UIButton *)sender;
+
+- (void)configCabbieCommitImage:(UIImage *)image;
+
+- (void)configCabbieSuccess;
 
 @end

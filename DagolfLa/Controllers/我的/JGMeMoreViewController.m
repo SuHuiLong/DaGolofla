@@ -10,6 +10,8 @@
 #import "MeDetailTableViewCell.h"
 #import "MySetAboutController.h"
 #import "JGHCaddieViewController.h"
+#import "JGHCabbieCertViewController.h"
+#import "JGHCabbieCertSuccessViewController.h"
 
 @interface JGMeMoreViewController ()<UITableViewDelegate, UITableViewDataSource>
 
@@ -26,7 +28,7 @@
     
     self.view.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];
     
-    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, (130-44) * ProportionAdapter) style:(UITableViewStylePlain)];
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 130 * ProportionAdapter) style:(UITableViewStylePlain)];
     self.tableView.rowHeight = 44 * ProportionAdapter;
     [self.tableView registerClass:[MeDetailTableViewCell class] forCellReuseIdentifier:@"MeDetailTableViewCell"];
     self.tableView.dataSource = self;
@@ -50,22 +52,42 @@
     
     
     switch (indexPath.row) {
-//        case 0:
-//        {
-//            JGHCaddieViewController *caddieCtrl = [[JGHCaddieViewController alloc]initWithNibName:@"JGHCaddieViewController" bundle:nil];
-//            [self.navigationController pushViewController:caddieCtrl animated:YES];
-//        }
-//            
-//            break;
-            
         case 0:
+        {
+            //hasCaddieRecord
+            NSMutableDictionary *cabbieDict = [NSMutableDictionary dictionary];
+            [cabbieDict setObject:DEFAULF_USERID forKey:@"userKey"];
+            [[JsonHttp jsonHttp]httpRequestWithMD5:@"score/hasCaddieRecord" JsonKey:nil withData:cabbieDict failedBlock:^(id errType) {
+                
+            } completionBlock:^(id data) {
+                NSLog(@"%@", data);
+                if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+                    if ([[data objectForKey:@"has"] integerValue] == 0) {
+                        JGHCabbieCertViewController *caddieCtrl = [[JGHCabbieCertViewController alloc]init];
+                        [self.navigationController pushViewController:caddieCtrl animated:YES];
+                    }else{
+                        JGHCabbieCertSuccessViewController *certSuflCtrl = [[JGHCabbieCertSuccessViewController alloc]init];
+                        
+                        [self.navigationController pushViewController:certSuflCtrl animated:YES];
+                    }
+                }else{
+                    if ([data objectForKey:@"packResultMsg"]) {
+                        [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+                    }
+                }
+            }];
+        }
+            
+            break;
+            
+        case 1:
         {
             MySetAboutController *abVC = [[MySetAboutController alloc] init];
             [self.navigationController pushViewController:abVC animated:YES];
         }
             break;
             
-        case 1:
+        case 2:
         {
             [Helper alertViewWithTitle:@"是否立即前往appStore进行评价" withBlockCancle:^{
                 
@@ -85,12 +107,12 @@
 
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 2;
+    return 3;
 }
 
 - (NSMutableArray *)titleArray{
     if (!_titleArray) {
-        _titleArray = [NSMutableArray arrayWithObjects:@"关于我们",@"产品评价",nil];//@"球童记分",
+        _titleArray = [NSMutableArray arrayWithObjects:@"球童记分",@"关于我们",@"产品评价",nil];//
     }
     return _titleArray;
 }

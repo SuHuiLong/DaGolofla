@@ -10,6 +10,16 @@
 
 @interface JGHCaddieViewController : ViewController
 
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *backTop;//27
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *backLeft;//20
+
+
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *playBtnLeft;//40
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *beetewn;//75
+
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *cabbieBtnRight;//40
+
+
 @property (weak, nonatomic) IBOutlet UIButton *backBtn;
 - (IBAction)backBtn:(UIButton *)sender;
 

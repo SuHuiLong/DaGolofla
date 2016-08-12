@@ -13,6 +13,14 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
+    
+    self.titleBtn.layer.masksToBounds = YES;
+    self.titleBtn.layer.cornerRadius = 8.0;
+    
+    self.titleBtnLeft.constant = 10 *ProportionAdapter;
+    self.titleBtnTop.constant = 10 *ProportionAdapter;
+    self.titleBtnDown.constant = 10 *ProportionAdapter;
+    self.titleBtnRight.constant = 10 *ProportionAdapter;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -22,5 +30,21 @@
 }
 
 - (IBAction)titleBtn:(UIButton *)sender {
+    if (self.delegate) {
+        [self.delegate commitCabbieCert:sender];
+    }
 }
+
+- (void)configBtn{
+    self.backgroundColor = [UIColor colorWithHexString:BG_color];
+    self.titleBtn.backgroundColor = [UIColor orangeColor];
+    [self.titleBtn setTitle:@"提交" forState:UIControlStateNormal];
+}
+
+- (void)configSuccessBtn{
+    self.backgroundColor = [UIColor whiteColor];
+    self.titleBtn.backgroundColor = [UIColor orangeColor];
+    [self.titleBtn setTitle:@"开始记分" forState:UIControlStateNormal];
+}
+
 @end
