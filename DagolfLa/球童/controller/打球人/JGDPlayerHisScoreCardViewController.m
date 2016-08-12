@@ -38,10 +38,9 @@
 
 - (void)setData{
     NSMutableDictionary *dic = [NSMutableDictionary dictionary];
-#warning TEST -------- 33160
-    [dic setObject:@33160 forKey:@"scoreKey"];
+    [dic setObject:self.timeKey forKey:@"scoreKey"];
     [dic setObject:DEFAULF_USERID forKey:@"userKey"];
-    [dic setObject:[Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@&scoreKey=%@dagolfla.com", DEFAULF_USERID, @33160]] forKey:@"md5"];
+    [dic setObject:[Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@&scoreKey=%@dagolfla.com", DEFAULF_USERID, self.timeKey]] forKey:@"md5"];
     
     [[JsonHttp jsonHttp] httpRequest:@"score/getScoreList" JsonKey:nil withData:dic requestMethod:@"GET" failedBlock:^(id errType) {
         
