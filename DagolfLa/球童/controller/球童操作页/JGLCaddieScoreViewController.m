@@ -7,79 +7,54 @@
 //  Copyright © 2016年 bhxx. All rights reserved.
 //
 
-#import "JGDPlayPersonViewController.h"
+#import "JGLCaddieScoreViewController.h"
 #import "JGDPlayPersoningTableViewCell.h"
 #import "JGDPlayPersonTableViewCell.h"
 
 #import "JGDHistoryScoreViewController.h"
 #import "JGDPlayerHisScoreCardViewController.h" // 活动记分
-#import "JGDNotActScoreViewController.h" // 非活动记分
 
-#import "JGDPlayerQRCodeViewController.h" // 我的二维码
-#import "JGDResultViewController.h" // 扫描结果
-
-@interface JGDPlayPersonViewController ()<UITableViewDelegate, UITableViewDataSource>
+#import "JGLAddClientViewController.h"
+#import "JGMyBarCodeViewController.h"
+@interface JGLCaddieScoreViewController ()<UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic ,strong) UILabel *tipLabel;
-@property (nonatomic, strong) NSMutableArray *dataArray;
-@property (nonatomic, strong) UIView *footView;
+
 @end
 
-@implementation JGDPlayPersonViewController
+@implementation JGLCaddieScoreViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"球童记分";
     [self createTable];
-    [self setData];
+    //    [self setData];
     // Do any additional setup after loading the view.
 }
 
 - (void)setData{
-    
-    NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
-    [dic setObject:DEFAULF_USERID forKey:@"userKey"];
-    [dic setObject:[Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@dagolfla.com", DEFAULF_USERID]] forKey:@"md5"];
-    
-    [[JsonHttp jsonHttp] httpRequest:@"score/getUserCaddieRecordHome" JsonKey:nil withData:dic requestMethod:@"GET" failedBlock:^(id errType) {
-        [[ShowHUD showHUD]showToastWithText:[NSString stringWithFormat:@"%@",errType] FromView:self.view];
-    } completionBlock:^(id data) {
-        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
-            
-            if ([data objectForKey:@"list"]) {
-                
-            }else{
-                self.tipLabel.hidden = YES;
-                self.tableView.tableFooterView.hidden = YES;
-                self.footView.hidden = YES;
-                UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake(134 * ProportionAdapter, 200 * ProportionAdapter, 107 * ProportionAdapter, 107 * ProportionAdapter)];
-                imageV.image = [UIImage imageNamed:@"bg-shy"];
-                [self.view addSubview:imageV];
-                
-                UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 330, screenWidth, 30 * ProportionAdapter)];
-                label.text = @"您还没有球童记分记录哦";
-                label.textAlignment = NSTextAlignmentCenter;
-                label.textColor = [UIColor colorWithHexString:@"#a0a0a0"];
-                label.font = [UIFont systemFontOfSize:18 * ProportionAdapter];
-                [self.view addSubview:label];
-                
-                UILabel *detailLB = [[UILabel alloc] initWithFrame:CGRectMake(20 * ProportionAdapter, 370 * ProportionAdapter, screenWidth - 40 * ProportionAdapter, 50 * ProportionAdapter)];
-                detailLB.text = @"扫描球童二维码，可指定球童为您记分，记分完成后，成绩自动存入您的历史记分卡中。";
-                detailLB.font = [UIFont systemFontOfSize:14 * ProportionAdapter];
-                detailLB.textColor = [UIColor colorWithHexString:@"#a0a0a0"];
-                detailLB.numberOfLines = 0;
-                [self.view addSubview:detailLB];
-
-            }
-            
-        }else{
-            if ([data objectForKey:@"packResultMsg"]) {
-                [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
-            }
-        }
-    }];
-
+    if (1) {
+        self.tipLabel.hidden = YES;
+        self.tableView.tableFooterView.hidden = YES;
+        UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake(134 * ProportionAdapter, 200 * ProportionAdapter, 107 * ProportionAdapter, 107 * ProportionAdapter)];
+        imageV.image = [UIImage imageNamed:@"bg-shy"];
+        [self.view addSubview:imageV];
+        
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 330, screenWidth, 30 * ProportionAdapter)];
+        label.text = @"您还没有球童记分记录哦";
+        label.textAlignment = NSTextAlignmentCenter;
+        label.textColor = [UIColor colorWithHexString:@"#a0a0a0"];
+        label.font = [UIFont systemFontOfSize:18 * ProportionAdapter];
+        [self.view addSubview:label];
+        
+        UILabel *detailLB = [[UILabel alloc] initWithFrame:CGRectMake(20 * ProportionAdapter, 370 * ProportionAdapter, screenWidth - 40 * ProportionAdapter, 50 * ProportionAdapter)];
+        detailLB.text = @"扫描球童二维码，可指定球童为您记分，记分完成后，成绩自动存入您的历史记分卡中。";
+        detailLB.font = [UIFont systemFontOfSize:14 * ProportionAdapter];
+        detailLB.textColor = [UIColor colorWithHexString:@"#a0a0a0"];
+        detailLB.numberOfLines = 0;
+        [self.view addSubview:detailLB];
+    }
 }
 
 #pragma mark ----- 创建 tableView
@@ -104,12 +79,11 @@
     UIButton *erweimaBtn = [UIButton buttonWithType:(UIButtonTypeCustom)];
     [erweimaBtn setImage:[UIImage imageNamed:@"erweima"] forState:(UIControlStateNormal)];
     erweimaBtn.frame = CGRectMake(screenWidth / 2 + 73 * ProportionAdapter, 25 * ProportionAdapter, 40 * ProportionAdapter, 40 * ProportionAdapter);
-    [erweimaBtn addTarget:self action:@selector(qrCodeAct) forControlEvents:(UIControlEventTouchUpInside)];
-    
+    [erweimaBtn addTarget:self action:@selector(erweimaClick:) forControlEvents:UIControlEventTouchUpInside];
     UIButton *saomaBtn = [UIButton buttonWithType:(UIButtonTypeCustom)];
     [saomaBtn setImage:[UIImage imageNamed:@"saoma"] forState:(UIControlStateNormal)];
     saomaBtn.frame = CGRectMake(71 * ProportionAdapter, 25 * ProportionAdapter, 40 * ProportionAdapter, 40 * ProportionAdapter);
-    [saomaBtn addTarget:self action:@selector(scanAct) forControlEvents:(UIControlEventTouchUpInside)];
+    [saomaBtn addTarget:self action:@selector(saomaClick:) forControlEvents:UIControlEventTouchUpInside];
     
     UILabel *labelerweima = [[UILabel alloc] initWithFrame:CGRectMake(screenWidth / 2 + 2 * ProportionAdapter, 80 * ProportionAdapter, screenWidth / 2, 30)];
     labelerweima.text = @"我的二维码";
@@ -118,7 +92,7 @@
     labelerweima.textColor = [UIColor colorWithHexString:@"#313131"];
     
     UILabel *labelSaomiao = [[UILabel alloc] initWithFrame:CGRectMake(0, 80 * ProportionAdapter, screenWidth / 2, 30)];
-    labelSaomiao.text = @"指定记分球童";
+    labelSaomiao.text = @"添加记分客户";
     labelSaomiao.textAlignment = NSTextAlignmentCenter;
     labelSaomiao.font = [UIFont systemFontOfSize:15 * ProportionAdapter];
     labelSaomiao.textColor = [UIColor colorWithHexString:@"#313131"];
@@ -135,47 +109,44 @@
     
     self.tipLabel = [[UILabel alloc] initWithFrame:CGRectMake(10 * ProportionAdapter, 140 * ProportionAdapter, screenWidth - 20 * ProportionAdapter, 37 * ProportionAdapter)];
     self.tipLabel.numberOfLines = 0;
-    self.tipLabel.text = @"扫描球童的二维码，客户可指定球童为其记分，记分完成后，成绩自动存入您的历史记分卡中。";
+    self.tipLabel.text = @"扫描球童二维码，可指定球童为您记分，记分完成后，成绩自动存入您的历史记分卡中。";
     self.tipLabel.font = [UIFont systemFontOfSize:12 * ProportionAdapter];
     self.tipLabel.textColor = [UIColor colorWithHexString:@"#b8b8b8"];
     [headerView addSubview:self.tipLabel];
     
     self.tableView.tableHeaderView = headerView;
     
-    self.footView = [[UIView alloc] initWithFrame:CGRectMake(0, 500 * ProportionAdapter, screenWidth, 60 * screenWidth / 320)];
+    UIView *footView = [[UIView alloc] initWithFrame:CGRectMake(0, 500 * ProportionAdapter, screenWidth, 60 * screenWidth / 320)];
     UIButton *footBtn = [[UIButton alloc]initWithFrame:CGRectMake(10 * screenWidth / 320, 10 * screenWidth / 320, screenWidth - 20 * screenWidth / 320, 44 * screenWidth / 320)];
     footBtn.clipsToBounds = YES;
     footBtn.layer.cornerRadius = 6.f;
-    [self.footView addSubview:footBtn];
+    [footView addSubview:footBtn];
     [footBtn setTitle:@"查看更多" forState:UIControlStateNormal];
     footBtn.backgroundColor = [UIColor colorWithHexString:@"#F59826"];
     [footBtn addTarget:self action:@selector(checkBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:self.footView];
+    [self.view addSubview:footView];
+}
+
+
+#pragma mark --扫码或二维码点击事件
+
+-(void)erweimaClick:(UIButton *)btn
+{
+    JGMyBarCodeViewController* barVc = [[JGMyBarCodeViewController alloc]init];
+    [self.navigationController pushViewController:barVc animated:YES];
+}
+-(void)saomaClick:(UIButton *)btn
+{
+    JGLAddClientViewController* addVc = [[JGLAddClientViewController alloc]init];
+    [self.navigationController pushViewController:addVc animated:YES];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (indexPath.section == 3) {
-        JGDNotActScoreViewController *noActVC = [[JGDNotActScoreViewController alloc] init];
-        [self.navigationController pushViewController:noActVC animated:YES];
-    }else{
-        JGDPlayerHisScoreCardViewController *DPHVC = [[JGDPlayerHisScoreCardViewController alloc] init];
-        [self.navigationController pushViewController:DPHVC animated:YES];
-    }
-
+    JGDPlayerHisScoreCardViewController *DPHVC = [[JGDPlayerHisScoreCardViewController alloc] init];
+    [self.navigationController pushViewController:DPHVC animated:YES];
 }
 
 
-#pragma mark ------- 我的二维码
-
-- (void)qrCodeAct{
-    JGDPlayerQRCodeViewController *codeVC = [[JGDPlayerQRCodeViewController alloc] init];
-    [self.navigationController pushViewController:codeVC animated:YES];
-}
-
-- (void)scanAct{
-    JGDResultViewController *resultVC = [[JGDResultViewController alloc] init];
-    [self.navigationController pushViewController:resultVC animated:YES];
-}
 
 #pragma mark ---查看更多
 
@@ -194,7 +165,7 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-  
+    
     if (indexPath.section == 3) {
         JGDPlayPersonTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"JGDPlayPersonTableViewCell"];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -209,22 +180,15 @@
         
         return cell;
     }
-
+    
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return [self.dataArray count];
+    return 5;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return 1;
-}
-
-- (NSMutableArray *)dataArray{
-    if (!_dataArray) {
-        _dataArray = [[NSMutableArray alloc] init];
-    }
-    return _dataArray;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -233,13 +197,13 @@
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

@@ -17,8 +17,6 @@
 
 #import "JGHCaddieViewController.h"
 
-//#import "JGLScoreLiveViewController.h"
-//#import "JGLScoreRankViewController.h"
 @interface JGLScoreNewViewController ()<UIScrollViewDelegate,UICollectionViewDataSource,UICollectionViewDelegate>
 {
     UIScrollView* _scrollView;
@@ -52,7 +50,7 @@
 }
 - (void)onRCIMReceiveMessage:(RCMessage *)message left:(int)left
 {
-//    [self.tabBarController.tabBar showBadgeOnItemIndex:3];
+    //    [self.tabBarController.tabBar showBadgeOnItemIndex:3];
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -94,7 +92,7 @@
                 }
             }
         }];
-
+        
     }
     else
     {
@@ -141,7 +139,7 @@
     
     lableTitle.text = @"自助记分";
     [btnImage setImage:[UIImage imageNamed:@"pen"] forState:UIControlStateNormal];
-
+    
     //平均成绩
     _averageScores = [[UILabel alloc]initWithFrame:CGRectMake(ScreenWidth/10 -15*ScreenWidth/375, ScreenWidth/16*11, ScreenWidth/5+30*ScreenWidth/375, ScreenWidth/8)];
     _averageScores.backgroundColor = [UIColor clearColor];
@@ -169,13 +167,13 @@
     
     for (int i = 0; i < 3; i++) {
         //记分数字
-//        UILabel* labelCount = [[UILabel alloc]initWithFrame:CGRectMake(ScreenWidth/10+ i*ScreenWidth/10*3-15*ScreenWidth/375, ScreenWidth/16*11, ScreenWidth/5+30*ScreenWidth/375, ScreenWidth/8)];
-//        labelCount.backgroundColor = [UIColor clearColor];
-//        labelCount.textColor = [UIColor whiteColor];
-//        labelCount.textAlignment = NSTextAlignmentCenter;
-//        labelCount.font = [UIFont systemFontOfSize:30*ScreenWidth/375];
-//        labelCount.tag = 500 + i;
-//        [_viewMain addSubview:labelCount];
+        //        UILabel* labelCount = [[UILabel alloc]initWithFrame:CGRectMake(ScreenWidth/10+ i*ScreenWidth/10*3-15*ScreenWidth/375, ScreenWidth/16*11, ScreenWidth/5+30*ScreenWidth/375, ScreenWidth/8)];
+        //        labelCount.backgroundColor = [UIColor clearColor];
+        //        labelCount.textColor = [UIColor whiteColor];
+        //        labelCount.textAlignment = NSTextAlignmentCenter;
+        //        labelCount.font = [UIFont systemFontOfSize:30*ScreenWidth/375];
+        //        labelCount.tag = 500 + i;
+        //        [_viewMain addSubview:labelCount];
         
         //标题
         UILabel* labelTint = [[UILabel alloc]initWithFrame:CGRectMake(ScreenWidth/10 + i*ScreenWidth/10*3, ScreenWidth/16*11+ScreenWidth/8, ScreenWidth/5, ScreenWidth/10)];
@@ -288,7 +286,7 @@
     UICollectionViewFlowLayout *flowLayout=[[UICollectionViewFlowLayout alloc] init];
     flowLayout.minimumInteritemSpacing=ScreenWidth / 8;//左右间隔
     flowLayout.minimumLineSpacing=0.f;
-    _collectionView = [[UICollectionView alloc]initWithFrame:CGRectMake(ScreenWidth / 8, 0, _viewSec.frame.size.width, _viewSec.frame.size.height) collectionViewLayout:flowLayout];
+    _collectionView = [[UICollectionView alloc]initWithFrame:CGRectMake(0, 0, _viewSec.frame.size.width, _viewSec.frame.size.height) collectionViewLayout:flowLayout];
     //    _collectionView.frame = _yuansuScrollview.frame;
     [_viewSec addSubview:_collectionView];
     _collectionView.delegate=self;
@@ -322,7 +320,7 @@
 //每个UICollectionView展示的内容
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-
+    
     MeWonderViewCell *cell = [[MeWonderViewCell alloc]init];
     
     // Set up the reuse identifier
@@ -333,7 +331,7 @@
     cell.iconLabel.textAlignment = NSTextAlignmentCenter;
     cell.iconLabel.font = [UIFont systemFontOfSize:14*ScreenWidth/375];
     NSArray* arrIcon = [[NSArray alloc]init];
-    arrIcon = @[@"graph",@"cardO", @""]; // icn_qiutong
+    arrIcon = @[@"main_shuju",@"main_jifenka", @"main_qiutong"]; // icn_qiutong
     cell.iconImage.image = [UIImage imageNamed:arrIcon[indexPath.row]];
     
     return cell;
@@ -341,12 +339,12 @@
 //定义每个UICollectionView 的大小
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    return CGSizeMake(90*ScreenWidth/375, 120*ScreenWidth/375);
+    return CGSizeMake(80*ScreenWidth/375, 120*ScreenWidth/375);
 }
 ////定义每个UICollectionView 的 margin
 -(UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
 {
-    return UIEdgeInsetsMake(30*ScreenWidth/375, 8*ScreenWidth/375, 20*ScreenWidth/375, 100*ScreenWidth/375);
+    return UIEdgeInsetsMake(30*ScreenWidth/375, 15*ScreenWidth/375, 10*ScreenWidth/375, 15*ScreenWidth/375);
 }
 //UICollectionView被选中时调用的方法
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
@@ -364,11 +362,10 @@
             wkVC.teamName = @"统计数据";
             [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
             [self.navigationController pushViewController:wkVC animated:YES];
-//#warning -------- TEST
-//            JGHCaddieViewController *caddieCtrl = [[JGHCaddieViewController alloc]initWithNibName:@"JGHCaddieViewController" bundle:nil];
-//            [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
-//            [self.navigationController pushViewController:caddieCtrl animated:YES];
-            
+        }else if (indexPath.item == 2) {
+            JGHCaddieViewController *caddieCtrl = [[JGHCaddieViewController alloc]initWithNibName:@"JGHCaddieViewController" bundle:nil];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
+            [self.navigationController pushViewController:caddieCtrl animated:YES];
         }
     }
     else

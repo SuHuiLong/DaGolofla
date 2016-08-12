@@ -6,14 +6,14 @@
 //  Copyright © 2016年 bhxx. All rights reserved.
 //
 
-#import "JGMyBarCodeViewController.h"
+#import "JGDPlayerQRCodeViewController.h"
 #import "UITool.h"
 #import "PostDataRequest.h"
-@interface JGMyBarCodeViewController ()
+@interface JGDPlayerQRCodeViewController ()
 
 @end
 
-@implementation JGMyBarCodeViewController
+@implementation JGDPlayerQRCodeViewController
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
@@ -23,7 +23,25 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.title = @"我的二维码";
+    
+    NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
+    [dic setObject:DEFAULF_USERID forKey:@"qcodeUserKey"];
+    [dic setObject:@"" forKey:@"qCodeID"];
+    [dic setObject:@"" forKey:@"md5"];
+
+    [[JsonHttp jsonHttp] httpRequest:@"score/doRegUserQCode" JsonKey:nil withData:dic requestMethod:@"GET" failedBlock:^(id errType) {
+        [[ShowHUD showHUD]showToastWithText:[NSString stringWithFormat:@"%@",errType] FromView:self.view];
+    } completionBlock:^(id data) {
+        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+        
+        }else{
+            if ([data objectForKey:@"packResultMsg"]) {
+                [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+            }
+        }
+    }];
+    
+    
     self.view.backgroundColor = [UITool colorWithHexString:@"eeeeee" alpha:1];
     [self createView];
     
@@ -79,7 +97,7 @@
     
     NSString* strUrl = [NSString stringWithFormat:@"http://mobile.dagolfla.com/qcode/userQCode?userKey=%@&md5=%@",DEFAULF_USERID,strMd];
     [imgvBar sd_setImageWithURL:[NSURL URLWithString:strUrl] placeholderImage:[UIImage imageNamed:TeamBGImage]];
-
+    
     
     UILabel* labelSign = [[UILabel alloc]initWithFrame:CGRectMake(10*screenWidth/375, viewBack.frame.size.height - 70*screenWidth/375, viewBack.frame.size.width - 20*screenWidth/375, 40*screenWidth/375)];
     labelSign.text = @"扫一扫图上二维码，添加好友。";
@@ -95,13 +113,13 @@
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end
