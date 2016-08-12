@@ -754,6 +754,9 @@
 		827BD52B1D20F23D009AF9CA /* JGLActivityMemberTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 827BD52A1D20F23D009AF9CA /* JGLActivityMemberTableViewCell.m */; };
 		827BD52F1D214A42009AF9CA /* JGLAddBankCardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 827BD52E1D214A42009AF9CA /* JGLAddBankCardViewController.m */; };
 		8281BE551CEC41D200C5BD31 /* JGTeamPhotoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8281BE541CEC41D200C5BD31 /* JGTeamPhotoModel.m */; };
+		82864C631D5C4C4A00A94101 /* JGLCaddieScoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 82864C621D5C4C4A00A94101 /* JGLCaddieScoreViewController.m */; };
+		82864C661D5C4FAD00A94101 /* JGLAddClientViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 82864C651D5C4FAD00A94101 /* JGLAddClientViewController.m */; };
+		82864C691D5CA4E200A94101 /* JGLScoreSureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 82864C681D5CA4E200A94101 /* JGLScoreSureViewController.m */; };
 		828A99E41CE3167800AF9860 /* JGTeamCreatePhotoController.m in Sources */ = {isa = PBXBuildFile; fileRef = 828A99E31CE3167800AF9860 /* JGTeamCreatePhotoController.m */; };
 		828A99E71CE325BB00AF9860 /* JGPhotoAlbumViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 828A99E61CE325BB00AF9860 /* JGPhotoAlbumViewController.m */; };
 		828A99EA1CE32B7000AF9860 /* JGTeamMemberController.m in Sources */ = {isa = PBXBuildFile; fileRef = 828A99E91CE32B7000AF9860 /* JGTeamMemberController.m */; };
@@ -2331,6 +2334,12 @@
 		827BD52E1D214A42009AF9CA /* JGLAddBankCardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGLAddBankCardViewController.m; sourceTree = "<group>"; };
 		8281BE531CEC41D200C5BD31 /* JGTeamPhotoModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGTeamPhotoModel.h; sourceTree = "<group>"; };
 		8281BE541CEC41D200C5BD31 /* JGTeamPhotoModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGTeamPhotoModel.m; sourceTree = "<group>"; };
+		82864C611D5C4C4A00A94101 /* JGLCaddieScoreViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGLCaddieScoreViewController.h; sourceTree = "<group>"; };
+		82864C621D5C4C4A00A94101 /* JGLCaddieScoreViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGLCaddieScoreViewController.m; sourceTree = "<group>"; };
+		82864C641D5C4FAD00A94101 /* JGLAddClientViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGLAddClientViewController.h; sourceTree = "<group>"; };
+		82864C651D5C4FAD00A94101 /* JGLAddClientViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGLAddClientViewController.m; sourceTree = "<group>"; };
+		82864C671D5CA4E200A94101 /* JGLScoreSureViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGLScoreSureViewController.h; sourceTree = "<group>"; };
+		82864C681D5CA4E200A94101 /* JGLScoreSureViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGLScoreSureViewController.m; sourceTree = "<group>"; };
 		828A99E21CE3167800AF9860 /* JGTeamCreatePhotoController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGTeamCreatePhotoController.h; sourceTree = "<group>"; };
 		828A99E31CE3167800AF9860 /* JGTeamCreatePhotoController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGTeamCreatePhotoController.m; sourceTree = "<group>"; };
 		828A99E51CE325BB00AF9860 /* JGPhotoAlbumViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGPhotoAlbumViewController.h; sourceTree = "<group>"; };
@@ -6211,6 +6220,12 @@
 		82864C601D5C21B700A94101 /* 球童操作页 */ = {
 			isa = PBXGroup;
 			children = (
+				82864C611D5C4C4A00A94101 /* JGLCaddieScoreViewController.h */,
+				82864C621D5C4C4A00A94101 /* JGLCaddieScoreViewController.m */,
+				82864C641D5C4FAD00A94101 /* JGLAddClientViewController.h */,
+				82864C651D5C4FAD00A94101 /* JGLAddClientViewController.m */,
+				82864C671D5CA4E200A94101 /* JGLScoreSureViewController.h */,
+				82864C681D5CA4E200A94101 /* JGLScoreSureViewController.m */,
 			);
 			path = "球童操作页";
 			sourceTree = "<group>";
@@ -7485,6 +7500,7 @@
 				20513BDB1CF7050A003233FB /* RSADataVerifier.m in Sources */,
 				36BF01C91BC77ABE005B3CE2 /* YueMyBallTableViewCell.m in Sources */,
 				2012AD861D2BB1B200F70E40 /* JGDActvityPriziSetTableViewCell.m in Sources */,
+				82864C631D5C4C4A00A94101 /* JGLCaddieScoreViewController.m in Sources */,
 				3660E1DE1BFC64020033B4D7 /* HistoryViewController.m in Sources */,
 				36E300EF1C3FF3F9005C3F08 /* MJRefreshHeader.m in Sources */,
 				3660E0F71BFC54900033B4D7 /* ManageViewController.m in Sources */,
@@ -7802,6 +7818,7 @@
 				F5EB44671C995788008ACD73 /* BallFriListCell.m in Sources */,
 				36BF004E1BC77213005B3CE2 /* OtherDataModel.m in Sources */,
 				20513BD81CF7050A003233FB /* NSDataEx.m in Sources */,
+				82864C661D5C4FAD00A94101 /* JGLAddClientViewController.m in Sources */,
 				F5321AEA1CE449C400CAE1EF /* JGCreateTeamView.m in Sources */,
 				AA857EE01C5F48AA0034B4C8 /* SelfDataViewController.m in Sources */,
 				20BA612C1CDC99D0004B61F5 /* ALMoviePlayerControls.m in Sources */,
@@ -7906,6 +7923,7 @@
 				36BF01F21BC77C71005B3CE2 /* MySelfTableViewCell.m in Sources */,
 				6543284E1CC1DBF700175622 /* MyNewsListModel.m in Sources */,
 				36BFFF5E1BC76D09005B3CE2 /* AFURLConnectionOperation.m in Sources */,
+				82864C691D5CA4E200A94101 /* JGLScoreSureViewController.m in Sources */,
 				36DF6E001C08243300B60B67 /* TeamPhotoDeModel.m in Sources */,
 				20F6A5D31CF475D200DD9383 /* JGHApplyListCell.m in Sources */,
 				20CA13DC1CE9F2C200DA15B9 /* UIColor+ColorTransfer.m in Sources */,

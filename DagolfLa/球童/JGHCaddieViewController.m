@@ -8,7 +8,7 @@
 
 #import "JGHCaddieViewController.h"
 #import "JGDPlayPersonViewController.h"
-
+#import "JGLCaddieScoreViewController.h"
 @interface JGHCaddieViewController ()
 
 @end
@@ -53,5 +53,7 @@
     [self.navigationController pushViewController:playVC animated:YES];
 }
 - (IBAction)caddieBtn:(UIButton *)sender {
+    JGLCaddieScoreViewController* cadVc = [[JGLCaddieScoreViewController alloc]init];
+    [self.navigationController pushViewController:cadVc animated:YES];
 }
 @end

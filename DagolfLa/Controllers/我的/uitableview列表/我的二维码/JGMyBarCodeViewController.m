@@ -24,7 +24,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
+    self.title = @"我的二维码";
     self.view.backgroundColor = [UITool colorWithHexString:@"eeeeee" alpha:1];
     [self createView];
     
