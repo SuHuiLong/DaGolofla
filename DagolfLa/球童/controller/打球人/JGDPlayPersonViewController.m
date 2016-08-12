@@ -18,12 +18,15 @@
 #import "JGDPlayerQRCodeViewController.h" // 我的二维码
 #import "JGDResultViewController.h" // 扫描结果
 
+#import "JGDPlayerModel.h"
+
 @interface JGDPlayPersonViewController ()<UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic ,strong) UILabel *tipLabel;
 @property (nonatomic, strong) NSMutableArray *dataArray;
 @property (nonatomic, strong) UIView *footView;
+
 @end
 
 @implementation JGDPlayPersonViewController
@@ -31,8 +34,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"球童记分";
-    [self createTable];
+
     [self setData];
+
+    [self createTable];
     // Do any additional setup after loading the view.
 }
 
@@ -48,7 +53,12 @@
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
             
             if ([data objectForKey:@"list"]) {
-                
+                for (NSDictionary *dic in [data objectForKey:@"list"]) {
+                    JGDPlayerModel *model =[[JGDPlayerModel alloc] init];
+                    [model setValuesForKeysWithDictionary:dic];
+                    [self.dataArray addObject:model];
+                }
+                [self.tableView reloadData];
             }else{
                 self.tipLabel.hidden = YES;
                 self.tableView.tableFooterView.hidden = YES;
@@ -154,14 +164,26 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (indexPath.section == 3) {
-        JGDNotActScoreViewController *noActVC = [[JGDNotActScoreViewController alloc] init];
-        [self.navigationController pushViewController:noActVC animated:YES];
+    JGDPlayerModel *model = self.dataArray[indexPath.section];
+    if ([model.scoreFinish integerValue] == 1) {
+        
+        JGDHistoryScoreViewController *hisVC = [[JGDHistoryScoreViewController alloc] init];
+        [self.navigationController pushViewController:hisVC animated:YES];
+        
     }else{
-        JGDPlayerHisScoreCardViewController *DPHVC = [[JGDPlayerHisScoreCardViewController alloc] init];
-        [self.navigationController pushViewController:DPHVC animated:YES];
+        
+        if ([model.srcType integerValue] == 1) {
+            JGDPlayerHisScoreCardViewController *DPHVC = [[JGDPlayerHisScoreCardViewController alloc] init];
+            DPHVC.timeKey = model.timeKey;
+            [self.navigationController pushViewController:DPHVC animated:YES];
+        }else{
+            JGDNotActScoreViewController *noActVC = [[JGDNotActScoreViewController alloc] init];
+            noActVC.timeKey = model.timeKey;
+            [self.navigationController pushViewController:noActVC animated:YES];
+            
+        }
     }
-
+    
 }
 
 
@@ -195,10 +217,12 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
   
-    if (indexPath.section == 3) {
+    JGDPlayerModel *model = self.dataArray[indexPath.section];
+    
+    if ([model.scoreFinish integerValue] == 1) {
         JGDPlayPersonTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"JGDPlayPersonTableViewCell"];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        NSMutableAttributedString * str = [[NSMutableAttributedString alloc] initWithString:@"球童 あそば 已完成记分并推送到您的 历史记分卡"];
+        NSMutableAttributedString * str = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"球童 %@ 已完成记分并推送到您的 历史记分卡", model.scoreUserName]];
         [str addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"#32b14d"] range:NSMakeRange(str.length - 5, 5)];
         cell.textLB.attributedText = str;
         return cell;

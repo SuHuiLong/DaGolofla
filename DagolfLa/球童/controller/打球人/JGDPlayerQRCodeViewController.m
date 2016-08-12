@@ -9,7 +9,11 @@
 #import "JGDPlayerQRCodeViewController.h"
 #import "UITool.h"
 #import "PostDataRequest.h"
+#import <CoreImage/CoreImage.h>
+
 @interface JGDPlayerQRCodeViewController ()
+
+@property (nonatomic, copy) NSString *qcodeID;
 
 @end
 
@@ -20,33 +24,81 @@
     
 }
 
+- (void)readQRCodeFromImageWithFileURL:(NSURL *)url{
+    CIImage *image = [CIImage imageWithContentsOfURL:url];
+    if (image) {
+        CIDetector *qrDetector = [CIDetector detectorOfType:CIDetectorTypeQRCode context:[CIContext contextWithOptions:@{kCIContextUseSoftwareRenderer : @(YES)}] options:@{CIDetectorAccuracy : CIDetectorAccuracyHigh}];
+        NSArray *features = [qrDetector featuresInImage:image];
+        if ([features count] > 0) {
+            if (![features[0] isKindOfClass:[CIQRCodeFeature class]]) {
+                return;
+            }
+            CIQRCodeFeature *qrFeature = (CIQRCodeFeature *)features[0];
+            
+            NSString *code = [qrFeature.messageString mutableCopy];
+            NSArray *stringArray = [code componentsSeparatedByString:@"qcodeID="];
+            NSArray *newStringArray = [stringArray[1] componentsSeparatedByString:@"&md5="];
+            self.qcodeID = newStringArray[0];
+            
+            
+            NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
+            [dic setObject:DEFAULF_USERID forKey:@"qcodeUserKey"];
+            [dic setObject:self.qcodeID forKey:@"qCodeID"];
+            
+            [[JsonHttp jsonHttp] httpRequestWithMD5:@"score/doRegUserQCode" JsonKey:nil withData:dic failedBlock:^(id errType) {
+                [[ShowHUD showHUD]showToastWithText:[NSString stringWithFormat:@"%@",errType] FromView:self.view];
+            } completionBlock:^(id data) {
+                if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+                    
+                    NSTimer * timer = [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(loopAct) userInfo:nil repeats:YES];
+                    [timer fire];
+                    
+//                    [timer invalidate];
+//                    timer = nil;
+                    
+                }else{
+                    if ([data objectForKey:@"packResultMsg"]) {
+                        [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+                    }
+                }
+            }];
+            
+            
+        }
+    }
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
-    [dic setObject:DEFAULF_USERID forKey:@"qcodeUserKey"];
-    [dic setObject:@"" forKey:@"qCodeID"];
-    [dic setObject:@"" forKey:@"md5"];
+    self.view.backgroundColor = [UITool colorWithHexString:@"eeeeee" alpha:1];
+    [self createView];
+}
 
-    [[JsonHttp jsonHttp] httpRequest:@"score/doRegUserQCode" JsonKey:nil withData:dic requestMethod:@"GET" failedBlock:^(id errType) {
+- (void)loopAct{
+    
+    NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
+    [dic setObject:self.qcodeID forKey:@"qCodeID"];
+    [[JsonHttp jsonHttp] httpRequestWithMD5:@"score/queryLoopCaddieQCodeState" JsonKey:nil withData:dic failedBlock:^(id errType) {
         [[ShowHUD showHUD]showToastWithText:[NSString stringWithFormat:@"%@",errType] FromView:self.view];
     } completionBlock:^(id data) {
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
-        
+            if ([data objectForKey:@"bean"]) {
+                NSDictionary *dataDic = [data objectForKey:@"bean"];
+                if ([[dataDic objectForKey:@"state"] integerValue] == 1) {
+                    // 1 扫码成功  2 同意  3 拒绝
+                    
+                }
+            }
+            
         }else{
             if ([data objectForKey:@"packResultMsg"]) {
                 [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
             }
         }
     }];
-    
-    
-    self.view.backgroundColor = [UITool colorWithHexString:@"eeeeee" alpha:1];
-    [self createView];
-    
 }
-
 
 -(void)createView
 {
@@ -98,6 +150,7 @@
     NSString* strUrl = [NSString stringWithFormat:@"http://mobile.dagolfla.com/qcode/userQCode?userKey=%@&md5=%@",DEFAULF_USERID,strMd];
     [imgvBar sd_setImageWithURL:[NSURL URLWithString:strUrl] placeholderImage:[UIImage imageNamed:TeamBGImage]];
     
+    [self readQRCodeFromImageWithFileURL:[NSURL URLWithString:strUrl]];
     
     UILabel* labelSign = [[UILabel alloc]initWithFrame:CGRectMake(10*screenWidth/375, viewBack.frame.size.height - 70*screenWidth/375, viewBack.frame.size.width - 20*screenWidth/375, 40*screenWidth/375)];
     labelSign.text = @"扫一扫图上二维码，添加好友。";

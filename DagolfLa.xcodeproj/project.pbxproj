@@ -892,6 +892,8 @@
 		F59A8B9C1D5B521D00E8292B /* JGDNotActScoreDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F59A8B9B1D5B521D00E8292B /* JGDNotActScoreDetailViewController.m */; };
 		F59A8B9F1D5C721A00E8292B /* JGDPlayerQRCodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F59A8B9E1D5C721A00E8292B /* JGDPlayerQRCodeViewController.m */; };
 		F59A8BA21D5CA66400E8292B /* JGDResultViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F59A8BA11D5CA66400E8292B /* JGDResultViewController.m */; };
+		F59A8BA51D5DB95500E8292B /* JGDPlayerModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F59A8BA41D5DB95400E8292B /* JGDPlayerModel.m */; };
+		F59A8BA81D5DC27E00E8292B /* JGDPlayerScanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F59A8BA71D5DC27E00E8292B /* JGDPlayerScanViewController.m */; };
 		F5AAAA251D58A64A0016E6F6 /* JGMeMoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5AAAA241D58A64A0016E6F6 /* JGMeMoreViewController.m */; };
 		F5AAAA2B1D5975A20016E6F6 /* JGDPlayPersonViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5AAAA2A1D5975A20016E6F6 /* JGDPlayPersonViewController.m */; };
 		F5AAAA2E1D5978250016E6F6 /* JGDPlayPersoningTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F5AAAA2D1D5978250016E6F6 /* JGDPlayPersoningTableViewCell.m */; };
@@ -2595,6 +2597,10 @@
 		F59A8B9E1D5C721A00E8292B /* JGDPlayerQRCodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGDPlayerQRCodeViewController.m; sourceTree = "<group>"; };
 		F59A8BA01D5CA66400E8292B /* JGDResultViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGDResultViewController.h; sourceTree = "<group>"; };
 		F59A8BA11D5CA66400E8292B /* JGDResultViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGDResultViewController.m; sourceTree = "<group>"; };
+		F59A8BA31D5DB95400E8292B /* JGDPlayerModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGDPlayerModel.h; sourceTree = "<group>"; };
+		F59A8BA41D5DB95400E8292B /* JGDPlayerModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGDPlayerModel.m; sourceTree = "<group>"; };
+		F59A8BA61D5DC27E00E8292B /* JGDPlayerScanViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGDPlayerScanViewController.h; sourceTree = "<group>"; };
+		F59A8BA71D5DC27E00E8292B /* JGDPlayerScanViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGDPlayerScanViewController.m; sourceTree = "<group>"; };
 		F5AAAA231D58A64A0016E6F6 /* JGMeMoreViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGMeMoreViewController.h; sourceTree = "<group>"; };
 		F5AAAA241D58A64A0016E6F6 /* JGMeMoreViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGMeMoreViewController.m; sourceTree = "<group>"; };
 		F5AAAA291D5975A20016E6F6 /* JGDPlayPersonViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGDPlayPersonViewController.h; sourceTree = "<group>"; };
@@ -6862,6 +6868,8 @@
 		F5AAAA261D5974910016E6F6 /* 打球人 */ = {
 			isa = PBXGroup;
 			children = (
+				F59A8BA31D5DB95400E8292B /* JGDPlayerModel.h */,
+				F59A8BA41D5DB95400E8292B /* JGDPlayerModel.m */,
 			);
 			path = "打球人";
 			sourceTree = "<group>";
@@ -6883,6 +6891,8 @@
 				F59A8B9E1D5C721A00E8292B /* JGDPlayerQRCodeViewController.m */,
 				F59A8BA01D5CA66400E8292B /* JGDResultViewController.h */,
 				F59A8BA11D5CA66400E8292B /* JGDResultViewController.m */,
+				F59A8BA61D5DC27E00E8292B /* JGDPlayerScanViewController.h */,
+				F59A8BA71D5DC27E00E8292B /* JGDPlayerScanViewController.m */,
 			);
 			path = "打球人";
 			sourceTree = "<group>";
@@ -7524,6 +7534,7 @@
 				F543ACC11CF4246000C6B111 /* JGNotTeamMemberDetailViewController.m in Sources */,
 				36BF00861BC772EF005B3CE2 /* MySetViewController.m in Sources */,
 				F569A1481CE35AA500CD0FD5 /* JGTeamChannelActivityTableViewCell.m in Sources */,
+				F59A8BA51D5DB95500E8292B /* JGDPlayerModel.m in Sources */,
 				827BD52F1D214A42009AF9CA /* JGLAddBankCardViewController.m in Sources */,
 				368DCA611C88152700871D28 /* ResponseViewController.m in Sources */,
 				2012AD661D2BB1A200F70E40 /* JGHAwardModel.m in Sources */,
@@ -7604,6 +7615,7 @@
 				F5B647101CE41E7E00A7A056 /* JGTeamDetailView.m in Sources */,
 				F5AEF7311D41B98E009A8C34 /* JGHScoresHoleCell.m in Sources */,
 				36BFFF851BC76D09005B3CE2 /* LazyPageScrollView.m in Sources */,
+				F59A8BA81D5DC27E00E8292B /* JGDPlayerScanViewController.m in Sources */,
 				82F2545F1D3CE1E1008BE0AF /* JGLAddressAddViewController.m in Sources */,
 				F5AEF73E1D41B98E009A8C34 /* JGDHistoryScoreTableViewCell.m in Sources */,
 				F5AEF7391D41B98E009A8C34 /* JGLChoosesScoreTableViewCell.m in Sources */,
