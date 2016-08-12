@@ -81,7 +81,19 @@
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     
     if (section == 0) {
-        UIView *viewTitle = [[UIView alloc] initWithFrame:CGRectMake(0, 10 * ProportionAdapter, screenWidth, 92 * ProportionAdapter)];
+        
+        UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 165 * ProportionAdapter)];
+        headerView.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];
+        
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 10 * ProportionAdapter, screenWidth, 50 * ProportionAdapter)];
+        label.backgroundColor = [UIColor whiteColor];
+        NSMutableAttributedString *lbStr = [[NSMutableAttributedString alloc] initWithString:@"球童 王二狗 正在为您记分"];
+        [lbStr addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"#32b14d"] range:NSMakeRange(3, lbStr.length - 10)];
+        label.attributedText = lbStr;
+        label.textAlignment = NSTextAlignmentCenter;
+        [headerView addSubview:label];
+        
+        UIView *viewTitle = [[UIView alloc] initWithFrame:CGRectMake(0, 60 * ProportionAdapter, screenWidth, 105 * ProportionAdapter)];
         viewTitle.backgroundColor = [UIColor whiteColor];
         
         UIView *lightV = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 10 * ProportionAdapter)];
@@ -95,20 +107,17 @@
         [viewTitle addSubview:self.nameLB];
         
         
-        UILabel *allLB = [[UILabel alloc] initWithFrame:CGRectMake(280 * ProportionAdapter, 15 * ProportionAdapter, 90 * ProportionAdapter, 30)];
-        allLB.text = @"总杆：          杆";
-        allLB.font = [UIFont systemFontOfSize:12 * ProportionAdapter];
-        [viewTitle addSubview:allLB];
-        
-        UILabel *stemLB = [[UILabel alloc] initWithFrame:CGRectMake(310 * ProportionAdapter, 15 * ProportionAdapter, 39 * ProportionAdapter, 30 * ProportionAdapter)];
-        stemLB.text = [self.model.poles stringValue];
-        stemLB.font = [UIFont systemFontOfSize:20 * ProportionAdapter];
-        stemLB.textAlignment = NSTextAlignmentCenter;
-        stemLB.textColor = [UIColor colorWithHexString:@"#fe6424"];
-        [viewTitle addSubview:stemLB];
-        
-        
-        
+//        UILabel *allLB = [[UILabel alloc] initWithFrame:CGRectMake(280 * ProportionAdapter, 15 * ProportionAdapter, 90 * ProportionAdapter, 30)];
+//        allLB.text = @"总杆：          杆";
+//        allLB.font = [UIFont systemFontOfSize:12 * ProportionAdapter];
+//        [viewTitle addSubview:allLB];
+//        
+//        UILabel *stemLB = [[UILabel alloc] initWithFrame:CGRectMake(310 * ProportionAdapter, 15 * ProportionAdapter, 39 * ProportionAdapter, 30 * ProportionAdapter)];
+//        stemLB.text = [self.model.poles stringValue];
+//        stemLB.font = [UIFont systemFontOfSize:20 * ProportionAdapter];
+//        stemLB.textAlignment = NSTextAlignmentCenter;
+//        stemLB.textColor = [UIColor colorWithHexString:@"#fe6424"];
+//        [viewTitle addSubview:stemLB];
         
         UILabel *ballNameLB = [[UILabel alloc] initWithFrame:CGRectMake(10 * ProportionAdapter, 50 * ProportionAdapter, 350 * ProportionAdapter, 30 * ProportionAdapter)];
         ballNameLB.text = [self.dataDic objectForKey:@"ballName"];
@@ -169,11 +178,12 @@
         Label4.text = @"Bogey";
         [viewTitle addSubview:Label4];
         
-        UIView *greenView = [[UIView alloc] initWithFrame:CGRectMake(0, 120 * ProportionAdapter, screenWidth, 2 * ProportionAdapter)];
+        UIView *greenView = [[UIView alloc] initWithFrame:CGRectMake(0, 105 * ProportionAdapter, screenWidth, 2 * ProportionAdapter)];
         greenView.backgroundColor = [UIColor colorWithHexString:@"#32b14d"];
         [viewTitle addSubview:greenView];
+        [headerView addSubview:viewTitle];
         
-        return viewTitle;
+        return headerView;
     }else{
         
         UIView *lightV = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 12 * ProportionAdapter)];
@@ -189,7 +199,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     if (section == 0) {
-        return 122 * ProportionAdapter;
+        return 167 * ProportionAdapter;
     }else{
         return 12 * ProportionAdapter;
     }
