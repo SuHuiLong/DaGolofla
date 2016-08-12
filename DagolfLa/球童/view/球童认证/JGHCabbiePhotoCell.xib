@@ -20,7 +20,7 @@
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="eLZ-ca-zZU">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cabbieHeader" translatesAutoresizingMaskIntoConstraints="NO" id="eLZ-ca-zZU">
                         <rect key="frame" x="100" y="10" width="120" height="140"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="120" id="3kh-dh-atI"/>
@@ -33,13 +33,23 @@
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9RX-WW-X7X">
+                        <rect key="frame" x="100" y="10" width="120" height="140"/>
+                        <connections>
+                            <action selector="imageViewBtn:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="zHR-FR-azU"/>
+                        </connections>
+                    </button>
                 </subviews>
                 <constraints>
                     <constraint firstItem="eLZ-ca-zZU" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="Faw-ND-vOd"/>
+                    <constraint firstItem="9RX-WW-X7X" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="JNh-CU-TqP"/>
+                    <constraint firstItem="9RX-WW-X7X" firstAttribute="height" secondItem="eLZ-ca-zZU" secondAttribute="height" id="NDJ-qp-gsE"/>
                     <constraint firstItem="luL-60-MbB" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="SuI-0a-hdr"/>
+                    <constraint firstItem="9RX-WW-X7X" firstAttribute="centerX" secondItem="eLZ-ca-zZU" secondAttribute="centerX" id="aKg-Bg-AID"/>
                     <constraint firstItem="luL-60-MbB" firstAttribute="top" secondItem="eLZ-ca-zZU" secondAttribute="bottom" constant="10" id="gtd-es-Gvh"/>
                     <constraint firstItem="zpz-ID-k2k" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="20" id="mcV-Vl-3FG"/>
                     <constraint firstItem="eLZ-ca-zZU" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="sGI-iO-wFk"/>
+                    <constraint firstItem="9RX-WW-X7X" firstAttribute="width" secondItem="eLZ-ca-zZU" secondAttribute="width" id="veZ-wA-gvN"/>
                     <constraint firstItem="zpz-ID-k2k" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="z10-5F-GAu"/>
                 </constraints>
             </tableViewCellContentView>
@@ -57,4 +67,7 @@
             <point key="canvasLocation" x="260" y="218"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="cabbieHeader" width="120" height="140"/>
+    </resources>
 </document>

@@ -14,14 +14,17 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vUl-I6-5pE">
-                        <rect key="frame" x="20" y="13" width="37.5" height="18"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vUl-I6-5pE">
+                        <rect key="frame" x="20" y="13" width="60" height="18"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="60" id="DzG-jJ-47W"/>
+                        </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="BdM-Ra-NSG">
-                        <rect key="frame" x="97.5" y="7" width="25" height="30"/>
+                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="BdM-Ra-NSG">
+                        <rect key="frame" x="120" y="13" width="180" height="17"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <textInputTraits key="textInputTraits"/>
                     </textField>
@@ -31,6 +34,7 @@
                     <constraint firstItem="BdM-Ra-NSG" firstAttribute="leading" secondItem="vUl-I6-5pE" secondAttribute="trailing" constant="40" id="EXa-aH-T5V"/>
                     <constraint firstItem="vUl-I6-5pE" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="a95-C2-1kW"/>
                     <constraint firstItem="vUl-I6-5pE" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="b8v-2a-9hU"/>
+                    <constraint firstAttribute="trailing" secondItem="BdM-Ra-NSG" secondAttribute="trailing" constant="20" id="rvz-B9-AqY"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
@@ -38,6 +42,7 @@
                 <outlet property="fielTextLeft" destination="EXa-aH-T5V" id="xCB-am-RNe"/>
                 <outlet property="titleLable" destination="vUl-I6-5pE" id="49n-xy-BdF"/>
                 <outlet property="titleLableLeft" destination="a95-C2-1kW" id="SM6-ux-dtd"/>
+                <outlet property="titleLableW" destination="DzG-jJ-47W" id="CgJ-Ui-KNq"/>
             </connections>
         </tableViewCell>
     </objects>
