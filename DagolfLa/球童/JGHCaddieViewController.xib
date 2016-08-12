@@ -8,8 +8,13 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="JGHCaddieViewController">
             <connections>
                 <outlet property="backBtn" destination="oly-nS-rdx" id="DqN-7J-Jdl"/>
+                <outlet property="backLeft" destination="GgX-lw-yoP" id="8uK-Yg-ma4"/>
+                <outlet property="backTop" destination="Rl3-H9-3SC" id="fvp-TT-vqr"/>
+                <outlet property="beetewn" destination="FYL-e6-v6S" id="ZlC-ie-XdS"/>
+                <outlet property="cabbieBtnRight" destination="H2u-ze-oUG" id="5LY-Vw-t6H"/>
                 <outlet property="caddieBtn" destination="pwg-GM-KPi" id="V2s-mi-KbN"/>
                 <outlet property="playBtn" destination="zNl-Vf-EgZ" id="zkZ-tR-Vlv"/>
+                <outlet property="playBtnLeft" destination="G6W-Ff-WLO" id="032-aU-5vl"/>
                 <outlet property="titleLable" destination="8Oi-p5-WIu" id="jTy-iv-Srs"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -30,7 +35,7 @@
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zNl-Vf-EgZ">
-                    <rect key="frame" x="20" y="539" width="120" height="55"/>
+                    <rect key="frame" x="40" y="539" width="110" height="55"/>
                     <state key="normal" title="我是打球人" backgroundImage="caddiebg">
                         <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </state>
@@ -39,7 +44,7 @@
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pwg-GM-KPi">
-                    <rect key="frame" x="215" y="539" width="120" height="55"/>
+                    <rect key="frame" x="225" y="539" width="110" height="55"/>
                     <state key="normal" title="我是球童" backgroundImage="caddiebg">
                         <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </state>
@@ -59,7 +64,7 @@
                 <constraint firstAttribute="bottom" secondItem="ilj-5A-e2v" secondAttribute="bottom" id="2dc-fa-NJ8"/>
                 <constraint firstAttribute="bottom" secondItem="zNl-Vf-EgZ" secondAttribute="bottom" constant="73" id="2hc-pe-iHn"/>
                 <constraint firstItem="pwg-GM-KPi" firstAttribute="leading" secondItem="zNl-Vf-EgZ" secondAttribute="trailing" constant="75" id="FYL-e6-v6S"/>
-                <constraint firstItem="zNl-Vf-EgZ" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="20" id="G6W-Ff-WLO"/>
+                <constraint firstItem="zNl-Vf-EgZ" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="40" id="G6W-Ff-WLO"/>
                 <constraint firstItem="oly-nS-rdx" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="20" id="GgX-lw-yoP"/>
                 <constraint firstAttribute="trailing" secondItem="pwg-GM-KPi" secondAttribute="trailing" constant="40" id="H2u-ze-oUG"/>
                 <constraint firstItem="pwg-GM-KPi" firstAttribute="height" secondItem="zNl-Vf-EgZ" secondAttribute="height" id="JMX-bf-wvS"/>

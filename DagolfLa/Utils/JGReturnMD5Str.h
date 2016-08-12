@@ -39,4 +39,8 @@
 
 + (NSString *)getStandardleversBallKey:(NSInteger)ballKey andRegion1:(NSString *)region1 andRegion2:(NSString *)region2;
 
++ (NSString *)getCaddieAuthUserKey:(NSInteger)userKey;
+
++ (NSString *)getUserTransDetailOrderTypeListUserKey:(NSInteger)userKey andOrderType:(NSInteger)orderType;
+
 @end

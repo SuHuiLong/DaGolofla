@@ -186,7 +186,6 @@
 {
     //手动滑动时候暂停自动替换
     [_timer invalidate];
-    _timer = nil;
     
     NSInteger currentSize = _scrollView.contentOffset.x /ScreenWidth;
 

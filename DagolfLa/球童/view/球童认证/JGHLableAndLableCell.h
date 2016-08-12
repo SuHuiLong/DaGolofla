@@ -15,5 +15,10 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *valueLable;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *valueLableLeft;//40
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *titleLableW;
+
+
+- (void)configBallName:(NSString *)ballName;
+
 
 @end

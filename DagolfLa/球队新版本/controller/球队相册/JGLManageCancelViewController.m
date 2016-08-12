@@ -260,6 +260,11 @@ static int timeNumber = 60;
     }];
 }
 
+-(void)dealloc
+{
+    _timer = nil;
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

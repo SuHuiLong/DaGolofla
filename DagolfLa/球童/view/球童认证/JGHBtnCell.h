@@ -8,6 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol JGHBtnCellDelegate <NSObject>
+
+- (void)commitCabbieCert:(UIButton *)btn;
+
+@end
+
 @interface JGHBtnCell : UITableViewCell
 
 @property (weak, nonatomic) IBOutlet UIButton *titleBtn;
@@ -17,5 +23,11 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *titleBtnTop;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *titleBtnDown;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *titleBtnRight;
+
+@property (nonatomic, weak)id <JGHBtnCellDelegate> delegate;
+
+- (void)configBtn;
+
+- (void)configSuccessBtn;
 
 @end

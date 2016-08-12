@@ -28,6 +28,16 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
+    self.backTop.constant = 27 *ProportionAdapter;
+    self.backLeft.constant = 20 *ProportionAdapter;
+    self.playBtnLeft.constant = 40 *ProportionAdapter;
+    self.beetewn.constant = 75 *ProportionAdapter;
+    self.cabbieBtnRight.constant = 40 *ProportionAdapter;
+    
+    self.titleLable.font = [UIFont systemFontOfSize:17 *ProportionAdapter];
+    
+    self.playBtn.titleLabel.font = [UIFont systemFontOfSize:18*ProportionAdapter];
+    self.caddieBtn.titleLabel.font = [UIFont systemFontOfSize:18*ProportionAdapter];
 }
 
 - (void)didReceiveMemoryWarning {
