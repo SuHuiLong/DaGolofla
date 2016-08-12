@@ -288,6 +288,10 @@
     
     return YES;
 }
+-(void)dealloc
+{
+    _timer = nil;
+}
 
 #pragma mark - lineAnimation
 - (void)lineAnimation {

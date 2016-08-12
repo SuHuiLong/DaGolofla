@@ -725,6 +725,7 @@
 		821C0D8D1D51EE59001BB913 /* JGLActivityMemberNumTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 821C0D8C1D51EE59001BB913 /* JGLActivityMemberNumTableViewCell.m */; };
 		821C0D911D52EDC2001BB913 /* JGLGuestAddPlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 821C0D901D52EDC2001BB913 /* JGLGuestAddPlayerViewController.m */; };
 		821C0D961D533661001BB913 /* JGLGuestAddPlayerTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 821C0D941D533661001BB913 /* JGLGuestAddPlayerTableViewCell.m */; };
+		821DB9CC1D5D6FAB00C882C2 /* JGLCaddieScoreTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 821DB9CB1D5D6FAB00C882C2 /* JGLCaddieScoreTableViewCell.m */; };
 		821F51041D0E89D700AF0E93 /* JGLMyTeamTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 821F51031D0E89D700AF0E93 /* JGLMyTeamTableViewCell.m */; };
 		821F51071D0ECF4700AF0E93 /* JGLTeamChoiseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 821F51061D0ECF4700AF0E93 /* JGLTeamChoiseViewController.m */; };
 		8225626F1D2DFB8400ABA7F3 /* SDBrowserImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 822562691D2DFB8400ABA7F3 /* SDBrowserImageView.m */; };
@@ -2273,6 +2274,8 @@
 		821C0D901D52EDC2001BB913 /* JGLGuestAddPlayerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGLGuestAddPlayerViewController.m; sourceTree = "<group>"; };
 		821C0D931D533661001BB913 /* JGLGuestAddPlayerTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGLGuestAddPlayerTableViewCell.h; sourceTree = "<group>"; };
 		821C0D941D533661001BB913 /* JGLGuestAddPlayerTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGLGuestAddPlayerTableViewCell.m; sourceTree = "<group>"; };
+		821DB9CA1D5D6FAB00C882C2 /* JGLCaddieScoreTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGLCaddieScoreTableViewCell.h; sourceTree = "<group>"; };
+		821DB9CB1D5D6FAB00C882C2 /* JGLCaddieScoreTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGLCaddieScoreTableViewCell.m; sourceTree = "<group>"; };
 		821F51021D0E89D700AF0E93 /* JGLMyTeamTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGLMyTeamTableViewCell.h; sourceTree = "<group>"; };
 		821F51031D0E89D700AF0E93 /* JGLMyTeamTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGLMyTeamTableViewCell.m; sourceTree = "<group>"; };
 		821F51051D0ECF4700AF0E93 /* JGLTeamChoiseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGLTeamChoiseViewController.h; sourceTree = "<group>"; };
@@ -2761,6 +2764,7 @@
 		201055D41D58A4C600C90FDE /* view */ = {
 			isa = PBXGroup;
 			children = (
+				821DB9C91D5D6F8E00C882C2 /* 球童操作页 */,
 				201056031D59C92800C90FDE /* 球童认证 */,
 				F5AAAA281D59749D0016E6F6 /* 打球人 */,
 				201055E01D58A5BA00C90FDE /* JGHSweepViewCell.h */,
@@ -6113,6 +6117,15 @@
 			path = "嘉宾";
 			sourceTree = "<group>";
 		};
+		821DB9C91D5D6F8E00C882C2 /* 球童操作页 */ = {
+			isa = PBXGroup;
+			children = (
+				821DB9CA1D5D6FAB00C882C2 /* JGLCaddieScoreTableViewCell.h */,
+				821DB9CB1D5D6FAB00C882C2 /* JGLCaddieScoreTableViewCell.m */,
+			);
+			path = "球童操作页";
+			sourceTree = "<group>";
+		};
 		822562671D2DFB8400ABA7F3 /* SDPhotoBrowser */ = {
 			isa = PBXGroup;
 			children = (
@@ -7515,6 +7528,7 @@
 				36BF00861BC772EF005B3CE2 /* MySetViewController.m in Sources */,
 				F569A1481CE35AA500CD0FD5 /* JGTeamChannelActivityTableViewCell.m in Sources */,
 				827BD52F1D214A42009AF9CA /* JGLAddBankCardViewController.m in Sources */,
+				821DB9CC1D5D6FAB00C882C2 /* JGLCaddieScoreTableViewCell.m in Sources */,
 				368DCA611C88152700871D28 /* ResponseViewController.m in Sources */,
 				2012AD661D2BB1A200F70E40 /* JGHAwardModel.m in Sources */,
 				36BFFF841BC76D09005B3CE2 /* IWTextView.m in Sources */,

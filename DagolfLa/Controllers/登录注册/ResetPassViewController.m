@@ -13,6 +13,9 @@
 #define kSend_URL @"user/sendPassByMobile.do"
 #import "UserDataInformation.h"
 #import "UserInformationModel.h"
+
+#import "JPUSHService.h"
+
 @interface ResetPassViewController ()<UITextFieldDelegate,UIAlertViewDelegate>
 {
     //手机号
@@ -78,6 +81,8 @@
 -(void)resetClick
 {
     [_textPass resignFirstResponder];
+    _btnBind.userInteractionEnabled = NO;
+    _btnBind.backgroundColor = [UIColor lightGrayColor];
     [_dict setObject:_textPass.text forKey:@"psw"];
     [_dict setObject:@3 forKey:@"login"];
     [_dict setObject:_tokenStr forKey:@"openid"];
@@ -89,7 +94,6 @@
         ////NSLog(@"dicr == %@",_dict);
         NSDictionary *userData = [NSJSONSerialization JSONObjectWithData:respondsData options:NSJSONReadingMutableContainers error:nil];
         //////NSLog(@"%@",userData);
-        
         if ([[userData objectForKey:@"success"] boolValue]) {
             //注册成功
             //////NSLog(@"%@",[userData objectForKey:@"message"]);
@@ -103,28 +107,99 @@
             [_dict setValue:i forKey:@"userId"];
             //                ////NSLog(@"%@",_userInfoDict);
             NSUserDefaults *user=[NSUserDefaults standardUserDefaults];
+            //判断是否登录，用来社区的刷新
+            [user setObject:@1 forKey:@"isFirstEnter"];
+            [user setObject:[[userData objectForKey:@"rows"] objectForKey:@"mobile"] forKey:@"mobile"];
             [user setObject:[[userData objectForKey:@"rows"] objectForKey:@"userId"] forKey:@"userId"];
             if (![Helper isBlankString:[[userData objectForKey:@"rows"] objectForKey:@"pic"]]) {
                 [user setObject:[[userData objectForKey:@"rows"] objectForKey:@"pic"] forKey:@"pic"];
             }
-            if (![Helper isBlankString:[[userData objectForKey:@"rows"] objectForKey:@"userName"]])
-            {
-                [user setObject:[[userData objectForKey:@"rows"] objectForKey:@"userName"] forKey:@"userName"];
+            if (![Helper isBlankString:[[userData objectForKey:@"rows"] objectForKey:@"userName"] ]) {
+                [user setObject:[[userData objectForKey:@"rows"] objectForKey:@"userName"]forKey:@"userName"];
             }
-            [user setObject:[[userData objectForKey:@"rows"] objectForKey:@"sex"] forKey:@"sex"];
+            [user setObject:[[userData objectForKey:@"rows"] objectForKey:@"rongTk"] forKey:@"rongTk"];
             [user synchronize];
             
+//            //极光推送的id和数据
+//            [self postAppJpost];
+//            
+//            NSString *token = [[userData objectForKey:@"rows"] objectForKey:@"rongTk"];
+//            //注册融云
+//            [self requestRCIMWithToken:token];
+//            //保存信息
+//            [self saveUserMobileAndPassword];            
+            
+            _btnBind.userInteractionEnabled = YES;
+            _btnBind.backgroundColor = [UIColor colorWithRed:0.33f green:0.70f blue:0.30f alpha:1.00f];
             [self.navigationController popToRootViewControllerAnimated:YES];
             
         }else {
             //注册失败
             UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:[userData objectForKey:@"message"] delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
             [alertView show];
+            _btnBind.userInteractionEnabled = YES;
+            _btnBind.backgroundColor = [UIColor colorWithRed:0.33f green:0.70f blue:0.30f alpha:1.00f];
         }
     } failed:^(NSError *error) {
         ////NSLog(@"%@",error);
+        _btnBind.userInteractionEnabled = YES;
+        _btnBind.backgroundColor = [UIColor colorWithRed:0.33f green:0.70f blue:0.30f alpha:1.00f];
     }];
 }
+
+
+
+//-(void)postAppJpost
+//{
+//    
+//    NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
+//    [dict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"userId"] forKey:@"userId"];
+//    if ([JPUSHService registrationID] != nil) {
+//        [dict setObject:[JPUSHService registrationID] forKey:@"jgpush"];
+//    }
+//    
+//    
+//    [[PostDataRequest sharedInstance] postDataRequest:@"user/updateUserInfo.do" parameter:dict success:^(id respondsData) {
+//    } failed:^(NSError *error) {
+//    }];
+//}
+//-(void)requestRCIMWithToken:(NSString *)token{
+//    NSUserDefaults *user=[NSUserDefaults standardUserDefaults];
+//    [RCIM sharedRCIM].globalConversationPortraitSize = CGSizeMake(40*ScreenWidth/375, 40*ScreenWidth/375);
+//    [[RCIM sharedRCIM] initWithAppKey:@"0vnjpoadnkihz"];
+//    [RCIM sharedRCIM].globalConversationAvatarStyle=RC_USER_AVATAR_CYCLE;
+//    [RCIM sharedRCIM].globalMessageAvatarStyle=RC_USER_AVATAR_CYCLE;
+//    [[RCIM sharedRCIM] setUserInfoDataSource:[UserDataInformation sharedInstance]];
+//    [[RCIM sharedRCIM] setGroupInfoDataSource:[UserDataInformation sharedInstance]];
+//    NSString *str1=[NSString stringWithFormat:@"%@",[user objectForKey:@"userId"]];
+//    NSString *str2=[NSString stringWithFormat:@"%@",[user objectForKey:@"userName"]];
+//    NSString *str3=[NSString stringWithFormat:@"http://www.dagolfla.com:8081/small_%@",[user objectForKey:@"pic"]];
+//    RCUserInfo *userInfo=[[RCUserInfo alloc] initWithUserId:str1 name:str2 portrait:str3];
+//    [RCIM sharedRCIM].currentUserInfo=userInfo;
+//    [RCIM sharedRCIM].enableMessageAttachUserInfo=NO;
+//    //            [RCIM sharedRCIM].receiveMessageDelegate=self;
+//    // 快速集成第二步，连接融云服务器
+//    [[RCIM sharedRCIM] connectWithToken:token success:^(NSString *userId) {
+//        //NSLog(@"1111");
+//        //自动登录   连接融云服务器
+//        [[UserDataInformation sharedInstance] synchronizeUserInfoRCIM];
+//        
+//    }error:^(RCConnectErrorCode status) {
+//        // Connect 失败
+//        //NSLog(@"11111");
+//    }tokenIncorrect:^() {
+//        // Token 失效的状态处理
+//        
+//    }];
+//}
+//
+//#pragma mark - 保存登陆信息
+//- (void)saveUserMobileAndPassword {
+//    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+//    [userDefaults setValuesForKeysWithDictionary:_dict];
+//    [userDefaults synchronize];
+//}
+
 
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string;
