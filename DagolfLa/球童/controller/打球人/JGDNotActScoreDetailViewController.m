@@ -87,7 +87,7 @@
         
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 10 * ProportionAdapter, screenWidth, 50 * ProportionAdapter)];
         label.backgroundColor = [UIColor whiteColor];
-        NSMutableAttributedString *lbStr = [[NSMutableAttributedString alloc] initWithString:@"球童 王二狗 正在为您记分"];
+        NSMutableAttributedString *lbStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"球童 %@ 正在为您记分", self.model.scoreUserName]];
         [lbStr addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"#32b14d"] range:NSMakeRange(3, lbStr.length - 10)];
         label.attributedText = lbStr;
         label.textAlignment = NSTextAlignmentCenter;

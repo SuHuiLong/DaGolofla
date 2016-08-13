@@ -29,6 +29,7 @@
 @property (nonatomic, copy) NSString *createtime;
 @property (nonatomic, strong) NSNumber *almost;
 @property (nonatomic, copy) NSString *date;
+@property (nonatomic, copy) NSString *scoreUserName;
 
 @end
 
