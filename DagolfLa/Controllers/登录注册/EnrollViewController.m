@@ -326,7 +326,10 @@ static int timeNumber = 60;
         
     }
 }
-
+-(void)dealloc
+{
+    _timer = nil;
+}
 
 #pragma mark --免责条款
 -(void)createResponsibility

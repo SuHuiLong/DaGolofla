@@ -238,8 +238,7 @@ static int timeNumber = 60;
         
         [[PostDataRequest sharedInstance] postDataRequest:@"user/queryMobileVaild.do" parameter:@{@"mobile":_textPhone.text,@"isreg":@0} success:^(id respondsData) {
             NSDictionary *dict1 = [NSJSONSerialization JSONObjectWithData:respondsData options:NSJSONReadingMutableContainers error:nil];
-            _btnCaptChe.userInteractionEnabled = YES;
-            _btnCaptChe.backgroundColor = [UIColor colorWithRed:0.33f green:0.70f blue:0.30f alpha:1.00f];
+            
             if ([[dict1 objectForKey:@"success"] boolValue]) {
                 
                 _testStr1 = [NSString stringWithFormat:@"%@",[dict1 objectForKey:@"message"]];
@@ -247,12 +246,11 @@ static int timeNumber = 60;
                 timeNumber = 60;
                 _timer=[NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(autoMoveTime) userInfo:nil repeats:YES];
                 [[NSRunLoop currentRunLoop] addTimer:_timer forMode:NSRunLoopCommonModes];
+                
             }else {
-                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:[dict1 objectForKey:@"message"] delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-                [alertView show];
-                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                    [alertView dismissWithClickedButtonIndex:0 animated:YES];
-                });
+                [[ShowHUD showHUD]showToastWithText:[dict1 objectForKey:@"message"] FromView:self.view];
+                _btnCaptChe.userInteractionEnabled = YES;
+                _btnCaptChe.backgroundColor = [UIColor colorWithRed:0.33f green:0.70f blue:0.30f alpha:1.00f];
             }
         } failed:^(NSError *error) {
             _btnCaptChe.userInteractionEnabled = YES;
@@ -278,6 +276,9 @@ static int timeNumber = 60;
 }
 
 - (void)autoMoveTime {
+    if (_btnCaptChe.userInteractionEnabled == NO) {
+        _btnCaptChe.backgroundColor = [UIColor colorWithRed:0.33f green:0.70f blue:0.30f alpha:1.00f];
+    }
     timeNumber--;
     _btnCaptChe.titleLabel.font = [UIFont systemFontOfSize:11];
     [_btnCaptChe setTitle:[NSString stringWithFormat:@"(%d)后重新获取",timeNumber] forState:UIControlStateNormal];
@@ -287,6 +288,10 @@ static int timeNumber = 60;
         [_timer invalidate];
         _btnCaptChe.userInteractionEnabled = YES;
     }
+}
+-(void)dealloc
+{
+    _timer = nil;
 }
 -(void)createView
 {

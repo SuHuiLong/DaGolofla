@@ -52,7 +52,7 @@ static NSString *const cellIdentifier=@"QQChart";
     [super viewDidDisappear:animated];
     
     [_timer invalidate];
-    _timer = nil;
+    
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -368,6 +368,10 @@ static int i = 0;
     
 }
 
+-(void)dealloc
+{
+    _timer = nil;
+}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];

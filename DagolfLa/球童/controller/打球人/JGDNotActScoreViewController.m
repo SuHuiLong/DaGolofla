@@ -18,6 +18,8 @@
 
 @property (nonatomic, strong) NSMutableArray *dataArray;
 @property (nonatomic, strong) NSMutableDictionary *dataDic;
+@property (nonatomic, strong) UILabel *label;
+@property (nonatomic, copy) NSString *name;
 
 @end
 
@@ -38,10 +40,9 @@
 
 - (void)setData{
     NSMutableDictionary *dic = [NSMutableDictionary dictionary];
-#warning --------- TEST
-    [dic setObject:@33261 forKey:@"scoreKey"];
+    [dic setObject:self.timeKey forKey:@"scoreKey"];
     [dic setObject:DEFAULF_USERID forKey:@"userKey"];
-    [dic setObject:[Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@&scoreKey=%@dagolfla.com", DEFAULF_USERID, @33261]] forKey:@"md5"];
+    [dic setObject:[Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@&scoreKey=%@dagolfla.com", DEFAULF_USERID, self.timeKey]] forKey:@"md5"];
     
     [[JsonHttp jsonHttp] httpRequest:@"score/getScoreList" JsonKey:nil withData:dic requestMethod:@"GET" failedBlock:^(id errType) {
         
@@ -91,8 +92,11 @@
                 view.backgroundColor = [UIColor whiteColor];
                 
                 self.tableView.tableFooterView = view;
-                
+                self.name = [NSString stringWithFormat:@"球童 %@ 正在为您记分", [[data objectForKey:@"list"][0] objectForKey:@"scoreUserName"]];
             }
+            
+
+            
             
             if ([data objectForKey:@"score"]) {
                 self.dataDic = [data objectForKey:@"score"];
@@ -164,13 +168,15 @@
         UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 152 * ProportionAdapter)];
         headerView.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];
         
-        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 10 * ProportionAdapter, screenWidth, 50 * ProportionAdapter)];
-        label.backgroundColor = [UIColor whiteColor];
-        NSMutableAttributedString *lbStr = [[NSMutableAttributedString alloc] initWithString:@"球童 王二狗 正在为您记分"];
-        [lbStr addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"#32b14d"] range:NSMakeRange(3, lbStr.length - 10)];
-        label.attributedText = lbStr;
-        label.textAlignment = NSTextAlignmentCenter;
-        [headerView addSubview:label];
+        self.label = [[UILabel alloc] initWithFrame:CGRectMake(0, 10 * ProportionAdapter, screenWidth, 50 * ProportionAdapter)];
+        self.label.backgroundColor = [UIColor whiteColor];
+        if (self.name) {
+            NSMutableAttributedString *lbStr = [[NSMutableAttributedString alloc] initWithString:self.name];
+            [lbStr addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"#32b14d"] range:NSMakeRange(3, lbStr.length - 10)];
+            self.label.attributedText = lbStr;
+        }
+        self.label.textAlignment = NSTextAlignmentCenter;
+        [headerView addSubview:self.label];
         
         UIView *viewTitle = [[UIView alloc] initWithFrame:CGRectMake(0, 60 * ProportionAdapter, screenWidth, 92 * ProportionAdapter)];
         viewTitle.backgroundColor = [UIColor whiteColor];

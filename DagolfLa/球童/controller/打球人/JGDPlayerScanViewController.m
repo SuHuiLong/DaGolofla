@@ -1,21 +1,21 @@
 //
-//  DPSweepCodeViewController.m
-//  24HMB
+//  JGDPlayerScanViewController.h
+//  DagolfLa
 //
-//  Created by Mac on 16/3/9.
-//  Copyright © 2016年 24hmb. All rights reserved.
+//  Created by 東 on 16/8/12.
+//  Copyright © 2016年 bhxx. All rights reserved.
 //
+
 #define KBARITEN_WH  (22.0f)
 #define QRCodeWidth  260.0   //正方形二维码的边长
 #define SCREENWidth  [UIScreenmainScreen].bounds.size.width   //设备屏幕的宽度
 #define SCREENHeight [UIScreen mainScreen].bounds.size.height //设备屏幕的高度
 
 #import <AVFoundation/AVFoundation.h>
-#import "JGLAddClientViewController.h"
-#import "JGMyBarCodeViewController.h"
+#import "JGDPlayerScanViewController.h"
+#import "JGDPlayPersonViewController.h"
 #import "UITool.h"
-#import "JGLScoreSureViewController.h"
-@interface JGLAddClientViewController ()<AVCaptureMetadataOutputObjectsDelegate>
+@interface JGDPlayerScanViewController ()<AVCaptureMetadataOutputObjectsDelegate>
 {
     AVCaptureSession *_session;//输入输出的中间桥梁
 }
@@ -28,7 +28,7 @@
 
 @end
 
-@implementation JGLAddClientViewController
+@implementation JGDPlayerScanViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -233,7 +233,7 @@
 }
 -(void)myCodeBarClick
 {
-    JGMyBarCodeViewController* barVc = [[JGMyBarCodeViewController alloc]init];
+    JGDPlayPersonViewController* barVc = [[JGDPlayPersonViewController alloc]init];
     [self.navigationController pushViewController:barVc animated:YES];
 }
 #pragma mark - 启动扫码
@@ -288,10 +288,6 @@
     
     return YES;
 }
--(void)dealloc
-{
-    _timer = nil;
-}
 
 #pragma mark - lineAnimation
 - (void)lineAnimation {
@@ -318,25 +314,45 @@
         NSString *str = metadataObject.stringValue;
         if ([str containsString:@"dagolfla"] == YES) {
             [_session stopRunning];
-            //dagolfla://qcode/user?userKey=191&qcodeID=5986859029096433&md5=EDB4A1EED2AD1DE49E2C478420A680B6
+            
+            
+            //           NSString *ssss = [Helper returnUrlString:str WithKey:@"md5"];
+            //            NSLog(@"%@", ssss);
+            //            NSString *sssss = [Helper returnUrlString:str WithKey:@"md6"];
+            //            NSLog(@"%@", sssss);
+            //
+            //
+            //            NSArray *array = [str componentsSeparatedByString:@"?"]; //从字符A中分隔成2个元素的数组
+            //            NSArray *array1 = [array[1] componentsSeparatedByString:@"&"];
+            //            NSArray *array2 = [array1[0] componentsSeparatedByString:@"="];
+            //            NSArray *array3 = ;
             NSMutableDictionary* dict =[[NSMutableDictionary alloc]init];
-            [dict setObject:[Helper returnUrlString:str WithKey:@"qcodeID"] forKey:@"qCodeID"];
-            [dict setObject:DEFAULF_USERID forKey:@"scanUserKey"];
-            [[JsonHttp jsonHttp]httpRequestWithMD5:@"score/doQCodeFinish" JsonKey:nil withData:dict failedBlock:^(id errType) {
+            [dict setObject:[Helper returnUrlString:str WithKey:@"userKey"] forKey:@"userKey"];
+            [dict setObject:[Helper returnUrlString:str WithKey:@"md5"] forKey:@"md5"];
+            
+            
+            [[JsonHttp jsonHttp]httpRequest:@"qcode/getUserInfo" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
                 
             } completionBlock:^(id data) {
+                
                 if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
-//                    NSMutableDictionary* dictDa = [[NSMutableDictionary alloc]init];
-//                    [dictDa setObject:[[data objectForKey:@"user"] objectForKey:@"userName"] forKey:[Helper returnUrlString:str WithKey:@"userKey"]];
-                    _blockData();
+                    NSMutableDictionary* dictDa = [[NSMutableDictionary alloc]init];
+                    [dictDa setObject:[[data objectForKey:@"user"] objectForKey:@"userName"] forKey:[Helper returnUrlString:str WithKey:@"userKey"]];
+                    _blockDict(dictDa);
                     [self.navigationController popViewControllerAnimated:YES];
                 }
                 else{
-                    
+                    [_session startRunning];
                     [Helper alertViewWithTitle:[data objectForKey:@"packResultMsg"] withBlock:^(UIAlertController *alertView) {
                         [self presentViewController:alertView animated:YES completion:nil];
                     }];
-                    [_session startRunning];
+                }
+                
+                NSLog(@"%@", data);
+                if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+                    
+                }else{
+                    
                 }
             }];
         }

@@ -8,16 +8,22 @@
 //
 
 #import "JGLCaddieScoreViewController.h"
-#import "JGDPlayPersoningTableViewCell.h"
-#import "JGDPlayPersonTableViewCell.h"
+#import "JGLCaddieScoreTableViewCell.h"
+//#import "JGDPlayPersoningTableViewCell.h"
+//#import "JGDPlayPersonTableViewCell.h"
 
 #import "JGDHistoryScoreViewController.h"
 #import "JGDPlayerHisScoreCardViewController.h" // 活动记分
 
 #import "JGLAddClientViewController.h"
-#import "JGMyBarCodeViewController.h"
-@interface JGLCaddieScoreViewController ()<UITableViewDelegate, UITableViewDataSource>
+#import "JGDPlayerQRCodeViewController.h"
 
+#import "JGLCaddieModel.h"
+@interface JGLCaddieScoreViewController ()<UITableViewDelegate, UITableViewDataSource>
+{
+    NSMutableArray* _dataArray;
+    NSInteger _page;
+}
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic ,strong) UILabel *tipLabel;
 
@@ -28,6 +34,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"球童记分";
+    _dataArray = [[NSMutableArray alloc]init];
+    _page = 0;
     [self createTable];
     //    [self setData];
     // Do any additional setup after loading the view.
@@ -63,11 +71,17 @@
     self.tableView = [[UITableView alloc] initWithFrame:[UIScreen mainScreen].bounds style:(UITableViewStyleGrouped)];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
-    [self.tableView registerClass:[JGDPlayPersoningTableViewCell class] forCellReuseIdentifier:@"JGDPlayPersoningTableViewCell"];
-    [self.tableView registerClass:[JGDPlayPersonTableViewCell class] forCellReuseIdentifier:@"JGDPlayPersonTableViewCell"];
+    [self.tableView registerClass:[JGLCaddieScoreTableViewCell class] forCellReuseIdentifier:@"JGLCaddieScoreTableViewCell"];
+//    [self.tableView registerClass:[JGDPlayPersonTableViewCell class] forCellReuseIdentifier:@"JGDPlayPersonTableViewCell"];
     self.tableView.scrollEnabled = NO;
     self.tableView.rowHeight = 50 * ProportionAdapter;
     [self.view addSubview:self.tableView];
+    
+    _tableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
+    _tableView.footer=[MJDIYBackFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRereshing)];
+    [_tableView.header beginRefreshing];
+    
+    
     
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 10 * ProportionAdapter, screenWidth, 200 * ProportionAdapter)];
     headerView.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];
@@ -127,17 +141,74 @@
     [self.view addSubview:footView];
 }
 
+// 刷新
+- (void)headRereshing
+{
+    [self downLoadData:_page isReshing:YES];
+}
+
+- (void)footRereshing
+{
+    [self downLoadData:_page isReshing:NO];
+}
+
+#pragma mark - 下载数据
+- (void)downLoadData:(NSInteger)page isReshing:(BOOL)isReshing{
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    [dict setObject:DEFAULF_USERID forKey:@"userKey"];
+    NSString* strMd = [Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@dagolfla.com",DEFAULF_USERID]];
+    [dict setObject:strMd forKey:@"md5"];
+    [[JsonHttp jsonHttp]httpRequest:@"score/getCaddieRecord" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
+        if (isReshing) {
+            [_tableView.header endRefreshing];
+        }else {
+            [_tableView.footer endRefreshing];
+        }
+    } completionBlock:^(id data) {
+        if ([data objectForKey:@"packSuccess"]) {
+            if (page == 0)
+            {
+                //清除数组数据
+                [_dataArray removeAllObjects];
+            }
+            for (NSDictionary *dic in [data objectForKey:@"list"]) {
+                JGLCaddieModel *model = [[JGLCaddieModel alloc]init];
+                [model setValuesForKeysWithDictionary:dic];
+                [_dataArray addObject:model];
+            }
+            [_dataArray addObjectsFromArray:[data objectForKey:@"teamSignUpList"]];
+            _page++;
+            [_tableView reloadData];
+        }else {
+            
+        }
+        [_tableView reloadData];
+        if (isReshing) {
+            [_tableView.header endRefreshing];
+        }else {
+            [_tableView.footer endRefreshing];
+        }
+    }];
+}
+
+
+
+
+
 
 #pragma mark --扫码或二维码点击事件
 
 -(void)erweimaClick:(UIButton *)btn
 {
-    JGMyBarCodeViewController* barVc = [[JGMyBarCodeViewController alloc]init];
+    JGDPlayerQRCodeViewController* barVc = [[JGDPlayerQRCodeViewController alloc]init];
     [self.navigationController pushViewController:barVc animated:YES];
 }
 -(void)saomaClick:(UIButton *)btn
 {
     JGLAddClientViewController* addVc = [[JGLAddClientViewController alloc]init];
+    addVc.blockData = ^(){
+        
+    };
     [self.navigationController pushViewController:addVc animated:YES];
 }
 
@@ -165,26 +236,36 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    
-    if (indexPath.section == 3) {
-        JGDPlayPersonTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"JGDPlayPersonTableViewCell"];
+    JGLCaddieScoreTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"JGLCaddieScoreTableViewCell"];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        NSMutableAttributedString * str = [[NSMutableAttributedString alloc] initWithString:@"球童 あそば 已完成记分并推送到您的 历史记分卡"];
-        [str addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"#32b14d"] range:NSMakeRange(str.length - 5, 5)];
-        cell.textLB.attributedText = str;
-        return cell;
-    }else{
-        JGDPlayPersoningTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"JGDPlayPersoningTableViewCell"];
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        
-        
-        return cell;
+    [cell showData:_dataArray[indexPath.row]];
+    if ([[_dataArray[indexPath.row] scoreFinish] integerValue] == 0) {
+        [cell.checkBtn addTarget:self action:@selector(continueClick) forControlEvents:UIControlEventTouchUpInside];
     }
+    else if ([[_dataArray[indexPath.row] scoreFinish] integerValue] == 1)
+    {
+        [cell.checkBtn addTarget:self action:@selector(finishClick) forControlEvents:UIControlEventTouchUpInside];
+    }
+    else{
+        
+    }
+    return cell;
     
 }
 
+-(void)continueClick
+{
+    
+}
+
+-(void)finishClick
+{
+    
+}
+
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 5;
+    return _dataArray.count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
