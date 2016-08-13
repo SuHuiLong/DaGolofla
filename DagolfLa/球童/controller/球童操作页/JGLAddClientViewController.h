@@ -11,6 +11,6 @@
 @interface JGLAddClientViewController : ViewController
 
 
-@property (copy, nonatomic) void(^blockData)();
+@property (copy, nonatomic) void(^blockData)(NSString *);
 
 @end
