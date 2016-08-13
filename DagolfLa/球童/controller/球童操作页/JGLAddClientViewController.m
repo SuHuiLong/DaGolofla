@@ -320,6 +320,7 @@
             [_session stopRunning];
             //dagolfla://qcode/user?userKey=191&qcodeID=5986859029096433&md5=EDB4A1EED2AD1DE49E2C478420A680B6
             NSMutableDictionary* dict =[[NSMutableDictionary alloc]init];
+            NSLog(@"%@",[Helper returnUrlString:str WithKey:@"qcodeID"]);
             [dict setObject:[Helper returnUrlString:str WithKey:@"qcodeID"] forKey:@"qCodeID"];
             [dict setObject:DEFAULF_USERID forKey:@"scanUserKey"];
             [[JsonHttp jsonHttp]httpRequestWithMD5:@"score/doQCodeFinish" JsonKey:nil withData:dict failedBlock:^(id errType) {
@@ -328,7 +329,7 @@
                 if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
 //                    NSMutableDictionary* dictDa = [[NSMutableDictionary alloc]init];
 //                    [dictDa setObject:[[data objectForKey:@"user"] objectForKey:@"userName"] forKey:[Helper returnUrlString:str WithKey:@"userKey"]];
-                    _blockData();
+                    _blockData([Helper returnUrlString:str WithKey:@"qcodeID"]);
                     [self.navigationController popViewControllerAnimated:YES];
                 }
                 else{
