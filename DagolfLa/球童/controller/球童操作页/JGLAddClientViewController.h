@@ -10,4 +10,7 @@
 
 @interface JGLAddClientViewController : ViewController
 
+
+@property (copy, nonatomic) void(^blockData)();
+
 @end

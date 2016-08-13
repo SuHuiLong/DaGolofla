@@ -16,7 +16,7 @@
 #import "JGDPlayerHisScoreCardViewController.h" // 活动记分
 
 #import "JGLAddClientViewController.h"
-#import "JGMyBarCodeViewController.h"
+#import "JGDPlayerQRCodeViewController.h"
 
 #import "JGLCaddieModel.h"
 @interface JGLCaddieScoreViewController ()<UITableViewDelegate, UITableViewDataSource>
@@ -200,12 +200,15 @@
 
 -(void)erweimaClick:(UIButton *)btn
 {
-    JGMyBarCodeViewController* barVc = [[JGMyBarCodeViewController alloc]init];
+    JGDPlayerQRCodeViewController* barVc = [[JGDPlayerQRCodeViewController alloc]init];
     [self.navigationController pushViewController:barVc animated:YES];
 }
 -(void)saomaClick:(UIButton *)btn
 {
     JGLAddClientViewController* addVc = [[JGLAddClientViewController alloc]init];
+    addVc.blockData = ^(){
+        
+    };
     [self.navigationController pushViewController:addVc animated:YES];
 }
 
