@@ -35,6 +35,8 @@
 - (void)configCabbieCommitImage:(UIImage *)image{
     self.photoImageTop.constant = 10 *ProportionAdapter;
     self.promptLableTop.constant = 12 *ProportionAdapter;
+    
+    self.photoImage.image = image;
 }
 
 - (void)configCabbieSuccess{

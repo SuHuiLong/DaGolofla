@@ -2808,6 +2808,7 @@
 			isa = PBXGroup;
 			children = (
 				2066E87E1D5D64A700A3A2B8 /* 我的奖励 */,
+				82864C601D5C21B700A94101 /* 球童操作页 */,
 				2010561D1D59C93600C90FDE /* 球童认证 */,
 				F5AAAA271D5974970016E6F6 /* 打球人 */,
 				201055D71D58A4C600C90FDE /* 添加打球人 */,
@@ -7240,7 +7241,7 @@
 				TargetAttributes = {
 					36BFFD271BC76C8D005B3CE2 = {
 						CreatedOnToolsVersion = 6.3.2;
-						DevelopmentTeam = 5P6JNXBH3C;
+						DevelopmentTeam = T8ML76W22A;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;

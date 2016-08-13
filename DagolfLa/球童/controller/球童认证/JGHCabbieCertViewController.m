@@ -146,6 +146,11 @@ static NSString *const JGHBtnCellIdentifier = @"JGHBtnCell";
         JGHCabbiePhotoCell *cabbiePhotoCell = [tableView dequeueReusableCellWithIdentifier:JGHCabbiePhotoCellIdentifier];
         //        [tranCell configScoreJGLAddActiivePlayModel:_playModel];
         cabbiePhotoCell.selectionStyle = UITableViewCellSelectionStyleNone;
+        cabbiePhotoCell.delegate = self;
+        if (_cabbieImage != nil) {
+            [cabbiePhotoCell configCabbieCommitImage:_cabbieImage];
+        }
+        
         return cabbiePhotoCell;
     }else{
         JGHLableAndFileTextCell *fielTextCell = [tableView dequeueReusableCellWithIdentifier:JGHLableAndFileTextCellIdentifier];
@@ -214,7 +219,9 @@ static NSString *const JGHBtnCellIdentifier = @"JGHBtnCell";
             {
                 _cabbieImage = (UIImage *)Data;
                 
-                [self.cabbieCertTableView reloadData];
+                NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:5];
+                NSArray *indexArray=[NSArray arrayWithObject:indexPath];
+                [self.cabbieCertTableView reloadRowsAtIndexPaths:indexArray withRowAnimation:UITableViewRowAnimationAutomatic];
             }
         }];
     }];
@@ -226,7 +233,9 @@ static NSString *const JGHBtnCellIdentifier = @"JGHBtnCell";
             {
                 _cabbieImage = (UIImage *)Data;
                 
-                [self.cabbieCertTableView reloadData];
+                NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:5];
+                NSArray *indexArray=[NSArray arrayWithObject:indexPath];
+                [self.cabbieCertTableView reloadRowsAtIndexPaths:indexArray withRowAnimation:UITableViewRowAnimationAutomatic];
             }
         }];
     }];
@@ -317,7 +326,7 @@ static NSString *const JGHBtnCellIdentifier = @"JGHBtnCell";
                         
                         [self.navigationController popViewControllerAnimated:YES];
                     }];
-                    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"系统提示" message:@"活动创建成功!" preferredStyle:UIAlertControllerStyleAlert];
+                    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"系统提示" message:@"球童认证成功!" preferredStyle:UIAlertControllerStyleAlert];
                     [alertController addAction:commitAction];
                     //获取主线层
                     if ([NSThread isMainThread]) {
