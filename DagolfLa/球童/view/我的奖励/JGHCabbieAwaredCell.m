@@ -37,10 +37,10 @@
     
     self.timeLable.text = model.exchangeTime;
     
-    if (model.balance < 0) {
-        self.monyLable.text = [NSString stringWithFormat:@"%td", model.balance];
+    if ([model.amount integerValue] < 0) {
+        self.monyLable.text = [NSString stringWithFormat:@"%@", model.amount];
     }else{
-        self.monyLable.text = [NSString stringWithFormat:@"+%td", model.balance];
+        self.monyLable.text = [NSString stringWithFormat:@"+%@", model.amount];
     }
 }
 

@@ -79,7 +79,7 @@
     
     
     self.title = self.teamName;
-    self.webView = [[WKWebView alloc]initWithFrame:self.view.bounds];
+    self.webView = [[WKWebView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight - 64)];
     [self.view addSubview:self.webView];
     self.webView.UIDelegate = self;
     self.webView.navigationDelegate = self;
