@@ -27,26 +27,25 @@
                             <constraint firstAttribute="height" constant="140" id="IS1-Bv-zRz"/>
                         </constraints>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="求真相" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="luL-60-MbB">
-                        <rect key="frame" x="138" y="160" width="45" height="18"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                        <nil key="highlightedColor"/>
-                    </label>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9RX-WW-X7X">
                         <rect key="frame" x="100" y="10" width="120" height="140"/>
                         <connections>
                             <action selector="imageViewBtn:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="zHR-FR-azU"/>
                         </connections>
                     </button>
+                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text=" " textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="MLe-0d-HEu">
+                        <rect key="frame" x="156" y="162" width="8" height="17"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <textInputTraits key="textInputTraits"/>
+                    </textField>
                 </subviews>
                 <constraints>
                     <constraint firstItem="eLZ-ca-zZU" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="Faw-ND-vOd"/>
                     <constraint firstItem="9RX-WW-X7X" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="JNh-CU-TqP"/>
                     <constraint firstItem="9RX-WW-X7X" firstAttribute="height" secondItem="eLZ-ca-zZU" secondAttribute="height" id="NDJ-qp-gsE"/>
-                    <constraint firstItem="luL-60-MbB" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="SuI-0a-hdr"/>
+                    <constraint firstItem="MLe-0d-HEu" firstAttribute="top" secondItem="eLZ-ca-zZU" secondAttribute="bottom" constant="12" id="OEb-FD-t5E"/>
+                    <constraint firstItem="MLe-0d-HEu" firstAttribute="centerX" secondItem="9RX-WW-X7X" secondAttribute="centerX" id="Vlu-Pe-r3j"/>
                     <constraint firstItem="9RX-WW-X7X" firstAttribute="centerX" secondItem="eLZ-ca-zZU" secondAttribute="centerX" id="aKg-Bg-AID"/>
-                    <constraint firstItem="luL-60-MbB" firstAttribute="top" secondItem="eLZ-ca-zZU" secondAttribute="bottom" constant="10" id="gtd-es-Gvh"/>
                     <constraint firstItem="zpz-ID-k2k" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="20" id="mcV-Vl-3FG"/>
                     <constraint firstItem="eLZ-ca-zZU" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="sGI-iO-wFk"/>
                     <constraint firstItem="9RX-WW-X7X" firstAttribute="width" secondItem="eLZ-ca-zZU" secondAttribute="width" id="veZ-wA-gvN"/>
@@ -58,8 +57,8 @@
                 <outlet property="photoImageH" destination="IS1-Bv-zRz" id="tg1-6F-A5r"/>
                 <outlet property="photoImageTop" destination="Faw-ND-vOd" id="Ii9-sc-gct"/>
                 <outlet property="photoImageW" destination="3kh-dh-atI" id="uol-WE-cpQ"/>
-                <outlet property="promptLable" destination="luL-60-MbB" id="hwS-js-1cC"/>
-                <outlet property="promptLableTop" destination="gtd-es-Gvh" id="R5r-XL-RcD"/>
+                <outlet property="proTextField" destination="MLe-0d-HEu" id="fnq-Wd-1yt"/>
+                <outlet property="promptLableTop" destination="OEb-FD-t5E" id="Iuf-hx-cqq"/>
                 <outlet property="titleLable" destination="zpz-ID-k2k" id="jOm-2k-L1z"/>
                 <outlet property="titleLableLeft" destination="z10-5F-GAu" id="iYh-ty-uJp"/>
                 <outlet property="titleLableTop" destination="mcV-Vl-3FG" id="etb-F7-T9F"/>

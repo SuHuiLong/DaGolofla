@@ -50,7 +50,7 @@ static NSString *const JGHLableAndLableCellIdentifier = @"JGHLableAndLableCell";
     
     self.view.backgroundColor = [UIColor whiteColor];
     self.navigationItem.title = @"认证完成";
-    _titleArray = @[@"", @"所属场地", @"姓名", @"球童编号", @"服务年限"];
+    _titleArray = @[@"", @"所属场地", @"姓别", @"球童编号", @"服务年限"];
     _model = [[JGHCaddieAuthModel alloc]init];
     self.pickPhoto = [[SXPickPhoto alloc]init];
     _sex = 0;
@@ -223,8 +223,13 @@ static NSString *const JGHLableAndLableCellIdentifier = @"JGHLableAndLableCell";
     if (indexPath.section == 0) {
         JGHCabbiePhotoCell *cabbiePhotoCell = [tableView dequeueReusableCellWithIdentifier:JGHCabbiePhotoCellIdentifier];
         cabbiePhotoCell.selectionStyle = UITableViewCellSelectionStyleNone;
-        [cabbiePhotoCell configCabbieSuccess];
+        if (_model.name) {
+            [cabbiePhotoCell configCabbieSuccess:_editor andName:_model.name];
+        }
+        
         cabbiePhotoCell.delegate = self;
+        cabbiePhotoCell.proTextField.delegate = self;
+        cabbiePhotoCell.proTextField.tag = 5;
         return cabbiePhotoCell;
     }else if (indexPath.section == 1){
         JGHLableAndLableCell *labelCell = [tableView dequeueReusableCellWithIdentifier:JGHLableAndLableCellIdentifier];
@@ -418,6 +423,8 @@ static NSString *const JGHLableAndLableCellIdentifier = @"JGHLableAndLableCell";
 - (void)textFieldDidEndEditing:(UITextField *)textField{
     if (textField.tag -100 == 3){
         _model.number = textField.text;
+    }else if (textField.tag == 5){
+        _model.name = textField.text;
     }else{
         _model.serviceTime = textField.text;
     }
