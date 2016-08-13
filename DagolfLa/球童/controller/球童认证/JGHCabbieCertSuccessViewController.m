@@ -68,6 +68,7 @@ static NSString *const JGHLableAndLableCellIdentifier = @"JGHLableAndLableCell";
     if (_editor == 0) {
         _editor = 1;
         [_item setTitle:@"保存"];
+        [self.cabbieCertSuccessTableView reloadData];
     }else{
         _editor = 0;
         [_item setTitle:@"编辑"];
@@ -203,6 +204,9 @@ static NSString *const JGHLableAndLableCellIdentifier = @"JGHLableAndLableCell";
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+    if (_editor == 1) {
+        return 5;
+    }
     return 6;
 }
 

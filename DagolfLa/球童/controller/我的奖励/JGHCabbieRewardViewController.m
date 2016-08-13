@@ -9,6 +9,7 @@
 #import "JGHCabbieRewardViewController.h"
 #import "JGHCabbieAwaredCell.h"
 #import "JGHTransDetailListModel.h"
+#import "JGDPrivateAccountViewController.h"
 
 static NSString *const JGHCabbieAwaredCellIdentifier = @"JGHCabbieAwaredCell";
 
@@ -85,6 +86,11 @@ static NSString *const JGHCabbieAwaredCellIdentifier = @"JGHCabbieAwaredCell";
 - (void)createBarView:(NSInteger)barId andTotalPrice:(float)price{
     if (barId == 0) {
         self.cabbieRewardTableView.frame = CGRectMake(0, 0, screenWidth, screenHeight - 64 -44*ProportionAdapter);
+        if (_totalLable != nil) {
+            [_totalLable removeFromSuperview];
+            [_barView removeFromSuperview];
+        }
+        
         _barView = [[UIView alloc]initWithFrame:CGRectMake(0, screenHeight -64 -44*ProportionAdapter, screenWidth, 44*ProportionAdapter)];
         _totalLable = [[UILabel alloc]initWithFrame:CGRectMake(10*ProportionAdapter, 10 *ProportionAdapter, screenWidth/2, 20*ProportionAdapter)];
         _totalLable.text = [NSString stringWithFormat:@"合计：¥%.2f", price];
@@ -129,7 +135,9 @@ static NSString *const JGHCabbieAwaredCellIdentifier = @"JGHCabbieAwaredCell";
 - (void)pushToMyAmount:(UIButton *)btn{
     btn.enabled = NO;
     NSLog(@"查看个人账户");
+    JGDPrivateAccountViewController *priveCtrl = [[JGDPrivateAccountViewController alloc]init];
     
+    [self.navigationController pushViewController:priveCtrl animated:YES];
     
     btn.enabled = YES;
 }
@@ -144,7 +152,20 @@ static NSString *const JGHCabbieAwaredCellIdentifier = @"JGHCabbieAwaredCell";
     
     self.cabbieRewardTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.cabbieRewardTableView.backgroundColor = [UIColor colorWithHexString:BG_color];
+    
+    self.cabbieRewardTableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
+    self.cabbieRewardTableView.footer=[MJDIYBackFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRereshing)];
+    [self.cabbieRewardTableView.header beginRefreshing];
+    
     [self.view addSubview:self.cabbieRewardTableView];
+}
+- (void)headRereshing{
+    _page = 0;
+    [self loadRewardData];
+}
+- (void)footRereshing{
+    _page ++;
+    [self loadRewardData];
 }
 #pragma mark -- tableView代理
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{

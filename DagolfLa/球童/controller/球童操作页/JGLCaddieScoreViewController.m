@@ -19,6 +19,8 @@
 #import "JGDPlayerQRCodeViewController.h"
 
 #import "JGLCaddieModel.h"
+#import "JGHCabbieRewardViewController.h"
+
 @interface JGLCaddieScoreViewController ()<UITableViewDelegate, UITableViewDataSource>
 {
     NSMutableArray* _dataArray;
@@ -36,9 +38,24 @@
     self.title = @"球童记分";
     _dataArray = [[NSMutableArray alloc]init];
     _page = 0;
+    
+    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    btn.frame = CGRectMake(0, 0, 44, 44);
+    btn.titleLabel.font = [UIFont systemFontOfSize:FontSize_Normal];
+    [btn setImage:[UIImage imageNamed:@"cabbArwed"] forState:UIControlStateNormal];
+    [btn addTarget:self action:@selector(pushRewardCtrl:) forControlEvents:UIControlEventTouchUpInside];
+    btn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
+    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithCustomView:btn];
+    self.navigationItem.rightBarButtonItem = rightItem;
+    
     [self createTable];
     //    [self setData];
     // Do any additional setup after loading the view.
+}
+#pragma mark -- 奖励
+- (void)pushRewardCtrl:(UIButton *)btn{
+    JGHCabbieRewardViewController *cabbieRewardCtrl = [[JGHCabbieRewardViewController alloc]init];
+    [self.navigationController pushViewController:cabbieRewardCtrl animated:YES];
 }
 
 - (void)setData{
