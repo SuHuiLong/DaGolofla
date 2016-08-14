@@ -19,13 +19,20 @@
 #import "JGDPlayerQRCodeViewController.h"
 
 #import "JGLCaddieModel.h"
+
+#import "JGLScoreSureViewController.h"
 @interface JGLCaddieScoreViewController ()<UITableViewDelegate, UITableViewDataSource>
 {
     NSMutableArray* _dataArray;
     NSInteger _page;
+    NSString* _qCodeId;
+    NSString* _qcodeUserName,* _qcodeUserMobile;//被扫码客户的用户名,手机号
+    NSNumber* _qcodeUserKey;
 }
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic ,strong) UILabel *tipLabel;
+
+@property (nonatomic, strong)  NSTimer * timer;
 
 @end
 
@@ -36,9 +43,24 @@
     self.title = @"球童记分";
     _dataArray = [[NSMutableArray alloc]init];
     _page = 0;
+    
+    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    btn.frame = CGRectMake(0, 0, 44, 44);
+    btn.titleLabel.font = [UIFont systemFontOfSize:FontSize_Normal];
+    [btn setImage:[UIImage imageNamed:@"cabbArwed"] forState:UIControlStateNormal];
+    [btn addTarget:self action:@selector(pushRewardCtrl:) forControlEvents:UIControlEventTouchUpInside];
+    btn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
+    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithCustomView:btn];
+    self.navigationItem.rightBarButtonItem = rightItem;
+    
     [self createTable];
     //    [self setData];
     // Do any additional setup after loading the view.
+}
+#pragma mark -- 奖励
+- (void)pushRewardCtrl:(UIButton *)btn{
+    JGHCabbieRewardViewController *cabbieRewardCtrl = [[JGHCabbieRewardViewController alloc]init];
+    [self.navigationController pushViewController:cabbieRewardCtrl animated:YES];
 }
 
 - (void)setData{
@@ -206,15 +228,120 @@
 -(void)saomaClick:(UIButton *)btn
 {
     JGLAddClientViewController* addVc = [[JGLAddClientViewController alloc]init];
-    addVc.blockData = ^(){
-        
+    addVc.blockData = ^(NSString* numQId){
+        _qCodeId = numQId;
+        self.timer = [NSTimer scheduledTimerWithTimeInterval:3 target:self selector:@selector(loopAct) userInfo:nil repeats:YES];
+        [self.timer fire];
     };
     [self.navigationController pushViewController:addVc animated:YES];
 }
 
+- (void)loopAct{
+    
+    NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
+    NSLog(@"%@",_qCodeId);
+    [dic setObject:_qCodeId forKey:@"qCodeID"];
+    [[JsonHttp jsonHttp] httpRequestWithMD5:@"score/queryLoopCaddieQCodeState" JsonKey:nil withData:dic failedBlock:^(id errType) {
+        [[ShowHUD showHUD]showToastWithText:[NSString stringWithFormat:@"%@",errType] FromView:self.view];
+    } completionBlock:^(id data) {
+        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+            if ([data objectForKey:@"bean"]) {
+                NSDictionary *dataDic = [data objectForKey:@"bean"];
+                if ([[dataDic objectForKey:@"state"] integerValue] == 2) {
+                    // 1 扫码成功  2 同意  3 拒绝
+                    [self.timer invalidate];
+                    self.timer = nil;
+                    _qcodeUserName = [NSString stringWithFormat:@"%@",[dataDic objectForKey:@"qcodeUserName"]];
+                    _qcodeUserKey  = [dataDic objectForKey:@"qcodeUserKey"];
+                    [self alertAct];
+                    
+                }
+                else{
+                    NSLog(@"11111111222222222222");
+                }
+            }
+        }else{
+            if ([data objectForKey:@"packResultMsg"]) {
+                [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+            }
+        }
+    }];
+}
+
+// 监听状态改变后
+
+- (void)alertAct{
+    if (_isCaddie == 1) {
+        
+        JGLScoreSureViewController* suVc = [[JGLScoreSureViewController alloc]init];
+        suVc.userKeyPlayer = _qcodeUserKey;
+        suVc.userNamePlayer = _qcodeUserName;
+        
+        [self.navigationController pushViewController:suVc animated:YES];
+        
+    }
+    else{
+        
+        NSString* str ;
+        str = [NSString stringWithFormat:@"客户同意你进行记分"];
+        
+        
+        [Helper alertViewWithTitle:str withBlockCancle:^{
+            
+            NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
+            [dic setObject:_qCodeId forKey:@"qCodeID"];
+            [dic setObject:@3 forKey:@"state"];
+            [[JsonHttp jsonHttp] httpRequestWithMD5:@"score/doCommitCaddieQCode" JsonKey:nil withData:dic failedBlock:^(id errType) {
+                [[ShowHUD showHUD]showToastWithText:[NSString stringWithFormat:@"%@",errType] FromView:self.view];
+            } completionBlock:^(id data) {
+                if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+                    if ([data objectForKey:@"bean"]) {
+                        //                    NSDictionary *dataDic = [data objectForKey:@"bean"];
+                        //                    if ([[dataDic objectForKey:@"state"] integerValue] == 1) {
+                        //                        // 1 扫码成功  2 同意  3 拒绝
+                        //                        NSLog(@"1111");
+                        //                    }
+                    }
+                    
+                }else{
+                    if ([data objectForKey:@"packResultMsg"]) {
+                        [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+                    }
+                }
+            }];
+        } withBlockSure:^{
+            
+            NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
+            [dic setObject:_qCodeId forKey:@"qCodeID"];
+            [dic setObject:@2 forKey:@"state"];
+            [[JsonHttp jsonHttp] httpRequestWithMD5:@"score/doCommitCaddieQCode" JsonKey:nil withData:dic failedBlock:^(id errType) {
+                [[ShowHUD showHUD]showToastWithText:[NSString stringWithFormat:@"%@",errType] FromView:self.view];
+            } completionBlock:^(id data) {
+                if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+                    //                if ([data objectForKey:@"bean"]) {
+                    //                    NSDictionary *dataDic = [data objectForKey:@"bean"];
+                    //                    if ([[dataDic objectForKey:@"state"] integerValue] == 1) {
+                    //                        // 1 扫码成功  2 同意  3 拒绝
+                    //                        NSLog(@"2222");
+                    //                    }
+                    //                }
+                    
+                }else{
+                    if ([data objectForKey:@"packResultMsg"]) {
+                        [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+                    }
+                }
+            }];
+        } withBlock:^(UIAlertController *alertView) {
+            [self presentViewController:alertView animated:YES completion:nil];
+        }];
+    }
+}
+
+
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    JGDPlayerHisScoreCardViewController *DPHVC = [[JGDPlayerHisScoreCardViewController alloc] init];
-    [self.navigationController pushViewController:DPHVC animated:YES];
+    
 }
 
 

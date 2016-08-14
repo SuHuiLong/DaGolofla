@@ -16,6 +16,7 @@
 #import "BallParkViewController.h"
 #import "SXPickPhoto.h"
 #import "JGHCabbieRewardViewController.h"
+#import "JGLChooseScoreViewController.h"
 
 static NSString *const JGHLableAndFileTextCellIdentifier = @"JGHLableAndFileTextCell";
 static NSString *const JGHBtnCellIdentifier = @"JGHBtnCell";
@@ -49,7 +50,7 @@ static NSString *const JGHLableAndLableCellIdentifier = @"JGHLableAndLableCell";
     
     self.view.backgroundColor = [UIColor whiteColor];
     self.navigationItem.title = @"认证完成";
-    _titleArray = @[@"", @"所属场地", @"姓名", @"球童编号", @"服务年限"];
+    _titleArray = @[@"", @"所属场地", @"姓别", @"球童编号", @"服务年限"];
     _model = [[JGHCaddieAuthModel alloc]init];
     self.pickPhoto = [[SXPickPhoto alloc]init];
     _sex = 0;
@@ -67,28 +68,29 @@ static NSString *const JGHLableAndLableCellIdentifier = @"JGHLableAndLableCell";
     if (_editor == 0) {
         _editor = 1;
         [_item setTitle:@"保存"];
+        [self.cabbieCertSuccessTableView reloadData];
     }else{
         _editor = 0;
         [_item setTitle:@"编辑"];
         
         [self.view endEditing:YES];
         
-        if (_model.ballName) {
+        if (!_model.ballName) {
             [[ShowHUD showHUD]showToastWithText:@"请选择球场！" FromView:self.view];
             return;
         }
         
-        if (_model.name) {
+        if (!_model.name) {
             [[ShowHUD showHUD]showToastWithText:@"请填写姓名！" FromView:self.view];
             return;
         }
         
-        if (_model.number) {
+        if (!_model.number) {
             [[ShowHUD showHUD]showToastWithText:@"请填写球童编号！" FromView:self.view];
             return;
         }
         
-        if (_model.serviceTime) {
+        if (!_model.serviceTime) {
             [[ShowHUD showHUD]showToastWithText:@"请填写服务年限！" FromView:self.view];
             return;
         }
@@ -130,28 +132,13 @@ static NSString *const JGHLableAndLableCellIdentifier = @"JGHLableAndLableCell";
                     } completionBlock:^(id data) {
                         NSLog(@"data == %@", data);
                         if ([[data objectForKey:@"code"] integerValue] == 1) {
-                            UIAlertAction *commitAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-                                
-                                [self.navigationController popViewControllerAnimated:YES];
-                            }];
-                            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"系统提示" message:@"活动创建成功!" preferredStyle:UIAlertControllerStyleAlert];
-                            [alertController addAction:commitAction];
-                            //获取主线层
-                            if ([NSThread isMainThread]) {
-                                NSLog(@"Yay!");
-                                [self presentViewController:alertController animated:YES completion:nil];
-                                [self.navigationController popViewControllerAnimated:YES];
-                            } else {
-                                NSLog(@"Humph, switching to main");
-                                dispatch_async(dispatch_get_main_queue(), ^{
-                                    [self presentViewController:alertController animated:YES completion:nil];
-                                });
-                            }
-                            
+                            [[ShowHUD showHUD]showToastWithText:@"保存成功!" FromView:self.view];
                         }else{
-                            
+                            [[ShowHUD showHUD]showToastWithText:@"头像上传失败!" FromView:self.view];
                         }
                     }];
+                }else{
+                    [[ShowHUD showHUD]showToastWithText:@"保存成功!" FromView:self.view];
                 }
             }else{
                 if ([data objectForKey:@"packResultMsg"]) {
@@ -217,6 +204,9 @@ static NSString *const JGHLableAndLableCellIdentifier = @"JGHLableAndLableCell";
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+    if (_editor == 1) {
+        return 5;
+    }
     return 6;
 }
 
@@ -233,13 +223,23 @@ static NSString *const JGHLableAndLableCellIdentifier = @"JGHLableAndLableCell";
     if (indexPath.section == 0) {
         JGHCabbiePhotoCell *cabbiePhotoCell = [tableView dequeueReusableCellWithIdentifier:JGHCabbiePhotoCellIdentifier];
         cabbiePhotoCell.selectionStyle = UITableViewCellSelectionStyleNone;
-        [cabbiePhotoCell configCabbieSuccess];
+        if (_model.name) {
+            [cabbiePhotoCell configCabbieSuccess:_editor andName:_model.name];
+        }
+        
         cabbiePhotoCell.delegate = self;
+        cabbiePhotoCell.proTextField.delegate = self;
+        cabbiePhotoCell.proTextField.tag = 5;
         return cabbiePhotoCell;
     }else if (indexPath.section == 1){
         JGHLableAndLableCell *labelCell = [tableView dequeueReusableCellWithIdentifier:JGHLableAndLableCellIdentifier];
         labelCell.selectionStyle = UITableViewCellSelectionStyleNone;
-        labelCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        if (_editor == 1) {
+            labelCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        }else{
+            labelCell.accessoryType = UITableViewCellAccessoryNone;
+        }
+        
         if (_model.ballName) {
             [labelCell configBallName:_model.ballName];
         }
@@ -305,7 +305,11 @@ static NSString *const JGHLableAndLableCellIdentifier = @"JGHLableAndLableCell";
     }
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (indexPath.section == 0) {
+    if (_editor == 0) {
+        return;
+    }
+    
+    if (indexPath.section == 1) {
         //球场列表
         BallParkViewController *ballCtrl = [[BallParkViewController alloc]init];
         [ballCtrl setCallback:^(NSString *balltitle, NSInteger ballid) {
@@ -359,9 +363,9 @@ static NSString *const JGHLableAndLableCellIdentifier = @"JGHLableAndLableCell";
 #pragma mark -- 开始记分
 - (void)commitCabbieCert:(UIButton *)btn{
     btn.enabled = NO;
-    JGHCabbieRewardViewController *cabbieAwaredCtrl = [[JGHCabbieRewardViewController alloc]init];
+    JGLChooseScoreViewController *chooseScoreCtrl = [[JGLChooseScoreViewController alloc]init];
     
-    [self.navigationController pushViewController:cabbieAwaredCtrl animated:YES];
+    [self.navigationController pushViewController:chooseScoreCtrl animated:YES];
     
     btn.enabled = YES;
 }
@@ -379,6 +383,10 @@ static NSString *const JGHLableAndLableCellIdentifier = @"JGHLableAndLableCell";
 }
 #pragma mark -- 图片选择
 - (void)selectCabbieImageBtn:(UIButton *)btn{
+    if (_editor == 0) {
+        return;
+    }
+    
     UIAlertAction * act1 = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
     }];
     //拍照：
@@ -415,6 +423,8 @@ static NSString *const JGHLableAndLableCellIdentifier = @"JGHLableAndLableCell";
 - (void)textFieldDidEndEditing:(UITextField *)textField{
     if (textField.tag -100 == 3){
         _model.number = textField.text;
+    }else if (textField.tag == 5){
+        _model.name = textField.text;
     }else{
         _model.serviceTime = textField.text;
     }

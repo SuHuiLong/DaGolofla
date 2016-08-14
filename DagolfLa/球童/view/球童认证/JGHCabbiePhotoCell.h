@@ -25,7 +25,8 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *photoImageW;//120
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *photoImageH;//140
 
-@property (weak, nonatomic) IBOutlet UILabel *promptLable;
+@property (weak, nonatomic) IBOutlet UITextField *proTextField;
+
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *promptLableTop;//10
 
 @property (weak, nonatomic)id <JGHCabbiePhotoCellDelegate> delegate;
@@ -34,6 +35,6 @@
 
 - (void)configCabbieCommitImage:(UIImage *)image;
 
-- (void)configCabbieSuccess;
+- (void)configCabbieSuccess:(NSInteger)editor andName:(NSString *)name;
 
 @end

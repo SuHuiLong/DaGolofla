@@ -9,6 +9,7 @@
 #import "JGHCabbieRewardViewController.h"
 #import "JGHCabbieAwaredCell.h"
 #import "JGHTransDetailListModel.h"
+#import "JGDPrivateAccountViewController.h"
 
 static NSString *const JGHCabbieAwaredCellIdentifier = @"JGHCabbieAwaredCell";
 
@@ -17,6 +18,7 @@ static NSString *const JGHCabbieAwaredCellIdentifier = @"JGHCabbieAwaredCell";
     UIView *_barView;
     NSInteger _page;
     UILabel *_totalLable;
+    UIView *_noDataView;
 }
 
 @property (nonatomic, strong)UITableView *cabbieRewardTableView;
@@ -71,9 +73,10 @@ static NSString *const JGHCabbieAwaredCellIdentifier = @"JGHCabbieAwaredCell";
                 [self createBarView:0 andTotalPrice:totalCount];
                 [self.cabbieRewardTableView reloadData];
             }else{
-                
+                [self createBarView:1 andTotalPrice:1.0];
             }
         }else{
+            [self createBarView:1 andTotalPrice:1.0];
             if ([data objectForKey:@"packResultMsg"]) {
                 [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
             }
@@ -82,19 +85,62 @@ static NSString *const JGHCabbieAwaredCellIdentifier = @"JGHCabbieAwaredCell";
 }
 - (void)createBarView:(NSInteger)barId andTotalPrice:(float)price{
     if (barId == 0) {
+        self.cabbieRewardTableView.frame = CGRectMake(0, 0, screenWidth, screenHeight - 64 -44*ProportionAdapter);
+        if (_totalLable != nil) {
+            [_totalLable removeFromSuperview];
+            [_barView removeFromSuperview];
+        }
+        
         _barView = [[UIView alloc]initWithFrame:CGRectMake(0, screenHeight -64 -44*ProportionAdapter, screenWidth, 44*ProportionAdapter)];
         _totalLable = [[UILabel alloc]initWithFrame:CGRectMake(10*ProportionAdapter, 10 *ProportionAdapter, screenWidth/2, 20*ProportionAdapter)];
-        _totalLable.text = [NSString stringWithFormat:@"合计：%.2f", price];
+        _totalLable.text = [NSString stringWithFormat:@"合计：¥%.2f", price];
         [_barView addSubview:_totalLable];
         
         UIButton *myAccountBtn = [[UIButton alloc]initWithFrame:CGRectMake(screenWidth - 120*ProportionAdapter, 4*ProportionAdapter, 110*ProportionAdapter, 36 *ProportionAdapter)];
         [myAccountBtn setTitle:@"查看个人账户" forState:UIControlStateNormal];
+        [myAccountBtn setTintColor:[UIColor orangeColor]];
+        [myAccountBtn addTarget:self action:@selector(pushToMyAmount:) forControlEvents:UIControlEventTouchUpInside];
         [_barView addSubview:myAccountBtn];
-    }else{
         
+        [self.view addSubview:_barView];
+    }else{
+        self.cabbieRewardTableView.frame = CGRectMake(0, 0, 0, 0);
+        if (_totalLable != nil) {
+            [_totalLable removeFromSuperview];
+            [_barView removeFromSuperview];
+        }
+        
+        _noDataView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight - 64)];
+        UIImageView *nodataImageView = [[UIImageView alloc]initWithFrame:CGRectMake(134*ProportionAdapter, 94*ProportionAdapter, 107 *ProportionAdapter, 107 *ProportionAdapter)];
+        nodataImageView.image = [UIImage imageNamed:@"emjoembarrassed"];
+        [_noDataView addSubview:nodataImageView];
+        
+        UILabel *proLable = [[UILabel alloc]initWithFrame:CGRectMake(20*ProportionAdapter, 267 *ProportionAdapter, screenWidth - 40*ProportionAdapter, 25 *ProportionAdapter)];
+        proLable.font = [UIFont systemFontOfSize:18 *ProportionAdapter];
+        proLable.textAlignment = NSTextAlignmentCenter;
+        proLable.text = @"您还没有奖励记录哦";
+        [_noDataView addSubview:proLable];
+        
+        UIButton *amountBtn = [[UIButton alloc]initWithFrame:CGRectMake(130 *ProportionAdapter, 300 *ProportionAdapter, screenWidth - 260*ProportionAdapter, 30*ProportionAdapter)];
+        [amountBtn setTitle:@"查看个人账户" forState:UIControlStateNormal];
+        [amountBtn setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
+        amountBtn.titleLabel.textAlignment = NSTextAlignmentCenter;
+        [amountBtn addTarget:self action:@selector(pushToMyAmount:) forControlEvents:UIControlEventTouchUpInside];
+        [_noDataView addSubview:amountBtn];
+        
+        [self.view addSubview:_noDataView];
     }
 }
-
+#pragma mark -- 查看个人账户
+- (void)pushToMyAmount:(UIButton *)btn{
+    btn.enabled = NO;
+    NSLog(@"查看个人账户");
+    JGDPrivateAccountViewController *priveCtrl = [[JGDPrivateAccountViewController alloc]init];
+    
+    [self.navigationController pushViewController:priveCtrl animated:YES];
+    
+    btn.enabled = YES;
+}
 - (void)createCabbieRewardTableView{
     self.cabbieRewardTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight - 64 -44*ProportionAdapter) style:UITableViewStylePlain];
     
@@ -106,7 +152,20 @@ static NSString *const JGHCabbieAwaredCellIdentifier = @"JGHCabbieAwaredCell";
     
     self.cabbieRewardTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.cabbieRewardTableView.backgroundColor = [UIColor colorWithHexString:BG_color];
+    
+    self.cabbieRewardTableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
+    self.cabbieRewardTableView.footer=[MJDIYBackFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRereshing)];
+    [self.cabbieRewardTableView.header beginRefreshing];
+    
     [self.view addSubview:self.cabbieRewardTableView];
+}
+- (void)headRereshing{
+    _page = 0;
+    [self loadRewardData];
+}
+- (void)footRereshing{
+    _page ++;
+    [self loadRewardData];
 }
 #pragma mark -- tableView代理
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
@@ -122,6 +181,7 @@ static NSString *const JGHCabbieAwaredCellIdentifier = @"JGHCabbieAwaredCell";
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    NSLog(@"%td", indexPath.section);
     JGHCabbieAwaredCell *cabbieAwaredCell = [tableView dequeueReusableCellWithIdentifier:JGHCabbieAwaredCellIdentifier];
     cabbieAwaredCell.selectionStyle = UITableViewCellSelectionStyleNone;
     if (_dataArray.count > 0) {

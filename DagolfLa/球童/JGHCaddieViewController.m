@@ -64,6 +64,7 @@
 }
 - (IBAction)caddieBtn:(UIButton *)sender {
     JGLCaddieScoreViewController* cadVc = [[JGLCaddieScoreViewController alloc]init];
+    cadVc.isCaddie = 1;
     [self.navigationController pushViewController:cadVc animated:YES];
 }
 @end

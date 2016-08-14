@@ -13,7 +13,7 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
-    self.promptLable.font = [UIFont systemFontOfSize:15*ProportionAdapter];
+    self.proTextField.font = [UIFont systemFontOfSize:15*ProportionAdapter];
     
     self.photoImageW.constant = 120 *ProportionAdapter;
     self.photoImageH.constant = 120 *ProportionAdapter;
@@ -35,9 +35,22 @@
 - (void)configCabbieCommitImage:(UIImage *)image{
     self.photoImageTop.constant = 10 *ProportionAdapter;
     self.promptLableTop.constant = 12 *ProportionAdapter;
+    self.photoImage.image = image;
+    
+    self.proTextField.enabled = NO;
+    self.proTextField.text = @"求真相";
 }
 
-- (void)configCabbieSuccess{
+- (void)configCabbieSuccess:(NSInteger)editor andName:(NSString *)name{
+    if (editor == 1) {
+        self.proTextField.enabled = YES;
+    }else{
+        self.proTextField.enabled = NO;
+    }
+    
+    self.proTextField.text = name;
+    self.proTextField.placeholder = @"请输入姓名";
+    
     self.titleLable.hidden = YES;
     self.photoImageTop.constant = 22 *ProportionAdapter;
     self.promptLableTop.constant = 12 *ProportionAdapter;
