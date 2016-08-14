@@ -10,8 +10,6 @@
 
 @interface JGDPlayPersoningTableViewCell ()
 
-@property (nonatomic, strong) UILabel *titleLabel;
-@property (nonatomic, strong) UIButton *checkBtn;
 
 @end
 
@@ -24,7 +22,6 @@
         self.titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(10 * ProportionAdapter, 0, 300 * ProportionAdapter, 50 * ProportionAdapter)];
         self.titleLabel.textColor = [UIColor colorWithHexString:@"#313131"];
         self.titleLabel.font = [UIFont systemFontOfSize:15 * ProportionAdapter];
-        self.titleLabel.text = @"我的妹妹哪有这么可爱";
         [self.contentView addSubview:self.titleLabel];
         
         self.checkBtn = [UIButton buttonWithType:(UIButtonTypeCustom)];
