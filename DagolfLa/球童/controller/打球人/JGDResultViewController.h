@@ -10,4 +10,7 @@
 
 @interface JGDResultViewController : ViewController
 
+@property (nonatomic, copy) NSString *qcodeUserName;
+@property (nonatomic, assign) NSInteger state;
+
 @end

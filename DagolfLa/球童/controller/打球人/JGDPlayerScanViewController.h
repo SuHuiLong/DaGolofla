@@ -10,6 +10,6 @@
 
 @interface JGDPlayerScanViewController : ViewController
 
-@property (copy, nonatomic) void (^blockDict)(NSMutableDictionary* );
+//@property (copy, nonatomic) void (^blockDict)(NSMutableDictionary* );
 
 @end

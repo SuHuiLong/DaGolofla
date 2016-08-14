@@ -20,6 +20,9 @@
 
 #import "JGDPlayerModel.h"
 
+#import "JGHCabbieCertViewController.h"
+#import "JGDPlayerScanViewController.h"
+
 @interface JGDPlayPersonViewController ()<UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic, strong) UITableView *tableView;
@@ -80,7 +83,10 @@
                 detailLB.textColor = [UIColor colorWithHexString:@"#a0a0a0"];
                 detailLB.numberOfLines = 0;
                 [self.view addSubview:detailLB];
-
+                
+                UIBarButtonItem *rightBtn = [[UIBarButtonItem alloc] initWithTitle:@"我是球童" style:UIBarButtonItemStyleDone target:self action:@selector(ballBoy)];
+                rightBtn.tintColor = [UIColor whiteColor];
+                self.navigationItem.rightBarButtonItem = rightBtn;
             }
             
         }else{
@@ -90,6 +96,14 @@
         }
     }];
 
+}
+
+
+#pragma mark --- 我是球童  － 球童认证
+
+- (void)ballBoy{
+    JGHCabbieCertViewController *cabVC = [[JGHCabbieCertViewController alloc] init];
+    [self.navigationController pushViewController:cabVC animated:YES];
 }
 
 #pragma mark ----- 创建 tableView
@@ -166,26 +180,32 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     JGDPlayerModel *model = self.dataArray[indexPath.section];
     if ([model.scoreFinish integerValue] == 1) {
-        
+
         JGDHistoryScoreViewController *hisVC = [[JGDHistoryScoreViewController alloc] init];
         [self.navigationController pushViewController:hisVC animated:YES];
         
     }else{
         
-        if ([model.srcType integerValue] == 1) {
-            JGDPlayerHisScoreCardViewController *DPHVC = [[JGDPlayerHisScoreCardViewController alloc] init];
-            DPHVC.timeKey = model.timeKey;
-            [self.navigationController pushViewController:DPHVC animated:YES];
-        }else{
-            JGDNotActScoreViewController *noActVC = [[JGDNotActScoreViewController alloc] init];
-            noActVC.timeKey = model.timeKey;
-            [self.navigationController pushViewController:noActVC animated:YES];
-            
-        }
+//        JGDPlayPersoningTableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+//        [cell.checkBtn addTarget:self action:@selector(checkAct:) forControlEvents:(UIControlEventTouchUpInside)];
+//        cell.tag = indexPath.section;
+
     }
-    
 }
 
+- (void)checkAct:(UIButton *)btn{
+    JGDPlayerModel *model = self.dataArray[btn.tag];
+    if ([model.srcType integerValue] == 1) {
+        JGDPlayerHisScoreCardViewController *DPHVC = [[JGDPlayerHisScoreCardViewController alloc] init];
+        DPHVC.timeKey = model.timeKey;
+        [self.navigationController pushViewController:DPHVC animated:YES];
+    }else{
+        JGDNotActScoreViewController *noActVC = [[JGDNotActScoreViewController alloc] init];
+        noActVC.timeKey = model.timeKey;
+        [self.navigationController pushViewController:noActVC animated:YES];
+        
+    }
+}
 
 #pragma mark ------- 我的二维码
 
@@ -195,8 +215,10 @@
 }
 
 - (void)scanAct{
-    JGDResultViewController *resultVC = [[JGDResultViewController alloc] init];
-    [self.navigationController pushViewController:resultVC animated:YES];
+    JGDPlayerScanViewController *scanVC = [[JGDPlayerScanViewController alloc] init];
+    [self.navigationController pushViewController:scanVC animated:YES];
+//    JGDResultViewController *resultVC = [[JGDResultViewController alloc] init];
+//    [self.navigationController pushViewController:resultVC animated:YES];
 }
 
 #pragma mark ---查看更多
@@ -228,9 +250,10 @@
         return cell;
     }else{
         JGDPlayPersoningTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"JGDPlayPersoningTableViewCell"];
+        cell.titleLabel.text = [NSString stringWithFormat:@"球童 %@ 正在为您记分", model.scoreUserName];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        
-        
+        [cell.checkBtn addTarget:self action:@selector(checkAct:) forControlEvents:(UIControlEventTouchUpInside)];
+        cell.tag = indexPath.section;
         return cell;
     }
 

@@ -22,16 +22,18 @@
 @implementation JGDPlayerQRCodeViewController
 
 - (void)viewWillAppear:(BOOL)animated{
+    
     [super viewWillAppear:animated];
     
 }
 
+// 解析图片的方法
 - (void)readQRCodeFromImageWithFileURL:(NSURL *)url{
     
     CIImage *image = [CIImage imageWithContentsOfURL:url];
     UIImage *barImage = [UIImage imageWithCIImage:image];
     self.imgvBar.image = barImage;
-
+    
     if (image) {
         CIDetector *qrDetector = [CIDetector detectorOfType:CIDetectorTypeQRCode context:[CIContext contextWithOptions:@{kCIContextUseSoftwareRenderer : @(YES)}] options:@{CIDetectorAccuracy : CIDetectorAccuracyHigh}];
         NSArray *features = [qrDetector featuresInImage:image];
@@ -55,22 +57,17 @@
                 [[ShowHUD showHUD]showToastWithText:[NSString stringWithFormat:@"%@",errType] FromView:self.view];
             } completionBlock:^(id data) {
                 if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
-
+                    
                     NSLog(@"-------%@-----------", self.qcodeID);
-
+                    
                     self.timer = [NSTimer scheduledTimerWithTimeInterval:3 target:self selector:@selector(loopAct) userInfo:nil repeats:YES];
                     [self.timer fire];
-                    
-
-                    
                 }else{
                     if ([data objectForKey:@"packResultMsg"]) {
                         [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
                     }
                 }
             }];
-            
-            
         }
     }
 }
@@ -93,16 +90,14 @@
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
             if ([data objectForKey:@"bean"]) {
                 NSDictionary *dataDic = [data objectForKey:@"bean"];
-                NSLog(@"%@---------*******--------%@--", [dataDic objectForKey:@"state"], self.qcodeID);
                 if ([[dataDic objectForKey:@"state"] integerValue] == 1) {
                     // 1 扫码成功  2 同意  3 拒绝
                     [self.timer invalidate];
                     self.timer = nil;
-                    NSLog(@"%@-----------", [dataDic objectForKey:@"state"]);
                     [self alertAct];
                 }
             }
-         
+            
         }else{
             if ([data objectForKey:@"packResultMsg"]) {
                 [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
@@ -116,6 +111,27 @@
 
 - (void)alertAct{
     [Helper alertViewWithTitle:@"球童 希望为您记分" withBlockCancle:^{
+        
+        NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
+        [dic setObject:self.qcodeID forKey:@"qCodeID"];
+        [dic setObject:@3 forKey:@"state"];
+        [[JsonHttp jsonHttp] httpRequestWithMD5:@"score/doCommitCaddieQCode" JsonKey:nil withData:dic failedBlock:^(id errType) {
+            [[ShowHUD showHUD]showToastWithText:[NSString stringWithFormat:@"%@",errType] FromView:self.view];
+        } completionBlock:^(id data) {
+            if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+                if ([data objectForKey:@"bean"]) {
+                    NSDictionary *dataDic = [data objectForKey:@"bean"];
+                    if ([[dataDic objectForKey:@"state"] integerValue] == 1) {
+                        // 1 扫码成功  2 同意  3 拒绝
+                    }
+                }
+                [self.navigationController popViewControllerAnimated:YES];
+            }else{
+                if ([data objectForKey:@"packResultMsg"]) {
+                    [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+                }
+            }
+        }];
         
     } withBlockSure:^{
         
@@ -133,7 +149,7 @@
                         
                     }
                 }
-                
+                [self.navigationController popViewControllerAnimated:YES];
             }else{
                 if ([data objectForKey:@"packResultMsg"]) {
                     [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
@@ -141,33 +157,7 @@
             }
         }];
         
-        
-        
-        [self.navigationController popViewControllerAnimated:YES];
     } withBlock:^(UIAlertController *alertView) {
-        
-        NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
-        [dic setObject:self.qcodeID forKey:@"qCodeID"];
-        [dic setObject:@3 forKey:@"state"];
-        [[JsonHttp jsonHttp] httpRequestWithMD5:@"score/doCommitCaddieQCode" JsonKey:nil withData:dic failedBlock:^(id errType) {
-            [[ShowHUD showHUD]showToastWithText:[NSString stringWithFormat:@"%@",errType] FromView:self.view];
-        } completionBlock:^(id data) {
-            if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
-                if ([data objectForKey:@"bean"]) {
-                    NSDictionary *dataDic = [data objectForKey:@"bean"];
-                    if ([[dataDic objectForKey:@"state"] integerValue] == 1) {
-                        // 1 扫码成功  2 同意  3 拒绝
-                        
-                    }
-                }
-                
-            }else{
-                if ([data objectForKey:@"packResultMsg"]) {
-                    [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
-                }
-            }
-        }];
-        
         
         [self presentViewController:alertView animated:YES completion:nil];
     }];
@@ -222,8 +212,7 @@
     
     
     NSString* strUrl = [NSString stringWithFormat:@"http://mobile.dagolfla.com/qcode/userQCode?userKey=%@&md5=%@",DEFAULF_USERID,strMd];
-//    [self.imgvBar sd_setImageWithURL:[NSURL URLWithString:strUrl] placeholderImage:[UIImage imageNamed:TeamBGImage]];
-//    NSLog(@"%@" , self.imgvBar.image);
+    //    [self.imgvBar sd_setImageWithURL:[NSURL URLWithString:strUrl] placeholderImage:[UIImage imageNamed:TeamBGImage]];
     [self readQRCodeFromImageWithFileURL:[NSURL URLWithString:strUrl]];
     
     UILabel* labelSign = [[UILabel alloc]initWithFrame:CGRectMake(10*screenWidth/375, viewBack.frame.size.height - 70*screenWidth/375, viewBack.frame.size.width - 20*screenWidth/375, 40*screenWidth/375)];

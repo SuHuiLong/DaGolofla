@@ -10,6 +10,8 @@
 
 @interface JGDPlayPersoningTableViewCell : UITableViewCell
 
+@property (nonatomic, strong) UILabel *titleLabel;
+@property (nonatomic, strong) UIButton *checkBtn;
 
 
 @end

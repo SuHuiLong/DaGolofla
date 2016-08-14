@@ -5,7 +5,6 @@
 //  Created by 東 on 16/8/12.
 //  Copyright © 2016年 bhxx. All rights reserved.
 //
-
 #define KBARITEN_WH  (22.0f)
 #define QRCodeWidth  260.0   //正方形二维码的边长
 #define SCREENWidth  [UIScreenmainScreen].bounds.size.width   //设备屏幕的宽度
@@ -13,8 +12,11 @@
 
 #import <AVFoundation/AVFoundation.h>
 #import "JGDPlayerScanViewController.h"
-#import "JGDPlayPersonViewController.h"
+#import "JGMyBarCodeViewController.h"
 #import "UITool.h"
+#import "JGLScoreSureViewController.h"
+#import "JGDResultViewController.h"
+
 @interface JGDPlayerScanViewController ()<AVCaptureMetadataOutputObjectsDelegate>
 {
     AVCaptureSession *_session;//输入输出的中间桥梁
@@ -22,6 +24,9 @@
 
 @property (nonatomic,strong) UIImageView      *line;
 @property (nonatomic,strong) NSTimer          *timer;
+@property (nonatomic,strong) NSTimer          *loopTimer;
+@property (nonatomic, copy) NSString *qcodeID;
+
 
 @property (strong, nonatomic) AVCaptureMetadataOutput * output;
 @property (assign, nonatomic) BOOL cameraIsValid, cameraIsAuthorised;
@@ -233,7 +238,7 @@
 }
 -(void)myCodeBarClick
 {
-    JGDPlayPersonViewController* barVc = [[JGDPlayPersonViewController alloc]init];
+    JGMyBarCodeViewController* barVc = [[JGMyBarCodeViewController alloc]init];
     [self.navigationController pushViewController:barVc animated:YES];
 }
 #pragma mark - 启动扫码
@@ -288,6 +293,10 @@
     
     return YES;
 }
+-(void)dealloc
+{
+    _timer = nil;
+}
 
 #pragma mark - lineAnimation
 - (void)lineAnimation {
@@ -314,49 +323,100 @@
         NSString *str = metadataObject.stringValue;
         if ([str containsString:@"dagolfla"] == YES) {
             [_session stopRunning];
-            
-            
-            //           NSString *ssss = [Helper returnUrlString:str WithKey:@"md5"];
-            //            NSLog(@"%@", ssss);
-            //            NSString *sssss = [Helper returnUrlString:str WithKey:@"md6"];
-            //            NSLog(@"%@", sssss);
-            //
-            //
-            //            NSArray *array = [str componentsSeparatedByString:@"?"]; //从字符A中分隔成2个元素的数组
-            //            NSArray *array1 = [array[1] componentsSeparatedByString:@"&"];
-            //            NSArray *array2 = [array1[0] componentsSeparatedByString:@"="];
-            //            NSArray *array3 = ;
+            //dagolfla://qcode/user?userKey=191&qcodeID=5986859029096433&md5=EDB4A1EED2AD1DE49E2C478420A680B6
             NSMutableDictionary* dict =[[NSMutableDictionary alloc]init];
-            [dict setObject:[Helper returnUrlString:str WithKey:@"userKey"] forKey:@"userKey"];
-            [dict setObject:[Helper returnUrlString:str WithKey:@"md5"] forKey:@"md5"];
-            
-            
-            [[JsonHttp jsonHttp]httpRequest:@"qcode/getUserInfo" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
+            [dict setObject:[Helper returnUrlString:str WithKey:@"qcodeID"] forKey:@"qCodeID"];
+            self.qcodeID = [Helper returnUrlString:str WithKey:@"qcodeID"];
+            [dict setObject:DEFAULF_USERID forKey:@"scanUserKey"];
+            [[JsonHttp jsonHttp]httpRequestWithMD5:@"score/doQCodeFinish" JsonKey:nil withData:dict failedBlock:^(id errType) {
                 
             } completionBlock:^(id data) {
-                
                 if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
-                    NSMutableDictionary* dictDa = [[NSMutableDictionary alloc]init];
-                    [dictDa setObject:[[data objectForKey:@"user"] objectForKey:@"userName"] forKey:[Helper returnUrlString:str WithKey:@"userKey"]];
-                    _blockDict(dictDa);
-                    [self.navigationController popViewControllerAnimated:YES];
+                    //                    NSMutableDictionary* dictDa = [[NSMutableDictionary alloc]init];
+                    //                    [dictDa setObject:[[data objectForKey:@"user"] objectForKey:@"userName"] forKey:[Helper returnUrlString:str WithKey:@"userKey"]];
+//                    _blockData();
+                    if ([[data objectForKey:@"errorState"] isEqualToString:@"allCustomers"]) {
+                        JGDResultViewController *resultVC = [[JGDResultViewController alloc] init];
+                        if ([data objectForKey:@"bean"]) {
+                            resultVC.qcodeUserName = [[data objectForKey:@"bean"] objectForKey:@"qcodeUserName"];
+                        }
+                        resultVC.state = 10;
+                        [self.navigationController pushViewController:resultVC animated:YES];
+                        
+                    }else{
+                        self.loopTimer = [NSTimer scheduledTimerWithTimeInterval:3 target:self selector:@selector(loopAct) userInfo:nil repeats:YES];
+                        [self.loopTimer fire];
+                    }
+
                 }
                 else{
-                    [_session startRunning];
+                    
                     [Helper alertViewWithTitle:[data objectForKey:@"packResultMsg"] withBlock:^(UIAlertController *alertView) {
                         [self presentViewController:alertView animated:YES completion:nil];
                     }];
-                }
-                
-                NSLog(@"%@", data);
-                if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
-                    
-                }else{
-                    
+                    [_session startRunning];
                 }
             }];
         }
     }
+}
+
+- (void)loopAct{
+    
+    NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
+    [dic setObject:self.qcodeID forKey:@"qCodeID"];
+    [[JsonHttp jsonHttp] httpRequestWithMD5:@"score/queryLoopCaddieQCodeState" JsonKey:nil withData:dic failedBlock:^(id errType) {
+        [[ShowHUD showHUD]showToastWithText:[NSString stringWithFormat:@"%@",errType] FromView:self.view];
+    } completionBlock:^(id data) {
+        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+            if ([data objectForKey:@"bean"]) {
+                NSDictionary *dataDic = [data objectForKey:@"bean"];
+                if ([[dataDic objectForKey:@"state"] integerValue] == 3) {
+                    // 1 扫码成功  2 同意  3 拒绝
+                    [self.loopTimer invalidate];
+                    self.loopTimer = nil;
+//                    JGDResultViewController *resultVC = [[JGDResultViewController alloc] init];
+//                    resultVC.qcodeUserName = [dataDic objectForKey:@"qcodeUserName"];
+//                    [self.navigationController pushViewController:resultVC animated:YES];
+                    [[ShowHUD showHUD]showToastWithText:@"对方取消记分" FromView:self.view];
+                    [self.navigationController popViewControllerAnimated:YES];
+                    /*
+                     isQCodeCaddie = 1;
+                     isScanCaddie = 0;
+                     qcodeID = 6236159635110692;
+                     qcodeUserKey = 244;
+                     qcodeUserName = "\U7403\U961f\U5c0f\U79d8\U4e662";
+                     scanUserKey = 2622;
+                     scanUserName = "177*****090";
+                     state = 2;
+                     */
+                    
+                }else if ([[dataDic objectForKey:@"state"] integerValue] == 2) {
+                    [self.loopTimer invalidate];
+                    self.loopTimer = nil;
+                    
+                    JGDResultViewController *resultVC = [[JGDResultViewController alloc] init];
+                    resultVC.qcodeUserName = [dataDic objectForKey:@"qcodeUserName"];
+                    [self.navigationController pushViewController:resultVC animated:YES];
+                    /*
+                     isQCodeCaddie = 1;
+                     isScanCaddie = 0;
+                     qcodeID = 6236159635110692;
+                     qcodeUserKey = 244;
+                     qcodeUserName = "\U7403\U961f\U5c0f\U79d8\U4e662";
+                     scanUserKey = 2622;
+                     scanUserName = "177*****090";
+                     state = 2;
+                     */
+                }
+            }
+            
+        }else{
+            if ([data objectForKey:@"packResultMsg"]) {
+                [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+            }
+        }
+    }];
 }
 
 - (BOOL)regexGUID:(NSString *)result{

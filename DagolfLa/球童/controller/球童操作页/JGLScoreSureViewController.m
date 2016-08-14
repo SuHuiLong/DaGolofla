@@ -7,7 +7,7 @@
 //
 
 #import "JGLScoreSureViewController.h"
-
+#import "JGLCaddieChooseStyleViewController.h"
 @interface JGLScoreSureViewController ()
 
 @end
@@ -53,13 +53,16 @@
     [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     btn.layer.masksToBounds = YES;
     btn.layer.cornerRadius = 8*ScreenWidth/375;
-    btn.frame = CGRectMake(10*ScreenWidth/375, 130*ScreenWidth/375, ScreenWidth-20*ScreenWidth/375, 44*ScreenWidth/375);
+    btn.frame = CGRectMake(10*ScreenWidth/375, screenHeight-64*ProportionAdapter-64, ScreenWidth-20*ScreenWidth/375, 44*ScreenWidth/375);
     [self.view addSubview:btn];
     [btn addTarget:self action:@selector(finishClick) forControlEvents:UIControlEventTouchUpInside];
 }
 
 -(void)finishClick{
-    
+    JGLCaddieChooseStyleViewController* choVc = [[JGLCaddieChooseStyleViewController alloc]init];
+    choVc.userKeyPlayer = _userKeyPlayer;
+    choVc.userNamePlayer = _userNamePlayer;
+    [self.navigationController pushViewController:choVc animated:YES];
 }
 
 - (void)didReceiveMemoryWarning {
