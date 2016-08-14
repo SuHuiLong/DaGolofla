@@ -10,6 +10,7 @@
 #import "JGHCabbieAwaredCell.h"
 #import "JGHTransDetailListModel.h"
 #import "JGDPrivateAccountViewController.h"
+#import "JGHCabbieWalletViewController.h"
 
 static NSString *const JGHCabbieAwaredCellIdentifier = @"JGHCabbieAwaredCell";
 
@@ -55,7 +56,8 @@ static NSString *const JGHCabbieAwaredCellIdentifier = @"JGHCabbieAwaredCell";
     [dict setObject:@(_page) forKey:@"offset"];
     [dict setObject:[JGReturnMD5Str getUserTransDetailOrderTypeListUserKey:[DEFAULF_USERID integerValue] andOrderType:7] forKey:@"md5"];
     [[JsonHttp jsonHttp]httpRequest:@"user/getUserTransDetailOrderTypeList" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
-        
+        [self.cabbieRewardTableView.header endRefreshing];
+        [self.cabbieRewardTableView.footer endRefreshing];
     } completionBlock:^(id data) {
         NSLog(@"%@", data);
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
@@ -81,6 +83,9 @@ static NSString *const JGHCabbieAwaredCellIdentifier = @"JGHCabbieAwaredCell";
                 [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
             }
         }
+        
+        [self.cabbieRewardTableView.header endRefreshing];
+        [self.cabbieRewardTableView.footer endRefreshing];
     }];
 }
 - (void)createBarView:(NSInteger)barId andTotalPrice:(float)price{
@@ -199,6 +204,11 @@ static NSString *const JGHCabbieAwaredCellIdentifier = @"JGHCabbieAwaredCell";
     UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, 1)];
     view.backgroundColor = [UIColor colorWithHexString:BG_color];
     return view;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    JGHCabbieWalletViewController *cabCtrl = [[JGHCabbieWalletViewController alloc]init];
+    [self.navigationController pushViewController:cabCtrl animated:YES];
 }
 
 
