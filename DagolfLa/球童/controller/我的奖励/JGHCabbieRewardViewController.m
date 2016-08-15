@@ -210,11 +210,11 @@ static NSString *const JGHCabbieAwaredCellIdentifier = @"JGHCabbieAwaredCell";
     view.backgroundColor = [UIColor colorWithHexString:BG_color];
     return view;
 }
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    JGHCabbieWalletViewController *cabCtrl = [[JGHCabbieWalletViewController alloc]init];
-    [self.navigationController pushViewController:cabCtrl animated:YES];
-}
+//
+//- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+//    JGHCabbieWalletViewController *cabCtrl = [[JGHCabbieWalletViewController alloc]init];
+//    [self.navigationController pushViewController:cabCtrl animated:YES];
+//}
 
 
 - (void)didReceiveMemoryWarning {

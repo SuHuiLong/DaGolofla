@@ -12,6 +12,7 @@
 #import "JGHScoreListModel.h"
 #import "JGHEndScoresViewController.h"
 #import "JGDHistoryScoreViewController.h"
+#import "JGHCabbieWalletViewController.h"
 
 @interface JGHScoresViewController ()<UIPageViewControllerDataSource,UIPageViewControllerDelegate>
 {
@@ -38,6 +39,8 @@
     NSInteger _isEdtor;// 0-未修改， 1- 修改
     
     NSInteger _isFinishScore;//是否完成记分0 1
+    
+    NSNumber *_walletMonay;//红包金额
 }
 
 @property (nonatomic, strong)NSMutableArray *userScoreArray;
@@ -437,6 +440,12 @@
 - (void)saveScoresClick{
     _item.enabled = NO;
     //保存
+    NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
+    if (_selectPage > 0) {
+        [userdef setObject:@(_selectPage-1) forKey:[NSString stringWithFormat:@"%@", _scorekey]];
+    }else{
+        [userdef setObject:@(_selectPage) forKey:[NSString stringWithFormat:@"%@", _scorekey]];
+    }
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     [dict setObject:DEFAULF_USERID forKey:@"userKey"];
     NSMutableArray *listArray = [NSMutableArray array];
@@ -486,6 +495,10 @@
                 } completionBlock:^(id data) {
                     NSLog(@"%@", data);
                     if ([[data objectForKey:@"packSuccess"]integerValue] == 1) {
+                        if ([data objectForKey:@"money"]) {
+                            _walletMonay = [data objectForKey:@"money"];
+                        }
+                        
                         //获取主线层
                         if ([NSThread isMainThread]) {
                             NSLog(@"Yay!");
@@ -538,20 +551,25 @@
 }
 #pragma mark -- 完成记分
 - (void)pushJGHEndScoresViewController{
-    NSInteger scoreCount = 0;
-    for (int i=0; i<_userScoreArray.count; i++) {
-        JGHScoreListModel *model = [[JGHScoreListModel alloc]init];
-        model = _userScoreArray[i];
-        if ([model.userKey integerValue] == [DEFAULF_USERID integerValue]) {
-            for (int i=0; i<model.poleNumber.count; i++) {
-                scoreCount += [model.poleNumber[i] integerValue];
+    if (_isCabbie == 1 && [_walletMonay floatValue] > 0) {
+        JGHCabbieWalletViewController *wealetCtrl = [[JGHCabbieWalletViewController alloc]init];
+        [self.navigationController pushViewController:wealetCtrl animated:YES];
+    }else{
+        NSInteger scoreCount = 0;
+        for (int i=0; i<_userScoreArray.count; i++) {
+            JGHScoreListModel *model = [[JGHScoreListModel alloc]init];
+            model = _userScoreArray[i];
+            if ([model.userKey integerValue] == [DEFAULF_USERID integerValue]) {
+                for (int i=0; i<model.poleNumber.count; i++) {
+                    scoreCount += [model.poleNumber[i] integerValue];
+                }
             }
         }
-    }
-    [_macthDict setObject:@(scoreCount) forKey:@"poleNum"];
-    JGHEndScoresViewController *endScoresCtrl = [[JGHEndScoresViewController alloc]init];
-    endScoresCtrl.dict = _macthDict;
-    [self.navigationController pushViewController:endScoresCtrl animated:YES];
+        [_macthDict setObject:@(scoreCount) forKey:@"poleNum"];
+        JGHEndScoresViewController *endScoresCtrl = [[JGHEndScoresViewController alloc]init];
+        endScoresCtrl.dict = _macthDict;
+        [self.navigationController pushViewController:endScoresCtrl animated:YES];
+    }    
 }
 
 - (void)didReceiveMemoryWarning {
