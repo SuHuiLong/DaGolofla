@@ -393,6 +393,7 @@
 {
     JGHScoresViewController* scrVc = [[JGHScoresViewController alloc]init];
     scrVc.scorekey = [NSString stringWithFormat:@"%@",[_dataArray[btn.tag - 1000] timeKey]];
+    scrVc.isCabbie = 1;
     NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
     
     if ([userdef objectForKey:[NSString stringWithFormat:@"%@", [_dataArray[btn.tag - 1000] timeKey]]]) {
