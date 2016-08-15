@@ -75,7 +75,10 @@ static NSString *const JGHCabbieAwaredCellIdentifier = @"JGHCabbieAwaredCell";
                 [self createBarView:0 andTotalPrice:totalCount];
                 [self.cabbieRewardTableView reloadData];
             }else{
-                [self createBarView:1 andTotalPrice:1.0];
+                if (self.dataArray.count == 0) {
+                    [self createBarView:1 andTotalPrice:1.0];
+                }
+                
             }
         }else{
             [self createBarView:1 andTotalPrice:1.0];
@@ -166,6 +169,7 @@ static NSString *const JGHCabbieAwaredCellIdentifier = @"JGHCabbieAwaredCell";
 }
 - (void)headRereshing{
     _page = 0;
+    [self.dataArray removeAllObjects];
     [self loadRewardData];
 }
 - (void)footRereshing{
