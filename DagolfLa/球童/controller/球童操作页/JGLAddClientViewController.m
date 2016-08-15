@@ -327,17 +327,24 @@
                 
             } completionBlock:^(id data) {
                 if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
-//                    NSMutableDictionary* dictDa = [[NSMutableDictionary alloc]init];
-//                    [dictDa setObject:[[data objectForKey:@"user"] objectForKey:@"userName"] forKey:[Helper returnUrlString:str WithKey:@"userKey"]];
+//
                     _blockData([Helper returnUrlString:str WithKey:@"qcodeID"]);
                     [self.navigationController popViewControllerAnimated:YES];
                 }
                 else{
-                    
-                    [Helper alertViewWithTitle:[data objectForKey:@"packResultMsg"] withBlock:^(UIAlertController *alertView) {
-                        [self presentViewController:alertView animated:YES completion:nil];
-                    }];
-                    [_session startRunning];
+                    if ([[data objectForKey:@"errorState"] integerValue] == 2) {
+                        JGLScoreSureViewController* suVc = [[JGLScoreSureViewController alloc]init];
+                        suVc.errorState = 2;
+                        [self.navigationController pushViewController:suVc animated:YES];
+                    }
+                    else if ([[data objectForKey:@"errorState"] integerValue] == 3)
+                    {
+                        
+                    }
+                    else{
+                        [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+                        [_session startRunning];
+                    }
                 }
             }];
         }
