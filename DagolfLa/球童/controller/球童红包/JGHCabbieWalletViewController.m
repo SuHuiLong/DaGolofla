@@ -63,44 +63,63 @@
     [self.view addSubview:_barView];
     
     [self.view insertSubview:_barView atIndex:0];
-    //------
-    UILabel *cabLable = [[UILabel alloc]initWithFrame:CGRectMake(10 *ProportionAdapter, (40 +64) *ProportionAdapter, screenWidth - 20*ProportionAdapter, 20*ProportionAdapter)];
-    cabLable.font = [UIFont systemFontOfSize:18*ProportionAdapter];
-    cabLable.text = @"你已完成替客户 XXX 的记分工作";
-    [self.view addSubview:cabLable];
     
-    UILabel *promLbale = [[UILabel alloc]initWithFrame:CGRectMake(10 *ProportionAdapter, (40 +20 +10 +64)*ProportionAdapter, screenWidth-20*ProportionAdapter, 35*ProportionAdapter)];
-    promLbale.numberOfLines = 0;
-    promLbale.font = [UIFont systemFontOfSize:13*ProportionAdapter];
-    promLbale.text = @"客户可在“打高尔夫啦App”－－记分——历史记分卡中，查看成绩。";
-    [self.view addSubview:promLbale];
-    
-    //红包默认图片
-    _hongbaoImageView = [[UIImageView alloc]initWithFrame:CGRectMake(60*ProportionAdapter, (40 +20 +10 +35 + 40 + 20 +64)*ProportionAdapter,  screenWidth-120*ProportionAdapter, 280 *ProportionAdapter)];
-    _hongbaoImageView.userInteractionEnabled = YES;
-    _hongbaoImageView.image = [UIImage imageNamed:@"hongbao"];
-    [self.view addSubview:_hongbaoImageView];
-    
-    //滑动文字
-    UIImageView *wordsLimageView = [[UIImageView alloc]initWithFrame:CGRectMake(10*ProportionAdapter, 190 *ProportionAdapter, _hongbaoImageView.frame.size.width - 20*ProportionAdapter, 30*ProportionAdapter)];
-    wordsLimageView.image = [UIImage imageNamed:@"hongbaowords"];
-    [_hongbaoImageView addSubview:wordsLimageView];
-    //滑动箭头
-    _huadongImageView = [[UIImageView alloc]initWithFrame:CGRectMake(170 *ProportionAdapter, 80*ProportionAdapter, 40 *ProportionAdapter, 80 *ProportionAdapter)];
-    _huadongImageView.image = [UIImage imageNamed:@"hongbaoopen_arrow"];
-    [_hongbaoImageView addSubview:_huadongImageView];
-    
-    //接受滑动手势的BTN
-    _gapBtn = [[UIButton alloc]initWithFrame:CGRectMake(80 *ProportionAdapter, 50*ProportionAdapter, 100*ProportionAdapter, 110*ProportionAdapter)];
-    [_hongbaoImageView addSubview:_gapBtn];
-    UISwipeGestureRecognizer *btnGapUp = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(gapBtnUpGapClick)];
-    [btnGapUp setDirection:UISwipeGestureRecognizerDirectionUp];
-    [_gapBtn addGestureRecognizer:btnGapUp];
-    
-    //创建计时器
-    self.timer =[NSTimer scheduledTimerWithTimeInterval:1.0 target:self
-                                               selector:@selector(arrowAnimation) userInfo:nil repeats:YES];
-    [self.timer fire];
+    if ([_wealMony floatValue] > 0) {
+        UIImageView *emjImageView = [[UIImageView alloc]initWithFrame:CGRectMake(134*ProportionAdapter, 87 *ProportionAdapter,  screenWidth-268*ProportionAdapter, 114 *ProportionAdapter)];
+        emjImageView.image = [UIImage imageNamed:@"emjlaugh"];
+        [self.view addSubview:emjImageView];
+        
+        UILabel *cabLable = [[UILabel alloc]initWithFrame:CGRectMake(10 *ProportionAdapter, 235 *ProportionAdapter, screenWidth - 20*ProportionAdapter, 20*ProportionAdapter)];
+        cabLable.font = [UIFont systemFontOfSize:20*ProportionAdapter];
+        cabLable.text = [NSString stringWithFormat:@"你已完成替客户 %@ 的记分工作", self.customerName];
+        [self.view addSubview:cabLable];
+        
+        UILabel *promLbale = [[UILabel alloc]initWithFrame:CGRectMake(10 *ProportionAdapter, 278*ProportionAdapter, screenWidth-20*ProportionAdapter, 35*ProportionAdapter)];
+        promLbale.numberOfLines = 0;
+        promLbale.font = [UIFont systemFontOfSize:13*ProportionAdapter];
+        promLbale.text = @"客户可在“打高尔夫啦App”－－记分——历史记分卡中，查看成绩。";
+        [self.view addSubview:promLbale];
+        
+    }else{
+        //------
+        UILabel *cabLable = [[UILabel alloc]initWithFrame:CGRectMake(10 *ProportionAdapter, (40 +64) *ProportionAdapter, screenWidth - 20*ProportionAdapter, 20*ProportionAdapter)];
+        cabLable.font = [UIFont systemFontOfSize:20*ProportionAdapter];
+        cabLable.text = @"你已完成替客户 XXX 的记分工作";
+        [self.view addSubview:cabLable];
+        
+        UILabel *promLbale = [[UILabel alloc]initWithFrame:CGRectMake(10 *ProportionAdapter, (40 +20 +10 +64)*ProportionAdapter, screenWidth-20*ProportionAdapter, 35*ProportionAdapter)];
+        promLbale.numberOfLines = 0;
+        promLbale.font = [UIFont systemFontOfSize:13*ProportionAdapter];
+        promLbale.text = @"客户可在“打高尔夫啦App”－－记分——历史记分卡中，查看成绩。";
+        [self.view addSubview:promLbale];
+        
+        //红包默认图片
+        _hongbaoImageView = [[UIImageView alloc]initWithFrame:CGRectMake(60*ProportionAdapter, (40 +20 +10 +35 + 40 + 20 +64)*ProportionAdapter,  screenWidth-120*ProportionAdapter, 280 *ProportionAdapter)];
+        _hongbaoImageView.userInteractionEnabled = YES;
+        _hongbaoImageView.image = [UIImage imageNamed:@"hongbao"];
+        [self.view addSubview:_hongbaoImageView];
+        
+        //滑动文字
+        UIImageView *wordsLimageView = [[UIImageView alloc]initWithFrame:CGRectMake(10*ProportionAdapter, 190 *ProportionAdapter, _hongbaoImageView.frame.size.width - 20*ProportionAdapter, 30*ProportionAdapter)];
+        wordsLimageView.image = [UIImage imageNamed:@"hongbaowords"];
+        [_hongbaoImageView addSubview:wordsLimageView];
+        //滑动箭头
+        _huadongImageView = [[UIImageView alloc]initWithFrame:CGRectMake(170 *ProportionAdapter, 80*ProportionAdapter, 40 *ProportionAdapter, 80 *ProportionAdapter)];
+        _huadongImageView.image = [UIImage imageNamed:@"hongbaoopen_arrow"];
+        [_hongbaoImageView addSubview:_huadongImageView];
+        
+        //接受滑动手势的BTN
+        _gapBtn = [[UIButton alloc]initWithFrame:CGRectMake(80 *ProportionAdapter, 50*ProportionAdapter, 100*ProportionAdapter, 110*ProportionAdapter)];
+        [_hongbaoImageView addSubview:_gapBtn];
+        UISwipeGestureRecognizer *btnGapUp = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(gapBtnUpGapClick)];
+        [btnGapUp setDirection:UISwipeGestureRecognizerDirectionUp];
+        [_gapBtn addGestureRecognizer:btnGapUp];
+        
+        //创建计时器
+        self.timer =[NSTimer scheduledTimerWithTimeInterval:1.0 target:self
+                                                   selector:@selector(arrowAnimation) userInfo:nil repeats:YES];
+        [self.timer fire];
+    }
 }
 - (void)BackBtnClick:(UIButton *)btn{
     [self.navigationController popViewControllerAnimated:YES];

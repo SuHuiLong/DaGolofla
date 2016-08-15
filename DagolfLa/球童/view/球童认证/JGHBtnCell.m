@@ -18,8 +18,7 @@
     self.titleBtn.layer.cornerRadius = 8.0;
     
     self.titleBtnLeft.constant = 10 *ProportionAdapter;
-    self.titleBtnTop.constant = 10 *ProportionAdapter;
-    self.titleBtnDown.constant = 10 *ProportionAdapter;
+
     self.titleBtnRight.constant = 10 *ProportionAdapter;
 }
 
@@ -36,12 +35,16 @@
 }
 
 - (void)configBtn{
+    self.titleBtnTop.constant = 5 *ProportionAdapter;
+    self.titleBtnDown.constant = 5 *ProportionAdapter;
     self.backgroundColor = [UIColor colorWithHexString:BG_color];
     self.titleBtn.backgroundColor = [UIColor orangeColor];
     [self.titleBtn setTitle:@"提交" forState:UIControlStateNormal];
 }
 
 - (void)configSuccessBtn{
+    self.titleBtnTop.constant = 0;
+    self.titleBtnDown.constant = 0;
     self.backgroundColor = [UIColor whiteColor];
     self.titleBtn.backgroundColor = [UIColor orangeColor];
     [self.titleBtn setTitle:@"开始记分" forState:UIControlStateNormal];

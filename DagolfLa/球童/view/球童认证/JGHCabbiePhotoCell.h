@@ -29,6 +29,10 @@
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *promptLableTop;//10
 
+@property (weak, nonatomic) IBOutlet UIImageView *cammaImageView;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *cammaDown;//12
+
+
 @property (weak, nonatomic)id <JGHCabbiePhotoCellDelegate> delegate;
 
 - (IBAction)imageViewBtn:(UIButton *)sender;

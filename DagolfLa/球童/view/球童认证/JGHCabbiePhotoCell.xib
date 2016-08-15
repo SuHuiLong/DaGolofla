@@ -33,13 +33,18 @@
                             <action selector="imageViewBtn:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="zHR-FR-azU"/>
                         </connections>
                     </button>
-                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text=" " textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="MLe-0d-HEu">
-                        <rect key="frame" x="156" y="162" width="8" height="17"/>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="camera" translatesAutoresizingMaskIntoConstraints="NO" id="3nm-Go-uCk">
+                        <rect key="frame" x="101.5" y="132" width="116" height="18"/>
+                    </imageView>
+                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="求真相" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="MLe-0d-HEu">
+                        <rect key="frame" x="137" y="162" width="46" height="17"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <textInputTraits key="textInputTraits"/>
                     </textField>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="MLe-0d-HEu" firstAttribute="top" secondItem="3nm-Go-uCk" secondAttribute="bottom" constant="12" id="9nS-Pb-i83"/>
+                    <constraint firstItem="3nm-Go-uCk" firstAttribute="centerX" secondItem="9RX-WW-X7X" secondAttribute="centerX" id="Czq-JU-bbK"/>
                     <constraint firstItem="eLZ-ca-zZU" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="Faw-ND-vOd"/>
                     <constraint firstItem="9RX-WW-X7X" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="JNh-CU-TqP"/>
                     <constraint firstItem="9RX-WW-X7X" firstAttribute="height" secondItem="eLZ-ca-zZU" secondAttribute="height" id="NDJ-qp-gsE"/>
@@ -53,6 +58,8 @@
                 </constraints>
             </tableViewCellContentView>
             <connections>
+                <outlet property="cammaDown" destination="9nS-Pb-i83" id="irh-5R-Ksr"/>
+                <outlet property="cammaImageView" destination="3nm-Go-uCk" id="yHX-up-5HK"/>
                 <outlet property="photoImage" destination="eLZ-ca-zZU" id="uNe-K8-nc8"/>
                 <outlet property="photoImageH" destination="IS1-Bv-zRz" id="tg1-6F-A5r"/>
                 <outlet property="photoImageTop" destination="Faw-ND-vOd" id="Ii9-sc-gct"/>
@@ -68,5 +75,6 @@
     </objects>
     <resources>
         <image name="cabbieHeader" width="120" height="140"/>
+        <image name="camera" width="116" height="18"/>
     </resources>
 </document>
