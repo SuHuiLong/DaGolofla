@@ -16,4 +16,6 @@
 
 @property (strong, nonatomic) NSString* userMobilePlayer;
 
+@property (assign, nonatomic) NSInteger errorState;//判断界面显示的样式，1，其他，2，球童扫球童，3打球人
+
 @end
