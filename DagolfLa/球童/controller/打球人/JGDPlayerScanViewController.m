@@ -335,7 +335,7 @@
                     //                    NSMutableDictionary* dictDa = [[NSMutableDictionary alloc]init];
                     //                    [dictDa setObject:[[data objectForKey:@"user"] objectForKey:@"userName"] forKey:[Helper returnUrlString:str WithKey:@"userKey"]];
 //                    _blockData();
-                    if ([[data objectForKey:@"errorState"] isEqualToString:@"allCustomers"]) {
+                    if ([[data objectForKey:@"errorState"] intValue] == 3) {
                         JGDResultViewController *resultVC = [[JGDResultViewController alloc] init];
                         if ([data objectForKey:@"bean"]) {
                             resultVC.qcodeUserName = [[data objectForKey:@"bean"] objectForKey:@"qcodeUserName"];
@@ -343,6 +343,8 @@
                         resultVC.state = 10;
                         [self.navigationController pushViewController:resultVC animated:YES];
                         
+                    }else if ([[data objectForKey:@"errorState"] intValue] == 1) {
+                        [[ShowHUD showHUD]showToastWithText:@"二维码解析错误" FromView:self.view];
                     }else{
                         self.loopTimer = [NSTimer scheduledTimerWithTimeInterval:3 target:self selector:@selector(loopAct) userInfo:nil repeats:YES];
                         [self.loopTimer fire];
