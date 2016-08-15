@@ -105,6 +105,7 @@
 		2066E8861D5D668600A3A2B8 /* JGHCabbieAwaredCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2066E8841D5D668600A3A2B8 /* JGHCabbieAwaredCell.m */; };
 		2066E8871D5D668600A3A2B8 /* JGHCabbieAwaredCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2066E8851D5D668600A3A2B8 /* JGHCabbieAwaredCell.xib */; };
 		2066E88B1D5D9D5D00A3A2B8 /* JGHTransDetailListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2066E88A1D5D9D5D00A3A2B8 /* JGHTransDetailListModel.m */; };
+		2066E88F1D603BA200A3A2B8 /* JGHCabbieWalletViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2066E88E1D603BA200A3A2B8 /* JGHCabbieWalletViewController.m */; };
 		2067C6B81CE30CA4002900C8 /* JGTeamActibityNameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2067C6B51CE30CA4002900C8 /* JGTeamActibityNameViewController.m */; };
 		2067C6B91CE30CA4002900C8 /* JGTeamActivityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2067C6B71CE30CA4002900C8 /* JGTeamActivityViewController.m */; };
 		2067C6CE1CE30CC0002900C8 /* JGActivityNameBaseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2067C6C01CE30CC0002900C8 /* JGActivityNameBaseCell.m */; };
@@ -1220,6 +1221,8 @@
 		2066E8851D5D668600A3A2B8 /* JGHCabbieAwaredCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JGHCabbieAwaredCell.xib; sourceTree = "<group>"; };
 		2066E8891D5D9D5D00A3A2B8 /* JGHTransDetailListModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHTransDetailListModel.h; sourceTree = "<group>"; };
 		2066E88A1D5D9D5D00A3A2B8 /* JGHTransDetailListModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHTransDetailListModel.m; sourceTree = "<group>"; };
+		2066E88D1D603BA200A3A2B8 /* JGHCabbieWalletViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHCabbieWalletViewController.h; sourceTree = "<group>"; };
+		2066E88E1D603BA200A3A2B8 /* JGHCabbieWalletViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHCabbieWalletViewController.m; sourceTree = "<group>"; };
 		2067C6B41CE30CA4002900C8 /* JGTeamActibityNameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGTeamActibityNameViewController.h; sourceTree = "<group>"; };
 		2067C6B51CE30CA4002900C8 /* JGTeamActibityNameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGTeamActibityNameViewController.m; sourceTree = "<group>"; };
 		2067C6B61CE30CA4002900C8 /* JGTeamActivityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGTeamActivityViewController.h; sourceTree = "<group>"; };
@@ -2830,7 +2833,7 @@
 		201055D61D58A4C600C90FDE /* controller */ = {
 			isa = PBXGroup;
 			children = (
-				82297AE31D6022D800CCB589 /* 球童记分 */,
+				2066E88C1D603A6D00A3A2B8 /* 球童红包 */,
 				821DB9D11D5DB64B00C882C2 /* 球童操作页 */,
 				2066E87E1D5D64A700A3A2B8 /* 我的奖励 */,
 				2010561D1D59C93600C90FDE /* 球童认证 */,
@@ -3323,6 +3326,15 @@
 				2066E88A1D5D9D5D00A3A2B8 /* JGHTransDetailListModel.m */,
 			);
 			path = "我的奖励";
+			sourceTree = "<group>";
+		};
+		2066E88C1D603A6D00A3A2B8 /* 球童红包 */ = {
+			isa = PBXGroup;
+			children = (
+				2066E88D1D603BA200A3A2B8 /* JGHCabbieWalletViewController.h */,
+				2066E88E1D603BA200A3A2B8 /* JGHCabbieWalletViewController.m */,
+			);
+			path = "球童红包";
 			sourceTree = "<group>";
 		};
 		2067C6B31CE30CA4002900C8 /* 球队活动 */ = {
@@ -7856,6 +7868,7 @@
 				36BFFFAD1BC76FF3005B3CE2 /* EnrollViewController.m in Sources */,
 				36BF01811BC77611005B3CE2 /* JobChooseViewController.m in Sources */,
 				F5838D901D4B271200A7FFC6 /* JGTeamHisScoreViewController.m in Sources */,
+				2066E88F1D603BA200A3A2B8 /* JGHCabbieWalletViewController.m in Sources */,
 				366B918F1C0448CB0095B4F6 /* TeamActiveTableViewCell.m in Sources */,
 				65B596D81CAD43AC007AB83A /* WFMessageBody.m in Sources */,
 				F5AEF73F1D41B98E009A8C34 /* JGDTrueOrFalseTableViewCell.m in Sources */,
