@@ -23,6 +23,11 @@
 #import "JGLScoreSureViewController.h"
 #import "JGHCabbieRewardViewController.h"
 
+//查看积分
+#import "JGDPlayerHisScoreCardViewController.h"
+#import "JGDNotActScoreViewController.h"
+//继续记分
+#import "JGHScoresViewController.h"
 @interface JGLCaddieScoreViewController ()<UITableViewDelegate, UITableViewDataSource>
 {
     NSMutableArray* _dataArray;
@@ -369,11 +374,13 @@
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
     [cell showData:_dataArray[indexPath.row]];
     if ([[_dataArray[indexPath.row] scoreFinish] integerValue] == 0) {
-        [cell.checkBtn addTarget:self action:@selector(continueClick) forControlEvents:UIControlEventTouchUpInside];
+        [cell.checkBtn addTarget:self action:@selector(continueClick:) forControlEvents:UIControlEventTouchUpInside];
+        cell.checkBtn.tag = 1000 + indexPath.row;
     }
     else if ([[_dataArray[indexPath.row] scoreFinish] integerValue] == 1)
     {
-        [cell.checkBtn addTarget:self action:@selector(finishClick) forControlEvents:UIControlEventTouchUpInside];
+        [cell.checkBtn addTarget:self action:@selector(finishClick:) forControlEvents:UIControlEventTouchUpInside];
+        cell.checkBtn.tag = 1000 + indexPath.row;
     }
     else{
         
@@ -382,14 +389,29 @@
     
 }
 
--(void)continueClick
+-(void)continueClick:(UIButton *)btn
 {
+    JGHScoresViewController* scrVc = [[JGHScoresViewController alloc]init];
+    scrVc.scorekey = [NSString stringWithFormat:@"%@",[_dataArray[btn.tag - 1000] timeKey]];
+    NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
     
+    if ([userdef objectForKey:[NSString stringWithFormat:@"%@", [_dataArray[btn.tag - 1000] timeKey]]]) {
+        scrVc.currentPage = [[userdef objectForKey:[NSString stringWithFormat:@"%@", [_dataArray[btn.tag - 1000] timeKey]]] integerValue];
+    }
+    [self.navigationController pushViewController:scrVc animated:YES];
 }
 
--(void)finishClick
+-(void)finishClick:(UIButton *)btn
 {
-    
+    if ([[_dataArray[btn.tag - 1000] srcType] integerValue] == 1) {
+        JGDPlayerHisScoreCardViewController *DPHVC = [[JGDPlayerHisScoreCardViewController alloc] init];
+        DPHVC.timeKey = [_dataArray[btn.tag - 1000] timeKey];
+        [self.navigationController pushViewController:DPHVC animated:YES];
+    }else{
+        JGDNotActScoreViewController *noActVC = [[JGDNotActScoreViewController alloc] init];
+        noActVC.timeKey = [_dataArray[btn.tag - 1000] timeKey];
+        [self.navigationController pushViewController:noActVC animated:YES];
+    }
 }
 
 
