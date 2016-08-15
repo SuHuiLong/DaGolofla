@@ -72,25 +72,7 @@
 
 - (void)setData{
     if (1) {
-        self.tipLabel.hidden = YES;
-        self.tableView.tableFooterView.hidden = YES;
-        UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake(134 * ProportionAdapter, 200 * ProportionAdapter, 107 * ProportionAdapter, 107 * ProportionAdapter)];
-        imageV.image = [UIImage imageNamed:@"bg-shy"];
-        [self.view addSubview:imageV];
         
-        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 330, screenWidth, 30 * ProportionAdapter)];
-        label.text = @"您还没有替客户记录的记分哦";
-        label.textAlignment = NSTextAlignmentCenter;
-        label.textColor = [UIColor colorWithHexString:@"#a0a0a0"];
-        label.font = [UIFont systemFontOfSize:18 * ProportionAdapter];
-        [self.view addSubview:label];
-        
-        UILabel *detailLB = [[UILabel alloc] initWithFrame:CGRectMake(20 * ProportionAdapter, 370 * ProportionAdapter, screenWidth - 40 * ProportionAdapter, 50 * ProportionAdapter)];
-        detailLB.text = @"球童扫描客户二维码，可代替客户记分，记分完成后，成绩自动存入客户历史记分卡中。";
-        detailLB.font = [UIFont systemFontOfSize:14 * ProportionAdapter];
-        detailLB.textColor = [UIColor colorWithHexString:@"#a0a0a0"];
-        detailLB.numberOfLines = 0;
-        [self.view addSubview:detailLB];
     }
 }
 
@@ -200,13 +182,36 @@
                 //清除数组数据
                 [_dataArray removeAllObjects];
             }
-            for (NSDictionary *dic in [data objectForKey:@"list"]) {
-                JGLCaddieModel *model = [[JGLCaddieModel alloc]init];
-                [model setValuesForKeysWithDictionary:dic];
-                [_dataArray addObject:model];
+            if ([data objectForKey:@"list"]) {
+                for (NSDictionary *dic in [data objectForKey:@"list"]) {
+                    JGLCaddieModel *model = [[JGLCaddieModel alloc]init];
+                    [model setValuesForKeysWithDictionary:dic];
+                    [_dataArray addObject:model];
+                }
+                [_dataArray addObjectsFromArray:[data objectForKey:@"teamSignUpList"]];
+                _page++;
             }
-            [_dataArray addObjectsFromArray:[data objectForKey:@"teamSignUpList"]];
-            _page++;
+            else{
+                self.tipLabel.hidden = YES;
+                self.tableView.tableFooterView.hidden = YES;
+                UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake(134 * ProportionAdapter, 200 * ProportionAdapter, 107 * ProportionAdapter, 107 * ProportionAdapter)];
+                imageV.image = [UIImage imageNamed:@"bg-shy"];
+                [self.view addSubview:imageV];
+                
+                UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 330, screenWidth, 30 * ProportionAdapter)];
+                label.text = @"您还没有替客户记录的记分哦";
+                label.textAlignment = NSTextAlignmentCenter;
+                label.textColor = [UIColor colorWithHexString:@"#a0a0a0"];
+                label.font = [UIFont systemFontOfSize:18 * ProportionAdapter];
+                [self.view addSubview:label];
+                
+                UILabel *detailLB = [[UILabel alloc] initWithFrame:CGRectMake(20 * ProportionAdapter, 370 * ProportionAdapter, screenWidth - 40 * ProportionAdapter, 50 * ProportionAdapter)];
+                detailLB.text = @"球童扫描客户二维码，可代替客户记分，记分完成后，成绩自动存入客户历史记分卡中。";
+                detailLB.font = [UIFont systemFontOfSize:14 * ProportionAdapter];
+                detailLB.textColor = [UIColor colorWithHexString:@"#a0a0a0"];
+                detailLB.numberOfLines = 0;
+                [self.view addSubview:detailLB];
+            }
             [_tableView reloadData];
         }else {
             
