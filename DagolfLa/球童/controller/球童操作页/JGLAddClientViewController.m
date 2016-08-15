@@ -33,7 +33,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor blackColor];
-    self.title = @"扫一扫";
+    self.title = @"扫码添加打球人";
     [self.navigationController.navigationBar setBarTintColor:[UIColor blackColor]];
     //    [self setNavigationBarItem];
     [self setupMaskView];//设置扫描区域之外的阴影视图
