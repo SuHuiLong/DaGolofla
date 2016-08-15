@@ -15,7 +15,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fRz-U9-y3k">
-                        <rect key="frame" x="10" y="10" width="300" height="33"/>
+                        <rect key="frame" x="10" y="5" width="300" height="42.5"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <state key="normal" title="Button">
                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -27,16 +27,10 @@
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="trailing" secondItem="fRz-U9-y3k" secondAttribute="trailing" constant="10" id="DcM-w8-VDE"/>
-                    <constraint firstItem="fRz-U9-y3k" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="RfC-A5-5XQ"/>
-                    <constraint firstAttribute="bottom" secondItem="fRz-U9-y3k" secondAttribute="bottom" constant="10" id="Z55-YS-Sgj"/>
+                    <constraint firstItem="fRz-U9-y3k" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="RfC-A5-5XQ"/>
+                    <constraint firstAttribute="bottom" secondItem="fRz-U9-y3k" secondAttribute="bottom" constant="5" id="Z55-YS-Sgj"/>
                     <constraint firstItem="fRz-U9-y3k" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="oIS-XX-9vd"/>
-                    <constraint firstItem="fRz-U9-y3k" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="wJJ-RF-u6M"/>
                 </constraints>
-                <variation key="default">
-                    <mask key="constraints">
-                        <exclude reference="wJJ-RF-u6M"/>
-                    </mask>
-                </variation>
             </tableViewCellContentView>
             <connections>
                 <outlet property="titleBtn" destination="fRz-U9-y3k" id="5w3-h1-Iqv"/>

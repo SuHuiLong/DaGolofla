@@ -16,7 +16,7 @@
 #import "BallParkViewController.h"
 #import "SXPickPhoto.h"
 #import "JGHCabbieRewardViewController.h"
-#import "JGLChooseScoreViewController.h"
+#import "JGLCaddieScoreViewController.h"
 
 static NSString *const JGHLableAndFileTextCellIdentifier = @"JGHLableAndFileTextCell";
 static NSString *const JGHBtnCellIdentifier = @"JGHBtnCell";
@@ -363,10 +363,9 @@ static NSString *const JGHLableAndLableCellIdentifier = @"JGHLableAndLableCell";
 #pragma mark -- 开始记分
 - (void)commitCabbieCert:(UIButton *)btn{
     btn.enabled = NO;
-    JGLChooseScoreViewController *chooseScoreCtrl = [[JGLChooseScoreViewController alloc]init];
+    JGLCaddieScoreViewController *caddieScoreCtrl = [[JGLCaddieScoreViewController alloc]init];
     
-    [self.navigationController pushViewController:chooseScoreCtrl animated:YES];
-    
+    [self.navigationController pushViewController:caddieScoreCtrl animated:YES];
     btn.enabled = YES;
 }
 #pragma mark -- 性别选择

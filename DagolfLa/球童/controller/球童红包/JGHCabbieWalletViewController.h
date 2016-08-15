@@ -10,4 +10,8 @@
 
 @interface JGHCabbieWalletViewController : ViewController
 
+@property (nonatomic, strong)NSString *customerName;
+
+@property (nonatomic, strong)NSNumber *wealMony;
+
 @end
