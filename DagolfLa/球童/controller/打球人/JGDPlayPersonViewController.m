@@ -185,11 +185,9 @@
         [self.navigationController pushViewController:hisVC animated:YES];
         
     }else{
-        
 //        JGDPlayPersoningTableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
 //        [cell.checkBtn addTarget:self action:@selector(checkAct:) forControlEvents:(UIControlEventTouchUpInside)];
 //        cell.tag = indexPath.section;
-
     }
 }
 
@@ -203,7 +201,6 @@
         JGDNotActScoreViewController *noActVC = [[JGDNotActScoreViewController alloc] init];
         noActVC.timeKey = model.timeKey;
         [self.navigationController pushViewController:noActVC animated:YES];
-        
     }
 }
 

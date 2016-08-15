@@ -177,6 +177,7 @@
         NSLog(@"%@", data);
         if ([[data objectForKey:@"packSuccess"]integerValue] == 1) {
             JGHScoresViewController *scoresCtrl = [[JGHScoresViewController alloc]init];
+            scoresCtrl.isCabbie = 1;
             scoresCtrl.scorekey = [data objectForKey:@"scorekey"];
             [self.navigationController pushViewController:scoresCtrl animated:YES];
         }else{

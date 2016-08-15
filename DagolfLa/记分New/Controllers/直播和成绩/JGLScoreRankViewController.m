@@ -120,7 +120,7 @@
 //    }
     
     
-    [UMSocialData defaultData].extConfig.title=[NSString stringWithFormat:@"%@", _strTitleShare];
+    [UMSocialData defaultData].extConfig.title=[NSString stringWithFormat:@"%@的成绩排名", _strTitleShare];
     
     if (index == 0){
         //微信

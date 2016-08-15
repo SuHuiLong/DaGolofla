@@ -27,7 +27,7 @@
 -(void)setData
 {
     UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake(134 * ProportionAdapter, 200 * ProportionAdapter, 107 * ProportionAdapter, 107 * ProportionAdapter)];
-    imageV.image = [UIImage imageNamed:@"bg-shy"];
+    imageV.image = [UIImage imageNamed:@"icn_laugh"];
     [self.view addSubview:imageV];
     
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 330, screenWidth, 30 * ProportionAdapter)];
