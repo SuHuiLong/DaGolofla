@@ -93,20 +93,21 @@ static NSString *const JGHCabbieAwaredCellIdentifier = @"JGHCabbieAwaredCell";
 }
 - (void)createBarView:(NSInteger)barId andTotalPrice:(float)price{
     if (barId == 0) {
-        self.cabbieRewardTableView.frame = CGRectMake(0, 0, screenWidth, screenHeight - 64 -44*ProportionAdapter);
+        self.cabbieRewardTableView.frame = CGRectMake(0, 0, screenWidth, screenHeight - 44*ProportionAdapter);
         if (_totalLable != nil) {
             [_totalLable removeFromSuperview];
             [_barView removeFromSuperview];
         }
         
         _barView = [[UIView alloc]initWithFrame:CGRectMake(0, screenHeight -64 -44*ProportionAdapter, screenWidth, 44*ProportionAdapter)];
+        _barView.backgroundColor = [UIColor whiteColor];
         _totalLable = [[UILabel alloc]initWithFrame:CGRectMake(10*ProportionAdapter, 10 *ProportionAdapter, screenWidth/2, 20*ProportionAdapter)];
         _totalLable.text = [NSString stringWithFormat:@"合计：¥%.2f", price];
         [_barView addSubview:_totalLable];
         
         UIButton *myAccountBtn = [[UIButton alloc]initWithFrame:CGRectMake(screenWidth - 120*ProportionAdapter, 4*ProportionAdapter, 110*ProportionAdapter, 36 *ProportionAdapter)];
         [myAccountBtn setTitle:@"查看个人账户" forState:UIControlStateNormal];
-        [myAccountBtn setTintColor:[UIColor orangeColor]];
+        [myAccountBtn setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
         [myAccountBtn addTarget:self action:@selector(pushToMyAmount:) forControlEvents:UIControlEventTouchUpInside];
         [_barView addSubview:myAccountBtn];
         
@@ -150,7 +151,7 @@ static NSString *const JGHCabbieAwaredCellIdentifier = @"JGHCabbieAwaredCell";
     btn.enabled = YES;
 }
 - (void)createCabbieRewardTableView{
-    self.cabbieRewardTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight - 64 -44*ProportionAdapter) style:UITableViewStylePlain];
+    self.cabbieRewardTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight -44*ProportionAdapter) style:UITableViewStylePlain];
     
     UINib *cabbieAwaredCellNib = [UINib nibWithNibName:@"JGHCabbieAwaredCell" bundle:[NSBundle mainBundle]];
     [self.cabbieRewardTableView registerNib:cabbieAwaredCellNib forCellReuseIdentifier:JGHCabbieAwaredCellIdentifier];
