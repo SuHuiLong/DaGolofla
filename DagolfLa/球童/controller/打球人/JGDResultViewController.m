@@ -48,7 +48,7 @@
     titleLB.font = [UIFont systemFontOfSize:18 * ProportionAdapter];
     [self.view addSubview:titleLB];
     
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10 * ProportionAdapter, 270 * ProportionAdapter, screenWidth - 20 * ProportionAdapter, 50)];
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10 * ProportionAdapter, 270 * ProportionAdapter, screenWidth - 20 * ProportionAdapter, 50 * ProportionAdapter)];
     label.text = [NSString stringWithFormat:@"球童%@正在为您做记分前准备，稍后即实时同步记分情况。", self.qcodeUserName]
     ;
     label.font = [UIFont systemFontOfSize:15 * ProportionAdapter];
@@ -63,16 +63,13 @@
     self.iconImageV.image = [UIImage imageNamed:@"cry"];
     [self.view addSubview:self.iconImageV];
     
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10 * ProportionAdapter, 230 * ProportionAdapter, screenWidth - 20 * ProportionAdapter, 50)];
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10 * ProportionAdapter, 230 * ProportionAdapter, screenWidth - 20 * ProportionAdapter, 70 * ProportionAdapter)];
     label.text = [NSString stringWithFormat:@"您添加的球童 %@ 未完成认证，无法为您提供记分服务，请吩咐启示成球童认证，认证过程大约两分钟。", self.qcodeUserName]
     ;
     label.font = [UIFont systemFontOfSize:15 * ProportionAdapter];
     label.textColor = [UIColor colorWithHexString:@"#a0a0a0"];
     label.numberOfLines = 0;
     [self.view addSubview:label];
-    
-
-    
     //
     
 }

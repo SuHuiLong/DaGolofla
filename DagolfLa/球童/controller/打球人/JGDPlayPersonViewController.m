@@ -85,6 +85,7 @@
                 [self.view addSubview:detailLB];
                 
                 UIBarButtonItem *rightBtn = [[UIBarButtonItem alloc] initWithTitle:@"我是球童" style:UIBarButtonItemStyleDone target:self action:@selector(ballBoy)];
+                [rightBtn setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:15 * ProportionAdapter], NSFontAttributeName, nil] forState:(UIControlStateNormal)];
                 rightBtn.tintColor = [UIColor whiteColor];
                 self.navigationItem.rightBarButtonItem = rightBtn;
             }

@@ -352,10 +352,18 @@
 
                 }
                 else{
-                    
-                    [Helper alertViewWithTitle:[data objectForKey:@"packResultMsg"] withBlock:^(UIAlertController *alertView) {
-                        [self presentViewController:alertView animated:YES completion:nil];
-                    }];
+                    if ([[data objectForKey:@"errorState"] intValue] == 3) {
+                        JGDResultViewController *resultVC = [[JGDResultViewController alloc] init];
+                        if ([data objectForKey:@"bean"]) {
+                            resultVC.qcodeUserName = [[data objectForKey:@"bean"] objectForKey:@"qcodeUserName"];
+                        }
+                        resultVC.state = 10;
+                        [self.navigationController pushViewController:resultVC animated:YES];
+                        
+                    }
+//                    [Helper alertViewWithTitle:[data objectForKey:@"packResultMsg"] withBlock:^(UIAlertController *alertView) {
+//                        [self presentViewController:alertView animated:YES completion:nil];
+//                    }];
                     [_session startRunning];
                 }
             }];
