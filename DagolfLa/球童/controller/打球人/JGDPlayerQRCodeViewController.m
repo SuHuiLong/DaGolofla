@@ -209,7 +209,10 @@
     imageV.layer.cornerRadius = 6*screenWidth/375;
     imageV.layer.masksToBounds = YES;
     [imageV sd_setImageWithURL:[Helper setImageIconUrl:@"user" andTeamKey:[DEFAULF_USERID integerValue] andIsSetWidth:YES andIsBackGround:NO] placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
-    
+    //添加边框
+    CALayer * layer = [imageV layer];
+    layer.borderColor = [[UIColor whiteColor] CGColor];
+    layer.borderWidth = 2.0f;
     NSString* strMd = [Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%tddagolfla.com",[DEFAULF_USERID integerValue] ]];
     //清楚缓存
     NSString *bgUrl = [NSString stringWithFormat:@"http://mobile.dagolfla.com/qcode/userQCode?userKey=%@&md5=%@",DEFAULF_USERID,strMd];

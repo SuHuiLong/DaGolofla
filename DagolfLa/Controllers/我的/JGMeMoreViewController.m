@@ -83,6 +83,7 @@
         case 1:
         {
             MySetAboutController *abVC = [[MySetAboutController alloc] init];
+            abVC.title = @"关于";
             [self.navigationController pushViewController:abVC animated:YES];
         }
             break;
@@ -112,7 +113,7 @@
 
 - (NSMutableArray *)titleArray{
     if (!_titleArray) {
-        _titleArray = [NSMutableArray arrayWithObjects:@"球童记分",@"关于我们",@"产品评价",nil];//
+        _titleArray = [NSMutableArray arrayWithObjects:@"我是球童",@"关于我们",@"产品评价",nil];//
     }
     return _titleArray;
 }
