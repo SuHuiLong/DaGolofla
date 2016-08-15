@@ -11,6 +11,7 @@
 #import "JGHTransDetailListModel.h"
 #import "JGDPrivateAccountViewController.h"
 #import "JGHCabbieWalletViewController.h"
+#import "JGTeamDeatilWKwebViewController.h"
 
 static NSString *const JGHCabbieAwaredCellIdentifier = @"JGHCabbieAwaredCell";
 
@@ -44,9 +45,20 @@ static NSString *const JGHCabbieAwaredCellIdentifier = @"JGHCabbieAwaredCell";
     self.navigationItem.title = @"我的奖励";
     _page = 0;
     
+    UIBarButtonItem *item = [[UIBarButtonItem alloc]initWithTitle:@"奖励政策" style:UIBarButtonItemStylePlain target:self action:@selector(rewardPolicy)];
+    item.tintColor=[UIColor whiteColor];
+    self.navigationItem.rightBarButtonItem = item;
+    
     [self createCabbieRewardTableView];
     
     [self loadRewardData];
+}
+#pragma mark -- 奖励政策
+- (void)rewardPolicy{
+    JGTeamDeatilWKwebViewController *wkCtrl = [[JGTeamDeatilWKwebViewController alloc]init];
+    //http://imgcache.dagolfla.com/share/score/rewardPolicy.html
+    wkCtrl.detailString = @"http://imgcache.dagolfla.com/share/score/rewardPolicy.html";
+    [self.navigationController pushViewController:wkCtrl animated:YES];
 }
 #pragma mark -- 下载
 - (void)loadRewardData{

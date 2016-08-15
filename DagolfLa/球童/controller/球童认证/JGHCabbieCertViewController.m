@@ -12,7 +12,7 @@
 #import "JGHSexCell.h"
 #import "JGHCabbiePhotoCell.h"
 #import "JGHBtnCell.h"
-#import "JGHCabbieCertSuccessViewController.h"
+#import "JGHStarScoreViewController.h"
 #import "JGHCaddieAuthModel.h"
 #import "BallParkViewController.h"
 #import "SXPickPhoto.h"
@@ -332,11 +332,12 @@ static NSString *const JGHBtnCellIdentifier = @"JGHBtnCell";
                     if ([NSThread isMainThread]) {
                         NSLog(@"Yay!");
                         [self presentViewController:alertController animated:YES completion:nil];
-                        [self.navigationController popViewControllerAnimated:YES];
+                        [self pushCtrl];
                     } else {
                         NSLog(@"Humph, switching to main");
                         dispatch_async(dispatch_get_main_queue(), ^{
                             [self presentViewController:alertController animated:YES completion:nil];
+                            [self pushCtrl];
                         });
                     }
                     
@@ -364,6 +365,12 @@ static NSString *const JGHBtnCellIdentifier = @"JGHBtnCell";
     }else{
         _cabbieYear = textField.text;
     }
+}
+
+- (void)pushCtrl{
+    JGHStarScoreViewController *startCtrl = [[JGHStarScoreViewController alloc]init];
+    
+    [self.navigationController pushViewController:startCtrl animated:YES];
 }
 
 - (void)didReceiveMemoryWarning {
