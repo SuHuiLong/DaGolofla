@@ -17,4 +17,6 @@
 
 @property (nonatomic, assign)NSInteger currentPage;
 
+@property (nonatomic, assign)NSInteger isCabbie;//1-球童
+
 @end

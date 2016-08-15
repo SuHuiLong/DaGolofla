@@ -80,6 +80,7 @@
     _hongbaoImageView.userInteractionEnabled = YES;
     _hongbaoImageView.image = [UIImage imageNamed:@"hongbao"];
     [self.view addSubview:_hongbaoImageView];
+    
     //滑动文字
     UIImageView *wordsLimageView = [[UIImageView alloc]initWithFrame:CGRectMake(10*ProportionAdapter, 190 *ProportionAdapter, _hongbaoImageView.frame.size.width - 20*ProportionAdapter, 30*ProportionAdapter)];
     wordsLimageView.image = [UIImage imageNamed:@"hongbaowords"];
@@ -104,6 +105,13 @@
 - (void)BackBtnClick:(UIButton *)btn{
     [self.navigationController popViewControllerAnimated:YES];
 }
+#pragma mark -- 红包跳转
+//- (void)hongbaoImageViewAnimation{
+//    [UIView animateWithDuration:1.0 animations:^{
+//        //修改按钮的frame
+//        _huadongImageView.frame = CGRectMake(170 *ProportionAdapter, 65*ProportionAdapter, 40 *ProportionAdapter, 80 *ProportionAdapter);
+//    }];
+//}
 #pragma maek -- 上滑手势
 - (void)gapBtnUpGapClick{
     _gapBtn.enabled = NO;
@@ -135,24 +143,26 @@
 }
 #pragma mark -- 钱币回收动画
 - (void)coinRecyclingAnimation{
+    [_hongbaoImageView stopAnimating];
     [_hongbaoImageView setImage:nil];
+    _hongbaoImageView.frame = CGRectMake(60*ProportionAdapter, (40 +20 +10 +35 + 20 +64)*ProportionAdapter,  screenWidth-120*ProportionAdapter, 320 *ProportionAdapter);
     [_hongbaoImageView setImage:[UIImage imageNamed:@"hongbaoopen"]];
     
     _hongbaojinbiImageView = [[UIImageView alloc]initWithFrame:CGRectMake((60 +20) *ProportionAdapter, (40 +20 +10 +35 + 40 + 20 +64 +10)*ProportionAdapter, _hongbaoImageView.frame.size.width - 40 *ProportionAdapter, 40*ProportionAdapter)];
     _hongbaojinbiImageView.image = [UIImage imageNamed:@"hongbaojinbi"];
     [self.view addSubview:_hongbaojinbiImageView];
     
-    [UIView animateWithDuration:2.0 animations:^{
+    [UIView animateWithDuration:1.5 animations:^{
         //修改按钮的frame
-        _hongbaojinbiImageView.frame = CGRectMake(screenWidth - 54*ProportionAdapter, 20, 44*ProportionAdapter, 44);
+        _hongbaojinbiImageView.frame = CGRectMake(screenWidth - 40*ProportionAdapter, 34, 24*ProportionAdapter, 24);
     }];
  
     //移除
-    [self performSelector:@selector(deleteAnimation) withObject:self afterDelay:2.0];
+    [self performSelector:@selector(deleteAnimation) withObject:self afterDelay:1.5];
 }
 - (void)deleteAnimation{
     [_hongbaojinbiImageView removeFromSuperview];
-    _jineLable = [[UILabel alloc]initWithFrame:CGRectMake(screenWidth - 24*ProportionAdapter, 50, 14*ProportionAdapter, 14)];
+    _jineLable = [[UILabel alloc]initWithFrame:CGRectMake(screenWidth - 24*ProportionAdapter, 46, 14*ProportionAdapter, 14)];
     _jineLable.text = @"+15";
     _jineLable.textColor = [UIColor yellowColor];
     _jineLable.font = [UIFont systemFontOfSize:13*ProportionAdapter];
