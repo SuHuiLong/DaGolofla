@@ -59,10 +59,16 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 - (IBAction)playBtn:(UIButton *)sender {
+    NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
+    [def setObject:@1 forKey:@"isCaddie"];
+    [def synchronize];
     JGDPlayPersonViewController * playVC = [[JGDPlayPersonViewController alloc] init];
     [self.navigationController pushViewController:playVC animated:YES];
 }
 - (IBAction)caddieBtn:(UIButton *)sender {
+    NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
+    [def setObject:@2 forKey:@"isCaddie"];
+    [def synchronize];
     JGLCaddieScoreViewController* cadVc = [[JGLCaddieScoreViewController alloc]init];
     cadVc.isCaddie = 1;
     [self.navigationController pushViewController:cadVc animated:YES];

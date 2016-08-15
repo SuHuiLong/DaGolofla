@@ -392,15 +392,9 @@
                         }
                     }
                 }];
-                
-                if ([[def objectForKey:@"isCaddie"] integerValue] == 10) {
-                }else if ([[def objectForKey:@"isCaddie"] integerValue] == 20) {
-                }
+
                 
             }else{
-                NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
-                [def setObject:@1 forKey:@"isCaddie"];
-                [def synchronize];
                 
                 JGHCaddieViewController *caddieCtrl = [[JGHCaddieViewController alloc]initWithNibName:@"JGHCaddieViewController" bundle:nil];
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
