@@ -21,6 +21,8 @@
 #import "JGLCaddieModel.h"
 
 #import "JGLScoreSureViewController.h"
+#import "JGHCabbieRewardViewController.h"
+
 @interface JGLCaddieScoreViewController ()<UITableViewDelegate, UITableViewDataSource>
 {
     NSMutableArray* _dataArray;
