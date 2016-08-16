@@ -10,7 +10,7 @@
 
 @interface JGLAddClientViewController : ViewController
 
-
+@property (assign, nonatomic) NSInteger isCaddie;//是否是球童，1，是球童，2，是打球人
 @property (copy, nonatomic) void(^blockData)(NSString *);
 
 @end

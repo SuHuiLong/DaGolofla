@@ -247,6 +247,7 @@
 //        self.timer = [NSTimer scheduledTimerWithTimeInterval:3 target:self selector:@selector(loopAct) userInfo:nil repeats:YES];
 //        [self.timer fire];
 //    };
+    addVc.isCaddie = _isCaddie;
     [self.navigationController pushViewController:addVc animated:YES];
 }
 
@@ -414,6 +415,7 @@
 
 -(void)finishClick:(UIButton *)btn
 {
+    
     if ([[_dataArray[btn.tag - 1000] srcType] integerValue] == 1) {
         JGDPlayerHisScoreCardViewController *DPHVC = [[JGDPlayerHisScoreCardViewController alloc] init];
         DPHVC.timeKey = [_dataArray[btn.tag - 1000] timeKey];
