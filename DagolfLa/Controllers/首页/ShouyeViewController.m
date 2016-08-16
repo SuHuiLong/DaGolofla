@@ -30,7 +30,7 @@
 
 #import "JGHDatePicksViewController.h"
 
-#import "JGLActivityMemberSetViewController.h"
+#import "JGLCaddieSelfAddPlayerViewController.h"
 
 
 #import "JGGuestViewController.h" // 嘉宾
@@ -372,7 +372,7 @@
                 NSLog(@"shangchen");
 //                UseMallViewController
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
-                UseMallViewController* userVc = [[UseMallViewController alloc]init];
+                JGLCaddieSelfAddPlayerViewController* userVc = [[JGLCaddieSelfAddPlayerViewController alloc]init];
                 [self.navigationController pushViewController:userVc animated:YES];
             }
                 break;

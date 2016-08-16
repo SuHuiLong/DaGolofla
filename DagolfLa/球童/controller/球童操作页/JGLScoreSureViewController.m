@@ -8,6 +8,7 @@
 
 #import "JGLScoreSureViewController.h"
 #import "JGLCaddieChooseStyleViewController.h"
+#import "JGLCaddieSelfScoreViewController.h"
 @interface JGLScoreSureViewController ()
 
 @end
@@ -86,10 +87,31 @@
 }
 
 -(void)finishClick{
-    JGLCaddieChooseStyleViewController* choVc = [[JGLCaddieChooseStyleViewController alloc]init];
-    choVc.userKeyPlayer = _userKeyPlayer;
-    choVc.userNamePlayer = _userNamePlayer;
-    [self.navigationController pushViewController:choVc animated:YES];
+    NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
+    [dict setObject:DEFAULF_USERID forKey:@"userKey"];
+    [dict setObject:[Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@dagolfla.com", DEFAULF_USERID]] forKey:@"md5"];
+    [[JsonHttp jsonHttp]httpRequest:@"score/getTodayScore" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
+        
+    } completionBlock:^(id data) {
+        
+        if ([[data objectForKey:@"acBoolean"] integerValue] == 1) {
+            JGLCaddieChooseStyleViewController* choVc = [[JGLCaddieChooseStyleViewController alloc]init];
+            choVc.userKeyPlayer = _userKeyPlayer;
+            choVc.userNamePlayer = _userNamePlayer;
+            [self.navigationController pushViewController:choVc animated:YES];
+        }
+        else{
+            JGLCaddieSelfScoreViewController* selfVc = [[JGLCaddieSelfScoreViewController alloc]init];
+            selfVc.userNamePlayer = _userNamePlayer;
+            selfVc.userKeyPlayer = _userKeyPlayer;
+            [self.navigationController pushViewController:selfVc animated:YES];
+        }
+    }];
+    
+    
+    
+    
+    
 }
 #pragma mark --球童相互扫描返回按钮
 -(void)backCaddieClick
