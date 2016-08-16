@@ -13,6 +13,7 @@
 #import "JGHEndScoresViewController.h"
 #import "JGDHistoryScoreViewController.h"
 #import "JGHCabbieWalletViewController.h"
+#import "JGLCaddieScoreViewController.h"
 
 @interface JGHScoresViewController ()<UIPageViewControllerDataSource,UIPageViewControllerDelegate>
 {
@@ -335,7 +336,10 @@
                     }
                 }
                 
-                [self titleBtnClick];
+                NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
+                if (![userdef objectForKey:[NSString stringWithFormat:@"%@list", _scorekey]]) {
+                    [self titleBtnClick];
+                }
             }
         }else{
             if ([data objectForKey:@"packResultMsg"]) {
@@ -483,6 +487,12 @@
     } completionBlock:^(id data) {
         NSLog(@"%@", data);
         if ([[data objectForKey:@"packSuccess"]integerValue] == 1) {
+            NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
+            if (![userdef objectForKey:[NSString stringWithFormat:@"%@list", _scorekey]]) {
+                [userdef setObject:@1 forKey:[NSString stringWithFormat:@"%@list", _scorekey]];
+                [userdef synchronize];
+            }
+            
             if (_selectcompleteHole == 1 || _selectHole == 1) {
                 [_timer invalidate];
                 _timer = nil;
@@ -536,18 +546,25 @@
 }
 #pragma mark --历史记分
 - (void)scoresResult{
-    NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
-    if (_selectPage > 0) {
-        [userdef setObject:@(_selectPage-1) forKey:[NSString stringWithFormat:@"%@", _scorekey]];
+    if (_isCabbie == 1) {
+        // isCaddie;//是否是球童，1，是球童，
+        JGLCaddieScoreViewController *cabbieCtrl = [[JGLCaddieScoreViewController alloc]init];
+        cabbieCtrl.isCaddie = 1;
+        [self.navigationController pushViewController:cabbieCtrl animated:YES];
     }else{
-        [userdef setObject:@(_selectPage) forKey:[NSString stringWithFormat:@"%@", _scorekey]];
+        NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
+        if (_selectPage > 0) {
+            [userdef setObject:@(_selectPage-1) forKey:[NSString stringWithFormat:@"%@", _scorekey]];
+        }else{
+            [userdef setObject:@(_selectPage) forKey:[NSString stringWithFormat:@"%@", _scorekey]];
+        }
+        
+        [userdef synchronize];
+        
+        NSLog(@"%@", [userdef objectForKey:[NSString stringWithFormat:@"%@", _scorekey]]);
+        JGDHistoryScoreViewController *historyCtrl = [[JGDHistoryScoreViewController alloc]init];
+        [self.navigationController pushViewController:historyCtrl animated:YES];
     }
-    
-    [userdef synchronize];
-    
-    NSLog(@"%@", [userdef objectForKey:[NSString stringWithFormat:@"%@", _scorekey]]);
-    JGDHistoryScoreViewController *historyCtrl = [[JGDHistoryScoreViewController alloc]init];
-    [self.navigationController pushViewController:historyCtrl animated:YES];
 }
 #pragma mark -- 完成记分
 - (void)pushJGHEndScoresViewController{

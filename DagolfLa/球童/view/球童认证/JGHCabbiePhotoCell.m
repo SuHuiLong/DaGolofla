@@ -15,10 +15,12 @@
     // Initialization code
     self.proTextField.font = [UIFont systemFontOfSize:15*ProportionAdapter];
     
-    self.photoImageW.constant = 120 *ProportionAdapter;
-    self.photoImageH.constant = 120 *ProportionAdapter;
+    
     self.promptLableTop.constant = 12 *ProportionAdapter;
     self.cammaDown.constant = 12 *ProportionAdapter;
+    
+    self.photoImageW.constant = 120 *ProportionAdapter;
+    self.photoImageH.constant = 140 *ProportionAdapter;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
