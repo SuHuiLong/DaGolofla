@@ -143,6 +143,7 @@ static NSString *const JGHLableAndLableCellIdentifier = @"JGHLableAndLableCell";
     }];
 }
 - (void)popCtrl{
+    _refreshBlock();
     [self.navigationController popViewControllerAnimated:YES];
 }
 - (void)createCabbieEditorTableview{

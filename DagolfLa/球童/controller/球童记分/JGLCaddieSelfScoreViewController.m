@@ -125,6 +125,7 @@
                 [[ShowHUD showHUD]showToastWithText:@"请选择Tee台" FromView:self.view];
                 return;
             }
+            
             [dict1 setObject:@1 forKey:@"userType"];// 用户名称
             [dict1 setObject:_userKeyPlayer forKey:@"userKey"];//用户Key
             [dict1 setObject:_userNamePlayer forKey:@"userName"];// 用户名称
@@ -156,6 +157,7 @@
             else{
                 [dict1 setObject:@"" forKey:@"userMobile"];// 手机号
             }
+            
             [dict1 setObject:@1 forKey:@"userType"];// 用户名称
         }
         else{
@@ -164,6 +166,7 @@
             if (_teeDictChoose.count != 0) {
                 [dict1 setObject:[_teeDictChoose objectForKey:@"0"] forKey:@"tTaiwan"];// T台
             }
+            
             [dict1 setObject:@1 forKey:@"userType"];// 用户名称
         }
         [userArray addObject:dict1];

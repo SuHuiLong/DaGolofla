@@ -11,6 +11,8 @@
 
 @interface JGHCabbieEditorViewController : ViewController
 
-@property (nonatomic, strong)JGHCaddieAuthModel *model;;
+@property (nonatomic, strong)JGHCaddieAuthModel *model;
+
+@property (strong, nonatomic) void (^refreshBlock)();
 
 @end
