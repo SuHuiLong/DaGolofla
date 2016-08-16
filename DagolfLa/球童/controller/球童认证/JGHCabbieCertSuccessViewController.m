@@ -61,6 +61,9 @@ static NSString *const JGHLableAndLableCellIdentifier = @"JGHLableAndLableCell";
 - (void)editorBtnClick:(UIBarButtonItem *)item{
     JGHCabbieEditorViewController *cabbEditorCtrl = [[JGHCabbieEditorViewController alloc]init];
     cabbEditorCtrl.model = _model;
+    cabbEditorCtrl.refreshBlock = ^(){
+        [self loadData];
+    };
     [self.navigationController pushViewController:cabbEditorCtrl animated:YES];
 }
 

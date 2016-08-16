@@ -64,7 +64,7 @@
     
     [self.view insertSubview:_barView atIndex:0];
     
-    if ([_wealMony floatValue] > 0) {
+    if ([_wealMony floatValue] <= 0) {
         UIImageView *emjImageView = [[UIImageView alloc]initWithFrame:CGRectMake(134*ProportionAdapter, 87 *ProportionAdapter,  screenWidth-268*ProportionAdapter, 114 *ProportionAdapter)];
         emjImageView.image = [UIImage imageNamed:@"emjlaugh"];
         [self.view addSubview:emjImageView];
@@ -190,7 +190,7 @@
     [UIView animateWithDuration:1.0 animations:^{
         //修改按钮的frame
         _jineLable.font = [UIFont systemFontOfSize:30 *ProportionAdapter];
-        _jineLable.frame = CGRectMake(screenWidth - 64*ProportionAdapter, 20, 54*ProportionAdapter, 44);
+        _jineLable.frame = CGRectMake(screenWidth - 74*ProportionAdapter, 10, 64*ProportionAdapter, 54);
     }];
     
     //移除

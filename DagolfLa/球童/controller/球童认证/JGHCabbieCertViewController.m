@@ -323,7 +323,7 @@ static NSString *const JGHBtnCellIdentifier = @"JGHBtnCell";
                 if ([[data objectForKey:@"code"] integerValue] == 1) {
                     UIAlertAction *commitAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
                         
-                        [self.navigationController popViewControllerAnimated:YES];
+                        [self pushCtrl];
                     }];
                     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"系统提示" message:@"球童认证成功!" preferredStyle:UIAlertControllerStyleAlert];
                     [alertController addAction:commitAction];
@@ -331,12 +331,11 @@ static NSString *const JGHBtnCellIdentifier = @"JGHBtnCell";
                     if ([NSThread isMainThread]) {
                         NSLog(@"Yay!");
                         [self presentViewController:alertController animated:YES completion:nil];
-                        [self pushCtrl];
+                        
                     } else {
                         NSLog(@"Humph, switching to main");
                         dispatch_async(dispatch_get_main_queue(), ^{
                             [self presentViewController:alertController animated:YES completion:nil];
-                            [self pushCtrl];
                         });
                     }
                     
