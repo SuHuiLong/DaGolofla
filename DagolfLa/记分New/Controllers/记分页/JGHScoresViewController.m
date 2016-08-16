@@ -443,6 +443,7 @@
 #pragma mark -- 保存
 - (void)saveScoresClick{
     _item.enabled = NO;
+    
     //保存
     NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
     if (_selectPage > 0) {
@@ -450,6 +451,9 @@
     }else{
         [userdef setObject:@(_selectPage) forKey:[NSString stringWithFormat:@"%@", _scorekey]];
     }
+    
+    [userdef synchronize];
+    
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     [dict setObject:DEFAULF_USERID forKey:@"userKey"];
     NSMutableArray *listArray = [NSMutableArray array];
@@ -497,13 +501,16 @@
                 [_timer invalidate];
                 _timer = nil;
                 //完成  finishScore
+                [[ShowHUD showHUD]showAnimationWithText:@"提交中..." FromView:self.view];
+                
                 NSMutableDictionary *finishDict = [NSMutableDictionary dictionary];
                 [finishDict setObject:DEFAULF_USERID forKey:@"userKey"];
                 [finishDict setObject:_scorekey forKey:@"scoreKey"];
                 [[JsonHttp jsonHttp]httpRequestWithMD5:@"score/finishScore" JsonKey:nil withData:finishDict failedBlock:^(id errType) {
-                    
+                    [[ShowHUD showHUD]hideAnimationFromView:self.view];
                 } completionBlock:^(id data) {
                     NSLog(@"%@", data);
+                    [[ShowHUD showHUD]hideAnimationFromView:self.view];
                     if ([[data objectForKey:@"packSuccess"]integerValue] == 1) {
                         if ([data objectForKey:@"money"]) {
                             _walletMonay = [data objectForKey:@"money"];
