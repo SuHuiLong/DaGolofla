@@ -17,6 +17,6 @@
 
 @property (nonatomic, strong)JGTeamAcitivtyModel *model;
 
-@property (copy, nonatomic) void (^refreshBlock)();
+@property (strong, nonatomic) void (^refreshBlock)();
 
 @end
