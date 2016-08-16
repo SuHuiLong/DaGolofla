@@ -112,7 +112,7 @@
 
 // 监听状态改变后
 
-- (void)alertAct{
+- (void)alertAct{ 
     NSString *alertStr; //
     if ([[self.dataDic objectForKey:@"isQCodeCaddie"] integerValue] == 1) {
         alertStr = [NSString stringWithFormat:@"客户 %@ 请你代为记分", [self.dataDic objectForKey:@"scanUserName"]];

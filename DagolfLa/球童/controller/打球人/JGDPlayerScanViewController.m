@@ -358,15 +358,13 @@
                             resultVC.qcodeUserName = [[data objectForKey:@"bean"] objectForKey:@"qcodeUserName"];
                         }
                         resultVC.state = 10;
-                        [self.loopTimer invalidate];
-                        self.loopTimer = nil;
                         [self.navigationController pushViewController:resultVC animated:YES];
                         
                     }
 //                    [Helper alertViewWithTitle:[data objectForKey:@"packResultMsg"] withBlock:^(UIAlertController *alertView) {
 //                        [self presentViewController:alertView animated:YES completion:nil];
 //                    }];
-                    [_session startRunning];
+//                    [_session startRunning];
                 }
             }];
         }
