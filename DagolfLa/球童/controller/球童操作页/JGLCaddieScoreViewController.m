@@ -38,6 +38,7 @@
     
     UIView *_footerView;
     UIButton *_footerFinishBtn;//点击完成的按钮和存放按钮的视图
+    NSInteger _isHaveData;
 }
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic ,strong) UILabel *tipLabel;
@@ -53,6 +54,7 @@
     self.title = @"球童记分";
     _dataArray = [[NSMutableArray alloc]init];
     _page = 0;
+    _isHaveData = 1;
     
     UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"backL"] style:UIBarButtonItemStylePlain target:self action:@selector(backButtonClcik)];
     item.tintColor=[UIColor whiteColor];
@@ -68,7 +70,8 @@
     self.navigationItem.rightBarButtonItem = rightItem;
     
     [self createTable];
-    //    [self setData];
+    
+    [self setData];
     // Do any additional setup after loading the view.
 }
 
@@ -187,6 +190,8 @@
             if ([data objectForKey:@"list"]) {
                 _footerView.hidden = NO;
                 _footerFinishBtn.hidden = NO;
+                self.tipLabel.hidden = NO;
+                self.tableView.tableFooterView.hidden = NO;
                 for (NSDictionary *dic in [data objectForKey:@"list"]) {
                     JGLCaddieModel *model = [[JGLCaddieModel alloc]init];
                     [model setValuesForKeysWithDictionary:dic];
@@ -194,29 +199,18 @@
                 }
                 [_dataArray addObjectsFromArray:[data objectForKey:@"teamSignUpList"]];
                 _page++;
+                _isHaveData = 2;
+                [self setData];
+                
             }
             else{
                 _footerView.hidden = YES;
                 _footerFinishBtn.hidden = YES;
                 self.tipLabel.hidden = YES;
                 self.tableView.tableFooterView.hidden = YES;
-                UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake(134 * ProportionAdapter, 200 * ProportionAdapter, 107 * ProportionAdapter, 107 * ProportionAdapter)];
-                imageV.image = [UIImage imageNamed:@"bg-shy"];
-                [self.view addSubview:imageV];
+                _isHaveData = 1;
+                [self setData];
                 
-                UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 330, screenWidth, 30 * ProportionAdapter)];
-                label.text = @"您还没有替客户记录的记分哦";
-                label.textAlignment = NSTextAlignmentCenter;
-                label.textColor = [UIColor colorWithHexString:@"#a0a0a0"];
-                label.font = [UIFont systemFontOfSize:18 * ProportionAdapter];
-                [self.view addSubview:label];
-                
-                UILabel *detailLB = [[UILabel alloc] initWithFrame:CGRectMake(20 * ProportionAdapter, 370 * ProportionAdapter, screenWidth - 40 * ProportionAdapter, 50 * ProportionAdapter)];
-                detailLB.text = @"球童扫描客户二维码，可代替客户记分，记分完成后，成绩自动存入客户历史记分卡中。";
-                detailLB.font = [UIFont systemFontOfSize:14 * ProportionAdapter];
-                detailLB.textColor = [UIColor colorWithHexString:@"#a0a0a0"];
-                detailLB.numberOfLines = 0;
-                [self.view addSubview:detailLB];
             }
             [_tableView reloadData];
         }else {
@@ -229,7 +223,43 @@
     }];
 }
 
-
+-(void)setData{
+    if (_isHaveData == 1) {
+        UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake(134 * ProportionAdapter, 200 * ProportionAdapter, 107 * ProportionAdapter, 107 * ProportionAdapter)];
+        imageV.image = [UIImage imageNamed:@"bg-shy"];
+        imageV.tag = 1001;
+        [_tableView addSubview:imageV];
+        
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 330, screenWidth, 30 * ProportionAdapter)];
+        label.text = @"您还没有替客户记录的记分哦";
+        label.textAlignment = NSTextAlignmentCenter;
+        label.textColor = [UIColor colorWithHexString:@"#a0a0a0"];
+        label.font = [UIFont systemFontOfSize:18 * ProportionAdapter];
+        [_tableView addSubview:label];
+        label.tag = 1002;
+        
+        UILabel *detailLB = [[UILabel alloc] initWithFrame:CGRectMake(20 * ProportionAdapter, 370 * ProportionAdapter, screenWidth - 40 * ProportionAdapter, 50 * ProportionAdapter)];
+        detailLB.text = @"球童扫描客户二维码，可代替客户记分，记分完成后，成绩自动存入客户历史记分卡中。";
+        detailLB.tag = 1003;
+        detailLB.font = [UIFont systemFontOfSize:14 * ProportionAdapter];
+        detailLB.textColor = [UIColor colorWithHexString:@"#a0a0a0"];
+        detailLB.numberOfLines = 0;
+        [_tableView addSubview:detailLB];
+    }
+    else{
+        
+        for (UIImageView* img in _tableView.subviews) {
+            if (img.tag == 1001) {
+                [img removeFromSuperview];
+            }
+        }
+        for (UILabel* label in _tableView.subviews) {
+            if (label.tag == 1002 || label.tag == 1003) {
+                [label removeFromSuperview];
+            }
+        }
+    }
+}
 
 
 
@@ -386,14 +416,14 @@
     JGLCaddieScoreTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"JGLCaddieScoreTableViewCell"];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
     [cell showData:_dataArray[indexPath.section]];
-    if ([[_dataArray[indexPath.row] scoreFinish] integerValue] == 0) {
+    if ([[_dataArray[indexPath.section] scoreFinish] integerValue] == 0) {
         [cell.checkBtn addTarget:self action:@selector(continueClick:) forControlEvents:UIControlEventTouchUpInside];
-        cell.checkBtn.tag = 1000 + indexPath.row;
+        cell.checkBtn.tag = 1000 + indexPath.section;
     }
-    else if ([[_dataArray[indexPath.row] scoreFinish] integerValue] == 1)
+    else if ([[_dataArray[indexPath.section] scoreFinish] integerValue] == 1)
     {
         [cell.checkBtn addTarget:self action:@selector(finishClick:) forControlEvents:UIControlEventTouchUpInside];
-        cell.checkBtn.tag = 1000 + indexPath.row;
+        cell.checkBtn.tag = 1000 + indexPath.section;
     }
     else{
         
@@ -406,12 +436,13 @@
 {
     JGHScoresViewController* scrVc = [[JGHScoresViewController alloc]init];
     scrVc.scorekey = [NSString stringWithFormat:@"%@",[_dataArray[btn.tag - 1000] timeKey]];
+    NSLog(@"%@",[_dataArray[btn.tag - 1000] timeKey]);
     scrVc.isCabbie = 1;
     NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
     
-    if ([userdef objectForKey:[NSString stringWithFormat:@"%@", [_dataArray[btn.tag - 1000] timeKey]]]) {
+//    if ([userdef objectForKey:[NSString stringWithFormat:@"%@", [_dataArray[btn.tag - 1000] timeKey]]]) {
         scrVc.currentPage = [[userdef objectForKey:[NSString stringWithFormat:@"%@", [_dataArray[btn.tag - 1000] timeKey]]] integerValue];
-    }
+//    }
     [self.navigationController pushViewController:scrVc animated:YES];
 }
 
@@ -427,6 +458,7 @@
         JGDNotActScoreViewController *noActVC = [[JGDNotActScoreViewController alloc] init];
         noActVC.timeKey = [_dataArray[btn.tag - 1000] timeKey];
         noActVC.ballkid = 10;//表示已经完成记分
+        NSLog(@"%@",[_dataArray[btn.tag - 1000] timeKey]);
         [self.navigationController pushViewController:noActVC animated:YES];
     }
 }
