@@ -34,7 +34,7 @@
                         </connections>
                     </button>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="camera" translatesAutoresizingMaskIntoConstraints="NO" id="3nm-Go-uCk">
-                        <rect key="frame" x="101.5" y="132" width="116" height="18"/>
+                        <rect key="frame" x="99.5" y="132" width="120" height="18"/>
                     </imageView>
                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="求真相" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="MLe-0d-HEu">
                         <rect key="frame" x="137" y="162" width="46" height="17"/>
@@ -43,6 +43,7 @@
                     </textField>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="3nm-Go-uCk" firstAttribute="width" secondItem="eLZ-ca-zZU" secondAttribute="width" id="5yJ-wZ-lP9"/>
                     <constraint firstItem="MLe-0d-HEu" firstAttribute="top" secondItem="3nm-Go-uCk" secondAttribute="bottom" constant="12" id="9nS-Pb-i83"/>
                     <constraint firstItem="3nm-Go-uCk" firstAttribute="centerX" secondItem="9RX-WW-X7X" secondAttribute="centerX" id="Czq-JU-bbK"/>
                     <constraint firstItem="eLZ-ca-zZU" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="Faw-ND-vOd"/>
