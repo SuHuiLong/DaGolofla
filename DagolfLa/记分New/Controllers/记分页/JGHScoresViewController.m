@@ -553,6 +553,15 @@
 - (void)pushJGHEndScoresViewController{
     if (_isCabbie == 1 && [_walletMonay floatValue] > 0) {
         JGHCabbieWalletViewController *wealetCtrl = [[JGHCabbieWalletViewController alloc]init];
+        wealetCtrl.wealMony = _walletMonay;
+        NSString *userNameString = @"";
+        for (JGHScoreListModel *model in self.userScoreArray) {
+            if (model.userName) {
+                [userNameString stringByAppendingString:model.userName];
+            }
+        }
+        
+        wealetCtrl.customerName = userNameString;
         [self.navigationController pushViewController:wealetCtrl animated:YES];
     }else{
         NSInteger scoreCount = 0;
