@@ -21,6 +21,8 @@ static NSString *const JGHCabbieAwaredCellIdentifier = @"JGHCabbieAwaredCell";
     NSInteger _page;
     UILabel *_totalLable;
     UIView *_noDataView;
+    
+    NSNumber *_sumMonay;
 }
 
 @property (nonatomic, strong)UITableView *cabbieRewardTableView;
@@ -75,6 +77,7 @@ static NSString *const JGHCabbieAwaredCellIdentifier = @"JGHCabbieAwaredCell";
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
             if ([data objectForKey:@"transDetailList"]) {
                 float totalCount = 0.00;
+                _sumMonay = [data objectForKey:@"inSumMoney"];
                 JGHTransDetailListModel *model = [[JGHTransDetailListModel alloc]init];
                 NSArray *dataArray = [NSArray array];
                 dataArray = [data objectForKey:@"transDetailList"];
@@ -84,16 +87,16 @@ static NSString *const JGHCabbieAwaredCellIdentifier = @"JGHCabbieAwaredCell";
                     [self.dataArray addObject:model];
                 }
                 
-                [self createBarView:0 andTotalPrice:totalCount];
+                [self createBarView:0 andTotalPrice:_sumMonay];
                 [self.cabbieRewardTableView reloadData];
             }else{
                 if (self.dataArray.count == 0) {
-                    [self createBarView:1 andTotalPrice:1.0];
+                    [self createBarView:1 andTotalPrice:_sumMonay];
                 }
                 
             }
         }else{
-            [self createBarView:1 andTotalPrice:1.0];
+            [self createBarView:1 andTotalPrice:_sumMonay];
             if ([data objectForKey:@"packResultMsg"]) {
                 [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
             }
@@ -103,7 +106,7 @@ static NSString *const JGHCabbieAwaredCellIdentifier = @"JGHCabbieAwaredCell";
         [self.cabbieRewardTableView.footer endRefreshing];
     }];
 }
-- (void)createBarView:(NSInteger)barId andTotalPrice:(float)price{
+- (void)createBarView:(NSInteger)barId andTotalPrice:(NSNumber *)price{
     if (barId == 0) {
         self.cabbieRewardTableView.frame = CGRectMake(0, 0, screenWidth, screenHeight - 44*ProportionAdapter);
         if (_totalLable != nil) {
@@ -114,7 +117,7 @@ static NSString *const JGHCabbieAwaredCellIdentifier = @"JGHCabbieAwaredCell";
         _barView = [[UIView alloc]initWithFrame:CGRectMake(0, screenHeight -64 -44*ProportionAdapter, screenWidth, 44*ProportionAdapter)];
         _barView.backgroundColor = [UIColor whiteColor];
         _totalLable = [[UILabel alloc]initWithFrame:CGRectMake(10*ProportionAdapter, 10 *ProportionAdapter, screenWidth/2, 20*ProportionAdapter)];
-        _totalLable.text = [NSString stringWithFormat:@"合计：¥%.2f", price];
+        _totalLable.text = [NSString stringWithFormat:@"合计：¥%.2f", [price floatValue]];
         [_barView addSubview:_totalLable];
         
         UIButton *myAccountBtn = [[UIButton alloc]initWithFrame:CGRectMake(screenWidth - 120*ProportionAdapter, 4*ProportionAdapter, 110*ProportionAdapter, 36 *ProportionAdapter)];

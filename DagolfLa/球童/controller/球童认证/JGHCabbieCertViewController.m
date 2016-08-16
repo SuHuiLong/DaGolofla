@@ -147,6 +147,7 @@ static NSString *const JGHBtnCellIdentifier = @"JGHBtnCell";
         //        [tranCell configScoreJGLAddActiivePlayModel:_playModel];
         cabbiePhotoCell.selectionStyle = UITableViewCellSelectionStyleNone;
         cabbiePhotoCell.delegate = self;
+        cabbiePhotoCell.proTextField.userInteractionEnabled = NO;
         if (_cabbieImage != nil) {
             [cabbiePhotoCell configCabbieCommitImage:_cabbieImage];
         }

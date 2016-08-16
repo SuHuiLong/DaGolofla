@@ -182,7 +182,7 @@
 - (void)deleteAnimation{
     [_hongbaojinbiImageView removeFromSuperview];
     _jineLable = [[UILabel alloc]initWithFrame:CGRectMake(screenWidth - 24*ProportionAdapter, 46, 14*ProportionAdapter, 14)];
-    _jineLable.text = @"+15";
+    _jineLable.text = [NSString stringWithFormat:@"+%@", _wealMony];
     _jineLable.textColor = [UIColor yellowColor];
     _jineLable.font = [UIFont systemFontOfSize:13*ProportionAdapter];
     [_barView addSubview:_jineLable];

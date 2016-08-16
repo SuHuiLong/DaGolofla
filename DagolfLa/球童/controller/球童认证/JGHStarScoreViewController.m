@@ -132,6 +132,7 @@ static NSString *const JGHLableAndLableCellIdentifier = @"JGHLableAndLableCell";
     if (indexPath.section == 0) {
         JGHCabbiePhotoCell *cabbiePhotoCell = [tableView dequeueReusableCellWithIdentifier:JGHCabbiePhotoCellIdentifier];
         cabbiePhotoCell.selectionStyle = UITableViewCellSelectionStyleNone;
+        cabbiePhotoCell.proTextField.userInteractionEnabled = NO;
         if (_model.name) {
             [cabbiePhotoCell configCabbieSuccess:1 andName:_model.name];
         }

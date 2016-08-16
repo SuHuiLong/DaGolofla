@@ -55,8 +55,9 @@
     }
     
     self.proTextField.text = name;
-    self.proTextField.placeholder = @"请输入姓名";
-        
+    self.proTextField.userInteractionEnabled = NO;
+//    self.proTextField.placeholder = @"请输入姓名";
+    
     self.photoImageTop.constant = 22 *ProportionAdapter;
 //    http://imgcache.dagolfla.com/user/head/244_caddie.jpg
     
