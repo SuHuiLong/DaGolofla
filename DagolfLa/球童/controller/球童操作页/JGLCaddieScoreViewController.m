@@ -35,6 +35,9 @@
     NSString* _qCodeId;
     NSString* _qcodeUserName,* _qcodeUserMobile;//被扫码客户的用户名,手机号
     NSNumber* _qcodeUserKey;
+    
+    UIView *_footerView;
+    UIButton *_footerFinishBtn;//点击完成的按钮和存放按钮的视图
 }
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic ,strong) UILabel *tipLabel;
@@ -70,11 +73,6 @@
     [self.navigationController pushViewController:cabbieRewardCtrl animated:YES];
 }
 
-- (void)setData{
-    if (1) {
-        
-    }
-}
 
 #pragma mark ----- 创建 tableView
 
@@ -141,15 +139,15 @@
     
     self.tableView.tableHeaderView = headerView;
     
-    UIView *footView = [[UIView alloc] initWithFrame:CGRectMake(0, 500 * ProportionAdapter, screenWidth, 60 * screenWidth / 320)];
-    UIButton *footBtn = [[UIButton alloc]initWithFrame:CGRectMake(10 * screenWidth / 320, 10 * screenWidth / 320, screenWidth - 20 * screenWidth / 320, 44 * screenWidth / 320)];
-    footBtn.clipsToBounds = YES;
-    footBtn.layer.cornerRadius = 6.f;
-    [footView addSubview:footBtn];
-    [footBtn setTitle:@"查看更多" forState:UIControlStateNormal];
-    footBtn.backgroundColor = [UIColor colorWithHexString:@"#F59826"];
-    [footBtn addTarget:self action:@selector(checkBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:footView];
+    _footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 500 * ProportionAdapter, screenWidth, 60 * screenWidth / 320)];
+    _footerFinishBtn = [[UIButton alloc]initWithFrame:CGRectMake(10 * screenWidth / 320, 10 * screenWidth / 320, screenWidth - 20 * screenWidth / 320, 44 * screenWidth / 320)];
+    _footerFinishBtn.clipsToBounds = YES;
+    _footerFinishBtn.layer.cornerRadius = 6.f;
+    [_footerView addSubview:_footerFinishBtn];
+    [_footerFinishBtn setTitle:@"查看更多" forState:UIControlStateNormal];
+    _footerFinishBtn.backgroundColor = [UIColor colorWithHexString:@"#F59826"];
+    [_footerFinishBtn addTarget:self action:@selector(checkBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:_footerView];
 }
 
 // 刷新
@@ -183,6 +181,8 @@
                 [_dataArray removeAllObjects];
             }
             if ([data objectForKey:@"list"]) {
+                _footerView.hidden = NO;
+                _footerFinishBtn.hidden = NO;
                 for (NSDictionary *dic in [data objectForKey:@"list"]) {
                     JGLCaddieModel *model = [[JGLCaddieModel alloc]init];
                     [model setValuesForKeysWithDictionary:dic];
@@ -192,6 +192,8 @@
                 _page++;
             }
             else{
+                _footerView.hidden = YES;
+                _footerFinishBtn.hidden = YES;
                 self.tipLabel.hidden = YES;
                 self.tableView.tableFooterView.hidden = YES;
                 UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake(134 * ProportionAdapter, 200 * ProportionAdapter, 107 * ProportionAdapter, 107 * ProportionAdapter)];
