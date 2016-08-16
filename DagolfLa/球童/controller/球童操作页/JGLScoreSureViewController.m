@@ -8,6 +8,8 @@
 
 #import "JGLScoreSureViewController.h"
 #import "JGLCaddieChooseStyleViewController.h"
+#import "JGLCaddieSelfScoreViewController.h"
+#import "JGLCaddieScoreViewController.h"
 @interface JGLScoreSureViewController ()
 
 @end
@@ -54,11 +56,14 @@
     UILabel *detailLB = [[UILabel alloc] initWithFrame:CGRectMake(20 * ProportionAdapter, 340 * ProportionAdapter, screenWidth - 40 * ProportionAdapter, 50 * ProportionAdapter)];
     if (_errorState == 2) {
         detailLB.text = @"臣妾做不到啊！人家仅支持球童为客户记分，不支持球童相互记分的啦！";
+        detailLB.font = [UIFont systemFontOfSize:16 * ProportionAdapter];
+        detailLB.frame = CGRectMake(20 * ProportionAdapter, 330 * ProportionAdapter, screenWidth - 40 * ProportionAdapter, 50 * ProportionAdapter);
     }else{
         detailLB.text = @"点击开始记分，进入客户记分模式，完成记分后，成绩自动存入客户历史记分卡";
+        detailLB.font = [UIFont systemFontOfSize:14 * ProportionAdapter];
     }
     
-    detailLB.font = [UIFont systemFontOfSize:14 * ProportionAdapter];
+    
     detailLB.textColor = [UIColor colorWithHexString:@"#a0a0a0"];
     detailLB.numberOfLines = 0;
     [self.view addSubview:detailLB];
@@ -73,7 +78,7 @@
         [btn addTarget:self action:@selector(backCaddieClick) forControlEvents:UIControlEventTouchUpInside];
     }
     else{
-        [btn setTitle:@"开始" forState:UIControlStateNormal];
+        [btn setTitle:@"开始记分" forState:UIControlStateNormal];
         [btn addTarget:self action:@selector(finishClick) forControlEvents:UIControlEventTouchUpInside];
     }
     
@@ -86,15 +91,40 @@
 }
 
 -(void)finishClick{
-    JGLCaddieChooseStyleViewController* choVc = [[JGLCaddieChooseStyleViewController alloc]init];
-    choVc.userKeyPlayer = _userKeyPlayer;
-    choVc.userNamePlayer = _userNamePlayer;
-    [self.navigationController pushViewController:choVc animated:YES];
+    NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
+    [dict setObject:DEFAULF_USERID forKey:@"userKey"];
+    [dict setObject:[Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@dagolfla.com", DEFAULF_USERID]] forKey:@"md5"];
+    [[JsonHttp jsonHttp]httpRequest:@"score/getTodayScore" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
+        
+    } completionBlock:^(id data) {
+        
+        if ([[data objectForKey:@"acBoolean"] integerValue] == 1) {
+            JGLCaddieChooseStyleViewController* choVc = [[JGLCaddieChooseStyleViewController alloc]init];
+            choVc.userKeyPlayer = _userKeyPlayer;
+            choVc.userNamePlayer = _userNamePlayer;
+            [self.navigationController pushViewController:choVc animated:YES];
+        }
+        else{
+            JGLCaddieSelfScoreViewController* selfVc = [[JGLCaddieSelfScoreViewController alloc]init];
+            selfVc.userNamePlayer = _userNamePlayer;
+            selfVc.userKeyPlayer = _userKeyPlayer;
+            [self.navigationController pushViewController:selfVc animated:YES];
+        }
+    }];
+    
+    
+    
+    
+    
 }
 #pragma mark --球童相互扫描返回按钮
 -(void)backCaddieClick
 {
-    
+    for (UIViewController *controller in self.navigationController.viewControllers) {
+        if ([controller isKindOfClass:[JGLCaddieScoreViewController class]]) {
+            [self.navigationController popToViewController:controller animated:YES];
+        }
+    }
 }
 
 

@@ -289,6 +289,7 @@ static NSString *const JGHBtnCellIdentifier = @"JGHBtnCell";
         return;
     }
     
+    [[ShowHUD showHUD]showAnimationWithText:@"提交中..." FromView:self.view];
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     NSMutableDictionary *caddieAuthDict = [NSMutableDictionary dictionary];
     [caddieAuthDict setObject:@(_ballKey) forKey:@"ballKey"];
@@ -301,9 +302,11 @@ static NSString *const JGHBtnCellIdentifier = @"JGHBtnCell";
     [dict setObject:caddieAuthDict forKey:@"caddieAuth"];
     [dict setObject:DEFAULF_USERID forKey:@"userKey"];
     [[JsonHttp jsonHttp]httpRequestWithMD5:@"score/doSaveCaddieAuth" JsonKey:nil withData:dict failedBlock:^(id errType) {
+        [[ShowHUD showHUD]hideAnimationFromView:self.view];
         
     } completionBlock:^(id data) {
         NSLog(@"%@", data);
+        [[ShowHUD showHUD]hideAnimationFromView:self.view];
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
             
             NSMutableArray *imageArray = [NSMutableArray array];
@@ -323,7 +326,7 @@ static NSString *const JGHBtnCellIdentifier = @"JGHBtnCell";
                 if ([[data objectForKey:@"code"] integerValue] == 1) {
                     UIAlertAction *commitAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
                         
-                        [self.navigationController popViewControllerAnimated:YES];
+                        [self pushCtrl];
                     }];
                     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"系统提示" message:@"球童认证成功!" preferredStyle:UIAlertControllerStyleAlert];
                     [alertController addAction:commitAction];
@@ -331,12 +334,11 @@ static NSString *const JGHBtnCellIdentifier = @"JGHBtnCell";
                     if ([NSThread isMainThread]) {
                         NSLog(@"Yay!");
                         [self presentViewController:alertController animated:YES completion:nil];
-                        [self pushCtrl];
+                        
                     } else {
                         NSLog(@"Humph, switching to main");
                         dispatch_async(dispatch_get_main_queue(), ^{
                             [self presentViewController:alertController animated:YES completion:nil];
-                            [self pushCtrl];
                         });
                     }
                     

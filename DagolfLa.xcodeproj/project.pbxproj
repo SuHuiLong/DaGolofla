@@ -772,6 +772,7 @@
 		828A99F51CE3481D00AF9860 /* JGMemManageController.m in Sources */ = {isa = PBXBuildFile; fileRef = 828A99F41CE3481D00AF9860 /* JGMemManageController.m */; };
 		828A99F91CE348D500AF9860 /* JGMemTitleTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 828A99F81CE348D500AF9860 /* JGMemTitleTableViewCell.m */; };
 		828A99FC1CE3549900AF9860 /* JGMemDataTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 828A99FB1CE3549900AF9860 /* JGMemDataTableViewCell.m */; };
+		828FAA4E1D62F839001F53C8 /* JGLCaddieSelfAddPlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 828FAA4D1D62F839001F53C8 /* JGLCaddieSelfAddPlayerViewController.m */; };
 		829960D41D23727C00E121A8 /* JGLBankModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 829960D31D23727C00E121A8 /* JGLBankModel.m */; };
 		829960DA1D23729C00E121A8 /* JGLAddBankNewsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 829960D71D23729C00E121A8 /* JGLAddBankNewsTableViewCell.m */; };
 		829960DB1D23729C00E121A8 /* JGLBankCardTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 829960D91D23729C00E121A8 /* JGLBankCardTableViewCell.m */; };
@@ -2386,6 +2387,8 @@
 		828A99F81CE348D500AF9860 /* JGMemTitleTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGMemTitleTableViewCell.m; sourceTree = "<group>"; };
 		828A99FA1CE3549900AF9860 /* JGMemDataTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGMemDataTableViewCell.h; sourceTree = "<group>"; };
 		828A99FB1CE3549900AF9860 /* JGMemDataTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGMemDataTableViewCell.m; sourceTree = "<group>"; };
+		828FAA4C1D62F839001F53C8 /* JGLCaddieSelfAddPlayerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGLCaddieSelfAddPlayerViewController.h; sourceTree = "<group>"; };
+		828FAA4D1D62F839001F53C8 /* JGLCaddieSelfAddPlayerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGLCaddieSelfAddPlayerViewController.m; sourceTree = "<group>"; };
 		829487241CE99A2F0018D3F6 /* JGPhotoShowCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGPhotoShowCollectionViewCell.h; sourceTree = "<group>"; };
 		829487251CE99A2F0018D3F6 /* JGPhotoShowCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGPhotoShowCollectionViewCell.m; sourceTree = "<group>"; };
 		829487261CE99A2F0018D3F6 /* JGPhotoShowCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JGPhotoShowCollectionViewCell.xib; sourceTree = "<group>"; };
@@ -6597,6 +6600,8 @@
 				82EDDF7A1D6154A8003D51EB /* JGLCaddieChooseStyleViewController.m */,
 				82EDDF7B1D6154A8003D51EB /* JGLCaddieSelfScoreViewController.h */,
 				82EDDF7C1D6154A8003D51EB /* JGLCaddieSelfScoreViewController.m */,
+				828FAA4C1D62F839001F53C8 /* JGLCaddieSelfAddPlayerViewController.h */,
+				828FAA4D1D62F839001F53C8 /* JGLCaddieSelfAddPlayerViewController.m */,
 			);
 			path = "球童记分";
 			sourceTree = "<group>";
@@ -7823,6 +7828,7 @@
 				8252E8641D360D6200448404 /* JGLScoreNewViewController.m in Sources */,
 				82CE500E1D4A280A00447875 /* JGLScoreLiveViewController.m in Sources */,
 				206ECF971D4756D900880234 /* UUDatePicker.m in Sources */,
+				828FAA4E1D62F839001F53C8 /* JGLCaddieSelfAddPlayerViewController.m in Sources */,
 				3660E1851BFC56DD0033B4D7 /* ScoreDetailTableViewCell.m in Sources */,
 				36DF6DF41C07FEAD00B60B67 /* TeamPhotoDetViewController.m in Sources */,
 				F554267C1D2277B900233B20 /* JGDCertificationViewController.m in Sources */,

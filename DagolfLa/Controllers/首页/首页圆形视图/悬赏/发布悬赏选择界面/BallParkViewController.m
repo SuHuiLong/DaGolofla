@@ -48,16 +48,16 @@
     self.title = @"地区选择";
     
     _page = 1;
-    _isCor = NO;
+//    _isCor = YES;
     
     [self getCurPosition];
     
-    if (_isCor == NO) {
+//    if (_isCor == NO) {
         //搜索栏
         [self createSeachBar];
         //表
         [self createTableView];
-    }
+//    }
 }
 
 
@@ -108,10 +108,10 @@
              [user setObject:city forKey:@"currentCity"];
              [user synchronize];
              
-             //搜索栏
-             [self createSeachBar];
-             //表
-             [self createTableView];
+//             //搜索栏
+//             [self createSeachBar];
+//             //表
+//             [self createTableView];
          }
          else if (error == nil && [array count] == 0)
          {
@@ -146,7 +146,7 @@
 
 
 -(void)createSeachBar{
-    _isCor = YES;
+    _isCor = NO;
     UIView *view=[[UIView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 44*ScreenWidth/375)];
     view.backgroundColor=[UIColor lightGrayColor];
     [self.view addSubview:view];

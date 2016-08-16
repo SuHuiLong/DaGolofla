@@ -66,7 +66,7 @@
     
     [dict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:userID] forKey:@"userKey"];//3619
     //189781710290821120  http://192.168.2.6:8888
-    [dict setObject:@0 forKey:@"offset"];
+    [dict setObject:@(_page) forKey:@"offset"];
     [dict setObject:[NSString stringWithFormat:@"%td", _timeKey] forKey:@"teamKey"];
     
     //球队活动
@@ -107,7 +107,7 @@
     JGHLaunchActivityViewController * launchCtrl = [[JGHLaunchActivityViewController alloc]init];
     launchCtrl.teamKey = _timeKey;
     launchCtrl.refreshBlock = ^(){
-        [self loadData];
+        [self headRereshing];
     };
     NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
     NSLog(@"%@", [userdef objectForKey:@"TeamActivityArray"]);

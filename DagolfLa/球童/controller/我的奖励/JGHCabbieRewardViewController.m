@@ -47,9 +47,15 @@ static NSString *const JGHCabbieAwaredCellIdentifier = @"JGHCabbieAwaredCell";
     self.navigationItem.title = @"我的奖励";
     _page = 0;
     
-    UIBarButtonItem *item = [[UIBarButtonItem alloc]initWithTitle:@"奖励政策" style:UIBarButtonItemStylePlain target:self action:@selector(rewardPolicy)];
-    item.tintColor=[UIColor whiteColor];
-    self.navigationItem.rightBarButtonItem = item;
+    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    btn.frame = CGRectMake(screenWidth - 64*ProportionAdapter, 20, 64 *ProportionAdapter, 44);
+    btn.titleLabel.font = [UIFont systemFontOfSize:13*ProportionAdapter];
+    [btn setTitle:@"奖励政策" forState:UIControlStateNormal];
+    [btn addTarget:self action:@selector(rewardPolicy) forControlEvents:UIControlEventTouchUpInside];
+    btn.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+    btn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
+    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc]initWithCustomView:btn];
+    self.navigationItem.rightBarButtonItem = leftItem;
     
     [self createCabbieRewardTableView];
     

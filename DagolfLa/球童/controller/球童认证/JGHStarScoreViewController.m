@@ -44,7 +44,7 @@ static NSString *const JGHLableAndLableCellIdentifier = @"JGHLableAndLableCell";
     // Do any additional setup after loading the view.
     
     self.view.backgroundColor = [UIColor whiteColor];
-    self.navigationItem.title = @"资料页";
+    self.navigationItem.title = @"认证完成";
     
     _titleArray = @[@"", @"所属场地", @"姓别", @"球童编号", @"服务年限"];
     _model = [[JGHCaddieAuthModel alloc]init];
@@ -61,6 +61,9 @@ static NSString *const JGHLableAndLableCellIdentifier = @"JGHLableAndLableCell";
 - (void)editorBtnClick:(UIBarButtonItem *)item{
     JGHCabbieEditorViewController *cabbEditorCtrl = [[JGHCabbieEditorViewController alloc]init];
     cabbEditorCtrl.model = _model;
+    cabbEditorCtrl.refreshBlock = ^(){
+        [self loadData];
+    };
     [self.navigationController pushViewController:cabbEditorCtrl animated:YES];
 }
 
