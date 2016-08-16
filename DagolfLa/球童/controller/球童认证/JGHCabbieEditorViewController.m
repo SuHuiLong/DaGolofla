@@ -119,10 +119,12 @@ static NSString *const JGHLableAndLableCellIdentifier = @"JGHLableAndLableCell";
                         if ([NSThread isMainThread]) {
                             NSLog(@"Yay!");
                             [[ShowHUD showHUD]showToastWithText:@"保存成功!" FromView:self.view];
+                            [self performSelector:@selector(popCtrl) withObject:self afterDelay:1.0];
                         } else {
                             NSLog(@"Humph, switching to main");
                             dispatch_async(dispatch_get_main_queue(), ^{
                                 [[ShowHUD showHUD]showToastWithText:@"保存成功!" FromView:self.view];
+                                [self performSelector:@selector(popCtrl) withObject:self afterDelay:1.0];
                             });
                         }
                     }else{
@@ -131,6 +133,7 @@ static NSString *const JGHLableAndLableCellIdentifier = @"JGHLableAndLableCell";
                 }];
             }else{
                 [[ShowHUD showHUD]showToastWithText:@"保存成功!" FromView:self.view];
+                [self performSelector:@selector(popCtrl) withObject:self afterDelay:1.0];
             }
         }else{
             if ([data objectForKey:@"packResultMsg"]) {
@@ -139,7 +142,9 @@ static NSString *const JGHLableAndLableCellIdentifier = @"JGHLableAndLableCell";
         }
     }];
 }
-
+- (void)popCtrl{
+    [self.navigationController popViewControllerAnimated:YES];
+}
 - (void)createCabbieEditorTableview{
     self.cabbieEditorTableview = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight - 64) style:UITableViewStylePlain];
     self.cabbieEditorTableview.backgroundColor = [UIColor whiteColor];
