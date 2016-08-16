@@ -567,6 +567,8 @@
             if ([data objectForKey:@"packResultMsg"]) {
                 [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
             }
+            
+            [self performSelector:@selector(scoresResult) withObject:self afterDelay:1.0];
         }
     }];
     
@@ -579,6 +581,7 @@
         for (UIViewController *controller in self.navigationController.viewControllers) {
             if ([controller isKindOfClass:[JGLCaddieScoreViewController class]]) {
                 //                [[NSNotificationCenter defaultCenter] postNotificationName:@"CaddieScoreRefreshing" object:@{@"cabbie": @"1"}];
+                _refreshBlock();
                 [self.navigationController popToViewController:controller animated:YES];
             }
         }
