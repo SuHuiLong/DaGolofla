@@ -90,7 +90,8 @@
 }
 
 #pragma mark -- 奖励
-- (void)pushRewardCtrl:(UIButton *)btn{
+- (void)
+RewardCtrl:(UIButton *)btn{
     JGHCabbieRewardViewController *cabbieRewardCtrl = [[JGHCabbieRewardViewController alloc]init];
     [self.navigationController pushViewController:cabbieRewardCtrl animated:YES];
 }
@@ -163,7 +164,7 @@
     
     self.tipLabel = [[UILabel alloc] initWithFrame:CGRectMake(10 * ProportionAdapter, 140 * ProportionAdapter, screenWidth - 20 * ProportionAdapter, 37 * ProportionAdapter)];
     self.tipLabel.numberOfLines = 0;
-    self.tipLabel.text = @"扫描球童二维码，可指定球童为您记分，记分完成后，成绩自动存入您的历史记分卡中。";
+    self.tipLabel.text = @"球童扫描客户二维码，可代替客户记分，记分完成后，成绩自动存入客户历史记分卡中。";
     self.tipLabel.font = [UIFont systemFontOfSize:12 * ProportionAdapter];
     self.tipLabel.textColor = [UIColor colorWithHexString:@"#b8b8b8"];
     [headerView addSubview:self.tipLabel];
