@@ -50,6 +50,7 @@ static NSString *const JGHLableAndLableCellIdentifier = @"JGHLableAndLableCell";
     self.navigationItem.rightBarButtonItem = item;
     
     [self createCabbieEditorTableview];
+    
 }
 #pragma mark -- 保存
 - (void)saveBtnClick{
@@ -75,7 +76,7 @@ static NSString *const JGHLableAndLableCellIdentifier = @"JGHLableAndLableCell";
         return;
     }
     
-    [[ShowHUD showHUD]showAnimationWithText:@"保存中..." FromView:self.view];
+//    [[ShowHUD showHUD]showAnimationWithText:@"保存中..." FromView:self.view];
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     NSMutableDictionary *caddieAuthDict = [NSMutableDictionary dictionary];
     [caddieAuthDict setObject:_model.ballKey forKey:@"ballKey"];
@@ -88,10 +89,10 @@ static NSString *const JGHLableAndLableCellIdentifier = @"JGHLableAndLableCell";
     [dict setObject:caddieAuthDict forKey:@"caddieAuth"];
     [dict setObject:DEFAULF_USERID forKey:@"userKey"];
     [[JsonHttp jsonHttp]httpRequestWithMD5:@"score/doSaveCaddieAuth" JsonKey:nil withData:dict failedBlock:^(id errType) {
-        [[ShowHUD showHUD]hideAnimationFromView:self.view];
+//        [[ShowHUD showHUD]hideAnimationFromView:self.view];
     } completionBlock:^(id data) {
         NSLog(@"%@", data);
-        [[ShowHUD showHUD]hideAnimationFromView:self.view];
+//        [[ShowHUD showHUD]hideAnimationFromView:self.view];
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
             
             if (_cabbieImage != nil) {
@@ -99,21 +100,31 @@ static NSString *const JGHLableAndLableCellIdentifier = @"JGHLableAndLableCell";
                 
                 [imageArray addObject:UIImageJPEGRepresentation(_cabbieImage, 0.7)];
                 
-                NSNumber* strTimeKey = [data objectForKey:@"timeKey"];
+//                NSNumber* strTimeKey = [data objectForKey:@"timeKey"];
                 // 上传图片
                 NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-                [dict setObject:TYPE_TEAM_BACKGROUND forKey:@"nType"];
                 [dict setObject:PHOTO_DAGOLFLA forKey:@"tag"];
                 
-                [dict setObject:[NSString stringWithFormat:@"%@_caddie" ,strTimeKey] forKey:@"data"];
-                [dict setObject:TYPE_TEAM_BACKGROUND forKey:@"nType"];
+                [dict setObject:[NSString stringWithFormat:@"%@_caddie" ,DEFAULF_USERID] forKey:@"data"];
+                [dict setObject:TYPE_USER_HEAD forKey:@"nType"];
                 [[JsonHttp jsonHttp] httpRequestImageOrVedio:@"5" withData:dict andDataArray:imageArray failedBlock:^(id errType) {
                     NSLog(@"errType===%@", errType);
                 } completionBlock:^(id data) {
                     NSLog(@"data == %@", data);
                     if ([[data objectForKey:@"code"] integerValue] == 1) {
-                        [[ShowHUD showHUD]showToastWithText:@"保存成功!" FromView:self.view];
+                        
                         [self.cabbieEditorTableview reloadData];
+                        
+                        //获取主线层
+                        if ([NSThread isMainThread]) {
+                            NSLog(@"Yay!");
+                            [[ShowHUD showHUD]showToastWithText:@"保存成功!" FromView:self.view];
+                        } else {
+                            NSLog(@"Humph, switching to main");
+                            dispatch_async(dispatch_get_main_queue(), ^{
+                                [[ShowHUD showHUD]showToastWithText:@"保存成功!" FromView:self.view];
+                            });
+                        }
                     }else{
                         [[ShowHUD showHUD]showToastWithText:@"头像上传失败!" FromView:self.view];
                     }
@@ -175,8 +186,12 @@ static NSString *const JGHLableAndLableCellIdentifier = @"JGHLableAndLableCell";
         JGHCabbiePhotoCell *cabbiePhotoCell = [tableView dequeueReusableCellWithIdentifier:JGHCabbiePhotoCellIdentifier];
         cabbiePhotoCell.selectionStyle = UITableViewCellSelectionStyleNone;
         cabbiePhotoCell.proTextField.userInteractionEnabled = NO;
-        if (_model.name) {
-            [cabbiePhotoCell configCabbieSuccess:1 andName:_model.name];
+        if (_cabbieImage) {
+            [cabbiePhotoCell configEditorImage:_cabbieImage andUserName:_model.name];
+        }else{
+            if (_model.name) {
+                [cabbiePhotoCell configImageWithName:_model.name];
+            }
         }
         
         cabbiePhotoCell.delegate = self;
