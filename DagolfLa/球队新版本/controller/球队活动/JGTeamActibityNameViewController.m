@@ -763,35 +763,20 @@ static CGFloat ImageHeight  = 210.0;
         [[ShowHUD showHUD]showToastWithText:@"您不是该球队队员！" FromView:self.view];
         return;
     }
+
+    NSInteger timeKey;
+    JGActivityMemNonMangerViewController *nonMangerVC = [[JGActivityMemNonMangerViewController alloc] init];
     
-//    NSInteger timeKey;
-//    if (_model.teamActivityKey == 0) {
-//        timeKey = [_model.timeKey integerValue];
-//    }else{
-//        timeKey = _model.teamActivityKey;
-//    }
-    
-//    if ([_power containsString:@"1001"]) {
-//        //JGLActivityMemberSetViewController  JGLActiveCancelMemViewController
-//        JGLActivityMemberSetViewController *powerCtrl = [[JGLActivityMemberSetViewController alloc]init];
-//        powerCtrl.teamKey = [NSNumber numberWithInteger:_teamKey];
-//
-//        powerCtrl.activityKey = [NSNumber numberWithInteger:timeKey];
-//        [self.navigationController pushViewController:powerCtrl animated:YES];
-//    }else{
-        NSInteger timeKey;
-        JGActivityMemNonMangerViewController *nonMangerVC = [[JGActivityMemNonMangerViewController alloc] init];
-        
-        if (_model.teamActivityKey == 0) {
-            timeKey = [_model.timeKey integerValue];
-        }else{
-            timeKey = _model.teamActivityKey;
-        }
-        nonMangerVC.teamKey = _model.teamKey;
-        nonMangerVC.activityKey = [NSNumber numberWithInteger:timeKey];
-        nonMangerVC.title = self.model.name;
-        [self.navigationController  pushViewController:nonMangerVC animated:YES];
-//    }
+    if (_model.teamActivityKey == 0) {
+        timeKey = [_model.timeKey integerValue];
+    }else{
+        timeKey = _model.teamActivityKey;
+    }
+    nonMangerVC.teamKey = _model.teamKey;
+    nonMangerVC.activityKey = [NSNumber numberWithInteger:timeKey];
+    nonMangerVC.title = self.model.name;
+    nonMangerVC.activityName = self.model.name;
+    [self.navigationController  pushViewController:nonMangerVC animated:YES];
 }
 #pragma mark - Table View Delegate
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {

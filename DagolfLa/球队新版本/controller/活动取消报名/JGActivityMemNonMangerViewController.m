@@ -53,7 +53,8 @@
     WKCtrl.detailString = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/team/group.html?teamKey=%td&activityKey=%@&userKey=%@&md5=%@", self.teamKey, self.activityKey, DEFAULF_USERID, str];
     WKCtrl.teamName = @"报名人列表";
     WKCtrl.isShareBtn = 1;
-    WKCtrl.teamKey = [self.activityKey integerValue];
+    WKCtrl.activeTimeKey = [self.activityKey integerValue];
+    WKCtrl.activeName = _activityName;
     [self.navigationController pushViewController:WKCtrl animated:YES];
 }
 
