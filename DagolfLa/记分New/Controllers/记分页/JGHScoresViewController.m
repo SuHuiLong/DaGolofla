@@ -146,6 +146,16 @@
     [[JsonHttp jsonHttp]cancelRequest];
     
     if (_isEdtor == 1) {
+        //保存
+        NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
+        if (_selectPage > 0) {
+            [userdef setObject:@(_selectPage-1) forKey:[NSString stringWithFormat:@"%@", _scorekey]];
+        }else{
+            [userdef setObject:@(_selectPage) forKey:[NSString stringWithFormat:@"%@", _scorekey]];
+        }
+        
+        [userdef synchronize];
+        
         _isEdtor = 0;
         NSMutableDictionary *dict = [NSMutableDictionary dictionary];
         [dict setObject:DEFAULF_USERID forKey:@"userKey"];
@@ -202,6 +212,15 @@
     _timer = nil;
     btn.enabled = NO;
     [[JsonHttp jsonHttp]cancelRequest];//取消所有请求
+    //保存
+    NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
+    if (_selectPage > 0) {
+        [userdef setObject:@(_selectPage-1) forKey:[NSString stringWithFormat:@"%@", _scorekey]];
+    }else{
+        [userdef setObject:@(_selectPage) forKey:[NSString stringWithFormat:@"%@", _scorekey]];
+    }
+    
+    [userdef synchronize];
     //保存
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     [dict setObject:DEFAULF_USERID forKey:@"userKey"];
