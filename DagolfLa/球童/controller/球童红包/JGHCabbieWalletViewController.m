@@ -7,6 +7,7 @@
 //
 
 #import "JGHCabbieWalletViewController.h"
+#import "JGLCaddieScoreViewController.h"
 
 @interface JGHCabbieWalletViewController ()
 {
@@ -72,6 +73,7 @@
         UILabel *cabLable = [[UILabel alloc]initWithFrame:CGRectMake(10 *ProportionAdapter, 235 *ProportionAdapter, screenWidth - 20*ProportionAdapter, 20*ProportionAdapter)];
         cabLable.font = [UIFont systemFontOfSize:20*ProportionAdapter];
         cabLable.text = [NSString stringWithFormat:@"你已完成替客户 %@ 的记分工作", self.customerName];
+        cabLable.textAlignment = NSTextAlignmentCenter;
         [self.view addSubview:cabLable];
         
         UILabel *promLbale = [[UILabel alloc]initWithFrame:CGRectMake(10 *ProportionAdapter, 278*ProportionAdapter, screenWidth-20*ProportionAdapter, 35*ProportionAdapter)];
@@ -84,7 +86,8 @@
         //------
         UILabel *cabLable = [[UILabel alloc]initWithFrame:CGRectMake(10 *ProportionAdapter, (40 +64) *ProportionAdapter, screenWidth - 20*ProportionAdapter, 20*ProportionAdapter)];
         cabLable.font = [UIFont systemFontOfSize:20*ProportionAdapter];
-        cabLable.text = @"你已完成替客户 XXX 的记分工作";
+        cabLable.text = [NSString stringWithFormat:@"你已完成替客户 %@ 的记分工作", self.customerName];
+        cabLable.textAlignment = NSTextAlignmentCenter;
         [self.view addSubview:cabLable];
         
         UILabel *promLbale = [[UILabel alloc]initWithFrame:CGRectMake(10 *ProportionAdapter, (40 +20 +10 +64)*ProportionAdapter, screenWidth-20*ProportionAdapter, 35*ProportionAdapter)];
@@ -122,7 +125,11 @@
     }
 }
 - (void)BackBtnClick:(UIButton *)btn{
-    [self.navigationController popViewControllerAnimated:YES];
+    for (UIViewController *controller in self.navigationController.viewControllers) {
+        if ([controller isKindOfClass:[JGLCaddieScoreViewController class]]) {
+            [self.navigationController popToViewController:controller animated:YES];
+        }
+    }
 }
 #pragma mark -- 红包跳转
 //- (void)hongbaoImageViewAnimation{
