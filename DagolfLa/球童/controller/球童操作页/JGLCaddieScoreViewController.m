@@ -116,8 +116,19 @@
     headerView.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];
     UIView *topViewFir = [[UIView alloc] initWithFrame:CGRectMake(0, 10 * ProportionAdapter, screenWidth , 120 * ProportionAdapter)];
     topViewFir.backgroundColor = [UIColor whiteColor];
+    
+    UIButton* btn1 = [UIButton buttonWithType:UIButtonTypeCustom];
+    btn1.frame = CGRectMake(0, 10 * ProportionAdapter, screenWidth/2, 200 * ProportionAdapter);
+    [btn1 addTarget:self action:@selector(saomaClick:) forControlEvents:UIControlEventTouchUpInside];
+    [topViewFir addSubview:btn1];
+    
     UIView *topViewSec = [[UIView alloc] initWithFrame:CGRectMake(screenWidth / 2 - 1 * ProportionAdapter, 10 * ProportionAdapter, 2 * ProportionAdapter, 100 * ProportionAdapter)];
     topViewSec.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];
+    
+    UIButton* btn2 = [UIButton buttonWithType:UIButtonTypeCustom];
+    btn2.frame = CGRectMake(screenWidth / 2 - 1 * ProportionAdapter, 10 * ProportionAdapter, screenWidth/2, 100 * ProportionAdapter);
+    [btn2 addTarget:self action:@selector(erweimaClick:) forControlEvents:UIControlEventTouchUpInside];
+    [topViewFir addSubview:btn2];
     
     UIButton *erweimaBtn = [UIButton buttonWithType:(UIButtonTypeCustom)];
     [erweimaBtn setImage:[UIImage imageNamed:@"erweima"] forState:(UIControlStateNormal)];
