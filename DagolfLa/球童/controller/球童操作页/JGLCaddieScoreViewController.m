@@ -467,12 +467,12 @@
     if ([[_dataArray[btn.tag - 1000] srcType] integerValue] == 1) {
         JGDPlayerHisScoreCardViewController *DPHVC = [[JGDPlayerHisScoreCardViewController alloc] init];
         DPHVC.timeKey = [_dataArray[btn.tag - 1000] timeKey];
-        DPHVC.ballkid = 10;//表示已经记分完成
+        DPHVC.ballkid = 11;//表示已经记分完成
         [self.navigationController pushViewController:DPHVC animated:YES];
     }else{
         JGDNotActScoreViewController *noActVC = [[JGDNotActScoreViewController alloc] init];
         noActVC.timeKey = [_dataArray[btn.tag - 1000] timeKey];
-        noActVC.ballkid = 10;//表示已经完成记分
+        noActVC.ballkid = 11;//表示已经完成记分
         NSLog(@"%@",[_dataArray[btn.tag - 1000] timeKey]);
         [self.navigationController pushViewController:noActVC animated:YES];
     }
