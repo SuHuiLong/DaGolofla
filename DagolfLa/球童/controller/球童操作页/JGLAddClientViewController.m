@@ -15,6 +15,8 @@
 #import "JGMyBarCodeViewController.h"
 #import "UITool.h"
 #import "JGLScoreSureViewController.h"
+#import "JGLCaddieChooseStyleViewController.h"
+#import "JGLCaddieSelfScoreViewController.h"
 @interface JGLAddClientViewController ()<AVCaptureMetadataOutputObjectsDelegate>
 {
     AVCaptureSession *_session;//输入输出的中间桥梁
@@ -327,11 +329,30 @@
                 
             } completionBlock:^(id data) {
                 if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
-//
-                    _blockData([Helper returnUrlString:str WithKey:@"qcodeID"]);
-                    [self.navigationController popViewControllerAnimated:YES];
+//              acBoolean == 1 有活动
+//                    _blockData([Helper returnUrlString:str WithKey:@"qcodeID"]);
+//                    [self.navigationController popViewControllerAnimated:YES];
+                    if ([data objectForKey:@"bean"]) {
+                        
+                        NSDictionary *dataDic = [data objectForKey:@"bean"];
+                        // 1 扫码成功  2 同意  3 拒绝
+                        if ([[data objectForKey:@"acBoolean"] integerValue] == 1) {
+                            JGLCaddieChooseStyleViewController* choVc = [[JGLCaddieChooseStyleViewController alloc]init];
+                            choVc.userKeyPlayer = [dataDic objectForKey:@"qcodeUserKey"];
+                            choVc.userNamePlayer = [NSString stringWithFormat:@"%@",[dataDic objectForKey:@"qcodeUserName"]];
+                            [self.navigationController pushViewController:choVc animated:YES];
+                        }
+                        else{
+                            JGLCaddieSelfScoreViewController* selfVc = [[JGLCaddieSelfScoreViewController alloc]init];
+                            selfVc.userNamePlayer = [NSString stringWithFormat:@"%@",[dataDic objectForKey:@"qcodeUserName"]];
+                            selfVc.userKeyPlayer = [dataDic objectForKey:@"qcodeUserKey"];
+                            [self.navigationController pushViewController:selfVc animated:YES];
+                        }
+                        
+                    }
                 }
                 else{
+                    //1，二维码未找到，2，球童扫描球童，3，打球人扫打球人
                     if ([[data objectForKey:@"errorState"] integerValue] == 2) {
                         JGLScoreSureViewController* suVc = [[JGLScoreSureViewController alloc]init];
                         suVc.errorState = 2;
