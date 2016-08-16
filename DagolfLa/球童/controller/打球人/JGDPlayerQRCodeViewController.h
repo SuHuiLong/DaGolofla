@@ -10,4 +10,6 @@
 
 @interface JGDPlayerQRCodeViewController : ViewController
 
+@property (nonatomic, copy) void (^clipBlock)(NSString *, NSInteger );
+
 @end

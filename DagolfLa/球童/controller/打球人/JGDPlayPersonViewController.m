@@ -54,10 +54,10 @@
         
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 200 * ProportionAdapter, screenWidth, 30 * ProportionAdapter)];
         NSMutableAttributedString *lbStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"指定球童 %@ 成功！", self.name]];
-        [lbStr addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"#32b14d"] range:NSMakeRange(3, lbStr.length - 8)];
+        label.textColor = [UIColor colorWithHexString:@"#eeeeee"];
+        [lbStr addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"#32b14d"] range:NSMakeRange(5, lbStr.length - 8)];
         label.attributedText = lbStr;
         label.textAlignment = NSTextAlignmentCenter;
-        label.textColor = [UIColor colorWithHexString:@"#eeeeee"];
         label.font = [UIFont systemFontOfSize:20 * ProportionAdapter];
         [self.shadeView addSubview:label];
         
@@ -68,7 +68,7 @@
         detailLB.numberOfLines = 0;
         [self.shadeView addSubview:detailLB];
         
-        UILabel *knownLB = [[UILabel alloc] initWithFrame:CGRectMake(0, 300, ScreenWidth, 30 * ProportionAdapter)];
+        UILabel *knownLB = [[UILabel alloc] initWithFrame:CGRectMake(0, 360, ScreenWidth, 30 * ProportionAdapter)];
         knownLB.text = @"朕知道～～";
         knownLB.textAlignment = NSTextAlignmentCenter;
         knownLB.font = [UIFont systemFontOfSize:22 * ProportionAdapter];
@@ -283,6 +283,10 @@
 
 - (void)qrCodeAct{
     JGDPlayerQRCodeViewController *codeVC = [[JGDPlayerQRCodeViewController alloc] init];
+    codeVC.clipBlock = ^(NSString *name, NSInteger throw) {
+        self.name = name;
+        self.throw = throw;
+    };
     [self.navigationController pushViewController:codeVC animated:YES];
 }
 
