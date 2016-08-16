@@ -335,17 +335,28 @@
                     if ([data objectForKey:@"bean"]) {
                         
                         NSDictionary *dataDic = [data objectForKey:@"bean"];
-                        // 1 扫码成功  2 同意  3 拒绝
                         if ([[data objectForKey:@"acBoolean"] integerValue] == 1) {
                             JGLCaddieChooseStyleViewController* choVc = [[JGLCaddieChooseStyleViewController alloc]init];
-                            choVc.userKeyPlayer = [dataDic objectForKey:@"qcodeUserKey"];
-                            choVc.userNamePlayer = [NSString stringWithFormat:@"%@",[dataDic objectForKey:@"qcodeUserName"]];
+                            if ([[dataDic objectForKey:@"isQCodeCaddie"] integerValue] == 1) {//球童扫码
+                                choVc.userKeyPlayer = [dataDic objectForKey:@"scanUserKey"];
+                                choVc.userNamePlayer = [NSString stringWithFormat:@"%@",[dataDic objectForKey:@"scanUserName"]];//
+                            }
+                            else{//客户扫码
+                                choVc.userKeyPlayer = [dataDic objectForKey:@"qcodeUserKey"];
+                                choVc.userNamePlayer = [NSString stringWithFormat:@"%@",[dataDic objectForKey:@"qcodeUserName"]];
+                            }
                             [self.navigationController pushViewController:choVc animated:YES];
                         }
                         else{
                             JGLCaddieSelfScoreViewController* selfVc = [[JGLCaddieSelfScoreViewController alloc]init];
-                            selfVc.userNamePlayer = [NSString stringWithFormat:@"%@",[dataDic objectForKey:@"qcodeUserName"]];
-                            selfVc.userKeyPlayer = [dataDic objectForKey:@"qcodeUserKey"];
+                            if ([[dataDic objectForKey:@"isQCodeCaddie"] integerValue] == 1) {//球童扫码
+                                selfVc.userKeyPlayer = [dataDic objectForKey:@"scanUserKey"];
+                                selfVc.userNamePlayer = [NSString stringWithFormat:@"%@",[dataDic objectForKey:@"scanUserName"]];//
+                            }
+                            else{//客户扫码
+                                selfVc.userKeyPlayer = [dataDic objectForKey:@"qcodeUserKey"];
+                                selfVc.userNamePlayer = [NSString stringWithFormat:@"%@",[dataDic objectForKey:@"qcodeUserName"]];
+                            }
                             [self.navigationController pushViewController:selfVc animated:YES];
                         }
                         
@@ -363,9 +374,10 @@
                         
                     }
                     else{
-                        [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
-                        [_session startRunning];
+                        [[ShowHUD showHUD]showToastWithText:@"二维码失效" FromView:self.view];
+                        
                     }
+                    [_session startRunning];
                 }
             }];
         }

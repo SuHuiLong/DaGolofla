@@ -91,8 +91,8 @@
 - (void)downLoadData:(int)page isReshing:(BOOL)isReshing{
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     
-    [dict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:userID] forKey:@"userKey"];
-    [dict setObject:[Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@dagolfla.com", DEFAULF_USERID]] forKey:@"md5"];
+    [dict setObject:_userKeyPlayer forKey:@"userKey"];
+    [dict setObject:[Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@dagolfla.com", _userKeyPlayer]] forKey:@"md5"];
     [[JsonHttp jsonHttp]httpRequest:@"score/getUserLatelyActivity" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
         if (isReshing) {
             [_tableView.header endRefreshing];

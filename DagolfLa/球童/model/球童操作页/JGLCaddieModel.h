@@ -34,7 +34,7 @@
 
 @property (strong, nonatomic) NSNumber* userName;
 
-@property (strong, nonatomic) NSString* createTime;
+@property (strong, nonatomic) NSString* createtime;
 
 
 

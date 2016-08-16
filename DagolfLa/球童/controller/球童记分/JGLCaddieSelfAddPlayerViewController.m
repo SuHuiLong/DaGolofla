@@ -70,6 +70,10 @@
     //    _viewHeader.userInteractionEnabled = YES;
     //saomiao
     
+    UIButton *btnBack = [UIButton buttonWithType:UIButtonTypeCustom];
+    btnBack.frame = CGRectMake(0, 0, screenWidth, 100*screenWidth/375);
+    [btnBack addTarget:self action:@selector(chooseStyleClick:) forControlEvents:UIControlEventTouchUpInside];
+    [_viewHeader addSubview:btnBack];
     
     UILabel* label = [[UILabel alloc]initWithFrame:CGRectMake(10*ProportionAdapter, 25*ProportionAdapter, 120*ProportionAdapter, 45*ProportionAdapter)];
     label.text = @"扫描添加打球人";
@@ -87,7 +91,7 @@
     [viewBack addSubview:imgv];
     
     
-    UIView* viewLine = [[UIView alloc]initWithFrame:CGRectMake(viewBack.frame.size.width - 80*ProportionAdapter, 5*ProportionAdapter, 65*ProportionAdapter, 1)];
+    UIView* viewLine = [[UIView alloc]initWithFrame:CGRectMake(viewBack.frame.size.width - 80*ProportionAdapter, 5*ProportionAdapter, 1, 65*ProportionAdapter)];
     viewLine.backgroundColor = [UITool colorWithHexString:@"eeeeee" alpha:1];
     [viewBack addSubview:viewLine];
     
