@@ -54,6 +54,10 @@
     _dataArray = [[NSMutableArray alloc]init];
     _page = 0;
     
+    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"backL"] style:UIBarButtonItemStylePlain target:self action:@selector(backButtonClcik)];
+    item.tintColor=[UIColor whiteColor];
+    self.navigationItem.leftBarButtonItem = item;
+    
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
     btn.frame = CGRectMake(0, 0, 44, 44);
     btn.titleLabel.font = [UIFont systemFontOfSize:FontSize_Normal];
@@ -67,6 +71,12 @@
     //    [self setData];
     // Do any additional setup after loading the view.
 }
+
+-(void)backButtonClcik
+{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 #pragma mark -- 奖励
 - (void)pushRewardCtrl:(UIButton *)btn{
     JGHCabbieRewardViewController *cabbieRewardCtrl = [[JGHCabbieRewardViewController alloc]init];
@@ -82,12 +92,10 @@
     self.tableView.dataSource = self;
     [self.tableView registerClass:[JGLCaddieScoreTableViewCell class] forCellReuseIdentifier:@"JGLCaddieScoreTableViewCell"];
 //    [self.tableView registerClass:[JGDPlayPersonTableViewCell class] forCellReuseIdentifier:@"JGDPlayPersonTableViewCell"];
-    self.tableView.scrollEnabled = NO;
     self.tableView.rowHeight = 50 * ProportionAdapter;
     [self.view addSubview:self.tableView];
     
     _tableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
-    _tableView.footer=[MJDIYBackFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRereshing)];
     [_tableView.header beginRefreshing];
     
     
@@ -170,16 +178,12 @@
     [[JsonHttp jsonHttp]httpRequest:@"score/getCaddieRecord" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
         if (isReshing) {
             [_tableView.header endRefreshing];
-        }else {
-            [_tableView.footer endRefreshing];
         }
     } completionBlock:^(id data) {
         if ([data objectForKey:@"packSuccess"]) {
-            if (page == 0)
-            {
                 //清除数组数据
-                [_dataArray removeAllObjects];
-            }
+            [_dataArray removeAllObjects];
+            
             if ([data objectForKey:@"list"]) {
                 _footerView.hidden = NO;
                 _footerFinishBtn.hidden = NO;
@@ -221,8 +225,6 @@
         [_tableView reloadData];
         if (isReshing) {
             [_tableView.header endRefreshing];
-        }else {
-            [_tableView.footer endRefreshing];
         }
     }];
 }
@@ -383,7 +385,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     JGLCaddieScoreTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"JGLCaddieScoreTableViewCell"];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    [cell showData:_dataArray[indexPath.row]];
+    [cell showData:_dataArray[indexPath.section]];
     if ([[_dataArray[indexPath.row] scoreFinish] integerValue] == 0) {
         [cell.checkBtn addTarget:self action:@selector(continueClick:) forControlEvents:UIControlEventTouchUpInside];
         cell.checkBtn.tag = 1000 + indexPath.row;
@@ -419,10 +421,12 @@
     if ([[_dataArray[btn.tag - 1000] srcType] integerValue] == 1) {
         JGDPlayerHisScoreCardViewController *DPHVC = [[JGDPlayerHisScoreCardViewController alloc] init];
         DPHVC.timeKey = [_dataArray[btn.tag - 1000] timeKey];
+        DPHVC.ballkid = 10;//表示已经记分完成
         [self.navigationController pushViewController:DPHVC animated:YES];
     }else{
         JGDNotActScoreViewController *noActVC = [[JGDNotActScoreViewController alloc] init];
         noActVC.timeKey = [_dataArray[btn.tag - 1000] timeKey];
+        noActVC.ballkid = 10;//表示已经完成记分
         [self.navigationController pushViewController:noActVC animated:YES];
     }
 }

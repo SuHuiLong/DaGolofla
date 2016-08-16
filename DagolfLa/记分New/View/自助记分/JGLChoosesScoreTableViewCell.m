@@ -70,7 +70,24 @@
         _labelName.text = [NSString stringWithFormat:@"暂无活动名"];
     }
     
-    _labelTime.text = model.beginDate;
+    if (![Helper isBlankString:model.beginDate]) {
+        NSLog(@"%@",model.beginDate);
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        [dateFormatter setDateFormat: @"yyyy-MM-dd HH:mm:ss"];
+        NSDate *destDate= [dateFormatter dateFromString:model.beginDate];
+        NSString* str = [NSString stringWithFormat:@"%@",destDate];
+        
+        NSArray* array = [str componentsSeparatedByString:@" "];
+        NSArray* array1 = [array[0] componentsSeparatedByString:@"-"];
+        NSArray* array2 = [array[1] componentsSeparatedByString:@":"];
+        
+        NSString* strTime = [NSString stringWithFormat:@"%@月%@日 %@:%@",array1[1],array1[2],array2[0],array2[1]];
+        _labelTime.text = strTime;
+        
+    }
+    else{
+        _labelTime.text = @"暂无时间";
+    }
     
     _labelBall.text = model.ballName;
     
