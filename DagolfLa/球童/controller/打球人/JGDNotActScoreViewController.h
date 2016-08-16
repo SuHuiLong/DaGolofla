@@ -12,4 +12,6 @@
 
 @property (nonatomic, strong) NSNumber *timeKey;
 
+@property (nonatomic, assign) NSInteger ballkid;
+
 @end

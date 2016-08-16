@@ -29,10 +29,57 @@
 @property (nonatomic ,strong) UILabel *tipLabel;
 @property (nonatomic, strong) NSMutableArray *dataArray;
 @property (nonatomic, strong) UIView *footView;
+@property (nonatomic, assign) NSInteger throw;
+@property (nonatomic, copy) NSString *name;
+@property (nonatomic, strong) UIImageView *shadeView;
 
 @end
 
 @implementation JGDPlayPersonViewController
+
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:YES];
+    if (self.throw == 10) {
+        self.throw = 0;
+        
+        self.shadeView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 100 * ProportionAdapter, screenWidth, screenHeight - 150 * ProportionAdapter)];
+        self.shadeView.image = [UIImage imageNamed:@"bg_somiaohou_03"];
+        self.shadeView.userInteractionEnabled = YES;
+        [self.view addSubview:self.shadeView];
+        UITapGestureRecognizer *tapGest = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(removeView)];
+        [self.shadeView addGestureRecognizer:tapGest];
+        UIImageView *iconImage = [[UIImageView alloc] initWithFrame:CGRectMake(134 * ProportionAdapter, 80 * ProportionAdapter, 107 * ProportionAdapter, 107 * ProportionAdapter)];
+        iconImage.image = [UIImage imageNamed:@"happy_saomiaohou"];
+        [self.shadeView addSubview:iconImage];
+        
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 200 * ProportionAdapter, screenWidth, 30 * ProportionAdapter)];
+        NSMutableAttributedString *lbStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"指定球童 %@ 成功！", self.name]];
+        [lbStr addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"#32b14d"] range:NSMakeRange(3, lbStr.length - 8)];
+        label.attributedText = lbStr;
+        label.textAlignment = NSTextAlignmentCenter;
+        label.textColor = [UIColor colorWithHexString:@"#eeeeee"];
+        label.font = [UIFont systemFontOfSize:20 * ProportionAdapter];
+        [self.shadeView addSubview:label];
+        
+        UILabel *detailLB = [[UILabel alloc] initWithFrame:CGRectMake(20 * ProportionAdapter, 250 * ProportionAdapter, screenWidth - 40 * ProportionAdapter, 50 * ProportionAdapter)];
+        detailLB.text = [NSString stringWithFormat:@"球童%@正在为您做记分准备， 稍后下滑屏幕可同步查看记分。", self.name];
+        detailLB.font = [UIFont systemFontOfSize:15 * ProportionAdapter];
+        detailLB.textColor = [UIColor colorWithHexString:@"#eeeeee"];
+        detailLB.numberOfLines = 0;
+        [self.shadeView addSubview:detailLB];
+        
+        UILabel *knownLB = [[UILabel alloc] initWithFrame:CGRectMake(0, 300, ScreenWidth, 30 * ProportionAdapter)];
+        knownLB.text = @"朕知道～～";
+        knownLB.textAlignment = NSTextAlignmentCenter;
+        knownLB.font = [UIFont systemFontOfSize:22 * ProportionAdapter];
+        knownLB.textColor = [UIColor colorWithHexString:@"#f39800"];
+        [self.shadeView addSubview:knownLB];
+    }
+}
+
+- (void)removeView{
+    [self.shadeView removeFromSuperview];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -56,33 +103,39 @@
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
             
             if ([data objectForKey:@"list"]) {
+                [self.dataArray removeAllObjects];
                 for (NSDictionary *dic in [data objectForKey:@"list"]) {
                     JGDPlayerModel *model =[[JGDPlayerModel alloc] init];
                     [model setValuesForKeysWithDictionary:dic];
                     [self.dataArray addObject:model];
                 }
+                self.tableView.tableFooterView = nil;
                 [self.tableView reloadData];
             }else{
                 self.tipLabel.hidden = YES;
-                self.tableView.tableFooterView.hidden = YES;
                 self.footView.hidden = YES;
-                UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake(134 * ProportionAdapter, 200 * ProportionAdapter, 107 * ProportionAdapter, 107 * ProportionAdapter)];
-                imageV.image = [UIImage imageNamed:@"bg-shy"];
-                [self.view addSubview:imageV];
                 
-                UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 330, screenWidth, 30 * ProportionAdapter)];
+                UIView *footView = [[UIView alloc] initWithFrame:CGRectMake(0, 200 * ProportionAdapter, screenWidth, 500 * ProportionAdapter)];
+                
+                UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake(134 * ProportionAdapter, 0 * ProportionAdapter, 107 * ProportionAdapter, 107 * ProportionAdapter)];
+                imageV.image = [UIImage imageNamed:@"bg-shy"];
+                [footView addSubview:imageV];
+                
+                UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 130 * ProportionAdapter, screenWidth, 30 * ProportionAdapter)];
                 label.text = @"您还没有球童记分记录哦";
                 label.textAlignment = NSTextAlignmentCenter;
                 label.textColor = [UIColor colorWithHexString:@"#a0a0a0"];
                 label.font = [UIFont systemFontOfSize:18 * ProportionAdapter];
-                [self.view addSubview:label];
+                [footView addSubview:label];
                 
-                UILabel *detailLB = [[UILabel alloc] initWithFrame:CGRectMake(20 * ProportionAdapter, 370 * ProportionAdapter, screenWidth - 40 * ProportionAdapter, 50 * ProportionAdapter)];
+                UILabel *detailLB = [[UILabel alloc] initWithFrame:CGRectMake(20 * ProportionAdapter, 170 * ProportionAdapter, screenWidth - 40 * ProportionAdapter, 50 * ProportionAdapter)];
                 detailLB.text = @"扫描球童二维码，可指定球童为您记分，记分完成后，成绩自动存入您的历史记分卡中。";
                 detailLB.font = [UIFont systemFontOfSize:14 * ProportionAdapter];
                 detailLB.textColor = [UIColor colorWithHexString:@"#a0a0a0"];
                 detailLB.numberOfLines = 0;
-                [self.view addSubview:detailLB];
+                [footView addSubview:detailLB];
+                
+                self.tableView.tableFooterView = footView;
                 
                 UIBarButtonItem *rightBtn = [[UIBarButtonItem alloc] initWithTitle:@"我是球童" style:UIBarButtonItemStyleDone target:self action:@selector(ballBoy)];
                 [rightBtn setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:15 * ProportionAdapter], NSFontAttributeName, nil] forState:(UIControlStateNormal)];
@@ -95,6 +148,9 @@
                 [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
             }
         }
+        
+        [_tableView.header endRefreshing];
+        [_tableView.footer endRefreshing];
     }];
 
 }
@@ -115,7 +171,7 @@
     self.tableView.dataSource = self;
     [self.tableView registerClass:[JGDPlayPersoningTableViewCell class] forCellReuseIdentifier:@"JGDPlayPersoningTableViewCell"];
     [self.tableView registerClass:[JGDPlayPersonTableViewCell class] forCellReuseIdentifier:@"JGDPlayPersonTableViewCell"];
-    self.tableView.scrollEnabled = NO;
+//    self.tableView.scrollEnabled = NO;
     self.tableView.rowHeight = 50 * ProportionAdapter;
     [self.view addSubview:self.tableView];
     
@@ -176,6 +232,24 @@
     footBtn.backgroundColor = [UIColor colorWithHexString:@"#F59826"];
     [footBtn addTarget:self action:@selector(checkBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.footView];
+    
+    
+    self.tableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
+    self.tableView.footer=[MJDIYBackFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRereshing)];
+    [self.tableView.header beginRefreshing];
+    
+}
+
+#pragma mark 开始进入刷新状态
+
+- (void)headRereshing
+{
+    [self setData ];
+}
+
+- (void)footRereshing
+{
+    [self setData];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -214,6 +288,10 @@
 
 - (void)scanAct{
     JGDPlayerScanViewController *scanVC = [[JGDPlayerScanViewController alloc] init];
+    scanVC.clipBlock = ^(NSString *name, NSInteger throw) {
+        self.name = name;
+        self.throw = throw;
+    };
     [self.navigationController pushViewController:scanVC animated:YES];
 //    JGDResultViewController *resultVC = [[JGDResultViewController alloc] init];
 //    [self.navigationController pushViewController:resultVC animated:YES];

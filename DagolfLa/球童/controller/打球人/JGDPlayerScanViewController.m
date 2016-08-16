@@ -16,6 +16,7 @@
 #import "UITool.h"
 #import "JGLScoreSureViewController.h"
 #import "JGDResultViewController.h"
+#import "JGDPlayPersonViewController.h"
 
 @interface JGDPlayerScanViewController ()<AVCaptureMetadataOutputObjectsDelegate>
 {
@@ -346,10 +347,14 @@
                     }else if ([[data objectForKey:@"errorState"] intValue] == 1) {
                         [[ShowHUD showHUD]showToastWithText:@"二维码解析错误" FromView:self.view];
                     }else{
-                        self.loopTimer = [NSTimer scheduledTimerWithTimeInterval:3 target:self selector:@selector(loopAct) userInfo:nil repeats:YES];
-                        [self.loopTimer fire];
-                    }
+                        if ([data objectForKey:@"bean"]) {
+                            _clipBlock([[data objectForKey:@"bean"] objectForKey:@"qcodeUserName"], 10);
+                            [self.navigationController popViewControllerAnimated:YES];
 
+                        }
+                        //                        self.loopTimer = [NSTimer scheduledTimerWithTimeInterval:3 target:self selector:@selector(loopAct) userInfo:nil repeats:YES];
+//                        [self.loopTimer fire];
+                    }
                 }
                 else{
                     if ([[data objectForKey:@"errorState"] intValue] == 3) {

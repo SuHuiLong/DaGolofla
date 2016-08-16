@@ -12,4 +12,6 @@
 
 //@property (copy, nonatomic) void (^blockDict)(NSMutableDictionary* );
 
+@property (nonatomic, copy) void (^clipBlock)(NSString *, NSInteger );
+
 @end

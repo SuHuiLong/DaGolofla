@@ -885,6 +885,7 @@
 		F55597281CF6DB0F00F33099 /* JGTeamInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F55597271CF6DB0F00F33099 /* JGTeamInfoViewController.m */; };
 		F55DB39E1D2B8D0E0054F251 /* JGDPrize.m in Sources */ = {isa = PBXBuildFile; fileRef = F55DB39D1D2B8D0E0054F251 /* JGDPrize.m */; };
 		F55DB3B41D2B94F20054F251 /* JGDActivityList.m in Sources */ = {isa = PBXBuildFile; fileRef = F55DB3B31D2B94F20054F251 /* JGDActivityList.m */; };
+		F565BC5D1D632C1200F0C7C3 /* bg_somiaohou_03.png in Resources */ = {isa = PBXBuildFile; fileRef = F565BC5C1D632C1200F0C7C3 /* bg_somiaohou_03.png */; };
 		F566EFAB1CA0F01B008BB328 /* InformSetmodel.m in Sources */ = {isa = PBXBuildFile; fileRef = F566EFAA1CA0F01B008BB328 /* InformSetmodel.m */; };
 		F569A13F1CE35A9C00CD0FD5 /* JGTeamChannelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F569A13B1CE35A9C00CD0FD5 /* JGTeamChannelViewController.m */; };
 		F569A1401CE35A9C00CD0FD5 /* JGTeamDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F569A13E1CE35A9C00CD0FD5 /* JGTeamDetailViewController.m */; };
@@ -2594,6 +2595,7 @@
 		F55DB39D1D2B8D0E0054F251 /* JGDPrize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGDPrize.m; sourceTree = "<group>"; };
 		F55DB3B21D2B94F20054F251 /* JGDActivityList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGDActivityList.h; sourceTree = "<group>"; };
 		F55DB3B31D2B94F20054F251 /* JGDActivityList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGDActivityList.m; sourceTree = "<group>"; };
+		F565BC5C1D632C1200F0C7C3 /* bg_somiaohou_03.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg_somiaohou_03.png; sourceTree = "<group>"; };
 		F566EFA91CA0F01B008BB328 /* InformSetmodel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InformSetmodel.h; sourceTree = "<group>"; };
 		F566EFAA1CA0F01B008BB328 /* InformSetmodel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InformSetmodel.m; sourceTree = "<group>"; };
 		F569A13A1CE35A9C00CD0FD5 /* JGTeamChannelViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGTeamChannelViewController.h; sourceTree = "<group>"; };
@@ -5070,6 +5072,7 @@
 		36BFFD531BC76CDB005B3CE2 /* 社区图标 */ = {
 			isa = PBXGroup;
 			children = (
+				F565BC5C1D632C1200F0C7C3 /* bg_somiaohou_03.png */,
 				F5E3F7ED1CAA54BC00B24C77 /* dz.png */,
 				F5E3F7EE1CAA54BC00B24C77 /* dz@2x.png */,
 				F5E3F7EF1CAA54BC00B24C77 /* dz@3x.png */,
@@ -7302,7 +7305,7 @@
 				TargetAttributes = {
 					36BFFD271BC76C8D005B3CE2 = {
 						CreatedOnToolsVersion = 6.3.2;
-						DevelopmentTeam = 5P6JNXBH3C;
+						DevelopmentTeam = DBD58PLQ9F;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -7433,6 +7436,7 @@
 				2067C6D51CE30CC0002900C8 /* JGTeamActivityDetailsCell.xib in Resources */,
 				6543320B1BD5D9B900363947 /* UMSnsAccountViewController.xib in Resources */,
 				20591C831D226126003271EC /* JGHWithdrawMoneyCell.xib in Resources */,
+				F565BC5D1D632C1200F0C7C3 /* bg_somiaohou_03.png in Resources */,
 				36BF000A1BC770C4005B3CE2 /* chatfrom_bg_normal.png in Resources */,
 				36DF6DFD1C08235900B60B67 /* TeamPhotoCollectionViewCell.xib in Resources */,
 				82E6A71B1CF68229009DD179 /* JGTeamAdressTableViewCell.xib in Resources */,
@@ -8450,7 +8454,7 @@
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = bihuaxinxi.DagolfLa;
+				PRODUCT_BUNDLE_IDENTIFIER = bihuaxinxi.DagolfLa323;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -8499,7 +8503,7 @@
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = bihuaxinxi.DagolfLa;
+				PRODUCT_BUNDLE_IDENTIFIER = bihuaxinxi.DagolfLa323;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
