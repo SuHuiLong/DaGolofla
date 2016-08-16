@@ -114,6 +114,7 @@
                     [model setValuesForKeysWithDictionary:dic];
                     [self.dataArray addObject:model];
                 }
+                self.tipLabel.hidden = NO;
                 self.tableView.tableFooterView = nil;
                 [self.tableView reloadData];
             }else{
