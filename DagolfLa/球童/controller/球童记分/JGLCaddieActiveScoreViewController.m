@@ -9,11 +9,9 @@
 #import "JGLCaddieActiveScoreViewController.h"
 #import "JGHScoresViewController.h"
 
-#import "JGLAddPlayerViewController.h"
 #import "JGLChooseScoreViewController.h"
 #import "BallParkViewController.h"
 #import "DateTimeViewController.h"
-#import "JGLAddPlayerViewController.h"
 #import "JGLAddActivePlayViewController.h"
 
 #import "JGLChoosesScoreTableViewCell.h"

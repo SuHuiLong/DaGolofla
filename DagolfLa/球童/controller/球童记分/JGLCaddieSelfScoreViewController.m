@@ -9,7 +9,7 @@
 #import "JGLCaddieSelfScoreViewController.h"
 #import "JGHScoresViewController.h"
 
-#import "JGLAddPlayerViewController.h"
+#import "JGLCaddieSelfAddPlayerViewController.h"
 #import "JGLChooseScoreViewController.h"
 #import "BallParkViewController.h"
 #import "DateTimeViewController.h"
@@ -594,7 +594,7 @@
         else{
             if (indexPath.row > 0) {
                 if (indexPath.row  == _dictPeo.count + 2) {
-                    JGLAddPlayerViewController* addVc = [[JGLAddPlayerViewController alloc]init];
+                    JGLCaddieSelfAddPlayerViewController* addVc = [[JGLCaddieSelfAddPlayerViewController alloc]init];
                     addVc.blockSurePlayer = ^(NSMutableDictionary *dict,NSMutableDictionary* dict1,NSMutableDictionary* dict2){
                         _dictPeo = dict;
                         NSIndexSet *indexSet=[[NSIndexSet alloc]initWithIndex:4];
