@@ -14,4 +14,6 @@
 @property (nonatomic, strong) NSNumber *activityKey;
 @property (nonatomic, assign) NSInteger teamKey;
 
+@property (nonatomic, strong)NSString *activityName;
+
 @end
