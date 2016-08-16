@@ -45,15 +45,16 @@
 -(void)showData:(JGLCaddieModel *)model{
     if (![Helper isBlankString:model.createtime]) {
         NSLog(@"%@",model.createtime);
-        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-        [dateFormatter setDateFormat: @"yyyy-MM-dd HH:mm:ss"];
-        NSDate *destDate= [dateFormatter dateFromString:model.createtime];
-        NSString* str = [NSString stringWithFormat:@"%@",destDate];
+//        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+//        [dateFormatter setDateFormat: @"yyyy-MM-dd HH:mm:ss"];
+//        NSDate *destDate= [dateFormatter dateFromString:model.createtime];
+//        NSString* str = [NSString stringWithFormat:@"%@",destDate];
         
-        NSArray* array = [str componentsSeparatedByString:@" "];
+        NSArray* array = [model.createtime componentsSeparatedByString:@" "];
         NSArray* array1 = [array[0] componentsSeparatedByString:@"-"];
         NSArray* array2 = [array[1] componentsSeparatedByString:@":"];
         NSString* strTime = [NSString stringWithFormat:@"%@-%@ %@:%@",array1[1],array1[2],array2[0],array2[1]];
+        NSLog(@"---------->>>>>>>>>>>>>>>>>%@ ........  %@",model.createtime,strTime);
         _timeLabel.text = strTime;
         
     }

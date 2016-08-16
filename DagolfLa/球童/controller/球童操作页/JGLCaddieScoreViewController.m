@@ -90,8 +90,7 @@
 }
 
 #pragma mark -- 奖励
-- (void)
-RewardCtrl:(UIButton *)btn{
+- (void)pushRewardCtrl:(UIButton *)btn{
     JGHCabbieRewardViewController *cabbieRewardCtrl = [[JGHCabbieRewardViewController alloc]init];
     [self.navigationController pushViewController:cabbieRewardCtrl animated:YES];
 }
@@ -437,54 +436,57 @@ RewardCtrl:(UIButton *)btn{
     JGLCaddieScoreTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"JGLCaddieScoreTableViewCell"];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
     [cell showData:_dataArray[indexPath.section]];
-    if ([[_dataArray[indexPath.section] scoreFinish] integerValue] == 0) {
-        [cell.checkBtn addTarget:self action:@selector(continueClick:) forControlEvents:UIControlEventTouchUpInside];
-        cell.checkBtn.tag = 1000 + indexPath.section;
-    }
-    else if ([[_dataArray[indexPath.section] scoreFinish] integerValue] == 1)
-    {
+//    if ([[_dataArray[indexPath.section] scoreFinish] integerValue] == 0) {
+//        [cell.checkBtn addTarget:self action:@selector(continueClick:) forControlEvents:UIControlEventTouchUpInside];
+//        cell.checkBtn.tag = 1000 + indexPath.section;
+//    }
+////    else if ([[_dataArray[indexPath.section] scoreFinish] integerValue] == 1)
+//    else
+//    {
         [cell.checkBtn addTarget:self action:@selector(finishClick:) forControlEvents:UIControlEventTouchUpInside];
         cell.checkBtn.tag = 1000 + indexPath.section;
-    }
-    else{
-        
-    }
+//    }
+
     return cell;
     
 }
 
 -(void)continueClick:(UIButton *)btn
 {
-    JGHScoresViewController* scrVc = [[JGHScoresViewController alloc]init];
-    scrVc.scorekey = [NSString stringWithFormat:@"%@",[_dataArray[btn.tag - 1000] timeKey]];
-    NSLog(@"%@",[_dataArray[btn.tag - 1000] timeKey]);
-    scrVc.isCabbie = 1;
-    NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
     
-//    if ([userdef objectForKey:[NSString stringWithFormat:@"%@", [_dataArray[btn.tag - 1000] timeKey]]]) {
-        scrVc.currentPage = [[userdef objectForKey:[NSString stringWithFormat:@"%@", [_dataArray[btn.tag - 1000] timeKey]]] integerValue];
-//    }
-//    scrVc.refreshBlock = ^(){
-//        [self headRereshing];
-//    };
-    
-    [self.navigationController pushViewController:scrVc animated:YES];
 }
 
 -(void)finishClick:(UIButton *)btn
 {
-    
-    if ([[_dataArray[btn.tag - 1000] srcType] integerValue] == 1) {
-        JGDPlayerHisScoreCardViewController *DPHVC = [[JGDPlayerHisScoreCardViewController alloc] init];
-        DPHVC.timeKey = [_dataArray[btn.tag - 1000] timeKey];
-        DPHVC.ballkid = 11;//表示已经记分完成
-        [self.navigationController pushViewController:DPHVC animated:YES];
-    }else{
-        JGDNotActScoreViewController *noActVC = [[JGDNotActScoreViewController alloc] init];
-        noActVC.timeKey = [_dataArray[btn.tag - 1000] timeKey];
-        noActVC.ballkid = 11;//表示已经完成记分
+    if ([[_dataArray[btn.tag - 1000] scoreFinish] integerValue] == 0) {
+        JGHScoresViewController* scrVc = [[JGHScoresViewController alloc]init];
+        scrVc.scorekey = [NSString stringWithFormat:@"%@",[_dataArray[btn.tag - 1000] timeKey]];
         NSLog(@"%@",[_dataArray[btn.tag - 1000] timeKey]);
-        [self.navigationController pushViewController:noActVC animated:YES];
+        scrVc.isCabbie = 1;
+        NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
+        
+        //    if ([userdef objectForKey:[NSString stringWithFormat:@"%@", [_dataArray[btn.tag - 1000] timeKey]]]) {
+        scrVc.currentPage = [[userdef objectForKey:[NSString stringWithFormat:@"%@", [_dataArray[btn.tag - 1000] timeKey]]] integerValue];
+        //    }
+        //    scrVc.refreshBlock = ^(){
+        //        [self headRereshing];
+        //    };
+        
+        [self.navigationController pushViewController:scrVc animated:YES];
+    }
+    else{
+        if ([[_dataArray[btn.tag - 1000] srcType] integerValue] == 1) {
+            JGDPlayerHisScoreCardViewController *DPHVC = [[JGDPlayerHisScoreCardViewController alloc] init];
+            DPHVC.timeKey = [_dataArray[btn.tag - 1000] timeKey];
+            DPHVC.ballkid = 11;//表示已经记分完成
+            [self.navigationController pushViewController:DPHVC animated:YES];
+        }else{
+            JGDNotActScoreViewController *noActVC = [[JGDNotActScoreViewController alloc] init];
+            noActVC.timeKey = [_dataArray[btn.tag - 1000] timeKey];
+            noActVC.ballkid = 11;//表示已经完成记分
+            NSLog(@"%@",[_dataArray[btn.tag - 1000] timeKey]);
+            [self.navigationController pushViewController:noActVC animated:YES];
+        }
     }
 }
 
