@@ -89,7 +89,7 @@
         self.unfinishimageV.image = [UIImage imageNamed:@"icn_daiji"];
         [self.holderImageV addSubview:self.unfinishimageV];
     }
-    if (([model.userType integerValue] == 1) && ([model.userName isEqualToString:model.scoreUserName])) {
+    if (([model.userType integerValue] == 1) && ([model.userKey isEqualToString:model.scoreUserKey])) {
         self.numberLB.text = model.userName;
     }else{
         NSString* strMoney = [NSString stringWithFormat:@"%@杆", [model.poleNumber stringValue]];

@@ -25,5 +25,7 @@
 @property (nonatomic, strong) NSNumber *userType; //  1 球童记分
 @property (nonatomic, strong) NSNumber *srcKey; //  userKey   如果相同是球童
 @property (nonatomic, copy) NSString *userName; // 被记分人
+@property (nonatomic, copy) NSString *scoreUserKey; //
+@property (nonatomic, copy) NSString *userKey; //
 
 @end

@@ -42,38 +42,43 @@
     if (self.throw == 10) {
         self.throw = 0;
         
-        self.shadeView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 100 * ProportionAdapter, screenWidth, screenHeight - 150 * ProportionAdapter)];
-        self.shadeView.image = [UIImage imageNamed:@"bg_somiaohou_03"];
-        self.shadeView.userInteractionEnabled = YES;
-        [self.view addSubview:self.shadeView];
-        UITapGestureRecognizer *tapGest = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(removeView)];
-        [self.shadeView addGestureRecognizer:tapGest];
-        UIImageView *iconImage = [[UIImageView alloc] initWithFrame:CGRectMake(134 * ProportionAdapter, 80 * ProportionAdapter, 107 * ProportionAdapter, 107 * ProportionAdapter)];
-        iconImage.image = [UIImage imageNamed:@"happy_saomiaohou"];
-        [self.shadeView addSubview:iconImage];
-        
-        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 200 * ProportionAdapter, screenWidth, 30 * ProportionAdapter)];
-        NSMutableAttributedString *lbStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"指定球童 %@ 成功！", self.name]];
-        label.textColor = [UIColor colorWithHexString:@"#eeeeee"];
-        [lbStr addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"#32b14d"] range:NSMakeRange(5, lbStr.length - 8)];
-        label.attributedText = lbStr;
-        label.textAlignment = NSTextAlignmentCenter;
-        label.font = [UIFont systemFontOfSize:20 * ProportionAdapter];
-        [self.shadeView addSubview:label];
-        
-        UILabel *detailLB = [[UILabel alloc] initWithFrame:CGRectMake(20 * ProportionAdapter, 250 * ProportionAdapter, screenWidth - 40 * ProportionAdapter, 50 * ProportionAdapter)];
-        detailLB.text = [NSString stringWithFormat:@"球童%@正在为您做记分准备， 稍后下滑屏幕可同步查看记分。", self.name];
-        detailLB.font = [UIFont systemFontOfSize:15 * ProportionAdapter];
-        detailLB.textColor = [UIColor colorWithHexString:@"#eeeeee"];
-        detailLB.numberOfLines = 0;
-        [self.shadeView addSubview:detailLB];
-        
-        UILabel *knownLB = [[UILabel alloc] initWithFrame:CGRectMake(0, 360, ScreenWidth, 30 * ProportionAdapter)];
-        knownLB.text = @"朕知道～～";
-        knownLB.textAlignment = NSTextAlignmentCenter;
-        knownLB.font = [UIFont systemFontOfSize:22 * ProportionAdapter];
-        knownLB.textColor = [UIColor colorWithHexString:@"#f39800"];
-        [self.shadeView addSubview:knownLB];
+        if (self.shadeView) {
+            [self.view addSubview:self.shadeView];
+        }else{
+            self.shadeView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 100 * ProportionAdapter, screenWidth, screenHeight - 150 * ProportionAdapter)];
+            self.shadeView.image = [UIImage imageNamed:@"bg_somiaohou_03"];
+            self.shadeView.userInteractionEnabled = YES;
+            [self.view addSubview:self.shadeView];
+            UITapGestureRecognizer *tapGest = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(removeView)];
+            [self.shadeView addGestureRecognizer:tapGest];
+            UIImageView *iconImage = [[UIImageView alloc] initWithFrame:CGRectMake(134 * ProportionAdapter, 80 * ProportionAdapter, 107 * ProportionAdapter, 107 * ProportionAdapter)];
+            iconImage.image = [UIImage imageNamed:@"happy_saomiaohou"];
+            [self.shadeView addSubview:iconImage];
+            
+            UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 200 * ProportionAdapter, screenWidth, 30 * ProportionAdapter)];
+            NSMutableAttributedString *lbStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"指定球童 %@ 成功！", self.name]];
+            label.textColor = [UIColor colorWithHexString:@"#eeeeee"];
+            [lbStr addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"#32b14d"] range:NSMakeRange(5, lbStr.length - 8)];
+            label.attributedText = lbStr;
+            label.textAlignment = NSTextAlignmentCenter;
+            label.font = [UIFont systemFontOfSize:20 * ProportionAdapter];
+            [self.shadeView addSubview:label];
+            
+            UILabel *detailLB = [[UILabel alloc] initWithFrame:CGRectMake(20 * ProportionAdapter, 250 * ProportionAdapter, screenWidth - 40 * ProportionAdapter, 50 * ProportionAdapter)];
+            detailLB.text = [NSString stringWithFormat:@"球童%@正在为您做记分准备， 稍后下滑屏幕可同步查看记分。", self.name];
+            detailLB.font = [UIFont systemFontOfSize:15 * ProportionAdapter];
+            detailLB.textColor = [UIColor colorWithHexString:@"#eeeeee"];
+            detailLB.numberOfLines = 0;
+            [self.shadeView addSubview:detailLB];
+            
+            UILabel *knownLB = [[UILabel alloc] initWithFrame:CGRectMake(0, 360, ScreenWidth, 30 * ProportionAdapter)];
+            knownLB.text = @"朕知道～～";
+            knownLB.textAlignment = NSTextAlignmentCenter;
+            knownLB.font = [UIFont systemFontOfSize:22 * ProportionAdapter];
+            knownLB.textColor = [UIColor colorWithHexString:@"#f39800"];
+            [self.shadeView addSubview:knownLB];
+        }
+
     }
 }
 
