@@ -567,6 +567,8 @@
             if ([data objectForKey:@"packResultMsg"]) {
                 [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
             }
+            
+            [self performSelector:@selector(scoresResult) withObject:self afterDelay:1.0];
         }
     }];
     
