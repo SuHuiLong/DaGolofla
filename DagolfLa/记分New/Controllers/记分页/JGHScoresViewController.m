@@ -579,6 +579,7 @@
         for (UIViewController *controller in self.navigationController.viewControllers) {
             if ([controller isKindOfClass:[JGLCaddieScoreViewController class]]) {
                 //                [[NSNotificationCenter defaultCenter] postNotificationName:@"CaddieScoreRefreshing" object:@{@"cabbie": @"1"}];
+                _refreshBlock();
                 [self.navigationController popToViewController:controller animated:YES];
             }
         }
