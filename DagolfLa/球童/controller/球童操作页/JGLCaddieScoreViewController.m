@@ -443,6 +443,10 @@
 //    if ([userdef objectForKey:[NSString stringWithFormat:@"%@", [_dataArray[btn.tag - 1000] timeKey]]]) {
         scrVc.currentPage = [[userdef objectForKey:[NSString stringWithFormat:@"%@", [_dataArray[btn.tag - 1000] timeKey]]] integerValue];
 //    }
+    scrVc.refreshBlock = ^(){
+        [self headRereshing];
+    };
+    
     [self.navigationController pushViewController:scrVc animated:YES];
 }
 
