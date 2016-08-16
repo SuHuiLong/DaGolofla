@@ -19,6 +19,6 @@
 
 @property (nonatomic, assign)NSInteger isCabbie;//1-球童
 
-@property (strong, nonatomic) void (^refreshBlock)();
+//@property (strong, nonatomic) void (^refreshBlock)();
 
 @end

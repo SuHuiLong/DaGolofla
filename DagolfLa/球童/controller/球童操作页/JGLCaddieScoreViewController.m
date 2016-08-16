@@ -56,6 +56,11 @@
     _page = 0;
     _isHaveData = 1;
     
+    //监听分组页面返回，刷新数据
+    NSNotificationCenter * center = [NSNotificationCenter defaultCenter];
+    //添加当前类对象为一个观察者，name和object设置为nil，表示接收一切通知
+    [center addObserver:self selector:@selector(reloadCaddieScoreData) name:@"reloadCaddieScoreData" object:nil];
+    
     UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"backL"] style:UIBarButtonItemStylePlain target:self action:@selector(backButtonClcik)];
     item.tintColor=[UIColor whiteColor];
     self.navigationItem.leftBarButtonItem = item;
@@ -73,6 +78,10 @@
     
     [self setData];
     // Do any additional setup after loading the view.
+}
+#pragma mark --通知调用－－刷新数据
+- (void)reloadCaddieScoreData{
+    [self headRereshing];
 }
 
 -(void)backButtonClcik
@@ -454,9 +463,9 @@
 //    if ([userdef objectForKey:[NSString stringWithFormat:@"%@", [_dataArray[btn.tag - 1000] timeKey]]]) {
         scrVc.currentPage = [[userdef objectForKey:[NSString stringWithFormat:@"%@", [_dataArray[btn.tag - 1000] timeKey]]] integerValue];
 //    }
-    scrVc.refreshBlock = ^(){
-        [self headRereshing];
-    };
+//    scrVc.refreshBlock = ^(){
+//        [self headRereshing];
+//    };
     
     [self.navigationController pushViewController:scrVc animated:YES];
 }
