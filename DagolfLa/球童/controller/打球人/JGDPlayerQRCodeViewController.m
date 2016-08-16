@@ -81,6 +81,12 @@
     [self createView];
 }
 
+
+- (void)dealloc{
+    
+    self.timer = nil;
+}
+
 - (void)loopAct{
     
     NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];

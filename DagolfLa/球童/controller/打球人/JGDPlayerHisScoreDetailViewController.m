@@ -136,12 +136,14 @@
         label.backgroundColor = [UIColor whiteColor];
         
         if (self.ballkid == 10) {
-            NSMutableAttributedString *lbStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"球童 %@ 记分", self.model.scoreUserName]];
-            [lbStr addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"#32b14d"] range:NSMakeRange(3, lbStr.length - 6)];
-            label.attributedText = lbStr;
-        }else{
             NSMutableAttributedString *lbStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"球童 %@ 正在为您记分", self.model.scoreUserName]];
             [lbStr addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"#32b14d"] range:NSMakeRange(3, lbStr.length - 10)];
+            label.attributedText = lbStr;
+            
+
+        }else{
+            NSMutableAttributedString *lbStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"球童 %@ 记分", self.model.scoreUserName]];
+            [lbStr addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"#32b14d"] range:NSMakeRange(3, lbStr.length - 6)];
             label.attributedText = lbStr;
         }
         

@@ -93,10 +93,11 @@
                 
                 self.tableView.tableFooterView = view;
                 if (self.ballkid == 10) {
-                    self.name = [NSString stringWithFormat:@"球童 %@ 记分", [[data objectForKey:@"list"][0] objectForKey:@"scoreUserName"]];
-
-                }else{
                     self.name = [NSString stringWithFormat:@"球童 %@ 正在为您记分", [[data objectForKey:@"list"][0] objectForKey:@"scoreUserName"]];
+                    
+                    
+                }else{
+                    self.name = [NSString stringWithFormat:@"球童 %@ 记分", [[data objectForKey:@"list"][0] objectForKey:@"scoreUserName"]];
                 }
             }
             
@@ -179,11 +180,11 @@
         if (self.name) {
             if (self.ballkid == 10) {
                 NSMutableAttributedString *lbStr = [[NSMutableAttributedString alloc] initWithString:self.name];
-                [lbStr addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"#32b14d"] range:NSMakeRange(3, lbStr.length - 6)];
+                [lbStr addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"#32b14d"] range:NSMakeRange(3, lbStr.length - 10)];
                 self.label.attributedText = lbStr;
             }else{
                 NSMutableAttributedString *lbStr = [[NSMutableAttributedString alloc] initWithString:self.name];
-                [lbStr addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"#32b14d"] range:NSMakeRange(3, lbStr.length - 10)];
+                [lbStr addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"#32b14d"] range:NSMakeRange(3, lbStr.length - 6)];
                 self.label.attributedText = lbStr;
             }
             
@@ -368,7 +369,7 @@
         JGDNotActScoreDetailViewController *detailV = [[JGDNotActScoreDetailViewController alloc] init];
         JGDHistoryScoreShowModel *model = self.dataArray[indexPath.row - 2];
         detailV.model = model;
-        detailV.ballkid = 10;
+        detailV.ballkid = self.ballkid;
         detailV.dataDic = self.dataDic;
         [self.navigationController pushViewController:detailV animated:YES];
     }
