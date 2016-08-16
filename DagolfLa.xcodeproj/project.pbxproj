@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		200200FC1D61B2C900308C44 /* JGHStarScoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 200200FB1D61B2C900308C44 /* JGHStarScoreViewController.m */; };
+		200200FF1D61BC0200308C44 /* JGHCabbieEditorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 200200FE1D61BC0200308C44 /* JGHCabbieEditorViewController.m */; };
 		201055DA1D58A4C600C90FDE /* JGHPlayAddCaddieViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 201055D91D58A4C600C90FDE /* JGHPlayAddCaddieViewController.m */; };
 		201055E31D58A5BA00C90FDE /* JGHSweepViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 201055E11D58A5BA00C90FDE /* JGHSweepViewCell.m */; };
 		201055E41D58A5BA00C90FDE /* JGHSweepViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 201055E21D58A5BA00C90FDE /* JGHSweepViewCell.xib */; };
@@ -978,6 +980,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		200200FA1D61B2C900308C44 /* JGHStarScoreViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHStarScoreViewController.h; sourceTree = "<group>"; };
+		200200FB1D61B2C900308C44 /* JGHStarScoreViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHStarScoreViewController.m; sourceTree = "<group>"; };
+		200200FD1D61BC0200308C44 /* JGHCabbieEditorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHCabbieEditorViewController.h; sourceTree = "<group>"; };
+		200200FE1D61BC0200308C44 /* JGHCabbieEditorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHCabbieEditorViewController.m; sourceTree = "<group>"; };
 		201055D81D58A4C600C90FDE /* JGHPlayAddCaddieViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHPlayAddCaddieViewController.h; sourceTree = "<group>"; };
 		201055D91D58A4C600C90FDE /* JGHPlayAddCaddieViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHPlayAddCaddieViewController.m; sourceTree = "<group>"; };
 		201055E01D58A5BA00C90FDE /* JGHSweepViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHSweepViewCell.h; sourceTree = "<group>"; };
@@ -2882,6 +2888,10 @@
 				2010561F1D59C93600C90FDE /* JGHCabbieCertViewController.m */,
 				2066E8771D5C15E800A3A2B8 /* JGHCabbieCertSuccessViewController.h */,
 				2066E8781D5C15E800A3A2B8 /* JGHCabbieCertSuccessViewController.m */,
+				200200FA1D61B2C900308C44 /* JGHStarScoreViewController.h */,
+				200200FB1D61B2C900308C44 /* JGHStarScoreViewController.m */,
+				200200FD1D61BC0200308C44 /* JGHCabbieEditorViewController.h */,
+				200200FE1D61BC0200308C44 /* JGHCabbieEditorViewController.m */,
 			);
 			path = "球童认证";
 			sourceTree = "<group>";
@@ -7313,7 +7323,7 @@
 				TargetAttributes = {
 					36BFFD271BC76C8D005B3CE2 = {
 						CreatedOnToolsVersion = 6.3.2;
-						DevelopmentTeam = DBD58PLQ9F;
+						DevelopmentTeam = T8ML76W22A;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -7659,6 +7669,7 @@
 				F543ACC11CF4246000C6B111 /* JGNotTeamMemberDetailViewController.m in Sources */,
 				36BF00861BC772EF005B3CE2 /* MySetViewController.m in Sources */,
 				F569A1481CE35AA500CD0FD5 /* JGTeamChannelActivityTableViewCell.m in Sources */,
+				200200FF1D61BC0200308C44 /* JGHCabbieEditorViewController.m in Sources */,
 				F59A8BA51D5DB95500E8292B /* JGDPlayerModel.m in Sources */,
 				827BD52F1D214A42009AF9CA /* JGLAddBankCardViewController.m in Sources */,
 				821DB9CC1D5D6FAB00C882C2 /* JGLCaddieScoreTableViewCell.m in Sources */,
@@ -8043,6 +8054,7 @@
 				36BFFF651BC76D09005B3CE2 /* UIActivityIndicatorView+AFNetworking.m in Sources */,
 				82D595E31CE42E7B00CD9587 /* JGMemHalfTableViewCell.m in Sources */,
 				36D9F7221C23BD4700699569 /* ScoreCardModel.m in Sources */,
+				200200FC1D61B2C900308C44 /* JGHStarScoreViewController.m in Sources */,
 				36B08F711C2D322600CD660E /* UITableViewRowAction+JZExtension.m in Sources */,
 				36BF008A1BC772EF005B3CE2 /* MySetHelpController.m in Sources */,
 				36BFFF751BC76D09005B3CE2 /* SDImageCache.m in Sources */,

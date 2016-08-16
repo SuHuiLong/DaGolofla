@@ -44,6 +44,8 @@
 }
 
 - (void)configCabbieSuccess:(NSInteger)editor andName:(NSString *)name{
+    self.titleLable.hidden = YES;
+    
     if (editor == 1) {
         self.proTextField.enabled = YES;
         self.cammaImageView.hidden = NO;
@@ -53,9 +55,9 @@
     }
     
     self.proTextField.text = name;
-    self.proTextField.placeholder = @"请输入姓名";
+    self.proTextField.userInteractionEnabled = NO;
+//    self.proTextField.placeholder = @"请输入姓名";
     
-    self.titleLable.hidden = YES;
     self.photoImageTop.constant = 22 *ProportionAdapter;
 //    http://imgcache.dagolfla.com/user/head/244_caddie.jpg
     

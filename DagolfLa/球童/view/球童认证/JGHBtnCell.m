@@ -43,8 +43,16 @@
 }
 
 - (void)configSuccessBtn{
-    self.titleBtnTop.constant = 0;
-    self.titleBtnDown.constant = 0;
+    self.titleBtnTop.constant = 5 *ProportionAdapter;
+    self.titleBtnDown.constant = 5 *ProportionAdapter;
+    self.backgroundColor = [UIColor whiteColor];
+    self.titleBtn.backgroundColor = [UIColor orangeColor];
+    [self.titleBtn setTitle:@"查看奖励" forState:UIControlStateNormal];
+}
+
+- (void)configStartBtn{
+    self.titleBtnTop.constant = 5 *ProportionAdapter;
+    self.titleBtnDown.constant = 5 *ProportionAdapter;
     self.backgroundColor = [UIColor whiteColor];
     self.titleBtn.backgroundColor = [UIColor orangeColor];
     [self.titleBtn setTitle:@"开始记分" forState:UIControlStateNormal];

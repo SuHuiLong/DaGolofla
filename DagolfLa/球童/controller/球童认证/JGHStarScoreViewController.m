@@ -1,12 +1,12 @@
 //
-//  JGHCabbieCertSuccessViewController.m
+//  JGHStarScoreViewController.m
 //  DagolfLa
 //
-//  Created by 黄安 on 16/8/11.
+//  Created by 黄安 on 16/8/15.
 //  Copyright © 2016年 bhxx. All rights reserved.
 //
 
-#import "JGHCabbieCertSuccessViewController.h"
+#import "JGHStarScoreViewController.h"
 #import "JGHLableAndFileTextCell.h"
 #import "JGHBtnCell.h"
 #import "JGHCabbiePhotoCell.h"
@@ -16,7 +16,7 @@
 #import "BallParkViewController.h"
 #import "SXPickPhoto.h"
 #import "JGHCabbieEditorViewController.h"
-#import "JGHCabbieRewardViewController.h"
+#import "JGLCaddieScoreViewController.h"
 
 static NSString *const JGHLableAndFileTextCellIdentifier = @"JGHLableAndFileTextCell";
 static NSString *const JGHBtnCellIdentifier = @"JGHBtnCell";
@@ -24,7 +24,7 @@ static NSString *const JGHCabbiePhotoCellIdentifier = @"JGHCabbiePhotoCell";
 static NSString *const JGHSexCellIdentifier = @"JGHSexCell";
 static NSString *const JGHLableAndLableCellIdentifier = @"JGHLableAndLableCell";
 
-@interface JGHCabbieCertSuccessViewController ()<UITableViewDelegate, UITableViewDataSource, JGHBtnCellDelegate>
+@interface JGHStarScoreViewController ()<UITableViewDelegate, UITableViewDataSource, JGHBtnCellDelegate>
 {
     NSArray *_titleArray;
     JGHCaddieAuthModel *_model;
@@ -37,7 +37,7 @@ static NSString *const JGHLableAndLableCellIdentifier = @"JGHLableAndLableCell";
 
 @end
 
-@implementation JGHCabbieCertSuccessViewController
+@implementation JGHStarScoreViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -142,7 +142,7 @@ static NSString *const JGHLableAndLableCellIdentifier = @"JGHLableAndLableCell";
     }else if (indexPath.section == 1){
         JGHLableAndLableCell *labelCell = [tableView dequeueReusableCellWithIdentifier:JGHLableAndLableCellIdentifier];
         labelCell.selectionStyle = UITableViewCellSelectionStyleNone;
-
+        
         labelCell.accessoryType = UITableViewCellAccessoryNone;
         
         if (_model.ballName) {
@@ -152,7 +152,7 @@ static NSString *const JGHLableAndLableCellIdentifier = @"JGHLableAndLableCell";
         return labelCell;
     }else if (indexPath.section == 5){
         JGHBtnCell *btnCell = [tableView dequeueReusableCellWithIdentifier:JGHBtnCellIdentifier];
-        [btnCell configSuccessBtn];
+        [btnCell configStartBtn];
         btnCell.delegate = self;
         btnCell.selectionStyle = UITableViewCellSelectionStyleNone;
         return btnCell;
@@ -208,11 +208,11 @@ static NSString *const JGHLableAndLableCellIdentifier = @"JGHLableAndLableCell";
         }
     }
 }
-#pragma mark -- 查看奖励
+#pragma mark -- 开始记分
 - (void)commitCabbieCert:(UIButton *)btn{
     btn.enabled = NO;
-    JGHCabbieRewardViewController *cabbieRewardCtrl = [[JGHCabbieRewardViewController alloc]init];
-    
+    JGLCaddieScoreViewController *cabbieRewardCtrl = [[JGLCaddieScoreViewController alloc]init];
+    cabbieRewardCtrl.isCaddie = 1;
     [self.navigationController pushViewController:cabbieRewardCtrl animated:YES];
     btn.enabled = YES;
 }

@@ -30,4 +30,6 @@
 
 - (void)configSuccessBtn;
 
+- (void)configStartBtn;
+
 @end
