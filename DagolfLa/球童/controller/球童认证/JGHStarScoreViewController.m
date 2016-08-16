@@ -44,7 +44,7 @@ static NSString *const JGHLableAndLableCellIdentifier = @"JGHLableAndLableCell";
     // Do any additional setup after loading the view.
     
     self.view.backgroundColor = [UIColor whiteColor];
-    self.navigationItem.title = @"资料页";
+    self.navigationItem.title = @"认证完成";
     
     _titleArray = @[@"", @"所属场地", @"姓别", @"球童编号", @"服务年限"];
     _model = [[JGHCaddieAuthModel alloc]init];

@@ -289,6 +289,7 @@ static NSString *const JGHBtnCellIdentifier = @"JGHBtnCell";
         return;
     }
     
+    [[ShowHUD showHUD]showAnimationWithText:@"提交中..." FromView:self.view];
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     NSMutableDictionary *caddieAuthDict = [NSMutableDictionary dictionary];
     [caddieAuthDict setObject:@(_ballKey) forKey:@"ballKey"];
@@ -301,9 +302,11 @@ static NSString *const JGHBtnCellIdentifier = @"JGHBtnCell";
     [dict setObject:caddieAuthDict forKey:@"caddieAuth"];
     [dict setObject:DEFAULF_USERID forKey:@"userKey"];
     [[JsonHttp jsonHttp]httpRequestWithMD5:@"score/doSaveCaddieAuth" JsonKey:nil withData:dict failedBlock:^(id errType) {
+        [[ShowHUD showHUD]hideAnimationFromView:self.view];
         
     } completionBlock:^(id data) {
         NSLog(@"%@", data);
+        [[ShowHUD showHUD]hideAnimationFromView:self.view];
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
             
             NSMutableArray *imageArray = [NSMutableArray array];

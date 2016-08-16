@@ -396,7 +396,8 @@
         MeHeadTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"MeHeadTableViewCell"];
         
         if ([[NSUserDefaults standardUserDefaults] objectForKey:@"userId"]) {
-            [cell.iconImgv sd_setImageWithURL:[Helper imageIconUrl:_model.pic] placeholderImage:[UIImage imageNamed:@"zwt"]];
+//            [cell.iconImgv sd_setImageWithURL:[Helper imageIconUrl:_model.pic] placeholderImage:[UIImage imageNamed:@"zwt"]];
+            [cell.iconImgv sd_setImageWithURL:[Helper setImageIconUrl:@"user" andTeamKey:[DEFAULF_USERID integerValue] andIsSetWidth:YES andIsBackGround:NO] placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
             cell.nameLabel.text = _model.userName;
             if (![Helper isBlankString:_model.pic] && ![Helper isBlankString:_model.userName] && ![Helper isBlankString:_model.userSign]) {
                 cell.detailLabel.text = _model.userSign;
