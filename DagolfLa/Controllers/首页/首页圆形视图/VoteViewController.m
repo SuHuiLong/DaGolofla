@@ -132,55 +132,14 @@
 #pragma mark --分享点击事件
 -(void)shareVoteClick
 {
-//    ShareAlert* alert = [[ShareAlert alloc]initMyAlert];
-//    alert.frame = CGRectMake(0, ScreenHeight, ScreenWidth, ScreenWidth);
-//    [alert setCallBackTitle:^(NSInteger index) {
-//        [self shareInfo:index];
-//    }];
-//    [UIView animateWithDuration:0.2 animations:^{
-//        [alert show];
-//    }];
-    
-    
-    NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
-    [dict setObject:@0 forKey:@"orderType"];
-    [dict setObject:@527 forKey:@"srcKey"];
-    [[JsonHttp jsonHttp]httpRequest:@"pay/doPayWeiXin" JsonKey:@"payInfo" withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
-        [[ShowHUD showHUD]showToastWithText:@"请检查您的网络" FromView:self.view];
-    } completionBlock:^(id data) {
-        
-        NSDictionary *dict = [data objectForKey:@"pay"];
-        //微信
-        //创建支付签名对象
-        //        payRequsestHandler *req = [payRequsestHandler alloc];
-        
-        //初始化支付签名对象
-        //        [req init:@"wxdcdc4e20544ed728" mch_id:[dict objectForKey:@"partnerid"]];
-        //设置秘钥
-        //        [req setKey:[[data objectForKey:@"rows"] objectForKey:@"key"]];
-        
-        //        NSMutableDictionary *dict1 = [req sendPay_demoPrePayid:[dict objectForKey:@"prepayid"]];
-        if (dict) {
-            PayReq *request = [[PayReq alloc] init];
-            request.openID       = [dict objectForKey:@"appid"];
-            request.partnerId    = [dict objectForKey:@"partnerid"];
-            request.prepayId     = [dict objectForKey:@"prepayid"];
-            request.package      = [dict objectForKey:@"Package"];
-            request.nonceStr     = [dict objectForKey:@"noncestr"];
-            request.timeStamp    =[[dict objectForKey:@"timestamp"] intValue];
-            request.sign         = [dict objectForKey:@"sign"];
-            
-            [WXApi sendReq:request];
-        }else
-        {
-            [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
-        }
-        
-        
+    ShareAlert* alert = [[ShareAlert alloc]initMyAlert];
+    alert.frame = CGRectMake(0, ScreenHeight, ScreenWidth, ScreenWidth);
+    [alert setCallBackTitle:^(NSInteger index) {
+        [self shareInfo:index];
     }];
-
-    
-    
+    [UIView animateWithDuration:0.2 animations:^{
+        [alert show];
+    }];
 }
 
 -(void)shareInfo:(NSInteger)index
