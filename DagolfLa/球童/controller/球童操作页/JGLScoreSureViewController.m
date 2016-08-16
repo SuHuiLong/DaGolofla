@@ -9,6 +9,7 @@
 #import "JGLScoreSureViewController.h"
 #import "JGLCaddieChooseStyleViewController.h"
 #import "JGLCaddieSelfScoreViewController.h"
+#import "JGLCaddieScoreViewController.h"
 @interface JGLScoreSureViewController ()
 
 @end
@@ -116,7 +117,11 @@
 #pragma mark --球童相互扫描返回按钮
 -(void)backCaddieClick
 {
-    
+    for (UIViewController *controller in self.navigationController.viewControllers) {
+        if ([controller isKindOfClass:[JGLCaddieScoreViewController class]]) {
+            [self.navigationController popToViewController:controller animated:YES];
+        }
+    }
 }
 
 
