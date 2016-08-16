@@ -8,6 +8,7 @@
 
 #import "JGHCabbieWalletViewController.h"
 #import "JGLCaddieScoreViewController.h"
+#import "JGHCabbieRewardViewController.h"
 
 @interface JGHCabbieWalletViewController ()
 {
@@ -57,6 +58,7 @@
     
     UIButton *cabbArwedbtn = [UIButton buttonWithType:UIButtonTypeCustom];
     cabbArwedbtn.frame = CGRectMake(screenWidth - 54*ProportionAdapter, 20, 44*ProportionAdapter, 44);
+    [cabbArwedbtn addTarget:self action:@selector(pushMyReward) forControlEvents:UIControlEventTouchUpInside];
     [cabbArwedbtn setImage:[UIImage imageNamed:@"cabbArwed"] forState:UIControlStateNormal];
 
     [_barView addSubview:cabbArwedbtn];
@@ -125,11 +127,50 @@
     }
 }
 - (void)BackBtnClick:(UIButton *)btn{
-    for (UIViewController *controller in self.navigationController.viewControllers) {
-        if ([controller isKindOfClass:[JGLCaddieScoreViewController class]]) {
-            [self.navigationController popToViewController:controller animated:YES];
+    self.navigationController.navigationBarHidden = NO;
+//    [self popScoreCtrl];
+    
+    if ([NSThread isMainThread]) {
+        NSLog(@"Yay!");
+        for (UIViewController *controller in self.navigationController.viewControllers) {
+            if ([controller isKindOfClass:[JGLCaddieScoreViewController class]]) {
+//                [[NSNotificationCenter defaultCenter] postNotificationName:@"CaddieScoreRefreshing" object:@{@"cabbie": @"1"}];
+                [self.navigationController popToViewController:controller animated:YES];
+            }
         }
+    } else {
+        NSLog(@"Humph, switching to main");
+        dispatch_async(dispatch_get_main_queue(), ^{
+            for (UIViewController *controller in self.navigationController.viewControllers) {
+                if ([controller isKindOfClass:[JGLCaddieScoreViewController class]]) {
+//                    [[NSNotificationCenter defaultCenter] postNotificationName:@"CaddieScoreRefreshing" object:@{@"cabbie": @"1"}];
+                    [self.navigationController popToViewController:controller animated:YES];
+                }
+            }
+        });
     }
+     
+}
+//#pragma mark -- pop记分页面
+//- (void)popScoreCtrl{
+//    UIViewController *target;
+//    for (UIViewController *vc in self.navigationController.viewControllers) {
+//        if ([vc isKindOfClass:[JGLCaddieScoreViewController class]]) {
+//            target=vc;
+//        }
+//    }
+//    
+//    if (target) {
+//        [[NSNotificationCenter defaultCenter] postNotificationName:@"CaddieScoreRefreshing" object:@[]];
+//        
+//        [self.navigationController popToViewController:target animated:YES];
+//    }
+//}
+#pragma mark -- 我的奖励
+- (void)pushMyReward{
+    JGHCabbieRewardViewController *rewardCtrl = [[JGHCabbieRewardViewController alloc]init];
+    
+    [self.navigationController pushViewController:rewardCtrl animated:YES];
 }
 #pragma mark -- 红包跳转
 //- (void)hongbaoImageViewAnimation{

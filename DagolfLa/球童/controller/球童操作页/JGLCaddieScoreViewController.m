@@ -54,6 +54,8 @@
     _dataArray = [[NSMutableArray alloc]init];
     _page = 0;
     
+    
+    
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
     btn.frame = CGRectMake(0, 0, 44, 44);
     btn.titleLabel.font = [UIFont systemFontOfSize:FontSize_Normal];

@@ -35,7 +35,7 @@
 - (void)configJGHTransDetailListModel:(JGHTransDetailListModel *)model{
     self.awaredLable.text = model.name;
     
-    self.timeLable.text = model.exchangeTime;
+    self.timeLable.text = [Helper distanceTimeWithBeforeTime:model.exchangeTime];
     
     if ([model.amount integerValue] < 0) {
         self.monyLable.text = [NSString stringWithFormat:@"%@", model.amount];

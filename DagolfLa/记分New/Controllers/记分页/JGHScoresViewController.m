@@ -555,9 +555,12 @@
 - (void)scoresResult{
     if (_isCabbie == 1) {
         // isCaddie;//是否是球童，1，是球童，
-        JGLCaddieScoreViewController *cabbieCtrl = [[JGLCaddieScoreViewController alloc]init];
-        cabbieCtrl.isCaddie = 1;
-        [self.navigationController pushViewController:cabbieCtrl animated:YES];
+        for (UIViewController *controller in self.navigationController.viewControllers) {
+            if ([controller isKindOfClass:[JGLCaddieScoreViewController class]]) {
+                //                [[NSNotificationCenter defaultCenter] postNotificationName:@"CaddieScoreRefreshing" object:@{@"cabbie": @"1"}];
+                [self.navigationController popToViewController:controller animated:YES];
+            }
+        }
     }else{
         NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
         if (_selectPage > 0) {

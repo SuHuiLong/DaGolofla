@@ -82,14 +82,15 @@ static NSString *const JGHCabbieAwaredCellIdentifier = @"JGHCabbieAwaredCell";
         NSLog(@"%@", data);
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
             if ([data objectForKey:@"transDetailList"]) {
-                float totalCount = 0.00;
+//                float totalCount = 0.00;
                 _sumMonay = [data objectForKey:@"inSumMoney"];
-                JGHTransDetailListModel *model = [[JGHTransDetailListModel alloc]init];
+                
                 NSArray *dataArray = [NSArray array];
                 dataArray = [data objectForKey:@"transDetailList"];
                 for (NSDictionary *dict in dataArray) {
+                    JGHTransDetailListModel *model = [[JGHTransDetailListModel alloc]init];
                     [model setValuesForKeysWithDictionary:dict];
-                    totalCount += [model.balance floatValue];
+//                    totalCount += [model.balance floatValue];
                     [self.dataArray addObject:model];
                 }
                 
@@ -215,6 +216,7 @@ static NSString *const JGHCabbieAwaredCellIdentifier = @"JGHCabbieAwaredCell";
     NSLog(@"%td", indexPath.section);
     JGHCabbieAwaredCell *cabbieAwaredCell = [tableView dequeueReusableCellWithIdentifier:JGHCabbieAwaredCellIdentifier];
     cabbieAwaredCell.selectionStyle = UITableViewCellSelectionStyleNone;
+    NSLog(@"%td", indexPath.section);
     if (_dataArray.count > 0) {
         [cabbieAwaredCell configJGHTransDetailListModel:self.dataArray[indexPath.section]];
     }
