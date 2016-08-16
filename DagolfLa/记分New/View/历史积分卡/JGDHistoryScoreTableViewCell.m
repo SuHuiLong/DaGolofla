@@ -89,15 +89,17 @@
         self.unfinishimageV.image = [UIImage imageNamed:@"icn_daiji"];
         [self.holderImageV addSubview:self.unfinishimageV];
     }
-    
-    NSString* strMoney = [NSString stringWithFormat:@"%@杆", [model.poleNumber stringValue]];
-    NSMutableAttributedString *str = [[NSMutableAttributedString alloc] initWithString:strMoney];
-    [str addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"#fe6424"] range:NSMakeRange(0, str.length - 1)];
-    [str addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"#cccccc"] range:NSMakeRange(str.length - 1, 1)];
-    [str addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:20 * ProportionAdapter] range:NSMakeRange(0, str.length - 1)];
-    [str addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:12 * ProportionAdapter] range:NSMakeRange(str.length - 1, 1)];
-    self.numberLB.attributedText = str;
-
+    if (([model.userType integerValue] == 1) && ([model.userName isEqualToString:model.scoreUserName])) {
+        self.numberLB.text = model.userName;
+    }else{
+        NSString* strMoney = [NSString stringWithFormat:@"%@杆", [model.poleNumber stringValue]];
+        NSMutableAttributedString *str = [[NSMutableAttributedString alloc] initWithString:strMoney];
+        [str addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"#fe6424"] range:NSMakeRange(0, str.length - 1)];
+        [str addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"#cccccc"] range:NSMakeRange(str.length - 1, 1)];
+        [str addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:20 * ProportionAdapter] range:NSMakeRange(0, str.length - 1)];
+        [str addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:12 * ProportionAdapter] range:NSMakeRange(str.length - 1, 1)];
+        self.numberLB.attributedText = str;
+    }
 }
 
 

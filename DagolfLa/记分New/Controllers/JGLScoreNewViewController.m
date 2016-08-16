@@ -383,7 +383,6 @@
                         NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
                         if ([def objectForKey:@"isCaddie"]) {
                             
-                            
                             JGDPlayPersonViewController *personVC = [[JGDPlayPersonViewController alloc] init];
                             [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
                             [self.navigationController pushViewController:personVC animated:YES];

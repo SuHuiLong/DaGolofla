@@ -18,8 +18,12 @@
 @property (nonatomic, strong) NSNumber *srcType; // 1 是活动记分     0 是个人
 @property (nonatomic, strong) NSNumber *scoreFinish; // 0 是未完成
 @property (nonatomic, copy) NSString *scoreUserName; // 代记分人
-@property (nonatomic, copy) NSString *teamActivityKey; // 
+@property (nonatomic, copy) NSString *teamActivityKey; //
 
 @property (nonatomic, strong) NSNumber *scoreSum; // 
+
+@property (nonatomic, strong) NSNumber *userType; //  1 球童记分
+@property (nonatomic, strong) NSNumber *srcKey; //  userKey   如果相同是球童
+@property (nonatomic, copy) NSString *userName; // 被记分人
 
 @end

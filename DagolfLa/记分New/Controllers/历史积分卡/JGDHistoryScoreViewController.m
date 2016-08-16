@@ -22,6 +22,8 @@
 #import "JGDHistoryScoreShowViewController.h"
 #import "JGDActSelfHistoryScoreViewController.h"
 
+#import "JGDPlayerHisScoreCardViewController.h"
+#import "JGDNotActScoreViewController.h"
 
 @interface JGDHistoryScoreViewController ()<UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate,UISearchResultsUpdating>
 
@@ -304,30 +306,64 @@
     
     JGDHistoryScoreModel *model = self.dataArray[indexPath.row];
     
-    if ([model.scoreFinish integerValue] == 0) {
-        JGHScoresViewController *scoreVC = [[JGHScoresViewController alloc] init];
-        NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
-        if ([userdef objectForKey:[NSString stringWithFormat:@"%@", model.timeKey]]) {
-            scoreVC.currentPage = [[userdef objectForKey:[NSString stringWithFormat:@"%@", model.timeKey]] integerValue];
-        }
-        NSLog(@"%@", [userdef objectForKey:[NSString stringWithFormat:@"%@", model.timeKey]]);
-        scoreVC.scorekey = [NSString stringWithFormat:@"%@", model.timeKey];
-        [self.navigationController pushViewController:scoreVC animated:YES];
-    }else{
-        
-        if ([model.srcType integerValue] == 0) {
-            
-            JGDNotActivityHisCoreViewController *notAciVC = [[JGDNotActivityHisCoreViewController alloc] init];
-            notAciVC.timeKey = model.timeKey;
-            [self.navigationController pushViewController:notAciVC animated:YES];
-            
+    
+    if (([model.userType integerValue] == 1) && (![model.userName isEqualToString:model.scoreUserName])) {
+
+        if ([model.scoreFinish integerValue] == 0) {
+            JGHScoresViewController *scoreVC = [[JGHScoresViewController alloc] init];
+            NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
+            if ([userdef objectForKey:[NSString stringWithFormat:@"%@", model.timeKey]]) {
+                scoreVC.currentPage = [[userdef objectForKey:[NSString stringWithFormat:@"%@", model.timeKey]] integerValue];
+            }
+            NSLog(@"%@", [userdef objectForKey:[NSString stringWithFormat:@"%@", model.timeKey]]);
+            scoreVC.scorekey = [NSString stringWithFormat:@"%@", model.timeKey];
+            [self.navigationController pushViewController:scoreVC animated:YES];
         }else{
             
-            JGDHistoryScoreShowViewController *showVC = [[JGDHistoryScoreShowViewController alloc] init];
-            showVC.timeKey = model.timeKey;
-            [self.navigationController pushViewController:showVC animated:YES];
+            if ([model.srcType integerValue] == 0) {
+                
+                JGDNotActScoreViewController *notAciVC = [[JGDNotActScoreViewController alloc] init];
+                notAciVC.timeKey = model.timeKey;
+                notAciVC.ballkid = 10;
+                [self.navigationController pushViewController:notAciVC animated:YES];
+                
+            }else{
+                
+                JGDPlayerHisScoreCardViewController *showVC = [[JGDPlayerHisScoreCardViewController alloc] init];
+                showVC.timeKey = model.timeKey;
+                showVC.ballkid = 10;
+                [self.navigationController pushViewController:showVC animated:YES];
+            }
+        }
+        
+    }else{
+        if ([model.scoreFinish integerValue] == 0) {
+            JGHScoresViewController *scoreVC = [[JGHScoresViewController alloc] init];
+            NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
+            if ([userdef objectForKey:[NSString stringWithFormat:@"%@", model.timeKey]]) {
+                scoreVC.currentPage = [[userdef objectForKey:[NSString stringWithFormat:@"%@", model.timeKey]] integerValue];
+            }
+            NSLog(@"%@", [userdef objectForKey:[NSString stringWithFormat:@"%@", model.timeKey]]);
+            scoreVC.scorekey = [NSString stringWithFormat:@"%@", model.timeKey];
+            [self.navigationController pushViewController:scoreVC animated:YES];
+        }else{
+            
+            if ([model.srcType integerValue] == 0) {
+                
+                JGDNotActivityHisCoreViewController *notAciVC = [[JGDNotActivityHisCoreViewController alloc] init];
+                notAciVC.timeKey = model.timeKey;
+                [self.navigationController pushViewController:notAciVC animated:YES];
+                
+            }else{
+                
+                JGDHistoryScoreShowViewController *showVC = [[JGDHistoryScoreShowViewController alloc] init];
+                showVC.timeKey = model.timeKey;
+                [self.navigationController pushViewController:showVC animated:YES];
+            }
         }
     }
+    
+
 }
 
 

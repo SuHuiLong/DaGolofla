@@ -92,7 +92,12 @@
                 view.backgroundColor = [UIColor whiteColor];
                 
                 self.tableView.tableFooterView = view;
-                self.name = [NSString stringWithFormat:@"球童 %@ 正在为您记分", [[data objectForKey:@"list"][0] objectForKey:@"scoreUserName"]];
+                if (self.ballkid == 10) {
+                    self.name = [NSString stringWithFormat:@"球童 %@ 记分", [[data objectForKey:@"list"][0] objectForKey:@"scoreUserName"]];
+
+                }else{
+                    self.name = [NSString stringWithFormat:@"球童 %@ 正在为您记分", [[data objectForKey:@"list"][0] objectForKey:@"scoreUserName"]];
+                }
             }
             
 
@@ -170,11 +175,20 @@
         
         self.label = [[UILabel alloc] initWithFrame:CGRectMake(0, 10 * ProportionAdapter, screenWidth, 50 * ProportionAdapter)];
         self.label.backgroundColor = [UIColor whiteColor];
+
         if (self.name) {
-            NSMutableAttributedString *lbStr = [[NSMutableAttributedString alloc] initWithString:self.name];
-            [lbStr addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"#32b14d"] range:NSMakeRange(3, lbStr.length - 10)];
-            self.label.attributedText = lbStr;
+            if (self.ballkid == 10) {
+                NSMutableAttributedString *lbStr = [[NSMutableAttributedString alloc] initWithString:self.name];
+                [lbStr addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"#32b14d"] range:NSMakeRange(3, lbStr.length - 6)];
+                self.label.attributedText = lbStr;
+            }else{
+                NSMutableAttributedString *lbStr = [[NSMutableAttributedString alloc] initWithString:self.name];
+                [lbStr addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"#32b14d"] range:NSMakeRange(3, lbStr.length - 10)];
+                self.label.attributedText = lbStr;
+            }
+            
         }
+        
         self.label.textAlignment = NSTextAlignmentCenter;
         [headerView addSubview:self.label];
         
@@ -354,6 +368,7 @@
         JGDNotActScoreDetailViewController *detailV = [[JGDNotActScoreDetailViewController alloc] init];
         JGDHistoryScoreShowModel *model = self.dataArray[indexPath.row - 2];
         detailV.model = model;
+        detailV.ballkid = 10;
         detailV.dataDic = self.dataDic;
         [self.navigationController pushViewController:detailV animated:YES];
     }

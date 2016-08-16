@@ -9,6 +9,8 @@
 #import "JGHCaddieViewController.h"
 #import "JGDPlayPersonViewController.h"
 #import "JGLCaddieScoreViewController.h"
+#import "JGHCabbieCertViewController.h"
+
 @interface JGHCaddieViewController ()
 
 @end
@@ -69,8 +71,8 @@
     NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
     [def setObject:@2 forKey:@"isCaddie"];
     [def synchronize];
-    JGLCaddieScoreViewController* cadVc = [[JGLCaddieScoreViewController alloc]init];
-    cadVc.isCaddie = 1;
+    JGHCabbieCertViewController* cadVc = [[JGHCabbieCertViewController alloc]init];
+//    cadVc.isCaddie = 1;
     [self.navigationController pushViewController:cadVc animated:YES];
 }
 @end
