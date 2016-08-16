@@ -310,14 +310,12 @@ static NSString *const JGHBtnCellIdentifier = @"JGHBtnCell";
             
             [imageArray addObject:UIImageJPEGRepresentation(_cabbieImage, 0.7)];
             
-            NSNumber* strTimeKey = [data objectForKey:@"timeKey"];
             // 上传图片
             NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-            [dict setObject:TYPE_TEAM_BACKGROUND forKey:@"nType"];
             [dict setObject:PHOTO_DAGOLFLA forKey:@"tag"];
             
-            [dict setObject:[NSString stringWithFormat:@"%@_caddie" ,strTimeKey] forKey:@"data"];
-            [dict setObject:TYPE_TEAM_BACKGROUND forKey:@"nType"];
+            [dict setObject:[NSString stringWithFormat:@"%@_caddie" ,DEFAULF_USERID] forKey:@"data"];
+            [dict setObject:TYPE_USER_HEAD forKey:@"nType"];
             [[JsonHttp jsonHttp] httpRequestImageOrVedio:@"5" withData:dict andDataArray:imageArray failedBlock:^(id errType) {
                 NSLog(@"errType===%@", errType);
             } completionBlock:^(id data) {

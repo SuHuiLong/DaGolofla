@@ -41,4 +41,8 @@
 
 - (void)configCabbieSuccess:(NSInteger)editor andName:(NSString *)name;
 
+- (void)configEditorImage:(UIImage *)image andUserName:(NSString *)name;
+
+- (void)configImageWithName:(NSString *)name;
+
 @end
