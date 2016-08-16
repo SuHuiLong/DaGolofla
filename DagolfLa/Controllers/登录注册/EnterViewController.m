@@ -271,7 +271,6 @@
                         }
                         if (target) {
                             [[NSNotificationCenter defaultCenter] postNotificationName:@"Refreshing" object:nil];
-                            
                             [self.navigationController popToViewController:target animated:YES];
                         }
                     }else{

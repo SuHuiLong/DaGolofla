@@ -307,7 +307,7 @@
     JGDHistoryScoreModel *model = self.dataArray[indexPath.row];
     
     
-    if (([model.userType integerValue] == 1) && (![model.userName isEqualToString:model.scoreUserName])) {
+    if (([model.userType integerValue] == 1) && (![model.userKey isEqualToString:model.scoreUserKey])) {
 
         if ([model.scoreFinish integerValue] == 0) {
             JGHScoresViewController *scoreVC = [[JGHScoresViewController alloc] init];
@@ -318,20 +318,40 @@
             NSLog(@"%@", [userdef objectForKey:[NSString stringWithFormat:@"%@", model.timeKey]]);
             scoreVC.scorekey = [NSString stringWithFormat:@"%@", model.timeKey];
             [self.navigationController pushViewController:scoreVC animated:YES];
-        }else{
+        }else if ([model.scoreFinish integerValue] == 2) {
             
             if ([model.srcType integerValue] == 0) {
                 
                 JGDNotActScoreViewController *notAciVC = [[JGDNotActScoreViewController alloc] init];
                 notAciVC.timeKey = model.timeKey;
-                notAciVC.ballkid = 10;
+                notAciVC.ballkid = 10;   //  未完成
+                //       notAciVC.ballkid = 11;
                 [self.navigationController pushViewController:notAciVC animated:YES];
                 
             }else{
                 
                 JGDPlayerHisScoreCardViewController *showVC = [[JGDPlayerHisScoreCardViewController alloc] init];
                 showVC.timeKey = model.timeKey;
-                showVC.ballkid = 10;
+                showVC.ballkid = 10;  // 未完成
+                //     showVC.ballkid = 11;
+                [self.navigationController pushViewController:showVC animated:YES];
+            }
+        } else{
+            
+            if ([model.srcType integerValue] == 0) {
+                
+                JGDNotActScoreViewController *notAciVC = [[JGDNotActScoreViewController alloc] init];
+                notAciVC.timeKey = model.timeKey;
+//                notAciVC.ballkid = 10;   //  未完成
+                notAciVC.ballkid = 11;
+                [self.navigationController pushViewController:notAciVC animated:YES];
+                
+            }else{
+                
+                JGDPlayerHisScoreCardViewController *showVC = [[JGDPlayerHisScoreCardViewController alloc] init];
+                showVC.timeKey = model.timeKey;
+//                showVC.ballkid = 10;  // 未完成
+                showVC.ballkid = 11;
                 [self.navigationController pushViewController:showVC animated:YES];
             }
         }

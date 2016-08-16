@@ -18,12 +18,12 @@
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        _timeLabel = [[UILabel alloc]initWithFrame:CGRectMake(10 * ProportionAdapter, 0, 70 * ProportionAdapter, 50 * ProportionAdapter)];
+        _timeLabel = [[UILabel alloc]initWithFrame:CGRectMake(10 * ProportionAdapter, 0, 80 * ProportionAdapter, 50 * ProportionAdapter)];
         [self.contentView addSubview:_timeLabel];
         _timeLabel.font = [UIFont systemFontOfSize:13*ProportionAdapter];
         _timeLabel.textColor = [UIColor lightGrayColor];
         
-        self.titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(80 * ProportionAdapter, 0, 220 * ProportionAdapter, 50 * ProportionAdapter)];
+        self.titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(90 * ProportionAdapter, 0, 210 * ProportionAdapter, 50 * ProportionAdapter)];
         self.titleLabel.textColor = [UIColor colorWithHexString:@"#313131"];
         self.titleLabel.font = [UIFont systemFontOfSize:15 * ProportionAdapter];
         [self.contentView addSubview:self.titleLabel];
@@ -43,12 +43,20 @@
 
 
 -(void)showData:(JGLCaddieModel *)model{
-    if (![Helper isBlankString:model.createTime]) {
+    if (![Helper isBlankString:model.createtime]) {
+        NSLog(@"%@",model.createtime);
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-        [dateFormatter setDateFormat: @"MM.dd HH:mm"];
-        NSDate *destDate= [dateFormatter dateFromString:model.createTime];
+        [dateFormatter setDateFormat: @"yyyy-MM-dd HH:mm:ss"];
+        NSDate *destDate= [dateFormatter dateFromString:model.createtime];
         NSString* str = [NSString stringWithFormat:@"%@",destDate];
-        _timeLabel.text = str;
+        
+        NSArray* array = [str componentsSeparatedByString:@" "];
+        NSArray* array1 = [array[0] componentsSeparatedByString:@"-"];
+        NSArray* array2 = [array[1] componentsSeparatedByString:@":"];
+        
+        NSString* strTime = [NSString stringWithFormat:@"%@-%@ %@:%@",array1[1],array1[2],array2[0],array2[1]];
+        _timeLabel.text = strTime;
+        
     }
     else{
         _timeLabel.text = @"暂无时间";
