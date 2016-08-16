@@ -9,9 +9,6 @@
 /* Begin PBXBuildFile section */
 		200200FC1D61B2C900308C44 /* JGHStarScoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 200200FB1D61B2C900308C44 /* JGHStarScoreViewController.m */; };
 		200200FF1D61BC0200308C44 /* JGHCabbieEditorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 200200FE1D61BC0200308C44 /* JGHCabbieEditorViewController.m */; };
-		201055DA1D58A4C600C90FDE /* JGHPlayAddCaddieViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 201055D91D58A4C600C90FDE /* JGHPlayAddCaddieViewController.m */; };
-		201055E31D58A5BA00C90FDE /* JGHSweepViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 201055E11D58A5BA00C90FDE /* JGHSweepViewCell.m */; };
-		201055E41D58A5BA00C90FDE /* JGHSweepViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 201055E21D58A5BA00C90FDE /* JGHSweepViewCell.xib */; };
 		201056131D59C92800C90FDE /* JGHBtnCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 201056051D59C92800C90FDE /* JGHBtnCell.m */; };
 		201056141D59C92800C90FDE /* JGHBtnCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 201056061D59C92800C90FDE /* JGHBtnCell.xib */; };
 		201056151D59C92800C90FDE /* JGHCabbiePhotoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 201056081D59C92800C90FDE /* JGHCabbiePhotoCell.m */; };
@@ -984,11 +981,6 @@
 		200200FB1D61B2C900308C44 /* JGHStarScoreViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHStarScoreViewController.m; sourceTree = "<group>"; };
 		200200FD1D61BC0200308C44 /* JGHCabbieEditorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHCabbieEditorViewController.h; sourceTree = "<group>"; };
 		200200FE1D61BC0200308C44 /* JGHCabbieEditorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHCabbieEditorViewController.m; sourceTree = "<group>"; };
-		201055D81D58A4C600C90FDE /* JGHPlayAddCaddieViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHPlayAddCaddieViewController.h; sourceTree = "<group>"; };
-		201055D91D58A4C600C90FDE /* JGHPlayAddCaddieViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHPlayAddCaddieViewController.m; sourceTree = "<group>"; };
-		201055E01D58A5BA00C90FDE /* JGHSweepViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHSweepViewCell.h; sourceTree = "<group>"; };
-		201055E11D58A5BA00C90FDE /* JGHSweepViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHSweepViewCell.m; sourceTree = "<group>"; };
-		201055E21D58A5BA00C90FDE /* JGHSweepViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JGHSweepViewCell.xib; sourceTree = "<group>"; };
 		201056041D59C92800C90FDE /* JGHBtnCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHBtnCell.h; sourceTree = "<group>"; };
 		201056051D59C92800C90FDE /* JGHBtnCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHBtnCell.m; sourceTree = "<group>"; };
 		201056061D59C92800C90FDE /* JGHBtnCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JGHBtnCell.xib; sourceTree = "<group>"; };
@@ -2818,9 +2810,6 @@
 				821DB9C91D5D6F8E00C882C2 /* 球童操作页 */,
 				201056031D59C92800C90FDE /* 球童认证 */,
 				F5AAAA281D59749D0016E6F6 /* 打球人 */,
-				201055E01D58A5BA00C90FDE /* JGHSweepViewCell.h */,
-				201055E11D58A5BA00C90FDE /* JGHSweepViewCell.m */,
-				201055E21D58A5BA00C90FDE /* JGHSweepViewCell.xib */,
 			);
 			path = view;
 			sourceTree = "<group>";
@@ -2845,18 +2834,8 @@
 				2066E87E1D5D64A700A3A2B8 /* 我的奖励 */,
 				2010561D1D59C93600C90FDE /* 球童认证 */,
 				F5AAAA271D5974970016E6F6 /* 打球人 */,
-				201055D71D58A4C600C90FDE /* 添加打球人 */,
 			);
 			path = controller;
-			sourceTree = "<group>";
-		};
-		201055D71D58A4C600C90FDE /* 添加打球人 */ = {
-			isa = PBXGroup;
-			children = (
-				201055D81D58A4C600C90FDE /* JGHPlayAddCaddieViewController.h */,
-				201055D91D58A4C600C90FDE /* JGHPlayAddCaddieViewController.m */,
-			);
-			path = "添加打球人";
 			sourceTree = "<group>";
 		};
 		201056031D59C92800C90FDE /* 球童认证 */ = {
@@ -7558,7 +7537,6 @@
 				2066E8871D5D668600A3A2B8 /* JGHCabbieAwaredCell.xib in Resources */,
 				36BF00061BC770C4005B3CE2 /* chat_bottom_up_press.png in Resources */,
 				F53A05681D518F32009DD489 /* JGHPlayersScoreTableViewCell.xib in Resources */,
-				201055E41D58A5BA00C90FDE /* JGHSweepViewCell.xib in Resources */,
 				209B3FE71D0FCB0300A6FF72 /* JGHSaveAndSubmitBtnCell.xib in Resources */,
 				36BF00011BC770C4005B3CE2 /* chat_bottom_keyboard_press.png in Resources */,
 				36BFFEB81BC76CDC005B3CE2 /* tab_bg2@2x.png in Resources */,
@@ -7699,7 +7677,6 @@
 				36DE28DB1C1EA39F008FA24D /* RewardWaitViewController.m in Sources */,
 				3660E19E1BFC573C0033B4D7 /* MineTeamManCell.m in Sources */,
 				2012AD841D2BB1B200F70E40 /* JGHChooseAwardCell.m in Sources */,
-				201055DA1D58A4C600C90FDE /* JGHPlayAddCaddieViewController.m in Sources */,
 				36E300FB1C3FF3F9005C3F08 /* UIScrollView+MJExtension.m in Sources */,
 				36BF00AA1BC77326005B3CE2 /* NewsModel.m in Sources */,
 				369E6B011C4FCAB700ED6684 /* ManageOtherTableViewCell.m in Sources */,
@@ -8157,7 +8134,6 @@
 				65B596E61CAD43AC007AB83A /* UIView+Extension.m in Sources */,
 				2064DEA61D4219BB00F0D52A /* JGHEndScoresViewController.m in Sources */,
 				82AAB7B11CE5C18E005F5633 /* JGSelfSetTableViewCell.m in Sources */,
-				201055E31D58A5BA00C90FDE /* JGHSweepViewCell.m in Sources */,
 				2066E87D1D5C585900A3A2B8 /* JGHCaddieAuthModel.m in Sources */,
 				201056131D59C92800C90FDE /* JGHBtnCell.m in Sources */,
 				F5AEF6E71D408F3F009A8C34 /* JGDHistoryScoreShowViewController.m in Sources */,
