@@ -57,6 +57,7 @@
     if (_errorState == 2) {
         detailLB.text = @"臣妾做不到啊！人家仅支持球童为客户记分，不支持球童相互记分的啦！";
         detailLB.font = [UIFont systemFontOfSize:16 * ProportionAdapter];
+        detailLB.frame = CGRectMake(20 * ProportionAdapter, 330 * ProportionAdapter, screenWidth - 40 * ProportionAdapter, 50 * ProportionAdapter);
     }else{
         detailLB.text = @"点击开始记分，进入客户记分模式，完成记分后，成绩自动存入客户历史记分卡";
         detailLB.font = [UIFont systemFontOfSize:14 * ProportionAdapter];
