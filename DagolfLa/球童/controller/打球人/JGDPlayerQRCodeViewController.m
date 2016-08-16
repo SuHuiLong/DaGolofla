@@ -97,7 +97,11 @@
                     // 1 扫码成功  2 同意  3 拒绝
                     [self.timer invalidate];
                     self.timer = nil;
-                    [self alertAct];
+                    if ([data objectForKey:@"bean"]) {
+                        _clipBlock([[data objectForKey:@"bean"] objectForKey:@"qcodeUserName"], 10);
+                        [self.navigationController popViewControllerAnimated:YES];
+                        
+                    }
                 }
             }
             
@@ -111,8 +115,15 @@
 
 
 // 监听状态改变后
+/*
+ if ([data objectForKey:@"bean"]) {
+ _clipBlock([[data objectForKey:@"bean"] objectForKey:@"qcodeUserName"], 10);
+ [self.navigationController popViewControllerAnimated:YES];
+ 
+ }
+ */
 
-- (void)alertAct{ 
+- (void)alertAct{
     NSString *alertStr; //
     if ([[self.dataDic objectForKey:@"isQCodeCaddie"] integerValue] == 1) {
         alertStr = [NSString stringWithFormat:@"客户 %@ 请你代为记分", [self.dataDic objectForKey:@"scanUserName"]];
