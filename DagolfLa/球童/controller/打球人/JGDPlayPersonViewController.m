@@ -71,7 +71,7 @@
             detailLB.numberOfLines = 0;
             [self.shadeView addSubview:detailLB];
             
-            UILabel *knownLB = [[UILabel alloc] initWithFrame:CGRectMake(0, 360, ScreenWidth, 30 * ProportionAdapter)];
+            UILabel *knownLB = [[UILabel alloc] initWithFrame:CGRectMake(0, 360 * ProportionAdapter, ScreenWidth, 30 * ProportionAdapter)];
             knownLB.text = @"朕知道～～";
             knownLB.textAlignment = NSTextAlignmentCenter;
             knownLB.font = [UIFont systemFontOfSize:22 * ProportionAdapter];
@@ -276,10 +276,12 @@
     if ([model.srcType integerValue] == 1) {
         JGDPlayerHisScoreCardViewController *DPHVC = [[JGDPlayerHisScoreCardViewController alloc] init];
         DPHVC.timeKey = model.timeKey;
+        DPHVC.ballkid = 10;
         [self.navigationController pushViewController:DPHVC animated:YES];
     }else{
         JGDNotActScoreViewController *noActVC = [[JGDNotActScoreViewController alloc] init];
         noActVC.timeKey = model.timeKey;
+        noActVC.ballkid = 10;
         [self.navigationController pushViewController:noActVC animated:YES];
     }
 }
