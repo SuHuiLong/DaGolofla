@@ -10,6 +10,8 @@
 #import "UITool.h"
 #import "PostDataRequest.h"
 #import <CoreImage/CoreImage.h>
+#import "JGLCaddieChooseStyleViewController.h"
+#import "JGLCaddieSelfScoreViewController.h"
 
 @interface JGDPlayerQRCodeViewController ()
 
@@ -103,11 +105,52 @@
                     // 1 扫码成功  2 同意  3 拒绝
                     [self.timer invalidate];
                     self.timer = nil;
-                    if ([data objectForKey:@"bean"]) {
-                        _clipBlock([[data objectForKey:@"bean"] objectForKey:@"scanUserName"], 10);
-                        [self.navigationController popViewControllerAnimated:YES];
-                        
+                    if ([[[data objectForKey:@"bean"] objectForKey:@"isQCodeCaddie"] integerValue ]!= 1) {
+                        if ([data objectForKey:@"bean"]) {
+                            _clipBlock([[data objectForKey:@"bean"] objectForKey:@"scanUserName"], 10);
+                            [self.navigationController popViewControllerAnimated:YES];
+                            
+                        }
                     }
+                    else
+                    {
+                        if ([data objectForKey:@"bean"]) {
+                            NSMutableDictionary* dictData = [data objectForKey:@"bean"];
+                            NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
+                            [dict setObject:[[data objectForKey:@"bean"] objectForKey:@"scanUserKey"] forKey:@"userKey"];
+                            [dict setObject:[Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@dagolfla.com", [[data objectForKey:@"bean"] objectForKey:@"scanUserKey"]]] forKey:@"md5"];
+                            [[JsonHttp jsonHttp]httpRequest:@"score/getTodayScore" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
+                                
+                            } completionBlock:^(id data) {
+                                if ([[data objectForKey:@"acBoolean"] integerValue] == 1) {
+                                    JGLCaddieChooseStyleViewController* choVc = [[JGLCaddieChooseStyleViewController alloc]init];
+                                    if ([[dictData objectForKey:@"isQCodeCaddie"] integerValue] == 1) {//球童扫码
+                                        choVc.userKeyPlayer = [dictData objectForKey:@"scanUserKey"];
+                                        choVc.userNamePlayer = [NSString stringWithFormat:@"%@",[dictData objectForKey:@"scanUserName"]];//
+                                    }
+                                    else{//客户扫码
+                                        choVc.userKeyPlayer = [dictData objectForKey:@"qcodeUserKey"];
+                                        choVc.userNamePlayer = [NSString stringWithFormat:@"%@",[dictData objectForKey:@"qcodeUserName"]];
+                                    }
+                                    [self.navigationController pushViewController:choVc animated:YES];
+                                }
+                                else{
+                                    JGLCaddieSelfScoreViewController* selfVc = [[JGLCaddieSelfScoreViewController alloc]init];
+                                    if ([[dictData objectForKey:@"isQCodeCaddie"] integerValue] == 1) {//球童扫码
+                                        selfVc.userKeyPlayer = [dictData objectForKey:@"scanUserKey"];
+                                        selfVc.userNamePlayer = [NSString stringWithFormat:@"%@",[dictData objectForKey:@"scanUserName"]];//
+                                    }
+                                    else{//客户扫码
+                                        selfVc.userKeyPlayer = [dictData objectForKey:@"qcodeUserKey"];
+                                        selfVc.userNamePlayer = [NSString stringWithFormat:@"%@",[dictData objectForKey:@"qcodeUserName"]];
+                                    }
+                                    [self.navigationController pushViewController:selfVc animated:YES];
+                                }
+                                
+                            }];
+                        }
+                    }
+
                 }
             }
             
