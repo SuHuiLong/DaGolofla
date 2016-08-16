@@ -60,12 +60,44 @@
     
     self.photoImageTop.constant = 22 *ProportionAdapter;
 //    http://imgcache.dagolfla.com/user/head/244_caddie.jpg
+    //http://imgcache.dagolfla.com/user/head/191_caddie.jpg
     
     NSString *url = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/user/head/%@_caddie.jpg", DEFAULF_USERID];
     
     [[SDImageCache sharedImageCache] removeImageForKey:url fromDisk:YES];
     
     [self.photoImage sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:[UIImage imageNamed:@"cabbieHeader"]];
+}
+
+- (void)configImageWithName:(NSString *)name{
+    self.titleLable.hidden = YES;
+    self.proTextField.enabled = YES;
+    self.cammaImageView.hidden = NO;
+    
+    self.proTextField.text = name;
+    self.proTextField.userInteractionEnabled = NO;
+    
+    self.photoImageTop.constant = 22 *ProportionAdapter;
+    //    http://imgcache.dagolfla.com/user/head/244_caddie.jpg
+    //http://imgcache.dagolfla.com/user/head/191_caddie.jpg
+    
+    NSString *url = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/user/head/%@_caddie.jpg", DEFAULF_USERID];
+    
+    [[SDImageCache sharedImageCache] removeImageForKey:url fromDisk:YES];
+    
+    [self.photoImage sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:[UIImage imageNamed:@"cabbieHeader"]];
+}
+
+- (void)configEditorImage:(UIImage *)image andUserName:(NSString *)name{
+    self.titleLable.hidden = YES;
+    self.proTextField.enabled = YES;
+    self.cammaImageView.hidden = NO;
+    
+    self.proTextField.text = name;
+    self.proTextField.userInteractionEnabled = NO;
+    
+    self.photoImage.image = nil;
+    [self.photoImage setImage:image];
 }
 
 @end

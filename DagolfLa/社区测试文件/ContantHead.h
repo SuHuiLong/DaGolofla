@@ -108,7 +108,6 @@ typedef NS_ENUM(NSInteger, GestureType) {
 #define TYPE_USER_HEAD       @5   // 用户头像
 #define TYPE_USER_CERTIFICATION       @9   // 实名认证
 
-
 #import "UIColor+ColorTransfer.h"
 #import "JsonHttp.h"
 #import "Helper.h"

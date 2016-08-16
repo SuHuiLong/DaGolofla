@@ -364,7 +364,7 @@
 //                    [Helper alertViewWithTitle:[data objectForKey:@"packResultMsg"] withBlock:^(UIAlertController *alertView) {
 //                        [self presentViewController:alertView animated:YES completion:nil];
 //                    }];
-                    [_session startRunning];
+//                    [_session startRunning];
                 }
             }];
         }

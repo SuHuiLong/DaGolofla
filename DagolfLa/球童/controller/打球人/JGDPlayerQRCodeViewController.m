@@ -16,6 +16,7 @@
 @property (nonatomic, copy) NSString *qcodeID;
 @property (nonatomic, strong) UIImageView* imgvBar;
 @property (nonatomic, strong)  NSTimer * timer;
+@property (nonatomic, strong) NSDictionary *dataDic;
 
 @end
 
@@ -89,8 +90,10 @@
     } completionBlock:^(id data) {
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
             if ([data objectForKey:@"bean"]) {
-                NSDictionary *dataDic = [data objectForKey:@"bean"];
-                if ([[dataDic objectForKey:@"state"] integerValue] == 1) {
+                
+                self.dataDic = [data objectForKey:@"bean"];
+                if ([[self.dataDic objectForKey:@"state"] integerValue] == 1) {
+
                     // 1 扫码成功  2 同意  3 拒绝
                     [self.timer invalidate];
                     self.timer = nil;
@@ -109,8 +112,14 @@
 
 // 监听状态改变后
 
-- (void)alertAct{
-    [Helper alertViewWithTitle:@"球童 希望为您记分" withBlockCancle:^{
+- (void)alertAct{ 
+    NSString *alertStr; //
+    if ([[self.dataDic objectForKey:@"isQCodeCaddie"] integerValue] == 1) {
+        alertStr = [NSString stringWithFormat:@"客户 %@ 请你代为记分", [self.dataDic objectForKey:@"scanUserName"]];
+    }else if ([[self.dataDic objectForKey:@"isScanCaddie"] integerValue] == 1) {
+        alertStr = [NSString stringWithFormat:@"球童 %@ 希望为您记分", [self.dataDic objectForKey:@"scanUserName"]];
+    }
+    [Helper alertViewWithTitle:alertStr withBlockCancle:^{
         
         NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
         [dic setObject:self.qcodeID forKey:@"qCodeID"];

@@ -366,40 +366,44 @@
             [self.navigationController pushViewController:wkVC animated:YES];
         }else if (indexPath.item == 2) {
             
-            NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
-            if ([def objectForKey:@"isCaddie"]) {
-                
-                NSMutableDictionary *dic = [NSMutableDictionary dictionary];
-                [dic setObject:DEFAULF_USERID forKey:@"userKey"];
-                [[JsonHttp jsonHttp] httpRequestWithMD5:@"score/hasCaddieRecord" JsonKey:nil withData:dic failedBlock:^(id errType) {
-                    [[ShowHUD showHUD]showToastWithText:[NSString stringWithFormat:@"%@",errType] FromView:self.view];
-                } completionBlock:^(id data) {
-                    if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+            
+            NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+            [dic setObject:DEFAULF_USERID forKey:@"userKey"];
+            [[JsonHttp jsonHttp] httpRequestWithMD5:@"score/hasCaddieRecord" JsonKey:nil withData:dic failedBlock:^(id errType) {
+                [[ShowHUD showHUD]showToastWithText:[NSString stringWithFormat:@"%@",errType] FromView:self.view];
+            } completionBlock:^(id data) {
+                if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+                    
+                    if ([[data objectForKey:@"has"] integerValue] == 1) {
+                        JGLCaddieScoreViewController *acdieVC = [[JGLCaddieScoreViewController alloc] init];
+                        [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
+                        [self.navigationController pushViewController:acdieVC animated:YES];
+                    }else{
                         
-                        if ([[data objectForKey:@"has"] integerValue] == 1) {
-                            JGLCaddieScoreViewController *acdieVC = [[JGLCaddieScoreViewController alloc] init];
-                            [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
-                            [self.navigationController pushViewController:acdieVC animated:YES];
-                        }else{
+                        NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
+                        if ([def objectForKey:@"isCaddie"]) {
+                            
+                            
                             JGDPlayPersonViewController *personVC = [[JGDPlayPersonViewController alloc] init];
                             [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
                             [self.navigationController pushViewController:personVC animated:YES];
+                            
+                        }else{
+                            
+                            JGHCaddieViewController *caddieCtrl = [[JGHCaddieViewController alloc]initWithNibName:@"JGHCaddieViewController" bundle:nil];
+                            [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
+                            [self.navigationController pushViewController:caddieCtrl animated:YES];
                         }
                         
-                    }else{
-                        if ([data objectForKey:@"packResultMsg"]) {
-                            [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
-                        }
                     }
-                }];
-
-                
-            }else{
-                
-                JGHCaddieViewController *caddieCtrl = [[JGHCaddieViewController alloc]initWithNibName:@"JGHCaddieViewController" bundle:nil];
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
-                [self.navigationController pushViewController:caddieCtrl animated:YES];
-            }
+                    
+                }else{
+                    if ([data objectForKey:@"packResultMsg"]) {
+                        [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+                    }
+                }
+            }];            
+            
         }
     }
     else
