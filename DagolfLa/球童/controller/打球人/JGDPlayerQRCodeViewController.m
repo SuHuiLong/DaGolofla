@@ -98,7 +98,7 @@
                     [self.timer invalidate];
                     self.timer = nil;
                     if ([data objectForKey:@"bean"]) {
-                        _clipBlock([[data objectForKey:@"bean"] objectForKey:@"qcodeUserName"], 10);
+                        _clipBlock([[data objectForKey:@"bean"] objectForKey:@"scanUserName"], 10);
                         [self.navigationController popViewControllerAnimated:YES];
                         
                     }

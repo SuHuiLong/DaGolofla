@@ -53,7 +53,6 @@
         NSArray* array = [str componentsSeparatedByString:@" "];
         NSArray* array1 = [array[0] componentsSeparatedByString:@"-"];
         NSArray* array2 = [array[1] componentsSeparatedByString:@":"];
-        
         NSString* strTime = [NSString stringWithFormat:@"%@-%@ %@:%@",array1[1],array1[2],array2[0],array2[1]];
         _timeLabel.text = strTime;
         
