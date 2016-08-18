@@ -136,6 +136,7 @@ static NSString *const JGHLableAndLableCellIdentifier = @"JGHLableAndLableCell";
         JGHCabbiePhotoCell *cabbiePhotoCell = [tableView dequeueReusableCellWithIdentifier:JGHCabbiePhotoCellIdentifier];
         cabbiePhotoCell.selectionStyle = UITableViewCellSelectionStyleNone;
         cabbiePhotoCell.proTextField.userInteractionEnabled = NO;
+        cabbiePhotoCell.cammaImageView.hidden = YES;
         if (_model.name) {
             [cabbiePhotoCell configCabbieSuccess:1 andName:_model.name];
         }

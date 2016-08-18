@@ -22,7 +22,6 @@ static NSString *const JGHLableAndLableCellIdentifier = @"JGHLableAndLableCell";
 
 @interface JGHCabbieEditorViewController ()<UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, JGHSexCellDelegate, JGHCabbiePhotoCellDelegate>
 {
-    NSInteger _sex;
     NSArray *_titleArray;
    
     UIImage *_cabbieImage;
@@ -82,7 +81,7 @@ static NSString *const JGHLableAndLableCellIdentifier = @"JGHLableAndLableCell";
     [caddieAuthDict setObject:_model.ballKey forKey:@"ballKey"];
     [caddieAuthDict setObject:_model.ballName forKey:@"ballName"];
     [caddieAuthDict setObject:_model.name forKey:@"name"];
-    [caddieAuthDict setObject:@(_sex) forKey:@"sex"];
+    [caddieAuthDict setObject:@(_model.sex) forKey:@"sex"];
     [caddieAuthDict setObject:_model.number forKey:@"number"];
     [caddieAuthDict setObject:_model.serviceTime forKey:@"serviceTime"];
     [caddieAuthDict setObject:DEFAULF_USERID forKey:@"timeKey"];
@@ -217,7 +216,7 @@ static NSString *const JGHLableAndLableCellIdentifier = @"JGHLableAndLableCell";
     }else{
         if (indexPath.section == 3) {
             JGHSexCell *sexCell = [tableView dequeueReusableCellWithIdentifier:JGHSexCellIdentifier];
-            [sexCell configSex:_sex];
+            [sexCell configSex:_model.sex];
             sexCell.delegate = self;
             sexCell.selectionStyle = UITableViewCellSelectionStyleNone;
             return sexCell;
@@ -264,9 +263,9 @@ static NSString *const JGHLableAndLableCellIdentifier = @"JGHLableAndLableCell";
 #pragma mark -- 性别选择
 - (void)selectSexBtn:(UIButton *)btn{
     if (btn.tag == 10) {
-        _sex = 0;
+        _model.sex = 0;
     }else{
-        _sex = 1;
+        _model.sex = 1;
     }
     
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:3];
