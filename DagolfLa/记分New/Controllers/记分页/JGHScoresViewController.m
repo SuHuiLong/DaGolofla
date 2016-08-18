@@ -42,6 +42,8 @@
     NSInteger _isFinishScore;//是否完成记分0 1
     
     NSNumber *_walletMonay;//红包金额
+    
+    NSInteger _cabbieFinishScore;//是否结束所有记分 1- 结束，0－不结束
 }
 
 @property (nonatomic, strong)NSMutableArray *userScoreArray;
@@ -84,6 +86,7 @@
     
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"bg_white"] forBarMetrics:UIBarMetricsDefault];
     [self.navigationController.navigationBar setBackgroundColor:[UIColor whiteColor]];
+    _cabbieFinishScore = 0;//不结束
     
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(noticePushScoresCtrl:) name:@"noticePushScores" object:nil];
     
@@ -461,7 +464,7 @@
 //    [[ShowHUD showHUD]showToastWithText:[NSString stringWithFormat:@"第-%td-洞", sub.index+1] FromView:self.view];
 }
 
-#pragma mark -- 保存
+#pragma mark -- 保存／结束记分
 - (void)saveScoresClick{
     _item.enabled = NO;
     
@@ -519,43 +522,20 @@
             }
             
             if (_selectcompleteHole == 1 || _selectHole == 1) {
-                [_timer invalidate];
-                _timer = nil;
-                //完成  finishScore
-                [[ShowHUD showHUD]showAnimationWithText:@"提交中..." FromView:self.view];
+                if (_selectHole == 1 && _isCabbie == 1 && _selectcompleteHole != 1 && _cabbieFinishScore == 0) {
+                    //球童结束记分--1、判断18洞是否完成
+                    [Helper alertViewWithTitle:@"您尚未完成所成绩录入，是否确定结束记分？" withBlockCancle:^{
+                        _cabbieFinishScore = 0;//不结束
+                    } withBlockSure:^{
+                        _cabbieFinishScore = 1;//结束
+                        [self finishScore];
+                    } withBlock:^(UIAlertController *alertView) {
+                        [self presentViewController:alertView animated:YES completion:nil];
+                    }];
+                    return;
+                }
                 
-                NSMutableDictionary *finishDict = [NSMutableDictionary dictionary];
-                [finishDict setObject:DEFAULF_USERID forKey:@"userKey"];
-                [finishDict setObject:_scorekey forKey:@"scoreKey"];
-                [[JsonHttp jsonHttp]httpRequestWithMD5:@"score/finishScore" JsonKey:nil withData:finishDict failedBlock:^(id errType) {
-                    [[ShowHUD showHUD]hideAnimationFromView:self.view];
-                } completionBlock:^(id data) {
-                    NSLog(@"%@", data);
-                    [[ShowHUD showHUD]hideAnimationFromView:self.view];
-                    if ([[data objectForKey:@"packSuccess"]integerValue] == 1) {
-                        if ([data objectForKey:@"money"]) {
-                            _walletMonay = [data objectForKey:@"money"];
-                        }
-                        
-                        //获取主线层
-                        if ([NSThread isMainThread]) {
-                            NSLog(@"Yay!");
-                            [[ShowHUD showHUD]showToastWithText:@"记分结束！" FromView:self.view];
-                            [self performSelector:@selector(pushJGHEndScoresViewController) withObject:self afterDelay:1.0];
-                        } else {
-                            NSLog(@"Humph, switching to main");
-                            dispatch_async(dispatch_get_main_queue(), ^{
-                                [[ShowHUD showHUD]showToastWithText:@"记分结束！" FromView:self.view];
-                                [self performSelector:@selector(pushJGHEndScoresViewController) withObject:self afterDelay:1.0];
-                            });
-                        }
-                        
-                    }else{
-                        if ([data objectForKey:@"packResultMsg"]) {
-                            [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
-                        }
-                    }
-                }];
+                [self finishScore];
             }else{
                 if (_selectcompleteHole != 1) {
                     [[ShowHUD showHUD]showToastWithText:@"记分保存成功！" FromView:self.view];
@@ -572,6 +552,48 @@
         }
     }];
     
+    _item.enabled = YES;
+}
+#pragma mark -- 结束记分／完成
+- (void)finishScore{
+    _item.enabled = NO;
+    [_timer invalidate];
+    _timer = nil;
+    //完成  finishScore
+    [[ShowHUD showHUD]showAnimationWithText:@"提交中..." FromView:self.view];
+    
+    NSMutableDictionary *finishDict = [NSMutableDictionary dictionary];
+    [finishDict setObject:DEFAULF_USERID forKey:@"userKey"];
+    [finishDict setObject:_scorekey forKey:@"scoreKey"];
+    [[JsonHttp jsonHttp]httpRequestWithMD5:@"score/finishScore" JsonKey:nil withData:finishDict failedBlock:^(id errType) {
+        [[ShowHUD showHUD]hideAnimationFromView:self.view];
+    } completionBlock:^(id data) {
+        NSLog(@"%@", data);
+        [[ShowHUD showHUD]hideAnimationFromView:self.view];
+        if ([[data objectForKey:@"packSuccess"]integerValue] == 1) {
+            if ([data objectForKey:@"money"]) {
+                _walletMonay = [data objectForKey:@"money"];
+            }
+            
+            //获取主线层
+            if ([NSThread isMainThread]) {
+                NSLog(@"Yay!");
+                [[ShowHUD showHUD]showToastWithText:@"记分结束！" FromView:self.view];
+                [self performSelector:@selector(pushJGHEndScoresViewController) withObject:self afterDelay:1.0];
+            } else {
+                NSLog(@"Humph, switching to main");
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [[ShowHUD showHUD]showToastWithText:@"记分结束！" FromView:self.view];
+                    [self performSelector:@selector(pushJGHEndScoresViewController) withObject:self afterDelay:1.0];
+                });
+            }
+            
+        }else{
+            if ([data objectForKey:@"packResultMsg"]) {
+                [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+            }
+        }
+    }];
     _item.enabled = YES;
 }
 #pragma mark --历史记分
@@ -603,36 +625,50 @@
         [self.navigationController pushViewController:historyCtrl animated:YES];
     }
 }
-#pragma mark -- 完成记分
+#pragma mark -- 完成记分---跳转
 - (void)pushJGHEndScoresViewController{
-    if (_isCabbie == 1 && [_walletMonay floatValue] > 0) {
-        JGHCabbieWalletViewController *wealetCtrl = [[JGHCabbieWalletViewController alloc]init];
-        wealetCtrl.wealMony = _walletMonay;
-        NSString *userNameString = @"";
-        for (JGHScoreListModel *model in self.userScoreArray) {
-            if (model.userName) {
-                [userNameString stringByAppendingString:model.userName];
+    
+    if (_cabbieFinishScore == 1) {
+        for (UIViewController *controller in self.navigationController.viewControllers) {
+            if ([controller isKindOfClass:[JGLCaddieScoreViewController class]]) {
+                NSNotification * notice = [NSNotification notificationWithName:@"reloadCaddieScoreData" object:nil userInfo:nil];
+                //发送消息
+                [[NSNotificationCenter defaultCenter]postNotification:notice];
+                
+                [self.navigationController popToViewController:controller animated:YES];
             }
         }
-        
-        wealetCtrl.customerName = userNameString;
-        [self.navigationController pushViewController:wealetCtrl animated:YES];
     }else{
-        NSInteger scoreCount = 0;
-        for (int i=0; i<_userScoreArray.count; i++) {
-            JGHScoreListModel *model = [[JGHScoreListModel alloc]init];
-            model = _userScoreArray[i];
-            if ([model.userKey integerValue] == [DEFAULF_USERID integerValue]) {
-                for (int i=0; i<model.poleNumber.count; i++) {
-                    scoreCount += [model.poleNumber[i] integerValue];
+        if (_isCabbie == 1 && [_walletMonay floatValue] > 0) {
+            JGHCabbieWalletViewController *wealetCtrl = [[JGHCabbieWalletViewController alloc]init];
+            wealetCtrl.wealMony = _walletMonay;
+            NSString *userNameString = @"";
+            for (JGHScoreListModel *model in self.userScoreArray) {
+                if (model.userName) {
+                    [userNameString stringByAppendingString:model.userName];
                 }
             }
-        }
-        [_macthDict setObject:@(scoreCount) forKey:@"poleNum"];
-        JGHEndScoresViewController *endScoresCtrl = [[JGHEndScoresViewController alloc]init];
-        endScoresCtrl.dict = _macthDict;
-        [self.navigationController pushViewController:endScoresCtrl animated:YES];
-    }    
+            
+            wealetCtrl.customerName = userNameString;
+            [self.navigationController pushViewController:wealetCtrl animated:YES];
+        }else{
+            NSInteger scoreCount = 0;
+            for (int i=0; i<_userScoreArray.count; i++) {
+                JGHScoreListModel *model = [[JGHScoreListModel alloc]init];
+                model = _userScoreArray[i];
+                if ([model.userKey integerValue] == [DEFAULF_USERID integerValue]) {
+                    for (int i=0; i<model.poleNumber.count; i++) {
+                        scoreCount += [model.poleNumber[i] integerValue];
+                    }
+                }
+            }
+            [_macthDict setObject:@(scoreCount) forKey:@"poleNum"];
+            JGHEndScoresViewController *endScoresCtrl = [[JGHEndScoresViewController alloc]init];
+            endScoresCtrl.dict = _macthDict;
+            [self.navigationController pushViewController:endScoresCtrl animated:YES];
+        }    
+
+    }
 }
 
 - (void)didReceiveMemoryWarning {
