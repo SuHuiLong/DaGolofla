@@ -524,7 +524,7 @@
             if (_selectcompleteHole == 1 || _selectHole == 1) {
                 if (_selectHole == 1 && _isCabbie == 1 && _selectcompleteHole != 1 && _cabbieFinishScore == 0) {
                     //球童结束记分--1、判断18洞是否完成
-                    [Helper alertViewWithTitle:@"您尚未完成所成绩录入，是否确定结束记分？" withBlockCancle:^{
+                    [Helper alertViewWithTitle:@"您尚未完成所有成绩录入，是否确定结束记分？" withBlockCancle:^{
                         _cabbieFinishScore = 0;//不结束
                     } withBlockSure:^{
                         _cabbieFinishScore = 1;//结束
