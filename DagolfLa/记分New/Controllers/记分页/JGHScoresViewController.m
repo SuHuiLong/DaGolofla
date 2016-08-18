@@ -361,7 +361,7 @@
                 }
                 
                 NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
-                if (![userdef objectForKey:[NSString stringWithFormat:@"%@list", _scorekey]]) {
+                if (![userdef objectForKey:[NSString stringWithFormat:@"%@", _scorekey]]) {
                     [self titleBtnClick];
                 }
             }
