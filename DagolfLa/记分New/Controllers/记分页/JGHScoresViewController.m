@@ -639,7 +639,8 @@
             }
         }
     }else{
-        if (_isCabbie == 1 && [_walletMonay floatValue] > 0) {
+        // && [_walletMonay floatValue] > 0
+        if (_isCabbie == 1) {
             JGHCabbieWalletViewController *wealetCtrl = [[JGHCabbieWalletViewController alloc]init];
             wealetCtrl.wealMony = _walletMonay;
             NSString *userNameString = @"";
