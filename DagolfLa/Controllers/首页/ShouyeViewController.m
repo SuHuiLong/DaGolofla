@@ -372,7 +372,7 @@
                 NSLog(@"shangchen");
 //                UseMallViewController
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
-                JGLCaddieSelfAddPlayerViewController* userVc = [[JGLCaddieSelfAddPlayerViewController alloc]init];
+                UseMallViewController* userVc = [[UseMallViewController alloc]init];
                 [self.navigationController pushViewController:userVc animated:YES];
             }
                 break;

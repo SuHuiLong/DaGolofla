@@ -143,7 +143,7 @@
     [[JsonHttp jsonHttp]httpRequest:@"team/auditTeamMember" JsonKey:nil withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
         
     } completionBlock:^(id data) {
-        if ([data objectForKey:@"packSuccess"]) {
+        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
             if (_dataArray.count != 0) {
                 [_dataArray removeObjectAtIndex:btn.tag - 10000];
             }

@@ -55,6 +55,7 @@
     WKCtrl.isShareBtn = 1;
     WKCtrl.activeTimeKey = [self.activityKey integerValue];
     WKCtrl.activeName = _activityName;
+    WKCtrl.teamKey = self.teamKey;
     [self.navigationController pushViewController:WKCtrl animated:YES];
 }
 
