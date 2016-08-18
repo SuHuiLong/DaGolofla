@@ -189,6 +189,16 @@
     UIView *topViewSec = [[UIView alloc] initWithFrame:CGRectMake(screenWidth / 2 - 1 * ProportionAdapter, 10 * ProportionAdapter, 2 * ProportionAdapter, 100 * ProportionAdapter)];
     topViewSec.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];
     
+    UIButton* btn1 = [UIButton buttonWithType:UIButtonTypeCustom];
+    btn1.frame = CGRectMake(0, 10 * ProportionAdapter, screenWidth/2, 200 * ProportionAdapter);
+    [btn1 addTarget:self action:@selector(scanAct) forControlEvents:UIControlEventTouchUpInside];
+    [topViewFir addSubview:btn1];
+    
+    UIButton* btn2 = [UIButton buttonWithType:UIButtonTypeCustom];
+    btn2.frame = CGRectMake(screenWidth / 2 - 1 * ProportionAdapter, 10 * ProportionAdapter, screenWidth/2, 100 * ProportionAdapter);
+    [btn2 addTarget:self action:@selector(qrCodeAct) forControlEvents:UIControlEventTouchUpInside];
+    [topViewFir addSubview:btn2];
+    
     UIButton *erweimaBtn = [UIButton buttonWithType:(UIButtonTypeCustom)];
     [erweimaBtn setImage:[UIImage imageNamed:@"erweima"] forState:(UIControlStateNormal)];
     erweimaBtn.frame = CGRectMake(screenWidth / 2 + 73 * ProportionAdapter, 25 * ProportionAdapter, 40 * ProportionAdapter, 40 * ProportionAdapter);
