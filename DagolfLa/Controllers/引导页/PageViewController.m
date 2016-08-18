@@ -38,7 +38,7 @@
     {
         UIImageView* imgv = [[UIImageView alloc]initWithFrame:CGRectMake((i)* width, 0, width, heitht)];
         [scrollView addSubview:imgv];
-        NSString* string = [NSString stringWithFormat:@"guide_0%d",i+1];
+        NSString* string = [NSString stringWithFormat:@"guide_%d",i+1];
         imgv.image = [UIImage imageNamed:string];
         imgv.userInteractionEnabled = YES;
         if (i == 3) {
@@ -48,7 +48,7 @@
             btn.center = CGPointMake(width/2, heitht-heitht/12+20);
             btn.backgroundColor = [UIColor clearColor];
 //            [btn setTitle:@"开始高球之旅" forState:UIControlStateNormal];
-            [btn setImage:[UIImage imageNamed:@"btndeng"] forState:UIControlStateNormal];
+//            [btn setImage:[UIImage imageNamed:@"btndeng"] forState:UIControlStateNormal];
             [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
             btn.titleLabel.font = [UIFont systemFontOfSize:20];
             [btn addTarget:self action:@selector(clickAction) forControlEvents:UIControlEventTouchUpInside];
