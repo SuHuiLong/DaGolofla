@@ -186,8 +186,8 @@
         fxData = [NSData dataWithContentsOfURL:[Helper setImageIconUrl:@"activity" andTeamKey:_activeTimeKey andIsSetWidth:YES andIsBackGround:YES]];
         
         
-        NSString* strMd = [JGReturnMD5Str getTeamGroupNameListTeamKey:0 activityKey:_activeTimeKey userKey:[DEFAULF_USERID integerValue]];
-        NSString*  shareUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/team/group.html?teamKey=0&activityKey=%td&userKey=%td&share=1&md5=%@", _activeTimeKey, [DEFAULF_USERID integerValue],strMd];
+        NSString* strMd = [JGReturnMD5Str getTeamGroupNameListTeamKey:_teamKey activityKey:_activeTimeKey userKey:[DEFAULF_USERID integerValue]];
+        shareUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/team/group.html?teamKey=%td&activityKey=%td&userKey=%td&share=1&md5=%@",_teamKey, _activeTimeKey, [DEFAULF_USERID integerValue],strMd];
         [UMSocialData defaultData].extConfig.title=[NSString stringWithFormat:@"%@分组表",_activeName];
     }
     else{

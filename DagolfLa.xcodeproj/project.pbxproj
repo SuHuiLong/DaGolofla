@@ -215,18 +215,6 @@
 		360C6A011C46910200798C8A /* TeamAreaChooseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 360C6A001C46910200798C8A /* TeamAreaChooseView.m */; };
 		3613B6511BE3458500C96CD1 /* MyFoodHeadTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3613B6501BE3458500C96CD1 /* MyFoodHeadTableViewCell.m */; };
 		362317121BD9D31500257862 /* PageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 362317111BD9D31500257862 /* PageViewController.m */; };
-		362317251BDA12F500257862 /* guide_01.png in Resources */ = {isa = PBXBuildFile; fileRef = 362317191BDA12F500257862 /* guide_01.png */; };
-		362317261BDA12F500257862 /* guide_01@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3623171A1BDA12F500257862 /* guide_01@2x.png */; };
-		362317271BDA12F500257862 /* guide_01@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3623171B1BDA12F500257862 /* guide_01@3x.png */; };
-		362317281BDA12F500257862 /* guide_02.png in Resources */ = {isa = PBXBuildFile; fileRef = 3623171C1BDA12F500257862 /* guide_02.png */; };
-		362317291BDA12F500257862 /* guide_02@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3623171D1BDA12F500257862 /* guide_02@2x.png */; };
-		3623172A1BDA12F500257862 /* guide_02@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3623171E1BDA12F500257862 /* guide_02@3x.png */; };
-		3623172B1BDA12F500257862 /* guide_03.png in Resources */ = {isa = PBXBuildFile; fileRef = 3623171F1BDA12F500257862 /* guide_03.png */; };
-		3623172C1BDA12F500257862 /* guide_03@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 362317201BDA12F500257862 /* guide_03@2x.png */; };
-		3623172D1BDA12F500257862 /* guide_03@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 362317211BDA12F500257862 /* guide_03@3x.png */; };
-		3623172E1BDA12F500257862 /* guide_04.png in Resources */ = {isa = PBXBuildFile; fileRef = 362317221BDA12F500257862 /* guide_04.png */; };
-		3623172F1BDA12F500257862 /* guide_04@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 362317231BDA12F500257862 /* guide_04@2x.png */; };
-		362317301BDA12F500257862 /* guide_04@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 362317241BDA12F500257862 /* guide_04@3x.png */; };
 		3623173D1BDA498B00257862 /* PicArrShowViewControllerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3623173C1BDA498B00257862 /* PicArrShowViewControllerViewController.m */; };
 		3623174B1BDA6B2800257862 /* CommunMessageViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 362317491BDA6B2800257862 /* CommunMessageViewCell.m */; };
 		3623174C1BDA6B2800257862 /* CommunMessageViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3623174A1BDA6B2800257862 /* CommunMessageViewCell.xib */; };
@@ -1626,18 +1614,6 @@
 		3613B6501BE3458500C96CD1 /* MyFoodHeadTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyFoodHeadTableViewCell.m; sourceTree = "<group>"; };
 		362317101BD9D31500257862 /* PageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PageViewController.h; sourceTree = "<group>"; };
 		362317111BD9D31500257862 /* PageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PageViewController.m; sourceTree = "<group>"; };
-		362317191BDA12F500257862 /* guide_01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = guide_01.png; sourceTree = "<group>"; };
-		3623171A1BDA12F500257862 /* guide_01@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "guide_01@2x.png"; sourceTree = "<group>"; };
-		3623171B1BDA12F500257862 /* guide_01@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "guide_01@3x.png"; sourceTree = "<group>"; };
-		3623171C1BDA12F500257862 /* guide_02.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = guide_02.png; sourceTree = "<group>"; };
-		3623171D1BDA12F500257862 /* guide_02@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "guide_02@2x.png"; sourceTree = "<group>"; };
-		3623171E1BDA12F500257862 /* guide_02@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "guide_02@3x.png"; sourceTree = "<group>"; };
-		3623171F1BDA12F500257862 /* guide_03.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = guide_03.png; sourceTree = "<group>"; };
-		362317201BDA12F500257862 /* guide_03@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "guide_03@2x.png"; sourceTree = "<group>"; };
-		362317211BDA12F500257862 /* guide_03@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "guide_03@3x.png"; sourceTree = "<group>"; };
-		362317221BDA12F500257862 /* guide_04.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = guide_04.png; sourceTree = "<group>"; };
-		362317231BDA12F500257862 /* guide_04@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "guide_04@2x.png"; sourceTree = "<group>"; };
-		362317241BDA12F500257862 /* guide_04@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "guide_04@3x.png"; sourceTree = "<group>"; };
 		3623173B1BDA498B00257862 /* PicArrShowViewControllerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PicArrShowViewControllerViewController.h; sourceTree = "<group>"; };
 		3623173C1BDA498B00257862 /* PicArrShowViewControllerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PicArrShowViewControllerViewController.m; sourceTree = "<group>"; };
 		362317481BDA6B2800257862 /* CommunMessageViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommunMessageViewCell.h; sourceTree = "<group>"; };
@@ -4367,18 +4343,6 @@
 		3623170F1BD9D30000257862 /* 引导页 */ = {
 			isa = PBXGroup;
 			children = (
-				362317191BDA12F500257862 /* guide_01.png */,
-				3623171A1BDA12F500257862 /* guide_01@2x.png */,
-				3623171B1BDA12F500257862 /* guide_01@3x.png */,
-				3623171C1BDA12F500257862 /* guide_02.png */,
-				3623171D1BDA12F500257862 /* guide_02@2x.png */,
-				3623171E1BDA12F500257862 /* guide_02@3x.png */,
-				3623171F1BDA12F500257862 /* guide_03.png */,
-				362317201BDA12F500257862 /* guide_03@2x.png */,
-				362317211BDA12F500257862 /* guide_03@3x.png */,
-				362317221BDA12F500257862 /* guide_04.png */,
-				362317231BDA12F500257862 /* guide_04@2x.png */,
-				362317241BDA12F500257862 /* guide_04@3x.png */,
 				362317101BD9D31500257862 /* PageViewController.h */,
 				362317111BD9D31500257862 /* PageViewController.m */,
 			);
@@ -8811,7 +8775,6 @@
 				202EC8071D5360990090FE4B /* JGHOperationScoreCell.xib in Resources */,
 				82E6A6F71CF5812C009DD179 /* JGLAuthorityTableViewCell.xib in Resources */,
 				20BA61421CDCA180004B61F5 /* VedioPlayViewController.xib in Resources */,
-				3623172B1BDA12F500257862 /* guide_03.png in Resources */,
 				36DD4DB71BFDBE30008D3424 /* TeamCreateTextViewCell.xib in Resources */,
 				AAB749E21C7B221A00018467 /* moren.jpg in Resources */,
 				36BFFD371BC76C8D005B3CE2 /* Main.storyboard in Resources */,
@@ -8819,7 +8782,6 @@
 				36BFFEE01BC76CDC005B3CE2 /* xiaoxidian2@2x.png in Resources */,
 				36BF00041BC770C4005B3CE2 /* chat_bottom_textfield.png in Resources */,
 				207FEC971D1BC98F0098E23C /* JGHCancelApplyBaseCell.xib in Resources */,
-				362317281BDA12F500257862 /* guide_02.png in Resources */,
 				36BFFEBA1BC76CDC005B3CE2 /* tab_jf.png in Resources */,
 				36BFFEC81BC76CDC005B3CE2 /* tab_wd@3x.png in Resources */,
 				3623174C1BDA6B2800257862 /* CommunMessageViewCell.xib in Resources */,
@@ -8858,19 +8820,15 @@
 				82D595E01CE42BDF00CD9587 /* mapapi.bundle in Resources */,
 				3660E0901BFC48B00033B4D7 /* Default@2x-667.png in Resources */,
 				207FECA11D1BE4180098E23C /* JGHTextFiledCell.xib in Resources */,
-				362317301BDA12F500257862 /* guide_04@3x.png in Resources */,
 				36BFFEB61BC76CDC005B3CE2 /* tab_bg1@3x.png in Resources */,
 				F53A056A1D518F32009DD489 /* JGHPublishedPeopleView.xib in Resources */,
 				36BFFEDC1BC76CDC005B3CE2 /* xiaoxi@2x.png in Resources */,
-				3623172E1BDA12F500257862 /* guide_04.png in Resources */,
 				2010561C1D59C92800C90FDE /* JGHSexCell.xib in Resources */,
 				3660E08F1BFC48B00033B4D7 /* Default@2x-568.png in Resources */,
-				362317251BDA12F500257862 /* guide_01.png in Resources */,
 				36D0B0F31C80151C00C7245E /* RongCloudKit.strings in Resources */,
 				82E6A7161CF68190009DD179 /* JGLTeamEditTableViewCell.xib in Resources */,
 				36BF00421BC771FB005B3CE2 /* ZanNumTableViewCell.xib in Resources */,
 				654332081BD5D9B900363947 /* UMShareEditViewController.xib in Resources */,
-				3623172D1BDA12F500257862 /* guide_03@3x.png in Resources */,
 				36BFFEC31BC76CDC005B3CE2 /* tab_sy.png in Resources */,
 				20BA61301CDC99D0004B61F5 /* Tae.bundle in Resources */,
 				20CA136A1CE44CCB00DA15B9 /* JGAlreadyAddGuestCell.xib in Resources */,
@@ -8893,7 +8851,6 @@
 				36BFFEC01BC76CDC005B3CE2 /* tab_sq.png in Resources */,
 				202EC80D1D5852F80090FE4B /* JGHCaddieViewController.xib in Resources */,
 				36BFFEBB1BC76CDC005B3CE2 /* tab_jf@2x.png in Resources */,
-				362317291BDA12F500257862 /* guide_02@2x.png in Resources */,
 				36BFFF621BC76D09005B3CE2 /* LICENSE in Resources */,
 				36BF02051BC78253005B3CE2 /* Images.xcassets in Resources */,
 				3660E1A61BFC57810033B4D7 /* ManageMineCell.xib in Resources */,
@@ -8932,7 +8889,6 @@
 				201056141D59C92800C90FDE /* JGHBtnCell.xib in Resources */,
 				20BA61341CDC99D0004B61F5 /* yw_1222.jpg in Resources */,
 				827AA01E1D1D1C5500F6B80B /* JGLActiveMemTableViewCell.xib in Resources */,
-				3623172C1BDA12F500257862 /* guide_03@2x.png in Resources */,
 				20BA61351CDC99D0004B61F5 /* ALBBQuPaiPlugin.bundle in Resources */,
 				F53A056F1D518F32009DD489 /* JGHSimpleAndResultsCell.xib in Resources */,
 				363D4F341C86E1C70089E52C /* PushConfig.plist in Resources */,
@@ -8957,7 +8913,6 @@
 				F53A055E1D518F32009DD489 /* JGHMatchTranscriptTableViewCell.xib in Resources */,
 				36BFFEB51BC76CDC005B3CE2 /* tab_bg1@2x.png in Resources */,
 				36BFFEC41BC76CDC005B3CE2 /* tab_sy@2x.png in Resources */,
-				362317261BDA12F500257862 /* guide_01@2x.png in Resources */,
 				AAE5CF0F1C60756B00D66086 /* selfBackPic.jpg in Resources */,
 				65B596F31CAD43AC007AB83A /* JKSlideViewController.xib in Resources */,
 				36E300F91C3FF3F9005C3F08 /* MJRefresh.bundle in Resources */,
@@ -8971,20 +8926,17 @@
 				36BFFEE11BC76CDC005B3CE2 /* xiaoxidian2@3x.png in Resources */,
 				36BFFEE51BC76CDC005B3CE2 /* xiaoxidian@2x.png in Resources */,
 				36BFFD521BC76CB8005B3CE2 /* top_back.png in Resources */,
-				3623172F1BDA12F500257862 /* guide_04@2x.png in Resources */,
 				3660E0921BFC48B00033B4D7 /* Default@3x.png in Resources */,
 				20591C701D221B0B003271EC /* JGHWithdrawDetailsCell.xib in Resources */,
 				367E32001C1EBAC00007BD32 /* YueHallPeoTableViewCell.xib in Resources */,
 				36DD4DB21BFDB68E008D3424 /* TeamCreateTableViewCell.xib in Resources */,
 				36BF01F71BC77C71005B3CE2 /* MyselfChooseViewCell.xib in Resources */,
 				20591C881D22630A003271EC /* JGHWithdrawCell.xib in Resources */,
-				362317271BDA12F500257862 /* guide_01@3x.png in Resources */,
 				36BF00401BC771FB005B3CE2 /* OtherDataTableViewCell.xib in Resources */,
 				36BFFEC61BC76CDC005B3CE2 /* tab_wd.png in Resources */,
 				207FEC9C1D1BDDB20098E23C /* JGHButtonCell.xib in Resources */,
 				654332031BD5D9B900363947 /* UMSocialLocalizable.strings in Resources */,
 				AACE5E841C7C7D5800966646 /* xiangcemoren.jpg in Resources */,
-				3623172A1BDA12F500257862 /* guide_02@3x.png in Resources */,
 				65CD8E4C1BEA067F006984F3 /* AddressBookViewCell.xib in Resources */,
 				208030541CF9A79800448BFC /* JGHTotalPriceCell.xib in Resources */,
 				2066E8871D5D668600A3A2B8 /* JGHCabbieAwaredCell.xib in Resources */,

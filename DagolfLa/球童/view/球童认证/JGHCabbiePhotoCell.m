@@ -48,13 +48,8 @@
 - (void)configCabbieSuccess:(NSInteger)editor andName:(NSString *)name{
     self.titleLable.hidden = YES;
     
-    if (editor == 1) {
-        self.proTextField.enabled = YES;
-        self.cammaImageView.hidden = NO;
-    }else{
-        self.proTextField.enabled = NO;
-        self.cammaImageView.hidden = YES;
-    }
+    self.proTextField.enabled = NO;
+    self.cammaImageView.hidden = YES;
     
     self.proTextField.text = name;
     self.proTextField.userInteractionEnabled = NO;

@@ -12,7 +12,7 @@
 
 #import "ChatDetailViewController.h"
 #import "RCDraggableButton.h"
-
+#import "MyOrderViewController.h"
 #import <AlipaySDK/AlipaySDK.h>
 #import "Order.h"
 #import "DataSigner.h"
@@ -229,24 +229,19 @@
         NSLog(@"%@",[data objectForKey:@"query"]);
         [[AlipaySDK defaultService] payOrder:[data objectForKey:@"query"] fromScheme:@"dagolfla" callback:^(NSDictionary *resultDic) {
             
-            NSLog(@"支付宝=====%@",resultDic[@"resultStatus"]);
             if ([resultDic[@"resultStatus"] isEqualToString:@"9000"]) {
-                NSLog(@"陈公");
+                MyOrderViewController *groupCtrl = [[MyOrderViewController alloc]init];
+                [self.navigationController pushViewController:groupCtrl animated:YES];
             } else if ([resultDic[@"resultStatus"] isEqualToString:@"4000"]) {
-                [Helper alertViewWithTitle:@"对不起，您的支付失败了" withBlock:^(UIAlertController *alertView) {
-                    [self.navigationController presentViewController:alertView animated:YES completion:nil];
-                }];
+                [[ShowHUD showHUD]showToastWithText:@"支付失败！" FromView:self.view];
             } else if ([resultDic[@"resultStatus"] isEqualToString:@"6002"]) {
-                [Helper alertViewWithTitle:@"对不起，请检查您的网络" withBlock:^(UIAlertController *alertView) {
-                    [self.navigationController presentViewController:alertView animated:YES completion:nil];
-                }];
+                [[ShowHUD showHUD]showToastWithText:@"对不起，请检查您的网络" FromView:self.view];
             } else if ([resultDic[@"resultStatus"] isEqualToString:@"6001"]) {
-                NSLog(@"取消支付");
+                //                NSLog(@"取消支付");
             } else {
-                [Helper alertViewWithTitle:@"对不起，您的支付失败了" withBlock:^(UIAlertController *alertView) {
-                    [self.navigationController presentViewController:alertView animated:YES completion:nil];
-                }];
+                [[ShowHUD showHUD]showToastWithText:@"支付失败！" FromView:self.view];
             }
+
         }];
     }];
 }
@@ -254,7 +249,10 @@
 #pragma mark -- 微信支付
 - (void)weChatPay{
     NSLog(@"微信支付");
-    
+    //获取通知中心单例对象
+    NSNotificationCenter * center = [NSNotificationCenter defaultCenter];
+    //添加当前类对象为一个观察者，name和object设置为nil，表示接收一切通知
+    [center addObserver:self selector:@selector(notice:) name:@"weChatNotice" object:nil];
     NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
     [dict setObject:@3 forKey:@"orderType"];
     [dict setObject:[_dictCan objectForKey:@"ordersn"] forKey:@"ordersn"];
@@ -281,6 +279,20 @@
             [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
         }
     }];
+}
+
+#pragma mark -- 微信支付成功后返回的通知
+- (void)notice:(NSNotification *)not{
+    NSInteger secess = [[not.userInfo objectForKey:@"secess"] integerValue];
+    if (secess == 1) {
+        //跳转分组页面
+        MyOrderViewController *groupCtrl = [[MyOrderViewController alloc]init];
+        [self.navigationController pushViewController:groupCtrl animated:YES];
+    }else if (secess == 2){
+        [[ShowHUD showHUD]showToastWithText:@"支付已取消！" FromView:self.view];
+    }else{
+        [[ShowHUD showHUD]showToastWithText:@"支付失败！" FromView:self.view];
+    }
 }
 
 #pragma mark --分享

@@ -29,6 +29,7 @@
     BOOL _hasShowedFistView;
     UILabel *_indexLabel;
     UIButton *_saveButton, * _shareButton,*_deleteButton;
+    UIButton* _btnBack;
     UIActivityIndicatorView *_indicatorView;
     
 //    int _indexScroll;
@@ -41,16 +42,34 @@
         _indexScroll = 0;
         self.backgroundColor = SDPhotoBrowserBackgrounColor;
         
+        _btnBack = [UIButton buttonWithType:UIButtonTypeSystem];
+        _btnBack.frame = CGRectMake(0, 0, screenWidth, screenHeight);
+        _btnBack.backgroundColor = [UIColor clearColor];
+        [self addSubview:_btnBack];
+        [_btnBack addTarget:self action:@selector(hideShareClick:) forControlEvents:UIControlEventTouchUpInside];
+        
     }
     return self;
 }
 
+-(void)hideShareClick:(UIButton *)btn
+{
+    
+    [self didMoveToSuperview];
+}
 
 - (void)didMoveToSuperview
 {
+//    self.hidden = YES;
+
+    ShareAlert* alert = (ShareAlert* )[self viewWithTag:1001];
+    [alert removeFromSuperview];
+    
     [self setupScrollView];
     
     [self setupToolbars];
+    
+    
 }
 
 - (void)setupToolbars
@@ -154,6 +173,7 @@
 -(void)shareImage
 {
     ShareAlert* alert = [[ShareAlert alloc]initMyAlert];
+    alert.tag = 1001;
     alert.frame = CGRectMake(0, ScreenHeight, ScreenWidth, ScreenWidth);
     [alert setCallBackTitle:^(NSInteger index) {
         [self shareInfo:index];
@@ -164,9 +184,9 @@
         _saveButton.hidden = YES;
         _shareButton.hidden = YES;
         _deleteButton.hidden = YES;
-//
+
         [UIView animateWithDuration:SDPhotoBrowserHideImageAnimationDuration animations:^{
-//            self.backgroundColor = [UIColor clearColor];
+            
         } completion:^(BOOL finished) {
             _saveButton.hidden = NO;
             _shareButton.hidden = NO;
