@@ -140,9 +140,13 @@
     
     [applyDict setObject:_nameText.text forKey:@"name"];//姓名
     if (_photoNumber.text.length>0) {
+        if (![Helper isPureNumandCharacters:_photoNumber.text]) {
+            NSLog(@"shuzi");
+            [[ShowHUD showHUD]showToastWithText:@"手机号必须为纯数字！" FromView:self.view];
+            return;
+        }
         [applyDict setObject:_photoNumber.text forKey:@"mobile"];//手机号
     }
-    
     if (_poorPointText.text.length>0) {
         [applyDict setObject:_poorPointText.text forKey:@"almost"];//差点
     }
