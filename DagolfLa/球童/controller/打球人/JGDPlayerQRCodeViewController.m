@@ -13,6 +13,13 @@
 #import "JGLCaddieChooseStyleViewController.h"
 #import "JGLCaddieSelfScoreViewController.h"
 
+
+#import "ZXingObjC.h"
+#import <AVFoundation/AVFoundation.h>
+
+//#import "ZXQRCodeReader.h"
+#import "NSString+ZXingQRImage.h"
+
 @interface JGDPlayerQRCodeViewController ()
 
 @property (nonatomic, copy) NSString *qcodeID;
@@ -30,8 +37,57 @@
     
 }
 
-// 解析图片的方法
+
+
 - (void)readQRCodeFromImageWithFileURL:(NSURL *)url{
+    
+    UIImage *loadImage= self.imgvBar.image;
+    CGImageRef imageToDecode = loadImage.CGImage;
+    
+    ZXLuminanceSource *source = [[ZXCGImageLuminanceSource alloc] initWithCGImage:imageToDecode];
+    ZXBinaryBitmap *bitmap = [ZXBinaryBitmap binaryBitmapWithBinarizer:[ZXHybridBinarizer binarizerWithSource:source]];
+    
+    NSError *error = nil;
+    
+    ZXDecodeHints *hints = [ZXDecodeHints hints];
+    
+    ZXMultiFormatReader *reader = [ZXMultiFormatReader reader];
+    ZXResult *result = [reader decode:bitmap
+                                hints:hints
+                                error:&error];
+    if (result) {
+        NSString *contents = result.text;
+        NSLog(@"contents =%@",contents);
+//        NSString *code = [qrFeature.messageString mutableCopy];
+        NSArray *stringArray = [contents componentsSeparatedByString:@"qcodeID="];
+        NSArray *newStringArray = [stringArray[1] componentsSeparatedByString:@"&md5="];
+        self.qcodeID = newStringArray[0];
+        
+        
+        NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
+        [dic setObject:DEFAULF_USERID forKey:@"qcodeUserKey"];
+        [dic setObject:self.qcodeID forKey:@"qCodeID"];
+        NSLog(@"%@", DEFAULF_USERID);
+        [[JsonHttp jsonHttp] httpRequestWithMD5:@"score/doRegUserQCode" JsonKey:nil withData:dic failedBlock:^(id errType) {
+            [[ShowHUD showHUD]showToastWithText:[NSString stringWithFormat:@"%@",errType] FromView:self.view];
+        } completionBlock:^(id data) {
+            if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+                
+                NSLog(@"-------%@-----------", self.qcodeID);
+                
+                self.timer = [NSTimer scheduledTimerWithTimeInterval:3 target:self selector:@selector(loopAct) userInfo:nil repeats:YES];
+                [self.timer fire];
+            }else{
+                if ([data objectForKey:@"packResultMsg"]) {
+                    [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+                }
+            }
+        }];
+    }
+}
+
+// 解析图片的方法   // 弃用方法
+- (void)readQRCodeFromImageWithFileURLLLLLLLLL:(NSURL *)url{
     
     CIImage *image = [CIImage imageWithContentsOfURL:url];
     UIImage *barImage = [UIImage imageWithCIImage:image];
@@ -153,11 +209,24 @@
 
                 }
             }
-            
+            NSLog(@"%@", [data objectForKey:@"packSuccess"]);
+            NSLog(@"%@", data);
+
         }else{
-            if ([data objectForKey:@"packResultMsg"]) {
-                [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+            
+            if ([NSThread isMainThread]) {
+                [self.navigationController popViewControllerAnimated:YES];
+
+            } else {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self.navigationController popViewControllerAnimated:YES];
+
+                });
             }
+//            [self.navigationController popViewControllerAnimated:YES];
+//            if ([data objectForKey:@"packResultMsg"]) {
+//                [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+//            }
         }
     }];
 }
@@ -241,9 +310,6 @@
     viewBack.layer.masksToBounds = YES;
     [self.view addSubview:viewBack];
     
-    
-    
-    
     UIImageView* imgvIcon = [[UIImageView alloc]initWithFrame:CGRectMake(10*screenWidth/375, 30*screenWidth/375, 60*screenWidth/375, 60*screenWidth/375)];
     [viewBack addSubview:imgvIcon];
     imgvIcon.layer.cornerRadius = 6*screenWidth/375;
@@ -268,12 +334,9 @@
     labelName.font = [UIFont systemFontOfSize:20*screenWidth/375];
     [viewBack addSubview:labelName];
     
-    
-    
-    
     self.imgvBar = [[UIImageView alloc]initWithFrame:CGRectMake(viewBack.frame.size.width/2 - 125*screenWidth/375, 130*screenWidth/375, 250*screenWidth/375, 250*screenWidth/375)];
     [viewBack addSubview:self.imgvBar];
-    UIImageView* imageV = [[UIImageView alloc]initWithFrame:CGRectMake(self.imgvBar.frame.size.width / 2 - 30, self.imgvBar.frame.size.height / 2 - 30, 60*screenWidth/375, 60*screenWidth/375)];
+    UIImageView* imageV = [[UIImageView alloc]initWithFrame:CGRectMake(self.imgvBar.frame.size.width / 2 - 25, self.imgvBar.frame.size.height / 2 - 30, 50*screenWidth/375, 50*screenWidth/375)];
     [self.imgvBar addSubview:imageV];
     imageV.layer.cornerRadius = 6*screenWidth/375;
     imageV.layer.masksToBounds = YES;
@@ -287,11 +350,17 @@
     NSString *bgUrl = [NSString stringWithFormat:@"http://mobile.dagolfla.com/qcode/userQCode?userKey=%@&md5=%@",DEFAULF_USERID,strMd];
     
     [[SDImageCache sharedImageCache] removeImageForKey:bgUrl fromDisk:YES];
-    
+    UIImageView* shadowImageV = [[UIImageView alloc]initWithFrame:CGRectMake(self.imgvBar.frame.size.width / 2 - 25, self.imgvBar.frame.size.height / 2 - 30, 50*screenWidth/375, 55*screenWidth/375)];
+    shadowImageV.image = [UIImage imageNamed:@"Shadow"];
+//    shadowImageV.backgroundColor = [UIColor orangeColor];
+    [self.imgvBar addSubview:shadowImageV];
     
     NSString* strUrl = [NSString stringWithFormat:@"http://mobile.dagolfla.com/qcode/userQCode?userKey=%@&md5=%@",DEFAULF_USERID,strMd];
-    //    [self.imgvBar sd_setImageWithURL:[NSURL URLWithString:strUrl] placeholderImage:[UIImage imageNamed:TeamBGImage]];
-    [self readQRCodeFromImageWithFileURL:[NSURL URLWithString:strUrl]];
+    
+    [self.imgvBar sd_setImageWithURL:[NSURL URLWithString:strUrl] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+        [self readQRCodeFromImageWithFileURL:[NSURL URLWithString:strUrl]];
+    }];
+    
     
     UILabel* labelSign = [[UILabel alloc]initWithFrame:CGRectMake(10*screenWidth/375, viewBack.frame.size.height - 70*screenWidth/375, viewBack.frame.size.width - 20*screenWidth/375, 40*screenWidth/375)];
     labelSign.text = @"扫一扫图上二维码，添加好友。";

@@ -37,6 +37,7 @@
 #import "MJDIYHeader.h"
 
 #import "JGActivityMemNonMangerViewController.h" //test
+#import "JGDGuestChannelViewController.h"
 
 
 
@@ -161,13 +162,26 @@
     blueImageV.backgroundColor = [UIColor colorWithRed:0.5 green:0.76 blue:1.0 alpha:1.0];
     [self.topBackView addSubview:blueImageV];
     
-    self.titleLB = [[UILabel alloc] initWithFrame:CGRectMake(25, 320 * screenWidth / 320, screenWidth, 40 * screenWidth / 320)];
+    self.titleLB = [[UILabel alloc] initWithFrame:CGRectMake(25, 320 * screenWidth / 320, screenWidth / 2, 40 * screenWidth / 320)];
     [self.topBackView addSubview:self.titleLB];
     
-
-    
-    
+    //  嘉宾通道
+    UIButton *guestBtn = [UIButton buttonWithType:(UIButtonTypeCustom)];
+    guestBtn.frame = CGRectMake(280 * ProportionAdapter, 330 * screenWidth / 320, 80 * ProportionAdapter, 20 * screenWidth / 320);
+    [guestBtn setTitle:@"嘉宾通道" forState:(UIControlStateNormal)];
+    guestBtn.titleLabel.font = [UIFont systemFontOfSize:13 * ProportionAdapter];
+    [guestBtn setTitleColor:[UIColor colorWithHexString:@"#32b14d"] forState:(UIControlStateNormal)];
+    guestBtn.imageEdgeInsets = UIEdgeInsetsMake(0, 70 * ProportionAdapter, 0, 0);
+    guestBtn.titleEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 10 * ProportionAdapter);
+    [guestBtn setImage:[UIImage imageNamed:@"sildRight"] forState:(UIControlStateNormal)];
+    [guestBtn addTarget:self action:@selector(guestAct) forControlEvents:(UIControlEventTouchUpInside)];
+//    [self.topBackView addSubview:guestBtn];
     // Do any additional setup after loading the view.
+}
+
+- (void)guestAct{
+    JGDGuestChannelViewController *guestVC = [[JGDGuestChannelViewController alloc] init];
+    [self.navigationController pushViewController:guestVC animated:YES];
 }
 
 #pragma mark ---刷新
