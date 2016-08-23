@@ -41,10 +41,14 @@
     [self setupMaskView];//设置扫描区域之外的阴影视图
     
     [self setupScanWindowView];//设置扫描二维码区域的视图
-    [self sweepCode];
+//    [self sweepCode];
     
-    //    [self checkCameraAuth];
     
+    
+}
+-(void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    [self checkCameraAuth];
 }
 
 -(BOOL)validateCamera {

@@ -45,10 +45,14 @@
     [self setupMaskView];//设置扫描区域之外的阴影视图
     
     [self setupScanWindowView];//设置扫描二维码区域的视图
-    [self sweepCode];
+//    [self sweepCode];
     
     //    [self checkCameraAuth];
     
+}
+-(void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    [self checkCameraAuth];
 }
 
 -(BOOL)validateCamera {
@@ -366,18 +370,14 @@
                         [self.navigationController pushViewController:resultVC animated:YES];
                         
                     }
-//                    [Helper alertViewWithTitle:[data objectForKey:@"packResultMsg"] withBlock:^(UIAlertController *alertView) {
-//                        [self presentViewController:alertView animated:YES completion:nil];
-//                    }];
-//                    [_session startRunning];
                 }
+                [_session startRunning];
             }];
         }
     }
 }
 
 - (void)loopAct{
-    
     NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
     [dic setObject:self.qcodeID forKey:@"qCodeID"];
     [[JsonHttp jsonHttp] httpRequestWithMD5:@"score/queryLoopCaddieQCodeState" JsonKey:nil withData:dic failedBlock:^(id errType) {

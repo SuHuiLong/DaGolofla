@@ -18,6 +18,7 @@
 {
     CGFloat space;
     CGFloat font;
+    UIButton* _btnBack;
 }
 
 @property (nonatomic, strong) UIView *backImageView;
@@ -202,8 +203,17 @@
         self.backImageView.backgroundColor = [UIColor blackColor];
         self.backImageView.alpha = 0;
         self.backImageView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+        
+        _btnBack = [UIButton buttonWithType:UIButtonTypeSystem];
+        _btnBack.frame = self.backImageView.bounds;
+        _btnBack.backgroundColor = [UIColor clearColor];
+        [self addSubview:_btnBack];
+        [_btnBack addTarget:self action:@selector(hideShareClick:) forControlEvents:UIControlEventTouchUpInside];
+        
     }
+    
     [topVC.view addSubview:self.backImageView];
+    [self.backImageView addSubview:_btnBack];
     CGRect afterFrame = CGRectMake(0, ScreenHeight-kAlertHeight, ScreenWidth, kAlertHeight);
     self.frame = afterFrame;
     [UIView animateWithDuration:0.5f delay:0.0 options:UIViewAnimationOptionCurveEaseIn animations:^{
@@ -214,7 +224,10 @@
     }];
     [super willMoveToSuperview:newSuperview];
 }
-
+-(void)hideShareClick:(UIButton *)btn
+{
+    [self dismissAlert];
+}
 
 @end
 

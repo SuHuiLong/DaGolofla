@@ -241,9 +241,7 @@
     viewBack.layer.masksToBounds = YES;
     [self.view addSubview:viewBack];
     
-    
-    
-    
+
     UIImageView* imgvIcon = [[UIImageView alloc]initWithFrame:CGRectMake(10*screenWidth/375, 30*screenWidth/375, 60*screenWidth/375, 60*screenWidth/375)];
     [viewBack addSubview:imgvIcon];
     imgvIcon.layer.cornerRadius = 6*screenWidth/375;
@@ -285,7 +283,6 @@
     NSString* strMd = [Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%tddagolfla.com",[DEFAULF_USERID integerValue] ]];
     //清楚缓存
     NSString *bgUrl = [NSString stringWithFormat:@"http://mobile.dagolfla.com/qcode/userQCode?userKey=%@&md5=%@",DEFAULF_USERID,strMd];
-    
     [[SDImageCache sharedImageCache] removeImageForKey:bgUrl fromDisk:YES];
     
     

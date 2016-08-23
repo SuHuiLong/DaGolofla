@@ -81,6 +81,10 @@
     else{
         _labelTee.text = [NSString stringWithFormat:@"暂无"];
     }
+    _labelName.textColor = [UIColor blackColor];
+    _labelAll.textColor = [UIColor blackColor];
+    _labelAlmost.textColor = [UIColor blackColor];
+    _labelTee.textColor = [UIColor blackColor];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

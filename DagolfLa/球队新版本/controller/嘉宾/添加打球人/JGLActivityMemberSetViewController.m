@@ -134,8 +134,7 @@
     //    [dict setObject:[NSNumber numberWithInteger:] forKey:@"activityKey"];
     [dict setObject:_activityKey forKey:@"activityKey"];
     [dict setObject:DEFAULF_USERID forKey:@"userKey"];
-    [dict setObject:@0 forKey:@"offset"];
-    [dict setObject:_teamKey forKey:@"teamKey"];
+    [dict setObject:_teamKey forKey:@"teamKey"];//罗开创说不传off
     NSString *strMD = [JGReturnMD5Str getTeamActivitySignUpListWithTeamKey:[_teamKey integerValue] activityKey:[_activityKey integerValue] userKey:[DEFAULF_USERID integerValue]];
     [dict setObject:strMD forKey:@"md5"];
     [[JsonHttp jsonHttp]httpRequest:@"team/getTeamActivitySignUpList" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
