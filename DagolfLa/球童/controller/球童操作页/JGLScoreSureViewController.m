@@ -16,6 +16,16 @@
 
 @implementation JGLScoreSureViewController
 
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    if (_errorState == 2) {
+        UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"backL"] style:UIBarButtonItemStylePlain target:self action:@selector(backCaddieClick)];
+        item.tintColor=[UIColor whiteColor];
+        self.navigationItem.leftBarButtonItem = item;
+    }
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -23,6 +33,7 @@
     [self setData];
     
     [self createScore];
+    
     
 }
 

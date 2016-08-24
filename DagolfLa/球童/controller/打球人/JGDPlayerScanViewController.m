@@ -21,6 +21,7 @@
 @interface JGDPlayerScanViewController ()<AVCaptureMetadataOutputObjectsDelegate>
 {
     AVCaptureSession *_session;//输入输出的中间桥梁
+    NSInteger isCheck;
 }
 
 @property (nonatomic,strong) UIImageView      *line;
@@ -38,6 +39,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    isCheck = 0;
     self.view.backgroundColor = [UIColor blackColor];
     self.title = @"扫码指定球童";
     [self.navigationController.navigationBar setBarTintColor:[UIColor blackColor]];
@@ -52,7 +54,9 @@
 }
 -(void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
-    [self checkCameraAuth];
+    if (isCheck == 0) {
+        [self checkCameraAuth];
+    }
 }
 
 -(BOOL)validateCamera {
@@ -83,6 +87,7 @@
 }
 
 -(void)checkCameraAuth {
+    isCheck = 1;
     //判断相机权限
     NSString *mediaType = AVMediaTypeVideo;//Or AVMediaTypeAudio
     AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaType:mediaType];
