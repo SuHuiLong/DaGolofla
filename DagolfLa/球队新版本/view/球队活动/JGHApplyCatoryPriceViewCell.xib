@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="KGk-i7-Jjw" customClass="JGHApplyCatoryPriceViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dJH-Qp-sWF">
+                        <rect key="frame" x="40" y="11" width="42" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="axg-dC-280">
+                        <rect key="frame" x="269" y="11" width="21" height="22"/>
+                        <state key="normal" image="xuan_w"/>
+                    </button>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v0E-ML-YKT">
+                        <rect key="frame" x="177" y="11" width="42" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="axg-dC-280" secondAttribute="trailing" constant="30" id="Dmy-YA-TyE"/>
+                    <constraint firstItem="v0E-ML-YKT" firstAttribute="centerY" secondItem="axg-dC-280" secondAttribute="centerY" id="NzS-SL-Zre"/>
+                    <constraint firstItem="dJH-Qp-sWF" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="Tav-uF-o38"/>
+                    <constraint firstItem="dJH-Qp-sWF" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="40" id="ZeM-ZB-BGd"/>
+                    <constraint firstItem="axg-dC-280" firstAttribute="leading" secondItem="v0E-ML-YKT" secondAttribute="trailing" constant="50" id="eoY-Ir-a90"/>
+                    <constraint firstItem="axg-dC-280" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="sP3-q4-4fb"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="catoryLable" destination="dJH-Qp-sWF" id="Yr5-I8-bsm"/>
+                <outlet property="catoryLableLeft" destination="ZeM-ZB-BGd" id="03O-qU-ICP"/>
+                <outlet property="priceLable" destination="v0E-ML-YKT" id="n1O-Lx-IvE"/>
+                <outlet property="priceLableRight" destination="eoY-Ir-a90" id="JmZ-6s-mqC"/>
+                <outlet property="selectBtn" destination="axg-dC-280" id="3Dg-q5-wnx"/>
+                <outlet property="selectBtnRight" destination="Dmy-YA-TyE" id="wHQ-aF-na4"/>
+            </connections>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="xuan_w" width="21" height="20"/>
+    </resources>
+</document>
