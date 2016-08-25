@@ -457,7 +457,9 @@
             
             NSMutableDictionary* dictWx = [[NSMutableDictionary alloc]init];
             [dictWx setObject:@1 forKey:@"login"];
-            [dictWx setObject:snsAccount.openId forKey:@"openid"];
+            if (![Helper isBlankString:snsAccount.openId]) {
+                [dictWx setObject:snsAccount.openId forKey:@"openid"];
+            }
             [dictWx setObject:snsAccount.userName forKey:@"uid"];
             [dictWx setObject:snsAccount.iconURL forKey:@"wxPicUrl"];
 //            [dictWx setObject:snsAccount.gender forKey:@"sex"];

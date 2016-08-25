@@ -129,7 +129,12 @@
             
             
             [dict1 setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"userName"] forKey:@"userName"];// 用户名称
-            [dict1 setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"mobile"] forKey:@"userMobile"];// 手机号
+            if (![Helper isBlankString:[[NSUserDefaults standardUserDefaults] objectForKey:@"mobile"]]) {
+                [dict1 setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"mobile"] forKey:@"userMobile"];// 手机号
+            }else{
+                [dict1 setObject:@"" forKey:@"userMobile"];// 手机号
+            }
+            
         }
         else{
             if (![Helper isBlankString:[_teeDictChoose objectForKey:[NSString stringWithFormat:@"%d",i]]]) {
@@ -152,7 +157,12 @@
             NSString* str1 = [NSString stringWithFormat:@"%@",arr1[i-1]];
             [dict1 setObject:str1 forKey:@"userName"];// 用户名称
             if (str.length >= 11) {
-                [dict1 setObject:str forKey:@"userMobile"];// 手机号
+                if (![Helper isBlankString:str]) {
+                    [dict1 setObject:str forKey:@"userMobile"];// 手机号
+                }
+                else{
+                    [dict1 setObject:@"" forKey:@"userMobile"];// 手机号
+                }
             }
             else{
                 [dict1 setObject:@"" forKey:@"userMobile"];// 手机号
@@ -195,10 +205,7 @@
     [_tableView registerClass:[JGLChangePlayerTableViewCell class] forCellReuseIdentifier:@"JGLChangePlayerTableViewCell"];
 }
 
--(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    return 5;
-}
+
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 0) {
@@ -310,7 +317,10 @@
     }
     return nil;
 }
-
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 5;
+}
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     if (section == 1 || section == 2) {

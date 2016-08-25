@@ -32,7 +32,7 @@
  */
 
 
-@property (strong, nonatomic) NSNumber* createTime;
+@property (strong, nonatomic) NSString* createTime;
 
 @property (strong, nonatomic) NSNumber* delFlag;
 

@@ -44,7 +44,7 @@
         _almostLabel.font = [UIFont systemFontOfSize:14*screenWidth/375];
         
         
-        _poleLabel = [[UILabel alloc]initWithFrame:CGRectMake(150*screenWidth/375, 30*screenWidth/375, 130*screenWidth/375, 20*screenWidth/375)];
+        _poleLabel = [[UILabel alloc]initWithFrame:CGRectMake(160*screenWidth/375, 30*screenWidth/375, 130*screenWidth/375, 20*screenWidth/375)];
         _poleLabel.textColor = [UIColor blackColor];
         _poleLabel.text = @"平均杆数 102杆";
         [self addSubview:_poleLabel];
@@ -149,9 +149,14 @@
         [_sexImgv setImage: [UIImage imageNamed:@"xb_nn"]];
     }
     
-    _almostLabel.text = [NSString stringWithFormat:@"%td", model.almost];
+    _almostLabel.text = [NSString stringWithFormat:@"%@", model.almost];
     
-    _poleLabel.text = [NSString stringWithFormat:@"%@",model.mobile];
+    if (![Helper isBlankString:model.mobile]) {
+        _poleLabel.text = [NSString stringWithFormat:@"%@",model.mobile];
+    }
+    else{
+        _poleLabel.text = [NSString stringWithFormat:@"暂无手机号"];
+    }
     [_poleLabel setUserInteractionEnabled:YES];
     _poleLabel.textColor = [UIColor blueColor];
     UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickTap:)];

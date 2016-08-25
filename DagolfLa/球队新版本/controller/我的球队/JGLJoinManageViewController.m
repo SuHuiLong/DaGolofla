@@ -17,6 +17,7 @@
 {
     UITableView* _tableView;
     NSMutableArray* _dataArray;
+    NSMutableArray* _dataUpDataArray;
     NSInteger _page;
 }
 @end
@@ -26,9 +27,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    UIView* view = [[UIView alloc]initWithFrame:CGRectMake(1, 1, 1, 1)];
+    [self.view addSubview:view];
+    
     _page = 0;
     _dataArray = [[NSMutableArray alloc]init];
-    self.title = @"我的球队";
+    _dataUpDataArray = [[NSMutableArray alloc]init];
+    self.title = @"申请审批";
     [self uiConfig];
     
     
@@ -40,7 +45,6 @@
     _tableView.delegate = self;
     _tableView.dataSource = self;
     _tableView.separatorStyle = UITableViewCellAccessoryNone;
-    _tableView.rowHeight = 83 * screenWidth / 320;
     [self.view addSubview:_tableView];
 //    [_tableView registerNib:[UINib nibWithNibName:@"TeamApplyViewCell" bundle:nil] forCellReuseIdentifier:@"TeamApplyViewCell"];
     [_tableView registerClass:[JGLTeamAdviceTableViewCell class] forCellReuseIdentifier:@"JGLTeamAdviceTableViewCell"];
@@ -65,21 +69,26 @@
             [_tableView.footer endRefreshing];
         }
     } completionBlock:^(id data) {
-        NSLog(@"data == %@", data);
         if ([[data objectForKey:@"packSuccess"] boolValue]) {
             if (page == 0)
             {
                 //清除数组数据
                 [_dataArray removeAllObjects];
+                [_dataUpDataArray removeAllObjects];
             }
             //数据解析
             for (NSDictionary *dataDic in [data objectForKey:@"teamMemberList"]) {
                 JGLTeamMemberModel *model = [[JGLTeamMemberModel alloc] init];
                 [model setValuesForKeysWithDictionary:dataDic];
-                if ([model.state integerValue] != 2) {
-                    [_dataArray addObject:model];
-                }
+                [_dataArray addObject:model];
             }
+            //拒绝或者同意的成员
+            for (NSDictionary *dataDic in [data objectForKey:@"updateTeamMemeberList"]) {
+                JGLTeamMemberModel *model = [[JGLTeamMemberModel alloc] init];
+                [model setValuesForKeysWithDictionary:dataDic];
+                [_dataUpDataArray addObject:model];
+            }
+            
             _page++;
             [_tableView reloadData];
         }else {
@@ -108,29 +117,103 @@
     [self downLoadData:_page isReshing:NO];
 }
 
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 55*ScreenWidth/320;
+    return 2;
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return _dataArray.count;
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    if (section == 0) {
+        return 0;
+    }
+    else{
+        return 55* screenWidth / 375;
+    }
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return 62 * screenWidth / 375;
+}
+
+//每个区中有多少行
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    if (section == 0) {
+        return _dataArray.count;
+    }
+    else{
+        return _dataUpDataArray.count;
+    }
+}
+//重设分区头的视图
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    if (section == 1) {
+        UIView* view = [[UIView alloc]initWithFrame:CGRectMake(0, 5*ScreenWidth/375, ScreenWidth, 50*ScreenWidth/375)];
+        view.backgroundColor = [UIColor colorWithRed:0.93f green:0.93f blue:0.93f alpha:1.00f];
+        //        93 5
+        UIView* viewLeft = [[UIView alloc]initWithFrame:CGRectMake(0, 27*ScreenWidth/375, 93*ScreenWidth/375, 1*ScreenWidth/375)];
+        viewLeft.backgroundColor = [UIColor lightGrayColor];
+        [view addSubview:viewLeft];
+        
+        UIView* viewRight = [[UIView alloc]initWithFrame:CGRectMake(screenWidth-93*ScreenWidth/375, 27*ScreenWidth/375, 93*ScreenWidth/375, 1*ScreenWidth/375)];
+        viewRight.backgroundColor = [UIColor lightGrayColor];
+        [view addSubview:viewRight];
+        
+        UILabel* label = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, 55*ScreenWidth/375)];
+        label.textAlignment = NSTextAlignmentCenter;
+        label.text = @"审批记录";
+        label.textColor = [UIColor lightGrayColor];
+        [view addSubview:label];
+        label.font = [UIFont systemFontOfSize:15*ScreenWidth/375];
+        
+        return view;
+    }
+    else{
+        return nil;
+    }
+    
 }
 
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    JGLTeamAdviceTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"JGLTeamAdviceTableViewCell" forIndexPath:indexPath];
-    cell.iconImage.layer.cornerRadius = cell.iconImage.frame.size.width/2;
-    cell.iconImage.layer.masksToBounds = YES;
-    [cell showData:_dataArray[indexPath.row]];
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    [cell.agreeBtn addTarget:self action:@selector(agreeClick:) forControlEvents:UIControlEventTouchUpInside];
-    cell.agreeBtn.tag = indexPath.row + 10000;
-    [cell.disMissBtn addTarget:self action:@selector(disMissClick:) forControlEvents:UIControlEventTouchUpInside];
-    cell.disMissBtn.tag = indexPath.row + 100000;
-    return cell;
-    
+    if (indexPath.section == 0) {
+        JGLTeamAdviceTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"JGLTeamAdviceTableViewCell" forIndexPath:indexPath];
+        cell.iconImage.layer.cornerRadius = cell.iconImage.frame.size.width/2;
+        cell.iconImage.layer.masksToBounds = YES;
+        [cell showData:_dataArray[indexPath.row]];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        [cell.agreeBtn addTarget:self action:@selector(agreeClick:) forControlEvents:UIControlEventTouchUpInside];
+        cell.agreeBtn.tag = indexPath.row + 10000;
+        [cell.disMissBtn addTarget:self action:@selector(disMissClick:) forControlEvents:UIControlEventTouchUpInside];
+        cell.disMissBtn.tag = indexPath.row + 100000;
+        cell.stateLabel.hidden = YES;
+        return cell;
+    }
+    else{
+        JGLTeamAdviceTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"JGLTeamAdviceTableViewCell" forIndexPath:indexPath];
+        [cell showData:_dataUpDataArray[indexPath.row]];
+        cell.iconImage.layer.cornerRadius = cell.iconImage.frame.size.width/2;
+        cell.iconImage.layer.masksToBounds = YES;
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        cell.agreeBtn.hidden = YES;
+        cell.disMissBtn.hidden = YES;
+        if ([[_dataUpDataArray[indexPath.row] joinState] integerValue] == 1) {
+            cell.stateLabel.text = @"已同意";
+            cell.stateLabel.textColor = [UIColor redColor];
+        }
+        else if ([[_dataUpDataArray[indexPath.row] joinState] integerValue] == 2){
+            cell.stateLabel.text = @"已拒绝";
+            cell.stateLabel.textColor = [UIColor orangeColor];
+        }
+        else{
+            cell.stateLabel.text = @"仍未审核";
+            cell.stateLabel.textColor = [UIColor lightGrayColor];
+        }
+        return cell;
+    }
 }
 
 -(void)agreeClick:(UIButton *)btn
