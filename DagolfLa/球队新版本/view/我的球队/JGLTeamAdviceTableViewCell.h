@@ -24,6 +24,8 @@
 @property (strong, nonatomic)  UIButton    *agreeBtn;
 @property (strong, nonatomic)  UIButton    *disMissBtn;
 
+@property (strong, nonatomic)  UILabel     *stateLabel;
+
 
 -(void)showData:(JGLTeamMemberModel *)model;
 

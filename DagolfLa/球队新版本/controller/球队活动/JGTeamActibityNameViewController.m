@@ -569,7 +569,7 @@ static CGFloat ImageHeight  = 210.0;
     return 0;
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 7;//详情页面
+    return 8;//详情页面
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 2) {
@@ -588,7 +588,7 @@ static CGFloat ImageHeight  = 210.0;
         return ImageHeight;
     }else if (section == 1){
         return 110;
-    }else if (section == 6){
+    }else if (section == 7){
         static JGTeamActivityDetailsCell *cell;
         if (!cell) {
             cell = [self.teamActibityNameTableView dequeueReusableCellWithIdentifier:JGTeamActivityDetailsCellIdentifier];
@@ -670,6 +670,14 @@ static CGFloat ImageHeight  = 210.0;
         [headerCell addSubview:applyListBtn];
         [headerCell congiftitles:@"查看奖项"];
         return (UIView *)headerCell;
+    }else if (section == 6) {
+        JGHHeaderLabelCell *headerCell = [tableView dequeueReusableCellWithIdentifier:JGHHeaderLabelCellIdentifier];
+        UIButton *applyListBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, screenWidth, headerCell.frame.size.height)];
+        [applyListBtn addTarget:self action:@selector(getTeamActivityGuestCode:) forControlEvents:UIControlEventTouchUpInside];
+        headerCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        [headerCell addSubview:applyListBtn];
+        [headerCell congiftitles:@"嘉宾参赛码"];
+        return (UIView *)headerCell;
     }else{
         JGTeamActivityDetailsCell *detailsCell = [tableView dequeueReusableCellWithIdentifier:JGTeamActivityDetailsCellIdentifier];
         UIButton *detailsBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, screenWidth, detailsCell.frame.size.height)];
@@ -684,6 +692,16 @@ static CGFloat ImageHeight  = 210.0;
     UIView *footView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, 10)];
     footView.backgroundColor = [UIColor colorWithHexString:BG_color];
     return footView;
+}
+#pragma mark -- 嘉宾参赛码
+- (void)getTeamActivityGuestCode:(UIButton *)btn{
+    /*
+    if (_model.teamActivityKey == 0) {
+        timeKey = [_model.timeKey integerValue];
+    }else{
+        timeKey = _model.teamActivityKey;
+    }
+     */
 }
 #pragma mark -- 查看奖项
 - (void)getTeamActivityAward:(UIButton *)btn{

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="46" id="KGk-i7-Jjw" customClass="JGHApplyNewCell">
+            <rect key="frame" x="0.0" y="0.0" width="367" height="46"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="367" height="45.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ghB-MW-7k4">
+                        <rect key="frame" x="37" y="13" width="37.5" height="18"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="E1A-8M-Tyi">
+                        <rect key="frame" x="129" y="10" width="66" height="25"/>
+                        <state key="normal" backgroundImage="applypricebg"/>
+                    </button>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Mnw-UZ-cTt">
+                        <rect key="frame" x="195.5" y="10" width="39" height="25"/>
+                        <state key="normal" title="修改" backgroundImage="applyeditor">
+                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                        <connections>
+                            <action selector="editorBtn:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="c4T-w9-s5z"/>
+                        </connections>
+                    </button>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PEf-3H-mox">
+                        <rect key="frame" x="332" y="12" width="15" height="22"/>
+                        <state key="normal" image="quxiao"/>
+                        <connections>
+                            <action selector="deleBtn:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="l4C-Dd-fT8"/>
+                        </connections>
+                    </button>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="coupons" translatesAutoresizingMaskIntoConstraints="NO" id="bTa-8D-0v1">
+                        <rect key="frame" x="271" y="13" width="41" height="19"/>
+                    </imageView>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="E1A-8M-Tyi" firstAttribute="centerY" secondItem="ghB-MW-7k4" secondAttribute="centerY" id="BFP-fh-7nc"/>
+                    <constraint firstItem="Mnw-UZ-cTt" firstAttribute="height" secondItem="E1A-8M-Tyi" secondAttribute="height" id="J84-jV-C9s"/>
+                    <constraint firstItem="E1A-8M-Tyi" firstAttribute="leading" secondItem="ghB-MW-7k4" secondAttribute="trailing" constant="55" id="MeX-ee-Ew2"/>
+                    <constraint firstItem="PEf-3H-mox" firstAttribute="centerY" secondItem="Mnw-UZ-cTt" secondAttribute="centerY" id="Qn5-7K-0PU"/>
+                    <constraint firstAttribute="trailing" secondItem="PEf-3H-mox" secondAttribute="trailing" constant="20" id="QtV-Ca-eeU"/>
+                    <constraint firstItem="PEf-3H-mox" firstAttribute="leading" secondItem="bTa-8D-0v1" secondAttribute="trailing" constant="20" id="ZZA-0I-7ld"/>
+                    <constraint firstItem="ghB-MW-7k4" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="crM-5f-f6m"/>
+                    <constraint firstItem="Mnw-UZ-cTt" firstAttribute="leading" secondItem="E1A-8M-Tyi" secondAttribute="trailing" id="jim-nv-0pN"/>
+                    <constraint firstItem="bTa-8D-0v1" firstAttribute="centerY" secondItem="PEf-3H-mox" secondAttribute="centerY" id="lj7-LC-NmT"/>
+                    <constraint firstItem="Mnw-UZ-cTt" firstAttribute="centerY" secondItem="E1A-8M-Tyi" secondAttribute="centerY" id="oKl-CT-SaK"/>
+                    <constraint firstItem="ghB-MW-7k4" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="37" id="rfL-Kc-yFr"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="deleBtn" destination="PEf-3H-mox" id="skt-PB-AKS"/>
+                <outlet property="deleBtnRight" destination="QtV-Ca-eeU" id="4k4-0b-4hq"/>
+                <outlet property="editorBtn" destination="Mnw-UZ-cTt" id="lZR-D7-7GX"/>
+                <outlet property="name" destination="ghB-MW-7k4" id="90n-yX-pam"/>
+                <outlet property="nameLeft" destination="rfL-Kc-yFr" id="wDo-FO-vWN"/>
+                <outlet property="preferpriceImageView" destination="bTa-8D-0v1" id="BHE-KD-m79"/>
+                <outlet property="preferpriceImageViewRight" destination="ZZA-0I-7ld" id="7fG-3d-SRE"/>
+                <outlet property="priceBtn" destination="E1A-8M-Tyi" id="9co-8j-byq"/>
+                <outlet property="priceBtnLeft" destination="MeX-ee-Ew2" id="Q3j-6a-mmH"/>
+            </connections>
+            <point key="canvasLocation" x="274.5" y="261"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="applyeditor" width="39" height="25"/>
+        <image name="applypricebg" width="66" height="25"/>
+        <image name="coupons" width="41" height="19"/>
+        <image name="quxiao" width="15" height="15"/>
+    </resources>
+</document>

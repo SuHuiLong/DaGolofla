@@ -15,7 +15,7 @@
 #import "JGTeamGroupViewController.h"
 #import "JGTeamAcitivtyModel.h"
 #import "JGHHeaderLabelCell.h"
-#import "JGHApplyListCell.h"
+#import "JGHApplyNewCell.h"
 #import "JGSignUoPromptCell.h"
 #import "JGHTotalPriceCell.h"
 //微信
@@ -29,17 +29,18 @@
 #import "JGHApplyListView.h"
 #import "JGHJustApplyListView.h"
 #import "JGActivityBaseInfoCell.h"
+#import "JGHApplyCatoryPriceView.h"
 
 static NSString *const JGHActivityBaseInfoCellIdentifier = @"JGHActivityBaseInfoCell";
 static NSString *const JGActivityBaseInfoCellIdentifier = @"JGActivityBaseInfoCell";
 static NSString *const JGTableViewCellIdentifier = @"JGTableViewCell";
 static NSString *const JGApplyPepoleCellIdentifier = @"JGApplyPepoleCell";
 static NSString *const JGHHeaderLabelCellIdentifier = @"JGHHeaderLabelCell";
-static NSString *const JGHApplyListCellIdentifier = @"JGHApplyListCell";
+static NSString *const JGHApplyNewCellIdentifier = @"JGHApplyNewCell";
 static NSString *const JGSignUoPromptCellIdentifier = @"JGSignUoPromptCell";
 static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
 
-@interface JGTeamApplyViewController ()<JGApplyPepoleCellDelegate, JGHApplyListCellDelegate, JGAddTeamGuestViewControllerDelegate, JGHAddInvoiceViewControllerDelegate, JGHApplyListViewDelegate, JGHJustApplyListViewDelegate>
+@interface JGTeamApplyViewController ()<JGApplyPepoleCellDelegate, JGHApplyNewCellDelegate, JGAddTeamGuestViewControllerDelegate, JGHAddInvoiceViewControllerDelegate, JGHApplyListViewDelegate, JGHJustApplyListViewDelegate>
 {
     UIAlertController *_actionView;
     
@@ -66,9 +67,18 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
 @property (nonatomic, strong)JGHApplyListView *applyListView;//报名人列表
 @property (nonatomic, strong)JGHJustApplyListView *justApplyListView;//仅报名列表
 
+@property (nonatomic, strong)JGHApplyCatoryPriceView *applyCatoryPriceView;//价格类型列表
+
 @end
 
 @implementation JGTeamApplyViewController
+
+//- (JGHApplyCatoryPriceView *)applyCatoryPriceView{
+//    if (_applyCatoryPriceView == nil) {
+//        self.applyCatoryPriceView = [[JGHApplyCatoryPriceView alloc]init];
+//    }
+//    return _applyCatoryPriceView;
+//}
 
 - (UIView *)tranView{
     if (_tranView == nil) {
@@ -201,8 +211,8 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
     UINib *headerLabelNib = [UINib nibWithNibName:@"JGHHeaderLabelCell" bundle: [NSBundle mainBundle]];
     [self.teamApplyTableView registerNib:headerLabelNib forCellReuseIdentifier:JGHHeaderLabelCellIdentifier];
     
-    UINib *applyListNib = [UINib nibWithNibName:@"JGHApplyListCell" bundle: [NSBundle mainBundle]];
-    [self.teamApplyTableView registerNib:applyListNib forCellReuseIdentifier:JGHApplyListCellIdentifier];
+    UINib *applyListNib = [UINib nibWithNibName:@"JGHApplyNewCell" bundle: [NSBundle mainBundle]];
+    [self.teamApplyTableView registerNib:applyListNib forCellReuseIdentifier:JGHApplyNewCellIdentifier];
     
     UINib *signUoPromptNib = [UINib nibWithNibName:@"JGSignUoPromptCell" bundle: [NSBundle mainBundle]];
     [self.teamApplyTableView registerNib:signUoPromptNib forCellReuseIdentifier:JGSignUoPromptCellIdentifier];
@@ -255,10 +265,9 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
                 [signUoPromptCell configPromptString:@"提示：当前报名者在线支付，本人可享受平台补贴。"];
                 return signUoPromptCell;
             }else{
-                JGHApplyListCell *applyListCel = [tableView dequeueReusableCellWithIdentifier:JGHApplyListCellIdentifier forIndexPath:indexPath];
-                applyListCel.chooseBtn.tag = indexPath.row;
-                applyListCel.deleteBtn.tag = indexPath.row + 100;
-                applyListCel.chooseBtn.hidden = YES;
+                JGHApplyNewCell *applyListCel = [tableView dequeueReusableCellWithIdentifier:JGHApplyNewCellIdentifier forIndexPath:indexPath];
+                applyListCel.editorBtn.tag = indexPath.row;
+                applyListCel.deleBtn.tag = indexPath.row + 100;
                 applyListCel.delegate = self;
                 applyListCel.selectionStyle = UITableViewCellSelectionStyleNone;
                 [applyListCel configDict:_applyArray[indexPath.row]];
@@ -358,8 +367,6 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
         self.justApplyListView.frame = CGRectMake(0, screenHeight - (132 + _applyArray.count * 30)-64, screenWidth, 88 + 44 + _applyArray.count * 30);
         [_justApplyListView configjustApplyViewData:_applyArray];
     }
-    
-    
 }
 #pragma mark -- 取消 －－ 仅报名
 - (void)didJustApplyListCancelBtn:(UIButton *)btn{
@@ -416,7 +423,7 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
 }
 
 #pragma mark -- 删除嘉宾
-- (void)didSelectDeleteBtn:(UIButton *)btn{
+- (void)selectApplyDeleteBtn:(UIButton *)btn{
     NSLog(@"%td", btn.tag - 100);
     if ([self.applyArray count]) {
         NSDictionary *dict = [NSDictionary dictionary];
@@ -439,6 +446,15 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
     }
     
     [self.teamApplyTableView reloadData];
+}
+#pragma mark -- 修改价格
+- (void)selectEditorBtn:(UIButton *)btn{
+//    self.tranView.frame = CGRectMake(0, 0, screenWidth, screenHeight - (88 + _applyArray.count * 30)-64 -44);
+//    self.applyCatoryPriceView.frame = CGRectMake(0, screenHeight - ((_applyArray.count +1)* 30)-64, screenWidth, (_applyArray.count +1)* 30);
+    self.applyCatoryPriceView = [[JGHApplyCatoryPriceView alloc]init];
+    self.applyCatoryPriceView.frame = CGRectMake(0, screenHeight - 234, screenWidth, 2* 30);
+    [self.applyCatoryPriceView configViewData:_applyListView];
+    [self.view addSubview:self.applyCatoryPriceView];
 }
 #pragma mark -- 添加打球人页面代理－－－返回打球人数组
 - (void)addGuestListArray:(NSArray *)guestListArray{
@@ -660,6 +676,8 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
     [_actionView addAction:cancelAction];
     [self presentViewController:_actionView animated:YES completion:nil];
 }
+
+
 /*
 #pragma mark - Navigation
 

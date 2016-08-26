@@ -17,6 +17,7 @@
 #import "JGHButtonCell.h"
 #import "JGTeamAcitivtyModel.h"
 #import "JGTeamActivityViewController.h"
+#import "JGLCancelDrawbackViewController.h"
 
 #define ActivityRefundrules @"提示：活动取消后缴纳的费用将退还到个人账户中，实际退款金额为用户实际缴纳金额，平台补贴金额不在退款范围。如有疑问请与活动组织者联系。"
 
@@ -294,19 +295,23 @@ static NSString *const JGHButtonCellIdentifier = @"JGHButtonCell";
 
 - (void)popCtrl{
     //创建一个消息对象
-    NSNotification * notice = [NSNotification notificationWithName:@"reloadActivityData" object:nil userInfo:nil];
-    //            发送消息
-    [[NSNotificationCenter defaultCenter]postNotification:notice];
-    [self.navigationController popViewControllerAnimated:YES];
-//    if ([NSThread isMainThread]) {
-//        NSLog(@"Yay!");
-//        [self pushCtrl];
-//    } else {
-//        NSLog(@"Humph, switching to main");
-//        dispatch_async(dispatch_get_main_queue(), ^{
-//            [self pushCtrl];
-//        });
-//    }
+//    NSNotification * notice = [NSNotification notificationWithName:@"reloadActivityData" object:nil userInfo:nil];
+//    //            发送消息
+//    [[NSNotificationCenter defaultCenter]postNotification:notice];
+//    [self.navigationController popViewControllerAnimated:YES];
+
+    JGLCancelDrawbackViewController* canVc = [[JGLCancelDrawbackViewController alloc]init];
+    canVc.model = self.model;
+    canVc.activityKey = self.activityKey;
+    
+    NSMutableArray *signupKeyArray = [NSMutableArray array];
+    for (int i = 0; i < _dataArray.count; i++) {
+        if ([[_dataArray[i] objectForKey:@"select"] integerValue] == 1) {
+            [signupKeyArray addObject:_dataArray[i]];
+        }
+    }
+    canVc.dataArray = signupKeyArray;
+    [self.navigationController pushViewController:canVc animated:YES];
 }
 
 - (void)pushCtrl{

@@ -74,6 +74,11 @@
         _disMissBtn.layer.masksToBounds = YES;
         _disMissBtn.layer.cornerRadius = 8*screenWidth/320;
         [self addSubview:_disMissBtn];
+        
+        
+        _stateLabel = [[UILabel alloc]initWithFrame:CGRectMake(271*screenWidth/320, 15*screenWidth/320, 46*screenWidth/320, 24*screenWidth/320)];
+        _stateLabel.font = [UIFont systemFontOfSize:14];
+        [self addSubview:_stateLabel];
     }
     return self;
 }
@@ -96,6 +101,8 @@
     }
     _chadianLabel.text = [NSString stringWithFormat:@"差点:%@",model.almost];
     _mobileLabel.text = [NSString stringWithFormat:@"手机号:%@",model.mobile];
+    
+    
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

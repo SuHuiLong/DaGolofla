@@ -59,6 +59,7 @@
 @property (strong, nonatomic) NSString* power;
 //申请状态 0申请中  1 已通过  2未通过
 @property (strong, nonatomic) NSNumber* state;
+@property (strong, nonatomic) NSNumber* joinState;
 
 @property (assign, nonatomic) NSInteger identity;
 

@@ -47,6 +47,8 @@ static CGFloat ImageHeight  = 210.0;
 @property (nonatomic, strong)UIButton *addressBtn;//添加地址
 @property (nonatomic, strong)UITextField *titleField;//球队名称输入框
 
+@property (nonatomic, strong)NSMutableArray *costListArray;//费用列表
+
 @end
 
 @implementation JGHLaunchActivityViewController
@@ -88,7 +90,7 @@ static CGFloat ImageHeight  = 210.0;
 //        self.dataDict = [NSMutableDictionary dictionary];
         self.pickPhoto = [[SXPickPhoto alloc]init];
         self.titleView = [[UIView alloc]init];
-
+        self.costListArray = [NSMutableArray array];
 //        _dataDict = [[NSMutableDictionary alloc]init];
         UIImage *image = [UIImage imageNamed:ActivityBGImage];
         self.model.bgImage = image;
@@ -399,6 +401,10 @@ static CGFloat ImageHeight  = 210.0;
         if (indexPath.row == 0) {
             JGCostSetViewController *costView = [[JGCostSetViewController alloc]initWithNibName:@"JGCostSetViewController" bundle:nil];
             costView.delegate = self;
+            if (self.costListArray.count > 0) {
+                costView.costListArray = _costListArray;
+            }
+            
             [self.navigationController pushViewController:costView animated:YES];
         }else if (indexPath.row == 2){
             JGHConcentTextViewController *concentTextCtrl = [[JGHConcentTextViewController alloc]initWithNibName:@"JGHConcentTextViewController" bundle:nil];
@@ -496,16 +502,6 @@ static CGFloat ImageHeight  = 210.0;
         [[ShowHUD showHUD]showToastWithText:@"活动报名截止时间不能为空！" FromView:self.view];
         return;
     }
-    
-//    if ([self.model.beginDate compare:self.model.endDate] > 0) {
-//        [[ShowHUD showHUD]showToastWithText:@"活动开球时间不能大于结束时间！" FromView:self.view];
-//        return;
-//    }
-//    
-//    if ([[[self.model.signUpEndTime componentsSeparatedByString:@" "] firstObject] compare:self.model.beginDate] > 0) {
-//        [[ShowHUD showHUD]showToastWithText:@"报名截止时间不能大于活动开始时间！" FromView:self.view];
-//        return;
-//    }
     
     if (self.model.userMobile.length != 11) {
         [[ShowHUD showHUD]showToastWithText:@"手机号码格式不正确！" FromView:self.view];

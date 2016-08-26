@@ -16,6 +16,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *manageBtn;
 
 @property (weak, nonatomic) IBOutlet UIImageView *suoImage;
+@property (weak, nonatomic) IBOutlet UILabel *numLabel;
 
 -(void)showData:(JGLPhotoAlbumModel *)model;
 

@@ -44,7 +44,6 @@
 - (void)postDataRequest:(NSString *)port parameter:(NSDictionary *)dit success:(SuccessBlockType)successBlock failed:(FailedBlockType)faliedBlock{
     
     //设置请求超时
-    
     _httpManager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
     
     [_httpManager POST:urlStr parameters:dit success:^(AFHTTPRequestOperation *operation, id responseObject) {

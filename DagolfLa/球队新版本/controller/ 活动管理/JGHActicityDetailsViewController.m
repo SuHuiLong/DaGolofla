@@ -776,22 +776,22 @@ static CGFloat ImageHeight  = 210.0;
     costView.delegate = self;
     //球队队员费用
     if ([self.model.memberPrice floatValue] > 0) {
-        costView.memberPrice = self.model.memberPrice;
+//        costView.memberPrice = self.model.memberPrice;
     }
     
     //嘉宾费用
     if ([self.model.guestPrice floatValue] > 0) {
-        costView.guestPrice = self.model.guestPrice;
+//        costView.guestPrice = self.model.guestPrice;
     }
     
     //记名费
     if ([self.model.billNamePrice floatValue] > 0) {
-        costView.billNamePrice = self.model.billNamePrice;
+//        costView.billNamePrice = self.model.billNamePrice;
     }
     
     //不记名费
     if ([self.model.billPrice floatValue] > 0) {
-        costView.billPrice = self.model.billPrice;
+//        costView.billPrice = self.model.billPrice;
     }
 
     [self.navigationController pushViewController:costView animated:YES];
