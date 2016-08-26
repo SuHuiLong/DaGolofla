@@ -175,7 +175,7 @@
     guestBtn.titleEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 10 * ProportionAdapter);
     [guestBtn setImage:[UIImage imageNamed:@"sildRight"] forState:(UIControlStateNormal)];
     [guestBtn addTarget:self action:@selector(guestAct) forControlEvents:(UIControlEventTouchUpInside)];
-//    [self.topBackView addSubview:guestBtn];
+    [self.topBackView addSubview:guestBtn];
     // Do any additional setup after loading the view.
 }
 

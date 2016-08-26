@@ -1156,6 +1156,8 @@
 		F5E1BB8E1D6B006100414727 /* ZXQRCodeWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = F5E1BAAC1D6B006100414727 /* ZXQRCodeWriter.m */; };
 		F5E1BB8F1D6B006100414727 /* ZXMultiFormatReader.m in Sources */ = {isa = PBXBuildFile; fileRef = F5E1BAAF1D6B006100414727 /* ZXMultiFormatReader.m */; };
 		F5E1BB901D6B006100414727 /* ZXMultiFormatWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = F5E1BAB11D6B006100414727 /* ZXMultiFormatWriter.m */; };
+		F5E1BB971D6D827700414727 /* JGDGuestTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F5E1BB961D6D827700414727 /* JGDGuestTableViewCell.m */; };
+		F5E1BB9A1D6EED6D00414727 /* JGDGuestCodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5E1BB991D6EED6C00414727 /* JGDGuestCodeViewController.m */; };
 		F5E3F7F01CAA54BC00B24C77 /* dz.png in Resources */ = {isa = PBXBuildFile; fileRef = F5E3F7ED1CAA54BC00B24C77 /* dz.png */; };
 		F5E3F7F11CAA54BC00B24C77 /* dz@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F5E3F7EE1CAA54BC00B24C77 /* dz@2x.png */; };
 		F5E3F7F21CAA54BC00B24C77 /* dz@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = F5E3F7EF1CAA54BC00B24C77 /* dz@3x.png */; };
@@ -3367,6 +3369,10 @@
 		F5E1BAAF1D6B006100414727 /* ZXMultiFormatReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXMultiFormatReader.m; sourceTree = "<group>"; };
 		F5E1BAB01D6B006100414727 /* ZXMultiFormatWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXMultiFormatWriter.h; sourceTree = "<group>"; };
 		F5E1BAB11D6B006100414727 /* ZXMultiFormatWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXMultiFormatWriter.m; sourceTree = "<group>"; };
+		F5E1BB951D6D827700414727 /* JGDGuestTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGDGuestTableViewCell.h; sourceTree = "<group>"; };
+		F5E1BB961D6D827700414727 /* JGDGuestTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGDGuestTableViewCell.m; sourceTree = "<group>"; };
+		F5E1BB981D6EED6C00414727 /* JGDGuestCodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGDGuestCodeViewController.h; sourceTree = "<group>"; };
+		F5E1BB991D6EED6C00414727 /* JGDGuestCodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGDGuestCodeViewController.m; sourceTree = "<group>"; };
 		F5E3F7ED1CAA54BC00B24C77 /* dz.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dz.png; sourceTree = "<group>"; };
 		F5E3F7EE1CAA54BC00B24C77 /* dz@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dz@2x.png"; sourceTree = "<group>"; };
 		F5E3F7EF1CAA54BC00B24C77 /* dz@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dz@3x.png"; sourceTree = "<group>"; };
@@ -7818,6 +7824,7 @@
 		F5E1B8771D6ADF3200414727 /* 嘉宾通道 */ = {
 			isa = PBXGroup;
 			children = (
+				F5E1BB941D6D825800414727 /* view */,
 				F5E1B8781D6ADF3300414727 /* controller */,
 			);
 			path = "嘉宾通道";
@@ -7830,6 +7837,8 @@
 				F5E1B87A1D6ADF6100414727 /* JGDGuestChannelViewController.m */,
 				F5E1B87C1D6AE13800414727 /* JGDGuestPayViewController.h */,
 				F5E1B87D1D6AE13800414727 /* JGDGuestPayViewController.m */,
+				F5E1BB981D6EED6C00414727 /* JGDGuestCodeViewController.h */,
+				F5E1BB991D6EED6C00414727 /* JGDGuestCodeViewController.m */,
 			);
 			path = controller;
 			sourceTree = "<group>";
@@ -8564,6 +8573,15 @@
 				F5E1BAA51D6B006100414727 /* ZXMultiFinderPatternFinder.m */,
 			);
 			path = detector;
+			sourceTree = "<group>";
+		};
+		F5E1BB941D6D825800414727 /* view */ = {
+			isa = PBXGroup;
+			children = (
+				F5E1BB951D6D827700414727 /* JGDGuestTableViewCell.h */,
+				F5E1BB961D6D827700414727 /* JGDGuestTableViewCell.m */,
+			);
+			path = view;
 			sourceTree = "<group>";
 		};
 		F5EB44641C995788008ACD73 /* 球友列表 */ = {
@@ -9383,6 +9401,7 @@
 				36DF09B21C03EFFB007A8A4E /* TeamLogoHeadCell.m in Sources */,
 				F5E1BB0E1D6B006100414727 /* ZXDataMatrixDecoder.m in Sources */,
 				36BFFF831BC76D09005B3CE2 /* HorButtonSet.m in Sources */,
+				F5E1BB9A1D6EED6D00414727 /* JGDGuestCodeViewController.m in Sources */,
 				36067BC11C97EED2001AE22C /* TeamFriListViewController.m in Sources */,
 				F5E1BB551D6B006100414727 /* ZXUPCAWriter.m in Sources */,
 				36BFFF7D1BC76D09005B3CE2 /* UIImage+GIF.m in Sources */,
@@ -9726,6 +9745,7 @@
 				82AAB7B11CE5C18E005F5633 /* JGSelfSetTableViewCell.m in Sources */,
 				2066E87D1D5C585900A3A2B8 /* JGHCaddieAuthModel.m in Sources */,
 				201056131D59C92800C90FDE /* JGHBtnCell.m in Sources */,
+				F5E1BB971D6D827700414727 /* JGDGuestTableViewCell.m in Sources */,
 				F5AEF6E71D408F3F009A8C34 /* JGDHistoryScoreShowViewController.m in Sources */,
 				F5E1BAF41D6B006100414727 /* ZXCharacterSetECI.m in Sources */,
 				F5E1BB8D1D6B006100414727 /* ZXQRCodeReader.m in Sources */,
@@ -10065,7 +10085,7 @@
 					"$(SRCROOT)/DagolfLa",
 				);
 				INFOPLIST_FILE = DagolfLa/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -10114,7 +10134,7 @@
 					"$(SRCROOT)/DagolfLa",
 				);
 				INFOPLIST_FILE = DagolfLa/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
