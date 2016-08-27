@@ -209,7 +209,8 @@ static NSString *const JGPlayPayBaseCellIdentifier = @"JGPlayPayBaseCell";
 - (void)selectAddPlays:(UIButton *)btn{
     NSLog(@"添加队员");
     JGHAddApplyTeamPlaysViewController *applyPlaysCtrl = [[JGHAddApplyTeamPlaysViewController alloc]init];
-    
+    applyPlaysCtrl.teamKey = _teamKey;
+    applyPlaysCtrl.activityKey = _activityKey;
     [self.navigationController pushViewController:applyPlaysCtrl animated:YES];
 }
 #pragma mark -- 添加球友
