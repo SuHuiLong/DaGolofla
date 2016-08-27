@@ -19,9 +19,9 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     
     if (self) {
-        self.titleLB = [[UILabel alloc] initWithFrame:CGRectMake(30 * ProportionAdapter, 0, 173 * ProportionAdapter, 50 * ProportionAdapter)];
+        self.titleLB = [[UILabel alloc] initWithFrame:CGRectMake(30 * ProportionAdapter, 0, 183 * ProportionAdapter, 50 * ProportionAdapter)];
         self.titleLB.font = [UIFont systemFontOfSize:15 * ProportionAdapter];
-        self.priceLB = [[UILabel alloc] initWithFrame:CGRectMake(210 * ProportionAdapter, 0, 130 * ProportionAdapter, 50 * ProportionAdapter)];
+        self.priceLB = [[UILabel alloc] initWithFrame:CGRectMake(210 * ProportionAdapter, 0, 100 * ProportionAdapter, 50 * ProportionAdapter)];
         self.priceLB.font = [UIFont systemFontOfSize:15 * ProportionAdapter];
         self.selectView = [[UIImageView alloc] initWithFrame:CGRectMake(330 * ProportionAdapter, 15 *ProportionAdapter, 20 * ProportionAdapter, 20 * ProportionAdapter)];
         [self.contentView addSubview:self.titleLB];

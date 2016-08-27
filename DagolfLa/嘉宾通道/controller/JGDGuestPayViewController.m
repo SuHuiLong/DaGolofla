@@ -103,7 +103,9 @@
     JGDGuestTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"JGDGuestTableViewCell"];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.titleLB.text = [self.costArray[indexPath.row] objectForKey:@"costName"];
-    cell.priceLB.text = [NSString stringWithFormat:@"%@元/人", [self.costArray[indexPath.row] objectForKey:@"money"]];
+    NSMutableAttributedString *attri = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@元/人", [self.costArray[indexPath.row] objectForKey:@"money"]]];
+    [attri addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:NSMakeRange(0, [[[self.costArray[indexPath.row] objectForKey:@"money"] stringValue] length])];
+    cell.priceLB.attributedText = attri;
     if (indexPath.row == 0) {
         cell.titleLB.textColor = [UIColor colorWithHexString:@"#a0a0a0"];
         cell.priceLB.textColor = [UIColor colorWithHexString:@"#a0a0a0"];
@@ -120,8 +122,15 @@
         JGDGuestTableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
         cell.selectView.image = [UIImage imageNamed:@"xuan_z"];
         [self.teamSignUpDic setObject:[self.costArray[indexPath.row] objectForKey:@"costType"] forKey:@"type"];
-        self.footLB.text = [NSString stringWithFormat:@"平台补贴费用%@元 实付金额：%.2f", self.model.subsidyPrice, [[self.costArray[indexPath.row] objectForKey:@"money"] floatValue] - [self.model.subsidyPrice floatValue]];
-        self.money = [[self.costArray[indexPath.row] objectForKey:@"money"] floatValue] - [self.model.subsidyPrice floatValue];
+        self.money = [[self.costArray[indexPath.row] objectForKey:@"money"] floatValue] - [self.model.subsidyPrice integerValue];
+        NSInteger subsidy = [self.model.subsidyPrice integerValue];
+        NSMutableAttributedString *attriStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"平台补贴费用%td元 实付金额：%.2f", subsidy, [[self.costArray[indexPath.row] objectForKey:@"money"] floatValue] - subsidy]];
+        [attriStr addAttribute:NSForegroundColorAttributeName value:[UIColor orangeColor] range:NSMakeRange(6, [[NSString stringWithFormat:@"%td", subsidy] length])];
+        [attriStr addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:NSMakeRange(attriStr.length - [[NSString stringWithFormat:@"%.2f", self.money] length], [[NSString stringWithFormat:@"%.2f", self.money] length])];
+
+        self.footLB.attributedText = attriStr;
+
+        
     }
 }
 
@@ -280,7 +289,12 @@
     [footView addSubview:footlineView];
     
     self.footLB = [[UILabel alloc] initWithFrame:CGRectMake(10 * ProportionAdapter, 1 * ProportionAdapter, 250 * ProportionAdapter, 50 * ProportionAdapter)];
-    self.footLB.text = [NSString stringWithFormat:@"平台补贴费用%@元 实付金额：0", self.model.subsidyPrice];
+    NSInteger subsidy = [self.model.subsidyPrice integerValue];
+    NSMutableAttributedString *attriStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"平台补贴费用%td元 实付金额：0", subsidy]];
+    [attriStr addAttribute:NSForegroundColorAttributeName value:[UIColor orangeColor] range:NSMakeRange(6, [[NSString stringWithFormat:@"%td", subsidy] length])];
+    [attriStr addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:NSMakeRange(attriStr.length - 1, 1)];
+
+    self.footLB.attributedText = attriStr;
     self.footLB.font = [UIFont systemFontOfSize:15 * ProportionAdapter];
     [footView addSubview:self.footLB];
     
@@ -400,7 +414,6 @@
 #pragma mark -- 微信支付
 - (void)weChatPay{
     NSLog(@"微信支付");
-//    JGApplyMaterialTableViewCell *cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1]];
     //获取通知中心单例对象
     NSNotificationCenter * center = [NSNotificationCenter defaultCenter];
     //添加当前类对象为一个观察者，name和object设置为nil，表示接收一切通知
@@ -408,7 +421,7 @@
     NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
     [dict setObject:[NSNumber numberWithFloat:self.money] forKey:@"money"];
     //    [dict setObject:@0.01 forKey:@"money"];
-    [dict setObject:@1 forKey:@"orderType"];
+    [dict setObject:@2 forKey:@"orderType"];
     [dict setObject: self.infoKey forKey:@"srcKey"]; // teammember's timekey
     
     [[JsonHttp jsonHttp]httpRequest:@"pay/doPayWeiXin" JsonKey:@"payInfo" withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
@@ -444,18 +457,14 @@
 #pragma mark -- 微信支付成功后返回的通知
 
 - (void)notice:(NSNotification *)not{
-    //    NSInteger secess = [[not.userInfo objectForKey:@"secess"] integerValue];
-    //    if (secess == 1) {
-    //        //跳转分组页面
-    //        JGTeamGroupViewController *groupCtrl = [[JGTeamGroupViewController alloc]init];
-    //        groupCtrl.teamActivityKey = [[self.detailDic objectForKey:@"timeKey"] integerValue];
-    //        groupCtrl.activityFrom = 1;
-    //        [self.navigationController pushViewController:groupCtrl animated:YES];
-    //    }else if (secess == 2){
-    //        [[ShowHUD showHUD]showToastWithText:@"支付已取消！" FromView:self.view];
-    //    }else{
-    //        [[ShowHUD showHUD]showToastWithText:@"支付失败！" FromView:self.view];
-    //    }
+    NSInteger secess = [[not.userInfo objectForKey:@"secess"] integerValue];
+    if (secess == 1) {
+        [self.navigationController popToRootViewControllerAnimated:YES];
+    }else if (secess == 2){
+        [[ShowHUD showHUD]showToastWithText:@"支付已取消！" FromView:self.view];
+    }else{
+        [[ShowHUD showHUD]showToastWithText:@"支付失败！" FromView:self.view];
+    }
 }
 - (void)dealloc{
     [[NSNotificationCenter defaultCenter]removeObserver:self];
@@ -477,19 +486,28 @@
         NSLog(@"%@",[data objectForKey:@"query"]);
         [[AlipaySDK defaultService] payOrder:[data objectForKey:@"query"] fromScheme:@"dagolfla" callback:^(NSDictionary *resultDic) {
             
-            NSLog(@"支付宝=====%@",resultDic[@"resultStatus"]);
+            
+            
             if ([resultDic[@"resultStatus"] isEqualToString:@"9000"]) {
-                NSLog(@"陈公");
-                
+                NSLog(@"成功！");
+                //跳转分组页面
+
+                [self.navigationController popToRootViewControllerAnimated:YES];
             } else if ([resultDic[@"resultStatus"] isEqualToString:@"4000"]) {
                 NSLog(@"失败");
+                [[ShowHUD showHUD]showToastWithText:@"支付失败！" FromView:self.view];
             } else if ([resultDic[@"resultStatus"] isEqualToString:@"6002"]) {
                 NSLog(@"网络错误");
+                [[ShowHUD showHUD]showToastWithText:@"网络异常，支付失败！" FromView:self.view];
             } else if ([resultDic[@"resultStatus"] isEqualToString:@"6001"]) {
                 NSLog(@"取消支付");
+                [[ShowHUD showHUD]showToastWithText:@"支付已取消！" FromView:self.view];
             } else {
                 NSLog(@"支付失败");
+                [[ShowHUD showHUD]showToastWithText:@"支付失败！" FromView:self.view];
             }
+            
+            
         }];
     }];
 }
