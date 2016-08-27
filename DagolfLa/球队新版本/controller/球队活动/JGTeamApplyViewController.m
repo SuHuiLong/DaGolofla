@@ -10,7 +10,6 @@
 #import "JGHActivityBaseInfoCell.h"
 #import "JGTableViewCell.h"
 #import "JGApplyPepoleCell.h"
-#import "JGAddTeamGuestViewController.h"
 #import "JGHAddInvoiceViewController.h"
 #import "JGTeamGroupViewController.h"
 #import "JGTeamAcitivtyModel.h"
@@ -30,6 +29,7 @@
 #import "JGHJustApplyListView.h"
 #import "JGActivityBaseInfoCell.h"
 #import "JGHApplyCatoryPriceView.h"
+#import "JGHAddTeamPlaysViewController.h"
 
 static NSString *const JGHActivityBaseInfoCellIdentifier = @"JGHActivityBaseInfoCell";
 static NSString *const JGActivityBaseInfoCellIdentifier = @"JGActivityBaseInfoCell";
@@ -40,7 +40,7 @@ static NSString *const JGHApplyNewCellIdentifier = @"JGHApplyNewCell";
 static NSString *const JGSignUoPromptCellIdentifier = @"JGSignUoPromptCell";
 static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
 
-@interface JGTeamApplyViewController ()<JGApplyPepoleCellDelegate, JGHApplyNewCellDelegate, JGAddTeamGuestViewControllerDelegate, JGHAddInvoiceViewControllerDelegate, JGHApplyListViewDelegate, JGHJustApplyListViewDelegate>
+@interface JGTeamApplyViewController ()<JGApplyPepoleCellDelegate, JGHApplyNewCellDelegate, JGHAddInvoiceViewControllerDelegate, JGHApplyListViewDelegate, JGHJustApplyListViewDelegate>
 {
     UIAlertController *_actionView;
     
@@ -392,6 +392,7 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
 }
 #pragma mark -- 添加嘉宾
 - (void)addApplyPeopleClick{
+    /*
     NSMutableArray *array = [NSMutableArray array];
     array = [NSMutableArray arrayWithArray:_baseInfoArray];
     for (int i=0; i<5; i++) {
@@ -409,13 +410,15 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
         [arrayData addObject:_baseInfoArray[4]];
         [arrayData addObject:_baseInfoArray[3]];
     }
+    */
+    JGHAddTeamPlaysViewController *addTeamPlaysCtrl = [[JGHAddTeamPlaysViewController alloc]init];
+//    addTeamGuestCtrl.delegate = self;
     
-    JGAddTeamGuestViewController *addTeamGuestCtrl = [[JGAddTeamGuestViewController alloc]initWithNibName:@"JGAddTeamGuestViewController" bundle:nil];
-    addTeamGuestCtrl.delegate = self;
-    
-    addTeamGuestCtrl.applyArray = self.applyArray;
-    addTeamGuestCtrl.catoryArray = arrayData;
-    [self.navigationController pushViewController:addTeamGuestCtrl animated:YES];
+//    addTeamGuestCtrl.applyArray = self.applyArray;
+//    addTeamGuestCtrl.catoryArray = arrayData;
+    addTeamPlaysCtrl.costListArray = [NSMutableArray arrayWithArray:_costListArray];
+    addTeamPlaysCtrl.playListArray = _applyArray;
+    [self.navigationController pushViewController:addTeamPlaysCtrl animated:YES];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

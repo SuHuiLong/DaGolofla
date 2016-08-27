@@ -70,7 +70,7 @@ static CGFloat ImageHeight  = 210.0;
 
 @property (nonatomic, strong)UITableView *teamActibityNameTableView;
 @property (nonatomic, strong)NSMutableArray *dataArray;//数据源
-@property (nonatomic, strong)NSMutableArray *subDataArray;//费用说明数据源
+//@property (nonatomic, strong)NSMutableArray *subDataArray;//费用说明数据源
 @property (nonatomic,strong)SXPickPhoto * pickPhoto;//相册类
 @property (nonatomic, strong)UIImage *headerImage;
 
@@ -87,6 +87,8 @@ static CGFloat ImageHeight  = 210.0;
 @property (nonatomic, strong)NSDictionary *teamMemberDic;
 
 @property (nonatomic, strong)JGTeamAcitivtyModel *model;
+
+@property (nonatomic, strong)NSMutableArray *costListArray;//报名资费列表
 
 @end
 
@@ -127,11 +129,12 @@ static CGFloat ImageHeight  = 210.0;
 - (instancetype)init{
     if (self == [super init]) {
         self.dataArray = [NSMutableArray array];
-        self.subDataArray = [NSMutableArray array];
+//        self.subDataArray = [NSMutableArray array];
         self.model = [[JGTeamAcitivtyModel alloc]init];
         self.pickPhoto = [[SXPickPhoto alloc]init];
         self.titleView = [[UIView alloc]init];
-            }
+        self.costListArray = [NSMutableArray array];
+    }
     return self;
 }
 
@@ -241,6 +244,9 @@ static CGFloat ImageHeight  = 210.0;
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
             
             _hasReleaseScore = [[data objectForKey:@"hasReleaseScore"] integerValue];
+            //费用列表
+            [self.costListArray removeAllObjects];
+            self.costListArray = [data objectForKey:@"costList"];
             
             NSMutableDictionary *dict = [NSMutableDictionary dictionary];
             
@@ -270,22 +276,22 @@ static CGFloat ImageHeight  = 210.0;
                 self.teamActibityNameTableView.frame = CGRectMake(0, 0, ScreenWidth, ScreenHeight);
             }
             
-            [_subDataArray removeAllObjects];
-            if ([self.model.memberPrice floatValue] > 0) {
-                [_subDataArray addObject:[NSString stringWithFormat:@"%.2f-球队队员资费", [self.model.memberPrice floatValue]]];
-            }
-            
-            if ([self.model.guestPrice floatValue] > 0) {
-                [_subDataArray addObject:[NSString stringWithFormat:@"%.2f-普通嘉宾资费", [self.model.guestPrice floatValue]]];
-            }
-            
-            if ([self.model.billNamePrice floatValue] > 0) {
-                [_subDataArray addObject:[NSString stringWithFormat:@"%.2f-球场记名会员资费", [self.model.billNamePrice floatValue]]];
-            }
-            
-            if ([self.model.billPrice floatValue] > 0) {
-                [_subDataArray addObject:[NSString stringWithFormat:@"%.2f-球场无记名会员资费", [self.model.billPrice floatValue]]];
-            }
+//            [_subDataArray removeAllObjects];
+//            if ([self.model.memberPrice floatValue] > 0) {
+//                [_subDataArray addObject:[NSString stringWithFormat:@"%.2f-球队队员资费", [self.model.memberPrice floatValue]]];
+//            }
+//            
+//            if ([self.model.guestPrice floatValue] > 0) {
+//                [_subDataArray addObject:[NSString stringWithFormat:@"%.2f-普通嘉宾资费", [self.model.guestPrice floatValue]]];
+//            }
+//            
+//            if ([self.model.billNamePrice floatValue] > 0) {
+//                [_subDataArray addObject:[NSString stringWithFormat:@"%.2f-球场记名会员资费", [self.model.billNamePrice floatValue]]];
+//            }
+//            
+//            if ([self.model.billPrice floatValue] > 0) {
+//                [_subDataArray addObject:[NSString stringWithFormat:@"%.2f-球场无记名会员资费", [self.model.billPrice floatValue]]];
+//            }
             
             [self.teamActibityNameTableView reloadData];
         }else{
@@ -551,6 +557,7 @@ static CGFloat ImageHeight  = 210.0;
             teamApplyCtrl.userName = _userName;
             teamApplyCtrl.isApply = (BOOL)[_isApply floatValue];
             teamApplyCtrl.teamMember = self.teamMemberDic;
+            teamApplyCtrl.costListArray = _costListArray;
             [self.navigationController pushViewController:teamApplyCtrl animated:YES];
         }
     }
@@ -564,8 +571,8 @@ static CGFloat ImageHeight  = 210.0;
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     if (section == 2) {
         //参赛费用列表
-        NSLog(@"%td", _subDataArray.count + 1);
-        return _subDataArray.count + 1;
+        NSLog(@"%td", _costListArray.count + 1);
+        return _costListArray.count + 1;
     }
     return 0;
 }
@@ -603,7 +610,7 @@ static CGFloat ImageHeight  = 210.0;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 2) {
-        if (indexPath.row == _subDataArray.count) {
+        if (indexPath.row == _costListArray.count) {
             JGActivityNameBaseCell *costSubCell = [tableView dequeueReusableCellWithIdentifier:JGActivityNameBaseCellIdentifier];
             costSubCell.selectionStyle = UITableViewCellSelectionStyleNone;
             if (_model.subsidyPrice) {
@@ -617,8 +624,8 @@ static CGFloat ImageHeight  = 210.0;
         }else{
             JGHCostListTableViewCell *costListCell = [tableView dequeueReusableCellWithIdentifier:JGHCostListTableViewCellIdentifier];
             costListCell.selectionStyle = UITableViewCellSelectionStyleNone;
-            if (_subDataArray.count > 0) {
-                [costListCell configCostData:_subDataArray[indexPath.row]];
+            if (_costListArray.count > 0) {
+                [costListCell configCostData:_costListArray[indexPath.row]];
             }
             
             return costListCell;

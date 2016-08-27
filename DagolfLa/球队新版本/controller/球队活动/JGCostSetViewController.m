@@ -20,6 +20,8 @@ static NSString *const JGHAddCostButtonCellIdentifier = @"JGHAddCostButtonCell";
     NSInteger _sectionCount;//
     
     NSInteger _costListArrayCount;//统计现有的资费类型数量
+    
+    NSArray *_keyArray;
 }
 
 @end
@@ -30,6 +32,8 @@ static NSString *const JGHAddCostButtonCellIdentifier = @"JGHAddCostButtonCell";
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor colorWithHexString:BG_color];
     self.navigationItem.title = @"费用设置";
+    
+    _keyArray = @[@"name", @"money"];
     
     if (!self.costListArray) {
         self.costListArray = [NSMutableArray array];
@@ -83,24 +87,47 @@ static NSString *const JGHAddCostButtonCellIdentifier = @"JGHAddCostButtonCell";
 - (void)saveBtnClick:(UIButton *)btn{
     [self.view endEditing:YES];
     NSLog(@"%@", _costListArray);
-//    if (self.membersCost.text.length == 0) {
-//        [[ShowHUD showHUD]showToastWithText:@"请输入会员费用！" FromView:self.view];
-//        return;
-//    }
-//    
-//    if (self.guestCost.text.length == 0) {
-//        [[ShowHUD showHUD]showToastWithText:@"请输入嘉宾费用！" FromView:self.view];
-//        return;
-//    }
-//    
-//    if (self.delegate) {
-//        NSLog(@"%@", self.membersCost.text);
-//        NSLog(@"%@", self.guestCost.text);
-//        NSLog(@"%@", self.registeredPrice.text);
-//        NSLog(@"%@", self.bearerPrice.text);
-//        [self.delegate inputMembersCost:self.membersCost.text guestCost:self.guestCost.text andRegisteredPrice:self.registeredPrice.text andBearerPrice:self.bearerPrice.text];
-//        [self.navigationController popViewControllerAnimated:YES];
-//    }
+    if (self.delegate) {
+        [self.delegate costList:_costListArray];
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+    
+    /*
+
+    
+    for (NSMutableDictionary *dict in _costListArray) {
+        
+        if ([dict count] !=3) {
+            [[ShowHUD showHUD]showToastWithText:@"请完善资费信息！" FromView:self.view];
+            return;
+        }else{
+            for (int i=0; i<2; i++) {
+                if ([[dict objectForKey:[NSString stringWithFormat:@"%@", _keyArray[i]]] isEqualToString:@""]) {
+                    [[ShowHUD showHUD]showToastWithText:@"请完善资费信息！" FromView:self.view];
+                    return;
+                }
+            }
+        }
+    }
+    
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    [dict setObject:DEFAULF_USERID forKey:@"userKey"];
+    [dict setObject:@(_activityKey) forKey:@"activityKey"];
+    [dict setObject:_costListArray forKey:@"costList"];
+    [[JsonHttp jsonHttp]httpRequestWithMD5:@"team/updateTeamActivityCost" JsonKey:nil withData:dict failedBlock:^(id errType) {
+        
+    } completionBlock:^(id data) {
+        NSLog(@"%@", data);
+        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+            [self.navigationController popViewControllerAnimated:YES];
+        }else{
+            if ([data objectForKey:@"packResultMsg"]) {
+                [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+            }
+        }
+    }];
+     
+      */
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
@@ -174,6 +201,35 @@ static NSString *const JGHAddCostButtonCellIdentifier = @"JGHAddCostButtonCell";
     }
 }
 
+-(NSArray *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.section > 3 && indexPath.section != _costListArray.count) {
+        NSLog(@"indexPath.section == %td", indexPath.section);
+        NSLog(@"indexPath.row == %td", indexPath.row);
+        NSString *type = nil;
+        type = @"删除";
+        
+        UITableViewRowAction *deleteRoWAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive title:type handler:^(UITableViewRowAction *action, NSIndexPath *indexPath) {
+            [self deleteChargesType:indexPath.section];
+            NSLog(@"00000");
+        }];//此处是iOS8.0以后苹果最新推出的api，UITableViewRowAction，Style是划出的标签颜色等状态的定义，这里也可自行定义
+        return @[deleteRoWAction];//最后返回这俩个RowAction 的数组
+    }else{
+        return nil;
+    }
+}
+-(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    editingStyle = UITableViewCellEditingStyleDelete;//此处的EditingStyle可等于任意UITableViewCellEditingStyle，该行代码只在iOS8.0以前版本有作用，也可以不实现。
+}
+#pragma mark -- 删除cell
+- (void)deleteChargesType:(NSInteger)cellID{
+    NSLog(@"删除");
+    if (self.costListArray.count >= cellID) {
+        [self.costListArray removeObjectAtIndex:cellID];
+        [self.costTableView reloadData];
+    }
+}
 #pragma mark -- 添加自定义资费
 - (void)addCostList:(UIButton *)btn{
     _sectionCount += 1;

@@ -16,6 +16,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *price;
 
 //详情页
-- (void)configCostData:(NSString *)string;
+- (void)configCostData:(NSMutableDictionary *)dict;
 
 @end
