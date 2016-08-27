@@ -20,7 +20,10 @@
     [_iconIngv sd_setImageWithURL:[Helper setImageIconUrl:@"album/media" andTeamKey:[model.mediaKey integerValue]andIsSetWidth:YES andIsBackGround:NO] placeholderImage:[UIImage imageNamed:@"xcback"]];
     _iconIngv.layer.masksToBounds = YES;
     _iconIngv.contentMode = UIViewContentModeScaleAspectFill;
-    _timeLabel.text = [NSString stringWithFormat:@"%@",model.createTime];
+    
+    NSArray* array1 = [model.createTime componentsSeparatedByString:@" "];
+    
+    _timeLabel.text = [NSString stringWithFormat:@"%@",array1[0]];
     if (![Helper isBlankString:model.name]) {
 
         _nameLabel.text = [NSString stringWithFormat:@"%@",model.name];
@@ -30,6 +33,7 @@
         _nameLabel.text = [NSString stringWithFormat:@"%@",model.name];
     }
     
+    _numLabel.text = [NSString stringWithFormat:@"%@张",model.photoNums];
 
         
 }

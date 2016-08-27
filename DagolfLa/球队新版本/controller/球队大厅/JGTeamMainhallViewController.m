@@ -81,7 +81,7 @@
     _searchController.searchBar.barTintColor = [UIColor colorWithRed:0.94 green:0.94 blue:0.94 alpha:1];
     _searchController.dimsBackgroundDuringPresentation = NO;
     _searchController.hidesNavigationBarDuringPresentation = NO;
-    _searchController.searchBar.frame = CGRectMake(self.searchController.searchBar.frame.origin.x, self.searchController.searchBar.frame.origin.y, self.searchController.searchBar.frame.size.width, 44.0);
+    _searchController.searchBar.frame = CGRectMake(120, 0, screenWidth-120, 44.0);
     self.searchController.searchBar.tintColor = [UIColor colorWithRed:0.36f green:0.66f blue:0.31f alpha:1.00f];
     self.searchController.searchBar.placeholder = @"输入球队昵称搜索";
     self.tableView.tableHeaderView = self.searchController.searchBar;
@@ -345,7 +345,9 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
-    [dic setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"userId"] forKey:@"userKey"];
+    if (DEFAULF_USERID != nil) {
+        [dic setObject:DEFAULF_USERID forKey:@"userKey"];
+    }
     if (self.searchController.active) {
         [dic setObject:@([[self.searchArray[indexPath.row] objectForKey:@"timeKey"] integerValue]) forKey:@"teamKey"];
     }else{

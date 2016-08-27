@@ -11,6 +11,8 @@
 
 @interface JGDGuestChannelViewController ()
 
+@property (nonatomic, strong) UITextField *enterTF;
+
 @end
 
 @implementation JGDGuestChannelViewController
@@ -26,10 +28,10 @@
     enterLB.textColor = [UIColor colorWithHexString:@"#313131"];
     [self.view addSubview:enterLB];
     
-    UITextField *enterTF = [[UITextField alloc] initWithFrame:CGRectMake(135 * ProportionAdapter, 25 * ProportionAdapter, screenWidth - 150 * ProportionAdapter, 30 * ProportionAdapter)];
-    enterTF.borderStyle = UITextBorderStyleRoundedRect;
-    enterTF.keyboardType = UIKeyboardTypeNumberPad;
-    [self.view addSubview:enterTF];
+    self.enterTF = [[UITextField alloc] initWithFrame:CGRectMake(135 * ProportionAdapter, 25 * ProportionAdapter, screenWidth - 150 * ProportionAdapter, 30 * ProportionAdapter)];
+    self.enterTF.borderStyle = UITextBorderStyleRoundedRect;
+    self.enterTF.keyboardType = UIKeyboardTypeNumberPad;
+    [self.view addSubview:self.enterTF];
     
     UILabel *textLB = [[UILabel alloc] initWithFrame:CGRectMake(15 * ProportionAdapter, 70 * ProportionAdapter, screenWidth - 30 * ProportionAdapter, 60 * ProportionAdapter)];
     textLB.text = @"说明：系统为每个球队活动生成唯一“嘉宾参赛码”，嘉宾在此处中输入该码，可直达嘉宾报名页，完成活动报名与付款。";
@@ -38,7 +40,7 @@
     textLB.textColor = [UIColor colorWithHexString:@"#a0a0a0"];
     [self.view addSubview:textLB];
     
-    UIButton *previewBtn = [[UIButton alloc]initWithFrame:CGRectMake(10 * screenWidth / 320, 130 * screenWidth / 320, screenWidth - 20 * screenWidth / 320, 44 * screenWidth / 320)];
+    UIButton *previewBtn = [[UIButton alloc]initWithFrame:CGRectMake(10 * screenWidth / 320, 130 * screenWidth / 320, screenWidth - 20 * screenWidth / 320, 44 * ProportionAdapter)];
     previewBtn.clipsToBounds = YES;
     previewBtn.layer.cornerRadius = 6.f;
     [previewBtn setTitle:@"确定" forState:UIControlStateNormal];
@@ -49,7 +51,14 @@
 }
 
 - (void)payAct{
+    
+    [self.view endEditing:YES];
+    if ([self.enterTF.text length] == 0) {
+        [[ShowHUD showHUD]showToastWithText:@"请输入嘉宾参赛码" FromView:self.view];
+        return;
+    }
     JGDGuestPayViewController *guestPayVC = [[JGDGuestPayViewController alloc] init];
+    guestPayVC.activityKey = self.enterTF.text;
     [self.navigationController pushViewController:guestPayVC animated:YES];
 }
 

@@ -43,7 +43,12 @@
     _dict = [[NSMutableDictionary alloc]init];
 
     [_dict setObject:_userName forKey:@"userName"];
-    [_dict setObject:_phoneNum forKey:@"mobile"];
+    if (![Helper isBlankString:_phoneNum]) {
+        [_dict setObject:_phoneNum forKey:@"mobile"];
+    }
+    else{
+        [_dict setObject:@"" forKey:@"mobile"];
+    }
     
     //密码
     [self createPass];
@@ -164,7 +169,6 @@
         }];
 //        _textPass.text = @"";
         return;
-        
     }
     else
     {
@@ -174,11 +178,11 @@
         _btnBind.userInteractionEnabled = YES;
         _btnBind.backgroundColor = [UIColor colorWithRed:0.33f green:0.70f blue:0.30f alpha:1.00f];
         [[PostDataRequest sharedInstance] postDataRequest:kRegist_URL parameter:_dict success:^(id respondsData) {
+            
             NSDictionary *userData = [NSJSONSerialization JSONObjectWithData:respondsData options:NSJSONReadingMutableContainers error:nil];
 
             if ([[userData objectForKey:@"success"] boolValue]) {
-                
-                
+    
                 [[PostDataRequest sharedInstance]postDataRequest:@"code/saveCodeRecord.do" parameter:@{@"userId":[[userData objectForKey:@"rows"] objectForKey:@"userId"],@"code":_textInvite.text} success:^(id respondsData) {
 //                    NSDictionary *dictCode = [NSJSONSerialization JSONObjectWithData:respondsData options:NSJSONReadingMutableContainers error:nil];
                     

@@ -6,8 +6,7 @@
 //  Copyright © 2016年 bhxx. All rights reserved.
 //
 
-#import "JGHCancelApplyViewController.h"
-#import "JGTeamActivityCell.h"
+#import "JGLCancelDrawbackViewController.h"
 #import "JGTeamAcitivtyModel.h"
 #import "JGHCancelApplyBaseCell.h"
 #import "JGApplyPepoleCell.h"
@@ -19,9 +18,11 @@
 #import "JGTeamActivityViewController.h"
 #import "JGLCancelDrawbackViewController.h"
 
+#import "JGTeamActibityNameViewController.H"
+#import "JGDPrivateAccountViewController.h"
 #define ActivityRefundrules @"提示：活动取消后缴纳的费用将退还到个人账户中，实际退款金额为用户实际缴纳金额，平台补贴金额不在退款范围。如有疑问请与活动组织者联系。"
 
-static NSString *const JGTeamActivityCellIdentifier = @"JGTeamActivityCell";
+static NSString *const TableViewCellIdentifier = @"tableviewcell";
 static NSString *const JGHCancelApplyBaseCellIdentifier = @"JGHCancelApplyBaseCell";
 static NSString *const JGApplyPepoleCellIdentifier = @"JGApplyPepoleCell";
 static NSString *const JGHHeaderLabelCellIdentifier = @"JGHHeaderLabelCell";
@@ -29,23 +30,30 @@ static NSString *const JGHApplyListCellIdentifier = @"JGHApplyListCell";
 static NSString *const JGActivityNameBaseCellIdentifier = @"JGActivityNameBaseCell";
 static NSString *const JGHButtonCellIdentifier = @"JGHButtonCell";
 
-@interface JGHCancelApplyViewController ()<UITableViewDelegate, UITableViewDataSource, JGHApplyListCellDelegate, JGHButtonCellDelegate>
+@interface JGLCancelDrawbackViewController ()<UITableViewDelegate, UITableViewDataSource, JGHApplyListCellDelegate, JGHButtonCellDelegate>
 
 @property (nonatomic, strong)UITableView *cancelApplyTableView;
 
-@property (nonatomic, strong)NSMutableArray *dataArray;
+
 
 @end
 
-@implementation JGHCancelApplyViewController
+@implementation JGLCancelDrawbackViewController
 
 - (instancetype)init{
     if (self == [super init]) {
-        self.dataArray = [NSMutableArray array];
+//        self.dataArray = [NSMutableArray array];
         self.model = [[JGTeamAcitivtyModel alloc]init];
     }
     return self;
 }
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"backL"] style:UIBarButtonItemStylePlain target:self action:@selector(popToViewCtrl)];
+    item.tintColor=[UIColor whiteColor];
+    self.navigationItem.leftBarButtonItem = item;
+}
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -60,11 +68,9 @@ static NSString *const JGHButtonCellIdentifier = @"JGHButtonCell";
     self.cancelApplyTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight - 44)];
     self.cancelApplyTableView.dataSource = self;
     self.cancelApplyTableView.delegate = self;
-    
     self.cancelApplyTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.cancelApplyTableView.backgroundColor = [UIColor colorWithHexString:BG_color];
-    UINib *activityNib = [UINib nibWithNibName:@"JGTeamActivityCell" bundle: [NSBundle mainBundle]];
-    [self.cancelApplyTableView registerNib:activityNib forCellReuseIdentifier:JGTeamActivityCellIdentifier];
+    [self.cancelApplyTableView registerClass:[UITableViewCell class] forCellReuseIdentifier:TableViewCellIdentifier];
     
     UINib *applyNib = [UINib nibWithNibName:@"JGHCancelApplyBaseCell" bundle: [NSBundle mainBundle]];
     [self.cancelApplyTableView registerNib:applyNib forCellReuseIdentifier:JGHCancelApplyBaseCellIdentifier];
@@ -85,51 +91,21 @@ static NSString *const JGHButtonCellIdentifier = @"JGHButtonCell";
     [self.cancelApplyTableView registerNib:btnNib forCellReuseIdentifier:JGHButtonCellIdentifier];
     
     [self.view addSubview:self.cancelApplyTableView];
-    
-    //下载数据
-    [self loadData];
-}
-- (void)loadData{
-    [[ShowHUD showHUD]showAnimationWithText:loadingString FromView:self.view];
-    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    [dict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:userID] forKey:@"userKey"];
-    [dict setObject:[NSString stringWithFormat:@"%td", _activityKey] forKey:@"activityKey"];
-    [[JsonHttp jsonHttp]httpRequest:@"team/getUserActivitySignUpList" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
-        NSLog(@"err = %@", errType);
-        [[ShowHUD showHUD]hideAnimationFromView:self.view];
-    } completionBlock:^(id data) {
-        NSLog(@"data = %@", data);
-        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
-            NSArray *dataArray = [data objectForKey:@"teamSignUpList"];
-            for (NSMutableDictionary *dataDict in dataArray) {
-                NSMutableDictionary *applyDict = [NSMutableDictionary dictionaryWithDictionary:dataDict];
-                [applyDict setObject:@"1" forKey:@"select"];//付款勾选默认勾
-                [self.dataArray addObject:applyDict];
-            }
-        }else{
-            if ([data objectForKey:@"packResultMsg"]) {
-                [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
-            }
-        }
-        
-        [[ShowHUD showHUD]hideAnimationFromView:self.view];
-        [self.cancelApplyTableView reloadData];
-    }];
-}
 
+}
 #pragma mark -- tableView 代理
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    if (section == 2) {
+    if (section == 1) {
         //参赛费用列表
         return _dataArray.count;
     }
     return 0;
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 6;
+    return 5;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (indexPath.section == 2) {
+    if (indexPath.section == 1) {
         return 30;
     }
     return 0;
@@ -139,8 +115,8 @@ static NSString *const JGHButtonCellIdentifier = @"JGHButtonCell";
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     if (section == 0) {
-        return 80;
-    }else if (section == 4){
+        return 44;
+    }else if (section == 3){
         static JGActivityNameBaseCell *cell;
         if (!cell) {
             cell = [self.cancelApplyTableView dequeueReusableCellWithIdentifier:JGActivityNameBaseCellIdentifier];
@@ -154,50 +130,49 @@ static NSString *const JGHButtonCellIdentifier = @"JGHButtonCell";
     return 44;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (indexPath.section == 2) {
+    if (indexPath.section == 1) {
         JGHApplyListCell *applyListCel = [tableView dequeueReusableCellWithIdentifier:JGHApplyListCellIdentifier forIndexPath:indexPath];
         applyListCel.chooseBtn.tag = indexPath.row + 100;
         applyListCel.delegate = self;
         applyListCel.selectionStyle = UITableViewCellSelectionStyleNone;
         [applyListCel configCancelApplyDict:_dataArray[indexPath.row]];
+        applyListCel.chooseBtn.hidden = YES;
+        applyListCel.backgroundColor = [UIColor clearColor];
         return applyListCel;
     }
     return nil;
 }
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     if (section == 0) {
-        JGTeamActivityCell *activityCell = [tableView dequeueReusableCellWithIdentifier:JGTeamActivityCellIdentifier];
-        [activityCell setJGTeamActivityCellWithModel:_model fromCtrl:1];
-        return (UIView *)activityCell;
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:TableViewCellIdentifier];
+        cell.textLabel.text = @"根据您的要求，如下名单报名/退款已经完成：";
+        cell.backgroundColor = [UIColor whiteColor];
+        cell.textLabel.font = [UIFont systemFontOfSize:15*ProportionAdapter];
+        return (UIView *)cell;
     }else if (section == 1){
-        JGHCancelApplyBaseCell *applyBaseCell = [tableView dequeueReusableCellWithIdentifier:JGHCancelApplyBaseCellIdentifier];
-        for (int i=0; i<_dataArray.count; i++) {
-            NSMutableDictionary *dict = _dataArray[i];
-            if ([[dict objectForKey:@"userKey"] integerValue] == [[[NSUserDefaults standardUserDefaults] objectForKey:userID] integerValue]) {
-                [applyBaseCell configDict:_dataArray[i]];
-            }
-        }
-        return (UIView *)applyBaseCell;
-    }else if (section == 2){
         JGApplyPepoleCell *signUoPromptCell = [tableView dequeueReusableCellWithIdentifier:JGApplyPepoleCellIdentifier];
-        [signUoPromptCell configCancelApplyTitles:@"选择取消报名人"];
+        [signUoPromptCell configCancelApplyTitles:@"取消报名人员名单"];
+        signUoPromptCell.directionImageView.hidden = YES;
+        signUoPromptCell.backgroundColor = [UIColor clearColor];
         return (UIView *)signUoPromptCell;
-    }else if (section == 3){
+    }else if (section == 2){
         JGHHeaderLabelCell *activityNameCell = [tableView dequeueReusableCellWithIdentifier:JGHHeaderLabelCellIdentifier];
         activityNameCell.selectionStyle = UITableViewCellSelectionStyleNone;
         [activityNameCell congiftitles:@"应退金额"];
+        activityNameCell.titles.textColor = [UIColor blackColor];
+        activityNameCell.backgroundColor = [UIColor clearColor];
         //计算退款金额
         [activityNameCell configRefoundMonay:[self calculateRefundMonay]];
         return (UIView *)activityNameCell;
-    }else if (section == 4){
+    }else if (section == 3){
         JGActivityNameBaseCell *promptDetailsCell = [tableView dequeueReusableCellWithIdentifier:JGActivityNameBaseCellIdentifier];
         promptDetailsCell.selectionStyle = UITableViewCellSelectionStyleNone;
-        [promptDetailsCell configActivityRefundRulesString:ActivityRefundrules];
+        [promptDetailsCell configCancelDrawback:ActivityRefundrules];
         return (UIView *)promptDetailsCell;
     }else{
         JGHButtonCell *buttonCell = [tableView dequeueReusableCellWithIdentifier:JGHButtonCellIdentifier];
         buttonCell.selectionStyle = UITableViewCellSelectionStyleNone;
-        [buttonCell.clickBtn setTitle:@"取消报名" forState:UIControlStateNormal];
+        [buttonCell.clickBtn setTitle:@"查看个人账户" forState:UIControlStateNormal];
         buttonCell.delegate = self;
         buttonCell.backgroundColor = [UIColor colorWithHexString:BG_color];
         return (UIView *)buttonCell;
@@ -221,102 +196,17 @@ static NSString *const JGHButtonCellIdentifier = @"JGHButtonCell";
     return refoundMonay;
 }
 
-#pragma mark -- 勾选事件代理
-- (void)didChooseBtn:(UIButton *)btn{
-    NSLog(@"%ld", (long)btn.tag);
-    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    dict = [_dataArray objectAtIndex:btn.tag-100];
-    if ([[dict objectForKey:@"select"] integerValue] == 0) {
-        [dict setObject:@"1" forKey:@"select"];
-        [_dataArray replaceObjectAtIndex:btn.tag-100 withObject:dict];
-    }else{
-        [dict setObject:@"0" forKey:@"select"];
-        [_dataArray replaceObjectAtIndex:btn.tag-100 withObject:dict];
-    }
-    
-    //计算价格
-    [self.cancelApplyTableView reloadData];
-}
 #pragma mark --取消报名
 - (void)selectCommitBtnClick:(UIButton *)btn{
-    NSInteger applyCount = 0;
-    for (NSMutableDictionary *dict in _dataArray) {
-        if ([[dict objectForKey:@"select"] integerValue] == 1) {
-            applyCount += 1;
-        }
-    }
-    
-    if (applyCount == 0) {
-        [[ShowHUD showHUD]showToastWithText:@"请选择取消报名人！" FromView:self.view];
-    }else{
-        [Helper alertViewWithTitle:@"确定取消报名？" withBlockCancle:^{
-            NSLog(@"取消报名");
-        } withBlockSure:^{
-            [self cancelApply];
-        } withBlock:^(UIAlertController *alertView) {
-            [self presentViewController:alertView animated:YES completion:nil];
-        }];
-    }
+    JGDPrivateAccountViewController* priVc = [[JGDPrivateAccountViewController alloc]init];
+    [self.navigationController pushViewController:priVc animated:YES];
 }
 
-- (void)cancelApply{
-    [[ShowHUD showHUD]showAnimationWithText:@"提交中..." FromView:self.view];
-    NSMutableDictionary *postDict = [NSMutableDictionary dictionary];
-    NSMutableArray *signupKeyArray = [NSMutableArray array];
-    for (NSMutableDictionary *dict in _dataArray) {
-        if ([[dict objectForKey:@"select"] integerValue] == 1) {
-            if ([[dict objectForKey:@"timeKey"] integerValue] != 0) {
-                [signupKeyArray addObject:[dict objectForKey:@"timeKey"]];
-            }else{
-                [signupKeyArray addObject:[dict objectForKey:@"teamActivityKey"]];
-            }
-        }
-    }
-    //signupKeyList
-    [postDict setObject:signupKeyArray forKey:@"signupKeyList"];
-    //activityKey
-    [postDict setObject:[NSString stringWithFormat:@"%td", _activityKey] forKey:@"activityKey"];
-    [[JsonHttp jsonHttp]httpRequest:@"team/doUnSignUpTeamActivity" JsonKey:nil withData:postDict requestMethod:@"POST" failedBlock:^(id errType) {
-        NSLog(@"errType == %@", errType);
-        [[ShowHUD showHUD]hideAnimationFromView:self.view];
-    } completionBlock:^(id data) {
-        NSLog(@"data == %@", data);
-        [[ShowHUD showHUD]hideAnimationFromView:self.view];
-        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
-            [[ShowHUD showHUD]showToastWithText:@"取消报名成功！" FromView:self.view];
-            [self performSelector:@selector(popCtrl) withObject:self afterDelay:1.0];
-        }else{
-            if ([data objectForKey:@"packResultMsg"]) {
-                [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
-            }
-        }
-    }];
-}
 
-- (void)popCtrl{
+- (void)popToViewCtrl{
     //创建一个消息对象
-//    NSNotification * notice = [NSNotification notificationWithName:@"reloadActivityData" object:nil userInfo:nil];
-//    //            发送消息
-//    [[NSNotificationCenter defaultCenter]postNotification:notice];
-//    [self.navigationController popViewControllerAnimated:YES];
-
-    JGLCancelDrawbackViewController* canVc = [[JGLCancelDrawbackViewController alloc]init];
-    canVc.model = self.model;
-    canVc.activityKey = self.activityKey;
-    
-    NSMutableArray *signupKeyArray = [NSMutableArray array];
-    for (int i = 0; i < _dataArray.count; i++) {
-        if ([[_dataArray[i] objectForKey:@"select"] integerValue] == 1) {
-            [signupKeyArray addObject:_dataArray[i]];
-        }
-    }
-    canVc.dataArray = signupKeyArray;
-    [self.navigationController pushViewController:canVc animated:YES];
-}
-
-- (void)pushCtrl{
     for (UIViewController *controller in self.navigationController.viewControllers) {
-        if ([controller isKindOfClass:[JGTeamActivityViewController class]]) {
+        if ([controller isKindOfClass:[JGTeamActibityNameViewController class]]) {
             //创建一个消息对象
             NSNotification * notice = [NSNotification notificationWithName:@"reloadActivityData" object:nil userInfo:nil];
             //            发送消息
@@ -326,19 +216,23 @@ static NSString *const JGHButtonCellIdentifier = @"JGHButtonCell";
     }
 }
 
+//- (void)pushCtrl{
+//    
+//}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end
