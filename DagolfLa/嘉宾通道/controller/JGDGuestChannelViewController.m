@@ -33,6 +33,10 @@
     self.enterTF.keyboardType = UIKeyboardTypeNumberPad;
     [self.view addSubview:self.enterTF];
     
+    if (self.activityKey) {
+        self.enterTF.text = self.activityKey;
+    }
+    
     UILabel *textLB = [[UILabel alloc] initWithFrame:CGRectMake(15 * ProportionAdapter, 70 * ProportionAdapter, screenWidth - 30 * ProportionAdapter, 60 * ProportionAdapter)];
     textLB.text = @"说明：系统为每个球队活动生成唯一“嘉宾参赛码”，嘉宾在此处中输入该码，可直达嘉宾报名页，完成活动报名与付款。";
     textLB.numberOfLines = 0;

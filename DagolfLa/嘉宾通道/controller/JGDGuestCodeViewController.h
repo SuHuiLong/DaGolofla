@@ -10,4 +10,6 @@
 
 @interface JGDGuestCodeViewController : ViewController
 
+@property (nonatomic, copy) NSString *timeKey;
+
 @end

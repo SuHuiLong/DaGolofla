@@ -10,4 +10,6 @@
 
 @interface JGDGuestChannelViewController : ViewController
 
+@property (nonatomic, copy) NSString *activityKey;
+
 @end
