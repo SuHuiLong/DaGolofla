@@ -392,32 +392,17 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
 }
 #pragma mark -- 添加嘉宾
 - (void)addApplyPeopleClick{
-    /*
-    NSMutableArray *array = [NSMutableArray array];
-    array = [NSMutableArray arrayWithArray:_baseInfoArray];
-    for (int i=0; i<5; i++) {
-        [array removeObjectAtIndex:0];
-    }
-    
-    NSMutableArray *arrayData = [NSMutableArray array];
-    if (array.count > 0) {
-        [arrayData addObject:_baseInfoArray[4]];
-        [arrayData addObject:_baseInfoArray[3]];
-        for (int i=0; i<array.count; i++) {
-            [arrayData addObject:array[i]];
-        }
-    }else{
-        [arrayData addObject:_baseInfoArray[4]];
-        [arrayData addObject:_baseInfoArray[3]];
-    }
-    */
     JGHAddTeamPlaysViewController *addTeamPlaysCtrl = [[JGHAddTeamPlaysViewController alloc]init];
-//    addTeamGuestCtrl.delegate = self;
-    
-//    addTeamGuestCtrl.applyArray = self.applyArray;
-//    addTeamGuestCtrl.catoryArray = arrayData;
     addTeamPlaysCtrl.costListArray = [NSMutableArray arrayWithArray:_costListArray];
     addTeamPlaysCtrl.playListArray = _applyArray;
+    if (_modelss.teamActivityKey != 0) {
+        addTeamPlaysCtrl.activityKey = _modelss.teamActivityKey;
+    }else{
+        addTeamPlaysCtrl.activityKey = [_modelss.timeKey integerValue];
+    }
+    
+    addTeamPlaysCtrl.teamKey = _modelss.teamKey;
+    
     [self.navigationController pushViewController:addTeamPlaysCtrl animated:YES];
 }
 - (void)didReceiveMemoryWarning {

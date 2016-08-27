@@ -14,4 +14,8 @@
 
 @property (nonatomic, strong)NSMutableArray *playListArray;//打球人
 
+@property (nonatomic, assign)NSInteger activityKey;//活动Key
+
+@property (nonatomic, assign)NSInteger teamKey;//球队Key
+
 @end
