@@ -351,7 +351,11 @@ static CGFloat ImageHeight  = 210.0;
             
             [launchActivityCell configTitlesString:str[indexPath.row]];
             
-            [launchActivityCell configContionsStringWhitModel:self.model andIndexPath:indexPath];
+            if (indexPath.section == 2) {
+                [launchActivityCell configActivityCost:_costListArray];
+            }else{
+                [launchActivityCell configContionsStringWhitModel:self.model andIndexPath:indexPath];
+            }
             
             return launchActivityCell;
         }
@@ -379,17 +383,13 @@ static CGFloat ImageHeight  = 210.0;
                 [self.launchActivityTableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indPath, nil] withRowAnimation:UITableViewRowAnimationNone];
             };
             [self.navigationController pushViewController:datePicksCrel animated:YES];
-            
-            //                [_dataDict setObject:dateStr forKey:@"activityBeginDate"];
         }else{
             DateTimeViewController *dataCtrl = [[DateTimeViewController alloc]init];
             [dataCtrl setCallback:^(NSString *dateStr, NSString *dateWeek, NSString *str) {
                 if(indexPath.row == 1){
                     [self.model setValue:[NSString stringWithFormat:@"%@ 23:59:59", dateStr] forKey:@"endDate"];
-                    //                [_dataDict setObject:dateStr forKey:@"activityEndDate"];endDate
                 }else{
                     [self.model setValue:[NSString stringWithFormat:@"%@ 23:59:59", dateStr] forKey:@"signUpEndTime"];
-                    //                [_dataDict setObject:dateStr forKey:@"activityEignUpEndTime"];
                 }
                 
                 NSIndexPath *indPath = [NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section];
@@ -517,14 +517,10 @@ static CGFloat ImageHeight  = 210.0;
         [[ShowHUD showHUD]showToastWithText:@"活动说明不能为空！" FromView:self.view];
         return;
     }
+
     
-    if (self.model.memberPrice < 0) {
-        [[ShowHUD showHUD]showToastWithText:@"请填写活动会员价！" FromView:self.view];
-        return;
-    }
-    
-    if (self.model.guestPrice <= 0) {
-        [[ShowHUD showHUD]showToastWithText:@"请填写活动嘉宾价！" FromView:self.view];
+    if (self.costListArray.count == 0) {
+        [[ShowHUD showHUD]showToastWithText:@"请填写活动资费！" FromView:self.view];
         return;
     }
     
@@ -534,6 +530,7 @@ static CGFloat ImageHeight  = 210.0;
     }
     
     [[ShowHUD showHUD]showAnimationWithText:@"提交中..." FromView:self.view];
+    NSMutableDictionary *postDict = [NSMutableDictionary dictionary];
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     [dict setObject:[NSString stringWithFormat:@"%td", self.teamKey] forKey:@"teamKey"];//球队key
     [dict setObject:@0 forKey:@"timeKey"];
@@ -549,10 +546,13 @@ static CGFloat ImageHeight  = 210.0;
     [dict setObject:[NSString stringWithFormat:@"%ld", (long)self.model.ballKey] forKey:@"ballKey"];//球场id
     [dict setObject:self.model.ballName forKey:@"ballName"];//球场名称
     [dict setObject:self.model.info forKey:@"info"];//活动简介
-    [dict setObject:[NSString stringWithFormat:@"%.2f", [self.model.memberPrice floatValue]] forKey:@"memberPrice"];//会员价
-    [dict setObject:[NSString stringWithFormat:@"%.2f", [self.model.guestPrice floatValue]] forKey:@"guestPrice"];//嘉宾价
-    [dict setObject:[NSString stringWithFormat:@"%.2f", [self.model.billNamePrice floatValue]] forKey:@"billNamePrice"];//球队会员记名价
-    [dict setObject:[NSString stringWithFormat:@"%.2f", [self.model.billPrice floatValue]] forKey:@"billPrice"];//球队会员不记名价
+    /*
+     [dict setObject:[NSString stringWithFormat:@"%.2f", [self.model.memberPrice floatValue]] forKey:@"memberPrice"];//会员价
+     [dict setObject:[NSString stringWithFormat:@"%.2f", [self.model.guestPrice floatValue]] forKey:@"guestPrice"];//嘉宾价
+     [dict setObject:[NSString stringWithFormat:@"%.2f", [self.model.billNamePrice floatValue]] forKey:@"billNamePrice"];//球队会员记名价
+     [dict setObject:[NSString stringWithFormat:@"%.2f", [self.model.billPrice floatValue]] forKey:@"billPrice"];//球队会员不记名价
+     */
+    
     [dict setObject:[NSString stringWithFormat:@"%ld", (long)self.model.maxCount] forKey:@"maxCount"];//最大人员数
     [dict setObject:[NSString stringWithFormat:@"%ld", (long)_model.isClose] forKey:@"isClose"];//活动是否结束 0 : 开始 , 1 : 已结束
     NSDateFormatter *formatter =[[NSDateFormatter alloc] init];
@@ -562,8 +562,10 @@ static CGFloat ImageHeight  = 210.0;
     [dict setObject:self.model.userName forKey:@"userName"];//联系人
     [dict setObject:self.model.userMobile forKey:@"userMobile"];//联系人
     
+    [postDict setObject:dict forKey:@"teamActivity"];
+    [postDict setObject:_costListArray forKey:@"costList"];
     //发布活动
-    [[JsonHttp jsonHttp]httpRequest:@"team/createTeamActivity" JsonKey:@"teamActivity" withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
+    [[JsonHttp jsonHttp]httpRequest:@"team/createTeamActivity" JsonKey:nil withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
         NSLog(@"%@", errType);
         [[ShowHUD showHUD]hideAnimationFromView:self.view];
     } completionBlock:^(id data) {
@@ -613,7 +615,6 @@ static CGFloat ImageHeight  = 210.0;
                         [self presentViewController:alertController animated:YES completion:nil];
                     });
                 }
-                
             }else{
                 
             }
@@ -686,6 +687,12 @@ static CGFloat ImageHeight  = 210.0;
     [self.launchActivityTableView reloadData];
 }
 #pragma mark -- 费用代理
+- (void)costList:(NSMutableArray *)costArray{
+    self.costListArray = costArray;
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:2];
+    NSArray *indexArray=[NSArray arrayWithObject:indexPath];
+    [self.launchActivityTableView reloadRowsAtIndexPaths:indexArray withRowAnimation:UITableViewRowAnimationAutomatic];
+}
 - (void)inputMembersCost:(NSString *)membersCost guestCost:(NSString *)guestCost andRegisteredPrice:(NSString *)registeredPrice andBearerPrice:(NSString *)bearerPrice{
     NSLog(@"%@", [Helper returnNumberForString:guestCost]);
     NSLog(@"%@", [Helper returnNumberForString:membersCost]);

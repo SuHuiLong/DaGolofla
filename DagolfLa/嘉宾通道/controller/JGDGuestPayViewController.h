@@ -10,4 +10,6 @@
 
 @interface JGDGuestPayViewController : ViewController
 
+@property (nonatomic, copy) NSString *activityKey;
+
 @end
