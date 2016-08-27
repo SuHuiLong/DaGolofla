@@ -73,10 +73,10 @@
 - (void)downLoadData:(int)page isReshing:(BOOL)isReshing{
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     
-    [dict setObject:@"4372" forKey:@"teamKey"];
+    [dict setObject:[NSNumber numberWithInteger:self.teamKey] forKey:@"teamKey"];
     [dict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:userID] forKey:@"userKey"];
     [dict setObject:[NSNumber numberWithInt:page] forKey:@"offset"];
-    NSString *para = [JGReturnMD5Str getTeamMemberListWithTeamKey:[@4372 integerValue] userKey:[DEFAULF_USERID integerValue]];
+    NSString *para = [JGReturnMD5Str getTeamMemberListWithTeamKey:self.teamKey userKey:[DEFAULF_USERID integerValue]];
     [dict setObject:para forKey:@"md5"];
     
     [[JsonHttp jsonHttp]httpRequest:@"team/getTeamMemberList" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
