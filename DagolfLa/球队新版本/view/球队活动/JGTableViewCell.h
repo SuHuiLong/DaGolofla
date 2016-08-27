@@ -25,4 +25,6 @@
 
 - (void)configTimeString:(JGTeamAcitivtyModel *)model andTag:(NSInteger)tag;
 
+- (void)configActivityCost:(NSMutableArray *)costArray;
+
 @end

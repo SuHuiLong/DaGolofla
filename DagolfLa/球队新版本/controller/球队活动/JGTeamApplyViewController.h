@@ -32,4 +32,6 @@
 
 @property (nonatomic, strong)NSDictionary *teamMember;
 
+@property (nonatomic, strong)NSMutableArray *costListArray;//报名资费列表
+
 @end
