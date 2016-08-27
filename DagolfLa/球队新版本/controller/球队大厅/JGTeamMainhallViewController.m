@@ -28,13 +28,14 @@
 
 #import "JGLViewCityChoose.h"
 
-@interface JGTeamMainhallViewController ()<UITableViewDelegate,UITableViewDataSource,CLLocationManagerDelegate,UIBarPositioningDelegate>
+@interface JGTeamMainhallViewController ()<UITableViewDelegate,UITableViewDataSource,CLLocationManagerDelegate,UIBarPositioningDelegate,UITextFieldDelegate>
 {
     UITextField *_textField;
     NSString* _strSearch;//搜索的字符串
-    JGLViewCityChoose* _viewCityChoose;
+    
     
     NSString* _strProvince;//省份的字符串
+//    UILabel* _labelCity;
 }
 
 @property (strong, nonatomic) UITableView *tableView;
@@ -43,7 +44,8 @@
 @property (assign, nonatomic) NSInteger page;
 @property (strong, nonatomic) CLLocationManager* locationManager;
 @property (strong, nonatomic) NSMutableArray *modelArray; //数据源
-
+@property (strong, nonatomic) UILabel *labelCity; //数据源
+@property (strong, nonatomic) JGLViewCityChoose* viewCityChoose;
 @end
 
 
@@ -56,6 +58,7 @@
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
+    _viewCityChoose.hidden = YES;
 
 }
 
@@ -79,11 +82,16 @@
     btnCity.layer.cornerRadius = 5;
     [view addSubview:btnCity];
     
-    UILabel* labelCity = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 50*ScreenWidth/375, 34*ScreenWidth/375)];
-    labelCity.font = [UIFont systemFontOfSize:14*ScreenWidth/375];
-    labelCity.textAlignment = NSTextAlignmentCenter;
-    [btnCity addSubview:labelCity];
-    labelCity.text = @"上海";
+    _labelCity = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 50*ScreenWidth/375, 34*ScreenWidth/375)];
+    _labelCity.font = [UIFont systemFontOfSize:14*ScreenWidth/375];
+    _labelCity.textAlignment = NSTextAlignmentCenter;
+    [btnCity addSubview:_labelCity];
+    if (![Helper isBlankString:_strProvince]) {
+        _labelCity.text = _strProvince;
+    }else{
+        _labelCity.text = @"上海";
+    }
+    
     
     UIImageView* imgvCity = [[UIImageView alloc]initWithFrame:CGRectMake(54*ScreenWidth/375, 5, 12*ScreenWidth/375, 24)];
     imgvCity.image = [UIImage imageNamed:@"xl"];
@@ -127,6 +135,13 @@
     [SeachButton addTarget:self action:@selector(searchBarSearchButtonClick) forControlEvents:UIControlEventTouchUpInside];
     [view addSubview:SeachButton];
 }
+#pragma  mark --textfield
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
+{
+    _viewCityChoose.hidden = YES;
+    return YES;
+}
+
 
 #pragma mark --城市选择view的点击事件
 -(void)cityShowCLick
@@ -134,6 +149,15 @@
     if (_viewCityChoose) {
         if (_viewCityChoose.hidden == YES) {
             _viewCityChoose.hidden = NO;
+            __weak JGTeamMainhallViewController* weakSelf = self;
+            _viewCityChoose.blockStrPro = ^(NSString* strPro){
+                _strProvince = strPro;
+                //        weakSelf.text = strPro;
+                weakSelf.labelCity.text = strPro;
+                weakSelf.tableView.header=[MJDIYHeader headerWithRefreshingTarget:weakSelf refreshingAction:@selector(headRereshing)];
+                [weakSelf.tableView.header beginRefreshing];
+                
+            };
         }
         else{
             _viewCityChoose.hidden = YES;
@@ -146,19 +170,29 @@
 -(void)createBtnView
 {
     _viewCityChoose = [[JGLViewCityChoose alloc]initWithFrame:CGRectMake(10*ProportionAdapter, 44, ScreenWidth-20*ProportionAdapter, 144*ProportionAdapter)];
+    
     if (![Helper isBlankString:_strProvince]) {
         _viewCityChoose.strProVince = _strProvince;
+        [_viewCityChoose initwithStr:_strProvince];
     }else{
         _viewCityChoose.strProVince = @"上海";
+        [_viewCityChoose initwithStr:_strProvince];
     }
-    
+    __weak JGTeamMainhallViewController* weakSelf = self;
+    _viewCityChoose.blockStrPro = ^(NSString* strPro){
+        _strProvince = strPro;
+//        weakSelf.text = strPro;
+        weakSelf.labelCity.text = strPro;
+        weakSelf.tableView.header=[MJDIYHeader headerWithRefreshingTarget:weakSelf refreshingAction:@selector(headRereshing)];
+        [weakSelf.tableView.header beginRefreshing];
+    };
     [self.view addSubview:_viewCityChoose];
 }
 
 #pragma mark --搜索按钮点击事件
 -(void)searchBarSearchButtonClick{
     [self.searchArray removeAllObjects];
-    
+    _viewCityChoose.hidden = YES;
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     [dict setObject:_textField.text forKey:@"likeName"];
     [dict setObject:[[NSUserDefaults standardUserDefaults]objectForKey:@"userId"] forKey:@"userKey"];
@@ -215,39 +249,14 @@
     [self createSeachBar];
     
     _tableView.rowHeight = 80 * ScreenWidth/320;
-////    _tableView.scrollEnabled = NO;
-//    _searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
-//    _searchController.searchResultsUpdater = self;
-//    _searchController.searchBar.barTintColor = [UIColor colorWithRed:0.94 green:0.94 blue:0.94 alpha:1];
-//    _searchController.dimsBackgroundDuringPresentation = NO;
-//    _searchController.hidesNavigationBarDuringPresentation = NO;
-//    _searchController.searchBar.frame = CGRectMake(120, 0, screenWidth-120, 44.0);
-//    self.searchController.searchBar.tintColor = [UIColor colorWithRed:0.36f green:0.66f blue:0.31f alpha:1.00f];
-//    self.searchController.searchBar.placeholder = @"输入球队昵称搜索";
-//    self.tableView.tableHeaderView = self.searchController.searchBar;
-//    self.searchController.searchBar.delegate = self;
-//    [self getData];
+
 }
 
-
-//- (void)getData{
-//    
-//    [[JsonHttp jsonHttp] httpRequest:@"team/getTeamList" JsonKey:nil withData:self.paraDic requestMethod:@"GET" failedBlock:^(id errType) {
-//        NSLog(@"error");
-//    } completionBlock:^(id data) {
-//        self.modelArray = [data objectForKey:@"teamList"];
-//        [self.tableView reloadData];
-//
-//    }];
-//    
-//}
 //创建球队
 - (void)creatTeam{
-    
+    _viewCityChoose.hidden = YES;
     NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
-    
-    
-    
+
     if ([user objectForKey:@"cacheCreatTeamDic"]) {
         UIAlertController *alert=[UIAlertController alertControllerWithTitle:@"提示" message:@"是否继续上次编辑" preferredStyle:UIAlertControllerStyleAlert];
         
@@ -291,9 +300,15 @@
 
 #pragma mark - 下载数据
 - (void)downLoadData:(NSInteger)page isReshing:(BOOL)isReshing{
+    _viewCityChoose.hidden = YES;
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    
     [dict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"userId"] forKey:@"userKey"];
+    if (![Helper isBlankString:_strProvince]) {
+        if ([_strProvince containsString:@"全国"] == NO) {
+            NSLog(@"%@", _strProvince);
+            [dict setObject:_strProvince forKey:@"province"];
+        }
+    }
     [dict setObject:[NSNumber numberWithInteger:_page] forKey:@"offset"];
     [[JsonHttp jsonHttp]httpRequest:@"team/getTeamList" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
         if (isReshing) {
@@ -302,14 +317,13 @@
             [_tableView.footer endRefreshing];
         }
     } completionBlock:^(id data) {
+        if (_page == 0)
+        {
+            //清除数组数据
+            [self.searchArray removeAllObjects];
+            [self.modelArray removeAllObjects];
+        }
         if ([data objectForKey:@"teamList"]) {
-            if (_page == 0)
-            {
-                //清除数组数据
-                [self.searchArray removeAllObjects];
-                [self.modelArray removeAllObjects];
-            }
-
             [self.modelArray addObjectsFromArray:[data objectForKey:@"teamList"]];
             
             _page++;
@@ -367,6 +381,7 @@
                  city = placemark.administrativeArea;
              }
              _strProvince = city;
+             _labelCity.text = city;
          }
          else if (error == nil && [array count] == 0)
          {
@@ -468,6 +483,7 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    _viewCityChoose.hidden = YES;
     NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
     if (DEFAULF_USERID != nil) {
         [dic setObject:DEFAULF_USERID forKey:@"userKey"];

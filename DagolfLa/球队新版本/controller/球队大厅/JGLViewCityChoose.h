@@ -12,6 +12,10 @@
 
 @property (strong, nonatomic) NSString* strProVince;
 
+-(void)initwithStr:(NSString *)str;
+
+
+@property (copy, nonatomic) void (^blockStrPro)(NSString *);
 
 
 @end
