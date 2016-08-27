@@ -16,6 +16,7 @@
 #import "JGHAddressBookPlaysViewController.h"
 #import "JGHAddTeamMemberViewController.h"
 #import "JGHAddApplyTeamPlaysViewController.h"
+#import "TKAddressModel.h"
 
 static NSString *const JGHHeaderLabelCellIdentifier = @"JGHHeaderLabelCell";
 static NSString *const JGHAddPlaysCellIdentifier = @"JGHAddPlaysCell";
@@ -229,6 +230,23 @@ static NSString *const JGPlayPayBaseCellIdentifier = @"JGPlayPayBaseCell";
     
     JGHAddressBookPlaysViewController *addressBookCtrl = [[JGHAddressBookPlaysViewController alloc]init];
     
+    __weak JGHAddTeamPlaysViewController *weakSelf = self;
+    addressBookCtrl.blockAddressPeople = ^(TKAddressModel *model){
+        NSString* str1 = model.userName;
+        NSString* str2 = model.mobile;
+        
+        if (model.userName) {
+            [_playsBaseDict setObject:model.userName forKey:@"name"];
+        }
+        
+        if (model.mobile) {
+            [_playsBaseDict setObject:model.mobile forKey:@"mobile"];
+        }
+        
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:1];
+        NSArray *indexArray=[NSArray arrayWithObject:indexPath];
+        [weakSelf.addTeamPlaysTableView reloadRowsAtIndexPaths:indexArray withRowAnimation:UITableViewRowAnimationAutomatic];
+    };
     [self.navigationController pushViewController:addressBookCtrl animated:YES];
 }
 #pragma mark -- 立即添加--资费类型

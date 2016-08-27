@@ -13,7 +13,7 @@
 
 @interface JGHAddressBookPlaysViewController : ViewController<ABPeoplePickerNavigationControllerDelegate>
 
-@property (copy, nonatomic) void (^blockAddressPeople)(NSMutableDictionary* dict);
+@property (copy, nonatomic) void (^blockAddressPeople)(TKAddressModel* dict);
 
 @property (strong, nonatomic) NSMutableDictionary* dictFinish;
 
