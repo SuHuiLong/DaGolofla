@@ -477,7 +477,7 @@
     NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
     [dict setObject:[NSNumber numberWithFloat:self.money]  forKey:@"money"];
     //    [dict setObject:@0.01 forKey:@"money"];
-    [dict setObject:@1 forKey:@"orderType"];
+    [dict setObject:@2 forKey:@"orderType"];
     [dict setObject:self.infoKey forKey:@"srcKey"]; // teammember's timekey
     
     [[JsonHttp jsonHttp]httpRequest:@"pay/doPayByAliPay" JsonKey:@"payInfo" withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
