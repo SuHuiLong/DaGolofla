@@ -11,6 +11,7 @@
 #import "JGDGuestTableViewCell.h"
 #import "JGTeamAcitivtyModel.h"
 #import <AlipaySDK/AlipaySDK.h>
+#import "JGTeamChannelViewController.h"
 
 
 @interface JGDGuestPayViewController ()<UITableViewDelegate, UITableViewDataSource>
@@ -122,9 +123,9 @@
         JGDGuestTableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
         cell.selectView.image = [UIImage imageNamed:@"xuan_z"];
         [self.teamSignUpDic setObject:[self.costArray[indexPath.row] objectForKey:@"costType"] forKey:@"type"];
-        self.money = [[self.costArray[indexPath.row] objectForKey:@"money"] floatValue] - [self.model.subsidyPrice integerValue];
+        self.money = [[self.costArray[indexPath.row] objectForKey:@"money"] floatValue];
         NSInteger subsidy = [self.model.subsidyPrice integerValue];
-        NSMutableAttributedString *attriStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"平台补贴费用%td元 实付金额：%.2f", subsidy, [[self.costArray[indexPath.row] objectForKey:@"money"] floatValue] - subsidy]];
+        NSMutableAttributedString *attriStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"平台补贴费用%td元 实付金额：%.2f", subsidy, [[self.costArray[indexPath.row] objectForKey:@"money"] floatValue]]];
         [attriStr addAttribute:NSForegroundColorAttributeName value:[UIColor orangeColor] range:NSMakeRange(6, [[NSString stringWithFormat:@"%td", subsidy] length])];
         [attriStr addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:NSMakeRange(attriStr.length - [[NSString stringWithFormat:@"%.2f", self.money] length], [[NSString stringWithFormat:@"%.2f", self.money] length])];
 
@@ -299,9 +300,11 @@
     [footView addSubview:self.footLB];
     
     UIButton *payBtn = [UIButton buttonWithType:(UIButtonTypeCustom)];
-    payBtn.frame = CGRectMake(260 * ProportionAdapter, 1 * ProportionAdapter, screenWidth - 260 * ProportionAdapter, 60 * ProportionAdapter);
+    payBtn.frame = CGRectMake(270 * ProportionAdapter, 1 * ProportionAdapter, screenWidth - 270 * ProportionAdapter, 60 * ProportionAdapter);
     payBtn.backgroundColor = [UIColor colorWithHexString:@"#F59826"];
     [payBtn setTitle:@"报名并支付" forState:(UIControlStateNormal)];
+    
+    payBtn.titleLabel.font = [UIFont systemFontOfSize:18 * ProportionAdapter];
     [payBtn setTitleColor:[UIColor whiteColor] forState:(UIControlStateNormal)];
     [payBtn addTarget:self action:@selector(payAct) forControlEvents:(UIControlEventTouchUpInside)];
     [footView addSubview:payBtn];
@@ -459,13 +462,41 @@
 - (void)notice:(NSNotification *)not{
     NSInteger secess = [[not.userInfo objectForKey:@"secess"] integerValue];
     if (secess == 1) {
-        [self.navigationController popToRootViewControllerAnimated:YES];
+        
+        [[ShowHUD showHUD]showToastWithText:@"支付已取消！" FromView:self.view];
+        [self performSelector:@selector(popToChannel) withObject:self afterDelay:1];
+        
     }else if (secess == 2){
         [[ShowHUD showHUD]showToastWithText:@"支付已取消！" FromView:self.view];
     }else{
         [[ShowHUD showHUD]showToastWithText:@"支付失败！" FromView:self.view];
     }
 }
+
+
+- (void)popToChannel{
+    if ([NSThread isMainThread]) {
+        NSLog(@"Yay!");
+        for (UIViewController *controller in self.navigationController.viewControllers) {
+            if ([controller isKindOfClass:[JGTeamChannelViewController class]]) {
+                //                [[NSNotificationCenter defaultCenter] postNotificationName:@"CaddieScoreRefreshing" object:@{@"cabbie": @"1"}];
+                [self.navigationController popToViewController:controller animated:YES];
+            }
+        }
+    } else {
+        NSLog(@"Humph, switching to main");
+        dispatch_async(dispatch_get_main_queue(), ^{
+            for (UIViewController *controller in self.navigationController.viewControllers) {
+                if ([controller isKindOfClass:[JGTeamChannelViewController class]]) {
+                    //                    [[NSNotificationCenter defaultCenter] postNotificationName:@"CaddieScoreRefreshing" object:@{@"cabbie": @"1"}];
+                    [self.navigationController popToViewController:controller animated:YES];
+                }
+            }
+        });
+    }
+}
+
+
 - (void)dealloc{
     [[NSNotificationCenter defaultCenter]removeObserver:self];
 }
@@ -489,10 +520,10 @@
             
             
             if ([resultDic[@"resultStatus"] isEqualToString:@"9000"]) {
-                NSLog(@"成功！");
+                [[ShowHUD showHUD]showToastWithText:@"支付成功！" FromView:self.view];
                 //跳转分组页面
-
-                [self.navigationController popToRootViewControllerAnimated:YES];
+                [self performSelector:@selector(popToChannel) withObject:self afterDelay:1];
+                
             } else if ([resultDic[@"resultStatus"] isEqualToString:@"4000"]) {
                 NSLog(@"失败");
                 [[ShowHUD showHUD]showToastWithText:@"支付失败！" FromView:self.view];
