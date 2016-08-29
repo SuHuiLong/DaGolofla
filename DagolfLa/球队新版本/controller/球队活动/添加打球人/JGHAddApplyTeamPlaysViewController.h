@@ -7,10 +7,11 @@
 //
 
 #import "ViewController.h"
+@class JGLTeamMemberModel;
 
 @interface JGHAddApplyTeamPlaysViewController : ViewController
 
-@property (copy, nonatomic) void (^blockFriendDict)(NSMutableDictionary *);
+@property (copy, nonatomic) void (^blockFriendDict)(JGLTeamMemberModel *model);
 @property (strong, nonatomic) NSMutableDictionary* dictFinish;
 
 @property (assign, nonatomic) NSInteger lastIndex;

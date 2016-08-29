@@ -51,6 +51,10 @@
 //    }
 }
 
+- (void)configActivityInfo:(NSString *)info{
+    self.contions.text = info;
+}
+
 - (void)configActivityCost:(NSMutableArray *)costArray{
     if (costArray.count == 0) {
         self.contions.text = @"0.00";

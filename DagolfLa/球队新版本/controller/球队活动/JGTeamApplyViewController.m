@@ -40,13 +40,15 @@ static NSString *const JGHApplyNewCellIdentifier = @"JGHApplyNewCell";
 static NSString *const JGSignUoPromptCellIdentifier = @"JGSignUoPromptCell";
 static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
 
-@interface JGTeamApplyViewController ()<JGApplyPepoleCellDelegate, JGHApplyNewCellDelegate, JGHAddInvoiceViewControllerDelegate, JGHApplyListViewDelegate, JGHJustApplyListViewDelegate>
+@interface JGTeamApplyViewController ()<JGApplyPepoleCellDelegate, JGHApplyNewCellDelegate, JGHAddInvoiceViewControllerDelegate, JGHApplyListViewDelegate, JGHJustApplyListViewDelegate, JGHApplyCatoryPriceViewDelegate>
 {
     UIAlertController *_actionView;
     
     NSInteger _w;
     NSInteger _z;
     NSString *_infoKey;
+    
+    NSInteger _editorPlayId;//修改价格 ID -0
 }
 
 @property (nonatomic, strong)NSArray *titleArray;//标题
@@ -132,6 +134,7 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
     _realPayPrice = 0;
     _subsidiesPrice = 0;
     _amountPayable = 0;
+    _editorPlayId = 0;
 
     [_baseInfoArray addObject:[NSString stringWithFormat:@"%@-活动名称", _modelss.name]];
     [_baseInfoArray addObject:[NSString stringWithFormat:@"%@-活动地址", _modelss.ballName]];
@@ -160,7 +163,7 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
         [applyDict setObject:_modelss.timeKey forKey:@"activityKey"];//球队活动id
         [applyDict setObject:@1 forKey:@"type"];//"是否是球队成员 0: 不是  1：是
         
-        [applyDict setObject:[NSString stringWithFormat:@"%.2f", [_modelss.memberPrice floatValue]] forKey:@"payMoney"];//实际付款金额
+        [applyDict setObject:[NSString stringWithFormat:@"%.2f", [_modelss.memberPrice floatValue]] forKey:@"money"];//实际付款金额
         
         [applyDict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:userID] forKey:@"userKey"];//报名用户key , 没有则是嘉宾
         
@@ -403,6 +406,13 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
     
     addTeamPlaysCtrl.teamKey = _modelss.teamKey;
     
+    __weak JGTeamApplyViewController *weakSelf = self;
+    addTeamPlaysCtrl.blockPlayListArray = ^(NSMutableArray *listArray){
+        _applyArray = listArray;
+        
+        [weakSelf.teamApplyTableView reloadData];
+    };
+    
     [self.navigationController pushViewController:addTeamPlaysCtrl animated:YES];
 }
 - (void)didReceiveMemoryWarning {
@@ -437,11 +447,14 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
 }
 #pragma mark -- 修改价格
 - (void)selectEditorBtn:(UIButton *)btn{
-//    self.tranView.frame = CGRectMake(0, 0, screenWidth, screenHeight - (88 + _applyArray.count * 30)-64 -44);
-//    self.applyCatoryPriceView.frame = CGRectMake(0, screenHeight - ((_applyArray.count +1)* 30)-64, screenWidth, (_applyArray.count +1)* 30);
+    NSLog(@"%ld", (long)btn.tag);
+    _editorPlayId = btn.tag;
+    self.tranView.hidden = NO;
+    self.tranView.frame = CGRectMake(0, 0, screenWidth, screenHeight - (64 +_costListArray.count *30 +44));
     self.applyCatoryPriceView = [[JGHApplyCatoryPriceView alloc]init];
-    self.applyCatoryPriceView.frame = CGRectMake(0, screenHeight - 234, screenWidth, 2* 30);
-    [self.applyCatoryPriceView configViewData:_applyListView];
+    self.applyCatoryPriceView.delegate = self;
+    self.applyCatoryPriceView.frame = CGRectMake(0, screenHeight - (64 +_costListArray.count *30 +44), screenWidth, _costListArray.count *30 + 44);
+    [self.applyCatoryPriceView configViewData:_costListArray];
     [self.view addSubview:self.applyCatoryPriceView];
 }
 #pragma mark -- 添加打球人页面代理－－－返回打球人数组
@@ -461,8 +474,8 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
     for (int i=0; i<_applyArray.count; i++) {
         NSDictionary *dict = [NSDictionary dictionary];
         dict = _applyArray[i];
-        NSLog(@"%@", [dict objectForKey:@"payMoney"]);
-        float value = [[dict objectForKey:@"payMoney"] floatValue];
+        NSLog(@"%@", [dict objectForKey:@"money"]);
+        float value = [[dict objectForKey:@"money"] floatValue];
         _amountPayable += value;
     }
     
@@ -665,6 +678,25 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
     [self presentViewController:_actionView animated:YES completion:nil];
 }
 
+#pragma mark -- 修改费用
+- (void)selectApplyCatory:(NSMutableDictionary *)costDict{
+    for (int i=0; i<_applyArray.count; i++) {
+        NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+        if (i == _editorPlayId) {
+            dict = _applyArray[_editorPlayId];
+            [dict setObject:[costDict objectForKey:@"costType"] forKey:@"type"];
+            [dict setObject:[costDict objectForKey:@"money"] forKey:@"money"];
+            [_applyArray replaceObjectAtIndex:i withObject:dict];
+        }
+    }
+    
+    [self.teamApplyTableView reloadData];
+    
+    self.tranView.frame = CGRectMake(0, 0, 0, 0);
+    self.tranView.hidden = YES;
+    [self.applyCatoryPriceView removeFromSuperview];
+    self.applyCatoryPriceView = nil;
+}
 
 /*
 #pragma mark - Navigation

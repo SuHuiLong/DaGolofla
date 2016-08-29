@@ -53,7 +53,7 @@
     self.name.text = [dict objectForKey:@"name"];
     
     //价格
-    [self.priceBtn setTitle:[NSString stringWithFormat:@"%.2f元", [[dict objectForKey:@"payMoney"] floatValue]] forState:UIControlStateNormal];
+    [self.priceBtn setTitle:[NSString stringWithFormat:@"%.2f元", [[dict objectForKey:@"money"] floatValue]] forState:UIControlStateNormal];
     
     //优惠券价格
     if ([dict objectForKey:@"subsidyPrice"]) {

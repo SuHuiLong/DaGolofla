@@ -47,10 +47,6 @@
     
     self.navigationItem.title = @"添加球友";
     
-    UIBarButtonItem* item = [[UIBarButtonItem alloc]initWithTitle:@"完成" style:UIBarButtonItemStylePlain target:self action:@selector(finishAction)];
-    item.tintColor = [UIColor whiteColor];
-    self.navigationItem.rightBarButtonItem = item;
-    
     _keyArray        = [[NSMutableArray alloc]init];
     _listArray       = [[NSMutableArray alloc]init];
     if (_dictFinish.count == 0) {
@@ -73,21 +69,6 @@
     [super viewWillAppear:animated];
     self.searchController.searchBar.hidden = NO;
     [_tableView reloadData];
-}
-
--(void)finishAction
-{
-    //    for (int i = 0; i < _dictFinish.count; i ++) {
-    //        if ([DEFAULF_USERID integerValue] == [[_dictFinish allKeys][i] integerValue]) {
-    //            [[ShowHUD showHUD]showToastWithText:@"您不能选择自己，请重新添加" FromView:self.view];
-    //            [_dictFinish removeObjectForKey:[_dictFinish allKeys][i]];
-    //            [_tableView reloadData];
-    //            return;
-    //        }
-    //    }
-    
-    _blockFriendDict(_dictFinish);
-    [self.navigationController popViewControllerAnimated:YES];
 }
 
 -(void)createHeadSearch
@@ -233,69 +214,22 @@
     }
     cell.myModel = model;
     
+//    NSString *str=[_dictFinish objectForKey:[self.listArray[indexPath.section][indexPath.row] otherUserId]];
     
-    
-    NSString *str=[_dictFinish objectForKey:[self.listArray[indexPath.section][indexPath.row] otherUserId]];
-    
-    if ([Helper isBlankString:str]==NO) {
-        cell.imgvState.image=[UIImage imageNamed:@"gou_x"];
-    }else{
-        cell.imgvState.image=[UIImage imageNamed:@"gou_w"];
-    }
+    cell.imgvState.hidden = YES;
+//    if ([Helper isBlankString:str]==NO) {
+//        cell.imgvState.image=[UIImage imageNamed:@"gou_x"];
+//    }else{
+//        cell.imgvState.image=[UIImage imageNamed:@"gou_w"];
+//    }
     return cell;
-    
-    
-    
-    
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (_dictFinish.count != 0) {
-        if (_dictFinish.count >= _lastIndex) {
-            [[ShowHUD showHUD]showToastWithText:@"您最多只能选择3个人" FromView:self.view];
-            
-        }
-        else{
-            NSString *str=[_dictFinish objectForKey:[self.listArray[indexPath.section][indexPath.row] otherUserId]];
-            if ([Helper isBlankString:str]==YES) {
-                
-                [_dictFinish setObject:[self.listArray[indexPath.section][indexPath.row] userName] forKey:[self.listArray[indexPath.section][indexPath.row] otherUserId]];
-                
-            }else{
-                [_dictFinish removeObjectForKey:[self.listArray[indexPath.section][indexPath.row] otherUserId]];
-            }
-            
-            NSIndexPath *indexPath_1=[NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section];
-            NSArray *indexArray=[NSArray arrayWithObject:indexPath_1];
-            [_tableView reloadRowsAtIndexPaths:indexArray withRowAnimation:UITableViewRowAnimationAutomatic];
-        }
-    }
-    else{
-        if (_dictFinish.count >= _lastIndex) {
-            [[ShowHUD showHUD]showToastWithText:@"您最多只能选择3个人" FromView:self.view];
-            
-        }
-        else{
-            NSString *str=[_dictFinish objectForKey:[self.listArray[indexPath.section][indexPath.row] otherUserId]];
-            if ([Helper isBlankString:str]==YES) {
-                
-                [_dictFinish setObject:[self.listArray[indexPath.section][indexPath.row] userName] forKey:[self.listArray[indexPath.section][indexPath.row] otherUserId]];
-                
-            }else{
-                [_dictFinish removeObjectForKey:[self.listArray[indexPath.section][indexPath.row] otherUserId]];
-            }
-            
-            NSIndexPath *indexPath_1=[NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section];
-            NSArray *indexArray=[NSArray arrayWithObject:indexPath_1];
-            [_tableView reloadRowsAtIndexPaths:indexArray withRowAnimation:UITableViewRowAnimationAutomatic];
-        }
-        
-    }
+    _blockFriendModel(_listArray[indexPath.section][indexPath.row]);
+    [self.navigationController popViewControllerAnimated:YES];
 }
-
-
-
 // 右侧索引
 - (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView {
     //  改变索引颜色

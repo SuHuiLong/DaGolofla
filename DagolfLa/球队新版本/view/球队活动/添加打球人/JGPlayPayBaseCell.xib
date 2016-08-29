@@ -14,11 +14,8 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="palylianxiren01" translatesAutoresizingMaskIntoConstraints="NO" id="w0a-7L-rci">
-                        <rect key="frame" x="20" y="12" width="20" height="20"/>
-                    </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IvW-gH-w8W">
-                        <rect key="frame" x="55" y="13" width="37.5" height="18"/>
+                        <rect key="frame" x="40" y="13" width="37.5" height="18"/>
                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
@@ -51,11 +48,9 @@
                     <constraint firstItem="u3K-ot-o7m" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="3SA-hx-Wsj"/>
                     <constraint firstItem="C4W-fL-mYT" firstAttribute="leading" secondItem="tx9-ib-nSW" secondAttribute="trailing" id="H3N-mV-iN9"/>
                     <constraint firstItem="tx9-ib-nSW" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="QdV-n9-ZeS"/>
+                    <constraint firstItem="IvW-gH-w8W" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="QtT-6t-KPx"/>
                     <constraint firstItem="tx9-ib-nSW" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="S2P-Rv-xGf"/>
-                    <constraint firstItem="w0a-7L-rci" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="TWh-Ha-oLh"/>
-                    <constraint firstItem="IvW-gH-w8W" firstAttribute="leading" secondItem="w0a-7L-rci" secondAttribute="trailing" constant="15" id="gSw-1I-Qnr"/>
-                    <constraint firstItem="IvW-gH-w8W" firstAttribute="centerY" secondItem="w0a-7L-rci" secondAttribute="centerY" id="h5i-IM-BEa"/>
-                    <constraint firstItem="w0a-7L-rci" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="iy3-Md-qhJ"/>
+                    <constraint firstItem="IvW-gH-w8W" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="40" id="bQa-Wh-lYB"/>
                     <constraint firstItem="BKU-3d-ZET" firstAttribute="centerY" secondItem="C4W-fL-mYT" secondAttribute="centerY" id="xWf-Hx-Wdy"/>
                     <constraint firstItem="BKU-3d-ZET" firstAttribute="leading" secondItem="C4W-fL-mYT" secondAttribute="trailing" constant="20" id="ylg-vE-zU0"/>
                     <constraint firstAttribute="trailing" secondItem="u3K-ot-o7m" secondAttribute="trailing" constant="10" id="zXF-Vd-aZX"/>
@@ -66,10 +61,8 @@
                 <outlet property="couponsImageViewLeft" destination="ylg-vE-zU0" id="WmH-ti-8YN"/>
                 <outlet property="deletePalyBtn" destination="u3K-ot-o7m" id="MDH-zZ-ISr"/>
                 <outlet property="deletePalyBtnRight" destination="zXF-Vd-aZX" id="mHA-ds-vR1"/>
-                <outlet property="headerImageView" destination="w0a-7L-rci" id="IM3-cm-pvj"/>
-                <outlet property="headerImageViewLeft" destination="iy3-Md-qhJ" id="Ed0-d2-vxO"/>
                 <outlet property="name" destination="IvW-gH-w8W" id="29A-Of-o7v"/>
-                <outlet property="nameLeft" destination="gSw-1I-Qnr" id="sFq-gS-JxE"/>
+                <outlet property="nameLeft" destination="bQa-Wh-lYB" id="1hk-3r-MEj"/>
                 <outlet property="price" destination="tx9-ib-nSW" id="D3L-8v-ZeE"/>
                 <outlet property="priceUnit" destination="C4W-fL-mYT" id="coG-KE-V3i"/>
             </connections>
@@ -77,7 +70,6 @@
     </objects>
     <resources>
         <image name="coupons" width="41" height="19"/>
-        <image name="palylianxiren01" width="20" height="20"/>
         <image name="remove" width="15" height="15"/>
     </resources>
 </document>

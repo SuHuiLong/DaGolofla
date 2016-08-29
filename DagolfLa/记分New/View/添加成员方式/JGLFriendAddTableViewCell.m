@@ -54,7 +54,7 @@
         self.labelTitle.text = model.userremarks;
     }
     [self.imgvIcon sd_setImageWithURL:[Helper imageIconUrl:myModel.pic] placeholderImage:[UIImage imageNamed:TeamLogoImage]];
-    self.imgvIcon.layer.cornerRadius  = 6*screenWidth/375;
+    self.imgvIcon.layer.cornerRadius  = self.imgvIcon.frame.size.width /2;
     self.imgvIcon.layer.masksToBounds = YES;
 }
 
