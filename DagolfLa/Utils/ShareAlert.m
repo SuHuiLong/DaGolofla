@@ -49,6 +49,81 @@
 #define kContentOffset 30.0f
 #define kBetweenLabelOffset 20.0f
 
+-(id)initMyAlertWithWeChat:(BOOL)usWeChat
+{
+    //CGFloat x=17.0;
+    //font=selfHeight<490?x-3:(selfHeight<570?x-2:(selfHeight<670?x:(selfHeight<740?x:1000)));
+    NSArray* titleArray=@[@"微信",@"朋友圈",@"新浪"];
+    NSArray* imagArray=@[@"weixin-1",@"pengyouquan",@"xinliang"];
+    space=10.0;
+    //CGFloat btnWidth=(selfWidth-8*10)/4.0;
+    CGFloat btnWidth=ScreenWidth/3.0;
+    UIImage* shareImg=[UIImage imageNamed:imagArray[0]];
+    CGFloat imgWidth=shareImg.size.width;
+    
+    
+    if (self = [super init])
+    {
+    
+            UIButton* myBtn=[UIButton buttonWithType:UIButtonTypeCustom];
+            [myBtn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+            [myBtn setTitleColor:[UIColor greenColor] forState:UIControlStateHighlighted];
+            myBtn.backgroundColor=[UIColor colorWithRed:0.93 green:0.93 blue:0.93 alpha:1.0];
+            
+            if(ScreenHeight<700)
+            {
+                if(ScreenHeight<500)
+                {
+                    myBtn.frame=CGRectMake(0, 0, screenWidth, btnWidth+40);
+                    myBtn.titleLabel.font=[UIFont systemFontOfSize:13.0f];
+                    [myBtn setImage:[UIImage imageNamed:imagArray[0]] forState:UIControlStateNormal];
+                    ////NSLog(@"%@",titleArray[0]);
+                    [myBtn setTitle:titleArray[0] forState:UIControlStateNormal];
+                    myBtn.titleLabel.textAlignment = NSTextAlignmentCenter;//设置title的字体居中
+                    [myBtn setImageEdgeInsets:UIEdgeInsetsMake(space, (screenWidth/2-imgWidth)/2.0,btnWidth-imgWidth, (btnWidth-imgWidth)/2.0)];
+                    [myBtn setTitleEdgeInsets:UIEdgeInsetsMake(20, -myBtn.titleLabel.bounds.size.width-50, 0, 0)];
+                }
+                else
+                {
+                    myBtn.frame=CGRectMake(0, 0, screenWidth, btnWidth+20);
+                    myBtn.titleLabel.font=[UIFont systemFontOfSize:13.0f];
+                    [myBtn setImage:[UIImage imageNamed:imagArray[0]] forState:UIControlStateNormal];
+                    [myBtn setTitle:titleArray[0] forState:UIControlStateNormal];
+                    myBtn.titleLabel.textAlignment = NSTextAlignmentCenter;//设置title的字体居中
+                    [myBtn setImageEdgeInsets:UIEdgeInsetsMake(space, (screenWidth/2-imgWidth)/2.0,btnWidth-imgWidth, (btnWidth-imgWidth)/2.0)];
+                    [myBtn setTitleEdgeInsets:UIEdgeInsetsMake(20, -myBtn.titleLabel.bounds.size.width-50, 0, 0)];
+                    
+                }
+            }
+            else
+            {
+                myBtn.frame=CGRectMake(0, 25, screenWidth, btnWidth);
+                myBtn.titleLabel.font=[UIFont systemFontOfSize:13.0f];
+                [myBtn setImage:[UIImage imageNamed:imagArray[0]] forState:UIControlStateNormal];
+                [myBtn setTitle:titleArray[0] forState:UIControlStateNormal];
+                myBtn.titleLabel.textAlignment = NSTextAlignmentCenter;//设置title的字体居中
+                [myBtn setImageEdgeInsets:UIEdgeInsetsMake(space, (screenWidth/2-imgWidth)/2.0,btnWidth-imgWidth-20, (btnWidth-imgWidth)/2.0)];
+                [myBtn setTitleEdgeInsets:UIEdgeInsetsMake(20, -myBtn.titleLabel.bounds.size.width-50, 0, 0)];
+            }
+            [myBtn addTarget:self action:@selector(selectIndex:) forControlEvents:UIControlEventTouchUpInside];
+            myBtn.tag=200;
+            myBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
+            [self addSubview:myBtn];
+        
+        UIButton* cancle=[UIButton buttonWithType:UIButtonTypeCustom];
+        [cancle setTitle:@"取消" forState:UIControlStateNormal];
+        [cancle setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        
+        cancle.frame=CGRectMake(0, kAlertHeight-(ScreenHeight<500?35:50), ScreenWidth, ScreenHeight<500?35:50);
+        cancle.backgroundColor=[UIColor whiteColor];
+        [cancle addTarget:self action:@selector(dismissAlert) forControlEvents:UIControlEventTouchUpInside];
+        [self addSubview:cancle];
+        
+    }
+    return self;
+}
+
+
 - (id)initMyAlert
 {
     //CGFloat x=17.0;

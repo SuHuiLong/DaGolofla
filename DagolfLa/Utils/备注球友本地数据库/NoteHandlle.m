@@ -172,7 +172,6 @@ static sqlite3 *db = nil;
             note.userremarks = userremarks;
             note.userMobile = userMobile;
             note.userSign = userSign;
-            
             [array addObject:note];
             
         }
