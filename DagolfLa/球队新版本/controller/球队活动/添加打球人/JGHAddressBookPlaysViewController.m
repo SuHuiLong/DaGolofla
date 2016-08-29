@@ -364,20 +364,20 @@
     cell.labelName.text = [self.listArray[indexPath.section][indexPath.row] userName];
     
     cell.labelMobile.text = [self.listArray[indexPath.section][indexPath.row] mobile];
-    NSString *str=[_dictFinish objectForKey:[self.listArray[indexPath.section][indexPath.row] mobile]];
-    
-    if ([Helper isBlankString:str]==NO) {
-        cell.imgvState.image=[UIImage imageNamed:@"gou_x"];
-    }else{
-        cell.imgvState.image=[UIImage imageNamed:@"gou_w"];
-    }
+//    NSString *str=[_dictFinish objectForKey:[self.listArray[indexPath.section][indexPath.row] mobile]];
+    cell.imgvState.hidden = YES;
+//    if ([Helper isBlankString:str]==NO) {
+//        cell.imgvState.image=[UIImage imageNamed:@"gou_x"];
+//    }else{
+//        cell.imgvState.image=[UIImage imageNamed:@"gou_w"];
+//    }
     return cell;
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     _blockAddressPeople(self.listArray[indexPath.section][indexPath.row]);
-    
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 

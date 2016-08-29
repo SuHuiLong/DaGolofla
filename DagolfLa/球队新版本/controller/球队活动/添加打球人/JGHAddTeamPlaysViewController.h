@@ -18,4 +18,6 @@
 
 @property (nonatomic, assign)NSInteger teamKey;//球队Key
 
+@property (copy, nonatomic) void (^blockPlayListArray)(NSMutableArray *listArray);
+
 @end

@@ -179,8 +179,6 @@ static CGFloat ImageHeight  = 210.0;
     }
     _titleArray = @[@[], @[@"活动开球时间", @"活动结束时间", @"报名截止时间"], @[@"费用说明", @"人员限制", @"活动说明"], @[@"联系电话"]];
     
-//    [self.model setValuesForKeysWithDictionary:[[NSUserDefaults standardUserDefaults] objectForKey:@"TeamActivityArray"]];
-    
 }
 
 - (void)replaceWithPicture:(UIButton *)Btn{
@@ -352,7 +350,11 @@ static CGFloat ImageHeight  = 210.0;
             [launchActivityCell configTitlesString:str[indexPath.row]];
             
             if (indexPath.section == 2) {
-                [launchActivityCell configActivityCost:_costListArray];
+                if (indexPath.row == 0) {
+                    [launchActivityCell configActivityCost:_costListArray];
+                }else{
+                    [launchActivityCell configActivityInfo:_model.info];
+                }
             }else{
                 [launchActivityCell configContionsStringWhitModel:self.model andIndexPath:indexPath];
             }
@@ -565,7 +567,7 @@ static CGFloat ImageHeight  = 210.0;
     [postDict setObject:dict forKey:@"teamActivity"];
     [postDict setObject:_costListArray forKey:@"costList"];
     //发布活动
-    [[JsonHttp jsonHttp]httpRequest:@"team/createTeamActivity" JsonKey:nil withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
+    [[JsonHttp jsonHttp]httpRequest:@"team/createTeamActivity" JsonKey:nil withData:postDict requestMethod:@"POST" failedBlock:^(id errType) {
         NSLog(@"%@", errType);
         [[ShowHUD showHUD]hideAnimationFromView:self.view];
     } completionBlock:^(id data) {
@@ -675,10 +677,6 @@ static CGFloat ImageHeight  = 210.0;
     [aleVC addAction:act2];
     [aleVC addAction:act3];
     [self presentViewController:aleVC animated:YES completion:nil];
-}
-- (void)connectionDidFinishDownloading:(NSURLConnection *)connection destinationURL:(NSURL *) destinationURL{
-    NSLog(@"%@", destinationURL);
-    NSLog(@"%@", connection);
 }
 #pragma mark -- 添加内容详情代理  JGHConcentTextViewControllerDelegate
 - (void)didSelectSaveBtnClick:(NSString *)text{

@@ -27,4 +27,6 @@
 
 - (void)configActivityCost:(NSMutableArray *)costArray;
 
+- (void)configActivityInfo:(NSString *)info;
+
 @end

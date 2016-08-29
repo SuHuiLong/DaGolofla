@@ -55,12 +55,9 @@
 
 -(void)finishAction
 {
-//    [_dictFin setObject:[[NSUserDefaults standardUserDefaults]objectForKey:@"userName"] forKey:DEFAULF_USERID];
     _blockSurePlayer(_dictPeople,_peoAddress,_peoAddress);
     [self.navigationController popViewControllerAnimated:YES];
-    
 }
-
 -(void)createHeader
 {
     _viewHeader = [[UIView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, 100*screenWidth/375)];

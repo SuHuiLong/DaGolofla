@@ -276,23 +276,6 @@ static CGFloat ImageHeight  = 210.0;
                 self.teamActibityNameTableView.frame = CGRectMake(0, 0, ScreenWidth, ScreenHeight);
             }
             
-//            [_subDataArray removeAllObjects];
-//            if ([self.model.memberPrice floatValue] > 0) {
-//                [_subDataArray addObject:[NSString stringWithFormat:@"%.2f-球队队员资费", [self.model.memberPrice floatValue]]];
-//            }
-//            
-//            if ([self.model.guestPrice floatValue] > 0) {
-//                [_subDataArray addObject:[NSString stringWithFormat:@"%.2f-普通嘉宾资费", [self.model.guestPrice floatValue]]];
-//            }
-//            
-//            if ([self.model.billNamePrice floatValue] > 0) {
-//                [_subDataArray addObject:[NSString stringWithFormat:@"%.2f-球场记名会员资费", [self.model.billNamePrice floatValue]]];
-//            }
-//            
-//            if ([self.model.billPrice floatValue] > 0) {
-//                [_subDataArray addObject:[NSString stringWithFormat:@"%.2f-球场无记名会员资费", [self.model.billPrice floatValue]]];
-//            }
-            
             [self.teamActibityNameTableView reloadData];
         }else{
             
