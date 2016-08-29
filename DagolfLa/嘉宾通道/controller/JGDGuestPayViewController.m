@@ -303,7 +303,7 @@
     payBtn.frame = CGRectMake(270 * ProportionAdapter, 1 * ProportionAdapter, screenWidth - 270 * ProportionAdapter, 60 * ProportionAdapter);
     payBtn.backgroundColor = [UIColor colorWithHexString:@"#F59826"];
     [payBtn setTitle:@"报名并支付" forState:(UIControlStateNormal)];
-    
+    payBtn.titleEdgeInsets = UIEdgeInsetsMake(10 * ProportionAdapter, 3 * ProportionAdapter, 15 * ProportionAdapter, 0);
     payBtn.titleLabel.font = [UIFont systemFontOfSize:18 * ProportionAdapter];
     [payBtn setTitleColor:[UIColor whiteColor] forState:(UIControlStateNormal)];
     [payBtn addTarget:self action:@selector(payAct) forControlEvents:(UIControlEventTouchUpInside)];
@@ -463,8 +463,8 @@
     NSInteger secess = [[not.userInfo objectForKey:@"secess"] integerValue];
     if (secess == 1) {
         
-        [[ShowHUD showHUD]showToastWithText:@"支付已取消！" FromView:self.view];
-        [self performSelector:@selector(popToChannel) withObject:self afterDelay:1];
+        [[ShowHUD showHUD]showToastWithText:@"支付成功" FromView:self.view];
+        [self performSelector:@selector(popToChannel) withObject:self afterDelay:2];
         
     }else if (secess == 2){
         [[ShowHUD showHUD]showToastWithText:@"支付已取消！" FromView:self.view];
@@ -518,11 +518,10 @@
         [[AlipaySDK defaultService] payOrder:[data objectForKey:@"query"] fromScheme:@"dagolfla" callback:^(NSDictionary *resultDic) {
             
             
-            
             if ([resultDic[@"resultStatus"] isEqualToString:@"9000"]) {
                 [[ShowHUD showHUD]showToastWithText:@"支付成功！" FromView:self.view];
                 //跳转分组页面
-                [self performSelector:@selector(popToChannel) withObject:self afterDelay:1];
+                [self performSelector:@selector(popToChannel) withObject:self afterDelay:2];
                 
             } else if ([resultDic[@"resultStatus"] isEqualToString:@"4000"]) {
                 NSLog(@"失败");
