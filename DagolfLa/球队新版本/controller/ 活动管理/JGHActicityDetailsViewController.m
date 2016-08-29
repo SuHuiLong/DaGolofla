@@ -78,6 +78,8 @@ static CGFloat ImageHeight  = 210.0;
 
 @property (nonatomic, strong)UIButton *editorBtn;
 
+@property (nonatomic, strong)NSMutableArray *costListArray;//报名资费列表
+
 @end
 
 @implementation JGHActicityDetailsViewController
@@ -112,6 +114,7 @@ static CGFloat ImageHeight  = 210.0;
         self.pickPhoto = [[SXPickPhoto alloc]init];
         self.titleView = [[UIView alloc]init];
         self.subDataArray = [NSMutableArray array];
+        self.costListArray = [NSMutableArray array];
     }
     return self;
 }
@@ -224,7 +227,11 @@ static CGFloat ImageHeight  = 210.0;
         NSLog(@"%@", data);
         [[ShowHUD showHUD]hideAnimationFromView:self.view];
         
-        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {            
+        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+            
+            //费用列表
+            [self.costListArray removeAllObjects];
+            self.costListArray = [data objectForKey:@"costList"];
             
             NSMutableDictionary *dict = [NSMutableDictionary dictionary];
             
@@ -387,16 +394,6 @@ static CGFloat ImageHeight  = 210.0;
             [[ShowHUD showHUD]showToastWithText:@"活动结束时间不能为空！" FromView:self.view];
             return;
         }
-        
-//        if (self.model.signUpEndTime == nil) {
-//            [[ShowHUD showHUD]showToastWithText:@"活动报名截止时间不能为空！" FromView:self.view];
-//            return;
-//        }
-//        
-//        if ([self.model.beginDate compare:self.model.endDate] > 0) {
-//            [[ShowHUD showHUD]showToastWithText:@"活动开始时间不能大于结束时间！" FromView:self.view];
-//            return;
-//        }
         
         if (self.model.userMobile.length != 11) {
             [[ShowHUD showHUD]showToastWithText:@"手机号码格式不正确！" FromView:self.view];
@@ -777,25 +774,16 @@ static CGFloat ImageHeight  = 210.0;
     JGCostSetViewController *costView = [[JGCostSetViewController alloc]initWithNibName:@"JGCostSetViewController" bundle:nil];
     costView.delegate = self;
     //球队队员费用
-    if ([self.model.memberPrice floatValue] > 0) {
-//        costView.memberPrice = self.model.memberPrice;
-    }
-    
-    //嘉宾费用
-    if ([self.model.guestPrice floatValue] > 0) {
-//        costView.guestPrice = self.model.guestPrice;
-    }
-    
-    //记名费
-    if ([self.model.billNamePrice floatValue] > 0) {
-//        costView.billNamePrice = self.model.billNamePrice;
-    }
-    
-    //不记名费
-    if ([self.model.billPrice floatValue] > 0) {
-//        costView.billPrice = self.model.billPrice;
+    if (self.costListArray.count > 0) {
+        costView.costListArray = _costListArray;
     }
 
+    if (_model.teamActivityKey != 0) {
+        costView.activityKey = _model.teamActivityKey;
+    }else{
+        costView.activityKey = [_model.timeKey integerValue];
+    }
+    costView.isManager = 1;
     [self.navigationController pushViewController:costView animated:YES];
 }
 #pragma mark -- 添加内容详情代理  JGHConcentTextViewControllerDelegate
@@ -805,35 +793,8 @@ static CGFloat ImageHeight  = 210.0;
     [self.teamActibityNameTableView reloadData];
 }
 #pragma mark -- 费用代理
-- (void)inputMembersCost:(NSString *)membersCost guestCost:(NSString *)guestCost andRegisteredPrice:(NSString *)registeredPrice andBearerPrice:(NSString *)bearerPrice{
-    _isEditor = 1;
-    NSLog(@"%@", [Helper returnNumberForString:guestCost]);
-    NSLog(@"%@", [Helper returnNumberForString:membersCost]);
-    NSLog(@"%@", [Helper returnNumberForString:registeredPrice]);
-    NSLog(@"%@", [Helper returnNumberForString:bearerPrice]);
-    self.model.guestPrice = [Helper returnNumberForString:guestCost];
-    self.model.memberPrice = [Helper returnNumberForString:membersCost];
-    self.model.billNamePrice = [Helper returnNumberForString:registeredPrice];
-    self.model.billPrice = [Helper returnNumberForString:bearerPrice];
-    
-    [_subDataArray removeAllObjects];
-    if ([self.model.memberPrice floatValue] > 0) {
-        [_subDataArray addObject:[NSString stringWithFormat:@"%.2f-球队队员资费", [self.model.memberPrice floatValue]]];
-    }
-    
-    if ([self.model.guestPrice floatValue] > 0) {
-        [_subDataArray addObject:[NSString stringWithFormat:@"%.2f-普通嘉宾资费", [self.model.guestPrice floatValue]]];
-    }
-    
-    if ([self.model.billNamePrice floatValue] > 0) {
-        [_subDataArray addObject:[NSString stringWithFormat:@"%.2f-球场记名会员资费", [self.model.billNamePrice floatValue]]];
-    }
-    
-    if ([self.model.billPrice floatValue] > 0) {
-        [_subDataArray addObject:[NSString stringWithFormat:@"%.2f-球场无记名会员资费", [self.model.billPrice floatValue]]];
-    }
-    
-    [self.teamActibityNameTableView reloadData];
+- (void)costList:(NSMutableArray *)costArray{
+    NSLog(@"%@", costArray);
 }
 #pragma mark -- 详情页面
 - (void)pushDetailSCtrl:(UIButton *)btn{

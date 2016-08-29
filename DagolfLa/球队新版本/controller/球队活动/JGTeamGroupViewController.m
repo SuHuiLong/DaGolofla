@@ -501,7 +501,6 @@ static NSString *const JGGroupdetailsCollectionViewCellIdentifier = @"JGGroupdet
         [alertController addAction:cancelAction];
         [alertController addAction:commitAction];
         [self presentViewController:alertController animated:YES completion:nil];
-
     }
 }
 #pragma mark -- 长按头像删除分组
