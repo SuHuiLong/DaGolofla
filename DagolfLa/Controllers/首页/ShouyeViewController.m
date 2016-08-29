@@ -468,9 +468,7 @@ else
     // 获取当前所在的城市名
     
     CLGeocoder *geocoder = [[CLGeocoder alloc] init];
-    
     //根据经纬度反向地理编译出地址信息
-    
     [geocoder reverseGeocodeLocation:currLocation completionHandler:^(NSArray *array, NSError *error)
     {
         if (array.count > 0)

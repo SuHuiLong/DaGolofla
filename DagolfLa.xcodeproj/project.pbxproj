@@ -763,6 +763,7 @@
 		822DC40B1D1944A4000F825D /* JGLPowerSettTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 822DC4091D1944A4000F825D /* JGLPowerSettTableViewCell.xib */; };
 		823277101D2E759C005F9BD3 /* JGLDrawalRecordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8232770F1D2E759C005F9BD3 /* JGLDrawalRecordViewController.m */; };
 		823277131D2E816E005F9BD3 /* JGLDrawalRewardTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 823277121D2E816E005F9BD3 /* JGLDrawalRewardTableViewCell.m */; };
+		823A88A71D702B7E00D0D1AB /* JGLViewCityChoose.m in Sources */ = {isa = PBXBuildFile; fileRef = 823A88A61D702B7E00D0D1AB /* JGLViewCityChoose.m */; };
 		823C149D1CEEF0B5000AB612 /* JGLTeamMemberModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 823C149C1CEEF0B5000AB612 /* JGLTeamMemberModel.m */; };
 		8252E8641D360D6200448404 /* JGLScoreNewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8252E8631D360D6200448404 /* JGLScoreNewViewController.m */; };
 		8252E86A1D360DA500448404 /* JGLScoreNewTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8252E8691D360DA500448404 /* JGLScoreNewTableViewCell.m */; };
@@ -2614,6 +2615,8 @@
 		8232770F1D2E759C005F9BD3 /* JGLDrawalRecordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGLDrawalRecordViewController.m; sourceTree = "<group>"; };
 		823277111D2E816E005F9BD3 /* JGLDrawalRewardTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGLDrawalRewardTableViewCell.h; sourceTree = "<group>"; };
 		823277121D2E816E005F9BD3 /* JGLDrawalRewardTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGLDrawalRewardTableViewCell.m; sourceTree = "<group>"; };
+		823A88A51D702B7E00D0D1AB /* JGLViewCityChoose.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGLViewCityChoose.h; sourceTree = "<group>"; };
+		823A88A61D702B7E00D0D1AB /* JGLViewCityChoose.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGLViewCityChoose.m; sourceTree = "<group>"; };
 		823C149B1CEEF0B5000AB612 /* JGLTeamMemberModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGLTeamMemberModel.h; sourceTree = "<group>"; };
 		823C149C1CEEF0B5000AB612 /* JGLTeamMemberModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGLTeamMemberModel.m; sourceTree = "<group>"; };
 		8252E8621D360D6200448404 /* JGLScoreNewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGLScoreNewViewController.h; sourceTree = "<group>"; };
@@ -7458,6 +7461,8 @@
 			children = (
 				F50B7FB51CE5DBB70065069D /* JGTeamMainhallViewController.h */,
 				F50B7FB61CE5DBB70065069D /* JGTeamMainhallViewController.m */,
+				823A88A51D702B7E00D0D1AB /* JGLViewCityChoose.h */,
+				823A88A61D702B7E00D0D1AB /* JGLViewCityChoose.m */,
 			);
 			path = "球队大厅";
 			sourceTree = "<group>";
@@ -8869,7 +8874,7 @@
 				TargetAttributes = {
 					36BFFD271BC76C8D005B3CE2 = {
 						CreatedOnToolsVersion = 6.3.2;
-						DevelopmentTeam = T8ML76W22A;
+						DevelopmentTeam = R269PG52XZ;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -9431,6 +9436,7 @@
 				20F6A5D71CF498E600DD9383 /* JGHApplyModel.m in Sources */,
 				F50B7FB71CE5DBB70065069D /* JGTeamMainhallViewController.m in Sources */,
 				36B08F701C2D322600CD660E /* UITableViewCell+JZExtension.m in Sources */,
+				823A88A71D702B7E00D0D1AB /* JGLViewCityChoose.m in Sources */,
 				F554267F1D23E82400233B20 /* JGDShowCertViewController.m in Sources */,
 				36BF00911BC772EF005B3CE2 /* MyAccountViewController.m in Sources */,
 				F569A1401CE35A9C00CD0FD5 /* JGTeamDetailViewController.m in Sources */,
@@ -10262,7 +10268,7 @@
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = bihuaxinxi.DagolfLa1;
+				PRODUCT_BUNDLE_IDENTIFIER = bihuaxinxi.DagolfLa123;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -10311,7 +10317,7 @@
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = bihuaxinxi.DagolfLa1;
+				PRODUCT_BUNDLE_IDENTIFIER = bihuaxinxi.DagolfLa123;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
