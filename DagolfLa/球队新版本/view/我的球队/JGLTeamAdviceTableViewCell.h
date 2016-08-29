@@ -25,7 +25,7 @@
 @property (strong, nonatomic)  UIButton    *disMissBtn;
 
 @property (strong, nonatomic)  UILabel     *stateLabel;
-
+@property (strong, nonatomic)  UILabel     *timeLabel;
 
 -(void)showData:(JGLTeamMemberModel *)model;
 
