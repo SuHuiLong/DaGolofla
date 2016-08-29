@@ -18,11 +18,9 @@
 
 @property (weak, nonatomic)id <JGPlayPayBaseCellDelegate> delegate;
 
-@property (weak, nonatomic) IBOutlet UIImageView *headerImageView;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *headerImageViewLeft;//20
 
 @property (weak, nonatomic) IBOutlet UILabel *name;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *nameLeft;//15
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *nameLeft;//40
 
 @property (weak, nonatomic) IBOutlet UILabel *price;
 @property (weak, nonatomic) IBOutlet UILabel *priceUnit;

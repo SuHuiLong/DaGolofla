@@ -7,12 +7,14 @@
 //
 
 #import "ViewController.h"
+@class MyattenModel;
 
 @interface JGHAddTeamMemberViewController : ViewController
 
-@property (copy, nonatomic) void (^blockFriendDict)(NSMutableDictionary *);
+@property (copy, nonatomic) void (^blockFriendModel)(MyattenModel *model);
 @property (strong, nonatomic) NSMutableDictionary* dictFinish;
 
 @property (assign, nonatomic) NSInteger lastIndex;
+
 
 @end

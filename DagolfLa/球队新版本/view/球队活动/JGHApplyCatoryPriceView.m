@@ -13,7 +13,10 @@
 static NSString *const JGHApplyCatoryPriceViewCellIdentifier = @"JGHApplyCatoryPriceViewCell";
 static NSString *const JGHApplyCatoryPromCellIdentifier = @"JGHApplyCatoryPromCell";
 
-@interface JGHApplyCatoryPriceView ()<UITableViewDelegate, UITableViewDataSource>
+@interface JGHApplyCatoryPriceView ()<UITableViewDelegate, UITableViewDataSource, JGHApplyCatoryPriceViewCellDelegate ,JGHApplyCatoryPromCellDelegate>
+{
+    NSInteger _selectId;
+}
 
 @property (nonatomic, strong)UITableView *justApplistTableView;
 
@@ -35,7 +38,7 @@ static NSString *const JGHApplyCatoryPromCellIdentifier = @"JGHApplyCatoryPromCe
 }
 #pragma mark -- 创建TableView
 - (void)createTeamActivityTabelView{
-    self.justApplistTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, 196) style:UITableViewStyleGrouped];
+    self.justApplistTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, 164) style:UITableViewStylePlain];
     self.justApplistTableView.delegate = self;
     self.justApplistTableView.dataSource = self;
     self.justApplistTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -52,30 +55,45 @@ static NSString *const JGHApplyCatoryPromCellIdentifier = @"JGHApplyCatoryPromCe
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
         //人员个数
 //    if (self.applyCatoryArray.count > 0) {
-//        return self.applyCatoryArray.count + 1;
+        return self.applyCatoryArray.count + 1;
 //    }
-    return 3;
+//    return 1;
 }
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 1;
-}
-- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
-    return 1;
-}
+//- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+//    return 1;
+//}
+//- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
+//    return 1;
+//}
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (indexPath.row == 0) {
+        return 44;
+    }
     return 30;
 }
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    return 44 *ProportionAdapter;
-}
+//- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+//    return 0;
+//}
+//- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
+//    return 0;
+//}
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (indexPath.section == 0) {
+    if (indexPath.row == 0) {
         JGHApplyCatoryPromCell *applyProCell = [tableView dequeueReusableCellWithIdentifier:JGHApplyCatoryPromCellIdentifier forIndexPath:indexPath];
         applyProCell.selectionStyle = UITableViewCellSelectionStyleNone;
+        applyProCell.delegate = self;
         return applyProCell;
     }else{
         JGHApplyCatoryPriceViewCell *applyCatoryCell = [tableView dequeueReusableCellWithIdentifier:JGHApplyCatoryPriceViewCellIdentifier forIndexPath:indexPath];
         applyCatoryCell.selectionStyle = UITableViewCellSelectionStyleNone;
+        [applyCatoryCell configJGHApplyCatoryPriceViewCell:_applyCatoryArray[indexPath.row -1]];
+        applyCatoryCell.selectBtn.tag = indexPath.row -1 +100;
+        applyCatoryCell.delegate = self;
+        if (indexPath.row -1 == _selectId) {
+            [applyCatoryCell.selectBtn setImage:[UIImage imageNamed:@"xuan_z"] forState:UIControlStateNormal];
+        }else{
+            [applyCatoryCell.selectBtn setImage:[UIImage imageNamed:@"xuan_w"] forState:UIControlStateNormal];
+        }
         return applyCatoryCell;
     }
 }
@@ -90,17 +108,35 @@ static NSString *const JGHApplyCatoryPromCellIdentifier = @"JGHApplyCatoryPromCe
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    NSLog(@"index.section == %td", indexPath.section);
-    if (indexPath.section > 0) {
-        if (self.delegate) {
-            [self.delegate selectApplyCatory];
-        }
+    NSLog(@"index.row == %td", indexPath.row);
+    if (indexPath.row > 0) {
+        _selectId = indexPath.row -1;
+        
+        [self.justApplistTableView reloadData];
     }
 }
 
+#pragma mark -- 刷新页面数据
 - (void)configViewData:(NSMutableArray *)dataArray{
+    _selectId = 0;
     self.applyCatoryArray = dataArray;
+    self.justApplistTableView.frame = CGRectMake(0, 0, screenWidth, self.applyCatoryArray.count *30 + 44);
     [self.justApplistTableView reloadData];
+}
+
+#pragma mark-- 勾选代理
+- (void)selectJGHApplyCatoryPriceViewCell:(UIButton *)btn{
+    NSLog(@"勾选代理 == %ld", (long)btn.tag);
+    _selectId = btn.tag -100;
+    
+    [self.justApplistTableView reloadData];
+}
+
+#pragma mark -- 确定
+- (void)applyCatoryPromCellCommitBtn:(UIButton *)btn{
+    if (self.delegate) {
+        [self.delegate selectApplyCatory:_applyCatoryArray[_selectId]];
+    }
 }
 
 /*

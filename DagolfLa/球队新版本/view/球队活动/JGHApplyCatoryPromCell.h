@@ -10,7 +10,7 @@
 
 @protocol JGHApplyCatoryPromCellDelegate <NSObject>
 
-- (void)ApplyCatoryPromCellCommitBtn:(UIButton *)btn;
+- (void)applyCatoryPromCellCommitBtn:(UIButton *)btn;
 
 @end
 
@@ -27,5 +27,6 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *commitBtnDown;//10
 
 - (IBAction)commitBtn:(UIButton *)sender;
+
 
 @end

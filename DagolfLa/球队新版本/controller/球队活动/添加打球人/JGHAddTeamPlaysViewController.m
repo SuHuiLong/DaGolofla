@@ -17,6 +17,8 @@
 #import "JGHAddTeamMemberViewController.h"
 #import "JGHAddApplyTeamPlaysViewController.h"
 #import "TKAddressModel.h"
+#import "JGLTeamMemberModel.h"
+#import "MyattenModel.h"
 
 static NSString *const JGHHeaderLabelCellIdentifier = @"JGHHeaderLabelCell";
 static NSString *const JGHAddPlaysCellIdentifier = @"JGHAddPlaysCell";
@@ -53,10 +55,20 @@ static NSString *const JGPlayPayBaseCellIdentifier = @"JGPlayPayBaseCell";
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor colorWithHexString:BG_color];
     self.navigationItem.title = @"添加打球人";
+    
+    UIBarButtonItem *item = [[UIBarButtonItem alloc]initWithTitle:@"完成" style:UIBarButtonItemStylePlain target:self action:@selector(completeBtnClick)];
+    item.tintColor=[UIColor whiteColor];
+    self.navigationItem.rightBarButtonItem = item;
+    
     _playsBaseDict = [NSMutableDictionary dictionary];
     [self initPlaysBaseInfo];
     
     [self createAddTeamPlaysTableView];
+}
+#pragma mark -- 完成
+- (void)completeBtnClick{
+    _blockPlayListArray(_playListArray);
+    [self.navigationController popViewControllerAnimated:YES];
 }
 #pragma mark -- 初始化报名人信息
 - (void)initPlaysBaseInfo{
@@ -209,16 +221,61 @@ static NSString *const JGPlayPayBaseCellIdentifier = @"JGPlayPayBaseCell";
 #pragma mark -- 添加队员
 - (void)selectAddPlays:(UIButton *)btn{
     NSLog(@"添加队员");
+    [_playsBaseDict removeAllObjects];
+    
+    [self initPlaysBaseInfo];//初始化打球人信息
+    
     JGHAddApplyTeamPlaysViewController *applyPlaysCtrl = [[JGHAddApplyTeamPlaysViewController alloc]init];
     applyPlaysCtrl.teamKey = _teamKey;
     applyPlaysCtrl.activityKey = _activityKey;
+    __weak JGHAddTeamPlaysViewController *weakSelf = self;
+    applyPlaysCtrl.blockFriendDict = ^(JGLTeamMemberModel *model){
+        
+        if (model.userName) {
+            [_playsBaseDict setObject:model.userName forKey:@"name"];
+        }
+        
+        if (model.mobile) {
+            [_playsBaseDict setObject:model.mobile forKey:@"mobile"];
+        }
+        
+        if (model.userKey) {
+            [_playsBaseDict setObject:model.userKey forKey:@"userKey"];
+        }else{
+            [_playsBaseDict setObject:@"0" forKey:@"userKey"];
+        }
+        
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:1];
+        NSArray *indexArray=[NSArray arrayWithObject:indexPath];
+        [weakSelf.addTeamPlaysTableView reloadRowsAtIndexPaths:indexArray withRowAnimation:UITableViewRowAnimationAutomatic];
+    };
     [self.navigationController pushViewController:applyPlaysCtrl animated:YES];
 }
 #pragma mark -- 添加球友
 - (void)selectAddBallPlays:(UIButton *)btn{
     NSLog(@"添加球友");
-    JGHAddTeamMemberViewController *addTeamMemberCtrl = [[JGHAddTeamMemberViewController alloc]init];
+    [_playsBaseDict removeAllObjects];
     
+    [self initPlaysBaseInfo];//初始化打球人信息
+    
+    JGHAddTeamMemberViewController *addTeamMemberCtrl = [[JGHAddTeamMemberViewController alloc]init];
+    __weak JGHAddTeamPlaysViewController *weakSelf = self;
+    addTeamMemberCtrl.blockFriendModel = ^(MyattenModel *model){
+        
+        if (model.userName) {
+            [_playsBaseDict setObject:model.userName forKey:@"name"];
+        }
+        
+        if ([model.userId integerValue] != 0) {
+            [_playsBaseDict setObject:model.userId forKey:@"userKey"];
+        }else{
+            [_playsBaseDict setObject:@0 forKey:@"userKey"];
+        }
+        
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:1];
+        NSArray *indexArray=[NSArray arrayWithObject:indexPath];
+        [weakSelf.addTeamPlaysTableView reloadRowsAtIndexPaths:indexArray withRowAnimation:UITableViewRowAnimationAutomatic];
+    };
     [self.navigationController pushViewController:addTeamMemberCtrl animated:YES];
 }
 #pragma mark -- 添加联系人
@@ -232,9 +289,7 @@ static NSString *const JGPlayPayBaseCellIdentifier = @"JGPlayPayBaseCell";
     
     __weak JGHAddTeamPlaysViewController *weakSelf = self;
     addressBookCtrl.blockAddressPeople = ^(TKAddressModel *model){
-        NSString* str1 = model.userName;
-        NSString* str2 = model.mobile;
-        
+
         if (model.userName) {
             [_playsBaseDict setObject:model.userName forKey:@"name"];
         }
@@ -242,6 +297,8 @@ static NSString *const JGPlayPayBaseCellIdentifier = @"JGPlayPayBaseCell";
         if (model.mobile) {
             [_playsBaseDict setObject:model.mobile forKey:@"mobile"];
         }
+        
+        [_playsBaseDict setObject:@0 forKey:@"userKey"];
         
         NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:1];
         NSArray *indexArray=[NSArray arrayWithObject:indexPath];
@@ -323,9 +380,23 @@ static NSString *const JGPlayPayBaseCellIdentifier = @"JGPlayPayBaseCell";
 #pragma mark -- 删除打球人
 - (void)deletePalyBaseBtn:(UIButton *)btn{
     NSLog(@" 删除打球人 == %ld", (long)btn.tag);
-    [_playListArray removeObjectAtIndex:btn.tag];
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    dict = _playListArray[btn.tag -1000];
+    if ([DEFAULF_USERID integerValue] == [[dict objectForKey:@"userKey"] integerValue]) {
+        [Helper alertViewWithTitle:@"删除后将不享受平台补贴，是否删除？" withBlockCancle:^{
+            NSLog(@"取消删除");
+        } withBlockSure:^{
+            [self delePalys:btn.tag - 1000];
+        } withBlock:^(UIAlertController *alertView) {
+            [self presentViewController:alertView animated:YES completion:nil];
+        }];
+    }else{
+        [self delePalys:btn.tag - 1000];
+    }
 }
-
+- (void)delePalys:(NSInteger)listId{
+    [_playListArray removeObjectAtIndex:listId];
+}
 #pragma mark -- textDelegate
 - (void)textFieldDidEndEditing:(UITextField *)textField{
     if (textField.tag == 200) {

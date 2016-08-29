@@ -10,7 +10,7 @@
 
 @protocol JGCostSetViewControllerDelegate <NSObject>
 
-- (void)inputMembersCost:(NSString *)membersCost guestCost:(NSString *)guestCost andRegisteredPrice:(NSString *)registeredPrice andBearerPrice:(NSString *)bearerPrice;
+//- (void)inputMembersCost:(NSString *)membersCost guestCost:(NSString *)guestCost andRegisteredPrice:(NSString *)registeredPrice andBearerPrice:(NSString *)bearerPrice;
 
 - (void)costList:(NSMutableArray *)costArray;
 

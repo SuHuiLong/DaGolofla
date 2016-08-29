@@ -58,6 +58,8 @@ static CGFloat ImageHeight  = 210.0;
     NSString *_userName;//用户在球队的真实姓名
     NSArray *_titleArray;//标题数组
     NSInteger _isEditor;//是否编辑0，1-已编辑
+    
+    NSMutableArray *_costListArray;//报名资费列表
 }
 
 @property (nonatomic, strong)UITableView *teamActibityNameTableView;
@@ -119,7 +121,7 @@ static CGFloat ImageHeight  = 210.0;
     self.view.backgroundColor = [UIColor colorWithHexString:BG_color];
     self.automaticallyAdjustsScrollViewInsets = NO;
     _isEditor = 0;
-    
+    _costListArray = [NSMutableArray array];
     _titleArray = @[@"活动开始时间", @"活动结束时间", @"报名截止时间"];
     
     self.imgProfile = [[UIImageView alloc] initWithImage:[UIImage imageNamed:ActivityBGImage]];

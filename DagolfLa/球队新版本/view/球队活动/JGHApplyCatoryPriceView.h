@@ -10,7 +10,7 @@
 
 @protocol JGHApplyCatoryPriceViewDelegate <NSObject>
 
-- (void)selectApplyCatory;
+- (void)selectApplyCatory:(NSMutableDictionary *)costDict;
 
 @end
 

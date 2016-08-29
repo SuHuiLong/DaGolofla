@@ -34,8 +34,9 @@
 
 - (IBAction)commitBtn:(UIButton *)sender {
     if (self.delegate) {
-        [self.delegate ApplyCatoryPromCellCommitBtn:sender];
+        [self.delegate applyCatoryPromCellCommitBtn:sender];
     }
 }
+
 
 @end
