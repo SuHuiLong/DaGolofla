@@ -63,14 +63,14 @@
             
             [self.teamSignUpDic setObject:[[data objectForKey:@"activity"] objectForKey:@"teamKey"] forKey:@"teamKey"];
             [self.teamSignUpDic setObject:[[data objectForKey:@"activity"] objectForKey:@"timeKey"] forKey:@"activityKey"];
-            [self.teamSignUpDic setObject:@0 forKey:@"userKey"];
+            [self.teamSignUpDic setObject:DEFAULF_USERID forKey:@"userKey"];
             [self.teamSignUpDic setObject:@1 forKey:@"isOnlinePay"];
             [self.teamSignUpDic setObject:self.model.guestSubsidyPrice forKey:@"guestSubsidyPrice"];
             
             
             [self.infoDic setObject:[[data objectForKey:@"activity"] objectForKey:@"teamKey"] forKey:@"teamKey"];
             [self.infoDic setObject:[[data objectForKey:@"activity"] objectForKey:@"timeKey"] forKey:@"activityKey"];
-            [self.infoDic setObject:@0 forKey:@"userKey"];
+            [self.infoDic setObject:DEFAULF_USERID forKey:@"userKey"];
             [self.infoDic setObject:@0 forKey:@"timeKey"];
             
             
@@ -101,6 +101,7 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+
     JGDGuestTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"JGDGuestTableViewCell"];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.titleLB.text = [self.costArray[indexPath.row] objectForKey:@"costName"];
@@ -208,8 +209,13 @@
     nameLB.font = [UIFont systemFontOfSize:15 * ProportionAdapter];
     [firstView addSubview:nameLB];
     
+
+    
     self.nameTF = [[UITextField alloc] initWithFrame:CGRectMake(90 * ProportionAdapter, 295 * ProportionAdapter, 100 * ProportionAdapter, 20 * ProportionAdapter)];
     self.nameTF.placeholder = @"请输入姓名";
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"realUserName"]) {
+        self.nameTF.text = [[NSUserDefaults standardUserDefaults] objectForKey:@"realUserName"];
+    }
     self.nameTF.font = [UIFont systemFontOfSize:15 * ProportionAdapter];
     [firstView addSubview:self.nameTF];
     
@@ -222,14 +228,24 @@
     sexLB.font = [UIFont systemFontOfSize:15 * ProportionAdapter];
     [firstView addSubview:sexLB];
     
+    
+    NSInteger sex = [[[NSUserDefaults standardUserDefaults] objectForKey:@"sex"] integerValue];
     UIButton *boyBtn = [[UIButton alloc] initWithFrame:CGRectMake(230 * ProportionAdapter, 297 * ProportionAdapter, 15 * ProportionAdapter, 15 * ProportionAdapter)];
-    [boyBtn setImage:[UIImage imageNamed:@"xuan_z"] forState:(UIControlStateNormal)];
+    if (sex == 0) {
+        [boyBtn setImage:[UIImage imageNamed:@"xuan_w"] forState:(UIControlStateNormal)];
+    }else{
+        [boyBtn setImage:[UIImage imageNamed:@"xuan_z"] forState:(UIControlStateNormal)];
+    }
     [boyBtn addTarget:self action:@selector(changeSex:) forControlEvents:(UIControlEventTouchUpInside)];
     boyBtn.tag = 201;
     [firstView addSubview:boyBtn];
     
     UIButton *girlBtn = [[UIButton alloc] initWithFrame:CGRectMake(295 * ProportionAdapter, 297 * ProportionAdapter, 15 * ProportionAdapter, 15 * ProportionAdapter)];
-    [girlBtn setImage:[UIImage imageNamed:@"xuan_w"] forState:(UIControlStateNormal)];
+    if (sex == 0) {
+        [girlBtn setImage:[UIImage imageNamed:@"xuan_z"] forState:(UIControlStateNormal)];
+    }else{
+        [girlBtn setImage:[UIImage imageNamed:@"xuan_w"] forState:(UIControlStateNormal)];
+    }
     [girlBtn addTarget:self action:@selector(changeSex:) forControlEvents:(UIControlEventTouchUpInside)];
     girlBtn.tag = 202;
     [firstView addSubview:girlBtn];
@@ -257,6 +273,9 @@
     
     self.mobileTF = [[UITextField alloc] initWithFrame:CGRectMake(260 *ProportionAdapter, 340 * ProportionAdapter, 100 * ProportionAdapter, 20 * ProportionAdapter)];
     self.mobileTF.placeholder = @"请输入手机号";
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"mobile"]) {
+        self.mobileTF.text = [[NSUserDefaults standardUserDefaults] objectForKey:@"mobile"];
+    }
     self.mobileTF.keyboardType = UIKeyboardTypeNumberPad;
     self.mobileTF.font = [UIFont systemFontOfSize:15 * ProportionAdapter];
     [firstView addSubview:self.mobileTF];
@@ -336,7 +355,7 @@
         return;
     }else{
         [self.infoDic setObject:self.nameTF.text forKey:@"userName"];
-        
+        [[NSUserDefaults standardUserDefaults] setObject:self.nameTF.text forKey: @"realUserName"];
         [self.teamSignUpDic setObject:self.nameTF.text forKey:@"name"];
         [self.teamSignUpDic setObject:self.mobileTF.text forKey:@"mobile"];
         [self.teamSignUpDic setObject:self.almostTF.text forKey:@"almost"];

@@ -269,17 +269,19 @@
 }
 -(void)webViewDidFinishLoad:(UIWebView *)webView
 {
-    UIImageView *statusView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 20, ScreenWidth, 20)];
-    
-    statusView.image = [UIImage imageNamed:@"nav_bg"];
-    
-    CGRect frame = statusView.frame;
-    
-    frame.origin = CGPointMake(0, 0);
-    
-    statusView.frame = frame;
-    
-    [self.view addSubview:statusView];
+//    if (_header != 1) {
+        UIImageView *statusView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 20, ScreenWidth, 20)];
+        
+        statusView.image = [UIImage imageNamed:@"nav_bg"];
+        
+        CGRect frame = statusView.frame;
+        
+        frame.origin = CGPointMake(0, 0);
+        
+        statusView.frame = frame;
+        
+        [self.view addSubview:statusView];
+//    }
     [_actIndicatorView stopAnimating];
     
 }

@@ -56,7 +56,7 @@
 -(void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
-    self.navigationController.navigationBarHidden=NO;
+//    self.navigationController.navigationBarHidden=NO;
     [[NSURLCache sharedURLCache] removeAllCachedResponses];
 }
 
@@ -238,6 +238,7 @@
             
             if ([resultDic[@"resultStatus"] isEqualToString:@"9000"]) {
                 MyOrderViewController *groupCtrl = [[MyOrderViewController alloc]init];
+                groupCtrl.header = 1;
                 [self.navigationController pushViewController:groupCtrl animated:YES];
             } else if ([resultDic[@"resultStatus"] isEqualToString:@"4000"]) {
                 [[ShowHUD showHUD]showToastWithText:@"支付失败！" FromView:self.view];
@@ -294,6 +295,7 @@
     if (secess == 1) {
         //跳转分组页面
         MyOrderViewController *groupCtrl = [[MyOrderViewController alloc]init];
+        groupCtrl.header = 1;
         [self.navigationController pushViewController:groupCtrl animated:YES];
     }else if (secess == 2){
         [[ShowHUD showHUD]showToastWithText:@"支付已取消！" FromView:self.view];
