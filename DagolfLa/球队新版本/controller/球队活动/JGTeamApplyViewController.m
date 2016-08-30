@@ -90,7 +90,12 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
     if (_applyListView == nil) {
         self.applyListView = [[JGHApplyListView alloc]init];
         self.applyListView.delegate = self;
-        self.applyListView.subsidiesPrice = [_modelss.subsidyPrice floatValue];
+        if (_canSubsidy == 1) {
+            self.applyListView.subsidiesPrice = [_modelss.subsidyPrice floatValue];
+        }else{
+            self.applyListView.subsidiesPrice = 0.00;
+        }
+        
         [self.view addSubview:_applyListView];
     }
     return _applyListView;

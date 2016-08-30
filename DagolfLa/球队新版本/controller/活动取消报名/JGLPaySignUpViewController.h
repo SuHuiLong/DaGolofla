@@ -27,4 +27,6 @@
 @property (copy, nonatomic)NSString *invoiceName;//发票name
 @property (copy, nonatomic)NSString *addressKey;//地址
 
+@property (assign, nonatomic)NSInteger canSubsidy;//是否补贴
+
 @end

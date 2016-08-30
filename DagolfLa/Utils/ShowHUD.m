@@ -41,7 +41,7 @@ static ShowHUD *showHUD = nil;
     _HUD.mode = MBProgressHUDModeText;
     
     [_HUD showAnimated:YES whileExecutingBlock:^{
-        sleep(1);
+        sleep(TIMESlEEP);
     } completionBlock:^{
         [_HUD removeFromSuperview];
         _HUD = nil;

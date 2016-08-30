@@ -123,6 +123,7 @@
 //    teamApplyCtrl.isTeamChannal = self.isTeamChannal;
     applyCtrl.userName = _userName;
     applyCtrl.isApply = _isApply;
+    applyCtrl.canSubsidy = _canSubsidy;
     [self.navigationController pushViewController:applyCtrl animated:YES];
 }
 
