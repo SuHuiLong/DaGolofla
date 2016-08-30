@@ -67,9 +67,9 @@
         [alert show];
     }];
     
-    JGTeamDeatilWKwebViewController *wkVC = [[JGTeamDeatilWKwebViewController alloc] init];
-    
-    [self.navigationController pushViewController:wkVC animated:YES];
+//    JGTeamDeatilWKwebViewController *wkVC = [[JGTeamDeatilWKwebViewController alloc] init];
+//    
+//    [self.navigationController pushViewController:wkVC animated:YES];
 }
 
 #pragma mark - 分享
