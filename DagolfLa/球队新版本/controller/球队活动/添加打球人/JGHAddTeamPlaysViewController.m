@@ -388,17 +388,17 @@ static NSString *const JGPlayPayBaseCellIdentifier = @"JGPlayPayBaseCell";
     [self selectPalysTypeList:btn.tag -100];
 }
 - (void)selectPalysTypeList:(NSInteger)listId{
-    NSInteger cellid = 0;
+//    NSInteger cellid = 0;
     for (int i=0; i<_costListArray.count; i++) {
         NSMutableDictionary *dict = [NSMutableDictionary dictionary];
         dict = [NSMutableDictionary dictionaryWithDictionary:_costListArray[i]];
-        if ([[dict objectForKey:@"select"] integerValue] == 1) {
-            cellid = i;
-        }
+//        if ([[dict objectForKey:@"select"] integerValue] == 1) {
+//            cellid = i;
+//        }
         
         if (i == listId) {
             [dict setObject:@1 forKey:@"select"];
-            [_playsBaseDict setObject:@(listId) forKey:@"type"];
+//            [_playsBaseDict setObject:@(listId) forKey:@"type"];
             [_playsBaseDict setObject:[dict objectForKey:@"money"] forKey:@"money"];
         }else{
             [dict setObject:@0 forKey:@"select"];
@@ -407,7 +407,9 @@ static NSString *const JGPlayPayBaseCellIdentifier = @"JGPlayPayBaseCell";
         [_costListArray replaceObjectAtIndex:i withObject:dict];
     }
     
-    [_playsBaseDict setObject:@(listId) forKey:@"type"];
+    NSDictionary *costDict = [NSDictionary dictionary];
+    costDict = [_costListArray objectAtIndex:listId];
+    [_playsBaseDict setObject:[costDict objectForKey:@"costType"] forKey:@"type"];
     
     [self.addTeamPlaysTableView reloadData];
 }

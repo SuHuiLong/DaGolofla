@@ -581,6 +581,12 @@ static CGFloat ImageHeight  = 210.0;
         
         self.refreshBlock();
         
+        //清空保存记录
+        NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
+        [userdef removeObjectForKey:@"TeamActivityArray"];
+        [userdef removeObjectForKey:@"TeamActivityCostListArray"];
+        [userdef synchronize];
+        
         if (self.model.bgImage) {
             NSMutableArray *imageArray = [NSMutableArray array];
             [imageArray addObject:UIImageJPEGRepresentation(self.model.bgImage, 0.7)];

@@ -124,6 +124,7 @@
     applyCtrl.userName = _userName;
     applyCtrl.isApply = _isApply;
     applyCtrl.canSubsidy = _canSubsidy;
+    applyCtrl.costListArray = _costListArray;
     [self.navigationController pushViewController:applyCtrl animated:YES];
 }
 

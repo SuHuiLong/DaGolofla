@@ -561,5 +561,9 @@
     return @"error";
 }
 
+//+ (BOOL)returnPriceString:(NSString *)price{
+////    NSCharacterSet *priceCharSet = [[ NSCharacterSet characterSetWithCharactersInString:@"0123456789."]
+////                                   invertedSet ];
+//}
 
 @end

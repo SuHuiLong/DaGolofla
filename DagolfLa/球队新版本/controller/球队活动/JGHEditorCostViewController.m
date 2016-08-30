@@ -66,7 +66,7 @@ static NSString *const JGHAddCostButtonCellIdentifier = @"JGHAddCostButtonCell";
         [self.costListArray removeAllObjects];
         
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
-            self.costListArray = [data objectForKey:@"list"];
+            self.costListArray = [[data objectForKey:@"list"] mutableCopy];
             
         }else{
             [[ShowHUD showHUD]showToastWithText:@"获取资费列表失败！" FromView:self.view];
@@ -231,19 +231,19 @@ static NSString *const JGHAddCostButtonCellIdentifier = @"JGHAddCostButtonCell";
     NSLog(@"textField.tag == %td", textField.tag);
     if (textField.tag < 10 + _costListArrayCount) {
         NSMutableDictionary *newDict = [NSMutableDictionary dictionary];
-        newDict = [self.costListArray objectAtIndex:textField.tag -10];
+        newDict = [[self.costListArray objectAtIndex:textField.tag -10] mutableCopy];
         [newDict setObject:textField.text forKey:@"money"];
         
         [self.costListArray replaceObjectAtIndex:textField.tag -10 withObject:newDict];
     }else{
         NSMutableDictionary *newDict = [NSMutableDictionary dictionary];
         if (textField.tag < 1000) {
-            newDict = [self.costListArray objectAtIndex:((textField.tag -100) + _costListArrayCount -1)];
+            newDict = [[self.costListArray objectAtIndex:((textField.tag -100) + _costListArrayCount -1)] mutableCopy];
             [newDict setObject:textField.text forKey:@"costName"];
             
             [self.costListArray replaceObjectAtIndex:((textField.tag -100) + _costListArrayCount -1) withObject:newDict];
         }else{
-            newDict = [self.costListArray objectAtIndex:((textField.tag -1000) + _costListArrayCount -1)];
+            newDict = [[self.costListArray objectAtIndex:((textField.tag -1000) + _costListArrayCount -1)] mutableCopy];
             [newDict setObject:textField.text forKey:@"money"];
             
             [self.costListArray replaceObjectAtIndex:((textField.tag -1000) + _costListArrayCount -1) withObject:newDict];
