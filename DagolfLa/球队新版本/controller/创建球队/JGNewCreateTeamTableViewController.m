@@ -155,6 +155,7 @@ static CGFloat ImageHeight  = 210.0;
     //    self.titleField.textColor = [UIColor whiteColor];
     //    self.titleField.font = [UIFont systemFontOfSize:15];
     self.titleField.placeholder = @"请输入球队名";
+    self.titleField.delegate = self;
     self.titleField.textColor = [UIColor whiteColor];
     [self.titleField setValue:[UIColor whiteColor] forKeyPath:@"_placeholderLabel.textColor"];
     [self.titleField setValue:[UIFont boldSystemFontOfSize:15 * screenWidth / 320] forKeyPath:@"_placeholderLabel.font"];
