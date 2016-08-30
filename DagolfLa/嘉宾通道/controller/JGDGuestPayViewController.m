@@ -447,12 +447,12 @@
     [dict setObject: self.infoKey forKey:@"srcKey"]; // teammember's timekey
     
     [[JsonHttp jsonHttp]httpRequest:@"pay/doPayWeiXin" JsonKey:@"payInfo" withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
-        [[ShowHUD showHUD]showToastWithText:@"请检查您的网络" FromView:self.view];
+        [[ShowHUD showHUD]showToastWithText:[NSString stringWithFormat:@"%@", errType] FromView:self.view];
     } completionBlock:^(id data) {
         NSDictionary *dict = [data objectForKey:@"pay"];
         //微信
         
-        if ([data objectForKey:@"packSuccess"]) {
+        if ([[data objectForKey:@"packSuccess"]integerValue] == 1) {
             
             if (dict) {
                 PayReq *request = [[PayReq alloc] init];
@@ -531,7 +531,7 @@
     [dict setObject:self.infoKey forKey:@"srcKey"]; // teammember's timekey
     
     [[JsonHttp jsonHttp]httpRequest:@"pay/doPayByAliPay" JsonKey:@"payInfo" withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
-        NSLog(@"errType == %@", errType);
+        [[ShowHUD showHUD]showToastWithText:[NSString stringWithFormat:@"%@", errType] FromView:self.view];
     } completionBlock:^(id data) {
         NSLog(@"%@",[data objectForKey:@"query"]);
         [[AlipaySDK defaultService] payOrder:[data objectForKey:@"query"] fromScheme:@"dagolfla" callback:^(NSDictionary *resultDic) {

@@ -261,7 +261,7 @@ static NSString *const JGHButtonCellIdentifier = @"JGHButtonCell";
 
 - (void)cancelApply:(UIButton *)btn{
     btn.enabled = NO;
-    [[ShowHUD showHUD]showAnimationWithText:@"提交中..." FromView:self.view];
+//    [[ShowHUD showHUD]showAnimationWithText:@"提交中..." FromView:self.view];
     NSMutableDictionary *postDict = [NSMutableDictionary dictionary];
     NSMutableArray *signupKeyArray = [NSMutableArray array];
     for (NSMutableDictionary *dict in _dataArray) {
@@ -279,10 +279,10 @@ static NSString *const JGHButtonCellIdentifier = @"JGHButtonCell";
     [postDict setObject:[NSString stringWithFormat:@"%td", _activityKey] forKey:@"activityKey"];
     [[JsonHttp jsonHttp]httpRequest:@"team/doUnSignUpTeamActivity" JsonKey:nil withData:postDict requestMethod:@"POST" failedBlock:^(id errType) {
         NSLog(@"errType == %@", errType);
-        [[ShowHUD showHUD]hideAnimationFromView:self.view];
+//        [[ShowHUD showHUD]hideAnimationFromView:self.view];
     } completionBlock:^(id data) {
         NSLog(@"data == %@", data);
-        [[ShowHUD showHUD]hideAnimationFromView:self.view];
+//        [[ShowHUD showHUD]hideAnimationFromView:self.view];
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
             [[ShowHUD showHUD]showToastWithText:@"取消报名成功！" FromView:self.view];
             [self performSelector:@selector(popCtrl) withObject:self afterDelay:TIMESlEEP];
