@@ -76,10 +76,11 @@
         [self addSubview:_disMissBtn];
         
         
-        _timeLabel = [[UILabel alloc]initWithFrame:CGRectMake(180*screenWidth/320, 5*screenWidth/320, 136*screenWidth/320, 20*screenWidth/320)];
+        _timeLabel = [[UILabel alloc]initWithFrame:CGRectMake(180*screenWidth/320, 5*screenWidth/320, 126*screenWidth/320, 20*screenWidth/320)];
         _timeLabel.font = [UIFont systemFontOfSize:14];
         _timeLabel.textColor = [UITool colorWithHexString:@"#a0a0a0" alpha:1];
         [self addSubview:_timeLabel];
+        _timeLabel.textAlignment = NSTextAlignmentRight;
         
         _stateLabel = [[UILabel alloc]initWithFrame:CGRectMake(271*screenWidth/320, 34*screenWidth/320, 46*screenWidth/320, 20*screenWidth/320)];
         _stateLabel.font = [UIFont systemFontOfSize:14];

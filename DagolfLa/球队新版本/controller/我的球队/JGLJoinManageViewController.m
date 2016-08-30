@@ -205,7 +205,9 @@
         cell.disMissBtn.hidden = YES;
         cell.stateLabel.textColor = [UITool colorWithHexString:@"#a0a0a0" alpha:1];
         if (![Helper isBlankString:[_dataUpDataArray[indexPath.row] createTime]]) {
-            cell.timeLabel.text = [_dataUpDataArray[indexPath.row] createTime];
+            
+            NSString* str = [[_dataUpDataArray[indexPath.row] createTime] substringToIndex:16];
+            cell.timeLabel.text = str;
         }
         else{
             cell.timeLabel.text = @"暂无时间";
