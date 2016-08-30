@@ -186,7 +186,7 @@
             }
         }else{
             if (self.model.beginDate && self.model.signUpEndTime) {
-                i == 0 ? (label.text = [self.model.beginDate substringWithRange:NSMakeRange(0, self.model.beginDate.length - 8)]) : (label.text = [self.model.signUpEndTime substringWithRange:NSMakeRange(0, self.model.signUpEndTime.length - 8)]);
+                i == 0 ? (label.text = [self.model.beginDate substringWithRange:NSMakeRange(0, self.model.beginDate.length - 3)]) : (label.text = [self.model.signUpEndTime substringWithRange:NSMakeRange(0, self.model.signUpEndTime.length - 8)]);
             }
             
         }

@@ -40,7 +40,7 @@
     UILabel *introLB = [[UILabel alloc] initWithFrame:CGRectMake(10 * ProportionAdapter, 125 * ProportionAdapter, screenWidth - 20 * ProportionAdapter, 60 * ProportionAdapter)];
     introLB.numberOfLines = 0;
     introLB.textColor = [UIColor colorWithHexString:@"#a0a0a0"];
-    NSMutableAttributedString *intro = [[NSMutableAttributedString alloc] initWithString:@"说明：系统为每个活动生成唯一“嘉宾参赛码“，嘉宾在我的球队－嘉宾通道中输入该码，可以直达嘉宾报名页，完成活动报名与付款"];
+    NSMutableAttributedString *intro = [[NSMutableAttributedString alloc] initWithString:@"说明：系统为每个活动生成唯一“嘉宾参赛码“，嘉宾在我的球队－嘉宾通道中输入该码，可以直达嘉宾报名页，完成活动报名与付款。"];
     [intro addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"6cb8ff"] range:NSMakeRange(25, 9)];
     introLB.attributedText = intro;
     introLB.font = [UIFont systemFontOfSize: 13 * ProportionAdapter];
