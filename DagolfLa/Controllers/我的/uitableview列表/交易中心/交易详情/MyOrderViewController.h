@@ -10,4 +10,7 @@
 
 @interface MyOrderViewController : ViewController
 
+
+@property (assign, nonatomic) NSInteger header;
+
 @end
