@@ -199,9 +199,14 @@
     }
     if (_powerPho != nil) {
         if ([_powerPho containsString:@"1005"] == YES) {
-            cell.manageBtn.hidden = NO;
-            cell.manageBtn.tag = 10000 + indexPath.row;
-            [cell.manageBtn addTarget:self action:@selector(manageClick:) forControlEvents:UIControlEventTouchUpInside];
+            if (_manageInter == 1) {
+                cell.manageBtn.hidden = YES;
+            }
+            else{
+                cell.manageBtn.hidden = NO;
+                cell.manageBtn.tag = 10000 + indexPath.row;
+                [cell.manageBtn addTarget:self action:@selector(manageClick:) forControlEvents:UIControlEventTouchUpInside];
+            }
         }
         else
         {
@@ -210,7 +215,7 @@
     }
     else
     {
-        cell.manageBtn.hidden = YES;
+        
     }
     
     return cell;

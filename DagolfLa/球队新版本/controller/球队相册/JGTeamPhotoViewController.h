@@ -20,4 +20,10 @@
 @property (strong, nonatomic) NSMutableDictionary* dictMember;
 
 //判断球队是不是在审核中
+
+
+
+
+//球队大厅中传参 如果inter== 1 则不显示管理按钮
+@property (assign, nonatomic) NSInteger manageInter;
 @end
