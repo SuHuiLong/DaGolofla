@@ -284,7 +284,7 @@ static NSString *const JGHButtonCellIdentifier = @"JGHButtonCell";
         [[ShowHUD showHUD]hideAnimationFromView:self.view];
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
             [[ShowHUD showHUD]showToastWithText:@"取消报名成功！" FromView:self.view];
-            [self performSelector:@selector(popCtrl) withObject:self afterDelay:1.0];
+            [self performSelector:@selector(popCtrl) withObject:self afterDelay:TIMESlEEP];
         }else{
             if ([data objectForKey:@"packResultMsg"]) {
                 [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];

@@ -186,7 +186,7 @@
             }
         }else{
             if (self.model.beginDate && self.model.signUpEndTime) {
-                i == 0 ? (label.text = [self.model.beginDate substringWithRange:NSMakeRange(0, self.model.beginDate.length - 8)]) : (label.text = [self.model.signUpEndTime substringWithRange:NSMakeRange(0, self.model.signUpEndTime.length - 8)]);
+                i == 0 ? (label.text = [self.model.beginDate substringWithRange:NSMakeRange(0, self.model.beginDate.length - 3)]) : (label.text = [self.model.signUpEndTime substringWithRange:NSMakeRange(0, self.model.signUpEndTime.length - 8)]);
             }
             
         }
@@ -288,7 +288,7 @@
     footlineView.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];
     [footView addSubview:footlineView];
     
-    self.footLB = [[UILabel alloc] initWithFrame:CGRectMake(10 * ProportionAdapter, 1 * ProportionAdapter, 250 * ProportionAdapter, 50 * ProportionAdapter)];
+    self.footLB = [[UILabel alloc] initWithFrame:CGRectMake(10 * ProportionAdapter, 1 * ProportionAdapter, 260 * ProportionAdapter, 50 * ProportionAdapter)];
     NSInteger subsidy = [self.model.guestSubsidyPrice integerValue];
     NSMutableAttributedString *attriStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"平台补贴费用%td元 实付金额：0", subsidy]];
     [attriStr addAttribute:NSForegroundColorAttributeName value:[UIColor orangeColor] range:NSMakeRange(6, [[NSString stringWithFormat:@"%td", subsidy] length])];
@@ -350,8 +350,9 @@
     NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
     [dic setObject:[NSArray arrayWithObject:self.teamSignUpDic] forKey:@"teamSignUpList"];
     [dic setObject:self.infoDic forKey:@"info"];
+    [dic setObject:@1 forKey:@"srcType"];
     [[JsonHttp jsonHttp] httpRequest:@"team/doTeamActivitySignUp" JsonKey:nil withData:dic requestMethod:@"POST" failedBlock:^(id errType) {
-        NSLog(@"%@", errType);
+        [[ShowHUD showHUD]showToastWithText:[NSString stringWithFormat:@"%@", errType] FromView:self.view];
     } completionBlock:^(id data) {
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
             if ([data objectForKey:@"infoKey"]) {
@@ -463,7 +464,7 @@
     if (secess == 1) {
         
         [[ShowHUD showHUD]showToastWithText:@"支付成功" FromView:self.view];
-        [self performSelector:@selector(popToChannel) withObject:self afterDelay:2];
+        [self performSelector:@selector(popToChannel) withObject:self afterDelay:TIMESlEEP];
         
     }else if (secess == 2){
         [[ShowHUD showHUD]showToastWithText:@"支付已取消！" FromView:self.view];
@@ -520,7 +521,7 @@
             if ([resultDic[@"resultStatus"] isEqualToString:@"9000"]) {
                 [[ShowHUD showHUD]showToastWithText:@"支付成功！" FromView:self.view];
                 //跳转分组页面
-                [self performSelector:@selector(popToChannel) withObject:self afterDelay:2];
+                [self performSelector:@selector(popToChannel) withObject:self afterDelay:TIMESlEEP];
                 
             } else if ([resultDic[@"resultStatus"] isEqualToString:@"4000"]) {
                 NSLog(@"失败");

@@ -146,7 +146,7 @@ static CGFloat ImageHeight  = 210.0;
             
             
             self.state = [[[data objectForKey:@"team"] objectForKey:@"state"] integerValue];
-            self.power = [[data objectForKey:@"teamMember" ] objectForKey:@"power"];
+            self.power = [[data objectForKey:@"teamMember"] objectForKey:@"power"];
             [[NSUserDefaults standardUserDefaults] setObject:self.power forKey:@"power"];
             [[NSUserDefaults standardUserDefaults]  synchronize];
             self.memBerDic = [data objectForKey:@"teamMember"];

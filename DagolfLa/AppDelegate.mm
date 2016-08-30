@@ -86,28 +86,6 @@
     [self.window makeKeyAndVisible];
     
     //极光推送
-    // Required
-    //    NSUserDefaults *use = [NSUserDefaults standardUserDefaults];
-    //    if ([use objectForKey:@"shake"]) {
-    //        if ([[use objectForKey:@"shake"] integerValue] == 1) {
-    //            //可以添加自定义categories
-    //            [JPUSHService registerForRemoteNotificationTypes:(UIUserNotificationTypeBadge |
-    //                                                              UIUserNotificationTypeSound |
-    //                                                              UIUserNotificationTypeAlert)
-    //                                                  categories:nil];
-    //        } else {
-    //            //categories 必须为nil
-    //            [JPUSHService registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge |
-    //                                                              UIRemoteNotificationTypeSound |
-    //                                                              UIRemoteNotificationTypeAlert)
-    //                                                  categories:nil];
-    //        }
-    //    } else {
-    //        [use setObject:@1 forKey:@"shake"];
-    //        [use synchronize];
-    //        //如需兼容旧版本的方式，请依旧使用[JPUSHService setupWithOption:launchOptions]方式初始化和同时使用pushConfig.plist文件声明appKey等配置内容。
-    //        [JPUSHService setupWithOption:launchOptions appKey:@"831cd22faea3454090c15bbe" channel:@"Publish channel" apsForProduction:NO];
-    //    }
     if ([[UIDevice currentDevice].systemVersion floatValue] >= 8.0) {
         //可以添加自定义categories
         [JPUSHService registerForRemoteNotificationTypes:(UIUserNotificationTypeBadge |
@@ -280,7 +258,41 @@
     if ([[NSString stringWithFormat:@"%@",url] rangeOfString:[NSString stringWithFormat:@"wxdcdc4e20544ed728://pay"]].location != NSNotFound) {
         return  [WXApi handleOpenURL:url delegate:self];
         //不是上面的情况的话，就正常用shareSDK调起相应的分享页面
-    }else{
+    }
+    else if ([url.host isEqualToString:@"safepay"]) {
+        //这个是进程KILL掉之后也会调用，这个只是第一次授权回调，同时也会返回支付信息
+        [[AlipaySDK defaultService]processAuth_V2Result:url standbyCallback:^(NSDictionary *resultDic) {
+            NSString * str = resultDic[@"result"];
+            NSLog(@"result = %@",str);
+        }];
+        //跳转支付宝钱包进行支付，处理支付结果，这个只是辅佐订单支付结果回调
+        [[AlipaySDK defaultService] processOrderWithPaymentResult:url standbyCallback:^(NSDictionary *resultDic) {
+//            NSString * query = [[url query] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+//            id<DataVerifier> dataVeri = CreateRSADataVerifier(@"public");
+            //验证签名是否一致
+            if ([resultDic[@"resultStatus"] isEqualToString:@"9000"]) {
+//                [[ShowHUD showHUD]showToastWithText:@"支付成功！" FromView:self.view];
+                //跳转分组页面
+//                [self performSelector:@selector(popToChannel) withObject:self afterDelay:TIMESlEEP];
+                
+            } else if ([resultDic[@"resultStatus"] isEqualToString:@"4000"]) {
+                NSLog(@"失败");
+//                [[ShowHUD showHUD]showToastWithText:@"支付失败！" FromView:self.view];
+            } else if ([resultDic[@"resultStatus"] isEqualToString:@"6002"]) {
+                NSLog(@"网络错误");
+//                [[ShowHUD showHUD]showToastWithText:@"网络异常，支付失败！" FromView:self.view];
+            } else if ([resultDic[@"resultStatus"] isEqualToString:@"6001"]) {
+                NSLog(@"取消支付");
+//                [[ShowHUD showHUD]showToastWithText:@"支付已取消！" FromView:self.view];
+            } else {
+                NSLog(@"支付失败");
+//                [[ShowHUD showHUD]showToastWithText:@"支付失败！" FromView:self.view];
+            }
+            
+        }];
+        return YES;
+    }
+    else{
         return [UMSocialSnsService handleOpenURL:url wxApiDelegate:self];
 //        [UMSocialSnsService handleOpenURL:url
 //                            wxDelegate:self];

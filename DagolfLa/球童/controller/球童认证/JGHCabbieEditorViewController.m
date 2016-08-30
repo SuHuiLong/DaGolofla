@@ -118,12 +118,12 @@ static NSString *const JGHLableAndLableCellIdentifier = @"JGHLableAndLableCell";
                         if ([NSThread isMainThread]) {
                             NSLog(@"Yay!");
                             [[ShowHUD showHUD]showToastWithText:@"保存成功!" FromView:self.view];
-                            [self performSelector:@selector(popCtrl) withObject:self afterDelay:1.0];
+                            [self performSelector:@selector(popCtrl) withObject:self afterDelay:TIMESlEEP];
                         } else {
                             NSLog(@"Humph, switching to main");
                             dispatch_async(dispatch_get_main_queue(), ^{
                                 [[ShowHUD showHUD]showToastWithText:@"保存成功!" FromView:self.view];
-                                [self performSelector:@selector(popCtrl) withObject:self afterDelay:1.0];
+                                [self performSelector:@selector(popCtrl) withObject:self afterDelay:TIMESlEEP];
                             });
                         }
                     }else{
@@ -132,7 +132,7 @@ static NSString *const JGHLableAndLableCellIdentifier = @"JGHLableAndLableCell";
                 }];
             }else{
                 [[ShowHUD showHUD]showToastWithText:@"保存成功!" FromView:self.view];
-                [self performSelector:@selector(popCtrl) withObject:self afterDelay:1.0];
+                [self performSelector:@selector(popCtrl) withObject:self afterDelay:TIMESlEEP];
             }
         }else{
             if ([data objectForKey:@"packResultMsg"]) {

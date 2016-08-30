@@ -339,40 +339,32 @@
             } completionBlock:^(id data) {
                 NSLog(@"%@", data);
                 if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
-                    [Helper alertViewNoHaveCancleWithTitle:@"提交成功" withBlock:^(UIAlertController *alertView) {
-                        [self.navigationController popViewControllerAnimated:YES];
-                        [self.navigationController presentViewController:alertView animated:YES completion:nil];
-                        
-                    }];
+                    [[ShowHUD showHUD]showToastWithText:@"提交成功" FromView:self.view];
+                    [self performSelector:@selector(popAct) withObject:self afterDelay:TIMESlEEP];
+
                 }else{
-                    NSString *errorStr = nil;
-                    if ([data objectForKey:@"packResultMsg"]) {
-                        errorStr = [data objectForKey:@"packResultMsg"];
-                    }else{
-                        errorStr = @"提交失败！";
-                    }
-                    [Helper alertViewNoHaveCancleWithTitle:errorStr withBlock:^(UIAlertController *alertView) {
-                        [self.navigationController popViewControllerAnimated:YES];
-                        [self.navigationController presentViewController:alertView animated:YES completion:nil];
-                        
-                    }];
+                    [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
                 }
             }];
         }
         
         
-        [Helper alertViewNoHaveCancleWithTitle:@"提交成功" withBlock:^(UIAlertController *alertView) {
-            [self.navigationController popViewControllerAnimated:YES];
-            [self.navigationController presentViewController:alertView animated:YES completion:nil];
-        
-        }];
-        
+//        [Helper alertViewNoHaveCancleWithTitle:@"提交成功" withBlock:^(UIAlertController *alertView) {
+//            [self.navigationController popViewControllerAnimated:YES];
+//            [self.navigationController presentViewController:alertView animated:YES completion:nil];
+//        
+//        }];
+//        
         
     }else{
         [Helper alertViewNoHaveCancleWithTitle:@"请完善信息" withBlock:^(UIAlertController *alertView) {
             [self.navigationController presentViewController:alertView animated:YES completion:nil];
         }];
     }
+}
+
+- (void)popAct{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{

@@ -269,7 +269,7 @@
                 [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
             }
             
-            [self performSelector:@selector(scoresResult) withObject:self afterDelay:1.0];
+            [self performSelector:@selector(scoresResult) withObject:self afterDelay:TIMESlEEP];
         }
     }];
     
@@ -541,14 +541,14 @@
                     [[ShowHUD showHUD]showToastWithText:@"记分保存成功！" FromView:self.view];
                 }
                 
-                [self performSelector:@selector(scoresResult) withObject:self afterDelay:1.0];
+                [self performSelector:@selector(scoresResult) withObject:self afterDelay:TIMESlEEP];
             }
         }else{
             if ([data objectForKey:@"packResultMsg"]) {
                 [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
             }
             
-            [self performSelector:@selector(scoresResult) withObject:self afterDelay:1.0];
+            [self performSelector:@selector(scoresResult) withObject:self afterDelay:TIMESlEEP];
         }
     }];
     
@@ -579,12 +579,12 @@
             if ([NSThread isMainThread]) {
                 NSLog(@"Yay!");
                 [[ShowHUD showHUD]showToastWithText:@"记分结束！" FromView:self.view];
-                [self performSelector:@selector(pushJGHEndScoresViewController) withObject:self afterDelay:1.0];
+                [self performSelector:@selector(pushJGHEndScoresViewController) withObject:self afterDelay:TIMESlEEP];
             } else {
                 NSLog(@"Humph, switching to main");
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [[ShowHUD showHUD]showToastWithText:@"记分结束！" FromView:self.view];
-                    [self performSelector:@selector(pushJGHEndScoresViewController) withObject:self afterDelay:1.0];
+                    [self performSelector:@selector(pushJGHEndScoresViewController) withObject:self afterDelay:TIMESlEEP];
                 });
             }
             

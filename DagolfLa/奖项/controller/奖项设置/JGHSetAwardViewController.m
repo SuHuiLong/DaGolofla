@@ -170,7 +170,7 @@ static NSString *const JGHActivityBaseCellIdentifier = @"JGHActivityBaseCell";
     //doPublishPrize
     if (_publishPrize == 1) {
         [[ShowHUD showHUD]showToastWithText:@"保存成功！" FromView:self.view];
-        [self performSelector:@selector(backCtrl) withObject:self afterDelay:1.0];
+        [self performSelector:@selector(backCtrl) withObject:self afterDelay:TIMESlEEP];
     }else{
         NSMutableDictionary *dict = [NSMutableDictionary dictionary];
         [dict setObject:DEFAULF_USERID forKey:@"userKey"];

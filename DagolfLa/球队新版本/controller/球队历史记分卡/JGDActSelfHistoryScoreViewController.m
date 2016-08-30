@@ -368,7 +368,7 @@
         
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
             [[ShowHUD showHUD]showToastWithText:@"差点保存成功" FromView:self.view];
-            [self performSelector:@selector(pop) withObject:self afterDelay:1];
+            [self performSelector:@selector(pop) withObject:self afterDelay:TIMESlEEP];
         }else{
             if ([data objectForKey:@"packResultMsg"]) {
                 [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
