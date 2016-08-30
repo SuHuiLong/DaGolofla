@@ -399,7 +399,7 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
     __weak JGTeamApplyViewController *weakSelf = self;
     addTeamPlaysCtrl.blockPlayListArray = ^(NSMutableArray *listArray){
         _applyArray = listArray;
-        
+        [weakSelf countAmountPayable];
         [weakSelf.teamApplyTableView reloadData];
     };
     

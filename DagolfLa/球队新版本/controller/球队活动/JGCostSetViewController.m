@@ -54,6 +54,8 @@ static NSString *const JGHAddCostButtonCellIdentifier = @"JGHAddCostButtonCell";
             
             [self.costListArray addObject:dict];
         }
+    }else{
+        self.costListArray = [NSMutableArray arrayWithArray:self.costListArray];
     }
     
 //    if (_isManager == 1) {
@@ -116,29 +118,15 @@ static NSString *const JGHAddCostButtonCellIdentifier = @"JGHAddCostButtonCell";
         return;
     }
     
-//    if (_isManager == 1) {
-////        updateTeamActivityCost
-//        NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-//        [dict setObject:DEFAULF_USERID forKey:@"userKey"];
-//        [dict setObject:@(_activityKey) forKey:@"activityKey"];
-//        [dict setObject:_costListArray forKey:@"costList"];
-//        [[JsonHttp jsonHttp]httpRequestWithMD5:@"team/updateTeamActivityCost" JsonKey:nil withData:dict failedBlock:^(id errType) {
-//            
-//        } completionBlock:^(id data) {
-//            NSLog(@"%@", data);
-//            if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
-//                [[ShowHUD showHUD]showToastWithText:@"保存成功！" FromView:self.view];
-//                [self performSelector:@selector(popCtrl) withObject:self afterDelay:TIMESlEEP];
-//            }else{
-//                [[ShowHUD showHUD]showToastWithText:@"保存失败！" FromView:self.view];
-//            }
-//        }];
-//    }else{
-        if (self.delegate) {
-            [self.delegate costList:_costListArray];
-            [self.navigationController popViewControllerAnimated:YES];
-        }
-//    }
+    if (moneyIsNumber == 1) {
+        [[ShowHUD showHUD]showToastWithText:@"资费价格必须为数字！" FromView:self.view];
+        return;
+    }
+    
+    if (self.delegate) {
+        [self.delegate costList:_costListArray];
+        [self.navigationController popViewControllerAnimated:YES];
+    }
 }
 - (void)popCtrl{
     [self.navigationController popViewControllerAnimated:YES];
@@ -261,19 +249,19 @@ static NSString *const JGHAddCostButtonCellIdentifier = @"JGHAddCostButtonCell";
     NSLog(@"textField.tag == %td", textField.tag);
     if (textField.tag < 10 + _costListArrayCount) {
         NSMutableDictionary *newDict = [NSMutableDictionary dictionary];
-        newDict = [self.costListArray objectAtIndex:textField.tag -10];
+        newDict = [NSMutableDictionary dictionaryWithDictionary:[self.costListArray objectAtIndex:textField.tag -10]];
         [newDict setObject:textField.text forKey:@"money"];
         
         [self.costListArray replaceObjectAtIndex:textField.tag -10 withObject:newDict];
     }else{
         NSMutableDictionary *newDict = [NSMutableDictionary dictionary];
         if (textField.tag < 1000) {
-            newDict = [self.costListArray objectAtIndex:((textField.tag -100) + _costListArrayCount -1)];
+            newDict = [NSMutableDictionary dictionaryWithDictionary:[self.costListArray objectAtIndex:((textField.tag -100) + _costListArrayCount -1)]];
             [newDict setObject:textField.text forKey:@"costName"];
             
             [self.costListArray replaceObjectAtIndex:((textField.tag -100) + _costListArrayCount -1) withObject:newDict];
         }else{
-            newDict = [self.costListArray objectAtIndex:((textField.tag -1000) + _costListArrayCount -1)];
+            newDict = [NSMutableDictionary dictionaryWithDictionary:[self.costListArray objectAtIndex:((textField.tag -1000) + _costListArrayCount -1)]];
             [newDict setObject:textField.text forKey:@"money"];
             
             [self.costListArray replaceObjectAtIndex:((textField.tag -1000) + _costListArrayCount -1) withObject:newDict];

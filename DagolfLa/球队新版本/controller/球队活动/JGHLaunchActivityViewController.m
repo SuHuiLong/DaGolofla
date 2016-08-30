@@ -581,45 +581,56 @@ static CGFloat ImageHeight  = 210.0;
         
         self.refreshBlock();
         
-        NSMutableArray *imageArray = [NSMutableArray array];
-        
-        [imageArray addObject:UIImageJPEGRepresentation(self.model.bgImage, 0.7)];
-        
-        NSNumber* strTimeKey = [data objectForKey:@"timeKey"];
-        // 上传图片
-        NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-        [dict setObject:TYPE_TEAM_BACKGROUND forKey:@"nType"];
-        [dict setObject:PHOTO_DAGOLFLA forKey:@"tag"];
-        
-        [dict setObject:[NSString stringWithFormat:@"%@_background" ,strTimeKey] forKey:@"data"];
-        [dict setObject:TYPE_TEAM_BACKGROUND forKey:@"nType"];
-        [[JsonHttp jsonHttp] httpRequestImageOrVedio:@"1" withData:dict andDataArray:imageArray failedBlock:^(id errType) {
-            NSLog(@"errType===%@", errType);
-        } completionBlock:^(id data) {
-            NSLog(@"data == %@", data);
-            if ([[data objectForKey:@"code"] integerValue] == 1) {
-                UIAlertAction *commitAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-                    
-                    [self.navigationController popViewControllerAnimated:YES];
-                }];
-                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"系统提示" message:@"活动创建成功!" preferredStyle:UIAlertControllerStyleAlert];
-                [alertController addAction:commitAction];
-                //获取主线层
-                if ([NSThread isMainThread]) {
-                    NSLog(@"Yay!");
-                    [self presentViewController:alertController animated:YES completion:nil];
-                    [self.navigationController popViewControllerAnimated:YES];
-                } else {
-                    NSLog(@"Humph, switching to main");
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        [self presentViewController:alertController animated:YES completion:nil];
-                    });
+        if (self.model.bgImage) {
+            NSMutableArray *imageArray = [NSMutableArray array];
+            [imageArray addObject:UIImageJPEGRepresentation(self.model.bgImage, 0.7)];
+            
+            NSNumber* strTimeKey = [data objectForKey:@"timeKey"];
+            // 上传图片
+            NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+            [dict setObject:TYPE_TEAM_BACKGROUND forKey:@"nType"];
+            [dict setObject:PHOTO_DAGOLFLA forKey:@"tag"];
+            
+            [dict setObject:[NSString stringWithFormat:@"%@_background" ,strTimeKey] forKey:@"data"];
+            [dict setObject:TYPE_TEAM_BACKGROUND forKey:@"nType"];
+            [[JsonHttp jsonHttp] httpRequestImageOrVedio:@"1" withData:dict andDataArray:imageArray failedBlock:^(id errType) {
+                NSLog(@"errType===%@", errType);
+            } completionBlock:^(id data) {
+                NSLog(@"data == %@", data);
+                if ([[data objectForKey:@"code"] integerValue] == 1) {
+                    [self popSeeussulCtrl];
+                }else{
+                    [[ShowHUD showHUD]showToastWithText:@"图片上传失败！" FromView:self.view];
+                    [self performSelector:@selector(popCtrl) withObject:self afterDelay:TIMESlEEP];
                 }
-            }else{
-                
-            }
-        }];
+            }];
+        }else{
+            [self popSeeussulCtrl];
+        }
     }];
+}
+- (void)popCtrl{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+#pragma mark -- 创建成功提示
+- (void)popSeeussulCtrl{
+    UIAlertAction *commitAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        
+        [self.navigationController popViewControllerAnimated:YES];
+    }];
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"系统提示" message:@"活动创建成功!" preferredStyle:UIAlertControllerStyleAlert];
+    [alertController addAction:commitAction];
+    //获取主线层
+    if ([NSThread isMainThread]) {
+        NSLog(@"Yay!");
+        [self presentViewController:alertController animated:YES completion:nil];
+        [self.navigationController popViewControllerAnimated:YES];
+    } else {
+        NSLog(@"Humph, switching to main");
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self presentViewController:alertController animated:YES completion:nil];
+        });
+    }
 }
 #pragma mark --添加活动头像
 -(void)SelectPhotoImage:(UIButton *)btn{
