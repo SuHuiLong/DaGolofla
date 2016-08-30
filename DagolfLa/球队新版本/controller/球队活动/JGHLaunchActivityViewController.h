@@ -19,4 +19,6 @@
 
 @property (strong, nonatomic) void (^refreshBlock)();
 
+@property (nonatomic, strong)NSMutableArray *costListArray;//费用列表
+
 @end

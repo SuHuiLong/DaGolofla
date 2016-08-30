@@ -147,7 +147,10 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
         [applyDict setObject:_modelss.timeKey forKey:@"activityKey"];//球队活动id
         [applyDict setObject:@1 forKey:@"type"];//"是否是球队成员 0: 不是  1：是
         
-        [applyDict setObject:[NSString stringWithFormat:@"%.2f", [_modelss.memberPrice floatValue]] forKey:@"money"];//实际付款金额
+        NSDictionary *costDict = [NSDictionary dictionary];
+        costDict = _costListArray[0];
+        
+        [applyDict setObject:[NSString stringWithFormat:@"%@", [costDict objectForKey:@"money"]] forKey:@"money"];//实际付款金额
         
         [applyDict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:userID] forKey:@"userKey"];//报名用户key , 没有则是嘉宾
         
@@ -692,7 +695,7 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
         }
     }
     
-    [self.teamApplyTableView reloadData];
+    [self countAmountPayable];
     
     self.tranView.frame = CGRectMake(0, 0, 0, 0);
     self.tranView.hidden = YES;

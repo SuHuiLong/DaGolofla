@@ -15,7 +15,6 @@
     [super awakeFromNib];
     // Initialization code
     
-    
 }
 
 - (void)configTitlesString:(NSString *)titles{
@@ -28,27 +27,18 @@
 - (void)configContionsStringWhitModel:(JGTeamAcitivtyModel *)model andIndexPath:(NSIndexPath *)indexPath{
     NSLog(@"%ld", (long)indexPath.section);
     NSLog(@"%ld", (long)indexPath.row);
-//    if (indexPath.section == 0) {
-//        
-//    }else if (indexPath.section == 1){
-        if (indexPath.row == 0) {
-            self.contions.text = model.beginDate;//活动开始时间
-        }else if (indexPath.row == 1){
-            self.contions.text = [[model.endDate componentsSeparatedByString:@" "] objectAtIndex:0];//活动结束时间
+    
+    if (indexPath.row == 0) {
+        if (model.beginDate.length > 16) {
+            self.contions.text = [model.beginDate substringToIndex:16];
         }else{
-            self.contions.text = [[model.signUpEndTime componentsSeparatedByString:@" "] objectAtIndex:0];//报名截止时间
+            self.contions.text = model.beginDate;//活动开始时间
         }
-//    }
-//    
-//    else if (indexPath.section == 2){
-//        if (indexPath.row == 0) {
-//            self.contions.text = [NSString stringWithFormat:@"%.2f/%.2f/%.2f/%.2f", [model.memberPrice floatValue], [model.guestPrice floatValue], [model.billNamePrice floatValue], [model.billPrice floatValue]];//费用说明
-//        }else if (indexPath.row == 1){
-//            self.contions.text = [NSString stringWithFormat:@"%ld(人)", (long)model.maxCount];
-//        }else{
-//            self.contions.text = model.info;
-//        }
-//    }
+    }else if (indexPath.row == 1){
+        self.contions.text = [[model.endDate componentsSeparatedByString:@" "] objectAtIndex:0];//活动结束时间
+    }else{
+        self.contions.text = [[model.signUpEndTime componentsSeparatedByString:@" "] objectAtIndex:0];//报名截止时间
+    }
 }
 
 - (void)configActivityInfo:(NSString *)info{

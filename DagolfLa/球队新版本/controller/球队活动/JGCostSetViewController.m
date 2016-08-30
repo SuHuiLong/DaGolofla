@@ -156,11 +156,11 @@ static NSString *const JGHAddCostButtonCellIdentifier = @"JGHAddCostButtonCell";
         addCostButtonCell.selectionStyle = UITableViewCellSelectionStyleNone;
         addCostButtonCell.delegate = self;
         return addCostButtonCell;
-    }else if (indexPath.section < 4){
+    }else if (indexPath.section < _costListArray.count){
         JGHCostListCell *costListCell = [tableView dequeueReusableCellWithIdentifier:JGHCostListCellIdentifier];
         costListCell.selectionStyle = UITableViewCellSelectionStyleNone;
         [costListCell configCostListCell:_costListArray[indexPath.section]];
-        costListCell.valueTextField.tag = 10 +indexPath.section +1;
+        costListCell.valueTextField.tag = 10 +indexPath.section;
         costListCell.valueTextField.delegate = self;
         NSLog(@"valueTextField == %td", costListCell.valueTextField.tag);
         return costListCell;

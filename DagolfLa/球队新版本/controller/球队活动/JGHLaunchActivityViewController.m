@@ -26,7 +26,6 @@ static CGFloat ImageHeight  = 210.0;
 
 @interface JGHLaunchActivityViewController ()<UITableViewDelegate, UITableViewDataSource, JGHConcentTextViewControllerDelegate,UITextFieldDelegate, JGCostSetViewControllerDelegate, JGHSaveAndSubmitBtnCellDelegate>
 {
-    //、、、、、、、
     NSArray *_titleArray;//标题数组
     NSInteger _photos;//跳转相册问题
     
@@ -34,8 +33,6 @@ static CGFloat ImageHeight  = 210.0;
 }
 @property (nonatomic,strong)SXPickPhoto * pickPhoto;//相册类
 @property (nonatomic, strong)UITableView *launchActivityTableView;
-
-//@property (nonatomic, strong)NSMutableDictionary *dataDict;
 
 @property (nonatomic, strong)UIImage *headerImage;
 
@@ -46,8 +43,6 @@ static CGFloat ImageHeight  = 210.0;
 
 @property (nonatomic, strong)UIButton *addressBtn;//添加地址
 @property (nonatomic, strong)UITextField *titleField;//球队名称输入框
-
-@property (nonatomic, strong)NSMutableArray *costListArray;//费用列表
 
 @end
 
@@ -87,11 +82,10 @@ static CGFloat ImageHeight  = 210.0;
 - (instancetype)init{
     if (self == [super init]) {
         self.model = [[JGTeamAcitivtyModel alloc]init];
-//        self.dataDict = [NSMutableDictionary dictionary];
+
         self.pickPhoto = [[SXPickPhoto alloc]init];
         self.titleView = [[UIView alloc]init];
-        self.costListArray = [NSMutableArray array];
-//        _dataDict = [[NSMutableDictionary alloc]init];
+
         UIImage *image = [UIImage imageNamed:ActivityBGImage];
         self.model.bgImage = image;
         self.imgProfile = [[UIImageView alloc] initWithImage:image];
@@ -125,6 +119,9 @@ static CGFloat ImageHeight  = 210.0;
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor colorWithHexString:BG_color];
     self.automaticallyAdjustsScrollViewInsets = NO;
+//    if (self.costListArray == nil) {
+//        self.costListArray = [NSMutableArray array];
+//    }
     
     _photos = 1;
     //返回按钮
@@ -424,11 +421,9 @@ static CGFloat ImageHeight  = 210.0;
 }
 #pragma mark --保存代理
 - (void)SaveBtnClick:(UIButton *)btn{
-    
     [self.view endEditing:YES];
     
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-
     
     if (self.titleField.text.length != 0) {
         [dict setObject:self.model.name forKey:@"name"];//活动名字
@@ -458,14 +453,6 @@ static CGFloat ImageHeight  = 210.0;
         [dict setObject:self.model.info forKey:@"info"];//活动简介
     }
     
-    if (self.model.memberPrice > 0) {
-        [dict setObject:[NSString stringWithFormat:@"%.2f", [self.model.memberPrice floatValue]] forKey:@"memberPrice"];//会员价
-    }
-    
-    if (self.model.guestPrice > 0) {
-        [dict setObject:[NSString stringWithFormat:@"%.2f", [self.model.guestPrice floatValue]] forKey:@"guestPrice"];//嘉宾价
-    }
-    
     if (self.model.userName != nil) {
         [dict setObject:self.model.userName forKey:@"userName"];//联系人
     }
@@ -479,6 +466,8 @@ static CGFloat ImageHeight  = 210.0;
     
     NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
     [userdef setObject:dict forKey:@"TeamActivityArray"];
+    //活动费用
+    [userdef setObject:_costListArray forKey:@"TeamActivityCostListArray"];
     [userdef synchronize];
     [[ShowHUD showHUD]hideAnimationFromView:self.view];
     [[ShowHUD showHUD]showToastWithText:@"提示：活动保存成功！" FromView:self.view];
