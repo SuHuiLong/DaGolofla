@@ -88,7 +88,7 @@ static NSString *const JGPlayPayBaseCellIdentifier = @"JGPlayPayBaseCell";
     }
 }
 - (void)createAddTeamPlaysTableView{
-    self.addTeamPlaysTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight)];
+    self.addTeamPlaysTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight - 64)];
     UINib *addPlaysCellNib = [UINib nibWithNibName:@"JGHAddPlaysCell" bundle: [NSBundle mainBundle]];
     [self.addTeamPlaysTableView registerNib:addPlaysCellNib forCellReuseIdentifier:JGHAddPlaysCellIdentifier];
     
@@ -378,17 +378,19 @@ static NSString *const JGPlayPayBaseCellIdentifier = @"JGPlayPayBaseCell";
     }
     
     [_playsBaseDict setObject:@(listId) forKey:@"type"];
-    NSArray *indexArray = [NSArray array];
-    if (listId == cellid) {
-        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:cellid inSection:2];
-        indexArray=[NSArray arrayWithObject:indexPath];
-    }else{
-        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:cellid inSection:2];
-        NSIndexPath *indexPath1 = [NSIndexPath indexPathForRow:listId inSection:2];
-        indexArray=[NSArray arrayWithObjects:indexPath, indexPath1, nil];
-    }
+//    NSArray *indexArray = [NSArray array];
+//    if (listId == cellid) {
+//        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:cellid inSection:2];
+//        indexArray=[NSArray arrayWithObject:indexPath];
+//    }else{
+//        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:cellid inSection:2];
+//        NSIndexPath *indexPath1 = [NSIndexPath indexPathForRow:listId inSection:2];
+//        indexArray=[NSArray arrayWithObjects:indexPath, indexPath1, nil];
+//    }
+//    
+//    [self.addTeamPlaysTableView reloadRowsAtIndexPaths:indexArray withRowAnimation:UITableViewRowAnimationAutomatic];
     
-    [self.addTeamPlaysTableView reloadRowsAtIndexPaths:indexArray withRowAnimation:UITableViewRowAnimationAutomatic];
+    [self.addTeamPlaysTableView reloadData];
 }
 #pragma mark -- 删除打球人
 - (void)deletePalyBaseBtn:(UIButton *)btn{
@@ -406,6 +408,8 @@ static NSString *const JGPlayPayBaseCellIdentifier = @"JGPlayPayBaseCell";
     }else{
         [self delePalys:btn.tag - 1000];
     }
+    
+    [self.addTeamPlaysTableView reloadData];
 }
 - (void)delePalys:(NSInteger)listId{
     [_playListArray removeObjectAtIndex:listId];
