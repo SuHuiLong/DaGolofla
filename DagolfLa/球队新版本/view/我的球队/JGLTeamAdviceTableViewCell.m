@@ -42,19 +42,19 @@
         
         _chadianLabel = [[UILabel alloc]initWithFrame:CGRectMake(70*screenWidth/320, 34*screenWidth/320, 50*screenWidth/320, 20*screenWidth/320)];
         _chadianLabel.font = [UIFont systemFontOfSize:10*screenWidth/320];
-        _chadianLabel.textColor = [UIColor darkGrayColor];
+        _chadianLabel.textColor = [UIColor blackColor];
         [self addSubview:_chadianLabel];
         _chadianLabel.text = @"差点:39";
         
-        _mobileLabel = [[UILabel alloc]initWithFrame:CGRectMake(115*screenWidth/320, 34*screenWidth/320, 100*screenWidth/320, 20*screenWidth/320)];
+        _mobileLabel = [[UILabel alloc]initWithFrame:CGRectMake(118*screenWidth/320, 34*screenWidth/320, 100*screenWidth/320, 20*screenWidth/320)];
         _mobileLabel.font = [UIFont systemFontOfSize:10*screenWidth/320];
-        _mobileLabel.textColor = [UIColor darkGrayColor];
+        _mobileLabel.textColor = [UIColor blackColor];
         [self addSubview:_mobileLabel];
         _mobileLabel.text = @"手机号:18612341234";
         
         
         _agreeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        _agreeBtn.frame = CGRectMake(224*screenWidth/320, 15*screenWidth/320, 46*screenWidth/320, 24*screenWidth/320);
+        _agreeBtn.frame = CGRectMake(218*screenWidth/320, 15*screenWidth/320, 46*screenWidth/320, 24*screenWidth/320);
         [_agreeBtn setTitle:@"同意" forState:UIControlStateNormal];
         [_agreeBtn setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
         [_agreeBtn.layer setBorderWidth:1.0]; //边框宽度
@@ -78,6 +78,7 @@
         
         _timeLabel = [[UILabel alloc]initWithFrame:CGRectMake(180*screenWidth/320, 5*screenWidth/320, 136*screenWidth/320, 20*screenWidth/320)];
         _timeLabel.font = [UIFont systemFontOfSize:14];
+        _timeLabel.textColor = [UITool colorWithHexString:@"#a0a0a0" alpha:1];
         [self addSubview:_timeLabel];
         
         _stateLabel = [[UILabel alloc]initWithFrame:CGRectMake(271*screenWidth/320, 34*screenWidth/320, 46*screenWidth/320, 20*screenWidth/320)];
