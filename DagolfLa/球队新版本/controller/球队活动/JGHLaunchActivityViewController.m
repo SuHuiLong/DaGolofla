@@ -24,7 +24,7 @@ static NSString *const JGHTeamContactCellIdentifier = @"JGHTeamContactTableViewC
 static NSString *const JGHSaveAndSubmitBtnCellIdentifier = @"JGHSaveAndSubmitBtnCell";
 static CGFloat ImageHeight  = 210.0;
 
-@interface JGHLaunchActivityViewController ()<UITableViewDelegate, UITableViewDataSource, JGHConcentTextViewControllerDelegate, NSURLConnectionDownloadDelegate,UITextFieldDelegate, JGCostSetViewControllerDelegate, JGHSaveAndSubmitBtnCellDelegate>
+@interface JGHLaunchActivityViewController ()<UITableViewDelegate, UITableViewDataSource, JGHConcentTextViewControllerDelegate,UITextFieldDelegate, JGCostSetViewControllerDelegate, JGHSaveAndSubmitBtnCellDelegate>
 {
     //、、、、、、、
     NSArray *_titleArray;//标题数组
@@ -297,6 +297,7 @@ static CGFloat ImageHeight  = 210.0;
         return launchImageActivityCell;
     }else if (indexPath.section == 3){
         JGHTeamContactTableViewCell *contactCell = [tableView dequeueReusableCellWithIdentifier:JGHTeamContactCellIdentifier];
+        
         if (indexPath.row == 1) {
             contactCell.contactLabel.text = @"联系人电话";
             contactCell.tetfileView.placeholder = @"请输入联系人电话";
@@ -316,7 +317,7 @@ static CGFloat ImageHeight  = 210.0;
         }
         
         contactCell.tetfileView.delegate = self;
-        
+        [contactCell configConstraint];
         return contactCell;
     }else if (indexPath.section == 4){
         JGHSaveAndSubmitBtnCell *saveCell = [tableView dequeueReusableCellWithIdentifier:JGHSaveAndSubmitBtnCellIdentifier];
@@ -329,7 +330,7 @@ static CGFloat ImageHeight  = 210.0;
             contactCell.tetfileView.delegate = self;
             contactCell.tetfileView.tag = 234;
             contactCell.contactLabel.text = @"人员限制";
-//            [contactCell configConstraint];
+            [contactCell configConstraint];
             if (self.model.name != nil) {
                 contactCell.tetfileView.text = [NSString stringWithFormat:@"%td", self.model.maxCount];
             }

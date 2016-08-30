@@ -85,6 +85,7 @@ typedef NS_ENUM(NSInteger, GestureType) {
 #define Cancel_Color @"#E5621E"
 #define NoClick_Color @"#DDDDDD"
 #define Click_Color @"#F08900"
+#define Bar_Color @"#32B14D"
 
 #define ProportionAdapter screenWidth/375
 
