@@ -30,6 +30,7 @@
 #import "JGActivityBaseInfoCell.h"
 #import "JGHApplyCatoryPriceView.h"
 #import "JGHAddTeamPlaysViewController.h"
+#import "JGTeamActibityNameViewController.h"
 
 static NSString *const JGHActivityBaseInfoCellIdentifier = @"JGHActivityBaseInfoCell";
 static NSString *const JGActivityBaseInfoCellIdentifier = @"JGActivityBaseInfoCell";
@@ -74,13 +75,6 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
 @end
 
 @implementation JGTeamApplyViewController
-
-//- (JGHApplyCatoryPriceView *)applyCatoryPriceView{
-//    if (_applyCatoryPriceView == nil) {
-//        self.applyCatoryPriceView = [[JGHApplyCatoryPriceView alloc]init];
-//    }
-//    return _applyCatoryPriceView;
-//}
 
 - (UIView *)tranView{
     if (_tranView == nil) {
@@ -140,20 +134,10 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
     [_baseInfoArray addObject:[NSString stringWithFormat:@"%@-活动地址", _modelss.ballName]];
     [_baseInfoArray addObject:[NSString stringWithFormat:@"%@-活动日期", [Helper returnDateformatString:_modelss.endDate]]];
     //基础信息
-    if ([self.modelss.memberPrice floatValue] > 0) {
-        [_baseInfoArray addObject:[NSString stringWithFormat:@"%.2f-球队队员资费", [self.modelss.memberPrice floatValue]]];
-    }
-    
-    if ([self.modelss.guestPrice floatValue] > 0) {
-        [_baseInfoArray addObject:[NSString stringWithFormat:@"%.2f-普通嘉宾资费", [self.modelss.guestPrice floatValue]]];
-    }
-    
-    if ([self.modelss.billNamePrice floatValue] > 0) {
-        [_baseInfoArray addObject:[NSString stringWithFormat:@"%.2f-球场记名会员资费", [self.modelss.billNamePrice floatValue]]];
-    }
-    
-    if ([self.modelss.billPrice floatValue] > 0) {
-        [_baseInfoArray addObject:[NSString stringWithFormat:@"%.2f-球场无记名会员资费", [self.modelss.billPrice floatValue]]];
+    for (NSDictionary *dict in _costListArray) {
+        NSString *string = nil;
+        string = [NSString stringWithFormat:@"%@-%@", [dict objectForKey:@"money"], [dict objectForKey:@"costName"]];
+        [_baseInfoArray addObject:string];
     }
     
     //默认添加自己的信息
@@ -178,7 +162,6 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
         if ([self.teamMember objectForKey:@"mobile"]) {
             [applyDict setObject:[self.teamMember objectForKey:@"mobile"] forKey:@"mobile"];//手机号
         }
-        
         
         [applyDict setObject:@"1" forKey:@"isOnlinePay"];//是否线上付款 1-线上
         [applyDict setObject:@0 forKey:@"signUpInfoKey"];//报名信息的timeKey
@@ -605,9 +588,28 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
         [self.navigationController pushViewController:groupCtrl animated:YES];
     }else if (secess == 2){
         [[ShowHUD showHUD]showToastWithText:@"支付已取消！" FromView:self.view];
+        [self performSelector:@selector(popActivityCtrl) withObject:self afterDelay:TIMESlEEP];
     }else{
         [[ShowHUD showHUD]showToastWithText:@"支付失败！" FromView:self.view];
+        [self performSelector:@selector(popActivityCtrl) withObject:self afterDelay:TIMESlEEP];
     }
+}
+- (void)popActivityCtrl{
+    //
+    NSNotification * notice = [NSNotification notificationWithName:@"reloadActivityData" object:nil userInfo:nil];
+    //发送消息
+    [[NSNotificationCenter defaultCenter]postNotification:notice];
+    
+    for (UIViewController *controller in self.navigationController.viewControllers) {
+        if ([controller isKindOfClass:[JGTeamActibityNameViewController class]]) {
+            //创建一个消息对象
+            NSNotification * notice = [NSNotification notificationWithName:@"reloadActivityData" object:nil userInfo:nil];
+            //发送消息
+            [[NSNotificationCenter defaultCenter]postNotification:notice];
+            [self.navigationController popToViewController:controller animated:YES];
+        }
+    }
+
 }
 #pragma mark -- 支付宝
 - (void)zhifubaoPay{

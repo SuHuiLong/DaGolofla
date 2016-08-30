@@ -124,6 +124,13 @@
         cell.phoneLB.text = @"";
     }
     
+    cell.signLB.textColor = [UIColor colorWithHexString:@"#7fc1ff"];
+    if ([[self.dataArray[indexPath.row] objectForKey:@"signUpInfoKey"] integerValue] == -1) {
+        cell.signLB.text = @"意向成员";
+    }else{
+        cell.signLB.text = @"线上报名";
+    }
+    
     [cell.headIconV sd_setImageWithURL:[Helper setImageIconUrl:@"user" andTeamKey:[[self.dataArray[indexPath.row] objectForKey:@"userKey"] integerValue] andIsSetWidth:YES andIsBackGround:NO] placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
 
     cell.selectionStyle = UITableViewCellSelectionStyleNone;

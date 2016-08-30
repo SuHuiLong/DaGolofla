@@ -24,7 +24,7 @@ static NSString *const JGHTeamContactCellIdentifier = @"JGHTeamContactTableViewC
 static NSString *const JGHSaveAndSubmitBtnCellIdentifier = @"JGHSaveAndSubmitBtnCell";
 static CGFloat ImageHeight  = 210.0;
 
-@interface JGHLaunchActivityViewController ()<UITableViewDelegate, UITableViewDataSource, JGHConcentTextViewControllerDelegate, NSURLConnectionDownloadDelegate,UITextFieldDelegate, JGCostSetViewControllerDelegate, JGHSaveAndSubmitBtnCellDelegate>
+@interface JGHLaunchActivityViewController ()<UITableViewDelegate, UITableViewDataSource, JGHConcentTextViewControllerDelegate,UITextFieldDelegate, JGCostSetViewControllerDelegate, JGHSaveAndSubmitBtnCellDelegate>
 {
     //、、、、、、、
     NSArray *_titleArray;//标题数组
@@ -297,6 +297,7 @@ static CGFloat ImageHeight  = 210.0;
         return launchImageActivityCell;
     }else if (indexPath.section == 3){
         JGHTeamContactTableViewCell *contactCell = [tableView dequeueReusableCellWithIdentifier:JGHTeamContactCellIdentifier];
+        
         if (indexPath.row == 1) {
             contactCell.contactLabel.text = @"联系人电话";
             contactCell.tetfileView.placeholder = @"请输入联系人电话";
@@ -316,7 +317,7 @@ static CGFloat ImageHeight  = 210.0;
         }
         
         contactCell.tetfileView.delegate = self;
-        
+        [contactCell configConstraint];
         return contactCell;
     }else if (indexPath.section == 4){
         JGHSaveAndSubmitBtnCell *saveCell = [tableView dequeueReusableCellWithIdentifier:JGHSaveAndSubmitBtnCellIdentifier];
@@ -329,6 +330,7 @@ static CGFloat ImageHeight  = 210.0;
             contactCell.tetfileView.delegate = self;
             contactCell.tetfileView.tag = 234;
             contactCell.contactLabel.text = @"人员限制";
+            [contactCell configConstraint];
             if (self.model.name != nil) {
                 contactCell.tetfileView.text = [NSString stringWithFormat:@"%td", self.model.maxCount];
             }
@@ -336,7 +338,6 @@ static CGFloat ImageHeight  = 210.0;
             contactCell.tetfileView.placeholder = @"请输入最大人员限制数";
             return contactCell;
         }else{
-            
             JGTableViewCell *launchActivityCell = [tableView dequeueReusableCellWithIdentifier:JGTableViewCellIdentifier forIndexPath:indexPath];
             launchActivityCell.selectionStyle = UITableViewCellSelectionStyleNone;
             
@@ -351,7 +352,7 @@ static CGFloat ImageHeight  = 210.0;
             
             if (indexPath.section == 2) {
                 if (indexPath.row == 0) {
-                    [launchActivityCell configActivityCost:_costListArray];
+//                    [launchActivityCell configActivityCost:_costListArray];
                 }else{
                     [launchActivityCell configActivityInfo:_model.info];
                 }
@@ -548,12 +549,6 @@ static CGFloat ImageHeight  = 210.0;
     [dict setObject:[NSString stringWithFormat:@"%ld", (long)self.model.ballKey] forKey:@"ballKey"];//球场id
     [dict setObject:self.model.ballName forKey:@"ballName"];//球场名称
     [dict setObject:self.model.info forKey:@"info"];//活动简介
-    /*
-     [dict setObject:[NSString stringWithFormat:@"%.2f", [self.model.memberPrice floatValue]] forKey:@"memberPrice"];//会员价
-     [dict setObject:[NSString stringWithFormat:@"%.2f", [self.model.guestPrice floatValue]] forKey:@"guestPrice"];//嘉宾价
-     [dict setObject:[NSString stringWithFormat:@"%.2f", [self.model.billNamePrice floatValue]] forKey:@"billNamePrice"];//球队会员记名价
-     [dict setObject:[NSString stringWithFormat:@"%.2f", [self.model.billPrice floatValue]] forKey:@"billPrice"];//球队会员不记名价
-     */
     
     [dict setObject:[NSString stringWithFormat:@"%ld", (long)self.model.maxCount] forKey:@"maxCount"];//最大人员数
     [dict setObject:[NSString stringWithFormat:@"%ld", (long)_model.isClose] forKey:@"isClose"];//活动是否结束 0 : 开始 , 1 : 已结束
@@ -565,7 +560,20 @@ static CGFloat ImageHeight  = 210.0;
     [dict setObject:self.model.userMobile forKey:@"userMobile"];//联系人
     
     [postDict setObject:dict forKey:@"teamActivity"];
-    [postDict setObject:_costListArray forKey:@"costList"];
+    
+    //过滤资费类型
+    NSMutableArray *costArray = [NSMutableArray array];
+
+    for (int i=0; i < _costListArray.count; i++) {
+        NSDictionary *dict = _costListArray[i];
+        NSString *costName = [dict objectForKey:@"costName"];
+        NSString *money = [dict objectForKey:@"money"];
+        if (![costName isEqualToString:@""] && ![money isEqualToString:@""]) {
+            [costArray addObject:_costListArray[i]];
+        }
+    }
+    
+    [postDict setObject:costArray forKey:@"costList"];
     //发布活动
     [[JsonHttp jsonHttp]httpRequest:@"team/createTeamActivity" JsonKey:nil withData:postDict requestMethod:@"POST" failedBlock:^(id errType) {
         NSLog(@"%@", errType);
@@ -690,19 +698,6 @@ static CGFloat ImageHeight  = 210.0;
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:2];
     NSArray *indexArray=[NSArray arrayWithObject:indexPath];
     [self.launchActivityTableView reloadRowsAtIndexPaths:indexArray withRowAnimation:UITableViewRowAnimationAutomatic];
-}
-- (void)inputMembersCost:(NSString *)membersCost guestCost:(NSString *)guestCost andRegisteredPrice:(NSString *)registeredPrice andBearerPrice:(NSString *)bearerPrice{
-    NSLog(@"%@", [Helper returnNumberForString:guestCost]);
-    NSLog(@"%@", [Helper returnNumberForString:membersCost]);
-    NSLog(@"%@", [Helper returnNumberForString:registeredPrice]);
-    NSLog(@"%@", [Helper returnNumberForString:bearerPrice]);
-    self.model.guestPrice = [Helper returnNumberForString:guestCost];
-    self.model.memberPrice = [Helper returnNumberForString:membersCost];
-    self.model.billNamePrice = [Helper returnNumberForString:registeredPrice];
-    self.model.billPrice = [Helper returnNumberForString:bearerPrice];
-//    [_dataDict setObject:guestCost forKey:@"activityGuestCost"];
-//    [_dataDict setObject:membersCost forKey:@"activityMembersCost"];
-    [self.launchActivityTableView reloadData];
 }
 #pragma mark -- UITextFliaView
 - (void)textFieldDidEndEditing:(UITextField *)textField{

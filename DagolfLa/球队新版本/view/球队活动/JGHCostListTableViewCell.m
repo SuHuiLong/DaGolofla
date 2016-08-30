@@ -22,7 +22,7 @@
 }
 
 - (void)configCostData:(NSMutableDictionary *)dict{
-    self.titles.text = [dict objectForKey:@"costName"];
+    self.titles.text = [NSString stringWithFormat:@"%@", [dict objectForKey:@"costName"]];
     self.price.text = [NSString stringWithFormat:@"%@", [dict objectForKey:@"money"]];
 }
 

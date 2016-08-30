@@ -181,8 +181,6 @@
 		20C1B8B11CE3241C00508ABC /* JGTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 20C1B8AF1CE3241C00508ABC /* JGTableViewCell.xib */; };
 		20C1B8B51CE344C600508ABC /* JGApplyPepoleCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 20C1B8B31CE344C600508ABC /* JGApplyPepoleCell.m */; };
 		20C1B8B61CE344C600508ABC /* JGApplyPepoleCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 20C1B8B41CE344C600508ABC /* JGApplyPepoleCell.xib */; };
-		20C1B8BA1CE350ED00508ABC /* JGAddTeamGuestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 20C1B8B81CE350ED00508ABC /* JGAddTeamGuestViewController.m */; };
-		20C1B8BB1CE350ED00508ABC /* JGAddTeamGuestViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 20C1B8B91CE350ED00508ABC /* JGAddTeamGuestViewController.xib */; };
 		20CA13651CE4276500DA15B9 /* JGTeamAcitivtyModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 20CA13641CE4276500DA15B9 /* JGTeamAcitivtyModel.m */; };
 		20CA13691CE44CCB00DA15B9 /* JGAlreadyAddGuestCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 20CA13671CE44CCB00DA15B9 /* JGAlreadyAddGuestCell.m */; };
 		20CA136A1CE44CCB00DA15B9 /* JGAlreadyAddGuestCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 20CA13681CE44CCB00DA15B9 /* JGAlreadyAddGuestCell.xib */; };
@@ -1583,9 +1581,6 @@
 		20C1B8B21CE344C600508ABC /* JGApplyPepoleCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGApplyPepoleCell.h; sourceTree = "<group>"; };
 		20C1B8B31CE344C600508ABC /* JGApplyPepoleCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGApplyPepoleCell.m; sourceTree = "<group>"; };
 		20C1B8B41CE344C600508ABC /* JGApplyPepoleCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JGApplyPepoleCell.xib; sourceTree = "<group>"; };
-		20C1B8B71CE350ED00508ABC /* JGAddTeamGuestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGAddTeamGuestViewController.h; sourceTree = "<group>"; };
-		20C1B8B81CE350ED00508ABC /* JGAddTeamGuestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGAddTeamGuestViewController.m; sourceTree = "<group>"; };
-		20C1B8B91CE350ED00508ABC /* JGAddTeamGuestViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JGAddTeamGuestViewController.xib; sourceTree = "<group>"; };
 		20CA13631CE4276500DA15B9 /* JGTeamAcitivtyModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGTeamAcitivtyModel.h; sourceTree = "<group>"; };
 		20CA13641CE4276500DA15B9 /* JGTeamAcitivtyModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGTeamAcitivtyModel.m; sourceTree = "<group>"; };
 		20CA13661CE44CCB00DA15B9 /* JGAlreadyAddGuestCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGAlreadyAddGuestCell.h; sourceTree = "<group>"; };
@@ -4091,9 +4086,6 @@
 				20C1B8A81CE313A200508ABC /* JGTeamApplyViewController.h */,
 				20C1B8A91CE313A200508ABC /* JGTeamApplyViewController.m */,
 				20C1B8AA1CE313A200508ABC /* JGTeamApplyViewController.xib */,
-				20C1B8B71CE350ED00508ABC /* JGAddTeamGuestViewController.h */,
-				20C1B8B81CE350ED00508ABC /* JGAddTeamGuestViewController.m */,
-				20C1B8B91CE350ED00508ABC /* JGAddTeamGuestViewController.xib */,
 				20CA136B1CE4784900DA15B9 /* JGInvoiceViewController.h */,
 				20CA136C1CE4784900DA15B9 /* JGInvoiceViewController.m */,
 				20513B4D1CF5D9AC003233FB /* JGHAddInvoiceViewController.h */,
@@ -8874,7 +8866,7 @@
 				TargetAttributes = {
 					36BFFD271BC76C8D005B3CE2 = {
 						CreatedOnToolsVersion = 6.3.2;
-						DevelopmentTeam = 5P6JNXBH3C;
+						DevelopmentTeam = T8ML76W22A;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -9066,7 +9058,6 @@
 				2010561A1D59C92800C90FDE /* JGHLableAndLableCell.xib in Resources */,
 				20591CA01D23A64D003271EC /* JGHTradRecordImageCell.xib in Resources */,
 				2080304A1CF828D100448BFC /* JGHAddAddressViewController.xib in Resources */,
-				20C1B8BB1CE350ED00508ABC /* JGAddTeamGuestViewController.xib in Resources */,
 				654332061BD5D9B900363947 /* UMSCommentInputController.xib in Resources */,
 				20513B511CF5D9AD003233FB /* JGHAddInvoiceViewController.xib in Resources */,
 				3660E17F1BFC56C20033B4D7 /* ScoreCommentSelfViewCell.xib in Resources */,
@@ -9926,7 +9917,6 @@
 				36BF00871BC772EF005B3CE2 /* MySetAboutController.m in Sources */,
 				36BFFF801BC76D09005B3CE2 /* UIImageView+WebCache.m in Sources */,
 				F5E1BB301D6B006100414727 /* ZXRSSExpandedBlockParsedResult.m in Sources */,
-				20C1B8BA1CE350ED00508ABC /* JGAddTeamGuestViewController.m in Sources */,
 				F5B5498F1CE98F5B0091C962 /* JGTeamManageViewController.m in Sources */,
 				2012AD621D2BB19400F70E40 /* JGDActivityListViewController.m in Sources */,
 				F5E1BB621D6B006100414727 /* ZXPDF417Codeword.m in Sources */,

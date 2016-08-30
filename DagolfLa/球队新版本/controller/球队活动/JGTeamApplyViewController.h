@@ -34,4 +34,6 @@
 
 @property (nonatomic, strong)NSMutableArray *costListArray;//报名资费列表
 
+//@property (strong, nonatomic) void (^refreshBlock)();
+
 @end

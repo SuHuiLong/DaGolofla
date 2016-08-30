@@ -22,7 +22,9 @@
     self.name.font = [UIFont systemFontOfSize:15 *ProportionAdapter];
     self.nameLeft.constant = 37 *ProportionAdapter;
     
-    self.priceBtnLeft.constant = 55 *ProportionAdapter;
+    self.nameW.constant = 80 *ProportionAdapter;
+    
+    self.priceBtnLeft.constant = 10 *ProportionAdapter;
     
     self.editorBtn.titleLabel.font = [UIFont systemFontOfSize:15*ProportionAdapter];
     self.priceBtn.titleLabel.font = [UIFont systemFontOfSize:15*ProportionAdapter];

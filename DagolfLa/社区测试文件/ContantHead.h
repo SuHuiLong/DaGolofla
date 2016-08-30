@@ -26,6 +26,8 @@ typedef NS_ENUM(NSInteger, GestureType) {
 //userId
 #define userID @"userId"
 #define DEFAULF_USERID [[NSUserDefaults standardUserDefaults] objectForKey:@"userId"]
+//提示框时间
+#define TIMESlEEP 2.0
 //1001-活动，1003,1001,1004,1002,1005
 //#define ActivityKey @"activityKey"
 //#define HEADERRImage @"logo"//头像默认图片
@@ -83,6 +85,7 @@ typedef NS_ENUM(NSInteger, GestureType) {
 #define Cancel_Color @"#E5621E"
 #define NoClick_Color @"#DDDDDD"
 #define Click_Color @"#F08900"
+#define Bar_Color @"#32B14D"
 
 #define ProportionAdapter screenWidth/375
 

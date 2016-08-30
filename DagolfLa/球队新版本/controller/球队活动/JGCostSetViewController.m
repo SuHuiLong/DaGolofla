@@ -33,21 +33,23 @@ static NSString *const JGHAddCostButtonCellIdentifier = @"JGHAddCostButtonCell";
     self.view.backgroundColor = [UIColor colorWithHexString:BG_color];
     self.navigationItem.title = @"费用设置";
     
-    _keyArray = @[@"name", @"money"];
+    _keyArray = @[@"costName", @"money"];
     
     if (!self.costListArray) {
         self.costListArray = [NSMutableArray array];
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < 5; i++) {
             NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-            [dict setObject:@(i) forKey:@"type"];
+            [dict setObject:@"" forKey:@"money"];
             if (i == 0) {
-                [dict setObject:@"普通嘉宾资费" forKey:@"name"];
+                [dict setObject:@"球队队员资费" forKey:@"costName"];
             }else if (i == 1){
-                [dict setObject:@"球队队员资费" forKey:@"name"];
+                [dict setObject:@"嘉宾资费" forKey:@"costName"];
             }else if (i == 2){
-                [dict setObject:@"球场记名会员资费" forKey:@"name"];
-            }else{
-                [dict setObject:@"球场无记名会员资费" forKey:@"name"];
+                [dict setObject:@"球场记名会员资费" forKey:@"costName"];
+            }else if (i == 3){
+                [dict setObject:@"球场不记名会员资费" forKey:@"costName"];
+            }else {
+                [dict setObject:@"" forKey:@"costName"];
             }
             
             [self.costListArray addObject:dict];
@@ -87,49 +89,47 @@ static NSString *const JGHAddCostButtonCellIdentifier = @"JGHAddCostButtonCell";
 - (void)saveBtnClick:(UIButton *)btn{
     [self.view endEditing:YES];
     NSLog(@"%@", _costListArray);
-    if (self.delegate) {
-        [self.delegate costList:_costListArray];
-        [self.navigationController popViewControllerAnimated:YES];
-    }
-    
-    /*
-
-    
-    for (NSMutableDictionary *dict in _costListArray) {
-        
-        if ([dict count] !=3) {
-            [[ShowHUD showHUD]showToastWithText:@"请完善资费信息！" FromView:self.view];
-            return;
-        }else{
-            for (int i=0; i<2; i++) {
-                if ([[dict objectForKey:[NSString stringWithFormat:@"%@", _keyArray[i]]] isEqualToString:@""]) {
-                    [[ShowHUD showHUD]showToastWithText:@"请完善资费信息！" FromView:self.view];
-                    return;
-                }
-            }
+    NSInteger costCount = 0;
+    for (NSDictionary *dict in _costListArray) {
+        NSString *costName = [dict objectForKey:@"costName"];
+        NSString *money = [dict objectForKey:@"money"];
+        if (![costName isEqualToString:@""] && ![money isEqualToString:@""]) {
+            costCount += 1;
         }
     }
     
-    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    [dict setObject:DEFAULF_USERID forKey:@"userKey"];
-    [dict setObject:@(_activityKey) forKey:@"activityKey"];
-    [dict setObject:_costListArray forKey:@"costList"];
-    [[JsonHttp jsonHttp]httpRequestWithMD5:@"team/updateTeamActivityCost" JsonKey:nil withData:dict failedBlock:^(id errType) {
-        
-    } completionBlock:^(id data) {
-        NSLog(@"%@", data);
-        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+    if (costCount == 0) {
+        [[ShowHUD showHUD]showToastWithText:@"至少设置一个资费类型！" FromView:self.view];
+        return;
+    }
+    
+    if (_isManager == 1) {
+//        updateTeamActivityCost
+        NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+        [dict setObject:DEFAULF_USERID forKey:@"userKey"];
+        [dict setObject:@(_activityKey) forKey:@"activityKey"];
+        [dict setObject:_costListArray forKey:@"costList"];
+        [[JsonHttp jsonHttp]httpRequestWithMD5:@"team/updateTeamActivityCost" JsonKey:nil withData:dict failedBlock:^(id errType) {
+            
+        } completionBlock:^(id data) {
+            NSLog(@"%@", data);
+            if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+                [[ShowHUD showHUD]showToastWithText:@"保存成功！" FromView:self.view];
+                [self performSelector:@selector(popCtrl) withObject:self afterDelay:TIMESlEEP];
+            }else{
+                [[ShowHUD showHUD]showToastWithText:@"保存失败！" FromView:self.view];
+            }
+        }];
+    }else{
+        if (self.delegate) {
+            [self.delegate costList:_costListArray];
             [self.navigationController popViewControllerAnimated:YES];
-        }else{
-            if ([data objectForKey:@"packResultMsg"]) {
-                [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
-            }
         }
-    }];
-     
-      */
+    }
 }
-
+- (void)popCtrl{
+    [self.navigationController popViewControllerAnimated:YES];
+}
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     return _sectionCount +1;
 }
@@ -143,7 +143,7 @@ static NSString *const JGHAddCostButtonCellIdentifier = @"JGHAddCostButtonCell";
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    if (section == _costListArrayCount) {
+    if (section == _costListArrayCount -1) {
         return 10 *ProportionAdapter;
     }
     return 1;
@@ -156,38 +156,30 @@ static NSString *const JGHAddCostButtonCellIdentifier = @"JGHAddCostButtonCell";
         addCostButtonCell.selectionStyle = UITableViewCellSelectionStyleNone;
         addCostButtonCell.delegate = self;
         return addCostButtonCell;
-    }else if (indexPath.section > _costListArrayCount -1){
-        if (indexPath.section > _costListArrayCount -1) {
-            JGHNewCostListCell *newCostListCell = [tableView dequeueReusableCellWithIdentifier:JGHNewCostListCellIdentifier];
-            newCostListCell.selectionStyle = UITableViewCellSelectionStyleNone;
-            [newCostListCell configTextFeilSpeaclerText];
-            newCostListCell.oneTextField.tag = indexPath.section - _costListArrayCount +100;
-            newCostListCell.twoTextField.tag = indexPath.section - _costListArrayCount +1000;
-            newCostListCell.oneTextField.delegate = self;
-            newCostListCell.twoTextField.delegate = self;
-            NSLog(@"oneTextField == %td", newCostListCell.oneTextField.tag);
-            NSLog(@"twoTextField == %td", newCostListCell.twoTextField.tag);
-            return newCostListCell;
-        }else{
-            JGHCostListCell *costListCell = [tableView dequeueReusableCellWithIdentifier:JGHCostListCellIdentifier];
-            costListCell.selectionStyle = UITableViewCellSelectionStyleNone;
-            [costListCell configCostListCell:_costListArray[indexPath.section]];
-            costListCell.valueTextField.delegate = self;
-            return costListCell;
-        }
-    }else{
+    }else if (indexPath.section < 4){
         JGHCostListCell *costListCell = [tableView dequeueReusableCellWithIdentifier:JGHCostListCellIdentifier];
         costListCell.selectionStyle = UITableViewCellSelectionStyleNone;
         [costListCell configCostListCell:_costListArray[indexPath.section]];
-        costListCell.valueTextField.tag = 10 +indexPath.section;
+        costListCell.valueTextField.tag = 10 +indexPath.section +1;
         costListCell.valueTextField.delegate = self;
         NSLog(@"valueTextField == %td", costListCell.valueTextField.tag);
         return costListCell;
+    }else{
+        JGHNewCostListCell *newCostListCell = [tableView dequeueReusableCellWithIdentifier:JGHNewCostListCellIdentifier];
+        newCostListCell.selectionStyle = UITableViewCellSelectionStyleNone;
+        [newCostListCell configTextFeilSpeaclerText];
+        newCostListCell.oneTextField.tag = indexPath.section - _costListArrayCount +100 +1;
+        newCostListCell.twoTextField.tag = indexPath.section - _costListArrayCount +1000 +1;
+        newCostListCell.oneTextField.delegate = self;
+        newCostListCell.twoTextField.delegate = self;
+        NSLog(@"oneTextField == %td", newCostListCell.oneTextField.tag);
+        NSLog(@"twoTextField == %td", newCostListCell.twoTextField.tag);
+        return newCostListCell;
     }
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
-    if (section == _costListArrayCount) {
+    if (section == _costListArrayCount -1) {
         UIView *footView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, 10 *ProportionAdapter)];
         footView.backgroundColor = [UIColor colorWithHexString:BG_color];
         return footView;
@@ -200,7 +192,7 @@ static NSString *const JGHAddCostButtonCellIdentifier = @"JGHAddCostButtonCell";
         return footView;
     }
 }
-
+/*
 -(NSArray *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section > 3 && indexPath.section != _costListArray.count) {
@@ -230,12 +222,23 @@ static NSString *const JGHAddCostButtonCellIdentifier = @"JGHAddCostButtonCell";
         [self.costTableView reloadData];
     }
 }
+ */
 #pragma mark -- 添加自定义资费
 - (void)addCostList:(UIButton *)btn{
+    if (_sectionCount >= 5) {
+        NSDictionary *costdict = [_costListArray lastObject];
+        NSString *costName = [costdict objectForKey:@"costName"];
+        NSString *money = [costdict objectForKey:@"money"];
+        if ([costName isEqualToString:@""] || [money isEqualToString:@""]) {
+            return;
+        }
+    }
+    
     _sectionCount += 1;
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    [dict setObject:@(_sectionCount -1) forKey:@"type"];
-    [dict setObject:@"" forKey:@"name"];
+
+    [dict setObject:@"" forKey:@"costName"];
+    [dict setObject:@"" forKey:@"money"];
     [_costListArray addObject:dict];
     
     [self.costTableView reloadData];
@@ -247,17 +250,20 @@ static NSString *const JGHAddCostButtonCellIdentifier = @"JGHAddCostButtonCell";
         NSMutableDictionary *newDict = [NSMutableDictionary dictionary];
         newDict = [self.costListArray objectAtIndex:textField.tag -10];
         [newDict setObject:textField.text forKey:@"money"];
+        
         [self.costListArray replaceObjectAtIndex:textField.tag -10 withObject:newDict];
     }else{
         NSMutableDictionary *newDict = [NSMutableDictionary dictionary];
         if (textField.tag < 1000) {
-            newDict = [self.costListArray objectAtIndex:((textField.tag -100) + _costListArrayCount)];
-            [newDict setObject:textField.text forKey:@"name"];
-            [self.costListArray replaceObjectAtIndex:((textField.tag -100) + _costListArrayCount) withObject:newDict];
+            newDict = [self.costListArray objectAtIndex:((textField.tag -100) + _costListArrayCount -1)];
+            [newDict setObject:textField.text forKey:@"costName"];
+            
+            [self.costListArray replaceObjectAtIndex:((textField.tag -100) + _costListArrayCount -1) withObject:newDict];
         }else{
-            newDict = [self.costListArray objectAtIndex:((textField.tag -1000) + _costListArrayCount)];
+            newDict = [self.costListArray objectAtIndex:((textField.tag -1000) + _costListArrayCount -1)];
             [newDict setObject:textField.text forKey:@"money"];
-            [self.costListArray replaceObjectAtIndex:((textField.tag -1000) + _costListArrayCount) withObject:newDict];
+            
+            [self.costListArray replaceObjectAtIndex:((textField.tag -1000) + _costListArrayCount -1) withObject:newDict];
         }
     }
 }

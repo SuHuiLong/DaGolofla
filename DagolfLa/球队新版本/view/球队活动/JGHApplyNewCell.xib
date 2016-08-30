@@ -15,17 +15,22 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ghB-MW-7k4">
-                        <rect key="frame" x="37" y="13" width="37.5" height="18"/>
+                        <rect key="frame" x="37" y="13" width="80" height="18"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="80" id="5kr-CX-ebd"/>
+                        </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="E1A-8M-Tyi">
-                        <rect key="frame" x="129" y="10" width="66" height="25"/>
-                        <state key="normal" backgroundImage="applypricebg"/>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="E1A-8M-Tyi">
+                        <rect key="frame" x="127" y="10" width="66" height="25"/>
+                        <state key="normal" backgroundImage="applypricebg">
+                            <color key="titleColor" red="1" green="0.10368039280000001" blue="0.136967965" alpha="1" colorSpace="calibratedRGB"/>
+                        </state>
                     </button>
-                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Mnw-UZ-cTt">
-                        <rect key="frame" x="195.5" y="10" width="39" height="25"/>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Mnw-UZ-cTt">
+                        <rect key="frame" x="193" y="10" width="39" height="25"/>
                         <state key="normal" title="修改" backgroundImage="applyeditor">
                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
@@ -47,7 +52,7 @@
                 <constraints>
                     <constraint firstItem="E1A-8M-Tyi" firstAttribute="centerY" secondItem="ghB-MW-7k4" secondAttribute="centerY" id="BFP-fh-7nc"/>
                     <constraint firstItem="Mnw-UZ-cTt" firstAttribute="height" secondItem="E1A-8M-Tyi" secondAttribute="height" id="J84-jV-C9s"/>
-                    <constraint firstItem="E1A-8M-Tyi" firstAttribute="leading" secondItem="ghB-MW-7k4" secondAttribute="trailing" constant="55" id="MeX-ee-Ew2"/>
+                    <constraint firstItem="E1A-8M-Tyi" firstAttribute="leading" secondItem="ghB-MW-7k4" secondAttribute="trailing" constant="10" id="MeX-ee-Ew2"/>
                     <constraint firstItem="PEf-3H-mox" firstAttribute="centerY" secondItem="Mnw-UZ-cTt" secondAttribute="centerY" id="Qn5-7K-0PU"/>
                     <constraint firstAttribute="trailing" secondItem="PEf-3H-mox" secondAttribute="trailing" constant="20" id="QtV-Ca-eeU"/>
                     <constraint firstItem="PEf-3H-mox" firstAttribute="leading" secondItem="bTa-8D-0v1" secondAttribute="trailing" constant="20" id="ZZA-0I-7ld"/>
@@ -64,6 +69,7 @@
                 <outlet property="editorBtn" destination="Mnw-UZ-cTt" id="lZR-D7-7GX"/>
                 <outlet property="name" destination="ghB-MW-7k4" id="90n-yX-pam"/>
                 <outlet property="nameLeft" destination="rfL-Kc-yFr" id="wDo-FO-vWN"/>
+                <outlet property="nameW" destination="5kr-CX-ebd" id="EsW-bN-zPg"/>
                 <outlet property="preferpriceImageView" destination="bTa-8D-0v1" id="BHE-KD-m79"/>
                 <outlet property="preferpriceImageViewRight" destination="ZZA-0I-7ld" id="7fG-3d-SRE"/>
                 <outlet property="priceBtn" destination="E1A-8M-Tyi" id="9co-8j-byq"/>

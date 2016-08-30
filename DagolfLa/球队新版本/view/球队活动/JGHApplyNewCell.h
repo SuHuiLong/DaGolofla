@@ -22,9 +22,10 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *name;//15
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *nameLeft;//37
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *nameW;
 
 @property (weak, nonatomic) IBOutlet UIButton *priceBtn;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *priceBtnLeft;//55
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *priceBtnLeft;//10
 
 @property (weak, nonatomic) IBOutlet UIButton *editorBtn;
 - (IBAction)editorBtn:(UIButton *)sender;
