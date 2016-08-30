@@ -313,13 +313,19 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    JGDHistoryScoreModel *model = self.dataArray[indexPath.row];
+    if (self.isTeamMem == NO) {
+        [[ShowHUD showHUD]showToastWithText:@"您还不是该球队成员" FromView:self.view];
+    }else{
+        JGDHistoryScoreModel *model = self.dataArray[indexPath.row];
+        
+        JGLScoreRankViewController *rankVC = [[JGLScoreRankViewController alloc] init];
+        rankVC.teamKey = self.teamKey;
+        rankVC.activity = [NSNumber numberWithInteger:[model.teamActivityKey integerValue]];
+        
+        [self.navigationController pushViewController:rankVC animated:YES];
+    }
+    
 
-    JGLScoreRankViewController *rankVC = [[JGLScoreRankViewController alloc] init];
-    rankVC.teamKey = self.teamKey;
-    rankVC.activity = [NSNumber numberWithInteger:[model.teamActivityKey integerValue]];
-
-    [self.navigationController pushViewController:rankVC animated:YES];
     
 //
 //    if ([model.scoreFinish integerValue] == 0) {

@@ -12,4 +12,6 @@
 
 @property (nonatomic, copy) NSString *timeKey;
 
+@property (nonatomic, copy) NSString *activityName;
+
 @end

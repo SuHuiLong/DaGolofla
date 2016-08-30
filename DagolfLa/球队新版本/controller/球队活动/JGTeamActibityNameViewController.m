@@ -701,6 +701,7 @@ static CGFloat ImageHeight  = 210.0;
     }else{
         guestVC.timeKey = [NSString stringWithFormat:@"%td", _model.teamActivityKey];
     }
+    guestVC.activityName = _model.name;
     [self.navigationController pushViewController:guestVC animated:YES];
 }
 #pragma mark -- 查看奖项

@@ -12,4 +12,6 @@
 
 @property (nonatomic, strong) NSNumber *teamKey;
 
+@property (nonatomic, assign) BOOL isTeamMem; // yes 是   n0 非球队成员
+
 @end
