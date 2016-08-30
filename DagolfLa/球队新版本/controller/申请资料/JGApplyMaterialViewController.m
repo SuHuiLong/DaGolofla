@@ -433,6 +433,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
 
+
     if (indexPath.section == 0 && indexPath.row == 1) {
         JGLableAndLableTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellLB" forIndexPath:indexPath];
         cell.promptLB.text = self.titleArray[indexPath.section][indexPath.row];
