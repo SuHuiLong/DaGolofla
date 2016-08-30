@@ -712,6 +712,7 @@ static CGFloat ImageHeight  = 210.0;
                 
                 JGTeamHisScoreViewController *histroyVC = [[JGTeamHisScoreViewController alloc] init];
                 histroyVC.teamKey = [self.detailDic objectForKey:@"timeKey"];
+                histroyVC.isTeamMem = YES;
                 [self.navigationController pushViewController:histroyVC animated:YES];
                 
             }
