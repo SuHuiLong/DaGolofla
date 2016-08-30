@@ -36,7 +36,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
+    self.navigationItem.title = @"选择时间";
     _dateString = [Helper returnCurrentDateString];
     
     NSDate *now = [NSDate date];

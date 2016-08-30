@@ -65,7 +65,7 @@
             [self.teamSignUpDic setObject:[[data objectForKey:@"activity"] objectForKey:@"timeKey"] forKey:@"activityKey"];
             [self.teamSignUpDic setObject:@0 forKey:@"userKey"];
             [self.teamSignUpDic setObject:@1 forKey:@"isOnlinePay"];
-            [self.teamSignUpDic setObject:self.model.subsidyPrice forKey:@"subsidyPrice"];
+            [self.teamSignUpDic setObject:self.model.guestSubsidyPrice forKey:@"guestSubsidyPrice"];
             
             
             [self.infoDic setObject:[[data objectForKey:@"activity"] objectForKey:@"teamKey"] forKey:@"teamKey"];
@@ -123,8 +123,8 @@
     cell.selectView.image = [UIImage imageNamed:@"xuan_z"];
     [self.teamSignUpDic setObject:[self.costArray[indexPath.row] objectForKey:@"costType"] forKey:@"type"];
     self.money = [[self.costArray[indexPath.row] objectForKey:@"money"] floatValue];
-    NSInteger subsidy = [self.model.subsidyPrice integerValue];
-    NSMutableAttributedString *attriStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"平台补贴费用%td元 实付金额：%.2f", subsidy, [[self.costArray[indexPath.row] objectForKey:@"money"] floatValue]]];
+    NSInteger subsidy = [self.model.guestSubsidyPrice integerValue];
+    NSMutableAttributedString *attriStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"平台补贴费用%td元 实付金额：%.2f", subsidy, [[self.costArray[indexPath.row] objectForKey:@"money"] floatValue] - subsidy]];
     [attriStr addAttribute:NSForegroundColorAttributeName value:[UIColor orangeColor] range:NSMakeRange(6, [[NSString stringWithFormat:@"%td", subsidy] length])];
     [attriStr addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:NSMakeRange(attriStr.length - [[NSString stringWithFormat:@"%.2f", self.money] length], [[NSString stringWithFormat:@"%.2f", self.money] length])];
     
@@ -289,7 +289,7 @@
     [footView addSubview:footlineView];
     
     self.footLB = [[UILabel alloc] initWithFrame:CGRectMake(10 * ProportionAdapter, 1 * ProportionAdapter, 250 * ProportionAdapter, 50 * ProportionAdapter)];
-    NSInteger subsidy = [self.model.subsidyPrice integerValue];
+    NSInteger subsidy = [self.model.guestSubsidyPrice integerValue];
     NSMutableAttributedString *attriStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"平台补贴费用%td元 实付金额：0", subsidy]];
     [attriStr addAttribute:NSForegroundColorAttributeName value:[UIColor orangeColor] range:NSMakeRange(6, [[NSString stringWithFormat:@"%td", subsidy] length])];
     [attriStr addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:NSMakeRange(attriStr.length - 1, 1)];

@@ -38,6 +38,8 @@
 @property (strong, nonatomic) NSNumber* memberPrice;
 //补贴价
 @property (strong, nonatomic) NSNumber* subsidyPrice;
+//嘉宾补贴价
+@property (strong, nonatomic) NSNumber* guestSubsidyPrice;
 //嘉宾价
 @property (strong, nonatomic) NSNumber* guestPrice;
 //球队会员记名价

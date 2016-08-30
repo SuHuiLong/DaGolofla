@@ -117,15 +117,17 @@
         [Helper alertViewWithTitle:@"是否继续上次未完成的操作！" withBlockCancle:^{
             NSLog(@"不继续，清除数据");
             [userdef removeObjectForKey:@"TeamActivityArray"];
+            [userdef removeObjectForKey:@"TeamActivityCostListArray"];
             [userdef synchronize];
             [self.navigationController pushViewController:launchCtrl animated:YES];
         } withBlockSure:^{
             JGTeamAcitivtyModel *model = [[JGTeamAcitivtyModel alloc]init];
             model = [[userdef objectForKey:@"TeamActivityArray"]objectAtIndex:0];
             launchCtrl.model = model;
+            launchCtrl.costListArray = [userdef objectForKey:@"TeamActivityCostListArray"];
             [self.navigationController pushViewController:launchCtrl animated:YES];
         } withBlock:^(UIAlertController *alertView) {
-            [self.navigationController presentViewController:alertView animated:YES completion:nil];
+            [self presentViewController:alertView animated:YES completion:nil];
         }];
     }
     
