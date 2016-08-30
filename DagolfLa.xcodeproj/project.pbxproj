@@ -40,6 +40,8 @@
 		2012AD8F1D2BB6E600F70E40 /* JGLPresentAwardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2012AD8C1D2BB6E600F70E40 /* JGLPresentAwardViewController.m */; };
 		2012AD9B1D3615AB00F70E40 /* JGHScoresViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2012AD9A1D3615AB00F70E40 /* JGHScoresViewController.m */; };
 		2012AD9E1D36192F00F70E40 /* JGHScoresMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2012AD9D1D36192F00F70E40 /* JGHScoresMainViewController.m */; };
+		202E05201D757D6D00566CA9 /* JGHEditorCostViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 202E051E1D757D6D00566CA9 /* JGHEditorCostViewController.m */; };
+		202E05211D757D6D00566CA9 /* JGHEditorCostViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 202E051F1D757D6D00566CA9 /* JGHEditorCostViewController.xib */; };
 		202EC8071D5360990090FE4B /* JGHOperationScoreCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 202EC8061D5360990090FE4B /* JGHOperationScoreCell.xib */; };
 		202EC80C1D5852F80090FE4B /* JGHCaddieViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 202EC80A1D5852F80090FE4B /* JGHCaddieViewController.m */; };
 		202EC80D1D5852F80090FE4B /* JGHCaddieViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 202EC80B1D5852F80090FE4B /* JGHCaddieViewController.xib */; };
@@ -1278,6 +1280,9 @@
 		2012AD9A1D3615AB00F70E40 /* JGHScoresViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHScoresViewController.m; sourceTree = "<group>"; };
 		2012AD9C1D36192F00F70E40 /* JGHScoresMainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHScoresMainViewController.h; sourceTree = "<group>"; };
 		2012AD9D1D36192F00F70E40 /* JGHScoresMainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHScoresMainViewController.m; sourceTree = "<group>"; };
+		202E051D1D757D6D00566CA9 /* JGHEditorCostViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHEditorCostViewController.h; sourceTree = "<group>"; };
+		202E051E1D757D6D00566CA9 /* JGHEditorCostViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHEditorCostViewController.m; sourceTree = "<group>"; };
+		202E051F1D757D6D00566CA9 /* JGHEditorCostViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JGHEditorCostViewController.xib; sourceTree = "<group>"; };
 		202EC8061D5360990090FE4B /* JGHOperationScoreCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JGHOperationScoreCell.xib; sourceTree = "<group>"; };
 		202EC8091D5852F80090FE4B /* JGHCaddieViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHCaddieViewController.h; sourceTree = "<group>"; };
 		202EC80A1D5852F80090FE4B /* JGHCaddieViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHCaddieViewController.m; sourceTree = "<group>"; };
@@ -4106,6 +4111,9 @@
 				20F6A5C61CF3F78200DD9383 /* JGCostSetViewController.h */,
 				20F6A5C71CF3F78200DD9383 /* JGCostSetViewController.m */,
 				20F6A5C81CF3F78200DD9383 /* JGCostSetViewController.xib */,
+				202E051D1D757D6D00566CA9 /* JGHEditorCostViewController.h */,
+				202E051E1D757D6D00566CA9 /* JGHEditorCostViewController.m */,
+				202E051F1D757D6D00566CA9 /* JGHEditorCostViewController.xib */,
 			);
 			path = "球队活动";
 			sourceTree = "<group>";
@@ -8866,7 +8874,7 @@
 				TargetAttributes = {
 					36BFFD271BC76C8D005B3CE2 = {
 						CreatedOnToolsVersion = 6.3.2;
-						DevelopmentTeam = 5P6JNXBH3C;
+						DevelopmentTeam = T8ML76W22A;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -9052,6 +9060,7 @@
 				F53A056F1D518F32009DD489 /* JGHSimpleAndResultsCell.xib in Resources */,
 				363D4F341C86E1C70089E52C /* PushConfig.plist in Resources */,
 				36BF000F1BC770C4005B3CE2 /* toolbar_bottom_bar.png in Resources */,
+				202E05211D757D6D00566CA9 /* JGHEditorCostViewController.xib in Resources */,
 				36BFFEB41BC76CDC005B3CE2 /* tab_bg1.png in Resources */,
 				36BF000C1BC770C4005B3CE2 /* chatto_bg_normal.png in Resources */,
 				654332091BD5D9B900363947 /* UMShareEditViewControlleriPad.xib in Resources */,
@@ -9510,6 +9519,7 @@
 				F5E1BB691D6B006100414727 /* ZXPDF417Detector.m in Sources */,
 				36747C441BE0AE3B0052A1B0 /* CityHighChooseView.m in Sources */,
 				36BFFFCD1BC770B1005B3CE2 /* BrowseImagesViewController.m in Sources */,
+				202E05201D757D6D00566CA9 /* JGHEditorCostViewController.m in Sources */,
 				36BFFFFA1BC770C4005B3CE2 /* NSString+DocumentPath.m in Sources */,
 				F5E1BB631D6B006100414727 /* ZXPDF417CodewordDecoder.m in Sources */,
 				36DFD9121C0E97E1004DC690 /* HistoryHeadTableViewCell.m in Sources */,

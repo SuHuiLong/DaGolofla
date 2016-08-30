@@ -20,6 +20,8 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *twoTextFieldRight;//10
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *twoTextFieldW;
 
-- (void)configTextFeilSpeaclerText;
+- (void)configTextFeilSpeaclerText:(NSMutableDictionary *)dict;
+
+- (void)configTextFeilSpeacler;
 
 @end

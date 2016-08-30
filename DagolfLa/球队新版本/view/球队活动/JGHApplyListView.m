@@ -226,8 +226,8 @@ static NSString *const JGHHeaderLabelCellIdentifier = @"JGHHeaderLabelCell";
         NSDictionary *dict = [NSDictionary dictionary];
         dict = _applistArray[i];
         if ([[dict objectForKey:@"select"]integerValue] == 1) {
-            NSLog(@"%@", [dict objectForKey:@"payMoney"]);
-            float value = [[dict objectForKey:@"payMoney"] floatValue];
+            NSLog(@"%@", [dict objectForKey:@"money"]);
+            float value = [[dict objectForKey:@"money"] floatValue];
             _amountPayable += value;
             
             if ([[dict objectForKey:@"userKey"] integerValue] != 0) {

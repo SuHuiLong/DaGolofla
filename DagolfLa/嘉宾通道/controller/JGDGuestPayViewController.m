@@ -350,8 +350,9 @@
     NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
     [dic setObject:[NSArray arrayWithObject:self.teamSignUpDic] forKey:@"teamSignUpList"];
     [dic setObject:self.infoDic forKey:@"info"];
+    [dic setObject:@1 forKey:@"srcType"];
     [[JsonHttp jsonHttp] httpRequest:@"team/doTeamActivitySignUp" JsonKey:nil withData:dic requestMethod:@"POST" failedBlock:^(id errType) {
-        NSLog(@"%@", errType);
+        [[ShowHUD showHUD]showToastWithText:[NSString stringWithFormat:@"%@", errType] FromView:self.view];
     } completionBlock:^(id data) {
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
             if ([data objectForKey:@"infoKey"]) {

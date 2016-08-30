@@ -28,9 +28,27 @@
     // Configure the view for the selected state
 }
 
-- (void)configTextFeilSpeaclerText{
-    self.oneTextField.placeholder = @"请输入资费名称";
+- (void)configTextFeilSpeaclerText:(NSMutableDictionary *)dict{
+    NSString *costName = [dict objectForKey:@"costName"];
+    NSString *money = [dict objectForKey:@"money"];
+    
+//    self.oneTextField.text = [NSString stringWithFormat:@"%@", [dict objectForKey:@"costName"]];
+    if (![money isEqualToString:@""]) {
+        self.twoTextField.text = money;
+    }else{
+        self.twoTextField.placeholder = @"请输入金额";
+    }
+    
+    if (![costName isEqualToString:@""]) {
+        self.oneTextField.text = costName;
+    }else{
+        self.oneTextField.placeholder = @"请输入资费名称";
+    }
+}
+
+- (void)configTextFeilSpeacler{
     self.twoTextField.placeholder = @"请输入金额";
+    self.oneTextField.placeholder = @"请输入资费名称";
 }
 
 @end

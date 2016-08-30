@@ -506,6 +506,7 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
     
     [dict setObject:_applyArray forKey:@"teamSignUpList"];//报名人员数组
     [dict setObject:_info forKey:@"info"];
+    [dict setObject:@0 forKey:@"srcType"];//报名类型－－0非嘉宾通道
     [[JsonHttp jsonHttp]httpRequest:@"team/doTeamActivitySignUp" JsonKey:nil withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
         NSLog(@"errType == %@", errType);
         [[ShowHUD showHUD]hideAnimationFromView:self.view];
@@ -626,6 +627,8 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
         NSLog(@"errType == %@", errType);
     } completionBlock:^(id data) {
         NSLog(@"%@",[data objectForKey:@"query"]);
+
+        
         [[AlipaySDK defaultService] payOrder:[data objectForKey:@"query"] fromScheme:@"dagolfla" callback:^(NSDictionary *resultDic) {
             
             NSLog(@"支付宝=====%@",resultDic[@"resultStatus"]);
@@ -639,15 +642,19 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
             } else if ([resultDic[@"resultStatus"] isEqualToString:@"4000"]) {
                 NSLog(@"失败");
                 [[ShowHUD showHUD]showToastWithText:@"支付失败！" FromView:self.view];
+                [self performSelector:@selector(popActivityCtrl) withObject:self afterDelay:TIMESlEEP];
             } else if ([resultDic[@"resultStatus"] isEqualToString:@"6002"]) {
                 NSLog(@"网络错误");
                 [[ShowHUD showHUD]showToastWithText:@"网络异常，支付失败！" FromView:self.view];
+                [self performSelector:@selector(popActivityCtrl) withObject:self afterDelay:TIMESlEEP];
             } else if ([resultDic[@"resultStatus"] isEqualToString:@"6001"]) {
                 NSLog(@"取消支付");
                 [[ShowHUD showHUD]showToastWithText:@"支付已取消！" FromView:self.view];
+                [self performSelector:@selector(popActivityCtrl) withObject:self afterDelay:TIMESlEEP];
             } else {
                 NSLog(@"支付失败");
                 [[ShowHUD showHUD]showToastWithText:@"支付失败！" FromView:self.view];
+                [self performSelector:@selector(popActivityCtrl) withObject:self afterDelay:TIMESlEEP];
             }
         }];
     }];

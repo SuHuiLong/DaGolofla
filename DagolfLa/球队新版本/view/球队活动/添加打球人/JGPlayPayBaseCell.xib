@@ -36,8 +36,8 @@
                         <rect key="frame" x="214" y="12" width="41" height="19"/>
                     </imageView>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="u3K-ot-o7m">
-                        <rect key="frame" x="295" y="11" width="15" height="22"/>
-                        <state key="normal" image="remove"/>
+                        <rect key="frame" x="288" y="11" width="22" height="22"/>
+                        <state key="normal" image="deleteplay"/>
                         <connections>
                             <action selector="deletePalyBtn:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="vKO-CF-4xa"/>
                         </connections>
@@ -70,6 +70,6 @@
     </objects>
     <resources>
         <image name="coupons" width="41" height="19"/>
-        <image name="remove" width="15" height="15"/>
+        <image name="deleteplay" width="22" height="22"/>
     </resources>
 </document>

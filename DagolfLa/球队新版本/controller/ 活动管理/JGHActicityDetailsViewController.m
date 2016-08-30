@@ -36,7 +36,7 @@
 #import "JGTeamGroupViewController.h"
 #import "JGHTeamContactTableViewCell.h"
 #import "DateTimeViewController.h"
-#import "JGCostSetViewController.h"
+#import "JGHEditorCostViewController.h"
 #import "JGHConcentTextViewController.h"
 #import "JGHSetAwardViewController.h"
 #import "JGLPresentAwardViewController.h"
@@ -52,7 +52,7 @@ static NSString *const JGHCostListTableViewCellIdentifier = @"JGHCostListTableVi
 static NSString *const JGHTeamContactCellIdentifier = @"JGHTeamContactTableViewCell";
 static CGFloat ImageHeight  = 210.0;
 
-@interface JGHActicityDetailsViewController ()<UITableViewDelegate, UITableViewDataSource, JGCostSetViewControllerDelegate, JGHConcentTextViewControllerDelegate, UITextFieldDelegate>
+@interface JGHActicityDetailsViewController ()<UITableViewDelegate, UITableViewDataSource, JGHConcentTextViewControllerDelegate, UITextFieldDelegate>
 {
     NSInteger _isTeamMember;//是否是球队成员 1 － 不是
     NSString *_userName;//用户在球队的真实姓名
@@ -771,19 +771,17 @@ static CGFloat ImageHeight  = 210.0;
 }
 #pragma mark -- 修改价格
 - (void)editorCostClick:(UIButton *)btn{
-    JGCostSetViewController *costView = [[JGCostSetViewController alloc]initWithNibName:@"JGCostSetViewController" bundle:nil];
-    costView.delegate = self;
+    JGHEditorCostViewController *costView = [[JGHEditorCostViewController alloc]initWithNibName:@"JGHEditorCostViewController" bundle:nil];
     //球队队员费用
-    if (self.costListArray.count > 0) {
-        costView.costListArray = _costListArray;
-    }
-
+//    if (self.costListArray.count > 0) {
+//        costView.costListArray = _costListArray;
+//    }
+    
     if (_model.teamActivityKey != 0) {
         costView.activityKey = _model.teamActivityKey;
     }else{
         costView.activityKey = [_model.timeKey integerValue];
     }
-    costView.isManager = 1;
     [self.navigationController pushViewController:costView animated:YES];
 }
 #pragma mark -- 添加内容详情代理  JGHConcentTextViewControllerDelegate
@@ -791,10 +789,6 @@ static CGFloat ImageHeight  = 210.0;
     _isEditor = 1;
     [self.model setValue:text forKey:@"info"];
     [self.teamActibityNameTableView reloadData];
-}
-#pragma mark -- 费用代理
-- (void)costList:(NSMutableArray *)costArray{
-    NSLog(@"%@", costArray);
 }
 #pragma mark -- 详情页面
 - (void)pushDetailSCtrl:(UIButton *)btn{

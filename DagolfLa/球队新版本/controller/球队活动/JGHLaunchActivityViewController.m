@@ -174,7 +174,7 @@ static CGFloat ImageHeight  = 210.0;
     }else{
          [self.titleField becomeFirstResponder];
     }
-    _titleArray = @[@[], @[@"活动开球时间", @"活动结束时间", @"报名截止时间"], @[@"费用说明", @"人员限制", @"活动说明"], @[@"联系电话"]];
+    _titleArray = @[@[], @[@"活动开球时间", @"活动结束时间", @"报名截止时间"], @[@"费用说明", @"人数限制", @"活动说明"], @[@"联系电话"]];
     
 }
 
@@ -326,13 +326,13 @@ static CGFloat ImageHeight  = 210.0;
             JGHTeamContactTableViewCell *contactCell = [tableView dequeueReusableCellWithIdentifier:JGHTeamContactCellIdentifier];
             contactCell.tetfileView.delegate = self;
             contactCell.tetfileView.tag = 234;
-            contactCell.contactLabel.text = @"人员限制";
+            contactCell.contactLabel.text = @"人数限制";
             [contactCell configConstraint];
             if (self.model.name != nil) {
                 contactCell.tetfileView.text = [NSString stringWithFormat:@"%td", self.model.maxCount];
             }
             
-            contactCell.tetfileView.placeholder = @"请输入最大人员限制数";
+            contactCell.tetfileView.placeholder = @"请输入最大人数限制数";
             return contactCell;
         }else{
             JGTableViewCell *launchActivityCell = [tableView dequeueReusableCellWithIdentifier:JGTableViewCellIdentifier forIndexPath:indexPath];
@@ -403,6 +403,7 @@ static CGFloat ImageHeight  = 210.0;
             costView.delegate = self;
             if (self.costListArray.count > 0) {
                 costView.costListArray = _costListArray;
+                costView.isEditor = 1;
             }
             
             [self.navigationController pushViewController:costView animated:YES];
@@ -556,8 +557,8 @@ static CGFloat ImageHeight  = 210.0;
     for (int i=0; i < _costListArray.count; i++) {
         NSDictionary *dict = _costListArray[i];
         NSString *costName = [dict objectForKey:@"costName"];
-        NSString *money = [dict objectForKey:@"money"];
-        if (![costName isEqualToString:@""] && ![money isEqualToString:@""]) {
+//        NSString *money = [dict objectForKey:@"money"];
+        if (![costName isEqualToString:@""]) {
             [costArray addObject:_costListArray[i]];
         }
     }

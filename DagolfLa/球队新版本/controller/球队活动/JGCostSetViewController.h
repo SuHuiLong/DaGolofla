@@ -21,12 +21,12 @@
 
 @property (nonatomic, strong)NSMutableArray *costListArray;//费用列表
 
-@property (nonatomic, assign)NSInteger activityKey;
+//@property (nonatomic, assign)NSInteger activityKey;
 
 
 @property (weak, nonatomic)id <JGCostSetViewControllerDelegate> delegate;
 
-@property (nonatomic, assign)NSInteger isManager;//1 -- 活动管理
+@property (nonatomic, assign)NSInteger isEditor;//1 -- 费用编辑
 
 
 @end

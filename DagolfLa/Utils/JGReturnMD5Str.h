@@ -43,4 +43,6 @@
 
 + (NSString *)getUserTransDetailOrderTypeListUserKey:(NSInteger)userKey andOrderType:(NSInteger)orderType;
 
++ (NSString *)getTeamActivityCostListUserKey:(NSInteger)userKey andActivityKey:(NSInteger)activityKey;
+
 @end
