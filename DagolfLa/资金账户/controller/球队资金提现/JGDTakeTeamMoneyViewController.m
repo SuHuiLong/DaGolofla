@@ -158,7 +158,7 @@
     } completionBlock:^(id data) {
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1 ) {
             [[ShowHUD showHUD]showToastWithText:@"提现成功" FromView:self.view];
-            [self performSelector:@selector(pop) withObject:self afterDelay:1];
+            [self performSelector:@selector(pop) withObject:self afterDelay:TIMESlEEP];
         }
         else
         {

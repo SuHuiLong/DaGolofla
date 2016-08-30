@@ -246,6 +246,7 @@ static CGFloat ImageHeight  = 210.0;
             _hasReleaseScore = [[data objectForKey:@"hasReleaseScore"] integerValue];
             //费用列表
             if (self.costListArray != nil) {
+                self.costListArray = [NSMutableArray arrayWithArray:self.costListArray];
                 [self.costListArray removeAllObjects];
             }
             
@@ -689,6 +690,10 @@ static CGFloat ImageHeight  = 210.0;
 }
 #pragma mark -- 嘉宾参赛码
 - (void)getTeamActivityGuestCode:(UIButton *)btn{
+    if (_isTeamMember == 1) {
+        [[ShowHUD showHUD]showToastWithText:@"您不是该球队队员！" FromView:self.view];
+        return;
+    }
     
     JGDGuestCodeViewController *guestVC =[[JGDGuestCodeViewController alloc] init];
     if (_model.teamActivityKey == 0) {
@@ -701,7 +706,6 @@ static CGFloat ImageHeight  = 210.0;
 }
 #pragma mark -- 查看奖项
 - (void)getTeamActivityAward:(UIButton *)btn{
-    
     if (_isTeamMember == 1) {
         [[ShowHUD showHUD]showToastWithText:@"您不是该球队队员！" FromView:self.view];
         return;

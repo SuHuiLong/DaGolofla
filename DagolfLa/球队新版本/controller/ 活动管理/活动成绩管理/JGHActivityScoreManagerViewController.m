@@ -373,7 +373,7 @@ static NSString *const JGHCenterBtnTableViewCellIdentifier = @"JGHCenterBtnTable
                 NSLog(@"%@", data);
                 if ([[data objectForKey:@"packSuccess"]integerValue] == 1) {
                     [[ShowHUD showHUD]showToastWithText:@"公布成功！" FromView:self.view];
-                    [self performSelector:@selector(pushCtrl) withObject:self afterDelay:1.0];
+                    [self performSelector:@selector(pushCtrl) withObject:self afterDelay:TIMESlEEP];
                 }else{
                     if ([data objectForKey:@"packResultMsg"]) {
                         [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];

@@ -62,7 +62,7 @@ static NSString *const JGHHeaderLabelCellIdentifier = @"JGHHeaderLabelCell";
     [self addSubview:self.cancelBtn];
     
     self.submitBtn = [[UIButton alloc]initWithFrame:CGRectMake(screenWidth/2, 152, screenWidth/2, 44)];
-    [self.submitBtn setTitle:@"报名并支付" forState:UIControlStateNormal];
+    [self.submitBtn setTitle:@"立即支付" forState:UIControlStateNormal];
     [self.submitBtn setBackgroundColor:[UIColor colorWithHexString:@"#E8611D"]];
     [self.submitBtn addTarget:self action:@selector(submitBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:self.submitBtn];

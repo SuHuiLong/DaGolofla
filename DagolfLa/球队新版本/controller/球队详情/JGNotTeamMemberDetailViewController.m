@@ -24,6 +24,7 @@
 #import "JGLableAndLableTableViewCell.h"
 #import "JGDisplayInfoTableViewCell.h"
 #import "JGApplyMaterialViewController.h"
+#import "JGTeamHisScoreViewController.h"
 
 static NSString *const JGTableViewCellIdentifier = @"JGTableViewCell";
 static NSString *const JGHTeamContactCellIdentifier = @"JGHTeamContactTableViewCell";
@@ -288,7 +289,7 @@ static CGFloat ImageHeight  = 210.0;
     }else if (section == 1){
         return 4;
     }else if (section == 2){
-        return 2;
+        return 3;
     }else{
         return 1;
     }
@@ -386,9 +387,12 @@ static CGFloat ImageHeight  = 210.0;
         if (indexPath.row == 0) {
             launchActivityCell.promptLB.text = @"球队活动";
             launchActivityCell.imageV.image = [UIImage imageNamed:@"hd-2"];
-        }else{
+        }else if (indexPath.row == 1){
             launchActivityCell.promptLB.text = @"球队相册";
             launchActivityCell.imageV.image = [UIImage imageNamed:@"xc"];
+        }else{
+            launchActivityCell.promptLB.text = @"球队历史记分卡";
+            launchActivityCell.imageV.image = [UIImage imageNamed:@"qiuduilist"];
         }
         launchActivityCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         return launchActivityCell;
@@ -405,12 +409,17 @@ static CGFloat ImageHeight  = 210.0;
             activity.timeKey = [[self.detailDic objectForKey:@"timeKey"] integerValue];
             [self.navigationController pushViewController:activity animated:YES];
             
-        }else{
-            
+        }else if (indexPath.row == 1){
             JGTeamPhotoViewController *photo = [[JGTeamPhotoViewController alloc] init];
             photo.manageInter = 1;
             photo.teamKey = [self.detailDic objectForKey:@"timeKey"];
             [self.navigationController pushViewController:photo animated:YES];
+        }else
+        {
+            JGTeamHisScoreViewController *histroyVC = [[JGTeamHisScoreViewController alloc] init];
+            histroyVC.teamKey = [self.detailDic objectForKey:@"timeKey"];
+            histroyVC.isTeamMem = NO;
+            [self.navigationController pushViewController:histroyVC animated:YES];
         }
         
        

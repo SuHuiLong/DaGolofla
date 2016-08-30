@@ -16,9 +16,10 @@
 
 @property (assign, nonatomic) NSInteger lastIndex;
 
-
 @property (nonatomic, assign)NSInteger activityKey;//活动Key
 
 @property (nonatomic, assign)NSInteger teamKey;//球队Key
+
+@property (nonatomic, strong)NSMutableArray *userKeyArray;
 
 @end

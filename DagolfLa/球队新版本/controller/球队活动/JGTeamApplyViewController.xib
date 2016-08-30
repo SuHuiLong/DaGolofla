@@ -44,7 +44,7 @@
                         <constraint firstAttribute="height" constant="44" id="msW-71-NKb"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <state key="normal" title="立即支付">
+                    <state key="normal" title="报名并支付">
                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                     <connections>
