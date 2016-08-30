@@ -252,14 +252,15 @@ static NSString *const JGHButtonCellIdentifier = @"JGHButtonCell";
         [Helper alertViewWithTitle:@"确定取消报名？" withBlockCancle:^{
             NSLog(@"取消报名");
         } withBlockSure:^{
-            [self cancelApply];
+            [self cancelApply:btn];
         } withBlock:^(UIAlertController *alertView) {
             [self presentViewController:alertView animated:YES completion:nil];
         }];
     }
 }
 
-- (void)cancelApply{
+- (void)cancelApply:(UIButton *)btn{
+    btn.enabled = NO;
     [[ShowHUD showHUD]showAnimationWithText:@"提交中..." FromView:self.view];
     NSMutableDictionary *postDict = [NSMutableDictionary dictionary];
     NSMutableArray *signupKeyArray = [NSMutableArray array];
@@ -291,6 +292,8 @@ static NSString *const JGHButtonCellIdentifier = @"JGHButtonCell";
             }
         }
     }];
+    
+    btn.enabled = YES;
 }
 
 - (void)popCtrl{

@@ -66,6 +66,8 @@ static CGFloat ImageHeight  = 210.0;
     UIButton *_viewResultsBtn;//查看成绩
     
     NSInteger _hasReleaseScore;//是否公布成绩0，1-已公布
+    
+    NSInteger _canSubsidy;//是否补贴-0不
 }
 
 @property (nonatomic, strong)UITableView *teamActibityNameTableView;
@@ -227,7 +229,9 @@ static CGFloat ImageHeight  = 210.0;
 
 #pragma mark -- 下载数据 －－－
 - (void)dataSet{
-    [[ShowHUD showHUD]showAnimationWithText:@"加载中..." FromView:self.view];
+    if (![self.view.subviews containsObject:(UIView *)[ShowHUD showHUD]]) {
+        [[ShowHUD showHUD]showAnimationWithText:@"加载中..." FromView:self.view];
+    }
     
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     [dict setValue:@(_teamKey) forKey:@"activityKey"];
@@ -244,6 +248,8 @@ static CGFloat ImageHeight  = 210.0;
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
             
             _hasReleaseScore = [[data objectForKey:@"hasReleaseScore"] integerValue];
+            //是否补贴
+            _canSubsidy = [[data objectForKey:@"canSubsidy"] integerValue];
             //费用列表
             if (self.costListArray != nil) {
                 self.costListArray = [NSMutableArray arrayWithArray:self.costListArray];
@@ -481,6 +487,7 @@ static CGFloat ImageHeight  = 210.0;
 - (void)applyOrPayBtnClick:(UIButton *)btn{
     JGLPaySignUpViewController *paySignUpCtrl = [[JGLPaySignUpViewController alloc]init];
     paySignUpCtrl.dictRealDetail = self.teamMemberDic;
+    paySignUpCtrl.canSubsidy = _canSubsidy;
     if (_model.teamActivityKey == 0) {
         //球队活动
         paySignUpCtrl.activityKey = [_model.timeKey integerValue];
@@ -545,6 +552,7 @@ static CGFloat ImageHeight  = 210.0;
             teamApplyCtrl.isApply = (BOOL)[_isApply floatValue];
             teamApplyCtrl.teamMember = self.teamMemberDic;
             teamApplyCtrl.costListArray = _costListArray;
+            teamApplyCtrl.canSubsidy = _canSubsidy;
             [self.navigationController pushViewController:teamApplyCtrl animated:YES];
         }
     }
@@ -600,7 +608,7 @@ static CGFloat ImageHeight  = 210.0;
         if (indexPath.row == _costListArray.count) {
             JGActivityNameBaseCell *costSubCell = [tableView dequeueReusableCellWithIdentifier:JGActivityNameBaseCellIdentifier];
             costSubCell.selectionStyle = UITableViewCellSelectionStyleNone;
-            if (_model.subsidyPrice) {
+            if ([_model.subsidyPrice integerValue] > 0 && _canSubsidy == 1) {
                 NSLog(@"%.2f", [_model.subsidyPrice floatValue]);
                 [costSubCell configCostSubInstructionPriceFloat:[_model.subsidyPrice floatValue]];
             }else{
