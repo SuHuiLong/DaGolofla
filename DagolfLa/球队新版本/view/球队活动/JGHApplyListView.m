@@ -159,6 +159,7 @@ static NSString *const JGHHeaderLabelCellIdentifier = @"JGHHeaderLabelCell";
         JGApplyPepoleCell *applyPepoleCell = [tableView dequeueReusableCellWithIdentifier:JGApplyPepoleCellIdentifier];
         applyPepoleCell.addApplyBtn.hidden = YES;
         applyPepoleCell.directionImageView.hidden = YES;
+        applyPepoleCell.twoDirectionImageView.hidden = YES;
         return (UIView *)applyPepoleCell;
     }else {
         JGHHeaderLabelCell *activityNameCell = [tableView dequeueReusableCellWithIdentifier:JGHHeaderLabelCellIdentifier];

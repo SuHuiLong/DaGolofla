@@ -19,6 +19,8 @@
 - (IBAction)addApplyBtnClick:(UIButton *)sender;
 @property (weak, nonatomic) IBOutlet UIButton *addApplyBtn;
 @property (weak, nonatomic) IBOutlet UIImageView *directionImageView;
+@property (weak, nonatomic) IBOutlet UIImageView *twoDirectionImageView;
+
 
 @property (weak, nonatomic)id <JGApplyPepoleCellDelegate> delegate;
 
