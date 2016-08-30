@@ -15,4 +15,6 @@
 @property (nonatomic, strong) UILabel *nameLB;
 @property (nonatomic, strong) UILabel *phoneLB;
 
+@property (nonatomic, strong) UILabel *signLB; // 意向成员标识
+
 @end
