@@ -21,9 +21,10 @@
     self.commitBtnRight.constant = 10 *ProportionAdapter;
     self.commitBtnDown.constant = 10 *ProportionAdapter;
     
+    [self.commitBtn setTitleColor:[UIColor colorWithHexString:Bar_Color] forState:UIControlStateNormal];
     self.commitBtn.layer.cornerRadius = 5.0 *ProportionAdapter;
     [self.commitBtn.layer setBorderWidth:1.0];
-    [self.commitBtn.layer setBorderColor:[UIColor greenColor].CGColor];
+    [self.commitBtn.layer setBorderColor:[UIColor colorWithHexString:Bar_Color].CGColor];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

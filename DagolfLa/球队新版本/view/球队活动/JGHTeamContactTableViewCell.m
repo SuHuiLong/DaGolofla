@@ -37,7 +37,7 @@
 //}
 
 - (void)configConstraint{
-    self.contactLabelLeft.constant = 10.0;
+    self.contactLabelLeft.constant = 14.0;
 }
 
 @end
