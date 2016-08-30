@@ -29,4 +29,6 @@
 
 @property (assign, nonatomic)NSInteger canSubsidy;//是否补贴
 
+@property (strong, nonatomic)NSMutableArray *costListArray;//资费列表
+
 @end

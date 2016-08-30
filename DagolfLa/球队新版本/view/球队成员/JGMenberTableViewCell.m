@@ -78,7 +78,7 @@
         [_sexImgv setImage: [UIImage imageNamed:@"xb_nn"]];
     }
     
-    _almostLabel.text = [NSString stringWithFormat:@"%@",model.almost];
+    _almostLabel.text = [NSString stringWithFormat:@"差点：%@",model.almost];
     
     //显示模式XXX。。。XXX
     if ([power containsString:@"1001"]) {
@@ -149,7 +149,7 @@
         [_sexImgv setImage: [UIImage imageNamed:@"xb_nn"]];
     }
     
-    _almostLabel.text = [NSString stringWithFormat:@"%@", model.almost];
+    _almostLabel.text = [NSString stringWithFormat:@"差点：%@", model.almost];
     
     if (![Helper isBlankString:model.mobile]) {
         _poleLabel.text = [NSString stringWithFormat:@"%@",model.mobile];

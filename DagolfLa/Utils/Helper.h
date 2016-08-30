@@ -102,4 +102,6 @@
 //解析URL，返回需要的字段值，没有返回error
 + (NSString *)returnUrlString:(NSString *)url WithKey:(NSString *)key;
 
++ (BOOL)returnPriceString:(NSString *)price;
+
 @end
