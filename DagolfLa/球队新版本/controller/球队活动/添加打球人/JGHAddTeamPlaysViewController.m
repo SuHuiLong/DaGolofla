@@ -35,10 +35,6 @@ static NSString *const JGPlayPayBaseCellIdentifier = @"JGPlayPayBaseCell";
 
 @property (strong, nonatomic)UITableView *addTeamPlaysTableView;
 
-
-
-
-
 @end
 
 @implementation JGHAddTeamPlaysViewController
@@ -245,6 +241,10 @@ static NSString *const JGPlayPayBaseCellIdentifier = @"JGPlayPayBaseCell";
             [_playsBaseDict setObject:@"0" forKey:@"userKey"];
         }
         
+        if (model.almost) {
+            [_playsBaseDict setObject:[NSString stringWithFormat:@"%@", model.almost] forKey:@"userKey"];
+        }
+        
         NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:1];
         NSArray *indexArray=[NSArray arrayWithObject:indexPath];
         [weakSelf.addTeamPlaysTableView reloadRowsAtIndexPaths:indexArray withRowAnimation:UITableViewRowAnimationAutomatic];
@@ -316,6 +316,19 @@ static NSString *const JGPlayPayBaseCellIdentifier = @"JGPlayPayBaseCell";
     }
     
     NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary:_playsBaseDict];
+    NSArray *keysArray = [NSArray array];
+    keysArray = [_playsBaseDict allKeys];
+    NSInteger keyID = 0;
+    for (NSString *keysString in keysArray) {
+        if ([keysString isEqualToString:@"userKey"]) {
+            keyID += 1;
+        }
+    }
+    
+    if (keyID == 0) {
+        [dict setObject:@0 forKey:@"userKey"];
+    }
+    
     [_playListArray addObject:dict];
     [_playsBaseDict removeAllObjects];
     

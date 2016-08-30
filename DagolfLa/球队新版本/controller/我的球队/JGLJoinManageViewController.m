@@ -13,6 +13,8 @@
 #import "MJDIYBackFooter.h"
 #import "MJDIYHeader.h"
 #import "JGLTeamMemberModel.h"
+
+#import "UITool.h"
 @interface JGLJoinManageViewController ()<UITableViewDelegate,UITableViewDataSource>
 {
     UITableView* _tableView;
@@ -190,6 +192,7 @@
         [cell.disMissBtn addTarget:self action:@selector(disMissClick:) forControlEvents:UIControlEventTouchUpInside];
         cell.disMissBtn.tag = indexPath.row + 100000;
         cell.stateLabel.hidden = YES;
+        cell.timeLabel.hidden = YES;
         return cell;
     }
     else{
@@ -200,13 +203,21 @@
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.agreeBtn.hidden = YES;
         cell.disMissBtn.hidden = YES;
+        cell.stateLabel.textColor = [UITool colorWithHexString:@"#a0a0a0" alpha:1];
+        if (![Helper isBlankString:[_dataUpDataArray[indexPath.row] createTime]]) {
+            cell.timeLabel.text = [_dataUpDataArray[indexPath.row] createTime];
+        }
+        else{
+            cell.timeLabel.text = @"暂无时间";
+        }
+        
         if ([[_dataUpDataArray[indexPath.row] joinState] integerValue] == 1) {
             cell.stateLabel.text = @"已同意";
-            cell.stateLabel.textColor = [UIColor redColor];
+            cell.stateLabel.textColor = [UITool colorWithHexString:@"32b14d" alpha:1];
         }
         else if ([[_dataUpDataArray[indexPath.row] joinState] integerValue] == 2){
             cell.stateLabel.text = @"已拒绝";
-            cell.stateLabel.textColor = [UIColor orangeColor];
+            cell.stateLabel.textColor = [UITool colorWithHexString:@"e00000" alpha:1];
         }
         else{
             cell.stateLabel.text = @"仍未审核";

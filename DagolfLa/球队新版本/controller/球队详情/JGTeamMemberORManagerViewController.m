@@ -162,7 +162,7 @@ static CGFloat ImageHeight  = 210.0;
                     [self.previewBtn setTitle:@"审核未通过" forState:UIControlStateNormal];
                     self.previewBtn.backgroundColor = [UIColor lightGrayColor];
                 }else{
-                    [self.previewBtn setTitle:@"邀请好友" forState:UIControlStateNormal];
+                    [self.previewBtn setTitle:@"微信招集队友" forState:UIControlStateNormal];
                     self.previewBtn.backgroundColor = [UIColor colorWithHexString:@"#F59826"];
                 }
                 
@@ -405,20 +405,9 @@ static CGFloat ImageHeight  = 210.0;
     }
 }
 #pragma mark -- 邀请好友BUTTON
-//- (UIButton *)previewBtn{
-//    if (!_previewBtn) {
-//        self.previewBtn = [[UIButton alloc]initWithFrame:CGRectMake(10 * screenWidth / 320, screenHeight - 54 * screenWidth / 320, screenWidth - 20 * screenWidth / 320, 44 * screenWidth / 320)];
-//        [self.previewBtn setTitle:@"邀请好友" forState:UIControlStateNormal];
-//        self.previewBtn.backgroundColor = [UIColor colorWithHexString:@"#F59826"];
-//        [self.previewBtn addTarget:self action:@selector(previewBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-//        self.previewBtn.clipsToBounds = YES;
-//        self.previewBtn.layer.cornerRadius = 6.f;
-//    }
-//    return _previewBtn;
-//}
+
 - (void)createPreviewBtn{
-//    self.previewBtn = [[UIButton alloc]initWithFrame:CGRectMake(10 * screenWidth / 320, screenHeight - 54 * screenWidth / 320, screenWidth - 20 * screenWidth / 320, 44 * screenWidth / 320)];
-    
+ 
     self.footBackView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 60 * screenWidth / 320)];
     self.previewBtn = [[UIButton alloc]initWithFrame:CGRectMake(10 * screenWidth / 320, 10 * screenWidth / 320, screenWidth - 20 * screenWidth / 320, 44 * screenWidth / 320)];
  
@@ -426,69 +415,61 @@ static CGFloat ImageHeight  = 210.0;
     self.previewBtn.layer.cornerRadius = 6.f;
     [self.footBackView addSubview:self.previewBtn];
     
-//    if ([self.memberState integerValue] == 0) {
-//        [self.previewBtn setTitle:@"等待管理员审批" forState:UIControlStateNormal];
-//        self.previewBtn.backgroundColor = [UIColor lightGrayColor];
-//
-//    }else{
-        [self.previewBtn setTitle:@"邀请好友" forState:UIControlStateNormal];
-        self.previewBtn.backgroundColor = [UIColor colorWithHexString:@"#F59826"];
-        [self.previewBtn addTarget:self action:@selector(previewBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-//    }
+    [self.previewBtn setTitle:@"微信招集队友" forState:UIControlStateNormal];
+    self.previewBtn.backgroundColor = [UIColor colorWithHexString:@"#F59826"];
+    [self.previewBtn addTarget:self action:@selector(previewBtnClick) forControlEvents:UIControlEventTouchUpInside];
     
-    
-//    [self.launchActivityTableView addSubview:self.previewBtn];
 }
-#pragma mark -- 邀请好友
-- (void)previewBtnClick:(UIButton *)btn{
+#pragma mark -- 微信分享召集好友
+- (void)previewBtnClick{
     
-    
-    if ([self.memberState integerValue] == 0) {
-        return;
-    }
-    
-    if ([[self.detailDic objectForKey:@"state"] integerValue] == 0) {
-        return;
-    }
-    if ([[self.detailDic objectForKey:@"state"] integerValue] == 2) {
-        return;
-    }
-    
-    TeamInviteViewController *inviteVc = [[TeamInviteViewController alloc] init];
-    
-    
-    inviteVc.block = ^(NSMutableArray* arrayIndex, NSMutableArray* arrayData, NSMutableArray *addressArray){
-        
-        
-        //接收数据
-        [_arrayIndex removeAllObjects];
-        [_arrayData1 removeAllObjects];//第一个列表的数据
-        [_arrayData removeAllObjects];//第二个列表的数据
-        
-        [_messageArray removeAllObjects];//第三个列表
-        [_telArray removeAllObjects];//第四个列表
-        
-        _arrayIndex=arrayIndex;
-        _arrayData1=arrayData;
-        
-        for (int i = 0; i < [addressArray[0] count]; i++) {
-            [_telArray addObject:addressArray[0][i]];
-        }
-        
-        [_arrayData addObjectsFromArray:arrayData[0]];
-        [_arrayData addObjectsFromArray:arrayData[1]];
-        
-        //存储短信数组
-        [_messageArray addObjectsFromArray:arrayData[2]];
-        NSMutableArray* arrayIdLis = [[NSMutableArray alloc]init];
-        
-        
-        
-    };
-    
-    
-    [self.navigationController pushViewController:inviteVc animated:YES];
+    ShareAlert* alert = [[ShareAlert alloc]initMyAlertWithWeChat:YES];
+    alert.frame = CGRectMake(0, ScreenHeight, ScreenWidth, ScreenWidth);
+    [alert setCallBackTitle:^(NSInteger index) {
+        [self shareInfo:index];
+    }];
+    [UIView animateWithDuration:0.2 animations:^{
+        [alert show];
+    }];
 
+}
+#pragma mark -- 分享
+-(void)shareInfoInvte:(NSInteger)index{
+    
+    NSData *fiData;
+    NSLog(@"%@",[Helper setImageIconUrl:@"team" andTeamKey:[[self.detailDic objectForKey:@"timeKey"] integerValue] andIsSetWidth:YES andIsBackGround:NO]);
+    fiData = [NSData dataWithContentsOfURL:[Helper setImageIconUrl:@"team" andTeamKey:[[self.detailDic objectForKey:@"timeKey"] integerValue] andIsSetWidth:YES andIsBackGround:NO]];
+    NSObject* obj;
+    if (fiData != nil && fiData.length > 0) {
+        obj = fiData;
+    }
+    else
+    {
+        obj = [UIImage imageNamed:@"iconlogo"];
+    }
+    NSString* shareUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/team/signUp.html?key=%td&share=1",_detailModel.timeKey];
+    [UMSocialData defaultData].extConfig.title = _detailModel.name;
+    if (index == 0){
+        //微信
+        [UMSocialWechatHandler setWXAppId:@"wxdcdc4e20544ed728" appSecret:@"fdc75aae5a98f2aa0f62ef8cba2b08e9" url:shareUrl];
+        [UMSocialConfig hiddenNotInstallPlatforms:@[UMShareToWechatSession,UMShareToWechatTimeline,UMShareToSina]];
+        [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatSession] content:_detailModel.name  image:fiData location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
+            if (response.responseCode == UMSResponseCodeSuccess) {
+                //                [self shareS:indexRow];
+            }
+        }];
+    }
+    else{
+        
+        //微信
+        [UMSocialWechatHandler setWXAppId:@"wxdcdc4e20544ed728" appSecret:@"fdc75aae5a98f2aa0f62ef8cba2b08e9" url:shareUrl];
+        [UMSocialConfig hiddenNotInstallPlatforms:@[UMShareToWechatSession,UMShareToWechatTimeline,UMShareToSina]];
+        [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatSession] content:_detailModel.name  image:fiData location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
+            if (response.responseCode == UMSResponseCodeSuccess) {
+                //                [self shareS:indexRow];
+            }
+        }];
+    }
 }
 
 

@@ -45,7 +45,7 @@
     self.name.text = [dict objectForKey:@"name"];
 //    @property (weak, nonatomic) IBOutlet UILabel *name;
     //价格
-    self.price.text = [NSString stringWithFormat:@"%.2f", [[dict objectForKey:@"payMoney"] floatValue]];
+    self.price.text = [NSString stringWithFormat:@"%.2f", [[dict objectForKey:@"money"] floatValue]];
 //    @property (weak, nonatomic) IBOutlet UILabel *price;
     if ([[dict objectForKey:@"select"]isEqualToString:@"1"]) {
         [self.chooseBtn setImage:[UIImage imageNamed:@"kuangwx"] forState:UIControlStateNormal];
@@ -73,7 +73,7 @@
     //价格
     self.price.font = [UIFont systemFontOfSize:15.0];
     if ([[dict objectForKey:@"payMoney"] floatValue] > 0) {
-        self.price.text = [NSString stringWithFormat:@"%.2f元", [[dict objectForKey:@"payMoney"] floatValue]];
+        self.price.text = [NSString stringWithFormat:@"%.2f元", [[dict objectForKey:@"money"] floatValue]];
         NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:self.price.text];
         [attributedString addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(self.price.text.length-1, 1)]; // 0为起始位置 length是从起始位置开始 设置指定颜色的长度
         self.price.attributedText = attributedString;

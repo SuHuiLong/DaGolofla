@@ -62,7 +62,7 @@
         [self addSubview:_agreeBtn];
         _agreeBtn.titleLabel.font = [UIFont systemFontOfSize:14];
         _agreeBtn.layer.masksToBounds = YES;
-        _agreeBtn.layer.cornerRadius = 8*screenWidth/320;
+        _agreeBtn.layer.cornerRadius = 6;
         
         _disMissBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         _disMissBtn.frame = CGRectMake(271*screenWidth/320, 15*screenWidth/320, 46*screenWidth/320, 24*screenWidth/320);
@@ -72,13 +72,20 @@
         _disMissBtn.layer.borderColor = [[UITool colorWithHexString:@"#f39800" alpha:1] CGColor];
         _disMissBtn.titleLabel.font = [UIFont systemFontOfSize:14];
         _disMissBtn.layer.masksToBounds = YES;
-        _disMissBtn.layer.cornerRadius = 8*screenWidth/320;
+        _disMissBtn.layer.cornerRadius = 6;
         [self addSubview:_disMissBtn];
         
         
-        _stateLabel = [[UILabel alloc]initWithFrame:CGRectMake(271*screenWidth/320, 15*screenWidth/320, 46*screenWidth/320, 24*screenWidth/320)];
+        _timeLabel = [[UILabel alloc]initWithFrame:CGRectMake(180*screenWidth/320, 5*screenWidth/320, 136*screenWidth/320, 20*screenWidth/320)];
+        _timeLabel.font = [UIFont systemFontOfSize:14];
+        [self addSubview:_timeLabel];
+        
+        _stateLabel = [[UILabel alloc]initWithFrame:CGRectMake(271*screenWidth/320, 34*screenWidth/320, 46*screenWidth/320, 20*screenWidth/320)];
         _stateLabel.font = [UIFont systemFontOfSize:14];
         [self addSubview:_stateLabel];
+        
+        
+        
     }
     return self;
 }

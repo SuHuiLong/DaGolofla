@@ -14,8 +14,8 @@
     [super awakeFromNib];
     // Initialization code
     
-    self.name.font = [UIFont systemFontOfSize:40 *ProportionAdapter];
-    self.nameLeft.constant = 20 *ProportionAdapter;
+    self.name.font = [UIFont systemFontOfSize:15 *ProportionAdapter];
+    self.nameLeft.constant = 40 *ProportionAdapter;
     
     self.price.font = [UIFont systemFontOfSize:15 *ProportionAdapter];
     self.priceUnit.font = [UIFont systemFontOfSize:15 *ProportionAdapter];

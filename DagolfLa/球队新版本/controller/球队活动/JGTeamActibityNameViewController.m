@@ -245,7 +245,10 @@ static CGFloat ImageHeight  = 210.0;
             
             _hasReleaseScore = [[data objectForKey:@"hasReleaseScore"] integerValue];
             //费用列表
-            [self.costListArray removeAllObjects];
+            if (self.costListArray != nil) {
+                [self.costListArray removeAllObjects];
+            }
+            
             self.costListArray = [data objectForKey:@"costList"];
             
             NSMutableDictionary *dict = [NSMutableDictionary dictionary];
@@ -732,32 +735,7 @@ static CGFloat ImageHeight  = 210.0;
         JGLScoreRankViewController *rankCtrl = [[JGLScoreRankViewController alloc]init];
         rankCtrl.activity = [NSNumber numberWithInteger:_teamKey];
         rankCtrl.teamKey = [NSNumber numberWithInteger:_model.teamKey];
-//        @property (strong, nonatomic) NSNumber* activity;//key,srcKey
-        
-//        @property (strong, nonatomic) NSNumber* teamKey;
-        
         [self.navigationController pushViewController:rankCtrl animated:YES];
-        //成绩纵览
-        //http://imgcache.dagolfla.com/share/score/teamYearScoreOverview.html?userKey=222&teamKey=1
-        
-        
-        /*
-        NSInteger timeKey;
-        JGTeamDeatilWKwebViewController *wkVC = [[JGTeamDeatilWKwebViewController alloc] init];
-        if (_model.teamActivityKey == 0) {
-            timeKey = [_model.timeKey integerValue];
-            wkVC.activeTimeKey = [_model.timeKey integerValue];
-        }else{
-            timeKey = _model.teamActivityKey;
-            wkVC.activeTimeKey = _model.teamActivityKey;;
-        }
-        wkVC.teamTimeKey = _model.teamKey;
-        wkVC.isScore = YES;
-        wkVC.activeName = _model.name;
-        wkVC.detailString = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/score/teamYearScoreOverview.html?userKey=%@&teamKey=%td", DEFAULF_USERID, timeKey];
-        wkVC.teamName = @"活动成绩";
-        [self.navigationController pushViewController:wkVC animated:YES];
-        */
     }
 }
 #pragma mark -- 详情页面

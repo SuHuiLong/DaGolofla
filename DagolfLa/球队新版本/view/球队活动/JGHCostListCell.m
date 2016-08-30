@@ -28,8 +28,10 @@
 }
 
 - (void)configCostListCell:(NSMutableDictionary *)dict{
-    self.titleLable.text = [NSString stringWithFormat:@"%@", [dict objectForKey:@"name"]];
-    
+    self.titleLable.text = [NSString stringWithFormat:@"%@", [dict objectForKey:@"costName"]];
+    if ([dict objectForKey:@"money"]) {
+        self.valueTextField.text = [NSString stringWithFormat:@"%@", [dict objectForKey:@"money"]];
+    }
 }
 
 @end

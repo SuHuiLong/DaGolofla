@@ -11,7 +11,7 @@
 
 @interface JGHActicityDetailsViewController : ViewController
 
-@property (nonatomic, assign)NSInteger activityKey;//我的活动key
+//@property (nonatomic, assign)NSInteger activityKey;//我的活动key
 
 @property (nonatomic, retain) UIImageView *imgProfile;//拉大图片
 
