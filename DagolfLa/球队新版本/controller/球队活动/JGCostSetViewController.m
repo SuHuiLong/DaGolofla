@@ -229,8 +229,8 @@ static NSString *const JGHAddCostButtonCellIdentifier = @"JGHAddCostButtonCell";
     if (_sectionCount >= 5) {
         NSDictionary *costdict = [_costListArray lastObject];
         NSString *costName = [costdict objectForKey:@"costName"];
-        NSString *money = [costdict objectForKey:@"money"];
-        if ([costName isEqualToString:@""] || [money isEqualToString:@""]) {
+//        NSString *money = [costdict objectForKey:@"money"];
+        if ([costName isEqualToString:@""]) {
             return;
         }
     }
@@ -255,7 +255,7 @@ static NSString *const JGHAddCostButtonCellIdentifier = @"JGHAddCostButtonCell";
         [self.costListArray replaceObjectAtIndex:textField.tag -10 withObject:newDict];
     }else{
         NSMutableDictionary *newDict = [NSMutableDictionary dictionary];
-        if (textField.tag < 1000) {
+        if (textField.tag < 900) {
             newDict = [NSMutableDictionary dictionaryWithDictionary:[self.costListArray objectAtIndex:((textField.tag -100) + _costListArrayCount -1)]];
             [newDict setObject:textField.text forKey:@"costName"];
             

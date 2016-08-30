@@ -248,6 +248,7 @@
     model = self.dataArray[indexPath.section];
     detailsCtrl.model = model;
     detailsCtrl.refreshBlock = ^(){
+        _page = 0;
         [self loadData];
     };
     

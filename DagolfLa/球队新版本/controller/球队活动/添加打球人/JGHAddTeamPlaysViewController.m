@@ -74,6 +74,7 @@ static NSString *const JGPlayPayBaseCellIdentifier = @"JGPlayPayBaseCell";
 //    
 //    [_playsBaseDict setObject:[costDict objectForKey:@"costType"] forKey:@"type"];//默认资费类型
 //    [_playsBaseDict setObject:[costDict objectForKey:@"money"] forKey:@"money"];//默认资费价格
+    [_playsBaseDict setObject:@"1" forKey:@"isOnlinePay"];//是否线上付款 1-线上
     
     for (int i=0; i<_costListArray.count; i++) {
         NSMutableDictionary *dict = [NSMutableDictionary dictionary];

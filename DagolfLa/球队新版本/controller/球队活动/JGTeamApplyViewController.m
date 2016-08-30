@@ -589,32 +589,32 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
 - (void)notice:(NSNotification *)not{
     NSInteger secess = [[not.userInfo objectForKey:@"secess"] integerValue];
     if (secess == 1) {
-        //跳转分组页面
-        JGTeamGroupViewController *groupCtrl = [[JGTeamGroupViewController alloc]init];
-        groupCtrl.teamActivityKey = [_modelss.timeKey integerValue];
-        groupCtrl.activityFrom = 1;
-        [self.navigationController pushViewController:groupCtrl animated:YES];
+        
     }else if (secess == 2){
         [[ShowHUD showHUD]showToastWithText:@"支付已取消！" FromView:self.view];
-        [self performSelector:@selector(popActivityCtrl) withObject:self afterDelay:TIMESlEEP];
     }else{
         [[ShowHUD showHUD]showToastWithText:@"支付失败！" FromView:self.view];
-        [self performSelector:@selector(popActivityCtrl) withObject:self afterDelay:TIMESlEEP];
     }
-}
-- (void)popActivityCtrl{
-    //
-    NSNotification * notice = [NSNotification notificationWithName:@"reloadActivityData" object:nil userInfo:nil];
-    //发送消息
-    [[NSNotificationCenter defaultCenter]postNotification:notice];
     
-    for (UIViewController *controller in self.navigationController.viewControllers) {
-        if ([controller isKindOfClass:[JGTeamActibityNameViewController class]]) {
-            [self.navigationController popToViewController:controller animated:YES];
-        }
-    }
-
+    //跳转分组页面
+    JGTeamGroupViewController *groupCtrl = [[JGTeamGroupViewController alloc]init];
+    groupCtrl.teamActivityKey = [_modelss.timeKey integerValue];
+    groupCtrl.activityFrom = 1;
+    [self.navigationController pushViewController:groupCtrl animated:YES];
 }
+//- (void)popActivityCtrl{
+//    //
+//    NSNotification * notice = [NSNotification notificationWithName:@"reloadActivityData" object:nil userInfo:nil];
+//    //发送消息
+//    [[NSNotificationCenter defaultCenter]postNotification:notice];
+//    
+//    for (UIViewController *controller in self.navigationController.viewControllers) {
+//        if ([controller isKindOfClass:[JGTeamActibityNameViewController class]]) {
+//            [self.navigationController popToViewController:controller animated:YES];
+//        }
+//    }
+//
+//}
 #pragma mark -- 支付宝
 - (void)zhifubaoPay{
     NSLog(@"支付宝支付");
@@ -632,35 +632,32 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
         NSLog(@"errType == %@", errType);
     } completionBlock:^(id data) {
         NSLog(@"%@",[data objectForKey:@"query"]);
-
         
         [[AlipaySDK defaultService] payOrder:[data objectForKey:@"query"] fromScheme:@"dagolfla" callback:^(NSDictionary *resultDic) {
             
             NSLog(@"支付宝=====%@",resultDic[@"resultStatus"]);
             if ([resultDic[@"resultStatus"] isEqualToString:@"9000"]) {
                 NSLog(@"成功！");
-                //跳转分组页面
-                JGTeamGroupViewController *groupCtrl = [[JGTeamGroupViewController alloc]init];
-                groupCtrl.activityFrom = 1;
-                groupCtrl.teamActivityKey = [_modelss.timeKey integerValue];
-                [self.navigationController pushViewController:groupCtrl animated:YES];
+                
             } else if ([resultDic[@"resultStatus"] isEqualToString:@"4000"]) {
                 NSLog(@"失败");
                 [[ShowHUD showHUD]showToastWithText:@"支付失败！" FromView:self.view];
-                [self performSelector:@selector(popActivityCtrl) withObject:self afterDelay:TIMESlEEP];
             } else if ([resultDic[@"resultStatus"] isEqualToString:@"6002"]) {
                 NSLog(@"网络错误");
                 [[ShowHUD showHUD]showToastWithText:@"网络异常，支付失败！" FromView:self.view];
-                [self performSelector:@selector(popActivityCtrl) withObject:self afterDelay:TIMESlEEP];
             } else if ([resultDic[@"resultStatus"] isEqualToString:@"6001"]) {
                 NSLog(@"取消支付");
                 [[ShowHUD showHUD]showToastWithText:@"支付已取消！" FromView:self.view];
-                [self performSelector:@selector(popActivityCtrl) withObject:self afterDelay:TIMESlEEP];
             } else {
                 NSLog(@"支付失败");
                 [[ShowHUD showHUD]showToastWithText:@"支付失败！" FromView:self.view];
-                [self performSelector:@selector(popActivityCtrl) withObject:self afterDelay:TIMESlEEP];
             }
+            
+            //跳转分组页面
+            JGTeamGroupViewController *groupCtrl = [[JGTeamGroupViewController alloc]init];
+            groupCtrl.activityFrom = 1;
+            groupCtrl.teamActivityKey = [_modelss.timeKey integerValue];
+            [self.navigationController pushViewController:groupCtrl animated:YES];
         }];
     }];
 }

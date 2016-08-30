@@ -94,6 +94,7 @@ static NSString *const JGHHeaderLabelCellIdentifier = @"JGHHeaderLabelCell";
     UINib *headerLabelNib = [UINib nibWithNibName:@"JGHHeaderLabelCell" bundle: [NSBundle mainBundle]];
     [self.applistTableView registerNib:headerLabelNib forCellReuseIdentifier:JGHHeaderLabelCellIdentifier];
 //    self.applistTableView.bounces = NO;
+    //[applyDict setObject:@"1" forKey:@"isOnlinePay"];//是否线上付款 1-线上
     [self addSubview:self.applistTableView];
 }
 

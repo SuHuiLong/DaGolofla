@@ -52,19 +52,19 @@ static NSString *const JGHCostListTableViewCellIdentifier = @"JGHCostListTableVi
 static NSString *const JGHTeamContactCellIdentifier = @"JGHTeamContactTableViewCell";
 static CGFloat ImageHeight  = 210.0;
 
-@interface JGHActicityDetailsViewController ()<UITableViewDelegate, UITableViewDataSource, JGHConcentTextViewControllerDelegate, UITextFieldDelegate>
+@interface JGHActicityDetailsViewController ()<UITableViewDelegate, UITableViewDataSource, JGHConcentTextViewControllerDelegate, UITextFieldDelegate, JGLActivityMemberSetViewControllerDelegate>
 {
     NSInteger _isTeamMember;//是否是球队成员 1 － 不是
     NSString *_userName;//用户在球队的真实姓名
     NSArray *_titleArray;//标题数组
     NSInteger _isEditor;//是否编辑0，1-已编辑
     
-    NSMutableArray *_costListArray;//报名资费列表
+//    NSMutableArray *_costListArray;//报名资费列表
 }
 
 @property (nonatomic, strong)UITableView *teamActibityNameTableView;
 @property (nonatomic, strong)NSMutableArray *dataArray;//数据源
-@property (nonatomic, strong)NSMutableArray *subDataArray;//费用说明数据源
+//@property (nonatomic, strong)NSMutableArray *subDataArray;//费用说明数据源
 @property (nonatomic,strong)SXPickPhoto * pickPhoto;//相册类
 @property (nonatomic, strong)UIImage *headerImage;
 
@@ -113,7 +113,7 @@ static CGFloat ImageHeight  = 210.0;
         self.model = [[JGTeamAcitivtyModel alloc]init];
         self.pickPhoto = [[SXPickPhoto alloc]init];
         self.titleView = [[UIView alloc]init];
-        self.subDataArray = [NSMutableArray array];
+//        self.subDataArray = [NSMutableArray array];
         self.costListArray = [NSMutableArray array];
     }
     return self;
@@ -124,7 +124,7 @@ static CGFloat ImageHeight  = 210.0;
     self.view.backgroundColor = [UIColor colorWithHexString:BG_color];
     self.automaticallyAdjustsScrollViewInsets = NO;
     _isEditor = 0;
-    _costListArray = [NSMutableArray array];
+//    _costListArray = [NSMutableArray array];
     _titleArray = @[@"活动开始时间", @"活动结束时间", @"报名截止时间"];
     
     self.imgProfile = [[UIImageView alloc] initWithImage:[UIImage imageNamed:ActivityBGImage]];
@@ -216,6 +216,8 @@ static CGFloat ImageHeight  = 210.0;
 #pragma mark -- 下载数据 －－－
 - (void)dataSet{
     [[ShowHUD showHUD]showAnimationWithText:@"加载中..." FromView:self.view];
+    self.teamActibityNameTableView.userInteractionEnabled = NO;
+    
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     //球队活动
     [dict setValue:[NSString stringWithFormat:@"%td", [_model.timeKey integerValue]] forKey:@"activityKey"];
@@ -230,8 +232,12 @@ static CGFloat ImageHeight  = 210.0;
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
             
             //费用列表
-            [self.costListArray removeAllObjects];
-            self.costListArray = [data objectForKey:@"costList"];
+            if (self.costListArray != nil) {
+                self.costListArray = [self.costListArray mutableCopy];
+                [self.costListArray removeAllObjects];
+            }
+            
+            self.costListArray = [[data objectForKey:@"costList"] mutableCopy];
             
             NSMutableDictionary *dict = [NSMutableDictionary dictionary];
             
@@ -245,28 +251,13 @@ static CGFloat ImageHeight  = 210.0;
             
             [self.model setValuesForKeysWithDictionary:[data objectForKey:@"activity"]];
             
-            [_subDataArray removeAllObjects];
-            if ([self.model.memberPrice floatValue] > 0) {
-                [_subDataArray addObject:[NSString stringWithFormat:@"%.2f-球队队员资费", [self.model.memberPrice floatValue]]];
-            }
-            
-            if ([self.model.guestPrice floatValue] > 0) {
-                [_subDataArray addObject:[NSString stringWithFormat:@"%.2f-普通嘉宾资费", [self.model.guestPrice floatValue]]];
-            }
-            
-            if ([self.model.billNamePrice floatValue] > 0) {
-                [_subDataArray addObject:[NSString stringWithFormat:@"%.2f-球场记名会员资费", [self.model.billNamePrice floatValue]]];
-            }
-            
-            if ([self.model.billPrice floatValue] > 0) {
-                [_subDataArray addObject:[NSString stringWithFormat:@"%.2f-球场无记名会员资费", [self.model.billPrice floatValue]]];
-            }
-            
             [self.teamActibityNameTableView reloadData];
         }else{
             
         }
     }];
+    
+    self.teamActibityNameTableView.userInteractionEnabled = YES;
 }
 #pragma mark -- 跳转分组页面
 - (void)pushGroupCtrl:(UIButton *)btn{
@@ -426,6 +417,8 @@ static CGFloat ImageHeight  = 210.0;
         }
         
         [[ShowHUD showHUD]showAnimationWithText:@"提交中..." FromView:self.view];
+        self.teamActibityNameTableView.userInteractionEnabled = NO;
+        
         NSMutableDictionary *dict = [NSMutableDictionary dictionary];
         [dict setObject:[NSString stringWithFormat:@"%td", _model.teamKey] forKey:@"teamKey"];//球队key
         [dict setObject:[NSString stringWithFormat:@"%td", [_model.timeKey integerValue]] forKey:@"timeKey"];
@@ -527,13 +520,15 @@ static CGFloat ImageHeight  = 210.0;
             }
         }];
     }
+    
+    self.teamActibityNameTableView.userInteractionEnabled = YES;
 }
 #pragma mark -- tableView 代理
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    if (section == 4) {
-        //参赛费用列表
-        return _subDataArray.count;
-    }
+//    if (section == 4) {
+//        //参赛费用列表
+//        return _costListArray.count;
+//    }
     return 0;
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
@@ -572,8 +567,8 @@ static CGFloat ImageHeight  = 210.0;
     if (indexPath.section == 4) {
         
         costListCell.selectionStyle = UITableViewCellSelectionStyleNone;
-        if (_subDataArray.count > 0) {
-            [costListCell configCostData:_subDataArray[indexPath.row]];
+        if (_costListArray.count > 0) {
+            [costListCell configCostData:_costListArray[indexPath.row]];
         }
     }
     
@@ -658,14 +653,14 @@ static CGFloat ImageHeight  = 210.0;
         JGHTeamContactTableViewCell *contactCell = [tableView dequeueReusableCellWithIdentifier:JGHTeamContactCellIdentifier];
         contactCell.tetfileView.tag = 234;
         contactCell.tetfileView.delegate = self;
-        contactCell.contactLabel.text = @"人员限制";
+        contactCell.contactLabel.text = @"人数限制";
         [contactCell configConstraint];
         contactCell.contentView.backgroundColor = [UIColor whiteColor];
         if (self.model.name != nil) {
             contactCell.tetfileView.text = [NSString stringWithFormat:@"%td", self.model.maxCount];
         }
         
-        contactCell.tetfileView.placeholder = @"请输入最大人员限制数";
+        contactCell.tetfileView.placeholder = @"请输入最大人数限制数";
         return contactCell.contentView;
     }else if (section == 10){
         JGHTeamContactTableViewCell *contactCell = [tableView dequeueReusableCellWithIdentifier:JGHTeamContactCellIdentifier];
@@ -693,7 +688,7 @@ static CGFloat ImageHeight  = 210.0;
             contactCell.tetfileView.text = self.model.userMobile;
         }
         
-        contactCell.tetfileView.placeholder = @"请输入最大人员限制数";
+        contactCell.tetfileView.placeholder = @"请输入最大人数限制数";
         return contactCell.contentView;
     }
 }
@@ -704,6 +699,7 @@ static CGFloat ImageHeight  = 210.0;
 }
 #pragma mark -- 成绩管理
 - (void)PerformanceManagement:(UIButton *)btn{
+    [self.view endEditing:YES];
     NSLog(@"成绩管理");
     JGHActivityScoreManagerViewController *activityScoreCtrl = [[JGHActivityScoreManagerViewController alloc]init];
     activityScoreCtrl.activityBaseModel = _model;
@@ -711,7 +707,7 @@ static CGFloat ImageHeight  = 210.0;
 }
 #pragma mark -- 奖项设置
 - (void)setAward:(UIButton *)btn{
-    
+    [self.view endEditing:YES];
     if (![Helper isBlankString:_model.awardedInfo]) {
         JGLPresentAwardViewController *prizeCtrl = [[JGLPresentAwardViewController alloc]init];
         if (_model.teamActivityKey != 0) {
@@ -738,12 +734,16 @@ static CGFloat ImageHeight  = 210.0;
         
         setAwardCtrl.model = _model;
         
+        setAwardCtrl.refreshBlock = ^(){
+            
+        };
+        
         [self.navigationController pushViewController:setAwardCtrl animated:YES];
     }
 }
 #pragma mark -- 修改时间地点
 - (void)getTimeAndAddressClick:(UIButton *)btn{
-    
+    [self.view endEditing:YES];
     if (btn.tag == 101) {
         JGHDatePicksViewController *datePicksCrel = [[JGHDatePicksViewController alloc]init];
         datePicksCrel.returnDateString = ^(NSString *dateString){
@@ -771,6 +771,7 @@ static CGFloat ImageHeight  = 210.0;
 }
 #pragma mark -- 修改价格
 - (void)editorCostClick:(UIButton *)btn{
+    [self.view endEditing:YES];
     JGHEditorCostViewController *costView = [[JGHEditorCostViewController alloc]initWithNibName:@"JGHEditorCostViewController" bundle:nil];
     //球队队员费用
 //    if (self.costListArray.count > 0) {
@@ -786,12 +787,14 @@ static CGFloat ImageHeight  = 210.0;
 }
 #pragma mark -- 添加内容详情代理  JGHConcentTextViewControllerDelegate
 - (void)didSelectSaveBtnClick:(NSString *)text{
+    [self.view endEditing:YES];
     _isEditor = 1;
     [self.model setValue:text forKey:@"info"];
     [self.teamActibityNameTableView reloadData];
 }
 #pragma mark -- 详情页面
 - (void)pushDetailSCtrl:(UIButton *)btn{
+    [self.view endEditing:YES];
     JGHConcentTextViewController *concentTextCtrl = [[JGHConcentTextViewController alloc]initWithNibName:@"JGHConcentTextViewController" bundle:nil];
     concentTextCtrl.itemText = @"活动详情";
     concentTextCtrl.delegate = self;
@@ -800,9 +803,12 @@ static CGFloat ImageHeight  = 210.0;
 }
 #pragma mark -- 查看已报名人列表
 - (void)getTeamActivitySignUpList:(UIButton *)btn{
+    [self.view endEditing:YES];
     //JGLActivityMemberSetViewController
     
     JGLActivityMemberSetViewController *activityMemberCtrl = [[JGLActivityMemberSetViewController alloc]init];
+    activityMemberCtrl.delegate = self;
+    
     if (_model.teamActivityKey != 0) {
         activityMemberCtrl.activityKey = [NSNumber numberWithInteger:_model.teamActivityKey];
     }else{
@@ -873,6 +879,10 @@ static CGFloat ImageHeight  = 210.0;
             self.addressBtn.hidden = NO;
         }
     }
+}
+#pragma mark -- 添加意向成员返回刷新数据
+- (void)reloadActivityMemberData{
+    [self dataSet];
 }
 
 /*

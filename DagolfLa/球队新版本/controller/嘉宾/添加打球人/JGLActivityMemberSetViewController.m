@@ -66,10 +66,27 @@
         self.searchController.searchBar.hidden = YES;
     }
 }
+
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     self.searchController.searchBar.hidden = NO;
+    
+    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    btn.frame = BackBtnFrame;
+    btn.titleLabel.font = [UIFont systemFontOfSize:FontSize_Normal];
+    [btn setImage:[UIImage imageNamed:@"backL"] forState:UIControlStateNormal];
+    [btn addTarget:self action:@selector(backButtonClcik:) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc]initWithCustomView:btn];
+    self.navigationItem.leftBarButtonItem = leftItem;
+    
     [_tableView reloadData];
+}
+#pragma mark -- 返回
+- (void)backButtonClcik:(UIButton *)btn{
+    if (self.delegate) {
+        [self.navigationController popViewControllerAnimated:YES];
+        [self.delegate reloadActivityMemberData];
+    }
 }
 #pragma mark -- 分组管理
 - (void)activityGroupManager{

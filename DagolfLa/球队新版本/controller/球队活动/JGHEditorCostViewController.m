@@ -211,8 +211,8 @@ static NSString *const JGHAddCostButtonCellIdentifier = @"JGHAddCostButtonCell";
     if (_sectionCount >= _costListArrayCount) {
         NSDictionary *costdict = [_costListArray lastObject];
         NSString *costName = [costdict objectForKey:@"costName"];
-        NSString *money = [costdict objectForKey:@"money"];
-        if ([costName isEqualToString:@""] || [money isEqualToString:@""]) {
+//        NSString *money = [costdict objectForKey:@"money"];
+        if ([costName isEqualToString:@""]) {
             return;
         }
     }
