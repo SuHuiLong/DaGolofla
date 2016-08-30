@@ -242,6 +242,7 @@
         NSString* strMoney = [NSString stringWithFormat:@"已付¥%@",model.payMoney];
         NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:strMoney];
         [attributedString addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"#e00000"] range:NSMakeRange(2, strMoney.length-2)]; // 0为起始位置 length是从起始位置开始 设置指定颜色的长度
+        [attributedString addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(0, 2)]; // 0为起始位置 length是从起始位置开始 设置指定颜色的长度
         cell.moneyLabel.attributedText = attributedString;
     }
     
