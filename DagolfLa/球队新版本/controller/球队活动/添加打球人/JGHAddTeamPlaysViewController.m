@@ -224,6 +224,8 @@ static NSString *const JGPlayPayBaseCellIdentifier = @"JGPlayPayBaseCell";
     JGHAddApplyTeamPlaysViewController *applyPlaysCtrl = [[JGHAddApplyTeamPlaysViewController alloc]init];
     applyPlaysCtrl.teamKey = _teamKey;
     applyPlaysCtrl.activityKey = _activityKey;
+    applyPlaysCtrl.userKeyArray = [self returnUserKeyString];
+    
     __weak JGHAddTeamPlaysViewController *weakSelf = self;
     applyPlaysCtrl.blockFriendDict = ^(JGLTeamMemberModel *model){
         
@@ -242,7 +244,7 @@ static NSString *const JGPlayPayBaseCellIdentifier = @"JGPlayPayBaseCell";
         }
         
         if (model.almost) {
-            [_playsBaseDict setObject:[NSString stringWithFormat:@"%@", model.almost] forKey:@"userKey"];
+            [_playsBaseDict setObject:[NSString stringWithFormat:@"%@", model.almost] forKey:@"almost"];
         }
         
         NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:1];
@@ -259,6 +261,8 @@ static NSString *const JGPlayPayBaseCellIdentifier = @"JGPlayPayBaseCell";
     [self initPlaysBaseInfo];//初始化打球人信息
     
     JGHAddTeamMemberViewController *addTeamMemberCtrl = [[JGHAddTeamMemberViewController alloc]init];
+    addTeamMemberCtrl.userKeyArray = [self returnUserKeyString];
+    
     __weak JGHAddTeamPlaysViewController *weakSelf = self;
     addTeamMemberCtrl.blockFriendModel = ^(MyattenModel *model){
         
@@ -266,8 +270,8 @@ static NSString *const JGPlayPayBaseCellIdentifier = @"JGPlayPayBaseCell";
             [_playsBaseDict setObject:model.userName forKey:@"name"];
         }
         
-        if ([model.userId integerValue] != 0) {
-            [_playsBaseDict setObject:model.userId forKey:@"userKey"];
+        if ([model.otherUserId integerValue] != 0) {
+            [_playsBaseDict setObject:model.otherUserId forKey:@"userKey"];
         }else{
             [_playsBaseDict setObject:@0 forKey:@"userKey"];
         }
@@ -299,12 +303,22 @@ static NSString *const JGPlayPayBaseCellIdentifier = @"JGPlayPayBaseCell";
         }
         
         [_playsBaseDict setObject:@0 forKey:@"userKey"];
-        
         NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:1];
         NSArray *indexArray=[NSArray arrayWithObject:indexPath];
         [weakSelf.addTeamPlaysTableView reloadRowsAtIndexPaths:indexArray withRowAnimation:UITableViewRowAnimationAutomatic];
     };
     [self.navigationController pushViewController:addressBookCtrl animated:YES];
+}
+#pragma mark -- 获取所有打球人userKey
+- (NSMutableArray *)returnUserKeyString{
+    NSMutableArray *userKeyArray = [NSMutableArray array];
+    for (NSDictionary *dict in _playListArray) {
+        if ([dict objectForKey:@"userKey"]) {
+            [userKeyArray addObject:[dict objectForKey:@"userKey"]];
+        }
+    }
+    
+    return userKeyArray;
 }
 #pragma mark -- 立即添加--资费类型
 - (void)addPlaysButtonCellClick:(UIButton *)btn{
@@ -329,11 +343,10 @@ static NSString *const JGPlayPayBaseCellIdentifier = @"JGPlayPayBaseCell";
         [dict setObject:@0 forKey:@"userKey"];
     }
     
+    [dict setObject:@"1" forKey:@"select"];//付款勾选默认勾
     [_playListArray addObject:dict];
     [_playsBaseDict removeAllObjects];
-    
     [self initPlaysBaseInfo];//初始化打球人信息
-    
     [self.addTeamPlaysTableView reloadData];
 }
 #pragma mark -- 选择男
@@ -378,17 +391,6 @@ static NSString *const JGPlayPayBaseCellIdentifier = @"JGPlayPayBaseCell";
     }
     
     [_playsBaseDict setObject:@(listId) forKey:@"type"];
-//    NSArray *indexArray = [NSArray array];
-//    if (listId == cellid) {
-//        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:cellid inSection:2];
-//        indexArray=[NSArray arrayWithObject:indexPath];
-//    }else{
-//        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:cellid inSection:2];
-//        NSIndexPath *indexPath1 = [NSIndexPath indexPathForRow:listId inSection:2];
-//        indexArray=[NSArray arrayWithObjects:indexPath, indexPath1, nil];
-//    }
-//    
-//    [self.addTeamPlaysTableView reloadRowsAtIndexPaths:indexArray withRowAnimation:UITableViewRowAnimationAutomatic];
     
     [self.addTeamPlaysTableView reloadData];
 }
@@ -413,6 +415,7 @@ static NSString *const JGPlayPayBaseCellIdentifier = @"JGPlayPayBaseCell";
 }
 - (void)delePalys:(NSInteger)listId{
     [_playListArray removeObjectAtIndex:listId];
+    [self.addTeamPlaysTableView reloadData];
 }
 #pragma mark -- textDelegate
 - (void)textFieldDidEndEditing:(UITextField *)textField{

@@ -145,11 +145,10 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
         NSMutableDictionary *applyDict = [NSMutableDictionary dictionary];
         [applyDict setObject:[NSString stringWithFormat:@"%td", _modelss.teamKey] forKey:@"teamKey"];//球队key
         [applyDict setObject:_modelss.timeKey forKey:@"activityKey"];//球队活动id
-        [applyDict setObject:@1 forKey:@"type"];//"是否是球队成员 0: 不是  1：是
         
         NSDictionary *costDict = [NSDictionary dictionary];
         costDict = _costListArray[0];
-        
+        [applyDict setObject:[NSString stringWithFormat:@"%@", [costDict objectForKey:@"costType"]] forKey:@"type"];//资费类型
         [applyDict setObject:[NSString stringWithFormat:@"%@", [costDict objectForKey:@"money"]] forKey:@"money"];//实际付款金额
         
         [applyDict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:userID] forKey:@"userKey"];//报名用户key , 没有则是嘉宾
@@ -383,7 +382,7 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
 - (void)addApplyPeopleClick{
     JGHAddTeamPlaysViewController *addTeamPlaysCtrl = [[JGHAddTeamPlaysViewController alloc]init];
     addTeamPlaysCtrl.costListArray = [NSMutableArray arrayWithArray:_costListArray];
-    addTeamPlaysCtrl.playListArray = _applyArray;
+    addTeamPlaysCtrl.playListArray = [NSMutableArray arrayWithArray:_applyArray];
     if (_modelss.teamActivityKey != 0) {
         addTeamPlaysCtrl.activityKey = _modelss.teamActivityKey;
     }else{
@@ -412,7 +411,7 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
     if ([self.applyArray count]) {
         NSDictionary *dict = [NSDictionary dictionary];
         dict = [self.applyArray objectAtIndex:btn.tag-100];
-        if ([[dict objectForKey:@"userKey"] integerValue] != 0) {
+        if ([[dict objectForKey:@"userKey"] integerValue] == [DEFAULF_USERID integerValue]) {
             [Helper alertViewWithTitle:@"删除后将不享受平台补贴，是否删除？" withBlockCancle:^{
                 
             } withBlockSure:^{
@@ -605,10 +604,6 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
     
     for (UIViewController *controller in self.navigationController.viewControllers) {
         if ([controller isKindOfClass:[JGTeamActibityNameViewController class]]) {
-            //创建一个消息对象
-            NSNotification * notice = [NSNotification notificationWithName:@"reloadActivityData" object:nil userInfo:nil];
-            //发送消息
-            [[NSNotificationCenter defaultCenter]postNotification:notice];
             [self.navigationController popToViewController:controller animated:YES];
         }
     }

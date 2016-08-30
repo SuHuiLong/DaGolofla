@@ -212,22 +212,27 @@
     }else{
         model.userName = modell.userremarks;
     }
+    
     cell.myModel = model;
-    
-//    NSString *str=[_dictFinish objectForKey:[self.listArray[indexPath.section][indexPath.row] otherUserId]];
-    
     cell.imgvState.hidden = YES;
-//    if ([Helper isBlankString:str]==NO) {
-//        cell.imgvState.image=[UIImage imageNamed:@"gou_x"];
-//    }else{
-//        cell.imgvState.image=[UIImage imageNamed:@"gou_w"];
-//    }
     return cell;
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    _blockFriendModel(_listArray[indexPath.section][indexPath.row]);
+    MyattenModel *model = [[MyattenModel alloc]init];
+    model = _listArray[indexPath.section][indexPath.row];
+    NSInteger userKey = [model.otherUserId integerValue];
+    
+    for (int i=0; i<_userKeyArray.count; i++) {
+        NSInteger useID = [_userKeyArray[i] integerValue];
+        if (useID == userKey) {
+            [[ShowHUD showHUD]showToastWithText:@"已添加" FromView:self.view];
+            return;
+        }
+    }
+    
+    _blockFriendModel(model);
     [self.navigationController popViewControllerAnimated:YES];
 }
 // 右侧索引

@@ -188,6 +188,18 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    JGLTeamMemberModel *model = [[JGLTeamMemberModel alloc]init];
+    model = _listArray[indexPath.section][indexPath.row];
+    NSInteger userKey = [model.userKey integerValue];
+    
+    for (int i=0; i<_userKeyArray.count; i++) {
+        NSInteger useID = [_userKeyArray[i] integerValue];
+        if (useID == userKey) {
+            [[ShowHUD showHUD]showToastWithText:@"已添加" FromView:self.view];
+            return;
+        }
+    }
+    
     _blockFriendDict(_listArray[indexPath.section][indexPath.row]);
     [self.navigationController popViewControllerAnimated:YES];
 }

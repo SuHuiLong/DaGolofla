@@ -56,6 +56,14 @@ static NSString *const JGHAddCostButtonCellIdentifier = @"JGHAddCostButtonCell";
         }
     }
     
+    if (_isManager == 1) {
+        NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+        [dict setObject:@"" forKey:@"money"];
+        [dict setObject:@"" forKey:@"costName"];
+        self.costListArray = [NSMutableArray arrayWithArray:self.costListArray];
+        [self.costListArray addObject:dict];
+    }
+    
     _sectionCount = _costListArray.count;
     _costListArrayCount = _costListArray.count;
     
@@ -90,11 +98,16 @@ static NSString *const JGHAddCostButtonCellIdentifier = @"JGHAddCostButtonCell";
     [self.view endEditing:YES];
     NSLog(@"%@", _costListArray);
     NSInteger costCount = 0;
+    NSInteger moneyIsNumber = 0;
     for (NSDictionary *dict in _costListArray) {
-        NSString *costName = [dict objectForKey:@"costName"];
-        NSString *money = [dict objectForKey:@"money"];
+        NSString *costName = [NSString stringWithFormat:@"%@", [dict objectForKey:@"costName"]];
+        NSString *money = [NSString stringWithFormat:@"%@", [dict objectForKey:@"money"]];
         if (![costName isEqualToString:@""] && ![money isEqualToString:@""]) {
             costCount += 1;
+        }
+        
+        if (![Helper isPureNumandCharacters:money]) {
+            moneyIsNumber = 1;
         }
     }
     
@@ -143,7 +156,7 @@ static NSString *const JGHAddCostButtonCellIdentifier = @"JGHAddCostButtonCell";
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    if (section == _costListArrayCount -1) {
+    if (section == 4) {
         return 10 *ProportionAdapter;
     }
     return 1;
@@ -156,7 +169,7 @@ static NSString *const JGHAddCostButtonCellIdentifier = @"JGHAddCostButtonCell";
         addCostButtonCell.selectionStyle = UITableViewCellSelectionStyleNone;
         addCostButtonCell.delegate = self;
         return addCostButtonCell;
-    }else if (indexPath.section < _costListArray.count){
+    }else if (indexPath.section < 4){
         JGHCostListCell *costListCell = [tableView dequeueReusableCellWithIdentifier:JGHCostListCellIdentifier];
         costListCell.selectionStyle = UITableViewCellSelectionStyleNone;
         [costListCell configCostListCell:_costListArray[indexPath.section]];

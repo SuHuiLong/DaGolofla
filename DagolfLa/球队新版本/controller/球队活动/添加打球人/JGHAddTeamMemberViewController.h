@@ -16,5 +16,6 @@
 
 @property (assign, nonatomic) NSInteger lastIndex;
 
+@property (nonatomic, strong)NSMutableArray *userKeyArray;
 
 @end
