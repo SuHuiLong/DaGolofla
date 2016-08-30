@@ -41,8 +41,27 @@ static NSString *const JGHActivityBaseCellIdentifier = @"JGHActivityBaseCell";
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    if (_dataArray.count == 0) {
+        if (self.bgView == nil) {
+            [self createNoData];
+        }
+    }else{
+        [self.bgView removeFromSuperview];
+        self.bgView = nil;
+    }
+}
+
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
     
 }
+
+//- (UIView *)bgView{
+//    if (_bgView == nil) {
+//        self.bgView = [[UIView alloc]init];
+//    }
+//    return _bgView;
+//}
 
 - (instancetype)init{
     if (self == [super init]) {
@@ -117,12 +136,17 @@ static NSString *const JGHActivityBaseCellIdentifier = @"JGHActivityBaseCell";
         [self.awardTableView.header endRefreshing];
         
         if (_dataArray.count == 0) {
-            [self createNoData];
-        }else{
-            for(UIView *view in [self.bgView subviews])
-            {
-                [view removeFromSuperview];
+            if (self.bgView == nil) {
+                [self createNoData];
             }
+            
+        }else{
+//            for(UIView *view in [self.bgView subviews])
+//            {
+//                [view removeFromSuperview];
+//            }
+            [self.bgView removeFromSuperview];
+            self.bgView = nil;
         }
         
         [self.awardTableView reloadData];

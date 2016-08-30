@@ -80,6 +80,10 @@
 + (NSString *)getUserTransDetailOrderTypeListUserKey:(NSInteger)userKey andOrderType:(NSInteger)orderType{
     return [Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%td&orderType=%tddagolfla.com", userKey, orderType]];
 }
+
++ (NSString *)getTeamActivityCostListUserKey:(NSInteger)userKey andActivityKey:(NSInteger)activityKey{
+    return [Helper md5HexDigest:[NSString stringWithFormat:@"activityKey=%td&userKey=%tddagolfla.com", activityKey, userKey]];
+}
 /*
  // App分享的MD5签名规则
  1. /team/getTeamActivitySignUpList?teamKey=1&activityKey=1&userKey=1 MD5加密

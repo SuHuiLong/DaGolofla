@@ -48,19 +48,13 @@ static NSString *const JGSignUoPromptCellIdentifier = @"JGSignUoPromptCell";
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor colorWithHexString:BG_color];
     self.navigationItem.title = @"选择奖项";
-//    _titleArray = @[@"一杆进洞奖", @"总杆冠军", @"总杆亚军", @"总杆季军", @"净杆冠军", @"净杆亚军", @"净杆季军", @"远距奖", @"最近洞奖", @"BB奖", @"大波奖", @"小波奖"];
     _titleArray = [NSMutableArray array];
     self.item = [UIButton buttonWithType:UIButtonTypeCustom];
     self.item.frame = CGRectMake(0, 0, 64, 44);
     self.item.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
     self.item.titleLabel.font = [UIFont systemFontOfSize:FontSize_Normal];
-//    if (self.selectChooseArray.count == self.dataArray.count) {
-//        [self.item setTitle:@"取消全选" forState:UIControlStateNormal];
-//        _select = 1;
-//    }else{
-        _select = 0;
-        [self.item setTitle:@"全选" forState:UIControlStateNormal];
-//    }
+    _select = 0;
+    [self.item setTitle:@"全选" forState:UIControlStateNormal];
     
     [self.item addTarget:self action:@selector(chooseAll:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *leftItem = [[UIBarButtonItem alloc]initWithCustomView:self.item];

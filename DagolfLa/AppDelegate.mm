@@ -337,6 +337,7 @@
                 NSLog(@"result = %@",resultDic);
                 NSLog(@"客户端支付");
             }];
+            
         }else{
             NSString *actKey = @"";
             NSString *actDetail = @"";
@@ -352,7 +353,6 @@
     }
     else
     {
-        
         return YES;
     }
 }

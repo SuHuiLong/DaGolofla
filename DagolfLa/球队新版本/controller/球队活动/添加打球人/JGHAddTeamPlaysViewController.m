@@ -69,20 +69,20 @@ static NSString *const JGPlayPayBaseCellIdentifier = @"JGPlayPayBaseCell";
 #pragma mark -- 初始化报名人信息
 - (void)initPlaysBaseInfo{
     [_playsBaseDict setObject:@0 forKey:@"sex"];//默认性别女-0
-    NSMutableDictionary *costDict = [NSMutableDictionary dictionary];
-    costDict = [_costListArray objectAtIndex:0];
-    
-    [_playsBaseDict setObject:[costDict objectForKey:@"costType"] forKey:@"type"];//默认资费类型
-    [_playsBaseDict setObject:[costDict objectForKey:@"money"] forKey:@"money"];//默认资费价格
+//    NSMutableDictionary *costDict = [NSMutableDictionary dictionary];
+//    costDict = [_costListArray objectAtIndex:0];
+//    
+//    [_playsBaseDict setObject:[costDict objectForKey:@"costType"] forKey:@"type"];//默认资费类型
+//    [_playsBaseDict setObject:[costDict objectForKey:@"money"] forKey:@"money"];//默认资费价格
     
     for (int i=0; i<_costListArray.count; i++) {
         NSMutableDictionary *dict = [NSMutableDictionary dictionary];
         dict = [NSMutableDictionary dictionaryWithDictionary:_costListArray[i]];
-        if (i == 0) {
-            [dict setObject:@1 forKey:@"select"];
-        }else{
+//        if (i == 0) {
+//            [dict setObject:@1 forKey:@"select"];
+//        }else{
             [dict setObject:@0 forKey:@"select"];
-        }
+//        }
         
         [_costListArray replaceObjectAtIndex:i withObject:dict];
     }
@@ -247,6 +247,12 @@ static NSString *const JGPlayPayBaseCellIdentifier = @"JGPlayPayBaseCell";
             [_playsBaseDict setObject:[NSString stringWithFormat:@"%@", model.almost] forKey:@"almost"];
         }
         
+        if ([model.sex integerValue] == 0) {
+            [_playsBaseDict setObject:model.sex forKey:@"sex"];
+        }else{
+            [_playsBaseDict setObject:@1 forKey:@"sex"];
+        }
+        
         NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:1];
         NSArray *indexArray=[NSArray arrayWithObject:indexPath];
         [weakSelf.addTeamPlaysTableView reloadRowsAtIndexPaths:indexArray withRowAnimation:UITableViewRowAnimationAutomatic];
@@ -274,6 +280,12 @@ static NSString *const JGPlayPayBaseCellIdentifier = @"JGPlayPayBaseCell";
             [_playsBaseDict setObject:model.otherUserId forKey:@"userKey"];
         }else{
             [_playsBaseDict setObject:@0 forKey:@"userKey"];
+        }
+        
+        if ([model.sex integerValue] == 0) {
+            [_playsBaseDict setObject:model.sex forKey:@"sex"];
+        }else{
+            [_playsBaseDict setObject:@1 forKey:@"sex"];
         }
         
         NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:1];
@@ -326,6 +338,11 @@ static NSString *const JGPlayPayBaseCellIdentifier = @"JGPlayPayBaseCell";
     [self.view endEditing:YES];
     if (![_playsBaseDict objectForKey:@"name"]) {
         [[ShowHUD showHUD]showToastWithText:@"请输入姓名！" FromView:self.view];
+        return;
+    }
+    
+    if (![_playsBaseDict objectForKey:@"type"]) {
+        [[ShowHUD showHUD]showToastWithText:@"请选择资费类型！" FromView:self.view];
         return;
     }
     
