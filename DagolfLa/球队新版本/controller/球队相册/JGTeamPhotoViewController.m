@@ -215,7 +215,7 @@
     }
     else
     {
-        
+        cell.manageBtn.hidden = YES;
     }
     
     return cell;
