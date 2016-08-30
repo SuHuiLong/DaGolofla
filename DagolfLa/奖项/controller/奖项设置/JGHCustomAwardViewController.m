@@ -89,7 +89,7 @@ static NSString *const JGHTextFiledCellIdentifier = @"JGHTextFiledCell";
         NSLog(@"data == %@", data);
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
             [[ShowHUD showHUD]showToastWithText:@"保存成功！" FromView:self.view];
-            [self performSelector:@selector(pushCtrl) withObject:self afterDelay:1.0];
+            [self performSelector:@selector(pushCtrl) withObject:self afterDelay:TIMESlEEP];
 //            _awardName = @"";
 //            _prizeName = @"";
 //            _prizeNumber = 0;

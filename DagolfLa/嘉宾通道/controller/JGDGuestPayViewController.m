@@ -288,7 +288,7 @@
     footlineView.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];
     [footView addSubview:footlineView];
     
-    self.footLB = [[UILabel alloc] initWithFrame:CGRectMake(10 * ProportionAdapter, 1 * ProportionAdapter, 250 * ProportionAdapter, 50 * ProportionAdapter)];
+    self.footLB = [[UILabel alloc] initWithFrame:CGRectMake(10 * ProportionAdapter, 1 * ProportionAdapter, 260 * ProportionAdapter, 50 * ProportionAdapter)];
     NSInteger subsidy = [self.model.guestSubsidyPrice integerValue];
     NSMutableAttributedString *attriStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"平台补贴费用%td元 实付金额：0", subsidy]];
     [attriStr addAttribute:NSForegroundColorAttributeName value:[UIColor orangeColor] range:NSMakeRange(6, [[NSString stringWithFormat:@"%td", subsidy] length])];
@@ -463,7 +463,7 @@
     if (secess == 1) {
         
         [[ShowHUD showHUD]showToastWithText:@"支付成功" FromView:self.view];
-        [self performSelector:@selector(popToChannel) withObject:self afterDelay:2];
+        [self performSelector:@selector(popToChannel) withObject:self afterDelay:TIMESlEEP];
         
     }else if (secess == 2){
         [[ShowHUD showHUD]showToastWithText:@"支付已取消！" FromView:self.view];
@@ -520,7 +520,7 @@
             if ([resultDic[@"resultStatus"] isEqualToString:@"9000"]) {
                 [[ShowHUD showHUD]showToastWithText:@"支付成功！" FromView:self.view];
                 //跳转分组页面
-                [self performSelector:@selector(popToChannel) withObject:self afterDelay:2];
+                [self performSelector:@selector(popToChannel) withObject:self afterDelay:TIMESlEEP];
                 
             } else if ([resultDic[@"resultStatus"] isEqualToString:@"4000"]) {
                 NSLog(@"失败");

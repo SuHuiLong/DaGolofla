@@ -224,7 +224,7 @@
             
             [MBProgressHUD hideAllHUDsForView:self.view animated:NO];
             [[ShowHUD showHUD]showToastWithText:@"提交成功" FromView:self.view];
-            [self performSelector:@selector(pop) withObject:self afterDelay:1];
+            [self performSelector:@selector(pop) withObject:self afterDelay:TIMESlEEP];
         }
         else
         {
