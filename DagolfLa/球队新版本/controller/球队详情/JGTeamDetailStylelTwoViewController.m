@@ -88,6 +88,7 @@
     }else{
         // 相册
         JGTeamPhotoViewController *photoVC = [[JGTeamPhotoViewController alloc] init];
+        photoVC.manageInter = 1;
         [self.navigationController pushViewController:photoVC animated:YES];
  
     }

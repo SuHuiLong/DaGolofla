@@ -695,6 +695,7 @@ static CGFloat ImageHeight  = 210.0;
                 phoVc.teamKey = [self.detailDic objectForKey:@"timeKey"];
                 phoVc.powerPho = self.power;
                 phoVc.dictMember = _memBerDic;
+                phoVc.manageInter = 1;
                 [self.navigationController pushViewController:phoVc animated:YES];
             }
                 break;

@@ -408,6 +408,7 @@ static CGFloat ImageHeight  = 210.0;
         }else{
             
             JGTeamPhotoViewController *photo = [[JGTeamPhotoViewController alloc] init];
+            photo.manageInter = 1;
             photo.teamKey = [self.detailDic objectForKey:@"timeKey"];
             [self.navigationController pushViewController:photo animated:YES];
         }
