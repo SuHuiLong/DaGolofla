@@ -29,6 +29,8 @@ static NSString *const JGHHeaderLabelCellIdentifier = @"JGHHeaderLabelCell";
 @property (nonatomic, assign)float realPayPrice;//实付金额
 @property (nonatomic, assign)float realSubPrice;//补贴金额
 
+@property (nonatomic, assign)NSInteger isSub;//是否显示补贴价 -1
+
 @end
 
 @implementation JGHApplyListView
@@ -40,6 +42,7 @@ static NSString *const JGHHeaderLabelCellIdentifier = @"JGHHeaderLabelCell";
         _realPayPrice = 0;
         _amountPayable = 0;
         _realSubPrice = 0;
+        _isSub = 0;
         [self createTeamActivityTabelView];//tableView
         [self createCancelAndSubmitBtn];
     }
@@ -75,8 +78,20 @@ static NSString *const JGHHeaderLabelCellIdentifier = @"JGHHeaderLabelCell";
 }
 #pragma mark -- 立即支付
 - (void)submitBtnClick:(UIButton *)btn{
+    NSMutableArray *array = [NSMutableArray array];
+    for (NSDictionary *dict in _applistArray) {
+        if ([[dict objectForKey:@"select"] integerValue] ==1) {
+            [array addObject:dict];
+        }
+    }
+    
+    if ([array count] == 0) {
+        [[ShowHUD showHUD]showToastWithText:@"请勾选付款人！" FromView:self];
+        return;
+    }
+    
     if (self.delegate) {
-        [self.delegate didSelectPayBtn:btn];
+        [self.delegate didSelectPayBtn:btn andApplyListArray:array];
     }
 }
 #pragma mark -- 创建TableView
@@ -166,7 +181,13 @@ static NSString *const JGHHeaderLabelCellIdentifier = @"JGHHeaderLabelCell";
         JGHHeaderLabelCell *activityNameCell = [tableView dequeueReusableCellWithIdentifier:JGHHeaderLabelCellIdentifier];
         activityNameCell.selectionStyle = UITableViewCellSelectionStyleNone;
         [activityNameCell congiftitles:@"实付金额"];
-        [activityNameCell congifContact:[NSString stringWithFormat:@"%.2f", _realPayPrice] andNote:[NSString stringWithFormat:@"%.2f", _realSubPrice]];
+        
+        if (_canSubsidy == 1) {
+            [activityNameCell congifContact:[NSString stringWithFormat:@"%.2f", _realPayPrice] andNote:[NSString stringWithFormat:@"%.2f", _subsidiesPrice]];
+        }else{
+            [activityNameCell congifContact:[NSString stringWithFormat:@"%.2f", _realPayPrice] andNote:@"0.00"];
+        }
+        
         return (UIView *)activityNameCell;
     }
 }
@@ -175,9 +196,19 @@ static NSString *const JGHHeaderLabelCellIdentifier = @"JGHHeaderLabelCell";
     footView.backgroundColor = [UIColor colorWithHexString:BG_color];
     return footView;
 }
-
+#pragma mark -- 判断是否勾选自己
+- (void)returnSelf{
+    for (NSDictionary *dict in self.applistArray) {
+        if ([[dict objectForKey:@"userKey"] integerValue] == [DEFAULF_USERID integerValue]) {
+            if ([[dict objectForKey:@"select"] integerValue] == 1) {
+                _isSub = 1;
+            }
+        }
+    }
+}
 #pragma mark -- 刷新页面数据
-- (void)configViewData:(NSMutableArray *)array{
+- (void)configViewData:(NSMutableArray *)array andCanSubsidy:(NSInteger)canSubsidy{
+    _canSubsidy = canSubsidy;
     self.applistArray = array;
     [self.applistTableView reloadData];
     [self countAmountPayable];
@@ -232,18 +263,25 @@ static NSString *const JGHHeaderLabelCellIdentifier = @"JGHHeaderLabelCell";
             float value = [[dict objectForKey:@"money"] floatValue];
             _amountPayable += value;
             
-            if ([[dict objectForKey:@"userKey"] integerValue] != 0) {
+            if ([[dict objectForKey:@"userKey"] integerValue] == [DEFAULF_USERID integerValue]) {
                 isMember = 1;
+                _subsidiesPrice = [[dict objectForKey:@"subsidyPrice"] floatValue];
             }
         }
     }
     
     //仅当前报名人[在线支付]享受平台补贴
     if (isMember == 1) {
-        _realSubPrice = _subsidiesPrice;
-        _realPayPrice = _amountPayable - _realSubPrice;
+//        _realSubPrice = _subsidiesPrice;
+        if (_canSubsidy == 1) {
+            _realPayPrice = _amountPayable - _subsidiesPrice;
+        }else{
+            _realPayPrice = _amountPayable;
+        }
+        
     }else{
         _realPayPrice = _amountPayable;
+        _subsidiesPrice = 0.0;
     }
     
     [self.applistTableView reloadData];

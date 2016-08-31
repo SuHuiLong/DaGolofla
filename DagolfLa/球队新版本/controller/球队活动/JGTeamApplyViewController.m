@@ -50,6 +50,8 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
     NSString *_infoKey;
     
     NSInteger _editorPlayId;//修改价格 ID -0
+    
+    NSMutableArray *_relApplistArray;
 }
 
 @property (nonatomic, strong)NSArray *titleArray;//标题
@@ -134,6 +136,8 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
     _subsidiesPrice = 0;
     _amountPayable = 0;
     _editorPlayId = 0;
+    
+    _relApplistArray = [NSMutableArray array];
 
     [_baseInfoArray addObject:[NSString stringWithFormat:@"%@-活动名称", _modelss.name]];
     [_baseInfoArray addObject:[NSString stringWithFormat:@"%@-活动地址", _modelss.ballName]];
@@ -334,11 +338,12 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
     if (screenHeight < ((_applyArray.count * 30) + 108)){
         self.tranView.frame = CGRectMake(0, 0, screenWidth, 0);
         self.applyListView.frame = CGRectMake(0, 0, screenWidth, screenHeight -64);
-        [_applyListView configViewData:_applyArray];
+        [_applyListView configViewData:_applyArray andCanSubsidy:_canSubsidy];
     }else{
         self.tranView.frame = CGRectMake(0, 0, screenWidth, screenHeight - (152 + _applyArray.count * 30)-64 -44);
         self.applyListView.frame = CGRectMake(0, screenHeight - (196 + _applyArray.count * 30)-64, screenWidth, 196 + 44 + _applyArray.count * 30);
-        [_applyListView configViewData:_applyArray];
+        [_applyListView configViewData:_applyArray andCanSubsidy:_canSubsidy];
+//        [_applyListView configViewData:_applyArray];
     }
 }
 
@@ -510,6 +515,16 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
     [self.info setObject:@0 forKey:@"timeKey"];//timeKey
     
     [dict setObject:_applyArray forKey:@"teamSignUpList"];//报名人员数组
+    
+    if (_relApplistArray.count > 0) {
+        NSMutableArray *listArray = [NSMutableArray array];
+        listArray = [_relApplistArray mutableCopy];
+        [dict setObject:listArray forKey:@"teamSignUpList"];//报名人员数组
+        [_relApplistArray removeAllObjects];
+    }else{
+        [dict setObject:_applyArray forKey:@"teamSignUpList"];//报名人员数组
+    }
+    
     [dict setObject:_info forKey:@"info"];
     [dict setObject:@0 forKey:@"srcType"];//报名类型－－0非嘉宾通道
     [[JsonHttp jsonHttp]httpRequest:@"team/doTeamActivitySignUp" JsonKey:nil withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
@@ -667,7 +682,9 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
     self.tranView.hidden = YES;
 }
 #pragma mark -- 确认页面－－立即支付
-- (void)didSelectPayBtn:(UIButton *)btn{
+- (void)didSelectPayBtn:(UIButton *)btn andApplyListArray:(NSMutableArray *)applistArray{
+    
+    _relApplistArray = [NSMutableArray arrayWithArray:applistArray];
     // 分别3个创建操作
     UIAlertAction * cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
     }];
