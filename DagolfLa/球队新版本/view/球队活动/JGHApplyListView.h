@@ -12,7 +12,7 @@
 
 - (void)didSelectCancelBtn:(UIButton *)btn;
 
-- (void)didSelectPayBtn:(UIButton *)btn;
+- (void)didSelectPayBtn:(UIButton *)btn andApplyListArray:(NSMutableArray *)applistArray;
 
 
 @end
@@ -23,8 +23,10 @@
 
 @property (weak, nonatomic)id <JGHApplyListViewDelegate> delegate;
 
-- (void)configViewData:(NSMutableArray *)array;
+- (void)configViewData:(NSMutableArray *)array andCanSubsidy:(NSInteger)canSubsidy;
 
 @property (nonatomic, assign)float subsidiesPrice;//补贴金额
+
+@property (assign, nonatomic)NSInteger canSubsidy;//是否可以补贴0-不，1-补贴
 
 @end
