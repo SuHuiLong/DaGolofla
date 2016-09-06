@@ -173,6 +173,8 @@
         ballNameLB.font = [UIFont systemFontOfSize:15 * ProportionAdapter];
         [viewTitle addSubview:ballNameLB];
         
+        UIButton *changeModel = [[UIButton alloc] initWithFrame:CGRectMake(300 * ProportionAdapter, 5 * ProportionAdapter, 50 * ProportionAdapter, 30 * ProportionAdapter)];
+        [changeModel setImage:[UIImage imageNamed:@""] forState:(UIControlStateNormal)];
         
         UILabel *timeLB = [[UILabel alloc] initWithFrame:CGRectMake(10 * ProportionAdapter, 50 * ProportionAdapter, 90 * ProportionAdapter, 30 * ProportionAdapter)];
         NSString *timeStr = [self.dataDic objectForKey:@"createtime"];
