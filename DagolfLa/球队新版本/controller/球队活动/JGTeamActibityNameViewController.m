@@ -278,12 +278,13 @@ static CGFloat ImageHeight  = 210.0;
 
             if ([[Helper returnCurrentDateString] compare:_model.signUpEndTime] < 0) {
                 if ([_isApply integerValue] == 0) {
-                    [self createApplyBtn];//报名按钮
+                    [self createApplyBtn:0];//报名按钮
                 }else{
                     [self createCancelBtnAndApplyOrPay];//已报名
                 }
             }else{
-                self.teamActibityNameTableView.frame = CGRectMake(0, 0, ScreenWidth, ScreenHeight);
+//                self.teamActibityNameTableView.frame = CGRectMake(0, 0, ScreenWidth, ScreenHeight);
+                [self createApplyBtn:1];//报名按钮--禁止报名
             }
             
             [self.teamActibityNameTableView reloadData];
@@ -518,24 +519,38 @@ static CGFloat ImageHeight  = 210.0;
     [self.navigationController pushViewController:cancelApplyCtrl animated:YES];
 }
 #pragma mark -- 创建报名按钮
-- (void)createApplyBtn{
+- (void)createApplyBtn:(NSInteger)btnID{
     self.headPortraitBtn.layer.masksToBounds = YES;
     self.headPortraitBtn.layer.cornerRadius = 8.0;
     
     UIButton *photoBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, screenHeight-44, (75*screenWidth/375)-1, 44)];
-    [photoBtn setImage:[UIImage imageNamed:@"consulting"] forState:UIControlStateNormal];
+    
     [photoBtn addTarget:self action:@selector(telPhotoClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:photoBtn];
+    
     UILabel *lines = [[UILabel alloc]initWithFrame:CGRectMake(photoBtn.frame.origin.x, photoBtn.frame.size.width, 1, 44)];
     lines.backgroundColor = [UIColor blackColor];
     [self.view addSubview:lines];
     self.applyBtn = [[UIButton alloc]initWithFrame:CGRectMake(photoBtn.frame.size.width + 1, screenHeight-44, screenWidth - 75 *ScreenWidth/375, 44)];
     [self.applyBtn setTitle:@"报名参加" forState:UIControlStateNormal];
-    self.applyBtn.backgroundColor = [UIColor colorWithHexString:Nav_Color];
-    [self.applyBtn addTarget:self action:@selector(applyAttendBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-
+    
+    
+    if (btnID == 0) {
+        [self.applyBtn addTarget:self action:@selector(applyAttendBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+        self.applyBtn.backgroundColor = [UIColor colorWithHexString:Nav_Color];
+        [photoBtn setImage:[UIImage imageNamed:@"consulting"] forState:UIControlStateNormal];
+    }else{
+        [self.applyBtn addTarget:self action:@selector(applyNoAttendBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+        self.applyBtn.backgroundColor = [UIColor lightGrayColor];
+        [photoBtn setImage:[UIImage imageNamed:@"consultingLight"] forState:UIControlStateNormal];
+    }
     
     [self.view addSubview:self.applyBtn];
+}
+#pragma mark -- 过期－报名
+- (void)applyNoAttendBtnClick:(UIButton *)btn{
+    [[ShowHUD showHUD]showToastWithText:@"该活动已截止报名！" FromView:self.view];
+    return;
 }
 #pragma mark -- 报名参加
 - (void)applyAttendBtnClick:(UIButton *)btn{

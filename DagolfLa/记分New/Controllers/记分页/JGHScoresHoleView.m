@@ -9,15 +9,23 @@
 #import "JGHScoresHoleView.h"
 #import "JGHScoresHoleCell.h"
 #import "JGHScoreListModel.h"
+#import "JGHScoreAreaCell.h"
+#import "JGHTwoScoreAreaCell.h"
 
 #define BGScoreColor @"#B3E4BF"
 
 static NSString *const JGHScoresHoleCellIdentifier = @"JGHScoresHoleCell";
+static NSString *const JGHScoreAreaCellIdentifier = @"JGHScoreAreaCell";
+static NSString *const JGHTwoScoreAreaCellIdentifier = @"JGHTwoScoreAreaCell";
 
-@interface JGHScoresHoleView ()<UITableViewDelegate, UITableViewDataSource, JGHScoresHoleCellDelegate>
+@interface JGHScoresHoleView ()<UITableViewDelegate, UITableViewDataSource, JGHScoresHoleCellDelegate, JGHTwoScoreAreaCellDelegate, JGHScoreAreaCellDelegate>
 {
     NSArray *_titleArray;
     NSArray *_colorArray;
+    NSInteger _areaId;// 0-无区域，1- ； 2-；
+    
+    UIView *_oneAreaView;
+    UIView *_twoAreaView;
 }
 
 @property (nonatomic, strong)UITableView *scoreTableView;
@@ -39,6 +47,12 @@ static NSString *const JGHScoresHoleCellIdentifier = @"JGHScoresHoleCell";
         self.scoreTableView.dataSource = self;
         UINib *scoresPageCellNib = [UINib nibWithNibName:@"JGHScoresHoleCell" bundle: [NSBundle mainBundle]];
         [self.scoreTableView registerNib:scoresPageCellNib forCellReuseIdentifier:JGHScoresHoleCellIdentifier];
+        
+        UINib *scoreAreaCellNib = [UINib nibWithNibName:@"JGHScoreAreaCell" bundle: [NSBundle mainBundle]];
+        [self.scoreTableView registerNib:scoreAreaCellNib forCellReuseIdentifier:JGHScoreAreaCellIdentifier];
+        
+        UINib *twoScoreAreaCellNib = [UINib nibWithNibName:@"JGHTwoScoreAreaCell" bundle: [NSBundle mainBundle]];
+        [self.scoreTableView registerNib:twoScoreAreaCellNib forCellReuseIdentifier:JGHTwoScoreAreaCellIdentifier];
         
         self.scoreTableView.separatorStyle = UITableViewCellSelectionStyleNone;
         [self addSubview:self.scoreTableView];
@@ -119,13 +133,15 @@ static NSString *const JGHScoresHoleCellIdentifier = @"JGHScoresHoleCell";
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
-    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, 37*ProportionAdapter)];
-    view.backgroundColor = [UIColor colorWithHexString:BG_color];
-    UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(5*ProportionAdapter, 4*ProportionAdapter, screenWidth -5*ProportionAdapter, view.frame.size.height - 8*ProportionAdapter)];
-    titleLabel.text = [NSString stringWithFormat:@"第%@九洞", (section == 0)? @"一":@"二"];
-    //    titleLabel.backgroundColor = [UIColor redColor];
-    [view addSubview:titleLabel];
-    return view;
+    if (section == 0) {
+        JGHScoreAreaCell *scoreAreaCell = [tableView dequeueReusableCellWithIdentifier:JGHScoreAreaCellIdentifier];
+        scoreAreaCell.delegate = self;
+        return scoreAreaCell;
+    }else{
+        JGHTwoScoreAreaCell *twoScoreAreaCell = [tableView dequeueReusableCellWithIdentifier:JGHTwoScoreAreaCellIdentifier];
+        twoScoreAreaCell.delegate = self;
+        return twoScoreAreaCell;
+    }
 }
 
 #pragma mark -- 点击杆数跳转到指定的积分页面
@@ -145,7 +161,43 @@ static NSString *const JGHScoresHoleCellIdentifier = @"JGHScoresHoleCell";
     //发送消息
     [[NSNotificationCenter defaultCenter]postNotification:notice];
 }
-
+#pragma mark -- 第一个区域
+- (void)oneAreaNameBtn:(UIButton *)btn{
+    NSLog(@"第一个区域");
+    _areaId = 1;
+    _oneAreaView = [[UIView alloc]initWithFrame:CGRectMake(10 *ProportionAdapter, btn.frame.origin.y + btn.frame.size.height, 84 *ProportionAdapter,_oneAreaArray.count *44 *ProportionAdapter)];
+    for (int i=0; i < _oneAreaArray.count; i++) {
+        UIButton *btn = [[UIButton alloc]initWithFrame:CGRectMake(2 *ProportionAdapter, 2 *ProportionAdapter, 80 *ProportionAdapter, 40 *ProportionAdapter)];
+        [btn setTitle:[NSString stringWithFormat:@"%@", _oneAreaArray[i]] forState:UIControlStateNormal];
+        btn.tag = 200 + i;
+        [btn addTarget:self action:@selector(oneAreaBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+        [_oneAreaView addSubview:btn];
+    }
+    [self addSubview:_oneAreaView];
+}
+#pragma mark -- 第一区域点击事件
+- (void)oneAreaBtnClick:(UIButton *)btn{
+    [_oneAreaView removeFromSuperview];
+}
+#pragma mark -- 第二个区域
+- (void)twoAreaNameBtn:(UIButton *)btn{
+    NSLog(@"第二个区域");
+    _areaId = 2;
+    
+    _twoAreaView = [[UIView alloc]initWithFrame:CGRectMake(10 *ProportionAdapter, btn.frame.origin.y + btn.frame.size.height, 84 *ProportionAdapter,_twoAreaArray.count *44 *ProportionAdapter)];
+    for (int i=0; i < _twoAreaArray.count; i++) {
+        UIButton *btn = [[UIButton alloc]initWithFrame:CGRectMake(2 *ProportionAdapter, 2 *ProportionAdapter, 80 *ProportionAdapter, 40 *ProportionAdapter)];
+        [btn setTitle:[NSString stringWithFormat:@"%@", _twoAreaArray[i]] forState:UIControlStateNormal];
+        btn.tag = 200 + i;
+        [btn addTarget:self action:@selector(oneAreaBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+        [_twoAreaView addSubview:btn];
+    }
+    [self addSubview:_twoAreaView];
+}
+#pragma mark -- 第二区域点击事件
+- (void)twoAreaBtnClick:(UIButton *)btn{
+    [_twoAreaView removeFromSuperview];
+}
 /*
  // Only override drawRect: if you perform custom drawing.
  // An empty implementation adversely affects performance during animation.

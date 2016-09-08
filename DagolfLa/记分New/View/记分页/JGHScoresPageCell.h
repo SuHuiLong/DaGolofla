@@ -67,7 +67,16 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *userName;
 
+@property (weak, nonatomic) IBOutlet UILabel *totalPromLabel;
+
+@property (weak, nonatomic) IBOutlet UILabel *pushPromLable;
+
 
 - (void)configJGHScoreListModel:(JGHScoreListModel *)model andIndex:(NSInteger)index;
+
+- (void)configTotalPoleViewTitle;
+
+- (void)configPoleViewTitle;
+
 
 @end

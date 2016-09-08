@@ -42,6 +42,12 @@
 		2012AD9E1D36192F00F70E40 /* JGHScoresMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2012AD9D1D36192F00F70E40 /* JGHScoresMainViewController.m */; };
 		202E05201D757D6D00566CA9 /* JGHEditorCostViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 202E051E1D757D6D00566CA9 /* JGHEditorCostViewController.m */; };
 		202E05211D757D6D00566CA9 /* JGHEditorCostViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 202E051F1D757D6D00566CA9 /* JGHEditorCostViewController.xib */; };
+		202E05271D7E932200566CA9 /* JGHNewScoresPageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 202E05251D7E932200566CA9 /* JGHNewScoresPageCell.m */; };
+		202E05281D7E932200566CA9 /* JGHNewScoresPageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 202E05261D7E932200566CA9 /* JGHNewScoresPageCell.xib */; };
+		202E052C1D80120800566CA9 /* JGHScoreAreaCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 202E052A1D80120800566CA9 /* JGHScoreAreaCell.m */; };
+		202E052D1D80120800566CA9 /* JGHScoreAreaCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 202E052B1D80120800566CA9 /* JGHScoreAreaCell.xib */; };
+		202E05311D80310B00566CA9 /* JGHTwoScoreAreaCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 202E052F1D80310B00566CA9 /* JGHTwoScoreAreaCell.m */; };
+		202E05321D80310B00566CA9 /* JGHTwoScoreAreaCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 202E05301D80310B00566CA9 /* JGHTwoScoreAreaCell.xib */; };
 		202EC8071D5360990090FE4B /* JGHOperationScoreCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 202EC8061D5360990090FE4B /* JGHOperationScoreCell.xib */; };
 		202EC80C1D5852F80090FE4B /* JGHCaddieViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 202EC80A1D5852F80090FE4B /* JGHCaddieViewController.m */; };
 		202EC80D1D5852F80090FE4B /* JGHCaddieViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 202EC80B1D5852F80090FE4B /* JGHCaddieViewController.xib */; };
@@ -1283,6 +1289,15 @@
 		202E051D1D757D6D00566CA9 /* JGHEditorCostViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHEditorCostViewController.h; sourceTree = "<group>"; };
 		202E051E1D757D6D00566CA9 /* JGHEditorCostViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHEditorCostViewController.m; sourceTree = "<group>"; };
 		202E051F1D757D6D00566CA9 /* JGHEditorCostViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JGHEditorCostViewController.xib; sourceTree = "<group>"; };
+		202E05241D7E932200566CA9 /* JGHNewScoresPageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHNewScoresPageCell.h; sourceTree = "<group>"; };
+		202E05251D7E932200566CA9 /* JGHNewScoresPageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHNewScoresPageCell.m; sourceTree = "<group>"; };
+		202E05261D7E932200566CA9 /* JGHNewScoresPageCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JGHNewScoresPageCell.xib; sourceTree = "<group>"; };
+		202E05291D80120800566CA9 /* JGHScoreAreaCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHScoreAreaCell.h; sourceTree = "<group>"; };
+		202E052A1D80120800566CA9 /* JGHScoreAreaCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHScoreAreaCell.m; sourceTree = "<group>"; };
+		202E052B1D80120800566CA9 /* JGHScoreAreaCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JGHScoreAreaCell.xib; sourceTree = "<group>"; };
+		202E052E1D80310B00566CA9 /* JGHTwoScoreAreaCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHTwoScoreAreaCell.h; sourceTree = "<group>"; };
+		202E052F1D80310B00566CA9 /* JGHTwoScoreAreaCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHTwoScoreAreaCell.m; sourceTree = "<group>"; };
+		202E05301D80310B00566CA9 /* JGHTwoScoreAreaCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JGHTwoScoreAreaCell.xib; sourceTree = "<group>"; };
 		202EC8061D5360990090FE4B /* JGHOperationScoreCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JGHOperationScoreCell.xib; sourceTree = "<group>"; };
 		202EC8091D5852F80090FE4B /* JGHCaddieViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHCaddieViewController.h; sourceTree = "<group>"; };
 		202EC80A1D5852F80090FE4B /* JGHCaddieViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHCaddieViewController.m; sourceTree = "<group>"; };
@@ -3720,6 +3735,23 @@
 				2064DE8B1D367FEC00F0D52A /* JGHScoresHoleView.m */,
 			);
 			path = "记分页";
+			sourceTree = "<group>";
+		};
+		202E05221D7E929100566CA9 /* 记分页New */ = {
+			isa = PBXGroup;
+			children = (
+				202E05241D7E932200566CA9 /* JGHNewScoresPageCell.h */,
+				202E05251D7E932200566CA9 /* JGHNewScoresPageCell.m */,
+				202E05261D7E932200566CA9 /* JGHNewScoresPageCell.xib */,
+			);
+			path = "记分页New";
+			sourceTree = "<group>";
+		};
+		202E05231D7E92B800566CA9 /* 记分页New */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "记分页New";
 			sourceTree = "<group>";
 		};
 		202EC8081D5852BD0090FE4B /* 球童 */ = {
@@ -7066,11 +7098,12 @@
 		8252E85F1D360D1000448404 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				202E05231D7E92B800566CA9 /* 记分页New */,
+				2012AD961D36156400F70E40 /* 记分页 */,
 				82CE50081D4A274800447875 /* 直播和成绩 */,
 				2064DEA31D42190B00F0D52A /* 完成记分 */,
 				F5AEF6DB1D408F3F009A8C34 /* 历史积分卡 */,
 				2064DE901D3C70BC00F0D52A /* 取回记分 */,
-				2012AD961D36156400F70E40 /* 记分页 */,
 				82F254551D3CA6F5008BE0AF /* 添加成员方式 */,
 				829C16E71D3735DD008ABB25 /* 自助记分 */,
 				8252E86B1D36204800448404 /* 添加打球人 */,
@@ -7085,6 +7118,7 @@
 			children = (
 				82CE500F1D4AFD7700447875 /* 直播和成绩 */,
 				F5AEF7111D41B98E009A8C34 /* 记分页 */,
+				202E05221D7E929100566CA9 /* 记分页New */,
 				F5AEF7181D41B98E009A8C34 /* 添加打球人 */,
 				F5AEF71D1D41B98E009A8C34 /* 自助记分 */,
 				F5AEF7281D41B98E009A8C34 /* 历史积分卡 */,
@@ -7854,6 +7888,12 @@
 				F5AEF7151D41B98E009A8C34 /* JGHScoresPageCell.h */,
 				F5AEF7161D41B98E009A8C34 /* JGHScoresPageCell.m */,
 				F5AEF7171D41B98E009A8C34 /* JGHScoresPageCell.xib */,
+				202E05291D80120800566CA9 /* JGHScoreAreaCell.h */,
+				202E052A1D80120800566CA9 /* JGHScoreAreaCell.m */,
+				202E052B1D80120800566CA9 /* JGHScoreAreaCell.xib */,
+				202E052E1D80310B00566CA9 /* JGHTwoScoreAreaCell.h */,
+				202E052F1D80310B00566CA9 /* JGHTwoScoreAreaCell.m */,
+				202E05301D80310B00566CA9 /* JGHTwoScoreAreaCell.xib */,
 			);
 			path = "记分页";
 			sourceTree = "<group>";
@@ -8917,6 +8957,7 @@
 				F5B5499B1CE9F3C00091C962 /* JGPhotoShowCollectionViewCell.xib in Resources */,
 				20CA13801CE574A400DA15B9 /* JGHConcentTextViewController.xib in Resources */,
 				6543320A1BD5D9B900363947 /* UMSLoginViewController.xib in Resources */,
+				202E05321D80310B00566CA9 /* JGHTwoScoreAreaCell.xib in Resources */,
 				36BF00091BC770C4005B3CE2 /* chatfrom_bg_focused.png in Resources */,
 				3660E0911BFC48B00033B4D7 /* Default@2x.png in Resources */,
 				2064DE971D3C715300F0D52A /* JGHRetrieveScoreViewController.xib in Resources */,
@@ -8957,6 +8998,7 @@
 				2012AD811D2BB1B200F70E40 /* JGHAddAwardImageCell.xib in Resources */,
 				3684FDAE1C4A35F4002A14FC /* TeamInviteTableViewCell.xib in Resources */,
 				F5AEF7321D41B98E009A8C34 /* JGHScoresHoleCell.xib in Resources */,
+				202E052D1D80120800566CA9 /* JGHScoreAreaCell.xib in Resources */,
 				209B91A91D6D375200A5BE10 /* JGHApplyNewCell.xib in Resources */,
 				201056161D59C92800C90FDE /* JGHCabbiePhotoCell.xib in Resources */,
 				3660E1041BFC54D90033B4D7 /* MyTeamsTableViewCell.xib in Resources */,
@@ -9033,6 +9075,7 @@
 				208837A41D1A9D88004C7B5D /* JGHActivityBaseInfoCell.xib in Resources */,
 				209B93A21D6E8DAC00A5BE10 /* JGHCostListCell.xib in Resources */,
 				20CA139B1CE984C500DA15B9 /* JGGroupdetailsCollectionViewCell.xib in Resources */,
+				202E05281D7E932200566CA9 /* JGHNewScoresPageCell.xib in Resources */,
 				36BF00BE1BC77383005B3CE2 /* MyNewsBoxTableCell.xib in Resources */,
 				20F0254F1D70202900D7D7B6 /* JGPlayPayBaseCell.xib in Resources */,
 				36BFFEBF1BC76CDC005B3CE2 /* tab_line@3x.png in Resources */,
@@ -9211,6 +9254,7 @@
 				36BFFFCF1BC770B1005B3CE2 /* ZYQAssetPickerController.m in Sources */,
 				828A99F91CE348D500AF9860 /* JGMemTitleTableViewCell.m in Sources */,
 				36E300F61C3FF3F9005C3F08 /* MJRefreshGifHeader.m in Sources */,
+				202E05311D80310B00566CA9 /* JGHTwoScoreAreaCell.m in Sources */,
 				36BFFF6A1BC76D09005B3CE2 /* UIRefreshControl+AFNetworking.m in Sources */,
 				36BF01831BC77611005B3CE2 /* YueMyBallViewController.m in Sources */,
 				36BF00A91BC77326005B3CE2 /* NewsDetailModel.m in Sources */,
@@ -9564,6 +9608,7 @@
 				36DF09B21C03EFFB007A8A4E /* TeamLogoHeadCell.m in Sources */,
 				F5E1BB0E1D6B006100414727 /* ZXDataMatrixDecoder.m in Sources */,
 				36BFFF831BC76D09005B3CE2 /* HorButtonSet.m in Sources */,
+				202E052C1D80120800566CA9 /* JGHScoreAreaCell.m in Sources */,
 				F5E1BB9A1D6EED6D00414727 /* JGDGuestCodeViewController.m in Sources */,
 				36067BC11C97EED2001AE22C /* TeamFriListViewController.m in Sources */,
 				F5E1BB551D6B006100414727 /* ZXUPCAWriter.m in Sources */,
@@ -9638,6 +9683,7 @@
 				82ABF1D21D1C0847004493DB /* JGLPayListTableViewCell.m in Sources */,
 				F53A05701D518F32009DD489 /* JGHSimpleScorePepoleBaseCell.m in Sources */,
 				F5E1BB041D6B006100414727 /* ZXErrors.m in Sources */,
+				202E05271D7E932200566CA9 /* JGHNewScoresPageCell.m in Sources */,
 				208030441CF7F32E00448BFC /* JGHIvoiceTypeCell.m in Sources */,
 				F5E1BAD91D6B006100414727 /* ZXTelParsedResult.m in Sources */,
 				F5E1BAC71D6B006100414727 /* ZXCalendarParsedResult.m in Sources */,

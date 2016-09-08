@@ -14,6 +14,10 @@
 
 @property (nonatomic, assign)NSInteger curPage;
 
+@property (nonatomic, strong)NSArray *oneAreaArray;//球道区域
+
+@property (nonatomic, strong)NSArray *twoAreaArray;//球道区域
+
 - (void)reloadScoreList;
 
 @end
