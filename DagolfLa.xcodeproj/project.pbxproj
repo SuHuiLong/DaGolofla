@@ -759,6 +759,10 @@
 		821DB9DA1D5DB64B00C882C2 /* JGLScoreSureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 821DB9D71D5DB64B00C882C2 /* JGLScoreSureViewController.m */; };
 		821F51041D0E89D700AF0E93 /* JGLMyTeamTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 821F51031D0E89D700AF0E93 /* JGLMyTeamTableViewCell.m */; };
 		821F51071D0ECF4700AF0E93 /* JGLTeamChoiseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 821F51061D0ECF4700AF0E93 /* JGLTeamChoiseViewController.m */; };
+		8222F49C1D7D67E700627549 /* JGLFeedbackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8222F49B1D7D67E700627549 /* JGLFeedbackViewController.m */; };
+		8222F49F1D7D771D00627549 /* JGLNewFuncTionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8222F49E1D7D771D00627549 /* JGLNewFuncTionViewController.m */; };
+		8222F4A21D7D777D00627549 /* JGLBallParkDataViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8222F4A11D7D777D00627549 /* JGLBallParkDataViewController.m */; };
+		8222F4A51D7D77B800627549 /* JGLProductFaultViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8222F4A41D7D77B800627549 /* JGLProductFaultViewController.m */; };
 		8225626F1D2DFB8400ABA7F3 /* SDBrowserImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 822562691D2DFB8400ABA7F3 /* SDBrowserImageView.m */; };
 		822562701D2DFB8400ABA7F3 /* SDPhotoBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = 8225626B1D2DFB8400ABA7F3 /* SDPhotoBrowser.m */; };
 		822562711D2DFB8400ABA7F3 /* SDWaitingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8225626E1D2DFB8400ABA7F3 /* SDWaitingView.m */; };
@@ -2610,6 +2614,14 @@
 		8222D8281D41052600663589 /* JGLActiveScoreViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGLActiveScoreViewController.m; sourceTree = "<group>"; };
 		8222D82D1D41101D00663589 /* JGLAddActivePlayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGLAddActivePlayViewController.h; sourceTree = "<group>"; };
 		8222D82E1D41101D00663589 /* JGLAddActivePlayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGLAddActivePlayViewController.m; sourceTree = "<group>"; };
+		8222F49A1D7D67E700627549 /* JGLFeedbackViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGLFeedbackViewController.h; sourceTree = "<group>"; };
+		8222F49B1D7D67E700627549 /* JGLFeedbackViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGLFeedbackViewController.m; sourceTree = "<group>"; };
+		8222F49D1D7D771D00627549 /* JGLNewFuncTionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGLNewFuncTionViewController.h; sourceTree = "<group>"; };
+		8222F49E1D7D771D00627549 /* JGLNewFuncTionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGLNewFuncTionViewController.m; sourceTree = "<group>"; };
+		8222F4A01D7D777D00627549 /* JGLBallParkDataViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGLBallParkDataViewController.h; sourceTree = "<group>"; };
+		8222F4A11D7D777D00627549 /* JGLBallParkDataViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGLBallParkDataViewController.m; sourceTree = "<group>"; };
+		8222F4A31D7D77B800627549 /* JGLProductFaultViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGLProductFaultViewController.h; sourceTree = "<group>"; };
+		8222F4A41D7D77B800627549 /* JGLProductFaultViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGLProductFaultViewController.m; sourceTree = "<group>"; };
 		822562681D2DFB8400ABA7F3 /* SDBrowserImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDBrowserImageView.h; sourceTree = "<group>"; };
 		822562691D2DFB8400ABA7F3 /* SDBrowserImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDBrowserImageView.m; sourceTree = "<group>"; };
 		8225626A1D2DFB8400ABA7F3 /* SDPhotoBrowser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDPhotoBrowser.h; sourceTree = "<group>"; };
@@ -6218,6 +6230,7 @@
 		36BFFF981BC76FB4005B3CE2 /* 我的 */ = {
 			isa = PBXGroup;
 			children = (
+				8222F4991D7D637000627549 /* 建议与反馈 */,
 				36BF00501BC7726D005B3CE2 /* 表头 */,
 				36BF005F1BC772C0005B3CE2 /* uitableview列表 */,
 				36BFFF9F1BC76FE3005B3CE2 /* MeViewController.h */,
@@ -7069,6 +7082,21 @@
 				821DB9D71D5DB64B00C882C2 /* JGLScoreSureViewController.m */,
 			);
 			path = "球童操作页";
+			sourceTree = "<group>";
+		};
+		8222F4991D7D637000627549 /* 建议与反馈 */ = {
+			isa = PBXGroup;
+			children = (
+				8222F49A1D7D67E700627549 /* JGLFeedbackViewController.h */,
+				8222F49B1D7D67E700627549 /* JGLFeedbackViewController.m */,
+				8222F4A01D7D777D00627549 /* JGLBallParkDataViewController.h */,
+				8222F4A11D7D777D00627549 /* JGLBallParkDataViewController.m */,
+				8222F4A31D7D77B800627549 /* JGLProductFaultViewController.h */,
+				8222F4A41D7D77B800627549 /* JGLProductFaultViewController.m */,
+				8222F49D1D7D771D00627549 /* JGLNewFuncTionViewController.h */,
+				8222F49E1D7D771D00627549 /* JGLNewFuncTionViewController.m */,
+			);
+			path = "建议与反馈";
 			sourceTree = "<group>";
 		};
 		822562671D2DFB8400ABA7F3 /* SDPhotoBrowser */ = {
@@ -8914,7 +8942,7 @@
 				TargetAttributes = {
 					36BFFD271BC76C8D005B3CE2 = {
 						CreatedOnToolsVersion = 6.3.2;
-						DevelopmentTeam = T8ML76W22A;
+						DevelopmentTeam = R269PG52XZ;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -9274,6 +9302,7 @@
 				20513BDB1CF7050A003233FB /* RSADataVerifier.m in Sources */,
 				F5E1BB8E1D6B006100414727 /* ZXQRCodeWriter.m in Sources */,
 				209B939C1D6D873F00A5BE10 /* JGHApplyCatoryPromCell.m in Sources */,
+				8222F4A21D7D777D00627549 /* JGLBallParkDataViewController.m in Sources */,
 				36BF01C91BC77ABE005B3CE2 /* YueMyBallTableViewCell.m in Sources */,
 				2012AD861D2BB1B200F70E40 /* JGDActvityPriziSetTableViewCell.m in Sources */,
 				3660E1DE1BFC64020033B4D7 /* HistoryViewController.m in Sources */,
@@ -9319,6 +9348,7 @@
 				36BF008D1BC772EF005B3CE2 /* MySetUpDateViewController.m in Sources */,
 				8205D6971D2BE68D00BC79E0 /* JGLWinnerShareModel.m in Sources */,
 				20F6A5DB1CF52C4F00DD9383 /* JGHHeaderLabelCell.m in Sources */,
+				8222F4A51D7D77B800627549 /* JGLProductFaultViewController.m in Sources */,
 				20BA612B1CDC99D0004B61F5 /* ALMoviePlayerController.m in Sources */,
 				F5E1BABB1D6B006100414727 /* ZXAztecSimpleToken.m in Sources */,
 				3660E1221BFC553A0033B4D7 /* TeamDetailViewController.m in Sources */,
@@ -9390,6 +9420,7 @@
 				F5AEF7361D41B98E009A8C34 /* JGLPlayerNumberTableViewCell.m in Sources */,
 				F5E1BAFE1D6B006100414727 /* ZXBinarizer.m in Sources */,
 				209B93A11D6E8DAC00A5BE10 /* JGHCostListCell.m in Sources */,
+				8222F49C1D7D67E700627549 /* JGLFeedbackViewController.m in Sources */,
 				821A130F1CED5F9C00694E49 /* JGLPhotoAlbumModel.m in Sources */,
 				20591C5F1D220EE0003271EC /* JGHTradRecordViewController.m in Sources */,
 				F5E1BB891D6B006100414727 /* ZXQRCodeMatrixUtil.m in Sources */,
@@ -9666,6 +9697,7 @@
 				36B9B59B1C3E004C0053B227 /* ProFileViewController.m in Sources */,
 				F5E1BB641D6B006100414727 /* ZXPDF417DecodedBitStreamParser.m in Sources */,
 				20591C6F1D221B0B003271EC /* JGHWithdrawDetailsCell.m in Sources */,
+				8222F49F1D7D771D00627549 /* JGLNewFuncTionViewController.m in Sources */,
 				2066E8811D5D64E900A3A2B8 /* JGHCabbieRewardViewController.m in Sources */,
 				F5E1BADD1D6B006100414727 /* ZXURIResultParser.m in Sources */,
 				F5EB44701C9957A7008ACD73 /* pinyin.m in Sources */,
@@ -10314,7 +10346,7 @@
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = bihuaxinxi.DagolfLa12;
+				PRODUCT_BUNDLE_IDENTIFIER = bihuaxinxi.DagolfLa22;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -10363,7 +10395,7 @@
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = bihuaxinxi.DagolfLa12;
+				PRODUCT_BUNDLE_IDENTIFIER = bihuaxinxi.DagolfLa22;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;

@@ -226,7 +226,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    _strProvince = @"全国";
     UIBarButtonItem *bar = [[UIBarButtonItem alloc] initWithTitle:@"创建球队" style:(UIBarButtonItemStylePlain) target:self action:@selector(creatTeam)];
     bar.tintColor = [UIColor whiteColor];
     self.navigationItem.rightBarButtonItem = bar;
@@ -304,10 +304,9 @@
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     [dict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"userId"] forKey:@"userKey"];
     if (![Helper isBlankString:_strProvince]) {
-        if ([_strProvince containsString:@"全国"] == NO) {
-            NSLog(@"%@", _strProvince);
+//        if ([_strProvince containsString:@"全国"] == NO) {
             [dict setObject:_strProvince forKey:@"province"];
-        }
+//        }
     }
     [dict setObject:[NSNumber numberWithInteger:_page] forKey:@"offset"];
     [[JsonHttp jsonHttp]httpRequest:@"team/getTeamList" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {

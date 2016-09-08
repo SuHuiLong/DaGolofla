@@ -94,18 +94,21 @@
     }
     else{
         [[ShowHUD showHUD]showToastWithText:@"请选择第一九洞" FromView:self.view];
+        return;
     }
     if (![Helper isBlankString:_strHole2]) {
         [dict setObject:_strHole2 forKey:@"region2"];
     }
     else{
         [[ShowHUD showHUD]showToastWithText:@"请选择第二九洞" FromView:self.view];
+        return;
     }
     if (![Helper isBlankString:_strDateBegin]) {
         [dict setObject:[NSString stringWithFormat:@"%@ 00:00:00",_strDateBegin] forKey:@"createTime"];
     }
     else{
         [[ShowHUD showHUD]showToastWithText:@"请选择打球时间" FromView:self.view];
+        return;
     }
     
     
