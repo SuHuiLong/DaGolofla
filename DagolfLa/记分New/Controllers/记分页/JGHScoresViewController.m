@@ -44,6 +44,10 @@
     NSNumber *_walletMonay;//红包金额
     
     NSInteger _cabbieFinishScore;//是否结束所有记分 1- 结束，0－不结束
+    
+    NSArray *_oneAreaArray;
+    
+    NSArray *_twoAreaArray;
 }
 
 @property (nonatomic, strong)NSMutableArray *userScoreArray;
@@ -87,6 +91,9 @@
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"bg_white"] forBarMetrics:UIBarMetricsDefault];
     [self.navigationController.navigationBar setBackgroundColor:[UIColor whiteColor]];
     _cabbieFinishScore = 0;//不结束
+    
+    _oneAreaArray = @[@"A 区", @"B 区"];
+    _twoAreaArray = @[@"C 区", @"D 区"];
     
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(noticePushScoresCtrl:) name:@"noticePushScores" object:nil];
     
@@ -382,6 +389,8 @@
         _scoresView = [[JGHScoresHoleView alloc]init];
         _scoresView.frame = CGRectMake(0, 0, screenWidth, (194 + self.userScoreArray.count * 60)*ProportionAdapter);
         _scoresView.dataArray = self.userScoreArray;
+        _scoresView.oneAreaArray = _oneAreaArray;
+        _scoresView.twoAreaArray = _twoAreaArray;
         _scoresView.curPage = _selectPage;
         [self.view addSubview:_scoresView];
         [_scoresView reloadScoreList];//更新UI位置

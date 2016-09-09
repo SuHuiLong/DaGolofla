@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="KGk-i7-Jjw" customClass="JGHTwoScoreAreaCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iMT-m9-Jm7">
+                        <rect key="frame" x="10" y="7" width="70" height="30"/>
+                        <state key="normal" title="可林斯A区">
+                            <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        </state>
+                        <connections>
+                            <action selector="areaNameBtn:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="cuD-VD-xfK"/>
+                        </connections>
+                    </button>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image=")-1" translatesAutoresizingMaskIntoConstraints="NO" id="9AG-bj-wdE">
+                        <rect key="frame" x="93" y="18.5" width="13" height="8"/>
+                    </imageView>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="iMT-m9-Jm7" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="Cec-zE-lmh"/>
+                    <constraint firstItem="9AG-bj-wdE" firstAttribute="leading" secondItem="iMT-m9-Jm7" secondAttribute="trailing" constant="13" id="Nq9-iz-qO2"/>
+                    <constraint firstItem="9AG-bj-wdE" firstAttribute="centerY" secondItem="iMT-m9-Jm7" secondAttribute="centerY" id="RAG-iQ-JG3"/>
+                    <constraint firstItem="iMT-m9-Jm7" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="oJj-pC-sgl"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="areaImageView" destination="9AG-bj-wdE" id="XmY-kW-Ub0"/>
+                <outlet property="areaImageViewLeft" destination="Nq9-iz-qO2" id="DzV-4G-7AS"/>
+                <outlet property="areaNameBtn" destination="iMT-m9-Jm7" id="u23-x8-48Y"/>
+                <outlet property="areaNameBtnLeft" destination="oJj-pC-sgl" id="fU9-yv-zjS"/>
+            </connections>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name=")-1" width="13" height="8"/>
+    </resources>
+</document>
