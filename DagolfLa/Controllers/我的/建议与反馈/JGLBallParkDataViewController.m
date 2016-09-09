@@ -10,10 +10,11 @@
 #import "UITool.h"
 
 #define TextViewDetail @"请描述一下您发现的问题"
-@interface JGLBallParkDataViewController ()<UITextViewDelegate>
+@interface JGLBallParkDataViewController ()<UITextViewDelegate,UITextFieldDelegate>
 {
     UIScrollView* _scrollView;
     UITextView* _textView;
+    UITextField* _textField;
     NSString* _str;
 }
 @end
@@ -23,7 +24,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.navigationController.title = @"球场纠错内容";
+    self.title = @"球场纠错内容";
     self.view.backgroundColor = [UITool colorWithHexString:@"#eeeeee" alpha:1];
     
     
@@ -50,8 +51,8 @@
     btn.frame = CGRectMake(0, 0, screenWidth, 58*ProportionAdapter);
     [_scrollView addSubview:btn];
     
-    UILabel* label = [[UILabel alloc]initWithFrame:CGRectMake(10*ProportionAdapter, 13*ProportionAdapter, screenWidth - 50*ProportionAdapter, 30*ProportionAdapter)];
-    label.font = [UIFont systemFontOfSize:14*ProportionAdapter];
+    UILabel* label = [[UILabel alloc]initWithFrame:CGRectMake(20*ProportionAdapter, 13*ProportionAdapter, screenWidth - 70*ProportionAdapter, 30*ProportionAdapter)];
+    label.font = [UIFont systemFontOfSize:15*ProportionAdapter];
     label.backgroundColor = [UIColor whiteColor];
     label.text = @" 选择纠错球场";
     if ([label.text isEqualToString:@" 选择纠错球场"] == YES) {
@@ -63,7 +64,7 @@
     
     [btn addSubview:label];
     
-    UIView* view = [[UIView alloc]initWithFrame:CGRectMake(screenWidth - 40*ProportionAdapter, 13*ProportionAdapter, 30*ProportionAdapter, 30*ProportionAdapter)];
+    UIView* view = [[UIView alloc]initWithFrame:CGRectMake(screenWidth - 50*ProportionAdapter, 13*ProportionAdapter, 30*ProportionAdapter, 30*ProportionAdapter)];
     view.backgroundColor = [UITool colorWithHexString:@"32b14d" alpha:1];
     [btn addSubview:view];
     
@@ -83,7 +84,7 @@
     [_scrollView addSubview:view];
     
     
-    _textView = [[UITextView alloc]initWithFrame:CGRectMake(10*ProportionAdapter, 17.5*ProportionAdapter, screenWidth - 20*ProportionAdapter, 75*ProportionAdapter)];
+    _textView = [[UITextView alloc]initWithFrame:CGRectMake(20*ProportionAdapter, 17.5*ProportionAdapter, screenWidth - 40*ProportionAdapter, 75*ProportionAdapter)];
     _textView.backgroundColor = [UIColor whiteColor];
     _textView.delegate = self;
     _textView.text = TextViewDetail;
@@ -130,25 +131,65 @@
 
 -(void)createPhoto
 {
-    UIView* view = [[UIView alloc]initWithFrame:CGRectMake(0, 165.5*ProportionAdapter, screenWidth, 102*ProportionAdapter)];
+    //165.5+102
+    UIView* view = [[UIView alloc]initWithFrame:CGRectMake(20*ProportionAdapter, 180*ProportionAdapter, screenWidth-40*ProportionAdapter, 102*ProportionAdapter)];
+    view.backgroundColor = [UIColor whiteColor];
     [_scrollView addSubview:view];
     
+
     
     UIButton* btn = [UIButton buttonWithType:UIButtonTypeCustom];
     btn.frame = CGRectMake(10*ProportionAdapter, 20*ProportionAdapter, 63*ProportionAdapter, 63*ProportionAdapter);
-    [btn setBackgroundImage:[UIImage imageNamed:@""] forState:UIControlStateNormal];
+    [btn setBackgroundImage:[UIImage imageNamed:@"addPIC"] forState:UIControlStateNormal];
     [view addSubview:btn];
+    
+    
+    UILabel* label = [[UILabel alloc]initWithFrame:CGRectMake(85*ProportionAdapter, 20*ProportionAdapter, screenWidth - 135*ProportionAdapter, 63*ProportionAdapter)];
+    label.font = [UIFont systemFontOfSize:15*ProportionAdapter];
+    label.textColor = [UITool colorWithHexString:@"a0a0a0" alpha:1];
+    label.numberOfLines = 2;
+    label.text = @"拍照上传球场记分卡，便于我们及时核对及更新相关数据。（选填）";
+    [view addSubview:label];
+    
+    UIView* viewLine = [[UIView alloc]initWithFrame:CGRectMake(0, 297*ProportionAdapter, screenWidth, 1*ProportionAdapter)];
+    viewLine.backgroundColor = [UITool colorWithHexString:@"dfdfdf" alpha:1];
+    [_scrollView addSubview:viewLine];
 }
 
 -(void)createPhoneNum
 {
+    UIView* view = [[UIView alloc]initWithFrame:CGRectMake(0, 297*ProportionAdapter, screenWidth, 45*ProportionAdapter)];
+    [_scrollView addSubview:view];
+    
+    _textField = [[UITextField alloc]initWithFrame:CGRectMake(20*ProportionAdapter, 15*ProportionAdapter, screenWidth - 40*ProportionAdapter, 30*ProportionAdapter)];
+    _textField.backgroundColor = [UIColor whiteColor];
+    _textField.delegate = self;
+    _textField.placeholder = @"请留下联系方式";
+    _textField.textColor = [UIColor blackColor];
+    _textField.font = [UIFont systemFontOfSize:15*ProportionAdapter];
+    [view addSubview:_textField];
     
 }
 
 -(void)createBtn
 {
+    UIButton* btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    btn.frame = CGRectMake(screenWidth/2 - 50*ProportionAdapter, 422*ProportionAdapter, 100*ProportionAdapter, 44*ProportionAdapter);
+    btn.backgroundColor = [UITool colorWithHexString:@"32b14d" alpha:1];
+    [self.view addSubview:btn];
+    [btn setTitle:@"提交" forState:UIControlStateNormal];
+    btn.layer.cornerRadius = 22*ProportionAdapter;
+    btn.layer.masksToBounds = YES;
+    btn.titleLabel.font = [UIFont systemFontOfSize:20*ProportionAdapter];
+    [self.view addSubview:btn];
+    [btn addTarget:self action:@selector(upDataClick) forControlEvents:UIControlEventTouchUpInside];
+}
+
+-(void)upDataClick
+{
     
 }
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

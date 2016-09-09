@@ -41,7 +41,8 @@
     NSMutableDictionary* _teeDictChoose;//记录选择的t台存放数组
     
     NSMutableDictionary *_dictPeo,*_dictFri,*_dictAdd;
-    NSString* _strHole1,* _strHole2;//九洞
+    NSMutableDictionary* _dictArea; //选择的分区
+    BOOL _isClickArea;//首次进入后则默认选择前两个区域，
     
 }
 @property (strong, nonatomic) UITableView* tableView;
@@ -58,7 +59,9 @@
     _dictFri       = [[NSMutableDictionary alloc]init];
     _dictAdd       = [[NSMutableDictionary alloc]init];
     _teeDictChoose = [[NSMutableDictionary alloc]init];
+    _dictArea      = [[NSMutableDictionary alloc]init];
     _isTee = NO;
+    _isClickArea   = NO;
     
     NSString* str = [Helper returnCurrentDateString];
     NSArray* arr = [str componentsSeparatedByString:@" "];
@@ -89,15 +92,15 @@
     [dict setObject:[NSNumber numberWithInteger:_ballId] forKey:@"ballKey"];
     [dict setObject:@0 forKey:@"srcKey"];//
     [dict setObject:@(0) forKey:@"srcType"];//活动传1，罗开创说的
-    if (![Helper isBlankString:_strHole1]) {
-        [dict setObject:_strHole1 forKey:@"region1"];
+    if (![Helper isBlankString:[_dictArea allValues][0]]) {
+        [dict setObject:[_dictArea allValues][0] forKey:@"region1"];
     }
     else{
         [[ShowHUD showHUD]showToastWithText:@"请选择第一九洞" FromView:self.view];
         return;
     }
-    if (![Helper isBlankString:_strHole2]) {
-        [dict setObject:_strHole2 forKey:@"region2"];
+    if (![Helper isBlankString:[_dictArea allValues][1]]) {
+        [dict setObject:[_dictArea allValues][1] forKey:@"region2"];
     }
     else{
         [[ShowHUD showHUD]showToastWithText:@"请选择第二九洞" FromView:self.view];
@@ -212,7 +215,7 @@
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 5;
+    return 4;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -229,18 +232,40 @@
         }
         return cell;
     }
-    else if (indexPath.section == 1 || indexPath.section == 2)
+    else if (indexPath.section == 1)
     {
         ScoreTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ScoreTableViewCell" forIndexPath:indexPath];
         
+        NSString *str = [_dictArea objectForKey:[NSNumber numberWithInteger:indexPath.row]];
+        if ([Helper isBlankString:str]) {
+            //            [cell.imageView setImage:[UIImage imageNamed:@"wuGou"] forState:UIControlStateNormal];
+            if (_isClickArea == NO) {
+                if (indexPath.row < 2) {
+                    cell.imgvState.image = [UIImage imageNamed:@"yigouxuan"];
+                    [_dictArea setObject:_dataBallArray[indexPath.section-1][indexPath.row] forKey:[NSNumber numberWithInteger:indexPath.row]];
+                    
+                }
+                else{
+                    cell.imgvState.image = [UIImage imageNamed:@"wuGou"];
+                }
+            }
+            else{
+                cell.imgvState.image = [UIImage imageNamed:@"wuGou"];
+            }
+            
+        }else{
+            
+            cell.imgvState.image = [UIImage imageNamed:@"yigouxuan"];
+        }
         NSArray *allValues = [_dataBallArray objectAtIndex:indexPath.section-1];
         //将数组显示至每行
         cell.textLabel.text = [allValues objectAtIndex:indexPath.row];
         cell.textLabel.font = [UIFont systemFontOfSize:15*ScreenWidth/375];
         cell.backgroundColor = [UIColor colorWithRed:0.93f green:0.93f blue:0.93f alpha:1.00f];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
     }
-    else if (indexPath.section == 3)
+    else if (indexPath.section == 2)
     {
         JGLPlayDateTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"JGLPlayDateTableViewCell" forIndexPath:indexPath];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -288,11 +313,6 @@
                 cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
                 cell.selectionStyle = UITableViewCellSelectionStyleNone;
                 
-                //                if (_teeDictChoose.count > indexPath.row) {
-                //                    cell.iconImgv.hidden = YES;
-                //                    cell.labelTee.text = @"请选择tee台";
-                //                }
-                //                else{
                 if (![Helper isBlankString:[_teeDictChoose objectForKey:[NSString stringWithFormat:@"%td",indexPath.row - 1]]]) {
                     cell.iconImgv.hidden = NO;
                     [cell showTee:_strTee];
@@ -301,16 +321,7 @@
                     cell.iconImgv.hidden = YES;
                     cell.labelTee.text = @"请选择tee台";
                 }
-                //                }
-                
-                //                if (![Helper isBlankString:_strTee]) {
-                //                    cell.iconImgv.hidden = NO;
-                //                    [cell showTee:_strTee];
-                //                }
-                //                else{
-                //                    cell.iconImgv.hidden = YES;
-                //                    cell.labelTee.text = @"请选择tee台";
-                //                }
+
                 cell.labelName.text = [_dictPeo allValues][indexPath.row-2];
                 return cell;
             }
@@ -328,8 +339,8 @@
 
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    if (section == 1 || section == 2) {
-        return 44* screenWidth / 375;
+    if (section == 1) {
+        return 0* screenWidth / 375;
     }
     else{
         return 10* screenWidth / 375;
@@ -340,7 +351,10 @@
     if (indexPath.section == 0) {
         return  60* screenWidth / 375;
     }
-    else if (indexPath.section == 4){
+    else if (indexPath.section == 1){
+        return _dataBallArray.count == 0 ? 0* screenWidth / 375 : 50* screenWidth / 375;
+    }
+    else if (indexPath.section == 3){
         return indexPath.row == 0 ? 44* screenWidth / 375 : 50* screenWidth / 375;
     }
     else{
@@ -351,121 +365,24 @@
 //每个区中有多少行
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (section == 1 || section == 2) {
-        if (_isOpen[section])
-        {
-            //取出字典中的所有值 一个数组中放着三个小数组
-            NSArray *allValues = [_dataBallArray objectAtIndex:section-1];
-            
-            //根据每个区 返回行数
-            return [allValues count];
+    if (section == 1) {
+        //取出字典中的所有值 一个数组中放着三个小数组
+        //根据每个区 返回行数
+        if (_dataBallArray.count != 0) {
+            return [_dataBallArray[0] count];
         }
-        else//如果不等于当前打开的区号 就是合闭状态 用返回0行来模拟出闭合状态
+        else{
             return 0;
+        }
     }
-    else if (section == 4)
+    else if (section == 3)
     {
-        return section == 4 ? 3 + _dictPeo.count : 1;
+        return section == 3 ? 3 + _dictPeo.count : 1;
     }
     else{
         return 1;
     }
 }
-
-#pragma mark -  表开合
-- (void)headerButtonClick:(id)sender
-{
-    ////NSLog(@"%@",_strBall);
-    if (_isTee == YES)  {
-        [_chooseView removeFromSuperview];
-        _isTee = NO;
-    }
-    if (![Helper isBlankString:_strBall]) {
-        
-        UIButton *button = (UIButton *)sender;
-        //根据button 获取区号
-        NSInteger section = button.tag - HEADER_BUTTON1_TAG;
-        
-        //改变BOOL数组中 该区的开合状态
-        //    BOOL isOpen = [[_openOrCloses objectAtIndex:section] boolValue];
-        //    [_openOrCloses replaceObjectAtIndex:section withObject:[NSNumber numberWithBool:!isOpen]];
-        _isOpen[section] = !_isOpen[section];
-        
-        //刷新表  表的相关代理方法会重新执行
-        //    [_tableView reloadData];
-        //    NSIndexSet 索引集合 非负整数
-        //刷新某些区
-        NSIndexSet *indexSet = [NSIndexSet indexSetWithIndex:section];
-        [_tableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationNone];
-        //刷新某些特定行
-        
-    }
-    else
-    {
-        ////NSLog(@"1");
-    }
-}
-
-
-
-
-
-//重设分区头的视图
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
-{
-    if (section == 1 || section == 2) {
-        UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 44*ScreenWidth/375)];
-        headerView.backgroundColor = [UIColor whiteColor];
-        
-        UIView* viewLine1 = [[UIView alloc]initWithFrame:CGRectMake(8*ScreenWidth/375, 43*ScreenWidth/375, ScreenWidth-16*ScreenWidth/375, 1*ScreenWidth/375)];
-        viewLine1.backgroundColor = [UIColor colorWithRed:0.86f green:0.86f blue:0.86f alpha:1.00f];
-        [headerView addSubview:viewLine1];
-        
-        UIButton* btn = [UIButton buttonWithType:UIButtonTypeCustom];
-        btn.backgroundColor = [UIColor clearColor];
-        btn.frame = CGRectMake(0, 0, ScreenWidth, 44*ScreenWidth/375);
-        [headerView addSubview:btn];
-        [btn addTarget:self action:@selector(headerButtonClick:) forControlEvents:UIControlEventTouchUpInside];
-        btn.tag = HEADER_BUTTON1_TAG +  section;
-        
-        UIButton *buttonJt = [UIButton buttonWithType:UIButtonTypeCustom];
-        //设置按钮的tag 让其与区号产生联系
-        buttonJt.tag = HEADER_BUTTON1_TAG +  section;
-        //旋转或转换 CGAffineTransformIdentity意为回归原位
-        buttonJt.transform = _isOpen[section]?CGAffineTransformMakeRotation(M_PI_2):CGAffineTransformIdentity;
-        if (_isOpen[section]) {
-            buttonJt.frame = CGRectMake(ScreenWidth-24*ScreenWidth/375, 16*ScreenWidth/375, 16*ScreenWidth/375, 12*ScreenWidth/375);
-        }
-        else
-        {
-            buttonJt.frame = CGRectMake(ScreenWidth-22*ScreenWidth/375, 14*ScreenWidth/375, 12*ScreenWidth/375, 16*ScreenWidth/375);
-        }
-        [buttonJt setBackgroundImage:[UIImage imageNamed:@"left_jt"] forState:UIControlStateNormal];
-        SEL a = @selector(headerButtonClick:);
-        [buttonJt addTarget:self action:a forControlEvents:UIControlEventTouchUpInside];
-        [headerView addSubview:buttonJt];
-        
-        UILabel *headerTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(10*ScreenWidth/375, 0, 60*ScreenWidth/375, 44*ScreenWidth/375)];
-        headerTitleLabel.textAlignment = NSTextAlignmentLeft;
-        NSArray* array = @[@"第一9洞",@"第二9洞"];
-        headerTitleLabel.text = array[section-1];
-        [headerView addSubview:headerTitleLabel];
-        headerTitleLabel.font = [UIFont systemFontOfSize:15*ScreenWidth/375];
-        
-        
-        UILabel* labelAreaDet = [[UILabel alloc]initWithFrame:CGRectMake(80*ScreenWidth/375, 0, ScreenWidth-115*ScreenWidth/375, 44*ScreenWidth/375)];
-        labelAreaDet.font = [UIFont systemFontOfSize:14*ScreenWidth/375];
-        labelAreaDet.textAlignment = NSTextAlignmentRight;
-        [headerView addSubview:labelAreaDet];
-        labelAreaDet.tag = 1234 +  section;
-        
-        return headerView;
-    }
-    else{
-        return nil;
-    }
-}
-
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -480,7 +397,6 @@
         ballVc.callback1=^(NSDictionary *dict, NSString *str){
             [_dataBallArray removeAllObjects];
             if (dict.count != 0) {
-                [_dataBallArray addObject:[dict objectForKey:@"ballAreas"]];
                 [_dataBallArray addObject:[dict objectForKey:@"ballAreas"]];
                 [_dataBallArray addObject:[dict objectForKey:@"tAll"]];
                 _strBallLogo = str;
@@ -500,59 +416,37 @@
             [_chooseView removeFromSuperview];
             _isTee = NO;
         }
-        UIButton *button = (UIButton *)[self.view viewWithTag:HEADER_BUTTON1_TAG + indexPath.section];
-        //根据button 获取区号
-        NSInteger section = button.tag - HEADER_BUTTON1_TAG;
-        
-        //改变BOOL数组中 该区的开合状态
-        //    BOOL isOpen = [[_openOrCloses objectAtIndex:section] boolValue];
-        //    [_openOrCloses replaceObjectAtIndex:section withObject:[NSNumber numberWithBool:!isOpen]];
-        _isOpen[section] = !_isOpen[section];
-        
-        //刷新表  表的相关代理方法会重新执行
-        //    [_tableView reloadData];
-        //    NSIndexSet 索引集合 非负整数
-        //刷新某些区
-        NSIndexSet *indexSet = [NSIndexSet indexSetWithIndex:section];
-        [_tableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationNone];
-        //刷新某些特定行
-        
-        UILabel* label = (UILabel *)[self.view viewWithTag:1234+section];
-        label.text = [NSString stringWithFormat:@"%@",_dataBallArray[indexPath.section-1][indexPath.row]];
-        _strHole1 = _dataBallArray[indexPath.section-1][indexPath.row];
-        
-    }
-    
-    else if (indexPath.section == 2)
-    {
-        if (_isTee == YES)  {
-            [_chooseView removeFromSuperview];
-            _isTee = NO;
+        NSString *str = [_dictArea objectForKey:[NSNumber numberWithInteger:indexPath.row]];
+        _isClickArea = YES;
+        if (_dictArea.count == 2) {
+            NSArray* arrNum = [_dictArea allKeys];
+            if (indexPath.row !=  [arrNum[0] integerValue] && indexPath.row !=  [arrNum[1] integerValue]) {
+                [[ShowHUD showHUD]showToastWithText:@"请先取消一项，再点选" FromView:self.view];
+            }
+            else{
+                if ([Helper isBlankString:str]) {
+                    [_dictArea setObject:_dataBallArray[indexPath.section-1][indexPath.row] forKey:[NSNumber numberWithInteger:indexPath.row]];
+                    
+                }else{
+                    [_dictArea removeObjectForKey:[NSNumber numberWithInteger:indexPath.row]];
+                }
+            }
+        }else{
+            if ([Helper isBlankString:str]) {
+                [_dictArea setObject:_dataBallArray[indexPath.section-1][indexPath.row] forKey:[NSNumber numberWithInteger:indexPath.row]];
+            }else{
+                [_dictArea removeObjectForKey:[NSNumber numberWithInteger:indexPath.row]];
+            }
         }
-        UIButton *button = (UIButton *)[self.view viewWithTag:HEADER_BUTTON1_TAG + indexPath.section];
-        //根据button 获取区号
-        NSInteger section = button.tag - HEADER_BUTTON1_TAG;
         
-        //改变BOOL数组中 该区的开合状态
-        //    BOOL isOpen = [[_openOrCloses objectAtIndex:section] boolValue];
-        //    [_openOrCloses replaceObjectAtIndex:section withObject:[NSNumber numberWithBool:!isOpen]];
-        _isOpen[section] = !_isOpen[section];
-        
-        //刷新表  表的相关代理方法会重新执行
-        //    [_tableView reloadData];
-        //    NSIndexSet 索引集合 非负整数
-        //刷新某些区
-        NSIndexSet *indexSet = [NSIndexSet indexSetWithIndex:section];
-        [_tableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationNone];
-        //刷新某些特定行
-        //    NSArray *indexPaths = @[[NSIndexPath indexPathForRow:1 inSection:0], [NSIndexPath indexPathForRow:1 inSection:1]];
-        //    [_tableView reloadRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
-        UILabel* label = (UILabel *)[self.view viewWithTag:1234+section];
-        label.text = [NSString stringWithFormat:@"%@",_dataBallArray[indexPath.section-1][indexPath.row]];
-        _strHole2 = _dataBallArray[indexPath.section-1][indexPath.row];
+        NSIndexPath *indexPath_1=[NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section];
+        NSArray *indexArray=[NSArray arrayWithObject:indexPath_1];
+        [_tableView reloadRowsAtIndexPaths:indexArray withRowAnimation:UITableViewRowAnimationAutomatic];
         
     }
-    else if (indexPath.section == 3)
+
+
+    else if (indexPath.section == 2)
     {
         if (_isTee == YES)  {
             [_chooseView removeFromSuperview];
@@ -562,7 +456,7 @@
         dateVc.typeIndex = @1;
         [dateVc setCallback:^(NSString *dateStr, NSString *dateWeek, NSString *str) {
             _strDateBegin = dateStr;
-            NSIndexSet *indexSet = [NSIndexSet indexSetWithIndex:3];
+            NSIndexSet *indexSet = [NSIndexSet indexSetWithIndex:2];
             [_tableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationNone];
         }];
         [self.navigationController pushViewController:dateVc animated:YES];
@@ -573,7 +467,7 @@
             if (![Helper isBlankString:_strBall]) {
                 if (_isTee == NO) {
                     JGLPlayerNameTableViewCell* cell = [tableView cellForRowAtIndexPath:indexPath];
-                    _chooseView = [[JGLTeeChooseView alloc]initWithFrame:CGRectMake(screenWidth - 120*screenWidth/375,  cell.frame.origin.y - [_dataBallArray[2] count]* 40*screenWidth/375, 100*screenWidth/375, [_dataBallArray[2] count]* 40*screenWidth/375) withArray:_dataBallArray[2]];
+                    _chooseView = [[JGLTeeChooseView alloc]initWithFrame:CGRectMake(screenWidth - 120*screenWidth/375,  cell.frame.origin.y - [_dataBallArray[1] count]* 40*screenWidth/375, 100*screenWidth/375, [_dataBallArray[1] count]* 40*screenWidth/375) withArray:_dataBallArray[1]];
                     [tableView addSubview:_chooseView];
                     _chooseView.blockTeeName = ^(NSString *strT){
                         _strTee = strT;
@@ -581,7 +475,7 @@
                         [_teeDictChoose setObject:_strTee forKey:[NSString stringWithFormat:@"%td",indexPath.row - 1]];
                         [_chooseView removeFromSuperview];
                         _isTee = NO;
-                        NSIndexPath *indexPath_1=[NSIndexPath indexPathForRow:indexPath.row inSection:4];
+                        NSIndexPath *indexPath_1=[NSIndexPath indexPathForRow:indexPath.row inSection:3];
                         NSArray *indexArray=[NSArray arrayWithObject:indexPath_1];
                         [_tableView reloadRowsAtIndexPaths:indexArray withRowAnimation:UITableViewRowAnimationAutomatic];
                     };
@@ -617,14 +511,14 @@
                     if (![Helper isBlankString:_strBall]) {
                         if (_isTee == NO) {
                             JGLPlayerNameTableViewCell* cell = [tableView cellForRowAtIndexPath:indexPath];
-                            _chooseView = [[JGLTeeChooseView alloc]initWithFrame:CGRectMake(screenWidth - 120*screenWidth/375,  cell.frame.origin.y - [_dataBallArray[2] count]* 40*screenWidth/375, 100*screenWidth/375, [_dataBallArray[2] count]* 40*screenWidth/375) withArray:_dataBallArray[2]];
+                            _chooseView = [[JGLTeeChooseView alloc]initWithFrame:CGRectMake(screenWidth - 120*screenWidth/375,  cell.frame.origin.y - [_dataBallArray[1] count]* 40*screenWidth/375, 100*screenWidth/375, [_dataBallArray[1] count]* 40*screenWidth/375) withArray:_dataBallArray[1]];
                             [tableView addSubview:_chooseView];
                             _chooseView.blockTeeName = ^(NSString *strT){
                                 _strTee = strT;
                                 [_teeDictChoose setObject:_strTee forKey:[NSString stringWithFormat:@"%td",indexPath.row - 1]];
                                 [_chooseView removeFromSuperview];
                                 _isTee = NO;
-                                NSIndexPath *indexPath_1=[NSIndexPath indexPathForRow:indexPath.row inSection:4];
+                                NSIndexPath *indexPath_1=[NSIndexPath indexPathForRow:indexPath.row inSection:3];
                                 NSArray *indexArray=[NSArray arrayWithObject:indexPath_1];
                                 [_tableView reloadRowsAtIndexPaths:indexArray withRowAnimation:UITableViewRowAnimationAutomatic];
                             };

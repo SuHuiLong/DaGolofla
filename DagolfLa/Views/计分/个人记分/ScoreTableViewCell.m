@@ -21,13 +21,9 @@
         _labelTitle = [[UILabel alloc]initWithFrame:CGRectMake(8*ScreenWidth/375, 12*ScreenWidth/375, 100*ScreenWidth/375, 20*ScreenWidth/375)];
         _labelTitle.font = [UIFont systemFontOfSize:15*ScreenWidth/375];
         [self.contentView addSubview:_labelTitle];
-       
         
-        _viewLine = [[UIView alloc]initWithFrame:CGRectMake(8*ScreenWidth/375, 49*ScreenWidth/375, ScreenWidth-16*ScreenWidth/375, 1*ScreenWidth/375)];
-        _viewLine.backgroundColor = [UIColor lightGrayColor];
-        [self.contentView addSubview:_viewLine];
-        
-        
+        _imgvState = [[UIImageView alloc]initWithFrame:CGRectMake(screenWidth - 50*ScreenWidth/375, 10*ScreenWidth/375, 30*ScreenWidth/375, 30*ScreenWidth/375)];
+        [self addSubview:_imgvState];
     }
     return self;
 }

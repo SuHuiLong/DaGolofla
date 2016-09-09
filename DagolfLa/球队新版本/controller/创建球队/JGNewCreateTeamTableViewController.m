@@ -67,7 +67,7 @@ static CGFloat ImageHeight  = 210.0;
         self.titleField.text = [self.detailDic objectForKey:@"name"];
     }
     if (self.detailDic) {
-        self.paraDic = self.detailDic;
+        self.paraDic = [self.detailDic mutableCopy];
     }
     
     //    _wasKeyboardManagerEnabled = [[IQKeyboardManager sharedManager] isEnabled];
@@ -321,7 +321,7 @@ static CGFloat ImageHeight  = 210.0;
     }else{
         
         
-        if (!self.titleField.text || ([self.titleField.text length] == 0)) {
+        if ([Helper isBlankString:self.titleField.text] ) {
             //    if ([[self.paraDic objectForKey:@"name"] length] > 0) {
             [Helper alertViewNoHaveCancleWithTitle:@"请填写球队名称" withBlock:^(UIAlertController *alertView) {
                 [self.navigationController presentViewController:alertView animated:YES completion:nil];
