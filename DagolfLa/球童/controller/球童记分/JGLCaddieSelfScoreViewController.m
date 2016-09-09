@@ -495,10 +495,11 @@
             if (indexPath.row > 0) {
                 if (indexPath.row  == _dictPeo.count + 2) {
                     JGLCaddieSelfAddPlayerViewController* addVc = [[JGLCaddieSelfAddPlayerViewController alloc]init];
-                    addVc.blockSurePlayer = ^(NSMutableDictionary *dict,NSMutableDictionary* dict1,NSMutableDictionary* dict2){
+                    addVc.blockSurePlayer = ^(NSMutableDictionary *dict){
                         _dictPeo = dict;
-                        NSIndexSet *indexSet=[[NSIndexSet alloc]initWithIndex:4];
-                        [_tableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationAutomatic];
+//                        NSIndexSet *indexSet=[[NSIndexSet alloc]initWithIndex:4];
+//                        [selfW.tableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationAutomatic];
+                        [_tableView reloadData];
                     };
                     //                addVc.dictFin = _dictPeo;
                     addVc.dictPeople = _dictPeo;

@@ -94,5 +94,5 @@
 
 @property (nonatomic, strong) NSString* awardedInfo;
 
-
+@property (nonatomic, strong) NSString* costName;
 @end

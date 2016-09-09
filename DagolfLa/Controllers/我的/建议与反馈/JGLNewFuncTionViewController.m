@@ -8,6 +8,7 @@
 
 #import "JGLNewFuncTionViewController.h"
 #import "UITool.h"
+#import "JGLWriteReplyViewController.h"
 @interface JGLNewFuncTionViewController ()<UITextViewDelegate>
 {
     UITextView* _textView;
@@ -99,7 +100,11 @@
     
     [self.view endEditing:YES];
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-//    [dict setObject:DEFAULF_USERID forKey:@"userKey"];
+    [dict setObject:DEFAULF_USERID forKey:@"userKey"];
+    if (![Helper isBlankString:[[NSUserDefaults standardUserDefaults] objectForKey:@"mobile"]]) {
+        [dict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"mobile"] forKey:@"userMobile"];
+    }
+    
     [dict setObject:@2 forKey:@"type"];//意见
     if ([Helper isBlankString:_textView.text] || [_textView.text isEqualToString:@"请针对我们的产品给出您宝贵的意见"] == YES) {
         [[ShowHUD showHUD]showToastWithText:@"请填写您宝贵的意见再进行提交，谢谢！" FromView:self.view];
@@ -113,9 +118,18 @@
     }
     
     [[JsonHttp jsonHttp]httpRequestHaveSpaceWithMD5:@"feedback/createFeedback" JsonKey:@"feedBack" withData:dict failedBlock:^(id errType) {
-        
+        btn.userInteractionEnabled = YES;
+        btn.backgroundColor = [UITool colorWithHexString:@"32b14d" alpha:1];
     } completionBlock:^(id data) {
-        
+        btn.userInteractionEnabled = YES;
+        btn.backgroundColor = [UITool colorWithHexString:@"32b14d" alpha:1];
+        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+            JGLWriteReplyViewController* reVc = [[JGLWriteReplyViewController alloc]init];
+            [self.navigationController pushViewController:reVc animated:YES];
+        }
+        else{
+            [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+        }
     }];
     
 }
