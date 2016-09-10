@@ -910,6 +910,7 @@
 		F543ACCA1CF476D400C6B111 /* JGNewCreateTeamTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F543ACC91CF476D400C6B111 /* JGNewCreateTeamTableViewController.m */; };
 		F54CC1831D83C75700A194F2 /* JGDAlmostStlyleSetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F54CC1821D83C75700A194F2 /* JGDAlmostStlyleSetViewController.m */; };
 		F54CC1861D83FA6800A194F2 /* JGDAlmostSetTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F54CC1851D83FA6800A194F2 /* JGDAlmostSetTableViewCell.m */; };
+		F54CC18A1D8428CE00A194F2 /* JGLWriteReplyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F54CC1891D8428CE00A194F2 /* JGLWriteReplyViewController.m */; };
 		F554266E1D224A2A00233B20 /* JGDSetPayPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F554266D1D224A2A00233B20 /* JGDSetPayPasswordViewController.m */; };
 		F55426721D22533300233B20 /* JGDSetPayPasswordTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F55426711D22533300233B20 /* JGDSetPayPasswordTableViewCell.m */; };
 		F55426751D225E6A00233B20 /* JGDSubMitPayPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F55426741D225E6A00233B20 /* JGDSubMitPayPasswordViewController.m */; };
@@ -2909,6 +2910,8 @@
 		F54CC1821D83C75700A194F2 /* JGDAlmostStlyleSetViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGDAlmostStlyleSetViewController.m; sourceTree = "<group>"; };
 		F54CC1841D83FA6800A194F2 /* JGDAlmostSetTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGDAlmostSetTableViewCell.h; sourceTree = "<group>"; };
 		F54CC1851D83FA6800A194F2 /* JGDAlmostSetTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGDAlmostSetTableViewCell.m; sourceTree = "<group>"; };
+		F54CC1881D8428CE00A194F2 /* JGLWriteReplyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGLWriteReplyViewController.h; sourceTree = "<group>"; };
+		F54CC1891D8428CE00A194F2 /* JGLWriteReplyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGLWriteReplyViewController.m; sourceTree = "<group>"; };
 		F554266C1D224A2A00233B20 /* JGDSetPayPasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGDSetPayPasswordViewController.h; sourceTree = "<group>"; };
 		F554266D1D224A2A00233B20 /* JGDSetPayPasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGDSetPayPasswordViewController.m; sourceTree = "<group>"; };
 		F55426701D22533300233B20 /* JGDSetPayPasswordTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGDSetPayPasswordTableViewCell.h; sourceTree = "<group>"; };
@@ -7124,6 +7127,8 @@
 		8222F4991D7D637000627549 /* 建议与反馈 */ = {
 			isa = PBXGroup;
 			children = (
+				F54CC1881D8428CE00A194F2 /* JGLWriteReplyViewController.h */,
+				F54CC1891D8428CE00A194F2 /* JGLWriteReplyViewController.m */,
 				8222F49A1D7D67E700627549 /* JGLFeedbackViewController.h */,
 				8222F49B1D7D67E700627549 /* JGLFeedbackViewController.m */,
 				8222F4A01D7D777D00627549 /* JGLBallParkDataViewController.h */,
@@ -9448,6 +9453,7 @@
 				F55426721D22533300233B20 /* JGDSetPayPasswordTableViewCell.m in Sources */,
 				36DE28DB1C1EA39F008FA24D /* RewardWaitViewController.m in Sources */,
 				3660E19E1BFC573C0033B4D7 /* MineTeamManCell.m in Sources */,
+				F54CC18A1D8428CE00A194F2 /* JGLWriteReplyViewController.m in Sources */,
 				2012AD841D2BB1B200F70E40 /* JGHChooseAwardCell.m in Sources */,
 				F5E1BB341D6B006100414727 /* ZXRSSExpandedDecodedNumeric.m in Sources */,
 				36E300FB1C3FF3F9005C3F08 /* UIScrollView+MJExtension.m in Sources */,
