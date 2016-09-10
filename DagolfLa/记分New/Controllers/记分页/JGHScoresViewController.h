@@ -21,4 +21,7 @@
 
 //@property (strong, nonatomic) void (^refreshBlock)();
 
+@property (nonatomic, assign)NSInteger switchMode;// 0- 总；1- 差
+
+
 @end

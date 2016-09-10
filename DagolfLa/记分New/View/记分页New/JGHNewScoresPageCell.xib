@@ -57,19 +57,19 @@
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lke-UL-I3w">
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lke-UL-I3w">
                         <rect key="frame" x="22" y="139" width="50" height="52"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="50" id="qVJ-B2-Be1"/>
                         </constraints>
-                        <state key="normal" backgroundImage="noballG"/>
+                        <state key="normal" image="poorFairwayYES"/>
                         <connections>
                             <action selector="fairwayBtn:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="eSR-gp-mAT"/>
                         </connections>
                     </button>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fFp-ar-N5S">
-                        <rect key="frame" x="22" y="191" width="50" height="51.5"/>
-                        <state key="normal" backgroundImage="noballL"/>
+                        <rect key="frame" x="22" y="191" width="50" height="52"/>
+                        <state key="normal" image="poorFairwayNO"/>
                         <connections>
                             <action selector="noFairwayBtn:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="G61-NC-3UY"/>
                         </connections>
@@ -98,32 +98,36 @@
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <button opaque="NO" tag="50" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eBr-7C-g5d">
+                    <button opaque="NO" tag="50" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eBr-7C-g5d">
                         <rect key="frame" x="204" y="95" width="61" height="51"/>
+                        <state key="normal" image="poorScoreJian"/>
                         <connections>
                             <action selector="pushRedBtn:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="uu5-Ax-0JF"/>
                         </connections>
                     </button>
-                    <button opaque="NO" tag="60" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TK7-wI-V2n">
+                    <button opaque="NO" tag="60" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TK7-wI-V2n">
                         <rect key="frame" x="265" y="95" width="61" height="51"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="51" id="JHQ-tq-Wly"/>
                         </constraints>
+                        <state key="normal" image="poorScoreJia"/>
                         <connections>
                             <action selector="pushAddBtn:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="Vah-4i-Yxr"/>
                         </connections>
                     </button>
-                    <button opaque="NO" tag="51" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dAL-uK-KXD">
+                    <button opaque="NO" tag="51" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dAL-uK-KXD">
                         <rect key="frame" x="204" y="194" width="61" height="51"/>
+                        <state key="normal" image="poorScoreJian"/>
                         <connections>
                             <action selector="rodRedBtn:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="vTV-B8-Zn6"/>
                         </connections>
                     </button>
-                    <button opaque="NO" tag="61" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yDD-yl-iKs">
+                    <button opaque="NO" tag="61" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yDD-yl-iKs">
                         <rect key="frame" x="265" y="194" width="61" height="51"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="51" id="nwg-8Y-kty"/>
                         </constraints>
+                        <state key="normal" image="poorScoreJia"/>
                         <connections>
                             <action selector="rodAddBtn:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="PkU-yX-QHD"/>
                         </connections>
@@ -228,7 +232,9 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="noballG" width="36" height="31"/>
-        <image name="noballL" width="36" height="31"/>
+        <image name="poorFairwayNO" width="50" height="50"/>
+        <image name="poorFairwayYES" width="50" height="50"/>
+        <image name="poorScoreJia" width="70" height="50"/>
+        <image name="poorScoreJian" width="70" height="50"/>
     </resources>
 </document>

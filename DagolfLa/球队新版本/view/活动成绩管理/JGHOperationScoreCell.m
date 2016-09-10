@@ -81,7 +81,7 @@
 }
 - (IBAction)scoreListBtnClick:(UIButton *)sender {
     if (self.delegate) {
-        [self.delegate scoreListBtn];
+        [self.delegate scoreListBtn:sender];
     }
 }
 - (IBAction)redScoreBtnClick:(UIButton *)sender {

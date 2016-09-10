@@ -47,13 +47,32 @@
 @property (weak, nonatomic) IBOutlet UIButton *nine;
 - (IBAction)nineBtnClick:(UIButton *)sender;
 
+//@property (strong, nonatomic)UILabel *zeroLable;
+@property (strong, nonatomic)UILabel *oneLable;
+@property (strong, nonatomic)UILabel *twoLable;
+@property (strong, nonatomic)UILabel *threeLable;
+@property (strong, nonatomic)UILabel *fourLable;
+@property (strong, nonatomic)UILabel *fiveLable;
+@property (strong, nonatomic)UILabel *sixLable;
+@property (strong, nonatomic)UILabel *sevenLable;
+@property (strong, nonatomic)UILabel *eightLable;
+@property (strong, nonatomic)UILabel *nineLable;
+
 #pragma mark -- 设置颜色
 - (void)configAllViewBgColor:(NSString *)colorString andCellTag:(NSInteger)tag;
-
+- (void)configOneToNine:(NSArray *)array andUserName:(NSString *)userName;//标准杆
+- (void)configNineToEighteenth:(NSArray *)array andUserName:(NSString *)userName;//biao
+//总杆模式
 - (void)configArray:(NSArray *)array;
 
-- (void)configOneToNine:(NSArray *)array andUserName:(NSString *)userName;
+- (void)configOneToNine:(NSArray *)array andUserName:(NSString *)userName andStandradArray:(NSArray *)standradArray;//计算杆的属性
 
-- (void)configNineToEighteenth:(NSArray *)array andUserName:(NSString *)userName;
+- (void)configNineToEighteenth:(NSArray *)array andUserName:(NSString *)userName andStandradArray:(NSArray *)standradArray;//计算杆的属性
+
+//差杆模式
+- (void)configPoorOneToNine:(NSArray *)array andUserName:(NSString *)userName andStandradArray:(NSArray *)standradArray;
+
+- (void)configPoorNineToEighteenth:(NSArray *)array andUserName:(NSString *)userName andStandradArray:(NSArray *)standradArray;//计算杆的属性
+
 
 @end

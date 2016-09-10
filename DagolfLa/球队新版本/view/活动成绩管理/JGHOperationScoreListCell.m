@@ -8,8 +8,10 @@
 
 #import "JGHOperationScoreListCell.h"
 #import "JGHOperScoreBtnListCell.h"
+#import "JGHOperScoreHeaderCell.h"
 
 static NSString *const JGHOperScoreBtnListCellIdentifier = @"JGHOperScoreBtnListCell";
+static NSString *const JGHOperScoreHeaderCellIdentifier = @"JGHOperScoreHeaderCell";
 
 @interface JGHOperationScoreListCell ()<JGHOperScoreBtnListCellDelegate>
 
@@ -42,32 +44,42 @@ static NSString *const JGHOperScoreBtnListCellIdentifier = @"JGHOperScoreBtnList
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-//    JGHOperScoreBtnListCell *tranCell = [tableView dequeueReusableCellWithIdentifier:JGHOperScoreBtnListCellIdentifier];
-    
-    JGHOperScoreBtnListCell * tranCell = [tableView dequeueReusableCellWithIdentifier:JGHOperScoreBtnListCellIdentifier];
-    if (!tranCell) {
-        tranCell = [[[NSBundle mainBundle]loadNibNamed:@"JGHOperScoreBtnListCell" owner:self options:nil]lastObject];
-    }
-    
-    tranCell.selectionStyle = UITableViewCellSelectionStyleNone;
-    
-    tranCell.delegate = self;
-    
-    tranCell.oneBtn.tag = 100 +indexPath.section;
-    tranCell.twoBtn.tag = 200 +indexPath.section;
-    tranCell.threeBtn.tag = 300 +indexPath.section;
-    tranCell.fourBtn.tag = 400 +indexPath.section;
-    NSLog(@"section == %td", indexPath.section);
-    NSLog(@"row == %td", indexPath.row);
     if (indexPath.section == 0) {
-        [tranCell confgiTitleString];
-    }else{
-        [tranCell configIndex:indexPath.section andOneHoel:[_poleArray[indexPath.section -1] integerValue] andTwoHole:[_poleArray[indexPath.section +8] integerValue]];
+        JGHOperScoreHeaderCell * tranCell = [tableView dequeueReusableCellWithIdentifier:JGHOperScoreHeaderCellIdentifier];
+        if (!tranCell) {
+            tranCell = [[[NSBundle mainBundle]loadNibNamed:@"JGHOperScoreHeaderCell" owner:self options:nil]lastObject];
+        }
+        
+        [tranCell configJGHOperScoreHeaderCell:_region1 andregion2:_region1];
+        tranCell.selectionStyle = UITableViewCellSelectionStyleNone;
+        
+        return tranCell;
+    }else {
+        JGHOperScoreBtnListCell * tranCell = [tableView dequeueReusableCellWithIdentifier:JGHOperScoreBtnListCellIdentifier];
+        if (!tranCell) {
+            tranCell = [[[NSBundle mainBundle]loadNibNamed:@"JGHOperScoreBtnListCell" owner:self options:nil]lastObject];
+        }
+        
+        tranCell.selectionStyle = UITableViewCellSelectionStyleNone;
+        
+        tranCell.delegate = self;
+        
+        tranCell.oneBtn.tag = 100 +indexPath.section;
+        tranCell.twoBtn.tag = 200 +indexPath.section;
+        tranCell.threeBtn.tag = 300 +indexPath.section;
+        tranCell.fourBtn.tag = 400 +indexPath.section;
+        NSLog(@"section == %td", indexPath.section);
+        NSLog(@"row == %td", indexPath.row);
+        
+        if (indexPath.section == 1){
+            [tranCell confgiTitleString];
+        }else{
+            [tranCell configIndex:indexPath.section andOneHoel:[_poleArray[indexPath.section -2] integerValue] andTwoHole:[_poleArray[indexPath.section +7] integerValue]];
+        }
+        
+        tranCell.selectionStyle = UITableViewCellSelectionStyleNone;
+        return tranCell;
     }
-    
-    tranCell.selectionStyle = UITableViewCellSelectionStyleNone;
-    
-    return tranCell;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{

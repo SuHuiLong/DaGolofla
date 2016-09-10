@@ -45,4 +45,6 @@
 
 + (NSString *)getTeamActivityCostListUserKey:(NSInteger)userKey andActivityKey:(NSInteger)activityKey;
 
++ (NSString *)getHoleNameAndPolesBallKey:(NSInteger)ballKey andArea:(NSString *)area;
+
 @end

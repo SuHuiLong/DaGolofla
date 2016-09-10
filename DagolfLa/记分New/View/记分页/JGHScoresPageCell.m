@@ -145,7 +145,7 @@
     
     if ([[model.poleNumber objectAtIndex:index] integerValue] == -1) {
         self.poleValue.text = [NSString stringWithFormat:@"%@", [model.standardlever objectAtIndex:index]];
-        self.poleValue.font = [UIFont systemFontOfSize:20*ProportionAdapter];
+        self.poleValue.font = [UIFont systemFontOfSize:25 *ProportionAdapter];
         self.poleValue.textColor = [UIColor lightGrayColor];
     }else{
         self.poleValue.text = [NSString stringWithFormat:@"%@", [model.poleNumber objectAtIndex:index]];
@@ -155,7 +155,7 @@
     
     if ([[model.pushrod objectAtIndex:index] integerValue] == -1) {
         self.pushPoleValue.text = @"2";
-        self.pushPoleValue.font = [UIFont systemFontOfSize:20*ProportionAdapter];
+        self.pushPoleValue.font = [UIFont systemFontOfSize:25*ProportionAdapter];
         self.pushPoleValue.textColor = [UIColor lightGrayColor];
     }else{
         self.pushPoleValue.text = [NSString stringWithFormat:@"%@", [model.pushrod objectAtIndex:index]];
@@ -178,12 +178,103 @@
     }
 }
 
+- (void)configPoorJGHScoreListModel:(JGHScoreListModel *)model andIndex:(NSInteger)index{
+    //standardlever  总差杆数
+    NSInteger standardCount = 0;
+    for (int i=0; i<model.poleNumber.count; i++) {
+        NSInteger pole = [[model.poleNumber objectAtIndex:i] integerValue];
+        NSInteger standard = [[model.standardlever objectAtIndex:i] integerValue];
+        NSLog(@"pole == %td", standard);
+        if (pole != -1) {
+            standardCount += (pole - standard);
+        }
+        
+        NSLog(@"poleCount == %td", standardCount);
+    }
+    if (standardCount == 0) {
+        self.totalPoleValue.text = @"0";
+    }else if (standardCount < 0){
+        self.totalPoleValue.text = [NSString stringWithFormat:@"%td", standardCount];
+    }else{
+        self.totalPoleValue.text = [NSString stringWithFormat:@"+%td", standardCount];
+    }
+    
+    //总推杆
+    NSInteger totalPoleCount = 0;
+    for (int i=0; i<model.pushrod.count; i++) {
+        NSInteger pole = [[model.pushrod objectAtIndex:i] integerValue];
+        NSLog(@"pole == %td", pole);
+        if (pole != -1) {
+            totalPoleCount += pole;
+        }
+        
+        NSLog(@"totalPoleCount == %td", totalPoleCount);
+    }
+    self.totalPushValue.text = [NSString stringWithFormat:@"%td", totalPoleCount];
+    
+    //差杆
+    if ([[model.poleNumber objectAtIndex:index] integerValue] == -1) {
+        self.poleValue.text = @"0";
+        self.poleValue.font = [UIFont systemFontOfSize:25*ProportionAdapter];
+        self.poleValue.textColor = [UIColor lightGrayColor];
+    }else{
+        if ([[model.poleNumber objectAtIndex:index] integerValue] == 0) {
+            self.poleValue.text = @"0";
+        }else{
+            self.poleValue.text = [NSString stringWithFormat:@"%td", ([[model.poleNumber objectAtIndex:index] integerValue] - [[model.standardlever objectAtIndex:index] integerValue])];
+        }
+        
+        self.poleValue.font = [UIFont systemFontOfSize:25*ProportionAdapter];
+        self.poleValue.textColor = [UIColor blackColor];
+    }
+    
+    if ([[model.pushrod objectAtIndex:index] integerValue] == -1) {
+        self.pushPoleValue.text = @"0";
+        self.pushPoleValue.font = [UIFont systemFontOfSize:25*ProportionAdapter];
+        self.pushPoleValue.textColor = [UIColor lightGrayColor];
+    }else{
+        self.pushPoleValue.text = [NSString stringWithFormat:@"%@", [model.pushrod objectAtIndex:index]];
+        self.pushPoleValue.font = [UIFont systemFontOfSize:25*ProportionAdapter];
+        self.pushPoleValue.textColor = [UIColor blackColor];
+    }
+    
+    self.userName.text = model.userName;
+    
+    //是否上球道
+    if ([[model.onthefairway objectAtIndex:index] integerValue] == 1){
+        [self.upperTrackBtn setBackgroundImage:[UIImage imageNamed:@"onballG"] forState:UIControlStateNormal];
+        [self.upperTrackNoBtn setBackgroundImage:[UIImage imageNamed:@"noballL"] forState:UIControlStateNormal];
+    }else if ([[model.onthefairway objectAtIndex:index] integerValue] == 0){
+        [self.upperTrackBtn setBackgroundImage:[UIImage imageNamed:@"onballL"] forState:UIControlStateNormal];
+        [self.upperTrackNoBtn setBackgroundImage:[UIImage imageNamed:@"noballG"] forState:UIControlStateNormal];
+    }else{
+        [self.upperTrackBtn setBackgroundImage:[UIImage imageNamed:@"onballL"] forState:UIControlStateNormal];
+        [self.upperTrackNoBtn setBackgroundImage:[UIImage imageNamed:@"noballL"] forState:UIControlStateNormal];
+    }
+    /*
+    if ([[model.onthefairway objectAtIndex:index] integerValue] == 1){
+        [self.upperTrackBtn setBackgroundImage:[UIImage imageNamed:@"poorFairwayYESLight"] forState:UIControlStateNormal];
+        [self.upperTrackNoBtn setBackgroundImage:[UIImage imageNamed:@"poorFairwayNO"] forState:UIControlStateNormal];
+    }else if ([[model.onthefairway objectAtIndex:index] integerValue] == 0){
+        [self.upperTrackBtn setBackgroundImage:[UIImage imageNamed:@"poorFairwayYES"] forState:UIControlStateNormal];
+        [self.upperTrackNoBtn setBackgroundImage:[UIImage imageNamed:@"poorFairwayNOLight"] forState:UIControlStateNormal];
+    }else{
+        [self.upperTrackBtn setBackgroundImage:[UIImage imageNamed:@"poorFairwayYES"] forState:UIControlStateNormal];
+        [self.upperTrackNoBtn setBackgroundImage:[UIImage imageNamed:@"poorFairwayNO"] forState:UIControlStateNormal];
+    }
+     */
+}
+
 - (void)configTotalPoleViewTitle{
+    self.totalPole.text = @"";
+    self.totalPromLabel.text = @"";
     self.totalPole.text = @"总杆";
     self.totalPromLabel.text = @"杆数";
 }
 
 - (void)configPoleViewTitle{
+    self.totalPole.text = @"";
+    self.totalPromLabel.text = @"";
     self.totalPole.text = @"总差杆";
     self.totalPromLabel.text = @"差杆";
 }

@@ -41,8 +41,15 @@
 // 是否上球道
 @property (nonatomic, strong)NSArray *onthefairway;
 
+//球洞mingc
+@property (nonatomic, strong)NSArray *poleNameList;
+
 // timeKey
 @property (nonatomic, strong)NSNumber *timeKey;
+
+@property (nonatomic, copy)NSString *region1;
+
+@property (nonatomic, copy)NSString *region2;
 
 
 @end

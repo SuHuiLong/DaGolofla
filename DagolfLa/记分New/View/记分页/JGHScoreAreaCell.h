@@ -45,4 +45,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *addParLable;
 @property (weak, nonatomic) IBOutlet UILabel *addaddParLable;
 
+- (void)configArea:(NSString *)areaString andImageDirection:(NSInteger)direction;
+
 @end

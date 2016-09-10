@@ -19,6 +19,14 @@
     
     self.areaImageViewLeft.constant = 13 *ProportionAdapter;
 }
+- (void)configArea:(NSString *)areaString andImageDirection:(NSInteger)direction{
+    [self.areaNameBtn setTitle:areaString forState:UIControlStateNormal];
+    if (direction == 0) {
+        self.areaImageView.image = [UIImage imageNamed:@")-1"];
+    }else{
+        self.areaImageView.image = [UIImage imageNamed:@")"];
+    }
+}
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];

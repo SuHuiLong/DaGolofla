@@ -14,7 +14,7 @@
 
 - (void)redOperationBtn:(UIButton *)btn;
 
-- (void)scoreListBtn;
+- (void)scoreListBtn:(UIButton *)btn;
 
 @end
 
