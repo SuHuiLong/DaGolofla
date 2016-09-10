@@ -14,6 +14,10 @@
 
 @property (nonatomic, strong)NSMutableArray *poleArray;
 
+@property (nonatomic, copy)NSString *region1;
+@property (nonatomic, copy)NSString *region2;
+
+@property (nonatomic, assign)NSInteger selectId;
 
 @property (nonatomic, copy)void (^returnHoleId)(NSInteger holeId);
 

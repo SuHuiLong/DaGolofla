@@ -81,6 +81,7 @@ static NSString *const JGHOperationScoreCellIdentifier = @"JGHOperationScoreCell
     JGHOperationScoreCell *tranCell = [tableView dequeueReusableCellWithIdentifier:JGHOperationScoreCellIdentifier];
     tranCell.addScoreBtn.tag = 100 + indexPath.section;
     tranCell.redScoreBtn.tag = 200 + indexPath.section;
+    tranCell.scoreListBtn.tag = indexPath.section + 300;
     tranCell.delegate = self;
     tranCell.transform = CGAffineTransformMakeRotation(M_PI/2);
     if (_parArray.count > 0) {
@@ -160,9 +161,9 @@ static NSString *const JGHOperationScoreCellIdentifier = @"JGHOperationScoreCell
     self.returnScoresCalculateDataArray(_poleNumberArray);
 }
 #pragma mark -- list
-- (void)scoreListBtn{
+- (void)scoreListBtn:(UIButton *)btn{
     if (self.delegate) {
-        [self.delegate selectScoreListBtn];
+        [self.delegate selectScoreListBtn:btn];
     }
 }
 

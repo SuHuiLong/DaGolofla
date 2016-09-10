@@ -48,6 +48,7 @@ static NSString *const JGHOperationScoreListCellIdentifier = @"JGHOperationScore
     
     NSString *_ballName;//球场名
     NSString *_loginpic;//球场图片地址
+    NSInteger _selectHoleId;//默认选择的球洞ID － 0
 }
 
 @property (nonatomic, strong)NSMutableArray *polesArray;//十八洞杆数
@@ -69,6 +70,7 @@ static NSString *const JGHOperationScoreListCellIdentifier = @"JGHOperationScore
     _holeListId = 0;
     _ballName = @"";
     _loginpic = @"";
+    _selectHoleId = 0;
     _userScoreBeanDict = [NSMutableDictionary dictionary];
     self.polesArray = [NSMutableArray array];
     _holeArray = [NSMutableArray array];
@@ -237,7 +239,10 @@ static NSString *const JGHOperationScoreListCellIdentifier = @"JGHOperationScore
                 [self.simpleScoreTableView reloadData];
             };
             
+//            operationScoreListCell.selectId = indexPath.section;
             operationScoreListCell.poleArray = self.polesArray;
+            operationScoreListCell.region1 = _region1;
+            operationScoreListCell.region2 = _region2;
             operationScoreListCell.selectionStyle = UITableViewCellSelectionStyleNone;
             [operationScoreListCell reloadOperScoreBtnListCellData];
             return operationScoreListCell;
@@ -340,6 +345,7 @@ static NSString *const JGHOperationScoreListCellIdentifier = @"JGHOperationScore
 - (void)selectSimpleScoreBtnClick:(UIButton *)btn{
     NSLog(@"简单记分");
     _selectId = 0;
+    
     [self.simpleScoreTableView reloadData];
 }
 #pragma mark -- 十八洞记分
@@ -349,9 +355,11 @@ static NSString *const JGHOperationScoreListCellIdentifier = @"JGHOperationScore
     [self.simpleScoreTableView reloadData];
 }
 #pragma mark -- 十八洞记分 list
-- (void)selectScoreListBtn{
+- (void)selectScoreListBtn:(UIButton *)btn{
     NSLog(@"十八洞记分 list");
     _selectId = 3;
+    //选中的球洞
+    _selectHoleId = btn.tag - 300;
     [self.simpleScoreTableView reloadData];
 }
 #pragma mark -- 完成

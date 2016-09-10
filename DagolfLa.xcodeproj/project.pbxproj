@@ -51,6 +51,8 @@
 		202E05361D81568300566CA9 /* JGHPoorBarHoleCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 202E05341D81568300566CA9 /* JGHPoorBarHoleCell.m */; };
 		202E05371D81568300566CA9 /* JGHPoorBarHoleCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 202E05351D81568300566CA9 /* JGHPoorBarHoleCell.xib */; };
 		202E053A1D815E2800566CA9 /* JGHPoorScoreHoleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 202E05391D815E2800566CA9 /* JGHPoorScoreHoleView.m */; };
+		202E053E1D84261000566CA9 /* JGHOperScoreHeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 202E053C1D84261000566CA9 /* JGHOperScoreHeaderCell.m */; };
+		202E053F1D84261000566CA9 /* JGHOperScoreHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 202E053D1D84261000566CA9 /* JGHOperScoreHeaderCell.xib */; };
 		202EC8071D5360990090FE4B /* JGHOperationScoreCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 202EC8061D5360990090FE4B /* JGHOperationScoreCell.xib */; };
 		202EC80C1D5852F80090FE4B /* JGHCaddieViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 202EC80A1D5852F80090FE4B /* JGHCaddieViewController.m */; };
 		202EC80D1D5852F80090FE4B /* JGHCaddieViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 202EC80B1D5852F80090FE4B /* JGHCaddieViewController.xib */; };
@@ -1310,6 +1312,9 @@
 		202E05351D81568300566CA9 /* JGHPoorBarHoleCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JGHPoorBarHoleCell.xib; sourceTree = "<group>"; };
 		202E05381D815E2800566CA9 /* JGHPoorScoreHoleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHPoorScoreHoleView.h; sourceTree = "<group>"; };
 		202E05391D815E2800566CA9 /* JGHPoorScoreHoleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHPoorScoreHoleView.m; sourceTree = "<group>"; };
+		202E053B1D84261000566CA9 /* JGHOperScoreHeaderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHOperScoreHeaderCell.h; sourceTree = "<group>"; };
+		202E053C1D84261000566CA9 /* JGHOperScoreHeaderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHOperScoreHeaderCell.m; sourceTree = "<group>"; };
+		202E053D1D84261000566CA9 /* JGHOperScoreHeaderCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JGHOperScoreHeaderCell.xib; sourceTree = "<group>"; };
 		202EC8061D5360990090FE4B /* JGHOperationScoreCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JGHOperationScoreCell.xib; sourceTree = "<group>"; };
 		202EC8091D5852F80090FE4B /* JGHCaddieViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHCaddieViewController.h; sourceTree = "<group>"; };
 		202EC80A1D5852F80090FE4B /* JGHCaddieViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHCaddieViewController.m; sourceTree = "<group>"; };
@@ -7588,6 +7593,9 @@
 				F53A05471D518F32009DD489 /* JGHOperScoreBtnListCell.h */,
 				F53A05481D518F32009DD489 /* JGHOperScoreBtnListCell.m */,
 				F53A05491D518F32009DD489 /* JGHOperScoreBtnListCell.xib */,
+				202E053B1D84261000566CA9 /* JGHOperScoreHeaderCell.h */,
+				202E053C1D84261000566CA9 /* JGHOperScoreHeaderCell.m */,
+				202E053D1D84261000566CA9 /* JGHOperScoreHeaderCell.xib */,
 				F53A05441D518F32009DD489 /* JGHOperationSimlpeCell.h */,
 				F53A05451D518F32009DD489 /* JGHOperationSimlpeCell.m */,
 				F53A05461D518F32009DD489 /* JGHOperationSimlpeCell.xib */,
@@ -9045,6 +9053,7 @@
 				3660E1041BFC54D90033B4D7 /* MyTeamsTableViewCell.xib in Resources */,
 				36BFFEBD1BC76CDC005B3CE2 /* tab_line.png in Resources */,
 				F5E1BAB21D6B006100414727 /* COPYING in Resources */,
+				202E053F1D84261000566CA9 /* JGHOperScoreHeaderCell.xib in Resources */,
 				20F0253B1D6FDC1000D7D7B6 /* JGHAddPlaysCell.xib in Resources */,
 				36BF00081BC770C4005B3CE2 /* chat_bottom_voice_press.png in Resources */,
 				82ABF1D31D1C0847004493DB /* JGLPayListTableViewCell.xib in Resources */,
@@ -9973,6 +9982,7 @@
 				20F025491D70199B00D7D7B6 /* JGHPalyTypeListCell.m in Sources */,
 				367E31FF1C1EBAC00007BD32 /* YueHallPeoTableViewCell.m in Sources */,
 				36BF01CB1BC77ABE005B3CE2 /* YueWaitTableViewCell.m in Sources */,
+				202E053E1D84261000566CA9 /* JGHOperScoreHeaderCell.m in Sources */,
 				20513B501CF5D9AD003233FB /* JGHAddInvoiceViewController.m in Sources */,
 				3660E13E1BFC55AC0033B4D7 /* TeamDeMessViewController.m in Sources */,
 				827BD52B1D20F23D009AF9CA /* JGLActivityMemberTableViewCell.m in Sources */,
