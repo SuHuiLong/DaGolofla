@@ -14,6 +14,7 @@
 
 @property (strong, nonatomic) UILabel* labelTitle;
 
-@property (strong, nonatomic) UIView* viewLine;
+@property (strong, nonatomic) UIImageView* imgvState;
+
 
 @end

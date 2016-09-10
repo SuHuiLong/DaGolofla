@@ -13,6 +13,11 @@
 #import "JGDHIstoryScoreDetailViewController.h"
 #import "JGDTrueOrFalseTableViewCell.h"
 
+#import "JGDPlayerNotActScoreDetailViewController.h"
+#import "JGDNotActScoreViewController.h"
+#import "JGDPlayerNotActScoreCardViewController.h"
+#import "JGHScoresViewController.h"
+
 @interface JGDNotActScoreDetailViewController ()<UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic, strong) UITableView *tableView;
@@ -22,6 +27,25 @@
 @end
 
 @implementation JGDNotActScoreDetailViewController
+
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    
+    UIBarButtonItem *leftBar = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"backL"] style:(UIBarButtonItemStyleDone) target:self action:@selector(backBtn)];
+    leftBar.tintColor = [UIColor whiteColor];
+    self.navigationItem.leftBarButtonItem = leftBar;
+    //    [self.tableView reloadData];
+}
+
+- (void)backBtn{
+    
+    for (UIViewController *vc in self.navigationController.viewControllers) {
+        if ([vc isKindOfClass:[JGDNotActScoreViewController class]] || [vc isKindOfClass:[JGDPlayerNotActScoreCardViewController class]]) {
+            [self.navigationController popToViewController:vc animated:YES];
+            return;
+        }
+    }
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -143,6 +167,11 @@
         timeLB.font = [UIFont systemFontOfSize:13 * ProportionAdapter];
         [viewTitle addSubview:timeLB];
         
+        UIButton *changeModelBtn = [[UIButton alloc] initWithFrame:CGRectMake(270 * ProportionAdapter, 5 * ProportionAdapter, 91 * ProportionAdapter, 38 * ProportionAdapter)];
+        [changeModelBtn setImage:[UIImage imageNamed:@"btn_zonggan"] forState:(UIControlStateNormal)];
+        [changeModelBtn addTarget:self action:@selector(changeAct) forControlEvents:(UIControlEventTouchUpInside)];
+        [viewTitle addSubview:changeModelBtn];
+        
         UIImageView *imageV1 = [[UIImageView alloc] initWithFrame:CGRectMake(135 * ProportionAdapter, 90 * ProportionAdapter, 10 * ProportionAdapter, 10 * ProportionAdapter)];
         imageV1.backgroundColor = [UIColor colorWithHexString:@"7fffff"];
         imageV1.layer.cornerRadius = 5 * ProportionAdapter;
@@ -187,7 +216,13 @@
         Label4.text = @"Bogey";
         [viewTitle addSubview:Label4];
         
-        UIView *greenView = [[UIView alloc] initWithFrame:CGRectMake(0, 105 * ProportionAdapter, screenWidth, 2 * ProportionAdapter)];
+        UILabel *partLB = [[UILabel alloc] initWithFrame:CGRectMake(0 * ProportionAdapter, 110 * ProportionAdapter, screenWidth, 25 * ProportionAdapter)];
+        partLB.text = [NSString stringWithFormat:@"   %@", self.model.region1];
+        partLB.font = [UIFont systemFontOfSize:13 * ProportionAdapter];
+        partLB.backgroundColor = [UIColor whiteColor];
+        [viewTitle addSubview:partLB];
+        
+        UIView *greenView = [[UIView alloc] initWithFrame:CGRectMake(0, 130 * ProportionAdapter, screenWidth, 2 * ProportionAdapter)];
         greenView.backgroundColor = [UIColor colorWithHexString:@"#32b14d"];
         [viewTitle addSubview:greenView];
         [headerView addSubview:viewTitle];
@@ -198,7 +233,13 @@
         UIView *lightV = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 12 * ProportionAdapter)];
         lightV.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];
         
-        UIView *greenView = [[UIView alloc] initWithFrame:CGRectMake(0, 10 * ProportionAdapter, screenWidth, 2 * ProportionAdapter)];
+        UILabel *partLB = [[UILabel alloc] initWithFrame:CGRectMake(0 * ProportionAdapter, 10 * ProportionAdapter, screenWidth, 25 * ProportionAdapter)];
+        partLB.text = [NSString stringWithFormat:@"   %@", self.model.region2];
+        partLB.backgroundColor = [UIColor whiteColor];
+        partLB.font = [UIFont systemFontOfSize:13 * ProportionAdapter];
+        [lightV addSubview:partLB];
+        
+        UIView *greenView = [[UIView alloc] initWithFrame:CGRectMake(0, 35 * ProportionAdapter, screenWidth, 2 * ProportionAdapter)];
         greenView.backgroundColor = [UIColor colorWithHexString:@"#32b14d"];
         [lightV addSubview:greenView];
         
@@ -206,11 +247,22 @@
     }
 }
 
+//切换差杆模式
+- (void)changeAct{
+    JGDPlayerNotActScoreDetailViewController *AlmostDetailVC = [[JGDPlayerNotActScoreDetailViewController alloc] init];
+    
+    AlmostDetailVC.dataDic = self.dataDic;
+    AlmostDetailVC.model = self.model;
+    AlmostDetailVC.ballkid = self.ballkid;
+
+    [self.navigationController pushViewController:AlmostDetailVC animated:YES];
+}
+
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     if (section == 0) {
-        return 167 * ProportionAdapter;
+        return 192 * ProportionAdapter;
     }else{
-        return 12 * ProportionAdapter;
+        return 37 * ProportionAdapter;
     }
 }
 
@@ -239,15 +291,20 @@
             cell.colorImageV.backgroundColor = [UIColor clearColor];
             cell.nameLB.text = @"Hole";
             cell.sumLB.text = @"Out";
-            for (UILabel *lb in cell.contentView.subviews) {
-                if (lb.tag) {
-                    lb.text = [NSString stringWithFormat:@"%td", lb.tag - 776];
-                }
-            }
+            [cell setholeSWithModel:self.model index:indexPath];
+
         }else if (indexPath.row == 3) {
             cell.contentView.backgroundColor = [UIColor colorWithHexString:@"#FAFAFA"];
         }
         
+        if (indexPath.row == 2 || indexPath.row == 3) {
+            for (UILabel *lb in cell.contentView.subviews) {
+                if (lb.tag) {
+                    UILongPressGestureRecognizer *longPG = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPGAct1:)];
+                    [lb addGestureRecognizer:longPG];
+                }
+            }
+        }
         
     }else if (indexPath.section == 1) {
         if (indexPath.row == 0) {
@@ -255,19 +312,51 @@
             cell.colorImageV.backgroundColor = [UIColor clearColor];
             cell.nameLB.text = @"Hole";
             cell.sumLB.text = @"In";
-            for (UILabel *lb in cell.contentView.subviews) {
-                if (lb.tag) {
-                    lb.text = [NSString stringWithFormat:@"%td", lb.tag - 776 + 9];
-                }
-            }
+            [cell setholeSWithModel:self.model index:indexPath];
+
         }else if (indexPath.row == 3) {
             cell.contentView.backgroundColor = [UIColor colorWithHexString:@"#FAFAFA"];
+        }
+        
+        if (indexPath.row == 2 || indexPath.row == 3) {
+            for (UILabel *lb in cell.contentView.subviews) {
+                if (lb.tag) {
+                    UILongPressGestureRecognizer *longPG = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPGAct2:)];
+                    [lb addGestureRecognizer:longPG];
+                }
+            }
         }
         
     }
     
     return cell;
     
+}
+
+// 上半场 长按
+- (void)longPGAct1:(UILongPressGestureRecognizer *)longPG {
+    NSLog(@"＝＝＝＝＝＝＝%td", [longPG view].tag);
+    [Helper alertViewWithTitle:@"点击“确定”修改成绩" withBlockCancle:^{
+        NSLog(@"－－－cancle");
+    } withBlockSure:^{
+        JGHScoresViewController *scoreVC = [[JGHScoresViewController alloc] init];
+        [self.navigationController pushViewController:scoreVC animated:YES];
+    } withBlock:^(UIAlertController *alertView) {
+        [self presentViewController:alertView animated:YES completion:nil];
+    }];
+}
+
+// 下半场 长按
+- (void)longPGAct2:(UILongPressGestureRecognizer *)longPG {
+    NSLog(@"%td", [longPG view].tag);
+    [Helper alertViewWithTitle:@"点击“确定”修改成绩" withBlockCancle:^{
+        NSLog(@"cancle");
+    } withBlockSure:^{
+        JGHScoresViewController *scoreVC = [[JGHScoresViewController alloc] init];
+        [self.navigationController pushViewController:scoreVC animated:YES];
+    } withBlock:^(UIAlertController *alertView) {
+        [self presentViewController:alertView animated:YES completion:nil];
+    }];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{

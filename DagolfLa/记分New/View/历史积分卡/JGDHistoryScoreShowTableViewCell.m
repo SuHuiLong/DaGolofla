@@ -44,6 +44,7 @@
             scoreLB.textColor = [UIColor colorWithHexString:@"#5f6660"];
             scoreLB.textAlignment = NSTextAlignmentCenter;
             scoreLB.tag = 777 + i;
+            scoreLB.userInteractionEnabled = YES;
             [self.contentView addSubview:scoreLB];
             
             if (i == 8) {
@@ -61,6 +62,25 @@
         
     }
     return self;
+}
+
+// 设置洞数
+
+- (void)setholeSWithModel:(JGDHistoryScoreShowModel *)model index:(NSIndexPath *)indexPath{
+    if (indexPath.section == 0) {
+        for (UILabel *lb in self.contentView.subviews) {
+            if (lb.tag) {
+                lb.text = [NSString stringWithFormat:@"%@", model.poleNameList[lb.tag - 777]];
+            }
+        }
+    }else{
+        for (UILabel *lb in self.contentView.subviews) {
+            if (lb.tag) {
+                lb.text = [NSString stringWithFormat:@"%@", model.poleNameList[lb.tag - 776 + 8]];
+            }
+        }
+    }
+    
 }
 
 - (void)takeInfoWithModel:(JGDHistoryScoreShowModel *)model index:(NSIndexPath *)indexPath{

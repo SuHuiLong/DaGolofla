@@ -56,7 +56,7 @@
 -(void)finishAction
 {
     //    [_dictFin setObject:[[NSUserDefaults standardUserDefaults]objectForKey:@"userName"] forKey:DEFAULF_USERID];
-    _blockSurePlayer(_dictPeople,_peoAddress,_peoAddress);
+    _blockSurePlayer(_dictPeople);
     [self.navigationController popViewControllerAnimated:YES];
     
 }

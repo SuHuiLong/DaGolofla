@@ -8,7 +8,9 @@
 
 #import "JGHActivityScoreManagerViewController.h"
 #import "JGHActivityMembersViewController.h"
-#import "JGHSetAlmostPromptViewController.h"
+//#import "JGHSetAlmostPromptViewController.h"
+#import "JGDAlmostStlyleSetViewController.h"
+
 #import "JGHMatchTranscriptTableViewCell.h"
 #import "JGHPlayersScoreTableViewCell.h"
 #import "JGHCenterBtnTableViewCell.h"
@@ -301,21 +303,21 @@ static NSString *const JGHCenterBtnTableViewCellIdentifier = @"JGHCenterBtnTable
 #pragma mark -- 设置差点
 - (void)selectSetAlmostBtn{
     NSLog(@"设置差点");
-    JGHSetAlmostPromptViewController *setAlmostCtrl = [[JGHSetAlmostPromptViewController alloc]initWithNibName:@"JGHSetAlmostPromptViewController" bundle:nil];
-    setAlmostCtrl.teamKey = _activityBaseModel.teamKey;
-    setAlmostCtrl.almostType = _almostType;
-    if (_activityBaseModel.teamActivityKey != 0) {
-        setAlmostCtrl.teamActivityKey = _activityBaseModel.teamActivityKey;
-    }else{
-        setAlmostCtrl.teamActivityKey = [_activityBaseModel.timeKey integerValue];
-    }
-    
-    __weak JGHActivityScoreManagerViewController *weakSlef = self;
-    setAlmostCtrl.refreshBlock = ^(NSInteger almostType){
-        weakSlef.almostType = almostType;
-        [self headRereshing];
-    };
-    
+//    JGHSetAlmostPromptViewController *setAlmostCtrl = [[JGHSetAlmostPromptViewController alloc]initWithNibName:@"JGHSetAlmostPromptViewController" bundle:nil];
+//    setAlmostCtrl.teamKey = _activityBaseModel.teamKey;
+//    setAlmostCtrl.almostType = _almostType;
+//    if (_activityBaseModel.teamActivityKey != 0) {
+//        setAlmostCtrl.teamActivityKey = _activityBaseModel.teamActivityKey;
+//    }else{
+//        setAlmostCtrl.teamActivityKey = [_activityBaseModel.timeKey integerValue];
+//    }
+//    
+//    __weak JGHActivityScoreManagerViewController *weakSlef = self;
+//    setAlmostCtrl.refreshBlock = ^(NSInteger almostType){
+//        weakSlef.almostType = almostType;
+//        [self headRereshing];
+//    };
+    JGDAlmostStlyleSetViewController *setAlmostCtrl = [[JGDAlmostStlyleSetViewController alloc] init];
     [self.navigationController pushViewController:setAlmostCtrl animated:YES];
 }
 #pragma mark -- 保存

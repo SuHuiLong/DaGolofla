@@ -8,6 +8,7 @@
 
 #import "JGLNewFuncTionViewController.h"
 #import "UITool.h"
+#import "JGLWriteReplyViewController.h"
 @interface JGLNewFuncTionViewController ()<UITextViewDelegate>
 {
     UITextView* _textView;
@@ -22,7 +23,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.navigationController.title = @"产品新功能建议";
+    self.title = @"产品新功能建议";
     self.view.backgroundColor = [UITool colorWithHexString:@"#eeeeee" alpha:1];
     [self createView];
     [self createBtn];
@@ -83,16 +84,53 @@
     btn.frame = CGRectMake(screenWidth/2 - 50*ProportionAdapter, 280*ProportionAdapter, 100*ProportionAdapter, 44*ProportionAdapter);
     btn.backgroundColor = [UITool colorWithHexString:@"32b14d" alpha:1];
     [self.view addSubview:btn];
+    [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [btn setTitle:@"提交" forState:UIControlStateNormal];
     btn.layer.cornerRadius = 22*ProportionAdapter;
     btn.layer.masksToBounds = YES;
     btn.titleLabel.font = [UIFont systemFontOfSize:20*ProportionAdapter];
     [self.view addSubview:btn];
-    [btn addTarget:self action:@selector(upDataClick) forControlEvents:UIControlEventTouchUpInside];
+    [btn addTarget:self action:@selector(upDataClick:) forControlEvents:UIControlEventTouchUpInside];
 }
 
--(void)upDataClick
+-(void)upDataClick:(UIButton *)btn
 {
+    btn.userInteractionEnabled = NO;
+    btn.backgroundColor = [UIColor lightGrayColor];
+    
+    [self.view endEditing:YES];
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    [dict setObject:DEFAULF_USERID forKey:@"userKey"];
+    if (![Helper isBlankString:[[NSUserDefaults standardUserDefaults] objectForKey:@"mobile"]]) {
+        [dict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"mobile"] forKey:@"userMobile"];
+    }
+    
+    [dict setObject:@2 forKey:@"type"];//意见
+    if ([Helper isBlankString:_textView.text] || [_textView.text isEqualToString:@"请针对我们的产品给出您宝贵的意见"] == YES) {
+        [[ShowHUD showHUD]showToastWithText:@"请填写您宝贵的意见再进行提交，谢谢！" FromView:self.view];
+        btn.userInteractionEnabled = YES;
+        btn.backgroundColor = [UITool colorWithHexString:@"32b14d" alpha:1];
+        [self.view endEditing:YES];
+        return;
+    }
+    else{
+        [dict setObject:_textView.text forKey:@"describe"];
+    }
+    
+    [[JsonHttp jsonHttp]httpRequestHaveSpaceWithMD5:@"feedback/createFeedback" JsonKey:@"feedBack" withData:dict failedBlock:^(id errType) {
+        btn.userInteractionEnabled = YES;
+        btn.backgroundColor = [UITool colorWithHexString:@"32b14d" alpha:1];
+    } completionBlock:^(id data) {
+        btn.userInteractionEnabled = YES;
+        btn.backgroundColor = [UITool colorWithHexString:@"32b14d" alpha:1];
+        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+            JGLWriteReplyViewController* reVc = [[JGLWriteReplyViewController alloc]init];
+            [self.navigationController pushViewController:reVc animated:YES];
+        }
+        else{
+            [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+        }
+    }];
     
 }
 

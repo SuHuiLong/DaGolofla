@@ -21,4 +21,6 @@
 
 - (void)takeDetailInfoWithModel:(JGDHistoryScoreShowModel *)model index:(NSIndexPath *)indexPath;
 
+- (void)setholeSWithModel:(JGDHistoryScoreShowModel *)model index:(NSIndexPath *)indexPath;
+
 @end

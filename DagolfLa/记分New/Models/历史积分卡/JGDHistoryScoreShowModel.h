@@ -31,5 +31,11 @@
 @property (nonatomic, copy) NSString *date;
 @property (nonatomic, copy) NSString *scoreUserName;
 
+@property (nonatomic, strong) NSArray *poleNameList;
+
+@property (nonatomic, copy) NSString *region1;
+@property (nonatomic, copy) NSString *region2;
+
+
 @end
 

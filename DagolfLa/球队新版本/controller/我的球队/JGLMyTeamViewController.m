@@ -30,7 +30,8 @@
     NSInteger _page;
 }
 
-@property (nonatomic, strong) NSMutableArray *TeamArray;
+//@property (nonatomic, strong) NSMutableArray *TeamArray;
+
 
 @end
 
@@ -65,11 +66,11 @@
 
 
 #pragma mark - 下载数据
-- (void)downLoadData:(int)page isReshing:(BOOL)isReshing{
+- (void)downLoadData:(NSInteger)page isReshing:(BOOL)isReshing{
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     
     [dict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:userID] forKey:@"userKey"];
-    [dict setObject:[NSNumber numberWithInt:page] forKey:@"offset"];
+    [dict setObject:[NSNumber numberWithInteger:page] forKey:@"offset"];
     [[JsonHttp jsonHttp]httpRequest:@"team/getMyTeamList" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
         if (isReshing) {
             [_tableView.header endRefreshing];
@@ -90,7 +91,7 @@
                 [model setValuesForKeysWithDictionary:dataDic];
                 [_dataArray addObject:model];
             }
-            [self.TeamArray addObjectsFromArray:[data objectForKey:@"teamList"]];
+//            [self.TeamArray addObjectsFromArray:[data objectForKey:@"teamList"]];
             _page++;
             [_tableView reloadData];
         }else {
@@ -138,7 +139,7 @@
     
     NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
     [dic setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"userId"] forKey:@"userKey"];
-    [dic setObject:@([[self.TeamArray[indexPath.row] objectForKey:@"teamKey"] integerValue]) forKey:@"teamKey"];
+    [dic setObject:@([[_dataArray[indexPath.row] teamKey] integerValue]) forKey:@"teamKey"];
     
     [[JsonHttp jsonHttp] httpRequest:@"team/getTeamInfo" JsonKey:nil withData:dic requestMethod:@"GET" failedBlock:^(id errType) {
         [Helper alertViewNoHaveCancleWithTitle:@"获取球队信息失败" withBlock:^(UIAlertController *alertView) {
@@ -173,13 +174,13 @@
     }];
     
 }
-
-- (NSMutableArray *)TeamArray{
-    if (!_TeamArray) {
-        _TeamArray = [[NSMutableArray alloc] init];
-    }
-    return _TeamArray;
-}
+//
+//- (NSMutableArray *)TeamArray{
+//    if (!_TeamArray) {
+//        _TeamArray = [[NSMutableArray alloc] init];
+//    }
+//    return _TeamArray;
+//}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

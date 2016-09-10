@@ -35,7 +35,7 @@
     [self.tableView registerClass:[MeDetailTableViewCell class] forCellReuseIdentifier:@"MeDetailTableViewCell"];
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
-    
+    self.tableView.scrollEnabled = NO;
     [self.view addSubview:self.tableView];
     // Do any additional setup after loading the view.
 
@@ -126,7 +126,7 @@
 
 - (NSMutableArray *)imageArray{
     if (!_imageArray) {
-        _imageArray = [NSMutableArray arrayWithObjects:@"icn_qiutong", @"icn_about", @"icn_pingjia",@"icn_pingjia", nil];
+        _imageArray = [NSMutableArray arrayWithObjects:@"icn_qiutong", @"icn_about", @"icn_pingjia",@"icn_advice", nil];
     }
     return _imageArray;
 }

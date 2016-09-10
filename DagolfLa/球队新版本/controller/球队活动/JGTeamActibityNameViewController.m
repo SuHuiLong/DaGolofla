@@ -68,6 +68,8 @@ static CGFloat ImageHeight  = 210.0;
     NSInteger _hasReleaseScore;//是否公布成绩0，1-已公布
     
     NSInteger _canSubsidy;//是否补贴-0不
+    
+    NSString* _strShare;
 }
 
 @property (nonatomic, strong)UITableView *teamActibityNameTableView;
@@ -258,6 +260,19 @@ static CGFloat ImageHeight  = 210.0;
             
             self.costListArray = [data objectForKey:@"costList"];
             
+//            for (int i = 0; i < self.costListArray.count; i++) {
+//                if ([[self.costListArray[i] allKeys] containsObject:@"money"] == YES) {
+//                    if (![Helper isBlankString:_strShare]) {
+//                        _strShare = [NSString stringWithFormat:@"%@,%@:%@",_strShare,[self.costListArray[i] costName],[self.costListArray[i] money]];
+//                    }
+//                    else{
+//                        _strShare = [NSString stringWithFormat:@"%@:%@",[self.costListArray[i] costName],[self.costListArray[i] money]];
+//                    }
+//                }
+//            }
+            
+            
+            
             NSMutableDictionary *dict = [NSMutableDictionary dictionary];
             
             if ([data objectForKey:@"teamMember"]) {
@@ -338,6 +353,10 @@ static CGFloat ImageHeight  = 210.0;
         //微信
         [UMSocialWechatHandler setWXAppId:@"wxdcdc4e20544ed728" appSecret:@"fdc75aae5a98f2aa0f62ef8cba2b08e9" url:shareUrl];
         [UMSocialConfig hiddenNotInstallPlatforms:@[UMShareToWechatSession,UMShareToWechatTimeline,UMShareToSina]];
+        
+        NSString* str = [NSString stringWithFormat:@"活动地址:%@。%@",_model.ballName,_strShare];
+        
+        
         [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatSession] content:[NSString stringWithFormat:@"球队会员：%.2f元，平台补贴：%.2f元，活动地点：%@，活动时间：%@", [_model.memberPrice floatValue],[_model.subsidyPrice floatValue],_model.ballName,_model.beginDate]  image:(fiData != nil && fiData.length > 0) ?fiData : [UIImage imageNamed:TeamBGImage] location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
             if (response.responseCode == UMSResponseCodeSuccess) {
                 //                [self shareS:indexRow];

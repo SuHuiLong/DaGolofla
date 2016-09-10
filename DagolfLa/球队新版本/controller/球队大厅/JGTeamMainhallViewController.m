@@ -89,7 +89,7 @@
     if (![Helper isBlankString:_strProvince]) {
         _labelCity.text = _strProvince;
     }else{
-        _labelCity.text = @"上海";
+        _labelCity.text = @"全国";
     }
     
     
@@ -175,7 +175,7 @@
         _viewCityChoose.strProVince = _strProvince;
         [_viewCityChoose initwithStr:_strProvince];
     }else{
-        _viewCityChoose.strProVince = @"上海";
+        _viewCityChoose.strProVince = @"全国";
         [_viewCityChoose initwithStr:_strProvince];
     }
     __weak JGTeamMainhallViewController* weakSelf = self;

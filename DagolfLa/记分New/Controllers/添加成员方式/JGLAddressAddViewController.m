@@ -66,7 +66,6 @@
 
 -(void)finishAction
 {
-    NSLog(@"%@",_dictFinish);
     _blockAddressPeople(_dictFinish);
     [self.navigationController popViewControllerAnimated:YES];
 }
