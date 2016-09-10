@@ -1,15 +1,15 @@
 //
-//  JGDHistoryScoreShowTableViewCell.h
+//  JGDAlmostScoreTableViewCell.h
 //  DagolfLa
 //
-//  Created by 東 on 16/7/14.
+//  Created by 東 on 16/9/6.
 //  Copyright © 2016年 bhxx. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 #import "JGDHistoryScoreShowModel.h"
 
-@interface JGDHistoryScoreShowTableViewCell : UITableViewCell
+@interface JGDAlmostScoreTableViewCell : UITableViewCell
 
 @property (nonatomic, strong) UIImageView *colorImageV;
 
@@ -21,6 +21,8 @@
 
 - (void)takeDetailInfoWithModel:(JGDHistoryScoreShowModel *)model index:(NSIndexPath *)indexPath;
 
-- (void)setholeSWithModel:(JGDHistoryScoreShowModel *)model index:(NSIndexPath *)indexPath;
 
+// 设置洞数
+
+- (void)setholeSWithModel:(JGDHistoryScoreShowModel *)model index:(NSIndexPath *)indexPath;
 @end

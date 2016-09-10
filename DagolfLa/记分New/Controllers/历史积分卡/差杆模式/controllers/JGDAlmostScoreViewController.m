@@ -6,28 +6,24 @@
 //  Copyright © 2016年 bhxx. All rights reserved.
 //
 
-#import "JGDNotActScoreViewController.h"
-#import "JGDHistoryScoreShowTableViewCell.h"
+#import "JGDAlmostScoreViewController.h"
+#import "JGDAlmostScoreTableViewCell.h"
 
 #import "JGDHIstoryScoreDetailViewController.h"
-#import "JGDNotActScoreDetailViewController.h"
-
-#import "JGDPlayerNotActScoreCardViewController.h"
+#import "JGDAlmostScoreDetailViewController.h"
 #import "JGDHistoryScoreViewController.h"
-#import "JGDPlayPersonViewController.h"
+#import "JGDNotActivityHisCoreViewController.h"
 
-@interface JGDNotActScoreViewController ()<UITableViewDelegate, UITableViewDataSource>
+@interface JGDAlmostScoreViewController ()<UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic, strong) UITableView *tableView;
 
 @property (nonatomic, strong) NSMutableArray *dataArray;
 @property (nonatomic, strong) NSMutableDictionary *dataDic;
-@property (nonatomic, strong) UILabel *label;
-@property (nonatomic, copy) NSString *name;
 
 @end
 
-@implementation JGDNotActScoreViewController
+@implementation JGDAlmostScoreViewController
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
@@ -35,7 +31,7 @@
     UIBarButtonItem *leftBar = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"backL"] style:(UIBarButtonItemStyleDone) target:self action:@selector(backBtn)];
     leftBar.tintColor = [UIColor whiteColor];
     self.navigationItem.leftBarButtonItem = leftBar;
-    //    [self.tableView reloadData];
+//    [self.tableView reloadData];
 }
 
 - (void)backBtn{
@@ -43,13 +39,6 @@
     for (UIViewController *vc in self.navigationController.viewControllers) {
         if ([vc isKindOfClass:[JGDHistoryScoreViewController class]]) {
             [self.navigationController popToViewController:vc animated:YES];
-            return;
-        }
-    }
-    for (UIViewController *vc in self.navigationController.viewControllers) {
-        if ([vc isKindOfClass:[JGDPlayPersonViewController class]]) {
-            [self.navigationController popToViewController:vc animated:YES];
-            return;
         }
     }
 }
@@ -97,10 +86,17 @@
                 allLB.text = @"总杆成绩（杆）";
                 allLB.font = [UIFont systemFontOfSize:15 * ProportionAdapter];
                 
+
                 for (int i = 0; i < [self.dataArray count]; i ++) {
                     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(screenWidth / [self.dataArray count] * i, 50 * ProportionAdapter, screenWidth / [self.dataArray count], 60 * ProportionAdapter)];
                     JGDHistoryScoreShowModel *model = self.dataArray[i];
-                    label.text = [model.poles stringValue];
+                    NSNumber *sum = [model.standardlever valueForKeyPath:@"@sum.integerValue"];
+                    NSInteger textNum = [model.poles integerValue] - [sum integerValue];
+                    if (textNum <= 0) {
+                        label.text = [NSString stringWithFormat:@"%td", textNum];
+                    }else{
+                        label.text = [NSString stringWithFormat:@"+%td", textNum];
+                    }
                     label.tag = 1000 + i;
                     label.textColor = [UIColor colorWithHexString:@"#fe6424"];
                     label.textAlignment = NSTextAlignmentCenter;
@@ -121,17 +117,8 @@
                 view.backgroundColor = [UIColor whiteColor];
                 
                 self.tableView.tableFooterView = view;
-                if (self.ballkid == 10) {
-                    self.name = [NSString stringWithFormat:@"球童 %@ 正在为您记分", [[data objectForKey:@"list"][0] objectForKey:@"scoreUserName"]];
-                    
-                    
-                }else{
-                    self.name = [NSString stringWithFormat:@"球童 %@ 记分", [[data objectForKey:@"list"][0] objectForKey:@"scoreUserName"]];
-                }
+                
             }
-            
-
-            
             
             if ([data objectForKey:@"score"]) {
                 self.dataDic = [data objectForKey:@"score"];
@@ -154,7 +141,7 @@
     self.tableView = [[UITableView alloc] initWithFrame:[UIScreen mainScreen].bounds style:(UITableViewStylePlain)];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
-    [self.tableView registerClass:[JGDHistoryScoreShowTableViewCell class] forCellReuseIdentifier:@"cell"];
+    [self.tableView registerClass:[JGDAlmostScoreTableViewCell class] forCellReuseIdentifier:@"cell"];
     self.tableView.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
@@ -199,30 +186,7 @@
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     
     if (section == 0) {
-        
-        UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 152 * ProportionAdapter)];
-        headerView.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];
-        
-        self.label = [[UILabel alloc] initWithFrame:CGRectMake(0, 10 * ProportionAdapter, screenWidth, 50 * ProportionAdapter)];
-        self.label.backgroundColor = [UIColor whiteColor];
-
-        if (self.name) {
-            if (self.ballkid == 10) {
-                NSMutableAttributedString *lbStr = [[NSMutableAttributedString alloc] initWithString:self.name];
-                [lbStr addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"#32b14d"] range:NSMakeRange(3, lbStr.length - 10)];
-                self.label.attributedText = lbStr;
-            }else{
-                NSMutableAttributedString *lbStr = [[NSMutableAttributedString alloc] initWithString:self.name];
-                [lbStr addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"#32b14d"] range:NSMakeRange(3, lbStr.length - 6)];
-                self.label.attributedText = lbStr;
-            }
-            
-        }
-        
-        self.label.textAlignment = NSTextAlignmentCenter;
-        [headerView addSubview:self.label];
-        
-        UIView *viewTitle = [[UIView alloc] initWithFrame:CGRectMake(0, 60 * ProportionAdapter, screenWidth, 82 * ProportionAdapter)];
+        UIView *viewTitle = [[UIView alloc] initWithFrame:CGRectMake(0, 10 * ProportionAdapter, screenWidth, 92 * ProportionAdapter)];
         viewTitle.backgroundColor = [UIColor whiteColor];
         
         UIView *lightV = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 10 * ProportionAdapter)];
@@ -236,6 +200,10 @@
         ballNameLB.font = [UIFont systemFontOfSize:15 * ProportionAdapter];
         [viewTitle addSubview:ballNameLB];
         
+        UIButton *changeModelBtn = [[UIButton alloc] initWithFrame:CGRectMake(270 * ProportionAdapter, 5 * ProportionAdapter, 91 * ProportionAdapter, 38 * ProportionAdapter)];
+        [changeModelBtn setImage:[UIImage imageNamed:@"btn_change"] forState:(UIControlStateNormal)];
+        [changeModelBtn addTarget:self action:@selector(changeAct) forControlEvents:(UIControlEventTouchUpInside)];
+        [viewTitle addSubview:changeModelBtn];
         
         UILabel *timeLB = [[UILabel alloc] initWithFrame:CGRectMake(10 * ProportionAdapter, 50 * ProportionAdapter, 90 * ProportionAdapter, 30 * ProportionAdapter)];
         NSString *timeStr = [self.dataDic objectForKey:@"createtime"];
@@ -244,37 +212,30 @@
         }        timeLB.font = [UIFont systemFontOfSize:13 * ProportionAdapter];
         [viewTitle addSubview:timeLB];
         
-        
-        UIButton *changeModelBtn = [[UIButton alloc] initWithFrame:CGRectMake(270 * ProportionAdapter, 5 * ProportionAdapter, 91 * ProportionAdapter, 38 * ProportionAdapter)];
-        [changeModelBtn setImage:[UIImage imageNamed:@"btn_zonggan"] forState:(UIControlStateNormal)];
-        [changeModelBtn addTarget:self action:@selector(changeAct) forControlEvents:(UIControlEventTouchUpInside)];
-        [viewTitle addSubview:changeModelBtn];
-        
-        
-        UIImageView *imageV1 = [[UIImageView alloc] initWithFrame:CGRectMake(135 * ProportionAdapter, 60 * ProportionAdapter, 10 * ProportionAdapter, 10 * ProportionAdapter)];
-        imageV1.backgroundColor = [UIColor colorWithHexString:@"7fffff"];
-        imageV1.layer.cornerRadius = 5 * ProportionAdapter;
-        imageV1.layer.masksToBounds = YES;
-        [viewTitle addSubview:imageV1];
-        
-        UILabel *Label1 = [[UILabel alloc] initWithFrame:CGRectMake(152.5 * ProportionAdapter, 50 * ProportionAdapter, 44 * ProportionAdapter, 30 * ProportionAdapter)];
-        Label1.font = [UIFont systemFontOfSize:13 * ProportionAdapter];
-        Label1.text = @"Eagle";
-        [viewTitle addSubview:Label1];
+//        UIImageView *imageV1 = [[UIImageView alloc] initWithFrame:CGRectMake(135 * ProportionAdapter, 60 * ProportionAdapter, 10 * ProportionAdapter, 10 * ProportionAdapter)];
+//        imageV1.backgroundColor = [UIColor colorWithHexString:@"7fffff"];
+//        imageV1.layer.cornerRadius = 5 * ProportionAdapter;
+//        imageV1.layer.masksToBounds = YES;
+//        [viewTitle addSubview:imageV1];
+//        
+//        UILabel *Label1 = [[UILabel alloc] initWithFrame:CGRectMake(152.5 * ProportionAdapter, 50 * ProportionAdapter, 44 * ProportionAdapter, 30 * ProportionAdapter)];
+//        Label1.font = [UIFont systemFontOfSize:13 * ProportionAdapter];
+//        Label1.text = @"Eagle";
+//        [viewTitle addSubview:Label1];
         
         UIImageView *imageV2 = [[UIImageView alloc] initWithFrame:CGRectMake(198.5 * ProportionAdapter, 60 * ProportionAdapter, 10 * ProportionAdapter, 10 * ProportionAdapter)];
-        imageV2.backgroundColor = [UIColor colorWithHexString:@"7fbfff"];
+        imageV2.backgroundColor = [UIColor colorWithHexString:@"#3586d8"];
         imageV2.layer.cornerRadius = 5 * ProportionAdapter;
         imageV2.layer.masksToBounds = YES;
         [viewTitle addSubview:imageV2];
         
         UILabel *Label2 = [[UILabel alloc] initWithFrame:CGRectMake(216 * ProportionAdapter, 50 * ProportionAdapter, 44 * ProportionAdapter, 30 * ProportionAdapter)];
         Label2.font = [UIFont systemFontOfSize:13 * ProportionAdapter];
-        Label2.text = @"Birdie";
+        Label2.text = @"Par-";
         [viewTitle addSubview:Label2];
         
         UIImageView *imageV3 = [[UIImageView alloc] initWithFrame:CGRectMake(260.5 * ProportionAdapter, 60 * ProportionAdapter, 10 * ProportionAdapter, 10 * ProportionAdapter)];
-        imageV3.backgroundColor = [UIColor colorWithHexString:@"ffd2a6"];
+        imageV3.backgroundColor = [UIColor colorWithHexString:@"#b4b3b3"];
         imageV3.layer.cornerRadius = 5 * ProportionAdapter;
         imageV3.layer.masksToBounds = YES;
         [viewTitle addSubview:imageV3];
@@ -285,31 +246,33 @@
         [viewTitle addSubview:Label3];
         
         UIImageView *imageV4 = [[UIImageView alloc] initWithFrame:CGRectMake(310.5 * ProportionAdapter, 60 * ProportionAdapter, 10 * ProportionAdapter, 10 * ProportionAdapter)];
-        imageV4.backgroundColor = [UIColor colorWithHexString:@"ffaaa5"];
+        imageV4.backgroundColor = [UIColor colorWithHexString:@"#e8625a"];
         imageV4.layer.cornerRadius = 5 * ProportionAdapter;
         imageV4.layer.masksToBounds = YES;
         [viewTitle addSubview:imageV4];
         
         UILabel *Label4 = [[UILabel alloc] initWithFrame:CGRectMake(328 * ProportionAdapter, 50 * ProportionAdapter, 44 * ProportionAdapter, 30 * ProportionAdapter)];
         Label4.font = [UIFont systemFontOfSize:13 * ProportionAdapter];
-        Label4.text = @"Bogey";
+        Label4.text = @"Par+";
         [viewTitle addSubview:Label4];
         
-        UILabel *partLB = [[UILabel alloc] initWithFrame:CGRectMake(0 * ProportionAdapter, 90 * ProportionAdapter, screenWidth, 25 * ProportionAdapter)];
+        UIView *lightView = [[UIView alloc] initWithFrame:CGRectMake(0, 90 * ProportionAdapter, screenWidth, 10 * ProportionAdapter)];
+        lightView.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];
+        [viewTitle addSubview:lightView];
+        
+        UILabel *partLB = [[UILabel alloc] initWithFrame:CGRectMake(10 * ProportionAdapter, 100 * ProportionAdapter, screenWidth, 25 * ProportionAdapter)];
         if ([self.dataArray count] > 0) {
             JGDHistoryScoreShowModel *model = self.dataArray[0];
-            partLB.text = [NSString stringWithFormat:@"   %@", model.region1];
+            partLB.text = model.region1;
         }
-        partLB.backgroundColor = [UIColor whiteColor];
         partLB.font = [UIFont systemFontOfSize:13 * ProportionAdapter];
         [viewTitle addSubview:partLB];
         
-        UIView *greenView = [[UIView alloc] initWithFrame:CGRectMake(0, 115 * ProportionAdapter, screenWidth, 2 * ProportionAdapter)];
+        UIView *greenView = [[UIView alloc] initWithFrame:CGRectMake(0, 125 * ProportionAdapter, screenWidth, 2 * ProportionAdapter)];
         greenView.backgroundColor = [UIColor colorWithHexString:@"#32b14d"];
         [viewTitle addSubview:greenView];
-        [headerView addSubview:viewTitle];
         
-        return headerView;
+        return viewTitle;
     }else{
         
         UIView *lightV = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 12 * ProportionAdapter)];
@@ -334,15 +297,14 @@
 
 - (void)changeAct{
     
-    JGDPlayerNotActScoreCardViewController *almostVC = [[JGDPlayerNotActScoreCardViewController alloc] init];
+    JGDNotActivityHisCoreViewController *almostVC = [[JGDNotActivityHisCoreViewController alloc] init];
     almostVC.timeKey = self.timeKey;
-    almostVC.ballkid = self.ballkid;
     [self.navigationController pushViewController:almostVC animated:YES];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     if (section == 0) {
-        return 177 * ProportionAdapter;
+        return 127 * ProportionAdapter;
     }else{
         return 37 * ProportionAdapter;
     }
@@ -350,7 +312,7 @@
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    JGDHistoryScoreShowTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
+    JGDAlmostScoreTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     
@@ -372,6 +334,11 @@
             if ([self.dataArray count] > 0) {
                 [cell setholeSWithModel:self.dataArray[0] index:indexPath];
             }
+//            for (UILabel *lb in cell.contentView.subviews) {
+//                if (lb.tag) {
+//                    lb.text = [NSString stringWithFormat:@"%td", lb.tag - 776];
+//                }
+//            }
         }else if (indexPath.row == 3) {
             
             cell.contentView.backgroundColor = [UIColor colorWithHexString:@"#FAFAFA"];
@@ -391,6 +358,11 @@
             if ([self.dataArray count] > 0) {
                 [cell setholeSWithModel:self.dataArray[0] index:indexPath];
             }
+//            for (UILabel *lb in cell.contentView.subviews) {
+//                if (lb.tag) {
+//                    lb.text = [NSString stringWithFormat:@"%td", lb.tag - 776 + 9];
+//                }
+//            }
         }else if (indexPath.row == 3) {
             
             cell.contentView.backgroundColor = [UIColor colorWithHexString:@"#FAFAFA"];
@@ -424,10 +396,9 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.row > 1) {
-        JGDNotActScoreDetailViewController *detailV = [[JGDNotActScoreDetailViewController alloc] init];
+        JGDAlmostScoreDetailViewController *detailV = [[JGDAlmostScoreDetailViewController alloc] init];
         JGDHistoryScoreShowModel *model = self.dataArray[indexPath.row - 2];
         detailV.model = model;
-        detailV.ballkid = self.ballkid;
         detailV.dataDic = self.dataDic;
         [self.navigationController pushViewController:detailV animated:YES];
     }

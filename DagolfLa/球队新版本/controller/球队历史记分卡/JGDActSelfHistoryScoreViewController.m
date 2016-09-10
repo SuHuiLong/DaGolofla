@@ -233,8 +233,15 @@
 //            [self.viewTitle addSubview:self.lineView];
         }
         
+        UILabel *partLB = [[UILabel alloc] initWithFrame:CGRectMake(10 * ProportionAdapter, 98 * ProportionAdapter, screenWidth, 25 * ProportionAdapter)];
+        if ([self.dataArray count] > 0) {
+            JGDHistoryScoreShowModel *model = self.dataArray[0];
+            partLB.text = model.region1;
+        }
+        partLB.font = [UIFont systemFontOfSize:13 * ProportionAdapter];
+        [self.viewTitle addSubview:partLB];
         
-        UIView *greenView = [[UIView alloc] initWithFrame:CGRectMake(0, 98 * ProportionAdapter, screenWidth, 2 * ProportionAdapter)];
+        UIView *greenView = [[UIView alloc] initWithFrame:CGRectMake(0, 123 * ProportionAdapter, screenWidth, 2 * ProportionAdapter)];
         greenView.backgroundColor = [UIColor colorWithHexString:@"#32b14d"];
         [self.viewTitle addSubview:greenView];
         
@@ -244,7 +251,16 @@
         UIView *lightV = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 12 * ProportionAdapter)];
         lightV.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];
         
-        UIView *greenView = [[UIView alloc] initWithFrame:CGRectMake(0, 10 * ProportionAdapter, screenWidth, 2 * ProportionAdapter)];
+        UILabel *partLB = [[UILabel alloc] initWithFrame:CGRectMake(0 * ProportionAdapter, 10 * ProportionAdapter, screenWidth, 25 * ProportionAdapter)];
+        if ([self.dataArray count] > 0) {
+            JGDHistoryScoreShowModel *model = self.dataArray[0];
+            partLB.text = [NSString stringWithFormat:@"   %@", model.region2];
+        }
+        partLB.backgroundColor = [UIColor whiteColor];
+        partLB.font = [UIFont systemFontOfSize:13 * ProportionAdapter];
+        [lightV addSubview:partLB];
+        
+        UIView *greenView = [[UIView alloc] initWithFrame:CGRectMake(0, 35 * ProportionAdapter, screenWidth, 2 * ProportionAdapter)];
         greenView.backgroundColor = [UIColor colorWithHexString:@"#32b14d"];
         [lightV addSubview:greenView];
         
@@ -254,9 +270,9 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     if (section == 0) {
-        return 100 * ProportionAdapter;
+        return 125 * ProportionAdapter;
     }else{
-        return 12 * ProportionAdapter;
+        return 37 * ProportionAdapter;
     }
 }
 

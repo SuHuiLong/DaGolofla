@@ -12,6 +12,11 @@
 #import "JGDPlayerHisScoreDetailViewController.h"
 #import "JGDHistoryScoreShowModel.h"
 
+#import "JGDPlayerScoreCardViewController.h"
+#import "JGDHistoryScoreViewController.h"
+
+#import "JGDPlayPersonViewController.h"
+
 @interface JGDPlayerHisScoreCardViewController ()<UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic, strong) UITableView *tableView;
@@ -22,6 +27,30 @@
 @end
 
 @implementation JGDPlayerHisScoreCardViewController
+
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    
+    UIBarButtonItem *leftBar = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"backL"] style:(UIBarButtonItemStyleDone) target:self action:@selector(backBtn)];
+    leftBar.tintColor = [UIColor whiteColor];
+    self.navigationItem.leftBarButtonItem = leftBar;
+    //    [self.tableView reloadData];
+}
+
+- (void)backBtn{
+    for (UIViewController *vc in self.navigationController.viewControllers) {
+        if ([vc isKindOfClass:[JGDHistoryScoreViewController class]]) {
+            [self.navigationController popToViewController:vc animated:YES];
+            return;
+        }
+    }
+    for (UIViewController *vc in self.navigationController.viewControllers) {
+        if ([vc isKindOfClass:[JGDPlayPersonViewController class]]) {
+            [self.navigationController popToViewController:vc animated:YES];
+            return;
+        }
+    }
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -214,6 +243,11 @@
         timeLB.font = [UIFont systemFontOfSize:13 * ProportionAdapter];
         [viewTitle addSubview:timeLB];
         
+        UIButton *changeModelBtn = [[UIButton alloc] initWithFrame:CGRectMake(270 * ProportionAdapter, 5 * ProportionAdapter, 91 * ProportionAdapter, 38 * ProportionAdapter)];
+        [changeModelBtn setImage:[UIImage imageNamed:@"btn_zonggan"] forState:(UIControlStateNormal)];
+        [changeModelBtn addTarget:self action:@selector(changeAct) forControlEvents:(UIControlEventTouchUpInside)];
+        [viewTitle addSubview:changeModelBtn];
+        
         UIImageView *imageV1 = [[UIImageView alloc] initWithFrame:CGRectMake(135 * ProportionAdapter, 120 * ProportionAdapter, 10 * ProportionAdapter, 10 * ProportionAdapter)];
         imageV1.backgroundColor = [UIColor colorWithHexString:@"#7fffff"];
         imageV1.layer.cornerRadius = 5 * ProportionAdapter;
@@ -258,7 +292,18 @@
         Label4.text = @"Bogey";
         [viewTitle addSubview:Label4];
         
-        UIView *greenView = [[UIView alloc] initWithFrame:CGRectMake(0, 136 * ProportionAdapter, screenWidth, 2 * ProportionAdapter)];
+        
+        UILabel *partLB = [[UILabel alloc] initWithFrame:CGRectMake(0 * ProportionAdapter, 140 * ProportionAdapter, screenWidth, 25 * ProportionAdapter)];
+        if ([self.dataArray count] > 0) {
+            JGDHistoryScoreShowModel *model = self.dataArray[0];
+            partLB.text = [NSString stringWithFormat:@"   %@", model.region1];
+        }
+        partLB.backgroundColor = [UIColor whiteColor];
+        partLB.font = [UIFont systemFontOfSize:13 * ProportionAdapter];
+        [viewTitle addSubview:partLB];
+        
+        
+        UIView *greenView = [[UIView alloc] initWithFrame:CGRectMake(0, 161 * ProportionAdapter, screenWidth, 2 * ProportionAdapter)];
         greenView.backgroundColor = [UIColor colorWithHexString:@"#32b14d"];
         [viewTitle addSubview:greenView];
         [headerView addSubview:viewTitle];
@@ -269,7 +314,16 @@
         UIView *lightV = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 12 * ProportionAdapter)];
         lightV.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];
         
-        UIView *greenView = [[UIView alloc] initWithFrame:CGRectMake(0, 10 * ProportionAdapter, screenWidth, 2 * ProportionAdapter)];
+        UILabel *partLB = [[UILabel alloc] initWithFrame:CGRectMake(0 * ProportionAdapter, 10 * ProportionAdapter, screenWidth, 25 * ProportionAdapter)];
+        if ([self.dataArray count] > 0) {
+            JGDHistoryScoreShowModel *model = self.dataArray[0];
+            partLB.text = [NSString stringWithFormat:@"   %@", model.region2];
+        }
+        partLB.backgroundColor = [UIColor whiteColor];
+        partLB.font = [UIFont systemFontOfSize:13 * ProportionAdapter];
+        [lightV addSubview:partLB];
+        
+        UIView *greenView = [[UIView alloc] initWithFrame:CGRectMake(0, 35 * ProportionAdapter, screenWidth, 2 * ProportionAdapter)];
         greenView.backgroundColor = [UIColor colorWithHexString:@"#32b14d"];
         [lightV addSubview:greenView];
         
@@ -277,11 +331,20 @@
     }
 }
 
+- (void)changeAct{
+    
+    JGDPlayerScoreCardViewController *almostVC = [[JGDPlayerScoreCardViewController alloc] init];
+    almostVC.timeKey = self.timeKey;
+    almostVC.ballkid = self.ballkid;
+    [self.navigationController pushViewController:almostVC animated:YES];
+}
+
+
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     if (section == 0) {
-        return 197 * ProportionAdapter;
+        return 222 * ProportionAdapter;
     }else{
-        return 12 * ProportionAdapter;
+        return 37 * ProportionAdapter;
     }
 }
 
@@ -305,10 +368,8 @@
             cell.colorImageV.backgroundColor = [UIColor clearColor];
             cell.nameLB.text = @"Hole";
             cell.sumLB.text = @"Out";
-            for (UILabel *lb in cell.contentView.subviews) {
-                if (lb.tag) {
-                    lb.text = [NSString stringWithFormat:@"%td", lb.tag - 776];
-                }
+            if ([self.dataArray count] > 0) {
+                [cell setholeSWithModel:self.dataArray[0] index:indexPath];
             }
         }else if (indexPath.row == 3) {
             
@@ -325,10 +386,8 @@
             cell.colorImageV.backgroundColor = [UIColor clearColor];
             cell.nameLB.text = @"Hole";
             cell.sumLB.text = @"In";
-            for (UILabel *lb in cell.contentView.subviews) {
-                if (lb.tag) {
-                    lb.text = [NSString stringWithFormat:@"%td", lb.tag - 776 + 9];
-                }
+            if ([self.dataArray count] > 0) {
+                [cell setholeSWithModel:self.dataArray[0] index:indexPath];
             }
         }else if (indexPath.row == 3) {
             
