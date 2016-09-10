@@ -134,7 +134,6 @@ static NSString *const JGHTwoScoreAreaCellIdentifier = @"JGHTwoScoreAreaCell";
             NSLog(@"indexPath.section -1 == %td", indexPath.section -1);
             model = _dataArray[indexPath.row -2];
             [scoresPageCell configPoorOneToNine:model.poleNumber andUserName:model.userName andStandradArray:model.standardlever];
-//            [scoresPageCell configOneToNine:model.poleNumber andUserName:model.userName];
         }
     }else{
         if (indexPath.row == 0) {
@@ -145,7 +144,6 @@ static NSString *const JGHTwoScoreAreaCellIdentifier = @"JGHTwoScoreAreaCell";
             [scoresPageCell configNineToEighteenth:model.standardlever andUserName:@"PAR"];
         }else{
             model = _dataArray[indexPath.row -2];
-//            [scoresPageCell configNineToEighteenth:model.poleNumber andUserName:model.userName];
             [scoresPageCell configPoorNineToEighteenth:model.poleNumber andUserName:model.userName andStandradArray:model.standardlever];
         }
     }
