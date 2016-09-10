@@ -43,7 +43,7 @@
 
 -(void) uiConfig
 {
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight) style:(UITableViewStylePlain)];
+    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight-64) style:(UITableViewStylePlain)];
     _tableView.delegate = self;
     _tableView.dataSource = self;
     _tableView.separatorStyle = UITableViewCellAccessoryNone;
@@ -193,6 +193,8 @@
         cell.disMissBtn.tag = indexPath.row + 100000;
         cell.stateLabel.hidden = YES;
         cell.timeLabel.hidden = YES;
+        cell.agreeBtn.hidden = NO;
+        cell.disMissBtn.hidden = NO;
         return cell;
     }
     else{
@@ -203,6 +205,8 @@
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.agreeBtn.hidden = YES;
         cell.disMissBtn.hidden = YES;
+        cell.stateLabel.hidden = NO;
+        cell.timeLabel.hidden = NO;
         cell.stateLabel.textColor = [UITool colorWithHexString:@"#a0a0a0" alpha:1];
         if (![Helper isBlankString:[_dataUpDataArray[indexPath.row] createTime]]) {
             

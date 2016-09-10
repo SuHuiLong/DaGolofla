@@ -68,6 +68,8 @@ static CGFloat ImageHeight  = 210.0;
     NSInteger _hasReleaseScore;//是否公布成绩0，1-已公布
     
     NSInteger _canSubsidy;//是否补贴-0不
+    
+    NSString* _strShare;
 }
 
 @property (nonatomic, strong)UITableView *teamActibityNameTableView;
@@ -258,6 +260,19 @@ static CGFloat ImageHeight  = 210.0;
             
             self.costListArray = [data objectForKey:@"costList"];
             
+//            for (int i = 0; i < self.costListArray.count; i++) {
+//                if ([[self.costListArray[i] allKeys] containsObject:@"money"] == YES) {
+//                    if (![Helper isBlankString:_strShare]) {
+//                        _strShare = [NSString stringWithFormat:@"%@,%@:%@",_strShare,[self.costListArray[i] costName],[self.costListArray[i] money]];
+//                    }
+//                    else{
+//                        _strShare = [NSString stringWithFormat:@"%@:%@",[self.costListArray[i] costName],[self.costListArray[i] money]];
+//                    }
+//                }
+//            }
+            
+            
+            
             NSMutableDictionary *dict = [NSMutableDictionary dictionary];
             
             if ([data objectForKey:@"teamMember"]) {
@@ -278,12 +293,13 @@ static CGFloat ImageHeight  = 210.0;
 
             if ([[Helper returnCurrentDateString] compare:_model.signUpEndTime] < 0) {
                 if ([_isApply integerValue] == 0) {
-                    [self createApplyBtn];//报名按钮
+                    [self createApplyBtn:0];//报名按钮
                 }else{
                     [self createCancelBtnAndApplyOrPay];//已报名
                 }
             }else{
-                self.teamActibityNameTableView.frame = CGRectMake(0, 0, ScreenWidth, ScreenHeight);
+//                self.teamActibityNameTableView.frame = CGRectMake(0, 0, ScreenWidth, ScreenHeight);
+                [self createApplyBtn:1];//报名按钮--禁止报名
             }
             
             [self.teamActibityNameTableView reloadData];
@@ -337,6 +353,10 @@ static CGFloat ImageHeight  = 210.0;
         //微信
         [UMSocialWechatHandler setWXAppId:@"wxdcdc4e20544ed728" appSecret:@"fdc75aae5a98f2aa0f62ef8cba2b08e9" url:shareUrl];
         [UMSocialConfig hiddenNotInstallPlatforms:@[UMShareToWechatSession,UMShareToWechatTimeline,UMShareToSina]];
+        
+        NSString* str = [NSString stringWithFormat:@"活动地址:%@。%@",_model.ballName,_strShare];
+        
+        
         [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatSession] content:[NSString stringWithFormat:@"球队会员：%.2f元，平台补贴：%.2f元，活动地点：%@，活动时间：%@", [_model.memberPrice floatValue],[_model.subsidyPrice floatValue],_model.ballName,_model.beginDate]  image:(fiData != nil && fiData.length > 0) ?fiData : [UIImage imageNamed:TeamBGImage] location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
             if (response.responseCode == UMSResponseCodeSuccess) {
                 //                [self shareS:indexRow];
@@ -518,24 +538,38 @@ static CGFloat ImageHeight  = 210.0;
     [self.navigationController pushViewController:cancelApplyCtrl animated:YES];
 }
 #pragma mark -- 创建报名按钮
-- (void)createApplyBtn{
+- (void)createApplyBtn:(NSInteger)btnID{
     self.headPortraitBtn.layer.masksToBounds = YES;
     self.headPortraitBtn.layer.cornerRadius = 8.0;
     
     UIButton *photoBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, screenHeight-44, (75*screenWidth/375)-1, 44)];
-    [photoBtn setImage:[UIImage imageNamed:@"consulting"] forState:UIControlStateNormal];
+    
     [photoBtn addTarget:self action:@selector(telPhotoClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:photoBtn];
+    
     UILabel *lines = [[UILabel alloc]initWithFrame:CGRectMake(photoBtn.frame.origin.x, photoBtn.frame.size.width, 1, 44)];
     lines.backgroundColor = [UIColor blackColor];
     [self.view addSubview:lines];
     self.applyBtn = [[UIButton alloc]initWithFrame:CGRectMake(photoBtn.frame.size.width + 1, screenHeight-44, screenWidth - 75 *ScreenWidth/375, 44)];
     [self.applyBtn setTitle:@"报名参加" forState:UIControlStateNormal];
-    self.applyBtn.backgroundColor = [UIColor colorWithHexString:Nav_Color];
-    [self.applyBtn addTarget:self action:@selector(applyAttendBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-
+    
+    
+    if (btnID == 0) {
+        [self.applyBtn addTarget:self action:@selector(applyAttendBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+        self.applyBtn.backgroundColor = [UIColor colorWithHexString:Nav_Color];
+        [photoBtn setImage:[UIImage imageNamed:@"consulting"] forState:UIControlStateNormal];
+    }else{
+        [self.applyBtn addTarget:self action:@selector(applyNoAttendBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+        self.applyBtn.backgroundColor = [UIColor lightGrayColor];
+        [photoBtn setImage:[UIImage imageNamed:@"consultingLight"] forState:UIControlStateNormal];
+    }
     
     [self.view addSubview:self.applyBtn];
+}
+#pragma mark -- 过期－报名
+- (void)applyNoAttendBtnClick:(UIButton *)btn{
+    [[ShowHUD showHUD]showToastWithText:@"该活动已截止报名！" FromView:self.view];
+    return;
 }
 #pragma mark -- 报名参加
 - (void)applyAttendBtnClick:(UIButton *)btn{

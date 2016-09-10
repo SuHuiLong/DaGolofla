@@ -102,11 +102,11 @@
         _ageLabel.text = [NSString stringWithFormat:@"%@岁",model.ballage];
     }
     if ([model.sex integerValue] == 1) {
-        _sexImage.image = [UIImage imageNamed:@"xb_nn"];
+        _sexImage.image = [UIImage imageNamed:@"xb_nn"];//男
     }
     else
     {
-        _sexImage.image = [UIImage imageNamed:@"xb_n"];
+        _sexImage.image = [UIImage imageNamed:@"xb_n"];//女
     }
     _chadianLabel.text = [NSString stringWithFormat:@"差点:%@",model.almost];
     _mobileLabel.text = [NSString stringWithFormat:@"手机号:%@",model.mobile];

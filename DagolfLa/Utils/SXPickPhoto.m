@@ -65,7 +65,7 @@
     
     //设置选择后的图片可被编辑
     
-    _picker.allowsEditing = YES;
+//    _picker.allowsEditing = YES;
     
     [Controller presentViewController:_picker animated:YES completion:nil];
 }

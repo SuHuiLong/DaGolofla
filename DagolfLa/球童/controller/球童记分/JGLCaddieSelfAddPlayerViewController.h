@@ -11,7 +11,7 @@
 @interface JGLCaddieSelfAddPlayerViewController : ViewController
 
 
-@property (copy, nonatomic) void (^blockSurePlayer)(NSMutableDictionary *,NSMutableDictionary*,NSMutableDictionary*);
+@property (copy, nonatomic) void (^blockSurePlayer)(NSMutableDictionary *);
 
 @property (copy, nonatomic) NSMutableDictionary* dictPeople, *peoAddress,* peoFriend;
 //通讯录返回数据    peoAddress

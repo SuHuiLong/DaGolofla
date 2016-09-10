@@ -9,6 +9,8 @@
 #import "JGHRetrieveScoreViewController.h"
 #import "JGHRetrieveScoreModel.h"
 #import "JGDHistoryScoreViewController.h"
+#import "JGDNotActivityHisCoreViewController.h"
+#import "JGDHistoryScoreShowViewController.h"
 
 @interface JGHRetrieveScoreViewController ()<UITextFieldDelegate>
 {
@@ -81,6 +83,10 @@
     self.eventView.layer.cornerRadius = 8.0;
     self.eventView.layer.masksToBounds = YES;
     
+    UIButton *eventBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, self.eventView.frame.size.width, self.eventView.frame.size.height)];
+    [eventBtn addTarget:self action:@selector(pushScoreBase:) forControlEvents:UIControlEventTouchUpInside];
+    [self.eventView addSubview:eventBtn];
+    
     self.eventName.font = [UIFont systemFontOfSize:17*ProportionAdapter];
     
     self.nameTop.constant = 8*ProportionAdapter;
@@ -110,6 +116,14 @@
     self.inScoresView.hidden = YES;
     
     self.noView.hidden = YES;
+}
+
+#pragma mark -- 点击记分卡  进入积分详情
+- (void)pushScoreBase:(UIButton *)btn{
+    NSLog(@"查看对应记分卡详情");
+    JGDNotActivityHisCoreViewController *hisCoreCtrl = [[JGDNotActivityHisCoreViewController alloc]init];
+    
+    [self.navigationController pushViewController:hisCoreCtrl animated:YES];
 }
 
 - (void)didReceiveMemoryWarning {

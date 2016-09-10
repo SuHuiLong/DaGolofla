@@ -34,7 +34,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8uS-Zn-GJm">
-                        <rect key="frame" x="187" y="26.5" width="1" height="80"/>
+                        <rect key="frame" x="187" y="26" width="1" height="80"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="80" id="M11-39-dvr"/>
                             <constraint firstAttribute="width" constant="1" id="lZm-0N-z8Q"/>
@@ -56,13 +56,13 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7ig-wG-1oA">
-                        <rect key="frame" x="220" y="64" width="13" height="25.5"/>
+                        <rect key="frame" x="220" y="65.5" width="13" height="25.5"/>
                         <fontDescription key="fontDescription" type="system" pointSize="21"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="推杆" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cI6-cs-GaN">
-                        <rect key="frame" x="213" y="92" width="26" height="16"/>
+                        <rect key="frame" x="213" y="93" width="26" height="16"/>
                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
@@ -83,7 +83,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <button opaque="NO" tag="61" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bZq-M0-hmi">
-                        <rect key="frame" x="304" y="76" width="50" height="32"/>
+                        <rect key="frame" x="304" y="77" width="50" height="32"/>
                         <constraints>
                             <constraint firstAttribute="width" secondItem="bZq-M0-hmi" secondAttribute="height" multiplier="25:16" id="zgG-XX-RYR"/>
                         </constraints>
@@ -93,7 +93,7 @@
                         </connections>
                     </button>
                     <button opaque="NO" tag="51" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DAe-Oj-5P1">
-                        <rect key="frame" x="254" y="76" width="50" height="32"/>
+                        <rect key="frame" x="254" y="77" width="50" height="32"/>
                         <constraints>
                             <constraint firstAttribute="width" secondItem="DAe-Oj-5P1" secondAttribute="height" multiplier="25:16" id="f0G-Ub-KMn"/>
                         </constraints>
@@ -141,8 +141,8 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="名称" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1L1-1Q-Mmj">
-                        <rect key="frame" x="20" y="89" width="114" height="20.5"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <rect key="frame" x="20" y="91" width="114" height="18"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
                         <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
@@ -211,6 +211,7 @@
                 <outlet property="pushPoleTop" destination="gqh-hh-Kbv" id="pe1-tA-oLg"/>
                 <outlet property="pushPoleValue" destination="7ig-wG-1oA" id="IWz-QT-9a2"/>
                 <outlet property="pushPoleValueRight" destination="cps-ZF-OmM" id="7QO-YP-SsH"/>
+                <outlet property="pushPromLable" destination="cI6-cs-GaN" id="KIq-P2-igf"/>
                 <outlet property="reduntionScoresBtn" destination="6s0-ge-w2h" id="pfa-GD-K0g"/>
                 <outlet property="rodTop" destination="gY3-oU-dMG" id="JFF-pO-hmw"/>
                 <outlet property="rodtoTotalPoleTop" destination="g1x-tx-Fxe" id="mDb-Sd-Cjf"/>
@@ -218,6 +219,7 @@
                 <outlet property="totalPoleLeft" destination="jmT-NK-wBq" id="Kcd-pJ-5MI"/>
                 <outlet property="totalPoleRight" destination="Lj6-DW-V8D" id="Liv-0u-wh7"/>
                 <outlet property="totalPoleValue" destination="QjO-fJ-OLa" id="LRo-9b-h6o"/>
+                <outlet property="totalPromLabel" destination="Vof-uQ-RCt" id="SHL-SZ-sNX"/>
                 <outlet property="totalPushValue" destination="e6Q-r2-5Ib" id="Xcc-oK-Ldb"/>
                 <outlet property="upperTrackBtn" destination="iwx-qM-Dkm" id="i3e-RI-9fc"/>
                 <outlet property="upperTrackNoBtn" destination="P9L-gY-TCJ" id="byu-pc-s5L"/>

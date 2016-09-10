@@ -47,7 +47,12 @@
     self.addScoresBtnRight.constant = 21*ProportionAdapter;
     
     self.userName.font = [UIFont systemFontOfSize:15.0 *ProportionAdapter];
-    self.userName.font = [UIFont systemFontOfSize:13.0*ProportionAdapter];
+//    self.userName.font = [UIFont systemFontOfSize:13.0*ProportionAdapter];
+    
+    self.totalPromLabel.font = [UIFont systemFontOfSize:13 *ProportionAdapter];
+    self.pushPromLable.font = [UIFont systemFontOfSize:13 *ProportionAdapter];
+
+    
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -171,6 +176,16 @@
         [self.upperTrackBtn setBackgroundImage:[UIImage imageNamed:@"onballL"] forState:UIControlStateNormal];
         [self.upperTrackNoBtn setBackgroundImage:[UIImage imageNamed:@"noballL"] forState:UIControlStateNormal];
     }
+}
+
+- (void)configTotalPoleViewTitle{
+    self.totalPole.text = @"总杆";
+    self.totalPromLabel.text = @"杆数";
+}
+
+- (void)configPoleViewTitle{
+    self.totalPole.text = @"总差杆";
+    self.totalPromLabel.text = @"差杆";
 }
 
 @end
