@@ -8,16 +8,33 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol JGHScoresHoleViewDelegate <NSObject>
+
+- (void)oneAreaBtnDelegate:(UIButton *)btn;
+
+- (void)twoAreaBtnDelegate:(UIButton *)btn;
+
+@end
+
 @interface JGHScoresHoleView : UIView
+
+@property (weak, nonatomic)id <JGHScoresHoleViewDelegate> delegate;
 
 @property (nonatomic, strong)NSMutableArray *dataArray;
 
 @property (nonatomic, assign)NSInteger curPage;
 
-@property (nonatomic, strong)NSArray *oneAreaArray;//球道区域
+@property (nonatomic, strong)NSArray *areaArray;//球道区域
 
-@property (nonatomic, strong)NSArray *twoAreaArray;//球道区域
+//@property (nonatomic, strong)NSArray *twoAreaArray;//球道区域
 
 - (void)reloadScoreList;
+
+- (void)removeOneAreaView;
+
+- (void)removeTwoAreaView;
+
+//选择区域后－－刷新试图数据
+- (void)reloadViewData:(NSMutableArray *)dataArray;
 
 @end

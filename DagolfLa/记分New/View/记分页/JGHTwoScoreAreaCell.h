@@ -25,4 +25,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *areaImageView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *areaImageViewLeft;//13
 
+
+- (void)configArea:(NSString *)areaString andImageDirection:(NSInteger)direction;
+
 @end

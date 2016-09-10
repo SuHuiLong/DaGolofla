@@ -14,17 +14,20 @@
 #import "JGDHistoryScoreViewController.h"
 #import "JGHCabbieWalletViewController.h"
 #import "JGLCaddieScoreViewController.h"
+#import "JGHPoorScoreHoleView.h"
 
-@interface JGHScoresViewController ()<UIPageViewControllerDataSource,UIPageViewControllerDelegate>
+//static NSInteger switchMode;
+
+@interface JGHScoresViewController ()<UIPageViewControllerDataSource,UIPageViewControllerDelegate, JGHScoresHoleViewDelegate, JGHPoorScoreHoleViewDelegate>
 {
     UIPageViewController *_pageViewController;
     NSMutableArray *_dataArray;
-//    NSInteger _currentPage;
-//    UIPageControl *_pageControl;
     
     NSInteger _selectHole;
     
     JGHScoresHoleView *_scoresView;
+    
+    JGHPoorScoreHoleView *_poorScoreView;
     
     UIView *_tranView;
     
@@ -47,7 +50,13 @@
     
     NSArray *_oneAreaArray;
     
-    NSArray *_twoAreaArray;
+    NSMutableArray *_currentAreaArray;
+    
+//    NSInteger _switchMode;//0-总；1-差
+    
+    NSMutableDictionary *_ballDict;
+    
+    NSInteger _ballKey;
 }
 
 @property (nonatomic, strong)NSMutableArray *userScoreArray;
@@ -91,9 +100,19 @@
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"bg_white"] forBarMetrics:UIBarMetricsDefault];
     [self.navigationController.navigationBar setBackgroundColor:[UIColor whiteColor]];
     _cabbieFinishScore = 0;//不结束
+//    _switchMode = 0;//默认总杆模式
+    _ballDict = [NSMutableDictionary dictionary];
+    NSUserDefaults *userdf = [NSUserDefaults standardUserDefaults];
+    if ([userdf objectForKey:[NSString stringWithFormat:@"switchMode%@", _scorekey]]) {
+        _switchMode = [[userdf objectForKey:[NSString stringWithFormat:@"switchMode%@", _scorekey]] integerValue];
+    }else{
+        _switchMode = 0;
+        [userdf setObject:@"0" forKey:[NSString stringWithFormat:@"switchMode%@", _scorekey]];
+        [userdf synchronize];
+    }
     
-    _oneAreaArray = @[@"A 区", @"B 区"];
-    _twoAreaArray = @[@"C 区", @"D 区"];
+    _oneAreaArray = [NSArray array];
+    _currentAreaArray = [NSMutableArray array];
     
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(noticePushScoresCtrl:) name:@"noticePushScores" object:nil];
     
@@ -141,7 +160,6 @@
     }
     
     [self getScoreList];
-    
 }
 
 -(void)dealloc
@@ -306,21 +324,36 @@
     [dict setObject:DEFAULF_USERID forKey:@"userKey"];
     [dict setObject:_scorekey forKey:@"scoreKey"];
     [dict setObject:[JGReturnMD5Str getScoreListUserKey:[DEFAULF_USERID integerValue] andScoreKey:[_scorekey integerValue]] forKey:@"md5"];
-    [[JsonHttp jsonHttp]httpRequest:@"score/getScoreList" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
+    [[JsonHttp jsonHttp]httpRequest:@"score/getOperationScoreList" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
         
     } completionBlock:^(id data) {
         NSLog(@"%@", data);
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+            
+            if ([data objectForKey:@"ballAreas"]) {
+                _oneAreaArray = [data objectForKey:@"ballAreas"];
+            }
+            
+            if ([data objectForKey:@"score"]) {
+                NSMutableDictionary *scoreDict = [data objectForKey:@"score"];
+                [_macthDict setObject:[scoreDict objectForKey:@"ballName"] forKey:@"ballName"];
+                [_macthDict setObject:[scoreDict objectForKey:@"ballKey"] forKey:@"placeId"];
+                [_macthDict setObject:[scoreDict objectForKey:@"createtime"] forKey:@"playTimes"];
+                
+                [_ballDict setObject:[scoreDict objectForKey:@"ballKey"] forKey:@"ballKey"];
+            }
+            
             if ([data objectForKey:@"list"]) {
                 NSArray *dataArray = [NSArray array];
                 dataArray = [data objectForKey:@"list"];
+
                 for (NSDictionary *dcitData in dataArray) {
                     JGHScoreListModel *model = [[JGHScoreListModel alloc]init];
                     [model setValuesForKeysWithDictionary:dcitData];
                     [self.userScoreArray addObject:model];
                 }
                 
-                self.timer =[NSTimer scheduledTimerWithTimeInterval:[[data objectForKey:@"interval"] floatValue] target:self
+                self.timer =[NSTimer scheduledTimerWithTimeInterval:[[data objectForKey:@"interval"] integerValue] target:self
                                                            selector:@selector(changeTimeAtTimeDoClick) userInfo:nil repeats:YES];
                 [self.timer fire];
                 
@@ -328,8 +361,9 @@
                 
                 JGHScoresMainViewController *sub = [[JGHScoresMainViewController alloc]init];
                 sub.index = _currentPage;
-                
                 sub.dataArray = self.userScoreArray;
+                sub.switchMode = _switchMode;
+                sub.scorekey = _scorekey;
                 __weak JGHScoresViewController *weakSelf = self;
                 sub.returnScoresDataArray= ^(NSMutableArray *dataArray){
                     weakSelf.userScoreArray = dataArray;
@@ -341,13 +375,6 @@
                 
                 _pageViewController.delegate = self;
                 _pageViewController.dataSource = self;
-                
-                if ([data objectForKey:@"score"]) {
-                    NSMutableDictionary *scoreDict = [data objectForKey:@"score"];
-                    [_macthDict setObject:[scoreDict objectForKey:@"ballName"] forKey:@"ballName"];
-                    [_macthDict setObject:[scoreDict objectForKey:@"ballKey"] forKey:@"placeId"];
-                    [_macthDict setObject:[scoreDict objectForKey:@"createtime"] forKey:@"playTimes"];
-                }
                 
                 for (int x=0; x<dataArray.count; x++) {
                     JGHScoreListModel *model = [[JGHScoreListModel alloc]init];
@@ -386,29 +413,51 @@
         _selectHole = 1;
         [_item setTitle:@"结束记分"];
         [_arrowBtn setImage:[UIImage imageNamed:@"zk1"] forState:UIControlStateNormal];
-        _scoresView = [[JGHScoresHoleView alloc]init];
-        _scoresView.frame = CGRectMake(0, 0, screenWidth, (194 + self.userScoreArray.count * 60)*ProportionAdapter);
-        _scoresView.dataArray = self.userScoreArray;
-        _scoresView.oneAreaArray = _oneAreaArray;
-        _scoresView.twoAreaArray = _twoAreaArray;
-        _scoresView.curPage = _selectPage;
-        [self.view addSubview:_scoresView];
-        [_scoresView reloadScoreList];//更新UI位置
-        _tranView = [[UIView alloc]initWithFrame:CGRectMake(0, _scoresView.frame.size.height, screenWidth, (screenHeight -64)-(194 + self.userScoreArray.count * 60)*ProportionAdapter)];
-        _tranView.backgroundColor = [UIColor blackColor];
-        _tranView.alpha = 0.3;
-        
-        UITapGestureRecognizer *tag = [[UITapGestureRecognizer alloc]init];
-        [tag addTarget:self action:@selector(titleBtnClick)];
-        [_tranView addGestureRecognizer:tag];
-        [self.view addSubview:_tranView];
-        [self.view addSubview:_scoresView];
-        
+        NSUserDefaults *userdf = [NSUserDefaults standardUserDefaults];
+        _switchMode = [[userdf objectForKey:[NSString stringWithFormat:@"switchMode%@", _scorekey]] integerValue];
+        if (_switchMode == 0) {
+            _scoresView = [[JGHScoresHoleView alloc]init];
+            _scoresView.delegate = self;
+            _scoresView.frame = CGRectMake(0, 0, screenWidth, (194 + self.userScoreArray.count * 60)*ProportionAdapter);
+            _scoresView.dataArray = self.userScoreArray;
+            _scoresView.areaArray = _oneAreaArray;
+            _scoresView.curPage = _selectPage;
+            [self.view addSubview:_scoresView];
+            [_scoresView reloadScoreList];//更新UI位置
+            _tranView = [[UIView alloc]initWithFrame:CGRectMake(0, _scoresView.frame.size.height, screenWidth, (screenHeight -64)-(194 + self.userScoreArray.count * 60)*ProportionAdapter)];
+            _tranView.backgroundColor = [UIColor blackColor];
+            _tranView.alpha = 0.3;
+            
+            UITapGestureRecognizer *tag = [[UITapGestureRecognizer alloc]init];
+            [tag addTarget:self action:@selector(titleBtnClick)];
+            [_tranView addGestureRecognizer:tag];
+            [self.view addSubview:_tranView];
+            [self.view addSubview:_scoresView];
+        }else{
+            _poorScoreView = [[JGHPoorScoreHoleView alloc]init];
+            _poorScoreView.delegate = self;
+            _poorScoreView.frame = CGRectMake(0, 0, screenWidth, (194 + self.userScoreArray.count * 60)*ProportionAdapter);
+            _poorScoreView.dataArray = self.userScoreArray;
+            _poorScoreView.areaArray = _oneAreaArray;
+            _poorScoreView.curPage = _selectPage;
+            [self.view addSubview:_scoresView];
+            [_poorScoreView reloadScoreList];//更新UI位置
+            _tranView = [[UIView alloc]initWithFrame:CGRectMake(0, _poorScoreView.frame.size.height, screenWidth, (screenHeight -64)-(194 + self.userScoreArray.count * 60)*ProportionAdapter)];
+            _tranView.backgroundColor = [UIColor blackColor];
+            _tranView.alpha = 0.3;
+            
+            UITapGestureRecognizer *tag = [[UITapGestureRecognizer alloc]init];
+            [tag addTarget:self action:@selector(titleBtnClick)];
+            [_tranView addGestureRecognizer:tag];
+            [self.view addSubview:_tranView];
+            [self.view addSubview:_poorScoreView];
+        }
     }else{
         [_arrowBtn setImage:[UIImage imageNamed:@"zk"] forState:UIControlStateNormal];
         _selectHole = 0;
         [_item setTitle:@"保存"];
         [_scoresView removeFromSuperview];
+        [_poorScoreView removeFromSuperview];
         [_tranView removeFromSuperview];
     }
 }
@@ -416,11 +465,15 @@
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController
 {
     JGHScoresMainViewController *s = (JGHScoresMainViewController *)viewController;
+    s.switchMode = _switchMode;
     _currentPage = s.index;
     if (_currentPage <= 0) {
         _currentPage = _dataArray.count - 1;
         JGHScoresMainViewController *sub = [[JGHScoresMainViewController alloc]init];
         sub.index = _currentPage;
+        NSUserDefaults *userdf = [NSUserDefaults standardUserDefaults];
+        sub.switchMode = [[userdf objectForKey:[NSString stringWithFormat:@"switchMode%@", _scorekey]] integerValue];
+        sub.scorekey = _scorekey;
         sub.dataArray = self.userScoreArray;
         return sub;
     }
@@ -428,21 +481,28 @@
     {
         _currentPage--;
         JGHScoresMainViewController *sub = [[JGHScoresMainViewController alloc]init];
+        NSUserDefaults *userdf = [NSUserDefaults standardUserDefaults];
+        sub.switchMode = [[userdf objectForKey:[NSString stringWithFormat:@"switchMode%@", _scorekey]] integerValue];
         sub.index = _currentPage;
+        sub.scorekey = _scorekey;
         sub.dataArray = self.userScoreArray;
         return sub;
     }
 }
 
-//返回后一页的视图控制器
+//下一页的视图控制器
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(UIViewController *)viewController
 {
     JGHScoresMainViewController *s = (JGHScoresMainViewController *)viewController;
+    s.switchMode = _switchMode;
     _currentPage = s.index;
     if (_currentPage >= _dataArray.count - 1) {
         _currentPage = 0;
         JGHScoresMainViewController *sub = [[JGHScoresMainViewController alloc]init];
+        NSUserDefaults *userdf = [NSUserDefaults standardUserDefaults];
+        sub.switchMode = [[userdf objectForKey:[NSString stringWithFormat:@"switchMode%@", _scorekey]] integerValue];
         sub.index = _currentPage;
+        sub.scorekey = _scorekey;
         sub.dataArray = self.userScoreArray;
         return sub;
     }
@@ -450,9 +510,11 @@
     {
         _currentPage++;
         JGHScoresMainViewController *sub = [[JGHScoresMainViewController alloc]init];
+        NSUserDefaults *userdf = [NSUserDefaults standardUserDefaults];
+        sub.switchMode = [[userdf objectForKey:[NSString stringWithFormat:@"switchMode%@", _scorekey]] integerValue];
         sub.index = _currentPage;
+        sub.scorekey = _scorekey;
         sub.dataArray = self.userScoreArray;
-        //        sub.text = _dataArray[_currentPage];
         NSLog(@"%@",sub);
         return sub;
     }
@@ -461,7 +523,10 @@
 - (void)pageViewController:(UIPageViewController *)pageViewController didFinishAnimating:(BOOL)finished previousViewControllers:(NSArray *)previousViewControllers transitionCompleted:(BOOL)completed
 {
     JGHScoresMainViewController *sub = (JGHScoresMainViewController *)pageViewController.viewControllers[0];
-    
+//    sub.delegate = self;
+    NSUserDefaults *userdf = [NSUserDefaults standardUserDefaults];
+    sub.switchMode = [[userdf objectForKey:[NSString stringWithFormat:@"switchMode%@", _scorekey]] integerValue];
+    sub.scorekey = _scorekey;
     __weak JGHScoresViewController *weakSelf = self;
     sub.returnScoresDataArray= ^(NSMutableArray *dataArray){
         weakSelf.userScoreArray = dataArray;
@@ -679,6 +744,107 @@
         }    
 
     }
+}
+#pragma mark -- 切换球场区域 -- 总杆模式
+- (void)oneAreaBtnDelegate:(UIButton *)btn{
+    
+    [Helper alertViewWithTitle:@"确定切换打球区吗？该区切换前的记分数据会被清空！" withBlockCancle:^{
+        
+    } withBlockSure:^{
+        
+        [self loadOneAreaData:btn.currentTitle andBtnTag:btn.tag];
+    } withBlock:^(UIAlertController *alertView) {
+        [self presentViewController:alertView animated:YES completion:nil];
+    }];
+}
+#pragma mark -- 切换第一区 -- 总杆模式
+- (void)loadOneAreaData:(NSString *)btnString andBtnTag:(NSInteger)tag{
+    NSLog(@"%@", btnString);
+    //getOperationScoreList
+    [_ballDict setObject:btnString forKey:@"cityName"];// 区域名
+    [_ballDict setObject:[JGReturnMD5Str getHoleNameAndPolesBallKey:[[_ballDict objectForKey:@"ballKey"] integerValue] andArea:btnString] forKey:@"md5"];
+    [[JsonHttp jsonHttp]httpRequest:@"ball/getHoleNameAndPoles" JsonKey:nil withData:_ballDict requestMethod:@"GET" failedBlock:^(id errType) {
+        
+    } completionBlock:^(id data) {
+        NSLog(@"%@", data);
+        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+            NSArray *holeNamesArray = [NSArray array];
+            holeNamesArray = [data objectForKey:@"holeNames"];
+            if (tag < 400) {
+                
+                [_scoresView removeOneAreaView];
+                //userScoreArray--poleNameList
+                for (int j=0; j<self.userScoreArray.count; j++) {
+                    JGHScoreListModel *model = self.userScoreArray[j];
+                    NSMutableArray *poleNameList = [NSMutableArray arrayWithArray:model.poleNameList];
+                    NSMutableArray *poleNumber = [NSMutableArray arrayWithArray:model.poleNumber];
+                    
+                    for (int i=0; i< 9; i++) {
+                        [poleNameList replaceObjectAtIndex:i withObject:holeNamesArray[i]];
+                        [poleNumber replaceObjectAtIndex:i withObject:@-1];
+                    }
+                    
+                    model.poleNameList = poleNameList;
+                    model.poleNumber = poleNumber;
+                    [self.userScoreArray replaceObjectAtIndex:j withObject:model];
+                }
+                
+            }else{
+                [_scoresView removeTwoAreaView];
+                
+                for (int j=0; j<self.userScoreArray.count; j++) {
+                    JGHScoreListModel *model = self.userScoreArray[j];
+                    NSMutableArray *poleNameList = [NSMutableArray arrayWithArray:model.poleNameList];
+                     NSMutableArray *poleNumber = [NSMutableArray arrayWithArray:model.poleNumber];
+                    
+                    for (int i=0; i< 9; i++) {
+                        [poleNameList replaceObjectAtIndex:i +9 withObject:holeNamesArray[i]];
+                        [poleNumber replaceObjectAtIndex:i +9 withObject:@-1];
+                    }
+                    
+                    model.poleNameList = poleNameList;
+                    model.poleNumber = poleNumber;
+                    [self.userScoreArray replaceObjectAtIndex:j withObject:model];
+                }
+            }
+            
+            //刷新
+            [_scoresView reloadViewData:self.userScoreArray];
+        }else{
+            if ([data objectForKey:@"packResultMsg"]) {
+                [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+            }
+        }
+    }];
+}
+- (void)twoAreaBtnDelegate:(UIButton *)btn{
+    [Helper alertViewWithTitle:@"确定切换打球区吗？该区切换前的记分数据会被清空！" withBlockCancle:^{
+        
+    } withBlockSure:^{
+        [self loadOneAreaData:btn.currentTitle andBtnTag:btn.tag];
+    } withBlock:^(UIAlertController *alertView) {
+        [self presentViewController:alertView animated:YES completion:nil];
+    }];
+}
+#pragma mark -- 差杆模式。切换区域
+- (void)oneAreaPoorBtnDelegate:(UIButton *)btn{
+    [Helper alertViewWithTitle:@"确定切换打球区吗？该区切换前的记分数据会被清空！" withBlockCancle:^{
+        
+    } withBlockSure:^{
+        
+        [self loadOneAreaData:btn.currentTitle andBtnTag:btn.tag];
+    } withBlock:^(UIAlertController *alertView) {
+        [self presentViewController:alertView animated:YES completion:nil];
+    }];
+}
+- (void)twoAreaPoorBtnDelegate:(UIButton *)btn{
+    [Helper alertViewWithTitle:@"确定切换打球区吗？该区切换前的记分数据会被清空！" withBlockCancle:^{
+        
+    } withBlockSure:^{
+        [self loadOneAreaData:btn.currentTitle andBtnTag:btn.tag];
+    } withBlock:^(UIAlertController *alertView) {
+        [self presentViewController:alertView animated:YES completion:nil];
+    }];
 }
 
 - (void)didReceiveMemoryWarning {

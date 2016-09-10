@@ -1,4 +1,4 @@
- //
+//
 //  JGHScoresMainViewController.m
 //  DagolfLa
 //
@@ -16,7 +16,7 @@ static NSString *const JGHNewScoresPageCellIdentifier = @"JGHNewScoresPageCell";
 
 @interface JGHScoresMainViewController ()<UITableViewDelegate, UITableViewDataSource, JGHScoresPageCellDelegate, JGHNewScoresPageCellDelegate>
 {
-    NSInteger _switchMode;// 0- 总；1- 差
+//    NSInteger _switchMode;// 0- 总；1- 差
     UIButton *_totalPoleBtn;
 }
 
@@ -26,8 +26,27 @@ static NSString *const JGHNewScoresPageCellIdentifier = @"JGHNewScoresPageCell";
 
 @implementation JGHScoresMainViewController
 
+- (void)viewDidDisappear:(BOOL)animated{
+    [super viewDidDisappear:animated];
+    
+}
+
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+}
+
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:YES];
+//    [self.scoresTableView reloadData];
+    NSUserDefaults *userdf = [NSUserDefaults standardUserDefaults];
+    _switchMode = [[userdf objectForKey:[NSString stringWithFormat:@"switchMode%@", _scorekey]] integerValue];
+    
+    if (_switchMode == 0) {
+        [_totalPoleBtn setTitle:@"总杆模式" forState:UIControlStateNormal];
+    }else{
+        [_totalPoleBtn setTitle:@"差杆模式" forState:UIControlStateNormal];
+    }
+    
     [self.scoresTableView reloadData];
 }
 
@@ -41,8 +60,7 @@ static NSString *const JGHNewScoresPageCellIdentifier = @"JGHNewScoresPageCell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    _switchMode = 0;
-    
+//    _switchMode = 0;
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(noticePushScoresCtrl:) name:@"noticePushScores" object:nil];
     
     self.scoresTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight - 64) style:UITableViewStylePlain];
@@ -81,8 +99,17 @@ static NSString *const JGHNewScoresPageCellIdentifier = @"JGHNewScoresPageCell";
      [view addSubview:label];
      */
     _totalPoleBtn = [[UIButton alloc]initWithFrame:CGRectMake((screenWidth-140*ProportionAdapter)/2, 0, 140*ProportionAdapter, 20*ProportionAdapter)];
-    [_totalPoleBtn setTitle:@"总杆模式" forState:UIControlStateNormal];
-    [_totalPoleBtn setTintColor:[UIColor colorWithHexString:Bar_Color]];
+    NSUserDefaults *userdf = [NSUserDefaults standardUserDefaults];
+    
+    if ([[userdf objectForKey:[NSString stringWithFormat:@"switchMode%@", _scorekey]] integerValue] == 0) {
+       
+        [_totalPoleBtn setTitle:@"总杆模式" forState:UIControlStateNormal];
+    }else{
+        [_totalPoleBtn setTitle:@"差杆模式" forState:UIControlStateNormal];
+    }
+    
+    NSLog(@"%td", [[userdf objectForKey:[NSString stringWithFormat:@"switchMode%@", _scorekey]] integerValue]);
+    [_totalPoleBtn setTitleColor:[UIColor colorWithHexString:Bar_Color] forState:UIControlStateNormal];
     _totalPoleBtn.titleLabel.font = [UIFont systemFontOfSize:15.0*ProportionAdapter];
     [_totalPoleBtn addTarget:self action:@selector(switchMode:) forControlEvents:UIControlEventTouchUpInside];
     [view addSubview:_totalPoleBtn];
@@ -92,8 +119,8 @@ static NSString *const JGHNewScoresPageCellIdentifier = @"JGHNewScoresPageCell";
 #pragma mark -- 记分模式切换
 - (void)switchMode:(UIButton *)btn{
     NSLog(@"记分模式");
-    
-    if (_switchMode == 0) {
+    NSUserDefaults *userdf = [NSUserDefaults standardUserDefaults];
+    if ([[userdf objectForKey:[NSString stringWithFormat:@"switchMode%@", _scorekey]] integerValue] == 0) {
         _switchMode = 1;
         [_totalPoleBtn setTitle:@"差杆模式" forState:UIControlStateNormal];
     }else{
@@ -103,6 +130,10 @@ static NSString *const JGHNewScoresPageCellIdentifier = @"JGHNewScoresPageCell";
     }
     
     [self.scoresTableView reloadData];
+    
+//    NSUserDefaults *userdf = [NSUserDefaults standardUserDefaults];
+    [userdf setObject:@(_switchMode) forKey:[NSString stringWithFormat:@"switchMode%@", _scorekey]];
+    [userdf synchronize];
 }
 #pragma mark -- 跳转指定记分几页通知
 - (void)noticePushScoresCtrl:(NSNotification *)not{
@@ -129,13 +160,16 @@ static NSString *const JGHNewScoresPageCellIdentifier = @"JGHNewScoresPageCell";
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    NSUserDefaults *userdf = [NSUserDefaults standardUserDefaults];
     if (_dataArray.count < 3) {
         JGHNewScoresPageCell *newScoresPageCell = [tableView dequeueReusableCellWithIdentifier:JGHNewScoresPageCellIdentifier];
-        newScoresPageCell.delegate = self;
+//        newScoresPageCell.delegate = self;
         newScoresPageCell.tag = indexPath.section + 100;
         newScoresPageCell.selectionStyle = UITableViewCellSelectionStyleNone;
         //        [scoresPageCell configJGHScoreListModel:_dataArray[indexPath.section] andIndex:_index];
-        if (_switchMode == 0) {
+        NSLog(@"ussssss === %@", [userdf objectForKey:[NSString stringWithFormat:@"switchMode%@", _scorekey]]);
+        if ([[userdf objectForKey:[NSString stringWithFormat:@"switchMode%@", _scorekey]] integerValue] == 0) {
             [newScoresPageCell configTotalPoleViewTitle];
         }else{
             [newScoresPageCell configPoleViewTitle];
@@ -147,10 +181,12 @@ static NSString *const JGHNewScoresPageCellIdentifier = @"JGHNewScoresPageCell";
         scoresPageCell.delegate = self;
         scoresPageCell.tag = indexPath.section + 100;
         scoresPageCell.selectionStyle = UITableViewCellSelectionStyleNone;
-        [scoresPageCell configJGHScoreListModel:_dataArray[indexPath.section] andIndex:_index];
-        if (_switchMode == 0) {
+        NSLog(@"useeeees === %@", [userdf objectForKey:[NSString stringWithFormat:@"switchMode%@", _scorekey]]);
+        if ([[userdf objectForKey:[NSString stringWithFormat:@"switchMode%@", _scorekey]] integerValue] == 0) {
             [scoresPageCell configTotalPoleViewTitle];
+            [scoresPageCell configJGHScoreListModel:_dataArray[indexPath.section] andIndex:_index];
         }else{
+            [scoresPageCell configPoorJGHScoreListModel:_dataArray[indexPath.section] andIndex:_index];
             [scoresPageCell configPoleViewTitle];
         }
         
@@ -231,18 +267,35 @@ static NSString *const JGHNewScoresPageCellIdentifier = @"JGHNewScoresPageCell";
         model = self.dataArray[cellTag-100];
         NSMutableArray *poleNumberArray = [NSMutableArray array];
         for (int i=0; i<model.poleNumber.count; i++) {
-            if (i == _index) {
-                if ([model.poleNumber[i] integerValue] == -1) {
-                    [poleNumberArray addObject:@([model.standardlever[i] integerValue])];
-                }else{
-                    if ([model.poleNumber[i] integerValue]-1 > 0) {
-                        [poleNumberArray addObject:@([model.poleNumber[i] integerValue]-1)];
+            if (_switchMode == 0) {
+                if (i == _index) {
+                    if ([model.poleNumber[i] integerValue] == -1) {
+                        [poleNumberArray addObject:@([model.standardlever[i] integerValue])];
                     }else{
-                        [poleNumberArray addObject:@1];
+                        if ([model.poleNumber[i] integerValue]-1 > 0) {
+                            [poleNumberArray addObject:@([model.poleNumber[i] integerValue]-1)];
+                        }else{
+                            [poleNumberArray addObject:@1];
+                        }
                     }
+                }else{
+                    [poleNumberArray addObject:model.poleNumber[i]];
                 }
             }else{
-                [poleNumberArray addObject:model.poleNumber[i]];
+                //差杆模式
+                if (i == _index) {
+                    if ([model.poleNumber[i] integerValue] == -1) {
+                        [poleNumberArray addObject:@0];
+                    }else{
+                        if ([model.poleNumber[i] integerValue]-1 > 0) {
+                            [poleNumberArray addObject:@([model.poleNumber[i] integerValue]-1)];
+                        }else{
+                            [poleNumberArray addObject:@1];
+                        }
+                    }
+                }else{
+                    [poleNumberArray addObject:model.poleNumber[i]];
+                }
             }
         }
         
@@ -256,7 +309,11 @@ static NSString *const JGHNewScoresPageCellIdentifier = @"JGHNewScoresPageCell";
         for (int i=0; i<model.pushrod.count; i++) {
             if (i == _index) {
                 if ([model.pushrod[i] integerValue] == -1) {
-                    [pushrodArray addObject:@2];
+                    if (_switchMode == 0) {
+                        [pushrodArray addObject:@2];
+                    }else{
+                        [pushrodArray addObject:@0];
+                    }
                 }else{
                     if ([model.pushrod[i] integerValue]-1 > 0) {
                         [pushrodArray addObject:@([model.pushrod[i] integerValue]-1)];
@@ -318,7 +375,11 @@ static NSString *const JGHNewScoresPageCellIdentifier = @"JGHNewScoresPageCell";
         for (int i=0; i<model.pushrod.count; i++) {
             if (i == _index) {
                 if ([model.pushrod[i] integerValue] == -1) {
-                    [pushrodArray addObject:@2];
+                    if (_switchMode == 0) {
+                        [pushrodArray addObject:@2];
+                    }else{
+                        [pushrodArray addObject:@0];
+                    }
                 }else{
                     [pushrodArray addObject:@([model.pushrod[i] integerValue]+1)];
                 }
@@ -373,11 +434,11 @@ static NSString *const JGHNewScoresPageCellIdentifier = @"JGHNewScoresPageCell";
 - (void)didTotalNOFairway:(UIButton *)btn andCellTage:(NSInteger)cellTag{
     [self selectUpperTrackNoBtnClick:btn andCellTage:cellTag];
 }
-#pragma mark -- + 杆数
+#pragma mark -- + 杆数 -- + 差杆
 - (void)didTotalAddPoleNumber:(UIButton *)btn andCellTage:(NSInteger)cellTag{
     [self selectAddScoresBtnClick:btn andCellTage:cellTag];
 }
-#pragma mark -- - 杆数
+#pragma mark -- - 杆数 -- - 差杆
 - (void)didTotalRedPoleNumber:(UIButton *)btn andCellTage:(NSInteger)cellTag{
     [self selectReduntionScoresBtnClicK:btn andCellTage:cellTag];
 }

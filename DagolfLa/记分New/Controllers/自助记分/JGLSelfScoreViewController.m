@@ -183,6 +183,7 @@
         if ([[data objectForKey:@"packSuccess"]integerValue] == 1) {
             JGHScoresViewController *scoresCtrl = [[JGHScoresViewController alloc]init];
             scoresCtrl.scorekey = [data objectForKey:@"scorekey"];
+//            scoresCtrl
             [self.navigationController pushViewController:scoresCtrl animated:YES];
         }else{
             if ([data objectForKey:@"packResultMsg"]) {

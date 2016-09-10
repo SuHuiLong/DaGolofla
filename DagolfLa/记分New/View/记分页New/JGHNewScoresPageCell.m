@@ -51,7 +51,6 @@
     self.pushRedBtnLeft.constant = 16 *ProportionAdapter;
     self.rodAddBtnRight.constant = 20 *ProportionAdapter;
     self.rodRedBtnLeft.constant = 16 *ProportionAdapter;
-    
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

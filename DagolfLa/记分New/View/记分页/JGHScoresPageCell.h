@@ -74,6 +74,8 @@
 
 - (void)configJGHScoreListModel:(JGHScoreListModel *)model andIndex:(NSInteger)index;
 
+- (void)configPoorJGHScoreListModel:(JGHScoreListModel *)model andIndex:(NSInteger)index;
+
 - (void)configTotalPoleViewTitle;
 
 - (void)configPoleViewTitle;

@@ -1,25 +1,24 @@
 //
-//  JGHScoresHoleView.m
+//  JGHPoorScoreHoleView.m
 //  DagolfLa
 //
-//  Created by 黄安 on 16/7/13.
+//  Created by 黄安 on 16/9/8.
 //  Copyright © 2016年 bhxx. All rights reserved.
 //
 
-#import "JGHScoresHoleView.h"
+#import "JGHPoorScoreHoleView.h"
 #import "JGHScoresHoleCell.h"
 #import "JGHScoreListModel.h"
 #import "JGHScoreAreaCell.h"
 #import "JGHTwoScoreAreaCell.h"
-#import "JGHPoorBarHoleCell.h"
 
 #define BGScoreColor @"#B3E4BF"
 
 static NSString *const JGHScoresHoleCellIdentifier = @"JGHScoresHoleCell";
-static NSString *const JGHPoorBarHoleCellIdentifier = @"JGHPoorBarHoleCell";
+static NSString *const JGHScoreAreaCellIdentifier = @"JGHScoreAreaCell";
 static NSString *const JGHTwoScoreAreaCellIdentifier = @"JGHTwoScoreAreaCell";
 
-@interface JGHScoresHoleView ()<UITableViewDelegate, UITableViewDataSource, JGHScoresHoleCellDelegate, JGHTwoScoreAreaCellDelegate, JGHPoorBarHoleCellDelegate>
+@interface JGHPoorScoreHoleView ()<UITableViewDelegate, UITableViewDataSource, JGHScoreAreaCellDelegate, JGHScoresHoleCellDelegate, JGHTwoScoreAreaCellDelegate>
 {
 //    NSArray *_titleArray;
     NSArray *_colorArray;
@@ -28,18 +27,17 @@ static NSString *const JGHTwoScoreAreaCellIdentifier = @"JGHTwoScoreAreaCell";
     UIView *_oneAreaView;
     UIView *_twoAreaView;
     
-    NSMutableArray *_currentAreaArray;
-    
     NSInteger _imageSelectOne;
     NSInteger _imageSelectTwo;
+    
+    NSMutableArray *_currentAreaArray;
 }
 
 @property (nonatomic, strong)UITableView *scoreTableView;
 
 @end
 
-@implementation JGHScoresHoleView
-
+@implementation JGHPoorScoreHoleView
 
 - (instancetype)init{
     if (self == [super init]) {
@@ -55,8 +53,8 @@ static NSString *const JGHTwoScoreAreaCellIdentifier = @"JGHTwoScoreAreaCell";
         UINib *scoresPageCellNib = [UINib nibWithNibName:@"JGHScoresHoleCell" bundle: [NSBundle mainBundle]];
         [self.scoreTableView registerNib:scoresPageCellNib forCellReuseIdentifier:JGHScoresHoleCellIdentifier];
         
-        UINib *scoreAreaCellNib = [UINib nibWithNibName:@"JGHPoorBarHoleCell" bundle: [NSBundle mainBundle]];
-        [self.scoreTableView registerNib:scoreAreaCellNib forCellReuseIdentifier:JGHPoorBarHoleCellIdentifier];
+        UINib *scoreAreaCellNib = [UINib nibWithNibName:@"JGHScoreAreaCell" bundle: [NSBundle mainBundle]];
+        [self.scoreTableView registerNib:scoreAreaCellNib forCellReuseIdentifier:JGHScoreAreaCellIdentifier];
         
         UINib *twoScoreAreaCellNib = [UINib nibWithNibName:@"JGHTwoScoreAreaCell" bundle: [NSBundle mainBundle]];
         [self.scoreTableView registerNib:twoScoreAreaCellNib forCellReuseIdentifier:JGHTwoScoreAreaCellIdentifier];
@@ -99,10 +97,9 @@ static NSString *const JGHTwoScoreAreaCellIdentifier = @"JGHTwoScoreAreaCell";
     scoresPageCell.delegate = self;
     scoresPageCell.tag = indexPath.section*10 + indexPath.row*100;
     scoresPageCell.selectionStyle = UITableViewCellSelectionStyleNone;
-    NSLog(@"page == %td", self.tag);
-    //背景
+    NSLog(@"%td", self.tag);
     if (_dataArray.count > 0) {
-        NSLog(@"_curPage === %td", _curPage);
+        NSLog(@"%td", _curPage);
         if (_curPage <= 9) {
             if (indexPath.section == 0) {
                 [scoresPageCell configAllViewBgColor:_colorArray[indexPath.row] andCellTag:_curPage];
@@ -118,8 +115,6 @@ static NSString *const JGHTwoScoreAreaCellIdentifier = @"JGHTwoScoreAreaCell";
         }
     }
     
-    NSLog(@"page1111 == %td", self.tag);
-    //数据
     JGHScoreListModel *model = [[JGHScoreListModel alloc]init];
     
     if (indexPath.section == 0) {
@@ -133,8 +128,8 @@ static NSString *const JGHTwoScoreAreaCellIdentifier = @"JGHTwoScoreAreaCell";
             NSLog(@"indexPath.row -1 == %td", indexPath.row -1);
             NSLog(@"indexPath.section -1 == %td", indexPath.section -1);
             model = _dataArray[indexPath.row -2];
-            [scoresPageCell configPoorOneToNine:model.poleNumber andUserName:model.userName andStandradArray:model.standardlever];
 //            [scoresPageCell configOneToNine:model.poleNumber andUserName:model.userName];
+            [scoresPageCell configOneToNine:model.poleNumber andUserName:model.userName andStandradArray:model.standardlever];
         }
     }else{
         if (indexPath.row == 0) {
@@ -146,10 +141,10 @@ static NSString *const JGHTwoScoreAreaCellIdentifier = @"JGHTwoScoreAreaCell";
         }else{
             model = _dataArray[indexPath.row -2];
 //            [scoresPageCell configNineToEighteenth:model.poleNumber andUserName:model.userName];
-            [scoresPageCell configPoorNineToEighteenth:model.poleNumber andUserName:model.userName andStandradArray:model.standardlever];
+            [scoresPageCell configNineToEighteenth:model.poleNumber andUserName:model.userName andStandradArray:model.standardlever];
         }
     }
-    NSLog(@"page22222 == %td", self.tag);
+    
     return scoresPageCell;
 }
 
@@ -159,14 +154,14 @@ static NSString *const JGHTwoScoreAreaCellIdentifier = @"JGHTwoScoreAreaCell";
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     if (section == 0) {
-        JGHPoorBarHoleCell *scoreAreaCell = [tableView dequeueReusableCellWithIdentifier:JGHPoorBarHoleCellIdentifier];
+        JGHScoreAreaCell *scoreAreaCell = [tableView dequeueReusableCellWithIdentifier:JGHScoreAreaCellIdentifier];
         scoreAreaCell.delegate = self;
-        [scoreAreaCell configJGHPoorBarHoleCell:_currentAreaArray[section] andImageDirection:_imageSelectOne];
+//        [scoreAreaCell configArea:_currentAreaArray[section] andImageDirection:_imageSelectOne];
         return scoreAreaCell;
+
     }else{
         JGHTwoScoreAreaCell *twoScoreAreaCell = [tableView dequeueReusableCellWithIdentifier:JGHTwoScoreAreaCellIdentifier];
         twoScoreAreaCell.delegate = self;
-        [twoScoreAreaCell configArea:_currentAreaArray[section] andImageDirection:_imageSelectTwo];
         return twoScoreAreaCell;
     }
 }
@@ -188,8 +183,8 @@ static NSString *const JGHTwoScoreAreaCellIdentifier = @"JGHTwoScoreAreaCell";
     //发送消息
     [[NSNotificationCenter defaultCenter]postNotification:notice];
 }
-#pragma mark -- 第一个区域
-- (void)jGHPoorBarHoleCellDelegate:(UIButton *)btn{
+#pragma mark -- 选择第一区域
+- (void)oneAreaNameBtn:(UIButton *)btn{
     NSLog(@"第一个区域");
     NSLog(@"%f", btn.frame.origin.y);
     [_twoAreaView removeFromSuperview];
@@ -226,13 +221,12 @@ static NSString *const JGHTwoScoreAreaCellIdentifier = @"JGHTwoScoreAreaCell";
     }
     [self addSubview:_oneAreaView];
 }
-#pragma mark -- 第一区域点击事件
 - (void)oneAreaBtnClick:(UIButton *)btn{
     if (self.delegate) {
-        [self.delegate oneAreaBtnDelegate:btn];
+        [self.delegate oneAreaPoorBtnDelegate:btn];
     }
 }
-- (void)removeOneAreaView{
+- (void)removePoorOneAreaView{
     [_oneAreaView removeFromSuperview];
     _oneAreaView = nil;
 }
@@ -267,7 +261,7 @@ static NSString *const JGHTwoScoreAreaCellIdentifier = @"JGHTwoScoreAreaCell";
         if ([_areaArray[i] isEqualToString:_currentAreaArray[1]]) {
             [btn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
         }else{
-           [btn addTarget:self action:@selector(twoAreaBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+            [btn addTarget:self action:@selector(twoAreaBtnClick:) forControlEvents:UIControlEventTouchUpInside];
             [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         }
         
@@ -282,26 +276,27 @@ static NSString *const JGHTwoScoreAreaCellIdentifier = @"JGHTwoScoreAreaCell";
 #pragma mark -- 第二区域点击事件
 - (void)twoAreaBtnClick:(UIButton *)btn{
     if (self.delegate) {
-        [self.delegate twoAreaBtnDelegate:btn];
+        [self.delegate twoAreaPoorBtnDelegate:btn];
     }
 }
--(void)removeTwoAreaView{
+-(void)removePoorTwoAreaView{
     [_twoAreaView removeFromSuperview];
     _twoAreaView = nil;
 }
 
 #pragma mark -- 刷新数据
-- (void)reloadViewData:(NSMutableArray *)dataArray{
+- (void)reloadPoorViewData:(NSMutableArray *)dataArray{
     self.dataArray = dataArray;
     
     [self.scoreTableView reloadData];
 }
+
 /*
- // Only override drawRect: if you perform custom drawing.
- // An empty implementation adversely affects performance during animation.
- - (void)drawRect:(CGRect)rect {
- // Drawing code
- }
- */
+// Only override drawRect: if you perform custom drawing.
+// An empty implementation adversely affects performance during animation.
+- (void)drawRect:(CGRect)rect {
+    // Drawing code
+}
+*/
 
 @end

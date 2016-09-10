@@ -87,9 +87,19 @@ typedef NS_ENUM(NSInteger, GestureType) {
 #define Click_Color @"#F08900"
 #define Bar_Color @"#32B14D"
 
+#define Par_jian @"#3586d8"
+#define Par_jia @"#e8625a"
+#define Par_b @"#b4b3b3"
+#define Par_Eagle @"#7fffff"
+#define Par_Birdie @"#7fbfff"
+#define Par_Par @"#ffd2a6"
+#define Par_Bogey @"#ffaaa5"
+
 #define ProportionAdapter screenWidth/375
 
 #define NUMBERS @"0123456789\n"
+
+//#define SwitchMode @"switchMode"
 
 //正式环境图片基础地址
 #define imageBaseUrl @"http://www.dagolfla.com:8081/"

@@ -9,12 +9,27 @@
 
 #import <UIKit/UIKit.h>
 
+//@protocol JGHScoresMainViewControllerdelegate <NSObject>
+//
+//- (void)returnSwitchMode:(NSInteger)switchMode;
+//
+//@end
+
 @interface JGHScoresMainViewController : UIViewController
+
+//@property (weak, nonatomic)id <JGHScoresMainViewControllerdelegate> delegate;
 
 @property (nonatomic,assign) NSInteger index;
 
 @property (nonatomic, strong) NSMutableArray *dataArray;
 
 @property (nonatomic, copy)void (^returnScoresDataArray)(NSMutableArray *dataArray);
+
+@property (nonatomic, assign)NSInteger switchMode;// 0- 总；1- 差
+
+@property (nonatomic, strong)NSString *scorekey;
+
+- (void)reloadTableView:(NSInteger)switchMode;
+
 
 @end
