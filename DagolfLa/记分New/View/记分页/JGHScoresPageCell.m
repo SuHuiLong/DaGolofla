@@ -251,18 +251,7 @@
         [self.upperTrackBtn setBackgroundImage:[UIImage imageNamed:@"onballL"] forState:UIControlStateNormal];
         [self.upperTrackNoBtn setBackgroundImage:[UIImage imageNamed:@"noballL"] forState:UIControlStateNormal];
     }
-    /*
-    if ([[model.onthefairway objectAtIndex:index] integerValue] == 1){
-        [self.upperTrackBtn setBackgroundImage:[UIImage imageNamed:@"poorFairwayYESLight"] forState:UIControlStateNormal];
-        [self.upperTrackNoBtn setBackgroundImage:[UIImage imageNamed:@"poorFairwayNO"] forState:UIControlStateNormal];
-    }else if ([[model.onthefairway objectAtIndex:index] integerValue] == 0){
-        [self.upperTrackBtn setBackgroundImage:[UIImage imageNamed:@"poorFairwayYES"] forState:UIControlStateNormal];
-        [self.upperTrackNoBtn setBackgroundImage:[UIImage imageNamed:@"poorFairwayNOLight"] forState:UIControlStateNormal];
-    }else{
-        [self.upperTrackBtn setBackgroundImage:[UIImage imageNamed:@"poorFairwayYES"] forState:UIControlStateNormal];
-        [self.upperTrackNoBtn setBackgroundImage:[UIImage imageNamed:@"poorFairwayNO"] forState:UIControlStateNormal];
-    }
-     */
+    
 }
 
 - (void)configTotalPoleViewTitle{

@@ -90,14 +90,7 @@ static NSString *const JGHNewScoresPageCellIdentifier = @"JGHNewScoresPageCell";
     UIImageView *imageRightView = [[UIImageView alloc]initWithFrame:CGRectMake(screenWidth/2 + 70*ProportionAdapter +10*ProportionAdapter, 4*ProportionAdapter, 10*ProportionAdapter, 12*ProportionAdapter)];
     imageRightView.image = [UIImage imageNamed:@"sildRight"];
     [view addSubview:imageRightView];
-    /*
-     UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake((screenWidth-140*ProportionAdapter)/2, 0, 140*ProportionAdapter, 20*ProportionAdapter)];
-     label.text = @"左右滑动可切换球洞";
-     label.textAlignment = NSTextAlignmentCenter;
-     label.font = [UIFont systemFontOfSize:15.0*ProportionAdapter];
-     //    label.backgroundColor = [UIColor redColor];
-     [view addSubview:label];
-     */
+
     _totalPoleBtn = [[UIButton alloc]initWithFrame:CGRectMake((screenWidth-140*ProportionAdapter)/2, 0, 140*ProportionAdapter, 20*ProportionAdapter)];
     NSUserDefaults *userdf = [NSUserDefaults standardUserDefaults];
     
@@ -164,15 +157,18 @@ static NSString *const JGHNewScoresPageCellIdentifier = @"JGHNewScoresPageCell";
     NSUserDefaults *userdf = [NSUserDefaults standardUserDefaults];
     if (_dataArray.count < 3) {
         JGHNewScoresPageCell *newScoresPageCell = [tableView dequeueReusableCellWithIdentifier:JGHNewScoresPageCellIdentifier];
-//        newScoresPageCell.delegate = self;
+        newScoresPageCell.delegate = self;
         newScoresPageCell.tag = indexPath.section + 100;
         newScoresPageCell.selectionStyle = UITableViewCellSelectionStyleNone;
-        //        [scoresPageCell configJGHScoreListModel:_dataArray[indexPath.section] andIndex:_index];
+        
+        
         NSLog(@"ussssss === %@", [userdf objectForKey:[NSString stringWithFormat:@"switchMode%@", _scorekey]]);
         if ([[userdf objectForKey:[NSString stringWithFormat:@"switchMode%@", _scorekey]] integerValue] == 0) {
             [newScoresPageCell configTotalPoleViewTitle];
+            [newScoresPageCell configJGHScoreListModel:_dataArray[indexPath.section] andIndex:_index];
         }else{
             [newScoresPageCell configPoleViewTitle];
+            [newScoresPageCell configPoorJGHScoreListModel:_dataArray[indexPath.section] andIndex:_index];
         }
         
         return newScoresPageCell;
