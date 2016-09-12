@@ -16,6 +16,7 @@
 #import "JGDNotActScoreViewController.h"
 #import "JGDPlayPersonViewController.h"
 #import "JGDPlayerNotActScoreDetailViewController.h"
+#import "JGLCaddieScoreViewController.h"
 
 @interface JGDPlayerNotActScoreCardViewController ()<UITableViewDelegate, UITableViewDataSource>
 
@@ -48,7 +49,7 @@
         }
     }
     for (UIViewController *vc in self.navigationController.viewControllers) {
-        if ([vc isKindOfClass:[JGDPlayPersonViewController class]]) {
+        if ([vc isKindOfClass:[JGDPlayPersonViewController class]] || [vc isKindOfClass:[JGLCaddieScoreViewController class]]) {
             [self.navigationController popToViewController:vc animated:YES];
             return;
         }

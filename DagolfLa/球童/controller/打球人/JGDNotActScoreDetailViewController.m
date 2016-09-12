@@ -140,17 +140,17 @@
         [viewTitle addSubview:self.nameLB];
         
         
-//        UILabel *allLB = [[UILabel alloc] initWithFrame:CGRectMake(280 * ProportionAdapter, 15 * ProportionAdapter, 90 * ProportionAdapter, 30)];
-//        allLB.text = @"总杆：          杆";
-//        allLB.font = [UIFont systemFontOfSize:12 * ProportionAdapter];
-//        [viewTitle addSubview:allLB];
-//        
-//        UILabel *stemLB = [[UILabel alloc] initWithFrame:CGRectMake(310 * ProportionAdapter, 15 * ProportionAdapter, 39 * ProportionAdapter, 30 * ProportionAdapter)];
-//        stemLB.text = [self.model.poles stringValue];
-//        stemLB.font = [UIFont systemFontOfSize:20 * ProportionAdapter];
-//        stemLB.textAlignment = NSTextAlignmentCenter;
-//        stemLB.textColor = [UIColor colorWithHexString:@"#fe6424"];
-//        [viewTitle addSubview:stemLB];
+        UILabel *allLB = [[UILabel alloc] initWithFrame:CGRectMake(280 * ProportionAdapter, 45 * ProportionAdapter, 90 * ProportionAdapter, 30)];
+        allLB.text = @"总杆：          杆";
+        allLB.font = [UIFont systemFontOfSize:12 * ProportionAdapter];
+        [viewTitle addSubview:allLB];
+        
+        UILabel *stemLB = [[UILabel alloc] initWithFrame:CGRectMake(310 * ProportionAdapter, 45 * ProportionAdapter, 39 * ProportionAdapter, 30 * ProportionAdapter)];
+        stemLB.text = [self.model.poles stringValue];
+        stemLB.font = [UIFont systemFontOfSize:20 * ProportionAdapter];
+        stemLB.textAlignment = NSTextAlignmentCenter;
+        stemLB.textColor = [UIColor colorWithHexString:@"#fe6424"];
+        [viewTitle addSubview:stemLB];
         
         UILabel *ballNameLB = [[UILabel alloc] initWithFrame:CGRectMake(10 * ProportionAdapter, 50 * ProportionAdapter, 350 * ProportionAdapter, 30 * ProportionAdapter)];
         ballNameLB.text = [self.dataDic objectForKey:@"ballName"];
@@ -335,28 +335,38 @@
 
 // 上半场 长按
 - (void)longPGAct1:(UILongPressGestureRecognizer *)longPG {
-    NSLog(@"＝＝＝＝＝＝＝%td", [longPG view].tag);
-    [Helper alertViewWithTitle:@"点击“确定”修改成绩" withBlockCancle:^{
-        NSLog(@"－－－cancle");
-    } withBlockSure:^{
-        JGHScoresViewController *scoreVC = [[JGHScoresViewController alloc] init];
-        [self.navigationController pushViewController:scoreVC animated:YES];
-    } withBlock:^(UIAlertController *alertView) {
-        [self presentViewController:alertView animated:YES completion:nil];
-    }];
+    if (self.ballkid == 10) {
+        [[ShowHUD showHUD]showToastWithText:@"记分未完成" FromView:self.view];
+    }else{
+        [Helper alertViewWithTitle:@"点击“确定”修改成绩" withBlockCancle:^{
+            NSLog(@"－－－cancle");
+        } withBlockSure:^{
+            JGHScoresViewController *scoreVC = [[JGHScoresViewController alloc] init];
+            scoreVC.currentPage = [longPG view].tag - 777;
+            scoreVC.scorekey = [NSString stringWithFormat:@"%@", [self.dataDic objectForKey:@"timeKey"]];
+            [self.navigationController pushViewController:scoreVC animated:YES];
+        } withBlock:^(UIAlertController *alertView) {
+            [self presentViewController:alertView animated:YES completion:nil];
+        }];
+    }
 }
 
 // 下半场 长按
 - (void)longPGAct2:(UILongPressGestureRecognizer *)longPG {
-    NSLog(@"%td", [longPG view].tag);
-    [Helper alertViewWithTitle:@"点击“确定”修改成绩" withBlockCancle:^{
-        NSLog(@"cancle");
-    } withBlockSure:^{
-        JGHScoresViewController *scoreVC = [[JGHScoresViewController alloc] init];
-        [self.navigationController pushViewController:scoreVC animated:YES];
-    } withBlock:^(UIAlertController *alertView) {
-        [self presentViewController:alertView animated:YES completion:nil];
-    }];
+    if (self.ballkid == 10) {
+        [[ShowHUD showHUD]showToastWithText:@"记分未完成" FromView:self.view];
+    }else{
+        [Helper alertViewWithTitle:@"点击“确定”修改成绩" withBlockCancle:^{
+            NSLog(@"cancle");
+        } withBlockSure:^{
+            JGHScoresViewController *scoreVC = [[JGHScoresViewController alloc] init];
+            scoreVC.currentPage = [longPG view].tag - 777 + 9;
+            scoreVC.scorekey = [NSString stringWithFormat:@"%@", [self.dataDic objectForKey:@"timeKey"]];
+            [self.navigationController pushViewController:scoreVC animated:YES];
+        } withBlock:^(UIAlertController *alertView) {
+            [self presentViewController:alertView animated:YES completion:nil];
+        }];
+    }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{

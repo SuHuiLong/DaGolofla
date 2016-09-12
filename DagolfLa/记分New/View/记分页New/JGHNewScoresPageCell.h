@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+@class JGHScoreListModel;
 
 @protocol JGHNewScoresPageCellDelegate <NSObject>
 
@@ -81,6 +82,11 @@
 @property (weak, nonatomic) IBOutlet UIButton *rodRedBtn;
 - (IBAction)rodRedBtn:(UIButton *)sender;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *rodRedBtnLeft;//16
+
+- (void)configJGHScoreListModel:(JGHScoreListModel *)model andIndex:(NSInteger)index;
+
+- (void)configPoorJGHScoreListModel:(JGHScoreListModel *)model andIndex:(NSInteger)index;
+
 
 - (void)configTotalPoleViewTitle;
 
