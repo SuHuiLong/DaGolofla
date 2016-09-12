@@ -67,7 +67,7 @@ static CGFloat ImageHeight  = 210.0;
         self.titleField.text = [self.detailDic objectForKey:@"name"];
     }
     if (self.detailDic) {
-        self.paraDic = [self.detailDic mutableCopy];
+        self.paraDic = self.detailDic;
     }
     
     //    _wasKeyboardManagerEnabled = [[IQKeyboardManager sharedManager] isEnabled];
@@ -87,7 +87,7 @@ static CGFloat ImageHeight  = 210.0;
         _dictPhoto = [[NSMutableDictionary alloc]init];
         [_dictPhoto setObject:[NSArray arrayWithObject:UIImageJPEGRepresentation([UIImage imageNamed:TeamLogoImage], 0.7)] forKey:@"headPortraitBtn"];
         [_dictPhoto setObject:[NSArray arrayWithObject:UIImageJPEGRepresentation([UIImage imageNamed:TeamBGImage], 0.7)] forKey:@"headerImage"];
-
+        
         self.pickPhoto = [[SXPickPhoto alloc]init];
         self.titleView = [[UIView alloc]init];
         UIImage *image = [UIImage imageNamed:TeamBGImage];
@@ -321,7 +321,7 @@ static CGFloat ImageHeight  = 210.0;
     }else{
         
         
-        if ([Helper isBlankString:self.titleField.text] ) {
+        if (!self.titleField.text || ([self.titleField.text length] == 0)) {
             //    if ([[self.paraDic objectForKey:@"name"] length] > 0) {
             [Helper alertViewNoHaveCancleWithTitle:@"请填写球队名称" withBlock:^(UIAlertController *alertView) {
                 [self.navigationController presentViewController:alertView animated:YES completion:nil];
