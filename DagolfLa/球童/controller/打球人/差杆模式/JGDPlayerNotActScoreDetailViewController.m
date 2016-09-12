@@ -146,7 +146,14 @@
         [viewTitle addSubview:allLB];
         
         UILabel *stemLB = [[UILabel alloc] initWithFrame:CGRectMake(310 * ProportionAdapter, 45 * ProportionAdapter, 39 * ProportionAdapter, 30 * ProportionAdapter)];
-        stemLB.text = [self.model.poles stringValue];
+//        stemLB.text = [self.model.poles stringValue];
+        NSNumber *sum = [self.model.standardlever valueForKeyPath:@"@sum.integerValue"];
+        NSInteger textNum = [self.model.poles integerValue] - [sum integerValue];
+        if (textNum <= 0) {
+            stemLB.text = [NSString stringWithFormat:@"%td", textNum];
+        }else{
+            stemLB.text = [NSString stringWithFormat:@"+%td", textNum];
+        }
         stemLB.font = [UIFont systemFontOfSize:20 * ProportionAdapter];
         stemLB.textAlignment = NSTextAlignmentCenter;
         stemLB.textColor = [UIColor colorWithHexString:@"#fe6424"];
