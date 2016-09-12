@@ -90,14 +90,19 @@
                 for (int i = 0; i < [self.dataArray count]; i ++) {
                     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(screenWidth / [self.dataArray count] * i, 50 * ProportionAdapter, screenWidth / [self.dataArray count], 60 * ProportionAdapter)];
                     JGDHistoryScoreShowModel *model = self.dataArray[i];
-                    NSNumber *sum = [model.standardlever valueForKeyPath:@"@sum.integerValue"];
-                    NSInteger textNum = [model.poles integerValue] - [sum integerValue];
-                    if (textNum <= 0) {
-                        label.text = [NSString stringWithFormat:@"%td", textNum];
-                    }else{
-                        label.text = [NSString stringWithFormat:@"+%td", textNum];
+                    NSInteger poleSum = 0;
+                    NSInteger standSum = 0;
+                    for (int i = 0; i < model.poleNumber.count; i ++) {
+                        if ([model.poleNumber[i] integerValue] != -1) {
+                            poleSum += [model.poleNumber[i] integerValue];
+                            standSum += [model.standardlever[i] integerValue];
+                        }
                     }
-//                    label.text = [model.poles stringValue];
+                    if (poleSum - standSum <= 0) {
+                        label.text = [NSString stringWithFormat:@"%td", poleSum - standSum];
+                    }else{
+                        label.text = [NSString stringWithFormat:@"+%td", poleSum - standSum];
+                    }
                     label.tag = 1000 + i;
                     label.textColor = [UIColor colorWithHexString:@"#fe6424"];
                     label.textAlignment = NSTextAlignmentCenter;

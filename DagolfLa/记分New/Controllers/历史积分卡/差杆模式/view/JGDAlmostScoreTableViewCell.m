@@ -86,7 +86,7 @@ static NSInteger SecondStandard;
             }
         }
     }
-
+    
 }
 
 // 最外层 多人
@@ -142,10 +142,20 @@ static NSInteger SecondStandard;
                     }
                 }
             }
-            if (sum - FirstStandard <= 0) {
-                self.sumLB.text = [NSString stringWithFormat:@"%td", sum - FirstStandard];
+            
+            
+            NSInteger poleSum = 0;
+            NSInteger standSum = 0;
+            for (int i = 0; i < model.poleNumber.count/2; i ++) {
+                if ([model.poleNumber[i] integerValue] != -1) {
+                    poleSum += [model.poleNumber[i] integerValue];
+                    standSum += [model.standardlever[i] integerValue];
+                }
+            }
+            if (poleSum - standSum <= 0) {
+                self.sumLB.text = [NSString stringWithFormat:@"%td", poleSum - standSum];
             }else{
-                self.sumLB.text = [NSString stringWithFormat:@"+%td", sum - FirstStandard];
+                self.sumLB.text = [NSString stringWithFormat:@"+%td", poleSum - standSum];
             }
         }
         
@@ -200,10 +210,20 @@ static NSInteger SecondStandard;
                     }
                 }
             }
-            if (sum - SecondStandard <= 0) {
-                self.sumLB.text = [NSString stringWithFormat:@"%td", sum - SecondStandard];
+            
+            
+            NSInteger poleSum = 0;
+            NSInteger standSum = 0;
+            for (int i = 0; i < model.poleNumber.count/2; i ++) {
+                if ([[model.poleNumber subarrayWithRange:NSMakeRange(9, 9)][i] integerValue] != -1) {
+                    poleSum += [[model.poleNumber subarrayWithRange:NSMakeRange(9, 9)][i] integerValue];
+                    standSum += [[model.standardlever subarrayWithRange:NSMakeRange(9, 9)][i] integerValue];;
+                }
+            }
+            if (poleSum - standSum <= 0) {
+                self.sumLB.text = [NSString stringWithFormat:@"%td", poleSum - standSum];
             }else{
-                self.sumLB.text = [NSString stringWithFormat:@"+%td", sum - SecondStandard];
+                self.sumLB.text = [NSString stringWithFormat:@"+%td", poleSum - standSum];
             }
         }
     }
@@ -260,7 +280,7 @@ static NSInteger SecondStandard;
                             NSLog(@"sum = %td -------- core = %td", sum, core);
                             
                             lb.text = [NSString stringWithFormat:@"%ld", labs(core - standardlever)];
-
+                            
                             if (core < standardlever) {
                                 lb.backgroundColor = [UIColor colorWithHexString:@"#3586d8"];
                                 
@@ -277,19 +297,35 @@ static NSInteger SecondStandard;
                         }
                     }
                 }
-                if (sum - FirstStandard <= 0) {
-                    self.sumLB.text = [NSString stringWithFormat:@"%td", sum - FirstStandard];
-                }else{
-                    self.sumLB.text = [NSString stringWithFormat:@"+%td", sum - FirstStandard];
+                
+                
+                NSInteger poleSum = 0;
+                NSInteger standSum = 0;
+                for (int i = 0; i < model.poleNumber.count/2; i ++) {
+                    if ([model.poleNumber[i] integerValue] != -1) {
+                        poleSum += [model.poleNumber[i] integerValue];
+                        standSum += [model.standardlever[i] integerValue];
+                    }
                 }
-//                self.sumLB.text = [NSString stringWithFormat:@"%td", sum - FirstStandard];
+                if (poleSum - standSum <= 0) {
+                    self.sumLB.text = [NSString stringWithFormat:@"%td", poleSum - standSum];
+                }else{
+                    self.sumLB.text = [NSString stringWithFormat:@"+%td", poleSum - standSum];
+                }
+                
+//                if (sum - FirstStandard <= 0) {
+//                    self.sumLB.text = [NSString stringWithFormat:@"%td", sum - FirstStandard];
+//                }else{
+//                    self.sumLB.text = [NSString stringWithFormat:@"+%td", sum - FirstStandard];
+//                }
+                //                self.sumLB.text = [NSString stringWithFormat:@"%td", sum - FirstStandard];
             }else{
                 self.nameLB.text = @"杆数";
                 NSInteger sum = 0;
                 for (UILabel *lb in self.contentView.subviews) {
                     if (lb.tag) {
                         if ([model.poleNumber[lb.tag - 776 + 8] integerValue] != -1) {
-//                            lb.text = [NSString stringWithFormat:@"%@", model.poleNumber[lb.tag - 776 + 8]];
+                            //                            lb.text = [NSString stringWithFormat:@"%@", model.poleNumber[lb.tag - 776 + 8]];
                             NSInteger core = [model.poleNumber[lb.tag - 776 + 8] integerValue];
                             NSInteger standardlever = [model.standardlever[lb.tag - 776 + 8] integerValue];
                             sum += core;
@@ -313,12 +349,25 @@ static NSInteger SecondStandard;
                         }
                     }
                 }
-                if (sum - SecondStandard <= 0) {
-                    self.sumLB.text = [NSString stringWithFormat:@"%td", sum - SecondStandard];
-                }else{
-                    self.sumLB.text = [NSString stringWithFormat:@"+%td", sum - SecondStandard];
+                NSInteger poleSum = 0;
+                NSInteger standSum = 0;
+                for (int i = 0; i < model.poleNumber.count/2; i ++) {
+                    if ([[model.poleNumber subarrayWithRange:NSMakeRange(9, 9)][i] integerValue] != -1) {
+                        poleSum += [[model.poleNumber subarrayWithRange:NSMakeRange(9, 9)][i] integerValue];
+                        standSum += [[model.standardlever subarrayWithRange:NSMakeRange(9, 9)][i] integerValue];;
+                    }
                 }
-//                self.sumLB.text = [NSString stringWithFormat:@"%td", sum - SecondStandard];
+                if (poleSum - standSum <= 0) {
+                    self.sumLB.text = [NSString stringWithFormat:@"%td", poleSum - standSum];
+                }else{
+                    self.sumLB.text = [NSString stringWithFormat:@"+%td", poleSum - standSum];
+                }
+                //                if (sum - SecondStandard <= 0) {
+                //                    self.sumLB.text = [NSString stringWithFormat:@"%td", sum - SecondStandard];
+                //                }else{
+                //                    self.sumLB.text = [NSString stringWithFormat:@"+%td", sum - SecondStandard];
+                //                }
+                //                self.sumLB.text = [NSString stringWithFormat:@"%td", sum - SecondStandard];
             }
             break;
             
