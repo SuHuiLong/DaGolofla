@@ -9,11 +9,16 @@
 #import "JGHOperationScoreListCell.h"
 #import "JGHOperScoreBtnListCell.h"
 #import "JGHOperScoreHeaderCell.h"
+#import "JGHBallAreaModel.h"
 
 static NSString *const JGHOperScoreBtnListCellIdentifier = @"JGHOperScoreBtnListCell";
 static NSString *const JGHOperScoreHeaderCellIdentifier = @"JGHOperScoreHeaderCell";
 
 @interface JGHOperationScoreListCell ()<JGHOperScoreBtnListCellDelegate>
+{
+    NSString *_region1;
+    NSString *_region2;
+}
 
 @end
 
@@ -110,7 +115,19 @@ static NSString *const JGHOperScoreHeaderCellIdentifier = @"JGHOperScoreHeaderCe
     // Configure the view for the selected state
 }
 
-- (void)reloadOperScoreBtnListCellData{
+- (void)reloadOperScoreBtnListCellData:(NSArray *)areaArray{
+    for (int i=0; i<areaArray.count; i++) {
+        JGHBallAreaModel *model = [[JGHBallAreaModel alloc]init];
+        model = areaArray[i];
+        if (model.select == 1) {
+            if (_region1 == nil) {
+                _region1 = model.ballArea;
+            }else{
+                _region2 = model.ballArea;
+            }
+        }
+    }
+    
     [self.operationScoreListTable reloadData];
 }
 
