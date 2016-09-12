@@ -308,7 +308,7 @@
         [dict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"mobile"] forKey:@"userMobile"];
     }
     [dict setObject:@0 forKey:@"type"];//球场
-    if ([Helper isBlankString:_textView.text] || [_textView.text isEqualToString:@"请针对我们的产品给出您宝贵的意见"] == YES) {
+    if ([Helper isBlankString:_textView.text] || [_textView.text isEqualToString:TextViewDetail] == YES) {
         [[ShowHUD showHUD]showToastWithText:@"请指出哪里出了问题，臣妾立马改正" FromView:self.view];
         [self.view endEditing:YES];
         return;
