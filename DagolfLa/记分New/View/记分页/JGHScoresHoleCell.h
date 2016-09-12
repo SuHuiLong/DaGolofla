@@ -70,6 +70,8 @@
 - (void)configNineToEighteenth:(NSArray *)array andUserName:(NSString *)userName andStandradArray:(NSArray *)standradArray;//计算杆的属性
 
 //差杆模式
+- (void)configPoorArray:(NSArray *)array;
+
 - (void)configPoorOneToNine:(NSArray *)array andUserName:(NSString *)userName andStandradArray:(NSArray *)standradArray;
 
 - (void)configPoorNineToEighteenth:(NSArray *)array andUserName:(NSString *)userName andStandradArray:(NSArray *)standradArray;//计算杆的属性

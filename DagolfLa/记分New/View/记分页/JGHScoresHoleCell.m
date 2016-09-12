@@ -124,7 +124,17 @@
         temp.backgroundColor = [UIColor colorWithHexString:BGScoreColor];
     }
 }
-
+- (void)configPoorArray:(NSArray *)array{
+    self.oneLable.text = [NSString stringWithFormat:@"%@", [NSString stringWithFormat:@"%@", array[9]]];
+    self.twoLable.text = [NSString stringWithFormat:@"%@", [NSString stringWithFormat:@"%@", array[10]]];
+    self.threeLable.text = [NSString stringWithFormat:@"%@", [NSString stringWithFormat:@"%@", array[11]]];
+    self.fourLable.text = [NSString stringWithFormat:@"%@", [NSString stringWithFormat:@"%@", array[12]]];
+    self.fiveLable.text = [NSString stringWithFormat:@"%@", [NSString stringWithFormat:@"%@", array[13]]];
+    self.sixLable.text = [NSString stringWithFormat:@"%@", [NSString stringWithFormat:@"%@", array[14]]];
+    self.sevenLable.text = [NSString stringWithFormat:@"%@", [NSString stringWithFormat:@"%@", array[15]]];
+    self.eightLable.text = [NSString stringWithFormat:@"%@", [NSString stringWithFormat:@"%@", array[16]]];
+    self.nineLable.text = [NSString stringWithFormat:@"%@", [NSString stringWithFormat:@"%@", array[17]]];
+}
 - (void)configArray:(NSArray *)array{
     self.name.text = @"HOLE";
     self.oneLable.text = [NSString stringWithFormat:@"%@", [NSString stringWithFormat:@"%@", array[0]]];

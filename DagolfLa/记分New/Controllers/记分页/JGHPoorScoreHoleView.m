@@ -134,7 +134,7 @@ static NSString *const JGHTwoScoreAreaCellIdentifier = @"JGHTwoScoreAreaCell";
     }else{
         if (indexPath.row == 0) {
             model = _dataArray[0];
-            [scoresPageCell configArray:model.poleNameList];
+            [scoresPageCell configPoorArray:model.poleNameList];
         }else if (indexPath.row == 1){
             model = _dataArray[0];
             [scoresPageCell configNineToEighteenth:model.standardlever andUserName:@"PAR"];

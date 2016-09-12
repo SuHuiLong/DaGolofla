@@ -32,7 +32,7 @@
     [self.setAlmostBtn.layer setBorderColor:([UIColor colorWithHexString:@"#5DACF7"]).CGColor];
     self.setAlmostBtn.titleLabel.font = [UIFont systemFontOfSize:17*ProportionAdapter];
     
-    NSLayoutConstraint *wConstraint = [NSLayoutConstraint constraintWithItem:self.setAlmostBtn attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationGreaterThanOrEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:80.0*ProportionAdapter];
+    NSLayoutConstraint *wConstraint = [NSLayoutConstraint constraintWithItem:self.setAlmostBtn attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationGreaterThanOrEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:60.0*ProportionAdapter];
     NSArray *arrayW = [NSArray arrayWithObjects:wConstraint, nil];
     [self addConstraints:arrayW];
     
