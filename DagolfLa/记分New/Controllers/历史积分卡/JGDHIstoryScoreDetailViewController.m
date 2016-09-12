@@ -398,6 +398,9 @@
         NSLog(@"－－－cancle");
     } withBlockSure:^{
         JGHScoresViewController *scoreVC = [[JGHScoresViewController alloc] init];
+    scoreVC.currentPage = [longPG view].tag - 777;
+     scoreVC.scorekey = [NSString stringWithFormat:@"%@", [self.dataDic objectForKey:@"timeKey"]];
+     
         [self.navigationController pushViewController:scoreVC animated:YES];
     } withBlock:^(UIAlertController *alertView) {
         [self presentViewController:alertView animated:YES completion:nil];
@@ -411,6 +414,8 @@
         NSLog(@"cancle");
     } withBlockSure:^{
         JGHScoresViewController *scoreVC = [[JGHScoresViewController alloc] init];
+        scoreVC.currentPage = [longPG view].tag - 777 + 9;
+        scoreVC.scorekey = [NSString stringWithFormat:@"%@", [self.dataDic objectForKey:@"timeKey"]];
         [self.navigationController pushViewController:scoreVC animated:YES];
     } withBlock:^(UIAlertController *alertView) {
         [self presentViewController:alertView animated:YES completion:nil];

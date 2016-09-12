@@ -426,30 +426,39 @@
 
 // 上半场 长按
 - (void)longPGAct1:(UILongPressGestureRecognizer *)longPG {
-    NSLog(@"＝＝＝＝＝＝＝%td", [longPG view].tag);
-    [Helper alertViewWithTitle:@"点击“确定”修改成绩" withBlockCancle:^{
-        NSLog(@"－－－cancle");
-    } withBlockSure:^{
-        JGHScoresViewController *scoreVC = [[JGHScoresViewController alloc] init];
-        [self.navigationController pushViewController:scoreVC animated:YES];
-    } withBlock:^(UIAlertController *alertView) {
-        [self presentViewController:alertView animated:YES completion:nil];
-    }];
+    if (self.ballkid == 10) {
+        [[ShowHUD showHUD]showToastWithText:@"记分未完成" FromView:self.view];
+    }else{
+        [Helper alertViewWithTitle:@"点击“确定”修改成绩" withBlockCancle:^{
+            NSLog(@"－－－cancle");
+        } withBlockSure:^{
+            JGHScoresViewController *scoreVC = [[JGHScoresViewController alloc] init];
+            scoreVC.currentPage = [longPG view].tag - 777;
+            scoreVC.scorekey = [NSString stringWithFormat:@"%@", [self.dataDic objectForKey:@"timeKey"]];
+            [self.navigationController pushViewController:scoreVC animated:YES];
+        } withBlock:^(UIAlertController *alertView) {
+            [self presentViewController:alertView animated:YES completion:nil];
+        }];
+    }
 }
 
 // 下半场 长按
 - (void)longPGAct2:(UILongPressGestureRecognizer *)longPG {
-    NSLog(@"%td", [longPG view].tag);
-    [Helper alertViewWithTitle:@"点击“确定”修改成绩" withBlockCancle:^{
-        NSLog(@"cancle");
-    } withBlockSure:^{
-        JGHScoresViewController *scoreVC = [[JGHScoresViewController alloc] init];
-        [self.navigationController pushViewController:scoreVC animated:YES];
-    } withBlock:^(UIAlertController *alertView) {
-        [self presentViewController:alertView animated:YES completion:nil];
-    }];
+    if (self.ballkid == 10) {
+        [[ShowHUD showHUD]showToastWithText:@"记分未完成" FromView:self.view];
+    }else{
+        [Helper alertViewWithTitle:@"点击“确定”修改成绩" withBlockCancle:^{
+            NSLog(@"cancle");
+        } withBlockSure:^{
+            JGHScoresViewController *scoreVC = [[JGHScoresViewController alloc] init];
+            scoreVC.currentPage = [longPG view].tag - 777 + 9;
+            scoreVC.scorekey = [NSString stringWithFormat:@"%@", [self.dataDic objectForKey:@"timeKey"]];
+            [self.navigationController pushViewController:scoreVC animated:YES];
+        } withBlock:^(UIAlertController *alertView) {
+            [self presentViewController:alertView animated:YES completion:nil];
+        }];
+    }
 }
-
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return 30 * ProportionAdapter;
