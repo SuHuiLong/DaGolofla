@@ -37,7 +37,7 @@ typedef NS_ENUM(NSInteger, GestureType) {
 #define TeamBGImage @"teamBGImage"// 球队背景图片
 #define TeamLogoImage @"teamLogo"//logo白色图片
 #define IconLogo @"iconlogo"//绿色app logo
-#define ActivityBGImage @"activityBGImage"
+#define ActivityBGImage @"teamBGImage"
 
 #define loadingString @"加载中..."
 
