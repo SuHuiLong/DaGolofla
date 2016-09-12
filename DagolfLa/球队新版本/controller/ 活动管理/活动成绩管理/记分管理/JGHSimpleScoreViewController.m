@@ -17,6 +17,7 @@
 #import "JGTeamAcitivtyModel.h"
 #import "JGLAddActiivePlayModel.h"
 #import "JGHActivityScoreManagerViewController.h"
+#import "JGHBallAreaModel.h"
 
 static NSString *const JGHSimpleScorePepoleBaseCellIdentifier = @"JGHSimpleScorePepoleBaseCell";
 static NSString *const JGHSimpleAndResultsCellIdentifier = @"JGHSimpleAndResultsCell";
@@ -39,10 +40,10 @@ static NSString *const JGHOperationScoreListCellIdentifier = @"JGHOperationScore
     
 //    NSMutableArray *_polesArray;//十八洞杆数
     
-    NSMutableArray *_holeArray;
+    NSMutableArray *_holeArray;//球场区域列表
     
-    NSString *_region1;
-    NSString *_region2;
+    NSInteger _region1;
+    NSInteger _region2;
     
     NSMutableArray *_standardParArray;
     
@@ -71,6 +72,8 @@ static NSString *const JGHOperationScoreListCellIdentifier = @"JGHOperationScore
     _ballName = @"";
     _loginpic = @"";
     _selectHoleId = 0;
+    _region1 = 0;//0-
+    _region2 = 1;
     _userScoreBeanDict = [NSMutableDictionary dictionary];
     self.polesArray = [NSMutableArray array];
     _holeArray = [NSMutableArray array];
@@ -91,9 +94,9 @@ static NSString *const JGHOperationScoreListCellIdentifier = @"JGHOperationScore
 - (void)getStandardlevers{
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     [dict setObject:@(_actModel.ballKey) forKey:@"ballKey"];
-    [dict setObject:_region1 forKey:@"region1"];
-    [dict setObject:_region2 forKey:@"region2"];
-    [dict setObject:[JGReturnMD5Str getStandardleversBallKey:_actModel.ballKey andRegion1:_region1 andRegion2:_region2] forKey:@"md5"];
+    [dict setObject:_holeArray[_region1] forKey:@"region1"];
+    [dict setObject:_holeArray[_region2] forKey:@"region2"];
+    [dict setObject:[JGReturnMD5Str getStandardleversBallKey:_actModel.ballKey andRegion1:_holeArray[_region1] andRegion2:_holeArray[_region2]] forKey:@"md5"];
     [[JsonHttp jsonHttp]httpRequest:@"ball/getStandardlevers" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
         
     } completionBlock:^(id data) {
@@ -118,9 +121,16 @@ static NSString *const JGHOperationScoreListCellIdentifier = @"JGHOperationScore
     } completionBlock:^(id data) {
         NSLog(@"%@", data);
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
-            _holeArray = [data objectForKey:@"ballAreas"];
-            _region1 = [_holeArray objectAtIndex:0];
-            _region2 = [_holeArray objectAtIndex:0];
+            NSMutableArray *areaArray = [NSMutableArray array];
+            areaArray = [data objectForKey:@"ballAreas"];
+            for (int i=0; i<areaArray.count; i++) {
+                JGHBallAreaModel *model = [[JGHBallAreaModel alloc]init];
+                model.ballArea = [areaArray objectAtIndex:i];
+                model.select = 0;
+                [_holeArray addObject:model];
+            }
+//            _region1 = [_holeArray objectAtIndex:0];
+//            _region2 = [_holeArray objectAtIndex:0];
             _ballName = [data objectForKey:@"ballName"];
             _loginpic = [data objectForKey:@"loginpic"];
         }else{
@@ -181,7 +191,8 @@ static NSString *const JGHOperationScoreListCellIdentifier = @"JGHOperationScore
         if (_selectId == 0) {
             return 310 *ProportionAdapter;
         }else if (_selectId == 1){
-            return 280 *ProportionAdapter;
+            
+            return (200 + _holeArray.count *40) *ProportionAdapter;
         }else{
             return screenWidth;
         }
@@ -210,7 +221,8 @@ static NSString *const JGHOperationScoreListCellIdentifier = @"JGHOperationScore
         }else if (_selectId == 1){
             JGHSetBallBaseCell *setBallBaseCell = [tableView dequeueReusableCellWithIdentifier:JGHSetBallBaseCellIdentifier];
             setBallBaseCell.delegate = self;
-            [setBallBaseCell configRegist1:_region1 andRegist2:_region2];
+//            [setBallBaseCell configRegist1:_region1 andRegist2:_region2];
+            [setBallBaseCell configJGHSetBallBaseCellArea:_holeArray];
             [setBallBaseCell configViewBallName:_ballName andLoginpic:_loginpic];
             setBallBaseCell.selectionStyle = UITableViewCellSelectionStyleNone;
             return setBallBaseCell;
@@ -239,12 +251,10 @@ static NSString *const JGHOperationScoreListCellIdentifier = @"JGHOperationScore
                 [self.simpleScoreTableView reloadData];
             };
             
-//            operationScoreListCell.selectId = indexPath.section;
             operationScoreListCell.poleArray = self.polesArray;
-            operationScoreListCell.region1 = _region1;
-            operationScoreListCell.region2 = _region2;
+            ///---
             operationScoreListCell.selectionStyle = UITableViewCellSelectionStyleNone;
-            [operationScoreListCell reloadOperScoreBtnListCellData];
+            [operationScoreListCell reloadOperScoreBtnListCellData:_holeArray];
             return operationScoreListCell;
         }
     }
@@ -282,59 +292,50 @@ static NSString *const JGHOperationScoreListCellIdentifier = @"JGHOperationScore
     
     [self.simpleScoreTableView reloadData];
 }
-#pragma mark -- 第一九洞
-- (void)oneAndNineBtn{
-    NSLog(@"第一九洞");
-    if (_ballView != nil) {
-        [_ballView removeFromSuperview];
+#pragma mark -- 选择球场区域
+- (void)returnAreaArray:(NSArray *)areaArray andAreaId:(NSInteger)areaId{
+    //统计select的总数
+    NSInteger selectCount = 0;
+    for (int i=0; i<areaArray.count; i++) {
+        JGHBallAreaModel *model = [[JGHBallAreaModel alloc]init];
+        model = areaArray[i];
+        if (model.select == 1) {
+            selectCount ++;
+        }
+    }
+    //
+    if (areaArray.count < 3) {
+        for (int i=0; i<areaArray.count; i++) {
+            if (areaId == i) {
+                JGHBallAreaModel *model = [[JGHBallAreaModel alloc]init];
+                model = areaArray[i];
+                model.select = 1;
+                [_holeArray replaceObjectAtIndex:areaId withObject:model];
+            }
+        }
+    }else{
+        for (int i=0; i<areaArray.count; i++) {
+            if (selectCount < 2) {
+                JGHBallAreaModel *model = [[JGHBallAreaModel alloc]init];
+                model = areaArray[i];
+                model.select = 1;
+                [_holeArray replaceObjectAtIndex:areaId withObject:model];
+            }else{
+                JGHBallAreaModel *model = [[JGHBallAreaModel alloc]init];
+                model = areaArray[i];
+                if (areaId == i && model.select == 1) {
+                    model.select = 0;
+                    [_holeArray replaceObjectAtIndex:areaId withObject:model];
+                }else{
+                    //请先取消一项，在点选！
+                    [[ShowHUD showHUD]showToastWithText:@"请先取消一项，在点选！" FromView:self.view];
+                    return;
+                }
+            }
+        }
     }
     
-    JGHSetBallBaseCell *setBallBaseCell = [self.simpleScoreTableView dequeueReusableCellWithIdentifier:JGHSetBallBaseCellIdentifier];
-    _ballView = [[UIView alloc]initWithFrame:CGRectMake( setBallBaseCell.oneBtn.frame.origin.x, setBallBaseCell.oneBtn.frame.origin.y + 140 *ProportionAdapter + setBallBaseCell.oneBtn.frame.size.height, setBallBaseCell.oneBtn.frame.size.width, 30 * 4 *ProportionAdapter)];
-    for (int i=0; i< _holeArray.count; i++) {
-        UIButton *btn = [[UIButton alloc]initWithFrame:CGRectMake(0, i * 30, _ballView.frame.size.width, 30*ProportionAdapter)];
-        [btn setTitle:_holeArray[i] forState:UIControlStateNormal];
-        btn.tag = 200 + i;
-        [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        [btn addTarget:self action:@selector(oneAndNineBtnSelectClick:) forControlEvents:UIControlEventTouchUpInside];
-        btn.backgroundColor = [UIColor whiteColor];
-        [_ballView addSubview:btn];
-    }
-    [self.view addSubview:_ballView];
-}
-#pragma mark -- 第一九洞选择事件
-- (void)oneAndNineBtnSelectClick:(UIButton *)btn{
-    NSLog(@"A区");
-    _region1 = [_holeArray objectAtIndex:btn.tag - 200];
     [self.simpleScoreTableView reloadData];
-    [_ballView removeFromSuperview];
-}
-#pragma mark -- 第二九洞
-- (void)twoAndNineBtn{
-    NSLog(@"第二九洞");
-    if (_ballTwoView != nil) {
-        [_ballTwoView removeFromSuperview];
-    }
-    
-    JGHSetBallBaseCell *setBallBaseCell = [self.simpleScoreTableView dequeueReusableCellWithIdentifier:JGHSetBallBaseCellIdentifier];
-    _ballTwoView = [[UIView alloc]initWithFrame:CGRectMake( setBallBaseCell.twoBtn.frame.origin.x, setBallBaseCell.twoBtn.frame.origin.y + 140 *ProportionAdapter + setBallBaseCell.twoBtn.frame.size.height, setBallBaseCell.twoBtn.frame.size.width, 30 * 4 *ProportionAdapter)];
-    for (int i=0; i< _holeArray.count; i++) {
-        UIButton *btn = [[UIButton alloc]initWithFrame:CGRectMake(0, i * 30, _ballTwoView.frame.size.width, 30*ProportionAdapter)];
-        [btn setTitle:_holeArray[i] forState:UIControlStateNormal];
-        btn.tag = 300 + i;
-        [btn addTarget:self action:@selector(twoAndNineBtnSelectClick:) forControlEvents:UIControlEventTouchUpInside];
-        btn.backgroundColor = [UIColor whiteColor];
-        [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        [_ballTwoView addSubview:btn];
-    }
-    [self.view addSubview:_ballTwoView];
-}
-#pragma mark -- 第二九洞选择事件
-- (void)twoAndNineBtnSelectClick:(UIButton *)btn{
-    NSLog(@"A区");
-    _region2 = [_holeArray objectAtIndex:btn.tag - 300];
-    [self.simpleScoreTableView reloadData];
-    [_ballTwoView removeFromSuperview];
 }
 #pragma mark -- 开始录入
 - (void)startScoreBtn{
@@ -377,8 +378,29 @@ static NSString *const JGHOperationScoreListCellIdentifier = @"JGHOperationScore
     NSMutableDictionary *userScoreDict = [NSMutableDictionary dictionary];
     
     if (_selectId != 0) {
-        [dict setObject:_region1 forKey:@"region1"];
-        [dict setObject:_region2 forKey:@"region2"];
+        NSInteger holeCount = 0;
+        NSString *region1 = nil;
+        NSString *region2 = nil;
+        for (int i=0; i<_holeArray.count; i++) {
+            JGHBallAreaModel *model = [[JGHBallAreaModel alloc]init];
+            model = _holeArray[i];
+            if (model.select == 1) {
+                holeCount += 1;
+                if (region1 == nil) {
+                    region1 = model.ballArea;
+                }else{
+                    region2 = model.ballArea;
+                }
+            }
+        }
+        
+        if (holeCount != 2) {
+            [[ShowHUD showHUD]showToastWithText:@"请选择2个区域！" FromView:self.view];
+            return;
+        }
+        
+        [dict setObject:region1 forKey:@"region1"];
+        [dict setObject:region2 forKey:@"region2"];
         if ([_playModel.userKey integerValue] != 0) {
             [userScoreDict setObject:_playModel.userKey forKey:@"userKey"];
         }else{

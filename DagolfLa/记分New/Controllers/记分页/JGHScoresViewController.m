@@ -761,7 +761,7 @@
 - (void)loadOneAreaData:(NSString *)btnString andBtnTag:(NSInteger)tag{
     NSLog(@"%@", btnString);
     //getOperationScoreList
-    [_ballDict setObject:btnString forKey:@"cityName"];// 区域名
+    [_ballDict setObject:btnString forKey:@"area"];// 区域名
     [_ballDict setObject:[JGReturnMD5Str getHoleNameAndPolesBallKey:[[_ballDict objectForKey:@"ballKey"] integerValue] andArea:btnString] forKey:@"md5"];
     [[JsonHttp jsonHttp]httpRequest:@"ball/getHoleNameAndPoles" JsonKey:nil withData:_ballDict requestMethod:@"GET" failedBlock:^(id errType) {
         

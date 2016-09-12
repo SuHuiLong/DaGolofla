@@ -233,13 +233,18 @@
         [viewTitle addSubview:allLB];
         
         UILabel *stemLB = [[UILabel alloc] initWithFrame:CGRectMake(310 * ProportionAdapter, 108 * ProportionAdapter, 39 * ProportionAdapter, 25 * ProportionAdapter)];
-//        stemLB.text = [self.model.poles stringValue];
-        NSNumber *sum = [self.model.standardlever valueForKeyPath:@"@sum.integerValue"];
-        NSInteger textNum = [self.model.poles integerValue] - [sum integerValue];
-        if (textNum <= 0) {
-            stemLB.text = [NSString stringWithFormat:@"%td", textNum];
+        NSInteger poleSum = 0;
+        NSInteger standSum = 0;
+        for (int i = 0; i < self.model.poleNumber.count; i ++) {
+            if ([self.model.poleNumber[i] integerValue] != -1) {
+                poleSum += [self.model.poleNumber[i] integerValue];
+                standSum += [self.model.standardlever[i] integerValue];
+            }
+        }
+        if (poleSum - standSum <= 0) {
+            stemLB.text = [NSString stringWithFormat:@"%td", poleSum - standSum];
         }else{
-            stemLB.text = [NSString stringWithFormat:@"+%td", textNum];
+            stemLB.text = [NSString stringWithFormat:@"+%td", poleSum - standSum];
         }
         stemLB.font = [UIFont systemFontOfSize:20 * ProportionAdapter];
         stemLB.textAlignment = NSTextAlignmentCenter;

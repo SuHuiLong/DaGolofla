@@ -79,11 +79,15 @@
         self.ballName.text = model.ballName;
     
     if ([model.scoreFinish integerValue] == 0) {
+        self.unfinishimageV.hidden = NO;
         self.unfinishimageV.image = [UIImage imageNamed:@"weiwanchegn"];
         [self.holderImageV addSubview:self.unfinishimageV];
     }else if ([model.scoreFinish integerValue] == 2) {
+        self.unfinishimageV.hidden = NO;
         self.unfinishimageV.image = [UIImage imageNamed:@"icn_daiji"];
         [self.holderImageV addSubview:self.unfinishimageV];
+    }else{
+        self.unfinishimageV.hidden = YES;
     }
     
     

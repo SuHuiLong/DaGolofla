@@ -7,12 +7,28 @@
 //
 
 #import "JGHSetBallBaseCell.h"
+#import "JGHLableAndGouCell.h"
+#import "JGHBallAreaModel.h"
+
+static NSString *const JGHLableAndGouCellIdentifier = @"JGHLableAndGouCell";
+
+@interface JGHSetBallBaseCell ()
+
+//{
+//    NSInteger _regist1;
+//    NSInteger _regist2;
+//}
+
+
+@end
 
 @implementation JGHSetBallBaseCell
 
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
+    
+    self.areaArray = [NSArray array];
     
     self.bgTop.constant = 5 *ProportionAdapter;
     self.bgLeft.constant = 20 *ProportionAdapter;
@@ -28,21 +44,26 @@
     self.ballName.font = [UIFont systemFontOfSize:15*ProportionAdapter];
     self.ballNameLeft.constant = 10 *ProportionAdapter;
 
-    self.lineLeft.constant = 30 *ProportionAdapter;
-    self.lineRight.constant = 30 *ProportionAdapter;
-
-    self.oneBtn.titleLabel.font = [UIFont systemFontOfSize:15*ProportionAdapter];
+    self.twolineLeft.constant = 20 *ProportionAdapter;
+    self.twolineRight.constant = 20 *ProportionAdapter;
+    self.twolineDown.constant = 15 *ProportionAdapter;
     
-    self.oneBtnTop.constant = 25 *ProportionAdapter;
-    self.oneBtnLeft.constant = 15 *ProportionAdapter;
-    self.oneBtnRight.constant = 30 *ProportionAdapter;
-
-    self.twoBtn.titleLabel.font = [UIFont systemFontOfSize:15*ProportionAdapter];
+    self.oneLineLeft.constant = 20 *ProportionAdapter;
+    self.oneLineRigh.constant = 20 *ProportionAdapter;
+    
+    self.setBallAreaTableViewTop.constant = 16 *ProportionAdapter;
+    self.setBallAreaTableViewLeft.constant = 20 *ProportionAdapter;
+    self.setBallAreaTableViewDown.constant = 30 *ProportionAdapter;
+    self.setBallAreaTableViewRight.constant = 20 *ProportionAdapter;
  
     self.startBtn.titleLabel.font = [UIFont systemFontOfSize:15*ProportionAdapter];
+    self.startBtnDown.constant = 15 *ProportionAdapter;
     
     self.bgImage.backgroundColor = [UIColor colorWithHexString:BG_color];
     self.backgroundColor = [UIColor colorWithHexString:BG_color];
+    
+    UINib *lableAndGouCellNib = [UINib nibWithNibName:@"JGHLableAndGouCell" bundle: [NSBundle mainBundle]];
+    [self.setBallAreaTableView registerNib:lableAndGouCellNib forCellReuseIdentifier:JGHLableAndGouCellIdentifier];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -51,31 +72,52 @@
     // Configure the view for the selected state
 }
 
-- (IBAction)oneBtnClick:(UIButton *)sender {
-    if (self.delegate) {
-        [self.delegate oneAndNineBtn];
-    }
-}
-- (IBAction)twoBtnClick:(UIButton *)sender {
-    if (self.delegate) {
-        [self.delegate twoAndNineBtn];
-    }
-}
 - (IBAction)startBtnClick:(UIButton *)sender {
     if (self.delegate) {
         [self.delegate startScoreBtn];
     }
 }
 
-- (void)configRegist1:(NSString *)regist1 andRegist2:(NSString *)regist2{
-    [self.oneBtn setTitle:[NSString stringWithFormat:@"  %@", regist1] forState:UIControlStateNormal];
-    
-    [self.twoBtn setTitle:[NSString stringWithFormat:@"  %@", regist2] forState:UIControlStateNormal];
-}
-
 - (void)configViewBallName:(NSString *)ballName andLoginpic:(NSString *)loginpic{
     [self.headerImageView sd_setImageWithURL:[Helper imageIconUrl:loginpic] placeholderImage:[UIImage imageNamed:TeamLogoImage]];
     self.ballName.text = ballName;
 }
+
+#pragma mark -- tableView代理
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    return 1;
+}
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+    return self.areaArray.count;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return 40 *ProportionAdapter;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    JGHLableAndGouCell *lableAndGouCell = [tableView dequeueReusableCellWithIdentifier:JGHLableAndGouCellIdentifier];
+    lableAndGouCell.name.tag = indexPath.section + 10;
+    [lableAndGouCell configJGHBallAreaModel:_areaArray[indexPath.section]];
+    lableAndGouCell.selectionStyle = UITableViewCellSelectionStyleNone;
+    return lableAndGouCell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (self.delegate) {
+        [self.delegate returnAreaArray:_areaArray andAreaId:indexPath.section];
+    }
+}
+
+- (void)configJGHSetBallBaseCellArea:(NSArray *)areaArray{
+    self.areaArray = areaArray;
+    
+    [self.setBallAreaTableView reloadData];
+}
+
+
+
 
 @end
