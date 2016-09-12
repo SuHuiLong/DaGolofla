@@ -804,6 +804,7 @@
 		828A99F91CE348D500AF9860 /* JGMemTitleTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 828A99F81CE348D500AF9860 /* JGMemTitleTableViewCell.m */; };
 		828A99FC1CE3549900AF9860 /* JGMemDataTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 828A99FB1CE3549900AF9860 /* JGMemDataTableViewCell.m */; };
 		828FAA4E1D62F839001F53C8 /* JGLCaddieSelfAddPlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 828FAA4D1D62F839001F53C8 /* JGLCaddieSelfAddPlayerViewController.m */; };
+		8290D6031D86931D00925E4A /* lauchingAnimation.html in Resources */ = {isa = PBXBuildFile; fileRef = 8290D6021D86931D00925E4A /* lauchingAnimation.html */; };
 		829960D41D23727C00E121A8 /* JGLBankModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 829960D31D23727C00E121A8 /* JGLBankModel.m */; };
 		829960DA1D23729C00E121A8 /* JGLAddBankNewsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 829960D71D23729C00E121A8 /* JGLAddBankNewsTableViewCell.m */; };
 		829960DB1D23729C00E121A8 /* JGLBankCardTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 829960D91D23729C00E121A8 /* JGLBankCardTableViewCell.m */; };
@@ -2718,6 +2719,7 @@
 		828A99FB1CE3549900AF9860 /* JGMemDataTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGMemDataTableViewCell.m; sourceTree = "<group>"; };
 		828FAA4C1D62F839001F53C8 /* JGLCaddieSelfAddPlayerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGLCaddieSelfAddPlayerViewController.h; sourceTree = "<group>"; };
 		828FAA4D1D62F839001F53C8 /* JGLCaddieSelfAddPlayerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGLCaddieSelfAddPlayerViewController.m; sourceTree = "<group>"; };
+		8290D6021D86931D00925E4A /* lauchingAnimation.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = lauchingAnimation.html; sourceTree = "<group>"; };
 		829487241CE99A2F0018D3F6 /* JGPhotoShowCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGPhotoShowCollectionViewCell.h; sourceTree = "<group>"; };
 		829487251CE99A2F0018D3F6 /* JGPhotoShowCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGPhotoShowCollectionViewCell.m; sourceTree = "<group>"; };
 		829487261CE99A2F0018D3F6 /* JGPhotoShowCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JGPhotoShowCollectionViewCell.xib; sourceTree = "<group>"; };
@@ -5943,6 +5945,7 @@
 		36BFFD2B1BC76C8D005B3CE2 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				8290D6021D86931D00925E4A /* lauchingAnimation.html */,
 				36BFFD2C1BC76C8D005B3CE2 /* Info.plist */,
 				36BFFD2D1BC76C8D005B3CE2 /* main.m */,
 				363D4F331C86E1C70089E52C /* PushConfig.plist */,
@@ -9055,7 +9058,7 @@
 				TargetAttributes = {
 					36BFFD271BC76C8D005B3CE2 = {
 						CreatedOnToolsVersion = 6.3.2;
-						DevelopmentTeam = R269PG52XZ;
+						DevelopmentTeam = 5P6JNXBH3C;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -9138,6 +9141,7 @@
 				36D0B0F21C80151C00C7245E /* Emoji.plist in Resources */,
 				2012AD811D2BB1B200F70E40 /* JGHAddAwardImageCell.xib in Resources */,
 				3684FDAE1C4A35F4002A14FC /* TeamInviteTableViewCell.xib in Resources */,
+				8290D6031D86931D00925E4A /* lauchingAnimation.html in Resources */,
 				F5AEF7321D41B98E009A8C34 /* JGHScoresHoleCell.xib in Resources */,
 				202E052D1D80120800566CA9 /* JGHScoreAreaCell.xib in Resources */,
 				209B91A91D6D375200A5BE10 /* JGHApplyNewCell.xib in Resources */,
