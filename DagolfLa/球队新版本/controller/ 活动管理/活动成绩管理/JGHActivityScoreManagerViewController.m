@@ -36,6 +36,7 @@ static NSString *const JGHCenterBtnTableViewCellIdentifier = @"JGHCenterBtnTable
     
     NSInteger _selectNumber;//选择的人数
     NSNumber *_teamKey;
+    NSInteger _lockScore;//是否锁定
 }
 
 @property (nonatomic, strong)UITableView *scoreManageTableView;
@@ -151,6 +152,7 @@ static NSString *const JGHCenterBtnTableViewCellIdentifier = @"JGHCenterBtnTable
             //数据解析
             //            self.TeamArray = [data objectForKey:@"teamList"];
             _almostType = [[data objectForKey:@"almostType"] integerValue];
+            _lockScore = [[data objectForKey:@"lockScore"] integerValue];
             
             for (NSDictionary *dataDic in [data objectForKey:@"list"]) {
                 JGLScoreLiveModel *model = [[JGLScoreLiveModel alloc] init];
@@ -325,6 +327,12 @@ static NSString *const JGHCenterBtnTableViewCellIdentifier = @"JGHCenterBtnTable
     }else{
         setAlmostCtrl.teamActivityKey = [_activityBaseModel.timeKey integerValue];
     }
+    
+    setAlmostCtrl.lockScore = _lockScore;
+//    setAlmostCtrl.refreshBlock = ^(NSInteger almostType){
+//        weakSlef.almostType = almostType;
+//        [self headRereshing];
+//    };
     [self.navigationController pushViewController:setAlmostCtrl animated:YES];
 }
 #pragma mark -- 保存
