@@ -16,5 +16,6 @@
 
 @property (nonatomic, assign)NSInteger almostType;
 
+@property (nonatomic, assign)NSInteger lockScore; // 0是未锁定
 
 @end

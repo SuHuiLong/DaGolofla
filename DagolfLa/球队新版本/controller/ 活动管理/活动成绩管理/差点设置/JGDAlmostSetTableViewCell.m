@@ -38,7 +38,8 @@
         [backView addSubview:newCalculateLB];
         
         UIButton *newButton = [[UIButton alloc] initWithFrame:CGRectMake(300 * ProportionAdapter, 40 * ProportionAdapter, 20 * ProportionAdapter, 20 * ProportionAdapter)];
-        [newButton setImage:[UIImage imageNamed:@"scorXZ"] forState:UIControlStateNormal];
+        [newButton setImage:[UIImage imageNamed:@"yuanquan"] forState:UIControlStateNormal];
+        newButton.tag = 201;
         [backView addSubview:newButton];
         
         UILabel *newCalculateDetailLB = [[UILabel alloc] initWithFrame:CGRectMake(30 * ProportionAdapter, 60 * ProportionAdapter, 300 * ProportionAdapter, 100 * ProportionAdapter)];
@@ -58,7 +59,8 @@
         [backView addSubview:calculateBySelfLB];
         
         UIButton *calculateBySelfButton = [[UIButton alloc] initWithFrame:CGRectMake(300 * ProportionAdapter, 180 * ProportionAdapter, 20 * ProportionAdapter, 20 * ProportionAdapter)];
-        [calculateBySelfButton setImage:[UIImage imageNamed:@"scorXZ"] forState:UIControlStateNormal];
+        [calculateBySelfButton setImage:[UIImage imageNamed:@"yuanquan"] forState:UIControlStateNormal];
+        calculateBySelfButton.tag = 202;
         [backView addSubview:calculateBySelfButton];
         
         UILabel *calculateBySelfDetailLB = [[UILabel alloc] initWithFrame:CGRectMake(30 * ProportionAdapter, 200 * ProportionAdapter, 300 * ProportionAdapter, 65 * ProportionAdapter)];

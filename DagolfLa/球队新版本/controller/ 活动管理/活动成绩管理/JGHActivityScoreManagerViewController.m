@@ -316,8 +316,15 @@ static NSString *const JGHCenterBtnTableViewCellIdentifier = @"JGHCenterBtnTable
 //    setAlmostCtrl.refreshBlock = ^(NSInteger almostType){
 //        weakSlef.almostType = almostType;
 //        [self headRereshing];
-//    };
+    //    };
     JGDAlmostStlyleSetViewController *setAlmostCtrl = [[JGDAlmostStlyleSetViewController alloc] init];
+    setAlmostCtrl.teamKey = _activityBaseModel.teamKey;
+    setAlmostCtrl.almostType = _almostType;
+    if (_activityBaseModel.teamActivityKey != 0) {
+        setAlmostCtrl.teamActivityKey = _activityBaseModel.teamActivityKey;
+    }else{
+        setAlmostCtrl.teamActivityKey = [_activityBaseModel.timeKey integerValue];
+    }
     [self.navigationController pushViewController:setAlmostCtrl animated:YES];
 }
 #pragma mark -- 保存
