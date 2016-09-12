@@ -18,6 +18,6 @@
 
 @property (nonatomic, assign)NSInteger lockScore; // 0是未锁定
 
-//@property (copy, nonatomic) void (^refreshBlock)();
+@property (copy, nonatomic) void (^refreshBlock)();
 
 @end

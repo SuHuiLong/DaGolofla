@@ -329,10 +329,10 @@ static NSString *const JGHCenterBtnTableViewCellIdentifier = @"JGHCenterBtnTable
     }
     
     setAlmostCtrl.lockScore = _lockScore;
-//    setAlmostCtrl.refreshBlock = ^(NSInteger almostType){
+    setAlmostCtrl.refreshBlock = ^(){
 //        weakSlef.almostType = almostType;
-//        [self headRereshing];
-//    };
+        [self headRereshing];
+    };
     [self.navigationController pushViewController:setAlmostCtrl animated:YES];
 }
 #pragma mark -- 保存
