@@ -16,6 +16,7 @@
 #import "JGDHistoryScoreViewController.h"
 
 #import "JGDPlayPersonViewController.h"
+#import "JGLCaddieScoreViewController.h"
 
 @interface JGDPlayerHisScoreCardViewController ()<UITableViewDelegate, UITableViewDataSource>
 
@@ -45,7 +46,7 @@
         }
     }
     for (UIViewController *vc in self.navigationController.viewControllers) {
-        if ([vc isKindOfClass:[JGDPlayPersonViewController class]]) {
+        if ([vc isKindOfClass:[JGDPlayPersonViewController class]] || [vc isKindOfClass:[JGLCaddieScoreViewController class]]) {
             [self.navigationController popToViewController:vc animated:YES];
             return;
         }
