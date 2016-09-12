@@ -512,8 +512,9 @@
                         _dataUserKey = arrUserKey;
                         _allmostArray = arrAllMost;
                         _mobileArr = arrMobile;
-                        NSIndexSet *indexSet=[[NSIndexSet alloc]initWithIndex:4];
-                        [_tableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationAutomatic];
+//                        NSIndexSet *indexSet=[[NSIndexSet alloc]initWithIndex:4];
+//                        [_tableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationAutomatic];
+                        [_tableView reloadData];
                     };
                     addVc.dictFinish = _dictPeo;
                     addVc.dataKey    = _dataKeyBack;

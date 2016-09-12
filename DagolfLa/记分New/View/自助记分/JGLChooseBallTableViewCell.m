@@ -19,7 +19,7 @@
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        _iconImg = [[UIImageView alloc]initWithFrame:CGRectMake(10*ScreenWidth/375, 10*ScreenWidth/375, 40*ScreenWidth/375, 40*ScreenWidth/375)];
+        _iconImg = [[UIImageView alloc]initWithFrame:CGRectMake(10*ScreenWidth/375, 15*ScreenWidth/375, 30*ScreenWidth/375, 30*ScreenWidth/375)];
         _iconImg.image = [UIImage imageNamed:IconLogo];
         [self.contentView addSubview:_iconImg];
         

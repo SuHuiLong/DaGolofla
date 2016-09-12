@@ -93,6 +93,11 @@
     [dict setObject:[NSNumber numberWithInteger:_ballId] forKey:@"ballKey"];
     [dict setObject:@0 forKey:@"srcKey"];//
     [dict setObject:@(0) forKey:@"srcType"];//活动传1，罗开创说的
+    if (_dictArea.count < 2) {
+        [[ShowHUD showHUD]showToastWithText:@"请选择两个球场分区，谢谢" FromView:self.view];
+        return;
+    }
+    
     if (![Helper isBlankString:[_dictArea allValues][0]]) {
         [dict setObject:[_dictArea allValues][0] forKey:@"region1"];
     }
