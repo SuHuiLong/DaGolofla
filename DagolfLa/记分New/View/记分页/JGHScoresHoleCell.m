@@ -29,7 +29,7 @@
     self.oneLable.textAlignment = NSTextAlignmentCenter;
     self.oneLable.layer.masksToBounds = YES;
     self.oneLable.layer.cornerRadius = self.oneLable.frame.size.width /2;
-    self.oneLable.userInteractionEnabled = YES;
+//    self.oneLable.userInteractionEnabled = YES;
     [self.one addSubview:self.oneLable];
     
     self.two.titleLabel.font = [UIFont systemFontOfSize:13.0*ProportionAdapter];
@@ -38,7 +38,7 @@
     self.twoLable.layer.masksToBounds = YES;
     self.twoLable.textAlignment = NSTextAlignmentCenter;
     self.twoLable.layer.cornerRadius = self.twoLable.frame.size.width /2;
-    self.twoLable.userInteractionEnabled = YES;
+//    self.twoLable.userInteractionEnabled = YES;
     [self.two addSubview:self.twoLable];
     
     self.three.titleLabel.font = [UIFont systemFontOfSize:13.0*ProportionAdapter];
@@ -47,7 +47,7 @@
     self.threeLable.layer.masksToBounds = YES;
     self.threeLable.textAlignment = NSTextAlignmentCenter;
     self.threeLable.layer.cornerRadius = self.threeLable.frame.size.width /2;
-    self.threeLable.userInteractionEnabled = YES;
+//    self.threeLable.userInteractionEnabled = YES;
     [self.three addSubview:self.threeLable];
     
     self.four.titleLabel.font = [UIFont systemFontOfSize:13.0*ProportionAdapter];
@@ -56,7 +56,7 @@
     self.fourLable.layer.masksToBounds = YES;
     self.fourLable.textAlignment = NSTextAlignmentCenter;
     self.fourLable.layer.cornerRadius = self.fourLable.frame.size.width /2;
-    self.fourLable.userInteractionEnabled = YES;
+//    self.fourLable.userInteractionEnabled = YES;
     [self.four addSubview:self.fourLable];
     
     self.five.titleLabel.font = [UIFont systemFontOfSize:13.0*ProportionAdapter];
@@ -65,7 +65,7 @@
     self.fiveLable.layer.masksToBounds = YES;
     self.fiveLable.textAlignment = NSTextAlignmentCenter;
     self.fiveLable.layer.cornerRadius = self.fiveLable.frame.size.width /2;
-    self.fiveLable.userInteractionEnabled = YES;
+//    self.fiveLable.userInteractionEnabled = YES;
     [self.five addSubview:self.fiveLable];
     
     self.six.titleLabel.font = [UIFont systemFontOfSize:13.0*ProportionAdapter];
@@ -74,7 +74,7 @@
     self.sixLable.layer.masksToBounds = YES;
     self.sixLable.textAlignment = NSTextAlignmentCenter;
     self.sixLable.layer.cornerRadius = self.sixLable.frame.size.width /2;
-    self.sixLable.userInteractionEnabled = YES;
+//    self.sixLable.userInteractionEnabled = YES;
     [self.six addSubview:self.sixLable];
     
     self.seven.titleLabel.font = [UIFont systemFontOfSize:13.0*ProportionAdapter];
@@ -83,7 +83,7 @@
     self.sevenLable.layer.masksToBounds = YES;
     self.sevenLable.textAlignment = NSTextAlignmentCenter;
     self.sevenLable.layer.cornerRadius = self.sevenLable.frame.size.width /2;
-    self.sevenLable.userInteractionEnabled = YES;
+//    self.sevenLable.userInteractionEnabled = YES;
     [self.seven addSubview:self.sevenLable];
     
     self.eight.titleLabel.font = [UIFont systemFontOfSize:13.0*ProportionAdapter];
@@ -92,7 +92,7 @@
     self.eightLable.layer.masksToBounds = YES;
     self.eightLable.textAlignment = NSTextAlignmentCenter;
     self.eightLable.layer.cornerRadius = self.eightLable.frame.size.width /2;
-    self.eightLable.userInteractionEnabled = YES;
+//    self.eightLable.userInteractionEnabled = YES;
     [self.eight addSubview:self.eightLable];
     
     self.nine.titleLabel.font = [UIFont systemFontOfSize:13.0*ProportionAdapter];
@@ -101,7 +101,7 @@
     self.nineLable.layer.masksToBounds = YES;
     self.nineLable.textAlignment = NSTextAlignmentCenter;
     self.nineLable.layer.cornerRadius = self.nineLable.frame.size.width /2;
-    self.nineLable.userInteractionEnabled = YES;
+//    self.nineLable.userInteractionEnabled = YES;
     [self.nine addSubview:self.nineLable];
 }
 
@@ -125,6 +125,7 @@
     }
 }
 - (void)configPoorArray:(NSArray *)array{
+    self.name.text = @"HOLE";
     self.oneLable.text = [NSString stringWithFormat:@"%@", [NSString stringWithFormat:@"%@", array[9]]];
     self.twoLable.text = [NSString stringWithFormat:@"%@", [NSString stringWithFormat:@"%@", array[10]]];
     self.threeLable.text = [NSString stringWithFormat:@"%@", [NSString stringWithFormat:@"%@", array[11]]];
@@ -146,15 +147,6 @@
     self.sevenLable.text = [NSString stringWithFormat:@"%@", [NSString stringWithFormat:@"%@", array[6]]];
     self.eightLable.text = [NSString stringWithFormat:@"%@", [NSString stringWithFormat:@"%@", array[7]]];
     self.nineLable.text = [NSString stringWithFormat:@"%@", [NSString stringWithFormat:@"%@", array[8]]];
-//    [self.one setTitle:[NSString stringWithFormat:@"%@", array[0]] forState:UIControlStateNormal];
-//    [self.two setTitle:[NSString stringWithFormat:@"%@", array[1]] forState:UIControlStateNormal];
-//    [self.three setTitle:[NSString stringWithFormat:@"%@", array[2]] forState:UIControlStateNormal];
-//    [self.four setTitle:[NSString stringWithFormat:@"%@", array[3]] forState:UIControlStateNormal];
-//    [self.five setTitle:[NSString stringWithFormat:@"%@", array[4]] forState:UIControlStateNormal];
-//    [self.six setTitle:[NSString stringWithFormat:@"%@", array[5]] forState:UIControlStateNormal];
-//    [self.seven setTitle:[NSString stringWithFormat:@"%@", array[6]] forState:UIControlStateNormal];
-//    [self.eight setTitle:[NSString stringWithFormat:@"%@", array[7]] forState:UIControlStateNormal];
-//    [self.nine setTitle:[NSString stringWithFormat:@"%@", array[8]] forState:UIControlStateNormal];
 }
 
 - (void)configOneToNine:(NSArray *)array andUserName:(NSString *)userName andStandradArray:(NSArray *)standradArray{
@@ -345,16 +337,6 @@
             }
         }
     }
-    
-//    self.oneLable.text = [NSString stringWithFormat:@"%@", [self returnValue:array[9]]];
-//    self.twoLable.text = [NSString stringWithFormat:@"%@", [self returnValue:array[10]]];
-//    self.threeLable.text = [NSString stringWithFormat:@"%@", [self returnValue:array[11]]];
-//    self.fourLable.text = [NSString stringWithFormat:@"%@", [self returnValue:array[12]]];
-//    self.fiveLable.text = [NSString stringWithFormat:@"%@", [self returnValue:array[13]]];
-//    self.sixLable.text = [NSString stringWithFormat:@"%@", [self returnValue:array[14]]];
-//    self.sevenLable.text = [NSString stringWithFormat:@"%@", [self returnValue:array[15]]];
-//    self.eightLable.text = [NSString stringWithFormat:@"%@", [self returnValue:array[16]]];
-//    self.nineLable.text = [NSString stringWithFormat:@"%@", [self returnValue:array[17]]];
     
     self.oneLable.text = [NSString stringWithFormat:@"%@", [self pole:[array objectAtIndex:9] andStandard:[[standradArray objectAtIndex:9] integerValue]]];
     

@@ -48,7 +48,7 @@
     
     NSInteger _cabbieFinishScore;//是否结束所有记分 1- 结束，0－不结束
     
-    NSArray *_oneAreaArray;
+    NSArray *_areaArray;
     
     NSMutableArray *_currentAreaArray;
     
@@ -108,7 +108,6 @@
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     
-    
 }
 #pragma mark -- 移除imageView 
 - (void)removeUserFristScoreImageView{
@@ -130,12 +129,12 @@
     if ([userdf objectForKey:[NSString stringWithFormat:@"switchMode%@", _scorekey]]) {
         _switchMode = [[userdf objectForKey:[NSString stringWithFormat:@"switchMode%@", _scorekey]] integerValue];
     }else{
-        _switchMode = 0;
-        [userdf setObject:@"0" forKey:[NSString stringWithFormat:@"switchMode%@", _scorekey]];
+        _switchMode = 1;
+        [userdf setObject:@"1" forKey:[NSString stringWithFormat:@"switchMode%@", _scorekey]];
         [userdf synchronize];
     }
     
-    _oneAreaArray = [NSArray array];
+    _areaArray = [NSArray array];
     _currentAreaArray = [NSMutableArray array];
     
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(noticePushScoresCtrl:) name:@"noticePushScores" object:nil];
@@ -157,10 +156,6 @@
     [_arrowBtn addTarget:self action:@selector(titleBtnClick) forControlEvents:UIControlEventTouchUpInside];
     [_arrowBtn setImage:[UIImage imageNamed:@"zk"] forState:UIControlStateNormal];
     [titleView addSubview:_arrowBtn];
-    
-    UILabel *bgLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 42, 80*ProportionAdapter, 2)];
-    bgLabel.backgroundColor = [UIColor colorWithHexString:@"#50BD67"];
-    [titleView addSubview:bgLabel];
     
     self.navigationItem.titleView = titleView;
     
@@ -330,6 +325,7 @@
     _selectHole = 0;
     [_item setTitle:@"保存"];
     [_scoresView removeFromSuperview];
+    [_poorScoreView removeFromSuperview];
     [_tranView removeFromSuperview];
 //    _pageControl.currentPage = [[not.userInfo objectForKey:@"index"] integerValue];
     [self.titleBtn setTitle:[NSString stringWithFormat:@"%td HOLE", [[not.userInfo objectForKey:@"index"] integerValue]+1] forState:UIControlStateNormal];
@@ -355,7 +351,7 @@
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
             
             if ([data objectForKey:@"ballAreas"]) {
-                _oneAreaArray = [data objectForKey:@"ballAreas"];
+                _areaArray = [data objectForKey:@"ballAreas"];
             }
             
             if ([data objectForKey:@"score"]) {
@@ -396,6 +392,7 @@
                 JGHScoresMainViewController *sub = [[JGHScoresMainViewController alloc]init];
                 sub.index = _currentPage;
                 sub.dataArray = self.userScoreArray;
+                sub.currentAreaArray = _currentAreaArray;
                 sub.switchMode = _switchMode;
                 sub.scorekey = _scorekey;
                 __weak JGHScoresViewController *weakSelf = self;
@@ -457,7 +454,7 @@
 //            _scoresView.areaArray = _oneAreaArray;
             _scoresView.curPage = _selectPage;
             [self.view addSubview:_scoresView];
-            [_scoresView reloadScoreList:_currentAreaArray];//更新UI位置
+            [_scoresView reloadScoreList:_currentAreaArray andAreaArray:_areaArray];//更新UI位置
             _tranView = [[UIView alloc]initWithFrame:CGRectMake(0, _scoresView.frame.size.height, screenWidth, (screenHeight -64)-(194 + self.userScoreArray.count * 60)*ProportionAdapter)];
             _tranView.backgroundColor = [UIColor blackColor];
             _tranView.alpha = 0.3;
@@ -472,10 +469,10 @@
             _poorScoreView.delegate = self;
             _poorScoreView.frame = CGRectMake(0, 0, screenWidth, (194 + self.userScoreArray.count * 60)*ProportionAdapter);
             _poorScoreView.dataArray = self.userScoreArray;
-            _poorScoreView.areaArray = _oneAreaArray;
+//            _poorScoreView.areaArray = _oneAreaArray;
             _poorScoreView.curPage = _selectPage;
             [self.view addSubview:_scoresView];
-            [_poorScoreView reloadScoreList];//更新UI位置
+            [_poorScoreView reloadScoreList:_currentAreaArray andAreaArray:_areaArray];//更新UI位置
             _tranView = [[UIView alloc]initWithFrame:CGRectMake(0, _poorScoreView.frame.size.height, screenWidth, (screenHeight -64)-(194 + self.userScoreArray.count * 60)*ProportionAdapter)];
             _tranView.backgroundColor = [UIColor blackColor];
             _tranView.alpha = 0.3;
@@ -509,6 +506,7 @@
         sub.switchMode = [[userdf objectForKey:[NSString stringWithFormat:@"switchMode%@", _scorekey]] integerValue];
         sub.scorekey = _scorekey;
         sub.dataArray = self.userScoreArray;
+        sub.currentAreaArray = _currentAreaArray;
         return sub;
     }
     else
@@ -520,6 +518,7 @@
         sub.index = _currentPage;
         sub.scorekey = _scorekey;
         sub.dataArray = self.userScoreArray;
+        sub.currentAreaArray = _currentAreaArray;
         return sub;
     }
 }
@@ -538,6 +537,7 @@
         sub.index = _currentPage;
         sub.scorekey = _scorekey;
         sub.dataArray = self.userScoreArray;
+        sub.currentAreaArray = _currentAreaArray;
         return sub;
     }
     else
@@ -549,6 +549,7 @@
         sub.index = _currentPage;
         sub.scorekey = _scorekey;
         sub.dataArray = self.userScoreArray;
+        sub.currentAreaArray = _currentAreaArray;
         NSLog(@"%@",sub);
         return sub;
     }
@@ -561,6 +562,7 @@
     NSUserDefaults *userdf = [NSUserDefaults standardUserDefaults];
     sub.switchMode = [[userdf objectForKey:[NSString stringWithFormat:@"switchMode%@", _scorekey]] integerValue];
     sub.scorekey = _scorekey;
+    sub.currentAreaArray = _currentAreaArray;
     __weak JGHScoresViewController *weakSelf = self;
     sub.returnScoresDataArray= ^(NSMutableArray *dataArray){
         weakSelf.userScoreArray = dataArray;
@@ -795,18 +797,22 @@
 - (void)loadOneAreaData:(NSString *)btnString andBtnTag:(NSInteger)tag{
     NSLog(@"%@", btnString);
     //getOperationScoreList
+    [[ShowHUD showHUD]showAnimationWithText:@"切换中..." FromView:self.view];
     [_ballDict setObject:btnString forKey:@"area"];// 区域名
     [_ballDict setObject:[JGReturnMD5Str getHoleNameAndPolesBallKey:[[_ballDict objectForKey:@"ballKey"] integerValue] andArea:btnString] forKey:@"md5"];
     [[JsonHttp jsonHttp]httpRequest:@"ball/getHoleNameAndPoles" JsonKey:nil withData:_ballDict requestMethod:@"GET" failedBlock:^(id errType) {
-        
+        [[ShowHUD showHUD]hideAnimationFromView:self.view];
     } completionBlock:^(id data) {
         NSLog(@"%@", data);
+        [[ShowHUD showHUD]hideAnimationFromView:self.view];
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
-            NSArray *holeNamesArray = [NSArray array];
+            NSArray *holeNamesArray = [NSArray array];//球洞名称
             holeNamesArray = [data objectForKey:@"holeNames"];
+            NSArray *standardleverArray = [NSArray array];//标准杆
+            standardleverArray = [data objectForKey:@"poles"];
             if (tag < 400) {
-                
                 [_scoresView removeOneAreaView];
+                [_poorScoreView removePoorOneAreaView];
                 
                 [_currentAreaArray replaceObjectAtIndex:0 withObject:btnString];
                 
@@ -819,23 +825,28 @@
                     NSMutableArray *onthefairway = [NSMutableArray arrayWithArray:model.onthefairway];
                     //pushrod
                     NSMutableArray *pushrod = [NSMutableArray arrayWithArray:model.pushrod];
+                    //standardlever
+                    NSMutableArray *standardlever = [NSMutableArray arrayWithArray:model.standardlever];
                     
                     for (int i=0; i< 9; i++) {
                         [poleNameList replaceObjectAtIndex:i withObject:holeNamesArray[i]];
                         [poleNumber replaceObjectAtIndex:i withObject:@-1];
                         [onthefairway replaceObjectAtIndex:i withObject:@-1];
                         [pushrod replaceObjectAtIndex:i withObject:@-1];
+                        [standardlever replaceObjectAtIndex:i withObject:standardleverArray[i]];
                     }
                     
                     model.poleNameList = poleNameList;
                     model.poleNumber = poleNumber;
                     model.onthefairway = onthefairway;
                     model.pushrod = pushrod;
+                    model.standardlever = standardlever;
                     [self.userScoreArray replaceObjectAtIndex:j withObject:model];
                 }
                 
             }else{
                 [_scoresView removeTwoAreaView];
+                [_poorScoreView removePoorTwoAreaView];
                 [_currentAreaArray replaceObjectAtIndex:1 withObject:btnString];
                 
                 for (int j=0; j<self.userScoreArray.count; j++) {
@@ -846,24 +857,29 @@
                     NSMutableArray *onthefairway = [NSMutableArray arrayWithArray:model.onthefairway];
                     //pushrod
                     NSMutableArray *pushrod = [NSMutableArray arrayWithArray:model.pushrod];
+                    //standardlever
+                    NSMutableArray *standardlever = [NSMutableArray arrayWithArray:model.standardlever];
                     
                     for (int i=0; i< 9; i++) {
                         [poleNameList replaceObjectAtIndex:i +9 withObject:holeNamesArray[i]];
                         [poleNumber replaceObjectAtIndex:i +9 withObject:@-1];
                         [onthefairway replaceObjectAtIndex:i +9 withObject:@-1];
                         [pushrod replaceObjectAtIndex:i +9 withObject:@-1];
+                        [standardlever replaceObjectAtIndex:i +9 withObject:standardleverArray[i]];
                     }
                     
                     model.poleNameList = poleNameList;
                     model.poleNumber = poleNumber;
                     model.onthefairway = onthefairway;
                     model.pushrod = pushrod;
+                    model.standardlever = standardlever;
                     [self.userScoreArray replaceObjectAtIndex:j withObject:model];
                 }
             }
             
             //刷新
             [_scoresView reloadViewData:self.userScoreArray andCurrentAreaArrat:_currentAreaArray];
+            [_poorScoreView reloadPoorViewData:self.userScoreArray andCurrentAreaArrat:_currentAreaArray];
         }else{
             if ([data objectForKey:@"packResultMsg"]) {
                 [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];

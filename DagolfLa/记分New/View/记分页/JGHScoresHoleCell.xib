@@ -103,7 +103,6 @@
                     </button>
                     <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dbl-Gm-u4h">
                         <rect key="frame" x="56.5" y="0.0" width="30.5" height="30.5"/>
-                        <color key="backgroundColor" red="1" green="0.10368039280000001" blue="0.136967965" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="71" id="6yJ-4d-7xf"/>
                             <constraint firstAttribute="width" secondItem="dbl-Gm-u4h" secondAttribute="height" multiplier="1:1" id="aO9-En-sKq"/>
