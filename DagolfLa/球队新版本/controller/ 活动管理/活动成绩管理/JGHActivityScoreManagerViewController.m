@@ -150,7 +150,7 @@ static NSString *const JGHCenterBtnTableViewCellIdentifier = @"JGHCenterBtnTable
                 [_dataArray removeAllObjects];
             }
             //数据解析
-            //            self.TeamArray = [data objectForKey:@"teamList"];
+            //      self.TeamArray = [data objectForKey:@"teamList"];
             _almostType = [[data objectForKey:@"almostType"] integerValue];
             _lockScore = [[data objectForKey:@"lockScore"] integerValue];
             
