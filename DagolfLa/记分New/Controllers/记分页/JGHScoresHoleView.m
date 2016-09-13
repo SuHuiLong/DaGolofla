@@ -28,7 +28,7 @@ static NSString *const JGHTwoScoreAreaCellIdentifier = @"JGHTwoScoreAreaCell";
     UIView *_oneAreaView;
     UIView *_twoAreaView;
     
-    NSMutableArray *_currentAreaArray;
+    NSArray *_currentAreaArray;
     
     NSInteger _imageSelectOne;
     NSInteger _imageSelectTwo;
@@ -44,9 +44,7 @@ static NSString *const JGHTwoScoreAreaCellIdentifier = @"JGHTwoScoreAreaCell";
 - (instancetype)init{
     if (self == [super init]) {
         self.backgroundColor = [UIColor colorWithHexString:BG_color];
-//        _titleArray = @[@[@"1", @"2", @"3", @"4", @"5", @"6", @"7", @"8", @"9"], @[@"10", @"11", @"12", @"13", @"14", @"15", @"16", @"17", @"18"]];
         _colorArray = @[@"#FFFFFF", @"#EEEEEE", @"#FFFFFF", @"#F9F9F9", @"#FFFFFF", @"#F9F9F9"];
-        _currentAreaArray = [NSMutableArray array];
         self.scoreTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, (194+60)*ProportionAdapter) style:UITableViewStylePlain];
         self.scoreTableView.backgroundColor = [UIColor colorWithHexString:BG_color];
         self.scoreTableView.scrollEnabled = NO;
@@ -67,19 +65,11 @@ static NSString *const JGHTwoScoreAreaCellIdentifier = @"JGHTwoScoreAreaCell";
     return self;
 }
 
-- (void)reloadScoreList{
+- (void)reloadScoreList:(NSArray *)currentAreaArray{
+    _currentAreaArray = currentAreaArray;
     _imageSelectOne = 0;
     _imageSelectTwo = 0;
     self.scoreTableView.frame = CGRectMake(0, 0, screenWidth, (194 + self.dataArray.count * 60)*ProportionAdapter);
-    JGHScoreListModel *model = [[JGHScoreListModel alloc]init];
-    model = self.dataArray[0];
-    if (model.region1 != nil) {
-        [_currentAreaArray addObject:model.region1];
-    }
-    
-    if (model.region2 != nil) {
-        [_currentAreaArray addObject:model.region2];
-    }
 }
 #pragma mark -- tableView代理
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
@@ -199,9 +189,9 @@ static NSString *const JGHTwoScoreAreaCellIdentifier = @"JGHTwoScoreAreaCell";
     }
     
     _areaId = 1;
-    _oneAreaView = [[UIView alloc]initWithFrame:CGRectMake(10 *ProportionAdapter, btn.frame.origin.y + btn.frame.size.height, 84 *ProportionAdapter, _areaArray.count *44 *ProportionAdapter)];
+    _oneAreaView = [[UIView alloc]initWithFrame:CGRectMake(10 *ProportionAdapter, btn.frame.origin.y + btn.frame.size.height, 84 *ProportionAdapter, _currentAreaArray.count *44 *ProportionAdapter)];
     _oneAreaView.backgroundColor = [UIColor whiteColor];
-    for (int i=0; i < _areaArray.count; i++) {
+    for (int i=0; i < _currentAreaArray.count; i++) {
         NSInteger btnY;
         if (i == 0) {
             btnY = 2 *ProportionAdapter;
@@ -209,9 +199,9 @@ static NSString *const JGHTwoScoreAreaCellIdentifier = @"JGHTwoScoreAreaCell";
             btnY = (i * 40 + 2) *ProportionAdapter;
         }
         UIButton *btn = [[UIButton alloc]initWithFrame:CGRectMake(2 *ProportionAdapter, btnY, 80 *ProportionAdapter, 40 *ProportionAdapter)];
-        [btn setTitle:[NSString stringWithFormat:@"%@", _areaArray[i]] forState:UIControlStateNormal];
+        [btn setTitle:[NSString stringWithFormat:@"%@", _currentAreaArray[i]] forState:UIControlStateNormal];
         btn.tag = 300 + i;
-        if ([_areaArray[i] isEqualToString:_currentAreaArray[0]]) {
+        if ([_currentAreaArray[i] isEqualToString:_currentAreaArray[0]]) {
             [btn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
         }else{
             [btn addTarget:self action:@selector(oneAreaBtnClick:) forControlEvents:UIControlEventTouchUpInside];
@@ -249,9 +239,9 @@ static NSString *const JGHTwoScoreAreaCellIdentifier = @"JGHTwoScoreAreaCell";
     
     NSLog(@"%f", btn.frame.origin.y);
     
-    _twoAreaView = [[UIView alloc]initWithFrame:CGRectMake(10 *ProportionAdapter, btn.frame.origin.y + btn.frame.size.height + (_dataArray.count +2) *30 *ProportionAdapter + 37 *ProportionAdapter, 84 *ProportionAdapter,_areaArray.count *44 *ProportionAdapter)];
+    _twoAreaView = [[UIView alloc]initWithFrame:CGRectMake(10 *ProportionAdapter, btn.frame.origin.y + btn.frame.size.height + (_dataArray.count +2) *30 *ProportionAdapter + 37 *ProportionAdapter, 84 *ProportionAdapter,_currentAreaArray.count *44 *ProportionAdapter)];
     _twoAreaView.backgroundColor = [UIColor whiteColor];
-    for (int i=0; i < _areaArray.count; i++) {
+    for (int i=0; i < _currentAreaArray.count; i++) {
         NSInteger btnY;
         if (i == 0) {
             btnY = 2 *ProportionAdapter;
@@ -260,9 +250,9 @@ static NSString *const JGHTwoScoreAreaCellIdentifier = @"JGHTwoScoreAreaCell";
         }
         
         UIButton *btn = [[UIButton alloc]initWithFrame:CGRectMake(2 *ProportionAdapter, btnY, 80 *ProportionAdapter, 40 *ProportionAdapter)];
-        [btn setTitle:[NSString stringWithFormat:@"%@", _areaArray[i]] forState:UIControlStateNormal];
+        [btn setTitle:[NSString stringWithFormat:@"%@", _currentAreaArray[i]] forState:UIControlStateNormal];
         btn.tag = 400 + i;
-        if ([_areaArray[i] isEqualToString:_currentAreaArray[1]]) {
+        if ([_currentAreaArray[i] isEqualToString:_currentAreaArray[1]]) {
             [btn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
         }else{
            [btn addTarget:self action:@selector(twoAreaBtnClick:) forControlEvents:UIControlEventTouchUpInside];
@@ -271,7 +261,7 @@ static NSString *const JGHTwoScoreAreaCellIdentifier = @"JGHTwoScoreAreaCell";
         
         btn.titleLabel.font = [UIFont systemFontOfSize:15 *ProportionAdapter];
         
-        btn.tag = 200 + i;
+//        btn.tag = 200 + i;
         
         [_twoAreaView addSubview:btn];
     }
@@ -289,8 +279,9 @@ static NSString *const JGHTwoScoreAreaCellIdentifier = @"JGHTwoScoreAreaCell";
 }
 
 #pragma mark -- 刷新数据
-- (void)reloadViewData:(NSMutableArray *)dataArray{
+- (void)reloadViewData:(NSMutableArray *)dataArray andCurrentAreaArrat:(NSArray *)currentAreaArray{
     self.dataArray = dataArray;
+    _currentAreaArray = currentAreaArray;
     
     [self.scoreTableView reloadData];
 }
