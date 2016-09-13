@@ -25,7 +25,7 @@
         [self.contentView addSubview:_labelTitle];
         
         
-        _labelDate = [[UILabel alloc]initWithFrame:CGRectMake(screenWidth - 120*ScreenWidth/375, 10*ScreenWidth/375, 110*ScreenWidth/375, 20*ScreenWidth/375)];
+        _labelDate = [[UILabel alloc]initWithFrame:CGRectMake(screenWidth - 140*ScreenWidth/375, 12*ScreenWidth/375, 110*ScreenWidth/375, 20*ScreenWidth/375)];
         _labelDate.textAlignment = NSTextAlignmentRight;
         _labelDate.font = [UIFont systemFontOfSize:14*ScreenWidth/375];
         [self.contentView addSubview:_labelDate];

@@ -76,12 +76,18 @@
 
 #pragma mark --textView代理方法
 - (void)textViewDidBeginEditing:(UITextView *)textView {
-    //    [UIView animateWithDuration:0.2 animations:^{
-    //        _scrollView.contentOffset = CGPointMake(0, 300);
-    //    }];
     //判断为空
     if ([Helper isBlankString:_str]) {
         textView.text = nil;
+    }
+}
+- (void)textViewDidChange:(UITextView *)textView
+{
+    if ([_textView.text isEqualToString:TextViewDetail] == YES || [Helper isBlankString:_textView.text]) {
+        _textView.textColor = [UITool colorWithHexString:@"a0a0a0" alpha:1];
+    }
+    else{
+        _textView.textColor = [UIColor blackColor];
     }
 }
 
@@ -167,7 +173,7 @@
     }
     [dict setObject:@1 forKey:@"type"];//反馈
     if ([Helper isBlankString:_textView.text] || [_textView.text isEqualToString:TextViewDetail] == YES) {
-        [[ShowHUD showHUD]showToastWithText:@"请明示臣妾哪里错了嘛！" FromView:self.view];
+        [[ShowHUD showHUD]showToastWithText:@"陛下：请明示臣妾哪里错了嘛！" FromView:self.view];
         [self.view endEditing:YES];
         return;
     }

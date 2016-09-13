@@ -123,6 +123,11 @@
     lightV.layer.cornerRadius = 5 * ProportionAdapter;
     lightV.layer.masksToBounds = YES;
     
+    UILabel *tipLB = [[UILabel alloc] initWithFrame:CGRectMake(10 * ProportionAdapter, 5 * ProportionAdapter, 300 * ProportionAdapter, 20 * ProportionAdapter)];
+    tipLB.text = @"注：长按杆数区，进入编辑页，可修改成绩！";
+    tipLB.font = [UIFont systemFontOfSize:12 * ProportionAdapter];
+    [view addSubview:tipLB];
+    
     UILabel *allLB = [[UILabel alloc] initWithFrame:CGRectMake(50 * ProportionAdapter,0 * ProportionAdapter, 120 * ProportionAdapter, 45 * ProportionAdapter)];
     allLB.text = @"成绩领取密钥：";
     allLB.font = [UIFont systemFontOfSize:15 * ProportionAdapter];

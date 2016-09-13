@@ -52,29 +52,27 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"hide" object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"show" object:nil];
     //创建视图控制器数组
-    //    [self configViewControllers];
     //
     //    //创建标签
     //    [self createTabbarItems];
     
     //    [self.tabBar setBackgroundImage:[UIImage imageNamed:@"tab_bg1"]];
-    UIImageView *backImgv = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 49)];
-    backImgv.image = [UIImage imageNamed:@"tab_bg1"];
+    UIImageView *backImgv = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, .5)];
+    backImgv.backgroundColor = [UITool colorWithHexString:@"8a8b87" alpha:1];
     [self.tabBar insertSubview:backImgv atIndex:0];
     self.tabBarController.tabBar.opaque = YES;
+//    [self.tabBar setTitleTextAttributes:[UITool colorWithHexString:@"" alpha:1];
     
     
-    
-    self.tabBar.tintColor = [UIColor whiteColor];
-    [[UITabBarItem appearance] setTitleTextAttributes:@{ NSForegroundColorAttributeName:[UIColor whiteColor]} forState:UIControlStateNormal];
-    [[UITabBarItem appearance] setTitleTextAttributes:@{ NSForegroundColorAttributeName:[UIColor whiteColor]} forState:UIControlStateSelected];
+    [[UITabBarItem appearance] setTitleTextAttributes:@{ NSForegroundColorAttributeName:[UITool colorWithHexString:@"929292" alpha:1]} forState:UIControlStateNormal];
+    [[UITabBarItem appearance] setTitleTextAttributes:@{ NSForegroundColorAttributeName:[UITool colorWithHexString:@"32b14d" alpha:1]} forState:UIControlStateSelected];
     
     // 去掉系统的横线
-    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 6)
-    {
-        [[UITabBar appearance] setShadowImage:[[UIImage alloc] init]];
-    }
-    
+//    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 6)
+//    {
+//        [[UITabBar appearance] setShadowImage:[[UIImage alloc] init]];
+//    }
+//    
     [self setUpAllViewControlller];
     
 }
@@ -86,48 +84,6 @@
 -(void)showTabBar
 {
     self.tabBar.hidden = NO;
-}
-
-
--(void)createTabbarItems
-{
-    _tabbar = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, [[UIScreen mainScreen]bounds].size.width, 49*ScreenWidth/320)];
-    _tabbar.image = [UIImage imageNamed:@"tabbar_bg"];
-    _tabbar.userInteractionEnabled = YES;
-    [self.tabBar addSubview:_tabbar];
-    //    self.tabBar
-    [self.tabBar showBadgeOnItemIndex:2];
-    NSArray *titleArr = @[@"首页",@"社区",@"记分",@"消息",@"我的"];
-    NSArray *picArr = @[@"tab_sy",
-                        @"sq",
-                        @"tab_jf",
-                        @"xx",
-                        @"tab_wd"];
-    //    NSArray *picSelectedArr = @[@"tabbar_limitfree_press",
-    //                                @"tabbar_reduceprice_press",
-    //                                @"tabbar_appfree_press",
-    //                                @"tabbar_subject_press"];
-    for (int i = 0; i<titleArr.count; i++) {
-        TabBarItem *item = [TabBarItem buttonWithType:UIButtonTypeCustom];
-        item.frame = CGRectMake(ScreenWidth/titleArr.count*i, 0, ScreenWidth/titleArr.count, 49*ScreenWidth/320);
-        [_tabbar addSubview:item];
-        [item setTitle:titleArr[i] forState:UIControlStateNormal];
-        [item setImage:[UIImage imageNamed:picArr[i]] forState:UIControlStateNormal];
-        //        [item setImage:[UIImage imageNamed:picSelectedArr[i]] forState:UIControlStateSelected];
-        if (i == 0) {
-            item.selected = YES;
-        }
-        item.tag = 100 + i;
-        [item addTarget:self action:@selector(actionClick:) forControlEvents:UIControlEventTouchUpInside];
-        if (i >0) {
-            UIImageView *imgv = [[UIImageView alloc]initWithFrame:CGRectMake(ScreenWidth/5*i, 0, 1, _tabbar.frame.size.height)];
-            imgv.image = [UIImage imageNamed:@"tab_line"];
-            [_tabbar addSubview:imgv];
-        }
-        
-    }
-    
-    //    [self.tabBar showBadgeOnItemIndex:4];
 }
 
 -(void)actionClick:(UIButton *)btn
@@ -143,63 +99,65 @@
     btn.selected = YES;
 }
     ///////JKSlideViewController     /////CommunityViewController
--(void)configViewControllers
-{
-    
-    NSArray *vcArr = @[@"ShouyeViewController",
-                       @"JKSlideViewController",
-                       @"ScoreViewController",
-                       @"ChatListViewController",
-                       @"MeViewController"];
-    
-    NSArray *titleArr = @[@"首页",@"社区",@"记分",@"消息",@"我的"];
-    NSMutableArray *arr = [[NSMutableArray alloc]init];
-    for (int i = 0; i<vcArr.count; i++) {
-        if (i != 3) {
-            ViewController *vc = [[NSClassFromString(vcArr[i]) alloc]init];
-            UINavigationController *navi = [[UINavigationController alloc]initWithRootViewController:vc];
-            //            vc.type = i;
-            vc.title = titleArr[i];
-            [arr addObject:navi];
-        }
-        else
-        {
-            RCConversationViewController *vc = [[NSClassFromString(vcArr[i]) alloc]init];
-            UINavigationController *navi = [[UINavigationController alloc]initWithRootViewController:vc];
-            //            vc.type = i;
-            vc.title = titleArr[i];
-            [arr addObject:navi];
-        }
-        //
-    }
-    self.viewControllers = arr;
-    
-}
+//-(void)configViewControllers
+//{
+//    
+//    NSArray *vcArr = @[@"ShouyeViewController",
+//                       @"JKSlideViewController",
+//                       @"ScoreViewController",
+//                       @"ChatListViewController",
+//                       @"MeViewController"];
+//    
+//    NSArray *titleArr = @[@"首页",@"社区",@"记分",@"消息",@"我的"];
+//    NSMutableArray *arr = [[NSMutableArray alloc]init];
+//    for (int i = 0; i<vcArr.count; i++) {
+//        if (i != 3) {
+//            ViewController *vc = [[NSClassFromString(vcArr[i]) alloc]init];
+//            UINavigationController *navi = [[UINavigationController alloc]initWithRootViewController:vc];
+//            //            vc.type = i;
+//            vc.title = titleArr[i];
+//            [arr addObject:navi];
+//        }
+//        else
+//        {
+//            RCConversationViewController *vc = [[NSClassFromString(vcArr[i]) alloc]init];
+//            UINavigationController *navi = [[UINavigationController alloc]initWithRootViewController:vc];
+//            //            vc.type = i;
+//            vc.title = titleArr[i];
+//            [arr addObject:navi];
+//        }
+//        //
+//    }
+//    self.viewControllers = arr;
+//    
+//}
 
 -(void)setUpAllViewControlller
 {
     ShouyeViewController *shou = [[ShouyeViewController alloc] init];
     shou.title = @"首页";
-    [self setUpOneChildViewController:shou image:[UIImage imageNamed:@"tab_sy"] selectImage:[[UIImage imageNamed:@"tab_sy"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
-    
+    [self setUpOneChildViewController:shou image:[UIImage imageNamed:@"home-page_gray"] selectImage:[[UIImage imageNamed:@"home-page_green"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
     JKSlideViewController *comVc = [[JKSlideViewController alloc] init];
 
+    
+    
+    
     //    USAFreindViewController *fe = [[USAFreindViewController alloc] init];
 //    CommunityViewController *comVc = [[CommunityViewController alloc] init];
     comVc.title = @"社区";
-    [self setUpOneChildViewController:comVc image:[UIImage imageNamed:@"sq"] selectImage:[[UIImage imageNamed:@"sq"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
+    [self setUpOneChildViewController:comVc image:[UIImage imageNamed:@"main_btn_community"] selectImage:[[UIImage imageNamed:@"main_btn_community_select"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
     
     JGLScoreNewViewController *scoVc = [[JGLScoreNewViewController alloc] init];
     scoVc.title = @"记分";
-    [self setUpOneChildViewController:scoVc image:[UIImage imageNamed:@"tab_jf"] selectImage:[[UIImage imageNamed:@"tab_jf"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
+    [self setUpOneChildViewController:scoVc image:[UIImage imageNamed:@"score_gray"] selectImage:[[UIImage imageNamed:@"score_green"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
     
     ChatListViewController *chatVc = [[ChatListViewController alloc] init];
     chatVc.title = @"消息";
-    [self setUpOneChildViewController:chatVc image:[UIImage imageNamed:@"xx"] selectImage:[[UIImage imageNamed:@"xx"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
+    [self setUpOneChildViewController:chatVc image:[UIImage imageNamed:@"chat_gray"] selectImage:[[UIImage imageNamed:@"chat_green"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
     
     MeViewController *meVc = [[MeViewController alloc] init];
     meVc.title = @"我的";
-    [self setUpOneChildViewController:meVc image:[UIImage imageNamed:@"tab_wd"]  selectImage:[UIImage imageNamed:@"tab_wd"]];
+    [self setUpOneChildViewController:meVc image:[UIImage imageNamed:@"mine_gray"]  selectImage:[UIImage imageNamed:@"mine_green"]];
 }
 // 添加一个子控制器的方法
 - (void)setUpOneChildViewController:(UIViewController *)vController image:(UIImage *)image selectImage:(UIImage *)selectImage
@@ -216,33 +174,26 @@
     //    }
     
     //    [self.tabBar setBackgroundImage:[UIImage imageNamed:@"tab_bg1"]];
-    if (ScreenWidth == 320) {
-        [self.tabBar setSelectionIndicatorImage:[UIImage imageNamed:@"tab_320.png"]];
-    }
-    else if (ScreenWidth == 375)
-    {
-        [self.tabBar setSelectionIndicatorImage:[UIImage imageNamed:@"tab_375.png"]];
-    }
-    else
-    {
-        [self.tabBar setSelectionIndicatorImage:[UIImage imageNamed:@"tab_414.png"]];
-    }
-    
-    //    [self.tabBar setBackgroundColor:[UITool colorWithHexString:@"3b3f42" alpha:1]];
+//    if (ScreenWidth == 320) {
+//        [self.tabBar setSelectionIndicatorImage:[UIImage imageNamed:@"tab_320.png"]];
+//    }
+//    else if (ScreenWidth == 375)
+//    {
+//        [self.tabBar setSelectionIndicatorImage:[UIImage imageNamed:@"tab_375.png"]];
+//    }
+//    else
+//    {
+//        [self.tabBar setSelectionIndicatorImage:[UIImage imageNamed:@"tab_414.png"]];
+//    }
+//    [self.tabBar setSelectionIndicatorImage:[UIImage imageNamed:@"nav_bgcolor"]];
+//    [self.tabBar setBackgroundImage:[UIImage imageNamed:@"nav_bgcolor"]];
+    [self.tabBar setBackgroundColor:[UITool colorWithHexString:@"f6f7f7" alpha:1]];
     
     naVC.tabBarItem.image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     naVC.tabBarItem.selectedImage = [selectImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     [self addChildViewController:naVC];
 }
--(void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item
-{
-    //    NSArray* arr = tabBar.items;
-    //    for(int i=0 ;i < 4 ;i++)
-    //    {
-    //    }
-    //    item.selectedImage = [UIImage imageNamed:@"tab_bg2"];
-    
-}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

@@ -57,6 +57,8 @@
     NSMutableDictionary *_ballDict;
     
     NSInteger _ballKey;
+    
+    UIImageView *navBarHairlineImageView;
 }
 
 @property (nonatomic, strong)NSMutableArray *userScoreArray;
@@ -80,7 +82,7 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
+    navBarHairlineImageView.hidden = YES;
     if (_backId != 1) {
         UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
         btn.frame = BackBtnFrame;
@@ -107,7 +109,7 @@
 
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
-    
+    navBarHairlineImageView.hidden = NO;
 }
 #pragma mark -- 移除imageView 
 - (void)removeUserFristScoreImageView{
@@ -179,6 +181,22 @@
     }
     
     [self getScoreList];
+    
+    navBarHairlineImageView = [self findHairlineImageViewUnder:self.navigationController.navigationBar];
+
+}
+
+- (UIImageView *)findHairlineImageViewUnder:(UIView *)view {
+    if ([view isKindOfClass:UIImageView.class] && view.bounds.size.height <= 1.0) {
+        return (UIImageView *)view;
+    }
+    for (UIView *subview in view.subviews) {
+        UIImageView *imageView = [self findHairlineImageViewUnder:subview];
+        if (imageView) {
+            return imageView;
+        }
+    }
+    return nil;
 }
 
 -(void)dealloc

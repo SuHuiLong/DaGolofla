@@ -47,6 +47,7 @@
     cell.titleLabel.text = self.titleArray[indexPath.row];
     cell.iconImgv.image = [UIImage imageNamed:self.imageArray[indexPath.row]];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     return cell;
 }
 

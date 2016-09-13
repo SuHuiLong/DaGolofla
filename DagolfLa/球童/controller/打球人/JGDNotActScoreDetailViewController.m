@@ -81,6 +81,11 @@
     allLB.font = [UIFont systemFontOfSize:15 * ProportionAdapter];
     [lightV addSubview:allLB];
     
+    UILabel *tipLB = [[UILabel alloc] initWithFrame:CGRectMake(10 * ProportionAdapter, 5 * ProportionAdapter, 300 * ProportionAdapter, 20 * ProportionAdapter)];
+    tipLB.text = @"注：长按杆数区，进入编辑页，可修改成绩！";
+    tipLB.font = [UIFont systemFontOfSize:12 * ProportionAdapter];
+    [view addSubview:tipLB];
+    
     UILabel *keyLB = [[UILabel alloc] initWithFrame:CGRectMake(170 * ProportionAdapter, 0 * ProportionAdapter, 100 * ProportionAdapter, 45 * ProportionAdapter)];
     keyLB.text = [NSString stringWithFormat:@"%@", self.model.invitationCode];
     keyLB.textAlignment = NSTextAlignmentLeft;

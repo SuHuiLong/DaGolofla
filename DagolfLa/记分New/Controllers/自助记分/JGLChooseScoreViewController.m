@@ -156,6 +156,23 @@
 
     JGLChoosesScoreTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"JGLChoosesScoreTableViewCell" forIndexPath:indexPath];
     [cell showData:_dataArray[indexPath.section]];
+    if (![Helper isBlankString:[_dataArray[indexPath.section] beginDate]]) {
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        [dateFormatter setDateFormat: @"yyyy-MM-dd HH:mm:ss"];
+        NSDate *destDate= [dateFormatter dateFromString:[_dataArray[indexPath.section] beginDate]];
+        NSString* str = [NSString stringWithFormat:@"%@",destDate];
+        
+        NSArray* array = [str componentsSeparatedByString:@" "];
+        NSArray* array1 = [array[0] componentsSeparatedByString:@"-"];
+        
+        NSString* strTime = [NSString stringWithFormat:@"%@月%@日",array1[1],array1[2]];
+        cell.labelTime.text = strTime;
+        
+    }
+    else{
+        cell.labelTime.text = @"暂无时间";
+    }
+
     return cell;
 }
 
