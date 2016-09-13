@@ -33,6 +33,12 @@
 }
 
 - (void)configJGHOperScoreHeaderCell:(NSString *)region1 andregion2:(NSString *)region2{
+    self.oneAreaLable.layer.masksToBounds = YES;
+    self.oneAreaLable.layer.cornerRadius = 5.0;
+    
+    self.twoAreaLable.layer.masksToBounds = YES;
+    self.twoAreaLable.layer.cornerRadius = 5.0;
+    
     self.oneAreaLable.text = region1;
     self.twoAreaLable.text = region2;
 }

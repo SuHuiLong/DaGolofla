@@ -15,27 +15,37 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ge7-GL-mWP">
-                        <rect key="frame" x="177.5" y="11" width="132.5" height="21"/>
+                        <rect key="frame" x="177" y="5" width="132.5" height="33.5"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ns6-ch-Cjw">
-                        <rect key="frame" x="10" y="11" width="132.5" height="21"/>
+                        <rect key="frame" x="10" y="5" width="132.5" height="33.5"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="ge7-GL-mWP" firstAttribute="leading" secondItem="ns6-ch-Cjw" secondAttribute="trailing" constant="35" id="4Xd-Hf-zMV"/>
+                    <constraint firstAttribute="bottom" secondItem="ge7-GL-mWP" secondAttribute="bottom" constant="5" id="9MF-Yx-cHf"/>
                     <constraint firstItem="ge7-GL-mWP" firstAttribute="width" secondItem="ns6-ch-Cjw" secondAttribute="width" id="C4S-WV-UeL"/>
                     <constraint firstItem="ge7-GL-mWP" firstAttribute="height" secondItem="ns6-ch-Cjw" secondAttribute="height" id="IWO-xa-dOC"/>
                     <constraint firstItem="ns6-ch-Cjw" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="L5m-WG-Qwr"/>
                     <constraint firstAttribute="trailing" secondItem="ge7-GL-mWP" secondAttribute="trailing" constant="10" id="PxX-xv-F2s"/>
                     <constraint firstItem="ge7-GL-mWP" firstAttribute="leading" secondItem="ns6-ch-Cjw" secondAttribute="trailing" constant="35" id="cIY-dp-WdJ"/>
-                    <constraint firstItem="ge7-GL-mWP" firstAttribute="centerY" secondItem="ns6-ch-Cjw" secondAttribute="centerY" id="dAv-Ui-YuH"/>
+                    <constraint firstAttribute="bottom" secondItem="ns6-ch-Cjw" secondAttribute="bottom" constant="5" id="fog-Ot-1rZ"/>
                     <constraint firstItem="ns6-ch-Cjw" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="hQ7-NE-vpU"/>
+                    <constraint firstItem="ns6-ch-Cjw" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="hru-Yf-dxC"/>
+                    <constraint firstItem="ge7-GL-mWP" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="mad-OH-bhG"/>
                 </constraints>
+                <variation key="default">
+                    <mask key="constraints">
+                        <exclude reference="hQ7-NE-vpU"/>
+                        <exclude reference="cIY-dp-WdJ"/>
+                    </mask>
+                </variation>
             </tableViewCellContentView>
             <connections>
                 <outlet property="oneAreaLable" destination="ns6-ch-Cjw" id="rfx-Wu-w3D"/>

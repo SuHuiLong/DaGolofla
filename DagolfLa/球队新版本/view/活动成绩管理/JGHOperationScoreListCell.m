@@ -41,11 +41,11 @@ static NSString *const JGHOperScoreHeaderCellIdentifier = @"JGHOperScoreHeaderCe
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 10;
+    return 11;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return (screenWidth-25*ProportionAdapter)/10;
+    return (screenWidth-25*ProportionAdapter)/11;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -79,7 +79,8 @@ static NSString *const JGHOperScoreHeaderCellIdentifier = @"JGHOperScoreHeaderCe
         if (indexPath.section == 1){
             [tranCell confgiTitleString];
         }else{
-            [tranCell configIndex:indexPath.section andOneHoel:[_poleArray[indexPath.section -2] integerValue] andTwoHole:[_poleArray[indexPath.section +7] integerValue]];
+            [tranCell configIndex:indexPath.section -1 andOneHoel:[_poleArray[indexPath.section -2] integerValue] andTwoHole:[_poleArray[indexPath.section +7] integerValue]];
+            [tranCell configViewBGColor:_selectId];
         }
         
         tranCell.selectionStyle = UITableViewCellSelectionStyleNone;

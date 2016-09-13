@@ -90,7 +90,7 @@ static NSString *const JGHNewScoresPageCellIdentifier = @"JGHNewScoresPageCell";
     UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, 20*ProportionAdapter)];
     headerView.backgroundColor = [UIColor whiteColor];
     
-    _areaLable = [[UILabel alloc]initWithFrame:CGRectMake(screenWidth/2 - 50*ProportionAdapter, 0, 100 *ProportionAdapter, 18 *ProportionAdapter)];
+    _areaLable = [[UILabel alloc]initWithFrame:CGRectMake(screenWidth/2 - 70*ProportionAdapter, 0, 140 *ProportionAdapter, 18 *ProportionAdapter)];
     _areaLable.font = [UIFont systemFontOfSize:15 *ProportionAdapter];
     _areaLable.textColor = [UIColor colorWithHexString:@"#32B14D"];
     _areaLable.textAlignment = NSTextAlignmentCenter;

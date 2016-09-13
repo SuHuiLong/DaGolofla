@@ -19,6 +19,13 @@
 @interface JGHOperScoreBtnListCell : UITableViewCell
 
 @property (nonatomic, weak)id <JGHOperScoreBtnListCellDelegate> delegate;
+@property (weak, nonatomic) IBOutlet UIView *oneBGView;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *oneBGViewLeft;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *oneBGViewRight;
+
+@property (weak, nonatomic) IBOutlet UIView *twoBGVIew;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *twoBGVIewRight;
+
 
 @property (weak, nonatomic) IBOutlet UIButton *oneBtn;
 - (IBAction)oneBtnClick:(UIButton *)sender;
@@ -36,6 +43,6 @@
 
 - (void)confgiTitleString;
 
-
+- (void)configViewBGColor:(NSInteger)selectHole;
 
 @end

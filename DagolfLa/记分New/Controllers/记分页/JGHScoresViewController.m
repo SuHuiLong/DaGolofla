@@ -141,18 +141,18 @@
     
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(noticeAllScoresCtrl) name:@"noticeAllScores" object:nil];
     
-    UIView *titleView = [[UIView alloc]initWithFrame:CGRectMake(110*ProportionAdapter, 0, 80*ProportionAdapter, 44)];
-    self.titleBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 80*ProportionAdapter, 44)];
+    UIView *titleView = [[UIView alloc]initWithFrame:CGRectMake(80*ProportionAdapter, 0, 150*ProportionAdapter, 44)];
+    self.titleBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 120*ProportionAdapter, 44)];
     [self.titleBtn setTitleColor:[UIColor colorWithHexString:@"#32b14d"] forState:(UIControlStateNormal)];
     [titleView addSubview:self.titleBtn];
     if (_currentPage > 0) {
-        [self.titleBtn setTitle:[NSString stringWithFormat:@"%td HOLE", _currentPage+1] forState:UIControlStateNormal];
+        [self.titleBtn setTitle:[NSString stringWithFormat:@"%td Hole PAR 3", _currentPage+1] forState:UIControlStateNormal];
     }else{
-        [self.titleBtn setTitle:@"1 HOLE" forState:UIControlStateNormal];
+        [self.titleBtn setTitle:@"1 Hole PAR" forState:UIControlStateNormal];
     }
     [self.titleBtn addTarget:self action:@selector(titleBtnClick) forControlEvents:UIControlEventTouchUpInside];
     
-    _arrowBtn = [[UIButton alloc]initWithFrame:CGRectMake(80*ProportionAdapter, 10, 30, 24)];
+    _arrowBtn = [[UIButton alloc]initWithFrame:CGRectMake(120*ProportionAdapter, 10, 30 *ProportionAdapter, 24)];
     [_arrowBtn addTarget:self action:@selector(titleBtnClick) forControlEvents:UIControlEventTouchUpInside];
     [_arrowBtn setImage:[UIImage imageNamed:@"zk"] forState:UIControlStateNormal];
     [titleView addSubview:_arrowBtn];
@@ -383,6 +383,8 @@
                     [_currentAreaArray addObject:model.region2];
                 }
                 
+                [self.titleBtn setTitle:[NSString stringWithFormat:@"1 Hole PAR %@", model.standardlever[0]] forState:UIControlStateNormal];
+                
                 self.timer =[NSTimer scheduledTimerWithTimeInterval:[[data objectForKey:@"interval"] integerValue] target:self
                                                            selector:@selector(changeTimeAtTimeDoClick) userInfo:nil repeats:YES];
                 [self.timer fire];
@@ -568,12 +570,17 @@
         weakSelf.userScoreArray = dataArray;
         _isEdtor = 1;
     };
-    [self.titleBtn setTitle:[NSString stringWithFormat:@"%td HOLE", sub.index+1] forState:UIControlStateNormal];
+    [self.titleBtn setTitle:[NSString stringWithFormat:@"%td Hole PAR %td", sub.index+1, [self returnStandardlever:sub.index]] forState:UIControlStateNormal];
     _selectPage = sub.index+1;
 //    _pageControl.currentPage = sub.index;
 //    [[ShowHUD showHUD]showToastWithText:[NSString stringWithFormat:@"第-%td-洞", sub.index+1] FromView:self.view];
 }
-
+#pragma mark -- 获取标准杆
+- (NSInteger)returnStandardlever:(NSInteger)standardId{
+    JGHScoreListModel *model = [[JGHScoreListModel alloc]init];
+    model = _userScoreArray[0];
+    return [model.standardlever[standardId] integerValue];
+}
 #pragma mark -- 保存／结束记分
 - (void)saveScoresClick{
     _item.enabled = NO;

@@ -14,56 +14,109 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CQ1-z3-zY5">
-                        <rect key="frame" x="0.0" y="7" width="80" height="30"/>
-                        <connections>
-                            <action selector="oneBtnClick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="xDH-Ax-0xd"/>
-                        </connections>
-                    </button>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oc0-QP-0lM">
-                        <rect key="frame" x="80" y="7" width="80" height="30"/>
-                        <connections>
-                            <action selector="twoBtnClick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="Qax-bQ-eNS"/>
-                        </connections>
-                    </button>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AiW-7I-dNa">
-                        <rect key="frame" x="160" y="7" width="80" height="30"/>
-                        <connections>
-                            <action selector="threeBtnClick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="iEb-C2-E7e"/>
-                        </connections>
-                    </button>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1pv-Sg-uJ7">
-                        <rect key="frame" x="240" y="7" width="80" height="30"/>
-                        <connections>
-                            <action selector="fourBtnClick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="oYU-Se-Dtb"/>
-                        </connections>
-                    </button>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Cjy-6O-r1w">
+                        <rect key="frame" x="10" y="2" width="132.5" height="39.5"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wFr-gx-Ep5">
+                                <rect key="frame" x="0.0" y="0.0" width="66" height="39.5"/>
+                                <state key="normal" title="Button"/>
+                                <connections>
+                                    <action selector="oneBtnClick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="Yql-QJ-TRr"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8ze-Da-BdD">
+                                <rect key="frame" x="66" y="0.0" width="66" height="39.5"/>
+                                <state key="normal" title="Button"/>
+                                <connections>
+                                    <action selector="twoBtnClick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="mDR-If-DTD"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="8ze-Da-BdD" secondAttribute="trailing" id="5SM-HH-6ye"/>
+                            <constraint firstItem="8ze-Da-BdD" firstAttribute="leading" secondItem="wFr-gx-Ep5" secondAttribute="trailing" id="6ae-hT-Gqd"/>
+                            <constraint firstItem="wFr-gx-Ep5" firstAttribute="leading" secondItem="Cjy-6O-r1w" secondAttribute="leading" id="BBk-3j-UgK"/>
+                            <constraint firstItem="8ze-Da-BdD" firstAttribute="leading" secondItem="wFr-gx-Ep5" secondAttribute="trailing" id="E94-9l-z9Z"/>
+                            <constraint firstItem="8ze-Da-BdD" firstAttribute="height" secondItem="wFr-gx-Ep5" secondAttribute="height" id="Etl-Zr-krT"/>
+                            <constraint firstItem="8ze-Da-BdD" firstAttribute="top" secondItem="Cjy-6O-r1w" secondAttribute="top" id="Tc5-dj-kN2"/>
+                            <constraint firstItem="8ze-Da-BdD" firstAttribute="width" secondItem="wFr-gx-Ep5" secondAttribute="width" id="ajd-5B-kNB"/>
+                            <constraint firstAttribute="bottom" secondItem="8ze-Da-BdD" secondAttribute="bottom" id="iQq-jc-0QI"/>
+                            <constraint firstItem="wFr-gx-Ep5" firstAttribute="centerY" secondItem="Cjy-6O-r1w" secondAttribute="centerY" id="tRv-Xy-5Tg"/>
+                            <constraint firstItem="8ze-Da-BdD" firstAttribute="leading" secondItem="wFr-gx-Ep5" secondAttribute="trailing" id="vb0-hT-OOT"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="6ae-hT-Gqd"/>
+                                <exclude reference="vb0-hT-OOT"/>
+                            </mask>
+                        </variation>
+                    </view>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jjJ-h5-Bbu">
+                        <rect key="frame" x="177" y="2" width="132.5" height="39.5"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EfD-g4-l8T">
+                                <rect key="frame" x="0.0" y="0.5" width="66" height="39.5"/>
+                                <state key="normal" title="Button"/>
+                                <connections>
+                                    <action selector="threeBtnClick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="3OL-tx-pGh"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lGq-Ma-ET9">
+                                <rect key="frame" x="66" y="0.0" width="66" height="39.5"/>
+                                <state key="normal" title="Button"/>
+                                <connections>
+                                    <action selector="fourBtnClick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="IRR-TG-oKn"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="EfD-g4-l8T" firstAttribute="centerY" secondItem="jjJ-h5-Bbu" secondAttribute="centerY" id="2vs-yK-R5q"/>
+                            <constraint firstAttribute="bottom" secondItem="lGq-Ma-ET9" secondAttribute="bottom" id="4XN-Aj-PsR"/>
+                            <constraint firstItem="lGq-Ma-ET9" firstAttribute="leading" secondItem="EfD-g4-l8T" secondAttribute="trailing" id="4aG-BS-CHC"/>
+                            <constraint firstAttribute="trailing" secondItem="lGq-Ma-ET9" secondAttribute="trailing" id="6su-C1-8qM"/>
+                            <constraint firstItem="lGq-Ma-ET9" firstAttribute="height" secondItem="EfD-g4-l8T" secondAttribute="height" id="CQU-ne-qfr"/>
+                            <constraint firstItem="EfD-g4-l8T" firstAttribute="centerY" secondItem="lGq-Ma-ET9" secondAttribute="centerY" id="FmH-an-z6S"/>
+                            <constraint firstItem="lGq-Ma-ET9" firstAttribute="leading" secondItem="EfD-g4-l8T" secondAttribute="trailing" id="RaV-85-gTJ"/>
+                            <constraint firstItem="lGq-Ma-ET9" firstAttribute="top" secondItem="jjJ-h5-Bbu" secondAttribute="top" id="Rgn-Jt-FsZ"/>
+                            <constraint firstItem="lGq-Ma-ET9" firstAttribute="leading" secondItem="EfD-g4-l8T" secondAttribute="trailing" id="SfO-ir-ahR"/>
+                            <constraint firstItem="EfD-g4-l8T" firstAttribute="centerY" secondItem="jjJ-h5-Bbu" secondAttribute="centerY" id="WLp-v6-IeD"/>
+                            <constraint firstItem="lGq-Ma-ET9" firstAttribute="width" secondItem="EfD-g4-l8T" secondAttribute="width" id="cad-Kg-oCN"/>
+                            <constraint firstItem="EfD-g4-l8T" firstAttribute="leading" secondItem="jjJ-h5-Bbu" secondAttribute="leading" id="zmd-ah-A2A"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="FmH-an-z6S"/>
+                                <exclude reference="WLp-v6-IeD"/>
+                                <exclude reference="4aG-BS-CHC"/>
+                                <exclude reference="SfO-ir-ahR"/>
+                            </mask>
+                        </variation>
+                    </view>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="AiW-7I-dNa" firstAttribute="width" secondItem="CQ1-z3-zY5" secondAttribute="width" id="3OK-IS-BlN"/>
-                    <constraint firstItem="oc0-QP-0lM" firstAttribute="height" secondItem="CQ1-z3-zY5" secondAttribute="height" id="7tC-bv-5ID"/>
-                    <constraint firstItem="CQ1-z3-zY5" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="8zd-bJ-GmE"/>
-                    <constraint firstItem="AiW-7I-dNa" firstAttribute="height" secondItem="CQ1-z3-zY5" secondAttribute="height" id="CbU-9A-1lI"/>
-                    <constraint firstAttribute="trailing" secondItem="1pv-Sg-uJ7" secondAttribute="trailing" id="FR6-tt-4Fx"/>
-                    <constraint firstItem="AiW-7I-dNa" firstAttribute="leading" secondItem="oc0-QP-0lM" secondAttribute="trailing" id="Foa-jA-Q8H"/>
-                    <constraint firstItem="oc0-QP-0lM" firstAttribute="leading" secondItem="CQ1-z3-zY5" secondAttribute="trailing" id="OgZ-Fy-OBa"/>
-                    <constraint firstItem="1pv-Sg-uJ7" firstAttribute="leading" secondItem="AiW-7I-dNa" secondAttribute="trailing" id="Tjt-Go-8mq"/>
-                    <constraint firstItem="CQ1-z3-zY5" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="aDt-y1-19o"/>
-                    <constraint firstItem="1pv-Sg-uJ7" firstAttribute="centerY" secondItem="AiW-7I-dNa" secondAttribute="centerY" id="b3q-Jp-APP"/>
-                    <constraint firstItem="oc0-QP-0lM" firstAttribute="centerY" secondItem="CQ1-z3-zY5" secondAttribute="centerY" id="dLw-t3-Bb5"/>
-                    <constraint firstItem="oc0-QP-0lM" firstAttribute="width" secondItem="CQ1-z3-zY5" secondAttribute="width" id="hMj-xE-zDR"/>
-                    <constraint firstItem="AiW-7I-dNa" firstAttribute="leading" secondItem="oc0-QP-0lM" secondAttribute="trailing" id="kpj-T7-5Ki"/>
-                    <constraint firstItem="AiW-7I-dNa" firstAttribute="centerY" secondItem="oc0-QP-0lM" secondAttribute="centerY" id="o86-NX-JkU"/>
-                    <constraint firstItem="1pv-Sg-uJ7" firstAttribute="width" secondItem="CQ1-z3-zY5" secondAttribute="width" id="t17-i9-0sB"/>
-                    <constraint firstItem="1pv-Sg-uJ7" firstAttribute="height" secondItem="CQ1-z3-zY5" secondAttribute="height" id="u9g-OF-ozn"/>
-                    <constraint firstItem="oc0-QP-0lM" firstAttribute="leading" secondItem="CQ1-z3-zY5" secondAttribute="trailing" id="y9v-RV-uaE"/>
+                    <constraint firstItem="jjJ-h5-Bbu" firstAttribute="width" secondItem="Cjy-6O-r1w" secondAttribute="width" id="6Ji-6B-bKL"/>
+                    <constraint firstItem="Cjy-6O-r1w" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="DNJ-zH-F0P"/>
+                    <constraint firstItem="jjJ-h5-Bbu" firstAttribute="leading" secondItem="Cjy-6O-r1w" secondAttribute="trailing" constant="35" id="Fxe-nB-MSf"/>
+                    <constraint firstItem="Cjy-6O-r1w" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="2" id="H1O-P5-YW7"/>
+                    <constraint firstItem="jjJ-h5-Bbu" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="2" id="HpX-fZ-Ev6"/>
+                    <constraint firstAttribute="trailing" secondItem="jjJ-h5-Bbu" secondAttribute="trailing" constant="10" id="SFV-jO-Ypg"/>
+                    <constraint firstItem="jjJ-h5-Bbu" firstAttribute="height" secondItem="Cjy-6O-r1w" secondAttribute="height" id="h1b-ml-gOC"/>
+                    <constraint firstAttribute="bottom" secondItem="Cjy-6O-r1w" secondAttribute="bottom" constant="2" id="lr4-uI-bRi"/>
+                    <constraint firstAttribute="bottom" secondItem="jjJ-h5-Bbu" secondAttribute="bottom" constant="2" id="zGv-p3-hgm"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
-                <outlet property="fourBtn" destination="1pv-Sg-uJ7" id="wpf-kt-pyt"/>
-                <outlet property="oneBtn" destination="CQ1-z3-zY5" id="5tz-Kb-fXu"/>
-                <outlet property="threeBtn" destination="AiW-7I-dNa" id="k0i-QI-qHI"/>
-                <outlet property="twoBtn" destination="oc0-QP-0lM" id="9VN-Zs-e6T"/>
+                <outlet property="fourBtn" destination="lGq-Ma-ET9" id="CPP-vZ-6N4"/>
+                <outlet property="oneBGView" destination="Cjy-6O-r1w" id="Gx3-UA-5Ge"/>
+                <outlet property="oneBGViewLeft" destination="DNJ-zH-F0P" id="SJ7-3w-iae"/>
+                <outlet property="oneBGViewRight" destination="Fxe-nB-MSf" id="QqE-84-GB0"/>
+                <outlet property="oneBtn" destination="wFr-gx-Ep5" id="5K2-5f-abi"/>
+                <outlet property="threeBtn" destination="EfD-g4-l8T" id="Gbj-Hs-omy"/>
+                <outlet property="twoBGVIew" destination="jjJ-h5-Bbu" id="ieB-4h-MAP"/>
+                <outlet property="twoBGVIewRight" destination="SFV-jO-Ypg" id="E3i-wK-UZQ"/>
+                <outlet property="twoBtn" destination="8ze-Da-BdD" id="Amc-Pi-Us2"/>
             </connections>
         </tableViewCell>
     </objects>
