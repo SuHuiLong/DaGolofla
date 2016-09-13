@@ -112,7 +112,11 @@
         [viewTitle addSubview:lightV];
         
         self.nameLB = [[UILabel alloc] initWithFrame:CGRectMake(10 * ProportionAdapter, 15 * ProportionAdapter, 200 * ProportionAdapter, 30 * ProportionAdapter)];
-        self.nameLB.text = [NSString stringWithFormat:@"%@(%@)", self.model.userName, self.model.tTaiwan];
+        if (self.model.tTaiwan) {
+            self.nameLB.text = [NSString stringWithFormat:@"%@(%@)", self.model.userName, self.model.tTaiwan];
+        }else{
+            self.nameLB.text = [NSString stringWithFormat:@"%@", self.model.userName];
+        }
         self.nameLB.textColor = [UIColor colorWithHexString:@"#313131"];
         self.nameLB.font = [UIFont systemFontOfSize:18 * ProportionAdapter];
         [viewTitle addSubview:self.nameLB];

@@ -195,7 +195,11 @@
         [viewTitle addSubview:lineLong];
         
         self.nameLB = [[UILabel alloc] initWithFrame:CGRectMake(10 * ProportionAdapter, 108 * ProportionAdapter, 150 * ProportionAdapter, 30 * ProportionAdapter)];
-        self.nameLB.text = [NSString stringWithFormat:@"%@(%@)", self.model.userName, self.model.tTaiwan];
+        if (self.model.tTaiwan) {
+            self.nameLB.text = [NSString stringWithFormat:@"%@(%@)", self.model.userName, self.model.tTaiwan];
+        }else{
+            self.nameLB.text = [NSString stringWithFormat:@"%@", self.model.userName];
+        }
         self.nameLB.font = [UIFont systemFontOfSize:15 * ProportionAdapter];
         [viewTitle addSubview:self.nameLB];
         
