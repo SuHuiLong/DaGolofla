@@ -46,6 +46,7 @@
 //#import "JGLActivityMemberSetViewController.h"
 #import "JGLScoreRankViewController.h"
 #import "JGDGuestCodeViewController.h"
+#import "JGLActivityMemberSetViewController.h"
 
 static NSString *const JGTeamActivityWithAddressCellIdentifier = @"JGTeamActivityWithAddressCell";
 static NSString *const JGTeamActivityDetailsCellIdentifier = @"JGTeamActivityDetailsCell";
@@ -54,7 +55,7 @@ static NSString *const JGHCostListTableViewCellIdentifier = @"JGHCostListTableVi
 static NSString *const JGActivityNameBaseCellIdentifier = @"JGActivityNameBaseCell";
 static CGFloat ImageHeight  = 210.0;
 
-@interface JGTeamActibityNameViewController ()<UITableViewDelegate, UITableViewDataSource>
+@interface JGTeamActibityNameViewController ()<UITableViewDelegate, UITableViewDataSource, JGLActivityMemberSetViewControllerDelegate>
 {
     NSInteger _isTeamMember;//是否是球队成员 1 － 不是
     NSString *_userName;//用户在球队的真实姓名
@@ -799,7 +800,35 @@ static CGFloat ImageHeight  = 210.0;
         [[ShowHUD showHUD]showToastWithText:@"您不是该球队队员！" FromView:self.view];
         return;
     }
-
+    
+    NSString *power = nil;
+    
+    if ([self.teamMemberDic objectForKey:@"power"]) {
+        power = [self.teamMemberDic objectForKey:@"power"];
+    }
+    
+    if (power != nil) {
+        if ([power containsString:@"1001"]) {
+            JGLActivityMemberSetViewController *activityMemberCtrl = [[JGLActivityMemberSetViewController alloc]init];
+            activityMemberCtrl.delegate = self;
+            
+            if (_model.teamActivityKey != 0) {
+                activityMemberCtrl.activityKey = [NSNumber numberWithInteger:_model.teamActivityKey];
+            }else{
+                activityMemberCtrl.activityKey = [NSNumber numberWithInteger:[_model.timeKey integerValue]];
+            }
+            
+            activityMemberCtrl.teamKey = [NSNumber numberWithInteger:_model.teamKey];
+            [self.navigationController pushViewController:activityMemberCtrl animated:YES];
+        }else{
+            [self pushJGActivityMemNonMangerViewController];
+        }
+    }else{
+        [self pushJGActivityMemNonMangerViewController];
+    }
+    
+}
+- (void)pushJGActivityMemNonMangerViewController{
     NSInteger timeKey;
     JGActivityMemNonMangerViewController *nonMangerVC = [[JGActivityMemNonMangerViewController alloc] init];
     
@@ -858,6 +887,10 @@ static CGFloat ImageHeight  = 210.0;
 #pragma mark -- 刷新数据
 - (void)reloadActivityData:(id)not{
     
+    [self dataSet];
+}
+#pragma mark -- 添加意向成员返回刷新数据
+- (void)reloadActivityMemberData{
     [self dataSet];
 }
 

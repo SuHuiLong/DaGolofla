@@ -353,6 +353,16 @@
                     [self.userScoreArray addObject:model];
                 }
                 
+                JGHScoreListModel *model = [[JGHScoreListModel alloc]init];
+                model = self.userScoreArray[0];
+                if (model.region1 != nil) {
+                    [_currentAreaArray addObject:model.region1];
+                }
+                
+                if (model.region2 != nil) {
+                    [_currentAreaArray addObject:model.region2];
+                }
+                
                 self.timer =[NSTimer scheduledTimerWithTimeInterval:[[data objectForKey:@"interval"] integerValue] target:self
                                                            selector:@selector(changeTimeAtTimeDoClick) userInfo:nil repeats:YES];
                 [self.timer fire];
@@ -420,10 +430,10 @@
             _scoresView.delegate = self;
             _scoresView.frame = CGRectMake(0, 0, screenWidth, (194 + self.userScoreArray.count * 60)*ProportionAdapter);
             _scoresView.dataArray = self.userScoreArray;
-            _scoresView.areaArray = _oneAreaArray;
+//            _scoresView.areaArray = _oneAreaArray;
             _scoresView.curPage = _selectPage;
             [self.view addSubview:_scoresView];
-            [_scoresView reloadScoreList];//更新UI位置
+            [_scoresView reloadScoreList:_currentAreaArray];//更新UI位置
             _tranView = [[UIView alloc]initWithFrame:CGRectMake(0, _scoresView.frame.size.height, screenWidth, (screenHeight -64)-(194 + self.userScoreArray.count * 60)*ProportionAdapter)];
             _tranView.backgroundColor = [UIColor blackColor];
             _tranView.alpha = 0.3;
@@ -773,6 +783,9 @@
             if (tag < 400) {
                 
                 [_scoresView removeOneAreaView];
+                
+                [_currentAreaArray replaceObjectAtIndex:0 withObject:btnString];
+                
                 //userScoreArray--poleNameList
                 for (int j=0; j<self.userScoreArray.count; j++) {
                     JGHScoreListModel *model = self.userScoreArray[j];
@@ -792,13 +805,14 @@
                     
                     model.poleNameList = poleNameList;
                     model.poleNumber = poleNumber;
-                    model.poleNumber = onthefairway;
-                    model.poleNumber = pushrod;
+                    model.onthefairway = onthefairway;
+                    model.pushrod = pushrod;
                     [self.userScoreArray replaceObjectAtIndex:j withObject:model];
                 }
                 
             }else{
                 [_scoresView removeTwoAreaView];
+                [_currentAreaArray replaceObjectAtIndex:1 withObject:btnString];
                 
                 for (int j=0; j<self.userScoreArray.count; j++) {
                     JGHScoreListModel *model = self.userScoreArray[j];
@@ -825,7 +839,7 @@
             }
             
             //刷新
-            [_scoresView reloadViewData:self.userScoreArray];
+            [_scoresView reloadViewData:self.userScoreArray andCurrentAreaArrat:_currentAreaArray];
         }else{
             if ([data objectForKey:@"packResultMsg"]) {
                 [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
