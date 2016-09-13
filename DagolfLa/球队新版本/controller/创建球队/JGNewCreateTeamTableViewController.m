@@ -129,7 +129,7 @@ static CGFloat ImageHeight  = 210.0;
     
     
     //渐变图
-    UIImageView *gradientImage = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, ImageHeight)];
+    UIImageView *gradientImage = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, ImageHeight * screenWidth / 320)];
     [gradientImage setImage:[UIImage imageNamed:@"backChange"]];
     [self.titleView addSubview:gradientImage];
     
