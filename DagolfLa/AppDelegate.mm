@@ -34,7 +34,7 @@
 #import <AlipaySDK/AlipaySDK.h>
 
 #import "UMMobClick/MobClick.h"
-
+#import "LanuchAdsManager.h"
 @interface AppDelegate ()
 {
     BMKMapManager* _mapManager;
@@ -54,35 +54,13 @@
     [MobClick startWithConfigure:UMConfigInstance];
 }
 
-//-(void)removeLun
-//{
-//    [_lunchView removeFromSuperview];
-//}
-//-(void)loadDocument:(NSString*)documentName inView:(UIWebView*)webView
-//{
-//    NSString *path = [[NSBundle mainBundle] pathForResource:documentName ofType:nil];
-//    //注意这里，是fileURLWithPath，而不是URLWithString。打开本地的用前者，打开网络的用后者
-//    NSURL *url = [NSURL fileURLWithPath:path];
-//    NSURLRequest *request = [NSURLRequest requestWithURL:url];
-//    [webView loadRequest:request];
-//}
+-(void)loadLaunchImagefromDoc
+{
+    [[LanuchAdsManager defaultMonitor]showAdAtPath:nil onView:self.window.rootViewController.view timeInterval:3.0 detailParameters:@{}];
+}
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    
-    
-//    [self.window makeKeyAndVisible];
-////    _lunchView = [[NSBundle mainBundle ]loadNibNamed:@"LaunchScreen" owner:nil options:nil][0];
-//    _lunchView = [[UIView alloc]init];
-//    _lunchView.frame = CGRectMake(0, 0, self.window.screen.bounds.size.width, self.window.screen.bounds.size.height);
-//    [self.window addSubview:_lunchView];
-//    _webView = [[UIWebView alloc] initWithFrame:self.window.bounds];
-////    [_webView setDelegate:self];
-//    _webView.userInteractionEnabled = NO;
-//    [_webView setScalesPageToFit:YES];
-//    [_lunchView addSubview:_webView];
-//    [self.window bringSubviewToFront:_lunchView];
-//    [self.window bringSubviewToFront:_lunchView];
-//    [self loadDocument:@"lauchingAnimation.html" inView:_webView];
-//    [NSTimer scheduledTimerWithTimeInterval:3 target:self selector:@selector(removeLun) userInfo:nil repeats:NO];
+    [self loadLaunchImagefromDoc];
     
     //初始化趣拍
     [[TaeSDK sharedInstance] asyncInit:^{
@@ -432,7 +410,7 @@
 {
     self.window.rootViewController = [[TabBarController alloc]init];
     self.window.backgroundColor = [UIColor whiteColor];
-    
+    [self loadLaunchImagefromDoc];
 }
 
 #pragma mark --消息推送

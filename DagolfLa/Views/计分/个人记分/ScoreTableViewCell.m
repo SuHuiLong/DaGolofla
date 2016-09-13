@@ -22,7 +22,7 @@
         _labelTitle.font = [UIFont systemFontOfSize:15*ScreenWidth/375];
         [self.contentView addSubview:_labelTitle];
         
-        _imgvState = [[UIImageView alloc]initWithFrame:CGRectMake(screenWidth - 50*ScreenWidth/375, 10*ScreenWidth/375, 30*ScreenWidth/375, 30*ScreenWidth/375)];
+        _imgvState = [[UIImageView alloc]initWithFrame:CGRectMake(screenWidth - 50*ScreenWidth/375, 15*ScreenWidth/375, 20*ScreenWidth/375, 20*ScreenWidth/375)];
         [self addSubview:_imgvState];
     }
     return self;

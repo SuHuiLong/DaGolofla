@@ -8,20 +8,36 @@
 
 #import "JGLWriteReplyViewController.h"
 #import "UITool.h"
+#import "JGLFeedbackViewController.h"
 @interface JGLWriteReplyViewController ()
 
 @end
 
 @implementation JGLWriteReplyViewController
 
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"backL"] style:UIBarButtonItemStylePlain target:self action:@selector(backButtonClcik)];
+    item.tintColor=[UIColor whiteColor];
+    self.navigationItem.leftBarButtonItem = item;
+}
+-(void)backButtonClcik
+{
+    for (UIViewController *vc in self.navigationController.viewControllers) {
+        if ([vc isKindOfClass:[JGLFeedbackViewController class]]) {
+            [self.navigationController popToViewController:vc animated:YES];
+            return;
+        }
+    }
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"回信";
     self.view.backgroundColor = [UITool colorWithHexString:@"eeeeee" alpha:1];
     [self createBack];
-    
-    
-    
+
 }
 
 -(void)createBack

@@ -807,7 +807,9 @@
 		828A99F91CE348D500AF9860 /* JGMemTitleTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 828A99F81CE348D500AF9860 /* JGMemTitleTableViewCell.m */; };
 		828A99FC1CE3549900AF9860 /* JGMemDataTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 828A99FB1CE3549900AF9860 /* JGMemDataTableViewCell.m */; };
 		828FAA4E1D62F839001F53C8 /* JGLCaddieSelfAddPlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 828FAA4D1D62F839001F53C8 /* JGLCaddieSelfAddPlayerViewController.m */; };
-		8290D6031D86931D00925E4A /* lauchingAnimation.html in Resources */ = {isa = PBXBuildFile; fileRef = 8290D6021D86931D00925E4A /* lauchingAnimation.html */; };
+		8290D6061D87D07200925E4A /* LanuchAdsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8290D6051D87D07100925E4A /* LanuchAdsManager.m */; };
+		8290D60A1D88073700925E4A /* gifLa.gif in Resources */ = {isa = PBXBuildFile; fileRef = 8290D6091D88073700925E4A /* gifLa.gif */; };
+		8290D60C1D88074D00925E4A /* gifLa.gif in Resources */ = {isa = PBXBuildFile; fileRef = 8290D60B1D88074D00925E4A /* gifLa.gif */; };
 		829960D41D23727C00E121A8 /* JGLBankModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 829960D31D23727C00E121A8 /* JGLBankModel.m */; };
 		829960DA1D23729C00E121A8 /* JGLAddBankNewsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 829960D71D23729C00E121A8 /* JGLAddBankNewsTableViewCell.m */; };
 		829960DB1D23729C00E121A8 /* JGLBankCardTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 829960D91D23729C00E121A8 /* JGLBankCardTableViewCell.m */; };
@@ -2727,7 +2729,10 @@
 		828A99FB1CE3549900AF9860 /* JGMemDataTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGMemDataTableViewCell.m; sourceTree = "<group>"; };
 		828FAA4C1D62F839001F53C8 /* JGLCaddieSelfAddPlayerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGLCaddieSelfAddPlayerViewController.h; sourceTree = "<group>"; };
 		828FAA4D1D62F839001F53C8 /* JGLCaddieSelfAddPlayerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGLCaddieSelfAddPlayerViewController.m; sourceTree = "<group>"; };
-		8290D6021D86931D00925E4A /* lauchingAnimation.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = lauchingAnimation.html; sourceTree = "<group>"; };
+		8290D6041D87D07100925E4A /* LanuchAdsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LanuchAdsManager.h; sourceTree = "<group>"; };
+		8290D6051D87D07100925E4A /* LanuchAdsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LanuchAdsManager.m; sourceTree = "<group>"; };
+		8290D6091D88073700925E4A /* gifLa.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = gifLa.gif; sourceTree = "<group>"; };
+		8290D60B1D88074D00925E4A /* gifLa.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = gifLa.gif; sourceTree = "<group>"; };
 		829487241CE99A2F0018D3F6 /* JGPhotoShowCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGPhotoShowCollectionViewCell.h; sourceTree = "<group>"; };
 		829487251CE99A2F0018D3F6 /* JGPhotoShowCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGPhotoShowCollectionViewCell.m; sourceTree = "<group>"; };
 		829487261CE99A2F0018D3F6 /* JGPhotoShowCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JGPhotoShowCollectionViewCell.xib; sourceTree = "<group>"; };
@@ -5943,6 +5948,8 @@
 				36BFFD511BC76CB8005B3CE2 /* top_back.png */,
 				36BFFD2F1BC76C8D005B3CE2 /* AppDelegate.h */,
 				36BFFD301BC76C8D005B3CE2 /* AppDelegate.mm */,
+				8290D6041D87D07100925E4A /* LanuchAdsManager.h */,
+				8290D6051D87D07100925E4A /* LanuchAdsManager.m */,
 				36BFFD321BC76C8D005B3CE2 /* ViewController.h */,
 				36BFFD331BC76C8D005B3CE2 /* ViewController.m */,
 				36BF02041BC78253005B3CE2 /* Images.xcassets */,
@@ -5955,7 +5962,6 @@
 		36BFFD2B1BC76C8D005B3CE2 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				8290D6021D86931D00925E4A /* lauchingAnimation.html */,
 				36BFFD2C1BC76C8D005B3CE2 /* Info.plist */,
 				36BFFD2D1BC76C8D005B3CE2 /* main.m */,
 				363D4F331C86E1C70089E52C /* PushConfig.plist */,
@@ -6247,6 +6253,8 @@
 		36BFFF8E1BC76D50005B3CE2 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				8290D60B1D88074D00925E4A /* gifLa.gif */,
+				8290D6091D88073700925E4A /* gifLa.gif */,
 				36BF01AC1BC77AB0005B3CE2 /* 首页 */,
 				36BF00AB1BC77375005B3CE2 /* 我的 */,
 				36BF00301BC771FB005B3CE2 /* 社区 */,
@@ -9071,7 +9079,7 @@
 				TargetAttributes = {
 					36BFFD271BC76C8D005B3CE2 = {
 						CreatedOnToolsVersion = 6.3.2;
-						DevelopmentTeam = T8ML76W22A;
+						DevelopmentTeam = 5P6JNXBH3C;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -9116,6 +9124,7 @@
 				6543320A1BD5D9B900363947 /* UMSLoginViewController.xib in Resources */,
 				202E05321D80310B00566CA9 /* JGHTwoScoreAreaCell.xib in Resources */,
 				36BF00091BC770C4005B3CE2 /* chatfrom_bg_focused.png in Resources */,
+				8290D60A1D88073700925E4A /* gifLa.gif in Resources */,
 				3660E0911BFC48B00033B4D7 /* Default@2x.png in Resources */,
 				2064DE971D3C715300F0D52A /* JGHRetrieveScoreViewController.xib in Resources */,
 				36BF003D1BC771FB005B3CE2 /* ComDetailViewCell.xib in Resources */,
@@ -9154,7 +9163,6 @@
 				36D0B0F21C80151C00C7245E /* Emoji.plist in Resources */,
 				2012AD811D2BB1B200F70E40 /* JGHAddAwardImageCell.xib in Resources */,
 				3684FDAE1C4A35F4002A14FC /* TeamInviteTableViewCell.xib in Resources */,
-				8290D6031D86931D00925E4A /* lauchingAnimation.html in Resources */,
 				F5AEF7321D41B98E009A8C34 /* JGHScoresHoleCell.xib in Resources */,
 				202E052D1D80120800566CA9 /* JGHScoreAreaCell.xib in Resources */,
 				209B91A91D6D375200A5BE10 /* JGHApplyNewCell.xib in Resources */,
@@ -9318,6 +9326,7 @@
 				36BF00011BC770C4005B3CE2 /* chat_bottom_keyboard_press.png in Resources */,
 				36BFFEB81BC76CDC005B3CE2 /* tab_bg2@2x.png in Resources */,
 				20F6A5CF1CF459D400DD9383 /* JGActivityBaseInfoCell.xib in Resources */,
+				8290D60C1D88074D00925E4A /* gifLa.gif in Resources */,
 				F53A056D1D518F32009DD489 /* JGHSetBallBaseCell.xib in Resources */,
 				F5E3F7F11CAA54BC00B24C77 /* dz@2x.png in Resources */,
 				36BFFEDF1BC76CDC005B3CE2 /* xiaoxidian2.png in Resources */,
@@ -9957,6 +9966,7 @@
 				209B3FEB1D10182B00A6FF72 /* JGHManagerViewController.m in Sources */,
 				F5E1BABF1D6B006100414727 /* ZXAztecReader.m in Sources */,
 				F5E1BAFB1D6B006100414727 /* ZXIntArray.m in Sources */,
+				8290D6061D87D07200925E4A /* LanuchAdsManager.m in Sources */,
 				F5E1BB391D6B006100414727 /* ZXRSSExpandedPair.m in Sources */,
 				368DCA641C88285000871D28 /* ReportViewController.m in Sources */,
 				F5E1BAFD1D6B006100414727 /* ZXStringUtils.m in Sources */,

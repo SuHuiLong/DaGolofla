@@ -268,6 +268,7 @@
     {
         JGLPlayDateTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"JGLPlayDateTableViewCell" forIndexPath:indexPath];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         if ( [Helper isBlankString:_strDateBegin]) {
             cell.labelDate.text = @"请选择打球时间";
         }
