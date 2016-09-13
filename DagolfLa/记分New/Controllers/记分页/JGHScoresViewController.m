@@ -90,6 +90,30 @@
         UIBarButtonItem *leftItem = [[UIBarButtonItem alloc]initWithCustomView:btn];
         self.navigationItem.leftBarButtonItem = leftItem;
     }
+    
+    NSUserDefaults *usedef = [NSUserDefaults standardUserDefaults];
+    if (![usedef objectForKey:@"userFristScore"]) {
+        UIImageView *userFristScoreImageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"-1"]];
+        userFristScoreImageView.userInteractionEnabled = YES;
+        userFristScoreImageView.tag = 7777;
+        userFristScoreImageView.frame = CGRectMake(0, 0, screenWidth, screenHeight);
+        [userFristScoreImageView bringSubviewToFront:appDelegate.window];
+        UITapGestureRecognizer *imageViewTap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(removeUserFristScoreImageView)];
+        [userFristScoreImageView addGestureRecognizer:imageViewTap];
+        [appDelegate.window addSubview:userFristScoreImageView];
+        [usedef setObject:@"1" forKey:@"userFristScore"];
+    }
+}
+
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    
+    
+}
+#pragma mark -- 移除imageView 
+- (void)removeUserFristScoreImageView{
+    UIImageView *removeImageview = (UIImageView *)[appDelegate.window viewWithTag:7777];
+    [removeImageview removeFromSuperview];
 }
 
 - (void)viewDidLoad {
