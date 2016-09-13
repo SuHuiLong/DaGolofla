@@ -653,12 +653,12 @@
             if ([NSThread isMainThread]) {
                 NSLog(@"Yay!");
                 [[ShowHUD showHUD]showToastWithText:@"记分结束！" FromView:self.view];
-                [self performSelector:@selector(pushJGHEndScoresViewController) withObject:self afterDelay:TIMESlEEP];
+                [self performSelector:@selector(pushJGHEndScoresViewController) withObject:self afterDelay:1.0];//TIMESlEEP
             } else {
                 NSLog(@"Humph, switching to main");
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [[ShowHUD showHUD]showToastWithText:@"记分结束！" FromView:self.view];
-                    [self performSelector:@selector(pushJGHEndScoresViewController) withObject:self afterDelay:TIMESlEEP];
+                    [self performSelector:@selector(pushJGHEndScoresViewController) withObject:self afterDelay:1.0];//TIMESlEEP
                 });
             }
             
@@ -778,14 +778,22 @@
                     JGHScoreListModel *model = self.userScoreArray[j];
                     NSMutableArray *poleNameList = [NSMutableArray arrayWithArray:model.poleNameList];
                     NSMutableArray *poleNumber = [NSMutableArray arrayWithArray:model.poleNumber];
+                    //onthefairway
+                    NSMutableArray *onthefairway = [NSMutableArray arrayWithArray:model.onthefairway];
+                    //pushrod
+                    NSMutableArray *pushrod = [NSMutableArray arrayWithArray:model.pushrod];
                     
                     for (int i=0; i< 9; i++) {
                         [poleNameList replaceObjectAtIndex:i withObject:holeNamesArray[i]];
                         [poleNumber replaceObjectAtIndex:i withObject:@-1];
+                        [onthefairway replaceObjectAtIndex:i withObject:@-1];
+                        [pushrod replaceObjectAtIndex:i withObject:@-1];
                     }
                     
                     model.poleNameList = poleNameList;
                     model.poleNumber = poleNumber;
+                    model.poleNumber = onthefairway;
+                    model.poleNumber = pushrod;
                     [self.userScoreArray replaceObjectAtIndex:j withObject:model];
                 }
                 
@@ -796,14 +804,22 @@
                     JGHScoreListModel *model = self.userScoreArray[j];
                     NSMutableArray *poleNameList = [NSMutableArray arrayWithArray:model.poleNameList];
                      NSMutableArray *poleNumber = [NSMutableArray arrayWithArray:model.poleNumber];
+                    //onthefairway
+                    NSMutableArray *onthefairway = [NSMutableArray arrayWithArray:model.onthefairway];
+                    //pushrod
+                    NSMutableArray *pushrod = [NSMutableArray arrayWithArray:model.pushrod];
                     
                     for (int i=0; i< 9; i++) {
                         [poleNameList replaceObjectAtIndex:i +9 withObject:holeNamesArray[i]];
                         [poleNumber replaceObjectAtIndex:i +9 withObject:@-1];
+                        [onthefairway replaceObjectAtIndex:i +9 withObject:@-1];
+                        [pushrod replaceObjectAtIndex:i +9 withObject:@-1];
                     }
                     
                     model.poleNameList = poleNameList;
                     model.poleNumber = poleNumber;
+                    model.onthefairway = onthefairway;
+                    model.pushrod = pushrod;
                     [self.userScoreArray replaceObjectAtIndex:j withObject:model];
                 }
             }

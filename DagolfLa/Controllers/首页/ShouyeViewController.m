@@ -339,7 +339,7 @@
 {
     //投票
     UIButton* btnVote = [UIButton buttonWithType:UIButtonTypeCustom];
-    btnVote.frame = CGRectMake(5*screenWidth/375, screenWidth/2 + 320*screenWidth/375, screenWidth/2-10*screenWidth/375, 100*screenWidth/375);
+    btnVote.frame = CGRectMake(270*screenWidth/375, screenWidth/2 + 320*screenWidth/375, 100*screenWidth/375, 100*screenWidth/375);
     [btnVote setBackgroundImage:[UIImage imageNamed:@"wytp"] forState:UIControlStateNormal];
     [_scrollView addSubview:btnVote];
     [btnVote addTarget:self action:@selector(manageClick:) forControlEvents:UIControlEventTouchUpInside];
@@ -348,7 +348,7 @@
     
     //球场
     UIButton* btnField = [UIButton buttonWithType:UIButtonTypeCustom];
-    btnField.frame = CGRectMake(screenWidth/2, screenWidth/2 + 320*screenWidth/375, screenWidth/2-10*screenWidth/375, 100*screenWidth/375);
+    btnField.frame = CGRectMake(5*screenWidth/375, screenWidth/2 + 320*screenWidth/375, 260*screenWidth/375, 100*screenWidth/375);
     [btnField setBackgroundImage:[UIImage imageNamed:@"qcyd"] forState:UIControlStateNormal];
     [_scrollView addSubview:btnField];
     [btnField addTarget:self action:@selector(manageClick:) forControlEvents:UIControlEventTouchUpInside];

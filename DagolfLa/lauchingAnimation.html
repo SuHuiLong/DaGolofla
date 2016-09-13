@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <style>
+        html{
+            width:100%;
+            height:100%;
+        }
+        body{
+            margin:0;
+            padding:0;
+            width:100%;
+            height:100%;
+        }
+        .container{
+            width:100%;
+            height:100%;
+            background:url(images/bg.jpg)no-repeat;
+            background-size: contain;
+            position: relative;
+        }
+        .flag{
+            width:.72rem;
+            height:.6rem;
+            position: absolute;
+            top:3.07rem;
+            left:4.05rem;
+            -webkit-animation: flagChange .5s infinite;
+            animation: flagChange .5s infinite;
+        }
+        @-webkit-keyframes flagChange {
+            0%{ background:url(images/flag1.png)no-repeat;background-size:contain; }
+            50%{background:url(images/flag2.png)no-repeat;background-size:contain;}
+            100%{background:url(images/flag1.png)no-repeat;background-size:contain;}
+        }
+        @keyframes flagChange {
+            0%{ background:url(images/flag1.png)no-repeat;background-size:contain; }
+            50%{background:url(images/flag2.png)no-repeat;background-size:contain;}
+            100%{background:url(images/flag1.png)no-repeat;background-size:contain;}
+        }
+
+        .ball{
+            width:.7rem;
+            height:.7rem;
+            background:url(images/ball.png)no-repeat;
+            background-size: contain;
+            position: absolute;
+            -webkit-animation: ballMove 1.5s linear;
+            animation: ballMove 1.5s linear;
+            z-index: 9;
+            opacity: 0;
+        }
+
+        @-webkit-keyframes ballMove {
+            0%{ top:-.35rem;left:5.68rem; opacity: 1;}
+            10%{ top:7.15rem;left:5.68rem; opacity: 1; }
+            15%{ top:8.88rem;left:5.68rem; opacity: 1; }
+            20%{ top:8.66rem;left:5.68rem; opacity: 1; }
+            25%{ top:8.28rem;left:5.68rem; opacity: 1; }
+            30%{ top:8.44rem;left:5.6rem; opacity: 1; }
+            32%{ top:8.6rem;left:5.52rem; opacity: 1; }
+            35%{ top:8.75rem;left:5.44rem; opacity: 1; }
+            75%{ top:5.1rem;left:3.02rem; opacity: 1; }
+            85%{ top:5.48rem;left:4.44rem; opacity: 1; }
+            99%{ top:6.5rem;left:4.44rem; opacity: 0; }
+            100%{  opacity: 0; }
+        }
+        @keyframes ballMove {
+            0%{ top:-.35rem;left:5.68rem; opacity: 1;}
+            10%{ top:7.15rem;left:5.68rem; opacity: 1; }
+            15%{ top:8.88rem;left:5.68rem; opacity: 1; }
+            20%{ top:8.66rem;left:5.68rem; opacity: 1; }
+            25%{ top:8.28rem;left:5.68rem; opacity: 1; }
+            30%{ top:8.44rem;left:5.6rem; opacity: 1; }
+            32%{ top:8.6rem;left:5.52rem; opacity: 1; }
+            35%{ top:8.75rem;left:5.44rem; opacity: 1; }
+            75%{ top:5.1rem;left:3.02rem; opacity: 1; }
+            85%{ top:5.48rem;left:4.44rem; opacity: 1; }
+            99%{ top:6.5rem;left:4.44rem; opacity: 0; }
+            100%{  opacity: 0; }
+        }
+
+        .ball_shadow{
+            width:.75rem;
+            height:.32rem;
+            border-radius: 50%;
+            background:rgba(0,0,0,.3);
+            position: absolute;
+            z-index: 5;
+            opacity: 0;
+            -webkit-animation: shadowChange 1.5s linear;
+            animation: shadowChange 1.5s linear;
+        }
+
+        @-webkit-keyframes shadowChange {
+            0%{ opacity: 0; }
+            14%{ opacity: 0; }
+            15%{ opacity: 1; top:9.35rem;left:5.62rem; }
+            20%{ opacity: 1;top:9.35rem;left:5.62rem;height:.18rem; }
+            25%{ opacity: 1; top:9.35rem;left:5.62rem;height:.04rem; }
+            30%{ opacity: 1; top:9.45rem;left:5.6rem;height:.14rem; }
+            32%{ opacity: 1; top:9.32rem;left:5.5rem;height:.24rem; }
+            35%{ opacity: 1; top:9.24rem;left:5.42rem;height:.32rem; }
+            75%{ opacity: 1; top:5.58rem;left:3.02rem;height:.32rem; }
+            85%{ opacity: 1; top:5.9rem;left:4.44rem;height:.32rem; }
+            86%{ opacity: 0; }
+            100%{ opacity: 0; }
+        }
+        @keyframes shadowChange {
+            0%{ opacity: 0; }
+            14%{ opacity: 0; }
+            15%{ opacity: 1; top:9.35rem;left:5.62rem; }
+            20%{ opacity: 1;top:9.35rem;left:5.62rem;height:.18rem; }
+            25%{ opacity: 1; top:9.35rem;left:5.62rem;height:.04rem; }
+            30%{ opacity: 1; top:9.45rem;left:5.6rem;height:.14rem; }
+            32%{ opacity: 1; top:9.32rem;left:5.5rem;height:.24rem; }
+            35%{ opacity: 1; top:9.24rem;left:5.42rem;height:.32rem; }
+            75%{ opacity: 1; top:5.58rem;left:3.02rem;height:.32rem; }
+            85%{ opacity: 1; top:5.9rem;left:4.44rem;height:.32rem; }
+            86%{ opacity: 0; }
+            100%{ opacity: 0; }
+        }
+        .home_page{
+            background:url(images/homePage.jpg)no-repeat;
+            background-size: contain;
+            position: absolute;
+            z-index: 99;
+            opacity: 1;
+            -webkit-animation: homePageChange 2s linear;
+            animation: homePageChange 2s linear;
+            width:7.5rem;
+            height:13.34rem;
+        }
+        @-webkit-keyframes homePageChange {
+            0%{ opacity: 0; }
+            85%{ opacity: 0; top:5.95rem; left:4.32rem; width:.86rem;  height:.86rem;}
+            86%{ opacity: 1; top:5.95rem; left:4.32rem; width:.86rem;  height:.86rem;}
+            100%{ opacity: 1;width:7.5rem;  height:13.34rem; top:0;left:0; }
+        }
+        @keyframes homePageChange {
+            0%{ opacity: 0; }
+            85%{ opacity: 0; top:5.95rem; left:4.32rem; width:.86rem;  height:.86rem;}
+            86%{ opacity: 1; top:5.95rem; left:4.32rem; width:.86rem;  height:.86rem;}
+            100%{ opacity: 1;width:7.5rem;  height:13.34rem; top:0;left:0; }
+        }
+    </style>
+</head>
+<body>
+
+    <script>
+    var sWidth = screen.width,
+            sScrollWidth = document.body.scrollWidth,
+            sDeviceRatio = window.devicePixelRatio,
+            oHtml = document.getElementsByTagName('html')[0];
+    if ( sWidth > sScrollWidth ){
+        if ( sWidth/sDeviceRatio/7.5 < 85.3 ){
+            oHtml.style.fontSize = sWidth/sDeviceRatio/7.5 + "px";
+        }else{
+            oHtml.style.fontSize = "85.3px";
+        }
+    }else{
+        if( screen.width< 640 ){
+            oHtml.style.fontSize = screen.width / 7.5 + "px";
+        }else{
+            oHtml.style.fontSize = "85.3px";
+        }
+    }
+</script>
+
+    <div class="container">
+        <div class="flag"></div>
+        <div class="ball"></div>
+        <div class="ball_shadow"></div>
+        <div class="home_page"></div>
+    </div>
+
+</body>
+</html>

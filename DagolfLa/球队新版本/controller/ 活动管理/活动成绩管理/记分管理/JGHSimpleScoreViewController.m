@@ -94,9 +94,28 @@ static NSString *const JGHOperationScoreListCellIdentifier = @"JGHOperationScore
 - (void)getStandardlevers{
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     [dict setObject:@(_actModel.ballKey) forKey:@"ballKey"];
-    [dict setObject:_holeArray[_region1] forKey:@"region1"];
-    [dict setObject:_holeArray[_region2] forKey:@"region2"];
-    [dict setObject:[JGReturnMD5Str getStandardleversBallKey:_actModel.ballKey andRegion1:_holeArray[_region1] andRegion2:_holeArray[_region2]] forKey:@"md5"];
+    NSString *region1 = nil;
+    NSString *region2 = nil;
+    for (int i=0; i<_holeArray.count; i++) {
+        JGHBallAreaModel *model = [[JGHBallAreaModel alloc]init];
+        model = _holeArray[i];
+        if (model.select == 1) {
+            if (region1 == nil) {
+                region1 = model.ballArea;
+            }else{
+                region2 = model.ballArea;
+            }
+        }
+    }
+    
+    if (region1 == nil || region2 == nil) {
+        [[ShowHUD showHUD]showToastWithText:@"请选择2个球场区域！" FromView:self.view];
+        return;
+    }
+    
+    [dict setObject:region1 forKey:@"region1"];
+    [dict setObject:region2 forKey:@"region2"];
+    [dict setObject:[JGReturnMD5Str getStandardleversBallKey:_actModel.ballKey andRegion1:region1 andRegion2:region2] forKey:@"md5"];
     [[JsonHttp jsonHttp]httpRequest:@"ball/getStandardlevers" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
         
     } completionBlock:^(id data) {
@@ -309,7 +328,12 @@ static NSString *const JGHOperationScoreListCellIdentifier = @"JGHOperationScore
             if (areaId == i) {
                 JGHBallAreaModel *model = [[JGHBallAreaModel alloc]init];
                 model = areaArray[i];
-                model.select = 1;
+                if (model.select == 1) {
+                    model.select = 0;
+                }else{
+                    model.select = 1;
+                }
+                
                 [_holeArray replaceObjectAtIndex:areaId withObject:model];
             }
         }
