@@ -15,7 +15,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iMT-m9-Jm7">
-                        <rect key="frame" x="10" y="7" width="70" height="30"/>
+                        <rect key="frame" x="10" y="0.0" width="70" height="43.5"/>
                         <state key="normal" title="可林斯A区">
                             <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         </state>
@@ -23,14 +23,15 @@
                             <action selector="areaNameBtn:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="cuD-VD-xfK"/>
                         </connections>
                     </button>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image=")-1" translatesAutoresizingMaskIntoConstraints="NO" id="9AG-bj-wdE">
-                        <rect key="frame" x="93" y="18.5" width="13" height="8"/>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrowDown" translatesAutoresizingMaskIntoConstraints="NO" id="9AG-bj-wdE">
+                        <rect key="frame" x="93" y="18.5" width="14" height="7"/>
                     </imageView>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="iMT-m9-Jm7" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="Cec-zE-lmh"/>
                     <constraint firstItem="9AG-bj-wdE" firstAttribute="leading" secondItem="iMT-m9-Jm7" secondAttribute="trailing" constant="13" id="Nq9-iz-qO2"/>
+                    <constraint firstAttribute="bottom" secondItem="iMT-m9-Jm7" secondAttribute="bottom" id="P8r-BL-g54"/>
                     <constraint firstItem="9AG-bj-wdE" firstAttribute="centerY" secondItem="iMT-m9-Jm7" secondAttribute="centerY" id="RAG-iQ-JG3"/>
+                    <constraint firstItem="iMT-m9-Jm7" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="dBD-Zm-Rzi"/>
                     <constraint firstItem="iMT-m9-Jm7" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="oJj-pC-sgl"/>
                 </constraints>
             </tableViewCellContentView>
@@ -43,6 +44,6 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name=")-1" width="13" height="8"/>
+        <image name="arrowDown" width="14" height="7"/>
     </resources>
 </document>

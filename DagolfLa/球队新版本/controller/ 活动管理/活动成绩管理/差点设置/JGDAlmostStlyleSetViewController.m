@@ -50,11 +50,11 @@
     
     UIButton *lockBtn = [[UIButton alloc] initWithFrame:CGRectMake(260 * ProportionAdapter, 15 * ProportionAdapter, 90 * ProportionAdapter, 30 * ProportionAdapter)];
     if (_lockScore == 0) {
-        [lockBtn setTitle:@"锁定" forState:(UIControlStateNormal)];
-        [lockBtn setImage:[UIImage imageNamed:@"lock"] forState:(UIControlStateNormal)];
-    }else{
         [lockBtn setTitle:@"同步" forState:(UIControlStateNormal)];
         [lockBtn setImage:[UIImage imageNamed:@"synchronous"] forState:(UIControlStateNormal)];
+    }else{
+        [lockBtn setTitle:@"锁定" forState:(UIControlStateNormal)];
+        [lockBtn setImage:[UIImage imageNamed:@"lock"] forState:(UIControlStateNormal)];
     }
     [lockBtn setTitleEdgeInsets:UIEdgeInsetsMake(0, -60 * ProportionAdapter, 0, 0)];
     [lockBtn setImageEdgeInsets:UIEdgeInsetsMake(0, 50 * ProportionAdapter, 0, 0)];
@@ -92,18 +92,17 @@
 
 - (void)lockAct:(UIButton *)button{
     if ([button.titleLabel.text isEqualToString:@"锁定"]) {
+        _lockScore = 0;
         [button setTitle:@"同步" forState:(UIControlStateNormal)];
         [button setImage:[UIImage imageNamed:@"synchronous"] forState:(UIControlStateNormal)];
         NSMutableDictionary *dict = [NSMutableDictionary dictionary];
         [dict setObject:DEFAULF_USERID forKey:@"userKey"];
-//        [dict setObject:@(_teamKey) forKey:@"teamKey"];
         [dict setObject:@(_teamActivityKey) forKey:@"activityKey"];
         [dict setObject:@(_almostType) forKey:@"almostType"];
         [dict setObject:@(_lockScore) forKey:@"lockScore"];
         [[JsonHttp jsonHttp]httpRequestWithMD5:@"score/lockActivityScore" JsonKey:nil withData:dict failedBlock:^(id errType) {
             
         } completionBlock:^(id data) {
-            NSLog(@"%@", data);
             if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
             }else{
                 if ([data objectForKey:@"packResultMsg"]) {
@@ -112,18 +111,17 @@
             }
         }];
     }else{
+        _lockScore = 1;
         [button setTitle:@"锁定" forState:(UIControlStateNormal)];
         [button setImage:[UIImage imageNamed:@"lock"] forState:(UIControlStateNormal)];
         NSMutableDictionary *dict = [NSMutableDictionary dictionary];
         [dict setObject:DEFAULF_USERID forKey:@"userKey"];
-        //        [dict setObject:@(_teamKey) forKey:@"teamKey"];
         [dict setObject:@(_teamActivityKey) forKey:@"activityKey"];
         [dict setObject:@(_almostType) forKey:@"almostType"];
         [dict setObject:@(_lockScore) forKey:@"lockScore"];
         [[JsonHttp jsonHttp]httpRequestWithMD5:@"score/lockActivityScore" JsonKey:nil withData:dict failedBlock:^(id errType) {
             
         } completionBlock:^(id data) {
-            NSLog(@"%@", data);
             if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
             }else{
                 if ([data objectForKey:@"packResultMsg"]) {

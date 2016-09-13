@@ -15,8 +15,8 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image=")-1" translatesAutoresizingMaskIntoConstraints="NO" id="bBn-Z6-Aau">
-                        <rect key="frame" x="93" y="18" width="13" height="8"/>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrowDown" translatesAutoresizingMaskIntoConstraints="NO" id="bBn-Z6-Aau">
+                        <rect key="frame" x="93" y="18.5" width="14" height="7"/>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Par" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TBP-JG-TSG">
                         <rect key="frame" x="164" y="12" width="23" height="18"/>
@@ -139,6 +139,6 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name=")-1" width="13" height="8"/>
+        <image name="arrowDown" width="14" height="7"/>
     </resources>
 </document>

@@ -229,7 +229,7 @@
     }
     
     if ([[model.pushrod objectAtIndex:index] integerValue] == -1) {
-        self.pushPoleValue.text = @"0";
+        self.pushPoleValue.text = @"2";
         self.pushPoleValue.font = [UIFont systemFontOfSize:25*ProportionAdapter];
         self.pushPoleValue.textColor = [UIColor lightGrayColor];
     }else{

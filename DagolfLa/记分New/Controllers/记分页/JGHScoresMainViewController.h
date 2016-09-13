@@ -31,5 +31,7 @@
 
 - (void)reloadTableView:(NSInteger)switchMode;
 
+@property (nonatomic, strong)NSMutableArray *currentAreaArray;
+
 
 @end

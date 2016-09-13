@@ -18,6 +18,8 @@ static NSString *const JGHNewScoresPageCellIdentifier = @"JGHNewScoresPageCell";
 {
 //    NSInteger _switchMode;// 0- 总；1- 差
     UIButton *_totalPoleBtn;
+    
+    UILabel *_areaLable;
 }
 
 @property (nonatomic, strong)UITableView *scoresTableView;
@@ -61,6 +63,7 @@ static NSString *const JGHNewScoresPageCellIdentifier = @"JGHNewScoresPageCell";
     [super viewDidLoad];
     // Do any additional setup after loading the view.
 //    _switchMode = 0;
+    
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(noticePushScoresCtrl:) name:@"noticePushScores" object:nil];
     
     self.scoresTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight - 64) style:UITableViewStylePlain];
@@ -78,24 +81,48 @@ static NSString *const JGHNewScoresPageCellIdentifier = @"JGHNewScoresPageCell";
     
     [self.view addSubview:self.scoresTableView];
     
-    [self creteSlidingView];
+    [self creteSlidingView];//总杆／差杆
+    
+    [self createHeaderBallAreaView];
 }
-
+#pragma mark -- 球场区域
+- (void)createHeaderBallAreaView{
+    UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, 20*ProportionAdapter)];
+    headerView.backgroundColor = [UIColor whiteColor];
+    
+    _areaLable = [[UILabel alloc]initWithFrame:CGRectMake(screenWidth/2 - 50*ProportionAdapter, 0, 100 *ProportionAdapter, 18 *ProportionAdapter)];
+    _areaLable.font = [UIFont systemFontOfSize:15 *ProportionAdapter];
+    _areaLable.textColor = [UIColor colorWithHexString:@"#32B14D"];
+    _areaLable.textAlignment = NSTextAlignmentCenter;
+    if (_index < 10) {
+        _areaLable.text = _currentAreaArray[0];
+    }else{
+        _areaLable.text = _currentAreaArray[1];
+    }
+    
+    [headerView addSubview:_areaLable];
+    
+    UILabel *lineLbale = [[UILabel alloc]initWithFrame:CGRectMake(screenWidth/2 - 50*ProportionAdapter, 20 *ProportionAdapter -1, 100 *ProportionAdapter, 1)];
+    lineLbale.backgroundColor = [UIColor colorWithHexString:@"#32B14D"];
+    [headerView addSubview:lineLbale];
+    
+    self.scoresTableView.tableHeaderView =headerView;
+}
+#pragma mark -- 总杆／差杆
 - (void)creteSlidingView{
-    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, screenHeight - 64 - 20*ProportionAdapter, screenWidth, 20*ProportionAdapter)];
-    UIImageView *imageLeftView = [[UIImageView alloc]initWithFrame:CGRectMake((screenWidth-140*ProportionAdapter)/2 -20*ProportionAdapter, 4*ProportionAdapter, 10*ProportionAdapter, 12*ProportionAdapter)];
+    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, screenHeight - 64 - 30*ProportionAdapter, screenWidth, 30*ProportionAdapter)];
+    UIImageView *imageLeftView = [[UIImageView alloc]initWithFrame:CGRectMake(20*ProportionAdapter, 8*ProportionAdapter, 14*ProportionAdapter, 14*ProportionAdapter)];
     imageLeftView.image = [UIImage imageNamed:@"sildLeft"];
     [view addSubview:imageLeftView];
     
-    UIImageView *imageRightView = [[UIImageView alloc]initWithFrame:CGRectMake(screenWidth/2 + 70*ProportionAdapter +10*ProportionAdapter, 4*ProportionAdapter, 10*ProportionAdapter, 12*ProportionAdapter)];
+    UIImageView *imageRightView = [[UIImageView alloc]initWithFrame:CGRectMake(screenWidth -20*ProportionAdapter -14 *ProportionAdapter, 8*ProportionAdapter, 14*ProportionAdapter, 14*ProportionAdapter)];
     imageRightView.image = [UIImage imageNamed:@"sildRight"];
     [view addSubview:imageRightView];
 
-    _totalPoleBtn = [[UIButton alloc]initWithFrame:CGRectMake((screenWidth-140*ProportionAdapter)/2, 0, 140*ProportionAdapter, 20*ProportionAdapter)];
+    _totalPoleBtn = [[UIButton alloc]initWithFrame:CGRectMake((screenWidth-140*ProportionAdapter)/2, 0, 140*ProportionAdapter, 30*ProportionAdapter)];
     NSUserDefaults *userdf = [NSUserDefaults standardUserDefaults];
     
     if ([[userdf objectForKey:[NSString stringWithFormat:@"switchMode%@", _scorekey]] integerValue] == 0) {
-       
         [_totalPoleBtn setTitle:@"总杆模式" forState:UIControlStateNormal];
     }else{
         [_totalPoleBtn setTitle:@"差杆模式" forState:UIControlStateNormal];
@@ -103,7 +130,7 @@ static NSString *const JGHNewScoresPageCellIdentifier = @"JGHNewScoresPageCell";
     
     NSLog(@"%td", [[userdf objectForKey:[NSString stringWithFormat:@"switchMode%@", _scorekey]] integerValue]);
     [_totalPoleBtn setTitleColor:[UIColor colorWithHexString:Bar_Color] forState:UIControlStateNormal];
-    _totalPoleBtn.titleLabel.font = [UIFont systemFontOfSize:15.0*ProportionAdapter];
+    _totalPoleBtn.titleLabel.font = [UIFont systemFontOfSize:17.0*ProportionAdapter];
     [_totalPoleBtn addTarget:self action:@selector(switchMode:) forControlEvents:UIControlEventTouchUpInside];
     [view addSubview:_totalPoleBtn];
     
@@ -124,7 +151,6 @@ static NSString *const JGHNewScoresPageCellIdentifier = @"JGHNewScoresPageCell";
     
     [self.scoresTableView reloadData];
     
-//    NSUserDefaults *userdf = [NSUserDefaults standardUserDefaults];
     [userdf setObject:@(_switchMode) forKey:[NSString stringWithFormat:@"switchMode%@", _scorekey]];
     [userdf synchronize];
 }
@@ -148,7 +174,7 @@ static NSString *const JGHNewScoresPageCellIdentifier = @"JGHNewScoresPageCell";
     if (_dataArray.count < 3) {
         return 260 *ProportionAdapter;
     }else{
-        return (screenHeight-64-50*ProportionAdapter)/4 -5*ProportionAdapter;
+        return (screenHeight-64-50*ProportionAdapter -20*ProportionAdapter)/4 -5*ProportionAdapter;
     }
 }
 
@@ -191,6 +217,9 @@ static NSString *const JGHNewScoresPageCellIdentifier = @"JGHNewScoresPageCell";
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    if (section == 4) {
+        return 0;
+    }
     return 10*ProportionAdapter;
 }
 
@@ -305,11 +334,11 @@ static NSString *const JGHNewScoresPageCellIdentifier = @"JGHNewScoresPageCell";
         for (int i=0; i<model.pushrod.count; i++) {
             if (i == _index) {
                 if ([model.pushrod[i] integerValue] == -1) {
-                    if (_switchMode == 0) {
+//                    if (_switchMode == 0) {
+//                        [pushrodArray addObject:@2];
+//                    }else{
                         [pushrodArray addObject:@2];
-                    }else{
-                        [pushrodArray addObject:@0];
-                    }
+//                    }
                 }else{
                     if ([model.pushrod[i] integerValue]-1 > 0) {
                         [pushrodArray addObject:@([model.pushrod[i] integerValue]-1)];
@@ -371,11 +400,11 @@ static NSString *const JGHNewScoresPageCellIdentifier = @"JGHNewScoresPageCell";
         for (int i=0; i<model.pushrod.count; i++) {
             if (i == _index) {
                 if ([model.pushrod[i] integerValue] == -1) {
-                    if (_switchMode == 0) {
-                        [pushrodArray addObject:@2];
-                    }else{
-                        [pushrodArray addObject:@0];
-                    }
+//                    if (_switchMode == 0) {
+//                        [pushrodArray addObject:@2];
+//                    }else{
+                    [pushrodArray addObject:@2];
+//                    }
                 }else{
                     [pushrodArray addObject:@([model.pushrod[i] integerValue]+1)];
                 }

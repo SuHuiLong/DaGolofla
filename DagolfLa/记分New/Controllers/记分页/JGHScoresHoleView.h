@@ -24,17 +24,17 @@
 
 @property (nonatomic, assign)NSInteger curPage;
 
-@property (nonatomic, strong)NSArray *areaArray;//球道区域
+//@property (nonatomic, strong)NSArray *areaArray;//球道区域
 
 //@property (nonatomic, strong)NSArray *twoAreaArray;//球道区域
 
-- (void)reloadScoreList;
+- (void)reloadScoreList:(NSArray *)currentAreaArray andAreaArray:(NSArray *)areaArray;
 
 - (void)removeOneAreaView;
 
 - (void)removeTwoAreaView;
 
 //选择区域后－－刷新试图数据
-- (void)reloadViewData:(NSMutableArray *)dataArray;
+- (void)reloadViewData:(NSMutableArray *)dataArray andCurrentAreaArrat:(NSArray *)currentAreaArray;
 
 @end

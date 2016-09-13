@@ -22,9 +22,9 @@
 - (void)configArea:(NSString *)areaString andImageDirection:(NSInteger)direction{
     [self.areaNameBtn setTitle:areaString forState:UIControlStateNormal];
     if (direction == 0) {
-        self.areaImageView.image = [UIImage imageNamed:@")-1"];
+        self.areaImageView.image = [UIImage imageNamed:@"arrowDown"];
     }else{
-        self.areaImageView.image = [UIImage imageNamed:@")"];
+        self.areaImageView.image = [UIImage imageNamed:@"arrowTop"];
     }
 }
 

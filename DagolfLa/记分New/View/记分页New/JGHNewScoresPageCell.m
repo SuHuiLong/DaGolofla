@@ -208,7 +208,7 @@
     }
     
     if ([[model.pushrod objectAtIndex:index] integerValue] == -1) {
-        self.rodNumber.text = @"0";
+        self.rodNumber.text = @"2";
         self.rodNumber.font = [UIFont systemFontOfSize:25*ProportionAdapter];
         self.rodNumber.textColor = [UIColor lightGrayColor];
     }else{
