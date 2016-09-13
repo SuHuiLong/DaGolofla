@@ -342,6 +342,11 @@ static NSString *const JGPlayPayBaseCellIdentifier = @"JGPlayPayBaseCell";
         return;
     }
     
+    if (![_playsBaseDict objectForKey:@"almost"]) {
+        [[ShowHUD showHUD]showToastWithText:@"请输入差点！" FromView:self.view];
+        return;
+    }
+    
     if (![_playsBaseDict objectForKey:@"type"]) {
         [[ShowHUD showHUD]showToastWithText:@"请选择资费类型！" FromView:self.view];
         return;
