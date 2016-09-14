@@ -249,26 +249,7 @@
     
     lableTitle.text = @"个人记分";
     [btnImage setImage:[UIImage imageNamed:@"pen"] forState:UIControlStateNormal];
-    
-    
-    //    if ([_model.scoreType integerValue] == 1) {
-    //        lableTitle.text = @"个人记分";
-    //        [btnImage setImage:[UIImage imageNamed:@"pen"] forState:UIControlStateNormal];
-    //    }
-    //    else if ([_model.scoreType integerValue] == 11)
-    //    {
-    //        lableTitle.text = @"活动记分";
-    //        [btnImage setImage:[UIImage imageNamed:@"activeS"] forState:UIControlStateNormal];
-    //    }
-    //    else if ([_model.scoreType integerValue] == 12)
-    //    {
-    //        lableTitle.text = @"赛事记分";
-    //        [btnImage setImage:[UIImage imageNamed:@"manageS"] forState:UIControlStateNormal];
-    //    }
-    //    else{
-    //        lableTitle.text = @"个人记分";
-    //        [btnImage setImage:[UIImage imageNamed:@"pen"] forState:UIControlStateNormal];
-    //    }
+ 
     
     for (int i = 0; i < 3; i++) {
         //记分数字
@@ -278,40 +259,7 @@
         labelCount.textAlignment = NSTextAlignmentCenter;
         labelCount.font = [UIFont systemFontOfSize:30*ScreenWidth/375];
         labelCount.tag = 500 + i;
-        /*
-         if (i == 0) {
-         if (_model.sumj == nil) {
-         labelCount.text = @"暂无成绩";
-         labelCount.font = [UIFont systemFontOfSize:20*ScreenWidth/375];
-         }
-         else
-         {
-         labelCount.text = [NSString stringWithFormat:@"%@",_model.sumj];
-         }
-         }
-         else if (i == 1)
-         {
-         if (_model.goodj == nil) {
-         labelCount.text = @"暂无成绩";
-         labelCount.font = [UIFont systemFontOfSize:20*ScreenWidth/375];
-         }
-         else
-         {
-         labelCount.text = [NSString stringWithFormat:@"%@",_model.goodj];
-         }
-         }
-         else
-         {
-         if (_model.nums == nil) {
-         labelCount.text = @"暂无排名";
-         labelCount.font = [UIFont systemFontOfSize:20*ScreenWidth/375];
-         }
-         else
-         {
-         labelCount.text = [NSString stringWithFormat:@"%@",_model.nums];
-         }
-         }
-         */
+    
         [_viewMain addSubview:labelCount];
         //标题
         UILabel* labelTint = [[UILabel alloc]initWithFrame:CGRectMake(ScreenWidth/10 + i*ScreenWidth/10*3, ScreenWidth/16*11+ScreenWidth/8, ScreenWidth/5, ScreenWidth/10)];
@@ -358,25 +306,6 @@
         }];
     }
     
-    
-    //    if ([_model.scoreType integerValue] == 1) {
-    //        ScoreBySelfViewController *scVc = [[ScoreBySelfViewController alloc]init];
-    //        [self.navigationController pushViewController:scVc animated:YES];
-    //    }
-    //    else if ([_model.scoreType integerValue] == 11)
-    //    {
-    //        ScoreByActiveViewController *scVc = [[ScoreByActiveViewController alloc]init];
-    //        [self.navigationController pushViewController:scVc animated:YES];
-    //    }
-    //    else if ([_model.scoreType integerValue] == 12)
-    //    {
-    //        ScoreByGameViewController *scVc = [[ScoreByGameViewController alloc]init];
-    //        [self.navigationController pushViewController:scVc animated:YES];
-    //    }
-    //    else{
-    //        ScoreBySelfViewController *scVc = [[ScoreBySelfViewController alloc]init];
-    //        [self.navigationController pushViewController:scVc animated:YES];
-    //    }
 }
 
 -(void)createUpLoad
@@ -409,23 +338,6 @@
     
     _iconLabelArr = @[@"数据统计",@"历史记分卡",@"赛事记分",@"活动记分"];
     
-    /*
-     if ([_model.scoreType integerValue] == 1) {
-     _iconLabelArr = @[@"数据统计",@"历史记分卡",@"赛事记分",@"活动记分"];
-     }
-     else if ([_model.scoreType integerValue] == 11)
-     {
-     _iconLabelArr = @[@"数据统计",@"历史记分卡",@"赛事记分",@"个人记分"];
-     }
-     else if ([_model.scoreType integerValue] == 12)
-     {
-     _iconLabelArr = @[@"数据统计",@"历史记分卡",@"活动记分",@"个人记分"];
-     }
-     else
-     {
-     _iconLabelArr = @[@"数据统计",@"历史记分卡",@"赛事记分",@"活动记分"];
-     }
-     */
     
 }
 
@@ -462,24 +374,6 @@
     ////NSLog(@"%d",[_model.scoreType integerValue]);
     
     arrIcon = @[@"shuju",@"lishi",@"saishi",@"huodong"];
-    
-    /*
-     if ([_model.scoreType integerValue] == 1) {
-     arrIcon = @[@"shuju",@"lishi",@"saishi",@"huodong"];
-     }
-     else if ([_model.scoreType integerValue] == 11)
-     {
-     arrIcon = @[@"shuju",@"lishi",@"saishi",@"selfDown"];
-     }
-     else if ([_model.scoreType integerValue] == 12)
-     {
-     arrIcon = @[@"shuju",@"lishi",@"huodong",@"selfDown"];
-     }
-     else
-     {
-     arrIcon = @[@"shuju",@"lishi",@"saishi",@"huodong"];
-     }
-     */
     cell.iconImage.image = [UIImage imageNamed:arrIcon[indexPath.row]];
     
     
@@ -509,39 +403,6 @@
                   @"ScoreByActiveViewController"];
         titleArr = @[@"数据统计",@"历史记分卡",@"赛事记分",@"活动记分"];
         
-        /*
-         if ([_model.scoreType integerValue] == 1) {
-         vcArr = @[@"DataViewController",
-         @"HistoryViewController",
-         @"ScoreByGameViewController",
-         @"ScoreByActiveViewController"];
-         titleArr = @[@"数据统计",@"历史记分卡",@"赛事记分",@"活动记分"];
-         }
-         else if ([_model.scoreType integerValue] == 11)
-         {
-         vcArr = @[@"DataViewController",
-         @"HistoryViewController",
-         @"ScoreByGameViewController",
-         @"ScoreBySelfViewController"];
-         titleArr = @[@"数据统计",@"历史记分卡",@"赛事记分",@"个人记分"];
-         }
-         else if ([_model.scoreType integerValue] == 12)
-         {
-         vcArr = @[@"DataViewController",
-         @"HistoryViewController",
-         @"ScoreByActiveViewController",
-         @"ScoreBySelfViewController"];
-         titleArr = @[@"数据统计",@"历史记分卡",@"活动记分",@"个人记分"];
-         }
-         else
-         {
-         vcArr = @[@"DataViewController",
-         @"HistoryViewController",
-         @"ScoreByGameViewController",
-         @"ScoreByActiveViewController"];
-         titleArr = @[@"数据统计",@"历史记分卡",@"赛事记分",@"活动记分"];
-         }
-         */
         NSMutableArray *arr = [[NSMutableArray alloc]init];
         for (int i = 0; i<vcArr.count; i++) {
             ViewController *vc = [[NSClassFromString(vcArr[i]) alloc]init];

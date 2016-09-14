@@ -203,7 +203,7 @@
 
 -(void)btnImgvClick:(UIButton *)btn
 {
-    btn.enabled = NO;
+    btn.userInteractionEnabled = NO;
     if ([[NSUserDefaults standardUserDefaults]objectForKey:@"userId"]) {
         NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
         [dict setObject:DEFAULF_USERID forKey:@"userKey"];
@@ -214,7 +214,7 @@
             NSLog(@"%@", data);
             if ([[data objectForKey:@"scoreKey"] integerValue] != 0) {
                 [Helper alertViewWithTitle:@"您还有记分尚未完成，是否前往继续记分" withBlockCancle:^{
-                    
+                    btn.userInteractionEnabled = YES;
                     if ([[data objectForKey:@"acBoolean"] integerValue] == 1) {
                         JGLChooseScoreViewController* chooVc = [[JGLChooseScoreViewController alloc]init];
                         [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
@@ -227,6 +227,7 @@
                     }
                     
                 } withBlockSure:^{
+                    btn.userInteractionEnabled = YES;
                     JGHScoresViewController* scrVc = [[JGHScoresViewController alloc]init];
                     [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
                     scrVc.scorekey = [NSString stringWithFormat:@"%@",[data objectForKey:@"scoreKey"]];
@@ -243,6 +244,7 @@
                 }];
             }
             else{
+                btn.userInteractionEnabled = YES;
                 if ([[data objectForKey:@"acBoolean"] integerValue] == 1) {
                     JGLChooseScoreViewController* chooVc = [[JGLChooseScoreViewController alloc]init];
                     [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
@@ -260,6 +262,7 @@
     }
     else
     {
+        btn.userInteractionEnabled = YES;
         [Helper alertViewWithTitle:@"是否立即登录?" withBlockCancle:^{
             
         } withBlockSure:^{
@@ -270,7 +273,6 @@
         }];
     }
     
-    btn.enabled = YES;
 }
 
 -(void)createUpLoad

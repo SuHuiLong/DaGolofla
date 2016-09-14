@@ -808,8 +808,6 @@
 		828A99FC1CE3549900AF9860 /* JGMemDataTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 828A99FB1CE3549900AF9860 /* JGMemDataTableViewCell.m */; };
 		828FAA4E1D62F839001F53C8 /* JGLCaddieSelfAddPlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 828FAA4D1D62F839001F53C8 /* JGLCaddieSelfAddPlayerViewController.m */; };
 		8290D6061D87D07200925E4A /* LanuchAdsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8290D6051D87D07100925E4A /* LanuchAdsManager.m */; };
-		8290D60A1D88073700925E4A /* gifLa.gif in Resources */ = {isa = PBXBuildFile; fileRef = 8290D6091D88073700925E4A /* gifLa.gif */; };
-		8290D60C1D88074D00925E4A /* gifLa.gif in Resources */ = {isa = PBXBuildFile; fileRef = 8290D60B1D88074D00925E4A /* gifLa.gif */; };
 		829960D41D23727C00E121A8 /* JGLBankModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 829960D31D23727C00E121A8 /* JGLBankModel.m */; };
 		829960DA1D23729C00E121A8 /* JGLAddBankNewsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 829960D71D23729C00E121A8 /* JGLAddBankNewsTableViewCell.m */; };
 		829960DB1D23729C00E121A8 /* JGLBankCardTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 829960D91D23729C00E121A8 /* JGLBankCardTableViewCell.m */; };
@@ -861,6 +859,7 @@
 		82F2545F1D3CE1E1008BE0AF /* JGLAddressAddViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 82F2545E1D3CE1E1008BE0AF /* JGLAddressAddViewController.m */; };
 		82F566E11D2F4BC20089B617 /* JGLDrawalRecordModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 82F566E01D2F4BC20089B617 /* JGLDrawalRecordModel.m */; };
 		82F566E51D2FAE1F0089B617 /* JGLPushDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 82F566E41D2FAE1E0089B617 /* JGLPushDetailsViewController.m */; };
+		82F9441D1D89159700A65381 /* gifLa1.gif in Resources */ = {isa = PBXBuildFile; fileRef = 82F9441C1D89159700A65381 /* gifLa1.gif */; };
 		82FBBF6C1D6E8AEB006A1548 /* JGLCancelDrawbackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 82FBBF6B1D6E8AEB006A1548 /* JGLCancelDrawbackViewController.m */; };
 		82FD961C1D3DBFA30047D7A8 /* JGLAddressAddTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 82FD961B1D3DBFA30047D7A8 /* JGLAddressAddTableViewCell.m */; };
 		82FD961F1D3DC4DD0047D7A8 /* JGLBarCodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 82FD961E1D3DC4DD0047D7A8 /* JGLBarCodeViewController.m */; };
@@ -2731,8 +2730,6 @@
 		828FAA4D1D62F839001F53C8 /* JGLCaddieSelfAddPlayerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGLCaddieSelfAddPlayerViewController.m; sourceTree = "<group>"; };
 		8290D6041D87D07100925E4A /* LanuchAdsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LanuchAdsManager.h; sourceTree = "<group>"; };
 		8290D6051D87D07100925E4A /* LanuchAdsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LanuchAdsManager.m; sourceTree = "<group>"; };
-		8290D6091D88073700925E4A /* gifLa.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = gifLa.gif; sourceTree = "<group>"; };
-		8290D60B1D88074D00925E4A /* gifLa.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = gifLa.gif; sourceTree = "<group>"; };
 		829487241CE99A2F0018D3F6 /* JGPhotoShowCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGPhotoShowCollectionViewCell.h; sourceTree = "<group>"; };
 		829487251CE99A2F0018D3F6 /* JGPhotoShowCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGPhotoShowCollectionViewCell.m; sourceTree = "<group>"; };
 		829487261CE99A2F0018D3F6 /* JGPhotoShowCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JGPhotoShowCollectionViewCell.xib; sourceTree = "<group>"; };
@@ -2835,6 +2832,7 @@
 		82F566E01D2F4BC20089B617 /* JGLDrawalRecordModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGLDrawalRecordModel.m; sourceTree = "<group>"; };
 		82F566E31D2FAE1E0089B617 /* JGLPushDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGLPushDetailsViewController.h; sourceTree = "<group>"; };
 		82F566E41D2FAE1E0089B617 /* JGLPushDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGLPushDetailsViewController.m; sourceTree = "<group>"; };
+		82F9441C1D89159700A65381 /* gifLa1.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = gifLa1.gif; sourceTree = "<group>"; };
 		82FBBF6A1D6E8AEB006A1548 /* JGLCancelDrawbackViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGLCancelDrawbackViewController.h; sourceTree = "<group>"; };
 		82FBBF6B1D6E8AEB006A1548 /* JGLCancelDrawbackViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGLCancelDrawbackViewController.m; sourceTree = "<group>"; };
 		82FD961A1D3DBFA30047D7A8 /* JGLAddressAddTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGLAddressAddTableViewCell.h; sourceTree = "<group>"; };
@@ -6253,8 +6251,7 @@
 		36BFFF8E1BC76D50005B3CE2 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				8290D60B1D88074D00925E4A /* gifLa.gif */,
-				8290D6091D88073700925E4A /* gifLa.gif */,
+				82F9441C1D89159700A65381 /* gifLa1.gif */,
 				36BF01AC1BC77AB0005B3CE2 /* 首页 */,
 				36BF00AB1BC77375005B3CE2 /* 我的 */,
 				36BF00301BC771FB005B3CE2 /* 社区 */,
@@ -9124,7 +9121,7 @@
 				6543320A1BD5D9B900363947 /* UMSLoginViewController.xib in Resources */,
 				202E05321D80310B00566CA9 /* JGHTwoScoreAreaCell.xib in Resources */,
 				36BF00091BC770C4005B3CE2 /* chatfrom_bg_focused.png in Resources */,
-				8290D60A1D88073700925E4A /* gifLa.gif in Resources */,
+				82F9441D1D89159700A65381 /* gifLa1.gif in Resources */,
 				3660E0911BFC48B00033B4D7 /* Default@2x.png in Resources */,
 				2064DE971D3C715300F0D52A /* JGHRetrieveScoreViewController.xib in Resources */,
 				36BF003D1BC771FB005B3CE2 /* ComDetailViewCell.xib in Resources */,
@@ -9326,7 +9323,6 @@
 				36BF00011BC770C4005B3CE2 /* chat_bottom_keyboard_press.png in Resources */,
 				36BFFEB81BC76CDC005B3CE2 /* tab_bg2@2x.png in Resources */,
 				20F6A5CF1CF459D400DD9383 /* JGActivityBaseInfoCell.xib in Resources */,
-				8290D60C1D88074D00925E4A /* gifLa.gif in Resources */,
 				F53A056D1D518F32009DD489 /* JGHSetBallBaseCell.xib in Resources */,
 				F5E3F7F11CAA54BC00B24C77 /* dz@2x.png in Resources */,
 				36BFFEDF1BC76CDC005B3CE2 /* xiaoxidian2.png in Resources */,
