@@ -14,6 +14,6 @@
 @property (copy, nonatomic) void (^blockFriendDict)(NSMutableDictionary *);
 @property (strong, nonatomic) NSMutableDictionary* dictFinish;
 
-@property (assign, nonatomic) NSInteger lastIndex;
+@property (assign, nonatomic) NSInteger lastIndex;//还剩多少个
 
 @end

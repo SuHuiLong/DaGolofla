@@ -107,11 +107,10 @@
         };
         addVc.dictFinish = _peoAddress;
         if (_dictPeople.count != 0) {
-            addVc.lastIndex = 3 - _dictPeople.count;
-
+            addVc.lastIndex = _dictPeople.count;
         }
         else{
-            addVc.lastIndex = 3;
+            addVc.lastIndex = 0;
         }
         _isClick = NO;
         [self.navigationController pushViewController:addVc animated:YES];
@@ -135,10 +134,10 @@
         };
         fVc.dictFinish = _peoFriend;
         if (_dictPeople.count != 0) {
-            fVc.lastIndex = 3 - _dictPeople.count;
+            fVc.lastIndex = _dictPeople.count;
         }
         else{
-            fVc.lastIndex = 3;
+            fVc.lastIndex = 0;
         }
         
         _isClick = NO;

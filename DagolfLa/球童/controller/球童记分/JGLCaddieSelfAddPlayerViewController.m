@@ -220,9 +220,7 @@
     if (indexPath.section == 1) {
         if (indexPath.row > 0) {
             if ([_dictPeople allValues].count < 4) {
-                if (indexPath.row-2 < [_dictPeople allValues].count) {
-                    NSLog(@"%@",[_dictPeople allKeys][indexPath.row-2]);
-                    
+                if (indexPath.row-2 < [_dictPeople allValues].count) {                    
                     [_peoAddress removeObjectForKey:[_dictPeople allKeys][indexPath.row-2]];
                     [_peoFriend removeObjectForKey:[_dictPeople allKeys][indexPath.row-2]];
                     [_dictPeople removeObjectForKey:[_dictPeople allKeys][indexPath.row-2]];

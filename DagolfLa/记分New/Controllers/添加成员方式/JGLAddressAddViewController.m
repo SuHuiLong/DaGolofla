@@ -389,18 +389,23 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (_dictFinish.count != 0) {
-        
-        if (_dictFinish.count >= _lastIndex) {
-            [[ShowHUD showHUD]showToastWithText:@"您最多只能选择3个人" FromView:self.view];
-            
-            
+        if (_lastIndex >= 3 || _dictFinish.count + _lastIndex > 3) {
+            NSString *str=[_dictFinish objectForKey:[NSNumber numberWithInteger:[self.listArray[indexPath.section][indexPath.row] recordID]]];
+            if ([Helper isBlankString:str]==YES) {
+                [[ShowHUD showHUD]showToastWithText:@"您最多只能选择3个人" FromView:self.view];
+            }else{
+                [_dictFinish removeObjectForKey:[self.listArray[indexPath.section][indexPath.row] mobile]];
+                NSIndexPath *indexPath_1=[NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section];
+                NSArray *indexArray=[NSArray arrayWithObject:indexPath_1];
+                [_tableView reloadRowsAtIndexPaths:indexArray withRowAnimation:UITableViewRowAnimationAutomatic];
+            }
+    
         }
         else{
             NSString *str=[_dictFinish objectForKey:[NSNumber numberWithInteger:[self.listArray[indexPath.section][indexPath.row] recordID]]];
             if ([Helper isBlankString:str]==YES) {
                 NSLog(@"%td   %td",indexPath.section,indexPath.row);
                 [_dictFinish setObject:[self.listArray[indexPath.section][indexPath.row] userName] forKey:[self.listArray[indexPath.section][indexPath.row] mobile]];
-                
             }else{
                 [_dictFinish removeObjectForKey:[self.listArray[indexPath.section][indexPath.row] mobile]];
             }
@@ -411,7 +416,7 @@
         }
     }
     else{
-        if (_dictFinish.count >= _lastIndex) {
+        if (_lastIndex >= 3 || _dictFinish.count + _lastIndex > 3) {
             [[ShowHUD showHUD]showToastWithText:@"您最多只能选择3个人" FromView:self.view];
         }
         else

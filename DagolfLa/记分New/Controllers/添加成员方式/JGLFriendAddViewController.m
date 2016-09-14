@@ -242,10 +242,17 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (_dictFinish.count != 0) {
-        if (_dictFinish.count >= _lastIndex) {
-            [[ShowHUD showHUD]showToastWithText:@"您最多只能选择3个人" FromView:self.view];
-            
+    if (_dictFinish.count != 0) {//已选择过
+        if (_lastIndex >= 3 || _dictFinish.count + _lastIndex > 3) {
+            NSString *str=[_dictFinish objectForKey:[self.listArray[indexPath.section][indexPath.row] otherUserId]];
+            if ([Helper isBlankString:str]==YES) {
+                [[ShowHUD showHUD]showToastWithText:@"您最多只能选择3个人" FromView:self.view];
+            }else{
+                [_dictFinish removeObjectForKey:[self.listArray[indexPath.section][indexPath.row] otherUserId]];
+                NSIndexPath *indexPath_1=[NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section];
+                NSArray *indexArray=[NSArray arrayWithObject:indexPath_1];
+                [_tableView reloadRowsAtIndexPaths:indexArray withRowAnimation:UITableViewRowAnimationAutomatic];
+            }
         }
         else{
             NSString *str=[_dictFinish objectForKey:[self.listArray[indexPath.section][indexPath.row] otherUserId]];
@@ -262,8 +269,8 @@
             [_tableView reloadRowsAtIndexPaths:indexArray withRowAnimation:UITableViewRowAnimationAutomatic];
         }
     }
-    else{
-        if (_dictFinish.count >= _lastIndex) {
+    else{//第一次勾选
+        if (_lastIndex >= 3 || _dictFinish.count + _lastIndex > 3) {
             [[ShowHUD showHUD]showToastWithText:@"您最多只能选择3个人" FromView:self.view];
             
         }
