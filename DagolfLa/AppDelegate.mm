@@ -56,7 +56,7 @@
 
 -(void)loadLaunchImagefromDoc
 {
-    [[LanuchAdsManager defaultMonitor]showAdAtPath:nil onView:self.window.rootViewController.view timeInterval:3.0 detailParameters:@{}];
+    [[LanuchAdsManager defaultMonitor]showAdAtPath:nil onView:self.window.rootViewController.view timeInterval:4 detailParameters:@{}];
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
@@ -98,12 +98,6 @@
         [JPUSHService registerForRemoteNotificationTypes:(UIUserNotificationTypeBadge |
                                                           UIUserNotificationTypeSound |
                                                           UIUserNotificationTypeAlert)
-                                              categories:nil];
-    } else {
-        //categories 必须为nil
-        [JPUSHService registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge |
-                                                          UIRemoteNotificationTypeSound |
-                                                          UIRemoteNotificationTypeAlert)
                                               categories:nil];
     }
     

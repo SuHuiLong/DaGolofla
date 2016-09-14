@@ -165,7 +165,7 @@
         return;
     }
     if (![Helper isBlankString:[_dictArea allValues][1]]) {
-        [dict setObject:[_dictArea allValues][0] forKey:@"region2"];
+        [dict setObject:[_dictArea allValues][1] forKey:@"region2"];
     }
     else{
         [[ShowHUD showHUD]showToastWithText:@"请选择第二九洞" FromView:self.view];

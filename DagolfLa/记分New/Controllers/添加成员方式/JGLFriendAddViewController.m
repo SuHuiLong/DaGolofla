@@ -77,15 +77,6 @@
 
 -(void)finishAction
 {
-//    for (int i = 0; i < _dictFinish.count; i ++) {
-//        if ([DEFAULF_USERID integerValue] == [[_dictFinish allKeys][i] integerValue]) {
-//            [[ShowHUD showHUD]showToastWithText:@"您不能选择自己，请重新添加" FromView:self.view];
-//            [_dictFinish removeObjectForKey:[_dictFinish allKeys][i]];
-//            [_tableView reloadData];
-//            return;
-//        }
-//    }
-    
     _blockFriendDict(_dictFinish);
     [self.navigationController popViewControllerAnimated:YES];
 }

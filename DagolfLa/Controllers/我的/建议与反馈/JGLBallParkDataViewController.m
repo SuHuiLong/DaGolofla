@@ -321,7 +321,7 @@
     }
     [dict setObject:@0 forKey:@"type"];//球场
     if ([Helper isBlankString:_textView.text] || [_textView.text isEqualToString:TextViewDetail] == YES) {
-        [[ShowHUD showHUD]showToastWithText:@"请指出哪里出了问题，臣妾立马改正" FromView:self.view];
+        [[ShowHUD showHUD]showToastWithText:@"陛下：请指出哪里出了问题，臣妾立马改正。" FromView:self.view];
         [self.view endEditing:YES];
         return;
     }
