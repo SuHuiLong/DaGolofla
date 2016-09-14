@@ -225,7 +225,6 @@ static NSString *const JGHTwoScoreAreaCellIdentifier = @"JGHTwoScoreAreaCell";
         return;
     }
     
-    //CGSize postSize = [self.postName.text boundingRectWithSize:CGSizeMake(kScreenWidth, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12]} context:nil].size;
     _areaId = 1;
     _oneAreaView = [[UIView alloc]initWithFrame:CGRectMake(10 *ProportionAdapter, btn.frame.origin.y + btn.frame.size.height, 84 *ProportionAdapter, _areaArray.count *40 *ProportionAdapter + 4*ProportionAdapter)];
 //    _oneAreaView.backgroundColor = [UIColor colorWithHexString:BG_color];
@@ -250,6 +249,9 @@ static NSString *const JGHTwoScoreAreaCellIdentifier = @"JGHTwoScoreAreaCell";
         
         btn.titleLabel.font = [UIFont systemFontOfSize:15 *ProportionAdapter];
         btn.backgroundColor = [UIColor whiteColor];
+        
+//        CGSize postSize = [self.postName.text boundingRectWithSize:CGSizeMake(kScreenWidth, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12]} context:nil].size;
+        
         [_oneAreaView addSubview:btn];
     }
     [self addSubview:_oneAreaView];

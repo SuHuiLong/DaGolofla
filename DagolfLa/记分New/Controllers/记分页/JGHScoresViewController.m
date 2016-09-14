@@ -332,8 +332,10 @@
     
     [[JsonHttp jsonHttp]httpRequestWithMD5:@"score/saveScore" JsonKey:nil withData:dict failedBlock:^(id errType) {
         self.view.userInteractionEnabled = YES;
+        btn.enabled = YES;
     } completionBlock:^(id data) {
         self.view.userInteractionEnabled = YES;
+        btn.enabled = YES;
         NSLog(@"%@", data);
         if ([[data objectForKey:@"packSuccess"]integerValue] == 1) {
             
@@ -346,8 +348,6 @@
             [self performSelector:@selector(scoresResult) withObject:self afterDelay:TIMESlEEP];
         }
     }];
-    
-    btn.enabled = YES;
 }
 #pragma mark -- 点击杆数跳转到指定的积分页面
 - (void)noticePushScoresCtrl:(NSNotification *)not{
