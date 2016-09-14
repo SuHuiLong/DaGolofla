@@ -233,7 +233,22 @@ static NSString *const JGHTwoScoreAreaCellIdentifier = @"JGHTwoScoreAreaCell";
         return;
     }
     
+    float btnW = 0.0;
+    for (int i = 0; i<_areaArray.count; i++) {
+        NSString *str = _areaArray[i];
+        CGSize postSize = [str boundingRectWithSize:CGSizeMake(screenWidth, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:15 *ProportionAdapter]} context:nil].size;
+        if (postSize.width > 84 *ProportionAdapter) {
+            btnW = postSize.width;
+        }
+    }
+    
     _areaId = 1;
+    if (btnW == 0.0) {
+        _oneAreaView = [[UIView alloc]initWithFrame:CGRectMake(10 *ProportionAdapter, btn.frame.origin.y + btn.frame.size.height + 20 *ProportionAdapter, 84 *ProportionAdapter, _areaArray.count *40 *ProportionAdapter + 4*ProportionAdapter)];
+    }else{
+        _oneAreaView = [[UIView alloc]initWithFrame:CGRectMake(10 *ProportionAdapter, btn.frame.origin.y + btn.frame.size.height + 20 *ProportionAdapter, btnW + 4 *ProportionAdapter, _areaArray.count *40 *ProportionAdapter + 4*ProportionAdapter)];
+    }
+    
     _oneAreaView = [[UIView alloc]initWithFrame:CGRectMake(10 *ProportionAdapter, btn.frame.origin.y + btn.frame.size.height +20 *ProportionAdapter, 84 *ProportionAdapter, _areaArray.count *40 *ProportionAdapter  + 4*ProportionAdapter)];
     [_oneAreaView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"alertViewBG"]]];
     for (int i=0; i < _areaArray.count; i++) {
@@ -285,6 +300,21 @@ static NSString *const JGHTwoScoreAreaCellIdentifier = @"JGHTwoScoreAreaCell";
         [_twoAreaView removeFromSuperview];
         _twoAreaView = nil;
         return;
+    }
+    
+    float btnW = 0.0;
+    for (int i = 0; i<_areaArray.count; i++) {
+        NSString *str = _areaArray[i];
+        CGSize postSize = [str boundingRectWithSize:CGSizeMake(screenWidth, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:15 *ProportionAdapter]} context:nil].size;
+        if (postSize.width > 84 *ProportionAdapter) {
+            btnW = postSize.width;
+        }
+    }
+    
+    if (btnW == 0.0) {
+        _twoAreaView = [[UIView alloc]initWithFrame:CGRectMake(10 *ProportionAdapter, btn.frame.origin.y + btn.frame.size.height + (_dataArray.count +2) *35 *ProportionAdapter + 37 *ProportionAdapter + 20 *ProportionAdapter, 84 *ProportionAdapter, _areaArray.count *40 *ProportionAdapter + 4*ProportionAdapter)];
+    }else{
+        _twoAreaView = [[UIView alloc]initWithFrame:CGRectMake(10 *ProportionAdapter, btn.frame.origin.y + btn.frame.size.height + (_dataArray.count +2) *35 *ProportionAdapter + 37 *ProportionAdapter + 20 *ProportionAdapter, btnW + 4 *ProportionAdapter, _areaArray.count *40 *ProportionAdapter + 4*ProportionAdapter)];
     }
     
     _areaId = 2;

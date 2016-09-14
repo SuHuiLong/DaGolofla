@@ -520,7 +520,7 @@
 - (void)configPoorNineToEighteenth:(NSArray *)array andUserName:(NSString *)userName andStandradArray:(NSArray *)standradArray{
     self.name.text = userName;
     
-    for (int i=9; i<17; i++) {
+    for (int i=9; i<18; i++) {
         if ([[array objectAtIndex:i] integerValue] == -1) {
             if (i == 9) {
                 self.oneLable.backgroundColor = [UIColor clearColor];
