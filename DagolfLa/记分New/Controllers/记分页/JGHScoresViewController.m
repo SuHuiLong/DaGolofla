@@ -93,6 +93,7 @@
         self.navigationItem.leftBarButtonItem = leftItem;
     }
     
+    /*
     NSUserDefaults *usedef = [NSUserDefaults standardUserDefaults];
     if (![usedef objectForKey:@"userFristScore"]) {
         UIImageView *userFristScoreImageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"-2"]];
@@ -105,18 +106,20 @@
         [appDelegate.window addSubview:userFristScoreImageView];
         [usedef setObject:@"1" forKey:@"userFristScore"];
     }
+     */
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     navBarHairlineImageView.hidden = NO;
 }
+/*
 #pragma mark -- 移除imageView 
 - (void)removeUserFristScoreImageView{
     UIImageView *removeImageview = (UIImageView *)[appDelegate.window viewWithTag:7777];
     [removeImageview removeFromSuperview];
 }
-
+*/
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -527,6 +530,7 @@
         [_poorScoreView removeFromSuperview];
         [_tranView removeFromSuperview];
         
+        /*
         NSUserDefaults *usedef = [NSUserDefaults standardUserDefaults];
         if (![usedef objectForKey:@"userSeccondScore"]) {
             UIImageView *userFristScoreImageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"-1"]];
@@ -539,13 +543,16 @@
             [appDelegate.window addSubview:userFristScoreImageView];
             [usedef setObject:@"1" forKey:@"userSeccondScore"];
         }
+         */
     }
 }
 #pragma mark -- 移除imageView
+/*
 - (void)removeUserSeccondScoreImageView{
     UIImageView *removeImageview = (UIImageView *)[appDelegate.window viewWithTag:8888];
     [removeImageview removeFromSuperview];
 }
+ */
 //返回前一页的视图控制器
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController
 {

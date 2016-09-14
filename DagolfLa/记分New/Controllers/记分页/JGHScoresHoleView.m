@@ -225,8 +225,22 @@ static NSString *const JGHTwoScoreAreaCellIdentifier = @"JGHTwoScoreAreaCell";
         return;
     }
     
+    float btnW = 0.0;
+    for (int i = 0; i<_areaArray.count; i++) {
+        NSString *str = _areaArray[i];
+        CGSize postSize = [str boundingRectWithSize:CGSizeMake(screenWidth, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:15 *ProportionAdapter]} context:nil].size;
+        if (postSize.width > 84 *ProportionAdapter) {
+            btnW = postSize.width;
+        }
+    }
+    
     _areaId = 1;
-    _oneAreaView = [[UIView alloc]initWithFrame:CGRectMake(10 *ProportionAdapter, btn.frame.origin.y + btn.frame.size.height, 84 *ProportionAdapter, _areaArray.count *40 *ProportionAdapter + 4*ProportionAdapter)];
+    if (btnW == 0.0) {
+        _oneAreaView = [[UIView alloc]initWithFrame:CGRectMake(10 *ProportionAdapter, btn.frame.origin.y + btn.frame.size.height, 84 *ProportionAdapter, _areaArray.count *40 *ProportionAdapter + 4*ProportionAdapter)];
+    }else{
+        _oneAreaView = [[UIView alloc]initWithFrame:CGRectMake(10 *ProportionAdapter, btn.frame.origin.y + btn.frame.size.height, btnW + 4 *ProportionAdapter, _areaArray.count *40 *ProportionAdapter + 4*ProportionAdapter)];
+    }
+    
 //    _oneAreaView.backgroundColor = [UIColor colorWithHexString:BG_color];
     [_oneAreaView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"alertViewBG"]]];
 //    _oneAreaView.backgroundColor = [UIColor whiteColor];
@@ -237,7 +251,7 @@ static NSString *const JGHTwoScoreAreaCellIdentifier = @"JGHTwoScoreAreaCell";
         }else{
             btnY = (i * 40 + 2) *ProportionAdapter;
         }
-        UIButton *btn = [[UIButton alloc]initWithFrame:CGRectMake(2 *ProportionAdapter, btnY, 80 *ProportionAdapter, 40 *ProportionAdapter)];
+        UIButton *btn = [[UIButton alloc]initWithFrame:CGRectMake(2 *ProportionAdapter, btnY, _oneAreaView.frame.size.width -4 *ProportionAdapter, 40 *ProportionAdapter)];
         [btn setTitle:[NSString stringWithFormat:@"%@", _areaArray[i]] forState:UIControlStateNormal];
         btn.tag = 300 + i;
         if ([_areaArray[i] isEqualToString:_currentAreaArray[0]]) {
@@ -249,8 +263,6 @@ static NSString *const JGHTwoScoreAreaCellIdentifier = @"JGHTwoScoreAreaCell";
         
         btn.titleLabel.font = [UIFont systemFontOfSize:15 *ProportionAdapter];
         btn.backgroundColor = [UIColor whiteColor];
-        
-//        CGSize postSize = [self.postName.text boundingRectWithSize:CGSizeMake(kScreenWidth, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12]} context:nil].size;
         
         [_oneAreaView addSubview:btn];
     }
