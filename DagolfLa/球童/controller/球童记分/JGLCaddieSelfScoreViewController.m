@@ -502,6 +502,7 @@
             if (indexPath.row > 0) {
                 if (indexPath.row  == _dictPeo.count + 2) {
                     JGLCaddieSelfAddPlayerViewController* addVc = [[JGLCaddieSelfAddPlayerViewController alloc]init];
+                    addVc.strPlayerName = _userNamePlayer;
                     addVc.blockSurePlayer = ^(NSMutableDictionary *dict){
                         _dictPeo = dict;
 //                        NSIndexSet *indexSet=[[NSIndexSet alloc]initWithIndex:4];

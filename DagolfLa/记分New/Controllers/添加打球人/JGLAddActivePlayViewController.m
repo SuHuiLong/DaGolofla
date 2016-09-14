@@ -340,7 +340,10 @@
         if (indexPath.row - 1 < _dictFinish.count) {
             [_dictFinish removeObjectForKey:_dataKey[indexPath.row-1]];
             [_dataKey removeObjectAtIndex:indexPath.row-1];
-            [_dataUserKey removeObjectAtIndex:indexPath.row-1];
+            if (_dataUserKey.count != 0) {
+                [_dataUserKey removeObjectAtIndex:indexPath.row-1];
+            }
+            
             [_arrMobile removeObjectAtIndex:indexPath.row-1];
             [_allMostArray removeObjectAtIndex:indexPath.row-1];
             

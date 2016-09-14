@@ -71,6 +71,8 @@ static CGFloat ImageHeight  = 210.0;
     NSInteger _canSubsidy;//是否补贴-0不
     
     NSString* _strShare;
+    
+    UIImageView *_gradientImage;//渐变图
 }
 
 @property (nonatomic, strong)UITableView *teamActibityNameTableView;
@@ -180,9 +182,9 @@ static CGFloat ImageHeight  = 210.0;
     [self.imgProfile addSubview:self.titleView];
     
     //渐变图
-    UIImageView *gradientImage = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, ImageHeight)];
-    [gradientImage setImage:[UIImage imageNamed:@"backChange"]];
-    [self.titleView addSubview:gradientImage];
+    _gradientImage = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, ImageHeight)];
+    [_gradientImage setImage:[UIImage imageNamed:@"backChange"]];
+    [self.titleView addSubview:_gradientImage];
 
     //返回按钮
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -857,6 +859,8 @@ static CGFloat ImageHeight  = 210.0;
         CGRect f = CGRectMake(-(factor-screenWidth)/2, 0, factor, ImageHeight+ABS(yOffset));
         self.imgProfile.frame = f;
         
+        _gradientImage.frame = self.imgProfile.frame;
+        
         CGRect title = self.titleView.frame;
         self.titleView.frame = CGRectMake((factor-screenWidth)/2, 0, title.size.width, title.size.height);
         
@@ -867,6 +871,8 @@ static CGFloat ImageHeight  = 210.0;
         CGRect f = self.imgProfile.frame;
         f.origin.y = -yOffset;
         self.imgProfile.frame = f;
+        
+        _gradientImage.frame = self.imgProfile.frame;
         
         CGRect t = self.titleView.frame;
         t.origin.y = yOffset;
