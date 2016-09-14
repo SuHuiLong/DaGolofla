@@ -47,6 +47,7 @@
             return;
         }
     }
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 

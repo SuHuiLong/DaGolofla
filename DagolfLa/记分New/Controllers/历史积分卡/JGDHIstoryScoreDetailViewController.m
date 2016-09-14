@@ -46,6 +46,7 @@
             return;
         }
     }
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)viewDidLoad {
@@ -227,11 +228,13 @@
         timeLB.text =  [timeStr substringWithRange:NSMakeRange(0, 10)];        timeLB.font = [UIFont systemFontOfSize:13 * ProportionAdapter];
         [viewTitle addSubview:timeLB];
         
-        
-        UIButton *changeModelBtn = [[UIButton alloc] initWithFrame:CGRectMake(270 * ProportionAdapter, 5 * ProportionAdapter, 91 * ProportionAdapter, 38 * ProportionAdapter)];
-        [changeModelBtn setImage:[UIImage imageNamed:@"btn_zonggan"] forState:(UIControlStateNormal)];
-        [changeModelBtn addTarget:self action:@selector(changeAct) forControlEvents:(UIControlEventTouchUpInside)];
-        [viewTitle addSubview:changeModelBtn];
+        if (_fromLive != 5) {
+            UIButton *changeModelBtn = [[UIButton alloc] initWithFrame:CGRectMake(270 * ProportionAdapter, 5 * ProportionAdapter, 91 * ProportionAdapter, 38 * ProportionAdapter)];
+            [changeModelBtn setImage:[UIImage imageNamed:@"btn_zonggan"] forState:(UIControlStateNormal)];
+            [changeModelBtn addTarget:self action:@selector(changeAct) forControlEvents:(UIControlEventTouchUpInside)];
+            [viewTitle addSubview:changeModelBtn];
+        }
+
         
         
         UIImageView *imageV1 = [[UIImageView alloc] initWithFrame:CGRectMake(135 * ProportionAdapter, 150 * ProportionAdapter, 10 * ProportionAdapter, 10 * ProportionAdapter)];
@@ -407,8 +410,8 @@
         NSLog(@"－－－cancle");
     } withBlockSure:^{
         JGHScoresViewController *scoreVC = [[JGHScoresViewController alloc] init];
-    scoreVC.currentPage = [longPG view].tag - 777;
-     scoreVC.scorekey = [NSString stringWithFormat:@"%@", [self.dataDic objectForKey:@"timeKey"]];
+        scoreVC.currentPage = [longPG view].tag - 777;
+        scoreVC.scorekey = [NSString stringWithFormat:@"%@", [self.dataDic objectForKey:@"timeKey"]];
         NSUserDefaults *userdf = [NSUserDefaults standardUserDefaults];
         [userdf setObject:@"0" forKey:[NSString stringWithFormat:@"switchMode%@", [self.dataDic objectForKey:@"timeKey"]]];
         [userdf synchronize];

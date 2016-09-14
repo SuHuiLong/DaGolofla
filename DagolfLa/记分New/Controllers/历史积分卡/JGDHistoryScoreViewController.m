@@ -311,6 +311,7 @@
 
         if ([model.scoreFinish integerValue] == 0) {
             JGHScoresViewController *scoreVC = [[JGHScoresViewController alloc] init];
+            scoreVC.isCabbie = [model.userType integerValue];
             NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
             if ([userdef objectForKey:[NSString stringWithFormat:@"%@", model.timeKey]]) {
                 scoreVC.currentPage = [[userdef objectForKey:[NSString stringWithFormat:@"%@", model.timeKey]] integerValue];
@@ -359,6 +360,7 @@
     }else{
         if ([model.scoreFinish integerValue] == 0) {
             JGHScoresViewController *scoreVC = [[JGHScoresViewController alloc] init];
+            scoreVC.isCabbie = [model.userType integerValue];
             NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
             if ([userdef objectForKey:[NSString stringWithFormat:@"%@", model.timeKey]]) {
                 scoreVC.currentPage = [[userdef objectForKey:[NSString stringWithFormat:@"%@", model.timeKey]] integerValue];

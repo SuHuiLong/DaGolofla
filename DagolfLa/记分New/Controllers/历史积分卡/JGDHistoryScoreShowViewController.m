@@ -19,6 +19,7 @@
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) NSMutableArray *dataArray;
 @property (nonatomic, strong) NSMutableDictionary *dataDic;
+@property (nonatomic, strong) NSNumber *isReversal;
 
 @end
 
@@ -115,6 +116,9 @@
      
             }
             
+            if ([data objectForKey:@"isReversal"]) {
+                self.isReversal = [data objectForKey:@"isReversal"];
+            }
             if ([data objectForKey:@"score"]) {
                 self.dataDic = [data objectForKey:@"score"];
             }
@@ -389,6 +393,7 @@
         JGDHistoryScoreShowModel *model = self.dataArray[indexPath.row - 2];
         detailV.model = model;
         detailV.dataDic = self.dataDic;
+        detailV.isReversal = self.isReversal;
         [self.navigationController pushViewController:detailV animated:YES];
     }
 
