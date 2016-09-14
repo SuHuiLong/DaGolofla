@@ -71,8 +71,8 @@ static NSString *const JGHOperScoreHeaderCellIdentifier = @"JGHOperScoreHeaderCe
         
         tranCell.oneBtn.tag = 100 +indexPath.section;
         tranCell.twoBtn.tag = 200 +indexPath.section;
-        tranCell.threeBtn.tag = 300 +indexPath.section;
-        tranCell.fourBtn.tag = 400 +indexPath.section;
+        tranCell.threeBtn.tag = 300 +indexPath.section +9;
+        tranCell.fourBtn.tag = 400 +indexPath.section +9;
         NSLog(@"section == %td", indexPath.section);
         NSLog(@"row == %td", indexPath.row);
         
@@ -95,13 +95,13 @@ static NSString *const JGHOperScoreHeaderCellIdentifier = @"JGHOperScoreHeaderCe
 #pragma mark -- 选择球洞的代理
 - (void)didSelectOneHole:(UIButton *)btn{
     NSLog(@"%td", btn.tag);
-    NSInteger index = btn.tag % 100;
+    NSInteger index = btn.tag % 100 -1;
     self.returnHoleId(index);
 }
 
 - (void)didSelectThreeHole:(UIButton *)btn{
     NSLog(@"%td", btn.tag);
-    NSInteger index = (btn.tag % 100) +9;
+    NSInteger index = (btn.tag % 100) -1;
     self.returnHoleId(index);
 }
 
