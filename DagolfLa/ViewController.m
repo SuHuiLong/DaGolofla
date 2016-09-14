@@ -28,8 +28,6 @@
     self.navigationItem.leftBarButtonItem = item;
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"nav_bg"] forBarMetrics:UIBarMetricsDefault];
     
-//    [self.navigationController.navigationBar setBarTintColor:[UIColor colorWithRed:0.36f green:0.66f blue:0.31f alpha:1.00f]];
-    
     
     if ([[[UIDevice currentDevice] systemVersion] doubleValue] >7.0) {
         [self.navigationController.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor],UITextAttributeTextColor, nil]];
@@ -43,15 +41,12 @@
 
 -(void)backButtonClcik{
     [self.navigationController popViewControllerAnimated:YES];
-    
-    [[JsonHttp jsonHttp]cancelRequest];
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
     self.navigationController.navigationBar.translucent = NO;
-    //    self.navigationController.navigationBar.backgroundColor = [UIColor colorWithRed:0.36f green:0.66f blue:0.31f alpha:1.00f];
     NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
     if ([user objectForKey:@"lat"] != nil) {
         self.lat = [user objectForKey:@"lat"];

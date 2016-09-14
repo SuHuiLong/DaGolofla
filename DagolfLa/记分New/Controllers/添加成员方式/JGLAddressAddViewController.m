@@ -380,7 +380,7 @@
         cell.imgvState.image=[UIImage imageNamed:@"gou_w"];
     }
     return cell;
-      
+    
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
