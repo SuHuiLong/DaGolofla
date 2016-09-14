@@ -527,6 +527,48 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
     
     [dict setObject:_info forKey:@"info"];
     [dict setObject:@0 forKey:@"srcType"];//报名类型－－0非嘉宾通道
+    //deviceID
+    NSString * uuid= [FCUUID getUUID];
+    [dict setObject:uuid forKey:@"deviceID"];
+    
+    [[JsonHttp jsonHttp]httpRequestWithMD5:@"team/doTeamActivitySignUp" JsonKey:nil withData:dict failedBlock:^(id errType) {
+        NSLog(@"errType == %@", errType);
+        [[ShowHUD showHUD]hideAnimationFromView:self.view];
+    } completionBlock:^(id data) {
+        [[ShowHUD showHUD]hideAnimationFromView:self.view];
+        NSLog(@"data == %@", data);
+        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+            _infoKey = [data objectForKey:@"infoKey"];
+            if (type == 1) {
+                [self weChatPay];
+            }else if (type == 2){
+                [self zhifubaoPay];
+            }else{
+                //跳转分组页面
+                JGTeamGroupViewController *groupCtrl = [[JGTeamGroupViewController alloc]init];
+                groupCtrl.activityFrom = 1;
+                groupCtrl.teamActivityKey = [_modelss.timeKey integerValue];
+                //                groupCtrl.teamKey = _modelss.teamKey;
+                [self.navigationController pushViewController:groupCtrl animated:YES];
+            }
+        }else{
+            if ([data count]== 2) {
+                [Helper alertViewWithTitle:@"报名失败！" withBlock:^(UIAlertController *alertView) {
+                    [self.navigationController presentViewController:alertView animated:YES completion:^{
+                        
+                    }];
+                }];
+            }else{
+                [Helper alertViewWithTitle:[data objectForKey:@"packResultMsg"] withBlock:^(UIAlertController *alertView) {
+                    [self.navigationController presentViewController:alertView animated:YES completion:^{
+                        
+                    }];
+                }];
+            }
+        }
+    }];
+    
+    /*
     [[JsonHttp jsonHttp]httpRequest:@"team/doTeamActivitySignUp" JsonKey:nil withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
         NSLog(@"errType == %@", errType);
         [[ShowHUD showHUD]hideAnimationFromView:self.view];
@@ -563,6 +605,7 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
             }
         }
     }];
+     */
 }
 #pragma mark -- 微信支付
 - (void)weChatPay{

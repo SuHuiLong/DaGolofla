@@ -142,5 +142,6 @@ typedef NS_ENUM(NSInteger, GestureType) {
 
 #import "JGHDatePicksViewController.h"
 #import "EnterViewController.h"
+#import "FCUUID.h"
 
 #endif

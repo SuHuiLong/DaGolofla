@@ -92,7 +92,7 @@ static NSString *const JGHNewScoresPageCellIdentifier = @"JGHNewScoresPageCell";
     
     _areaLable = [[UILabel alloc]initWithFrame:CGRectMake(screenWidth/2 - 70*ProportionAdapter, 0, 140 *ProportionAdapter, 18 *ProportionAdapter)];
     _areaLable.font = [UIFont systemFontOfSize:15 *ProportionAdapter];
-    _areaLable.textColor = [UIColor colorWithHexString:@"#32B14D"];
+    _areaLable.textColor = [UIColor blackColor];
     _areaLable.textAlignment = NSTextAlignmentCenter;
     if (_index < 9) {
         _areaLable.text = _currentAreaArray[0];

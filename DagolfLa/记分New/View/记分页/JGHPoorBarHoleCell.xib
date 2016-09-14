@@ -16,8 +16,8 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NuF-Ep-O2e">
-                        <rect key="frame" x="10" y="0.0" width="74" height="43.5"/>
-                        <state key="normal" title="科斯林 A区">
+                        <rect key="frame" x="10" y="0.0" width="104" height="43.5"/>
+                        <state key="normal" title="科斯林的 A区二">
                             <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         </state>
                         <connections>
@@ -25,7 +25,7 @@
                         </connections>
                     </button>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image=")-1" translatesAutoresizingMaskIntoConstraints="NO" id="4Zg-K2-mA8">
-                        <rect key="frame" x="97" y="18" width="13" height="8"/>
+                        <rect key="frame" x="127" y="18" width="13" height="8"/>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bogey" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qC5-T1-uNQ">
                         <rect key="frame" x="337" y="13" width="38.5" height="16"/>

@@ -145,7 +145,7 @@
     
     UIView *titleView = [[UIView alloc]initWithFrame:CGRectMake(80*ProportionAdapter, 0, 150*ProportionAdapter, 44)];
     self.titleBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 120*ProportionAdapter, 44)];
-    [self.titleBtn setTitleColor:[UIColor colorWithHexString:@"#32b14d"] forState:(UIControlStateNormal)];
+    [self.titleBtn setTitleColor:[UIColor blackColor] forState:(UIControlStateNormal)];
     [titleView addSubview:self.titleBtn];
     if (_currentPage > 0) {
         [self.titleBtn setTitle:[NSString stringWithFormat:@"%td Hole PAR 3", _currentPage+1] forState:UIControlStateNormal];
@@ -245,6 +245,10 @@
             }else{
                 [listDict setObject:@"" forKey:@"tTaiwan"];// T台
             }
+            
+            [listDict setObject:_currentAreaArray[0] forKey:@"region1"];//region1
+            [listDict setObject:_currentAreaArray[1] forKey:@"region2"];//region2
+            [listDict setObject:model.poleNameList forKey:@"poleNameList"];// 球洞名称
             [listDict setObject:model.poleNumber forKey:@"poleNumber"];// 球队杆数
             [listDict setObject:model.pushrod forKey:@"pushrod"];// 推杆
             [listDict setObject:model.onthefairway forKey:@"onthefairway"];// 是否上球道
@@ -276,6 +280,7 @@
     [_timer invalidate];
     _timer = nil;
     btn.enabled = NO;
+    self.view.userInteractionEnabled = NO;
     [[JsonHttp jsonHttp]cancelRequest];//取消所有请求
     //保存
     NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
@@ -310,6 +315,10 @@
         }else{
             [listDict setObject:@"" forKey:@"tTaiwan"];// T台
         }
+        
+        [listDict setObject:_currentAreaArray[0] forKey:@"region1"];//region1
+        [listDict setObject:_currentAreaArray[1] forKey:@"region2"];//region2
+        [listDict setObject:model.poleNameList forKey:@"poleNameList"];// 球洞名称
         [listDict setObject:model.poleNumber forKey:@"poleNumber"];// 球队杆数
         [listDict setObject:model.pushrod forKey:@"pushrod"];// 推杆
         [listDict setObject:model.onthefairway forKey:@"onthefairway"];// 是否上球道
@@ -320,8 +329,9 @@
     [dict setObject:listArray forKey:@"list"];
     
     [[JsonHttp jsonHttp]httpRequestWithMD5:@"score/saveScore" JsonKey:nil withData:dict failedBlock:^(id errType) {
-        
+        self.view.userInteractionEnabled = YES;
     } completionBlock:^(id data) {
+        self.view.userInteractionEnabled = YES;
         NSLog(@"%@", data);
         if ([[data objectForKey:@"packSuccess"]integerValue] == 1) {
             
@@ -662,6 +672,9 @@
             [listDict setObject:@"" forKey:@"tTaiwan"];// T台
         }
         
+        [listDict setObject:_currentAreaArray[0] forKey:@"region1"];//region1
+        [listDict setObject:_currentAreaArray[1] forKey:@"region2"];//region2
+        [listDict setObject:model.poleNameList forKey:@"poleNameList"];// 球洞名称
         [listDict setObject:model.poleNumber forKey:@"poleNumber"];// 球队杆数
         [listDict setObject:model.pushrod forKey:@"pushrod"];// 推杆
         [listDict setObject:model.onthefairway forKey:@"onthefairway"];// 是否上球道
@@ -720,6 +733,7 @@
     _item.enabled = NO;
     [_timer invalidate];
     _timer = nil;
+    self.view.userInteractionEnabled = NO;
     //完成  finishScore
     [[ShowHUD showHUD]showAnimationWithText:@"提交中..." FromView:self.view];
     
@@ -728,8 +742,10 @@
     [finishDict setObject:_scorekey forKey:@"scoreKey"];
     [[JsonHttp jsonHttp]httpRequestWithMD5:@"score/finishScore" JsonKey:nil withData:finishDict failedBlock:^(id errType) {
         [[ShowHUD showHUD]hideAnimationFromView:self.view];
+        self.view.userInteractionEnabled = YES;
     } completionBlock:^(id data) {
         NSLog(@"%@", data);
+        self.view.userInteractionEnabled = YES;
         [[ShowHUD showHUD]hideAnimationFromView:self.view];
         if ([[data objectForKey:@"packSuccess"]integerValue] == 1) {
             if ([data objectForKey:@"money"]) {
