@@ -929,6 +929,7 @@
 - (void)scoresResult{
     if (_isCabbie == 1) {
         // isCaddie;//是否是球童，1，是球童，
+        NSInteger _isPushCtrl =0;
         for (UIViewController *controller in self.navigationController.viewControllers) {
             if ([controller isKindOfClass:[JGLCaddieScoreViewController class]]) {
                 //                [[NSNotificationCenter defaultCenter] postNotificationName:@"CaddieScoreRefreshing" object:@{@"cabbie": @"1"}];
@@ -937,10 +938,13 @@
                 [[NSNotificationCenter defaultCenter]postNotification:notice];
                 
                 [self.navigationController popToViewController:controller animated:YES];
-            }else{
-                JGDHistoryScoreViewController *historyCtrl = [[JGDHistoryScoreViewController alloc]init];
-                [self.navigationController pushViewController:historyCtrl animated:YES];
+                _isPushCtrl = 1;
             }
+        }
+        
+        if (_isPushCtrl == 0) {
+            JGDHistoryScoreViewController *historyCtrl = [[JGDHistoryScoreViewController alloc]init];
+            [self.navigationController pushViewController:historyCtrl animated:YES];
         }
     }else{
         NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
