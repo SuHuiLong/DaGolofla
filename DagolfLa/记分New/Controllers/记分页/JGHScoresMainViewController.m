@@ -94,7 +94,7 @@ static NSString *const JGHNewScoresPageCellIdentifier = @"JGHNewScoresPageCell";
     _areaLable.font = [UIFont systemFontOfSize:15 *ProportionAdapter];
     _areaLable.textColor = [UIColor colorWithHexString:@"#32B14D"];
     _areaLable.textAlignment = NSTextAlignmentCenter;
-    if (_index < 10) {
+    if (_index < 9) {
         _areaLable.text = _currentAreaArray[0];
     }else{
         _areaLable.text = _currentAreaArray[1];
@@ -159,6 +159,12 @@ static NSString *const JGHNewScoresPageCellIdentifier = @"JGHNewScoresPageCell";
     //weChatNotice
     NSLog(@"%@", not.userInfo);
     _index = [[not.userInfo objectForKey:@"index"] integerValue];
+    if (_index < 9) {
+        _areaLable.text = _currentAreaArray[0];
+    }else{
+        _areaLable.text = _currentAreaArray[1];
+    }
+    
     [self.scoresTableView reloadData];
 }
 #pragma mark -- tableView代理
@@ -174,7 +180,7 @@ static NSString *const JGHNewScoresPageCellIdentifier = @"JGHNewScoresPageCell";
     if (_dataArray.count < 3) {
         return 260 *ProportionAdapter;
     }else{
-        return (screenHeight-64-50*ProportionAdapter -20*ProportionAdapter)/4 -5*ProportionAdapter;
+        return (screenHeight-64-50*ProportionAdapter)/4 -5*ProportionAdapter;
     }
 }
 
@@ -220,7 +226,7 @@ static NSString *const JGHNewScoresPageCellIdentifier = @"JGHNewScoresPageCell";
     if (section == 4) {
         return 0;
     }
-    return 10*ProportionAdapter;
+    return 5*ProportionAdapter;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{

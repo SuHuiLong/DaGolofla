@@ -50,6 +50,8 @@
 @property (weak, nonatomic) IBOutlet UIButton *fairwayBtn;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *fairwayBtnTop;//25
 - (IBAction)fairwayBtn:(UIButton *)sender;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *fairwayBtnH;
+
 
 @property (weak, nonatomic) IBOutlet UIButton *noFairwayBtn;
 - (IBAction)noFairwayBtn:(UIButton *)sender;
@@ -62,6 +64,8 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *rodNumber;//25
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *rodNumberTop;//41
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *rodNumberW;//60
+
 
 @property (weak, nonatomic) IBOutlet UILabel *rodNumberProLable;//15
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *rodNumberProLableTop;//10
@@ -82,6 +86,10 @@
 @property (weak, nonatomic) IBOutlet UIButton *rodRedBtn;
 - (IBAction)rodRedBtn:(UIButton *)sender;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *rodRedBtnLeft;//16
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *rodRedBtnW;//60
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *rodAddBtnTop;//48
+
+
 
 - (void)configJGHScoreListModel:(JGHScoreListModel *)model andIndex:(NSInteger)index;
 

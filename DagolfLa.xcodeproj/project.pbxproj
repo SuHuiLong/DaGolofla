@@ -3825,13 +3825,6 @@
 			path = "记分页New";
 			sourceTree = "<group>";
 		};
-		202E05231D7E92B800566CA9 /* 记分页New */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = "记分页New";
-			sourceTree = "<group>";
-		};
 		202EC8081D5852BD0090FE4B /* 球童 */ = {
 			isa = PBXGroup;
 			children = (
@@ -7204,7 +7197,6 @@
 		8252E85F1D360D1000448404 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				202E05231D7E92B800566CA9 /* 记分页New */,
 				2012AD961D36156400F70E40 /* 记分页 */,
 				82CE50081D4A274800447875 /* 直播和成绩 */,
 				2064DEA31D42190B00F0D52A /* 完成记分 */,
@@ -9079,7 +9071,7 @@
 				TargetAttributes = {
 					36BFFD271BC76C8D005B3CE2 = {
 						CreatedOnToolsVersion = 6.3.2;
-						DevelopmentTeam = 5P6JNXBH3C;
+						DevelopmentTeam = T8ML76W22A;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
