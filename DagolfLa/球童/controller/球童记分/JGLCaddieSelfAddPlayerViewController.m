@@ -174,7 +174,7 @@
             if (indexPath.row == 1) {
                 cell.labelTitle.hidden = YES;
                 cell.imgvIcon.hidden = YES;
-                cell.labelName.text = [[NSUserDefaults standardUserDefaults] objectForKey:@"userName"];
+                cell.labelName.text = _strPlayerName;
             }
             else{
                 cell.labelTitle.hidden = YES;
