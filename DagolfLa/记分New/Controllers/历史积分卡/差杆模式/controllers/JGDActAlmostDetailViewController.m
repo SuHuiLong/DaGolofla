@@ -416,7 +416,11 @@
         NSLog(@"－－－cancle");
     } withBlockSure:^{
         JGHScoresViewController *scoreVC = [[JGHScoresViewController alloc] init];
-        scoreVC.currentPage = [longPG view].tag - 777;
+        if ([self.isReversal integerValue] == 1) {
+            scoreVC.currentPage = [longPG view].tag - 777 + 9;
+        }else{
+            scoreVC.currentPage = [longPG view].tag - 777;
+        }
         scoreVC.scorekey = [NSString stringWithFormat:@"%@", [self.dataDic objectForKey:@"timeKey"]];
         NSUserDefaults *userdf = [NSUserDefaults standardUserDefaults];
         [userdf setObject:@"1" forKey:[NSString stringWithFormat:@"switchMode%@", [self.dataDic objectForKey:@"timeKey"]]];
@@ -434,7 +438,11 @@
         NSLog(@"cancle");
     } withBlockSure:^{
         JGHScoresViewController *scoreVC = [[JGHScoresViewController alloc] init];
-        scoreVC.currentPage = [longPG view].tag - 777 + 9;
+        if ([self.isReversal integerValue] == 1) {
+            scoreVC.currentPage = [longPG view].tag - 777;
+        }else{
+            scoreVC.currentPage = [longPG view].tag - 777 + 9;
+        }
         scoreVC.scorekey = [NSString stringWithFormat:@"%@", [self.dataDic objectForKey:@"timeKey"]];
         NSUserDefaults *userdf = [NSUserDefaults standardUserDefaults];
         [userdf setObject:@"1" forKey:[NSString stringWithFormat:@"switchMode%@", [self.dataDic objectForKey:@"timeKey"]]];
