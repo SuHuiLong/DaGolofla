@@ -96,7 +96,7 @@
                 lightV.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];
                 
                 UILabel *allLB = [[UILabel alloc] initWithFrame:CGRectMake(10 * ProportionAdapter, 15 * ProportionAdapter, 200 * ProportionAdapter, 30 * ProportionAdapter)];
-                allLB.text = @"总杆成绩（杆）";
+                allLB.text = @"差杆成绩（杆）";
                 allLB.font = [UIFont systemFontOfSize:15 * ProportionAdapter];
                 
                 for (int i = 0; i < [self.dataArray count]; i ++) {
