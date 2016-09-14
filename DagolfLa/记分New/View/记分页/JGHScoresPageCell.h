@@ -71,6 +71,11 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *pushPromLable;
 
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *addPoleRight;//10
+
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *addPushRight;//10
+
+
 
 - (void)configJGHScoreListModel:(JGHScoreListModel *)model andIndex:(NSInteger)index;
 

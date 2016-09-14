@@ -14,7 +14,7 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
-    self.totalPoleLeft.constant = 20*ProportionAdapter;
+    self.totalPoleLeft.constant = 10*ProportionAdapter;
     self.totalPoleRight.constant = 6*ProportionAdapter;
     
     self.totalPole.font = [UIFont systemFontOfSize:17*ProportionAdapter];
@@ -24,8 +24,11 @@
     self.rodTop.constant = 23*ProportionAdapter;
     self.rodtoTotalPoleTop.constant = -4*ProportionAdapter;
     
-    self.userNameLeft.constant = 20*ProportionAdapter;
+    self.userNameLeft.constant = 10*ProportionAdapter;
     self.userNameDown.constant = 23*ProportionAdapter;
+    
+    self.addPoleRight.constant = 10*ProportionAdapter;
+    self.addPushRight.constant = 10*ProportionAdapter;
     
     NSLayoutConstraint *addScoresConstraint = [NSLayoutConstraint constraintWithItem:self.addScoresBtn attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationGreaterThanOrEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:50*ProportionAdapter];
     
