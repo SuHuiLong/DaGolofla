@@ -24,7 +24,7 @@
 @property (nonatomic, assign)NSInteger switchMode;// 0- 总；1- 差
 
 
-@property (nonatomic, assign)NSInteger *isCompleteHistoryScore;//已完成的记分,历史记分卡跳回来
+//@property (nonatomic, assign)NSInteger *isCompleteHistoryScore;//已完成的记分,历史记分卡跳回来-1
 
 
 @end

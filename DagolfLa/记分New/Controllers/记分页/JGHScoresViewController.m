@@ -59,6 +59,8 @@
     NSInteger _ballKey;
     
     UIImageView *navBarHairlineImageView;
+    
+    NSInteger _scoreFinish;//是否完成记分0-,1-完成
 }
 
 @property (nonatomic, strong)NSMutableArray *userScoreArray;
@@ -216,7 +218,7 @@
     [[JsonHttp jsonHttp]cancelRequest];
     
     if (_isEdtor == 1) {
-        //保存
+        //保存洞号
         NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
         if (_selectPage > 0) {
             [userdef setObject:@(_selectPage-1) forKey:[NSString stringWithFormat:@"%@", _scorekey]];
@@ -356,13 +358,19 @@
 - (void)noticePushScoresCtrl:(NSNotification *)not{
     //
     _selectHole = 0;
-    [_item setTitle:@"保存"];
+    if (_scoreFinish == 1) {
+        [_item setTitle:@"完成"];
+    }else{
+        [_item setTitle:@"保存"];
+    }
+    
     [_scoresView removeFromSuperview];
     [_poorScoreView removeFromSuperview];
     [_tranView removeFromSuperview];
 //    _pa.currentPage = [[not.userInfo objectForKey:@"index"] integerValue];
     [self.titleBtn setTitle:[NSString stringWithFormat:@"%td Hole PAR %td", [self returnPoleNameList:[[not.userInfo objectForKey:@"index"] integerValue]], [self returnStandardlever:[[not.userInfo objectForKey:@"index"] integerValue]]] forState:UIControlStateNormal];
-    _selectPage = [self returnPoleNameList:[[not.userInfo objectForKey:@"index"] integerValue]];
+    _currentPage = [[not.userInfo objectForKey:@"index"] integerValue] +1;
+    _selectPage = [[not.userInfo objectForKey:@"index"] integerValue] +1;
 //    [[ShowHUD showHUD]showToastWithText:[NSString stringWithFormat:@"第-%td-洞", [[not.userInfo objectForKey:@"index"] integerValue]+1] FromView:self.view];
 }
 #pragma mark -- 所有记分完成后
@@ -394,6 +402,15 @@
                 [_macthDict setObject:[scoreDict objectForKey:@"createtime"] forKey:@"playTimes"];
                 
                 [_ballDict setObject:[scoreDict objectForKey:@"ballKey"] forKey:@"ballKey"];
+            }
+            
+            if ([data objectForKey:@"score"]) {
+                _scoreFinish = [[[data objectForKey:@"score"] objectForKey:@"scoreFinish"] integerValue];
+                if (_scoreFinish == 1) {
+                    _item.title = @"完成";
+                }else{
+                    _item.title = @"保存";
+                }
             }
             
             if ([data objectForKey:@"list"]) {
@@ -481,7 +498,12 @@
     NSLog(@"XXX dong");
     if (_selectHole == 0) {
         _selectHole = 1;
-        [_item setTitle:@"结束记分"];
+        if (_scoreFinish == 1) {
+            [_item setTitle:@"完成"];
+        }else{
+            [_item setTitle:@"结束记分"];
+        }
+        
         [_arrowBtn setImage:[UIImage imageNamed:@"zk1"] forState:UIControlStateNormal];
         NSUserDefaults *userdf = [NSUserDefaults standardUserDefaults];
         _switchMode = [[userdf objectForKey:[NSString stringWithFormat:@"switchMode%@", _scorekey]] integerValue];
@@ -525,7 +547,12 @@
     }else{
         [_arrowBtn setImage:[UIImage imageNamed:@"zk"] forState:UIControlStateNormal];
         _selectHole = 0;
-        [_item setTitle:@"保存"];
+        if (_scoreFinish == 1) {
+            [_item setTitle:@"完成"];
+        }else{
+            [_item setTitle:@"保存"];
+        }
+        
         [_scoresView removeFromSuperview];
         [_poorScoreView removeFromSuperview];
         [_tranView removeFromSuperview];
@@ -623,6 +650,8 @@
     NSUserDefaults *userdf = [NSUserDefaults standardUserDefaults];
     sub.switchMode = [[userdf objectForKey:[NSString stringWithFormat:@"switchMode%@", _scorekey]] integerValue];
     sub.scorekey = _scorekey;
+//    sub.index = _currentPage;
+//    _selectPage = _currentPage;
     sub.currentAreaArray = _currentAreaArray;
     __weak JGHScoresViewController *weakSelf = self;
     sub.returnScoresDataArray= ^(NSMutableArray *dataArray){
@@ -708,7 +737,7 @@
                 [userdef synchronize];
             }
             
-            if (_selectcompleteHole == 1 || _selectHole == 1) {
+            if ((_selectcompleteHole == 1 || _selectHole == 1) && _scoreFinish == 0) {
                 if (_selectHole == 1 && _isCabbie == 1 && _selectcompleteHole != 1 && _cabbieFinishScore == 0) {
                     //球童结束记分--1、判断18洞是否完成
                     [Helper alertViewWithTitle:@"您尚未完成所有成绩录入，是否确定结束记分？" withBlockCancle:^{
