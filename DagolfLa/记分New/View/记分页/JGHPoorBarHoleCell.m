@@ -49,10 +49,11 @@
 
 - (void)configJGHPoorBarHoleCell:(NSString *)areaString andImageDirection:(NSInteger)direction;{
     [self.nameBtn setTitle:areaString forState:UIControlStateNormal];
+
     if (direction == 0) {
-        self.nameBtnImageView.image = [UIImage imageNamed:@")-1"];
+        self.nameBtnImageView.image = [UIImage imageNamed:@"arrowDown"];
     }else{
-        self.nameBtnImageView.image = [UIImage imageNamed:@")"];
+        self.nameBtnImageView.image = [UIImage imageNamed:@"arrowTop"];
     }
 }
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

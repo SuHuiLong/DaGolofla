@@ -10,6 +10,7 @@
 #import "JGDWithDrawTeamMoneyViewController.h"
 #import "JGTeamMemberController.h"
 #import "JGLDrawalRecordViewController.h"
+#import "JGLFeedbackViewController.h"
 
 #import "ShareAlert.h"
 #import "UMSocial.h"
@@ -35,7 +36,11 @@
     UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"backL"] style:UIBarButtonItemStylePlain target:self action:@selector(backButtonClcik)];
     item.tintColor=[UIColor whiteColor];
     self.navigationItem.leftBarButtonItem = item;
-    
+    if (_isReward == 1) {
+        UIBarButtonItem* bar = [[UIBarButtonItem alloc]initWithTitle:@"建议与反馈" style:UIBarButtonItemStylePlain target:self action:@selector(recordBtn)];
+        bar.tintColor = [UIColor whiteColor];
+        self.navigationItem.rightBarButtonItem = bar;
+    }
     if (_isManage == YES) {
     UIBarButtonItem* bar = [[UIBarButtonItem alloc]initWithTitle:@"提现记录" style:UIBarButtonItemStylePlain target:self action:@selector(recordBtn)];
     bar.tintColor = [UIColor whiteColor];
@@ -289,9 +294,16 @@
 
 #pragma mark -- 账户体现
 - (void)recordBtn{
-    JGLDrawalRecordViewController* dwVc = [[JGLDrawalRecordViewController alloc]init];
-    dwVc.teamKey = _teamKey;
-    [self.navigationController pushViewController:dwVc animated:YES];
+    if (_isReward == 1) {
+        JGLFeedbackViewController* feVc = [[JGLFeedbackViewController alloc]init];
+        [self.navigationController pushViewController:feVc animated:YES];
+    }
+    else{
+        JGLDrawalRecordViewController* dwVc = [[JGLDrawalRecordViewController alloc]init];
+        dwVc.teamKey = _teamKey;
+        [self.navigationController pushViewController:dwVc animated:YES];
+    }
+    
 }
 
 - (void)clearCookies{

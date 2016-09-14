@@ -208,9 +208,9 @@ static NSString *const JGHTwoScoreAreaCellIdentifier = @"JGHTwoScoreAreaCell";
     
     NSMutableDictionary *userDict = [NSMutableDictionary dictionary];
     if ((cellTag%100/10) == 0) {
-        [userDict setObject:@(btnTag - 1) forKey:@"index"];
+        [userDict setObject:@(btnTag -1) forKey:@"index"];
     }else{
-        [userDict setObject:@(btnTag - 1 + 9) forKey:@"index"];
+        [userDict setObject:@(btnTag -1 + 9) forKey:@"index"];
     }
     //创建一个消息对象
     NSNotification * notice = [NSNotification notificationWithName:@"noticePushScores" object:nil userInfo:userDict];

@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "TabBarController.h"
+#import "XHLaunchAd.h"
 #import "IQKeyboardManager.h"
 
 #import "UMSocial.h"
@@ -34,7 +35,9 @@
 #import <AlipaySDK/AlipaySDK.h>
 
 #import "UMMobClick/MobClick.h"
-#import "LanuchAdsManager.h"
+
+
+#define ImgUrlString2 @"http://res.dagolfla.com/h5/ad/app.jpg"
 @interface AppDelegate ()
 {
     BMKMapManager* _mapManager;
@@ -54,12 +57,12 @@
     [MobClick startWithConfigure:UMConfigInstance];
 }
 
--(void)loadLaunchImagefromDoc
-{
-    [[LanuchAdsManager defaultMonitor]showAdAtPath:nil onView:self.window.rootViewController.view timeInterval:3.5 detailParameters:@{}];
-}
+
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    
+
+    
     //初始化趣拍
     [[TaeSDK sharedInstance] asyncInit:^{
         
@@ -222,40 +225,86 @@
     {
         [[RCIM sharedRCIM] initWithAppKey:@"0vnjpoadnkihz"];//pgyu6atqylmiu
     }
-    
-    //取出新版本号
-    NSString* versionKey = (NSString*)kCFBundleVersionKey;
-    NSString* version = [NSBundle mainBundle].infoDictionary[versionKey];
-    
-    //取出老的版本号
-    NSString* lastVerson = [[NSUserDefaults standardUserDefaults]valueForKey:versionKey];
-    if(![version isEqualToString:lastVerson])
-    {
-        PageViewController* pageview = [[PageViewController alloc]init];
-        self.window.rootViewController = pageview;
-        [pageview setCallBack:^{
-            [[NSUserDefaults standardUserDefaults]setValue:version forKey:versionKey];
-            [[NSUserDefaults standardUserDefaults]synchronize];
-            [self startApp];
-        }];
-    }
-    else
-    {
-        [self startApp];
-    }
     //微信支付
     [WXApi registerApp:@"wxdcdc4e20544ed728"];
     [self umengTrack];
-    
+
+    //    //取出新版本号
+    //    NSString* versionKey = (NSString*)kCFBundleVersionKey;
+    //    NSString* version = [NSBundle mainBundle].infoDictionary[versionKey];
+    //    //取出老的版本号
+    //    NSString* lastVerson = [[NSUserDefaults standardUserDefaults]valueForKey:versionKey];
+    //    if(![version isEqualToString:lastVerson])
+    //    {
+    //        PageViewController* pageview = [[PageViewController alloc]init];
+    //        self.window.rootViewController = pageview;
+    //        [pageview setCallBack:^{
+    //            [[NSUserDefaults standardUserDefaults]setValue:version forKey:versionKey];
+    //            [[NSUserDefaults standardUserDefaults]synchronize];
+    //            [self startApp];
+    //        }];
+    //    }
+    //    else
+    //    {
+    [self startApp];
+    //    }
     return YES;
 }
 -(void)startApp
 {
-    self.window.rootViewController = [[TabBarController alloc]init];
-    self.window.backgroundColor = [UIColor whiteColor];
-    [self loadLaunchImagefromDoc];
+    [self gifReLoad];
+    [self.window makeKeyAndVisible];
 }
-
+-(void)gifReLoad
+{
+    /**
+     *  1.显示启动页广告
+     */
+    [XHLaunchAd showWithAdFrame:CGRectMake(0, 0,self.window.bounds.size.width, self.window.bounds.size.height) setAdImage:^(XHLaunchAd *launchAd) {
+        
+        //未检测到广告数据,启动页停留时间,不设置默认为3,(设置4即表示:启动页显示了4s,还未检测到广告数据,就自动进入window根控制器)
+        //launchAd.noDataDuration = 4;
+        
+        //获取广告数据
+        [self requestImageData:^(NSString *imgUrl, NSInteger duration, NSString *openUrl) {
+            
+            /**
+             *  2.设置广告数据
+             */
+            
+//            WEAKLAUNCHAD;//定义一个weakLaunchAd
+            [launchAd setImageUrl:imgUrl duration:duration skipType:SkipTypeTimeText options:XHWebImageDefault completed:^(UIImage *image, NSURL *url) {
+                
+                //异步加载图片完成回调(若需根据图片尺寸,刷新广告frame,可在这里操作)
+                //weakLaunchAd.adFrame = ...;
+                
+            } click:^{
+                //打开网页
+                
+            }];
+            
+        }];
+        
+    } showFinish:^{
+        self.window.rootViewController = [[TabBarController alloc]init];
+        self.window.backgroundColor = [UIColor whiteColor];
+    }];
+}
+/**
+ *  模拟:向服务器请求广告数据
+ *
+ *  @param imageData 回调imageUrl,及停留时间,跳转链接
+ */
+-(void)requestImageData:(void(^)(NSString *imgUrl,NSInteger duration,NSString *openUrl))imageData{
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        
+        if(imageData)
+        {
+            imageData(ImgUrlString2,3.5,@"http://www.dagolfla.com");
+        }
+    });
+}
 - (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<NSString*, id> *)options
 {
     //这里判断是否发起的请求为微信支付，如果是的话，用WXApi的方法调起微信客户端的支付页面（://pay 之前的那串字符串就是你的APPID，）

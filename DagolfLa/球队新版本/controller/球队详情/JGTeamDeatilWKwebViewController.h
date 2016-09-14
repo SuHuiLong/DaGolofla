@@ -28,6 +28,8 @@
 
 @property (assign, nonatomic) BOOL isScoreAll;//成绩总览
 
+@property (assign, nonatomic) NSInteger isReward;//奖励政策
+
 
 
 @end
