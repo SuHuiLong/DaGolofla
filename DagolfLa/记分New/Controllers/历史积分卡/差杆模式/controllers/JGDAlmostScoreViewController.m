@@ -20,6 +20,7 @@
 
 @property (nonatomic, strong) NSMutableArray *dataArray;
 @property (nonatomic, strong) NSMutableDictionary *dataDic;
+@property (nonatomic, strong) NSNumber *isReversal;
 
 @end
 
@@ -132,6 +133,10 @@
                 self.dataDic = [data objectForKey:@"score"];
             }
             
+            if ([data objectForKey:@"isReversal"]) {
+                self.isReversal = [data objectForKey:@"isReversal"];
+            }
+            
         }else{
             if ([data objectForKey:@"packResultMsg"]) {
                 [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
@@ -202,7 +207,7 @@
         [viewTitle addSubview:lightV];
         
         
-        UILabel *ballNameLB = [[UILabel alloc] initWithFrame:CGRectMake(10 * ProportionAdapter, 20 * ProportionAdapter, 350 * ProportionAdapter, 30 * ProportionAdapter)];
+        UILabel *ballNameLB = [[UILabel alloc] initWithFrame:CGRectMake(10 * ProportionAdapter, 20 * ProportionAdapter, 260 * ProportionAdapter, 30 * ProportionAdapter)];
         ballNameLB.text = [self.dataDic objectForKey:@"ballName"];
         ballNameLB.textColor = [UIColor colorWithHexString:@"#313131"];
         ballNameLB.font = [UIFont systemFontOfSize:15 * ProportionAdapter];
@@ -408,6 +413,7 @@
         JGDHistoryScoreShowModel *model = self.dataArray[indexPath.row - 2];
         detailV.model = model;
         detailV.dataDic = self.dataDic;
+        detailV.isReversal = self.isReversal;
         [self.navigationController pushViewController:detailV animated:YES];
     }
 }

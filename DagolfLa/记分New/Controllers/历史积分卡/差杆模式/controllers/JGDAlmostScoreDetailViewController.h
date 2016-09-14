@@ -13,5 +13,6 @@
 
 @property (nonatomic, strong) JGDHistoryScoreShowModel *model;
 @property (nonatomic, strong) NSMutableDictionary *dataDic;
+@property (nonatomic, strong) NSNumber *isReversal;
 
 @end

@@ -26,6 +26,7 @@
 @property (nonatomic, strong) NSMutableDictionary *dataDic;
 @property (nonatomic, strong) UILabel *label;
 @property (nonatomic, copy) NSString *name;
+@property (nonatomic, strong) NSNumber *isReversal;
 
 @end
 
@@ -251,7 +252,7 @@
         [viewTitle addSubview:lightV];
         
         
-        UILabel *ballNameLB = [[UILabel alloc] initWithFrame:CGRectMake(10 * ProportionAdapter, 20 * ProportionAdapter, 350 * ProportionAdapter, 30 * ProportionAdapter)];
+        UILabel *ballNameLB = [[UILabel alloc] initWithFrame:CGRectMake(10 * ProportionAdapter, 20 * ProportionAdapter, 260 * ProportionAdapter, 30 * ProportionAdapter)];
         ballNameLB.text = [self.dataDic objectForKey:@"ballName"];
         ballNameLB.textColor = [UIColor colorWithHexString:@"#313131"];
         ballNameLB.font = [UIFont systemFontOfSize:15 * ProportionAdapter];
@@ -440,6 +441,7 @@
         detailV.model = model;
         detailV.ballkid = self.ballkid;
         detailV.dataDic = self.dataDic;
+        detailV.isReversal = self.isReversal;
         [self.navigationController pushViewController:detailV animated:YES];
     }
 }

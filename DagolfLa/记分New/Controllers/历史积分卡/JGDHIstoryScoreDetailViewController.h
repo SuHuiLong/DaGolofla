@@ -18,5 +18,6 @@
 @property (nonatomic, strong) NSNumber *srcKey;
 @property (nonatomic, strong) NSNumber *scoreKey;
 
+@property (nonatomic, strong) NSNumber *isReversal;
 
 @end

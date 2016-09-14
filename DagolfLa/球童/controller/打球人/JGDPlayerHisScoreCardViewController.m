@@ -24,6 +24,7 @@
 @property (nonatomic, strong) NSMutableArray *dataArray;
 @property (nonatomic, strong) NSMutableDictionary *dataDic;
 @property (nonatomic, copy) NSString *name;
+@property (nonatomic, strong) NSNumber *isReversal;
 
 @end
 
@@ -428,6 +429,7 @@
         detailV.model = model;
         detailV.dataDic = self.dataDic;
         detailV.ballkid = self.ballkid;
+        detailV.isReversal = self.isReversal;
         [self.navigationController pushViewController:detailV animated:YES];
     }
     
