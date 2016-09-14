@@ -94,7 +94,7 @@ static NSString *const JGHNewScoresPageCellIdentifier = @"JGHNewScoresPageCell";
     UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, 20*ProportionAdapter)];
     headerView.backgroundColor = [UIColor whiteColor];
     
-    _areaLable = [[UILabel alloc]initWithFrame:CGRectMake(screenWidth/2 - 70*ProportionAdapter, 0, 140 *ProportionAdapter, 18 *ProportionAdapter)];
+    _areaLable = [[UILabel alloc]initWithFrame:CGRectMake(100*ProportionAdapter, 0, screenWidth -200 *ProportionAdapter, 18 *ProportionAdapter)];
     _areaLable.font = [UIFont systemFontOfSize:15 *ProportionAdapter];
     _areaLable.textColor = [UIColor blackColor];
     _areaLable.textAlignment = NSTextAlignmentCenter;
@@ -106,7 +106,7 @@ static NSString *const JGHNewScoresPageCellIdentifier = @"JGHNewScoresPageCell";
     
     [headerView addSubview:_areaLable];
     
-    UILabel *lineLbale = [[UILabel alloc]initWithFrame:CGRectMake(screenWidth/2 - 50*ProportionAdapter, 20 *ProportionAdapter -1, 100 *ProportionAdapter, 1)];
+    UILabel *lineLbale = [[UILabel alloc]initWithFrame:CGRectMake(100*ProportionAdapter, 20 *ProportionAdapter -1, screenWidth -200 *ProportionAdapter, 1)];
     lineLbale.backgroundColor = [UIColor colorWithHexString:@"#32B14D"];
     [headerView addSubview:lineLbale];
     
@@ -168,6 +168,10 @@ static NSString *const JGHNewScoresPageCellIdentifier = @"JGHNewScoresPageCell";
     }else{
         _areaLable.text = _currentAreaArray[1];
     }
+//    
+//    NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
+//    [userdef setObject:@(_currentPage) forKey:[NSString stringWithFormat:@"%@", _scorekey]];
+//    [userdef synchronize];
     
     [self.scoresTableView reloadData];
 }

@@ -366,38 +366,7 @@
         }
     }];
 }
-#pragma mark -- 点击杆数跳转到指定的积分页面
-- (void)noticePushScoresCtrl:(NSNotification *)not{
-    //
-    _selectHole = 0;
-    if (_scoreFinish == 1) {
-        [_item setTitle:@"完成"];
-    }else{
-        [_item setTitle:@"保存"];
-    }
-    
-    [_scoresView removeFromSuperview];
-    [_poorScoreView removeFromSuperview];
-    [_tranView removeFromSuperview];
-//    _pa.currentPage = [[not.userInfo objectForKey:@"index"] integerValue];
-    [self.titleBtn setTitle:[NSString stringWithFormat:@"%td Hole PAR %td", [self returnPoleNameList:[[not.userInfo objectForKey:@"index"] integerValue]], [self returnStandardlever:[[not.userInfo objectForKey:@"index"] integerValue]]] forState:UIControlStateNormal];
-//    _currentPage = [[not.userInfo objectForKey:@"index"] integerValue] +1;
-    
-    //保存
-    
-    _selectPage = [[not.userInfo objectForKey:@"index"] integerValue] +1;
-    
-    NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
-    if (_currentPage < 0 || _currentPage > 17) {
-        [userdef setObject:@0 forKey:[NSString stringWithFormat:@"%@", _scorekey]];
-    }else{
-        [userdef setObject:@(_currentPage) forKey:[NSString stringWithFormat:@"%@", _scorekey]];
-    }
-    [userdef synchronize];
-    
-//    _selectPage = [[userdef objectForKey:[NSString stringWithFormat:@"%@", _scorekey]] integerValue] +1;
-//    [[ShowHUD showHUD]showToastWithText:[NSString stringWithFormat:@"第-%td-洞", [[not.userInfo objectForKey:@"index"] integerValue]+1] FromView:self.view];
-}
+
 #pragma mark -- 所有记分完成后
 - (void)noticeAllScoresCtrl{
     _selectcompleteHole = 1;
@@ -602,23 +571,55 @@
     UIImageView *removeImageview = (UIImageView *)[appDelegate.window viewWithTag:8888];
     [removeImageview removeFromSuperview];
 }
+#pragma mark -- 点击杆数跳转到指定的积分页面
+- (void)noticePushScoresCtrl:(NSNotification *)not{
+    //
+    _selectHole = 0;
+    if (_scoreFinish == 1) {
+        [_item setTitle:@"完成"];
+    }else{
+        [_item setTitle:@"保存"];
+    }
+    
+    [_scoresView removeFromSuperview];
+    [_poorScoreView removeFromSuperview];
+    [_tranView removeFromSuperview];
+    //    _pa.currentPage = [[not.userInfo objectForKey:@"index"] integerValue];
+    [self.titleBtn setTitle:[NSString stringWithFormat:@"%td Hole PAR %td", [self returnPoleNameList:[[not.userInfo objectForKey:@"index"] integerValue]], [self returnStandardlever:[[not.userInfo objectForKey:@"index"] integerValue]]] forState:UIControlStateNormal];
+    
+    _currentPage = [[not.userInfo objectForKey:@"index"] integerValue] +1;
+    
+    //保存
+    
+    _selectPage = [[not.userInfo objectForKey:@"index"] integerValue] +1;
+    
+//    NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
+//    if (_currentPage <= 0 || _currentPage > 17) {
+//        [userdef setObject:@0 forKey:[NSString stringWithFormat:@"%@", _scorekey]];
+//    }else{
+//        [userdef setObject:@(_currentPage -1) forKey:[NSString stringWithFormat:@"%@", _scorekey]];
+//    }
+//    [userdef synchronize];
+    
+    //    _selectPage = [[userdef objectForKey:[NSString stringWithFormat:@"%@", _scorekey]] integerValue] +1;
+    //    [[ShowHUD showHUD]showToastWithText:[NSString stringWithFormat:@"第-%td-洞", [[not.userInfo objectForKey:@"index"] integerValue]+1] FromView:self.view];
+}
 //返回前一页的视图控制器
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController
 {
     
     JGHScoresMainViewController *s = (JGHScoresMainViewController *)viewController;
     s.switchMode = _switchMode;
-    NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
-    _currentPage = [[userdef objectForKey:[NSString stringWithFormat:@"%@", _scorekey]] integerValue];
-//    _currentPage = s.index;
+//    NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
+//    _currentPage = [[userdef objectForKey:[NSString stringWithFormat:@"%@", _scorekey]] integerValue];
+    _currentPage = s.index;
     
     if (_currentPage <= 0) {
         _currentPage = _dataArray.count - 1;
         JGHScoresMainViewController *sub = [[JGHScoresMainViewController alloc]init];
-        
-        NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
-        [userdef setObject:@(_currentPage) forKey:[NSString stringWithFormat:@"%@", _scorekey]];
-        [userdef synchronize];
+//        NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
+//        [userdef setObject:@(_currentPage) forKey:[NSString stringWithFormat:@"%@", _scorekey]];
+//        [userdef synchronize];
         
         sub.index = _currentPage;
         //保存
@@ -634,11 +635,11 @@
     {
         //保存
         NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
-        _currentPage = [[userdef objectForKey:[NSString stringWithFormat:@"%@", _scorekey]] integerValue];
+//        _currentPage = [[userdef objectForKey:[NSString stringWithFormat:@"%@", _scorekey]] integerValue];
         
         _currentPage--;
         
-        [userdef setObject:@(_currentPage) forKey:[NSString stringWithFormat:@"%@", _scorekey]];
+//        [userdef setObject:@(_currentPage) forKey:[NSString stringWithFormat:@"%@", _scorekey]];
         
         JGHScoresMainViewController *sub = [[JGHScoresMainViewController alloc]init];
         sub.switchMode = [[userdef objectForKey:[NSString stringWithFormat:@"switchMode%@", _scorekey]] integerValue];
@@ -663,10 +664,10 @@
     JGHScoresMainViewController *s = (JGHScoresMainViewController *)viewController;
     s.switchMode = _switchMode;
     
-    NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
-    _currentPage = [[userdef objectForKey:[NSString stringWithFormat:@"%@", _scorekey]] integerValue];
+//    NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
+//    _currentPage = [[userdef objectForKey:[NSString stringWithFormat:@"%@", _scorekey]] integerValue];
     
-//    _currentPage = s.index;
+    _currentPage = s.index;
     
     if (_currentPage >= _dataArray.count - 1) {
         _currentPage = 0;
@@ -678,8 +679,8 @@
 //        //保存
 //        NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
         
-        [userdf setObject:@(_currentPage) forKey:[NSString stringWithFormat:@"%@", _scorekey]];
-        [userdf synchronize];
+//        [userdf setObject:@(_currentPage) forKey:[NSString stringWithFormat:@"%@", _scorekey]];
+//        [userdf synchronize];
         
         sub.scorekey = _scorekey;
         sub.dataArray = self.userScoreArray;
@@ -690,15 +691,15 @@
     {
         //保存
         NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
-        _currentPage = [[userdef objectForKey:[NSString stringWithFormat:@"%@", _scorekey]] integerValue];
+//        _currentPage = [[userdef objectForKey:[NSString stringWithFormat:@"%@", _scorekey]] integerValue];
         
         _currentPage++;
         
-        if (_currentPage < 0 || _currentPage > 17) {
-            [userdef setObject:@0 forKey:[NSString stringWithFormat:@"%@", _scorekey]];
-        }else{
-            [userdef setObject:@(_currentPage) forKey:[NSString stringWithFormat:@"%@", _scorekey]];
-        }
+//        if (_currentPage < 0 || _currentPage > 17) {
+//            [userdef setObject:@0 forKey:[NSString stringWithFormat:@"%@", _scorekey]];
+//        }else{
+//            [userdef setObject:@(_currentPage) forKey:[NSString stringWithFormat:@"%@", _scorekey]];
+//        }
         
         JGHScoresMainViewController *sub = [[JGHScoresMainViewController alloc]init];
         
@@ -822,7 +823,7 @@
             }
             
             if ((_selectcompleteHole == 1 || _selectHole == 1) && _scoreFinish == 0) {
-                if (_selectHole == 1 && _isCabbie == 1 && _selectcompleteHole != 1 && _cabbieFinishScore == 0) {
+                if (_selectHole == 1 && _isCabbie == 0 && _selectcompleteHole != 1 && _cabbieFinishScore == 0) {
                     //球童结束记分--1、判断18洞是否完成
                     [Helper alertViewWithTitle:@"您尚未完成所有成绩录入，是否确定结束记分？" withBlockCancle:^{
                         _cabbieFinishScore = 0;//不结束
@@ -911,6 +912,9 @@
                 [[NSNotificationCenter defaultCenter]postNotification:notice];
                 
                 [self.navigationController popToViewController:controller animated:YES];
+            }else{
+                JGDHistoryScoreViewController *historyCtrl = [[JGDHistoryScoreViewController alloc]init];
+                [self.navigationController pushViewController:historyCtrl animated:YES];
             }
         }
     }else{
