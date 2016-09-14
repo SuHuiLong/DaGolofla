@@ -146,6 +146,7 @@
     UIView *titleView = [[UIView alloc]initWithFrame:CGRectMake(80*ProportionAdapter, 0, 150*ProportionAdapter, 44)];
     self.titleBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 120*ProportionAdapter, 44)];
     [self.titleBtn setTitleColor:[UIColor blackColor] forState:(UIControlStateNormal)];
+    self.titleBtn.titleLabel.font = [UIFont systemFontOfSize:17 *ProportionAdapter];
     [titleView addSubview:self.titleBtn];
     if (_currentPage > 0) {
         [self.titleBtn setTitle:[NSString stringWithFormat:@"%td Hole PAR 3", _currentPage+1] forState:UIControlStateNormal];
@@ -173,6 +174,7 @@
     _selectcompleteHole = 0;
     _item = [[UIBarButtonItem alloc]initWithTitle:@"保存" style:UIBarButtonItemStylePlain target:self action:@selector(saveScoresClick)];
     _item.tintColor=[UIColor colorWithHexString:@"#32b14d"];
+    [_item setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:15 * ProportionAdapter], NSFontAttributeName, nil] forState:(UIControlStateNormal)];
     self.navigationItem.rightBarButtonItem = _item;
     
     _dataArray = [[NSMutableArray alloc]init];
@@ -411,7 +413,11 @@
                     [_currentAreaArray addObject:model.region2];
                 }
                 
-                [self.titleBtn setTitle:[NSString stringWithFormat:@"%@ Hole PAR %@", model.poleNameList[0], model.standardlever[0]] forState:UIControlStateNormal];
+                if (_currentPage != 0) {
+                    [self.titleBtn setTitle:[NSString stringWithFormat:@"%@ Hole PAR %@", model.poleNameList[_currentPage], model.standardlever[_currentPage]] forState:UIControlStateNormal];
+                }else{
+                    [self.titleBtn setTitle:[NSString stringWithFormat:@"%@ Hole PAR %@", model.poleNameList[0], model.standardlever[0]] forState:UIControlStateNormal];
+                }
                 
                 self.timer =[NSTimer scheduledTimerWithTimeInterval:[[data objectForKey:@"interval"] integerValue] target:self
                                                            selector:@selector(changeTimeAtTimeDoClick) userInfo:nil repeats:YES];
@@ -479,7 +485,7 @@
         if (_switchMode == 0) {
             _scoresView = [[JGHScoresHoleView alloc]init];
             _scoresView.delegate = self;
-            _scoresView.frame = CGRectMake(0, 0, screenWidth, (194 + self.userScoreArray.count * 60)*ProportionAdapter);
+            _scoresView.frame = CGRectMake(0, 0, screenWidth, (194 +20 + self.userScoreArray.count * 70)*ProportionAdapter);
             _scoresView.dataArray = self.userScoreArray;
 //            _scoresView.areaArray = _oneAreaArray;
             _scoresView.curPage = _selectPage;
@@ -497,7 +503,7 @@
         }else{
             _poorScoreView = [[JGHPoorScoreHoleView alloc]init];
             _poorScoreView.delegate = self;
-            _poorScoreView.frame = CGRectMake(0, 0, screenWidth, (194 + self.userScoreArray.count * 60)*ProportionAdapter);
+            _poorScoreView.frame = CGRectMake(0, 0, screenWidth, (194 + 20+ self.userScoreArray.count * 70)*ProportionAdapter);
             _poorScoreView.dataArray = self.userScoreArray;
 //            _poorScoreView.areaArray = _oneAreaArray;
             _poorScoreView.curPage = _selectPage;

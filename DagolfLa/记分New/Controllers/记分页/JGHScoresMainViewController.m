@@ -316,7 +316,7 @@ static NSString *const JGHNewScoresPageCellIdentifier = @"JGHNewScoresPageCell";
                 //差杆模式
                 if (i == _index) {
                     if ([model.poleNumber[i] integerValue] == -1) {
-                        [poleNumberArray addObject:@0];
+                        [poleNumberArray addObject:model.standardlever[i]];
                     }else{
                         if ([model.poleNumber[i] integerValue]-1 > 0) {
                             [poleNumberArray addObject:@([model.poleNumber[i] integerValue]-1)];
@@ -338,23 +338,24 @@ static NSString *const JGHNewScoresPageCellIdentifier = @"JGHNewScoresPageCell";
         model = self.dataArray[cellTag-100];
         NSMutableArray *pushrodArray = [NSMutableArray array];
         for (int i=0; i<model.pushrod.count; i++) {
-            if (i == _index) {
-                if ([model.pushrod[i] integerValue] == -1) {
-//                    if (_switchMode == 0) {
-//                        [pushrodArray addObject:@2];
-//                    }else{
+//            if (_switchMode == 0) {
+                if (i == _index) {
+                    if ([model.pushrod[i] integerValue] == -1) {
                         [pushrodArray addObject:@2];
-//                    }
-                }else{
-                    if ([model.pushrod[i] integerValue]-1 > 0) {
-                        [pushrodArray addObject:@([model.pushrod[i] integerValue]-1)];
                     }else{
-                        [pushrodArray addObject:@0];
+                        if ([model.pushrod[i] integerValue]-1 > 0) {
+                            [pushrodArray addObject:@([model.pushrod[i] integerValue]-1)];
+                        }else{
+                            [pushrodArray addObject:@0];
+                        }
                     }
+                }else{
+                    [pushrodArray addObject:model.pushrod[i]];
                 }
-            }else{
-                [pushrodArray addObject:model.pushrod[i]];
-            }
+//            }else{
+//                //差杆模式
+//                
+//            }
         }
         
         model.pushrod = pushrodArray;
