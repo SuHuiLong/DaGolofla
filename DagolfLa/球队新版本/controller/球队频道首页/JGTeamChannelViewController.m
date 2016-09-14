@@ -111,7 +111,7 @@
     
     //渐变图
     UIImageView *gradientImage = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, 60 * screenWidth / 320)];
-    [gradientImage setImage:[UIImage imageNamed:@"backChange"]];
+    [gradientImage setImage:[UIImage imageNamed:@"jianbian"]];
     gradientImage.userInteractionEnabled = YES;
     [self.topScrollView addSubview:gradientImage];
     

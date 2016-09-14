@@ -589,6 +589,30 @@
     
     _currentPage = [[not.userInfo objectForKey:@"index"] integerValue];
     
+    JGHScoresMainViewController *vc2;
+
+    for (JGHScoresMainViewController *vc in _pageViewController.viewControllers) {
+        if (vc.index == _currentPage){
+            vc2 = vc;
+        }
+    }
+    if (vc2 == nil) {
+        vc2 = [[JGHScoresMainViewController alloc] init];
+        vc2.index = _currentPage;
+    }
+    vc2.dataArray = self.userScoreArray;
+    vc2.currentAreaArray = _currentAreaArray;
+    vc2.switchMode = _switchMode;
+    vc2.scorekey = _scorekey;
+    __weak JGHScoresViewController *weakSelf = self;
+    vc2.returnScoresDataArray= ^(NSMutableArray *dataArray){
+        weakSelf.userScoreArray = dataArray;
+        _isEdtor = 1;
+    };
+    [_pageViewController setViewControllers:@[vc2] direction:0 animated:NO completion:nil];
+
+    
+    [self pageViewController:_pageViewController viewControllerAfterViewController:vc2];
     //保存
     
 //    _selectPage = [[not.userInfo objectForKey:@"index"] integerValue] +1;

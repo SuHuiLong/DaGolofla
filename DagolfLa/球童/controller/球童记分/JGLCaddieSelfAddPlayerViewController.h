@@ -13,6 +13,8 @@
 
 @property (copy, nonatomic) void (^blockSurePlayer)(NSMutableDictionary *);
 
+@property (strong, nonatomic) NSString* strPlayerName;
+
 @property (copy, nonatomic) NSMutableDictionary* dictPeople, *peoAddress,* peoFriend;
 //通讯录返回数据    peoAddress
 //球友列表返回数据;   _peoFriend
