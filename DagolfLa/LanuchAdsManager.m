@@ -89,7 +89,7 @@ static LanuchAdsManager * _manager;
     
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(time * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         v.userInteractionEnabled = NO;
-        [UIView animateWithDuration:.25
+        [UIView animateWithDuration:0.25
                          animations:^{
                              v.alpha = 0.0f;
                          }
@@ -109,7 +109,7 @@ static LanuchAdsManager * _manager;
 {
     UIView *sup = [(UIButton *)sender superview];
     sup.userInteractionEnabled = NO;
-    [UIView animateWithDuration:.25
+    [UIView animateWithDuration:1
                      animations:^{
                          sup.alpha = 0.0f;
                      }
