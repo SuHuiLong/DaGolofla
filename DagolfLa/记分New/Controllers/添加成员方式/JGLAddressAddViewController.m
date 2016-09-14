@@ -380,17 +380,14 @@
         cell.imgvState.image=[UIImage imageNamed:@"gou_w"];
     }
     return cell;
-    
-    
-    
-    
+      
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (_dictFinish.count != 0) {
-        if (_lastIndex >= 3 || _dictFinish.count + _lastIndex > 3) {
-            NSString *str=[_dictFinish objectForKey:[NSNumber numberWithInteger:[self.listArray[indexPath.section][indexPath.row] recordID]]];
+        if (_lastIndex >= 3 || (_lastIndex == 0 ? (_dictFinish.count >= 3) : _dictFinish.count + _lastIndex > 3)) {
+            NSString *str=[_dictFinish objectForKey:[self.listArray[indexPath.section][indexPath.row] mobile]];
             if ([Helper isBlankString:str]==YES) {
                 [[ShowHUD showHUD]showToastWithText:@"您最多只能选择3个人" FromView:self.view];
             }else{
@@ -402,7 +399,7 @@
     
         }
         else{
-            NSString *str=[_dictFinish objectForKey:[NSNumber numberWithInteger:[self.listArray[indexPath.section][indexPath.row] recordID]]];
+            NSString *str=[_dictFinish objectForKey:[self.listArray[indexPath.section][indexPath.row] mobile]];
             if ([Helper isBlankString:str]==YES) {
                 NSLog(@"%td   %td",indexPath.section,indexPath.row);
                 [_dictFinish setObject:[self.listArray[indexPath.section][indexPath.row] userName] forKey:[self.listArray[indexPath.section][indexPath.row] mobile]];
@@ -416,12 +413,12 @@
         }
     }
     else{
-        if (_lastIndex >= 3 || _dictFinish.count + _lastIndex > 3) {
+        if (_lastIndex >= 3 || (_lastIndex == 0 ? (_dictFinish.count >= 3) : _dictFinish.count + _lastIndex > 3)) {
             [[ShowHUD showHUD]showToastWithText:@"您最多只能选择3个人" FromView:self.view];
         }
         else
         {
-            NSString *str=[_dictFinish objectForKey:[NSNumber numberWithInteger:[self.listArray[indexPath.section][indexPath.row] recordID]]];
+            NSString *str=[_dictFinish objectForKey:[self.listArray[indexPath.section][indexPath.row] mobile]];
             if ([Helper isBlankString:str]==YES) {
                 NSLog(@"%td   %td",indexPath.section,indexPath.row);
                 [_dictFinish setObject:[self.listArray[indexPath.section][indexPath.row] userName] forKey:[self.listArray[indexPath.section][indexPath.row] mobile]];
