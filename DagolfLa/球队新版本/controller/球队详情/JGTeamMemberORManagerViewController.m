@@ -207,6 +207,11 @@ static CGFloat ImageHeight  = 210.0;
         self.imgProfile.contentMode = UIViewContentModeScaleAspectFill;
         self.imgProfile.layer.masksToBounds = YES;
         
+        //渐变图
+        _gradientImage = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, ImageHeight)];
+        [_gradientImage setImage:[UIImage imageNamed:@"backChange"]];
+        [self.imgProfile addSubview:_gradientImage];
+        
         self.launchActivityTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight) style:(UITableViewStylePlain)];
         [self.launchActivityTableView registerClass:[JGImageAndLabelAndLabelTableViewCell class] forCellReuseIdentifier:@"lbVSlb"];
         [self.launchActivityTableView registerClass:[JGDisplayInfoTableViewCell class] forCellReuseIdentifier:@"Display"];
@@ -237,11 +242,7 @@ static CGFloat ImageHeight  = 210.0;
     _arrayData1 = [[NSMutableArray alloc]init];
     _messageArray = [[NSMutableArray alloc]init];
     _telArray = [[NSMutableArray alloc]init];
-    
-    //渐变图
-    _gradientImage = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, ImageHeight)];
-    [_gradientImage setImage:[UIImage imageNamed:@"backChange"]];
-    [self.titleView addSubview:_gradientImage];
+
     
     //返回按钮
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];

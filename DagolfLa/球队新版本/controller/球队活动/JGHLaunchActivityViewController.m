@@ -97,15 +97,16 @@ static CGFloat ImageHeight  = 210.0;
         self.imgProfile.contentMode = UIViewContentModeScaleAspectFill;
         self.imgProfile.layer.masksToBounds = YES;
         
+        //渐变图
+        _gradientImage = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, ImageHeight)];
+        [_gradientImage setImage:[UIImage imageNamed:@"backChange"]];
+        [self.imgProfile addSubview:_gradientImage];
+        
         [self.view addSubview:self.launchActivityTableView];
         [self.view addSubview:self.imgProfile];
         self.titleView.frame = CGRectMake(0, 0, screenWidth, 44);
         self.titleView.backgroundColor = [UIColor clearColor];
         
-        //渐变图
-        _gradientImage = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, ImageHeight)];
-        [_gradientImage setImage:[UIImage imageNamed:@"backChange"]];
-        [self.titleView addSubview:_gradientImage];
         
         [self.imgProfile addSubview:self.titleView];
         
