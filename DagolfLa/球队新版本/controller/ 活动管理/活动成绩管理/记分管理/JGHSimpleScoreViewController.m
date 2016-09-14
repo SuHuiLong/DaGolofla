@@ -484,7 +484,7 @@ static NSString *const JGHOperationScoreListCellIdentifier = @"JGHOperationScore
         [dict setObject:userScoreDict forKey:@"userScoreBean"];
     }
     
-    [[JsonHttp jsonHttp]httpRequestWithMD5:@"score/makeupTeamScore" JsonKey:nil withData:dict failedBlock:^(id errType) {
+    [[JsonHttp jsonHttp]httpRequestHaveSpaceWithMD5:@"score/makeupTeamScore" JsonKey:nil withData:dict failedBlock:^(id errType) {
         [[ShowHUD showHUD]hideAnimationFromView:self.view];
     } completionBlock:^(id data) {
         [[ShowHUD showHUD]hideAnimationFromView:self.view];

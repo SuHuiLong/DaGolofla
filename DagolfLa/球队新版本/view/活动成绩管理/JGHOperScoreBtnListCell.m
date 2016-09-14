@@ -74,13 +74,13 @@
     NSLog(@"selectHole == %td", selectHole);
     NSLog(@"oneBtn.tag  === %td", self.oneBtn.tag - 100);
     NSLog(@"threeBtn.tag  === %td", self.threeBtn.tag/3 - 100);
-    if (self.oneBtn.tag - 100 == selectHole) {
+    if (self.oneBtn.tag - 100 -2 == selectHole) {
         self.oneBGView.backgroundColor = [UIColor colorWithHexString:BG_color];
     }else{
         self.oneBGView.backgroundColor = [UIColor whiteColor];
     }
     
-    if (self.threeBtn.tag/3 - 100 == selectHole) {
+    if (self.threeBtn.tag - 300 -2 == selectHole) {
         self.twoBGVIew.backgroundColor = [UIColor colorWithHexString:BG_color];
     }else{
         self.twoBGVIew.backgroundColor = [UIColor whiteColor];

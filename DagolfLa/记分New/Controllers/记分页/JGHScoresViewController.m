@@ -508,7 +508,7 @@
             _scoresView.dataArray = self.userScoreArray;
 //            _scoresView.areaArray = _oneAreaArray;
             _scoresView.scorekey = _scorekey;
-            _scoresView.curPage = _currentPage +1;
+            _scoresView.curPage = _currentPage;
             [self.view addSubview:_scoresView];
             [_scoresView reloadScoreList:_currentAreaArray andAreaArray:_areaArray];//更新UI位置
             _tranView = [[UIView alloc]initWithFrame:CGRectMake(0, _scoresView.frame.size.height, screenWidth, (screenHeight -64)-(194 +20 +20 + self.userScoreArray.count * 70)*ProportionAdapter)];
@@ -526,7 +526,7 @@
             _poorScoreView.frame = CGRectMake(0, 0, screenWidth, (194 + 20 +20+ self.userScoreArray.count * 70)*ProportionAdapter);
             _poorScoreView.dataArray = self.userScoreArray;
 //            _poorScoreView.areaArray = _oneAreaArray;
-            _poorScoreView.curPage = _currentPage +1;
+            _poorScoreView.curPage = _currentPage;
             [self.view addSubview:_scoresView];
             [_poorScoreView reloadScoreList:_currentAreaArray andAreaArray:_areaArray];//更新UI位置
             _tranView = [[UIView alloc]initWithFrame:CGRectMake(0, _poorScoreView.frame.size.height, screenWidth, (screenHeight -64)-(194 +20 +20 + self.userScoreArray.count * 70)*ProportionAdapter)];
@@ -604,6 +604,7 @@
     vc2.currentAreaArray = _currentAreaArray;
     vc2.switchMode = _switchMode;
     vc2.scorekey = _scorekey;
+    _currentPage = vc2.index;
     __weak JGHScoresViewController *weakSelf = self;
     vc2.returnScoresDataArray= ^(NSMutableArray *dataArray){
         weakSelf.userScoreArray = dataArray;
@@ -769,6 +770,7 @@
 //    [userdef setObject:@(sub.index) forKey:[NSString stringWithFormat:@"%@", _scorekey]];
 //    [userdf synchronize];
     
+    _currentPage = sub.index;
     _selectPage = sub.index+1;
 //    _pageControl.currentPage = sub.index;
 //    [[ShowHUD showHUD]showToastWithText:[NSString stringWithFormat:@"第-%td-洞", sub.index+1] FromView:self.view];
@@ -863,11 +865,12 @@
                 
                 [self finishScore];
             }else{
-                if (_selectcompleteHole != 1) {
+                if (_scoreFinish == 1) {
+                    [self finishScore];
+                }else if (_selectcompleteHole != 1) {
                     [[ShowHUD showHUD]showToastWithText:@"记分保存成功！" FromView:self.view];
+                    [self performSelector:@selector(scoresResult) withObject:self afterDelay:TIMESlEEP];
                 }
-                
-                [self performSelector:@selector(scoresResult) withObject:self afterDelay:TIMESlEEP];
             }
         }else{
             if ([data objectForKey:@"packResultMsg"]) {
@@ -974,6 +977,19 @@
                 [self.navigationController popToViewController:controller animated:YES];
             }
         }
+    }else if (_scoreFinish == 1){
+        NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
+        if (_selectPage > 0) {
+            [userdef setObject:@(_selectPage-1) forKey:[NSString stringWithFormat:@"%@", _scorekey]];
+        }else{
+            [userdef setObject:@(_selectPage) forKey:[NSString stringWithFormat:@"%@", _scorekey]];
+        }
+        
+        [userdef synchronize];
+        
+        NSLog(@"%@", [userdef objectForKey:[NSString stringWithFormat:@"%@", _scorekey]]);
+        JGDHistoryScoreViewController *historyCtrl = [[JGDHistoryScoreViewController alloc]init];
+        [self.navigationController pushViewController:historyCtrl animated:YES];
     }else{
         // && [_walletMonay floatValue] > 0
         if (_isCabbie == 1) {

@@ -194,11 +194,11 @@
     //设置动画播放次数
     [_hongbaoImageView setAnimationRepeatCount:1];
     //设置动画播放时间
-    [_hongbaoImageView setAnimationDuration:2.0];
+    [_hongbaoImageView setAnimationDuration:1.5];
     //开始动画
     [_hongbaoImageView startAnimating];
     
-    [self performSelector:@selector(coinRecyclingAnimation) withObject:self afterDelay:2.0];
+    [self performSelector:@selector(coinRecyclingAnimation) withObject:self afterDelay:1.5];
 }
 #pragma mark -- 滑动箭头动画
 - (void)arrowAnimation{

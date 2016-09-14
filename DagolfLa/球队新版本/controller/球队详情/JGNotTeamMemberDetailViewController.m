@@ -102,6 +102,11 @@ static CGFloat ImageHeight  = 210.0;
         self.imgProfile.userInteractionEnabled = YES;
         self.imgProfile.contentMode = UIViewContentModeScaleAspectFill;
         self.imgProfile.layer.masksToBounds = YES;
+        
+        //渐变图
+        _gradientImage = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, ImageHeight)];
+        [_gradientImage setImage:[UIImage imageNamed:@"backChange"]];
+        [self.imgProfile addSubview:_gradientImage];
 
         self.launchActivityTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight) style:(UITableViewStylePlain)];
         [self.launchActivityTableView registerClass:[JGLableAndLableTableViewCell class] forCellReuseIdentifier:@"lbVSlb"];
@@ -128,11 +133,7 @@ static CGFloat ImageHeight  = 210.0;
     self.navigationController.navigationBar.hidden = YES;
     self.automaticallyAdjustsScrollViewInsets=NO;
     self.view.backgroundColor = [UIColor colorWithHexString:@"#EAEAEB"];
-    
-    //渐变图
-    _gradientImage = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, ImageHeight)];
-    [_gradientImage setImage:[UIImage imageNamed:@"backChange"]];
-    [self.titleView addSubview:_gradientImage];
+
     
     //返回按钮
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
