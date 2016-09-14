@@ -56,12 +56,10 @@
 
 -(void)loadLaunchImagefromDoc
 {
-    [[LanuchAdsManager defaultMonitor]showAdAtPath:nil onView:self.window.rootViewController.view timeInterval:4 detailParameters:@{}];
+    [[LanuchAdsManager defaultMonitor]showAdAtPath:nil onView:self.window.rootViewController.view timeInterval:3.5 detailParameters:@{}];
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    [self loadLaunchImagefromDoc];
-    
     //初始化趣拍
     [[TaeSDK sharedInstance] asyncInit:^{
         
@@ -245,12 +243,17 @@
     {
         [self startApp];
     }
-    
-    
     //微信支付
     [WXApi registerApp:@"wxdcdc4e20544ed728"];
     [self umengTrack];
+    
     return YES;
+}
+-(void)startApp
+{
+    self.window.rootViewController = [[TabBarController alloc]init];
+    self.window.backgroundColor = [UIColor whiteColor];
+    [self loadLaunchImagefromDoc];
 }
 
 - (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<NSString*, id> *)options
@@ -300,11 +303,7 @@
     }
     
 }
-//- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
-//{
-//    return  [WXApi handleOpenURL:url delegate:self];
-//    
-//}
+
 //新浪微博的
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
 {
@@ -400,12 +399,7 @@
     }
 }
 
--(void)startApp
-{
-    self.window.rootViewController = [[TabBarController alloc]init];
-    self.window.backgroundColor = [UIColor whiteColor];
-    [self loadLaunchImagefromDoc];
-}
+
 
 #pragma mark --消息推送
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {

@@ -61,6 +61,19 @@ static NSString *const JGHTwoScoreAreaCellIdentifier = @"JGHTwoScoreAreaCell";
         
         self.scoreTableView.separatorStyle = UITableViewCellSelectionStyleNone;
         [self addSubview:self.scoreTableView];
+        
+        UIView *whiteHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 20 * ProportionAdapter)];
+        whiteHeaderView.backgroundColor = [UIColor whiteColor];
+        UILabel *headLB = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 16 * ProportionAdapter)];
+        headLB.textAlignment = NSTextAlignmentCenter;
+        headLB.font = [UIFont systemFontOfSize:15 * ProportionAdapter];
+        headLB.text = @"【魔兽世界】CHASSEUR";
+        [whiteHeaderView addSubview:headLB];
+        
+        UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(100 * ProportionAdapter, 19 * ProportionAdapter, screenWidth - 200 * ProportionAdapter, 1)];
+        lineView.backgroundColor = [UIColor colorWithHexString:@"#32B14D"];
+        [whiteHeaderView addSubview:lineView];
+        self.scoreTableView.tableHeaderView = whiteHeaderView;
     }
     return self;
 }

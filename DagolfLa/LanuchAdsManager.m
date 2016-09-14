@@ -42,7 +42,6 @@ static LanuchAdsManager * _manager;
     UIImageView *iv = [[UIImageView alloc] initWithFrame:f];
     iv.image = [UIImage imageNamed:@"loadingcopy 3"];
     
-    //iv.image = [UIImage sd_animatedGIFWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:@"http://7xr83e.com2.z0.glb.qiniucdn.com/GIF.gif"]]];
     UIImageView *gifImageView = [[UIImageView alloc]initWithFrame:[UIScreen mainScreen].bounds];
     gifImageView.image = [UIImage sd_animatedGIFNamed:@"gifLa1"];
     self.conn = nil;
