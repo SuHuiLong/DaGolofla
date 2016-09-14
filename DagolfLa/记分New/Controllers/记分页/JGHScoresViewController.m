@@ -62,7 +62,7 @@
     
     NSInteger _scoreFinish;//是否完成记分0-,1-完成
     
-    NSInteger _jumpPage;//0
+//    NSInteger _jumpPage;//0
 }
 
 @property (nonatomic, strong)NSMutableArray *userScoreArray;
@@ -97,7 +97,6 @@
         self.navigationItem.leftBarButtonItem = leftItem;
     }
     
-    /*
     NSUserDefaults *usedef = [NSUserDefaults standardUserDefaults];
     if (![usedef objectForKey:@"userFristScore"]) {
         UIImageView *userFristScoreImageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"-2"]];
@@ -110,20 +109,17 @@
         [appDelegate.window addSubview:userFristScoreImageView];
         [usedef setObject:@"1" forKey:@"userFristScore"];
     }
-     */
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     navBarHairlineImageView.hidden = NO;
 }
-/*
 #pragma mark -- 移除imageView 
 - (void)removeUserFristScoreImageView{
     UIImageView *removeImageview = (UIImageView *)[appDelegate.window viewWithTag:7777];
     [removeImageview removeFromSuperview];
 }
-*/
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -135,6 +131,14 @@
 //    _switchMode = 0;//默认总杆模式
     _ballDict = [NSMutableDictionary dictionary];
     NSUserDefaults *userdf = [NSUserDefaults standardUserDefaults];
+    if ([[userdf objectForKey:[NSString stringWithFormat:@"%@", _scorekey]] integerValue]) {
+        [userdf setObject:@0 forKey:[NSString stringWithFormat:@"%@", _scorekey]];
+        [userdf synchronize];
+    }else{
+       _currentPage = [[userdf objectForKey:[NSString stringWithFormat:@"%@", _scorekey]] integerValue];
+    }
+    
+    
     if ([userdf objectForKey:[NSString stringWithFormat:@"switchMode%@", _scorekey]]) {
         _switchMode = [[userdf objectForKey:[NSString stringWithFormat:@"switchMode%@", _scorekey]] integerValue];
     }else{
@@ -267,7 +271,7 @@
         
         [dict setObject:listArray forKey:@"list"];
         
-        [[JsonHttp jsonHttp]httpRequestWithMD5:@"score/saveScore" JsonKey:nil withData:dict failedBlock:^(id errType) {
+        [[JsonHttp jsonHttp]httpRequestHaveSpaceWithMD5:@"score/saveScore" JsonKey:nil withData:dict failedBlock:^(id errType) {
             _isEdtor = 1;
         } completionBlock:^(id data) {
             NSLog(@"%@", data);
@@ -336,8 +340,14 @@
     }
     
     [dict setObject:listArray forKey:@"list"];
+//    dispatch_queue_t queue=dispatch_get_main_queue();
+//    dispatch_async(queue, ^{
+//        //code here
+//        NSLog(@"currentThread == %@", [NSThread currentThread]);
+//    });
     
-    [[JsonHttp jsonHttp]httpRequestWithMD5:@"score/saveScore" JsonKey:nil withData:dict failedBlock:^(id errType) {
+    NSLog(@"mainThread == %@", [NSThread mainThread]);
+    [[JsonHttp jsonHttp]httpRequestHaveSpaceWithMD5:@"score/saveScore" JsonKey:nil withData:dict failedBlock:^(id errType) {
         self.view.userInteractionEnabled = YES;
         btn.enabled = YES;
     } completionBlock:^(id data) {
@@ -372,8 +382,20 @@
 //    _pa.currentPage = [[not.userInfo objectForKey:@"index"] integerValue];
     [self.titleBtn setTitle:[NSString stringWithFormat:@"%td Hole PAR %td", [self returnPoleNameList:[[not.userInfo objectForKey:@"index"] integerValue]], [self returnStandardlever:[[not.userInfo objectForKey:@"index"] integerValue]]] forState:UIControlStateNormal];
 //    _currentPage = [[not.userInfo objectForKey:@"index"] integerValue] +1;
-//    _selectPage = [[not.userInfo objectForKey:@"index"] integerValue] +1;
-    _jumpPage = [[not.userInfo objectForKey:@"index"] integerValue] +1;
+    
+    //保存
+    
+    _selectPage = [[not.userInfo objectForKey:@"index"] integerValue] +1;
+    
+    NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
+    if (_currentPage < 0 || _currentPage > 17) {
+        [userdef setObject:@0 forKey:[NSString stringWithFormat:@"%@", _scorekey]];
+    }else{
+        [userdef setObject:@(_currentPage) forKey:[NSString stringWithFormat:@"%@", _scorekey]];
+    }
+    [userdef synchronize];
+    
+//    _selectPage = [[userdef objectForKey:[NSString stringWithFormat:@"%@", _scorekey]] integerValue] +1;
 //    [[ShowHUD showHUD]showToastWithText:[NSString stringWithFormat:@"第-%td-洞", [[not.userInfo objectForKey:@"index"] integerValue]+1] FromView:self.view];
 }
 #pragma mark -- 所有记分完成后
@@ -513,13 +535,14 @@
         if (_switchMode == 0) {
             _scoresView = [[JGHScoresHoleView alloc]init];
             _scoresView.delegate = self;
-            _scoresView.frame = CGRectMake(0, 0, screenWidth, (194 +20 + self.userScoreArray.count * 70)*ProportionAdapter);
+            _scoresView.frame = CGRectMake(0, 0, screenWidth, (194 +20 +20 + self.userScoreArray.count * 70)*ProportionAdapter);
             _scoresView.dataArray = self.userScoreArray;
 //            _scoresView.areaArray = _oneAreaArray;
+            _scoresView.scorekey = _scorekey;
             _scoresView.curPage = _selectPage;
             [self.view addSubview:_scoresView];
             [_scoresView reloadScoreList:_currentAreaArray andAreaArray:_areaArray];//更新UI位置
-            _tranView = [[UIView alloc]initWithFrame:CGRectMake(0, _scoresView.frame.size.height, screenWidth, (screenHeight -64)-(194 +20 + self.userScoreArray.count * 70)*ProportionAdapter)];
+            _tranView = [[UIView alloc]initWithFrame:CGRectMake(0, _scoresView.frame.size.height, screenWidth, (screenHeight -64)-(194 +20 +20 + self.userScoreArray.count * 70)*ProportionAdapter)];
             _tranView.backgroundColor = [UIColor blackColor];
             _tranView.alpha = 0.3;
             
@@ -531,13 +554,13 @@
         }else{
             _poorScoreView = [[JGHPoorScoreHoleView alloc]init];
             _poorScoreView.delegate = self;
-            _poorScoreView.frame = CGRectMake(0, 0, screenWidth, (194 + 20+ self.userScoreArray.count * 70)*ProportionAdapter);
+            _poorScoreView.frame = CGRectMake(0, 0, screenWidth, (194 + 20 +20+ self.userScoreArray.count * 70)*ProportionAdapter);
             _poorScoreView.dataArray = self.userScoreArray;
 //            _poorScoreView.areaArray = _oneAreaArray;
             _poorScoreView.curPage = _selectPage;
             [self.view addSubview:_scoresView];
             [_poorScoreView reloadScoreList:_currentAreaArray andAreaArray:_areaArray];//更新UI位置
-            _tranView = [[UIView alloc]initWithFrame:CGRectMake(0, _poorScoreView.frame.size.height, screenWidth, (screenHeight -64)-(194 +20 + self.userScoreArray.count * 70)*ProportionAdapter)];
+            _tranView = [[UIView alloc]initWithFrame:CGRectMake(0, _poorScoreView.frame.size.height, screenWidth, (screenHeight -64)-(194 +20 +20 + self.userScoreArray.count * 70)*ProportionAdapter)];
             _tranView.backgroundColor = [UIColor blackColor];
             _tranView.alpha = 0.3;
             
@@ -560,7 +583,6 @@
         [_poorScoreView removeFromSuperview];
         [_tranView removeFromSuperview];
         
-        /*
         NSUserDefaults *usedef = [NSUserDefaults standardUserDefaults];
         if (![usedef objectForKey:@"userSeccondScore"]) {
             UIImageView *userFristScoreImageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"-1"]];
@@ -573,31 +595,34 @@
             [appDelegate.window addSubview:userFristScoreImageView];
             [usedef setObject:@"1" forKey:@"userSeccondScore"];
         }
-         */
     }
 }
 #pragma mark -- 移除imageView
-/*
 - (void)removeUserSeccondScoreImageView{
     UIImageView *removeImageview = (UIImageView *)[appDelegate.window viewWithTag:8888];
     [removeImageview removeFromSuperview];
 }
- */
 //返回前一页的视图控制器
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController
 {
+    
     JGHScoresMainViewController *s = (JGHScoresMainViewController *)viewController;
     s.switchMode = _switchMode;
-    _currentPage = s.index;
-    if (_jumpPage != 0) {
-        _currentPage = _jumpPage +1;
-        _jumpPage = 0;
-    }
+    NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
+    _currentPage = [[userdef objectForKey:[NSString stringWithFormat:@"%@", _scorekey]] integerValue];
+//    _currentPage = s.index;
     
     if (_currentPage <= 0) {
         _currentPage = _dataArray.count - 1;
         JGHScoresMainViewController *sub = [[JGHScoresMainViewController alloc]init];
+        
+        NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
+        [userdef setObject:@(_currentPage) forKey:[NSString stringWithFormat:@"%@", _scorekey]];
+        [userdef synchronize];
+        
         sub.index = _currentPage;
+        //保存
+  
         NSUserDefaults *userdf = [NSUserDefaults standardUserDefaults];
         sub.switchMode = [[userdf objectForKey:[NSString stringWithFormat:@"switchMode%@", _scorekey]] integerValue];
         sub.scorekey = _scorekey;
@@ -607,28 +632,41 @@
     }
     else
     {
+        //保存
+        NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
+        _currentPage = [[userdef objectForKey:[NSString stringWithFormat:@"%@", _scorekey]] integerValue];
+        
         _currentPage--;
+        
+        [userdef setObject:@(_currentPage) forKey:[NSString stringWithFormat:@"%@", _scorekey]];
+        
         JGHScoresMainViewController *sub = [[JGHScoresMainViewController alloc]init];
-        NSUserDefaults *userdf = [NSUserDefaults standardUserDefaults];
-        sub.switchMode = [[userdf objectForKey:[NSString stringWithFormat:@"switchMode%@", _scorekey]] integerValue];
+        sub.switchMode = [[userdef objectForKey:[NSString stringWithFormat:@"switchMode%@", _scorekey]] integerValue];
         sub.index = _currentPage;
+        
+        [userdef synchronize];
+        
         sub.scorekey = _scorekey;
         sub.dataArray = self.userScoreArray;
         sub.currentAreaArray = _currentAreaArray;
+//        [self.titleBtn setTitle:[NSString stringWithFormat:@"%td Hole PAR %td", [self returnPoleNameList:sub.index], [self returnStandardlever:sub.index]] forState:UIControlStateNormal];
         return sub;
     }
+    
 }
 
 //下一页的视图控制器
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(UIViewController *)viewController
 {
+    
+    
     JGHScoresMainViewController *s = (JGHScoresMainViewController *)viewController;
     s.switchMode = _switchMode;
-    _currentPage = s.index;
-    if (_jumpPage != 0) {
-        _currentPage = _jumpPage +1;
-        _jumpPage = 0;
-    }
+    
+    NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
+    _currentPage = [[userdef objectForKey:[NSString stringWithFormat:@"%@", _scorekey]] integerValue];
+    
+//    _currentPage = s.index;
     
     if (_currentPage >= _dataArray.count - 1) {
         _currentPage = 0;
@@ -636,6 +674,13 @@
         NSUserDefaults *userdf = [NSUserDefaults standardUserDefaults];
         sub.switchMode = [[userdf objectForKey:[NSString stringWithFormat:@"switchMode%@", _scorekey]] integerValue];
         sub.index = _currentPage;
+        
+//        //保存
+//        NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
+        
+        [userdf setObject:@(_currentPage) forKey:[NSString stringWithFormat:@"%@", _scorekey]];
+        [userdf synchronize];
+        
         sub.scorekey = _scorekey;
         sub.dataArray = self.userScoreArray;
         sub.currentAreaArray = _currentAreaArray;
@@ -643,21 +688,39 @@
     }
     else
     {
+        //保存
+        NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
+        _currentPage = [[userdef objectForKey:[NSString stringWithFormat:@"%@", _scorekey]] integerValue];
+        
         _currentPage++;
+        
+        if (_currentPage < 0 || _currentPage > 17) {
+            [userdef setObject:@0 forKey:[NSString stringWithFormat:@"%@", _scorekey]];
+        }else{
+            [userdef setObject:@(_currentPage) forKey:[NSString stringWithFormat:@"%@", _scorekey]];
+        }
+        
         JGHScoresMainViewController *sub = [[JGHScoresMainViewController alloc]init];
-        NSUserDefaults *userdf = [NSUserDefaults standardUserDefaults];
-        sub.switchMode = [[userdf objectForKey:[NSString stringWithFormat:@"switchMode%@", _scorekey]] integerValue];
+        
+        sub.switchMode = [[userdef objectForKey:[NSString stringWithFormat:@"switchMode%@", _scorekey]] integerValue];
         sub.index = _currentPage;
+        
+        [userdef synchronize];
+        
         sub.scorekey = _scorekey;
         sub.dataArray = self.userScoreArray;
         sub.currentAreaArray = _currentAreaArray;
+//        [self.titleBtn setTitle:[NSString stringWithFormat:@"%td Hole PAR %td", [self returnPoleNameList:sub.index], [self returnStandardlever:sub.index]] forState:UIControlStateNormal];
         NSLog(@"%@",sub);
         return sub;
     }
+    
 }
 
 - (void)pageViewController:(UIPageViewController *)pageViewController didFinishAnimating:(BOOL)finished previousViewControllers:(NSArray *)previousViewControllers transitionCompleted:(BOOL)completed
 {
+    
+    
     JGHScoresMainViewController *sub = (JGHScoresMainViewController *)pageViewController.viewControllers[0];
 //    sub.delegate = self;
     NSUserDefaults *userdf = [NSUserDefaults standardUserDefaults];
@@ -673,6 +736,13 @@
     };
 //    [self.titleBtn setTitle:[NSString stringWithFormat:@"%td Hole PAR %td", sub.index+1, [self returnStandardlever:sub.index]] forState:UIControlStateNormal];
     [self.titleBtn setTitle:[NSString stringWithFormat:@"%td Hole PAR %td", [self returnPoleNameList:sub.index], [self returnStandardlever:sub.index]] forState:UIControlStateNormal];
+    
+    //保存
+    NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
+    
+    [userdef setObject:@(sub.index) forKey:[NSString stringWithFormat:@"%@", _scorekey]];
+    [userdf synchronize];
+    
     _selectPage = sub.index+1;
 //    _pageControl.currentPage = sub.index;
 //    [[ShowHUD showHUD]showToastWithText:[NSString stringWithFormat:@"第-%td-洞", sub.index+1] FromView:self.view];
@@ -740,7 +810,7 @@
     
     [dict setObject:listArray forKey:@"list"];
     
-    [[JsonHttp jsonHttp]httpRequestWithMD5:@"score/saveScore" JsonKey:nil withData:dict failedBlock:^(id errType) {
+    [[JsonHttp jsonHttp]httpRequestHaveSpaceWithMD5:@"score/saveScore" JsonKey:nil withData:dict failedBlock:^(id errType) {
         
     } completionBlock:^(id data) {
         NSLog(@"%@", data);

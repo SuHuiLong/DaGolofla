@@ -33,6 +33,8 @@ static NSString *const JGHTwoScoreAreaCellIdentifier = @"JGHTwoScoreAreaCell";
     
     NSInteger _imageSelectOne;
     NSInteger _imageSelectTwo;
+    
+    UILabel *_headLB;//区域
 }
 
 @property (nonatomic, strong)UITableView *scoreTableView;
@@ -50,7 +52,7 @@ static NSString *const JGHTwoScoreAreaCellIdentifier = @"JGHTwoScoreAreaCell";
     if (self == [super init]) {
         self.backgroundColor = [UIColor colorWithHexString:BG_color];
         _colorArray = @[@"#FFFFFF", @"#EEEEEE", @"#FFFFFF", @"#F9F9F9", @"#FFFFFF", @"#F9F9F9"];
-        self.scoreTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, (194 +20 + 70)*ProportionAdapter) style:UITableViewStylePlain];
+        self.scoreTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, (194 +20 +20 + 70)*ProportionAdapter) style:UITableViewStylePlain];
         self.scoreTableView.backgroundColor = [UIColor colorWithHexString:BG_color];
         self.scoreTableView.scrollEnabled = NO;
         self.scoreTableView.delegate = self;
@@ -69,11 +71,11 @@ static NSString *const JGHTwoScoreAreaCellIdentifier = @"JGHTwoScoreAreaCell";
         
         UIView *whiteHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 20 * ProportionAdapter)];
         whiteHeaderView.backgroundColor = [UIColor whiteColor];
-        UILabel *headLB = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 16 * ProportionAdapter)];
-        headLB.textAlignment = NSTextAlignmentCenter;
-        headLB.font = [UIFont systemFontOfSize:15 * ProportionAdapter];
-        headLB.text = @"【魔兽世界】CHASSEUR";
-        [whiteHeaderView addSubview:headLB];
+        _headLB = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 16 * ProportionAdapter)];
+        _headLB.textAlignment = NSTextAlignmentCenter;
+        _headLB.font = [UIFont systemFontOfSize:15 * ProportionAdapter];
+        _headLB.text = @"A 区";
+        [whiteHeaderView addSubview:_headLB];
         
         UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(100 * ProportionAdapter, 19 * ProportionAdapter, screenWidth - 200 * ProportionAdapter, 1)];
         lineView.backgroundColor = [UIColor colorWithHexString:@"#32B14D"];
@@ -87,11 +89,19 @@ static NSString *const JGHTwoScoreAreaCellIdentifier = @"JGHTwoScoreAreaCell";
 - (void)reloadScoreList:(NSArray *)currentAreaArray andAreaArray:(NSArray *)areaArray{
     _areaArray = areaArray;
     _currentAreaArray = currentAreaArray;
-//    _oneArea = _currentAreaArray[0];
-//    _twoArea = _currentAreaArray[1];
+//    if (_index < 9) {
+//        _areaLable.text = _currentAreaArray[0];
+//    }else{
+//        _areaLable.text = _currentAreaArray[1];
+//    }
     _imageSelectOne = 0;
     _imageSelectTwo = 0;
-    self.scoreTableView.frame = CGRectMake(0, 0, screenWidth, (194 +20 + self.dataArray.count * 70)*ProportionAdapter);
+    if (_curPage < 9) {
+        _headLB.text = currentAreaArray[0];
+    }else{
+        _headLB.text = currentAreaArray[1];
+    }
+    self.scoreTableView.frame = CGRectMake(0, 0, screenWidth, (194 +20 +20 + self.dataArray.count * 70)*ProportionAdapter);
 }
 #pragma mark -- tableView代理
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
@@ -205,15 +215,29 @@ static NSString *const JGHTwoScoreAreaCellIdentifier = @"JGHTwoScoreAreaCell";
         _twoAreaView = nil;
         return;
     }
+    /*
+    NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
     
     NSMutableDictionary *userDict = [NSMutableDictionary dictionary];
     if ((cellTag%100/10) == 0) {
+        [userdef setObject:@(btnTag -1) forKey:[NSString stringWithFormat:@"%@", _scorekey]];
         [userDict setObject:@(btnTag -1) forKey:@"index"];
     }else{
         [userDict setObject:@(btnTag -1 + 9) forKey:@"index"];
+        [userdef setObject:@(btnTag -1 + 9) forKey:[NSString stringWithFormat:@"%@", _scorekey]];
+    }
+    //创建一个消息对象
+    NSNotification * notice = [NSNotification notificationWithName:@"noticePushScores" object:nil userInfo:nil];
+    */
+    NSMutableDictionary *userDict = [NSMutableDictionary dictionary];
+    if ((cellTag%100/10) == 0) {
+        [userDict setObject:@(btnTag - 1) forKey:@"index"];
+    }else{
+        [userDict setObject:@(btnTag - 1 + 9) forKey:@"index"];
     }
     //创建一个消息对象
     NSNotification * notice = [NSNotification notificationWithName:@"noticePushScores" object:nil userInfo:userDict];
+    
     //发送消息
     [[NSNotificationCenter defaultCenter]postNotification:notice];
 }
@@ -250,7 +274,7 @@ static NSString *const JGHTwoScoreAreaCellIdentifier = @"JGHTwoScoreAreaCell";
     
     _areaId = 1;
     if (btnW == 0.0) {
-        _oneAreaView = [[UIView alloc]initWithFrame:CGRectMake(10 *ProportionAdapter, btn.frame.origin.y + btn.frame.size.height, 84 *ProportionAdapter, _areaArray.count *40 *ProportionAdapter + 4*ProportionAdapter)];
+        _oneAreaView = [[UIView alloc]initWithFrame:CGRectMake(10 *ProportionAdapter, btn.frame.origin.y + btn.frame.size.height + 20 *ProportionAdapter, 84 *ProportionAdapter, _areaArray.count *40 *ProportionAdapter + 4*ProportionAdapter)];
     }else{
         _oneAreaView = [[UIView alloc]initWithFrame:CGRectMake(10 *ProportionAdapter, btn.frame.origin.y + btn.frame.size.height, btnW + 4 *ProportionAdapter, _areaArray.count *40 *ProportionAdapter + 4*ProportionAdapter)];
     }
@@ -317,8 +341,8 @@ static NSString *const JGHTwoScoreAreaCellIdentifier = @"JGHTwoScoreAreaCell";
     
     NSLog(@"%f", btn.frame.origin.y);
     
-    _twoAreaView = [[UIView alloc]initWithFrame:CGRectMake(10 *ProportionAdapter, btn.frame.origin.y + btn.frame.size.height + (_dataArray.count +2) *35 *ProportionAdapter + 37 *ProportionAdapter, 84 *ProportionAdapter,_areaArray.count *44 *ProportionAdapter + 4*ProportionAdapter)];
-    [_oneAreaView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"alertViewBG"]]];
+    _twoAreaView = [[UIView alloc]initWithFrame:CGRectMake(10 *ProportionAdapter, btn.frame.origin.y + btn.frame.size.height + (_dataArray.count +2) *35 *ProportionAdapter + 37 *ProportionAdapter + 20 *ProportionAdapter, 84 *ProportionAdapter, _areaArray.count *40 *ProportionAdapter + 4*ProportionAdapter)];
+    [_twoAreaView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"alertViewBG"]]];
     for (int i=0; i < _areaArray.count; i++) {
         NSInteger btnY;
         if (i == 0) {
@@ -338,7 +362,7 @@ static NSString *const JGHTwoScoreAreaCellIdentifier = @"JGHTwoScoreAreaCell";
         }
         
         btn.titleLabel.font = [UIFont systemFontOfSize:15 *ProportionAdapter];
-        
+        btn.backgroundColor = [UIColor whiteColor];
         [_twoAreaView addSubview:btn];
     }
     [self addSubview:_twoAreaView];

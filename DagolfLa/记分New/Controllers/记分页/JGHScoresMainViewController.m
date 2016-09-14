@@ -64,6 +64,10 @@ static NSString *const JGHNewScoresPageCellIdentifier = @"JGHNewScoresPageCell";
     // Do any additional setup after loading the view.
 //    _switchMode = 0;
     
+    //保存
+//    NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
+//    _index = [[userdef objectForKey:[NSString stringWithFormat:@"%@", _scorekey]] integerValue];
+    
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(noticePushScoresCtrl:) name:@"noticePushScores" object:nil];
     
     self.scoresTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight - 64) style:UITableViewStylePlain];
