@@ -142,8 +142,10 @@
     [lightV addSubview:self.keyLB];
     
     [view addSubview:lightV];
-    
-    self.tableView.tableFooterView = view;
+    if (_fromLive != 5) {
+        self.tableView.tableFooterView = view;
+    }
+
     [self.view addSubview:self.tableView];
 }
 
