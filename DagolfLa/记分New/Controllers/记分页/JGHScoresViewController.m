@@ -357,9 +357,9 @@
     [_scoresView removeFromSuperview];
     [_poorScoreView removeFromSuperview];
     [_tranView removeFromSuperview];
-//    _pageControl.currentPage = [[not.userInfo objectForKey:@"index"] integerValue];
+//    _pa.currentPage = [[not.userInfo objectForKey:@"index"] integerValue];
     [self.titleBtn setTitle:[NSString stringWithFormat:@"%td Hole PAR %td", [self returnPoleNameList:[[not.userInfo objectForKey:@"index"] integerValue]], [self returnStandardlever:[[not.userInfo objectForKey:@"index"] integerValue]]] forState:UIControlStateNormal];
-    
+    _selectPage = [self returnPoleNameList:[[not.userInfo objectForKey:@"index"] integerValue]];
 //    [[ShowHUD showHUD]showToastWithText:[NSString stringWithFormat:@"第-%td-洞", [[not.userInfo objectForKey:@"index"] integerValue]+1] FromView:self.view];
 }
 #pragma mark -- 所有记分完成后
