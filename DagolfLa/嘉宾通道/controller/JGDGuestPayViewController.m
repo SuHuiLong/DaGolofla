@@ -366,7 +366,10 @@
         return;
     }
     
+    //deviceID
+    NSString * uuid= [FCUUID getUUID];
     NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
+    [dic setObject:uuid forKey:@"deviceID"];
     [dic setObject:[NSArray arrayWithObject:self.teamSignUpDic] forKey:@"teamSignUpList"];
     [dic setObject:self.infoDic forKey:@"info"];
     [dic setObject:@1 forKey:@"srcType"];
