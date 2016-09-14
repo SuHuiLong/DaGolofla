@@ -39,6 +39,8 @@ static CGFloat ImageHeight  = 210.0;
     NSMutableDictionary* _dictPhoto;
     
     BOOL _wasKeyboardManagerEnabled;
+    
+    UIImageView *_gradientImage;
 }
 @property (nonatomic,strong)SXPickPhoto * pickPhoto;//相册类
 @property (nonatomic, strong)UITableView *launchActivityTableView;
@@ -96,6 +98,11 @@ static CGFloat ImageHeight  = 210.0;
         self.imgProfile.userInteractionEnabled = YES;
         self.imgProfile.contentMode = UIViewContentModeScaleToFill;
         
+        //渐变图
+        _gradientImage = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, ImageHeight * screenWidth / 320)];
+        [_gradientImage setImage:[UIImage imageNamed:@"backChange"]];
+        [self.imgProfile addSubview:_gradientImage];
+        
         self.launchActivityTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight) style:(UITableViewStylePlain)];
         [self.launchActivityTableView registerClass:[JGLableAndLableTableViewCell class] forCellReuseIdentifier:@"lbVSlb"];
         [self.launchActivityTableView registerClass:[JGDisplayInfoTableViewCell class] forCellReuseIdentifier:@"Display"];
@@ -125,13 +132,6 @@ static CGFloat ImageHeight  = 210.0;
     self.navigationController.navigationBar.hidden = YES;
     self.automaticallyAdjustsScrollViewInsets=NO;
     self.view.backgroundColor = [UIColor colorWithHexString:@"#EAEAEB"];
-    
-    
-    
-    //渐变图
-    UIImageView *gradientImage = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, ImageHeight * screenWidth / 320)];
-    [gradientImage setImage:[UIImage imageNamed:@"backChange"]];
-    [self.titleView addSubview:gradientImage];
     
     //返回按钮
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -568,6 +568,8 @@ static CGFloat ImageHeight  = 210.0;
         CGRect f = CGRectMake(-(factor-screenWidth)/2, 0, factor, (ImageHeight * screenWidth / 320)+ABS(yOffset));
         self.imgProfile.frame = f;
         
+        _gradientImage.frame = self.imgProfile.frame;
+        
         CGRect title = self.titleView.frame;
         self.titleView.frame = CGRectMake((factor-screenWidth)/2, 0 * screenWidth / 320, title.size.width, title.size.height);
         
@@ -578,6 +580,8 @@ static CGFloat ImageHeight  = 210.0;
         CGRect f = self.imgProfile.frame;
         f.origin.y = -yOffset;
         self.imgProfile.frame = f;
+        
+        _gradientImage.frame = self.imgProfile.frame;
         
         CGRect t = self.titleView.frame;
         t.origin.y = yOffset + 0 * screenWidth / 320;

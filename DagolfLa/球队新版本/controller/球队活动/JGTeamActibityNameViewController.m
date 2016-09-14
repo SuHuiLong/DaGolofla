@@ -176,15 +176,15 @@ static CGFloat ImageHeight  = 210.0;
     [self.view addSubview:self.teamActibityNameTableView];
     [self.view addSubview:self.imgProfile];
     
+    //渐变图
+    _gradientImage = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, ImageHeight)];
+    [_gradientImage setImage:[UIImage imageNamed:@"backChange"]];
+    [self.imgProfile addSubview:_gradientImage];
+    
     //顶部图
     self.titleView.frame = CGRectMake(0, 0, screenWidth, 44);
     self.titleView.backgroundColor = [UIColor clearColor];
     [self.imgProfile addSubview:self.titleView];
-    
-    //渐变图
-    _gradientImage = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, ImageHeight)];
-    [_gradientImage setImage:[UIImage imageNamed:@"backChange"]];
-    [self.titleView addSubview:_gradientImage];
 
     //返回按钮
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];

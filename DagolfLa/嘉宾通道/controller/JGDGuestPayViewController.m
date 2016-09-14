@@ -366,11 +366,14 @@
         return;
     }
     
+    //deviceID
+    NSString * uuid= [FCUUID getUUID];
     NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
+    [dic setObject:uuid forKey:@"deviceID"];
     [dic setObject:[NSArray arrayWithObject:self.teamSignUpDic] forKey:@"teamSignUpList"];
     [dic setObject:self.infoDic forKey:@"info"];
     [dic setObject:@1 forKey:@"srcType"];
-    [[JsonHttp jsonHttp] httpRequest:@"team/doTeamActivitySignUp" JsonKey:nil withData:dic requestMethod:@"POST" failedBlock:^(id errType) {
+    [[JsonHttp jsonHttp] httpRequestWithMD5:@"team/doTeamActivitySignUp" JsonKey:nil withData:dic failedBlock:^(id errType) {
         [[ShowHUD showHUD]showToastWithText:[NSString stringWithFormat:@"%@", errType] FromView:self.view];
     } completionBlock:^(id data) {
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
@@ -383,8 +386,14 @@
                 [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
             }
         }
-        
     }];
+    
+//    [[JsonHttp jsonHttp] httpRequest:@"team/doTeamActivitySignUp" JsonKey:nil withData:dic requestMethod:@"POST" failedBlock:^(id errType) {
+//        [[ShowHUD showHUD]showToastWithText:[NSString stringWithFormat:@"%@", errType] FromView:self.view];
+//    } completionBlock:^(id data) {
+//
+//        
+//    }];
 }
 
 - (NSMutableArray *)costArray{
