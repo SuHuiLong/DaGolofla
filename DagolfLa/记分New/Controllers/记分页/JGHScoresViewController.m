@@ -604,6 +604,7 @@
     vc2.currentAreaArray = _currentAreaArray;
     vc2.switchMode = _switchMode;
     vc2.scorekey = _scorekey;
+    _currentPage = vc2.index;
     __weak JGHScoresViewController *weakSelf = self;
     vc2.returnScoresDataArray= ^(NSMutableArray *dataArray){
         weakSelf.userScoreArray = dataArray;
@@ -769,6 +770,7 @@
 //    [userdef setObject:@(sub.index) forKey:[NSString stringWithFormat:@"%@", _scorekey]];
 //    [userdf synchronize];
     
+    _currentPage = sub.index;
     _selectPage = sub.index+1;
 //    _pageControl.currentPage = sub.index;
 //    [[ShowHUD showHUD]showToastWithText:[NSString stringWithFormat:@"第-%td-洞", sub.index+1] FromView:self.view];
