@@ -50,7 +50,7 @@ static NSString *const JGHTwoScoreAreaCellIdentifier = @"JGHTwoScoreAreaCell";
     if (self == [super init]) {
         self.backgroundColor = [UIColor colorWithHexString:BG_color];
         _colorArray = @[@"#FFFFFF", @"#EEEEEE", @"#FFFFFF", @"#F9F9F9", @"#FFFFFF", @"#F9F9F9"];
-        self.scoreTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, (194+60)*ProportionAdapter) style:UITableViewStylePlain];
+        self.scoreTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, (194 +20 + 70)*ProportionAdapter) style:UITableViewStylePlain];
         self.scoreTableView.backgroundColor = [UIColor colorWithHexString:BG_color];
         self.scoreTableView.scrollEnabled = NO;
         self.scoreTableView.delegate = self;
@@ -180,6 +180,18 @@ static NSString *const JGHTwoScoreAreaCellIdentifier = @"JGHTwoScoreAreaCell";
     NSLog(@"%td", cellTag);//101
     NSLog(@"cell10 = %td", cellTag%100/10);
     NSLog(@"cell100  = %td", cellTag/100);
+    if (_oneAreaView != nil) {
+        [_oneAreaView removeFromSuperview];
+        _oneAreaView = nil;
+        return;
+    }
+    
+    if (_twoAreaView != nil) {
+        [_twoAreaView removeFromSuperview];
+        _twoAreaView = nil;
+        return;
+    }
+    
     NSMutableDictionary *userDict = [NSMutableDictionary dictionary];
     if ((cellTag%100/10) == 0) {
         [userDict setObject:@(btnTag - 1) forKey:@"index"];
@@ -215,8 +227,10 @@ static NSString *const JGHTwoScoreAreaCellIdentifier = @"JGHTwoScoreAreaCell";
     
     //CGSize postSize = [self.postName.text boundingRectWithSize:CGSizeMake(kScreenWidth, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12]} context:nil].size;
     _areaId = 1;
-    _oneAreaView = [[UIView alloc]initWithFrame:CGRectMake(10 *ProportionAdapter, btn.frame.origin.y + btn.frame.size.height, 84 *ProportionAdapter, _areaArray.count *44 *ProportionAdapter)];
-    _oneAreaView.backgroundColor = [UIColor whiteColor];
+    _oneAreaView = [[UIView alloc]initWithFrame:CGRectMake(10 *ProportionAdapter, btn.frame.origin.y + btn.frame.size.height, 84 *ProportionAdapter, _areaArray.count *40 *ProportionAdapter + 4*ProportionAdapter)];
+//    _oneAreaView.backgroundColor = [UIColor colorWithHexString:BG_color];
+    [_oneAreaView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"alertViewBG"]]];
+//    _oneAreaView.backgroundColor = [UIColor whiteColor];
     for (int i=0; i < _areaArray.count; i++) {
         NSInteger btnY;
         if (i == 0) {
@@ -235,7 +249,7 @@ static NSString *const JGHTwoScoreAreaCellIdentifier = @"JGHTwoScoreAreaCell";
         }
         
         btn.titleLabel.font = [UIFont systemFontOfSize:15 *ProportionAdapter];
-
+        btn.backgroundColor = [UIColor whiteColor];
         [_oneAreaView addSubview:btn];
     }
     [self addSubview:_oneAreaView];
@@ -275,8 +289,8 @@ static NSString *const JGHTwoScoreAreaCellIdentifier = @"JGHTwoScoreAreaCell";
     
     NSLog(@"%f", btn.frame.origin.y);
     
-    _twoAreaView = [[UIView alloc]initWithFrame:CGRectMake(10 *ProportionAdapter, btn.frame.origin.y + btn.frame.size.height + (_dataArray.count +2) *30 *ProportionAdapter + 37 *ProportionAdapter, 84 *ProportionAdapter,_areaArray.count *44 *ProportionAdapter)];
-    _twoAreaView.backgroundColor = [UIColor whiteColor];
+    _twoAreaView = [[UIView alloc]initWithFrame:CGRectMake(10 *ProportionAdapter, btn.frame.origin.y + btn.frame.size.height + (_dataArray.count +2) *35 *ProportionAdapter + 37 *ProportionAdapter, 84 *ProportionAdapter,_areaArray.count *44 *ProportionAdapter + 4*ProportionAdapter)];
+    [_oneAreaView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"alertViewBG"]]];
     for (int i=0; i < _areaArray.count; i++) {
         NSInteger btnY;
         if (i == 0) {
