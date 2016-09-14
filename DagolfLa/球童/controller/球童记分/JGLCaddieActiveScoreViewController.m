@@ -279,6 +279,7 @@
     if (indexPath.section == 0) {
         JGLChoosesScoreTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"JGLChoosesScoreTableViewCell" forIndexPath:indexPath];
         [cell showData:_model];
+        cell.labelTime.hidden = YES;
         return cell;
     }
     else if (indexPath.section == 1)
@@ -318,6 +319,7 @@
     {
         JGLPlayDateTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"JGLPlayDateTableViewCell" forIndexPath:indexPath];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         if ( [Helper isBlankString:_strDateBegin]) {
             cell.labelDate.text = @"请选择打球时间";
         }

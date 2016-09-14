@@ -14,7 +14,7 @@
 
 @property (nonatomic, strong)NSMutableArray *poleArray;
 
-@property (nonatomic, assign)NSInteger selectId;
+@property (nonatomic, assign)NSInteger selectId;//洞号
 
 @property (nonatomic, copy)void (^returnHoleId)(NSInteger holeId);
 

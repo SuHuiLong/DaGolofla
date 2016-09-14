@@ -61,6 +61,15 @@
         textView.text = nil;
     }
 }
+- (void)textViewDidChange:(UITextView *)textView
+{
+    if ([_textView.text isEqualToString:@"请针对我们的产品给出您宝贵的意见"] == YES || [Helper isBlankString:_textView.text]) {
+        _textView.textColor = [UITool colorWithHexString:@"a0a0a0" alpha:1];
+    }
+    else{
+        _textView.textColor = [UIColor blackColor];
+    }
+}
 
 - (void)textViewDidEndEditing:(UITextView *)textView {
     if ([Helper isBlankString:textView.text]) {
