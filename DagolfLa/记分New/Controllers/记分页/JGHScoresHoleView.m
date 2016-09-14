@@ -37,6 +37,10 @@ static NSString *const JGHTwoScoreAreaCellIdentifier = @"JGHTwoScoreAreaCell";
 
 @property (nonatomic, strong)UITableView *scoreTableView;
 
+//@property (nonatomic, copy)NSString *oneArea;
+
+//@property (nonatomic, copy)NSString *twoArea;
+
 @end
 
 @implementation JGHScoresHoleView
@@ -69,9 +73,11 @@ static NSString *const JGHTwoScoreAreaCellIdentifier = @"JGHTwoScoreAreaCell";
 - (void)reloadScoreList:(NSArray *)currentAreaArray andAreaArray:(NSArray *)areaArray{
     _areaArray = areaArray;
     _currentAreaArray = currentAreaArray;
+//    _oneArea = _currentAreaArray[0];
+//    _twoArea = _currentAreaArray[1];
     _imageSelectOne = 0;
     _imageSelectTwo = 0;
-    self.scoreTableView.frame = CGRectMake(0, 0, screenWidth, (194 + self.dataArray.count * 60)*ProportionAdapter);
+    self.scoreTableView.frame = CGRectMake(0, 0, screenWidth, (194 +20 + self.dataArray.count * 70)*ProportionAdapter);
 }
 #pragma mark -- tableView代理
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
@@ -83,7 +89,7 @@ static NSString *const JGHTwoScoreAreaCellIdentifier = @"JGHTwoScoreAreaCell";
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 30*ProportionAdapter;
+    return 35*ProportionAdapter;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -152,13 +158,18 @@ static NSString *const JGHTwoScoreAreaCellIdentifier = @"JGHTwoScoreAreaCell";
         JGHPoorBarHoleCell *scoreAreaCell = [tableView dequeueReusableCellWithIdentifier:JGHPoorBarHoleCellIdentifier];
         scoreAreaCell.backgroundColor = [UIColor colorWithHexString:BG_color];
         scoreAreaCell.delegate = self;
+        scoreAreaCell.nameBtn.userInteractionEnabled = YES;
+//        [scoreAreaCell.contentView insertSubview:scoreAreaCell.nameBtn atIndex:[scoreAreaCell.contentView.subviews count]];
         [scoreAreaCell configJGHPoorBarHoleCell:_currentAreaArray[section] andImageDirection:_imageSelectOne];
+//        scoreAreaCell.contentView.userInteractionEnabled = YES;
         return scoreAreaCell;
     }else{
         JGHTwoScoreAreaCell *twoScoreAreaCell = [tableView dequeueReusableCellWithIdentifier:JGHTwoScoreAreaCellIdentifier];
         twoScoreAreaCell.backgroundColor = [UIColor colorWithHexString:BG_color];
         twoScoreAreaCell.delegate = self;
+//        twoScoreAreaCell.areaNameBtn.userInteractionEnabled = YES;
         [twoScoreAreaCell configArea:_currentAreaArray[section] andImageDirection:_imageSelectTwo];
+        twoScoreAreaCell.contentView.userInteractionEnabled = YES;
         return twoScoreAreaCell;
     }
 }
@@ -191,6 +202,7 @@ static NSString *const JGHTwoScoreAreaCellIdentifier = @"JGHTwoScoreAreaCell";
         _imageSelectOne = 0;
     }
     
+//    [self.scoreTableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationNone];
     [self.scoreTableView reloadData];
     
     [_twoAreaView removeFromSuperview];
@@ -201,6 +213,7 @@ static NSString *const JGHTwoScoreAreaCellIdentifier = @"JGHTwoScoreAreaCell";
         return;
     }
     
+    //CGSize postSize = [self.postName.text boundingRectWithSize:CGSizeMake(kScreenWidth, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12]} context:nil].size;
     _areaId = 1;
     _oneAreaView = [[UIView alloc]initWithFrame:CGRectMake(10 *ProportionAdapter, btn.frame.origin.y + btn.frame.size.height, 84 *ProportionAdapter, _areaArray.count *44 *ProportionAdapter)];
     _oneAreaView.backgroundColor = [UIColor whiteColor];
@@ -247,6 +260,7 @@ static NSString *const JGHTwoScoreAreaCellIdentifier = @"JGHTwoScoreAreaCell";
         _imageSelectTwo = 0;
     }
     
+//    [self.scoreTableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationNone];
     [self.scoreTableView reloadData];
     
     [_oneAreaView removeFromSuperview];
@@ -303,6 +317,8 @@ static NSString *const JGHTwoScoreAreaCellIdentifier = @"JGHTwoScoreAreaCell";
     
     self.dataArray = dataArray;
     _currentAreaArray = currentAreaArray;
+//    self.oneArea = _currentAreaArray[0];
+//    self.twoArea = _currentAreaArray[1];
     
     [self.scoreTableView reloadData];
 }

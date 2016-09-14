@@ -145,7 +145,13 @@ static NSString *const JGHOperationScoreListCellIdentifier = @"JGHOperationScore
             for (int i=0; i<areaArray.count; i++) {
                 JGHBallAreaModel *model = [[JGHBallAreaModel alloc]init];
                 model.ballArea = [areaArray objectAtIndex:i];
-                model.select = 0;
+                if (i == 0) {
+                    model.select = 1;
+                }else if (i == 1){
+                    model.select = 1;
+                }else{
+                    model.select = 0;
+                }
                 [_holeArray addObject:model];
             }
 //            _region1 = [_holeArray objectAtIndex:0];
@@ -272,6 +278,7 @@ static NSString *const JGHOperationScoreListCellIdentifier = @"JGHOperationScore
             
             operationScoreListCell.poleArray = self.polesArray;
             ///---
+            operationScoreListCell.selectId = _selectHoleId;
             operationScoreListCell.selectionStyle = UITableViewCellSelectionStyleNone;
             [operationScoreListCell reloadOperScoreBtnListCellData:_holeArray];
             return operationScoreListCell;
@@ -340,20 +347,29 @@ static NSString *const JGHOperationScoreListCellIdentifier = @"JGHOperationScore
     }else{
         for (int i=0; i<areaArray.count; i++) {
             if (selectCount < 2) {
-                JGHBallAreaModel *model = [[JGHBallAreaModel alloc]init];
-                model = areaArray[i];
-                model.select = 1;
-                [_holeArray replaceObjectAtIndex:areaId withObject:model];
+                if (areaId == i) {
+                    JGHBallAreaModel *model = [[JGHBallAreaModel alloc]init];
+                    model = areaArray[i];
+                    if (model.select == 1) {
+                        model.select = 0;
+                    }else{
+                        model.select = 1;
+                    }
+                    
+                    [_holeArray replaceObjectAtIndex:areaId withObject:model];
+                }
             }else{
                 JGHBallAreaModel *model = [[JGHBallAreaModel alloc]init];
                 model = areaArray[i];
-                if (areaId == i && model.select == 1) {
-                    model.select = 0;
-                    [_holeArray replaceObjectAtIndex:areaId withObject:model];
-                }else{
-                    //请先取消一项，在点选！
-                    [[ShowHUD showHUD]showToastWithText:@"请先取消一项，在点选！" FromView:self.view];
-                    return;
+                if (areaId == i) {
+                    if (model.select == 1) {
+                        model.select = 0;
+                        [_holeArray replaceObjectAtIndex:areaId withObject:model];
+                    }else{
+                        //请先取消一项，在点选！
+                        [[ShowHUD showHUD]showToastWithText:@"请先取消一项，在点选！" FromView:self.view];
+                        return;
+                    }
                 }
             }
         }

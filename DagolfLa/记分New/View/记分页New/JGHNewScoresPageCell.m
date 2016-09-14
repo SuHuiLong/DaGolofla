@@ -32,6 +32,7 @@
     self.fairwayLabel.font = [UIFont systemFontOfSize:18 *ProportionAdapter];
     self.fairwayLabelLeft.constant = 20 *ProportionAdapter;
     self.fairwayLabelTop.constant = 20 *ProportionAdapter;
+    self.fairwayBtnH.constant = 50 *ProportionAdapter;
     
     self.fairwayBtnTop.constant = 25 *ProportionAdapter;
     
@@ -43,6 +44,7 @@
     
     self.rodNumber.font = [UIFont systemFontOfSize:25 *ProportionAdapter];
     self.rodNumberTop.constant = 41 *ProportionAdapter;
+    self.rodNumberW.constant = 60 *ProportionAdapter;
     
     self.rodNumberProLable.font = [UIFont systemFontOfSize:15 *ProportionAdapter];
     self.rodNumberProLableTop.constant = 10 *ProportionAdapter;
@@ -52,6 +54,9 @@
     self.pushRedBtnLeft.constant = 16 *ProportionAdapter;
     self.rodAddBtnRight.constant = 20 *ProportionAdapter;
     self.rodRedBtnLeft.constant = 16 *ProportionAdapter;
+    
+    self.rodRedBtnW.constant = 60 *ProportionAdapter;
+    self.rodAddBtnTop.constant = 48 *ProportionAdapter;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

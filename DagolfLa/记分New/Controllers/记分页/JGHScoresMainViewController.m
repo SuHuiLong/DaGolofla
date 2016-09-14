@@ -90,11 +90,11 @@ static NSString *const JGHNewScoresPageCellIdentifier = @"JGHNewScoresPageCell";
     UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, 20*ProportionAdapter)];
     headerView.backgroundColor = [UIColor whiteColor];
     
-    _areaLable = [[UILabel alloc]initWithFrame:CGRectMake(screenWidth/2 - 50*ProportionAdapter, 0, 100 *ProportionAdapter, 18 *ProportionAdapter)];
+    _areaLable = [[UILabel alloc]initWithFrame:CGRectMake(screenWidth/2 - 70*ProportionAdapter, 0, 140 *ProportionAdapter, 18 *ProportionAdapter)];
     _areaLable.font = [UIFont systemFontOfSize:15 *ProportionAdapter];
-    _areaLable.textColor = [UIColor colorWithHexString:@"#32B14D"];
+    _areaLable.textColor = [UIColor blackColor];
     _areaLable.textAlignment = NSTextAlignmentCenter;
-    if (_index < 10) {
+    if (_index < 9) {
         _areaLable.text = _currentAreaArray[0];
     }else{
         _areaLable.text = _currentAreaArray[1];
@@ -159,6 +159,12 @@ static NSString *const JGHNewScoresPageCellIdentifier = @"JGHNewScoresPageCell";
     //weChatNotice
     NSLog(@"%@", not.userInfo);
     _index = [[not.userInfo objectForKey:@"index"] integerValue];
+    if (_index < 9) {
+        _areaLable.text = _currentAreaArray[0];
+    }else{
+        _areaLable.text = _currentAreaArray[1];
+    }
+    
     [self.scoresTableView reloadData];
 }
 #pragma mark -- tableView代理
@@ -174,7 +180,7 @@ static NSString *const JGHNewScoresPageCellIdentifier = @"JGHNewScoresPageCell";
     if (_dataArray.count < 3) {
         return 260 *ProportionAdapter;
     }else{
-        return (screenHeight-64-50*ProportionAdapter -20*ProportionAdapter)/4 -5*ProportionAdapter;
+        return (screenHeight-64-50*ProportionAdapter)/4 -5*ProportionAdapter;
     }
 }
 
@@ -220,7 +226,7 @@ static NSString *const JGHNewScoresPageCellIdentifier = @"JGHNewScoresPageCell";
     if (section == 4) {
         return 0;
     }
-    return 10*ProportionAdapter;
+    return 5*ProportionAdapter;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
@@ -310,7 +316,7 @@ static NSString *const JGHNewScoresPageCellIdentifier = @"JGHNewScoresPageCell";
                 //差杆模式
                 if (i == _index) {
                     if ([model.poleNumber[i] integerValue] == -1) {
-                        [poleNumberArray addObject:@0];
+                        [poleNumberArray addObject:model.standardlever[i]];
                     }else{
                         if ([model.poleNumber[i] integerValue]-1 > 0) {
                             [poleNumberArray addObject:@([model.poleNumber[i] integerValue]-1)];
@@ -332,23 +338,24 @@ static NSString *const JGHNewScoresPageCellIdentifier = @"JGHNewScoresPageCell";
         model = self.dataArray[cellTag-100];
         NSMutableArray *pushrodArray = [NSMutableArray array];
         for (int i=0; i<model.pushrod.count; i++) {
-            if (i == _index) {
-                if ([model.pushrod[i] integerValue] == -1) {
-//                    if (_switchMode == 0) {
-//                        [pushrodArray addObject:@2];
-//                    }else{
+//            if (_switchMode == 0) {
+                if (i == _index) {
+                    if ([model.pushrod[i] integerValue] == -1) {
                         [pushrodArray addObject:@2];
-//                    }
-                }else{
-                    if ([model.pushrod[i] integerValue]-1 > 0) {
-                        [pushrodArray addObject:@([model.pushrod[i] integerValue]-1)];
                     }else{
-                        [pushrodArray addObject:@0];
+                        if ([model.pushrod[i] integerValue]-1 > 0) {
+                            [pushrodArray addObject:@([model.pushrod[i] integerValue]-1)];
+                        }else{
+                            [pushrodArray addObject:@0];
+                        }
                     }
+                }else{
+                    [pushrodArray addObject:model.pushrod[i]];
                 }
-            }else{
-                [pushrodArray addObject:model.pushrod[i]];
-            }
+//            }else{
+//                //差杆模式
+//                
+//            }
         }
         
         model.pushrod = pushrodArray;

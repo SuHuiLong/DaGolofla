@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -52,23 +53,30 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="上球道" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TEU-NJ-MLc">
-                        <rect key="frame" x="20" y="93" width="54" height="21"/>
+                        <rect key="frame" x="20" y="93" width="54" height="25"/>
                         <fontDescription key="fontDescription" type="system" pointSize="18"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lke-UL-I3w">
-                        <rect key="frame" x="22" y="139" width="50" height="52"/>
+                        <rect key="frame" x="22" y="143" width="50" height="50"/>
                         <constraints>
+                            <constraint firstAttribute="width" secondItem="Lke-UL-I3w" secondAttribute="height" multiplier="1:1" id="GEF-ft-dRW"/>
+                            <constraint firstAttribute="height" constant="50" id="Svg-ZZ-68a"/>
                             <constraint firstAttribute="width" constant="50" id="qVJ-B2-Be1"/>
                         </constraints>
                         <state key="normal" backgroundImage="poorFairwayYES"/>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="qVJ-B2-Be1"/>
+                            </mask>
+                        </variation>
                         <connections>
                             <action selector="fairwayBtn:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="eSR-gp-mAT"/>
                         </connections>
                     </button>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fFp-ar-N5S">
-                        <rect key="frame" x="22" y="191" width="50" height="52"/>
+                        <rect key="frame" x="22" y="193" width="50" height="50"/>
                         <state key="normal" backgroundImage="poorFairwayNO"/>
                         <connections>
                             <action selector="noFairwayBtn:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="G61-NC-3UY"/>
@@ -81,7 +89,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="杆数" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BgB-oc-CbQ">
-                        <rect key="frame" x="158" y="129" width="30" height="18"/>
+                        <rect key="frame" x="156" y="129" width="34" height="18"/>
                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
@@ -92,41 +100,43 @@
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="推杆" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0SR-tx-RCW">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="推杆" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0SR-tx-RCW">
                         <rect key="frame" x="158" y="228" width="30" height="18"/>
                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <button opaque="NO" tag="50" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eBr-7C-g5d">
-                        <rect key="frame" x="204" y="95" width="61" height="51"/>
+                        <rect key="frame" x="206" y="95" width="60" height="50"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="eBr-7C-g5d" secondAttribute="height" multiplier="60:50" id="s2A-rs-1qg"/>
+                            <constraint firstAttribute="width" constant="60" id="wSr-cg-qMF"/>
+                        </constraints>
                         <state key="normal" image="poorScoreJian"/>
                         <connections>
                             <action selector="pushRedBtn:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="uu5-Ax-0JF"/>
                         </connections>
                     </button>
                     <button opaque="NO" tag="60" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TK7-wI-V2n">
-                        <rect key="frame" x="265" y="95" width="61" height="51"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="51" id="JHQ-tq-Wly"/>
-                        </constraints>
+                        <rect key="frame" x="266" y="95" width="60" height="50"/>
                         <state key="normal" image="poorScoreJia"/>
                         <connections>
                             <action selector="pushAddBtn:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="Vah-4i-Yxr"/>
                         </connections>
                     </button>
                     <button opaque="NO" tag="51" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dAL-uK-KXD">
-                        <rect key="frame" x="204" y="194" width="61" height="51"/>
+                        <rect key="frame" x="206" y="193" width="60" height="50"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="60" id="abI-8f-kLA"/>
+                            <constraint firstAttribute="width" secondItem="dAL-uK-KXD" secondAttribute="height" multiplier="60:50" id="vh5-yc-1nh"/>
+                        </constraints>
                         <state key="normal" image="poorScoreJian"/>
                         <connections>
                             <action selector="rodRedBtn:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="vTV-B8-Zn6"/>
                         </connections>
                     </button>
                     <button opaque="NO" tag="61" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yDD-yl-iKs">
-                        <rect key="frame" x="265" y="194" width="61" height="51"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="51" id="nwg-8Y-kty"/>
-                        </constraints>
+                        <rect key="frame" x="266" y="193" width="60" height="50"/>
                         <state key="normal" image="poorScoreJia"/>
                         <connections>
                             <action selector="rodAddBtn:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="PkU-yX-QHD"/>
@@ -184,17 +194,12 @@
                     <constraint firstItem="TEU-NJ-MLc" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="r8h-Sz-fw8"/>
                     <constraint firstItem="TK7-wI-V2n" firstAttribute="width" secondItem="eBr-7C-g5d" secondAttribute="width" id="s4B-BA-gwV"/>
                     <constraint firstItem="dy6-Jc-eaj" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="sOg-8T-JYe"/>
-                    <constraint firstItem="1XH-CU-8en" firstAttribute="centerY" secondItem="TEU-NJ-MLc" secondAttribute="centerY" id="uZt-eJ-CcQ"/>
                     <constraint firstItem="o0B-hG-0Gc" firstAttribute="leading" secondItem="1Ny-nh-byr" secondAttribute="trailing" constant="27" id="ufc-sE-Vqy"/>
                 </constraints>
-                <variation key="default">
-                    <mask key="constraints">
-                        <exclude reference="uZt-eJ-CcQ"/>
-                    </mask>
-                </variation>
             </tableViewCellContentView>
             <connections>
                 <outlet property="fairwayBtn" destination="Lke-UL-I3w" id="CYP-DN-GNW"/>
+                <outlet property="fairwayBtnH" destination="Svg-ZZ-68a" id="KGG-6i-SpD"/>
                 <outlet property="fairwayBtnTop" destination="KgV-Da-z79" id="z28-x7-gKG"/>
                 <outlet property="fairwayLabel" destination="TEU-NJ-MLc" id="y3a-AG-Pck"/>
                 <outlet property="fairwayLabelLeft" destination="r8h-Sz-fw8" id="TfS-xk-dt3"/>
@@ -218,12 +223,15 @@
                 <outlet property="pushRodLabelRight" destination="OuR-Sr-ESk" id="mdG-A1-6u1"/>
                 <outlet property="rodAddBtn" destination="yDD-yl-iKs" id="GVo-zy-OGe"/>
                 <outlet property="rodAddBtnRight" destination="fku-eW-QQR" id="pnm-so-Z5f"/>
+                <outlet property="rodAddBtnTop" destination="OUN-9L-wBK" id="49N-nO-kCw"/>
                 <outlet property="rodNumber" destination="dy6-Jc-eaj" id="m9H-PQ-kGI"/>
                 <outlet property="rodNumberProLable" destination="0SR-tx-RCW" id="Jgy-UR-QwK"/>
                 <outlet property="rodNumberProLableTop" destination="bAP-5y-sxA" id="NfG-IP-P3C"/>
                 <outlet property="rodNumberTop" destination="Cth-Kl-ROR" id="D1B-Fi-OMM"/>
+                <outlet property="rodNumberW" destination="wSr-cg-qMF" id="UG7-7s-F66"/>
                 <outlet property="rodRedBtn" destination="dAL-uK-KXD" id="Zbr-UK-S0a"/>
                 <outlet property="rodRedBtnLeft" destination="LMJ-s2-Uve" id="jrd-hQ-kVy"/>
+                <outlet property="rodRedBtnW" destination="abI-8f-kLA" id="nbo-LQ-JYl"/>
                 <outlet property="scoreCatoryLable" destination="1Ny-nh-byr" id="oT5-XT-RR3"/>
                 <outlet property="scoreCatoryLableRight" destination="ufc-sE-Vqy" id="EQw-iY-16Q"/>
                 <outlet property="totalRodLabel" destination="o0B-hG-0Gc" id="K2k-Rj-Zgd"/>

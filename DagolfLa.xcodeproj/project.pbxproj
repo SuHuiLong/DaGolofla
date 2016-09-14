@@ -242,6 +242,10 @@
 		20F7D4421D86799800302406 /* JGHLableAndGouCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 20F7D4401D86799800302406 /* JGHLableAndGouCell.m */; };
 		20F7D4431D86799800302406 /* JGHLableAndGouCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 20F7D4411D86799800302406 /* JGHLableAndGouCell.xib */; };
 		20F7D4461D869D5A00302406 /* JGHBallAreaModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 20F7D4451D869D5A00302406 /* JGHBallAreaModel.m */; };
+		20F7D4511D88E7FC00302406 /* FCUUID.m in Sources */ = {isa = PBXBuildFile; fileRef = 20F7D44A1D88E7FC00302406 /* FCUUID.m */; };
+		20F7D4521D88E7FC00302406 /* KeyChainStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 20F7D44C1D88E7FC00302406 /* KeyChainStore.m */; };
+		20F7D4531D88E7FC00302406 /* UIDevice+FCUUID.m in Sources */ = {isa = PBXBuildFile; fileRef = 20F7D44E1D88E7FC00302406 /* UIDevice+FCUUID.m */; };
+		20F7D4541D88E7FC00302406 /* UUID.m in Sources */ = {isa = PBXBuildFile; fileRef = 20F7D4501D88E7FC00302406 /* UUID.m */; };
 		20FBD5F51D044E5900DEE48D /* ShowHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 20FBD5F41D044E5900DEE48D /* ShowHUD.m */; };
 		360148F81C1FFE5E0074C395 /* ManageFinfishModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 360148F71C1FFE5E0074C395 /* ManageFinfishModel.m */; };
 		36067BAB1C96A9FB001AE22C /* ScreenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 36067BAA1C96A9FB001AE22C /* ScreenViewController.m */; };
@@ -1714,6 +1718,15 @@
 		20F7D4411D86799800302406 /* JGHLableAndGouCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JGHLableAndGouCell.xib; sourceTree = "<group>"; };
 		20F7D4441D869D5A00302406 /* JGHBallAreaModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHBallAreaModel.h; sourceTree = "<group>"; };
 		20F7D4451D869D5A00302406 /* JGHBallAreaModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHBallAreaModel.m; sourceTree = "<group>"; };
+		20F7D4471D88E56600302406 /* DagolfLa.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = DagolfLa.entitlements; path = DagolfLa/DagolfLa.entitlements; sourceTree = "<group>"; };
+		20F7D4491D88E7FC00302406 /* FCUUID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FCUUID.h; sourceTree = "<group>"; };
+		20F7D44A1D88E7FC00302406 /* FCUUID.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FCUUID.m; sourceTree = "<group>"; };
+		20F7D44B1D88E7FC00302406 /* KeyChainStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeyChainStore.h; sourceTree = "<group>"; };
+		20F7D44C1D88E7FC00302406 /* KeyChainStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeyChainStore.m; sourceTree = "<group>"; };
+		20F7D44D1D88E7FC00302406 /* UIDevice+FCUUID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIDevice+FCUUID.h"; sourceTree = "<group>"; };
+		20F7D44E1D88E7FC00302406 /* UIDevice+FCUUID.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIDevice+FCUUID.m"; sourceTree = "<group>"; };
+		20F7D44F1D88E7FC00302406 /* UUID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UUID.h; sourceTree = "<group>"; };
+		20F7D4501D88E7FC00302406 /* UUID.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UUID.m; sourceTree = "<group>"; };
 		20FBD5F31D044E5900DEE48D /* ShowHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShowHUD.h; sourceTree = "<group>"; };
 		20FBD5F41D044E5900DEE48D /* ShowHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShowHUD.m; sourceTree = "<group>"; };
 		360148F61C1FFE5E0074C395 /* ManageFinfishModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ManageFinfishModel.h; sourceTree = "<group>"; };
@@ -3823,13 +3836,6 @@
 			path = "记分页New";
 			sourceTree = "<group>";
 		};
-		202E05231D7E92B800566CA9 /* 记分页New */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = "记分页New";
-			sourceTree = "<group>";
-		};
 		202EC8081D5852BD0090FE4B /* 球童 */ = {
 			isa = PBXGroup;
 			children = (
@@ -4483,6 +4489,21 @@
 				20F0254D1D70202900D7D7B6 /* JGPlayPayBaseCell.xib */,
 			);
 			path = "添加打球人";
+			sourceTree = "<group>";
+		};
+		20F7D4481D88E7FC00302406 /* UUID */ = {
+			isa = PBXGroup;
+			children = (
+				20F7D4491D88E7FC00302406 /* FCUUID.h */,
+				20F7D44A1D88E7FC00302406 /* FCUUID.m */,
+				20F7D44B1D88E7FC00302406 /* KeyChainStore.h */,
+				20F7D44C1D88E7FC00302406 /* KeyChainStore.m */,
+				20F7D44D1D88E7FC00302406 /* UIDevice+FCUUID.h */,
+				20F7D44E1D88E7FC00302406 /* UIDevice+FCUUID.m */,
+				20F7D44F1D88E7FC00302406 /* UUID.h */,
+				20F7D4501D88E7FC00302406 /* UUID.m */,
+			);
+			path = UUID;
 			sourceTree = "<group>";
 		};
 		360148F51C1FFE4A0074C395 /* 赛事创建完成 */ = {
@@ -5908,6 +5929,7 @@
 			isa = PBXGroup;
 			children = (
 				2080305B1CFCB86B00448BFC /* UMMobClick.framework */,
+				20F7D4471D88E56600302406 /* DagolfLa.entitlements */,
 				20513B671CF7050A003233FB /* zhifu */,
 				36D0B0F91C80156900C7245E /* frameWork */,
 				36BFFD531BC76CDB005B3CE2 /* 社区图标 */,
@@ -6159,6 +6181,7 @@
 		36BFFF431BC76D09005B3CE2 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				20F7D4481D88E7FC00302406 /* UUID */,
 				F5E1B8C31D6B006000414727 /* ZXingObjC */,
 				206ECF921D47568F00880234 /* datePicks */,
 				65B5969E1CAD43AC007AB83A /* ContantHead.h */,
@@ -7201,7 +7224,6 @@
 		8252E85F1D360D1000448404 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				202E05231D7E92B800566CA9 /* 记分页New */,
 				2012AD961D36156400F70E40 /* 记分页 */,
 				82CE50081D4A274800447875 /* 直播和成绩 */,
 				2064DEA31D42190B00F0D52A /* 完成记分 */,
@@ -9076,9 +9098,12 @@
 				TargetAttributes = {
 					36BFFD271BC76C8D005B3CE2 = {
 						CreatedOnToolsVersion = 6.3.2;
-						DevelopmentTeam = 5P6JNXBH3C;
+						DevelopmentTeam = T8ML76W22A;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+							com.apple.Keychain = {
 								enabled = 1;
 							};
 						};
@@ -9857,6 +9882,7 @@
 				654A031B1CC89F70007F5243 /* PersonHomeController.m in Sources */,
 				82E6A70D1CF5DDB8009DD179 /* JGLTeamEditViewController.m in Sources */,
 				82ABF1D21D1C0847004493DB /* JGLPayListTableViewCell.m in Sources */,
+				20F7D4521D88E7FC00302406 /* KeyChainStore.m in Sources */,
 				F53A05701D518F32009DD489 /* JGHSimpleScorePepoleBaseCell.m in Sources */,
 				F5E1BB041D6B006100414727 /* ZXErrors.m in Sources */,
 				202E05271D7E932200566CA9 /* JGHNewScoresPageCell.m in Sources */,
@@ -9984,6 +10010,7 @@
 				F5E1BB751D6B006100414727 /* ZXQRCodeBitMatrixParser.m in Sources */,
 				654332211BD630E500363947 /* PostRewordTableViewCell.m in Sources */,
 				F5E1BB6F1D6B006100414727 /* ZXPDF417ErrorCorrection.m in Sources */,
+				20F7D4541D88E7FC00302406 /* UUID.m in Sources */,
 				F5EE488F1D462625001D5E44 /* JGHScoreBallBaseModel.m in Sources */,
 				20CA13FF1CEAF07100DA15B9 /* SXPickPhoto.m in Sources */,
 				20C1B8B01CE3241C00508ABC /* JGTableViewCell.m in Sources */,
@@ -10094,6 +10121,7 @@
 				36DCB8251C01AA38000EB674 /* TeamJoinModel.m in Sources */,
 				36BF01AA1BC77A6B005B3CE2 /* TeamInviteViewController.m in Sources */,
 				20F025441D70026100D7D7B6 /* JGHPlayBaseInfoCell.m in Sources */,
+				20F7D4531D88E7FC00302406 /* UIDevice+FCUUID.m in Sources */,
 				36D39B311BCCD85C00C0B197 /* UIView+ChangeFrame.m in Sources */,
 				F5AEF7351D41B98E009A8C34 /* JGLAddPlayerTableViewCell.m in Sources */,
 				F5AEF73D1D41B98E009A8C34 /* JGDHistoryScoreShowTableViewCell.m in Sources */,
@@ -10205,6 +10233,7 @@
 				36BFFF6B1BC76D09005B3CE2 /* UIWebView+AFNetworking.m in Sources */,
 				F5E1BB6C1D6B006100414727 /* ZXPDF417BarcodeMatrix.m in Sources */,
 				36BFFF8A1BC76D09005B3CE2 /* FDCalendar.m in Sources */,
+				20F7D4511D88E7FC00302406 /* FCUUID.m in Sources */,
 				82266D681D4EDFD1001A4F9D /* JGLScoreRankTableViewCell.m in Sources */,
 				F51E5EFA1D81309200AE254E /* JGDPlayerNotActScoreDetailViewController.m in Sources */,
 				3660E1031BFC54D90033B4D7 /* MyTeamsTableViewCell.m in Sources */,
@@ -10467,6 +10496,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_ENTITLEMENTS = DagolfLa/DagolfLa.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_BITCODE = NO;
@@ -10516,6 +10546,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_ENTITLEMENTS = DagolfLa/DagolfLa.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_BITCODE = NO;

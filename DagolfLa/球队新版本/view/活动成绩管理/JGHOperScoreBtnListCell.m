@@ -14,6 +14,17 @@
     [super awakeFromNib];
     // Initialization code
     
+    self.oneBGView.layer.masksToBounds = YES;
+    self.oneBGView.layer.cornerRadius = 5.0;
+    
+    self.oneBGViewLeft.constant = 10 *ProportionAdapter;
+    self.oneBGViewRight.constant = 35 *ProportionAdapter;
+    
+    self.twoBGVIew.layer.masksToBounds = YES;
+    self.twoBGVIew.layer.cornerRadius = 5.0;
+    
+    self.twoBGVIewRight.constant = 10 *ProportionAdapter;
+    
     self.oneBtn.titleLabel.font = [UIFont systemFontOfSize:15*ProportionAdapter];
     
     self.twoBtn.titleLabel.font = [UIFont systemFontOfSize:15*ProportionAdapter];
@@ -57,6 +68,23 @@
     [self.twoBtn setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
     [self.threeBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [self.fourBtn setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
+}
+
+- (void)configViewBGColor:(NSInteger)selectHole{
+    NSLog(@"selectHole == %td", selectHole);
+    NSLog(@"oneBtn.tag  === %td", self.oneBtn.tag - 100);
+    NSLog(@"threeBtn.tag  === %td", self.threeBtn.tag/3 - 100);
+    if (self.oneBtn.tag - 100 == selectHole) {
+        self.oneBGView.backgroundColor = [UIColor colorWithHexString:BG_color];
+    }else{
+        self.oneBGView.backgroundColor = [UIColor whiteColor];
+    }
+    
+    if (self.threeBtn.tag/3 - 100 == selectHole) {
+        self.twoBGVIew.backgroundColor = [UIColor colorWithHexString:BG_color];
+    }else{
+        self.twoBGVIew.backgroundColor = [UIColor whiteColor];
+    }
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

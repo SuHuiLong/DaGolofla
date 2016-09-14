@@ -15,7 +15,7 @@
     [super awakeFromNib];
     // Initialization code
     self.totalPoleLeft.constant = 20*ProportionAdapter;
-    self.totalPoleRight.constant = 10*ProportionAdapter;
+    self.totalPoleRight.constant = 6*ProportionAdapter;
     
     self.totalPole.font = [UIFont systemFontOfSize:17*ProportionAdapter];
     
