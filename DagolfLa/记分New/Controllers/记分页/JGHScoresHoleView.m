@@ -356,7 +356,6 @@ static NSString *const JGHTwoScoreAreaCellIdentifier = @"JGHTwoScoreAreaCell";
     
     NSLog(@"%f", btn.frame.origin.y);
     
-    _twoAreaView = [[UIView alloc]initWithFrame:CGRectMake(10 *ProportionAdapter, btn.frame.origin.y + btn.frame.size.height + (_dataArray.count +2) *35 *ProportionAdapter + 37 *ProportionAdapter + 20 *ProportionAdapter, 84 *ProportionAdapter, _areaArray.count *40 *ProportionAdapter + 4*ProportionAdapter)];
     [_twoAreaView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"alertViewBG"]]];
     for (int i=0; i < _areaArray.count; i++) {
         NSInteger btnY;
@@ -366,7 +365,7 @@ static NSString *const JGHTwoScoreAreaCellIdentifier = @"JGHTwoScoreAreaCell";
             btnY = (i * 40 + 2) *ProportionAdapter;
         }
         
-        UIButton *btn = [[UIButton alloc]initWithFrame:CGRectMake(2 *ProportionAdapter, btnY, 80 *ProportionAdapter, 40 *ProportionAdapter)];
+        UIButton *btn = [[UIButton alloc]initWithFrame:CGRectMake(2 *ProportionAdapter, btnY,  _twoAreaView.frame.size.width -4 *ProportionAdapter, 40 *ProportionAdapter)];
         [btn setTitle:[NSString stringWithFormat:@"%@", _areaArray[i]] forState:UIControlStateNormal];
         btn.tag = 400 + i;
         if ([_areaArray[i] isEqualToString:_currentAreaArray[1]]) {

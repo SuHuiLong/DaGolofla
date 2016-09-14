@@ -131,12 +131,12 @@
 //    _switchMode = 0;//默认总杆模式
     _ballDict = [NSMutableDictionary dictionary];
     NSUserDefaults *userdf = [NSUserDefaults standardUserDefaults];
-    if ([[userdf objectForKey:[NSString stringWithFormat:@"%@", _scorekey]] integerValue]) {
-        [userdf setObject:@0 forKey:[NSString stringWithFormat:@"%@", _scorekey]];
-        [userdf synchronize];
-    }else{
-       _currentPage = [[userdf objectForKey:[NSString stringWithFormat:@"%@", _scorekey]] integerValue];
-    }
+//    if ([[userdf objectForKey:[NSString stringWithFormat:@"%@", _scorekey]] integerValue]) {
+//        [userdf setObject:@0 forKey:[NSString stringWithFormat:@"%@", _scorekey]];
+//        [userdf synchronize];
+//    }else{
+//       _currentPage = [[userdf objectForKey:[NSString stringWithFormat:@"%@", _scorekey]] integerValue];
+//    }
     
     
     if ([userdf objectForKey:[NSString stringWithFormat:@"switchMode%@", _scorekey]]) {
@@ -508,7 +508,7 @@
             _scoresView.dataArray = self.userScoreArray;
 //            _scoresView.areaArray = _oneAreaArray;
             _scoresView.scorekey = _scorekey;
-            _scoresView.curPage = _selectPage;
+            _scoresView.curPage = _currentPage +1;
             [self.view addSubview:_scoresView];
             [_scoresView reloadScoreList:_currentAreaArray andAreaArray:_areaArray];//更新UI位置
             _tranView = [[UIView alloc]initWithFrame:CGRectMake(0, _scoresView.frame.size.height, screenWidth, (screenHeight -64)-(194 +20 +20 + self.userScoreArray.count * 70)*ProportionAdapter)];
@@ -526,7 +526,7 @@
             _poorScoreView.frame = CGRectMake(0, 0, screenWidth, (194 + 20 +20+ self.userScoreArray.count * 70)*ProportionAdapter);
             _poorScoreView.dataArray = self.userScoreArray;
 //            _poorScoreView.areaArray = _oneAreaArray;
-            _poorScoreView.curPage = _selectPage;
+            _poorScoreView.curPage = _currentPage +1;
             [self.view addSubview:_scoresView];
             [_poorScoreView reloadScoreList:_currentAreaArray andAreaArray:_areaArray];//更新UI位置
             _tranView = [[UIView alloc]initWithFrame:CGRectMake(0, _poorScoreView.frame.size.height, screenWidth, (screenHeight -64)-(194 +20 +20 + self.userScoreArray.count * 70)*ProportionAdapter)];
@@ -587,11 +587,11 @@
     //    _pa.currentPage = [[not.userInfo objectForKey:@"index"] integerValue];
     [self.titleBtn setTitle:[NSString stringWithFormat:@"%td Hole PAR %td", [self returnPoleNameList:[[not.userInfo objectForKey:@"index"] integerValue]], [self returnStandardlever:[[not.userInfo objectForKey:@"index"] integerValue]]] forState:UIControlStateNormal];
     
-    _currentPage = [[not.userInfo objectForKey:@"index"] integerValue] +1;
+    _currentPage = [[not.userInfo objectForKey:@"index"] integerValue];
     
     //保存
     
-    _selectPage = [[not.userInfo objectForKey:@"index"] integerValue] +1;
+//    _selectPage = [[not.userInfo objectForKey:@"index"] integerValue] +1;
     
 //    NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
 //    if (_currentPage <= 0 || _currentPage > 17) {
@@ -727,6 +727,7 @@
     NSUserDefaults *userdf = [NSUserDefaults standardUserDefaults];
     sub.switchMode = [[userdf objectForKey:[NSString stringWithFormat:@"switchMode%@", _scorekey]] integerValue];
     sub.scorekey = _scorekey;
+    _currentPage = sub.index;
 //    sub.index = _selectPage;
 //    _selectPage = _currentPage;
     sub.currentAreaArray = _currentAreaArray;
@@ -739,10 +740,10 @@
     [self.titleBtn setTitle:[NSString stringWithFormat:@"%td Hole PAR %td", [self returnPoleNameList:sub.index], [self returnStandardlever:sub.index]] forState:UIControlStateNormal];
     
     //保存
-    NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
-    
-    [userdef setObject:@(sub.index) forKey:[NSString stringWithFormat:@"%@", _scorekey]];
-    [userdf synchronize];
+//    NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
+//    
+//    [userdef setObject:@(sub.index) forKey:[NSString stringWithFormat:@"%@", _scorekey]];
+//    [userdf synchronize];
     
     _selectPage = sub.index+1;
 //    _pageControl.currentPage = sub.index;
