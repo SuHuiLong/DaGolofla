@@ -936,7 +936,7 @@
 #pragma mark -- 完成记分---跳转
 - (void)pushJGHEndScoresViewController{
     
-    if (_cabbieFinishScore == 1) {
+    if (_cabbieFinishScore == 1 && _isCabbie == 1) {
         for (UIViewController *controller in self.navigationController.viewControllers) {
             if ([controller isKindOfClass:[JGLCaddieScoreViewController class]]) {
                 NSNotification * notice = [NSNotification notificationWithName:@"reloadCaddieScoreData" object:nil userInfo:nil];
