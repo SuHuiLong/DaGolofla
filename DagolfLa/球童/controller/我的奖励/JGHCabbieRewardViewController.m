@@ -66,6 +66,7 @@ static NSString *const JGHCabbieAwaredCellIdentifier = @"JGHCabbieAwaredCell";
     JGTeamDeatilWKwebViewController *wkCtrl = [[JGTeamDeatilWKwebViewController alloc]init];
     //http://imgcache.dagolfla.com/share/score/rewardPolicy.html
     wkCtrl.detailString = @"http://imgcache.dagolfla.com/share/score/rewardPolicy.html";
+    wkCtrl.isReward = 1;
     [self.navigationController pushViewController:wkCtrl animated:YES];
 }
 #pragma mark -- 下载
