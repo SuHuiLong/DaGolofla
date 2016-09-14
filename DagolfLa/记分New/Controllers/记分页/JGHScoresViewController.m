@@ -61,6 +61,8 @@
     UIImageView *navBarHairlineImageView;
     
     NSInteger _scoreFinish;//是否完成记分0-,1-完成
+    
+    NSInteger _jumpPage;//0
 }
 
 @property (nonatomic, strong)NSMutableArray *userScoreArray;
@@ -369,8 +371,9 @@
     [_tranView removeFromSuperview];
 //    _pa.currentPage = [[not.userInfo objectForKey:@"index"] integerValue];
     [self.titleBtn setTitle:[NSString stringWithFormat:@"%td Hole PAR %td", [self returnPoleNameList:[[not.userInfo objectForKey:@"index"] integerValue]], [self returnStandardlever:[[not.userInfo objectForKey:@"index"] integerValue]]] forState:UIControlStateNormal];
-    _currentPage = [[not.userInfo objectForKey:@"index"] integerValue] +1;
-    _selectPage = [[not.userInfo objectForKey:@"index"] integerValue] +1;
+//    _currentPage = [[not.userInfo objectForKey:@"index"] integerValue] +1;
+//    _selectPage = [[not.userInfo objectForKey:@"index"] integerValue] +1;
+    _jumpPage = [[not.userInfo objectForKey:@"index"] integerValue] +1;
 //    [[ShowHUD showHUD]showToastWithText:[NSString stringWithFormat:@"第-%td-洞", [[not.userInfo objectForKey:@"index"] integerValue]+1] FromView:self.view];
 }
 #pragma mark -- 所有记分完成后
@@ -586,6 +589,11 @@
     JGHScoresMainViewController *s = (JGHScoresMainViewController *)viewController;
     s.switchMode = _switchMode;
     _currentPage = s.index;
+    if (_jumpPage != 0) {
+        _currentPage = _jumpPage +1;
+        _jumpPage = 0;
+    }
+    
     if (_currentPage <= 0) {
         _currentPage = _dataArray.count - 1;
         JGHScoresMainViewController *sub = [[JGHScoresMainViewController alloc]init];
@@ -617,6 +625,11 @@
     JGHScoresMainViewController *s = (JGHScoresMainViewController *)viewController;
     s.switchMode = _switchMode;
     _currentPage = s.index;
+    if (_jumpPage != 0) {
+        _currentPage = _jumpPage +1;
+        _jumpPage = 0;
+    }
+    
     if (_currentPage >= _dataArray.count - 1) {
         _currentPage = 0;
         JGHScoresMainViewController *sub = [[JGHScoresMainViewController alloc]init];
@@ -650,7 +663,7 @@
     NSUserDefaults *userdf = [NSUserDefaults standardUserDefaults];
     sub.switchMode = [[userdf objectForKey:[NSString stringWithFormat:@"switchMode%@", _scorekey]] integerValue];
     sub.scorekey = _scorekey;
-//    sub.index = _currentPage;
+//    sub.index = _selectPage;
 //    _selectPage = _currentPage;
     sub.currentAreaArray = _currentAreaArray;
     __weak JGHScoresViewController *weakSelf = self;
@@ -663,6 +676,7 @@
     _selectPage = sub.index+1;
 //    _pageControl.currentPage = sub.index;
 //    [[ShowHUD showHUD]showToastWithText:[NSString stringWithFormat:@"第-%td-洞", sub.index+1] FromView:self.view];
+    
 }
 #pragma mark -- 获取标准杆
 - (NSInteger)returnStandardlever:(NSInteger)standardId{
