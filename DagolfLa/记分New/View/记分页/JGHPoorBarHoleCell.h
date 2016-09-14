@@ -23,7 +23,7 @@
 - (IBAction)nameBtn:(UIButton *)sender;
 
 @property (weak, nonatomic) IBOutlet UIImageView *nameBtnImageView;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *nameBtnImageViewLeft;//13
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *nameBtnImageViewLeft;//8
 
 @property (weak, nonatomic) IBOutlet UILabel *oneK;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *oneKW;//13

@@ -491,7 +491,7 @@
             _scoresView.curPage = _selectPage;
             [self.view addSubview:_scoresView];
             [_scoresView reloadScoreList:_currentAreaArray andAreaArray:_areaArray];//更新UI位置
-            _tranView = [[UIView alloc]initWithFrame:CGRectMake(0, _scoresView.frame.size.height, screenWidth, (screenHeight -64)-(194 + self.userScoreArray.count * 60)*ProportionAdapter)];
+            _tranView = [[UIView alloc]initWithFrame:CGRectMake(0, _scoresView.frame.size.height, screenWidth, (screenHeight -64)-(194 +20 + self.userScoreArray.count * 70)*ProportionAdapter)];
             _tranView.backgroundColor = [UIColor blackColor];
             _tranView.alpha = 0.3;
             
@@ -509,7 +509,7 @@
             _poorScoreView.curPage = _selectPage;
             [self.view addSubview:_scoresView];
             [_poorScoreView reloadScoreList:_currentAreaArray andAreaArray:_areaArray];//更新UI位置
-            _tranView = [[UIView alloc]initWithFrame:CGRectMake(0, _poorScoreView.frame.size.height, screenWidth, (screenHeight -64)-(194 + self.userScoreArray.count * 60)*ProportionAdapter)];
+            _tranView = [[UIView alloc]initWithFrame:CGRectMake(0, _poorScoreView.frame.size.height, screenWidth, (screenHeight -64)-(194 +20 + self.userScoreArray.count * 70)*ProportionAdapter)];
             _tranView.backgroundColor = [UIColor blackColor];
             _tranView.alpha = 0.3;
             
@@ -842,7 +842,9 @@
                 model = _userScoreArray[i];
                 if ([model.userKey integerValue] == [DEFAULF_USERID integerValue]) {
                     for (int i=0; i<model.poleNumber.count; i++) {
-                        scoreCount += [model.poleNumber[i] integerValue];
+                        if ([model.poleNumber[i] integerValue] != -1) {
+                            scoreCount += [model.poleNumber[i] integerValue];
+                        }
                     }
                 }
             }
@@ -851,7 +853,6 @@
             endScoresCtrl.dict = _macthDict;
             [self.navigationController pushViewController:endScoresCtrl animated:YES];
         }    
-
     }
 }
 #pragma mark -- 切换球场区域 -- 总杆模式
