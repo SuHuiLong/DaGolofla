@@ -56,10 +56,31 @@
 
 -(void)loadLaunchImagefromDoc
 {
-    [[LanuchAdsManager defaultMonitor]showAdAtPath:nil onView:self.window.rootViewController.view timeInterval:3.5 detailParameters:@{}];
+    [[LanuchAdsManager defaultMonitor]showAdAtPath:nil onView:self.window.rootViewController.view timeInterval:3.4 detailParameters:@{}];
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    
+//    //取出新版本号
+//    NSString* versionKey = (NSString*)kCFBundleVersionKey;
+//    NSString* version = [NSBundle mainBundle].infoDictionary[versionKey];
+//    //取出老的版本号
+//    NSString* lastVerson = [[NSUserDefaults standardUserDefaults]valueForKey:versionKey];
+//    if(![version isEqualToString:lastVerson])
+//    {
+//        PageViewController* pageview = [[PageViewController alloc]init];
+//        self.window.rootViewController = pageview;
+//        [pageview setCallBack:^{
+//            [[NSUserDefaults standardUserDefaults]setValue:version forKey:versionKey];
+//            [[NSUserDefaults standardUserDefaults]synchronize];
+//            [self startApp];
+//        }];
+//    }
+//    else
+//    {
+        [self startApp];
+//    }
+    
     //初始化趣拍
     [[TaeSDK sharedInstance] asyncInit:^{
         
@@ -222,30 +243,10 @@
     {
         [[RCIM sharedRCIM] initWithAppKey:@"0vnjpoadnkihz"];//pgyu6atqylmiu
     }
-    
-    //取出新版本号
-    NSString* versionKey = (NSString*)kCFBundleVersionKey;
-    NSString* version = [NSBundle mainBundle].infoDictionary[versionKey];
-    
-    //取出老的版本号
-    NSString* lastVerson = [[NSUserDefaults standardUserDefaults]valueForKey:versionKey];
-    if(![version isEqualToString:lastVerson])
-    {
-        PageViewController* pageview = [[PageViewController alloc]init];
-        self.window.rootViewController = pageview;
-        [pageview setCallBack:^{
-            [[NSUserDefaults standardUserDefaults]setValue:version forKey:versionKey];
-            [[NSUserDefaults standardUserDefaults]synchronize];
-            [self startApp];
-        }];
-    }
-    else
-    {
-        [self startApp];
-    }
     //微信支付
     [WXApi registerApp:@"wxdcdc4e20544ed728"];
     [self umengTrack];
+
     
     return YES;
 }

@@ -394,7 +394,12 @@
     }
     else if (section == 3)
     {
-        return section == 3 ? 3 + _dictPeo.count : 1;
+        if (_dictPeo.count <= 3) {
+            return section == 3 ? 3 + _dictPeo.count : 1;
+        }
+        else{
+            return section == 3 ? 6 : 1;
+        }
     }
     else{
         return 1;
