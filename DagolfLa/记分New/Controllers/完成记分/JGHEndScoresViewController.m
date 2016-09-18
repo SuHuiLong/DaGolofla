@@ -535,7 +535,7 @@
 -(void)faClick:(UIButton *)btn{
     btn.enabled = NO;
     [_textView resignFirstResponder];
-//    [[ShowHUD showHUD]showAnimationWithText:@"正在发布..." FromView:self.view];
+    [[ShowHUD showHUD]showAnimationWithText:@"发布中..." FromView:self.view];
     //    BOOL type = 0;
     [_dict setValue:@1 forKey:@"moodType"];
     //isSync
@@ -555,7 +555,7 @@
     if (![Helper isBlankString:_textView.text]) {
         if (_vedioData) {
             [[PostDataRequest sharedInstance]postDataAndVideoDataRequest:kUsersave_URL parameter:_dict videoData:_vedioData imageDataArr:_selectImages success:^(id respondsData) {
-                [MBProgressHUD hideHUDForView:self.view  animated:YES];
+                [[ShowHUD showHUD]hideAnimationFromView:self.view];
                 
                 //NSLog(@"%@",dict);
                 btn.enabled = YES;
@@ -572,7 +572,7 @@
                 });
                 alertView.tag = 1000;
             } failed:^(NSError *error) {
-                [MBProgressHUD hideHUDForView:self.view  animated:YES];
+                [[ShowHUD showHUD]hideAnimationFromView:self.view];
                 btn.enabled = YES;
                 UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"\n链接超时！\n" delegate:self cancelButtonTitle:nil otherButtonTitles:nil, nil];
                 [alertView show];
@@ -582,7 +582,7 @@
             }];
         }else{
             [[PostDataRequest sharedInstance]postDataAndImageRequest:kUsersave_URL parameter:_dict imageDataArr:_selectImages success:^(id respondsData) {
-                [MBProgressHUD hideHUDForView:self.view  animated:YES];
+                [[ShowHUD showHUD]hideAnimationFromView:self.view];
                 NSDictionary* dictData = [NSJSONSerialization JSONObjectWithData:respondsData options:NSJSONReadingMutableContainers error:nil];
                 NSLog(@"%@",dictData);
                 btn.enabled = YES;
@@ -601,7 +601,7 @@
                 
             } failed:^(NSError *error) {
                 btn.enabled = YES;
-                [MBProgressHUD hideHUDForView:self.view  animated:YES];
+                [[ShowHUD showHUD]hideAnimationFromView:self.view];
                 UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"\n链接超时！\n" delegate:self cancelButtonTitle:nil otherButtonTitles:nil, nil];
                 [alertView show];
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
@@ -613,16 +613,12 @@
     else
     {
         btn.enabled = YES;
-        [MBProgressHUD hideHUDForView:self.view  animated:YES];
-        //
-        //        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"请重新输入文字" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-        //        [alertView show];
-        [Helper alertViewWithTitle:@"请重新输入文字" withBlock:^(UIAlertController *alertView) {
+       [[ShowHUD showHUD]hideAnimationFromView:self.view];
+        
+        [Helper alertViewWithTitle:@"请说点什么吧！" withBlock:^(UIAlertController *alertView) {
             [self presentViewController:alertView animated:YES completion:nil];
         }];
     }
-    
-    btn.enabled = YES;
 }
 
 

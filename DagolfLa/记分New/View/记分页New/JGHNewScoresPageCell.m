@@ -205,7 +205,11 @@
         if ([[model.poleNumber objectAtIndex:index] integerValue] == 0) {
             self.pushNumber.text = @"0";
         }else{
-            self.pushNumber.text = [NSString stringWithFormat:@"%td", ([[model.poleNumber objectAtIndex:index] integerValue] - [[model.standardlever objectAtIndex:index] integerValue])];
+            if ([[model.poleNumber objectAtIndex:index] integerValue] - [[model.standardlever objectAtIndex:index] integerValue] > 0) {
+                self.pushNumber.text = [NSString stringWithFormat:@"+%td", ([[model.poleNumber objectAtIndex:index] integerValue] - [[model.standardlever objectAtIndex:index] integerValue])];
+            }else{
+                self.pushNumber.text = [NSString stringWithFormat:@"%td", ([[model.poleNumber objectAtIndex:index] integerValue] - [[model.standardlever objectAtIndex:index] integerValue])];
+            }
         }
         
         self.pushNumber.font = [UIFont systemFontOfSize:25*ProportionAdapter];

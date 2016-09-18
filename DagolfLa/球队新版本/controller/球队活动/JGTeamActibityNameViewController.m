@@ -158,7 +158,7 @@ static CGFloat ImageHeight  = 210.0;
     self.imgProfile = [[UIImageView alloc] initWithImage:[UIImage imageNamed:TeamBGImage]];
     self.imgProfile.frame = CGRectMake(0, 0, screenWidth, ImageHeight);
     self.imgProfile.userInteractionEnabled = YES;
-    self.teamActibityNameTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight - 44)];
+    self.teamActibityNameTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight - 44)];
     UINib *tableViewNib = [UINib nibWithNibName:@"JGHHeaderLabelCell" bundle: [NSBundle mainBundle]];
     [self.teamActibityNameTableView registerNib:tableViewNib forCellReuseIdentifier:JGHHeaderLabelCellIdentifier];
     UINib *addressNib = [UINib nibWithNibName:@"JGTeamActivityWithAddressCell" bundle: [NSBundle mainBundle]];
@@ -177,7 +177,7 @@ static CGFloat ImageHeight  = 210.0;
     [self.view addSubview:self.imgProfile];
     
     //渐变图
-    _gradientImage = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, ImageHeight)];
+    _gradientImage = [[UIImageView alloc]initWithFrame:self.imgProfile.frame];
     [_gradientImage setImage:[UIImage imageNamed:@"backChange"]];
     [self.imgProfile addSubview:_gradientImage];
     
@@ -262,20 +262,7 @@ static CGFloat ImageHeight  = 210.0;
             }
             
             self.costListArray = [data objectForKey:@"costList"];
-            
-//            for (int i = 0; i < self.costListArray.count; i++) {
-//                if ([[self.costListArray[i] allKeys] containsObject:@"money"] == YES) {
-//                    if (![Helper isBlankString:_strShare]) {
-//                        _strShare = [NSString stringWithFormat:@"%@,%@:%@",_strShare,[self.costListArray[i] costName],[self.costListArray[i] money]];
-//                    }
-//                    else{
-//                        _strShare = [NSString stringWithFormat:@"%@:%@",[self.costListArray[i] costName],[self.costListArray[i] money]];
-//                    }
-//                }
-//            }
-            
-            
-            
+
             NSMutableDictionary *dict = [NSMutableDictionary dictionary];
             
             if ([data objectForKey:@"teamMember"]) {
@@ -298,11 +285,19 @@ static CGFloat ImageHeight  = 210.0;
                 if ([_isApply integerValue] == 0) {
                     [self createApplyBtn:0];//报名按钮
                 }else{
-                    [self createCancelBtnAndApplyOrPay];//已报名
+                    [self createCancelBtnAndApplyOrPay:0];//已报名
                 }
             }else{
-//                self.teamActibityNameTableView.frame = CGRectMake(0, 0, ScreenWidth, ScreenHeight);
-                [self createApplyBtn:1];//报名按钮--禁止报名
+                //判断活动是否结束 endDate
+                if ([[Helper returnCurrentDateString] compare:_model.endDate] < 0) {
+                    if ([_isApply integerValue] == 0) {
+                        self.teamActibityNameTableView.frame = CGRectMake(0, 0, screenWidth, screenHeight);
+                    }else{
+                        [self createCancelBtnAndApplyOrPay:1];//已报名
+                    }
+                }else{
+                    self.teamActibityNameTableView.frame = CGRectMake(0, 0, screenWidth, screenHeight);
+                }
             }
             
             [self.teamActibityNameTableView reloadData];
@@ -477,7 +472,7 @@ static CGFloat ImageHeight  = 210.0;
     [self presentViewController:aleVC animated:YES completion:nil];
 }
 #pragma mark -- 取消报名－－报名／支付
-- (void)createCancelBtnAndApplyOrPay{
+- (void)createCancelBtnAndApplyOrPay:(NSInteger)applercatory{
     self.headPortraitBtn.layer.masksToBounds = YES;
     self.headPortraitBtn.layer.cornerRadius = 8.0;
     
@@ -488,21 +483,22 @@ static CGFloat ImageHeight  = 210.0;
 
     UIButton *cancelApplyBtn = [[UIButton alloc]initWithFrame:CGRectMake(photoBtn.frame.size.width, screenHeight-44, (screenWidth - 75 *ScreenWidth/375)/2, 44)];
     [cancelApplyBtn setTitle:@"取消报名" forState:UIControlStateNormal];
-    cancelApplyBtn.backgroundColor = [UIColor colorWithHexString:Nav_Color];
-    [cancelApplyBtn addTarget:self action:@selector(cancelApplyBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-    if ([[Helper returnCurrentDateString] compare:_model.signUpEndTime] >= 0) {
+    cancelApplyBtn.titleLabel.font = [UIFont systemFontOfSize:17 *ProportionAdapter];
+    if (applercatory == 0) {
+        cancelApplyBtn.backgroundColor = [UIColor colorWithHexString:Nav_Color];
+        [cancelApplyBtn addTarget:self action:@selector(cancelApplyBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    }else{
         cancelApplyBtn.backgroundColor = [UIColor lightGrayColor];
     }
+    
     
     [self.view addSubview:cancelApplyBtn];
     
     UIButton *applyOrPayBtn = [[UIButton alloc]initWithFrame:CGRectMake(photoBtn.frame.size.width + cancelApplyBtn.frame.size.width, screenHeight-44, (screenWidth - 75 *ScreenWidth/375)/2, 44)];
     [applyOrPayBtn setTitle:@"报名／支付" forState:UIControlStateNormal];
+    applyOrPayBtn.titleLabel.font = [UIFont systemFontOfSize:17 *ProportionAdapter];
     applyOrPayBtn.backgroundColor = [UIColor colorWithHexString:Cancel_Color];
     [applyOrPayBtn addTarget:self action:@selector(applyOrPayBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-    if ([[Helper returnCurrentDateString] compare:_model.signUpEndTime] >= 0) {
-        applyOrPayBtn.backgroundColor = [UIColor lightGrayColor];
-    }
     
     [self.view addSubview:applyOrPayBtn];
 }
@@ -555,17 +551,10 @@ static CGFloat ImageHeight  = 210.0;
     [self.view addSubview:lines];
     self.applyBtn = [[UIButton alloc]initWithFrame:CGRectMake(photoBtn.frame.size.width + 1, screenHeight-44, screenWidth - 75 *ScreenWidth/375, 44)];
     [self.applyBtn setTitle:@"报名参加" forState:UIControlStateNormal];
-    
-    
-    if (btnID == 0) {
-        [self.applyBtn addTarget:self action:@selector(applyAttendBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-        self.applyBtn.backgroundColor = [UIColor colorWithHexString:Nav_Color];
-        [photoBtn setImage:[UIImage imageNamed:@"consulting"] forState:UIControlStateNormal];
-    }else{
-        [self.applyBtn addTarget:self action:@selector(applyNoAttendBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-        self.applyBtn.backgroundColor = [UIColor lightGrayColor];
-        [photoBtn setImage:[UIImage imageNamed:@"consultingLight"] forState:UIControlStateNormal];
-    }
+    self.applyBtn.titleLabel.font = [UIFont systemFontOfSize:17 *ProportionAdapter];
+    [self.applyBtn addTarget:self action:@selector(applyAttendBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    self.applyBtn.backgroundColor = [UIColor colorWithHexString:Nav_Color];
+    [photoBtn setImage:[UIImage imageNamed:@"consulting"] forState:UIControlStateNormal];
     
     [self.view addSubview:self.applyBtn];
 }

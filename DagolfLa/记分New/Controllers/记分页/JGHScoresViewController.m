@@ -340,11 +340,6 @@
     }
     
     [dict setObject:listArray forKey:@"list"];
-//    dispatch_queue_t queue=dispatch_get_main_queue();
-//    dispatch_async(queue, ^{
-//        //code here
-//        NSLog(@"currentThread == %@", [NSThread currentThread]);
-//    });
     
     NSLog(@"mainThread == %@", [NSThread mainThread]);
     [[JsonHttp jsonHttp]httpRequestHaveSpaceWithMD5:@"score/saveScore" JsonKey:nil withData:dict failedBlock:^(id errType) {
@@ -370,7 +365,6 @@
 #pragma mark -- 所有记分完成后
 - (void)noticeAllScoresCtrl{
     _selectcompleteHole = 1;
-//    _isFinishScore = 1;
     [_item setTitle:@"完成"];
 }
 #pragma mark -- getScoreList 获取活动计分列表
@@ -506,7 +500,6 @@
             _scoresView.delegate = self;
             _scoresView.frame = CGRectMake(0, 0, screenWidth, (194 +20 +20 + self.userScoreArray.count * 70)*ProportionAdapter);
             _scoresView.dataArray = self.userScoreArray;
-//            _scoresView.areaArray = _oneAreaArray;
             _scoresView.scorekey = _scorekey;
             _scoresView.curPage = _currentPage;
             [self.view addSubview:_scoresView];
@@ -525,7 +518,6 @@
             _poorScoreView.delegate = self;
             _poorScoreView.frame = CGRectMake(0, 0, screenWidth, (194 + 20 +20+ self.userScoreArray.count * 70)*ProportionAdapter);
             _poorScoreView.dataArray = self.userScoreArray;
-//            _poorScoreView.areaArray = _oneAreaArray;
             _poorScoreView.curPage = _currentPage;
             [self.view addSubview:_scoresView];
             [_poorScoreView reloadScoreList:_currentAreaArray andAreaArray:_areaArray];//更新UI位置
@@ -584,13 +576,10 @@
     [_scoresView removeFromSuperview];
     [_poorScoreView removeFromSuperview];
     [_tranView removeFromSuperview];
-    //    _pa.currentPage = [[not.userInfo objectForKey:@"index"] integerValue];
     [self.titleBtn setTitle:[NSString stringWithFormat:@"%td Hole PAR %td", [self returnPoleNameList:[[not.userInfo objectForKey:@"index"] integerValue]], [self returnStandardlever:[[not.userInfo objectForKey:@"index"] integerValue]]] forState:UIControlStateNormal];
     
     _currentPage = [[not.userInfo objectForKey:@"index"] integerValue];
-    
     JGHScoresMainViewController *vc2;
-
     for (JGHScoresMainViewController *vc in _pageViewController.viewControllers) {
         if (vc.index == _currentPage){
             vc2 = vc;
@@ -614,20 +603,6 @@
 
     
     [self pageViewController:_pageViewController viewControllerAfterViewController:vc2];
-    //保存
-    
-//    _selectPage = [[not.userInfo objectForKey:@"index"] integerValue] +1;
-    
-//    NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
-//    if (_currentPage <= 0 || _currentPage > 17) {
-//        [userdef setObject:@0 forKey:[NSString stringWithFormat:@"%@", _scorekey]];
-//    }else{
-//        [userdef setObject:@(_currentPage -1) forKey:[NSString stringWithFormat:@"%@", _scorekey]];
-//    }
-//    [userdef synchronize];
-    
-    //    _selectPage = [[userdef objectForKey:[NSString stringWithFormat:@"%@", _scorekey]] integerValue] +1;
-    //    [[ShowHUD showHUD]showToastWithText:[NSString stringWithFormat:@"第-%td-洞", [[not.userInfo objectForKey:@"index"] integerValue]+1] FromView:self.view];
 }
 //返回前一页的视图控制器
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController
@@ -635,17 +610,11 @@
     
     JGHScoresMainViewController *s = (JGHScoresMainViewController *)viewController;
     s.switchMode = _switchMode;
-//    NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
-//    _currentPage = [[userdef objectForKey:[NSString stringWithFormat:@"%@", _scorekey]] integerValue];
     _currentPage = s.index;
     
     if (_currentPage <= 0) {
         _currentPage = _dataArray.count - 1;
         JGHScoresMainViewController *sub = [[JGHScoresMainViewController alloc]init];
-//        NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
-//        [userdef setObject:@(_currentPage) forKey:[NSString stringWithFormat:@"%@", _scorekey]];
-//        [userdef synchronize];
-        
         sub.index = _currentPage;
         //保存
   
@@ -660,11 +629,7 @@
     {
         //保存
         NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
-//        _currentPage = [[userdef objectForKey:[NSString stringWithFormat:@"%@", _scorekey]] integerValue];
-        
         _currentPage--;
-        
-//        [userdef setObject:@(_currentPage) forKey:[NSString stringWithFormat:@"%@", _scorekey]];
         
         JGHScoresMainViewController *sub = [[JGHScoresMainViewController alloc]init];
         sub.switchMode = [[userdef objectForKey:[NSString stringWithFormat:@"switchMode%@", _scorekey]] integerValue];
@@ -675,7 +640,6 @@
         sub.scorekey = _scorekey;
         sub.dataArray = self.userScoreArray;
         sub.currentAreaArray = _currentAreaArray;
-//        [self.titleBtn setTitle:[NSString stringWithFormat:@"%td Hole PAR %td", [self returnPoleNameList:sub.index], [self returnStandardlever:sub.index]] forState:UIControlStateNormal];
         return sub;
     }
     
@@ -689,9 +653,6 @@
     JGHScoresMainViewController *s = (JGHScoresMainViewController *)viewController;
     s.switchMode = _switchMode;
     
-//    NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
-//    _currentPage = [[userdef objectForKey:[NSString stringWithFormat:@"%@", _scorekey]] integerValue];
-    
     _currentPage = s.index;
     
     if (_currentPage >= _dataArray.count - 1) {
@@ -700,12 +661,6 @@
         NSUserDefaults *userdf = [NSUserDefaults standardUserDefaults];
         sub.switchMode = [[userdf objectForKey:[NSString stringWithFormat:@"switchMode%@", _scorekey]] integerValue];
         sub.index = _currentPage;
-        
-//        //保存
-//        NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
-        
-//        [userdf setObject:@(_currentPage) forKey:[NSString stringWithFormat:@"%@", _scorekey]];
-//        [userdf synchronize];
         
         sub.scorekey = _scorekey;
         sub.dataArray = self.userScoreArray;
@@ -716,15 +671,8 @@
     {
         //保存
         NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
-//        _currentPage = [[userdef objectForKey:[NSString stringWithFormat:@"%@", _scorekey]] integerValue];
         
         _currentPage++;
-        
-//        if (_currentPage < 0 || _currentPage > 17) {
-//            [userdef setObject:@0 forKey:[NSString stringWithFormat:@"%@", _scorekey]];
-//        }else{
-//            [userdef setObject:@(_currentPage) forKey:[NSString stringWithFormat:@"%@", _scorekey]];
-//        }
         
         JGHScoresMainViewController *sub = [[JGHScoresMainViewController alloc]init];
         
@@ -736,11 +684,9 @@
         sub.scorekey = _scorekey;
         sub.dataArray = self.userScoreArray;
         sub.currentAreaArray = _currentAreaArray;
-//        [self.titleBtn setTitle:[NSString stringWithFormat:@"%td Hole PAR %td", [self returnPoleNameList:sub.index], [self returnStandardlever:sub.index]] forState:UIControlStateNormal];
         NSLog(@"%@",sub);
         return sub;
     }
-    
 }
 
 - (void)pageViewController:(UIPageViewController *)pageViewController didFinishAnimating:(BOOL)finished previousViewControllers:(NSArray *)previousViewControllers transitionCompleted:(BOOL)completed
@@ -748,33 +694,20 @@
     
     
     JGHScoresMainViewController *sub = (JGHScoresMainViewController *)pageViewController.viewControllers[0];
-//    sub.delegate = self;
     NSUserDefaults *userdf = [NSUserDefaults standardUserDefaults];
     sub.switchMode = [[userdf objectForKey:[NSString stringWithFormat:@"switchMode%@", _scorekey]] integerValue];
     sub.scorekey = _scorekey;
     _currentPage = sub.index;
-//    sub.index = _selectPage;
-//    _selectPage = _currentPage;
     sub.currentAreaArray = _currentAreaArray;
     __weak JGHScoresViewController *weakSelf = self;
     sub.returnScoresDataArray= ^(NSMutableArray *dataArray){
         weakSelf.userScoreArray = dataArray;
         _isEdtor = 1;
     };
-//    [self.titleBtn setTitle:[NSString stringWithFormat:@"%td Hole PAR %td", sub.index+1, [self returnStandardlever:sub.index]] forState:UIControlStateNormal];
     [self.titleBtn setTitle:[NSString stringWithFormat:@"%td Hole PAR %td", [self returnPoleNameList:sub.index], [self returnStandardlever:sub.index]] forState:UIControlStateNormal];
-    
-    //保存
-//    NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
-//    
-//    [userdef setObject:@(sub.index) forKey:[NSString stringWithFormat:@"%@", _scorekey]];
-//    [userdf synchronize];
     
     _currentPage = sub.index;
     _selectPage = sub.index+1;
-//    _pageControl.currentPage = sub.index;
-//    [[ShowHUD showHUD]showToastWithText:[NSString stringWithFormat:@"第-%td-洞", sub.index+1] FromView:self.view];
-    
 }
 #pragma mark -- 获取标准杆
 - (NSInteger)returnStandardlever:(NSInteger)standardId{

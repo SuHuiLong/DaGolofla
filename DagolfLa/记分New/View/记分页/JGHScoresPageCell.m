@@ -224,7 +224,11 @@
         if ([[model.poleNumber objectAtIndex:index] integerValue] == 0) {
             self.poleValue.text = @"0";
         }else{
-            self.poleValue.text = [NSString stringWithFormat:@"%td", ([[model.poleNumber objectAtIndex:index] integerValue] - [[model.standardlever objectAtIndex:index] integerValue])];
+            if ([[model.poleNumber objectAtIndex:index] integerValue] - [[model.standardlever objectAtIndex:index] integerValue] > 0) {
+                self.poleValue.text = [NSString stringWithFormat:@"+%td", ([[model.poleNumber objectAtIndex:index] integerValue] - [[model.standardlever objectAtIndex:index] integerValue])];
+            }else{
+                self.poleValue.text = [NSString stringWithFormat:@"%td", ([[model.poleNumber objectAtIndex:index] integerValue] - [[model.standardlever objectAtIndex:index] integerValue])];
+            }
         }
         
         self.poleValue.font = [UIFont systemFontOfSize:25*ProportionAdapter];
