@@ -102,6 +102,12 @@
     btn.titleLabel.font = [UIFont systemFontOfSize:15*ProportionAdapter];
     [btn addTarget:self action:@selector(chooseStyleClick:) forControlEvents:UIControlEventTouchUpInside];
     [viewBack addSubview:btn];
+    
+    UIButton* btnView = [UIButton buttonWithType:UIButtonTypeCustom];
+    btnView.frame = CGRectMake(0, 0, screenWidth, 100*screenWidth/375);
+    [btnView addTarget:self action:@selector(chooseStyleClick:) forControlEvents:UIControlEventTouchUpInside];
+    [viewBack addSubview:btnView];
+    
 }
 
 -(void)chooseStyleClick:(UIButton *)btn
