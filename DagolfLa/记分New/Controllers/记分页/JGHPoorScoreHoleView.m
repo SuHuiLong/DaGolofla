@@ -20,7 +20,6 @@ static NSString *const JGHTwoScoreAreaCellIdentifier = @"JGHTwoScoreAreaCell";
 
 @interface JGHPoorScoreHoleView ()<UITableViewDelegate, UITableViewDataSource, JGHScoreAreaCellDelegate, JGHScoresHoleCellDelegate, JGHTwoScoreAreaCellDelegate>
 {
-//    NSArray *_titleArray;
     NSArray *_colorArray;
     NSInteger _areaId;// 0-无区域，1- ； 2-；
     
@@ -45,7 +44,6 @@ static NSString *const JGHTwoScoreAreaCellIdentifier = @"JGHTwoScoreAreaCell";
 - (instancetype)init{
     if (self == [super init]) {
         self.backgroundColor = [UIColor colorWithHexString:BG_color];
-//        _titleArray = @[@[@"1", @"2", @"3", @"4", @"5", @"6", @"7", @"8", @"9"], @[@"10", @"11", @"12", @"13", @"14", @"15", @"16", @"17", @"18"]];
         _colorArray = @[@"#FFFFFF", @"#EEEEEE", @"#FFFFFF", @"#F9F9F9", @"#FFFFFF", @"#F9F9F9"];
         self.scoreTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, (194 +20 +20 +60)*ProportionAdapter) style:UITableViewStylePlain];
         self.scoreTableView.backgroundColor = [UIColor colorWithHexString:BG_color];
@@ -141,7 +139,6 @@ static NSString *const JGHTwoScoreAreaCellIdentifier = @"JGHTwoScoreAreaCell";
             NSLog(@"indexPath.row -1 == %td", indexPath.row -1);
             NSLog(@"indexPath.section -1 == %td", indexPath.section -1);
             model = _dataArray[indexPath.row -2];
-//            [scoresPageCell configOneToNine:model.poleNumber andUserName:model.userName];
             [scoresPageCell configOneToNine:model.poleNumber andUserName:model.userName andStandradArray:model.standardlever];
         }
     }else{
@@ -153,7 +150,6 @@ static NSString *const JGHTwoScoreAreaCellIdentifier = @"JGHTwoScoreAreaCell";
             [scoresPageCell configNineToEighteenth:model.standardlever andUserName:@"PAR"];
         }else{
             model = _dataArray[indexPath.row -2];
-//            [scoresPageCell configNineToEighteenth:model.poleNumber andUserName:model.userName];
             [scoresPageCell configNineToEighteenth:model.poleNumber andUserName:model.userName andStandradArray:model.standardlever];
         }
     }

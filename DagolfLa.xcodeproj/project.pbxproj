@@ -70,7 +70,6 @@
 		20513B5C1CF69F3B003233FB /* JGHPlayersModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 20513B5B1CF69F3B003233FB /* JGHPlayersModel.m */; };
 		20513BCE1CF7050A003233FB /* AlipaySDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 20513B681CF7050A003233FB /* AlipaySDK.bundle */; };
 		20513BCF1CF7050A003233FB /* AlipaySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 20513B691CF7050A003233FB /* AlipaySDK.framework */; };
-		20513BD01CF7050A003233FB /* APAuthV2Info.m in Sources */ = {isa = PBXBuildFile; fileRef = 20513B6B1CF7050A003233FB /* APAuthV2Info.m */; };
 		20513BD11CF7050A003233FB /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 20513B6C1CF7050A003233FB /* libcrypto.a */; };
 		20513BD21CF7050A003233FB /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 20513B6D1CF7050A003233FB /* libssl.a */; };
 		20513BD31CF7050A003233FB /* Order.m in Sources */ = {isa = PBXBuildFile; fileRef = 20513BBB1CF7050A003233FB /* Order.m */; };
@@ -1333,8 +1332,6 @@
 		20513B5B1CF69F3B003233FB /* JGHPlayersModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHPlayersModel.m; sourceTree = "<group>"; };
 		20513B681CF7050A003233FB /* AlipaySDK.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = AlipaySDK.bundle; sourceTree = "<group>"; };
 		20513B691CF7050A003233FB /* AlipaySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AlipaySDK.framework; sourceTree = "<group>"; };
-		20513B6A1CF7050A003233FB /* APAuthV2Info.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APAuthV2Info.h; sourceTree = "<group>"; };
-		20513B6B1CF7050A003233FB /* APAuthV2Info.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APAuthV2Info.m; sourceTree = "<group>"; };
 		20513B6C1CF7050A003233FB /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcrypto.a; sourceTree = "<group>"; };
 		20513B6D1CF7050A003233FB /* libssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libssl.a; sourceTree = "<group>"; };
 		20513B6F1CF7050A003233FB /* aes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aes.h; sourceTree = "<group>"; };
@@ -3833,8 +3830,6 @@
 			children = (
 				20513B681CF7050A003233FB /* AlipaySDK.bundle */,
 				20513B691CF7050A003233FB /* AlipaySDK.framework */,
-				20513B6A1CF7050A003233FB /* APAuthV2Info.h */,
-				20513B6B1CF7050A003233FB /* APAuthV2Info.m */,
 				20513B6C1CF7050A003233FB /* libcrypto.a */,
 				20513B6D1CF7050A003233FB /* libssl.a */,
 				20513B6E1CF7050A003233FB /* openssl */,
@@ -9021,7 +9016,7 @@
 				TargetAttributes = {
 					36BFFD271BC76C8D005B3CE2 = {
 						CreatedOnToolsVersion = 6.3.2;
-						DevelopmentTeam = 5P6JNXBH3C;
+						DevelopmentTeam = T8ML76W22A;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -9519,7 +9514,6 @@
 				F5AAAA311D59B08D0016E6F6 /* JGDPlayPersonTableViewCell.m in Sources */,
 				82EDDF7F1D6154A8003D51EB /* JGLCaddieSelfScoreViewController.m in Sources */,
 				F5E1BAF01D6B006100414727 /* ZXBitMatrix.m in Sources */,
-				20513BD01CF7050A003233FB /* APAuthV2Info.m in Sources */,
 				36B9B5921C3DFFCE0053B227 /* ShopCarViewController.m in Sources */,
 				36BF01DA1BC77BB0005B3CE2 /* CaptchaModel.m in Sources */,
 				20591C5E1D220EE0003271EC /* JGDPrivateAccountViewController.m in Sources */,

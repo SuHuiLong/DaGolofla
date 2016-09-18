@@ -21,7 +21,6 @@ static NSString *const JGHTwoScoreAreaCellIdentifier = @"JGHTwoScoreAreaCell";
 
 @interface JGHScoresHoleView ()<UITableViewDelegate, UITableViewDataSource, JGHScoresHoleCellDelegate, JGHTwoScoreAreaCellDelegate, JGHPoorBarHoleCellDelegate>
 {
-//    NSArray *_titleArray;
     NSArray *_colorArray;
     NSInteger _areaId;// 0-无区域，1- ； 2-；
     
@@ -38,10 +37,6 @@ static NSString *const JGHTwoScoreAreaCellIdentifier = @"JGHTwoScoreAreaCell";
 }
 
 @property (nonatomic, strong)UITableView *scoreTableView;
-
-//@property (nonatomic, copy)NSString *oneArea;
-
-//@property (nonatomic, copy)NSString *twoArea;
 
 @end
 
@@ -89,11 +84,6 @@ static NSString *const JGHTwoScoreAreaCellIdentifier = @"JGHTwoScoreAreaCell";
 - (void)reloadScoreList:(NSArray *)currentAreaArray andAreaArray:(NSArray *)areaArray{
     _areaArray = areaArray;
     _currentAreaArray = currentAreaArray;
-//    if (_index < 9) {
-//        _areaLable.text = _currentAreaArray[0];
-//    }else{
-//        _areaLable.text = _currentAreaArray[1];
-//    }
     _imageSelectOne = 0;
     _imageSelectTwo = 0;
     if (_curPage < 9) {
@@ -183,15 +173,12 @@ static NSString *const JGHTwoScoreAreaCellIdentifier = @"JGHTwoScoreAreaCell";
         scoreAreaCell.backgroundColor = [UIColor colorWithHexString:BG_color];
         scoreAreaCell.delegate = self;
         scoreAreaCell.nameBtn.userInteractionEnabled = YES;
-//        [scoreAreaCell.contentView insertSubview:scoreAreaCell.nameBtn atIndex:[scoreAreaCell.contentView.subviews count]];
         [scoreAreaCell configJGHPoorBarHoleCell:_currentAreaArray[section] andImageDirection:_imageSelectOne];
-//        scoreAreaCell.contentView.userInteractionEnabled = YES;
         return scoreAreaCell;
     }else{
         JGHTwoScoreAreaCell *twoScoreAreaCell = [tableView dequeueReusableCellWithIdentifier:JGHTwoScoreAreaCellIdentifier];
         twoScoreAreaCell.backgroundColor = [UIColor colorWithHexString:BG_color];
         twoScoreAreaCell.delegate = self;
-//        twoScoreAreaCell.areaNameBtn.userInteractionEnabled = YES;
         [twoScoreAreaCell configArea:_currentAreaArray[section] andImageDirection:_imageSelectTwo];
         twoScoreAreaCell.contentView.userInteractionEnabled = YES;
         return twoScoreAreaCell;
@@ -215,20 +202,7 @@ static NSString *const JGHTwoScoreAreaCellIdentifier = @"JGHTwoScoreAreaCell";
         _twoAreaView = nil;
         return;
     }
-    /*
-    NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
     
-    NSMutableDictionary *userDict = [NSMutableDictionary dictionary];
-    if ((cellTag%100/10) == 0) {
-        [userdef setObject:@(btnTag -1) forKey:[NSString stringWithFormat:@"%@", _scorekey]];
-        [userDict setObject:@(btnTag -1) forKey:@"index"];
-    }else{
-        [userDict setObject:@(btnTag -1 + 9) forKey:@"index"];
-        [userdef setObject:@(btnTag -1 + 9) forKey:[NSString stringWithFormat:@"%@", _scorekey]];
-    }
-    //创建一个消息对象
-    NSNotification * notice = [NSNotification notificationWithName:@"noticePushScores" object:nil userInfo:nil];
-    */
     NSMutableDictionary *userDict = [NSMutableDictionary dictionary];
     if ((cellTag%100/10) == 0) {
         [userDict setObject:@(btnTag - 1) forKey:@"index"];
@@ -252,7 +226,6 @@ static NSString *const JGHTwoScoreAreaCellIdentifier = @"JGHTwoScoreAreaCell";
         _imageSelectOne = 0;
     }
     
-//    [self.scoreTableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationNone];
     [self.scoreTableView reloadData];
     
     [_twoAreaView removeFromSuperview];
@@ -279,9 +252,7 @@ static NSString *const JGHTwoScoreAreaCellIdentifier = @"JGHTwoScoreAreaCell";
         _oneAreaView = [[UIView alloc]initWithFrame:CGRectMake(10 *ProportionAdapter, btn.frame.origin.y + btn.frame.size.height + 20 *ProportionAdapter, btnW + 4 *ProportionAdapter, _areaArray.count *40 *ProportionAdapter + 4*ProportionAdapter)];
     }
     
-//    _oneAreaView.backgroundColor = [UIColor colorWithHexString:BG_color];
     [_oneAreaView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"alertViewBG"]]];
-//    _oneAreaView.backgroundColor = [UIColor whiteColor];
     for (int i=0; i < _areaArray.count; i++) {
         NSInteger btnY;
         if (i == 0) {
@@ -326,7 +297,6 @@ static NSString *const JGHTwoScoreAreaCellIdentifier = @"JGHTwoScoreAreaCell";
         _imageSelectTwo = 0;
     }
     
-//    [self.scoreTableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationNone];
     [self.scoreTableView reloadData];
     
     [_oneAreaView removeFromSuperview];
@@ -397,8 +367,6 @@ static NSString *const JGHTwoScoreAreaCellIdentifier = @"JGHTwoScoreAreaCell";
     
     self.dataArray = dataArray;
     _currentAreaArray = currentAreaArray;
-//    self.oneArea = _currentAreaArray[0];
-//    self.twoArea = _currentAreaArray[1];
     
     [self.scoreTableView reloadData];
 }

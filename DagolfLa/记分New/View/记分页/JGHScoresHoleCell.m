@@ -15,7 +15,7 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
-    
+    self.backgroundColor = [UIColor colorWithHexString:BG_color];
     self.selectionStyle = UITableViewCellSelectionStyleNone;
     
     self.name.font = [UIFont systemFontOfSize:13.0*ProportionAdapter];
@@ -117,9 +117,11 @@
     self.eight.backgroundColor = [UIColor colorWithHexString:colorString];
     self.nine.backgroundColor = [UIColor colorWithHexString:colorString];
     if (self.tag == 0) {
+        NSLog(@"sel tag 111 = %td", self.tag);
         UIButton * temp = [self viewWithTag:tag];
         temp.backgroundColor = [UIColor colorWithHexString:BGScoreColor];
     }else{
+        NSLog(@"sel tag = %td", self.tag);
         UIButton * temp = [self viewWithTag:tag];
         temp.backgroundColor = [UIColor colorWithHexString:BGScoreColor];
     }
