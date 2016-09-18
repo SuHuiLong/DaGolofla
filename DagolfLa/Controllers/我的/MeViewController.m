@@ -397,6 +397,9 @@
         
         if ([[NSUserDefaults standardUserDefaults] objectForKey:@"userId"]) {
 //            [cell.iconImgv sd_setImageWithURL:[Helper imageIconUrl:_model.pic] placeholderImage:[UIImage imageNamed:@"zwt"]];
+            
+            NSString *bgUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/%@/head/%td.jpg@200w_200h",@"user",[DEFAULF_USERID integerValue]];
+            [[SDImageCache sharedImageCache] removeImageForKey:bgUrl fromDisk:YES];
             [cell.iconImgv sd_setImageWithURL:[Helper setImageIconUrl:@"user" andTeamKey:[DEFAULF_USERID integerValue] andIsSetWidth:YES andIsBackGround:NO] placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
             cell.nameLabel.text = _model.userName;
             if (![Helper isBlankString:_model.pic] && ![Helper isBlankString:_model.userName] && ![Helper isBlankString:_model.userSign]) {
