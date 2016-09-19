@@ -356,8 +356,7 @@
     [self.view endEditing:YES];
     BallParkViewController* ballVc = [[BallParkViewController alloc]init];
     ballVc.type1=1;
-    ballVc.callback1=^(NSDictionary *dict, NSString* str){
-        ////NSLog(@"%@",dict);
+    ballVc.callback1=^(NSDictionary *dict, NSNumber* num){
         
         [_dataBallArray removeAllObjects];
         [_dataBallArray addObject:[dict objectForKey:@"ballAreas"]];

@@ -60,6 +60,7 @@ static JsonHttp *jsonHttp = nil;
     
 }
 
+
 - (void)httpRequestWithMD5:(NSString *)url JsonKey:(NSString *)jsonKey withData:(NSDictionary *)postData failedBlock:(GBHEFailedBlock)failedBlock completionBlock:(GBHECompletionBlock)completionBlock
 {
    
@@ -323,5 +324,99 @@ static JsonHttp *jsonHttp = nil;
        }
     }];
 }
+
+
+#pragma mark --多张上传照片
+- (void)httpRequestImage:(NSString *)url withData:(NSDictionary *)postData andDataArray:(NSData *)dataPic failedBlock:(GBHEFailedBlock)failedBlock completionBlock:(GBHECompletionBlock)completionBlock{
+    
+    NSString *TWITTERFON_FORM_BOUNDARY = @"AaB03x";
+    //根据url初始化request
+    NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:@"http://webfile.dagolfla.com/upload.do"] cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:10];
+    //分界线 --AaB03x
+    NSString *MPboundary=[[NSString alloc]initWithFormat:@"--%@",TWITTERFON_FORM_BOUNDARY];
+    //结束符 AaB03x--
+    NSString *endMPboundary=[[NSString alloc]initWithFormat:@"%@--",MPboundary];
+    //http body的字符串
+    NSMutableString *body=[[NSMutableString alloc]init];
+    //添加分界线，换行
+    [body appendFormat:@"%@\r\n",MPboundary];
+    //添加字段名称，换2行
+    [body appendFormat:@"Content-Disposition: form-data; name=\"option\"\r\n\r\n"];
+    //    NSDictionary *dictJson = [NSDictionary dictionaryWithDictionary:postData];
+    //  @{@"nType":@"1", @"tag":@"dagolfla", @"data":@"test"};
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:postData options:NSJSONWritingPrettyPrinted error:nil];
+    //添加字段的值
+    [body appendFormat:@"%@\r\n",  [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding]];
+    
+    ////添加分界线，换行
+    [body appendFormat:@"%@\r\n",MPboundary];
+    //声明pic字段，文件名为boris.png
+    [body appendFormat:@"Content-Disposition: form-data; name=\"file\"; filename=\"boris.png\"\r\n"];
+    //声明上传文件的格式
+    [body appendFormat:@"Content-Type: image/png\r\n\r\n"];
+    
+    //声明结束符：--AaB03x--
+    NSString *end=[[NSString alloc]initWithFormat:@"\r\n%@",endMPboundary];
+    //声明myRequestData，用来放入http body
+    NSMutableData *myRequestData=[NSMutableData data];
+    
+    
+    //将body字符串转化为UTF8格式的二进制
+    [myRequestData appendData:[body dataUsingEncoding:NSUTF8StringEncoding]];
+    //将image的data加入
+    [myRequestData appendData:dataPic];
+    
+    //加入结束符--AaB03x--
+    [myRequestData appendData:[end dataUsingEncoding:NSUTF8StringEncoding]];
+    
+    //设置HTTPHeader中Content-Type的值
+    NSString *content=[[NSString alloc]initWithFormat:@"multipart/form-data; boundary=%@",TWITTERFON_FORM_BOUNDARY];
+    //设置HTTPHeader
+    [request setValue:content forHTTPHeaderField:@"Content-Type"];
+    
+    //设置Content-Length
+    [request setValue:[NSString stringWithFormat:@"%ld", (long)[myRequestData length]] forHTTPHeaderField:@"Content-Length"];
+    //设置http body
+    [request setHTTPBody:myRequestData];
+    
+    NSData *da = [NSData dataWithData:myRequestData];
+    NSString *myRequestString = nil;
+    myRequestString = [[NSString alloc]initWithData:da encoding:NSUTF8StringEncoding];
+    
+    NSLog(@"%@", myRequestString);
+    
+    //http method
+    [request setHTTPMethod:@"POST"];
+    
+    //错误信息
+    //    NSError *error = nil;
+    //返回数据
+    //    NSURLResponse *response = nil;
+    NSOperationQueue *queue = [[NSOperationQueue alloc]init];
+    //发送请求
+    [NSURLConnection sendAsynchronousRequest:request queue:queue completionHandler:^(NSURLResponse * _Nullable response, NSData * _Nullable data, NSError * _Nullable connectionError) {
+        NSDictionary *dataDict = nil;
+        if ([NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil]) {
+            dataDict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+        }else{
+            return ;
+        }
+        
+        if ([[NSString stringWithFormat:@"%@", [dataDict objectForKey:@"code"]] isEqualToString:@"1"]) {
+            completionBlock(dataDict);
+        }else{
+            if ([[connectionError.userInfo objectForKey:@"_kCFStreamErrorCodeKey"] integerValue] == 61) {
+                [Helper downLoadDataOverrun];
+            }else if ([[connectionError.userInfo objectForKey:@"_kCFStreamErrorCodeKey"] integerValue] == 51) {
+                [Helper netWorkError];
+            }else{
+                //参数错误
+            }
+            failedBlock(connectionError);
+        }
+    }];
+}
+
+
 
 @end

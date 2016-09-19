@@ -10,7 +10,6 @@
 #import "LazyPageScrollView.h"
 #import "YueMyBallTableViewCell.h"
 #import "YueDetailViewController.h"
-#import "YueHallViewController.h"
 
 #import "PostDataRequest.h"
 
@@ -61,9 +60,9 @@
     if (self.popViewNumber == 2) {
         UIViewController *target=nil;
         for (UIViewController *vc in self.navigationController.viewControllers) {
-            if ([vc isKindOfClass:[YueHallViewController class]]) {
-                target=vc;
-            }
+//            if ([vc isKindOfClass:[YueHallViewController class]]) {
+//                target=vc;
+//            }
         }
         if (target) {
             [[NSNotificationCenter defaultCenter] postNotificationName:@"Refreshing" object:nil];

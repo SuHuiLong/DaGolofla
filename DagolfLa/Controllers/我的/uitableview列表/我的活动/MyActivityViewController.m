@@ -10,7 +10,6 @@
 #import "YueMyBallViewController.h"
 #import "MineRewardViewController.h"
 #import "MineTeamController.h"
-#import "ManageForMeController.h"
 @interface MyActivityViewController ()<UITableViewDelegate,UITableViewDataSource>
 {
     UITableView* _tableView;
@@ -82,8 +81,7 @@
         }
             break;
         case 3:{
-            ManageForMeController* yueVc = [[ManageForMeController alloc]init];
-            [self.navigationController pushViewController:yueVc animated:YES];
+            
         }
             break;
     }

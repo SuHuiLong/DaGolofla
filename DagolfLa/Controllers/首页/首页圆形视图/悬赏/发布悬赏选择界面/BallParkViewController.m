@@ -218,42 +218,67 @@
 - (void)downLoadData:(int)page isReshing:(BOOL)isReshing{
     
     NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
-    [dict setObject:[NSNumber numberWithInt:page] forKey:@"page"];
-    [dict setObject:@15 forKey:@"rows"];
+    [dict setObject:[NSNumber numberWithInt:page] forKey:@"offset"];
     [dict setObject:_textField.text forKey:@"ballName"];
     [dict setObject:self.lat forKey:@"xIndex"];
     [dict setObject:self.lng forKey:@"yIndex"];
-    [[PostDataRequest sharedInstance] postDataRequest:kBallPark_URL parameter:dict success:^(id respondsData) {
-        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:respondsData options:NSJSONReadingMutableContainers error:nil];
-        if ([[dict objectForKey:@"success"] boolValue]) {
+    
+    
+    [[JsonHttp jsonHttp]httpRequest:@"ball/getBallSearchList" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
+        
+    } completionBlock:^(id data) {
+        NSLog(@"%@",data);
+        if ([[data objectForKey:@"packSuccess"] boolValue]) {
             if (page == 1){
                 [_dataArray removeAllObjects];
             }
-            for (NSDictionary *dataDict in [dict objectForKey:@"rows"]) {
+            for (NSDictionary *dataDict in [data objectForKey:@"list"]) {
                 BallParkModel *model = [[BallParkModel alloc] init];
                 [model setValuesForKeysWithDictionary:dataDict];
                 [_dataArray addObject:model];
-//                [_numArray addObject:model.ballId];
             }
             _page++;
             [_tableView reloadData];
         }else {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:[dict objectForKey:@"message"] delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-            [alert show];
+            [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
         }
-//        [_tableView reloadData];
-        if (isReshing) {
-            [_tableView.header endRefreshing];
-        }else {
-            [_tableView.footer endRefreshing];
-        }
-    } failed:^(NSError *error) {
         if (isReshing) {
             [_tableView.header endRefreshing];
         }else {
             [_tableView.footer endRefreshing];
         }
     }];
+//    [[PostDataRequest sharedInstance] postDataRequest:kBallPark_URL parameter:dict success:^(id respondsData) {
+//        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:respondsData options:NSJSONReadingMutableContainers error:nil];
+//        if ([[dict objectForKey:@"success"] boolValue]) {
+//            if (page == 1){
+//                [_dataArray removeAllObjects];
+//            }
+//            for (NSDictionary *dataDict in [dict objectForKey:@"rows"]) {
+//                BallParkModel *model = [[BallParkModel alloc] init];
+//                [model setValuesForKeysWithDictionary:dataDict];
+//                [_dataArray addObject:model];
+////                [_numArray addObject:model.ballId];
+//            }
+//            _page++;
+//            [_tableView reloadData];
+//        }else {
+//            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:[dict objectForKey:@"message"] delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+//            [alert show];
+//        }
+////        [_tableView reloadData];
+//        if (isReshing) {
+//            [_tableView.header endRefreshing];
+//        }else {
+//            [_tableView.footer endRefreshing];
+//        }
+//    } failed:^(NSError *error) {
+//        if (isReshing) {
+//            [_tableView.header endRefreshing];
+//        }else {
+//            [_tableView.footer endRefreshing];
+//        }
+//    }];
 }
 #pragma mark 开始进入刷新状态
 - (void)headerRereshing
@@ -276,8 +301,6 @@
 //返回每一行所对应的cell
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
-    
     static NSString *cellid = @"cellid";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellid];
     if (!cell) {
@@ -294,62 +317,42 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (_isNeedAdd == YES) {
-        if (![Helper isBlankString:[_dataArray[indexPath.row] ballAddress]]) {
-            _callbackAddress([_dataArray[indexPath.row] ballName],[[_dataArray[indexPath.row] ballId] integerValue],[_dataArray[indexPath.row] ballAddress]);
+    if (_type1==0) {
+        if (_isClick == NO)
+        {
+            //点击事件选中后传值
+            _callback([_dataArray[indexPath.row] ballName],[[_dataArray[indexPath.row] timeKey] integerValue]);
+            [self.navigationController popViewControllerAnimated:YES];
         }
-        else{
-            _callbackAddress([_dataArray[indexPath.row] ballName],[[_dataArray[indexPath.row] ballId] integerValue],[_dataArray[indexPath.row] ballName]);
-        }
-        [self.navigationController popViewControllerAnimated:YES];
-    }
-    else
-    {
-        if (_type1==0) {
-            if (_isClick == NO)
-            {
-                //点击事件选中后传值
-                _callback([_dataArray[indexPath.row] ballName],[[_dataArray[indexPath.row] ballId] integerValue]);
-                [self.navigationController popViewControllerAnimated:YES];
-            }
-        }else{
-            if (_isClick == NO)
-            {
-                
-                NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-                [dict setObject:[_dataArray[indexPath.row] ballId] forKey:@"ballKey"];
-                [[JsonHttp jsonHttp]httpRequest:@"ball/getBallCode" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
-                    
-                } completionBlock:^(id data) {
-                    
-                    if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
-                        //点击事件选中后传值
-                        NSMutableDictionary* dict1 = [[NSMutableDictionary alloc]init];
-                        [dict1 setObject:[data objectForKey:@"ballAreas"] forKey:@"ballAreas"];
-                        [dict1 setObject:[data objectForKey:@"tAll"] forKey:@"tAll"];
-                        _callback1(dict1,[_dataArray[indexPath.row]loginpic]);
-                        _callback([_dataArray[indexPath.row] ballName],[[_dataArray[indexPath.row] ballId] integerValue]);
-                        [self.navigationController popViewControllerAnimated:YES];
-                    }
-                    else{
-                        [Helper alertViewWithTitle:@"球场整修中" withBlock:^(UIAlertController *alertView) {
-                            [self presentViewController:alertView animated:YES completion:nil];
-                        }];
-                    }
-
-                    NSLog(@"%@", data);
-                    if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
-                        
-                    }else{
-                        
-                    }
-                }];
+    }else{
+        if (_isClick == NO)
+        {
             
+            NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+            [dict setObject:[_dataArray[indexPath.row] timeKey] forKey:@"ballKey"];
+            [[JsonHttp jsonHttp]httpRequest:@"ball/getBallCode" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
                 
-            }
+            } completionBlock:^(id data) {
+
+                if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+                    //点击事件选中后传值
+                    NSMutableDictionary* dict1 = [[NSMutableDictionary alloc]init];
+                    [dict1 setObject:[data objectForKey:@"ballAreas"] forKey:@"ballAreas"];
+                    [dict1 setObject:[data objectForKey:@"tAll"] forKey:@"tAll"];
+                    _callback1(dict1,[_dataArray[indexPath.row]timeKey]);
+                    _callback([_dataArray[indexPath.row] ballName],[[_dataArray[indexPath.row] timeKey] integerValue]);
+                    [self.navigationController popViewControllerAnimated:YES];
+                }
+                else{
+                    [Helper alertViewWithTitle:@"球场整修中" withBlock:^(UIAlertController *alertView) {
+                        [self presentViewController:alertView animated:YES completion:nil];
+                    }];
+                }
+            }];
+            
+            
         }
     }
-    
 }
 
 

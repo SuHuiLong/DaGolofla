@@ -23,9 +23,10 @@
 #import "JGPhotoListModel.h"
 #import "JGTeamPhotoShowViewController.h"
 
-
+#import "JGLPhotosUpDataViewController.h"
 #import "SDPhotoBrowser.h"
 #define SDPhotoBrowserShowImageAnimationDuration 0.8f
+
 
 @interface JGPhotoAlbumViewController ()<UICollectionViewDelegate,UICollectionViewDataSource,SDPhotoBrowserDelegate>
 {
@@ -93,38 +94,20 @@
 -(void)upDataClick
 {
     
-    //    _photos = 10;
-    UIAlertAction * act1 = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-        //        _photos = 1;
-    }];
-    //拍照：
-    UIAlertAction * act2 = [UIAlertAction actionWithTitle:@"拍照" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        //打开相机
-        _pickPhoto.picker.allowsEditing = NO;
-        [_pickPhoto ShowTakePhotoWithController:self andWithBlock:^(NSObject *Data) {
-            NSArray* arrayData = [NSArray arrayWithObject:UIImageJPEGRepresentation((UIImage *)Data, 0.7)];
-            [self imageArray:arrayData];
-            
-        }];
-    }];
-    //相册
-    UIAlertAction * act3 = [UIAlertAction actionWithTitle:@"相册" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        //打开相册
-        _pickPhoto.picker.allowsEditing = NO;
-        [_pickPhoto SHowLocalPhotoWithController:self andWithBlock:^(NSObject *Data) {
-            NSArray* arrayData = [NSArray arrayWithObject:UIImageJPEGRepresentation((UIImage *)Data, 0.7)];
-            [self imageArray:arrayData];
-        }];
-    }];
-    
-    UIAlertController * aleVC = [UIAlertController alertControllerWithTitle:@"提示" message:@"选择图片" preferredStyle:UIAlertControllerStyleActionSheet];
-    [aleVC addAction:act1];
-    [aleVC addAction:act2];
-    [aleVC addAction:act3];
-    
-    [self presentViewController:aleVC animated:YES completion:nil];
-    
-    
+    JGLPhotosUpDataViewController* upVc = [[JGLPhotosUpDataViewController alloc]init];
+    upVc.albumKey = _albumKey;
+    upVc.blockRefresh = ^(){
+        if (_collectionView.header.isRefreshing == YES) {
+            [_collectionView.header endRefreshing];
+        }
+        _collectionView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
+        _isUpdata = YES;
+        [_collectionView.header beginRefreshing];
+        [_collectionView reloadData];
+    };
+    [self.navigationController pushViewController:upVc animated:YES];
+    return;
+
 }
 #pragma mark --上传图片方法
 -(void)imageArray:(NSArray *)array

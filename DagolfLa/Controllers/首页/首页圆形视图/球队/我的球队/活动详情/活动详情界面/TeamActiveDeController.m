@@ -35,7 +35,7 @@
 
 #import "TeamInviteViewController.h"
 
-#import "ManageWatchViewController.h"
+//#import "ManageWatchViewController.h"
 
 #import "PersonHomeController.h"
 
@@ -659,11 +659,11 @@
 #pragma mark --查看积分
 -(void)watchPointClick
 {
-    ManageWatchViewController* watchVc = [[ManageWatchViewController alloc]init];
-    watchVc.type1 = @11;
-    watchVc.manageId = _model.teamActivityId;
-    
-    [self.navigationController pushViewController:watchVc animated:YES];
+//    ManageWatchViewController* watchVc = [[ManageWatchViewController alloc]init];
+//    watchVc.type1 = @11;
+//    watchVc.manageId = _model.teamActivityId;
+//    
+//    [self.navigationController pushViewController:watchVc animated:YES];
 
 }
 

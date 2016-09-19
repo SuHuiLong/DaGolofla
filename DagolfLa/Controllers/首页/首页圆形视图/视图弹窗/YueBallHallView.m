@@ -15,7 +15,7 @@
 #import "MineRewardViewController.h"
 #import "YueMyBallViewController.h"
 #import "MineTeamController.h"
-#import "ManageForMeController.h"
+//#import "ManageForMeController.h"
 @implementation YueBallHallView
 
 // Only override drawRect: if you perform custom drawing.
@@ -77,8 +77,8 @@
     }
     else
     {
-        ManageForMeController* manVc= [[ManageForMeController alloc]init];
-        _block(manVc);
+//        ManageForMeController* manVc= [[ManageForMeController alloc]init];
+//        _block(manVc);
         
     }
 }

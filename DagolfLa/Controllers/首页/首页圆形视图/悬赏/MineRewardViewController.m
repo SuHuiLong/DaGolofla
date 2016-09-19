@@ -21,7 +21,7 @@
 
 #import "PostRewordViewController.h"
 
-#import "HighBallViewController.h"
+//#import "HighBallViewController.h"
 #define kShang_url @"aboutBallReward/queryPage.do"
 @interface MineRewardViewController ()<LazyPageScrollViewDelegate,UITableViewDataSource,UITableViewDelegate>
 {
@@ -66,9 +66,9 @@
     if (self.popViewNumber == 2) {
         UIViewController *target=nil;
         for (UIViewController *vc in self.navigationController.viewControllers) {
-            if ([vc isKindOfClass:[HighBallViewController class]]) {
-                target=vc;
-            }
+//            if ([vc isKindOfClass:[HighBallViewController class]]) {
+//                target=vc;
+//            }
         }
         if (target) {
             [[NSNotificationCenter defaultCenter] postNotificationName:@"Refreshing" object:nil];

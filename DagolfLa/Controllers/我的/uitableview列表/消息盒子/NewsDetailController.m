@@ -23,7 +23,7 @@
 #import "YueDetailViewController.h"
 #import "PostDetailViewController.h"
 #import "TeamDeMessViewController.h"
-#import "ManageDetailController.h"
+//#import "ManageDetailController.h"
 #import "TeamActiveDeController.h"
 
 @interface NewsDetailController ()<UITableViewDataSource,UITableViewDelegate>
@@ -330,11 +330,11 @@
         //赛事
         else if ([[_dataArray[indexPath.row] messType] integerValue] == 12)
         {
-            ManageDetailController* manVc = [[ManageDetailController alloc]init];
-            manVc.eventId = [_dataArray[indexPath.row] messObjid];
-            manVc.typeNews = @1;
-            [self.navigationController pushViewController:manVc animated:YES];
-            [tableView deselectRowAtIndexPath:indexPath animated:NO];
+//            ManageDetailController* manVc = [[ManageDetailController alloc]init];
+//            manVc.eventId = [_dataArray[indexPath.row] messObjid];
+//            manVc.typeNews = @1;
+//            [self.navigationController pushViewController:manVc animated:YES];
+//            [tableView deselectRowAtIndexPath:indexPath animated:NO];
         }
         //约球
         else if ([[_dataArray[indexPath.row] messType] integerValue] == 14)

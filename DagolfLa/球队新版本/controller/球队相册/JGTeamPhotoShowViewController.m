@@ -98,7 +98,7 @@
         UMSocialData *data = [UMSocialData defaultData];
         data.shareImage = [UIImage imageNamed:@"logo"];
         data.shareText = [NSString stringWithFormat:@"%@%@",@"打高尔夫啦",shareUrl];
-        [[UMSocialControllerService defaultControllerService] setSocialData:data];
+        [[UMSocialControllerService defaultControllerService] setSocialData:fiData];
         //2.设置分享平台
         [UMSocialSnsPlatformManager getSocialPlatformWithName:UMShareToSina].snsClickHandler(self,[UMSocialControllerService defaultControllerService],YES);
     }

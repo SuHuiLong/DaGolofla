@@ -9,7 +9,7 @@
 
 #import "ShouyeViewController.h"
 #import "JGTeamChannelViewController.h"
-#import "ManageViewController.h"
+//#import "ManageViewController.h"
 #import "VoteViewController.h"
 #import "UseMallViewController.h"
 #import "PackageViewController.h"

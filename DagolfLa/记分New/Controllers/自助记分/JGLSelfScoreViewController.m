@@ -37,7 +37,7 @@
     JGLTeeChooseView* _chooseView;//tee台视图
     BOOL _isTee;//是否选择了Tee台
     NSString* _strTee;//用来记录选择的Tee台
-    NSString* _strBallLogo;//记录球场头像
+    NSNumber* _numTimeKeyLogo;//记录球场头像
     NSMutableDictionary* _teeDictChoose;//记录选择的t台存放数组
     
     NSMutableDictionary *_dictPeo,*_dictFri,*_dictAdd;
@@ -224,7 +224,7 @@
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         if (![Helper isBlankString:_strBall]) {
             cell.labelTitle.text = _strBall;
-            [cell.iconImg sd_setImageWithURL:[Helper imageIconUrl:_strBallLogo] placeholderImage:[UIImage imageNamed:TeamLogoImage]];
+            [cell.iconImg sd_setImageWithURL:[Helper setImageIconUrl:@"ball" andTeamKey:[_numTimeKeyLogo integerValue] andIsSetWidth:YES andIsBackGround:NO] placeholderImage:[UIImage imageNamed:TeamLogoImage]];
         }
         else{
             cell.labelTitle.text = @"请选择球场";
@@ -416,14 +416,14 @@
         //球场
         BallParkViewController* ballVc = [[BallParkViewController alloc]init];
         ballVc.type1=1;
-        ballVc.callback1=^(NSDictionary *dict, NSString *str){
+        ballVc.callback1=^(NSDictionary *dict, NSNumber *num){
             [_dataBallArray removeAllObjects];
             [_dictArea removeAllObjects];
             _isClickArea = NO;
             if (dict.count != 0) {
                 [_dataBallArray addObject:[dict objectForKey:@"ballAreas"]];
                 [_dataBallArray addObject:[dict objectForKey:@"tAll"]];
-                _strBallLogo = str;
+                _numTimeKeyLogo = num;
             }
             [_tableView reloadData];
         };
