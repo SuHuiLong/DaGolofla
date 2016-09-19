@@ -320,16 +320,7 @@ static NSString *const JGHLableAndLableCellIdentifier = @"JGHLableAndLableCell";
         _model.serviceTime = textField.text;
     }
 }
-//- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
-//    if (textField.tag -100 == 2){
-//        _model.name = textField.text;
-//        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-//        NSArray *indexArray=[NSArray arrayWithObject:indexPath];
-//        [self.cabbieEditorTableview reloadRowsAtIndexPaths:indexArray withRowAnimation:UITableViewRowAnimationAutomatic];
-//    }
-//    
-//    return YES;
-//}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

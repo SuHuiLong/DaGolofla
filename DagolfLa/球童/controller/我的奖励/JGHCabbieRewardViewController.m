@@ -83,7 +83,6 @@ static NSString *const JGHCabbieAwaredCellIdentifier = @"JGHCabbieAwaredCell";
         NSLog(@"%@", data);
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
             if ([data objectForKey:@"transDetailList"]) {
-//                float totalCount = 0.00;
                 _sumMonay = [data objectForKey:@"inSumMoney"];
                 
                 NSArray *dataArray = [NSArray array];
@@ -91,7 +90,6 @@ static NSString *const JGHCabbieAwaredCellIdentifier = @"JGHCabbieAwaredCell";
                 for (NSDictionary *dict in dataArray) {
                     JGHTransDetailListModel *model = [[JGHTransDetailListModel alloc]init];
                     [model setValuesForKeysWithDictionary:dict];
-//                    totalCount += [model.balance floatValue];
                     [self.dataArray addObject:model];
                 }
                 
@@ -234,12 +232,6 @@ static NSString *const JGHCabbieAwaredCellIdentifier = @"JGHCabbieAwaredCell";
     view.backgroundColor = [UIColor colorWithHexString:BG_color];
     return view;
 }
-//
-//- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-//    JGHCabbieWalletViewController *cabCtrl = [[JGHCabbieWalletViewController alloc]init];
-//    [self.navigationController pushViewController:cabCtrl animated:YES];
-//}
-
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

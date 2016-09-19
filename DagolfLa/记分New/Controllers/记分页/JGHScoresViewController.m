@@ -128,16 +128,9 @@
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"bg_white"] forBarMetrics:UIBarMetricsDefault];
     [self.navigationController.navigationBar setBackgroundColor:[UIColor whiteColor]];
     _cabbieFinishScore = 0;//不结束
-//    _switchMode = 0;//默认总杆模式
+
     _ballDict = [NSMutableDictionary dictionary];
     NSUserDefaults *userdf = [NSUserDefaults standardUserDefaults];
-//    if ([[userdf objectForKey:[NSString stringWithFormat:@"%@", _scorekey]] integerValue]) {
-//        [userdf setObject:@0 forKey:[NSString stringWithFormat:@"%@", _scorekey]];
-//        [userdf synchronize];
-//    }else{
-//       _currentPage = [[userdf objectForKey:[NSString stringWithFormat:@"%@", _scorekey]] integerValue];
-//    }
-    
     
     if ([userdf objectForKey:[NSString stringWithFormat:@"switchMode%@", _scorekey]]) {
         _switchMode = [[userdf objectForKey:[NSString stringWithFormat:@"switchMode%@", _scorekey]] integerValue];
