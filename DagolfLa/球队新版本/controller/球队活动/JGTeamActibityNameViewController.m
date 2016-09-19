@@ -681,7 +681,7 @@ static CGFloat ImageHeight  = 210.0;
         [applyListBtn addTarget:self action:@selector(getTeamActivitySignUpList:) forControlEvents:UIControlEventTouchUpInside];
         [headerCell addSubview:applyListBtn];
         headerCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        [headerCell congiftitles:@"查看活动成员"];
+        [headerCell congiftitles:@"活动成员及分组"];
         [headerCell congifCount:self.model.sumCount andSum:self.model.maxCount];
         return (UIView *)headerCell;
     }else if (section == 4) {
