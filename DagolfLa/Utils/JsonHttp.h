@@ -33,7 +33,7 @@ typedef void (^GBHEBytesRecvBlock)(unsigned long long length, unsigned long long
 
 - (void)httpRequestImageOrVedio:(NSString *)url withData:(NSDictionary *)postData andDataArray:(NSArray *)arrayPic failedBlock:(GBHEFailedBlock)failedBlock completionBlock:(GBHECompletionBlock)completionBlock;
 
-
+- (void)httpConnectionWithMD5GET:(NSString *)url withData:(NSDictionary *)getData Success:(void(^)(id result))block Failue:(void(^)(id error))failure;
 
 #pragma mark ---- MD5
 - (void)httpRequestHaveSpaceWithMD5:(NSString *)url JsonKey:(NSString *)jsonKey withData:(NSDictionary *)postData failedBlock:(GBHEFailedBlock)failedBlock completionBlock:(GBHECompletionBlock)completionBlock;
@@ -41,5 +41,7 @@ typedef void (^GBHEBytesRecvBlock)(unsigned long long length, unsigned long long
 - (void)httpRequestWithMD5:(NSString *)url JsonKey:(NSString *)jsonKey withData:(NSDictionary *)postData failedBlock:(GBHEFailedBlock)failedBlock completionBlock:(GBHECompletionBlock)completionBlock;
 
 - (void)httpRequestWithMD5GET:(NSString *)url JsonKey:(NSString *)jsonKey withData:(NSDictionary *)getData failedBlock:(GBHEFailedBlock)failedBlock completionBlock:(GBHECompletionBlock)completionBlock;
+//多张上传
+- (void)httpRequestImage:(NSString *)url withData:(NSDictionary *)postData andDataArray:(NSData *)dataPic failedBlock:(GBHEFailedBlock)failedBlock completionBlock:(GBHECompletionBlock)completionBlock;
 
 @end

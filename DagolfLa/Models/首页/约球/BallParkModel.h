@@ -9,35 +9,18 @@
 #import "BaseModel.h"
 
 @interface BallParkModel : BaseModel
-
-@property (copy, nonatomic) NSNumber* ballId;
-@property (copy, nonatomic) NSString* ballName;
-@property (strong, nonatomic) NSString* ballAddress;
-
-@property (strong, nonatomic) NSNumber* yIndex;
-@property (strong, nonatomic) NSNumber* xIndex;
-@property (strong, nonatomic) NSString* loginpic;
+@property (strong, nonatomic) NSNumber* ballId;
+@property (strong, nonatomic) NSString* address;
+@property (strong, nonatomic) NSString* ballName;
+@property (strong, nonatomic) NSString* country;
+@property (strong, nonatomic) NSNumber* delFlag;
+@property (strong, nonatomic) NSNumber* douDef1;
+@property (strong, nonatomic) NSNumber* douDef2;
+@property (strong, nonatomic) NSNumber* geohash;
+@property (strong, nonatomic) NSNumber* province;
+@property (strong, nonatomic) NSNumber* rsyncFlag;
+@property (strong, nonatomic) NSNumber* syncFlag;
+@property (strong, nonatomic) NSNumber* timeKey;
+@property (strong, nonatomic) NSString* ts;
 
 @end
-/*
- {
- "rows":
- [
- {
- "id":414,
- "ballName":"重庆庆隆南山高尔夫俱乐部"
- },
- {
- "id":413,
- "ballName":"重庆佰富江景高尔夫俱乐部"
- },
- {
- "id":412,
- "ballName":"重庆保利高尔夫俱乐部"
- }],
- "message":"查询成功",
- "success":true,
- "total":414,
- "flg":0
- }
- */

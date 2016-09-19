@@ -16,7 +16,7 @@
 #import "TeamCreateViewController.h"
 
 #import "ActiveIsUseViewController.h"
-#import "MyTeamViewController.h"
+//#import "MyTeamViewController.h"
 
 #import "TeamModel.h"
 #import "TeamActiveModel.h"
