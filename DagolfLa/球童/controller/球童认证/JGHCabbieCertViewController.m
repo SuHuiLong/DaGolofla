@@ -144,7 +144,6 @@ static NSString *const JGHBtnCellIdentifier = @"JGHBtnCell";
         return sexCell;
     }else if (indexPath.section == 5){
         JGHCabbiePhotoCell *cabbiePhotoCell = [tableView dequeueReusableCellWithIdentifier:JGHCabbiePhotoCellIdentifier];
-        //        [tranCell configScoreJGLAddActiivePlayModel:_playModel];
         cabbiePhotoCell.selectionStyle = UITableViewCellSelectionStyleNone;
         cabbiePhotoCell.delegate = self;
         cabbiePhotoCell.proTextField.userInteractionEnabled = NO;

@@ -16,7 +16,7 @@ static NSString *const JGHNewScoresPageCellIdentifier = @"JGHNewScoresPageCell";
 
 @interface JGHScoresMainViewController ()<UITableViewDelegate, UITableViewDataSource, JGHScoresPageCellDelegate, JGHNewScoresPageCellDelegate>
 {
-//    NSInteger _switchMode;// 0- 总；1- 差
+
     UIButton *_totalPoleBtn;
     
     UILabel *_areaLable;
@@ -39,7 +39,7 @@ static NSString *const JGHNewScoresPageCellIdentifier = @"JGHNewScoresPageCell";
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:YES];
-//    [self.scoresTableView reloadData];
+
     NSUserDefaults *userdf = [NSUserDefaults standardUserDefaults];
     _switchMode = [[userdf objectForKey:[NSString stringWithFormat:@"switchMode%@", _scorekey]] integerValue];
     
@@ -62,12 +62,7 @@ static NSString *const JGHNewScoresPageCellIdentifier = @"JGHNewScoresPageCell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-//    _switchMode = 0;
-    
-    //保存
-//    NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
-//    _index = [[userdef objectForKey:[NSString stringWithFormat:@"%@", _scorekey]] integerValue];
-    
+
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(noticePushScoresCtrl:) name:@"noticePushScores" object:nil];
     
     self.scoresTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight - 64) style:UITableViewStylePlain];
@@ -168,10 +163,6 @@ static NSString *const JGHNewScoresPageCellIdentifier = @"JGHNewScoresPageCell";
     }else{
         _areaLable.text = _currentAreaArray[1];
     }
-//    
-//    NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
-//    [userdef setObject:@(_currentPage) forKey:[NSString stringWithFormat:@"%@", _scorekey]];
-//    [userdef synchronize];
     
     [self.scoresTableView reloadData];
 }
@@ -346,24 +337,19 @@ static NSString *const JGHNewScoresPageCellIdentifier = @"JGHNewScoresPageCell";
         model = self.dataArray[cellTag-100];
         NSMutableArray *pushrodArray = [NSMutableArray array];
         for (int i=0; i<model.pushrod.count; i++) {
-//            if (_switchMode == 0) {
-                if (i == _index) {
-                    if ([model.pushrod[i] integerValue] == -1) {
-                        [pushrodArray addObject:@2];
-                    }else{
-                        if ([model.pushrod[i] integerValue]-1 > 0) {
-                            [pushrodArray addObject:@([model.pushrod[i] integerValue]-1)];
-                        }else{
-                            [pushrodArray addObject:@0];
-                        }
-                    }
+            if (i == _index) {
+                if ([model.pushrod[i] integerValue] == -1) {
+                    [pushrodArray addObject:@2];
                 }else{
-                    [pushrodArray addObject:model.pushrod[i]];
+                    if ([model.pushrod[i] integerValue]-1 > 0) {
+                        [pushrodArray addObject:@([model.pushrod[i] integerValue]-1)];
+                    }else{
+                        [pushrodArray addObject:@0];
+                    }
                 }
-//            }else{
-//                //差杆模式
-//                
-//            }
+            }else{
+                [pushrodArray addObject:model.pushrod[i]];
+            }
         }
         
         model.pushrod = pushrodArray;
@@ -415,11 +401,7 @@ static NSString *const JGHNewScoresPageCellIdentifier = @"JGHNewScoresPageCell";
         for (int i=0; i<model.pushrod.count; i++) {
             if (i == _index) {
                 if ([model.pushrod[i] integerValue] == -1) {
-//                    if (_switchMode == 0) {
-//                        [pushrodArray addObject:@2];
-//                    }else{
                     [pushrodArray addObject:@2];
-//                    }
                 }else{
                     [pushrodArray addObject:@([model.pushrod[i] integerValue]+1)];
                 }
@@ -496,14 +478,5 @@ static NSString *const JGHNewScoresPageCellIdentifier = @"JGHNewScoresPageCell";
     // Dispose of any resources that can be recreated.
 }
 
-/*
- #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- */
 
 @end

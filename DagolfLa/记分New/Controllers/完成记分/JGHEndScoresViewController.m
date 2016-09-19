@@ -213,14 +213,6 @@
     
     [textField resignFirstResponder];
 }
-//-(BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
-//{
-//    if ([text isEqualToString:@"\n"]) {
-//        [textView resignFirstResponder];
-//        return NO;
-//    }
-//    return YES;
-//}
 #pragma mark -- 图片选择
 //图片选择
 - (void)initializeDataSource {

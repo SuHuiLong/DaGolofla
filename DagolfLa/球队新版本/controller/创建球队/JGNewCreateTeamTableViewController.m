@@ -580,9 +580,7 @@ static CGFloat ImageHeight  = 210.0;
         CGRect f = self.imgProfile.frame;
         f.origin.y = -yOffset;
         self.imgProfile.frame = f;
-        
-        _gradientImage.frame = self.imgProfile.frame;
-        
+                
         CGRect t = self.titleView.frame;
         t.origin.y = yOffset + 0 * screenWidth / 320;
         self.titleView.frame = t;

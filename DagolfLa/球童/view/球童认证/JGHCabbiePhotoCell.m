@@ -53,11 +53,8 @@
     
     self.proTextField.text = name;
     self.proTextField.userInteractionEnabled = NO;
-//    self.proTextField.placeholder = @"请输入姓名";
     
     self.photoImageTop.constant = 22 *ProportionAdapter;
-//    http://imgcache.dagolfla.com/user/head/244_caddie.jpg
-    //http://imgcache.dagolfla.com/user/head/191_caddie.jpg
     
     NSString *url = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/user/head/%@_caddie.jpg", DEFAULF_USERID];
     
@@ -75,8 +72,6 @@
     self.proTextField.userInteractionEnabled = NO;
     
     self.photoImageTop.constant = 22 *ProportionAdapter;
-    //    http://imgcache.dagolfla.com/user/head/244_caddie.jpg
-    //http://imgcache.dagolfla.com/user/head/191_caddie.jpg
     
     NSString *url = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/user/head/%@_caddie.jpg", DEFAULF_USERID];
     
