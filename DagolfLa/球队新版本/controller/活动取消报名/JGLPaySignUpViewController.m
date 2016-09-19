@@ -108,19 +108,29 @@
     btnDelete.backgroundColor = [UIColor orangeColor];
     [btnDelete setTitle:@"继续报名" forState:UIControlStateNormal];
     [btnDelete setTintColor:[UIColor whiteColor]];
+    if ([[Helper returnCurrentDateString] compare:_model.signUpEndTime] < 0) {
+        [btnDelete addTarget:self action:@selector(addPeopleClick) forControlEvents:UIControlEventTouchUpInside];
+    }else{
+        //判断活动是否结束 endDate
+        if ([[Helper returnCurrentDateString] compare:_model.endDate] < 0) {
+            [btnDelete setBackgroundColor:[UIColor lightGrayColor]];
+        }else{
+            _tableView.frame = CGRectMake(0, 0, screenWidth, screenHeight -64);
+        }
+    }
+    
     [self.view addSubview:btnDelete];
     btnDelete.titleLabel.font = [UIFont systemFontOfSize:17];
     btnDelete.frame = CGRectMake(10*screenWidth/375, screenHeight - 54*screenWidth/375-64, screenWidth-20*screenWidth/375, 44*screenWidth/375);
     btnDelete.layer.cornerRadius = 8*screenWidth/375;
     btnDelete.layer.masksToBounds = YES;
-    [btnDelete addTarget:self action:@selector(addPeopleClick) forControlEvents:UIControlEventTouchUpInside];
+    
 }
 #pragma mark --添加报名人点击事件
 -(void)addPeopleClick
 {
     JGTeamApplyViewController *applyCtrl = [[JGTeamApplyViewController alloc]init];
     applyCtrl.modelss = _model;
-//    teamApplyCtrl.isTeamChannal = self.isTeamChannal;
     applyCtrl.userName = _userName;
     applyCtrl.isApply = _isApply;
     applyCtrl.canSubsidy = _canSubsidy;
@@ -148,12 +158,6 @@
     _tableView.backgroundColor = [UIColor colorWithHexString:BG_color];
     [self.view addSubview:_tableView];
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    
-//    [_tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"cellid"];
-////    [_tableView registerClass:[JGLPayHeaderTableViewCell class] forCellReuseIdentifier:@"JGLPayHeaderTableViewCell"];
-//    [_tableView registerNib:[UINib nibWithNibName:@"JGLSignPeoTableViewCell" bundle:nil] forCellReuseIdentifier:@"JGLSignPeoTableViewCell"];
-//    [_tableView registerNib:[UINib nibWithNibName:@"JGLPayListTableViewCell" bundle:nil] forCellReuseIdentifier:@"JGLPayListTableViewCell"];
-// 
     
     _tableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
     [_tableView.header beginRefreshing];

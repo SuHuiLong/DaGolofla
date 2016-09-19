@@ -70,7 +70,6 @@
 		20513B5C1CF69F3B003233FB /* JGHPlayersModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 20513B5B1CF69F3B003233FB /* JGHPlayersModel.m */; };
 		20513BCE1CF7050A003233FB /* AlipaySDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 20513B681CF7050A003233FB /* AlipaySDK.bundle */; };
 		20513BCF1CF7050A003233FB /* AlipaySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 20513B691CF7050A003233FB /* AlipaySDK.framework */; };
-		20513BD01CF7050A003233FB /* APAuthV2Info.m in Sources */ = {isa = PBXBuildFile; fileRef = 20513B6B1CF7050A003233FB /* APAuthV2Info.m */; };
 		20513BD11CF7050A003233FB /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 20513B6C1CF7050A003233FB /* libcrypto.a */; };
 		20513BD21CF7050A003233FB /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 20513B6D1CF7050A003233FB /* libssl.a */; };
 		20513BD31CF7050A003233FB /* Order.m in Sources */ = {isa = PBXBuildFile; fileRef = 20513BBB1CF7050A003233FB /* Order.m */; };
@@ -278,10 +277,6 @@
 		365736971C1685FA00D2BC10 /* ScoreProModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 365736961C1685FA00D2BC10 /* ScoreProModel.m */; };
 		3657369A1C16872B00D2BC10 /* ScoreProListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 365736991C16872B00D2BC10 /* ScoreProListModel.m */; };
 		36603F0F1C45330200AF0446 /* YuePriceTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 36603F0E1C45330200AF0446 /* YuePriceTableViewCell.m */; };
-		3660E08F1BFC48B00033B4D7 /* Default@2x-568.png in Resources */ = {isa = PBXBuildFile; fileRef = 3660E08B1BFC48B00033B4D7 /* Default@2x-568.png */; };
-		3660E0901BFC48B00033B4D7 /* Default@2x-667.png in Resources */ = {isa = PBXBuildFile; fileRef = 3660E08C1BFC48B00033B4D7 /* Default@2x-667.png */; };
-		3660E0911BFC48B00033B4D7 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3660E08D1BFC48B00033B4D7 /* Default@2x.png */; };
-		3660E0921BFC48B00033B4D7 /* Default@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3660E08E1BFC48B00033B4D7 /* Default@3x.png */; };
 		3660E0C31BFC530B0033B4D7 /* ScoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3660E0951BFC530B0033B4D7 /* ScoreViewController.m */; };
 		3660E0EB1BFC53B70033B4D7 /* SelfScoreTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3660E0DD1BFC53B70033B4D7 /* SelfScoreTableViewCell.m */; };
 		3660E1031BFC54D90033B4D7 /* MyTeamsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3660E0FA1BFC54D90033B4D7 /* MyTeamsTableViewCell.m */; };
@@ -486,35 +481,6 @@
 		36BFFD371BC76C8D005B3CE2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 36BFFD351BC76C8D005B3CE2 /* Main.storyboard */; };
 		36BFFD481BC76C8D005B3CE2 /* DagolfLaTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 36BFFD471BC76C8D005B3CE2 /* DagolfLaTests.m */; };
 		36BFFD521BC76CB8005B3CE2 /* top_back.png in Resources */ = {isa = PBXBuildFile; fileRef = 36BFFD511BC76CB8005B3CE2 /* top_back.png */; };
-		36BFFEB41BC76CDC005B3CE2 /* tab_bg1.png in Resources */ = {isa = PBXBuildFile; fileRef = 36BFFDE91BC76CDC005B3CE2 /* tab_bg1.png */; };
-		36BFFEB51BC76CDC005B3CE2 /* tab_bg1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 36BFFDEA1BC76CDC005B3CE2 /* tab_bg1@2x.png */; };
-		36BFFEB61BC76CDC005B3CE2 /* tab_bg1@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 36BFFDEB1BC76CDC005B3CE2 /* tab_bg1@3x.png */; };
-		36BFFEB71BC76CDC005B3CE2 /* tab_bg2.png in Resources */ = {isa = PBXBuildFile; fileRef = 36BFFDEC1BC76CDC005B3CE2 /* tab_bg2.png */; };
-		36BFFEB81BC76CDC005B3CE2 /* tab_bg2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 36BFFDED1BC76CDC005B3CE2 /* tab_bg2@2x.png */; };
-		36BFFEB91BC76CDC005B3CE2 /* tab_bg2@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 36BFFDEE1BC76CDC005B3CE2 /* tab_bg2@3x.png */; };
-		36BFFEBA1BC76CDC005B3CE2 /* tab_jf.png in Resources */ = {isa = PBXBuildFile; fileRef = 36BFFDEF1BC76CDC005B3CE2 /* tab_jf.png */; };
-		36BFFEBB1BC76CDC005B3CE2 /* tab_jf@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 36BFFDF01BC76CDC005B3CE2 /* tab_jf@2x.png */; };
-		36BFFEBC1BC76CDC005B3CE2 /* tab_jf@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 36BFFDF11BC76CDC005B3CE2 /* tab_jf@3x.png */; };
-		36BFFEBD1BC76CDC005B3CE2 /* tab_line.png in Resources */ = {isa = PBXBuildFile; fileRef = 36BFFDF21BC76CDC005B3CE2 /* tab_line.png */; };
-		36BFFEBE1BC76CDC005B3CE2 /* tab_line@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 36BFFDF31BC76CDC005B3CE2 /* tab_line@2x.png */; };
-		36BFFEBF1BC76CDC005B3CE2 /* tab_line@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 36BFFDF41BC76CDC005B3CE2 /* tab_line@3x.png */; };
-		36BFFEC01BC76CDC005B3CE2 /* tab_sq.png in Resources */ = {isa = PBXBuildFile; fileRef = 36BFFDF51BC76CDC005B3CE2 /* tab_sq.png */; };
-		36BFFEC11BC76CDC005B3CE2 /* tab_sq@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 36BFFDF61BC76CDC005B3CE2 /* tab_sq@2x.png */; };
-		36BFFEC21BC76CDC005B3CE2 /* tab_sq@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 36BFFDF71BC76CDC005B3CE2 /* tab_sq@3x.png */; };
-		36BFFEC31BC76CDC005B3CE2 /* tab_sy.png in Resources */ = {isa = PBXBuildFile; fileRef = 36BFFDF81BC76CDC005B3CE2 /* tab_sy.png */; };
-		36BFFEC41BC76CDC005B3CE2 /* tab_sy@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 36BFFDF91BC76CDC005B3CE2 /* tab_sy@2x.png */; };
-		36BFFEC51BC76CDC005B3CE2 /* tab_sy@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 36BFFDFA1BC76CDC005B3CE2 /* tab_sy@3x.png */; };
-		36BFFEC61BC76CDC005B3CE2 /* tab_wd.png in Resources */ = {isa = PBXBuildFile; fileRef = 36BFFDFB1BC76CDC005B3CE2 /* tab_wd.png */; };
-		36BFFEC71BC76CDC005B3CE2 /* tab_wd@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 36BFFDFC1BC76CDC005B3CE2 /* tab_wd@2x.png */; };
-		36BFFEC81BC76CDC005B3CE2 /* tab_wd@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 36BFFDFD1BC76CDC005B3CE2 /* tab_wd@3x.png */; };
-		36BFFEDB1BC76CDC005B3CE2 /* xiaoxi.png in Resources */ = {isa = PBXBuildFile; fileRef = 36BFFE111BC76CDC005B3CE2 /* xiaoxi.png */; };
-		36BFFEDC1BC76CDC005B3CE2 /* xiaoxi@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 36BFFE121BC76CDC005B3CE2 /* xiaoxi@2x.png */; };
-		36BFFEDD1BC76CDC005B3CE2 /* xiaoxi@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 36BFFE131BC76CDC005B3CE2 /* xiaoxi@3x.png */; };
-		36BFFEDF1BC76CDC005B3CE2 /* xiaoxidian2.png in Resources */ = {isa = PBXBuildFile; fileRef = 36BFFE151BC76CDC005B3CE2 /* xiaoxidian2.png */; };
-		36BFFEE01BC76CDC005B3CE2 /* xiaoxidian2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 36BFFE161BC76CDC005B3CE2 /* xiaoxidian2@2x.png */; };
-		36BFFEE11BC76CDC005B3CE2 /* xiaoxidian2@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 36BFFE171BC76CDC005B3CE2 /* xiaoxidian2@3x.png */; };
-		36BFFEE51BC76CDC005B3CE2 /* xiaoxidian@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 36BFFE1B1BC76CDC005B3CE2 /* xiaoxidian@2x.png */; };
-		36BFFEE61BC76CDC005B3CE2 /* xiaoxidian@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 36BFFE1C1BC76CDC005B3CE2 /* xiaoxidian@3x.png */; };
 		36BFFF591BC76D09005B3CE2 /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 36BFFEEE1BC76D09005B3CE2 /* AFHTTPRequestOperation.m */; };
 		36BFFF5A1BC76D09005B3CE2 /* AFHTTPRequestOperationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 36BFFEF01BC76D09005B3CE2 /* AFHTTPRequestOperationManager.m */; };
 		36BFFF5B1BC76D09005B3CE2 /* AFHTTPSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 36BFFEF21BC76D09005B3CE2 /* AFHTTPSessionManager.m */; };
@@ -1353,8 +1319,6 @@
 		20513B5B1CF69F3B003233FB /* JGHPlayersModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHPlayersModel.m; sourceTree = "<group>"; };
 		20513B681CF7050A003233FB /* AlipaySDK.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = AlipaySDK.bundle; sourceTree = "<group>"; };
 		20513B691CF7050A003233FB /* AlipaySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AlipaySDK.framework; sourceTree = "<group>"; };
-		20513B6A1CF7050A003233FB /* APAuthV2Info.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APAuthV2Info.h; sourceTree = "<group>"; };
-		20513B6B1CF7050A003233FB /* APAuthV2Info.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APAuthV2Info.m; sourceTree = "<group>"; };
 		20513B6C1CF7050A003233FB /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcrypto.a; sourceTree = "<group>"; };
 		20513B6D1CF7050A003233FB /* libssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libssl.a; sourceTree = "<group>"; };
 		20513B6F1CF7050A003233FB /* aes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aes.h; sourceTree = "<group>"; };
@@ -1779,10 +1743,6 @@
 		365736991C16872B00D2BC10 /* ScoreProListModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScoreProListModel.m; sourceTree = "<group>"; };
 		36603F0D1C45330200AF0446 /* YuePriceTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YuePriceTableViewCell.h; sourceTree = "<group>"; };
 		36603F0E1C45330200AF0446 /* YuePriceTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YuePriceTableViewCell.m; sourceTree = "<group>"; };
-		3660E08B1BFC48B00033B4D7 /* Default@2x-568.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x-568.png"; sourceTree = "<group>"; };
-		3660E08C1BFC48B00033B4D7 /* Default@2x-667.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x-667.png"; sourceTree = "<group>"; };
-		3660E08D1BFC48B00033B4D7 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
-		3660E08E1BFC48B00033B4D7 /* Default@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@3x.png"; sourceTree = "<group>"; };
 		3660E0941BFC530B0033B4D7 /* ScoreViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScoreViewController.h; sourceTree = "<group>"; };
 		3660E0951BFC530B0033B4D7 /* ScoreViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScoreViewController.m; sourceTree = "<group>"; };
 		3660E0DC1BFC53B70033B4D7 /* SelfScoreTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelfScoreTableViewCell.h; sourceTree = "<group>"; };
@@ -2124,35 +2084,6 @@
 		36BFFD461BC76C8D005B3CE2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		36BFFD471BC76C8D005B3CE2 /* DagolfLaTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DagolfLaTests.m; sourceTree = "<group>"; };
 		36BFFD511BC76CB8005B3CE2 /* top_back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = top_back.png; sourceTree = "<group>"; };
-		36BFFDE91BC76CDC005B3CE2 /* tab_bg1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tab_bg1.png; sourceTree = "<group>"; };
-		36BFFDEA1BC76CDC005B3CE2 /* tab_bg1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tab_bg1@2x.png"; sourceTree = "<group>"; };
-		36BFFDEB1BC76CDC005B3CE2 /* tab_bg1@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tab_bg1@3x.png"; sourceTree = "<group>"; };
-		36BFFDEC1BC76CDC005B3CE2 /* tab_bg2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tab_bg2.png; sourceTree = "<group>"; };
-		36BFFDED1BC76CDC005B3CE2 /* tab_bg2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tab_bg2@2x.png"; sourceTree = "<group>"; };
-		36BFFDEE1BC76CDC005B3CE2 /* tab_bg2@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tab_bg2@3x.png"; sourceTree = "<group>"; };
-		36BFFDEF1BC76CDC005B3CE2 /* tab_jf.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tab_jf.png; sourceTree = "<group>"; };
-		36BFFDF01BC76CDC005B3CE2 /* tab_jf@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tab_jf@2x.png"; sourceTree = "<group>"; };
-		36BFFDF11BC76CDC005B3CE2 /* tab_jf@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tab_jf@3x.png"; sourceTree = "<group>"; };
-		36BFFDF21BC76CDC005B3CE2 /* tab_line.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tab_line.png; sourceTree = "<group>"; };
-		36BFFDF31BC76CDC005B3CE2 /* tab_line@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tab_line@2x.png"; sourceTree = "<group>"; };
-		36BFFDF41BC76CDC005B3CE2 /* tab_line@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tab_line@3x.png"; sourceTree = "<group>"; };
-		36BFFDF51BC76CDC005B3CE2 /* tab_sq.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tab_sq.png; sourceTree = "<group>"; };
-		36BFFDF61BC76CDC005B3CE2 /* tab_sq@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tab_sq@2x.png"; sourceTree = "<group>"; };
-		36BFFDF71BC76CDC005B3CE2 /* tab_sq@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tab_sq@3x.png"; sourceTree = "<group>"; };
-		36BFFDF81BC76CDC005B3CE2 /* tab_sy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tab_sy.png; sourceTree = "<group>"; };
-		36BFFDF91BC76CDC005B3CE2 /* tab_sy@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tab_sy@2x.png"; sourceTree = "<group>"; };
-		36BFFDFA1BC76CDC005B3CE2 /* tab_sy@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tab_sy@3x.png"; sourceTree = "<group>"; };
-		36BFFDFB1BC76CDC005B3CE2 /* tab_wd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tab_wd.png; sourceTree = "<group>"; };
-		36BFFDFC1BC76CDC005B3CE2 /* tab_wd@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tab_wd@2x.png"; sourceTree = "<group>"; };
-		36BFFDFD1BC76CDC005B3CE2 /* tab_wd@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tab_wd@3x.png"; sourceTree = "<group>"; };
-		36BFFE111BC76CDC005B3CE2 /* xiaoxi.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = xiaoxi.png; sourceTree = "<group>"; };
-		36BFFE121BC76CDC005B3CE2 /* xiaoxi@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "xiaoxi@2x.png"; sourceTree = "<group>"; };
-		36BFFE131BC76CDC005B3CE2 /* xiaoxi@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "xiaoxi@3x.png"; sourceTree = "<group>"; };
-		36BFFE151BC76CDC005B3CE2 /* xiaoxidian2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = xiaoxidian2.png; sourceTree = "<group>"; };
-		36BFFE161BC76CDC005B3CE2 /* xiaoxidian2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "xiaoxidian2@2x.png"; sourceTree = "<group>"; };
-		36BFFE171BC76CDC005B3CE2 /* xiaoxidian2@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "xiaoxidian2@3x.png"; sourceTree = "<group>"; };
-		36BFFE1B1BC76CDC005B3CE2 /* xiaoxidian@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "xiaoxidian@2x.png"; sourceTree = "<group>"; };
-		36BFFE1C1BC76CDC005B3CE2 /* xiaoxidian@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "xiaoxidian@3x.png"; sourceTree = "<group>"; };
 		36BFFEED1BC76D09005B3CE2 /* AFHTTPRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPRequestOperation.h; sourceTree = "<group>"; };
 		36BFFEEE1BC76D09005B3CE2 /* AFHTTPRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPRequestOperation.m; sourceTree = "<group>"; };
 		36BFFEEF1BC76D09005B3CE2 /* AFHTTPRequestOperationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPRequestOperationManager.h; sourceTree = "<group>"; };
@@ -3860,8 +3791,6 @@
 			children = (
 				20513B681CF7050A003233FB /* AlipaySDK.bundle */,
 				20513B691CF7050A003233FB /* AlipaySDK.framework */,
-				20513B6A1CF7050A003233FB /* APAuthV2Info.h */,
-				20513B6B1CF7050A003233FB /* APAuthV2Info.m */,
 				20513B6C1CF7050A003233FB /* libcrypto.a */,
 				20513B6D1CF7050A003233FB /* libssl.a */,
 				20513B6E1CF7050A003233FB /* openssl */,
@@ -5856,7 +5785,6 @@
 				20513B671CF7050A003233FB /* zhifu */,
 				36D0B0F91C80156900C7245E /* frameWork */,
 				36BFFD531BC76CDB005B3CE2 /* 社区图标 */,
-				36BFFDCD1BC76CDC005B3CE2 /* 首页图片 */,
 				36BFFD2A1BC76C8D005B3CE2 /* DagolfLa */,
 				36BFFD441BC76C8D005B3CE2 /* DagolfLaTests */,
 				36BFFD291BC76C8D005B3CE2 /* Products */,
@@ -5939,46 +5867,6 @@
 				AAE5CF0E1C60756B00D66086 /* selfBackPic.jpg */,
 			);
 			path = "社区图标";
-			sourceTree = "<group>";
-		};
-		36BFFDCD1BC76CDC005B3CE2 /* 首页图片 */ = {
-			isa = PBXGroup;
-			children = (
-				3660E08B1BFC48B00033B4D7 /* Default@2x-568.png */,
-				3660E08C1BFC48B00033B4D7 /* Default@2x-667.png */,
-				3660E08D1BFC48B00033B4D7 /* Default@2x.png */,
-				3660E08E1BFC48B00033B4D7 /* Default@3x.png */,
-				36BFFDE91BC76CDC005B3CE2 /* tab_bg1.png */,
-				36BFFDEA1BC76CDC005B3CE2 /* tab_bg1@2x.png */,
-				36BFFDEB1BC76CDC005B3CE2 /* tab_bg1@3x.png */,
-				36BFFDEC1BC76CDC005B3CE2 /* tab_bg2.png */,
-				36BFFDED1BC76CDC005B3CE2 /* tab_bg2@2x.png */,
-				36BFFDEE1BC76CDC005B3CE2 /* tab_bg2@3x.png */,
-				36BFFDEF1BC76CDC005B3CE2 /* tab_jf.png */,
-				36BFFDF01BC76CDC005B3CE2 /* tab_jf@2x.png */,
-				36BFFDF11BC76CDC005B3CE2 /* tab_jf@3x.png */,
-				36BFFDF21BC76CDC005B3CE2 /* tab_line.png */,
-				36BFFDF31BC76CDC005B3CE2 /* tab_line@2x.png */,
-				36BFFDF41BC76CDC005B3CE2 /* tab_line@3x.png */,
-				36BFFDF51BC76CDC005B3CE2 /* tab_sq.png */,
-				36BFFDF61BC76CDC005B3CE2 /* tab_sq@2x.png */,
-				36BFFDF71BC76CDC005B3CE2 /* tab_sq@3x.png */,
-				36BFFDFB1BC76CDC005B3CE2 /* tab_wd.png */,
-				36BFFDFC1BC76CDC005B3CE2 /* tab_wd@2x.png */,
-				36BFFDFD1BC76CDC005B3CE2 /* tab_wd@3x.png */,
-				36BFFE111BC76CDC005B3CE2 /* xiaoxi.png */,
-				36BFFE121BC76CDC005B3CE2 /* xiaoxi@2x.png */,
-				36BFFDF81BC76CDC005B3CE2 /* tab_sy.png */,
-				36BFFDF91BC76CDC005B3CE2 /* tab_sy@2x.png */,
-				36BFFDFA1BC76CDC005B3CE2 /* tab_sy@3x.png */,
-				36BFFE131BC76CDC005B3CE2 /* xiaoxi@3x.png */,
-				36BFFE151BC76CDC005B3CE2 /* xiaoxidian2.png */,
-				36BFFE161BC76CDC005B3CE2 /* xiaoxidian2@2x.png */,
-				36BFFE171BC76CDC005B3CE2 /* xiaoxidian2@3x.png */,
-				36BFFE1B1BC76CDC005B3CE2 /* xiaoxidian@2x.png */,
-				36BFFE1C1BC76CDC005B3CE2 /* xiaoxidian@3x.png */,
-			);
-			path = "首页图片";
 			sourceTree = "<group>";
 		};
 		36BFFEEA1BC76D09005B3CE2 /* 第三方库 */ = {
@@ -9039,7 +8927,7 @@
 				TargetAttributes = {
 					36BFFD271BC76C8D005B3CE2 = {
 						CreatedOnToolsVersion = 6.3.2;
-						DevelopmentTeam = 5P6JNXBH3C;
+						DevelopmentTeam = T8ML76W22A;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -9087,7 +8975,6 @@
 				6543320A1BD5D9B900363947 /* UMSLoginViewController.xib in Resources */,
 				202E05321D80310B00566CA9 /* JGHTwoScoreAreaCell.xib in Resources */,
 				36BF00091BC770C4005B3CE2 /* chatfrom_bg_focused.png in Resources */,
-				3660E0911BFC48B00033B4D7 /* Default@2x.png in Resources */,
 				2064DE971D3C715300F0D52A /* JGHRetrieveScoreViewController.xib in Resources */,
 				36BF003D1BC771FB005B3CE2 /* ComDetailViewCell.xib in Resources */,
 				20CA13901CE9562800DA15B9 /* JGTeamGroupCollectionViewCell.xib in Resources */,
@@ -9106,11 +8993,8 @@
 				20F025451D70026100D7D7B6 /* JGHPlayBaseInfoCell.xib in Resources */,
 				36BFFD371BC76C8D005B3CE2 /* Main.storyboard in Resources */,
 				36BF00071BC770C4005B3CE2 /* chat_bottom_voice_nor.png in Resources */,
-				36BFFEE01BC76CDC005B3CE2 /* xiaoxidian2@2x.png in Resources */,
 				36BF00041BC770C4005B3CE2 /* chat_bottom_textfield.png in Resources */,
 				207FEC971D1BC98F0098E23C /* JGHCancelApplyBaseCell.xib in Resources */,
-				36BFFEBA1BC76CDC005B3CE2 /* tab_jf.png in Resources */,
-				36BFFEC81BC76CDC005B3CE2 /* tab_wd@3x.png in Resources */,
 				3623174C1BDA6B2800257862 /* CommunMessageViewCell.xib in Resources */,
 				2080304F1CF9A70800448BFC /* JGSignUoPromptCell.xib in Resources */,
 				36BF00001BC770C4005B3CE2 /* chat_bottom_keyboard_nor.png in Resources */,
@@ -9121,7 +9005,6 @@
 				36BF000B1BC770C4005B3CE2 /* chatto_bg_focused.png in Resources */,
 				F53A05641D518F32009DD489 /* JGHOperationSimlpeCell.xib in Resources */,
 				36BF00021BC770C4005B3CE2 /* chat_bottom_smile_nor.png in Resources */,
-				36BFFEDD1BC76CDC005B3CE2 /* xiaoxi@3x.png in Resources */,
 				36D0B0F21C80151C00C7245E /* Emoji.plist in Resources */,
 				2012AD811D2BB1B200F70E40 /* JGHAddAwardImageCell.xib in Resources */,
 				3684FDAE1C4A35F4002A14FC /* TeamInviteTableViewCell.xib in Resources */,
@@ -9130,7 +9013,6 @@
 				209B91A91D6D375200A5BE10 /* JGHApplyNewCell.xib in Resources */,
 				201056161D59C92800C90FDE /* JGHCabbiePhotoCell.xib in Resources */,
 				3660E1041BFC54D90033B4D7 /* MyTeamsTableViewCell.xib in Resources */,
-				36BFFEBD1BC76CDC005B3CE2 /* tab_line.png in Resources */,
 				F5E1BAB21D6B006100414727 /* COPYING in Resources */,
 				202E053F1D84261000566CA9 /* JGHOperScoreHeaderCell.xib in Resources */,
 				20F0253B1D6FDC1000D7D7B6 /* JGHAddPlaysCell.xib in Resources */,
@@ -9138,39 +9020,30 @@
 				82ABF1D31D1C0847004493DB /* JGLPayListTableViewCell.xib in Resources */,
 				20C1B8AC1CE313A200508ABC /* JGTeamApplyViewController.xib in Resources */,
 				209B93981D6D871900A5BE10 /* JGHApplyCatoryPriceViewCell.xib in Resources */,
-				36BFFEC21BC76CDC005B3CE2 /* tab_sq@3x.png in Resources */,
 				36BF01CA1BC77ABE005B3CE2 /* YueMyBallTableViewCell.xib in Resources */,
 				36BF01F51BC77C71005B3CE2 /* MyselfImpotTableViewCell.xib in Resources */,
 				20C1B8B11CE3241C00508ABC /* JGTableViewCell.xib in Resources */,
 				36BF000D1BC770C4005B3CE2 /* icon01.jpg in Resources */,
-				36BFFEBE1BC76CDC005B3CE2 /* tab_line@2x.png in Resources */,
 				654332071BD5D9B900363947 /* UMSCommentInputControlleriPad.xib in Resources */,
 				3660E19D1BFC573C0033B4D7 /* MineTeamActiveCell.xib in Resources */,
 				36BF00C21BC77383005B3CE2 /* MeTableViewCell.xib in Resources */,
 				36A046A31BC8EA1B00296DE3 /* MessageTableViewCell.xib in Resources */,
 				36D0B0F61C80151C00C7245E /* RongCloud.bundle in Resources */,
 				82D595E01CE42BDF00CD9587 /* mapapi.bundle in Resources */,
-				3660E0901BFC48B00033B4D7 /* Default@2x-667.png in Resources */,
 				207FECA11D1BE4180098E23C /* JGHTextFiledCell.xib in Resources */,
-				36BFFEB61BC76CDC005B3CE2 /* tab_bg1@3x.png in Resources */,
 				F53A056A1D518F32009DD489 /* JGHPublishedPeopleView.xib in Resources */,
-				36BFFEDC1BC76CDC005B3CE2 /* xiaoxi@2x.png in Resources */,
 				2010561C1D59C92800C90FDE /* JGHSexCell.xib in Resources */,
-				3660E08F1BFC48B00033B4D7 /* Default@2x-568.png in Resources */,
 				36D0B0F31C80151C00C7245E /* RongCloudKit.strings in Resources */,
 				82E6A7161CF68190009DD179 /* JGLTeamEditTableViewCell.xib in Resources */,
 				36BF00421BC771FB005B3CE2 /* ZanNumTableViewCell.xib in Resources */,
 				654332081BD5D9B900363947 /* UMShareEditViewController.xib in Resources */,
-				36BFFEC31BC76CDC005B3CE2 /* tab_sy.png in Resources */,
 				20BA61301CDC99D0004B61F5 /* Tae.bundle in Resources */,
 				20CA136A1CE44CCB00DA15B9 /* JGAlreadyAddGuestCell.xib in Resources */,
-				36BFFEC11BC76CDC005B3CE2 /* tab_sq@2x.png in Resources */,
 				20F6A5CA1CF3F78200DD9383 /* JGCostSetViewController.xib in Resources */,
 				20F025401D6FE9CF00D7D7B6 /* JGHAddPlaysButtonCell.xib in Resources */,
 				20F0254A1D70199B00D7D7B6 /* JGHPalyTypeListCell.xib in Resources */,
 				6543320D1BD5D9B900363947 /* UMSocialSDKResourcesNew.bundle in Resources */,
 				2067C6CF1CE30CC0002900C8 /* JGActivityNameBaseCell.xib in Resources */,
-				36BFFEDB1BC76CDC005B3CE2 /* xiaoxi.png in Resources */,
 				F5AEF7341D41B98E009A8C34 /* JGHScoresPageCell.xib in Resources */,
 				36BF000E1BC770C4005B3CE2 /* icon02.jpg in Resources */,
 				F53A05711D518F32009DD489 /* JGHSimpleScorePepoleBaseCell.xib in Resources */,
@@ -9183,32 +9056,26 @@
 				36DF6DFD1C08235900B60B67 /* TeamPhotoCollectionViewCell.xib in Resources */,
 				82E6A71B1CF68229009DD179 /* JGTeamAdressTableViewCell.xib in Resources */,
 				36BF01C21BC77ABD005B3CE2 /* FabuPostTableViewCell.xib in Resources */,
-				36BFFEC01BC76CDC005B3CE2 /* tab_sq.png in Resources */,
 				202EC80D1D5852F80090FE4B /* JGHCaddieViewController.xib in Resources */,
-				36BFFEBB1BC76CDC005B3CE2 /* tab_jf@2x.png in Resources */,
 				36BFFF621BC76D09005B3CE2 /* LICENSE in Resources */,
 				36BF02051BC78253005B3CE2 /* Images.xcassets in Resources */,
 				3660E1A61BFC57810033B4D7 /* ManageMineCell.xib in Resources */,
-				36BFFEC71BC76CDC005B3CE2 /* tab_wd@2x.png in Resources */,
 				2067C6D31CE30CC0002900C8 /* JGTeamActivityCell.xib in Resources */,
 				2012AD7F1D2BB1B200F70E40 /* JGHActivityBaseCell.xib in Resources */,
 				82E6A7201CF682BC009DD179 /* JGTeamEIntroTableViewCell.xib in Resources */,
 				20F6A5DC1CF52C4F00DD9383 /* JGHHeaderLabelCell.xib in Resources */,
 				20513B591CF67EED003233FB /* JGHAddressCell.xib in Resources */,
-				36BFFEB71BC76CDC005B3CE2 /* tab_bg2.png in Resources */,
 				20CA13721CE4929C00DA15B9 /* JGInvoiceTypeTextCell.xib in Resources */,
 				202E05371D81568300566CA9 /* JGHPoorBarHoleCell.xib in Resources */,
 				36BF01881BC77611005B3CE2 /* CityCollectionViewCell.xib in Resources */,
 				654332201BD630E500363947 /* PostRewordTableViewCell.xib in Resources */,
 				3660E17D1BFC56C20033B4D7 /* ScoreCommentOtherViewCell.xib in Resources */,
-				36BFFEE61BC76CDC005B3CE2 /* xiaoxidian@3x.png in Resources */,
 				208837A41D1A9D88004C7B5D /* JGHActivityBaseInfoCell.xib in Resources */,
 				209B93A21D6E8DAC00A5BE10 /* JGHCostListCell.xib in Resources */,
 				20CA139B1CE984C500DA15B9 /* JGGroupdetailsCollectionViewCell.xib in Resources */,
 				202E05281D7E932200566CA9 /* JGHNewScoresPageCell.xib in Resources */,
 				36BF00BE1BC77383005B3CE2 /* MyNewsBoxTableCell.xib in Resources */,
 				20F0254F1D70202900D7D7B6 /* JGPlayPayBaseCell.xib in Resources */,
-				36BFFEBF1BC76CDC005B3CE2 /* tab_line@3x.png in Resources */,
 				F53A05621D518F32009DD489 /* JGHOperationScoreListCell.xib in Resources */,
 				3660E19F1BFC573C0033B4D7 /* MineTeamManCell.xib in Resources */,
 				F53A05661D518F32009DD489 /* JGHOperScoreBtnListCell.xib in Resources */,
@@ -9223,7 +9090,6 @@
 				AA91C7871C4201B80078DA17 /* IQButtonBarArrowRight@2x.png in Resources */,
 				2048E8EB1D4B369E00A2C024 /* JGHSetAlmostPromptViewController.xib in Resources */,
 				36BF00051BC770C4005B3CE2 /* chat_bottom_up_nor.png in Resources */,
-				36BFFEBC1BC76CDC005B3CE2 /* tab_jf@3x.png in Resources */,
 				82D595EE1CE4654C00CD9587 /* JGTeamPhotoCollectionViewCell.xib in Resources */,
 				36C05BBA1BD872F900B3DD2D /* YueBallHallView.xib in Resources */,
 				201056141D59C92800C90FDE /* JGHBtnCell.xib in Resources */,
@@ -9234,7 +9100,6 @@
 				363D4F341C86E1C70089E52C /* PushConfig.plist in Resources */,
 				36BF000F1BC770C4005B3CE2 /* toolbar_bottom_bar.png in Resources */,
 				202E05211D757D6D00566CA9 /* JGHEditorCostViewController.xib in Resources */,
-				36BFFEB41BC76CDC005B3CE2 /* tab_bg1.png in Resources */,
 				36BF000C1BC770C4005B3CE2 /* chatto_bg_normal.png in Resources */,
 				654332091BD5D9B900363947 /* UMShareEditViewControlleriPad.xib in Resources */,
 				2010561A1D59C92800C90FDE /* JGHLableAndLableCell.xib in Resources */,
@@ -9248,11 +9113,8 @@
 				2012AD831D2BB1B200F70E40 /* JGHAwardCell.xib in Resources */,
 				82ABF1CE1D1C072E004493DB /* JGLSignPeoTableViewCell.xib in Resources */,
 				36BF00C01BC77383005B3CE2 /* NewsDetailViewCell.xib in Resources */,
-				36BFFEB91BC76CDC005B3CE2 /* tab_bg2@3x.png in Resources */,
 				2067C6D71CE30CC0002900C8 /* JGTeamActivityWithAddressCell.xib in Resources */,
 				F53A055E1D518F32009DD489 /* JGHMatchTranscriptTableViewCell.xib in Resources */,
-				36BFFEB51BC76CDC005B3CE2 /* tab_bg1@2x.png in Resources */,
-				36BFFEC41BC76CDC005B3CE2 /* tab_sy@2x.png in Resources */,
 				AAE5CF0F1C60756B00D66086 /* selfBackPic.jpg in Resources */,
 				20F7D4431D86799800302406 /* JGHLableAndGouCell.xib in Resources */,
 				65B596F31CAD43AC007AB83A /* JKSlideViewController.xib in Resources */,
@@ -9264,17 +9126,13 @@
 				36BF01C61BC77ABE005B3CE2 /* FabuYueBallViewCell.xib in Resources */,
 				36C05BBF1BD8A90200B3DD2D /* FabuYueTitleCell.xib in Resources */,
 				36BF00031BC770C4005B3CE2 /* chat_bottom_smile_press.png in Resources */,
-				36BFFEE11BC76CDC005B3CE2 /* xiaoxidian2@3x.png in Resources */,
-				36BFFEE51BC76CDC005B3CE2 /* xiaoxidian@2x.png in Resources */,
 				36BFFD521BC76CB8005B3CE2 /* top_back.png in Resources */,
-				3660E0921BFC48B00033B4D7 /* Default@3x.png in Resources */,
 				20591C701D221B0B003271EC /* JGHWithdrawDetailsCell.xib in Resources */,
 				367E32001C1EBAC00007BD32 /* YueHallPeoTableViewCell.xib in Resources */,
 				36DD4DB21BFDB68E008D3424 /* TeamCreateTableViewCell.xib in Resources */,
 				36BF01F71BC77C71005B3CE2 /* MyselfChooseViewCell.xib in Resources */,
 				20591C881D22630A003271EC /* JGHWithdrawCell.xib in Resources */,
 				36BF00401BC771FB005B3CE2 /* OtherDataTableViewCell.xib in Resources */,
-				36BFFEC61BC76CDC005B3CE2 /* tab_wd.png in Resources */,
 				207FEC9C1D1BDDB20098E23C /* JGHButtonCell.xib in Resources */,
 				654332031BD5D9B900363947 /* UMSocialLocalizable.strings in Resources */,
 				209B93A71D6E8EB700A5BE10 /* JGHNewCostListCell.xib in Resources */,
@@ -9286,14 +9144,11 @@
 				F53A05681D518F32009DD489 /* JGHPlayersScoreTableViewCell.xib in Resources */,
 				209B3FE71D0FCB0300A6FF72 /* JGHSaveAndSubmitBtnCell.xib in Resources */,
 				36BF00011BC770C4005B3CE2 /* chat_bottom_keyboard_press.png in Resources */,
-				36BFFEB81BC76CDC005B3CE2 /* tab_bg2@2x.png in Resources */,
 				20F6A5CF1CF459D400DD9383 /* JGActivityBaseInfoCell.xib in Resources */,
 				F53A056D1D518F32009DD489 /* JGHSetBallBaseCell.xib in Resources */,
 				F5E3F7F11CAA54BC00B24C77 /* dz@2x.png in Resources */,
-				36BFFEDF1BC76CDC005B3CE2 /* xiaoxidian2.png in Resources */,
 				36BF01F31BC77C71005B3CE2 /* MySelfTableViewCell.xib in Resources */,
 				6543320C1BD5D9B900363947 /* UMSShareListController.xib in Resources */,
-				36BFFEC51BC76CDC005B3CE2 /* tab_sy@3x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9566,7 +9421,6 @@
 				F5AAAA311D59B08D0016E6F6 /* JGDPlayPersonTableViewCell.m in Sources */,
 				82EDDF7F1D6154A8003D51EB /* JGLCaddieSelfScoreViewController.m in Sources */,
 				F5E1BAF01D6B006100414727 /* ZXBitMatrix.m in Sources */,
-				20513BD01CF7050A003233FB /* APAuthV2Info.m in Sources */,
 				36B9B5921C3DFFCE0053B227 /* ShopCarViewController.m in Sources */,
 				36BF01DA1BC77BB0005B3CE2 /* CaptchaModel.m in Sources */,
 				20591C5E1D220EE0003271EC /* JGDPrivateAccountViewController.m in Sources */,

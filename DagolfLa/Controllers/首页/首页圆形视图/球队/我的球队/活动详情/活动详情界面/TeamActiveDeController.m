@@ -201,7 +201,6 @@
 -(void)createMainHead
 {
     UIImageView* imgv = [[UIImageView alloc]initWithFrame:CGRectMake(10*ScreenWidth/320, 5*ScreenWidth/320, 60*ScreenWidth/320, 60*ScreenWidth/320)];
-    //    imgv.image = [UIImage imageNamed:@"tu3"];
     [imgv sd_setImageWithURL:[Helper imageIconUrl:_model.treamPic] placeholderImage:[UIImage imageNamed:@"zwt"]];
     [_scrollView addSubview:imgv];
     
