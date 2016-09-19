@@ -7,7 +7,6 @@
 //
 
 #import "TeamApplyViewController.h"
-#import "TeamApplyViewCell.h"
 #import "TeamJoinSetTableViewCell.h"
 #import "TeamJoinModel.h"
 #import "PostDataRequest.h"
