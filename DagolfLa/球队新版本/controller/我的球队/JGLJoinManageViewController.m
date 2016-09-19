@@ -7,7 +7,6 @@
 //
 
 #import "JGLJoinManageViewController.h"
-#import "TeamApplyViewCell.h"
 #import "JGLTeamAdviceTableViewCell.h"
 #import "MJRefresh.h"
 #import "MJDIYBackFooter.h"
@@ -48,7 +47,6 @@
     _tableView.dataSource = self;
     _tableView.separatorStyle = UITableViewCellAccessoryNone;
     [self.view addSubview:_tableView];
-//    [_tableView registerNib:[UINib nibWithNibName:@"TeamApplyViewCell" bundle:nil] forCellReuseIdentifier:@"TeamApplyViewCell"];
     [_tableView registerClass:[JGLTeamAdviceTableViewCell class] forCellReuseIdentifier:@"JGLTeamAdviceTableViewCell"];
     _tableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
     _tableView.footer=[MJDIYBackFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRereshing)];

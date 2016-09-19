@@ -14,11 +14,7 @@
 #import "MyFootViewController.h"
 //列表点击视图
 #import "MyAccountViewController.h"
-#import "NewsDetailController.h"
 #import "MyTradeViewController.h"
-#import "MyActivityViewController.h"
-#import "MyAwardViewController.h"
-#import "MyRecomViewController.h"
 #import "ScreenViewController.h"
 
 

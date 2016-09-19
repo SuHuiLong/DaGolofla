@@ -20,11 +20,11 @@
 
 #import "ChatDetailViewController.h"
 
-#import "YueDetailViewController.h"
-#import "PostDetailViewController.h"
-#import "TeamDeMessViewController.h"
+//#import "YueDetailViewController.h"
+//#import "PostDetailViewController.h"
+//#import "TeamDeMessViewController.h"
 //#import "ManageDetailController.h"
-#import "TeamActiveDeController.h"
+//#import "TeamActiveDeController.h"
 
 @interface NewsDetailController ()<UITableViewDataSource,UITableViewDelegate>
 {
@@ -309,67 +309,7 @@
     }
     else
     {
-        //球队
-        if ([[_dataArray[indexPath.row] messType] integerValue] == 10){
-            TeamDeMessViewController* teamVc = [[TeamDeMessViewController alloc]init];
-            teamVc.teamId = [_dataArray[indexPath.row] messObjid];
-            teamVc.forrelvant = [_dataArray[indexPath.row] forrelevant];
-            teamVc.typeNews = @1;
-            [self.navigationController pushViewController:teamVc animated:YES];
-            [tableView deselectRowAtIndexPath:indexPath animated:NO];
-        }
-        //活动
-        else if ([[_dataArray[indexPath.row] messType] integerValue] == 11)
-        {
-            TeamActiveDeController* teamVc = [[TeamActiveDeController alloc]init];
-            teamVc.teamActivityId = [_dataArray[indexPath.row] messObjid];
-            teamVc.teamStand = [_dataArray[indexPath.row] forrelevant];
-            teamVc.typeNews = @1;
-            [self.navigationController pushViewController:teamVc animated:YES];
-        }
-        //赛事
-        else if ([[_dataArray[indexPath.row] messType] integerValue] == 12)
-        {
-//            ManageDetailController* manVc = [[ManageDetailController alloc]init];
-//            manVc.eventId = [_dataArray[indexPath.row] messObjid];
-//            manVc.typeNews = @1;
-//            [self.navigationController pushViewController:manVc animated:YES];
-//            [tableView deselectRowAtIndexPath:indexPath animated:NO];
-        }
-        //约球
-        else if ([[_dataArray[indexPath.row] messType] integerValue] == 14)
-        {
-            YueDetailViewController* yueDVc = [[YueDetailViewController alloc]init];
-            yueDVc.aboutBallId = [_dataArray[indexPath.row] messObjid];
-            yueDVc.typeNews = @1;
-            [self.navigationController pushViewController:yueDVc animated:YES];
-            [tableView deselectRowAtIndexPath:indexPath animated:NO];
-        }
-        //悬赏
-        else if ([[_dataArray[indexPath.row] messType] integerValue] == 15)
-        {
-            [[PostDataRequest sharedInstance] postDataRequest:@"aboutBallReward/updateSee.do" parameter:@{@"aboutBallReId":[_dataArray[indexPath.row] messObjid]} success:^(id respondsData) {
-                NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:respondsData options:NSJSONReadingMutableContainers error:nil];
-                if ([[dict objectForKey:@"success"] integerValue] == 1) {
-                    PostDetailViewController* detailVc = [[PostDetailViewController alloc]init];
-                    detailVc.aboutBallId = [_dataArray[indexPath.row] messObjid];
-                    detailVc.typeNews = @1;
-                    [self.navigationController pushViewController:detailVc animated:YES];
-                    [tableView deselectRowAtIndexPath:indexPath animated:NO];
-                }
-                else
-                {
-                    
-                }
-                
-            } failed:^(NSError *error) {
-                ////NSLog(@"%@",error);
-            }];
-        }
-        else
-        {
-            
-        }
+        
     }
 }
 

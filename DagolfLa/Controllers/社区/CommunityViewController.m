@@ -32,7 +32,6 @@
 
 #import "PicArrShowViewControllerViewController.h"
 #import "UIButton+WebCache.h"
-#import "NewsDetailController.h"
 
 #import "ReportViewController.h"
 

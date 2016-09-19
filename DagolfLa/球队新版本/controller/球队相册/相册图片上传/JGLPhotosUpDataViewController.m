@@ -111,6 +111,12 @@
 #pragma mark --上传图片方法
 -(void)imageArray:(NSArray *)array
 {
+    if (_selectImages.count == 0) {
+        [[ShowHUD showHUD] showToastWithText:@"请选择照片后进行发布" FromView:self.view];
+        return;
+    }
+    
+    
     self.navigationItem.hidesBackButton = YES;
     self.navigationItem.rightBarButtonItem.customView.hidden=YES;
     MBProgressHUD *progress = [[MBProgressHUD alloc] initWithView:self.view];

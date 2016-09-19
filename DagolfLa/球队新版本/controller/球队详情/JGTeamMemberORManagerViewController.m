@@ -25,7 +25,6 @@
 #import "JGCostSetViewController.h"
 #import "JGLableAndLableTableViewCell.h"
 #import "JGDisplayInfoTableViewCell.h"
-#import "TeamInviteViewController.h"
 
 #import "ShareAlert.h"
 #import "EnterViewController.h"
@@ -44,7 +43,6 @@
 #import "JGTeamManageViewController.h"
 
 #import "JGTeamMemberController.h"
-#import "TeamMessageController.h"//发送信息
 //球队照片
 #import "JGTeamPhotoViewController.h"
 #import "JGDWithDrawTeamMoneyViewController.h"

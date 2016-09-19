@@ -27,7 +27,6 @@
 
 #import "Helper.h"
 #import "PostDataRequest.h"
-#import "NewsDetailController.h"
 #import "JPUSHService.h"
 
 #import <TAESDK/TaeSDK.h>
@@ -533,11 +532,7 @@
     [JPUSHService handleRemoteNotification:userInfo];
     completionHandler(UIBackgroundFetchResultNewData);
     
-//    NewsDetailController * VC = [[NewsDetailController alloc]init];
-//    //    VC.pushType = 1;
-//    UINavigationController * Nav = [[UINavigationController alloc]initWithRootViewController:VC];//这里加导航栏是因为我跳转的页面带导航栏，如果跳转的页面不带导航，那这句话请省去。
-//    //    [self.window.rootViewController presentViewController:Nav animated:YES completion:nil];
-//    [self.window.rootViewController.navigationController pushViewController:VC animated:YES];
+
     NSString* str = [userInfo objectForKey:@"url"];
     NSURL *url = [NSURL URLWithString:str];
     if ([url.scheme isEqualToString:@"dagolfla"]){

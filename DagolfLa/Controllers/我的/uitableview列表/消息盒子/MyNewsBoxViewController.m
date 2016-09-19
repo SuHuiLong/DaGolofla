@@ -9,7 +9,6 @@
 #import "MyNewsBoxViewController.h"
 #import "MyNewsBoxTableCell.h"
 
-#import "NewsDetailController.h"
 #import "NewsModel.h"
 
 #import "PostDataRequest.h"
