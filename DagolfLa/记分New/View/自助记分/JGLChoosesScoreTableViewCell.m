@@ -20,7 +20,6 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         _iconImgv = [[UIImageView alloc]initWithFrame:CGRectMake(10*screenWidth/375, 12*screenWidth/375, 69*screenWidth/375, 69*screenWidth/375)];
-        _iconImgv.image = [UIImage imageNamed:@"banner"];
         _iconImgv.layer.masksToBounds = YES;
         _iconImgv.layer.cornerRadius = 8* screenWidth / 375;
         [self.contentView addSubview:_iconImgv];
