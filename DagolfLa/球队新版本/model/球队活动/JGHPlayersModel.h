@@ -7,6 +7,7 @@
 //
 
 #import "BaseModel.h"
+#import "ChineseString.h"
 
 @interface JGHPlayersModel : BaseModel
 
@@ -46,5 +47,13 @@
 @property (nonatomic, assign)NSInteger type;//类型: 0:嘉宾  1:球队队员
 
 @property (nonatomic, assign)NSInteger timeKey;//timeKey
+
+@property (strong, nonatomic) NSNumber* accountUserKey;
+
+@property (strong, nonatomic) NSString* accountUserName;
+
+@property (strong, nonatomic) NSString* accountUserMobile;
+
+@property (strong, nonatomic) ChineseString *chineseString;
 
 @end
