@@ -60,21 +60,21 @@
         
         
         
-        _labelAlmost = [[UILabel alloc]initWithFrame:CGRectMake(10*ProportionAdapter, 75*ProportionAdapter, 40*ProportionAdapter, 30*ProportionAdapter)];
+        _labelAlmost = [[UILabel alloc]initWithFrame:CGRectMake(10*ProportionAdapter, 70*ProportionAdapter, 40*ProportionAdapter, 30*ProportionAdapter)];
         _labelAlmost.font = [UIFont systemFontOfSize:14*ProportionAdapter];
         _labelAlmost.text = @"差点";
         [self.contentView addSubview:_labelAlmost];
         
-        _textAlmost = [[UITextField alloc]initWithFrame:CGRectMake(60*ProportionAdapter, 75*ProportionAdapter, 100*ProportionAdapter, 30*ProportionAdapter)];
+        _textAlmost = [[UITextField alloc]initWithFrame:CGRectMake(60*ProportionAdapter, 70*ProportionAdapter, 100*ProportionAdapter, 30*ProportionAdapter)];
         _textAlmost.font = [UIFont systemFontOfSize:14*ProportionAdapter];
         [self.contentView addSubview:_textAlmost];
         
-        _labelMobile = [[UILabel alloc]initWithFrame:CGRectMake(165*ProportionAdapter, 75*ProportionAdapter, 55*ProportionAdapter, 30*ProportionAdapter)];
+        _labelMobile = [[UILabel alloc]initWithFrame:CGRectMake(165*ProportionAdapter, 70*ProportionAdapter, 55*ProportionAdapter, 30*ProportionAdapter)];
         _labelMobile.font = [UIFont systemFontOfSize:14*ProportionAdapter];
         _labelMobile.text = @"手机号";
         [self.contentView addSubview:_labelMobile];
         
-        _textMobile = [[UITextField alloc]initWithFrame:CGRectMake(220*ProportionAdapter, 75*ProportionAdapter, 100*ProportionAdapter, 30*ProportionAdapter)];
+        _textMobile = [[UITextField alloc]initWithFrame:CGRectMake(220*ProportionAdapter, 70*ProportionAdapter, 100*ProportionAdapter, 30*ProportionAdapter)];
         _textMobile.font = [UIFont systemFontOfSize:14*ProportionAdapter];
         [self.contentView addSubview:_textMobile];
         

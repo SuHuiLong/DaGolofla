@@ -16,7 +16,7 @@
 @interface JGLGuestAddressViewController : ViewController<ABPeoplePickerNavigationControllerDelegate>
 
 @property (strong, nonatomic) NSMutableDictionary* dictFinish;
-@property (copy, nonatomic) void (^blockAddressPeople)(TKAddressModel* dict);
+@property (copy, nonatomic) void (^blockAddressPeople)(NSMutableDictionary *);
 @property (assign, nonatomic) BOOL isGest;//判断是否是嘉宾，嘉宾不需要标记
 
 @end

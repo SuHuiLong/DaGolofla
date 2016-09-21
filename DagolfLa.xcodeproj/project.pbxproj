@@ -584,6 +584,9 @@
 		8215EE121D0FD9F90099F161 /* JGTeamMemberManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8215EE111D0FD9F90099F161 /* JGTeamMemberManager.m */; };
 		821724241D504896007BC63D /* JGLScoreLiveModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 821724231D504896007BC63D /* JGLScoreLiveModel.m */; };
 		821724271D508A7D007BC63D /* JGLScoreRankModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 821724261D508A7D007BC63D /* JGLScoreRankModel.m */; };
+		8219ADD41D90DC6000793110 /* JGLAddTeaPlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8219ADD31D90DC6000793110 /* JGLAddTeaPlayerViewController.m */; };
+		8219ADD71D90DF5200793110 /* JGLAddTeamPlayerTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8219ADD61D90DF5200793110 /* JGLAddTeamPlayerTableViewCell.m */; };
+		8219ADDA1D91112800793110 /* JGLFinishBtnTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8219ADD91D91112800793110 /* JGLFinishBtnTableViewCell.m */; };
 		821A130F1CED5F9C00694E49 /* JGLPhotoAlbumModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 821A130E1CED5F9C00694E49 /* JGLPhotoAlbumModel.m */; };
 		821A13131CEDE04400694E49 /* JGLMyTeamModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 821A13121CEDE04400694E49 /* JGLMyTeamModel.m */; };
 		821C0D8D1D51EE59001BB913 /* JGLActivityMemberNumTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 821C0D8C1D51EE59001BB913 /* JGLActivityMemberNumTableViewCell.m */; };
@@ -2192,6 +2195,12 @@
 		821724231D504896007BC63D /* JGLScoreLiveModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGLScoreLiveModel.m; sourceTree = "<group>"; };
 		821724251D508A7D007BC63D /* JGLScoreRankModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGLScoreRankModel.h; sourceTree = "<group>"; };
 		821724261D508A7D007BC63D /* JGLScoreRankModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGLScoreRankModel.m; sourceTree = "<group>"; };
+		8219ADD21D90DC6000793110 /* JGLAddTeaPlayerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGLAddTeaPlayerViewController.h; sourceTree = "<group>"; };
+		8219ADD31D90DC6000793110 /* JGLAddTeaPlayerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGLAddTeaPlayerViewController.m; sourceTree = "<group>"; };
+		8219ADD51D90DF5200793110 /* JGLAddTeamPlayerTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGLAddTeamPlayerTableViewCell.h; sourceTree = "<group>"; };
+		8219ADD61D90DF5200793110 /* JGLAddTeamPlayerTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGLAddTeamPlayerTableViewCell.m; sourceTree = "<group>"; };
+		8219ADD81D91112800793110 /* JGLFinishBtnTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGLFinishBtnTableViewCell.h; sourceTree = "<group>"; };
+		8219ADD91D91112800793110 /* JGLFinishBtnTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGLFinishBtnTableViewCell.m; sourceTree = "<group>"; };
 		821A130D1CED5F9C00694E49 /* JGLPhotoAlbumModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGLPhotoAlbumModel.h; sourceTree = "<group>"; };
 		821A130E1CED5F9C00694E49 /* JGLPhotoAlbumModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGLPhotoAlbumModel.m; sourceTree = "<group>"; };
 		821A13111CEDE04400694E49 /* JGLMyTeamModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGLMyTeamModel.h; sourceTree = "<group>"; };
@@ -5982,6 +5991,15 @@
 			path = "直播和成绩";
 			sourceTree = "<group>";
 		};
+		8219ADD11D90D69F00793110 /* 球队意向成员 */ = {
+			isa = PBXGroup;
+			children = (
+				8219ADD21D90DC6000793110 /* JGLAddTeaPlayerViewController.h */,
+				8219ADD31D90DC6000793110 /* JGLAddTeaPlayerViewController.m */,
+			);
+			path = "球队意向成员";
+			sourceTree = "<group>";
+		};
 		821A13101CEDE02E00694E49 /* 我的球队 */ = {
 			isa = PBXGroup;
 			children = (
@@ -5996,6 +6014,7 @@
 		821C0D8E1D52E866001BB913 /* 添加打球人 */ = {
 			isa = PBXGroup;
 			children = (
+				8219ADD11D90D69F00793110 /* 球队意向成员 */,
 				826FB5131D5429DA00B13155 /* JGLActivityMemberSetViewController.h */,
 				826FB5141D5429DA00B13155 /* JGLActivityMemberSetViewController.m */,
 				821C0D8F1D52EDC2001BB913 /* JGLGuestAddPlayerViewController.h */,
@@ -6013,6 +6032,10 @@
 				821C0D941D533661001BB913 /* JGLGuestAddPlayerTableViewCell.m */,
 				826FB5161D5433F300B13155 /* JGLGuestActiveMemberTableViewCell.h */,
 				826FB5171D5433F300B13155 /* JGLGuestActiveMemberTableViewCell.m */,
+				8219ADD51D90DF5200793110 /* JGLAddTeamPlayerTableViewCell.h */,
+				8219ADD61D90DF5200793110 /* JGLAddTeamPlayerTableViewCell.m */,
+				8219ADD81D91112800793110 /* JGLFinishBtnTableViewCell.h */,
+				8219ADD91D91112800793110 /* JGLFinishBtnTableViewCell.m */,
 			);
 			path = "嘉宾";
 			sourceTree = "<group>";
@@ -7995,7 +8018,7 @@
 				TargetAttributes = {
 					36BFFD271BC76C8D005B3CE2 = {
 						CreatedOnToolsVersion = 6.3.2;
-						DevelopmentTeam = T8ML76W22A;
+						DevelopmentTeam = R269PG52XZ;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -8324,6 +8347,7 @@
 				20BA612B1CDC99D0004B61F5 /* ALMoviePlayerController.m in Sources */,
 				F5E1BABB1D6B006100414727 /* ZXAztecSimpleToken.m in Sources */,
 				36E300F41C3FF3F9005C3F08 /* MJRefreshBackNormalFooter.m in Sources */,
+				8219ADDA1D91112800793110 /* JGLFinishBtnTableViewCell.m in Sources */,
 				364E77E21C156F810064F130 /* ScorePeopleModel.m in Sources */,
 				F55426721D22533300233B20 /* JGDSetPayPasswordTableViewCell.m in Sources */,
 				F54CC18A1D8428CE00A194F2 /* JGLWriteReplyViewController.m in Sources */,
@@ -8524,6 +8548,7 @@
 				36BF00E21BC77428005B3CE2 /* TeacherViewController.m in Sources */,
 				2066E88B1D5D9D5D00A3A2B8 /* JGHTransDetailListModel.m in Sources */,
 				82D595E61CE4510100CD9587 /* JGMemAuthorityViewController.m in Sources */,
+				8219ADD71D90DF5200793110 /* JGLAddTeamPlayerTableViewCell.m in Sources */,
 				2012AD9B1D3615AB00F70E40 /* JGHScoresViewController.m in Sources */,
 				F5EE488D1D462625001D5E44 /* JGLAddActiivePlayModel.m in Sources */,
 				36D6266B1C1A61DB0066E4DD /* ScoreView.m in Sources */,
@@ -8658,6 +8683,7 @@
 				36BFFF5C1BC76D09005B3CE2 /* AFNetworkReachabilityManager.m in Sources */,
 				8252E86A1D360DA500448404 /* JGLScoreNewTableViewCell.m in Sources */,
 				F5E1BB741D6B006100414727 /* ZXPDF417Writer.m in Sources */,
+				8219ADD41D90DC6000793110 /* JGLAddTeaPlayerViewController.m in Sources */,
 				F5E1BB561D6B006100414727 /* ZXUPCEANExtension2Support.m in Sources */,
 				F569A14A1CE35AA500CD0FD5 /* JGTeamChannelTableViewCell.m in Sources */,
 				F5AAAA2E1D5978250016E6F6 /* JGDPlayPersoningTableViewCell.m in Sources */,
@@ -9264,7 +9290,7 @@
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = bihuaxinxi.DagolfLaipo;
+				PRODUCT_BUNDLE_IDENTIFIER = bihuaxinxi.DagolfLaii00;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -9314,7 +9340,7 @@
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = bihuaxinxi.DagolfLaipo;
+				PRODUCT_BUNDLE_IDENTIFIER = bihuaxinxi.DagolfLaii00;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
