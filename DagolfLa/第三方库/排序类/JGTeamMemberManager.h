@@ -12,4 +12,7 @@
 
 +(NSArray *)archiveNumbers:(NSArray *)originalArray;
 
+//活动报名人排序
++(NSArray *)activityArchiveNumbers:(NSArray *)originalArray;
+
 @end

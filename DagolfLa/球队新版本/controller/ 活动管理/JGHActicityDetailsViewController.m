@@ -16,7 +16,6 @@
 #import "BallParkViewController.h"
 #import "JGHCostListTableViewCell.h"
 #import "JGTeamActivityViewController.h"
-#import "JGHTeamMembersViewController.h"
 #import "JGTeamDeatilWKwebViewController.h"
 #import "JGTeamGroupViewController.h"
 #import "JGTableViewCell.h"

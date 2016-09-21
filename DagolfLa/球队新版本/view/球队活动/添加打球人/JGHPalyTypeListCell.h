@@ -20,6 +20,7 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *type;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *typeLeft;//40
+
 - (IBAction)selectBtn:(UIButton *)sender;
 
 @property (weak, nonatomic) IBOutlet UIButton *selectBtn;

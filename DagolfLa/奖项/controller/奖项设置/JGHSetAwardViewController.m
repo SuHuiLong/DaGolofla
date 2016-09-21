@@ -102,17 +102,17 @@ static NSString *const JGHActivityBaseCellIdentifier = @"JGHActivityBaseCell";
 }
 #pragma mark -- 下载数据
 - (void)loadData{
-    [[ShowHUD showHUD]showAnimationWithText:@"加载中..." FromView:self.view];
+//    [[ShowHUD showHUD]showAnimationWithText:@"加载中..." FromView:self.view];
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     [dict setObject:@(_activityKey) forKey:@"activityKey"];
     [dict setObject:@(_teamKey) forKey:@"teamKey"];
     [dict setObject:DEFAULF_USERID forKey:@"userKey"];
     [[JsonHttp jsonHttp]httpRequest:@"team/getTeamActivityPrizeAllList" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
         NSLog(@"errType = %@", errType);
-        [[ShowHUD showHUD]hideAnimationFromView:self.view];
+//        [[ShowHUD showHUD]hideAnimationFromView:self.view];
     } completionBlock:^(id data) {
         NSLog(@"data = %@", data);
-        [[ShowHUD showHUD]hideAnimationFromView:self.view];
+//        [[ShowHUD showHUD]hideAnimationFromView:self.view];
         [self.dataArray removeAllObjects];
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
             _publishPrize = [[data objectForKey:@"publishPrize"] integerValue];

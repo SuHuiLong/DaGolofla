@@ -357,6 +357,7 @@
 
 #pragma mark -- 所有记分完成后
 - (void)noticeAllScoresCtrl{
+    //
     _selectcompleteHole = 1;
     [_item setTitle:@"完成"];
 }

@@ -81,14 +81,17 @@ static NSString *const JGGroupdetailsCollectionViewCellIdentifier = @"JGGroupdet
     UIBarButtonItem *bar = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"iconfont-fenxiang"] style:(UIBarButtonItemStylePlain) target:self action:@selector(shareBtn)];
     bar.tintColor = [UIColor whiteColor];
     self.navigationItem.rightBarButtonItem = bar;
-    
+    self.teamGroupAllDataArray = [NSMutableArray array];
+    self.alreadyDataArray = [NSMutableArray array];
+     _groupDetailsCollectionViewCount = 0;
 //    UIView* view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 0, 0)];
 //    [self.view addSubview:view];
     //待分组label
-    self.teamGroupAllDataArray = [NSMutableArray array];
-    self.alreadyDataArray = [NSMutableArray array];
-    _groupDetailsCollectionViewCount = 0;
-    _waitGroupLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 10, screenWidth, 30)];
+   UILabel *linelable = [[UILabel alloc]initWithFrame:CGRectMake(0, 10, 10*ProportionAdapter, 30)];
+    linelable.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:linelable];
+    
+    _waitGroupLabel = [[UILabel alloc]initWithFrame:CGRectMake(10 *ProportionAdapter, 10, screenWidth, 30)];
     _waitGroupLabel.text = @"待分组";
     _waitGroupLabel.backgroundColor = [UIColor whiteColor];
     _waitGroupLabel.textAlignment = NSTextAlignmentLeft;
@@ -96,14 +99,14 @@ static NSString *const JGGroupdetailsCollectionViewCellIdentifier = @"JGGroupdet
     [self.view addSubview:_waitGroupLabel];
     
     //添加分组
-    UIButton *autoGroupBtn = [[UIButton alloc]initWithFrame:CGRectMake(screenWidth - 110, 14.5, 80, 21)];
+    UIButton *autoGroupBtn = [[UIButton alloc]initWithFrame:CGRectMake(screenWidth - 100 *ProportionAdapter, 14.5 *ProportionAdapter, 80 *ProportionAdapter, 21 *ProportionAdapter)];
     [autoGroupBtn setTitle:@"按差点分组" forState:UIControlStateNormal];
     autoGroupBtn.layer.masksToBounds = YES;
     [autoGroupBtn setTitleColor:[UIColor colorWithHexString:@"#7DDFFD"] forState:UIControlStateNormal];
     autoGroupBtn.backgroundColor = [UIColor colorWithHexString:BG_color];
     autoGroupBtn.layer.borderWidth = 1.0;
     autoGroupBtn.layer.borderColor = [UIColor colorWithHexString:@"#7DDFFD"].CGColor;
-    autoGroupBtn.titleLabel.font = [UIFont systemFontOfSize:12];
+    autoGroupBtn.titleLabel.font = [UIFont systemFontOfSize:12*ProportionAdapter];
     [autoGroupBtn addTarget:self action:@selector(autoGroupBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [autoGroupBtn setBackgroundColor:[UIColor whiteColor]];
     [self.view addSubview:autoGroupBtn];
@@ -135,29 +138,29 @@ static NSString *const JGGroupdetailsCollectionViewCellIdentifier = @"JGGroupdet
     self.collectionView = collectionView;
     [self.view addSubview:self.collectionView];
     //提示语
-    UILabel *promptLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, collectionView.frame.size.height+_waitGroupLabel.frame.size.height+20, screenWidth, 12)];
+    UILabel *promptLabel = [[UILabel alloc]initWithFrame:CGRectMake(10 *ProportionAdapter, collectionView.frame.size.height+_waitGroupLabel.frame.size.height+20, screenWidth, 12)];
     promptLabel.text = @"提示:点击任意“待添加”，实现自动分组";
     promptLabel.textColor = [UIColor colorWithHexString:Prompt_Color];
     promptLabel.backgroundColor = [UIColor colorWithHexString:BG_color];
     promptLabel.textAlignment = NSTextAlignmentLeft;
-    promptLabel.font = [UIFont systemFontOfSize:12];
+    promptLabel.font = [UIFont systemFontOfSize:12*ProportionAdapter];
     [self.view addSubview:promptLabel];
     //好友分组label
-    UILabel *groupLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, self.collectionView.frame.size.height+_waitGroupLabel.frame.size.height+30 + 10, screenWidth-90, 21)];
+    UILabel *groupLabel = [[UILabel alloc]initWithFrame:CGRectMake(10 *ProportionAdapter, self.collectionView.frame.size.height+_waitGroupLabel.frame.size.height+30 + 10, screenWidth-90, 21)];
     groupLabel.text = @"好友分组";
     groupLabel.backgroundColor = [UIColor colorWithHexString:BG_color];
     groupLabel.textAlignment = NSTextAlignmentLeft;
-    groupLabel.font = [UIFont systemFontOfSize:15];
+    groupLabel.font = [UIFont systemFontOfSize:15*ProportionAdapter];
     [self.view addSubview:groupLabel];
     //添加分组
-    UIButton *addGroupBtn = [[UIButton alloc]initWithFrame:CGRectMake(screenWidth - 90, self.collectionView.frame.size.height+_waitGroupLabel.frame.size.height+30+10, 60, 21)];
+    UIButton *addGroupBtn = [[UIButton alloc]initWithFrame:CGRectMake(screenWidth - 80 *ProportionAdapter, self.collectionView.frame.size.height+_waitGroupLabel.frame.size.height+30+10, 60 *ProportionAdapter, 21 *ProportionAdapter)];
     [addGroupBtn setTitle:@"添加分组" forState:UIControlStateNormal];
     addGroupBtn.layer.masksToBounds = YES;
     [addGroupBtn setTitleColor:[UIColor colorWithHexString:@"#7DDFFD"] forState:UIControlStateNormal];
     addGroupBtn.backgroundColor = [UIColor colorWithHexString:BG_color];
     addGroupBtn.layer.borderWidth = 1.0;
     addGroupBtn.layer.borderColor = [UIColor colorWithHexString:@"#7DDFFD"].CGColor;
-    addGroupBtn.titleLabel.font = [UIFont systemFontOfSize:12];
+    addGroupBtn.titleLabel.font = [UIFont systemFontOfSize:12*ProportionAdapter];
     [addGroupBtn addTarget:self action:@selector(addGroupBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:addGroupBtn];
     
