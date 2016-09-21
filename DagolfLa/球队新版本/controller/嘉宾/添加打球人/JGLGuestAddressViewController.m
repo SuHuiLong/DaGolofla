@@ -370,7 +370,9 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    _blockAddressPeople(self.listArray[indexPath.section][indexPath.row]);
+    NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
+    [dict setObject:self.listArray[indexPath.section][indexPath.row] forKey:@1];
+    _blockAddressPeople(dict);
     [self.navigationController popViewControllerAnimated:YES];
 }
 
@@ -391,13 +393,9 @@
     NSIndexPath *selectIndexPath = [NSIndexPath indexPathForRow:0 inSection:index];
     
     if (![_listArray[index] count]) {
-        
         return 0;
-        
     }else{
-        
         [tableView scrollToRowAtIndexPath:selectIndexPath atScrollPosition:UITableViewScrollPositionNone animated:YES];
-        
         return index;
     }
 }
