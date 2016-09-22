@@ -13,6 +13,7 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
+    self.backgroundColor = [UIColor whiteColor];
     
     self.name.font = [UIFont systemFontOfSize:15 *ProportionAdapter];
     self.nameLeft.constant = 40 *ProportionAdapter;

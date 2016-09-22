@@ -13,7 +13,7 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
-    
+    self.backgroundColor = [UIColor whiteColor];
     self.addCostBtn.titleLabel.font = [UIFont systemFontOfSize:18 *ProportionAdapter];
     
 }

@@ -27,7 +27,7 @@ static NSString *const JGHLableAndGouCellIdentifier = @"JGHLableAndGouCell";
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
-    
+    self.backgroundColor = [UIColor whiteColor];
     self.areaArray = [NSArray array];
     
     self.bgTop.constant = 5 *ProportionAdapter;

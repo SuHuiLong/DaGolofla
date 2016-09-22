@@ -14,7 +14,7 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
-    
+    self.backgroundColor = [UIColor whiteColor];
     self.time.font = [UIFont systemFontOfSize:15.0 * ProportionAdapter];
     self.name.font = [UIFont systemFontOfSize:17.0 * ProportionAdapter];
     self.monay.font = [UIFont systemFontOfSize:17.0 * ProportionAdapter];

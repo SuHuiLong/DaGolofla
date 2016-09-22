@@ -254,7 +254,7 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
             if (indexPath.row == self.applyArray.count){
                 JGHTotalPriceCell *totalPriceCell = [tableView dequeueReusableCellWithIdentifier:JGHTotalPriceCellIdentifier forIndexPath:indexPath];
                 totalPriceCell.selectionStyle = UITableViewCellSelectionStyleNone;
-                [totalPriceCell configTotalPrice:_amountPayable];
+                [totalPriceCell configTotalPrice:_realPayPrice];
                 return totalPriceCell;
             }else if (indexPath.row == self.applyArray.count+1){
                 JGSignUoPromptCell *signUoPromptCell = [tableView dequeueReusableCellWithIdentifier:JGSignUoPromptCellIdentifier forIndexPath:indexPath];
@@ -460,6 +460,7 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
 }
 #pragma mark -- 计算应付价格
 - (void)countAmountPayable{
+    /*
     _w = 0;
     _z = 0;
     _subsidiesPrice = 0.0;
@@ -477,6 +478,45 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
     _realPayPrice = _amountPayable;
     
     [self.teamApplyTableView reloadData];
+    */
+    
+    
+    _subsidiesPrice = 0.0;
+    _amountPayable = 0.0;
+    _realPayPrice = 0.0;
+    //判断成员中是否包含自己
+    NSInteger isMember = 0;
+    for (int i=0; i<_applyArray.count; i++) {
+        NSDictionary *dict = [NSDictionary dictionary];
+        dict = _applyArray[i];
+        if ([[dict objectForKey:@"select"]integerValue] == 1) {
+            NSLog(@"%@", [dict objectForKey:@"money"]);
+            float value = [[dict objectForKey:@"money"] floatValue];
+            _amountPayable += value;
+            
+            if ([[dict objectForKey:@"userKey"] integerValue] == [DEFAULF_USERID integerValue]) {
+                isMember = 1;
+                _subsidiesPrice = [[dict objectForKey:@"subsidyPrice"] floatValue];
+            }
+        }
+    }
+    
+    //仅当前报名人[在线支付]享受平台补贴
+    if (isMember == 1) {
+        //        _realSubPrice = _subsidiesPrice;
+        if (_canSubsidy == 1) {
+            _realPayPrice = _amountPayable - _subsidiesPrice;
+        }else{
+            _realPayPrice = _amountPayable;
+        }
+        
+    }else{
+        _realPayPrice = _amountPayable;
+        _subsidiesPrice = 0.0;
+    }
+    
+    [self.teamApplyTableView reloadData];
+    
 }
 #pragma mark -- 发票代理
 - (void)backAddressKey:(NSString *)invoiceKey andInvoiceName:(NSString *)name andAddressKey:(NSString *)addressKey{

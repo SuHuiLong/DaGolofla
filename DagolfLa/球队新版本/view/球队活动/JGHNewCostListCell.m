@@ -13,6 +13,7 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
+    self.backgroundColor = [UIColor whiteColor];
     self.oneTextField.font = [UIFont systemFontOfSize:15 *ProportionAdapter];
     self.oneTextFieldLeft.constant = 10 *ProportionAdapter;
     self.oneTextFieldRight.constant = 30 *ProportionAdapter;

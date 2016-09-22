@@ -14,7 +14,7 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
-    
+    self.backgroundColor = [UIColor whiteColor];
     self.prices.font = [UIFont systemFontOfSize:35.0 * ProportionAdapter];
     self.propontLabel.font = [UIFont systemFontOfSize:17.0 * ProportionAdapter];
     

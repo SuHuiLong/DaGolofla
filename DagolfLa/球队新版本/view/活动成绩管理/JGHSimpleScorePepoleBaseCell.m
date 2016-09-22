@@ -14,7 +14,7 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
-    
+    self.backgroundColor = [UIColor whiteColor];
     self.userImageView.image = [UIImage imageNamed:DefaultHeaderImage];
     
     self.userImageViewWith.constant = 40 *ProportionAdapter;

@@ -13,6 +13,7 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
+    self.backgroundColor = [UIColor whiteColor];
     self.clickBtn.layer.masksToBounds = YES;
     self.clickBtn.layer.cornerRadius = 8.0;
     

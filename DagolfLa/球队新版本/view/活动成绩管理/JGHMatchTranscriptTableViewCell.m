@@ -13,7 +13,7 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
-    
+    self.backgroundColor = [UIColor whiteColor];
     self.ballName.font = [UIFont systemFontOfSize:17*ProportionAdapter];
     self.ballNameLeft.constant = 10 *ProportionAdapter;
     self.ballNameTop.constant = 15 *ProportionAdapter;

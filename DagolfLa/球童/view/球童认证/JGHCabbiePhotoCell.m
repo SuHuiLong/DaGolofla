@@ -13,8 +13,9 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
-    self.proTextField.font = [UIFont systemFontOfSize:15*ProportionAdapter];
+    self.backgroundColor = [UIColor whiteColor];
     
+    self.proTextField.font = [UIFont systemFontOfSize:15*ProportionAdapter];
     
     self.promptLableTop.constant = 12 *ProportionAdapter;
     self.cammaDown.constant = 12 *ProportionAdapter;

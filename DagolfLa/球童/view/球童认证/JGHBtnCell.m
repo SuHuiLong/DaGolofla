@@ -13,7 +13,7 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
-    
+    self.backgroundColor = [UIColor whiteColor];
     self.titleBtn.layer.masksToBounds = YES;
     self.titleBtn.layer.cornerRadius = 8.0;
     

@@ -13,7 +13,7 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
-    
+    self.backgroundColor = [UIColor whiteColor];
     self.headerImage.layer.masksToBounds = YES;
     self.headerImage.layer.cornerRadius = _headerImage.frame.size.width/2;
 }

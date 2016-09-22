@@ -14,7 +14,7 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
-    
+    self.backgroundColor = [UIColor whiteColor];
     NSLayoutConstraint *sConstraint = [NSLayoutConstraint constraintWithItem:self.activityimageView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationGreaterThanOrEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:64*ProportionAdapter];
     
     NSArray *array2 = [NSArray arrayWithObjects:sConstraint, nil];
