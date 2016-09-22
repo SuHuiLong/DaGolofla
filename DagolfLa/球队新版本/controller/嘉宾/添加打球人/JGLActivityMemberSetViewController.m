@@ -264,7 +264,7 @@
     }
     
     if (model.almost) {
-        cell.almostLabel.text = [NSString stringWithFormat:@"差点  %@", model.almost];
+        cell.almostLabel.text = [NSString stringWithFormat:@"差点  %.1f", [model.almost floatValue]];
     }else{
         cell.almostLabel.text = @"差点";
     }
