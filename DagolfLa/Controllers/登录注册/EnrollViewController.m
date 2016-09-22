@@ -343,14 +343,14 @@ static int timeNumber = 60;
     [_gouXuan addTarget:self action:@selector(agreeClick) forControlEvents:UIControlEventTouchUpInside];
     
     
-    _labelResponse = [[UILabel alloc]initWithFrame:CGRectMake(54*ScreenWidth/375, 170*ScreenWidth/375, 90*ScreenWidth/375, 44*ScreenWidth/375)];
+    _labelResponse = [[UILabel alloc]initWithFrame:CGRectMake(54*ScreenWidth/375, 170*ScreenWidth/375, 100*ScreenWidth/375, 44*ScreenWidth/375)];
     _labelResponse.text = @"已阅读并同意";
     _labelResponse.textColor = [UIColor darkGrayColor];
     _labelResponse.font = [UIFont systemFontOfSize:15*ScreenWidth/375];
     [self.view addSubview:_labelResponse];
     
     _btnBind = [UIButton buttonWithType:UIButtonTypeCustom];
-    _btnBind.frame = CGRectMake(144*ScreenWidth/375, 170*ScreenWidth/375, 170*ScreenWidth/375, 44*ScreenWidth/375);
+    _btnBind.frame = CGRectMake(154*ScreenWidth/375, 170*ScreenWidth/375, 170*ScreenWidth/375, 44*ScreenWidth/375);
     [_btnBind setTitle:@"《使用条款和隐私政策》" forState:UIControlStateNormal];
     [_btnBind setTitleColor:[UITool colorWithHexString:@"32b14d" alpha:1] forState:UIControlStateNormal];
     [self.view addSubview:_btnBind];

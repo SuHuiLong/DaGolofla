@@ -26,7 +26,7 @@
         //sdhgfsdjkhgfjd
         
         NSDictionary *dict = @{NSFontAttributeName:[UIFont systemFontOfSize:size]};
-        CGRect rect = [text boundingRectWithSize:CGSizeMake(textWidth + 5, MAXFLOAT) options:NSStringDrawingTruncatesLastVisibleLine|NSStringDrawingUsesFontLeading|NSStringDrawingUsesLineFragmentOrigin attributes:dict context:nil];
+        CGRect rect = [text boundingRectWithSize:CGSizeMake(textWidth + 10 * ProportionAdapter, MAXFLOAT) options:NSStringDrawingTruncatesLastVisibleLine|NSStringDrawingUsesFontLeading|NSStringDrawingUsesLineFragmentOrigin attributes:dict context:nil];
         //返回计算出的行高
         return rect.size.height;
         
@@ -37,7 +37,7 @@
          2.预设 宽度和高度 宽度是固定的 高度一般写成最大值
          3.换行模式 字符换行
          */
-        CGSize textSize = [text sizeWithFont:[UIFont systemFontOfSize:size] constrainedToSize:CGSizeMake(textWidth + 5, MAXFLOAT) lineBreakMode:NSLineBreakByCharWrapping];
+        CGSize textSize = [text sizeWithFont:[UIFont systemFontOfSize:size] constrainedToSize:CGSizeMake(textWidth + 10 * ProportionAdapter, MAXFLOAT) lineBreakMode:NSLineBreakByCharWrapping];
         return textSize.height;//返回 计算出得行高
     }
 }
@@ -55,7 +55,7 @@
         //sdhgfsdjkhgfjd
         
         NSDictionary *dict = @{NSFontAttributeName:[UIFont systemFontOfSize:size]};
-        CGRect rect = [text boundingRectWithSize:CGSizeMake(MAXFLOAT, textHeight + 5) options:NSStringDrawingTruncatesLastVisibleLine|NSStringDrawingUsesFontLeading|NSStringDrawingUsesLineFragmentOrigin attributes:dict context:nil];
+        CGRect rect = [text boundingRectWithSize:CGSizeMake(MAXFLOAT, textHeight + 10 * ProportionAdapter) options:NSStringDrawingTruncatesLastVisibleLine|NSStringDrawingUsesFontLeading|NSStringDrawingUsesLineFragmentOrigin attributes:dict context:nil];
         //返回计算出的行高
         return rect.size.width;
         
@@ -66,7 +66,7 @@
          2.预设 宽度和高度 宽度是固定的 高度一般写成最大值
          3.换行模式 字符换行
          */
-        CGSize textSize = [text sizeWithFont:[UIFont systemFontOfSize:size] constrainedToSize:CGSizeMake(MAXFLOAT, textHeight + 5) lineBreakMode:NSLineBreakByCharWrapping];
+        CGSize textSize = [text sizeWithFont:[UIFont systemFontOfSize:size] constrainedToSize:CGSizeMake(MAXFLOAT, textHeight + 10 * ProportionAdapter) lineBreakMode:NSLineBreakByCharWrapping];
         return textSize.width;//返回 计算出得行高
     }
 }
