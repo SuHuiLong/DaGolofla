@@ -48,7 +48,7 @@
     }
     
     if (model.almost) {
-        self.sexAndValue.text = [NSString stringWithFormat:@"%@ 差点:%@", sexStr, model.almost];
+        self.sexAndValue.text = [NSString stringWithFormat:@"%@ 差点:%.1f", sexStr, [model.almost floatValue]];
     }
     
 }

@@ -395,7 +395,7 @@
     
     
     UIButton* btnEnroll = [UIButton buttonWithType:UIButtonTypeCustom];
-    btnEnroll.frame = CGRectMake(ScreenWidth/2+20*ScreenWidth/375, 230*ScreenWidth/375, 60*ScreenWidth/375, 44*ScreenWidth/375);
+    btnEnroll.frame = CGRectMake(ScreenWidth/2+20*ScreenWidth/375, 230*ScreenWidth/375, 70*ScreenWidth/375, 44*ScreenWidth/375);
     [btnEnroll setTitle:@"快速注册" forState:UIControlStateNormal];
     [btnEnroll setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
     btnEnroll.titleLabel.font = [UIFont systemFontOfSize:15*ScreenWidth/375];

@@ -385,7 +385,6 @@
                     }
                     else{
                         [[ShowHUD showHUD]showToastWithText:@"二维码失效" FromView:self.view];
-                        
                     }
                     [_session startRunning];
                 }
