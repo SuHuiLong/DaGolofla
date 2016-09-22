@@ -65,9 +65,7 @@
     
     self.navigationItem.rightBarButtonItem = rightBar;
     
-    
-    
-    // Do any additional setup after loading the view.
+
 }
 
 - (void)createTableView{

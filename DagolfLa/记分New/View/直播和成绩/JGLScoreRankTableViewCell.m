@@ -68,7 +68,7 @@
     }
     
     if (model.almost != nil) {
-        _labelAlmost.text = [NSString stringWithFormat:@"%@",model.almost];
+        _labelAlmost.text = [NSString stringWithFormat:@"%.1f",[model.almost floatValue]];
     }
     else{
         _labelAlmost.text = [NSString stringWithFormat:@"暂无"];

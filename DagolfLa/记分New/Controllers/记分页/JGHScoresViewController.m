@@ -52,8 +52,6 @@
     
     NSMutableArray *_currentAreaArray;
     
-//    NSInteger _switchMode;//0-总；1-差
-    
     NSMutableDictionary *_ballDict;
     
     NSInteger _ballKey;
@@ -62,7 +60,7 @@
     
     NSInteger _scoreFinish;//是否完成记分0-,1-完成
     
-//    NSInteger _jumpPage;//0
+    NSInteger _switchMode;// 0- 总；1- 差
 }
 
 @property (nonatomic, strong)NSMutableArray *userScoreArray;
@@ -259,6 +257,7 @@
             [listDict setObject:model.pushrod forKey:@"pushrod"];// 推杆
             [listDict setObject:model.onthefairway forKey:@"onthefairway"];// 是否上球道
             [listDict setObject:model.timeKey forKey:@"timeKey"];// 是否上球道
+            [listDict setObject:@(_switchMode) forKey:@"scoreModel"];//记分模式
             [listArray addObject:listDict];
         }
         
@@ -329,6 +328,7 @@
         [listDict setObject:model.pushrod forKey:@"pushrod"];// 推杆
         [listDict setObject:model.onthefairway forKey:@"onthefairway"];// 是否上球道
         [listDict setObject:model.timeKey forKey:@"timeKey"];// 是否上球道
+        [listDict setObject:@(_switchMode) forKey:@"scoreModel"];//记分模式
         [listArray addObject:listDict];
     }
     
@@ -384,6 +384,8 @@
                 [_macthDict setObject:[scoreDict objectForKey:@"createtime"] forKey:@"playTimes"];
                 
                 [_ballDict setObject:[scoreDict objectForKey:@"ballKey"] forKey:@"ballKey"];
+                
+                _switchMode = [[scoreDict objectForKey:@"scoreModel"] integerValue];
             }
             
             if ([data objectForKey:@"score"]) {
@@ -760,6 +762,8 @@
         [listDict setObject:model.pushrod forKey:@"pushrod"];// 推杆
         [listDict setObject:model.onthefairway forKey:@"onthefairway"];// 是否上球道
         [listDict setObject:model.timeKey forKey:@"timeKey"];// 是否上球道
+        [listDict setObject:@(_switchMode) forKey:@"scoreModel"];//记分模式
+        
         [listArray addObject:listDict];
     }
     

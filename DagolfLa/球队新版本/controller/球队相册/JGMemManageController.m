@@ -192,7 +192,7 @@
                     break;
                 case 3:
                 {
-                    cell.detailLabel.text = [NSString stringWithFormat:@"%@",_model.almost];
+                    cell.detailLabel.text = [NSString stringWithFormat:@"%.1f",[_model.almost floatValue]];
                 }
                     break;
                 case 4:

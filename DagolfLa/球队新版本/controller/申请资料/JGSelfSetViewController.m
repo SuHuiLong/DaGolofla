@@ -297,7 +297,7 @@
         cell.labell.textColor = [UIColor lightGrayColor];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         if ([self.memeDic objectForKey:@"almost"]) {
-            cell.textFD.text = [[self.memeDic objectForKey:@"almost"] stringValue];
+            cell.textFD.text = [NSString stringWithFormat:@"%.1f",[[self.memeDic objectForKey:@"almost"] floatValue]];
             return cell;
         }else{
             cell.textFD.placeholder = @"请输入你的差点";
@@ -423,7 +423,7 @@
             [cell.button setTitle:[self.memeDic objectForKey:@"sex"] forState:(UIControlStateNormal)];
         }else if (i == 3){
             JGApplyMaterialTableViewCell *cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0]];
-            cell.textFD.text = [self.memeDic objectForKey:@"almost"];
+            cell.textFD.text = [NSString stringWithFormat:@"%.1f",[[self.memeDic objectForKey:@"almost"] floatValue]];
         }
     }
     
