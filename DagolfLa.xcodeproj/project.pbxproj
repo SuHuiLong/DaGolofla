@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		200200FC1D61B2C900308C44 /* JGHStarScoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 200200FB1D61B2C900308C44 /* JGHStarScoreViewController.m */; };
 		200200FF1D61BC0200308C44 /* JGHCabbieEditorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 200200FE1D61BC0200308C44 /* JGHCabbieEditorViewController.m */; };
+		200D4C151D95244700DDD51D /* JGHScoreHoleListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 200D4C141D95244700DDD51D /* JGHScoreHoleListCell.m */; };
 		201056131D59C92800C90FDE /* JGHBtnCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 201056051D59C92800C90FDE /* JGHBtnCell.m */; };
 		201056141D59C92800C90FDE /* JGHBtnCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 201056061D59C92800C90FDE /* JGHBtnCell.xib */; };
 		201056151D59C92800C90FDE /* JGHCabbiePhotoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 201056081D59C92800C90FDE /* JGHCabbiePhotoCell.m */; };
@@ -1101,6 +1102,8 @@
 		200200FB1D61B2C900308C44 /* JGHStarScoreViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHStarScoreViewController.m; sourceTree = "<group>"; };
 		200200FD1D61BC0200308C44 /* JGHCabbieEditorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHCabbieEditorViewController.h; sourceTree = "<group>"; };
 		200200FE1D61BC0200308C44 /* JGHCabbieEditorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHCabbieEditorViewController.m; sourceTree = "<group>"; };
+		200D4C131D95244700DDD51D /* JGHScoreHoleListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHScoreHoleListCell.h; sourceTree = "<group>"; };
+		200D4C141D95244700DDD51D /* JGHScoreHoleListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHScoreHoleListCell.m; sourceTree = "<group>"; };
 		201056041D59C92800C90FDE /* JGHBtnCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHBtnCell.h; sourceTree = "<group>"; };
 		201056051D59C92800C90FDE /* JGHBtnCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHBtnCell.m; sourceTree = "<group>"; };
 		201056061D59C92800C90FDE /* JGHBtnCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JGHBtnCell.xib; sourceTree = "<group>"; };
@@ -6986,6 +6989,8 @@
 				F5AEF7121D41B98E009A8C34 /* JGHScoresHoleCell.h */,
 				F5AEF7131D41B98E009A8C34 /* JGHScoresHoleCell.m */,
 				F5AEF7141D41B98E009A8C34 /* JGHScoresHoleCell.xib */,
+				200D4C131D95244700DDD51D /* JGHScoreHoleListCell.h */,
+				200D4C141D95244700DDD51D /* JGHScoreHoleListCell.m */,
 				F5AEF7151D41B98E009A8C34 /* JGHScoresPageCell.h */,
 				F5AEF7161D41B98E009A8C34 /* JGHScoresPageCell.m */,
 				F5AEF7171D41B98E009A8C34 /* JGHScoresPageCell.xib */,
@@ -8680,6 +8685,7 @@
 				208030441CF7F32E00448BFC /* JGHIvoiceTypeCell.m in Sources */,
 				F5E1BAD91D6B006100414727 /* ZXTelParsedResult.m in Sources */,
 				F5E1BAC71D6B006100414727 /* ZXCalendarParsedResult.m in Sources */,
+				200D4C151D95244700DDD51D /* JGHScoreHoleListCell.m in Sources */,
 				36BFFF5C1BC76D09005B3CE2 /* AFNetworkReachabilityManager.m in Sources */,
 				8252E86A1D360DA500448404 /* JGLScoreNewTableViewCell.m in Sources */,
 				F5E1BB741D6B006100414727 /* ZXPDF417Writer.m in Sources */,

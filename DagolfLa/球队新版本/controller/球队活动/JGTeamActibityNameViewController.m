@@ -279,7 +279,7 @@ static CGFloat ImageHeight  = 210.0;
             [self.model setValuesForKeysWithDictionary:[data objectForKey:@"activity"]];
             
             [self setData];//设置名称 及 图片
-            if ([[Helper returnCurrentDateString] compare:_model.endDate] >= 0) {
+            if ([[Helper returnCurrentDateString] compare:_model.endDate] < 0) {
                 if ([[Helper returnCurrentDateString] compare:_model.signUpEndTime] < 0) {
                     if ([_isApply integerValue] == 0) {
                         [self createApplyBtn:0];//报名按钮
