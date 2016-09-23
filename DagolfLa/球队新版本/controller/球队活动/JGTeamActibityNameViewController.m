@@ -279,24 +279,27 @@ static CGFloat ImageHeight  = 210.0;
             [self.model setValuesForKeysWithDictionary:[data objectForKey:@"activity"]];
             
             [self setData];//设置名称 及 图片
-
-            if ([[Helper returnCurrentDateString] compare:_model.signUpEndTime] < 0) {
-                if ([_isApply integerValue] == 0) {
-                    [self createApplyBtn:0];//报名按钮
-                }else{
-                    [self createCancelBtnAndApplyOrPay:0];//已报名
-                }
-            }else{
-                //判断活动是否结束 endDate
-                if ([[Helper returnCurrentDateString] compare:_model.endDate] < 0) {
+            if ([[Helper returnCurrentDateString] compare:_model.endDate] >= 0) {
+                if ([[Helper returnCurrentDateString] compare:_model.signUpEndTime] < 0) {
                     if ([_isApply integerValue] == 0) {
-                        self.teamActibityNameTableView.frame = CGRectMake(0, 0, screenWidth, screenHeight);
+                        [self createApplyBtn:0];//报名按钮
                     }else{
-                        [self createCancelBtnAndApplyOrPay:1];//已报名
+                        [self createCancelBtnAndApplyOrPay:0];//已报名
                     }
                 }else{
-                    self.teamActibityNameTableView.frame = CGRectMake(0, 0, screenWidth, screenHeight);
+                    //判断活动是否结束 endDate
+                    if ([[Helper returnCurrentDateString] compare:_model.endDate] < 0) {
+                        if ([_isApply integerValue] == 0) {
+                            self.teamActibityNameTableView.frame = CGRectMake(0, 0, screenWidth, screenHeight);
+                        }else{
+                            [self createCancelBtnAndApplyOrPay:1];//已报名
+                        }
+                    }else{
+                        self.teamActibityNameTableView.frame = CGRectMake(0, 0, screenWidth, screenHeight);
+                    }
                 }
+            }else{
+                self.teamActibityNameTableView.frame = CGRectMake(0, 0, screenWidth, screenHeight);
             }
             
             [self.teamActibityNameTableView reloadData];
