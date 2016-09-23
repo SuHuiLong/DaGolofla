@@ -68,12 +68,12 @@
                   moduleName = "DagolfLa"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/DM/Desktop/dagolfla_ios/DagolfLa/%E7%90%83%E9%98%9F%E6%96%B0%E7%89%88%E6%9C%AC/controller/%E6%B4%BB%E5%8A%A8%E5%8F%96%E6%B6%88%E6%8A%A5%E5%90%8D/JGLPaySignUpViewController.m"
-                  timestampString = "496141124.059575"
+                  timestampString = "496309476.172455"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "186"
                   endingLineNumber = "186"
-                  offsetFromSymbolStart = "374">
+                  offsetFromSymbolStart = "326">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
@@ -83,12 +83,12 @@
                   moduleName = "DagolfLa"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/DM/Desktop/dagolfla_ios/DagolfLa/%E7%90%83%E9%98%9F%E6%96%B0%E7%89%88%E6%9C%AC/controller/%E6%B4%BB%E5%8A%A8%E5%8F%96%E6%B6%88%E6%8A%A5%E5%90%8D/JGLPaySignUpViewController.m"
-                  timestampString = "496141124.059771"
+                  timestampString = "496309476.175346"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "186"
                   endingLineNumber = "186"
-                  offsetFromSymbolStart = "394">
+                  offsetFromSymbolStart = "338">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -139,6 +139,22 @@
             endingLineNumber = "46"
             landmarkName = "-viewDidLoad"
             landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "DagolfLa/&#x7403;&#x961f;&#x65b0;&#x7248;&#x672c;/controller/&#x5609;&#x5bbe;/&#x6dfb;&#x52a0;&#x6253;&#x7403;&#x4eba;/JGLGuestAddPlayerViewController.m"
+            timestampString = "496309475.765044"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "367"
+            endingLineNumber = "367"
+            landmarkName = "-tableView:didSelectRowAtIndexPath:"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

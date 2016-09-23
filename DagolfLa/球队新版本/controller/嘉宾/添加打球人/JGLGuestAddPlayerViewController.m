@@ -364,7 +364,8 @@
                 [_tableView reloadData];
             }
             else{
-                [_dictTeamMem removeObjectForKey:_arrayMemKey[indexPath.row -_arrayAddress.count-1]];
+                [_dictTeamMem removeObjectForKey:[NSString stringWithFormat:@"%@",_arrayMemKey[indexPath.row -_arrayAddress.count-1]]];
+                [_arrayMemKey removeObjectAtIndex:indexPath.row -_arrayAddress.count-1];
                 [_arrayTeamMember removeObjectAtIndex:indexPath.row-_arrayAddress.count-1];
                 [_tableView reloadData];
             }
