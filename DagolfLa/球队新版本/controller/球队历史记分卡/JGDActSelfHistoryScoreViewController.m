@@ -139,7 +139,7 @@
         lightV.layer.cornerRadius = 5 * ProportionAdapter;
         lightV.layer.masksToBounds = YES;
         
-        UILabel *allLB = [[UILabel alloc] initWithFrame:CGRectMake(30 * ProportionAdapter,0 * ProportionAdapter, 135 * ProportionAdapter, 45 * ProportionAdapter)];
+        UILabel *allLB = [[UILabel alloc] initWithFrame:CGRectMake(10 * ProportionAdapter,0 * ProportionAdapter, 155 * ProportionAdapter, 45 * ProportionAdapter)];
         allLB.text = @"记分成绩领取密钥：";
         allLB.font = [UIFont systemFontOfSize:15 * ProportionAdapter];
         [lightV addSubview:allLB];
