@@ -47,7 +47,7 @@
     [super viewDidLoad];
     self.title = @"地区选择";
     
-    _page = 1;
+    _page = 0;
 //    _isCor = YES;
     
     [self getCurPosition];
@@ -229,7 +229,7 @@
     } completionBlock:^(id data) {
         NSLog(@"%@",data);
         if ([[data objectForKey:@"packSuccess"] boolValue]) {
-            if (page == 1){
+            if (page == 0){
                 [_dataArray removeAllObjects];
             }
             for (NSDictionary *dataDict in [data objectForKey:@"list"]) {
@@ -283,7 +283,7 @@
 #pragma mark 开始进入刷新状态
 - (void)headerRereshing
 {
-    _page = 1;
+    _page = 0;
     [self downLoadData:_page isReshing:YES];
 }
 

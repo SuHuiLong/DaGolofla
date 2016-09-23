@@ -29,6 +29,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.navigationItem.title = @"实名认证";
     self.view.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];
     [self creatTable];
     // Do any additional setup after loading the view.
