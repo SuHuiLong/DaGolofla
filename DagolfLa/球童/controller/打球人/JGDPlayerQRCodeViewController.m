@@ -337,7 +337,7 @@
     self.imgvBar = [[UIImageView alloc]initWithFrame:CGRectMake(viewBack.frame.size.width/2 - 125*screenWidth/375, 130*screenWidth/375, 250*screenWidth/375, 250*screenWidth/375)];
     [viewBack addSubview:self.imgvBar];
     UIImageView* imageV = [[UIImageView alloc]initWithFrame:CGRectMake(self.imgvBar.frame.size.width / 2 - 25, self.imgvBar.frame.size.height / 2 - 30, 50*screenWidth/375, 50*screenWidth/375)];
-    [self.imgvBar addSubview:imageV];
+    // [self.imgvBar addSubview:imageV];
     imageV.layer.cornerRadius = 6*screenWidth/375;
     imageV.layer.masksToBounds = YES;
     [imageV sd_setImageWithURL:[Helper setImageIconUrl:@"user" andTeamKey:[DEFAULF_USERID integerValue] andIsSetWidth:YES andIsBackGround:NO] placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
