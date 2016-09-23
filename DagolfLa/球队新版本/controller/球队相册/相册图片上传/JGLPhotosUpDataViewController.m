@@ -98,14 +98,6 @@
 }
 -(void)fabuClick:(UIButton *)btn
 {
-    btn.userInteractionEnabled = NO;
-    
-    _progress = [[MBProgressHUD alloc] initWithView:self.view];
-    _progress.mode = MBProgressHUDModeIndeterminate;
-    _progress.labelText = @"正在发布...";
-    [self.view addSubview:_progress];
-    [_progress show:YES];
-    
     [self imageArray:_selectImages];
 }
 #pragma mark --上传图片方法
