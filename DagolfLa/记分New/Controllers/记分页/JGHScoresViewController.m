@@ -217,10 +217,10 @@
     if (_isEdtor == 1) {
         //保存洞号
         NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
-        if (_selectPage > 0) {
-            [userdef setObject:@(_selectPage-1) forKey:[NSString stringWithFormat:@"%@", _scorekey]];
+        if (_currentPage > 0) {
+            [userdef setObject:@(_currentPage) forKey:[NSString stringWithFormat:@"%@", _scorekey]];
         }else{
-            [userdef setObject:@(_selectPage) forKey:[NSString stringWithFormat:@"%@", _scorekey]];
+            [userdef setObject:@0 forKey:[NSString stringWithFormat:@"%@", _scorekey]];
         }
         
         [userdef synchronize];
@@ -289,10 +289,10 @@
     [[JsonHttp jsonHttp]cancelRequest];//取消所有请求
     //保存
     NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
-    if (_selectPage > 0) {
-        [userdef setObject:@(_selectPage-1) forKey:[NSString stringWithFormat:@"%@", _scorekey]];
+    if (_currentPage > 0) {
+        [userdef setObject:@(_currentPage) forKey:[NSString stringWithFormat:@"%@", _scorekey]];
     }else{
-        [userdef setObject:@(_selectPage) forKey:[NSString stringWithFormat:@"%@", _scorekey]];
+        [userdef setObject:@0 forKey:[NSString stringWithFormat:@"%@", _scorekey]];
     }
     
     [userdef synchronize];
@@ -585,6 +585,11 @@
         vc2 = [[JGHScoresMainViewController alloc] init];
         vc2.index = _currentPage;
     }
+    
+    NSUserDefaults *usedef = [NSUserDefaults standardUserDefaults];
+    [usedef setObject:@(vc2.index) forKey:[NSString stringWithFormat:@"%@", _scorekey]];
+    [usedef synchronize];
+    
     vc2.dataArray = self.userScoreArray;
     vc2.currentAreaArray = _currentAreaArray;
     vc2.switchMode = _switchMode;
@@ -724,10 +729,10 @@
     
     //保存
     NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
-    if (_selectPage > 0) {
-        [userdef setObject:@(_selectPage-1) forKey:[NSString stringWithFormat:@"%@", _scorekey]];
+    if (_currentPage > 0) {
+        [userdef setObject:@(_currentPage-1) forKey:[NSString stringWithFormat:@"%@", _scorekey]];
     }else{
-        [userdef setObject:@(_selectPage) forKey:[NSString stringWithFormat:@"%@", _scorekey]];
+        [userdef setObject:@0 forKey:[NSString stringWithFormat:@"%@", _scorekey]];
     }
     
     [userdef synchronize];
@@ -882,10 +887,10 @@
         }
     }else{
         NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
-        if (_selectPage > 0) {
-            [userdef setObject:@(_selectPage-1) forKey:[NSString stringWithFormat:@"%@", _scorekey]];
+        if (_currentPage > 0) {
+            [userdef setObject:@(_currentPage-1) forKey:[NSString stringWithFormat:@"%@", _scorekey]];
         }else{
-            [userdef setObject:@(_selectPage) forKey:[NSString stringWithFormat:@"%@", _scorekey]];
+            [userdef setObject:@0 forKey:[NSString stringWithFormat:@"%@", _scorekey]];
         }
         
         [userdef synchronize];
@@ -910,10 +915,10 @@
         }
     }else if (_scoreFinish == 1){
         NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
-        if (_selectPage > 0) {
-            [userdef setObject:@(_selectPage-1) forKey:[NSString stringWithFormat:@"%@", _scorekey]];
+        if (_currentPage > 0) {
+            [userdef setObject:@(_currentPage) forKey:[NSString stringWithFormat:@"%@", _scorekey]];
         }else{
-            [userdef setObject:@(_selectPage) forKey:[NSString stringWithFormat:@"%@", _scorekey]];
+            [userdef setObject:@0 forKey:[NSString stringWithFormat:@"%@", _scorekey]];
         }
         
         [userdef synchronize];
