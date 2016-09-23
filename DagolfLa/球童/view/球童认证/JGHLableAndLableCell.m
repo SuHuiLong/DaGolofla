@@ -16,7 +16,7 @@
     self.backgroundColor = [UIColor whiteColor];
     self.titleLable.font = [UIFont systemFontOfSize:15*ProportionAdapter];
     self.titleLableLeft.constant = 20 *ProportionAdapter;
-    self.titleLableW.constant = 60 *ProportionAdapter;
+    self.titleLableW.constant = 70 *ProportionAdapter;
     
     self.valueLable.font = [UIFont systemFontOfSize:15*ProportionAdapter];
     self.valueLableLeft.constant = 40 *ProportionAdapter;
