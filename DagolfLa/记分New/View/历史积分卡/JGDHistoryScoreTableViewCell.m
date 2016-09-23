@@ -45,6 +45,8 @@
         [self.contentView addSubview:imageV];
         
         self.numberLB = [[UILabel alloc] initWithFrame:CGRectMake(110 * ProportionAdapter, 0, 60 * ProportionAdapter, 85 * ProportionAdapter)];
+        self.numberLB.font = [UIFont systemFontOfSize:15 * ProportionAdapter];
+        self.numberLB.numberOfLines = 0;
         [self.contentView addSubview:self.numberLB];
         
 
