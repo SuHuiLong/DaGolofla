@@ -30,7 +30,6 @@
     self.oneLable.layer.masksToBounds = YES;
     self.oneLable.layer.cornerRadius = self.oneLable.frame.size.width /2;
 //    self.oneLable.userInteractionEnabled = YES;
-    self.oneLable.backgroundColor = [UIColor orangeColor];
     [self.one addSubview:self.oneLable];
     
     self.two.titleLabel.font = [UIFont systemFontOfSize:13.0*ProportionAdapter];
