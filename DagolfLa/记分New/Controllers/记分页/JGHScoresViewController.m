@@ -128,15 +128,15 @@
     _cabbieFinishScore = 0;//不结束
 
     _ballDict = [NSMutableDictionary dictionary];
-    //NSUserDefaults *userdf = [NSUserDefaults standardUserDefaults];
+    NSUserDefaults *userdf = [NSUserDefaults standardUserDefaults];
     
-    //if ([userdf objectForKey:[NSString stringWithFormat:@"switchMode%@", _scorekey]]) {
-        //_switchMode = [[userdf objectForKey:[NSString stringWithFormat:@"switchMode%@", _scorekey]] integerValue];
-    //}else{
-        //_switchMode = 1;
-       // [userdf setObject:@"1" forKey:[NSString stringWithFormat:@"switchMode%@", _scorekey]];
-     //   [userdf synchronize];
-   // }
+    if ([userdf objectForKey:[NSString stringWithFormat:@"switchMode%@", _scorekey]]) {
+        _switchMode = [[userdf objectForKey:[NSString stringWithFormat:@"switchMode%@", _scorekey]] integerValue];
+    }else{
+        _switchMode = 1;
+        [userdf setObject:@"1" forKey:[NSString stringWithFormat:@"switchMode%@", _scorekey]];
+        [userdf synchronize];
+    }
     
     _areaArray = [NSArray array];
     _currentAreaArray = [NSMutableArray array];
