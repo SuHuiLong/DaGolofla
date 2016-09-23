@@ -56,7 +56,7 @@
         self.holderImageV = [[UIImageView alloc] initWithFrame:CGRectMake(165 * ProportionAdapter, 10 * ProportionAdapter, 200 * ProportionAdapter, 45 * ProportionAdapter)];
         self.holderImageV.image = [UIImage imageNamed:@"yousaishi-nocolor"];
         [self.contentView addSubview:self.holderImageV];
-       
+        
         self.unfinishimageV = [[UIImageView alloc] initWithFrame:CGRectMake(200 * ProportionAdapter - 35 * ProportionAdapter, 0, 35 * ProportionAdapter, 35 * ProportionAdapter)];
         
         self.activityNameLB = [[UILabel alloc] initWithFrame:CGRectMake(20 * ProportionAdapter, 10 * ProportionAdapter, 170 * ProportionAdapter, 25 * ProportionAdapter)];
@@ -76,9 +76,9 @@
 }
 
 - (void)setModel:(JGDHistoryScoreModel *)model{
-        
-        self.timeLB.text = [model.createtime substringWithRange:NSMakeRange(0, 10)];
-        self.ballName.text = model.ballName;
+    
+    self.timeLB.text = [model.createtime substringWithRange:NSMakeRange(0, 10)];
+    self.ballName.text = model.ballName;
     
     if ([model.scoreFinish integerValue] == 0) {
         self.unfinishimageV.hidden = NO;
@@ -113,7 +113,7 @@
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
-
+    
     // Configure the view for the selected state
 }
 

@@ -69,6 +69,7 @@
     self.navigationItem.leftBarButtonItem = leftBar;
     //[[NSNotificationCenter defaultCenter] postNotificationName:@"show" object:nil];
 }
+
 - (void)viewDidLoad {
     [super viewDidLoad];
 
@@ -76,7 +77,7 @@
     self.view.backgroundColor = [UIColor colorWithRed:0.93f green:0.93f blue:0.93f alpha:1.00f];
     _titleArray = [[NSArray alloc]init];
 //    _titleArray = @[@[@"关于我们",@"帮助反馈",@"清空缓存"],@[@"是否接受他人约球"]];
-    _titleArray = @[@"通知设置",@"屏蔽管理",@"帮助反馈",@"清空缓存", @"实名认证", @"设置支付密码"];
+    _titleArray = @[@"通知设置",@"屏蔽管理",@"帮助反馈",@"清空缓存", @"实名认证", @"设置交易密码"];
     
     
     _dict = [[NSMutableDictionary alloc]init];
