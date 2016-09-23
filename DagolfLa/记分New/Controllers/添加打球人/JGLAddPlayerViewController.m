@@ -250,16 +250,14 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 1) {
         if (indexPath.row > 0) {
-            if ([_dictPeople allValues].count < 4) {
-                if (indexPath.row-2 < [_dictPeople allValues].count) {
-                    NSLog(@"%@",[_dictPeople allKeys][indexPath.row-2]);
-
-                    [_peoAddress removeObjectForKey:[_dictPeople allKeys][indexPath.row-2]];
-                    [_peoFriend removeObjectForKey:[_dictPeople allKeys][indexPath.row-2]];
-                    [_dictPeople removeObjectForKey:[_dictPeople allKeys][indexPath.row-2]];
-                    [_tableView reloadData];
-                    _isClick = YES;
-                }
+            if (indexPath.row-2 < [_dictPeople allValues].count) {
+                NSLog(@"%@",[_dictPeople allKeys][indexPath.row-2]);
+                
+                [_peoAddress removeObjectForKey:[_dictPeople allKeys][indexPath.row-2]];
+                [_peoFriend removeObjectForKey:[_dictPeople allKeys][indexPath.row-2]];
+                [_dictPeople removeObjectForKey:[_dictPeople allKeys][indexPath.row-2]];
+                [_tableView reloadData];
+                _isClick = YES;
             }
         }
     }
