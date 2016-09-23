@@ -12,8 +12,13 @@
 
 //titles
 @property (weak, nonatomic) IBOutlet UILabel *titles;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *titleLeft;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *titlesW;
 //价格
 @property (weak, nonatomic) IBOutlet UILabel *price;
+
+@property (weak, nonatomic) IBOutlet UILabel *priceUnit;
+
 
 //详情页
 - (void)configCostData:(NSMutableDictionary *)dict;

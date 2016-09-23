@@ -14,6 +14,8 @@
     [super awakeFromNib];
     // Initialization code
     self.backgroundColor = [UIColor whiteColor];
+    
+    self.titleLeft.constant = 60 *ProportionAdapter;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -25,6 +27,21 @@
 - (void)configCostData:(NSMutableDictionary *)dict{
     self.titles.text = [NSString stringWithFormat:@"%@", [dict objectForKey:@"costName"]];
     self.price.text = [NSString stringWithFormat:@"%@", [dict objectForKey:@"money"]];
+    
+    
+    float titlesWSize;
+    float priceWSize;
+    float priceUnitWSize;
+    
+    titlesWSize = [Helper textWidthFromTextString:self.titles.text height:self.titles.frame.size.height fontSize:15];
+    priceWSize = [Helper textWidthFromTextString:self.price.text height:self.price.frame.size.height fontSize:15];
+    priceUnitWSize = [Helper textWidthFromTextString:self.priceUnit.text height:self.priceUnit.frame.size.height fontSize:15];
+    
+    if (titlesWSize + priceWSize + priceUnitWSize > screenWidth - 70) {
+        self.titlesW.constant = screenWidth - 70 - priceWSize - priceUnitWSize;
+    }else{
+        self.titlesW.constant = titlesWSize;
+    }
 }
 
 
