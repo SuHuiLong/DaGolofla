@@ -15,7 +15,7 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
-    
+    self.backgroundColor = [UIColor whiteColor];
 //    self.imageview.frame = CGRectMake(self.imageview.frame.origin.x, self.imageview.frame.origin.y, 60 * screenWidth/375, 60 * screenWidth/375);
     self.imageview.layer.masksToBounds = YES;
     self.imageview.layer.cornerRadius = CornerRadiu;

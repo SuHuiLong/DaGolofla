@@ -13,6 +13,7 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
+    self.backgroundColor = [UIColor whiteColor];
     self.nameBtn.titleLabel.font = [UIFont systemFontOfSize:15*ProportionAdapter];
     self.nameBtnLeft.constant = 10 *ProportionAdapter;
     

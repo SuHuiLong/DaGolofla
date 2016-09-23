@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -11,28 +12,25 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
+                <frame key="frameInset" width="320" height="43"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Cjy-6O-r1w">
-                        <rect key="frame" x="10" y="2" width="132.5" height="39.5"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wFr-gx-Ep5">
-                                <rect key="frame" x="0.0" y="0.0" width="66" height="39.5"/>
                                 <state key="normal" title="Button"/>
                                 <connections>
                                     <action selector="oneBtnClick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="Yql-QJ-TRr"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8ze-Da-BdD">
-                                <rect key="frame" x="66" y="0.0" width="66" height="39.5"/>
                                 <state key="normal" title="Button"/>
                                 <connections>
                                     <action selector="twoBtnClick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="mDR-If-DTD"/>
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="8ze-Da-BdD" secondAttribute="trailing" id="5SM-HH-6ye"/>
                             <constraint firstItem="8ze-Da-BdD" firstAttribute="leading" secondItem="wFr-gx-Ep5" secondAttribute="trailing" id="6ae-hT-Gqd"/>
@@ -53,24 +51,21 @@
                         </variation>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jjJ-h5-Bbu">
-                        <rect key="frame" x="177" y="2" width="132.5" height="39.5"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EfD-g4-l8T">
-                                <rect key="frame" x="0.0" y="0.5" width="66" height="39.5"/>
                                 <state key="normal" title="Button"/>
                                 <connections>
                                     <action selector="threeBtnClick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="3OL-tx-pGh"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lGq-Ma-ET9">
-                                <rect key="frame" x="66" y="0.0" width="66" height="39.5"/>
                                 <state key="normal" title="Button"/>
                                 <connections>
                                     <action selector="fourBtnClick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="IRR-TG-oKn"/>
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="EfD-g4-l8T" firstAttribute="centerY" secondItem="jjJ-h5-Bbu" secondAttribute="centerY" id="2vs-yK-R5q"/>
                             <constraint firstAttribute="bottom" secondItem="lGq-Ma-ET9" secondAttribute="bottom" id="4XN-Aj-PsR"/>

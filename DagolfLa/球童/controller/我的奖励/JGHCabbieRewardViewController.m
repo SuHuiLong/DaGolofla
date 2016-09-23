@@ -82,6 +82,10 @@ static NSString *const JGHCabbieAwaredCellIdentifier = @"JGHCabbieAwaredCell";
     } completionBlock:^(id data) {
         NSLog(@"%@", data);
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+            if (_page == 0) {
+                [self.dataArray removeAllObjects];
+            }
+            
             if ([data objectForKey:@"transDetailList"]) {
                 _sumMonay = [data objectForKey:@"inSumMoney"];
                 
@@ -123,12 +127,14 @@ static NSString *const JGHCabbieAwaredCellIdentifier = @"JGHCabbieAwaredCell";
         _barView = [[UIView alloc]initWithFrame:CGRectMake(0, screenHeight -64 -44*ProportionAdapter, screenWidth, 44*ProportionAdapter)];
         _barView.backgroundColor = [UIColor whiteColor];
         _totalLable = [[UILabel alloc]initWithFrame:CGRectMake(10*ProportionAdapter, 10 *ProportionAdapter, screenWidth/2, 20*ProportionAdapter)];
+        _totalLable.font = [UIFont systemFontOfSize:17 *ProportionAdapter];
         _totalLable.text = [NSString stringWithFormat:@"合计：¥%.2f", [price floatValue]];
         [_barView addSubview:_totalLable];
         
         UIButton *myAccountBtn = [[UIButton alloc]initWithFrame:CGRectMake(screenWidth - 120*ProportionAdapter, 4*ProportionAdapter, 110*ProportionAdapter, 36 *ProportionAdapter)];
         [myAccountBtn setTitle:@"查看个人账户" forState:UIControlStateNormal];
         [myAccountBtn setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
+        myAccountBtn.titleLabel.font = [UIFont systemFontOfSize:17*ProportionAdapter];
         [myAccountBtn addTarget:self action:@selector(pushToMyAmount:) forControlEvents:UIControlEventTouchUpInside];
         [_barView addSubview:myAccountBtn];
         
@@ -154,6 +160,7 @@ static NSString *const JGHCabbieAwaredCellIdentifier = @"JGHCabbieAwaredCell";
         UIButton *amountBtn = [[UIButton alloc]initWithFrame:CGRectMake(130 *ProportionAdapter, 300 *ProportionAdapter, screenWidth - 260*ProportionAdapter, 30*ProportionAdapter)];
         [amountBtn setTitle:@"查看个人账户" forState:UIControlStateNormal];
         [amountBtn setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
+        amountBtn.titleLabel.font = [UIFont systemFontOfSize:17*ProportionAdapter];
         amountBtn.titleLabel.textAlignment = NSTextAlignmentCenter;
         [amountBtn addTarget:self action:@selector(pushToMyAmount:) forControlEvents:UIControlEventTouchUpInside];
         [_noDataView addSubview:amountBtn];
@@ -191,7 +198,6 @@ static NSString *const JGHCabbieAwaredCellIdentifier = @"JGHCabbieAwaredCell";
 }
 - (void)headRereshing{
     _page = 0;
-    [self.dataArray removeAllObjects];
     [self loadRewardData];
 }
 - (void)footRereshing{

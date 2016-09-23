@@ -13,7 +13,7 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
-    
+    self.backgroundColor = [UIColor whiteColor];
     self.imageScoreLeft.constant = 30*ProportionAdapter;
     self.imageScoreRight.constant = 30*ProportionAdapter;
    

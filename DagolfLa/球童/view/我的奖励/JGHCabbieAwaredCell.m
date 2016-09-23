@@ -14,6 +14,8 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
+    self.backgroundColor = [UIColor whiteColor];
+    
     self.awaredLable.font = [UIFont systemFontOfSize:15*ProportionAdapter];
     self.awaredLableLeft.constant = 10 *ProportionAdapter;
     self.awaredLableTop.constant = 16 *ProportionAdapter;

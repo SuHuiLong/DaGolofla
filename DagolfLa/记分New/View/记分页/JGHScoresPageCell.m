@@ -14,6 +14,7 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
+    self.backgroundColor = [UIColor whiteColor];
     self.totalPoleLeft.constant = 10*ProportionAdapter;
     self.totalPoleRight.constant = 6*ProportionAdapter;
     

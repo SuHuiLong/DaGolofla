@@ -128,15 +128,15 @@
     _cabbieFinishScore = 0;//不结束
 
     _ballDict = [NSMutableDictionary dictionary];
-    NSUserDefaults *userdf = [NSUserDefaults standardUserDefaults];
+    //NSUserDefaults *userdf = [NSUserDefaults standardUserDefaults];
     
-    if ([userdf objectForKey:[NSString stringWithFormat:@"switchMode%@", _scorekey]]) {
-        _switchMode = [[userdf objectForKey:[NSString stringWithFormat:@"switchMode%@", _scorekey]] integerValue];
-    }else{
-        _switchMode = 1;
-        [userdf setObject:@"1" forKey:[NSString stringWithFormat:@"switchMode%@", _scorekey]];
-        [userdf synchronize];
-    }
+    //if ([userdf objectForKey:[NSString stringWithFormat:@"switchMode%@", _scorekey]]) {
+        //_switchMode = [[userdf objectForKey:[NSString stringWithFormat:@"switchMode%@", _scorekey]] integerValue];
+    //}else{
+        //_switchMode = 1;
+       // [userdf setObject:@"1" forKey:[NSString stringWithFormat:@"switchMode%@", _scorekey]];
+     //   [userdf synchronize];
+   // }
     
     _areaArray = [NSArray array];
     _currentAreaArray = [NSMutableArray array];
@@ -770,8 +770,9 @@
     [dict setObject:listArray forKey:@"list"];
     
     [[JsonHttp jsonHttp]httpRequestHaveSpaceWithMD5:@"score/saveScore" JsonKey:nil withData:dict failedBlock:^(id errType) {
-        
+        _item.enabled = YES;
     } completionBlock:^(id data) {
+        _item.enabled = YES;
         NSLog(@"%@", data);
         if ([[data objectForKey:@"packSuccess"]integerValue] == 1) {
             NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
@@ -811,8 +812,6 @@
             [self performSelector:@selector(scoresResult) withObject:self afterDelay:TIMESlEEP];
         }
     }];
-    
-    _item.enabled = YES;
 }
 #pragma mark -- 结束记分／完成
 - (void)finishScore{
@@ -829,8 +828,10 @@
     [[JsonHttp jsonHttp]httpRequestWithMD5:@"score/finishScore" JsonKey:nil withData:finishDict failedBlock:^(id errType) {
         [[ShowHUD showHUD]hideAnimationFromView:self.view];
         self.view.userInteractionEnabled = YES;
+        _item.enabled = YES;
     } completionBlock:^(id data) {
         NSLog(@"%@", data);
+        _item.enabled = YES;
         self.view.userInteractionEnabled = YES;
         [[ShowHUD showHUD]hideAnimationFromView:self.view];
         if ([[data objectForKey:@"packSuccess"]integerValue] == 1) {
@@ -857,7 +858,6 @@
             }
         }
     }];
-    _item.enabled = YES;
 }
 #pragma mark --历史记分
 - (void)scoresResult{

@@ -13,6 +13,7 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
+    self.backgroundColor = [UIColor whiteColor];
     
     self.type.font = [UIFont systemFontOfSize:15 *ProportionAdapter];
     self.typeLeft.constant = 40 *ProportionAdapter;
@@ -23,6 +24,8 @@
     self.unitLableRight.constant = 20 *ProportionAdapter;
     
     self.priceLable.font = [UIFont systemFontOfSize:15 *ProportionAdapter];
+    
+    self.unitLableW.constant = 40 *ProportionAdapter;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

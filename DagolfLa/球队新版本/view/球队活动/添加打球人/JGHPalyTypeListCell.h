@@ -29,6 +29,9 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *unitLableRight;//20
 @property (weak, nonatomic) IBOutlet UILabel *priceLable;
 
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *unitLableW;
+
+
 - (void)configJGHPalyTypeListCell:(NSMutableDictionary *)dict;
 
 

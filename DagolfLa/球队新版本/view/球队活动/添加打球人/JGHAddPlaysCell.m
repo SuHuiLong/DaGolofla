@@ -13,6 +13,7 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
+    self.backgroundColor = [UIColor whiteColor];
     
     self.oneImageViewTop.constant = 16 *ProportionAdapter;
     self.oneImageViewLeft.constant = 40 *ProportionAdapter;

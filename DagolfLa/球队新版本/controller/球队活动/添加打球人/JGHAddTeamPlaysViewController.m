@@ -69,21 +69,12 @@ static NSString *const JGPlayPayBaseCellIdentifier = @"JGPlayPayBaseCell";
 #pragma mark -- 初始化报名人信息
 - (void)initPlaysBaseInfo{
     [_playsBaseDict setObject:@0 forKey:@"sex"];//默认性别女-0
-//    NSMutableDictionary *costDict = [NSMutableDictionary dictionary];
-//    costDict = [_costListArray objectAtIndex:0];
-//    
-//    [_playsBaseDict setObject:[costDict objectForKey:@"costType"] forKey:@"type"];//默认资费类型
-//    [_playsBaseDict setObject:[costDict objectForKey:@"money"] forKey:@"money"];//默认资费价格
     [_playsBaseDict setObject:@"1" forKey:@"isOnlinePay"];//是否线上付款 1-线上
     
     for (int i=0; i<_costListArray.count; i++) {
         NSMutableDictionary *dict = [NSMutableDictionary dictionary];
         dict = [NSMutableDictionary dictionaryWithDictionary:_costListArray[i]];
-//        if (i == 0) {
-//            [dict setObject:@1 forKey:@"select"];
-//        }else{
-            [dict setObject:@0 forKey:@"select"];
-//        }
+        [dict setObject:@0 forKey:@"select"];
         
         [_costListArray replaceObjectAtIndex:i withObject:dict];
     }

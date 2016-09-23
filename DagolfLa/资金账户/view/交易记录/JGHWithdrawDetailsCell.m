@@ -13,6 +13,7 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
+    self.backgroundColor = [UIColor whiteColor];
     self.applyforTime.font = [UIFont systemFontOfSize:12.0 * ProportionAdapter];
     self.dealwithTime.font = [UIFont systemFontOfSize:12.0 * ProportionAdapter];
     self.seccessful.font = [UIFont systemFontOfSize:12.0 * ProportionAdapter];

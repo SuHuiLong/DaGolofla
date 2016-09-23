@@ -13,7 +13,7 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
-    
+    self.backgroundColor = [UIColor whiteColor];
    
     [_btnChange setTitleColor:[UITool colorWithHexString:@"#7fc1ff" alpha:1] forState:UIControlStateNormal];
     [_btnChange.layer setBorderWidth:1.0]; //边框宽度

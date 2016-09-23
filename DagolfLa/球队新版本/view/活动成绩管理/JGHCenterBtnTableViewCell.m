@@ -13,7 +13,7 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
-    
+    self.backgroundColor = [UIColor whiteColor];
     self.collectionPointsBtn.titleLabel.font = [UIFont systemFontOfSize:15 *ProportionAdapter];
     
 }

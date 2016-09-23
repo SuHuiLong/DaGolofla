@@ -141,14 +141,14 @@ static NSString *const JGGroupdetailsCollectionViewCellIdentifier = @"JGGroupdet
     UILabel *promptLabel = [[UILabel alloc]initWithFrame:CGRectMake(10 *ProportionAdapter, collectionView.frame.size.height+_waitGroupLabel.frame.size.height+20, screenWidth, 12)];
     promptLabel.text = @"提示:点击任意“待添加”，实现自动分组";
     promptLabel.textColor = [UIColor colorWithHexString:Prompt_Color];
-    promptLabel.backgroundColor = [UIColor colorWithHexString:BG_color];
+    promptLabel.backgroundColor = [UIColor clearColor];
     promptLabel.textAlignment = NSTextAlignmentLeft;
     promptLabel.font = [UIFont systemFontOfSize:12*ProportionAdapter];
     [self.view addSubview:promptLabel];
     //好友分组label
     UILabel *groupLabel = [[UILabel alloc]initWithFrame:CGRectMake(10 *ProportionAdapter, self.collectionView.frame.size.height+_waitGroupLabel.frame.size.height+30 + 10, screenWidth-90, 21)];
     groupLabel.text = @"好友分组";
-    groupLabel.backgroundColor = [UIColor colorWithHexString:BG_color];
+    groupLabel.backgroundColor = [UIColor clearColor];
     groupLabel.textAlignment = NSTextAlignmentLeft;
     groupLabel.font = [UIFont systemFontOfSize:15*ProportionAdapter];
     [self.view addSubview:groupLabel];

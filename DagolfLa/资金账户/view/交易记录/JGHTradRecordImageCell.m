@@ -14,7 +14,7 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
-    
+    self.backgroundColor = [UIColor whiteColor];
     self.titleTop.constant = 16 * ProportionAdapter;
     self.imageLeft.constant = 20 * ProportionAdapter;
     

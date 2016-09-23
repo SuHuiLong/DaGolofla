@@ -13,6 +13,7 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
+    self.backgroundColor = [UIColor whiteColor];
     
     self.oneBGView.layer.masksToBounds = YES;
     self.oneBGView.layer.cornerRadius = 5.0;

@@ -14,7 +14,7 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
-    
+    self.backgroundColor = [UIColor whiteColor];
     self.jiangbeiLeft.constant = 10*ProportionAdapter;
     self.jiangbeiTop.constant = 20*ProportionAdapter;
     

@@ -13,6 +13,7 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
+    self.backgroundColor = [UIColor whiteColor];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -23,6 +24,7 @@
 
 - (void)congiftitles:(NSString *)titles{
     self.titles.text = titles;
+    self.backgroundColor = [UIColor whiteColor];
 }
 
 - (void)congifContact:(NSString *)contact andNote:(NSString *)note{

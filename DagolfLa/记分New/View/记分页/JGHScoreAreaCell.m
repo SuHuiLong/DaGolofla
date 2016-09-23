@@ -13,7 +13,7 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
-    
+    self.backgroundColor = [UIColor whiteColor];
     self.areaNameBtn.titleLabel.font = [UIFont systemFontOfSize:15 *ProportionAdapter];
     self.areaNameBtnLeft.constant = 10 *ProportionAdapter;
     
