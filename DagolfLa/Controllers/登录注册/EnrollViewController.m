@@ -194,7 +194,7 @@ static int timeNumber = 60;
                     _timer=[NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(autoMove) userInfo:nil repeats:YES];
                     [[NSRunLoop currentRunLoop] addTimer:_timer forMode:NSRunLoopCommonModes];
                 }else {
-                    [[ShowHUD showHUD]showToastWithText:@"获取验证码失败" FromView:self.view];
+                    [[ShowHUD showHUD]showToastWithText:[dict objectForKey:@"mesage"] FromView:self.view];
 
                 }
             } failed:^(NSError *error) {
