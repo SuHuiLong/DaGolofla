@@ -335,7 +335,17 @@
 
 // 上半场 长按
 - (void)longPGAct1:(UILongPressGestureRecognizer *)longPG {
-    NSLog(@"%td", [longPG view].tag);
+
+    if ([[self.dataDic objectForKey:@"scoreFinish"] integerValue] == 2) {
+        [[ShowHUD showHUD]showToastWithText:@"记分未完成" FromView:self.view];
+        return;
+    }
+    
+    if (self.model.region1 == nil || self.model.region2 == nil) {
+        [[ShowHUD showHUD]showToastWithText:@"简单记分，不能修改" FromView:self.view];
+        return;
+    }
+    
     [Helper alertViewWithTitle:@"点击“确定”修改成绩" withBlockCancle:^{
         NSLog(@"cancle");
     } withBlockSure:^{
@@ -357,7 +367,17 @@
 
 // 下半场 长按
 - (void)longPGAct2:(UILongPressGestureRecognizer *)longPG {
-    NSLog(@"%td", [longPG view].tag);
+
+    if ([[self.dataDic objectForKey:@"scoreFinish"] integerValue] == 2) {
+        [[ShowHUD showHUD]showToastWithText:@"记分未完成" FromView:self.view];
+        return;
+    }
+    
+    if (self.model.region1 == nil || self.model.region2 == nil) {
+        [[ShowHUD showHUD]showToastWithText:@"简单记分，不能修改" FromView:self.view];
+        return;
+    }
+    
     [Helper alertViewWithTitle:@"点击“确定”修改成绩" withBlockCancle:^{
         NSLog(@"cancle");
     } withBlockSure:^{
