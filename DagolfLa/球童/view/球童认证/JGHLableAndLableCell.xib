@@ -12,7 +12,7 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <frame key="frameInset" width="320" height="43"/>
+                <frame key="frameInset" width="320" height="43.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u8x-Pp-z3z">
@@ -32,6 +32,7 @@
                 <constraints>
                     <constraint firstItem="FRN-Fq-jjz" firstAttribute="centerY" secondItem="u8x-Pp-z3z" secondAttribute="centerY" id="DPV-dK-3bA"/>
                     <constraint firstItem="FRN-Fq-jjz" firstAttribute="leading" secondItem="u8x-Pp-z3z" secondAttribute="trailing" constant="40" id="ZIo-79-m1m"/>
+                    <constraint firstAttribute="trailing" secondItem="FRN-Fq-jjz" secondAttribute="trailing" constant="10" id="fnK-uu-mXe"/>
                     <constraint firstItem="u8x-Pp-z3z" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="ntY-rJ-i7o"/>
                     <constraint firstItem="u8x-Pp-z3z" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="rjN-EH-WCs"/>
                 </constraints>

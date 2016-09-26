@@ -71,4 +71,7 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *inScoressBtnDwon;//15
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *inScoressViewTop;//10
 
+
+@property (nonatomic, strong)NSString *failKeyString;
+
 @end
