@@ -36,11 +36,10 @@
     UILabel*  _labelResponse;
     BOOL _isxuan;
     
-    BOOL _isDidSelect;
     NSMutableDictionary *_dict;
     NSTimer *_timer;
     NSString *_testStr;//输入验证码
-    NSNumber *_testStr1;//接收验证码
+    NSString *_testStr1;//接收验证码
     
     NSString* _strName;
     
@@ -97,13 +96,12 @@
     
     if (_isxuan == YES) {
         if ([Helper testMobileIsTrue:_textPhone.text]) {
-            if ([[NSString stringWithFormat:@"%@",_textCaptChe.text] isEqualToString:_testStr]) {
+            if ([[NSString stringWithFormat:@"%@",_textCaptChe.text] isEqualToString:_testStr1])
+            {
                 PasswordViewController* pasVc = [[PasswordViewController alloc]init];
-                
                 pasVc.userName = [_dict objectForKey:@"userName"];
                 pasVc.phoneNum = [_dict objectForKey:@"mobile"];
                 pasVc.capChe = _textCaptChe.text;
-                
                 [self.navigationController pushViewController:pasVc animated:YES];
             }
             else
@@ -114,10 +112,6 @@
             }
             
         }else {
-//            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"手机号码格式错误!" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-//            alertView.tag = 1001;
-//            [alertView show];
-//            
             [Helper alertViewWithTitle:@"手机号码格式错误!" withBlock:^(UIAlertController *alertView) {
                 [self presentViewController:alertView animated:YES completion:nil];
             }];
@@ -186,7 +180,6 @@ static int timeNumber = 60;
         if ([Helper testMobileIsTrue:_textPhone.text]) {
             [_dict setValue:_strName forKey:@"userName"];
             btn.userInteractionEnabled = YES;
-//            [btn setBackgroundColor:[UIColor colorWithRed:0.33f green:0.70f blue:0.30f alpha:1.00f]];
             btn.backgroundColor = [UIColor colorWithRed:0.33f green:0.70f blue:0.30f alpha:1.00f];
             //手机获得验证码
             [[PostDataRequest sharedInstance] postDataRequest:kRegist_URL parameter:@{@"mobile":_textPhone.text} success:^(id respondsData) {
@@ -196,18 +189,13 @@ static int timeNumber = 60;
                 _btnCaptChe.userInteractionEnabled = YES;
                 if ([[dict objectForKey:@"success"] boolValue]) {
                     _btnCaptChe.userInteractionEnabled = NO;
-                    _testStr1 = [NSNumber numberWithInteger:[_textCaptChe.text integerValue]];
-                    ////NSLog(@"1234 == %@",_testStr1);
+                    _testStr1 = [NSString stringWithFormat:@"%@",[dict objectForKey:@"message"]];
                     timeNumber = 60;
                     _timer=[NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(autoMove) userInfo:nil repeats:YES];
                     [[NSRunLoop currentRunLoop] addTimer:_timer forMode:NSRunLoopCommonModes];
                 }else {
-                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:[dict objectForKey:@"message"] delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-                    alertView.tag = 1003;
-                    [alertView show];
-                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                        [alertView dismissWithClickedButtonIndex:0 animated:YES];
-                    });
+                    [[ShowHUD showHUD]showToastWithText:@"获取验证码失败" FromView:self.view];
+
                 }
             } failed:^(NSError *error) {
                 [MBProgressHUD hideHUDForView:self.view  animated:NO];
@@ -218,21 +206,14 @@ static int timeNumber = 60;
             [MBProgressHUD hideHUDForView:self.view  animated:NO];
             btn.userInteractionEnabled = YES;
             btn.backgroundColor = [UIColor colorWithRed:0.33f green:0.70f blue:0.30f alpha:1.00f];
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"手机号输入错误" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-            alertView.tag = 1004;
-            [alertView show];
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                [alertView dismissWithClickedButtonIndex:0 animated:YES];
-            });
+            [[ShowHUD showHUD]showToastWithText:@"手机号输入错误" FromView:self.view];
         }
     }else {
         [MBProgressHUD hideHUDForView:self.view  animated:NO];
         btn.userInteractionEnabled = YES;
         btn.backgroundColor = [UIColor colorWithRed:0.33f green:0.70f blue:0.30f alpha:1.00f];
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"请输入用户名" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-        
-        alertView.tag = 1001;
-        [alertView show];
+        [[ShowHUD showHUD]showToastWithText:@"请输入用户名" FromView:self.view];
+
     }
     
 }
@@ -264,7 +245,6 @@ static int timeNumber = 60;
     _textPhone.returnKeyType = UIReturnKeyNext;
 }
 
-
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string;
 {
     if ([string isEqualToString:@"\n"]){
@@ -276,8 +256,7 @@ static int timeNumber = 60;
         [_dict setValue:str forKey:@"mobile"];
         if ([str length] > 20) {
             textField.text = [str substringToIndex:20];
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"超过最大字数不能输入了" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
-            [alert show];
+            [[ShowHUD showHUD]showToastWithText:@"超过最大字数不能输入了" FromView:self.view];
             return NO;
         }
     }else if(textField == _textCaptChe){
@@ -317,10 +296,7 @@ static int timeNumber = 60;
 -(void)textFieldDidEndEditing:(UITextField *)textField {
     if (textField == _textPhone) {
         [_dict setValue:textField.text forKey:@"mobile"];
-        
-        
-        
-        
+   
     }else if(textField == _textCaptChe) {
         _testStr = textField.text;
         
@@ -343,7 +319,7 @@ static int timeNumber = 60;
     [_gouXuan addTarget:self action:@selector(agreeClick) forControlEvents:UIControlEventTouchUpInside];
     
     
-    _labelResponse = [[UILabel alloc]initWithFrame:CGRectMake(54*ScreenWidth/375, 170*ScreenWidth/375, 100*ScreenWidth/375, 44*ScreenWidth/375)];
+    _labelResponse = [[UILabel alloc]initWithFrame:CGRectMake(54*ScreenWidth/375, 170*ScreenWidth/375, 110*ScreenWidth/375, 44*ScreenWidth/375)];
     _labelResponse.text = @"已阅读并同意";
     _labelResponse.textColor = [UIColor darkGrayColor];
     _labelResponse.font = [UIFont systemFontOfSize:15*ScreenWidth/375];

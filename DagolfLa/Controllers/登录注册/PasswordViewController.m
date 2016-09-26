@@ -42,7 +42,12 @@
     
     _dict = [[NSMutableDictionary alloc]init];
 
-    [_dict setObject:_userName forKey:@"userName"];
+    if (![Helper isBlankString:_userName]) {
+        [_dict setObject:_userName forKey:@"userName"];
+    }
+    else{
+        
+    }
     if (![Helper isBlankString:_phoneNum]) {
         [_dict setObject:_phoneNum forKey:@"mobile"];
     }
