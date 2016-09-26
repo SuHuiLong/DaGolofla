@@ -212,7 +212,10 @@
     }
     
     self.eventName.text = _model.title;
-    self.nameAndTime.text = [NSString stringWithFormat:@"%@  %@", _model.userName, _model.createtime];
+    if ([_model.createtime length] > 10) {
+            self.nameAndTime.text = [NSString stringWithFormat:@"%@  %@", _model.userName, [_model.createtime substringWithRange:NSMakeRange(0, 10)]];
+    }
+
     self.address.text = _model.ballName;
 }
 

@@ -369,7 +369,7 @@
             cell.contentView.backgroundColor = [UIColor colorWithHexString:@"#FAFAFA"];
         }
         
-        if (indexPath.row == 2 || indexPath.row == 3) {
+        if ((indexPath.row == 2 || indexPath.row == 3) && self.fromLive != 5) {
             for (UILabel *lb in cell.contentView.subviews) {
                 if (lb.tag) {
                     UILongPressGestureRecognizer *longPG = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPGAct1:)];
@@ -392,7 +392,7 @@
         }else if (indexPath.row == 2) {
             cell.contentView.backgroundColor = [UIColor clearColor];
         }
-        if (indexPath.row == 2 || indexPath.row == 3) {
+        if ((indexPath.row == 2 || indexPath.row == 3) && self.fromLive != 5) {
             for (UILabel *lb in cell.contentView.subviews) {
                 if (lb.tag) {
                     UILongPressGestureRecognizer *longPG = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPGAct2:)];
