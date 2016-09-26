@@ -107,7 +107,7 @@
             
             if ([[data objectForKey:@"bean"] objectForKey:@"invitationCode"]) {
                 self.invitationCode = [[data objectForKey:@"bean"] objectForKey:@"invitationCode"];
-                self.keyLB.text = [NSString stringWithFormat:@"%@",[[data objectForKey:@"bean"] objectForKey:@"invitationCode"]];
+                self.keyLB.text = [NSString stringWithFormat:@"%@      取回记分 >>",[[data objectForKey:@"bean"] objectForKey:@"invitationCode"]];
             }
             
         }else{
@@ -139,17 +139,24 @@
         lightV.layer.cornerRadius = 5 * ProportionAdapter;
         lightV.layer.masksToBounds = YES;
         
-        UILabel *allLB = [[UILabel alloc] initWithFrame:CGRectMake(10 * ProportionAdapter,0 * ProportionAdapter, 155 * ProportionAdapter, 45 * ProportionAdapter)];
-        allLB.text = @"记分成绩领取密钥：";
+        UILabel *allLB = [[UILabel alloc] initWithFrame:CGRectMake(10 * ProportionAdapter,0 * ProportionAdapter, 120 * ProportionAdapter, 45 * ProportionAdapter)];
+        allLB.text = @"记分卡密钥：";
         allLB.font = [UIFont systemFontOfSize:15 * ProportionAdapter];
         [lightV addSubview:allLB];
         
-       self.keyLB = [[UILabel alloc] initWithFrame:CGRectMake(170 * ProportionAdapter, 0 * ProportionAdapter, 100 * ProportionAdapter, 45 * ProportionAdapter)];
-        self.keyLB.text = [NSString stringWithFormat:@"%@", self.invitationCode];
+       self.keyLB = [[UILabel alloc] initWithFrame:CGRectMake(130 * ProportionAdapter, 0 * ProportionAdapter, 200 * ProportionAdapter, 45 * ProportionAdapter)];
+        self.keyLB.text = [NSString stringWithFormat:@"%@      取回记分 >>", self.invitationCode];
         self.keyLB.textAlignment = NSTextAlignmentLeft;
-        self.keyLB.textColor = [UIColor colorWithHexString:@"#fe7a7a"];
+        self.keyLB.textColor = [UIColor colorWithHexString:@"#fe6424"];
         self.keyLB.font = [UIFont systemFontOfSize:15 * ProportionAdapter];
         [lightV addSubview:self.keyLB];
+       
+        UITapGestureRecognizer *tapAct = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapAct)];
+        [self.keyLB addGestureRecognizer:tapAct];
+        
+        UIView *lightLine = [[UIView alloc] initWithFrame:CGRectMake(60 * ProportionAdapter, 0, 1 * ProportionAdapter, 45 * ProportionAdapter)];
+        lightLine.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];
+        [self.keyLB addSubview:lightLine];
         
         [view addSubview:lightV];
         
@@ -158,6 +165,10 @@
     
     
     [self.view addSubview:self.tableView];
+}
+
+- (void)tapAct{
+//     self.invitationCode
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
