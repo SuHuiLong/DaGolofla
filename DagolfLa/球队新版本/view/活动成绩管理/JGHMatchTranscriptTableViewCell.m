@@ -54,7 +54,14 @@
 - (void)configActivityName:(NSString *)name andStartTime:(NSString *)startTime andEndTime:(NSString *)endTime{
     self.ballName.text = name;
     
-    self.time.text = [NSString stringWithFormat:@"%@~%@", [[startTime componentsSeparatedByString:@" "] firstObject], [[endTime componentsSeparatedByString:@" "] firstObject]];
+    
+    if ([[[startTime componentsSeparatedByString:@" "] firstObject] isEqualToString:[[endTime componentsSeparatedByString:@" "] firstObject]] == YES) {
+        self.time.text = [NSString stringWithFormat:@"%@", [[startTime componentsSeparatedByString:@" "] firstObject]];
+    }
+    else{
+        self.time.text = [NSString stringWithFormat:@"%@~%@", [[startTime componentsSeparatedByString:@" "] firstObject], [[endTime componentsSeparatedByString:@" "] firstObject]];
+    }
+    
 }
 
 @end
