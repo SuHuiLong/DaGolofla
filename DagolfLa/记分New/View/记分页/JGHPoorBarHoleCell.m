@@ -49,6 +49,8 @@
     self.fourK.backgroundColor = [UIColor colorWithHexString:Par_Bogey];
     self.fourKW.constant = 10 *ProportionAdapter;
     self.fourKRight.constant = 6 *ProportionAdapter;
+    self.fourK.layer.masksToBounds = YES;
+    self.fourK.layer.cornerRadius = self.oneK.frame.size.width /2;
 
     self.BogeyLable.font = [UIFont systemFontOfSize:13 *ProportionAdapter];
     self.BogeyLableRight.constant = 10 *ProportionAdapter;
