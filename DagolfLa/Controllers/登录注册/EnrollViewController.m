@@ -194,7 +194,7 @@ static int timeNumber = 60;
                     _timer=[NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(autoMove) userInfo:nil repeats:YES];
                     [[NSRunLoop currentRunLoop] addTimer:_timer forMode:NSRunLoopCommonModes];
                 }else {
-                    [[ShowHUD showHUD]showToastWithText:[dict objectForKey:@"mesage"] FromView:self.view];
+                    [[ShowHUD showHUD]showToastWithText:[dict objectForKey:@"message"] FromView:self.view];
 
                 }
             } failed:^(NSError *error) {
