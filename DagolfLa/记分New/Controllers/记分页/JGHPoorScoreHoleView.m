@@ -79,8 +79,8 @@ static NSString *const JGHTwoScoreAreaCellIdentifier = @"JGHTwoScoreAreaCell";
 }
 
 - (void)reloadScoreList:(NSArray *)currentAreaArray andAreaArray:(NSArray *)areaArray{
-    NSUserDefaults *userdf = [NSUserDefaults standardUserDefaults];
-    _curPage = [[userdf objectForKey:[NSString stringWithFormat:@"%@", _scorekey]] integerValue];
+    //NSUserDefaults *userdf = [NSUserDefaults standardUserDefaults];
+    //_curPage = [[userdf objectForKey:[NSString stringWithFormat:@"%@", _scorekey]] integerValue];
     _areaArray = areaArray;
     _currentAreaArray = currentAreaArray;
     _imageSelectOne = 0;

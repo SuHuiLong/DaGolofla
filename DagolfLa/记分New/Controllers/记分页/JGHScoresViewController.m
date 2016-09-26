@@ -291,16 +291,16 @@
     self.view.userInteractionEnabled = NO;
     [[JsonHttp jsonHttp]cancelRequest];//取消所有请求
     //保存
-    /*
+    
     NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
     if (_currentPage > 0) {
-        [userdef setObject:@(_currentPage) forKey:[NSString stringWithFormat:@"%@", _scorekey]];
+        [userdef setObject:@(_currentPage -1) forKey:[NSString stringWithFormat:@"%@", _scorekey]];
     }else{
         [userdef setObject:@0 forKey:[NSString stringWithFormat:@"%@", _scorekey]];
     }
     
     [userdef synchronize];
-     */
+     
     //保存
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     [dict setObject:DEFAULF_USERID forKey:@"userKey"];
@@ -504,7 +504,7 @@
             _scoresView.frame = CGRectMake(0, 0, screenWidth, (194 +20 +20 + self.userScoreArray.count * 70)*ProportionAdapter);
             _scoresView.dataArray = self.userScoreArray;
             _scoresView.scorekey = _scorekey;
-            //_scoresView.curPage = _currentPage;
+            _scoresView.curPage = _selectPage;
             
             [self.view addSubview:_scoresView];
             [_scoresView reloadScoreList:_currentAreaArray andAreaArray:_areaArray];//更新UI位置
@@ -523,7 +523,7 @@
             _poorScoreView.frame = CGRectMake(0, 0, screenWidth, (194 + 20 +20+ self.userScoreArray.count * 70)*ProportionAdapter);
             _poorScoreView.dataArray = self.userScoreArray;
             _poorScoreView.scorekey = _scorekey;
-            //_poorScoreView.curPage = _currentPage;
+            _poorScoreView.curPage = _selectPage;
            // _poorScoreView.curPage = [[userdf objectForKey:[NSString stringWithFormat:@"%@", _scorekey]] integerValue];
             [self.view addSubview:_scoresView];
             [_poorScoreView reloadScoreList:_currentAreaArray andAreaArray:_areaArray];//更新UI位置
@@ -601,6 +601,7 @@
     vc2.switchMode = _switchMode;
     vc2.scorekey = _scorekey;
     _currentPage = vc2.index;
+    _selectPage = _currentPage +1;
     //保存
     NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
     if (vc2.index > 0) {
@@ -742,16 +743,16 @@
     _item.enabled = NO;
     
     //保存
-    /*
+    
     NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
     if (_currentPage > 0) {
-        [userdef setObject:@(_currentPage-1) forKey:[NSString stringWithFormat:@"%@", _scorekey]];
+        [userdef setObject:@(_currentPage -1) forKey:[NSString stringWithFormat:@"%@", _scorekey]];
     }else{
         [userdef setObject:@0 forKey:[NSString stringWithFormat:@"%@", _scorekey]];
     }
     
     [userdef synchronize];
-     */
+     
     
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     [dict setObject:DEFAULF_USERID forKey:@"userKey"];
