@@ -172,7 +172,7 @@
 //     self.invitationCode
     JGHRetrieveScoreViewController *retriveVC = [[JGHRetrieveScoreViewController alloc] init];
     if (self.invitationCode) {
-        retriveVC.failKeyString = self.invitationCode;
+        retriveVC.invitationCode = self.invitationCode;
     }
     [self.navigationController pushViewController:retriveVC animated:YES];
 }
