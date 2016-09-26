@@ -216,14 +216,17 @@
     
     if (_isEdtor == 1) {
         //保存洞号
+        /*
         NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
         if (_currentPage > 0) {
             [userdef setObject:@(_currentPage) forKey:[NSString stringWithFormat:@"%@", _scorekey]];
         }else{
             [userdef setObject:@0 forKey:[NSString stringWithFormat:@"%@", _scorekey]];
         }
+         
         
         [userdef synchronize];
+        */
         
         _isEdtor = 0;
         NSMutableDictionary *dict = [NSMutableDictionary dictionary];
@@ -288,6 +291,7 @@
     self.view.userInteractionEnabled = NO;
     [[JsonHttp jsonHttp]cancelRequest];//取消所有请求
     //保存
+    /*
     NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
     if (_currentPage > 0) {
         [userdef setObject:@(_currentPage) forKey:[NSString stringWithFormat:@"%@", _scorekey]];
@@ -296,6 +300,7 @@
     }
     
     [userdef synchronize];
+     */
     //保存
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     [dict setObject:DEFAULF_USERID forKey:@"userKey"];
@@ -430,7 +435,9 @@
                 _pageViewController = [[UIPageViewController alloc]initWithTransitionStyle:1 navigationOrientation:0 options:nil];
                 
                 JGHScoresMainViewController *sub = [[JGHScoresMainViewController alloc]init];
-                sub.index = _currentPage;
+                //sub.index = _currentPage;
+                NSUserDefaults *userdf = [NSUserDefaults standardUserDefaults];
+                sub.index = [[userdf objectForKey:[NSString stringWithFormat:@"%@", _scorekey]] integerValue];
                 sub.dataArray = self.userScoreArray;
                 sub.currentAreaArray = _currentAreaArray;
                 sub.switchMode = _switchMode;
@@ -497,7 +504,8 @@
             _scoresView.frame = CGRectMake(0, 0, screenWidth, (194 +20 +20 + self.userScoreArray.count * 70)*ProportionAdapter);
             _scoresView.dataArray = self.userScoreArray;
             _scoresView.scorekey = _scorekey;
-            _scoresView.curPage = _currentPage;
+            //_scoresView.curPage = _currentPage;
+            
             [self.view addSubview:_scoresView];
             [_scoresView reloadScoreList:_currentAreaArray andAreaArray:_areaArray];//更新UI位置
             _tranView = [[UIView alloc]initWithFrame:CGRectMake(0, _scoresView.frame.size.height, screenWidth, (screenHeight -64)-(194 +20 +20 + self.userScoreArray.count * 70)*ProportionAdapter)];
@@ -514,7 +522,9 @@
             _poorScoreView.delegate = self;
             _poorScoreView.frame = CGRectMake(0, 0, screenWidth, (194 + 20 +20+ self.userScoreArray.count * 70)*ProportionAdapter);
             _poorScoreView.dataArray = self.userScoreArray;
-            _poorScoreView.curPage = _currentPage;
+            _poorScoreView.scorekey = _scorekey;
+            //_poorScoreView.curPage = _currentPage;
+           // _poorScoreView.curPage = [[userdf objectForKey:[NSString stringWithFormat:@"%@", _scorekey]] integerValue];
             [self.view addSubview:_scoresView];
             [_poorScoreView reloadScoreList:_currentAreaArray andAreaArray:_areaArray];//更新UI位置
             _tranView = [[UIView alloc]initWithFrame:CGRectMake(0, _poorScoreView.frame.size.height, screenWidth, (screenHeight -64)-(194 +20 +20 + self.userScoreArray.count * 70)*ProportionAdapter)];
@@ -586,15 +596,20 @@
         vc2.index = _currentPage;
     }
     
-    NSUserDefaults *usedef = [NSUserDefaults standardUserDefaults];
-    [usedef setObject:@(vc2.index) forKey:[NSString stringWithFormat:@"%@", _scorekey]];
-    [usedef synchronize];
-    
     vc2.dataArray = self.userScoreArray;
     vc2.currentAreaArray = _currentAreaArray;
     vc2.switchMode = _switchMode;
     vc2.scorekey = _scorekey;
     _currentPage = vc2.index;
+    //保存
+    NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
+    if (vc2.index > 0) {
+        [userdef setObject:@(vc2.index) forKey:[NSString stringWithFormat:@"%@", _scorekey]];
+    }else{
+        [userdef setObject:@0 forKey:[NSString stringWithFormat:@"%@", _scorekey]];
+    }
+    
+    [userdef synchronize];
     __weak JGHScoresViewController *weakSelf = self;
     vc2.returnScoresDataArray= ^(NSMutableArray *dataArray){
         weakSelf.userScoreArray = dataArray;
@@ -727,6 +742,7 @@
     _item.enabled = NO;
     
     //保存
+    /*
     NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
     if (_currentPage > 0) {
         [userdef setObject:@(_currentPage-1) forKey:[NSString stringWithFormat:@"%@", _scorekey]];
@@ -735,6 +751,7 @@
     }
     
     [userdef synchronize];
+     */
     
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     [dict setObject:DEFAULF_USERID forKey:@"userKey"];
@@ -885,6 +902,7 @@
             [self.navigationController pushViewController:historyCtrl animated:YES];
         }
     }else{
+        /*
         NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
         if (_currentPage > 0) {
             [userdef setObject:@(_currentPage-1) forKey:[NSString stringWithFormat:@"%@", _scorekey]];
@@ -893,8 +911,8 @@
         }
         
         [userdef synchronize];
-        
-        NSLog(@"%@", [userdef objectForKey:[NSString stringWithFormat:@"%@", _scorekey]]);
+        */
+        //NSLog(@"%@", [userdef objectForKey:[NSString stringWithFormat:@"%@", _scorekey]]);
         JGDHistoryScoreViewController *historyCtrl = [[JGDHistoryScoreViewController alloc]init];
         [self.navigationController pushViewController:historyCtrl animated:YES];
     }
@@ -913,6 +931,7 @@
             }
         }
     }else if (_scoreFinish == 1){
+        /*
         NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
         if (_currentPage > 0) {
             [userdef setObject:@(_currentPage) forKey:[NSString stringWithFormat:@"%@", _scorekey]];
@@ -921,8 +940,9 @@
         }
         
         [userdef synchronize];
+         */
         
-        NSLog(@"%@", [userdef objectForKey:[NSString stringWithFormat:@"%@", _scorekey]]);
+        //NSLog(@"%@", [userdef objectForKey:[NSString stringWithFormat:@"%@", _scorekey]]);
         JGDHistoryScoreViewController *historyCtrl = [[JGDHistoryScoreViewController alloc]init];
         [self.navigationController pushViewController:historyCtrl animated:YES];
     }else{

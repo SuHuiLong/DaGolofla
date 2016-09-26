@@ -62,6 +62,16 @@ static NSString *const JGHNewScoresPageCellIdentifier = @"JGHNewScoresPageCell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
+    //保存
+    NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
+    if (_index > 0) {
+        [userdef setObject:@(_index-1) forKey:[NSString stringWithFormat:@"%@", _scorekey]];
+    }else{
+        [userdef setObject:@(_index) forKey:[NSString stringWithFormat:@"%@", _scorekey]];
+    }
+    
+    [userdef synchronize];
 
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(noticePushScoresCtrl:) name:@"noticePushScores" object:nil];
     

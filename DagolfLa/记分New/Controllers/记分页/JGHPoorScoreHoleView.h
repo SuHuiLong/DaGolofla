@@ -24,6 +24,8 @@
 
 @property (nonatomic, assign)NSInteger curPage;
 
+@property (nonatomic, strong)NSString *scorekey;
+
 //@property (nonatomic, strong)NSArray *areaArray;//球道区域
 
 //@property (nonatomic, strong)NSArray *twoAreaArray;//球道区域
