@@ -74,4 +74,8 @@
 
 @property (nonatomic, strong)NSString *failKeyString;
 
+@property (nonatomic, copy) NSString *invitationCode;//  邀请码
+
+
+
 @end

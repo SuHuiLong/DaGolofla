@@ -14,7 +14,6 @@
 
 @interface JGHRetrieveScoreViewController ()<UITextFieldDelegate>
 {
-    NSString *_invitationCode;//  邀请码
     NSInteger _editor;
     JGHRetrieveScoreModel *_model;
 }
@@ -62,10 +61,10 @@
     self.failKeyTop.constant = 25*ProportionAdapter;
 //    self.failKey.secureTextEntry = YES;
     self.failKey.delegate = self;
-    if (self.failKeyString == nil) {
+    if (self.invitationCode == nil) {
         self.failKey.text = @"";
     }else{
-        self.failKey.text = _failKeyString;
+        self.failKey.text = _invitationCode;
         _editor = 1;
         [self.submitBtn setBackgroundColor:[UIColor orangeColor]];
     }
