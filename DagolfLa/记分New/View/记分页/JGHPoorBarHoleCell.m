@@ -22,6 +22,8 @@
     self.oneK.backgroundColor = [UIColor colorWithHexString:Par_Eagle];
     self.oneKW.constant = 10 *ProportionAdapter;
     self.oneKRight.constant = 6 *ProportionAdapter;
+    self.oneK.layer.masksToBounds = YES;
+    self.oneK.layer.cornerRadius = self.oneK.frame.size.width /2;
     
     self.eagleLable.font = [UIFont systemFontOfSize:13 *ProportionAdapter];
     self.eagleLableRight.constant = 10 *ProportionAdapter;
@@ -29,6 +31,8 @@
     self.twoK.backgroundColor = [UIColor colorWithHexString:Par_Birdie];
     self.twoKW.constant = 10 *ProportionAdapter;
     self.twoKRight.constant = 6 *ProportionAdapter;
+    self.twoK.layer.masksToBounds = YES;
+    self.twoK.layer.cornerRadius = self.oneK.frame.size.width /2;
 
     self.birdleLable.font = [UIFont systemFontOfSize:13 *ProportionAdapter];
     self.birdleLableRight.constant = 10 *ProportionAdapter;
@@ -36,6 +40,8 @@
     self.three.backgroundColor = [UIColor colorWithHexString:Par_Par];
     self.threeW.constant = 10 *ProportionAdapter;
     self.threeRight.constant = 6 *ProportionAdapter;
+    self.three.layer.masksToBounds = YES;
+    self.three.layer.cornerRadius = self.oneK.frame.size.width /2;
 
     self.parLable.font = [UIFont systemFontOfSize:13 *ProportionAdapter];
     self.parLableRight.constant = 10 *ProportionAdapter;
@@ -43,6 +49,8 @@
     self.fourK.backgroundColor = [UIColor colorWithHexString:Par_Bogey];
     self.fourKW.constant = 10 *ProportionAdapter;
     self.fourKRight.constant = 6 *ProportionAdapter;
+    self.fourK.layer.masksToBounds = YES;
+    self.fourK.layer.cornerRadius = self.oneK.frame.size.width /2;
 
     self.BogeyLable.font = [UIFont systemFontOfSize:13 *ProportionAdapter];
     self.BogeyLableRight.constant = 10 *ProportionAdapter;
