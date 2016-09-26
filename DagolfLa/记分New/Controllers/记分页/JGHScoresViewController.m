@@ -291,16 +291,16 @@
     self.view.userInteractionEnabled = NO;
     [[JsonHttp jsonHttp]cancelRequest];//取消所有请求
     //保存
-    /*
+    
     NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
     if (_currentPage > 0) {
-        [userdef setObject:@(_currentPage) forKey:[NSString stringWithFormat:@"%@", _scorekey]];
+        [userdef setObject:@(_currentPage -1) forKey:[NSString stringWithFormat:@"%@", _scorekey]];
     }else{
-        [userdef setObject:@0 forKey:[NSgetUserScoreByInvitationCodeString stringWithFormat:@"%@", _scorekey]];
+        [userdef setObject:@0 forKey:[NSString stringWithFormat:@"%@", _scorekey]];
     }
     
     [userdef synchronize];
-     */
+     
     //保存
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     [dict setObject:DEFAULF_USERID forKey:@"userKey"];
@@ -601,6 +601,7 @@
     vc2.switchMode = _switchMode;
     vc2.scorekey = _scorekey;
     _currentPage = vc2.index;
+    _selectPage = _currentPage +1;
     //保存
     NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
     if (vc2.index > 0) {
