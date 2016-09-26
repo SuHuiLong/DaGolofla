@@ -226,7 +226,13 @@
             if (![Helper isBlankString:[data objectForKey:@"date"]] && ![Helper isBlankString:[data objectForKey:@"endDate"]]) {
                 NSArray *array1 = [[data objectForKey:@"date"] componentsSeparatedByString:@" "];
                 NSArray *array2 = [[data objectForKey:@"endDate"] componentsSeparatedByString:@" "];
-                _labelTime.text = [NSString stringWithFormat:@"%@~%@",array1[0],array2[0]];
+                if ([array1[0] isEqualToString:array2[0]] == YES) {
+                    _labelTime.text = [NSString stringWithFormat:@"%@",array1[0]];
+                }
+                else{
+                    _labelTime.text = [NSString stringWithFormat:@"%@~%@",array1[0],array2[0]];
+                }
+                
             }
             else{
                 _labelTime.text = @"暂无时间";

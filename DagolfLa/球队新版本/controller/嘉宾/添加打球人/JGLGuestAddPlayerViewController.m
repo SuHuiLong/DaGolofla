@@ -381,7 +381,14 @@
     }
     else if (textField.tag == 2002)
     {
-        _strAlmost = textField.text;
+        if ([Helper isPureNumandCharacters:textField.text] == YES) {
+            _strAlmost = textField.text;
+        }
+        else{
+            textField.text = @"";
+            [[ShowHUD showHUD] showToastWithText:@"差点只能填写数字" FromView:self.view];
+        }
+        
     }
     else if (textField.tag == 2003)
     {
