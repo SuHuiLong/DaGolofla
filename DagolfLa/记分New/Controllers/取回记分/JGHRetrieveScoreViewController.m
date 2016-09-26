@@ -66,6 +66,8 @@
         self.failKey.text = @"";
     }else{
         self.failKey.text = _failKeyString;
+        _editor = 1;
+        [self.submitBtn setBackgroundColor:[UIColor orangeColor]];
     }
     
     NSLayoutConstraint *failKeyHConstraint = [NSLayoutConstraint constraintWithItem:self.failKey attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationGreaterThanOrEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:36*ProportionAdapter];
