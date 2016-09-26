@@ -11,6 +11,7 @@
 
 #import "JGDHIstoryScoreDetailViewController.h"
 #import "JGDNotActivityHisDetailViewController.h"
+#import "JGHRetrieveScoreViewController.h"
 
 @interface JGDActSelfHistoryScoreViewController ()<UITableViewDelegate, UITableViewDataSource>
 
@@ -153,7 +154,7 @@
        
         UITapGestureRecognizer *tapAct = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapAct)];
         [self.keyLB addGestureRecognizer:tapAct];
-        
+        self.keyLB.userInteractionEnabled = YES;
         UIView *lightLine = [[UIView alloc] initWithFrame:CGRectMake(60 * ProportionAdapter, 0, 1 * ProportionAdapter, 45 * ProportionAdapter)];
         lightLine.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];
         [self.keyLB addSubview:lightLine];
@@ -169,6 +170,11 @@
 
 - (void)tapAct{
 //     self.invitationCode
+    JGHRetrieveScoreViewController *retriveVC = [[JGHRetrieveScoreViewController alloc] init];
+    if (self.invitationCode) {
+        retriveVC.failKeyString = self.invitationCode;
+    }
+    [self.navigationController pushViewController:retriveVC animated:YES];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
