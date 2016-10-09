@@ -35,6 +35,7 @@
 
 #import "JGGuestViewController.h" // 嘉宾
 
+#import "JGConfrontChannelViewController.h"
 
 @interface ShouyeViewController ()<UIApplicationDelegate,CLLocationManagerDelegate>
 {
@@ -405,7 +406,7 @@
             {
                 NSLog(@"toup");
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
-                VoteViewController* voteVc = [[VoteViewController alloc]init];
+                JGConfrontChannelViewController* voteVc = [[JGConfrontChannelViewController alloc]init];
                 [self.navigationController pushViewController:voteVc animated:YES];
             }
                 break;
