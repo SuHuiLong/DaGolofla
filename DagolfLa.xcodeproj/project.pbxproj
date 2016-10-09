@@ -724,6 +724,7 @@
 		F50B7FB71CE5DBB70065069D /* JGTeamMainhallViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F50B7FB61CE5DBB70065069D /* JGTeamMainhallViewController.m */; };
 		F50EFF331CF9609100F7AB3F /* JGImageAndLabelAndLabelTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F50EFF321CF9609100F7AB3F /* JGImageAndLabelAndLabelTableViewCell.m */; };
 		F50EFF361CF9762C00F7AB3F /* JGTeamDeatilWKwebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F50EFF351CF9762C00F7AB3F /* JGTeamDeatilWKwebViewController.m */; };
+		F51472F91DA8D43100029C59 /* JGDHotMatchTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F51472F81DA8D43100029C59 /* JGDHotMatchTableViewCell.m */; };
 		F51E5EE41D7E5F0700AE254E /* JGDAlmostScoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F51E5EE31D7E5F0700AE254E /* JGDAlmostScoreViewController.m */; };
 		F51E5EE71D7E92FE00AE254E /* JGDAlmostScoreTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F51E5EE61D7E92FE00AE254E /* JGDAlmostScoreTableViewCell.m */; };
 		F51E5EEA1D7FE47B00AE254E /* JGDAlmostScoreDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F51E5EE91D7FE47B00AE254E /* JGDAlmostScoreDetailViewController.m */; };
@@ -2475,6 +2476,8 @@
 		F50EFF321CF9609100F7AB3F /* JGImageAndLabelAndLabelTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGImageAndLabelAndLabelTableViewCell.m; sourceTree = "<group>"; };
 		F50EFF341CF9762C00F7AB3F /* JGTeamDeatilWKwebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGTeamDeatilWKwebViewController.h; sourceTree = "<group>"; };
 		F50EFF351CF9762C00F7AB3F /* JGTeamDeatilWKwebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGTeamDeatilWKwebViewController.m; sourceTree = "<group>"; };
+		F51472F71DA8D43100029C59 /* JGDHotMatchTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGDHotMatchTableViewCell.h; sourceTree = "<group>"; };
+		F51472F81DA8D43100029C59 /* JGDHotMatchTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGDHotMatchTableViewCell.m; sourceTree = "<group>"; };
 		F51E5EE21D7E5F0700AE254E /* JGDAlmostScoreViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGDAlmostScoreViewController.h; sourceTree = "<group>"; };
 		F51E5EE31D7E5F0700AE254E /* JGDAlmostScoreViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGDAlmostScoreViewController.m; sourceTree = "<group>"; };
 		F51E5EE51D7E92FE00AE254E /* JGDAlmostScoreTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGDAlmostScoreTableViewCell.h; sourceTree = "<group>"; };
@@ -3460,6 +3463,7 @@
 		20203B111D9B5EFF009A75F3 /* view */ = {
 			isa = PBXGroup;
 			children = (
+				F51472F61DA8D41100029C59 /* 热门对抗赛 */,
 				20203B1D1D9B609E009A75F3 /* 发布赛事 */,
 			);
 			path = view;
@@ -6628,6 +6632,15 @@
 			path = "球队大厅";
 			sourceTree = "<group>";
 		};
+		F51472F61DA8D41100029C59 /* 热门对抗赛 */ = {
+			isa = PBXGroup;
+			children = (
+				F51472F71DA8D43100029C59 /* JGDHotMatchTableViewCell.h */,
+				F51472F81DA8D43100029C59 /* JGDHotMatchTableViewCell.m */,
+			);
+			path = "热门对抗赛";
+			sourceTree = "<group>";
+		};
 		F51E5EDC1D7E5DBE00AE254E /* 差杆模式 */ = {
 			isa = PBXGroup;
 			children = (
@@ -9173,6 +9186,7 @@
 				36BFFD2E1BC76C8D005B3CE2 /* main.m in Sources */,
 				F51E5EFD1D8130AA00AE254E /* JGDPlayerNotActScoreCardViewController.m in Sources */,
 				F5838D8D1D4B26EE00A7FFC6 /* JGDActSelfHistoryScoreViewController.m in Sources */,
+				F51472F91DA8D43100029C59 /* JGDHotMatchTableViewCell.m in Sources */,
 				2048E8FD1D4F28F900A2C024 /* JGHActivityMembersViewController.m in Sources */,
 				20C1B8AB1CE313A200508ABC /* JGTeamApplyViewController.m in Sources */,
 				8215EE121D0FD9F90099F161 /* JGTeamMemberManager.m in Sources */,
