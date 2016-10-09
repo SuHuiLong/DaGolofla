@@ -32,4 +32,6 @@
 
 - (void)configStartBtn;
 
+- (void)configNextBtn;
+
 @end
