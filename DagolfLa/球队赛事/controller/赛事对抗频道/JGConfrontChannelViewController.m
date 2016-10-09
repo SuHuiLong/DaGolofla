@@ -7,8 +7,9 @@
 //
 
 #import "JGConfrontChannelViewController.h"
-
+#import "JGHPublishEventViewController.h"
 #import "JGDHotMatchTableViewCell.h"
+#import "JGHEventDetailsViewController.h"
 
 @interface JGConfrontChannelViewController ()<UITableViewDelegate, UITableViewDataSource>
 
@@ -132,7 +133,10 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return 80 * ProportionAdapter;
 }
-
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    JGHEventDetailsViewController *deatilCtrl = [[JGHEventDetailsViewController alloc]init];
+    [self.navigationController pushViewController:deatilCtrl animated:YES];
+}
 // leftButton
 - (void)myMatchAct:(UIButton *)btn{
     if (self.leftView.hidden == YES) {
@@ -159,6 +163,8 @@
 // 发布赛事
 - (void)postAct{
     NSLog(@" 发 布 赛 事 ");
+    JGHPublishEventViewController *publishCtrl = [[JGHPublishEventViewController alloc]init];
+    [self.navigationController pushViewController:publishCtrl animated:YES];
 }
 
 
