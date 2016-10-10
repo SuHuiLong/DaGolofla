@@ -840,6 +840,8 @@
 		F5B647101CE41E7E00A7A056 /* JGTeamDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = F5B6470F1CE41E7E00A7A056 /* JGTeamDetailView.m */; };
 		F5B90E081D1786FE008ACC22 /* JGTeamPayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5B90E071D1786FE008ACC22 /* JGTeamPayViewController.m */; };
 		F5BDF0A11CEC1B750020175A /* JGTeamDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = F5BDF0A01CEC1B750020175A /* JGTeamDetail.m */; };
+		F5C802FD1DAB2C3B003046FD /* JGDCheckScoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5C802FC1DAB2C3B003046FD /* JGDCheckScoreViewController.m */; };
+		F5C803001DAB2C62003046FD /* JGDCheckScoreTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F5C802FF1DAB2C62003046FD /* JGDCheckScoreTableViewCell.m */; };
 		F5D794421D9B6DF50095EF0B /* JGConfrontChannelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5D794411D9B6DF50095EF0B /* JGConfrontChannelViewController.m */; };
 		F5E1B87B1D6ADF6100414727 /* JGDGuestChannelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5E1B87A1D6ADF6100414727 /* JGDGuestChannelViewController.m */; };
 		F5E1B87E1D6AE13800414727 /* JGDGuestPayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5E1B87D1D6AE13800414727 /* JGDGuestPayViewController.m */; };
@@ -2687,6 +2689,10 @@
 		F5B90E071D1786FE008ACC22 /* JGTeamPayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGTeamPayViewController.m; sourceTree = "<group>"; };
 		F5BDF09F1CEC1B750020175A /* JGTeamDetail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGTeamDetail.h; sourceTree = "<group>"; };
 		F5BDF0A01CEC1B750020175A /* JGTeamDetail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGTeamDetail.m; sourceTree = "<group>"; };
+		F5C802FB1DAB2C3B003046FD /* JGDCheckScoreViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGDCheckScoreViewController.h; sourceTree = "<group>"; };
+		F5C802FC1DAB2C3B003046FD /* JGDCheckScoreViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGDCheckScoreViewController.m; sourceTree = "<group>"; };
+		F5C802FE1DAB2C62003046FD /* JGDCheckScoreTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGDCheckScoreTableViewCell.h; sourceTree = "<group>"; };
+		F5C802FF1DAB2C62003046FD /* JGDCheckScoreTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGDCheckScoreTableViewCell.m; sourceTree = "<group>"; };
 		F5D794401D9B6DF50095EF0B /* JGConfrontChannelViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGConfrontChannelViewController.h; sourceTree = "<group>"; };
 		F5D794411D9B6DF50095EF0B /* JGConfrontChannelViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGConfrontChannelViewController.m; sourceTree = "<group>"; };
 		F5E1B8791D6ADF6100414727 /* JGDGuestChannelViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGDGuestChannelViewController.h; sourceTree = "<group>"; };
@@ -3446,6 +3452,7 @@
 		20203B0F1D9B5EFF009A75F3 /* controller */ = {
 			isa = PBXGroup;
 			children = (
+				F5C802F91DAB2BB7003046FD /* 查看成绩 */,
 				F5D7943F1D9B6D670095EF0B /* 赛事对抗频道 */,
 				20203B121D9B5F2C009A75F3 /* 发布赛事 */,
 			);
@@ -3463,6 +3470,7 @@
 		20203B111D9B5EFF009A75F3 /* view */ = {
 			isa = PBXGroup;
 			children = (
+				F5C802FA1DAB2BBE003046FD /* 查看成绩 */,
 				F51472F61DA8D41100029C59 /* 热门对抗赛 */,
 				20203B1D1D9B609E009A75F3 /* 发布赛事 */,
 			);
@@ -7201,6 +7209,24 @@
 			path = "球队详情";
 			sourceTree = "<group>";
 		};
+		F5C802F91DAB2BB7003046FD /* 查看成绩 */ = {
+			isa = PBXGroup;
+			children = (
+				F5C802FB1DAB2C3B003046FD /* JGDCheckScoreViewController.h */,
+				F5C802FC1DAB2C3B003046FD /* JGDCheckScoreViewController.m */,
+			);
+			path = "查看成绩";
+			sourceTree = "<group>";
+		};
+		F5C802FA1DAB2BBE003046FD /* 查看成绩 */ = {
+			isa = PBXGroup;
+			children = (
+				F5C802FE1DAB2C62003046FD /* JGDCheckScoreTableViewCell.h */,
+				F5C802FF1DAB2C62003046FD /* JGDCheckScoreTableViewCell.m */,
+			);
+			path = "查看成绩";
+			sourceTree = "<group>";
+		};
 		F5D7943F1D9B6D670095EF0B /* 赛事对抗频道 */ = {
 			isa = PBXGroup;
 			children = (
@@ -8691,6 +8717,7 @@
 				20591C821D226126003271EC /* JGHWithdrawMoneyCell.m in Sources */,
 				F53A056E1D518F32009DD489 /* JGHSimpleAndResultsCell.m in Sources */,
 				F59A8BA21D5CA66400E8292B /* JGDResultViewController.m in Sources */,
+				F5C803001DAB2C62003046FD /* JGDCheckScoreTableViewCell.m in Sources */,
 				F5E1BAC11D6B006100414727 /* ZXAbstractDoCoMoResultParser.m in Sources */,
 				F5E1BAFF1D6B006100414727 /* ZXBinaryBitmap.m in Sources */,
 				F5AEF6E91D408F3F009A8C34 /* JGDNotActivityHisCoreViewController.m in Sources */,
@@ -8750,6 +8777,7 @@
 				36B08F721C2D322600CD660E /* UITableViewRowAction.m in Sources */,
 				36D39B361BCCD8D000C0B197 /* AppraiseModel.m in Sources */,
 				F5AEF73A1D41B98E009A8C34 /* JGLPlayDateTableViewCell.m in Sources */,
+				F5C802FD1DAB2C3B003046FD /* JGDCheckScoreViewController.m in Sources */,
 				F5E1BB011D6B006100414727 /* ZXDecodeHints.m in Sources */,
 				36BF005E1BC77296005B3CE2 /* MyFootViewController.m in Sources */,
 				36BF00A71BC77326005B3CE2 /* MeselfModel.m in Sources */,
