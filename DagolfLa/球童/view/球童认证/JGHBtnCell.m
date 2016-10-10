@@ -58,4 +58,12 @@
     [self.titleBtn setTitle:@"开始记分" forState:UIControlStateNormal];
 }
 
+- (void)configNextBtn{
+    self.titleBtnTop.constant = 5 *ProportionAdapter;
+    self.titleBtnDown.constant = 5 *ProportionAdapter;
+    self.backgroundColor = [UIColor colorWithHexString:BG_color];
+    self.titleBtn.backgroundColor = [UIColor orangeColor];
+    [self.titleBtn setTitle:@"下一步" forState:UIControlStateNormal];
+}
+
 @end

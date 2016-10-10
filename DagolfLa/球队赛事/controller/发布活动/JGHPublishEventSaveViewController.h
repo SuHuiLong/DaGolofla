@@ -1,15 +1,15 @@
 //
-//  JGHPublishEventViewController.h
+//  JGHPublishEventSaveViewController.h
 //  DagolfLa
 //
-//  Created by 黄安 on 16/9/28.
+//  Created by 黄安 on 16/10/8.
 //  Copyright © 2016年 bhxx. All rights reserved.
 //
 
 #import "ViewController.h"
 @class JGTeamAcitivtyModel;
 
-@interface JGHPublishEventViewController : ViewController
+@interface JGHPublishEventSaveViewController : ViewController
 
 @property (nonatomic, retain) UIImageView *imgProfile;
 
@@ -20,5 +20,6 @@
 @property (strong, nonatomic) void (^refreshBlock)();
 
 @property (nonatomic, strong)NSMutableArray *costListArray;//费用列表
+
 
 @end

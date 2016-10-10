@@ -173,6 +173,12 @@
 		209B93A71D6E8EB700A5BE10 /* JGHNewCostListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 209B93A51D6E8EB700A5BE10 /* JGHNewCostListCell.xib */; };
 		209B93AB1D6EC65600A5BE10 /* JGHAddCostButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 209B93A91D6EC65600A5BE10 /* JGHAddCostButtonCell.m */; };
 		209B93AC1D6EC65600A5BE10 /* JGHAddCostButtonCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 209B93AA1D6EC65600A5BE10 /* JGHAddCostButtonCell.xib */; };
+		20B04A791DA88BA800475F7A /* JGHGameSetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 20B04A781DA88BA800475F7A /* JGHGameSetViewController.m */; };
+		20B04A7D1DA88E9D00475F7A /* JGHGameSetCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 20B04A7B1DA88E9D00475F7A /* JGHGameSetCell.m */; };
+		20B04A7E1DA88E9D00475F7A /* JGHGameSetCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 20B04A7C1DA88E9D00475F7A /* JGHGameSetCell.xib */; };
+		20B04A811DA8C75000475F7A /* JGHPublishEventSaveViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 20B04A801DA8C75000475F7A /* JGHPublishEventSaveViewController.m */; };
+		20B04A841DA8EA1800475F7A /* JGHGameRoundsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 20B04A831DA8EA1800475F7A /* JGHGameRoundsViewController.m */; };
+		20B04A871DA8F1C000475F7A /* JGHEventDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 20B04A861DA8F1C000475F7A /* JGHEventDetailsViewController.m */; };
 		20BA61291CDC99D0004B61F5 /* ALAirplayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 20BA61151CDC99D0004B61F5 /* ALAirplayView.m */; };
 		20BA612A1CDC99D0004B61F5 /* ALButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 20BA61171CDC99D0004B61F5 /* ALButton.m */; };
 		20BA612B1CDC99D0004B61F5 /* ALMoviePlayerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 20BA61191CDC99D0004B61F5 /* ALMoviePlayerController.m */; };
@@ -1459,6 +1465,17 @@
 		209B93A81D6EC65600A5BE10 /* JGHAddCostButtonCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHAddCostButtonCell.h; sourceTree = "<group>"; };
 		209B93A91D6EC65600A5BE10 /* JGHAddCostButtonCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHAddCostButtonCell.m; sourceTree = "<group>"; };
 		209B93AA1D6EC65600A5BE10 /* JGHAddCostButtonCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JGHAddCostButtonCell.xib; sourceTree = "<group>"; };
+		20B04A771DA88BA800475F7A /* JGHGameSetViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHGameSetViewController.h; sourceTree = "<group>"; };
+		20B04A781DA88BA800475F7A /* JGHGameSetViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHGameSetViewController.m; sourceTree = "<group>"; };
+		20B04A7A1DA88E9D00475F7A /* JGHGameSetCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHGameSetCell.h; sourceTree = "<group>"; };
+		20B04A7B1DA88E9D00475F7A /* JGHGameSetCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHGameSetCell.m; sourceTree = "<group>"; };
+		20B04A7C1DA88E9D00475F7A /* JGHGameSetCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JGHGameSetCell.xib; sourceTree = "<group>"; };
+		20B04A7F1DA8C75000475F7A /* JGHPublishEventSaveViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHPublishEventSaveViewController.h; sourceTree = "<group>"; };
+		20B04A801DA8C75000475F7A /* JGHPublishEventSaveViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHPublishEventSaveViewController.m; sourceTree = "<group>"; };
+		20B04A821DA8EA1800475F7A /* JGHGameRoundsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHGameRoundsViewController.h; sourceTree = "<group>"; };
+		20B04A831DA8EA1800475F7A /* JGHGameRoundsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHGameRoundsViewController.m; sourceTree = "<group>"; };
+		20B04A851DA8F1C000475F7A /* JGHEventDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHEventDetailsViewController.h; sourceTree = "<group>"; };
+		20B04A861DA8F1C000475F7A /* JGHEventDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHEventDetailsViewController.m; sourceTree = "<group>"; };
 		20BA61141CDC99D0004B61F5 /* ALAirplayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALAirplayView.h; sourceTree = "<group>"; };
 		20BA61151CDC99D0004B61F5 /* ALAirplayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALAirplayView.m; sourceTree = "<group>"; };
 		20BA61161CDC99D0004B61F5 /* ALButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALButton.h; sourceTree = "<group>"; };
@@ -3482,6 +3499,14 @@
 			children = (
 				20203B131D9B5F7B009A75F3 /* JGHPublishEventViewController.h */,
 				20203B141D9B5F7B009A75F3 /* JGHPublishEventViewController.m */,
+				20B04A7F1DA8C75000475F7A /* JGHPublishEventSaveViewController.h */,
+				20B04A801DA8C75000475F7A /* JGHPublishEventSaveViewController.m */,
+				20B04A771DA88BA800475F7A /* JGHGameSetViewController.h */,
+				20B04A781DA88BA800475F7A /* JGHGameSetViewController.m */,
+				20B04A821DA8EA1800475F7A /* JGHGameRoundsViewController.h */,
+				20B04A831DA8EA1800475F7A /* JGHGameRoundsViewController.m */,
+				20B04A851DA8F1C000475F7A /* JGHEventDetailsViewController.h */,
+				20B04A861DA8F1C000475F7A /* JGHEventDetailsViewController.m */,
 			);
 			name = "发布赛事";
 			path = "发布活动";
@@ -3502,6 +3527,9 @@
 				20203B1E1D9B60CC009A75F3 /* JGHPublishEventCell.h */,
 				20203B1F1D9B60CC009A75F3 /* JGHPublishEventCell.m */,
 				20203B201D9B60CC009A75F3 /* JGHPublishEventCell.xib */,
+				20B04A7A1DA88E9D00475F7A /* JGHGameSetCell.h */,
+				20B04A7B1DA88E9D00475F7A /* JGHGameSetCell.m */,
+				20B04A7C1DA88E9D00475F7A /* JGHGameSetCell.xib */,
 			);
 			path = "发布赛事";
 			sourceTree = "<group>";
@@ -8284,6 +8312,7 @@
 				F53A05661D518F32009DD489 /* JGHOperScoreBtnListCell.xib in Resources */,
 				208030451CF7F32E00448BFC /* JGHIvoiceTypeCell.xib in Resources */,
 				20513BCE1CF7050A003233FB /* AlipaySDK.bundle in Resources */,
+				20B04A7E1DA88E9D00475F7A /* JGHGameSetCell.xib in Resources */,
 				36BF00BC1BC77383005B3CE2 /* MyAttentionViewCell.xib in Resources */,
 				20F6A5D41CF475D200DD9383 /* JGHApplyListCell.xib in Resources */,
 				20513B491CF5D1D8003233FB /* JGHInvoiceCell.xib in Resources */,
@@ -8492,6 +8521,7 @@
 				20591C731D2247BB003271EC /* JGHRefundDetailsViewController.m in Sources */,
 				82EDDF7E1D6154A8003D51EB /* JGLCaddieChooseStyleViewController.m in Sources */,
 				F5E1BB781D6B006100414727 /* ZXQRCodeDecodedBitStreamParser.m in Sources */,
+				20B04A841DA8EA1800475F7A /* JGHGameRoundsViewController.m in Sources */,
 				208837991D17D206004C7B5D /* JGHActicityDetailsViewController.m in Sources */,
 				36B9B5981C3E00200053B227 /* CollectViewController.m in Sources */,
 				2012AD801D2BB1B200F70E40 /* JGHAddAwardImageCell.m in Sources */,
@@ -8712,6 +8742,7 @@
 				65B596D81CAD43AC007AB83A /* WFMessageBody.m in Sources */,
 				F5AEF73F1D41B98E009A8C34 /* JGDTrueOrFalseTableViewCell.m in Sources */,
 				F5E1BB661D6B006100414727 /* ZXPDF417DetectionResultColumn.m in Sources */,
+				20B04A811DA8C75000475F7A /* JGHPublishEventSaveViewController.m in Sources */,
 				20CA138B1CE954B300DA15B9 /* JGTeamGroupViewController.m in Sources */,
 				20591C9F1D23A64D003271EC /* JGHTradRecordImageCell.m in Sources */,
 				20591C821D226126003271EC /* JGHWithdrawMoneyCell.m in Sources */,
@@ -8943,6 +8974,7 @@
 				F50B7FB31CE59E050065069D /* JGTeamDetailStylelTwoViewController.m in Sources */,
 				208030531CF9A79800448BFC /* JGHTotalPriceCell.m in Sources */,
 				3669C28C1C48AAC9006CBAAA /* PublishViewController.m in Sources */,
+				20B04A7D1DA88E9D00475F7A /* JGHGameSetCell.m in Sources */,
 				F5E1BB4F1D6B006100414727 /* ZXITFWriter.m in Sources */,
 				20513BD41CF7050A003233FB /* base64.m in Sources */,
 				36067BBC1C96B43B001AE22C /* ChatDetailViewController.m in Sources */,
@@ -9081,6 +9113,7 @@
 				82AAB7B11CE5C18E005F5633 /* JGSelfSetTableViewCell.m in Sources */,
 				2066E87D1D5C585900A3A2B8 /* JGHCaddieAuthModel.m in Sources */,
 				201056131D59C92800C90FDE /* JGHBtnCell.m in Sources */,
+				20B04A791DA88BA800475F7A /* JGHGameSetViewController.m in Sources */,
 				F5E1BB971D6D827700414727 /* JGDGuestTableViewCell.m in Sources */,
 				F5AEF6E71D408F3F009A8C34 /* JGDHistoryScoreShowViewController.m in Sources */,
 				F51E5EE71D7E92FE00AE254E /* JGDAlmostScoreTableViewCell.m in Sources */,
@@ -9238,6 +9271,7 @@
 				82266D6B1D4F1D21001A4F9D /* JGLScoreLiveHeadTableViewCell.m in Sources */,
 				F53A056C1D518F32009DD489 /* JGHSetBallBaseCell.m in Sources */,
 				F5E1BB611D6B006100414727 /* ZXPDF417BoundingBox.m in Sources */,
+				20B04A871DA8F1C000475F7A /* JGHEventDetailsViewController.m in Sources */,
 				F5E1BB601D6B006100414727 /* ZXPDF417BarcodeValue.m in Sources */,
 				F5B90E081D1786FE008ACC22 /* JGTeamPayViewController.m in Sources */,
 				65319B7F1C967C960036DCF1 /* HomeHeadView.m in Sources */,
