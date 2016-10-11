@@ -1,44 +1,39 @@
 //
-//  JGDCheckScoreViewController.m
+//  JGDTeamSortViewController.m
 //  DagolfLa
 //
 //  Created by 東 on 16/10/10.
 //  Copyright © 2016年 bhxx. All rights reserved.
 //
 
-#import "JGDCheckScoreViewController.h"
-#import "JGDCheckScoreTableViewCell.h"
-#import "JGDTeamSortViewController.h" // 球队排行
+#import "JGDTeamSortViewController.h"
+#import "JGDSortTableViewCell.h"
 
-@interface JGDCheckScoreViewController ()<UITableViewDelegate, UITableViewDataSource>
+@interface JGDTeamSortViewController ()<UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic, strong) UIImageView *iconView;
 @property (nonatomic, strong) UILabel *titleLB;
 @property (nonatomic, strong) UILabel *ballLB;
 
+
 @end
 
-@implementation JGDCheckScoreViewController
+@implementation JGDTeamSortViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.title = @"球队竞赛";
-    
-    UIBarButtonItem *rightBar = [[UIBarButtonItem alloc] initWithTitle:@"排名" style:(UIBarButtonItemStyleDone) target:self action:@selector(sortAct)];
-    rightBar.tintColor = [UIColor whiteColor];
-    self.navigationItem.rightBarButtonItem = rightBar;
-    
     UITableView *tableView = [[UITableView alloc] initWithFrame:[UIScreen mainScreen].bounds];
     tableView.delegate = self;
     tableView.dataSource = self;
-    [tableView registerClass:[JGDCheckScoreTableViewCell class] forCellReuseIdentifier:@"checkScore"];
     tableView.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];
     
     [self.view addSubview:tableView];
     
+    [tableView registerClass:[JGDSortTableViewCell class] forCellReuseIdentifier:@"checkScore"];
+    tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
-    UIView *headView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 100 * ProportionAdapter)];
+    UIView *headView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 120 * ProportionAdapter)];
     headView.backgroundColor = [UIColor whiteColor];
     tableView.tableHeaderView = headView;
     
@@ -67,61 +62,49 @@
     self.ballLB.font = [UIFont systemFontOfSize:12 * ProportionAdapter];
     [headView addSubview:self.ballLB];
     
-
+    UIView *lightV2 = [[UIView alloc] initWithFrame:CGRectMake(0, 100 * ProportionAdapter, screenWidth, 10 * ProportionAdapter)];
+    lightV2.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];
+    [headView addSubview:lightV2];
+    
     // Do any additional setup after loading the view.
 }
 
-- (void)sortAct{
-    JGDTeamSortViewController *sortVC = [[JGDTeamSortViewController alloc] init];
-    [self.navigationController pushViewController:sortVC animated:YES];
-}
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 35 * ProportionAdapter)];
-    view.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];
-//    UILabel *styleLB = [[UILabel alloc] initWithFrame:CGRectMake(10 * ProportionAdapter, 10 * ProportionAdapter, screenWidth - 20 * ProportionAdapter, 10 * ProportionAdapter)];;
-//    styleLB.text =@"比赛类型：哈哈哈哈哈哈哈哈哈";
-//    styleLB.textAlignment = NSTextAlignmentRight;
-//    styleLB.font = [UIFont systemFontOfSize:12 * ProportionAdapter];
-//    styleLB.textColor = [UIColor colorWithHexString:@"#32b14d"];
-//    [view addSubview:styleLB];
-    UIView *greenLine = [[UIView alloc] initWithFrame:CGRectMake(0, 8 * ProportionAdapter, screenWidth, 2 * ProportionAdapter)];
-    greenLine.backgroundColor = [UIColor colorWithHexString:@"#32b14d"];
-    [view addSubview:greenLine];
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 30 * ProportionAdapter)];
+    view.backgroundColor = [UIColor whiteColor];
+    UILabel *styleLB = [[UILabel alloc] initWithFrame:CGRectMake(10 * ProportionAdapter, 8 * ProportionAdapter, screenWidth - 20 * ProportionAdapter, 10 * ProportionAdapter)];
+    styleLB.text =@"排名                            参赛球队                                              得分";
+    styleLB.textAlignment = NSTextAlignmentCenter;
+    styleLB.font = [UIFont systemFontOfSize:12 * ProportionAdapter];
+    styleLB.textColor = [UIColor lightGrayColor];
+    [view addSubview:styleLB];
     
-    UILabel *numberLB = [[UILabel alloc] initWithFrame:CGRectMake(0, 10 * ProportionAdapter, screenWidth, 25 * ProportionAdapter)];
-    numberLB.textColor = [UIColor colorWithHexString:@"#313131"];
-    numberLB.textAlignment = NSTextAlignmentCenter;
-    numberLB.text = [NSString stringWithFormat:@"第%td轮 啦啦啦",section];
-    numberLB.font = [UIFont systemFontOfSize:16 * ProportionAdapter];
-    numberLB.backgroundColor = [UIColor whiteColor];
-    
-    [view addSubview:numberLB];
     return view;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    return 35 * ProportionAdapter;
+    return 30 * ProportionAdapter;
 }
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    JGDCheckScoreTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"checkScore"];
+    JGDSortTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"checkScore"];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    cell.numberLB.text = [NSString stringWithFormat:@"%td", indexPath.row];
+    if (indexPath.row % 2 == 0) {
+        cell.backgroundColor = [UIColor colorWithHexString:@"#fafafa"];
+    }
     return cell;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 83 * ProportionAdapter;
+    return 50 * ProportionAdapter;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 5;
-}
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 5;
+    return 6;
 }
 
 

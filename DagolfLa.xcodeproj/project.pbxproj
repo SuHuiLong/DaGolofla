@@ -725,6 +725,8 @@
 		AAB749E21C7B221A00018467 /* moren.jpg in Resources */ = {isa = PBXBuildFile; fileRef = AAB749E11C7B221A00018467 /* moren.jpg */; };
 		AACE5E841C7C7D5800966646 /* xiangcemoren.jpg in Resources */ = {isa = PBXBuildFile; fileRef = AACE5E831C7C7D5800966646 /* xiangcemoren.jpg */; };
 		AAE5CF0F1C60756B00D66086 /* selfBackPic.jpg in Resources */ = {isa = PBXBuildFile; fileRef = AAE5CF0E1C60756B00D66086 /* selfBackPic.jpg */; };
+		F50800961DAC8ECF00D26A82 /* JGDSetConfrontViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F50800951DAC8ECF00D26A82 /* JGDSetConfrontViewController.m */; };
+		F50800991DAC90D000D26A82 /* JGDSetConfrontTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F50800981DAC90D000D26A82 /* JGDSetConfrontTableViewCell.m */; };
 		F50B7FB01CE59C8F0065069D /* JGTeamDetailStyleTwoView.m in Sources */ = {isa = PBXBuildFile; fileRef = F50B7FAF1CE59C8F0065069D /* JGTeamDetailStyleTwoView.m */; };
 		F50B7FB31CE59E050065069D /* JGTeamDetailStylelTwoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F50B7FB21CE59E050065069D /* JGTeamDetailStylelTwoViewController.m */; };
 		F50B7FB71CE5DBB70065069D /* JGTeamMainhallViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F50B7FB61CE5DBB70065069D /* JGTeamMainhallViewController.m */; };
@@ -848,6 +850,8 @@
 		F5BDF0A11CEC1B750020175A /* JGTeamDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = F5BDF0A01CEC1B750020175A /* JGTeamDetail.m */; };
 		F5C802FD1DAB2C3B003046FD /* JGDCheckScoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5C802FC1DAB2C3B003046FD /* JGDCheckScoreViewController.m */; };
 		F5C803001DAB2C62003046FD /* JGDCheckScoreTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F5C802FF1DAB2C62003046FD /* JGDCheckScoreTableViewCell.m */; };
+		F5C803051DAB6A95003046FD /* JGDTeamSortViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5C803041DAB6A95003046FD /* JGDTeamSortViewController.m */; };
+		F5C803081DAB6F1B003046FD /* JGDSortTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F5C803071DAB6F1B003046FD /* JGDSortTableViewCell.m */; };
 		F5D794421D9B6DF50095EF0B /* JGConfrontChannelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5D794411D9B6DF50095EF0B /* JGConfrontChannelViewController.m */; };
 		F5E1B87B1D6ADF6100414727 /* JGDGuestChannelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5E1B87A1D6ADF6100414727 /* JGDGuestChannelViewController.m */; };
 		F5E1B87E1D6AE13800414727 /* JGDGuestPayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5E1B87D1D6AE13800414727 /* JGDGuestPayViewController.m */; };
@@ -2485,6 +2489,10 @@
 		AAB749E11C7B221A00018467 /* moren.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = moren.jpg; sourceTree = "<group>"; };
 		AACE5E831C7C7D5800966646 /* xiangcemoren.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = xiangcemoren.jpg; sourceTree = "<group>"; };
 		AAE5CF0E1C60756B00D66086 /* selfBackPic.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = selfBackPic.jpg; sourceTree = SOURCE_ROOT; };
+		F50800941DAC8ECF00D26A82 /* JGDSetConfrontViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGDSetConfrontViewController.h; sourceTree = "<group>"; };
+		F50800951DAC8ECF00D26A82 /* JGDSetConfrontViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGDSetConfrontViewController.m; sourceTree = "<group>"; };
+		F50800971DAC90D000D26A82 /* JGDSetConfrontTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGDSetConfrontTableViewCell.h; sourceTree = "<group>"; };
+		F50800981DAC90D000D26A82 /* JGDSetConfrontTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGDSetConfrontTableViewCell.m; sourceTree = "<group>"; };
 		F50B7FAE1CE59C8F0065069D /* JGTeamDetailStyleTwoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGTeamDetailStyleTwoView.h; sourceTree = "<group>"; };
 		F50B7FAF1CE59C8F0065069D /* JGTeamDetailStyleTwoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGTeamDetailStyleTwoView.m; sourceTree = "<group>"; };
 		F50B7FB11CE59E050065069D /* JGTeamDetailStylelTwoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGTeamDetailStylelTwoViewController.h; sourceTree = "<group>"; };
@@ -2710,6 +2718,10 @@
 		F5C802FC1DAB2C3B003046FD /* JGDCheckScoreViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGDCheckScoreViewController.m; sourceTree = "<group>"; };
 		F5C802FE1DAB2C62003046FD /* JGDCheckScoreTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGDCheckScoreTableViewCell.h; sourceTree = "<group>"; };
 		F5C802FF1DAB2C62003046FD /* JGDCheckScoreTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGDCheckScoreTableViewCell.m; sourceTree = "<group>"; };
+		F5C803031DAB6A95003046FD /* JGDTeamSortViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGDTeamSortViewController.h; sourceTree = "<group>"; };
+		F5C803041DAB6A95003046FD /* JGDTeamSortViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGDTeamSortViewController.m; sourceTree = "<group>"; };
+		F5C803061DAB6F1B003046FD /* JGDSortTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGDSortTableViewCell.h; sourceTree = "<group>"; };
+		F5C803071DAB6F1B003046FD /* JGDSortTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGDSortTableViewCell.m; sourceTree = "<group>"; };
 		F5D794401D9B6DF50095EF0B /* JGConfrontChannelViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGConfrontChannelViewController.h; sourceTree = "<group>"; };
 		F5D794411D9B6DF50095EF0B /* JGConfrontChannelViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGConfrontChannelViewController.m; sourceTree = "<group>"; };
 		F5E1B8791D6ADF6100414727 /* JGDGuestChannelViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGDGuestChannelViewController.h; sourceTree = "<group>"; };
@@ -3469,6 +3481,8 @@
 		20203B0F1D9B5EFF009A75F3 /* controller */ = {
 			isa = PBXGroup;
 			children = (
+				F50800921DAC8E5E00D26A82 /* 设置对抗 */,
+				F5C803011DAB6A5D003046FD /* 球队排行 */,
 				F5C802F91DAB2BB7003046FD /* 查看成绩 */,
 				F5D7943F1D9B6D670095EF0B /* 赛事对抗频道 */,
 				20203B121D9B5F2C009A75F3 /* 发布赛事 */,
@@ -3487,6 +3501,8 @@
 		20203B111D9B5EFF009A75F3 /* view */ = {
 			isa = PBXGroup;
 			children = (
+				F50800931DAC8E7400D26A82 /* 设置对抗 */,
+				F5C803021DAB6A67003046FD /* 球队排行 */,
 				F5C802FA1DAB2BBE003046FD /* 查看成绩 */,
 				F51472F61DA8D41100029C59 /* 热门对抗赛 */,
 				20203B1D1D9B609E009A75F3 /* 发布赛事 */,
@@ -6650,6 +6666,24 @@
 			path = IQKeyBoardManager;
 			sourceTree = "<group>";
 		};
+		F50800921DAC8E5E00D26A82 /* 设置对抗 */ = {
+			isa = PBXGroup;
+			children = (
+				F50800941DAC8ECF00D26A82 /* JGDSetConfrontViewController.h */,
+				F50800951DAC8ECF00D26A82 /* JGDSetConfrontViewController.m */,
+			);
+			path = "设置对抗";
+			sourceTree = "<group>";
+		};
+		F50800931DAC8E7400D26A82 /* 设置对抗 */ = {
+			isa = PBXGroup;
+			children = (
+				F50800971DAC90D000D26A82 /* JGDSetConfrontTableViewCell.h */,
+				F50800981DAC90D000D26A82 /* JGDSetConfrontTableViewCell.m */,
+			);
+			path = "设置对抗";
+			sourceTree = "<group>";
+		};
 		F50B7FAA1CE5777D0065069D /* 球队大厅 */ = {
 			isa = PBXGroup;
 			children = (
@@ -7253,6 +7287,24 @@
 				F5C802FF1DAB2C62003046FD /* JGDCheckScoreTableViewCell.m */,
 			);
 			path = "查看成绩";
+			sourceTree = "<group>";
+		};
+		F5C803011DAB6A5D003046FD /* 球队排行 */ = {
+			isa = PBXGroup;
+			children = (
+				F5C803031DAB6A95003046FD /* JGDTeamSortViewController.h */,
+				F5C803041DAB6A95003046FD /* JGDTeamSortViewController.m */,
+			);
+			path = "球队排行";
+			sourceTree = "<group>";
+		};
+		F5C803021DAB6A67003046FD /* 球队排行 */ = {
+			isa = PBXGroup;
+			children = (
+				F5C803061DAB6F1B003046FD /* JGDSortTableViewCell.h */,
+				F5C803071DAB6F1B003046FD /* JGDSortTableViewCell.m */,
+			);
+			path = "球队排行";
 			sourceTree = "<group>";
 		};
 		F5D7943F1D9B6D670095EF0B /* 赛事对抗频道 */ = {
@@ -8387,6 +8439,7 @@
 				F5EE48941D4626D4001D5E44 /* JGLAddActivePlayViewController.m in Sources */,
 				F5EE48911D4626AE001D5E44 /* JGLActiveScoreViewController.h in Sources */,
 				F5EE48921D4626AE001D5E44 /* JGLActiveScoreViewController.m in Sources */,
+				F50800961DAC8ECF00D26A82 /* JGDSetConfrontViewController.m in Sources */,
 				82636E8D1D06CB1600216DC1 /* JGPhotoListModel.m in Sources */,
 				20F6A5C41CF3EDE800DD9383 /* JGHTeamContactTableViewCell.m in Sources */,
 				20F025551D703C9F00D7D7B6 /* JGHAddTeamMemberViewController.m in Sources */,
@@ -8501,6 +8554,7 @@
 				82FBBF6C1D6E8AEB006A1548 /* JGLCancelDrawbackViewController.m in Sources */,
 				821C0D911D52EDC2001BB913 /* JGLGuestAddPlayerViewController.m in Sources */,
 				2080304E1CF9A70800448BFC /* JGSignUoPromptCell.m in Sources */,
+				F50800991DAC90D000D26A82 /* JGDSetConfrontTableViewCell.m in Sources */,
 				F5E1BABC1D6B006100414727 /* ZXAztecState.m in Sources */,
 				20591C7E1D2260CE003271EC /* JGHWithdrawCatoryCell.m in Sources */,
 				36BF008D1BC772EF005B3CE2 /* MySetUpDateViewController.m in Sources */,
@@ -9072,6 +9126,7 @@
 				20203B211D9B60CC009A75F3 /* JGHPublishEventCell.m in Sources */,
 				F5AEF7351D41B98E009A8C34 /* JGLAddPlayerTableViewCell.m in Sources */,
 				F5AEF73D1D41B98E009A8C34 /* JGDHistoryScoreShowTableViewCell.m in Sources */,
+				F5C803081DAB6F1B003046FD /* JGDSortTableViewCell.m in Sources */,
 				F53A055B1D518F32009DD489 /* JGHCenterBtnTableViewCell.m in Sources */,
 				F5AEF7331D41B98E009A8C34 /* JGHScoresPageCell.m in Sources */,
 				201056171D59C92800C90FDE /* JGHLableAndFileTextCell.m in Sources */,
@@ -9272,6 +9327,7 @@
 				F53A056C1D518F32009DD489 /* JGHSetBallBaseCell.m in Sources */,
 				F5E1BB611D6B006100414727 /* ZXPDF417BoundingBox.m in Sources */,
 				20B04A871DA8F1C000475F7A /* JGHEventDetailsViewController.m in Sources */,
+				F5C803051DAB6A95003046FD /* JGDTeamSortViewController.m in Sources */,
 				F5E1BB601D6B006100414727 /* ZXPDF417BarcodeValue.m in Sources */,
 				F5B90E081D1786FE008ACC22 /* JGTeamPayViewController.m in Sources */,
 				65319B7F1C967C960036DCF1 /* HomeHeadView.m in Sources */,

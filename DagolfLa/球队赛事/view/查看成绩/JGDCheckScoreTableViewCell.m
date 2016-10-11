@@ -8,6 +8,14 @@
 
 #import "JGDCheckScoreTableViewCell.h"
 
+@interface JGDCheckScoreTableViewCell ()
+
+@property (nonatomic, strong) UILabel *scoreLB;
+@property (nonatomic, strong) UILabel *leftLB;
+@property (nonatomic, strong) UILabel *rightLB;
+
+@end
+
 @implementation JGDCheckScoreTableViewCell
 
 - (void)awakeFromNib {
@@ -20,10 +28,16 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         
+        self.scoreLB = [[UILabel alloc] initWithFrame:CGRectMake(163 * ProportionAdapter, 14 * ProportionAdapter, 50 * ProportionAdapter, 15 * ProportionAdapter)];
+        self.scoreLB.text = @"5 : 3";
+        self.scoreLB.textAlignment = NSTextAlignmentCenter;
+        self.scoreLB.font = [UIFont systemFontOfSize:18 * ProportionAdapter];
+        self.scoreLB.textColor = [UIColor redColor];
+        [self.contentView addSubview:self.scoreLB];
+        
         UIImageView *picImageV = [[UIImageView alloc] initWithFrame:CGRectMake(10 * ProportionAdapter, 32 * ProportionAdapter, screenWidth - 20 * ProportionAdapter, 35 * ProportionAdapter)];
         picImageV.image = [UIImage imageNamed:@"vs_title"];
         [self.contentView addSubview:picImageV];
-        
         
         
     }

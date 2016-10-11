@@ -11,6 +11,9 @@
 #import "JGDHotMatchTableViewCell.h"
 #import "JGHEventDetailsViewController.h"
 
+#import "JGDCheckScoreViewController.h" // 查看成绩
+#import "JGDSetConfrontViewController.h" // 设置对抗
+
 @interface JGConfrontChannelViewController ()<UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic, strong) UITableView *tableView;
@@ -123,6 +126,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     JGDHotMatchTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"hotMatch"];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
 }
 
@@ -134,8 +138,24 @@
     return 80 * ProportionAdapter;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    JGHEventDetailsViewController *deatilCtrl = [[JGHEventDetailsViewController alloc]init];
-    [self.navigationController pushViewController:deatilCtrl animated:YES];
+    
+    if (indexPath.row == 3) {
+        
+        JGDCheckScoreViewController *checkScoreV = [[JGDCheckScoreViewController alloc] init];
+        [self.navigationController pushViewController:checkScoreV animated:YES];
+        
+    }else if (indexPath.row == 2) {
+        
+        JGDSetConfrontViewController *setConfVC = [[JGDSetConfrontViewController alloc] init];
+        [self.navigationController pushViewController:setConfVC animated:YES];
+        
+    }else{
+        
+        JGHEventDetailsViewController *deatilCtrl = [[JGHEventDetailsViewController alloc]init];
+        [self.navigationController pushViewController:deatilCtrl animated:YES];
+        
+    }
+
 }
 // leftButton
 - (void)myMatchAct:(UIButton *)btn{

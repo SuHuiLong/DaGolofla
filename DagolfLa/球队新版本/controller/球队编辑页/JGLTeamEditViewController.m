@@ -432,7 +432,7 @@ static CGFloat ImageHeight  = 210.0;
                     [dict setObject:PHOTO_DAGOLFLA forKey:@"tag"];
                     [dict setObject:[NSString stringWithFormat:@"%@_background" ,[self.detailDic objectForKey:@"timeKey"]] forKey:@"data"];
                     [dict setObject:TYPE_TEAM_HEAD forKey:@"nType"];
-                    [[JsonHttp jsonHttp] httpRequestImageOrVedio:@"1" withData:dict andDataArray:[NSArray arrayWithObject:UIImageJPEGRepresentation(self.imgProfile.image, 1.0)] failedBlock:^(id errType) {
+                    [[JsonHttp jsonHttp] httpRequestImageOrVedio:@"1" withData:dict andDataArray:[NSArray arrayWithObject:UIImageJPEGRepresentation(self.imgProfile.image, 0.7)] failedBlock:^(id errType) {
                         NSLog(@"errType===%@", errType);
                     } completionBlock:^(id data) {
 
@@ -456,7 +456,7 @@ static CGFloat ImageHeight  = 210.0;
                     [dict setObject:TYPE_TEAM_HEAD forKey:@"nType"];
                     [dict setObject:PHOTO_DAGOLFLA forKey:@"tag"];
                     
-                    [[JsonHttp jsonHttp]httpRequestImageOrVedio:@"1" withData:dict andDataArray:[NSArray arrayWithObject:UIImageJPEGRepresentation((UIImage *)Data, 1.0)] failedBlock:^(id errType) {
+                    [[JsonHttp jsonHttp]httpRequestImageOrVedio:@"1" withData:dict andDataArray:[NSArray arrayWithObject:UIImageJPEGRepresentation((UIImage *)Data, 0.7)] failedBlock:^(id errType) {
                         NSLog(@"errType===%@", errType);
                     } completionBlock:^(id data) {
                         NSString *head = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/team/661.jpg@100w_100h"];
