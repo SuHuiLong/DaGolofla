@@ -39,7 +39,17 @@
         picImageV.image = [UIImage imageNamed:@"vs_title"];
         [self.contentView addSubview:picImageV];
         
+        self.leftLB = [[UILabel alloc] initWithFrame:CGRectMake(5 * ProportionAdapter, 10 * ProportionAdapter, 130 * ProportionAdapter, 20 * ProportionAdapter)];
+        self.leftLB.font = [UIFont systemFontOfSize:12 * ProportionAdapter];
+        self.leftLB.text = @"欲买桂花同载酒";
+        self.leftLB.textColor = [UIColor whiteColor];
+        [picImageV addSubview:self.leftLB];
         
+        self.rightLB = [[UILabel alloc] initWithFrame:CGRectMake(220 * ProportionAdapter, 10 * ProportionAdapter, 130 * ProportionAdapter, 20 * ProportionAdapter)];
+        self.rightLB.font = [UIFont systemFontOfSize:12 * ProportionAdapter];
+        self.rightLB.text = @"终不似，少年游";
+        self.rightLB.textColor = [UIColor whiteColor];
+        [picImageV addSubview:self.rightLB];
     }
     return self;
 }

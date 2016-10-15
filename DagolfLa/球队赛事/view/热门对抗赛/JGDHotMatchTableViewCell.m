@@ -33,8 +33,11 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         
+        // 赛事头像
         self.iconImage = [[UIImageView alloc] initWithFrame:CGRectMake(10 * ProportionAdapter, 6 * ProportionAdapter, 68 * ProportionAdapter, 68 * ProportionAdapter)];
         [self.contentView addSubview:self.iconImage];
+        self.iconImage.layer.cornerRadius = 6 * ProportionAdapter;
+        self.iconImage.clipsToBounds = YES;
         self.iconImage.backgroundColor = [UIColor orangeColor];
         
         //activityStateImage
@@ -68,7 +71,19 @@
         self.sumLB.text = @"参赛：30人";
         self.sumLB.textAlignment = NSTextAlignmentCenter;
         [self.contentView addSubview:self.sumLB];
-    
+        
+        
+        self.dateLB = [[UILabel alloc] initWithFrame:CGRectMake(110 * ProportionAdapter, 35 * ProportionAdapter, 200 * ProportionAdapter, 20 * ProportionAdapter)];
+        self.dateLB.text = @"12月09号";
+        self.dateLB.textColor = [UIColor colorWithHexString:@"#626262"];
+        self.dateLB.font = [UIFont systemFontOfSize:10 * ProportionAdapter];
+        [self.contentView addSubview:self.dateLB];
+        
+        self.adressLB = [[UILabel alloc] initWithFrame:CGRectMake(110 * ProportionAdapter, 55 * ProportionAdapter, 260 * ProportionAdapter, 20 * ProportionAdapter)];
+        self.adressLB.font = [UIFont systemFontOfSize:12 * ProportionAdapter];
+        self.adressLB.textColor = [UIColor blackColor];
+        self.adressLB.text = @"美国加利福尼亚俱乐部（整修中）";
+        [self.contentView addSubview:self.adressLB];
     }
     return self;
 }

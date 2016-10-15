@@ -26,6 +26,7 @@
     self.title = @"球队竞赛";
     
     UIBarButtonItem *rightBar = [[UIBarButtonItem alloc] initWithTitle:@"排名" style:(UIBarButtonItemStyleDone) target:self action:@selector(sortAct)];
+
     rightBar.tintColor = [UIColor whiteColor];
     self.navigationItem.rightBarButtonItem = rightBar;
     
@@ -48,6 +49,8 @@
     
     self.iconView = [[UIImageView alloc] initWithFrame:CGRectMake(10 * ProportionAdapter, 20 * ProportionAdapter, 68 * ProportionAdapter, 68 * ProportionAdapter)];
     self.iconView.backgroundColor = [UIColor orangeColor];
+    self.iconView.layer.cornerRadius = 6 * ProportionAdapter;
+    self.iconView.clipsToBounds = YES;
     [headView addSubview:self.iconView];
     
     self.titleLB = [[UILabel alloc] initWithFrame:CGRectMake(90 * ProportionAdapter, 27 * ProportionAdapter, 280 * ProportionAdapter, 20 * ProportionAdapter)];

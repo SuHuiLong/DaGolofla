@@ -218,6 +218,7 @@ static CGFloat ImageHeight  = 210.0;
     [self.backView addSubview:view];
 //    [self.launchActivityTableView addSubview:self.backView];
 }
+
 #pragma mark -- 申请加入
 - (void)previewBtnClick:(UIButton *)btn{
 

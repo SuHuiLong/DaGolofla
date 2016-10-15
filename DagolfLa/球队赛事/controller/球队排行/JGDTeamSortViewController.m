@@ -23,6 +23,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.title = @"球队排行";
+    
     UITableView *tableView = [[UITableView alloc] initWithFrame:[UIScreen mainScreen].bounds];
     tableView.delegate = self;
     tableView.dataSource = self;
@@ -33,7 +35,7 @@
     [tableView registerClass:[JGDSortTableViewCell class] forCellReuseIdentifier:@"checkScore"];
     tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
-    UIView *headView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 120 * ProportionAdapter)];
+    UIView *headView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 140 * ProportionAdapter)];
     headView.backgroundColor = [UIColor whiteColor];
     tableView.tableHeaderView = headView;
     
@@ -51,7 +53,7 @@
     self.titleLB.font = [UIFont systemFontOfSize:15 * ProportionAdapter];
     [headView addSubview:self.titleLB];
     
-    UIImageView *addessImageV = [[UIImageView alloc] initWithFrame:CGRectMake(90 * ProportionAdapter, 60 * ProportionAdapter, 10 * ProportionAdapter, 15 * ProportionAdapter)];
+    UIImageView *addessImageV = [[UIImageView alloc] initWithFrame:CGRectMake(90 * ProportionAdapter, 62 * ProportionAdapter, 10 * ProportionAdapter, 15 * ProportionAdapter)];
     addessImageV.image = [UIImage imageNamed:@"address"];
     [headView addSubview:addessImageV];
     
@@ -62,10 +64,19 @@
     self.ballLB.font = [UIFont systemFontOfSize:12 * ProportionAdapter];
     [headView addSubview:self.ballLB];
     
-    UIView *lightV2 = [[UIView alloc] initWithFrame:CGRectMake(0, 100 * ProportionAdapter, screenWidth, 10 * ProportionAdapter)];
+    UIView *lightV2 = [[UIView alloc] initWithFrame:CGRectMake(0, 100 * ProportionAdapter, screenWidth, 30 * ProportionAdapter)];
     lightV2.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];
     [headView addSubview:lightV2];
     
+    UIView *greenVie = [[UIView alloc] initWithFrame:CGRectMake(0, 128 * ProportionAdapter, screenWidth, 2 * ProportionAdapter)];
+    greenVie.backgroundColor = [UIColor colorWithHexString:@"#32b14d"];
+    [headView addSubview:greenVie];
+    
+    UILabel *matchLB = [[UILabel alloc] initWithFrame:CGRectMake(0, 100 * ProportionAdapter, screenWidth - 10 * ProportionAdapter, 20 * ProportionAdapter)];
+    matchLB.text = @"队际比杆积分赛";
+    matchLB.textColor = [UIColor colorWithHexString:@"#32b14d"];
+    matchLB.font = [UIFont systemFontOfSize:12 * ProportionAdapter];
+    [headView addSubview:matchLB];
     // Do any additional setup after loading the view.
 }
 
@@ -74,12 +85,26 @@
     
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 30 * ProportionAdapter)];
     view.backgroundColor = [UIColor whiteColor];
-    UILabel *styleLB = [[UILabel alloc] initWithFrame:CGRectMake(10 * ProportionAdapter, 8 * ProportionAdapter, screenWidth - 20 * ProportionAdapter, 10 * ProportionAdapter)];
-    styleLB.text =@"排名                            参赛球队                                              得分";
-    styleLB.textAlignment = NSTextAlignmentCenter;
+    UILabel *styleLB = [[UILabel alloc] initWithFrame:CGRectMake(10 * ProportionAdapter, 3 * ProportionAdapter, 100 * ProportionAdapter, 15 * ProportionAdapter)];
+    styleLB.text =@"排名";
+//    styleLB.textAlignment = NSTextAlignmentCenter;
     styleLB.font = [UIFont systemFontOfSize:12 * ProportionAdapter];
     styleLB.textColor = [UIColor lightGrayColor];
     [view addSubview:styleLB];
+    
+    UILabel *styleLB2 = [[UILabel alloc] initWithFrame:CGRectMake(100 * ProportionAdapter, 3 * ProportionAdapter, 100 * ProportionAdapter, 15 * ProportionAdapter)];
+    styleLB2.text =@"参赛球队";
+    styleLB2.textAlignment = NSTextAlignmentCenter;
+    styleLB2.font = [UIFont systemFontOfSize:12 * ProportionAdapter];
+    styleLB2.textColor = [UIColor lightGrayColor];
+    [view addSubview:styleLB2];
+    
+    UILabel *styleLB3 = [[UILabel alloc] initWithFrame:CGRectMake(290 * ProportionAdapter, 3 * ProportionAdapter, 50 * ProportionAdapter, 15 * ProportionAdapter)];
+    styleLB3.text =@"得分";
+    styleLB3.textAlignment = NSTextAlignmentCenter;
+    styleLB3.font = [UIFont systemFontOfSize:12 * ProportionAdapter];
+    styleLB3.textColor = [UIColor lightGrayColor];
+    [view addSubview:styleLB3];
     
     return view;
 }
@@ -92,10 +117,18 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     JGDSortTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"checkScore"];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     cell.numberLB.text = [NSString stringWithFormat:@"%td", indexPath.row];
+    if (indexPath.row < 3) {
+        cell.numberLB.backgroundColor = [UIColor colorWithHexString:@"#4393d6"];
+        cell.numberLB.textColor = [UIColor whiteColor];
+    }
+
     if (indexPath.row % 2 == 0) {
         cell.backgroundColor = [UIColor colorWithHexString:@"#fafafa"];
     }
+    
+    
     return cell;
 }
 
