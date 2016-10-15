@@ -10,4 +10,6 @@
 
 @interface JGLTeamSignUpSuccViewController : ViewController
 
+
+@property (strong, nonatomic) NSNumber* matchKey;//当前赛事的key
 @end

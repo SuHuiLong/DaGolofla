@@ -89,45 +89,52 @@
 - (void)setImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder
 {
     __weak SDBrowserImageView *imageViewWeak = self;
-
+    
     [self sd_setImageWithURL:url placeholderImage:placeholder options:SDWebImageLowPriority progress:^(NSInteger receivedSize, NSInteger expectedSize) {
         
-        if( _waitingView == nil ){
-            SDWaitingView *waiting = [[SDWaitingView alloc] init];
-            waiting.bounds = CGRectMake(0, 0, 100, 100);
-            waiting.mode = SDWaitingViewProgressMode;
-            _waitingView = waiting;
-            [self addSubview:waiting];
-        }
+        //zi
+        //
         
-        imageViewWeak.progress = (CGFloat)receivedSize / expectedSize;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            // something
+            if( _waitingView == nil ){
+                SDWaitingView *waiting = [[SDWaitingView alloc] init];
+                waiting.bounds = CGRectMake(0, 0, 100, 100);
+                waiting.mode = SDWaitingViewProgressMode;
+                _waitingView = waiting;
+                [self addSubview:waiting];
+            }
+            imageViewWeak.progress = (CGFloat)receivedSize / expectedSize;
+        });
         
     } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-        
-        [imageViewWeak removeWaitingView];
-        
-        if (error) {
-            UILabel *label = [[UILabel alloc] init];
-            label.bounds = CGRectMake(0, 0, 160, 30);
-            label.center = CGPointMake(imageViewWeak.bounds.size.width * 0.5, imageViewWeak.bounds.size.height * 0.5);
-            label.text = @"图片加载失败";
-            label.font = [UIFont systemFontOfSize:16];
-            label.textColor = [UIColor whiteColor];
-            label.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.8];
-            label.layer.cornerRadius = 5;
-            label.clipsToBounds = YES;
-            label.textAlignment = NSTextAlignmentCenter;
-            [imageViewWeak addSubview:label];
-        }else{
-        
-            if( _scrollImageView != nil ){
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [imageViewWeak removeWaitingView];
+            if (error) {
                 
-                _scrollImageView.image  =  image;
+                UILabel *label = [[UILabel alloc] init];
+                label.bounds = CGRectMake(0, 0, 160, 30);
+                label.center = CGPointMake(imageViewWeak.bounds.size.width * 0.5, imageViewWeak.bounds.size.height * 0.5);
+                label.text = @"图片加载失败";
+                label.font = [UIFont systemFontOfSize:16];
+                label.textColor = [UIColor whiteColor];
+                label.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.8];
+                label.layer.cornerRadius = 5;
+                label.clipsToBounds = YES;
+                label.textAlignment = NSTextAlignmentCenter;
+                [imageViewWeak addSubview:label];
+            }else{
                 
-                [self adjustFrame];
+                if( _scrollImageView != nil ){
+                    
+                    _scrollImageView.image  =  image;
+                    
+                    [self adjustFrame];
+                }
             }
-        }
-   
+        });
+        
+        
     }];
 }
 

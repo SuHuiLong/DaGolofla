@@ -6,10 +6,10 @@
 //  Copyright © 2016年 bhxx. All rights reserved.
 //
 
-#import "JGLTeamSignUpMemViewController.h"
+#import "JGLSignUpMemberCeViewController.h"
 #import "JGLTeamCounterMemberTableViewCell.h"
 #import "JGLCompeteMemberModel.h"
-@interface JGLTeamSignUpMemViewController ()<UITableViewDelegate,UITableViewDataSource>
+@interface JGLSignUpMemberCeViewController ()<UITableViewDelegate,UITableViewDataSource>
 {
     UITableView* _tableView;
     NSMutableArray* _dataArray;
@@ -18,7 +18,7 @@
 }
 @end
 
-@implementation JGLTeamSignUpMemViewController
+@implementation JGLSignUpMemberCeViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -37,9 +37,9 @@
     [_tableView registerClass:[JGLTeamCounterMemberTableViewCell class] forCellReuseIdentifier:@"JGLTeamCounterMemberTableViewCell"];
     
     _tableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
-    _tableView.footer=[MJDIYBackFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRereshing)];
     [_tableView.header beginRefreshing];
 }
+
 #pragma mark - 下载数据
 - (void)downLoadData:(int)page isReshing:(BOOL)isReshing{
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
@@ -50,8 +50,6 @@
     [[JsonHttp jsonHttp]httpRequest:@"match/getMatchSignUpList" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
         if (isReshing) {
             [_tableView.header endRefreshing];
-        }else {
-            [_tableView.footer endRefreshing];
         }
     } completionBlock:^(id data) {
         if ([[data objectForKey:@"packSuccess"] boolValue]) {
@@ -62,7 +60,7 @@
                 [_dataModeArray removeAllObjects];
             }
             //数据解析
-            _dataArray = [data objectForKey:@"list"];
+            _dataArray = [[data objectForKey:@"list"] mutableCopy];
             if (_dataArray.count != 0) {
                 for (int i = 0; i < _dataArray.count; i++) {
                     NSMutableArray * arr = [[NSMutableArray alloc]init];
@@ -85,8 +83,6 @@
         [_tableView reloadData];
         if (isReshing) {
             [_tableView.header endRefreshing];
-        }else {
-            [_tableView.footer endRefreshing];
         }
     }];
 }
@@ -98,12 +94,6 @@
     [self downLoadData:_page isReshing:YES];
 }
 
-- (void)footRereshing
-{
-    [self downLoadData:_page isReshing:NO];
-}
-
-
 #pragma mark -- tableview代理方法
 //分区数
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -111,10 +101,11 @@
     return _dataModeArray.count;
 }
 
+
 //重设分区头的视图
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 44*ScreenWidth/375)];
+    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 65*ScreenWidth/375)];
     headerView.backgroundColor = [UIColor whiteColor];
     
     UIButton* btn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -126,32 +117,71 @@
     backView.backgroundColor = [UITool colorWithHexString:@"eeeeee" alpha:1];
     [headerView addSubview:backView];
     
-    UILabel* labelTitle = [[UILabel alloc]initWithFrame:CGRectMake(20*ProportionAdapter, 10*ProportionAdapter, 250*ProportionAdapter, 40*ProportionAdapter)];
+    UILabel* labelTitle = [[UILabel alloc]initWithFrame:CGRectMake(20*ProportionAdapter, 10*ProportionAdapter, 250*ProportionAdapter, 30*ProportionAdapter)];
     labelTitle.textColor = [UITool colorWithHexString:@"eb6100" alpha:1];
     labelTitle.font = [UIFont systemFontOfSize:15*ProportionAdapter];
-    if (![Helper isBlankString:[_dataArray[section] objectForKey:@"teamName"]]) {
-        labelTitle.text = [_dataArray[section] objectForKey:@"teamName"];
+    if (section < _dataArray.count) {
+        if (![Helper isBlankString:[_dataArray[section] objectForKey:@"teamName"]]) {
+            labelTitle.text = [_dataArray[section] objectForKey:@"teamName"];
+        }
     }
+    
     [headerView addSubview:labelTitle];
     
-    UILabel* labelNum = [[UILabel alloc]initWithFrame:CGRectMake(270*ProportionAdapter, 10*ProportionAdapter, 100*ProportionAdapter, 40*ProportionAdapter)];
+    UILabel* labelNum = [[UILabel alloc]initWithFrame:CGRectMake(270*ProportionAdapter, 10*ProportionAdapter, 100*ProportionAdapter, 30*ProportionAdapter)];
     labelNum.textColor = [UITool colorWithHexString:@"a0a0a0" alpha:1];
     labelNum.font = [UIFont systemFontOfSize:15*ProportionAdapter];
-    labelNum.text = [NSString stringWithFormat:@"（%@）人",[_dataArray[section] objectForKey:@"sumCount"]];
+    if (section < _dataArray.count){
+        labelNum.text = [NSString stringWithFormat:@"（%@）人",[_dataArray[section] objectForKey:@"sumCount"]];
+    }
+    
     [headerView addSubview:labelNum];
     
-    UIImageView* imgv = [[UIImageView alloc]initWithFrame:CGRectMake(screenWidth - 30*ProportionAdapter, 27*ProportionAdapter, 20*ProportionAdapter, 16*ProportionAdapter)];
+    UILabel* labelPeople = [[UILabel alloc]initWithFrame:CGRectMake(20*ProportionAdapter, 40*ProportionAdapter, 140*ProportionAdapter, 25*ProportionAdapter)];
+    labelPeople.textColor = [UITool colorWithHexString:@"313131" alpha:1];
+    labelPeople.font = [UIFont systemFontOfSize:15*ProportionAdapter];
+    labelPeople.text = @"报名人：张晓晓";
+    if (section < _dataArray.count) {
+        if (![Helper isBlankString:[_dataArray[section] objectForKey:@"userName"]]) {
+            labelPeople.text = [_dataArray[section] objectForKey:@"userName"];
+        }
+    }
+    
+    [headerView addSubview:labelPeople];
+    
+    UIImageView* imgvPhone = [[UIImageView alloc]initWithFrame:CGRectMake(150*ProportionAdapter, 46.5*ProportionAdapter, 12*ProportionAdapter, 12*ProportionAdapter)];
+    imgvPhone.image = [UIImage imageNamed:@"call-in"];
+    [headerView addSubview:imgvPhone];
+    
+    UIButton* btnPhone = [UIButton buttonWithType:UIButtonTypeCustom];
+    if (![Helper isBlankString:[_dataArray[section] objectForKey:@"userMobile"]]) {
+        [btnPhone setTitle:[_dataArray[section] objectForKey:@"userMobile"] forState:UIControlStateNormal];
+    }
+    btnPhone.titleLabel.font = [UIFont systemFontOfSize:13*ProportionAdapter];
+    [btnPhone setTitleColor:[UITool colorWithHexString:@"32b14d" alpha:1] forState:UIControlStateNormal];
+    btnPhone.frame = CGRectMake(160*ProportionAdapter, 40*ProportionAdapter, 100*ProportionAdapter, 25*ProportionAdapter);
+    [btnPhone addTarget:self action:@selector(callPhone) forControlEvents:UIControlEventTouchUpInside];
+    [headerView addSubview:btnPhone];
+    btnPhone.tag = section;
+    
+    UIImageView* imgv = [[UIImageView alloc]initWithFrame:CGRectMake(screenWidth - 30*ProportionAdapter, 28*ProportionAdapter, 16*ProportionAdapter, 13*ProportionAdapter)];
     imgv.image = [UIImage imageNamed:@")-1"];
     [headerView addSubview:imgv];
     return headerView;
 }
+#pragma mark -- 打电话
+-(void)callPhone
+{
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"tel://8008808888"]];
+}
+
 #pragma mark -  表开合
 - (void)headerButtonClick:(id)sender
 {
     UIButton *button = (UIButton *)sender;
     //根据button 获取区号
     NSInteger section = button.tag;
-    _isOpen[section] = !_isOpen[section];
+    _isClickBool[section] = !_isClickBool[section];
     //刷新表  表的相关代理方法会重新执行
     NSIndexSet *indexSet = [NSIndexSet indexSetWithIndex:section];
     [_tableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationNone];
@@ -161,7 +191,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     //如果当前区为打开状态
-    if (_isOpen[section])
+    if (_isClickBool[section])
     {
         return 0;
     }
@@ -170,7 +200,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 62 * screenWidth / 375;
+    return 65 * screenWidth / 375;
 }
 
 //显示行
@@ -189,13 +219,13 @@
 //返回各个分区的头高度
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    return 44*ScreenWidth/375;
+    return 65*ScreenWidth/375;
 }
 
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-
+    
 }
 
 
@@ -209,13 +239,13 @@
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

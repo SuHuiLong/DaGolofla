@@ -47,4 +47,8 @@
 
 + (NSString *)getHoleNameAndPolesBallKey:(NSInteger)ballKey andArea:(NSString *)area;
 
+
++ (NSString *)getTeamCompeteSignUpListWithMatchKey:(NSInteger)matchKey userKey:(NSInteger)uerKey;
+
+
 @end

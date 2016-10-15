@@ -16,5 +16,6 @@
 
 @property (strong, nonatomic) UILabel* rightLabel;
 
+@property (strong, nonatomic) UIImageView* lineImgv;
 
 @end

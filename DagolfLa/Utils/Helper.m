@@ -127,23 +127,23 @@
     {
         if (isBack == 0) {
             if ([iconType isEqualToString:@"user"] == 1) {
-                imageStr = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/%@/head/%td.jpg@200w_200h",iconType,timeKey];
+                imageStr = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/%@/head/%td.jpg@200w_200h_2o",iconType,timeKey];
             }
             else
             {
-                imageStr = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/%@/%td.jpg@200w_200h",iconType,timeKey];
+                imageStr = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/%@/%td.jpg@200w_200h_2o",iconType,timeKey];
             }
             
         }
         else
         {
-            imageStr = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/%@/%td_background.jpg@400w_150h",iconType,timeKey];
+            imageStr = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/%@/%td_background.jpg@400w_150h_2o",iconType,timeKey];
         }
     }
     
     NSURL *imageUrl = [NSURL URLWithString:imageStr];
     return imageUrl;
-
+    
 }
 
 

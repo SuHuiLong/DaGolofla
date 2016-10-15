@@ -17,6 +17,8 @@
 
 @property (nonatomic, strong) NSMutableArray *matchArray; // 参赛球队列表
 
+@property (nonatomic, strong) NSMutableDictionary *currentDic;
+
 @end
 
 @implementation JGDSetConfrontViewController

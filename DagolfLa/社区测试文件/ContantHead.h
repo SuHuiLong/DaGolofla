@@ -144,4 +144,6 @@ typedef NS_ENUM(NSInteger, GestureType) {
 #import "EnterViewController.h"
 #import "FCUUID.h"
 
+#import "UITool.h"
+
 #endif
