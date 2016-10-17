@@ -34,7 +34,7 @@
 
 
 #import "JGGuestViewController.h" // 嘉宾
-
+#import "JGLDivideGroupsViewController.h"
 #import "JGConfrontChannelViewController.h"
 
 @interface ShouyeViewController ()<UIApplicationDelegate,CLLocationManagerDelegate>
@@ -373,7 +373,7 @@
                 NSLog(@"shangchen");
 //                UseMallViewController
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
-                UseMallViewController* userVc = [[UseMallViewController alloc]init];
+                JGLDivideGroupsViewController* userVc = [[JGLDivideGroupsViewController alloc]init];
                 [self.navigationController pushViewController:userVc animated:YES];
             }
                 break;

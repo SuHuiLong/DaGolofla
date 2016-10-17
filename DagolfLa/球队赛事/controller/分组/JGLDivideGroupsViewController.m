@@ -15,6 +15,9 @@
     UILabel* _labelTitle, *_labelDetile;//分区头
     UIButton* _btnSetLeft,* _btnSegRight;//分区头
     BOOL _isSegLeft,_isSegRight;//判断segment是否选中
+    
+    NSMutableArray* _dataArray;//请求数据
+    int _page;
 }
 @end
 
@@ -23,6 +26,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"分组";
+    _page = 0;
+    _dataArray = [[NSMutableArray alloc]init];
     self.view.backgroundColor = [UITool colorWithHexString:BG_color alpha:1];
     _isSegLeft = NO;
     _isSegRight = NO;
@@ -39,7 +44,54 @@
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [_tableView registerClass:[JGLGroupClubTitleTableViewCell class] forCellReuseIdentifier:@"JGLGroupClubTitleTableViewCell"];
     [_tableView registerClass:[JGLGroupPeoTableViewCell class] forCellReuseIdentifier:@"JGLGroupPeoTableViewCell"];
+    
+    _tableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
+    [_tableView.header beginRefreshing];
 }
+
+#pragma mark - 下载数据
+- (void)downLoadData:(int)page isReshing:(BOOL)isReshing{
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    [dict setObject:DEFAULF_USERID forKey:@"userKey"];
+    [dict setObject:@122 forKey:@"matchKey"];
+    NSString *strMD = [JGReturnMD5Str getTeamCompeteSignUpListWithMatchKey:122 userKey:[DEFAULF_USERID integerValue]];
+    [dict setObject:strMD forKey:@"md5"];
+    [[JsonHttp jsonHttp]httpRequest:@"match/getMatchGroupList" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
+        if (isReshing) {
+            [_tableView.header endRefreshing];
+        }
+    } completionBlock:^(id data) {
+        if ([[data objectForKey:@"packSuccess"] boolValue]) {
+            if (page == 0)
+            {
+                //清除数组数据
+                [_dataArray removeAllObjects];
+            }
+            //数据解析
+            for (NSDictionary *dicList in [data objectForKey:@"teamSignUpList"])
+            {
+//                JGHPlayersModel *model = [[JGHPlayersModel alloc] init];
+//                [model setValuesForKeysWithDictionary:dicList];
+//                [_dataArray addObject:model];
+            }
+            _page++;
+        }else {
+           [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+        }
+        [_tableView reloadData];
+        if (isReshing) {
+            [_tableView.header endRefreshing];
+        }
+    }];
+}
+
+#pragma mark 开始进入刷新状态
+- (void)headerRereshing
+{
+    _page = 0;
+    [self downLoadData:_page isReshing:YES];
+}
+
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     
@@ -117,10 +169,7 @@
         
         return cell;
     }
-    
 }
-
-
 
 //返回各个分区的头高度
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
@@ -128,13 +177,10 @@
     return 85*ScreenWidth/375;
 }
 
-
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
 }
-
-
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
