@@ -13,11 +13,20 @@
 
 @property (nonatomic, strong) UIView *pickerBackView;
 
-@property (nonatomic, strong) NSString *testString;
+@property (nonatomic, strong) NSString *currentName;
 
 @property (nonatomic, strong) NSMutableArray *matchArray; // 参赛球队列表
 
+@property (nonatomic, strong) UITableView *tableView;
+
 @property (nonatomic, strong) NSMutableDictionary *currentDic;
+
+@property (nonatomic, strong) NSIndexPath *currentIndex;
+
+@property (nonatomic, strong) UIButton *currentBtn;
+
+@property (nonatomic, strong) NSMutableArray *sectionArray;
+
 
 @end
 
@@ -34,19 +43,19 @@
     self.navigationItem.rightBarButtonItem = rightBar;
     
     
-    UITableView *tableView = [[UITableView alloc] initWithFrame:[UIScreen mainScreen].bounds];
-    tableView.delegate = self;
-    tableView.dataSource = self;
-    tableView.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];
+    self.tableView = [[UITableView alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
+    self.tableView.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];
     
-    [self.view addSubview:tableView];
+    [self.view addSubview:self.tableView];
     
-    [tableView registerClass:[JGDSetConfrontTableViewCell class] forCellReuseIdentifier:@"setConfront"];
-    tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    [self.tableView registerClass:[JGDSetConfrontTableViewCell class] forCellReuseIdentifier:@"setConfront"];
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     UIView *headBackV = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 70 * ProportionAdapter)];
     headBackV.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];
-    tableView.tableHeaderView = headBackV;
+    self.tableView.tableHeaderView = headBackV;
     
     UILabel *setLB = [[UILabel alloc] initWithFrame:CGRectMake(10 * ProportionAdapter, 10 * ProportionAdapter, 300 * ProportionAdapter, 25 * ProportionAdapter)];
     setLB.text = @"请先设置球队的对抗关系！";
@@ -149,18 +158,40 @@
     [_button2 setTitleColor:[UIColor blackColor] forState:(UIControlStateNormal)];
     [_button2 addTarget:self action:@selector(buttonShowClickSec:) forControlEvents:UIControlEventTouchUpInside];
     [self.pickerBackView addSubview:_button2];
-}
-
-
-// 完成
-- (void)compAct{
     
+    self.currentName = [self.matchArray[0] objectForKey:@"name"];
 }
 
 
-// 确认
+#pragma mark -- 完成
+
+- (void)compAct{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+
+#pragma mark -- 确认
+
 - (void)buttonShowClickSec:(UIButton *)btn{
     self.pickerBackView.hidden = YES;
+    [self.currentBtn setTitle:self.currentName forState:(UIControlStateNormal)];
+    
+    JGDSetConfrontTableViewCell *cell = [self.tableView cellForRowAtIndexPath:self.currentIndex];
+    
+    
+    if (btn.tag == 201) {
+        UIButton *anotherBtn = [cell viewWithTag:202];
+        if (![anotherBtn.titleLabel.text isEqualToString:@"+ 打高尔夫啦俱乐部"]) {
+            [self.tableView insertRowsAtIndexPaths:@[self.currentIndex] withRowAnimation:YES];
+        }
+        
+    }else{
+        UIButton *anotherBtn = [cell viewWithTag:201];
+        if (![anotherBtn.titleLabel.text isEqualToString:@"+ 打高尔夫啦俱乐部"]) {
+            [self.tableView insertRowsAtIndexPaths:@[self.currentIndex] withRowAnimation:YES];
+        }
+    }
+    
 }
 
 // 取消
@@ -187,14 +218,19 @@
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
-    self.testString = [self.matchArray[row] objectForKey:@"name"];
+    self.currentName = [self.matchArray[row] objectForKey:@"name"];
 }
 
 
 #pragma mark - tableView
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    JGDSetConfrontTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"setConfront"];
+
+    JGDSetConfrontTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:[NSString stringWithFormat:@"%td%td", indexPath.section, indexPath.row]];
+    if (!cell) {
+        cell = [[JGDSetConfrontTableViewCell alloc] initWithStyle:(UITableViewCellStyleValue1) reuseIdentifier:[NSString stringWithFormat:@"%td%td", indexPath.section, indexPath.row]];
+    }
+
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     [cell.leftButton addTarget:self action:@selector(leftAct:) forControlEvents:(UIControlEventTouchUpInside)];
     [cell.rightButton addTarget:self action:@selector(rightAct:) forControlEvents:(UIControlEventTouchUpInside)];
@@ -209,6 +245,15 @@
     }else{
         [self pickerViewSet];
     }
+    
+    JGDSetConfrontTableViewCell *cell = (JGDSetConfrontTableViewCell *)[[[btn superview] superview]superview];
+    NSIndexPath *index = [self.tableView indexPathForCell:cell];
+    NSLog(@"row = %td, section = %td", index.row, index.section);
+    
+    self.currentBtn = btn;
+    self.currentIndex = index;
+    
+    
 }
 
 - (void)rightAct:(UIButton *)btn{
@@ -217,11 +262,18 @@
     }else{
         [self pickerViewSet];
     }
+    JGDSetConfrontTableViewCell *cell = (JGDSetConfrontTableViewCell *)[[[btn superview] superview]superview];
+    NSIndexPath *index = [self.tableView indexPathForCell:cell];
+    NSLog(@"row = %td, section = %td", index.row, index.section);
+    
+    self.currentBtn = btn;
+    self.currentIndex = index;
 }
 
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 2;
+    
+    return [self.sectionArray[section] integerValue];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -229,7 +281,7 @@
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 3;
+    return 10;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
@@ -260,6 +312,14 @@
         _matchArray = [[NSMutableArray alloc] init];
     }
     return _matchArray;
+}
+
+- (NSMutableArray *)sectionArray{
+    
+    if (!_sectionArray) {
+        _sectionArray = [[NSMutableArray alloc] initWithObjects:@1,@1,@1,@1,@1,@1,@1,@1,@1,@1, nil];
+    }
+    return _sectionArray;
 }
 
 - (void)didReceiveMemoryWarning {

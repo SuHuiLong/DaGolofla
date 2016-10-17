@@ -14,6 +14,11 @@
 #import "JGDCheckScoreViewController.h" // 查看成绩
 #import "JGDSetConfrontViewController.h" // 设置对抗
 
+#import "MJRefresh.h"
+#import "MJDIYBackFooter.h"
+#import "MJDIYHeader.h"
+
+
 @interface JGConfrontChannelViewController ()<UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic, strong) UITableView *tableView;
@@ -25,6 +30,10 @@
 @property (nonatomic, strong) UIButton *myMatchBtn;
 @property (nonatomic, strong) UIButton *hotMatchBtn;
 @property (nonatomic, strong) UIView *sectionHeadView;
+
+@property (assign, nonatomic) NSInteger page;
+
+@property (nonatomic, strong) NSMutableArray *dataArray;
 
 @end
 
@@ -45,6 +54,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    _page = 0;
+
     // 返回按钮
     UIButton *backBtn = [UIButton buttonWithType:(UIButtonTypeCustom)];
     backBtn.frame = CGRectMake(0 , 20, 30 * screenWidth / 320, 30 * screenWidth / 320);
@@ -81,8 +92,79 @@
     
     self.tableView.tableHeaderView = self.headBackView;
     
+    self.tableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
+    self.tableView.footer=[MJDIYBackFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRereshing)];
+    [self.tableView.header beginRefreshing];
+    
     // Do any additional setup after loading the view.
 }
+
+
+#pragma mark ---刷新
+// 刷新
+- (void)headRereshing
+{
+    [self downLoadData:_page isReshing:YES];
+}
+
+- (void)footRereshing
+{
+    [self downLoadData:_page isReshing:NO];
+}
+
+#pragma mark - 下载数据
+- (void)downLoadData:(NSInteger)page isReshing:(BOOL)isReshing{
+    
+    if ([self.dataArray count] != 0) {
+        NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+        [dict setObject:DEFAULF_USERID forKey:@"userKey"];
+        [dict setObject:[NSNumber numberWithInteger:page] forKey:@"offset"];
+        [[JsonHttp jsonHttp]httpRequest:@"team/getMyTeamActivityAll" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
+            if (isReshing) {
+                [_tableView.header endRefreshing];
+            }else {
+                [_tableView.footer endRefreshing];
+            }
+        } completionBlock:^(id data) {
+            if ([data objectForKey:@"teamList"]) {
+                if (page == 0)
+                {
+                    //清除数组数据
+                    [self.dataArray removeAllObjects];
+                }
+            
+                for (NSDictionary *dicModel in data[@"activityList"]) {
+//                    JGTeamAcitivtyModel *model = [[JGTeamAcitivtyModel alloc] init];
+//                    [model setValuesForKeysWithDictionary:dicModel];
+//                    [self.myActivityArray addObject:model];
+                }
+                [self.tableView reloadData];
+                
+                //            [self.myActivityArray addObjectsFromArray:[data objectForKey:@"teamList"]];
+                
+                _page++;
+                [_tableView reloadData];
+            }else {
+                //            [Helper alertViewWithTitle:@"没有更多球队" withBlock:^(UIAlertController *alertView) {
+                //                [self presentViewController:alertView animated:YES completion:nil];
+                //            }];
+            }
+            [_tableView reloadData];
+            if (isReshing) {
+                [_tableView.header endRefreshing];
+            }else {
+                [_tableView.footer endRefreshing];
+            }
+        }];
+    }else{
+        if (isReshing) {
+            [_tableView.header endRefreshing];
+        }else {
+            [_tableView.footer endRefreshing];
+        }
+    }
+}
+
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     return 60 * ProportionAdapter;
@@ -229,6 +311,13 @@
     [self.navigationController pushViewController:publishCtrl animated:YES];
 }
 
+
+- (NSMutableArray *)dataArray{
+    if (!_dataArray) {
+        _dataArray = [[NSMutableArray alloc] init];
+    }
+    return _dataArray;
+}
 
 - (UIView *)rightView{
     if (!_rightView) {
