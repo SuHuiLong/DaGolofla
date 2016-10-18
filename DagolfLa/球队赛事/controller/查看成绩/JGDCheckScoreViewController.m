@@ -16,6 +16,10 @@
 @property (nonatomic, strong) UILabel *titleLB;
 @property (nonatomic, strong) UILabel *ballLB;
 
+@property (nonatomic, strong) NSArray *dataArray;
+
+@property (nonatomic, strong) UITableView *tableView;
+
 @end
 
 @implementation JGDCheckScoreViewController
@@ -30,18 +34,18 @@
     rightBar.tintColor = [UIColor whiteColor];
     self.navigationItem.rightBarButtonItem = rightBar;
     
-    UITableView *tableView = [[UITableView alloc] initWithFrame:[UIScreen mainScreen].bounds];
-    tableView.delegate = self;
-    tableView.dataSource = self;
-    [tableView registerClass:[JGDCheckScoreTableViewCell class] forCellReuseIdentifier:@"checkScore"];
-    tableView.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];
+    self.tableView = [[UITableView alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
+    [self.tableView registerClass:[JGDCheckScoreTableViewCell class] forCellReuseIdentifier:@"checkScore"];
+    self.tableView.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];
     
-    [self.view addSubview:tableView];
+    [self.view addSubview:self.tableView];
     
     
     UIView *headView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 100 * ProportionAdapter)];
     headView.backgroundColor = [UIColor whiteColor];
-    tableView.tableHeaderView = headView;
+    self.tableView.tableHeaderView = headView;
     
     UIView *lightView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 10 * ProportionAdapter)];
     lightView.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];
@@ -70,8 +74,33 @@
     self.ballLB.font = [UIFont systemFontOfSize:12 * ProportionAdapter];
     [headView addSubview:self.ballLB];
     
-
+    [self matchData];
     // Do any additional setup after loading the view.
+}
+
+
+- (void)matchData{
+    
+    NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
+    [dic setObject:@244 forKey:@"userKey"];
+    [dic setObject:@122 forKey:@"matchKey"];
+    [dic setObject:[Helper md5HexDigest:@"matchKey=122&userKey=244dagolfla.com"] forKey:@"md5"];
+    
+    [[JsonHttp jsonHttp] httpRequest:@"match/getMatchCombatList" JsonKey:nil withData:dic requestMethod:@"GET" failedBlock:^(id errType) {
+        [[ShowHUD showHUD]showToastWithText:[NSString stringWithFormat:@"%@",errType] FromView:self.view];
+    } completionBlock:^(id data) {
+        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+            if ([data objectForKey:@"list"]) {
+                self.dataArray = [[data objectForKey:@"list"] mutableCopy];
+                [self.tableView reloadData];
+            }
+            
+        }else{
+            if ([data objectForKey:@"packResultMsg"]) {
+                [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+            }
+        }
+    }];
 }
 
 - (void)sortAct{
@@ -112,6 +141,9 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     JGDCheckScoreTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"checkScore"];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    NSDictionary *dic = [self.dataArray[indexPath.section] objectForKey:@"combatList"][indexPath.row];
+    cell.leftLB.text = [dic objectForKey:@"teamName1"];
+    cell.rightLB.text = [dic objectForKey:@"teamName2"];
     return cell;
 }
 
@@ -120,14 +152,19 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 5;
+    return [[self.dataArray[section] objectForKey:@"combatList"] count];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 5;
+    return [self.dataArray count];
 }
 
-
+- (NSArray *)dataArray{
+    if (!_dataArray) {
+        _dataArray = [[NSArray alloc] init];
+    }
+    return _dataArray;
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

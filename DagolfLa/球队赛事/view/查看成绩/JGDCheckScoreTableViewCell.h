@@ -10,4 +10,7 @@
 
 @interface JGDCheckScoreTableViewCell : UITableViewCell
 
+@property (nonatomic, strong) UILabel *leftLB;
+@property (nonatomic, strong) UILabel *rightLB;
+
 @end

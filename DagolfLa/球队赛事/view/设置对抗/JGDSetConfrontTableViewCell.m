@@ -29,14 +29,14 @@
         picImageV.userInteractionEnabled = YES;
         
         self.leftButton = [[UIButton alloc] initWithFrame:CGRectMake(5 * ProportionAdapter, 10 * ProportionAdapter, 130 * ProportionAdapter, 20 * ProportionAdapter)];
-        [self.leftButton setTitle:@"+ 打高尔夫啦俱乐部" forState:(UIControlStateNormal)];
+        [self.leftButton setTitle:@"+ 添加球队" forState:(UIControlStateNormal)];
 //        [self.leftButton setTitleColor:[UIColor whiteColor] forState:(UIControlStateNormal)];
         self.leftButton.titleLabel.font = [UIFont systemFontOfSize:12 * ProportionAdapter];
         self.leftButton.tag = 201;
         [picImageV addSubview:self.leftButton];
         
         self.rightButton = [[UIButton alloc] initWithFrame:CGRectMake(220 * ProportionAdapter, 10 * ProportionAdapter, 130 * ProportionAdapter, 20 * ProportionAdapter)];
-        [self.rightButton setTitle:@"+ 打高尔夫啦俱乐部" forState:(UIControlStateNormal)];
+        [self.rightButton setTitle:@"+ 添加球队" forState:(UIControlStateNormal)];
         //        [self.leftButton setTitleColor:[UIColor whiteColor] forState:(UIControlStateNormal)];
         self.rightButton.titleLabel.font = [UIFont systemFontOfSize:12 * ProportionAdapter];
         self.rightButton.tag = 202;

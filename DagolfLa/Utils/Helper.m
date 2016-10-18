@@ -609,6 +609,13 @@
     return chinese;
 }
 
+// 赛事头像
++ (NSURL *)setMatchImageIconUrl:(NSInteger)timeKey {
+    //        NSString *imageStr = [NSString stringWithFormat:@"http://192.168.2.18:8080/%@",downloadImageUrl];
+    NSString *imageStr = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/match/%td.jpg@100w_100h",timeKey];
+    NSURL *imageUrl = [NSURL URLWithString:imageStr];
+    return imageUrl;
+}
 
 
 @end

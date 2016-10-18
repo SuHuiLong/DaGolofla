@@ -752,6 +752,7 @@
 		F51E5EFD1D8130AA00AE254E /* JGDPlayerNotActScoreCardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F51E5EFC1D8130AA00AE254E /* JGDPlayerNotActScoreCardViewController.m */; };
 		F52A49E51C969F79002A4973 /* ScreenTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F52A49E41C969F79002A4973 /* ScreenTableViewCell.m */; };
 		F5321AEA1CE449C400CAE1EF /* JGCreateTeamView.m in Sources */ = {isa = PBXBuildFile; fileRef = F5321AE91CE449C400CAE1EF /* JGCreateTeamView.m */; };
+		F538E3A81DB6160300FF9E38 /* JGDConfrontChannelModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F538E3A71DB6160300FF9E38 /* JGDConfrontChannelModel.m */; };
 		F53A05361D5079E0009DD489 /* JGTeamHIsScoreTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F53A05351D5079E0009DD489 /* JGTeamHIsScoreTableViewCell.m */; };
 		F53A055B1D518F32009DD489 /* JGHCenterBtnTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F53A05391D518F32009DD489 /* JGHCenterBtnTableViewCell.m */; };
 		F53A055C1D518F32009DD489 /* JGHCenterBtnTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F53A053A1D518F32009DD489 /* JGHCenterBtnTableViewCell.xib */; };
@@ -2555,6 +2556,8 @@
 		F52A49E41C969F79002A4973 /* ScreenTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScreenTableViewCell.m; sourceTree = "<group>"; };
 		F5321AE81CE449C400CAE1EF /* JGCreateTeamView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGCreateTeamView.h; sourceTree = "<group>"; };
 		F5321AE91CE449C400CAE1EF /* JGCreateTeamView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGCreateTeamView.m; sourceTree = "<group>"; };
+		F538E3A61DB6160300FF9E38 /* JGDConfrontChannelModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGDConfrontChannelModel.h; sourceTree = "<group>"; };
+		F538E3A71DB6160300FF9E38 /* JGDConfrontChannelModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGDConfrontChannelModel.m; sourceTree = "<group>"; };
 		F53A05341D5079E0009DD489 /* JGTeamHIsScoreTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGTeamHIsScoreTableViewCell.h; sourceTree = "<group>"; };
 		F53A05351D5079E0009DD489 /* JGTeamHIsScoreTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGTeamHIsScoreTableViewCell.m; sourceTree = "<group>"; };
 		F53A05381D518F32009DD489 /* JGHCenterBtnTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHCenterBtnTableViewCell.h; sourceTree = "<group>"; };
@@ -3532,6 +3535,7 @@
 		20203B101D9B5EFF009A75F3 /* model */ = {
 			isa = PBXGroup;
 			children = (
+				F538E3A51DB6160300FF9E38 /* 赛事对抗频道 */,
 				82434E371DB499C0006DE8DD /* 分组 */,
 				F54E16191DB23B4D0018B3AB /* 对抗成员列表 */,
 				20203B191D9B5FE6009A75F3 /* 发布赛事 */,
@@ -6875,6 +6879,15 @@
 			path = "创建球队";
 			sourceTree = "<group>";
 		};
+		F538E3A51DB6160300FF9E38 /* 赛事对抗频道 */ = {
+			isa = PBXGroup;
+			children = (
+				F538E3A61DB6160300FF9E38 /* JGDConfrontChannelModel.h */,
+				F538E3A71DB6160300FF9E38 /* JGDConfrontChannelModel.m */,
+			);
+			path = "赛事对抗频道";
+			sourceTree = "<group>";
+		};
 		F53A05331D5079BA009DD489 /* 球队历史记分卡 */ = {
 			isa = PBXGroup;
 			children = (
@@ -8802,6 +8815,7 @@
 				36BFFD341BC76C8D005B3CE2 /* ViewController.m in Sources */,
 				20513BDA1CF7050A003233FB /* RSADataSigner.m in Sources */,
 				36BF004D1BC77213005B3CE2 /* CommunityModel.m in Sources */,
+				F538E3A81DB6160300FF9E38 /* JGDConfrontChannelModel.m in Sources */,
 				20591CA61D23C2A4003271EC /* JGHSelectBlanKCardView.m in Sources */,
 				829960D41D23727C00E121A8 /* JGLBankModel.m in Sources */,
 				20CA137F1CE574A400DA15B9 /* JGHConcentTextViewController.m in Sources */,

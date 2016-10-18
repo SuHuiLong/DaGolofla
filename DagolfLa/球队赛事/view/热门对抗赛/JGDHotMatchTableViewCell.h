@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+#import "JGDConfrontChannelModel.h"
+
 @interface JGDHotMatchTableViewCell : UITableViewCell
+
+@property (nonatomic, strong) JGDConfrontChannelModel *model;
 
 @end

@@ -18,6 +18,7 @@
 @property (nonatomic, strong) UILabel *adressLB;
 
 @property (nonatomic, strong) UILabel *sumLB;
+@property (nonatomic, strong) UILabel *kindLB;
 
 @end
 
@@ -48,7 +49,6 @@
         self.titleLB = [[UILabel alloc] initWithFrame:CGRectMake(88 * ProportionAdapter, 8 * ProportionAdapter, 200 * ProportionAdapter, 25 * ProportionAdapter)];
         [self.contentView addSubview:self.titleLB];
         self.titleLB.font = [UIFont systemFontOfSize:15 * ProportionAdapter];
-        self.titleLB.text = @"南北对抗赛";
 
         UIImageView *dateimageV = [[UIImageView alloc] initWithFrame:CGRectMake(88 * ProportionAdapter, 38 * ProportionAdapter, 15 * ProportionAdapter, 15 * ProportionAdapter)];
         dateimageV.image = [UIImage imageNamed:@"time"];
@@ -59,16 +59,15 @@
         [self.contentView addSubview:addressImageV];
     
     
-        UILabel *kindLB = [[UILabel alloc] initWithFrame:CGRectMake(310 * ProportionAdapter, 12 * ProportionAdapter, 60 * ProportionAdapter, 25 * ProportionAdapter)];
-        kindLB.text = @"比赛类型";
-        kindLB.font = [UIFont systemFontOfSize:13 * ProportionAdapter];
-        kindLB.textColor = [UIColor colorWithHexString:@"#fe6424"];
-        [self.contentView addSubview:kindLB];
+        self.kindLB = [[UILabel alloc] initWithFrame:CGRectMake(280 * ProportionAdapter, 12 * ProportionAdapter, 90 * ProportionAdapter, 25 * ProportionAdapter)];
+        self.kindLB.font = [UIFont systemFontOfSize:13 * ProportionAdapter];
+        self.kindLB.textColor = [UIColor colorWithHexString:@"#fe6424"];
+        self.kindLB.textAlignment = NSTextAlignmentRight;
+        [self.contentView addSubview:self.kindLB];
     
         self.sumLB = [[UILabel alloc] initWithFrame:CGRectMake(290 * ProportionAdapter, 40 * ProportionAdapter, 80 * ProportionAdapter, 25 * ProportionAdapter)];
         self.sumLB.font = [UIFont systemFontOfSize:12 * ProportionAdapter];
         self.sumLB.textColor = [UIColor colorWithHexString:@"a0a0a0"];
-        self.sumLB.text = @"参赛：30人";
         self.sumLB.textAlignment = NSTextAlignmentCenter;
         [self.contentView addSubview:self.sumLB];
         
@@ -82,12 +81,20 @@
         self.adressLB = [[UILabel alloc] initWithFrame:CGRectMake(110 * ProportionAdapter, 55 * ProportionAdapter, 260 * ProportionAdapter, 20 * ProportionAdapter)];
         self.adressLB.font = [UIFont systemFontOfSize:12 * ProportionAdapter];
         self.adressLB.textColor = [UIColor blackColor];
-        self.adressLB.text = @"美国加利福尼亚俱乐部（整修中）";
         [self.contentView addSubview:self.adressLB];
     }
     return self;
 }
 
+- (void)setModel:(JGDConfrontChannelModel *)model{
+    self.adressLB.text = model.ballName;
+    self.sumLB.text = [NSString stringWithFormat:@"参赛：%td 人",[model.sumCount integerValue]];
+    self.kindLB.text = model.matchTypeName;
+    self.titleLB.text = model.matchName;
+    self.dateLB.text = [NSString stringWithFormat:@"%@月%@号",[model.createTime substringWithRange:NSMakeRange(5, 2)], [model.createTime substringWithRange:NSMakeRange(8, 2)]];
+    [self.iconImage sd_setImageWithURL:[Helper setMatchImageIconUrl:[model.timeKey integerValue] ]placeholderImage:[UIImage imageNamed:TeamLogoImage]];
+
+}
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
