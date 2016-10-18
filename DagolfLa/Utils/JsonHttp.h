@@ -44,4 +44,8 @@ typedef void (^GBHEBytesRecvBlock)(unsigned long long length, unsigned long long
 //多张上传
 - (void)httpRequestImage:(NSString *)url withData:(NSDictionary *)postData andDataArray:(NSData *)dataPic failedBlock:(GBHEFailedBlock)failedBlock completionBlock:(GBHECompletionBlock)completionBlock;
 
+//--请求Json
+- (void) httpRequest:(NSString *)url failedBlock:(GBHEFailedBlock)failedBlock
+     completionBlock:(GBHECompletionBlock)completionBlock;
+
 @end

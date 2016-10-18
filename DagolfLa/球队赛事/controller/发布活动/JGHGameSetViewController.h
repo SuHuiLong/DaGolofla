@@ -8,6 +8,16 @@
 
 #import "ViewController.h"
 
+@protocol JGHGameSetViewControllerDelegate <NSObject>
+
+- (void)saveRulesArray:(NSMutableArray *)rulesArray;
+
+@end
+
 @interface JGHGameSetViewController : ViewController
+
+@property (nonatomic, strong)NSMutableArray *rulesArray;
+
+@property (weak, nonatomic)id <JGHGameSetViewControllerDelegate> delegate;
 
 @end

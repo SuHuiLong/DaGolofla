@@ -22,28 +22,45 @@
                             <constraint firstAttribute="width" constant="35" id="vft-6z-qFz"/>
                         </constraints>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aC3-1H-T1t">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aC3-1H-T1t">
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image=")-1" translatesAutoresizingMaskIntoConstraints="NO" id="o4s-Bv-p1V"/>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YLK-0N-YBF">
+                        <connections>
+                            <action selector="gameSetCellBtn:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="zbE-Zi-z4R"/>
+                        </connections>
+                    </button>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="o4s-Bv-p1V" firstAttribute="leading" secondItem="aC3-1H-T1t" secondAttribute="trailing" constant="5" id="4he-WO-9GZ"/>
                     <constraint firstItem="QeQ-Xs-1AI" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="4y7-3y-qti"/>
                     <constraint firstItem="aC3-1H-T1t" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="Cg3-EV-n9y"/>
                     <constraint firstItem="QeQ-Xs-1AI" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="DqR-lU-pn9"/>
+                    <constraint firstItem="o4s-Bv-p1V" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="JV6-Qw-Src"/>
+                    <constraint firstAttribute="bottom" secondItem="YLK-0N-YBF" secondAttribute="bottom" id="KEZ-AI-4fQ"/>
+                    <constraint firstAttribute="trailing" secondItem="YLK-0N-YBF" secondAttribute="trailing" id="Szu-vq-fA5"/>
                     <constraint firstItem="aC3-1H-T1t" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="25" id="ZEJ-bj-sB5"/>
-                    <constraint firstAttribute="trailing" secondItem="aC3-1H-T1t" secondAttribute="trailing" constant="5" id="fSA-4B-rHn"/>
+                    <constraint firstItem="YLK-0N-YBF" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="ibO-Lm-MZg"/>
+                    <constraint firstItem="YLK-0N-YBF" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="iiK-TY-tc1"/>
+                    <constraint firstAttribute="trailing" secondItem="o4s-Bv-p1V" secondAttribute="trailing" constant="15" id="xYn-mm-Rsd"/>
                 </constraints>
             </tableViewCellContentView>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <connections>
+                <outlet property="downImageViewRight" destination="xYn-mm-Rsd" id="rUy-Ex-HOK"/>
                 <outlet property="gameSet" destination="aC3-1H-T1t" id="Dsa-rb-APF"/>
+                <outlet property="gameSetCellBtn" destination="YLK-0N-YBF" id="0fb-Ab-v4d"/>
                 <outlet property="gameSetLeft" destination="ZEJ-bj-sB5" id="0wJ-hg-Eaa"/>
                 <outlet property="imageW" destination="vft-6z-qFz" id="mru-G4-txw"/>
+                <outlet property="statusImageView" destination="QeQ-Xs-1AI" id="ECA-mS-2It"/>
             </connections>
         </tableViewCell>
     </objects>
     <resources>
+        <image name=")-1" width="12" height="8"/>
         <image name="gameSetSelect" width="34" height="37"/>
     </resources>
 </document>

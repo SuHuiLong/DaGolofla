@@ -7,7 +7,7 @@
 //
 
 #import "ViewController.h"
-@class JGTeamAcitivtyModel;
+@class JGHPublishEventModel;
 
 @interface JGHPublishEventSaveViewController : ViewController
 
@@ -15,11 +15,14 @@
 
 @property (nonatomic, assign)NSInteger teamKey;//发布活动teamkey
 
-@property (nonatomic, strong)JGTeamAcitivtyModel *model;
+@property (nonatomic, strong)JGHPublishEventModel *model;
 
 @property (strong, nonatomic) void (^refreshBlock)();
 
 @property (nonatomic, strong)NSMutableArray *costListArray;//费用列表
 
+@property (nonatomic, strong)NSMutableArray *rulesArray;//规则信息
+
+@property (nonatomic, strong)NSString *rulesTimeKey;
 
 @end

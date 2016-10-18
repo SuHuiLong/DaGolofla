@@ -219,6 +219,10 @@
 }
 
 - (void)configCellWithModelArray:(NSMutableArray *)modelArray{
+    self.leftTopValue.text = @"";
+    self.rightTopValue.text = @"";
+    self.leftDownValue.text = @"";
+    self.rightDownVlaue.text = @"";
     //清空空间内容
     if (self.lable1.text.length != 0) {
         self.lable1.text = nil;

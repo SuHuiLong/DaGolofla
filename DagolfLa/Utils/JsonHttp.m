@@ -417,6 +417,30 @@ static JsonHttp *jsonHttp = nil;
     }];
 }
 
+- (void)httpRequest:(NSString *)url failedBlock:(GBHEFailedBlock)failedBlock completionBlock:(GBHECompletionBlock)completionBlock
+{
+    url = [NSString stringWithFormat:@"%@", url];
+    NSLog(@"%@",url);
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    //申明请求的数据是json类型
+    manager.requestSerializer=[AFJSONRequestSerializer serializer];
+    //返回数据格式
+    manager.responseSerializer = [AFJSONResponseSerializer serializer];
+    //    [AFJSONResponseSerializer serializerWithReadingOptions:NSJSONReadingMutableContainers];
+    //https安全策略
+    //    manager.securityPolicy.allowInvalidCertificates = YES;
+    //    manager.securityPolicy.validatesDomainName = NO;
+    
+    [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        if (completionBlock) {
+            completionBlock(responseObject);
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        if (failedBlock) {
+            failedBlock(error);
+        }
+    }];
+}
 
 
 @end

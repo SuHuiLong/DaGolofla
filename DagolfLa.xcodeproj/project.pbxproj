@@ -43,8 +43,6 @@
 		2012AD9E1D36192F00F70E40 /* JGHScoresMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2012AD9D1D36192F00F70E40 /* JGHScoresMainViewController.m */; };
 		20203B151D9B5F7B009A75F3 /* JGHPublishEventViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 20203B141D9B5F7B009A75F3 /* JGHPublishEventViewController.m */; };
 		20203B1C1D9B6013009A75F3 /* JGHPublishEventModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 20203B1A1D9B6013009A75F3 /* JGHPublishEventModel.m */; };
-		20203B211D9B60CC009A75F3 /* JGHPublishEventCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 20203B1F1D9B60CC009A75F3 /* JGHPublishEventCell.m */; };
-		20203B221D9B60CC009A75F3 /* JGHPublishEventCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 20203B201D9B60CC009A75F3 /* JGHPublishEventCell.xib */; };
 		202E05201D757D6D00566CA9 /* JGHEditorCostViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 202E051E1D757D6D00566CA9 /* JGHEditorCostViewController.m */; };
 		202E05211D757D6D00566CA9 /* JGHEditorCostViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 202E051F1D757D6D00566CA9 /* JGHEditorCostViewController.xib */; };
 		202E05271D7E932200566CA9 /* JGHNewScoresPageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 202E05251D7E932200566CA9 /* JGHNewScoresPageCell.m */; };
@@ -174,8 +172,6 @@
 		209B93AB1D6EC65600A5BE10 /* JGHAddCostButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 209B93A91D6EC65600A5BE10 /* JGHAddCostButtonCell.m */; };
 		209B93AC1D6EC65600A5BE10 /* JGHAddCostButtonCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 209B93AA1D6EC65600A5BE10 /* JGHAddCostButtonCell.xib */; };
 		20B04A791DA88BA800475F7A /* JGHGameSetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 20B04A781DA88BA800475F7A /* JGHGameSetViewController.m */; };
-		20B04A7D1DA88E9D00475F7A /* JGHGameSetCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 20B04A7B1DA88E9D00475F7A /* JGHGameSetCell.m */; };
-		20B04A7E1DA88E9D00475F7A /* JGHGameSetCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 20B04A7C1DA88E9D00475F7A /* JGHGameSetCell.xib */; };
 		20B04A811DA8C75000475F7A /* JGHPublishEventSaveViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 20B04A801DA8C75000475F7A /* JGHPublishEventSaveViewController.m */; };
 		20B04A841DA8EA1800475F7A /* JGHGameRoundsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 20B04A831DA8EA1800475F7A /* JGHGameRoundsViewController.m */; };
 		20B04A871DA8F1C000475F7A /* JGHEventDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 20B04A861DA8F1C000475F7A /* JGHEventDetailsViewController.m */; };
@@ -222,6 +218,31 @@
 		20CA13DC1CE9F2C200DA15B9 /* UIColor+ColorTransfer.m in Sources */ = {isa = PBXBuildFile; fileRef = 20CA13DB1CE9F2C200DA15B9 /* UIColor+ColorTransfer.m */; };
 		20CA13FF1CEAF07100DA15B9 /* SXPickPhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = 20CA13FE1CEAF07100DA15B9 /* SXPickPhoto.m */; };
 		20CA14021CEB086600DA15B9 /* JsonHttp.m in Sources */ = {isa = PBXBuildFile; fileRef = 20CA14011CEB086600DA15B9 /* JsonHttp.m */; };
+		20D514BB1DB63CEB0006EFCB /* JGHGameRoundsRulesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 20D514B71DB63CEB0006EFCB /* JGHGameRoundsRulesViewController.m */; };
+		20D514BC1DB63CEB0006EFCB /* JGHGameBaseSetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 20D514B91DB63CEB0006EFCB /* JGHGameBaseSetViewController.m */; };
+		20D514C01DB63D250006EFCB /* JGHEditorEventViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 20D514BF1DB63D250006EFCB /* JGHEditorEventViewController.m */; };
+		20D514C31DB63D690006EFCB /* JGHMatchRoundModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 20D514C11DB63D690006EFCB /* JGHMatchRoundModel.m */; };
+		20D514E71DB63DA60006EFCB /* JGHPublicLevelCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 20D514C61DB63DA60006EFCB /* JGHPublicLevelCell.m */; };
+		20D514E81DB63DA60006EFCB /* JGHPublicLevelCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 20D514C71DB63DA60006EFCB /* JGHPublicLevelCell.xib */; };
+		20D514E91DB63DA60006EFCB /* JGHGameBaseHeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 20D514CA1DB63DA60006EFCB /* JGHGameBaseHeaderCell.m */; };
+		20D514EA1DB63DA60006EFCB /* JGHGameBaseHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 20D514CB1DB63DA60006EFCB /* JGHGameBaseHeaderCell.xib */; };
+		20D514EB1DB63DA60006EFCB /* JGHGameBaseHeaderSubCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 20D514CD1DB63DA60006EFCB /* JGHGameBaseHeaderSubCell.m */; };
+		20D514EC1DB63DA60006EFCB /* JGHGameBaseHeaderSubCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 20D514CE1DB63DA60006EFCB /* JGHGameBaseHeaderSubCell.xib */; };
+		20D514ED1DB63DA60006EFCB /* JGHGameSetBaseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 20D514D01DB63DA60006EFCB /* JGHGameSetBaseCell.m */; };
+		20D514EE1DB63DA60006EFCB /* JGHGameSetBaseCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 20D514D11DB63DA60006EFCB /* JGHGameSetBaseCell.xib */; };
+		20D514EF1DB63DA60006EFCB /* JGHGameSetBaseCellCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 20D514D31DB63DA60006EFCB /* JGHGameSetBaseCellCell.m */; };
+		20D514F01DB63DA60006EFCB /* JGHGameSetBaseCellCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 20D514D41DB63DA60006EFCB /* JGHGameSetBaseCellCell.xib */; };
+		20D514F11DB63DA60006EFCB /* JGHGameSetCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 20D514D61DB63DA60006EFCB /* JGHGameSetCell.m */; };
+		20D514F21DB63DA60006EFCB /* JGHGameSetCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 20D514D71DB63DA60006EFCB /* JGHGameSetCell.xib */; };
+		20D514F31DB63DA60006EFCB /* JGHPublishEventCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 20D514D91DB63DA60006EFCB /* JGHPublishEventCell.m */; };
+		20D514F41DB63DA60006EFCB /* JGHPublishEventCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 20D514DA1DB63DA60006EFCB /* JGHPublishEventCell.xib */; };
+		20D514F51DB63DA60006EFCB /* JGHRulesForDetailsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 20D514DC1DB63DA60006EFCB /* JGHRulesForDetailsView.m */; };
+		20D514F61DB63DA60006EFCB /* JGHAddEventRoundsBtnCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 20D514DF1DB63DA60006EFCB /* JGHAddEventRoundsBtnCell.m */; };
+		20D514F71DB63DA60006EFCB /* JGHAddEventRoundsBtnCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 20D514E01DB63DA60006EFCB /* JGHAddEventRoundsBtnCell.xib */; };
+		20D514F81DB63DA60006EFCB /* JGHEventRulesContentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 20D514E21DB63DA60006EFCB /* JGHEventRulesContentCell.m */; };
+		20D514F91DB63DA60006EFCB /* JGHEventRulesContentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 20D514E31DB63DA60006EFCB /* JGHEventRulesContentCell.xib */; };
+		20D514FA1DB63DA60006EFCB /* JGHEventRulesHeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 20D514E51DB63DA60006EFCB /* JGHEventRulesHeaderCell.m */; };
+		20D514FB1DB63DA60006EFCB /* JGHEventRulesHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 20D514E61DB63DA60006EFCB /* JGHEventRulesHeaderCell.xib */; };
 		20F025361D6FD59300D7D7B6 /* JGHAddTeamPlaysViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 20F025351D6FD59300D7D7B6 /* JGHAddTeamPlaysViewController.m */; };
 		20F0253A1D6FDC1000D7D7B6 /* JGHAddPlaysCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 20F025381D6FDC1000D7D7B6 /* JGHAddPlaysCell.m */; };
 		20F0253B1D6FDC1000D7D7B6 /* JGHAddPlaysCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 20F025391D6FDC1000D7D7B6 /* JGHAddPlaysCell.xib */; };
@@ -1192,9 +1213,6 @@
 		20203B141D9B5F7B009A75F3 /* JGHPublishEventViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHPublishEventViewController.m; sourceTree = "<group>"; };
 		20203B1A1D9B6013009A75F3 /* JGHPublishEventModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHPublishEventModel.m; sourceTree = "<group>"; };
 		20203B1B1D9B6013009A75F3 /* JGHPublishEventModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHPublishEventModel.h; sourceTree = "<group>"; };
-		20203B1E1D9B60CC009A75F3 /* JGHPublishEventCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHPublishEventCell.h; sourceTree = "<group>"; };
-		20203B1F1D9B60CC009A75F3 /* JGHPublishEventCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHPublishEventCell.m; sourceTree = "<group>"; };
-		20203B201D9B60CC009A75F3 /* JGHPublishEventCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JGHPublishEventCell.xib; sourceTree = "<group>"; };
 		202E051D1D757D6D00566CA9 /* JGHEditorCostViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHEditorCostViewController.h; sourceTree = "<group>"; };
 		202E051E1D757D6D00566CA9 /* JGHEditorCostViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHEditorCostViewController.m; sourceTree = "<group>"; };
 		202E051F1D757D6D00566CA9 /* JGHEditorCostViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JGHEditorCostViewController.xib; sourceTree = "<group>"; };
@@ -1484,9 +1502,6 @@
 		209B93AA1D6EC65600A5BE10 /* JGHAddCostButtonCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JGHAddCostButtonCell.xib; sourceTree = "<group>"; };
 		20B04A771DA88BA800475F7A /* JGHGameSetViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHGameSetViewController.h; sourceTree = "<group>"; };
 		20B04A781DA88BA800475F7A /* JGHGameSetViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHGameSetViewController.m; sourceTree = "<group>"; };
-		20B04A7A1DA88E9D00475F7A /* JGHGameSetCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHGameSetCell.h; sourceTree = "<group>"; };
-		20B04A7B1DA88E9D00475F7A /* JGHGameSetCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHGameSetCell.m; sourceTree = "<group>"; };
-		20B04A7C1DA88E9D00475F7A /* JGHGameSetCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JGHGameSetCell.xib; sourceTree = "<group>"; };
 		20B04A7F1DA8C75000475F7A /* JGHPublishEventSaveViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHPublishEventSaveViewController.h; sourceTree = "<group>"; };
 		20B04A801DA8C75000475F7A /* JGHPublishEventSaveViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHPublishEventSaveViewController.m; sourceTree = "<group>"; };
 		20B04A821DA8EA1800475F7A /* JGHGameRoundsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHGameRoundsViewController.h; sourceTree = "<group>"; };
@@ -1558,6 +1573,46 @@
 		20CA13FE1CEAF07100DA15B9 /* SXPickPhoto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SXPickPhoto.m; sourceTree = "<group>"; };
 		20CA14001CEB086600DA15B9 /* JsonHttp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JsonHttp.h; sourceTree = "<group>"; };
 		20CA14011CEB086600DA15B9 /* JsonHttp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JsonHttp.m; sourceTree = "<group>"; };
+		20D514B71DB63CEB0006EFCB /* JGHGameRoundsRulesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHGameRoundsRulesViewController.m; sourceTree = "<group>"; };
+		20D514B81DB63CEB0006EFCB /* JGHGameRoundsRulesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHGameRoundsRulesViewController.h; sourceTree = "<group>"; };
+		20D514B91DB63CEB0006EFCB /* JGHGameBaseSetViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHGameBaseSetViewController.m; sourceTree = "<group>"; };
+		20D514BA1DB63CEB0006EFCB /* JGHGameBaseSetViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHGameBaseSetViewController.h; sourceTree = "<group>"; };
+		20D514BE1DB63D250006EFCB /* JGHEditorEventViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHEditorEventViewController.h; sourceTree = "<group>"; };
+		20D514BF1DB63D250006EFCB /* JGHEditorEventViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHEditorEventViewController.m; sourceTree = "<group>"; };
+		20D514C11DB63D690006EFCB /* JGHMatchRoundModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHMatchRoundModel.m; sourceTree = "<group>"; };
+		20D514C21DB63D690006EFCB /* JGHMatchRoundModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHMatchRoundModel.h; sourceTree = "<group>"; };
+		20D514C51DB63DA60006EFCB /* JGHPublicLevelCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHPublicLevelCell.h; sourceTree = "<group>"; };
+		20D514C61DB63DA60006EFCB /* JGHPublicLevelCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHPublicLevelCell.m; sourceTree = "<group>"; };
+		20D514C71DB63DA60006EFCB /* JGHPublicLevelCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JGHPublicLevelCell.xib; sourceTree = "<group>"; };
+		20D514C91DB63DA60006EFCB /* JGHGameBaseHeaderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHGameBaseHeaderCell.h; sourceTree = "<group>"; };
+		20D514CA1DB63DA60006EFCB /* JGHGameBaseHeaderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHGameBaseHeaderCell.m; sourceTree = "<group>"; };
+		20D514CB1DB63DA60006EFCB /* JGHGameBaseHeaderCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JGHGameBaseHeaderCell.xib; sourceTree = "<group>"; };
+		20D514CC1DB63DA60006EFCB /* JGHGameBaseHeaderSubCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHGameBaseHeaderSubCell.h; sourceTree = "<group>"; };
+		20D514CD1DB63DA60006EFCB /* JGHGameBaseHeaderSubCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHGameBaseHeaderSubCell.m; sourceTree = "<group>"; };
+		20D514CE1DB63DA60006EFCB /* JGHGameBaseHeaderSubCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JGHGameBaseHeaderSubCell.xib; sourceTree = "<group>"; };
+		20D514CF1DB63DA60006EFCB /* JGHGameSetBaseCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHGameSetBaseCell.h; sourceTree = "<group>"; };
+		20D514D01DB63DA60006EFCB /* JGHGameSetBaseCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHGameSetBaseCell.m; sourceTree = "<group>"; };
+		20D514D11DB63DA60006EFCB /* JGHGameSetBaseCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JGHGameSetBaseCell.xib; sourceTree = "<group>"; };
+		20D514D21DB63DA60006EFCB /* JGHGameSetBaseCellCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHGameSetBaseCellCell.h; sourceTree = "<group>"; };
+		20D514D31DB63DA60006EFCB /* JGHGameSetBaseCellCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHGameSetBaseCellCell.m; sourceTree = "<group>"; };
+		20D514D41DB63DA60006EFCB /* JGHGameSetBaseCellCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JGHGameSetBaseCellCell.xib; sourceTree = "<group>"; };
+		20D514D51DB63DA60006EFCB /* JGHGameSetCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHGameSetCell.h; sourceTree = "<group>"; };
+		20D514D61DB63DA60006EFCB /* JGHGameSetCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHGameSetCell.m; sourceTree = "<group>"; };
+		20D514D71DB63DA60006EFCB /* JGHGameSetCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JGHGameSetCell.xib; sourceTree = "<group>"; };
+		20D514D81DB63DA60006EFCB /* JGHPublishEventCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHPublishEventCell.h; sourceTree = "<group>"; };
+		20D514D91DB63DA60006EFCB /* JGHPublishEventCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHPublishEventCell.m; sourceTree = "<group>"; };
+		20D514DA1DB63DA60006EFCB /* JGHPublishEventCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JGHPublishEventCell.xib; sourceTree = "<group>"; };
+		20D514DB1DB63DA60006EFCB /* JGHRulesForDetailsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHRulesForDetailsView.h; sourceTree = "<group>"; };
+		20D514DC1DB63DA60006EFCB /* JGHRulesForDetailsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHRulesForDetailsView.m; sourceTree = "<group>"; };
+		20D514DE1DB63DA60006EFCB /* JGHAddEventRoundsBtnCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHAddEventRoundsBtnCell.h; sourceTree = "<group>"; };
+		20D514DF1DB63DA60006EFCB /* JGHAddEventRoundsBtnCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHAddEventRoundsBtnCell.m; sourceTree = "<group>"; };
+		20D514E01DB63DA60006EFCB /* JGHAddEventRoundsBtnCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JGHAddEventRoundsBtnCell.xib; sourceTree = "<group>"; };
+		20D514E11DB63DA60006EFCB /* JGHEventRulesContentCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHEventRulesContentCell.h; sourceTree = "<group>"; };
+		20D514E21DB63DA60006EFCB /* JGHEventRulesContentCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHEventRulesContentCell.m; sourceTree = "<group>"; };
+		20D514E31DB63DA60006EFCB /* JGHEventRulesContentCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JGHEventRulesContentCell.xib; sourceTree = "<group>"; };
+		20D514E41DB63DA60006EFCB /* JGHEventRulesHeaderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHEventRulesHeaderCell.h; sourceTree = "<group>"; };
+		20D514E51DB63DA60006EFCB /* JGHEventRulesHeaderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHEventRulesHeaderCell.m; sourceTree = "<group>"; };
+		20D514E61DB63DA60006EFCB /* JGHEventRulesHeaderCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JGHEventRulesHeaderCell.xib; sourceTree = "<group>"; };
 		20F025341D6FD59300D7D7B6 /* JGHAddTeamPlaysViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHAddTeamPlaysViewController.h; sourceTree = "<group>"; };
 		20F025351D6FD59300D7D7B6 /* JGHAddTeamPlaysViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHAddTeamPlaysViewController.m; sourceTree = "<group>"; };
 		20F025371D6FDC1000D7D7B6 /* JGHAddPlaysCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHAddPlaysCell.h; sourceTree = "<group>"; };
@@ -3527,6 +3582,7 @@
 				F5C803011DAB6A5D003046FD /* 球队排行 */,
 				F5C802F91DAB2BB7003046FD /* 查看成绩 */,
 				F5D7943F1D9B6D670095EF0B /* 赛事对抗频道 */,
+				20D514BD1DB63D250006EFCB /* 编辑赛事 */,
 				20203B121D9B5F2C009A75F3 /* 发布赛事 */,
 			);
 			path = controller;
@@ -3546,13 +3602,13 @@
 		20203B111D9B5EFF009A75F3 /* view */ = {
 			isa = PBXGroup;
 			children = (
+				20D514C41DB63DA60006EFCB /* 发布赛事 */,
 				F54E16151DB23AE40018B3AB /* 球队成员 */,
 				82000C8F1DACD89B009D2DBF /* 分组 */,
 				F50800931DAC8E7400D26A82 /* 设置对抗 */,
 				F5C803021DAB6A67003046FD /* 球队排行 */,
 				F5C802FA1DAB2BBE003046FD /* 查看成绩 */,
 				F51472F61DA8D41100029C59 /* 热门对抗赛 */,
-				20203B1D1D9B609E009A75F3 /* 发布赛事 */,
 			);
 			path = view;
 			sourceTree = "<group>";
@@ -3560,6 +3616,10 @@
 		20203B121D9B5F2C009A75F3 /* 发布赛事 */ = {
 			isa = PBXGroup;
 			children = (
+				20D514B81DB63CEB0006EFCB /* JGHGameRoundsRulesViewController.h */,
+				20D514B71DB63CEB0006EFCB /* JGHGameRoundsRulesViewController.m */,
+				20D514B91DB63CEB0006EFCB /* JGHGameBaseSetViewController.m */,
+				20D514BA1DB63CEB0006EFCB /* JGHGameBaseSetViewController.h */,
 				20203B131D9B5F7B009A75F3 /* JGHPublishEventViewController.h */,
 				20203B141D9B5F7B009A75F3 /* JGHPublishEventViewController.m */,
 				20B04A7F1DA8C75000475F7A /* JGHPublishEventSaveViewController.h */,
@@ -3578,21 +3638,10 @@
 		20203B191D9B5FE6009A75F3 /* 发布赛事 */ = {
 			isa = PBXGroup;
 			children = (
+				20D514C11DB63D690006EFCB /* JGHMatchRoundModel.m */,
+				20D514C21DB63D690006EFCB /* JGHMatchRoundModel.h */,
 				20203B1A1D9B6013009A75F3 /* JGHPublishEventModel.m */,
 				20203B1B1D9B6013009A75F3 /* JGHPublishEventModel.h */,
-			);
-			path = "发布赛事";
-			sourceTree = "<group>";
-		};
-		20203B1D1D9B609E009A75F3 /* 发布赛事 */ = {
-			isa = PBXGroup;
-			children = (
-				20203B1E1D9B60CC009A75F3 /* JGHPublishEventCell.h */,
-				20203B1F1D9B60CC009A75F3 /* JGHPublishEventCell.m */,
-				20203B201D9B60CC009A75F3 /* JGHPublishEventCell.xib */,
-				20B04A7A1DA88E9D00475F7A /* JGHGameSetCell.h */,
-				20B04A7B1DA88E9D00475F7A /* JGHGameSetCell.m */,
-				20B04A7C1DA88E9D00475F7A /* JGHGameSetCell.xib */,
 			);
 			path = "发布赛事";
 			sourceTree = "<group>";
@@ -4221,6 +4270,70 @@
 				20F7D4451D869D5A00302406 /* JGHBallAreaModel.m */,
 			);
 			path = "球队活动";
+			sourceTree = "<group>";
+		};
+		20D514BD1DB63D250006EFCB /* 编辑赛事 */ = {
+			isa = PBXGroup;
+			children = (
+				20D514BE1DB63D250006EFCB /* JGHEditorEventViewController.h */,
+				20D514BF1DB63D250006EFCB /* JGHEditorEventViewController.m */,
+			);
+			path = "编辑赛事";
+			sourceTree = "<group>";
+		};
+		20D514C41DB63DA60006EFCB /* 发布赛事 */ = {
+			isa = PBXGroup;
+			children = (
+				20D514C51DB63DA60006EFCB /* JGHPublicLevelCell.h */,
+				20D514C61DB63DA60006EFCB /* JGHPublicLevelCell.m */,
+				20D514C71DB63DA60006EFCB /* JGHPublicLevelCell.xib */,
+				20D514C81DB63DA60006EFCB /* 赛事玩法 */,
+				20D514DD1DB63DA60006EFCB /* 赛事规则 */,
+			);
+			path = "发布赛事";
+			sourceTree = "<group>";
+		};
+		20D514C81DB63DA60006EFCB /* 赛事玩法 */ = {
+			isa = PBXGroup;
+			children = (
+				20D514C91DB63DA60006EFCB /* JGHGameBaseHeaderCell.h */,
+				20D514CA1DB63DA60006EFCB /* JGHGameBaseHeaderCell.m */,
+				20D514CB1DB63DA60006EFCB /* JGHGameBaseHeaderCell.xib */,
+				20D514CC1DB63DA60006EFCB /* JGHGameBaseHeaderSubCell.h */,
+				20D514CD1DB63DA60006EFCB /* JGHGameBaseHeaderSubCell.m */,
+				20D514CE1DB63DA60006EFCB /* JGHGameBaseHeaderSubCell.xib */,
+				20D514CF1DB63DA60006EFCB /* JGHGameSetBaseCell.h */,
+				20D514D01DB63DA60006EFCB /* JGHGameSetBaseCell.m */,
+				20D514D11DB63DA60006EFCB /* JGHGameSetBaseCell.xib */,
+				20D514D21DB63DA60006EFCB /* JGHGameSetBaseCellCell.h */,
+				20D514D31DB63DA60006EFCB /* JGHGameSetBaseCellCell.m */,
+				20D514D41DB63DA60006EFCB /* JGHGameSetBaseCellCell.xib */,
+				20D514D51DB63DA60006EFCB /* JGHGameSetCell.h */,
+				20D514D61DB63DA60006EFCB /* JGHGameSetCell.m */,
+				20D514D71DB63DA60006EFCB /* JGHGameSetCell.xib */,
+				20D514D81DB63DA60006EFCB /* JGHPublishEventCell.h */,
+				20D514D91DB63DA60006EFCB /* JGHPublishEventCell.m */,
+				20D514DA1DB63DA60006EFCB /* JGHPublishEventCell.xib */,
+				20D514DB1DB63DA60006EFCB /* JGHRulesForDetailsView.h */,
+				20D514DC1DB63DA60006EFCB /* JGHRulesForDetailsView.m */,
+			);
+			path = "赛事玩法";
+			sourceTree = "<group>";
+		};
+		20D514DD1DB63DA60006EFCB /* 赛事规则 */ = {
+			isa = PBXGroup;
+			children = (
+				20D514DE1DB63DA60006EFCB /* JGHAddEventRoundsBtnCell.h */,
+				20D514DF1DB63DA60006EFCB /* JGHAddEventRoundsBtnCell.m */,
+				20D514E01DB63DA60006EFCB /* JGHAddEventRoundsBtnCell.xib */,
+				20D514E11DB63DA60006EFCB /* JGHEventRulesContentCell.h */,
+				20D514E21DB63DA60006EFCB /* JGHEventRulesContentCell.m */,
+				20D514E31DB63DA60006EFCB /* JGHEventRulesContentCell.xib */,
+				20D514E41DB63DA60006EFCB /* JGHEventRulesHeaderCell.h */,
+				20D514E51DB63DA60006EFCB /* JGHEventRulesHeaderCell.m */,
+				20D514E61DB63DA60006EFCB /* JGHEventRulesHeaderCell.xib */,
+			);
+			path = "赛事规则";
 			sourceTree = "<group>";
 		};
 		20F025321D6FD50100D7D7B6 /* 添加打球人 */ = {
@@ -8409,6 +8522,7 @@
 				202E05321D80310B00566CA9 /* JGHTwoScoreAreaCell.xib in Resources */,
 				2064DE971D3C715300F0D52A /* JGHRetrieveScoreViewController.xib in Resources */,
 				36BF003D1BC771FB005B3CE2 /* ComDetailViewCell.xib in Resources */,
+				20D514E81DB63DA60006EFCB /* JGHPublicLevelCell.xib in Resources */,
 				20CA13901CE9562800DA15B9 /* JGTeamGroupCollectionViewCell.xib in Resources */,
 				20C1B8B61CE344C600508ABC /* JGApplyPepoleCell.xib in Resources */,
 				F5E3F7F21CAA54BC00B24C77 /* dz@3x.png in Resources */,
@@ -8423,6 +8537,7 @@
 				36BFFD371BC76C8D005B3CE2 /* Main.storyboard in Resources */,
 				82C16BF21D8FC0BC0025DDED /* AddressBookViewCell.xib in Resources */,
 				207FEC971D1BC98F0098E23C /* JGHCancelApplyBaseCell.xib in Resources */,
+				20D514F21DB63DA60006EFCB /* JGHGameSetCell.xib in Resources */,
 				3623174C1BDA6B2800257862 /* CommunMessageViewCell.xib in Resources */,
 				2080304F1CF9A70800448BFC /* JGSignUoPromptCell.xib in Resources */,
 				20591C8D1D227A0D003271EC /* JGHTradRecordCell.xib in Resources */,
@@ -8443,6 +8558,7 @@
 				20C1B8AC1CE313A200508ABC /* JGTeamApplyViewController.xib in Resources */,
 				209B93981D6D871900A5BE10 /* JGHApplyCatoryPriceViewCell.xib in Resources */,
 				36BF01F51BC77C71005B3CE2 /* MyselfImpotTableViewCell.xib in Resources */,
+				20D514EE1DB63DA60006EFCB /* JGHGameSetBaseCell.xib in Resources */,
 				20C1B8B11CE3241C00508ABC /* JGTableViewCell.xib in Resources */,
 				654332071BD5D9B900363947 /* UMSCommentInputControlleriPad.xib in Resources */,
 				36BF00C21BC77383005B3CE2 /* MeTableViewCell.xib in Resources */,
@@ -8471,12 +8587,14 @@
 				F565BC611D633EFC00F0C7C3 /* bg_somiaohou_03.png in Resources */,
 				36DF6DFD1C08235900B60B67 /* TeamPhotoCollectionViewCell.xib in Resources */,
 				82E6A71B1CF68229009DD179 /* JGTeamAdressTableViewCell.xib in Resources */,
+				20D514EA1DB63DA60006EFCB /* JGHGameBaseHeaderCell.xib in Resources */,
 				202EC80D1D5852F80090FE4B /* JGHCaddieViewController.xib in Resources */,
+				20D514F01DB63DA60006EFCB /* JGHGameSetBaseCellCell.xib in Resources */,
 				36BFFF621BC76D09005B3CE2 /* LICENSE in Resources */,
+				20D514FB1DB63DA60006EFCB /* JGHEventRulesHeaderCell.xib in Resources */,
 				36BF02051BC78253005B3CE2 /* Images.xcassets in Resources */,
 				2067C6D31CE30CC0002900C8 /* JGTeamActivityCell.xib in Resources */,
 				2012AD7F1D2BB1B200F70E40 /* JGHActivityBaseCell.xib in Resources */,
-				20203B221D9B60CC009A75F3 /* JGHPublishEventCell.xib in Resources */,
 				82E6A7201CF682BC009DD179 /* JGTeamEIntroTableViewCell.xib in Resources */,
 				20F6A5DC1CF52C4F00DD9383 /* JGHHeaderLabelCell.xib in Resources */,
 				20513B591CF67EED003233FB /* JGHAddressCell.xib in Resources */,
@@ -8484,16 +8602,19 @@
 				202E05371D81568300566CA9 /* JGHPoorBarHoleCell.xib in Resources */,
 				36BF01881BC77611005B3CE2 /* CityCollectionViewCell.xib in Resources */,
 				208837A41D1A9D88004C7B5D /* JGHActivityBaseInfoCell.xib in Resources */,
+				20D514F91DB63DA60006EFCB /* JGHEventRulesContentCell.xib in Resources */,
+				20D514F41DB63DA60006EFCB /* JGHPublishEventCell.xib in Resources */,
 				209B93A21D6E8DAC00A5BE10 /* JGHCostListCell.xib in Resources */,
 				20CA139B1CE984C500DA15B9 /* JGGroupdetailsCollectionViewCell.xib in Resources */,
 				202E05281D7E932200566CA9 /* JGHNewScoresPageCell.xib in Resources */,
+				20D514EC1DB63DA60006EFCB /* JGHGameBaseHeaderSubCell.xib in Resources */,
 				36BF00BE1BC77383005B3CE2 /* MyNewsBoxTableCell.xib in Resources */,
 				20F0254F1D70202900D7D7B6 /* JGPlayPayBaseCell.xib in Resources */,
 				F53A05621D518F32009DD489 /* JGHOperationScoreListCell.xib in Resources */,
 				F53A05661D518F32009DD489 /* JGHOperScoreBtnListCell.xib in Resources */,
 				208030451CF7F32E00448BFC /* JGHIvoiceTypeCell.xib in Resources */,
 				20513BCE1CF7050A003233FB /* AlipaySDK.bundle in Resources */,
-				20B04A7E1DA88E9D00475F7A /* JGHGameSetCell.xib in Resources */,
+				20D514F71DB63DA60006EFCB /* JGHAddEventRoundsBtnCell.xib in Resources */,
 				36BF00BC1BC77383005B3CE2 /* MyAttentionViewCell.xib in Resources */,
 				20F6A5D41CF475D200DD9383 /* JGHApplyListCell.xib in Resources */,
 				20513B491CF5D1D8003233FB /* JGHInvoiceCell.xib in Resources */,
@@ -8670,6 +8791,7 @@
 				F5E1BB831D6B006100414727 /* ZXQRCodeFinderPatternFinder.m in Sources */,
 				200200FF1D61BC0200308C44 /* JGHCabbieEditorViewController.m in Sources */,
 				F59A8BA51D5DB95500E8292B /* JGDPlayerModel.m in Sources */,
+				20D514F31DB63DA60006EFCB /* JGHPublishEventCell.m in Sources */,
 				827BD52F1D214A42009AF9CA /* JGLAddBankCardViewController.m in Sources */,
 				F5E1BB5E1D6B006100414727 /* ZXPDF417ECErrorCorrection.m in Sources */,
 				821DB9CC1D5D6FAB00C882C2 /* JGLCaddieScoreTableViewCell.m in Sources */,
@@ -8781,6 +8903,7 @@
 				82FD961C1D3DBFA30047D7A8 /* JGLAddressAddTableViewCell.m in Sources */,
 				822562711D2DFB8400ABA7F3 /* SDWaitingView.m in Sources */,
 				82000C8E1DACD887009D2DBF /* JGLDivideGroupsViewController.m in Sources */,
+				20D514F81DB63DA60006EFCB /* JGHEventRulesContentCell.m in Sources */,
 				F5E1BAEF1D6B006100414727 /* ZXBitArray.m in Sources */,
 				36BF01861BC77611005B3CE2 /* CityChooseView.m in Sources */,
 				36BF00111BC770C4005B3CE2 /* ChartContentView.m in Sources */,
@@ -8849,12 +8972,14 @@
 				828A99F21CE32E9300AF9860 /* JGMenberTableViewCell.m in Sources */,
 				F554266E1D224A2A00233B20 /* JGDSetPayPasswordViewController.m in Sources */,
 				F50EFF361CF9762C00F7AB3F /* JGTeamDeatilWKwebViewController.m in Sources */,
+				20D514F61DB63DA60006EFCB /* JGHAddEventRoundsBtnCell.m in Sources */,
 				36E301021C3FF410005C3F08 /* MJDIYBackFooter.m in Sources */,
 				F5E1BB271D6B006100414727 /* ZXAI01320xDecoder.m in Sources */,
 				65B596F01CAD43AC007AB83A /* WXViewController.m in Sources */,
 				655E748A1BCF788200624D83 /* ChatPeopleMessageModel.m in Sources */,
 				36BFFF7E1BC76D09005B3CE2 /* UIImage+MultiFormat.m in Sources */,
 				F5E1BAE01D6B006100414727 /* ZXVEventResultParser.m in Sources */,
+				20D514E71DB63DA60006EFCB /* JGHPublicLevelCell.m in Sources */,
 				F5EE488C1D462625001D5E44 /* JGHRetrieveScoreModel.m in Sources */,
 				82000C851DACD879009D2DBF /* JGLSignSuccFinishViewController.m in Sources */,
 				36BF02091BC7E654005B3CE2 /* YueHallModel.m in Sources */,
@@ -9004,6 +9129,7 @@
 				36BF005E1BC77296005B3CE2 /* MyFootViewController.m in Sources */,
 				36BF00A71BC77326005B3CE2 /* MeselfModel.m in Sources */,
 				F5AEF73B1D41B98E009A8C34 /* JGLPlayerNameTableViewCell.m in Sources */,
+				20D514C01DB63D250006EFCB /* JGHEditorEventViewController.m in Sources */,
 				82E6A6EB1CF2FFA3009DD179 /* JGLJoinManageViewController.m in Sources */,
 				F5EEB1531D1BC1C7009D37CE /* JGActivityMemNonMangerViewController.m in Sources */,
 				36BFFFD01BC770B1005B3CE2 /* NewsMessageViewController.m in Sources */,
@@ -9052,6 +9178,7 @@
 				366409AC1CBF9BCE002FC920 /* InfoDataViewController.m in Sources */,
 				207FEC961D1BC98F0098E23C /* JGHCancelApplyBaseCell.m in Sources */,
 				36E300EB1C3FF3F9005C3F08 /* MJRefreshAutoFooter.m in Sources */,
+				20D514BC1DB63CEB0006EFCB /* JGHGameBaseSetViewController.m in Sources */,
 				36BFFF631BC76D09005B3CE2 /* README.md in Sources */,
 				F5E1BB511D6B006100414727 /* ZXMultiFormatUPCEANReader.m in Sources */,
 				F5E1BACA1D6B006100414727 /* ZXEmailDoCoMoResultParser.m in Sources */,
@@ -9064,11 +9191,13 @@
 				82F566E11D2F4BC20089B617 /* JGLDrawalRecordModel.m in Sources */,
 				36A396291BE34DB100CBF455 /* MyFootBodyTableViewCell.m in Sources */,
 				82F9445D1D89775600A65381 /* UIImageView+XHWebCache.m in Sources */,
+				20D514ED1DB63DA60006EFCB /* JGHGameSetBaseCell.m in Sources */,
 				826FB5181D5433F300B13155 /* JGLGuestActiveMemberTableViewCell.m in Sources */,
 				F5E1BB3A1D6B006100414727 /* ZXRSSExpandedReader.m in Sources */,
 				F5E1BB8A1D6B006100414727 /* ZXMultiDetector.m in Sources */,
 				36BFFFAF1BC76FF3005B3CE2 /* ForgetViewController.m in Sources */,
 				20CA137B1CE56B6100DA15B9 /* JGHLaunchActivityViewController.m in Sources */,
+				20D514BB1DB63CEB0006EFCB /* JGHGameRoundsRulesViewController.m in Sources */,
 				F5EB44671C995788008ACD73 /* BallFriListCell.m in Sources */,
 				82F9445B1D89775600A65381 /* UIButton+XHEnlarged.m in Sources */,
 				F5E1BAB91D6B006100414727 /* ZXAztecEncoder.m in Sources */,
@@ -9125,6 +9254,7 @@
 				65B596D51CAD43AC007AB83A /* ILRegularExpressionManager.m in Sources */,
 				201056201D59C93600C90FDE /* JGHCabbieCertViewController.m in Sources */,
 				368394821C09A67E00F162F6 /* GameModel.m in Sources */,
+				20D514F51DB63DA60006EFCB /* JGHRulesForDetailsView.m in Sources */,
 				F5E1B87B1D6ADF6100414727 /* JGDGuestChannelViewController.m in Sources */,
 				36067BBD1C96B43B001AE22C /* ChatListViewController.m in Sources */,
 				20513BD71CF7050A003233FB /* MD5DataSigner.m in Sources */,
@@ -9167,7 +9297,6 @@
 				F50B7FB31CE59E050065069D /* JGTeamDetailStylelTwoViewController.m in Sources */,
 				208030531CF9A79800448BFC /* JGHTotalPriceCell.m in Sources */,
 				3669C28C1C48AAC9006CBAAA /* PublishViewController.m in Sources */,
-				20B04A7D1DA88E9D00475F7A /* JGHGameSetCell.m in Sources */,
 				F5E1BB4F1D6B006100414727 /* ZXITFWriter.m in Sources */,
 				20513BD41CF7050A003233FB /* base64.m in Sources */,
 				36067BBC1C96B43B001AE22C /* ChatDetailViewController.m in Sources */,
@@ -9187,6 +9316,7 @@
 				36BF00851BC772EF005B3CE2 /* MyTradeViewController.m in Sources */,
 				82434E3A1DB49A31006DE8DD /* JGLGroupRoundModel.m in Sources */,
 				821DB9D01D5DB5F300C882C2 /* JGLCaddieModel.m in Sources */,
+				20D514E91DB63DA60006EFCB /* JGHGameBaseHeaderCell.m in Sources */,
 				F53A05611D518F32009DD489 /* JGHOperationScoreListCell.m in Sources */,
 				36067BCE1C97F915001AE22C /* NewFriendTableViewCell.m in Sources */,
 				2048E8EA1D4B369E00A2C024 /* JGHSetAlmostPromptViewController.m in Sources */,
@@ -9264,7 +9394,6 @@
 				20F025441D70026100D7D7B6 /* JGHPlayBaseInfoCell.m in Sources */,
 				20F7D4531D88E7FC00302406 /* UIDevice+FCUUID.m in Sources */,
 				36D39B311BCCD85C00C0B197 /* UIView+ChangeFrame.m in Sources */,
-				20203B211D9B60CC009A75F3 /* JGHPublishEventCell.m in Sources */,
 				F5AEF7351D41B98E009A8C34 /* JGLAddPlayerTableViewCell.m in Sources */,
 				F5AEF73D1D41B98E009A8C34 /* JGDHistoryScoreShowTableViewCell.m in Sources */,
 				F5C803081DAB6F1B003046FD /* JGDSortTableViewCell.m in Sources */,
@@ -9299,6 +9428,7 @@
 				F5AEF6EA1D408F3F009A8C34 /* JGDNotActivityHisDetailViewController.m in Sources */,
 				F543ACC71CF42E1200C6B111 /* JGDisplayInfoTableViewCell.m in Sources */,
 				F5E1BB111D6B006100414727 /* ZXDataMatrixASCIIEncoder.m in Sources */,
+				20D514FA1DB63DA60006EFCB /* JGHEventRulesHeaderCell.m in Sources */,
 				F5E1BB091D6B006100414727 /* ZXResultPoint.m in Sources */,
 				209B93AB1D6EC65600A5BE10 /* JGHAddCostButtonCell.m in Sources */,
 				36BF00931BC772EF005B3CE2 /* NewsDetailController.m in Sources */,
@@ -9327,6 +9457,7 @@
 				F5B5498F1CE98F5B0091C962 /* JGTeamManageViewController.m in Sources */,
 				2012AD621D2BB19400F70E40 /* JGDActivityListViewController.m in Sources */,
 				F5E1BB621D6B006100414727 /* ZXPDF417Codeword.m in Sources */,
+				20D514EB1DB63DA60006EFCB /* JGHGameBaseHeaderSubCell.m in Sources */,
 				36E300FA1C3FF3F9005C3F08 /* MJRefreshConst.m in Sources */,
 				F5E1BB541D6B006100414727 /* ZXUPCAReader.m in Sources */,
 				20CA13711CE4929C00DA15B9 /* JGInvoiceTypeTextCell.m in Sources */,
@@ -9350,6 +9481,7 @@
 				F56F0B871CC60B0400A222F3 /* NoteHandlle.m in Sources */,
 				F54CC1861D83FA6800A194F2 /* JGDAlmostSetTableViewCell.m in Sources */,
 				82D595E91CE4604500CD9587 /* JGTeamPhotoViewController.m in Sources */,
+				20D514C31DB63D690006EFCB /* JGHMatchRoundModel.m in Sources */,
 				36BFFF5F1BC76D09005B3CE2 /* AFURLRequestSerialization.m in Sources */,
 				36DF6DFC1C08235900B60B67 /* TeamPhotoCollectionViewCell.m in Sources */,
 				36BFFF611BC76D09005B3CE2 /* AFURLSessionManager.m in Sources */,
@@ -9460,6 +9592,7 @@
 				829960DA1D23729C00E121A8 /* JGLAddBankNewsTableViewCell.m in Sources */,
 				F55426831D25100E00233B20 /* JGDWithDrawTeamMoneyViewController.m in Sources */,
 				F5E1B87E1D6AE13800414727 /* JGDGuestPayViewController.m in Sources */,
+				20D514F11DB63DA60006EFCB /* JGHGameSetCell.m in Sources */,
 				3660E1DF1BFC64020033B4D7 /* ScoredCardViewController.m in Sources */,
 				65B801001CD04D150077A324 /* DeatilModel.m in Sources */,
 				F5E1BB311D6B006100414727 /* ZXRSSExpandedCurrentParsingState.m in Sources */,
@@ -9475,6 +9608,7 @@
 				65319B7F1C967C960036DCF1 /* HomeHeadView.m in Sources */,
 				36067BAB1C96A9FB001AE22C /* ScreenViewController.m in Sources */,
 				36E300EE1C3FF3F9005C3F08 /* MJRefreshFooter.m in Sources */,
+				20D514EF1DB63DA60006EFCB /* JGHGameSetBaseCellCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

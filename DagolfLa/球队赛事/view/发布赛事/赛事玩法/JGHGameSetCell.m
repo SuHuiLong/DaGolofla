@@ -17,6 +17,8 @@
     self.gameSetLeft.constant = 25 *ProportionAdapter;
     
     self.imageW.constant = 35 *ProportionAdapter;
+    
+    self.downImageViewRight.constant = 15 *ProportionAdapter;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -24,5 +26,22 @@
 
     // Configure the view for the selected state
 }
+
+- (IBAction)gameSetCellBtn:(UIButton *)sender {
+    if (self.delegate) {
+        [self.delegate didSelectJGHGameSetCellBtn:sender];
+    }
+}
+
+- (void)configJGHGameSetCellTitleString:(NSString *)titleString andSelect:(NSInteger)select{
+    self.gameSet.text = titleString;
+    
+    if (select == 0) {
+        self.statusImageView.image = [UIImage imageNamed:@"gameSetNoSelect"];
+    }else{
+        self.statusImageView.image = [UIImage imageNamed:@"gameSetSelect"];
+    }
+}
+
 
 @end

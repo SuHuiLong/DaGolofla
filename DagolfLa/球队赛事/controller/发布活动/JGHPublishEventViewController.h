@@ -7,7 +7,6 @@
 //
 
 #import "ViewController.h"
-@class JGTeamAcitivtyModel;
 
 @interface JGHPublishEventViewController : ViewController
 
@@ -15,7 +14,6 @@
 
 @property (nonatomic, assign)NSInteger teamKey;//发布活动teamkey
 
-@property (nonatomic, strong)JGTeamAcitivtyModel *model;
 
 @property (strong, nonatomic) void (^refreshBlock)();
 

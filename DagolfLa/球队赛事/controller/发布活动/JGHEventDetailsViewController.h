@@ -7,7 +7,14 @@
 //
 
 #import "ViewController.h"
+@class JGTeamAcitivtyModel;
 
 @interface JGHEventDetailsViewController : ViewController
+
+@property (nonatomic, retain) UIImageView *imgProfile;
+
+@property (nonatomic, assign) NSInteger timeKey;
+
+@property (nonatomic, strong) JGTeamAcitivtyModel *model;
 
 @end
