@@ -112,7 +112,6 @@
         [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:strU]]];
     }
     else if (_isManage == YES){
-//        NSString* strMd = [JGReturnMD5Str getUserScoreWithTeamKey:_teamTimeKey userKey:[DEFAULF_USERID integerValue] srcKey:_activeTimeKey srcType:1];
         NSString* strMd = [JGReturnMD5Str getTeamBillInfoWithTeamKey:_teamKey userKey:[DEFAULF_USERID integerValue]];
         NSString* strU = [NSString stringWithFormat:@"%@&md5=%@",self.detailString,strMd];
         [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:strU]]];
@@ -311,15 +310,13 @@
     WKWebsiteDataStore *dateStore = [WKWebsiteDataStore defaultDataStore];
     [dateStore fetchDataRecordsOfTypes:[WKWebsiteDataStore allWebsiteDataTypes]
                      completionHandler:^(NSArray<WKWebsiteDataRecord *> * __nonnull records) {
-                         for (WKWebsiteDataRecord *record  in records)
-                         {
+        for (WKWebsiteDataRecord *record  in records)
+                    {
                              //                             if ( [record.displayName containsString:@"baidu"]) //取消备注，可以针对某域名清除，否则是全清
                              //                             {
-                             [[WKWebsiteDataStore defaultDataStore] removeDataOfTypes:record.dataTypes
-                                                                       forDataRecords:@[record]
-                                                                    completionHandler:^{
-                                                                        NSLog(@"Cookies for %@ deleted successfully",record.displayName);
-                                                                    }];
+                        [[WKWebsiteDataStore defaultDataStore] removeDataOfTypes:record.dataTypes
+                                                                       forDataRecords:@[record]completionHandler:^{
+                                                                       }];
                              //                             }
                          }
                      }];
