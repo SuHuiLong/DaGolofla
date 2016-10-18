@@ -60,6 +60,7 @@
 }
 -(void)createHeader
 {
+    //添加打球人页面，
     _viewHeader = [[UIView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, 100*screenWidth/375)];
     _viewHeader.backgroundColor = [UIColor whiteColor];
     _tableView.tableHeaderView = _viewHeader;
@@ -96,6 +97,7 @@
 
 -(void)chooseStyleClick:(UIButton *)btn
 {
+    //通讯录成员添加按钮
     if (btn.tag == 100) {
         JGLAddressAddViewController* addVc = [[JGLAddressAddViewController alloc]init];
         //选择好的通讯录成员

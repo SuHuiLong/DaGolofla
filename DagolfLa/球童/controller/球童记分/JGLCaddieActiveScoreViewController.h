@@ -10,14 +10,14 @@
 #import "JGLChooseScoreModel.h"
 @interface JGLCaddieActiveScoreViewController : ViewController
 
-
+///活动积分
 @property (strong, nonatomic) JGLChooseScoreModel* model;
 
-@property (strong, nonatomic) NSString* userNamePlayer;
+@property (strong, nonatomic) NSString* userNamePlayer;//打球人姓名
 
-@property (strong, nonatomic) NSNumber* userKeyPlayer;
+@property (strong, nonatomic) NSNumber* userKeyPlayer;//打球人userkey
 
-@property (strong, nonatomic) NSString* userMobilePlayer;
+@property (strong, nonatomic) NSString* userMobilePlayer;//打球人手机号
 
 
 

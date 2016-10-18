@@ -114,18 +114,21 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 0) {
+        //活动名称
         JGLChoosesScoreTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"JGLChoosesScoreTableViewCell" forIndexPath:indexPath];
         [cell showLiveData:_model];
         return cell;
 
     }
     else{
+        //title
         if (indexPath.row == 0) {
             JGLScoreLiveHeadTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"JGLScoreLiveHeadTableViewCell" forIndexPath:indexPath];
             cell.backgroundColor = [UITool colorWithHexString:@"ecf7ef" alpha:1];
             return cell;
         }
         else{
+            //同一个cell，加载数据
             JGLScoreLiveDetailTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"JGLScoreLiveDetailTableViewCell" forIndexPath:indexPath];
                 [cell showData:_dataArray[indexPath.row - 1]];
             return cell;

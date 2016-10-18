@@ -10,6 +10,8 @@
 
 @interface JGLTeeChooseView : UIView
 
+
+//tee台的视图
 @property (strong, nonatomic) NSMutableArray* dataArray;
 
 @property (copy, nonatomic) void (^blockTeeName)(NSString* );

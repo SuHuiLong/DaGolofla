@@ -68,7 +68,6 @@
                         JGLCompeteMemberModel *model = [[JGLCompeteMemberModel alloc] init];
                         [model setValuesForKeysWithDictionary:dict];
                         [arr addObject:model];
-                        
                     }
                     [_dataModeArray addObject:arr];
                 }

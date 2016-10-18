@@ -11,11 +11,11 @@
 @interface JGLCaddieChooseStyleViewController : ViewController
 
 
-@property (strong, nonatomic) NSString* userNamePlayer;
+@property (strong, nonatomic) NSString* userNamePlayer;//打球人姓名
 
-@property (strong, nonatomic) NSNumber* userKeyPlayer;
+@property (strong, nonatomic) NSNumber* userKeyPlayer;//打球人userkey
 
-@property (strong, nonatomic) NSString* userMobilePlayer;
+@property (strong, nonatomic) NSString* userMobilePlayer;//打球人手机号
 
 
 @end

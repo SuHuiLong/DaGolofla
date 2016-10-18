@@ -339,7 +339,7 @@
         actVC.userKey = model.userKey;
         actVC.scoreKey = model.scoreKey;
         actVC.srcKey = _activity;
-        actVC.fromManeger = 6;
+        actVC.fromManeger = 6;// 从非管理页面进入传 6
         [self.navigationController pushViewController:actVC animated:YES];
     }
 

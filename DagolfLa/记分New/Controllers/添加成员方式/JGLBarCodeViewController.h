@@ -9,7 +9,7 @@
 #import "ViewController.h"
 
 @interface JGLBarCodeViewController : ViewController
-
+//二维码添加好友
 @property (copy, nonatomic) void (^blockDict)(NSMutableDictionary* );
 
 

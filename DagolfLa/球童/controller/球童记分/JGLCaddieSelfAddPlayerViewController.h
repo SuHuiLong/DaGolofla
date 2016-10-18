@@ -8,10 +8,15 @@
 
 #import "ViewController.h"
 
+//添加打球人界面，
+
+
 @interface JGLCaddieSelfAddPlayerViewController : ViewController
 
 
-@property (copy, nonatomic) void (^blockSurePlayer)(NSMutableDictionary *);
+@property (copy, nonatomic) void (^blockSurePlayer)(NSMutableDictionary *);//之前还有个功能暂未实现：添加打球人将数据返回到上一层页面，再回当前页面没有带值过来。
+//一直没有解决
+
 
 @property (strong, nonatomic) NSString* strPlayerName;
 

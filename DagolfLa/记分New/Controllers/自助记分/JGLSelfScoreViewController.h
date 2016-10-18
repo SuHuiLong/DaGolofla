@@ -10,4 +10,6 @@
 
 @interface JGLSelfScoreViewController : ViewController
 
+
+//普通积分，类似于球童记分内容
 @end

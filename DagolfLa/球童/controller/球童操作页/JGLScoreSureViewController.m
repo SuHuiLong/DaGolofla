@@ -10,6 +10,9 @@
 #import "JGLCaddieChooseStyleViewController.h"
 #import "JGLCaddieSelfScoreViewController.h"
 #import "JGLCaddieScoreViewController.h"
+
+
+//扫描而二维码后跳转的页面
 @interface JGLScoreSureViewController ()
 
 @end

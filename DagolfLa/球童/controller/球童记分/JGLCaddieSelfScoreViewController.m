@@ -334,6 +334,7 @@
                 return cell;
             }
             else{
+                //最后一行cell，按钮，点击添加打球人跳转页面
                 JGLChangePlayerTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"JGLChangePlayerTableViewCell" forIndexPath:indexPath];
                 cell.selectionStyle = UITableViewCellSelectionStyleNone;
                 return cell;
@@ -424,9 +425,11 @@
             [_chooseView removeFromSuperview];
             _isTee = NO;
         }
+        //选择过得球场区域数目，如果等于2则判断取消一项
         NSString *str = [_dictArea objectForKey:[NSNumber numberWithInteger:indexPath.row]];
         _isClickArea = YES;
         if (_dictArea.count == 2) {
+            //这个判断是当从字典中取键，拿到了之后比较，若键不相等，则是还未点选，提示信息
             NSArray* arrNum = [_dictArea allKeys];
             if (indexPath.row !=  [arrNum[0] integerValue] && indexPath.row !=  [arrNum[1] integerValue]) {
                 [[ShowHUD showHUD]showToastWithText:@"请先取消一项，再点选" FromView:self.view];
@@ -470,6 +473,7 @@
         [self.navigationController pushViewController:dateVc animated:YES];
     }
     else{
+        //当index为1的时候，必有数据，所以此时时可以直接进行Tee台操作的
         if (indexPath.row == 1) {
             
             if (![Helper isBlankString:_strBall]) {
@@ -500,6 +504,7 @@
             
         }
         else{
+            //这个是跳转下一个页面。。最后一个按钮，用来添加打球人的
             if (indexPath.row > 0) {
                 if (indexPath.row  == _dictPeo.count + 2) {
                     JGLCaddieSelfAddPlayerViewController* addVc = [[JGLCaddieSelfAddPlayerViewController alloc]init];
@@ -518,6 +523,8 @@
                     
                 }
                 else{
+                    //这是另外的打球人，初始化时没有，添加打球人才会展示，最多显示3个
+                    //和自己一共4个人
                     if (![Helper isBlankString:_strBall]) {
                         if (_isTee == NO) {
                             JGLPlayerNameTableViewCell* cell = [tableView cellForRowAtIndexPath:indexPath];

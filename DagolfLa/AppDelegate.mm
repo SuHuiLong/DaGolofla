@@ -262,28 +262,30 @@
     [XHLaunchAd showWithAdFrame:CGRectMake(0, 0,self.window.bounds.size.width, self.window.bounds.size.height) setAdImage:^(XHLaunchAd *launchAd) {
         
         //未检测到广告数据,启动页停留时间,不设置默认为3,(设置4即表示:启动页显示了4s,还未检测到广告数据,就自动进入window根控制器)
-        //launchAd.noDataDuration = 4;
+        launchAd.noDataDuration = 3;
         
-        //获取广告数据
-        [self requestImageData:^(NSString *imgUrl, NSInteger duration, NSString *openUrl) {
-            
-            /**
-             *  2.设置广告数据
-             */
-            
-//            WEAKLAUNCHAD;//定义一个weakLaunchAd
-            [launchAd setImageUrl:imgUrl duration:duration skipType:SkipTypeTimeText options:XHWebImageDefault completed:^(UIImage *image, NSURL *url) {
+        
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            //获取广告数据
+            [self requestImageData:^(NSString *imgUrl, NSInteger duration, NSString *openUrl) {
                 
-                //异步加载图片完成回调(若需根据图片尺寸,刷新广告frame,可在这里操作)
-                //weakLaunchAd.adFrame = ...;
+                /**
+                 *  2.设置广告数据
+                 */
                 
-            } click:^{
-                //打开网页
+                //            WEAKLAUNCHAD;//定义一个weakLaunchAd
+                [launchAd setImageUrl:imgUrl duration:duration skipType:SkipTypeTimeText options:XHWebImageDefault completed:^(UIImage *image, NSURL *url) {
+                    
+                    //异步加载图片完成回调(若需根据图片尺寸,刷新广告frame,可在这里操作)
+                    //weakLaunchAd.adFrame = ...;
+                    
+                } click:^{
+                    //打开网页
+                    
+                }];
                 
             }];
-            
-        }];
-        
+        });
     } showFinish:^{
         self.window.rootViewController = [[TabBarController alloc]init];
         self.window.backgroundColor = [UIColor whiteColor];

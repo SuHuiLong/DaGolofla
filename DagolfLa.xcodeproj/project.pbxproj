@@ -631,6 +631,9 @@
 		823277131D2E816E005F9BD3 /* JGLDrawalRewardTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 823277121D2E816E005F9BD3 /* JGLDrawalRewardTableViewCell.m */; };
 		823A88A71D702B7E00D0D1AB /* JGLViewCityChoose.m in Sources */ = {isa = PBXBuildFile; fileRef = 823A88A61D702B7E00D0D1AB /* JGLViewCityChoose.m */; };
 		823C149D1CEEF0B5000AB612 /* JGLTeamMemberModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 823C149C1CEEF0B5000AB612 /* JGLTeamMemberModel.m */; };
+		82434E3A1DB49A31006DE8DD /* JGLGroupRoundModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 82434E391DB49A31006DE8DD /* JGLGroupRoundModel.m */; };
+		82434E3D1DB49E12006DE8DD /* JGLGroupCombatModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 82434E3C1DB49E12006DE8DD /* JGLGroupCombatModel.m */; };
+		82434E401DB4A026006DE8DD /* JGLGroupSignUpMemberModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 82434E3F1DB4A026006DE8DD /* JGLGroupSignUpMemberModel.m */; };
 		8252E8641D360D6200448404 /* JGLScoreNewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8252E8631D360D6200448404 /* JGLScoreNewViewController.m */; };
 		8252E86A1D360DA500448404 /* JGLScoreNewTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8252E8691D360DA500448404 /* JGLScoreNewTableViewCell.m */; };
 		8252E86E1D36212E00448404 /* JGLAddPlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8252E86D1D36212E00448404 /* JGLAddPlayerViewController.m */; };
@@ -2319,6 +2322,12 @@
 		823A88A61D702B7E00D0D1AB /* JGLViewCityChoose.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGLViewCityChoose.m; sourceTree = "<group>"; };
 		823C149B1CEEF0B5000AB612 /* JGLTeamMemberModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGLTeamMemberModel.h; sourceTree = "<group>"; };
 		823C149C1CEEF0B5000AB612 /* JGLTeamMemberModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGLTeamMemberModel.m; sourceTree = "<group>"; };
+		82434E381DB49A31006DE8DD /* JGLGroupRoundModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGLGroupRoundModel.h; sourceTree = "<group>"; };
+		82434E391DB49A31006DE8DD /* JGLGroupRoundModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGLGroupRoundModel.m; sourceTree = "<group>"; };
+		82434E3B1DB49E12006DE8DD /* JGLGroupCombatModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGLGroupCombatModel.h; sourceTree = "<group>"; };
+		82434E3C1DB49E12006DE8DD /* JGLGroupCombatModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGLGroupCombatModel.m; sourceTree = "<group>"; };
+		82434E3E1DB4A026006DE8DD /* JGLGroupSignUpMemberModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGLGroupSignUpMemberModel.h; sourceTree = "<group>"; };
+		82434E3F1DB4A026006DE8DD /* JGLGroupSignUpMemberModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGLGroupSignUpMemberModel.m; sourceTree = "<group>"; };
 		8252E8621D360D6200448404 /* JGLScoreNewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGLScoreNewViewController.h; sourceTree = "<group>"; };
 		8252E8631D360D6200448404 /* JGLScoreNewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGLScoreNewViewController.m; sourceTree = "<group>"; };
 		8252E8681D360DA500448404 /* JGLScoreNewTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGLScoreNewTableViewCell.h; sourceTree = "<group>"; };
@@ -3523,6 +3532,7 @@
 		20203B101D9B5EFF009A75F3 /* model */ = {
 			isa = PBXGroup;
 			children = (
+				82434E371DB499C0006DE8DD /* 分组 */,
 				F54E16191DB23B4D0018B3AB /* 对抗成员列表 */,
 				20203B191D9B5FE6009A75F3 /* 发布赛事 */,
 			);
@@ -6315,6 +6325,19 @@
 			path = SDPhotoBrowser;
 			sourceTree = "<group>";
 		};
+		82434E371DB499C0006DE8DD /* 分组 */ = {
+			isa = PBXGroup;
+			children = (
+				82434E381DB49A31006DE8DD /* JGLGroupRoundModel.h */,
+				82434E391DB49A31006DE8DD /* JGLGroupRoundModel.m */,
+				82434E3B1DB49E12006DE8DD /* JGLGroupCombatModel.h */,
+				82434E3C1DB49E12006DE8DD /* JGLGroupCombatModel.m */,
+				82434E3E1DB4A026006DE8DD /* JGLGroupSignUpMemberModel.h */,
+				82434E3F1DB4A026006DE8DD /* JGLGroupSignUpMemberModel.m */,
+			);
+			path = "分组";
+			sourceTree = "<group>";
+		};
 		8252E85E1D360D1000448404 /* 记分New */ = {
 			isa = PBXGroup;
 			children = (
@@ -8843,6 +8866,7 @@
 				206ECF971D4756D900880234 /* UUDatePicker.m in Sources */,
 				F5E1BAD51D6B006100414727 /* ZXSMSMMSResultParser.m in Sources */,
 				828FAA4E1D62F839001F53C8 /* JGLCaddieSelfAddPlayerViewController.m in Sources */,
+				82434E401DB4A026006DE8DD /* JGLGroupSignUpMemberModel.m in Sources */,
 				20F025581D7040AD00D7D7B6 /* JGHAddApplyTeamPlaysViewController.m in Sources */,
 				F554267C1D2277B900233B20 /* JGDCertificationViewController.m in Sources */,
 				82F2545C1D3CCCB2008BE0AF /* JGLFriendAddTableViewCell.m in Sources */,
@@ -8994,6 +9018,7 @@
 				654A031B1CC89F70007F5243 /* PersonHomeController.m in Sources */,
 				82E6A70D1CF5DDB8009DD179 /* JGLTeamEditViewController.m in Sources */,
 				82ABF1D21D1C0847004493DB /* JGLPayListTableViewCell.m in Sources */,
+				82434E3D1DB49E12006DE8DD /* JGLGroupCombatModel.m in Sources */,
 				20F7D4521D88E7FC00302406 /* KeyChainStore.m in Sources */,
 				F53A05701D518F32009DD489 /* JGHSimpleScorePepoleBaseCell.m in Sources */,
 				F5E1BB041D6B006100414727 /* ZXErrors.m in Sources */,
@@ -9146,6 +9171,7 @@
 				2064DE961D3C715300F0D52A /* JGHRetrieveScoreViewController.m in Sources */,
 				F55426781D226DBD00233B20 /* JGDChangePasswordViewController.m in Sources */,
 				36BF00851BC772EF005B3CE2 /* MyTradeViewController.m in Sources */,
+				82434E3A1DB49A31006DE8DD /* JGLGroupRoundModel.m in Sources */,
 				821DB9D01D5DB5F300C882C2 /* JGLCaddieModel.m in Sources */,
 				F53A05611D518F32009DD489 /* JGHOperationScoreListCell.m in Sources */,
 				36067BCE1C97F915001AE22C /* NewFriendTableViewCell.m in Sources */,

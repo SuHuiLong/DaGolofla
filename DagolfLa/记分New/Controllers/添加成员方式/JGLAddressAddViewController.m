@@ -373,7 +373,8 @@
     
     cell.labelMobile.text = [self.listArray[indexPath.section][indexPath.row] mobile];
     NSString *str=[_dictFinish objectForKey:[self.listArray[indexPath.section][indexPath.row] mobile]];
-    
+    //从存储人员的字典中按照userid查找信息，如果str为空，不勾选，否则勾选
+
     if ([Helper isBlankString:str]==NO) {
         cell.imgvState.image=[UIImage imageNamed:@"gou_x"];
     }else{
@@ -386,6 +387,8 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (_dictFinish.count != 0) {
+        //lastindex是上一层页面一共的人数，当他大于三个或者和本页选择人数相加大于3个，则提示信息
+        //否则进入else
         if (_lastIndex >= 3 || (_lastIndex == 0 ? (_dictFinish.count >= 3) : _dictFinish.count + _lastIndex >= 3)) {
             NSString *str=[_dictFinish objectForKey:[self.listArray[indexPath.section][indexPath.row] mobile]];
             if ([Helper isBlankString:str]==YES) {
@@ -398,12 +401,16 @@
             }
     
         }
+        //当点选人数不超过三个，根据str找到当前点击的index是否有数据
+        //
         else{
             NSString *str=[_dictFinish objectForKey:[self.listArray[indexPath.section][indexPath.row] mobile]];
+            //有数据按userid存入数据
             if ([Helper isBlankString:str]==YES) {
                 NSLog(@"%td   %td",indexPath.section,indexPath.row);
                 [_dictFinish setObject:[self.listArray[indexPath.section][indexPath.row] userName] forKey:[self.listArray[indexPath.section][indexPath.row] mobile]];
             }else{
+                //删除该键值对
                 [_dictFinish removeObjectForKey:[self.listArray[indexPath.section][indexPath.row] mobile]];
             }
             

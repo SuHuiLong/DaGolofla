@@ -103,5 +103,7 @@
 + (NSString *)returnUrlString:(NSString *)url WithKey:(NSString *)key;
 
 + (BOOL)returnPriceString:(NSString *)price;
+//阿拉伯数字转成中文数字  例如：9-->>九
++(NSString *)numTranslation:(NSString *)arebic;
 
 @end

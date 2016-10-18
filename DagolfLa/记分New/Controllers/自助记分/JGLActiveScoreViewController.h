@@ -10,5 +10,7 @@
 #import "JGLChooseScoreModel.h"
 @interface JGLActiveScoreViewController : ViewController
 
+
+//活动积分，类似于球童活动积分内容
 @property (strong, nonatomic) JGLChooseScoreModel* model;
 @end

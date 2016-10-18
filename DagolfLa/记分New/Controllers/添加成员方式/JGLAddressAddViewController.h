@@ -11,7 +11,7 @@
 #import <AddressBook/AddressBook.h>
 #import <AddressBookUI/AddressBookUI.h>
 @interface JGLAddressAddViewController : ViewController<ABPeoplePickerNavigationControllerDelegate>
-
+///通讯录添加好友
 @property (copy, nonatomic) void (^blockAddressPeople)(NSMutableDictionary* dict);
 
 @property (strong, nonatomic) NSMutableDictionary* dictFinish;

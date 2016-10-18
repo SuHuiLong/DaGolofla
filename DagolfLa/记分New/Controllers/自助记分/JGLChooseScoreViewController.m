@@ -153,7 +153,7 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-
+    //显示最近三天的活动数据
     JGLChoosesScoreTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"JGLChoosesScoreTableViewCell" forIndexPath:indexPath];
     [cell showData:_dataArray[indexPath.section]];
     if (![Helper isBlankString:[_dataArray[indexPath.section] beginDate]]) {

@@ -19,7 +19,6 @@
     UIView* _viewHeader;
     
     
-    
     BOOL _isClick;
 }
 @end
@@ -38,13 +37,13 @@
     UIView* view = [[UIView alloc]initWithFrame:CGRectMake(1, 1, 1, 1)];
     [self.view addSubview:view];
     //    if (_dictPeople.count == 0) {
-    _dictPeople = [[NSMutableDictionary alloc]init];
+    _dictPeople = [[NSMutableDictionary alloc]init];//添加的成员
     //    }
     //    if (_peoFriend.count == 0) {
-    _peoFriend  = [[NSMutableDictionary alloc]init];
+    _peoFriend  = [[NSMutableDictionary alloc]init];//球友数据
     //    }
     //    if (_peoAddress.count == 0) {
-    _peoAddress = [[NSMutableDictionary alloc]init];
+    _peoAddress = [[NSMutableDictionary alloc]init];//通讯录数据
     //    }
     
     
@@ -56,13 +55,14 @@
 -(void)finishAction
 {
     //    [_dictFin setObject:[[NSUserDefaults standardUserDefaults]objectForKey:@"userName"] forKey:DEFAULF_USERID];
-    _blockSurePlayer(_dictPeople);
+    _blockSurePlayer(_dictPeople);//返回用户数据倒上一层页面
     [self.navigationController popViewControllerAnimated:YES];
     
 }
 
 -(void)createHeader
 {
+    //扫码界面
     _viewHeader = [[UIView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, 100*screenWidth/375)];
     _viewHeader.backgroundColor = [UIColor clearColor];
     _tableView.tableHeaderView = _viewHeader;
@@ -174,24 +174,22 @@
         if (indexPath.row == 0) {
             cell.labelName.hidden = YES;
             cell.imgvIcon.hidden = YES;
-            cell.labelTitle.text = @"已添加打球人";
+            cell.labelTitle.text = @"已添加打球人";//titile，可以不用管
         }
         else{
             if (indexPath.row == 1) {
                 cell.labelTitle.hidden = YES;
                 cell.imgvIcon.hidden = YES;
-                cell.labelName.text = _strPlayerName;
+                cell.labelName.text = _strPlayerName;//显示第一个人的名字，这是球童添加的那个打球人
             }
             else{
                 cell.labelTitle.hidden = YES;
-                
                 if (_dictPeople.count != 0) {
-                    NSLog(@"%td",indexPath.row);
-                    if ([_dictPeople allValues].count < 4) {
+                    if ([_dictPeople allValues].count < 4) {//添加的成员必须小于4个人
                         if (indexPath.row-2 < [_dictPeople allValues].count) {
                             if (_isClick == YES) {
                                 if (indexPath.row-2 < [_dictPeople allValues].count) {
-                                    cell.labelName.text = [_dictPeople allValues][indexPath.row - 2];
+                                    cell.labelName.text = [_dictPeople allValues][indexPath.row - 2];//
                                 }
                                 else{
                                     cell.labelName.text = @"暂无成员，请添加";
@@ -225,11 +223,12 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 1) {
         if (indexPath.row > 0) {
-            if ([_dictPeople allValues].count < 4) {
-                if (indexPath.row-2 < [_dictPeople allValues].count) {
+            if ([_dictPeople allValues].count < 4) {//数量小于四
+                if (indexPath.row-2 < [_dictPeople allValues].count) {//点击的行数小于人数个数
                     [_peoAddress removeObjectForKey:[_dictPeople allKeys][indexPath.row-2]];
                     [_peoFriend removeObjectForKey:[_dictPeople allKeys][indexPath.row-2]];
                     [_dictPeople removeObjectForKey:[_dictPeople allKeys][indexPath.row-2]];
+                    //根据key，删除对应的人，
                     [_tableView reloadData];
                     _isClick = YES;
                 }

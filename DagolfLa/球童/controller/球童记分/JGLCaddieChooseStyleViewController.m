@@ -25,7 +25,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    //球童记分前，选择活动积分或者普通积分的那个列表
     _page = 0;
     _dataArray = [[NSMutableArray alloc]init];
     self.title = @"选择记分对象";
@@ -155,7 +155,7 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    
+    //活动数据列表，当球童添加的那个打球人最近2天有活动，则展示到这个列表中
     JGLChoosesScoreTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"JGLChoosesScoreTableViewCell" forIndexPath:indexPath];
     [cell showData:_dataArray[indexPath.section]];
     if (![Helper isBlankString:[_dataArray[indexPath.section] beginDate]]) {

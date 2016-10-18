@@ -65,7 +65,7 @@
     _isClickArea = NO;
     
     NSString* str = [Helper returnCurrentDateString];
-    NSArray* arr = [str componentsSeparatedByString:@" "];
+    NSArray* arr = [str componentsSeparatedByString:@" "];///截断时间，存入字符串
     _strDateBegin = arr[0];
     [self uiConfig];
     [self createScoreBtn];

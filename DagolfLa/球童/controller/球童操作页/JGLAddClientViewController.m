@@ -68,8 +68,6 @@
     NSString *mediaType = AVMediaTypeVideo;
     AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaType:mediaType];
     if(authStatus == AVAuthorizationStatusRestricted || authStatus == AVAuthorizationStatusDenied){
-        
-        NSLog(@"相机权限受限");
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil message:@"请在设备的“设置-隐私-相机”中允许访问相机。" preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
             [self.navigationController popViewControllerAnimated:YES];
@@ -216,7 +214,7 @@
     [scanNetImageView.layer addAnimation:scanNetAnimation forKey:nil];
     [scanWindow addSubview:scanNetImageView];
     //    scanNetImageView.backgroundColor = [UIColor orangeColor];
-    
+    //这是扫码的边框
     UIImageView *backRoundImgv = [[UIImageView alloc]initWithFrame:CGRectMake( 0, 0, QRCodeWidth,QRCodeWidth)];
     backRoundImgv.image = [UIImage imageNamed:@"saoma_kuang"];
     [scanWindow addSubview:backRoundImgv];
@@ -270,7 +268,7 @@
         //初始化链接对象
         _session = [[AVCaptureSession alloc]init];
         //高质量采集率
-        [_session setSessionPreset:AVCaptureSessionPresetHigh];
+        [_session setSessionPreset:AVCaptureSessionPresetHigh];//这个设置为high，扫描会很快，但是对性能要求高，
         
         [_session addInput:input];
         [_session addOutput:_output];
@@ -306,7 +304,7 @@
 }
 
 #pragma mark - lineAnimation
-- (void)lineAnimation {
+- (void)lineAnimation {//扫码时横线的动画
     CGFloat width = 250;
     [UIView animateWithDuration:0.9 animations:^{
         CGRect frame = self.line.frame;

@@ -53,7 +53,7 @@
     
     _keyArray        = [[NSMutableArray alloc]init];
     _listArray       = [[NSMutableArray alloc]init];
-    if (_dictFinish.count == 0) {
+    if (_dictFinish.count == 0) {//上层界面如果传值过来就不用创建，否则初始化数组
         _dictFinish      = [[NSMutableDictionary alloc]init];
     }
     _dataArray       = [[NSMutableArray alloc]init];
@@ -62,14 +62,14 @@
     [self uiConfig];
     [self createHeadSearch];
 }
-- (void)viewWillDisappear:(BOOL)animated {
+- (void)viewWillDisappear:(BOOL)animated {//隐藏搜索框
     [super viewWillDisappear:animated];
     if (self.searchController.active) {
         self.searchController.active = NO;
         self.searchController.searchBar.hidden = YES;
     }
 }
-- (void)viewWillAppear:(BOOL)animated{
+- (void)viewWillAppear:(BOOL)animated{//展示搜索框
     [super viewWillAppear:animated];
     self.searchController.searchBar.hidden = NO;
     [_tableView reloadData];
@@ -123,6 +123,7 @@
 
 
 #pragma mark - 下载数据
+//1.0的借口，可能要替换
 - (void)downLoadData:(int)page isReshing:(BOOL)isReshing{
     [_dictData setObject:DEFAULF_USERID forKey:@"userId"];
     [_dictData setObject:@0 forKey:@"otherUserId"];
@@ -130,7 +131,7 @@
     [_dictData setObject:@0 forKey:@"rows"];
     [[PostDataRequest sharedInstance] postDataRequest:@"UserFollow/querbyUserFollowList.do" parameter:_dictData success:^(id respondsData) {
         NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:respondsData options:NSJSONReadingMutableContainers error:nil];
-        
+        //拿到数据，model接手后存入数组排序
         if ([[dict objectForKey:@"success"] boolValue]) {
             NSArray *array = [dict objectForKey:@"rows"];
             NSMutableArray *allFriarr = [[NSMutableArray alloc] init];
@@ -153,7 +154,6 @@
             self.listArray = [[NSMutableArray alloc]initWithArray:[PYTableViewIndexManager archiveNumbers:allFriarr]];
             
             _keyArray = [[NSMutableArray alloc]initWithObjects:@"A",@"B",@"C",@"D",@"E",@"F",@"G",@"H",@"I",@"J",@"K",@"L",@"M",@"N",@"O",@"P",@"Q",@"R",@"S",@"T",@"U",@"V",@"W",@"X",@"Y",@"Z",@"#", nil];
-            
             for (int i = (int)self.listArray.count-1; i>=0; i--) {
                 if ([self.listArray[i] count] == 0) {
                     [self.keyArray removeObjectAtIndex:i];
@@ -212,22 +212,18 @@
 {
 
     JGLFriendAddTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"JGLFriendAddTableViewCell" forIndexPath:indexPath];
-    
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    
     MyattenModel *model = self.listArray[indexPath.section][indexPath.row];
     NoteModel *modell = [NoteHandlle selectNoteWithUID:model.otherUserId];
+    //判断用户的备注是否为空，不为空则显示备注，否则显示用户信息
     if ([modell.userremarks isEqualToString:@"(null)"] || [modell.userremarks isEqualToString:@""] || modell.userremarks == nil) {
         
     }else{
         model.userName = modell.userremarks;
     }
     cell.myModel = model;
-    
-    
-    
     NSString *str=[_dictFinish objectForKey:[self.listArray[indexPath.section][indexPath.row] otherUserId]];
-    
+    //从存储人员的字典中按照userid查找信息，如果str为空，不勾选，否则勾选
     if ([Helper isBlankString:str]==NO) {
         cell.imgvState.image=[UIImage imageNamed:@"gou_x"];
     }else{
@@ -243,6 +239,8 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (_dictFinish.count != 0) {//已选择过
+        //lastindex是上一层页面一共的人数，当他大于三个或者和本页选择人数相加大于3个，则提示信息
+        //否则进入else
         if (_lastIndex >= 3 || (_lastIndex == 0 ? (_dictFinish.count >= 3) : _dictFinish.count + _lastIndex >= 3)) {
             NSString *str=[_dictFinish objectForKey:[self.listArray[indexPath.section][indexPath.row] otherUserId]];
             if ([Helper isBlankString:str]==YES) {
@@ -254,13 +252,16 @@
                 [_tableView reloadRowsAtIndexPaths:indexArray withRowAnimation:UITableViewRowAnimationAutomatic];
             }
         }
+        //当点选人数不超过三个，根据str找到当前点击的index是否有数据
+        //
         else{
             NSString *str=[_dictFinish objectForKey:[self.listArray[indexPath.section][indexPath.row] otherUserId]];
             if ([Helper isBlankString:str]==YES) {
-                
+                //有数据按userid存入数据
                 [_dictFinish setObject:[self.listArray[indexPath.section][indexPath.row] userName] forKey:[self.listArray[indexPath.section][indexPath.row] otherUserId]];
                 
             }else{
+                //删除该键值对
                 [_dictFinish removeObjectForKey:[self.listArray[indexPath.section][indexPath.row] otherUserId]];
             }
             
@@ -270,10 +271,12 @@
         }
     }
     else{//第一次勾选
+        //这个基本可以不考虑
         if (_lastIndex >= 3 || (_lastIndex == 0 ? (_dictFinish.count >= 3) : _dictFinish.count + _lastIndex >= 3)) {
             [[ShowHUD showHUD]showToastWithText:@"您最多只能选择3个人" FromView:self.view];
             
         }
+        //存入新数据，和258行一样
         else{
             NSString *str=[_dictFinish objectForKey:[self.listArray[indexPath.section][indexPath.row] otherUserId]];
             if ([Helper isBlankString:str]==YES) {
