@@ -82,9 +82,9 @@
 - (void)matchData{
     
     NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
-    [dic setObject:@244 forKey:@"userKey"];
-    [dic setObject:@122 forKey:@"matchKey"];
-    [dic setObject:[Helper md5HexDigest:@"matchKey=122&userKey=244dagolfla.com"] forKey:@"md5"];
+    [dic setObject:DEFAULF_USERID forKey:@"userKey"];
+    [dic setObject:self.matchKey forKey:@"matchKey"];
+    [dic setObject:[Helper md5HexDigest:[NSString stringWithFormat:@"matchKey=%@&userKey=%@dagolfla.com", self.matchKey, DEFAULF_USERID]] forKey:@"md5"];
     
     [[JsonHttp jsonHttp] httpRequest:@"match/getMatchCombatList" JsonKey:nil withData:dic requestMethod:@"GET" failedBlock:^(id errType) {
         [[ShowHUD showHUD]showToastWithText:[NSString stringWithFormat:@"%@",errType] FromView:self.view];

@@ -124,7 +124,7 @@
     
         NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
         [dic setObject:@(_page) forKey:@"offset"];
-        [dic setObject:@244 forKey:@"userKey"];
+        [dic setObject:DEFAULF_USERID forKey:@"userKey"];
         [dic setObject:[Helper md5HexDigest:@"userKey=244dagolfla.com"] forKey:@"md5"];
         [[JsonHttp jsonHttp] httpRequest:@"match/getHotMatchList" JsonKey:nil withData:dic requestMethod:@"GET" failedBlock:^(id errType) {
             if (isReshing) {
@@ -254,11 +254,19 @@
     if (indexPath.row == 3) {
         
         JGDCheckScoreViewController *checkScoreV = [[JGDCheckScoreViewController alloc] init];
+        JGDConfrontChannelModel *model = self.dataArray[indexPath.row];
+        if (model.timeKey != nil) {
+            checkScoreV.matchKey = model.timeKey;
+        }
         [self.navigationController pushViewController:checkScoreV animated:YES];
         
     }else if (indexPath.row == 2) {
         
         JGDSetConfrontViewController *setConfVC = [[JGDSetConfrontViewController alloc] init];
+        JGDConfrontChannelModel *model = self.dataArray[indexPath.row];
+        if (model.timeKey != nil) {
+            setConfVC.matchKey = model.timeKey;
+        }
         [self.navigationController pushViewController:setConfVC animated:YES];
         
     }else{
@@ -289,8 +297,8 @@
     
     NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
     [dic setObject:@(_page) forKey:@"offset"];
-    [dic setObject:@244 forKey:@"userKey"];
-    [dic setObject:[Helper md5HexDigest:@"userKey=244dagolfla.com"] forKey:@"md5"];
+    [dic setObject:DEFAULF_USERID forKey:@"userKey"];
+    [dic setObject:[Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@dagolfla.com", DEFAULF_USERID]] forKey:@"md5"];
     
     
     [[JsonHttp jsonHttp] httpRequest:@"match/getMyMatchList" JsonKey:nil withData:dic requestMethod:@"GET" failedBlock:^(id errType) {
@@ -333,8 +341,8 @@
     
     NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
     [dic setObject:@(_page) forKey:@"offset"];
-    [dic setObject:@244 forKey:@"userKey"];
-    [dic setObject:[Helper md5HexDigest:@"userKey=244dagolfla.com"] forKey:@"md5"];
+    [dic setObject:DEFAULF_USERID forKey:@"userKey"];
+    [dic setObject:[Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@dagolfla.com", DEFAULF_USERID]] forKey:@"md5"];
     
     
 //    [[JsonHttp jsonHttp] httpRequest:@"match/getHotMatchList" JsonKey:nil withData:dic requestMethod:@"GET" failedBlock:^(id errType) {

@@ -412,7 +412,7 @@ static CGFloat ImageHeight  = 210.0;
             [dict setObject:TYPE_MATCH_HEAD forKey:@"nType"];
             [dict setObject:PHOTO_DAGOLFLA forKey:@"tag"];
             
-            [dict setObject:[NSString stringWithFormat:@"%@", DEFAULF_USERID] forKey:@"data"];
+            [dict setObject:[NSString stringWithFormat:@"%td", self.model.timeKey] forKey:@"data"];
             [[JsonHttp jsonHttp] httpRequestImageOrVedio:@"1" withData:dict andDataArray:imageArray failedBlock:^(id errType) {
                 NSLog(@"errType===%@", errType);
             } completionBlock:^(id data) {
