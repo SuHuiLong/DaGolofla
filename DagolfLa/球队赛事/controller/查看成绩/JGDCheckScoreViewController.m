@@ -82,9 +82,9 @@
 - (void)matchData{
     
     NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
-    [dic setObject:@244 forKey:@"userKey"];
-    [dic setObject:@122 forKey:@"matchKey"];
-    [dic setObject:[Helper md5HexDigest:@"matchKey=122&userKey=244dagolfla.com"] forKey:@"md5"];
+    [dic setObject:DEFAULF_USERID forKey:@"userKey"];
+    [dic setObject:self.matchKey forKey:@"matchKey"];
+    [dic setObject:[Helper md5HexDigest:[NSString stringWithFormat:@"matchKey=%@&userKey=%@dagolfla.com", self.matchKey, DEFAULF_USERID]] forKey:@"md5"];
     
     [[JsonHttp jsonHttp] httpRequest:@"match/getMatchCombatList" JsonKey:nil withData:dic requestMethod:@"GET" failedBlock:^(id errType) {
         [[ShowHUD showHUD]showToastWithText:[NSString stringWithFormat:@"%@",errType] FromView:self.view];
@@ -125,7 +125,12 @@
     UILabel *numberLB = [[UILabel alloc] initWithFrame:CGRectMake(0, 10 * ProportionAdapter, screenWidth, 25 * ProportionAdapter)];
     numberLB.textColor = [UIColor colorWithHexString:@"#313131"];
     numberLB.textAlignment = NSTextAlignmentCenter;
-    numberLB.text = [NSString stringWithFormat:@"第%td轮 啦啦啦",section];
+    
+    NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
+    formatter.numberStyle = kCFNumberFormatterRoundHalfDown;
+    NSString *string = [formatter stringFromNumber:[self.dataArray[section] objectForKey:@"round"]];
+    
+    numberLB.text = [NSString stringWithFormat:@"第%@轮 %@",string, [self.dataArray[section] objectForKey:@"matchformatName"]];
     numberLB.font = [UIFont systemFontOfSize:16 * ProportionAdapter];
     numberLB.backgroundColor = [UIColor whiteColor];
     
@@ -144,6 +149,16 @@
     NSDictionary *dic = [self.dataArray[indexPath.section] objectForKey:@"combatList"][indexPath.row];
     cell.leftLB.text = [dic objectForKey:@"teamName1"];
     cell.rightLB.text = [dic objectForKey:@"teamName2"];
+    
+    NSString *teamScore1 = [[dic objectForKey:@"teamScore1"] stringValue];
+    NSString *teamScore2 = [[dic objectForKey:@"teamScore2"] stringValue];
+    NSMutableAttributedString *scoreString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@ : %@", teamScore1, teamScore2]];
+    [scoreString addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"#60c8d4"] range:NSMakeRange(0, [teamScore1 length])];
+    [scoreString addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"#999999"] range:NSMakeRange([teamScore1 length] + 1, 1)];
+    [scoreString addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"#dc6b5d"] range:NSMakeRange([teamScore1 length] + 3, [teamScore2 length])];
+
+    cell.scoreLB.attributedText = scoreString;
+    
     return cell;
 }
 

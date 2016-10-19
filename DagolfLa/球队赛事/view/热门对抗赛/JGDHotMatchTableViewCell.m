@@ -59,7 +59,7 @@
         [self.contentView addSubview:addressImageV];
     
     
-        self.kindLB = [[UILabel alloc] initWithFrame:CGRectMake(280 * ProportionAdapter, 12 * ProportionAdapter, 90 * ProportionAdapter, 25 * ProportionAdapter)];
+        self.kindLB = [[UILabel alloc] initWithFrame:CGRectMake(290 * ProportionAdapter, 12 * ProportionAdapter, 75 * ProportionAdapter, 25 * ProportionAdapter)];
         self.kindLB.font = [UIFont systemFontOfSize:13 * ProportionAdapter];
         self.kindLB.textColor = [UIColor colorWithHexString:@"#fe6424"];
         self.kindLB.textAlignment = NSTextAlignmentRight;

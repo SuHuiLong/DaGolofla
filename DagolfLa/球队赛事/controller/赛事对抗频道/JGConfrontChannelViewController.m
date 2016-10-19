@@ -98,7 +98,7 @@
     
     self.tableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
     self.tableView.footer=[MJDIYBackFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRereshing)];
-//    [self.tableView.header beginRefreshing];
+    [self.tableView.header beginRefreshing];
     
     // Do any additional setup after loading the view.
 }
@@ -123,8 +123,8 @@
 - (void)downLoadData:(NSInteger)page isReshing:(BOOL)isReshing{
     
         NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
-        [dic setObject:@0 forKey:@"offset"];
-        [dic setObject:@244 forKey:@"userKey"];
+        [dic setObject:@(_page) forKey:@"offset"];
+        [dic setObject:DEFAULF_USERID forKey:@"userKey"];
         [dic setObject:[Helper md5HexDigest:@"userKey=244dagolfla.com"] forKey:@"md5"];
         [[JsonHttp jsonHttp] httpRequest:@"match/getHotMatchList" JsonKey:nil withData:dic requestMethod:@"GET" failedBlock:^(id errType) {
             if (isReshing) {
@@ -135,24 +135,24 @@
         } completionBlock:^(id data) {
             
             if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
-
-                if ([data objectForKey:@"teamList"]) {
+                
+                if ([data objectForKey:@"list"]) {
                     if (page == 0)
                     {
                         //清除数组数据
                         [self.dataArray removeAllObjects];
                     }
-                    for (NSDictionary *dicModel in data[@"activityList"]) {
-                        //                    JGTeamAcitivtyModel *model = [[JGTeamAcitivtyModel alloc] init];
-                        //                    [model setValuesForKeysWithDictionary:dicModel];
-                        //                    [self.myActivityArray addObject:model];
+                    for (NSDictionary *dicModel in data[@"list"]) {
+                        JGDConfrontChannelModel *model = [[JGDConfrontChannelModel alloc] init];
+                        [model setValuesForKeysWithDictionary:dicModel];
+                        [self.dataArray addObject:model];
                     }
                     [self.tableView reloadData];
                     
                     //            [self.myActivityArray addObjectsFromArray:[data objectForKey:@"teamList"]];
                     
                     _page++;
-                    [_tableView reloadData];
+//                    [_tableView reloadData];
                 }else {
                     //            [Helper alertViewWithTitle:@"没有更多球队" withBlock:^(UIAlertController *alertView) {
                     //                [self presentViewController:alertView animated:YES completion:nil];
@@ -232,9 +232,6 @@
     }
 
     
-    
-    
-    
     return self.sectionHeadView;
 }
 
@@ -257,11 +254,19 @@
     if (indexPath.row == 3) {
         
         JGDCheckScoreViewController *checkScoreV = [[JGDCheckScoreViewController alloc] init];
+        JGDConfrontChannelModel *model = self.dataArray[indexPath.row];
+        if (model.timeKey != nil) {
+            checkScoreV.matchKey = model.timeKey;
+        }
         [self.navigationController pushViewController:checkScoreV animated:YES];
         
     }else if (indexPath.row == 2) {
         
         JGDSetConfrontViewController *setConfVC = [[JGDSetConfrontViewController alloc] init];
+        JGDConfrontChannelModel *model = self.dataArray[indexPath.row];
+        if (model.timeKey != nil) {
+            setConfVC.matchKey = model.timeKey;
+        }
         [self.navigationController pushViewController:setConfVC animated:YES];
         
     }else{
@@ -292,9 +297,9 @@
     
     
     NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
-    [dic setObject:@0 forKey:@"offset"];
-    [dic setObject:@244 forKey:@"userKey"];
-    [dic setObject:[Helper md5HexDigest:@"userKey=244dagolfla.com"] forKey:@"md5"];
+    [dic setObject:@(_page) forKey:@"offset"];
+    [dic setObject:DEFAULF_USERID forKey:@"userKey"];
+    [dic setObject:[Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@dagolfla.com", DEFAULF_USERID]] forKey:@"md5"];
     
     
     [[JsonHttp jsonHttp] httpRequest:@"match/getMyMatchList" JsonKey:nil withData:dic requestMethod:@"GET" failedBlock:^(id errType) {
@@ -336,9 +341,9 @@
     
     
     NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
-    [dic setObject:@0 forKey:@"offset"];
-    [dic setObject:@244 forKey:@"userKey"];
-    [dic setObject:[Helper md5HexDigest:@"userKey=244dagolfla.com"] forKey:@"md5"];
+    [dic setObject:@(_page) forKey:@"offset"];
+    [dic setObject:DEFAULF_USERID forKey:@"userKey"];
+    [dic setObject:[Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@dagolfla.com", DEFAULF_USERID]] forKey:@"md5"];
     
     
 //    [[JsonHttp jsonHttp] httpRequest:@"match/getHotMatchList" JsonKey:nil withData:dic requestMethod:@"GET" failedBlock:^(id errType) {

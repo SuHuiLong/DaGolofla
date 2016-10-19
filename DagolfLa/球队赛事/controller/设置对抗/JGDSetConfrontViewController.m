@@ -90,9 +90,9 @@
     
     // 获取参赛球队列表
     NSMutableDictionary *matchDic = [[NSMutableDictionary alloc] init];
-    [matchDic setObject:@122 forKey:@"matchKey"];
-    [matchDic setObject:@244 forKey:@"userKey"];
-    [matchDic setObject:[Helper md5HexDigest:@"matchKey=122&userKey=244dagolfla.com"] forKey:@"md5"];
+    [matchDic setObject:self.matchKey forKey:@"matchKey"];
+    [matchDic setObject:DEFAULF_USERID forKey:@"userKey"];
+    [matchDic setObject:[Helper md5HexDigest:[NSString stringWithFormat:@"matchKey=%@&userKey=%@dagolfla.com", self.matchKey, DEFAULF_USERID]] forKey:@"md5"];
     
     [[JsonHttp jsonHttp] httpRequest:@"match/getMatchTeamList" JsonKey:nil withData:matchDic requestMethod:@"GET" failedBlock:^(id errType) {
         [[ShowHUD showHUD]showToastWithText:[NSString stringWithFormat:@"%@",errType] FromView:self.view];
@@ -116,9 +116,9 @@
 - (void)roundData{
     //  获取轮次
     NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
-    [dic setObject:@122 forKey:@"matchKey"];
-    [dic setObject:@244 forKey:@"userKey"];
-    [dic setObject:[Helper md5HexDigest:@"matchKey=122&userKey=244dagolfla.com"] forKey:@"md5"];
+    [dic setObject:self.matchKey forKey:@"matchKey"];
+    [dic setObject:DEFAULF_USERID forKey:@"userKey"];
+    [dic setObject:[Helper md5HexDigest:[NSString stringWithFormat:@"matchKey=%@&userKey=%@dagolfla.com", self.matchKey, DEFAULF_USERID]] forKey:@"md5"];
     
     [[JsonHttp jsonHttp] httpRequest:@"match/getMatchCombatList" JsonKey:nil withData:dic requestMethod:@"GET" failedBlock:^(id errType) {
         [[ShowHUD showHUD]showToastWithText:[NSString stringWithFormat:@"%@",errType] FromView:self.view];
@@ -206,9 +206,8 @@
     }
     
     NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
-    [dic setObject:@244 forKey:@"userKey"];
+    [dic setObject:DEFAULF_USERID forKey:@"userKey"];
     [dic setObject:combatArray forKey:@"combatList"];
-    
     
     
     [[JsonHttp jsonHttp] httpRequestWithMD5:@"match/addCombat" JsonKey:nil withData:dic failedBlock:^(id errType) {

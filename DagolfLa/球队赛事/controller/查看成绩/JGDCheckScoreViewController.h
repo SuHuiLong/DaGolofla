@@ -10,4 +10,6 @@
 
 @interface JGDCheckScoreViewController : ViewController
 
+@property (nonatomic, strong) NSNumber *matchKey;
+
 @end
