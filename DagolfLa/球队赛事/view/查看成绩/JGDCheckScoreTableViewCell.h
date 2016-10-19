@@ -12,5 +12,6 @@
 
 @property (nonatomic, strong) UILabel *leftLB;
 @property (nonatomic, strong) UILabel *rightLB;
+@property (nonatomic, strong) UILabel *scoreLB;
 
 @end

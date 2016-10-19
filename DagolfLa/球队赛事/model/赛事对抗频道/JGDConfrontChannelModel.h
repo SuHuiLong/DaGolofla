@@ -24,6 +24,8 @@
 
 @property (nonatomic, strong) NSNumber *timeKey;
 
+//@property (nonatomic, strong) NSNumber *userKey;
+
 @property (nonatomic, strong) NSNumber *state;  // 1:邀请中，2:已加入，3：其他成员同意加入后为等待加入", defaultValue="0"
 
 @property (nonatomic, strong) NSNumber *delFlag;
