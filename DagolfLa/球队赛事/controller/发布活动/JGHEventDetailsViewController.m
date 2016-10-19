@@ -82,7 +82,7 @@ static NSString *const JGTeamActivityWithAddressCellIdentifier = @"JGTeamActivit
         
         [self.view addSubview:self.eventDetailsTableView];
         [self.view addSubview:self.imgProfile];
-        self.titleView.frame = CGRectMake(0, 0, screenWidth, 44);
+        self.titleView.frame = CGRectMake(0, 10 *ProportionAdapter, screenWidth, 44);
         self.titleView.backgroundColor = [UIColor clearColor];
         
         [self.imgProfile addSubview:self.titleView];
@@ -343,22 +343,18 @@ static NSString *const JGTeamActivityWithAddressCellIdentifier = @"JGTeamActivit
     NSLog(@"yOffset:%f",yOffset);
     CGFloat factor = ((ABS(yOffset)+ImageHeight)*screenWidth)/ImageHeight;
     if (yOffset < 0) {
-        
         CGRect f = CGRectMake(-(factor-screenWidth)/2, 0, factor, ImageHeight+ABS(yOffset));
         self.imgProfile.frame = f;
-        
         _gradientImage.frame = self.imgProfile.frame;
-        
         CGRect title = self.titleView.frame;
-        self.titleView.frame = CGRectMake((factor-screenWidth)/2, 0, title.size.width, title.size.height);
+        self.titleView.frame = CGRectMake((factor-screenWidth)/2, 10 *ProportionAdapter, title.size.width, title.size.height);
     } else {
         CGRect f = self.imgProfile.frame;
         f.origin.y = -yOffset;
         self.imgProfile.frame = f;
-        
-        CGRect t = self.titleView.frame;
-        t.origin.y = yOffset;
-        self.titleView.frame = t;
+//        CGRect t = self.titleView.frame;
+//        t.origin.y = yOffset;
+//        self.titleView.frame = t;
     }
 }
 
