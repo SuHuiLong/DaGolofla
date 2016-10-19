@@ -15,6 +15,6 @@
 
 @property (nonatomic, assign) NSInteger timeKey;
 
-@property (nonatomic, strong) JGTeamAcitivtyModel *model;
+- (void)getMatchInfo:(NSInteger)timeKey;
 
 @end

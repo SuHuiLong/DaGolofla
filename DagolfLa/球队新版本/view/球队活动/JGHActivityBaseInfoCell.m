@@ -35,4 +35,35 @@
     }    
 }
 
+- (void)configMatchBaseInfo:(NSString *)string andBaseValue:(NSString *)baseValue andRow:(NSInteger)row{
+    self.titleLeft.constant = 40 *ProportionAdapter;
+    self.titles.font = [UIFont systemFontOfSize:13 *ProportionAdapter];
+    self.value.font = [UIFont systemFontOfSize:13 *ProportionAdapter];
+//    NSArray *array = [string componentsSeparatedByString:@"-"];
+    self.titles.text = string;
+    
+    self.value.text = baseValue;
+    
+    if (row == 0) {
+        NSString *timeString =[[baseValue componentsSeparatedByString:@" "] objectAtIndex:1];
+        NSString *minutesstring;
+        NSArray *array = [timeString componentsSeparatedByString:@":"];
+        for (int i=0; i< 2; i++) {
+            if (i == 0) {
+                minutesstring = [NSString stringWithFormat:@"%@时", array[i]];
+            }else {
+                minutesstring = [minutesstring stringByAppendingString:[NSString stringWithFormat:@"%@分", array[i]]];
+            }
+        }
+        
+        self.value.text = [NSString stringWithFormat:@"%@%@", [Helper returnDateformatString:[[baseValue componentsSeparatedByString:@" "] objectAtIndex:0]], minutesstring];
+    }else if (row ==1){
+        //截止
+        self.value.text = [Helper returnDateformatString:baseValue];
+    }else{
+        //地址
+        self.value.text = baseValue;
+    }
+}
+
 @end

@@ -269,7 +269,8 @@
         JGHEventDetailsViewController *deatilCtrl = [[JGHEventDetailsViewController alloc]init];
         JGDConfrontChannelModel *model = self.dataArray[indexPath.row];
         if (model.timeKey != nil) {
-            deatilCtrl.timeKey = [model.timeKey integerValue];
+//            deatilCtrl.timeKey = [model.timeKey integerValue];
+            [deatilCtrl getMatchInfo:[model.timeKey integerValue]];
         }
         [self.navigationController pushViewController:deatilCtrl animated:YES];
     }

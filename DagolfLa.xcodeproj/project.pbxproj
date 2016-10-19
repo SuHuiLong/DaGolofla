@@ -3638,10 +3638,10 @@
 		20203B191D9B5FE6009A75F3 /* 发布赛事 */ = {
 			isa = PBXGroup;
 			children = (
-				20D514C11DB63D690006EFCB /* JGHMatchRoundModel.m */,
 				20D514C21DB63D690006EFCB /* JGHMatchRoundModel.h */,
-				20203B1A1D9B6013009A75F3 /* JGHPublishEventModel.m */,
+				20D514C11DB63D690006EFCB /* JGHMatchRoundModel.m */,
 				20203B1B1D9B6013009A75F3 /* JGHPublishEventModel.h */,
+				20203B1A1D9B6013009A75F3 /* JGHPublishEventModel.m */,
 			);
 			path = "发布赛事";
 			sourceTree = "<group>";

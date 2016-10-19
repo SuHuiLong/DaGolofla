@@ -7,14 +7,14 @@
 //
 
 #import "JGHEventDetailsViewController.h"
-#import "SXPickPhoto.h"
-#import "JGTeamAcitivtyModel.h"
 #import "JGHHeaderLabelCell.h"
 #import "JGTeamActivityDetailsCell.h"
 #import "JGActivityNameBaseCell.h"
 #import "JGHCostListTableViewCell.h"
 #import "JGTeamActivityWithAddressCell.h"
 #import "JGHEditorEventViewController.h"
+#import "JGHPublishEventModel.h"
+#import "JGHActivityBaseInfoCell.h"
 
 static CGFloat ImageHeight  = 210.0;
 static NSString *const JGHHeaderLabelCellIdentifier = @"JGHHeaderLabelCell";
@@ -22,20 +22,29 @@ static NSString *const JGTeamActivityDetailsCellIdentifier = @"JGTeamActivityDet
 static NSString *const JGActivityNameBaseCellIdentifier = @"JGActivityNameBaseCell";
 static NSString *const JGHCostListTableViewCellIdentifier = @"JGHCostListTableViewCell";
 static NSString *const JGTeamActivityWithAddressCellIdentifier = @"JGTeamActivityWithAddressCell";
+static NSString *const JGHActivityBaseInfoCellIdentifier = @"JGHActivityBaseInfoCell";
+static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
+static NSString *const JGSignUoPromptCellIdentifier = @"JGSignUoPromptCell";
 
 @interface JGHEventDetailsViewController ()<UITableViewDelegate, UITableViewDataSource>
 {
     NSArray *_titleArray;//标题数组
-    NSInteger _photos;//跳转相册问题
+    
+    NSArray *_baseInfoArray;
     
     NSMutableDictionary* dictData;
     
     UIImageView *_gradientImage;
+    
+    NSInteger _hasHaveTeam;//是否拥有球队
+    
+    NSInteger _canSubsidy;//是否补贴-0不
+    NSArray *_levelArray;
+    
+    NSInteger _isApply;//是否已经报名
 }
 
 @property (nonatomic, strong)UITableView *eventDetailsTableView;
-
-@property (nonatomic,strong)SXPickPhoto * pickPhoto;//相册类
 
 @property (nonatomic, strong)UIImage *headerImage;
 
@@ -44,6 +53,10 @@ static NSString *const JGTeamActivityWithAddressCellIdentifier = @"JGTeamActivit
 @property (nonatomic, strong)UITextField *titleField;//球队名称输入框
 
 @property (nonatomic, strong)UIButton *applyBtn;
+
+@property (nonatomic, strong)JGHPublishEventModel *model;
+
+@property (nonatomic, strong)NSMutableArray *costListArray;
 
 @end
 
@@ -60,10 +73,8 @@ static NSString *const JGTeamActivityWithAddressCellIdentifier = @"JGTeamActivit
 
 - (instancetype)init{
     if (self == [super init]) {
-        
-        self.model = [[JGTeamAcitivtyModel alloc]init];
-        
-        self.pickPhoto = [[SXPickPhoto alloc]init];
+        self.model = [[JGHPublishEventModel alloc]init];
+        self.costListArray = [NSMutableArray array];
         self.titleView = [[UIView alloc]init];
         
         UIImage *image = [UIImage imageNamed:ActivityBGImage];
@@ -99,6 +110,13 @@ static NSString *const JGTeamActivityWithAddressCellIdentifier = @"JGTeamActivit
         UINib *addressNib = [UINib nibWithNibName:@"JGTeamActivityWithAddressCell" bundle: [NSBundle mainBundle]];
         [self.eventDetailsTableView registerNib:addressNib forCellReuseIdentifier:JGTeamActivityWithAddressCellIdentifier];
         
+        UINib *activityBaseInfoCellNib = [UINib nibWithNibName:@"JGHActivityBaseInfoCell" bundle: [NSBundle mainBundle]];
+        [self.eventDetailsTableView registerNib:activityBaseInfoCellNib forCellReuseIdentifier:JGHActivityBaseInfoCellIdentifier];
+        
+        //JGTeamActivityDetailsCell
+        UINib *teamActivityDetailsCellNib = [UINib nibWithNibName:@"JGTeamActivityDetailsCell" bundle: [NSBundle mainBundle]];
+        [self.eventDetailsTableView registerNib:teamActivityDetailsCellNib forCellReuseIdentifier:JGTeamActivityDetailsCellIdentifier];
+        
         self.eventDetailsTableView.dataSource = self;
         self.eventDetailsTableView.delegate = self;
         self.eventDetailsTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -112,80 +130,180 @@ static NSString *const JGTeamActivityWithAddressCellIdentifier = @"JGTeamActivit
     
     self.view.backgroundColor = [UIColor colorWithHexString:BG_color];
     self.automaticallyAdjustsScrollViewInsets = NO;
-//    if (self.costListArray == nil) {
-//        self.costListArray = [NSMutableArray array];
-//    }
-    
-    _photos = 1;
     //返回按钮
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
     btn.frame = BackBtnFrame;
     btn.titleLabel.font = [UIFont systemFontOfSize:FontSize_Normal];
-    btn.tag = 521;
     [btn setImage:[UIImage imageNamed:@"backL"] forState:UIControlStateNormal];
     [btn addTarget:self action:@selector(initItemsBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.titleView addSubview:btn];
-    //点击更换背景
-    UIButton *replaceBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    replaceBtn.frame = CGRectMake(screenWidth-64, 0, 54, 44);
-    replaceBtn.titleLabel.font = [UIFont systemFontOfSize:FontSize_Normal];
-    [replaceBtn setTitle:@"点击更换" forState:UIControlStateNormal];
-    replaceBtn.titleLabel.font = [UIFont systemFontOfSize:13];
-    replaceBtn.tag = 520;
-    [replaceBtn addTarget:self action:@selector(initItemsBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-    [self.titleView addSubview:replaceBtn];
     //输入框
     self.titleField = [[UITextField alloc]initWithFrame:CGRectMake(64, 7, screenWidth - 128, 30)];
     self.titleField.placeholder = @"请输入赛事名称";
     [self.titleField setValue:[UIColor whiteColor] forKeyPath:@"_placeholderLabel.textColor"];
-    [self.titleField setValue:[UIFont boldSystemFontOfSize:15] forKeyPath:@"_placeholderLabel.font"];
+    [self.titleField setValue:[UIFont boldSystemFontOfSize:15 *ProportionAdapter] forKeyPath:@"_placeholderLabel.font"];
     self.titleField.tag = 345;
 //    self.titleField.delegate = self;
     self.titleField.textAlignment = NSTextAlignmentCenter;
-    self.titleField.font = [UIFont systemFontOfSize:15];
+    self.titleField.font = [UIFont systemFontOfSize:15 *ProportionAdapter];
     [self.titleView addSubview:self.titleField];
     
-    _titleArray = @[@[], @[@"开球时间", @"活动结束时间", @"报名截止时间", @"举办场地"], @[@"玩法设置"], @[@"主办方", @"联系人电话"]];
+    _titleArray = @[@"", @"基本信息", @"参赛费用", @"球队比杆排位赛", @"查看报名及分组", @"查看成绩", @"对所有人公开", @"主办方", @"赛事联系人电话", @"赛事说明"];
     
-    [self createApplyBtn:0];
+    _baseInfoArray = @[@"开球时间", @"报名截止时间", @"举办场地"];
     
-    [self getMatchInfo];
+    _levelArray = @[@"对所有人公开", @"仅对参与球队公开", @"仅对参与及被邀请方公开"];
+}
+#pragma mark -- 设置图片及名称
+- (void)setData{
+    self.titleField.text = self.model.matchName;
+    //我的球队活动
+    [self.imgProfile sd_setImageWithURL:[Helper setImageIconUrl:@"match" andTeamKey:_model.timeKey andIsSetWidth:NO andIsBackGround:YES] placeholderImage:[UIImage imageNamed:ActivityBGImage]];
+    
+    self.imgProfile.contentMode = UIViewContentModeScaleAspectFill;
+    self.imgProfile.layer.masksToBounds = YES;
 }
 #pragma mark -- 下载数据
-- (void)getMatchInfo{
+- (void)getMatchInfo:(NSInteger)timeKey{
+    //30342
+    self.timeKey = timeKey;
+    self.timeKey = 30342;
     NSMutableDictionary *getDict = [NSMutableDictionary dictionary];
     [getDict setObject:@(_timeKey) forKey:@"matchKey"];
     [getDict setObject:DEFAULF_USERID forKey:@"userKey"];
     NSString *strMD5 = [Helper md5HexDigest:[NSString stringWithFormat:@"matchKey=%td&userKey=%tddagolfla.com", _timeKey, [DEFAULF_USERID integerValue]]];
     [getDict setObject:strMD5 forKey:@"md5"];
     [[JsonHttp jsonHttp]httpRequest:@"match/getMatchInfo" JsonKey:nil withData:getDict requestMethod:@"GET" failedBlock:^(id errType) {
-        
+        NSLog(@"%@", errType);
     } completionBlock:^(id data) {
         NSLog(@"%@", data);
+        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+            [self.model setValuesForKeysWithDictionary:[data objectForKey:@"match"]];
+            _hasHaveTeam = [[data objectForKey:@"hasHaveTeam"]integerValue];
+            self.costListArray = [data objectForKey:@"costList"];
+            //是否补贴
+            if ([data objectForKey:@"canSubsidy"]) {
+                _canSubsidy = [[data objectForKey:@"canSubsidy"] integerValue];
+            }else{
+                _canSubsidy = 0;
+            }
+            
+            [self setData];//设置名称 及 图片
+            
+//            [self createApplyBtn:0];
+            
+            if ([data objectForKey:@"hasSignUp"]) {
+                _isApply = [[data objectForKey:@"hasSignUp"] integerValue];
+            }else{
+                _isApply = 0;
+            }
+            
+            if ([[Helper returnCurrentDateString] compare:_model.endDate] < 0) {
+                if ([[Helper returnCurrentDateString] compare:_model.signUpEndTime] < 0) {
+                    if (_isApply == 0) {
+                        [self createApplyBtn:0];//报名按钮
+                    }else{
+                        [self createCancelBtnAndApplyOrPay:0];//已报名
+                    }
+                }else{
+                    //判断活动是否结束 endDate
+                    if ([[Helper returnCurrentDateString] compare:_model.endDate] < 0) {
+                        if (_isApply == 0) {
+                            self.eventDetailsTableView.frame = CGRectMake(0, 0, screenWidth, screenHeight);
+                        }else{
+                            [self createCancelBtnAndApplyOrPay:1];//已报名
+                        }
+                    }else{
+                        self.eventDetailsTableView.frame = CGRectMake(0, 0, screenWidth, screenHeight);
+                    }
+                }
+            }else{
+                self.eventDetailsTableView.frame = CGRectMake(0, 0, screenWidth, screenHeight);
+            }
+            
+        }else{
+            if ([data objectForKey:@"packResultMsg"]) {
+                [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+            }
+        }
+        
+        [self.eventDetailsTableView reloadData];
     }];
+}
+#pragma mark -- 取消报名－－报名／支付
+- (void)createCancelBtnAndApplyOrPay:(NSInteger)applercatory{
+    UIButton *photoBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, screenHeight-44, (75*screenWidth/375)-1, 44)];
+    [photoBtn setImage:[UIImage imageNamed:@"consulting"] forState:UIControlStateNormal];
+    [photoBtn addTarget:self action:@selector(telPhotoClick:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:photoBtn];
+    
+    UIButton *cancelApplyBtn = [[UIButton alloc]initWithFrame:CGRectMake(photoBtn.frame.size.width, screenHeight-44, (screenWidth - 75 *ScreenWidth/375)/2, 44)];
+    [cancelApplyBtn setTitle:@"取消报名" forState:UIControlStateNormal];
+    cancelApplyBtn.titleLabel.font = [UIFont systemFontOfSize:17 *ProportionAdapter];
+    if (applercatory == 0) {
+        cancelApplyBtn.backgroundColor = [UIColor colorWithHexString:Nav_Color];
+        [cancelApplyBtn addTarget:self action:@selector(cancelApplyBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    }else{
+        cancelApplyBtn.backgroundColor = [UIColor lightGrayColor];
+    }
+    
+    
+    [self.view addSubview:cancelApplyBtn];
+    
+    UIButton *applyOrPayBtn = [[UIButton alloc]initWithFrame:CGRectMake(photoBtn.frame.size.width + cancelApplyBtn.frame.size.width, screenHeight-44, (screenWidth - 75 *ScreenWidth/375)/2, 44)];
+    [applyOrPayBtn setTitle:@"报名／支付" forState:UIControlStateNormal];
+    applyOrPayBtn.titleLabel.font = [UIFont systemFontOfSize:17 *ProportionAdapter];
+    applyOrPayBtn.backgroundColor = [UIColor colorWithHexString:Cancel_Color];
+    [applyOrPayBtn addTarget:self action:@selector(applyOrPayBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    
+    [self.view addSubview:applyOrPayBtn];
 }
 #pragma mark -- 创建报名按钮
 - (void)createApplyBtn:(NSInteger)btnID{
-//    self.headPortraitBtn.layer.masksToBounds = YES;
-//    self.headPortraitBtn.layer.cornerRadius = 8.0;
-    
-    UIButton *editorBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, screenHeight-44, (75*screenWidth/375)-1, 44)];
-    [editorBtn setTitle:@"编辑" forState:UIControlStateNormal];
-    editorBtn.titleLabel.font = [UIFont systemFontOfSize:17 *ProportionAdapter];
-    editorBtn.backgroundColor = [UIColor colorWithHexString:Nav_Color];
-    [editorBtn addTarget:self action:@selector(editorBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:editorBtn];
-    
-    UILabel *lines = [[UILabel alloc]initWithFrame:CGRectMake(editorBtn.frame.origin.x, editorBtn.frame.size.width, 1, 44)];
-    lines.backgroundColor = [UIColor blackColor];
-    [self.view addSubview:lines];
-    self.applyBtn = [[UIButton alloc]initWithFrame:CGRectMake(editorBtn.frame.size.width + 1, screenHeight-44, screenWidth - 75 *ScreenWidth/375, 44)];
-    [self.applyBtn setTitle:@"报名参加" forState:UIControlStateNormal];
-    self.applyBtn.titleLabel.font = [UIFont systemFontOfSize:17 *ProportionAdapter];
-    [self.applyBtn addTarget:self action:@selector(applyAttendBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-    self.applyBtn.backgroundColor = [UIColor colorWithHexString:Nav_Color];
-    
-    [self.view addSubview:self.applyBtn];
+    if ([_model.userKey integerValue] == [DEFAULF_USERID integerValue]) {
+        UIButton *editorBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, screenHeight-44, (75*screenWidth/375)-1, 44)];
+        [editorBtn setTitle:@"编辑" forState:UIControlStateNormal];
+        editorBtn.titleLabel.font = [UIFont systemFontOfSize:17 *ProportionAdapter];
+        editorBtn.backgroundColor = [UIColor colorWithHexString:Nav_Color];
+        [editorBtn addTarget:self action:@selector(editorBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+        [self.view addSubview:editorBtn];
+        
+        UIButton *invitationBtn = [[UIButton alloc]initWithFrame:CGRectMake(75*screenWidth/375, screenHeight-44, (2*75*screenWidth/375)-1, 44)];
+        [invitationBtn setTitle:@"邀请" forState:UIControlStateNormal];
+        invitationBtn.titleLabel.font = [UIFont systemFontOfSize:17 *ProportionAdapter];
+        invitationBtn.backgroundColor = [UIColor colorWithHexString:Nav_Color];
+        [invitationBtn addTarget:self action:@selector(editorBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+        [self.view addSubview:invitationBtn];
+        
+        UILabel *lines = [[UILabel alloc]initWithFrame:CGRectMake(editorBtn.frame.origin.x, editorBtn.frame.size.width, 1, 44)];
+        lines.backgroundColor = [UIColor blackColor];
+        [self.view addSubview:lines];
+        self.applyBtn = [[UIButton alloc]initWithFrame:CGRectMake(editorBtn.frame.size.width + 1, screenHeight-44, screenWidth -2* 75 *ScreenWidth/375, 44)];
+        [self.applyBtn setTitle:@"球队报名" forState:UIControlStateNormal];
+        self.applyBtn.titleLabel.font = [UIFont systemFontOfSize:17 *ProportionAdapter];
+        [self.applyBtn addTarget:self action:@selector(applyAttendBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+        self.applyBtn.backgroundColor = [UIColor colorWithHexString:Nav_Color];
+        
+        [self.view addSubview:self.applyBtn];
+    }else{
+        UIButton *editorBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, screenHeight-44, (75*screenWidth/375)-1, 44)];
+        [editorBtn setTitle:@"邀请" forState:UIControlStateNormal];
+        editorBtn.titleLabel.font = [UIFont systemFontOfSize:17 *ProportionAdapter];
+        editorBtn.backgroundColor = [UIColor colorWithHexString:Nav_Color];
+        [editorBtn addTarget:self action:@selector(editorBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+        [self.view addSubview:editorBtn];
+        
+        UILabel *lines = [[UILabel alloc]initWithFrame:CGRectMake(editorBtn.frame.origin.x, editorBtn.frame.size.width, 1, 44)];
+        lines.backgroundColor = [UIColor blackColor];
+        [self.view addSubview:lines];
+        self.applyBtn = [[UIButton alloc]initWithFrame:CGRectMake(editorBtn.frame.size.width + 1, screenHeight-44, screenWidth - 75 *ScreenWidth/375, 44)];
+        [self.applyBtn setTitle:@"球队报名" forState:UIControlStateNormal];
+        self.applyBtn.titleLabel.font = [UIFont systemFontOfSize:17 *ProportionAdapter];
+        [self.applyBtn addTarget:self action:@selector(applyAttendBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+        self.applyBtn.backgroundColor = [UIColor colorWithHexString:Nav_Color];
+        
+        [self.view addSubview:self.applyBtn];
+    }
 }
 #pragma mark -- 编辑
 - (void)editorBtnClick:(UIButton *)btn{
@@ -202,20 +320,22 @@ static NSString *const JGTeamActivityWithAddressCellIdentifier = @"JGTeamActivit
 }
 #pragma mark -- tableView 代理
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    if (section == 2) {
-        //列表
+    if (section == 1) {
         return 3;
+    }else if (section == 2) {
+        //列表
+        return _costListArray.count +1;
     }else if (section == 3){
         return 4;
     }
     return 0;
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 8;//详情页面
+    return 10;//详情页面
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (indexPath.section == 2) {
-        return 30;
+    if (indexPath.section == 2 || indexPath.section == 1) {
+        return 30 *ProportionAdapter;
     }
     return 0;
 }
@@ -223,13 +343,11 @@ static NSString *const JGTeamActivityWithAddressCellIdentifier = @"JGTeamActivit
     if (section == 3 || section == 4) {
         return 0;
     }
-    return 10;
+    return 10 *ProportionAdapter;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     if (section == 0) {
         return ImageHeight;
-    }else if (section == 1){
-        return 110;
     }else if (section == 9){
         static JGTeamActivityDetailsCell *cell;
         if (!cell) {
@@ -240,30 +358,42 @@ static NSString *const JGTeamActivityWithAddressCellIdentifier = @"JGTeamActivit
         
         return [cell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height + 1;
     }
-    return 44;
+    return 44 *ProportionAdapter;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (indexPath.section == 2) {
-        JGActivityNameBaseCell *costSubCell = [tableView dequeueReusableCellWithIdentifier:JGActivityNameBaseCellIdentifier];
-        costSubCell.selectionStyle = UITableViewCellSelectionStyleNone;
-//        if ([_model.subsidyPrice integerValue] > 0 && _canSubsidy == 1) {
-//            NSLog(@"%.2f", [_model.subsidyPrice floatValue]);
-//            [costSubCell configCostSubInstructionPriceFloat:[_model.subsidyPrice floatValue]];
-//        }else{
-//            [costSubCell configCostSubInstructionPriceFloat:0.0];
-//        }
-        
-        return costSubCell;
-    }else if (indexPath.section == 3){
-        JGHCostListTableViewCell *costListCell = [tableView dequeueReusableCellWithIdentifier:JGHCostListTableViewCellIdentifier];
-        costListCell.selectionStyle = UITableViewCellSelectionStyleNone;
-//        if (_costListArray.count > 0) {
-//            [costListCell configCostData:_costListArray[indexPath.row]];
-//        }
-        
-        return costListCell;
+    if (indexPath.section == 1) {
+        JGHActivityBaseInfoCell *infoCell = [tableView dequeueReusableCellWithIdentifier:JGHActivityBaseInfoCellIdentifier];
+        infoCell.selectionStyle = UITableViewCellSelectionStyleNone;
+        if (indexPath.row == 0) {
+            [infoCell configMatchBaseInfo:_baseInfoArray[indexPath.row] andBaseValue:_model.beginDate andRow:indexPath.row];
+        }else if (indexPath.row == 1){
+            [infoCell configMatchBaseInfo:_baseInfoArray[indexPath.row] andBaseValue:_model.signUpEndTime andRow:indexPath.row];
+        }else{
+            [infoCell configMatchBaseInfo:_baseInfoArray[indexPath.row] andBaseValue:_model.ballName andRow:indexPath.row];
+        }
+        return infoCell;
+    }else{
+        if (indexPath.row == _costListArray.count) {
+            JGActivityNameBaseCell *costSubCell = [tableView dequeueReusableCellWithIdentifier:JGActivityNameBaseCellIdentifier];
+            costSubCell.selectionStyle = UITableViewCellSelectionStyleNone;
+            if ([_model.subsidyPrice integerValue] > 0 && _canSubsidy == 1) {
+                NSLog(@"%.2f", [_model.subsidyPrice floatValue]);
+                [costSubCell configCostSubInstructionPriceFloat:[_model.subsidyPrice floatValue]];
+            }else{
+                [costSubCell configCostSubInstructionPriceFloat:0.0];
+            }
+            
+            return costSubCell;
+        }else{
+            JGHCostListTableViewCell *costListCell = [tableView dequeueReusableCellWithIdentifier:JGHCostListTableViewCellIdentifier];
+            costListCell.selectionStyle = UITableViewCellSelectionStyleNone;
+            if (_costListArray.count > 0) {
+                [costListCell configMatchCostData:_costListArray[indexPath.row]];
+            }
+            
+            return costListCell;
+        }
     }
-    return nil;
 }
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     NSString *windowReuseIdentifier = @"SectionOneCell";
@@ -271,67 +401,40 @@ static NSString *const JGTeamActivityWithAddressCellIdentifier = @"JGTeamActivit
         UITableViewCell *launchImageActivityCell = nil;
         launchImageActivityCell = [tableView dequeueReusableCellWithIdentifier:windowReuseIdentifier];
         if (!launchImageActivityCell) {
-            
             launchImageActivityCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:windowReuseIdentifier];
         }
         
         launchImageActivityCell.selectionStyle = UITableViewCellSelectionStyleNone;
-        
         return (UIView *)launchImageActivityCell;
-    }else if (section == 1) {
-        JGTeamActivityWithAddressCell *addressCell = [tableView dequeueReusableCellWithIdentifier:JGTeamActivityWithAddressCellIdentifier];
-//        [addressCell configModel:self.model];
-        return (UIView *)addressCell;
-    }else if (section == 2){
-        JGHHeaderLabelCell *headerCell = [tableView dequeueReusableCellWithIdentifier:JGHHeaderLabelCellIdentifier];
-        return (UIView *)headerCell;
-    }else if (section == 3){
-        JGHHeaderLabelCell *headerCell = [tableView dequeueReusableCellWithIdentifier:JGHHeaderLabelCellIdentifier];
-        UIButton *applyListBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, screenWidth, headerCell.frame.size.height)];
-        [applyListBtn addTarget:self action:@selector(getTeamActivitySignUpList:) forControlEvents:UIControlEventTouchUpInside];
-        [headerCell addSubview:applyListBtn];
-        headerCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        [headerCell congiftitles:@"活动成员及分组"];
-        [headerCell congifCount:self.model.sumCount andSum:self.model.maxCount];
-        return (UIView *)headerCell;
-    }else if (section == 4) {
-        JGHHeaderLabelCell *headerCell = [tableView dequeueReusableCellWithIdentifier:JGHHeaderLabelCellIdentifier];
-        UIButton *applyListBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, screenWidth, headerCell.frame.size.height)];
-        [applyListBtn addTarget:self action:@selector(getTeamActivityResults:) forControlEvents:UIControlEventTouchUpInside];
-        [headerCell addSubview:applyListBtn];
-        headerCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        [headerCell congiftitles:@"查看成绩"];
-        return (UIView *)headerCell;
-    }else if (section == 5) {
-        JGHHeaderLabelCell *headerCell = [tableView dequeueReusableCellWithIdentifier:JGHHeaderLabelCellIdentifier];
-        UIButton *applyListBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, screenWidth, headerCell.frame.size.height)];
-        [applyListBtn addTarget:self action:@selector(getTeamActivityAward:) forControlEvents:UIControlEventTouchUpInside];
-        headerCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        [headerCell addSubview:applyListBtn];
-        [headerCell congiftitles:@"查看奖项"];
-        return (UIView *)headerCell;
-    }else if (section == 6) {
-        JGHHeaderLabelCell *headerCell = [tableView dequeueReusableCellWithIdentifier:JGHHeaderLabelCellIdentifier];
-        UIButton *applyListBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, screenWidth, headerCell.frame.size.height)];
-        [applyListBtn addTarget:self action:@selector(getTeamActivityGuestCode:) forControlEvents:UIControlEventTouchUpInside];
-        headerCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        [headerCell addSubview:applyListBtn];
-        [headerCell congiftitles:@"嘉宾参赛码"];
-        return (UIView *)headerCell;
-    }else{
+    }else if (section == 9){
         JGTeamActivityDetailsCell *detailsCell = [tableView dequeueReusableCellWithIdentifier:JGTeamActivityDetailsCellIdentifier];
-        UIButton *detailsBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, screenWidth, detailsCell.frame.size.height)];
-        [detailsBtn addTarget:self action:@selector(pushDetailSCtrl:) forControlEvents:UIControlEventTouchUpInside];
-        [detailsCell addSubview:detailsBtn];
-        detailsCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         [detailsCell configDetailsText:@"活动详情" AndActivityDetailsText:self.model.info];
         return (UIView *)detailsCell;
+    }else{
+        JGHHeaderLabelCell *headerCell = [tableView dequeueReusableCellWithIdentifier:JGHHeaderLabelCellIdentifier];
+        UIButton *detailsBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, screenWidth, headerCell.frame.size.height)];
+        [detailsBtn addTarget:self action:@selector(pushSectionDetailSCtrl:) forControlEvents:UIControlEventTouchUpInside];
+        [headerCell addSubview:detailsBtn];
+        
+        if (section == 6) {
+            [headerCell congiftitles:_levelArray[_model.openType]];
+        }else{
+            headerCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            [headerCell congiftitles:_titleArray[section]];
+        }
+        
+        
+        return (UIView *)headerCell;
     }
 }
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
     UIView *footView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, 10)];
     footView.backgroundColor = [UIColor colorWithHexString:BG_color];
     return footView;
+}
+#pragma mark -- 点击事件
+- (void)pushSectionDetailSCtrl:(UIButton *)btn{
+    
 }
 #pragma mark - Table View Delegate
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
@@ -352,9 +455,6 @@ static NSString *const JGTeamActivityWithAddressCellIdentifier = @"JGTeamActivit
         CGRect f = self.imgProfile.frame;
         f.origin.y = -yOffset;
         self.imgProfile.frame = f;
-//        CGRect t = self.titleView.frame;
-//        t.origin.y = yOffset;
-//        self.titleView.frame = t;
     }
 }
 

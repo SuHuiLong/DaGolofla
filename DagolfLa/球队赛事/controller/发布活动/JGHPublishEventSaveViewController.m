@@ -159,7 +159,7 @@ static CGFloat ImageHeight  = 210.0;
     }
     _titleArray = @[@"", @"比赛轮次设置", @"费用设置", @"对所有人公开", @"赛事说明"];
     
-    _levelArray = @[@"对所有人公开", @"仅对参与球队公开", @"仅对参与球队公开及个人好友公开"];
+    _levelArray = @[@"对所有人公开", @"仅对参与球队公开", @"仅对参与及被邀请方公开"];
 }
 
 - (void)replaceWithPicture:(UIButton *)Btn{
