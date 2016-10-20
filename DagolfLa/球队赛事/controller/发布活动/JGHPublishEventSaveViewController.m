@@ -294,10 +294,12 @@ static CGFloat ImageHeight  = 210.0;
         [self.navigationController pushViewController:concentTextCtrl animated:YES];
     }
 }
+
 #pragma mark --保存代理
 - (void)SaveBtnClick:(UIButton *)btn{
     [self pushAndSaveEvent:btn andCatory:0];
 }
+
 #pragma mark --提交代理
 - (void)SubmitBtnClick:(UIButton *)btn{
     [self pushAndSaveEvent:btn andCatory:1];

@@ -316,7 +316,9 @@ static NSString *const JGSignUoPromptCellIdentifier = @"JGSignUoPromptCell";
 }
 #pragma mark -- 报名
 - (void)applyAttendBtnClick:(UIButton *)btn{
-    
+    JGLTeamSignUpSuccViewController *teamSignUpVC = [[JGLTeamSignUpSuccViewController alloc] init];
+    teamSignUpVC.matchKey = [NSNumber numberWithInteger:self.timeKey];
+    [self.navigationController pushViewController:teamSignUpVC animated:YES];
 }
 #pragma mark -- 页面按钮事件
 - (void)initItemsBtnClick:(UIButton *)btn{
