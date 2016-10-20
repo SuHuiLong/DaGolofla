@@ -12,13 +12,19 @@
 #import "JGHTeamContactTableViewCell.h"
 #import "JGTableViewCell.h"
 #import "JGTeamActivityDetailsCell.h"
+#import "JGHPublicLevelCell.h"
+#import "JGHConcentTextViewController.h"
+#import "JGCostSetViewController.h"
+#import "JGHGameRoundsViewController.h"
+#import "JGHEditorGameRoundsViewController.h"
 
 static CGFloat ImageHeight  = 210.0;
 static NSString *const JGHTeamContactCellIdentifier = @"JGHTeamContactTableViewCell";
 static NSString *const JGTableViewCellIdentifier = @"JGTableViewCell";
 static NSString *const JGTeamActivityDetailsCellIdentifier = @"JGTeamActivityDetailsCell";
+static NSString *const JGHPublicLevelCellIdentifier = @"JGHPublicLevelCell";
 
-@interface JGHEditorEventViewController ()<UITableViewDelegate, UITableViewDataSource>
+@interface JGHEditorEventViewController ()<UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, JGHConcentTextViewControllerDelegate, JGCostSetViewControllerDelegate>
 
 {
     NSArray *_titleArray;//标题数组
@@ -27,13 +33,15 @@ static NSString *const JGTeamActivityDetailsCellIdentifier = @"JGTeamActivityDet
     NSMutableDictionary* dictData;
     
     UIImageView *_gradientImage;
+    
+    NSArray *_levelArray;//公开等级
+    
+    NSInteger _isEditor;//1-编辑；0-无
 }
 
 @property (nonatomic, strong)UITableView *editorEventTableView;
 
 @property (nonatomic,strong)SXPickPhoto * pickPhoto;//相册类
-
-@property (nonatomic, strong)UIImage *headerImage;
 
 @property (nonatomic, strong)UIView *titleView;//顶部导航
 
@@ -55,9 +63,7 @@ static NSString *const JGTeamActivityDetailsCellIdentifier = @"JGTeamActivityDet
 }
 
 - (instancetype)init{
-    if (self == [super init]) {
-        self.model = [[JGHPublishEventModel alloc]init];
-        
+    if (self == [super init]) {        
         self.pickPhoto = [[SXPickPhoto alloc]init];
         self.titleView = [[UIView alloc]init];
         
@@ -90,6 +96,9 @@ static NSString *const JGTeamActivityDetailsCellIdentifier = @"JGTeamActivityDet
         
         UINib *teamActivityDetailsCellNib = [UINib nibWithNibName:@"JGTeamActivityDetailsCell" bundle: [NSBundle mainBundle]];
         [self.editorEventTableView registerNib:teamActivityDetailsCellNib forCellReuseIdentifier:JGTeamActivityDetailsCellIdentifier];
+        
+        UINib *publicLevelCellNib = [UINib nibWithNibName:@"JGHPublicLevelCell" bundle: [NSBundle mainBundle]];
+        [self.editorEventTableView registerNib:publicLevelCellNib forCellReuseIdentifier:JGHPublicLevelCellIdentifier];
 
         self.editorEventTableView.dataSource = self;
         self.editorEventTableView.delegate = self;
@@ -106,9 +115,6 @@ static NSString *const JGTeamActivityDetailsCellIdentifier = @"JGTeamActivityDet
     
     self.view.backgroundColor = [UIColor colorWithHexString:BG_color];
     self.automaticallyAdjustsScrollViewInsets = NO;
-//    if (self.costListArray == nil) {
-//        self.costListArray = [NSMutableArray array];
-//    }
     
     _photos = 1;
     //返回按钮
@@ -125,8 +131,7 @@ static NSString *const JGTeamActivityDetailsCellIdentifier = @"JGTeamActivityDet
     replaceBtn.titleLabel.font = [UIFont systemFontOfSize:FontSize_Normal];
     [replaceBtn setTitle:@"点击更换" forState:UIControlStateNormal];
     replaceBtn.titleLabel.font = [UIFont systemFontOfSize:13];
-    replaceBtn.tag = 520;
-    [replaceBtn addTarget:self action:@selector(initItemsBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    [replaceBtn addTarget:self action:@selector(selectPhotoImage:) forControlEvents:UIControlEventTouchUpInside];
     [self.titleView addSubview:replaceBtn];
     //输入框
     self.titleField = [[UITextField alloc]initWithFrame:CGRectMake(64, 7, screenWidth - 128, 30)];
@@ -139,7 +144,27 @@ static NSString *const JGTeamActivityDetailsCellIdentifier = @"JGTeamActivityDet
     self.titleField.font = [UIFont systemFontOfSize:15];
     [self.titleView addSubview:self.titleField];
     
-    _titleArray = @[@"", @"基本信息", @"参赛费用", @"球队比杆排位赛", @"查看报名及分组", @"查看成绩", @"对所有人公开", @"主办方", @"赛事联系人电话", @"赛事说明"];
+    _titleArray = @[@"", @[@"开球时间", @"报名截止时间", @"活动结束时间", @"举办场地"], @[@"玩法设置"], @[@"主办方", @"联系人电话"], @[@"比赛轮次设置", @"费用设置"], @[@"对所有人公开"], @[@"赛事说明"]];
+    
+    _levelArray = @[@"对所有人公开", @"仅对参与球队公开", @"仅对参与及被邀请方公开"];
+}
+- (void)configJGHPublishEventModelReloadTable:(JGHPublishEventModel *)model andCostlistArray:(NSMutableArray *)costListArray{
+    _model = model;
+    self.costListArray = costListArray;
+    [self.editorEventTableView reloadData];
+}
+
+#pragma mark -- 保存按钮
+- (void)createEditorBtn{
+    self.applyBtn = [[UIButton alloc]initWithFrame:CGRectMake( 0, screenHeight-44, screenWidth, 44)];
+    [self.applyBtn setTitle:@"保存" forState:UIControlStateNormal];
+    self.applyBtn.backgroundColor = [UIColor lightGrayColor];
+    [self.applyBtn addTarget:self action:@selector(editonAttendBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:self.applyBtn];
+}
+#pragma mark -- 发布赛事
+- (void)editonAttendBtnClick:(UIButton *)btn{
+    
 }
 #pragma mark -- 页面按钮事件
 - (void)initItemsBtnClick:(UIButton *)btn{
@@ -183,6 +208,10 @@ static NSString *const JGTeamActivityDetailsCellIdentifier = @"JGTeamActivityDet
         return 1;
     }else if (section == 3){
         return 2;
+    }else if (section == 4){
+        return 2;
+    }else if (section == 5){
+        return 3;
     }else{
         return 1;
     }
@@ -193,8 +222,17 @@ static NSString *const JGTeamActivityDetailsCellIdentifier = @"JGTeamActivityDet
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 0) {
         return ImageHeight -10;
+    }else if (indexPath.section == 6){
+        static JGTeamActivityDetailsCell *cell;
+        if (!cell) {
+            cell = [self.editorEventTableView dequeueReusableCellWithIdentifier:JGTeamActivityDetailsCellIdentifier];
+        }
+        
+        cell.activityDetails.text = self.model.info;
+        
+        return [cell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height + 1;
     }else{
-        return 44;
+        return 44 *ProportionAdapter;
     }
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
@@ -221,75 +259,160 @@ static NSString *const JGTeamActivityDetailsCellIdentifier = @"JGTeamActivityDet
         launchImageActivityCell.selectionStyle = UITableViewCellSelectionStyleNone;
         
         return launchImageActivityCell;
+    }else if (indexPath.section == 1){
+        JGTableViewCell *launchActivityCell = [tableView dequeueReusableCellWithIdentifier:JGTableViewCellIdentifier forIndexPath:indexPath];
+        launchActivityCell.selectionStyle = UITableViewCellSelectionStyleNone;
+        if (indexPath.row == 3) {
+            launchActivityCell.underline.hidden = YES;
+        }else{
+            launchActivityCell.underline.hidden = NO;
+        }
+        
+        [launchActivityCell configTitlesString:_titleArray[indexPath.section][indexPath.row]];
+        return launchActivityCell;
+    }else if (indexPath.section == 2){
+        JGTableViewCell *launchActivityCell = [tableView dequeueReusableCellWithIdentifier:JGTableViewCellIdentifier forIndexPath:indexPath];
+        launchActivityCell.selectionStyle = UITableViewCellSelectionStyleNone;
+        launchActivityCell.underline.hidden = YES;
+        [launchActivityCell configTitlesString:_titleArray[indexPath.section][indexPath.row]];
+        return launchActivityCell;
     }else if (indexPath.section == 3){
         JGHTeamContactTableViewCell *contactCell = [tableView dequeueReusableCellWithIdentifier:JGHTeamContactCellIdentifier];
         
-        if (indexPath.row == 1) {
-            //contactCell.contactLabel.text = @"联系人电话";
-            contactCell.contactLabel.text = _titleArray[indexPath.row];
-            contactCell.tetfileView.placeholder = @"请输入联系人姓名";
-            contactCell.tetfileView.tag = 123;
-//            if (self.model.name != nil) {
-//                contactCell.tetfileView.text = self.model.userMobile;
-//            }
-        }else{
-            //contactCell.contactLabel.text = @"联系人";
-            contactCell.contactLabel.text = _titleArray[indexPath.row];
-            contactCell.tetfileView.keyboardType = UIKeyboardTypeDefault;
+        if (indexPath.row == 0) {
+            contactCell.contactLabel.text = _titleArray[indexPath.section][indexPath.row];
             contactCell.tetfileView.placeholder = @"请输入主办方名称";
-//            if (self.model.name != nil) {
-//                contactCell.tetfileView.text = self.model.userName;
-//            }
+            contactCell.tetfileView.tag = 123;
+            if (self.model.userName != nil) {
+                contactCell.tetfileView.text = self.model.userName;
+            }
+        }else{
+            contactCell.contactLabel.text = _titleArray[indexPath.section][indexPath.row];
+            contactCell.tetfileView.keyboardType = UIKeyboardTypeDefault;
+            contactCell.tetfileView.placeholder = @"请输入联系人电话";
+            if (self.model.userMobile != nil) {
+                contactCell.tetfileView.text = self.model.userMobile;
+            }
             
             contactCell.tetfileView.tag = 23;
         }
         
-//        contactCell.tetfileView.delegate = self;
+        contactCell.tetfileView.delegate = self;
         [contactCell configConstraint];
         return contactCell;
     }else if (indexPath.section == 4){
-        JGTeamActivityDetailsCell *detailsCell = [tableView dequeueReusableCellWithIdentifier:JGTeamActivityDetailsCellIdentifier];
-//        UIButton *detailsBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, screenWidth, detailsCell.frame.size.height)];
-//        [detailsBtn addTarget:self action:@selector(pushDetailSCtrl:) forControlEvents:UIControlEventTouchUpInside];
-//        [detailsCell addSubview:detailsBtn];
-//        detailsCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-//        [detailsCell configDetailsText:@"活动详情" AndActivityDetailsText:self.model.info];
-        return detailsCell;
-    }else{
-        
         JGTableViewCell *launchActivityCell = [tableView dequeueReusableCellWithIdentifier:JGTableViewCellIdentifier forIndexPath:indexPath];
         launchActivityCell.selectionStyle = UITableViewCellSelectionStyleNone;
+        launchActivityCell.underline.hidden = YES;
         
-//        NSArray *str = _titleArray[indexPath.section];
-//        if (indexPath.row == [str count]-1) {
-//            launchActivityCell.underline.hidden = YES;
-//        }else{
-//            launchActivityCell.underline.hidden = NO;
-//        }
-//        
-//        [launchActivityCell configTitlesString:str[indexPath.row]];
-//        
-//        if (indexPath.section == 2) {
-//            if (indexPath.row == 0) {
-//                //                    [launchActivityCell configActivityCost:_costListArray];
-//            }else{
-//                [launchActivityCell configActivityInfo:_model.info];
-//            }
-//        }else{
-//            [launchActivityCell configContionsStringWhitModel:self.model andIndexPath:indexPath];
-//        }
-        
+        [launchActivityCell configTitlesString:_titleArray[indexPath.section][indexPath.row]];
         return launchActivityCell;
+    }else if (indexPath.section == 5){
+        JGHPublicLevelCell *publicCell = [tableView dequeueReusableCellWithIdentifier:JGHPublicLevelCellIdentifier];
+        publicCell.selectionStyle = UITableViewCellSelectionStyleNone;
+        [publicCell configEditorLevelCell:_levelArray[indexPath.row] andSelect:(indexPath.row == _model.openType)?1:0];
+        return publicCell;
+    }else{
+        JGTeamActivityDetailsCell *detailsCell = [tableView dequeueReusableCellWithIdentifier:JGTeamActivityDetailsCellIdentifier];
+        [detailsCell configDetailsText:@"活动详情" AndActivityDetailsText:self.model.info];
+        return detailsCell;
     }
 }
-
 - (nullable UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     UIView *footView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, 10)];
     footView.backgroundColor = [UIColor colorWithHexString:BG_color];
     return footView;
 }
-
-
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (indexPath.section == 1){
+        
+    }else if (indexPath.section == 2){
+        [[ShowHUD showHUD]showToastWithText:@"玩法规则不允许编辑！" FromView:self.view];
+        return;
+    }else if (indexPath.section == 3){
+        
+    }else if (indexPath.section == 4){
+        if (indexPath.row == 1) {
+            JGCostSetViewController *costSetCtrl = [[JGCostSetViewController alloc]init];
+            costSetCtrl.delegate = self;
+            if (self.costListArray.count > 0) {
+                costSetCtrl.costListArray = _costListArray;
+                costSetCtrl.isEditor = 1;
+            }
+            
+            [self.navigationController pushViewController:costSetCtrl animated:YES];
+        }else{
+            JGHEditorGameRoundsViewController *gameRoundsCtrl = [[JGHEditorGameRoundsViewController alloc]init];
+            gameRoundsCtrl.timeKey = _model.timeKey;
+            [self.navigationController pushViewController:gameRoundsCtrl animated:YES];
+        }
+    }else if (indexPath.section == 5){
+        _model.openType = indexPath.row;
+        [self.editorEventTableView reloadData];
+    }else{
+        JGHConcentTextViewController *concentTextCtrl = [[JGHConcentTextViewController alloc]initWithNibName:@"JGHConcentTextViewController" bundle:nil];
+        
+        concentTextCtrl.itemText = @"内容";
+        concentTextCtrl.delegate = self;
+        concentTextCtrl.contentTextString = _model.info;
+        
+        [self.navigationController pushViewController:concentTextCtrl animated:YES];
+    }
+}
+#pragma mark --添加赛事背景
+-(void)selectPhotoImage:(UIButton *)btn{
+    UIAlertAction * act1 = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+    }];
+    //拍照：
+    UIAlertAction * act2 = [UIAlertAction actionWithTitle:@"拍照" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        //打开相机
+        [_pickPhoto ShowTakePhotoWithController:self andWithBlock:^(NSObject *Data) {
+            if ([Data isKindOfClass:[UIImage class]])
+            {
+                self.imgProfile.image = (UIImage *)Data;
+                self.model.bgImage = (UIImage *)Data;
+                
+                [self.editorEventTableView reloadData];
+            }
+        }];
+    }];
+    //相册
+    UIAlertAction * act3 = [UIAlertAction actionWithTitle:@"相册" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        //打开相册
+        [_pickPhoto SHowLocalPhotoWithController:self andWithBlock:^(NSObject *Data) {
+            if ([Data isKindOfClass:[UIImage class]])
+            {
+                //设置背景
+                self.imgProfile.image = (UIImage *)Data;
+                self.model.bgImage = (UIImage *)Data;
+                [self.editorEventTableView reloadData];
+            }
+        }];
+    }];
+    UIAlertController * aleVC = [UIAlertController alertControllerWithTitle:@"提示" message:@"选择图片" preferredStyle:UIAlertControllerStyleActionSheet];
+    [aleVC addAction:act1];
+    [aleVC addAction:act2];
+    [aleVC addAction:act3];
+    [self presentViewController:aleVC animated:YES completion:nil];
+}
+#pragma mark -- 费用代理
+- (void)costList:(NSMutableArray *)costArray{
+    self.costListArray = costArray;
+}
+#pragma mark -- 添加内容详情代理  JGHConcentTextViewControllerDelegate
+- (void)didSelectSaveBtnClick:(NSString *)text{
+    [self.model setValue:text forKey:@"info"];
+    //    [_dataDict setObject:text forKey:@"activityContext"];
+    [self.editorEventTableView reloadData];
+}
+#pragma mark -- UITextFliaView
+- (void)textFieldDidEndEditing:(UITextField *)textField{
+    if (textField.tag == 23) {
+        self.model.userMobile = textField.text;
+    }else if (textField.tag == 123){
+        self.model.userName = textField.text;
+    }
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

@@ -37,6 +37,7 @@
 @property (assign, nonatomic) NSInteger sumCount;//赛事报名总人数
 @property (strong, nonatomic) NSNumber* sumMoney;//赛事总金额
 @property (strong, nonatomic) NSString* details;//赛事详情
+@property (strong, nonatomic) NSString* matchTypeName;//赛事详情
 
 @property (nonatomic, strong) UIImage *bgImage;//背景图
 /*

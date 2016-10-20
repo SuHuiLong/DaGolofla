@@ -20,4 +20,6 @@
 
 - (void)configJGHPublicLevelCell:(NSString *)titleString andSelect:(NSInteger)select;
 
+- (void)configEditorLevelCell:(NSString *)titleString andSelect:(NSInteger)select;
+
 @end

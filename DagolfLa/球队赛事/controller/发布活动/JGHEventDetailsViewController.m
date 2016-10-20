@@ -17,6 +17,7 @@
 #import "JGHActivityBaseInfoCell.h"
 #import "JGLTeamSignUpSuccViewController.h"
 #import "JGLSignSuccFinishViewController.h"
+#import "JGHGameRoundsRulesViewController.h"
 
 static CGFloat ImageHeight  = 210.0;
 static NSString *const JGHHeaderLabelCellIdentifier = @"JGHHeaderLabelCell";
@@ -311,7 +312,7 @@ static NSString *const JGSignUoPromptCellIdentifier = @"JGSignUoPromptCell";
 #pragma mark -- 编辑
 - (void)editorBtnClick:(UIButton *)btn{
     JGHEditorEventViewController *editorEventCtrl = [[JGHEditorEventViewController alloc]init];
-    editorEventCtrl.model = _model;
+    [editorEventCtrl configJGHPublishEventModelReloadTable:_model andCostlistArray:_costListArray];
     [self.navigationController pushViewController:editorEventCtrl animated:YES];
 }
 #pragma mark -- 报名
@@ -422,6 +423,13 @@ static NSString *const JGSignUoPromptCellIdentifier = @"JGSignUoPromptCell";
         
         if (section == 6) {
             [headerCell congiftitles:_levelArray[_model.openType]];
+        }else if (section == 3){
+            headerCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            if (_model.matchName == nil) {
+                [headerCell congiftitles:_model.matchName];
+            }else{
+                [headerCell congiftitles:_titleArray[section]];
+            }
         }else{
             headerCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             [headerCell congiftitles:_titleArray[section]];
