@@ -49,6 +49,7 @@
                 <outlet property="priceUnit" destination="mct-eI-RR3" id="oTA-yG-HIr"/>
                 <outlet property="titleLeft" destination="v5M-rj-HKL" id="ikL-z9-E6q"/>
                 <outlet property="titles" destination="OOQ-yO-kD2" id="ZjW-Xh-uhc"/>
+                <outlet property="titlesLeft" destination="v5M-rj-HKL" id="yrC-VB-Qgf"/>
                 <outlet property="titlesW" destination="E0a-op-Ulv" id="LDt-h5-h08"/>
             </connections>
         </tableViewCell>

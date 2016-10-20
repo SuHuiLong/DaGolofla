@@ -12,7 +12,6 @@
 #import "DateTimeViewController.h"
 #import "TeamAreaViewController.h"
 #import "JGHPublishEventModel.h"
-#import "SXPickPhoto.h"
 #import "JGHTeamContactTableViewCell.h"
 #import "JGCostSetViewController.h"
 #import "BallParkViewController.h"
@@ -30,7 +29,6 @@ static CGFloat ImageHeight  = 210.0;
 @interface JGHPublishEventSaveViewController ()<UITableViewDelegate, UITableViewDataSource, JGHConcentTextViewControllerDelegate, JGCostSetViewControllerDelegate, JGHSaveAndSubmitBtnCellDelegate>
 {
     NSArray *_titleArray;//标题数组
-    NSInteger _photos;//跳转相册问题
     
     NSMutableDictionary* dictData;
     
@@ -39,7 +37,6 @@ static CGFloat ImageHeight  = 210.0;
     NSArray *_levelArray;//公开政策
     NSInteger _selectLevel;//选择的公开政策
 }
-@property (nonatomic,strong)SXPickPhoto * pickPhoto;//相册类
 @property (nonatomic, strong)UITableView *launchActivityTableView;
 
 @property (nonatomic, strong)UIImage *headerImage;
@@ -65,14 +62,11 @@ static CGFloat ImageHeight  = 210.0;
 }
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:YES];
-    if (_photos == 1) {
-        self.navigationController.navigationBarHidden = NO;
-    }
+    self.navigationController.navigationBarHidden = NO;
 }
 
 - (instancetype)init{
     if (self == [super init]) {
-        self.pickPhoto = [[SXPickPhoto alloc]init];
         self.titleView = [[UIView alloc]init];
         _selectLevel = 0;
         UIImage *image = [UIImage imageNamed:ActivityBGImage];
@@ -121,35 +115,21 @@ static CGFloat ImageHeight  = 210.0;
         self.costListArray = [NSMutableArray array];
     }
     
-    _photos = 1;
     //返回按钮
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
     btn.frame = BackBtnFrame;
     btn.titleLabel.font = [UIFont systemFontOfSize:FontSize_Normal];
-    btn.tag = 521;
     [btn setImage:[UIImage imageNamed:@"backL"] forState:UIControlStateNormal];
     [btn addTarget:self action:@selector(initItemsBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.titleView addSubview:btn];
-    //点击更换背景
-//    UIButton *replaceBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-//    replaceBtn.frame = CGRectMake(screenWidth-64, 0, 54, 44);
-//    replaceBtn.titleLabel.font = [UIFont systemFontOfSize:FontSize_Normal];
-//    [replaceBtn setTitle:@"点击更换" forState:UIControlStateNormal];
-//    replaceBtn.titleLabel.font = [UIFont systemFontOfSize:13];
-//    replaceBtn.tag = 520;
-//    [replaceBtn addTarget:self action:@selector(initItemsBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-//    [self.titleView addSubview:replaceBtn];
     //输入框
     self.titleField = [[UITextField alloc]initWithFrame:CGRectMake(64, 7, screenWidth - 128, 30)];
     self.titleField.placeholder = @"请输入活动名称";
     [self.titleField setValue:[UIColor whiteColor] forKeyPath:@"_placeholderLabel.textColor"];
     [self.titleField setValue:[UIFont boldSystemFontOfSize:15] forKeyPath:@"_placeholderLabel.font"];
-//    self.titleField.tag = 345;
-//    self.titleField.delegate = self;
     self.titleField.textAlignment = NSTextAlignmentCenter;
     self.titleField.font = [UIFont systemFontOfSize:15];
     self.titleField.userInteractionEnabled = NO;
-
     [self.titleView addSubview:self.titleField];
     
     if (self.model.matchName != nil) {
@@ -159,7 +139,7 @@ static CGFloat ImageHeight  = 210.0;
     }
     _titleArray = @[@"", @"比赛轮次设置", @"费用设置", @"对所有人公开", @"赛事说明"];
     
-    _levelArray = @[@"对所有人公开", @"仅对参与球队公开", @"仅对参与球队公开及个人好友公开"];
+    _levelArray = @[@"对所有人公开", @"仅对参与球队公开", @"仅对参与及被邀请方公开"];
 }
 
 - (void)replaceWithPicture:(UIButton *)Btn{
@@ -170,11 +150,7 @@ static CGFloat ImageHeight  = 210.0;
 }
 #pragma mark -- 页面按钮事件
 - (void)initItemsBtnClick:(UIButton *)btn{
-    if (btn.tag == 521) {
-        [self.navigationController popViewControllerAnimated:YES];
-    }else if (btn.tag == 520){
-        //更换背景
-    }
+    [self.navigationController popViewControllerAnimated:YES];
 }
 #pragma mark -- 提示信息
 - (void)alertviewString:(NSString *)string{
@@ -188,22 +164,15 @@ static CGFloat ImageHeight  = 210.0;
     NSLog(@"yOffset:%f",yOffset);
     CGFloat factor = ((ABS(yOffset)+ImageHeight)*screenWidth)/ImageHeight;
     if (yOffset < 0) {
-        
         CGRect f = CGRectMake(-(factor-screenWidth)/2, 0, factor, ImageHeight+ABS(yOffset));
         self.imgProfile.frame = f;
-        
         _gradientImage.frame = self.imgProfile.frame;
-        
         CGRect title = self.titleView.frame;
         self.titleView.frame = CGRectMake((factor-screenWidth)/2, 10 *ProportionAdapter, title.size.width, title.size.height);
     } else {
         CGRect f = self.imgProfile.frame;
         f.origin.y = -yOffset;
         self.imgProfile.frame = f;
-        
-//        CGRect t = self.titleView.frame;
-//        t.origin.y = yOffset;
-//        self.titleView.frame = t;
     }
 }
 #pragma mark - Table View Delegate
@@ -335,20 +304,15 @@ static CGFloat ImageHeight  = 210.0;
 }
 - (void)pushAndSaveEvent:(UIButton *)btn andCatory:(NSInteger)catory{
     [self.view endEditing:YES];
-//    if (self.model.info == nil) {
-//        [[ShowHUD showHUD]showToastWithText:@"活动说明不能为空！" FromView:self.view];
-//        return;
-//    }
-//    
-//    if (self.costListArray.count == 0) {
-//        [[ShowHUD showHUD]showToastWithText:@"请填写活动资费！" FromView:self.view];
-//        return;
-//    }
-//    
-//    if (self.model.userName == nil) {
-//        [[ShowHUD showHUD]showToastWithText:@"活动联系人不能为空！" FromView:self.view];
-//        return;
-//    }
+    if (self.model.info == nil) {
+        [[ShowHUD showHUD]showToastWithText:@"活动说明不能为空！" FromView:self.view];
+        return;
+    }
+    
+    if (self.costListArray.count == 0) {
+        [[ShowHUD showHUD]showToastWithText:@"请填写活动资费！" FromView:self.view];
+        return;
+    }
     
 //    [[ShowHUD showHUD]showAnimationWithText:@"提交中..." FromView:self.view];
     NSMutableDictionary *postDict = [NSMutableDictionary dictionary];
@@ -359,12 +323,16 @@ static CGFloat ImageHeight  = 210.0;
     [matchDict setObject:_model.userMobile forKey:@"userMobile"];
     [matchDict setObject:_model.matchName forKey:@"matchName"];
     [matchDict setObject:_model.signUpEndTime forKey:@"signUpEndTime"];
-    [matchDict setObject:_model.beginDate forKey:@"beginDate"];
+    if (_model.beginDate.length == 16) {
+        [matchDict setObject:[NSString stringWithFormat:@"%@:00", _model.beginDate] forKey:@"beginDate"];
+    }else{
+        [matchDict setObject:_model.beginDate forKey:@"beginDate"];
+    }
+    
     [matchDict setObject:_model.endDate forKey:@"endDate"];
     [matchDict setObject:_model.ballKey forKey:@"ballKey"];
     [matchDict setObject:_model.ballName forKey:@"ballName"];
     [matchDict setObject:_model.info forKey:@"info"];
-    [matchDict setObject:_model.beginDate forKey:@"beginDate"];
     [matchDict setObject:@(_model.timeKey) forKey:@"timeKey"];
     [matchDict setObject:@(_selectLevel) forKey:@"openType"];
     

@@ -80,6 +80,7 @@ static NSString *const JGHAddEventRoundsBtnCellIdentifier = @"JGHAddEventRoundsB
                 [self.ballBaseArray addObject:dict];
             }else{
                 //数据
+                
             }
         }else{
             if ([data objectForKey:@"packResultMsg"]) {
@@ -242,7 +243,10 @@ static NSString *const JGHAddEventRoundsBtnCellIdentifier = @"JGHAddEventRoundsB
         JGHGameRoundsRulesViewController *gameRulesListCtrl = [[JGHGameRoundsRulesViewController alloc]init];
 //        NSDictionary *rulesDict = _rulesArray[0][0];
         gameRulesListCtrl.rulesTimeKey = _rulesTimeKey;
-        gameRulesListCtrl.roundRulesArray = self.roundArray[indexPath.section];
+        if (self.roundArray.count >= indexPath.section+1) {
+            gameRulesListCtrl.roundRulesArray = self.roundArray[indexPath.section];
+        }
+        
         gameRulesListCtrl.delegate = self;
         _roundID = indexPath.section;
         [self.navigationController pushViewController:gameRulesListCtrl animated:YES];
@@ -268,21 +272,56 @@ static NSString *const JGHAddEventRoundsBtnCellIdentifier = @"JGHAddEventRoundsB
     NSInteger selectCatory;
     NSDictionary *ballDict = self.ballBaseArray[btn.tag -100];
     selectCatory = [[ballDict objectForKey:@"select"] integerValue];
+    if ([[ballDict objectForKey:@"ballName"]isEqualToString:@""]) {
+        [[ShowHUD showHUD]showToastWithText:@"请选择球场！" FromView:self.view];
+        return;
+    }
     
-//    @Param(value = "roundKey"    , require = true )Long roundKey,
-//    @Param(value = "userKey"     , require = true )Long userKey,
-//    @Param(value = "md5"         , require = true )String md5,
+    if ([[ballDict objectForKey:@"kickOffTime"]isEqualToString:@""]) {
+        [[ShowHUD showHUD]showToastWithText:@"请选择开球时间！" FromView:self.view];
+        return;
+    }
     
-//    @Param(value = "matchRound" , require = true ) MatchRound  matchRound,   // 比赛轮次
-//    @Param(value = "userKey"    , require = true )Long userKey,
-//    @Param(value = "md5"        , require = true )String md5,
-    if (selectCatory == 1) {
+    if (self.roundArray.count > btn.tag -100 +1) {
+        [[ShowHUD showHUD]showToastWithText:@"请选择赛制规则！" FromView:self.view];
+        return;
+    }
+    
+    NSDictionary *roundDict = [self.roundArray objectAtIndex:btn.tag - 100];
+
+    
+    if (selectCatory == 0) {
         //保存
         NSMutableDictionary *paterdict = [NSMutableDictionary dictionary];
+        NSMutableDictionary *matchRoundDict = [NSMutableDictionary dictionary];
+        matchRoundDict = [ballDict mutableCopy];
+        [matchRoundDict setObject:[roundDict objectForKey:@"timeKey"] forKey:@"matchformatKey"];
+        [matchRoundDict setObject:[roundDict objectForKey:@"name"] forKey:@"matchformatName"];
+        [matchRoundDict setObject:@(_timeKey) forKey:@"matchKey"];
+        [matchRoundDict setObject:roundDict forKey:@"ruleJson"];
         
+        [paterdict setObject:DEFAULF_USERID forKey:@"userKey"];
+        [paterdict setObject:matchRoundDict forKey:@"matchRound"];
+        [[JsonHttp jsonHttp]httpRequestWithMD5:@"match/addRound" JsonKey:nil withData:paterdict failedBlock:^(id errType) {
+            
+        } completionBlock:^(id data) {
+            NSLog(@"%@", data);
+        }];
     }else{
         //删除
         
+        //    @Param(value = "roundKey"    , require = true )Long roundKey,
+        //    @Param(value = "userKey"     , require = true )Long userKey,
+        //    @Param(value = "md5"         , require = true )String md5,
+        NSMutableDictionary *postdict = [NSMutableDictionary dictionary];
+        
+        [postdict setObject:DEFAULF_USERID forKey:@"userKey"];
+        [postdict setObject:@"" forKey:@"roundKey"];
+        [[JsonHttp jsonHttp]httpRequestWithMD5:@"match/deleteRound" JsonKey:nil withData:postdict failedBlock:^(id errType) {
+            
+        } completionBlock:^(id data) {
+            NSLog(@"%@", data);
+        }];
     }
 }
 #pragma mark -- 赛制代理

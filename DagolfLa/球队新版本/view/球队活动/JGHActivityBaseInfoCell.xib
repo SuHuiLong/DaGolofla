@@ -48,6 +48,7 @@
                 </constraints>
             </tableViewCellContentView>
             <connections>
+                <outlet property="titleLeft" destination="Ool-ax-lf6" id="Twb-ff-8vb"/>
                 <outlet property="titles" destination="VHL-jK-9W3" id="uAR-Fw-zbG"/>
                 <outlet property="value" destination="41b-ak-Cdg" id="jaF-ur-qMF"/>
             </connections>
