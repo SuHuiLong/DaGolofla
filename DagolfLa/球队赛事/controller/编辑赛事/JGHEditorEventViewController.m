@@ -7,7 +7,7 @@
 //
 
 #import "JGHEditorEventViewController.h"
-#import "JGTeamAcitivtyModel.h"
+#import "JGHPublishEventModel.h"
 #import "SXPickPhoto.h"
 #import "JGHTeamContactTableViewCell.h"
 #import "JGTableViewCell.h"
@@ -56,7 +56,7 @@ static NSString *const JGTeamActivityDetailsCellIdentifier = @"JGTeamActivityDet
 
 - (instancetype)init{
     if (self == [super init]) {
-        self.model = [[JGTeamAcitivtyModel alloc]init];
+        self.model = [[JGHPublishEventModel alloc]init];
         
         self.pickPhoto = [[SXPickPhoto alloc]init];
         self.titleView = [[UIView alloc]init];
@@ -87,6 +87,9 @@ static NSString *const JGTeamActivityDetailsCellIdentifier = @"JGTeamActivityDet
         
         UINib *tableViewNib = [UINib nibWithNibName:@"JGTableViewCell" bundle: [NSBundle mainBundle]];
         [self.editorEventTableView registerNib:tableViewNib forCellReuseIdentifier:JGTableViewCellIdentifier];
+        
+        UINib *teamActivityDetailsCellNib = [UINib nibWithNibName:@"JGTeamActivityDetailsCell" bundle: [NSBundle mainBundle]];
+        [self.editorEventTableView registerNib:teamActivityDetailsCellNib forCellReuseIdentifier:JGTeamActivityDetailsCellIdentifier];
 
         self.editorEventTableView.dataSource = self;
         self.editorEventTableView.delegate = self;
@@ -135,6 +138,8 @@ static NSString *const JGTeamActivityDetailsCellIdentifier = @"JGTeamActivityDet
     self.titleField.textAlignment = NSTextAlignmentCenter;
     self.titleField.font = [UIFont systemFontOfSize:15];
     [self.titleView addSubview:self.titleField];
+    
+    _titleArray = @[@"", @"基本信息", @"参赛费用", @"球队比杆排位赛", @"查看报名及分组", @"查看成绩", @"对所有人公开", @"主办方", @"赛事联系人电话", @"赛事说明"];
 }
 #pragma mark -- 页面按钮事件
 - (void)initItemsBtnClick:(UIButton *)btn{
@@ -221,20 +226,20 @@ static NSString *const JGTeamActivityDetailsCellIdentifier = @"JGTeamActivityDet
         
         if (indexPath.row == 1) {
             //contactCell.contactLabel.text = @"联系人电话";
-            contactCell.contactLabel.text = _titleArray[indexPath.section][indexPath.row];
+            contactCell.contactLabel.text = _titleArray[indexPath.row];
             contactCell.tetfileView.placeholder = @"请输入联系人姓名";
             contactCell.tetfileView.tag = 123;
-            if (self.model.name != nil) {
-                contactCell.tetfileView.text = self.model.userMobile;
-            }
+//            if (self.model.name != nil) {
+//                contactCell.tetfileView.text = self.model.userMobile;
+//            }
         }else{
             //contactCell.contactLabel.text = @"联系人";
-            contactCell.contactLabel.text = _titleArray[indexPath.section][indexPath.row];
+            contactCell.contactLabel.text = _titleArray[indexPath.row];
             contactCell.tetfileView.keyboardType = UIKeyboardTypeDefault;
             contactCell.tetfileView.placeholder = @"请输入主办方名称";
-            if (self.model.name != nil) {
-                contactCell.tetfileView.text = self.model.userName;
-            }
+//            if (self.model.name != nil) {
+//                contactCell.tetfileView.text = self.model.userName;
+//            }
             
             contactCell.tetfileView.tag = 23;
         }

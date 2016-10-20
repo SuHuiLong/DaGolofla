@@ -411,14 +411,12 @@ static CGFloat ImageHeight  = 210.0;
         [[ShowHUD showHUD]showToastWithText:@"手机号码格式不正确！" FromView:self.view];
         return;
     }
-     
-     if (_rulesArray.count == 0) {
-     [[ShowHUD showHUD]showToastWithText:@"请设置玩法！" FromView:self.view];
-     return;
-     }
-     
-    */
     
+    if (_rulesArray.count == 0) {
+        [[ShowHUD showHUD]showToastWithText:@"请设置玩法！" FromView:self.view];
+        return;
+    }
+    */
     JGHPublishEventSaveViewController *publishCtrl = [[JGHPublishEventSaveViewController alloc]init];
     publishCtrl.rulesArray = _rulesArray;
     publishCtrl.model = _model;

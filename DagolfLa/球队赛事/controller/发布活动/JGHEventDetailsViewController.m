@@ -15,6 +15,8 @@
 #import "JGHEditorEventViewController.h"
 #import "JGHPublishEventModel.h"
 #import "JGHActivityBaseInfoCell.h"
+#import "JGLTeamSignUpSuccViewController.h"
+#import "JGLSignSuccFinishViewController.h"
 
 static CGFloat ImageHeight  = 210.0;
 static NSString *const JGHHeaderLabelCellIdentifier = @"JGHHeaderLabelCell";
@@ -167,7 +169,7 @@ static NSString *const JGSignUoPromptCellIdentifier = @"JGSignUoPromptCell";
 - (void)getMatchInfo:(NSInteger)timeKey{
     //30342
     self.timeKey = timeKey;
-    self.timeKey = 30342;
+//    self.timeKey = 30342;
     NSMutableDictionary *getDict = [NSMutableDictionary dictionary];
     [getDict setObject:@(_timeKey) forKey:@"matchKey"];
     [getDict setObject:DEFAULF_USERID forKey:@"userKey"];
@@ -268,17 +270,14 @@ static NSString *const JGSignUoPromptCellIdentifier = @"JGSignUoPromptCell";
         [editorBtn addTarget:self action:@selector(editorBtnClick:) forControlEvents:UIControlEventTouchUpInside];
         [self.view addSubview:editorBtn];
         
-        UIButton *invitationBtn = [[UIButton alloc]initWithFrame:CGRectMake(75*screenWidth/375, screenHeight-44, (2*75*screenWidth/375)-1, 44)];
+        UIButton *invitationBtn = [[UIButton alloc]initWithFrame:CGRectMake(75*screenWidth/375, screenHeight-44, (75*screenWidth/375)-1, 44)];
         [invitationBtn setTitle:@"邀请" forState:UIControlStateNormal];
         invitationBtn.titleLabel.font = [UIFont systemFontOfSize:17 *ProportionAdapter];
         invitationBtn.backgroundColor = [UIColor colorWithHexString:Nav_Color];
-        [invitationBtn addTarget:self action:@selector(editorBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+        [invitationBtn addTarget:self action:@selector(inviteTeamBtnClick:) forControlEvents:UIControlEventTouchUpInside];
         [self.view addSubview:invitationBtn];
         
-        UILabel *lines = [[UILabel alloc]initWithFrame:CGRectMake(editorBtn.frame.origin.x, editorBtn.frame.size.width, 1, 44)];
-        lines.backgroundColor = [UIColor blackColor];
-        [self.view addSubview:lines];
-        self.applyBtn = [[UIButton alloc]initWithFrame:CGRectMake(editorBtn.frame.size.width + 1, screenHeight-44, screenWidth -2* 75 *ScreenWidth/375, 44)];
+        self.applyBtn = [[UIButton alloc]initWithFrame:CGRectMake(2*75*screenWidth/375, screenHeight-44, screenWidth -2* 75 *ScreenWidth/375, 44)];
         [self.applyBtn setTitle:@"球队报名" forState:UIControlStateNormal];
         self.applyBtn.titleLabel.font = [UIFont systemFontOfSize:17 *ProportionAdapter];
         [self.applyBtn addTarget:self action:@selector(applyAttendBtnClick:) forControlEvents:UIControlEventTouchUpInside];
@@ -290,7 +289,7 @@ static NSString *const JGSignUoPromptCellIdentifier = @"JGSignUoPromptCell";
         [editorBtn setTitle:@"邀请" forState:UIControlStateNormal];
         editorBtn.titleLabel.font = [UIFont systemFontOfSize:17 *ProportionAdapter];
         editorBtn.backgroundColor = [UIColor colorWithHexString:Nav_Color];
-        [editorBtn addTarget:self action:@selector(editorBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+        [editorBtn addTarget:self action:@selector(inviteTeamBtnClick:) forControlEvents:UIControlEventTouchUpInside];
         [self.view addSubview:editorBtn];
         
         UILabel *lines = [[UILabel alloc]initWithFrame:CGRectMake(editorBtn.frame.origin.x, editorBtn.frame.size.width, 1, 44)];
@@ -305,9 +304,14 @@ static NSString *const JGSignUoPromptCellIdentifier = @"JGSignUoPromptCell";
         [self.view addSubview:self.applyBtn];
     }
 }
+#pragma mark -- 邀请
+- (void)inviteTeamBtnClick:(UIButton *)btn{
+    
+}
 #pragma mark -- 编辑
 - (void)editorBtnClick:(UIButton *)btn{
     JGHEditorEventViewController *editorEventCtrl = [[JGHEditorEventViewController alloc]init];
+    editorEventCtrl.model = _model;
     [self.navigationController pushViewController:editorEventCtrl animated:YES];
 }
 #pragma mark -- 报名

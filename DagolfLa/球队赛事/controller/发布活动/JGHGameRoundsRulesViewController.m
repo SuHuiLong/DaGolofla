@@ -49,6 +49,7 @@ static NSString *const JGHGameBaseHeaderSubCellIdentifier = @"JGHGameBaseHeaderS
 - (void)backButtonClcik{
     if (self.delegate) {
         [self.delegate didGameRoundsRulesViewSaveroundRulesArray:self.roundRulesArray];
+        [self.navigationController popViewControllerAnimated:YES];
     }
 }
 - (void)loadRulesData{

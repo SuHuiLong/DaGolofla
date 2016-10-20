@@ -7,12 +7,12 @@
 //
 
 #import "ViewController.h"
-@class JGTeamAcitivtyModel;
+@class JGHPublishEventModel;
 
 @interface JGHEditorEventViewController : ViewController
 
 @property (nonatomic, retain) UIImageView *imgProfile;
 
-@property (nonatomic, strong)JGTeamAcitivtyModel *model;
+@property (nonatomic, strong)JGHPublishEventModel *model;
 
 @end

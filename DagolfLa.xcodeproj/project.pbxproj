@@ -3616,8 +3616,6 @@
 		20203B121D9B5F2C009A75F3 /* 发布赛事 */ = {
 			isa = PBXGroup;
 			children = (
-				20D514B81DB63CEB0006EFCB /* JGHGameRoundsRulesViewController.h */,
-				20D514B71DB63CEB0006EFCB /* JGHGameRoundsRulesViewController.m */,
 				20D514B91DB63CEB0006EFCB /* JGHGameBaseSetViewController.m */,
 				20D514BA1DB63CEB0006EFCB /* JGHGameBaseSetViewController.h */,
 				20203B131D9B5F7B009A75F3 /* JGHPublishEventViewController.h */,
@@ -3628,6 +3626,8 @@
 				20B04A781DA88BA800475F7A /* JGHGameSetViewController.m */,
 				20B04A821DA8EA1800475F7A /* JGHGameRoundsViewController.h */,
 				20B04A831DA8EA1800475F7A /* JGHGameRoundsViewController.m */,
+				20D514B81DB63CEB0006EFCB /* JGHGameRoundsRulesViewController.h */,
+				20D514B71DB63CEB0006EFCB /* JGHGameRoundsRulesViewController.m */,
 				20B04A851DA8F1C000475F7A /* JGHEventDetailsViewController.h */,
 				20B04A861DA8F1C000475F7A /* JGHEventDetailsViewController.m */,
 			);
