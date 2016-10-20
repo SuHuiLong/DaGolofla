@@ -294,7 +294,9 @@ static CGFloat ImageHeight  = 210.0;
     footView.backgroundColor = [UIColor colorWithHexString:BG_color];
     return footView;
 }
+
 #pragma mark -- cell点击事件
+
 - (void)didSelectCellBtn:(UIButton *)btn{
     if (btn.tag == 101) {
         JGHGameRoundsViewController *gameRoundsCtrl = [[JGHGameRoundsViewController alloc]init];

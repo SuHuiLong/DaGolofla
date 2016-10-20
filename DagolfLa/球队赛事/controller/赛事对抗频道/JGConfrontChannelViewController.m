@@ -119,64 +119,61 @@
 
 #pragma mark - 下载数据
 
-
 - (void)downLoadData:(NSInteger)page isReshing:(BOOL)isReshing{
     
-        NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
-        [dic setObject:@(_page) forKey:@"offset"];
-        [dic setObject:DEFAULF_USERID forKey:@"userKey"];
-        [dic setObject:[Helper md5HexDigest:@"userKey=244dagolfla.com"] forKey:@"md5"];
-        [[JsonHttp jsonHttp] httpRequest:@"match/getHotMatchList" JsonKey:nil withData:dic requestMethod:@"GET" failedBlock:^(id errType) {
-            if (isReshing) {
-                [_tableView.header endRefreshing];
-            }else {
-                [_tableView.footer endRefreshing];
-            }
-        } completionBlock:^(id data) {
-            
-            if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
-                
-                if ([data objectForKey:@"list"]) {
-                    if (page == 0)
-                    {
-                        //清除数组数据
-                        [self.dataArray removeAllObjects];
-                    }
-                    for (NSDictionary *dicModel in data[@"list"]) {
-                        JGDConfrontChannelModel *model = [[JGDConfrontChannelModel alloc] init];
-                        [model setValuesForKeysWithDictionary:dicModel];
-                        [self.dataArray addObject:model];
-                    }
-                    [self.tableView reloadData];
-                    
-                    //            [self.myActivityArray addObjectsFromArray:[data objectForKey:@"teamList"]];
-                    
-                    _page++;
-//                    [_tableView reloadData];
-                }else {
-                    //            [Helper alertViewWithTitle:@"没有更多球队" withBlock:^(UIAlertController *alertView) {
-                    //                [self presentViewController:alertView animated:YES completion:nil];
-                    //            }];
-                }
-                [_tableView reloadData];
-                if (isReshing) {
-                    [_tableView.header endRefreshing];
-                }else {
-                    [_tableView.footer endRefreshing];
-                }
-            
-            }else{
-                if ([data objectForKey:@"packResultMsg"]) {
-                    [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
-                }
-            }
-            
-
-        }
-    ];
-    
-
+    NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
+    [dic setObject:@(_page) forKey:@"offset"];
+    [dic setObject:DEFAULF_USERID forKey:@"userKey"];
+    [dic setObject:[Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@dagolfla.com", DEFAULF_USERID]] forKey:@"md5"];
+    NSString *requestString = self.leftORright == 1 ? @"match/getHotMatchList" : @"match/getMyMatchList";
+    [[JsonHttp jsonHttp] httpRequest:requestString JsonKey:nil withData:dic requestMethod:@"GET" failedBlock:^(id errType) {
         
+        [[ShowHUD showHUD]showToastWithText:[NSString stringWithFormat:@"%@",errType] FromView:self.view];
+        if (isReshing) {
+            [_tableView.header endRefreshing];
+        }else {
+            [_tableView.footer endRefreshing];
+        }
+        
+    } completionBlock:^(id data) {
+        
+        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+            
+            if ([data objectForKey:@"list"]) {
+                if (page == 0)
+                {
+                    //清除数组数据
+                    [self.dataArray removeAllObjects];
+                }
+                
+                for (NSDictionary *dicModel in data[@"list"]) {
+                    JGDConfrontChannelModel *model = [[JGDConfrontChannelModel alloc] init];
+                    [model setValuesForKeysWithDictionary:dicModel];
+                    [self.dataArray addObject:model];
+                }
+                [self.tableView reloadData];
+                _page++;
+            }
+            [_tableView reloadData];
+            
+        }else{
+            
+            if ([data objectForKey:@"packResultMsg"]) {
+                [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+            }
+        }
+        
+        if (isReshing) {
+            [_tableView.header endRefreshing];
+        }else {
+            [_tableView.footer endRefreshing];
+        }
+        
+    }
+     ];
+    
+    
+    
 }
 
 
@@ -196,7 +193,7 @@
     self.myMatchBtn = [[UIButton alloc] initWithFrame:CGRectMake(200 * ProportionAdapter, 0 * ProportionAdapter, 150 * ProportionAdapter, 50 * ProportionAdapter)];
     //    [self.myMatchBtn setImage:[UIImage imageNamed:@"hotfight"] forState:(UIControlStateNormal)];
     [self.myMatchBtn setTitle:@"我的对抗赛" forState:(UIControlStateNormal)];
-//    [self.myMatchBtn setTitleColor:[UIColor blackColor] forState:(UIControlStateNormal)];
+    //    [self.myMatchBtn setTitleColor:[UIColor blackColor] forState:(UIControlStateNormal)];
     [self.sectionHeadView addSubview:self.myMatchBtn];
     self.myMatchBtn.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 100 * ProportionAdapter);
     [self.myMatchBtn addTarget:self action:@selector(myMatchAct:) forControlEvents:(UIControlEventTouchUpInside)];
@@ -219,10 +216,10 @@
     if (self.leftORright == 1) {
         self.leftView.hidden = NO;
         self.rightView.hidden = YES;
-
+        
         [self.myMatchBtn setTitleColor:[UIColor lightGrayColor] forState:(UIControlStateNormal)];
         [self.hotMatchBtn setTitleColor:[UIColor blackColor] forState:(UIControlStateNormal)];
-
+        
     }else{
         self.leftView.hidden = YES;
         self.rightView.hidden = NO;
@@ -230,7 +227,7 @@
         [self.myMatchBtn setTitleColor:[UIColor blackColor] forState:(UIControlStateNormal)];
         [self.hotMatchBtn setTitleColor:[UIColor lightGrayColor] forState:(UIControlStateNormal)];
     }
-
+    
     
     return self.sectionHeadView;
 }
@@ -281,16 +278,16 @@
     
 }
 
+#pragma mark --我的对抗赛
 
-//  我的对抗赛
 - (void)myMatchAct:(UIButton *)btn{
     
     self.leftORright = 2;
-    
-//    if (self.rightView.hidden == YES) {
-//        self.rightView.hidden = NO;
-//        self.leftView.hidden = YES;
-//    }
+    _page = 0;
+    //    if (self.rightView.hidden == YES) {
+    //        self.rightView.hidden = NO;
+    //        self.leftView.hidden = YES;
+    //    }
     [btn setTitleColor:[UIColor blackColor] forState:(UIControlStateNormal)];
     [self.hotMatchBtn setTitleColor:[UIColor lightGrayColor] forState:(UIControlStateNormal)];
     
@@ -299,7 +296,6 @@
     [dic setObject:@(_page) forKey:@"offset"];
     [dic setObject:DEFAULF_USERID forKey:@"userKey"];
     [dic setObject:[Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@dagolfla.com", DEFAULF_USERID]] forKey:@"md5"];
-    
     
     [[JsonHttp jsonHttp] httpRequest:@"match/getMyMatchList" JsonKey:nil withData:dic requestMethod:@"GET" failedBlock:^(id errType) {
         [[ShowHUD showHUD]showToastWithText:[NSString stringWithFormat:@"%@",errType] FromView:self.view];
@@ -314,8 +310,8 @@
                     [self.dataArray addObject:model];
                 }
                 
-                [self.tableView reloadData];
             }
+            [self.tableView reloadData];
             
         }else{
             if ([data objectForKey:@"packResultMsg"]) {
@@ -326,15 +322,16 @@
     
 }
 
-//  热门对抗赛
+#pragma mark --热门对抗赛
+
 - (void)hotMatchAct:(UIButton *)btn{
     
     self.leftORright = 1;
-    
-//    if (self.leftView.hidden == YES) {
-//        self.leftView.hidden = NO;
-//        self.rightView.hidden = YES;
-//    }
+    _page = 0;
+    //    if (self.leftView.hidden == YES) {
+    //        self.leftView.hidden = NO;
+    //        self.rightView.hidden = YES;
+    //    }
     [btn setTitleColor:[UIColor blackColor] forState:(UIControlStateNormal)];
     [self.myMatchBtn setTitleColor:[UIColor lightGrayColor] forState:(UIControlStateNormal)];
     
@@ -345,17 +342,21 @@
     [dic setObject:[Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@dagolfla.com", DEFAULF_USERID]] forKey:@"md5"];
     
     
-//    [[JsonHttp jsonHttp] httpRequest:@"match/getHotMatchList" JsonKey:nil withData:dic requestMethod:@"GET" failedBlock:^(id errType) {
-    [[JsonHttp jsonHttp] httpRequest:@"match/getMyMatchList" JsonKey:nil withData:dic requestMethod:@"GET" failedBlock:^(id errType) {
-
+        [[JsonHttp jsonHttp] httpRequest:@"match/getHotMatchList" JsonKey:nil withData:dic requestMethod:@"GET" failedBlock:^(id errType) {
+//    [[JsonHttp jsonHttp] httpRequest:@"match/getMyMatchList" JsonKey:nil withData:dic requestMethod:@"GET" failedBlock:^(id errType) {
+    
         [[ShowHUD showHUD]showToastWithText:[NSString stringWithFormat:@"%@",errType] FromView:self.view];
     } completionBlock:^(id data) {
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
             NSLog(@"--hot--");
-            for (NSDictionary *dic in [data objectForKey:@"list"]) {
-                JGDConfrontChannelModel *model = [[JGDConfrontChannelModel alloc] init];
-                [model setValuesForKeysWithDictionary:dic];
-                [self.dataArray addObject:model];
+            if ([data objectForKey:@"list"]) {
+                [self.dataArray removeAllObjects];
+                
+                for (NSDictionary *dic in [data objectForKey:@"list"]) {
+                    JGDConfrontChannelModel *model = [[JGDConfrontChannelModel alloc] init];
+                    [model setValuesForKeysWithDictionary:dic];
+                    [self.dataArray addObject:model];
+                }
             }
             [self.tableView reloadData];
         }else{

@@ -40,7 +40,7 @@
         self.iconImage.layer.cornerRadius = 6 * ProportionAdapter;
         self.iconImage.clipsToBounds = YES;
         self.iconImage.backgroundColor = [UIColor orangeColor];
-        
+        self.iconImage.contentMode = UIViewContentModeScaleAspectFill;
         //activityStateImage
         self.identifierImage = [[UIImageView alloc] initWithFrame:CGRectMake(38 * ProportionAdapter, 0, 30 * ProportionAdapter, 30 * ProportionAdapter)];
         self.identifierImage.image = [UIImage imageNamed:@"activityStateImage"];
@@ -65,15 +65,14 @@
         self.kindLB.textAlignment = NSTextAlignmentRight;
         [self.contentView addSubview:self.kindLB];
     
-        self.sumLB = [[UILabel alloc] initWithFrame:CGRectMake(290 * ProportionAdapter, 40 * ProportionAdapter, 80 * ProportionAdapter, 25 * ProportionAdapter)];
+        self.sumLB = [[UILabel alloc] initWithFrame:CGRectMake(290 * ProportionAdapter, 38 * ProportionAdapter, 80 * ProportionAdapter, 20 * ProportionAdapter)];
         self.sumLB.font = [UIFont systemFontOfSize:12 * ProportionAdapter];
         self.sumLB.textColor = [UIColor colorWithHexString:@"a0a0a0"];
         self.sumLB.textAlignment = NSTextAlignmentCenter;
         [self.contentView addSubview:self.sumLB];
         
         
-        self.dateLB = [[UILabel alloc] initWithFrame:CGRectMake(110 * ProportionAdapter, 35 * ProportionAdapter, 200 * ProportionAdapter, 20 * ProportionAdapter)];
-        self.dateLB.text = @"12月09号";
+        self.dateLB = [[UILabel alloc] initWithFrame:CGRectMake(110 * ProportionAdapter, 35 * ProportionAdapter, 100 * ProportionAdapter, 20 * ProportionAdapter)];
         self.dateLB.textColor = [UIColor colorWithHexString:@"#626262"];
         self.dateLB.font = [UIFont systemFontOfSize:10 * ProportionAdapter];
         [self.contentView addSubview:self.dateLB];
@@ -91,7 +90,13 @@
     self.sumLB.text = [NSString stringWithFormat:@"参赛：%td 人",[model.sumCount integerValue]];
     self.kindLB.text = model.matchTypeName;
     self.titleLB.text = model.matchName;
-    self.dateLB.text = [NSString stringWithFormat:@"%@月%@号",[model.createTime substringWithRange:NSMakeRange(5, 2)], [model.createTime substringWithRange:NSMakeRange(8, 2)]];
+    self.dateLB.text = [NSString stringWithFormat:@"%@月%@号",[model.beginDate substringWithRange:NSMakeRange(5, 2)], [model.createTime substringWithRange:NSMakeRange(8, 2)]];
+    
+    //清缓存
+    NSString *bgUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/match/%@.jpg",model.timeKey];
+    [[SDImageCache sharedImageCache] removeImageForKey:bgUrl fromDisk:YES];
+    
+    // 再给图片赋值
     [self.iconImage sd_setImageWithURL:[Helper setMatchImageIconUrl:[model.timeKey integerValue] ]placeholderImage:[UIImage imageNamed:TeamLogoImage]];
 
 }

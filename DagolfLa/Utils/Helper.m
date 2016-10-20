@@ -613,7 +613,7 @@
 + (NSURL *)setMatchImageIconUrl:(NSInteger)timeKey {
     //   http://imgcache.dagolfla.com/match/244.jpg
     
-    NSString *imageStr = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/match/%td.jpg@100w_100h",timeKey];
+    NSString *imageStr = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/match/%td.jpg",timeKey];
     NSURL *imageUrl = [NSURL URLWithString:imageStr];
     return imageUrl;
 }
