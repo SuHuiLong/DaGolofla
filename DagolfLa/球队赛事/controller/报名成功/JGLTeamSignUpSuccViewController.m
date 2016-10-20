@@ -59,25 +59,28 @@
 }
 -(void)finishClick:(UIButton *)btn{
     btn.userInteractionEnabled = NO;
-//    JGLSignSuccFinishViewController* finVc = [[JGLSignSuccFinishViewController alloc]init];
-//    [self.navigationController pushViewController:finVc animated:YES];
+    //    JGLSignSuccFinishViewController* finVc = [[JGLSignSuccFinishViewController alloc]init];
+    //    [self.navigationController pushViewController:finVc animated:YES];
     
     if ([_strTeamName isEqualToString:@"请选择球队"] == YES) {
         [[ShowHUD showHUD]showToastWithText:@"您的球队尚未选择" FromView:self.view];
+        btn.userInteractionEnabled = YES;
         return;
     }
     if ([Helper isBlankString:_textFieldName.text]) {
         [[ShowHUD showHUD]showToastWithText:@"报名人姓名尚未填写" FromView:self.view];
+        btn.userInteractionEnabled = YES;
         return;
     }
     if ([Helper isBlankString:_textFieldMobile.text]) {
         [[ShowHUD showHUD]showToastWithText:@"报名人手机号尚未填写" FromView:self.view];
+        btn.userInteractionEnabled = YES;
         return;
     }
     NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
     [dict setObject:DEFAULF_USERID forKey:@"userKey"];
     [dict setObject:_teamKey forKey:@"teamKey"];
-    [dict setObject:@122 forKey:@"matchKey"];
+    [dict setObject:self.matchKey forKey:@"matchKey"];
     [dict setObject:_textFieldName.text forKey:@"userName"];
     [dict setObject:_textFieldMobile.text forKey:@"userMobile"];
     [[JsonHttp jsonHttp]httpRequestHaveSpaceWithMD5:@"match/joinMatch" JsonKey:nil withData:dict failedBlock:^(id errType) {
@@ -86,10 +89,14 @@
         NSLog(@"%@", data);
         
         if ([[data objectForKey:@"packSuccess"]integerValue] == 1) {
+            JGLSignSuccFinishViewController *succVC = [[JGLSignSuccFinishViewController alloc] init];
+            [self.navigationController pushViewController:succVC animated:YES];
             
             //                        [self scoresResult];
         }else{
             if ([data objectForKey:@"packResultMsg"]) {
+            
+                [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
                 
             }
         }
@@ -114,9 +121,9 @@
     _textFieldName.layer.cornerRadius = 8;
     _textFieldName.layer.masksToBounds = YES;
     
-//    UIView* view = [[UIView alloc]initWithFrame:CGRectMake(0, 34*ProportionAdapter, screenWidth-100*ProportionAdapter, 1*ProportionAdapter)];
-//    view.backgroundColor = [UIColor darkGrayColor];
-//    [_textFieldName addSubview:view];
+    //    UIView* view = [[UIView alloc]initWithFrame:CGRectMake(0, 34*ProportionAdapter, screenWidth-100*ProportionAdapter, 1*ProportionAdapter)];
+    //    view.backgroundColor = [UIColor darkGrayColor];
+    //    [_textFieldName addSubview:view];
     
 }
 
@@ -206,7 +213,7 @@
             [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
         }
     }];
-
+    
 }
 #pragma mark 开始进入刷新状态
 - (void)headerRefreshing
@@ -268,13 +275,13 @@
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

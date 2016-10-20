@@ -7,6 +7,7 @@
 //
 
 #import "JGLSignSuccFinishViewController.h"
+#import "JGHEventDetailsViewController.h"
 
 @interface JGLSignSuccFinishViewController ()
 
@@ -60,6 +61,12 @@
 
 -(void) labelTouchUpInside:(UITapGestureRecognizer *)recognizer{
     NSLog(@"被点击了");
+    for (UIViewController *vc in self.navigationController.viewControllers) {
+        if ([vc isKindOfClass:[JGHEventDetailsViewController class]]) {
+            [self.navigationController popToViewController:vc animated:YES];
+            return;
+        }
+    }
 }
 
 

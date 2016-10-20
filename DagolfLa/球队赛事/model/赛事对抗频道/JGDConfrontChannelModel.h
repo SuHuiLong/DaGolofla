@@ -22,6 +22,8 @@
 
 @property (nonatomic, copy) NSString *createTime;
 
+@property (nonatomic, copy) NSString *beginDate;
+
 @property (nonatomic, strong) NSNumber *timeKey;
 
 //@property (nonatomic, strong) NSNumber *userKey;

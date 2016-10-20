@@ -8477,7 +8477,7 @@
 				TargetAttributes = {
 					36BFFD271BC76C8D005B3CE2 = {
 						CreatedOnToolsVersion = 6.3.2;
-						DevelopmentTeam = 5P6JNXBH3C;
+						DevelopmentTeam = R269PG52XZ;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
@@ -9771,7 +9771,7 @@
 				CODE_SIGN_ENTITLEMENTS = DagolfLa/DagolfLa.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = 5P6JNXBH3C;
+				DEVELOPMENT_TEAM = R269PG52XZ;
 				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -9822,7 +9822,7 @@
 				CODE_SIGN_ENTITLEMENTS = DagolfLa/DagolfLa.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = 5P6JNXBH3C;
+				DEVELOPMENT_TEAM = R269PG52XZ;
 				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = NO;
 				FRAMEWORK_SEARCH_PATHS = (

@@ -263,7 +263,9 @@ static CGFloat ImageHeight  = 210.0;
     footView.backgroundColor = [UIColor colorWithHexString:BG_color];
     return footView;
 }
+
 #pragma mark -- cell点击事件
+
 - (void)didSelectCellBtn:(UIButton *)btn{
     if (btn.tag == 101) {
         JGHGameRoundsViewController *gameRoundsCtrl = [[JGHGameRoundsViewController alloc]init];
@@ -292,10 +294,12 @@ static CGFloat ImageHeight  = 210.0;
         [self.navigationController pushViewController:concentTextCtrl animated:YES];
     }
 }
+
 #pragma mark --保存代理
 - (void)SaveBtnClick:(UIButton *)btn{
     [self pushAndSaveEvent:btn andCatory:0];
 }
+
 #pragma mark --提交代理
 - (void)SubmitBtnClick:(UIButton *)btn{
     [self pushAndSaveEvent:btn andCatory:1];
