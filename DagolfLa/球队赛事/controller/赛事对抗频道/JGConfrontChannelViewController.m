@@ -108,6 +108,7 @@
 // 刷新
 - (void)headRereshing
 {
+    _page = 0;
     [self downLoadData:_page isReshing:YES];
 }
 
@@ -145,16 +146,27 @@
                     //清除数组数据
                     [self.dataArray removeAllObjects];
                 }
-                
+                NSMutableArray *indexPathArray = [[NSMutableArray alloc] init];
                 for (NSDictionary *dicModel in data[@"list"]) {
                     JGDConfrontChannelModel *model = [[JGDConfrontChannelModel alloc] init];
                     [model setValuesForKeysWithDictionary:dicModel];
                     [self.dataArray addObject:model];
                 }
-                [self.tableView reloadData];
+                
+                if (_page > 0) {
+                    for (int i = 0; i < [data[@"list"] count]; i ++) {
+                        [indexPathArray addObject:[NSIndexPath indexPathForRow:20 * _page + i inSection:0]];
+                    }
+                    [self.tableView insertRowsAtIndexPaths:indexPathArray withRowAnimation:UITableViewRowAnimationFade];
+                }else{
+                    [_tableView reloadData];
+                }
                 _page++;
+                
+            }else{
+//                [_tableView reloadData];
+                
             }
-            [_tableView reloadData];
             
         }else{
             
@@ -171,9 +183,6 @@
         
     }
      ];
-    
-    
-    
 }
 
 
@@ -228,7 +237,6 @@
         [self.hotMatchBtn setTitleColor:[UIColor lightGrayColor] forState:(UIControlStateNormal)];
     }
     
-    
     return self.sectionHeadView;
 }
 
@@ -246,37 +254,16 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return 80 * ProportionAdapter;
 }
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    
-    if (indexPath.row == 3) {
-        
-        JGDCheckScoreViewController *checkScoreV = [[JGDCheckScoreViewController alloc] init];
-        JGDConfrontChannelModel *model = self.dataArray[indexPath.row];
-        if (model.timeKey != nil) {
-            checkScoreV.matchKey = model.timeKey;
-        }
-        [self.navigationController pushViewController:checkScoreV animated:YES];
-        
-    }else if (indexPath.row == 2) {
-        
-        JGDSetConfrontViewController *setConfVC = [[JGDSetConfrontViewController alloc] init];
-        JGDConfrontChannelModel *model = self.dataArray[indexPath.row];
-        if (model.timeKey != nil) {
-            setConfVC.matchKey = model.timeKey;
-        }
-        [self.navigationController pushViewController:setConfVC animated:YES];
-        
-    }else{
-        
-        JGHEventDetailsViewController *deatilCtrl = [[JGHEventDetailsViewController alloc]init];
+
+    JGHEventDetailsViewController *deatilCtrl = [[JGHEventDetailsViewController alloc]init];
         JGDConfrontChannelModel *model = self.dataArray[indexPath.row];
         if (model.timeKey != nil) {
 //            deatilCtrl.timeKey = [model.timeKey integerValue];
             [deatilCtrl getMatchInfo:[model.timeKey integerValue]];
         }
-        [self.navigationController pushViewController:deatilCtrl animated:YES];
-    }
-    
+        [self.navigationController pushViewController:deatilCtrl animated:YES];    
 }
 
 #pragma mark --我的对抗赛
@@ -302,15 +289,16 @@
         [[ShowHUD showHUD]showToastWithText:[NSString stringWithFormat:@"%@",errType] FromView:self.view];
     } completionBlock:^(id data) {
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+            [self.dataArray removeAllObjects];
+
             if ([data objectForKey:@"list"]) {
-                [self.dataArray removeAllObjects];
                 
                 for (NSDictionary *dic in [data objectForKey:@"list"]) {
                     JGDConfrontChannelModel *model = [[JGDConfrontChannelModel alloc] init];
                     [model setValuesForKeysWithDictionary:dic];
                     [self.dataArray addObject:model];
                 }
-                
+                _page ++;
             }
             [self.tableView reloadData];
             
@@ -349,15 +337,16 @@
         [[ShowHUD showHUD]showToastWithText:[NSString stringWithFormat:@"%@",errType] FromView:self.view];
     } completionBlock:^(id data) {
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
-            NSLog(@"--hot--");
+            [self.dataArray removeAllObjects];
+
             if ([data objectForKey:@"list"]) {
-                [self.dataArray removeAllObjects];
                 
                 for (NSDictionary *dic in [data objectForKey:@"list"]) {
                     JGDConfrontChannelModel *model = [[JGDConfrontChannelModel alloc] init];
                     [model setValuesForKeysWithDictionary:dic];
                     [self.dataArray addObject:model];
                 }
+                _page ++;
             }
             [self.tableView reloadData];
         }else{

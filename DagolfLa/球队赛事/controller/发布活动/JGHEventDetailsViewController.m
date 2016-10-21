@@ -22,6 +22,12 @@
 #import "JGHEventRoundsRulesViewController.h"
 #import "JGHTeamContactTableViewCell.h"
 
+#import "JGDInvateTeamViewController.h"
+
+
+#warning TEST 
+#import "JGDSetConfrontViewController.h"
+
 static CGFloat ImageHeight  = 210.0;
 static NSString *const JGHHeaderLabelCellIdentifier = @"JGHHeaderLabelCell";
 static NSString *const JGTeamActivityDetailsCellIdentifier = @"JGTeamActivityDetailsCell";
@@ -313,6 +319,15 @@ static NSString *const JGHTeamContactTableViewCellIdentifier = @"JGHTeamContactT
 #pragma mark -- 邀请
 - (void)inviteTeamBtnClick:(UIButton *)btn{
     
+#warning TSET ---
+    JGDSetConfrontViewController *setConfVC = [[JGDSetConfrontViewController alloc] init];
+    setConfVC.matchKey = [NSNumber numberWithInteger:self.timeKey];
+    [self.navigationController pushViewController:setConfVC animated:YES];
+    
+    
+//    JGDInvateTeamViewController *inviteTeamVC = [[JGDInvateTeamViewController alloc] init];
+//    inviteTeamVC.matchKey = [NSNumber numberWithInteger:self.timeKey];
+//    [self.navigationController pushViewController:inviteTeamVC animated:YES];
 }
 #pragma mark -- 编辑
 - (void)editorBtnClick:(UIButton *)btn{
