@@ -21,7 +21,6 @@
 #import "JGDCheckScoreViewController.h"
 #import "JGHEventRoundsRulesViewController.h"
 #import "JGHTeamContactTableViewCell.h"
-
 #import "JGDInvateTeamViewController.h"
 
 
@@ -505,6 +504,8 @@ static NSString *const JGHTeamContactTableViewCellIdentifier = @"JGHTeamContactT
     if (btn.tag -1000 == 5) {
         JGDCheckScoreViewController *checkCtrl = [[JGDCheckScoreViewController alloc]init];
         checkCtrl.matchKey = [NSNumber numberWithInteger:_model.timeKey];
+        checkCtrl.ballName = _model.ballName;
+        checkCtrl.matchName = _model.matchName;
         [self.navigationController pushViewController:checkCtrl animated:YES];
     }
 }
