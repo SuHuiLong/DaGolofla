@@ -887,6 +887,8 @@
 		F5C803001DAB2C62003046FD /* JGDCheckScoreTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F5C802FF1DAB2C62003046FD /* JGDCheckScoreTableViewCell.m */; };
 		F5C803051DAB6A95003046FD /* JGDTeamSortViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5C803041DAB6A95003046FD /* JGDTeamSortViewController.m */; };
 		F5C803081DAB6F1B003046FD /* JGDSortTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F5C803071DAB6F1B003046FD /* JGDSortTableViewCell.m */; };
+		F5CB6EA81DB9B6540068F768 /* JGDInvateTeamViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5CB6EA71DB9B6540068F768 /* JGDInvateTeamViewController.m */; };
+		F5CB6EAB1DB9BB190068F768 /* JGDInviteTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F5CB6EAA1DB9BB190068F768 /* JGDInviteTableViewCell.m */; };
 		F5D794421D9B6DF50095EF0B /* JGConfrontChannelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5D794411D9B6DF50095EF0B /* JGConfrontChannelViewController.m */; };
 		F5E1B87B1D6ADF6100414727 /* JGDGuestChannelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5E1B87A1D6ADF6100414727 /* JGDGuestChannelViewController.m */; };
 		F5E1B87E1D6AE13800414727 /* JGDGuestPayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5E1B87D1D6AE13800414727 /* JGDGuestPayViewController.m */; };
@@ -2819,6 +2821,10 @@
 		F5C803041DAB6A95003046FD /* JGDTeamSortViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGDTeamSortViewController.m; sourceTree = "<group>"; };
 		F5C803061DAB6F1B003046FD /* JGDSortTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGDSortTableViewCell.h; sourceTree = "<group>"; };
 		F5C803071DAB6F1B003046FD /* JGDSortTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGDSortTableViewCell.m; sourceTree = "<group>"; };
+		F5CB6EA61DB9B6540068F768 /* JGDInvateTeamViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGDInvateTeamViewController.h; sourceTree = "<group>"; };
+		F5CB6EA71DB9B6540068F768 /* JGDInvateTeamViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGDInvateTeamViewController.m; sourceTree = "<group>"; };
+		F5CB6EA91DB9BB190068F768 /* JGDInviteTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGDInviteTableViewCell.h; sourceTree = "<group>"; };
+		F5CB6EAA1DB9BB190068F768 /* JGDInviteTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGDInviteTableViewCell.m; sourceTree = "<group>"; };
 		F5D794401D9B6DF50095EF0B /* JGConfrontChannelViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGConfrontChannelViewController.h; sourceTree = "<group>"; };
 		F5D794411D9B6DF50095EF0B /* JGConfrontChannelViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGConfrontChannelViewController.m; sourceTree = "<group>"; };
 		F5E1B8791D6ADF6100414727 /* JGDGuestChannelViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGDGuestChannelViewController.h; sourceTree = "<group>"; };
@@ -3578,6 +3584,7 @@
 		20203B0F1D9B5EFF009A75F3 /* controller */ = {
 			isa = PBXGroup;
 			children = (
+				F5CB6EA41DB9B61E0068F768 /* 邀请球队 */,
 				82000C8B1DACD887009D2DBF /* 分组 */,
 				82000C871DACD87E009D2DBF /* 球队分区成员 */,
 				82000C801DACD879009D2DBF /* 报名成功 */,
@@ -3605,6 +3612,7 @@
 		20203B111D9B5EFF009A75F3 /* view */ = {
 			isa = PBXGroup;
 			children = (
+				F5CB6EA51DB9B6290068F768 /* 邀请球队 */,
 				20D514C41DB63DA60006EFCB /* 发布赛事 */,
 				F54E16151DB23AE40018B3AB /* 球队成员 */,
 				82000C8F1DACD89B009D2DBF /* 分组 */,
@@ -7554,6 +7562,24 @@
 			path = "球队排行";
 			sourceTree = "<group>";
 		};
+		F5CB6EA41DB9B61E0068F768 /* 邀请球队 */ = {
+			isa = PBXGroup;
+			children = (
+				F5CB6EA61DB9B6540068F768 /* JGDInvateTeamViewController.h */,
+				F5CB6EA71DB9B6540068F768 /* JGDInvateTeamViewController.m */,
+			);
+			path = "邀请球队";
+			sourceTree = "<group>";
+		};
+		F5CB6EA51DB9B6290068F768 /* 邀请球队 */ = {
+			isa = PBXGroup;
+			children = (
+				F5CB6EA91DB9BB190068F768 /* JGDInviteTableViewCell.h */,
+				F5CB6EAA1DB9BB190068F768 /* JGDInviteTableViewCell.m */,
+			);
+			path = "邀请球队";
+			sourceTree = "<group>";
+		};
 		F5D7943F1D9B6D670095EF0B /* 赛事对抗频道 */ = {
 			isa = PBXGroup;
 			children = (
@@ -8882,6 +8908,7 @@
 				F5E1BB891D6B006100414727 /* ZXQRCodeMatrixUtil.m in Sources */,
 				82E6A6E51CF2FDE8009DD179 /* JGLMyTeamViewController.m in Sources */,
 				36BFFF791BC76D09005B3CE2 /* SDWebImageDownloaderOperation.m in Sources */,
+				F5CB6EA81DB9B6540068F768 /* JGDInvateTeamViewController.m in Sources */,
 				20F0253A1D6FDC1000D7D7B6 /* JGHAddPlaysCell.m in Sources */,
 				36DBFD3B1BEF452200CA64D3 /* NearByModel.m in Sources */,
 				20513BD31CF7050A003233FB /* Order.m in Sources */,
@@ -9267,6 +9294,7 @@
 				209B3FEB1D10182B00A6FF72 /* JGHManagerViewController.m in Sources */,
 				F5E1BABF1D6B006100414727 /* ZXAztecReader.m in Sources */,
 				F5E1BAFB1D6B006100414727 /* ZXIntArray.m in Sources */,
+				F5CB6EAB1DB9BB190068F768 /* JGDInviteTableViewCell.m in Sources */,
 				F5E1BB391D6B006100414727 /* ZXRSSExpandedPair.m in Sources */,
 				20203B1C1D9B6013009A75F3 /* JGHPublishEventModel.m in Sources */,
 				368DCA641C88285000871D28 /* ReportViewController.m in Sources */,

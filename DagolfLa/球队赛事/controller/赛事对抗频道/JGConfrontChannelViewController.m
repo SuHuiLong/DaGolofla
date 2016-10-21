@@ -256,36 +256,14 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    
-    if (indexPath.row == 3) {
-        
-        JGDCheckScoreViewController *checkScoreV = [[JGDCheckScoreViewController alloc] init];
-        JGDConfrontChannelModel *model = self.dataArray[indexPath.row];
-        if (model.timeKey != nil) {
-            checkScoreV.matchKey = model.timeKey;
-        }
-        [self.navigationController pushViewController:checkScoreV animated:YES];
-        
-    }else if (indexPath.row == 2) {
-        
-        JGDSetConfrontViewController *setConfVC = [[JGDSetConfrontViewController alloc] init];
-        JGDConfrontChannelModel *model = self.dataArray[indexPath.row];
-        if (model.timeKey != nil) {
-            setConfVC.matchKey = model.timeKey;
-        }
-        [self.navigationController pushViewController:setConfVC animated:YES];
-        
-    }else{
-        
-        JGHEventDetailsViewController *deatilCtrl = [[JGHEventDetailsViewController alloc]init];
+
+    JGHEventDetailsViewController *deatilCtrl = [[JGHEventDetailsViewController alloc]init];
         JGDConfrontChannelModel *model = self.dataArray[indexPath.row];
         if (model.timeKey != nil) {
 //            deatilCtrl.timeKey = [model.timeKey integerValue];
             [deatilCtrl getMatchInfo:[model.timeKey integerValue]];
         }
-        [self.navigationController pushViewController:deatilCtrl animated:YES];
-    }
-    
+        [self.navigationController pushViewController:deatilCtrl animated:YES];    
 }
 
 #pragma mark --我的对抗赛
