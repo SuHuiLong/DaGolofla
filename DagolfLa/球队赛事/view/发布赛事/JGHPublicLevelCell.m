@@ -30,6 +30,16 @@
     }
 }
 
+- (void)configEditorLevelCell:(NSString *)titleString andSelect:(NSInteger)select{
+    self.titleLableLeft.constant = 20;
+    self.titleLable.text = titleString;
+    if (select == 0) {
+        self.gouImageView.image = [UIImage imageNamed:@"gou_w"];
+    }else{
+        self.gouImageView.image = [UIImage imageNamed:@"gou_x"];
+    }
+}
+
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
 

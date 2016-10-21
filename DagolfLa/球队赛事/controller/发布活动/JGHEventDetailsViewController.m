@@ -17,6 +17,9 @@
 #import "JGHActivityBaseInfoCell.h"
 #import "JGLTeamSignUpSuccViewController.h"
 #import "JGLSignSuccFinishViewController.h"
+#import "JGHGameRoundsRulesViewController.h"
+#import "JGDCheckScoreViewController.h"
+#import "JGHGameRoundsRulesViewController.h"
 
 static CGFloat ImageHeight  = 210.0;
 static NSString *const JGHHeaderLabelCellIdentifier = @"JGHHeaderLabelCell";
@@ -192,8 +195,6 @@ static NSString *const JGSignUoPromptCellIdentifier = @"JGSignUoPromptCell";
             
             [self setData];//设置名称 及 图片
             
-//            [self createApplyBtn:0];
-            
             if ([data objectForKey:@"hasSignUp"]) {
                 _isApply = [[data objectForKey:@"hasSignUp"] integerValue];
             }else{
@@ -311,7 +312,7 @@ static NSString *const JGSignUoPromptCellIdentifier = @"JGSignUoPromptCell";
 #pragma mark -- 编辑
 - (void)editorBtnClick:(UIButton *)btn{
     JGHEditorEventViewController *editorEventCtrl = [[JGHEditorEventViewController alloc]init];
-    editorEventCtrl.model = _model;
+    [editorEventCtrl configJGHPublishEventModelReloadTable:_model andCostlistArray:_costListArray];
     [self.navigationController pushViewController:editorEventCtrl animated:YES];
 }
 #pragma mark -- 报名
@@ -420,15 +421,28 @@ static NSString *const JGSignUoPromptCellIdentifier = @"JGSignUoPromptCell";
         JGHHeaderLabelCell *headerCell = [tableView dequeueReusableCellWithIdentifier:JGHHeaderLabelCellIdentifier];
         UIButton *detailsBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, screenWidth, headerCell.frame.size.height)];
         [detailsBtn addTarget:self action:@selector(pushSectionDetailSCtrl:) forControlEvents:UIControlEventTouchUpInside];
+        detailsBtn.tag = 1000 +section;
         [headerCell addSubview:detailsBtn];
         
         if (section == 6) {
             [headerCell congiftitles:_levelArray[_model.openType]];
-        }else{
+        }else if (section == 3){
             headerCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            if (_model.matchName == nil) {
+                [headerCell congiftitles:_model.matchName];
+            }else{
+                [headerCell congiftitles:_titleArray[section]];
+            }
+        }else{
             [headerCell congiftitles:_titleArray[section]];
+            if (section == 7) {
+                [headerCell configInvoiceIfo:_model.userName];
+            }else if (section == 8){
+                [headerCell configInvoiceIfo:_model.userMobile];
+            }else{
+                headerCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            }
         }
-        
         
         return (UIView *)headerCell;
     }
@@ -440,7 +454,23 @@ static NSString *const JGSignUoPromptCellIdentifier = @"JGSignUoPromptCell";
 }
 #pragma mark -- 点击事件
 - (void)pushSectionDetailSCtrl:(UIButton *)btn{
+    NSLog(@"btn.tag == %td", btn.tag -1000);
+    //查看规则
+    if (btn.tag -1000 == 3) {
+        JGHGameRoundsRulesViewController *roundCtrl = [[JGHGameRoundsRulesViewController alloc]init];
+        [self.navigationController pushViewController:roundCtrl animated:YES];
+    }
     
+    if (btn.tag -1000 == 4) {
+        
+    }
+    
+    //查看成绩
+    if (btn.tag -1000 == 5) {
+        JGDCheckScoreViewController *checkCtrl = [[JGDCheckScoreViewController alloc]init];
+        checkCtrl.matchKey = [NSNumber numberWithInteger:_model.timeKey];
+        [self.navigationController pushViewController:checkCtrl animated:YES];
+    }
 }
 #pragma mark - Table View Delegate
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {

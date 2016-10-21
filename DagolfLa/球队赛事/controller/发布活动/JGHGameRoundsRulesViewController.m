@@ -116,7 +116,7 @@ static NSString *const JGHGameBaseHeaderSubCellIdentifier = @"JGHGameBaseHeaderS
 //
     NSInteger _select = 0;
     NSDictionary *rulesDict = self.dataArray[indexPath.row];
-    if ([rulesDict objectForKey:@"timeKey"] == [self.roundRulesArray[0] objectForKey:@"timeKey"]) {
+    if ([[rulesDict objectForKey:@"timeKey"] isEqualToString:[self.roundRulesArray[0] objectForKey:@"timeKey"]]) {
         _select = 1;
     }
     
