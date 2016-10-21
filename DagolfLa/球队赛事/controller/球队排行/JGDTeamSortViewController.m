@@ -77,7 +77,35 @@
     matchLB.textColor = [UIColor colorWithHexString:@"#32b14d"];
     matchLB.font = [UIFont systemFontOfSize:12 * ProportionAdapter];
     [headView addSubview:matchLB];
+
+    [self downLoadData];
+    
     // Do any additional setup after loading the view.
+
+}
+
+
+
+- (void)downLoadData{
+ 
+    NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
+    [dic setObject:self.matchKey forKey:@"matchKey"];
+    NSString *md5String = [Helper md5HexDigest:[NSString stringWithFormat:@"matchKey=%@dagplfla.com", self.matchKey]];
+    [dic setObject:md5String forKey:@"md5"];
+    [[JsonHttp jsonHttp] httpRequest:@"match/getMatchTeamRankingList" JsonKey:nil withData:dic requestMethod:@"GET" failedBlock:^(id errType) {
+        
+    } completionBlock:^(id data) {
+        
+        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+            
+        }else{
+            if ([data objectForKey:@"packResultMsg"]) {
+                [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+            }
+        }
+        
+    }];
+    
 }
 
 
@@ -99,12 +127,22 @@
     styleLB2.textColor = [UIColor lightGrayColor];
     [view addSubview:styleLB2];
     
-    UILabel *styleLB3 = [[UILabel alloc] initWithFrame:CGRectMake(290 * ProportionAdapter, 3 * ProportionAdapter, 50 * ProportionAdapter, 15 * ProportionAdapter)];
-    styleLB3.text =@"得分";
+    
+    
+    UILabel *styleLB3 = [[UILabel alloc] initWithFrame:CGRectMake(230 * ProportionAdapter, 3 * ProportionAdapter, 50 * ProportionAdapter, 15 * ProportionAdapter)];
+    styleLB3.text =@"杆数";
     styleLB3.textAlignment = NSTextAlignmentCenter;
     styleLB3.font = [UIFont systemFontOfSize:12 * ProportionAdapter];
     styleLB3.textColor = [UIColor lightGrayColor];
     [view addSubview:styleLB3];
+    
+    
+    UILabel *styleLB4 = [[UILabel alloc] initWithFrame:CGRectMake(290 * ProportionAdapter, 3 * ProportionAdapter, 50 * ProportionAdapter, 15 * ProportionAdapter)];
+    styleLB4.text =@"得分";
+    styleLB4.textAlignment = NSTextAlignmentCenter;
+    styleLB4.font = [UIFont systemFontOfSize:12 * ProportionAdapter];
+    styleLB4.textColor = [UIColor lightGrayColor];
+    [view addSubview:styleLB4];
     
     return view;
 }

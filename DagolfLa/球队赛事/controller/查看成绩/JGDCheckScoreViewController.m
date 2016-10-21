@@ -103,8 +103,12 @@
     }];
 }
 
+#pragma mark -- 排名
+
 - (void)sortAct{
+    
     JGDTeamSortViewController *sortVC = [[JGDTeamSortViewController alloc] init];
+    sortVC.matchKey = self.matchKey;
     [self.navigationController pushViewController:sortVC animated:YES];
 }
 

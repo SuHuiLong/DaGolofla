@@ -10,4 +10,6 @@
 
 @interface JGDTeamSortViewController : ViewController
 
+@property (nonatomic, strong) NSNumber *matchKey;
+
 @end
