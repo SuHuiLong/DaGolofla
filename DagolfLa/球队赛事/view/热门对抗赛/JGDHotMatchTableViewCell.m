@@ -90,8 +90,8 @@
     self.sumLB.text = [NSString stringWithFormat:@"参赛：%td 人",[model.sumCount integerValue]];
     self.kindLB.text = model.matchTypeName;
     self.titleLB.text = model.matchName;
-    self.dateLB.text = [NSString stringWithFormat:@"%@月%@号",[model.beginDate substringWithRange:NSMakeRange(5, 2)], [model.createTime substringWithRange:NSMakeRange(8, 2)]];
-    
+    self.dateLB.text = [NSString stringWithFormat:@"%@月%@号",[model.beginDate substringWithRange:NSMakeRange(5, 2)], [model.beginDate substringWithRange:NSMakeRange(8, 2)]];
+
     //清缓存
     NSString *bgUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/match/%@.jpg",model.timeKey];
     [[SDImageCache sharedImageCache] removeImageForKey:bgUrl fromDisk:YES];
