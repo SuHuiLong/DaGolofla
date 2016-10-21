@@ -43,7 +43,7 @@
         self.ballNameLB.font = [UIFont systemFontOfSize:12 * ProportionAdapter];
         [self.contentView addSubview:self.ballNameLB];
         
-        self.sumPole = [[UILabel alloc] initWithFrame:CGRectMake(250 * ProportionAdapter, 10 * ProportionAdapter, 20 * ProportionAdapter, 30 * ProportionAdapter)];
+        self.sumPole = [[UILabel alloc] initWithFrame:CGRectMake(250 * ProportionAdapter, 10 * ProportionAdapter, 50 * ProportionAdapter, 30 * ProportionAdapter)];
         self.sumPole.text = @"--";
         self.sumPole.font = [UIFont systemFontOfSize:12 * ProportionAdapter];
         [self.contentView addSubview:self.sumPole];

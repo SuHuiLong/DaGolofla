@@ -890,6 +890,7 @@
 		F5C803081DAB6F1B003046FD /* JGDSortTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F5C803071DAB6F1B003046FD /* JGDSortTableViewCell.m */; };
 		F5CB6EA81DB9B6540068F768 /* JGDInvateTeamViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5CB6EA71DB9B6540068F768 /* JGDInvateTeamViewController.m */; };
 		F5CB6EAB1DB9BB190068F768 /* JGDInviteTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F5CB6EAA1DB9BB190068F768 /* JGDInviteTableViewCell.m */; };
+		F5CB6EAD1DBA29150068F768 /* bg_image_pk@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F5CB6EAC1DBA29150068F768 /* bg_image_pk@2x.jpg */; };
 		F5D794421D9B6DF50095EF0B /* JGConfrontChannelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5D794411D9B6DF50095EF0B /* JGConfrontChannelViewController.m */; };
 		F5E1B87B1D6ADF6100414727 /* JGDGuestChannelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5E1B87A1D6ADF6100414727 /* JGDGuestChannelViewController.m */; };
 		F5E1B87E1D6AE13800414727 /* JGDGuestPayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5E1B87D1D6AE13800414727 /* JGDGuestPayViewController.m */; };
@@ -2828,6 +2829,7 @@
 		F5CB6EA71DB9B6540068F768 /* JGDInvateTeamViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGDInvateTeamViewController.m; sourceTree = "<group>"; };
 		F5CB6EA91DB9BB190068F768 /* JGDInviteTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGDInviteTableViewCell.h; sourceTree = "<group>"; };
 		F5CB6EAA1DB9BB190068F768 /* JGDInviteTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGDInviteTableViewCell.m; sourceTree = "<group>"; };
+		F5CB6EAC1DBA29150068F768 /* bg_image_pk@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "bg_image_pk@2x.jpg"; sourceTree = "<group>"; };
 		F5D794401D9B6DF50095EF0B /* JGConfrontChannelViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGConfrontChannelViewController.h; sourceTree = "<group>"; };
 		F5D794411D9B6DF50095EF0B /* JGConfrontChannelViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGConfrontChannelViewController.m; sourceTree = "<group>"; };
 		F5E1B8791D6ADF6100414727 /* JGDGuestChannelViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGDGuestChannelViewController.h; sourceTree = "<group>"; };
@@ -5414,6 +5416,7 @@
 		36BFFD531BC76CDB005B3CE2 /* 社区图标 */ = {
 			isa = PBXGroup;
 			children = (
+				F5CB6EAC1DBA29150068F768 /* bg_image_pk@2x.jpg */,
 				F565BC601D633EFC00F0C7C3 /* bg_somiaohou_03.png */,
 				F5E3F7ED1CAA54BC00B24C77 /* dz.png */,
 				F5E3F7EE1CAA54BC00B24C77 /* dz@2x.png */,
@@ -8653,6 +8656,7 @@
 				20D514F71DB63DA60006EFCB /* JGHAddEventRoundsBtnCell.xib in Resources */,
 				36BF00BC1BC77383005B3CE2 /* MyAttentionViewCell.xib in Resources */,
 				20F6A5D41CF475D200DD9383 /* JGHApplyListCell.xib in Resources */,
+				F5CB6EAD1DBA29150068F768 /* bg_image_pk@2x.jpg in Resources */,
 				20513B491CF5D1D8003233FB /* JGHInvoiceCell.xib in Resources */,
 				822DC40B1D1944A4000F825D /* JGLPowerSettTableViewCell.xib in Resources */,
 				654332051BD5D9B900363947 /* UMSCommentDetailController.xib in Resources */,

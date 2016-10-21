@@ -44,11 +44,19 @@
     [headView addSubview:lightView];
     
     self.iconView = [[UIImageView alloc] initWithFrame:CGRectMake(10 * ProportionAdapter, 20 * ProportionAdapter, 68 * ProportionAdapter, 68 * ProportionAdapter)];
-    self.iconView.backgroundColor = [UIColor orangeColor];
     [headView addSubview:self.iconView];
+    self.iconView.layer.cornerRadius = 6 * ProportionAdapter;
+    self.iconView.clipsToBounds = YES;
+    //清缓存
+    NSString *bgUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/match/%@.jpg",self.matchKey];
+    [[SDImageCache sharedImageCache] removeImageForKey:bgUrl fromDisk:YES];
+    
+    // 再给图片赋值
+    [self.iconView sd_setImageWithURL:[Helper setMatchImageIconUrl:[self.matchKey integerValue] ]placeholderImage:[UIImage imageNamed:TeamLogoImage]];
+    
     
     self.titleLB = [[UILabel alloc] initWithFrame:CGRectMake(90 * ProportionAdapter, 27 * ProportionAdapter, 280 * ProportionAdapter, 20 * ProportionAdapter)];
-    self.titleLB.text = @"第一高尔夫球队活动";
+    self.titleLB.text = self.matchName;
     self.titleLB.textColor = [UIColor colorWithHexString:@"#313131"];
     self.titleLB.font = [UIFont systemFontOfSize:15 * ProportionAdapter];
     [headView addSubview:self.titleLB];
@@ -59,7 +67,7 @@
     
     // 球场名字
     self.ballLB = [[UILabel alloc] initWithFrame:CGRectMake(110 * ProportionAdapter, 60 * ProportionAdapter, 250 * ProportionAdapter, 20 * ProportionAdapter)];
-    self.ballLB.text = @"上海汤臣高尔夫球场（整修中）";
+    self.ballLB.text = self.ballName;
     self.ballLB.textColor = [UIColor colorWithHexString:@"#666666"];
     self.ballLB.font = [UIFont systemFontOfSize:12 * ProportionAdapter];
     [headView addSubview:self.ballLB];
@@ -72,10 +80,11 @@
     greenVie.backgroundColor = [UIColor colorWithHexString:@"#32b14d"];
     [headView addSubview:greenVie];
     
-    UILabel *matchLB = [[UILabel alloc] initWithFrame:CGRectMake(0, 100 * ProportionAdapter, screenWidth - 10 * ProportionAdapter, 20 * ProportionAdapter)];
+    UILabel *matchLB = [[UILabel alloc] initWithFrame:CGRectMake(0, 105 * ProportionAdapter, screenWidth - 10 * ProportionAdapter, 20 * ProportionAdapter)];
     matchLB.text = @"队际比杆积分赛";
     matchLB.textColor = [UIColor colorWithHexString:@"#32b14d"];
     matchLB.font = [UIFont systemFontOfSize:12 * ProportionAdapter];
+    matchLB.textAlignment = NSTextAlignmentRight;
     [headView addSubview:matchLB];
 
     [self downLoadData];

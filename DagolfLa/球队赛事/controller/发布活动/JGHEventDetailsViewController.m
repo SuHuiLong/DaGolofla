@@ -319,14 +319,14 @@ static NSString *const JGHTeamContactTableViewCellIdentifier = @"JGHTeamContactT
 - (void)inviteTeamBtnClick:(UIButton *)btn{
     
 #warning TSET ---
-    JGDSetConfrontViewController *setConfVC = [[JGDSetConfrontViewController alloc] init];
-    setConfVC.matchKey = [NSNumber numberWithInteger:self.timeKey];
-    [self.navigationController pushViewController:setConfVC animated:YES];
+//    JGDSetConfrontViewController *setConfVC = [[JGDSetConfrontViewController alloc] init];
+//    setConfVC.matchKey = [NSNumber numberWithInteger:self.timeKey];
+//    [self.navigationController pushViewController:setConfVC animated:YES];
     
     
-//    JGDInvateTeamViewController *inviteTeamVC = [[JGDInvateTeamViewController alloc] init];
-//    inviteTeamVC.matchKey = [NSNumber numberWithInteger:self.timeKey];
-//    [self.navigationController pushViewController:inviteTeamVC animated:YES];
+    JGDInvateTeamViewController *inviteTeamVC = [[JGDInvateTeamViewController alloc] init];
+    inviteTeamVC.matchKey = [NSNumber numberWithInteger:self.timeKey];
+    [self.navigationController pushViewController:inviteTeamVC animated:YES];
 }
 #pragma mark -- 编辑
 - (void)editorBtnClick:(UIButton *)btn{
