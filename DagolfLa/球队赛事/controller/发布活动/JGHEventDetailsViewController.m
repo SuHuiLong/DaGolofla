@@ -19,7 +19,8 @@
 #import "JGLSignSuccFinishViewController.h"
 #import "JGHGameRoundsRulesViewController.h"
 #import "JGDCheckScoreViewController.h"
-#import "JGHGameRoundsRulesViewController.h"
+#import "JGHEventRoundsRulesViewController.h"
+#import "JGHTeamContactTableViewCell.h"
 
 static CGFloat ImageHeight  = 210.0;
 static NSString *const JGHHeaderLabelCellIdentifier = @"JGHHeaderLabelCell";
@@ -30,6 +31,7 @@ static NSString *const JGTeamActivityWithAddressCellIdentifier = @"JGTeamActivit
 static NSString *const JGHActivityBaseInfoCellIdentifier = @"JGHActivityBaseInfoCell";
 static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
 static NSString *const JGSignUoPromptCellIdentifier = @"JGSignUoPromptCell";
+static NSString *const JGHTeamContactTableViewCellIdentifier = @"JGHTeamContactTableViewCell";
 
 @interface JGHEventDetailsViewController ()<UITableViewDelegate, UITableViewDataSource>
 {
@@ -122,6 +124,9 @@ static NSString *const JGSignUoPromptCellIdentifier = @"JGSignUoPromptCell";
         UINib *teamActivityDetailsCellNib = [UINib nibWithNibName:@"JGTeamActivityDetailsCell" bundle: [NSBundle mainBundle]];
         [self.eventDetailsTableView registerNib:teamActivityDetailsCellNib forCellReuseIdentifier:JGTeamActivityDetailsCellIdentifier];
         
+        UINib *teamContactTableViewCellNib = [UINib nibWithNibName:@"JGHTeamContactTableViewCell" bundle: [NSBundle mainBundle]];
+        [self.eventDetailsTableView registerNib:teamContactTableViewCellNib forCellReuseIdentifier:JGHTeamContactTableViewCellIdentifier];
+        
         self.eventDetailsTableView.dataSource = self;
         self.eventDetailsTableView.delegate = self;
         self.eventDetailsTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -206,7 +211,7 @@ static NSString *const JGSignUoPromptCellIdentifier = @"JGSignUoPromptCell";
                     if (_isApply == 0) {
                         [self createApplyBtn:0];//报名按钮
                     }else{
-                        [self createCancelBtnAndApplyOrPay:0];//已报名
+//                        [self createCancelBtnAndApplyOrPay:0];//已报名
                     }
                 }else{
                     //判断活动是否结束 endDate
@@ -214,7 +219,7 @@ static NSString *const JGSignUoPromptCellIdentifier = @"JGSignUoPromptCell";
                         if (_isApply == 0) {
                             self.eventDetailsTableView.frame = CGRectMake(0, 0, screenWidth, screenHeight);
                         }else{
-                            [self createCancelBtnAndApplyOrPay:1];//已报名
+//                            [self createCancelBtnAndApplyOrPay:1];//已报名
                         }
                     }else{
                         self.eventDetailsTableView.frame = CGRectMake(0, 0, screenWidth, screenHeight);
@@ -417,6 +422,26 @@ static NSString *const JGSignUoPromptCellIdentifier = @"JGSignUoPromptCell";
         JGTeamActivityDetailsCell *detailsCell = [tableView dequeueReusableCellWithIdentifier:JGTeamActivityDetailsCellIdentifier];
         [detailsCell configDetailsText:@"活动详情" AndActivityDetailsText:self.model.info];
         return (UIView *)detailsCell;
+    }else if (section == 7 || section == 8){
+        JGHTeamContactTableViewCell *contactCell = [tableView dequeueReusableCellWithIdentifier:JGHTeamContactTableViewCellIdentifier];
+        contactCell.tetfileView.userInteractionEnabled = NO;
+//        contactCell.contactLabel.textColor = [UIColor colorWithHexString:BG_color];
+//        contactCell.tetfileView.textColor = [UIColor colorWithHexString:BG_color];
+        if (section == 7) {
+            contactCell.contactLabel.text = _titleArray[section];
+            
+            if (self.model.userMobile != nil) {
+                contactCell.tetfileView.text = self.model.userName;
+            }
+        }else{
+            contactCell.contactLabel.text = _titleArray[section];
+            if (self.model.userName != nil) {
+                contactCell.tetfileView.text = self.model.userMobile;
+            }
+        }
+        
+        [contactCell configConstraint];
+        return contactCell;
     }else{
         JGHHeaderLabelCell *headerCell = [tableView dequeueReusableCellWithIdentifier:JGHHeaderLabelCellIdentifier];
         UIButton *detailsBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, screenWidth, headerCell.frame.size.height)];
@@ -435,13 +460,7 @@ static NSString *const JGSignUoPromptCellIdentifier = @"JGSignUoPromptCell";
             }
         }else{
             [headerCell congiftitles:_titleArray[section]];
-            if (section == 7) {
-                [headerCell configInvoiceIfo:_model.userName];
-            }else if (section == 8){
-                [headerCell configInvoiceIfo:_model.userMobile];
-            }else{
-                headerCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-            }
+            headerCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         }
         
         return (UIView *)headerCell;
@@ -457,7 +476,9 @@ static NSString *const JGSignUoPromptCellIdentifier = @"JGSignUoPromptCell";
     NSLog(@"btn.tag == %td", btn.tag -1000);
     //查看规则
     if (btn.tag -1000 == 3) {
-        JGHGameRoundsRulesViewController *roundCtrl = [[JGHGameRoundsRulesViewController alloc]init];
+        JGHEventRoundsRulesViewController *roundCtrl = [[JGHEventRoundsRulesViewController alloc]init];
+        roundCtrl.matchTypeKey = _model.matchTypeKey;
+        roundCtrl.matchKey = _model.timeKey;
         [self.navigationController pushViewController:roundCtrl animated:YES];
     }
     

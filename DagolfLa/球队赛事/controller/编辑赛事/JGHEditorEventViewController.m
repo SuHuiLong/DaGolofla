@@ -17,6 +17,8 @@
 #import "JGCostSetViewController.h"
 #import "JGHGameRoundsViewController.h"
 #import "JGHEditorGameRoundsViewController.h"
+#import "BallParkViewController.h"
+#import "DateTimeViewController.h"
 
 static CGFloat ImageHeight  = 210.0;
 static NSString *const JGHTeamContactCellIdentifier = @"JGHTeamContactTableViewCell";
@@ -56,6 +58,14 @@ static NSString *const JGHPublicLevelCellIdentifier = @"JGHPublicLevelCell";
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:YES];
     self.navigationController.navigationBarHidden = YES;
+    
+    if (_model.matchName != nil) {
+        self.titleField.text = _model.matchName;
+    }
+    
+    if (_isEditor == 1) {
+        self.applyBtn.backgroundColor = [UIColor colorWithHexString:@"#F59A2C"];
+    }
 }
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:YES];
@@ -83,7 +93,7 @@ static NSString *const JGHPublicLevelCellIdentifier = @"JGHPublicLevelCell";
         
         [self.view addSubview:self.editorEventTableView];
         [self.view addSubview:self.imgProfile];
-        self.titleView.frame = CGRectMake(0, 0, screenWidth, 44);
+        self.titleView.frame = CGRectMake(0, 10 *ProportionAdapter, screenWidth, 44);
         self.titleView.backgroundColor = [UIColor clearColor];
         
         [self.imgProfile addSubview:self.titleView];
@@ -147,18 +157,20 @@ static NSString *const JGHPublicLevelCellIdentifier = @"JGHPublicLevelCell";
     _titleArray = @[@"", @[@"开球时间", @"报名截止时间", @"活动结束时间", @"举办场地"], @[@"玩法设置"], @[@"主办方", @"联系人电话"], @[@"比赛轮次设置", @"费用设置"], @[@"对所有人公开"], @[@"赛事说明"]];
     
     _levelArray = @[@"对所有人公开", @"仅对参与球队公开", @"仅对参与及被邀请方公开"];
+    
+    [self createEditorBtn];
 }
 - (void)configJGHPublishEventModelReloadTable:(JGHPublishEventModel *)model andCostlistArray:(NSMutableArray *)costListArray{
     _model = model;
     self.costListArray = costListArray;
     [self.editorEventTableView reloadData];
 }
-
 #pragma mark -- 保存按钮
 - (void)createEditorBtn{
     self.applyBtn = [[UIButton alloc]initWithFrame:CGRectMake( 0, screenHeight-44, screenWidth, 44)];
     [self.applyBtn setTitle:@"保存" forState:UIControlStateNormal];
     self.applyBtn.backgroundColor = [UIColor lightGrayColor];
+    self.applyBtn.enabled = NO;
     [self.applyBtn addTarget:self action:@selector(editonAttendBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.applyBtn];
 }
@@ -183,7 +195,7 @@ static NSString *const JGHPublicLevelCellIdentifier = @"JGHPublicLevelCell";
         _gradientImage.frame = self.imgProfile.frame;
         
         CGRect title = self.titleView.frame;
-        self.titleView.frame = CGRectMake((factor-screenWidth)/2, 0, title.size.width, title.size.height);
+        self.titleView.frame = CGRectMake((factor-screenWidth)/2, 10 *ProportionAdapter, title.size.width, title.size.height);
     } else {
         CGRect f = self.imgProfile.frame;
         f.origin.y = -yOffset;
@@ -325,6 +337,44 @@ static NSString *const JGHPublicLevelCellIdentifier = @"JGHPublicLevelCell";
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 1){
+        if (indexPath.row == 0) {
+            JGHDatePicksViewController *datePicksCrel = [[JGHDatePicksViewController alloc]init];
+            datePicksCrel.returnDateString = ^(NSString *dateString){
+                NSLog(@"%@", dateString);
+                [self.model setValue:dateString forKey:@"beginDate"];
+                [self setEditorBtn];
+                NSIndexPath *indPath = [NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section];
+                [self.editorEventTableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indPath, nil] withRowAnimation:UITableViewRowAnimationNone];
+            };
+            [self.navigationController pushViewController:datePicksCrel animated:YES];
+        }else if (indexPath.row == 1){
+            DateTimeViewController *dataCtrl = [[DateTimeViewController alloc]init];
+            [dataCtrl setCallback:^(NSString *dateStr, NSString *dateWeek, NSString *str) {
+                if(indexPath.row == 1){
+                    [self.model setValue:[NSString stringWithFormat:@"%@ 23:59:59", dateStr] forKey:@"endDate"];
+                }else{
+                    [self.model setValue:[NSString stringWithFormat:@"%@ 23:59:59", dateStr] forKey:@"signUpEndTime"];
+                }
+                
+                [self setEditorBtn];
+                NSIndexPath *indPath = [NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section];
+                [self.editorEventTableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indPath, nil] withRowAnimation:UITableViewRowAnimationNone];
+            }];
+            [self.navigationController pushViewController:dataCtrl animated:YES];
+        }else {
+            //球场列表
+            BallParkViewController *ballCtrl = [[BallParkViewController alloc]init];
+            [ballCtrl setCallback:^(NSString *balltitle, NSInteger ballid) {
+                NSLog(@"%@----%ld", balltitle, (long)ballid);
+                self.model.ballKey = [NSNumber numberWithInteger:ballid];
+                self.model.ballName = balltitle;
+                [self setEditorBtn];
+                NSIndexPath *indPath = [NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section];
+                [self.editorEventTableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indPath, nil] withRowAnimation:UITableViewRowAnimationNone];
+            }];
+            
+            [self.navigationController pushViewController:ballCtrl animated:YES];
+        }
         
     }else if (indexPath.section == 2){
         [[ShowHUD showHUD]showToastWithText:@"玩法规则不允许编辑！" FromView:self.view];
@@ -344,6 +394,7 @@ static NSString *const JGHPublicLevelCellIdentifier = @"JGHPublicLevelCell";
         }else{
             JGHEditorGameRoundsViewController *gameRoundsCtrl = [[JGHEditorGameRoundsViewController alloc]init];
             gameRoundsCtrl.timeKey = _model.timeKey;
+            gameRoundsCtrl.matchTypeKey = _model.matchTypeKey;
             [self.navigationController pushViewController:gameRoundsCtrl animated:YES];
         }
     }else if (indexPath.section == 5){
@@ -371,7 +422,7 @@ static NSString *const JGHPublicLevelCellIdentifier = @"JGHPublicLevelCell";
             {
                 self.imgProfile.image = (UIImage *)Data;
                 self.model.bgImage = (UIImage *)Data;
-                
+                [self setEditorBtn];
                 [self.editorEventTableView reloadData];
             }
         }];
@@ -385,6 +436,7 @@ static NSString *const JGHPublicLevelCellIdentifier = @"JGHPublicLevelCell";
                 //设置背景
                 self.imgProfile.image = (UIImage *)Data;
                 self.model.bgImage = (UIImage *)Data;
+                [self setEditorBtn];
                 [self.editorEventTableView reloadData];
             }
         }];
@@ -395,8 +447,15 @@ static NSString *const JGHPublicLevelCellIdentifier = @"JGHPublicLevelCell";
     [aleVC addAction:act3];
     [self presentViewController:aleVC animated:YES completion:nil];
 }
+#pragma mark -- 更改编辑按钮
+- (void)setEditorBtn{
+    _isEditor = 1;
+    self.applyBtn.enabled = YES;
+    self.applyBtn.backgroundColor = [UIColor colorWithHexString:@"#F59A2C"];
+}
 #pragma mark -- 费用代理
 - (void)costList:(NSMutableArray *)costArray{
+    _isEditor = 1;
     self.costListArray = costArray;
 }
 #pragma mark -- 添加内容详情代理  JGHConcentTextViewControllerDelegate
@@ -407,10 +466,13 @@ static NSString *const JGHPublicLevelCellIdentifier = @"JGHPublicLevelCell";
 }
 #pragma mark -- UITextFliaView
 - (void)textFieldDidEndEditing:(UITextField *)textField{
+    [self setEditorBtn];
     if (textField.tag == 23) {
         self.model.userMobile = textField.text;
     }else if (textField.tag == 123){
         self.model.userName = textField.text;
+    }else if (textField.tag == 345){
+        self.model.matchName = textField.text;
     }
 }
 - (void)didReceiveMemoryWarning {

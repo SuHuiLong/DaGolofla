@@ -12,6 +12,6 @@
 
 @property (nonatomic, assign)NSInteger timeKey;//赛事key
 
-@property (nonatomic, strong)NSMutableArray *dataArray;//列表数据
+@property (strong, nonatomic) NSString* matchTypeKey;
 
 @end

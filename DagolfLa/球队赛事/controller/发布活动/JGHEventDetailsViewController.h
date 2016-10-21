@@ -7,7 +7,6 @@
 //
 
 #import "ViewController.h"
-@class JGTeamAcitivtyModel;
 
 @interface JGHEventDetailsViewController : ViewController
 

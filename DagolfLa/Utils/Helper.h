@@ -109,4 +109,9 @@
 // 赛事头像
 + (NSURL *)setMatchImageIconUrl:(NSInteger)timeKey;
 
+//json格式字符串转字典：
++ (NSDictionary *)dictionaryWithJsonString:(NSString *)jsonString;
+
+//字典转json格式字符串：dictionaryToJson
+
 @end

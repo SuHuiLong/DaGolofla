@@ -31,7 +31,7 @@
 }
 
 - (void)configEditorLevelCell:(NSString *)titleString andSelect:(NSInteger)select{
-    self.titleLableLeft.constant = 20;
+    self.titleLableLeft.constant = 10;
     self.titleLable.text = titleString;
     if (select == 0) {
         self.gouImageView.image = [UIImage imageNamed:@"gou_w"];

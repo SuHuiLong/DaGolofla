@@ -28,6 +28,10 @@ static NSString *const JGHAddEventRoundsBtnCellIdentifier = @"JGHAddEventRoundsB
 
 @property (nonatomic, strong)UITableView *gameRoundsTableView;
 
+@property (nonatomic, strong)NSMutableArray *dataArray;//列表数据
+
+@property (nonatomic, strong)NSMutableArray *roundArray;
+
 @end
 
 @implementation JGHEditorGameRoundsViewController
@@ -37,12 +41,10 @@ static NSString *const JGHAddEventRoundsBtnCellIdentifier = @"JGHAddEventRoundsB
     // Do any additional setup after loading the view.
     self.navigationItem.title = @"设置比赛轮次";
     _titltArray = @[@"开球时间", @"比赛场地", @"赛制/规则"];
-    
-    if (self.dataArray.count == 0) {
-        self.dataArray = [NSMutableArray array];
-        //1、获取所有赛制
-        [self getAllRound];
-    }
+    self.dataArray = [NSMutableArray array];
+    self.roundArray = [NSMutableArray array];
+    //1、获取所有赛制
+    [self getAllRound];
     
     [self createGameRoundsTableView];
 }
@@ -60,16 +62,13 @@ static NSString *const JGHAddEventRoundsBtnCellIdentifier = @"JGHAddEventRoundsB
         NSLog(@"%@", data);
         [self.dataArray removeAllObjects];
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
-            if ([data allKeys].count == 2) {
-                NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-                [dict setObject:@"" forKey:@"kickOffTime"];
-                [dict setObject:@"" forKey:@"ballKey"];
-                [dict setObject:@"0" forKey:@"select"];//0-保存，1-删除
-//                [dict setObject:_rulesTimeKey forKey:@"matchTypeKey"];//赛事类型key
-//                [self.ballBaseArray addObject:dict];
-            }else{
-                //数据
+            if ([data objectForKey:@"list"]) {
+                self.dataArray = [data objectForKey:@"list"];
                 
+                for (NSDictionary *dict in self.dataArray) {
+                    NSString *ruleJson = [dict objectForKey:@"ruleJson"];
+                    [self.roundArray addObject:[Helper dictionaryWithJsonString:ruleJson]];
+                }
             }
         }else{
             if ([data objectForKey:@"packResultMsg"]) {
@@ -124,21 +123,16 @@ static NSString *const JGHAddEventRoundsBtnCellIdentifier = @"JGHAddEventRoundsB
         [eventRulesContentCell configJGHEventRulesContentCellTitle:@""];
     }
     
-//    NSDictionary *contextDict = [self.ballBaseArray objectAtIndex:indexPath.section];
-//    if (indexPath.row == 0) {
-//        [eventRulesContentCell configJGHEventRulesContentCellContext:[contextDict objectForKey:@"kickOffTime"]];
-//    }else if (indexPath.row == 1){
-//        [eventRulesContentCell configJGHEventRulesContentCellContext:[contextDict objectForKey:@"ballName"]];
-//    }else{
-//        
-//        if (self.roundArray.count > 0) {
-//            [eventRulesContentCell configJGHEventRulesContentCellContext:[self.roundArray[indexPath.section] objectForKey:@"name"]];
-//        }else{
-//            if (self.dataArray.count > 0) {
-//                [eventRulesContentCell configJGHEventRulesContentCellContext:[self.dataArray[0] objectForKey:@"name"]];
-//            }
-//        }
-//    }
+    if (self.dataArray.count >= indexPath.section) {
+        NSDictionary *contextDict = [self.dataArray objectAtIndex:indexPath.section];
+        if (indexPath.row == 0) {
+            [eventRulesContentCell configJGHEventRulesContentCellContext:[contextDict objectForKey:@"kickOffTime"]];
+        }else if (indexPath.row == 1){
+            [eventRulesContentCell configJGHEventRulesContentCellContext:[contextDict objectForKey:@"ballName"]];
+        }else{
+            [eventRulesContentCell configJGHEventRulesContentCellContext:[self.dataArray[indexPath.section] objectForKey:@"matchformatName"]];
+        }
+    }
     
     return eventRulesContentCell;
 }
@@ -148,11 +142,11 @@ static NSString *const JGHAddEventRoundsBtnCellIdentifier = @"JGHAddEventRoundsB
     if (section < _dataArray.count) {
         JGHEventRulesHeaderCell *eventRulesHeaderCell = [tableView dequeueReusableCellWithIdentifier:JGHEventRulesHeaderCellIdentifier];
         eventRulesHeaderCell.selectionStyle = UITableViewCellSelectionStyleNone;
-//        eventRulesHeaderCell.delegate = self;
-//        eventRulesHeaderCell.saveAndDeleteBtn.tag = 100 + section;
-//        
+        eventRulesHeaderCell.delegate = self;
+        eventRulesHeaderCell.saveAndDeleteBtn.tag = 100 + section;
+        
 //        NSInteger saveOrDelete = 0;
-//        NSDictionary *ballDict = self.ballBaseArray[section];
+//        NSDictionary *ballDict = self.dataArray[section];
 //        saveOrDelete = [[ballDict objectForKey:@"select"] integerValue];
 //        [eventRulesHeaderCell configJGHEventRulesHeaderCell:section +1 andSelect:saveOrDelete];
         
@@ -184,17 +178,17 @@ static NSString *const JGHAddEventRoundsBtnCellIdentifier = @"JGHAddEventRoundsB
         JGHDatePicksViewController *datePicksCrel = [[JGHDatePicksViewController alloc]init];
         datePicksCrel.returnDateString = ^(NSString *dateString){
             NSLog(@"%@", dateString);
-//            NSMutableDictionary *dict = [self.ballBaseArray objectAtIndex:indexPath.section];
-//            if (dateString.length == 16) {
-//                [dict setObject:[NSString stringWithFormat:@"%@:00", dateString] forKey:@"kickOffTime"];
-//            }else{
-//                [dict setObject:dateString forKey:@"kickOffTime"];
-//            }
-//            
-//            [self.ballBaseArray replaceObjectAtIndex:indexPath.section withObject:dict];
-//            
-//            NSIndexPath *indPath = [NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section];
-//            [self.gameRoundsTableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indPath, nil] withRowAnimation:UITableViewRowAnimationNone];
+            NSMutableDictionary *dict = [self.dataArray objectAtIndex:indexPath.section];
+            if (dateString.length == 16) {
+                [dict setObject:[NSString stringWithFormat:@"%@:00", dateString] forKey:@"kickOffTime"];
+            }else{
+                [dict setObject:dateString forKey:@"kickOffTime"];
+            }
+            
+            [self.dataArray replaceObjectAtIndex:indexPath.section withObject:dict];
+            
+            NSIndexPath *indPath = [NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section];
+            [self.gameRoundsTableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indPath, nil] withRowAnimation:UITableViewRowAnimationNone];
         };
         [self.navigationController pushViewController:datePicksCrel animated:YES];
     }else if (indexPath.row == 1) {
@@ -202,13 +196,13 @@ static NSString *const JGHAddEventRoundsBtnCellIdentifier = @"JGHAddEventRoundsB
         BallParkViewController *ballCtrl = [[BallParkViewController alloc]init];
         [ballCtrl setCallback:^(NSString *balltitle, NSInteger ballid) {
             NSLog(@"%@----%ld", balltitle, (long)ballid);
-//            NSMutableDictionary *dict = [self.ballBaseArray objectAtIndex:indexPath.section];
-//            [dict setObject:@(ballid) forKey:@"ballKey"];
-//            [dict setObject:balltitle forKey:@"ballName"];
-//            [self.ballBaseArray replaceObjectAtIndex:indexPath.section withObject:dict];
-//            
-//            NSIndexPath *indPath = [NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section];
-//            [self.gameRoundsTableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indPath, nil] withRowAnimation:UITableViewRowAnimationNone];
+            NSMutableDictionary *dict = [self.dataArray objectAtIndex:indexPath.section];
+            [dict setObject:@(ballid) forKey:@"ballKey"];
+            [dict setObject:balltitle forKey:@"ballName"];
+            [self.dataArray replaceObjectAtIndex:indexPath.section withObject:dict];
+            
+            NSIndexPath *indPath = [NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section];
+            [self.gameRoundsTableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indPath, nil] withRowAnimation:UITableViewRowAnimationNone];
         }];
         
         [self.navigationController pushViewController:ballCtrl animated:YES];
@@ -216,10 +210,12 @@ static NSString *const JGHAddEventRoundsBtnCellIdentifier = @"JGHAddEventRoundsB
     
     if (indexPath.row == 2) {
         JGHGameRoundsRulesViewController *gameRulesListCtrl = [[JGHGameRoundsRulesViewController alloc]init];
-//        gameRulesListCtrl.rulesTimeKey = _rulesTimeKey;
-//        if (self.roundArray.count >= indexPath.section+1) {
-//            gameRulesListCtrl.roundRulesArray = self.roundArray[indexPath.section];
-//        }
+        NSMutableDictionary *dict = [self.dataArray objectAtIndex:indexPath.section];
+        gameRulesListCtrl.rulesTimeKey = [dict objectForKey:@""];
+        
+        if (self.roundArray.count >= indexPath.section+1) {
+            gameRulesListCtrl.roundRulesArray = self.roundArray[indexPath.section];
+        }
         
         gameRulesListCtrl.delegate = self;
         _roundID = indexPath.section;
@@ -229,24 +225,31 @@ static NSString *const JGHAddEventRoundsBtnCellIdentifier = @"JGHAddEventRoundsB
 #pragma mark -- 添加轮次
 - (void)didSelectAddEventRoundsBtn:(UIButton *)btn{
     //添加默认信息
-//    NSMutableDictionary *baseDict = [NSMutableDictionary dictionary];
-//    [baseDict setObject:@"" forKey:@"kickOffTime"];
-//    [baseDict setObject:@"" forKey:@"ballKey"];
-//    [baseDict setObject:@"" forKey:@"ballName"];
-//    [baseDict setObject:@"0" forKey:@"select"];//0-保存，1-删除
-//    [baseDict setObject:_rulesTimeKey forKey:@"matchTypeKey"];//赛事类型key
-//    [self.ballBaseArray addObject:baseDict];
-//    
-//    [self.gameRoundsTableView reloadData];
+    NSMutableDictionary *baseDict = [NSMutableDictionary dictionary];
+    baseDict = [[self.dataArray lastObject] mutableCopy];
+    [baseDict setObject:@"" forKey:@"kickOffTime"];
+    [baseDict setObject:@"" forKey:@"ballKey"];
+    [baseDict setObject:@"" forKey:@"ballName"];
+    [baseDict setObject:@"" forKey:@"ruleJson"];
+    [baseDict setObject:@"" forKey:@"matchformatName"];
+    [baseDict setObject:@"" forKey:@"ruleType"];
+    [baseDict setObject:@"" forKey:@"matchTypeKey"];//赛事类型key
+    [baseDict setObject:@"" forKey:@"timeKey"];
+    
+    NSMutableArray *array = [NSMutableArray array];
+    array = [self.dataArray mutableCopy];
+    [array addObject:baseDict];
+    self.dataArray = array;
+    
+    [self.gameRoundsTableView reloadData];
 }
 #pragma mark -- 删除或者保存
 - (void)didSelectSaveOrDeleteBtn:(UIButton *)btn{
     NSLog(@"%ld", (long)btn.tag);
-    /*
     btn.enabled = NO;
     //区分是保存还是删除
     NSInteger selectCatory;
-    NSDictionary *ballDict = self.ballBaseArray[btn.tag -100];
+    NSDictionary *ballDict = self.dataArray[btn.tag -100];
     selectCatory = [[ballDict objectForKey:@"select"] integerValue];
     if ([[ballDict objectForKey:@"ballName"]isEqualToString:@""]) {
         [[ShowHUD showHUD]showToastWithText:@"请选择球场！" FromView:self.view];
@@ -294,10 +297,6 @@ static NSString *const JGHAddEventRoundsBtnCellIdentifier = @"JGHAddEventRoundsB
         }];
     }else{
         //删除
-        
-        //    @Param(value = "roundKey"    , require = true )Long roundKey,
-        //    @Param(value = "userKey"     , require = true )Long userKey,
-        //    @Param(value = "md5"         , require = true )String md5,
         NSMutableDictionary *postdict = [NSMutableDictionary dictionary];
         
         [postdict setObject:DEFAULF_USERID forKey:@"userKey"];
@@ -310,20 +309,25 @@ static NSString *const JGHAddEventRoundsBtnCellIdentifier = @"JGHAddEventRoundsB
             btn.enabled = YES;
         }];
     }
-     */
 }
 #pragma mark -- 赛制代理
 - (void)didGameRoundsRulesViewSaveroundRulesArray:(NSMutableArray *)roundRulesArray{
 //    self.roundArray = roundRulesArray;
-//    if (_roundID > self.roundArray.count -1) {
-//        [self.roundArray addObject:roundRulesArray[0]];
-//    }else{
-//        for (int i=0; i<self.roundArray.count; i++) {
-//            [self.roundArray replaceObjectAtIndex:_roundID withObject:roundRulesArray[0]];
-//        }
-//    }
-//    
-//    [self.gameRoundsTableView reloadData];
+    if (_roundID <= self.roundArray.count -1) {
+        for (int i=0; i<self.roundArray.count; i++) {
+            NSMutableDictionary *oldRuleDict = [NSMutableDictionary dictionary];
+            oldRuleDict = self.roundArray[i];
+            [oldRuleDict setValuesForKeysWithDictionary:roundRulesArray[0]];
+            [self.roundArray replaceObjectAtIndex:_roundID withObject:oldRuleDict];
+        }
+    }else{
+        NSMutableDictionary *oldRuleDict = [NSMutableDictionary dictionary];
+        oldRuleDict = self.roundArray[0];
+        [oldRuleDict setValuesForKeysWithDictionary:roundRulesArray[0]];
+        [self.roundArray replaceObjectAtIndex:_roundID withObject:oldRuleDict];
+    }
+    
+    [self.gameRoundsTableView reloadData];
 }
 
 - (void)didReceiveMemoryWarning {

@@ -191,10 +191,6 @@ static CGFloat ImageHeight  = 210.0;
         CGRect f = self.imgProfile.frame;
         f.origin.y = -yOffset;
         self.imgProfile.frame = f;
-        
-//        CGRect t = self.titleView.frame;
-//        t.origin.y = yOffset;
-//        self.titleView.frame = t;
     }
 }
 #pragma mark - Table View Delegate
