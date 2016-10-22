@@ -86,7 +86,7 @@
     self.headBackView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 200 * ProportionAdapter)];
     
     UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 200 * ProportionAdapter)];
-    imageV.backgroundColor = [UIColor orangeColor];
+    imageV.image = [UIImage imageNamed:@"bg_image_pk@2x.jpg"];
     imageV.userInteractionEnabled = YES;
     
     [self.headBackView addSubview:imageV];

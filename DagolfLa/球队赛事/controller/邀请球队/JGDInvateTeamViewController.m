@@ -115,9 +115,11 @@
     } completionBlock:^(id data) {
        
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
-          
-            [self.navigationController popViewControllerAnimated:YES];
+            
+            [[ShowHUD showHUD]showToastWithText:@"邀请成功" FromView:self.view];
 
+            [self performSelector:@selector(delayAct) withObject:self afterDelay:1];
+            
         }else{
             
             if ([data objectForKey:@"packResultMsg"]) {
@@ -129,6 +131,9 @@
     
 }
 
+- (void)delayAct{
+    [self.navigationController popViewControllerAnimated:YES];
+}
 
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
@@ -277,14 +282,24 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    if (self.searchController.active) {
+        if (self.searchController.active) {
+        
+        for (JGTeamDetail *model in self.localDataArray) {
+            JGTeamDetail *dataModel = self.dataArray[indexPath.row];
+            if (model.timeKey == dataModel.timeKey) {
+                [[ShowHUD showHUD]showToastWithText:@"该球队已存在" FromView:self.view];
+                return;
+            }
+        }
+
+        
         [self.searchController setActive:NO];
         NSIndexPath *addIndexPath = [NSIndexPath indexPathForRow:[self.localDataArray count] inSection:0];
         [self.localDataArray addObject:self.dataArray[indexPath.row]];
         [self.tableView insertRowsAtIndexPaths:@[addIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+
     }
 }
-
 
 
 - (NSMutableArray *)dataArray{
