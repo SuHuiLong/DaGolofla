@@ -28,7 +28,10 @@
 
 //@property (nonatomic, strong) NSNumber *userKey;
 
-@property (nonatomic, strong) NSNumber *state;  // 1:邀请中，2:已加入，3：其他成员同意加入后为等待加入", defaultValue="0"
+// state
+// 我的 1:邀请中，2:已加入，3：其他成员同意加入后为等待加入", defaultValue="0"
+// 热门 10 是报名中 11 是比赛中 12 已结束
+@property (nonatomic, strong) NSNumber *state;
 
 @property (nonatomic, strong) NSNumber *delFlag;
 

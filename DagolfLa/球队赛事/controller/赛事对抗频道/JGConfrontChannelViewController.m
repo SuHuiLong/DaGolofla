@@ -75,11 +75,14 @@
     
     UILabel *titleLB = [[UILabel alloc] initWithFrame:CGRectMake(160 * ProportionAdapter, 20 * ProportionAdapter, 120 * ProportionAdapter, 30 * ProportionAdapter)];
     titleLB.text = @"赛事对抗";
+    titleLB.font = [UIFont systemFontOfSize:18 * ProportionAdapter];
     
     // 发布按钮
     UIButton *postButton = [[UIButton alloc] initWithFrame:CGRectMake(260 * ProportionAdapter, 20 * ProportionAdapter, 120 * ProportionAdapter, 30 * ProportionAdapter)];
     [postButton setTitle:@"发布对抗赛" forState:(UIControlStateNormal)];
     [postButton setTitleColor:[UIColor blackColor] forState:(UIControlStateNormal)];
+    postButton.titleLabel.font = [UIFont systemFontOfSize:16 * ProportionAdapter];
+    
     [postButton addTarget:self action:@selector(postAct) forControlEvents:(UIControlEventTouchUpInside)];
     
     // 表头
