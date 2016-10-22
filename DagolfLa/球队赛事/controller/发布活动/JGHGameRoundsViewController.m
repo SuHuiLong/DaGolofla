@@ -114,11 +114,6 @@ static NSString *const JGHAddEventRoundsBtnCellIdentifier = @"JGHAddEventRoundsB
         if (self.roundArray.count >= indexPath.section +1) {
             [eventRulesContentCell configJGHEventRulesContentCellContext:[self.roundArray[indexPath.section] objectForKey:@"name"]];
         }
-//        else{
-//            if (self.dataArray.count > 0) {
-//                [eventRulesContentCell configJGHEventRulesContentCellContext:[self.dataArray[0] objectForKey:@"name"]];
-//            }
-//        }
     }
     
     return eventRulesContentCell;
@@ -235,13 +230,14 @@ static NSString *const JGHAddEventRoundsBtnCellIdentifier = @"JGHAddEventRoundsB
     NSInteger selectCatory;
     NSDictionary *ballDict = self.ballBaseArray[btn.tag -100];
     selectCatory = [[ballDict objectForKey:@"select"] integerValue];
-    if ([[ballDict objectForKey:@"ballName"]isEqualToString:@""]) {
-        [[ShowHUD showHUD]showToastWithText:@"请选择球场！" FromView:self.view];
-        return;
-    }
     
     if ([[ballDict objectForKey:@"kickOffTime"]isEqualToString:@""]) {
         [[ShowHUD showHUD]showToastWithText:@"请选择开球时间！" FromView:self.view];
+        return;
+    }
+    
+    if ([[ballDict objectForKey:@"ballName"]isEqualToString:@""]) {
+        [[ShowHUD showHUD]showToastWithText:@"请选择球场！" FromView:self.view];
         return;
     }
     
@@ -251,7 +247,7 @@ static NSString *const JGHAddEventRoundsBtnCellIdentifier = @"JGHAddEventRoundsB
     }
     
     btn.enabled = NO;
-    
+    NSLog(@"btn.tag ==%td", btn.tag);
     NSDictionary *roundDict = [self.roundArray objectAtIndex:btn.tag - 100];
     
     if (selectCatory == 0) {
@@ -274,7 +270,7 @@ static NSString *const JGHAddEventRoundsBtnCellIdentifier = @"JGHAddEventRoundsB
             if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
                 [self.dataArray insertObject:[data objectForKey:@"timeKey"] atIndex:btn.tag -100];
                 [ballDict setValue:@1 forKey:@"select"];
-                [self.roundArray replaceObjectAtIndex:btn.tag -100 withObject:ballDict];
+                [self.ballBaseArray replaceObjectAtIndex:btn.tag -100 withObject:ballDict];
                 [[ShowHUD showHUD]showToastWithText:@"保存成功！" FromView:self.view];
             }else{
                 if ([data objectForKey:@"packResultMsg"]) {
@@ -282,26 +278,21 @@ static NSString *const JGHAddEventRoundsBtnCellIdentifier = @"JGHAddEventRoundsB
                 }
             }
             btn.enabled = YES;
+            [self.gameRoundsTableView reloadData];
         }];
     }else{
         //删除
-        
-        //    @Param(value = "roundKey"    , require = true )Long roundKey,
-        //    @Param(value = "userKey"     , require = true )Long userKey,
-        //    @Param(value = "md5"         , require = true )String md5,
         NSMutableDictionary *postdict = [NSMutableDictionary dictionary];
         [postdict setObject:self.dataArray[btn.tag -100] forKey:@"roundKey"];
         [postdict setObject:DEFAULF_USERID forKey:@"userKey"];
-        [postdict setObject:@"" forKey:@"roundKey"];
         [[JsonHttp jsonHttp]httpRequestWithMD5:@"match/deleteRound" JsonKey:nil withData:postdict failedBlock:^(id errType) {
             btn.enabled = YES;
         } completionBlock:^(id data) {
             NSLog(@"%@", data);
             if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
-                [self.dataArray insertObject:[data objectForKey:@"timeKey"] atIndex:btn.tag -100];
+                [self.dataArray removeObjectAtIndex:btn.tag -100];
                 [self.roundArray removeObjectAtIndex:btn.tag -100];
                 [_ballBaseArray removeObjectAtIndex:btn.tag -100];
-                [self.gameRoundsTableView reloadData];
                 [[ShowHUD showHUD]showToastWithText:@"删除成功！" FromView:self.view];
             }else{
                 if ([data objectForKey:@"packResultMsg"]) {
@@ -309,18 +300,23 @@ static NSString *const JGHAddEventRoundsBtnCellIdentifier = @"JGHAddEventRoundsB
                 }
             }
             btn.enabled = YES;
+            [self.gameRoundsTableView reloadData];
         }];
     }
 }
 #pragma mark -- 赛制代理
 - (void)didGameRoundsRulesViewSaveroundRulesArray:(NSMutableArray *)roundRulesArray{
-    self.roundArray = roundRulesArray;
-    if (_roundID <= self.roundArray.count -1) {
-        for (int i=0; i<self.roundArray.count; i++) {
-            [self.roundArray replaceObjectAtIndex:_roundID withObject:roundRulesArray[0]];
-        }
-    }else{
+//    self.roundArray = roundRulesArray;
+    if (self.roundArray.count == 0) {
         [self.roundArray addObject:roundRulesArray[0]];
+    }else{
+        if (_roundID <= self.roundArray.count -1) {
+            for (int i=0; i<self.roundArray.count; i++) {
+                [self.roundArray replaceObjectAtIndex:_roundID withObject:roundRulesArray[0]];
+            }
+        }else{
+            [self.roundArray addObject:roundRulesArray[0]];
+        }
     }
     
     [self.gameRoundsTableView reloadData];

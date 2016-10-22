@@ -376,7 +376,6 @@ static CGFloat ImageHeight  = 210.0;
 }
 #pragma mark -- 下一步
 - (void)commitCabbieCert:(UIButton *)btn{
-    /*
     if (self.model.matchName == nil) {
         [[ShowHUD showHUD]showToastWithText:@"活动名称不能为空！" FromView:self.view];
         return;
@@ -412,7 +411,7 @@ static CGFloat ImageHeight  = 210.0;
         [[ShowHUD showHUD]showToastWithText:@"请设置玩法！" FromView:self.view];
         return;
     }
-    */
+    
     JGHPublishEventSaveViewController *publishCtrl = [[JGHPublishEventSaveViewController alloc]init];
     publishCtrl.rulesArray = _rulesArray;
     publishCtrl.model = _model;

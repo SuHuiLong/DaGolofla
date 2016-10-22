@@ -8,6 +8,7 @@
 
 #import "ViewController.h"
 
+
 @interface JGHEditorGameRoundsViewController : ViewController
 
 @property (nonatomic, assign)NSInteger timeKey;//赛事key
