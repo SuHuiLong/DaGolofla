@@ -253,8 +253,6 @@ static NSString *const JGHGameSetBaseCellCellIdentifier = @"JGHGameSetBaseCellCe
     gameBaseCtrl.delegate = self;
     gameBaseCtrl.dictData = self.dictData;
     gameBaseCtrl.rulesId = setBtn.tag -1000;
-    
-    
     gameBaseCtrl.rulesArray = _rulesArray;
     [self.navigationController pushViewController:gameBaseCtrl animated:YES];
 }

@@ -434,17 +434,6 @@ static CGFloat ImageHeight  = 210.0;
 - (void)costList:(NSMutableArray *)costArray{
     self.costListArray = costArray;
 }
-#pragma mark -- UITextFliaView
-//- (void)textFieldDidEndEditing:(UITextField *)textField{
-//    if (textField.tag == 23) {
-//        self.model.userName = textField.text;
-//    }else if (textField.tag == 123){
-//        self.model.userMobile = textField.text;
-//    }else if (textField.tag == 345){
-//        self.model.matchName = textField.text;
-//    }
-//}
-
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

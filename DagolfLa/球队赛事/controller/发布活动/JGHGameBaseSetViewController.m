@@ -24,26 +24,26 @@ static NSString *const JGHGameBaseHeaderSubCellIdentifier = @"JGHGameBaseHeaderS
 
 @implementation JGHGameBaseSetViewController
 
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    
+    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"backL"] style:UIBarButtonItemStylePlain target:self action:@selector(saveBtnClick)];
+    item.tintColor=[UIColor whiteColor];
+    self.navigationItem.leftBarButtonItem = item;
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"nav_bg"] forBarMetrics:UIBarMetricsDefault];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     NSDictionary *dict = [[self.dictData objectForKey:@"-1"]objectAtIndex:_rulesId];
     
-    self.navigationItem.title = [dict objectForKey:@"name"];
-    
-    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    btn.frame = RightNavItemFrame;
-    btn.titleLabel.font = [UIFont systemFontOfSize:FontSize_Normal];
-    [btn setTitle:@"确定" forState:UIControlStateNormal];
-    [btn addTarget:self action:@selector(saveBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-    btn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
-    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithCustomView:btn];
-    self.navigationItem.rightBarButtonItem = rightItem;
+    self.navigationItem.title = [dict objectForKey:@"name"];    
     
     [self createGameSetTableView];
 }
 #pragma mark -- 确定
-- (void)saveBtnClick:(UIButton *)btn{
+- (void)saveBtnClick{
     if (self.delegate) {
         [self.delegate selectRulesArray:self.rulesArray];
         [self.navigationController popViewControllerAnimated:YES];
@@ -108,7 +108,10 @@ static NSString *const JGHGameBaseHeaderSubCellIdentifier = @"JGHGameBaseHeaderS
     NSInteger _select = 0;
     for (int i=0; i< _rulesArray.count; i++) {
         NSDictionary *rulesDict = _rulesArray[i];
-        if ([rulesDict objectForKey:@"timeKey"] == [baseDict objectForKey:@"timeKey"]) {
+        NSLog(@"timeKey %@== timeKey %@", [rulesDict objectForKey:@"timeKey"], [baseDict objectForKey:@"timeKey"]);
+        NSInteger timeKey1 = [[rulesDict objectForKey:@"timeKey"] integerValue];
+        NSInteger timeKey2 = [[baseDict objectForKey:@"timeKey"] integerValue];
+        if (timeKey1 == timeKey2) {
             _select = 1;
         }
     }

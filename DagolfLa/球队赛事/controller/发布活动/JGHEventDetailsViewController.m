@@ -77,6 +77,8 @@ static NSString *const JGHTeamContactTableViewCellIdentifier = @"JGHTeamContactT
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:YES];
     self.navigationController.navigationBarHidden = YES;
+    
+    [self.imgProfile sd_setImageWithURL:[Helper setMatchImageIconUrl:_model.timeKey ]placeholderImage:[UIImage imageNamed:TeamLogoImage]];
 }
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:YES];
