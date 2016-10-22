@@ -378,7 +378,7 @@
 
 - (UIView *)rightView{
     if (!_rightView) {
-        _rightView = [[UIView alloc] initWithFrame:CGRectMake(screenWidth / 2, 48, screenWidth / 2, 2 * ProportionAdapter)];
+        _rightView = [[UIView alloc] initWithFrame:CGRectMake(screenWidth / 2, 48 * ProportionAdapter, screenWidth / 2, 2 * ProportionAdapter)];
         _rightView.backgroundColor = [UIColor colorWithHexString:@"#32b14d"];
     }
     return _rightView;
@@ -386,7 +386,7 @@
 
 - (UIView *)leftView{
     if (!_leftView) {
-        _leftView = [[UIView alloc] initWithFrame:CGRectMake(0, 48, screenWidth / 2, 2 * ProportionAdapter)];
+        _leftView = [[UIView alloc] initWithFrame:CGRectMake(0, 48 * ProportionAdapter, screenWidth / 2, 2 * ProportionAdapter)];
         _leftView.backgroundColor = [UIColor colorWithHexString:@"#32b14d"];
     }
     return _leftView;
