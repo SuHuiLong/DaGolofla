@@ -56,6 +56,7 @@
 
 
 - (void)viewDidLoad {
+    
     [super viewDidLoad];
     
     _page = 0;

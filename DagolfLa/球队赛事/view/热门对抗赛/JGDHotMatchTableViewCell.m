@@ -43,7 +43,6 @@
         self.iconImage.contentMode = UIViewContentModeScaleAspectFill;
         //activityStateImage
         self.identifierImage = [[UIImageView alloc] initWithFrame:CGRectMake(38 * ProportionAdapter, 0, 30 * ProportionAdapter, 30 * ProportionAdapter)];
-        self.identifierImage.image = [UIImage imageNamed:@"activityStateImage"];
         [self.iconImage addSubview:self.identifierImage];
         
         self.titleLB = [[UILabel alloc] initWithFrame:CGRectMake(88 * ProportionAdapter, 8 * ProportionAdapter, 200 * ProportionAdapter, 25 * ProportionAdapter)];
@@ -86,6 +85,12 @@
 }
 
 - (void)setModel:(JGDConfrontChannelModel *)model{
+    
+    if ([model.state integerValue] == 10) {
+        self.identifierImage.image = [UIImage imageNamed:@"activityStateImage"];
+    }
+    
+    
     self.adressLB.text = model.ballName;
     self.sumLB.text = [NSString stringWithFormat:@"参赛：%td 人",[model.sumCount integerValue]];
     self.kindLB.text = model.matchTypeName;
