@@ -14,7 +14,10 @@
 static NSString *const JGHGameBaseHeaderCellIdentifier = @"JGHGameBaseHeaderCell";
 static NSString *const JGHGameBaseHeaderSubCellIdentifier = @"JGHGameBaseHeaderSubCell";
 
-@interface JGHGameBaseSetViewController ()<UITableViewDelegate, UITableViewDataSource, JGHGameBaseHeaderCellDelegate>
+@interface JGHGameBaseSetViewController ()<UITableViewDelegate, UITableViewDataSource, JGHGameBaseHeaderCellDelegate, UITextFieldDelegate>
+{
+    
+}
 
 @property (nonatomic, strong)UITableView *gameBaseSetTableView;
 
@@ -116,7 +119,14 @@ static NSString *const JGHGameBaseHeaderSubCellIdentifier = @"JGHGameBaseHeaderS
         }
     }
     
-    [gameSetBaseCellCell configJGHGameBaseHeaderSubCell:[baseDict objectForKey:@"name"] andSelect:_select];
+    NSString *nameString = [NSString stringWithFormat:@"%@", [baseDict objectForKey:@"name"]];
+    if ([nameString containsString:@"regular"]) {
+        UITextField *toptextField = [[UITextField alloc]initWithFrame:CGRectMake(gameSetBaseCellCell.name.frame.origin.x + gameSetBaseCellCell.name.frame.size.width + 5, gameSetBaseCellCell.name.frame.origin.y, 40 *ProportionAdapter, gameSetBaseCellCell.name.frame.size.height)];
+        toptextField.delegate = self;
+        toptextField.tag = 234;
+    }
+    
+    [gameSetBaseCellCell configJGHGameBaseHeaderSubCell:nameString andSelect:_select];
     return gameSetBaseCellCell;
 }
 
@@ -165,6 +175,12 @@ static NSString *const JGHGameBaseHeaderSubCellIdentifier = @"JGHGameBaseHeaderS
     rulesForDetailsView.frame = CGRectMake(0, 0, screenWidth, screenHeight);
     rulesForDetailsView.alpha = 0.5;
     [self.view addSubview:rulesForDetailsView];
+}
+#pragma mark -- UITextFliaView
+- (void)textFieldDidEndEditing:(UITextField *)textField{
+    if (textField.tag == 234) {
+        
+    }
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

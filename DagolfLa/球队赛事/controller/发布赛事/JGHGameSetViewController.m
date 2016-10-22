@@ -45,7 +45,7 @@ static NSString *const JGHGameSetBaseCellCellIdentifier = @"JGHGameSetBaseCellCe
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
     btn.frame = RightNavItemFrame;
     btn.titleLabel.font = [UIFont systemFontOfSize:FontSize_Normal];
-    [btn setTitle:@"确定" forState:UIControlStateNormal];
+    [btn setTitle:@"完成" forState:UIControlStateNormal];
     [btn addTarget:self action:@selector(saveBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     btn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
     UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithCustomView:btn];

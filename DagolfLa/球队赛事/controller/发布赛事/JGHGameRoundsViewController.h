@@ -20,4 +20,10 @@
 
 @property (nonatomic, strong)NSMutableArray *roundArray;//赛制Array
 
+@property (nonatomic, assign)NSInteger ballKey;//球场KEY
+
+@property (nonatomic, strong)NSString *ballName;//球场名称
+
+@property (nonatomic, strong)NSString *beginDate;//开球时间
+
 @end

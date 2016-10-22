@@ -18,6 +18,7 @@
 #import "JGHSaveAndSubmitBtnCell.h"
 #import "JGHGameRoundsViewController.h"
 #import "JGHPublicLevelCell.h"
+#import "JGConfrontChannelViewController.h"
 
 static NSString *const JGTableViewCellIdentifier = @"JGTableViewCell";
 static NSString *const JGHTeamContactCellIdentifier = @"JGHTeamContactTableViewCell";
@@ -269,9 +270,9 @@ static CGFloat ImageHeight  = 210.0;
 - (void)didSelectCellBtn:(UIButton *)btn{
     if (btn.tag == 101) {
         JGHGameRoundsViewController *gameRoundsCtrl = [[JGHGameRoundsViewController alloc]init];
-//        NSMutableArray *array = [NSMutableArray array];
-//        [array addObject:_rulesArray];
-//        gameRoundsCtrl.rulesArray = array;
+        gameRoundsCtrl.ballKey = [_model.ballKey integerValue];
+        gameRoundsCtrl.ballName = _model.ballName;
+        gameRoundsCtrl.beginDate = _model.beginDate;
         gameRoundsCtrl.timeKey = _model.timeKey;
         gameRoundsCtrl.rulesTimeKey = [_rulesArray[0] objectForKey:@"timeKey"];
         [self.navigationController pushViewController:gameRoundsCtrl animated:YES];
@@ -368,7 +369,7 @@ static CGFloat ImageHeight  = 210.0;
         NSLog(@"%@", data);
         if ([[data objectForKey:@"packSuccess"] integerValue] == 0) {
             [Helper alertViewWithTitle:[data objectForKey:@"packResultMsg"] withBlock:^(UIAlertController *alertView) {
-                [self.navigationController presentViewController:alertView animated:YES completion:nil];
+                [self popCtrl];
             }];
             
             return ;
@@ -402,7 +403,11 @@ static CGFloat ImageHeight  = 210.0;
     }];
 }
 - (void)popCtrl{
-    [self.navigationController popViewControllerAnimated:YES];
+    for (UIViewController *controller in self.navigationController.viewControllers) {
+        if ([controller isKindOfClass:[JGConfrontChannelViewController class]]) {
+            [self.navigationController popToViewController:controller animated:YES];
+        }
+    }
 }
 #pragma mark -- 创建成功提示
 - (void)popSeeussulCtrl{

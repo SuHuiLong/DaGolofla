@@ -134,7 +134,7 @@ static CGFloat ImageHeight  = 210.0;
     self.titleField = [[UITextField alloc]initWithFrame:CGRectMake(64, 7, screenWidth - 128, 30)];
     self.titleField.placeholder = @"请输入赛事名称";
     [self.titleField setValue:[UIColor whiteColor] forKeyPath:@"_placeholderLabel.textColor"];
-    [self.titleField setValue:[UIFont boldSystemFontOfSize:15] forKeyPath:@"_placeholderLabel.font"];
+    [self.titleField setValue:[UIFont boldSystemFontOfSize:17 *ProportionAdapter] forKeyPath:@"_placeholderLabel.font"];
     self.titleField.tag = 345;
     self.titleField.delegate = self;
     self.titleField.textAlignment = NSTextAlignmentCenter;
@@ -218,7 +218,7 @@ static CGFloat ImageHeight  = 210.0;
     if (indexPath.section == 0) {
         return ImageHeight -10;
     }else{
-        return 44;
+        return 44 *ProportionAdapter;
     }
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
@@ -227,9 +227,9 @@ static CGFloat ImageHeight  = 210.0;
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     
     if (section == 4) {
-        return 20;
+        return 20 *ProportionAdapter;
     }else{
-        return 10;
+        return 10 *ProportionAdapter;
     }
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -274,7 +274,7 @@ static CGFloat ImageHeight  = 210.0;
     }else if (indexPath.section == 4){
         JGHBtnCell *saveCell = [tableView dequeueReusableCellWithIdentifier:JGHBtnCellIdentifier];
         saveCell.backgroundColor = [UIColor colorWithHexString:BG_color];
-        [saveCell configNextBtn];
+        [saveCell configEventNextBtn];
         saveCell.delegate = self;
         return saveCell;
     }else{
@@ -302,7 +302,7 @@ static CGFloat ImageHeight  = 210.0;
 }
 
 - (nullable UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
-    UIView *footView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, 10)];
+    UIView *footView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, 10 *ProportionAdapter)];
     footView.backgroundColor = [UIColor colorWithHexString:BG_color];
     return footView;
 }
@@ -396,6 +396,10 @@ static CGFloat ImageHeight  = 210.0;
         return;
     }
     
+    if (self.model.ballName == nil) {
+        [[ShowHUD showHUD]showToastWithText:@"活动地址不能为空！" FromView:self.view];
+        return;
+    }
     
     if (self.model.userName == nil) {
         [[ShowHUD showHUD]showToastWithText:@"主办方姓名不能为空！" FromView:self.view];

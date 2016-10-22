@@ -104,16 +104,7 @@ static NSString *const JGHGameBaseHeaderSubCellIdentifier = @"JGHGameBaseHeaderS
     return footView;
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-//    NSString *timeKey = nil;
-//    NSDictionary *dict = [[self.dictData objectForKey:@"-1"]objectAtIndex:_rulesId];
-//    timeKey = [dict objectForKey:@"timeKey"];
-//    NSArray *secondaryDirectoryArray = [NSArray array];
-//    secondaryDirectoryArray = [self.dictData objectForKey:timeKey];
-//    NSDictionary *rulesTitleDict = secondaryDirectoryArray[indexPath.section];
-//    NSArray *rulesList = [self.dictData objectForKey:[rulesTitleDict objectForKey:@"timeKey"]];
-//    NSDictionary *baseDict = [rulesList objectAtIndex:indexPath.row];
     JGHGameBaseHeaderSubCell *gameSetBaseCellCell = [tableView dequeueReusableCellWithIdentifier:JGHGameBaseHeaderSubCellIdentifier];
-//
     NSInteger _select = 0;
     NSDictionary *rulesDict = self.dataArray[indexPath.row];
     if ([[rulesDict objectForKey:@"timeKey"] isEqualToString:[self.roundRulesArray[0] objectForKey:@"timeKey"]]) {
@@ -123,7 +114,6 @@ static NSString *const JGHGameBaseHeaderSubCellIdentifier = @"JGHGameBaseHeaderS
     [gameSetBaseCellCell configJGHGameBaseHeaderSubCell:[[self.dataArray objectAtIndex:indexPath.row] objectForKey:@"name"] andSelect:_select];
     return gameSetBaseCellCell;
 }
-
 //组头视图
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
