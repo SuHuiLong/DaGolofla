@@ -29,7 +29,7 @@ static NSString *const JGHGameBaseHeaderSubCellIdentifier = @"JGHGameBaseHeaderS
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
+    //
     self.navigationItem.title = @"设置赛制";
     
     self.dataArray = [NSMutableArray array];

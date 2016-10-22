@@ -30,6 +30,7 @@ static NSString *const JGHAddEventRoundsBtnCellIdentifier = @"JGHAddEventRoundsB
     NSInteger _isCreateRound;//是否可以添加轮次
     
     NSMutableArray *_roundKey;//轮次key,第一轮次没有Key
+    
 }
 
 @property (nonatomic, strong)UITableView *gameRoundsTableView;
