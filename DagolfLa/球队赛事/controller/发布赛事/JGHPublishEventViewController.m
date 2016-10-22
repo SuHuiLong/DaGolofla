@@ -134,14 +134,14 @@ static CGFloat ImageHeight  = 210.0;
     self.titleField = [[UITextField alloc]initWithFrame:CGRectMake(64, 7, screenWidth - 128, 30)];
     self.titleField.placeholder = @"请输入赛事名称";
     [self.titleField setValue:[UIColor whiteColor] forKeyPath:@"_placeholderLabel.textColor"];
-    [self.titleField setValue:[UIFont boldSystemFontOfSize:17 *ProportionAdapter] forKeyPath:@"_placeholderLabel.font"];
+    [self.titleField setValue:[UIFont boldSystemFontOfSize:17] forKeyPath:@"_placeholderLabel.font"];
     self.titleField.tag = 345;
     self.titleField.delegate = self;
     self.titleField.textAlignment = NSTextAlignmentCenter;
-    self.titleField.font = [UIFont systemFontOfSize:15];
+    self.titleField.font = [UIFont systemFontOfSize:17 *ProportionAdapter];
     [self.titleView addSubview:self.titleField];
     
-    _titleArray = @[@[], @[@"开球时间", @"活动结束时间", @"报名截止时间", @"举办场地"], @[@"玩法设置"], @[@"主办方", @"联系人电话"]];
+    _titleArray = @[@[], @[@"开球时间", @"报名截止时间", @"活动结束时间", @"举办场地"], @[@"玩法设置"], @[@"主办方", @"联系人电话"]];
     
     [self getTimeKey];
 }
@@ -355,9 +355,9 @@ static CGFloat ImageHeight  = 210.0;
             DateTimeViewController *dataCtrl = [[DateTimeViewController alloc]init];
             [dataCtrl setCallback:^(NSString *dateStr, NSString *dateWeek, NSString *str) {
                 if(indexPath.row == 1){
-                    [self.model setValue:[NSString stringWithFormat:@"%@ 23:59:59", dateStr] forKey:@"endDate"];
-                }else{
                     [self.model setValue:[NSString stringWithFormat:@"%@ 23:59:59", dateStr] forKey:@"signUpEndTime"];
+                }else{
+                    [self.model setValue:[NSString stringWithFormat:@"%@ 23:59:59", dateStr] forKey:@"endDate"];
                 }
                 
                 NSIndexPath *indPath = [NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section];
@@ -413,6 +413,23 @@ static CGFloat ImageHeight  = 210.0;
     
     if (_rulesArray.count == 0) {
         [[ShowHUD showHUD]showToastWithText:@"请设置玩法！" FromView:self.view];
+        return;
+    }
+    
+    NSString *beginDate = [[_model.beginDate componentsSeparatedByString:@" "] firstObject];
+    NSString *signUpEndTime = [[_model.signUpEndTime componentsSeparatedByString:@" "] firstObject];
+    NSString *endDate = [[_model.endDate componentsSeparatedByString:@" "] firstObject];
+    
+    NSLog(@"beginDate == %ld", (long)[beginDate compare:endDate]);
+    
+    if ([beginDate compare:endDate options:NSNumericSearch] == NSOrderedDescending) {
+        [[ShowHUD showHUD]showToastWithText:@"活动开球时间不能大于活动结束时间！" FromView:self.view];
+        return;
+    }
+    
+    NSLog(@"beginDate == %ld", (long)[beginDate compare:signUpEndTime]);
+    if ([signUpEndTime compare:beginDate options:NSNumericSearch] == NSOrderedDescending) {
+        [[ShowHUD showHUD]showToastWithText:@"报名截止时间不能大于活动开球时间！" FromView:self.view];
         return;
     }
     

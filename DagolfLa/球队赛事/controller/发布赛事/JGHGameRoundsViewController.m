@@ -217,6 +217,13 @@ static NSString *const JGHAddEventRoundsBtnCellIdentifier = @"JGHAddEventRoundsB
         JGHAddEventRoundsBtnCell *addEventRoundsBtnCell = [tableView dequeueReusableCellWithIdentifier:JGHAddEventRoundsBtnCellIdentifier];
         addEventRoundsBtnCell.selectionStyle = UITableViewCellSelectionStyleNone;
         addEventRoundsBtnCell.delegate = self;
+        if (_isCreateRound == 0) {
+            addEventRoundsBtnCell.ruleaddBtn.userInteractionEnabled = NO;
+            [addEventRoundsBtnCell.ruleaddBtn setTitleColor:[UIColor colorWithHexString:BG_color] forState:UIControlStateNormal];
+        }else{
+            addEventRoundsBtnCell.ruleaddBtn.userInteractionEnabled = YES;
+        }
+        
         return addEventRoundsBtnCell;
     }
 }
@@ -240,19 +247,19 @@ static NSString *const JGHAddEventRoundsBtnCellIdentifier = @"JGHAddEventRoundsB
         JGHDatePicksViewController *datePicksCrel = [[JGHDatePicksViewController alloc]init];
         datePicksCrel.returnDateString = ^(NSString *dateString){
             NSLog(@"%@", dateString);
-            NSMutableDictionary *dict = [self.ballBaseArray objectAtIndex:indexPath.section];
+            NSMutableDictionary *dict = [self.dataArray objectAtIndex:indexPath.section];
             if (dateString.length == 16) {
                 [dict setObject:[NSString stringWithFormat:@"%@:00", dateString] forKey:@"kickOffTime"];
             }else{
                 [dict setObject:dateString forKey:@"kickOffTime"];
             }
             
-            NSMutableArray *array = [self.dataArray mutableCopy];
+            NSMutableArray *array = [NSMutableArray array];
+            array = [NSMutableArray arrayWithArray:_dataArray];
             [array replaceObjectAtIndex:indexPath.section withObject:dict];
             self.dataArray = array;
-            
-            NSIndexPath *indPath = [NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section];
-            [self.gameRoundsTableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indPath, nil] withRowAnimation:UITableViewRowAnimationNone];
+            [_showArray replaceObjectAtIndex:indexPath.section withObject:@0];
+            [self.gameRoundsTableView reloadData];
         };
         [self.navigationController pushViewController:datePicksCrel animated:YES];
     }
@@ -262,15 +269,15 @@ static NSString *const JGHAddEventRoundsBtnCellIdentifier = @"JGHAddEventRoundsB
         BallParkViewController *ballCtrl = [[BallParkViewController alloc]init];
         [ballCtrl setCallback:^(NSString *balltitle, NSInteger ballid) {
             NSLog(@"%@----%ld", balltitle, (long)ballid);
-            NSMutableDictionary *dict = [self.ballBaseArray objectAtIndex:indexPath.section];
+            NSMutableDictionary *dict = [self.dataArray objectAtIndex:indexPath.section];
             [dict setObject:@(ballid) forKey:@"ballKey"];
             [dict setObject:balltitle forKey:@"ballName"];
-            NSMutableArray *array = [self.dataArray mutableCopy];
+            NSMutableArray *array = [NSMutableArray array];
+            array = [NSMutableArray arrayWithArray:_dataArray];
             [array replaceObjectAtIndex:indexPath.section withObject:dict];
             self.dataArray = array;
-            
-            NSIndexPath *indPath = [NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section];
-            [self.gameRoundsTableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indPath, nil] withRowAnimation:UITableViewRowAnimationNone];
+            [_showArray replaceObjectAtIndex:indexPath.section withObject:@0];
+            [self.gameRoundsTableView reloadData];
         }];
         
         [self.navigationController pushViewController:ballCtrl animated:YES];
@@ -370,7 +377,7 @@ static NSString *const JGHAddEventRoundsBtnCellIdentifier = @"JGHAddEventRoundsB
                 if (btn.tag != 100) {
                     NSMutableArray *array = [NSMutableArray array];
                     array = [_showArray mutableCopy];
-                    [array replaceObjectAtIndex:btn.tag withObject:@1];
+                    [array replaceObjectAtIndex:btn.tag -100 withObject:@1];
                     _showArray = array;
                 }
                 [[ShowHUD showHUD]showToastWithText:@"保存成功！" FromView:self.view];
@@ -407,7 +414,8 @@ static NSString *const JGHAddEventRoundsBtnCellIdentifier = @"JGHAddEventRoundsB
 }
 #pragma mark -- 赛制代理
 - (void)didGameRoundsRulesViewSaveroundRulesArray:(NSMutableArray *)roundRulesArray{
-//    self.roundArray = roundRulesArray;
+    [_showArray replaceObjectAtIndex:_roundID withObject:@0];
+    
     if (self.roundArray.count == 0) {
         [self.roundArray addObject:roundRulesArray[0]];
     }else{

@@ -27,6 +27,9 @@
 @property (weak, nonatomic) IBOutlet UIImageView *statusImageView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *downImageViewRight;//15
 
+@property (weak, nonatomic) IBOutlet UIImageView *gouImageView;
+
+
 @property (weak, nonatomic)id <JGHGameSetCellDelegate> delegate;
 
 - (void)configJGHGameSetCellTitleString:(NSString *)titleString andSelect:(NSInteger)select;

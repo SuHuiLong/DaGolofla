@@ -127,9 +127,9 @@ static CGFloat ImageHeight  = 210.0;
     self.titleField = [[UITextField alloc]initWithFrame:CGRectMake(64, 7, screenWidth - 128, 30)];
     self.titleField.placeholder = @"请输入活动名称";
     [self.titleField setValue:[UIColor whiteColor] forKeyPath:@"_placeholderLabel.textColor"];
-    [self.titleField setValue:[UIFont boldSystemFontOfSize:15] forKeyPath:@"_placeholderLabel.font"];
+    [self.titleField setValue:[UIFont boldSystemFontOfSize:17 *ProportionAdapter] forKeyPath:@"_placeholderLabel.font"];
     self.titleField.textAlignment = NSTextAlignmentCenter;
-    self.titleField.font = [UIFont systemFontOfSize:15];
+    self.titleField.font = [UIFont systemFontOfSize:17 *ProportionAdapter];
     self.titleField.userInteractionEnabled = NO;
     [self.titleView addSubview:self.titleField];
     
@@ -369,7 +369,7 @@ static CGFloat ImageHeight  = 210.0;
         NSLog(@"%@", data);
         if ([[data objectForKey:@"packSuccess"] integerValue] == 0) {
             [Helper alertViewWithTitle:[data objectForKey:@"packResultMsg"] withBlock:^(UIAlertController *alertView) {
-                [self popCtrl];
+                [self presentViewController:alertView animated:YES completion:nil];
             }];
             
             return ;
@@ -394,7 +394,7 @@ static CGFloat ImageHeight  = 210.0;
                     [self popSeeussulCtrl];
                 }else{
                     [[ShowHUD showHUD]showToastWithText:@"图片上传失败！" FromView:self.view];
-                    [self performSelector:@selector(popCtrl) withObject:self afterDelay:TIMESlEEP];
+//                    [self performSelector:@selector(popCtrl) withObject:self afterDelay:TIMESlEEP];
                 }
             }];
         }else{
@@ -402,18 +402,15 @@ static CGFloat ImageHeight  = 210.0;
         }
     }];
 }
-- (void)popCtrl{
-    for (UIViewController *controller in self.navigationController.viewControllers) {
-        if ([controller isKindOfClass:[JGConfrontChannelViewController class]]) {
-            [self.navigationController popToViewController:controller animated:YES];
-        }
-    }
-}
 #pragma mark -- 创建成功提示
 - (void)popSeeussulCtrl{
     UIAlertAction *commitAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         
-        [self.navigationController popViewControllerAnimated:YES];
+        for (UIViewController *controller in self.navigationController.viewControllers) {
+            if ([controller isKindOfClass:[JGConfrontChannelViewController class]]) {
+                [self.navigationController popToViewController:controller animated:YES];
+            }
+        }
     }];
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"系统提示" message:@"赛事成功!" preferredStyle:UIAlertControllerStyleAlert];
     [alertController addAction:commitAction];

@@ -38,8 +38,10 @@
     
     if (select == 0) {
         self.statusImageView.image = [UIImage imageNamed:@"gameSetNoSelect"];
+        self.gouImageView.image = [UIImage imageNamed:@")-1"];
     }else{
         self.statusImageView.image = [UIImage imageNamed:@"gameSetSelect"];
+        self.gouImageView.image = [UIImage imageNamed:@"arrowTop"];
     }
 }
 
