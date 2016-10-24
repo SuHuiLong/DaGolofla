@@ -17,7 +17,11 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *slectImageViewRight;//25
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *slectImageViewW;//10
+@property (weak, nonatomic) IBOutlet UITextField *toptextfeil;
+@property (weak, nonatomic) IBOutlet UILabel *namelable2;
 
-- (void)configJGHGameBaseHeaderSubCell:(NSString *)rulesName andSelect:(NSInteger)select;
+
+
+- (void)configJGHGameBaseHeaderSubCell:(NSString *)rulesName andSelect:(NSInteger)select andTopvalue:(NSString *)topvalue;
 
 @end

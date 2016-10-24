@@ -111,7 +111,7 @@ static NSString *const JGHGameBaseHeaderSubCellIdentifier = @"JGHGameBaseHeaderS
         _select = 1;
     }
     
-    [gameSetBaseCellCell configJGHGameBaseHeaderSubCell:[[self.dataArray objectAtIndex:indexPath.row] objectForKey:@"name"] andSelect:_select];
+    [gameSetBaseCellCell configJGHGameBaseHeaderSubCell:[[self.dataArray objectAtIndex:indexPath.row] objectForKey:@"name"] andSelect:_select andTopvalue:@""];
     return gameSetBaseCellCell;
 }
 //组头视图

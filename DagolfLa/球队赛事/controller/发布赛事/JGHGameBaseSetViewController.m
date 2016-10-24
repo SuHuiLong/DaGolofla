@@ -16,7 +16,7 @@ static NSString *const JGHGameBaseHeaderSubCellIdentifier = @"JGHGameBaseHeaderS
 
 @interface JGHGameBaseSetViewController ()<UITableViewDelegate, UITableViewDataSource, JGHGameBaseHeaderCellDelegate, UITextFieldDelegate>
 {
-    
+    NSString *_toptextfeil;
 }
 
 @property (nonatomic, strong)UITableView *gameBaseSetTableView;
@@ -29,6 +29,7 @@ static NSString *const JGHGameBaseHeaderSubCellIdentifier = @"JGHGameBaseHeaderS
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    self.view.backgroundColor = [UIColor colorWithHexString:BG_color];
     
     UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"backL"] style:UIBarButtonItemStylePlain target:self action:@selector(saveBtnClick)];
     item.tintColor=[UIColor whiteColor];
@@ -120,16 +121,13 @@ static NSString *const JGHGameBaseHeaderSubCellIdentifier = @"JGHGameBaseHeaderS
     }
     
     NSString *nameString = [NSString stringWithFormat:@"%@", [baseDict objectForKey:@"name"]];
-    if ([nameString containsString:@"regular"]) {
-        UITextField *toptextField = [[UITextField alloc]initWithFrame:CGRectMake(gameSetBaseCellCell.name.frame.origin.x + gameSetBaseCellCell.name.frame.size.width + 5, gameSetBaseCellCell.name.frame.origin.y, 40 *ProportionAdapter, gameSetBaseCellCell.name.frame.size.height)];
-        toptextField.delegate = self;
-        toptextField.tag = 234;
-    }
     
-    [gameSetBaseCellCell configJGHGameBaseHeaderSubCell:nameString andSelect:_select];
+    gameSetBaseCellCell.toptextfeil.delegate = self;
+    
+    [gameSetBaseCellCell configJGHGameBaseHeaderSubCell:nameString andSelect:_select andTopvalue:_toptextfeil];
+    
     return gameSetBaseCellCell;
 }
-
 //组头视图
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
@@ -163,7 +161,11 @@ static NSString *const JGHGameBaseHeaderSubCellIdentifier = @"JGHGameBaseHeaderS
     secondaryDirectoryArray = [self.dictData objectForKey:timeKey];
     NSDictionary *rulesTitleDict = secondaryDirectoryArray[indexPath.section];
     NSArray *rulesList = [self.dictData objectForKey:[rulesTitleDict objectForKey:@"timeKey"]];
-    NSDictionary *baseDict = [rulesList objectAtIndex:indexPath.row];
+    NSMutableDictionary *baseDict = [[rulesList objectAtIndex:indexPath.row] mutableCopy];
+    
+    if ([[baseDict objectForKey:@"name"] containsString:@"regular"]) {
+        [baseDict setObject:_toptextfeil forKey:@"value"];
+    }
     
     [self.rulesArray replaceObjectAtIndex:indexPath.section +1 withObject:baseDict];
     
@@ -178,9 +180,24 @@ static NSString *const JGHGameBaseHeaderSubCellIdentifier = @"JGHGameBaseHeaderS
 }
 #pragma mark -- UITextFliaView
 - (void)textFieldDidEndEditing:(UITextField *)textField{
-    if (textField.tag == 234) {
-        
+    _toptextfeil= textField.text;
+}
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string;
+{
+    NSCharacterSet *cs;
+    if(textField)
+    {
+        cs = [[NSCharacterSet characterSetWithCharactersInString:NUMBERS] invertedSet];
+        NSString *filtered = [[string componentsSeparatedByCharactersInSet:cs] componentsJoinedByString:@""];
+        BOOL basicTest = [string isEqualToString:filtered];
+        if(!basicTest)
+        {
+            [[ShowHUD showHUD]showToastWithText:@"请输入数字" FromView:self.view];
+            return NO;
+        }
     }
+    //其他的类型不需要检测，直接写入
+    return YES;
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
