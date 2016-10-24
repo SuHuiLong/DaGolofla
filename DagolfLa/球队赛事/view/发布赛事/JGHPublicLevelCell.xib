@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="KGk-i7-Jjw" customClass="JGHPublicLevelCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <frame key="frameInset" width="320" height="43"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YcC-24-Oa8">
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="gou_w" translatesAutoresizingMaskIntoConstraints="NO" id="r4Q-a1-NKF">
+                        <constraints>
+                            <constraint firstAttribute="width" constant="15" id="0bH-4c-7iQ"/>
+                            <constraint firstAttribute="width" secondItem="r4Q-a1-NKF" secondAttribute="height" multiplier="1:1" id="hef-qP-x9d"/>
+                        </constraints>
+                    </imageView>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="r4Q-a1-NKF" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="Alk-DI-8hp"/>
+                    <constraint firstItem="YcC-24-Oa8" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="40" id="mXk-NE-jkg"/>
+                    <constraint firstItem="YcC-24-Oa8" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="oTB-sH-4gi"/>
+                    <constraint firstAttribute="trailing" secondItem="r4Q-a1-NKF" secondAttribute="trailing" constant="20" id="svD-yT-ntW"/>
+                    <constraint firstItem="r4Q-a1-NKF" firstAttribute="leading" secondItem="YcC-24-Oa8" secondAttribute="trailing" constant="10" id="xPg-Mg-dZo"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="gouImageView" destination="r4Q-a1-NKF" id="nD3-vi-iC0"/>
+                <outlet property="gouImageViewW" destination="0bH-4c-7iQ" id="Z3Z-L5-fX1"/>
+                <outlet property="titleLable" destination="YcC-24-Oa8" id="pm0-14-wG8"/>
+                <outlet property="titleLableLeft" destination="mXk-NE-jkg" id="bmx-BB-d6k"/>
+                <outlet property="titleLableLeftRight" destination="xPg-Mg-dZo" id="Ujb-7t-r5j"/>
+            </connections>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="gou_w" width="15" height="15"/>
+    </resources>
+</document>

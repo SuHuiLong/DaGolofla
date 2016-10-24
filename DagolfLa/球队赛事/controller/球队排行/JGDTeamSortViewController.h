@@ -10,4 +10,10 @@
 
 @interface JGDTeamSortViewController : ViewController
 
+@property (nonatomic, strong) NSNumber *matchKey;
+
+@property (nonatomic, copy) NSString *matchName;
+
+@property (nonatomic, copy) NSString *ballName;
+
 @end

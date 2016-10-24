@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="KGk-i7-Jjw" customClass="JGHGameBaseHeaderCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <frame key="frameInset" width="320" height="43"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BIx-H5-6Dz">
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="m1R-A7-o0T">
+                        <state key="normal" image="btn_details"/>
+                        <connections>
+                            <action selector="detailsBtn:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="EGV-a0-4jI"/>
+                        </connections>
+                    </button>
+                </subviews>
+                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                <constraints>
+                    <constraint firstItem="BIx-H5-6Dz" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="56S-ho-bnG"/>
+                    <constraint firstAttribute="trailing" secondItem="m1R-A7-o0T" secondAttribute="trailing" constant="25" id="AWy-Y2-rmE"/>
+                    <constraint firstItem="m1R-A7-o0T" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="LGj-1T-vnL"/>
+                    <constraint firstItem="BIx-H5-6Dz" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="Nvt-xi-cgu"/>
+                </constraints>
+            </tableViewCellContentView>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <connections>
+                <outlet property="detailsBtn" destination="m1R-A7-o0T" id="89d-S1-vPy"/>
+                <outlet property="detailsBtnRight" destination="AWy-Y2-rmE" id="sF3-QR-Z32"/>
+                <outlet property="name" destination="BIx-H5-6Dz" id="CWi-Is-nf5"/>
+                <outlet property="nameLeft" destination="56S-ho-bnG" id="G0D-w3-p8u"/>
+            </connections>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="btn_details" width="22" height="22"/>
+    </resources>
+</document>

@@ -609,6 +609,44 @@
     return chinese;
 }
 
+// 赛事头像
++ (NSURL *)setMatchImageIconUrl:(NSInteger)timeKey {
+    //   http://imgcache.dagolfla.com/match/244.jpg
+    
+    NSString *imageStr = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/match/%td.jpg",timeKey];
+    NSURL *imageUrl = [NSURL URLWithString:imageStr];
+    return imageUrl;
+}
+
++ (NSDictionary *)dictionaryWithJsonString:(NSString *)jsonString{
+    
+    if (jsonString == nil) {
+        
+        return nil;
+        
+    }
+    
+    NSData *jsonData = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
+    
+    NSError *err;
+    
+    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:jsonData
+                         
+                                                        options:NSJSONReadingMutableContainers
+                         
+                                                          error:&err];
+    
+    if(err) {
+        
+        NSLog(@"json解析失败：%@",err);
+        
+        return nil;
+        
+    }
+    
+    return dic;
+    
+}
 
 
 @end

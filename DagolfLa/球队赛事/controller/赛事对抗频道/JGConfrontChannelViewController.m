@@ -18,6 +18,8 @@
 #import "MJDIYBackFooter.h"
 #import "MJDIYHeader.h"
 
+#import "JGDConfrontChannelModel.h"
+
 
 @interface JGConfrontChannelViewController ()<UITableViewDelegate, UITableViewDataSource>
 
@@ -34,6 +36,8 @@
 @property (assign, nonatomic) NSInteger page;
 
 @property (nonatomic, strong) NSMutableArray *dataArray;
+
+@property (nonatomic, assign) NSInteger leftORright; // 1 是左 hot   2 是右 mine
 
 @end
 
@@ -52,10 +56,11 @@
 
 
 - (void)viewDidLoad {
+    
     [super viewDidLoad];
     
     _page = 0;
-
+    self.leftORright = 1;
     // 返回按钮
     UIButton *backBtn = [UIButton buttonWithType:(UIButtonTypeCustom)];
     backBtn.frame = CGRectMake(0 , 20, 30 * screenWidth / 320, 30 * screenWidth / 320);
@@ -71,18 +76,21 @@
     
     UILabel *titleLB = [[UILabel alloc] initWithFrame:CGRectMake(160 * ProportionAdapter, 20 * ProportionAdapter, 120 * ProportionAdapter, 30 * ProportionAdapter)];
     titleLB.text = @"赛事对抗";
+    titleLB.font = [UIFont systemFontOfSize:18 * ProportionAdapter];
     
     // 发布按钮
     UIButton *postButton = [[UIButton alloc] initWithFrame:CGRectMake(260 * ProportionAdapter, 20 * ProportionAdapter, 120 * ProportionAdapter, 30 * ProportionAdapter)];
     [postButton setTitle:@"发布对抗赛" forState:(UIControlStateNormal)];
     [postButton setTitleColor:[UIColor blackColor] forState:(UIControlStateNormal)];
+    postButton.titleLabel.font = [UIFont systemFontOfSize:16 * ProportionAdapter];
+    
     [postButton addTarget:self action:@selector(postAct) forControlEvents:(UIControlEventTouchUpInside)];
     
     // 表头
     self.headBackView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 200 * ProportionAdapter)];
     
     UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 200 * ProportionAdapter)];
-    imageV.backgroundColor = [UIColor orangeColor];
+    imageV.image = [UIImage imageNamed:@"bg_image_pk@2x.jpg"];
     imageV.userInteractionEnabled = YES;
     
     [self.headBackView addSubview:imageV];
@@ -104,6 +112,7 @@
 // 刷新
 - (void)headRereshing
 {
+    _page = 0;
     [self downLoadData:_page isReshing:YES];
 }
 
@@ -112,57 +121,72 @@
     [self downLoadData:_page isReshing:NO];
 }
 
+
 #pragma mark - 下载数据
+
 - (void)downLoadData:(NSInteger)page isReshing:(BOOL)isReshing{
     
-    if ([self.dataArray count] != 0) {
-        NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-        [dict setObject:DEFAULF_USERID forKey:@"userKey"];
-        [dict setObject:[NSNumber numberWithInteger:page] forKey:@"offset"];
-        [[JsonHttp jsonHttp]httpRequest:@"team/getMyTeamActivityAll" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
-            if (isReshing) {
-                [_tableView.header endRefreshing];
-            }else {
-                [_tableView.footer endRefreshing];
-            }
-        } completionBlock:^(id data) {
-            if ([data objectForKey:@"teamList"]) {
-                if (page == 0)
-                {
-                    //清除数组数据
-                    [self.dataArray removeAllObjects];
-                }
-            
-                for (NSDictionary *dicModel in data[@"activityList"]) {
-//                    JGTeamAcitivtyModel *model = [[JGTeamAcitivtyModel alloc] init];
-//                    [model setValuesForKeysWithDictionary:dicModel];
-//                    [self.myActivityArray addObject:model];
-                }
-                [self.tableView reloadData];
-                
-                //            [self.myActivityArray addObjectsFromArray:[data objectForKey:@"teamList"]];
-                
-                _page++;
-                [_tableView reloadData];
-            }else {
-                //            [Helper alertViewWithTitle:@"没有更多球队" withBlock:^(UIAlertController *alertView) {
-                //                [self presentViewController:alertView animated:YES completion:nil];
-                //            }];
-            }
-            [_tableView reloadData];
-            if (isReshing) {
-                [_tableView.header endRefreshing];
-            }else {
-                [_tableView.footer endRefreshing];
-            }
-        }];
-    }else{
+    NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
+    [dic setObject:@(_page) forKey:@"offset"];
+    [dic setObject:DEFAULF_USERID forKey:@"userKey"];
+    [dic setObject:[Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@dagolfla.com", DEFAULF_USERID]] forKey:@"md5"];
+    NSString *requestString = self.leftORright == 1 ? @"match/getHotMatchList" : @"match/getMyMatchList";
+    [[JsonHttp jsonHttp] httpRequest:requestString JsonKey:nil withData:dic requestMethod:@"GET" failedBlock:^(id errType) {
+        
+        [[ShowHUD showHUD]showToastWithText:[NSString stringWithFormat:@"%@",errType] FromView:self.view];
         if (isReshing) {
             [_tableView.header endRefreshing];
         }else {
             [_tableView.footer endRefreshing];
         }
+        
+    } completionBlock:^(id data) {
+        
+        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+            
+            if ([data objectForKey:@"list"]) {
+                if (page == 0)
+                {
+                    //清除数组数据
+                    [self.dataArray removeAllObjects];
+                }
+                NSMutableArray *indexPathArray = [[NSMutableArray alloc] init];
+                for (NSDictionary *dicModel in data[@"list"]) {
+                    JGDConfrontChannelModel *model = [[JGDConfrontChannelModel alloc] init];
+                    [model setValuesForKeysWithDictionary:dicModel];
+                    [self.dataArray addObject:model];
+                }
+                
+                if (_page > 0) {
+                    for (int i = 0; i < [data[@"list"] count]; i ++) {
+                        [indexPathArray addObject:[NSIndexPath indexPathForRow:20 * _page + i inSection:0]];
+                    }
+                    [self.tableView insertRowsAtIndexPaths:indexPathArray withRowAnimation:UITableViewRowAnimationFade];
+                }else{
+                    [_tableView reloadData];
+                }
+                _page++;
+                
+            }else{
+//                [_tableView reloadData];
+                
+            }
+            
+        }else{
+            
+            if ([data objectForKey:@"packResultMsg"]) {
+                [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+            }
+        }
+        
+        if (isReshing) {
+            [_tableView.header endRefreshing];
+        }else {
+            [_tableView.footer endRefreshing];
+        }
+        
     }
+     ];
 }
 
 
@@ -182,26 +206,40 @@
     self.myMatchBtn = [[UIButton alloc] initWithFrame:CGRectMake(200 * ProportionAdapter, 0 * ProportionAdapter, 150 * ProportionAdapter, 50 * ProportionAdapter)];
     //    [self.myMatchBtn setImage:[UIImage imageNamed:@"hotfight"] forState:(UIControlStateNormal)];
     [self.myMatchBtn setTitle:@"我的对抗赛" forState:(UIControlStateNormal)];
-    [self.myMatchBtn setTitleColor:[UIColor blackColor] forState:(UIControlStateNormal)];
+    //    [self.myMatchBtn setTitleColor:[UIColor blackColor] forState:(UIControlStateNormal)];
     [self.sectionHeadView addSubview:self.myMatchBtn];
     self.myMatchBtn.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 100 * ProportionAdapter);
     [self.myMatchBtn addTarget:self action:@selector(myMatchAct:) forControlEvents:(UIControlEventTouchUpInside)];
-    [self.myMatchBtn setTitleColor:[UIColor lightGrayColor] forState:(UIControlStateNormal)];
     
     // 热门赛事
     self.hotMatchBtn = [[UIButton alloc] initWithFrame:CGRectMake(15 * ProportionAdapter, 0 * ProportionAdapter, 150 * ProportionAdapter, 50 * ProportionAdapter)];
     //    [self.hotMatchBtn setImage:[UIImage imageNamed:@"minefight"] forState:(UIControlStateNormal)];
     [self.hotMatchBtn setTitle:@"热门对抗赛" forState:(UIControlStateNormal)];
-    [self.hotMatchBtn setTitleColor:[UIColor blackColor] forState:(UIControlStateNormal)];
     [self.sectionHeadView addSubview:self.hotMatchBtn];
     self.hotMatchBtn.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 100 * ProportionAdapter);
     [self.hotMatchBtn addTarget:self action:@selector(hotMatchAct:) forControlEvents:(UIControlEventTouchUpInside)];
     
-    self.leftView.hidden = NO;
-    self.rightView.hidden = YES;
+    if (![self.sectionHeadView.subviews containsObject:self.leftView]) {
+        [self.sectionHeadView addSubview:self.leftView];
+    }
+    if (![self.sectionHeadView.subviews containsObject:self.rightView]) {
+        [self.sectionHeadView addSubview:self.rightView];
+    }
     
-    
-    
+    if (self.leftORright == 1) {
+        self.leftView.hidden = NO;
+        self.rightView.hidden = YES;
+        
+        [self.myMatchBtn setTitleColor:[UIColor lightGrayColor] forState:(UIControlStateNormal)];
+        [self.hotMatchBtn setTitleColor:[UIColor blackColor] forState:(UIControlStateNormal)];
+        
+    }else{
+        self.leftView.hidden = YES;
+        self.rightView.hidden = NO;
+        
+        [self.myMatchBtn setTitleColor:[UIColor blackColor] forState:(UIControlStateNormal)];
+        [self.hotMatchBtn setTitleColor:[UIColor lightGrayColor] forState:(UIControlStateNormal)];
+    }
     
     return self.sectionHeadView;
 }
@@ -209,59 +247,65 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     JGDHotMatchTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"hotMatch"];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    cell.model = self.dataArray[indexPath.row];
     return cell;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 10;
+    return [self.dataArray count];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return 80 * ProportionAdapter;
 }
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    
-    if (indexPath.row == 3) {
-        
-        JGDCheckScoreViewController *checkScoreV = [[JGDCheckScoreViewController alloc] init];
-        [self.navigationController pushViewController:checkScoreV animated:YES];
-        
-    }else if (indexPath.row == 2) {
-        
-        JGDSetConfrontViewController *setConfVC = [[JGDSetConfrontViewController alloc] init];
-        [self.navigationController pushViewController:setConfVC animated:YES];
-        
-    }else{
-        
-        JGHEventDetailsViewController *deatilCtrl = [[JGHEventDetailsViewController alloc]init];
-        [self.navigationController pushViewController:deatilCtrl animated:YES];
-        
-    }
-    
+
+    JGHEventDetailsViewController *deatilCtrl = [[JGHEventDetailsViewController alloc]init];
+        JGDConfrontChannelModel *model = self.dataArray[indexPath.row];
+        if (model.timeKey != nil) {
+//            deatilCtrl.timeKey = [model.timeKey integerValue];
+            [deatilCtrl getMatchInfo:[model.timeKey integerValue]];
+        }
+        [self.navigationController pushViewController:deatilCtrl animated:YES];    
 }
 
+#pragma mark --我的对抗赛
 
-//  我的对抗赛
 - (void)myMatchAct:(UIButton *)btn{
-    if (self.rightView.hidden == YES) {
-        self.rightView.hidden = NO;
-        self.leftView.hidden = YES;
-    }
+    
+    self.leftORright = 2;
+    _page = 0;
+    //    if (self.rightView.hidden == YES) {
+    //        self.rightView.hidden = NO;
+    //        self.leftView.hidden = YES;
+    //    }
     [btn setTitleColor:[UIColor blackColor] forState:(UIControlStateNormal)];
     [self.hotMatchBtn setTitleColor:[UIColor lightGrayColor] forState:(UIControlStateNormal)];
     
     
     NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
-    [dic setObject:@0 forKey:@"offset"];
-    [dic setObject:@244 forKey:@"userKey"];
-    [dic setObject:[Helper md5HexDigest:@"userKey=244dagolfla.com"] forKey:@"md5"];
-    
+    [dic setObject:@(_page) forKey:@"offset"];
+    [dic setObject:DEFAULF_USERID forKey:@"userKey"];
+    [dic setObject:[Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@dagolfla.com", DEFAULF_USERID]] forKey:@"md5"];
     
     [[JsonHttp jsonHttp] httpRequest:@"match/getMyMatchList" JsonKey:nil withData:dic requestMethod:@"GET" failedBlock:^(id errType) {
         [[ShowHUD showHUD]showToastWithText:[NSString stringWithFormat:@"%@",errType] FromView:self.view];
     } completionBlock:^(id data) {
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
-            NSLog(@"--mine--");
+            [self.dataArray removeAllObjects];
+
+            if ([data objectForKey:@"list"]) {
+                
+                for (NSDictionary *dic in [data objectForKey:@"list"]) {
+                    JGDConfrontChannelModel *model = [[JGDConfrontChannelModel alloc] init];
+                    [model setValuesForKeysWithDictionary:dic];
+                    [self.dataArray addObject:model];
+                }
+                _page ++;
+            }
+            [self.tableView reloadData];
+            
         }else{
             if ([data objectForKey:@"packResultMsg"]) {
                 [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
@@ -271,27 +315,44 @@
     
 }
 
-//  热门对抗赛
+#pragma mark --热门对抗赛
+
 - (void)hotMatchAct:(UIButton *)btn{
-    if (self.leftView.hidden == YES) {
-        self.leftView.hidden = NO;
-        self.rightView.hidden = YES;
-    }
+    
+    self.leftORright = 1;
+    _page = 0;
+    //    if (self.leftView.hidden == YES) {
+    //        self.leftView.hidden = NO;
+    //        self.rightView.hidden = YES;
+    //    }
     [btn setTitleColor:[UIColor blackColor] forState:(UIControlStateNormal)];
     [self.myMatchBtn setTitleColor:[UIColor lightGrayColor] forState:(UIControlStateNormal)];
     
     
     NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
-    [dic setObject:@0 forKey:@"offset"];
-    [dic setObject:@244 forKey:@"userKey"];
-    [dic setObject:[Helper md5HexDigest:@"userKey=244dagolfla.com"] forKey:@"md5"];
+    [dic setObject:@(_page) forKey:@"offset"];
+    [dic setObject:DEFAULF_USERID forKey:@"userKey"];
+    [dic setObject:[Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@dagolfla.com", DEFAULF_USERID]] forKey:@"md5"];
     
     
-    [[JsonHttp jsonHttp] httpRequest:@"match/getHotMatchList" JsonKey:nil withData:dic requestMethod:@"GET" failedBlock:^(id errType) {
+        [[JsonHttp jsonHttp] httpRequest:@"match/getHotMatchList" JsonKey:nil withData:dic requestMethod:@"GET" failedBlock:^(id errType) {
+//    [[JsonHttp jsonHttp] httpRequest:@"match/getMyMatchList" JsonKey:nil withData:dic requestMethod:@"GET" failedBlock:^(id errType) {
+    
         [[ShowHUD showHUD]showToastWithText:[NSString stringWithFormat:@"%@",errType] FromView:self.view];
     } completionBlock:^(id data) {
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
-            NSLog(@"--hot--");
+            [self.dataArray removeAllObjects];
+
+            if ([data objectForKey:@"list"]) {
+                
+                for (NSDictionary *dic in [data objectForKey:@"list"]) {
+                    JGDConfrontChannelModel *model = [[JGDConfrontChannelModel alloc] init];
+                    [model setValuesForKeysWithDictionary:dic];
+                    [self.dataArray addObject:model];
+                }
+                _page ++;
+            }
+            [self.tableView reloadData];
         }else{
             if ([data objectForKey:@"packResultMsg"]) {
                 [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
@@ -321,18 +382,16 @@
 
 - (UIView *)rightView{
     if (!_rightView) {
-        _rightView = [[UIView alloc] initWithFrame:CGRectMake(screenWidth / 2, 48, screenWidth / 2, 2 * ProportionAdapter)];
+        _rightView = [[UIView alloc] initWithFrame:CGRectMake(screenWidth / 2, 48 * ProportionAdapter, screenWidth / 2, 2 * ProportionAdapter)];
         _rightView.backgroundColor = [UIColor colorWithHexString:@"#32b14d"];
-        [self.sectionHeadView addSubview:_rightView];
     }
     return _rightView;
 }
 
 - (UIView *)leftView{
     if (!_leftView) {
-        _leftView = [[UIView alloc] initWithFrame:CGRectMake(0, 48, screenWidth / 2, 2 * ProportionAdapter)];
+        _leftView = [[UIView alloc] initWithFrame:CGRectMake(0, 48 * ProportionAdapter, screenWidth / 2, 2 * ProportionAdapter)];
         _leftView.backgroundColor = [UIColor colorWithHexString:@"#32b14d"];
-        [self.sectionHeadView addSubview:_leftView];
     }
     return _leftView;
 }

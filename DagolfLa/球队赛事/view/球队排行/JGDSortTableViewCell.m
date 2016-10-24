@@ -13,6 +13,7 @@
 @property (nonatomic ,strong) UIImageView *iconImageV;
 @property (nonatomic, strong) UILabel *ballNameLB;
 @property (nonatomic, strong) UILabel *scoreLB;
+@property (nonatomic, strong) UILabel *sumPole;
 
 @end
 
@@ -42,11 +43,10 @@
         self.ballNameLB.font = [UIFont systemFontOfSize:12 * ProportionAdapter];
         [self.contentView addSubview:self.ballNameLB];
         
-        
-        UILabel *lineLB = [[UILabel alloc] initWithFrame:CGRectMake(250 * ProportionAdapter, 10 * ProportionAdapter, 20 * ProportionAdapter, 30 * ProportionAdapter)];
-        lineLB.text = @"--";
-        lineLB.font = [UIFont systemFontOfSize:12 * ProportionAdapter];
-        [self.contentView addSubview:lineLB];
+        self.sumPole = [[UILabel alloc] initWithFrame:CGRectMake(250 * ProportionAdapter, 10 * ProportionAdapter, 50 * ProportionAdapter, 30 * ProportionAdapter)];
+        self.sumPole.text = @"--";
+        self.sumPole.font = [UIFont systemFontOfSize:12 * ProportionAdapter];
+        [self.contentView addSubview:self.sumPole];
         
         self.scoreLB = [[UILabel alloc] initWithFrame:CGRectMake(300 * ProportionAdapter, 10 * ProportionAdapter, 50 * ProportionAdapter, 30 * ProportionAdapter)];
         self.scoreLB.text = @"+188";

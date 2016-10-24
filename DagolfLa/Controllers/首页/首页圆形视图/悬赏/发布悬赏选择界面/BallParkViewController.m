@@ -45,7 +45,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = @"地区选择";
+    self.title = @"球场选择";
     
     _page = 0;
 //    _isCor = YES;

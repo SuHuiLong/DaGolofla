@@ -8,12 +8,24 @@
 
 #import "JGHGameSetViewController.h"
 #import "JGHGameSetCell.h"
+#import "JGHGameSetBaseCell.h"
+#import "JGHGameSetBaseCellCell.h"
+#import "JGHGameBaseSetViewController.h"
 
 static NSString *const JGHGameSetCellIdentifier = @"JGHGameSetCell";
+static NSString *const JGHGameSetBaseCellIdentifier = @"JGHGameSetBaseCell";
+static NSString *const JGHGameSetBaseCellCellIdentifier = @"JGHGameSetBaseCellCell";
 
-@interface JGHGameSetViewController ()<UITableViewDelegate, UITableViewDataSource>
+@interface JGHGameSetViewController ()<UITableViewDelegate, UITableViewDataSource, JGHGameSetCellDelegate, JGHGameSetBaseCellCellDelegate, JGHGameBaseSetViewControllerDelegate>
 
 @property (nonatomic, strong)UITableView *gameSetTableView;
+
+@property (nonatomic, strong)NSMutableDictionary *dictData;
+
+@property (nonatomic, strong)NSMutableArray *titleArray;
+
+@property (nonatomic, strong)NSMutableArray *showArray;
+
 
 @end
 
@@ -23,9 +35,57 @@ static NSString *const JGHGameSetCellIdentifier = @"JGHGameSetCell";
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.navigationItem.title = @"玩法设置";
+    self.dictData = [NSMutableDictionary dictionary];
+    self.titleArray = [NSMutableArray array];
+    self.showArray = [NSMutableArray array];
+    if (self.rulesArray.count == 0) {
+        self.rulesArray = [NSMutableArray array];
+    }
     
+    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    btn.frame = RightNavItemFrame;
+    btn.titleLabel.font = [UIFont systemFontOfSize:FontSize_Normal];
+    [btn setTitle:@"确定" forState:UIControlStateNormal];
+    [btn addTarget:self action:@selector(saveBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    btn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
+    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithCustomView:btn];
+    self.navigationItem.rightBarButtonItem = rightItem;
     
     [self createGameSetTableView];
+    
+    [self loadJosnData];
+}
+#pragma mark -- 确定
+- (void)saveBtnClick:(UIButton *)btn{
+    if (self.delegate) {
+        [self.delegate saveRulesArray:self.rulesArray];
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+}
+#pragma mark -- 下载数据
+- (void)loadJosnData{
+    [[JsonHttp jsonHttp]httpRequest:@"http://res.dagolfla.com/download/json/rule_all.json" failedBlock:^(id errType) {
+        NSLog(@"%@", errType);
+    } completionBlock:^(id data) {
+        NSLog(@"%@", data);
+        self.dictData = data;
+        if ([self.dictData objectForKey:@"-1"]) {
+            self.titleArray = [[self.dictData objectForKey:@"-1"] mutableCopy];
+            for (int i=0; i<self.titleArray.count; i++) {
+                if (self.rulesArray.count > 0) {
+                    if ([[self.titleArray[i] objectForKey:@"timeKey"] isEqualToString:[self.rulesArray[0] objectForKey:@"timeKey"]]) {
+                        [self.showArray addObject:@1];
+                    }else{
+                        [self.showArray addObject:@0];
+                    }
+                }else{
+                    [self.showArray addObject:@0];
+                }
+            }
+        }
+        
+        [self.gameSetTableView reloadData];
+    }];
 }
 
 - (void)createGameSetTableView{
@@ -41,6 +101,12 @@ static NSString *const JGHGameSetCellIdentifier = @"JGHGameSetCell";
     
     UINib *gameSetCellNib = [UINib nibWithNibName:@"JGHGameSetCell" bundle: [NSBundle mainBundle]];
     [self.gameSetTableView registerNib:gameSetCellNib forCellReuseIdentifier:JGHGameSetCellIdentifier];
+    
+    UINib *gameSetBaseCellNib = [UINib nibWithNibName:@"JGHGameSetBaseCell" bundle: [NSBundle mainBundle]];
+    [self.gameSetTableView registerNib:gameSetBaseCellNib forCellReuseIdentifier:JGHGameSetBaseCellIdentifier];
+    
+    UINib *gameSetBaseCellCellNib = [UINib nibWithNibName:@"JGHGameSetBaseCellCell" bundle: [NSBundle mainBundle]];
+    [self.gameSetTableView registerNib:gameSetBaseCellCellNib forCellReuseIdentifier:JGHGameSetBaseCellCellIdentifier];
 
     self.gameSetTableView.dataSource = self;
     self.gameSetTableView.delegate = self;
@@ -52,87 +118,148 @@ static NSString *const JGHGameSetCellIdentifier = @"JGHGameSetCell";
 #pragma mark - UITableViewDataSource 协议方法
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 4;
+    return _titleArray.count;
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    /*
-    if ([[[self.queryTimeSortedArray objectAtIndex:section]objectForKey:@"key_state"]boolValue])
-    {
-        NSInteger counnnt = [[[self.queryTimeSortedArray objectAtIndex:section]objectForKey:@"key_array"] count];
-        return counnnt;
-    }
-    else{
+    NSInteger showID = [[self.showArray objectAtIndex:section] integerValue];
+    if (showID == 0) {
         return 0;
+    }else{
+        NSString *timeKey = nil;
+        NSDictionary *dict = [_titleArray objectAtIndex:section];
+        timeKey = [dict objectForKey:@"timeKey"];
+        NSArray *secondaryDirectoryArray = [NSArray array];
+        secondaryDirectoryArray = [self.dictData objectForKey:timeKey];
+        return secondaryDirectoryArray.count;
     }
-     */
-    
-    return 2;
 }
-
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
+    return 10 *ProportionAdapter;
+}
+- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
+    UIView *footView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, 10 *ProportionAdapter)];
+    footView.backgroundColor = [UIColor colorWithHexString:BG_color];
+    return footView;
+}
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-//    NSString *backCellID = @"backCellID";
-//    BackOrderDetailsTableViewCell *backCell = [tableView dequeueReusableCellWithIdentifier:backCellID];
-//    if (backCell == nil) {
-//        backCell = [[[NSBundle mainBundle]loadNibNamed:@"BackOrderDetailsTableViewCell" owner:self options:nil]lastObject];
-//    }
-//    //取消选中效果
-//    backCell.selectionStyle = UITableViewCellSelectionStyleNone;
-//    backCell.delegate = self;
-//    backCell.selectBtn.tag = indexPath.row + indexPath.section * 1000;
-//    backCell.endorseTheBackBtn.tag = indexPath.row + indexPath.section * 10000;
-//    if (self.submitCount == 1) {
-//        [backCell.selectBtn setTitle:@"预定" forState:UIControlStateNormal];
-//    }
-//    
-//    FlightBaseListModel *listModel = [[FlightBaseListModel alloc]init];
-//    
-//    if (isSelectTimeSortedBarBtnTag == 0) {
-//        NSDictionary *dict = [self.arraySubDatas objectAtIndex:indexPath.section];
-//        NSArray *array = [dict objectForKey:@"key_array"];
-//        listModel = array[indexPath.row];
-//    }else if (isSelectTimeSortedBarBtnTag == 1 || isSelectTimeSortedBarBtnTag == 2 || isSelectTimeSortedBarBtnTag == 3){
-//        NSDictionary *dict = [self.queryTimeSortedArray objectAtIndex:indexPath.section];
-//        NSArray *array = [dict objectForKey:@"key_array"];
-//        listModel = array[indexPath.row];
-//    }else if (isSelectTimeSortedBarBtnTag == 5 || isSelectTimeSortedBarBtnTag == 4){
-//        if (self.screenToArray.count != 0) {
-//            NSDictionary *dict = [self.screenToArray objectAtIndex:indexPath.section];
-//            NSArray *array = [dict objectForKey:@"key_array"];
-//            listModel = array[indexPath.row];
-//        }else{
-//            NSDictionary *dict = [self.queryTimeSortedArray objectAtIndex:indexPath.section];
-//            NSArray *array = [dict objectForKey:@"key_array"];
-//            listModel = array[indexPath.row];
-//        }
-//    }
-//    
-//    [backCell config:listModel];
-//    return backCell;
+    JGHGameSetBaseCellCell *gameSetBaseCellCell = [tableView dequeueReusableCellWithIdentifier:JGHGameSetBaseCellCellIdentifier];
+    gameSetBaseCellCell.delegate = self;
+    gameSetBaseCellCell.rulesSetBtn.tag = 1000 +indexPath.section;
+
+    if (indexPath.row == 0) {
+        gameSetBaseCellCell.rulesSetBtn.hidden = NO;
+    }else{
+        gameSetBaseCellCell.rulesSetBtn.hidden = YES;
+    }
     
-    JGHGameSetCell *gameSetCell = [tableView dequeueReusableCellWithIdentifier:JGHGameSetCellIdentifier];
+    NSString *timeKey = nil;
+    timeKey = [[_titleArray objectAtIndex:indexPath.section] objectForKey:@"timeKey"];
+    NSArray *subRulesArray = [NSArray array];
+    subRulesArray = [self.dictData objectForKey:timeKey];
     
-    return gameSetCell;
+    NSDictionary *rulesTitleDict = subRulesArray[indexPath.row];
+    NSArray *rulesList = [self.dictData objectForKey:[rulesTitleDict objectForKey:@"timeKey"]];
+    NSDictionary *baseDict = [rulesList objectAtIndex:0];
+    
+    NSArray *secondaryDirectoryArray = [NSArray array];
+    secondaryDirectoryArray = [self.dictData objectForKey:timeKey];
+    
+    [gameSetBaseCellCell configJGHGameSetBaseCellCell:secondaryDirectoryArray[indexPath.row]];
+    
+    if (self.rulesArray.count == 0) {
+        [gameSetBaseCellCell configJGHGameSetBaseCellCellContext:baseDict];
+    }else{
+        for (int i=0; i<_showArray.count; i++) {
+            NSInteger show = [_showArray[i] integerValue];
+            if (show == 1) {
+                [gameSetBaseCellCell configJGHGameSetBaseCellCellContext:self.rulesArray[indexPath.row +1]];
+            }
+        }
+    }
+    
+    return gameSetBaseCellCell;
 }
 
 //组头视图
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     JGHGameSetCell *gameSetCell = [tableView dequeueReusableCellWithIdentifier:JGHGameSetCellIdentifier];
+    gameSetCell.delegate = self;
+    gameSetCell.gameSetCellBtn.tag = 100 +section;
     
+    NSArray *titleArray = [NSArray array];
+    titleArray = [self.dictData objectForKey:@"-1"];
+    NSDictionary *titleDict = [titleArray objectAtIndex:section];
+    NSString *titleString = [titleDict objectForKey:@"name"];
+    NSInteger showID = [[self.showArray objectAtIndex:section] integerValue];
+    [gameSetCell configJGHGameSetCellTitleString:titleString andSelect:showID];
     return gameSetCell;
 }
 
 //Cell的高度
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 30 *ProportionAdapter;
+    return 40 *ProportionAdapter;
 }
 //设置头部高度
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
     return 44 *ProportionAdapter;
+}
+#pragma mark -- 点击组头
+- (void)didSelectJGHGameSetCellBtn:(UIButton *)btn{
+    NSInteger showID = [[self.showArray objectAtIndex:btn.tag -100] integerValue];
+    for (int i=0; i < _showArray.count; i++) {
+        if (btn.tag -100 == i) {
+            if (showID == 0) {
+                [self.showArray replaceObjectAtIndex:btn.tag -100 withObject:@1];
+            }else{
+                [self.showArray replaceObjectAtIndex:btn.tag -100 withObject:@0];
+            }
+        }else{
+            [_showArray replaceObjectAtIndex:i withObject:@0];
+        }
+    }
+    
+    //填充默认规则
+    if (self.rulesArray.count != 0) {
+//        NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+//        dict = [self.rulesArray objectAtIndex:0];
+        [self.rulesArray removeAllObjects];
+//        [self.rulesArray addObject:dict];
+    }
+    
+    [self.rulesArray addObject:[_titleArray objectAtIndex:btn.tag -100]];
+    NSString *timeKey = nil;
+    timeKey = [[_titleArray objectAtIndex:btn.tag -100] objectForKey:@"timeKey"];
+    NSArray *subRulesArray = [NSArray array];
+    subRulesArray = [self.dictData objectForKey:timeKey];
+    
+    for (int i=0; i<subRulesArray.count; i++) {
+        NSDictionary *rulesTitleDict = subRulesArray[i];
+        NSArray *rulesList = [self.dictData objectForKey:[rulesTitleDict objectForKey:@"timeKey"]];
+        NSDictionary *baseDict = [rulesList objectAtIndex:0];
+        [self.rulesArray addObject:baseDict];
+    }
+    
+    [self.gameSetTableView reloadData];
+}
+#pragma mark -- 设置规则
+- (void)didSelectGameSetBtn:(UIButton *)setBtn{
+    
+    JGHGameBaseSetViewController *gameBaseCtrl = [[JGHGameBaseSetViewController alloc]init];
+    gameBaseCtrl.delegate = self;
+    gameBaseCtrl.dictData = self.dictData;
+    gameBaseCtrl.rulesId = setBtn.tag -1000;
+    gameBaseCtrl.rulesArray = _rulesArray;
+    [self.navigationController pushViewController:gameBaseCtrl animated:YES];
+}
+#pragma mark -- 返回赛制规则
+- (void)selectRulesArray:(NSMutableArray *)rulesArray{
+    self.rulesArray = [rulesArray mutableCopy];
+    [self.gameSetTableView reloadData];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

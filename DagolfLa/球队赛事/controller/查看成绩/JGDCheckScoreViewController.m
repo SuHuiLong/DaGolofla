@@ -16,6 +16,10 @@
 @property (nonatomic, strong) UILabel *titleLB;
 @property (nonatomic, strong) UILabel *ballLB;
 
+@property (nonatomic, strong) NSArray *dataArray;
+
+@property (nonatomic, strong) UITableView *tableView;
+
 @end
 
 @implementation JGDCheckScoreViewController
@@ -30,31 +34,37 @@
     rightBar.tintColor = [UIColor whiteColor];
     self.navigationItem.rightBarButtonItem = rightBar;
     
-    UITableView *tableView = [[UITableView alloc] initWithFrame:[UIScreen mainScreen].bounds];
-    tableView.delegate = self;
-    tableView.dataSource = self;
-    [tableView registerClass:[JGDCheckScoreTableViewCell class] forCellReuseIdentifier:@"checkScore"];
-    tableView.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];
+    self.tableView = [[UITableView alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
+    [self.tableView registerClass:[JGDCheckScoreTableViewCell class] forCellReuseIdentifier:@"checkScore"];
+    self.tableView.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];
     
-    [self.view addSubview:tableView];
+    [self.view addSubview:self.tableView];
     
     
     UIView *headView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 100 * ProportionAdapter)];
     headView.backgroundColor = [UIColor whiteColor];
-    tableView.tableHeaderView = headView;
+    self.tableView.tableHeaderView = headView;
     
     UIView *lightView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 10 * ProportionAdapter)];
     lightView.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];
     [headView addSubview:lightView];
     
     self.iconView = [[UIImageView alloc] initWithFrame:CGRectMake(10 * ProportionAdapter, 20 * ProportionAdapter, 68 * ProportionAdapter, 68 * ProportionAdapter)];
-    self.iconView.backgroundColor = [UIColor orangeColor];
     self.iconView.layer.cornerRadius = 6 * ProportionAdapter;
     self.iconView.clipsToBounds = YES;
     [headView addSubview:self.iconView];
     
+    //清缓存
+    NSString *bgUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/match/%@.jpg",self.matchKey];
+    [[SDImageCache sharedImageCache] removeImageForKey:bgUrl fromDisk:YES];
+    
+    // 再给图片赋值
+    [self.iconView sd_setImageWithURL:[Helper setMatchImageIconUrl:[self.matchKey integerValue] ]placeholderImage:[UIImage imageNamed:TeamLogoImage]];
+    
     self.titleLB = [[UILabel alloc] initWithFrame:CGRectMake(90 * ProportionAdapter, 27 * ProportionAdapter, 280 * ProportionAdapter, 20 * ProportionAdapter)];
-    self.titleLB.text = @"第一高尔夫球队活动";
+    self.titleLB.text = self.matchName;
     self.titleLB.textColor = [UIColor colorWithHexString:@"#313131"];
     self.titleLB.font = [UIFont systemFontOfSize:15 * ProportionAdapter];
     [headView addSubview:self.titleLB];
@@ -65,17 +75,48 @@
     
     // 球场名字
     self.ballLB = [[UILabel alloc] initWithFrame:CGRectMake(110 * ProportionAdapter, 60 * ProportionAdapter, 250 * ProportionAdapter, 20 * ProportionAdapter)];
-    self.ballLB.text = @"上海汤臣高尔夫球场（整修中）";
+    self.ballLB.text = self.ballName;
     self.ballLB.textColor = [UIColor colorWithHexString:@"#666666"];
     self.ballLB.font = [UIFont systemFontOfSize:12 * ProportionAdapter];
     [headView addSubview:self.ballLB];
     
-
+    [self matchData];
     // Do any additional setup after loading the view.
 }
 
+
+- (void)matchData{
+    
+    NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
+    [dic setObject:DEFAULF_USERID forKey:@"userKey"];
+    [dic setObject:self.matchKey forKey:@"matchKey"];
+    [dic setObject:[Helper md5HexDigest:[NSString stringWithFormat:@"matchKey=%@&userKey=%@dagolfla.com", self.matchKey, DEFAULF_USERID]] forKey:@"md5"];
+    
+    [[JsonHttp jsonHttp] httpRequest:@"match/getMatchCombatList" JsonKey:nil withData:dic requestMethod:@"GET" failedBlock:^(id errType) {
+        [[ShowHUD showHUD]showToastWithText:[NSString stringWithFormat:@"%@",errType] FromView:self.view];
+    } completionBlock:^(id data) {
+        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+            if ([data objectForKey:@"list"]) {
+                self.dataArray = [[data objectForKey:@"list"] mutableCopy];
+                [self.tableView reloadData];
+            }
+            
+        }else{
+            if ([data objectForKey:@"packResultMsg"]) {
+                [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+            }
+        }
+    }];
+}
+
+#pragma mark -- 排名
+
 - (void)sortAct{
+    
     JGDTeamSortViewController *sortVC = [[JGDTeamSortViewController alloc] init];
+    sortVC.matchKey = self.matchKey;
+    sortVC.matchName = self.matchName;
+    sortVC.ballName = self.ballName;
     [self.navigationController pushViewController:sortVC animated:YES];
 }
 
@@ -96,7 +137,12 @@
     UILabel *numberLB = [[UILabel alloc] initWithFrame:CGRectMake(0, 10 * ProportionAdapter, screenWidth, 25 * ProportionAdapter)];
     numberLB.textColor = [UIColor colorWithHexString:@"#313131"];
     numberLB.textAlignment = NSTextAlignmentCenter;
-    numberLB.text = [NSString stringWithFormat:@"第%td轮 啦啦啦",section];
+    
+    NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
+    formatter.numberStyle = kCFNumberFormatterRoundHalfDown;
+    NSString *string = [formatter stringFromNumber:[self.dataArray[section] objectForKey:@"round"]];
+    
+    numberLB.text = [NSString stringWithFormat:@"第%@轮 %@",string, [self.dataArray[section] objectForKey:@"matchformatName"]];
     numberLB.font = [UIFont systemFontOfSize:16 * ProportionAdapter];
     numberLB.backgroundColor = [UIColor whiteColor];
     
@@ -112,6 +158,19 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     JGDCheckScoreTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"checkScore"];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    NSDictionary *dic = [self.dataArray[indexPath.section] objectForKey:@"combatList"][indexPath.row];
+    cell.leftLB.text = [dic objectForKey:@"teamName1"];
+    cell.rightLB.text = [dic objectForKey:@"teamName2"];
+    
+    NSString *teamScore1 = [[dic objectForKey:@"teamScore1"] stringValue];
+    NSString *teamScore2 = [[dic objectForKey:@"teamScore2"] stringValue];
+    NSMutableAttributedString *scoreString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@ : %@", teamScore1, teamScore2]];
+    [scoreString addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"#60c8d4"] range:NSMakeRange(0, [teamScore1 length])];
+    [scoreString addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"#999999"] range:NSMakeRange([teamScore1 length] + 1, 1)];
+    [scoreString addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"#dc6b5d"] range:NSMakeRange([teamScore1 length] + 3, [teamScore2 length])];
+
+    cell.scoreLB.attributedText = scoreString;
+    
     return cell;
 }
 
@@ -120,14 +179,19 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 5;
+    return [[self.dataArray[section] objectForKey:@"combatList"] count];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 5;
+    return [self.dataArray count];
 }
 
-
+- (NSArray *)dataArray{
+    if (!_dataArray) {
+        _dataArray = [[NSArray alloc] init];
+    }
+    return _dataArray;
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

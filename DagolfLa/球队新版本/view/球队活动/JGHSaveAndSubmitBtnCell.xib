@@ -72,7 +72,7 @@
                 <outlet property="saveBtn" destination="VW1-Wh-Ydw" id="EWg-8M-ZIc"/>
                 <outlet property="submitBtn" destination="zHz-MA-r1e" id="ZLi-xs-AkL"/>
             </connections>
-            <point key="canvasLocation" x="237" y="294.5"/>
+            <point key="canvasLocation" x="91" y="143"/>
         </tableViewCell>
     </objects>
 </document>

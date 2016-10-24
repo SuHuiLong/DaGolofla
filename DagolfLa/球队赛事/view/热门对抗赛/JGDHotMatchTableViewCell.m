@@ -18,6 +18,7 @@
 @property (nonatomic, strong) UILabel *adressLB;
 
 @property (nonatomic, strong) UILabel *sumLB;
+@property (nonatomic, strong) UILabel *kindLB;
 
 @end
 
@@ -39,16 +40,14 @@
         self.iconImage.layer.cornerRadius = 6 * ProportionAdapter;
         self.iconImage.clipsToBounds = YES;
         self.iconImage.backgroundColor = [UIColor orangeColor];
-        
+        self.iconImage.contentMode = UIViewContentModeScaleAspectFill;
         //activityStateImage
         self.identifierImage = [[UIImageView alloc] initWithFrame:CGRectMake(38 * ProportionAdapter, 0, 30 * ProportionAdapter, 30 * ProportionAdapter)];
-        self.identifierImage.image = [UIImage imageNamed:@"activityStateImage"];
         [self.iconImage addSubview:self.identifierImage];
         
         self.titleLB = [[UILabel alloc] initWithFrame:CGRectMake(88 * ProportionAdapter, 8 * ProportionAdapter, 200 * ProportionAdapter, 25 * ProportionAdapter)];
         [self.contentView addSubview:self.titleLB];
         self.titleLB.font = [UIFont systemFontOfSize:15 * ProportionAdapter];
-        self.titleLB.text = @"南北对抗赛";
 
         UIImageView *dateimageV = [[UIImageView alloc] initWithFrame:CGRectMake(88 * ProportionAdapter, 38 * ProportionAdapter, 15 * ProportionAdapter, 15 * ProportionAdapter)];
         dateimageV.image = [UIImage imageNamed:@"time"];
@@ -59,22 +58,20 @@
         [self.contentView addSubview:addressImageV];
     
     
-        UILabel *kindLB = [[UILabel alloc] initWithFrame:CGRectMake(310 * ProportionAdapter, 12 * ProportionAdapter, 60 * ProportionAdapter, 25 * ProportionAdapter)];
-        kindLB.text = @"比赛类型";
-        kindLB.font = [UIFont systemFontOfSize:13 * ProportionAdapter];
-        kindLB.textColor = [UIColor colorWithHexString:@"#fe6424"];
-        [self.contentView addSubview:kindLB];
+        self.kindLB = [[UILabel alloc] initWithFrame:CGRectMake(290 * ProportionAdapter, 12 * ProportionAdapter, 75 * ProportionAdapter, 25 * ProportionAdapter)];
+        self.kindLB.font = [UIFont systemFontOfSize:13 * ProportionAdapter];
+        self.kindLB.textColor = [UIColor colorWithHexString:@"#fe6424"];
+        self.kindLB.textAlignment = NSTextAlignmentRight;
+        [self.contentView addSubview:self.kindLB];
     
-        self.sumLB = [[UILabel alloc] initWithFrame:CGRectMake(290 * ProportionAdapter, 40 * ProportionAdapter, 80 * ProportionAdapter, 25 * ProportionAdapter)];
+        self.sumLB = [[UILabel alloc] initWithFrame:CGRectMake(290 * ProportionAdapter, 38 * ProportionAdapter, 80 * ProportionAdapter, 20 * ProportionAdapter)];
         self.sumLB.font = [UIFont systemFontOfSize:12 * ProportionAdapter];
         self.sumLB.textColor = [UIColor colorWithHexString:@"a0a0a0"];
-        self.sumLB.text = @"参赛：30人";
         self.sumLB.textAlignment = NSTextAlignmentCenter;
         [self.contentView addSubview:self.sumLB];
         
         
-        self.dateLB = [[UILabel alloc] initWithFrame:CGRectMake(110 * ProportionAdapter, 35 * ProportionAdapter, 200 * ProportionAdapter, 20 * ProportionAdapter)];
-        self.dateLB.text = @"12月09号";
+        self.dateLB = [[UILabel alloc] initWithFrame:CGRectMake(110 * ProportionAdapter, 35 * ProportionAdapter, 100 * ProportionAdapter, 20 * ProportionAdapter)];
         self.dateLB.textColor = [UIColor colorWithHexString:@"#626262"];
         self.dateLB.font = [UIFont systemFontOfSize:10 * ProportionAdapter];
         [self.contentView addSubview:self.dateLB];
@@ -82,12 +79,56 @@
         self.adressLB = [[UILabel alloc] initWithFrame:CGRectMake(110 * ProportionAdapter, 55 * ProportionAdapter, 260 * ProportionAdapter, 20 * ProportionAdapter)];
         self.adressLB.font = [UIFont systemFontOfSize:12 * ProportionAdapter];
         self.adressLB.textColor = [UIColor blackColor];
-        self.adressLB.text = @"美国加利福尼亚俱乐部（整修中）";
         [self.contentView addSubview:self.adressLB];
     }
     return self;
 }
 
+- (void)setModel:(JGDConfrontChannelModel *)model{
+    
+    
+    switch ([model.state integerValue]) {
+        case 10:
+            self.identifierImage.image = [UIImage imageNamed:@"activityStateImage"]; // 报名中
+            break;
+        case 11:
+            self.identifierImage.image = [UIImage imageNamed:@"list_bisai"]; // 比赛中
+            break;
+        case 0:
+            self.identifierImage.image = [UIImage imageNamed:@"icn_weifabu"]; // 未发布
+            break;
+
+        default:
+            self.identifierImage.image = [UIImage imageNamed:@""];
+            break;
+    }
+    
+    
+//    if ([model.state integerValue] == 10) {
+//        self.identifierImage.image = [UIImage imageNamed:@"activityStateImage"]; // 报名中
+//    } else if ([model.state integerValue] == 11) {
+//        self.identifierImage.image = [UIImage imageNamed:@"list_bisai"]; // 比赛中
+//    } else if ([model.state integerValue] == 12) {
+//        self.identifierImage.image = [UIImage imageNamed:@"icn_weifabu"]; // 未发布
+//    } else{
+//        self.identifierImage.image = [UIImage imageNamed:@""];
+//    }
+    
+    
+    self.adressLB.text = model.ballName;
+    self.sumLB.text = [NSString stringWithFormat:@"参赛：%td 人",[model.sumCount integerValue]];
+    self.kindLB.text = model.matchTypeName;
+    self.titleLB.text = model.matchName;
+    self.dateLB.text = [NSString stringWithFormat:@"%@月%@号",[model.beginDate substringWithRange:NSMakeRange(5, 2)], [model.beginDate substringWithRange:NSMakeRange(8, 2)]];
+
+    //清缓存
+    NSString *bgUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/match/%@.jpg",model.timeKey];
+    [[SDImageCache sharedImageCache] removeImageForKey:bgUrl fromDisk:YES];
+    
+    // 再给图片赋值
+    [self.iconImage sd_setImageWithURL:[Helper setMatchImageIconUrl:[model.timeKey integerValue] ]placeholderImage:[UIImage imageNamed:TeamLogoImage]];
+
+}
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];

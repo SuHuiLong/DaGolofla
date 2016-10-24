@@ -11,9 +11,12 @@
 @interface JGHActivityBaseInfoCell : UITableViewCell
 
 @property (weak, nonatomic) IBOutlet UILabel *titles;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *titleLeft;//40
 
 @property (weak, nonatomic) IBOutlet UILabel *value;
 
 - (void)configBaseInfo:(NSString *)string andIndexRow:(NSInteger)index;
+
+- (void)configMatchBaseInfo:(NSString *)string andBaseValue:(NSString *)baseValue andRow:(NSInteger)row;
 
 @end
