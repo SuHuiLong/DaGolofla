@@ -423,6 +423,7 @@ static NSString *const JGHTeamContactTableViewCellIdentifier = @"JGHTeamContactT
         }
     }
 }
+
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     NSString *windowReuseIdentifier = @"SectionOneCell";
     if (section == 0) {

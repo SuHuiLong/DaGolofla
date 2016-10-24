@@ -86,9 +86,33 @@
 
 - (void)setModel:(JGDConfrontChannelModel *)model{
     
-    if ([model.state integerValue] == 10) {
-        self.identifierImage.image = [UIImage imageNamed:@"activityStateImage"];
+    
+    switch ([model.state integerValue]) {
+        case 10:
+            self.identifierImage.image = [UIImage imageNamed:@"activityStateImage"]; // 报名中
+            break;
+        case 11:
+            self.identifierImage.image = [UIImage imageNamed:@"list_bisai"]; // 比赛中
+            break;
+        case 0:
+            self.identifierImage.image = [UIImage imageNamed:@"icn_weifabu"]; // 未发布
+            break;
+
+        default:
+            self.identifierImage.image = [UIImage imageNamed:@""];
+            break;
     }
+    
+    
+//    if ([model.state integerValue] == 10) {
+//        self.identifierImage.image = [UIImage imageNamed:@"activityStateImage"]; // 报名中
+//    } else if ([model.state integerValue] == 11) {
+//        self.identifierImage.image = [UIImage imageNamed:@"list_bisai"]; // 比赛中
+//    } else if ([model.state integerValue] == 12) {
+//        self.identifierImage.image = [UIImage imageNamed:@"icn_weifabu"]; // 未发布
+//    } else{
+//        self.identifierImage.image = [UIImage imageNamed:@""];
+//    }
     
     
     self.adressLB.text = model.ballName;

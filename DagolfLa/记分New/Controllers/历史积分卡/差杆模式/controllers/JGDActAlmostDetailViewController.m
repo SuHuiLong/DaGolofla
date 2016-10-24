@@ -123,7 +123,7 @@
     lightV.layer.masksToBounds = YES;
     
     UILabel *allLB = [[UILabel alloc] initWithFrame:CGRectMake(50 * ProportionAdapter,0 * ProportionAdapter, 120 * ProportionAdapter, 45 * ProportionAdapter)];
-    allLB.text = @"成绩领取密钥：";
+    allLB.text = @"记分卡密钥：";
     allLB.font = [UIFont systemFontOfSize:15 * ProportionAdapter];
     [lightV addSubview:allLB];
     
