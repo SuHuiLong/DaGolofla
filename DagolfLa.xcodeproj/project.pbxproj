@@ -108,6 +108,7 @@
 		20591CAA1D23C308003271EC /* JGHSelectBlankCatoryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 20591CA81D23C308003271EC /* JGHSelectBlankCatoryCell.m */; };
 		20591CAB1D23C308003271EC /* JGHSelectBlankCatoryCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 20591CA91D23C308003271EC /* JGHSelectBlankCatoryCell.xib */; };
 		20591CAE1D23FDD3003271EC /* JGHNOBlankPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 20591CAD1D23FDD3003271EC /* JGHNOBlankPasswordViewController.m */; };
+		205FA1C21DBDA37F003B9668 /* JGHEventViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 205FA1C11DBDA37F003B9668 /* JGHEventViewController.m */; };
 		2064DE8C1D367FEC00F0D52A /* JGHScoresHoleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2064DE8B1D367FEC00F0D52A /* JGHScoresHoleView.m */; };
 		2064DE961D3C715300F0D52A /* JGHRetrieveScoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2064DE941D3C715300F0D52A /* JGHRetrieveScoreViewController.m */; };
 		2064DE971D3C715300F0D52A /* JGHRetrieveScoreViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2064DE951D3C715300F0D52A /* JGHRetrieveScoreViewController.xib */; };
@@ -658,6 +659,8 @@
 		82434E3A1DB49A31006DE8DD /* JGLGroupRoundModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 82434E391DB49A31006DE8DD /* JGLGroupRoundModel.m */; };
 		82434E3D1DB49E12006DE8DD /* JGLGroupCombatModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 82434E3C1DB49E12006DE8DD /* JGLGroupCombatModel.m */; };
 		82434E401DB4A026006DE8DD /* JGLGroupSignUpMemberModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 82434E3F1DB4A026006DE8DD /* JGLGroupSignUpMemberModel.m */; };
+		82434EA41DB8D7CD006DE8DD /* JGLGroupPeopleDetileTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 82434EA31DB8D7CD006DE8DD /* JGLGroupPeopleDetileTableViewCell.m */; };
+		82434EAA1DBB29DB006DE8DD /* JGLGroupSignUpMenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 82434EA91DBB29DB006DE8DD /* JGLGroupSignUpMenViewController.m */; };
 		8252E8641D360D6200448404 /* JGLScoreNewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8252E8631D360D6200448404 /* JGLScoreNewViewController.m */; };
 		8252E86A1D360DA500448404 /* JGLScoreNewTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8252E8691D360DA500448404 /* JGLScoreNewTableViewCell.m */; };
 		8252E86E1D36212E00448404 /* JGLAddPlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8252E86D1D36212E00448404 /* JGLAddPlayerViewController.m */; };
@@ -1402,6 +1405,8 @@
 		20591CA91D23C308003271EC /* JGHSelectBlankCatoryCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JGHSelectBlankCatoryCell.xib; sourceTree = "<group>"; };
 		20591CAC1D23FDD3003271EC /* JGHNOBlankPasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHNOBlankPasswordViewController.h; sourceTree = "<group>"; };
 		20591CAD1D23FDD3003271EC /* JGHNOBlankPasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHNOBlankPasswordViewController.m; sourceTree = "<group>"; };
+		205FA1C01DBDA37F003B9668 /* JGHEventViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHEventViewController.h; sourceTree = "<group>"; };
+		205FA1C11DBDA37F003B9668 /* JGHEventViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHEventViewController.m; sourceTree = "<group>"; };
 		2064DE8A1D367FEC00F0D52A /* JGHScoresHoleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHScoresHoleView.h; sourceTree = "<group>"; };
 		2064DE8B1D367FEC00F0D52A /* JGHScoresHoleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHScoresHoleView.m; sourceTree = "<group>"; };
 		2064DE931D3C715300F0D52A /* JGHRetrieveScoreViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHRetrieveScoreViewController.h; sourceTree = "<group>"; };
@@ -2396,6 +2401,10 @@
 		82434E3C1DB49E12006DE8DD /* JGLGroupCombatModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGLGroupCombatModel.m; sourceTree = "<group>"; };
 		82434E3E1DB4A026006DE8DD /* JGLGroupSignUpMemberModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGLGroupSignUpMemberModel.h; sourceTree = "<group>"; };
 		82434E3F1DB4A026006DE8DD /* JGLGroupSignUpMemberModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGLGroupSignUpMemberModel.m; sourceTree = "<group>"; };
+		82434EA21DB8D7CD006DE8DD /* JGLGroupPeopleDetileTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGLGroupPeopleDetileTableViewCell.h; sourceTree = "<group>"; };
+		82434EA31DB8D7CD006DE8DD /* JGLGroupPeopleDetileTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGLGroupPeopleDetileTableViewCell.m; sourceTree = "<group>"; };
+		82434EA81DBB29DB006DE8DD /* JGLGroupSignUpMenViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGLGroupSignUpMenViewController.h; sourceTree = "<group>"; };
+		82434EA91DBB29DB006DE8DD /* JGLGroupSignUpMenViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGLGroupSignUpMenViewController.m; sourceTree = "<group>"; };
 		8252E8621D360D6200448404 /* JGLScoreNewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGLScoreNewViewController.h; sourceTree = "<group>"; };
 		8252E8631D360D6200448404 /* JGLScoreNewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGLScoreNewViewController.m; sourceTree = "<group>"; };
 		8252E8681D360DA500448404 /* JGLScoreNewTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGLScoreNewTableViewCell.h; sourceTree = "<group>"; };
@@ -3592,6 +3601,7 @@
 		20203B0F1D9B5EFF009A75F3 /* controller */ = {
 			isa = PBXGroup;
 			children = (
+				205FA1BF1DBDA324003B9668 /* 赛事报名 */,
 				20D515051DBB82280006EFCB /* 发布赛事 */,
 				F5CB6EA41DB9B61E0068F768 /* 邀请球队 */,
 				82000C8B1DACD887009D2DBF /* 分组 */,
@@ -3946,6 +3956,15 @@
 				20591C971D239BED003271EC /* JGHWithDrawModel.m */,
 			);
 			path = "交易记录";
+			sourceTree = "<group>";
+		};
+		205FA1BF1DBDA324003B9668 /* 赛事报名 */ = {
+			isa = PBXGroup;
+			children = (
+				205FA1C01DBDA37F003B9668 /* JGHEventViewController.h */,
+				205FA1C11DBDA37F003B9668 /* JGHEventViewController.m */,
+			);
+			path = "赛事报名";
 			sourceTree = "<group>";
 		};
 		2064DE901D3C70BC00F0D52A /* 取回记分 */ = {
@@ -6301,6 +6320,8 @@
 				F54E161E1DB23B900018B3AB /* JGLSignUpMemberCeViewController.m */,
 				82000C881DACD87E009D2DBF /* JGLTeamSignUpMemViewController.h */,
 				82000C891DACD87E009D2DBF /* JGLTeamSignUpMemViewController.m */,
+				82434EA81DBB29DB006DE8DD /* JGLGroupSignUpMenViewController.h */,
+				82434EA91DBB29DB006DE8DD /* JGLGroupSignUpMenViewController.m */,
 			);
 			path = "球队分区成员";
 			sourceTree = "<group>";
@@ -6321,6 +6342,8 @@
 				F54E16211DB23C4A0018B3AB /* JGLGroupPeoTableViewCell.m */,
 				82000C901DACD8A9009D2DBF /* JGLGroupClubTitleTableViewCell.h */,
 				82000C911DACD8A9009D2DBF /* JGLGroupClubTitleTableViewCell.m */,
+				82434EA21DB8D7CD006DE8DD /* JGLGroupPeopleDetileTableViewCell.h */,
+				82434EA31DB8D7CD006DE8DD /* JGLGroupPeopleDetileTableViewCell.m */,
 			);
 			path = "分组";
 			sourceTree = "<group>";
@@ -8515,7 +8538,7 @@
 				TargetAttributes = {
 					36BFFD271BC76C8D005B3CE2 = {
 						CreatedOnToolsVersion = 6.3.2;
-						DevelopmentTeam = R269PG52XZ;
+						DevelopmentTeam = AKVZK78CBX;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
@@ -9014,6 +9037,7 @@
 				36BF00911BC772EF005B3CE2 /* MyAccountViewController.m in Sources */,
 				F569A1401CE35A9C00CD0FD5 /* JGTeamDetailViewController.m in Sources */,
 				F54E161C1DB23B4D0018B3AB /* JGLCompeteMemberModel.m in Sources */,
+				205FA1C21DBDA37F003B9668 /* JGHEventViewController.m in Sources */,
 				2012AD5C1D2BB19400F70E40 /* JGHChooseAwardViewController.m in Sources */,
 				36BFFFFC1BC770C4005B3CE2 /* ChartCell.m in Sources */,
 				828A99F21CE32E9300AF9860 /* JGMenberTableViewCell.m in Sources */,
@@ -9071,6 +9095,7 @@
 				F5E1BB501D6B006100414727 /* ZXMultiFormatOneDReader.m in Sources */,
 				36BF008E1BC772EF005B3CE2 /* MyRecomViewController.m in Sources */,
 				36E300F71C3FF3F9005C3F08 /* MJRefreshNormalHeader.m in Sources */,
+				82434EA41DB8D7CD006DE8DD /* JGLGroupPeopleDetileTableViewCell.m in Sources */,
 				36BF00E21BC77428005B3CE2 /* TeacherViewController.m in Sources */,
 				2066E88B1D5D9D5D00A3A2B8 /* JGHTransDetailListModel.m in Sources */,
 				82D595E61CE4510100CD9587 /* JGMemAuthorityViewController.m in Sources */,
@@ -9152,6 +9177,7 @@
 				F5AEF73C1D41B98E009A8C34 /* JGDHistoryScore2TableViewCell.m in Sources */,
 				36DF562F1C1519B40006D9BA /* ScoreWriteProController.m in Sources */,
 				20513BD61CF7050A003233FB /* DataVerifier.m in Sources */,
+				82434EAA1DBB29DB006DE8DD /* JGLGroupSignUpMenViewController.m in Sources */,
 				20591C981D239BED003271EC /* JGHWithDrawModel.m in Sources */,
 				20D515181DBB82280006EFCB /* JGHGameBaseSetViewController.m in Sources */,
 				F569A1491CE35AA500CD0FD5 /* JGTeamChannelTableView.m in Sources */,
@@ -9813,8 +9839,8 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = DagolfLa/DagolfLa.entitlements;
 				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				DEVELOPMENT_TEAM = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = AKVZK78CBX;
 				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -9864,8 +9890,8 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = DagolfLa/DagolfLa.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				DEVELOPMENT_TEAM = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = AKVZK78CBX;
 				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = NO;
 				FRAMEWORK_SEARCH_PATHS = (

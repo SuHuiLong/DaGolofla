@@ -94,6 +94,13 @@
     return [Helper md5HexDigest:[NSString stringWithFormat:@"matchKey=%td&userKey=%tddagolfla.com", matchKey, uerKey]];
 }
 
++ (NSString *)getTeamCompeteSignUpListWithMatchKey:(NSInteger)matchKey teamKey:(NSInteger)teamKey{
+    return [Helper md5HexDigest:[NSString stringWithFormat:@"matchKey=%td&teamKey=%tddagolfla.com", matchKey, teamKey]];
+}
++ (NSString *)getTeamCompeteSignUpListWithuserKey:(NSInteger)uerKey roundKey:(NSInteger)roundKey{
+    return [Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%td&roundKey=%tddagolfla.com", uerKey, roundKey]];
+}
+
 /*
  // App分享的MD5签名规则
  1. /team/getTeamActivitySignUpList?teamKey=1&activityKey=1&userKey=1 MD5加密
