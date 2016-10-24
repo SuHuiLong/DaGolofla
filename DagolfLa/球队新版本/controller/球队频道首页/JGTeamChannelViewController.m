@@ -298,7 +298,6 @@
 
 - (void)setData{
     
-    
     if ([[NSUserDefaults standardUserDefaults]objectForKey:@"userId"]) {
 
     NSMutableDictionary *getMyTeam = [NSMutableDictionary dictionary];
