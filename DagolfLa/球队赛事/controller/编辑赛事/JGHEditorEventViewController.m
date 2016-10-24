@@ -39,6 +39,7 @@ static NSString *const JGHPublicLevelCellIdentifier = @"JGHPublicLevelCell";
     NSArray *_levelArray;//公开等级
     
     NSInteger _isEditor;//1-编辑；0-无
+    //花都分
 }
 
 @property (nonatomic, strong)UITableView *editorEventTableView;

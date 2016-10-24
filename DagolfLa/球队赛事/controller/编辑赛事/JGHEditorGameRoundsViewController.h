@@ -14,5 +14,6 @@
 @property (nonatomic, assign)NSInteger timeKey;//赛事key
 
 @property (strong, nonatomic) NSString* matchTypeKey;
+//
 
 @end

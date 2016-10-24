@@ -28,11 +28,22 @@
     // Configure the view for the selected state
 }
 
-- (void)configJGHGameBaseHeaderSubCell:(NSString *)rulesName andSelect:(NSInteger)select{
+- (void)configJGHGameBaseHeaderSubCell:(NSString *)rulesName andSelect:(NSInteger)select andTopvalue:(NSString *)topvalue{
+    self.toptextfeil.text = @"";
+    self.namelable2.text = @"";
+    self.toptextfeil.hidden = YES;
+    self.namelable2.hidden = YES;
     
     if ([rulesName containsString:@"regular"]) {
         //top
+        self.toptextfeil.hidden = NO;
+        self.namelable2.hidden = NO;
+        self.toptextfeil.tag = 101;
+        self.namelable2.font = [UIFont systemFontOfSize:15 *ProportionAdapter];
+        self.toptextfeil.font = [UIFont systemFontOfSize:15 *ProportionAdapter];
         self.name.text = [[rulesName componentsSeparatedByString:@"<"] objectAtIndex:0];
+        self.namelable2.text = [[rulesName componentsSeparatedByString:@">"] lastObject];
+        self.toptextfeil.text = topvalue;
     }else{
         self.name.text = rulesName;
     }

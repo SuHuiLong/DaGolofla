@@ -18,5 +18,6 @@
 @property (nonatomic, strong)NSMutableArray *costListArray;//费用列表
 
 - (void)configJGHPublishEventModelReloadTable:(JGHPublishEventModel *)model andCostlistArray:(NSMutableArray *)costListArray;
+//
 
 @end

@@ -54,6 +54,7 @@
                 <outlet property="gameSet" destination="aC3-1H-T1t" id="Dsa-rb-APF"/>
                 <outlet property="gameSetCellBtn" destination="YLK-0N-YBF" id="0fb-Ab-v4d"/>
                 <outlet property="gameSetLeft" destination="ZEJ-bj-sB5" id="0wJ-hg-Eaa"/>
+                <outlet property="gouImageView" destination="o4s-Bv-p1V" id="lqb-KD-xuq"/>
                 <outlet property="imageW" destination="vft-6z-qFz" id="mru-G4-txw"/>
                 <outlet property="statusImageView" destination="QeQ-Xs-1AI" id="ECA-mS-2It"/>
             </connections>

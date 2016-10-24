@@ -1,12 +1,12 @@
 //
-//  JGHEditorGameRoundsRulesViewController.m
+//  JGHGameRoundsRulesViewController.m
 //  DagolfLa
 //
-//  Created by 黄安 on 16/10/22.
+//  Created by 黄安 on 16/10/16.
 //  Copyright © 2016年 bhxx. All rights reserved.
 //
 
-#import "JGHEditorGameRoundsRulesViewController.h"
+#import "JGHGameRoundsRulesViewController.h"
 #import "JGHGameBaseHeaderCell.h"
 #import "JGHGameBaseHeaderSubCell.h"
 #import "JGHRulesForDetailsView.h"
@@ -14,42 +14,41 @@
 static NSString *const JGHGameBaseHeaderCellIdentifier = @"JGHGameBaseHeaderCell";
 static NSString *const JGHGameBaseHeaderSubCellIdentifier = @"JGHGameBaseHeaderSubCell";
 
-@interface JGHEditorGameRoundsRulesViewController ()<UITableViewDelegate, UITableViewDataSource>
+@interface JGHGameRoundsRulesViewController ()<UITableViewDelegate, UITableViewDataSource, JGHGameBaseHeaderCellDelegate>
 
 @property (nonatomic, strong)UITableView *gameRoundsRulesTableView;
 
 @property (nonatomic, strong)NSMutableArray *dataArray;
 
-@property (nonatomic, strong)NSMutableDictionary *ruleDict;
-
 @end
 
-@implementation JGHEditorGameRoundsRulesViewController
+@implementation JGHGameRoundsRulesViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    //
+    
     self.navigationItem.title = @"设置赛制";
     
     self.dataArray = [NSMutableArray array];
-    
-    self.ruleDict = [NSMutableDictionary dictionary];
     
     UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"backL"] style:UIBarButtonItemStylePlain target:self action:@selector(backButtonClcik)];
     item.tintColor=[UIColor whiteColor];
     self.navigationItem.leftBarButtonItem = item;
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"nav_bg"] forBarMetrics:UIBarMetricsDefault];
     
+    if (self.roundRulesArray == nil) {
+        self.roundRulesArray = [NSMutableArray array];
+    }
+    
     [self createGameRoundsRulesTableView];
     
     [self loadRulesData];
 }
-
 #pragma mark -- 保存
 - (void)backButtonClcik{
     if (self.delegate) {
-        [self.delegate didSelectRulesDict:self.ruleDict];
+        [self.delegate didGameRoundsRulesViewSaveroundRulesArray:self.roundRulesArray];
         [self.navigationController popViewControllerAnimated:YES];
     }
 }
@@ -60,9 +59,11 @@ static NSString *const JGHGameBaseHeaderSubCellIdentifier = @"JGHGameBaseHeaderS
         NSLog(@"%@", data);
         [self.dataArray removeAllObjects];
         
-        self.dataArray = [data objectForKey:_matchTypeKey];
+        self.dataArray = [data objectForKey:_rulesTimeKey];
         
-        
+        if (self.roundRulesArray.count == 0) {
+            [self.roundRulesArray addObject:self.dataArray[0]];
+        }
         
         [self.gameRoundsRulesTableView reloadData];
     }];
@@ -103,25 +104,21 @@ static NSString *const JGHGameBaseHeaderSubCellIdentifier = @"JGHGameBaseHeaderS
     return footView;
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-
     JGHGameBaseHeaderSubCell *gameSetBaseCellCell = [tableView dequeueReusableCellWithIdentifier:JGHGameBaseHeaderSubCellIdentifier];
-    //
     NSInteger _select = 0;
     NSDictionary *rulesDict = self.dataArray[indexPath.row];
-    NSString *matchformatKey1 = [rulesDict objectForKey:@"timeKey"];
-    if ([matchformatKey1 isEqualToString:_matchformatKey]) {
+    if ([[rulesDict objectForKey:@"timeKey"] isEqualToString:[self.roundRulesArray[0] objectForKey:@"timeKey"]]) {
         _select = 1;
     }
     
     [gameSetBaseCellCell configJGHGameBaseHeaderSubCell:[[self.dataArray objectAtIndex:indexPath.row] objectForKey:@"name"] andSelect:_select andTopvalue:@""];
     return gameSetBaseCellCell;
 }
-
 //组头视图
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     JGHGameBaseHeaderCell *gameSetCell = [tableView dequeueReusableCellWithIdentifier:JGHGameBaseHeaderCellIdentifier];
-//    gameSetCell.delegate = self;
+    gameSetCell.delegate = self;
     [gameSetCell configJGHGameBaseHeaderCell:@"赛制"];
     return gameSetCell;
 }
@@ -136,16 +133,15 @@ static NSString *const JGHGameBaseHeaderSubCellIdentifier = @"JGHGameBaseHeaderS
     return 45 *ProportionAdapter;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    self.ruleDict = self.dataArray[indexPath.row];
-    _matchformatKey = [self.ruleDict objectForKey:@"timeKey"];
+    [self.roundRulesArray removeAllObjects];
+    
+    [self.roundRulesArray addObject:self.dataArray[indexPath.row]];
     [self.gameRoundsRulesTableView reloadData];
 }
 #pragma mark -- 赛制详情
 - (void)didSelectHelpBtn:(UIButton *)btn{
     
 }
-
-
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

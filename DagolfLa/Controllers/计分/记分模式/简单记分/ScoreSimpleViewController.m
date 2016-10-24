@@ -19,7 +19,6 @@
 #import "UIButton+WebCache.h"
 
 #import "ScorePeopleModel.h"
-#define NUMBERS @"0123456789\n"
 
 #import "MBProgressHUD.h"
 @interface ScoreSimpleViewController ()<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate,CustomIOSAlertViewDelegate>

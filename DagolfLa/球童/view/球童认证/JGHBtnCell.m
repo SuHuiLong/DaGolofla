@@ -66,4 +66,12 @@
     [self.titleBtn setTitle:@"下一步" forState:UIControlStateNormal];
 }
 
+- (void)configEventNextBtn{
+    self.titleBtnTop.constant = 0;
+    self.titleBtnDown.constant = 0;
+    self.backgroundColor = [UIColor colorWithHexString:BG_color];
+    self.titleBtn.backgroundColor = [UIColor orangeColor];
+    [self.titleBtn setTitle:@"下一步" forState:UIControlStateNormal];
+}
+
 @end

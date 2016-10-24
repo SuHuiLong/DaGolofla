@@ -24,5 +24,6 @@
 //matchformatKey
 
 @property (nonatomic, strong)id <JGHEditorGameRoundsRulesViewControllerDelegate> delegate;
+//
 
 @end
