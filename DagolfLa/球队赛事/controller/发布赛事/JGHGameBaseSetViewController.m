@@ -163,7 +163,7 @@ static NSString *const JGHGameBaseHeaderSubCellIdentifier = @"JGHGameBaseHeaderS
     NSArray *rulesList = [self.dictData objectForKey:[rulesTitleDict objectForKey:@"timeKey"]];
     NSMutableDictionary *baseDict = [[rulesList objectAtIndex:indexPath.row] mutableCopy];
     
-    if ([[baseDict objectForKey:@"name"] containsString:@"regular"]) {
+    if ([[baseDict objectForKey:@"name"] containsString:@"regular"] && _toptextfeil != nil) {
         [baseDict setObject:_toptextfeil forKey:@"value"];
     }
     
@@ -181,6 +181,7 @@ static NSString *const JGHGameBaseHeaderSubCellIdentifier = @"JGHGameBaseHeaderS
 #pragma mark -- UITextFliaView
 - (void)textFieldDidEndEditing:(UITextField *)textField{
     _toptextfeil= textField.text;
+
 }
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string;
 {

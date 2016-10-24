@@ -45,7 +45,7 @@
         self.identifierImage = [[UIImageView alloc] initWithFrame:CGRectMake(38 * ProportionAdapter, 0, 30 * ProportionAdapter, 30 * ProportionAdapter)];
         [self.iconImage addSubview:self.identifierImage];
         
-        self.titleLB = [[UILabel alloc] initWithFrame:CGRectMake(88 * ProportionAdapter, 8 * ProportionAdapter, 200 * ProportionAdapter, 25 * ProportionAdapter)];
+        self.titleLB = [[UILabel alloc] initWithFrame:CGRectMake(88 * ProportionAdapter, 8 * ProportionAdapter, 180 * ProportionAdapter, 25 * ProportionAdapter)];
         [self.contentView addSubview:self.titleLB];
         self.titleLB.font = [UIFont systemFontOfSize:15 * ProportionAdapter];
 
@@ -58,16 +58,16 @@
         [self.contentView addSubview:addressImageV];
     
     
-        self.kindLB = [[UILabel alloc] initWithFrame:CGRectMake(290 * ProportionAdapter, 12 * ProportionAdapter, 75 * ProportionAdapter, 25 * ProportionAdapter)];
+        self.kindLB = [[UILabel alloc] initWithFrame:CGRectMake(270 * ProportionAdapter, 12 * ProportionAdapter, 100 * ProportionAdapter, 25 * ProportionAdapter)];
         self.kindLB.font = [UIFont systemFontOfSize:13 * ProportionAdapter];
         self.kindLB.textColor = [UIColor colorWithHexString:@"#fe6424"];
         self.kindLB.textAlignment = NSTextAlignmentRight;
         [self.contentView addSubview:self.kindLB];
     
-        self.sumLB = [[UILabel alloc] initWithFrame:CGRectMake(290 * ProportionAdapter, 38 * ProportionAdapter, 80 * ProportionAdapter, 20 * ProportionAdapter)];
+        self.sumLB = [[UILabel alloc] initWithFrame:CGRectMake(270 * ProportionAdapter, 38 * ProportionAdapter, 100 * ProportionAdapter, 20 * ProportionAdapter)];
         self.sumLB.font = [UIFont systemFontOfSize:12 * ProportionAdapter];
         self.sumLB.textColor = [UIColor colorWithHexString:@"a0a0a0"];
-        self.sumLB.textAlignment = NSTextAlignmentCenter;
+        self.sumLB.textAlignment = NSTextAlignmentRight;
         [self.contentView addSubview:self.sumLB];
         
         
