@@ -36,6 +36,10 @@
 @property (strong, nonatomic) NSMutableArray* signUpList1;
 
 @property (strong, nonatomic) NSMutableArray* signUpList2;
+
+@property (strong, nonatomic) NSNumber* maxGroupIndex;
+
+@property (strong, nonatomic) NSMutableDictionary* dictState;
 @end
 /*
  "createTime":"1970-01-01 00:00:00",

@@ -30,7 +30,6 @@
         
         _labelNum = [[UILabel alloc]initWithFrame:CGRectMake(160*ProportionAdapter, 30*ProportionAdapter, 60*ProportionAdapter, 20*ProportionAdapter)];
         _labelNum.textAlignment = NSTextAlignmentCenter;
-        _labelNum.text = @"第12组";
         _labelNum.font = [UIFont systemFontOfSize:12*ProportionAdapter];
         _labelNum.textColor = [UITool colorWithHexString:@"a0a0a0" alpha:1];
         [self.contentView addSubview:_labelNum];
@@ -64,7 +63,7 @@
     
     _labelNum = [[UILabel alloc]initWithFrame:CGRectMake(168*ProportionAdapter, 30*ProportionAdapter, 50*ProportionAdapter, 20*ProportionAdapter)];
     _labelNum.textAlignment = NSTextAlignmentCenter;
-    _labelNum.text = @"第十二组";
+//    _labelNum.text = @"第十二组";
     _labelNum.font = [UIFont systemFontOfSize:13*ProportionAdapter];
     _labelNum.textColor = [UITool colorWithHexString:@"a0a0a0" alpha:1];
     [self.contentView addSubview:_labelNum];
@@ -97,16 +96,14 @@
     _labelName1.font = [UIFont systemFontOfSize:10*ProportionAdapter];
     _labelName1.backgroundColor = [UIColor whiteColor];
     _labelName1.textAlignment = NSTextAlignmentCenter;
-    _labelName1.text = @"郑小虎";
     [_btnHeader1 addSubview:_labelName1];
-    
+    _labelName1.text = @"暂无姓名";
     _labelAlmast1 = [[UILabel alloc]initWithFrame:CGRectMake(10*ProportionAdapter, 60*ProportionAdapter, 55*ProportionAdapter, 20*ProportionAdapter)];
-    _labelAlmast1.text = @"06";
     _labelAlmast1.textAlignment = NSTextAlignmentCenter;
     _labelAlmast1.font = [UIFont systemFontOfSize:13*ProportionAdapter];
     _labelAlmast1.textColor = [UITool colorWithHexString:@"60c8d4" alpha:1];
     [_backView1 addSubview:_labelAlmast1];
-    
+    _labelAlmast1.text = @"暂无差点";
     _labelChadian1 = [[UILabel alloc]initWithFrame:CGRectMake(10*ProportionAdapter, 75*ProportionAdapter, 55*ProportionAdapter, 20*ProportionAdapter)];
     _labelChadian1.text = @"差点";
     _labelChadian1.font = [UIFont systemFontOfSize:9*ProportionAdapter];
@@ -129,16 +126,14 @@
     _labelName2.font = [UIFont systemFontOfSize:10*ProportionAdapter];
     _labelName2.backgroundColor = [UIColor whiteColor];
     _labelName2.textAlignment = NSTextAlignmentCenter;
-    _labelName2.text = @"郑小虎";
     [_btnHeader2 addSubview:_labelName2];
-    
+    _labelName2.text = @"暂无姓名";
     _labelAlmast2 = [[UILabel alloc]initWithFrame:CGRectMake(80*ProportionAdapter, 60*ProportionAdapter, 55*ProportionAdapter, 20*ProportionAdapter)];
-    _labelAlmast2.text = @"06";
     _labelAlmast2.textAlignment = NSTextAlignmentCenter;
     _labelAlmast2.font = [UIFont systemFontOfSize:13*ProportionAdapter];
     _labelAlmast2.textColor = [UITool colorWithHexString:@"60c8d4" alpha:1];
     [_backView1 addSubview:_labelAlmast2];
-    
+    _labelAlmast2.text = @"暂无差点";
     _labelChadian2 = [[UILabel alloc]initWithFrame:CGRectMake(80*ProportionAdapter, 75*ProportionAdapter, 55*ProportionAdapter, 20*ProportionAdapter)];
     _labelChadian2.text = @"差点";
     _labelChadian2.font = [UIFont systemFontOfSize:9*ProportionAdapter];
@@ -161,16 +156,14 @@
     _labelName3.font = [UIFont systemFontOfSize:10*ProportionAdapter];
     _labelName3.backgroundColor = [UIColor whiteColor];
     _labelName3.textAlignment = NSTextAlignmentCenter;
-    _labelName3.text = @"郑小虎";
     [_btnHeader3 addSubview:_labelName3];
-    
+    _labelName3.text = @"暂无姓名";
     _labelAlmast3 = [[UILabel alloc]initWithFrame:CGRectMake(10*ProportionAdapter, 60*ProportionAdapter, 55*ProportionAdapter, 20*ProportionAdapter)];
-    _labelAlmast3.text = @"06";
     _labelAlmast3.textAlignment = NSTextAlignmentCenter;
     _labelAlmast3.font = [UIFont systemFontOfSize:13*ProportionAdapter];
     _labelAlmast3.textColor = [UITool colorWithHexString:@"60c8d4" alpha:1];
     [_backView2 addSubview:_labelAlmast3];
-    
+    _labelAlmast3.text = @"暂无差点";
     _labelChadian3 = [[UILabel alloc]initWithFrame:CGRectMake(10*ProportionAdapter, 75*ProportionAdapter, 55*ProportionAdapter, 20*ProportionAdapter)];
     _labelChadian3.text = @"差点";
     _labelChadian3.font = [UIFont systemFontOfSize:9*ProportionAdapter];
@@ -192,22 +185,108 @@
     _labelName4.font = [UIFont systemFontOfSize:10*ProportionAdapter];
     _labelName4.backgroundColor = [UIColor whiteColor];
     _labelName4.textAlignment = NSTextAlignmentCenter;
-    _labelName4.text = @"郑小虎";
     [_btnHeader4 addSubview:_labelName4];
-    
+    _labelName4.text = @"暂无姓名";
     _labelAlmast4 = [[UILabel alloc]initWithFrame:CGRectMake(80*ProportionAdapter, 60*ProportionAdapter, 55*ProportionAdapter, 20*ProportionAdapter)];
-    _labelAlmast4.text = @"06";
     _labelAlmast4.textAlignment = NSTextAlignmentCenter;
     _labelAlmast4.font = [UIFont systemFontOfSize:13*ProportionAdapter];
     _labelAlmast4.textColor = [UITool colorWithHexString:@"60c8d4" alpha:1];
     [_backView2 addSubview:_labelAlmast4];
-    
+    _labelAlmast4.text = @"暂无差点";
     _labelChadian4 = [[UILabel alloc]initWithFrame:CGRectMake(80*ProportionAdapter, 75*ProportionAdapter, 55*ProportionAdapter, 20*ProportionAdapter)];
     _labelChadian4.text = @"差点";
     _labelChadian4.font = [UIFont systemFontOfSize:9*ProportionAdapter];
     _labelChadian4.textColor = [UITool colorWithHexString:@"a0a0a0" alpha:1];
     _labelChadian4.textAlignment = NSTextAlignmentCenter;
     [_backView2 addSubview:_labelChadian4];
+}
+
+
+
+-(void)showDataSignUp1:(JGLGroupCombatModel *)model withIndex:(NSInteger)index
+{
+    
+    NSLog(@"%td",index);//index，第几行cell
+    NSArray* arr1 = model.signUpList1;
+    for (int i = 0 ; i < arr1.count; i ++) {
+        
+        JGLGroupSignUpMemberModel *modelSignUp = [[JGLGroupSignUpMemberModel alloc] init];
+        [modelSignUp setValuesForKeysWithDictionary:arr1[i]];
+        _labelNum.text = [NSString stringWithFormat:@"第%td组",[modelSignUp.groupIndex integerValue] + 1];
+        if ([modelSignUp.groupIndex integerValue] == index) {
+            if ([modelSignUp.sortIndex integerValue] == 0) {
+                [_btnHeader1 sd_setImageWithURL:[Helper setImageIconUrl:@"user" andTeamKey:[modelSignUp.userKey integerValue] andIsSetWidth:YES andIsBackGround:NO] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
+                if (![Helper isBlankString:modelSignUp.userName]) {
+                    _labelName1.text = [NSString stringWithFormat:@"%@",modelSignUp.userName];
+                }else{
+                    _labelName1.text = @"暂无";
+                }
+                if (modelSignUp.almost != nil) {
+                    _labelAlmast1.text = [NSString stringWithFormat:@"%@",modelSignUp.almost];
+                }
+                else{
+                    _labelAlmast1.text = @"暂无差点";
+                }
+                
+            }
+            else{
+                [_btnHeader2 sd_setImageWithURL:[Helper setImageIconUrl:@"user" andTeamKey:[modelSignUp.userKey integerValue] andIsSetWidth:YES andIsBackGround:NO] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
+                if (![Helper isBlankString:modelSignUp.userName]) {
+                    _labelName2.text = [NSString stringWithFormat:@"%@",modelSignUp.userName];
+                }else{
+                    _labelName2.text = @"暂无";
+                }
+                if (modelSignUp.almost != nil) {
+                    _labelAlmast2.text = [NSString stringWithFormat:@"%@",modelSignUp.almost];
+                }
+                else{
+                    _labelAlmast2.text = @"暂无差点";
+                }
+            }
+        }else
+        {
+            
+        }
+    }
+}
+-(void)showDataSignUp2:(JGLGroupCombatModel *)model withIndex:(NSInteger)index
+{
+    NSArray* arr1 = model.signUpList2;
+    for (int i = 0 ; i < arr1.count; i ++) {
+        JGLGroupSignUpMemberModel *modelSignUp = [[JGLGroupSignUpMemberModel alloc] init];
+        [modelSignUp setValuesForKeysWithDictionary:arr1[i]];
+        if ([modelSignUp.groupIndex integerValue] == index) {
+            if ([modelSignUp.sortIndex integerValue] == 0) {
+                [_btnHeader3 sd_setImageWithURL:[Helper setImageIconUrl:@"user" andTeamKey:[modelSignUp.userKey integerValue] andIsSetWidth:YES andIsBackGround:NO] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
+                if (![Helper isBlankString:modelSignUp.userName]) {
+                    _labelName3.text = [NSString stringWithFormat:@"%@",modelSignUp.userName];
+                }else{
+                    _labelName3.text = @"暂无";
+                }
+                if (modelSignUp.almost != nil) {
+                    _labelAlmast3.text = [NSString stringWithFormat:@"%@",modelSignUp.almost];
+                }
+                else{
+                    _labelAlmast3.text = @"暂无差点";
+                }
+                
+            }
+            else{
+                [_btnHeader4 sd_setImageWithURL:[Helper setImageIconUrl:@"user" andTeamKey:[modelSignUp.userKey integerValue] andIsSetWidth:YES andIsBackGround:NO] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
+                if (![Helper isBlankString:modelSignUp.userName]) {
+                    _labelName4.text = [NSString stringWithFormat:@"%@",modelSignUp.userName];
+                }else{
+                    _labelName4.text = @"暂无";
+                }
+                if (modelSignUp.almost != nil) {
+                    _labelAlmast4.text = [NSString stringWithFormat:@"%@",modelSignUp.almost];
+                }
+                else{
+                    _labelAlmast4.text = @"暂无差点";
+                }
+            }
+        }
+    }
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

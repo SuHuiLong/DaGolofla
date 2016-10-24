@@ -68,7 +68,7 @@
                   moduleName = "DagolfLa"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/DM/Desktop/dagolfla_iosF/DagolfLa/%E7%90%83%E9%98%9F%E6%96%B0%E7%89%88%E6%9C%AC/controller/%E6%B4%BB%E5%8A%A8%E5%8F%96%E6%B6%88%E6%8A%A5%E5%90%8D/JGLPaySignUpViewController.m"
-                  timestampString = "498450401.911301"
+                  timestampString = "498980414.29077"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "186"
@@ -83,7 +83,7 @@
                   moduleName = "DagolfLa"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/DM/Desktop/dagolfla_iosF/DagolfLa/%E7%90%83%E9%98%9F%E6%96%B0%E7%89%88%E6%9C%AC/controller/%E6%B4%BB%E5%8A%A8%E5%8F%96%E6%B6%88%E6%8A%A5%E5%90%8D/JGLPaySignUpViewController.m"
-                  timestampString = "498450401.91445"
+                  timestampString = "498980414.292897"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "186"
@@ -122,23 +122,7 @@
             startingLineNumber = "33"
             endingLineNumber = "33"
             landmarkName = "-viewDidLoad"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "DagolfLa/Controllers/&#x6211;&#x7684;/uitableview&#x5217;&#x8868;/&#x6d88;&#x606f;&#x76d2;&#x5b50;/MyNewsBoxViewController.m"
-            timestampString = "495958736.829697"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "46"
-            endingLineNumber = "46"
-            landmarkName = "-viewDidLoad"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -160,16 +144,96 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "DagolfLa/Controllers/&#x6211;&#x7684;/PersonHomeController.m"
+            timestampString = "498471393.491978"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "87"
+            endingLineNumber = "87"
+            landmarkName = "-viewWillAppear:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "DagolfLa/&#x7403;&#x961f;&#x8d5b;&#x4e8b;/view/&#x5206;&#x7ec4;/JGLGroupPeoTableViewCell.m"
+            timestampString = "498968555.195027"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "219"
+            endingLineNumber = "219"
+            landmarkName = "-showDataSignUp1:withIndex:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "DagolfLa/&#x7403;&#x961f;&#x8d5b;&#x4e8b;/view/&#x5206;&#x7ec4;/JGLGroupPeoTableViewCell.m"
+            timestampString = "498968555.195027"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "234"
+            endingLineNumber = "234"
+            landmarkName = "-showDataSignUp1:withIndex:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "DagolfLa/&#x7403;&#x961f;&#x8d5b;&#x4e8b;/view/&#x5206;&#x7ec4;/JGLGroupPeopleDetileTableViewCell.m"
+            timestampString = "498968938.511066"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "86"
+            endingLineNumber = "86"
+            landmarkName = "-tableView:cellForRowAtIndexPath:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "DagolfLa/&#x7403;&#x961f;&#x8d5b;&#x4e8b;/controller/&#x5206;&#x7ec4;/JGLDivideGroupsViewController.m"
-            timestampString = "498394216.758508"
+            timestampString = "498968873.282887"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "228"
-            endingLineNumber = "228"
-            landmarkName = "-chooseSortRightClick:"
+            startingLineNumber = "355"
+            endingLineNumber = "355"
+            landmarkName = "-tableView:cellForRowAtIndexPath:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "DagolfLa/&#x7403;&#x961f;&#x8d5b;&#x4e8b;/view/&#x5206;&#x7ec4;/JGLGroupPeopleDetileTableViewCell.m"
+            timestampString = "498969053.565289"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "84"
+            endingLineNumber = "84"
+            landmarkName = "-tableView:cellForRowAtIndexPath:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

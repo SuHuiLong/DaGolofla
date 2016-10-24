@@ -14,13 +14,13 @@
 
 @property (strong, nonatomic) NSNumber* combatKey;
 
-@property (strong, nonatomic) NSNumber* groupIndex;
+@property (strong, nonatomic) NSNumber* groupIndex;//行
 
 @property (strong, nonatomic) NSNumber* matchKey;
 
 @property (strong, nonatomic) NSNumber* roundKey;
 
-@property (strong, nonatomic) NSNumber* sortIndex;
+@property (strong, nonatomic) NSNumber* sortIndex;//列，第几位
 
 @property (strong, nonatomic) NSNumber* teamKey;
 
@@ -28,13 +28,13 @@
 
 @property (strong, nonatomic) NSNumber* userKey;
 
-@property (strong, nonatomic) NSNumber* userName;
+@property (strong, nonatomic) NSString* userName;
 
 @end
 /*
  "almost":100,
  "combatKey":"30250",
- "groupIndex":0,
+ "groupIndex":0, 。。
  "matchKey":"122",
  "roundKey":"1212",
  "rsyncFlag":0,

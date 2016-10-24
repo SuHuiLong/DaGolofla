@@ -32,7 +32,11 @@
 
 @property (strong, nonatomic) NSNumber* timeKey;
 
+@property (strong, nonatomic) NSNumber* sumGroup;
+
 @property (strong, nonatomic) NSString* matchformatName;//赛制名
+
+@property (strong, nonatomic) NSNumber* groupType;
 
 
 @end

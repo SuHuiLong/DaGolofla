@@ -7,7 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "JGLGroupSignUpMemberModel.h"
+#import "JGLGroupCombatModel.h"
+#import "JGLGroupRoundModel.h"
 @interface JGLGroupPeoTableViewCell : UITableViewCell
 //左边成员的背景框
 @property (strong, nonatomic) UIView* backView1;
@@ -39,5 +41,8 @@
 
 
 -(void)initUiConfig;
+
+-(void)showDataSignUp1:(JGLGroupCombatModel *)model withIndex:(NSInteger)index;//左边人员数组
+-(void)showDataSignUp2:(JGLGroupCombatModel *)model withIndex:(NSInteger)index;//右边成员数组
 
 @end

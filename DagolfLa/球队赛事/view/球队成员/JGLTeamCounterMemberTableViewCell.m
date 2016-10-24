@@ -56,11 +56,11 @@
     return self;
 }
 
--(void)showData:(JGLCompeteMemberModel *)model
+-(void)showData:(JGLCompeteMemberModel *)model withUserKey:(NSNumber *)userKey
 {
     [_iconImage sd_setImageWithURL:[Helper setImageIconUrl:@"user" andTeamKey:[model.userKey integerValue] andIsSetWidth:YES andIsBackGround:NO] placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
     
-    _nameLabel.text = [NSString stringWithFormat:@"%@",model.name];
+    _nameLabel.text = [NSString stringWithFormat:@"%@",model.userName];
     
     if ([model.sex integerValue] == 0) {
         [_sexImage setImage: [UIImage imageNamed:@"xb_n"]];
@@ -82,7 +82,56 @@
             _mobileLabel.text = @"暂无手机号";
         }
     }
+    if (userKey != nil) {
+        if ([model.userKey integerValue] == [userKey integerValue]) {
+            _stateImgv.image = [UIImage imageNamed:@"btn_myself_delete"];
+        }
+        else{
+            if ([model.canMatch integerValue] == 0) {//0，参赛代表，1，不是参赛代表
+                _stateImgv.image = [UIImage imageNamed:@"btn_representative"];
+            }
+            else{
+                _stateImgv.image = [UIImage imageNamed:@""];
+            }
+        }
+    }
+    else{
+        if ([model.canMatch integerValue] == 0) {//0，参赛代表，1，不是参赛代表
+            _stateImgv.image = [UIImage imageNamed:@"btn_representative"];
+        }
+        else{
+            _stateImgv.image = [UIImage imageNamed:@""];
+        }
+    }
     
+}
+
+-(void)showData:(JGLCompeteMemberModel *)model
+{
+    [_iconImage sd_setImageWithURL:[Helper setImageIconUrl:@"user" andTeamKey:[model.userKey integerValue] andIsSetWidth:YES andIsBackGround:NO] placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
+    
+    _nameLabel.text = [NSString stringWithFormat:@"%@",model.userName];
+    
+    if ([model.sex integerValue] == 0) {
+        [_sexImage setImage: [UIImage imageNamed:@"xb_n"]];
+    }
+    else
+    {
+        [_sexImage setImage: [UIImage imageNamed:@"xb_nn"]];
+    }
+    
+    _chadianLabel.text = [NSString stringWithFormat:@"差点：%@",model.almost];
+    
+    if (model.mobile.length == 11) {
+        _mobileLabel.text = [NSString stringWithFormat:@"%@***%@",[model.mobile substringToIndex:3], [model.mobile substringFromIndex:8]];
+    }else{
+        if (![Helper isBlankString:model.mobile]) {
+            _mobileLabel.text = [NSString stringWithFormat:@"%@***", model.mobile];
+        }
+        else{
+            _mobileLabel.text = @"暂无手机号";
+        }
+    }
     if ([model.canMatch integerValue] == 0) {//0，参赛代表，1，不是参赛代表
         _stateImgv.image = [UIImage imageNamed:@"btn_representative"];
     }
@@ -90,7 +139,9 @@
         _stateImgv.image = [UIImage imageNamed:@""];
     }
     
+    
 }
+
 
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

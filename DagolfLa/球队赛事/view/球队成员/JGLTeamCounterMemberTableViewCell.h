@@ -20,7 +20,7 @@
 
 @property (strong, nonatomic)  UIImageView*    stateImgv;
 
-
 -(void)showData:(JGLCompeteMemberModel *)model;
+-(void)showData:(JGLCompeteMemberModel *)model withUserKey:(NSNumber *)userKey;
 
 @end

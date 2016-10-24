@@ -9,15 +9,15 @@
 #import "JGLDivideGroupsViewController.h"
 #import "JGLGroupClubTitleTableViewCell.h"
 #import "JGLGroupPeoTableViewCell.h"
+#import "JGLGroupPeopleDetileTableViewCell.h"
 
 #import "JGLGroupRoundModel.h"
 #import "JGLGroupCombatModel.h"
 #import "JGLGroupSignUpMemberModel.h"
-@interface JGLDivideGroupsViewController ()<UITableViewDelegate,UITableViewDataSource>
+#import "JGLGroupSignUpMenViewController.h"
+@interface JGLDivideGroupsViewController ()<UITableViewDelegate,UITableViewDataSource, JGLGroupPeopleDetileTableViewCellDelegate>
 {
     UITableView* _tableView;
-    UILabel* _labelTitle, *_labelDetile;//分区头
-    UIButton* _btnSetLeft,* _btnSegRight;//分区头
     BOOL _isSegLeft[10000],_isSegRight[10000], _isClick[10000];//判断segment是否选中
     
     NSMutableArray* _dataArray;//最外层总数据
@@ -43,7 +43,6 @@
     self.view.backgroundColor = [UITool colorWithHexString:BG_color alpha:1];
     [self uiConfig];
 }
-
 -(void)uiConfig{
     _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight) style:UITableViewStylePlain];
     _tableView.dataSource = self;
@@ -52,9 +51,9 @@
     //    _tableView.bounces = NO;
     //    _tableView.scrollEnabled = NO;
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    [_tableView registerClass:[JGLGroupClubTitleTableViewCell class] forCellReuseIdentifier:@"JGLGroupClubTitleTableViewCell"];
+    [_tableView registerClass:[JGLGroupPeopleDetileTableViewCell class] forCellReuseIdentifier:@"JGLGroupPeopleDetileTableViewCell"];
     [_tableView registerClass:[JGLGroupPeoTableViewCell class] forCellReuseIdentifier:@"JGLGroupPeoTableViewCell"];
-    
+    _tableView.tag = 100;
     _tableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
     [_tableView.header beginRefreshing];
 }
@@ -76,6 +75,7 @@
             {
                 //清除数组数据
                 [_dataArray removeAllObjects];
+                indexTag = 0;
             }
             
             if ([data objectForKey:@"list"]) {
@@ -92,9 +92,6 @@
                         [arr addObject:model];
                     }
                     [_dataModeArray addObject:arr];
-                    
-                    
-                    
                     for (int j = 0; j < [_dataModeArray[i] count]; j++) {
                         NSMutableArray * arr1 = [[NSMutableArray alloc]init];
                         for (NSDictionary* dict in [_dataModeArray[i][j] signUpList1]) {
@@ -117,12 +114,12 @@
                     [_dataSignUpArray2 addObject:arrData2];
                 }
             }
-
+            
             _page++;
+            [_tableView reloadData];
         }else {
-           [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+            [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
         }
-        [_tableView reloadData];
         if (isReshing) {
             [_tableView.header endRefreshing];
         }
@@ -138,159 +135,265 @@
 //分区数
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return _dataArray.count;
+    if (tableView.tag == 100) {
+        return _dataArray.count;
+    }
+    else
+        return 0;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    
-    UIView* viewHead = [[UIView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, 85*ProportionAdapter)];
-    viewHead.backgroundColor = [UIColor whiteColor];
-    _labelTitle = [[UILabel alloc]initWithFrame:CGRectMake(0, 10*ProportionAdapter, screenWidth, 20*ProportionAdapter)];
-    _labelTitle.font = [UIFont systemFontOfSize:16*ProportionAdapter];
-    _labelTitle.textAlignment = NSTextAlignmentCenter;
-    _labelTitle.textColor = [UITool colorWithHexString:@"313131" alpha:1];
-    if ([_dataArray[section] objectForKey:@"round"] != nil && ![Helper isBlankString:[_dataArray[section] objectForKey:@"matchformatName"]]) {
-        NSString* str = [NSString stringWithFormat:@"第%@轮",[Helper numTranslation:[NSString stringWithFormat:@"%@",[_dataArray[section] objectForKey:@"round"]]]];
-        _labelTitle.text = [NSString stringWithFormat:@"%@  %@",str, [_dataArray[section] objectForKey:@"matchformatName"]];
-    }
-    else{
-        _labelTitle.text = @"暂无轮次或赛制名称";
-    }
-    [viewHead addSubview:_labelTitle];
-    
-    _labelDetile = [[UILabel alloc]initWithFrame:CGRectMake(10*ProportionAdapter, 55*ProportionAdapter, 100*ProportionAdapter, 20*ProportionAdapter)];
-    _labelDetile.text = @"分组详情";
-    _labelDetile.textColor = [UITool colorWithHexString:@"313131" alpha:1];
-    [viewHead addSubview:_labelDetile];
-    
-    _btnSetLeft = [UIButton buttonWithType:UIButtonTypeCustom];
-    _btnSetLeft.frame = CGRectMake(screenWidth-140*ProportionAdapter, 50*ProportionAdapter, 65*ProportionAdapter, 27*ProportionAdapter);
-    if (_isClick[section] == NO) {
-        [_btnSetLeft setImage:[UIImage imageNamed:@"segunselectleft"] forState:UIControlStateNormal];
-    }
-    else{
-        if (_isSegLeft[section] == YES) {
-            [_btnSetLeft setImage:[UIImage imageNamed:@"segselectleft"] forState:UIControlStateNormal];
+//    if (tableView.tag == 100) {
+        UIView* viewHead = [[UIView alloc]init];
+        viewHead.frame = CGRectMake(0, 0, screenWidth, 85*ProportionAdapter);
+        viewHead.backgroundColor = [UIColor whiteColor];
+        UILabel* labelTitle = [[UILabel alloc]initWithFrame:CGRectMake(0, 10*ProportionAdapter, screenWidth, 20*ProportionAdapter)];
+        labelTitle.font = [UIFont systemFontOfSize:16*ProportionAdapter];
+        labelTitle.textAlignment = NSTextAlignmentCenter;
+        labelTitle.textColor = [UITool colorWithHexString:@"313131" alpha:1];
+        if (_dataArray.count != 0) {
+            if ([_dataArray[section] objectForKey:@"round"] != nil && ![Helper isBlankString:[_dataArray[section] objectForKey:@"matchformatName"]]) {
+                NSString* str = [NSString stringWithFormat:@"第%@轮",[Helper numTranslation:[NSString stringWithFormat:@"%@",[_dataArray[section] objectForKey:@"round"]]]];
+                labelTitle.text = [NSString stringWithFormat:@"%@  %@",str, [_dataArray[section] objectForKey:@"matchformatName"]];
+            }
+            else{
+                labelTitle.text = @"暂无轮次或赛制名称";
+            }
         }
         else{
-            [_btnSetLeft setImage:[UIImage imageNamed:@"segdefaultleft"] forState:UIControlStateNormal];
+            labelTitle.text = @"暂无轮次或赛制名称";
         }
-    }
-    
-    [viewHead addSubview:_btnSetLeft];
-    [_btnSetLeft addTarget:self action:@selector(chooseSortLeftClick:) forControlEvents:UIControlEventAllEvents];
-    _btnSetLeft.tag = 10000 + section;
-    
-    _btnSegRight = [UIButton buttonWithType:UIButtonTypeCustom];
-    _btnSegRight.frame = CGRectMake(screenWidth-75*ProportionAdapter, 50*ProportionAdapter, 65*ProportionAdapter, 27*ProportionAdapter);
-    if (_isClick[section] == NO) {
-        [_btnSegRight setImage:[UIImage imageNamed:@"segunselectright"] forState:UIControlStateNormal];
-    }
-    else{
-        if (_isSegLeft[section] == YES) {
-            [_btnSegRight setImage:[UIImage imageNamed:@"segselectright"] forState:UIControlStateNormal];
+        
+        [viewHead addSubview:labelTitle];
+        
+        UILabel* labelDetile = [[UILabel alloc]initWithFrame:CGRectMake(10*ProportionAdapter, 55*ProportionAdapter, 100*ProportionAdapter, 20*ProportionAdapter)];
+        labelDetile.text = @"分组详情";
+        labelDetile.textColor = [UITool colorWithHexString:@"313131" alpha:1];
+        [viewHead addSubview:labelDetile];
+        
+        UIButton* btnSetLeft = [UIButton buttonWithType:UIButtonTypeCustom];
+        btnSetLeft.frame = CGRectMake(screenWidth-140*ProportionAdapter, 50*ProportionAdapter, 65*ProportionAdapter, 27*ProportionAdapter);
+        btnSetLeft.tag = 10000 + section;
+        if (_isClick[section] == NO) {
+            [btnSetLeft setImage:[UIImage imageNamed:@"segunselectleft"] forState:UIControlStateNormal];
         }
         else{
-            [_btnSegRight setImage:[UIImage imageNamed:@"segdefaultright"] forState:UIControlStateNormal];
+            if (_isSegLeft[section] == YES) {
+                [btnSetLeft setImage:[UIImage imageNamed:@"segselectleft"] forState:UIControlStateNormal];
+            }
+            else{
+                [btnSetLeft setImage:[UIImage imageNamed:@"segdefaultleft"] forState:UIControlStateNormal];
+            }
         }
-    }
-    
-    
-    [viewHead addSubview:_btnSegRight];
-    [_btnSegRight addTarget:self action:@selector(chooseSortRightClick:) forControlEvents:UIControlEventAllEvents];
-    _btnSegRight.tag = 100000 + section;
-    return viewHead;
+        [viewHead addSubview:btnSetLeft];
+        
+        UIButton* btnSegRight = [UIButton buttonWithType:UIButtonTypeCustom];
+        btnSegRight.frame = CGRectMake(screenWidth-75*ProportionAdapter, 50*ProportionAdapter, 65*ProportionAdapter, 27*ProportionAdapter);
+        if (_isClick[section] == NO) {
+            [btnSegRight setImage:[UIImage imageNamed:@"segunselectright"] forState:UIControlStateNormal];
+        }
+        else{
+            if (_isSegRight[section] == YES) {
+                [btnSegRight setImage:[UIImage imageNamed:@"segselectright"] forState:UIControlStateNormal];
+            }
+            else{
+                [btnSegRight setImage:[UIImage imageNamed:@"segdefaultright"] forState:UIControlStateNormal];
+            }
+        }
+        btnSegRight.tag = 100000 + section;
+        [viewHead addSubview:btnSegRight];
+        [btnSegRight addTarget:self action:@selector(chooseSortRightClick:) forControlEvents:UIControlEventAllEvents];
+        [btnSetLeft addTarget:self action:@selector(chooseSortLeftClick:) forControlEvents:UIControlEventAllEvents];
+        
+        
+        return viewHead;
 }
 -(void)chooseSortLeftClick:(UIButton *)btn
 {
-    //根据button 获取区号
+    //根据button 获取区号    左边tag - 10000
     NSInteger section = btn.tag;
     UIButton* btnr = (UIButton *)[self.view viewWithTag:section - 10000 + 100000];
-    NSLog(@"%td    %td",section,btnr.tag);
-//    if (_isSegLeft[section - 10000] == NO) {
-        [btn setImage:[UIImage imageNamed:@"segselectleft"] forState:UIControlStateNormal];
-        [btnr setImage:[UIImage imageNamed:@"segdefaultright"] forState:UIControlStateNormal];
+    [btn setImage:[UIImage imageNamed:@"segselectleft"] forState:UIControlStateNormal];
+    [btnr setImage:[UIImage imageNamed:@"segdefaultright"] forState:UIControlStateNormal];
+    if (_isSegLeft[section - 10000] == NO) {
         _isSegLeft[section - 10000] = !_isSegLeft[section - 10000];
+    }
+    if (_isSegRight[section - 10000] == YES) {
         _isSegRight[section - 10000] = !_isSegRight[section - 10000];
-        if (_isClick[section - 10000] == NO) {
-            _isClick[section - 10000] = YES;
+    }
+    if (_isClick[section - 10000] == NO) {
+        _isClick[section - 10000] = YES;
+    }
+    
+    btn.userInteractionEnabled = NO;
+    btnr.userInteractionEnabled = NO;
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    [dict setObject:DEFAULF_USERID forKey:@"userKey"];
+    [dict setObject:[_dataArray[section - 10000] objectForKey:@"timeKey"] forKey:@"roundKey"];
+    [dict setObject:@1 forKey:@"grouptype"];//随机分组
+    NSString* strMd = [JGReturnMD5Str getTeamCompeteSignUpListWithuserKey:[DEFAULF_USERID integerValue] roundKey:[[_dataArray[section - 10000] objectForKey:@"timeKey"] integerValue]];
+    [dict setObject:strMd forKey:@"md5"];
+    [[JsonHttp jsonHttp]httpRequest:@"match/getAutomaticGroupList" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
+        btn.userInteractionEnabled = YES;
+        btnr.userInteractionEnabled = YES;
+    } completionBlock:^(id data) {
+        btn.userInteractionEnabled = YES;
+        btnr.userInteractionEnabled = YES;
+        if ([[data objectForKey:@"packSuccess"] boolValue]) {
+            NSMutableDictionary* dictD = [[NSMutableDictionary alloc]init];
+            dictD = [_dataArray[section - 10000] mutableCopy];
+            [dictD setObject:[data objectForKey:@"list"] forKey:@"combatList"];
+            [dictD setObject:@1 forKey:@"groupType"];
+            [_dataArray replaceObjectAtIndex:section-10000 withObject:dictD];
+            
+            NSMutableArray* arr = [[NSMutableArray alloc]init];
+            for (NSDictionary* dict in [data objectForKey:@"list"]) {
+                JGLGroupCombatModel *model = [[JGLGroupCombatModel alloc] init];
+                [model setValuesForKeysWithDictionary:dict];
+                [arr addObject:model];
+            }
+            [_dataModeArray replaceObjectAtIndex:section - 10000 withObject:arr];
+            [_tableView reloadData];
         }
-//    }
+        else{
+            [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+        }
+    }];
+    
 }
 -(void)chooseSortRightClick:(UIButton *)btn
 {
-    NSInteger section = btn.tag;
+    NSInteger section = btn.tag;// 右边tag - 100000
     UIButton* btnl = (UIButton *)[self.view viewWithTag:section - 100000 + 10000];
-    NSLog(@"%td    %td",section,btnl.tag);
-//    if (_isSegRight[section - 100000] == NO) {
-        [btnl setImage:[UIImage imageNamed:@"segdefaultleft"] forState:UIControlStateNormal];
-        [btn setImage:[UIImage imageNamed:@"segselectright"] forState:UIControlStateNormal];
+    [btnl setImage:[UIImage imageNamed:@"segdefaultleft"] forState:UIControlStateNormal];
+    [btn setImage:[UIImage imageNamed:@"segselectright"] forState:UIControlStateNormal];
+    _isSegRight[section - 100000] = !_isSegRight[section - 100000];
+    if (_isSegLeft[section - 100000] == YES) {
         _isSegLeft[section - 100000] = !_isSegLeft[section - 100000];
+    }
+    if (_isSegRight[section - 100000] == NO) {
         _isSegRight[section - 100000] = !_isSegRight[section - 100000];
-        if (_isClick[section] == NO) {
-            _isClick[section] = YES;
+    }
+    if (_isClick[section] == NO) {
+        _isClick[section] = YES;
+    }
+    
+    btn.userInteractionEnabled = NO;
+    btnl.userInteractionEnabled = NO;
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    [dict setObject:DEFAULF_USERID forKey:@"userKey"];
+//    [dict setObject:@122 forKey:@"matchKey"];
+    [dict setObject:[_dataArray[section - 100000] objectForKey:@"timeKey"] forKey:@"roundKey"];
+    [dict setObject:@2 forKey:@"grouptype"];//随机分组
+    NSString* strMd = [JGReturnMD5Str getTeamCompeteSignUpListWithuserKey:[DEFAULF_USERID integerValue] roundKey:[[_dataArray[section - 100000] objectForKey:@"timeKey"] integerValue]];
+    [dict setObject:strMd forKey:@"md5"];
+    [[JsonHttp jsonHttp]httpRequest:@"match/getAutomaticGroupList" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
+        btn.userInteractionEnabled = YES;
+        btnl.userInteractionEnabled = YES;
+    } completionBlock:^(id data) {
+        btn.userInteractionEnabled = YES;
+        btnl.userInteractionEnabled = YES;
+        if ([[data objectForKey:@"packSuccess"] boolValue]) {
+            NSMutableDictionary* dictD = [[NSMutableDictionary alloc]init];
+            dictD = [_dataArray[section - 100000] mutableCopy];
+            [dictD setObject:[data objectForKey:@"list"] forKey:@"combatList"];
+            [dictD setObject:@2 forKey:@"groupType"];
+            [_dataArray replaceObjectAtIndex:section-100000 withObject:dictD];
+            
+            
+            
+            NSMutableArray* arr = [[NSMutableArray alloc]init];
+            for (NSDictionary* dict in [data objectForKey:@"list"]) {
+                JGLGroupCombatModel *model = [[JGLGroupCombatModel alloc] init];
+                [model setValuesForKeysWithDictionary:dict];
+                [arr addObject:model];
+            }
+            [_dataModeArray replaceObjectAtIndex:section - 100000 withObject:arr];
+            [_tableView reloadData];
+
         }
-//    }
+        else{
+            [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+        }
+    }];
+    
 }
 
 //每个区中有多少行
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 2;
+//    if (tableView.tag == 100) {
+        return 1;
+//    }
 }
 
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row == 0) {
-        return 70*ProportionAdapter;
-    }
-    else
-        return 104*ProportionAdapter;
+//    if (tableView.tag == 100) {
+        return [[_dataArray[indexPath.section] objectForKey:@"sumGroup"] integerValue] * 70*ProportionAdapter + [_dataModeArray[indexPath.section] count] * 104*ProportionAdapter;
+//    }
+//    else
+//        return 104*ProportionAdapter;
 }
 
 //显示行
+static int indexTag = 0;
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row == 0) {
-        JGLGroupClubTitleTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"JGLGroupClubTitleTableViewCell" forIndexPath:indexPath];
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        return cell;
-    }
-    else{
-        JGLGroupPeoTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"JGLGroupPeoTableViewCell" forIndexPath:indexPath];
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-//        [cell initUiConfig];
-        
-        return cell;
-    }
+//    if (indexTag < _dataArray.count) {
+//        indexTag ++;
+//    }
+    
+
+    JGLGroupPeopleDetileTableViewCell *cell=[tableView dequeueReusableCellWithIdentifier:@"JGLGroupPeopleDetileTableViewCell"];
+    cell.delegate = self;
+
+    [cell tableViewReFresh:_dataModeArray[indexPath.section] withArrAll:_dataArray];
+    cell.tableView.frame=CGRectMake(0, 0, screenWidth, [[_dataArray[indexPath.section] objectForKey:@"sumGroup"] integerValue] * 70*ProportionAdapter + [_dataModeArray[indexPath.section] count] * 104*ProportionAdapter);
+    cell.tableView.tag = 1000 + indexPath.section;
+    NSLog(@"----------------%td",cell.tableView.tag);
+    [cell.tableView reloadData];
+    return cell;
 }
 
 //返回各个分区的头高度
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    return 85*ScreenWidth/375;
+//    if (tableView.tag == 100) {
+        return 85*ProportionAdapter;
+//    }
+//    else{
+//        return 70*ProportionAdapter;
+//    }
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
 }
-
+#pragma mark --push界面的代理方法
+- (void)pushController:(NSNumber *)teamKey withUserKey:(NSNumber *)userKey{
+    JGLGroupSignUpMenViewController* vc = [[JGLGroupSignUpMenViewController alloc]init];
+    vc.teamKey = teamKey;
+    vc.userKey = userKey;
+    vc.dataArrayAll = [_dataArray mutableCopy];
+    [self.navigationController pushViewController:vc animated:YES];
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end
