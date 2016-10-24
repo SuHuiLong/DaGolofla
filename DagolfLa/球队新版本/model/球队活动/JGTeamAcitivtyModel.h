@@ -95,4 +95,7 @@
 @property (nonatomic, strong) NSString* awardedInfo;
 
 @property (nonatomic, strong) NSString* costName;
+
+@property (nonatomic, strong)NSNumber *matchKey;
+
 @end

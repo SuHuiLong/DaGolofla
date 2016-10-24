@@ -108,6 +108,7 @@
 		20591CAA1D23C308003271EC /* JGHSelectBlankCatoryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 20591CA81D23C308003271EC /* JGHSelectBlankCatoryCell.m */; };
 		20591CAB1D23C308003271EC /* JGHSelectBlankCatoryCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 20591CA91D23C308003271EC /* JGHSelectBlankCatoryCell.xib */; };
 		20591CAE1D23FDD3003271EC /* JGHNOBlankPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 20591CAD1D23FDD3003271EC /* JGHNOBlankPasswordViewController.m */; };
+		205FA1C21DBDA37F003B9668 /* JGHEventViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 205FA1C11DBDA37F003B9668 /* JGHEventViewController.m */; };
 		2064DE8C1D367FEC00F0D52A /* JGHScoresHoleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2064DE8B1D367FEC00F0D52A /* JGHScoresHoleView.m */; };
 		2064DE961D3C715300F0D52A /* JGHRetrieveScoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2064DE941D3C715300F0D52A /* JGHRetrieveScoreViewController.m */; };
 		2064DE971D3C715300F0D52A /* JGHRetrieveScoreViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2064DE951D3C715300F0D52A /* JGHRetrieveScoreViewController.xib */; };
@@ -1402,6 +1403,8 @@
 		20591CA91D23C308003271EC /* JGHSelectBlankCatoryCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JGHSelectBlankCatoryCell.xib; sourceTree = "<group>"; };
 		20591CAC1D23FDD3003271EC /* JGHNOBlankPasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHNOBlankPasswordViewController.h; sourceTree = "<group>"; };
 		20591CAD1D23FDD3003271EC /* JGHNOBlankPasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHNOBlankPasswordViewController.m; sourceTree = "<group>"; };
+		205FA1C01DBDA37F003B9668 /* JGHEventViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHEventViewController.h; sourceTree = "<group>"; };
+		205FA1C11DBDA37F003B9668 /* JGHEventViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHEventViewController.m; sourceTree = "<group>"; };
 		2064DE8A1D367FEC00F0D52A /* JGHScoresHoleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHScoresHoleView.h; sourceTree = "<group>"; };
 		2064DE8B1D367FEC00F0D52A /* JGHScoresHoleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHScoresHoleView.m; sourceTree = "<group>"; };
 		2064DE931D3C715300F0D52A /* JGHRetrieveScoreViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHRetrieveScoreViewController.h; sourceTree = "<group>"; };
@@ -3592,6 +3595,7 @@
 		20203B0F1D9B5EFF009A75F3 /* controller */ = {
 			isa = PBXGroup;
 			children = (
+				205FA1BF1DBDA324003B9668 /* 赛事报名 */,
 				20D515051DBB82280006EFCB /* 发布赛事 */,
 				F5CB6EA41DB9B61E0068F768 /* 邀请球队 */,
 				82000C8B1DACD887009D2DBF /* 分组 */,
@@ -3946,6 +3950,15 @@
 				20591C971D239BED003271EC /* JGHWithDrawModel.m */,
 			);
 			path = "交易记录";
+			sourceTree = "<group>";
+		};
+		205FA1BF1DBDA324003B9668 /* 赛事报名 */ = {
+			isa = PBXGroup;
+			children = (
+				205FA1C01DBDA37F003B9668 /* JGHEventViewController.h */,
+				205FA1C11DBDA37F003B9668 /* JGHEventViewController.m */,
+			);
+			path = "赛事报名";
 			sourceTree = "<group>";
 		};
 		2064DE901D3C70BC00F0D52A /* 取回记分 */ = {
@@ -8515,7 +8528,7 @@
 				TargetAttributes = {
 					36BFFD271BC76C8D005B3CE2 = {
 						CreatedOnToolsVersion = 6.3.2;
-						DevelopmentTeam = R269PG52XZ;
+						DevelopmentTeam = AKVZK78CBX;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
@@ -9014,6 +9027,7 @@
 				36BF00911BC772EF005B3CE2 /* MyAccountViewController.m in Sources */,
 				F569A1401CE35A9C00CD0FD5 /* JGTeamDetailViewController.m in Sources */,
 				F54E161C1DB23B4D0018B3AB /* JGLCompeteMemberModel.m in Sources */,
+				205FA1C21DBDA37F003B9668 /* JGHEventViewController.m in Sources */,
 				2012AD5C1D2BB19400F70E40 /* JGHChooseAwardViewController.m in Sources */,
 				36BFFFFC1BC770C4005B3CE2 /* ChartCell.m in Sources */,
 				828A99F21CE32E9300AF9860 /* JGMenberTableViewCell.m in Sources */,
@@ -9813,8 +9827,8 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = DagolfLa/DagolfLa.entitlements;
 				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				DEVELOPMENT_TEAM = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = AKVZK78CBX;
 				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -9864,8 +9878,8 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = DagolfLa/DagolfLa.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				DEVELOPMENT_TEAM = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = AKVZK78CBX;
 				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = NO;
 				FRAMEWORK_SEARCH_PATHS = (

@@ -376,6 +376,8 @@ static CGFloat ImageHeight  = 210.0;
 }
 #pragma mark -- 下一步
 - (void)commitCabbieCert:(UIButton *)btn{
+    [self.view endEditing:YES];
+    
     if (self.model.matchName == nil) {
         [[ShowHUD showHUD]showToastWithText:@"活动名称不能为空！" FromView:self.view];
         return;
