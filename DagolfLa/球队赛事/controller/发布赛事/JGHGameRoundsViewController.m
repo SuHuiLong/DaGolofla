@@ -355,13 +355,23 @@ static NSString *const JGHAddEventRoundsBtnCellIdentifier = @"JGHAddEventRoundsB
     btn.enabled = NO;
     NSLog(@"btn.tag ==%td", btn.tag);
     NSDictionary *roundDict = [self.roundArray objectAtIndex:btn.tag - 100];
+    NSDictionary *dataBaseDict = [self.dataArray objectAtIndex:btn.tag -100];
     
     if (selectCatory == 0) {
         //保存
         NSMutableDictionary *paterdict = [NSMutableDictionary dictionary];
         NSMutableDictionary *matchRoundDict = [NSMutableDictionary dictionary];
         matchRoundDict = [ballDict mutableCopy];
-        [matchRoundDict setObject:@0 forKey:@"timeKey"];
+        if ([dataBaseDict objectForKey:@"timeKey"]) {
+            if ([[dataBaseDict objectForKey:@"timeKey"] integerValue] > 0) {
+                [matchRoundDict setObject:[dataBaseDict objectForKey:@"timeKey"] forKey:@"timeKey"];
+            }else{
+                [matchRoundDict setObject:@0 forKey:@"timeKey"];
+            }
+        }else{
+            [matchRoundDict setObject:@0 forKey:@"timeKey"];
+        }
+        
         [matchRoundDict setObject:[roundDict objectForKey:@"timeKey"] forKey:@"matchformatKey"];
         [matchRoundDict setObject:[roundDict objectForKey:@"name"] forKey:@"matchformatName"];
         [matchRoundDict setObject:@(_timeKey) forKey:@"matchKey"];
@@ -380,6 +390,13 @@ static NSString *const JGHAddEventRoundsBtnCellIdentifier = @"JGHAddEventRoundsB
                     [array replaceObjectAtIndex:btn.tag -100 withObject:@1];
                     _showArray = array;
                 }
+                //保存赛制key
+                NSInteger timeKey = [[data objectForKey:@"timeKey"] integerValue];
+                
+                NSMutableArray *matchKeyArray = [self.dataArray mutableCopy];
+                NSMutableDictionary *basedict = [self.dataArray[btn.tag -100] mutableCopy];
+                [basedict setValue:@(timeKey) forKey:@"macthKey"];
+                [matchKeyArray replaceObjectAtIndex:btn.tag -100 withObject:basedict];
                 [[ShowHUD showHUD]showToastWithText:@"保存成功！" FromView:self.view];
             }else{
                 if ([data objectForKey:@"packResultMsg"]) {
@@ -392,7 +409,7 @@ static NSString *const JGHAddEventRoundsBtnCellIdentifier = @"JGHAddEventRoundsB
     }else{
         //删除
         NSMutableDictionary *postdict = [NSMutableDictionary dictionary];
-        [postdict setObject:self.dataArray[btn.tag -100] forKey:@"roundKey"];
+        [postdict setObject:[dataBaseDict objectForKey:@"timeKey"] forKey:@"roundKey"];
         [postdict setObject:DEFAULF_USERID forKey:@"userKey"];
         [[JsonHttp jsonHttp]httpRequestWithMD5:@"match/deleteRound" JsonKey:nil withData:postdict failedBlock:^(id errType) {
             btn.enabled = YES;
