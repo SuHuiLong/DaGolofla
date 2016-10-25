@@ -13,7 +13,6 @@
 #import "JGPhotoShowCollectionViewCell.h"
 #import "JGPhotoTimeReusableView.h"
 
-#import "JGLUpdataPhotoController.h"
 #import "SXPickPhoto.h"
 
 #import "MJRefresh.h"
