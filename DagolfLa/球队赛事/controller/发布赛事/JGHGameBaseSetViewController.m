@@ -49,6 +49,7 @@ static NSString *const JGHGameBaseHeaderSubCellIdentifier = @"JGHGameBaseHeaderS
 #pragma mark -- 确定
 - (void)saveBtnClick{
     if (self.delegate) {
+        [self.view endEditing:YES];
         [self.delegate selectRulesArray:self.rulesArray];
         [self.navigationController popViewControllerAnimated:YES];
     }
@@ -123,7 +124,9 @@ static NSString *const JGHGameBaseHeaderSubCellIdentifier = @"JGHGameBaseHeaderS
     NSString *nameString = [NSString stringWithFormat:@"%@", [baseDict objectForKey:@"name"]];
     
     gameSetBaseCellCell.toptextfeil.delegate = self;
-    
+    gameSetBaseCellCell.toptextfeil.keyboardType = UIKeyboardTypeNumberPad;
+    gameSetBaseCellCell.toptextfeil.tag = indexPath.row +100;
+    gameSetBaseCellCell.toptextfeil.textAlignment = NSTextAlignmentCenter;
     [gameSetBaseCellCell configJGHGameBaseHeaderSubCell:nameString andSelect:_select andTopvalue:_toptextfeil];
     
     return gameSetBaseCellCell;
@@ -163,9 +166,11 @@ static NSString *const JGHGameBaseHeaderSubCellIdentifier = @"JGHGameBaseHeaderS
     NSArray *rulesList = [self.dictData objectForKey:[rulesTitleDict objectForKey:@"timeKey"]];
     NSMutableDictionary *baseDict = [[rulesList objectAtIndex:indexPath.row] mutableCopy];
     
-    if ([[baseDict objectForKey:@"name"] containsString:@"regular"]) {
-        [baseDict setObject:_toptextfeil forKey:@"value"];
-    }
+//    if ([[baseDict objectForKey:@"name"] containsString:@"regular"]) {
+//        if (_toptextfeil != nil) {
+//            [baseDict setObject:_toptextfeil forKey:@"value"];
+//        }
+//    }
     
     [self.rulesArray replaceObjectAtIndex:indexPath.section +1 withObject:baseDict];
     
@@ -181,6 +186,9 @@ static NSString *const JGHGameBaseHeaderSubCellIdentifier = @"JGHGameBaseHeaderS
 #pragma mark -- UITextFliaView
 - (void)textFieldDidEndEditing:(UITextField *)textField{
     _toptextfeil= textField.text;
+    NSMutableDictionary *dict = [[self.rulesArray objectAtIndex:textField.tag -100+1] mutableCopy];
+    [dict setObject:_toptextfeil forKey:@"value"];
+    [self.rulesArray replaceObjectAtIndex:textField.tag -100+1 withObject:dict];
 }
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string;
 {

@@ -29,6 +29,7 @@
 }
 
 - (void)configJGHGameBaseHeaderSubCell:(NSString *)rulesName andSelect:(NSInteger)select andTopvalue:(NSString *)topvalue{
+    self.toptextfeil.textAlignment = NSTextAlignmentCenter;
     self.toptextfeil.text = @"";
     self.namelable2.text = @"";
     self.toptextfeil.hidden = YES;

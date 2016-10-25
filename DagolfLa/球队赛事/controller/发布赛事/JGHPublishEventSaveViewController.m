@@ -285,7 +285,7 @@ static CGFloat ImageHeight  = 210.0;
         }
         
         [self.navigationController pushViewController:costSetCtrl animated:YES];
-    }else{
+    }else if (btn.tag == 104){
         JGHConcentTextViewController *concentTextCtrl = [[JGHConcentTextViewController alloc]initWithNibName:@"JGHConcentTextViewController" bundle:nil];
         
         concentTextCtrl.itemText = @"内容";
