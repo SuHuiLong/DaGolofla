@@ -10,8 +10,8 @@
 
 @implementation JGHRecomStadiumView
 
-- (instancetype)init{
-    if (self == [super init]) {
+- (instancetype)initWithFrame:(CGRect)frame{
+    if (self == [super initWithFrame:frame]) {
         _activityImageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, self.frame.size.width, 107 *ProportionAdapter)];
         _activityImageView.image = [UIImage imageNamed:@"activityStateImage"];
         [self addSubview:_activityImageView];
@@ -30,6 +30,12 @@
     return self;
 }
 
+- (void)configJGHRecomStadiumView:(NSDictionary *)dict{
+    [self.activityImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@", [dict objectForKey:@"imgURL"]]] placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
+    _name.text = [NSString stringWithFormat:@"%@", [dict objectForKey:@"title"]];
+    
+    _price.text = [NSString stringWithFormat:@"¥%@", [dict objectForKey:@"money"]];
+}
 
 /*
 // Only override drawRect: if you perform custom drawing.

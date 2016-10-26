@@ -18,4 +18,6 @@
 
 @property (nonatomic ,strong)UILabel *drawee;
 
+- (void)configJGHSuppliesMallView:(NSDictionary *)dict;
+
 @end

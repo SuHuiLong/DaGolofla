@@ -19,7 +19,7 @@
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="1qj-54-Twl">
                         <constraints>
                             <constraint firstAttribute="width" secondItem="1qj-54-Twl" secondAttribute="height" multiplier="1:1" id="J4A-LA-BjU"/>
-                            <constraint firstAttribute="width" constant="80" id="Zgp-c5-gAd"/>
+                            <constraint firstAttribute="width" constant="70" id="Zgp-c5-gAd"/>
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Irm-n2-aX1">
@@ -33,7 +33,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="yxz" translatesAutoresizingMaskIntoConstraints="NO" id="jTN-kh-iFg"/>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="daL-QR-NgF">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="daL-QR-NgF">
                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
@@ -47,7 +47,9 @@
                 <constraints>
                     <constraint firstItem="jTN-kh-iFg" firstAttribute="leading" secondItem="1qj-54-Twl" secondAttribute="trailing" constant="20" id="4jS-jx-9WY"/>
                     <constraint firstItem="wEf-dt-nF6" firstAttribute="top" secondItem="Irm-n2-aX1" secondAttribute="top" id="Beg-mp-rZj"/>
+                    <constraint firstAttribute="trailing" secondItem="daL-QR-NgF" secondAttribute="trailing" constant="10" id="C7K-yD-rdd"/>
                     <constraint firstItem="tOw-WT-eRd" firstAttribute="bottom" secondItem="1qj-54-Twl" secondAttribute="bottom" id="KVr-8c-0Du"/>
+                    <constraint firstAttribute="trailing" secondItem="tOw-WT-eRd" secondAttribute="trailing" constant="10" id="KnI-9r-Jp6"/>
                     <constraint firstItem="daL-QR-NgF" firstAttribute="centerY" secondItem="jTN-kh-iFg" secondAttribute="centerY" id="Qyd-fD-gED"/>
                     <constraint firstItem="tOw-WT-eRd" firstAttribute="leading" secondItem="1qj-54-Twl" secondAttribute="trailing" constant="20" id="YIZ-fx-ISj"/>
                     <constraint firstItem="wEf-dt-nF6" firstAttribute="leading" secondItem="Irm-n2-aX1" secondAttribute="trailing" constant="10" id="cGt-xO-2JB"/>
@@ -60,6 +62,20 @@
                     <constraint firstAttribute="trailing" secondItem="wEf-dt-nF6" secondAttribute="trailing" constant="10" id="yUq-Ra-aMd"/>
                 </constraints>
             </tableViewCellContentView>
+            <connections>
+                <outlet property="activityHeaderImageView" destination="1qj-54-Twl" id="MBf-Ej-xz5"/>
+                <outlet property="activityHeaderImageViewLeft" destination="uMj-ME-sLk" id="Cl2-Lh-wiY"/>
+                <outlet property="activityHeaderImageViewW" destination="Zgp-c5-gAd" id="9Xe-oY-Gyb"/>
+                <outlet property="activityNumber" destination="wEf-dt-nF6" id="BfO-CM-Oqv"/>
+                <outlet property="activityNumberLeft" destination="cGt-xO-2JB" id="Dbs-4Q-z6i"/>
+                <outlet property="address" destination="daL-QR-NgF" id="VTr-eH-WkO"/>
+                <outlet property="addressImageLeft" destination="4jS-jx-9WY" id="LWv-72-C5b"/>
+                <outlet property="addressLeft" destination="oIF-Px-Ha5" id="11z-IX-o4E"/>
+                <outlet property="details" destination="tOw-WT-eRd" id="pDO-TY-IpF"/>
+                <outlet property="detailsLeft" destination="YIZ-fx-ISj" id="0Db-IR-F0e"/>
+                <outlet property="name" destination="Irm-n2-aX1" id="b7D-mY-fRs"/>
+                <outlet property="nameLeft" destination="iSF-u4-r8R" id="T2a-S1-ohN"/>
+            </connections>
             <point key="canvasLocation" x="49" y="85.5"/>
         </tableViewCell>
     </objects>

@@ -10,8 +10,8 @@
 
 @implementation JGHWonderfulView
 
-- (instancetype)init{
-    if (self == [super init]) {
+- (instancetype)initWithFrame:(CGRect)frame{
+    if (self == [super initWithFrame:frame]) {
         _activityImageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, self.frame.size.width, 107 *ProportionAdapter)];
         _activityImageView.image = [UIImage imageNamed:@"activityStateImage"];
         [self addSubview:_activityImageView];
@@ -22,6 +22,14 @@
         [self addSubview:_name];
     }
     return self;
+}
+
+- (void)configJGHWonderfulView:(NSDictionary *)dict{
+    if ([dict objectForKey:@"timeKey"]) {
+        [_activityImageView sd_setImageWithURL:[dict objectForKey:@"imgURL"] placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
+        
+        _name = [dict objectForKey:@"title"];
+    }
 }
 
 /*

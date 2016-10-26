@@ -82,7 +82,10 @@ static NSString *const JGHShowSuppliesMallTableViewCellIdentifier = @"JGHShowSup
 - (void)loadIndexdata{
     NSUserDefaults *userDef = [NSUserDefaults standardUserDefaults];
     NSMutableDictionary *getDict = [NSMutableDictionary dictionary];
-    [getDict setObject:DEFAULF_USERID forKey:@"userKey"];
+    if (DEFAULF_USERID) {
+        [getDict setObject:DEFAULF_USERID forKey:@"userKey"];
+    }
+    
     if ([userDef objectForKey:@"lat"]) {
         [getDict setObject:[userDef objectForKey:@"lng"] forKey:@"longitude"];
         [getDict setObject:[userDef objectForKey:@"lat"] forKey:@"latitude"];
@@ -196,18 +199,41 @@ static NSString *const JGHShowSuppliesMallTableViewCellIdentifier = @"JGHShowSup
         return showActivityPhotoCell;
     }else if (indexPath.section == 1){
         JGHWonderfulTableViewCell *wonderfulTableViewCell = [tableView dequeueReusableCellWithIdentifier:JGHWonderfulTableViewCellIdentifier];
+        if (self.indexModel.plateList.count > 0) {
+            NSDictionary *wonderfulDict = self.indexModel.plateList[0];
+            NSArray *wonderfulArray = [wonderfulDict objectForKey:@"bodyList"];
+            [wonderfulTableViewCell configJGHWonderfulTableViewCell:wonderfulArray];
+        }
         
         return wonderfulTableViewCell;
     }else if (indexPath.section == 2){
+        //热门球队
         JGHShowFavouritesCell *showFavouritesCell = [tableView dequeueReusableCellWithIdentifier:JGHShowFavouritesCellIdentifier];
+        if (self.indexModel.plateList.count > 1) {
+            NSDictionary *favourDict = self.indexModel.plateList[1];
+            NSArray *favourArray = [favourDict objectForKey:@"bodyList"];
+            [showFavouritesCell configJGHShowFavouritesCell:favourArray[indexPath.row]];
+        }
         
         return showFavouritesCell;
     }else if (indexPath.section == 3){
+        //球场推荐
         JGHShowRecomStadiumTableViewCell *showRecomStadiumTableViewCell = [tableView dequeueReusableCellWithIdentifier:JGHShowRecomStadiumTableViewCellIdentifier];
+        if (self.indexModel.plateList.count > 2) {
+            NSDictionary *recomStadiumDict = self.indexModel.plateList[2];
+            NSArray *recomStadiumArray = [recomStadiumDict objectForKey:@"bodyList"];
+            [showRecomStadiumTableViewCell configJGHShowRecomStadiumTableViewCell:recomStadiumArray];
+        }
         
         return showRecomStadiumTableViewCell;
     }else{
+        //用品商城
         JGHShowSuppliesMallTableViewCell *showSuppliesMallTableViewCell = [tableView dequeueReusableCellWithIdentifier:JGHShowSuppliesMallTableViewCellIdentifier];
+        if (self.indexModel.plateList.count > 3) {
+            NSDictionary *suppliesMallDict = self.indexModel.plateList[3];
+            NSArray *suppliesMallArray = [suppliesMallDict objectForKey:@"bodyList"];
+            [showSuppliesMallTableViewCell configJGHShowSuppliesMallTableViewCell:suppliesMallArray];
+        }
         
         return showSuppliesMallTableViewCell;
     }
@@ -242,7 +268,7 @@ static NSString *const JGHShowSuppliesMallTableViewCellIdentifier = @"JGHShowSup
     }else if (indexPath.section == 3){
         return 2 *171 *ProportionAdapter + 8*ProportionAdapter;
     }else if (indexPath.section == 4){
-        return 4 *163 *ProportionAdapter + 8*ProportionAdapter;
+        return self.indexModel.plateList.count/2 *163 *ProportionAdapter + 8*ProportionAdapter;
     }else{
         return 80 *ProportionAdapter;
     }

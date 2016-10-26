@@ -20,21 +20,26 @@
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
     if (self ==  [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
-        self.backgroundColor = [UIColor redColor];
+        self.backgroundColor = [UIColor whiteColor];
         self.selectionStyle = UITableViewCellSelectionStyleNone;
-        for (int i=0; i<8; i++) {
-            _suppliesMallView = [[JGHSuppliesMallView alloc]init];
-            if (i%2 == 0) {
-                _suppliesMallView.frame = CGRectMake(8*ProportionAdapter, (i/2 +1)*8*ProportionAdapter + (i/2)*155*ProportionAdapter, (screenWidth-24*ProportionAdapter)/2, 155 *ProportionAdapter);
-            }else{
-                _suppliesMallView.frame = CGRectMake(16*ProportionAdapter +(screenWidth-16*ProportionAdapter)/2, (i/2 +1)*8*ProportionAdapter + (i/2)*155*ProportionAdapter, (screenWidth-24*ProportionAdapter)/2, 155 *ProportionAdapter);
-            }
-            
-            NSLog(@"%d", i/2);
-            [self addSubview:_suppliesMallView];
-        }
+        
     }
     return self;
+}
+
+- (void)configJGHShowSuppliesMallTableViewCell:(NSArray *)array{
+    [self.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    for (int i=0; i<array.count; i++) {
+        
+        if (i%2 == 0) {
+            _suppliesMallView = [[JGHSuppliesMallView alloc]initWithFrame:CGRectMake(8*ProportionAdapter, (i/2 +1)*8*ProportionAdapter + (i/2)*155*ProportionAdapter, (screenWidth-24*ProportionAdapter)/2, 155 *ProportionAdapter)];
+        }else{
+            _suppliesMallView = [[JGHSuppliesMallView alloc]initWithFrame:CGRectMake(16*ProportionAdapter +(screenWidth-16*ProportionAdapter)/2, (i/2 +1)*8*ProportionAdapter + (i/2)*155*ProportionAdapter, (screenWidth-24*ProportionAdapter)/2, 155 *ProportionAdapter)];
+        }
+        
+        [_suppliesMallView configJGHSuppliesMallView:array[i]];
+        [self addSubview:_suppliesMallView];
+    }
 }
 
 - (void)awakeFromNib {

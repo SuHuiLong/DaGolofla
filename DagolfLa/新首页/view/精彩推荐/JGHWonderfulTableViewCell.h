@@ -10,4 +10,6 @@
 
 @interface JGHWonderfulTableViewCell : UITableViewCell
 
+- (void)configJGHWonderfulTableViewCell:(NSArray *)wonderfulArray;
+
 @end

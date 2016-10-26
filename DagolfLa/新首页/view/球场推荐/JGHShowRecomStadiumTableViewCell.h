@@ -10,4 +10,6 @@
 
 @interface JGHShowRecomStadiumTableViewCell : UITableViewCell
 
+- (void)configJGHShowRecomStadiumTableViewCell:(NSArray *)array;
+
 @end

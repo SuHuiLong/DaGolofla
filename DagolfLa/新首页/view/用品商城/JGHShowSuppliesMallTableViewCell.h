@@ -10,4 +10,6 @@
 
 @interface JGHShowSuppliesMallTableViewCell : UITableViewCell
 
+- (void)configJGHShowSuppliesMallTableViewCell:(NSArray *)array;
+
 @end

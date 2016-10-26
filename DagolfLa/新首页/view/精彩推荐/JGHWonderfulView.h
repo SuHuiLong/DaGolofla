@@ -14,5 +14,6 @@
 
 @property (nonatomic ,strong)UILabel *name;
 
+- (void)configJGHWonderfulView:(NSDictionary *)dict;
 
 @end

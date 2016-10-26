@@ -10,8 +10,8 @@
 
 @implementation JGHSuppliesMallView
 
-- (instancetype)init{
-    if (self == [super init]) {
+- (instancetype)initWithFrame:(CGRect)frame{
+    if (self == [super initWithFrame:frame]) {
         _activityImageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, self.frame.size.width, 107 *ProportionAdapter)];
         _activityImageView.image = [UIImage imageNamed:@"activityStateImage"];
         [self addSubview:_activityImageView];
@@ -40,6 +40,15 @@
         self.backgroundColor = [UIColor whiteColor];
     }
     return self;
+}
+
+- (void)configJGHSuppliesMallView:(NSDictionary *)dict{
+    [self.activityImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@", [dict objectForKey:@"imgURL"]]] placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
+    _name.text = [NSString stringWithFormat:@"%@", [dict objectForKey:@"title"]];
+    
+    _price.text = [NSString stringWithFormat:@"¥%@", [dict objectForKey:@"money"]];
+    
+    _drawee.text = [NSString stringWithFormat:@"%@人付款", [dict objectForKey:@""]];
 }
 
 /*

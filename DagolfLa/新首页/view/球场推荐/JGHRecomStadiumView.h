@@ -16,4 +16,6 @@
 
 @property (nonatomic ,strong)UILabel *price;
 
+- (void)configJGHRecomStadiumView:(NSDictionary *)dict;
+
 @end

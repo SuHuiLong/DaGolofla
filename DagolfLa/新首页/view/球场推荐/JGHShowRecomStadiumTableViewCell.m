@@ -20,21 +20,24 @@
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
     if (self ==  [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
-        self.backgroundColor = [UIColor redColor];
+        self.backgroundColor = [UIColor whiteColor];
         self.selectionStyle = UITableViewCellSelectionStyleNone;
-        for (int i=0; i<4; i++) {
-            _recomStadiumView = [[JGHRecomStadiumView alloc]init];
-            if (i%2 == 0) {
-                _recomStadiumView.frame = CGRectMake(8*ProportionAdapter, (i/2 +1)*8*ProportionAdapter + (i/2)*163*ProportionAdapter, (screenWidth-24*ProportionAdapter)/2, 163 *ProportionAdapter);
-            }else{
-                _recomStadiumView.frame = CGRectMake(16*ProportionAdapter +(screenWidth-16*ProportionAdapter)/2, (i/2 +1)*8*ProportionAdapter + (i/2)*163*ProportionAdapter, (screenWidth-24*ProportionAdapter)/2, 163*ProportionAdapter);
-            }
-            
-            NSLog(@"%d", i/2);
-            [self addSubview:_recomStadiumView];
-        }
     }
     return self;
+}
+
+- (void)configJGHShowRecomStadiumTableViewCell:(NSArray *)array{
+    [self.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    for (int i=0; i<array.count; i++) {
+        if (i%2 == 0) {
+            _recomStadiumView = [[JGHRecomStadiumView alloc]initWithFrame:CGRectMake(8*ProportionAdapter, (i/2 +1)*8*ProportionAdapter + (i/2)*163*ProportionAdapter, (screenWidth-24*ProportionAdapter)/2, 163 *ProportionAdapter)];
+        }else{
+            _recomStadiumView = [[JGHRecomStadiumView alloc]initWithFrame:CGRectMake(16*ProportionAdapter +(screenWidth-16*ProportionAdapter)/2, (i/2 +1)*8*ProportionAdapter + (i/2)*163*ProportionAdapter, (screenWidth-24*ProportionAdapter)/2, 163*ProportionAdapter)];
+        }
+        
+        [_recomStadiumView configJGHRecomStadiumView:array[i]];
+        [self addSubview:_recomStadiumView];
+    }
 }
 
 - (void)awakeFromNib {
