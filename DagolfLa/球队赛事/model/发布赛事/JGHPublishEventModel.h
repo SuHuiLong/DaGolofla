@@ -47,4 +47,10 @@
  */
 
 
+
+// 近期活动进入   活动名称 ＝＝ 赛事名
+@property (strong, nonatomic) NSString* name;//联系人名字
+
+
+
 @end

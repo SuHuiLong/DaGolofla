@@ -105,6 +105,8 @@ static NSString *const JGHTeamContactTableViewCellIdentifier = @"JGHTeamContactT
         [_gradientImage setImage:[UIImage imageNamed:@"backChange"]];
         [self.imgProfile addSubview:_gradientImage];
         
+
+        
         [self.view addSubview:self.eventDetailsTableView];
         [self.view addSubview:self.imgProfile];
         self.titleView.frame = CGRectMake(0, 10 *ProportionAdapter, screenWidth, 44);
@@ -165,12 +167,25 @@ static NSString *const JGHTeamContactTableViewCellIdentifier = @"JGHTeamContactT
     self.titleField.font = [UIFont systemFontOfSize:15 *ProportionAdapter];
     [self.titleView addSubview:self.titleField];
     
+    //分享
+    UIButton *shareBtn = [UIButton buttonWithType:UIButtonTypeSystem];
+    shareBtn.frame = CGRectMake(screenWidth - 54 * screenWidth / 320, 10, 54 * screenWidth / 320, 44 * screenWidth / 320);
+    shareBtn.titleLabel.font = [UIFont systemFontOfSize:FontSize_Normal];
+    [shareBtn setTintColor:[UIColor whiteColor]];
+    [shareBtn setImage:[UIImage imageNamed:@"fenxiang"] forState:(UIControlStateNormal)];
+    shareBtn.titleLabel.font = [UIFont systemFontOfSize:15 * screenWidth / 320];
+    [shareBtn addTarget:self action:@selector(shareBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    [self.titleView addSubview:shareBtn];
+    
+    
     _titleArray = @[@"", @"基本信息", @"参赛费用", @"球队比杆排位赛", @"查看报名及分组", @"查看成绩", @"对所有人公开", @"主办方", @"赛事联系人电话", @"赛事说明"];
     
     _baseInfoArray = @[@"开球时间", @"报名截止时间", @"举办场地"];
     
     _levelArray = @[@"对所有人公开", @"仅对参与球队公开", @"仅对参与及被邀请方公开"];
 }
+
+
 #pragma mark -- 设置图片及名称
 - (void)setData{
     self.titleField.text = self.model.matchName;
@@ -531,6 +546,74 @@ static NSString *const JGHTeamContactTableViewCellIdentifier = @"JGHTeamContactT
         f.origin.y = -yOffset;
         self.imgProfile.frame = f;
     }
+}
+
+
+#pragma mark -- 分享
+
+- (void)shareBtnClick:(UIButton *)btn{
+
+    ShareAlert* alert = [[ShareAlert alloc]initMyAlert];
+    alert.frame = CGRectMake(0, ScreenHeight, ScreenWidth, ScreenWidth);
+    [alert setCallBackTitle:^(NSInteger index) {
+        [self shareInfo:index];
+    }];
+    [UIView animateWithDuration:0.2 animations:^{
+        [alert show];
+    }];
+
+}
+
+-(void)shareInfo:(NSInteger)index{
+    
+//    NSData *fiData;
+//    
+//    
+//    NSLog(@"%@",[Helper setMatchImageIconUrl:self.model.timeKey]);
+//    fiData = [NSData dataWithContentsOfURL:[Helper setMatchImageIconUrl:self.model.timeKey]];
+//    NSObject* obj;
+//    if (fiData != nil && fiData.length > 0) {
+//        obj = fiData;
+//    }
+//    else
+//    {
+//        obj = [UIImage imageNamed:@"iconlogo"];
+//    }
+//    
+//    //http://imgcache.dagolfla.com/share/match/arwyAgainstSign.html?matchKey=1212&md5=dsd     
+//    NSString*  shareUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/match/arwyAgainstSign.html?matchKey=%td&md5=%@", self.model.timeKey, [Helper md5HexDigest:[NSString stringWithFormat:@"%td" ,self.model.timeKey]]];
+//    [UMSocialData defaultData].extConfig.title=[NSString stringWithFormat:@"欢迎加入%@", self.model.matchName];
+//    if (index == 0){
+//        
+//        //微信
+//        [UMSocialWechatHandler setWXAppId:@"wxdcdc4e20544ed728" appSecret:@"fdc75aae5a98f2aa0f62ef8cba2b08e9" url:shareUrl];
+//        [UMSocialConfig hiddenNotInstallPlatforms:@[UMShareToWechatSession,UMShareToWechatTimeline,UMShareToSina]];
+//        [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatSession] content:[NSString stringWithFormat:@"赛事简介:%@",[self.detailDic objectForKey:@"info"]]  image:obj location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
+//            if (response.responseCode == UMSResponseCodeSuccess) {
+//                //                [self shareS:indexRow];
+//            }
+//        }];
+//        
+//    }else if (index==1){
+//        //朋友圈
+//        [UMSocialWechatHandler setWXAppId:@"wxdcdc4e20544ed728" appSecret:@"fdc75aae5a98f2aa0f62ef8cba2b08e9" url:shareUrl];
+//        [UMSocialConfig hiddenNotInstallPlatforms:@[UMShareToWechatSession,UMShareToWechatTimeline,UMShareToSina]];
+//        [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatTimeline] content:[NSString stringWithFormat:@"球队简介:%@",[self.detailDic objectForKey:@"info"]] image:obj location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
+//            if (response.responseCode == UMSResponseCodeSuccess) {
+//                //                [self shareS:indexRow];
+//            }
+//        }];
+//    }else{
+//        UMSocialData *data = [UMSocialData defaultData];
+//        data.shareImage = [UIImage imageNamed:@"logo"];
+//        data.shareText = [NSString stringWithFormat:@"%@%@",@"打高尔夫啦",shareUrl];
+//        [[UMSocialControllerService defaultControllerService] setSocialData:data];
+//        //2.设置分享平台
+//        [UMSocialSnsPlatformManager getSocialPlatformWithName:UMShareToSina].snsClickHandler(self,[UMSocialControllerService defaultControllerService],YES);
+//        self.launchActivityTableView.frame = CGRectMake(0, 64, ScreenWidth, screenHeight - 64 - 49);
+//        
+//    }
+    
 }
 
 

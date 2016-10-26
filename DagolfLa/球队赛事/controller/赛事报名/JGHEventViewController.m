@@ -152,7 +152,7 @@ static NSString *const JGHTeamContactTableViewCellIdentifier = @"JGHTeamContactT
     [self.titleView addSubview:btn];
     //输入框
     self.titleField = [[UITextField alloc]initWithFrame:CGRectMake(64, 7, screenWidth - 128, 30)];
-    self.titleField.placeholder = @"请输入赛事名称";
+//    self.titleField.placeholder = @"请输入赛事名称";
     [self.titleField setValue:[UIColor whiteColor] forKeyPath:@"_placeholderLabel.textColor"];
     [self.titleField setValue:[UIFont boldSystemFontOfSize:15 *ProportionAdapter] forKeyPath:@"_placeholderLabel.font"];
     self.titleField.tag = 345;
@@ -169,7 +169,7 @@ static NSString *const JGHTeamContactTableViewCellIdentifier = @"JGHTeamContactT
 }
 #pragma mark -- 设置图片及名称
 - (void)setData{
-    self.titleField.text = self.model.matchName;
+    self.titleField.text = self.model.name;
     //我的球队活动
     [self.imgProfile sd_setImageWithURL:[Helper setImageIconUrl:@"match" andTeamKey:_model.timeKey andIsSetWidth:NO andIsBackGround:YES] placeholderImage:[UIImage imageNamed:ActivityBGImage]];
     
@@ -182,16 +182,16 @@ static NSString *const JGHTeamContactTableViewCellIdentifier = @"JGHTeamContactT
     self.timeKey = timeKey;
     //    self.timeKey = 30342;
     NSMutableDictionary *getDict = [NSMutableDictionary dictionary];
-    [getDict setObject:@(_timeKey) forKey:@"matchKey"];
+    [getDict setObject:@(_timeKey) forKey:@"activityKey"];
     [getDict setObject:DEFAULF_USERID forKey:@"userKey"];
-    NSString *strMD5 = [Helper md5HexDigest:[NSString stringWithFormat:@"matchKey=%td&userKey=%tddagolfla.com", _timeKey, [DEFAULF_USERID integerValue]]];
-    [getDict setObject:strMD5 forKey:@"md5"];
-    [[JsonHttp jsonHttp]httpRequest:@"match/getMatchInfo" JsonKey:nil withData:getDict requestMethod:@"GET" failedBlock:^(id errType) {
+//    NSString *strMD5 = [Helper md5HexDigest:[NSString stringWithFormat:@"matchKey=%td&userKey=%tddagolfla.com", _timeKey, [DEFAULF_USERID integerValue]]];
+//    [getDict setObject:strMD5 forKey:@"md5"];
+    [[JsonHttp jsonHttp]httpRequest:@"team/getTeamActivity" JsonKey:nil withData:getDict requestMethod:@"GET" failedBlock:^(id errType) {
         NSLog(@"%@", errType);
     } completionBlock:^(id data) {
         NSLog(@"%@", data);
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
-            [self.model setValuesForKeysWithDictionary:[data objectForKey:@"match"]];
+            [self.model setValuesForKeysWithDictionary:[data objectForKey:@"activity"]];
             _hasHaveTeam = [[data objectForKey:@"hasHaveTeam"]integerValue];
             self.costListArray = [data objectForKey:@"costList"];
             //是否补贴
@@ -465,8 +465,8 @@ static NSString *const JGHTeamContactTableViewCellIdentifier = @"JGHTeamContactT
             [headerCell congiftitles:_levelArray[_model.openType]];
         }else if (section == 3){
             headerCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-            if (_model.matchName == nil) {
-                [headerCell congiftitles:_model.matchName];
+            if (_model.matchTypeName != nil) {
+                [headerCell congiftitles:_model.matchTypeName];
             }else{
                 [headerCell congiftitles:_titleArray[section]];
             }
@@ -503,7 +503,7 @@ static NSString *const JGHTeamContactTableViewCellIdentifier = @"JGHTeamContactT
         JGDCheckScoreViewController *checkCtrl = [[JGDCheckScoreViewController alloc]init];
         checkCtrl.matchKey = [NSNumber numberWithInteger:_model.timeKey];
         checkCtrl.ballName = _model.ballName;
-        checkCtrl.matchName = _model.matchName;
+        checkCtrl.matchName = _model.name;
         [self.navigationController pushViewController:checkCtrl animated:YES];
     }
 }
