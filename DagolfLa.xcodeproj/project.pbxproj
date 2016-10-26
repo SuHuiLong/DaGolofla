@@ -686,6 +686,7 @@
 		826FB50C1D53650500B13155 /* JGLGuestAddressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 826FB50B1D53650500B13155 /* JGLGuestAddressViewController.m */; };
 		826FB5151D5429DA00B13155 /* JGLActivityMemberSetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 826FB5141D5429DA00B13155 /* JGLActivityMemberSetViewController.m */; };
 		826FB5181D5433F300B13155 /* JGLGuestActiveMemberTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 826FB5171D5433F300B13155 /* JGLGuestActiveMemberTableViewCell.m */; };
+		82708FEE1DBDF913009E9940 /* JGLAnimationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 82708FED1DBDF913009E9940 /* JGLAnimationViewController.m */; };
 		827AA0111D1D003C00F6B80B /* JGLPaySignModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 827AA0101D1D003C00F6B80B /* JGLPaySignModel.m */; };
 		827AA0141D1D1BFF00F6B80B /* JGHCancelApplyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 827AA0131D1D1BFF00F6B80B /* JGHCancelApplyViewController.m */; };
 		827AA01D1D1D1C5500F6B80B /* JGLActiveMemTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 827AA0191D1D1C5500F6B80B /* JGLActiveMemTableViewCell.m */; };
@@ -2468,6 +2469,8 @@
 		826FB5141D5429DA00B13155 /* JGLActivityMemberSetViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGLActivityMemberSetViewController.m; sourceTree = "<group>"; };
 		826FB5161D5433F300B13155 /* JGLGuestActiveMemberTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGLGuestActiveMemberTableViewCell.h; sourceTree = "<group>"; };
 		826FB5171D5433F300B13155 /* JGLGuestActiveMemberTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGLGuestActiveMemberTableViewCell.m; sourceTree = "<group>"; };
+		82708FEC1DBDF913009E9940 /* JGLAnimationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGLAnimationViewController.h; sourceTree = "<group>"; };
+		82708FED1DBDF913009E9940 /* JGLAnimationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGLAnimationViewController.m; sourceTree = "<group>"; };
 		827AA00F1D1D003C00F6B80B /* JGLPaySignModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGLPaySignModel.h; sourceTree = "<group>"; };
 		827AA0101D1D003C00F6B80B /* JGLPaySignModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGLPaySignModel.m; sourceTree = "<group>"; };
 		827AA0121D1D1BFF00F6B80B /* JGHCancelApplyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHCancelApplyViewController.h; sourceTree = "<group>"; };
@@ -4660,6 +4663,8 @@
 			children = (
 				362317101BD9D31500257862 /* PageViewController.h */,
 				362317111BD9D31500257862 /* PageViewController.m */,
+				82708FEC1DBDF913009E9940 /* JGLAnimationViewController.h */,
+				82708FED1DBDF913009E9940 /* JGLAnimationViewController.m */,
 			);
 			path = "引导页";
 			sourceTree = "<group>";
@@ -8684,7 +8689,7 @@
 				TargetAttributes = {
 					36BFFD271BC76C8D005B3CE2 = {
 						CreatedOnToolsVersion = 6.3.2;
-						DevelopmentTeam = AKVZK78CBX;
+						DevelopmentTeam = 5P6JNXBH3C;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
@@ -9496,6 +9501,7 @@
 				3623173D1BDA498B00257862 /* PicArrShowViewControllerViewController.m in Sources */,
 				20CA138F1CE9562800DA15B9 /* JGTeamGroupCollectionViewCell.m in Sources */,
 				20513BD91CF7050A003233FB /* openssl_wrapper.m in Sources */,
+				82708FEE1DBDF913009E9940 /* JGLAnimationViewController.m in Sources */,
 				20CA13651CE4276500DA15B9 /* JGTeamAcitivtyModel.m in Sources */,
 				202E05361D81568300566CA9 /* JGHPoorBarHoleCell.m in Sources */,
 				207F70541DC0821400667E26 /* JGHIndexModel.m in Sources */,
@@ -10002,7 +10008,7 @@
 				CODE_SIGN_ENTITLEMENTS = DagolfLa/DagolfLa.entitlements;
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = AKVZK78CBX;
+				DEVELOPMENT_TEAM = 5P6JNXBH3C;
 				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -10053,7 +10059,7 @@
 				CODE_SIGN_ENTITLEMENTS = DagolfLa/DagolfLa.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = AKVZK78CBX;
+				DEVELOPMENT_TEAM = 5P6JNXBH3C;
 				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = NO;
 				FRAMEWORK_SEARCH_PATHS = (

@@ -139,6 +139,7 @@
         [_arrTimeKey addObject:TimeKey];
     }
 
+    //讲创建的timey和图片上传
     for (int i = 0; i < _selectImages.count; i++) {
         NSMutableDictionary* dictMedia = [[NSMutableDictionary alloc]init];
         [dictMedia setObject:_arrTimeKey[i] forKey:@"data"];

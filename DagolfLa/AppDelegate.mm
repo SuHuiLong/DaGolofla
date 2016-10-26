@@ -35,7 +35,7 @@
 
 #import "UMMobClick/MobClick.h"
 
-
+#import "JGLAnimationViewController.h"
 #define ImgUrlString2 @"http://res.dagolfla.com/h5/ad/app.jpg"
 @interface AppDelegate ()
 {
@@ -229,29 +229,36 @@
     [self umengTrack];
 
     //    //取出新版本号
-    //    NSString* versionKey = (NSString*)kCFBundleVersionKey;
-    //    NSString* version = [NSBundle mainBundle].infoDictionary[versionKey];
-    //    //取出老的版本号
-    //    NSString* lastVerson = [[NSUserDefaults standardUserDefaults]valueForKey:versionKey];
-    //    if(![version isEqualToString:lastVerson])
-    //    {
-    //        PageViewController* pageview = [[PageViewController alloc]init];
-    //        self.window.rootViewController = pageview;
-    //        [pageview setCallBack:^{
-    //            [[NSUserDefaults standardUserDefaults]setValue:version forKey:versionKey];
-    //            [[NSUserDefaults standardUserDefaults]synchronize];
-    //            [self startApp];
-    //        }];
-    //    }
-    //    else
-    //    {
-    [self startApp];
-    //    }
+    NSString* versionKey = (NSString*)kCFBundleVersionKey;
+    NSString* version = [NSBundle mainBundle].infoDictionary[versionKey];
+    //取出老的版本号
+    NSString* lastVerson = [[NSUserDefaults standardUserDefaults]valueForKey:versionKey];
+    if(![version isEqualToString:lastVerson])
+    {
+        PageViewController* pageview = [[PageViewController alloc]init];
+        self.window.rootViewController = pageview;
+        [pageview setCallBack:^{
+            [[NSUserDefaults standardUserDefaults]setValue:version forKey:versionKey];
+            [[NSUserDefaults standardUserDefaults]synchronize];
+            [self startApp];
+        }];
+    }
+    else
+    {
+        JGLAnimationViewController* aniVc = [[JGLAnimationViewController alloc]init];
+        self.window.rootViewController = aniVc;
+        [aniVc setCallBack:^{
+            [self startApp];
+        }];
+        
+    }
     return YES;
 }
 -(void)startApp
 {
-    [self gifReLoad];
+//    [self gifReLoad];
+    self.window.rootViewController = [[TabBarController alloc]init];
+    self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
 }
 -(void)gifReLoad
