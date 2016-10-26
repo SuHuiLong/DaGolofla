@@ -494,7 +494,8 @@
         JGTeamAcitivtyModel *model = self.myActivityArray[indexPath.row];
         if ([model.matchKey integerValue] > 0) {
             JGHEventViewController *eventCtrl = [[JGHEventViewController alloc]init];
-            [eventCtrl getMatchInfo:[model.matchKey integerValue]];
+//            [eventCtrl getMatchInfo:[model.matchKey integerValue]];
+            [eventCtrl getMatchInfo:[model.timeKey integerValue]];
             [self.navigationController pushViewController:eventCtrl animated:YES];
         }else{
             JGTeamActibityNameViewController *teamActivityVC = [[JGTeamActibityNameViewController alloc] init];

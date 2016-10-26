@@ -86,9 +86,9 @@ static NSString *const JGHAddEventRoundsBtnCellIdentifier = @"JGHAddEventRoundsB
             if ([data objectForKey:@"list"]) {
                 self.dataArray = [data objectForKey:@"list"];
                 for (int i=0; i<self.dataArray.count; i++) {
-                    NSDictionary *dict = self.dataArray[i];
-                    NSString *ruleJson = [dict objectForKey:@"ruleJson"];
-                    [self.roundArray addObject:[Helper dictionaryWithJsonString:ruleJson]];
+//                    NSDictionary *dict = self.dataArray[i];
+//                    NSString *ruleJson = [dict objectForKey:@"ruleJson"];
+//                    [self.roundArray addObject:[Helper dictionaryWithJsonString:ruleJson]];
                     if (i == 0) {
                         [_showArray addObject:@0];
                     }else{
@@ -96,8 +96,8 @@ static NSString *const JGHAddEventRoundsBtnCellIdentifier = @"JGHAddEventRoundsB
                     }
                 }
                 for (NSDictionary *dict in self.dataArray) {
-                    NSString *ruleJson = [dict objectForKey:@"ruleJson"];
-                    [self.roundArray addObject:[Helper dictionaryWithJsonString:ruleJson]];
+//                    NSString *ruleJson = [dict objectForKey:@"ruleJson"];
+//                    [self.roundArray addObject:[Helper dictionaryWithJsonString:ruleJson]];
                     [_showArray addObject:@1];
                 }
             }else{

@@ -435,11 +435,75 @@ static CGFloat ImageHeight  = 210.0;
         return;
     }
     
-    JGHPublishEventSaveViewController *publishCtrl = [[JGHPublishEventSaveViewController alloc]init];
-    publishCtrl.rulesArray = _rulesArray;
-    publishCtrl.model = _model;
-    [self.navigationController pushViewController:publishCtrl animated:YES];
+    [self firstRoundSet];
+    
 }
+
+
+// 调用getround 接口
+
+
+- (void)firstRoundSet{
+    NSMutableDictionary *paterdict = [NSMutableDictionary dictionary];
+    NSMutableDictionary *matchRoundDict = [NSMutableDictionary dictionary];
+    //    matchRoundDict = [ruleDict mutableCopy];
+    [matchRoundDict setObject:[NSNumber numberWithInteger:_model.timeKey] forKey:@"timeKey"];
+    //    [matchRoundDict setObject:[ruleDict objectForKey:@"timeKey"] forKey:@"matchformatKey"];
+    //    [matchRoundDict setObject:[ruleDict objectForKey:@"name"] forKey:@"matchformatName"];
+    [matchRoundDict setObject:[NSNumber numberWithInteger:_model.timeKey]forKey:@"matchKey"];
+    //    [matchRoundDict setObject:ruleDict forKey:@"ruleJson"];
+    
+    [matchRoundDict setObject:_model.beginDate forKey:@"kickOffTime"];
+    [matchRoundDict setObject:_model.ballName forKey:@"ballName"];
+    
+    for (NSDictionary *dic in self.rulesArray) {
+        if ([[dic objectForKey:@"parentKey"] integerValue] == -1) {
+            [matchRoundDict setObject:[dic objectForKey:@"timeKey"] forKey:@"matchTypeKey"];
+            break;
+        }
+    }
+    
+    [paterdict setObject:DEFAULF_USERID forKey:@"userKey"];
+    [paterdict setObject:matchRoundDict forKey:@"matchRound"];
+    [[JsonHttp jsonHttp]httpRequestHaveSpaceWithMD5:@"match/addRound" JsonKey:nil withData:paterdict failedBlock:^(id errType) {
+        //        btn.enabled = YES;
+    } completionBlock:^(id data) {
+        NSLog(@"%@", data);
+        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+            
+            JGHPublishEventSaveViewController *publishCtrl = [[JGHPublishEventSaveViewController alloc]init];
+            publishCtrl.rulesArray = _rulesArray;
+            publishCtrl.model = _model;
+            [self.navigationController pushViewController:publishCtrl animated:YES];
+            
+            
+            //            NSMutableArray *alldataArray = [NSMutableArray array];
+            //            alldataArray = self.dataArray;
+            //            for (int i=0; i< self.dataArray.count; i++) {
+            //                if (i == btn.tag -100) {
+            //                    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+            //                    dict = [alldataArray[i] mutableCopy];
+            //                    [dict setObject:[data objectForKey:@"timeKey"] forKey:@"roundKey"];
+            ////                    [alldataArray replaceObjectAtIndex:btn.tag -100 withObject:dict];
+            //                }
+            //            }
+            //
+            //            self.dataArray = alldataArray;
+            
+            //            [[ShowHUD showHUD]showToastWithText:@"保存成功！" FromView:self.view];
+        }else{
+            if ([data objectForKey:@"packResultMsg"]) {
+                [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+            }
+        }
+        //        btn.enabled = YES;
+    }];
+    
+}
+
+
+
+
 
 - (void)popCtrl{
     [self.navigationController popViewControllerAnimated:YES];
@@ -501,13 +565,13 @@ static CGFloat ImageHeight  = 210.0;
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end
