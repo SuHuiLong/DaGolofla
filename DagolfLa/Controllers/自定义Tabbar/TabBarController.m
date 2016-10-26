@@ -11,7 +11,7 @@
 #import "AppDelegate.h"
 
 
-#import "ShouyeViewController.h"
+#import "JGHNewHomePageViewController.h"
 #import "CommunityViewController.h"
 #import "JKSlideViewController.h"
 #import "MeViewController.h"
@@ -137,11 +137,11 @@
 
 -(void)setUpAllViewControlller
 {
-    ShouyeViewController *shou = [[ShouyeViewController alloc] init];
+    JGHNewHomePageViewController *shou = [[JGHNewHomePageViewController alloc] init];
     shou.title = @"首页";
     [self setUpOneChildViewController:shou image:[UIImage imageNamed:@"home-page_gray"] selectImage:[[UIImage imageNamed:@"home-page_green"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
     JKSlideViewController *comVc = [[JKSlideViewController alloc] init];
-
+    
     
     
     
