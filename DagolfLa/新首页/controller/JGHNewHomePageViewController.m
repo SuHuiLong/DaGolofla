@@ -19,6 +19,9 @@
 #import "JGHNavListView.h"
 #import "JGLScoreNewViewController.h"
 #import "JGHShowMyTeamViewController.h" // 我的球队
+#import "JGTeamMemberORManagerViewController.h" // 球队详情 － 自己的球队
+#import "JGNotTeamMemberDetailViewController.h"  // 球队详情 － 别人的球队
+#import "JGPhotoAlbumViewController.h" // 相册
 
 
 static NSString *const JGHPASHeaderTableViewCellIdentifier = @"JGHPASHeaderTableViewCell";
@@ -394,12 +397,19 @@ static NSString *const JGHShowSuppliesMallTableViewCellIdentifier = @"JGHShowSup
 }
 #pragma mark -- 1001(活动) －－1002(相册) －－ 1003（成绩）
 - (void)didSelectActivityOrPhotoOrResultsBtn:(UIButton *)btn{
+
+    JGHShowActivityPhotoCell *cell = [self.homeTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+
     if (btn.tag == 1001) {
-        JGHShowActivityPhotoCell *cell = [self.homeTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+
         [cell configJGHShowActivityPhotoCell:_indexModel.activityList];
 
-    }else if (btn.tag == 1002) {
-        JGHShowActivityPhotoCell *cell = [self.homeTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+    } else if (btn.tag == 1002) {
+        
+        [cell configJGHShowPhotoCell:_indexModel.activityList];
+
+    } else if (btn.tag == 1003) {
+        
         [cell configJGHShowLiveCell:_indexModel.activityList];
 
     }
