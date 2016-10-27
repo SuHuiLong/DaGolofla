@@ -11,10 +11,12 @@
 #import "JGDShowLiveView.h" // 直播
 #import "JGDShowPhotoView.h" // 相册
 
+
 @interface JGHShowActivityPhotoCell ()
 {
     JGHShowActivityView *_showActivityView;
     JGDShowLiveView *_liveView;
+    JGDShowPhotoView *_photoView;
 }
 
 @end
@@ -56,15 +58,40 @@
         _liveView.backgroundColor = [UIColor whiteColor];
         [_liveView configJGHShowLiveView:activtiyList[i]];
         
-        UIButton *selectBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
-        selectBtn.tag = 200 +i;
-        [selectBtn addTarget:self action:@selector(activityClick:) forControlEvents:UIControlEventTouchUpInside];
-        [_liveView addSubview:selectBtn];
+//        UIButton *selectBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
+//        selectBtn.tag = 200 +i;
+//        [selectBtn addTarget:self action:@selector(liveClick:) forControlEvents:UIControlEventTouchUpInside];
+//        [_liveView addSubview:selectBtn];
+
+        UITapGestureRecognizer *tapGes = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(liveTapAct)];
+        [_liveView addGestureRecognizer:tapGes];
         [self addSubview:_liveView];
     }
 }
 
 - (void)configJGHShowPhotoCell:(NSArray *)activtiyList{
+    [self.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    
+    for (int i = 0; i < [activtiyList count]; i ++) {
+        if (i%2 == 0) {
+            _photoView = [[JGDShowPhotoView alloc]initWithFrame:CGRectMake(8*ProportionAdapter, (i/2 +1)*8*ProportionAdapter + (i/2)*70*ProportionAdapter, (screenWidth-24*ProportionAdapter)/2, 70 *ProportionAdapter)];
+        }else{
+            _photoView = [[JGDShowPhotoView alloc]initWithFrame:CGRectMake(16*ProportionAdapter +(screenWidth-16*ProportionAdapter)/2, (i/2 +1)*8*ProportionAdapter + (i/2)*70*ProportionAdapter, (screenWidth-24*ProportionAdapter)/2, 70 *ProportionAdapter)];
+        }
+        [_photoView configJGHShowPhotoView:activtiyList[i]];
+        UITapGestureRecognizer *tapGes = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(photoTapAct)];
+        [_photoView addGestureRecognizer:tapGes];
+        [self addSubview:_photoView];
+    }
+}
+
+// 直播
+- (void)liveTapAct{
+    
+}
+
+// 照片
+- (void)photoTapAct{
     
 }
 

@@ -202,7 +202,6 @@
 }
 
 
-
 -(void)showDataSignUp1:(JGLGroupCombatModel *)model withIndex:(NSInteger)index
 {
     
@@ -229,7 +228,7 @@
                 }
                 
             }
-            else{
+            else if ([modelSignUp.sortIndex integerValue] == 1){
                 [_btnHeader2 sd_setImageWithURL:[Helper setImageIconUrl:@"user" andTeamKey:[modelSignUp.userKey integerValue] andIsSetWidth:YES andIsBackGround:NO] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
                 if (![Helper isBlankString:modelSignUp.userName]) {
                     _labelName2.text = [NSString stringWithFormat:@"%@",modelSignUp.userName];
@@ -243,9 +242,34 @@
                     _labelAlmast2.text = @"暂无差点";
                 }
             }
+            else{
+                if([modelSignUp.sortIndex integerValue] == -1)
+                {
+                    [_btnHeader1 setImage:[UIImage imageNamed:DefaultHeaderImage] forState:UIControlStateNormal];
+                    _labelName1.text = @"暂未添加";
+                    _labelAlmast1.text = @"暂未添加";
+                }
+                else if([modelSignUp.sortIndex integerValue] == -2)
+                {
+                    [_btnHeader2 setImage:[UIImage imageNamed:DefaultHeaderImage] forState:UIControlStateNormal];
+                    _labelName2.text = @"暂未添加";
+                    _labelAlmast2.text = @"暂未添加";
+                }
+            }
         }else
         {
-            
+            if([modelSignUp.sortIndex integerValue] == -1)
+            {
+                [_btnHeader1 setImage:[UIImage imageNamed:DefaultHeaderImage] forState:UIControlStateNormal];
+                _labelName1.text = @"暂未添加";
+                _labelAlmast1.text = @"暂未添加";
+            }
+            else if([modelSignUp.sortIndex integerValue] == -2)
+            {
+                [_btnHeader2 setImage:[UIImage imageNamed:DefaultHeaderImage] forState:UIControlStateNormal];
+                _labelName2.text = @"暂未添加";
+                _labelAlmast2.text = @"暂未添加";
+            }
         }
     }
 }
@@ -271,7 +295,7 @@
                 }
                 
             }
-            else{
+            else if ([modelSignUp.sortIndex integerValue] == 1){
                 [_btnHeader4 sd_setImageWithURL:[Helper setImageIconUrl:@"user" andTeamKey:[modelSignUp.userKey integerValue] andIsSetWidth:YES andIsBackGround:NO] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
                 if (![Helper isBlankString:modelSignUp.userName]) {
                     _labelName4.text = [NSString stringWithFormat:@"%@",modelSignUp.userName];
@@ -284,6 +308,34 @@
                 else{
                     _labelAlmast4.text = @"暂无差点";
                 }
+            }
+            else{
+                if([modelSignUp.sortIndex integerValue] == -1)
+                {
+                    [_btnHeader3 setImage:[UIImage imageNamed:DefaultHeaderImage] forState:UIControlStateNormal];
+                    _labelName3.text = @"暂未添加";
+                    _labelAlmast3.text = @"暂未添加";
+                }
+                else if([modelSignUp.sortIndex integerValue] == -2)
+                {
+                    [_btnHeader4 setImage:[UIImage imageNamed:DefaultHeaderImage] forState:UIControlStateNormal];
+                    _labelName4.text = @"暂未添加";
+                    _labelAlmast4.text = @"暂未添加";
+                }
+            }
+        }
+        else{
+            if([modelSignUp.sortIndex integerValue] == -1)
+            {
+                [_btnHeader3 setImage:[UIImage imageNamed:DefaultHeaderImage] forState:UIControlStateNormal];
+                _labelName3.text = @"暂未添加";
+                _labelAlmast3.text = @"暂未添加";
+            }
+            else if([modelSignUp.sortIndex integerValue] == -2)
+            {
+                [_btnHeader4 setImage:[UIImage imageNamed:DefaultHeaderImage] forState:UIControlStateNormal];
+                _labelName4.text = @"暂未添加";
+                _labelAlmast4.text = @"暂未添加";
             }
         }
     }

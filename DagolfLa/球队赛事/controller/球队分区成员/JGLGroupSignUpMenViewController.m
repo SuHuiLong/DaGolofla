@@ -44,9 +44,9 @@
 #pragma mark - 下载数据
 - (void)downLoadData:(int)page isReshing:(BOOL)isReshing{
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    [dict setObject:@122 forKey:@"matchKey"];
+    [dict setObject:@14064 forKey:@"matchKey"];
     [dict setObject:_teamKey forKey:@"teamKey"];
-    NSString *strMD = [JGReturnMD5Str getTeamCompeteSignUpListWithMatchKey:122 teamKey:[_teamKey integerValue]];
+    NSString *strMD = [JGReturnMD5Str getTeamCompeteSignUpListWithMatchKey:14064 teamKey:[_teamKey integerValue]];
     [dict setObject:strMD forKey:@"md5"];
     [[JsonHttp jsonHttp]httpRequest:@"match/getCanMatchTeamSignUpList" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
         if (isReshing) {
@@ -163,14 +163,25 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-//    _bl
-    //已添加过得，可移除
-    if ([[_dataArray[indexPath.row] userKey] integerValue] == [_userKey integerValue]) {
-        
+    
+    if (_userKey == nil) {
+        //之前没有人，添加队员
+        self.blockAddPeo();
+        [self.navigationController popViewControllerAnimated:YES];
     }
     else{
-        
+        //已添加过得，且userkey和选中的人一样，点击后移除
+        if ([[_dataArray[indexPath.row] userKey] integerValue] == [_userKey integerValue]) {
+            self.blockCon();
+            [self.navigationController popViewControllerAnimated:YES];
+        }
+        else{
+            //否则，需要把分组列表内的先移除掉，然后在添加一个人
+            self.blockChangePeo();
+            [self.navigationController popViewControllerAnimated:YES];
+        }
     }
+    
     
 }
 

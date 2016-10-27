@@ -52,4 +52,5 @@
 
 + (NSString *)getTeamCompeteSignUpListWithMatchKey:(NSInteger)matchKey teamKey:(NSInteger)teamKey;
 + (NSString *)getTeamCompeteSignUpListWithuserKey:(NSInteger)uerKey roundKey:(NSInteger)roundKey;
++ (NSString *)getTeamCompeteSignUpListWithAlbumKey:(NSInteger)albumKey userKey:(NSInteger)userKey;
 @end

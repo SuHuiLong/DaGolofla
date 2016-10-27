@@ -43,6 +43,7 @@
 -(void)initUiConfig;
 
 -(void)showDataSignUp1:(JGLGroupCombatModel *)model withIndex:(NSInteger)index;//左边人员数组
+
 -(void)showDataSignUp2:(JGLGroupCombatModel *)model withIndex:(NSInteger)index;//右边成员数组
 
 @end

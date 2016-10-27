@@ -15,12 +15,12 @@
 @property (strong, nonatomic) NSNumber* strTimeKey;
 
 //相册的key
-@property (strong, nonatomic) NSNumber* albumKey;
+@property (strong, nonatomic) NSNumber* albumKey;//相册key------首页改动后只要相册key，别的暂时都不用
 @property (strong, nonatomic) NSString* power;//球队管理权限
 
 @property (strong, nonatomic) NSNumber* userKey;
 
-@property (strong, nonatomic) NSNumber* teamTimeKey;
+@property (strong, nonatomic) NSNumber* teamTimeKey;//球队key
 
 @property (strong, nonatomic) NSNumber* state;
 
