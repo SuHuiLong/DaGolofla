@@ -15,20 +15,32 @@
                 <frame key="frameInset" width="426" height="50"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FaS-hX-hXO">
+                    <button opaque="NO" tag="1001" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FaS-hX-hXO">
+                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
                         <state key="normal" title="活动">
                             <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
                         </state>
+                        <connections>
+                            <action selector="activityBtn:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="qha-tg-vQr"/>
+                        </connections>
                     </button>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yu9-5l-B72">
+                    <button opaque="NO" tag="1002" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yu9-5l-B72">
+                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
                         <state key="normal" title="相册">
                             <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         </state>
+                        <connections>
+                            <action selector="photoBtn:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="j7J-Bg-0MJ"/>
+                        </connections>
                     </button>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5Yg-rX-24a">
+                    <button opaque="NO" tag="1003" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5Yg-rX-24a">
+                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
                         <state key="normal" title="成绩">
                             <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         </state>
+                        <connections>
+                            <action selector="resultsBtn:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="pUf-XO-zKF"/>
+                        </connections>
                     </button>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="P2V-QU-w6D">
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
@@ -80,6 +92,15 @@
                 </constraints>
             </tableViewCellContentView>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <connections>
+                <outlet property="activityBtn" destination="FaS-hX-hXO" id="Erk-zh-HdV"/>
+                <outlet property="activityLable" destination="P2V-QU-w6D" id="do1-Je-bqQ"/>
+                <outlet property="activityLableW" destination="Ht8-ia-ukU" id="cRk-u0-EdA"/>
+                <outlet property="photoBtn" destination="yu9-5l-B72" id="YOa-iD-tCr"/>
+                <outlet property="photoLable" destination="nfo-AJ-Z3M" id="jiU-5L-tVa"/>
+                <outlet property="resultsBtn" destination="5Yg-rX-24a" id="NJ4-8A-wrF"/>
+                <outlet property="resultsLable" destination="kWr-hF-Rs8" id="LDa-VS-shT"/>
+            </connections>
             <point key="canvasLocation" x="-383" y="-41.5"/>
         </tableViewCell>
     </objects>

@@ -17,6 +17,7 @@
     
     self.bgLable.backgroundColor = [UIColor colorWithHexString:BG_color];
     self.bgLableLeft.constant = 10 *ProportionAdapter;
+    self.bgLableH.constant = 20 *ProportionAdapter;
 
     self.name.font = [UIFont systemFontOfSize:16 *ProportionAdapter];
     self.nameLeft.constant = 10 *ProportionAdapter;

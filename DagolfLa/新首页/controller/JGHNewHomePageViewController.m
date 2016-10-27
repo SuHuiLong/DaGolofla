@@ -16,6 +16,7 @@
 #import "JGHShowRecomStadiumTableViewCell.h"
 #import "JGHShowSuppliesMallTableViewCell.h"
 #import "JGHIndexModel.h"
+#import "JGHNavListView.h"
 
 static NSString *const JGHPASHeaderTableViewCellIdentifier = @"JGHPASHeaderTableViewCell";
 static NSString *const JGHShowSectionTableViewCellIdentifier = @"JGHShowSectionTableViewCell";
@@ -25,7 +26,7 @@ static NSString *const JGHWonderfulTableViewCellIdentifier = @"JGHWonderfulTable
 static NSString *const JGHShowRecomStadiumTableViewCellIdentifier = @"JGHShowRecomStadiumTableViewCell";
 static NSString *const JGHShowSuppliesMallTableViewCellIdentifier = @"JGHShowSuppliesMallTableViewCell";
 
-@interface JGHNewHomePageViewController ()<UITableViewDelegate, UITableViewDataSource, JGHShowSectionTableViewCellDelegate, CLLocationManagerDelegate, JGHShowActivityPhotoCellDelegate, JGHWonderfulTableViewCellDelegate, JGHShowRecomStadiumTableViewCellDelegate, JGHShowSuppliesMallTableViewCellDelegate>
+@interface JGHNewHomePageViewController ()<UITableViewDelegate, UITableViewDataSource, JGHShowSectionTableViewCellDelegate, CLLocationManagerDelegate, JGHShowActivityPhotoCellDelegate, JGHWonderfulTableViewCellDelegate, JGHShowRecomStadiumTableViewCellDelegate, JGHShowSuppliesMallTableViewCellDelegate, JGHNavListViewDelegate, JGHPASHeaderTableViewCellDelegate>
 {
     NSArray *_titleArray;
 }
@@ -36,6 +37,8 @@ static NSString *const JGHShowSuppliesMallTableViewCellIdentifier = @"JGHShowSup
 @property (strong, nonatomic) CLLocationManager* locationManager;
 
 @property (nonatomic, strong)JGHIndexModel *indexModel;
+
+@property (nonatomic, strong)JGHNavListView *navListView;
 
 @end
 
@@ -70,13 +73,36 @@ static NSString *const JGHShowSuppliesMallTableViewCellIdentifier = @"JGHShowSup
     _titleArray = @[@"", @"精彩推荐", @"热门球队", @"球场推荐", @"用品商城"];
     self.indexModel = [[JGHIndexModel alloc]init];
     
-    [self getCurPosition];
-    
-    [self loadIndexdata];//上线注释
-    
     [self createHomeTableView];
     
+    [self parsingCacheData];
+    
+    [self getCurPosition];
+    
+//    [self loadIndexdata];//上线注释
+    
     [self createBanner];
+}
+#pragma mark -- 寻找本地缓存数据
+- (void)parsingCacheData{
+    //解归档----获取缓存数据-----
+    //获得文件路径
+    NSString *documentPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+    NSString *filePath = [documentPath stringByAppendingPathComponent:@"indexdata.archiver"];
+    //1. 从磁盘读取文件，生成NSData实例
+    NSData *unarchiverData = [NSData dataWithContentsOfFile:filePath];
+    if (unarchiverData) {
+        //2. 根据Data实例创建和初始化解归档对象
+        NSKeyedUnarchiver *unachiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:unarchiverData];
+        //3. 解归档，根据key值访问
+        JGHIndexModel *model = [unachiver decodeObjectForKey:@"indexModel"];
+        self.indexModel = model;
+//        NSString *name = [unachiver decodeObjectForKey:@"indexModel"];
+//        int age = [unachiver decodeIntForKey:@"age"];
+//        NSArray *ary = [unachiver decodeObjectForKey:@"language"];
+//        NSLog(@"name=%@ age=%i ary=%@",name,age,ary);
+        [self.homeTableView reloadData];
+    }
 }
 #pragma mark -- 下载数据
 - (void)loadIndexdata{
@@ -103,6 +129,27 @@ static NSString *const JGHShowSuppliesMallTableViewCellIdentifier = @"JGHShowSup
         
         [self.homeTableView reloadData];
         [self.homeTableView.header endRefreshing];
+        
+        // -----------缓存数据-------------
+        //获得文件路径
+        NSString *documentPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+        NSString *filePath = [documentPath stringByAppendingPathComponent:@"indexdata.archiver"];
+        
+        //1. 使用NSData存放归档数据
+        NSMutableData *archiverData = [NSMutableData data];
+        //2. 创建归档对象
+        NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:archiverData];
+        //3. 添加归档内容 （设置键值对）
+        [archiver encodeObject:_indexModel forKey:@"indexModel"];
+//        [archiver encodeInt:20 forKey:@"age"];
+//        [archiver encodeObject:@[@"ios",@"oc"] forKey:@"language"];
+        //4. 完成归档
+        [archiver finishEncoding];
+        //5. 将归档的信息存储到磁盘上
+        if ([archiverData writeToFile:filePath atomically:YES]) {
+            NSLog(@"archiver success");
+        }
+        
     }];
 }
 #pragma mark -- 创建TableView
@@ -128,7 +175,7 @@ static NSString *const JGHShowSuppliesMallTableViewCellIdentifier = @"JGHShowSup
     
     self.homeTableView.dataSource = self;
     self.homeTableView.delegate = self;
-    self.homeTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    self.homeTableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     self.homeTableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
     self.homeTableView.backgroundColor = [UIColor colorWithHexString:BG_color];
     [self.view addSubview:self.homeTableView];
@@ -140,16 +187,16 @@ static NSString *const JGHShowSuppliesMallTableViewCellIdentifier = @"JGHShowSup
 -(void)createBanner
 {
     //头视图
-    UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, screenWidth/2 +60 *ProportionAdapter)];
+    UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, screenWidth/2 +95 *ProportionAdapter)];
     headerView.backgroundColor = [UIColor whiteColor];
     //banner
     self.topScrollView = [[HomeHeadView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, screenWidth/2)];
     self.topScrollView.userInteractionEnabled = YES;
     [headerView addSubview:self.topScrollView];
     
-//    for (int i=0; i<3; i++) {
-//        UIButton *teamBtn = [UIButton alloc]initWithFrame:CGRectMake(40 *ProportionAdapter, <#CGFloat y#>, <#CGFloat width#>, <#CGFloat height#>)
-//    }
+    self.navListView = [[JGHNavListView alloc]initWithFrame:CGRectMake(0, screenWidth/2, screenWidth, 95 *ProportionAdapter)];
+    self.navListView.delegate = self;
+    [headerView addSubview:self.navListView];
     
     self.homeTableView.tableHeaderView = headerView;
     
@@ -208,6 +255,9 @@ static NSString *const JGHShowSuppliesMallTableViewCellIdentifier = @"JGHShowSup
     return 1;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
+    if (section == 4) {
+        return 0;
+    }
     return 10 *ProportionAdapter;
 }
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
@@ -271,7 +321,7 @@ static NSString *const JGHShowSuppliesMallTableViewCellIdentifier = @"JGHShowSup
 {
     if (section == 0) {
         JGHPASHeaderTableViewCell *pASHeaderCell = [tableView dequeueReusableCellWithIdentifier:JGHPASHeaderTableViewCellIdentifier];
-        
+        pASHeaderCell.delegate = self;
 //        NSInteger saveOrDelete = 0;
 //        saveOrDelete = [_showArray[section] integerValue];
 //        [eventRulesHeaderCell configJGHEventRulesHeaderCell:section +1 andSelect:saveOrDelete];
@@ -315,13 +365,13 @@ static NSString *const JGHShowSuppliesMallTableViewCellIdentifier = @"JGHShowSup
         if (_indexModel.plateList.count > 0) {
             NSDictionary *dict = [_indexModel.plateList lastObject];
             NSArray *bodyList = [dict objectForKey:@"bodyList"];
-            return ((bodyList.count-1)/2+1) *163 *ProportionAdapter + 8*ProportionAdapter;
+            return ((bodyList.count-1)/2+1) *250 *ProportionAdapter + 8*ProportionAdapter;
         }else{
             return 0;
         }
     }else{
         //2---热门球队
-        return 80 *ProportionAdapter;
+        return 90 *ProportionAdapter;
     }
 }
 //设置头部高度
@@ -334,6 +384,23 @@ static NSString *const JGHShowSuppliesMallTableViewCellIdentifier = @"JGHShowSup
     if (indexPath.section == 2) {
         
     }
+}
+#pragma mark -- 1001(活动) －－1002(相册) －－ 1003（成绩）
+- (void)didSelectActivityOrPhotoOrResultsBtn:(UIButton *)btn{
+    
+}
+#pragma mark -- 我的球队
+- (void)didSelectMyTeamBtn:(UIButton *)btn{
+    NSLog(@"我的球队");
+}
+#pragma mark -- 开局记分
+- (void)didSelectStartScoreBtn:(UIButton *)btn{
+    NSLog(@"开局记分");
+    self.tabBarController.selectedIndex = 2;
+}
+#pragma mark -- 历史成绩
+- (void)didSelectHistoryResultsBtn:(UIButton *)btn{
+    NSLog(@"历史成绩");
 }
 #pragma mark -- 活动点击事件
 - (void)activityListSelectClick:(UIButton *)btn{

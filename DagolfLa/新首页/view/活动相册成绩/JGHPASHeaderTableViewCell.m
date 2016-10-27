@@ -13,6 +13,11 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
+    self.activityBtn.titleLabel.font = [UIFont systemFontOfSize:16 *ProportionAdapter];
+    self.activityLableW.constant = 40 *ProportionAdapter;
+    
+    self.photoBtn.titleLabel.font = [UIFont systemFontOfSize:16 *ProportionAdapter];
+    self.resultsBtn.titleLabel.font = [UIFont systemFontOfSize:16 *ProportionAdapter];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -20,5 +25,22 @@
 
     // Configure the view for the selected state
 }
+
+- (IBAction)activityBtn:(UIButton *)sender {
+    if ([self.delegate respondsToSelector:@selector(didSelectActivityOrPhotoOrResultsBtn:)]) {
+        [self.delegate didSelectActivityOrPhotoOrResultsBtn:sender];
+    }
+}
+- (IBAction)photoBtn:(UIButton *)sender {
+    if ([self.delegate respondsToSelector:@selector(didSelectActivityOrPhotoOrResultsBtn:)]) {
+        [self.delegate didSelectActivityOrPhotoOrResultsBtn:sender];
+    }
+}
+- (IBAction)resultsBtn:(UIButton *)sender {
+    if ([self.delegate respondsToSelector:@selector(didSelectActivityOrPhotoOrResultsBtn:)]) {
+        [self.delegate didSelectActivityOrPhotoOrResultsBtn:sender];
+    }
+}
+
 
 @end
