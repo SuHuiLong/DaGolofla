@@ -15,7 +15,7 @@
 #import "CommunityViewController.h"
 #import "JKSlideViewController.h"
 #import "MeViewController.h"
-#import "JGLScoreNewViewController.h"
+//#import "JGLScoreNewViewController.h"
 
 #import "UserDataInformation.h"
 #import "EnterViewController.h"
@@ -147,12 +147,12 @@
     
     //    USAFreindViewController *fe = [[USAFreindViewController alloc] init];
 //    CommunityViewController *comVc = [[CommunityViewController alloc] init];
-    comVc.title = @"社区";
+    comVc.title = @"球友圈";
     [self setUpOneChildViewController:comVc image:[UIImage imageNamed:@"main_btn_community"] selectImage:[[UIImage imageNamed:@"main_btn_community_select"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
     
-    JGLScoreNewViewController *scoVc = [[JGLScoreNewViewController alloc] init];
-    scoVc.title = @"记分";
-    [self setUpOneChildViewController:scoVc image:[UIImage imageNamed:@"score_gray"] selectImage:[[UIImage imageNamed:@"score_green"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
+//    JGLScoreNewViewController *scoVc = [[JGLScoreNewViewController alloc] init];
+//    scoVc.title = @"记分";
+//    [self setUpOneChildViewController:scoVc image:[UIImage imageNamed:@"score_gray"] selectImage:[[UIImage imageNamed:@"score_green"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
     
     ChatListViewController *chatVc = [[ChatListViewController alloc] init];
     chatVc.title = @"消息";

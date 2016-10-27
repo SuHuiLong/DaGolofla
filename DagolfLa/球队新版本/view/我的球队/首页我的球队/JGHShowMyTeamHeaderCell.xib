@@ -54,6 +54,7 @@
             </tableViewCellContentView>
             <connections>
                 <outlet property="GuestsBtn" destination="e0C-de-b7i" id="pBe-HQ-7o8"/>
+                <outlet property="arrowImageView" destination="8kC-rb-Xnh" id="kTS-ic-KKK"/>
                 <outlet property="arrowRight" destination="lqZ-Jz-AB3" id="fvq-12-hs8"/>
                 <outlet property="bgLableLeft" destination="2Ld-Dx-fxz" id="aNK-q4-ZDT"/>
                 <outlet property="bgLbaleH" destination="1Sx-dL-1dE" id="dEL-8a-QR9"/>

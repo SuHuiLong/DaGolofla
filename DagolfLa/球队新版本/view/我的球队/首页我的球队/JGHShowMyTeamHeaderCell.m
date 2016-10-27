@@ -25,6 +25,18 @@
     self.arrowRight.constant = 10 *ProportionAdapter;
 }
 
+- (void)configJGHShowMyTeamHeaderCell:(NSString *)name andSection:(NSInteger)section{
+    if (section == 0) {
+        self.GuestsBtn.hidden = YES;
+        self.arrowImageView.hidden = YES;
+    }else{
+        self.GuestsBtn.hidden = NO;
+        self.arrowImageView.hidden = NO;
+    }
+    
+    self.name.text = name;
+}
+
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
 

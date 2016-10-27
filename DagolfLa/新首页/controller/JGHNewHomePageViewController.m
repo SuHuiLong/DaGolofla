@@ -17,7 +17,7 @@
 #import "JGHShowSuppliesMallTableViewCell.h"
 #import "JGHIndexModel.h"
 #import "JGHNavListView.h"
-
+#import "JGLScoreNewViewController.h"
 #import "JGHShowMyTeamViewController.h" // 我的球队
 #import "JGTeamMemberORManagerViewController.h" // 球队详情 － 自己的球队
 #import "JGNotTeamMemberDetailViewController.h"  // 球队详情 － 别人的球队
@@ -130,32 +130,37 @@ static NSString *const JGHShowSuppliesMallTableViewCellIdentifier = @"JGHShowSup
         [self.homeTableView.header endRefreshing];
     } completionBlock:^(id data) {
         NSLog(@"%@", data);
-        
-        [self.indexModel setValuesForKeysWithDictionary:data];
-        
-        [self.homeTableView reloadData];
-        [self.homeTableView.header endRefreshing];
-        
-        // -----------缓存数据-------------
-        //获得文件路径
-        NSString *documentPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
-        NSString *filePath = [documentPath stringByAppendingPathComponent:@"indexdata.archiver"];
-        
-        //1. 使用NSData存放归档数据
-        NSMutableData *archiverData = [NSMutableData data];
-        //2. 创建归档对象
-        NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:archiverData];
-        //3. 添加归档内容 （设置键值对）
-        [archiver encodeObject:_indexModel forKey:@"indexModel"];
-//        [archiver encodeInt:20 forKey:@"age"];
-//        [archiver encodeObject:@[@"ios",@"oc"] forKey:@"language"];
-        //4. 完成归档
-        [archiver finishEncoding];
-        //5. 将归档的信息存储到磁盘上
-        if ([archiverData writeToFile:filePath atomically:YES]) {
-            NSLog(@"archiver success");
+        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+            [self.indexModel setValuesForKeysWithDictionary:data];
+            
+            [self.homeTableView reloadData];
+            [self.homeTableView.header endRefreshing];
+            
+            // -----------缓存数据-------------
+            //获得文件路径
+            NSString *documentPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+            NSString *filePath = [documentPath stringByAppendingPathComponent:@"indexdata.archiver"];
+            
+            //1. 使用NSData存放归档数据
+            NSMutableData *archiverData = [NSMutableData data];
+            //2. 创建归档对象
+            NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:archiverData];
+            //3. 添加归档内容 （设置键值对）
+            [archiver encodeObject:_indexModel forKey:@"indexModel"];
+            //        [archiver encodeInt:20 forKey:@"age"];
+            //        [archiver encodeObject:@[@"ios",@"oc"] forKey:@"language"];
+            //4. 完成归档
+            [archiver finishEncoding];
+            //5. 将归档的信息存储到磁盘上
+            if ([archiverData writeToFile:filePath atomically:YES]) {
+                NSLog(@"archiver success");
+            }
+            
+        }else{
+            if ([data objectForKey:@"packResultMsg"]) {
+                [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+            }
         }
-        
     }];
 }
 #pragma mark -- 创建TableView
@@ -341,7 +346,6 @@ static NSString *const JGHShowSuppliesMallTableViewCellIdentifier = @"JGHShowSup
         return showSectionCell;
     }
 }
-
 //Cell的高度
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -412,14 +416,16 @@ static NSString *const JGHShowSuppliesMallTableViewCellIdentifier = @"JGHShowSup
 }
 #pragma mark -- 我的球队
 - (void)didSelectMyTeamBtn:(UIButton *)btn{
-
     JGHShowMyTeamViewController *myTeamVC = [[JGHShowMyTeamViewController alloc] init];
+    myTeamVC.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:myTeamVC animated:YES];
 }
 #pragma mark -- 开局记分
 - (void)didSelectStartScoreBtn:(UIButton *)btn{
     NSLog(@"开局记分");
-    self.tabBarController.selectedIndex = 2;
+    JGLScoreNewViewController *scoreCtrl = [[JGLScoreNewViewController alloc]init];
+    scoreCtrl.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:scoreCtrl animated:YES];
 }
 #pragma mark -- 历史成绩
 - (void)didSelectHistoryResultsBtn:(UIButton *)btn{
