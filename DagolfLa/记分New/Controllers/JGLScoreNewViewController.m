@@ -47,6 +47,11 @@
     self.view.backgroundColor = [UIColor whiteColor];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"show" object:nil];
     
+    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"backL"] style:UIBarButtonItemStylePlain target:self action:@selector(backButtonClcik)];
+    item.tintColor=[UIColor whiteColor];
+    self.navigationItem.leftBarButtonItem = item;
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"nav_bg"] forBarMetrics:UIBarMetricsDefault];
+    
     self.title = @"记分";
     [self loadData];
 }
@@ -54,6 +59,10 @@
 {
     //    [self.tabBarController.tabBar showBadgeOnItemIndex:3];
 }
+- (void)backButtonClcik{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     

@@ -28,5 +28,8 @@
 - (IBAction)GuestsBtn:(UIButton *)sender;
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *arrowRight;//10
+@property (weak, nonatomic) IBOutlet UIImageView *arrowImageView;
+
+- (void)configJGHShowMyTeamHeaderCell:(NSString *)name andSection:(NSInteger)section;
 
 @end

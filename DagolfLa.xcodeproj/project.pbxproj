@@ -152,6 +152,8 @@
 		207F70541DC0821400667E26 /* JGHIndexModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 207F70531DC0821400667E26 /* JGHIndexModel.m */; };
 		207F70581DC1952E00667E26 /* JGHNavListView.m in Sources */ = {isa = PBXBuildFile; fileRef = 207F70571DC1952E00667E26 /* JGHNavListView.m */; };
 		207F705C1DC1DF8F00667E26 /* JGHShowMyTeamViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 207F705B1DC1DF8F00667E26 /* JGHShowMyTeamViewController.m */; };
+		207F70661DC1FE7B00667E26 /* JGHAddMoreTeamTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 207F70641DC1FE7B00667E26 /* JGHAddMoreTeamTableViewCell.m */; };
+		207F70671DC1FE7B00667E26 /* JGHAddMoreTeamTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 207F70651DC1FE7B00667E26 /* JGHAddMoreTeamTableViewCell.xib */; };
 		207FEC961D1BC98F0098E23C /* JGHCancelApplyBaseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 207FEC941D1BC98F0098E23C /* JGHCancelApplyBaseCell.m */; };
 		207FEC971D1BC98F0098E23C /* JGHCancelApplyBaseCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 207FEC951D1BC98F0098E23C /* JGHCancelApplyBaseCell.xib */; };
 		207FEC9B1D1BDDB10098E23C /* JGHButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 207FEC991D1BDDB10098E23C /* JGHButtonCell.m */; };
@@ -1506,6 +1508,9 @@
 		207F70571DC1952E00667E26 /* JGHNavListView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHNavListView.m; sourceTree = "<group>"; };
 		207F705A1DC1DF8F00667E26 /* JGHShowMyTeamViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHShowMyTeamViewController.h; sourceTree = "<group>"; };
 		207F705B1DC1DF8F00667E26 /* JGHShowMyTeamViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHShowMyTeamViewController.m; sourceTree = "<group>"; };
+		207F70631DC1FE7B00667E26 /* JGHAddMoreTeamTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHAddMoreTeamTableViewCell.h; sourceTree = "<group>"; };
+		207F70641DC1FE7B00667E26 /* JGHAddMoreTeamTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHAddMoreTeamTableViewCell.m; sourceTree = "<group>"; };
+		207F70651DC1FE7B00667E26 /* JGHAddMoreTeamTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JGHAddMoreTeamTableViewCell.xib; sourceTree = "<group>"; };
 		207FEC931D1BC98F0098E23C /* JGHCancelApplyBaseCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHCancelApplyBaseCell.h; sourceTree = "<group>"; };
 		207FEC941D1BC98F0098E23C /* JGHCancelApplyBaseCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHCancelApplyBaseCell.m; sourceTree = "<group>"; };
 		207FEC951D1BC98F0098E23C /* JGHCancelApplyBaseCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JGHCancelApplyBaseCell.xib; sourceTree = "<group>"; };
@@ -4398,6 +4403,9 @@
 				F56FA2751DC1F08D008281D7 /* JGHShowMyTeamHeaderCell.h */,
 				F56FA2761DC1F08D008281D7 /* JGHShowMyTeamHeaderCell.m */,
 				F56FA2771DC1F08D008281D7 /* JGHShowMyTeamHeaderCell.xib */,
+				207F70631DC1FE7B00667E26 /* JGHAddMoreTeamTableViewCell.h */,
+				207F70641DC1FE7B00667E26 /* JGHAddMoreTeamTableViewCell.m */,
+				207F70651DC1FE7B00667E26 /* JGHAddMoreTeamTableViewCell.xib */,
 			);
 			path = "首页我的球队";
 			sourceTree = "<group>";
@@ -8854,6 +8862,7 @@
 				20D514EA1DB63DA60006EFCB /* JGHGameBaseHeaderCell.xib in Resources */,
 				202EC80D1D5852F80090FE4B /* JGHCaddieViewController.xib in Resources */,
 				20D514F01DB63DA60006EFCB /* JGHGameSetBaseCellCell.xib in Resources */,
+				207F70671DC1FE7B00667E26 /* JGHAddMoreTeamTableViewCell.xib in Resources */,
 				36BFFF621BC76D09005B3CE2 /* LICENSE in Resources */,
 				20D514FB1DB63DA60006EFCB /* JGHEventRulesHeaderCell.xib in Resources */,
 				36BF02051BC78253005B3CE2 /* Images.xcassets in Resources */,
@@ -9270,6 +9279,7 @@
 				36BF003C1BC771FB005B3CE2 /* ComDetailViewCell.m in Sources */,
 				36BF008B1BC772EF005B3CE2 /* MySetPasswordController.m in Sources */,
 				F5E1BB0F1D6B006100414727 /* ZXDataMatrixVersion.m in Sources */,
+				207F70661DC1FE7B00667E26 /* JGHAddMoreTeamTableViewCell.m in Sources */,
 				F5E1BADA1D6B006100414727 /* ZXTelResultParser.m in Sources */,
 				36DCA73C1C22630500E12DF7 /* ScoreProStandedModel.m in Sources */,
 				36D39B3E1BCCE23100C0B197 /* MBProgressHUD.m in Sources */,
