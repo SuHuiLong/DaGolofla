@@ -18,6 +18,11 @@
 
 @property (strong, nonatomic) NSMutableArray* dataArrayAll;
 
-@property (assign, nonatomic) void(^blockCon)(NSMutableArray *);//返回刷新array数据
+@property (copy, nonatomic) void(^blockCon)();//返回刷新array数据
+
+@property (copy, nonatomic) void(^blockAddPeo)();
+
+@property (copy, nonatomic) void(^blockChangePeo)();
+
 
 @end

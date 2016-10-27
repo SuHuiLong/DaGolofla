@@ -62,8 +62,8 @@
 - (void)downLoadData:(int)page isReshing:(BOOL)isReshing{
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     [dict setObject:DEFAULF_USERID forKey:@"userKey"];
-    [dict setObject:@122 forKey:@"matchKey"];
-    NSString *strMD = [JGReturnMD5Str getTeamCompeteSignUpListWithMatchKey:122 userKey:[DEFAULF_USERID integerValue]];
+    [dict setObject:@14064 forKey:@"matchKey"];
+    NSString *strMD = [JGReturnMD5Str getTeamCompeteSignUpListWithMatchKey:14064 userKey:[DEFAULF_USERID integerValue]];
     [dict setObject:strMD forKey:@"md5"];
     [[JsonHttp jsonHttp]httpRequest:@"match/getMatchGroupList" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
         if (isReshing) {
@@ -283,7 +283,6 @@
     btnl.userInteractionEnabled = NO;
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     [dict setObject:DEFAULF_USERID forKey:@"userKey"];
-//    [dict setObject:@122 forKey:@"matchKey"];
     [dict setObject:[_dataArray[section - 100000] objectForKey:@"timeKey"] forKey:@"roundKey"];
     [dict setObject:@2 forKey:@"grouptype"];//随机分组
     NSString* strMd = [JGReturnMD5Str getTeamCompeteSignUpListWithuserKey:[DEFAULF_USERID integerValue] roundKey:[[_dataArray[section - 100000] objectForKey:@"timeKey"] integerValue]];
@@ -349,7 +348,7 @@ static int indexTag = 0;
 
     JGLGroupPeopleDetileTableViewCell *cell=[tableView dequeueReusableCellWithIdentifier:@"JGLGroupPeopleDetileTableViewCell"];
     cell.delegate = self;
-
+ 
     [cell tableViewReFresh:_dataModeArray[indexPath.section] withArrAll:_dataArray];
     cell.tableView.frame=CGRectMake(0, 0, screenWidth, [[_dataArray[indexPath.section] objectForKey:@"sumGroup"] integerValue] * 70*ProportionAdapter + [_dataModeArray[indexPath.section] count] * 104*ProportionAdapter);
     cell.tableView.tag = 1000 + indexPath.section;
@@ -374,11 +373,173 @@ static int indexTag = 0;
     
 }
 #pragma mark --push界面的代理方法
-- (void)pushController:(NSNumber *)teamKey withUserKey:(NSNumber *)userKey{
+- (void)pushController:(NSNumber *)teamKey withUserKey:(NSNumber *)userKey withGroupIndex:(NSInteger)groupIndex withSortIndex:(NSInteger)sortIndex withRows:(NSInteger)rows{
     JGLGroupSignUpMenViewController* vc = [[JGLGroupSignUpMenViewController alloc]init];
     vc.teamKey = teamKey;
     vc.userKey = userKey;
     vc.dataArrayAll = [_dataArray mutableCopy];
+    //移除分组成员，移除说明肯定再列表上，sortindex肯定是0或者1，不可能为负数
+    [vc setBlockCon:^{
+        NSMutableDictionary* dictModel = [[_dataArray[groupIndex] objectForKey:@"combatList"][rows] mutableCopy];
+        NSMutableArray* arr = [[_dataArray[groupIndex] objectForKey:@"combatList"] mutableCopy];
+        NSMutableArray* arrD = [[_dataArray[groupIndex] objectForKey:@"combatList"] mutableCopy];
+        if ([[dictModel objectForKey:@"teamKey1"] integerValue] == [teamKey integerValue]) {//当球队key和第一个球队key相同的时候执行
+            NSMutableArray* arr1 = [[dictModel objectForKey:@"signUpList1"] mutableCopy];//球队成员列表
+            NSMutableArray* arr2 = [[dictModel objectForKey:@"signUpList1"] mutableCopy];//球队成员列表
+            for (int i = 0 ; i < arr1.count; i ++) {
+                JGLGroupCombatModel* modelCom = _dataModeArray[groupIndex][i];
+                NSMutableDictionary* dictArr = [arr1[i] mutableCopy];
+                if ([[dictArr objectForKey:@"userKey"] integerValue] == [userKey integerValue]) {
+                    if (sortIndex == 0) {
+                        [dictArr setObject:@-1 forKey:@"sortIndex"];
+                    }else{
+                        [dictArr setObject:@-2 forKey:@"sortIndex"];
+                    }
+                    [arr1 replaceObjectAtIndex:i withObject:dictArr];
+                    [dictModel setObject:arr1 forKey:@"signUpList1"];
+                    [arr replaceObjectAtIndex:groupIndex withObject:dictModel];
+                    [_dataArray[groupIndex] setObject:arr forKey:@"combatList"];
+                    
+                    if (sortIndex == 0) {
+                        [dictArr setObject:@-1 forKey:@"sortIndex"];
+                    }else{
+                        [dictArr setObject:@-2 forKey:@"sortIndex"];
+                    }
+                    
+                    [arr2 replaceObjectAtIndex:i withObject:dictArr];
+                    NSMutableArray* arrCom = [modelCom.signUpList1 mutableCopy];
+                    [arrCom replaceObjectAtIndex:i withObject:dictArr];
+                    modelCom.signUpList1 = [arrCom mutableCopy];
+                    [arrD replaceObjectAtIndex:groupIndex withObject:modelCom];
+//                    [_dataModeArray[groupIndex] setObject:arr forKey:@"combatList"];
+                    _dataModeArray[groupIndex][i] = modelCom;
+                    [_tableView reloadData];
+                    return ;
+                }
+            }
+        }
+        else if([[dictModel objectForKey:@"teamKey2"] integerValue] == [teamKey integerValue]){//第二个球队key与返回值key相同执行
+            NSMutableArray* arr1 = [[dictModel objectForKey:@"signUpList2"] mutableCopy];//球队成员列表
+            NSMutableArray* arr2 = [[dictModel objectForKey:@"signUpList2"] mutableCopy];//球队成员列表
+            for (int i = 0 ; i < arr1.count; i ++) {
+                JGLGroupCombatModel* modelCom = _dataModeArray[groupIndex][i];
+                NSMutableDictionary* dictArr = [arr1[i] mutableCopy];
+                if ([[dictArr objectForKey:@"userKey"] integerValue] == [userKey integerValue]) {
+                    if (sortIndex == 0) {
+                        [dictArr setObject:@-1 forKey:@"sortIndex"];
+                    }else{
+                        [dictArr setObject:@-2 forKey:@"sortIndex"];
+                    }
+                    [arr1 replaceObjectAtIndex:i withObject:dictArr];
+                    [dictModel setObject:arr1 forKey:@"signUpList2"];
+                    [arr replaceObjectAtIndex:groupIndex withObject:dictModel];
+                    [_dataArray[groupIndex] setObject:arr forKey:@"combatList"];
+                    
+                    if (sortIndex == 0) {
+                        [dictArr setObject:@-1 forKey:@"sortIndex"];
+                    }else{
+                        [dictArr setObject:@-2 forKey:@"sortIndex"];
+                    }
+                    
+                    [arr2 replaceObjectAtIndex:i withObject:dictArr];
+                    NSMutableArray* arrCom = [modelCom.signUpList2 mutableCopy];
+                    [arrCom replaceObjectAtIndex:i withObject:dictArr];
+                    modelCom.signUpList2 = [arrCom mutableCopy];
+                    [arrD replaceObjectAtIndex:groupIndex withObject:modelCom];
+                    //                    [_dataModeArray[groupIndex] setObject:arr forKey:@"combatList"];
+                    _dataModeArray[groupIndex][i] = modelCom;
+                    [_tableView reloadData];
+                    return ;
+                }
+            }
+
+        }
+        else{
+            return ;
+        }
+    }];
+    
+    //添加分组成员,
+    vc.blockAddPeo = ^(){
+        NSMutableDictionary* dictModel = [[_dataArray[groupIndex] objectForKey:@"combatList"][rows] mutableCopy];
+        NSMutableArray* arr = [[_dataArray[groupIndex] objectForKey:@"combatList"] mutableCopy];
+        NSMutableArray* arrD = [[_dataArray[groupIndex] objectForKey:@"combatList"] mutableCopy];
+        if ([[dictModel objectForKey:@"teamKey1"] integerValue] == [teamKey integerValue]) {//当球队key和第一个球队key相同的时候执行
+            NSMutableArray* arr1 = [[dictModel objectForKey:@"signUpList1"] mutableCopy];//球队成员列表
+            NSMutableArray* arr2 = [[dictModel objectForKey:@"signUpList1"] mutableCopy];//球队成员列表
+            for (int i = 0 ; i < arr1.count; i ++) {
+                JGLGroupCombatModel* modelCom = _dataModeArray[groupIndex][i];
+                NSMutableDictionary* dictArr = [arr1[i] mutableCopy];
+                if ([[dictArr objectForKey:@"userKey"] integerValue] == [userKey integerValue]) {
+                    if (sortIndex == -1 || sortIndex == 0) {
+                        [dictArr setObject:@0 forKey:@"sortIndex"];
+                    }else{
+                        [dictArr setObject:@1 forKey:@"sortIndex"];
+                    }
+                    [dictArr setObject:[NSNumber numberWithInteger:groupIndex] forKey:@"groupIndex"];
+                    [arr1 replaceObjectAtIndex:i withObject:dictArr];
+                    [dictModel setObject:arr1 forKey:@"signUpList1"];
+                    [arr replaceObjectAtIndex:groupIndex withObject:dictModel];
+                    [_dataArray[groupIndex] setObject:arr forKey:@"combatList"];
+                    
+                    if (sortIndex == -1 || sortIndex == 0) {
+                        [dictArr setObject:@0 forKey:@"sortIndex"];
+                    }else{
+                        [dictArr setObject:@1 forKey:@"sortIndex"];
+                    }
+                    [arr2 replaceObjectAtIndex:i withObject:dictArr];
+                    NSMutableArray* arrCom = [modelCom.signUpList1 mutableCopy];
+                    [arrCom replaceObjectAtIndex:i withObject:dictArr];
+                    modelCom.signUpList1 = [arrCom mutableCopy];
+                    [arrD replaceObjectAtIndex:groupIndex withObject:modelCom];
+                    //                    [_dataModeArray[groupIndex] setObject:arr forKey:@"combatList"];
+                    _dataModeArray[groupIndex][i] = modelCom;
+                    [_tableView reloadData];
+                    return ;
+                }
+            }
+        }
+        else if([[dictModel objectForKey:@"teamKey2"] integerValue] == [teamKey integerValue]){//第二个球队key与返回值key相同执行
+            NSMutableArray* arr1 = [[dictModel objectForKey:@"signUpList2"] mutableCopy];//球队成员列表
+            NSMutableArray* arr2 = [[dictModel objectForKey:@"signUpList2"] mutableCopy];//球队成员列表
+            for (int i = 0 ; i < arr1.count; i ++) {
+                JGLGroupCombatModel* modelCom = _dataModeArray[groupIndex][i];
+                NSMutableDictionary* dictArr = [arr1[i] mutableCopy];
+                if ([[dictArr objectForKey:@"userKey"] integerValue] == [userKey integerValue]) {
+                    if (sortIndex == -1) {
+                        [dictArr setObject:@0 forKey:@"sortIndex"];
+                    }else{
+                        [dictArr setObject:@1 forKey:@"sortIndex"];
+                    }
+                    [arr1 replaceObjectAtIndex:i withObject:dictArr];
+                    [dictModel setObject:arr1 forKey:@"signUpList2"];
+                    [arr replaceObjectAtIndex:groupIndex withObject:dictModel];
+                    [_dataArray[groupIndex] setObject:arr forKey:@"combatList"];
+                    
+                    if (sortIndex == -1) {
+                        [dictArr setObject:@0 forKey:@"sortIndex"];
+                    }else{
+                        [dictArr setObject:@1 forKey:@"sortIndex"];
+                    }
+                    
+                    [arr2 replaceObjectAtIndex:i withObject:dictArr];
+                    NSMutableArray* arrCom = [modelCom.signUpList2 mutableCopy];
+                    [arrCom replaceObjectAtIndex:i withObject:dictArr];
+                    modelCom.signUpList2 = [arrCom mutableCopy];
+                    [arrD replaceObjectAtIndex:groupIndex withObject:modelCom];
+                    //                    [_dataModeArray[groupIndex] setObject:arr forKey:@"combatList"];
+                    _dataModeArray[groupIndex][i] = modelCom;
+                    [_tableView reloadData];
+                    return ;
+                }
+            }
+            
+        }
+        else{
+            return ;
+        }
+    };
+    
     [self.navigationController pushViewController:vc animated:YES];
 }
 - (void)didReceiveMemoryWarning {
