@@ -29,7 +29,7 @@
                     </button>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t0o-oN-5qz">
                         <constraints>
-                            <constraint firstAttribute="height" constant="21" id="Sd4-9A-ug1"/>
+                            <constraint firstAttribute="height" constant="20" id="Sd4-9A-ug1"/>
                             <constraint firstAttribute="width" constant="3" id="fSW-th-OCU"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -56,6 +56,7 @@
             </tableViewCellContentView>
             <connections>
                 <outlet property="bgLable" destination="t0o-oN-5qz" id="wIh-E8-Mdk"/>
+                <outlet property="bgLableH" destination="Sd4-9A-ug1" id="2JH-MW-P4S"/>
                 <outlet property="bgLableLeft" destination="KdA-KB-Gma" id="EOY-Nc-18W"/>
                 <outlet property="moreBtn" destination="Zwd-vg-nBg" id="Hu1-I1-9F7"/>
                 <outlet property="moreImageView" destination="Oxc-bZ-bE6" id="hDi-e5-7FT"/>

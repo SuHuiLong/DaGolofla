@@ -18,6 +18,7 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *bgLable;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *bgLableLeft;//10
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *bgLableH;
 
 @property (weak, nonatomic) IBOutlet UILabel *name;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *nameLeft;//10
