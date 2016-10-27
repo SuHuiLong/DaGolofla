@@ -430,7 +430,6 @@
     }
 else
 {
-    
     [Helper alertViewWithTitle:@"是否立即登录?" withBlockCancle:^{
             
     } withBlockSure:^{

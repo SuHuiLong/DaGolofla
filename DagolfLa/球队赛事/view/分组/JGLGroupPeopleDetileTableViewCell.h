@@ -10,7 +10,7 @@
 
 @protocol JGLGroupPeopleDetileTableViewCellDelegate <NSObject>
 
-- (void)pushController:(NSNumber *)teamKey withUserKey:(NSNumber *)userKey;
+- (void)pushController:(NSNumber *)teamKey withUserKey:(NSNumber *)userKey withGroupIndex:(NSInteger)groupIndex withSortIndex:(NSInteger)sortIndex withRows:(NSInteger)rows;
 
 @end
 
