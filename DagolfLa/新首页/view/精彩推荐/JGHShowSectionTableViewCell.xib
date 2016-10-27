@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="KGk-i7-Jjw" customClass="JGHShowSectionTableViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <frame key="frameInset" width="320" height="43"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="more" translatesAutoresizingMaskIntoConstraints="NO" id="Oxc-bZ-bE6"/>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zwd-vg-nBg">
+                        <rect key="contentStretch" x="1" y="0.0" width="1" height="1"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                        <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        <state key="normal" title="更多">
+                            <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                        <connections>
+                            <action selector="moreBtn:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="sZU-bN-pv8"/>
+                        </connections>
+                    </button>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t0o-oN-5qz">
+                        <constraints>
+                            <constraint firstAttribute="height" constant="20" id="Sd4-9A-ug1"/>
+                            <constraint firstAttribute="width" constant="3" id="fSW-th-OCU"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="精彩推荐" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rTS-4n-n6h">
+                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="bottom" secondItem="Zwd-vg-nBg" secondAttribute="bottom" id="0vf-Px-SKB"/>
+                    <constraint firstItem="rTS-4n-n6h" firstAttribute="centerY" secondItem="t0o-oN-5qz" secondAttribute="centerY" id="9Wa-2D-KXx"/>
+                    <constraint firstAttribute="trailing" secondItem="Oxc-bZ-bE6" secondAttribute="trailing" constant="10" id="Kcy-1i-4f6"/>
+                    <constraint firstItem="t0o-oN-5qz" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="KdA-KB-Gma"/>
+                    <constraint firstItem="rTS-4n-n6h" firstAttribute="leading" secondItem="t0o-oN-5qz" secondAttribute="trailing" constant="10" id="RJP-Bf-Cbm"/>
+                    <constraint firstItem="Oxc-bZ-bE6" firstAttribute="leading" secondItem="Zwd-vg-nBg" secondAttribute="trailing" constant="5" id="WLm-eE-d6R"/>
+                    <constraint firstItem="Zwd-vg-nBg" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="d8R-eX-kRv"/>
+                    <constraint firstItem="Oxc-bZ-bE6" firstAttribute="centerY" secondItem="Zwd-vg-nBg" secondAttribute="centerY" id="nV4-dG-x9v"/>
+                    <constraint firstItem="t0o-oN-5qz" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="uhs-W9-xNV"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="bgLable" destination="t0o-oN-5qz" id="wIh-E8-Mdk"/>
+                <outlet property="bgLableH" destination="Sd4-9A-ug1" id="2JH-MW-P4S"/>
+                <outlet property="bgLableLeft" destination="KdA-KB-Gma" id="EOY-Nc-18W"/>
+                <outlet property="moreBtn" destination="Zwd-vg-nBg" id="Hu1-I1-9F7"/>
+                <outlet property="moreImageView" destination="Oxc-bZ-bE6" id="hDi-e5-7FT"/>
+                <outlet property="name" destination="rTS-4n-n6h" id="3ZI-gd-b0T"/>
+                <outlet property="nameLeft" destination="RJP-Bf-Cbm" id="WVW-l8-LyH"/>
+            </connections>
+            <point key="canvasLocation" x="174" y="27"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="more" width="6" height="11"/>
+    </resources>
+</document>

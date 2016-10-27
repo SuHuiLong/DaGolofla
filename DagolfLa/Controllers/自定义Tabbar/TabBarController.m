@@ -11,11 +11,11 @@
 #import "AppDelegate.h"
 
 
-#import "ShouyeViewController.h"
+#import "JGHNewHomePageViewController.h"
 #import "CommunityViewController.h"
 #import "JKSlideViewController.h"
 #import "MeViewController.h"
-#import "JGLScoreNewViewController.h"
+//#import "JGLScoreNewViewController.h"
 
 #import "UserDataInformation.h"
 #import "EnterViewController.h"
@@ -137,22 +137,22 @@
 
 -(void)setUpAllViewControlller
 {
-    ShouyeViewController *shou = [[ShouyeViewController alloc] init];
+    JGHNewHomePageViewController *shou = [[JGHNewHomePageViewController alloc] init];
     shou.title = @"首页";
     [self setUpOneChildViewController:shou image:[UIImage imageNamed:@"home-page_gray"] selectImage:[[UIImage imageNamed:@"home-page_green"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
     JKSlideViewController *comVc = [[JKSlideViewController alloc] init];
-
+    
     
     
     
     //    USAFreindViewController *fe = [[USAFreindViewController alloc] init];
 //    CommunityViewController *comVc = [[CommunityViewController alloc] init];
-    comVc.title = @"社区";
+    comVc.title = @"球友圈";
     [self setUpOneChildViewController:comVc image:[UIImage imageNamed:@"main_btn_community"] selectImage:[[UIImage imageNamed:@"main_btn_community_select"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
     
-    JGLScoreNewViewController *scoVc = [[JGLScoreNewViewController alloc] init];
-    scoVc.title = @"记分";
-    [self setUpOneChildViewController:scoVc image:[UIImage imageNamed:@"score_gray"] selectImage:[[UIImage imageNamed:@"score_green"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
+//    JGLScoreNewViewController *scoVc = [[JGLScoreNewViewController alloc] init];
+//    scoVc.title = @"记分";
+//    [self setUpOneChildViewController:scoVc image:[UIImage imageNamed:@"score_gray"] selectImage:[[UIImage imageNamed:@"score_green"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
     
     ChatListViewController *chatVc = [[ChatListViewController alloc] init];
     chatVc.title = @"消息";

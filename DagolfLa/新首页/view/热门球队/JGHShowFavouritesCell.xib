@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="95" id="KGk-i7-Jjw" customClass="JGHShowFavouritesCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="95"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <frame key="frameInset" width="320" height="94"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="1qj-54-Twl">
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="1qj-54-Twl" secondAttribute="height" multiplier="1:1" id="J4A-LA-BjU"/>
+                            <constraint firstAttribute="width" constant="70" id="Zgp-c5-gAd"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text=" " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Irm-n2-aX1">
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wEf-dt-nF6">
+                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="address" translatesAutoresizingMaskIntoConstraints="NO" id="jTN-kh-iFg"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text=" " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="daL-QR-NgF">
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tOw-WT-eRd">
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="jTN-kh-iFg" firstAttribute="leading" secondItem="1qj-54-Twl" secondAttribute="trailing" constant="20" id="4jS-jx-9WY"/>
+                    <constraint firstItem="wEf-dt-nF6" firstAttribute="top" secondItem="Irm-n2-aX1" secondAttribute="top" id="Beg-mp-rZj"/>
+                    <constraint firstAttribute="trailing" secondItem="daL-QR-NgF" secondAttribute="trailing" constant="10" id="C7K-yD-rdd"/>
+                    <constraint firstItem="tOw-WT-eRd" firstAttribute="bottom" secondItem="1qj-54-Twl" secondAttribute="bottom" id="KVr-8c-0Du"/>
+                    <constraint firstAttribute="trailing" secondItem="tOw-WT-eRd" secondAttribute="trailing" constant="10" id="KnI-9r-Jp6"/>
+                    <constraint firstItem="daL-QR-NgF" firstAttribute="centerY" secondItem="jTN-kh-iFg" secondAttribute="centerY" id="Qyd-fD-gED"/>
+                    <constraint firstItem="tOw-WT-eRd" firstAttribute="leading" secondItem="1qj-54-Twl" secondAttribute="trailing" constant="20" id="YIZ-fx-ISj"/>
+                    <constraint firstItem="wEf-dt-nF6" firstAttribute="leading" secondItem="Irm-n2-aX1" secondAttribute="trailing" constant="10" id="cGt-xO-2JB"/>
+                    <constraint firstItem="Irm-n2-aX1" firstAttribute="leading" secondItem="1qj-54-Twl" secondAttribute="trailing" constant="20" id="iSF-u4-r8R"/>
+                    <constraint firstItem="1qj-54-Twl" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="jSH-DI-nJ1"/>
+                    <constraint firstItem="Irm-n2-aX1" firstAttribute="top" secondItem="1qj-54-Twl" secondAttribute="top" id="k3D-4z-Ekd"/>
+                    <constraint firstItem="daL-QR-NgF" firstAttribute="leading" secondItem="jTN-kh-iFg" secondAttribute="trailing" constant="10" id="oIF-Px-Ha5"/>
+                    <constraint firstItem="1qj-54-Twl" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="uMj-ME-sLk"/>
+                    <constraint firstItem="jTN-kh-iFg" firstAttribute="centerY" secondItem="1qj-54-Twl" secondAttribute="centerY" id="xFA-Mf-fs4"/>
+                    <constraint firstAttribute="trailing" secondItem="wEf-dt-nF6" secondAttribute="trailing" constant="10" id="yUq-Ra-aMd"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="activityHeaderImageView" destination="1qj-54-Twl" id="MBf-Ej-xz5"/>
+                <outlet property="activityHeaderImageViewLeft" destination="uMj-ME-sLk" id="Cl2-Lh-wiY"/>
+                <outlet property="activityHeaderImageViewW" destination="Zgp-c5-gAd" id="9Xe-oY-Gyb"/>
+                <outlet property="activityNumber" destination="wEf-dt-nF6" id="BfO-CM-Oqv"/>
+                <outlet property="activityNumberLeft" destination="cGt-xO-2JB" id="Dbs-4Q-z6i"/>
+                <outlet property="address" destination="daL-QR-NgF" id="VTr-eH-WkO"/>
+                <outlet property="addressImageLeft" destination="4jS-jx-9WY" id="LWv-72-C5b"/>
+                <outlet property="addressLeft" destination="oIF-Px-Ha5" id="11z-IX-o4E"/>
+                <outlet property="details" destination="tOw-WT-eRd" id="pDO-TY-IpF"/>
+                <outlet property="detailsLeft" destination="YIZ-fx-ISj" id="0Db-IR-F0e"/>
+                <outlet property="name" destination="Irm-n2-aX1" id="b7D-mY-fRs"/>
+                <outlet property="nameLeft" destination="iSF-u4-r8R" id="T2a-S1-ohN"/>
+            </connections>
+            <point key="canvasLocation" x="49" y="85.5"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="address" width="9" height="13"/>
+    </resources>
+</document>
