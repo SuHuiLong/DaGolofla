@@ -28,9 +28,9 @@
         _activityName.text = @"上海XX球场活动";
         [self addSubview:_activityName];
         
-        UIImageView *timeImageView = [[UIImageView alloc]initWithFrame:CGRectMake(71 *ProportionAdapter, 43 *ProportionAdapter, 12 *ProportionAdapter, 12 *ProportionAdapter)];
-        timeImageView.image = [UIImage imageNamed:@"juli"];
-        [self addSubview:timeImageView];
+        UIImageView *adressImageV = [[UIImageView alloc]initWithFrame:CGRectMake(71 *ProportionAdapter, 43 *ProportionAdapter, 10 *ProportionAdapter, 13 *ProportionAdapter)];
+        adressImageV.image = [UIImage imageNamed:@"juli"];
+        [self addSubview:adressImageV];
  
         
         _address = [[UILabel alloc]initWithFrame:CGRectMake(86 *ProportionAdapter, 40 *ProportionAdapter, _time.frame.size.width, 20*ProportionAdapter)];

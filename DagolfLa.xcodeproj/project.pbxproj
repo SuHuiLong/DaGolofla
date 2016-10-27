@@ -861,6 +861,8 @@
 		F56F0B8D1CC613E100A222F3 /* NoteModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F56F0B8C1CC613E100A222F3 /* NoteModel.m */; };
 		F56F0B901CC637A200A222F3 /* AddNoteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F56F0B8F1CC637A200A222F3 /* AddNoteViewController.m */; };
 		F56FA2741DC1EAFE008281D7 /* JGDShowLiveView.m in Sources */ = {isa = PBXBuildFile; fileRef = F56FA2731DC1EAFE008281D7 /* JGDShowLiveView.m */; };
+		F56FA2781DC1F08D008281D7 /* JGHShowMyTeamHeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F56FA2761DC1F08D008281D7 /* JGHShowMyTeamHeaderCell.m */; };
+		F56FA2791DC1F08D008281D7 /* JGHShowMyTeamHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F56FA2771DC1F08D008281D7 /* JGHShowMyTeamHeaderCell.xib */; };
 		F5838D8D1D4B26EE00A7FFC6 /* JGDActSelfHistoryScoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5838D8C1D4B26EE00A7FFC6 /* JGDActSelfHistoryScoreViewController.m */; };
 		F5838D901D4B271200A7FFC6 /* JGTeamHisScoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5838D8F1D4B271200A7FFC6 /* JGTeamHisScoreViewController.m */; };
 		F5843DF91CFCF5EA00547812 /* JGSelfSetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5843DF81CFCF5EA00547812 /* JGSelfSetViewController.m */; };
@@ -2802,6 +2804,9 @@
 		F56F0B8F1CC637A200A222F3 /* AddNoteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddNoteViewController.m; sourceTree = "<group>"; };
 		F56FA2721DC1EAFE008281D7 /* JGDShowLiveView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGDShowLiveView.h; sourceTree = "<group>"; };
 		F56FA2731DC1EAFE008281D7 /* JGDShowLiveView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGDShowLiveView.m; sourceTree = "<group>"; };
+		F56FA2751DC1F08D008281D7 /* JGHShowMyTeamHeaderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHShowMyTeamHeaderCell.h; sourceTree = "<group>"; };
+		F56FA2761DC1F08D008281D7 /* JGHShowMyTeamHeaderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHShowMyTeamHeaderCell.m; sourceTree = "<group>"; };
+		F56FA2771DC1F08D008281D7 /* JGHShowMyTeamHeaderCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JGHShowMyTeamHeaderCell.xib; sourceTree = "<group>"; };
 		F5838D8B1D4B26EE00A7FFC6 /* JGDActSelfHistoryScoreViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGDActSelfHistoryScoreViewController.h; sourceTree = "<group>"; };
 		F5838D8C1D4B26EE00A7FFC6 /* JGDActSelfHistoryScoreViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGDActSelfHistoryScoreViewController.m; sourceTree = "<group>"; };
 		F5838D8E1D4B271200A7FFC6 /* JGTeamHisScoreViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGTeamHisScoreViewController.h; sourceTree = "<group>"; };
@@ -4390,6 +4395,9 @@
 		207F705D1DC1E45E00667E26 /* 首页我的球队 */ = {
 			isa = PBXGroup;
 			children = (
+				F56FA2751DC1F08D008281D7 /* JGHShowMyTeamHeaderCell.h */,
+				F56FA2761DC1F08D008281D7 /* JGHShowMyTeamHeaderCell.m */,
+				F56FA2771DC1F08D008281D7 /* JGHShowMyTeamHeaderCell.xib */,
 			);
 			path = "首页我的球队";
 			sourceTree = "<group>";
@@ -8855,6 +8863,7 @@
 				20F6A5DC1CF52C4F00DD9383 /* JGHHeaderLabelCell.xib in Resources */,
 				20513B591CF67EED003233FB /* JGHAddressCell.xib in Resources */,
 				20CA13721CE4929C00DA15B9 /* JGInvoiceTypeTextCell.xib in Resources */,
+				F56FA2791DC1F08D008281D7 /* JGHShowMyTeamHeaderCell.xib in Resources */,
 				202E05371D81568300566CA9 /* JGHPoorBarHoleCell.xib in Resources */,
 				36BF01881BC77611005B3CE2 /* CityCollectionViewCell.xib in Resources */,
 				208837A41D1A9D88004C7B5D /* JGHActivityBaseInfoCell.xib in Resources */,
@@ -9685,6 +9694,7 @@
 				20F025491D70199B00D7D7B6 /* JGHPalyTypeListCell.m in Sources */,
 				202E053E1D84261000566CA9 /* JGHOperScoreHeaderCell.m in Sources */,
 				20513B501CF5D9AD003233FB /* JGHAddInvoiceViewController.m in Sources */,
+				F56FA2781DC1F08D008281D7 /* JGHShowMyTeamHeaderCell.m in Sources */,
 				827BD52B1D20F23D009AF9CA /* JGLActivityMemberTableViewCell.m in Sources */,
 				65B596F11CAD43AC007AB83A /* JKSlideSwitchView.m in Sources */,
 				82C16BE81D8FB9970025DDED /* JobChooseViewController.m in Sources */,

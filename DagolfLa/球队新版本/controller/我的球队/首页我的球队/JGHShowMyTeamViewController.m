@@ -9,11 +9,13 @@
 #import "JGHShowMyTeamViewController.h"
 #import "JGTeamActivityCell.h"
 #import "JGLMyTeamTableViewCell.h"
+#import "JGHShowMyTeamHeaderCell.h"
 
 static NSString *const JGTeamActivityCellIdentifier = @"JGTeamActivityCell";
 static NSString *const JGLMyTeamTableViewCellIdentifier = @"JGLMyTeamTableViewCell";
+static NSString *const JGHShowMyTeamHeaderCellIdentifier = @"JGHShowMyTeamHeaderCell";
 
-@interface JGHShowMyTeamViewController ()<UITableViewDelegate, UITableViewDataSource>
+@interface JGHShowMyTeamViewController ()<UITableViewDelegate, UITableViewDataSource, JGHShowMyTeamHeaderCellDelegate>
 
 @property (nonatomic, strong)UITableView *showMyTeamTableView;
 
@@ -33,12 +35,15 @@ static NSString *const JGLMyTeamTableViewCellIdentifier = @"JGLMyTeamTableViewCe
     UINib *teamActivityCellNib = [UINib nibWithNibName:@"JGTeamActivityCell" bundle: [NSBundle mainBundle]];
     [self.showMyTeamTableView registerNib:teamActivityCellNib forCellReuseIdentifier:JGTeamActivityCellIdentifier];
     
+    UINib *showMyTeamHeaderCellNib = [UINib nibWithNibName:@"JGHShowMyTeamHeaderCell" bundle: [NSBundle mainBundle]];
+    [self.showMyTeamTableView registerNib:showMyTeamHeaderCellNib forCellReuseIdentifier:JGHShowMyTeamHeaderCellIdentifier];
+    
     [self.showMyTeamTableView registerClass:[JGLMyTeamTableViewCell class] forCellReuseIdentifier:JGLMyTeamTableViewCellIdentifier];
     
     self.showMyTeamTableView.dataSource = self;
     self.showMyTeamTableView.delegate = self;
     self.showMyTeamTableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
-    self.showMyTeamTableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
+//    self.showMyTeamTableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
     self.showMyTeamTableView.backgroundColor = [UIColor colorWithHexString:BG_color];
     [self.view addSubview:self.showMyTeamTableView];
 }
@@ -46,15 +51,15 @@ static NSString *const JGLMyTeamTableViewCellIdentifier = @"JGLMyTeamTableViewCe
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     //    return _dataArray.count +1;
-    return 5;
+    return 2;
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if (section == 2){
         //热门球队
-        return 1;
+        return 2;
     }
-    return 1;
+    return 3;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
     if (section == 4) {
@@ -67,7 +72,32 @@ static NSString *const JGLMyTeamTableViewCellIdentifier = @"JGLMyTeamTableViewCe
     footView.backgroundColor = [UIColor colorWithHexString:BG_color];
     return footView;
 }
-
+//组头视图
+-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    JGHShowMyTeamHeaderCell *showMyTeamHeaderCell = [tableView dequeueReusableCellWithIdentifier:JGHShowMyTeamHeaderCellIdentifier];
+    showMyTeamHeaderCell.delegate = self;
+    if (section == 0) {
+        
+    }
+    
+    return showMyTeamHeaderCell;
+}
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (indexPath.section == 0) {
+        JGLMyTeamTableViewCell *myTeamTableViewCell = [tableView dequeueReusableCellWithIdentifier:JGLMyTeamTableViewCellIdentifier];
+        
+        return myTeamTableViewCell;
+    }else{
+        JGTeamActivityCell *teamActivityCell = [tableView dequeueReusableCellWithIdentifier:JGTeamActivityCellIdentifier];
+        
+        return teamActivityCell;
+    }
+}
+#pragma mark -- 嘉宾通道
+- (void)didSelectGuestsBtn:(UIButton *)guestbtn{
+    
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
