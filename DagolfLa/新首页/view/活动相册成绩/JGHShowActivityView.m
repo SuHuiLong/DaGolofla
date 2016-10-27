@@ -66,16 +66,16 @@
         NSString *moneyString = @"0";
         [dataDict objectForKey:@"money"] ? moneyString = [[dataDict objectForKey:@"money"] stringValue] : @"0";
         
-        NSString *timeString = [NSString stringWithFormat:@"%@月%@号(已报名%@人)¥: %@元",[[dataDict objectForKey:@"beginTime"] substringWithRange:NSMakeRange(5, 2)], [[dataDict objectForKey:@"beginTime"] substringWithRange:NSMakeRange(8, 2)], [dataDict objectForKey:@"userSum"], moneyString];
+        NSString *timeString = [NSString stringWithFormat:@"%@月%@号(已报名%@人)¥ %@元",[[dataDict objectForKey:@"beginTime"] substringWithRange:NSMakeRange(5, 2)], [[dataDict objectForKey:@"beginTime"] substringWithRange:NSMakeRange(8, 2)], [dataDict objectForKey:@"userSum"], moneyString];
         
-        NSArray *stringArray = [timeString componentsSeparatedByString:@":"];
+        NSArray *stringArray = [timeString componentsSeparatedByString:@"¥"];
         NSInteger userSumLength = [[[dataDict objectForKey:@"userSum"] stringValue] length];
         
         NSMutableAttributedString *attriString = [[NSMutableAttributedString alloc] initWithString:timeString];
         
-        [attriString addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"#fb841c"] range:NSMakeRange([stringArray[0] length] - userSumLength - 3, userSumLength)];
+        [attriString addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"#fb841c"] range:NSMakeRange([stringArray[0] length] - userSumLength - 2, userSumLength)];
         
-        [attriString addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"#ce131d"] range:NSMakeRange([stringArray[0] length] + 2, [moneyString length] + 1)];
+        [attriString addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"#ce131d"] range:NSMakeRange([stringArray[0] length] + 1, [moneyString length] + 1)];
         
         _time.attributedText = attriString;
         
