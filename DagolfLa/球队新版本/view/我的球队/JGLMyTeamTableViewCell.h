@@ -18,9 +18,12 @@
 @property (nonatomic, strong)UILabel *adressLabel;
 @property (nonatomic, strong)UILabel *describLabel;
 
+@property (nonatomic, strong)UIView *lightGrayView;
+
 
 
 -(void)showData:(JGLMyTeamModel *)model;
 
+-(void)newShowData:(JGLMyTeamModel *)model;
 
 @end

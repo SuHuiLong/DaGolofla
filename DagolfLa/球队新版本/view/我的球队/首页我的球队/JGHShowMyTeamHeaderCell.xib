@@ -30,7 +30,9 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="sildRight" translatesAutoresizingMaskIntoConstraints="NO" id="8kC-rb-Xnh"/>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="sildRight" translatesAutoresizingMaskIntoConstraints="NO" id="8kC-rb-Xnh">
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </imageView>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e0C-de-b7i">
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <state key="normal" title="嘉宾通道">
@@ -41,6 +43,7 @@
                         </connections>
                     </button>
                 </subviews>
+                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 <constraints>
                     <constraint firstItem="bi1-ia-B9V" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="2Ld-Dx-fxz"/>
                     <constraint firstItem="8kC-rb-Xnh" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="4Y6-fR-b3b"/>
@@ -52,6 +55,7 @@
                     <constraint firstItem="B2j-QG-hZJ" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="suF-Cl-CbV"/>
                 </constraints>
             </tableViewCellContentView>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <connections>
                 <outlet property="GuestsBtn" destination="e0C-de-b7i" id="pBe-HQ-7o8"/>
                 <outlet property="arrowImageView" destination="8kC-rb-Xnh" id="kTS-ic-KKK"/>

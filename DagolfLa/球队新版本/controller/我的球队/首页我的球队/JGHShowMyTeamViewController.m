@@ -12,6 +12,9 @@
 #import "JGHShowMyTeamHeaderCell.h"
 #import "JGHAddMoreTeamTableViewCell.h"
 #import "JGLMyTeamModel.h"
+#import "JGTeamAcitivtyModel.h"
+#import "JGDGuestChannelViewController.h"
+#import "JGTeamMainhallViewController.h"
 
 static NSString *const JGTeamActivityCellIdentifier = @"JGTeamActivityCell";
 static NSString *const JGLMyTeamTableViewCellIdentifier = @"JGLMyTeamTableViewCell";
@@ -21,10 +24,13 @@ static NSString *const JGHAddMoreTeamTableViewCellIdentifier = @"JGHAddMoreTeamT
 @interface JGHShowMyTeamViewController ()<UITableViewDelegate, UITableViewDataSource, JGHShowMyTeamHeaderCellDelegate, JGHAddMoreTeamTableViewCellDelegate>
 {
     NSArray *_titleArray;
+    NSInteger _page;
 }
 @property (nonatomic, strong)UITableView *showMyTeamTableView;
 
 @property (nonatomic, strong)NSMutableArray *teamArray;
+
+@property (nonatomic, strong)NSMutableArray *activityArray;
 
 @end
 
@@ -35,44 +41,73 @@ static NSString *const JGHAddMoreTeamTableViewCellIdentifier = @"JGHAddMoreTeamT
     // Do any additional setup after loading the view.
     self.navigationItem.title = @"球队部落";
     self.teamArray = [NSMutableArray array];
-    
-    _titleArray = @[@"我的球队", @"我的活动"];
+    self.activityArray = [NSMutableArray array];
+    _page = 0;
+    _titleArray = @[@"我的球队", @"", @"我的活动"];
     
     [self createHomeTableView];
     
     [self loadMyTeamList];
+    
+    [self loadMyActivityList];
 }
+#pragma mark -- 下载我的活动
+- (void)loadMyActivityList{
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    [dict setObject:DEFAULF_USERID forKey:@"userKey"];//3619
+    [dict setObject:@(_page) forKey:@"offset"];
+    [dict setObject:[NSString stringWithFormat:@"%@", _timeKey] forKey:@"teamKey"];
+    [[JsonHttp jsonHttp]httpRequest:@"team/getMyTeamActivityAll" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
+        [self.showMyTeamTableView.header endRefreshing];
+        [self.showMyTeamTableView.footer endRefreshing];
+    } completionBlock:^(id data) {
+        if ([[data objectForKey:@"packSuccess"] boolValue]) {
+            if (_page == 0)
+            {
+                //清除数组数据
+                [self.activityArray removeAllObjects];
+            }
+            if ([data objectForKey:@"activityList"]) {
+                NSArray *array = [data objectForKey:@"activityList"];
+                for (NSDictionary *dict in array) {
+                    JGTeamAcitivtyModel *model = [[JGTeamAcitivtyModel alloc]init];
+                    [model setValuesForKeysWithDictionary:dict];
+                    [self.activityArray addObject:model];
+                }
+                _page++;
+                
+            }
+        }
+        
+        [self.showMyTeamTableView reloadData];
+        [self.showMyTeamTableView.header endRefreshing];
+        [self.showMyTeamTableView.footer endRefreshing];
+    }];
+}
+#pragma mark -- 下载我的球队
 - (void)loadMyTeamList{
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    
     [dict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:userID] forKey:@"userKey"];
     [dict setObject:@0 forKey:@"offset"];
     [[JsonHttp jsonHttp]httpRequest:@"team/getMyTeamList" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
         [self.showMyTeamTableView.header endRefreshing];
         [self.showMyTeamTableView.footer endRefreshing];
     } completionBlock:^(id data) {
+        [self.teamArray removeAllObjects];
         if ([[data objectForKey:@"packSuccess"] boolValue]) {
-//            if (page == 0)
-//            {
-                //清除数组数据
-//                [_dataArray removeAllObjects];
-//            }
-            //数据解析
-            //            self.TeamArray = [data objectForKey:@"teamList"];
             for (NSDictionary *dataDic in [data objectForKey:@"teamList"]) {
                 JGLMyTeamModel *model = [[JGLMyTeamModel alloc] init];
                 [model setValuesForKeysWithDictionary:dataDic];
                 [self.teamArray addObject:model];
             }
-            //            [self.TeamArray addObjectsFromArray:[data objectForKey:@"teamList"]];
-//            _page++;
-            [self.showMyTeamTableView reloadData];
-        }else {
-            if ([data objectForKey:@"packResultMsg"]) {
-                [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
-            }
         }
-//        [_tableView reloadData];
+//        else {
+//            if ([data objectForKey:@"packResultMsg"]) {
+//                [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+//            }
+//        }
+        
+        [self.showMyTeamTableView reloadData];
         [self.showMyTeamTableView.header endRefreshing];
         [self.showMyTeamTableView.footer endRefreshing];
     }];
@@ -95,9 +130,19 @@ static NSString *const JGHAddMoreTeamTableViewCellIdentifier = @"JGHAddMoreTeamT
     self.showMyTeamTableView.dataSource = self;
     self.showMyTeamTableView.delegate = self;
     self.showMyTeamTableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
-//    self.showMyTeamTableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
+    self.showMyTeamTableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
+    self.showMyTeamTableView.footer=[MJDIYBackFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRereshing)];
+    
     self.showMyTeamTableView.backgroundColor = [UIColor colorWithHexString:BG_color];
     [self.view addSubview:self.showMyTeamTableView];
+}
+- (void)headRereshing{
+    _page = 0;
+    [self loadMyActivityList];
+    [self loadMyTeamList];
+}
+- (void)footRereshing{
+    [self loadMyActivityList];
 }
 #pragma mark - UITableViewDataSource 协议方法
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -108,14 +153,14 @@ static NSString *const JGHAddMoreTeamTableViewCellIdentifier = @"JGHAddMoreTeamT
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if (section == 0) {
-        return 2;//我的球队
+        return _teamArray.count;//我的球队
     }else if (section == 2){
-        return 2;//我的活动
+        return _activityArray.count;//我的活动
     }
     return 0;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
-    if (section == 4) {
+    if (section == 0) {
         return 0;
     }
     return 10 *ProportionAdapter;
@@ -142,33 +187,51 @@ static NSString *const JGHAddMoreTeamTableViewCellIdentifier = @"JGHAddMoreTeamT
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 0) {
         JGLMyTeamTableViewCell *myTeamTableViewCell = [tableView dequeueReusableCellWithIdentifier:JGLMyTeamTableViewCellIdentifier];
+        if (_teamArray.count > 0) {
+            [myTeamTableViewCell newShowData:_teamArray[indexPath.row]];
+        }
         
         return myTeamTableViewCell;
     }else{
         JGTeamActivityCell *teamActivityCell = [tableView dequeueReusableCellWithIdentifier:JGTeamActivityCellIdentifier];
-        
+        [teamActivityCell setJGTeamActivityCellWithModel:_activityArray[indexPath.row] fromCtrl:1];
         return teamActivityCell;
     }
 }
 //Cell的高度
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 60 *ProportionAdapter;
+    if (indexPath.section == 0) {
+        return 100 *ProportionAdapter;
+    }else if (indexPath.section == 2){
+        return 80 *ProportionAdapter;
+    }
+    return 0;
 }
 //设置头部高度
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
+    if (section == 1) {
+        return 30 *ProportionAdapter;
+    }
     return 45 *ProportionAdapter;
 }
 #pragma mark -- 嘉宾通道
 - (void)didSelectGuestsBtn:(UIButton *)guestbtn{
     NSLog(@"嘉宾通道");
-    
+    guestbtn.enabled = NO;
+    JGDGuestChannelViewController *guestChanneCtrl = [[JGDGuestChannelViewController alloc]init];
+    [self.navigationController pushViewController:guestChanneCtrl animated:YES];
+    guestbtn.enabled = YES;
 }
 
 #pragma mark -- 添加更多球队
 - (void)didSelectAddMoreBtn:(UIButton *)btn{
     NSLog(@"添加更多球队");
+    btn.enabled = NO;
+    JGTeamMainhallViewController *teamMainCtrl = [[JGTeamMainhallViewController alloc]init];
+    [self.navigationController pushViewController:teamMainCtrl animated:YES];
+    btn.enabled = YES;
 }
 
 - (void)didReceiveMemoryWarning {

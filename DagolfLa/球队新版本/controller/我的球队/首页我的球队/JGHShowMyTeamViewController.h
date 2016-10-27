@@ -10,4 +10,6 @@
 
 @interface JGHShowMyTeamViewController : ViewController
 
+@property (nonatomic, strong)NSNumber *timeKey;
+
 @end

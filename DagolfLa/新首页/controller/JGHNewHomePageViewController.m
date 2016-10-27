@@ -64,10 +64,9 @@ static NSString *const JGHShowSuppliesMallTableViewCellIdentifier = @"JGHShowSup
 {
     [super viewWillDisappear:animated];
     //把当前页面的任务栏影藏
-    [[UIApplication sharedApplication] setStatusBarHidden:NO];
+    [[UIApplication sharedApplication] setStatusBarHidden:YES];
     //把当前界面的导航栏隐藏
     self.navigationController.navigationBarHidden = NO;
-    
     
 }
 

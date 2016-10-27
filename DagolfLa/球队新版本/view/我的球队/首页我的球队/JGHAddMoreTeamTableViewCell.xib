@@ -25,11 +25,13 @@
                         </connections>
                     </button>
                 </subviews>
+                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 <constraints>
                     <constraint firstItem="OPX-cB-Lar" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="DTY-SM-hz3"/>
                     <constraint firstItem="OPX-cB-Lar" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="uVB-Tb-ymr"/>
                 </constraints>
             </tableViewCellContentView>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <connections>
                 <outlet property="addTeamBtn" destination="OPX-cB-Lar" id="sRp-vm-bWh"/>
             </connections>
