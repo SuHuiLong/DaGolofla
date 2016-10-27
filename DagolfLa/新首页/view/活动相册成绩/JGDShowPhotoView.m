@@ -13,17 +13,29 @@
 - (instancetype)initWithFrame:(CGRect)frame{
     if (self == [super initWithFrame:frame]) {
  
-        self.photoImageV = [[UIImageView alloc] initWithFrame:CGRectMake(10 * ProportionAdapter, 10 * ProportionAdapter, (screenWidth - 29 * ProportionAdapter) / 2 , 70 * ProportionAdapter)];
-        self.photoImageV.backgroundColor = [UIColor orangeColor];
+        self.photoImageV = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, (screenWidth - 29 * ProportionAdapter) / 2 , 70 * ProportionAdapter)];
+        self.photoImageV.contentMode = UIViewContentModeScaleAspectFill;
+        self.photoImageV.clipsToBounds = YES;
         [self addSubview:self.photoImageV];
+        
+        self.backView = [[UIView alloc] initWithFrame:CGRectMake(0, 55 * ProportionAdapter,  (screenWidth - 29 * ProportionAdapter) / 2, 15 * ProportionAdapter)];
+        self.backView.backgroundColor = [UIColor colorWithHexString:@"#313131"];
+        self.backView.alpha = 0.9;
+        [self addSubview:self.backView];
+        
+        self.titleLB = [[UILabel alloc] initWithFrame:CGRectMake(0, 55 * ProportionAdapter,  (screenWidth - 29 * ProportionAdapter) / 2, 15 * ProportionAdapter)];
+        self.titleLB.font = [UIFont systemFontOfSize:11 * ProportionAdapter];
+        self.titleLB.textAlignment = NSTextAlignmentCenter;
+        self.titleLB.textColor = [UIColor colorWithHexString:@"#eceaea"];
+        [self addSubview:self.titleLB];
     }
     return self;
 }
 
 - (void)configJGHShowPhotoView:(NSDictionary *)dic{
     
-    
-    
+    [self.photoImageV sd_setImageWithURL:[NSURL URLWithString:[dic objectForKey:@"imgURL"]] placeholderImage:[UIImage imageNamed:@"xcback"]];
+    self.titleLB.text = [NSString stringWithFormat:@"%@", [dic objectForKey:@"title"]];
     
 }
 /*

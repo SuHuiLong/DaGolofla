@@ -351,7 +351,7 @@ static NSString *const JGHShowSuppliesMallTableViewCellIdentifier = @"JGHShowSup
 {
     if (indexPath.section == 0) {
         // 活动－相册－成绩
-        return 150 *ProportionAdapter;
+        return 173 *ProportionAdapter;
     }else if (indexPath.section == 1){
         //精彩推荐
         if (_indexModel.plateList.count > 0) {
@@ -406,11 +406,11 @@ static NSString *const JGHShowSuppliesMallTableViewCellIdentifier = @"JGHShowSup
 
     } else if (btn.tag == 1002) {
         
-        [cell configJGHShowPhotoCell:_indexModel.activityList];
+        [cell configJGHShowPhotoCell:_indexModel.albumList];
 
     } else if (btn.tag == 1003) {
         
-        [cell configJGHShowLiveCell:_indexModel.activityList];
+        [cell configJGHShowLiveCell:_indexModel.scoreList];
 
     }
 }
