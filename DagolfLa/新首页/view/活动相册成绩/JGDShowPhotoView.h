@@ -10,6 +10,8 @@
 
 @interface JGDShowPhotoView : UIView
 
+@property (nonatomic, strong) UIImageView *photoImageV;
+
 - (void)configJGHShowPhotoView:(NSDictionary *)dic;
 
 @end
