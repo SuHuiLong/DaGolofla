@@ -697,6 +697,7 @@
 		827AA01E1D1D1C5500F6B80B /* JGLActiveMemTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 827AA01A1D1D1C5500F6B80B /* JGLActiveMemTableViewCell.xib */; };
 		827BD52B1D20F23D009AF9CA /* JGLActivityMemberTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 827BD52A1D20F23D009AF9CA /* JGLActivityMemberTableViewCell.m */; };
 		827BD52F1D214A42009AF9CA /* JGLAddBankCardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 827BD52E1D214A42009AF9CA /* JGLAddBankCardViewController.m */; };
+		827E12C41DC21D82000BDF65 /* JGLWebUserMallViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 827E12C31DC21D82000BDF65 /* JGLWebUserMallViewController.m */; };
 		8281BE551CEC41D200C5BD31 /* JGTeamPhotoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8281BE541CEC41D200C5BD31 /* JGTeamPhotoModel.m */; };
 		828A99E41CE3167800AF9860 /* JGTeamCreatePhotoController.m in Sources */ = {isa = PBXBuildFile; fileRef = 828A99E31CE3167800AF9860 /* JGTeamCreatePhotoController.m */; };
 		828A99E71CE325BB00AF9860 /* JGPhotoAlbumViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 828A99E61CE325BB00AF9860 /* JGPhotoAlbumViewController.m */; };
@@ -2497,6 +2498,8 @@
 		827BD52A1D20F23D009AF9CA /* JGLActivityMemberTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGLActivityMemberTableViewCell.m; sourceTree = "<group>"; };
 		827BD52D1D214A42009AF9CA /* JGLAddBankCardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGLAddBankCardViewController.h; sourceTree = "<group>"; };
 		827BD52E1D214A42009AF9CA /* JGLAddBankCardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGLAddBankCardViewController.m; sourceTree = "<group>"; };
+		827E12C21DC21D82000BDF65 /* JGLWebUserMallViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGLWebUserMallViewController.h; sourceTree = "<group>"; };
+		827E12C31DC21D82000BDF65 /* JGLWebUserMallViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGLWebUserMallViewController.m; sourceTree = "<group>"; };
 		8281BE531CEC41D200C5BD31 /* JGTeamPhotoModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGTeamPhotoModel.h; sourceTree = "<group>"; };
 		8281BE541CEC41D200C5BD31 /* JGTeamPhotoModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGTeamPhotoModel.m; sourceTree = "<group>"; };
 		828A99E21CE3167800AF9860 /* JGTeamCreatePhotoController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGTeamCreatePhotoController.h; sourceTree = "<group>"; };
@@ -3912,6 +3915,7 @@
 		2053ED951DBEF7650076BFE4 /* controller */ = {
 			isa = PBXGroup;
 			children = (
+				827E12C11DC21816000BDF65 /* 商城页面 */,
 				2053ED981DBEF7F00076BFE4 /* JGHNewHomePageViewController.h */,
 				2053ED991DBEF7F00076BFE4 /* JGHNewHomePageViewController.m */,
 			);
@@ -6790,6 +6794,15 @@
 			path = "添加银行卡";
 			sourceTree = "<group>";
 		};
+		827E12C11DC21816000BDF65 /* 商城页面 */ = {
+			isa = PBXGroup;
+			children = (
+				827E12C21DC21D82000BDF65 /* JGLWebUserMallViewController.h */,
+				827E12C31DC21D82000BDF65 /* JGLWebUserMallViewController.m */,
+			);
+			path = "商城页面";
+			sourceTree = "<group>";
+		};
 		8281BE521CEC41A800C5BD31 /* 球队相册 */ = {
 			isa = PBXGroup;
 			children = (
@@ -9402,6 +9415,7 @@
 				20D515181DBB82280006EFCB /* JGHGameBaseSetViewController.m in Sources */,
 				F569A1491CE35AA500CD0FD5 /* JGTeamChannelTableView.m in Sources */,
 				F55DB3B41D2B94F20054F251 /* JGDActivityList.m in Sources */,
+				827E12C41DC21D82000BDF65 /* JGLWebUserMallViewController.m in Sources */,
 				36BFFF8B1BC76D09005B3CE2 /* FDCalendarItem.m in Sources */,
 				F5E1BB001D6B006100414727 /* ZXByteMatrix.m in Sources */,
 				36BFFF9E1BC76FD4005B3CE2 /* CommunityViewController.m in Sources */,
