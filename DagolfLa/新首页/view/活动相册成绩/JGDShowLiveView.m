@@ -43,6 +43,9 @@
     return self;
 }
 
+- (void)configJGHShowLiveView:(NSDictionary *)dic{
+    NSLog(@"configJGHShowLiveView---");
+}
 
 /*
 // Only override drawRect: if you perform custom drawing.

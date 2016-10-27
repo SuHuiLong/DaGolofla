@@ -20,5 +20,6 @@
 
 @property (nonatomic ,strong)UILabel *address;
 
+- (void)configJGHShowLiveView:(NSDictionary *)dic;
 
 @end

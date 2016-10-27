@@ -387,7 +387,15 @@ static NSString *const JGHShowSuppliesMallTableViewCellIdentifier = @"JGHShowSup
 }
 #pragma mark -- 1001(活动) －－1002(相册) －－ 1003（成绩）
 - (void)didSelectActivityOrPhotoOrResultsBtn:(UIButton *)btn{
-    
+    if (btn.tag == 1001) {
+        JGHShowActivityPhotoCell *cell = [self.homeTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+        [cell configJGHShowActivityPhotoCell:_indexModel.activityList];
+
+    }else if (btn.tag == 1002) {
+        JGHShowActivityPhotoCell *cell = [self.homeTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+        [cell configJGHShowLiveCell:_indexModel.activityList];
+
+    }
 }
 #pragma mark -- 我的球队
 - (void)didSelectMyTeamBtn:(UIButton *)btn{

@@ -860,6 +860,7 @@
 		F56F0B871CC60B0400A222F3 /* NoteHandlle.m in Sources */ = {isa = PBXBuildFile; fileRef = F56F0B861CC60B0400A222F3 /* NoteHandlle.m */; };
 		F56F0B8D1CC613E100A222F3 /* NoteModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F56F0B8C1CC613E100A222F3 /* NoteModel.m */; };
 		F56F0B901CC637A200A222F3 /* AddNoteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F56F0B8F1CC637A200A222F3 /* AddNoteViewController.m */; };
+		F56FA2741DC1EAFE008281D7 /* JGDShowLiveView.m in Sources */ = {isa = PBXBuildFile; fileRef = F56FA2731DC1EAFE008281D7 /* JGDShowLiveView.m */; };
 		F5838D8D1D4B26EE00A7FFC6 /* JGDActSelfHistoryScoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5838D8C1D4B26EE00A7FFC6 /* JGDActSelfHistoryScoreViewController.m */; };
 		F5838D901D4B271200A7FFC6 /* JGTeamHisScoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5838D8F1D4B271200A7FFC6 /* JGTeamHisScoreViewController.m */; };
 		F5843DF91CFCF5EA00547812 /* JGSelfSetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5843DF81CFCF5EA00547812 /* JGSelfSetViewController.m */; };
@@ -2799,6 +2800,8 @@
 		F56F0B8C1CC613E100A222F3 /* NoteModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoteModel.m; sourceTree = "<group>"; };
 		F56F0B8E1CC637A200A222F3 /* AddNoteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddNoteViewController.h; sourceTree = "<group>"; };
 		F56F0B8F1CC637A200A222F3 /* AddNoteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddNoteViewController.m; sourceTree = "<group>"; };
+		F56FA2721DC1EAFE008281D7 /* JGDShowLiveView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGDShowLiveView.h; sourceTree = "<group>"; };
+		F56FA2731DC1EAFE008281D7 /* JGDShowLiveView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGDShowLiveView.m; sourceTree = "<group>"; };
 		F5838D8B1D4B26EE00A7FFC6 /* JGDActSelfHistoryScoreViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGDActSelfHistoryScoreViewController.h; sourceTree = "<group>"; };
 		F5838D8C1D4B26EE00A7FFC6 /* JGDActSelfHistoryScoreViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGDActSelfHistoryScoreViewController.m; sourceTree = "<group>"; };
 		F5838D8E1D4B271200A7FFC6 /* JGTeamHisScoreViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGTeamHisScoreViewController.h; sourceTree = "<group>"; };
@@ -3927,6 +3930,8 @@
 		2053ED9B1DBF24E20076BFE4 /* 活动相册成绩 */ = {
 			isa = PBXGroup;
 			children = (
+				F56FA2721DC1EAFE008281D7 /* JGDShowLiveView.h */,
+				F56FA2731DC1EAFE008281D7 /* JGDShowLiveView.m */,
 				2053EDAA1DBF27E80076BFE4 /* JGHPASHeaderTableViewCell.h */,
 				2053EDAB1DBF27E80076BFE4 /* JGHPASHeaderTableViewCell.m */,
 				2053EDAC1DBF27E80076BFE4 /* JGHPASHeaderTableViewCell.xib */,
@@ -9623,6 +9628,7 @@
 				F5E1BB7C1D6B006100414727 /* ZXQRCodeFormatInformation.m in Sources */,
 				F5E1BB2D1D6B006100414727 /* ZXAI01decoder.m in Sources */,
 				207F70451DBF882900667E26 /* JGHWonderfulView.m in Sources */,
+				F56FA2741DC1EAFE008281D7 /* JGDShowLiveView.m in Sources */,
 				20CA13DC1CE9F2C200DA15B9 /* UIColor+ColorTransfer.m in Sources */,
 				F55597221CF5328C00F33099 /* JGPreviewTeamViewController.m in Sources */,
 				36BF019E1BC779D8005B3CE2 /* BallParkModel.m in Sources */,
