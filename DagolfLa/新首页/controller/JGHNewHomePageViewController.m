@@ -18,6 +18,9 @@
 #import "JGHIndexModel.h"
 #import "JGHNavListView.h"
 
+#import "JGHShowMyTeamViewController.h" // 我的球队
+
+
 static NSString *const JGHPASHeaderTableViewCellIdentifier = @"JGHPASHeaderTableViewCell";
 static NSString *const JGHShowSectionTableViewCellIdentifier = @"JGHShowSectionTableViewCell";
 static NSString *const JGHShowFavouritesCellIdentifier = @"JGHShowFavouritesCell";
@@ -399,7 +402,9 @@ static NSString *const JGHShowSuppliesMallTableViewCellIdentifier = @"JGHShowSup
 }
 #pragma mark -- 我的球队
 - (void)didSelectMyTeamBtn:(UIButton *)btn{
-    NSLog(@"我的球队");
+
+    JGHShowMyTeamViewController *myTeamVC = [[JGHShowMyTeamViewController alloc] init];
+    [self.navigationController pushViewController:myTeamVC animated:YES];
 }
 #pragma mark -- 开局记分
 - (void)didSelectStartScoreBtn:(UIButton *)btn{
