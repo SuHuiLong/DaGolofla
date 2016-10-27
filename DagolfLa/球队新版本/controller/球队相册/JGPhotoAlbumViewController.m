@@ -148,8 +148,11 @@
 - (void)downLoadData:(int)page isReshing:(BOOL)isReshing{
     NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
     [dict setObject:_albumKey forKey:@"albumKey"];
+    [dict setObject:DEFAULF_USERID forKey:@"userKey"];
     [dict setObject:[NSNumber numberWithInt:page] forKey:@"offset"];
-    [[JsonHttp jsonHttp]httpRequest:@"team/getTeamMediaList" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
+    NSString* strMd = [JGReturnMD5Str getTeamCompeteSignUpListWithAlbumKey:[_albumKey integerValue] userKey:[DEFAULF_USERID integerValue]];
+    [dict setObject:strMd forKey:@"md5"];
+    [[JsonHttp jsonHttp]httpRequest:@"team/getTeamMediaRoleList" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
         if (isReshing) {
             [_collectionView.header endRefreshing];
         }else {
