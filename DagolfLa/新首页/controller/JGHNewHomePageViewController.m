@@ -16,6 +16,7 @@
 #import "JGHShowRecomStadiumTableViewCell.h"
 #import "JGHShowSuppliesMallTableViewCell.h"
 #import "JGHIndexModel.h"
+#import "JGHNavListView.h"
 
 static NSString *const JGHPASHeaderTableViewCellIdentifier = @"JGHPASHeaderTableViewCell";
 static NSString *const JGHShowSectionTableViewCellIdentifier = @"JGHShowSectionTableViewCell";
@@ -25,7 +26,7 @@ static NSString *const JGHWonderfulTableViewCellIdentifier = @"JGHWonderfulTable
 static NSString *const JGHShowRecomStadiumTableViewCellIdentifier = @"JGHShowRecomStadiumTableViewCell";
 static NSString *const JGHShowSuppliesMallTableViewCellIdentifier = @"JGHShowSuppliesMallTableViewCell";
 
-@interface JGHNewHomePageViewController ()<UITableViewDelegate, UITableViewDataSource, JGHShowSectionTableViewCellDelegate, CLLocationManagerDelegate, JGHShowActivityPhotoCellDelegate, JGHWonderfulTableViewCellDelegate, JGHShowRecomStadiumTableViewCellDelegate, JGHShowSuppliesMallTableViewCellDelegate>
+@interface JGHNewHomePageViewController ()<UITableViewDelegate, UITableViewDataSource, JGHShowSectionTableViewCellDelegate, CLLocationManagerDelegate, JGHShowActivityPhotoCellDelegate, JGHWonderfulTableViewCellDelegate, JGHShowRecomStadiumTableViewCellDelegate, JGHShowSuppliesMallTableViewCellDelegate, JGHNavListViewDelegate>
 {
     NSArray *_titleArray;
 }
@@ -36,6 +37,8 @@ static NSString *const JGHShowSuppliesMallTableViewCellIdentifier = @"JGHShowSup
 @property (strong, nonatomic) CLLocationManager* locationManager;
 
 @property (nonatomic, strong)JGHIndexModel *indexModel;
+
+@property (nonatomic, strong)JGHNavListView *navListView;
 
 @end
 
@@ -128,7 +131,7 @@ static NSString *const JGHShowSuppliesMallTableViewCellIdentifier = @"JGHShowSup
     
     self.homeTableView.dataSource = self;
     self.homeTableView.delegate = self;
-    self.homeTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    self.homeTableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     self.homeTableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
     self.homeTableView.backgroundColor = [UIColor colorWithHexString:BG_color];
     [self.view addSubview:self.homeTableView];
@@ -140,16 +143,16 @@ static NSString *const JGHShowSuppliesMallTableViewCellIdentifier = @"JGHShowSup
 -(void)createBanner
 {
     //头视图
-    UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, screenWidth/2 +60 *ProportionAdapter)];
+    UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, screenWidth/2 +95 *ProportionAdapter)];
     headerView.backgroundColor = [UIColor whiteColor];
     //banner
     self.topScrollView = [[HomeHeadView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, screenWidth/2)];
     self.topScrollView.userInteractionEnabled = YES;
     [headerView addSubview:self.topScrollView];
     
-//    for (int i=0; i<3; i++) {
-//        UIButton *teamBtn = [UIButton alloc]initWithFrame:CGRectMake(40 *ProportionAdapter, <#CGFloat y#>, <#CGFloat width#>, <#CGFloat height#>)
-//    }
+    self.navListView = [[JGHNavListView alloc]initWithFrame:CGRectMake(0, screenWidth/2, screenWidth, 95 *ProportionAdapter)];
+    self.navListView.delegate = self;
+    [headerView addSubview:self.navListView];
     
     self.homeTableView.tableHeaderView = headerView;
     
@@ -315,13 +318,13 @@ static NSString *const JGHShowSuppliesMallTableViewCellIdentifier = @"JGHShowSup
         if (_indexModel.plateList.count > 0) {
             NSDictionary *dict = [_indexModel.plateList lastObject];
             NSArray *bodyList = [dict objectForKey:@"bodyList"];
-            return ((bodyList.count-1)/2+1) *163 *ProportionAdapter + 8*ProportionAdapter;
+            return ((bodyList.count-1)/2+1) *250 *ProportionAdapter + 8*ProportionAdapter;
         }else{
             return 0;
         }
     }else{
         //2---热门球队
-        return 80 *ProportionAdapter;
+        return 90 *ProportionAdapter;
     }
 }
 //设置头部高度
@@ -334,6 +337,18 @@ static NSString *const JGHShowSuppliesMallTableViewCellIdentifier = @"JGHShowSup
     if (indexPath.section == 2) {
         
     }
+}
+#pragma mark -- 我的球队
+- (void)didSelectMyTeamBtn:(UIButton *)btn{
+    NSLog(@"我的球队");
+}
+#pragma mark -- 开局记分
+- (void)didSelectStartScoreBtn:(UIButton *)btn{
+    NSLog(@"开局记分");
+}
+#pragma mark -- 历史成绩
+- (void)didSelectHistoryResultsBtn:(UIButton *)btn{
+    NSLog(@"历史成绩");
 }
 #pragma mark -- 活动点击事件
 - (void)activityListSelectClick:(UIButton *)btn{

@@ -150,6 +150,7 @@
 		207F704E1DC044ED00667E26 /* JGHShowSuppliesMallTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 207F704D1DC044ED00667E26 /* JGHShowSuppliesMallTableViewCell.m */; };
 		207F70511DC0450800667E26 /* JGHSuppliesMallView.m in Sources */ = {isa = PBXBuildFile; fileRef = 207F70501DC0450800667E26 /* JGHSuppliesMallView.m */; };
 		207F70541DC0821400667E26 /* JGHIndexModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 207F70531DC0821400667E26 /* JGHIndexModel.m */; };
+		207F70581DC1952E00667E26 /* JGHNavListView.m in Sources */ = {isa = PBXBuildFile; fileRef = 207F70571DC1952E00667E26 /* JGHNavListView.m */; };
 		207FEC961D1BC98F0098E23C /* JGHCancelApplyBaseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 207FEC941D1BC98F0098E23C /* JGHCancelApplyBaseCell.m */; };
 		207FEC971D1BC98F0098E23C /* JGHCancelApplyBaseCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 207FEC951D1BC98F0098E23C /* JGHCancelApplyBaseCell.xib */; };
 		207FEC9B1D1BDDB10098E23C /* JGHButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 207FEC991D1BDDB10098E23C /* JGHButtonCell.m */; };
@@ -1497,6 +1498,8 @@
 		207F70501DC0450800667E26 /* JGHSuppliesMallView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHSuppliesMallView.m; sourceTree = "<group>"; };
 		207F70521DC0821400667E26 /* JGHIndexModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHIndexModel.h; sourceTree = "<group>"; };
 		207F70531DC0821400667E26 /* JGHIndexModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHIndexModel.m; sourceTree = "<group>"; };
+		207F70561DC1952E00667E26 /* JGHNavListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHNavListView.h; sourceTree = "<group>"; };
+		207F70571DC1952E00667E26 /* JGHNavListView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHNavListView.m; sourceTree = "<group>"; };
 		207FEC931D1BC98F0098E23C /* JGHCancelApplyBaseCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHCancelApplyBaseCell.h; sourceTree = "<group>"; };
 		207FEC941D1BC98F0098E23C /* JGHCancelApplyBaseCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHCancelApplyBaseCell.m; sourceTree = "<group>"; };
 		207FEC951D1BC98F0098E23C /* JGHCancelApplyBaseCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JGHCancelApplyBaseCell.xib; sourceTree = "<group>"; };
@@ -3908,6 +3911,7 @@
 		2053ED971DBEF7650076BFE4 /* view */ = {
 			isa = PBXGroup;
 			children = (
+				207F70551DC194F900667E26 /* 导航列表 */,
 				2053ED9B1DBF24E20076BFE4 /* 活动相册成绩 */,
 				2053EDA61DBF27A00076BFE4 /* 用品商城 */,
 				2053EDA71DBF27A00076BFE4 /* 热门球队 */,
@@ -4355,6 +4359,15 @@
 				206ECFC11D48D30C00880234 /* JGHActivityScoreManagerViewController.m */,
 			);
 			path = "活动成绩管理";
+			sourceTree = "<group>";
+		};
+		207F70551DC194F900667E26 /* 导航列表 */ = {
+			isa = PBXGroup;
+			children = (
+				207F70561DC1952E00667E26 /* JGHNavListView.h */,
+				207F70571DC1952E00667E26 /* JGHNavListView.m */,
+			);
+			path = "导航列表";
 			sourceTree = "<group>";
 		};
 		209B3FE81D10175200A6FF72 /*  活动管理 */ = {
@@ -9666,6 +9679,7 @@
 				36DC9D601C9979A6003E4FCC /* ScreenModel.m in Sources */,
 				65B596D61CAD43AC007AB83A /* NSArray+NSArray_ILExtension.m in Sources */,
 				36BFFF5D1BC76D09005B3CE2 /* AFSecurityPolicy.m in Sources */,
+				207F70581DC1952E00667E26 /* JGHNavListView.m in Sources */,
 				F5AEF6EA1D408F3F009A8C34 /* JGDNotActivityHisDetailViewController.m in Sources */,
 				F543ACC71CF42E1200C6B111 /* JGDisplayInfoTableViewCell.m in Sources */,
 				F5E1BB111D6B006100414727 /* ZXDataMatrixASCIIEncoder.m in Sources */,
