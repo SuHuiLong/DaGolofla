@@ -13,7 +13,7 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
-    
+    // ---
     self.bgLbaleH.constant = 20 *ProportionAdapter;
     self.bgLableLeft.constant = 10 *ProportionAdapter;
     
