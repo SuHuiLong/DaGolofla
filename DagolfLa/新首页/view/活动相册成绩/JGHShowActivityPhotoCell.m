@@ -9,6 +9,7 @@
 #import "JGHShowActivityPhotoCell.h"
 #import "JGHShowActivityView.h"
 #import "JGDShowLiveView.h" // 直播
+#import "JGDShowPhotoView.h" // 相册
 
 @interface JGHShowActivityPhotoCell ()
 {
@@ -63,6 +64,9 @@
     }
 }
 
+- (void)configJGHShowPhotoCell:(NSArray *)activtiyList{
+    
+}
 
 - (void)activityClick:(UIButton *)btn{
     if ([self.delegate respondsToSelector:@selector(activityListSelectClick:)]) {

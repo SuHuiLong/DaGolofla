@@ -24,4 +24,6 @@
 
 - (void)configJGHShowLiveCell:(NSArray *)activtiyList;
 
+- (void)configJGHShowPhotoCell:(NSArray *)activtiyList;
+
 @end
