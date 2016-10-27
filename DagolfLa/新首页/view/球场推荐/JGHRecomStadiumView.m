@@ -16,13 +16,14 @@
         _activityImageView.image = [UIImage imageNamed:@"activityStateImage"];
         [self addSubview:_activityImageView];
         
-        _name = [[UILabel alloc]initWithFrame:CGRectMake(0, 107 *ProportionAdapter, _activityImageView.frame.size.width, 20 *ProportionAdapter)];
-        _name.font = [UIFont systemFontOfSize:15 *ProportionAdapter];
+        _name = [[UILabel alloc]initWithFrame:CGRectMake(0, 113 *ProportionAdapter, _activityImageView.frame.size.width, 20 *ProportionAdapter)];
+        _name.font = [UIFont systemFontOfSize:17 *ProportionAdapter];
         _name.text = @"上海CF球队相册";
         [self addSubview:_name];
         
-        _price = [[UILabel alloc]initWithFrame:CGRectMake(0, 127 *ProportionAdapter, _activityImageView.frame.size.width, 20 *ProportionAdapter)];
-        _price.font = [UIFont systemFontOfSize:15 *ProportionAdapter];
+        _price = [[UILabel alloc]initWithFrame:CGRectMake(0, 143 *ProportionAdapter, _activityImageView.frame.size.width, 20 *ProportionAdapter)];
+        _price.font = [UIFont systemFontOfSize:16 *ProportionAdapter];
+        _price.textColor = [UIColor colorWithHexString:@"#f2862c"];
         _price.text = @"¥998";
         [self addSubview:_price];
         self.backgroundColor = [UIColor whiteColor];

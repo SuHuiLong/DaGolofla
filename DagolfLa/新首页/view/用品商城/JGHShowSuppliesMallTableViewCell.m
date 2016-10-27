@@ -32,9 +32,9 @@
     for (int i=0; i<array.count; i++) {
         
         if (i%2 == 0) {
-            _suppliesMallView = [[JGHSuppliesMallView alloc]initWithFrame:CGRectMake(8*ProportionAdapter, (i/2 +1)*8*ProportionAdapter + (i/2)*155*ProportionAdapter, (screenWidth-24*ProportionAdapter)/2, 155 *ProportionAdapter)];
+            _suppliesMallView = [[JGHSuppliesMallView alloc]initWithFrame:CGRectMake(8*ProportionAdapter, (i/2 +1)*8*ProportionAdapter + (i/2)*235*ProportionAdapter, (screenWidth-24*ProportionAdapter)/2, 235 *ProportionAdapter)];
         }else{
-            _suppliesMallView = [[JGHSuppliesMallView alloc]initWithFrame:CGRectMake(16*ProportionAdapter +(screenWidth-16*ProportionAdapter)/2, (i/2 +1)*8*ProportionAdapter + (i/2)*155*ProportionAdapter, (screenWidth-24*ProportionAdapter)/2, 155 *ProportionAdapter)];
+            _suppliesMallView = [[JGHSuppliesMallView alloc]initWithFrame:CGRectMake(16*ProportionAdapter +(screenWidth-16*ProportionAdapter)/2, (i/2 +1)*8*ProportionAdapter + (i/2)*235*ProportionAdapter, (screenWidth-24*ProportionAdapter)/2, 235 *ProportionAdapter)];
         }
         
         [_suppliesMallView configJGHSuppliesMallView:array[i]];
