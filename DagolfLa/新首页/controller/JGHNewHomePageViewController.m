@@ -25,7 +25,7 @@ static NSString *const JGHWonderfulTableViewCellIdentifier = @"JGHWonderfulTable
 static NSString *const JGHShowRecomStadiumTableViewCellIdentifier = @"JGHShowRecomStadiumTableViewCell";
 static NSString *const JGHShowSuppliesMallTableViewCellIdentifier = @"JGHShowSuppliesMallTableViewCell";
 
-@interface JGHNewHomePageViewController ()<UITableViewDelegate, UITableViewDataSource, JGHShowSectionTableViewCellDelegate, CLLocationManagerDelegate>
+@interface JGHNewHomePageViewController ()<UITableViewDelegate, UITableViewDataSource, JGHShowSectionTableViewCellDelegate, CLLocationManagerDelegate, JGHShowActivityPhotoCellDelegate, JGHWonderfulTableViewCellDelegate, JGHShowRecomStadiumTableViewCellDelegate, JGHShowSuppliesMallTableViewCellDelegate>
 {
     NSArray *_titleArray;
 }
@@ -82,8 +82,11 @@ static NSString *const JGHShowSuppliesMallTableViewCellIdentifier = @"JGHShowSup
 - (void)loadIndexdata{
     NSUserDefaults *userDef = [NSUserDefaults standardUserDefaults];
     NSMutableDictionary *getDict = [NSMutableDictionary dictionary];
-    if (DEFAULF_USERID) {
+    
+    if ([[userDef objectForKey:userID] integerValue] > 0) {
         [getDict setObject:DEFAULF_USERID forKey:@"userKey"];
+    }else{
+        [getDict setObject:@0 forKey:@"userKey"];
     }
     
     if ([userDef objectForKey:@"lat"]) {
@@ -92,13 +95,14 @@ static NSString *const JGHShowSuppliesMallTableViewCellIdentifier = @"JGHShowSup
     }
     
     [[JsonHttp jsonHttp]httpRequest:@"index/getIndex" JsonKey:nil withData:getDict requestMethod:@"GET" failedBlock:^(id errType) {
-        
+        [self.homeTableView.header endRefreshing];
     } completionBlock:^(id data) {
         NSLog(@"%@", data);
         
         [self.indexModel setValuesForKeysWithDictionary:data];
         
         [self.homeTableView reloadData];
+        [self.homeTableView.header endRefreshing];
     }];
 }
 #pragma mark -- 创建TableView
@@ -125,8 +129,12 @@ static NSString *const JGHShowSuppliesMallTableViewCellIdentifier = @"JGHShowSup
     self.homeTableView.dataSource = self;
     self.homeTableView.delegate = self;
     self.homeTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    self.homeTableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
     self.homeTableView.backgroundColor = [UIColor colorWithHexString:BG_color];
     [self.view addSubview:self.homeTableView];
+}
+- (void)headRereshing{
+    [self loadIndexdata];
 }
 #pragma  mark -- 创建Banner
 -(void)createBanner
@@ -188,23 +196,40 @@ static NSString *const JGHShowSuppliesMallTableViewCellIdentifier = @"JGHShowSup
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if (section == 2){
-        return 3;
+        //热门球队
+        if (_indexModel.plateList.count > 0) {
+            NSDictionary *dict = _indexModel.plateList[1];
+            NSArray *bodyList = [dict objectForKey:@"bodyList"];
+            return bodyList.count;
+        }else{
+            return 0;
+        }
     }
     return 1;
+}
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
+    return 10 *ProportionAdapter;
+}
+- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
+    UIView *footView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, 10)];
+    footView.backgroundColor = [UIColor colorWithHexString:BG_color];
+    return footView;
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 0) {
         JGHShowActivityPhotoCell *showActivityPhotoCell = [tableView dequeueReusableCellWithIdentifier:JGHShowActivityPhotoCellIdentifier];
+        showActivityPhotoCell.delegate = self;
         [showActivityPhotoCell configJGHShowActivityPhotoCell:_indexModel.activityList];
         return showActivityPhotoCell;
     }else if (indexPath.section == 1){
         JGHWonderfulTableViewCell *wonderfulTableViewCell = [tableView dequeueReusableCellWithIdentifier:JGHWonderfulTableViewCellIdentifier];
+        wonderfulTableViewCell.delegate = self;
         if (self.indexModel.plateList.count > 0) {
             NSDictionary *wonderfulDict = self.indexModel.plateList[0];
             NSArray *wonderfulArray = [wonderfulDict objectForKey:@"bodyList"];
             [wonderfulTableViewCell configJGHWonderfulTableViewCell:wonderfulArray];
         }
-        
+    
         return wonderfulTableViewCell;
     }else if (indexPath.section == 2){
         //热门球队
@@ -219,6 +244,8 @@ static NSString *const JGHShowSuppliesMallTableViewCellIdentifier = @"JGHShowSup
     }else if (indexPath.section == 3){
         //球场推荐
         JGHShowRecomStadiumTableViewCell *showRecomStadiumTableViewCell = [tableView dequeueReusableCellWithIdentifier:JGHShowRecomStadiumTableViewCellIdentifier];
+        showRecomStadiumTableViewCell.delegate = self;
+        
         if (self.indexModel.plateList.count > 2) {
             NSDictionary *recomStadiumDict = self.indexModel.plateList[2];
             NSArray *recomStadiumArray = [recomStadiumDict objectForKey:@"bodyList"];
@@ -229,6 +256,7 @@ static NSString *const JGHShowSuppliesMallTableViewCellIdentifier = @"JGHShowSup
     }else{
         //用品商城
         JGHShowSuppliesMallTableViewCell *showSuppliesMallTableViewCell = [tableView dequeueReusableCellWithIdentifier:JGHShowSuppliesMallTableViewCellIdentifier];
+        showSuppliesMallTableViewCell.delegate = self;
         if (self.indexModel.plateList.count > 3) {
             NSDictionary *suppliesMallDict = self.indexModel.plateList[3];
             NSArray *suppliesMallArray = [suppliesMallDict objectForKey:@"bodyList"];
@@ -262,14 +290,37 @@ static NSString *const JGHShowSuppliesMallTableViewCellIdentifier = @"JGHShowSup
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section == 0) {
+        // 活动－相册－成绩
         return 150 *ProportionAdapter;
     }else if (indexPath.section == 1){
-        return 3 *143 *ProportionAdapter + 8*ProportionAdapter;
+        //精彩推荐
+        if (_indexModel.plateList.count > 0) {
+            NSDictionary *dict = _indexModel.plateList[0];
+            NSArray *bodyList = [dict objectForKey:@"bodyList"];
+            return ((bodyList.count-1)/2+1) *143 *ProportionAdapter + 8*ProportionAdapter;
+        }else{
+            return 0;
+        }
     }else if (indexPath.section == 3){
-        return 2 *171 *ProportionAdapter + 8*ProportionAdapter;
+        //球场推荐
+        if (_indexModel.plateList.count > 0) {
+            NSDictionary *dict = _indexModel.plateList[2];
+            NSArray *bodyList = [dict objectForKey:@"bodyList"];
+            return ((bodyList.count-1)/2+1) *171 *ProportionAdapter + 8*ProportionAdapter;
+        }else{
+            return 0;
+        }
     }else if (indexPath.section == 4){
-        return self.indexModel.plateList.count/2 *163 *ProportionAdapter + 8*ProportionAdapter;
+        //用品商城
+        if (_indexModel.plateList.count > 0) {
+            NSDictionary *dict = [_indexModel.plateList lastObject];
+            NSArray *bodyList = [dict objectForKey:@"bodyList"];
+            return ((bodyList.count-1)/2+1) *163 *ProportionAdapter + 8*ProportionAdapter;
+        }else{
+            return 0;
+        }
     }else{
+        //2---热门球队
         return 80 *ProportionAdapter;
     }
 }
@@ -278,13 +329,28 @@ static NSString *const JGHShowSuppliesMallTableViewCellIdentifier = @"JGHShowSup
 {
     return 45 *ProportionAdapter;
 }
-- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
-    return 1;
-}
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    
+    // 热门球队
+    if (indexPath.section == 2) {
+        
+    }
 }
-
+#pragma mark -- 活动点击事件
+- (void)activityListSelectClick:(UIButton *)btn{
+    NSLog(@"%td", btn.tag);
+}
+#pragma mark -- 精彩推荐
+- (void)wonderfulSelectClick:(UIButton *)btn{
+    NSLog(@"%td", btn.tag);
+}
+#pragma mark -- 球场推荐
+- (void)recomStadiumSelectClick:(UIButton *)btn{
+    NSLog(@"%td", btn.tag);
+}
+#pragma mark -- 用品商城
+- (void)suppliesMallSelectClick:(UIButton *)btn{
+    NSLog(@"%td", btn.tag);
+}
 #pragma mark -- 更多
 - (void)didSelectMoreBtn:(UIButton *)moreBtn{
     NSLog(@"%td", moreBtn.tag);

@@ -38,7 +38,17 @@
         }
         
         [_suppliesMallView configJGHSuppliesMallView:array[i]];
+        UIButton *selectBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
+        selectBtn.tag = 500 +i;
+        [selectBtn addTarget:self action:@selector(suppliesMallClick:) forControlEvents:UIControlEventTouchUpInside];
+        [_suppliesMallView addSubview:selectBtn];
         [self addSubview:_suppliesMallView];
+    }
+}
+
+- (void)suppliesMallClick:(UIButton *)btn{
+    if ([self.delegate respondsToSelector:@selector(suppliesMallSelectClick:)]) {
+        [self.delegate suppliesMallSelectClick:btn];
     }
 }
 

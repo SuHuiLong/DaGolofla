@@ -8,7 +8,15 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol JGHWonderfulTableViewCellDelegate <NSObject>
+
+- (void)wonderfulSelectClick:(UIButton *)btn;
+
+@end
+
 @interface JGHWonderfulTableViewCell : UITableViewCell
+
+@property (weak, nonatomic)id <JGHWonderfulTableViewCellDelegate> delegate;
 
 - (void)configJGHWonderfulTableViewCell:(NSArray *)wonderfulArray;
 

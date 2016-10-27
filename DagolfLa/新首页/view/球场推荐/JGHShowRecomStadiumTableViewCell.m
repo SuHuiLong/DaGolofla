@@ -36,9 +36,20 @@
         }
         
         [_recomStadiumView configJGHRecomStadiumView:array[i]];
+        UIButton *selectBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
+        selectBtn.tag = 400 +i;
+        [selectBtn addTarget:self action:@selector(recomStadiumClick:) forControlEvents:UIControlEventTouchUpInside];
+        [_recomStadiumView addSubview:selectBtn];
         [self addSubview:_recomStadiumView];
     }
 }
+
+- (void)recomStadiumClick:(UIButton *)btn{
+    if ([self.delegate respondsToSelector:@selector(recomStadiumSelectClick:)]) {
+        [self.delegate recomStadiumSelectClick:btn];
+    }
+}
+
 
 - (void)awakeFromNib {
     [super awakeFromNib];

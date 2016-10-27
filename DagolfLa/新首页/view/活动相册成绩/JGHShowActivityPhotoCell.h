@@ -8,7 +8,15 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol JGHShowActivityPhotoCellDelegate <NSObject>
+
+- (void)activityListSelectClick:(UIButton *)btn;
+
+@end
+
 @interface JGHShowActivityPhotoCell : UITableViewCell
+
+@property (weak, nonatomic)id <JGHShowActivityPhotoCellDelegate> delegate;
 
 @property (nonatomic, strong)UIImageView *headerImageView;
 

@@ -8,7 +8,15 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol JGHShowSuppliesMallTableViewCellDelegate <NSObject>
+
+- (void)suppliesMallSelectClick:(UIButton *)btn;
+
+@end
+
 @interface JGHShowSuppliesMallTableViewCell : UITableViewCell
+
+@property (weak, nonatomic)id <JGHShowSuppliesMallTableViewCellDelegate> delegate;
 
 - (void)configJGHShowSuppliesMallTableViewCell:(NSArray *)array;
 

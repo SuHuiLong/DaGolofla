@@ -20,7 +20,7 @@
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
     if (self ==  [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
-        self.backgroundColor = [UIColor redColor];
+        self.backgroundColor = [UIColor whiteColor];
         self.selectionStyle = UITableViewCellSelectionStyleNone;
         
     }
@@ -39,7 +39,19 @@
         
         NSLog(@"%d", i/2);
         _wonderfulView.backgroundColor = [UIColor whiteColor];
+        UIButton *selectBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
+        selectBtn.tag = 300 +i;
+        [selectBtn addTarget:self action:@selector(wonderfulClick:) forControlEvents:UIControlEventTouchUpInside];
+        [_wonderfulView addSubview:selectBtn];
+        
+        [_wonderfulView configJGHWonderfulView:wonderfulArray[i]];
         [self addSubview:_wonderfulView];
+    }
+}
+
+- (void)wonderfulClick:(UIButton *)btn{
+    if ([self.delegate respondsToSelector:@selector(wonderfulSelectClick:)]) {
+        [self.delegate wonderfulSelectClick:btn];
     }
 }
 
