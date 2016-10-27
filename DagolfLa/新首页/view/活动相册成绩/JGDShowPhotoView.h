@@ -12,6 +12,11 @@
 
 @property (nonatomic, strong) UIImageView *photoImageV;
 
+@property (nonatomic, strong) UIView *backView;
+
+@property (nonatomic, strong) UILabel *titleLB;
+
+
 - (void)configJGHShowPhotoView:(NSDictionary *)dic;
 
 @end
