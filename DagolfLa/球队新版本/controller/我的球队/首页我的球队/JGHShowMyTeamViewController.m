@@ -16,6 +16,10 @@
 #import "JGDGuestChannelViewController.h"
 #import "JGTeamChannelViewController.h"
 
+#import "JGTeamMemberORManagerViewController.h"
+#import "JGTeamActibityNameViewController.h" 
+#import "JGTeamMainhallViewController.h"    // 大厅
+
 static NSString *const JGTeamActivityCellIdentifier = @"JGTeamActivityCell";
 static NSString *const JGLMyTeamTableViewCellIdentifier = @"JGLMyTeamTableViewCell";
 static NSString *const JGHShowMyTeamHeaderCellIdentifier = @"JGHShowMyTeamHeaderCell";
@@ -95,11 +99,41 @@ static NSString *const JGHAddMoreTeamTableViewCellIdentifier = @"JGHAddMoreTeamT
     } completionBlock:^(id data) {
         [self.teamArray removeAllObjects];
         if ([[data objectForKey:@"packSuccess"] boolValue]) {
-            for (NSDictionary *dataDic in [data objectForKey:@"teamList"]) {
-                JGLMyTeamModel *model = [[JGLMyTeamModel alloc] init];
-                [model setValuesForKeysWithDictionary:dataDic];
-                [self.teamArray addObject:model];
+            
+            if ([data objectForKey:@"teamList"]) {
+                for (NSDictionary *dataDic in [data objectForKey:@"teamList"]) {
+                    JGLMyTeamModel *model = [[JGLMyTeamModel alloc] init];
+                    [model setValuesForKeysWithDictionary:dataDic];
+                    [self.teamArray addObject:model];
+                }
+            }else{
+                [self.showMyTeamTableView removeFromSuperview];
+                self.view.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];
+                UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake(134 * ProportionAdapter, 105 * ProportionAdapter, 107 * ProportionAdapter, 107 * ProportionAdapter)];
+                imageV.image = [UIImage imageNamed:@"bg-shy"];
+                [self.view addSubview:imageV];
+                
+                UILabel *label1 = [[UILabel alloc] initWithFrame:CGRectMake(100 * ProportionAdapter, 251 * ProportionAdapter, 200 * ProportionAdapter, 30 * ProportionAdapter)];
+                label1.text = @"您还没有自己的球队哦";
+                label1.font = [UIFont systemFontOfSize:18 * ProportionAdapter];
+                label1.textColor = [UIColor colorWithHexString:@"a0a0a0"];
+                [self.view addSubview:label1];
+                
+                UILabel *label2 = [[UILabel alloc] initWithFrame:CGRectMake(20 * ProportionAdapter, 300 * ProportionAdapter, screenWidth - 40 * ProportionAdapter, 80 * ProportionAdapter)];
+                label2.textColor = [UIColor colorWithHexString:@"a0a0a0"];
+                label2.font = [UIFont systemFontOfSize:15 * ProportionAdapter];
+                NSMutableAttributedString *attriString = [[NSMutableAttributedString alloc] initWithString:@"您可以点击右上角创建自己的球队，也可到球队大厅快速加入别人的球队！"];
+                [attriString addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:18 * ProportionAdapter] range:NSMakeRange(19, 4)];
+                [attriString addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"#32b148"] range:NSMakeRange(19, 4)];
+                label2.attributedText = attriString;
+                label2.numberOfLines = 0;
+                [self.view addSubview:label2];
+                
+                UITapGestureRecognizer *gapVC = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapAvt)];
+                [label2 addGestureRecognizer:gapVC];
+                label2.userInteractionEnabled = YES;
             }
+            
         }
 //        else {
 //            if ([data objectForKey:@"packResultMsg"]) {
@@ -112,6 +146,14 @@ static NSString *const JGHAddMoreTeamTableViewCellIdentifier = @"JGHAddMoreTeamT
         [self.showMyTeamTableView.footer endRefreshing];
     }];
 }
+
+- (void)tapAvt{
+
+    JGTeamMainhallViewController *teamMainCtrl = [[JGTeamMainhallViewController alloc]init];
+    [self.navigationController pushViewController:teamMainCtrl animated:YES];
+
+}
+
 #pragma mark -- 创建TableView
 - (void)createHomeTableView{
     self.showMyTeamTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight -44)];
@@ -190,11 +232,12 @@ static NSString *const JGHAddMoreTeamTableViewCellIdentifier = @"JGHAddMoreTeamT
         if (_teamArray.count > 0) {
             [myTeamTableViewCell newShowData:_teamArray[indexPath.row]];
         }
-        
+        myTeamTableViewCell.selectionStyle = UITableViewCellSelectionStyleNone;
         return myTeamTableViewCell;
     }else{
         JGTeamActivityCell *teamActivityCell = [tableView dequeueReusableCellWithIdentifier:JGTeamActivityCellIdentifier];
         [teamActivityCell setJGTeamActivityCellWithModel:_activityArray[indexPath.row] fromCtrl:1];
+        teamActivityCell.selectionStyle = UITableViewCellSelectionStyleNone;
         return teamActivityCell;
     }
 }
@@ -216,6 +259,57 @@ static NSString *const JGHAddMoreTeamTableViewCellIdentifier = @"JGHAddMoreTeamT
     }
     return 45 *ProportionAdapter;
 }
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (indexPath.section == 0) {
+        [self teamAct:indexPath];
+    } else if (indexPath.section == 2) {
+        JGTeamActibityNameViewController *actVC = [[JGTeamActibityNameViewController alloc] init];
+        JGTeamAcitivtyModel *model = _activityArray[indexPath.row];
+        actVC.teamKey = [model.timeKey integerValue];
+        [self.navigationController pushViewController:actVC animated:YES];
+    }
+}
+
+- (void)teamAct:(NSIndexPath *)indexPath{
+    NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
+    [dic setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"userId"] forKey:@"userKey"];
+    JGLMyTeamModel *model = _teamArray[indexPath.row];
+    [dic setObject:@([model.teamKey integerValue]) forKey:@"teamKey"];
+    
+    [[JsonHttp jsonHttp] httpRequest:@"team/getTeamInfo" JsonKey:nil withData:dic requestMethod:@"GET" failedBlock:^(id errType) {
+        [Helper alertViewNoHaveCancleWithTitle:@"获取球队信息失败" withBlock:^(UIAlertController *alertView) {
+            [self.navigationController presentViewController:alertView animated:YES completion:nil];
+        }];
+        
+    } completionBlock:^(id data) {
+        
+        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+            JGTeamMemberORManagerViewController *detailVC = [[JGTeamMemberORManagerViewController alloc] init];
+            if ([[[data objectForKey:@"teamMember"] objectForKey:@"power"] containsString:@"1005"]){
+                detailVC.detailDic = [data objectForKey:@"team"];
+                //                detailVC.detailModel.manager = 1;
+                detailVC.isManager = YES;
+                
+                [self.navigationController pushViewController:detailVC animated:YES];
+            }else{
+                
+                detailVC.detailDic = [data objectForKey:@"team"];
+                //                detailVC.detailModel.manager = 0;
+                detailVC.isManager = NO;
+                
+                [self.navigationController pushViewController:detailVC animated:YES];
+            }
+            
+        }else{
+            if ([data objectForKey:@"packResultMsg"]) {
+                [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+            }
+        }
+        
+    }];
+}
+
 #pragma mark -- 嘉宾通道
 - (void)didSelectGuestsBtn:(UIButton *)guestbtn{
     NSLog(@"嘉宾通道");
@@ -229,7 +323,7 @@ static NSString *const JGHAddMoreTeamTableViewCellIdentifier = @"JGHAddMoreTeamT
 - (void)didSelectAddMoreBtn:(UIButton *)btn{
     NSLog(@"添加更多球队");
     btn.enabled = NO;
-    JGTeamChannelViewController *teamMainCtrl = [[JGTeamChannelViewController alloc]init];
+    JGTeamMainhallViewController *teamMainCtrl = [[JGTeamMainhallViewController alloc]init];
     [self.navigationController pushViewController:teamMainCtrl animated:YES];
     btn.enabled = YES;
 }
