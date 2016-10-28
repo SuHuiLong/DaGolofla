@@ -77,7 +77,7 @@ static NSString *const JGHShowSuppliesMallTableViewCellIdentifier = @"JGHShowSup
     [[UIApplication sharedApplication] setStatusBarHidden:YES];
     //把当前界面的导航栏隐藏
     self.navigationController.navigationBarHidden = NO;
-    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"show" object:nil];
 }
 
 - (void)viewDidLoad {
@@ -271,9 +271,12 @@ static NSString *const JGHShowSuppliesMallTableViewCellIdentifier = @"JGHShowSup
             if ([arrayIcon count] != 0) {
                 [self.topScrollView config:arrayIcon data:arrayUrl title:arrayTitle ts:arrayTs];
 //                self.topScrollView.delegate = self;
+                __weak JGHNewHomePageViewController *weakSelf = self;
                 [self.topScrollView setClick:^(UIViewController *vc) {
-                    [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
-                    [self.navigationController pushViewController:vc animated:YES];
+                    [weakSelf isLoginUp];
+                    
+                    [weakSelf.navigationController pushViewController:vc animated:YES];
+                    [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:nil];
                 }];
             }
         }
@@ -727,13 +730,14 @@ static NSString *const JGHShowSuppliesMallTableViewCellIdentifier = @"JGHShowSup
 }
 #pragma mark -- 判断是否需要登录
 - (void)isLoginUp{
+//    [[NSNotificationCenter defaultCenter] postNotificationName:@"show" object:nil];
     if ([[NSUserDefaults standardUserDefaults] objectForKey:@"userId"]) {
         
     }
     else
     {
         [Helper alertViewWithTitle:@"是否立即登录?" withBlockCancle:^{
-            
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"show" object:nil];
         } withBlockSure:^{
             EnterViewController *vc = [[EnterViewController alloc] init];
             vc.jiazai = ^(){
@@ -741,6 +745,8 @@ static NSString *const JGHShowSuppliesMallTableViewCellIdentifier = @"JGHShowSup
             };
             [self.navigationController pushViewController:vc animated:YES];
         } withBlock:^(UIAlertController *alertView) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"show" object:nil];
+//            [self.navigationController pushViewController:alertView animated:YES];
             [self presentViewController:alertView animated:YES completion:nil];
         }];
         return;
