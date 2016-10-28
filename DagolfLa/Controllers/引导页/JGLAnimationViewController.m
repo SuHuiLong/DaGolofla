@@ -167,7 +167,7 @@ static int timeNumber = 0;
     //绘制贝塞尔曲线
     CGPathRef path=CGPathCreateMutable();
     CGPathMoveToPoint(path, NULL, self.ballView.layer.position.x, self.ballView.layer.position.y);//移动到起始点
-    CGPathAddCurveToPoint(path, NULL, 160*ProportionAdapter, 261*ProportionAdapter, 140*ProportionAdapter, 255*ProportionAdapter, 240*ProportionAdapter, 290*ProportionAdapter);//绘制二次贝塞尔曲线
+    CGPathAddCurveToPoint(path, NULL, 160*ProportionAdapter, 341*ProportionAdapter, 140*ProportionAdapter, 255*ProportionAdapter, 240*ProportionAdapter, 290*ProportionAdapter);//绘制二次贝塞尔曲线
     keyframeAnimation.path=path;//设置path属性
     CGPathRelease(path);//释放路径对象
     keyframeAnimation.removedOnCompletion = NO;
