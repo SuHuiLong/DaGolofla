@@ -55,21 +55,32 @@
 }
 
 - (void)teamBtnClick:(UIButton *)btn{
+    btn.enabled = NO;
+    
+    
     if ([self.delegate respondsToSelector:@selector(didSelectMyTeamBtn:)]) {
         [self.delegate didSelectMyTeamBtn:btn];
     }
+    
+    btn.enabled = YES;
 }
 
 - (void)scoreBtnClick:(UIButton *)btn{
+    btn.enabled = NO;
     if ([self.delegate respondsToSelector:@selector(didSelectStartScoreBtn:)]) {
         [self.delegate didSelectStartScoreBtn:btn];
     }
+    
+    btn.enabled = YES;
 }
 
 - (void)resultsBtnClick:(UIButton *)btn{
+    btn.enabled = NO;
     if ([self.delegate respondsToSelector:@selector(didSelectHistoryResultsBtn:)]) {
         [self.delegate didSelectHistoryResultsBtn:btn];
     }
+    
+    btn.enabled = YES;
 }
 
 /*

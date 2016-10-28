@@ -47,9 +47,12 @@
 }
 
 - (void)suppliesMallClick:(UIButton *)btn{
+    btn.enabled = NO;
     if ([self.delegate respondsToSelector:@selector(suppliesMallSelectClick:)]) {
         [self.delegate suppliesMallSelectClick:btn];
     }
+    
+    btn.enabled = YES;
 }
 
 - (void)awakeFromNib {
