@@ -23,6 +23,7 @@
 #import "JGNotTeamMemberDetailViewController.h"  // 球队详情 － 别人的球队
 #import "JGPhotoAlbumViewController.h" // 相册
 #import "JGLWebUserMallViewController.h"
+#import "JGTeamMainhallViewController.h"
 
 static NSString *const JGHPASHeaderTableViewCellIdentifier = @"JGHPASHeaderTableViewCell";
 static NSString *const JGHShowSectionTableViewCellIdentifier = @"JGHShowSectionTableViewCell";
@@ -339,7 +340,14 @@ static NSString *const JGHShowSuppliesMallTableViewCellIdentifier = @"JGHShowSup
         JGHShowSectionTableViewCell *showSectionCell = [tableView dequeueReusableCellWithIdentifier:JGHShowSectionTableViewCellIdentifier];
         showSectionCell.delegate = self;
         showSectionCell.moreBtn.tag = 100 +section;
-        [showSectionCell congfigJGHShowSectionTableViewCell:_titleArray[section] andHiden:1];
+        
+        NSDictionary *dict = _indexModel.plateList[section -1];
+        NSInteger _more = 0;
+        if ([dict objectForKey:@"moreLink"]) {
+            _more = 1;
+        }
+        
+        [showSectionCell congfigJGHShowSectionTableViewCell:_titleArray[section] andHiden:_more];
         return showSectionCell;
     }
 }
@@ -441,15 +449,23 @@ static NSString *const JGHShowSuppliesMallTableViewCellIdentifier = @"JGHShowSup
     NSArray *bodyList = [dict objectForKey:@"bodyList"];
     NSDictionary *ablumListDict = bodyList[btn.tag -300];
     
-    JGPhotoAlbumViewController *photoAlbumCtrl = [[JGPhotoAlbumViewController alloc]init];
-    photoAlbumCtrl.albumKey = [NSNumber numberWithInteger:[[ablumListDict objectForKey:@"timeKey"] integerValue]];
-    photoAlbumCtrl.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:photoAlbumCtrl animated:YES];
+    [self pushctrlWithUrl:[ablumListDict objectForKey:@"weblinks"]];
+//    JGPhotoAlbumViewController *photoAlbumCtrl = [[JGPhotoAlbumViewController alloc]init];
+//    photoAlbumCtrl.albumKey = [NSNumber numberWithInteger:[[ablumListDict objectForKey:@"timeKey"] integerValue]];
+//    photoAlbumCtrl.hidesBottomBarWhenPushed = YES;
+//    [self.navigationController pushViewController:photoAlbumCtrl animated:YES];
 }
 #pragma mark -- 球场推荐
 - (void)recomStadiumSelectClick:(UIButton *)btn{
     NSLog(@"%td", btn.tag);
-
+    NSDictionary *dict = _indexModel.plateList[2];
+    NSArray *bodyList = [dict objectForKey:@"bodyList"];
+    NSDictionary *mallListDict = bodyList[btn.tag -500];
+    [self pushctrlWithUrl:[mallListDict objectForKey:@"weblinks"]];
+//    JGLWebUserMallViewController *mallCtrl = [[JGLWebUserMallViewController alloc]init];
+//    mallCtrl.urlRequest = [NSString stringWithFormat:@"%@", [mallListDict objectForKey:@"weblinks"]];
+//    mallCtrl.hidesBottomBarWhenPushed = YES;
+//    [self.navigationController pushViewController:mallCtrl animated:YES];
 }
 #pragma mark -- 用品商城
 - (void)suppliesMallSelectClick:(UIButton *)btn{
@@ -457,16 +473,35 @@ static NSString *const JGHShowSuppliesMallTableViewCellIdentifier = @"JGHShowSup
     NSDictionary *dict = _indexModel.plateList[3];
     NSArray *bodyList = [dict objectForKey:@"bodyList"];
     NSDictionary *mallListDict = bodyList[btn.tag -500];
-    
-    JGLWebUserMallViewController *mallCtrl = [[JGLWebUserMallViewController alloc]init];
-    mallCtrl.urlRequest = [NSString stringWithFormat:@"%@", [mallListDict objectForKey:@"weblinks"]];
-    mallCtrl.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:mallCtrl animated:YES];
+    [self pushctrlWithUrl:[mallListDict objectForKey:@"weblinks"]];
+//    JGLWebUserMallViewController *mallCtrl = [[JGLWebUserMallViewController alloc]init];
+//    mallCtrl.urlRequest = [NSString stringWithFormat:@"%@", [mallListDict objectForKey:@"weblinks"]];
+//    mallCtrl.hidesBottomBarWhenPushed = YES;
+//    [self.navigationController pushViewController:mallCtrl animated:YES];
 }
 #pragma mark -- 更多
 - (void)didSelectMoreBtn:(UIButton *)moreBtn{
     NSLog(@"%td", moreBtn.tag);
-    
+    NSDictionary *dict = _indexModel.plateList[moreBtn.tag -100 -1];
+    NSString *url = [dict objectForKey:@"moreLink"];
+    if ([url containsString:@"teamHall"]) {
+        JGTeamMainhallViewController *teamMainCtrl = [[JGTeamMainhallViewController alloc]init];
+        teamMainCtrl.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:teamMainCtrl animated:YES];
+    }else {
+        NSString *urlRequest;
+        if ([url containsString:@"index.html"]) {
+            //http://www.dagolfla.com/app/index.html
+            urlRequest = @"http://www.dagolfla.com/app/index.html";
+        }else{
+            urlRequest = @"http://www.dagolfla.com/app/bookserch.html";
+        }
+        
+        JGLWebUserMallViewController *mallCtrl = [[JGLWebUserMallViewController alloc]init];
+        mallCtrl.urlRequest = urlRequest;
+        mallCtrl.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:mallCtrl animated:YES];
+    }
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -539,6 +574,35 @@ static NSString *const JGHShowSuppliesMallTableViewCellIdentifier = @"JGHShowSup
     if ([error code] == kCLErrorLocationUnknown) {
         //无法获取位置信息
         //NSLog(@"无法获取位置信息");
+    }
+    
+    //定位失败后也下载数据
+    [self loadIndexdata];
+}
+#pragma mark -- 通过URL 判断跳转
+- (void)pushctrlWithUrl:(NSString *)url{
+    
+    if ([url containsString:@"goodDetail"]) {//商城／球场预定
+        JGLWebUserMallViewController *mallCtrl = [[JGLWebUserMallViewController alloc]init];
+        //http://www.dagolfla.com/app/ProductDetails.html?proid=%@
+        NSString *urlRequest = [NSString stringWithFormat:@"%@", [Helper returnKeyVlaueWithUrlString:url andKey:@"goodKey"]];
+        mallCtrl.urlRequest = [NSString stringWithFormat:@"http://www.dagolfla.com/app/ProductDetails.html?proid=%@", urlRequest];
+        mallCtrl.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:mallCtrl animated:YES];
+        return;
+    }
+    
+    if ([url containsString:@"teamMediaList"]) {//相册
+        JGPhotoAlbumViewController *albumCtrl = [[JGPhotoAlbumViewController alloc]init];
+        NSNumber *albumKey = [NSNumber numberWithInteger:[[Helper returnKeyVlaueWithUrlString:url andKey:@"albumKey"] integerValue]];
+        if ([albumKey integerValue] > 0) {
+            albumCtrl.albumKey = albumKey;
+        }else{
+            albumCtrl.albumKey = 0;
+        }
+        albumCtrl.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:albumCtrl animated:YES];
+        return;
     }
 }
 /*

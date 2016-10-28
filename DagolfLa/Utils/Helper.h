@@ -112,6 +112,8 @@
 //json格式字符串转字典：
 + (NSDictionary *)dictionaryWithJsonString:(NSString *)jsonString;
 
-//字典转json格式字符串：dictionaryToJson
+//在URL中取key对应的值
++ (NSString *)returnKeyVlaueWithUrlString:(NSString *)string andKey:(NSString *)key;
+
 
 @end

@@ -11,4 +11,13 @@
 
 @interface JGHNewHomePageViewController : ViewController
 
+//定义枚举类型
+typedef enum {
+    ENUM_ViewController895_ActionTypeStart=0,//开始
+    ENUM_ViewController895_ActionTypeStop,//停止
+    ENUM_ViewController895_ActionTypePause//暂停
+} PushCtrlType;
+
+@property (nonatomic,assign) NSInteger PushType;
+
 @end
