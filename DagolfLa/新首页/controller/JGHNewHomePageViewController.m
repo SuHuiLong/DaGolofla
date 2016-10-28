@@ -508,6 +508,9 @@ static NSString *const JGHShowSuppliesMallTableViewCellIdentifier = @"JGHShowSup
             [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
             
             JGPhotoAlbumViewController *photoVC = [[JGPhotoAlbumViewController alloc] init];
+            photoVC.blockRefresh = ^(){
+              //只是实现，不作操作
+            };
             photoVC.albumKey = [_indexModel.albumList[numB] objectForKey:@"timeKey"];
             [self.navigationController pushViewController:photoVC animated:YES];
         };
