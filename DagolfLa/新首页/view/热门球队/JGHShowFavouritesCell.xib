@@ -13,7 +13,7 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="95"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <frame key="frameInset" width="320" height="94"/>
+                <frame key="frameInset" width="320" height="94.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="1qj-54-Twl">
@@ -52,7 +52,7 @@
                     <constraint firstAttribute="trailing" secondItem="tOw-WT-eRd" secondAttribute="trailing" constant="10" id="KnI-9r-Jp6"/>
                     <constraint firstItem="daL-QR-NgF" firstAttribute="centerY" secondItem="jTN-kh-iFg" secondAttribute="centerY" id="Qyd-fD-gED"/>
                     <constraint firstItem="tOw-WT-eRd" firstAttribute="leading" secondItem="1qj-54-Twl" secondAttribute="trailing" constant="20" id="YIZ-fx-ISj"/>
-                    <constraint firstItem="wEf-dt-nF6" firstAttribute="leading" secondItem="Irm-n2-aX1" secondAttribute="trailing" constant="10" id="cGt-xO-2JB"/>
+                    <constraint firstItem="wEf-dt-nF6" firstAttribute="leading" secondItem="Irm-n2-aX1" secondAttribute="trailing" constant="5" id="cGt-xO-2JB"/>
                     <constraint firstItem="Irm-n2-aX1" firstAttribute="leading" secondItem="1qj-54-Twl" secondAttribute="trailing" constant="20" id="iSF-u4-r8R"/>
                     <constraint firstItem="1qj-54-Twl" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="jSH-DI-nJ1"/>
                     <constraint firstItem="Irm-n2-aX1" firstAttribute="top" secondItem="1qj-54-Twl" secondAttribute="top" id="k3D-4z-Ekd"/>

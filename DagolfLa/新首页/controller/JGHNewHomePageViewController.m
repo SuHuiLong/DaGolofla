@@ -221,7 +221,7 @@ static NSString *const JGHShowSuppliesMallTableViewCellIdentifier = @"JGHShowSup
     self.homeTableView.dataSource = self;
     self.homeTableView.delegate = self;
     self.homeTableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
-    self.homeTableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
+    self.homeTableView.header = [MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
     self.homeTableView.backgroundColor = [UIColor colorWithHexString:BG_color];
     [self.view addSubview:self.homeTableView];
 }
@@ -428,6 +428,8 @@ static NSString *const JGHShowSuppliesMallTableViewCellIdentifier = @"JGHShowSup
     return 45 *ProportionAdapter;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    [self isLoginUp];
+    
     // 热门球队 --- 详情
     if (indexPath.section == 2) {
         NSDictionary *dict = [_indexModel.plateList[1] objectForKey:@"bodyList"][indexPath.row];
@@ -477,6 +479,7 @@ static NSString *const JGHShowSuppliesMallTableViewCellIdentifier = @"JGHShowSup
 }
 #pragma mark -- 1001(活动) －－1002(相册) －－ 1003（成绩）
 - (void)didSelectActivityOrPhotoOrResultsBtn:(UIButton *)btn{
+    
     JGHShowActivityPhotoCell *cell = [self.homeTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
     
     UILabel *activityLable = [self.view viewWithTag:30001];
@@ -497,6 +500,7 @@ static NSString *const JGHShowSuppliesMallTableViewCellIdentifier = @"JGHShowSup
         scoreLable.hidden = YES;
         [cell configJGHShowPhotoCell:_indexModel.albumList];
         cell.photoBlock = ^(NSInteger numB){
+            [self isLoginUp];
             
             [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
             
@@ -511,6 +515,7 @@ static NSString *const JGHShowSuppliesMallTableViewCellIdentifier = @"JGHShowSup
         scoreLable.hidden = NO;
         [cell configJGHShowLiveCell:_indexModel.scoreList];
         cell.liveBlock = ^(NSInteger numB){
+            [self isLoginUp];
             
             [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
             
@@ -530,24 +535,32 @@ static NSString *const JGHShowSuppliesMallTableViewCellIdentifier = @"JGHShowSup
 }
 #pragma mark -- 我的球队
 - (void)didSelectMyTeamBtn:(UIButton *)btn{
+    [self isLoginUp];
+    
     JGHShowMyTeamViewController *myTeamVC = [[JGHShowMyTeamViewController alloc] init];
     myTeamVC.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:myTeamVC animated:YES];
 }
 #pragma mark -- 开局记分
 - (void)didSelectStartScoreBtn:(UIButton *)btn{
+    [self isLoginUp];
+    
     JGLScoreNewViewController *scoreCtrl = [[JGLScoreNewViewController alloc]init];
     scoreCtrl.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:scoreCtrl animated:YES];
 }
 #pragma mark -- 历史成绩
 - (void)didSelectHistoryResultsBtn:(UIButton *)btn{
+    [self isLoginUp];
+    
     JGDHistoryScoreViewController *historyCtrl = [[JGDHistoryScoreViewController alloc]init];
     historyCtrl.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:historyCtrl animated:YES];
 }
 #pragma mark -- 活动点击事件
 - (void)activityListSelectClick:(UIButton *)btn{
+    [self isLoginUp];
+    
     [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
     NSDictionary *dic = _indexModel.activityList[btn.tag - 200];
     JGTeamActibityNameViewController *teamActVC = [[JGTeamActibityNameViewController alloc] init];
@@ -557,6 +570,8 @@ static NSString *const JGHShowSuppliesMallTableViewCellIdentifier = @"JGHShowSup
 #pragma mark -- 精彩推荐 -- 相册
 - (void)wonderfulSelectClick:(UIButton *)btn{
     NSLog(@"%td", btn.tag);
+    [self isLoginUp];
+    
     NSDictionary *dict = _indexModel.plateList[0];
     NSArray *bodyList = [dict objectForKey:@"bodyList"];
     NSDictionary *ablumListDict = bodyList[btn.tag -300];
@@ -568,6 +583,8 @@ static NSString *const JGHShowSuppliesMallTableViewCellIdentifier = @"JGHShowSup
 #pragma mark -- 球场推荐
 - (void)recomStadiumSelectClick:(UIButton *)btn{
     NSLog(@"%td", btn.tag);
+    [self isLoginUp];
+    
     NSDictionary *dict = _indexModel.plateList[2];
     NSArray *bodyList = [dict objectForKey:@"bodyList"];
     NSDictionary *mallListDict = bodyList[btn.tag -400];
@@ -576,6 +593,8 @@ static NSString *const JGHShowSuppliesMallTableViewCellIdentifier = @"JGHShowSup
 #pragma mark -- 用品商城
 - (void)suppliesMallSelectClick:(UIButton *)btn{
     NSLog(@"%td", btn.tag);
+    [self isLoginUp];
+    
     NSDictionary *dict = _indexModel.plateList[3];
     NSArray *bodyList = [dict objectForKey:@"bodyList"];
     NSDictionary *mallListDict = bodyList[btn.tag -500];
@@ -584,6 +603,8 @@ static NSString *const JGHShowSuppliesMallTableViewCellIdentifier = @"JGHShowSup
 #pragma mark -- 更多
 - (void)didSelectMoreBtn:(UIButton *)moreBtn{
     NSLog(@"%td", moreBtn.tag);
+    [self isLoginUp];
+    
     NSDictionary *dict = _indexModel.plateList[moreBtn.tag -100 -1];
     NSString *url = [dict objectForKey:@"moreLink"];
     if ([url containsString:@"teamHall"]) {
@@ -715,6 +736,9 @@ static NSString *const JGHShowSuppliesMallTableViewCellIdentifier = @"JGHShowSup
             
         } withBlockSure:^{
             EnterViewController *vc = [[EnterViewController alloc] init];
+            vc.jiazai = ^(){
+                [self.homeTableView.header beginRefreshing];
+            };
             [self.navigationController pushViewController:vc animated:YES];
         } withBlock:^(UIAlertController *alertView) {
             [self presentViewController:alertView animated:YES completion:nil];

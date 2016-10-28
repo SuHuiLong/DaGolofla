@@ -101,7 +101,7 @@ static NSString *const JGHAddMoreTeamTableViewCellIdentifier = @"JGHAddMoreTeamT
     [dict setObject:DEFAULF_USERID forKey:@"userKey"];//3619
     [dict setObject:@(_page) forKey:@"offset"];
     [dict setObject:[NSString stringWithFormat:@"%@", _timeKey] forKey:@"teamKey"];
-    [[JsonHttp jsonHttp]httpRequest:@"team/getMyTeamActivityAll" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
+    [[JsonHttp jsonHttp]httpRequest:@"team/getMyTeamActivityList" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
         [self.showMyTeamTableView.header endRefreshing];
         [self.showMyTeamTableView.footer endRefreshing];
     } completionBlock:^(id data) {
