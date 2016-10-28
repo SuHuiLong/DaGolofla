@@ -175,7 +175,7 @@
             _teamTimeKey = [data objectForKey:@"teamKey"];
             _strTitle = [data objectForKey:@"albumName"];
             self.title = _strTitle;
-            if (_rightItem) {
+            if (!_rightItem) {
                 if ([[data objectForKey:@"isTeamMemeber"] integerValue] == 1) {
                     _rightItem = [[UIBarButtonItem alloc]initWithTitle:@"上传" style:UIBarButtonItemStylePlain target:self action:@selector(upDataClick)];
                     _rightItem.tintColor = [UIColor whiteColor];
