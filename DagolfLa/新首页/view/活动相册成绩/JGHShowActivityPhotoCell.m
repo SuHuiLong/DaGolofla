@@ -37,7 +37,7 @@
     [self.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
     for (int i=0; i<activtiyList.count; i++) {
         
-        _showActivityView = [[JGHShowActivityView alloc]initWithFrame:CGRectMake(14 *ProportionAdapter, 60 *i *ProportionAdapter +(i+1)*17 *ProportionAdapter, screenWidth -28*ProportionAdapter, 60 *ProportionAdapter)];
+        _showActivityView = [[JGHShowActivityView alloc]initWithFrame:CGRectMake(20 *ProportionAdapter, 60 *i *ProportionAdapter +(i+1)*17 *ProportionAdapter, screenWidth -40*ProportionAdapter, 60 *ProportionAdapter)];
         _showActivityView.backgroundColor = [UIColor whiteColor];
         [_showActivityView configJGHShowActivityView:activtiyList[i]];
         
@@ -54,7 +54,7 @@
     [self.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
     for (int i=0; i<activtiyList.count; i++) {
         
-        _liveView = [[JGDShowLiveView alloc]initWithFrame:CGRectMake(14 *ProportionAdapter, 60 *i *ProportionAdapter +(i+1)*17 *ProportionAdapter, screenWidth -28*ProportionAdapter, 60 *ProportionAdapter)];
+        _liveView = [[JGDShowLiveView alloc]initWithFrame:CGRectMake(20 *ProportionAdapter, 60 *i *ProportionAdapter +(i+1)*17 *ProportionAdapter, screenWidth -40*ProportionAdapter, 60 *ProportionAdapter)];
         _liveView.backgroundColor = [UIColor whiteColor];
         [_liveView configJGHShowLiveView:activtiyList[i]];
         

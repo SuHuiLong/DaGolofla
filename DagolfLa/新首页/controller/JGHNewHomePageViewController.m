@@ -27,6 +27,10 @@
 #import "JGDHistoryScoreViewController.h"
 #import "JGTeamActibityNameViewController.h" // 活动
 #import "JGLScoreLiveViewController.h"   // 直播
+#import "UseMallViewController.h"
+#import "JGNewCreateTeamTableViewController.h"
+#import "DetailViewController.h"
+#import "JGLPushDetailsViewController.h"
 
 static NSString *const JGHPASHeaderTableViewCellIdentifier = @"JGHPASHeaderTableViewCell";
 static NSString *const JGHShowSectionTableViewCellIdentifier = @"JGHShowSectionTableViewCell";
@@ -84,16 +88,22 @@ static NSString *const JGHShowSuppliesMallTableViewCellIdentifier = @"JGHShowSup
     _titleArray = @[@"", @"精彩推荐", @"热门球队", @"球场推荐", @"用品商城"];
     self.indexModel = [[JGHIndexModel alloc]init];
     _showLineID = 0;
+    
+    //监听分组页面返回，刷新数据
+    NSNotificationCenter * center = [NSNotificationCenter defaultCenter];
+    //添加当前类对象为一个观察者，name和object设置为nil，表示接收一切通知
+    [center addObserver:self selector:@selector(PushJGTeamActibityNameViewController:) name:@"PushJGTeamActibityNameViewController" object:nil];
 
+    
     [self createHomeTableView];
     
     [self parsingCacheData];
     
+    [self loadIndexdata];//上线不注释
+    
     [self getCurPosition];
     
     [self createBanner];
-    
-    [self loadIndexdata];//上线不注释
 }
 #pragma mark -- 寻找本地缓存数据
 - (void)parsingCacheData{
@@ -110,6 +120,25 @@ static NSString *const JGHShowSuppliesMallTableViewCellIdentifier = @"JGHShowSup
         JGHIndexModel *model = [unachiver decodeObjectForKey:@"indexModel"];
         self.indexModel = model;
 
+        [self.homeTableView reloadData];
+    }else{
+        NSString * path = [[NSBundle mainBundle] pathForResource:@"index.json" ofType:nil];
+        
+        NSError * error = nil;
+        NSString * str = [NSString stringWithContentsOfFile:path encoding:NSASCIIStringEncoding error:&error];
+        if (error) {
+            NSLog(@"error:%@", error);
+        }
+        
+        NSData * data = [str dataUsingEncoding:NSUTF8StringEncoding];
+        
+        NSError * error1 = nil;
+        NSDictionary * dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:&error1];
+        if (error1) {
+            NSLog(@"error1:%@", error1);
+        }
+        
+        [self.indexModel setValuesForKeysWithDictionary:dic];
         [self.homeTableView reloadData];
     }
 }
@@ -514,6 +543,7 @@ static NSString *const JGHShowSuppliesMallTableViewCellIdentifier = @"JGHShowSup
 #pragma mark -- 历史成绩
 - (void)didSelectHistoryResultsBtn:(UIButton *)btn{
     JGDHistoryScoreViewController *historyCtrl = [[JGDHistoryScoreViewController alloc]init];
+    historyCtrl.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:historyCtrl animated:YES];
 }
 #pragma mark -- 活动点击事件
@@ -672,6 +702,146 @@ static NSString *const JGHShowSuppliesMallTableViewCellIdentifier = @"JGHShowSup
         albumCtrl.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:albumCtrl animated:YES];
         return;
+    }
+}
+#pragma mark -- 判断是否需要登录
+- (void)isLoginUp{
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"userId"]) {
+        
+    }
+    else
+    {
+        [Helper alertViewWithTitle:@"是否立即登录?" withBlockCancle:^{
+            
+        } withBlockSure:^{
+            EnterViewController *vc = [[EnterViewController alloc] init];
+            [self.navigationController pushViewController:vc animated:YES];
+        } withBlock:^(UIAlertController *alertView) {
+            [self presentViewController:alertView animated:YES completion:nil];
+        }];
+        return;
+    }
+}
+#pragma mark -- 网页 跳转活动详情
+- (void)PushJGTeamActibityNameViewController:(NSNotification *)not{
+    [self isLoginUp];
+    
+    if ([not.userInfo[@"details"] isEqualToString:@"activityKey"]) {
+        //活动
+        JGTeamActibityNameViewController *teamCtrl= [[JGTeamActibityNameViewController alloc]init];
+        teamCtrl.teamKey = [not.userInfo[@"timekey"] integerValue];
+        teamCtrl.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:teamCtrl animated:YES];
+        return;
+    }
+    else if ([not.userInfo[@"details"] isEqualToString:@"teamKey"])
+    {
+        //球队
+        NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
+        [dic setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"userId"] forKey:@"userKey"];
+        [dic setObject:@([not.userInfo[@"timekey"] integerValue]) forKey:@"teamKey"];
+        
+        [[JsonHttp jsonHttp] httpRequest:@"team/getTeamInfo" JsonKey:nil withData:dic requestMethod:@"GET" failedBlock:^(id errType) {
+            
+        } completionBlock:^(id data) {
+            
+            
+            if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
+                
+                if (![data objectForKey:@"teamMember"]) {
+                    JGNotTeamMemberDetailViewController *detailVC = [[JGNotTeamMemberDetailViewController alloc] init];
+                    detailVC.detailDic = [data objectForKey:@"team"];
+                    
+                    [self.navigationController pushViewController:detailVC animated:YES];
+                }else{
+                    
+                    if ([[[data objectForKey:@"teamMember"] objectForKey:@"power"] containsString:@"1005"]){
+                        JGTeamMemberORManagerViewController *detailVC = [[JGTeamMemberORManagerViewController alloc] init];
+                        detailVC.detailDic = [data objectForKey:@"team"];
+                        detailVC.isManager = YES;
+                        [self.navigationController pushViewController:detailVC animated:YES];
+                    }else{
+                        JGTeamMemberORManagerViewController *detailVC = [[JGTeamMemberORManagerViewController alloc] init];
+                        detailVC.detailDic = [data objectForKey:@"team"];
+                        detailVC.isManager = NO;
+                        [self.navigationController pushViewController:detailVC animated:YES];
+                    }
+                    
+                    
+                }
+                
+            }else{
+                if ([data objectForKey:@"packResultMsg"]) {
+                    [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+                }
+            }
+            
+        }];
+        
+        return;
+    }
+    else if ([not.userInfo[@"details"] isEqualToString:@"goodKey"])
+    {
+        //商城
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
+        UseMallViewController* userVc = [[UseMallViewController alloc]init];
+        userVc.linkUrl = [NSString stringWithFormat:@"http://www.dagolfla.com/app/ProductDetails.html?proid=%td",[not.userInfo[@"timekey"] integerValue]];
+        [self.navigationController pushViewController:userVc animated:YES];
+        return;
+    }
+    else if ([not.userInfo[@"details"] isEqualToString:@"url"])
+    {
+        //h5
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
+        JGLPushDetailsViewController* puVc = [[JGLPushDetailsViewController alloc]init];
+        puVc.strUrl = [NSString stringWithFormat:@"%@",not.userInfo[@"timekey"]];
+        [self.navigationController pushViewController:puVc animated:YES];
+    }
+    else if ([not.userInfo[@"details"] isEqualToString:@"moodKey"])
+    {
+        //社区
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
+        
+        DetailViewController * comDevc = [[DetailViewController alloc]init];
+        
+        comDevc.detailId = [NSNumber numberWithInteger:[not.userInfo[@"timekey"] integerValue]];
+        
+        [self.navigationController pushViewController:comDevc animated:YES];
+        
+    }
+    //创建球队
+    else if ([not.userInfo[@"details"] isEqualToString:@"createTeam"]) {
+        NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
+        
+        if ([user objectForKey:@"cacheCreatTeamDic"]) {
+            UIAlertController *alert=[UIAlertController alertControllerWithTitle:@"提示" message:@"是否继续上次编辑" preferredStyle:UIAlertControllerStyleAlert];
+            
+            UIAlertAction *action1=[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                [user setObject:0 forKey:@"cacheCreatTeamDic"];
+                JGNewCreateTeamTableViewController *creatteamVc = [[JGNewCreateTeamTableViewController alloc] init];
+                [self.navigationController pushViewController:creatteamVc animated:YES];
+            }];
+            UIAlertAction* action2=[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                JGNewCreateTeamTableViewController *creatteamVc = [[JGNewCreateTeamTableViewController alloc] init];
+                creatteamVc.detailDic = [[user objectForKey:@"cacheCreatTeamDic"] mutableCopy];
+                creatteamVc.titleField.text = [[user objectForKey:@"cacheCreatTeamDic"] objectForKey:@"name"];
+                
+                
+                [self.navigationController pushViewController:creatteamVc animated:YES];
+            }];
+            
+            [alert addAction:action1];
+            [alert addAction:action2];
+            [self presentViewController:alert animated:YES completion:nil];
+            
+        }else{
+            JGNewCreateTeamTableViewController *creatteamVc = [[JGNewCreateTeamTableViewController alloc] init];
+            [self.navigationController pushViewController:creatteamVc animated:YES];
+        }
+    }
+    else{
+        
     }
 }
 /*

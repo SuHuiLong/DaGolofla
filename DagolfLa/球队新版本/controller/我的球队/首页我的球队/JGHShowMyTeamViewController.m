@@ -43,7 +43,7 @@ static NSString *const JGHAddMoreTeamTableViewCellIdentifier = @"JGHAddMoreTeamT
     self.teamArray = [NSMutableArray array];
     self.activityArray = [NSMutableArray array];
     _page = 0;
-    _titleArray = @[@"我的球队", @"", @"我的活动"];
+    _titleArray = @[@"我的球队", @"", @"我的球队活动"];
     
     [self createHomeTableView];
     
