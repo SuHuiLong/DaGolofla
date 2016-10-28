@@ -14,6 +14,7 @@
     if (self == [super initWithFrame:frame]) {
         _activityImageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 60 *ProportionAdapter, 60 *ProportionAdapter)];
         _activityImageView.image = [UIImage imageNamed:@"activityStateImage"];
+        _activityImageView.userInteractionEnabled = YES;
         [self addSubview:_activityImageView];
         _activityImageView.layer.cornerRadius = 6 * ProportionAdapter;
         _activityImageView.clipsToBounds = YES;

@@ -22,7 +22,7 @@
 #import "JGTeamMemberORManagerViewController.h" // 球队详情 － 自己的球队
 #import "JGNotTeamMemberDetailViewController.h"  // 球队详情 － 别人的球队
 #import "JGPhotoAlbumViewController.h" // 相册
-
+#import "JGLWebUserMallViewController.h"
 
 static NSString *const JGHPASHeaderTableViewCellIdentifier = @"JGHPASHeaderTableViewCell";
 static NSString *const JGHShowSectionTableViewCellIdentifier = @"JGHShowSectionTableViewCell";
@@ -35,6 +35,7 @@ static NSString *const JGHShowSuppliesMallTableViewCellIdentifier = @"JGHShowSup
 @interface JGHNewHomePageViewController ()<UITableViewDelegate, UITableViewDataSource, JGHShowSectionTableViewCellDelegate, CLLocationManagerDelegate, JGHShowActivityPhotoCellDelegate, JGHWonderfulTableViewCellDelegate, JGHShowRecomStadiumTableViewCellDelegate, JGHShowSuppliesMallTableViewCellDelegate, JGHNavListViewDelegate, JGHPASHeaderTableViewCellDelegate>
 {
     NSArray *_titleArray;
+    
 }
 @property (nonatomic, strong)HomeHeadView *topScrollView;//BANNAER图
 
@@ -77,7 +78,7 @@ static NSString *const JGHShowSuppliesMallTableViewCellIdentifier = @"JGHShowSup
     self.view.backgroundColor = [UIColor colorWithHexString:BG_color];
     _titleArray = @[@"", @"精彩推荐", @"热门球队", @"球场推荐", @"用品商城"];
     self.indexModel = [[JGHIndexModel alloc]init];
-    
+
     [self createHomeTableView];
     
     [self parsingCacheData];
@@ -102,10 +103,7 @@ static NSString *const JGHShowSuppliesMallTableViewCellIdentifier = @"JGHShowSup
         //3. 解归档，根据key值访问
         JGHIndexModel *model = [unachiver decodeObjectForKey:@"indexModel"];
         self.indexModel = model;
-//        NSString *name = [unachiver decodeObjectForKey:@"indexModel"];
-//        int age = [unachiver decodeIntForKey:@"age"];
-//        NSArray *ary = [unachiver decodeObjectForKey:@"language"];
-//        NSLog(@"name=%@ age=%i ary=%@",name,age,ary);
+
         [self.homeTableView reloadData];
     }
 }
@@ -350,7 +348,7 @@ static NSString *const JGHShowSuppliesMallTableViewCellIdentifier = @"JGHShowSup
 {
     if (indexPath.section == 0) {
         // 活动－相册－成绩
-        return 173 *ProportionAdapter;
+        return 190 *ProportionAdapter;
     }else if (indexPath.section == 1){
         //精彩推荐
         if (_indexModel.plateList.count > 0) {
@@ -389,7 +387,7 @@ static NSString *const JGHShowSuppliesMallTableViewCellIdentifier = @"JGHShowSup
     return 45 *ProportionAdapter;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    // 热门球队
+    // 热门球队 --- 详情
     if (indexPath.section == 2) {
         
     }
@@ -429,22 +427,41 @@ static NSString *const JGHShowSuppliesMallTableViewCellIdentifier = @"JGHShowSup
 #pragma mark -- 历史成绩
 - (void)didSelectHistoryResultsBtn:(UIButton *)btn{
     NSLog(@"历史成绩");
+
 }
 #pragma mark -- 活动点击事件
 - (void)activityListSelectClick:(UIButton *)btn{
     NSLog(@"%td", btn.tag);
+
 }
-#pragma mark -- 精彩推荐
+#pragma mark -- 精彩推荐 -- 相册
 - (void)wonderfulSelectClick:(UIButton *)btn{
     NSLog(@"%td", btn.tag);
+    NSDictionary *dict = _indexModel.plateList[0];
+    NSArray *bodyList = [dict objectForKey:@"bodyList"];
+    NSDictionary *ablumListDict = bodyList[btn.tag -300];
+    
+    JGPhotoAlbumViewController *photoAlbumCtrl = [[JGPhotoAlbumViewController alloc]init];
+    photoAlbumCtrl.albumKey = [NSNumber numberWithInteger:[[ablumListDict objectForKey:@"timeKey"] integerValue]];
+    photoAlbumCtrl.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:photoAlbumCtrl animated:YES];
 }
 #pragma mark -- 球场推荐
 - (void)recomStadiumSelectClick:(UIButton *)btn{
     NSLog(@"%td", btn.tag);
+
 }
 #pragma mark -- 用品商城
 - (void)suppliesMallSelectClick:(UIButton *)btn{
     NSLog(@"%td", btn.tag);
+    NSDictionary *dict = _indexModel.plateList[3];
+    NSArray *bodyList = [dict objectForKey:@"bodyList"];
+    NSDictionary *mallListDict = bodyList[btn.tag -500];
+    
+    JGLWebUserMallViewController *mallCtrl = [[JGLWebUserMallViewController alloc]init];
+    mallCtrl.urlRequest = [NSString stringWithFormat:@"%@", [mallListDict objectForKey:@"weblinks"]];
+    mallCtrl.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:mallCtrl animated:YES];
 }
 #pragma mark -- 更多
 - (void)didSelectMoreBtn:(UIButton *)moreBtn{
@@ -500,14 +517,9 @@ static NSString *const JGHShowSuppliesMallTableViewCellIdentifier = @"JGHShowSup
              
              //定位成功后下载数据
              [self loadIndexdata];
-         }
-         else if (error == nil && [array count] == 0)
-         {
-             NSLog(@"No results were returned.");
-         }
-         else if (error != nil)
-         {
-             NSLog(@"An error occurred = %@", error);
+         } else {
+             //定位失败后也下载数据
+             [self loadIndexdata];
          }
      }];
     

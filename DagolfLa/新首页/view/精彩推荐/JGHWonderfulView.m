@@ -13,6 +13,7 @@
 - (instancetype)initWithFrame:(CGRect)frame{
     if (self == [super initWithFrame:frame]) {
         _activityImageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, self.frame.size.width, 107 *ProportionAdapter)];
+        _activityImageView.userInteractionEnabled = YES;
         [self addSubview:_activityImageView];
         
         _name = [[UILabel alloc]initWithFrame:CGRectMake(0, 115 *ProportionAdapter, _activityImageView.frame.size.width, 20 *ProportionAdapter)];
