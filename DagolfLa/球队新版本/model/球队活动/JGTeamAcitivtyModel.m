@@ -17,6 +17,11 @@
     if ([key isEqualToString:@"title"]) {
         [self setValue:value forKey:@"name"];
     }
+    
+    
+    if ([key isEqualToString:@"beginTime"]) {
+        [self setValue:value forKey:@"beginDate"];
+    }
 }
 
 @end
