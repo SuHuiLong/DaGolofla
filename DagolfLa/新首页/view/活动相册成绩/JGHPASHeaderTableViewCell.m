@@ -42,5 +42,20 @@
     }
 }
 
+- (void)configJGHPASHeaderTableViewCell:(NSInteger)showId{
+    if (showId == 0) {
+        self.activityLable.hidden = NO;
+        self.photoLable.hidden = YES;
+        self.resultsLable.hidden = YES;
+    }else if (showId == 1){
+        self.activityLable.hidden = YES;
+        self.photoLable.hidden = NO;
+        self.resultsLable.hidden = YES;
+    }else{
+        self.activityLable.hidden = YES;
+        self.photoLable.hidden = YES;
+        self.resultsLable.hidden = NO;
+    }
+}
 
 @end

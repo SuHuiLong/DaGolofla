@@ -45,7 +45,6 @@
         
         _actDescrib = [[UILabel alloc]initWithFrame:CGRectMake(71 *ProportionAdapter, 40 *ProportionAdapter, 280 * ProportionAdapter, 20*ProportionAdapter)];
         _actDescrib.font = [UIFont systemFontOfSize:14 *ProportionAdapter];
-        _actDescrib.text = @"哈哈 嘿嘿 吼猴 喵喵";
         _actDescrib.textColor = [UIColor colorWithHexString:@"#636161"];
         [self addSubview:_actDescrib];
 
@@ -63,6 +62,8 @@
     _activityName.text = [NSString stringWithFormat:@"%@", [dic objectForKey:@"title"]];
     _address.text = [NSString stringWithFormat:@"%@", [dic objectForKey:@"ballName"]];
     _time.text = [NSString stringWithFormat:@"%@月%@号",[timeString substringWithRange:NSMakeRange(5, 2)], [timeString substringWithRange:NSMakeRange(8, 2)]];
+    _actDescrib.text = [NSString stringWithFormat:@"%@", [dic objectForKey:@"userNames"]];
+
 }
 
 /*

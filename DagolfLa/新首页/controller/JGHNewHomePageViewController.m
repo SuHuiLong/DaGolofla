@@ -24,7 +24,7 @@
 #import "JGPhotoAlbumViewController.h" // 相册
 #import "JGLWebUserMallViewController.h"
 #import "JGTeamMainhallViewController.h"
-
+#import "JGDHistoryScoreViewController.h"
 #import "JGTeamActibityNameViewController.h" // 活动
 #import "JGLScoreLiveViewController.h"   // 直播
 
@@ -40,6 +40,7 @@ static NSString *const JGHShowSuppliesMallTableViewCellIdentifier = @"JGHShowSup
 {
     NSArray *_titleArray;
     
+    NSInteger _showLineID;//0-活动，1-相册，2-成绩
 }
 @property (nonatomic, strong)HomeHeadView *topScrollView;//BANNAER图
 
@@ -82,6 +83,7 @@ static NSString *const JGHShowSuppliesMallTableViewCellIdentifier = @"JGHShowSup
     self.view.backgroundColor = [UIColor colorWithHexString:BG_color];
     _titleArray = @[@"", @"精彩推荐", @"热门球队", @"球场推荐", @"用品商城"];
     self.indexModel = [[JGHIndexModel alloc]init];
+    _showLineID = 0;
 
     [self createHomeTableView];
     
@@ -89,9 +91,9 @@ static NSString *const JGHShowSuppliesMallTableViewCellIdentifier = @"JGHShowSup
     
     [self getCurPosition];
     
-//    [self loadIndexdata];//上线注释
-    
     [self createBanner];
+    
+    [self loadIndexdata];//上线不注释
 }
 #pragma mark -- 寻找本地缓存数据
 - (void)parsingCacheData{
@@ -131,6 +133,8 @@ static NSString *const JGHShowSuppliesMallTableViewCellIdentifier = @"JGHShowSup
         [self.homeTableView.header endRefreshing];
     } completionBlock:^(id data) {
         NSLog(@"%@", data);
+        _showLineID = 0;
+        
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
             [self.indexModel setValuesForKeysWithDictionary:data];
             
@@ -334,11 +338,8 @@ static NSString *const JGHShowSuppliesMallTableViewCellIdentifier = @"JGHShowSup
     if (section == 0) {
         JGHPASHeaderTableViewCell *pASHeaderCell = [tableView dequeueReusableCellWithIdentifier:JGHPASHeaderTableViewCellIdentifier];
         pASHeaderCell.delegate = self;
-//        NSInteger saveOrDelete = 0;
-//        saveOrDelete = [_showArray[section] integerValue];
-//        [eventRulesHeaderCell configJGHEventRulesHeaderCell:section +1 andSelect:saveOrDelete];
-        
-        return pASHeaderCell;
+        [pASHeaderCell configJGHPASHeaderTableViewCell:_showLineID];
+        return (UIView *)pASHeaderCell;
     }else{
         JGHShowSectionTableViewCell *showSectionCell = [tableView dequeueReusableCellWithIdentifier:JGHShowSectionTableViewCellIdentifier];
         showSectionCell.delegate = self;
@@ -351,7 +352,7 @@ static NSString *const JGHShowSuppliesMallTableViewCellIdentifier = @"JGHShowSup
         }
         
         [showSectionCell congfigJGHShowSectionTableViewCell:_titleArray[section] andHiden:_more];
-        return showSectionCell;
+        return (UIView *)showSectionCell;
     }
 }
 //Cell的高度
@@ -400,11 +401,8 @@ static NSString *const JGHShowSuppliesMallTableViewCellIdentifier = @"JGHShowSup
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     // 热门球队 --- 详情
     if (indexPath.section == 2) {
-        
         NSDictionary *dict = [_indexModel.plateList[1] objectForKey:@"bodyList"][indexPath.row];
-        
         [self hotTeam: dict];
-        
     }
 }
 
@@ -420,12 +418,8 @@ static NSString *const JGHShowSuppliesMallTableViewCellIdentifier = @"JGHShowSup
     [[JsonHttp jsonHttp] httpRequest:@"team/getTeamInfo" JsonKey:nil withData:dic requestMethod:@"GET" failedBlock:^(id errType) {
         
     } completionBlock:^(id data) {
-        
-        
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
-            
             [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
-            
             if (![data objectForKey:@"teamMember"]) {
                 JGNotTeamMemberDetailViewController *detailVC = [[JGNotTeamMemberDetailViewController alloc] init];
                 detailVC.detailDic = [data objectForKey:@"team"];
@@ -445,29 +439,33 @@ static NSString *const JGHShowSuppliesMallTableViewCellIdentifier = @"JGHShowSup
                     [self.navigationController pushViewController:detailVC animated:YES];
                 }
             }
-            
         }else{
             if ([data objectForKey:@"packResultMsg"]) {
                 [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
             }
         }
-        
     }];
-    
 }
-
-
 #pragma mark -- 1001(活动) －－1002(相册) －－ 1003（成绩）
 - (void)didSelectActivityOrPhotoOrResultsBtn:(UIButton *)btn{
-
     JGHShowActivityPhotoCell *cell = [self.homeTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
     
+    UILabel *activityLable = [self.view viewWithTag:30001];
+    UILabel *photoLable = [self.view viewWithTag:30002];
+    UILabel *scoreLable = [self.view viewWithTag:30003];
+    
     if (btn.tag == 1001) {
-        
+        _showLineID = 0;
+        activityLable.hidden = NO;
+        photoLable.hidden = YES;
+        scoreLable.hidden = YES;
         [cell configJGHShowActivityPhotoCell:_indexModel.activityList];
         
     } else if (btn.tag == 1002) {
-        
+        _showLineID = 1;
+        activityLable.hidden = YES;
+        photoLable.hidden = NO;
+        scoreLable.hidden = YES;
         [cell configJGHShowPhotoCell:_indexModel.albumList];
         cell.photoBlock = ^(NSInteger numB){
             
@@ -478,7 +476,10 @@ static NSString *const JGHShowSuppliesMallTableViewCellIdentifier = @"JGHShowSup
             [self.navigationController pushViewController:photoVC animated:YES];
         };
     } else if (btn.tag == 1003) {
-        
+        _showLineID = 2;
+        activityLable.hidden = YES;
+        photoLable.hidden = YES;
+        scoreLable.hidden = NO;
         [cell configJGHShowLiveCell:_indexModel.scoreList];
         cell.liveBlock = ^(NSInteger numB){
             
@@ -496,6 +497,7 @@ static NSString *const JGHShowSuppliesMallTableViewCellIdentifier = @"JGHShowSup
             [self.navigationController pushViewController:liveVC animated:YES];
         };
     }
+    
 }
 #pragma mark -- 我的球队
 - (void)didSelectMyTeamBtn:(UIButton *)btn{
@@ -505,23 +507,19 @@ static NSString *const JGHShowSuppliesMallTableViewCellIdentifier = @"JGHShowSup
 }
 #pragma mark -- 开局记分
 - (void)didSelectStartScoreBtn:(UIButton *)btn{
-    NSLog(@"开局记分");
     JGLScoreNewViewController *scoreCtrl = [[JGLScoreNewViewController alloc]init];
     scoreCtrl.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:scoreCtrl animated:YES];
 }
 #pragma mark -- 历史成绩
 - (void)didSelectHistoryResultsBtn:(UIButton *)btn{
-    NSLog(@"历史成绩");
-
+    JGDHistoryScoreViewController *historyCtrl = [[JGDHistoryScoreViewController alloc]init];
+    [self.navigationController pushViewController:historyCtrl animated:YES];
 }
 #pragma mark -- 活动点击事件
 - (void)activityListSelectClick:(UIButton *)btn{
-   
     [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
-    
     NSDictionary *dic = _indexModel.activityList[btn.tag - 200];
-    
     JGTeamActibityNameViewController *teamActVC = [[JGTeamActibityNameViewController alloc] init];
     teamActVC.teamKey = [[dic objectForKey:@"timeKey"] integerValue];
     [self.navigationController pushViewController:teamActVC animated:YES];
@@ -542,7 +540,7 @@ static NSString *const JGHShowSuppliesMallTableViewCellIdentifier = @"JGHShowSup
     NSLog(@"%td", btn.tag);
     NSDictionary *dict = _indexModel.plateList[2];
     NSArray *bodyList = [dict objectForKey:@"bodyList"];
-    NSDictionary *mallListDict = bodyList[btn.tag -500];
+    NSDictionary *mallListDict = bodyList[btn.tag -400];
     [self pushctrlWithUrl:[mallListDict objectForKey:@"weblinks"]];
 }
 #pragma mark -- 用品商城
@@ -583,7 +581,6 @@ static NSString *const JGHShowSuppliesMallTableViewCellIdentifier = @"JGHShowSup
 }
 #pragma MARK --定位方法
 -(void)getCurPosition{
-    
     if (_locationManager==nil) {
         _locationManager=[[CLLocationManager alloc] init];
     }
@@ -597,7 +594,6 @@ static NSString *const JGHShowSuppliesMallTableViewCellIdentifier = @"JGHShowSup
         }
         [_locationManager startUpdatingLocation];
     }
-    
 }
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
 {
@@ -605,7 +601,6 @@ static NSString *const JGHShowSuppliesMallTableViewCellIdentifier = @"JGHShowSup
     //NSLog(@"经度=%f 纬度=%f 高度=%f", currLocation.coordinate.latitude, currLocation.coordinate.longitude, currLocation.altitude);
     NSUserDefaults *user=[NSUserDefaults standardUserDefaults];
     // 获取当前所在的城市名
-    
     CLGeocoder *geocoder = [[CLGeocoder alloc] init];
     //根据经纬度反向地理编译出地址信息
     [geocoder reverseGeocodeLocation:currLocation completionHandler:^(NSArray *array, NSError *error)
