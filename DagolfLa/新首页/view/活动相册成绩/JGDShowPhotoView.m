@@ -16,6 +16,7 @@
         self.photoImageV = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, (screenWidth - 29 * ProportionAdapter) / 2 , 70 * ProportionAdapter)];
         self.photoImageV.contentMode = UIViewContentModeScaleAspectFill;
         self.photoImageV.clipsToBounds = YES;
+        self.photoImageV.userInteractionEnabled = YES;
         [self addSubview:self.photoImageV];
         
         self.backView = [[UIView alloc] initWithFrame:CGRectMake(0, 55 * ProportionAdapter,  (screenWidth - 29 * ProportionAdapter) / 2, 15 * ProportionAdapter)];

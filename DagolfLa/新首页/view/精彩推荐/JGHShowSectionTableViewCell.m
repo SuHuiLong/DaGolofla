@@ -44,11 +44,9 @@
 }
 
 - (IBAction)moreBtn:(UIButton *)sender {
-    sender.enabled = NO;
     if (self.delegate) {
         [self.delegate didSelectMoreBtn:sender];
     }
     
-    sender.enabled = YES;
 }
 @end

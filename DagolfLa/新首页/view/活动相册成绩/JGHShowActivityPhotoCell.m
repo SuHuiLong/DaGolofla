@@ -96,12 +96,10 @@
 }
 
 - (void)activityClick:(UIButton *)btn{
-    btn.enabled = NO;
     if ([self.delegate respondsToSelector:@selector(activityListSelectClick:)]) {
         [self.delegate activityListSelectClick:btn];
     }
     
-    btn.enabled = YES;
 }
 
 - (void)awakeFromNib {

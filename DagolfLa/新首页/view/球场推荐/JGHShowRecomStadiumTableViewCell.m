@@ -45,12 +45,10 @@
 }
 
 - (void)recomStadiumClick:(UIButton *)btn{
-    btn.enabled = NO;
     if ([self.delegate respondsToSelector:@selector(recomStadiumSelectClick:)]) {
         [self.delegate recomStadiumSelectClick:btn];
     }
     
-    btn.enabled = YES;
 }
 
 
