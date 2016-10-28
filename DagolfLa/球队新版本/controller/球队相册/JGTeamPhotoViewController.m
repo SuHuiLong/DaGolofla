@@ -252,7 +252,6 @@
 {
     JGPhotoAlbumViewController* phoVc = [[JGPhotoAlbumViewController alloc]init];
     phoVc.strTitle = [_dataArray[indexPath.row] name];
-    phoVc.strTimeKey = [_dataArray[indexPath.row] timeKey];
     phoVc.albumKey = [_dataArray[indexPath.row] timeKey];
     phoVc.power = _powerPho;
     phoVc.state = [_dictMember objectForKey:@"state"];
