@@ -41,7 +41,7 @@
         _showActivityView.backgroundColor = [UIColor whiteColor];
         [_showActivityView configJGHShowActivityView:activtiyList[i]];
         
-        UIButton *selectBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
+        UIButton *selectBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, screenWidth, 60 *ProportionAdapter)];
         selectBtn.tag = 200 +i;
         [selectBtn addTarget:self action:@selector(activityClick:) forControlEvents:UIControlEventTouchUpInside];
         [_showActivityView addSubview:selectBtn];
@@ -96,10 +96,12 @@
 }
 
 - (void)activityClick:(UIButton *)btn{
+    btn.enabled = NO;
     if ([self.delegate respondsToSelector:@selector(activityListSelectClick:)]) {
         [self.delegate activityListSelectClick:btn];
     }
     
+    btn.enabled = YES;
 }
 
 - (void)awakeFromNib {

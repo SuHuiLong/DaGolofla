@@ -39,7 +39,7 @@
         
         NSLog(@"%d", i/2);
         _wonderfulView.backgroundColor = [UIColor whiteColor];
-        UIButton *selectBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
+        UIButton *selectBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, screenWidth -16*ProportionAdapter, 135 *ProportionAdapter)];
         selectBtn.tag = 300 +i;
         [selectBtn addTarget:self action:@selector(wonderfulClick:) forControlEvents:UIControlEventTouchUpInside];
         [_wonderfulView addSubview:selectBtn];
@@ -50,9 +50,12 @@
 }
 
 - (void)wonderfulClick:(UIButton *)btn{
+    btn.enabled = NO;
     if ([self.delegate respondsToSelector:@selector(wonderfulSelectClick:)]) {
         [self.delegate wonderfulSelectClick:btn];
     }
+    
+    btn.enabled = YES;
 }
 
 - (void)awakeFromNib {

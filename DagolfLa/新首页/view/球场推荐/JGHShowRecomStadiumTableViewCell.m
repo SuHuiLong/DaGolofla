@@ -36,7 +36,7 @@
         }
         
         [_recomStadiumView configJGHRecomStadiumView:array[i]];
-        UIButton *selectBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
+        UIButton *selectBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, screenWidth - 16*ProportionAdapter, 163*ProportionAdapter)];
         selectBtn.tag = 400 +i;
         [selectBtn addTarget:self action:@selector(recomStadiumClick:) forControlEvents:UIControlEventTouchUpInside];
         [_recomStadiumView addSubview:selectBtn];
