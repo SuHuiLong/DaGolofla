@@ -12,15 +12,14 @@
 
 - (instancetype)initWithFrame:(CGRect)frame{
     if (self == [super initWithFrame:frame]) {
-        _activityImageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 60 *ProportionAdapter, 60 *ProportionAdapter)];
-        _activityImageView.image = [UIImage imageNamed:@"activityStateImage"];
+        _activityImageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 3 *ProportionAdapter, 60 *ProportionAdapter, 60 *ProportionAdapter)];
+//        _activityImageView.image = [UIImage imageNamed:@"activityStateImage"];
         _activityImageView.userInteractionEnabled = YES;
         [self addSubview:_activityImageView];
         _activityImageView.layer.cornerRadius = 6 * ProportionAdapter;
         _activityImageView.clipsToBounds = YES;
         
-        _isSignUpImageView = [[UIImageView alloc]initWithFrame:CGRectMake(30 *ProportionAdapter, 0, 30 *ProportionAdapter, 30*ProportionAdapter)];
-        _isSignUpImageView.image = [UIImage imageNamed:@"baoming"];
+        _isSignUpImageView = [[UIImageView alloc]initWithFrame:CGRectMake(30 *ProportionAdapter, 0, 30 *ProportionAdapter, 50*ProportionAdapter)];
         [_activityImageView addSubview:_isSignUpImageView];
         
         _activityName = [[UILabel alloc]initWithFrame:CGRectMake(72*ProportionAdapter, 0, self.frame.size.width -72 *ProportionAdapter, 20 *ProportionAdapter)];
@@ -28,21 +27,21 @@
         _activityName.text = @"上海XX球场活动";
         [self addSubview:_activityName];
         
-        UIImageView *timeImageView = [[UIImageView alloc]initWithFrame:CGRectMake(71 *ProportionAdapter, 24 *ProportionAdapter, 12 *ProportionAdapter, 12 *ProportionAdapter)];
+        UIImageView *timeImageView = [[UIImageView alloc]initWithFrame:CGRectMake(71 *ProportionAdapter, 30 *ProportionAdapter, 12 *ProportionAdapter, 12 *ProportionAdapter)];
         timeImageView.image = [UIImage imageNamed:@"time"];
         [self addSubview:timeImageView];
         
-        _time =[[UILabel alloc]initWithFrame:CGRectMake(86 *ProportionAdapter, 20 *ProportionAdapter, self.frame.size.width - 86 *ProportionAdapter, 20 *ProportionAdapter)];
+        _time =[[UILabel alloc]initWithFrame:CGRectMake(86 *ProportionAdapter, 25 *ProportionAdapter, self.frame.size.width - 86 *ProportionAdapter, 20 *ProportionAdapter)];
         _time.font = [UIFont systemFontOfSize:14 *ProportionAdapter];
         _time.text = @"2016年10月25号";
         _time.textColor = [UIColor colorWithHexString:@"#636161"];
         [self addSubview:_time];
         
-        UIImageView *addressImageView = [[UIImageView alloc]initWithFrame:CGRectMake(72 *ProportionAdapter, 43 *ProportionAdapter, 10 *ProportionAdapter, 13 *ProportionAdapter)];
+        UIImageView *addressImageView = [[UIImageView alloc]initWithFrame:CGRectMake(72 *ProportionAdapter, 50 *ProportionAdapter, 10 *ProportionAdapter, 13 *ProportionAdapter)];
         addressImageView.image = [UIImage imageNamed:@"juli"];
         [self addSubview:addressImageView];
         
-        _address = [[UILabel alloc]initWithFrame:CGRectMake(86 *ProportionAdapter, 40 *ProportionAdapter, _time.frame.size.width, 20*ProportionAdapter)];
+        _address = [[UILabel alloc]initWithFrame:CGRectMake(86 *ProportionAdapter, 47 *ProportionAdapter, _time.frame.size.width, 20*ProportionAdapter)];
         _address.font = [UIFont systemFontOfSize:14 *ProportionAdapter];
         _address.text = @"上海市浦东辛苦";
         _address.textColor = [UIColor colorWithHexString:@"#636161"];
@@ -53,14 +52,22 @@
 }
 
 - (void)configJGHShowActivityView:(NSDictionary *)dataDict{
+
+    // 1 是报名中  0 已结束
+    if ([[dataDict objectForKey:@"state"] integerValue] == 1) {
+        _isSignUpImageView.image = [UIImage imageNamed:@"baoming"];
+    } else {
+        _isSignUpImageView.image = [UIImage imageNamed:@""];
+    }
+    
     if ([dataDict objectForKey:@"timeKey"]) {
         [self.activityImageView sd_setImageWithURL:[Helper setImageIconUrl:@"activity" andTeamKey:[[dataDict objectForKey:@"timeKey"] integerValue] andIsSetWidth:YES andIsBackGround:YES] placeholderImage:[UIImage imageNamed:ActivityBGImage]];
         NSLog(@"%@", [Helper setImageIconUrl:@"activity" andTeamKey:[[dataDict objectForKey:@"timeKey"] integerValue] andIsSetWidth:YES andIsBackGround:YES]);
-        if ([[dataDict objectForKey:@"hasSignup"] integerValue] == 0) {
-            _isSignUpImageView.image = nil;//未报名
-        }else{
-            _isSignUpImageView.image = [UIImage imageNamed:@"baoming"];//已报名
-        }
+//        if ([[dataDict objectForKey:@"hasSignup"] integerValue] == 0) {
+//            _isSignUpImageView.image = nil;//未报名
+//        }else{
+//            _isSignUpImageView.image = [UIImage imageNamed:@"baoming"];//已报名
+//        }
         
         _activityName.text = [dataDict objectForKey:@"title"];
         
@@ -84,7 +91,7 @@
     }
     
     
-    _isSignUpImageView.image = [UIImage imageNamed:@"baoming"];
+//    _isSignUpImageView.image = [UIImage imageNamed:@"baoming"];
 }
 
 /*

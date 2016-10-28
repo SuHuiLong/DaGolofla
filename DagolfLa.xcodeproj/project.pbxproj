@@ -216,6 +216,7 @@
 		20C1B8B11CE3241C00508ABC /* JGTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 20C1B8AF1CE3241C00508ABC /* JGTableViewCell.xib */; };
 		20C1B8B51CE344C600508ABC /* JGApplyPepoleCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 20C1B8B31CE344C600508ABC /* JGApplyPepoleCell.m */; };
 		20C1B8B61CE344C600508ABC /* JGApplyPepoleCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 20C1B8B41CE344C600508ABC /* JGApplyPepoleCell.xib */; };
+		20C9157F1DC3482B00828B41 /* index.json in Resources */ = {isa = PBXBuildFile; fileRef = 20C9157E1DC3482B00828B41 /* index.json */; };
 		20CA13651CE4276500DA15B9 /* JGTeamAcitivtyModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 20CA13641CE4276500DA15B9 /* JGTeamAcitivtyModel.m */; };
 		20CA13691CE44CCB00DA15B9 /* JGAlreadyAddGuestCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 20CA13671CE44CCB00DA15B9 /* JGAlreadyAddGuestCell.m */; };
 		20CA136A1CE44CCB00DA15B9 /* JGAlreadyAddGuestCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 20CA13681CE44CCB00DA15B9 /* JGAlreadyAddGuestCell.xib */; };
@@ -1605,6 +1606,7 @@
 		20C1B8B21CE344C600508ABC /* JGApplyPepoleCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGApplyPepoleCell.h; sourceTree = "<group>"; };
 		20C1B8B31CE344C600508ABC /* JGApplyPepoleCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGApplyPepoleCell.m; sourceTree = "<group>"; };
 		20C1B8B41CE344C600508ABC /* JGApplyPepoleCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JGApplyPepoleCell.xib; sourceTree = "<group>"; };
+		20C9157E1DC3482B00828B41 /* index.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = index.json; sourceTree = "<group>"; };
 		20CA13631CE4276500DA15B9 /* JGTeamAcitivtyModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGTeamAcitivtyModel.h; sourceTree = "<group>"; };
 		20CA13641CE4276500DA15B9 /* JGTeamAcitivtyModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGTeamAcitivtyModel.m; sourceTree = "<group>"; };
 		20CA13661CE44CCB00DA15B9 /* JGAlreadyAddGuestCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGAlreadyAddGuestCell.h; sourceTree = "<group>"; };
@@ -5572,6 +5574,7 @@
 		36BFFD1F1BC76C8D005B3CE2 = {
 			isa = PBXGroup;
 			children = (
+				20C9157E1DC3482B00828B41 /* index.json */,
 				2080305B1CFCB86B00448BFC /* UMMobClick.framework */,
 				20F7D4471D88E56600302406 /* DagolfLa.entitlements */,
 				20513B671CF7050A003233FB /* zhifu */,
@@ -8815,6 +8818,7 @@
 				20D514E81DB63DA60006EFCB /* JGHPublicLevelCell.xib in Resources */,
 				20CA13901CE9562800DA15B9 /* JGTeamGroupCollectionViewCell.xib in Resources */,
 				20C1B8B61CE344C600508ABC /* JGApplyPepoleCell.xib in Resources */,
+				20C9157F1DC3482B00828B41 /* index.json in Resources */,
 				F5E3F7F21CAA54BC00B24C77 /* dz@3x.png in Resources */,
 				36D0B0F51C80151C00C7245E /* release_notes_ios.txt in Resources */,
 				201056181D59C92800C90FDE /* JGHLableAndFileTextCell.xib in Resources */,

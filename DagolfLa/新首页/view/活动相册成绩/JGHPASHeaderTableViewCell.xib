@@ -35,7 +35,7 @@
                     </button>
                     <button opaque="NO" tag="1003" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5Yg-rX-24a">
                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                        <state key="normal" title="成绩">
+                        <state key="normal" title="直播">
                             <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         </state>
                         <connections>
