@@ -14,7 +14,7 @@
 #import "JGLMyTeamModel.h"
 #import "JGTeamAcitivtyModel.h"
 #import "JGDGuestChannelViewController.h"
-#import "JGTeamMainhallViewController.h"
+#import "JGTeamChannelViewController.h"
 
 static NSString *const JGTeamActivityCellIdentifier = @"JGTeamActivityCell";
 static NSString *const JGLMyTeamTableViewCellIdentifier = @"JGLMyTeamTableViewCell";
@@ -161,7 +161,7 @@ static NSString *const JGHAddMoreTeamTableViewCellIdentifier = @"JGHAddMoreTeamT
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
     if (section == 0) {
-        return 0;
+        return 1;
     }
     return 10 *ProportionAdapter;
 }
@@ -212,7 +212,7 @@ static NSString *const JGHAddMoreTeamTableViewCellIdentifier = @"JGHAddMoreTeamT
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
     if (section == 1) {
-        return 30 *ProportionAdapter;
+        return 40 *ProportionAdapter;
     }
     return 45 *ProportionAdapter;
 }
@@ -229,7 +229,7 @@ static NSString *const JGHAddMoreTeamTableViewCellIdentifier = @"JGHAddMoreTeamT
 - (void)didSelectAddMoreBtn:(UIButton *)btn{
     NSLog(@"添加更多球队");
     btn.enabled = NO;
-    JGTeamMainhallViewController *teamMainCtrl = [[JGTeamMainhallViewController alloc]init];
+    JGTeamChannelViewController *teamMainCtrl = [[JGTeamChannelViewController alloc]init];
     [self.navigationController pushViewController:teamMainCtrl animated:YES];
     btn.enabled = YES;
 }

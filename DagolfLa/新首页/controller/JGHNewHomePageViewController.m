@@ -133,6 +133,8 @@ static NSString *const JGHShowSuppliesMallTableViewCellIdentifier = @"JGHShowSup
         [self.homeTableView.header endRefreshing];
     } completionBlock:^(id data) {
         NSLog(@"%@", data);
+        _showLineID = 0;
+        
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
             [self.indexModel setValuesForKeysWithDictionary:data];
             
