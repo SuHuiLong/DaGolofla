@@ -132,7 +132,7 @@ static NSString *const JGHAddMoreTeamTableViewCellIdentifier = @"JGHAddMoreTeamT
 - (void)loadMyTeamList{
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     [dict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:userID] forKey:@"userKey"];
-//    [dict setObject:@0 forKey:@"offset"];
+    [dict setObject:[Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@dagolfla.com", DEFAULF_USERID]] forKey:@"md5"];
     [[JsonHttp jsonHttp]httpRequest:@"team/getMyTeamListAll" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
         [self.showMyTeamTableView.header endRefreshing];
         [self.showMyTeamTableView.footer endRefreshing];
@@ -146,6 +146,8 @@ static NSString *const JGHAddMoreTeamTableViewCellIdentifier = @"JGHAddMoreTeamT
                     [model setValuesForKeysWithDictionary:dataDic];
                     [self.teamArray addObject:model];
                 }
+                
+                [self.showMyTeamTableView reloadData];
             }else{
                 [self.showMyTeamTableView removeFromSuperview];
                 self.view.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];
@@ -174,6 +176,8 @@ static NSString *const JGHAddMoreTeamTableViewCellIdentifier = @"JGHAddMoreTeamT
                 label2.userInteractionEnabled = YES;
             }
             
+            
+            
         }
 //        else {
 //            if ([data objectForKey:@"packResultMsg"]) {
@@ -181,7 +185,7 @@ static NSString *const JGHAddMoreTeamTableViewCellIdentifier = @"JGHAddMoreTeamT
 //            }
 //        }
         
-        [self.showMyTeamTableView reloadData];
+        
         [self.showMyTeamTableView.header endRefreshing];
         [self.showMyTeamTableView.footer endRefreshing];
     }];
