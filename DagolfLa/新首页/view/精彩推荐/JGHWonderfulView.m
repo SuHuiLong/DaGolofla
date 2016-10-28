@@ -28,7 +28,12 @@
     if ([dict objectForKey:@"timeKey"]) {
         [_activityImageView sd_setImageWithURL:[dict objectForKey:@"imgURL"] placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
         
-        _name = [dict objectForKey:@"title"];
+        if ([dict objectForKey:@"title"]) {
+            _name.text = [dict objectForKey:@"title"];
+        }else{
+            _name.text = @"";
+        }
+        
     }
 }
 
