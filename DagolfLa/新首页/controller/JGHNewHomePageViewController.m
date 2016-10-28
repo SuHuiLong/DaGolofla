@@ -125,7 +125,7 @@ static NSString *const JGHShowSuppliesMallTableViewCellIdentifier = @"JGHShowSup
         NSString * path = [[NSBundle mainBundle] pathForResource:@"index.json" ofType:nil];
         
         NSError * error = nil;
-        NSString * str = [NSString stringWithContentsOfFile:path encoding:NSASCIIStringEncoding error:&error];
+        NSString * str = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:&error];
         if (error) {
             NSLog(@"error:%@", error);
         }
