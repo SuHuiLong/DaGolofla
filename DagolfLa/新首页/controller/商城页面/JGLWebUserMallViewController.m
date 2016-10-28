@@ -53,7 +53,7 @@
 #pragma mark --创建wkwebview
 -(void)createWebView
 {
-    
+    //加载的时候展示的任务栏，加载时会隐藏
     UIImageView *statusView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 20, ScreenWidth, 20)];
     statusView.image = [UIImage imageNamed:@"nav_bg"];
     CGRect frame = statusView.frame;
@@ -95,6 +95,17 @@
             [strongSelf.webView evaluateJavaScript:@"navigator.userAgent" completionHandler:^(id result, NSError *error) {
                 NSLog(@"%@", _urlRequest);
                 [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:_urlRequest]]];
+                
+                
+                //重设任务栏
+                UIImageView *statusView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 20, ScreenWidth, 20)];
+                statusView.image = [UIImage imageNamed:@"nav_bg"];
+                CGRect frame = statusView.frame;
+                frame.origin = CGPointMake(0, 0);
+                statusView.frame = frame;
+                [self.view addSubview:statusView];
+                [_actIndicatorView stopAnimating];
+            
             }];
             
         }];

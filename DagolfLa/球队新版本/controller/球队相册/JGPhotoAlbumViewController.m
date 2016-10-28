@@ -39,6 +39,7 @@
     BOOL _isUpdata;
     
     NSString* _teamName;
+    UIBarButtonItem* _rightItem;
 }
 @property (nonatomic,strong)  SXPickPhoto * pickPhoto;//相册类
 @property (strong, nonatomic) JGPhotoTimeReusableView *headView;
@@ -80,11 +81,7 @@
     self.navigationItem.leftBarButtonItem = item;
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"nav_bg"] forBarMetrics:UIBarMetricsDefault];
     
-    if ([[_dictMember objectForKey:@"state"] integerValue] == 1) {
-        UIBarButtonItem* rightBtn = [[UIBarButtonItem alloc]initWithTitle:@"上传" style:UIBarButtonItemStylePlain target:self action:@selector(upDataClick)];
-        rightBtn.tintColor = [UIColor whiteColor];
-        self.navigationItem.rightBarButtonItem = rightBtn;
-    }
+    
     
     [self uiConfig];
     
@@ -172,8 +169,18 @@
                 [_dataArray addObject:model];
             }
             _teamName = [data objectForKey:@"teamName"];
-            NSLog(@"%ld",_dataArray.count);
             _page++;
+            _state = [data objectForKey:@"isTeamMemeber"];
+            _power = [data objectForKey:@"power"];
+            _teamTimeKey = [data objectForKey:@"teamKey"];
+            _strTitle = [data objectForKey:@"albumName"];
+            if (_rightItem) {
+                if ([[data objectForKey:@"isTeamMemeber"] integerValue] == 1) {
+                    _rightItem = [[UIBarButtonItem alloc]initWithTitle:@"上传" style:UIBarButtonItemStylePlain target:self action:@selector(upDataClick)];
+                    _rightItem.tintColor = [UIColor whiteColor];
+                    self.navigationItem.rightBarButtonItem = _rightItem;
+                }
+            }
             [_collectionView reloadData];
         }else {
             [Helper alertViewWithTitle:[dict objectForKey:@"message"] withBlock:^(UIAlertController *alertView) {
