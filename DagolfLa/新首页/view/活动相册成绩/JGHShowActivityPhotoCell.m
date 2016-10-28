@@ -35,6 +35,13 @@
 
 - (void)configJGHShowActivityPhotoCell:(NSArray *)activtiyList{
     [self.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    UIImageView *bgImageView = [[UIImageView alloc]initWithFrame:CGRectMake(10 *ProportionAdapter, 160 *ProportionAdapter, screenWidth -20*ProportionAdapter, 30 *ProportionAdapter)];
+    bgImageView.image = [UIImage imageNamed:@"datouying"];
+    UILabel *bgLable = [[UILabel alloc]initWithFrame:CGRectMake(2 *ProportionAdapter, 0*ProportionAdapter, screenWidth - 24 *ProportionAdapter, 16 *ProportionAdapter)];
+    bgLable.backgroundColor = [UIColor whiteColor];
+    [bgImageView addSubview:bgLable];
+    [self addSubview:bgImageView];
+    
     for (int i=0; i<activtiyList.count; i++) {
         
         _showActivityView = [[JGHShowActivityView alloc]initWithFrame:CGRectMake(20 *ProportionAdapter, 60 *i *ProportionAdapter +(i+1)*17 *ProportionAdapter, screenWidth -40*ProportionAdapter, 60 *ProportionAdapter)];
@@ -45,6 +52,7 @@
         selectBtn.tag = 200 +i;
         [selectBtn addTarget:self action:@selector(activityClick:) forControlEvents:UIControlEventTouchUpInside];
         [_showActivityView addSubview:selectBtn];
+        _showActivityView.backgroundColor = [UIColor whiteColor];
         [self addSubview:_showActivityView];
     }
 }
