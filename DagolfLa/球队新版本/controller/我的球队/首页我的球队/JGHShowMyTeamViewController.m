@@ -306,7 +306,12 @@ static NSString *const JGHAddMoreTeamTableViewCellIdentifier = @"JGHAddMoreTeamT
     } else if (indexPath.section == 2) {
         JGTeamActibityNameViewController *actVC = [[JGTeamActibityNameViewController alloc] init];
         JGTeamAcitivtyModel *model = _activityArray[indexPath.row];
-        actVC.teamKey = [model.timeKey integerValue];
+        if (model.teamActivityKey > 0) {
+            actVC.teamKey = model.teamActivityKey;
+        }else{
+            actVC.teamKey = [model.timeKey integerValue];
+        }
+        
         [self.navigationController pushViewController:actVC animated:YES];
     }
 }
