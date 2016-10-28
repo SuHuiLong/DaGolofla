@@ -656,8 +656,13 @@
         NSString *parameterStr = [timeKeyArray objectAtIndex:1];
         if ([parameterStr containsString:@"&"]) {
             parameterArray = [parameterStr componentsSeparatedByString:@"&"];
-            if ([[parameterArray objectAtIndex:0]containsString:key]) {
-                timeKey = [[[parameterArray objectAtIndex:0]componentsSeparatedByString:@"="] objectAtIndex:1];
+            if (parameterArray.count > 0) {
+                for (int i=0; i<parameterArray.count; i++) {
+                    NSString *keyString = [parameterArray objectAtIndex:i];
+                    if ([keyString containsString:key]) {
+                        timeKey = [[[parameterArray objectAtIndex:0]componentsSeparatedByString:@"="] objectAtIndex:1];
+                    }
+                }
             }
         }else{
             if ([parameterStr containsString:key]) {

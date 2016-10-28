@@ -10,4 +10,13 @@
 
 @implementation JGTeamAcitivtyModel
 
+- (void)setValue:(id)value forKey:(NSString *)key{
+    
+    [super setValue:value forKey:key];
+    
+    if ([key isEqualToString:@"title"]) {
+        [self setValue:value forKey:@"name"];
+    }
+}
+
 @end

@@ -62,8 +62,8 @@
 //        selectBtn.tag = 200 +i;
 //        [selectBtn addTarget:self action:@selector(liveClick:) forControlEvents:UIControlEventTouchUpInside];
 //        [_liveView addSubview:selectBtn];
-
-        UITapGestureRecognizer *tapGes = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(liveTapAct)];
+        _liveView.tag = 300 + i;
+        UITapGestureRecognizer *tapGes = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(liveTapAct:)];
         [_liveView addGestureRecognizer:tapGes];
         [self addSubview:_liveView];
     }
@@ -79,20 +79,27 @@
             _photoView = [[JGDShowPhotoView alloc]initWithFrame:CGRectMake(16*ProportionAdapter +(screenWidth-16*ProportionAdapter)/2, (i/2 +1)*15*ProportionAdapter + (i/2)*70*ProportionAdapter, (screenWidth-24*ProportionAdapter)/2, 70 *ProportionAdapter)];
         }
         [_photoView configJGHShowPhotoView:activtiyList[i]];
-        UITapGestureRecognizer *tapGes = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(photoTapAct)];
+        
+        _photoView.tag = 500 + i;
+        UITapGestureRecognizer *tapGes = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(photoTapAct:)];
         [_photoView addGestureRecognizer:tapGes];
         [self addSubview:_photoView];
     }
 }
 
 // 直播
-- (void)liveTapAct{
-    
+- (void)liveTapAct:(UIGestureRecognizer *)geture{
+    //    JGLScoreLiveViewController
+    NSLog(@"%td",   [geture view].tag - 300);
+    self.liveBlock([geture view].tag - 300);
 }
 
 // 照片
-- (void)photoTapAct{
-    
+- (void)photoTapAct:(UIGestureRecognizer *)geture{
+    //    JGPhotoAlbumViewController
+      NSLog(@"%td",   [geture view].tag - 500);
+    self.photoBlock([geture view].tag - 500);
+
 }
 
 - (void)activityClick:(UIButton *)btn{

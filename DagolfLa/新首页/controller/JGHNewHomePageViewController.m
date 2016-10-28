@@ -25,6 +25,9 @@
 #import "JGLWebUserMallViewController.h"
 #import "JGTeamMainhallViewController.h"
 
+#import "JGTeamActibityNameViewController.h" // 活动
+#import "JGLScoreLiveViewController.h"   // 直播
+
 static NSString *const JGHPASHeaderTableViewCellIdentifier = @"JGHPASHeaderTableViewCell";
 static NSString *const JGHShowSectionTableViewCellIdentifier = @"JGHShowSectionTableViewCell";
 static NSString *const JGHShowFavouritesCellIdentifier = @"JGHShowFavouritesCell";
@@ -398,25 +401,100 @@ static NSString *const JGHShowSuppliesMallTableViewCellIdentifier = @"JGHShowSup
     // 热门球队 --- 详情
     if (indexPath.section == 2) {
         
+        NSDictionary *dict = [_indexModel.plateList[1] objectForKey:@"bodyList"][indexPath.row];
+        
+        [self hotTeam: dict];
+        
     }
 }
+
+- (void)hotTeam:(NSDictionary *)dict{
+    
+    NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
+    
+    if (DEFAULF_USERID != nil) {
+        [dic setObject:DEFAULF_USERID forKey:@"userKey"];
+    }
+    [dic setObject:[dict objectForKey:@"timeKey"] forKey:@"teamKey"];
+    
+    [[JsonHttp jsonHttp] httpRequest:@"team/getTeamInfo" JsonKey:nil withData:dic requestMethod:@"GET" failedBlock:^(id errType) {
+        
+    } completionBlock:^(id data) {
+        
+        
+        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+            
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
+            
+            if (![data objectForKey:@"teamMember"]) {
+                JGNotTeamMemberDetailViewController *detailVC = [[JGNotTeamMemberDetailViewController alloc] init];
+                detailVC.detailDic = [data objectForKey:@"team"];
+                [self.navigationController pushViewController:detailVC animated:YES];
+            }else{
+                
+                if ([[[data objectForKey:@"teamMember"] objectForKey:@"power"] containsString:@"1005"]){
+                    JGTeamMemberORManagerViewController *detailVC = [[JGTeamMemberORManagerViewController alloc] init];
+                    detailVC.detailDic = [data objectForKey:@"team"];
+                    
+                    detailVC.isManager = YES;
+                    [self.navigationController pushViewController:detailVC animated:YES];
+                }else{
+                    JGTeamMemberORManagerViewController *detailVC = [[JGTeamMemberORManagerViewController alloc] init];
+                    detailVC.detailDic = [data objectForKey:@"team"];
+                    detailVC.isManager = NO;
+                    [self.navigationController pushViewController:detailVC animated:YES];
+                }
+            }
+            
+        }else{
+            if ([data objectForKey:@"packResultMsg"]) {
+                [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+            }
+        }
+        
+    }];
+    
+}
+
+
 #pragma mark -- 1001(活动) －－1002(相册) －－ 1003（成绩）
 - (void)didSelectActivityOrPhotoOrResultsBtn:(UIButton *)btn{
 
     JGHShowActivityPhotoCell *cell = [self.homeTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
-
+    
     if (btn.tag == 1001) {
-
+        
         [cell configJGHShowActivityPhotoCell:_indexModel.activityList];
-
+        
     } else if (btn.tag == 1002) {
         
         [cell configJGHShowPhotoCell:_indexModel.albumList];
-
+        cell.photoBlock = ^(NSInteger numB){
+            
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
+            
+            JGPhotoAlbumViewController *photoVC = [[JGPhotoAlbumViewController alloc] init];
+            photoVC.albumKey = [_indexModel.albumList[numB] objectForKey:@"timeKey"];
+            [self.navigationController pushViewController:photoVC animated:YES];
+        };
     } else if (btn.tag == 1003) {
         
         [cell configJGHShowLiveCell:_indexModel.scoreList];
-
+        cell.liveBlock = ^(NSInteger numB){
+            
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
+            
+            JGLScoreLiveViewController *liveVC = [[JGLScoreLiveViewController alloc] init];
+            
+            liveVC.activity = [_indexModel.scoreList[numB] objectForKey:@"timeKey"];
+            
+            JGTeamAcitivtyModel* liveModel = [[JGTeamAcitivtyModel alloc] init];
+            [liveModel setValuesForKeysWithDictionary:_indexModel.scoreList[numB]];
+            
+            liveVC.model = liveModel;
+            
+            [self.navigationController pushViewController:liveVC animated:YES];
+        };
     }
 }
 #pragma mark -- 我的球队
@@ -439,8 +517,14 @@ static NSString *const JGHShowSuppliesMallTableViewCellIdentifier = @"JGHShowSup
 }
 #pragma mark -- 活动点击事件
 - (void)activityListSelectClick:(UIButton *)btn{
-    NSLog(@"%td", btn.tag);
-
+   
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
+    
+    NSDictionary *dic = _indexModel.activityList[btn.tag - 200];
+    
+    JGTeamActibityNameViewController *teamActVC = [[JGTeamActibityNameViewController alloc] init];
+    teamActVC.teamKey = [[dic objectForKey:@"timeKey"] integerValue];
+    [self.navigationController pushViewController:teamActVC animated:YES];
 }
 #pragma mark -- 精彩推荐 -- 相册
 - (void)wonderfulSelectClick:(UIButton *)btn{
