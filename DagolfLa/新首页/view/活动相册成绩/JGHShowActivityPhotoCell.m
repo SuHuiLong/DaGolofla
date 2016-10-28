@@ -11,6 +11,8 @@
 #import "JGDShowLiveView.h" // 直播
 #import "JGDShowPhotoView.h" // 相册
 
+#define LineColor @"#E1E1E1"
+
 
 @interface JGHShowActivityPhotoCell ()
 {
@@ -35,13 +37,7 @@
 
 - (void)configJGHShowActivityPhotoCell:(NSArray *)activtiyList{
     [self.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
-    UIImageView *bgImageView = [[UIImageView alloc]initWithFrame:CGRectMake(10 *ProportionAdapter, 160 *ProportionAdapter, screenWidth -20*ProportionAdapter, 30 *ProportionAdapter)];
-    bgImageView.image = [UIImage imageNamed:@"datouying"];
-    UILabel *bgLable = [[UILabel alloc]initWithFrame:CGRectMake(2 *ProportionAdapter, 0*ProportionAdapter, screenWidth - 24 *ProportionAdapter, 16 *ProportionAdapter)];
-    bgLable.backgroundColor = [UIColor whiteColor];
-    [bgImageView addSubview:bgLable];
-    [self addSubview:bgImageView];
-    
+    [self createLineCase:@"left"];
     for (int i=0; i<activtiyList.count; i++) {
         
         _showActivityView = [[JGHShowActivityView alloc]initWithFrame:CGRectMake(20 *ProportionAdapter, 60 *i *ProportionAdapter +(i+1)*17 *ProportionAdapter, screenWidth -40*ProportionAdapter, 60 *ProportionAdapter)];
@@ -60,6 +56,7 @@
 
 - (void)configJGHShowLiveCell:(NSArray *)activtiyList{
     [self.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    [self createLineCase:@"right"];
     for (int i=0; i<activtiyList.count; i++) {
         
         _liveView = [[JGDShowLiveView alloc]initWithFrame:CGRectMake(20 *ProportionAdapter, 60 *i *ProportionAdapter +(i+1)*17 *ProportionAdapter, screenWidth -40*ProportionAdapter, 60 *ProportionAdapter)];
@@ -79,7 +76,7 @@
 
 - (void)configJGHShowPhotoCell:(NSArray *)activtiyList{
     [self.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
-    
+    [self createLineCase:@"middle"];
     for (int i = 0; i < [activtiyList count]; i ++) {
         if (i%2 == 0) {
             _photoView = [[JGDShowPhotoView alloc]initWithFrame:CGRectMake(22*ProportionAdapter, (i/2 +1)*10*ProportionAdapter + (i/2)*70*ProportionAdapter, (screenWidth-24*ProportionAdapter)/2, 70 *ProportionAdapter)];
@@ -118,6 +115,33 @@
     
     btn.enabled = YES;
 }
+
+- (void)createLineCase:(NSString *)imageName{
+    UIImageView *bgImageView = [[UIImageView alloc]initWithFrame:CGRectMake(10 *ProportionAdapter, 160 *ProportionAdapter, screenWidth -20*ProportionAdapter, 30 *ProportionAdapter)];
+    bgImageView.image = [UIImage imageNamed:@"datouying"];
+    UILabel *bgLable = [[UILabel alloc]initWithFrame:CGRectMake(2 *ProportionAdapter, 0*ProportionAdapter, screenWidth - 24 *ProportionAdapter, 16 *ProportionAdapter)];
+    bgLable.backgroundColor = [UIColor whiteColor];
+    [bgImageView addSubview:bgLable];
+    
+    UILabel *downLine = [[UILabel alloc]initWithFrame:CGRectMake(0, 16*ProportionAdapter, screenWidth - 20 *ProportionAdapter, 0.5)];
+    downLine.backgroundColor = [UIColor colorWithHexString:LineColor];
+    [bgImageView addSubview:downLine];
+    [self addSubview:bgImageView];
+    
+    UIImageView *topImageview = [[UIImageView alloc]initWithFrame:CGRectMake(10 *ProportionAdapter, 5 *ProportionAdapter, screenWidth -20*ProportionAdapter, 3)];
+    topImageview.image = [UIImage imageNamed:imageName];
+    [self addSubview:topImageview];
+    
+    UILabel *leftLine = [[UILabel alloc]initWithFrame:CGRectMake(10 *ProportionAdapter, 5 *ProportionAdapter, 0.5, 171 *ProportionAdapter)];
+    leftLine.backgroundColor = [UIColor colorWithHexString:LineColor];
+    [self addSubview:leftLine];
+    
+    UILabel *rightLine = [[UILabel alloc]initWithFrame:CGRectMake(screenWidth -10*ProportionAdapter, 5 *ProportionAdapter, 0.5, 171 *ProportionAdapter)];
+    rightLine.backgroundColor = [UIColor colorWithHexString:LineColor];
+    [self addSubview:rightLine];
+
+}
+
 
 - (void)awakeFromNib {
     [super awakeFromNib];
