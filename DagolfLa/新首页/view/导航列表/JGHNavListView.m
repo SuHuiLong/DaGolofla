@@ -20,7 +20,7 @@
         [self addSubview:_teamBtn];
         
         _teamLable = [[UILabel alloc]initWithFrame:CGRectMake(0, 53 *ProportionAdapter, self.frame.size.width/3, 20 *ProportionAdapter)];
-        _teamLable.text = @"我的球队";
+        _teamLable.text = @"球队部落";
         _teamLable.font = [UIFont systemFontOfSize:16 *ProportionAdapter];
         _teamLable.textAlignment = NSTextAlignmentCenter;
         [self addSubview:_teamLable];

@@ -33,4 +33,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *resultsLable;
 
 
+- (void)configJGHPASHeaderTableViewCell:(NSInteger)showId;
+
 @end
