@@ -77,7 +77,7 @@ static NSString *const JGHShowSuppliesMallTableViewCellIdentifier = @"JGHShowSup
     [[UIApplication sharedApplication] setStatusBarHidden:YES];
     //把当前界面的导航栏隐藏
     self.navigationController.navigationBarHidden = NO;
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"show" object:nil];
+//    [[NSNotificationCenter defaultCenter] postNotificationName:@"show" object:nil];
 }
 
 - (void)viewDidLoad {
