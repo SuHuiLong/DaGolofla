@@ -532,12 +532,10 @@ static NSString *const JGHShowSuppliesMallTableViewCellIdentifier = @"JGHShowSup
     NSDictionary *dict = _indexModel.plateList[0];
     NSArray *bodyList = [dict objectForKey:@"bodyList"];
     NSDictionary *ablumListDict = bodyList[btn.tag -300];
-    
-    [self pushctrlWithUrl:[ablumListDict objectForKey:@"weblinks"]];
-//    JGPhotoAlbumViewController *photoAlbumCtrl = [[JGPhotoAlbumViewController alloc]init];
-//    photoAlbumCtrl.albumKey = [NSNumber numberWithInteger:[[ablumListDict objectForKey:@"timeKey"] integerValue]];
-//    photoAlbumCtrl.hidesBottomBarWhenPushed = YES;
-//    [self.navigationController pushViewController:photoAlbumCtrl animated:YES];
+    JGPhotoAlbumViewController *photoAlbumCtrl = [[JGPhotoAlbumViewController alloc]init];
+    photoAlbumCtrl.albumKey = [NSNumber numberWithInteger:[[ablumListDict objectForKey:@"timeKey"] integerValue]];
+    photoAlbumCtrl.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:photoAlbumCtrl animated:YES];
 }
 #pragma mark -- 球场推荐
 - (void)recomStadiumSelectClick:(UIButton *)btn{
@@ -546,10 +544,6 @@ static NSString *const JGHShowSuppliesMallTableViewCellIdentifier = @"JGHShowSup
     NSArray *bodyList = [dict objectForKey:@"bodyList"];
     NSDictionary *mallListDict = bodyList[btn.tag -500];
     [self pushctrlWithUrl:[mallListDict objectForKey:@"weblinks"]];
-//    JGLWebUserMallViewController *mallCtrl = [[JGLWebUserMallViewController alloc]init];
-//    mallCtrl.urlRequest = [NSString stringWithFormat:@"%@", [mallListDict objectForKey:@"weblinks"]];
-//    mallCtrl.hidesBottomBarWhenPushed = YES;
-//    [self.navigationController pushViewController:mallCtrl animated:YES];
 }
 #pragma mark -- 用品商城
 - (void)suppliesMallSelectClick:(UIButton *)btn{
@@ -558,10 +552,6 @@ static NSString *const JGHShowSuppliesMallTableViewCellIdentifier = @"JGHShowSup
     NSArray *bodyList = [dict objectForKey:@"bodyList"];
     NSDictionary *mallListDict = bodyList[btn.tag -500];
     [self pushctrlWithUrl:[mallListDict objectForKey:@"weblinks"]];
-//    JGLWebUserMallViewController *mallCtrl = [[JGLWebUserMallViewController alloc]init];
-//    mallCtrl.urlRequest = [NSString stringWithFormat:@"%@", [mallListDict objectForKey:@"weblinks"]];
-//    mallCtrl.hidesBottomBarWhenPushed = YES;
-//    [self.navigationController pushViewController:mallCtrl animated:YES];
 }
 #pragma mark -- 更多
 - (void)didSelectMoreBtn:(UIButton *)moreBtn{
