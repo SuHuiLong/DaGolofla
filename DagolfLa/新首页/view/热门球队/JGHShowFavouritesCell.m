@@ -22,7 +22,7 @@
     self.nameLeft.constant = 20 *ProportionAdapter;
     
     self.activityNumber.font = [UIFont systemFontOfSize:12 *ProportionAdapter];
-    self.activityNumberLeft.constant = 10 *ProportionAdapter;
+    self.activityNumberLeft.constant = 5 *ProportionAdapter;
     
     self.addressImageLeft.constant = 20 *ProportionAdapter;
 
@@ -48,6 +48,12 @@
         self.address.text = [NSString stringWithFormat:@"%@", [dict objectForKey:@"position"]];
         
         self.details.text = [NSString stringWithFormat:@"%@", [dict objectForKey:@"desc"]];
+        
+        if ([dict objectForKey:@"viewCount"]) {
+            _activityNumber.text = [NSString stringWithFormat:@"(%@)", [dict objectForKey:@"viewCount"]];
+        }else{
+            _activityNumber.text = @"";
+        }
     }
 }
 

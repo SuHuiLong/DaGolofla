@@ -16,8 +16,8 @@
         _activityImageView.userInteractionEnabled = YES;
         [self addSubview:_activityImageView];
         
-        _name = [[UILabel alloc]initWithFrame:CGRectMake(0, 115 *ProportionAdapter, _activityImageView.frame.size.width, 20 *ProportionAdapter)];
-        _name.font = [UIFont systemFontOfSize:15 *ProportionAdapter];
+        _name = [[UILabel alloc]initWithFrame:CGRectMake(0, 110 *ProportionAdapter, _activityImageView.frame.size.width, 20 *ProportionAdapter)];
+        _name.font = [UIFont systemFontOfSize:14 *ProportionAdapter];
         _name.text = @"上海CF球队相册";
         [self addSubview:_name];
     }
@@ -28,7 +28,12 @@
     if ([dict objectForKey:@"timeKey"]) {
         [_activityImageView sd_setImageWithURL:[dict objectForKey:@"imgURL"] placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
         
-        _name = [dict objectForKey:@"title"];
+        if ([dict objectForKey:@"title"]) {
+            _name.text = [dict objectForKey:@"title"];
+        }else{
+            _name.text = @"";
+        }
+        
     }
 }
 

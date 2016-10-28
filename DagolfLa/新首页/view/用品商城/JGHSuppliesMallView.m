@@ -37,8 +37,9 @@
         
         _drawee = [[UILabel alloc]initWithFrame:CGRectMake(self.frame.size.width -30*ProportionAdapter -80 *ProportionAdapter, 210*ProportionAdapter, 80 *ProportionAdapter, 20 *ProportionAdapter)];
         _drawee.font = [UIFont systemFontOfSize:14 *ProportionAdapter];
-        _drawee.text = @"43人付款";
+        _drawee.text = @"0 人付款";
         _drawee.textColor = [UIColor colorWithHexString:@"#aaaaaa"];
+        _drawee.textAlignment = NSTextAlignmentRight;
         [self addSubview:_drawee];
         
         self.backgroundColor = [UIColor whiteColor];
@@ -53,9 +54,10 @@
     _price.text = [NSString stringWithFormat:@"¥%@", [dict objectForKey:@"money"]];
     
     if ([dict objectForKey:@"viewCount"]) {
-        NSString *priceString = @"";
-        [[dict objectForKey:@"viewCount"] integerValue] == 0 ? (priceString = @"") : (priceString = [NSString stringWithFormat:@"%@人付款", [dict objectForKey:@"viewCount"]]);
-        _drawee.text = priceString;
+
+        _drawee.text = [NSString stringWithFormat:@"%@ 人付款", [dict objectForKey:@"viewCount"]];
+    }else{
+        _drawee.text = @"0 @人付款";
     }
 }
 

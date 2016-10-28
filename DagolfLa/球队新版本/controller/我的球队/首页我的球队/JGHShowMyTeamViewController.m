@@ -101,7 +101,7 @@ static NSString *const JGHAddMoreTeamTableViewCellIdentifier = @"JGHAddMoreTeamT
     [dict setObject:DEFAULF_USERID forKey:@"userKey"];//3619
     [dict setObject:@(_page) forKey:@"offset"];
     [dict setObject:[NSString stringWithFormat:@"%@", _timeKey] forKey:@"teamKey"];
-    [[JsonHttp jsonHttp]httpRequest:@"team/getMyTeamActivityAll" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
+    [[JsonHttp jsonHttp]httpRequest:@"team/getMyTeamActivityList" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
         [self.showMyTeamTableView.header endRefreshing];
         [self.showMyTeamTableView.footer endRefreshing];
     } completionBlock:^(id data) {
@@ -306,7 +306,12 @@ static NSString *const JGHAddMoreTeamTableViewCellIdentifier = @"JGHAddMoreTeamT
     } else if (indexPath.section == 2) {
         JGTeamActibityNameViewController *actVC = [[JGTeamActibityNameViewController alloc] init];
         JGTeamAcitivtyModel *model = _activityArray[indexPath.row];
-        actVC.teamKey = [model.timeKey integerValue];
+        if (model.teamActivityKey > 0) {
+            actVC.teamKey = model.teamActivityKey;
+        }else{
+            actVC.teamKey = [model.timeKey integerValue];
+        }
+        
         [self.navigationController pushViewController:actVC animated:YES];
     }
 }
