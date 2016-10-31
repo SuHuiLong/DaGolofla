@@ -114,7 +114,7 @@
     flowLayout.minimumLineSpacing=1.f;
     
     
-    _collectionView = [[UICollectionView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight) collectionViewLayout:flowLayout];
+    _collectionView = [[UICollectionView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight-44*ProportionAdapter - 15*ProportionAdapter) collectionViewLayout:flowLayout];
     //    _collectionView.frame = _yuansuScrollview.frame;
     [self.view addSubview:_collectionView];
     _collectionView.delegate=self;
