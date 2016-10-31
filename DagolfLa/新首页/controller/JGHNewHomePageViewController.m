@@ -738,8 +738,9 @@ static NSString *const JGHShowSuppliesMallTableViewCellIdentifier = @"JGHShowSup
     if ([url containsString:@"openURL"]) {//相册
         JGLWebUserMallViewController *mallCtrl = [[JGLWebUserMallViewController alloc]init];
         //http://www.dagolfla.com/app/ProductDetails.html?proid=%@
+        
         NSString *urlRequest = [NSString stringWithFormat:@"%@", [Helper returnKeyVlaueWithUrlString:url andKey:@"url"]];
-        mallCtrl.urlRequest = urlRequest;
+        mallCtrl.urlRequest = [urlRequest stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
         mallCtrl.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:mallCtrl animated:YES];
         return;

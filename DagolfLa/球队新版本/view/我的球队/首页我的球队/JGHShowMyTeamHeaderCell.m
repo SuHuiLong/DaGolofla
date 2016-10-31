@@ -23,6 +23,9 @@
     self.GuestsBtn.titleLabel.font = [UIFont systemFontOfSize:14 *ProportionAdapter];
     
     self.arrowRight.constant = 10 *ProportionAdapter;
+    
+    self.lineLeft.constant = 10 *ProportionAdapter;
+    self.lineRight.constant = 10 *ProportionAdapter;
 }
 
 - (void)configJGHShowMyTeamHeaderCell:(NSString *)name andSection:(NSInteger)section{

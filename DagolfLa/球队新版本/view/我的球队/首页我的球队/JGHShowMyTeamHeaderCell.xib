@@ -12,7 +12,7 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <frame key="frameInset" width="320" height="42.5"/>
+                <frame key="frameInset" width="320" height="42"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bi1-ia-B9V">
@@ -74,6 +74,8 @@
                 <outlet property="arrowRight" destination="lqZ-Jz-AB3" id="fvq-12-hs8"/>
                 <outlet property="bgLableLeft" destination="2Ld-Dx-fxz" id="aNK-q4-ZDT"/>
                 <outlet property="bgLbaleH" destination="1Sx-dL-1dE" id="dEL-8a-QR9"/>
+                <outlet property="lineLeft" destination="CAf-0T-2vs" id="aVE-LA-E50"/>
+                <outlet property="lineRight" destination="ZIO-bI-goQ" id="HkZ-cB-X0h"/>
                 <outlet property="name" destination="B2j-QG-hZJ" id="pE0-je-CNX"/>
                 <outlet property="nameLeft" destination="HP9-94-3qs" id="EV0-Wr-x3e"/>
             </connections>

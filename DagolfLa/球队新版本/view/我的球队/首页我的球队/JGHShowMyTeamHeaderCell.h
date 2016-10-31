@@ -30,6 +30,10 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *arrowRight;//10
 @property (weak, nonatomic) IBOutlet UIImageView *arrowImageView;
 
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *lineLeft;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *lineRight;
+
+
 - (void)configJGHShowMyTeamHeaderCell:(NSString *)name andSection:(NSInteger)section;
 
 @end
