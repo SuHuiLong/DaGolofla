@@ -19,7 +19,7 @@
         [self addSubview:_activityImageView];
         
         _name = [[UILabel alloc]initWithFrame:CGRectMake(0, 110 *ProportionAdapter, _activityImageView.frame.size.width, 20 *ProportionAdapter)];
-        _name.font = [UIFont systemFontOfSize:14 *ProportionAdapter];
+        _name.font = [UIFont systemFontOfSize:15 *ProportionAdapter];
         _name.text = @"上海CF球队相册";
         [self addSubview:_name];
     }

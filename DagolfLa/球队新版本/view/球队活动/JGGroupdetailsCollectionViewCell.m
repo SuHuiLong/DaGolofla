@@ -258,6 +258,7 @@
                 [self.section4 setImage:[UIImage imageNamed:@"addGroup"] forState:UIControlStateNormal];
             }else{
                 if (model.sortIndex == 0) {
+                    NSLog(@"%@", [Helper setImageIconUrl:@"user" andTeamKey:model.userKey andIsSetWidth:YES andIsBackGround:NO]);
                     [self.sction1 sd_setImageWithURL:[Helper setImageIconUrl:@"user" andTeamKey:model.userKey andIsSetWidth:YES andIsBackGround:NO] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
                     self.sction1.layer.masksToBounds = YES;
                     self.sction1.layer.cornerRadius = self.sction1.frame.size.width/2;

@@ -18,7 +18,7 @@
         [self addSubview:_activityImageView];
         
         _name = [[UILabel alloc]initWithFrame:CGRectMake(0, 150 *ProportionAdapter, _activityImageView.frame.size.width, 40 *ProportionAdapter)];
-        _name.font = [UIFont systemFontOfSize:16 *ProportionAdapter];
+        _name.font = [UIFont systemFontOfSize:15 *ProportionAdapter];
         _name.text = @"ADIDAS阿迪达斯GOLF高尔夫球鞋Q4674男士轻便防水";
         _name.numberOfLines = 2;
         [self addSubview:_name];
@@ -32,6 +32,7 @@
         
         _ellipsisLable = [[UILabel alloc]initWithFrame:CGRectMake(self.frame.size.width - 20 *ProportionAdapter, 195 *ProportionAdapter, 20 *ProportionAdapter, 20 *ProportionAdapter)];
         _ellipsisLable.text = @"...";
+        _ellipsisLable.textColor = [UIColor lightGrayColor];
         _ellipsisLable.font = [UIFont systemFontOfSize:18 * ProportionAdapter];
         [self addSubview:_ellipsisLable];
         

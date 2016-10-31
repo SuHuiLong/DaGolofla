@@ -18,7 +18,7 @@
     self.activityHeaderImageViewLeft.constant = 10 *ProportionAdapter;
     self.activityHeaderImageViewW.constant = 70 *ProportionAdapter;
     
-    self.name.font = [UIFont systemFontOfSize:18 *ProportionAdapter];
+    self.name.font = [UIFont systemFontOfSize:16 *ProportionAdapter];
     self.nameLeft.constant = 20 *ProportionAdapter;
     
     self.activityNumber.font = [UIFont systemFontOfSize:12 *ProportionAdapter];
@@ -26,10 +26,10 @@
     
     self.addressImageLeft.constant = 20 *ProportionAdapter;
 
-    self.address.font = [UIFont systemFontOfSize:15 *ProportionAdapter];
+    self.address.font = [UIFont systemFontOfSize:14 *ProportionAdapter];
     self.addressLeft.constant = 10 *ProportionAdapter;
     
-    self.details.font = [UIFont systemFontOfSize:15 *ProportionAdapter];
+    self.details.font = [UIFont systemFontOfSize:14 *ProportionAdapter];
     self.detailsLeft.constant = 20 *ProportionAdapter;
 }
 
