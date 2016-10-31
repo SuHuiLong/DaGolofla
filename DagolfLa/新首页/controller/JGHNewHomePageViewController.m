@@ -42,7 +42,7 @@ static NSString *const JGHShowSuppliesMallTableViewCellIdentifier = @"JGHShowSup
 
 @interface JGHNewHomePageViewController ()<UITableViewDelegate, UITableViewDataSource, JGHShowSectionTableViewCellDelegate, CLLocationManagerDelegate, JGHShowActivityPhotoCellDelegate, JGHWonderfulTableViewCellDelegate, JGHShowRecomStadiumTableViewCellDelegate, JGHShowSuppliesMallTableViewCellDelegate, JGHNavListViewDelegate, JGHPASHeaderTableViewCellDelegate>
 {
-    NSArray *_titleArray;
+//    NSArray *_titleArray;
     
     NSInteger _showLineID;//0-活动，1-相册，2-成绩
 }
@@ -85,7 +85,7 @@ static NSString *const JGHShowSuppliesMallTableViewCellIdentifier = @"JGHShowSup
     // Do any additional setup after loading the view.
     self.automaticallyAdjustsScrollViewInsets = NO;
     self.view.backgroundColor = [UIColor colorWithHexString:BG_color];
-    _titleArray = @[@"", @"精彩推荐", @"热门球队", @"球场推荐", @"用品商城"];
+//    _titleArray = @[@"", @"精彩推荐", @"热门球队", @"球场推荐", @"用品商城"];
     self.indexModel = [[JGHIndexModel alloc]init];
     _showLineID = 0;
     
@@ -199,7 +199,7 @@ static NSString *const JGHShowSuppliesMallTableViewCellIdentifier = @"JGHShowSup
 }
 #pragma mark -- 创建TableView
 - (void)createHomeTableView{
-    self.homeTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight -44)];
+    self.homeTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight -44) style:UITableViewStyleGrouped];
     
     UINib *pASHeaderTableViewCellNib = [UINib nibWithNibName:@"JGHPASHeaderTableViewCell" bundle: [NSBundle mainBundle]];
     [self.homeTableView registerNib:pASHeaderTableViewCellNib forCellReuseIdentifier:JGHPASHeaderTableViewCellIdentifier];
@@ -303,15 +303,19 @@ static NSString *const JGHShowSuppliesMallTableViewCellIdentifier = @"JGHShowSup
     return 1;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
-    if (section == 4) {
+    if (section == 5) {
         return 0;
     }
     return 10 *ProportionAdapter;
 }
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
-    UIView *footView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, 10)];
-    footView.backgroundColor = [UIColor colorWithHexString:BG_color];
-    return footView;
+    if (section == 5) {
+        return nil;
+    }else{
+        UIView *footView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, 10)];
+        footView.backgroundColor = [UIColor colorWithHexString:BG_color];
+        return footView;
+    }
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 0) {
@@ -325,7 +329,7 @@ static NSString *const JGHShowSuppliesMallTableViewCellIdentifier = @"JGHShowSup
         if (self.indexModel.plateList.count > 0) {
             NSDictionary *wonderfulDict = self.indexModel.plateList[0];
             NSArray *wonderfulArray = [wonderfulDict objectForKey:@"bodyList"];
-            [wonderfulTableViewCell configJGHWonderfulTableViewCell:wonderfulArray];
+            [wonderfulTableViewCell configJGHWonderfulTableViewCell:wonderfulArray andImageW:[[wonderfulDict objectForKey:@"imgWidth"] integerValue] andImageH:[[wonderfulDict objectForKey:@"imgHeight"] integerValue]];
         }
     
         return wonderfulTableViewCell;
@@ -347,7 +351,7 @@ static NSString *const JGHShowSuppliesMallTableViewCellIdentifier = @"JGHShowSup
         if (self.indexModel.plateList.count > 2) {
             NSDictionary *recomStadiumDict = self.indexModel.plateList[2];
             NSArray *recomStadiumArray = [recomStadiumDict objectForKey:@"bodyList"];
-            [showRecomStadiumTableViewCell configJGHShowRecomStadiumTableViewCell:recomStadiumArray];
+            [showRecomStadiumTableViewCell configJGHShowRecomStadiumTableViewCell:recomStadiumArray andImageW:[[recomStadiumDict objectForKey:@"imgWidth"] integerValue] andImageH:[[recomStadiumDict objectForKey:@"imgHeight"] integerValue]];
         }
         
         return showRecomStadiumTableViewCell;
@@ -358,7 +362,7 @@ static NSString *const JGHShowSuppliesMallTableViewCellIdentifier = @"JGHShowSup
         if (self.indexModel.plateList.count > 3) {
             NSDictionary *suppliesMallDict = self.indexModel.plateList[3];
             NSArray *suppliesMallArray = [suppliesMallDict objectForKey:@"bodyList"];
-            [showSuppliesMallTableViewCell configJGHShowSuppliesMallTableViewCell:suppliesMallArray];
+            [showSuppliesMallTableViewCell configJGHShowSuppliesMallTableViewCell:suppliesMallArray andImageW:[[suppliesMallDict objectForKey:@"imgWidth"] integerValue] andImageH:[[suppliesMallDict objectForKey:@"imgHeight"] integerValue]];
         }
         
         return showSuppliesMallTableViewCell;
@@ -383,7 +387,7 @@ static NSString *const JGHShowSuppliesMallTableViewCellIdentifier = @"JGHShowSup
             _more = 1;
         }
         
-        [showSectionCell congfigJGHShowSectionTableViewCell:_titleArray[section] andHiden:_more];
+        [showSectionCell congfigJGHShowSectionTableViewCell:[dict objectForKey:@"title"] andHiden:_more];
         return (UIView *)showSectionCell;
     }
 }
@@ -394,11 +398,11 @@ static NSString *const JGHShowSuppliesMallTableViewCellIdentifier = @"JGHShowSup
         // 活动－相册－成绩
         return 190 *ProportionAdapter;
     }else if (indexPath.section == 1){
-        //精彩推荐
+        //精彩推荐 -- 135
         if (_indexModel.plateList.count > 0) {
             NSDictionary *dict = _indexModel.plateList[0];
             NSArray *bodyList = [dict objectForKey:@"bodyList"];
-            return ((bodyList.count-1)/2+1) *143 *ProportionAdapter + 8*ProportionAdapter;
+            return ((bodyList.count-1)/2+1) *([[dict objectForKey:@"imgHeight"] integerValue] +35 +8) *ProportionAdapter + 8*ProportionAdapter;
         }else{
             return 0;
         }
@@ -407,16 +411,16 @@ static NSString *const JGHShowSuppliesMallTableViewCellIdentifier = @"JGHShowSup
         if (_indexModel.plateList.count > 0) {
             NSDictionary *dict = _indexModel.plateList[2];
             NSArray *bodyList = [dict objectForKey:@"bodyList"];
-            return ((bodyList.count-1)/2+1) *171 *ProportionAdapter + 8*ProportionAdapter;
+            return ((bodyList.count-1)/2+1) *([[dict objectForKey:@"imgHeight"] integerValue] +56 +8) *ProportionAdapter + 8*ProportionAdapter;
         }else{
             return 0;
         }
     }else if (indexPath.section == 4){
-        //用品商城
+        //用品商城 -- (104 +imageH)
         if (_indexModel.plateList.count > 0) {
             NSDictionary *dict = [_indexModel.plateList lastObject];
             NSArray *bodyList = [dict objectForKey:@"bodyList"];
-            return ((bodyList.count-1)/2+1) *250 *ProportionAdapter + 8*ProportionAdapter;
+            return ((bodyList.count-1)/2+1) *([[dict objectForKey:@"imgHeight"] integerValue] +104 +8) *ProportionAdapter + 8*ProportionAdapter;
         }else{
             return 0;
         }

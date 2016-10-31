@@ -18,6 +18,8 @@
 
 @property (nonatomic ,strong)UILabel *drawee;
 
-- (void)configJGHSuppliesMallView:(NSDictionary *)dict;
+@property (nonatomic ,strong)UILabel *ellipsisLable;
+
+- (void)configJGHSuppliesMallView:(NSDictionary *)dict  andImageW:(NSInteger)imageW andImageH:(NSInteger)imageH;
 
 @end

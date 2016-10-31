@@ -18,6 +18,6 @@
 
 @property (weak, nonatomic)id <JGHWonderfulTableViewCellDelegate> delegate;
 
-- (void)configJGHWonderfulTableViewCell:(NSArray *)wonderfulArray;
+- (void)configJGHWonderfulTableViewCell:(NSArray *)wonderfulArray andImageW:(NSInteger)imageW andImageH:(NSInteger)imageH;
 
 @end

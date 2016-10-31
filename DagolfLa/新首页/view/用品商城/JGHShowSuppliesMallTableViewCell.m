@@ -27,18 +27,17 @@
     return self;
 }
 
-- (void)configJGHShowSuppliesMallTableViewCell:(NSArray *)array{
+- (void)configJGHShowSuppliesMallTableViewCell:(NSArray *)array andImageW:(NSInteger)imageW andImageH:(NSInteger)imageH{
     [self.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
     for (int i=0; i<array.count; i++) {
-        
         if (i%2 == 0) {
-            _suppliesMallView = [[JGHSuppliesMallView alloc]initWithFrame:CGRectMake(8*ProportionAdapter, (i/2 +1)*8*ProportionAdapter + (i/2)*235*ProportionAdapter, (screenWidth-24*ProportionAdapter)/2, 235 *ProportionAdapter)];
+            _suppliesMallView = [[JGHSuppliesMallView alloc]initWithFrame:CGRectMake(8*ProportionAdapter, (i/2 +1)*8*ProportionAdapter + (i/2)*(104 +imageW)*ProportionAdapter, (screenWidth-24*ProportionAdapter)/2, (104 +imageH) *ProportionAdapter)];
         }else{
-            _suppliesMallView = [[JGHSuppliesMallView alloc]initWithFrame:CGRectMake(16*ProportionAdapter +(screenWidth-16*ProportionAdapter)/2, (i/2 +1)*8*ProportionAdapter + (i/2)*235*ProportionAdapter, (screenWidth-24*ProportionAdapter)/2, 235 *ProportionAdapter)];
+            _suppliesMallView = [[JGHSuppliesMallView alloc]initWithFrame:CGRectMake(16*ProportionAdapter +(screenWidth-16*ProportionAdapter)/2, (i/2 +1)*8*ProportionAdapter + (i/2)*(104 +imageW)*ProportionAdapter, (screenWidth-24*ProportionAdapter)/2, (104 +imageH) *ProportionAdapter)];
         }
         
-        [_suppliesMallView configJGHSuppliesMallView:array[i]];
-        UIButton *selectBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, self.frame.size.width, 235 *ProportionAdapter)];
+        [_suppliesMallView configJGHSuppliesMallView:array[i] andImageW:imageW andImageH:imageH];
+        UIButton *selectBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, self.frame.size.width, (104 +imageW) *ProportionAdapter)];
         selectBtn.tag = 500 +i;
         [selectBtn addTarget:self action:@selector(suppliesMallClick:) forControlEvents:UIControlEventTouchUpInside];
         [_suppliesMallView addSubview:selectBtn];

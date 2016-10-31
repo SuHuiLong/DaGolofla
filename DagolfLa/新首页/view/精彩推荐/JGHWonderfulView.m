@@ -13,6 +13,7 @@
 - (instancetype)initWithFrame:(CGRect)frame{
     if (self == [super initWithFrame:frame]) {
         _activityImageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, self.frame.size.width, 107 *ProportionAdapter)];
+//        _activityImageView.contentMode = UIViewContentModeScaleAspectFit;
         _activityImageView.userInteractionEnabled = YES;
         [self addSubview:_activityImageView];
         
@@ -24,7 +25,11 @@
     return self;
 }
 
-- (void)configJGHWonderfulView:(NSDictionary *)dict{
+- (void)configJGHWonderfulView:(NSDictionary *)dict andImageW:(NSInteger)imageW andImageH:(NSInteger)imageH{
+    _activityImageView.frame = CGRectMake(0, 0, self.frame.size.width, imageH *ProportionAdapter);
+    
+    _name.frame = CGRectMake(0, imageH *ProportionAdapter +5*ProportionAdapter, imageW *ProportionAdapter, 20 *ProportionAdapter);
+    
     if ([dict objectForKey:@"timeKey"]) {
         [_activityImageView sd_setImageWithURL:[dict objectForKey:@"imgURL"] placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
         

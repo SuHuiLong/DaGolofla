@@ -18,6 +18,6 @@
 
 @property (weak, nonatomic)id <JGHShowSuppliesMallTableViewCellDelegate> delegate;
 
-- (void)configJGHShowSuppliesMallTableViewCell:(NSArray *)array;
+- (void)configJGHShowSuppliesMallTableViewCell:(NSArray *)array andImageW:(NSInteger)imageW andImageH:(NSInteger)imageH;
 
 @end

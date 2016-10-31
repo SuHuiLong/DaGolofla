@@ -18,6 +18,6 @@
 
 @property (weak, nonatomic)id <JGHShowRecomStadiumTableViewCellDelegate> delegate;
 
-- (void)configJGHShowRecomStadiumTableViewCell:(NSArray *)array;
+- (void)configJGHShowRecomStadiumTableViewCell:(NSArray *)array andImageW:(NSInteger)imageW andImageH:(NSInteger)imageH;
 
 @end

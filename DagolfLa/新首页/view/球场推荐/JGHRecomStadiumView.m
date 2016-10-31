@@ -32,7 +32,13 @@
     return self;
 }
 
-- (void)configJGHRecomStadiumView:(NSDictionary *)dict{
+- (void)configJGHRecomStadiumView:(NSDictionary *)dict andImageW:(NSInteger)imageW andImageH:(NSInteger)imageH{
+    _activityImageView.frame = CGRectMake(0, 0, self.frame.size.width, imageH *ProportionAdapter);
+    
+    _name.frame = CGRectMake(0, (imageH +5) *ProportionAdapter, _activityImageView.frame.size.width, 20 *ProportionAdapter);
+    
+    _price.frame = CGRectMake(0, (imageH +5 + 30) *ProportionAdapter, _activityImageView.frame.size.width, 20 *ProportionAdapter);
+    
     [self.activityImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@", [dict objectForKey:@"imgURL"]]] placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
     _name.text = [NSString stringWithFormat:@"%@", [dict objectForKey:@"title"]];
     

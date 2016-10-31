@@ -26,17 +26,17 @@
     return self;
 }
 
-- (void)configJGHShowRecomStadiumTableViewCell:(NSArray *)array{
+- (void)configJGHShowRecomStadiumTableViewCell:(NSArray *)array andImageW:(NSInteger)imageW andImageH:(NSInteger)imageH{
     [self.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
     for (int i=0; i<array.count; i++) {
         if (i%2 == 0) {
-            _recomStadiumView = [[JGHRecomStadiumView alloc]initWithFrame:CGRectMake(8*ProportionAdapter, (i/2 +1)*8*ProportionAdapter + (i/2)*163*ProportionAdapter, (screenWidth-24*ProportionAdapter)/2, 163 *ProportionAdapter)];
+            _recomStadiumView = [[JGHRecomStadiumView alloc]initWithFrame:CGRectMake(8*ProportionAdapter, (i/2 +1)*8*ProportionAdapter + (i/2)*(imageH +56)*ProportionAdapter, (screenWidth-24*ProportionAdapter)/2, (imageH +56) *ProportionAdapter)];
         }else{
-            _recomStadiumView = [[JGHRecomStadiumView alloc]initWithFrame:CGRectMake(16*ProportionAdapter +(screenWidth-16*ProportionAdapter)/2, (i/2 +1)*8*ProportionAdapter + (i/2)*163*ProportionAdapter, (screenWidth-24*ProportionAdapter)/2, 163*ProportionAdapter)];
+            _recomStadiumView = [[JGHRecomStadiumView alloc]initWithFrame:CGRectMake(16*ProportionAdapter +(screenWidth-16*ProportionAdapter)/2, (i/2 +1)*8*ProportionAdapter + (i/2)*(imageH +56)*ProportionAdapter, (screenWidth-24*ProportionAdapter)/2, (imageH +56)*ProportionAdapter)];
         }
         
-        [_recomStadiumView configJGHRecomStadiumView:array[i]];
-        UIButton *selectBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, screenWidth - 16*ProportionAdapter, 163*ProportionAdapter)];
+        [_recomStadiumView configJGHRecomStadiumView:array[i] andImageW:imageW andImageH:imageH];
+        UIButton *selectBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, screenWidth - 16*ProportionAdapter, (imageH +56)*ProportionAdapter)];
         selectBtn.tag = 400 +i;
         [selectBtn addTarget:self action:@selector(recomStadiumClick:) forControlEvents:UIControlEventTouchUpInside];
         [_recomStadiumView addSubview:selectBtn];
