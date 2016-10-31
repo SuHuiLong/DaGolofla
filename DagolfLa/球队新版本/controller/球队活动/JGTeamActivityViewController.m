@@ -156,7 +156,7 @@
 }
 #pragma mark -- 创建TableView
 - (void)createTeamActivityTabelView{
-    self.teamActivityTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight) style:UITableViewStyleGrouped];
+    self.teamActivityTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight-44*ProportionAdapter - 15*ProportionAdapter) style:UITableViewStyleGrouped];
     self.teamActivityTableView.delegate = self;
     self.teamActivityTableView.dataSource = self;
     self.teamActivityTableView.separatorStyle = UITableViewCellSeparatorStyleNone;

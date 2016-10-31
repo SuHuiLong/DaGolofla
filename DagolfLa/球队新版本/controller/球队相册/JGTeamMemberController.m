@@ -39,6 +39,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    UIView* view = [[UIView alloc]initWithFrame:CGRectMake(1, 1, 1, 1)];
+    [self.view addSubview:view];
     
     self.navigationItem.title = @"球队成员";
     _keyArray = [[NSMutableArray alloc]init];
@@ -55,7 +57,7 @@
 
 -(void)uiConfig
 {
-    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight-15*screenWidth/375)];
+    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight-15*screenWidth/375 - 44*ProportionAdapter)];
     _tableView.delegate = self;
     _tableView.dataSource = self;
     [self.view addSubview:_tableView];
