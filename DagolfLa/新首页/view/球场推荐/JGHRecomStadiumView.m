@@ -15,6 +15,8 @@
         _activityImageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, self.frame.size.width, 107 *ProportionAdapter)];
         _activityImageView.image = [UIImage imageNamed:@"activityStateImage"];
         _activityImageView.userInteractionEnabled = YES;
+        _activityImageView.contentMode = UIViewContentModeScaleAspectFill;
+        _activityImageView.clipsToBounds = YES;
         [self addSubview:_activityImageView];
         
         _name = [[UILabel alloc]initWithFrame:CGRectMake(0, 113 *ProportionAdapter, _activityImageView.frame.size.width, 20 *ProportionAdapter)];

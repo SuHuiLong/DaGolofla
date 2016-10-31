@@ -199,7 +199,7 @@ static NSString *const JGHShowSuppliesMallTableViewCellIdentifier = @"JGHShowSup
 }
 #pragma mark -- 创建TableView
 - (void)createHomeTableView{
-    self.homeTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight -44) style:UITableViewStyleGrouped];
+    self.homeTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight -40 *ProportionAdapter) style:UITableViewStyleGrouped];
     
     UINib *pASHeaderTableViewCellNib = [UINib nibWithNibName:@"JGHPASHeaderTableViewCell" bundle: [NSBundle mainBundle]];
     [self.homeTableView registerNib:pASHeaderTableViewCellNib forCellReuseIdentifier:JGHPASHeaderTableViewCellIdentifier];
@@ -312,7 +312,7 @@ static NSString *const JGHShowSuppliesMallTableViewCellIdentifier = @"JGHShowSup
     if (section == 5) {
         return nil;
     }else{
-        UIView *footView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, 10)];
+        UIView *footView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, 10 *ProportionAdapter)];
         footView.backgroundColor = [UIColor colorWithHexString:BG_color];
         return footView;
     }
@@ -732,6 +732,16 @@ static NSString *const JGHShowSuppliesMallTableViewCellIdentifier = @"JGHShowSup
         }
         albumCtrl.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:albumCtrl animated:YES];
+        return;
+    }
+    
+    if ([url containsString:@"openURL"]) {//相册
+        JGLWebUserMallViewController *mallCtrl = [[JGLWebUserMallViewController alloc]init];
+        //http://www.dagolfla.com/app/ProductDetails.html?proid=%@
+        NSString *urlRequest = [NSString stringWithFormat:@"%@", [Helper returnKeyVlaueWithUrlString:url andKey:@"url"]];
+        mallCtrl.urlRequest = urlRequest;
+        mallCtrl.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:mallCtrl animated:YES];
         return;
     }
 }

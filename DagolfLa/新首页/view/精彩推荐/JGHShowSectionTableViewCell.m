@@ -22,7 +22,7 @@
     self.name.font = [UIFont systemFontOfSize:16 *ProportionAdapter];
     self.nameLeft.constant = 10 *ProportionAdapter;
     
-    self.moreBtn.titleLabel.font = [UIFont systemFontOfSize:11 *ProportionAdapter];
+    self.moreBtn.titleLabel.font = [UIFont systemFontOfSize:14 *ProportionAdapter];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

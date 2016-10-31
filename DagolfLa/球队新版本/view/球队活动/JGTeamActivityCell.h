@@ -24,8 +24,16 @@
 
 //imageView
 @property (weak, nonatomic) IBOutlet UIImageView *imageview;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *imageviewW;//65
 //activityStateImage
 @property (weak, nonatomic) IBOutlet UIImageView *activityStateImage;
+
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *nameLeft;//10
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *timeImageLeft;
+
+
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *addressImageLeft;
+
 
 //填充cell数据
 

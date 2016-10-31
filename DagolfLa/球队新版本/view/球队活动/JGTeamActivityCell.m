@@ -19,6 +19,11 @@
 //    self.imageview.frame = CGRectMake(self.imageview.frame.origin.x, self.imageview.frame.origin.y, 60 * screenWidth/375, 60 * screenWidth/375);
     self.imageview.layer.masksToBounds = YES;
     self.imageview.layer.cornerRadius = CornerRadiu;
+    self.imageviewW.constant = 65*ProportionAdapter;
+    
+    self.nameLeft.constant = 10*ProportionAdapter;
+    self.timeImageLeft.constant = 10*ProportionAdapter;
+    self.addressImageLeft.constant = 10*ProportionAdapter;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
