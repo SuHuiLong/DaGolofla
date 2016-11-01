@@ -53,6 +53,7 @@ static NSString *const JGHAddMoreTeamTableViewCellIdentifier = @"JGHAddMoreTeamT
     
     UIBarButtonItem *createTeam = [[UIBarButtonItem alloc] initWithTitle:@"创建球队" style:(UIBarButtonItemStyleDone) target:self action:@selector(createTeam)];
     createTeam.tintColor = [UIColor whiteColor];
+    [createTeam setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:15 * ProportionAdapter], NSFontAttributeName, nil] forState:UIControlStateNormal];
     self.navigationItem.rightBarButtonItem = createTeam;
     
     [self createHomeTableView];

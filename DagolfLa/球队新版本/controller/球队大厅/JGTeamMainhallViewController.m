@@ -229,6 +229,7 @@
     _strProvince = @"全国";
     UIBarButtonItem *bar = [[UIBarButtonItem alloc] initWithTitle:@"创建球队" style:(UIBarButtonItemStylePlain) target:self action:@selector(creatTeam)];
     bar.tintColor = [UIColor whiteColor];
+    [bar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:15 * ProportionAdapter], NSFontAttributeName, nil] forState:UIControlStateNormal];
     self.navigationItem.rightBarButtonItem = bar;
     _page = 0;
     self.title = @"球队大厅";

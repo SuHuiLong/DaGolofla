@@ -19,10 +19,10 @@
     self.bgLableLeft.constant = 10 *ProportionAdapter;
     self.bgLableH.constant = 20 *ProportionAdapter;
 
-    self.name.font = [UIFont systemFontOfSize:16 *ProportionAdapter];
+    self.name.font = [UIFont systemFontOfSize:18 *ProportionAdapter];
     self.nameLeft.constant = 10 *ProportionAdapter;
     
-    self.moreBtn.titleLabel.font = [UIFont systemFontOfSize:11 *ProportionAdapter];
+    self.moreBtn.titleLabel.font = [UIFont systemFontOfSize:14 *ProportionAdapter];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
