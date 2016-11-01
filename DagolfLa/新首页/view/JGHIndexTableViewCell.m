@@ -93,6 +93,7 @@
 }
 
 - (void)configJGDHotTeamCell:(NSArray *)array andImageW:(NSInteger)imageW andImageH:(NSInteger)imageH{
+    [self.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
     for (int i=0; i<array.count; i++) {
         _hotTeamView = [[JGDHotTeamView alloc]initWithFrame:CGRectMake(0, i*90*ProportionAdapter, screenWidth, 90 *ProportionAdapter)];
         [_hotTeamView configJGHShowFavouritesCell:array[i]];
