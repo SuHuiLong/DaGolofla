@@ -95,13 +95,20 @@
 - (void)configJGDHotTeamCell:(NSArray *)array andImageW:(NSInteger)imageW andImageH:(NSInteger)imageH{
     [self.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
     for (int i=0; i<array.count; i++) {
-        _hotTeamView = [[JGDHotTeamView alloc]initWithFrame:CGRectMake(0, i*90*ProportionAdapter, screenWidth, 90 *ProportionAdapter)];
+        _hotTeamView = [[JGDHotTeamView alloc]initWithFrame:CGRectMake(0, i*(imageH +25)*ProportionAdapter, screenWidth, (imageH +25) *ProportionAdapter)];
         [_hotTeamView configJGHShowFavouritesCell:array[i] andImageW:imageW andImageH:imageH];
         
-        UIButton *selectBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, screenWidth, 90 *ProportionAdapter)];
+        UIButton *selectBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, screenWidth, (imageH +25) *ProportionAdapter)];
         selectBtn.tag = 600 +i;
         [selectBtn addTarget:self action:@selector(hotTeamClick:) forControlEvents:UIControlEventTouchUpInside];
         [_suppliesMallView addSubview:selectBtn];
+        
+        if (i < array.count -1) {
+            UILabel *line = [[UILabel alloc]initWithFrame:CGRectMake(10 *ProportionAdapter, _hotTeamView.frame.size.height -1, screenWidth - 20 *ProportionAdapter, 1)];
+            line.backgroundColor = [UIColor colorWithHexString:@"#F0F1F2"];
+            [_hotTeamView addSubview:line];
+        }
+        
         [self addSubview:_hotTeamView];
     }
     

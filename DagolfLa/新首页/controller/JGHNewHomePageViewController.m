@@ -297,13 +297,13 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
     return 1;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
-    if (section == 5) {
+    if (section == _indexModel.plateList.count +1) {
         return 0;
     }
     return 10 *ProportionAdapter;
 }
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
-    if (section == 5) {
+    if (section == _indexModel.plateList.count +1) {
         return nil;
     }else{
         UIView *footView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, 10 *ProportionAdapter)];
@@ -441,7 +441,7 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
                 return ((bodyList.count-1)/2+1) *(imgHeight +104 +8) *ProportionAdapter + 8*ProportionAdapter;
             }else if (bodyLayoutType == 2){
                 //热门球队
-                return 70 *ProportionAdapter;
+                return ((25 +imgHeight) *ProportionAdapter) *bodyList.count;
             }else if (bodyLayoutType == 3){
                 //订场推荐
                 return ((bodyList.count-1)/2+1) *(imgHeight +56 +8) *ProportionAdapter + 8*ProportionAdapter;

@@ -48,7 +48,7 @@
         self.addressLB.textColor = [UIColor colorWithHexString:@"#aaaaaa"];
         [self addSubview:self.addressLB];
         
-        self.detailLB = [[UILabel alloc] initWithFrame:CGRectMake(105 * ProportionAdapter, 60 * ProportionAdapter, screenWidth - 110 * ProportionAdapter, 20 * ProportionAdapter)];
+        self.detailLB = [[UILabel alloc] initWithFrame:CGRectMake(105 * ProportionAdapter, 62 * ProportionAdapter, screenWidth - 110 * ProportionAdapter, 20 * ProportionAdapter)];
         self.detailLB.font = [UIFont systemFontOfSize:15 * ProportionAdapter];
         self.detailLB.textColor = [UIColor colorWithHexString:@"#aaaaaa"];
         [self addSubview:self.detailLB];
@@ -69,7 +69,7 @@
     
     self.addressLB.frame = CGRectMake(self.iconImageV.frame.origin.x + (imageW + 39) * ProportionAdapter, 39 * ProportionAdapter, screenWidth - 110 * ProportionAdapter, 25 * ProportionAdapter);
 
-    self.detailLB.frame = CGRectMake(self.iconImageV.frame.origin.x + (imageW + 24) * ProportionAdapter, 60 * ProportionAdapter, screenWidth - 110 * ProportionAdapter, 20 * ProportionAdapter);
+    self.detailLB.frame = CGRectMake(self.iconImageV.frame.origin.x + (imageW + 24) * ProportionAdapter, 62 * ProportionAdapter, screenWidth - 110 * ProportionAdapter, 20 * ProportionAdapter);
     
     if ([dict objectForKey:@"timeKey"]) {
         [self.iconImageV sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@", [dict objectForKey:@"imgURL"]]] placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
