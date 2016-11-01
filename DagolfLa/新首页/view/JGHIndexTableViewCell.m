@@ -10,6 +10,7 @@
 #import "JGHWonderfulView.h"
 #import "JGHRecomStadiumView.h"
 #import "JGHSuppliesMallView.h"
+#import "JGDHotTeamView.h"
 
 @interface JGHIndexTableViewCell ()
 
@@ -17,6 +18,7 @@
     JGHWonderfulView *_wonderfulView;
     JGHRecomStadiumView *_recomStadiumView;
     JGHSuppliesMallView *_suppliesMallView;
+    JGDHotTeamView *_hotTeamView;
 }
 
 @end
@@ -88,6 +90,29 @@
         [_suppliesMallView addSubview:selectBtn];
         [self addSubview:_suppliesMallView];
     }
+}
+
+- (void)configJGDHotTeamCell:(NSArray *)array andImageW:(NSInteger)imageW andImageH:(NSInteger)imageH{
+    for (int i=0; i<array.count; i++) {
+        _hotTeamView = [[JGDHotTeamView alloc]initWithFrame:CGRectMake(0, i*90*ProportionAdapter, screenWidth, 90 *ProportionAdapter)];
+        [_hotTeamView configJGDHotTeamWithDic:array[i]];
+        
+        UIButton *selectBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, screenWidth, 90 *ProportionAdapter)];
+        selectBtn.tag = 600 +i;
+        [selectBtn addTarget:self action:@selector(hotTeamClick:) forControlEvents:UIControlEventTouchUpInside];
+        [_suppliesMallView addSubview:selectBtn];
+        [self addSubview:_hotTeamView];
+    }
+    
+}
+
+- (void)hotTeamClick:(UIButton *)btn{
+    btn.enabled = NO;
+    if ([self.delegate respondsToSelector:@selector(hotTeamSelectClick:)]) {
+        [self.delegate hotTeamSelectClick:btn];
+    }
+    
+    btn.enabled = YES;
 }
 
 - (void)suppliesMallClick:(UIButton *)btn{

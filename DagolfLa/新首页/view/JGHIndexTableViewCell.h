@@ -17,6 +17,8 @@
 
 - (void)suppliesMallSelectClick:(UIButton *)btn;
 
+- (void)hotTeamSelectClick:(UIButton *)btn;
+
 @end
 
 @interface JGHIndexTableViewCell : UITableViewCell
@@ -29,5 +31,7 @@
 - (void)configJGHShowRecomStadiumTableViewCell:(NSArray *)array andImageW:(NSInteger)imageW andImageH:(NSInteger)imageH;
 //用品商城
 - (void)configJGHShowSuppliesMallTableViewCell:(NSArray *)array andImageW:(NSInteger)imageW andImageH:(NSInteger)imageH;
+//热门球队
+- (void)configJGDHotTeamCell:(NSArray *)array andImageW:(NSInteger)imageW andImageH:(NSInteger)imageH;
 
 @end

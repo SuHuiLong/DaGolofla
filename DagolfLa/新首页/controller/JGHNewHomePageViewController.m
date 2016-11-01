@@ -220,6 +220,8 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
     
     [self.homeTableView registerClass:[JGHShowSuppliesMallTableViewCell class] forCellReuseIdentifier:JGHShowSuppliesMallTableViewCellIdentifier];
     
+    [self.homeTableView registerClass:[JGHIndexTableViewCell class] forCellReuseIdentifier:JGHIndexTableViewCellIdentifier];
+    
     self.homeTableView.dataSource = self;
     self.homeTableView.delegate = self;
     self.homeTableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
@@ -345,7 +347,7 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
                 [indexTableViewCell configJGHShowSuppliesMallTableViewCell:bodyList andImageW:imgWidth andImageH:imgHeight];
             }else if (bodyLayoutType == 2){
                 //热门球队
-                
+                [indexTableViewCell configJGDHotTeamCell:bodyList andImageW:imgWidth andImageH:imgHeight];
             }else if (bodyLayoutType == 3){
                 //订场推荐
                 [indexTableViewCell configJGHShowRecomStadiumTableViewCell:bodyList andImageW:imgWidth andImageH:imgHeight];
@@ -676,6 +678,11 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
     NSArray *bodyList = [dict objectForKey:@"bodyList"];
     NSDictionary *mallListDict = bodyList[btn.tag -500];
     [self pushctrlWithUrl:[mallListDict objectForKey:@"weblinks"]];
+}
+#pragma mark -- 热门球队
+- (void)hotTeamSelectClick:(UIButton *)btn{
+    NSLog(@"%td", btn.tag);
+    
 }
 #pragma mark -- 更多
 - (void)didSelectMoreBtn:(UIButton *)moreBtn{
