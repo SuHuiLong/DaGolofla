@@ -290,20 +290,10 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
 //    return _dataArray.count +1;
-    return 5;
+    return _indexModel.plateList.count +1;
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (section == 2){
-        //热门球队
-        if (_indexModel.plateList.count > 0) {
-            NSDictionary *dict = _indexModel.plateList[1];
-            NSArray *bodyList = [dict objectForKey:@"bodyList"];
-            return bodyList.count;
-        }else{
-            return 0;
-        }
-    }
     return 1;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
