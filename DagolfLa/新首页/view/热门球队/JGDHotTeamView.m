@@ -18,6 +18,8 @@
 
 @property (nonatomic, strong) UILabel *detailLB;
 
+@property (nonatomic, strong) UIImageView *addressImageView;
+
 @end
 
 @implementation JGDHotTeamView
@@ -37,9 +39,9 @@
         self.nameLB.textColor = [UIColor colorWithHexString:@"#333333"];
         [self addSubview: self.nameLB];
         
-        UIImageView *addressImageView = [[UIImageView alloc]initWithFrame:CGRectMake(105 *ProportionAdapter, 39     *ProportionAdapter, 10 *ProportionAdapter, 13 *ProportionAdapter)];
-        addressImageView.image = [UIImage imageNamed:@"juli"];
-        [self addSubview:addressImageView];
+        self.addressImageView = [[UIImageView alloc]initWithFrame:CGRectMake(105 *ProportionAdapter, 44     *ProportionAdapter, 11 *ProportionAdapter, 15 *ProportionAdapter)];
+        self.addressImageView.image = [UIImage imageNamed:@"juli"];
+        [self addSubview:self.addressImageView];
         
         self.addressLB = [[UILabel alloc] initWithFrame:CGRectMake(120 * ProportionAdapter, 39 * ProportionAdapter, screenWidth - 150 * ProportionAdapter, 20 * ProportionAdapter)];
         self.addressLB.font = [UIFont systemFontOfSize:15 * ProportionAdapter];
@@ -56,11 +58,29 @@
     return self;
 }
 
-- (void)configJGHShowFavouritesCell:(NSDictionary *)dict{
+- (void)configJGHShowFavouritesCell:(NSDictionary *)dict andImageW:(NSInteger)imageW andImageH:(NSInteger)imageH{
+    
+    
+    self.iconImageV.frame = CGRectMake(11 * ProportionAdapter, 14 * ProportionAdapter, imageW * ProportionAdapter, imageH * ProportionAdapter);
+    
+    self.nameLB.frame = CGRectMake(self.iconImageV.frame.origin.x + (imageW + 24) * ProportionAdapter, 14 * ProportionAdapter, screenWidth - 110 * ProportionAdapter, 25 * ProportionAdapter);
+    
+    self.addressImageView.frame = CGRectMake(self.iconImageV.frame.origin.x + (imageW + 24) * ProportionAdapter, 44     *ProportionAdapter, 11 *ProportionAdapter, 15 *ProportionAdapter);
+    
+    self.addressLB.frame = CGRectMake(self.iconImageV.frame.origin.x + (imageW + 39) * ProportionAdapter, 39 * ProportionAdapter, screenWidth - 110 * ProportionAdapter, 25 * ProportionAdapter);
+
+    self.detailLB.frame = CGRectMake(self.iconImageV.frame.origin.x + (imageW + 24) * ProportionAdapter, 60 * ProportionAdapter, screenWidth - 110 * ProportionAdapter, 20 * ProportionAdapter);
+    
     if ([dict objectForKey:@"timeKey"]) {
         [self.iconImageV sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@", [dict objectForKey:@"imgURL"]]] placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
         
-        self.nameLB.text = [NSString stringWithFormat:@"%@", [dict objectForKey:@"title"]];
+        NSString * name = [dict objectForKey:@"title"];
+        NSString * sum = [[dict objectForKey:@"viewCount"] stringValue];
+        
+        NSMutableAttributedString *nameAttrib = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@（%@）", name,  sum]];
+        [nameAttrib addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:12 * ProportionAdapter] range:NSMakeRange([name length], [sum length] + 2)];
+        self.nameLB.attributedText = nameAttrib;
+//        self.nameLB.text = [NSString stringWithFormat:@"%@（%@）", [dict objectForKey:@"title"],  [dict objectForKey:@"viewCount"]];
         
         self.addressLB.text = [NSString stringWithFormat:@"%@", [dict objectForKey:@"position"]];
         

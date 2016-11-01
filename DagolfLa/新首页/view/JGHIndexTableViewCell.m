@@ -96,7 +96,7 @@
     [self.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
     for (int i=0; i<array.count; i++) {
         _hotTeamView = [[JGDHotTeamView alloc]initWithFrame:CGRectMake(0, i*90*ProportionAdapter, screenWidth, 90 *ProportionAdapter)];
-        [_hotTeamView configJGHShowFavouritesCell:array[i]];
+        [_hotTeamView configJGHShowFavouritesCell:array[i] andImageW:imageW andImageH:imageH];
         
         UIButton *selectBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, screenWidth, 90 *ProportionAdapter)];
         selectBtn.tag = 600 +i;
