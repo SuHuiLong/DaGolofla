@@ -191,6 +191,7 @@
 		209B93A71D6E8EB700A5BE10 /* JGHNewCostListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 209B93A51D6E8EB700A5BE10 /* JGHNewCostListCell.xib */; };
 		209B93AB1D6EC65600A5BE10 /* JGHAddCostButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 209B93A91D6EC65600A5BE10 /* JGHAddCostButtonCell.m */; };
 		209B93AC1D6EC65600A5BE10 /* JGHAddCostButtonCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 209B93AA1D6EC65600A5BE10 /* JGHAddCostButtonCell.xib */; };
+		20A4CFB61DC85D3F00F5A81D /* JGHIndexTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 20A4CFB51DC85D3F00F5A81D /* JGHIndexTableViewCell.m */; };
 		20BA61291CDC99D0004B61F5 /* ALAirplayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 20BA61151CDC99D0004B61F5 /* ALAirplayView.m */; };
 		20BA612A1CDC99D0004B61F5 /* ALButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 20BA61171CDC99D0004B61F5 /* ALButton.m */; };
 		20BA612B1CDC99D0004B61F5 /* ALMoviePlayerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 20BA61191CDC99D0004B61F5 /* ALMoviePlayerController.m */; };
@@ -1572,6 +1573,8 @@
 		209B93A81D6EC65600A5BE10 /* JGHAddCostButtonCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHAddCostButtonCell.h; sourceTree = "<group>"; };
 		209B93A91D6EC65600A5BE10 /* JGHAddCostButtonCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHAddCostButtonCell.m; sourceTree = "<group>"; };
 		209B93AA1D6EC65600A5BE10 /* JGHAddCostButtonCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JGHAddCostButtonCell.xib; sourceTree = "<group>"; };
+		20A4CFB41DC85D3F00F5A81D /* JGHIndexTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHIndexTableViewCell.h; sourceTree = "<group>"; };
+		20A4CFB51DC85D3F00F5A81D /* JGHIndexTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHIndexTableViewCell.m; sourceTree = "<group>"; };
 		20BA61141CDC99D0004B61F5 /* ALAirplayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALAirplayView.h; sourceTree = "<group>"; };
 		20BA61151CDC99D0004B61F5 /* ALAirplayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALAirplayView.m; sourceTree = "<group>"; };
 		20BA61161CDC99D0004B61F5 /* ALButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALButton.h; sourceTree = "<group>"; };
@@ -3936,6 +3939,8 @@
 		2053ED971DBEF7650076BFE4 /* view */ = {
 			isa = PBXGroup;
 			children = (
+				20A4CFB41DC85D3F00F5A81D /* JGHIndexTableViewCell.h */,
+				20A4CFB51DC85D3F00F5A81D /* JGHIndexTableViewCell.m */,
 				207F70551DC194F900667E26 /* 导航列表 */,
 				2053ED9B1DBF24E20076BFE4 /* 活动相册成绩 */,
 				2053EDA61DBF27A00076BFE4 /* 用品商城 */,
@@ -9635,6 +9640,7 @@
 				F55426781D226DBD00233B20 /* JGDChangePasswordViewController.m in Sources */,
 				36BF00851BC772EF005B3CE2 /* MyTradeViewController.m in Sources */,
 				82434E3A1DB49A31006DE8DD /* JGLGroupRoundModel.m in Sources */,
+				20A4CFB61DC85D3F00F5A81D /* JGHIndexTableViewCell.m in Sources */,
 				821DB9D01D5DB5F300C882C2 /* JGLCaddieModel.m in Sources */,
 				20D514E91DB63DA60006EFCB /* JGHGameBaseHeaderCell.m in Sources */,
 				F53A05611D518F32009DD489 /* JGHOperationScoreListCell.m in Sources */,
