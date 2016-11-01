@@ -56,12 +56,24 @@
     return self;
 }
 
-- (void)configJGDHotTeamWithDic:(NSDictionary *)dic{
-    self.iconImageV.backgroundColor = [UIColor cyanColor];
-    self.nameLB.text = @"łłłłłłłłłłłłłłłłłłłłłłł";
-    self.addressLB.text = @"łłłłłłłłłłłłłłłłłłłłłł";
-    self.detailLB.text = @"łłłłłłłłłłłłłłłłłłłłłłłłłłłłłłłłłłłłłłłłłłł";
+- (void)configJGHShowFavouritesCell:(NSDictionary *)dict{
+    if ([dict objectForKey:@"timeKey"]) {
+        [self.iconImageV sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@", [dict objectForKey:@"imgURL"]]] placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
+        
+        self.nameLB.text = [NSString stringWithFormat:@"%@", [dict objectForKey:@"title"]];
+        
+        self.addressLB.text = [NSString stringWithFormat:@"%@", [dict objectForKey:@"position"]];
+        
+        self.detailLB.text = [NSString stringWithFormat:@"%@", [dict objectForKey:@"desc"]];
+        
+//        if ([dict objectForKey:@"viewCount"]) {
+//            _activityNumber.text = [NSString stringWithFormat:@"(%@)", [dict objectForKey:@"viewCount"]];
+//        }else{
+//            _activityNumber.text = @"";
+//        }
+    }
 }
+
 /*
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.

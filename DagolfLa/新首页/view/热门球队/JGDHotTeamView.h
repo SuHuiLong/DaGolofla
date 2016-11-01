@@ -11,6 +11,5 @@
 @interface JGDHotTeamView : UIView
 
 
-- (void)configJGDHotTeamWithDic:(NSDictionary *)dic;
-
+- (void)configJGHShowFavouritesCell:(NSDictionary *)dict;
 @end
