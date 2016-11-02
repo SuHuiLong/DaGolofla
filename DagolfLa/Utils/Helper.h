@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+#import "LQProgressHud.h"
 
 @interface Helper : NSObject
 //根据字符串内容的多少  在固定宽度 下计算出实际的行高
