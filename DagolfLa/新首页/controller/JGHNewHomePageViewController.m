@@ -31,6 +31,7 @@
 #import "JGNewCreateTeamTableViewController.h"
 #import "DetailViewController.h"
 #import "JGLPushDetailsViewController.h"
+#import "JGHIndexTableViewCell.h"
 
 static NSString *const JGHPASHeaderTableViewCellIdentifier = @"JGHPASHeaderTableViewCell";
 static NSString *const JGHShowSectionTableViewCellIdentifier = @"JGHShowSectionTableViewCell";
@@ -39,8 +40,9 @@ static NSString *const JGHShowActivityPhotoCellIdentifier = @"JGHShowActivityPho
 static NSString *const JGHWonderfulTableViewCellIdentifier = @"JGHWonderfulTableViewCell";
 static NSString *const JGHShowRecomStadiumTableViewCellIdentifier = @"JGHShowRecomStadiumTableViewCell";
 static NSString *const JGHShowSuppliesMallTableViewCellIdentifier = @"JGHShowSuppliesMallTableViewCell";
+static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell";
 
-@interface JGHNewHomePageViewController ()<UITableViewDelegate, UITableViewDataSource, JGHShowSectionTableViewCellDelegate, CLLocationManagerDelegate, JGHShowActivityPhotoCellDelegate, JGHWonderfulTableViewCellDelegate, JGHShowRecomStadiumTableViewCellDelegate, JGHShowSuppliesMallTableViewCellDelegate, JGHNavListViewDelegate, JGHPASHeaderTableViewCellDelegate>
+@interface JGHNewHomePageViewController ()<UITableViewDelegate, UITableViewDataSource, JGHShowSectionTableViewCellDelegate, CLLocationManagerDelegate, JGHShowActivityPhotoCellDelegate, JGHWonderfulTableViewCellDelegate, JGHShowRecomStadiumTableViewCellDelegate, JGHShowSuppliesMallTableViewCellDelegate, JGHNavListViewDelegate, JGHPASHeaderTableViewCellDelegate, JGHIndexTableViewCellDelegate>
 {
 //    NSArray *_titleArray;
     
@@ -218,6 +220,8 @@ static NSString *const JGHShowSuppliesMallTableViewCellIdentifier = @"JGHShowSup
     
     [self.homeTableView registerClass:[JGHShowSuppliesMallTableViewCell class] forCellReuseIdentifier:JGHShowSuppliesMallTableViewCellIdentifier];
     
+    [self.homeTableView registerClass:[JGHIndexTableViewCell class] forCellReuseIdentifier:JGHIndexTableViewCellIdentifier];
+    
     self.homeTableView.dataSource = self;
     self.homeTableView.delegate = self;
     self.homeTableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
@@ -286,30 +290,20 @@ static NSString *const JGHShowSuppliesMallTableViewCellIdentifier = @"JGHShowSup
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
 //    return _dataArray.count +1;
-    return 5;
+    return _indexModel.plateList.count +1;
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (section == 2){
-        //热门球队
-        if (_indexModel.plateList.count > 0) {
-            NSDictionary *dict = _indexModel.plateList[1];
-            NSArray *bodyList = [dict objectForKey:@"bodyList"];
-            return bodyList.count;
-        }else{
-            return 0;
-        }
-    }
     return 1;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
-    if (section == 5) {
+    if (section == _indexModel.plateList.count +1) {
         return 0;
     }
     return 10 *ProportionAdapter;
 }
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
-    if (section == 5) {
+    if (section == _indexModel.plateList.count +1) {
         return nil;
     }else{
         UIView *footView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, 10 *ProportionAdapter)];
@@ -318,12 +312,47 @@ static NSString *const JGHShowSuppliesMallTableViewCellIdentifier = @"JGHShowSup
     }
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    
     if (indexPath.section == 0) {
         JGHShowActivityPhotoCell *showActivityPhotoCell = [tableView dequeueReusableCellWithIdentifier:JGHShowActivityPhotoCellIdentifier];
         showActivityPhotoCell.delegate = self;
         [showActivityPhotoCell configJGHShowActivityPhotoCell:_indexModel.activityList];
         return showActivityPhotoCell;
-    }else if (indexPath.section == 1){
+    }else{
+        JGHIndexTableViewCell *indexTableViewCell = [tableView dequeueReusableCellWithIdentifier:JGHIndexTableViewCellIdentifier];
+        indexTableViewCell.delegate = self;
+        
+        if (_indexModel.plateList.count > 0) {
+            NSDictionary *dict = _indexModel.plateList[indexPath.section -1];
+            NSArray *bodyList = [dict objectForKey:@"bodyList"];
+            NSInteger bodyLayoutType = [[dict objectForKey:@"bodyLayoutType"] integerValue];
+            NSInteger imgHeight = [[dict objectForKey:@"imgHeight"] integerValue];
+            NSInteger imgWidth = [[dict objectForKey:@"imgWidth"] integerValue];
+            
+            if (bodyLayoutType == 0) {
+                //精彩推荐
+                [indexTableViewCell configJGHWonderfulTableViewCell:bodyList andImageW:imgWidth andImageH:imgHeight];
+            }else if (bodyLayoutType == 1){
+                //用品商城
+                [indexTableViewCell configJGHShowSuppliesMallTableViewCell:bodyList andImageW:imgWidth andImageH:imgHeight];
+            }else if (bodyLayoutType == 2){
+                //热门球队
+                [indexTableViewCell configJGDHotTeamCell:bodyList andImageW:imgWidth andImageH:imgHeight];
+            }else if (bodyLayoutType == 3){
+                //订场推荐
+                [indexTableViewCell configJGHShowRecomStadiumTableViewCell:bodyList andImageW:imgWidth andImageH:imgHeight];
+            }else{
+                //其他  －－－ 更新版本
+                
+            }
+        }
+        
+        
+        return indexTableViewCell;
+    }
+    
+        /*
+         if (indexPath.section == 1){
         JGHWonderfulTableViewCell *wonderfulTableViewCell = [tableView dequeueReusableCellWithIdentifier:JGHWonderfulTableViewCellIdentifier];
         wonderfulTableViewCell.delegate = self;
         if (self.indexModel.plateList.count > 0) {
@@ -367,6 +396,7 @@ static NSString *const JGHShowSuppliesMallTableViewCellIdentifier = @"JGHShowSup
         
         return showSuppliesMallTableViewCell;
     }
+     */
 }
 //组头视图
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
@@ -397,7 +427,35 @@ static NSString *const JGHShowSuppliesMallTableViewCellIdentifier = @"JGHShowSup
     if (indexPath.section == 0) {
         // 活动－相册－成绩
         return 190 *ProportionAdapter;
-    }else if (indexPath.section == 1){
+    }else{
+        if (_indexModel.plateList.count > 0) {
+            NSDictionary *dict = _indexModel.plateList[indexPath.section -1];
+            NSArray *bodyList = [dict objectForKey:@"bodyList"];
+            NSInteger bodyLayoutType = [[dict objectForKey:@"bodyLayoutType"] integerValue];
+            NSInteger imgHeight = [[dict objectForKey:@"imgHeight"] integerValue];
+            if (bodyLayoutType == 0) {
+                //精彩推荐
+                return ((bodyList.count-1)/2+1) *(imgHeight +35 +8) *ProportionAdapter + 8*ProportionAdapter;
+            }else if (bodyLayoutType == 1){
+                //用品商城
+                return ((bodyList.count-1)/2+1) *(imgHeight +104 +8) *ProportionAdapter + 8*ProportionAdapter;
+            }else if (bodyLayoutType == 2){
+                //热门球队
+                return ((25 +imgHeight) *ProportionAdapter) *bodyList.count;
+            }else if (bodyLayoutType == 3){
+                //订场推荐
+                return ((bodyList.count-1)/2+1) *(imgHeight +56 +8) *ProportionAdapter + 8*ProportionAdapter;
+            }else{
+                //其他  －－－ 更新版本
+                return 30 *ProportionAdapter;
+            }
+        }else{
+            return 0;
+        }
+    }
+    
+    /*
+    else if (indexPath.section == 1){
         //精彩推荐 -- 135
         if (_indexModel.plateList.count > 0) {
             NSDictionary *dict = _indexModel.plateList[0];
@@ -428,6 +486,7 @@ static NSString *const JGHShowSuppliesMallTableViewCellIdentifier = @"JGHShowSup
         //2---热门球队
         return 90 *ProportionAdapter;
     }
+     */
 }
 //设置头部高度
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
@@ -609,6 +668,11 @@ static NSString *const JGHShowSuppliesMallTableViewCellIdentifier = @"JGHShowSup
     NSArray *bodyList = [dict objectForKey:@"bodyList"];
     NSDictionary *mallListDict = bodyList[btn.tag -500];
     [self pushctrlWithUrl:[mallListDict objectForKey:@"weblinks"]];
+}
+#pragma mark -- 热门球队
+- (void)hotTeamSelectClick:(UIButton *)btn{
+    NSLog(@"%td", btn.tag);
+    
 }
 #pragma mark -- 更多
 - (void)didSelectMoreBtn:(UIButton *)moreBtn{
