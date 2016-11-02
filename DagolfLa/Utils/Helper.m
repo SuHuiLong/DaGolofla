@@ -186,7 +186,7 @@
 +(void)netWorkError {
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"\n网络链接异常，请检查您的网络！\n" delegate:self cancelButtonTitle:nil otherButtonTitles:nil, nil];
     [alertView show];
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [alertView dismissWithClickedButtonIndex:0 animated:YES];
     });
 }
@@ -202,7 +202,7 @@
 +(void)noNetWork {
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"\n亲，没有网络哦！请检查您网络！\n" delegate:self cancelButtonTitle:nil otherButtonTitles:nil, nil];
     [alertView show];
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [alertView dismissWithClickedButtonIndex:0 animated:YES];
     });
 }

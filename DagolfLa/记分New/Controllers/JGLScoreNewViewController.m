@@ -66,6 +66,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    NSString* str = @"啥地方";
+    CGFloat fl = [Helper textHeightFromTextString:str width:300 fontSize:15];
+    
     _scrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight)];
     _scrollView.delegate = self;
     _scrollView.userInteractionEnabled = YES;
@@ -86,7 +89,6 @@
         [dict setObject:DEFAULF_USERID forKey:@"userKey"];
         [dict setObject:[Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@dagolfla.com", DEFAULF_USERID]] forKey:@"md5"];
         [[JsonHttp jsonHttp]httpRequest:@"score/getUserScoreStatisticsMain" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
-            
         } completionBlock:^(id data) {
             NSLog(@"%@", data);
             if ([[data objectForKey:@"packSuccess"]integerValue] == 1) {
