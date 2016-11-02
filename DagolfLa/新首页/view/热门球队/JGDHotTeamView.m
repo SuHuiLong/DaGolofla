@@ -20,6 +20,8 @@
 
 @property (nonatomic, strong) UIImageView *addressImageView;
 
+@property (nonatomic, strong) UILabel *sumLB;
+
 @end
 
 @implementation JGDHotTeamView
@@ -38,6 +40,10 @@
         self.nameLB.font = [UIFont systemFontOfSize:18 * ProportionAdapter];
         self.nameLB.textColor = [UIColor colorWithHexString:@"#333333"];
         [self addSubview: self.nameLB];
+        
+        self.sumLB = [[UILabel alloc] initWithFrame:CGRectMake(350 * ProportionAdapter, 14 * ProportionAdapter, 20 * ProportionAdapter, 25 * ProportionAdapter)];
+        self.sumLB.font = [UIFont systemFontOfSize:12 * ProportionAdapter];
+        [self addSubview:self.sumLB];
         
         self.addressImageView = [[UIImageView alloc]initWithFrame:CGRectMake(105 *ProportionAdapter, 44     *ProportionAdapter, 11 *ProportionAdapter, 15 *ProportionAdapter)];
         self.addressImageView.image = [UIImage imageNamed:@"juli"];
@@ -63,7 +69,22 @@
     
     self.iconImageV.frame = CGRectMake(11 * ProportionAdapter, 14 * ProportionAdapter, imageW * ProportionAdapter, imageH * ProportionAdapter);
     
-    self.nameLB.frame = CGRectMake(self.iconImageV.frame.origin.x + (imageW + 24) * ProportionAdapter, 14 * ProportionAdapter, screenWidth - 110 * ProportionAdapter, 25 * ProportionAdapter);
+    CGFloat width = [Helper textWidthFromTextString:[NSString stringWithFormat:@"%@", [dict objectForKey:@"title"]] height:self.addressImageView.frame.size.height fontSize:18 * ProportionAdapter];
+
+    if (self.iconImageV.frame.origin.x + (imageW + 24) * ProportionAdapter + width > 330) {
+        
+        self.nameLB.frame = CGRectMake(self.iconImageV.frame.origin.x + (imageW + 24) * ProportionAdapter, 14 * ProportionAdapter, 330 * ProportionAdapter - (self.iconImageV.frame.origin.x + (imageW + 24) * ProportionAdapter), 25 * ProportionAdapter);
+        
+        self.sumLB.frame = CGRectMake(330 * ProportionAdapter, 12 * ProportionAdapter, 35 * ProportionAdapter, 25 * ProportionAdapter);
+    }else{
+        self.nameLB.frame = CGRectMake(self.iconImageV.frame.origin.x + (imageW + 24) * ProportionAdapter, 14 * ProportionAdapter, width, 25 * ProportionAdapter);
+
+        self.sumLB.frame = CGRectMake(self.nameLB.frame.origin.x + width, 12 * ProportionAdapter, 35 * ProportionAdapter, 25 * ProportionAdapter);
+
+    }
+    self.sumLB.text = [NSString stringWithFormat:@"(%@)", [[dict objectForKey:@"viewCount"] stringValue]];
+
+//    self.nameLB.frame = CGRectMake(self.iconImageV.frame.origin.x + (imageW + 24) * ProportionAdapter, 14 * ProportionAdapter, width, 25 * ProportionAdapter);
     
     self.addressImageView.frame = CGRectMake(self.iconImageV.frame.origin.x + (imageW + 24) * ProportionAdapter, 44     *ProportionAdapter, 11 *ProportionAdapter, 15 *ProportionAdapter);
     
@@ -74,17 +95,19 @@
     if ([dict objectForKey:@"timeKey"]) {
         [self.iconImageV sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@", [dict objectForKey:@"imgURL"]]] placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
         
-        NSString * name = [dict objectForKey:@"title"];
-        NSString * sum = [[dict objectForKey:@"viewCount"] stringValue];
-        
-        NSMutableAttributedString *nameAttrib = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@（%@）", name,  sum]];
-        [nameAttrib addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:12 * ProportionAdapter] range:NSMakeRange([name length], [sum length] + 2)];
-        self.nameLB.attributedText = nameAttrib;
-//        self.nameLB.text = [NSString stringWithFormat:@"%@（%@）", [dict objectForKey:@"title"],  [dict objectForKey:@"viewCount"]];
-        
+//        NSString * name = [dict objectForKey:@"title"];
+//        NSString * sum = [[dict objectForKey:@"viewCount"] stringValue];
+//        
+//        NSMutableAttributedString *nameAttrib = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@（%@）", name,  sum]];
+//        [nameAttrib addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:12 * ProportionAdapter] range:NSMakeRange([name length], [sum length] + 2)];
+//        self.nameLB.attributedText = nameAttrib;
+        self.nameLB.text = [NSString stringWithFormat:@"%@", [dict objectForKey:@"title"]];
+
         self.addressLB.text = [NSString stringWithFormat:@"%@", [dict objectForKey:@"position"]];
         
         self.detailLB.text = [NSString stringWithFormat:@"%@", [dict objectForKey:@"desc"]];
+        
+        
         
 //        if ([dict objectForKey:@"viewCount"]) {
 //            _activityNumber.text = [NSString stringWithFormat:@"(%@)", [dict objectForKey:@"viewCount"]];
