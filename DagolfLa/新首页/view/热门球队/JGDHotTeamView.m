@@ -83,8 +83,6 @@
 
     }
     self.sumLB.text = [NSString stringWithFormat:@"(%@)", [[dict objectForKey:@"viewCount"] stringValue]];
-
-//    self.nameLB.frame = CGRectMake(self.iconImageV.frame.origin.x + (imageW + 24) * ProportionAdapter, 14 * ProportionAdapter, width, 25 * ProportionAdapter);
     
     self.addressImageView.frame = CGRectMake(self.iconImageV.frame.origin.x + (imageW + 24) * ProportionAdapter, 44     *ProportionAdapter, 11 *ProportionAdapter, 15 *ProportionAdapter);
     
@@ -95,25 +93,12 @@
     if ([dict objectForKey:@"timeKey"]) {
         [self.iconImageV sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@", [dict objectForKey:@"imgURL"]]] placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
         
-//        NSString * name = [dict objectForKey:@"title"];
-//        NSString * sum = [[dict objectForKey:@"viewCount"] stringValue];
-//        
-//        NSMutableAttributedString *nameAttrib = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@（%@）", name,  sum]];
-//        [nameAttrib addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:12 * ProportionAdapter] range:NSMakeRange([name length], [sum length] + 2)];
-//        self.nameLB.attributedText = nameAttrib;
         self.nameLB.text = [NSString stringWithFormat:@"%@", [dict objectForKey:@"title"]];
 
         self.addressLB.text = [NSString stringWithFormat:@"%@", [dict objectForKey:@"position"]];
         
         self.detailLB.text = [NSString stringWithFormat:@"%@", [dict objectForKey:@"desc"]];
         
-        
-        
-//        if ([dict objectForKey:@"viewCount"]) {
-//            _activityNumber.text = [NSString stringWithFormat:@"(%@)", [dict objectForKey:@"viewCount"]];
-//        }else{
-//            _activityNumber.text = @"";
-//        }
     }
 }
 
