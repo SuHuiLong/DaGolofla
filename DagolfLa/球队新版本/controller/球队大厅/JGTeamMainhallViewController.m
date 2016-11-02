@@ -34,7 +34,7 @@
     NSString* _strSearch;//搜索的字符串
     
     
-    NSString* _strProvince;//省份的字符串
+   // NSString* _strProvince;//省份的字符串
 //    UILabel* _labelCity;
 }
 
@@ -397,6 +397,9 @@
     [user setObject:[NSNumber numberWithFloat:currLocation.coordinate.longitude] forKey:@"lng"];
     [_locationManager stopUpdatingLocation];
     [user synchronize];
+    //[_tableView.header beginRefreshing];
+    //_tableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
+    //[_tableView.header beginRefreshing];
 
 }
 

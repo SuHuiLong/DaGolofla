@@ -152,8 +152,6 @@
         [self.navigationController popViewControllerAnimated:YES];
         return ;
     }
-    
-    
     //   分享
     if ([url rangeOfString:@"dagolfla://share"].location != NSNotFound) {
         ShareAlert* alert = [[ShareAlert alloc]initMyAlert];
