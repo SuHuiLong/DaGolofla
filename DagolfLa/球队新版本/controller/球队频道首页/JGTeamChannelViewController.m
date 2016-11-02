@@ -431,6 +431,9 @@
     }else if (button.tag == 202) {
         
         JGTeamMainhallViewController *MainhallTeamVC = [[JGTeamMainhallViewController alloc] init];
+        if (![Helper isBlankString:[[NSUserDefaults standardUserDefaults] objectForKey:@"currentCity"]]) {
+            MainhallTeamVC.strProvince = [[NSUserDefaults standardUserDefaults] objectForKey:@"currentCity"];
+        }
         [self.navigationController pushViewController:MainhallTeamVC animated:YES];
         
     }

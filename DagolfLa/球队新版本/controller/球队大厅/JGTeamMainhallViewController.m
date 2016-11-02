@@ -88,8 +88,10 @@
     [btnCity addSubview:_labelCity];
     if (![Helper isBlankString:_strProvince]) {
         _labelCity.text = _strProvince;
+        _textField.text = _strProvince;
     }else{
         _labelCity.text = @"全国";
+        _textField.text = @"";
     }
     
     

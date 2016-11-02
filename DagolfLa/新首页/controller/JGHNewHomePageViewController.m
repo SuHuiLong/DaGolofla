@@ -684,6 +684,9 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
     if ([url containsString:@"teamHall"]) {
         JGTeamMainhallViewController *teamMainCtrl = [[JGTeamMainhallViewController alloc]init];
         teamMainCtrl.hidesBottomBarWhenPushed = YES;
+        if (![Helper isBlankString:[[NSUserDefaults standardUserDefaults] objectForKey:@"currentCity"]]) {
+            teamMainCtrl.strProvince = [[NSUserDefaults standardUserDefaults] objectForKey:@"currentCity"];
+        }
         [self.navigationController pushViewController:teamMainCtrl animated:YES];
     }else {
         NSString *urlRequest;
