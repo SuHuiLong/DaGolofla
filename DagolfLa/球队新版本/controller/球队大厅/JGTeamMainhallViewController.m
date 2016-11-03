@@ -34,7 +34,7 @@
     NSString* _strSearch;//搜索的字符串
     
     
-    NSString* _strProvince;//省份的字符串
+   // NSString* _strProvince;//省份的字符串
 //    UILabel* _labelCity;
 }
 
@@ -88,8 +88,10 @@
     [btnCity addSubview:_labelCity];
     if (![Helper isBlankString:_strProvince]) {
         _labelCity.text = _strProvince;
+        _textField.text = _strProvince;
     }else{
         _labelCity.text = @"全国";
+        _textField.text = @"";
     }
     
     
@@ -397,6 +399,9 @@
     [user setObject:[NSNumber numberWithFloat:currLocation.coordinate.longitude] forKey:@"lng"];
     [_locationManager stopUpdatingLocation];
     [user synchronize];
+    //[_tableView.header beginRefreshing];
+    //_tableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
+    //[_tableView.header beginRefreshing];
 
 }
 

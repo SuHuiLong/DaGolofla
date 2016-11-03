@@ -77,7 +77,7 @@
     self.view.backgroundColor = [UIColor colorWithRed:0.93f green:0.93f blue:0.93f alpha:1.00f];
     _titleArray = [[NSArray alloc]init];
 //    _titleArray = @[@[@"关于我们",@"帮助反馈",@"清空缓存"],@[@"是否接受他人约球"]];
-    _titleArray = @[@"通知设置",@"屏蔽管理",@"帮助反馈",@"清空缓存", @"实名认证", @"设置交易密码"];
+    _titleArray = @[@"通知设置",@"屏蔽管理",@"帮助反馈",@"清空缓存", @"实名认证", @"设置密码", @"设置交易密码"];
     
     
     _dict = [[NSMutableDictionary alloc]init];
@@ -99,7 +99,7 @@
 
 -(void)uiConfig
 {
-    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, 44*6*ScreenWidth/375) style:UITableViewStylePlain];
+    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, 44*7*ScreenWidth/375) style:UITableViewStylePlain];
     _tableView.delegate = self;
     _tableView.dataSource = self;
     [self.view addSubview:_tableView];
@@ -175,7 +175,7 @@
  */
 -(void)createBtnView
 {
-    _btnExit = [[UIButton alloc]initWithFrame:CGRectMake(10*ScreenWidth/375, 44*6*ScreenWidth/375+1*10*ScreenWidth/375, ScreenWidth-20*ScreenWidth/375, 44*ScreenWidth/375)];
+    _btnExit = [[UIButton alloc]initWithFrame:CGRectMake(10*ScreenWidth/375, 44*7*ScreenWidth/375+1*10*ScreenWidth/375, ScreenWidth-20*ScreenWidth/375, 44*ScreenWidth/375)];
     [self.view addSubview:_btnExit];
     [_btnExit setTitle:@"退出登录" forState:UIControlStateNormal];
     [_btnExit setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
@@ -268,7 +268,7 @@
 //    {
 //        number  = 1;
 //    }
-    return 6;
+    return 7;
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -339,7 +339,14 @@
         }];
 
     }
+    
     else if (indexPath.row == 5) {
+        
+        NSLog(@"设置－－－");
+        
+        
+    }
+    else if (indexPath.row == 6) {
         
         NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
         [dict setObject:DEFAULF_USERID forKey:@"userKey"];

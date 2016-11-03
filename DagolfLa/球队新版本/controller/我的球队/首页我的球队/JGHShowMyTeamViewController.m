@@ -195,6 +195,9 @@ static NSString *const JGHAddMoreTeamTableViewCellIdentifier = @"JGHAddMoreTeamT
 - (void)tapAvt{
 
     JGTeamMainhallViewController *teamMainCtrl = [[JGTeamMainhallViewController alloc]init];
+    if (![Helper isBlankString:[[NSUserDefaults standardUserDefaults] objectForKey:@"currentCity"]]) {
+        teamMainCtrl.strProvince = [[NSUserDefaults standardUserDefaults] objectForKey:@"currentCity"];
+    }
     [self.navigationController pushViewController:teamMainCtrl animated:YES];
 
 }
@@ -374,6 +377,9 @@ static NSString *const JGHAddMoreTeamTableViewCellIdentifier = @"JGHAddMoreTeamT
     NSLog(@"添加更多球队");
     btn.enabled = NO;
     JGTeamMainhallViewController *teamMainCtrl = [[JGTeamMainhallViewController alloc]init];
+    if (![Helper isBlankString:[[NSUserDefaults standardUserDefaults] objectForKey:@"currentCity"]]) {
+        teamMainCtrl.strProvince = [[NSUserDefaults standardUserDefaults] objectForKey:@"currentCity"];
+    }
     [self.navigationController pushViewController:teamMainCtrl animated:YES];
     btn.enabled = YES;
 }

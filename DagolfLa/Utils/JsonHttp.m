@@ -149,6 +149,9 @@ static JsonHttp *jsonHttp = nil;
     manager.requestSerializer=[AFJSONRequestSerializer serializer];
     //返回数据格式
     manager.responseSerializer = [AFJSONResponseSerializer serializer];
+    [manager.requestSerializer willChangeValueForKey:@"timeoutInterval"];
+    manager.requestSerializer.timeoutInterval = 30.f;
+    [manager.requestSerializer didChangeValueForKey:@"timeoutInterval"];
 //    [AFJSONResponseSerializer serializerWithReadingOptions:NSJSONReadingMutableContainers];
     //https安全策略
 //    manager.securityPolicy.allowInvalidCertificates = YES;
@@ -156,20 +159,25 @@ static JsonHttp *jsonHttp = nil;
     
     NSComparisonResult comparison1 = [httpMethod caseInsensitiveCompare:@"GET"];
     NSComparisonResult comparisonResult2 = [httpMethod caseInsensitiveCompare:@"POST"];
-    if (comparison1 == NSOrderedSame)
+    if (comparison1 == NSOrderedSame)//get
     {
         [manager GET:url parameters:postDict success:^(AFHTTPRequestOperation *operation, id responseObject) {
             if (completionBlock) {
                 completionBlock(responseObject);
             }
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            if ([[error.userInfo objectForKey:@"_kCFStreamErrorCodeKey"] integerValue] == 61) {
+                [Helper downLoadDataOverrun];
+            }else{
+                [Helper netWorkError];
+            }
             if (failedBlock) {
                 failedBlock(error);
             }
         }];
     }
     
-    if (comparisonResult2 == NSOrderedSame)
+    if (comparisonResult2 == NSOrderedSame)//post
     {
         BOOL isFile = NO;
         for (NSString *key in postData.allKeys) {
@@ -189,7 +197,7 @@ static JsonHttp *jsonHttp = nil;
             } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                 if ([[error.userInfo objectForKey:@"_kCFStreamErrorCodeKey"] integerValue] == 61) {
                     [Helper downLoadDataOverrun];
-                }else if ([[error.userInfo objectForKey:@"_kCFStreamErrorCodeKey"] integerValue] == 51) {
+                }else{
                     [Helper netWorkError];
                 }
                 if (failedBlock) {
@@ -281,7 +289,7 @@ static JsonHttp *jsonHttp = nil;
     NSString *content=[[NSString alloc]initWithFormat:@"multipart/form-data; boundary=%@",TWITTERFON_FORM_BOUNDARY];
     //设置HTTPHeader
     [request setValue:content forHTTPHeaderField:@"Content-Type"];
-    
+
     //设置Content-Length
     [request setValue:[NSString stringWithFormat:@"%ld", (long)[myRequestData length]] forHTTPHeaderField:@"Content-Length"];
     //设置http body
@@ -319,6 +327,7 @@ static JsonHttp *jsonHttp = nil;
                [Helper netWorkError];
            }else{
                //参数错误
+               [Helper netWorkError];
            }
            failedBlock(connectionError);
        }
@@ -411,6 +420,7 @@ static JsonHttp *jsonHttp = nil;
                 [Helper netWorkError];
             }else{
                 //参数错误
+                [Helper netWorkError];
             }
             failedBlock(connectionError);
         }
@@ -430,6 +440,9 @@ static JsonHttp *jsonHttp = nil;
     //https安全策略
     //    manager.securityPolicy.allowInvalidCertificates = YES;
     //    manager.securityPolicy.validatesDomainName = NO;
+    [manager.requestSerializer willChangeValueForKey:@"timeoutInterval"];
+    manager.requestSerializer.timeoutInterval = 30.f;
+    [manager.requestSerializer didChangeValueForKey:@"timeoutInterval"];
     
     [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (completionBlock) {

@@ -10,4 +10,5 @@
 
 @interface JGTeamMainhallViewController : ViewController
 
+@property (strong, nonatomic) NSString* strProvince;//省份的字符串
 @end
