@@ -101,7 +101,7 @@
         UIButton *selectBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, screenWidth, (imageH +25) *ProportionAdapter)];
         selectBtn.tag = 600 +i;
         [selectBtn addTarget:self action:@selector(hotTeamClick:) forControlEvents:UIControlEventTouchUpInside];
-        [_suppliesMallView addSubview:selectBtn];
+        [_hotTeamView addSubview:selectBtn];
         
         if (i < array.count -1) {
             UILabel *line = [[UILabel alloc]initWithFrame:CGRectMake(10 *ProportionAdapter, _hotTeamView.frame.size.height -1, screenWidth - 20 *ProportionAdapter, 1)];
