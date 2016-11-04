@@ -21,6 +21,7 @@
 #import "JGTeamMainhallViewController.h"    // 大厅
 
 #import "JGNewCreateTeamTableViewController.h"
+#import "UMMobClick/MobClick.h"
 
 static NSString *const JGTeamActivityCellIdentifier = @"JGTeamActivityCell";
 static NSString *const JGLMyTeamTableViewCellIdentifier = @"JGLMyTeamTableViewCell";
@@ -41,6 +42,12 @@ static NSString *const JGHAddMoreTeamTableViewCellIdentifier = @"JGHAddMoreTeamT
 @end
 
 @implementation JGHShowMyTeamViewController
+
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:YES];
+    [MobClick event:@"teamHallKey"];
+}
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -376,6 +383,7 @@ static NSString *const JGHAddMoreTeamTableViewCellIdentifier = @"JGHAddMoreTeamT
 - (void)didSelectAddMoreBtn:(UIButton *)btn{
     NSLog(@"添加更多球队");
     btn.enabled = NO;
+    [MobClick event:@"teamLobby"];
     JGTeamMainhallViewController *teamMainCtrl = [[JGTeamMainhallViewController alloc]init];
     if (![Helper isBlankString:[[NSUserDefaults standardUserDefaults] objectForKey:@"currentCity"]]) {
         teamMainCtrl.strProvince = [[NSUserDefaults standardUserDefaults] objectForKey:@"currentCity"];

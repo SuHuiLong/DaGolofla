@@ -33,6 +33,8 @@
 #import "JGLPushDetailsViewController.h"
 #import "JGHIndexTableViewCell.h"
 
+#import "UMMobClick/MobClick.h"
+
 static NSString *const JGHPASHeaderTableViewCellIdentifier = @"JGHPASHeaderTableViewCell";
 static NSString *const JGHShowSectionTableViewCellIdentifier = @"JGHShowSectionTableViewCell";
 static NSString *const JGHShowFavouritesCellIdentifier = @"JGHShowFavouritesCell";
@@ -462,6 +464,9 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
     UILabel *scoreLable = [self.view viewWithTag:30003];
     
     if (btn.tag == 1001) {
+        
+        [MobClick event:@"wonderfulPhotoAlbum"];
+
         _showLineID = 0;
         activityLable.hidden = NO;
         photoLable.hidden = YES;
@@ -469,6 +474,9 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
         [cell configJGHShowActivityPhotoCell:_indexModel.activityList];
         
     } else if (btn.tag == 1002) {
+        
+        [MobClick event:@"photoAlbum"];
+
         _showLineID = 1;
         activityLable.hidden = YES;
         photoLable.hidden = NO;
@@ -487,6 +495,9 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
             [self.navigationController pushViewController:photoVC animated:YES];
         };
     } else if (btn.tag == 1003) {
+        
+        [MobClick event:@"live"];
+
         _showLineID = 2;
         activityLable.hidden = YES;
         photoLable.hidden = YES;
@@ -514,7 +525,8 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
 #pragma mark -- 我的球队
 - (void)didSelectMyTeamBtn:(UIButton *)btn{
     [self isLoginUp];
-    
+    // 友盟埋点
+    [MobClick event:@"teamTribe"];
     JGHShowMyTeamViewController *myTeamVC = [[JGHShowMyTeamViewController alloc] init];
     myTeamVC.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:myTeamVC animated:YES];
@@ -522,7 +534,7 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
 #pragma mark -- 开局记分
 - (void)didSelectStartScoreBtn:(UIButton *)btn{
     [self isLoginUp];
-    
+    [MobClick event:@"beginKeepScore"];
     JGLScoreNewViewController *scoreCtrl = [[JGLScoreNewViewController alloc]init];
     scoreCtrl.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:scoreCtrl animated:YES];
@@ -530,7 +542,7 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
 #pragma mark -- 历史成绩
 - (void)didSelectHistoryResultsBtn:(UIButton *)btn{
     [self isLoginUp];
-    
+    [MobClick event:@"historyScore"];
     JGDHistoryScoreViewController *historyCtrl = [[JGDHistoryScoreViewController alloc]init];
     historyCtrl.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:historyCtrl animated:YES];
@@ -550,6 +562,7 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
     NSLog(@"%td", btn.tag);
     [self isLoginUp];
     
+    [MobClick event:@"wonderfulPhotoAlbum"];
     NSDictionary *mallListDict = [NSDictionary dictionary];
     for (int i=0; i<_indexModel.plateList.count; i++) {
         if ([[_indexModel.plateList[i] objectForKey:@"bodyLayoutType"] integerValue] == 0) {
@@ -570,7 +583,8 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
 - (void)recomStadiumSelectClick:(UIButton *)btn{
     NSLog(@"%td", btn.tag);
     [self isLoginUp];
-    
+    [MobClick event:@"ballParkRecommend"];
+
     NSDictionary *recomListDict = [NSDictionary dictionary];
     for (int i=0; i<_indexModel.plateList.count; i++) {
         if ([[_indexModel.plateList[i] objectForKey:@"bodyLayoutType"] integerValue] == 3) {
@@ -591,7 +605,8 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
 - (void)suppliesMallSelectClick:(UIButton *)btn{
     NSLog(@"%td", btn.tag);
     [self isLoginUp];
-    
+    [MobClick event:@"market"];
+
     NSDictionary *mallListDict = [NSDictionary dictionary];
     for (int i=0; i<_indexModel.plateList.count; i++) {
         if ([[_indexModel.plateList[i] objectForKey:@"bodyLayoutType"] integerValue] == 1) {
@@ -612,6 +627,8 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
 - (void)hotTeamSelectClick:(UIButton *)btn{
     NSLog(@"%td", btn.tag);
     [self isLoginUp];
+    
+    [MobClick event:@"hotTeam"];
     
     // 热门球队 --- 详情  bodyLayoutType -2
     NSDictionary *hotTeamDict = [NSDictionary dictionary];
@@ -637,6 +654,9 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
     NSDictionary *dict = _indexModel.plateList[moreBtn.tag -100 -1];
     NSString *url = [dict objectForKey:@"moreLink"];
     if ([url containsString:@"teamHall"]) {
+        
+        [MobClick event:@"hotTeamLobby"];
+
         JGTeamMainhallViewController *teamMainCtrl = [[JGTeamMainhallViewController alloc]init];
         teamMainCtrl.hidesBottomBarWhenPushed = YES;
         if (![Helper isBlankString:[[NSUserDefaults standardUserDefaults] objectForKey:@"currentCity"]]) {
@@ -646,10 +666,12 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
     }else {
         NSString *urlRequest;
         if ([url containsString:@"index.html"]) {
-            //http://www.dagolfla.com/app/index.html
+            //http://www.dagolfla.com/app/index.html  商城
             urlRequest = @"http://www.dagolfla.com/app/index.html";
+            [MobClick event:@"marketMore"];
         }else{
             urlRequest = @"http://www.dagolfla.com/app/bookserch.html";
+            [MobClick event:@"ballParkMore"];
         }
         
         JGLWebUserMallViewController *mallCtrl = [[JGLWebUserMallViewController alloc]init];

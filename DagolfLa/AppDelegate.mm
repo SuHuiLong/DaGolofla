@@ -54,6 +54,7 @@
     UMConfigInstance.secret = nil;
     //    UMConfigInstance.eSType = E_UM_GAME;
     [MobClick startWithConfigure:UMConfigInstance];
+    [MobClick beginLogPageView:@""];
 }
 
 
