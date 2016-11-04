@@ -465,7 +465,7 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
     
     if (btn.tag == 1001) {
         
-        [MobClick event:@"activity"];
+        [MobClick event:@"wonderfulPhotoAlbum"];
 
         _showLineID = 0;
         activityLable.hidden = NO;
@@ -562,6 +562,7 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
     NSLog(@"%td", btn.tag);
     [self isLoginUp];
     
+    [MobClick event:@"wonderfulPhotoAlbum"];
     NSDictionary *mallListDict = [NSDictionary dictionary];
     for (int i=0; i<_indexModel.plateList.count; i++) {
         if ([[_indexModel.plateList[i] objectForKey:@"bodyLayoutType"] integerValue] == 0) {
@@ -582,7 +583,8 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
 - (void)recomStadiumSelectClick:(UIButton *)btn{
     NSLog(@"%td", btn.tag);
     [self isLoginUp];
-    
+    [MobClick event:@"ballParkRecommend"];
+
     NSDictionary *recomListDict = [NSDictionary dictionary];
     for (int i=0; i<_indexModel.plateList.count; i++) {
         if ([[_indexModel.plateList[i] objectForKey:@"bodyLayoutType"] integerValue] == 3) {
@@ -603,7 +605,8 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
 - (void)suppliesMallSelectClick:(UIButton *)btn{
     NSLog(@"%td", btn.tag);
     [self isLoginUp];
-    
+    [MobClick event:@"market"];
+
     NSDictionary *mallListDict = [NSDictionary dictionary];
     for (int i=0; i<_indexModel.plateList.count; i++) {
         if ([[_indexModel.plateList[i] objectForKey:@"bodyLayoutType"] integerValue] == 1) {
@@ -624,6 +627,8 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
 - (void)hotTeamSelectClick:(UIButton *)btn{
     NSLog(@"%td", btn.tag);
     [self isLoginUp];
+    
+    [MobClick event:@"hotTeam"];
     
     // 热门球队 --- 详情  bodyLayoutType -2
     NSDictionary *hotTeamDict = [NSDictionary dictionary];
@@ -649,6 +654,9 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
     NSDictionary *dict = _indexModel.plateList[moreBtn.tag -100 -1];
     NSString *url = [dict objectForKey:@"moreLink"];
     if ([url containsString:@"teamHall"]) {
+        
+        [MobClick event:@"hotTeamLobby"];
+
         JGTeamMainhallViewController *teamMainCtrl = [[JGTeamMainhallViewController alloc]init];
         teamMainCtrl.hidesBottomBarWhenPushed = YES;
         if (![Helper isBlankString:[[NSUserDefaults standardUserDefaults] objectForKey:@"currentCity"]]) {
@@ -658,10 +666,12 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
     }else {
         NSString *urlRequest;
         if ([url containsString:@"index.html"]) {
-            //http://www.dagolfla.com/app/index.html
+            //http://www.dagolfla.com/app/index.html  商城
             urlRequest = @"http://www.dagolfla.com/app/index.html";
+            [MobClick event:@"marketMore"];
         }else{
             urlRequest = @"http://www.dagolfla.com/app/bookserch.html";
+            [MobClick event:@"ballParkMore"];
         }
         
         JGLWebUserMallViewController *mallCtrl = [[JGLWebUserMallViewController alloc]init];

@@ -383,7 +383,7 @@ static NSString *const JGHAddMoreTeamTableViewCellIdentifier = @"JGHAddMoreTeamT
 - (void)didSelectAddMoreBtn:(UIButton *)btn{
     NSLog(@"添加更多球队");
     btn.enabled = NO;
-    [MobClick event:@"teamHall"];
+    [MobClick event:@"teamLobby"];
     JGTeamMainhallViewController *teamMainCtrl = [[JGTeamMainhallViewController alloc]init];
     if (![Helper isBlankString:[[NSUserDefaults standardUserDefaults] objectForKey:@"currentCity"]]) {
         teamMainCtrl.strProvince = [[NSUserDefaults standardUserDefaults] objectForKey:@"currentCity"];
