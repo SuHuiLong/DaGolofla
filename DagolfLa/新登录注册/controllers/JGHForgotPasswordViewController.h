@@ -22,8 +22,6 @@
 @property (weak, nonatomic) IBOutlet UITextField *mobileText;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *mobileTextLeft;
 
-@property (weak, nonatomic) IBOutlet UIButton *codeBtn;
-- (IBAction)codeBtn:(UIButton *)sender;
 @property (weak, nonatomic) IBOutlet UILabel *codeLine;
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *codeTextLeft;
@@ -31,9 +29,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *codeTwoLine;
 @property (weak, nonatomic) IBOutlet UIButton *getCodeBtn;
 - (IBAction)getCodeBtn:(UIButton *)sender;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *getCodeBtnW;
 
-@property (weak, nonatomic) IBOutlet UIButton *passwordBtn;
-- (IBAction)passwordBtn:(UIButton *)sender;
 @property (weak, nonatomic) IBOutlet UILabel *passwordLine;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *passwordTextLeft;
 @property (weak, nonatomic) IBOutlet UITextField *passwordText;
@@ -48,9 +45,14 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *resetBtnLeft;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *resetBtnTop;//50
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *resetBtnRight;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *resetBtnH;
 
+@property (weak, nonatomic) IBOutlet UIView *oneView;
+@property (weak, nonatomic) IBOutlet UIView *twoView;
 
+@property (weak, nonatomic) IBOutlet UIView *threeView;
 
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *oneviewH;
 
 
 @end

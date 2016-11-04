@@ -171,13 +171,17 @@ static int timeNumber = 60;
 }
 #pragma mark -- 区域选择
 - (void)regionPickBtn:(UIButton *)btn{
-    _pickerView = [[UIPickerView alloc] init];
-    _pickerView.showsSelectionIndicator = YES;
-    _pickerView.frame = CGRectMake(0, (screenHeight/3)*2, screenWidth, screenHeight/3);
+    if (_pickerView == nil) {
+        _pickerView = [[UIPickerView alloc] init];
+        _pickerView.showsSelectionIndicator = YES;
+        _pickerView.frame = CGRectMake(0, (screenHeight/3)*2, screenWidth, screenHeight/3);
+        
+        _pickerView.delegate = self;
+        _pickerView.dataSource = self;
+        [self.view addSubview:_pickerView];
+    }
     
-    _pickerView.delegate = self;
-    _pickerView.dataSource = self;
-    [self.view addSubview:_pickerView];
+    _pickerView.hidden = NO;
 }
 #pragma mark -- 快速注册
 - (void)quickRegistrationBtn:(UIButton *)btn{
@@ -189,7 +193,7 @@ static int timeNumber = 60;
 #pragma mark -- 登录
 - (void)loginIn:(UIButton *)btn{
     [self.view endEditing:YES];
-    [_pickerView removeFromSuperview];
+    _pickerView.hidden = YES;
     
     if (_mobileText.text.length == 0) {
         [LQProgressHud showMessage:@"请输入手机号！"];
@@ -202,6 +206,12 @@ static int timeNumber = 60;
             [LQProgressHud showMessage:@"请输入密码！"];
             return;
         }
+        
+        if (_passwordText.text.length < 6) {
+            [LQProgressHud showMessage:@"密码长度至少6位！"];
+            return;
+        }
+        
         //手机号密码登录
         urlString = @"login/doLoginByTelphonePassword";
         [_dict setObject:_mobileText.text forKey:@"telphone"];
@@ -228,7 +238,9 @@ static int timeNumber = 60;
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
             
         }else{
-            
+            if ([data objectForKey:@"packResultMsg"]) {
+                [LQProgressHud showMessage:[data objectForKey:@"packResultMsg"]];
+            }
         }
     }];
 }
@@ -262,21 +274,21 @@ static int timeNumber = 60;
                     NSUserDefaults *user=[NSUserDefaults standardUserDefaults];
                     //判断是否登录，用来社区的刷新
                     [user setObject:@1 forKey:@"isFirstEnter"];
-                    [user setObject:[[dict objectForKey:@"rows"] objectForKey:@"mobile"] forKey:@"mobile"];
-                    [user setObject:snsAccount.openId forKey:@"openId"];
-                    [user setObject:snsAccount.userName forKey:@"uid"];
-                    [user setObject:@1 forKey:@"isWeChat"];
-                    [user setObject:[[dict objectForKey:@"rows"] objectForKey:@"userId"] forKey:@"userId"];
+                    [user setObject:[[dict objectForKey:@"rows"] objectForKey:@"mobile"] forKey:@"mobile"];//
+                    [user setObject:snsAccount.openId forKey:@"openId"];//
+                    [user setObject:snsAccount.userName forKey:@"uid"];//---
+                    [user setObject:@1 forKey:@"isWeChat"];//
+                    [user setObject:[[dict objectForKey:@"rows"] objectForKey:@"userId"] forKey:@"userId"];//
                     if (![Helper isBlankString:[[dict objectForKey:@"rows"] objectForKey:@"pic"]]) {
-                        [user setObject:[[dict objectForKey:@"rows"] objectForKey:@"pic"] forKey:@"pic"];
+                        [user setObject:[[dict objectForKey:@"rows"] objectForKey:@"pic"] forKey:@"pic"];//
                     }
                     if (![Helper isBlankString:[[dict objectForKey:@"rows"] objectForKey:@"userName"] ]) {
-                        [user setObject:[[dict objectForKey:@"rows"] objectForKey:@"userName"] forKey:@"userName"];
+                        [user setObject:[[dict objectForKey:@"rows"] objectForKey:@"userName"] forKey:@"userName"];//
                         
                     }
                     
-                    [user setObject:[[dict objectForKey:@"rows"] objectForKey:@"sex"] forKey:@"sex"];
-                    [user setObject:[[dict objectForKey:@"rows"] objectForKey:@"rongTk"] forKey:@"rongTk"];
+                    [user setObject:[[dict objectForKey:@"rows"] objectForKey:@"sex"] forKey:@"sex"];//
+                    [user setObject:[[dict objectForKey:@"rows"] objectForKey:@"rongTk"] forKey:@"rongTk"];//
                     [user synchronize];
                     //保存信息
                     [self saveUserMobileAndPassword];
@@ -554,7 +566,7 @@ static int timeNumber = 60;
 {
     [_mobileText resignFirstResponder];
     [_passwordText resignFirstResponder];
-    [_pickerView removeFromSuperview];
+    _pickerView.hidden = YES;
 }
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string;
 {

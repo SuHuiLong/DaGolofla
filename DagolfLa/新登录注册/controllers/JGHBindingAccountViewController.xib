@@ -12,18 +12,21 @@
                 <outlet property="bindingAccountBtnLeft" destination="1er-zD-cPp" id="nh6-Ck-jap"/>
                 <outlet property="bindingAccountBtnRight" destination="pp2-DO-XWx" id="ZUp-E0-1Xy"/>
                 <outlet property="bindingAccountBtnTop" destination="8B6-Su-dWq" id="ibX-r9-GEu"/>
-                <outlet property="codeBtn" destination="Jd3-FF-trj" id="XBy-jY-ync"/>
                 <outlet property="codeLine" destination="ye9-Dp-MY7" id="0xm-pp-7e3"/>
                 <outlet property="codeText" destination="3AQ-f4-y9b" id="pDN-1A-xOA"/>
                 <outlet property="codeTwoLine" destination="B5j-zy-ctB" id="qTw-gF-7d3"/>
                 <outlet property="getCodeBtn" destination="kHj-5H-Da4" id="adj-fs-pSG"/>
                 <outlet property="mobileBtn" destination="7S3-dF-KS6" id="bkF-Uo-Y4M"/>
+                <outlet property="mobileBtnW" destination="u4E-Fc-Fpu" id="Ekk-jm-nvN"/>
                 <outlet property="mobileLable" destination="RG2-tl-hHd" id="FvX-No-uqb"/>
                 <outlet property="mobiletext" destination="eMF-i0-2Bd" id="i3j-cO-kQY"/>
+                <outlet property="oneView" destination="KiW-yM-t5u" id="eT3-uK-Scr"/>
+                <outlet property="oneViewH" destination="yKg-1H-epA" id="lSN-dI-72S"/>
                 <outlet property="oneViewLeft" destination="Q20-vd-QGL" id="49R-Lx-sei"/>
                 <outlet property="oneViewRight" destination="W9a-B4-UxC" id="6Ni-uL-DpI"/>
                 <outlet property="oneViewTop" destination="YI8-Gk-7do" id="sGX-0u-Wmr"/>
                 <outlet property="twoViewTop" destination="A1h-SO-mqA" id="Mvt-oG-RaV"/>
+                <outlet property="twoview" destination="deY-8p-lPn" id="cc7-xP-MdV"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -78,9 +81,6 @@
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jd3-FF-trj">
                             <state key="normal" image="icon_login_verify"/>
-                            <connections>
-                                <action selector="codeBtn:" destination="-1" eventType="touchUpInside" id="cfo-iM-LWG"/>
-                            </connections>
                         </button>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ye9-Dp-MY7">
                             <color key="backgroundColor" white="0.70232862510000005" alpha="1" colorSpace="calibratedWhite"/>
@@ -88,12 +88,13 @@
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kHj-5H-Da4">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kHj-5H-Da4">
                             <constraints>
                                 <constraint firstAttribute="width" constant="130" id="m9z-s2-Veg"/>
                             </constraints>
-                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                            <state key="normal" title="获取验证码"/>
+                            <state key="normal" title="获取验证码">
+                                <color key="titleColor" red="0.0013606981289999999" green="0.5928685897" blue="0.01561024649" alpha="1" colorSpace="calibratedRGB"/>
+                            </state>
                             <connections>
                                 <action selector="getCodeBtn:" destination="-1" eventType="touchUpInside" id="DEd-FX-6bm"/>
                             </connections>

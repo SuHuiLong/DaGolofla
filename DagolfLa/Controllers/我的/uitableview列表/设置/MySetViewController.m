@@ -35,6 +35,7 @@
 #import "JGDShowCertViewController.h"
 #import "JGDSubMitPayPasswordViewController.h"
 
+#import "JGDChangePWDViewController.h" // 修改密码
 
 @interface MySetViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
@@ -342,8 +343,8 @@
     
     else if (indexPath.row == 5) {
         
-        NSLog(@"设置－－－");
-        
+        JGDChangePWDViewController *changePWD = [[JGDChangePWDViewController alloc] init];
+        [self.navigationController pushViewController:changePWD animated:YES];
         
     }
     else if (indexPath.row == 6) {

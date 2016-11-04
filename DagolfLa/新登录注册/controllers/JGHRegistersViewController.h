@@ -27,13 +27,10 @@
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *twoViewTop;//10
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *threeViewTop;//10
-@property (weak, nonatomic) IBOutlet UIButton *codebtn;
-- (IBAction)codebtn:(UIButton *)sender;
 @property (weak, nonatomic) IBOutlet UITextField *codeText;
 @property (weak, nonatomic) IBOutlet UIButton *getCodeBtn;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *getCodeBtnW;
 - (IBAction)getCodeBtn:(UIButton *)sender;
-@property (weak, nonatomic) IBOutlet UIButton *passwordBtn;
-- (IBAction)passwordBtn:(UIButton *)sender;
 @property (weak, nonatomic) IBOutlet UITextField *passwordText;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *passwordTextRight;//15
 @property (weak, nonatomic) IBOutlet UIButton *entryBtn;
@@ -43,12 +40,10 @@
 
 @property (weak, nonatomic) IBOutlet UIButton *selectBtn;
 - (IBAction)selectBtn:(UIButton *)sender;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *selectBtnLeft;//8
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *selectBtnW;//15
+
 
 @property (weak, nonatomic) IBOutlet UILabel *registeredLable;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *registeredLableLeft;//10
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *registeredLableW;
+
 
 @property (weak, nonatomic) IBOutlet UIButton *termsBtn;//13
 - (IBAction)termsBtn:(UIButton *)sender;
@@ -56,8 +51,22 @@
 @property (weak, nonatomic) IBOutlet UIButton *completeBtn;
 - (IBAction)completeBtn:(UIButton *)sender;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *completeBtnTop;//35
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *completeBtnLeft;//10
+
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *resLableLeft;//10
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *tersmLeft;//5
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *completeBtnLeft;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *completeBtnRight;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *completeBtnH;
+
+@property (weak, nonatomic) IBOutlet UIView *oneView;
+@property (weak, nonatomic) IBOutlet UIView *twoView;
+@property (weak, nonatomic) IBOutlet UIView *threeView;
+
+
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *mobileBtnLeft;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *codeBtnLeft;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *passwordTextLeft;
+
 
 
 @end
