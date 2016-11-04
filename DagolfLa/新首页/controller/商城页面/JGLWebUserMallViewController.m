@@ -54,17 +54,13 @@
 -(void)createWebView
 {
     //加载的时候展示的任务栏，加载时会隐藏
-    UIImageView *statusView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 20, ScreenWidth, 20)];
-    statusView.image = [UIImage imageNamed:@"nav_bg"];
-    CGRect frame = statusView.frame;
-    frame.origin = CGPointMake(0, 0);
-    statusView.frame = frame;
-    [self.view addSubview:statusView];
-    [_actIndicatorView stopAnimating];
-    
-    
-    
-    
+//    UIImageView *statusView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 20, ScreenWidth, 20)];
+//    statusView.image = [UIImage imageNamed:@"nav_bg"];
+//    CGRect frame = statusView.frame;
+//    frame.origin = CGPointMake(0, 0);
+//    statusView.frame = frame;
+//    [self.view addSubview:statusView];
+//    [_actIndicatorView stopAnimating];
     NSString* strUrl;
     if ([[[NSUserDefaults standardUserDefaults] objectForKey:@"isWeChat"] integerValue] == 1) {
         strUrl = [[NSString stringWithFormat:@"http://www.dagolfla.com/app/api/client/api.php?Action=AppToUserOathBind&method=login&openid=%@&uid=%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"openId"],[[NSUserDefaults standardUserDefaults] objectForKey:@"uid"]] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
@@ -73,10 +69,9 @@
     {
         strUrl = [NSString stringWithFormat:@"http://www.dagolfla.com/app/api/client/api.php?Action=UserLogin&uid=%@&psw=%@&url=%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"mobile"],[[NSUserDefaults standardUserDefaults] objectForKey:@"passWord"],@"index.jsp"];
     }
-    //NSLog(@"%@",strUrl);
     [[PostDataRequest sharedInstance] getDataRequest:strUrl success:^(id respondsData) {
         
-        self.webView = [[WKWebView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight)];
+        self.webView = [[WKWebView alloc]initWithFrame:CGRectMake(0, -20, screenWidth, screenHeight)];
         [self.view addSubview:self.webView];
         self.webView.UIDelegate = self;
         self.webView.navigationDelegate = self;
@@ -93,24 +88,27 @@
             
             strongSelf.webView = [[WKWebView alloc] initWithFrame:strongSelf.view.bounds];
             [strongSelf.webView evaluateJavaScript:@"navigator.userAgent" completionHandler:^(id result, NSError *error) {
-                NSLog(@"%@", _urlRequest);
                 [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:_urlRequest]]];
-                
-                
                 //重设任务栏
-                UIImageView *statusView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 20, ScreenWidth, 20)];
+                UIImageView *statusView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, 20)];
                 statusView.image = [UIImage imageNamed:@"nav_bg"];
                 CGRect frame = statusView.frame;
                 frame.origin = CGPointMake(0, 0);
                 statusView.frame = frame;
                 [self.view addSubview:statusView];
                 [_actIndicatorView stopAnimating];
+                
+                
+//                NSString *js = @"javascript:void(0);";
+//                [self.webView evaluateJavaScript:js completionHandler:^(id _Nullable other, NSError * _Nullable error) {
+//                    self.navigationController.navigationBarHidden=NO;
+//                    [self.navigationController popViewControllerAnimated:YES];
+//                }];
             
             }];
             
         }];
         [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:_urlRequest]]];
-        
         RCDraggableButton *avatar = [[RCDraggableButton alloc] initInKeyWindowWithFrame:CGRectMake(0, 100, 33, 38)];
         [self.view addSubview:avatar];
         avatar.backgroundColor = [UIColor clearColor];
@@ -118,13 +116,7 @@
         UITapGestureRecognizer *tapGesture=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(btnWebClick:)];
         tapGesture.numberOfTapsRequired = 1;
         [avatar addGestureRecognizer:tapGesture];
-        
-        
-        
-        
-        
-        
-        
+  
     } failed:^(NSError *error) {
         [_actIndicatorView stopAnimating];
     }];
@@ -139,11 +131,15 @@
     //    [btn removeFromSuperview];
     [self.navigationController popViewControllerAnimated:YES];
 }
+- (void)userContentController:(WKUserContentController *)userContentController didReceiveScriptMessage:(WKScriptMessage *)message
+{
+    
+}
 
 - (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler {
+    
+    
     NSString *url = [navigationAction.request.URL.absoluteString stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    
-    
     decisionHandler(WKNavigationActionPolicyAllow);
     
     
