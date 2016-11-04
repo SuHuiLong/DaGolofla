@@ -11,6 +11,10 @@
 #import "MySetBindViewController.h"
 #import "UserDataInformation.h"
 #import "JPUSHService.h"
+#import "JGHForgotPasswordViewController.h"
+#import "JGHRegistersViewController.h"
+
+static int timeNumber = 60;
 
 @interface JGHLoginViewController ()<UITextFieldDelegate, UIPickerViewDataSource,UIPickerViewDelegate>
 
@@ -34,8 +38,13 @@
     UIPickerView *_pickerView;
     
     NSArray *_titleArray;
+    NSArray *_titleCodeArray;
     
     UIButton *_areaBtn;
+    
+    NSString *_codeing;
+    NSTimer *_timer;
+    UIButton *_getCodeBtn;
 }
 
 @end
@@ -57,6 +66,8 @@
     _dict = [NSMutableDictionary dictionary];
     
     _titleArray = @[@"中国", @"香港", @"澳门", @"台湾"];
+    _titleCodeArray = @[@"0086", @"00886", @"00852", @"00853"];
+    _codeing = @"0086";
     
     [self createNavViewBtn];
 }
@@ -111,6 +122,7 @@
     _mobileText = [[UITextField alloc]initWithFrame:CGRectMake(72*ProportionAdapter +1, 0, screenWidth - ((16 +50+22)*ProportionAdapter +1), 50 *ProportionAdapter)];
     _mobileText.placeholder = @"请输入手机号";
     _mobileText.tag = 187;
+    _mobileText.clearButtonMode = UITextFieldViewModeAlways;
     _mobileText.font = [UIFont systemFontOfSize:17 *ProportionAdapter];
     _mobileText.delegate = self;
     _mobileText.keyboardType = UIKeyboardTypeNumberPad;
@@ -157,7 +169,7 @@
     
     [self createPasswordView];
 }
-#pragma mark -- regionBtn
+#pragma mark -- 区域选择
 - (void)regionPickBtn:(UIButton *)btn{
     _pickerView = [[UIPickerView alloc] init];
     _pickerView.showsSelectionIndicator = YES;
@@ -171,17 +183,54 @@
 - (void)quickRegistrationBtn:(UIButton *)btn{
     [self.view endEditing:YES];
     
+    JGHRegistersViewController *registerCtrl = [[JGHRegistersViewController alloc]initWithNibName:@"JGHRegistersViewController" bundle:nil];
+    [self.navigationController pushViewController:registerCtrl animated:YES];
 }
 #pragma mark -- 登录
 - (void)loginIn:(UIButton *)btn{
     [self.view endEditing:YES];
     [_pickerView removeFromSuperview];
     
-    [_dict setObject:_mobileText.text forKey:@"telphone"];
-    [_dict setObject:_passwordText.text forKey:@"password"];
+    if (_mobileText.text.length == 0) {
+        [LQProgressHud showMessage:@"请输入手机号！"];
+        return;
+    }
     
-    
-    
+    NSString *urlString;
+    if (_showId == 0) {
+        if (_passwordText.text.length == 0) {
+            [LQProgressHud showMessage:@"请输入密码！"];
+            return;
+        }
+        //手机号密码登录
+        urlString = @"login/doLoginByTelphonePassword";
+        [_dict setObject:_mobileText.text forKey:@"telphone"];
+        [_dict setObject:_passwordText.text forKey:@"password"];
+    }else{
+        if (_passwordText.text.length == 0) {
+            [LQProgressHud showMessage:@"请输入验证码！"];
+            return;
+        }
+        
+        //验证码登录
+        urlString = @"login/doLoginByTelphoneCheckCode";
+        [_dict setObject:_mobileText.text forKey:@"telphone"];
+        [_dict setObject:_passwordText.text forKey:@"checkCode"];
+    }
+    /*
+     18637665180
+     123456
+     */
+    [[JsonHttp jsonHttp]httpRequestWithMD5:urlString JsonKey:nil withData:_dict failedBlock:^(id errType) {
+        
+    } completionBlock:^(id data) {
+        NSLog(@"%@", data);
+        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+            
+        }else{
+            
+        }
+    }];
 }
 #pragma mark -- 微信登录
 - (void)weixinLogin:(UIButton *)btn{
@@ -284,8 +333,17 @@
     _passwordText = [[UITextField alloc]initWithFrame:CGRectMake(72*ProportionAdapter +1, 0, screenWidth - ((16 +50+30+22+22)*ProportionAdapter +1), 50 *ProportionAdapter)];
     _passwordText.placeholder = @"请输入密码";
     _passwordText.font = [UIFont systemFontOfSize:17 *ProportionAdapter];
+    _passwordText.secureTextEntry = YES;
+    _passwordText.clearButtonMode = UITextFieldViewModeAlways;
     _passwordText.delegate = self;
     [_passwordView addSubview:_passwordText];
+    
+    UIButton *forgotPasswordBtn = [[UIButton alloc]initWithFrame:CGRectMake(screenWidth - 88*ProportionAdapter, (15 + 10 +50 +50 +15) *ProportionAdapter, 80 *ProportionAdapter, 15 *ProportionAdapter)];
+    [forgotPasswordBtn setTitle:@"忘记密码？" forState:UIControlStateNormal];
+    [forgotPasswordBtn setTitleColor:[UIColor colorWithHexString:Line_Color] forState:UIControlStateNormal];
+    forgotPasswordBtn.titleLabel.font = [UIFont systemFontOfSize:15 *ProportionAdapter];
+    [forgotPasswordBtn addTarget:self action:@selector(forgotPasswordBtn:) forControlEvents:UIControlEventTouchUpInside];
+    [_bgView addSubview:forgotPasswordBtn];
     
     UIButton *entryBtn = [[UIButton alloc]initWithFrame:CGRectMake(screenWidth -(30 +22 +8)*ProportionAdapter, 18 *ProportionAdapter, 22*ProportionAdapter, 14*ProportionAdapter)];
     [entryBtn setImage:[UIImage imageNamed:@"icn_login_eyeopen"] forState:UIControlStateNormal];
@@ -293,6 +351,12 @@
     [_passwordView addSubview:entryBtn];
     
     [_bgView addSubview:_passwordView];
+}
+#pragma mark -- 忘记密码
+- (void)forgotPasswordBtn:(UIButton *)btn{
+    JGHForgotPasswordViewController *forCtrl = [[JGHForgotPasswordViewController alloc]initWithNibName:@"JGHForgotPasswordViewController" bundle:nil];
+    
+    [self.navigationController pushViewController:forCtrl animated:YES];
 }
 #pragma mark -- 验证码登录试图
 - (void)createlogInView{
@@ -316,17 +380,19 @@
     _codeText = [[UITextField alloc]initWithFrame:CGRectMake(72*ProportionAdapter +1, 0, screenWidth - ((16 +50+2+22+130)*ProportionAdapter +1), 50 *ProportionAdapter)];
     _codeText.placeholder = @"请输入验证码";
     _codeText.font = [UIFont systemFontOfSize:17 *ProportionAdapter];
+    _codeText.keyboardType = UIKeyboardTypeNumberPad;
     [_codeView addSubview:_codeText];
     
     UILabel *codeLine = [[UILabel alloc]initWithFrame:CGRectMake(_codeText.frame.origin.x + _codeText.frame.size.width +1, 12 *ProportionAdapter, 1, 26 *ProportionAdapter)];
     codeLine.backgroundColor = [UIColor colorWithHexString:Line_Color];
     [_codeView addSubview:codeLine];
     
-    UIButton *getCodeBtn = [[UIButton alloc]initWithFrame:CGRectMake(codeLine.frame.origin.x +1, 18 *ProportionAdapter, 130*ProportionAdapter, 14*ProportionAdapter)];
-    [getCodeBtn setTitle:@"获取验证码" forState:UIControlStateNormal];
-    [getCodeBtn setTitleColor:[UIColor colorWithHexString:Bar_Color] forState:UIControlStateNormal];
-    getCodeBtn.titleLabel.font = [UIFont systemFontOfSize:17*ProportionAdapter];
-    [_codeView addSubview:getCodeBtn];
+    _getCodeBtn = [[UIButton alloc]initWithFrame:CGRectMake(codeLine.frame.origin.x +1, 18 *ProportionAdapter, 130*ProportionAdapter, 14*ProportionAdapter)];
+    [_getCodeBtn setTitle:@"获取验证码" forState:UIControlStateNormal];
+    [_getCodeBtn setTitleColor:[UIColor colorWithHexString:Bar_Color] forState:UIControlStateNormal];
+    _getCodeBtn.titleLabel.font = [UIFont systemFontOfSize:17*ProportionAdapter];
+    [_getCodeBtn addTarget:self action:@selector(getCodeBtn:) forControlEvents:UIControlEventTouchUpInside];
+    [_codeView addSubview:_getCodeBtn];
     
     [_bgView addSubview:_codeView];
 }
@@ -336,6 +402,55 @@
         _passwordText.secureTextEntry = NO;
     }else{
         _passwordText.secureTextEntry = YES;
+    }
+}
+#pragma mark -- 获取验证码
+- (void)getCodeBtn:(UIButton *)btn{
+    [self.view endEditing:YES];
+    NSMutableDictionary *codeDict = [NSMutableDictionary dictionary];
+    if (_mobileText.text.length == 0) {
+        [LQProgressHud showMessage:@"请输入手机号！"];
+        return;
+    }
+    
+    [codeDict setObject:_mobileText.text forKey:@"telphone"];
+    //
+    [codeDict setObject:_codeing forKey:@"countryCode"];
+    _getCodeBtn.userInteractionEnabled = NO;
+    [[JsonHttp jsonHttp]httpRequestWithMD5:@"login/doSendLoginCheckCodeSms" JsonKey:nil withData:codeDict failedBlock:^(id errType) {
+        _getCodeBtn.userInteractionEnabled = YES;
+    } completionBlock:^(id data) {
+        NSLog(@"%@", data);
+        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+            //
+            [_getCodeBtn setTitleColor:[UIColor colorWithHexString:Line_Color] forState:UIControlStateNormal];
+            _getCodeBtn.titleLabel.font = [UIFont systemFontOfSize:14*ProportionAdapter];
+            _timer=[NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(autoMove) userInfo:nil repeats:YES];
+            [[NSRunLoop currentRunLoop] addTimer:_timer forMode:NSRunLoopCommonModes];
+            
+        }else{
+            _getCodeBtn.userInteractionEnabled = YES;
+            if ([data objectForKey:@"packResultMsg"]) {
+                [LQProgressHud showMessage:[data objectForKey:@"packResultMsg"]];
+            }
+        }
+    }];
+}
+-(void)dealloc
+{
+    _timer = nil;
+}
+- (void)autoMove {
+    timeNumber--;
+    [_getCodeBtn setTitle:[NSString stringWithFormat:@"(%d)后重新获取",timeNumber] forState:UIControlStateNormal];
+    if (timeNumber == 0) {
+        [_getCodeBtn setTitleColor:[UIColor colorWithHexString:Bar_Color] forState:UIControlStateNormal];
+        _getCodeBtn.titleLabel.font = [UIFont systemFontOfSize:17*ProportionAdapter];
+        [_getCodeBtn setTitle:@"发送验证码" forState:UIControlStateNormal];
+        [_timer invalidate];
+        timeNumber = 60;
+        
+        _getCodeBtn.userInteractionEnabled = YES;
     }
 }
 #pragma mark -- 密码登录
@@ -483,6 +598,7 @@
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
     [_areaBtn setTitle:_titleArray[row] forState:UIControlStateNormal];
+    _codeing = [NSString stringWithFormat:@"%@", _titleCodeArray[row]];
 }
 
 - (void)didReceiveMemoryWarning {

@@ -48,6 +48,7 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *registeredLable;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *registeredLableLeft;//10
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *registeredLableW;
 
 @property (weak, nonatomic) IBOutlet UIButton *termsBtn;//13
 - (IBAction)termsBtn:(UIButton *)sender;

@@ -199,7 +199,6 @@
 		209B93AB1D6EC65600A5BE10 /* JGHAddCostButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 209B93A91D6EC65600A5BE10 /* JGHAddCostButtonCell.m */; };
 		209B93AC1D6EC65600A5BE10 /* JGHAddCostButtonCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 209B93AA1D6EC65600A5BE10 /* JGHAddCostButtonCell.xib */; };
 		20A4CFB61DC85D3F00F5A81D /* JGHIndexTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 20A4CFB51DC85D3F00F5A81D /* JGHIndexTableViewCell.m */; };
-		20A4CFBD1DC9B3BF00F5A81D /* JGHRegisteredViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 20A4CFBC1DC9B3BF00F5A81D /* JGHRegisteredViewController.m */; };
 		20BA61291CDC99D0004B61F5 /* ALAirplayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 20BA61151CDC99D0004B61F5 /* ALAirplayView.m */; };
 		20BA612A1CDC99D0004B61F5 /* ALButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 20BA61171CDC99D0004B61F5 /* ALButton.m */; };
 		20BA612B1CDC99D0004B61F5 /* ALMoviePlayerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 20BA61191CDC99D0004B61F5 /* ALMoviePlayerController.m */; };
@@ -1596,8 +1595,6 @@
 		209B93AA1D6EC65600A5BE10 /* JGHAddCostButtonCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JGHAddCostButtonCell.xib; sourceTree = "<group>"; };
 		20A4CFB41DC85D3F00F5A81D /* JGHIndexTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHIndexTableViewCell.h; sourceTree = "<group>"; };
 		20A4CFB51DC85D3F00F5A81D /* JGHIndexTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHIndexTableViewCell.m; sourceTree = "<group>"; };
-		20A4CFBB1DC9B3BF00F5A81D /* JGHRegisteredViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHRegisteredViewController.h; sourceTree = "<group>"; };
-		20A4CFBC1DC9B3BF00F5A81D /* JGHRegisteredViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHRegisteredViewController.m; sourceTree = "<group>"; };
 		20BA61141CDC99D0004B61F5 /* ALAirplayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALAirplayView.h; sourceTree = "<group>"; };
 		20BA61151CDC99D0004B61F5 /* ALAirplayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALAirplayView.m; sourceTree = "<group>"; };
 		20BA61161CDC99D0004B61F5 /* ALButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALButton.h; sourceTree = "<group>"; };
@@ -4480,8 +4477,6 @@
 		20A4CFB81DC9B0ED00F5A81D /* controllers */ = {
 			isa = PBXGroup;
 			children = (
-				20A4CFBB1DC9B3BF00F5A81D /* JGHRegisteredViewController.h */,
-				20A4CFBC1DC9B3BF00F5A81D /* JGHRegisteredViewController.m */,
 				2053FE8E1DC9C04300975203 /* JGHRegistersViewController.h */,
 				2053FE8F1DC9C04300975203 /* JGHRegistersViewController.m */,
 				2053FE901DC9C04300975203 /* JGHRegistersViewController.xib */,
@@ -9847,7 +9842,6 @@
 				F5E1BB111D6B006100414727 /* ZXDataMatrixASCIIEncoder.m in Sources */,
 				20D514FA1DB63DA60006EFCB /* JGHEventRulesHeaderCell.m in Sources */,
 				F5E1BB091D6B006100414727 /* ZXResultPoint.m in Sources */,
-				20A4CFBD1DC9B3BF00F5A81D /* JGHRegisteredViewController.m in Sources */,
 				209B93AB1D6EC65600A5BE10 /* JGHAddCostButtonCell.m in Sources */,
 				36BF00931BC772EF005B3CE2 /* NewsDetailController.m in Sources */,
 				65B596E61CAD43AC007AB83A /* UIView+Extension.m in Sources */,

@@ -32,6 +32,7 @@
                 <outlet property="passwordTextRight" destination="2aV-4y-T90" id="8GT-f1-9fR"/>
                 <outlet property="registeredLable" destination="2FQ-q8-kVv" id="0ru-yc-V9A"/>
                 <outlet property="registeredLableLeft" destination="UrM-Qa-sHg" id="8Jy-GJ-oMY"/>
+                <outlet property="registeredLableW" destination="IM8-bY-t80" id="lX5-R3-h8T"/>
                 <outlet property="selectBtn" destination="dpr-KA-f1v" id="3fL-gw-7t1"/>
                 <outlet property="selectBtnLeft" destination="Ege-2x-cx2" id="kxE-aG-B6r"/>
                 <outlet property="selectBtnW" destination="n7z-Jh-dVs" id="sDG-qy-hLZ"/>
@@ -71,12 +72,13 @@
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="请输入手机号" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="dSd-6Z-P3T">
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入手机号" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="dSd-6Z-P3T">
                             <nil key="textColor"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <textInputTraits key="textInputTraits"/>
                         </textField>
                     </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstItem="23u-cP-rMn" firstAttribute="top" secondItem="xeH-tC-u6R" secondAttribute="top" id="0oO-vC-do8"/>
                         <constraint firstItem="rbq-ip-sKc" firstAttribute="height" secondItem="23u-cP-rMn" secondAttribute="height" id="6D9-Rj-sXZ"/>
@@ -115,7 +117,7 @@
                                 <action selector="getCodeBtn:" destination="-1" eventType="touchUpInside" id="OAh-kg-t8P"/>
                             </connections>
                         </button>
-                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="请输入验证码" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Zdb-4H-WGw">
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入验证码" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Zdb-4H-WGw">
                             <nil key="textColor"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <textInputTraits key="textInputTraits"/>
@@ -161,7 +163,7 @@
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="请输入密码" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="bp0-hN-ozD">
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入密码" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="bp0-hN-ozD">
                             <nil key="textColor"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <textInputTraits key="textInputTraits"/>
@@ -204,19 +206,13 @@
                     </connections>
                 </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="注册代表您同意" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2FQ-q8-kVv">
+                    <constraints>
+                        <constraint firstAttribute="width" constant="100" id="IM8-bY-t80"/>
+                    </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JDO-2E-P0y">
-                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                    <state key="normal" title="《使用条款和隐私政策》">
-                        <color key="titleColor" red="0.0013606981289999999" green="0.5928685897" blue="0.01561024649" alpha="1" colorSpace="calibratedRGB"/>
-                    </state>
-                    <connections>
-                        <action selector="termsBtn:" destination="-1" eventType="touchUpInside" id="dbX-Zp-jQM"/>
-                    </connections>
-                </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dlm-1D-aa9">
                     <constraints>
                         <constraint firstAttribute="height" constant="50" id="EYS-3O-MVc"/>
@@ -225,6 +221,15 @@
                     <state key="normal" title="完成"/>
                     <connections>
                         <action selector="completeBtn:" destination="-1" eventType="touchUpInside" id="IrO-GT-0D9"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JDO-2E-P0y">
+                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                    <state key="normal" title="《使用条款和隐私政策》">
+                        <color key="titleColor" red="0.0013606981289999999" green="0.5928685897" blue="0.01561024649" alpha="1" colorSpace="calibratedRGB"/>
+                    </state>
+                    <connections>
+                        <action selector="termsBtn:" destination="-1" eventType="touchUpInside" id="dbX-Zp-jQM"/>
                     </connections>
                 </button>
             </subviews>

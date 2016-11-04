@@ -18,6 +18,9 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
+    self.view.backgroundColor = [UIColor colorWithHexString:BG_color];
+    self.navigationItem.title = @"注册";
+    
     self.viewLeft.constant = 8 *ProportionAdapter;
     self.viewTop.constant = 10 *ProportionAdapter;
     self.viewRight.constant = 8 *ProportionAdapter;
@@ -53,6 +56,7 @@
 
     self.registeredLable.font = [UIFont systemFontOfSize:13 *ProportionAdapter];
     self.registeredLableLeft.constant = 10 *ProportionAdapter;
+    self.registeredLableW.constant = 100 *ProportionAdapter;
     
     self.termsBtn.titleLabel.font = [UIFont systemFontOfSize:13 *ProportionAdapter];
 
