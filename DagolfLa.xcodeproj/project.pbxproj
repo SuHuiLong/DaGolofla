@@ -123,6 +123,7 @@
 		20591CAA1D23C308003271EC /* JGHSelectBlankCatoryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 20591CA81D23C308003271EC /* JGHSelectBlankCatoryCell.m */; };
 		20591CAB1D23C308003271EC /* JGHSelectBlankCatoryCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 20591CA91D23C308003271EC /* JGHSelectBlankCatoryCell.xib */; };
 		20591CAE1D23FDD3003271EC /* JGHNOBlankPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 20591CAD1D23FDD3003271EC /* JGHNOBlankPasswordViewController.m */; };
+		205E61DF1DCC7BC60079F128 /* JGDChangePWDViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 205E61DD1DCC7BC60079F128 /* JGDChangePWDViewController.m */; };
 		205FA1C21DBDA37F003B9668 /* JGHEventViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 205FA1C11DBDA37F003B9668 /* JGHEventViewController.m */; };
 		2064DE8C1D367FEC00F0D52A /* JGHScoresHoleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2064DE8B1D367FEC00F0D52A /* JGHScoresHoleView.m */; };
 		2064DE961D3C715300F0D52A /* JGHRetrieveScoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2064DE941D3C715300F0D52A /* JGHRetrieveScoreViewController.m */; };
@@ -1467,6 +1468,8 @@
 		20591CA91D23C308003271EC /* JGHSelectBlankCatoryCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JGHSelectBlankCatoryCell.xib; sourceTree = "<group>"; };
 		20591CAC1D23FDD3003271EC /* JGHNOBlankPasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHNOBlankPasswordViewController.h; sourceTree = "<group>"; };
 		20591CAD1D23FDD3003271EC /* JGHNOBlankPasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHNOBlankPasswordViewController.m; sourceTree = "<group>"; };
+		205E61DD1DCC7BC60079F128 /* JGDChangePWDViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGDChangePWDViewController.m; sourceTree = "<group>"; };
+		205E61DE1DCC7BC60079F128 /* JGDChangePWDViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGDChangePWDViewController.h; sourceTree = "<group>"; };
 		205FA1C01DBDA37F003B9668 /* JGHEventViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHEventViewController.h; sourceTree = "<group>"; };
 		205FA1C11DBDA37F003B9668 /* JGHEventViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHEventViewController.m; sourceTree = "<group>"; };
 		2064DE8A1D367FEC00F0D52A /* JGHScoresHoleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHScoresHoleView.h; sourceTree = "<group>"; };
@@ -4480,6 +4483,8 @@
 		20A4CFB81DC9B0ED00F5A81D /* controllers */ = {
 			isa = PBXGroup;
 			children = (
+				205E61DD1DCC7BC60079F128 /* JGDChangePWDViewController.m */,
+				205E61DE1DCC7BC60079F128 /* JGDChangePWDViewController.h */,
 				2053FE8E1DC9C04300975203 /* JGHRegistersViewController.h */,
 				2053FE8F1DC9C04300975203 /* JGHRegistersViewController.m */,
 				2053FE901DC9C04300975203 /* JGHRegistersViewController.xib */,
@@ -9243,6 +9248,7 @@
 				65B596E91CAD43AC007AB83A /* WFPopView.m in Sources */,
 				F569A13F1CE35A9C00CD0FD5 /* JGTeamChannelViewController.m in Sources */,
 				F5E1BB031D6B006100414727 /* ZXEncodeHints.m in Sources */,
+				205E61DF1DCC7BC60079F128 /* JGDChangePWDViewController.m in Sources */,
 				36DFD9181C0EC1EE004DC690 /* HistoryRightTableViewCell.m in Sources */,
 				F5E1BAC51D6B006100414727 /* ZXBizcardResultParser.m in Sources */,
 				F5EE48991D462730001D5E44 /* JGLActiveAddPlayTableViewCell.m in Sources */,
