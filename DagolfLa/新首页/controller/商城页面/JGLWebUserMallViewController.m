@@ -171,8 +171,6 @@
                 [_dictCan setObject:arrCan[1] forKey:arrCan[0]];
             }
         }
-        NSLog(@"%@",_dictCan);
-        
         UIAlertAction * cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
         }];
         UIAlertAction *weiChatAction = [UIAlertAction actionWithTitle:@"微信支付" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {

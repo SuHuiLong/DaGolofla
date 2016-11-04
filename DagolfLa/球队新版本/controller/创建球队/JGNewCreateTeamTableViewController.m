@@ -77,7 +77,8 @@ static CGFloat ImageHeight  = 210.0;
     
 }
 - (void)viewWillDisappear:(BOOL)animated{
-    [super viewWillDisappear:YES];
+//    [super viewWillDisappear:YES];
+    [super viewWillDisappear:NO];
     self.navigationController.navigationBarHidden = NO;
     //     [[IQKeyboardManager sharedManager] setEnable:_wasKeyboardManagerEnabled];
 }
