@@ -147,5 +147,7 @@ typedef NS_ENUM(NSInteger, GestureType) {
 #import "FCUUID.h"
 
 #import "UITool.h"
+#import "UMMobClick/MobClick.h"
+
 
 #endif

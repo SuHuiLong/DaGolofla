@@ -215,6 +215,7 @@
 -(void)btnImgvClick:(UIButton *)btn
 {
     btn.userInteractionEnabled = NO;
+    [MobClick event:@"scoreBySelf"];
     if ([[NSUserDefaults standardUserDefaults]objectForKey:@"userId"]) {
         NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
         [dict setObject:DEFAULF_USERID forKey:@"userKey"];
@@ -379,7 +380,8 @@
             [self.navigationController pushViewController:wkVC animated:YES];
         }else if (indexPath.item == 2) {
             
-            
+            [MobClick event:@"caddieRecord"];
+
             NSMutableDictionary *dic = [NSMutableDictionary dictionary];
             [dic setObject:DEFAULF_USERID forKey:@"userKey"];
             [[JsonHttp jsonHttp] httpRequestWithMD5:@"score/hasCaddieRecord" JsonKey:nil withData:dic failedBlock:^(id errType) {
