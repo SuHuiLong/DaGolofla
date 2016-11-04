@@ -33,6 +33,8 @@
 #import "JGLPushDetailsViewController.h"
 #import "JGHIndexTableViewCell.h"
 
+#import "UMMobClick/MobClick.h"
+
 static NSString *const JGHPASHeaderTableViewCellIdentifier = @"JGHPASHeaderTableViewCell";
 static NSString *const JGHShowSectionTableViewCellIdentifier = @"JGHShowSectionTableViewCell";
 static NSString *const JGHShowFavouritesCellIdentifier = @"JGHShowFavouritesCell";
@@ -347,56 +349,8 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
             }
         }
         
-        
         return indexTableViewCell;
     }
-    
-        /*
-         if (indexPath.section == 1){
-        JGHWonderfulTableViewCell *wonderfulTableViewCell = [tableView dequeueReusableCellWithIdentifier:JGHWonderfulTableViewCellIdentifier];
-        wonderfulTableViewCell.delegate = self;
-        if (self.indexModel.plateList.count > 0) {
-            NSDictionary *wonderfulDict = self.indexModel.plateList[0];
-            NSArray *wonderfulArray = [wonderfulDict objectForKey:@"bodyList"];
-            [wonderfulTableViewCell configJGHWonderfulTableViewCell:wonderfulArray andImageW:[[wonderfulDict objectForKey:@"imgWidth"] integerValue] andImageH:[[wonderfulDict objectForKey:@"imgHeight"] integerValue]];
-        }
-    
-        return wonderfulTableViewCell;
-    }else if (indexPath.section == 2){
-        //热门球队
-        JGHShowFavouritesCell *showFavouritesCell = [tableView dequeueReusableCellWithIdentifier:JGHShowFavouritesCellIdentifier];
-        if (self.indexModel.plateList.count > 1) {
-            NSDictionary *favourDict = self.indexModel.plateList[1];
-            NSArray *favourArray = [favourDict objectForKey:@"bodyList"];
-            [showFavouritesCell configJGHShowFavouritesCell:favourArray[indexPath.row]];
-        }
-        
-        return showFavouritesCell;
-    }else if (indexPath.section == 3){
-        //球场推荐
-        JGHShowRecomStadiumTableViewCell *showRecomStadiumTableViewCell = [tableView dequeueReusableCellWithIdentifier:JGHShowRecomStadiumTableViewCellIdentifier];
-        showRecomStadiumTableViewCell.delegate = self;
-        
-        if (self.indexModel.plateList.count > 2) {
-            NSDictionary *recomStadiumDict = self.indexModel.plateList[2];
-            NSArray *recomStadiumArray = [recomStadiumDict objectForKey:@"bodyList"];
-            [showRecomStadiumTableViewCell configJGHShowRecomStadiumTableViewCell:recomStadiumArray andImageW:[[recomStadiumDict objectForKey:@"imgWidth"] integerValue] andImageH:[[recomStadiumDict objectForKey:@"imgHeight"] integerValue]];
-        }
-        
-        return showRecomStadiumTableViewCell;
-    }else{
-        //用品商城
-        JGHShowSuppliesMallTableViewCell *showSuppliesMallTableViewCell = [tableView dequeueReusableCellWithIdentifier:JGHShowSuppliesMallTableViewCellIdentifier];
-        showSuppliesMallTableViewCell.delegate = self;
-        if (self.indexModel.plateList.count > 3) {
-            NSDictionary *suppliesMallDict = self.indexModel.plateList[3];
-            NSArray *suppliesMallArray = [suppliesMallDict objectForKey:@"bodyList"];
-            [showSuppliesMallTableViewCell configJGHShowSuppliesMallTableViewCell:suppliesMallArray andImageW:[[suppliesMallDict objectForKey:@"imgWidth"] integerValue] andImageH:[[suppliesMallDict objectForKey:@"imgHeight"] integerValue]];
-        }
-        
-        return showSuppliesMallTableViewCell;
-    }
-     */
 }
 //组头视图
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
@@ -453,54 +407,11 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
             return 0;
         }
     }
-    
-    /*
-    else if (indexPath.section == 1){
-        //精彩推荐 -- 135
-        if (_indexModel.plateList.count > 0) {
-            NSDictionary *dict = _indexModel.plateList[0];
-            NSArray *bodyList = [dict objectForKey:@"bodyList"];
-            return ((bodyList.count-1)/2+1) *([[dict objectForKey:@"imgHeight"] integerValue] +35 +8) *ProportionAdapter + 8*ProportionAdapter;
-        }else{
-            return 0;
-        }
-    }else if (indexPath.section == 3){
-        //球场推荐
-        if (_indexModel.plateList.count > 0) {
-            NSDictionary *dict = _indexModel.plateList[2];
-            NSArray *bodyList = [dict objectForKey:@"bodyList"];
-            return ((bodyList.count-1)/2+1) *([[dict objectForKey:@"imgHeight"] integerValue] +56 +8) *ProportionAdapter + 8*ProportionAdapter;
-        }else{
-            return 0;
-        }
-    }else if (indexPath.section == 4){
-        //用品商城 -- (104 +imageH)
-        if (_indexModel.plateList.count > 0) {
-            NSDictionary *dict = [_indexModel.plateList lastObject];
-            NSArray *bodyList = [dict objectForKey:@"bodyList"];
-            return ((bodyList.count-1)/2+1) *([[dict objectForKey:@"imgHeight"] integerValue] +104 +8) *ProportionAdapter + 8*ProportionAdapter;
-        }else{
-            return 0;
-        }
-    }else{
-        //2---热门球队
-        return 90 *ProportionAdapter;
-    }
-     */
 }
 //设置头部高度
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
     return 45 *ProportionAdapter;
-}
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    [self isLoginUp];
-    
-    // 热门球队 --- 详情
-    if (indexPath.section == 2) {
-        NSDictionary *dict = [_indexModel.plateList[1] objectForKey:@"bodyList"][indexPath.row];
-        [self hotTeam: dict];
-    }
 }
 
 - (void)hotTeam:(NSDictionary *)dict{
@@ -553,6 +464,9 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
     UILabel *scoreLable = [self.view viewWithTag:30003];
     
     if (btn.tag == 1001) {
+        
+        [MobClick event:@"activity"];
+
         _showLineID = 0;
         activityLable.hidden = NO;
         photoLable.hidden = YES;
@@ -560,6 +474,9 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
         [cell configJGHShowActivityPhotoCell:_indexModel.activityList];
         
     } else if (btn.tag == 1002) {
+        
+        [MobClick event:@"photoAlbum"];
+
         _showLineID = 1;
         activityLable.hidden = YES;
         photoLable.hidden = NO;
@@ -578,6 +495,9 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
             [self.navigationController pushViewController:photoVC animated:YES];
         };
     } else if (btn.tag == 1003) {
+        
+        [MobClick event:@"live"];
+
         _showLineID = 2;
         activityLable.hidden = YES;
         photoLable.hidden = YES;
@@ -605,7 +525,8 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
 #pragma mark -- 我的球队
 - (void)didSelectMyTeamBtn:(UIButton *)btn{
     [self isLoginUp];
-    
+    // 友盟埋点
+    [MobClick event:@"teamTribe"];
     JGHShowMyTeamViewController *myTeamVC = [[JGHShowMyTeamViewController alloc] init];
     myTeamVC.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:myTeamVC animated:YES];
@@ -613,7 +534,7 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
 #pragma mark -- 开局记分
 - (void)didSelectStartScoreBtn:(UIButton *)btn{
     [self isLoginUp];
-    
+    [MobClick event:@"beginKeepScore"];
     JGLScoreNewViewController *scoreCtrl = [[JGLScoreNewViewController alloc]init];
     scoreCtrl.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:scoreCtrl animated:YES];
@@ -621,7 +542,7 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
 #pragma mark -- 历史成绩
 - (void)didSelectHistoryResultsBtn:(UIButton *)btn{
     [self isLoginUp];
-    
+    [MobClick event:@"historyScore"];
     JGDHistoryScoreViewController *historyCtrl = [[JGDHistoryScoreViewController alloc]init];
     historyCtrl.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:historyCtrl animated:YES];
@@ -641,38 +562,84 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
     NSLog(@"%td", btn.tag);
     [self isLoginUp];
     
-    NSDictionary *dict = _indexModel.plateList[0];
-    NSArray *bodyList = [dict objectForKey:@"bodyList"];
-    NSDictionary *ablumListDict = bodyList[btn.tag -300];
-    JGPhotoAlbumViewController *photoAlbumCtrl = [[JGPhotoAlbumViewController alloc]init];
-    photoAlbumCtrl.albumKey = [NSNumber numberWithInteger:[[ablumListDict objectForKey:@"timeKey"] integerValue]];
-    photoAlbumCtrl.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:photoAlbumCtrl animated:YES];
+    NSDictionary *mallListDict = [NSDictionary dictionary];
+    for (int i=0; i<_indexModel.plateList.count; i++) {
+        if ([[_indexModel.plateList[i] objectForKey:@"bodyLayoutType"] integerValue] == 0) {
+            mallListDict = _indexModel.plateList[i];
+        }
+    }
+    
+    if (mallListDict) {
+        NSArray *bodyList = [mallListDict objectForKey:@"bodyList"];
+        NSDictionary *ablumListDict = bodyList[btn.tag -300];
+        JGPhotoAlbumViewController *photoAlbumCtrl = [[JGPhotoAlbumViewController alloc]init];
+        photoAlbumCtrl.albumKey = [NSNumber numberWithInteger:[[ablumListDict objectForKey:@"timeKey"] integerValue]];
+        photoAlbumCtrl.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:photoAlbumCtrl animated:YES];
+    }
 }
-#pragma mark -- 球场推荐
+#pragma mark -- 订场推荐
 - (void)recomStadiumSelectClick:(UIButton *)btn{
     NSLog(@"%td", btn.tag);
     [self isLoginUp];
     
-    NSDictionary *dict = _indexModel.plateList[2];
-    NSArray *bodyList = [dict objectForKey:@"bodyList"];
-    NSDictionary *mallListDict = bodyList[btn.tag -400];
-    [self pushctrlWithUrl:[mallListDict objectForKey:@"weblinks"]];
+    NSDictionary *recomListDict = [NSDictionary dictionary];
+    for (int i=0; i<_indexModel.plateList.count; i++) {
+        if ([[_indexModel.plateList[i] objectForKey:@"bodyLayoutType"] integerValue] == 3) {
+            recomListDict = _indexModel.plateList[i];
+        }
+    }
+    
+    if (recomListDict) {
+        NSArray *bodyList = [NSArray array];
+        bodyList = [recomListDict objectForKey:@"bodyList"];
+        NSString *mallUrl = [bodyList[btn.tag -400] objectForKey:@"weblinks"];
+        [self pushctrlWithUrl:mallUrl];
+    }else{
+        return;
+    }
 }
 #pragma mark -- 用品商城
 - (void)suppliesMallSelectClick:(UIButton *)btn{
     NSLog(@"%td", btn.tag);
     [self isLoginUp];
     
-    NSDictionary *dict = _indexModel.plateList[3];
-    NSArray *bodyList = [dict objectForKey:@"bodyList"];
-    NSDictionary *mallListDict = bodyList[btn.tag -500];
-    [self pushctrlWithUrl:[mallListDict objectForKey:@"weblinks"]];
+    NSDictionary *mallListDict = [NSDictionary dictionary];
+    for (int i=0; i<_indexModel.plateList.count; i++) {
+        if ([[_indexModel.plateList[i] objectForKey:@"bodyLayoutType"] integerValue] == 1) {
+            mallListDict = _indexModel.plateList[i];
+        }
+    }
+    
+    if (mallListDict) {
+        NSArray *bodyList = [NSArray array];
+        bodyList = [mallListDict objectForKey:@"bodyList"];
+        NSString *mallUrl = [bodyList[btn.tag -500] objectForKey:@"weblinks"];
+        [self pushctrlWithUrl:mallUrl];
+    }else{
+        return;
+    }
 }
 #pragma mark -- 热门球队
 - (void)hotTeamSelectClick:(UIButton *)btn{
     NSLog(@"%td", btn.tag);
+    [self isLoginUp];
     
+    // 热门球队 --- 详情  bodyLayoutType -2
+    NSDictionary *hotTeamDict = [NSDictionary dictionary];
+    for (int i=0; i<_indexModel.plateList.count; i++) {
+        if ([[_indexModel.plateList[i] objectForKey:@"bodyLayoutType"] integerValue] == 2) {
+            hotTeamDict = _indexModel.plateList[i];
+        }
+    }
+    
+    if (hotTeamDict) {
+        NSArray *bodyList = [NSArray array];
+        bodyList = [hotTeamDict objectForKey:@"bodyList"];
+        [self hotTeam:bodyList[btn.tag -600]];
+    }else{
+        return;
+    }
 }
 #pragma mark -- 更多
 - (void)didSelectMoreBtn:(UIButton *)moreBtn{
@@ -824,10 +791,10 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
         [Helper alertViewWithTitle:@"是否立即登录?" withBlockCancle:^{
             [[NSNotificationCenter defaultCenter] postNotificationName:@"show" object:nil];
         } withBlockSure:^{
-            EnterViewController *vc = [[EnterViewController alloc] init];
-            vc.jiazai = ^(){
-                [self.homeTableView.header beginRefreshing];
-            };
+            JGHLoginViewController *vc = [[JGHLoginViewController alloc] init];
+//            vc.jiazai = ^(){
+//                [self.homeTableView.header beginRefreshing];
+//            };
             [self.navigationController pushViewController:vc animated:YES];
         } withBlock:^(UIAlertController *alertView) {
             [[NSNotificationCenter defaultCenter] postNotificationName:@"show" object:nil];

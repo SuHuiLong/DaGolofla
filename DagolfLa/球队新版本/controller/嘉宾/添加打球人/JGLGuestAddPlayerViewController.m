@@ -183,6 +183,7 @@
     _tableView.delegate = self;
     _tableView.dataSource = self;
     _tableView.separatorEffect = UITableViewCellSeparatorStyleNone;
+    _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:_tableView];
     [_tableView registerClass:[JGLGuestAddPlayerTableViewCell class] forCellReuseIdentifier:@"JGLGuestAddPlayerTableViewCell"];
     [_tableView registerClass:[JGLFinishBtnTableViewCell class] forCellReuseIdentifier:@"JGLFinishBtnTableViewCell"];
@@ -381,6 +382,7 @@
     }
     else if (textField.tag == 2002)
     {
+        /*
         if ([Helper isPureNumandCharacters:textField.text] == YES) {
             _strAlmost = textField.text;
         }
@@ -388,6 +390,10 @@
             textField.text = @"";
             [[ShowHUD showHUD] showToastWithText:@"差点只能填写数字" FromView:self.view];
         }
+        */
+        NSCharacterSet *setToRemove = [[ NSCharacterSet characterSetWithCharactersInString:@"0123456789."]
+                                       invertedSet ];
+        _strAlmost = [[textField.text componentsSeparatedByCharactersInSet:setToRemove] componentsJoinedByString:@""];
         
     }
     else if (textField.tag == 2003)
