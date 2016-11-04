@@ -21,12 +21,15 @@
     self.view.backgroundColor = [UIColor colorWithHexString:BG_color];
     self.navigationItem.title = @"忘记密码";
     
+    self.oneViewH.constant = 50 *ProportionAdapter;
     self.oneViewLeft.constant = 8 *ProportionAdapter;
     self.oneViewTop.constant = 10 *ProportionAdapter;
     self.oneViewRight.constant = 8 *ProportionAdapter;
     self.twoViewTop.constant = 10 *ProportionAdapter;
     
     self.mobileBtn.titleLabel.font = [UIFont systemFontOfSize:17 *ProportionAdapter];
+    [self.mobileBtn setTitleColor:[UIColor colorWithHexString:Line_Color] forState:UIControlStateNormal];
+    self.mobileBtnW.constant = 50 *ProportionAdapter;
     
     self.mobileLable.backgroundColor = [UIColor colorWithHexString:Line_Color];
     
@@ -38,12 +41,18 @@
     self.codeTwoLine.backgroundColor = [UIColor colorWithHexString:Line_Color];
     
     self.getCodeBtn.titleLabel.font = [UIFont systemFontOfSize:17 *ProportionAdapter];
+    [self.getCodeBtn setTitleColor:[UIColor colorWithHexString:Bar_Color] forState:UIControlStateNormal];
     
     self.bindingAccount.titleLabel.font = [UIFont systemFontOfSize:19 *ProportionAdapter];
     self.bindingAccountBtnLeft.constant = 8 *ProportionAdapter;
     self.bindingAccountBtnTop.constant = 35 *ProportionAdapter;
     self.bindingAccountBtnRight.constant = 8 *ProportionAdapter;
     
+    self.oneView.layer.masksToBounds = YES;
+    self.oneView.layer.cornerRadius = 3.0 *ProportionAdapter;
+    
+    self.twoview.layer.masksToBounds = YES;
+    self.twoview.layer.cornerRadius = 3.0 *ProportionAdapter;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -63,8 +72,7 @@
 
 - (IBAction)mobileBtn:(UIButton *)sender {
 }
-- (IBAction)codeBtn:(UIButton *)sender {
-}
+
 - (IBAction)getCodeBtn:(UIButton *)sender {
 }
 - (IBAction)bindingAccount:(UIButton *)sender {

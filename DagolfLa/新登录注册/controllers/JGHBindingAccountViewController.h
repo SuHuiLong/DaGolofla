@@ -17,11 +17,11 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *twoViewTop;//10
 
 @property (weak, nonatomic) IBOutlet UIButton *mobileBtn;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *mobileBtnW;
 - (IBAction)mobileBtn:(UIButton *)sender;
 @property (weak, nonatomic) IBOutlet UILabel *mobileLable;
 @property (weak, nonatomic) IBOutlet UITextField *mobiletext;
-@property (weak, nonatomic) IBOutlet UIButton *codeBtn;
-- (IBAction)codeBtn:(UIButton *)sender;
+
 @property (weak, nonatomic) IBOutlet UILabel *codeLine;
 @property (weak, nonatomic) IBOutlet UITextField *codeText;
 @property (weak, nonatomic) IBOutlet UILabel *codeTwoLine;
@@ -33,6 +33,9 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *bindingAccountBtnTop;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *bindingAccountBtnRight;
 
+@property (weak, nonatomic) IBOutlet UIView *oneView;
+@property (weak, nonatomic) IBOutlet UIView *twoview;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *oneViewH;
 
 
 @end

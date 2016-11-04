@@ -58,6 +58,7 @@
 		202EC8071D5360990090FE4B /* JGHOperationScoreCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 202EC8061D5360990090FE4B /* JGHOperationScoreCell.xib */; };
 		202EC80C1D5852F80090FE4B /* JGHCaddieViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 202EC80A1D5852F80090FE4B /* JGHCaddieViewController.m */; };
 		202EC80D1D5852F80090FE4B /* JGHCaddieViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 202EC80B1D5852F80090FE4B /* JGHCaddieViewController.xib */; };
+		202F967E1DCC5F2500C5DBE6 /* JGHUserAgreementViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 202F967D1DCC5F2500C5DBE6 /* JGHUserAgreementViewController.m */; };
 		2048E8EA1D4B369E00A2C024 /* JGHSetAlmostPromptViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2048E8E81D4B369E00A2C024 /* JGHSetAlmostPromptViewController.m */; };
 		2048E8EB1D4B369E00A2C024 /* JGHSetAlmostPromptViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2048E8E91D4B369E00A2C024 /* JGHSetAlmostPromptViewController.xib */; };
 		2048E8EF1D4B528E00A2C024 /* JGHSimpleScoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2048E8EE1D4B528E00A2C024 /* JGHSimpleScoreViewController.m */; };
@@ -1281,6 +1282,8 @@
 		202EC8091D5852F80090FE4B /* JGHCaddieViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHCaddieViewController.h; sourceTree = "<group>"; };
 		202EC80A1D5852F80090FE4B /* JGHCaddieViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHCaddieViewController.m; sourceTree = "<group>"; };
 		202EC80B1D5852F80090FE4B /* JGHCaddieViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JGHCaddieViewController.xib; sourceTree = "<group>"; };
+		202F967C1DCC5F2500C5DBE6 /* JGHUserAgreementViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHUserAgreementViewController.h; sourceTree = "<group>"; };
+		202F967D1DCC5F2500C5DBE6 /* JGHUserAgreementViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHUserAgreementViewController.m; sourceTree = "<group>"; };
 		2048E8E71D4B369E00A2C024 /* JGHSetAlmostPromptViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHSetAlmostPromptViewController.h; sourceTree = "<group>"; };
 		2048E8E81D4B369E00A2C024 /* JGHSetAlmostPromptViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHSetAlmostPromptViewController.m; sourceTree = "<group>"; };
 		2048E8E91D4B369E00A2C024 /* JGHSetAlmostPromptViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JGHSetAlmostPromptViewController.xib; sourceTree = "<group>"; };
@@ -4488,6 +4491,8 @@
 				2053FE9A1DC9DC5000975203 /* JGHBindingAccountViewController.xib */,
 				2053FE9D1DC9E83A00975203 /* JGHLoginViewController.h */,
 				2053FE9E1DC9E83A00975203 /* JGHLoginViewController.m */,
+				202F967C1DCC5F2500C5DBE6 /* JGHUserAgreementViewController.h */,
+				202F967D1DCC5F2500C5DBE6 /* JGHUserAgreementViewController.m */,
 			);
 			path = controllers;
 			sourceTree = "<group>";
@@ -9889,6 +9894,7 @@
 				F5E1BAED1D6B006100414727 /* ZXReedSolomonDecoder.m in Sources */,
 				F5E1BABE1D6B006100414727 /* ZXAztecDetectorResult.m in Sources */,
 				206ECFC21D48D30C00880234 /* JGHActivityScoreManagerViewController.m in Sources */,
+				202F967E1DCC5F2500C5DBE6 /* JGHUserAgreementViewController.m in Sources */,
 				82ABF1CD1D1C072E004493DB /* JGLSignPeoTableViewCell.m in Sources */,
 				36BF00921BC772EF005B3CE2 /* MyNewsBoxViewController.m in Sources */,
 				F56F0B871CC60B0400A222F3 /* NoteHandlle.m in Sources */,
