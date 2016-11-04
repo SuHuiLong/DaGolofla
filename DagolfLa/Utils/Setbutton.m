@@ -40,7 +40,6 @@
 -(void)showData:(YueDetailModel *)model
 {
     self.titleLabel.text = model.userName;
-//    [self.imageView sd_setImageWithURL:[Helper imageUrl:model.pic] placeholderImage:[UIImage imageNamed:@"tx4"]];
 }
 
 @end

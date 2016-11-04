@@ -28,6 +28,7 @@
 #import "UIImageView+WebCache.h"
 
 #import "OtherDataModel.h"
+#import "MeselfModel.h"
 #import "OtherDataTableViewCell.h"
 
 #import <BaiduMapAPI/BMapKit.h>
@@ -59,7 +60,7 @@ static NSString *const orderDetailCellIdentifier = @"OtherDataTableViewCell";
     UIImageView *_profileView;
     UITableView* _tableView;
     UIButton *_changePic;
-    OtherDataModel *_model;
+    MeselfModel *_model;
     DeatilModel *_deatilModel;
     UIImageView *_backImg;
     UIImageView *_iconImg;
@@ -340,43 +341,85 @@ static NSString *const orderDetailCellIdentifier = @"OtherDataTableViewCell";
 
 
 -(void)gerenPostData {
-    [[PostDataRequest sharedInstance] postDataRequest:kqueryIDs_URL parameter:@{@"userId":[[NSUserDefaults standardUserDefaults] objectForKey:@"userId"],@"otherUserId":_strMoodId} success:^(id respondsData) {
-        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:respondsData options:NSJSONReadingMutableContainers error:nil];
-                //NSLog(@"%@",[dict objectForKey:@"rows"]);
-        if ([[dict objectForKey:@"success"] boolValue]) {
-            _model = [[OtherDataModel alloc] init];
-            [_model setValuesForKeysWithDictionary:[dict objectForKey:@"rows"]];
+    if ([DEFAULF_USERID integerValue] == [_strMoodId integerValue]) {
+        NSMutableDictionary* dictUser = [[NSMutableDictionary alloc]init];
+        [dictUser setObject:DEFAULF_USERID forKey:@"userKey"];
+        NSString *strMD = [JGReturnMD5Str getCaddieAuthUserKey:[DEFAULF_USERID integerValue]];
+        [dictUser setObject:strMD forKey:@"md5"];
+        
+        [[JsonHttp jsonHttp]httpRequest:@"user/getUserInfo" JsonKey:nil withData:dictUser requestMethod:@"GET" failedBlock:^(id errType) {
             
-            self.title = _model.userName;
-            
-            [_backImg sd_setImageWithURL:[Helper imageUrl:_model.backPic] placeholderImage:[UIImage imageNamed:@"selfBackPic.jpg"]];
-            [_iconImg sd_setImageWithURL:[Helper imageIconUrl:_model.pic] placeholderImage:[UIImage imageNamed:@"zwt"]];
-           
-            //替换备注名称
-            NoteModel *model = [NoteHandlle selectNoteWithUID:self.strMoodId];
-            if ([model.userremarks isEqualToString:@"(null)"] || [model.userremarks isEqualToString:@""] || model.userremarks == nil) {
-                _nameLabel.text = _model.userName;
-            }else{
-                _nameLabel.text = model.userremarks;
+        } completionBlock:^(id data) {
+            if ([[data objectForKey:@"packSuccess"] boolValue]) {
+                _model = [[MeselfModel alloc] init];
+                [_model setValuesForKeysWithDictionary:[data objectForKey:@"rows"]];
+                
+                self.title = _model.userName;
+                
+                [_backImg sd_setImageWithURL:[Helper imageUrl:_model.backPic] placeholderImage:[UIImage imageNamed:@"selfBackPic.jpg"]];
+                [_iconImg sd_setImageWithURL:[Helper imageIconUrl:_model.pic] placeholderImage:[UIImage imageNamed:@"zwt"]];
+                
+                //替换备注名称
+                NoteModel *model = [NoteHandlle selectNoteWithUID:self.strMoodId];
+                if ([model.userremarks isEqualToString:@"(null)"] || [model.userremarks isEqualToString:@""] || model.userremarks == nil) {
+                    _nameLabel.text = _model.userName;
+                }else{
+                    _nameLabel.text = model.userremarks;
+                }
+                
+                if ([_model.sex integerValue] == 0) {
+                    _sexImg.image = [UIImage imageNamed:@"xb_n"];
+                }else{
+                    _sexImg.image = [UIImage imageNamed:@"xb_nn"];
+                }
+                _infoLabel.text = [NSString stringWithFormat:@"%@岁  差点:%@",_model.age,_model.almost];
+                
+                // 相片的数据请求
+                [self inquirePicSource];
+                //分割线
+            }else {
+                [LQProgressHud showMessage:[data objectForKey:@"message"]];
             }
-            
-            if ([_model.sex integerValue] == 0) {
-                _sexImg.image = [UIImage imageNamed:@"xb_n"];
-            }else{
-                _sexImg.image = [UIImage imageNamed:@"xb_nn"];
+        }];
+    }
+    else{
+        [[PostDataRequest sharedInstance] postDataRequest:kqueryIDs_URL parameter:@{@"userId":[[NSUserDefaults standardUserDefaults] objectForKey:@"userId"],@"otherUserId":_strMoodId} success:^(id respondsData) {
+            NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:respondsData options:NSJSONReadingMutableContainers error:nil];
+            //NSLog(@"%@",[dict objectForKey:@"rows"]);
+            if ([[dict objectForKey:@"success"] boolValue]) {
+                _model = [[MeselfModel alloc] init];
+                [_model setValuesForKeysWithDictionary:[dict objectForKey:@"rows"]];
+                
+                self.title = _model.userName;
+                
+                [_backImg sd_setImageWithURL:[Helper imageUrl:_model.backPic] placeholderImage:[UIImage imageNamed:@"selfBackPic.jpg"]];
+                [_iconImg sd_setImageWithURL:[Helper imageIconUrl:_model.pic] placeholderImage:[UIImage imageNamed:@"zwt"]];
+                
+                //替换备注名称
+                NoteModel *model = [NoteHandlle selectNoteWithUID:self.strMoodId];
+                if ([model.userremarks isEqualToString:@"(null)"] || [model.userremarks isEqualToString:@""] || model.userremarks == nil) {
+                    _nameLabel.text = _model.userName;
+                }else{
+                    _nameLabel.text = model.userremarks;
+                }
+                
+                if ([_model.sex integerValue] == 0) {
+                    _sexImg.image = [UIImage imageNamed:@"xb_n"];
+                }else{
+                    _sexImg.image = [UIImage imageNamed:@"xb_nn"];
+                }
+                _infoLabel.text = [NSString stringWithFormat:@"%@岁  差点:%@",_model.age,_model.almost];
+                
+                // 相片的数据请求
+                [self inquirePicSource];
+                //分割线
+            }else {
+                [LQProgressHud showMessage:[dict objectForKey:@"message"]];
             }
-            _infoLabel.text = [NSString stringWithFormat:@"%@岁  差点:%@",_model.age,_model.almost];
-            
-            // 相片的数据请求
-            [self inquirePicSource];
-            //分割线
-            //            [self createLineBetween];
-        }else {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:[dict objectForKey:@"message"] delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-            [alert show];
-        }
-    } failed:^(NSError *error) {
-    }];
+        } failed:^(NSError *error) {
+        }];
+    }
+    
 }
 
 -(void)detailPostData {
@@ -399,26 +442,17 @@ static NSString *const orderDetailCellIdentifier = @"OtherDataTableViewCell";
                 }else{
                     _deatilModel.picUrl = nil;
                 }
-                
-                //                for (NSDictionary *imageDic in [deatilDic objectForKey:@"images"]) {
-                //                    _deatilModel.picUrl = [imageDic objectForKey:@"path"];
-                //                }
-                
+ 
                 [_deatilModel setValuesForKeysWithDictionary:deatilDic];
                 [_dataArray addObject:_deatilModel];
             }
-            
-            //            _page++;
-            //            [_tableView reloadData];
-            
         }else {
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:[dict objectForKey:@"message"] delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
             [alert show];
         }
         
         [self createPageView];
-        
-        
+
     } failed:^(NSError *error) {
     }];
 }
@@ -771,8 +805,6 @@ static NSString *const orderDetailCellIdentifier = @"OtherDataTableViewCell";
     [self.navigationController pushViewController:addVc animated:YES];
 }
 
-
-
 #pragma mark - 调用手机相机和相册
 - (void)usePhonePhotoAndCamera {
     UIActionSheet *selestSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"相机",@"相册", nil];
@@ -976,8 +1008,6 @@ static NSString *const orderDetailCellIdentifier = @"OtherDataTableViewCell";
             //////NSLog(@"%@",userData);
             [btn setTitle:@"已关注" forState:UIControlStateNormal];
             if ([[userData objectForKey:@"success"] boolValue]) {
-                //////NSLog(@"%@",[userData objectForKey:@"message"]);
-                
                 UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:[userData objectForKey:@"message"] delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
                 [alertView show];
                 
@@ -1001,8 +1031,6 @@ static NSString *const orderDetailCellIdentifier = @"OtherDataTableViewCell";
             //////NSLog(@"%@",userData);
             [btn setTitle:@"关注" forState:UIControlStateNormal];
             if ([[userData objectForKey:@"success"] boolValue]) {
-                //////NSLog(@"%@",[userData objectForKey:@"message"]);
-                
                 UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:[userData objectForKey:@"message"] delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
                 [alertView show];
                 
@@ -1032,25 +1060,6 @@ static NSString *const orderDetailCellIdentifier = @"OtherDataTableViewCell";
     }
 }
 
-//- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView{
-//    //   //NSLog(@"%f",_mainScrollView.contentOffset.y);
-//    //NSLog(@"%f",_tableView.contentOffset.y);
-//
-//
-//
-//    if (_mainScrollView.contentOffset.y > 200) {
-//        _tableView.scrollEnabled = YES;
-//    }else if (_tableView.contentOffset.y < 0 && _mainScrollView.contentOffset.y > 200){
-//        _tableView.scrollEnabled = NO;
-//    }else{
-//        _tableView.scrollEnabled = NO;
-//    }
-//
-//
-//    CGFloat tabY = _tableView.contentOffset.y;
-//
-//}
-//
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView {
     //NSLog(@"%f",_mainScrollView.contentOffset.y);
     //    //NSLog(@"tab.contentoffset.y>>>>>>>>>>>>>%f",_tableView.contentOffset.y);

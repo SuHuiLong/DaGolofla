@@ -113,31 +113,34 @@
         [self.view addSubview:_progressView];
         [_progressView show:YES];
         //
-        [[PostDataRequest sharedInstance] postDataRequest:@"user/queryById.do" parameter:@{@"userId":[[NSUserDefaults standardUserDefaults] objectForKey:@"userId"]} success:^(id respondsData) {
-            [MBProgressHUD hideHUDForView:self.view animated:YES];
-            NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:respondsData options:NSJSONReadingMutableContainers error:nil];
-            if ([[dict objectForKey:@"success"]boolValue] == 1) {
+        
+        NSMutableDictionary* dictUser = [[NSMutableDictionary alloc]init];
+        [dictUser setObject:DEFAULF_USERID forKey:@"userKey"];
+        NSString *strMD = [JGReturnMD5Str getCaddieAuthUserKey:[DEFAULF_USERID integerValue]];
+        [dictUser setObject:strMD forKey:@"md5"];
+        
+        [[JsonHttp jsonHttp]httpRequest:@"user/getUserInfo" JsonKey:nil withData:dictUser requestMethod:@"GET" failedBlock:^(id errType) {
+            
+        } completionBlock:^(id data) {
+            if ([[data objectForKey:@"packSuccess"]boolValue]) {
                 [MBProgressHUD hideHUDForView:self.view animated:YES];
-                
-                [_model setValuesForKeysWithDictionary:[dict objectForKey:@"rows"]];
-
+                [_model setValuesForKeysWithDictionary:[data objectForKey:@"user"]];
                 NSIndexSet *indexSet=[[NSIndexSet alloc]initWithIndex:0];
                 [_tableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationAutomatic];
                 
                 NSUserDefaults *user=[NSUserDefaults standardUserDefaults];
-                if (![Helper isBlankString:[[dict objectForKey:@"rows"] objectForKey:@"pic"]]) {
-                    [user setObject:[[dict objectForKey:@"rows"] objectForKey:@"pic"] forKey:@"pic"];
+                if (![Helper isBlankString:[[data objectForKey:@"user"] objectForKey:@"pic"]]) {
+                    [user setObject:[[data objectForKey:@"user"] objectForKey:@"pic"] forKey:@"pic"];
                 }
-                if (![Helper isBlankString:[[dict objectForKey:@"rows"] objectForKey:@"userName"]])
+                if (![Helper isBlankString:[[data objectForKey:@"user"] objectForKey:@"userName"]])
                 {
-                    [user setObject:[[dict objectForKey:@"rows"] objectForKey:@"userName"] forKey:@"userName"];
+                    [user setObject:[[data objectForKey:@"user"] objectForKey:@"userName"] forKey:@"userName"];
                 }
-                [user setObject:[[dict objectForKey:@"rows"] objectForKey:@"sex"] forKey:@"sex"];
+                [user setObject:[[data objectForKey:@"user"] objectForKey:@"sex"] forKey:@"sex"];
                 [user synchronize];
             }
-        } failed:^(NSError *error) {
-            [MBProgressHUD hideHUDForView:self.view animated:YES];
         }];
+
         
     }else {
         [MBProgressHUD hideHUDForView:self.view animated:YES];
@@ -145,8 +148,15 @@
         [_tableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationAutomatic];
         _imgvIcon.image = [UIImage imageNamed:@"zwt"];
         _labelnickName.text = nil;
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"打高尔夫啦" message:@"确定是否立即登录？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
-        [alertView show];
+        [Helper alertViewWithTitle:@"是否立即登录?" withBlockCancle:^{
+            
+        } withBlockSure:^{
+            EnterViewController *vc = [[EnterViewController alloc] init];
+            [self.navigationController pushViewController:vc animated:YES];
+        } withBlock:^(UIAlertController *alertView) {
+            [self presentViewController:alertView animated:YES completion:nil];
+        }];
+        return;
     }
 }
 
@@ -294,21 +304,10 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-
-
-
-
-
 - (void)onRCIMReceiveMessage:(RCMessage *)message
                         left:(int)left
 {
     [self.tabBarController.tabBar showBadgeOnItemIndex:3];
-}
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if (buttonIndex == 1) {
-        EnterViewController *vc = [[EnterViewController alloc] init];
-        [self.navigationController pushViewController:vc animated:YES];
-    }
 }
 
 
@@ -392,7 +391,6 @@
         MeHeadTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"MeHeadTableViewCell"];
         
         if ([[NSUserDefaults standardUserDefaults] objectForKey:@"userId"]) {
-//            [cell.iconImgv sd_setImageWithURL:[Helper imageIconUrl:_model.pic] placeholderImage:[UIImage imageNamed:@"zwt"]];
             
             NSString *bgUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/%@/head/%td.jpg@200w_200h",@"user",[DEFAULF_USERID integerValue]];
             [[SDImageCache sharedImageCache] removeImageForKey:bgUrl fromDisk:YES];
@@ -547,8 +545,14 @@
     }
     else
     {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"打高尔夫啦" message:@"确定是否立即登录？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
-        [alertView show];
+        [Helper alertViewWithTitle:@"是否立即登录?" withBlockCancle:^{
+            
+        } withBlockSure:^{
+            EnterViewController *vc = [[EnterViewController alloc] init];
+            [self.navigationController pushViewController:vc animated:YES];
+        } withBlock:^(UIAlertController *alertView) {
+            [self presentViewController:alertView animated:YES completion:nil];
+        }];
     }
  
 }

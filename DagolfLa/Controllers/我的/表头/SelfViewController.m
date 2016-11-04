@@ -71,18 +71,33 @@
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"nav_bg"] forBarMetrics:UIBarMetricsDefault];
     
     
-    [[PostDataRequest sharedInstance] postDataRequest:@"user/queryById.do" parameter:@{@"userId":_str} success:^(id respondsData) {
-        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:respondsData options:NSJSONReadingMutableContainers error:nil];
-        _model = nil;
+//    [[PostDataRequest sharedInstance] postDataRequest:@"user/queryById.do" parameter:@{@"userId":_str} success:^(id respondsData) {
+//        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:respondsData options:NSJSONReadingMutableContainers error:nil];
+//        _model = nil;
+//        
+//        if ([[dict objectForKey:@"success"]boolValue]) {
+//            _model = [[MeselfModel alloc] init];
+//            [_model setValuesForKeysWithDictionary:[dict objectForKey:@"rows"]];
+//        }else {
+//        }
+//        [_tableView reloadData];
+//        
+//    } failed:^(NSError *error) {
+//    }];
+    NSMutableDictionary* dictUser = [[NSMutableDictionary alloc]init];
+    [dictUser setObject:DEFAULF_USERID forKey:@"userKey"];
+    NSString *strMD = [JGReturnMD5Str getCaddieAuthUserKey:[DEFAULF_USERID integerValue]];
+    [dictUser setObject:strMD forKey:@"md5"];
+
+    [[JsonHttp jsonHttp]httpRequest:@"user/getUserInfo" JsonKey:nil withData:dictUser requestMethod:@"GET" failedBlock:^(id errType) {
         
-        if ([[dict objectForKey:@"success"]boolValue]) {
+    } completionBlock:^(id data) {
+        if ([[data objectForKey:@"packSuccess"]boolValue]) {
+            
             _model = [[MeselfModel alloc] init];
-            [_model setValuesForKeysWithDictionary:[dict objectForKey:@"rows"]];
-        }else {
+            [_model setValuesForKeysWithDictionary:[data objectForKey:@"user"]];
+            [_tableView reloadData];
         }
-        [_tableView reloadData];
-        
-    } failed:^(NSError *error) {
     }];
     
     _btnBack = [UIButton buttonWithType:UIButtonTypeSystem];
@@ -498,45 +513,9 @@
     
 }
 
-//- (UITableViewCellAccessoryType)tableView:(UITableView*)tableView accessoryTypeForRowWithIndexPath:(NSIndexPath*)indexPath
-//
-//{
-//
-//    if(indexPath.row==current && current >= 10)
-//    {
-//        return UITableViewCellAccessoryCheckmark;
-//    }
-//    else
-//    {
-//        return UITableViewCellAccessoryNone;
-//    }
-//}
-//
-
 //选中时调用
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    //    if (indexPath.row >= 10) {
-    //        [tableView deselectRowAtIndexPath:indexPath animated:NO];
-    //        if(indexPath.row==current){
-    //            return;
-    //        }
-    //        NSIndexPath *oldIndexPath = [NSIndexPath indexPathForRow:current inSection:0];
-    //        UITableViewCell *newCell = [tableView cellForRowAtIndexPath:indexPath];
-    //        if (newCell.accessoryType == UITableViewCellAccessoryNone)
-    //        {
-    //            newCell.accessoryType= UITableViewCellAccessoryCheckmark;
-    //        }
-    //        UITableViewCell *oldCell = [tableView cellForRowAtIndexPath:oldIndexPath];
-    //        if (oldCell.accessoryType == UITableViewCellAccessoryCheckmark)
-    //        {
-    //            oldCell.accessoryType = UITableViewCellAccessoryNone;
-    //        }
-    //        current=indexPath.row;
-    //        NSInteger index = current-10;
-    //        NSNumber* num = [NSNumber numberWithInteger:index];
-    //        [self post:@{@"userId":_str,@"infoState":num}];
-    //    }else
     if (indexPath.row == 0) {
         [self usePhonePhotoAndCamera];
         isClick = YES;
@@ -623,63 +602,25 @@
     [[PostDataRequest sharedInstance] postDataAndImageRequest:kUpDateData_URL parameter:@{@"userId":[[NSUserDefaults standardUserDefaults] objectForKey:@"userId"]} imageDataArr:_arrayPage success:^(id respondsData) {
         //[MBProgressHUD hideHUDForView:self.view  animated:NO];
         NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:respondsData options:NSJSONReadingMutableContainers error:nil];
-        
         if ([[dict objectForKey:@"success"] boolValue]) {
             NSUserDefaults *user=[NSUserDefaults standardUserDefaults];
             [user setObject:[[dict objectForKey:@"rows"] objectForKey:@"pic"] forKey:@"pic"];
             [user synchronize];
             [self synchronizeUserInfoRCIM];
             
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:[dict objectForKey:@"message"] delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-            [alertView show];
+            [LQProgressHud showMessage:@"提交成功"];
         }
         else{
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:[dict objectForKey:@"message"] delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-            [alertView show];
+            [LQProgressHud showMessage:@"提交失败"];
         }
         
     } failed:^(NSError *error) {
-        //        [MBProgressHUD hideHUDForView:self.view  animated:YES];
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"\n链接超时！\n" delegate:self cancelButtonTitle:nil otherButtonTitles:nil, nil];
-        [alertView show];
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [alertView dismissWithClickedButtonIndex:0 animated:YES];
-        });
     }];
     
     
 }
-////融云
-//-(void)requestRCIMWithToken:(NSString *)token{
-//    NSUserDefaults *user=[NSUserDefaults standardUserDefaults];
-//    [RCIM sharedRCIM].globalConversationPortraitSize = CGSizeMake(40*ScreenWidth/375, 40*ScreenWidth/375);
-//    [[RCIM sharedRCIM] initWithAppKey:@"0vnjpoadnkihz"];
-//    [RCIM sharedRCIM].globalConversationAvatarStyle=RC_USER_AVATAR_CYCLE;
-//    [RCIM sharedRCIM].globalMessageAvatarStyle=RC_USER_AVATAR_CYCLE;
-//    [[RCIM sharedRCIM] setUserInfoDataSource:[UserDataInformation sharedInstance]];
-//    [[RCIM sharedRCIM] setGroupInfoDataSource:[UserDataInformation sharedInstance]];
-//    NSString *str1=[NSString stringWithFormat:@"%@",[user objectForKey:@"userId"]];
-//    NSString *str2=[NSString stringWithFormat:@"%@",[user objectForKey:@"userName"]];
-//    NSString *str3=[NSString stringWithFormat:@"http://139.196.9.49:8081/small_%@",[user objectForKey:@"pic"]];
-//    RCUserInfo *userInfo=[[RCUserInfo alloc] initWithUserId:str1 name:str2 portrait:str3];
-//    [RCIM sharedRCIM].currentUserInfo=userInfo;
-//    [RCIM sharedRCIM].enableMessageAttachUserInfo=YES;
-//    //            [RCIM sharedRCIM].receiveMessageDelegate=self;
-//    // 快速集成第二步，连接融云服务器
-//    [[RCIM sharedRCIM] connectWithToken:token success:^(NSString *userId) {
-//        //自动登录   连接融云服务器
-//        [[UserDataInformation sharedInstance] synchronizeUserInfoRCIM];
-//        
-//    }error:^(RCConnectErrorCode status) {
-//        // Connect 失败
-//        //NSLog(@"连接失败");
-//    }tokenIncorrect:^() {
-//        // Token 失效的状态处理
-//        //NSLog(@"失效token");
-//    }];
-//}
+
 - (void)synchronizeUserInfoRCIM {
-    
     [[RCIM sharedRCIM] refreshUserInfoCache:[self userInfoModel] withUserId:[NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"userId"]]];
 }
 
@@ -703,8 +644,7 @@
     {
         if ([toBeString length] > 15) { //如果输入框内容大于20则弹出警告
             textField.text = [toBeString substringToIndex:15];
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"超过最大字数不能输入了" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
-            [alert show];
+            [LQProgressHud showMessage:@"超过最大字数限制"];
             return NO;
         }
     }
@@ -740,20 +680,26 @@
 -(void)post:(NSDictionary *)dict
 {
     ////NSLog(@"%@",dict);
-    [[PostDataRequest sharedInstance] postDataRequest:kUpDateData_URL parameter:dict success:^(id respondsData) {
-//        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:respondsData options:NSJSONReadingMutableContainers error:nil];
-        //                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:[dict objectForKey:@"message"] delegate:self cancelButtonTitle:@"确认" otherButtonTitles:nil, nil];
-        //                [alertView show];
+//    [[PostDataRequest sharedInstance] postDataRequest:kUpDateData_URL parameter:dict success:^(id respondsData) {
+////        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:respondsData options:NSJSONReadingMutableContainers error:nil];
+//        //                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:[dict objectForKey:@"message"] delegate:self cancelButtonTitle:@"确认" otherButtonTitles:nil, nil];
+//        //                [alertView show];
+//        
+//    } failed:^(NSError *error) {
+//       
+//    }];
+    
+    [[JsonHttp jsonHttp]httpRequestWithMD5:@"user/doUpdateUserInfo" JsonKey:@"TUser" withData:dict failedBlock:^(id errType) {
         
-    } failed:^(NSError *error) {
-        //        [MBProgressHUD hideHUDForView:self.view  animated:YES];
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"\n链接超时！\n" delegate:self cancelButtonTitle:nil otherButtonTitles:nil, nil];
-        [alertView show];
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [alertView dismissWithClickedButtonIndex:0 animated:YES];
-        });
-        
+    } completionBlock:^(id data) {
+        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+            [LQProgressHud showMessage:@"修改成功"];
+        }
+        else{
+            [LQProgressHud showMessage:@"修改失败"];
+        }
     }];
+    
     
     
 }

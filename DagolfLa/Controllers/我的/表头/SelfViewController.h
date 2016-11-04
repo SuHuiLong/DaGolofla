@@ -12,18 +12,16 @@
 #import "OtherDataModel.h"
 
 
-
+#import "MeselfModel.h"
 @interface SelfViewController : ViewController
 
 
-@property(nonatomic,strong) OtherDataModel *userModel;
+@property(nonatomic,strong) MeselfModel *userModel;
 
 @property (strong, nonatomic) NSNumber* fromEnroll;
 
 typedef void(^BlockRereshingkMe)(NSArray *);
 @property(nonatomic,copy)BlockRereshingkMe blockRereshingMe;
-
-
 
 
 @end
