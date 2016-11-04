@@ -90,6 +90,13 @@
 		2053EDB31DBF29610076BFE4 /* JGHShowSectionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2053EDB11DBF29610076BFE4 /* JGHShowSectionTableViewCell.xib */; };
 		2053EDC11DBF2D680076BFE4 /* JGHShowFavouritesCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2053EDBF1DBF2D680076BFE4 /* JGHShowFavouritesCell.m */; };
 		2053EDC21DBF2D680076BFE4 /* JGHShowFavouritesCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2053EDC01DBF2D680076BFE4 /* JGHShowFavouritesCell.xib */; };
+		2053FE911DC9C04300975203 /* JGHRegistersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2053FE8F1DC9C04300975203 /* JGHRegistersViewController.m */; };
+		2053FE921DC9C04300975203 /* JGHRegistersViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2053FE901DC9C04300975203 /* JGHRegistersViewController.xib */; };
+		2053FE961DC9D5DD00975203 /* JGHForgotPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2053FE941DC9D5DD00975203 /* JGHForgotPasswordViewController.m */; };
+		2053FE971DC9D5DD00975203 /* JGHForgotPasswordViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2053FE951DC9D5DD00975203 /* JGHForgotPasswordViewController.xib */; };
+		2053FE9B1DC9DC5000975203 /* JGHBindingAccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2053FE991DC9DC5000975203 /* JGHBindingAccountViewController.m */; };
+		2053FE9C1DC9DC5000975203 /* JGHBindingAccountViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2053FE9A1DC9DC5000975203 /* JGHBindingAccountViewController.xib */; };
+		2053FE9F1DC9E83A00975203 /* JGHLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2053FE9E1DC9E83A00975203 /* JGHLoginViewController.m */; };
 		20591C551D215BCD003271EC /* JGDPrivateAccountModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 20591C4A1D215BCD003271EC /* JGDPrivateAccountModel.m */; };
 		20591C561D215BCD003271EC /* JGDPrivateAccountTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 20591C4E1D215BCD003271EC /* JGDPrivateAccountTableViewCell.m */; };
 		20591C5E1D220EE0003271EC /* JGDPrivateAccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 20591C5A1D220EE0003271EC /* JGDPrivateAccountViewController.m */; };
@@ -1403,6 +1410,17 @@
 		2053EDBE1DBF2D680076BFE4 /* JGHShowFavouritesCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHShowFavouritesCell.h; sourceTree = "<group>"; };
 		2053EDBF1DBF2D680076BFE4 /* JGHShowFavouritesCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHShowFavouritesCell.m; sourceTree = "<group>"; };
 		2053EDC01DBF2D680076BFE4 /* JGHShowFavouritesCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JGHShowFavouritesCell.xib; sourceTree = "<group>"; };
+		2053FE8E1DC9C04300975203 /* JGHRegistersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHRegistersViewController.h; sourceTree = "<group>"; };
+		2053FE8F1DC9C04300975203 /* JGHRegistersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHRegistersViewController.m; sourceTree = "<group>"; };
+		2053FE901DC9C04300975203 /* JGHRegistersViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JGHRegistersViewController.xib; sourceTree = "<group>"; };
+		2053FE931DC9D5DD00975203 /* JGHForgotPasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHForgotPasswordViewController.h; sourceTree = "<group>"; };
+		2053FE941DC9D5DD00975203 /* JGHForgotPasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHForgotPasswordViewController.m; sourceTree = "<group>"; };
+		2053FE951DC9D5DD00975203 /* JGHForgotPasswordViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JGHForgotPasswordViewController.xib; sourceTree = "<group>"; };
+		2053FE981DC9DC5000975203 /* JGHBindingAccountViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHBindingAccountViewController.h; sourceTree = "<group>"; };
+		2053FE991DC9DC5000975203 /* JGHBindingAccountViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHBindingAccountViewController.m; sourceTree = "<group>"; };
+		2053FE9A1DC9DC5000975203 /* JGHBindingAccountViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JGHBindingAccountViewController.xib; sourceTree = "<group>"; };
+		2053FE9D1DC9E83A00975203 /* JGHLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHLoginViewController.h; sourceTree = "<group>"; };
+		2053FE9E1DC9E83A00975203 /* JGHLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHLoginViewController.m; sourceTree = "<group>"; };
 		20591C491D215BCD003271EC /* JGDPrivateAccountModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGDPrivateAccountModel.h; sourceTree = "<group>"; };
 		20591C4A1D215BCD003271EC /* JGDPrivateAccountModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGDPrivateAccountModel.m; sourceTree = "<group>"; };
 		20591C4D1D215BCD003271EC /* JGDPrivateAccountTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGDPrivateAccountTableViewCell.h; sourceTree = "<group>"; };
@@ -4446,6 +4464,48 @@
 			path = " 活动管理";
 			sourceTree = "<group>";
 		};
+		20A4CFB71DC9B0ED00F5A81D /* 新登录注册 */ = {
+			isa = PBXGroup;
+			children = (
+				20A4CFB81DC9B0ED00F5A81D /* controllers */,
+				20A4CFB91DC9B0ED00F5A81D /* model */,
+				20A4CFBA1DC9B0ED00F5A81D /* view */,
+			);
+			path = "新登录注册";
+			sourceTree = "<group>";
+		};
+		20A4CFB81DC9B0ED00F5A81D /* controllers */ = {
+			isa = PBXGroup;
+			children = (
+				2053FE8E1DC9C04300975203 /* JGHRegistersViewController.h */,
+				2053FE8F1DC9C04300975203 /* JGHRegistersViewController.m */,
+				2053FE901DC9C04300975203 /* JGHRegistersViewController.xib */,
+				2053FE931DC9D5DD00975203 /* JGHForgotPasswordViewController.h */,
+				2053FE941DC9D5DD00975203 /* JGHForgotPasswordViewController.m */,
+				2053FE951DC9D5DD00975203 /* JGHForgotPasswordViewController.xib */,
+				2053FE981DC9DC5000975203 /* JGHBindingAccountViewController.h */,
+				2053FE991DC9DC5000975203 /* JGHBindingAccountViewController.m */,
+				2053FE9A1DC9DC5000975203 /* JGHBindingAccountViewController.xib */,
+				2053FE9D1DC9E83A00975203 /* JGHLoginViewController.h */,
+				2053FE9E1DC9E83A00975203 /* JGHLoginViewController.m */,
+			);
+			path = controllers;
+			sourceTree = "<group>";
+		};
+		20A4CFB91DC9B0ED00F5A81D /* model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = model;
+			sourceTree = "<group>";
+		};
+		20A4CFBA1DC9B0ED00F5A81D /* view */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = view;
+			sourceTree = "<group>";
+		};
 		20BA61131CDC99D0004B61F5 /* ALMoviePlayerController */ = {
 			isa = PBXGroup;
 			children = (
@@ -5611,6 +5671,7 @@
 		36BFFD2A1BC76C8D005B3CE2 /* DagolfLa */ = {
 			isa = PBXGroup;
 			children = (
+				20A4CFB71DC9B0ED00F5A81D /* 新登录注册 */,
 				2053ED941DBEF7650076BFE4 /* 新首页 */,
 				20203B0E1D9B5EFF009A75F3 /* 球队赛事 */,
 				F5E1B8771D6ADF3200414727 /* 嘉宾通道 */,
@@ -8829,6 +8890,7 @@
 				6543320A1BD5D9B900363947 /* UMSLoginViewController.xib in Resources */,
 				202E05321D80310B00566CA9 /* JGHTwoScoreAreaCell.xib in Resources */,
 				2064DE971D3C715300F0D52A /* JGHRetrieveScoreViewController.xib in Resources */,
+				2053FE971DC9D5DD00975203 /* JGHForgotPasswordViewController.xib in Resources */,
 				36BF003D1BC771FB005B3CE2 /* ComDetailViewCell.xib in Resources */,
 				20D514E81DB63DA60006EFCB /* JGHPublicLevelCell.xib in Resources */,
 				20CA13901CE9562800DA15B9 /* JGTeamGroupCollectionViewCell.xib in Resources */,
@@ -8913,6 +8975,7 @@
 				202E05371D81568300566CA9 /* JGHPoorBarHoleCell.xib in Resources */,
 				36BF01881BC77611005B3CE2 /* CityCollectionViewCell.xib in Resources */,
 				208837A41D1A9D88004C7B5D /* JGHActivityBaseInfoCell.xib in Resources */,
+				2053FE9C1DC9DC5000975203 /* JGHBindingAccountViewController.xib in Resources */,
 				20D514F91DB63DA60006EFCB /* JGHEventRulesContentCell.xib in Resources */,
 				20D514F41DB63DA60006EFCB /* JGHPublishEventCell.xib in Resources */,
 				209B93A21D6E8DAC00A5BE10 /* JGHCostListCell.xib in Resources */,
@@ -8950,6 +9013,7 @@
 				2080304A1CF828D100448BFC /* JGHAddAddressViewController.xib in Resources */,
 				654332061BD5D9B900363947 /* UMSCommentInputController.xib in Resources */,
 				20513B511CF5D9AD003233FB /* JGHAddInvoiceViewController.xib in Resources */,
+				2053FE921DC9C04300975203 /* JGHRegistersViewController.xib in Resources */,
 				AA91C7861C4201B80078DA17 /* IQButtonBarArrowLeft@2x.png in Resources */,
 				2012AD831D2BB1B200F70E40 /* JGHAwardCell.xib in Resources */,
 				82ABF1CE1D1C072E004493DB /* JGLSignPeoTableViewCell.xib in Resources */,
@@ -9260,6 +9324,7 @@
 				F538E3A81DB6160300FF9E38 /* JGDConfrontChannelModel.m in Sources */,
 				20591CA61D23C2A4003271EC /* JGHSelectBlanKCardView.m in Sources */,
 				829960D41D23727C00E121A8 /* JGLBankModel.m in Sources */,
+				2053FE9F1DC9E83A00975203 /* JGHLoginViewController.m in Sources */,
 				20CA137F1CE574A400DA15B9 /* JGHConcentTextViewController.m in Sources */,
 				F5E1BAEA1D6B006100414727 /* ZXWhiteRectangleDetector.m in Sources */,
 				20BA61411CDCA180004B61F5 /* VedioPlayViewController.m in Sources */,
@@ -9534,11 +9599,13 @@
 				F5321AEA1CE449C400CAE1EF /* JGCreateTeamView.m in Sources */,
 				AA857EE01C5F48AA0034B4C8 /* SelfDataViewController.m in Sources */,
 				20BA612C1CDC99D0004B61F5 /* ALMoviePlayerControls.m in Sources */,
+				2053FE911DC9C04300975203 /* JGHRegistersViewController.m in Sources */,
 				F51E5EEA1D7FE47B00AE254E /* JGDAlmostScoreDetailViewController.m in Sources */,
 				36BF00531BC7726D005B3CE2 /* SelfViewController.m in Sources */,
 				F5E1BB2F1D6B006100414727 /* ZXAnyAIDecoder.m in Sources */,
 				F5E1BAC61D6B006100414727 /* ZXBookmarkDoCoMoResultParser.m in Sources */,
 				36E300EC1C3FF3F9005C3F08 /* MJRefreshBackFooter.m in Sources */,
+				2053FE961DC9D5DD00975203 /* JGHForgotPasswordViewController.m in Sources */,
 				F5E1BAE21D6B006100414727 /* ZXVINResultParser.m in Sources */,
 				20591CAA1D23C308003271EC /* JGHSelectBlankCatoryCell.m in Sources */,
 				F5E1BB101D6B006100414727 /* ZXDataMatrixDetector.m in Sources */,
@@ -9751,6 +9818,7 @@
 				82C16BE81D8FB9970025DDED /* JobChooseViewController.m in Sources */,
 				368B73321C102A710002A618 /* ScoreFootViewController.m in Sources */,
 				F51E5EED1D8012EB00AE254E /* JGDActAlmostViewController.m in Sources */,
+				2053FE9B1DC9DC5000975203 /* JGHBindingAccountViewController.m in Sources */,
 				65B596ED1CAD43AC007AB83A /* YMShowImageView.m in Sources */,
 				36067BC81C97F46D001AE22C /* NewFriendViewController.m in Sources */,
 				F5E1BB4E1D6B006100414727 /* ZXITFReader.m in Sources */,

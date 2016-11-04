@@ -40,7 +40,6 @@
     self.woman.font = [UIFont systemFontOfSize:15 *ProportionAdapter];
     self.womanLeft.constant = 20 *ProportionAdapter;
     
-    self.almostFext.keyboardType = UIKeyboardTypeNumberPad;
     self.phoneNumberText.keyboardType = UIKeyboardTypeNumberPad;
 }
 

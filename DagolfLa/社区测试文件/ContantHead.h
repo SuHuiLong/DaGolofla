@@ -86,6 +86,7 @@ typedef NS_ENUM(NSInteger, GestureType) {
 #define NoClick_Color @"#DDDDDD"
 #define Click_Color @"#F08900"
 #define Bar_Color @"#32B14D"
+#define Line_Color @"#d2d2d2"
 
 #define Par_jian @"#3586d8"
 #define Par_jia @"#e8625a"
@@ -145,7 +146,7 @@ typedef NS_ENUM(NSInteger, GestureType) {
 #import "JGHDatePicksViewController.h"
 #import "EnterViewController.h"
 #import "FCUUID.h"
-
+#import "JGHLoginViewController.h"
 #import "UITool.h"
 #import "UMMobClick/MobClick.h"
 
