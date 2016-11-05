@@ -112,14 +112,14 @@
                             <constraints>
                                 <constraint firstAttribute="width" constant="130" id="bOM-dK-LqO"/>
                             </constraints>
-                            <state key="normal" title="获取验证码">
+                            <state key="normal" title="获取动态密码">
                                 <color key="titleColor" red="0.0013606981289999999" green="0.5928685897" blue="0.01561024649" alpha="1" colorSpace="calibratedRGB"/>
                             </state>
                             <connections>
                                 <action selector="getCodeBtn:" destination="-1" eventType="touchUpInside" id="OAh-kg-t8P"/>
                             </connections>
                         </button>
-                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入验证码" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Zdb-4H-WGw">
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入动态密码" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Zdb-4H-WGw">
                             <nil key="textColor"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <textInputTraits key="textInputTraits"/>
@@ -173,7 +173,7 @@
                                 <constraint firstAttribute="width" constant="22" id="kO0-mf-ZN1"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                            <state key="normal" image="icn_login_eyeclose"/>
+                            <state key="normal" image="icn_login_eyeopen"/>
                             <connections>
                                 <action selector="entryBtn:" destination="-1" eventType="touchUpInside" id="tfc-nv-mwp"/>
                             </connections>
@@ -263,7 +263,7 @@
         </view>
     </objects>
     <resources>
-        <image name="icn_login_eyeclose" width="23" height="11"/>
+        <image name="icn_login_eyeopen" width="22" height="13"/>
         <image name="icn_register" width="15" height="15"/>
         <image name="icon_login_password" width="16" height="19"/>
         <image name="icon_login_verify" width="18" height="21"/>

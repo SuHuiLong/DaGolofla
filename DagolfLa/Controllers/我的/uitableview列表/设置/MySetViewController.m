@@ -15,9 +15,6 @@
 #import "MySetUpDateViewController.h"
 #import "MySetReceiveController.h"
 #import "MySetApplyController.h"
-
-#import "EnterViewController.h"
-
 #import "PostDataRequest.h"
 #import "Helper.h"
 #define kUpDateData_URL @"user/updateUserInfo.do"
@@ -230,8 +227,13 @@
         [user synchronize];
 
         [self.tabBarController.tabBar hideBadgeOnItemIndex:3];
-        EnterViewController *vc = [[EnterViewController alloc] init];
-        vc.popViewNumber = 101;
+//        EnterViewController *vc = [[EnterViewController alloc] init];
+//        vc.popViewNumber = 101;
+//        [self.navigationController pushViewController:vc animated:YES];
+        JGHLoginViewController *vc = [[JGHLoginViewController alloc] init];
+        vc.reloadCtrlData = ^(){
+            
+        };
         [self.navigationController pushViewController:vc animated:YES];
         
     } withBlock:^(UIAlertController *alertView) {

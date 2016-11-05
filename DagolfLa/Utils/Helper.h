@@ -61,10 +61,6 @@
 
 +(void)alertViewWithTitle:(NSString *)title  withBlockCancle:(void(^)())blockCancle withBlockSure:(void(^)())blockSure withBlock:(void(^)(UIAlertController *alertView))blockOver;
 
-
-
-//判断登录
-+(void)loginWithBlock:(void(^)(UIViewController *vc))block WithBlock1:(void(^)(UIAlertController *alertView))block1;
 //判断是否为数字
 +(BOOL)isPureNumandCharacters:(NSString *)string;
 

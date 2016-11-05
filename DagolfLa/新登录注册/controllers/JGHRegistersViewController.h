@@ -9,6 +9,10 @@
 #import "ViewController.h"
 
 @interface JGHRegistersViewController : ViewController
+
+typedef void(^BlackCtrl)();
+@property(nonatomic,copy)BlackCtrl blackCtrl;
+
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *viewLeft;//8
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *viewTop;//10
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *viewRight;//8

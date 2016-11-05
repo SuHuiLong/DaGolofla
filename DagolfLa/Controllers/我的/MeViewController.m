@@ -29,7 +29,6 @@
 #import "UIImageView+WebCache.h"
 
 //登录注册
-#import "EnterViewController.h"
 #import "UserDataInformation.h"
 
 #import "PersonHomeController.h"
@@ -163,7 +162,10 @@
         [Helper alertViewWithTitle:@"是否立即登录?" withBlockCancle:^{
             
         } withBlockSure:^{
-            EnterViewController *vc = [[EnterViewController alloc] init];
+            JGHLoginViewController *vc = [[JGHLoginViewController alloc] init];
+            vc.reloadCtrlData = ^(){
+                
+            };
             [self.navigationController pushViewController:vc animated:YES];
         } withBlock:^(UIAlertController *alertView) {
             [self presentViewController:alertView animated:YES completion:nil];
@@ -306,7 +308,10 @@
 }
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (buttonIndex == 1) {
-        EnterViewController *vc = [[EnterViewController alloc] init];
+        JGHLoginViewController *vc = [[JGHLoginViewController alloc] init];
+        vc.reloadCtrlData = ^(){
+            
+        };
         [self.navigationController pushViewController:vc animated:YES];
     }
 }

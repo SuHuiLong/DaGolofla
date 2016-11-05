@@ -792,7 +792,6 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
 }
 #pragma mark -- 判断是否需要登录
 - (void)isLoginUp{
-//    [[NSNotificationCenter defaultCenter] postNotificationName:@"show" object:nil];
     if ([[NSUserDefaults standardUserDefaults] objectForKey:@"userId"]) {
         
     }
@@ -802,13 +801,12 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
             [[NSNotificationCenter defaultCenter] postNotificationName:@"show" object:nil];
         } withBlockSure:^{
             JGHLoginViewController *vc = [[JGHLoginViewController alloc] init];
-//            vc.jiazai = ^(){
-//                [self.homeTableView.header beginRefreshing];
-//            };
+            vc.reloadCtrlData = ^(){
+                [self loadIndexdata];
+            };
             [self.navigationController pushViewController:vc animated:YES];
         } withBlock:^(UIAlertController *alertView) {
             [[NSNotificationCenter defaultCenter] postNotificationName:@"show" object:nil];
-//            [self.navigationController pushViewController:alertView animated:YES];
             [self presentViewController:alertView animated:YES completion:nil];
         }];
         return;

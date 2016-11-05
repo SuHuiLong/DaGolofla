@@ -16,7 +16,6 @@
 #import "StadiumViewController.h"
 #import "TeacherViewController.h"
 
-#import "EnterViewController.h"
 //跳转详情界面
 
 #import "HomeHeadView.h"
@@ -115,8 +114,11 @@
         [Helper alertViewWithTitle:@"是否立即登录?" withBlockCancle:^{
             
         } withBlockSure:^{
-            EnterViewController *vc = [[EnterViewController alloc] init];
+
+            JGHLoginViewController *vc = [[JGHLoginViewController alloc] init];
+
             [self.navigationController pushViewController:vc animated:YES];
+
         } withBlock:^(UIAlertController *alertView) {
             [self presentViewController:alertView animated:YES completion:nil];
         }];
@@ -358,8 +360,12 @@
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (buttonIndex == 1) {
-        EnterViewController *vc = [[EnterViewController alloc] init];
+        
+        JGHLoginViewController *vc = [[JGHLoginViewController alloc] init];
+        vc.reloadCtrlData = ^(){
+        };
         [self.navigationController pushViewController:vc animated:YES];
+
     }
 }
 
@@ -433,8 +439,13 @@ else
     [Helper alertViewWithTitle:@"是否立即登录?" withBlockCancle:^{
             
     } withBlockSure:^{
-        EnterViewController *vc = [[EnterViewController alloc] init];
+
+        JGHLoginViewController *vc = [[JGHLoginViewController alloc] init];
+        vc.reloadCtrlData = ^(){
+            
+        };
         [self.navigationController pushViewController:vc animated:YES];
+
     } withBlock:^(UIAlertController *alertView) {
         [self presentViewController:alertView animated:YES completion:nil];
     }];

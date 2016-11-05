@@ -246,24 +246,6 @@
     block(alert);
 }
 
-
-+(void)loginWithBlock:(void(^)(UIViewController *vc))block WithBlock1:(void(^)(UIAlertController *alertView))block1{
-    UIAlertController *alert=[UIAlertController alertControllerWithTitle:@"提示" message:@"是否登录" preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *action2=[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        EnterViewController *login=[[EnterViewController alloc] init];
-        block(login);
-    }];
-    UIAlertAction* action1=[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        
-    }];
-    [alert addAction:action2];
-    [alert addAction:action1];
-    block1(alert);
-    return;
-}
-
-
-
 +(void)alertViewWithTitle:(NSString *)title withBlockCancle:(void (^)())blockCancle withBlockSure:(void (^)())blockSure withBlock:(void (^)(UIAlertController *))blockOver{
     UIAlertController *alert=[UIAlertController alertControllerWithTitle:@"提示" message:title preferredStyle:UIAlertControllerStyleAlert];
     

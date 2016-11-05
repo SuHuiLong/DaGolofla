@@ -18,7 +18,6 @@
 //#import "JGLScoreNewViewController.h"
 
 #import "UserDataInformation.h"
-#import "EnterViewController.h"
 #import "PersonHomeController.h"
 #import "ChatListViewController.h"
 #import "UITabBar+badge.h"
