@@ -55,6 +55,7 @@ static int timeNumber = 60;
     
     self.mobileTF = [[UITextField alloc] initWithFrame:CGRectMake(70 * ProportionAdapter, 0, 160 * ProportionAdapter, 50 * ProportionAdapter)];
     self.mobileTF.keyboardType = UIKeyboardTypeNumberPad;
+    self.mobileTF.placeholder = @"发送至";
     self.mobileTF.font = [UIFont systemFontOfSize:17 * ProportionAdapter];
     [mobileView addSubview:self.mobileTF];
     
@@ -107,12 +108,69 @@ static int timeNumber = 60;
 
 // 获取验证码
 - (void)codelAct{
+    [self.view endEditing:YES];
+    NSMutableDictionary *codeDict = [NSMutableDictionary dictionary];
+    if (self.mobileTF.text.length == 0) {
+        [LQProgressHud showMessage:@"请输入验证码！"];
+        return;
+    }
     
+    [codeDict setObject:@15221882010 forKey:@"telphone"];
+    self.codeBtn.userInteractionEnabled = NO;
+    //----判断手机号是否注册过 18637665180
+    [[JsonHttp jsonHttp]httpRequestWithMD5:@"reg/hasMobileRegistered" JsonKey:nil withData:codeDict failedBlock:^(id errType) {
+        self.codeBtn.userInteractionEnabled = YES;
+    } completionBlock:^(id data) {
+        NSLog(@"%@", data);
+        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+            if ([[data objectForKey:@"hasMobileRegistered"] integerValue] == 1) {
+                [Helper alertViewWithTitle:@"手机号已注册！" withBlockCancle:^{
+                    
+                } withBlockSure:^{
+                    
+                } withBlock:^(UIAlertController *alertView) {
+                    [self presentViewController:alertView animated:YES completion:nil];
+                }];
+                self.codeBtn.userInteractionEnabled = YES;
+                return;
+            }else{
+                [codeDict setObject:@"" forKey:@"countryCode"];
+                self.codeBtn.userInteractionEnabled = NO;
+                [[JsonHttp jsonHttp]httpRequestWithMD5:@"reg/doSendRegisterUserSms" JsonKey:nil withData:codeDict failedBlock:^(id errType) {
+                    self.codeBtn.userInteractionEnabled = YES;
+                } completionBlock:^(id data) {
+                    NSLog(@"%@", data);
+                    if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+                        //
+                        
+                        
+                        _timer=[NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(autoMove) userInfo:nil repeats:YES];
+                        [[NSRunLoop currentRunLoop] addTimer:_timer forMode:NSRunLoopCommonModes];
+                        
+                    }else{
+                        self.codeBtn.userInteractionEnabled = YES;
+                        if ([data objectForKey:@"packResultMsg"]) {
+                            [LQProgressHud showMessage:[data objectForKey:@"packResultMsg"]];
+                        }
+                    }
+                }];
+            }
+        }else{
+            self.codeBtn.userInteractionEnabled = YES;
+            if ([data objectForKey:@"packResultMsg"]) {
+                [LQProgressHud showMessage:[data objectForKey:@"packResultMsg"]];
+            }
+        }
+        
+    }];
+
 
 }
 
 - (void)autoMove {
     timeNumber--;
+    [self.codeBtn setTitleColor:[UIColor colorWithHexString:Line_Color] forState:UIControlStateNormal];
+    self.codeBtn.titleLabel.font = [UIFont systemFontOfSize:14*ProportionAdapter];
     [self.codeBtn setTitle:[NSString stringWithFormat:@"(%d)后重新获取",timeNumber] forState:UIControlStateNormal];
     if (timeNumber == 0) {
         [self.codeBtn setTitleColor:[UIColor colorWithHexString:Bar_Color] forState:UIControlStateNormal];
@@ -122,15 +180,17 @@ static int timeNumber = 60;
         timeNumber = 60;
         
         self.codeBtn.userInteractionEnabled = YES;
-    }
-}
+    }}
 
 
 // 明文／暗文
 - (void)eyeAct:(UIButton *)btn{
+    
     if (self.PWDTF.secureTextEntry == YES) {
+        [self.eyeBtn setImage:[UIImage imageNamed:@"icn_login_eyeopen"] forState:(UIControlStateNormal)];
         self.PWDTF.secureTextEntry = NO;
     }else{
+        [self.eyeBtn setImage:[UIImage imageNamed:@"icn_login_eyeclose"] forState:(UIControlStateNormal)];
         self.PWDTF.secureTextEntry = YES;
     }
     

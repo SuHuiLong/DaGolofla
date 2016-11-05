@@ -28,7 +28,21 @@
 @property (strong, nonatomic) NSNumber *yIndex;
 @property (strong, nonatomic) NSNumber* ballage;
 
-@property (assign, nonatomic) double xIndex;
+@property (assign, nonatomic) NSNumber* xIndex;
+
+
+
+
+@property (strong, nonatomic) NSNumber* otherUserId;
+@property (strong, nonatomic) NSString* backPic;
+@property (strong, nonatomic) NSNumber* age;
+//签名
+@property (strong, nonatomic) NSNumber* ballYear;
+//球龄
+@property (strong, nonatomic) NSNumber* followState;
+@property (strong, nonatomic) NSNumber* lookstate;
+
+
 @end
 /**
  *  {

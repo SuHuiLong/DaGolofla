@@ -353,7 +353,6 @@
     //头像
     _imgvIcon = [[UIImageView alloc]initWithFrame:CGRectMake(7*ScreenWidth/375, 225*ScreenWidth/375, 73*ScreenWidth/375, 73*ScreenWidth/375)];
     _imgvIcon.userInteractionEnabled = YES;
-    //    imgvIcon.image = [UIImage imageNamed:@"tx4"];
     [_imgvIcon sd_setImageWithURL:[Helper imageIconUrl:_model.pic] placeholderImage:[UIImage imageNamed:@"zwt"]];
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(imageIconACt)];
     [_imgvIcon addGestureRecognizer:tap];
