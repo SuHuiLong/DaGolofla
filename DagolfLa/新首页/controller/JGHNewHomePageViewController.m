@@ -172,7 +172,6 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
             [self.indexModel setValuesForKeysWithDictionary:data];
             
             [self.homeTableView reloadData];
-            [self.homeTableView.header endRefreshing];
             
             // -----------缓存数据-------------
             //获得文件路径
@@ -199,6 +198,8 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
                 [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
             }
         }
+        
+        [self.homeTableView.header endRefreshing];
     }];
 }
 #pragma mark -- 创建TableView
@@ -527,9 +528,22 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
     [self isLoginUp];
     // 友盟埋点
     [MobClick event:@"teamTribe"];
-    JGHShowMyTeamViewController *myTeamVC = [[JGHShowMyTeamViewController alloc] init];
-    myTeamVC.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:myTeamVC animated:YES];
+    if (_indexModel.isHaveTeam == 0) {
+        JGTeamMainhallViewController *teamMainCtrl = [[JGTeamMainhallViewController alloc]init];
+        NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
+        if ([userdef objectForKey:@"currentCity"]) {
+            
+        }else{
+            
+        }
+        //[user setObject:city forKey:@"currentCity"];
+        
+        [self.navigationController pushViewController:teamMainCtrl animated:YES];
+    }else{
+        JGHShowMyTeamViewController *myTeamVC = [[JGHShowMyTeamViewController alloc] init];
+        myTeamVC.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:myTeamVC animated:YES];
+    }
 }
 #pragma mark -- 开局记分
 - (void)didSelectStartScoreBtn:(UIButton *)btn{

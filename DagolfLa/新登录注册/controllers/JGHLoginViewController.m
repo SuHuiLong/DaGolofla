@@ -15,9 +15,7 @@
 #import "JGHRegistersViewController.h"
 #import "JGHBindingAccountViewController.h"
 
-static int timeNumber = 60;
-
-@interface JGHLoginViewController ()<UITextFieldDelegate, UIPickerViewDataSource,UIPickerViewDelegate, JGHForgotPasswordViewControllerDelegate>
+@interface JGHLoginViewController ()<UITextFieldDelegate, UIPickerViewDataSource,UIPickerViewDelegate, JGHForgotPasswordViewControllerDelegate, JGHRegistersViewControllerDelegate>
 
 {
     UIView *_bgView;
@@ -46,6 +44,8 @@ static int timeNumber = 60;
     NSString *_codeing;
     NSTimer *_timer;
     UIButton *_getCodeBtn;
+    
+    NSUInteger _timeNumber;
 }
 
 @property (nonatomic, strong)NSMutableDictionary *weiChetDict;
@@ -76,6 +76,7 @@ static int timeNumber = 60;
     _titleArray = @[@"中国", @"香港", @"澳门", @"台湾"];
     _titleCodeArray = @[@"0086", @"00886", @"00852", @"00853"];
     _codeing = @"0086";
+    _timeNumber = 60;
     
     [self createNavViewBtn];
 }
@@ -204,6 +205,7 @@ static int timeNumber = 60;
     [self.view endEditing:YES];
     
     JGHRegistersViewController *registerCtrl = [[JGHRegistersViewController alloc]initWithNibName:@"JGHRegistersViewController" bundle:nil];
+    registerCtrl.delegate = self;
     [self.navigationController pushViewController:registerCtrl animated:YES];
 }
 #pragma mark -- 登录
@@ -261,9 +263,9 @@ static int timeNumber = 60;
             }
             
             NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
-            if ([userDict objectForKey:@"userId"]) {
-                [userdef setObject:[userDict objectForKey:@"userId"] forKey:@"userId"];
-                [userdef setObject:[userDict objectForKey:@"mobile"] forKey:@"mobile"];
+            if ([userDict objectForKey:userID]) {
+                [userdef setObject:[userDict objectForKey:userID] forKey:userID];
+                [userdef setObject:[userDict objectForKey:Mobile] forKey:Mobile];
                 [userdef setObject:[userDict objectForKey:@"sex"] forKey:@"sex"];
                 //判断是否登录，用来社区的刷新
                 [userdef setObject:@1 forKey:@"isFirstEnter"];
@@ -299,6 +301,12 @@ static int timeNumber = 60;
             if (![Helper isBlankString:snsAccount.openId]) {
                 [dictWx setObject:snsAccount.openId forKey:@"openid"];
                 [_weiChetDict setObject:snsAccount.openId forKey:@"openid"];
+            }else{
+                [Helper alertViewWithTitle:@"微信登录失败" withBlock:^(UIAlertController *alertView) {
+                    [self presentViewController:alertView animated:YES completion:nil];
+                    return ;
+                }];
+                return ;
             }
             
             [_weiChetDict setObject:snsAccount.userName forKey:@"uid"];
@@ -315,9 +323,9 @@ static int timeNumber = 60;
                     }
                     
                     NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
-                    if ([userDict objectForKey:@"userId"]) {
-                        [userdef setObject:[userDict objectForKey:@"userId"] forKey:@"userId"];
-                        [userdef setObject:[userDict objectForKey:@"mobile"] forKey:@"mobile"];
+                    if ([userDict objectForKey:userID]) {
+                        [userdef setObject:[userDict objectForKey:userID] forKey:userID];
+                        [userdef setObject:[userDict objectForKey:Mobile] forKey:Mobile];
                         [userdef setObject:[userDict objectForKey:@"sex"] forKey:@"sex"];
                         //判断是否登录，用来社区的刷新
                         [userdef setObject:@1 forKey:@"isFirstEnter"];
@@ -484,14 +492,14 @@ static int timeNumber = 60;
     _timer = nil;
 }
 - (void)autoMove {
-    timeNumber--;
-    [_getCodeBtn setTitle:[NSString stringWithFormat:@"(%d)后重新获取",timeNumber] forState:UIControlStateNormal];
-    if (timeNumber == 0) {
+    _timeNumber--;
+    [_getCodeBtn setTitle:[NSString stringWithFormat:@"(%tds)后重新获取", _timeNumber] forState:UIControlStateNormal];
+    if (_timeNumber == 0) {
         [_getCodeBtn setTitleColor:[UIColor colorWithHexString:Bar_Color] forState:UIControlStateNormal];
         _getCodeBtn.titleLabel.font = [UIFont systemFontOfSize:17*ProportionAdapter];
         [_getCodeBtn setTitle:@"获取动态密码" forState:UIControlStateNormal];
         [_timer invalidate];
-        timeNumber = 60;
+        _timeNumber = 60;
         
         _getCodeBtn.userInteractionEnabled = YES;
     }
@@ -501,6 +509,9 @@ static int timeNumber = 60;
     [self.view endEditing:YES];
     _loginLable.frame = CGRectMake(43 *ProportionAdapter, 50 *ProportionAdapter -2, screenWidth/2-86*ProportionAdapter, 2);
     [self.view bringSubviewToFront:_loginLable];
+    if ([_timer isValid]) {
+        [_timer invalidate];
+    }
     
     if (_showId != 0) {
         [_codeView removeFromSuperview];
@@ -534,7 +545,7 @@ static int timeNumber = 60;
 -(void)postAppJpost
 {
     NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
-    [dict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"userId"] forKey:@"userId"];
+    [dict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:userID] forKey:userID];
     
     if ([JPUSHService registrationID] != nil) {
         [dict setObject:[JPUSHService registrationID] forKey:@"jgpush"];
@@ -554,7 +565,7 @@ static int timeNumber = 60;
     [RCIM sharedRCIM].globalMessageAvatarStyle=RC_USER_AVATAR_CYCLE;
     [[RCIM sharedRCIM] setUserInfoDataSource:[UserDataInformation sharedInstance]];
     [[RCIM sharedRCIM] setGroupInfoDataSource:[UserDataInformation sharedInstance]];
-    NSString *str1=[NSString stringWithFormat:@"%@",[user objectForKey:@"userId"]];
+    NSString *str1=[NSString stringWithFormat:@"%@",[user objectForKey:userID]];
     NSString *str2=[NSString stringWithFormat:@"%@",[user objectForKey:@"userName"]];
     NSString *str3=[NSString stringWithFormat:@"http://www.dagolfla.com:8081/small_%@",[user objectForKey:@"pic"]];
     RCUserInfo *userInfo=[[RCUserInfo alloc] initWithUserId:str1 name:str2 portrait:str3];
@@ -640,7 +651,9 @@ static int timeNumber = 60;
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
-    [_areaBtn setTitle:_titleArray[row] forState:UIControlStateNormal];
+    NSMutableString *code = [_titleCodeArray[row] mutableCopy];
+    NSString *cddd = [code stringByReplacingOccurrencesOfString:@"0" withString:@""];
+    [_areaBtn setTitle:cddd forState:UIControlStateNormal];
     _codeing = [NSString stringWithFormat:@"%@", _titleCodeArray[row]];
 }
 #pragma mark -- 忘记密码 返回
@@ -648,8 +661,15 @@ static int timeNumber = 60;
     [self passwordLoginBtn];
     _mobileText.text = account;
     _passwordText.text = password;
-    [_areaBtn setTitle:_codeing forState:UIControlStateNormal];
+    [_areaBtn setTitle:codeing forState:UIControlStateNormal];
 }
+#pragma mark -- 注册－－已经注册返回登录
+- (void)registerForLoginWithMobile:(NSString *)mobile andCodeing:(NSString *)code{
+    [self passwordLoginBtn];
+    _mobileText.text = mobile;
+    [_areaBtn setTitle:code forState:UIControlStateNormal];
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

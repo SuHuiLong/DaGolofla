@@ -8,8 +8,6 @@
 
 #import "JGHForgotPasswordViewController.h"
 
-static int timeNumber = 60;
-
 @interface JGHForgotPasswordViewController ()<UITextFieldDelegate, UIPickerViewDataSource,UIPickerViewDelegate>
 
 {    
@@ -18,6 +16,8 @@ static int timeNumber = 60;
     NSArray *_titleCodeArray;
     NSString *_codeing;
     UIPickerView *_pickerView;
+    
+    NSInteger _timeNumber;
 }
 
 @end
@@ -29,7 +29,7 @@ static int timeNumber = 60;
     // Do any additional setup after loading the view from its nib.
     self.view.backgroundColor = [UIColor colorWithHexString:BG_color];
     self.navigationItem.title = @"忘记密码";
-    
+    _timeNumber = 60;
     self.oneViewLeft.constant = 8 *ProportionAdapter;
     self.oneViewTop.constant = 10 *ProportionAdapter;
     self.oneViewRight.constant = 8 *ProportionAdapter;
@@ -180,16 +180,16 @@ static int timeNumber = 60;
     _timer = nil;
 }
 - (void)autoMove {
-    timeNumber--;
+    _timeNumber--;
     [_getCodeBtn setTitleColor:[UIColor colorWithHexString:Line_Color] forState:UIControlStateNormal];
     _getCodeBtn.titleLabel.font = [UIFont systemFontOfSize:14*ProportionAdapter];
-    [_getCodeBtn setTitle:[NSString stringWithFormat:@"(%d)后重新获取",timeNumber] forState:UIControlStateNormal];
-    if (timeNumber == 0) {
+    [_getCodeBtn setTitle:[NSString stringWithFormat:@"(%tds)后重新获取", _timeNumber] forState:UIControlStateNormal];
+    if (_timeNumber == 0) {
         [_getCodeBtn setTitleColor:[UIColor colorWithHexString:Bar_Color] forState:UIControlStateNormal];
         _getCodeBtn.titleLabel.font = [UIFont systemFontOfSize:17*ProportionAdapter];
         [_getCodeBtn setTitle:@"发送验证码" forState:UIControlStateNormal];
         [_timer invalidate];
-        timeNumber = 60;
+        _timeNumber = 60;
         
         _getCodeBtn.userInteractionEnabled = YES;
     }
@@ -322,7 +322,9 @@ static int timeNumber = 60;
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
-    [_mobileBtn setTitle:_titleArray[row] forState:UIControlStateNormal];
+    NSMutableString *code = [_titleCodeArray[row] mutableCopy];
+    NSString *cddd = [code stringByReplacingOccurrencesOfString:@"0" withString:@""];
+    [_mobileBtn setTitle:cddd forState:UIControlStateNormal];
     _codeing = [NSString stringWithFormat:@"%@", _titleCodeArray[row]];
 }
 

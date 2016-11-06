@@ -13,8 +13,6 @@
 #import "UserDataInformation.h"
 #import "JPUSHService.h"
 
-static int timeNumber = 60;
-
 @interface JGHRegistersViewController ()<UITextFieldDelegate, UIPickerViewDataSource,UIPickerViewDelegate>
 {
     NSTimer *_timer;
@@ -24,6 +22,8 @@ static int timeNumber = 60;
     UIPickerView *_pickerView;
     
     NSInteger _select;
+    
+    NSInteger _timeNumber;
 }
 
 @end
@@ -36,7 +36,7 @@ static int timeNumber = 60;
     
     self.view.backgroundColor = [UIColor colorWithHexString:BG_color];
     self.navigationItem.title = @"注册";
-    
+    _timeNumber = 60;
     self.viewLeft.constant = 8 *ProportionAdapter;
     self.viewTop.constant = 10 *ProportionAdapter;
     self.viewRight.constant = 8 *ProportionAdapter;
@@ -69,7 +69,7 @@ static int timeNumber = 60;
     [self.getCodeBtn setTitleColor:[UIColor colorWithHexString:Bar_Color] forState:UIControlStateNormal];
     self.passwordText.font = [UIFont systemFontOfSize:17 *ProportionAdapter];
     self.passwordTextRight.constant = 15 *ProportionAdapter;
-    self.passwordText.secureTextEntry = YES;
+    self.passwordText.secureTextEntry = NO;
     _passwordText.clearButtonMode = UITextFieldViewModeAlways;
     
     self.entryBtn.titleLabel.font = [UIFont systemFontOfSize:17 *ProportionAdapter];
@@ -165,15 +165,22 @@ static int timeNumber = 60;
         NSLog(@"%@", data);
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
             if ([[data objectForKey:@"hasMobileRegistered"] integerValue] == 1) {
-                [Helper alertViewWithTitle:@"手机号已注册！" withBlockCancle:^{
+                UIAlertController *alert=[UIAlertController alertControllerWithTitle:@"提示" message:@"手机号码已注册过，使用该号码登录？" preferredStyle:UIAlertControllerStyleAlert];
+                
+                UIAlertAction *action1=[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                     
-                } withBlockSure:^{
-                    
-                } withBlock:^(UIAlertController *alertView) {
-                    [self presentViewController:alertView animated:YES completion:nil];
                 }];
+                UIAlertAction* action2=[UIAlertAction actionWithTitle:@"登录" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                    if (self.delegate) {
+                        [self.delegate registerForLoginWithMobile:_mobileText.text andCodeing:_codeing];
+                        [self.navigationController popViewControllerAnimated:YES];
+                    }
+                }];
+                
+                [alert addAction:action1];
+                [alert addAction:action2];
+                [self presentViewController:alert animated:YES completion:nil];
                 _getCodeBtn.userInteractionEnabled = YES;
-                return;
             }else{
                 [codeDict setObject:_codeing forKey:@"countryCode"];
                 _getCodeBtn.userInteractionEnabled = NO;
@@ -210,16 +217,16 @@ static int timeNumber = 60;
     _timer = nil;
 }
 - (void)autoMove {
-    timeNumber--;
+    _timeNumber--;
     [_getCodeBtn setTitleColor:[UIColor colorWithHexString:Line_Color] forState:UIControlStateNormal];
      _getCodeBtn.titleLabel.font = [UIFont systemFontOfSize:14*ProportionAdapter];
-    [_getCodeBtn setTitle:[NSString stringWithFormat:@"(%d)后重新获取",timeNumber] forState:UIControlStateNormal];
-    if (timeNumber == 0) {
+    [_getCodeBtn setTitle:[NSString stringWithFormat:@"(%tds)后重新获取", _timeNumber] forState:UIControlStateNormal];
+    if (_timeNumber == 0) {
         [_getCodeBtn setTitleColor:[UIColor colorWithHexString:Bar_Color] forState:UIControlStateNormal];
         _getCodeBtn.titleLabel.font = [UIFont systemFontOfSize:17*ProportionAdapter];
         [_getCodeBtn setTitle:@"发送验证码" forState:UIControlStateNormal];
         [_timer invalidate];
-        timeNumber = 60;
+        _timeNumber = 60;
         
         _getCodeBtn.userInteractionEnabled = YES;
     }
@@ -308,9 +315,9 @@ static int timeNumber = 60;
             }
             
             NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
-            if ([userDict objectForKey:@"userId"]) {
-                [userdef setObject:[userDict objectForKey:@"userId"] forKey:@"userId"];
-                [userdef setObject:[userDict objectForKey:@"mobile"] forKey:@"mobile"];
+            if ([userDict objectForKey:userID]) {
+                [userdef setObject:[userDict objectForKey:userID] forKey:userID];
+                [userdef setObject:[userDict objectForKey:Mobile] forKey:Mobile];
                 [userdef setObject:[userDict objectForKey:@"sex"] forKey:@"sex"];
                 //判断是否登录，用来社区的刷新
                 [userdef setObject:@1 forKey:@"isFirstEnter"];
@@ -326,16 +333,11 @@ static int timeNumber = 60;
             //注册融云
             [self requestRCIMWithToken:token];
             [self postAppJpost];
+            [Helper alertViewWithTitle:@"注册成功！" withBlock:^(UIAlertController *alertView) {
+               [self presentViewController:alertView animated:YES completion:nil];
+            }];
             
-            [Helper alertViewWithTitle:@"注册成功!" withBlockCancle:^{
-                [self.navigationController popViewControllerAnimated:YES];
-                
-            } withBlockSure:^{
-                _blackCtrl();
-                [self.navigationController popViewControllerAnimated:YES];
-            } withBlock:^(UIAlertController *alertView) {
-                [self presentViewController:alertView animated:YES completion:nil];
-            }];            
+            [self.navigationController popViewControllerAnimated:YES];
         }else{
             _getCodeBtn.userInteractionEnabled = YES;
             if ([data objectForKey:@"packResultMsg"]) {
@@ -348,7 +350,7 @@ static int timeNumber = 60;
 -(void)postAppJpost
 {
     NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
-    [dict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"userId"] forKey:@"userId"];
+    [dict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:userID] forKey:userID];
     if ([JPUSHService registrationID] != nil) {
         [dict setObject:[JPUSHService registrationID] forKey:@"jgpush"];
     }
@@ -366,7 +368,7 @@ static int timeNumber = 60;
     [RCIM sharedRCIM].globalMessageAvatarStyle=RC_USER_AVATAR_CYCLE;
     [[RCIM sharedRCIM] setUserInfoDataSource:[UserDataInformation sharedInstance]];
     [[RCIM sharedRCIM] setGroupInfoDataSource:[UserDataInformation sharedInstance]];
-    NSString *str1=[NSString stringWithFormat:@"%@",[user objectForKey:@"userId"]];
+    NSString *str1=[NSString stringWithFormat:@"%@",[user objectForKey:userID]];
     NSString *str2=[NSString stringWithFormat:@"%@",[user objectForKey:@"userName"]];
     NSString *str3=[NSString stringWithFormat:@"http://www.dagolfla.com:8081/small_%@",[user objectForKey:@"pic"]];
     RCUserInfo *userInfo=[[RCUserInfo alloc] initWithUserId:str1 name:str2 portrait:str3];
@@ -451,7 +453,9 @@ static int timeNumber = 60;
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
-    [_mobileBtn setTitle:_titleArray[row] forState:UIControlStateNormal];
+    NSMutableString *code = [_titleCodeArray[row] mutableCopy];
+    NSString *cddd = [code stringByReplacingOccurrencesOfString:@"0" withString:@""];
+    [_mobileBtn setTitle:cddd forState:UIControlStateNormal];
     _codeing = [NSString stringWithFormat:@"%@", _titleCodeArray[row]];
 }
 

@@ -11,8 +11,6 @@
 #import "UserDataInformation.h"
 #import "JPUSHService.h"
 
-static int timeNumber = 60;
-
 @interface JGHBindingAccountViewController ()<UITextFieldDelegate, UIPickerViewDataSource,UIPickerViewDelegate>
 {
     UIPickerView *_pickerView;
@@ -22,6 +20,8 @@ static int timeNumber = 60;
     
     NSString *_codeing;
     NSTimer *_timer;
+    
+    NSInteger _timeNumber;
 }
 
 @end
@@ -34,6 +34,7 @@ static int timeNumber = 60;
     
     self.view.backgroundColor = [UIColor colorWithHexString:BG_color];
     self.navigationItem.title = @"忘记密码";
+    _timeNumber = 60;
     
     self.oneViewH.constant = 50 *ProportionAdapter;
     self.oneViewLeft.constant = 8 *ProportionAdapter;
@@ -162,9 +163,9 @@ static int timeNumber = 60;
             }
             
             NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
-            if ([userDict objectForKey:@"userId"]) {
-                [userdef setObject:[userDict objectForKey:@"userId"] forKey:@"userId"];
-                [userdef setObject:[userDict objectForKey:@"mobile"] forKey:@"mobile"];
+            if ([userDict objectForKey:userID]) {
+                [userdef setObject:[userDict objectForKey:userID] forKey:userID];
+                [userdef setObject:[userDict objectForKey:Mobile] forKey:Mobile];
                 [userdef setObject:[userDict objectForKey:@"sex"] forKey:@"sex"];
                 //判断是否登录，用来社区的刷新
                 [userdef setObject:@1 forKey:@"isFirstEnter"];
@@ -199,16 +200,16 @@ static int timeNumber = 60;
     _timer = nil;
 }
 - (void)autoMove {
-    timeNumber--;
+    _timeNumber--;
     [_getCodeBtn setTitleColor:[UIColor colorWithHexString:Line_Color] forState:UIControlStateNormal];
     _getCodeBtn.titleLabel.font = [UIFont systemFontOfSize:14*ProportionAdapter];
-    [_getCodeBtn setTitle:[NSString stringWithFormat:@"(%d)后重新获取",timeNumber] forState:UIControlStateNormal];
-    if (timeNumber == 0) {
+    [_getCodeBtn setTitle:[NSString stringWithFormat:@"(%tds)后重新获取", _timeNumber] forState:UIControlStateNormal];
+    if (_timeNumber == 0) {
         [_getCodeBtn setTitleColor:[UIColor colorWithHexString:Bar_Color] forState:UIControlStateNormal];
         _getCodeBtn.titleLabel.font = [UIFont systemFontOfSize:17*ProportionAdapter];
         [_getCodeBtn setTitle:@"发送验证码" forState:UIControlStateNormal];
         [_timer invalidate];
-        timeNumber = 60;
+        _timeNumber = 60;
         
         _getCodeBtn.userInteractionEnabled = YES;
     }
@@ -217,7 +218,7 @@ static int timeNumber = 60;
 -(void)postAppJpost
 {
     NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
-    [dict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"userId"] forKey:@"userId"];
+    [dict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:userID] forKey:userID];
     if ([JPUSHService registrationID] != nil) {
         [dict setObject:[JPUSHService registrationID] forKey:@"jgpush"];
     }
@@ -235,7 +236,7 @@ static int timeNumber = 60;
     [RCIM sharedRCIM].globalMessageAvatarStyle=RC_USER_AVATAR_CYCLE;
     [[RCIM sharedRCIM] setUserInfoDataSource:[UserDataInformation sharedInstance]];
     [[RCIM sharedRCIM] setGroupInfoDataSource:[UserDataInformation sharedInstance]];
-    NSString *str1=[NSString stringWithFormat:@"%@",[user objectForKey:@"userId"]];
+    NSString *str1=[NSString stringWithFormat:@"%@",[user objectForKey:userID]];
     NSString *str2=[NSString stringWithFormat:@"%@",[user objectForKey:@"userName"]];
     NSString *str3=[NSString stringWithFormat:@"http://www.dagolfla.com:8081/small_%@",[user objectForKey:@"pic"]];
     RCUserInfo *userInfo=[[RCUserInfo alloc] initWithUserId:str1 name:str2 portrait:str3];
@@ -319,7 +320,9 @@ static int timeNumber = 60;
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
-    [_mobileBtn setTitle:_titleArray[row] forState:UIControlStateNormal];
+    NSMutableString *code = [_titleCodeArray[row] mutableCopy];
+    NSString *cddd = [code stringByReplacingOccurrencesOfString:@"0" withString:@""];
+    [_mobileBtn setTitle:cddd forState:UIControlStateNormal];
     _codeing = [NSString stringWithFormat:@"%@", _titleCodeArray[row]];
 }
 @end

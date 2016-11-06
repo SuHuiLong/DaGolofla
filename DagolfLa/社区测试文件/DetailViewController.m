@@ -29,7 +29,6 @@
 #import "Helper.h"
 
 #import "MyNewsBoxViewController.h"
-#import "EnterViewController.h"
 #import "PublishViewController.h"
 #import "ZanNumViewController.h"
 #import "PersonHomeController.h"
@@ -406,8 +405,11 @@
         }else {
             [Helper alertViewWithTitle:@"是否立即登录?" withBlockCancle:^{
             } withBlockSure:^{
-                EnterViewController *vc = [[EnterViewController alloc] init];
-                [self.navc pushViewController:vc animated:YES];
+                JGHLoginViewController *vc = [[JGHLoginViewController alloc] init];
+                vc.reloadCtrlData = ^(){
+                    
+                };
+                [self.navigationController pushViewController:vc animated:YES];
             } withBlock:^(UIAlertController *alertView) {
                 [self presentViewController:alertView animated:YES completion:nil];
             }];
@@ -509,8 +511,11 @@
         
         [Helper alertViewWithTitle:@"是否立即登录?" withBlockCancle:^{
         } withBlockSure:^{
-            EnterViewController *vc = [[EnterViewController alloc] init];
-            [self.navc pushViewController:vc animated:YES];
+            JGHLoginViewController *vc = [[JGHLoginViewController alloc] init];
+            vc.reloadCtrlData = ^(){
+                
+            };
+            [self.navigationController pushViewController:vc animated:YES];
         } withBlock:^(UIAlertController *alertView) {
             [self presentViewController:alertView animated:YES completion:nil];
         }];
@@ -534,8 +539,11 @@
     }else {
         [Helper alertViewWithTitle:@"是否立即登录?" withBlockCancle:^{
         } withBlockSure:^{
-            EnterViewController *vc = [[EnterViewController alloc] init];
-            [self.navc pushViewController:vc animated:YES];
+            JGHLoginViewController *vc = [[JGHLoginViewController alloc] init];
+            vc.reloadCtrlData = ^(){
+                
+            };
+            [self.navigationController pushViewController:vc animated:YES];
         } withBlock:^(UIAlertController *alertView) {
             [self presentViewController:alertView animated:YES completion:nil];
         }];
@@ -565,8 +573,11 @@
     }else {
         [Helper alertViewWithTitle:@"是否立即登录?" withBlockCancle:^{
         } withBlockSure:^{
-            EnterViewController *vc = [[EnterViewController alloc] init];
-            [self.navc pushViewController:vc animated:YES];
+            JGHLoginViewController *vc = [[JGHLoginViewController alloc] init];
+            vc.reloadCtrlData = ^(){
+                
+            };
+            [self.navigationController pushViewController:vc animated:YES];
         } withBlock:^(UIAlertController *alertView) {
             [self presentViewController:alertView animated:YES completion:nil];
         }];
@@ -621,8 +632,11 @@
     }else {
         [Helper alertViewWithTitle:@"是否立即登录?" withBlockCancle:^{
         } withBlockSure:^{
-            EnterViewController *vc = [[EnterViewController alloc] init];
-            [self.navc pushViewController:vc animated:YES];
+            JGHLoginViewController *vc = [[JGHLoginViewController alloc] init];
+            vc.reloadCtrlData = ^(){
+                
+            };
+            [self.navigationController pushViewController:vc animated:YES];
         } withBlock:^(UIAlertController *alertView) {
             [self presentViewController:alertView animated:YES completion:nil];
         }];
@@ -636,8 +650,11 @@
         
         [Helper alertViewWithTitle:@"是否立即登录?" withBlockCancle:^{
         } withBlockSure:^{
-            EnterViewController *vc = [[EnterViewController alloc] init];
-            [self.navc pushViewController:vc animated:YES];
+            JGHLoginViewController *vc = [[JGHLoginViewController alloc] init];
+            vc.reloadCtrlData = ^(){
+                
+            };
+            [self.navigationController pushViewController:vc animated:YES];
         } withBlock:^(UIAlertController *alertView) {
             [self presentViewController:alertView animated:YES completion:nil];
         }];
@@ -790,8 +807,11 @@
         
         [Helper alertViewWithTitle:@"是否立即登录?" withBlockCancle:^{
         } withBlockSure:^{
-            EnterViewController *vc = [[EnterViewController alloc] init];
-            [self.navc pushViewController:vc animated:YES];
+            JGHLoginViewController *vc = [[JGHLoginViewController alloc] init];
+            vc.reloadCtrlData = ^(){
+                
+            };
+            [self.navigationController pushViewController:vc animated:YES];
         } withBlock:^(UIAlertController *alertView) {
             [self presentViewController:alertView animated:YES completion:nil];
         }];
@@ -825,8 +845,11 @@
     }else {
         [Helper alertViewWithTitle:@"是否立即登录?" withBlockCancle:^{
         } withBlockSure:^{
-            EnterViewController *vc = [[EnterViewController alloc] init];
-            [self.navc pushViewController:vc animated:YES];
+            JGHLoginViewController *vc = [[JGHLoginViewController alloc] init];
+            vc.reloadCtrlData = ^(){
+                
+            };
+            [self.navigationController pushViewController:vc animated:YES];
         } withBlock:^(UIAlertController *alertView) {
             [self presentViewController:alertView animated:YES completion:nil];
         }];
@@ -969,8 +992,11 @@
     }else {
         [Helper alertViewWithTitle:@"是否立即登录?" withBlockCancle:^{
         } withBlockSure:^{
-            EnterViewController *vc = [[EnterViewController alloc] init];
-            [self.navc pushViewController:vc animated:YES];
+            JGHLoginViewController *vc = [[JGHLoginViewController alloc] init];
+            vc.reloadCtrlData = ^(){
+                
+            };
+            [self.navigationController pushViewController:vc animated:YES];
         } withBlock:^(UIAlertController *alertView) {
             [self presentViewController:alertView animated:YES completion:nil];
         }];

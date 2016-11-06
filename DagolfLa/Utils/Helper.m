@@ -7,7 +7,6 @@
 //
 
 #import "Helper.h"
-#import "EnterViewController.h"
 #import "CommonCrypto/CommonDigest.h"
 
 @implementation Helper
