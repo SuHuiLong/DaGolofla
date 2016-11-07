@@ -4483,8 +4483,8 @@
 		20A4CFB81DC9B0ED00F5A81D /* controllers */ = {
 			isa = PBXGroup;
 			children = (
-				205E61DD1DCC7BC60079F128 /* JGDChangePWDViewController.m */,
 				205E61DE1DCC7BC60079F128 /* JGDChangePWDViewController.h */,
+				205E61DD1DCC7BC60079F128 /* JGDChangePWDViewController.m */,
 				2053FE8E1DC9C04300975203 /* JGHRegistersViewController.h */,
 				2053FE8F1DC9C04300975203 /* JGHRegistersViewController.m */,
 				2053FE901DC9C04300975203 /* JGHRegistersViewController.xib */,
@@ -8851,7 +8851,7 @@
 				TargetAttributes = {
 					36BFFD271BC76C8D005B3CE2 = {
 						CreatedOnToolsVersion = 6.3.2;
-						DevelopmentTeam = 5P6JNXBH3C;
+						DevelopmentTeam = AKVZK78CBX;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
@@ -10192,7 +10192,7 @@
 				CODE_SIGN_ENTITLEMENTS = DagolfLa/DagolfLa.entitlements;
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = 5P6JNXBH3C;
+				DEVELOPMENT_TEAM = AKVZK78CBX;
 				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -10243,7 +10243,7 @@
 				CODE_SIGN_ENTITLEMENTS = DagolfLa/DagolfLa.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = 5P6JNXBH3C;
+				DEVELOPMENT_TEAM = AKVZK78CBX;
 				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = NO;
 				FRAMEWORK_SEARCH_PATHS = (

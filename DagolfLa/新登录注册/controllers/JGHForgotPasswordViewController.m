@@ -8,8 +8,6 @@
 
 #import "JGHForgotPasswordViewController.h"
 
-static int timeNumber = 60;
-
 @interface JGHForgotPasswordViewController ()<UITextFieldDelegate, UIPickerViewDataSource,UIPickerViewDelegate>
 
 {    
@@ -18,6 +16,8 @@ static int timeNumber = 60;
     NSArray *_titleCodeArray;
     NSString *_codeing;
     UIPickerView *_pickerView;
+    
+    NSInteger _timeNumber;
 }
 
 @end
@@ -29,7 +29,7 @@ static int timeNumber = 60;
     // Do any additional setup after loading the view from its nib.
     self.view.backgroundColor = [UIColor colorWithHexString:BG_color];
     self.navigationItem.title = @"忘记密码";
-    
+    _timeNumber = 60;
     self.oneViewLeft.constant = 8 *ProportionAdapter;
     self.oneViewTop.constant = 10 *ProportionAdapter;
     self.oneViewRight.constant = 8 *ProportionAdapter;
@@ -105,7 +105,7 @@ static int timeNumber = 60;
     if (_pickerView == nil) {
         _pickerView = [[UIPickerView alloc] init];
         _pickerView.showsSelectionIndicator = YES;
-        _pickerView.frame = CGRectMake(0, (screenHeight/3)*2, screenWidth, screenHeight/3);
+        _pickerView.frame = CGRectMake(0, (screenHeight/3)*2 -64, screenWidth, screenHeight/3);
         
         _pickerView.delegate = self;
         _pickerView.dataSource = self;
@@ -120,31 +120,55 @@ static int timeNumber = 60;
 }
 
 - (IBAction)getCodeBtn:(UIButton *)sender {
-    if (_mobileText.text.length == 0) {
-        [LQProgressHud showMessage:@"请输入手机号！"];
-        return;
-    }
-
+    
     if (_mobileText.text.length == 0) {
         [LQProgressHud showMessage:@"请输入手机号！"];
         return;
     }
     
+    if ([_codeing isEqualToString:@"0086"]) {
+        if (_mobileText.text.length != 11) {
+            [LQProgressHud showMessage:@"手机号码格式有误！"];
+            return;
+        }
+    }
+    
     NSMutableDictionary *codeDict = [NSMutableDictionary dictionary];
-    [codeDict setObject:[NSString stringWithFormat:@"%@-%@", _codeing, _mobileText.text] forKey:@"telphone"];
+    [codeDict setObject:_mobileText.text forKey:@"telphone"];
+    [codeDict setObject:_codeing forKey:@"countryCode"];
     _getCodeBtn.userInteractionEnabled = NO;
-    [[JsonHttp jsonHttp]httpRequestWithMD5:@"login/doSendLoginCheckCodeSms" JsonKey:nil withData:codeDict failedBlock:^(id errType) {
+    
+    [[JsonHttp jsonHttp]httpRequestWithMD5:@"reg/hasMobileRegistered" JsonKey:nil withData:codeDict failedBlock:^(id errType) {
         _getCodeBtn.userInteractionEnabled = YES;
     } completionBlock:^(id data) {
         NSLog(@"%@", data);
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
-            //
-            _timer=[NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(autoMove) userInfo:nil repeats:YES];
-            [[NSRunLoop currentRunLoop] addTimer:_timer forMode:NSRunLoopCommonModes];
-            
+            if ([[data objectForKey:@"hasMobileRegistered"] integerValue] == 1) {
+                //手机号已注册
+                [[JsonHttp jsonHttp]httpRequestWithMD5:@"reg/doSendRegisterUserSms" JsonKey:nil withData:codeDict failedBlock:^(id errType) {
+                    _getCodeBtn.userInteractionEnabled = YES;
+                } completionBlock:^(id data) {
+                    NSLog(@"%@", data);
+                    if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+                        //
+                        _timer=[NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(autoMove) userInfo:nil repeats:YES];
+                        [[NSRunLoop currentRunLoop] addTimer:_timer forMode:NSRunLoopCommonModes];
+                    }else{
+                        _getCodeBtn.userInteractionEnabled = YES;
+                        
+                        if ([data objectForKey:@"packResultMsg"]) {
+                            [LQProgressHud showMessage:[data objectForKey:@"packResultMsg"]];
+                        }
+                    }
+                }];
+            }else{
+                //手机号未注册
+                [Helper alertViewWithTitle:@"手机号未注册，请先注册！" withBlock:^(UIAlertController *alertView) {
+                    [self presentViewController:alertView animated:YES completion:nil];
+                }];
+            }
         }else{
             _getCodeBtn.userInteractionEnabled = YES;
-            
             if ([data objectForKey:@"packResultMsg"]) {
                 [LQProgressHud showMessage:[data objectForKey:@"packResultMsg"]];
             }
@@ -156,16 +180,16 @@ static int timeNumber = 60;
     _timer = nil;
 }
 - (void)autoMove {
-    timeNumber--;
+    _timeNumber--;
     [_getCodeBtn setTitleColor:[UIColor colorWithHexString:Line_Color] forState:UIControlStateNormal];
     _getCodeBtn.titleLabel.font = [UIFont systemFontOfSize:14*ProportionAdapter];
-    [_getCodeBtn setTitle:[NSString stringWithFormat:@"(%d)后重新获取",timeNumber] forState:UIControlStateNormal];
-    if (timeNumber == 0) {
+    [_getCodeBtn setTitle:[NSString stringWithFormat:@"(%tds)后重新获取", _timeNumber] forState:UIControlStateNormal];
+    if (_timeNumber == 0) {
         [_getCodeBtn setTitleColor:[UIColor colorWithHexString:Bar_Color] forState:UIControlStateNormal];
         _getCodeBtn.titleLabel.font = [UIFont systemFontOfSize:17*ProportionAdapter];
         [_getCodeBtn setTitle:@"发送验证码" forState:UIControlStateNormal];
         [_timer invalidate];
-        timeNumber = 60;
+        _timeNumber = 60;
         
         _getCodeBtn.userInteractionEnabled = YES;
     }
@@ -186,6 +210,13 @@ static int timeNumber = 60;
         return;
     }
     
+    if ([_codeing isEqualToString:@"0086"]) {
+        if (_mobileText.text.length != 11) {
+            [LQProgressHud showMessage:@"手机号码格式有误！"];
+            return;
+        }
+    }
+    
     if (_codeText.text.length == 0) {
         [LQProgressHud showMessage:@"请输入验证码！"];
         return;
@@ -201,15 +232,28 @@ static int timeNumber = 60;
         return;
     }
     
+    sender.userInteractionEnabled = NO;
     NSMutableDictionary *resetDict = [NSMutableDictionary dictionary];
     [resetDict setObject:_mobileText.text forKey:@"telphone"];
-    [resetDict setObject:_codeText.text forKey:@"passWord"];
-    [resetDict setObject:_passwordText.text forKey:@"checkCode"];
+    [resetDict setObject:_passwordText.text forKey:@"passWord"];
+    [resetDict setObject:_codeText.text forKey:@"checkCode"];
     
     [[JsonHttp jsonHttp]httpRequestWithMD5:@"user/updatePassword" JsonKey:nil withData:resetDict failedBlock:^(id errType) {
-        
+        sender.userInteractionEnabled = YES;
     } completionBlock:^(id data) {
         NSLog(@"%@", data);
+        sender.userInteractionEnabled = YES;
+        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+            if (self.delegate) {
+                [self.delegate fillLoginViewAccount:_mobileText.text andPassword:_passwordText.text andCodeing:_codeing];
+                [self.navigationController popViewControllerAnimated:YES];
+            }
+        }else{
+            _getCodeBtn.userInteractionEnabled = YES;
+            if ([data objectForKey:@"packResultMsg"]) {
+                [LQProgressHud showMessage:[data objectForKey:@"packResultMsg"]];
+            }
+        }
     }];
 }
 
@@ -278,7 +322,9 @@ static int timeNumber = 60;
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
-    [_mobileBtn setTitle:_titleArray[row] forState:UIControlStateNormal];
+    NSMutableString *code = [_titleCodeArray[row] mutableCopy];
+    NSString *cddd = [code stringByReplacingOccurrencesOfString:@"0" withString:@""];
+    [_mobileBtn setTitle:cddd forState:UIControlStateNormal];
     _codeing = [NSString stringWithFormat:@"%@", _titleCodeArray[row]];
 }
 

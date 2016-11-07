@@ -25,7 +25,6 @@
 
 #import "JKSlideSwitchView.h"
 #import "PersonHomeController.h"
-#import "EnterViewController.h"
 
 #import "NoteHandlle.h"
 #import "NoteModel.h"

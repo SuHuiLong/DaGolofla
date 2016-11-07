@@ -10,4 +10,7 @@
 
 @interface JGHLoginViewController : ViewController
 
+typedef void(^ReloadCtrlData)();
+@property(nonatomic,copy)ReloadCtrlData reloadCtrlData;
+
 @end

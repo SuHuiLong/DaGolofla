@@ -10,6 +10,9 @@
 
 @interface JGHBindingAccountViewController : ViewController
 
+typedef void(^BlackCtrl)();
+@property(nonatomic,copy)BlackCtrl blackCtrl;
+
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *oneViewLeft;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *oneViewTop;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *oneViewRight;
@@ -21,9 +24,11 @@
 - (IBAction)mobileBtn:(UIButton *)sender;
 @property (weak, nonatomic) IBOutlet UILabel *mobileLable;
 @property (weak, nonatomic) IBOutlet UITextField *mobiletext;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *mobiletextLeft;//22
 
 @property (weak, nonatomic) IBOutlet UILabel *codeLine;
 @property (weak, nonatomic) IBOutlet UITextField *codeText;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *codeTextLeft;
 @property (weak, nonatomic) IBOutlet UILabel *codeTwoLine;
 @property (weak, nonatomic) IBOutlet UIButton *getCodeBtn;
 - (IBAction)getCodeBtn:(UIButton *)sender;
@@ -36,6 +41,9 @@
 @property (weak, nonatomic) IBOutlet UIView *oneView;
 @property (weak, nonatomic) IBOutlet UIView *twoview;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *oneViewH;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *bindingAccountW;
+
+@property (nonatomic, strong)NSMutableDictionary *weiChetDict;
 
 
 @end

@@ -8,7 +8,20 @@
 
 #import "ViewController.h"
 
+@protocol JGHRegistersViewControllerDelegate <NSObject>
+
+@optional
+- (void)registerForLoginWithMobile:(NSString *)mobile andCodeing:(NSString *)code;
+
+@end
+
 @interface JGHRegistersViewController : ViewController
+
+typedef void(^BlackCtrl)();
+@property(nonatomic,copy)BlackCtrl blackCtrl;
+
+@property (weak, nonatomic)id <JGHRegistersViewControllerDelegate> delegate;
+
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *viewLeft;//8
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *viewTop;//10
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *viewRight;//8

@@ -10,7 +10,6 @@
 
 #import "Helper.h"
 #import "PostDataRequest.h"
-#import "EnterViewController.h"
 
 #define kReseve_URL @"user/updatePassWord.do"
 

@@ -76,7 +76,7 @@
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入手机号" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="dSd-6Z-P3T">
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入手机号码" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="dSd-6Z-P3T">
                             <nil key="textColor"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <textInputTraits key="textInputTraits"/>
@@ -162,7 +162,7 @@
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入密码" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="bp0-hN-ozD">
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入密码（至少6位）" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="bp0-hN-ozD">
                             <nil key="textColor"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <textInputTraits key="textInputTraits"/>
@@ -173,7 +173,7 @@
                                 <constraint firstAttribute="width" constant="22" id="kO0-mf-ZN1"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                            <state key="normal" image="icn_login_eyeclose"/>
+                            <state key="normal" image="icn_login_eyeopen"/>
                             <connections>
                                 <action selector="entryBtn:" destination="-1" eventType="touchUpInside" id="tfc-nv-mwp"/>
                             </connections>
@@ -263,7 +263,7 @@
         </view>
     </objects>
     <resources>
-        <image name="icn_login_eyeclose" width="23" height="11"/>
+        <image name="icn_login_eyeopen" width="22" height="13"/>
         <image name="icn_register" width="15" height="15"/>
         <image name="icon_login_password" width="16" height="19"/>
         <image name="icon_login_verify" width="18" height="21"/>

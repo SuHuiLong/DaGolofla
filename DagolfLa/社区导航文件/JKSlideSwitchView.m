@@ -12,7 +12,6 @@
 
 #import "MyNewsBoxViewController.h"
 #import "Helper.h"
-#import "EnterViewController.h"
 #import "PublishViewController.h"
 #import "MyNewsBoxViewController.h"
 

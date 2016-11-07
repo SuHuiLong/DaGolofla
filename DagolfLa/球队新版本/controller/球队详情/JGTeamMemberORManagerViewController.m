@@ -27,7 +27,6 @@
 #import "JGDisplayInfoTableViewCell.h"
 
 #import "ShareAlert.h"
-#import "EnterViewController.h"
 #import "UMSocial.h"
 #import "ShareAlert.h"
 #import "UMSocialData.h"
@@ -324,7 +323,10 @@ static CGFloat ImageHeight  = 210.0;
     }else {
         [Helper alertViewWithTitle:@"是否立即登录?" withBlockCancle:^{
         } withBlockSure:^{
-            EnterViewController *vc = [[EnterViewController alloc] init];
+            JGHLoginViewController *vc = [[JGHLoginViewController alloc] init];
+            vc.reloadCtrlData = ^(){
+                
+            };
             [self.navigationController pushViewController:vc animated:YES];
         } withBlock:^(UIAlertController *alertView) {
             [self presentViewController:alertView animated:YES completion:nil];

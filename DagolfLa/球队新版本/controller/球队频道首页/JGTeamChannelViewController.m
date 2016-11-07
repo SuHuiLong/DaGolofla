@@ -25,7 +25,6 @@
 #import "JGNewCreateTeamTableViewController.h"
 #import "JGTeamActivityCell.h"
 #import <CoreLocation/CLLocation.h>
-#import "EnterViewController.h"
 #import "Helper.h"
 
 #import "HomeHeadView.h"  // topscrollView
@@ -370,7 +369,10 @@
     }else{
         [Helper alertViewWithTitle:@"是否立即登录?" withBlockCancle:^{
         } withBlockSure:^{
-            EnterViewController *vc = [[EnterViewController alloc] init];
+            JGHLoginViewController *vc = [[JGHLoginViewController alloc] init];
+            vc.reloadCtrlData = ^(){
+                
+            };
             [self.navigationController pushViewController:vc animated:YES];
         } withBlock:^(UIAlertController *alertView) {
             [self presentViewController:alertView animated:YES completion:nil];

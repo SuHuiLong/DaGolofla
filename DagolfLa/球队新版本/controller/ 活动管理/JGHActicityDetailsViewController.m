@@ -30,8 +30,6 @@
 #import "CommuniteTableViewCell.h"
 #import "UMSocialWechatHandler.h"
 #import "UMSocialControllerService.h"
-
-#import "EnterViewController.h"
 #import "JGTeamGroupViewController.h"
 #import "JGHTeamContactTableViewCell.h"
 #import "DateTimeViewController.h"

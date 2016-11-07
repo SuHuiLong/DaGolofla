@@ -15,7 +15,6 @@
 #import "Helper.h"
 
 #import "ComDetailViewController.h"
-#import "EnterViewController.h"
 
 #import "MyNewsListModel.h"
 
@@ -205,7 +204,10 @@
         [Helper alertViewWithTitle:@"是否立即登录?" withBlockCancle:^{
             
         } withBlockSure:^{
-            EnterViewController *vc = [[EnterViewController alloc] init];
+            JGHLoginViewController *vc = [[JGHLoginViewController alloc] init];
+            vc.reloadCtrlData = ^(){
+                
+            };
             [self.navigationController pushViewController:vc animated:YES];
         } withBlock:^(UIAlertController *alertView) {
             [self.navigationController presentViewController:alertView animated:YES completion:nil];

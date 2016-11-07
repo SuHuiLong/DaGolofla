@@ -13,17 +13,16 @@
 #import "JPUSHService.h"
 #import "JGHForgotPasswordViewController.h"
 #import "JGHRegistersViewController.h"
+#import "JGHBindingAccountViewController.h"
 
-static int timeNumber = 60;
-
-@interface JGHLoginViewController ()<UITextFieldDelegate, UIPickerViewDataSource,UIPickerViewDelegate>
+@interface JGHLoginViewController ()<UITextFieldDelegate, UIPickerViewDataSource,UIPickerViewDelegate, JGHForgotPasswordViewControllerDelegate, JGHRegistersViewControllerDelegate>
 
 {
     UIView *_bgView;
     UIView *_passwordView;//密码输入框试图
     UIView *_codeView;//验证码试图
     
-    NSMutableDictionary* _dict, * _userInfoDict;
+    NSMutableDictionary* _dict;
     
     UITextField *_mobileText;
     
@@ -45,7 +44,11 @@ static int timeNumber = 60;
     NSString *_codeing;
     NSTimer *_timer;
     UIButton *_getCodeBtn;
+    
+    NSUInteger _timeNumber;
 }
+
+@property (nonatomic, strong)NSMutableDictionary *weiChetDict;
 
 @end
 
@@ -64,21 +67,30 @@ static int timeNumber = 60;
     self.navigationItem.title = @"登录账户";
     _showId = 0;
     _dict = [NSMutableDictionary dictionary];
+    self.weiChetDict = [NSMutableDictionary dictionary];
+    
+    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"backL"] style:UIBarButtonItemStylePlain target:self action:@selector(backClcik)];
+    item.tintColor=[UIColor whiteColor];
+    self.navigationItem.leftBarButtonItem = item;
     
     _titleArray = @[@"中国", @"香港", @"澳门", @"台湾"];
     _titleCodeArray = @[@"0086", @"00886", @"00852", @"00853"];
     _codeing = @"0086";
+    _timeNumber = 60;
     
     [self createNavViewBtn];
 }
-
+- (void)backClcik{
+    _reloadCtrlData();
+    [self.navigationController popViewControllerAnimated:YES];
+}
 - (void)createNavViewBtn{
     //密码登陆
     UIButton *passwordLoginBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, screenWidth/2, 50 *ProportionAdapter)];
-    [passwordLoginBtn setTitle:@"密码登录" forState:UIControlStateNormal];
+    [passwordLoginBtn setTitle:@"账户密码登录" forState:UIControlStateNormal];
     passwordLoginBtn.titleLabel.font = [UIFont systemFontOfSize:18 *ProportionAdapter];
     [passwordLoginBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [passwordLoginBtn addTarget:self action:@selector(passwordLoginBtn:) forControlEvents:UIControlEventTouchUpInside];
+    [passwordLoginBtn addTarget:self action:@selector(passwordLoginBtn) forControlEvents:UIControlEventTouchUpInside];
     [passwordLoginBtn setBackgroundColor:[UIColor whiteColor]];
     [self.view addSubview:passwordLoginBtn];
     
@@ -88,7 +100,7 @@ static int timeNumber = 60;
     
     //验证码登录
     UIButton *codeLoginBtn = [[UIButton alloc]initWithFrame:CGRectMake(screenWidth/2, 0, screenWidth/2, 50 *ProportionAdapter)];
-    [codeLoginBtn setTitle:@"验证码登录" forState:UIControlStateNormal];
+    [codeLoginBtn setTitle:@"动态密码登录" forState:UIControlStateNormal];
     codeLoginBtn.titleLabel.font = [UIFont systemFontOfSize:18 *ProportionAdapter];
     [codeLoginBtn addTarget:self action:@selector(codeLoginBtn:) forControlEvents:UIControlEventTouchUpInside];
     [codeLoginBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
@@ -110,7 +122,7 @@ static int timeNumber = 60;
     _areaBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 50*ProportionAdapter, 50 *ProportionAdapter)];
     _areaBtn.titleLabel.textAlignment = NSTextAlignmentCenter;
     _areaBtn.titleLabel.font = [UIFont systemFontOfSize:17*ProportionAdapter];
-    [_areaBtn setTitle:@"+86" forState:UIControlStateNormal];
+    [_areaBtn setTitle:@"86" forState:UIControlStateNormal];
     [_areaBtn setTitleColor:[UIColor colorWithHexString:Line_Color] forState:UIControlStateNormal];
     [_areaBtn addTarget:self action:@selector(regionPickBtn:) forControlEvents:UIControlEventTouchUpInside];
     [mobileView addSubview:_areaBtn];
@@ -120,7 +132,7 @@ static int timeNumber = 60;
     [mobileView addSubview:regionLine];
     
     _mobileText = [[UITextField alloc]initWithFrame:CGRectMake(72*ProportionAdapter +1, 0, screenWidth - ((16 +50+22)*ProportionAdapter +1), 50 *ProportionAdapter)];
-    _mobileText.placeholder = @"请输入手机号";
+    _mobileText.placeholder = @"请输入手机号码";
     _mobileText.tag = 187;
     _mobileText.clearButtonMode = UITextFieldViewModeAlways;
     _mobileText.font = [UIFont systemFontOfSize:17 *ProportionAdapter];
@@ -174,20 +186,26 @@ static int timeNumber = 60;
     if (_pickerView == nil) {
         _pickerView = [[UIPickerView alloc] init];
         _pickerView.showsSelectionIndicator = YES;
-        _pickerView.frame = CGRectMake(0, (screenHeight/3)*2, screenWidth, screenHeight/3);
+        _pickerView.backgroundColor = [UIColor whiteColor];
+        _pickerView.frame = CGRectMake(0, (screenHeight/3)*2 -64, screenWidth, screenHeight/3);
         
         _pickerView.delegate = self;
         _pickerView.dataSource = self;
         [self.view addSubview:_pickerView];
+    }else{
+        if (_pickerView.hidden == NO) {
+            _pickerView.hidden = YES;
+        }else{
+            _pickerView.hidden = NO;
+        }
     }
-    
-    _pickerView.hidden = NO;
 }
 #pragma mark -- 快速注册
 - (void)quickRegistrationBtn:(UIButton *)btn{
     [self.view endEditing:YES];
     
     JGHRegistersViewController *registerCtrl = [[JGHRegistersViewController alloc]initWithNibName:@"JGHRegistersViewController" bundle:nil];
+    registerCtrl.delegate = self;
     [self.navigationController pushViewController:registerCtrl animated:YES];
 }
 #pragma mark -- 登录
@@ -217,7 +235,7 @@ static int timeNumber = 60;
         [_dict setObject:_mobileText.text forKey:@"telphone"];
         [_dict setObject:_passwordText.text forKey:@"password"];
     }else{
-        if (_passwordText.text.length == 0) {
+        if (_codeText.text.length == 0) {
             [LQProgressHud showMessage:@"请输入验证码！"];
             return;
         }
@@ -225,18 +243,43 @@ static int timeNumber = 60;
         //验证码登录
         urlString = @"login/doLoginByTelphoneCheckCode";
         [_dict setObject:_mobileText.text forKey:@"telphone"];
-        [_dict setObject:_passwordText.text forKey:@"checkCode"];
+        [_dict setObject:_codeText.text forKey:@"checkCode"];
     }
     /*
      18637665180
      123456
      */
+    btn.userInteractionEnabled = NO;
     [[JsonHttp jsonHttp]httpRequestWithMD5:urlString JsonKey:nil withData:_dict failedBlock:^(id errType) {
-        
+        btn.userInteractionEnabled = YES;
     } completionBlock:^(id data) {
         NSLog(@"%@", data);
+        btn.userInteractionEnabled = YES;
+        
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+            NSDictionary *userDict = [NSDictionary dictionary];
+            if ([data objectForKey:@"user"]) {
+                userDict = [data objectForKey:@"user"];
+            }
             
+            NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
+            if ([userDict objectForKey:userID]) {
+                [userdef setObject:[userDict objectForKey:userID] forKey:userID];
+                [userdef setObject:[userDict objectForKey:Mobile] forKey:Mobile];
+                [userdef setObject:[userDict objectForKey:@"sex"] forKey:@"sex"];
+                //判断是否登录，用来社区的刷新
+                [userdef setObject:@1 forKey:@"isFirstEnter"];
+                [userdef setObject:[userDict objectForKey:@"userName"] forKey:@"userName"];
+                [userdef setObject:[userDict objectForKey:@"rongTk"] forKey:@"rongTk"];
+                [userdef synchronize];
+            }
+            
+            NSString *token = [[userDict objectForKey:@"rows"] objectForKey:@"rongTk"];
+            //注册融云
+            [self requestRCIMWithToken:token];
+            [self postAppJpost];
+            _reloadCtrlData();
+            [self.navigationController popViewControllerAnimated:YES];
         }else{
             if ([data objectForKey:@"packResultMsg"]) {
                 [LQProgressHud showMessage:[data objectForKey:@"packResultMsg"]];
@@ -254,68 +297,61 @@ static int timeNumber = 60;
             UMSocialAccountEntity *snsAccount = [[UMSocialAccountManager socialAccountDictionary]valueForKey:UMShareToWechatSession];
             
             NSMutableDictionary* dictWx = [[NSMutableDictionary alloc]init];
-            [dictWx setObject:@1 forKey:@"login"];
+//            [dictWx setObject:@1 forKey:@"login"];
             if (![Helper isBlankString:snsAccount.openId]) {
                 [dictWx setObject:snsAccount.openId forKey:@"openid"];
+                [_weiChetDict setObject:snsAccount.openId forKey:@"openid"];
+            }else{
+                [Helper alertViewWithTitle:@"微信登录失败" withBlock:^(UIAlertController *alertView) {
+                    [self presentViewController:alertView animated:YES completion:nil];
+                    return ;
+                }];
+                return ;
             }
-            [dictWx setObject:snsAccount.userName forKey:@"uid"];
-            [dictWx setObject:snsAccount.iconURL forKey:@"wxPicUrl"];
-            //            [dictWx setObject:snsAccount.gender forKey:@"sex"];
-            [[PostDataRequest sharedInstance] postDataRequest:@"UserTHirdLogin/weixinLogin.do" parameter:dictWx success:^(id respondsData) {
-                NSDictionary* dict = [NSJSONSerialization JSONObjectWithData:respondsData options:NSJSONReadingMutableContainers error:nil];
-                if ([[dict objectForKey:@"success"] integerValue] == 1) {
-                    //登陆成功
-                    UserInformationModel* model = [[UserInformationModel alloc]init];
-                    [model setValuesForKeysWithDictionary:[dict objectForKey:@"rows"]];
-                    [[UserDataInformation sharedInstance] saveUserInformation:model];
-                    NSNumber* i = [[dict objectForKey:@"rows"] objectForKey:@"userId"];
-                    [_dict setValue:i forKey:@"userId"];
-                    ////NSLog(@"%@",_userInfoDict);
-                    NSUserDefaults *user=[NSUserDefaults standardUserDefaults];
-                    //判断是否登录，用来社区的刷新
-                    [user setObject:@1 forKey:@"isFirstEnter"];
-                    [user setObject:[[dict objectForKey:@"rows"] objectForKey:@"mobile"] forKey:@"mobile"];//
-                    [user setObject:snsAccount.openId forKey:@"openId"];//
-                    [user setObject:snsAccount.userName forKey:@"uid"];//---
-                    [user setObject:@1 forKey:@"isWeChat"];//
-                    [user setObject:[[dict objectForKey:@"rows"] objectForKey:@"userId"] forKey:@"userId"];//
-                    if (![Helper isBlankString:[[dict objectForKey:@"rows"] objectForKey:@"pic"]]) {
-                        [user setObject:[[dict objectForKey:@"rows"] objectForKey:@"pic"] forKey:@"pic"];//
-                    }
-                    if (![Helper isBlankString:[[dict objectForKey:@"rows"] objectForKey:@"userName"] ]) {
-                        [user setObject:[[dict objectForKey:@"rows"] objectForKey:@"userName"] forKey:@"userName"];//
-                        
+            
+            [_weiChetDict setObject:snsAccount.userName forKey:@"uid"];
+            [_weiChetDict setObject:snsAccount.iconURL forKey:@"wxPicUrl"];
+//            [_weiChetDict setObject:snsAccount.gender forKey:@"sex"];
+            [[JsonHttp jsonHttp]httpRequestWithMD5:@"login/doWeiXinLogin" JsonKey:nil withData:dictWx failedBlock:^(id errType) {
+                
+            } completionBlock:^(id data) {
+                NSLog(@"%@", data);
+                if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+                    NSDictionary *userDict = [NSDictionary dictionary];
+                    if ([data objectForKey:@"user"]) {
+                        userDict = [data objectForKey:@"user"];
                     }
                     
-                    [user setObject:[[dict objectForKey:@"rows"] objectForKey:@"sex"] forKey:@"sex"];//
-                    [user setObject:[[dict objectForKey:@"rows"] objectForKey:@"rongTk"] forKey:@"rongTk"];//
-                    [user synchronize];
-                    //保存信息
-                    [self saveUserMobileAndPassword];
+                    NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
+                    if ([userDict objectForKey:userID]) {
+                        [userdef setObject:[userDict objectForKey:userID] forKey:userID];
+                        [userdef setObject:[userDict objectForKey:Mobile] forKey:Mobile];
+                        [userdef setObject:[userDict objectForKey:@"sex"] forKey:@"sex"];
+                        //判断是否登录，用来社区的刷新
+                        [userdef setObject:@1 forKey:@"isFirstEnter"];
+                        [userdef setObject:[userDict objectForKey:@"userName"] forKey:@"userName"];
+                        [userdef setObject:[userDict objectForKey:@"rongTk"] forKey:@"rongTk"];
+                        [userdef synchronize];
+                    }
                     
-                    //极光推送的id和数据
-                    [self postAppJpost];
-                    
-                    NSString *token = [[dict objectForKey:@"rows"] objectForKey:@"rongTk"];
+                    NSString *token = [[userDict objectForKey:@"rows"] objectForKey:@"rongTk"];
                     //注册融云
                     [self requestRCIMWithToken:token];
+                    [self postAppJpost];
+                    _reloadCtrlData();
                     [self.navigationController popViewControllerAnimated:YES];
+                }else{
+                    JGHBindingAccountViewController *bindctrl = [[JGHBindingAccountViewController alloc]initWithNibName:@"JGHBindingAccountViewController" bundle:nil];
+                    [bindctrl setWeiChetDict:_weiChetDict];
+                    [self.navigationController pushViewController:bindctrl animated:YES];
                 }
-                else
-                {
-                    MySetBindViewController* myVc = [[MySetBindViewController alloc]init];
-                    myVc.tokenStr = snsAccount.openId;
-                    myVc.uid = snsAccount.userName;
-                    myVc.pic = snsAccount.iconURL;
-                    [self.navigationController pushViewController:myVc animated:YES];
-                }
-                
-            } failed:^(NSError *error) {
-                [MBProgressHUD hideHUDForView:self.view animated:YES];
+            }];
+        }else{
+            [Helper alertViewWithTitle:@"微信登录失败" withBlock:^(UIAlertController *alertView) {
+                [self presentViewController:alertView animated:YES completion:nil];
+                return ;
             }];
         }
-        
-        
     });
     //得到的数据在回调Block对象形参respone的data属性
     [[UMSocialDataService defaultDataService] requestSnsInformation:UMShareToWechatSession  completion:^(UMSocialResponseEntity *response){
@@ -345,14 +381,14 @@ static int timeNumber = 60;
     _passwordText = [[UITextField alloc]initWithFrame:CGRectMake(72*ProportionAdapter +1, 0, screenWidth - ((16 +50+30+22+22)*ProportionAdapter +1), 50 *ProportionAdapter)];
     _passwordText.placeholder = @"请输入密码";
     _passwordText.font = [UIFont systemFontOfSize:17 *ProportionAdapter];
-    _passwordText.secureTextEntry = YES;
+    _passwordText.secureTextEntry = NO;
     _passwordText.clearButtonMode = UITextFieldViewModeAlways;
     _passwordText.delegate = self;
     [_passwordView addSubview:_passwordText];
     
     UIButton *forgotPasswordBtn = [[UIButton alloc]initWithFrame:CGRectMake(screenWidth - 88*ProportionAdapter, (15 + 10 +50 +50 +15) *ProportionAdapter, 80 *ProportionAdapter, 15 *ProportionAdapter)];
     [forgotPasswordBtn setTitle:@"忘记密码？" forState:UIControlStateNormal];
-    [forgotPasswordBtn setTitleColor:[UIColor colorWithHexString:Line_Color] forState:UIControlStateNormal];
+    [forgotPasswordBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
     forgotPasswordBtn.titleLabel.font = [UIFont systemFontOfSize:15 *ProportionAdapter];
     [forgotPasswordBtn addTarget:self action:@selector(forgotPasswordBtn:) forControlEvents:UIControlEventTouchUpInside];
     [_bgView addSubview:forgotPasswordBtn];
@@ -367,7 +403,7 @@ static int timeNumber = 60;
 #pragma mark -- 忘记密码
 - (void)forgotPasswordBtn:(UIButton *)btn{
     JGHForgotPasswordViewController *forCtrl = [[JGHForgotPasswordViewController alloc]initWithNibName:@"JGHForgotPasswordViewController" bundle:nil];
-    
+    forCtrl.delegate = self;
     [self.navigationController pushViewController:forCtrl animated:YES];
 }
 #pragma mark -- 验证码登录试图
@@ -382,7 +418,7 @@ static int timeNumber = 60;
     UIButton *passwordBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 50*ProportionAdapter, 50 *ProportionAdapter)];
     passwordBtn.titleLabel.textAlignment = NSTextAlignmentCenter;
     passwordBtn.titleLabel.font = [UIFont systemFontOfSize:17*ProportionAdapter];
-    [passwordBtn setImage:[UIImage imageNamed:@"icon_login_password"] forState:UIControlStateNormal];
+    [passwordBtn setImage:[UIImage imageNamed:@"icon_login_verify"] forState:UIControlStateNormal];
     [_codeView addSubview:passwordBtn];
     
     UILabel *passwordLine = [[UILabel alloc]initWithFrame:CGRectMake(50 *ProportionAdapter, 0, 1, 50 *ProportionAdapter)];
@@ -390,7 +426,8 @@ static int timeNumber = 60;
     [_codeView addSubview:passwordLine];
     
     _codeText = [[UITextField alloc]initWithFrame:CGRectMake(72*ProportionAdapter +1, 0, screenWidth - ((16 +50+2+22+130)*ProportionAdapter +1), 50 *ProportionAdapter)];
-    _codeText.placeholder = @"请输入验证码";
+    _codeText.placeholder = @"请输入动态密码";
+    _codeText.clearButtonMode = UITextFieldViewModeAlways;
     _codeText.font = [UIFont systemFontOfSize:17 *ProportionAdapter];
     _codeText.keyboardType = UIKeyboardTypeNumberPad;
     [_codeView addSubview:_codeText];
@@ -400,7 +437,7 @@ static int timeNumber = 60;
     [_codeView addSubview:codeLine];
     
     _getCodeBtn = [[UIButton alloc]initWithFrame:CGRectMake(codeLine.frame.origin.x +1, 18 *ProportionAdapter, 130*ProportionAdapter, 14*ProportionAdapter)];
-    [_getCodeBtn setTitle:@"获取验证码" forState:UIControlStateNormal];
+    [_getCodeBtn setTitle:@"获取动态密码" forState:UIControlStateNormal];
     [_getCodeBtn setTitleColor:[UIColor colorWithHexString:Bar_Color] forState:UIControlStateNormal];
     _getCodeBtn.titleLabel.font = [UIFont systemFontOfSize:17*ProportionAdapter];
     [_getCodeBtn addTarget:self action:@selector(getCodeBtn:) forControlEvents:UIControlEventTouchUpInside];
@@ -412,8 +449,10 @@ static int timeNumber = 60;
 - (void)entry:(UIButton *)btn{
     if (_passwordText.secureTextEntry == YES) {
         _passwordText.secureTextEntry = NO;
+        [btn setImage:[UIImage imageNamed:@"icn_login_eyeopen"] forState:UIControlStateNormal];
     }else{
         _passwordText.secureTextEntry = YES;
+        [btn setImage:[UIImage imageNamed:@"icn_login_eyeclose"] forState:UIControlStateNormal];
     }
 }
 #pragma mark -- 获取验证码
@@ -453,23 +492,26 @@ static int timeNumber = 60;
     _timer = nil;
 }
 - (void)autoMove {
-    timeNumber--;
-    [_getCodeBtn setTitle:[NSString stringWithFormat:@"(%d)后重新获取",timeNumber] forState:UIControlStateNormal];
-    if (timeNumber == 0) {
+    _timeNumber--;
+    [_getCodeBtn setTitle:[NSString stringWithFormat:@"(%tds)后重新获取", _timeNumber] forState:UIControlStateNormal];
+    if (_timeNumber == 0) {
         [_getCodeBtn setTitleColor:[UIColor colorWithHexString:Bar_Color] forState:UIControlStateNormal];
         _getCodeBtn.titleLabel.font = [UIFont systemFontOfSize:17*ProportionAdapter];
-        [_getCodeBtn setTitle:@"发送验证码" forState:UIControlStateNormal];
+        [_getCodeBtn setTitle:@"获取动态密码" forState:UIControlStateNormal];
         [_timer invalidate];
-        timeNumber = 60;
+        _timeNumber = 60;
         
         _getCodeBtn.userInteractionEnabled = YES;
     }
 }
-#pragma mark -- 密码登录
-- (void)passwordLoginBtn:(UIButton *)btn{
+#pragma mark -- 密码登录 View
+- (void)passwordLoginBtn{
     [self.view endEditing:YES];
     _loginLable.frame = CGRectMake(43 *ProportionAdapter, 50 *ProportionAdapter -2, screenWidth/2-86*ProportionAdapter, 2);
     [self.view bringSubviewToFront:_loginLable];
+    if ([_timer isValid]) {
+        [_timer invalidate];
+    }
     
     if (_showId != 0) {
         [_codeView removeFromSuperview];
@@ -479,7 +521,7 @@ static int timeNumber = 60;
     
     _showId = 0;
 }
-#pragma mark -- 验证码登录
+#pragma mark -- 验证码登录 View
 - (void)codeLoginBtn:(UIButton *)btn{
     [self.view endEditing:YES];
     _loginLable.frame = CGRectMake(43 *ProportionAdapter + screenWidth/2, 50 *ProportionAdapter -2, screenWidth/2-86*ProportionAdapter, 2);
@@ -503,7 +545,7 @@ static int timeNumber = 60;
 -(void)postAppJpost
 {
     NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
-    [dict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"userId"] forKey:@"userId"];
+    [dict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:userID] forKey:userID];
     
     if ([JPUSHService registrationID] != nil) {
         [dict setObject:[JPUSHService registrationID] forKey:@"jgpush"];
@@ -523,7 +565,7 @@ static int timeNumber = 60;
     [RCIM sharedRCIM].globalMessageAvatarStyle=RC_USER_AVATAR_CYCLE;
     [[RCIM sharedRCIM] setUserInfoDataSource:[UserDataInformation sharedInstance]];
     [[RCIM sharedRCIM] setGroupInfoDataSource:[UserDataInformation sharedInstance]];
-    NSString *str1=[NSString stringWithFormat:@"%@",[user objectForKey:@"userId"]];
+    NSString *str1=[NSString stringWithFormat:@"%@",[user objectForKey:userID]];
     NSString *str2=[NSString stringWithFormat:@"%@",[user objectForKey:@"userName"]];
     NSString *str3=[NSString stringWithFormat:@"http://www.dagolfla.com:8081/small_%@",[user objectForKey:@"pic"]];
     RCUserInfo *userInfo=[[RCUserInfo alloc] initWithUserId:str1 name:str2 portrait:str3];
@@ -609,8 +651,23 @@ static int timeNumber = 60;
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
-    [_areaBtn setTitle:_titleArray[row] forState:UIControlStateNormal];
+    NSMutableString *code = [_titleCodeArray[row] mutableCopy];
+    NSString *cddd = [code stringByReplacingOccurrencesOfString:@"0" withString:@""];
+    [_areaBtn setTitle:cddd forState:UIControlStateNormal];
     _codeing = [NSString stringWithFormat:@"%@", _titleCodeArray[row]];
+}
+#pragma mark -- 忘记密码 返回
+- (void)fillLoginViewAccount:(NSString *)account andPassword:(NSString *)password andCodeing:(NSString *)codeing{
+    [self passwordLoginBtn];
+    _mobileText.text = account;
+    _passwordText.text = password;
+    [_areaBtn setTitle:codeing forState:UIControlStateNormal];
+}
+#pragma mark -- 注册－－已经注册返回登录
+- (void)registerForLoginWithMobile:(NSString *)mobile andCodeing:(NSString *)code{
+    [self passwordLoginBtn];
+    _mobileText.text = mobile;
+    [_areaBtn setTitle:code forState:UIControlStateNormal];
 }
 
 - (void)didReceiveMemoryWarning {
