@@ -87,7 +87,7 @@
     [self createBtnView];
     
     // 获取通知设置
-    [self setinformMessege];
+    // [self setinformMessege];
 
 }
 

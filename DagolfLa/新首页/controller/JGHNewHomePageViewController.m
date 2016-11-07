@@ -466,7 +466,7 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
     
     if (btn.tag == 1001) {
         
-        [MobClick event:@"wonderfulPhotoAlbum"];
+        [MobClick event:@"activity"];
 
         _showLineID = 0;
         activityLable.hidden = NO;
@@ -527,7 +527,7 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
 - (void)didSelectMyTeamBtn:(UIButton *)btn{
     [self isLoginUp];
     // 友盟埋点
-    [MobClick event:@"teamTribe"];
+    [MobClick event:@"sz"];
     if (_indexModel.isHaveTeam == 0) {
         JGTeamMainhallViewController *teamMainCtrl = [[JGTeamMainhallViewController alloc]init];
         NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
