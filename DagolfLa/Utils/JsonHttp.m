@@ -461,13 +461,13 @@ static JsonHttp *jsonHttp = nil;
     NSLog(@"%@",url);
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     //申明请求的数据是json类型
-    manager.requestSerializer=[AFJSONRequestSerializer serializer];
+//    manager.requestSerializer=[AFJSONRequestSerializer serializer];
     //返回数据格式
     manager.responseSerializer = [AFJSONResponseSerializer serializer];
-    //    [AFJSONResponseSerializer serializerWithReadingOptions:NSJSONReadingMutableContainers];
+//    [AFJSONResponseSerializer serializerWithReadingOptions:NSJSONReadingMutableContainers];
     //https安全策略
-    //    manager.securityPolicy.allowInvalidCertificates = YES;
-    //    manager.securityPolicy.validatesDomainName = NO;
+//    manager.securityPolicy.allowInvalidCertificates = YES;
+//    manager.securityPolicy.validatesDomainName = NO;
     [manager.requestSerializer willChangeValueForKey:@"timeoutInterval"];
     manager.requestSerializer.timeoutInterval = 30.f;
     [manager.requestSerializer didChangeValueForKey:@"timeoutInterval"];
