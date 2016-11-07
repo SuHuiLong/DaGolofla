@@ -130,7 +130,7 @@
                 vc.reloadCtrlData = ^(){
                     
                 };
-                [self.navigationController pushViewController:vc animated:YES];
+                [self.navc pushViewController:vc animated:YES];
 
             } withBlock:^(UIAlertController *alertView) {
                 [self presentViewController:alertView animated:YES completion:nil];
@@ -486,7 +486,7 @@
                 vc.reloadCtrlData = ^(){
                     
                 };
-                [self.navigationController pushViewController:vc animated:YES];
+                [self.navc pushViewController:vc animated:YES];
 
             } withBlock:^(UIAlertController *alertView) {
                 [self presentViewController:alertView animated:YES completion:nil];
@@ -594,7 +594,7 @@
             vc.reloadCtrlData = ^(){
                 
             };
-            [self.navigationController pushViewController:vc animated:YES];
+            [self.navc pushViewController:vc animated:YES];
 
         } withBlock:^(UIAlertController *alertView) {
             [self presentViewController:alertView animated:YES completion:nil];
@@ -624,7 +624,7 @@
             vc.reloadCtrlData = ^(){
                 
             };
-            [self.navigationController pushViewController:vc animated:YES];
+            [self.navc pushViewController:vc animated:YES];
 
         } withBlock:^(UIAlertController *alertView) {
             [self presentViewController:alertView animated:YES completion:nil];
@@ -660,7 +660,7 @@
             vc.reloadCtrlData = ^(){
                 
             };
-            [self.navigationController pushViewController:vc animated:YES];
+            [self.navc pushViewController:vc animated:YES];
 
         } withBlock:^(UIAlertController *alertView) {
             [self presentViewController:alertView animated:YES completion:nil];
@@ -721,7 +721,7 @@
             vc.reloadCtrlData = ^(){
 
             };
-            [self.navigationController pushViewController:vc animated:YES];
+            [self.navc pushViewController:vc animated:YES];
 
         } withBlock:^(UIAlertController *alertView) {
             [self presentViewController:alertView animated:YES completion:nil];
@@ -741,7 +741,7 @@
             vc.reloadCtrlData = ^(){
                 
             };
-            [self.navigationController pushViewController:vc animated:YES];
+            [self.navc pushViewController:vc animated:YES];
 
         } withBlock:^(UIAlertController *alertView) {
             [self presentViewController:alertView animated:YES completion:nil];
@@ -898,7 +898,7 @@
             vc.reloadCtrlData = ^(){
                 
             };
-            [self.navigationController pushViewController:vc animated:YES];
+            [self.navc pushViewController:vc animated:YES];
 
         } withBlock:^(UIAlertController *alertView) {
             [self presentViewController:alertView animated:YES completion:nil];
@@ -938,7 +938,7 @@
             JGHLoginViewController *vc = [[JGHLoginViewController alloc] init];
             vc.reloadCtrlData = ^(){
             };
-            [self.navigationController pushViewController:vc animated:YES];
+            [self.navc pushViewController:vc animated:YES];
 
         } withBlock:^(UIAlertController *alertView) {
             [self presentViewController:alertView animated:YES completion:nil];
@@ -1108,7 +1108,7 @@
             JGHLoginViewController *vc = [[JGHLoginViewController alloc] init];
             vc.reloadCtrlData = ^(){
             };
-            [self.navigationController pushViewController:vc animated:YES];
+            [self.navc pushViewController:vc animated:YES];
 
         } withBlock:^(UIAlertController *alertView) {
             [self presentViewController:alertView animated:YES completion:nil];

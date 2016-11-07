@@ -54,8 +54,18 @@ static JsonHttp *jsonHttp = nil;
     // 4.发送请求
     [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
         
-        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
-        completionBlock(dic);
+        if (connectionError != nil) {
+            if ([[connectionError.userInfo objectForKey:@"_kCFStreamErrorCodeKey"] integerValue] == 61) {
+                [Helper downLoadDataOverrun];
+            }else{
+                [Helper netWorkError];
+            }
+            
+            failedBlock(connectionError);
+        }else{
+            NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+            completionBlock(dic);
+        }
     }];
     
 }
@@ -89,9 +99,18 @@ static JsonHttp *jsonHttp = nil;
     request.HTTPBody = data2;
     // 4.发送请求
     [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
-        
-        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
-        completionBlock(dic);
+        if (connectionError != nil) {
+            if ([[connectionError.userInfo objectForKey:@"_kCFStreamErrorCodeKey"] integerValue] == 61) {
+                [Helper downLoadDataOverrun];
+            }else{
+                [Helper netWorkError];
+            }
+
+            failedBlock(connectionError);
+        }else{
+            NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+            completionBlock(dic);
+        }
     }];
     
 }
@@ -127,9 +146,18 @@ static JsonHttp *jsonHttp = nil;
     request.HTTPBody = data2;
     // 4.发送请求
     [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
-        
-        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
-        completionBlock(dic);
+        if (connectionError != nil) {
+            if ([[connectionError.userInfo objectForKey:@"_kCFStreamErrorCodeKey"] integerValue] == 61) {
+                [Helper downLoadDataOverrun];
+            }else{
+                [Helper netWorkError];
+            }
+            
+            failedBlock(connectionError);
+        }else{
+            NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+            completionBlock(dic);
+        }
     }];
     
 }

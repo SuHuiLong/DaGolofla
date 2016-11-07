@@ -57,7 +57,13 @@
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:nil];
-    [super viewWillAppear:YES];
+//    [super viewWillAppear:YES];
+}
+
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    //    [[NSNotificationCenter defaultCenter] postNotificationName:@"show" object:nil];
 }
 
 - (void)viewDidLoad {
@@ -73,7 +79,7 @@
     item.tintColor=[UIColor whiteColor];
     self.navigationItem.leftBarButtonItem = item;
     
-    _titleArray = @[@"中国", @"香港", @"澳门", @"台湾"];
+    _titleArray = @[@"中国 0086", @"香港 00886", @"澳门 00852", @"台湾 00853"];
     _titleCodeArray = @[@"0086", @"00886", @"00852", @"00853"];
     _codeing = @"0086";
     _timeNumber = 60;
@@ -122,7 +128,7 @@
     _areaBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 50*ProportionAdapter, 50 *ProportionAdapter)];
     _areaBtn.titleLabel.textAlignment = NSTextAlignmentCenter;
     _areaBtn.titleLabel.font = [UIFont systemFontOfSize:17*ProportionAdapter];
-    [_areaBtn setTitle:@"86" forState:UIControlStateNormal];
+    [_areaBtn setTitle:@"086" forState:UIControlStateNormal];
     [_areaBtn setTitleColor:[UIColor colorWithHexString:Line_Color] forState:UIControlStateNormal];
     [_areaBtn addTarget:self action:@selector(regionPickBtn:) forControlEvents:UIControlEventTouchUpInside];
     [mobileView addSubview:_areaBtn];
@@ -670,7 +676,7 @@
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
     NSMutableString *code = [_titleCodeArray[row] mutableCopy];
-    NSString *cddd = [code stringByReplacingOccurrencesOfString:@"0" withString:@""];
+    NSString *cddd = [code substringFromIndex:2];
     [_areaBtn setTitle:cddd forState:UIControlStateNormal];
     _codeing = [NSString stringWithFormat:@"%@", _titleCodeArray[row]];
 }
