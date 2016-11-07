@@ -13,4 +13,6 @@
 typedef void(^ReloadCtrlData)();
 @property(nonatomic,copy)ReloadCtrlData reloadCtrlData;
 
+@property (nonatomic, assign)NSInteger index;
+
 @end

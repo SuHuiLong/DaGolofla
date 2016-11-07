@@ -116,7 +116,9 @@
         } withBlockSure:^{
 
             JGHLoginViewController *vc = [[JGHLoginViewController alloc] init];
-
+            vc.reloadCtrlData = ^(){
+                
+            };
             [self.navigationController pushViewController:vc animated:YES];
 
         } withBlock:^(UIAlertController *alertView) {

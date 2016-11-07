@@ -87,14 +87,19 @@
     [self createNavViewBtn];
 }
 - (void)backClcik{
-    _reloadCtrlData();
-    
-//    NSMutableArray *ctrlArray = [self.navigationController.viewControllers mutableCopy];
-//    [ctrlArray removeObjectAtIndex:1];
-//    self.navigationController.viewControllers = ctrlArray;
-//    NSLog(@"%@", ctrlArray);
+    if (_index == 1) {
+        [self.navigationController popToRootViewControllerAnimated:YES];
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"SetOutToIndexNot" object:nil];
+    }else{
+        _reloadCtrlData();
         
-    [self.navigationController popViewControllerAnimated:YES];
+        //    NSMutableArray *ctrlArray = [self.navigationController.viewControllers mutableCopy];
+        //    [ctrlArray removeObjectAtIndex:1];
+        //    self.navigationController.viewControllers = ctrlArray;
+        //    NSLog(@"%@", ctrlArray);
+        
+        [self.navigationController popViewControllerAnimated:YES];
+    }
 }
 - (void)createNavViewBtn{
     //密码登陆
@@ -530,6 +535,7 @@
 -(void)dealloc
 {
     _timer = nil;
+    [[NSNotificationCenter defaultCenter]removeObserver:self];
 }
 - (void)autoMove {
     _timeNumber--;

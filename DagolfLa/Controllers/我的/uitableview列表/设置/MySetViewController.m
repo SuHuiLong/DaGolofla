@@ -78,6 +78,7 @@
     _titleArray = @[@"通知设置",@"屏蔽管理",@"帮助反馈",@"清空缓存", @"实名认证", @"设置登录密码", @"设置交易密码"];
     
     
+    
     _dict = [[NSMutableDictionary alloc]init];
     [self uiConfig];
     
@@ -90,6 +91,7 @@
     // [self setinformMessege];
 
 }
+
 
 - (void)backBtn{
     [self.navigationController popToRootViewControllerAnimated:YES];
@@ -233,6 +235,7 @@
 
         
         JGHLoginViewController *vc = [[JGHLoginViewController alloc] init];
+        vc.index = 1;
         vc.reloadCtrlData = ^(){
             
         };

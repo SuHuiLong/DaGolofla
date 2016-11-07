@@ -553,11 +553,12 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
 }
 #pragma mark -- 开局记分
 - (void)didSelectStartScoreBtn:(UIButton *)btn{
-    [self isLoginUp];
-    [MobClick event:@"beginKeepScore"];
-    JGLScoreNewViewController *scoreCtrl = [[JGLScoreNewViewController alloc]init];
-    scoreCtrl.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:scoreCtrl animated:YES];
+    self.tabBarController.selectedIndex = 2;
+//    [self isLoginUp];
+//    [MobClick event:@"beginKeepScore"];
+//    JGLScoreNewViewController *scoreCtrl = [[JGLScoreNewViewController alloc]init];
+//    scoreCtrl.hidesBottomBarWhenPushed = YES;
+//    [self.navigationController pushViewController:scoreCtrl animated:YES];
 }
 #pragma mark -- 历史成绩
 - (void)didSelectHistoryResultsBtn:(UIButton *)btn{

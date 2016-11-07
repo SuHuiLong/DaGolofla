@@ -332,10 +332,14 @@
     _model = [[MeselfModel alloc] init];
     [self createTableView];
     
-
+    //监听推出登录后返回的通知
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(blackIndexCtrl) name:@"SetOutToIndexNot" object:nil];
 }
 
-
+#pragma mark --监听推出登录后返回的通知
+- (void)blackIndexCtrl{
+    self.tabBarController.selectedIndex = 0;
+}
 
 -(void)createTableView
 {
