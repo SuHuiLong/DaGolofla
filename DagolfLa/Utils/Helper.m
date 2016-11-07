@@ -187,11 +187,7 @@
 }
 //加载超时
 +(void)downLoadDataOverrun {
-    [LQProgressHud showMessage:@"请求数据超时..."];
-}
-//网络错误
-+(void)noNetWork {
-    [LQProgressHud showMessage:@"亲，没有网络哦！请检查您网络！"];
+    [LQProgressHud showMessage:@"亲，服务器开小差了，请稍后再试！"];
 }
 
 + (UIImageView *)rotate360DegreeWithImageView:(UIImageView *)imageView{

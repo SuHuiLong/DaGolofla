@@ -62,6 +62,9 @@ static JsonHttp *jsonHttp = nil;
             }
             
             failedBlock(connectionError);
+        }else if (connectionError == nil){
+            [Helper netWorkError];
+            failedBlock(connectionError);
         }else{
             NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
             completionBlock(dic);
@@ -106,6 +109,9 @@ static JsonHttp *jsonHttp = nil;
                 [Helper netWorkError];
             }
 
+            failedBlock(connectionError);
+        }else if (connectionError == nil){
+            [Helper netWorkError];
             failedBlock(connectionError);
         }else{
             NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
@@ -156,6 +162,9 @@ static JsonHttp *jsonHttp = nil;
                 [Helper netWorkError];
             }
             
+            failedBlock(connectionError);
+        }else if (connectionError == nil){
+            [Helper netWorkError];
             failedBlock(connectionError);
         }else{
             NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];

@@ -49,9 +49,6 @@
 //网络错误
 +(void)netWorkError;
 
-//网络错误
-+(void)noNetWork;
-
 //图片旋转
 + (UIImageView *)rotate360DegreeWithImageView:(UIImageView *)imageView;
 
@@ -114,5 +111,6 @@
 
 //登录PHP
 + (void)callPHPLoginUserId:(NSString *)userId;
+
 
 @end
