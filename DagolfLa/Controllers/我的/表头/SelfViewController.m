@@ -451,31 +451,7 @@
     //最下方视图
     else
     {
-        //        NSArray* array = @[@"对所有人开放",@"对球队成员开放",@"仅自己可见",@"对部分好友开放"];
-        //        UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
-        //        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        //        if (indexPath.row == 5 || indexPath.row == 9)
-        //        {
-        //            cell.backgroundColor = [UIColor colorWithRed:0.86f green:0.86f blue:0.86f alpha:1.00f];
-        //            return cell;
-        //        }
-        //        else
-        //        {
-        //            cell.textLabel.text = array[indexPath.row - 10];
-        //            cell.textLabel.font = [UIFont systemFontOfSize:14];
-        //            cell.tintColor = [UIColor greenColor];
-        //            current = [_userModel.infoState integerValue]+10;
-        //
-        //            if (indexPath.row == current) {
-        //                cell.accessoryType = UITableViewCellAccessoryCheckmark;
-        //            }
-        //            else{
-        //                cell.accessoryType = UITableViewCellAccessoryNone;
-        //            }
-        //
-        //            return cell;
-        //        }
-        
+        return nil;
     }
     
     return nil;
@@ -676,25 +652,11 @@
 
 -(void)post:(NSDictionary *)dict
 {
-    ////NSLog(@"%@",dict);
-//    [[PostDataRequest sharedInstance] postDataRequest:kUpDateData_URL parameter:dict success:^(id respondsData) {
-////        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:respondsData options:NSJSONReadingMutableContainers error:nil];
-//        //                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:[dict objectForKey:@"message"] delegate:self cancelButtonTitle:@"确认" otherButtonTitles:nil, nil];
-//        //                [alertView show];
-//        
-//    } failed:^(NSError *error) {
-//       
-//    }];
     
     [[JsonHttp jsonHttp]httpRequestWithMD5:@"user/doUpdateUserInfo" JsonKey:@"TUser" withData:dict failedBlock:^(id errType) {
         
     } completionBlock:^(id data) {
-        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
-            [LQProgressHud showMessage:@"修改成功"];
-        }
-        else{
-            [LQProgressHud showMessage:@"修改失败"];
-        }
+        
     }];
     
     
