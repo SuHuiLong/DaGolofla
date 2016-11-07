@@ -57,9 +57,6 @@ static JsonHttp *jsonHttp = nil;
         if (connectionError != nil) {
             [Helper netWorkError];
             failedBlock(connectionError);
-        }else if (connectionError == nil){
-            [Helper downLoadDataOverrun];
-            failedBlock(connectionError);
         }else{
             NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
             completionBlock(dic);
@@ -100,13 +97,18 @@ static JsonHttp *jsonHttp = nil;
         if (connectionError != nil) {
             [Helper netWorkError];
             failedBlock(connectionError);
-        }else if (connectionError == nil){
-            [Helper downLoadDataOverrun];
-            failedBlock(connectionError);
         }else{
             NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
             completionBlock(dic);
         }
+        
+        /*
+         else if (connectionError == nil){
+         //response == nil
+         [Helper downLoadDataOverrun];
+         failedBlock(connectionError);
+         }
+         */
     }];
     
 }
@@ -147,9 +149,6 @@ static JsonHttp *jsonHttp = nil;
     [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
         if (connectionError != nil) {
             [Helper netWorkError];
-            failedBlock(connectionError);
-        }else if (connectionError == nil){
-            [Helper downLoadDataOverrun];
             failedBlock(connectionError);
         }else{
             NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
@@ -192,12 +191,12 @@ static JsonHttp *jsonHttp = nil;
             }
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             
-            if ([[error.userInfo objectForKey:@"_kCFStreamErrorCodeKey"] integerValue] == -2102) {
-                [Helper netWorkError];
-                
-            }else{
+//            if ([[error.userInfo objectForKey:@"_kCFStreamErrorCodeKey"] integerValue] == -2102) {
+//                [Helper netWorkError];
+//                
+//            }else{
                 [Helper downLoadDataOverrun];
-            }
+//            }
 
             if (failedBlock) {
                 failedBlock(error);
@@ -223,12 +222,12 @@ static JsonHttp *jsonHttp = nil;
                     completionBlock(responseObject);
                 }
             } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                if ([[error.userInfo objectForKey:@"_kCFStreamErrorCodeKey"] integerValue] == -2102) {
-                    [Helper netWorkError];
-                    
-                }else{
+//                if ([[error.userInfo objectForKey:@"_kCFStreamErrorCodeKey"] integerValue] == -2102) {
+//                    [Helper netWorkError];
+//                    
+//                }else{
                     [Helper downLoadDataOverrun];
-                }
+//                }
                 
                 if (failedBlock) {
                     failedBlock(error);
@@ -259,12 +258,12 @@ static JsonHttp *jsonHttp = nil;
                     completionBlock(responseObject);
                 }
             } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                if ([[error.userInfo objectForKey:@"_kCFStreamErrorCodeKey"] integerValue] == -2102) {
-                    [Helper netWorkError];
-                    
-                }else{
+//                if ([[error.userInfo objectForKey:@"_kCFStreamErrorCodeKey"] integerValue] == -2102) {
+//                    [Helper netWorkError];
+//                    
+//                }else{
                     [Helper downLoadDataOverrun];
-                }
+//                }
                 
                 if (failedBlock) {
                     failedBlock(error);
@@ -359,11 +358,11 @@ static JsonHttp *jsonHttp = nil;
            completionBlock(dataDict);
        }else{
            
-           if (connectionError != nil) {
+//           if (connectionError != nil) {
                [Helper netWorkError];
-           }else {
-               [Helper downLoadDataOverrun];
-           }
+//           }else {
+//               [Helper downLoadDataOverrun];
+//           }
            
            failedBlock(connectionError);
        }
@@ -450,11 +449,11 @@ static JsonHttp *jsonHttp = nil;
         if ([[NSString stringWithFormat:@"%@", [dataDict objectForKey:@"code"]] isEqualToString:@"1"]) {
             completionBlock(dataDict);
         }else{
-            if (connectionError != nil) {
+//            if (connectionError != nil) {
                 [Helper netWorkError];
-            }else {
-                [Helper downLoadDataOverrun];
-            }
+//            }else {
+//                [Helper downLoadDataOverrun];
+//            }
 
             failedBlock(connectionError);
         }
