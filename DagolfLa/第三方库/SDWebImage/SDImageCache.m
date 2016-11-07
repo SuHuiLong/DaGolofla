@@ -386,6 +386,7 @@ BOOL ImageDataHasPNGPreffix(NSData *data) {
 
 - (void)cleanDisk {
     [self cleanDiskWithCompletionBlock:nil];
+    [self.memCache removeAllObjects];
 }
 
 - (void)cleanDiskWithCompletionBlock:(SDWebImageNoParamsBlock)completionBlock {
