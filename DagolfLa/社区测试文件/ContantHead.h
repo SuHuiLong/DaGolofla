@@ -26,6 +26,7 @@ typedef NS_ENUM(NSInteger, GestureType) {
 //userId
 #define userID @"userId"
 #define Mobile @"mobile"
+#define PHPState @"phpstate"
 #define DEFAULF_USERID [[NSUserDefaults standardUserDefaults] objectForKey:@"userId"]
 //提示框时间
 #define TIMESlEEP 2.0
