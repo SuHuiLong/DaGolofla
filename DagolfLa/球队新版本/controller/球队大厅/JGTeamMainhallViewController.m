@@ -235,7 +235,7 @@
     self.navigationItem.rightBarButtonItem = bar;
     _page = 0;
     self.title = @"搜索球队";
-    _tableView = [[JGTeamChannelTableView alloc] initWithFrame:CGRectMake(0, 44, screenWidth, screenHeight-44) style:(UITableViewStylePlain)];
+    _tableView = [[JGTeamChannelTableView alloc] initWithFrame:CGRectMake(0, 44, screenWidth, screenHeight-90 * ProportionAdapter) style:(UITableViewStylePlain)];
 //    _tableView = [[JGTeamChannelTableView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight - 40)];
     _tableView.separatorStyle = UITableViewCellAccessoryDisclosureIndicator;
 
