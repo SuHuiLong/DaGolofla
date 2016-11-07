@@ -119,10 +119,10 @@
         [dictUser setObject:strMD forKey:@"md5"];
         
         [[JsonHttp jsonHttp]httpRequest:@"user/getUserInfo" JsonKey:nil withData:dictUser requestMethod:@"GET" failedBlock:^(id errType) {
-            
+            [MBProgressHUD hideHUDForView:self.view animated:YES];
         } completionBlock:^(id data) {
+            [MBProgressHUD hideHUDForView:self.view animated:YES];
             if ([[data objectForKey:@"packSuccess"]boolValue]) {
-                [MBProgressHUD hideHUDForView:self.view animated:YES];
                 [_model setValuesForKeysWithDictionary:[data objectForKey:@"user"]];
                 NSIndexSet *indexSet=[[NSIndexSet alloc]initWithIndex:0];
                 [_tableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationAutomatic];
@@ -161,7 +161,6 @@
         return;
     }
 }
-
 
 #pragma mark -- 网页 跳转活动详情
 - (void)PushJGTeamActibityNameViewController:(NSNotification *)not{

@@ -46,6 +46,7 @@
 #import "NoteHandlle.h"
 #import "NoteModel.h"
 #import "AddNoteViewController.h"
+#import "SXPickPhoto.h"
 
 
 static NSString *const orderDetailCellIdentifier = @"OtherDataTableViewCell";
@@ -78,6 +79,7 @@ static NSString *const orderDetailCellIdentifier = @"OtherDataTableViewCell";
     NSMutableArray *_picArr;
     
 }
+@property (nonatomic,strong)SXPickPhoto * pickPhoto;//相册类
 
 @end
 
@@ -114,7 +116,7 @@ static NSString *const orderDetailCellIdentifier = @"OtherDataTableViewCell";
     self.view.backgroundColor = [UIColor whiteColor];
     NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
     [user setValue:@"00" forKey:@"data"];
-    
+    _pickPhoto = [[SXPickPhoto alloc]init];
     _dataArray = [NSMutableArray array];
     [self detailPostData];
     
@@ -342,6 +344,7 @@ static NSString *const orderDetailCellIdentifier = @"OtherDataTableViewCell";
 
 
 -(void)gerenPostData {
+    //自己
     if ([DEFAULF_USERID integerValue] == [_strMoodId integerValue]) {
         NSMutableDictionary* dictUser = [[NSMutableDictionary alloc]init];
         [dictUser setObject:DEFAULF_USERID forKey:@"userKey"];
@@ -357,9 +360,10 @@ static NSString *const orderDetailCellIdentifier = @"OtherDataTableViewCell";
                 
                 self.title = _model.userName;
                 
-                [_backImg sd_setImageWithURL:[Helper imageUrl:_model.backPic] placeholderImage:[UIImage imageNamed:@"selfBackPic.jpg"]];
+//                [_backImg sd_setImageWithURL:[Helper imageUrl:_model.backPic] placeholderImage:[UIImage imageNamed:@"selfBackPic.jpg"]];
+                [_backImg sd_setImageWithURL:[Helper setImageIconUrl:@"user/head" andTeamKey:[_strMoodId integerValue] andIsSetWidth:NO andIsBackGround:YES] placeholderImage:[UIImage imageNamed:@"selfBackPic.jpg"]];
 //                [_iconImg sd_setImageWithURL:[Helper imageIconUrl:_model.pic] placeholderImage:[UIImage imageNamed:@"zwt"]];
-                [_iconImg sd_setImageWithURL:[Helper setImageIconUrl:@"user" andTeamKey:[DEFAULF_USERID integerValue] andIsSetWidth:YES andIsBackGround:NO] placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
+                [_iconImg sd_setImageWithURL:[Helper setImageIconUrl:@"user" andTeamKey:[_strMoodId integerValue] andIsSetWidth:YES andIsBackGround:NO] placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
                 
                 //替换备注名称
                 NoteModel *model = [NoteHandlle selectNoteWithUID:self.strMoodId];
@@ -407,8 +411,10 @@ static NSString *const orderDetailCellIdentifier = @"OtherDataTableViewCell";
                 
                 self.title = _model.userName;
                 
-                [_backImg sd_setImageWithURL:[Helper imageUrl:_model.backPic] placeholderImage:[UIImage imageNamed:@"selfBackPic.jpg"]];
-                [_iconImg sd_setImageWithURL:[Helper imageIconUrl:_model.pic] placeholderImage:[UIImage imageNamed:@"zwt"]];
+//                [_backImg sd_setImageWithURL:[Helper imageUrl:_model.backPic] placeholderImage:[UIImage imageNamed:@"selfBackPic.jpg"]];
+                [_backImg sd_setImageWithURL:[Helper setImageIconUrl:@"user/head" andTeamKey:[_strMoodId integerValue] andIsSetWidth:NO andIsBackGround:YES] placeholderImage:[UIImage imageNamed:@"selfBackPic.jpg"]];
+                [_iconImg sd_setImageWithURL:[Helper setImageIconUrl:@"user" andTeamKey:[_strMoodId integerValue] andIsSetWidth:YES andIsBackGround:NO] placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
+                
                 
                 //替换备注名称
                 NoteModel *model = [NoteHandlle selectNoteWithUID:self.strMoodId];
@@ -822,64 +828,55 @@ static NSString *const orderDetailCellIdentifier = @"OtherDataTableViewCell";
 
 #pragma mark - 调用手机相机和相册
 - (void)usePhonePhotoAndCamera {
-    UIActionSheet *selestSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"相机",@"相册", nil];
-    [selestSheet showInView:self.view];
-}
-- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if (buttonIndex == 0) {
-        [self usePhonCamera];
-    }else if (buttonIndex == 1) {
-        [self usePhonePhoto];
-    }
-}
-#pragma mark - 调用相机
-- (void)usePhonCamera {
-    UIImagePickerControllerSourceType sourceType = UIImagePickerControllerSourceTypeCamera;
-    UIImagePickerController *picker = [[UIImagePickerController alloc] init];
-    picker.delegate = self;
-    picker.allowsEditing = YES;
-    picker.sourceType = sourceType;
-    
-    [self presentViewController:picker animated:YES completion:nil];
-}
-#pragma mark - 调用相册
-- (void)usePhonePhoto {
-    UIImagePickerControllerSourceType sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-    UIImagePickerController *picker = [[UIImagePickerController alloc] init];
-    picker.delegate = self;
-    picker.allowsEditing = YES;
-    picker.sourceType = sourceType;
-    [self presentViewController:picker animated:YES completion:nil];
-}
-- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
-    [picker dismissViewControllerAnimated:YES completion:nil];
-}
-- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
-    
-    UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
-    
-    NSData *photoData = UIImageJPEGRepresentation(image, 0.5);
-    
-    [self dismissViewControllerAnimated:YES completion:nil];
-    NSMutableArray *photoArr = [NSMutableArray array];
-    
-    [photoArr addObject:photoData];
-    
-    //NSLog(@"%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"userId"]);
-    [[PostDataRequest sharedInstance] postDataAndImageRequestBackPic:@"user/updateUserInfo.do" parameter:@{@"userId":[[NSUserDefaults standardUserDefaults] objectForKey:@"userId"]} imageDataArr:photoArr success:^(id respondsData) {
-        [_backImg setImage:image];
-    } failed:^(NSError *error) {
-        
+    //    _photos = 10;
+    UIAlertAction * act1 = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        //        _photos = 1;
+    }];
+    //拍照：
+    UIAlertAction * act2 = [UIAlertAction actionWithTitle:@"拍照" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        //打开相机
+        _pickPhoto.picker.allowsEditing = NO;
+        [_pickPhoto ShowTakePhotoWithController:self andWithBlock:^(NSObject *Data) {
+            NSMutableArray* arrayData = [NSMutableArray arrayWithObject:UIImageJPEGRepresentation((UIImage *)Data, 0.7)];
+            [self imageArray:arrayData withImage:(UIImage *)Data];
+            
+        }];
+    }];
+    //相册
+    UIAlertAction * act3 = [UIAlertAction actionWithTitle:@"相册" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        //打开相册
+        _pickPhoto.picker.allowsEditing = NO;
+        [_pickPhoto SHowLocalPhotoWithController:self andWithBlock:^(NSObject *Data) {
+            NSMutableArray* arrayData = [NSMutableArray arrayWithObject:UIImageJPEGRepresentation((UIImage *)Data, 0.7)];
+            [self imageArray:arrayData withImage:(UIImage *)Data];
+        }];
     }];
     
-    [self dismissViewControllerAnimated:YES completion:nil];
+    UIAlertController * aleVC = [UIAlertController alertControllerWithTitle:@"提示" message:@"选择图片" preferredStyle:UIAlertControllerStyleActionSheet];
+    [aleVC addAction:act1];
+    [aleVC addAction:act2];
+    [aleVC addAction:act3];
     
-    NSIndexPath *indexPath=[NSIndexPath indexPathForRow:0 inSection:0];
-    [_tableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath,nil] withRowAnimation:UITableViewRowAnimationNone];
+    [self presentViewController:aleVC animated:YES completion:nil];
 }
 
 
-
+#pragma mark --上传图片方法
+-(void)imageArray:(NSMutableArray *)array withImage:(UIImage *)image
+{
+    NSString* strTimeKey = [NSString stringWithFormat:@"%@_background",DEFAULF_USERID];
+    // 上传图片
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    [dict setObject:strTimeKey forKey:@"data"];
+    [dict setObject:TYPE_USER_HEAD forKey:@"nType"];
+    [dict setObject:PHOTO_DAGOLFLA forKey:@"tag"];
+    
+    [[JsonHttp jsonHttp]httpRequestImageOrVedio:@"1" withData:dict andDataArray:array failedBlock:^(id errType) {
+    } completionBlock:^(id data) {
+//        [_backImg setImage:image];
+        [_backImg sd_setImageWithURL:[Helper setImageIconUrl:@"user/head" andTeamKey:[DEFAULF_USERID integerValue] andIsSetWidth:NO andIsBackGround:YES] placeholderImage:[UIImage imageNamed:@"selfBackPic.jpg"]];
+    }];
+}
 
 
 -(void)LazyPageScrollViewPageChange:(LazyPageScrollView *)pageScrollView Index:(NSInteger)index PreIndex:(NSInteger)preIndex

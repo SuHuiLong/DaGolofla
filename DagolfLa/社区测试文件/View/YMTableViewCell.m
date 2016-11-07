@@ -198,7 +198,8 @@
     tempDate = ymData;
 #pragma mark -  //头像 昵称 简介
     //    [_userHeaderImage sd_setImageWithURL:[NSURL URLWithString:tempDate.messageBody.posterImgstr]];
-    [_userHeaderImage sd_setImageWithURL:[NSURL URLWithString:tempDate.messageBody.posterImgstr] placeholderImage:[UIImage imageNamed:@"moren.jpg"]];
+//    [_userHeaderImage sd_setImageWithURL:[NSURL URLWithString:tempDate.messageBody.posterImgstr] placeholderImage:[UIImage imageNamed:@"moren.jpg"]];
+    [_userHeaderImage sd_setImageWithURL:[Helper setImageIconUrl:@"user" andTeamKey:[tempDate.uId integerValue] andIsSetWidth:YES andIsBackGround:NO] placeholderImage:[UIImage imageNamed:@"moren.jpg"]];
     _userHeaderImage.tag = [ymData.uId intValue];
     
     
