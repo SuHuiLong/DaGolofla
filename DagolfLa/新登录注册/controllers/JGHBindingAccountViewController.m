@@ -111,6 +111,8 @@
 }
 #pragma mark -- 区域选择
 - (IBAction)mobileBtn:(UIButton *)sender {
+    [_mobiletext resignFirstResponder];
+    [_codeText resignFirstResponder];
     if (_pickerView == nil) {
         _pickerView = [[UIPickerView alloc] init];
         _pickerView.showsSelectionIndicator = YES;

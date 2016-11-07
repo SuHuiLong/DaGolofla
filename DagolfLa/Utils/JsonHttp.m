@@ -88,7 +88,7 @@ static JsonHttp *jsonHttp = nil;
     
     // 1.创建请求
     NSURL *urls = [NSURL URLWithString:[NSString stringWithFormat:@"%@?md5=%@",url ,str]];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:urls];
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc]initWithURL:urls cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:20.0f];
     request.HTTPMethod = @"POST";
     
     // 2.设置请求头
@@ -135,7 +135,9 @@ static JsonHttp *jsonHttp = nil;
     
     // 1.创建请求
     NSURL *urls = [NSURL URLWithString:[NSString stringWithFormat:@"%@?md5=%@",url ,str]];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:urls];
+//    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:urls];
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc]initWithURL:urls cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:20.0f];
+    
     request.HTTPMethod = @"GET";
     
     // 2.设置请求头
@@ -144,6 +146,7 @@ static JsonHttp *jsonHttp = nil;
     NSData *data2 =[paraStr dataUsingEncoding:NSUTF8StringEncoding];
     
     request.HTTPBody = data2;
+    
     // 4.发送请求
     [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
         if (connectionError != nil) {

@@ -134,6 +134,9 @@
 */
 
 - (IBAction)mobileBtn:(UIButton *)sender {
+    [_mobileText resignFirstResponder];
+    [_passwordText resignFirstResponder];
+    
     if (_pickerView == nil) {
         _pickerView = [[UIPickerView alloc] init];
         _pickerView.showsSelectionIndicator = YES;
