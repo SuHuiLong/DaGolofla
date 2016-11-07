@@ -527,7 +527,7 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
 - (void)didSelectMyTeamBtn:(UIButton *)btn{
     [self isLoginUp];
     // 友盟埋点
-    [MobClick event:@"sz"];
+    [MobClick event:@"teamTribe"];
     if (_indexModel.isHaveTeam == 0) {
         JGTeamMainhallViewController *teamMainCtrl = [[JGTeamMainhallViewController alloc]init];
         NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
