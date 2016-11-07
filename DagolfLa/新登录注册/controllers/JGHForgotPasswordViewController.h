@@ -8,17 +8,20 @@
 
 #import "ViewController.h"
 
-@protocol JGHForgotPasswordViewControllerDelegate <NSObject>
-
-@optional
-
-- (void)fillLoginViewAccount:(NSString *)account andPassword:(NSString *)password andCodeing:(NSString *)codeing;
-
-@end
+//@protocol JGHForgotPasswordViewControllerDelegate <NSObject>
+//
+//@optional
+//
+//- (void)fillLoginViewAccount:(NSString *)account andPassword:(NSString *)password andCodeing:(NSString *)codeing;
+//
+//@end
 
 @interface JGHForgotPasswordViewController : ViewController
 
-@property (weak, nonatomic)id <JGHForgotPasswordViewControllerDelegate> delegate;
+typedef void(^BlackCtrl)();
+@property(nonatomic,copy)BlackCtrl blackCtrl;
+
+//@property (weak, nonatomic)id <JGHForgotPasswordViewControllerDelegate> delegate;
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *oneViewLeft;//8
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *oneViewTop;//10

@@ -15,7 +15,7 @@
 #import "JGHRegistersViewController.h"
 #import "JGHBindingAccountViewController.h"
 
-@interface JGHLoginViewController ()<UITextFieldDelegate, UIPickerViewDataSource,UIPickerViewDelegate, JGHForgotPasswordViewControllerDelegate, JGHRegistersViewControllerDelegate>
+@interface JGHLoginViewController ()<UITextFieldDelegate, UIPickerViewDataSource,UIPickerViewDelegate, JGHRegistersViewControllerDelegate>
 
 {
     UIView *_bgView;
@@ -94,7 +94,7 @@
     [passwordLoginBtn setBackgroundColor:[UIColor whiteColor]];
     [self.view addSubview:passwordLoginBtn];
     
-    _loginLable = [[UILabel alloc]initWithFrame:CGRectMake(43 *ProportionAdapter, 50 *ProportionAdapter -2, screenWidth/2-86*ProportionAdapter, 2)];
+    _loginLable = [[UILabel alloc]initWithFrame:CGRectMake(30 *ProportionAdapter, 50 *ProportionAdapter -2, screenWidth/2-60*ProportionAdapter, 2)];
     _loginLable.backgroundColor = [UIColor colorWithHexString:Bar_Color];
     [self.view addSubview:_loginLable];
     
@@ -277,6 +277,8 @@
                 [userdef setObject:[userDict objectForKey:@"rongTk"] forKey:@"rongTk"];
                 [userdef synchronize];
                 
+                NSLog(@"----%@", DEFAULF_USERID);
+                
                 NSString *token = [[userDict objectForKey:@"rows"] objectForKey:@"rongTk"];
                 //注册融云
                 [self requestRCIMWithToken:token];
@@ -415,7 +417,9 @@
 #pragma mark -- 忘记密码
 - (void)forgotPasswordBtn:(UIButton *)btn{
     JGHForgotPasswordViewController *forCtrl = [[JGHForgotPasswordViewController alloc]initWithNibName:@"JGHForgotPasswordViewController" bundle:nil];
-    forCtrl.delegate = self;
+    forCtrl.blackCtrl = ^(){
+        _reloadCtrlData();
+    };
     [self.navigationController pushViewController:forCtrl animated:YES];
 }
 #pragma mark -- 验证码登录试图
@@ -486,8 +490,6 @@
         NSLog(@"%@", data);
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
             //
-            [_getCodeBtn setTitleColor:[UIColor colorWithHexString:Line_Color] forState:UIControlStateNormal];
-            _getCodeBtn.titleLabel.font = [UIFont systemFontOfSize:14*ProportionAdapter];
             _timer=[NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(autoMove) userInfo:nil repeats:YES];
             [[NSRunLoop currentRunLoop] addTimer:_timer forMode:NSRunLoopCommonModes];
             
@@ -505,6 +507,8 @@
 }
 - (void)autoMove {
     _timeNumber--;
+    [_getCodeBtn setTitleColor:[UIColor colorWithHexString:Line_Color] forState:UIControlStateNormal];
+    _getCodeBtn.titleLabel.font = [UIFont systemFontOfSize:14*ProportionAdapter];
     [_getCodeBtn setTitle:[NSString stringWithFormat:@"(%tds)后重新获取", _timeNumber] forState:UIControlStateNormal];
     if (_timeNumber == 0) {
         [_getCodeBtn setTitleColor:[UIColor colorWithHexString:Bar_Color] forState:UIControlStateNormal];
@@ -519,7 +523,7 @@
 #pragma mark -- 密码登录 View
 - (void)passwordLoginBtn{
     [self.view endEditing:YES];
-    _loginLable.frame = CGRectMake(43 *ProportionAdapter, 50 *ProportionAdapter -2, screenWidth/2-86*ProportionAdapter, 2);
+    _loginLable.frame = CGRectMake(30 *ProportionAdapter, 50 *ProportionAdapter -2, screenWidth/2-60*ProportionAdapter, 2);
     [self.view bringSubviewToFront:_loginLable];
     if ([_timer isValid]) {
         [_timer invalidate];
@@ -536,13 +540,15 @@
 #pragma mark -- 验证码登录 View
 - (void)codeLoginBtn:(UIButton *)btn{
     [self.view endEditing:YES];
-    _loginLable.frame = CGRectMake(43 *ProportionAdapter + screenWidth/2, 50 *ProportionAdapter -2, screenWidth/2-86*ProportionAdapter, 2);
+    _loginLable.frame = CGRectMake(30 *ProportionAdapter + screenWidth/2, 50 *ProportionAdapter -2, screenWidth/2-60*ProportionAdapter, 2);
     [self.view bringSubviewToFront:_loginLable];
     
     if (_showId == 1) {
         [_passwordView removeFromSuperview];
     }
 
+    _timeNumber = 60;
+    
     [self createlogInView];
     
     _showId = 1;
@@ -669,17 +675,17 @@
     _codeing = [NSString stringWithFormat:@"%@", _titleCodeArray[row]];
 }
 #pragma mark -- 忘记密码 返回
-- (void)fillLoginViewAccount:(NSString *)account andPassword:(NSString *)password andCodeing:(NSString *)codeing{
-    [self passwordLoginBtn];
-    _mobileText.text = account;
-    _passwordText.text = password;
-    [_areaBtn setTitle:codeing forState:UIControlStateNormal];
-}
+//- (void)fillLoginViewAccount:(NSString *)account andPassword:(NSString *)password andCodeing:(NSString *)codeing{
+//    [self passwordLoginBtn];
+//    _mobileText.text = account;
+//    _passwordText.text = password;
+//    [_areaBtn setTitle:[codeing stringByReplacingOccurrencesOfString:@"0" withString:@""] forState:UIControlStateNormal];
+//}
 #pragma mark -- 注册－－已经注册返回登录
 - (void)registerForLoginWithMobile:(NSString *)mobile andCodeing:(NSString *)code{
     [self passwordLoginBtn];
     _mobileText.text = mobile;
-    [_areaBtn setTitle:code forState:UIControlStateNormal];
+    [_areaBtn setTitle:[code stringByReplacingOccurrencesOfString:@"0" withString:@""] forState:UIControlStateNormal];
 }
 
 - (void)didReceiveMemoryWarning {

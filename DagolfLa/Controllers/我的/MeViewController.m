@@ -471,7 +471,7 @@
         if (indexPath.section == 0) {
             PersonHomeController* selfVc = [[PersonHomeController alloc]init];
             selfVc.sexType = [_model.sex integerValue];
-            selfVc.strMoodId = [[NSUserDefaults standardUserDefaults] objectForKey:@"userId"];
+            selfVc.strMoodId = _model.userId;
             [self.navigationController pushViewController:selfVc animated:YES];
         }
         else if (indexPath.section == 1)
