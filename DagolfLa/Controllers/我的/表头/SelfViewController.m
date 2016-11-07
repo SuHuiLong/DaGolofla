@@ -26,6 +26,7 @@
 #define kUpDateData_URL @"user/updateUserInfo.do"
 #import <RongIMKit/RongIMKit.h>
 #import "UserDataInformation.h"
+#import "SXPickPhoto.h"
 @interface SelfViewController ()<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UIActionSheetDelegate>
 {
     UITableView* _tableView;
@@ -46,14 +47,16 @@
     NSMutableString* _str;
     
     NSData *_photoData;
-    NSMutableArray* _arrayPage;
-    NSMutableArray* _arrayChange;
+    NSMutableArray* _arrayPage;//图片数组
+    NSMutableArray* _arrayChange;//跟换的行业等文字
     
     BOOL _birIsClick;
     BOOL _jobIsClick;
     
     NSString* _strPIC;
+//    NSMutableArray* _arrayData;
 }
+@property (nonatomic,strong)SXPickPhoto * pickPhoto;//相册类
 
 
 
@@ -63,7 +66,6 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    
     
     UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"backL"] style:UIBarButtonItemStylePlain target:self action:@selector(backButtonClcik)];
     item.tintColor=[UIColor whiteColor];
@@ -153,6 +155,7 @@
     _scrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight)];
     [self.view addSubview:_scrollView];
     
+    _pickPhoto = [[SXPickPhoto alloc]init];
     _arrayPage = [[NSMutableArray alloc]init];
     _arrayChange = [[NSMutableArray alloc]init];
     _arrayChange = [NSMutableArray arrayWithArray:@[@"请选择日期",@"请选择行业"]];
@@ -235,7 +238,9 @@
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
         if (isClick == NO) {
-            [cell.iconImage sd_setImageWithURL:[Helper imageIconUrl:_model.pic] placeholderImage:[UIImage imageNamed:@"zwt"]];
+//            [cell.iconImage sd_setImageWithURL:[Helper imageIconUrl:_model.pic] placeholderImage:[UIImage imageNamed:@"zwt"]];
+            [cell.iconImage sd_setImageWithURL:[Helper setImageIconUrl:@"user" andTeamKey:[DEFAULF_USERID integerValue] andIsSetWidth:YES andIsBackGround:NO] placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
+
         }
         else
         {
@@ -243,7 +248,9 @@
                 cell.iconImage.image = [UIImage imageWithData:_arrayPage[0]];
             }
             else{
-                [cell.iconImage sd_setImageWithURL:[Helper imageIconUrl:_model.pic] placeholderImage:[UIImage imageNamed:@"zwt"]];
+//                [cell.iconImage sd_setImageWithURL:[Helper imageIconUrl:_model.pic] placeholderImage:[UIImage imageNamed:@"zwt"]];
+                [cell.iconImage sd_setImageWithURL:[Helper setImageIconUrl:@"user" andTeamKey:[DEFAULF_USERID integerValue] andIsSetWidth:YES andIsBackGround:NO] placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
+
             }
         }
         
@@ -557,67 +564,60 @@
 }
 #pragma mark - 调用手机相机和相册
 - (void)usePhonePhotoAndCamera {
-    UIActionSheet *selestSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"相机",@"相册", nil];
-    [selestSheet showInView:self.view];
-}
-- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if (buttonIndex == 0) {
-        [self usePhonCamera];
-    }else if (buttonIndex == 1) {
-        [self usePhonePhoto];
-    }
-}
-#pragma mark - 调用相机
-- (void)usePhonCamera {
-    UIImagePickerControllerSourceType sourceType = UIImagePickerControllerSourceTypeCamera;
-    UIImagePickerController *picker = [[UIImagePickerController alloc] init];
-    picker.delegate = self;
-    picker.allowsEditing = YES;
-    picker.sourceType = sourceType;
-    
-    [self presentViewController:picker animated:YES completion:nil];
-}
-#pragma mark - 调用相册
-- (void)usePhonePhoto {
-    UIImagePickerControllerSourceType sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-    UIImagePickerController *picker = [[UIImagePickerController alloc] init];
-    picker.delegate = self;
-    picker.allowsEditing = YES;
-    picker.sourceType = sourceType;
-    [self presentViewController:picker animated:YES completion:nil];
-    
-    
-}
-- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
-    [picker dismissViewControllerAnimated:YES completion:nil];
-}
-- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
-    [_arrayPage removeAllObjects];
-    UIImage *image = [info objectForKey:UIImagePickerControllerEditedImage];
-    
-    _photoData = UIImageJPEGRepresentation(image, 0.5);
-    [self dismissViewControllerAnimated:YES completion:nil];
-    [_arrayPage addObject:_photoData];
-    
-    [[PostDataRequest sharedInstance] postDataAndImageRequest:kUpDateData_URL parameter:@{@"userId":[[NSUserDefaults standardUserDefaults] objectForKey:@"userId"]} imageDataArr:_arrayPage success:^(id respondsData) {
-        //[MBProgressHUD hideHUDForView:self.view  animated:NO];
-        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:respondsData options:NSJSONReadingMutableContainers error:nil];
-        if ([[dict objectForKey:@"success"] boolValue]) {
-            NSUserDefaults *user=[NSUserDefaults standardUserDefaults];
-            [user setObject:[[dict objectForKey:@"rows"] objectForKey:@"pic"] forKey:@"pic"];
-            [user synchronize];
-            [self synchronizeUserInfoRCIM];
+    //    _photos = 10;
+    UIAlertAction * act1 = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        //        _photos = 1;
+    }];
+    //拍照：
+    UIAlertAction * act2 = [UIAlertAction actionWithTitle:@"拍照" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        //打开相机
+        _pickPhoto.picker.allowsEditing = NO;
+        [_pickPhoto ShowTakePhotoWithController:self andWithBlock:^(NSObject *Data) {
+            _arrayPage = [NSMutableArray arrayWithObject:UIImageJPEGRepresentation((UIImage *)Data, 0.7)];
+            [self imageArray:_arrayPage];
             
-            [LQProgressHud showMessage:@"提交成功"];
-        }
-        else{
-            [LQProgressHud showMessage:@"提交失败"];
-        }
-        
-    } failed:^(NSError *error) {
+        }];
+    }];
+    //相册
+    UIAlertAction * act3 = [UIAlertAction actionWithTitle:@"相册" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        //打开相册
+        _pickPhoto.picker.allowsEditing = NO;
+        [_pickPhoto SHowLocalPhotoWithController:self andWithBlock:^(NSObject *Data) {
+            _arrayPage = [NSMutableArray arrayWithObject:UIImageJPEGRepresentation((UIImage *)Data, 0.7)];
+            [self imageArray:_arrayPage];
+        }];
     }];
     
+    UIAlertController * aleVC = [UIAlertController alertControllerWithTitle:@"提示" message:@"选择图片" preferredStyle:UIAlertControllerStyleActionSheet];
+    [aleVC addAction:act1];
+    [aleVC addAction:act2];
+    [aleVC addAction:act3];
     
+    [self presentViewController:aleVC animated:YES completion:nil];
+}
+
+#pragma mark --上传图片方法
+-(void)imageArray:(NSMutableArray *)array
+{
+    NSNumber* strTimeKey = DEFAULF_USERID;
+    // 上传图片
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    [dict setObject:strTimeKey forKey:@"data"];
+    [dict setObject:TYPE_USER_HEAD forKey:@"nType"];
+    [dict setObject:PHOTO_DAGOLFLA forKey:@"tag"];
+    
+    [[JsonHttp jsonHttp]httpRequestImageOrVedio:@"1" withData:dict andDataArray:array failedBlock:^(id errType) {
+        NSLog(@"errType===%@", errType);
+    } completionBlock:^(id data) {
+        NSString *headUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/user/head/%@.jpg@120w_120h", DEFAULF_USERID];
+        [[SDImageCache sharedImageCache] removeImageForKey:headUrl fromDisk:YES];
+        NSUserDefaults *user=[NSUserDefaults standardUserDefaults];
+        if (![Helper isBlankString:headUrl]) {
+            [user setObject:headUrl forKey:@"pic"];
+        }
+        [user synchronize];
+        [self synchronizeUserInfoRCIM];
+    }];
 }
 
 - (void)synchronizeUserInfoRCIM {

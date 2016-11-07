@@ -206,6 +206,9 @@
     
     JGHRegistersViewController *registerCtrl = [[JGHRegistersViewController alloc]initWithNibName:@"JGHRegistersViewController" bundle:nil];
     registerCtrl.delegate = self;
+    registerCtrl.blackCtrl = ^(){
+        _reloadCtrlData();
+    };
     [self.navigationController pushViewController:registerCtrl animated:YES];
 }
 #pragma mark -- 登录
@@ -263,6 +266,7 @@
             }
             
             NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
+            NSLog(@"-----%@", [userDict objectForKey:userID]);
             if ([userDict objectForKey:userID]) {
                 [userdef setObject:[userDict objectForKey:userID] forKey:userID];
                 [userdef setObject:[userDict objectForKey:Mobile] forKey:Mobile];
@@ -272,14 +276,14 @@
                 [userdef setObject:[userDict objectForKey:@"userName"] forKey:@"userName"];
                 [userdef setObject:[userDict objectForKey:@"rongTk"] forKey:@"rongTk"];
                 [userdef synchronize];
+                
+                NSString *token = [[userDict objectForKey:@"rows"] objectForKey:@"rongTk"];
+                //注册融云
+                [self requestRCIMWithToken:token];
+                [self postAppJpost];
+                _reloadCtrlData();
+                [self.navigationController popViewControllerAnimated:YES];
             }
-            
-            NSString *token = [[userDict objectForKey:@"rows"] objectForKey:@"rongTk"];
-            //注册融云
-            [self requestRCIMWithToken:token];
-            [self postAppJpost];
-            _reloadCtrlData();
-            [self.navigationController popViewControllerAnimated:YES];
         }else{
             if ([data objectForKey:@"packResultMsg"]) {
                 [LQProgressHud showMessage:[data objectForKey:@"packResultMsg"]];
@@ -316,13 +320,14 @@
                 
             } completionBlock:^(id data) {
                 NSLog(@"%@", data);
-                if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+                if ([[data objectForKey:@"packSuccess"] integerValue] == 0) {
                     NSDictionary *userDict = [NSDictionary dictionary];
                     if ([data objectForKey:@"user"]) {
                         userDict = [data objectForKey:@"user"];
                     }
                     
                     NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
+                    NSLog(@"----%@", [userDict objectForKey:userID]);
                     if ([userDict objectForKey:userID]) {
                         [userdef setObject:[userDict objectForKey:userID] forKey:userID];
                         [userdef setObject:[userDict objectForKey:Mobile] forKey:Mobile];
@@ -332,17 +337,24 @@
                         [userdef setObject:[userDict objectForKey:@"userName"] forKey:@"userName"];
                         [userdef setObject:[userDict objectForKey:@"rongTk"] forKey:@"rongTk"];
                         [userdef synchronize];
+                        
+                        
+                        NSString *token = [[userDict objectForKey:@"rows"] objectForKey:@"rongTk"];
+                        //注册融云
+                        [self requestRCIMWithToken:token];
+                        [self postAppJpost];
+                        _reloadCtrlData();
+                        [self.navigationController popViewControllerAnimated:YES];
                     }
                     
-                    NSString *token = [[userDict objectForKey:@"rows"] objectForKey:@"rongTk"];
-                    //注册融云
-                    [self requestRCIMWithToken:token];
-                    [self postAppJpost];
-                    _reloadCtrlData();
-                    [self.navigationController popViewControllerAnimated:YES];
                 }else{
                     JGHBindingAccountViewController *bindctrl = [[JGHBindingAccountViewController alloc]initWithNibName:@"JGHBindingAccountViewController" bundle:nil];
                     [bindctrl setWeiChetDict:_weiChetDict];
+                    bindctrl.blackCtrl = ^(){
+                        
+                        _reloadCtrlData();
+                        [self.navigationController popViewControllerAnimated:YES];
+                    };
                     [self.navigationController pushViewController:bindctrl animated:YES];
                 }
             }];

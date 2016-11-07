@@ -352,12 +352,13 @@ static NSString *const orderDetailCellIdentifier = @"OtherDataTableViewCell";
         } completionBlock:^(id data) {
             if ([[data objectForKey:@"packSuccess"] boolValue]) {
                 _model = [[MeselfModel alloc] init];
-                [_model setValuesForKeysWithDictionary:[data objectForKey:@"rows"]];
+                [_model setValuesForKeysWithDictionary:[data objectForKey:@"user"]];
                 
                 self.title = _model.userName;
                 
                 [_backImg sd_setImageWithURL:[Helper imageUrl:_model.backPic] placeholderImage:[UIImage imageNamed:@"selfBackPic.jpg"]];
-                [_iconImg sd_setImageWithURL:[Helper imageIconUrl:_model.pic] placeholderImage:[UIImage imageNamed:@"zwt"]];
+//                [_iconImg sd_setImageWithURL:[Helper imageIconUrl:_model.pic] placeholderImage:[UIImage imageNamed:@"zwt"]];
+                [_iconImg sd_setImageWithURL:[Helper setImageIconUrl:@"user" andTeamKey:[DEFAULF_USERID integerValue] andIsSetWidth:YES andIsBackGround:NO] placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
                 
                 //替换备注名称
                 NoteModel *model = [NoteHandlle selectNoteWithUID:self.strMoodId];
@@ -372,8 +373,21 @@ static NSString *const orderDetailCellIdentifier = @"OtherDataTableViewCell";
                 }else{
                     _sexImg.image = [UIImage imageNamed:@"xb_nn"];
                 }
-                _infoLabel.text = [NSString stringWithFormat:@"%@岁  差点:%@",_model.age,_model.almost];
-                
+                if (_model.age != nil && _model.almost != nil) {
+                    _infoLabel.text = [NSString stringWithFormat:@"%@岁  差点:%@",_model.age,_model.almost];
+                }
+                else if (_model.age == nil && _model.almost != nil)
+                {
+                    _infoLabel.text = [NSString stringWithFormat:@"暂无年龄  差点:%@",_model.almost];
+                }
+                else if (_model.almost == nil && _model.age != nil)
+                {
+                    _infoLabel.text = [NSString stringWithFormat:@"%@岁  暂无差点",_model.age];
+                }
+                else{
+                    _infoLabel.text = [NSString stringWithFormat:@"暂无年龄  暂无差点"];
+
+                }
                 // 相片的数据请求
                 [self inquirePicSource];
                 //分割线
@@ -772,7 +786,7 @@ static NSString *const orderDetailCellIdentifier = @"OtherDataTableViewCell";
     if ([annotation isKindOfClass:[BMKPointAnnotation class]]) {
         BMKPinAnnotationView *newAnnotationView = [[BMKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"myAnnotation"];
         // 设置颜色
-        newAnnotationView.pinColor = BMKPinAnnotationColorPurple;
+//        newAnnotationView.pinColor = BMKPinAnnotationColorPurple;
         newAnnotationView.animatesDrop = YES;// 设置该标注点动画显示
         
         // 设置可拖拽

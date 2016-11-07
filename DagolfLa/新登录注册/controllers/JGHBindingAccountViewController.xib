@@ -46,7 +46,7 @@
                                 <constraint firstAttribute="width" constant="50" id="u4E-Fc-Fpu"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                            <state key="normal" title="＋86"/>
+                            <state key="normal" title="86"/>
                             <connections>
                                 <action selector="mobileBtn:" destination="-1" eventType="touchUpInside" id="hCy-ci-ASs"/>
                             </connections>

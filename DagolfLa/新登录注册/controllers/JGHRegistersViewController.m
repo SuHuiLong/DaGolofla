@@ -336,7 +336,7 @@
             [Helper alertViewWithTitle:@"注册成功！" withBlock:^(UIAlertController *alertView) {
                [self presentViewController:alertView animated:YES completion:nil];
             }];
-            
+            _blackCtrl();
             [self.navigationController popViewControllerAnimated:YES];
         }else{
             _getCodeBtn.userInteractionEnabled = YES;
