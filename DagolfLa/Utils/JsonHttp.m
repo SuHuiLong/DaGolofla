@@ -191,11 +191,14 @@ static JsonHttp *jsonHttp = nil;
                 completionBlock(responseObject);
             }
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            if ([[error.userInfo objectForKey:@"_kCFStreamErrorCodeKey"] integerValue] == 61) {
-                [Helper downLoadDataOverrun];
-            }else{
+            
+            if ([[error.userInfo objectForKey:@"_kCFStreamErrorCodeKey"] integerValue] == -2102) {
                 [Helper netWorkError];
+                
+            }else{
+                [Helper downLoadDataOverrun];
             }
+
             if (failedBlock) {
                 failedBlock(error);
             }
@@ -220,11 +223,13 @@ static JsonHttp *jsonHttp = nil;
                     completionBlock(responseObject);
                 }
             } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                if ([[error.userInfo objectForKey:@"_kCFStreamErrorCodeKey"] integerValue] == 61) {
-                    [Helper downLoadDataOverrun];
-                }else{
+                if ([[error.userInfo objectForKey:@"_kCFStreamErrorCodeKey"] integerValue] == -2102) {
                     [Helper netWorkError];
+                    
+                }else{
+                    [Helper downLoadDataOverrun];
                 }
+                
                 if (failedBlock) {
                     failedBlock(error);
                 }
@@ -254,6 +259,13 @@ static JsonHttp *jsonHttp = nil;
                     completionBlock(responseObject);
                 }
             } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                if ([[error.userInfo objectForKey:@"_kCFStreamErrorCodeKey"] integerValue] == -2102) {
+                    [Helper netWorkError];
+                    
+                }else{
+                    [Helper downLoadDataOverrun];
+                }
+                
                 if (failedBlock) {
                     failedBlock(error);
                 }
@@ -346,14 +358,13 @@ static JsonHttp *jsonHttp = nil;
        if ([[NSString stringWithFormat:@"%@", [dataDict objectForKey:@"code"]] isEqualToString:@"1"]) {
            completionBlock(dataDict);
        }else{
-           if ([[connectionError.userInfo objectForKey:@"_kCFStreamErrorCodeKey"] integerValue] == 61) {
+           
+           if (connectionError != nil) {
+               [Helper netWorkError];
+           }else {
                [Helper downLoadDataOverrun];
-           }else if ([[connectionError.userInfo objectForKey:@"_kCFStreamErrorCodeKey"] integerValue] == 51) {
-               [Helper netWorkError];
-           }else{
-               //参数错误
-               [Helper netWorkError];
            }
+           
            failedBlock(connectionError);
        }
     }];
@@ -439,14 +450,12 @@ static JsonHttp *jsonHttp = nil;
         if ([[NSString stringWithFormat:@"%@", [dataDict objectForKey:@"code"]] isEqualToString:@"1"]) {
             completionBlock(dataDict);
         }else{
-            if ([[connectionError.userInfo objectForKey:@"_kCFStreamErrorCodeKey"] integerValue] == 61) {
+            if (connectionError != nil) {
+                [Helper netWorkError];
+            }else {
                 [Helper downLoadDataOverrun];
-            }else if ([[connectionError.userInfo objectForKey:@"_kCFStreamErrorCodeKey"] integerValue] == 51) {
-                [Helper netWorkError];
-            }else{
-                //参数错误
-                [Helper netWorkError];
             }
+
             failedBlock(connectionError);
         }
     }];
