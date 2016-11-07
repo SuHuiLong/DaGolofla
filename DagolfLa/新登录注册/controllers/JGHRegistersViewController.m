@@ -224,7 +224,7 @@
     if (_timeNumber == 0) {
         [_getCodeBtn setTitleColor:[UIColor colorWithHexString:Bar_Color] forState:UIControlStateNormal];
         _getCodeBtn.titleLabel.font = [UIFont systemFontOfSize:17*ProportionAdapter];
-        [_getCodeBtn setTitle:@"发送验证码" forState:UIControlStateNormal];
+        [_getCodeBtn setTitle:@"获取验证码" forState:UIControlStateNormal];
         [_timer invalidate];
         _timeNumber = 60;
         

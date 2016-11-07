@@ -41,11 +41,13 @@
     self.mobileLine.backgroundColor = [UIColor colorWithHexString:Line_Color];
     
     self.mobileText.font = [UIFont systemFontOfSize:17 *ProportionAdapter];
+    self.mobileText.clearButtonMode = UITextFieldViewModeAlways;
     self.mobileTextLeft.constant = 22 *ProportionAdapter;
     
     self.codeLine.backgroundColor = [UIColor colorWithHexString:Line_Color];
     self.codeText.font = [UIFont systemFontOfSize:17 *ProportionAdapter];
     self.codeTextLeft.constant = 22 *ProportionAdapter;
+    self.codeText.clearButtonMode = UITextFieldViewModeAlways;
     self.codeTwoLine.backgroundColor = [UIColor colorWithHexString:Line_Color];
     
     self.getCodeBtnW.constant = 130 *ProportionAdapter;
@@ -54,6 +56,7 @@
     
     self.passwordLine.backgroundColor = [UIColor colorWithHexString:Line_Color];
     self.passwordText.font = [UIFont systemFontOfSize:17 *ProportionAdapter];
+    self.passwordText.clearButtonMode = UITextFieldViewModeAlways;
     
     self.passwordTextRight.constant = 15 *ProportionAdapter;
     self.passwordTextLeft.constant = 22 *ProportionAdapter;
@@ -283,7 +286,7 @@
 {
     [_mobileText resignFirstResponder];
     [_passwordText resignFirstResponder];
-    [_pickerView removeFromSuperview];
+    _pickerView.hidden = YES;
 }
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string;
 {
