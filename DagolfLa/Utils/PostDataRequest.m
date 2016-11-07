@@ -36,6 +36,7 @@
     if (self = [super init]) {
         _httpManager = [[AFHTTPRequestOperationManager alloc] init];
         //返回二进制
+        _httpManager.requestSerializer.timeoutInterval = 20.f;
         _httpManager.responseSerializer = [AFHTTPResponseSerializer serializer];
     }
     return self;
