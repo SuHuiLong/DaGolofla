@@ -38,8 +38,6 @@
     NSInteger current;
     UIButton* _btnBack;
     
-    
-    
     BOOL isClick;
     
     NSMutableDictionary* _dict;
@@ -54,7 +52,6 @@
     BOOL _jobIsClick;
     
     NSString* _strPIC;
-//    NSMutableArray* _arrayData;
 }
 @property (nonatomic,strong)SXPickPhoto * pickPhoto;//相册类
 
