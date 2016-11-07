@@ -317,6 +317,8 @@
             
             NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
             if ([userDict objectForKey:userID]) {
+                //登录PHP
+                [Helper callPHPLoginUserId:[NSString stringWithFormat:@"%@", [userDict objectForKey:userID]]];
                 [userdef setObject:[userDict objectForKey:userID] forKey:userID];
                 [userdef setObject:[userDict objectForKey:Mobile] forKey:Mobile];
                 [userdef setObject:[userDict objectForKey:@"sex"] forKey:@"sex"];

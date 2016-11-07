@@ -652,6 +652,11 @@
     } completionBlock:^(id data) {
         NSLog(@"%@", data);
         //state - 1成功
+        NSUserDefaults *userDef = [NSUserDefaults standardUserDefaults];
+        if ([data objectForKey:@"state"]) {
+            [userDef setObject:[data objectForKey:@"state"] forKey:PHPState];
+        }
+        
     }];
 }
 

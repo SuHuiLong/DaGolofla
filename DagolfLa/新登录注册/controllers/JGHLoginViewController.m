@@ -330,44 +330,53 @@
                 
             } completionBlock:^(id data) {
                 NSLog(@"%@", data);
-                if ([[data objectForKey:@"packSuccess"] integerValue] == 0) {
-                    NSDictionary *userDict = [NSDictionary dictionary];
-                    if ([data objectForKey:@"user"]) {
-                        userDict = [data objectForKey:@"user"];
-                    }
-                    
-                    NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
-                    NSLog(@"----%@", [userDict objectForKey:userID]);
-                    if ([userDict objectForKey:userID]) {
-                        //登录PHP
-                        [Helper callPHPLoginUserId:[NSString stringWithFormat:@"%@", [userDict objectForKey:userID]]];
-                        [userdef setObject:[userDict objectForKey:userID] forKey:userID];
-                        [userdef setObject:[userDict objectForKey:Mobile] forKey:Mobile];
-                        [userdef setObject:[userDict objectForKey:@"sex"] forKey:@"sex"];
-                        //判断是否登录，用来社区的刷新
-                        [userdef setObject:@1 forKey:@"isFirstEnter"];
-                        [userdef setObject:[userDict objectForKey:@"userName"] forKey:@"userName"];
-                        [userdef setObject:[userDict objectForKey:@"rongTk"] forKey:@"rongTk"];
-                        [userdef synchronize];
+                if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+                    if ([[data objectForKey:@"needRegister"] integerValue] == 0) {
+                        NSDictionary *userDict = [NSDictionary dictionary];
+                        if ([data objectForKey:@"user"]) {
+                            userDict = [data objectForKey:@"user"];
+                        }
                         
-                        
-                        NSString *token = [[userDict objectForKey:@"rows"] objectForKey:@"rongTk"];
-                        //注册融云
-                        [self requestRCIMWithToken:token];
-                        [self postAppJpost];
-                        _reloadCtrlData();
-                        [self.navigationController popViewControllerAnimated:YES];
+                        NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
+                        NSLog(@"----%@", [userDict objectForKey:userID]);
+                        if ([userDict objectForKey:userID]) {
+                            //登录PHP
+                            [Helper callPHPLoginUserId:[NSString stringWithFormat:@"%@", [userDict objectForKey:userID]]];
+                            [userdef setObject:[userDict objectForKey:userID] forKey:userID];
+                            [userdef setObject:[userDict objectForKey:Mobile] forKey:Mobile];
+                            [userdef setObject:[userDict objectForKey:@"sex"] forKey:@"sex"];
+                            //判断是否登录，用来社区的刷新
+                            [userdef setObject:@1 forKey:@"isFirstEnter"];
+                            [userdef setObject:[userDict objectForKey:@"userName"] forKey:@"userName"];
+                            [userdef setObject:[userDict objectForKey:@"rongTk"] forKey:@"rongTk"];
+                            [userdef synchronize];
+                            
+                            
+                            NSString *token = [[userDict objectForKey:@"rows"] objectForKey:@"rongTk"];
+                            //注册融云
+                            [self requestRCIMWithToken:token];
+                            [self postAppJpost];
+                            _reloadCtrlData();
+                            [self.navigationController popViewControllerAnimated:YES];
+                        }
+
+                    }else{
+                        JGHBindingAccountViewController *bindctrl = [[JGHBindingAccountViewController alloc]initWithNibName:@"JGHBindingAccountViewController" bundle:nil];
+                        [bindctrl setWeiChetDict:_weiChetDict];
+                        bindctrl.blackCtrl = ^(){
+                            
+                            _reloadCtrlData();
+                            [self.navigationController popViewControllerAnimated:YES];
+                        };
+                        [self.navigationController pushViewController:bindctrl animated:YES];
                     }
                     
                 }else{
-                    JGHBindingAccountViewController *bindctrl = [[JGHBindingAccountViewController alloc]initWithNibName:@"JGHBindingAccountViewController" bundle:nil];
-                    [bindctrl setWeiChetDict:_weiChetDict];
-                    bindctrl.blackCtrl = ^(){
-                        
-                        _reloadCtrlData();
-                        [self.navigationController popViewControllerAnimated:YES];
-                    };
-                    [self.navigationController pushViewController:bindctrl animated:YES];
+                    //
+                    [Helper alertViewWithTitle:@"微信登录失败" withBlock:^(UIAlertController *alertView) {
+                        [self presentViewController:alertView animated:YES completion:nil];
+                        return ;
+                    }];
                 }
             }];
         }else{
