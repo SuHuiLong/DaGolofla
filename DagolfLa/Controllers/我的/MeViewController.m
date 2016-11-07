@@ -124,12 +124,9 @@
             [MBProgressHUD hideHUDForView:self.view animated:YES];
             if ([[data objectForKey:@"packSuccess"]boolValue]) {
                 [_model setValuesForKeysWithDictionary:[data objectForKey:@"user"]];
-                NSIndexSet *indexSet=[[NSIndexSet alloc]initWithIndex:0];
-                [_tableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationAutomatic];
-                
                 NSUserDefaults *user=[NSUserDefaults standardUserDefaults];
-                if (![Helper isBlankString:[[data objectForKey:@"user"] objectForKey:@"pic"]]) {
-                    [user setObject:[[data objectForKey:@"user"] objectForKey:@"pic"] forKey:@"pic"];
+                if (![Helper isBlankString:[data objectForKey:@"handImgUrl"]]) {
+                    [user setObject:[data objectForKey:@"handImgUrl"] forKey:@"pic"];
                 }
                 if (![Helper isBlankString:[[data objectForKey:@"user"] objectForKey:@"userName"]])
                 {
@@ -137,6 +134,9 @@
                 }
                 [user setObject:[[data objectForKey:@"user"] objectForKey:@"sex"] forKey:@"sex"];
                 [user synchronize];
+                
+                NSIndexSet *indexSet=[[NSIndexSet alloc]initWithIndex:0];
+                [_tableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationAutomatic];
             }
         }];
 
