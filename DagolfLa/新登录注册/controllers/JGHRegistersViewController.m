@@ -164,15 +164,18 @@
     
     [[ShowHUD showHUD]showAnimationWithText:@"发送中..." FromView:self.view];
     _getCodeBtn.userInteractionEnabled = NO;
+    self.navigationItem.leftBarButtonItem.enabled = NO;
     [codeDict setObject:_mobileText.text forKey:@"telphone"];
     [codeDict setObject:_codeing forKey:@"countryCode"];
     _getCodeBtn.userInteractionEnabled = NO;//  doSendRegisterUserSms
     [[JsonHttp jsonHttp]httpRequestWithMD5:@"reg/doSendRegisterUserSms" JsonKey:nil withData:codeDict failedBlock:^(id errType) {
         _getCodeBtn.userInteractionEnabled = YES;
+        self.navigationItem.leftBarButtonItem.enabled = YES;
         [[ShowHUD showHUD]hideAnimationFromView:self.view];
     } completionBlock:^(id data) {
         NSLog(@"%@", data);
         [[ShowHUD showHUD]hideAnimationFromView:self.view];
+        self.navigationItem.leftBarButtonItem.enabled = YES;
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
             //
             if ([[data objectForKey:@"hasMobileRegistered"] integerValue] == 1) {

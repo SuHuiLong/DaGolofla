@@ -129,13 +129,16 @@ static int timeNumber = 60;
     
     [[ShowHUD showHUD]showAnimationWithText:@"发送中..." FromView:self.view];
     self.codeBtn.userInteractionEnabled = NO;
+    self.navigationItem.leftBarButtonItem.enabled = NO;
     //----判断手机号是否注册过 18637665180
     [[JsonHttp jsonHttp]httpRequestWithMD5:@"reg/hasMobileRegistered" JsonKey:nil withData:codeDict failedBlock:^(id errType) {
         self.codeBtn.userInteractionEnabled = YES;
+        self.navigationItem.leftBarButtonItem.enabled = YES;
         [[ShowHUD showHUD]hideAnimationFromView:self.view];
     } completionBlock:^(id data) {
         NSLog(@"%@", data);
         [[ShowHUD showHUD]hideAnimationFromView:self.view];
+        self.navigationItem.leftBarButtonItem.enabled = YES;
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
             if ([[data objectForKey:@"hasMobileRegistered"] integerValue] == 1) {
                                 
@@ -232,6 +235,7 @@ static int timeNumber = 60;
     }
     
     btn.userInteractionEnabled = NO;
+    self.navigationItem.leftBarButtonItem.enabled = NO;
     [[ShowHUD showHUD]showAnimationWithText:@"提交中..." FromView:self.view];
     NSMutableDictionary *resetDict = [NSMutableDictionary dictionary];
     [resetDict setObject:[userdef objectForKey:Mobile] forKey:@"telphone"];
@@ -240,10 +244,12 @@ static int timeNumber = 60;
     
     [[JsonHttp jsonHttp]httpRequestWithMD5:@"user/updatePassword" JsonKey:nil withData:resetDict failedBlock:^(id errType) {
         btn.userInteractionEnabled = YES;
+        self.navigationItem.leftBarButtonItem.enabled = YES;
         [[ShowHUD showHUD]hideAnimationFromView:self.view];
     } completionBlock:^(id data) {
         NSLog(@"%@", data);
         btn.userInteractionEnabled = YES;
+        self.navigationItem.leftBarButtonItem.enabled = NO;
         [[ShowHUD showHUD]hideAnimationFromView:self.view];
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
             [LQProgressHud showMessage:@"新密码设置成功！"];

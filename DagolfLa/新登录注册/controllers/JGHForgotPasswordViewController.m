@@ -146,6 +146,7 @@
     
     [[ShowHUD showHUD]showAnimationWithText:@"发送中..." FromView:self.view];
     _getCodeBtn.userInteractionEnabled = NO;
+    self.navigationItem.leftBarButtonItem.enabled = NO;
     NSMutableDictionary *codeDict = [NSMutableDictionary dictionary];
     [codeDict setObject:_mobileText.text forKey:@"telphone"];
     [codeDict setObject:_codeing forKey:@"countryCode"];
@@ -153,9 +154,11 @@
     //手机号已注册
     [[JsonHttp jsonHttp]httpRequestWithMD5:@"user/doSendForgetPasswordSms" JsonKey:nil withData:codeDict failedBlock:^(id errType) {
         _getCodeBtn.userInteractionEnabled = YES;
+        self.navigationItem.leftBarButtonItem.enabled = YES;
         [[ShowHUD showHUD]hideAnimationFromView:self.view];
     } completionBlock:^(id data) {
         NSLog(@"%@", data);
+        self.navigationItem.leftBarButtonItem.enabled = YES;
         [[ShowHUD showHUD]hideAnimationFromView:self.view];
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
             //
@@ -178,7 +181,6 @@
             
         }else{
             _getCodeBtn.userInteractionEnabled = YES;
-            
             if ([data objectForKey:@"packResultMsg"]) {
                 [LQProgressHud showMessage:[data objectForKey:@"packResultMsg"]];
             }
@@ -246,6 +248,7 @@
     
     [[ShowHUD showHUD]showAnimationWithText:@"提交中..." FromView:self.view];
     sender.userInteractionEnabled = NO;
+    self.navigationItem.leftBarButtonItem.enabled = NO;
     NSMutableDictionary *resetDict = [NSMutableDictionary dictionary];
     [resetDict setObject:_mobileText.text forKey:@"telphone"];
     [resetDict setObject:_passwordText.text forKey:@"passWord"];
@@ -253,10 +256,12 @@
     
     [[JsonHttp jsonHttp]httpRequestWithMD5:@"user/updatePassword" JsonKey:nil withData:resetDict failedBlock:^(id errType) {
         sender.userInteractionEnabled = YES;
+        self.navigationItem.leftBarButtonItem.enabled = YES;
         [[ShowHUD showHUD]hideAnimationFromView:self.view];
     } completionBlock:^(id data) {
         NSLog(@"%@", data);
         sender.userInteractionEnabled = YES;
+        self.navigationItem.leftBarButtonItem.enabled = YES;
         [[ShowHUD showHUD]hideAnimationFromView:self.view];
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
             

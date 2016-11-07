@@ -275,13 +275,16 @@
      */
     [[ShowHUD showHUD]showAnimationWithText:@"登录中..." FromView:self.view];
     btn.userInteractionEnabled = NO;
+    self.navigationItem.leftBarButtonItem.enabled = NO;
     [[JsonHttp jsonHttp]httpRequestWithMD5:urlString JsonKey:nil withData:_dict failedBlock:^(id errType) {
         btn.userInteractionEnabled = YES;
+        self.navigationItem.leftBarButtonItem.enabled = YES;
         [[ShowHUD showHUD]hideAnimationFromView:self.view];
     } completionBlock:^(id data) {
         NSLog(@"%@", data);
         [[ShowHUD showHUD]hideAnimationFromView:self.view];
         btn.userInteractionEnabled = YES;
+        self.navigationItem.leftBarButtonItem.enabled = YES;
         
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
             NSDictionary *userDict = [NSDictionary dictionary];
@@ -321,11 +324,14 @@
 }
 #pragma mark -- 微信登录
 - (void)weixinLogin:(UIButton *)btn{
+    self.navigationItem.leftBarButtonItem.enabled = NO;
+    
     UMSocialSnsPlatform *snsPlatform = [UMSocialSnsPlatformManager getSocialPlatformWithName:UMShareToWechatSession];
     
     snsPlatform.loginClickHandler(self,[UMSocialControllerService defaultControllerService],YES,^(UMSocialResponseEntity *response){
         [MBProgressHUD hideHUDForView:self.view animated:YES];
         if (response.responseCode == UMSResponseCodeSuccess) {
+            
             UMSocialAccountEntity *snsAccount = [[UMSocialAccountManager socialAccountDictionary]valueForKey:UMShareToWechatSession];
             
             NSMutableDictionary* dictWx = [[NSMutableDictionary alloc]init];
@@ -378,6 +384,7 @@
                             [self.navigationController popViewControllerAnimated:YES];
                         }
 
+                        self.navigationItem.leftBarButtonItem.enabled = YES;
                     }else{
                         JGHBindingAccountViewController *bindctrl = [[JGHBindingAccountViewController alloc]initWithNibName:@"JGHBindingAccountViewController" bundle:nil];
                         [bindctrl setWeiChetDict:_weiChetDict];
@@ -387,15 +394,18 @@
                             [self.navigationController popViewControllerAnimated:YES];
                         };
                         [self.navigationController pushViewController:bindctrl animated:YES];
+                        self.navigationItem.leftBarButtonItem.enabled = YES;
                     }
                     
                 }else{
                     //
                     [LQProgressHud showMessage:@"微信登录失败！"];
+                    self.navigationItem.leftBarButtonItem.enabled = YES;
                 }
             }];
         }else{
             [LQProgressHud showMessage:@"微信登录失败！"];
+            self.navigationItem.leftBarButtonItem.enabled = YES;
         }
     });
     //得到的数据在回调Block对象形参respone的data属性
@@ -513,6 +523,7 @@
     }
     
     [[ShowHUD showHUD]showAnimationWithText:@"发送中..." FromView:self.view];
+    self.navigationItem.leftBarButtonItem.enabled = NO;
     _getCodeBtn.userInteractionEnabled = NO;
     [codeDict setObject:_mobileText.text forKey:@"telphone"];
     //
@@ -520,10 +531,13 @@
     
     [[JsonHttp jsonHttp]httpRequestWithMD5:@"login/doSendLoginCheckCodeSms" JsonKey:nil withData:codeDict failedBlock:^(id errType) {
         _getCodeBtn.userInteractionEnabled = YES;
+        self.navigationItem.leftBarButtonItem.enabled = YES;
         [[ShowHUD showHUD]hideAnimationFromView:self.view];
     } completionBlock:^(id data) {
         NSLog(@"%@", data);
         [[ShowHUD showHUD]hideAnimationFromView:self.view];
+        self.navigationItem.leftBarButtonItem.enabled = YES;
+        
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
             //
             _timer=[NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(autoMove) userInfo:nil repeats:YES];

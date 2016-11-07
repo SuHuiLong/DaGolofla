@@ -140,15 +140,18 @@
     
     [[ShowHUD showHUD]showAnimationWithText:@"发送中..." FromView:self.view];
     _getCodeBtn.userInteractionEnabled = NO;
+    self.navigationItem.leftBarButtonItem.enabled = NO;
     [codeDict setObject:_mobiletext.text forKey:@"telphone"];
     //
     [codeDict setObject:_codeing forKey:@"countryCode"];
     
     [[JsonHttp jsonHttp]httpRequestWithMD5:@"reg/doSendDoBindWechatSms" JsonKey:nil withData:codeDict failedBlock:^(id errType) {
         _getCodeBtn.userInteractionEnabled = YES;
+        self.navigationItem.leftBarButtonItem.enabled = YES;
         [[ShowHUD showHUD]hideAnimationFromView:self.view];
     } completionBlock:^(id data) {
         NSLog(@"%@", data);
+        self.navigationItem.leftBarButtonItem.enabled = YES;
         [[ShowHUD showHUD]hideAnimationFromView:self.view];
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
             //            
@@ -180,15 +183,18 @@
     
     [[ShowHUD showHUD]showAnimationWithText:@"提交中..." FromView:self.view];
     sender.userInteractionEnabled = NO;
+    self.navigationItem.leftBarButtonItem.enabled = NO;
     [_weiChetDict setObject:_codeing forKey:@"countryCode"];
     [_weiChetDict setObject:_mobiletext.text forKey:@"telphone"];
     [_weiChetDict setObject:_codeText.text forKey:@"checkCode"];
     [[JsonHttp jsonHttp]httpRequestWithMD5:@"reg/doBindWechat" JsonKey:nil withData:_weiChetDict failedBlock:^(id errType) {
         sender.userInteractionEnabled = YES;
+        self.navigationItem.leftBarButtonItem.enabled = YES;
         [[ShowHUD showHUD]hideAnimationFromView:self.view];
     } completionBlock:^(id data) {
         NSLog(@"%@", data);
         sender.userInteractionEnabled = YES;
+        self.navigationItem.leftBarButtonItem.enabled = YES;
         [[ShowHUD showHUD]hideAnimationFromView:self.view];
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
             NSDictionary *userDict = [NSDictionary dictionary];
