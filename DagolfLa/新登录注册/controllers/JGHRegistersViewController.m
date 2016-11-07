@@ -13,6 +13,7 @@
 #import "UserDataInformation.h"
 #import "JPUSHService.h"
 
+
 @interface JGHRegistersViewController ()<UITextFieldDelegate, UIPickerViewDataSource,UIPickerViewDelegate>
 {
     NSTimer *_timer;
@@ -324,20 +325,18 @@
                 [userdef setObject:[userDict objectForKey:@"userName"] forKey:@"userName"];
                 [userdef setObject:[userDict objectForKey:@"rongTk"] forKey:@"rongTk"];
                 [userdef synchronize];
+                
+                
+                NSString *token = [[userDict objectForKey:@"rows"] objectForKey:@"rongTk"];
+                //注册融云
+                [self requestRCIMWithToken:token];
+                [self postAppJpost];
+                
+                [LQProgressHud showMessage:@"注册成功！"];
+                
+                [self.navigationController popViewControllerAnimated:YES];
+                _blackCtrl();
             }
-//            if (![Helper isBlankString:[[userData objectForKey:@"rows"] objectForKey:@"pic"]]) {
-//                [user setObject:[[userData objectForKey:@"rows"] objectForKey:@"pic"] forKey:@"pic"];
-//            }
-                       
-            NSString *token = [[userDict objectForKey:@"rows"] objectForKey:@"rongTk"];
-            //注册融云
-            [self requestRCIMWithToken:token];
-            [self postAppJpost];
-            [Helper alertViewWithTitle:@"注册成功！" withBlock:^(UIAlertController *alertView) {
-               [self presentViewController:alertView animated:YES completion:nil];
-            }];
-            _blackCtrl();
-            [self.navigationController popViewControllerAnimated:YES];
         }else{
             _getCodeBtn.userInteractionEnabled = YES;
             if ([data objectForKey:@"packResultMsg"]) {

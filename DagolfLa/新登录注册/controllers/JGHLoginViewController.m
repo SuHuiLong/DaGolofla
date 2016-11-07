@@ -15,7 +15,7 @@
 #import "JGHRegistersViewController.h"
 #import "JGHBindingAccountViewController.h"
 
-@interface JGHLoginViewController ()<UITextFieldDelegate, UIPickerViewDataSource,UIPickerViewDelegate, JGHForgotPasswordViewControllerDelegate, JGHRegistersViewControllerDelegate>
+@interface JGHLoginViewController ()<UITextFieldDelegate, UIPickerViewDataSource,UIPickerViewDelegate, JGHRegistersViewControllerDelegate>
 
 {
     UIView *_bgView;
@@ -277,6 +277,8 @@
                 [userdef setObject:[userDict objectForKey:@"rongTk"] forKey:@"rongTk"];
                 [userdef synchronize];
                 
+                NSLog(@"----%@", DEFAULF_USERID);
+                
                 NSString *token = [[userDict objectForKey:@"rows"] objectForKey:@"rongTk"];
                 //注册融云
                 [self requestRCIMWithToken:token];
@@ -415,7 +417,9 @@
 #pragma mark -- 忘记密码
 - (void)forgotPasswordBtn:(UIButton *)btn{
     JGHForgotPasswordViewController *forCtrl = [[JGHForgotPasswordViewController alloc]initWithNibName:@"JGHForgotPasswordViewController" bundle:nil];
-    forCtrl.delegate = self;
+    forCtrl.blackCtrl = ^(){
+        _reloadCtrlData();
+    };
     [self.navigationController pushViewController:forCtrl animated:YES];
 }
 #pragma mark -- 验证码登录试图
@@ -671,12 +675,12 @@
     _codeing = [NSString stringWithFormat:@"%@", _titleCodeArray[row]];
 }
 #pragma mark -- 忘记密码 返回
-- (void)fillLoginViewAccount:(NSString *)account andPassword:(NSString *)password andCodeing:(NSString *)codeing{
-    [self passwordLoginBtn];
-    _mobileText.text = account;
-    _passwordText.text = password;
-    [_areaBtn setTitle:[codeing stringByReplacingOccurrencesOfString:@"0" withString:@""] forState:UIControlStateNormal];
-}
+//- (void)fillLoginViewAccount:(NSString *)account andPassword:(NSString *)password andCodeing:(NSString *)codeing{
+//    [self passwordLoginBtn];
+//    _mobileText.text = account;
+//    _passwordText.text = password;
+//    [_areaBtn setTitle:[codeing stringByReplacingOccurrencesOfString:@"0" withString:@""] forState:UIControlStateNormal];
+//}
 #pragma mark -- 注册－－已经注册返回登录
 - (void)registerForLoginWithMobile:(NSString *)mobile andCodeing:(NSString *)code{
     [self passwordLoginBtn];

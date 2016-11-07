@@ -137,6 +137,7 @@ static NSString *const orderDetailCellIdentifier = @"OtherDataTableViewCell";
     _backImg.userInteractionEnabled = YES;
     [_mainScrollView addSubview:_backImg];
     
+    NSLog(@"----%@", DEFAULF_USERID);
     
     if ([self.strMoodId isEqualToNumber:[[NSUserDefaults standardUserDefaults] objectForKey:@"userId"]]) {
         //点击更换图片
