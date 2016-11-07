@@ -507,9 +507,7 @@ static NSString *const orderDetailCellIdentifier = @"OtherDataTableViewCell";
     }
     [dict setObject:@-1 forKey:@"searchState"];
     [dict setObject:@1 forKey:@"moodType"];
-    
-    
-    
+
     [[PostDataRequest sharedInstance] postDataRequest:@"userMood/queryPage.do" parameter:dict success:^(id respondsData) {
         NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:respondsData options:NSJSONReadingMutableContainers error:nil];
         _picArr = [NSMutableArray array];
@@ -551,8 +549,7 @@ static NSString *const orderDetailCellIdentifier = @"OtherDataTableViewCell";
     scVc.userModel = _model;
     
     scVc.blockRereshingMe = ^(NSArray* arrayData){
-        //NSLog(@"返回刷新了!!!!!!!>>>%@",_model.sex);
-        
+
         _nameLabel.text = _model.userName;
         
         if (_model.age != nil) {
@@ -879,9 +876,10 @@ static NSString *const orderDetailCellIdentifier = @"OtherDataTableViewCell";
     
     [[JsonHttp jsonHttp]httpRequestImageOrVedio:@"1" withData:dict andDataArray:array failedBlock:^(id errType) {
     } completionBlock:^(id data) {
-        NSString *bgUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/user/head/%td_background.jpg",[_strMoodId integerValue]];
-        [[SDImageCache sharedImageCache] removeImageForKey:bgUrl fromDisk:YES];
-        [_backImg sd_setImageWithURL:[NSURL URLWithString:bgUrl] placeholderImage:[UIImage imageNamed:@"selfBackPic.jpg"]];
+//        NSString *bgUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/user/head/%td_background.jpg",[_strMoodId integerValue]];
+//        [[SDImageCache sharedImageCache] removeImageForKey:bgUrl fromDisk:YES];
+//        [_backImg sd_setImageWithURL:[NSURL URLWithString:bgUrl] placeholderImage:[UIImage imageNamed:@"selfBackPic.jpg"]];
+        [_backImg setImage:image];
     }];
 }
 
