@@ -36,7 +36,6 @@ static int timeNumber = 60;
     [self createUI];
 }
 
-
 - (void)createUI{
     
     UIView *mobileView = [[UIView alloc] initWithFrame:CGRectMake(10 * ProportionAdapter, 10 * ProportionAdapter, screenWidth - 20 * ProportionAdapter, 50 * ProportionAdapter)];
@@ -119,12 +118,15 @@ static int timeNumber = 60;
 - (void)codelAct{
     [self.view endEditing:YES];
     NSMutableDictionary *codeDict = [NSMutableDictionary dictionary];
-    if (self.mobileTF.text.length == 0) {
-        [LQProgressHud showMessage:@"请输入验证码！"];
+
+    NSUserDefaults *autoMove = [NSUserDefaults standardUserDefaults];
+    if ([autoMove objectForKey:Mobile]) {
+        [codeDict setObject:[autoMove objectForKey:Mobile] forKey:@"telphone"];
+    }else{
+        [LQProgressHud showMessage:@"请先登录！"];
         return;
     }
     
-    [codeDict setObject:@15221882010 forKey:@"telphone"];
     self.codeBtn.userInteractionEnabled = NO;
     //----判断手机号是否注册过 18637665180
     [[JsonHttp jsonHttp]httpRequestWithMD5:@"reg/hasMobileRegistered" JsonKey:nil withData:codeDict failedBlock:^(id errType) {
@@ -238,9 +240,8 @@ static int timeNumber = 60;
         NSLog(@"%@", data);
         btn.userInteractionEnabled = YES;
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
-            [Helper alertViewWithTitle:@"新密码设置成功！" withBlock:^(UIAlertController *alertView) {
-                [self presentViewController:alertView animated:YES completion:nil];
-            }];
+            [LQProgressHud showMessage:@"新密码设置成功！"];
+            [self.navigationController popViewControllerAnimated:YES];
         }else{
             if ([data objectForKey:@"packResultMsg"]) {
                 [LQProgressHud showMessage:[data objectForKey:@"packResultMsg"]];

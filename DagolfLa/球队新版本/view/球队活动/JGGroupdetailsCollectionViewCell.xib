@@ -191,8 +191,8 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="06" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KiO-rB-56H">
-                                <rect key="frame" x="10" y="4" width="16" height="15"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="19.5" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KiO-rB-56H">
+                                <rect key="frame" x="0.0" y="4" width="30" height="15"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <color key="textColor" red="0.032315962980000001" green="0.85570913459999998" blue="0.79418547699999997" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -200,12 +200,13 @@
                         </subviews>
                         <color key="backgroundColor" red="0.76078431369999999" green="0.82352941180000006" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
+                            <constraint firstAttribute="trailing" secondItem="KiO-rB-56H" secondAttribute="trailing" constant="25" id="BU0-s8-HSf"/>
                             <constraint firstAttribute="trailing" secondItem="qUf-5T-kyw" secondAttribute="trailing" constant="25" id="Ddk-PP-MvQ"/>
+                            <constraint firstItem="KiO-rB-56H" firstAttribute="leading" secondItem="DW0-bJ-Crl" secondAttribute="leading" id="EZQ-Ao-TjI"/>
                             <constraint firstAttribute="width" constant="55" id="MyY-Ce-pnc"/>
                             <constraint firstAttribute="bottom" secondItem="qUf-5T-kyw" secondAttribute="bottom" constant="25" id="ZNO-3I-goo"/>
                             <constraint firstItem="qUf-5T-kyw" firstAttribute="top" secondItem="KiO-rB-56H" secondAttribute="bottom" id="c2f-hA-RKP"/>
                             <constraint firstAttribute="width" secondItem="DW0-bJ-Crl" secondAttribute="height" multiplier="1:1" id="i7a-Ec-vvN"/>
-                            <constraint firstItem="KiO-rB-56H" firstAttribute="centerX" secondItem="qUf-5T-kyw" secondAttribute="centerX" id="sQP-3a-yGB"/>
                             <constraint firstItem="qUf-5T-kyw" firstAttribute="leading" secondItem="DW0-bJ-Crl" secondAttribute="leading" constant="5" id="v8O-Iv-yiv"/>
                         </constraints>
                     </view>
@@ -296,7 +297,7 @@
                 <outlet property="section3" destination="zAO-eG-BzH" id="JZ6-v1-a7k"/>
                 <outlet property="section4" destination="bYS-gj-Bfh" id="fak-z7-qaX"/>
             </connections>
-            <point key="canvasLocation" x="29" y="60"/>
+            <point key="canvasLocation" x="28.5" y="60"/>
         </collectionViewCell>
     </objects>
     <resources>

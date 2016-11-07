@@ -57,7 +57,7 @@
         [self refreshConversationTableViewIfNeeded];
 //        [self.tabBarController.tabBar hideBadgeOnItemIndex:4];
 //        [self.tabBarController.tabBar showBadgeOnItemIndex:4];
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"show" object:self];
+        
     }
     else
     {
@@ -66,6 +66,7 @@
         [alertView show];
     }
 
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"show" object:self];
 }
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (buttonIndex == 1) {

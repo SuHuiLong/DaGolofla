@@ -537,7 +537,7 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
             
         }
         //[user setObject:city forKey:@"currentCity"];
-        
+        teamMainCtrl.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:teamMainCtrl animated:YES];
     }else{
         JGHShowMyTeamViewController *myTeamVC = [[JGHShowMyTeamViewController alloc] init];
