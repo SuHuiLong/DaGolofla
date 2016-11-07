@@ -459,7 +459,7 @@
 - (void)forgotPasswordBtn:(UIButton *)btn{
     JGHForgotPasswordViewController *forCtrl = [[JGHForgotPasswordViewController alloc]initWithNibName:@"JGHForgotPasswordViewController" bundle:nil];
     forCtrl.blackCtrl = ^(){
-        _reloadCtrlData();
+        [self backClcik];
     };
     [self.navigationController pushViewController:forCtrl animated:YES];
 }
