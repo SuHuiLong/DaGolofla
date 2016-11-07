@@ -359,10 +359,13 @@ static NSString *const orderDetailCellIdentifier = @"OtherDataTableViewCell";
                 
                 self.title = _model.userName;
                 
-//                [_backImg sd_setImageWithURL:[Helper imageUrl:_model.backPic] placeholderImage:[UIImage imageNamed:@"selfBackPic.jpg"]];
-                [_backImg sd_setImageWithURL:[Helper setImageIconUrl:@"user/head" andTeamKey:[_strMoodId integerValue] andIsSetWidth:NO andIsBackGround:YES] placeholderImage:[UIImage imageNamed:@"selfBackPic.jpg"]];
-//                [_iconImg sd_setImageWithURL:[Helper imageIconUrl:_model.pic] placeholderImage:[UIImage imageNamed:@"zwt"]];
-                [_iconImg sd_setImageWithURL:[Helper setImageIconUrl:@"user" andTeamKey:[_strMoodId integerValue] andIsSetWidth:YES andIsBackGround:NO] placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
+                NSString *bgUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/user/head/%td_background.jpg",[_strMoodId integerValue]];
+                [[SDImageCache sharedImageCache] removeImageForKey:bgUrl fromDisk:YES];
+                [_backImg sd_setImageWithURL:[NSURL URLWithString:bgUrl] placeholderImage:[UIImage imageNamed:@"selfBackPic.jpg"]];
+                
+                NSString *iconUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/%@/head/%td.jpg@200w_200h_2o",@"user",[_strMoodId integerValue]];
+                [[SDImageCache sharedImageCache] removeImageForKey:iconUrl fromDisk:YES];
+                [_iconImg sd_setImageWithURL:[NSURL URLWithString:iconUrl] placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
                 
                 //替换备注名称
                 NoteModel *model = [NoteHandlle selectNoteWithUID:self.strMoodId];
@@ -410,9 +413,14 @@ static NSString *const orderDetailCellIdentifier = @"OtherDataTableViewCell";
                 
                 self.title = _model.userName;
                 
-//                [_backImg sd_setImageWithURL:[Helper imageUrl:_model.backPic] placeholderImage:[UIImage imageNamed:@"selfBackPic.jpg"]];
-                [_backImg sd_setImageWithURL:[Helper setImageIconUrl:@"user/head" andTeamKey:[_strMoodId integerValue] andIsSetWidth:NO andIsBackGround:YES] placeholderImage:[UIImage imageNamed:@"selfBackPic.jpg"]];
-                [_iconImg sd_setImageWithURL:[Helper setImageIconUrl:@"user" andTeamKey:[_strMoodId integerValue] andIsSetWidth:YES andIsBackGround:NO] placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
+                NSString *bgUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/user/head/%td_background.jpg",[_strMoodId integerValue]];
+                [[SDImageCache sharedImageCache] removeImageForKey:bgUrl fromDisk:YES];
+                [_backImg sd_setImageWithURL:[NSURL URLWithString:bgUrl] placeholderImage:[UIImage imageNamed:@"selfBackPic.jpg"]];
+                
+                NSString *iconUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/%@/head/%td.jpg@200w_200h_2o",@"user",[_strMoodId integerValue]];
+                [[SDImageCache sharedImageCache] removeImageForKey:iconUrl fromDisk:YES];
+                [_iconImg sd_setImageWithURL:[NSURL URLWithString:iconUrl] placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
+                
                 
                 
                 //替换备注名称
@@ -467,8 +475,7 @@ static NSString *const orderDetailCellIdentifier = @"OtherDataTableViewCell";
                 [_dataArray addObject:_deatilModel];
             }
         }else {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:[dict objectForKey:@"message"] delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-            [alert show];
+            
         }
         
         [self createPageView];
@@ -872,8 +879,9 @@ static NSString *const orderDetailCellIdentifier = @"OtherDataTableViewCell";
     
     [[JsonHttp jsonHttp]httpRequestImageOrVedio:@"1" withData:dict andDataArray:array failedBlock:^(id errType) {
     } completionBlock:^(id data) {
-//        [_backImg setImage:image];
-        [_backImg sd_setImageWithURL:[Helper setImageIconUrl:@"user/head" andTeamKey:[DEFAULF_USERID integerValue] andIsSetWidth:NO andIsBackGround:YES] placeholderImage:[UIImage imageNamed:@"selfBackPic.jpg"]];
+        NSString *bgUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/user/head/%td_background.jpg",[_strMoodId integerValue]];
+        [[SDImageCache sharedImageCache] removeImageForKey:bgUrl fromDisk:YES];
+        [_backImg sd_setImageWithURL:[NSURL URLWithString:bgUrl] placeholderImage:[UIImage imageNamed:@"selfBackPic.jpg"]];
     }];
 }
 

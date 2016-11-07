@@ -48,7 +48,7 @@
     _isWomen = YES;
     [_btnMen setImage:[UIImage imageNamed:@"xuan_w"] forState:UIControlStateNormal];
     [_btnWomen setImage:[UIImage imageNamed:@"xuan_z"] forState:UIControlStateNormal];
-    [self post:@{@"userId":[[NSUserDefaults standardUserDefaults] objectForKey:@"userId"],@"sex":@0}];
+    [self post:@{@"userId":[[NSUserDefaults standardUserDefaults] objectForKey:@"userId"],@"sex":@0}];//
     NSNumber* number = @0;
     self.blockSexNumber(number);
 }
@@ -65,8 +65,6 @@
     if (model.sex == 0) {
         _isMen = NO;
         _isWomen = YES;
-//        _imgMen.image = [UIImage imageNamed:@"xuan_w"];
-//        _imgWomen.image = [UIImage imageNamed:@"xuan_z"];
         [_btnMen setImage:[UIImage imageNamed:@"xuan_w"] forState:UIControlStateNormal];
         [_btnWomen setImage:[UIImage imageNamed:@"xuan_z"] forState:UIControlStateNormal];
         
@@ -75,8 +73,6 @@
     {
         _isMen = YES;
         _isWomen = NO;
-//        _imgMen.image = [UIImage imageNamed:@"xuan_z"];
-//        _imgWomen.image = [UIImage imageNamed:@"xuan_w"];
         [_btnMen setImage:[UIImage imageNamed:@"xuan_z"] forState:UIControlStateNormal];
         [_btnWomen setImage:[UIImage imageNamed:@"xuan_w"] forState:UIControlStateNormal];
     }
@@ -84,22 +80,11 @@
 
 -(void)post:(NSDictionary *)dict
 {
-    [[PostDataRequest sharedInstance] postDataRequest:kUpDateData_URL parameter:dict success:^(id respondsData) {
-        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:respondsData options:NSJSONReadingMutableContainers error:nil];
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:[dict objectForKey:@"message"] delegate:self cancelButtonTitle:@"确认" otherButtonTitles:nil, nil];
-        [alertView show];
-//        [Helper alertViewWithTitle:[dict objectForKey:@"message"] withBlock:^(UIAlertController *alertView) {
-//        }];
-    } failed:^(NSError *error) {
-        //        [MBProgressHUD hideHUDForView:self.view  animated:YES];
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"\n链接超时！\n" delegate:self cancelButtonTitle:nil otherButtonTitles:nil, nil];
-        [alertView show];
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [alertView dismissWithClickedButtonIndex:0 animated:YES];
-        });
+    [[JsonHttp jsonHttp]httpRequestWithMD5:@"user/doUpdateUserInfo" JsonKey:@"TUser" withData:dict failedBlock:^(id errType) {
+        
+    } completionBlock:^(id data) {
         
     }];
-    
     
 }
 
