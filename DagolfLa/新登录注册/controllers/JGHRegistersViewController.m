@@ -110,7 +110,7 @@
     self.threeView.layer.masksToBounds = YES;
     self.threeView.layer.cornerRadius = 3.0 *ProportionAdapter;
     
-    _titleArray = @[@"中国 0086", @"香港 00886", @"澳门 00852", @"台湾 00853"];
+    _titleArray = @[@"中国大陆      +0086", @"中国香港      ＋00886", @"中国澳门      ＋00852", @"中国台湾      ＋00853"];
     _titleCodeArray = @[@"0086", @"00886", @"00852", @"00853"];
     
     _codeing = @"0086";
@@ -163,7 +163,7 @@
     _getCodeBtn.userInteractionEnabled = NO;
     [codeDict setObject:_mobileText.text forKey:@"telphone"];
     [codeDict setObject:_codeing forKey:@"countryCode"];
-    _getCodeBtn.userInteractionEnabled = NO;
+    _getCodeBtn.userInteractionEnabled = NO;//  doSendRegisterUserSms
     [[JsonHttp jsonHttp]httpRequestWithMD5:@"reg/doSendRegisterUserSms" JsonKey:nil withData:codeDict failedBlock:^(id errType) {
         _getCodeBtn.userInteractionEnabled = YES;
         [[ShowHUD showHUD]hideAnimationFromView:self.view];
@@ -176,7 +176,7 @@
                 UIAlertController *alert=[UIAlertController alertControllerWithTitle:@"提示" message:@"手机号码已注册过，使用该号码登录？" preferredStyle:UIAlertControllerStyleAlert];
                 
                 UIAlertAction *action1=[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                    
+                    _getCodeBtn.userInteractionEnabled = YES;
                 }];
                 UIAlertAction* action2=[UIAlertAction actionWithTitle:@"登录" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                     if (self.delegate) {
@@ -188,6 +188,7 @@
                 [alert addAction:action1];
                 [alert addAction:action2];
                 [self presentViewController:alert animated:YES completion:nil];
+                return ;
             }else{
                 _timer=[NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(autoMove) userInfo:nil repeats:YES];
                 [[NSRunLoop currentRunLoop] addTimer:_timer forMode:NSRunLoopCommonModes];
@@ -230,6 +231,7 @@
         [self.entryBtn setImage:[UIImage imageNamed:@"icn_login_eyeopen"] forState:UIControlStateNormal];
     }else{
         _passwordText.secureTextEntry = YES;
+        _passwordText.text = @"";
         [self.entryBtn setImage:[UIImage imageNamed:@"icn_login_eyeclose"] forState:UIControlStateNormal];
     }
 }

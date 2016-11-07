@@ -36,6 +36,7 @@
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:YES];
     
+    /*
     [[PostDataRequest sharedInstance] postDataRequest:@"user/updateUserSys.do" parameter:self.newDic success:^(id respondsData) {
         NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:respondsData options:NSJSONReadingMutableContainers error:nil];
         
@@ -54,7 +55,7 @@
         
         
     }];
-    
+    */
     
 }
 

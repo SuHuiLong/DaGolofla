@@ -141,7 +141,7 @@ static int timeNumber = 60;
                                 
                 [codeDict setObject:@"" forKey:@"countryCode"];
                 self.codeBtn.userInteractionEnabled = NO;
-                [[JsonHttp jsonHttp]httpRequestWithMD5:@"reg/doSendRegisterUserSms" JsonKey:nil withData:codeDict failedBlock:^(id errType) {
+                [[JsonHttp jsonHttp]httpRequestWithMD5:@"user/doSendSetPasswordSms" JsonKey:nil withData:codeDict failedBlock:^(id errType) {
                     self.codeBtn.userInteractionEnabled = YES;
                 } completionBlock:^(id data) {
                     NSLog(@"%@", data);
@@ -201,6 +201,7 @@ static int timeNumber = 60;
         self.PWDTF.secureTextEntry = NO;
     }else{
         [self.eyeBtn setImage:[UIImage imageNamed:@"icn_login_eyeclose"] forState:(UIControlStateNormal)];
+        self.PWDTF.text = @"";
         self.PWDTF.secureTextEntry = YES;
     }
 }

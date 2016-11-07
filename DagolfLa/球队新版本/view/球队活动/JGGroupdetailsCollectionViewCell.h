@@ -58,16 +58,12 @@
 
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *almostTop1;//25
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *almostLeft1;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *almostRight1;
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *conViewTop1;//-25
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *conViewLeft1;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *conViewW1;//60
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *almostTop2;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *almostLeft2;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *almostRight2;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *conViewTop2;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *conViewLeft2;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *conViewW2;

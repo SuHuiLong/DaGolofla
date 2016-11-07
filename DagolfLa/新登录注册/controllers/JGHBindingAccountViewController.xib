@@ -40,12 +40,11 @@
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KiW-yM-t5u">
                     <subviews>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7S3-dF-KS6">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7S3-dF-KS6">
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="50" id="u4E-Fc-Fpu"/>
                             </constraints>
-                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <state key="normal" title="086"/>
                             <connections>
                                 <action selector="mobileBtn:" destination="-1" eventType="touchUpInside" id="hCy-ci-ASs"/>

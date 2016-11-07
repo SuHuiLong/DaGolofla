@@ -18,15 +18,11 @@
 //    [[SDImageCache sharedImageCache] clearDisk];
     
     self.almostTop1.constant = 25 *ProportionAdapter;
-    self.almostLeft1.constant = 25 *ProportionAdapter;
-    self.almostRight1.constant = 5 *ProportionAdapter;
     self.conViewTop1.constant = -25 *ProportionAdapter;
     self.conViewLeft1.constant = -25 *ProportionAdapter;
     self.conViewW1.constant = 55 *ProportionAdapter;
     
     self.almostTop2.constant = 25 *ProportionAdapter;
-    self.almostLeft2.constant = 25 *ProportionAdapter;
-    self.almostRight2.constant = 5 *ProportionAdapter;
     self.conViewTop2.constant = -25 *ProportionAdapter;
     self.conViewLeft2.constant = -25 *ProportionAdapter;
     self.conViewW2.constant = 55 *ProportionAdapter;
@@ -86,15 +82,15 @@
     self.rightDownAlmost.tintColor = [UIColor colorWithHexString:@"#a0a0a0"];
     
     if (iPhone5) {
-        self.leftTopValue.font = [UIFont systemFontOfSize:11*ProportionAdapter];
-        self.rightTopValue.font = [UIFont systemFontOfSize:11*ProportionAdapter];
-        self.leftDownValue.font = [UIFont systemFontOfSize:11*ProportionAdapter];
-        self.rightDownVlaue.font = [UIFont systemFontOfSize:11*ProportionAdapter];
+        self.leftTopValue.font = [UIFont systemFontOfSize:10*ProportionAdapter];
+        self.rightTopValue.font = [UIFont systemFontOfSize:10*ProportionAdapter];
+        self.leftDownValue.font = [UIFont systemFontOfSize:10*ProportionAdapter];
+        self.rightDownVlaue.font = [UIFont systemFontOfSize:10*ProportionAdapter];
     }else{
-        self.leftTopValue.font = [UIFont systemFontOfSize:13*ProportionAdapter];
-        self.rightTopValue.font = [UIFont systemFontOfSize:13*ProportionAdapter];
-        self.leftDownValue.font = [UIFont systemFontOfSize:13*ProportionAdapter];
-        self.rightDownVlaue.font = [UIFont systemFontOfSize:13*ProportionAdapter];
+        self.leftTopValue.font = [UIFont systemFontOfSize:12*ProportionAdapter];
+        self.rightTopValue.font = [UIFont systemFontOfSize:12*ProportionAdapter];
+        self.leftDownValue.font = [UIFont systemFontOfSize:12*ProportionAdapter];
+        self.rightDownVlaue.font = [UIFont systemFontOfSize:12*ProportionAdapter];
     }
 
     self.bgView.layer.masksToBounds = YES;
@@ -270,7 +266,7 @@
                     }
                     
                     if (model.almost) {
-                        self.leftTopValue.text = [NSString stringWithFormat:@"%@", model.almost];
+                        self.leftTopValue.text = [NSString stringWithFormat:@"%.1f", [model.almost floatValue]];
                     }
                 }
                 
@@ -288,7 +284,7 @@
                     }
                     
                     if (model.almost) {
-                        self.rightTopValue.text = [NSString stringWithFormat:@"%@" ,model.almost];
+                        self.rightTopValue.text = [NSString stringWithFormat:@"%.1f", [model.almost floatValue]];
                     }
                 }
                 
@@ -306,7 +302,7 @@
                     }
                     
                     if (model.almost) {
-                        self.leftDownValue.text = [NSString stringWithFormat:@"%@", model.almost];
+                        self.leftDownValue.text = [NSString stringWithFormat:@"%.1f", [model.almost floatValue]];
                     }
                 }
                 
@@ -324,7 +320,7 @@
                     }
                     
                     if (model.almost) {
-                        self.rightDownVlaue.text = [NSString stringWithFormat:@"%@", model.almost];
+                        self.rightDownVlaue.text = [NSString stringWithFormat:@"%.1f", [model.almost floatValue]];
                     }
                 }
             }

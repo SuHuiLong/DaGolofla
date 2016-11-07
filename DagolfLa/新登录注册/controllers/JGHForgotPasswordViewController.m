@@ -88,7 +88,7 @@
     self.threeView.layer.masksToBounds = YES;
     self.threeView.layer.cornerRadius = 3.0 *ProportionAdapter;
     
-    _titleArray = @[@"中国 0086", @"香港 00886", @"澳门 00852", @"台湾 00853"];
+    _titleArray = @[@"中国大陆      +0086", @"中国香港      ＋00886", @"中国澳门      ＋00852", @"中国台湾      ＋00853"];
     _titleCodeArray = @[@"0086", @"00886", @"00852", @"00853"];
     
     _codeing = @"0086";
@@ -148,7 +148,7 @@
     [codeDict setObject:_codeing forKey:@"countryCode"];
     
     //手机号已注册
-    [[JsonHttp jsonHttp]httpRequestWithMD5:@"reg/doSendRegisterUserSms" JsonKey:nil withData:codeDict failedBlock:^(id errType) {
+    [[JsonHttp jsonHttp]httpRequestWithMD5:@"user/doSendForgetPasswordSms" JsonKey:nil withData:codeDict failedBlock:^(id errType) {
         _getCodeBtn.userInteractionEnabled = YES;
         [[ShowHUD showHUD]hideAnimationFromView:self.view];
     } completionBlock:^(id data) {
@@ -209,6 +209,7 @@
         [self.entryBtn setImage:[UIImage imageNamed:@"icn_login_eyeopen"] forState:UIControlStateNormal];
     }else{
         _passwordText.secureTextEntry = YES;
+        _passwordText.text = @"";
         [self.entryBtn setImage:[UIImage imageNamed:@"icn_login_eyeclose"] forState:UIControlStateNormal];
     }
 }
