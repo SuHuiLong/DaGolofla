@@ -141,50 +141,41 @@
         }
     }
     
+    [[ShowHUD showHUD]showAnimationWithText:@"发送中..." FromView:self.view];
+    _getCodeBtn.userInteractionEnabled = NO;
     NSMutableDictionary *codeDict = [NSMutableDictionary dictionary];
     [codeDict setObject:_mobileText.text forKey:@"telphone"];
     [codeDict setObject:_codeing forKey:@"countryCode"];
-    _getCodeBtn.userInteractionEnabled = NO;
     
-    [[JsonHttp jsonHttp]httpRequestWithMD5:@"reg/hasMobileRegistered" JsonKey:nil withData:codeDict failedBlock:^(id errType) {
+    //手机号已注册
+    [[JsonHttp jsonHttp]httpRequestWithMD5:@"reg/doSendRegisterUserSms" JsonKey:nil withData:codeDict failedBlock:^(id errType) {
         _getCodeBtn.userInteractionEnabled = YES;
+        [[ShowHUD showHUD]hideAnimationFromView:self.view];
     } completionBlock:^(id data) {
         NSLog(@"%@", data);
-        
+        [[ShowHUD showHUD]hideAnimationFromView:self.view];
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+            //
             if ([[data objectForKey:@"hasMobileRegistered"] integerValue] == 1) {
-                //手机号已注册
-                [[JsonHttp jsonHttp]httpRequestWithMD5:@"reg/doSendRegisterUserSms" JsonKey:nil withData:codeDict failedBlock:^(id errType) {
-                    _getCodeBtn.userInteractionEnabled = YES;
-                } completionBlock:^(id data) {
-                    NSLog(@"%@", data);
-                    if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
-                        //
-                        _timer=[NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(autoMove) userInfo:nil repeats:YES];
-                        [[NSRunLoop currentRunLoop] addTimer:_timer forMode:NSRunLoopCommonModes];
-                    }else{
-                        _getCodeBtn.userInteractionEnabled = YES;
-                        
-                        if ([data objectForKey:@"packResultMsg"]) {
-                            [LQProgressHud showMessage:[data objectForKey:@"packResultMsg"]];
-                        }
-                    }
-                }];
+                _timer=[NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(autoMove) userInfo:nil repeats:YES];
+                [[NSRunLoop currentRunLoop] addTimer:_timer forMode:NSRunLoopCommonModes];
             }else{
                 //手机号未注册
                 _getCodeBtn.userInteractionEnabled = YES;
-
+                
                 UIAlertController *alert=[UIAlertController alertControllerWithTitle:@"提示" message:@"手机号未注册，请先注册！" preferredStyle:UIAlertControllerStyleAlert];
                 
                 UIAlertAction *action1=[UIAlertAction actionWithTitle:@"知道了" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                    [self.navigationController popViewControllerAnimated:YES];
+                    
                 }];
                 
                 [alert addAction:action1];
                 [self presentViewController:alert animated:YES completion:nil];
             }
+            
         }else{
             _getCodeBtn.userInteractionEnabled = YES;
+            
             if ([data objectForKey:@"packResultMsg"]) {
                 [LQProgressHud showMessage:[data objectForKey:@"packResultMsg"]];
             }
@@ -197,6 +188,7 @@
 }
 - (void)autoMove {
     _timeNumber--;
+    _getCodeBtn.userInteractionEnabled = NO;
     [_getCodeBtn setTitleColor:[UIColor colorWithHexString:Line_Color] forState:UIControlStateNormal];
     _getCodeBtn.titleLabel.font = [UIFont systemFontOfSize:14*ProportionAdapter];
     [_getCodeBtn setTitle:[NSString stringWithFormat:@"(%tds)后重新获取", _timeNumber] forState:UIControlStateNormal];
@@ -248,6 +240,7 @@
         return;
     }
     
+    [[ShowHUD showHUD]showAnimationWithText:@"提交中..." FromView:self.view];
     sender.userInteractionEnabled = NO;
     NSMutableDictionary *resetDict = [NSMutableDictionary dictionary];
     [resetDict setObject:_mobileText.text forKey:@"telphone"];
@@ -256,9 +249,11 @@
     
     [[JsonHttp jsonHttp]httpRequestWithMD5:@"user/updatePassword" JsonKey:nil withData:resetDict failedBlock:^(id errType) {
         sender.userInteractionEnabled = YES;
+        [[ShowHUD showHUD]hideAnimationFromView:self.view];
     } completionBlock:^(id data) {
         NSLog(@"%@", data);
         sender.userInteractionEnabled = YES;
+        [[ShowHUD showHUD]hideAnimationFromView:self.view];
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
             
             NSDictionary *userDict = [NSDictionary dictionary];
@@ -404,7 +399,12 @@
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
     NSMutableString *code = [_titleCodeArray[row] mutableCopy];
-    NSString *cddd = [code substringFromIndex:2];
+    NSString *cddd;
+    if ([code isEqualToString:@"0086"]) {
+        cddd = [code substringFromIndex:1];
+    }else{
+        cddd = [code substringFromIndex:2];
+    }
     [_mobileBtn setTitle:cddd forState:UIControlStateNormal];
     _codeing = [NSString stringWithFormat:@"%@", _titleCodeArray[row]];
 }

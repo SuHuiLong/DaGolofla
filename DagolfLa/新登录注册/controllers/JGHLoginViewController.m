@@ -58,6 +58,10 @@
     [super viewWillAppear:animated];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:nil];
 //    [super viewWillAppear:YES];
+    
+    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"backL"] style:UIBarButtonItemStylePlain target:self action:@selector(backClcik)];
+    item.tintColor=[UIColor whiteColor];
+    self.navigationItem.leftBarButtonItem = item;
 }
 
 -(void)viewWillDisappear:(BOOL)animated
@@ -75,10 +79,6 @@
     _dict = [NSMutableDictionary dictionary];
     self.weiChetDict = [NSMutableDictionary dictionary];
     
-    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"backL"] style:UIBarButtonItemStylePlain target:self action:@selector(backClcik)];
-    item.tintColor=[UIColor whiteColor];
-    self.navigationItem.leftBarButtonItem = item;
-    
     _titleArray = @[@"中国 0086", @"香港 00886", @"澳门 00852", @"台湾 00853"];
     _titleCodeArray = @[@"0086", @"00886", @"00852", @"00853"];
     _codeing = @"0086";
@@ -88,6 +88,12 @@
 }
 - (void)backClcik{
     _reloadCtrlData();
+    
+//    NSMutableArray *ctrlArray = [self.navigationController.viewControllers mutableCopy];
+//    [ctrlArray removeObjectAtIndex:1];
+//    self.navigationController.viewControllers = ctrlArray;
+//    NSLog(@"%@", ctrlArray);
+        
     [self.navigationController popViewControllerAnimated:YES];
 }
 - (void)createNavViewBtn{
@@ -214,6 +220,7 @@
     registerCtrl.delegate = self;
     registerCtrl.blackCtrl = ^(){
         _reloadCtrlData();
+        [self.navigationController popViewControllerAnimated:YES];
     };
     [self.navigationController pushViewController:registerCtrl animated:YES];
 }
@@ -258,11 +265,14 @@
      18637665180
      123456
      */
+    [[ShowHUD showHUD]showAnimationWithText:@"登录中..." FromView:self.view];
     btn.userInteractionEnabled = NO;
     [[JsonHttp jsonHttp]httpRequestWithMD5:urlString JsonKey:nil withData:_dict failedBlock:^(id errType) {
         btn.userInteractionEnabled = YES;
+        [[ShowHUD showHUD]hideAnimationFromView:self.view];
     } completionBlock:^(id data) {
         NSLog(@"%@", data);
+        [[ShowHUD showHUD]hideAnimationFromView:self.view];
         btn.userInteractionEnabled = YES;
         
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
@@ -373,17 +383,11 @@
                     
                 }else{
                     //
-                    [Helper alertViewWithTitle:@"微信登录失败" withBlock:^(UIAlertController *alertView) {
-                        [self presentViewController:alertView animated:YES completion:nil];
-                        return ;
-                    }];
+                    [LQProgressHud showMessage:@"微信登录失败！"];
                 }
             }];
         }else{
-            [Helper alertViewWithTitle:@"微信登录失败" withBlock:^(UIAlertController *alertView) {
-                [self presentViewController:alertView animated:YES completion:nil];
-                return ;
-            }];
+            [LQProgressHud showMessage:@"微信登录失败！"];
         }
     });
     //得到的数据在回调Block对象形参respone的data属性
@@ -499,19 +503,22 @@
         return;
     }
     
+    [[ShowHUD showHUD]showAnimationWithText:@"发送中..." FromView:self.view];
+    _getCodeBtn.userInteractionEnabled = NO;
     [codeDict setObject:_mobileText.text forKey:@"telphone"];
     //
     [codeDict setObject:_codeing forKey:@"countryCode"];
-    _getCodeBtn.userInteractionEnabled = NO;
+    
     [[JsonHttp jsonHttp]httpRequestWithMD5:@"login/doSendLoginCheckCodeSms" JsonKey:nil withData:codeDict failedBlock:^(id errType) {
         _getCodeBtn.userInteractionEnabled = YES;
+        [[ShowHUD showHUD]hideAnimationFromView:self.view];
     } completionBlock:^(id data) {
         NSLog(@"%@", data);
+        [[ShowHUD showHUD]hideAnimationFromView:self.view];
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
             //
             _timer=[NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(autoMove) userInfo:nil repeats:YES];
             [[NSRunLoop currentRunLoop] addTimer:_timer forMode:NSRunLoopCommonModes];
-            
         }else{
             _getCodeBtn.userInteractionEnabled = YES;
             if ([data objectForKey:@"packResultMsg"]) {
@@ -689,7 +696,12 @@
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
     NSMutableString *code = [_titleCodeArray[row] mutableCopy];
-    NSString *cddd = [code substringFromIndex:2];
+    NSString *cddd;
+    if ([code isEqualToString:@"0086"]) {
+        cddd = [code substringFromIndex:1];
+    }else{
+        cddd = [code substringFromIndex:2];
+    }
     [_areaBtn setTitle:cddd forState:UIControlStateNormal];
     _codeing = [NSString stringWithFormat:@"%@", _titleCodeArray[row]];
 }

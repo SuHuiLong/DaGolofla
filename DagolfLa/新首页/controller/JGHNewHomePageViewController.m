@@ -108,6 +108,12 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
     [self getCurPosition];
     
     [self createBanner];
+    
+    [self loadingPHP];
+}
+#pragma mark -- 登录PHP
+- (void)loadingPHP{
+    [Helper callPHPLoginUserId:[NSString stringWithFormat:@"%@", DEFAULF_USERID]];
 }
 #pragma mark -- 寻找本地缓存数据
 - (void)parsingCacheData{

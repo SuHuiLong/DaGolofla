@@ -230,6 +230,8 @@
 //        EnterViewController *vc = [[EnterViewController alloc] init];
 //        vc.popViewNumber = 101;
 //        [self.navigationController pushViewController:vc animated:YES];
+
+        
         JGHLoginViewController *vc = [[JGHLoginViewController alloc] init];
         vc.reloadCtrlData = ^(){
             

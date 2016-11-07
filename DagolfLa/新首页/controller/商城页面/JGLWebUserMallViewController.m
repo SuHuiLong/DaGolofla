@@ -61,6 +61,7 @@
 //    statusView.frame = frame;
 //    [self.view addSubview:statusView];
 //    [_actIndicatorView stopAnimating];
+    /*
     NSString* strUrl;
     if ([[[NSUserDefaults standardUserDefaults] objectForKey:@"isWeChat"] integerValue] == 1)
     {
@@ -70,62 +71,143 @@
     {
         strUrl = [NSString stringWithFormat:@"http://www.dagolfla.com/app/api/client/api.php?Action=UserLogin&uid=%@&psw=%@&url=%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"mobile"],[[NSUserDefaults standardUserDefaults] objectForKey:@"passWord"],@"index.jsp"];
     }
-    [[PostDataRequest sharedInstance] getDataRequest:strUrl success:^(id respondsData) {
-        
-        self.webView = [[WKWebView alloc]initWithFrame:CGRectMake(0, -20, screenWidth, screenHeight)];
-        [self.view addSubview:self.webView];
-        self.webView.UIDelegate = self;
-        self.webView.navigationDelegate = self;
-        self.webView.allowsBackForwardNavigationGestures =YES;
-        
-        __weak typeof(self) weakSelf = self;
-        [self.webView evaluateJavaScript:@"navigator.userAgent" completionHandler:^(id result, NSError *error) {
-            __strong typeof(weakSelf) strongSelf = weakSelf;
+    */
+    //-----登录PHP－－－－
+    NSUserDefaults *useDef = [NSUserDefaults standardUserDefaults];
+    
+    if ([useDef objectForKey:PHPState]) {
+        if ([[useDef objectForKey:PHPState] integerValue] == 1) {
+            [self resgterWebView];
+        }else{
+            NSString *url = [NSString stringWithFormat:@"http://www.dagolfla.com/app/api/client/api.php?Action=UserLoginUserid&uid=%@&url=dsadsa", DEFAULF_USERID];
             
-            NSString *userAgent = result;
-            NSString *newUserAgent = [userAgent stringByAppendingString:@" DagolfLa/2.0"];
-            NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:newUserAgent, @"UserAgent", nil];
-            [[NSUserDefaults standardUserDefaults] registerDefaults:dictionary];
-            
-            strongSelf.webView = [[WKWebView alloc] initWithFrame:strongSelf.view.bounds];
-            [strongSelf.webView evaluateJavaScript:@"navigator.userAgent" completionHandler:^(id result, NSError *error) {
-                [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:_urlRequest]]];
-                //重设任务栏
-                UIImageView *statusView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, 20)];
-                statusView.image = [UIImage imageNamed:@"nav_bg"];
-                CGRect frame = statusView.frame;
-                frame.origin = CGPointMake(0, 0);
-                statusView.frame = frame;
-                [self.view addSubview:statusView];
-                [_actIndicatorView stopAnimating];
+            [[JsonHttp jsonHttp]httpRequest:url failedBlock:^(id errType) {
                 
-                
-//                NSString *js = @"javascript:void(0);";
-//                [self.webView evaluateJavaScript:js completionHandler:^(id _Nullable other, NSError * _Nullable error) {
-//                    self.navigationController.navigationBarHidden=NO;
-//                    [self.navigationController popViewControllerAnimated:YES];
-//                }];
-            
+            } completionBlock:^(id data) {
+                NSLog(@"%@", data);
+                //state - 1成功
+                NSUserDefaults *userDef = [NSUserDefaults standardUserDefaults];
+                if ([[data objectForKey:@"state"] integerValue] == 1) {
+                    [self resgterWebView];
+                }
+               
+                [userDef setObject:[data objectForKey:@"state"] forKey:PHPState];
             }];
+        }
+    }else{
+        NSString *url = [NSString stringWithFormat:@"http://www.dagolfla.com/app/api/client/api.php?Action=UserLoginUserid&uid=%@&url=dsadsa", DEFAULF_USERID];
+        
+        [[JsonHttp jsonHttp]httpRequest:url failedBlock:^(id errType) {
+            
+        } completionBlock:^(id data) {
+            NSLog(@"%@", data);
+            //state - 1成功
+            NSUserDefaults *userDef = [NSUserDefaults standardUserDefaults];
+            if ([[data objectForKey:@"state"] integerValue] == 1) {
+                [self resgterWebView];
+            }
+            
+            [userDef setObject:[data objectForKey:@"state"] forKey:PHPState];
+        }];
+    }
+//    [[PostDataRequest sharedInstance] getDataRequest:strUrl success:^(id respondsData) {
+//        
+//        self.webView = [[WKWebView alloc]initWithFrame:CGRectMake(0, -20, screenWidth, screenHeight)];
+//        [self.view addSubview:self.webView];
+//        self.webView.UIDelegate = self;
+//        self.webView.navigationDelegate = self;
+//        self.webView.allowsBackForwardNavigationGestures =YES;
+//        
+//        __weak typeof(self) weakSelf = self;
+//        [self.webView evaluateJavaScript:@"navigator.userAgent" completionHandler:^(id result, NSError *error) {
+//            __strong typeof(weakSelf) strongSelf = weakSelf;
+//            
+//            NSString *userAgent = result;
+//            NSString *newUserAgent = [userAgent stringByAppendingString:@" DagolfLa/2.0"];
+//            NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:newUserAgent, @"UserAgent", nil];
+//            [[NSUserDefaults standardUserDefaults] registerDefaults:dictionary];
+//            
+//            strongSelf.webView = [[WKWebView alloc] initWithFrame:strongSelf.view.bounds];
+//            [strongSelf.webView evaluateJavaScript:@"navigator.userAgent" completionHandler:^(id result, NSError *error) {
+//                [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:_urlRequest]]];
+//                //重设任务栏
+//                UIImageView *statusView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, 20)];
+//                statusView.image = [UIImage imageNamed:@"nav_bg"];
+//                CGRect frame = statusView.frame;
+//                frame.origin = CGPointMake(0, 0);
+//                statusView.frame = frame;
+//                [self.view addSubview:statusView];
+//                [_actIndicatorView stopAnimating];
+//                
+//                
+////                NSString *js = @"javascript:void(0);";
+////                [self.webView evaluateJavaScript:js completionHandler:^(id _Nullable other, NSError * _Nullable error) {
+////                    self.navigationController.navigationBarHidden=NO;
+////                    [self.navigationController popViewControllerAnimated:YES];
+////                }];
+//            
+//            }];
+//            
+//        }];
+//        [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:_urlRequest]]];
+//        RCDraggableButton *avatar = [[RCDraggableButton alloc] initInKeyWindowWithFrame:CGRectMake(0, 100, 33, 38)];
+//        [self.view addSubview:avatar];
+//        avatar.backgroundColor = [UIColor clearColor];
+//        [avatar setBackgroundImage:[UIImage imageNamed:@"sy"] forState:UIControlStateNormal];
+//        UITapGestureRecognizer *tapGesture=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(btnWebClick:)];
+//        tapGesture.numberOfTapsRequired = 1;
+//        [avatar addGestureRecognizer:tapGesture];
+//  
+//    } failed:^(NSError *error) {
+//        [_actIndicatorView stopAnimating];
+//    }];
+}
+- (void)resgterWebView{
+    self.webView = [[WKWebView alloc]initWithFrame:CGRectMake(0, -20, screenWidth, screenHeight)];
+    [self.view addSubview:self.webView];
+    self.webView.UIDelegate = self;
+    self.webView.navigationDelegate = self;
+    self.webView.allowsBackForwardNavigationGestures =YES;
+    
+    __weak typeof(self) weakSelf = self;
+    [self.webView evaluateJavaScript:@"navigator.userAgent" completionHandler:^(id result, NSError *error) {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        
+        NSString *userAgent = result;
+        NSString *newUserAgent = [userAgent stringByAppendingString:@" DagolfLa/2.0"];
+        NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:newUserAgent, @"UserAgent", nil];
+        [[NSUserDefaults standardUserDefaults] registerDefaults:dictionary];
+        
+        strongSelf.webView = [[WKWebView alloc] initWithFrame:strongSelf.view.bounds];
+        [strongSelf.webView evaluateJavaScript:@"navigator.userAgent" completionHandler:^(id result, NSError *error) {
+            [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:_urlRequest]]];
+            //重设任务栏
+            UIImageView *statusView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, 20)];
+            statusView.image = [UIImage imageNamed:@"nav_bg"];
+            CGRect frame = statusView.frame;
+            frame.origin = CGPointMake(0, 0);
+            statusView.frame = frame;
+            [self.view addSubview:statusView];
+            [_actIndicatorView stopAnimating];
+            
+            
+            //                NSString *js = @"javascript:void(0);";
+            //                [self.webView evaluateJavaScript:js completionHandler:^(id _Nullable other, NSError * _Nullable error) {
+            //                    self.navigationController.navigationBarHidden=NO;
+            //                    [self.navigationController popViewControllerAnimated:YES];
+            //                }];
             
         }];
-        [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:_urlRequest]]];
-        RCDraggableButton *avatar = [[RCDraggableButton alloc] initInKeyWindowWithFrame:CGRectMake(0, 100, 33, 38)];
-        [self.view addSubview:avatar];
-        avatar.backgroundColor = [UIColor clearColor];
-        [avatar setBackgroundImage:[UIImage imageNamed:@"sy"] forState:UIControlStateNormal];
-        UITapGestureRecognizer *tapGesture=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(btnWebClick:)];
-        tapGesture.numberOfTapsRequired = 1;
-        [avatar addGestureRecognizer:tapGesture];
-  
-    } failed:^(NSError *error) {
-        [_actIndicatorView stopAnimating];
+        
     }];
-    
-    
-    
-    
-    
+    [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:_urlRequest]]];
+    RCDraggableButton *avatar = [[RCDraggableButton alloc] initInKeyWindowWithFrame:CGRectMake(0, 100, 33, 38)];
+    [self.view addSubview:avatar];
+    avatar.backgroundColor = [UIColor clearColor];
+    [avatar setBackgroundImage:[UIImage imageNamed:@"sy"] forState:UIControlStateNormal];
+    UITapGestureRecognizer *tapGesture=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(btnWebClick:)];
+    tapGesture.numberOfTapsRequired = 1;
+    [avatar addGestureRecognizer:tapGesture];
 }
 -(void)btnWebClick:(UIButton *)btn
 {

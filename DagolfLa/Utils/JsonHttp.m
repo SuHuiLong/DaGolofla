@@ -178,7 +178,7 @@ static JsonHttp *jsonHttp = nil;
     //返回数据格式
     manager.responseSerializer = [AFJSONResponseSerializer serializer];
     [manager.requestSerializer willChangeValueForKey:@"timeoutInterval"];
-    manager.requestSerializer.timeoutInterval = 30.f;
+    manager.requestSerializer.timeoutInterval = 20.f;
     [manager.requestSerializer didChangeValueForKey:@"timeoutInterval"];
 //    [AFJSONResponseSerializer serializerWithReadingOptions:NSJSONReadingMutableContainers];
     //https安全策略
@@ -469,7 +469,7 @@ static JsonHttp *jsonHttp = nil;
 //    manager.securityPolicy.allowInvalidCertificates = YES;
 //    manager.securityPolicy.validatesDomainName = NO;
     [manager.requestSerializer willChangeValueForKey:@"timeoutInterval"];
-    manager.requestSerializer.timeoutInterval = 30.f;
+    manager.requestSerializer.timeoutInterval = 20.f;
     [manager.requestSerializer didChangeValueForKey:@"timeoutInterval"];
     
     manager.responseSerializer.acceptableContentTypes =  [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html", nil];//设置相应内容类型

@@ -28,6 +28,14 @@
 
 @implementation JGHBindingAccountViewController
 
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    
+    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"backL"] style:UIBarButtonItemStylePlain target:self action:@selector(backClcik)];
+    item.tintColor=[UIColor whiteColor];
+    self.navigationItem.leftBarButtonItem = item;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
@@ -35,10 +43,6 @@
     self.view.backgroundColor = [UIColor colorWithHexString:BG_color];
     self.navigationItem.title = @"绑定账号";
     _timeNumber = 60;
-    
-    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"backL"] style:UIBarButtonItemStylePlain target:self action:@selector(backClcik)];
-    item.tintColor=[UIColor whiteColor];
-    self.navigationItem.leftBarButtonItem = item;
     
     self.oneViewH.constant = 50 *ProportionAdapter;
     self.oneViewLeft.constant = 8 *ProportionAdapter;
@@ -132,14 +136,18 @@
         return;
     }
     
+    [[ShowHUD showHUD]showAnimationWithText:@"发送中..." FromView:self.view];
+    _getCodeBtn.userInteractionEnabled = NO;
     [codeDict setObject:_mobiletext.text forKey:@"telphone"];
     //
     [codeDict setObject:_codeing forKey:@"countryCode"];
-    _getCodeBtn.userInteractionEnabled = NO;
+    
     [[JsonHttp jsonHttp]httpRequestWithMD5:@"reg/doSendRegisterUserSms" JsonKey:nil withData:codeDict failedBlock:^(id errType) {
         _getCodeBtn.userInteractionEnabled = YES;
+        [[ShowHUD showHUD]hideAnimationFromView:self.view];
     } completionBlock:^(id data) {
         NSLog(@"%@", data);
+        [[ShowHUD showHUD]hideAnimationFromView:self.view];
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
             //            
             _timer=[NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(autoMove) userInfo:nil repeats:YES];
@@ -168,13 +176,18 @@
         return;
     }
     
+    [[ShowHUD showHUD]showAnimationWithText:@"提交中..." FromView:self.view];
+    sender.userInteractionEnabled = NO;
     [_weiChetDict setObject:_codeing forKey:@"countryCode"];
     [_weiChetDict setObject:_mobiletext.text forKey:@"telphone"];
     [_weiChetDict setObject:_codeText.text forKey:@"checkCode"];
     [[JsonHttp jsonHttp]httpRequestWithMD5:@"reg/doBindWechat" JsonKey:nil withData:_weiChetDict failedBlock:^(id errType) {
-        
+        sender.userInteractionEnabled = YES;
+        [[ShowHUD showHUD]hideAnimationFromView:self.view];
     } completionBlock:^(id data) {
         NSLog(@"%@", data);
+        sender.userInteractionEnabled = YES;
+        [[ShowHUD showHUD]hideAnimationFromView:self.view];
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
             NSDictionary *userDict = [NSDictionary dictionary];
             if ([data objectForKey:@"user"]) {
@@ -222,7 +235,7 @@
     if (_timeNumber == 0) {
         [_getCodeBtn setTitleColor:[UIColor colorWithHexString:Bar_Color] forState:UIControlStateNormal];
         _getCodeBtn.titleLabel.font = [UIFont systemFontOfSize:17*ProportionAdapter];
-        [_getCodeBtn setTitle:@"发送验证码" forState:UIControlStateNormal];
+        [_getCodeBtn setTitle:@"获取验证码" forState:UIControlStateNormal];
         [_timer invalidate];
         _timeNumber = 60;
         
@@ -336,7 +349,13 @@
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
     NSMutableString *code = [_titleCodeArray[row] mutableCopy];
-    NSString *cddd = [code substringFromIndex:2];
+    NSString *cddd;
+    if ([code isEqualToString:@"0086"]) {
+        cddd = [code substringFromIndex:1];
+    }else{
+        cddd = [code substringFromIndex:2];
+    }
+    
     [_mobileBtn setTitle:cddd forState:UIControlStateNormal];
     _codeing = [NSString stringWithFormat:@"%@", _titleCodeArray[row]];
 }
