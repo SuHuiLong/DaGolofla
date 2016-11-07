@@ -112,5 +112,7 @@
 //在URL中取key对应的值
 + (NSString *)returnKeyVlaueWithUrlString:(NSString *)string andKey:(NSString *)key;
 
+//登录PHP
++ (void)callPHPLoginUserId:(NSString *)userId;
 
 @end

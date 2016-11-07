@@ -15,7 +15,7 @@
 #import "JGHRegistersViewController.h"
 #import "JGHBindingAccountViewController.h"
 
-@interface JGHLoginViewController ()<UITextFieldDelegate, UIPickerViewDataSource,UIPickerViewDelegate, JGHForgotPasswordViewControllerDelegate, JGHRegistersViewControllerDelegate>
+@interface JGHLoginViewController ()<UITextFieldDelegate, UIPickerViewDataSource,UIPickerViewDelegate, JGHRegistersViewControllerDelegate>
 
 {
     UIView *_bgView;
@@ -57,7 +57,13 @@
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:nil];
-    [super viewWillAppear:YES];
+//    [super viewWillAppear:YES];
+}
+
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    //    [[NSNotificationCenter defaultCenter] postNotificationName:@"show" object:nil];
 }
 
 - (void)viewDidLoad {
@@ -73,7 +79,7 @@
     item.tintColor=[UIColor whiteColor];
     self.navigationItem.leftBarButtonItem = item;
     
-    _titleArray = @[@"中国", @"香港", @"澳门", @"台湾"];
+    _titleArray = @[@"中国 0086", @"香港 00886", @"澳门 00852", @"台湾 00853"];
     _titleCodeArray = @[@"0086", @"00886", @"00852", @"00853"];
     _codeing = @"0086";
     _timeNumber = 60;
@@ -122,7 +128,7 @@
     _areaBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 50*ProportionAdapter, 50 *ProportionAdapter)];
     _areaBtn.titleLabel.textAlignment = NSTextAlignmentCenter;
     _areaBtn.titleLabel.font = [UIFont systemFontOfSize:17*ProportionAdapter];
-    [_areaBtn setTitle:@"86" forState:UIControlStateNormal];
+    [_areaBtn setTitle:@"086" forState:UIControlStateNormal];
     [_areaBtn setTitleColor:[UIColor colorWithHexString:Line_Color] forState:UIControlStateNormal];
     [_areaBtn addTarget:self action:@selector(regionPickBtn:) forControlEvents:UIControlEventTouchUpInside];
     [mobileView addSubview:_areaBtn];
@@ -268,6 +274,8 @@
             NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
             NSLog(@"-----%@", [userDict objectForKey:userID]);
             if ([userDict objectForKey:userID]) {
+                //登录PHP
+                [Helper callPHPLoginUserId:[NSString stringWithFormat:@"%@", [userDict objectForKey:userID]]];
                 [userdef setObject:[userDict objectForKey:userID] forKey:userID];
                 [userdef setObject:[userDict objectForKey:Mobile] forKey:Mobile];
                 [userdef setObject:[userDict objectForKey:@"sex"] forKey:@"sex"];
@@ -276,6 +284,8 @@
                 [userdef setObject:[userDict objectForKey:@"userName"] forKey:@"userName"];
                 [userdef setObject:[userDict objectForKey:@"rongTk"] forKey:@"rongTk"];
                 [userdef synchronize];
+                
+                NSLog(@"----%@", DEFAULF_USERID);
                 
                 NSString *token = [[userDict objectForKey:@"rows"] objectForKey:@"rongTk"];
                 //注册融云
@@ -329,6 +339,8 @@
                     NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
                     NSLog(@"----%@", [userDict objectForKey:userID]);
                     if ([userDict objectForKey:userID]) {
+                        //登录PHP
+                        [Helper callPHPLoginUserId:[NSString stringWithFormat:@"%@", [userDict objectForKey:userID]]];
                         [userdef setObject:[userDict objectForKey:userID] forKey:userID];
                         [userdef setObject:[userDict objectForKey:Mobile] forKey:Mobile];
                         [userdef setObject:[userDict objectForKey:@"sex"] forKey:@"sex"];
@@ -415,7 +427,9 @@
 #pragma mark -- 忘记密码
 - (void)forgotPasswordBtn:(UIButton *)btn{
     JGHForgotPasswordViewController *forCtrl = [[JGHForgotPasswordViewController alloc]initWithNibName:@"JGHForgotPasswordViewController" bundle:nil];
-    forCtrl.delegate = self;
+    forCtrl.blackCtrl = ^(){
+        _reloadCtrlData();
+    };
     [self.navigationController pushViewController:forCtrl animated:YES];
 }
 #pragma mark -- 验证码登录试图
@@ -666,17 +680,17 @@
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
     NSMutableString *code = [_titleCodeArray[row] mutableCopy];
-    NSString *cddd = [code stringByReplacingOccurrencesOfString:@"0" withString:@""];
+    NSString *cddd = [code substringFromIndex:2];
     [_areaBtn setTitle:cddd forState:UIControlStateNormal];
     _codeing = [NSString stringWithFormat:@"%@", _titleCodeArray[row]];
 }
 #pragma mark -- 忘记密码 返回
-- (void)fillLoginViewAccount:(NSString *)account andPassword:(NSString *)password andCodeing:(NSString *)codeing{
-    [self passwordLoginBtn];
-    _mobileText.text = account;
-    _passwordText.text = password;
-    [_areaBtn setTitle:[codeing stringByReplacingOccurrencesOfString:@"0" withString:@""] forState:UIControlStateNormal];
-}
+//- (void)fillLoginViewAccount:(NSString *)account andPassword:(NSString *)password andCodeing:(NSString *)codeing{
+//    [self passwordLoginBtn];
+//    _mobileText.text = account;
+//    _passwordText.text = password;
+//    [_areaBtn setTitle:[codeing stringByReplacingOccurrencesOfString:@"0" withString:@""] forState:UIControlStateNormal];
+//}
 #pragma mark -- 注册－－已经注册返回登录
 - (void)registerForLoginWithMobile:(NSString *)mobile andCodeing:(NSString *)code{
     [self passwordLoginBtn];

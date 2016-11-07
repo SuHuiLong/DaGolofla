@@ -466,7 +466,7 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
     
     if (btn.tag == 1001) {
         
-        [MobClick event:@"wonderfulPhotoAlbum"];
+        [MobClick event:@"activity"];
 
         _showLineID = 0;
         activityLable.hidden = NO;
@@ -537,7 +537,7 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
             
         }
         //[user setObject:city forKey:@"currentCity"];
-        
+        teamMainCtrl.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:teamMainCtrl animated:YES];
     }else{
         JGHShowMyTeamViewController *myTeamVC = [[JGHShowMyTeamViewController alloc] init];

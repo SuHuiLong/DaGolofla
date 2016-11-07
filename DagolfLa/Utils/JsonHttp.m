@@ -54,8 +54,18 @@ static JsonHttp *jsonHttp = nil;
     // 4.发送请求
     [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
         
-        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
-        completionBlock(dic);
+        if (connectionError != nil) {
+            if ([[connectionError.userInfo objectForKey:@"_kCFStreamErrorCodeKey"] integerValue] == 61) {
+                [Helper downLoadDataOverrun];
+            }else{
+                [Helper netWorkError];
+            }
+            
+            failedBlock(connectionError);
+        }else{
+            NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+            completionBlock(dic);
+        }
     }];
     
 }
@@ -89,9 +99,18 @@ static JsonHttp *jsonHttp = nil;
     request.HTTPBody = data2;
     // 4.发送请求
     [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
-        
-        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
-        completionBlock(dic);
+        if (connectionError != nil) {
+            if ([[connectionError.userInfo objectForKey:@"_kCFStreamErrorCodeKey"] integerValue] == 61) {
+                [Helper downLoadDataOverrun];
+            }else{
+                [Helper netWorkError];
+            }
+
+            failedBlock(connectionError);
+        }else{
+            NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+            completionBlock(dic);
+        }
     }];
     
 }
@@ -127,9 +146,18 @@ static JsonHttp *jsonHttp = nil;
     request.HTTPBody = data2;
     // 4.发送请求
     [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
-        
-        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
-        completionBlock(dic);
+        if (connectionError != nil) {
+            if ([[connectionError.userInfo objectForKey:@"_kCFStreamErrorCodeKey"] integerValue] == 61) {
+                [Helper downLoadDataOverrun];
+            }else{
+                [Helper netWorkError];
+            }
+            
+            failedBlock(connectionError);
+        }else{
+            NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+            completionBlock(dic);
+        }
     }];
     
 }
@@ -433,13 +461,13 @@ static JsonHttp *jsonHttp = nil;
     NSLog(@"%@",url);
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     //申明请求的数据是json类型
-    manager.requestSerializer=[AFJSONRequestSerializer serializer];
+//    manager.requestSerializer=[AFJSONRequestSerializer serializer];
     //返回数据格式
     manager.responseSerializer = [AFJSONResponseSerializer serializer];
-    //    [AFJSONResponseSerializer serializerWithReadingOptions:NSJSONReadingMutableContainers];
+//    [AFJSONResponseSerializer serializerWithReadingOptions:NSJSONReadingMutableContainers];
     //https安全策略
-    //    manager.securityPolicy.allowInvalidCertificates = YES;
-    //    manager.securityPolicy.validatesDomainName = NO;
+//    manager.securityPolicy.allowInvalidCertificates = YES;
+//    manager.securityPolicy.validatesDomainName = NO;
     [manager.requestSerializer willChangeValueForKey:@"timeoutInterval"];
     manager.requestSerializer.timeoutInterval = 30.f;
     [manager.requestSerializer didChangeValueForKey:@"timeoutInterval"];

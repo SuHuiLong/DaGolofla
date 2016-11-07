@@ -33,8 +33,12 @@
     // Do any additional setup after loading the view from its nib.
     
     self.view.backgroundColor = [UIColor colorWithHexString:BG_color];
-    self.navigationItem.title = @"忘记密码";
+    self.navigationItem.title = @"绑定账号";
     _timeNumber = 60;
+    
+    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"backL"] style:UIBarButtonItemStylePlain target:self action:@selector(backClcik)];
+    item.tintColor=[UIColor whiteColor];
+    self.navigationItem.leftBarButtonItem = item;
     
     self.oneViewH.constant = 50 *ProportionAdapter;
     self.oneViewLeft.constant = 8 *ProportionAdapter;
@@ -49,10 +53,12 @@
     self.mobileLable.backgroundColor = [UIColor colorWithHexString:Line_Color];
     
     self.mobiletext.font = [UIFont systemFontOfSize:17 *ProportionAdapter];
+    self.mobiletext.clearButtonMode = UITextFieldViewModeAlways;
     self.mobiletext.keyboardType = UIKeyboardTypeNumberPad;
     self.mobiletextLeft.constant = 22 *ProportionAdapter;
     self.codeLine.backgroundColor = [UIColor colorWithHexString:Line_Color];
     self.codeText.font = [UIFont systemFontOfSize:17 *ProportionAdapter];
+    self.codeText.clearButtonMode = UITextFieldViewModeAlways;
     self.codeText.keyboardType = UIKeyboardTypeNumberPad;
     self.codeTwoLine.backgroundColor = [UIColor colorWithHexString:Line_Color];
     self.codeTextLeft.constant = 22 *ProportionAdapter;
@@ -75,12 +81,25 @@
     self.twoview.layer.masksToBounds = YES;
     self.twoview.layer.cornerRadius = 3.0 *ProportionAdapter;
     
-    _titleArray = @[@"中国", @"香港", @"澳门", @"台湾"];
+    _titleArray = @[@"中国 0086", @"香港 00886", @"澳门 00852", @"台湾 00853"];
     _titleCodeArray = @[@"0086", @"00886", @"00852", @"00853"];
     _codeing = @"0086";
 }
 
-
+- (void)backClcik{
+    UIAlertController *alert=[UIAlertController alertControllerWithTitle:@"提示" message:@"微信登录尚未完成，是否继续绑定？" preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction *action1=[UIAlertAction actionWithTitle:@"退出登录" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [self.navigationController popViewControllerAnimated:YES];
+    }];
+    UIAlertAction* action2=[UIAlertAction actionWithTitle:@"继续绑定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
+    }];
+    
+    [alert addAction:action1];
+    [alert addAction:action2];
+    [self presentViewController:alert animated:YES completion:nil];
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -178,7 +197,7 @@
                 [self requestRCIMWithToken:token];
                 [self postAppJpost];
                 
-                [LQProgressHud showMessage:@"注册成功！"];
+                [LQProgressHud showMessage:@"登录成功！"];
                 _blackCtrl();
                 [self.navigationController popViewControllerAnimated:YES];
             }
@@ -317,7 +336,7 @@
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
     NSMutableString *code = [_titleCodeArray[row] mutableCopy];
-    NSString *cddd = [code stringByReplacingOccurrencesOfString:@"0" withString:@""];
+    NSString *cddd = [code substringFromIndex:2];
     [_mobileBtn setTitle:cddd forState:UIControlStateNormal];
     _codeing = [NSString stringWithFormat:@"%@", _titleCodeArray[row]];
 }

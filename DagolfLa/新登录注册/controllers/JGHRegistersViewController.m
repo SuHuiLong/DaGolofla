@@ -13,6 +13,7 @@
 #import "UserDataInformation.h"
 #import "JPUSHService.h"
 
+
 @interface JGHRegistersViewController ()<UITextFieldDelegate, UIPickerViewDataSource,UIPickerViewDelegate>
 {
     NSTimer *_timer;
@@ -107,7 +108,7 @@
     self.threeView.layer.masksToBounds = YES;
     self.threeView.layer.cornerRadius = 3.0 *ProportionAdapter;
     
-    _titleArray = @[@"中国", @"香港", @"澳门", @"台湾"];
+    _titleArray = @[@"中国 0086", @"香港 00886", @"澳门 00852", @"台湾 00853"];
     _titleCodeArray = @[@"0086", @"00886", @"00852", @"00853"];
     
     _codeing = @"0086";
@@ -324,20 +325,18 @@
                 [userdef setObject:[userDict objectForKey:@"userName"] forKey:@"userName"];
                 [userdef setObject:[userDict objectForKey:@"rongTk"] forKey:@"rongTk"];
                 [userdef synchronize];
+                
+                
+                NSString *token = [[userDict objectForKey:@"rows"] objectForKey:@"rongTk"];
+                //注册融云
+                [self requestRCIMWithToken:token];
+                [self postAppJpost];
+                
+                [LQProgressHud showMessage:@"注册成功！"];
+                
+                [self.navigationController popViewControllerAnimated:YES];
+                _blackCtrl();
             }
-//            if (![Helper isBlankString:[[userData objectForKey:@"rows"] objectForKey:@"pic"]]) {
-//                [user setObject:[[userData objectForKey:@"rows"] objectForKey:@"pic"] forKey:@"pic"];
-//            }
-                       
-            NSString *token = [[userDict objectForKey:@"rows"] objectForKey:@"rongTk"];
-            //注册融云
-            [self requestRCIMWithToken:token];
-            [self postAppJpost];
-            [Helper alertViewWithTitle:@"注册成功！" withBlock:^(UIAlertController *alertView) {
-               [self presentViewController:alertView animated:YES completion:nil];
-            }];
-            _blackCtrl();
-            [self.navigationController popViewControllerAnimated:YES];
         }else{
             _getCodeBtn.userInteractionEnabled = YES;
             if ([data objectForKey:@"packResultMsg"]) {
@@ -454,7 +453,7 @@
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
     NSMutableString *code = [_titleCodeArray[row] mutableCopy];
-    NSString *cddd = [code stringByReplacingOccurrencesOfString:@"0" withString:@""];
+    NSString *cddd = [code substringFromIndex:2];
     [_mobileBtn setTitle:cddd forState:UIControlStateNormal];
     _codeing = [NSString stringWithFormat:@"%@", _titleCodeArray[row]];
 }

@@ -7,6 +7,9 @@
 //
 
 #import "JGHForgotPasswordViewController.h"
+#import "UserInformationModel.h"
+#import "UserDataInformation.h"
+#import "JPUSHService.h"
 
 @interface JGHForgotPasswordViewController ()<UITextFieldDelegate, UIPickerViewDataSource,UIPickerViewDelegate>
 
@@ -42,10 +45,12 @@
     
     self.mobileText.font = [UIFont systemFontOfSize:17 *ProportionAdapter];
     self.mobileText.clearButtonMode = UITextFieldViewModeAlways;
+    self.mobileText.keyboardType = UIKeyboardTypeNumberPad;
     self.mobileTextLeft.constant = 22 *ProportionAdapter;
     
     self.codeLine.backgroundColor = [UIColor colorWithHexString:Line_Color];
     self.codeText.font = [UIFont systemFontOfSize:17 *ProportionAdapter];
+    self.codeText.keyboardType = UIKeyboardTypeNumberPad;
     self.codeTextLeft.constant = 22 *ProportionAdapter;
     self.codeText.clearButtonMode = UITextFieldViewModeAlways;
     self.codeTwoLine.backgroundColor = [UIColor colorWithHexString:Line_Color];
@@ -83,7 +88,7 @@
     self.threeView.layer.masksToBounds = YES;
     self.threeView.layer.cornerRadius = 3.0 *ProportionAdapter;
     
-    _titleArray = @[@"中国", @"香港", @"澳门", @"台湾"];
+    _titleArray = @[@"中国 0086", @"香港 00886", @"澳门 00852", @"台湾 00853"];
     _titleCodeArray = @[@"0086", @"00886", @"00852", @"00853"];
     
     _codeing = @"0086";
@@ -168,9 +173,15 @@
             }else{
                 //手机号未注册
                 _getCodeBtn.userInteractionEnabled = YES;
-                [Helper alertViewWithTitle:@"手机号未注册，请先注册！" withBlock:^(UIAlertController *alertView) {
-                    [self presentViewController:alertView animated:YES completion:nil];
+
+                UIAlertController *alert=[UIAlertController alertControllerWithTitle:@"提示" message:@"手机号未注册，请先注册！" preferredStyle:UIAlertControllerStyleAlert];
+                
+                UIAlertAction *action1=[UIAlertAction actionWithTitle:@"知道了" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                    [self.navigationController popViewControllerAnimated:YES];
                 }];
+                
+                [alert addAction:action1];
+                [self presentViewController:alert animated:YES completion:nil];
             }
         }else{
             _getCodeBtn.userInteractionEnabled = YES;
@@ -249,8 +260,29 @@
         NSLog(@"%@", data);
         sender.userInteractionEnabled = YES;
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
-            if (self.delegate) {
-                [self.delegate fillLoginViewAccount:_mobileText.text andPassword:_passwordText.text andCodeing:_codeing];
+            
+            NSDictionary *userDict = [NSDictionary dictionary];
+            if ([data objectForKey:@"user"]) {
+                userDict = [data objectForKey:@"user"];
+            }
+            
+            NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
+            NSLog(@"-----%@", [userDict objectForKey:userID]);
+            if ([userDict objectForKey:userID]) {
+                [userdef setObject:[userDict objectForKey:userID] forKey:userID];
+                [userdef setObject:[userDict objectForKey:Mobile] forKey:Mobile];
+                [userdef setObject:[userDict objectForKey:@"sex"] forKey:@"sex"];
+                //判断是否登录，用来社区的刷新
+                [userdef setObject:@1 forKey:@"isFirstEnter"];
+                [userdef setObject:[userDict objectForKey:@"userName"] forKey:@"userName"];
+                [userdef setObject:[userDict objectForKey:@"rongTk"] forKey:@"rongTk"];
+                [userdef synchronize];
+                
+                NSString *token = [[userDict objectForKey:@"rows"] objectForKey:@"rongTk"];
+                //注册融云
+                [self requestRCIMWithToken:token];
+                [self postAppJpost];
+                _blackCtrl();
                 [self.navigationController popViewControllerAnimated:YES];
             }
         }else{
@@ -261,7 +293,49 @@
         }
     }];
 }
-
+#pragma mark -- 极光推送的id和数据
+-(void)postAppJpost
+{
+    NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
+    [dict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:userID] forKey:userID];
+    
+    if ([JPUSHService registrationID] != nil) {
+        [dict setObject:[JPUSHService registrationID] forKey:@"jgpush"];
+    }
+    
+    
+    [[PostDataRequest sharedInstance] postDataRequest:@"user/updateUserInfo.do" parameter:dict success:^(id respondsData) {
+    } failed:^(NSError *error) {
+    }];
+}
+#pragma mark -- 注册融云
+-(void)requestRCIMWithToken:(NSString *)token{
+    NSUserDefaults *user=[NSUserDefaults standardUserDefaults];
+    [RCIM sharedRCIM].globalConversationPortraitSize = CGSizeMake(40*ScreenWidth/375, 40*ScreenWidth/375);
+    [[RCIM sharedRCIM] initWithAppKey:@"0vnjpoadnkihz"];
+    [RCIM sharedRCIM].globalConversationAvatarStyle=RC_USER_AVATAR_CYCLE;
+    [RCIM sharedRCIM].globalMessageAvatarStyle=RC_USER_AVATAR_CYCLE;
+    [[RCIM sharedRCIM] setUserInfoDataSource:[UserDataInformation sharedInstance]];
+    [[RCIM sharedRCIM] setGroupInfoDataSource:[UserDataInformation sharedInstance]];
+    NSString *str1=[NSString stringWithFormat:@"%@",[user objectForKey:userID]];
+    NSString *str2=[NSString stringWithFormat:@"%@",[user objectForKey:@"userName"]];
+    NSString *str3=[NSString stringWithFormat:@"http://www.dagolfla.com:8081/small_%@",[user objectForKey:@"pic"]];
+    RCUserInfo *userInfo=[[RCUserInfo alloc] initWithUserId:str1 name:str2 portrait:str3];
+    [RCIM sharedRCIM].currentUserInfo=userInfo;
+    [RCIM sharedRCIM].enableMessageAttachUserInfo=NO;
+    //            [RCIM sharedRCIM].receiveMessageDelegate=self;
+    // 快速集成第二步，连接融云服务器
+    [[RCIM sharedRCIM] connectWithToken:token success:^(NSString *userId) {
+        //自动登录   连接融云服务器
+        [[UserDataInformation sharedInstance] synchronizeUserInfoRCIM];
+        
+    }error:^(RCConnectErrorCode status) {
+        // Connect 失败
+    }tokenIncorrect:^() {
+        // Token 失效的状态处理
+        
+    }];
+}
 #pragma mark -- textdelegate
 -(void)textFieldDidEndEditing:(UITextField *)textField
 {
@@ -328,7 +402,7 @@
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
     NSMutableString *code = [_titleCodeArray[row] mutableCopy];
-    NSString *cddd = [code stringByReplacingOccurrencesOfString:@"0" withString:@""];
+    NSString *cddd = [code substringFromIndex:2];
     [_mobileBtn setTitle:cddd forState:UIControlStateNormal];
     _codeing = [NSString stringWithFormat:@"%@", _titleCodeArray[row]];
 }

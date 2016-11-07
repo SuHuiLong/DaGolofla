@@ -644,4 +644,15 @@
     return timeKey;
 }
 
++ (void)callPHPLoginUserId:(NSString *)userId{
+    NSString *url = [NSString stringWithFormat:@"http://www.dagolfla.com/app/api/client/api.php?Action=UserLoginUserid&uid=%@&url=dsadsa", userId];
+    
+    [[JsonHttp jsonHttp]httpRequest:url failedBlock:^(id errType) {
+        
+    } completionBlock:^(id data) {
+        NSLog(@"%@", data);
+        //state - 1成功
+    }];
+}
+
 @end
