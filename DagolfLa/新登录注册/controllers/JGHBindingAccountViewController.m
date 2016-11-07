@@ -172,21 +172,17 @@
                 [userdef setObject:[userDict objectForKey:@"userName"] forKey:@"userName"];
                 [userdef setObject:[userDict objectForKey:@"rongTk"] forKey:@"rongTk"];
                 [userdef synchronize];
+                
+                NSString *token = [[userDict objectForKey:@"rows"] objectForKey:@"rongTk"];
+                //注册融云
+                [self requestRCIMWithToken:token];
+                [self postAppJpost];
+                
+                [LQProgressHud showMessage:@"注册成功！"];
+                _blackCtrl();
+                [self.navigationController popViewControllerAnimated:YES];
             }
             
-            NSString *token = [[userDict objectForKey:@"rows"] objectForKey:@"rongTk"];
-            //注册融云
-            [self requestRCIMWithToken:token];
-            [self postAppJpost];
-            
-            [Helper alertViewWithTitle:@"注册成功!" withBlockCancle:^{
-                [self.navigationController popViewControllerAnimated:YES];
-                _blackCtrl();
-            } withBlockSure:^{
-                //
-            } withBlock:^(UIAlertController *alertView) {
-                [self presentViewController:alertView animated:YES completion:nil];
-            }];
         }else{
             if ([data objectForKey:@"packResultMsg"]) {
                 [LQProgressHud showMessage:[data objectForKey:@"packResultMsg"]];

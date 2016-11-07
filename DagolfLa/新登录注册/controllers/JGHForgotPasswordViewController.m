@@ -142,6 +142,7 @@
         _getCodeBtn.userInteractionEnabled = YES;
     } completionBlock:^(id data) {
         NSLog(@"%@", data);
+        
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
             if ([[data objectForKey:@"hasMobileRegistered"] integerValue] == 1) {
                 //手机号已注册
@@ -163,6 +164,7 @@
                 }];
             }else{
                 //手机号未注册
+                _getCodeBtn.userInteractionEnabled = YES;
                 [Helper alertViewWithTitle:@"手机号未注册，请先注册！" withBlock:^(UIAlertController *alertView) {
                     [self presentViewController:alertView animated:YES completion:nil];
                 }];
