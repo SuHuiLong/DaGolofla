@@ -58,6 +58,14 @@ static JsonHttp *jsonHttp = nil;
             [Helper netWorkError];
             failedBlock(connectionError);
         }else{
+            NSHTTPURLResponse *httpResonse=(NSHTTPURLResponse *)response;
+            
+            if( httpResonse.statusCode != 200 ){
+                [Helper netWorkError];
+                failedBlock(NSURLErrorDomain);
+                return;
+            }
+            
             NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
             completionBlock(dic);
         }
@@ -98,6 +106,15 @@ static JsonHttp *jsonHttp = nil;
             [Helper netWorkError];
             failedBlock(connectionError);
         }else{
+            
+            NSHTTPURLResponse *httpResonse=(NSHTTPURLResponse *)response;
+            
+            if( httpResonse.statusCode != 200 ){
+                [Helper netWorkError];
+                failedBlock(NSURLErrorDomain);
+                return;
+            }
+            
             NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
             completionBlock(dic);
         }
@@ -151,6 +168,14 @@ static JsonHttp *jsonHttp = nil;
             [Helper netWorkError];
             failedBlock(connectionError);
         }else{
+            NSHTTPURLResponse *httpResonse=(NSHTTPURLResponse *)response;
+            
+            if( httpResonse.statusCode != 200 ){
+                [Helper netWorkError];
+                failedBlock(NSURLErrorDomain);
+                return;
+            }
+            
             NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
             completionBlock(dic);
         }
@@ -192,10 +217,10 @@ static JsonHttp *jsonHttp = nil;
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             
 //            if ([[error.userInfo objectForKey:@"_kCFStreamErrorCodeKey"] integerValue] == -2102) {
-//                [Helper netWorkError];
-//                
+                [Helper netWorkError];
+//
 //            }else{
-                [Helper downLoadDataOverrun];
+//                [Helper downLoadDataOverrun];
 //            }
 
             if (failedBlock) {
@@ -223,10 +248,10 @@ static JsonHttp *jsonHttp = nil;
                 }
             } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 //                if ([[error.userInfo objectForKey:@"_kCFStreamErrorCodeKey"] integerValue] == -2102) {
-//                    [Helper netWorkError];
-//                    
+                    [Helper netWorkError];
+//
 //                }else{
-                    [Helper downLoadDataOverrun];
+//                    [Helper downLoadDataOverrun];
 //                }
                 
                 if (failedBlock) {
@@ -259,10 +284,10 @@ static JsonHttp *jsonHttp = nil;
                 }
             } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 //                if ([[error.userInfo objectForKey:@"_kCFStreamErrorCodeKey"] integerValue] == -2102) {
-//                    [Helper netWorkError];
+                    [Helper netWorkError];
 //                    
 //                }else{
-                    [Helper downLoadDataOverrun];
+//                    [Helper downLoadDataOverrun];
 //                }
                 
                 if (failedBlock) {
