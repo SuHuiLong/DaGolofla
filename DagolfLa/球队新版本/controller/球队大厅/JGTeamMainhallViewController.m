@@ -234,7 +234,7 @@
     [bar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:15 * ProportionAdapter], NSFontAttributeName, nil] forState:UIControlStateNormal];
     self.navigationItem.rightBarButtonItem = bar;
     _page = 0;
-    self.title = @"球队大厅";
+    self.title = @"搜索球队";
     _tableView = [[JGTeamChannelTableView alloc] initWithFrame:CGRectMake(0, 44, screenWidth, screenHeight-44) style:(UITableViewStylePlain)];
 //    _tableView = [[JGTeamChannelTableView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight - 40)];
     _tableView.separatorStyle = UITableViewCellAccessoryDisclosureIndicator;
