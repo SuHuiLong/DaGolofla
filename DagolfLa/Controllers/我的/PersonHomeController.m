@@ -139,7 +139,7 @@ static NSString *const orderDetailCellIdentifier = @"OtherDataTableViewCell";
     
     NSLog(@"----%@", DEFAULF_USERID);
     
-    if ([self.strMoodId isEqualToNumber:[[NSUserDefaults standardUserDefaults] objectForKey:@"userId"]]) {
+    if ([_strMoodId integerValue] == [DEFAULF_USERID integerValue]) {
         //点击更换图片
         _changePic = [UIButton buttonWithType:UIButtonTypeCustom];
         [_changePic setFrame:CGRectMake(_backImg.frame.size.width-110*ScreenWidth/375, _backImg.y + 20*ScreenWidth/375, 100*ScreenWidth/375, 30*ScreenWidth/375)];
@@ -197,9 +197,9 @@ static NSString *const orderDetailCellIdentifier = @"OtherDataTableViewCell";
     _infoLabel.backgroundColor = [UIColor clearColor];
     [_profileView addSubview:_infoLabel];
     
+    NSLog(@"%@",DEFAULF_USERID);
     
-    
-    if ([self.strMoodId isEqualToNumber:[[NSUserDefaults standardUserDefaults] objectForKey:@"userId"]]) {
+    if ([self.strMoodId integerValue] == [DEFAULF_USERID integerValue]) {
         //当前用户个人主页
         
         UIButton* btnSet = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -618,7 +618,7 @@ static NSString *const orderDetailCellIdentifier = @"OtherDataTableViewCell";
     imgvJian.image = [UIImage imageNamed:@"left_jt"];
     [viewBtn addSubview:imgvJian];
     
-    if ([self.strMoodId isEqualToNumber:[[NSUserDefaults standardUserDefaults] objectForKey:@"userId"]]) {
+    if ([self.strMoodId integerValue] == [DEFAULF_USERID integerValue]) {
         
     }else{
         //不是当前用户  禁止发布足迹
@@ -1060,7 +1060,7 @@ static NSString *const orderDetailCellIdentifier = @"OtherDataTableViewCell";
 
 - (void)imageIconACt{
     
-    if ([self.strMoodId isEqualToNumber:[[NSUserDefaults standardUserDefaults] objectForKey:@"userId"]]) {
+    if ([self.strMoodId integerValue] == [DEFAULF_USERID integerValue]) {
         
     }else{
         AddNoteViewController *AVC = [[AddNoteViewController alloc] init];
