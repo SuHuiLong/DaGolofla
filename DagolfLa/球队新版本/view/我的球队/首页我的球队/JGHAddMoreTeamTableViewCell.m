@@ -15,6 +15,13 @@
     // Initialization code
     
     self.addTeamBtn.titleLabel.font = [UIFont systemFontOfSize:16 *ProportionAdapter];
+    
+    UILabel *addLB = [[UILabel alloc] initWithFrame:CGRectMake(- 32 * ProportionAdapter, self.addTeamBtn.frame.origin.y - 2 * ProportionAdapter, 30 * ProportionAdapter, 20 * ProportionAdapter)];
+        addLB.text = @"+";
+    addLB.textColor = [UIColor orangeColor];
+    addLB.textAlignment = NSTextAlignmentRight;
+    addLB.font = [UIFont systemFontOfSize:28 * ProportionAdapter];
+    [self.addTeamBtn addSubview:addLB];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
