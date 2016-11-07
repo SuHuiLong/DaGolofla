@@ -235,8 +235,9 @@
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
         if (isClick == NO) {
-//            [cell.iconImage sd_setImageWithURL:[Helper imageIconUrl:_model.pic] placeholderImage:[UIImage imageNamed:@"zwt"]];
-            [cell.iconImage sd_setImageWithURL:[Helper setImageIconUrl:@"user" andTeamKey:[DEFAULF_USERID integerValue] andIsSetWidth:YES andIsBackGround:NO] placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
+            NSString *bgUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/%@/head/%td.jpg@200w_200h_2o",@"user",[DEFAULF_USERID integerValue]];
+            [[SDImageCache sharedImageCache] removeImageForKey:bgUrl fromDisk:YES];
+            [cell.iconImage sd_setImageWithURL:[NSURL URLWithString:bgUrl] placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
 
         }
         else
@@ -245,9 +246,9 @@
                 cell.iconImage.image = [UIImage imageWithData:_arrayPage[0]];
             }
             else{
-//                [cell.iconImage sd_setImageWithURL:[Helper imageIconUrl:_model.pic] placeholderImage:[UIImage imageNamed:@"zwt"]];
-                [cell.iconImage sd_setImageWithURL:[Helper setImageIconUrl:@"user" andTeamKey:[DEFAULF_USERID integerValue] andIsSetWidth:YES andIsBackGround:NO] placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
-
+                NSString *bgUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/%@/head/%td.jpg@200w_200h_2o",@"user",[DEFAULF_USERID integerValue]];
+                [[SDImageCache sharedImageCache] removeImageForKey:bgUrl fromDisk:YES];
+                [cell.iconImage sd_setImageWithURL:[NSURL URLWithString:bgUrl] placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
             }
         }
         

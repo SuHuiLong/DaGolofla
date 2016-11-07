@@ -364,7 +364,7 @@ static NSString *const orderDetailCellIdentifier = @"OtherDataTableViewCell";
                 [[SDImageCache sharedImageCache] removeImageForKey:bgUrl fromDisk:YES];
                 [_backImg sd_setImageWithURL:[NSURL URLWithString:bgUrl] placeholderImage:[UIImage imageNamed:@"selfBackPic.jpg"]];
                 
-                NSString *iconUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/%@/head/%td.jpg@200w_200h",@"user",[_strMoodId integerValue]];
+                NSString *iconUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/%@/head/%td.jpg@200w_200h_2o",@"user",[_strMoodId integerValue]];
                 [[SDImageCache sharedImageCache] removeImageForKey:iconUrl fromDisk:YES];
                 [_iconImg sd_setImageWithURL:[NSURL URLWithString:iconUrl] placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
                 
@@ -418,7 +418,7 @@ static NSString *const orderDetailCellIdentifier = @"OtherDataTableViewCell";
                 [[SDImageCache sharedImageCache] removeImageForKey:bgUrl fromDisk:YES];
                 [_backImg sd_setImageWithURL:[NSURL URLWithString:bgUrl] placeholderImage:[UIImage imageNamed:@"selfBackPic.jpg"]];
                 
-                NSString *iconUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/%@/head/%td.jpg@200w_200h",@"user",[_strMoodId integerValue]];
+                NSString *iconUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/%@/head/%td.jpg@200w_200h_2o",@"user",[_strMoodId integerValue]];
                 [[SDImageCache sharedImageCache] removeImageForKey:iconUrl fromDisk:YES];
                 [_iconImg sd_setImageWithURL:[NSURL URLWithString:iconUrl] placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
                 

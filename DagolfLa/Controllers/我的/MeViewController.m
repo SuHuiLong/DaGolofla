@@ -405,7 +405,7 @@
         
         if ([[NSUserDefaults standardUserDefaults] objectForKey:@"userId"]) {
             
-            NSString *bgUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/%@/head/%td.jpg@200w_200h",@"user",[DEFAULF_USERID integerValue]];
+            NSString *bgUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/%@/head/%td.jpg@200w_200h_2o",@"user",[DEFAULF_USERID integerValue]];
             [[SDImageCache sharedImageCache] removeImageForKey:bgUrl fromDisk:YES];
             [cell.iconImgv sd_setImageWithURL:[NSURL URLWithString:bgUrl] placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
             cell.nameLabel.text = _model.userName;
