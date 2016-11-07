@@ -64,7 +64,7 @@ static int timeNumber = 60;
         self.mobileTF.placeholder = @"发送至";
     }
     
-    self.mobileTF.font = [UIFont systemFontOfSize:17 * ProportionAdapter];
+    self.mobileTF.font = [UIFont systemFontOfSize:16 * ProportionAdapter];
     [mobileView addSubview:self.mobileTF];
     
     UILabel *line2LB = [[UILabel alloc] initWithFrame:CGRectMake(240 * ProportionAdapter, 10 * ProportionAdapter, 1, 30 * ProportionAdapter)];
@@ -98,7 +98,7 @@ static int timeNumber = 60;
     self.PWDTF = [[UITextField alloc] initWithFrame:CGRectMake(70 * ProportionAdapter, 0, 220 * ProportionAdapter, 50 * ProportionAdapter)];
     self.PWDTF.placeholder = @"设置登录密码（至少6位）";
     self.PWDTF.secureTextEntry = NO;
-    self.PWDTF.font = [UIFont systemFontOfSize:17 * ProportionAdapter];
+    self.PWDTF.font = [UIFont systemFontOfSize:16 * ProportionAdapter];
     [PWDView addSubview:self.PWDTF];
     
     self.eyeBtn = [[UIButton alloc] initWithFrame:CGRectMake(PWDView.frame.size.width - 50 * ProportionAdapter, 0, 50 * ProportionAdapter, 50 * ProportionAdapter)];

@@ -345,8 +345,8 @@
     _arrayTitle = [[NSArray alloc]init];
     _arrayPic = [[NSArray alloc]init];
 //    _arrayTitle = @[@[@"我的聊天",@"我的消息",@"交易中心",@"我的活动",@"推荐有礼"],@[@"设置"]];
-    _arrayTitle = @[@[@""],@[@"球友",@"我的二维码",@"足迹"],@[@"个人帐户",@"交易中心"],@[@"推荐有礼",@"设置",@"更多"]];
-    _arrayPic = @[@[@""],@[@"qyIcon",@"saomiao",@"zuji"],@[@"gerenzhanghu",@"jyIcon"],@[@"tjIcon",@"setIcon",@"btn_more"]];
+    _arrayTitle = @[@[@""],@[@"球友",@"足迹",@"我的二维码"],@[@"个人帐户",@"交易中心"],@[@"推荐有礼",@"设置",@"更多"]];
+    _arrayPic = @[@[@""],@[@"qyIcon",@"zuji",@"saomiao"],@[@"gerenzhanghu",@"jyIcon"],@[@"tjIcon",@"setIcon",@"btn_more"]];
     _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, 44*8*ScreenWidth/375+40*ScreenWidth/375+80*ScreenWidth/375)];
     
     _tableView.delegate = self;
@@ -487,13 +487,13 @@
                 case 1:
                 {
                     [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
-                    [self.navigationController pushViewController:arr[2] animated:YES];
+                    [self.navigationController pushViewController:arr[3] animated:YES];
                     break;
                 }
                 case 2:
                 {
                     [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
-                    [self.navigationController pushViewController:arr[3] animated:YES];
+                    [self.navigationController pushViewController:arr[2] animated:YES];
                     break;
                 }
                 default:
