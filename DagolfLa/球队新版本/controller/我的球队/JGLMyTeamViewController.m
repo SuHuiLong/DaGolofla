@@ -9,7 +9,7 @@
 #import "JGLMyTeamViewController.h"
 #import "JGTeamChannelTableView.h"
 #import "JGTeamChannelTableViewCell.h"
-#import "JGTeamMemberORManagerViewController.h"
+#import "JGDNewTeamDetailViewController.h"
 
 #import "JGTeamDetailStylelTwoViewController.h"
 
@@ -141,37 +141,40 @@
     [dic setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"userId"] forKey:@"userKey"];
     [dic setObject:@([[_dataArray[indexPath.row] teamKey] integerValue]) forKey:@"teamKey"];
     
-    [[JsonHttp jsonHttp] httpRequest:@"team/getTeamInfo" JsonKey:nil withData:dic requestMethod:@"GET" failedBlock:^(id errType) {
-        [Helper alertViewNoHaveCancleWithTitle:@"获取球队信息失败" withBlock:^(UIAlertController *alertView) {
-            [self.navigationController presentViewController:alertView animated:YES completion:nil];
-        }];
-        
-    } completionBlock:^(id data) {
-        
-        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
-            JGTeamMemberORManagerViewController *detailVC = [[JGTeamMemberORManagerViewController alloc] init];
-            if ([[[data objectForKey:@"teamMember"] objectForKey:@"power"] containsString:@"1005"]){
-                detailVC.detailDic = [data objectForKey:@"team"];
-                //                detailVC.detailModel.manager = 1;
-                detailVC.isManager = YES;
-                
-                [self.navigationController pushViewController:detailVC animated:YES];
-            }else{
-                
-                detailVC.detailDic = [data objectForKey:@"team"];
-                //                detailVC.detailModel.manager = 0;
-                detailVC.isManager = NO;
-                
-                [self.navigationController pushViewController:detailVC animated:YES];
-            }
-            
-        }else{
-            if ([data objectForKey:@"packResultMsg"]) {
-                [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
-            }
-        }
-        
-    }];
+    JGDNewTeamDetailViewController *newTeamVC = [[JGDNewTeamDetailViewController alloc] init];
+    newTeamVC.timeKey = [_dataArray[indexPath.row] teamKey];
+    [self.navigationController pushViewController:newTeamVC animated:YES];
+//    [[JsonHttp jsonHttp] httpRequest:@"team/getTeamInfo" JsonKey:nil withData:dic requestMethod:@"GET" failedBlock:^(id errType) {
+//        [Helper alertViewNoHaveCancleWithTitle:@"获取球队信息失败" withBlock:^(UIAlertController *alertView) {
+//            [self.navigationController presentViewController:alertView animated:YES completion:nil];
+//        }];
+//        
+//    } completionBlock:^(id data) {
+//        
+//        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+//            JGTeamMemberORManagerViewController *detailVC = [[JGTeamMemberORManagerViewController alloc] init];
+//            if ([[[data objectForKey:@"teamMember"] objectForKey:@"power"] containsString:@"1005"]){
+//                detailVC.detailDic = [data objectForKey:@"team"];
+//                //                detailVC.detailModel.manager = 1;
+//                detailVC.isManager = YES;
+//                
+//                [self.navigationController pushViewController:detailVC animated:YES];
+//            }else{
+//                
+//                detailVC.detailDic = [data objectForKey:@"team"];
+//                //                detailVC.detailModel.manager = 0;
+//                detailVC.isManager = NO;
+//                
+//                [self.navigationController pushViewController:detailVC animated:YES];
+//            }
+//            
+//        }else{
+//            if ([data objectForKey:@"packResultMsg"]) {
+//                [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+//            }
+//        }
+//        
+//    }];
     
 }
 //

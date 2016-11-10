@@ -19,8 +19,9 @@
 #import "JGHNavListView.h"
 #import "JGLScoreNewViewController.h"
 #import "JGHShowMyTeamViewController.h" // 我的球队
-#import "JGTeamMemberORManagerViewController.h" // 球队详情 － 自己的球队
-#import "JGNotTeamMemberDetailViewController.h"  // 球队详情 － 别人的球队
+#import "JGDNewTeamDetailViewController.h" // 球队详情
+//#import "JGTeamMemberORManagerViewController.h" // 球队详情 － 自己的球队
+//#import "JGNotTeamMemberDetailViewController.h"  // 球队详情 － 别人的球队
 #import "JGPhotoAlbumViewController.h" // 相册
 #import "JGLWebUserMallViewController.h"
 #import "JGTeamMainhallViewController.h"
@@ -98,7 +99,6 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
     //添加当前类对象为一个观察者，name和object设置为nil，表示接收一切通知
     [center addObserver:self selector:@selector(PushJGTeamActibityNameViewController:) name:@"PushJGTeamActibityNameViewController" object:nil];
 
-    
     [self createHomeTableView];
     
     [self parsingCacheData];
@@ -152,6 +152,7 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
         [self.homeTableView reloadData];
     }
 }
+
 #pragma mark -- 下载数据
 - (void)loadIndexdata{
     NSUserDefaults *userDef = [NSUserDefaults standardUserDefaults];
@@ -430,36 +431,40 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
     }
     [dic setObject:[dict objectForKey:@"timeKey"] forKey:@"teamKey"];
     
-    [[JsonHttp jsonHttp] httpRequest:@"team/getTeamInfo" JsonKey:nil withData:dic requestMethod:@"GET" failedBlock:^(id errType) {
-        
-    } completionBlock:^(id data) {
-        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
-            if (![data objectForKey:@"teamMember"]) {
-                JGNotTeamMemberDetailViewController *detailVC = [[JGNotTeamMemberDetailViewController alloc] init];
-                detailVC.detailDic = [data objectForKey:@"team"];
-                [self.navigationController pushViewController:detailVC animated:YES];
-            }else{
-                
-                if ([[[data objectForKey:@"teamMember"] objectForKey:@"power"] containsString:@"1005"]){
-                    JGTeamMemberORManagerViewController *detailVC = [[JGTeamMemberORManagerViewController alloc] init];
-                    detailVC.detailDic = [data objectForKey:@"team"];
-                    
-                    detailVC.isManager = YES;
-                    [self.navigationController pushViewController:detailVC animated:YES];
-                }else{
-                    JGTeamMemberORManagerViewController *detailVC = [[JGTeamMemberORManagerViewController alloc] init];
-                    detailVC.detailDic = [data objectForKey:@"team"];
-                    detailVC.isManager = NO;
-                    [self.navigationController pushViewController:detailVC animated:YES];
-                }
-            }
-        }else{
-            if ([data objectForKey:@"packResultMsg"]) {
-                [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
-            }
-        }
-    }];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
+    JGDNewTeamDetailViewController *newTeamVC = [[JGDNewTeamDetailViewController alloc] init];
+    newTeamVC.timeKey = [dict objectForKey:@"timeKey"];
+    [self.navigationController pushViewController:newTeamVC animated:YES];
+//    [[JsonHttp jsonHttp] httpRequest:@"team/getTeamInfo" JsonKey:nil withData:dic requestMethod:@"GET" failedBlock:^(id errType) {
+//        
+//    } completionBlock:^(id data) {
+//        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+//            [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
+//            if (![data objectForKey:@"teamMember"]) {
+//                JGNotTeamMemberDetailViewController *detailVC = [[JGNotTeamMemberDetailViewController alloc] init];
+//                detailVC.detailDic = [data objectForKey:@"team"];
+//                [self.navigationController pushViewController:detailVC animated:YES];
+//            }else{
+//                
+//                if ([[[data objectForKey:@"teamMember"] objectForKey:@"power"] containsString:@"1005"]){
+//                    JGTeamMemberORManagerViewController *detailVC = [[JGTeamMemberORManagerViewController alloc] init];
+//                    detailVC.detailDic = [data objectForKey:@"team"];
+//                    
+//                    detailVC.isManager = YES;
+//                    [self.navigationController pushViewController:detailVC animated:YES];
+//                }else{
+//                    JGTeamMemberORManagerViewController *detailVC = [[JGTeamMemberORManagerViewController alloc] init];
+//                    detailVC.detailDic = [data objectForKey:@"team"];
+//                    detailVC.isManager = NO;
+//                    [self.navigationController pushViewController:detailVC animated:YES];
+//                }
+//            }
+//        }else{
+//            if ([data objectForKey:@"packResultMsg"]) {
+//                [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+//            }
+//        }
+//    }];
 }
 #pragma mark -- 1001(活动) －－1002(相册) －－ 1003（成绩）
 - (void)didSelectActivityOrPhotoOrResultsBtn:(UIButton *)btn{
@@ -851,43 +856,48 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
         [dic setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"userId"] forKey:@"userKey"];
         [dic setObject:@([not.userInfo[@"timekey"] integerValue]) forKey:@"teamKey"];
         
-        [[JsonHttp jsonHttp] httpRequest:@"team/getTeamInfo" JsonKey:nil withData:dic requestMethod:@"GET" failedBlock:^(id errType) {
-            
-        } completionBlock:^(id data) {
-            
-            
-            if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
-                
-                if (![data objectForKey:@"teamMember"]) {
-                    JGNotTeamMemberDetailViewController *detailVC = [[JGNotTeamMemberDetailViewController alloc] init];
-                    detailVC.detailDic = [data objectForKey:@"team"];
-                    
-                    [self.navigationController pushViewController:detailVC animated:YES];
-                }else{
-                    
-                    if ([[[data objectForKey:@"teamMember"] objectForKey:@"power"] containsString:@"1005"]){
-                        JGTeamMemberORManagerViewController *detailVC = [[JGTeamMemberORManagerViewController alloc] init];
-                        detailVC.detailDic = [data objectForKey:@"team"];
-                        detailVC.isManager = YES;
-                        [self.navigationController pushViewController:detailVC animated:YES];
-                    }else{
-                        JGTeamMemberORManagerViewController *detailVC = [[JGTeamMemberORManagerViewController alloc] init];
-                        detailVC.detailDic = [data objectForKey:@"team"];
-                        detailVC.isManager = NO;
-                        [self.navigationController pushViewController:detailVC animated:YES];
-                    }
-                    
-                    
-                }
-                
-            }else{
-                if ([data objectForKey:@"packResultMsg"]) {
-                    [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
-                }
-            }
-            
-        }];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
+        JGDNewTeamDetailViewController *newTeamVC = [[JGDNewTeamDetailViewController alloc] init];
+        newTeamVC.timeKey = not.userInfo[@"timekey"];
+        [self.navigationController pushViewController:newTeamVC animated:YES];
+        
+//        [[JsonHttp jsonHttp] httpRequest:@"team/getTeamInfo" JsonKey:nil withData:dic requestMethod:@"GET" failedBlock:^(id errType) {
+//            
+//        } completionBlock:^(id data) {
+//            
+//            
+//            if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+//                [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
+//                
+//                if (![data objectForKey:@"teamMember"]) {
+//                    JGNotTeamMemberDetailViewController *detailVC = [[JGNotTeamMemberDetailViewController alloc] init];
+//                    detailVC.detailDic = [data objectForKey:@"team"];
+//                    
+//                    [self.navigationController pushViewController:detailVC animated:YES];
+//                }else{
+//                    
+//                    if ([[[data objectForKey:@"teamMember"] objectForKey:@"power"] containsString:@"1005"]){
+//                        JGTeamMemberORManagerViewController *detailVC = [[JGTeamMemberORManagerViewController alloc] init];
+//                        detailVC.detailDic = [data objectForKey:@"team"];
+//                        detailVC.isManager = YES;
+//                        [self.navigationController pushViewController:detailVC animated:YES];
+//                    }else{
+//                        JGTeamMemberORManagerViewController *detailVC = [[JGTeamMemberORManagerViewController alloc] init];
+//                        detailVC.detailDic = [data objectForKey:@"team"];
+//                        detailVC.isManager = NO;
+//                        [self.navigationController pushViewController:detailVC animated:YES];
+//                    }
+//                    
+//                    
+//                }
+//                
+//            }else{
+//                if ([data objectForKey:@"packResultMsg"]) {
+//                    [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+//                }
+//            }
+//            
+//        }];
         
         return;
     }
