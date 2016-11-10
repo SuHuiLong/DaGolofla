@@ -33,6 +33,7 @@
 #import "JGDSubMitPayPasswordViewController.h"
 
 #import "JGDChangePWDViewController.h" // 修改密码
+#import "JGDSetBusinessPWDViewController.h" // 修改交易密码
 
 @interface MySetViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
@@ -356,25 +357,27 @@
     }
     else if (indexPath.row == 6) {
         
-        NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
-        [dict setObject:DEFAULF_USERID forKey:@"userKey"];
-        [[JsonHttp jsonHttp]httpRequest:@"user/isSetPayPassWord" JsonKey:nil withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
-            [[ShowHUD showHUD]showToastWithText:@"当前服务器繁忙，请稍后再试" FromView:self.view];
-        } completionBlock:^(id data) {
-            if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
-                if ([[data objectForKey:@"isSetPayPassWord"] integerValue]== 1) {
-                    JGDChangePasswordViewController *change = [[JGDChangePasswordViewController alloc] init];
-                    [self.navigationController pushViewController:change animated:YES];
-                }else{
-                    JGDSubMitPayPasswordViewController *setPassVC = [[JGDSubMitPayPasswordViewController alloc] init];
-                    [self.navigationController pushViewController:setPassVC animated:YES];
-                }
-            }
-            else
-            {
-                [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
-            }
-        }];
+        JGDSetBusinessPWDViewController *busPWDVC = [[JGDSetBusinessPWDViewController alloc] init];
+        [self.navigationController pushViewController:busPWDVC animated:YES];
+//        NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
+//        [dict setObject:DEFAULF_USERID forKey:@"userKey"];
+//        [[JsonHttp jsonHttp]httpRequest:@"user/isSetPayPassWord" JsonKey:nil withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
+//            [[ShowHUD showHUD]showToastWithText:@"当前服务器繁忙，请稍后再试" FromView:self.view];
+//        } completionBlock:^(id data) {
+//            if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+//                if ([[data objectForKey:@"isSetPayPassWord"] integerValue]== 1) {
+//                    JGDChangePasswordViewController *change = [[JGDChangePasswordViewController alloc] init];
+//                    [self.navigationController pushViewController:change animated:YES];
+//                }else{
+//                    JGDSubMitPayPasswordViewController *setPassVC = [[JGDSubMitPayPasswordViewController alloc] init];
+//                    [self.navigationController pushViewController:setPassVC animated:YES];
+//                }
+//            }
+//            else
+//            {
+//                [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+//            }
+//        }];
     }
 
 }

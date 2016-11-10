@@ -794,6 +794,7 @@
 		AAB749E21C7B221A00018467 /* moren.jpg in Resources */ = {isa = PBXBuildFile; fileRef = AAB749E11C7B221A00018467 /* moren.jpg */; };
 		AACE5E841C7C7D5800966646 /* xiangcemoren.jpg in Resources */ = {isa = PBXBuildFile; fileRef = AACE5E831C7C7D5800966646 /* xiangcemoren.jpg */; };
 		AAE5CF0F1C60756B00D66086 /* selfBackPic.jpg in Resources */ = {isa = PBXBuildFile; fileRef = AAE5CF0E1C60756B00D66086 /* selfBackPic.jpg */; };
+		F500DC611DD451EE000E8E90 /* JGDSetBusinessPWDViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F500DC601DD451EE000E8E90 /* JGDSetBusinessPWDViewController.m */; };
 		F50800961DAC8ECF00D26A82 /* JGDSetConfrontViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F50800951DAC8ECF00D26A82 /* JGDSetConfrontViewController.m */; };
 		F50800991DAC90D000D26A82 /* JGDSetConfrontTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F50800981DAC90D000D26A82 /* JGDSetConfrontTableViewCell.m */; };
 		F50B7FB01CE59C8F0065069D /* JGTeamDetailStyleTwoView.m in Sources */ = {isa = PBXBuildFile; fileRef = F50B7FAF1CE59C8F0065069D /* JGTeamDetailStyleTwoView.m */; };
@@ -2692,6 +2693,8 @@
 		AAB749E11C7B221A00018467 /* moren.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = moren.jpg; sourceTree = "<group>"; };
 		AACE5E831C7C7D5800966646 /* xiangcemoren.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = xiangcemoren.jpg; sourceTree = "<group>"; };
 		AAE5CF0E1C60756B00D66086 /* selfBackPic.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = selfBackPic.jpg; sourceTree = SOURCE_ROOT; };
+		F500DC5F1DD451EE000E8E90 /* JGDSetBusinessPWDViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGDSetBusinessPWDViewController.h; sourceTree = "<group>"; };
+		F500DC601DD451EE000E8E90 /* JGDSetBusinessPWDViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGDSetBusinessPWDViewController.m; sourceTree = "<group>"; };
 		F50800941DAC8ECF00D26A82 /* JGDSetConfrontViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGDSetConfrontViewController.h; sourceTree = "<group>"; };
 		F50800951DAC8ECF00D26A82 /* JGDSetConfrontViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGDSetConfrontViewController.m; sourceTree = "<group>"; };
 		F50800971DAC90D000D26A82 /* JGDSetConfrontTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGDSetConfrontTableViewCell.h; sourceTree = "<group>"; };
@@ -7447,6 +7450,8 @@
 				F55426741D225E6A00233B20 /* JGDSubMitPayPasswordViewController.m */,
 				F55426761D226DBC00233B20 /* JGDChangePasswordViewController.h */,
 				F55426771D226DBD00233B20 /* JGDChangePasswordViewController.m */,
+				F500DC5F1DD451EE000E8E90 /* JGDSetBusinessPWDViewController.h */,
+				F500DC601DD451EE000E8E90 /* JGDSetBusinessPWDViewController.m */,
 			);
 			path = "设置支付密码";
 			sourceTree = "<group>";
@@ -9342,6 +9347,7 @@
 				F5E1BAEA1D6B006100414727 /* ZXWhiteRectangleDetector.m in Sources */,
 				20BA61411CDCA180004B61F5 /* VedioPlayViewController.m in Sources */,
 				F5E1BB8F1D6B006100414727 /* ZXMultiFormatReader.m in Sources */,
+				F500DC611DD451EE000E8E90 /* JGDSetBusinessPWDViewController.m in Sources */,
 				F5E1BB6B1D6B006100414727 /* ZXPDF417.m in Sources */,
 				F5E1BB171D6B006100414727 /* ZXDataMatrixErrorCorrection.m in Sources */,
 				36BF00E01BC77428005B3CE2 /* PracticeViewController.m in Sources */,
