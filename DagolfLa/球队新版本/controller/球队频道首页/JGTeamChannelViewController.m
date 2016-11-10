@@ -21,7 +21,7 @@
 #import "JGTeamDetail.h"
 #import "JGTeamActivityCell.h"
 #import "JGTeamActibityNameViewController.h"
-#import "JGNotTeamMemberDetailViewController.h"
+#import "JGDNewTeamDetailViewController.h"
 #import "JGNewCreateTeamTableViewController.h"
 #import "JGTeamActivityCell.h"
 #import <CoreLocation/CLLocation.h>
@@ -489,8 +489,8 @@
     
     if ([self.myActivityArray count] == 0) {
 
-        JGNotTeamMemberDetailViewController *detailV = [[JGNotTeamMemberDetailViewController alloc] init];
-        detailV.detailDic = self.teamArray[indexPath.row];
+        JGDNewTeamDetailViewController *detailV = [[JGDNewTeamDetailViewController alloc] init];
+        detailV.timeKey = [self.teamArray[indexPath.row] objectForKey:@"timeKey"];
         
         [self.navigationController pushViewController:detailV animated:YES];
     }else{
