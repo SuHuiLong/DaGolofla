@@ -329,7 +329,7 @@
     UMSocialSnsPlatform *snsPlatform = [UMSocialSnsPlatformManager getSocialPlatformWithName:UMShareToWechatSession];
     
     snsPlatform.loginClickHandler(self,[UMSocialControllerService defaultControllerService],YES,^(UMSocialResponseEntity *response){
-        [MBProgressHUD hideHUDForView:self.view animated:YES];
+        
         if (response.responseCode == UMSResponseCodeSuccess) {
             
             UMSocialAccountEntity *snsAccount = [[UMSocialAccountManager socialAccountDictionary]valueForKey:UMShareToWechatSession];
@@ -350,10 +350,12 @@
             [_weiChetDict setObject:snsAccount.userName forKey:@"uid"];
             [_weiChetDict setObject:snsAccount.iconURL forKey:@"wxPicUrl"];
 //            [_weiChetDict setObject:snsAccount.gender forKey:@"sex"];
+            [[ShowHUD showHUD]showAnimationWithText:@"登录中..." FromView:self.view];
             [[JsonHttp jsonHttp]httpRequestWithMD5:@"login/doWeiXinLogin" JsonKey:nil withData:dictWx failedBlock:^(id errType) {
-                
+                [[ShowHUD showHUD]hideAnimationFromView:self.view];
             } completionBlock:^(id data) {
                 NSLog(@"%@", data);
+                [[ShowHUD showHUD]hideAnimationFromView:self.view];
                 if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
                     if ([[data objectForKey:@"needRegister"] integerValue] == 0) {
                         NSDictionary *userDict = [NSDictionary dictionary];
@@ -377,11 +379,13 @@
                             
                             
                             NSString *token = [[userDict objectForKey:@"rows"] objectForKey:@"rongTk"];
+                            
+                            _reloadCtrlData();
+                            [self.navigationController popViewControllerAnimated:YES];
+                            
                             //注册融云
                             [self requestRCIMWithToken:token];
                             [self postAppJpost];
-                            _reloadCtrlData();
-                            [self.navigationController popViewControllerAnimated:YES];
                         }
 
                         self.navigationItem.leftBarButtonItem.enabled = YES;

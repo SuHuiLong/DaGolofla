@@ -56,6 +56,7 @@
 
 - (void)configCellWithModelArray:(NSMutableArray *)modelArray;
 
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *fourRightcont;//-25
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *almostTop1;//25
 

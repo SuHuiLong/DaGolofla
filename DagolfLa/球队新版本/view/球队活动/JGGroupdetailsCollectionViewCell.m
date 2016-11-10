@@ -41,6 +41,8 @@
     self.conViewLeft4.constant = -25 *ProportionAdapter;
     self.conViewW4.constant = 55 *ProportionAdapter;
     
+    self.fourRightcont.constant = -25 *ProportionAdapter;
+    
 //    [self insertSubview:self.leftTopView atIndex:0];
     self.leftTopView.layer.masksToBounds = YES;
     self.leftTopView.layer.cornerRadius = self.RightTopView.frame.size.width/2;

@@ -156,14 +156,14 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eZF-bg-2Yw">
                         <rect key="frame" x="217" y="-25" width="55" height="55"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="06" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EAx-uU-Psg">
-                                <rect key="frame" x="6" y="25" width="24" height="15"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="06" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EAx-uU-Psg">
+                                <rect key="frame" x="9" y="25" width="16" height="15"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <color key="textColor" red="0.032315962980000001" green="0.85570913459999998" blue="0.79418547699999997" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="差点" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="M12-ku-Pmt">
-                                <rect key="frame" x="8" y="40" width="19" height="11"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="差点" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="M12-ku-Pmt">
+                                <rect key="frame" x="5" y="40" width="25" height="11"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="9"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
@@ -210,6 +210,7 @@
             <constraints>
                 <constraint firstItem="gqY-6j-vij" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="5" id="1TN-Cl-qOm"/>
                 <constraint firstItem="eZF-bg-2Yw" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="-25" id="1fy-az-NYo"/>
+                <constraint firstItem="M12-ku-Pmt" firstAttribute="centerX" secondItem="qUf-5T-kyw" secondAttribute="centerX" id="1on-ua-fbt"/>
                 <constraint firstItem="7ar-9o-vZi" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="2TV-US-KAY"/>
                 <constraint firstItem="bqG-xM-Wc1" firstAttribute="top" secondItem="lpE-O3-pVD" secondAttribute="bottom" id="39K-Ew-BI9"/>
                 <constraint firstItem="bYS-gj-Bfh" firstAttribute="top" secondItem="bqG-xM-Wc1" secondAttribute="bottom" id="3lT-AE-EsD"/>
@@ -237,11 +238,11 @@
                 <constraint firstItem="bqG-xM-Wc1" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="eEx-u6-7Is"/>
                 <constraint firstItem="teM-nD-9Nz" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="-25" id="eS7-gj-zs5"/>
                 <constraint firstItem="lpE-O3-pVD" firstAttribute="width" secondItem="lXy-ef-oB0" secondAttribute="width" id="eoh-VE-cDl"/>
+                <constraint firstItem="M12-ku-Pmt" firstAttribute="width" secondItem="qUf-5T-kyw" secondAttribute="width" id="flE-uR-Qhw"/>
                 <constraint firstAttribute="trailing" secondItem="eZF-bg-2Yw" secondAttribute="trailing" constant="-25" id="jTS-Bx-Z30"/>
                 <constraint firstAttribute="trailing" secondItem="gqY-6j-vij" secondAttribute="trailing" constant="5" id="lK7-uL-S5b"/>
                 <constraint firstItem="gqY-6j-vij" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="5" id="lSh-OL-AKA"/>
                 <constraint firstItem="zAO-eG-BzH" firstAttribute="height" secondItem="lXy-ef-oB0" secondAttribute="height" id="p5b-8k-0lb"/>
-                <constraint firstItem="EAx-uU-Psg" firstAttribute="width" secondItem="KiO-rB-56H" secondAttribute="width" id="pm8-dv-D4s"/>
                 <constraint firstItem="bqG-xM-Wc1" firstAttribute="top" secondItem="lXy-ef-oB0" secondAttribute="bottom" id="sdG-Di-O0P"/>
                 <constraint firstItem="bqG-xM-Wc1" firstAttribute="centerY" secondItem="gTV-IL-0wX" secondAttribute="centerY" id="wYD-Ep-jNb"/>
                 <constraint firstItem="UWh-BD-X1P" firstAttribute="centerX" secondItem="KFw-Aa-D7B" secondAttribute="centerX" id="wdf-Sc-UdB"/>
@@ -273,6 +274,7 @@
                 <outlet property="conViewW2" destination="34F-om-Qt2" id="P0z-Yn-aQl"/>
                 <outlet property="conViewW3" destination="s5v-5E-C5z" id="Z2M-ln-CPD"/>
                 <outlet property="conViewW4" destination="MyY-Ce-pnc" id="1z7-Pz-v6D"/>
+                <outlet property="fourRightcont" destination="4wR-fD-11i" id="VgA-N0-U0g"/>
                 <outlet property="groupName" destination="7ar-9o-vZi" id="1G8-CD-cQZ"/>
                 <outlet property="leftDownAlmost" destination="R04-lZ-ElV" id="Kob-01-OoN"/>
                 <outlet property="leftDownValue" destination="KFw-Aa-D7B" id="56V-gn-gNc"/>
