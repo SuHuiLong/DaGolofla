@@ -15,7 +15,7 @@
 #import "WCLPassWordView.h"
 #import "JGHbalanceView.h"
 
-@interface JGTeamPayViewController ()<UITableViewDelegate, UITableViewDataSource, WCLPassWordViewDelegate>
+@interface JGTeamPayViewController ()<UITableViewDelegate, UITableViewDataSource, WCLPassWordViewDelegate, JGHbalanceViewDelegate>
 
 {
     UIView *_bgView;
@@ -142,6 +142,7 @@
     _balanceView.layer.masksToBounds = YES;
     _balanceView.layer.cornerRadius = 5.0*ProportionAdapter;
     _balanceView.alpha = 1.0;
+    _balanceView.delegate = self;
     [_balanceView configJGHbalanceViewPrice:[cell.textFD.text floatValue] andBalance:balance andDetail:_name];
     //密码输入框
     WCLPassWordView *passWordView = [[[NSBundle mainBundle]loadNibNamed:@"WCLPassWordView" owner:self options:nil]lastObject];
