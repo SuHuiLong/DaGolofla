@@ -70,7 +70,9 @@
 
 
 - (void)deleteBtn:(UIButton *)btn{
-    
+    if ([self.delegate respondsToSelector:@selector(deleteBalanceView:)]) {
+        [self.delegate deleteBalanceView:btn];
+    }
 }
 
 /*

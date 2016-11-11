@@ -11,6 +11,6 @@
 @interface MyOrderViewController : ViewController
 
 
-@property (assign, nonatomic) NSInteger header;
+@property (assign, nonatomic) NSInteger header;//不要了
 
 @end

@@ -228,12 +228,14 @@ static NSString *const JGPlayPayBaseCellIdentifier = @"JGPlayPayBaseCell";
         if (model.mobile) {
             [_playsBaseDict setObject:model.mobile forKey:@"mobile"];
         }
-        
+        /*
         if (model.userKey) {
             [_playsBaseDict setObject:model.userKey forKey:@"userKey"];
         }else{
             [_playsBaseDict setObject:@"0" forKey:@"userKey"];
         }
+        */
+        [_playsBaseDict setObject:@"0" forKey:@"userKey"];
         
         if (model.almost) {
             [_playsBaseDict setObject:[NSString stringWithFormat:@"%@", model.almost] forKey:@"almost"];
@@ -267,12 +269,14 @@ static NSString *const JGPlayPayBaseCellIdentifier = @"JGPlayPayBaseCell";
         if (model.userName) {
             [_playsBaseDict setObject:model.userName forKey:@"name"];
         }
-        
+        /*
         if ([model.otherUserId integerValue] != 0) {
             [_playsBaseDict setObject:model.otherUserId forKey:@"userKey"];
         }else{
             [_playsBaseDict setObject:@0 forKey:@"userKey"];
         }
+        */
+        [_playsBaseDict setObject:@0 forKey:@"userKey"];
         
         if ([model.sex integerValue] == 0) {
             [_playsBaseDict setObject:model.sex forKey:@"sex"];

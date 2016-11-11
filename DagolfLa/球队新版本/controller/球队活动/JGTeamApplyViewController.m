@@ -735,7 +735,7 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
         _tranView.hidden = YES;
         [[ShowHUD showHUD]hideAnimationFromView:self.view];
         //跳转分组页面
-        if ([[data objectForKey:@"packResultMsg"] integerValue] == 1) {
+        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
             [[ShowHUD showHUD]showAnimationWithText:@"支付成功！" FromView:self.view];
         }else{
             if ([data objectForKey:@"packResultMsg"]) {

@@ -335,7 +335,7 @@
     _bgView.alpha = 0.5;
     [self.view addSubview:_bgView];
     
-    _balanceView = [[JGHbalanceView alloc]initWithFrame:CGRectMake(15 *ProportionAdapter, 50 *ProportionAdapter, screenWidth -30*ProportionAdapter, 286*ProportionAdapter)];
+    _balanceView = [[JGHbalanceView alloc]initWithFrame:CGRectMake(15 *ProportionAdapter, 84 *ProportionAdapter, screenWidth -30*ProportionAdapter, 286*ProportionAdapter)];
     _balanceView.layer.masksToBounds = YES;
     _balanceView.delegate = self;
     _balanceView.layer.cornerRadius = 5.0*ProportionAdapter;
@@ -393,9 +393,9 @@
         
         [[ShowHUD showHUD]hideAnimationFromView:self.view];
         //
-        if ([[data objectForKey:@"packResultMsg"] integerValue] == 1) {
+        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
             MyOrderViewController *groupCtrl = [[MyOrderViewController alloc]init];
-            groupCtrl.header = 1;
+            //groupCtrl.header = 1;
             [self.navigationController pushViewController:groupCtrl animated:YES];
         }else{
             
@@ -477,7 +477,7 @@
 - (void)notice:(NSNotification *)not{
     NSInteger secess = [[not.userInfo objectForKey:@"secess"] integerValue];
     if (secess == 1) {
-        //跳转分组页面
+        //
         MyOrderViewController *groupCtrl = [[MyOrderViewController alloc]init];
         groupCtrl.header = 1;
         [self.navigationController pushViewController:groupCtrl animated:YES];

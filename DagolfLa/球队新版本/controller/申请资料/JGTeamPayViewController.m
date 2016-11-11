@@ -130,6 +130,7 @@
 }
 #pragma mark -- 余额支付
 - (void)dreawBalance:(NSString *)balance{
+    self.navigationItem.leftBarButtonItem.enabled = NO;
     //
     _bgView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight -64)];
     _bgView.backgroundColor = [UIColor lightGrayColor];
@@ -166,6 +167,7 @@
 }
 #pragma mark -- 余额支付
 - (void)balancePay{
+    self.navigationItem.leftBarButtonItem.enabled = NO;
     [[ShowHUD showHUD]showAnimationWithText:@"支付中..." FromView:self.view];
     NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
     [dict setObject:@1 forKey:@"orderType"];
@@ -176,13 +178,15 @@
     
     [[JsonHttp jsonHttp]httpRequestWithMD5:@"pay/doPayByUserAccount" JsonKey:@"payInfo" withData:dict failedBlock:^(id errType) {
         NSLog(@"errType == %@", errType);
+        self.navigationItem.leftBarButtonItem.enabled = YES;
         [[ShowHUD showHUD]hideAnimationFromView:self.view];
     } completionBlock:^(id data) {
         NSLog(@"%@",[data objectForKey:@"query"]);
+        self.navigationItem.leftBarButtonItem.enabled = YES;
         [_balanceView removeFromSuperview];
         [[ShowHUD showHUD]hideAnimationFromView:self.view];
         //跳转分组页面
-        if ([[data objectForKey:@"packResultMsg"] integerValue] == 1) {
+        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
             [[ShowHUD showHUD]showAnimationWithText:@"支付成功！" FromView:self.view];
         }else{
             if ([data objectForKey:@"packResultMsg"]) {
