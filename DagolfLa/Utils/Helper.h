@@ -58,6 +58,11 @@
 
 +(void)alertViewWithTitle:(NSString *)title  withBlockCancle:(void(^)())blockCancle withBlockSure:(void(^)())blockSure withBlock:(void(^)(UIAlertController *alertView))blockOver;
 
+
++(void)actionSheetWithTitle:(NSString *)title withArrayTitle:(NSArray *)arayTitle withBlockFirst:(void (^)())blockFirst withBlockSecond:(void (^)())blockSecond;
+
++(void)actionSheetWithTitle:(NSString *)title withArrayTitle:(NSArray *)arayTitle withBlockFirst:(void (^)())blockFirst withBlockSecond:(void (^)())blockSecond withBlockThird:(void (^)())blockThird;
+
 //判断是否为数字
 +(BOOL)isPureNumandCharacters:(NSString *)string;
 
