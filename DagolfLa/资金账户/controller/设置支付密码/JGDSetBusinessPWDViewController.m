@@ -12,7 +12,6 @@ static int timeNumber = 60;
 
 @interface JGDSetBusinessPWDViewController ()<UITextFieldDelegate>
 
-
 @property (nonatomic, strong) UITextField *mobileTF;
 
 @property (nonatomic, strong) UIButton * codeBtn;
@@ -21,7 +20,8 @@ static int timeNumber = 60;
 
 @property (nonatomic, strong) UIButton * eyeBtn;
 
-@property (nonatomic, strong) NSTimer *timer;;
+@property (nonatomic, strong) NSTimer *timer;
+
 @end
 
 @implementation JGDSetBusinessPWDViewController
@@ -143,17 +143,18 @@ static int timeNumber = 60;
     
     [[JsonHttp jsonHttp]httpRequestWithMD5:@"user/doSendUpdatePayPassWordSms" JsonKey:nil withData:dict failedBlock:^(id errType) {
         self.codeBtn.userInteractionEnabled = YES;
+        [[ShowHUD showHUD]hideAnimationFromView:self.view];
+        
     } completionBlock:^(id data) {
-        NSLog(@"%@", data);
+
         self.codeBtn.userInteractionEnabled = YES;
         self.navigationItem.leftBarButtonItem.enabled = YES;
         [[ShowHUD showHUD]hideAnimationFromView:self.view];
-
+        
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
-
+            
             self.mobileTF.placeholder = @"请输入验证码";
-
-            //
+            
             _timer=[NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(autoMove) userInfo:nil repeats:YES];
             [[NSRunLoop currentRunLoop] addTimer:_timer forMode:NSRunLoopCommonModes];
         }else{
@@ -162,55 +163,6 @@ static int timeNumber = 60;
             }
         }
     }];
-    
-    //----判断手机号是否注册过 18637665180
-//    [[JsonHttp jsonHttp]httpRequestWithMD5:@"reg/hasMobileRegistered" JsonKey:nil withData:codeDict failedBlock:^(id errType) {
-//        self.codeBtn.userInteractionEnabled = YES;
-//        self.navigationItem.leftBarButtonItem.enabled = YES;
-//        [[ShowHUD showHUD]hideAnimationFromView:self.view];
-//    } completionBlock:^(id data) {
-//        NSLog(@"%@", data);
-//        [[ShowHUD showHUD]hideAnimationFromView:self.view];
-//        self.navigationItem.leftBarButtonItem.enabled = YES;
-//        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
-//            if ([[data objectForKey:@"hasMobileRegistered"] integerValue] == 1) {
-//                
-//                [codeDict setObject:@"" forKey:@"countryCode"];
-//                self.codeBtn.userInteractionEnabled = NO;
-//                [[JsonHttp jsonHttp]httpRequestWithMD5:@"user/doSendSetPasswordSms" JsonKey:nil withData:codeDict failedBlock:^(id errType) {
-//                    self.codeBtn.userInteractionEnabled = YES;
-//                } completionBlock:^(id data) {
-//                    NSLog(@"%@", data);
-//                    self.codeBtn.userInteractionEnabled = YES;
-//                    
-//                    if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
-//                        //
-//                        _timer=[NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(autoMove) userInfo:nil repeats:YES];
-//                        [[NSRunLoop currentRunLoop] addTimer:_timer forMode:NSRunLoopCommonModes];
-//                    }else{
-//                        if ([data objectForKey:@"packResultMsg"]) {
-//                            [LQProgressHud showMessage:[data objectForKey:@"packResultMsg"]];
-//                        }
-//                    }
-//                }];
-//            }else{
-//                self.codeBtn.userInteractionEnabled = YES;
-//                [Helper alertViewWithTitle:@"手机号未注册！" withBlock:^(UIAlertController *alertView) {
-//                    [self presentViewController:alertView animated:YES completion:nil];
-//                }];
-//                
-//                return;
-//            }
-//        }else{
-//            self.codeBtn.userInteractionEnabled = YES;
-//            if ([data objectForKey:@"packResultMsg"]) {
-//                [LQProgressHud showMessage:[data objectForKey:@"packResultMsg"]];
-//            }
-//        }
-//        
-//    }];
-    
-    
 }
 
 - (void)autoMove {
@@ -249,10 +201,10 @@ static int timeNumber = 60;
         return;
     }
     
-//    if (_PWDTF.text.length == 0) {
-//        [LQProgressHud showMessage:@"请输入密码！"];
-//        return;
-//    }
+    //    if (_PWDTF.text.length == 0) {
+    //        [LQProgressHud showMessage:@"请输入密码！"];
+    //        return;
+    //    }
     
     if (_PWDTF.text.length != 6) {
         [LQProgressHud showMessage:@"密码只能为6位纯数字！"];
@@ -296,28 +248,9 @@ static int timeNumber = 60;
                 [LQProgressHud showMessage:[data objectForKey:@"packResultMsg"]];
             }
         }
-
+        
     }];
     
-    
-//    [[JsonHttp jsonHttp]httpRequestWithMD5:@"user/updatePassword" JsonKey:nil withData:resetDict failedBlock:^(id errType) {
-//        btn.userInteractionEnabled = YES;
-//        self.navigationItem.leftBarButtonItem.enabled = YES;
-//        [[ShowHUD showHUD]hideAnimationFromView:self.view];
-//    } completionBlock:^(id data) {
-//        NSLog(@"%@", data);
-//        btn.userInteractionEnabled = YES;
-//        self.navigationItem.leftBarButtonItem.enabled = NO;
-//        [[ShowHUD showHUD]hideAnimationFromView:self.view];
-//        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
-//            [LQProgressHud showMessage:@"新密码设置成功！"];
-//            [self.navigationController popViewControllerAnimated:YES];
-//        }else{
-//            if ([data objectForKey:@"packResultMsg"]) {
-//                [LQProgressHud showMessage:[data objectForKey:@"packResultMsg"]];
-//            }
-//        }
-//    }];
 }
 
 -(void)dealloc
@@ -377,13 +310,13 @@ static int timeNumber = 60;
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

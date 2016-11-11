@@ -536,6 +536,7 @@ static CGFloat ImageHeight  = 210.0;
     }
     
     [[ShowHUD showHUD]showAnimationWithText:@"提交中..." FromView:self.view];
+    btn.userInteractionEnabled = NO;
     NSMutableDictionary *postDict = [NSMutableDictionary dictionary];
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     [dict setObject:[NSString stringWithFormat:@"%td", self.teamKey] forKey:@"teamKey"];//球队key
@@ -581,9 +582,11 @@ static CGFloat ImageHeight  = 210.0;
     [[JsonHttp jsonHttp]httpRequest:@"team/createTeamActivity" JsonKey:nil withData:postDict requestMethod:@"POST" failedBlock:^(id errType) {
         NSLog(@"%@", errType);
         [[ShowHUD showHUD]hideAnimationFromView:self.view];
+        btn.userInteractionEnabled = YES;
     } completionBlock:^(id data) {
         NSLog(@"%@", data);
         [[ShowHUD showHUD]hideAnimationFromView:self.view];
+        btn.userInteractionEnabled = YES;
         if ([[data objectForKey:@"packSuccess"] integerValue] == 0) {
             [Helper alertViewWithTitle:[data objectForKey:@"packResultMsg"] withBlock:^(UIAlertController *alertView) {
                 [self.navigationController presentViewController:alertView animated:YES completion:nil];

@@ -14,6 +14,8 @@
 #import "JGDSubMitPayPasswordViewController.h"
 #import "JGLAddBankCardViewController.h"
 
+#import "JGDSetBusinessPWDViewController.h"
+
 @interface JGDPrivateAccountViewController ()<UITableViewDelegate,UITableViewDataSource>
 
 @property (nonatomic, strong) UITableView *tableView;
@@ -232,7 +234,7 @@
             
         }];
         UIAlertAction* action2=[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            JGDSubMitPayPasswordViewController *setPassWord = [[JGDSubMitPayPasswordViewController alloc] init];
+            JGDSetBusinessPWDViewController *setPassWord = [[JGDSetBusinessPWDViewController alloc] init];
             [self.navigationController pushViewController:setPassWord animated:YES];
         }];
         
