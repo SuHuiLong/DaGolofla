@@ -166,6 +166,12 @@
 - (void)passWordBeginInput:(WCLPassWordView *)passWord{
     
 }
+#pragma mark -- 删除支付密码页面
+- (void)deleteBalanceView:(UIButton *)btn{
+    [_bgView removeFromSuperview];
+    [_balanceView removeFromSuperview];
+    self.navigationItem.leftBarButtonItem.enabled = YES;
+}
 #pragma mark -- 余额支付
 - (void)balancePay{
     self.navigationItem.leftBarButtonItem.enabled = NO;
@@ -246,7 +252,6 @@
 }
 
 #pragma mark -- 微信支付成功后返回的通知
-
 - (void)notice:(NSNotification *)not{
 //    NSInteger secess = [[not.userInfo objectForKey:@"secess"] integerValue];
 //    if (secess == 1) {
