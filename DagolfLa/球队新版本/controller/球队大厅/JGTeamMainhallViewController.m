@@ -17,8 +17,8 @@
 #import <CoreLocation/CoreLocation.h>
 #import "JGTeamDetail.h"
 #import "JGTeamDetailViewController.h"
-#import "JGNotTeamMemberDetailViewController.h"
-#import "JGTeamMemberORManagerViewController.h"
+#import "JGDNewTeamDetailViewController.h"
+//#import "JGTeamMemberORManagerViewController.h"
 #import "JGNewCreateTeamTableViewController.h"
 
 #import "MJRefresh.h"
@@ -27,6 +27,10 @@
 #import "UITool.h"
 
 #import "JGLViewCityChoose.h"
+
+
+#import "JGDNewTeamDetailViewController.h"
+
 
 @interface JGTeamMainhallViewController ()<UITableViewDelegate,UITableViewDataSource,CLLocationManagerDelegate,UIBarPositioningDelegate,UITextFieldDelegate>
 {
@@ -498,57 +502,61 @@
     }else{
         [dic setObject:@([[self.modelArray[indexPath.row] objectForKey:@"timeKey"] integerValue]) forKey:@"teamKey"];
     }
-
-    [[JsonHttp jsonHttp] httpRequest:@"team/getTeamInfo" JsonKey:nil withData:dic requestMethod:@"GET" failedBlock:^(id errType) {
-
-    } completionBlock:^(id data) {
-
-        
-        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
-
-            if (![data objectForKey:@"teamMember"]) {
-                JGNotTeamMemberDetailViewController *detailVC = [[JGNotTeamMemberDetailViewController alloc] init];
-                if (![Helper isBlankString:_textField.text]) {
-                    detailVC.detailDic = self.searchArray[indexPath.row];
-                }else{
-                    detailVC.detailDic = self.modelArray[indexPath.row];
-                }
-                [self.navigationController pushViewController:detailVC animated:YES];
-            }else{
-                
-                if ([[[data objectForKey:@"teamMember"] objectForKey:@"power"] containsString:@"1005"]){
-                    JGTeamMemberORManagerViewController *detailVC = [[JGTeamMemberORManagerViewController alloc] init];
-                    if (![Helper isBlankString:_textField.text]) {
-                        detailVC.detailDic = self.searchArray[indexPath.row];
-                    }else{
-                        detailVC.detailDic = self.modelArray[indexPath.row];
-                    }
-                    detailVC.isManager = YES;
-                    [self.navigationController pushViewController:detailVC animated:YES];
-                }else{
-                    JGTeamMemberORManagerViewController *detailVC = [[JGTeamMemberORManagerViewController alloc] init];
-                    if (![Helper isBlankString:_textField.text]) {
-                        
-                        if ([self.searchArray count] > 0) {
-                            detailVC.detailDic = self.searchArray[indexPath.row];
-                        }
-                    }else{
-                        if ([self.modelArray count] > 0) {
-                            detailVC.detailDic = self.modelArray[indexPath.row];
-                        }
-                    }
-                    detailVC.isManager = NO;
-                    [self.navigationController pushViewController:detailVC animated:YES];
-                }
-            }
-            
-        }else{
-            if ([data objectForKey:@"packResultMsg"]) {
-                [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
-            }
-        }
-
-    }];
+    
+    JGDNewTeamDetailViewController *teamDetailVC = [[JGDNewTeamDetailViewController alloc] init];
+    teamDetailVC.timeKey = [dic objectForKey:@"teamKey"];
+    [self.navigationController pushViewController:teamDetailVC animated:YES];
+    
+//    [[JsonHttp jsonHttp] httpRequest:@"team/getTeamInfo" JsonKey:nil withData:dic requestMethod:@"GET" failedBlock:^(id errType) {
+//
+//    } completionBlock:^(id data) {
+//
+//        
+//        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+//
+//            if (![data objectForKey:@"teamMember"]) {
+//                JGNotTeamMemberDetailViewController *detailVC = [[JGNotTeamMemberDetailViewController alloc] init];
+//                if (![Helper isBlankString:_textField.text]) {
+//                    detailVC.detailDic = self.searchArray[indexPath.row];
+//                }else{
+//                    detailVC.detailDic = self.modelArray[indexPath.row];
+//                }
+//                [self.navigationController pushViewController:detailVC animated:YES];
+//            }else{
+//                
+//                if ([[[data objectForKey:@"teamMember"] objectForKey:@"power"] containsString:@"1005"]){
+//                    JGTeamMemberORManagerViewController *detailVC = [[JGTeamMemberORManagerViewController alloc] init];
+//                    if (![Helper isBlankString:_textField.text]) {
+//                        detailVC.detailDic = self.searchArray[indexPath.row];
+//                    }else{
+//                        detailVC.detailDic = self.modelArray[indexPath.row];
+//                    }
+//                    detailVC.isManager = YES;
+//                    [self.navigationController pushViewController:detailVC animated:YES];
+//                }else{
+//                    JGTeamMemberORManagerViewController *detailVC = [[JGTeamMemberORManagerViewController alloc] init];
+//                    if (![Helper isBlankString:_textField.text]) {
+//                        
+//                        if ([self.searchArray count] > 0) {
+//                            detailVC.detailDic = self.searchArray[indexPath.row];
+//                        }
+//                    }else{
+//                        if ([self.modelArray count] > 0) {
+//                            detailVC.detailDic = self.modelArray[indexPath.row];
+//                        }
+//                    }
+//                    detailVC.isManager = NO;
+//                    [self.navigationController pushViewController:detailVC animated:YES];
+//                }
+//            }
+//            
+//        }else{
+//            if ([data objectForKey:@"packResultMsg"]) {
+//                [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+//            }
+//        }
+//
+//    }];
 
 }
 
