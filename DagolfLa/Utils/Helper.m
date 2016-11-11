@@ -230,9 +230,6 @@
     block(alert);
 }
 
-
-
-
 +(void)alertViewNoHaveCancleWithTitle:(NSString *)title withBlock:(void(^)(UIAlertController *alertView))block{
     UIAlertController *alert=[UIAlertController alertControllerWithTitle:@"提示" message:title preferredStyle:UIAlertControllerStyleAlert];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
@@ -257,6 +254,53 @@
     
 
 }
+
+
+#pragma mark --actionsheet
+
++(void)actionSheetWithTitle:(NSString *)title withArrayTitle:(NSArray *)arayTitle withBlockFirst:(void (^)())blockFirst withBlockSecond:(void (^)())blockSecond{
+    UIAlertController *alert=[UIAlertController alertControllerWithTitle:nil message:title preferredStyle:UIAlertControllerStyleActionSheet];
+    
+    UIAlertAction *action1=[UIAlertAction actionWithTitle:arayTitle[0] style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        blockFirst();
+    }];
+    UIAlertAction* action2=[UIAlertAction actionWithTitle:arayTitle[1] style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        blockSecond();
+    }];
+    UIAlertAction* actionCancel=[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+    }];
+    
+    [alert addAction:action1];
+    [alert addAction:action2];
+    [alert addAction:actionCancel];
+    [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:alert animated:YES completion:nil];
+}
+
+
++(void)actionSheetWithTitle:(NSString *)title withArrayTitle:(NSArray *)arayTitle withBlockFirst:(void (^)())blockFirst withBlockSecond:(void (^)())blockSecond withBlockThird:(void (^)())blockThird{
+    UIAlertController *alert=[UIAlertController alertControllerWithTitle:nil message:title preferredStyle:UIAlertControllerStyleActionSheet];
+    
+    UIAlertAction *action1=[UIAlertAction actionWithTitle:arayTitle[0] style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        blockFirst();
+    }];
+    UIAlertAction* action2=[UIAlertAction actionWithTitle:arayTitle[1] style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        blockSecond();
+    }];
+    UIAlertAction* action3=[UIAlertAction actionWithTitle:arayTitle[2] style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        blockThird();
+    }];
+    UIAlertAction* actionCancel=[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+    }];
+    
+    [alert addAction:action1];
+    [alert addAction:action2];
+    [alert addAction:action3];
+    [alert addAction:actionCancel];
+    [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:alert animated:YES completion:nil];
+}
+
+
+
 
 
 + (BOOL)isPureNumandCharacters:(NSString *)string

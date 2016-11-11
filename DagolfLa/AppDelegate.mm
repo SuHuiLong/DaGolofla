@@ -253,8 +253,28 @@
         }];
         
     }
+    
+    //调用PHP登录
+    [self phpLogin];
+    
     return YES;
 }
+- (void)phpLogin{
+    NSString *url = [NSString stringWithFormat:@"http://www.dagolfla.com/app/api/client/api.php?Action=UserLoginUserid&uid=%@&url=dsadsa", DEFAULF_USERID];
+    
+    [[JsonHttp jsonHttp]httpRequest:url failedBlock:^(id errType) {
+        
+    } completionBlock:^(id data) {
+        NSLog(@"%@", data);
+        //state - 1成功
+        NSUserDefaults *userDef = [NSUserDefaults standardUserDefaults];
+        if ([data objectForKey:@"state"]) {
+            [userDef setObject:[data objectForKey:@"state"] forKey:PHPState];
+        }
+        
+    }];
+}
+
 -(void)startApp
 {
 //    [self gifReLoad];

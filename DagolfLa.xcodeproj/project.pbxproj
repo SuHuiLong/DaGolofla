@@ -245,6 +245,9 @@
 		20CA13DC1CE9F2C200DA15B9 /* UIColor+ColorTransfer.m in Sources */ = {isa = PBXBuildFile; fileRef = 20CA13DB1CE9F2C200DA15B9 /* UIColor+ColorTransfer.m */; };
 		20CA13FF1CEAF07100DA15B9 /* SXPickPhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = 20CA13FE1CEAF07100DA15B9 /* SXPickPhoto.m */; };
 		20CA14021CEB086600DA15B9 /* JsonHttp.m in Sources */ = {isa = PBXBuildFile; fileRef = 20CA14011CEB086600DA15B9 /* JsonHttp.m */; };
+		20D1E1AB1DD41DE600EB25C3 /* WCLPassWordView.m in Sources */ = {isa = PBXBuildFile; fileRef = 20D1E1A91DD41DE600EB25C3 /* WCLPassWordView.m */; };
+		20D1E1AE1DD42F7400EB25C3 /* JGHbalanceView.m in Sources */ = {isa = PBXBuildFile; fileRef = 20D1E1AD1DD42F7400EB25C3 /* JGHbalanceView.m */; };
+		20D1E1B01DD4615E00EB25C3 /* WCLPassWordView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 20D1E1AF1DD4615E00EB25C3 /* WCLPassWordView.xib */; };
 		20D514C01DB63D250006EFCB /* JGHEditorEventViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 20D514BF1DB63D250006EFCB /* JGHEditorEventViewController.m */; };
 		20D514C31DB63D690006EFCB /* JGHMatchRoundModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 20D514C11DB63D690006EFCB /* JGHMatchRoundModel.m */; };
 		20D514E71DB63DA60006EFCB /* JGHPublicLevelCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 20D514C61DB63DA60006EFCB /* JGHPublicLevelCell.m */; };
@@ -1667,6 +1670,11 @@
 		20CA13FE1CEAF07100DA15B9 /* SXPickPhoto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SXPickPhoto.m; sourceTree = "<group>"; };
 		20CA14001CEB086600DA15B9 /* JsonHttp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JsonHttp.h; sourceTree = "<group>"; };
 		20CA14011CEB086600DA15B9 /* JsonHttp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JsonHttp.m; sourceTree = "<group>"; };
+		20D1E1A91DD41DE600EB25C3 /* WCLPassWordView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WCLPassWordView.m; sourceTree = "<group>"; };
+		20D1E1AA1DD41DE600EB25C3 /* WCLPassWordView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WCLPassWordView.h; sourceTree = "<group>"; };
+		20D1E1AC1DD42F7400EB25C3 /* JGHbalanceView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHbalanceView.h; sourceTree = "<group>"; };
+		20D1E1AD1DD42F7400EB25C3 /* JGHbalanceView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHbalanceView.m; sourceTree = "<group>"; };
+		20D1E1AF1DD4615E00EB25C3 /* WCLPassWordView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WCLPassWordView.xib; sourceTree = "<group>"; };
 		20D514BE1DB63D250006EFCB /* JGHEditorEventViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHEditorEventViewController.h; sourceTree = "<group>"; };
 		20D514BF1DB63D250006EFCB /* JGHEditorEventViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHEditorEventViewController.m; sourceTree = "<group>"; };
 		20D514C11DB63D690006EFCB /* JGHMatchRoundModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHMatchRoundModel.m; sourceTree = "<group>"; };
@@ -4583,6 +4591,18 @@
 			path = "球队活动";
 			sourceTree = "<group>";
 		};
+		20D1E1A81DD41DC100EB25C3 /* 支付密码框 */ = {
+			isa = PBXGroup;
+			children = (
+				20D1E1AA1DD41DE600EB25C3 /* WCLPassWordView.h */,
+				20D1E1A91DD41DE600EB25C3 /* WCLPassWordView.m */,
+				20D1E1AF1DD4615E00EB25C3 /* WCLPassWordView.xib */,
+				20D1E1AC1DD42F7400EB25C3 /* JGHbalanceView.h */,
+				20D1E1AD1DD42F7400EB25C3 /* JGHbalanceView.m */,
+			);
+			path = "支付密码框";
+			sourceTree = "<group>";
+		};
 		20D514BD1DB63D250006EFCB /* 编辑赛事 */ = {
 			isa = PBXGroup;
 			children = (
@@ -5873,6 +5893,7 @@
 		36BFFF431BC76D09005B3CE2 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				20D1E1A81DD41DC100EB25C3 /* 支付密码框 */,
 				20F7D4481D88E7FC00302406 /* UUID */,
 				F5E1B8C31D6B006000414727 /* ZXingObjC */,
 				206ECF921D47568F00880234 /* datePicks */,
@@ -8902,6 +8923,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				20D1E1B01DD4615E00EB25C3 /* WCLPassWordView.xib in Resources */,
 				20591C7B1D225EBD003271EC /* JGHWithdrawCatoryCell.xib in Resources */,
 				F5B5499B1CE9F3C00091C962 /* JGPhotoShowCollectionViewCell.xib in Resources */,
 				20CA13801CE574A400DA15B9 /* JGHConcentTextViewController.xib in Resources */,
@@ -9126,6 +9148,7 @@
 				36BF00A81BC77326005B3CE2 /* MyfootModel.m in Sources */,
 				209B3FE61D0FCB0300A6FF72 /* JGHSaveAndSubmitBtnCell.m in Sources */,
 				829960DB1D23729C00E121A8 /* JGLBankCardTableViewCell.m in Sources */,
+				20D1E1AB1DD41DE600EB25C3 /* WCLPassWordView.m in Sources */,
 				F5E1BAD01D6B006100414727 /* ZXISBNResultParser.m in Sources */,
 				36BF00891BC772EF005B3CE2 /* MySetBindViewController.m in Sources */,
 				F5E1BAFA1D6B006100414727 /* ZXHybridBinarizer.m in Sources */,
@@ -9253,6 +9276,7 @@
 				36BFFF591BC76D09005B3CE2 /* AFHTTPRequestOperation.m in Sources */,
 				82F566E51D2FAE1F0089B617 /* JGLPushDetailsViewController.m in Sources */,
 				65B596E91CAD43AC007AB83A /* WFPopView.m in Sources */,
+				20D1E1AE1DD42F7400EB25C3 /* JGHbalanceView.m in Sources */,
 				F569A13F1CE35A9C00CD0FD5 /* JGTeamChannelViewController.m in Sources */,
 				F5E1BB031D6B006100414727 /* ZXEncodeHints.m in Sources */,
 				205E61DF1DCC7BC60079F128 /* JGDChangePWDViewController.m in Sources */,

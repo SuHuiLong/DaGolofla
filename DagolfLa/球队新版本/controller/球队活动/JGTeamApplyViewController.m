@@ -31,6 +31,9 @@
 #import "JGHApplyCatoryPriceView.h"
 #import "JGHAddTeamPlaysViewController.h"
 #import "JGTeamActibityNameViewController.h"
+#import "JGHbalanceView.h"
+#import "WCLPassWordView.h"
+#import "JGDSetBusinessPWDViewController.h"
 
 static NSString *const JGHActivityBaseInfoCellIdentifier = @"JGHActivityBaseInfoCell";
 static NSString *const JGActivityBaseInfoCellIdentifier = @"JGActivityBaseInfoCell";
@@ -41,7 +44,7 @@ static NSString *const JGHApplyNewCellIdentifier = @"JGHApplyNewCell";
 static NSString *const JGSignUoPromptCellIdentifier = @"JGSignUoPromptCell";
 static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
 
-@interface JGTeamApplyViewController ()<JGApplyPepoleCellDelegate, JGHApplyNewCellDelegate, JGHAddInvoiceViewControllerDelegate, JGHApplyListViewDelegate, JGHJustApplyListViewDelegate, JGHApplyCatoryPriceViewDelegate>
+@interface JGTeamApplyViewController ()<JGApplyPepoleCellDelegate, JGHApplyNewCellDelegate, JGHAddInvoiceViewControllerDelegate, JGHApplyListViewDelegate, JGHJustApplyListViewDelegate, JGHApplyCatoryPriceViewDelegate, WCLPassWordViewDelegate, JGHbalanceViewDelegate>
 {
     UIAlertController *_actionView;
     
@@ -74,6 +77,8 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
 
 @property (nonatomic, strong)JGHApplyCatoryPriceView *applyCatoryPriceView;//价格类型列表
 
+@property (nonatomic, strong)JGHbalanceView *balanceView;
+
 @end
 
 @implementation JGTeamApplyViewController
@@ -82,7 +87,7 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
     if (_tranView == nil) {
         self.tranView = [[UIView alloc]init];
         self.tranView.backgroundColor = [UIColor lightGrayColor];
-        self.tranView.alpha = 0.4;
+        self.tranView.alpha = 0.5;
         [self.view addSubview:_tranView];
     }
     return _tranView;
@@ -460,27 +465,6 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
 }
 #pragma mark -- 计算应付价格
 - (void)countAmountPayable{
-    /*
-    _w = 0;
-    _z = 0;
-    _subsidiesPrice = 0.0;
-    _amountPayable = 0.0;
-    _realPayPrice = 0.0;
-    //判断成员中是否包含自己
-    for (int i=0; i<_applyArray.count; i++) {
-        NSDictionary *dict = [NSDictionary dictionary];
-        dict = _applyArray[i];
-        NSLog(@"%@", [dict objectForKey:@"money"]);
-        float value = [[dict objectForKey:@"money"] floatValue];
-        _amountPayable += value;
-    }
-    
-    _realPayPrice = _amountPayable;
-    
-    [self.teamApplyTableView reloadData];
-    */
-    
-    
     _subsidiesPrice = 0.0;
     _amountPayable = 0.0;
     _realPayPrice = 0.0;
@@ -583,6 +567,9 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
                 [self weChatPay];
             }else if (type == 2){
                 [self zhifubaoPay];
+            }else if (type == 3){
+                //余额支付
+                [self balancePay];
             }else{
                 //跳转分组页面
                 JGTeamGroupViewController *groupCtrl = [[JGTeamGroupViewController alloc]init];
@@ -607,45 +594,6 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
             }
         }
     }];
-    
-    /*
-    [[JsonHttp jsonHttp]httpRequest:@"team/doTeamActivitySignUp" JsonKey:nil withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
-        NSLog(@"errType == %@", errType);
-        [[ShowHUD showHUD]hideAnimationFromView:self.view];
-    } completionBlock:^(id data) {
-        [[ShowHUD showHUD]hideAnimationFromView:self.view];
-        NSLog(@"data == %@", data);
-        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
-            _infoKey = [data objectForKey:@"infoKey"];
-            if (type == 1) {
-                [self weChatPay];
-            }else if (type == 2){
-                [self zhifubaoPay];
-            }else{
-                //跳转分组页面
-                JGTeamGroupViewController *groupCtrl = [[JGTeamGroupViewController alloc]init];
-                groupCtrl.activityFrom = 1;
-                groupCtrl.teamActivityKey = [_modelss.timeKey integerValue];
-//                groupCtrl.teamKey = _modelss.teamKey;
-                [self.navigationController pushViewController:groupCtrl animated:YES];
-            }
-        }else{
-            if ([data count]== 2) {
-                [Helper alertViewWithTitle:@"报名失败！" withBlock:^(UIAlertController *alertView) {
-                    [self.navigationController presentViewController:alertView animated:YES completion:^{
-                        
-                    }];
-                }];
-            }else{
-                [Helper alertViewWithTitle:[data objectForKey:@"packResultMsg"] withBlock:^(UIAlertController *alertView) {
-                    [self.navigationController presentViewController:alertView animated:YES completion:^{
-                        
-                    }];
-                }];
-            }
-        }
-    }];
-     */
 }
 #pragma mark -- 微信支付
 - (void)weChatPay{
@@ -759,6 +707,49 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
         }];
     }];
 }
+#pragma mark -- 删除密码视图
+- (void)deleteBalanceView:(UIButton *)btn{
+    [_balanceView removeFromSuperview];
+    _tranView.hidden = YES;
+}
+#pragma mark -- 余额支付
+- (void)balancePay{
+    [[ShowHUD showHUD]showAnimationWithText:@"支付中..." FromView:self.view];
+    NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
+    [dict setObject:@2 forKey:@"orderType"];
+    [dict setObject:_infoKey forKey:@"srcKey"];
+    [dict setObject:@"活动报名" forKey:@"name"];
+    [dict setObject:@"活动余额支付订单" forKey:@"otherInfo"];
+    [dict setObject:DEFAULF_USERID forKey:@"userKey"];
+    if (_invoiceKey != nil) {
+        [dict setObject:_addressKey forKey:@"addressKey"];
+        [dict setObject:_invoiceKey forKey:@"invoiceKey"];
+    }
+    
+    [[JsonHttp jsonHttp]httpRequestWithMD5:@"pay/doPayByUserAccount" JsonKey:@"payInfo" withData:dict failedBlock:^(id errType) {
+        NSLog(@"errType == %@", errType);
+        [[ShowHUD showHUD]hideAnimationFromView:self.view];
+    } completionBlock:^(id data) {
+        NSLog(@"%@",[data objectForKey:@"query"]);
+        [_balanceView removeFromSuperview];
+        _tranView.hidden = YES;
+        [[ShowHUD showHUD]hideAnimationFromView:self.view];
+        //跳转分组页面
+        if ([[data objectForKey:@"packResultMsg"] integerValue] == 1) {
+            [[ShowHUD showHUD]showAnimationWithText:@"支付成功！" FromView:self.view];
+        }else{
+            if ([data objectForKey:@"packResultMsg"]) {
+                [[ShowHUD showHUD]showAnimationWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+            }else{
+                [[ShowHUD showHUD]showAnimationWithText:@"支付失败！" FromView:self.view];
+            }
+        }
+        JGTeamGroupViewController *groupCtrl = [[JGTeamGroupViewController alloc]init];
+        groupCtrl.activityFrom = 1;
+        groupCtrl.teamActivityKey = [_modelss.timeKey integerValue];
+        [self.navigationController pushViewController:groupCtrl animated:YES];
+    }];
+}
 #pragma mark -- 确认页面－－取消 -立即支付
 - (void)didSelectCancelBtn:(UIButton *)btn{
     self.applyListView.hidden = YES;
@@ -766,27 +757,93 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
 }
 #pragma mark -- 确认页面－－立即支付
 - (void)didSelectPayBtn:(UIButton *)btn andApplyListArray:(NSMutableArray *)applistArray{
-    
-    _relApplistArray = [NSMutableArray arrayWithArray:applistArray];
-    // 分别3个创建操作
-    UIAlertAction * cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+    [[ShowHUD showHUD]showAnimationWithText:@"加载中..." FromView:self.view];
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    [dict setObject:DEFAULF_USERID forKey:@"userKey"];
+    [[JsonHttp jsonHttp]httpRequest:@"user/getUserBalance" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
+        [[ShowHUD showHUD]hideAnimationFromView:self.view];
+    } completionBlock:^(id data) {
+        NSLog(@"%@", data);
+        [[ShowHUD showHUD]hideAnimationFromView:self.view];
+        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+            NSString *balanceString;
+            if ([[data objectForKey:@"money"] floatValue] >= _realPayPrice) {
+                balanceString = [NSString stringWithFormat:@"余额支付（¥%.2f）", [[data objectForKey:@"money"] floatValue]];
+            }else{
+                balanceString = [NSString stringWithFormat:@"余额支付（余额不足 ¥%.2f）", [[data objectForKey:@"money"] floatValue]];
+            }
+            
+            _relApplistArray = [NSMutableArray arrayWithArray:applistArray];
+            // 分别3个创建操作
+            UIAlertAction * cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+            }];
+            UIAlertAction *weiChatAction = [UIAlertAction actionWithTitle:@"微信支付" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                //添加微信支付请求
+                [self submitInfo:1];
+            }];
+            UIAlertAction *zhifubaoAction = [UIAlertAction actionWithTitle:@"支付宝支付" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                //添加支付宝支付请求
+                [self submitInfo:2];
+            }];
+            UIAlertAction *balanceAction = [UIAlertAction actionWithTitle:balanceString style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                //余额支付
+                if ([[data objectForKey:@"money"] floatValue] >= _realPayPrice) {
+                    if ([[data objectForKey:@"isSetPayPassWord"] integerValue] == 0) {
+                        JGDSetBusinessPWDViewController *setpassCtrl = [[JGDSetBusinessPWDViewController alloc]init];
+                        [self.navigationController pushViewController:setpassCtrl animated:YES];
+                    }else{
+                        [self dreawBalance:[NSString stringWithFormat:@"%.2f", [[data objectForKey:@"money"] floatValue]]];
+                    }
+                }else{
+                    return ;
+                }
+                
+            }];
+            _actionView = [UIAlertController alertControllerWithTitle:@"选择支付方式" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+            [_actionView addAction:weiChatAction];
+            [_actionView addAction:zhifubaoAction];
+            [_actionView addAction:balanceAction];
+            [_actionView addAction:cancelAction];
+            [self presentViewController:_actionView animated:YES completion:nil];
+        }else{
+            if ([data objectForKey:@"packResultMsg"]) {
+                [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+            }
+        }
     }];
-    UIAlertAction *weiChatAction = [UIAlertAction actionWithTitle:@"微信支付" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        //添加微信支付请求
-        [self submitInfo:1];
-    }];
-    UIAlertAction *zhifubaoAction = [UIAlertAction actionWithTitle:@"支付宝支付" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        //添加支付宝支付请求
-        [self submitInfo:2];
-    }];
-    
-    _actionView = [UIAlertController alertControllerWithTitle:@"选择支付方式" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-    [_actionView addAction:weiChatAction];
-    [_actionView addAction:zhifubaoAction];
-    [_actionView addAction:cancelAction];
-    [self presentViewController:_actionView animated:YES completion:nil];
 }
-
+#pragma mark -- 余额支付
+- (void)dreawBalance:(NSString *)balance{
+    _tranView.hidden = NO;
+    _tranView.frame = CGRectMake(0, 0, screenWidth, screenHeight -64);
+    //
+    _balanceView = [[JGHbalanceView alloc]initWithFrame:CGRectMake(15 *ProportionAdapter, 50 *ProportionAdapter, screenWidth -30*ProportionAdapter, 286*ProportionAdapter)];
+    _balanceView.layer.masksToBounds = YES;
+    _balanceView.layer.cornerRadius = 5.0*ProportionAdapter;
+    _balanceView.alpha = 1.0;
+    _balanceView.delegate = self;
+    [_balanceView configJGHbalanceViewPrice:_realPayPrice andBalance:balance andDetail:_modelss.name];
+    //密码输入框
+    WCLPassWordView *passWordView = [[[NSBundle mainBundle]loadNibNamed:@"WCLPassWordView" owner:self options:nil]lastObject];
+    passWordView.frame = CGRectMake(13 *ProportionAdapter, 222 *ProportionAdapter, _balanceView.frame.size.width -26*ProportionAdapter, 45 *ProportionAdapter);
+    passWordView.delegate = self;
+    passWordView.backgroundColor = [UIColor whiteColor];
+    [_balanceView addSubview:passWordView];
+    
+    [self.view addSubview:_balanceView];
+}
+#pragma mark -- 监听输入的改变
+- (void)passWordDidChange:(WCLPassWordView *)passWord{
+    
+}
+#pragma mark -- 监听输入的完成时
+- (void)passWordCompleteInput:(WCLPassWordView *)passWord{
+    [self submitInfo:3];
+}
+#pragma mark -- 监听开始输入
+- (void)passWordBeginInput:(WCLPassWordView *)passWord{
+    
+}
 #pragma mark -- 修改费用
 - (void)selectApplyCatory:(NSMutableDictionary *)costDict{
     for (int i=0; i<_applyArray.count; i++) {
