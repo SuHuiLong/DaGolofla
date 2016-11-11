@@ -24,4 +24,9 @@
 
 @property (nonatomic, strong)UILabel *balance;
 
+@property (nonatomic, strong)UILabel *detail;
+
+
+- (void)configJGHbalanceViewPrice:(float)price andBalance:(NSString *)balance andDetail:(NSString *)detail;
+
 @end

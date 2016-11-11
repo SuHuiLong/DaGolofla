@@ -29,15 +29,15 @@
         onleLine.backgroundColor = [UIColor colorWithHexString:Line_Color];
         [self addSubview:onleLine];
         
-        UILabel *dagolfla = [[UILabel alloc]initWithFrame:CGRectMake(0, 70 *ProportionAdapter, self.frame.size.width, 18 *ProportionAdapter)];
-        dagolfla.textAlignment = NSTextAlignmentCenter;
-        dagolfla.text = @"打高尔夫啦";
-        dagolfla.font = [UIFont systemFontOfSize:15 *ProportionAdapter];
-        [self addSubview:dagolfla];
+        self.detail = [[UILabel alloc]initWithFrame:CGRectMake(0, 70 *ProportionAdapter, self.frame.size.width, 18 *ProportionAdapter)];
+        self.detail.textAlignment = NSTextAlignmentCenter;
+        self.detail.text = @"打高尔夫啦";
+        self.detail.font = [UIFont systemFontOfSize:15 *ProportionAdapter];
+        [self addSubview:self.detail];
         
         self.price = [[UILabel alloc]initWithFrame:CGRectMake(0, 105 *ProportionAdapter, self.frame.size.width, 35 *ProportionAdapter)];
         self.price.textAlignment = NSTextAlignmentCenter;
-        self.price.text = @"¥100";
+        self.price.text = @"";
         self.price.font = [UIFont systemFontOfSize:35 *ProportionAdapter];
         [self addSubview:self.price];
         
@@ -46,11 +46,11 @@
         [self addSubview:twoLine];
         
         UIImageView *blankImageView = [[UIImageView alloc]initWithFrame:CGRectMake(15 *ProportionAdapter, 169 *ProportionAdapter, 32 *ProportionAdapter, 32*ProportionAdapter)];
-        blankImageView.image = [UIImage imageNamed:@""];
+        blankImageView.image = [UIImage imageNamed:@"yuer"];
         [self addSubview:blankImageView];
         
         self.balance = [[UILabel alloc]initWithFrame:CGRectMake(57 *ProportionAdapter, 169 *ProportionAdapter, self.frame.size.width -72*ProportionAdapter, 32*ProportionAdapter)];
-        self.balance.text = @"余额199";
+        self.balance.text = @"";
         self.balance.textAlignment = NSTextAlignmentLeft;
         [self addSubview:self.balance];
         
@@ -61,6 +61,13 @@
     }
     return self;
 }
+
+- (void)configJGHbalanceViewPrice:(float)price andBalance:(NSString *)balance andDetail:(NSString *)detail{
+    self.detail.text = [NSString stringWithFormat:@"%@ 订单", detail];
+    self.balance.text = balance;
+    self.price.text = [NSString stringWithFormat:@"¥ %.2f", price];
+}
+
 
 - (void)deleteBtn:(UIButton *)btn{
     
