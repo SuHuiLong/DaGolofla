@@ -14,7 +14,7 @@
     if ([super initWithFrame:frame]) {
         self.backgroundColor = [UIColor whiteColor];
         self.alpha = 1.0;
-        self.delebtn = [[UIButton alloc]initWithFrame:CGRectMake(15 *ProportionAdapter, 15*ProportionAdapter, 16*ProportionAdapter, 16*ProportionAdapter)];
+        self.delebtn = [[UIButton alloc]initWithFrame:CGRectMake(15 *ProportionAdapter, 8*ProportionAdapter, 25*ProportionAdapter, 25*ProportionAdapter)];
         [self.delebtn setImage:[UIImage imageNamed:@"close"] forState:UIControlStateNormal];
         [self.delebtn addTarget:self action:@selector(deleteBtn:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:self.delebtn];
