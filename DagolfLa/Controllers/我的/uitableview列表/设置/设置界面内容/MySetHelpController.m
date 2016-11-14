@@ -87,7 +87,7 @@
  */
 -(void)createPhoneView
 {
-    UILabel* labelContact = [[UILabel alloc]initWithFrame:CGRectMake(10*ScreenWidth/375, 220*ScreenWidth/375, 60*ScreenWidth/375, 44*ScreenWidth/375)];
+    UILabel* labelContact = [[UILabel alloc]initWithFrame:CGRectMake(10*ScreenWidth/375, 220*ScreenWidth/375, 65*ScreenWidth/375, 44*ScreenWidth/375)];
     [self.view addSubview:labelContact];
     labelContact.text = @"联系方式";
     labelContact.font = [UIFont systemFontOfSize:15*ScreenWidth/375];
@@ -101,7 +101,7 @@
     imgv.image = [UIImage imageNamed:@"phone"];
     [viewBase addSubview:imgv];
     
-    UIView* viewLine = [[UIView alloc]initWithFrame:CGRectMake(37*ScreenWidth/375, 3*ScreenWidth/375, 1*ScreenWidth/375, 38*ScreenWidth/375)];
+    UIView* viewLine = [[UIView alloc]initWithFrame:CGRectMake(37*ScreenWidth/375, 5*ScreenWidth/375, 1*ScreenWidth/375, 34*ScreenWidth/375)];
     viewLine.backgroundColor = [UIColor lightGrayColor];
     [viewBase addSubview:viewLine];
     
