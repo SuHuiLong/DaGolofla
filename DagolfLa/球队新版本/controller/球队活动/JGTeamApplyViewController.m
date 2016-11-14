@@ -391,7 +391,7 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
         [self.applyArray addObject:dict];
     }
     
-    [self submitInfo:3];
+    [self submitInfo:4];
 }
 #pragma mark -- 添加嘉宾
 - (void)addApplyPeopleClick{
@@ -731,6 +731,7 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
         [[ShowHUD showHUD]hideAnimationFromView:self.view];
     } completionBlock:^(id data) {
         NSLog(@"%@",[data objectForKey:@"query"]);
+        
         [_balanceView removeFromSuperview];
         _tranView.hidden = YES;
         [[ShowHUD showHUD]hideAnimationFromView:self.view];

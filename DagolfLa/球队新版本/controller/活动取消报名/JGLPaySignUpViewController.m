@@ -505,6 +505,7 @@
     [dict setObject:DEFAULF_USERID forKey:@"userKey"];
     [[JsonHttp jsonHttp]httpRequest:@"user/getUserBalance" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
         [[ShowHUD showHUD]hideAnimationFromView:self.view];
+        [_bgView removeFromSuperview];
     } completionBlock:^(id data) {
         NSLog(@"%@", data);
         [[ShowHUD showHUD]hideAnimationFromView:self.view];
@@ -552,6 +553,8 @@
             if ([data objectForKey:@"packResultMsg"]) {
                 [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
             }
+            
+            [_bgView removeFromSuperview];
         }
     }];
 }
@@ -611,6 +614,7 @@
     } completionBlock:^(id data) {
         NSLog(@"%@",[data objectForKey:@"query"]);
         self.navigationItem.leftBarButtonItem.enabled = YES;
+        [_bgView removeFromSuperview];
         [_balanceView removeFromSuperview];
         [[ShowHUD showHUD]hideAnimationFromView:self.view];
         //跳转分组页面
@@ -621,9 +625,7 @@
                 [[ShowHUD showHUD]showAnimationWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
             }else{
                 [[ShowHUD showHUD]showAnimationWithText:@"支付失败！" FromView:self.view];
-            }
-            
-            [_bgView removeFromSuperview];
+            }            
         }
         
         JGTeamGroupViewController *groupCtrl = [[JGTeamGroupViewController alloc]init];

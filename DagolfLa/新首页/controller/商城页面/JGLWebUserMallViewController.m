@@ -386,6 +386,7 @@
     [[JsonHttp jsonHttp]httpRequestWithMD5:@"pay/doPayByUserAccount" JsonKey:@"payInfo" withData:dict failedBlock:^(id errType) {
         NSLog(@"errType == %@", errType);
         [[ShowHUD showHUD]hideAnimationFromView:self.view];
+        [_bgView removeFromSuperview];
     } completionBlock:^(id data) {
         NSLog(@"%@",[data objectForKey:@"query"]);
         [_balanceView removeFromSuperview];

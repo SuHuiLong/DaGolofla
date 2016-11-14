@@ -186,10 +186,13 @@
     [[JsonHttp jsonHttp]httpRequestWithMD5:@"pay/doPayByUserAccount" JsonKey:@"payInfo" withData:dict failedBlock:^(id errType) {
         NSLog(@"errType == %@", errType);
         self.navigationItem.leftBarButtonItem.enabled = YES;
+        [_bgView removeFromSuperview];
+        [_balanceView removeFromSuperview];
         [[ShowHUD showHUD]hideAnimationFromView:self.view];
     } completionBlock:^(id data) {
         NSLog(@"%@",[data objectForKey:@"query"]);
         self.navigationItem.leftBarButtonItem.enabled = YES;
+        [_bgView removeFromSuperview];
         [_balanceView removeFromSuperview];
         [[ShowHUD showHUD]hideAnimationFromView:self.view];
         //跳转分组页面
