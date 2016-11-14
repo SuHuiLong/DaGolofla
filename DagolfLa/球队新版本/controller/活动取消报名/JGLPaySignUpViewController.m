@@ -521,7 +521,7 @@
     [[ShowHUD showHUD]showAnimationWithText:@"支付中..." FromView:self.view];
     NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
     [dict setObject:@4 forKey:@"orderType"];
-    [dict setObject:_infoKey forKey:@"srcKey"];
+    //[dict setObject:_infoKey forKey:@"srcKey"];
     [dict setObject:@"球队会费" forKey:@"name"];
     [dict setObject:@"球队会费支付" forKey:@"otherInfo"];
     [dict setObject:DEFAULF_USERID forKey:@"userKey"];
