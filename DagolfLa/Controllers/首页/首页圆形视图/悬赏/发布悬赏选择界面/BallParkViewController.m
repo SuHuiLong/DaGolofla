@@ -108,6 +108,7 @@
              [user setObject:city forKey:@"currentCity"];
              [user synchronize];
              
+             [self headerRereshing];
 //             //搜索栏
 //             [self createSeachBar];
 //             //表
@@ -122,7 +123,6 @@
              NSLog(@"An error occurred = %@", error);
          }
      }];
-    
     
     [user setObject:[NSNumber numberWithFloat:currLocation.coordinate.latitude] forKey:@"lat"];
     [user setObject:[NSNumber numberWithFloat:currLocation.coordinate.longitude] forKey:@"lng"];
