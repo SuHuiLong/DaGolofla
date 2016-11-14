@@ -239,7 +239,7 @@
             }
         }];
         
-        
+        /*
         UIAlertAction * cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
         }];
         UIAlertAction *weiChatAction = [UIAlertAction actionWithTitle:@"微信支付" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
@@ -256,6 +256,7 @@
         [_actionView addAction:zhifubaoAction];
         [_actionView addAction:cancelAction];
         [self presentViewController:_actionView animated:YES completion:nil];
+         */
     }
     else
     {
@@ -336,9 +337,9 @@
         [[ShowHUD showHUD]hideAnimationFromView:self.view];
         //
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
-            MyOrderViewController *groupCtrl = [[MyOrderViewController alloc]init];
+            //MyOrderViewController *groupCtrl = [[MyOrderViewController alloc]init];
             //groupCtrl.header = 1;
-            [self.navigationController pushViewController:groupCtrl animated:YES];
+            //[self.navigationController pushViewController:groupCtrl animated:YES];
         }else{
             
             if ([data objectForKey:@"packResultMsg"]) {
