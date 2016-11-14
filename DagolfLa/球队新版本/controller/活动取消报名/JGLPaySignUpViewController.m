@@ -407,7 +407,90 @@
         [_applyListView configViewData:self.applyDataArray];
     }
 }
-
+#pragma mark -- 提交报名信息
+- (void)submitInfo:(NSInteger)type{
+    [[ShowHUD showHUD]showAnimationWithText:@"报名中..." FromView:self.view];
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    
+    if (_invoiceKey != nil) {
+        [self.info setObject:_invoiceKey forKey:@"invoiceKey"];//发票Key
+        [self.info setObject:_addressKey forKey:@"addressKey"];//地址Key
+    }
+    
+    NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
+    //    [dict setObject:[userdef objectForKey:userID] forKey:@"appUserKey"];
+    [self.info setObject:[NSString stringWithFormat:@"%td", _model.teamKey] forKey:@"teamKey"];//球队key
+    if (_model.teamActivityKey == 0) {
+        [self.info setObject:[NSString stringWithFormat:@"%td", [_model.timeKey integerValue]] forKey:@"activityKey"];//球队活动key
+    }else{
+        [self.info setObject:[NSString stringWithFormat:@"%td", _model.teamActivityKey] forKey:@"activityKey"];//球队活动key
+    }
+    
+    
+    [self.info setObject:[userdef objectForKey:@"userName"] forKey:@"userName"];//报名人名称//teamkey 156
+    [self.info setObject:[userdef objectForKey:userID] forKey:@"userKey"];//用户Key
+    [self.info setObject:@0 forKey:@"timeKey"];//timeKey
+    NSMutableArray *teamSignUpList = [NSMutableArray array];
+    NSMutableString *otherInfo = [[NSMutableString alloc]init];
+    for (int i=0; i<_applyDataArray.count; i++) {
+        
+        JGTeamAcitivtyModel *model = [[JGTeamAcitivtyModel alloc]init];
+        model = _applyDataArray[i];
+        [teamSignUpList addObject:model.timeKey];
+        if (i==0) {
+            otherInfo = [NSMutableString stringWithFormat:@"%@,", model.timeKey];
+        }else{
+            [otherInfo appendFormat:@"%@,", model.timeKey];
+        }
+    }
+    
+    [dict setObject:teamSignUpList forKey:@"signupKeyList"];//报名人员数组
+    [dict setObject:_info forKey:@"info"];
+    //支付字典
+    [self.payDict setObject:@4 forKey:@"orderType"];
+    [self.payDict setObject:@"活动报名" forKey:@"name"];
+    [self.payDict setObject:otherInfo forKey:@"otherInfo"];
+    [self.payDict setObject:[userdef objectForKey:userID] forKey:@"userKey"];
+    
+    [[JsonHttp jsonHttp]httpRequest:@"team/doTeamActivitySignUpPay" JsonKey:nil withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
+        NSLog(@"errType == %@", errType);
+        [[ShowHUD showHUD]hideAnimationFromView:self.view];
+    } completionBlock:^(id data) {
+        [[ShowHUD showHUD]hideAnimationFromView:self.view];
+        NSLog(@"data == %@", data);
+        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+            _infoKey = [data objectForKey:@"infoKey"];
+            [self.payDict setObject:_infoKey forKey:@"srcKey"];
+            if (type == 1) {
+                [self weChatPay];
+            }else if (type == 2){
+                [self zhifubaoPay];
+            }else if (type == 3){
+                [self balancePay];
+            }else{
+                //跳转分组页面
+                JGTeamGroupViewController *groupCtrl = [[JGTeamGroupViewController alloc]init];
+                groupCtrl.activityFrom = 1;
+                groupCtrl.teamActivityKey = [_model.timeKey integerValue];
+                [self.navigationController pushViewController:groupCtrl animated:YES];
+            }
+        }else{
+            if ([data count]== 2) {
+                [Helper alertViewWithTitle:@"报名失败！" withBlock:^(UIAlertController *alertView) {
+                    [self.navigationController presentViewController:alertView animated:YES completion:^{
+                        
+                    }];
+                }];
+            }else{
+                [Helper alertViewWithTitle:[data objectForKey:@"packResultMsg"] withBlock:^(UIAlertController *alertView) {
+                    [self.navigationController presentViewController:alertView animated:YES completion:^{
+                        
+                    }];
+                }];
+            }
+        }
+    }];
+}
 #pragma mark -- 取消
 - (void)selectCancelRepeatApply:(UIButton *)btn{
     NSLog(@"取消");
@@ -439,11 +522,11 @@
             }];
             UIAlertAction *weiChatAction = [UIAlertAction actionWithTitle:@"微信支付" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                 //添加微信支付请求
-                [self weChatPay];
+                [self submitInfo:1];
             }];
             UIAlertAction *zhifubaoAction = [UIAlertAction actionWithTitle:@"支付宝支付" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                 //添加支付宝支付请求
-                [self zhifubaoPay];
+                [self submitInfo:2];
             }];
             UIAlertAction *balanceAction = [UIAlertAction actionWithTitle:balanceString style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                 //余额支付
@@ -503,7 +586,7 @@
 }
 #pragma mark -- 监听输入的完成时
 - (void)passWordCompleteInput:(WCLPassWordView *)passWord{
-    [self balancePay];
+    [self submitInfo:3];
 }
 #pragma mark -- 监听开始输入
 - (void)passWordBeginInput:(WCLPassWordView *)passWord{
@@ -519,16 +602,11 @@
 - (void)balancePay{
     self.navigationItem.leftBarButtonItem.enabled = NO;
     [[ShowHUD showHUD]showAnimationWithText:@"支付中..." FromView:self.view];
-    NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
-    [dict setObject:@4 forKey:@"orderType"];
-    //[dict setObject:_infoKey forKey:@"srcKey"];
-    [dict setObject:@"球队会费" forKey:@"name"];
-    [dict setObject:@"球队会费支付" forKey:@"otherInfo"];
-    [dict setObject:DEFAULF_USERID forKey:@"userKey"];
     
-    [[JsonHttp jsonHttp]httpRequestWithMD5:@"pay/doPayByUserAccount" JsonKey:@"payInfo" withData:dict failedBlock:^(id errType) {
+    [[JsonHttp jsonHttp]httpRequestWithMD5:@"pay/doPayByUserAccount" JsonKey:@"payInfo" withData:_payDict failedBlock:^(id errType) {
         NSLog(@"errType == %@", errType);
         self.navigationItem.leftBarButtonItem.enabled = YES;
+        [_bgView removeFromSuperview];
         [[ShowHUD showHUD]hideAnimationFromView:self.view];
     } completionBlock:^(id data) {
         NSLog(@"%@",[data objectForKey:@"query"]);
@@ -544,7 +622,14 @@
             }else{
                 [[ShowHUD showHUD]showAnimationWithText:@"支付失败！" FromView:self.view];
             }
+            
+            [_bgView removeFromSuperview];
         }
+        
+        JGTeamGroupViewController *groupCtrl = [[JGTeamGroupViewController alloc]init];
+        groupCtrl.activityFrom = 1;
+        groupCtrl.teamActivityKey = [_model.timeKey integerValue];
+        [self.navigationController pushViewController:groupCtrl animated:YES];
     }];
 }
 #pragma mark -- 计算应付价格
