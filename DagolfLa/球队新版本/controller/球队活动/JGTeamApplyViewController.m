@@ -55,6 +55,8 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
     NSInteger _editorPlayId;//修改价格 ID -0
     
     NSMutableArray *_relApplistArray;
+    
+    NSString *_balance;//余额
 }
 
 @property (nonatomic, strong)NSArray *titleArray;//标题
@@ -563,13 +565,17 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
         NSLog(@"data == %@", data);
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
             _infoKey = [data objectForKey:@"infoKey"];
+            if ([data objectForKey:@"payMoneyAll"]) {
+                _realPayPrice = [[data objectForKey:@"payMoneyAll"] floatValue];
+            }
+            
             if (type == 1) {
                 [self weChatPay];
             }else if (type == 2){
                 [self zhifubaoPay];
             }else if (type == 3){
                 //余额支付
-                [self balancePay];
+                [self dreawBalance];
             }else{
                 //跳转分组页面
                 JGTeamGroupViewController *groupCtrl = [[JGTeamGroupViewController alloc]init];
@@ -711,6 +717,11 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
 - (void)deleteBalanceView:(UIButton *)btn{
     [_balanceView removeFromSuperview];
     _tranView.hidden = YES;
+    
+    JGTeamGroupViewController *groupCtrl = [[JGTeamGroupViewController alloc]init];
+    groupCtrl.activityFrom = 1;
+    groupCtrl.teamActivityKey = [_modelss.timeKey integerValue];
+    [self.navigationController pushViewController:groupCtrl animated:YES];
 }
 #pragma mark -- 余额支付
 - (void)balancePay{
@@ -766,7 +777,10 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
     } completionBlock:^(id data) {
         NSLog(@"%@", data);
         [[ShowHUD showHUD]hideAnimationFromView:self.view];
+        
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+            _balance = [NSString stringWithFormat:@"%@", [data objectForKey:@"money"]];
+            
             NSString *balanceString;
             if ([[data objectForKey:@"money"] floatValue] >= _realPayPrice) {
                 balanceString = [NSString stringWithFormat:@"余额支付（¥%.2f）", [[data objectForKey:@"money"] floatValue]];
@@ -793,7 +807,8 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
                         JGDSetBusinessPWDViewController *setpassCtrl = [[JGDSetBusinessPWDViewController alloc]init];
                         [self.navigationController pushViewController:setpassCtrl animated:YES];
                     }else{
-                        [self dreawBalance:[NSString stringWithFormat:@"%.2f", [[data objectForKey:@"money"] floatValue]]];
+                        [self submitInfo:3];
+                        //[self dreawBalance:[NSString stringWithFormat:@"%.2f", [[data objectForKey:@"money"] floatValue]]];
                     }
                 }else{
                     return ;
@@ -814,7 +829,7 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
     }];
 }
 #pragma mark -- 余额支付
-- (void)dreawBalance:(NSString *)balance{
+- (void)dreawBalance{
     _tranView.hidden = NO;
     _tranView.frame = CGRectMake(0, 0, screenWidth, screenHeight -64);
     //
@@ -823,7 +838,7 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
     _balanceView.layer.cornerRadius = 5.0*ProportionAdapter;
     _balanceView.alpha = 1.0;
     _balanceView.delegate = self;
-    [_balanceView configJGHbalanceViewPrice:_realPayPrice andBalance:balance andDetail:_modelss.name];
+    [_balanceView configJGHbalanceViewPrice:_realPayPrice andBalance:_balance andDetail:_modelss.name];
     //密码输入框
     WCLPassWordView *passWordView = [[[NSBundle mainBundle]loadNibNamed:@"WCLPassWordView" owner:self options:nil]lastObject];
     passWordView.frame = CGRectMake(13 *ProportionAdapter, 222 *ProportionAdapter, _balanceView.frame.size.width -26*ProportionAdapter, 45 *ProportionAdapter);
@@ -839,7 +854,8 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
 }
 #pragma mark -- 监听输入的完成时
 - (void)passWordCompleteInput:(WCLPassWordView *)passWord{
-    [self submitInfo:3];
+    [self balancePay];
+//    [self submitInfo:3];
 }
 #pragma mark -- 监听开始输入
 - (void)passWordBeginInput:(WCLPassWordView *)passWord{

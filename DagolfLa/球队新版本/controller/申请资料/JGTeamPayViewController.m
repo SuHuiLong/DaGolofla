@@ -72,7 +72,7 @@
 - (void)payBtn{
     
     [self.view endEditing:YES];
-    
+    [[ShowHUD showHUD]showToastWithText:@"报名中..." FromView:self.view];
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     [dict setObject:DEFAULF_USERID forKey:@"userKey"];
     [[JsonHttp jsonHttp]httpRequest:@"user/getUserBalance" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
@@ -175,7 +175,7 @@
 #pragma mark -- 余额支付
 - (void)balancePay{
     self.navigationItem.leftBarButtonItem.enabled = NO;
-    [[ShowHUD showHUD]showAnimationWithText:@"支付中..." FromView:self.view];
+    [LQProgressHud showLoading:@"支付中..."];
     NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
     [dict setObject:@1 forKey:@"orderType"];
     [dict setObject:[self.detailDic objectForKey:@"timeKey"] forKey:@"srcKey"];
@@ -188,13 +188,13 @@
         self.navigationItem.leftBarButtonItem.enabled = YES;
         [_bgView removeFromSuperview];
         [_balanceView removeFromSuperview];
-        [[ShowHUD showHUD]hideAnimationFromView:self.view];
+        [LQProgressHud hide];
     } completionBlock:^(id data) {
         NSLog(@"%@",[data objectForKey:@"query"]);
         self.navigationItem.leftBarButtonItem.enabled = YES;
         [_bgView removeFromSuperview];
         [_balanceView removeFromSuperview];
-        [[ShowHUD showHUD]hideAnimationFromView:self.view];
+        [LQProgressHud hide];
         //跳转分组页面
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
             [[ShowHUD showHUD]showAnimationWithText:@"支付成功！" FromView:self.view];
@@ -276,6 +276,7 @@
 
 - (void)zhifubaoPay{
     NSLog(@"支付宝支付");
+    [[ShowHUD showHUD]showToastWithText:@"支付中..." FromView:self.view];
     JGApplyMaterialTableViewCell *cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1]];
     NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
     [dict setObject:[NSString stringWithFormat:@"%@.00",cell.textFD.text] forKey:@"money"];
@@ -285,8 +286,11 @@
     
     [[JsonHttp jsonHttp]httpRequest:@"pay/doPayByAliPay" JsonKey:@"payInfo" withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
         NSLog(@"errType == %@", errType);
+        [[ShowHUD showHUD]hideAnimationFromView:self.view];
     } completionBlock:^(id data) {
         NSLog(@"%@",[data objectForKey:@"query"]);
+        [[ShowHUD showHUD]hideAnimationFromView:self.view];
+        
         [[AlipaySDK defaultService] payOrder:[data objectForKey:@"query"] fromScheme:@"dagolfla" callback:^(NSDictionary *resultDic) {
             
             NSLog(@"支付宝=====%@",resultDic[@"resultStatus"]);
