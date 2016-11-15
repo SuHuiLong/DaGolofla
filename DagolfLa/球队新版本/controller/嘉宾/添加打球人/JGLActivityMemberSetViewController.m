@@ -384,12 +384,13 @@
             } completionBlock:^(id data) {
                 NSLog(@"data == %@", data);
                 [[ShowHUD showHUD]hideAnimationFromView:self.view];
+                
                 if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
-                    [[ShowHUD showHUD]showToastWithText:@"删除意向成功！" FromView:self.view];
+                    [LQProgressHud showMessage:@"删除意向成功"];
                     [self headRereshing];
                 }else{
                     if ([data objectForKey:@"packResultMsg"]) {
-                        [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+                        [LQProgressHud showMessage:[data objectForKey:@"packResultMsg"]];
                     }
                 }
             }];
@@ -411,11 +412,11 @@
                 NSLog(@"data == %@", data);
                 [[ShowHUD showHUD]hideAnimationFromView:self.view];
                 if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
-                    [[ShowHUD showHUD]showToastWithText:@"取消报名成功！" FromView:self.view];
+                    [LQProgressHud showMessage:@"取消报名成功！"];
                     [self headRereshing];
                 }else{
                     if ([data objectForKey:@"packResultMsg"]) {
-                        [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+                        [LQProgressHud showMessage:[data objectForKey:@"packResultMsg"]];
                     }
                 }
             }];

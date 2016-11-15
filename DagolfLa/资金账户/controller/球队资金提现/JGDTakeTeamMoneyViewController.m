@@ -163,16 +163,18 @@
     } completionBlock:^(id data) {
                 
         [[ShowHUD showHUD]hideAnimationFromView:self.view];
-        btn.userInteractionEnabled = YES;
 
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1 ) {
             
-            [[ShowHUD showHUD]showToastWithText:@"提现成功" FromView:self.view];
+            [LQProgressHud showMessage:@"提现成功"];
+            btn.userInteractionEnabled = YES;
             [self performSelector:@selector(pop) withObject:self afterDelay:TIMESlEEP];
         }
         else
         {
             [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+            btn.userInteractionEnabled = YES;
+
         }
     }];
 }
