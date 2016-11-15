@@ -180,14 +180,14 @@
         }
         NSLog(@"%@",_dictCan);
         
-        [[ShowHUD showHUD]showAnimationWithText:@"加载中..." FromView:self.view];
+        [LQProgressHud showLoading:@""];
         NSMutableDictionary *dict = [NSMutableDictionary dictionary];
         [dict setObject:DEFAULF_USERID forKey:@"userKey"];
         [[JsonHttp jsonHttp]httpRequest:@"user/getUserBalance" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
-            [[ShowHUD showHUD]hideAnimationFromView:self.view];
+            [LQProgressHud hide];
         } completionBlock:^(id data) {
             NSLog(@"%@", data);
-            [[ShowHUD showHUD]hideAnimationFromView:self.view];
+            [LQProgressHud hide];
             if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
                 NSString *balanceString;
                 if ([_dictCan objectForKey:@"price"]) {
@@ -239,24 +239,6 @@
             }
         }];
         
-        /*
-        UIAlertAction * cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-        }];
-        UIAlertAction *weiChatAction = [UIAlertAction actionWithTitle:@"微信支付" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            //添加请求
-            [self weChatPay];
-        }];
-        UIAlertAction *zhifubaoAction = [UIAlertAction actionWithTitle:@"支付宝支付" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            //添加请求
-            [self zhifubaoPay];
-        }];
-        
-        _actionView = [UIAlertController alertControllerWithTitle:@"选择支付方式" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-        [_actionView addAction:weiChatAction];
-        [_actionView addAction:zhifubaoAction];
-        [_actionView addAction:cancelAction];
-        [self presentViewController:_actionView animated:YES completion:nil];
-         */
     }
     else
     {
@@ -340,6 +322,7 @@
             //MyOrderViewController *groupCtrl = [[MyOrderViewController alloc]init];
             //groupCtrl.header = 1;
             //[self.navigationController pushViewController:groupCtrl animated:YES];
+            [self.webView reload];
         }else{
             
             if ([data objectForKey:@"packResultMsg"]) {

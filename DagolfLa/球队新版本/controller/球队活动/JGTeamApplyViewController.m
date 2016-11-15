@@ -714,7 +714,7 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
 }
 #pragma mark -- 余额支付
 - (void)balancePay{
-    [[ShowHUD showHUD]showAnimationWithText:@"支付中..." FromView:self.view];
+    [LQProgressHud showLoading:@"支付中..."];
     NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
     [dict setObject:@2 forKey:@"orderType"];
     [dict setObject:_infoKey forKey:@"srcKey"];
@@ -728,13 +728,13 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
     
     [[JsonHttp jsonHttp]httpRequestWithMD5:@"pay/doPayByUserAccount" JsonKey:@"payInfo" withData:dict failedBlock:^(id errType) {
         NSLog(@"errType == %@", errType);
-        [[ShowHUD showHUD]hideAnimationFromView:self.view];
+        [LQProgressHud hide];
     } completionBlock:^(id data) {
         NSLog(@"%@",[data objectForKey:@"query"]);
         
         [_balanceView removeFromSuperview];
         _tranView.hidden = YES;
-        [[ShowHUD showHUD]hideAnimationFromView:self.view];
+        [LQProgressHud hide];
         //跳转分组页面
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
             [[ShowHUD showHUD]showAnimationWithText:@"支付成功！" FromView:self.view];

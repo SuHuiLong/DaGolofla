@@ -68,7 +68,7 @@ static NSString *const JGPlayPayBaseCellIdentifier = @"JGPlayPayBaseCell";
 }
 #pragma mark -- 初始化报名人信息
 - (void)initPlaysBaseInfo{
-    [_playsBaseDict setObject:@0 forKey:@"sex"];//默认性别女-0
+    [_playsBaseDict setObject:@1 forKey:@"sex"];//默认性别女-0
     [_playsBaseDict setObject:@"1" forKey:@"isOnlinePay"];//是否线上付款 1-线上
     
     for (int i=0; i<_costListArray.count; i++) {
