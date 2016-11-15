@@ -141,7 +141,7 @@
 }
 #pragma mark -- 创建TableView
 - (void)createTeamActivityTabelView{
-    self.teamActivityTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight) style:UITableViewStyleGrouped];
+    self.teamActivityTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight-64) style:UITableViewStyleGrouped];
     self.teamActivityTableView.delegate = self;
     self.teamActivityTableView.dataSource = self;
     self.teamActivityTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -275,7 +275,7 @@
 //        [self.cerArray removeObjectAtIndex:indexPath.row];
         // Delete the row from the data source.
         
-        //[self.teamActivityTableView deleteRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath, nil] withRowAnimation:UITableViewRowAnimationTop];
+        [self.teamActivityTableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section]] withRowAnimation:UITableViewRowAnimationNone];
     }
 }
 

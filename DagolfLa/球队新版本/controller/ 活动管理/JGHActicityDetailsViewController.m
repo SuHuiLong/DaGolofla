@@ -608,6 +608,7 @@ static CGFloat ImageHeight  = 210.0;
 
     }else if (section == 4){
         JGHHeaderLabelCell *headerCell = [tableView dequeueReusableCellWithIdentifier:JGHHeaderLabelCellIdentifier];
+        [headerCell congiftitles:@"费用设置"];
         UIButton *timeCellBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, screenWidth, headerCell.frame.size.height)];
         timeCellBtn.tag = section + 100;
         [timeCellBtn addTarget:self action:@selector(editorCostClick:) forControlEvents:UIControlEventTouchUpInside];
