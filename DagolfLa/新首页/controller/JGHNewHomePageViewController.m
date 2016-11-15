@@ -47,8 +47,6 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
 
 @interface JGHNewHomePageViewController ()<UITableViewDelegate, UITableViewDataSource, JGHShowSectionTableViewCellDelegate, CLLocationManagerDelegate, JGHShowActivityPhotoCellDelegate, JGHWonderfulTableViewCellDelegate, JGHShowRecomStadiumTableViewCellDelegate, JGHShowSuppliesMallTableViewCellDelegate, JGHNavListViewDelegate, JGHPASHeaderTableViewCellDelegate, JGHIndexTableViewCellDelegate>
 {
-//    NSArray *_titleArray;
-    
     NSInteger _showLineID;//0-活动，1-相册，2-成绩
 }
 @property (nonatomic, strong)HomeHeadView *topScrollView;//BANNAER图
@@ -90,7 +88,6 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
     // Do any additional setup after loading the view.
     self.automaticallyAdjustsScrollViewInsets = NO;
     self.view.backgroundColor = [UIColor colorWithHexString:BG_color];
-//    _titleArray = @[@"", @"精彩推荐", @"热门球队", @"球场推荐", @"用品商城"];
     self.indexModel = [[JGHIndexModel alloc]init];
     _showLineID = 0;
     
@@ -234,7 +231,7 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
     
     self.homeTableView.dataSource = self;
     self.homeTableView.delegate = self;
-    self.homeTableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+    self.homeTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.homeTableView.header = [MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
     self.homeTableView.backgroundColor = [UIColor colorWithHexString:BG_color];
     [self.view addSubview:self.homeTableView];
@@ -435,36 +432,6 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
     JGDNewTeamDetailViewController *newTeamVC = [[JGDNewTeamDetailViewController alloc] init];
     newTeamVC.timeKey = [dict objectForKey:@"timeKey"];
     [self.navigationController pushViewController:newTeamVC animated:YES];
-//    [[JsonHttp jsonHttp] httpRequest:@"team/getTeamInfo" JsonKey:nil withData:dic requestMethod:@"GET" failedBlock:^(id errType) {
-//        
-//    } completionBlock:^(id data) {
-//        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
-//            [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
-//            if (![data objectForKey:@"teamMember"]) {
-//                JGNotTeamMemberDetailViewController *detailVC = [[JGNotTeamMemberDetailViewController alloc] init];
-//                detailVC.detailDic = [data objectForKey:@"team"];
-//                [self.navigationController pushViewController:detailVC animated:YES];
-//            }else{
-//                
-//                if ([[[data objectForKey:@"teamMember"] objectForKey:@"power"] containsString:@"1005"]){
-//                    JGTeamMemberORManagerViewController *detailVC = [[JGTeamMemberORManagerViewController alloc] init];
-//                    detailVC.detailDic = [data objectForKey:@"team"];
-//                    
-//                    detailVC.isManager = YES;
-//                    [self.navigationController pushViewController:detailVC animated:YES];
-//                }else{
-//                    JGTeamMemberORManagerViewController *detailVC = [[JGTeamMemberORManagerViewController alloc] init];
-//                    detailVC.detailDic = [data objectForKey:@"team"];
-//                    detailVC.isManager = NO;
-//                    [self.navigationController pushViewController:detailVC animated:YES];
-//                }
-//            }
-//        }else{
-//            if ([data objectForKey:@"packResultMsg"]) {
-//                [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
-//            }
-//        }
-//    }];
 }
 #pragma mark -- 1001(活动) －－1002(相册) －－ 1003（成绩）
 - (void)didSelectActivityOrPhotoOrResultsBtn:(UIButton *)btn{
