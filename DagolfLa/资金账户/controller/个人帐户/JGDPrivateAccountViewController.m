@@ -208,9 +208,11 @@
 #pragma mark -----提现
 
 - (void)takeMoney:(UIButton *)btn{
-    
+    btn.userInteractionEnabled = NO;
+    [[ShowHUD showHUD]showAnimationWithText:@"加载中..." FromView:self.view];
     
     if (([self.hasUserRealName integerValue] == 0)||([self.hasUserRealName integerValue] == 2)) {
+        [[ShowHUD showHUD]hideAnimationFromView:self.view];
         UIAlertController *alert=[UIAlertController alertControllerWithTitle:@"提示" message:@"是否前往实名认证" preferredStyle:UIAlertControllerStyleAlert];
         
         UIAlertAction *action1=[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
@@ -227,6 +229,7 @@
         [self presentViewController:alert animated:YES completion:nil];
         
     }else if ( [self.isSetPayPassWord integerValue] == 0){
+        [[ShowHUD showHUD]hideAnimationFromView:self.view];
         UIAlertController *alert=[UIAlertController alertControllerWithTitle:@"提示" message:@"是否前往设置交易密码" preferredStyle:UIAlertControllerStyleAlert];
         
         UIAlertAction *action1=[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
@@ -244,6 +247,7 @@
         
         
     }else if ( [self.hasUserBankCard integerValue] == 0){
+        [[ShowHUD showHUD]hideAnimationFromView:self.view];
         UIAlertController *alert=[UIAlertController alertControllerWithTitle:@"提示" message:@"是否前往添加银行卡" preferredStyle:UIAlertControllerStyleAlert];
         
         UIAlertAction *action1=[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
@@ -262,14 +266,14 @@
         
         
     }else{
-        btn.enabled = NO;
+        [[ShowHUD showHUD]hideAnimationFromView:self.view];
         JGHWithdrawViewController *withdrawCtrl = [[JGHWithdrawViewController alloc]init];
         withdrawCtrl.balance = self.money;
         withdrawCtrl.realName = self.name;
         [self.navigationController pushViewController:withdrawCtrl animated:YES];
-        btn.enabled = YES;
     }
     
+    btn.userInteractionEnabled = YES;
 }
 
 #pragma mark -----添加银行卡

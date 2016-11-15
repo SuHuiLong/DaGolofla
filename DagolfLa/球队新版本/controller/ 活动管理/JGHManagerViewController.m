@@ -255,7 +255,6 @@
     [self.navigationController pushViewController:detailsCtrl animated:YES];
 }
 
-/**
 - (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath{
     return @"删除";
 }
@@ -266,37 +265,46 @@
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        
-        //删除证件信息
-        [self removeCerBase:model.certtyid];
-        
-        [self.cerArray removeObjectAtIndex:indexPath.row];
-        // Delete the row from the data source.
-        
-        [self.customTableView deleteRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath, nil] withRowAnimation:UITableViewRowAnimationTop];
-    }
-}
-#pragma mark -- 删除证件信息
-- (void)removeCerBase:(NSString *)certId
-{
-    //    https://101.200.199.81/tmsWanda/deletecertinfo.action?certId=68968
-    NSMutableDictionary *params = [NSMutableDictionary dictionary];
-    [params setObject:certId forKey:@"certId"];
-    
-    [[HttpRequestAdapter shareAdapter]httpRequest:@"deletecertinfo.action" withData:params requestMethod:@"GET" failedBlock:^(id errType) {
-        NSLog(@"%@", errType);
-    } completionBlock:^(id data) {
-        
-        NSLog(@"%@", data);
-        
-        if ([[data objectForKey:@"sys_status"] isEqualToString:@"ok"]) {
-            NSLog(@"证件删除成功！");
-            [self.customTableView reloadData];
+        if ([_power containsString:@"1001"]) {
+            [self removeActivitySection:indexPath.section];
+        }else{
+            //
+            [[ShowHUD showHUD]showToastWithText:@"无权限删除活动！" FromView:self.view];
         }
         
+//        [self.cerArray removeObjectAtIndex:indexPath.row];
+        // Delete the row from the data source.
+        
+        //[self.teamActivityTableView deleteRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath, nil] withRowAnimation:UITableViewRowAnimationTop];
+    }
+}
+
+#pragma mark -- 删除活动
+- (void)removeActivitySection:(NSInteger)section
+{
+    [[ShowHUD showHUD]showAnimationWithText:@"" FromView:self.view];
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    JGTeamAcitivtyModel *model = [_dataArray objectAtIndex:section];
+    [dict setObject:DEFAULF_USERID forKey:@"userKey"];
+    [dict setObject:model.timeKey forKey:@"activityKey"];
+    [[JsonHttp jsonHttp]httpRequestWithMD5:@"team/delTeamActivity" JsonKey:nil withData:dict failedBlock:^(id errType) {
+        [[ShowHUD showHUD]hideAnimationFromView:self.view];
+    } completionBlock:^(id data) {
+        NSLog(@"%@", data);
+        [[ShowHUD showHUD]hideAnimationFromView:self.view];
+        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+            //
+            [_dataArray removeObjectAtIndex:section];
+        }else{
+            if ([data objectForKey:@"packResultMsg"]) {
+                [LQProgressHud showMessage:[data objectForKey:@"packResultMsg"]];
+            }
+        }
+        
+        [self.teamActivityTableView reloadData];
     }];
 }
-*/
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
