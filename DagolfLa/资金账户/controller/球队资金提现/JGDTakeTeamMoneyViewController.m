@@ -66,7 +66,7 @@
     nextBtn.frame = CGRectMake(10 * screenWidth / 375, 25 * screenWidth / 375, screenWidth - 20 * screenWidth / 375, 40 * screenWidth / 375);
     nextBtn.backgroundColor = [UIColor colorWithHexString:@"#F59826"];
     [nextBtn setTitle:@"提交" forState:(UIControlStateNormal)];
-    [nextBtn addTarget:self action:@selector(comitBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    [nextBtn addTarget:self action:@selector(comitBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     nextBtn.clipsToBounds = YES;
     nextBtn.layer.cornerRadius = 6.f * screenWidth / 375;
     view.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];
@@ -127,7 +127,7 @@
     return 10  * screenWidth / 375;
 }
 
-- (void)comitBtnClick{
+- (void)comitBtnClick:(UIButton *)btn{
     
     JGDSetPayPasswordTableViewCell *cell1 = [self.tableV cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
     JGDSetPayPasswordTableViewCell *cell3 = [self.tableV cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1]];
@@ -153,10 +153,20 @@
         [dict setObject:cell3.txFD.text forKey:@"remark"];
     }
     
+    [[ShowHUD showHUD]showAnimationWithText:@"提现中..." FromView:self.view];
+    btn.userInteractionEnabled = NO;
     [[JsonHttp jsonHttp]httpRequestWithMD5:@"team/doTeamWithDraw" JsonKey:nil withData:dict failedBlock:^(id errType) {
         
+        [[ShowHUD showHUD]hideAnimationFromView:self.view];
+        btn.userInteractionEnabled = YES;
+
     } completionBlock:^(id data) {
+                
+        [[ShowHUD showHUD]hideAnimationFromView:self.view];
+        btn.userInteractionEnabled = YES;
+
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1 ) {
+            
             [[ShowHUD showHUD]showToastWithText:@"提现成功" FromView:self.view];
             [self performSelector:@selector(pop) withObject:self afterDelay:TIMESlEEP];
         }
