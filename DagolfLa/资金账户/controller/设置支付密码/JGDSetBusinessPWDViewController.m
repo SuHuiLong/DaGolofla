@@ -8,7 +8,6 @@
 
 #import "JGDSetBusinessPWDViewController.h"
 
-static int timeNumber = 60;
 
 @interface JGDSetBusinessPWDViewController ()<UITextFieldDelegate>
 
@@ -22,9 +21,11 @@ static int timeNumber = 60;
 
 @property (nonatomic, strong) NSTimer *timer;
 
+@property (nonatomic, assign) int timeNumber;
 @end
 
 @implementation JGDSetBusinessPWDViewController
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -32,7 +33,7 @@ static int timeNumber = 60;
     self.title = @"设置交易密码";
     self.view.backgroundColor = [UIColor colorWithHexString:BG_color];
     // Do any additional setup after loading the view.
-    
+    _timeNumber = 60;
     [self createUI];
 }
 
@@ -166,16 +167,16 @@ static int timeNumber = 60;
 }
 
 - (void)autoMove {
-    timeNumber--;
+    _timeNumber--;
     [self.codeBtn setTitleColor:[UIColor colorWithHexString:Line_Color] forState:UIControlStateNormal];
     self.codeBtn.titleLabel.font = [UIFont systemFontOfSize:14*ProportionAdapter];
-    [self.codeBtn setTitle:[NSString stringWithFormat:@"(%d)后重新获取",timeNumber] forState:UIControlStateNormal];
-    if (timeNumber == 0) {
+    [self.codeBtn setTitle:[NSString stringWithFormat:@"(%d)后重新获取",_timeNumber] forState:UIControlStateNormal];
+    if (_timeNumber == 0) {
         [self.codeBtn setTitleColor:[UIColor colorWithHexString:Bar_Color] forState:UIControlStateNormal];
         self.codeBtn.titleLabel.font = [UIFont systemFontOfSize:17*ProportionAdapter];
-        [self.codeBtn setTitle:@"发送验证码" forState:UIControlStateNormal];
+        [self.codeBtn setTitle:@"获取验证码" forState:UIControlStateNormal];
         [_timer invalidate];
-        timeNumber = 60;
+        _timeNumber = 60;
         
         self.codeBtn.userInteractionEnabled = YES;
     }}
