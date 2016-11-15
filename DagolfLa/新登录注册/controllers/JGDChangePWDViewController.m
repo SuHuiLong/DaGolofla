@@ -57,7 +57,7 @@
     line1LB.backgroundColor = [UIColor colorWithHexString:Line_Color];
     [mobileView addSubview:line1LB];
     
-    self.mobileTF = [[UITextField alloc] initWithFrame:CGRectMake(70 * ProportionAdapter, 0, 160 * ProportionAdapter, 50 * ProportionAdapter)];
+    self.mobileTF = [[UITextField alloc] initWithFrame:CGRectMake(60 * ProportionAdapter, 0, 160 * ProportionAdapter, 50 * ProportionAdapter)];
     self.mobileTF.tag = 187;
     self.mobileTF.delegate = self;
     self.mobileTF.keyboardType = UIKeyboardTypeNumberPad;
@@ -71,11 +71,11 @@
     self.mobileTF.font = [UIFont systemFontOfSize:16 * ProportionAdapter];
     [mobileView addSubview:self.mobileTF];
     
-    UILabel *line2LB = [[UILabel alloc] initWithFrame:CGRectMake(240 * ProportionAdapter, 10 * ProportionAdapter, 1, 30 * ProportionAdapter)];
+    UILabel *line2LB = [[UILabel alloc] initWithFrame:CGRectMake(230 * ProportionAdapter, 10 * ProportionAdapter, 1, 30 * ProportionAdapter)];
     line2LB.backgroundColor = [UIColor colorWithHexString:Line_Color];
     [mobileView addSubview:line2LB];
     
-    self.codeBtn = [[UIButton alloc] initWithFrame:CGRectMake(250 * ProportionAdapter, 0, 100 * ProportionAdapter, 50 * ProportionAdapter)];
+    self.codeBtn = [[UIButton alloc] initWithFrame:CGRectMake(240 * ProportionAdapter, 0, 110 * ProportionAdapter, 50 * ProportionAdapter)];
     [self.codeBtn setTitle:@"获取验证码" forState:(UIControlStateNormal)];
     [self.codeBtn setTitleColor:[UIColor colorWithHexString:Bar_Color] forState:UIControlStateNormal];
     [self.codeBtn addTarget:self action:@selector(codelAct) forControlEvents:(UIControlEventTouchUpInside)];
@@ -193,7 +193,7 @@
     _timeNumber--;
     [self.codeBtn setTitleColor:[UIColor colorWithHexString:Line_Color] forState:UIControlStateNormal];
     self.codeBtn.titleLabel.font = [UIFont systemFontOfSize:14*ProportionAdapter];
-    [self.codeBtn setTitle:[NSString stringWithFormat:@"(%d)后重新获取",_timeNumber] forState:UIControlStateNormal];
+    [self.codeBtn setTitle:[NSString stringWithFormat:@"(%ds)后重新获取",_timeNumber] forState:UIControlStateNormal];
     if (_timeNumber == 0) {
         [self.codeBtn setTitleColor:[UIColor colorWithHexString:Bar_Color] forState:UIControlStateNormal];
         self.codeBtn.titleLabel.font = [UIFont systemFontOfSize:17*ProportionAdapter];
