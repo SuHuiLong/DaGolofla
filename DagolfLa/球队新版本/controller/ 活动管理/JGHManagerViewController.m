@@ -265,9 +265,12 @@
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        
-        //删除证件信息
-        [self removeActivitySection:indexPath.section];
+        if ([_power containsString:@"1001"]) {
+            [self removeActivitySection:indexPath.section];
+        }else{
+            //
+            [[ShowHUD showHUD]showToastWithText:@"无权限删除活动！" FromView:self.view];
+        }
         
 //        [self.cerArray removeObjectAtIndex:indexPath.row];
         // Delete the row from the data source.
