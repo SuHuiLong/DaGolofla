@@ -100,7 +100,7 @@
     self.tableView.tableHeaderView = view;
     self.tableView.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];
     
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(20 * ScreenWidth / 375, 20 * ScreenWidth / 375, 100 * ScreenWidth / 375, 30 * ScreenWidth / 375)];
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(20 * ScreenWidth / 375, 20 * ScreenWidth / 375, 150 * ScreenWidth / 375, 30 * ScreenWidth / 375)];
     label.text = @"帐户余额（元）";
     label.font = [UIFont systemFontOfSize:14 * ScreenWidth / 375];
     label.textColor = [UIColor whiteColor];
