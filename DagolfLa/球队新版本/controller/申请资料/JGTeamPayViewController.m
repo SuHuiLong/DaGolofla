@@ -184,7 +184,7 @@
     [dict setObject:@"球队会费" forKey:@"name"];
     [dict setObject:@"球队会费支付" forKey:@"otherInfo"];
     [dict setObject:DEFAULF_USERID forKey:@"userKey"];
-    [dict setObject:_passWordView.textStore forKey:@"payPassword"];
+    [dict setObject:[Helper md5HexDigest:_passWordView.textStore] forKey:@"payPassword"];
     [[JsonHttp jsonHttp]httpRequestWithMD5:@"pay/doPayByUserAccount" JsonKey:@"payInfo" withData:dict failedBlock:^(id errType) {
         NSLog(@"errType == %@", errType);
         self.navigationItem.leftBarButtonItem.enabled = YES;

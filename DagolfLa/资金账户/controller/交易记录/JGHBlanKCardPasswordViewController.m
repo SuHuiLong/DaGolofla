@@ -167,11 +167,11 @@ static NSString *const JGHWithdrawCellIdentifier = @"JGHWithdrawCell";
 #pragma mark --确定
 - (void)selectCommitBtnClick:(UIButton *)btn{
     NSLog(@"确定");
+    btn.userInteractionEnabled = NO;
     [self.view endEditing:YES];
-    btn.enabled = NO;
     
     if (_editor == 1) {
-//        [[ShowHUD showHUD]showToastWithText:@"提现中..." FromView:self.view];
+        [[ShowHUD showHUD]showAnimationWithText:@"提现中..." FromView:self.view];
         NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
         [dict setObject:DEFAULF_USERID forKey:@"userKey"];
         [dict setObject:[NSString stringWithFormat:@"%.2f", _reaplyBalance] forKey:@"money"];
@@ -179,13 +179,13 @@ static NSString *const JGHWithdrawCellIdentifier = @"JGHWithdrawCell";
         [dict setObject:[Helper md5HexDigest:_password] forKey:@"payPassword"];
         
         [[JsonHttp jsonHttp]httpRequestWithMD5:@"user/doUserWithDraw" JsonKey:nil withData:dict failedBlock:^(id errType) {
-//            [[ShowHUD showHUD]hideAnimationFromView:self.view];
-
+            [[ShowHUD showHUD]hideAnimationFromView:self.view];
+            btn.userInteractionEnabled = YES;
         } completionBlock:^(id data) {
-//            [[ShowHUD showHUD]hideAnimationFromView:self.view];
+            btn.userInteractionEnabled = YES;
+            [[ShowHUD showHUD]hideAnimationFromView:self.view];
             if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
-                [[ShowHUD showHUD]showToastWithText:@"提现成功！" FromView:self.view];
-                
+                [LQProgressHud showMessage:@"提现成功！"];
                 if ([NSThread isMainThread]) {
                     NSLog(@"Yay!");
                     [self performSelector:@selector(pushCtrl) withObject:self afterDelay:1.0];
@@ -196,12 +196,10 @@ static NSString *const JGHWithdrawCellIdentifier = @"JGHWithdrawCell";
                     });
                 }
                 
-                
             }
             else
             {
-                
-                [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+                [LQProgressHud showMessage:[data objectForKey:@"packResultMsg"]];
                 
             }
         }];
@@ -237,9 +235,10 @@ static NSString *const JGHWithdrawCellIdentifier = @"JGHWithdrawCell";
 //                
 //            }
 //        }];
+    }else{
+        btn.userInteractionEnabled = YES;
     }
     
-    btn.enabled = YES;
 }
 
 #pragma mark -- 返回个人账户

@@ -736,7 +736,7 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
     [dict setObject:@"活动报名" forKey:@"name"];
     [dict setObject:@"活动余额支付订单" forKey:@"otherInfo"];
     [dict setObject:DEFAULF_USERID forKey:@"userKey"];
-    [dict setObject:_passWordView.textStore forKey:@"payPassword"];
+    [dict setObject:[Helper md5HexDigest:_passWordView.textStore] forKey:@"payPassword"];
     NSLog(@"%@", _passWordView.textStore);
     if (_invoiceKey != nil) {
         [dict setObject:_addressKey forKey:@"addressKey"];
