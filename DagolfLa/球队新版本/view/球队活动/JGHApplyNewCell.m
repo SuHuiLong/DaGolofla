@@ -14,7 +14,7 @@
     [super awakeFromNib];
     // Initialization code
     
-    self.couponsLabel = [[UILabel alloc]initWithFrame:CGRectMake( self.preferpriceImageView.frame.size.width / 4, self.preferpriceImageView.frame.size.height / 10, self.preferpriceImageView.frame.size.width/4*2, self.preferpriceImageView.frame.size.height/2)];
+    self.couponsLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 0, 20, 12)];
     self.couponsLabel.textAlignment = NSTextAlignmentCenter;
     self.couponsLabel.textColor = [UIColor whiteColor];
     [self.couponsLabel setFont:[UIFont fontWithName:@"Helvetica-Bold" size:8.0]];
@@ -60,9 +60,10 @@
     //优惠券价格
     if ([dict objectForKey:@"subsidyPrice"]) {
         self.preferpriceImageView.hidden = NO;
-        
+        NSLog(@"==== %.2f", [[dict objectForKey:@"subsidyPrice"] floatValue]);
         self.couponsLabel.text = [NSString stringWithFormat:@"%.2f", [[dict objectForKey:@"subsidyPrice"] floatValue]];
         [self.preferpriceImageView addSubview:self.couponsLabel];
+        [self.preferpriceImageView bringSubviewToFront:self.couponsLabel];
     }else{
         self.preferpriceImageView.hidden = YES;
     }

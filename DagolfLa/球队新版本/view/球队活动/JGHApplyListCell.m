@@ -15,7 +15,7 @@
     [super awakeFromNib];
     // Initialization code
     
-    self.couponsLabel = [[UILabel alloc]initWithFrame:CGRectMake( self.couponsImageView.frame.size.width / 4, self.couponsImageView.frame.size.height / 10, self.couponsImageView.frame.size.width/4*2, self.couponsImageView.frame.size.height/2)];
+    self.couponsLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 0, 20, 12)];
     self.couponsLabel.textAlignment = NSTextAlignmentCenter;
     self.couponsLabel.textColor = [UIColor whiteColor];
     [self.couponsLabel setFont:[UIFont fontWithName:@"Helvetica-Bold" size:8.0]];
@@ -59,6 +59,7 @@
         
         self.couponsLabel.text = [NSString stringWithFormat:@"%.2f", [[dict objectForKey:@"subsidyPrice"] floatValue]];
         [self.couponsImageView addSubview:self.couponsLabel];
+        [self.couponsImageView bringSubviewToFront:self.couponsLabel];
     }else{
         self.couponsImageView.hidden = YES;
     }

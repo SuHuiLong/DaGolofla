@@ -329,7 +329,7 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
     invoiceCtrl.addressKey = _addressKey;
     [self.navigationController pushViewController:invoiceCtrl animated:YES];
 }
-#pragma mark -- 立即支付
+#pragma mark -- 报名并支付
 - (IBAction)nowPayBtnClick:(UIButton *)sender {
     if (_applyArray.count == 0) {
         [[ShowHUD showHUD]showToastWithText:@"请添加打球人，再支付！" FromView:self.view];
@@ -717,18 +717,15 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
 }
 #pragma mark -- 删除密码视图
 - (void)deleteBalanceView:(UIButton *)btn{
-    _passWordView.textStore = [@"" mutableCopy];
-    [_passWordView reloadInputViews];
-    [_passWordView becomeFirstResponder];
-    /*
+    
     [_balanceView removeFromSuperview];
+    [_passWordView removeFromSuperview];
     _tranView.hidden = YES;
     
     JGTeamGroupViewController *groupCtrl = [[JGTeamGroupViewController alloc]init];
     groupCtrl.activityFrom = 1;
     groupCtrl.teamActivityKey = [_modelss.timeKey integerValue];
     [self.navigationController pushViewController:groupCtrl animated:YES];
-     */
 }
 #pragma mark -- 余额支付
 - (void)balancePay{
@@ -758,17 +755,21 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
         //跳转分组页面
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
             [[ShowHUD showHUD]showAnimationWithText:@"支付成功！" FromView:self.view];
+            JGTeamGroupViewController *groupCtrl = [[JGTeamGroupViewController alloc]init];
+            groupCtrl.activityFrom = 1;
+            groupCtrl.teamActivityKey = [_modelss.timeKey integerValue];
+            [self.navigationController pushViewController:groupCtrl animated:YES];
         }else{
+            _passWordView.textStore = [@"" mutableCopy];
+            [_passWordView deleteBackward];
+            [_passWordView becomeFirstResponder];
+            
             if ([data objectForKey:@"packResultMsg"]) {
                 [[ShowHUD showHUD]showAnimationWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
             }else{
                 [[ShowHUD showHUD]showAnimationWithText:@"支付失败！" FromView:self.view];
             }
         }
-        JGTeamGroupViewController *groupCtrl = [[JGTeamGroupViewController alloc]init];
-        groupCtrl.activityFrom = 1;
-        groupCtrl.teamActivityKey = [_modelss.timeKey integerValue];
-        [self.navigationController pushViewController:groupCtrl animated:YES];
     }];
 }
 #pragma mark -- 确认页面－－取消 -立即支付

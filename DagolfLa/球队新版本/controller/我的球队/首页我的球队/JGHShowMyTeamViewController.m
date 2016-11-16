@@ -211,7 +211,7 @@ static NSString *const JGHAddMoreTeamTableViewCellIdentifier = @"JGHAddMoreTeamT
 
 #pragma mark -- 创建TableView
 - (void)createHomeTableView{
-    self.showMyTeamTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight -64)];
+    self.showMyTeamTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight -64) style:UITableViewStyleGrouped];
     
     UINib *teamActivityCellNib = [UINib nibWithNibName:@"JGTeamActivityCell" bundle: [NSBundle mainBundle]];
     [self.showMyTeamTableView registerNib:teamActivityCellNib forCellReuseIdentifier:JGTeamActivityCellIdentifier];
@@ -226,7 +226,7 @@ static NSString *const JGHAddMoreTeamTableViewCellIdentifier = @"JGHAddMoreTeamT
     
     self.showMyTeamTableView.dataSource = self;
     self.showMyTeamTableView.delegate = self;
-    self.showMyTeamTableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+    self.showMyTeamTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.showMyTeamTableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
     self.showMyTeamTableView.footer=[MJDIYBackFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRereshing)];
     
@@ -259,8 +259,10 @@ static NSString *const JGHAddMoreTeamTableViewCellIdentifier = @"JGHAddMoreTeamT
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
     if (section == 0) {
         return 1;
+    }else if (section == 1){
+        return 10 *ProportionAdapter;
     }
-    return 10 *ProportionAdapter;
+    return 0;
 }
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
     UIView *footView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, 10)];

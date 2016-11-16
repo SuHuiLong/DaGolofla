@@ -32,6 +32,8 @@
 
 @property (nonatomic, retain)JGHbalanceView *balanceView;
 
+@property (nonatomic, retain)WCLPassWordView *passWordView;
+
 @end
 
 @implementation JGLWebUserMallViewController
@@ -347,11 +349,11 @@
     }
     
     //密码输入框
-    WCLPassWordView *passWordView = [[[NSBundle mainBundle]loadNibNamed:@"WCLPassWordView" owner:self options:nil]lastObject];
-    passWordView.frame = CGRectMake(13 *ProportionAdapter, 222 *ProportionAdapter, _balanceView.frame.size.width -26*ProportionAdapter, 45 *ProportionAdapter);
-    passWordView.delegate = self;
-    passWordView.backgroundColor = [UIColor whiteColor];
-    [_balanceView addSubview:passWordView];
+    _passWordView = [[[NSBundle mainBundle]loadNibNamed:@"WCLPassWordView" owner:self options:nil]lastObject];
+    _passWordView.frame = CGRectMake(13 *ProportionAdapter, 222 *ProportionAdapter, _balanceView.frame.size.width -26*ProportionAdapter, 45 *ProportionAdapter);
+    _passWordView.delegate = self;
+    _passWordView.backgroundColor = [UIColor whiteColor];
+    [_balanceView addSubview:_passWordView];
     
     [self.view addSubview:_balanceView];
 }
@@ -370,6 +372,7 @@
 #pragma mark －－ 删除密码输入框
 - (void)deleteBalanceView:(UIButton *)btn{
     [_balanceView removeFromSuperview];
+    [_passWordView removeFromSuperview];
     [_bgView removeFromSuperview];
 }
 #pragma mark -- 余额支付
@@ -399,6 +402,9 @@
             //groupCtrl.header = 1;
             [self.navigationController pushViewController:groupCtrl animated:YES];
         }else{
+            _passWordView.textStore = [@"" mutableCopy];
+            [_passWordView deleteBackward];
+            [_passWordView becomeFirstResponder];
             
             if ([data objectForKey:@"packResultMsg"]) {
                 [[ShowHUD showHUD]showAnimationWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];

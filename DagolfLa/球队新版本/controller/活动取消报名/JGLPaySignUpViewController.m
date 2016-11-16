@@ -58,6 +58,8 @@
 
 @property (nonatomic, strong)NSMutableDictionary *payDict;
 
+@property (nonatomic, strong)WCLPassWordView *passWordView;
+
 @end
 
 @implementation JGLPaySignUpViewController
@@ -574,11 +576,11 @@
     _balanceView.delegate = self;
     [_balanceView configJGHbalanceViewPrice:[self countAmountPayable] andBalance:balance andDetail:_model.name];
     //密码输入框
-    WCLPassWordView *passWordView = [[[NSBundle mainBundle]loadNibNamed:@"WCLPassWordView" owner:self options:nil]lastObject];
-    passWordView.frame = CGRectMake(13 *ProportionAdapter, 222 *ProportionAdapter, _balanceView.frame.size.width -26*ProportionAdapter, 45 *ProportionAdapter);
-    passWordView.delegate = self;
-    passWordView.backgroundColor = [UIColor whiteColor];
-    [_balanceView addSubview:passWordView];
+    _passWordView = [[[NSBundle mainBundle]loadNibNamed:@"WCLPassWordView" owner:self options:nil]lastObject];
+    _passWordView.frame = CGRectMake(13 *ProportionAdapter, 222 *ProportionAdapter, _balanceView.frame.size.width -26*ProportionAdapter, 45 *ProportionAdapter);
+    _passWordView.delegate = self;
+    _passWordView.backgroundColor = [UIColor whiteColor];
+    [_balanceView addSubview:_passWordView];
     [self.view bringSubviewToFront:_balanceView];
     
     [self.view addSubview:_balanceView];
@@ -598,6 +600,7 @@
 #pragma mark -- 删除支付密码页面
 - (void)deleteBalanceView:(UIButton *)btn{
     [_bgView removeFromSuperview];
+    [_passWordView removeFromSuperview];
     [_balanceView removeFromSuperview];
     self.navigationItem.leftBarButtonItem.enabled = YES;
 }
@@ -621,6 +624,10 @@
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
             [[ShowHUD showHUD]showAnimationWithText:@"支付成功！" FromView:self.view];
         }else{
+            _passWordView.textStore = [@"" mutableCopy];
+            [_passWordView deleteBackward];
+            [_passWordView becomeFirstResponder];
+            
             if ([data objectForKey:@"packResultMsg"]) {
                 [[ShowHUD showHUD]showAnimationWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
             }else{
