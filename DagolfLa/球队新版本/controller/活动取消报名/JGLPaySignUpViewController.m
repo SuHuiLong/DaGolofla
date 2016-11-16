@@ -711,18 +711,16 @@
 //    [self.navigationController pushViewController:groupCtrl animated:YES];
     NSInteger secess = [[not.userInfo objectForKey:@"secess"] integerValue];
     if (secess == 1) {
-        
+        //跳转分组页面
+        JGTeamGroupViewController *groupCtrl = [[JGTeamGroupViewController alloc]init];
+        groupCtrl.teamActivityKey = [_model.timeKey integerValue];
+        groupCtrl.activityFrom = 1;
+        [self.navigationController pushViewController:groupCtrl animated:YES];
     }else if (secess == 2){
         [[ShowHUD showHUD]showToastWithText:@"支付已取消！" FromView:self.view];
     }else{
         [[ShowHUD showHUD]showToastWithText:@"支付失败！" FromView:self.view];
     }
-    
-    //跳转分组页面
-    JGTeamGroupViewController *groupCtrl = [[JGTeamGroupViewController alloc]init];
-    groupCtrl.teamActivityKey = [_model.timeKey integerValue];
-    groupCtrl.activityFrom = 1;
-    [self.navigationController pushViewController:groupCtrl animated:YES];
 }
 #pragma mark -- 支付宝
 - (void)zhifubaoPay{
@@ -734,15 +732,14 @@
         NSLog(@"%@",[data objectForKey:@"query"]);
         [[AlipaySDK defaultService] payOrder:[data objectForKey:@"query"] fromScheme:@"dagolfla" callback:^(NSDictionary *resultDic) {
             
-            //跳转分组页面
-            JGTeamGroupViewController *groupCtrl = [[JGTeamGroupViewController alloc]init];
-            groupCtrl.activityFrom = 1;
-            groupCtrl.teamActivityKey = [_model.timeKey integerValue];
-            [self.navigationController pushViewController:groupCtrl animated:YES];
             NSLog(@"支付宝=====%@",resultDic[@"resultStatus"]);
             if ([resultDic[@"resultStatus"] isEqualToString:@"9000"]) {
                 NSLog(@"陈公");
-                
+                //跳转分组页面
+                JGTeamGroupViewController *groupCtrl = [[JGTeamGroupViewController alloc]init];
+                groupCtrl.activityFrom = 1;
+                groupCtrl.teamActivityKey = [_model.timeKey integerValue];
+                [self.navigationController pushViewController:groupCtrl animated:YES];
             } else if ([resultDic[@"resultStatus"] isEqualToString:@"4000"]) {
                 NSLog(@"失败");
             } else if ([resultDic[@"resultStatus"] isEqualToString:@"6002"]) {
