@@ -426,10 +426,18 @@
 //设置区域的行数
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     if (![Helper isBlankString:_textField.text]) {
-        return [self.searchArray count];
+        if (self.searchArray) {
+            return [self.searchArray count];
+        }else{
+            return 0;
+        }
     }else{
 //        self.tableView.footer = nil;
-        return [self.modelArray count];
+        if (self.modelArray) {
+            return [self.modelArray count];
+        }else{
+            return 0;
+        }
     }
 }
 
