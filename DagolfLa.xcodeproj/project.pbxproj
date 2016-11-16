@@ -5670,10 +5670,10 @@
 			isa = PBXGroup;
 			children = (
 				20C9157E1DC3482B00828B41 /* index.json */,
+				36D0B0F91C80156900C7245E /* frameWork */,
 				2080305B1CFCB86B00448BFC /* UMMobClick.framework */,
 				20F7D4471D88E56600302406 /* DagolfLa.entitlements */,
 				20513B671CF7050A003233FB /* zhifu */,
-				36D0B0F91C80156900C7245E /* frameWork */,
 				36BFFD531BC76CDB005B3CE2 /* 社区图标 */,
 				36BFFD2A1BC76C8D005B3CE2 /* DagolfLa */,
 				36BFFD441BC76C8D005B3CE2 /* DagolfLaTests */,

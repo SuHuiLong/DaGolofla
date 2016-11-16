@@ -81,9 +81,9 @@
         
         NSMutableAttributedString *attriString = [[NSMutableAttributedString alloc] initWithString:timeString];
         
-        [attriString addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"#fb841c"] range:NSMakeRange([stringArray[0] length] - userSumLength - 2, userSumLength)];
+        [attriString addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"#ef491c"] range:NSMakeRange([stringArray[0] length] - userSumLength - 2, userSumLength)];
         
-        [attriString addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"#ce131d"] range:NSMakeRange([stringArray[0] length] + 1, [moneyString length] + 1)];
+        [attriString addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"#ef491c"] range:NSMakeRange([stringArray[0] length], [moneyString length] + 2)];
         
         _time.attributedText = attriString;
         
