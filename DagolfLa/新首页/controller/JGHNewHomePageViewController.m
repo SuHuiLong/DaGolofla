@@ -237,6 +237,7 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
 }
 - (void)headRereshing{
     [self loadIndexdata];
+    [self loadBanner];
 }
 #pragma  mark -- 创建Banner
 -(void)createBanner
@@ -255,6 +256,10 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
     
     self.homeTableView.tableHeaderView = headerView;
     
+    [self loadBanner];
+}
+#pragma mark -- 下载barner数据
+- (void)loadBanner{
     NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
     [dict setValue:@0 forKey:@"nPos"];
     [dict setValue:@0 forKey:@"nType"];
@@ -280,7 +285,7 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
             
             if ([arrayIcon count] != 0) {
                 [self.topScrollView config:arrayIcon data:arrayUrl title:arrayTitle ts:arrayTs];
-//                self.topScrollView.delegate = self;
+                //                self.topScrollView.delegate = self;
                 __weak JGHNewHomePageViewController *weakSelf = self;
                 [self.topScrollView setClick:^(UIViewController *vc) {
                     [weakSelf isLoginUp];
