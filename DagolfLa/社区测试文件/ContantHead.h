@@ -81,6 +81,7 @@ typedef NS_ENUM(NSInteger, GestureType) {
 #define RGBA(r,g,b,a)   [UIColor colorWithRed:(float)r/255.0f green:(float)g/255.0f blue:(float)b/255.0f alpha:a]
 #define kScreenHeight ([[UIScreen mainScreen] bounds].size.height)
 
+#define SY_PriceColor @"#ef491c"
 #define BG_color @"#EEEEEE"
 #define Prompt_Color @"#F39800"
 #define Nav_Color @"#F59826"
