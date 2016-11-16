@@ -47,7 +47,7 @@
         _resultsLable.textAlignment = NSTextAlignmentCenter;
         [self addSubview:_resultsLable];
         
-        UILabel *segLable = [[UILabel alloc]initWithFrame:CGRectMake(0, 95*ProportionAdapter -10*ProportionAdapter, self.frame.size.width, 10 *ProportionAdapter)];
+        UILabel *segLable = [[UILabel alloc]initWithFrame:CGRectMake(0, 105*ProportionAdapter -10*ProportionAdapter, self.frame.size.width, 10 *ProportionAdapter)];
         segLable.backgroundColor = [UIColor colorWithHexString:BG_color];
         [self addSubview:segLable];
     }

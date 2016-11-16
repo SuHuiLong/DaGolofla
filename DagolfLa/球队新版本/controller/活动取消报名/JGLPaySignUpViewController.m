@@ -608,7 +608,7 @@
 - (void)balancePay{
     self.navigationItem.leftBarButtonItem.enabled = NO;
     [LQProgressHud showLoading:@"支付中..."];
-    
+    [_payDict setObject:_passWordView.textStore forKey:@"payPassword"];
     [[JsonHttp jsonHttp]httpRequestWithMD5:@"pay/doPayByUserAccount" JsonKey:@"payInfo" withData:_payDict failedBlock:^(id errType) {
         NSLog(@"errType == %@", errType);
         self.navigationItem.leftBarButtonItem.enabled = YES;

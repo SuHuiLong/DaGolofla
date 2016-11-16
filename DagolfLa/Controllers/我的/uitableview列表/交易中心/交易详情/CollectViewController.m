@@ -323,7 +323,7 @@
     [dict setObject:@"活动报名" forKey:@"name"];
     [dict setObject:@"活动余额支付订单" forKey:@"otherInfo"];
     [dict setObject:DEFAULF_USERID forKey:@"userKey"];
-    
+    [dict setObject:_passWordView.textStore forKey:@"payPassword"];
     [[JsonHttp jsonHttp]httpRequestWithMD5:@"pay/doPayByUserAccount" JsonKey:@"payInfo" withData:dict failedBlock:^(id errType) {
         NSLog(@"errType == %@", errType);
         [[ShowHUD showHUD]hideAnimationFromView:self.view];

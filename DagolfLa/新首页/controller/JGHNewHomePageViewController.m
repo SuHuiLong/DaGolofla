@@ -242,14 +242,14 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
 -(void)createBanner
 {
     //头视图
-    UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, screenWidth/2 +95 *ProportionAdapter)];
+    UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, screenWidth/2 +115 *ProportionAdapter)];
     headerView.backgroundColor = [UIColor whiteColor];
     //banner
     self.topScrollView = [[HomeHeadView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, screenWidth/2)];
     self.topScrollView.userInteractionEnabled = YES;
     [headerView addSubview:self.topScrollView];
     
-    self.navListView = [[JGHNavListView alloc]initWithFrame:CGRectMake(0, screenWidth/2, screenWidth, 95 *ProportionAdapter)];
+    self.navListView = [[JGHNavListView alloc]initWithFrame:CGRectMake(0, screenWidth/2 +10*ProportionAdapter, screenWidth, 105 *ProportionAdapter)];
     self.navListView.delegate = self;
     [headerView addSubview:self.navListView];
     

@@ -729,14 +729,14 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
 }
 #pragma mark -- 余额支付
 - (void)balancePay{
-    [LQProgressHud showLoading:@"支付中..."];
+    [[ShowHUD showHUD]showAnimationWithText:@"支付中..." FromView:self.view];
     NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
     [dict setObject:@2 forKey:@"orderType"];
     [dict setObject:_infoKey forKey:@"srcKey"];
     [dict setObject:@"活动报名" forKey:@"name"];
     [dict setObject:@"活动余额支付订单" forKey:@"otherInfo"];
     [dict setObject:DEFAULF_USERID forKey:@"userKey"];
-    [dict setObject:_passWordView.textStore forKey:@"userKey"];
+    [dict setObject:_passWordView.textStore forKey:@"payPassword"];
     NSLog(@"%@", _passWordView.textStore);
     if (_invoiceKey != nil) {
         [dict setObject:_addressKey forKey:@"addressKey"];
@@ -745,31 +745,32 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
     
     [[JsonHttp jsonHttp]httpRequestWithMD5:@"pay/doPayByUserAccount" JsonKey:@"payInfo" withData:dict failedBlock:^(id errType) {
         NSLog(@"errType == %@", errType);
-        [LQProgressHud hide];
+        [[ShowHUD showHUD]hideAnimationFromView:self.view];
     } completionBlock:^(id data) {
         NSLog(@"%@",[data objectForKey:@"query"]);
-        
+        [[ShowHUD showHUD]hideAnimationFromView:self.view];
         [_balanceView removeFromSuperview];
         _tranView.hidden = YES;
-        [LQProgressHud hide];
         //跳转分组页面
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
-            [[ShowHUD showHUD]showAnimationWithText:@"支付成功！" FromView:self.view];
-            JGTeamGroupViewController *groupCtrl = [[JGTeamGroupViewController alloc]init];
-            groupCtrl.activityFrom = 1;
-            groupCtrl.teamActivityKey = [_modelss.timeKey integerValue];
-            [self.navigationController pushViewController:groupCtrl animated:YES];
+            [LQProgressHud showMessage:@"支付成功！"];
+            
         }else{
             _passWordView.textStore = [@"" mutableCopy];
             [_passWordView deleteBackward];
             [_passWordView becomeFirstResponder];
             
             if ([data objectForKey:@"packResultMsg"]) {
-                [[ShowHUD showHUD]showAnimationWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+                [LQProgressHud showMessage:[data objectForKey:@"packResultMsg"]];
             }else{
-                [[ShowHUD showHUD]showAnimationWithText:@"支付失败！" FromView:self.view];
+                [LQProgressHud showMessage:@"支付失败！"];
             }
         }
+        
+        JGTeamGroupViewController *groupCtrl = [[JGTeamGroupViewController alloc]init];
+        groupCtrl.activityFrom = 1;
+        groupCtrl.teamActivityKey = [_modelss.timeKey integerValue];
+        [self.navigationController pushViewController:groupCtrl animated:YES];
     }];
 }
 #pragma mark -- 确认页面－－取消 -立即支付
