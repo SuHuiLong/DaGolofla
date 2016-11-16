@@ -227,7 +227,7 @@
     
     NSMutableDictionary *resetDict = [NSMutableDictionary dictionary];
     [resetDict setObject:DEFAULF_USERID forKey:@"userKey"];
-    [resetDict setObject:_PWDTF.text forKey:@"newPassWord"];
+    [resetDict setObject:[Helper md5HexDigest:_PWDTF.text] forKey:@"newPassWord"];
     [resetDict setObject:_mobileTF.text forKey:@"checkCode"];
     
     
