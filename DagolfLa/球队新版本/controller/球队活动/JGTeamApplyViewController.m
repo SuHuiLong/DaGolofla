@@ -81,6 +81,8 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
 
 @property (nonatomic, strong)JGHbalanceView *balanceView;
 
+@property (nonatomic, strong)WCLPassWordView *passWordView;
+
 @end
 
 @implementation JGTeamApplyViewController
@@ -715,6 +717,10 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
 }
 #pragma mark -- 删除密码视图
 - (void)deleteBalanceView:(UIButton *)btn{
+    _passWordView.textStore = [@"" mutableCopy];
+    [_passWordView reloadInputViews];
+    [_passWordView becomeFirstResponder];
+    /*
     [_balanceView removeFromSuperview];
     _tranView.hidden = YES;
     
@@ -722,6 +728,7 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
     groupCtrl.activityFrom = 1;
     groupCtrl.teamActivityKey = [_modelss.timeKey integerValue];
     [self.navigationController pushViewController:groupCtrl animated:YES];
+     */
 }
 #pragma mark -- 余额支付
 - (void)balancePay{
@@ -732,6 +739,8 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
     [dict setObject:@"活动报名" forKey:@"name"];
     [dict setObject:@"活动余额支付订单" forKey:@"otherInfo"];
     [dict setObject:DEFAULF_USERID forKey:@"userKey"];
+    [dict setObject:_passWordView.textStore forKey:@"userKey"];
+    NSLog(@"%@", _passWordView.textStore);
     if (_invoiceKey != nil) {
         [dict setObject:_addressKey forKey:@"addressKey"];
         [dict setObject:_invoiceKey forKey:@"invoiceKey"];
@@ -840,11 +849,11 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
     _balanceView.delegate = self;
     [_balanceView configJGHbalanceViewPrice:_realPayPrice andBalance:_balance andDetail:_modelss.name];
     //密码输入框
-    WCLPassWordView *passWordView = [[[NSBundle mainBundle]loadNibNamed:@"WCLPassWordView" owner:self options:nil]lastObject];
-    passWordView.frame = CGRectMake(13 *ProportionAdapter, 222 *ProportionAdapter, _balanceView.frame.size.width -26*ProportionAdapter, 45 *ProportionAdapter);
-    passWordView.delegate = self;
-    passWordView.backgroundColor = [UIColor whiteColor];
-    [_balanceView addSubview:passWordView];
+    _passWordView = [[[NSBundle mainBundle]loadNibNamed:@"WCLPassWordView" owner:self options:nil]lastObject];
+    _passWordView.frame = CGRectMake(13 *ProportionAdapter, 222 *ProportionAdapter, _balanceView.frame.size.width -26*ProportionAdapter, 45 *ProportionAdapter);
+    _passWordView.delegate = self;
+    _passWordView.backgroundColor = [UIColor whiteColor];
+    [_balanceView addSubview:_passWordView];
     
     [self.view addSubview:_balanceView];
 }

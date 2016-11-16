@@ -10,7 +10,6 @@
 #import "HomeHeadView.h"
 #import "JGHPASHeaderTableViewCell.h"
 #import "JGHShowSectionTableViewCell.h"
-#import "JGHShowFavouritesCell.h"
 #import "JGHShowActivityPhotoCell.h"
 #import "JGHWonderfulTableViewCell.h"
 #import "JGHShowRecomStadiumTableViewCell.h"

@@ -10,7 +10,7 @@
 
 @interface WCLPassWordView ()
 
-@property (strong, nonatomic) NSMutableString *textStore;//保存密码的字符串
+//@property (strong, nonatomic) NSMutableString *textStore;//保存密码的字符串
 
 @end
 
@@ -22,7 +22,7 @@ static NSString  * const MONEYNUMBERS = @"0123456789";
     self = [super initWithCoder:coder];
     if (self) {
         self.textStore = [NSMutableString string];
-        self.squareWidth = 45;
+        self.squareWidth = 45*ProportionAdapter;
         self.passWordNum = 6;
         self.pointRadius = 6;
         self.rectColor = [UIColor colorWithRed:51.0/255.0 green:51.0/255.0 blue:51.0/255.0 alpha:1.0];

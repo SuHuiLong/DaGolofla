@@ -89,8 +89,6 @@
 		2053EDAE1DBF27E80076BFE4 /* JGHPASHeaderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2053EDAC1DBF27E80076BFE4 /* JGHPASHeaderTableViewCell.xib */; };
 		2053EDB21DBF29610076BFE4 /* JGHShowSectionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2053EDB01DBF29610076BFE4 /* JGHShowSectionTableViewCell.m */; };
 		2053EDB31DBF29610076BFE4 /* JGHShowSectionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2053EDB11DBF29610076BFE4 /* JGHShowSectionTableViewCell.xib */; };
-		2053EDC11DBF2D680076BFE4 /* JGHShowFavouritesCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2053EDBF1DBF2D680076BFE4 /* JGHShowFavouritesCell.m */; };
-		2053EDC21DBF2D680076BFE4 /* JGHShowFavouritesCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2053EDC01DBF2D680076BFE4 /* JGHShowFavouritesCell.xib */; };
 		2053FE911DC9C04300975203 /* JGHRegistersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2053FE8F1DC9C04300975203 /* JGHRegistersViewController.m */; };
 		2053FE921DC9C04300975203 /* JGHRegistersViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2053FE901DC9C04300975203 /* JGHRegistersViewController.xib */; };
 		2053FE961DC9D5DD00975203 /* JGHForgotPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2053FE941DC9D5DD00975203 /* JGHForgotPasswordViewController.m */; };
@@ -1414,9 +1412,6 @@
 		2053EDAF1DBF29610076BFE4 /* JGHShowSectionTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHShowSectionTableViewCell.h; sourceTree = "<group>"; };
 		2053EDB01DBF29610076BFE4 /* JGHShowSectionTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHShowSectionTableViewCell.m; sourceTree = "<group>"; };
 		2053EDB11DBF29610076BFE4 /* JGHShowSectionTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JGHShowSectionTableViewCell.xib; sourceTree = "<group>"; };
-		2053EDBE1DBF2D680076BFE4 /* JGHShowFavouritesCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHShowFavouritesCell.h; sourceTree = "<group>"; };
-		2053EDBF1DBF2D680076BFE4 /* JGHShowFavouritesCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHShowFavouritesCell.m; sourceTree = "<group>"; };
-		2053EDC01DBF2D680076BFE4 /* JGHShowFavouritesCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JGHShowFavouritesCell.xib; sourceTree = "<group>"; };
 		2053FE8E1DC9C04300975203 /* JGHRegistersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHRegistersViewController.h; sourceTree = "<group>"; };
 		2053FE8F1DC9C04300975203 /* JGHRegistersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHRegistersViewController.m; sourceTree = "<group>"; };
 		2053FE901DC9C04300975203 /* JGHRegistersViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JGHRegistersViewController.xib; sourceTree = "<group>"; };
@@ -4021,9 +4016,6 @@
 		2053EDA71DBF27A00076BFE4 /* 热门球队 */ = {
 			isa = PBXGroup;
 			children = (
-				2053EDBE1DBF2D680076BFE4 /* JGHShowFavouritesCell.h */,
-				2053EDBF1DBF2D680076BFE4 /* JGHShowFavouritesCell.m */,
-				2053EDC01DBF2D680076BFE4 /* JGHShowFavouritesCell.xib */,
 				F58BD3431DC8657E00C1C0B9 /* JGDHotTeamView.h */,
 				F58BD3441DC8657E00C1C0B9 /* JGDHotTeamView.m */,
 			);
@@ -9037,7 +9029,6 @@
 				654332051BD5D9B900363947 /* UMSCommentDetailController.xib in Resources */,
 				209B93AC1D6EC65600A5BE10 /* JGHAddCostButtonCell.xib in Resources */,
 				AA91C7871C4201B80078DA17 /* IQButtonBarArrowRight@2x.png in Resources */,
-				2053EDC21DBF2D680076BFE4 /* JGHShowFavouritesCell.xib in Resources */,
 				2048E8EB1D4B369E00A2C024 /* JGHSetAlmostPromptViewController.xib in Resources */,
 				82D595EE1CE4654C00CD9587 /* JGTeamPhotoCollectionViewCell.xib in Resources */,
 				201056141D59C92800C90FDE /* JGHBtnCell.xib in Resources */,
@@ -9867,7 +9858,6 @@
 				3660E1BC1BFC58B70033B4D7 /* TeamApplyViewController.m in Sources */,
 				36BFFF7A1BC76D09005B3CE2 /* SDWebImageManager.m in Sources */,
 				36BFFFB01BC76FF3005B3CE2 /* PasswordViewController.m in Sources */,
-				2053EDC11DBF2D680076BFE4 /* JGHShowFavouritesCell.m in Sources */,
 				207F70481DC0404600667E26 /* JGHShowRecomStadiumTableViewCell.m in Sources */,
 				F5E1BB881D6B006100414727 /* ZXQRCodeMaskUtil.m in Sources */,
 				F5E1BAC21D6B006100414727 /* ZXAddressBookAUResultParser.m in Sources */,

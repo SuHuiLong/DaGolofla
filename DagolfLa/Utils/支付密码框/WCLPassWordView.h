@@ -40,6 +40,6 @@ IB_DESIGNABLE
 @property (strong, nonatomic) IBInspectable UIColor *pointColor;//黑点的颜色
 @property (strong, nonatomic) IBInspectable UIColor *rectColor;//边框的颜色
 @property (weak, nonatomic) IBOutlet id<WCLPassWordViewDelegate> delegate;
-@property (strong, nonatomic, readonly) NSMutableString *textStore;//保存密码的字符串
+@property (strong, nonatomic) NSMutableString *textStore;//保存密码的字符串
 
 @end

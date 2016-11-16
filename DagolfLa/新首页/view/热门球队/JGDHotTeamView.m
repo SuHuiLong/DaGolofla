@@ -34,7 +34,7 @@
     if (self) {
     
         self.iconImageV = [[UIImageView alloc] initWithFrame:CGRectMake(11 * ProportionAdapter, 14 * ProportionAdapter, 70 * ProportionAdapter, 70 * ProportionAdapter)];
-        [self addSubview: self.iconImageV];
+        [self addSubview:self.iconImageV];
         
         self.nameLB = [[UILabel alloc] initWithFrame:CGRectMake(105 * ProportionAdapter, 14 * ProportionAdapter, screenWidth - 110 * ProportionAdapter, 25 * ProportionAdapter)];
         self.nameLB.font = [UIFont systemFontOfSize:18 * ProportionAdapter];
@@ -45,7 +45,7 @@
         self.sumLB.font = [UIFont systemFontOfSize:12 * ProportionAdapter];
         [self addSubview:self.sumLB];
         
-        self.addressImageView = [[UIImageView alloc]initWithFrame:CGRectMake(105 *ProportionAdapter, 44     *ProportionAdapter, 11 *ProportionAdapter, 15 *ProportionAdapter)];
+        self.addressImageView = [[UIImageView alloc]initWithFrame:CGRectMake(105 *ProportionAdapter, 44 *ProportionAdapter, 11 *ProportionAdapter, 15 *ProportionAdapter)];
         self.addressImageView.image = [UIImage imageNamed:@"juli"];
         [self addSubview:self.addressImageView];
         
