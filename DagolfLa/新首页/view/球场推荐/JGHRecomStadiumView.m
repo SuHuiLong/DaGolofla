@@ -44,7 +44,7 @@
     [self.activityImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@", [dict objectForKey:@"imgURL"]]] placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
     _name.text = [NSString stringWithFormat:@"%@", [dict objectForKey:@"title"]];
     
-    _price.text = [NSString stringWithFormat:@"¥%@", [dict objectForKey:@"money"]];
+    _price.text = [NSString stringWithFormat:@"¥%.2f", [[dict objectForKey:@"money"] floatValue]];
 }
 
 /*

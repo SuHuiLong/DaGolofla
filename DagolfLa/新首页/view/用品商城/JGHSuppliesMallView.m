@@ -23,20 +23,20 @@
         _name.numberOfLines = 2;
         [self addSubview:_name];
         
-        _price = [[UILabel alloc]initWithFrame:CGRectMake(0, 200 *ProportionAdapter, _activityImageView.frame.size.width, 20 *ProportionAdapter)];
+        _price = [[UILabel alloc]initWithFrame:CGRectMake(0, 210 *ProportionAdapter, _activityImageView.frame.size.width, 20 *ProportionAdapter)];
         _price.font = [UIFont systemFontOfSize:16 *ProportionAdapter];
         _price.text = @"¥998";
         _price.textColor = [UIColor colorWithHexString:@"#f2862c"];
         [self addSubview:_price];
         self.backgroundColor = [UIColor orangeColor];
         
-        _ellipsisLable = [[UILabel alloc]initWithFrame:CGRectMake(self.frame.size.width - 20 *ProportionAdapter, 195 *ProportionAdapter, 20 *ProportionAdapter, 20 *ProportionAdapter)];
+        _ellipsisLable = [[UILabel alloc]initWithFrame:CGRectMake(self.frame.size.width - 20 *ProportionAdapter, 205 *ProportionAdapter, 20 *ProportionAdapter, 20 *ProportionAdapter)];
         _ellipsisLable.text = @"...";
         _ellipsisLable.textColor = [UIColor lightGrayColor];
         _ellipsisLable.font = [UIFont systemFontOfSize:18 * ProportionAdapter];
         [self addSubview:_ellipsisLable];
         
-        _drawee = [[UILabel alloc]initWithFrame:CGRectMake(self.frame.size.width -30*ProportionAdapter -80 *ProportionAdapter, 200*ProportionAdapter, 80 *ProportionAdapter, 20 *ProportionAdapter)];
+        _drawee = [[UILabel alloc]initWithFrame:CGRectMake(self.frame.size.width -26*ProportionAdapter -80 *ProportionAdapter, 210*ProportionAdapter, 80 *ProportionAdapter, 20 *ProportionAdapter)];
         _drawee.font = [UIFont systemFontOfSize:14 *ProportionAdapter];
         _drawee.text = @"0 人付款";
         _drawee.textColor = [UIColor colorWithHexString:@"#aaaaaa"];
@@ -56,16 +56,16 @@
     
     _name.frame = CGRectMake(0, (imageH + 24)*ProportionAdapter, self.frame.size.width, 40 *ProportionAdapter);
     
-    _price.frame = CGRectMake(0, (imageH +40 +24) *ProportionAdapter, self.frame.size.width - 100 *ProportionAdapter, 20 *ProportionAdapter);
+    _price.frame = CGRectMake(0, (imageH +50 +24) *ProportionAdapter, self.frame.size.width - 100 *ProportionAdapter, 20 *ProportionAdapter);
     
-    _ellipsisLable.frame = CGRectMake(self.frame.size.width - 20 *ProportionAdapter, (imageH +40 +24 -5) *ProportionAdapter, 20 *ProportionAdapter, 20 *ProportionAdapter);
+    _ellipsisLable.frame = CGRectMake(self.frame.size.width - 20 *ProportionAdapter, (imageH +50 +24 -5) *ProportionAdapter, 20 *ProportionAdapter, 20 *ProportionAdapter);
     
-    _drawee.frame = CGRectMake(self.frame.size.width -30*ProportionAdapter -80 *ProportionAdapter, (imageH +40 +24) *ProportionAdapter, 80 *ProportionAdapter, 20 *ProportionAdapter);
+    _drawee.frame = CGRectMake(self.frame.size.width -26*ProportionAdapter -80 *ProportionAdapter, (imageH +50 +24) *ProportionAdapter, 80 *ProportionAdapter, 20 *ProportionAdapter);
     
     [self.activityImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@", [dict objectForKey:@"imgURL"]]] placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
     _name.text = [NSString stringWithFormat:@"%@", [dict objectForKey:@"title"]];
     
-    _price.text = [NSString stringWithFormat:@"¥%@", [dict objectForKey:@"money"]];
+    _price.text = [NSString stringWithFormat:@"¥%.2f", [[dict objectForKey:@"money"] floatValue]];
     
     if ([dict objectForKey:@"viewCount"]) {
 
