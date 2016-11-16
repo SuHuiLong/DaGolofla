@@ -71,7 +71,7 @@
     flowLayout.minimumLineSpacing=0.f;
 
     
-    _collectionView = [[UICollectionView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight-15*screenWidth/375) collectionViewLayout:flowLayout];
+    _collectionView = [[UICollectionView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight - 44 * ProportionAdapter - 15*screenWidth/375) collectionViewLayout:flowLayout];
     //    _collectionView.frame = _yuansuScrollview.frame;
     [self.view addSubview:_collectionView];
     _collectionView.delegate=self;
@@ -91,6 +91,7 @@
 
 #pragma mark - 下载数据
 - (void)downLoadData:(int)page isReshing:(BOOL)isReshing{
+    
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     
     [dict setObject:_teamKey forKey:@"teamKey"];
