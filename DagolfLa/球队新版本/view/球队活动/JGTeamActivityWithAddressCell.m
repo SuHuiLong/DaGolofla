@@ -42,8 +42,11 @@
         self.reamName.text = [NSString stringWithFormat:@"%@%@", [Helper returnDateformatString:[[model.beginDate componentsSeparatedByString:@" "] objectAtIndex:0]], string];
     }
     
-    //截止
-    self.activityTime.text = [Helper returnDateformatString:model.signUpEndTime];
+    if (model.signUpEndTime) {
+        //截止
+        self.activityTime.text = [Helper returnDateformatString:model.signUpEndTime];
+    }
+    
     //地址
     self.limits.text = model.ballAddress;
 }

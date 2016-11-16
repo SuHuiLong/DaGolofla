@@ -604,19 +604,19 @@
 #pragma mark -- 余额支付
 - (void)balancePay{
     self.navigationItem.leftBarButtonItem.enabled = NO;
-    [[ShowHUD showHUD]showAnimationWithText:@"支付中..." FromView:self.view];
+    [LQProgressHud showLoading:@"支付中..."];
     
     [[JsonHttp jsonHttp]httpRequestWithMD5:@"pay/doPayByUserAccount" JsonKey:@"payInfo" withData:_payDict failedBlock:^(id errType) {
         NSLog(@"errType == %@", errType);
         self.navigationItem.leftBarButtonItem.enabled = YES;
         [_bgView removeFromSuperview];
-        [[ShowHUD showHUD]hideAnimationFromView:self.view];
+        [LQProgressHud hide];
     } completionBlock:^(id data) {
         NSLog(@"%@",[data objectForKey:@"query"]);
         self.navigationItem.leftBarButtonItem.enabled = YES;
         [_bgView removeFromSuperview];
         [_balanceView removeFromSuperview];
-        [[ShowHUD showHUD]hideAnimationFromView:self.view];
+        [LQProgressHud hide];
         //跳转分组页面
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
             [[ShowHUD showHUD]showAnimationWithText:@"支付成功！" FromView:self.view];

@@ -64,7 +64,7 @@
 
 - (void)configJGHbalanceViewPrice:(float)price andBalance:(NSString *)balance andDetail:(NSString *)detail{
     self.detail.text = [NSString stringWithFormat:@"%@ 订单", detail];
-    self.balance.text = balance;
+    self.balance.text = [NSString stringWithFormat:@"%.2f", [balance floatValue]];
     self.price.text = [NSString stringWithFormat:@"¥ %.2f", price];
 }
 
