@@ -623,6 +623,10 @@
         //跳转分组页面
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
             [[ShowHUD showHUD]showAnimationWithText:@"支付成功！" FromView:self.view];
+            JGTeamGroupViewController *groupCtrl = [[JGTeamGroupViewController alloc]init];
+            groupCtrl.activityFrom = 1;
+            groupCtrl.teamActivityKey = [_model.timeKey integerValue];
+            [self.navigationController pushViewController:groupCtrl animated:YES];
         }else{
             _passWordView.textStore = [@"" mutableCopy];
             [_passWordView deleteBackward];
@@ -630,15 +634,11 @@
             
             if ([data objectForKey:@"packResultMsg"]) {
                 [[ShowHUD showHUD]showAnimationWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+                
             }else{
                 [[ShowHUD showHUD]showAnimationWithText:@"支付失败！" FromView:self.view];
             }            
         }
-        
-        JGTeamGroupViewController *groupCtrl = [[JGTeamGroupViewController alloc]init];
-        groupCtrl.activityFrom = 1;
-        groupCtrl.teamActivityKey = [_model.timeKey integerValue];
-        [self.navigationController pushViewController:groupCtrl animated:YES];
     }];
 }
 #pragma mark -- 计算应付价格

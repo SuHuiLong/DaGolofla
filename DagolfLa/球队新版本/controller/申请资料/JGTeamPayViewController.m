@@ -207,6 +207,7 @@
             
             if ([data objectForKey:@"packResultMsg"]) {
                 [[ShowHUD showHUD]showAnimationWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+                
             }else{
                 [[ShowHUD showHUD]showAnimationWithText:@"支付失败！" FromView:self.view];
             }
