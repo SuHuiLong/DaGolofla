@@ -60,7 +60,7 @@
     
     //    [self.tabBar setBackgroundImage:[UIImage imageNamed:@"tab_bg1"]];
     UIImageView *backImgv = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, .5)];
-    backImgv.backgroundColor = [UITool colorWithHexString:@"8a8b87" alpha:1];
+//    backImgv.backgroundColor = [UITool colorWithHexString:@"8a8b87" alpha:1];
     [self.tabBar insertSubview:backImgv atIndex:0];
     self.tabBarController.tabBar.opaque = YES;
 //    [self.tabBar setTitleTextAttributes:[UITool colorWithHexString:@"" alpha:1];
