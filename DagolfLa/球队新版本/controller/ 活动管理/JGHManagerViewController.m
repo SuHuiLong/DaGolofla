@@ -275,7 +275,7 @@
 //        [self.cerArray removeObjectAtIndex:indexPath.row];
         // Delete the row from the data source.
         
-        [self.teamActivityTableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section]] withRowAnimation:UITableViewRowAnimationNone];
+//        [self.teamActivityTableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section]] withRowAnimation:UITableViewRowAnimationNone];
     }
 }
 

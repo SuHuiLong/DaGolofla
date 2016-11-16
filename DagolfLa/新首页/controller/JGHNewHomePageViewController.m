@@ -237,24 +237,29 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
 }
 - (void)headRereshing{
     [self loadIndexdata];
+    [self loadBanner];
 }
 #pragma  mark -- 创建Banner
 -(void)createBanner
 {
     //头视图
-    UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, screenWidth/2 +95 *ProportionAdapter)];
+    UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, screenWidth/2 +115 *ProportionAdapter)];
     headerView.backgroundColor = [UIColor whiteColor];
     //banner
     self.topScrollView = [[HomeHeadView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, screenWidth/2)];
     self.topScrollView.userInteractionEnabled = YES;
     [headerView addSubview:self.topScrollView];
     
-    self.navListView = [[JGHNavListView alloc]initWithFrame:CGRectMake(0, screenWidth/2, screenWidth, 95 *ProportionAdapter)];
+    self.navListView = [[JGHNavListView alloc]initWithFrame:CGRectMake(0, screenWidth/2 +10*ProportionAdapter, screenWidth, 105 *ProportionAdapter)];
     self.navListView.delegate = self;
     [headerView addSubview:self.navListView];
     
     self.homeTableView.tableHeaderView = headerView;
     
+    [self loadBanner];
+}
+#pragma mark -- 下载barner数据
+- (void)loadBanner{
     NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
     [dict setValue:@0 forKey:@"nPos"];
     [dict setValue:@0 forKey:@"nType"];
@@ -280,7 +285,7 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
             
             if ([arrayIcon count] != 0) {
                 [self.topScrollView config:arrayIcon data:arrayUrl title:arrayTitle ts:arrayTs];
-//                self.topScrollView.delegate = self;
+                //                self.topScrollView.delegate = self;
                 __weak JGHNewHomePageViewController *weakSelf = self;
                 [self.topScrollView setClick:^(UIViewController *vc) {
                     [weakSelf isLoginUp];
@@ -826,44 +831,6 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
         JGDNewTeamDetailViewController *newTeamVC = [[JGDNewTeamDetailViewController alloc] init];
         newTeamVC.timeKey = not.userInfo[@"timekey"];
         [self.navigationController pushViewController:newTeamVC animated:YES];
-        
-//        [[JsonHttp jsonHttp] httpRequest:@"team/getTeamInfo" JsonKey:nil withData:dic requestMethod:@"GET" failedBlock:^(id errType) {
-//            
-//        } completionBlock:^(id data) {
-//            
-//            
-//            if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
-//                [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
-//                
-//                if (![data objectForKey:@"teamMember"]) {
-//                    JGNotTeamMemberDetailViewController *detailVC = [[JGNotTeamMemberDetailViewController alloc] init];
-//                    detailVC.detailDic = [data objectForKey:@"team"];
-//                    
-//                    [self.navigationController pushViewController:detailVC animated:YES];
-//                }else{
-//                    
-//                    if ([[[data objectForKey:@"teamMember"] objectForKey:@"power"] containsString:@"1005"]){
-//                        JGTeamMemberORManagerViewController *detailVC = [[JGTeamMemberORManagerViewController alloc] init];
-//                        detailVC.detailDic = [data objectForKey:@"team"];
-//                        detailVC.isManager = YES;
-//                        [self.navigationController pushViewController:detailVC animated:YES];
-//                    }else{
-//                        JGTeamMemberORManagerViewController *detailVC = [[JGTeamMemberORManagerViewController alloc] init];
-//                        detailVC.detailDic = [data objectForKey:@"team"];
-//                        detailVC.isManager = NO;
-//                        [self.navigationController pushViewController:detailVC animated:YES];
-//                    }
-//                    
-//                    
-//                }
-//                
-//            }else{
-//                if ([data objectForKey:@"packResultMsg"]) {
-//                    [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
-//                }
-//            }
-//            
-//        }];
         
         return;
     }
