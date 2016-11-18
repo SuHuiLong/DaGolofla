@@ -26,7 +26,7 @@
         _price = [[UILabel alloc]initWithFrame:CGRectMake(0, 210 *ProportionAdapter, _activityImageView.frame.size.width, 20 *ProportionAdapter)];
         _price.font = [UIFont systemFontOfSize:16 *ProportionAdapter];
         _price.text = @"¥998";
-        _price.textColor = [UIColor colorWithHexString:@"#f2862c"];
+        _price.textColor = [UIColor colorWithHexString:SY_PriceColor];
         [self addSubview:_price];
         self.backgroundColor = [UIColor orangeColor];
         
