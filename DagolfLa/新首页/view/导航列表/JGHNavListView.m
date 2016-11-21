@@ -30,6 +30,8 @@
         [_scoreBtn addTarget:self action:@selector(teamBtnClick:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:_scoreBtn];
         
+//        UIButton
+        
         _scoreLable = [[UILabel alloc]initWithFrame:CGRectMake(self.frame.size.width/3 +10 *ProportionAdapter, 55 *ProportionAdapter, self.frame.size.width/3 -20*ProportionAdapter, 20*ProportionAdapter)];
         _scoreLable.text = @"球队部落";
         _scoreLable.font = [UIFont systemFontOfSize:16 *ProportionAdapter];
