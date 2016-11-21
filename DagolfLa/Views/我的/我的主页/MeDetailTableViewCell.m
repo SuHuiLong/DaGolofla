@@ -18,11 +18,11 @@
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        _iconImgv = [[UIImageView alloc]initWithFrame:CGRectMake(10*ScreenWidth/375, 10*ScreenWidth/375, 24*ScreenWidth/375, 24*ScreenWidth/375)];
+        _iconImgv = [[UIImageView alloc]initWithFrame:CGRectMake(10*ScreenWidth/375, 7*ScreenWidth/375, 28*ScreenWidth/375, 28*ScreenWidth/375)];
         [self addSubview:_iconImgv];
         
         _titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(44*ScreenWidth/375, 7*ScreenWidth/375, 200*ScreenWidth/375, 30*ScreenWidth/375)];
-        _titleLabel.font = [UIFont systemFontOfSize:15*ScreenWidth/375];
+        _titleLabel.font = [UIFont systemFontOfSize:16*ScreenWidth/375];
         [self addSubview:_titleLabel];
         
     }
