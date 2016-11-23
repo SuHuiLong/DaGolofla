@@ -73,7 +73,7 @@
 - (void)payBtn{
     
     [self.view endEditing:YES];
-    [[ShowHUD showHUD]showToastWithText:@"报名中..." FromView:self.view];
+    [[ShowHUD showHUD]showToastWithText:@"加载中..." FromView:self.view];
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     [dict setObject:DEFAULF_USERID forKey:@"userKey"];
     [[JsonHttp jsonHttp]httpRequest:@"user/getUserBalance" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {

@@ -312,7 +312,7 @@ static NSString *const JGHAddMoreTeamTableViewCellIdentifier = @"JGHAddMoreTeamT
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
     if (section == 1) {
-        return 40 *ProportionAdapter;
+        return 50 *ProportionAdapter;
     }else if (section == 0 || section == 2){
         return 45 *ProportionAdapter;
     }else{

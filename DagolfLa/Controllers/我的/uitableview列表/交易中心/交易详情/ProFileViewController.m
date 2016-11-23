@@ -123,6 +123,10 @@
 }
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
+    NSString *userAgent = [[[UIWebView alloc] init] stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"];
+    NSString *customUserAgent = [userAgent stringByAppendingFormat:@" dagolfla/2.0"];
+    [[NSUserDefaults standardUserDefaults] registerDefaults:@{@"UserAgent":customUserAgent}];
+    
     ////NSLog(@"%@",[request.URL absoluteString]);
     NSString *str = [[request.URL absoluteString] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSArray  * array= [[request.URL absoluteString] componentsSeparatedByString:@":"];
