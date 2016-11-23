@@ -31,6 +31,8 @@
 @property (nonatomic, strong) NSMutableDictionary *paraDic;
 @property (assign, nonatomic) int page;
 
+@property (nonatomic, strong) UIButton *contactBtn;
+
 @end
 
 //static int page = 1;
@@ -70,8 +72,21 @@
     _searchController.searchBar.frame = CGRectMake(self.searchController.searchBar.frame.origin.x, self.searchController.searchBar.frame.origin.y, self.searchController.searchBar.frame.size.width, 44.0);
     self.searchController.searchBar.tintColor = [UIColor colorWithRed:0.36f green:0.66f blue:0.31f alpha:1.00f];
     self.searchController.searchBar.placeholder = @"请输入昵称或者手机号";
+    self.searchController.searchBar.delegate = self;
     self.tableView.tableHeaderView = self.searchController.searchBar;
+    self.tableView.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];
     
+    //
+    self.searchController.searchBar.barTintColor = [UIColor colorWithHexString:@"#EEEEEE"];
+    
+    UISearchBar *searchBar = self.searchController.searchBar;
+    UIImageView *barImageView = [[[searchBar.subviews firstObject] subviews] firstObject];
+    barImageView.layer.borderColor = RGBA(248,248,248,1).CGColor;
+    barImageView.layer.borderWidth = 1;
+
+    self.contactBtn = [[UIButton alloc] initWithFrame:CGRectMake(333 * ProportionAdapter, 13 * ProportionAdapter, 20 * ProportionAdapter, 20 * ProportionAdapter)];
+    [self.contactBtn setImage:[UIImage imageNamed:@"phonenumber"] forState:(UIControlStateNormal)];;
+    [self.searchController.searchBar addSubview:self.contactBtn];
     // Do any additional setup after loading the view.
 }
 
@@ -132,7 +147,7 @@
 -(void)updateSearchResultsForSearchController:(UISearchController *)searchController {
     [self.searchArray removeAllObjects];
     
-    
+
     NSString *searchString = [self.searchController.searchBar text];
     //    NSPredicate *preicate = [NSPredicate predicateWithFormat:@"SELF CONTAINS[c] %@", searchString];
     _page = 1;
@@ -243,6 +258,23 @@
         
     }];
     
+}
+
+
+- (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar{
+
+    self.navigationController.navigationBarHidden = YES;
+    self.contactBtn.frame = CGRectMake(280 * ProportionAdapter, 13 * ProportionAdapter, 20 * ProportionAdapter, 20 * ProportionAdapter);
+    return YES;
+}
+
+- (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar{
+
+}
+
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar{
+    self.navigationController.navigationBarHidden = NO;
+    self.contactBtn.frame = CGRectMake(333 * ProportionAdapter, 13 * ProportionAdapter, 20 * ProportionAdapter, 20 * ProportionAdapter);
 }
 
 

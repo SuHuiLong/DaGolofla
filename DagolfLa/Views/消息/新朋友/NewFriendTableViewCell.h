@@ -21,5 +21,6 @@
 @property (strong, nonatomic) UIButton* btnFocus;
 
 -(void)showData:(NewFriendModel *)model;
+-(void)exhibitionData:(NewFriendModel *)model;
 
 @end
