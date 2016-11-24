@@ -19,6 +19,9 @@
 #import "PersonHomeController.h"
 #import "ChatDetailViewController.h"
 
+#import "JGAddFriendViewController.h"
+
+
 @interface NewFriendViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
     UITableView* _tableView;
@@ -30,13 +33,32 @@
 @implementation NewFriendViewController
 
 - (void)viewDidLoad {
+    
     [super viewDidLoad];
-    self.title = @"新朋友";
+    
+    if (_fromWitchVC == 1) {
+        self.title = @"推荐球友";
+        
+        UIBarButtonItem *rightBar = [[UIBarButtonItem alloc] initWithTitle:@"下一批" style:(UIBarButtonItemStyleDone) target:self action:@selector(nextFriend)];
+        rightBar.tintColor = [UIColor whiteColor];
+        [rightBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:15 * ProportionAdapter], NSFontAttributeName, nil] forState:UIControlStateNormal];
+
+        self.navigationItem.rightBarButtonItem = rightBar;
+        
+    }else{
+        self.title = @"新朋友";
+
+    }
     _page = 1;
     _dataArray = [[NSMutableArray alloc]init];
     [self uiConfig];
     
 }
+
+- (void)nextFriend{
+    NSLog(@"NEXTFRIEND");
+}
+
 -(void)uiConfig
 {
     _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight)];
@@ -45,8 +67,10 @@
     [self.view addSubview:_tableView];
     [_tableView registerClass:[NewFriendTableViewCell class] forCellReuseIdentifier:@"NewFriendTableViewCell"];
     
+    if (_fromWitchVC == 2) {
+        _tableView.footer=[MJDIYBackFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRereshing)];
+    }
     _tableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
-    _tableView.footer=[MJDIYBackFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRereshing)];
     [_tableView.header beginRefreshing];
 }
 
@@ -90,6 +114,8 @@
         }
     }];
 }
+
+
 #pragma mark 开始进入刷新状态
 - (void)headRereshing
 {
@@ -102,6 +128,9 @@
     [self downLoadData:_page isReshing:NO];
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    return 10 * ProportionAdapter;
+}
 
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -117,12 +146,18 @@
 
     NewFriendTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"NewFriendTableViewCell" forIndexPath:indexPath];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    [cell showData:_dataArray[indexPath.row]];
+    
+    if (_fromWitchVC == 1) {
+        [cell showData:_dataArray[indexPath.row]];
+
+    }else{
+        [cell exhibitionData:_dataArray[indexPath.row]];
+    }
     cell.btnIcon.tag = indexPath.row + 10000;
     [cell.btnIcon addTarget:self action:@selector(selfDetClick:) forControlEvents:UIControlEventTouchUpInside];
     
     cell.btnFocus.tag = indexPath.row + 100000;
-    [cell.btnFocus addTarget:self action:@selector(focusClick:) forControlEvents:UIControlEventTouchUpInside];
+    [cell.btnFocus addTarget:self action:@selector(cellBtnClicked:event:) forControlEvents:UIControlEventTouchUpInside];
     return cell;
 }
 
@@ -134,26 +169,43 @@
 }
 
 
+// 添加球友
+- (void)cellBtnClicked:(id)sender event:(id)event
+{
+    NSSet *touches =[event allTouches];
+    UITouch *touch =[touches anyObject];
+    CGPoint currentTouchPosition = [touch locationInView:_tableView];
+    NSIndexPath *indexPath= [_tableView indexPathForRowAtPoint:currentTouchPosition];
+    
+    NewFriendTableViewCell* cell = [_tableView cellForRowAtIndexPath:indexPath];
+    
+    if (_fromWitchVC == 1) {
+        JGAddFriendViewController *addFriVC = [[JGAddFriendViewController alloc] init];
+        [self.navigationController pushViewController:addFriVC animated:YES];
+    }
+    
+    
+    if (indexPath!= nil)
+    {
+        // do something
+    }
+}
+
+
 -(void)focusClick:(UIButton *)btn
 {
     [[PostDataRequest sharedInstance] postDataRequest:@"UserFollow/saveFollow.do" parameter:@{@"userId":[[NSUserDefaults standardUserDefaults] objectForKey:@"userId"],@"otherUserId":[_dataArray[btn.tag - 100000] userId]} success:^(id respondsData) {
         NSDictionary* dict = [NSJSONSerialization JSONObjectWithData:respondsData options:NSJSONReadingMutableContainers error:nil];
         if ([[dict objectForKey:@"success"] integerValue] == 1) {
-            [btn setTitle:@"已关注" forState:UIControlStateNormal];
-            [btn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
-            CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
-            CGColorRef colorref = CGColorCreate(colorSpace,(CGFloat[]){ 166/255,166/255,166/255, 1 });
-            [btn.layer setBorderColor:colorref];//边框颜色
-
-            btn.userInteractionEnabled = NO;
+            NewFriendTableViewCell* cell = (NewFriendTableViewCell* )[[btn superview] superview];
+            NSLog(@"%@", cell);
         }
         else
         {
-            [Helper alertViewWithTitle:@"关注好友成功" withBlock:^(UIAlertController *alertView) {
-                [self.navigationController presentViewController:alertView animated:YES completion:nil];
-            }];
+            [LQProgressHud showMessage:@"添加失败，请稍后再试"];
         }
     } failed:^(NSError *error) {
+        [LQProgressHud showMessage:@"添加失败，请稍后再试"];
         
     }];
 }

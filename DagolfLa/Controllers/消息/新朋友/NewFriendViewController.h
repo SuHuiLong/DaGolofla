@@ -10,4 +10,7 @@
 
 @interface NewFriendViewController : ViewController
 
+@property (nonatomic, assign) NSInteger fromWitchVC;  // 1 是球友推荐  2 新朋友
+
+
 @end

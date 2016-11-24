@@ -856,6 +856,7 @@
 		F543ACC41CF4269D00C6B111 /* JGLableAndLableTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F543ACC31CF4269D00C6B111 /* JGLableAndLableTableViewCell.m */; };
 		F543ACC71CF42E1200C6B111 /* JGDisplayInfoTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F543ACC61CF42E1200C6B111 /* JGDisplayInfoTableViewCell.m */; };
 		F543ACCA1CF476D400C6B111 /* JGNewCreateTeamTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F543ACC91CF476D400C6B111 /* JGNewCreateTeamTableViewController.m */; };
+		F54564E71DE5228600596211 /* JGAddFriendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F54564E61DE5228600596211 /* JGAddFriendViewController.m */; };
 		F54CC1831D83C75700A194F2 /* JGDAlmostStlyleSetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F54CC1821D83C75700A194F2 /* JGDAlmostStlyleSetViewController.m */; };
 		F54CC1861D83FA6800A194F2 /* JGDAlmostSetTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F54CC1851D83FA6800A194F2 /* JGDAlmostSetTableViewCell.m */; };
 		F54CC18A1D8428CE00A194F2 /* JGLWriteReplyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F54CC1891D8428CE00A194F2 /* JGLWriteReplyViewController.m */; };
@@ -2819,6 +2820,8 @@
 		F543ACC61CF42E1200C6B111 /* JGDisplayInfoTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGDisplayInfoTableViewCell.m; sourceTree = "<group>"; };
 		F543ACC81CF476D400C6B111 /* JGNewCreateTeamTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGNewCreateTeamTableViewController.h; sourceTree = "<group>"; };
 		F543ACC91CF476D400C6B111 /* JGNewCreateTeamTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGNewCreateTeamTableViewController.m; sourceTree = "<group>"; };
+		F54564E51DE5228600596211 /* JGAddFriendViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGAddFriendViewController.h; sourceTree = "<group>"; };
+		F54564E61DE5228600596211 /* JGAddFriendViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGAddFriendViewController.m; sourceTree = "<group>"; };
 		F54CC1811D83C75700A194F2 /* JGDAlmostStlyleSetViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGDAlmostStlyleSetViewController.h; sourceTree = "<group>"; };
 		F54CC1821D83C75700A194F2 /* JGDAlmostStlyleSetViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGDAlmostStlyleSetViewController.m; sourceTree = "<group>"; };
 		F54CC1841D83FA6800A194F2 /* JGDAlmostSetTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGDAlmostSetTableViewCell.h; sourceTree = "<group>"; };
@@ -4855,6 +4858,8 @@
 				36067BC31C97EF16001AE22C /* ContactViewController.m */,
 				36067BBF1C97EED2001AE22C /* TeamFriListViewController.h */,
 				36067BC01C97EED2001AE22C /* TeamFriListViewController.m */,
+				F54564E51DE5228600596211 /* JGAddFriendViewController.h */,
+				F54564E61DE5228600596211 /* JGAddFriendViewController.m */,
 			);
 			path = "球友列表";
 			sourceTree = "<group>";
@@ -9595,6 +9600,7 @@
 				36BFFF7D1BC76D09005B3CE2 /* UIImage+GIF.m in Sources */,
 				20D564B41DE4216F005535A6 /* JGHSystemNotViewController.m in Sources */,
 				F52A49E51C969F79002A4973 /* ScreenTableViewCell.m in Sources */,
+				F54564E71DE5228600596211 /* JGAddFriendViewController.m in Sources */,
 				F5E1BB441D6B006100414727 /* ZXCode128Reader.m in Sources */,
 				2048E8EF1D4B528E00A2C024 /* JGHSimpleScoreViewController.m in Sources */,
 				3660E1E01BFC64020033B4D7 /* ScoreByGameViewController.m in Sources */,

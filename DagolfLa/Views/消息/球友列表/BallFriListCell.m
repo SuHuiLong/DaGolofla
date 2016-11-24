@@ -20,22 +20,24 @@
 
 @implementation BallFriListCell
 
-- (void)awakeFromNib {
-    // Initialization code
-}
-
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        self.myImageV = [[UIImageView alloc] initWithFrame:CGRectMake(10*ScreenWidth/375, 3*ScreenWidth/375, 55*ScreenWidth/375, 55*ScreenWidth/375)];
+        self.myImageV = [[UIImageView alloc] initWithFrame:CGRectMake(10* ProportionAdapter, 4* ProportionAdapter, 40* ProportionAdapter, 40* ProportionAdapter)];
         self.myImageV.layer.masksToBounds = YES;
-        self.myImageV.layer.cornerRadius = 8 * ScreenWidth / 375;
-              self.myImageV.userInteractionEnabled = YES;
+        self.myImageV.layer.cornerRadius = 20 * ProportionAdapter;
+        self.myImageV.userInteractionEnabled = YES;
         //      cell.myImageV.contentMode = UIViewContentModeScaleAspectFill;
         
         
-        self.myLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.myImageV.frame.size.width + 5 * 5 * ScreenWidth / 375 + 3 * ScreenWidth / 375, 0, 200, 60*ScreenWidth/375)];
+        self.myLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.myImageV.frame.size.width + 5 * 5 * ScreenWidth / 375 + 3 * ScreenWidth / 375, 7 * ProportionAdapter, 200, 18 * ScreenWidth/375)];
+        self.myLabel.font = [UIFont systemFontOfSize:13 * ProportionAdapter];
         
+        
+        self.sexImageV = [[UIImageView alloc] initWithFrame:CGRectMake(self.myImageV.frame.size.width + 5 * 5 * ScreenWidth / 375 + 3 * ScreenWidth / 375, 28 * ProportionAdapter, 12 * ProportionAdapter, 12 * ProportionAdapter)];
+
+        
+        [self.contentView addSubview:self.sexImageV];
         [self.contentView addSubview:self.myImageV];
         [self.contentView addSubview:self.myLabel];
     }
@@ -53,6 +55,8 @@
     
     [self.myImageV sd_setImageWithURL:[Helper imageIconUrl:myModel.pic]];
     
+    self.sexImageV.image = [UIImage imageNamed:@"sexIcon"];
+
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
