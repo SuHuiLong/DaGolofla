@@ -32,11 +32,11 @@
         if (i%2 == 0) {
             _recomStadiumView = [[JGHRecomStadiumView alloc]initWithFrame:CGRectMake(8*ProportionAdapter, (i/2 +1)*8*ProportionAdapter + (i/2)*(imageH +56)*ProportionAdapter, (screenWidth-24*ProportionAdapter)/2, (imageH +56) *ProportionAdapter)];
         }else{
-            _recomStadiumView = [[JGHRecomStadiumView alloc]initWithFrame:CGRectMake(16*ProportionAdapter +(screenWidth-16*ProportionAdapter)/2, (i/2 +1)*8*ProportionAdapter + (i/2)*(imageH +56)*ProportionAdapter, (screenWidth-24*ProportionAdapter)/2, (imageH +56)*ProportionAdapter)];
+            _recomStadiumView = [[JGHRecomStadiumView alloc]initWithFrame:CGRectMake(12*ProportionAdapter +(screenWidth-24*ProportionAdapter)/2, (i/2 +1)*8*ProportionAdapter + (i/2)*(imageH +56)*ProportionAdapter, (screenWidth-24*ProportionAdapter)/2, (imageH +56)*ProportionAdapter)];
         }
         
         [_recomStadiumView configJGHRecomStadiumView:array[i] andImageW:imageW andImageH:imageH];
-        UIButton *selectBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, screenWidth - 16*ProportionAdapter, (imageH +56)*ProportionAdapter)];
+        UIButton *selectBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, (screenWidth - 24*ProportionAdapter)/2, (imageH +56)*ProportionAdapter)];
         selectBtn.tag = 400 +i;
         [selectBtn addTarget:self action:@selector(recomStadiumClick:) forControlEvents:UIControlEventTouchUpInside];
         [_recomStadiumView addSubview:selectBtn];
