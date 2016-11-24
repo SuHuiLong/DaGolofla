@@ -61,8 +61,6 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
-
-    
     //初始化趣拍
     [[TaeSDK sharedInstance] asyncInit:^{
         
@@ -257,6 +255,29 @@
     //调用PHP登录
     [self phpLogin];
     
+    NSURL *url = [launchOptions objectForKey:UIApplicationLaunchOptionsURLKey];
+//    NSLog(@"%@", UIApplicationLaunchOptionsURLKey);
+    if (url != nil) {
+        if ([[url query] containsString:@"safepay"]) {
+            //跳转支付宝钱包进行支付，处理支付结果
+//            [[AlipaySDK defaultService] processOrderWithPaymentResult:url standbyCallback:^(NSDictionary *resultDic) {
+//                NSLog(@"result = %@",resultDic);
+//                NSLog(@"客户端支付");
+//            }];
+            
+        }else{
+            NSString *actKey = @"";
+            NSString *actDetail = @"";
+            if ([url query]) {
+                actKey = [[[NSString stringWithFormat:@"%@", [url query]] componentsSeparatedByString:@"="] objectAtIndex:1];
+                actDetail = [[[NSString stringWithFormat:@"%@", [url query]] componentsSeparatedByString:@"="] objectAtIndex:0];
+            }
+            
+            [self gotoAppPage:actKey switchDetails:actDetail];
+        }
+
+    }
+    
     return YES;
 }
 - (void)phpLogin{
@@ -378,12 +399,35 @@
     if ([[NSString stringWithFormat:@"%@",url] rangeOfString:[NSString stringWithFormat:@"wxdcdc4e20544ed728://pay"]].location != NSNotFound) {
         return  [WXApi handleOpenURL:url delegate:self];
         //不是上面的情况的话，就正常用shareSDK调起相应的分享页面
+    }else if ([url.scheme isEqualToString:@"dagolfla"]){
+//        NSLog(@"Calling Application Bundle ID: %@", sourceApplication);
+        NSLog(@"URL scheme:%@", [url scheme]);
+        NSLog(@"URL query: %@", [url query]);
+        if ([[url query] containsString:@"safepay"]) {
+            //跳转支付宝钱包进行支付，处理支付结果
+            [[AlipaySDK defaultService] processOrderWithPaymentResult:url standbyCallback:^(NSDictionary *resultDic) {
+                NSLog(@"result = %@",resultDic);
+                NSLog(@"客户端支付");
+            }];
+            
+        }else{
+            NSString *actKey = @"";
+            NSString *actDetail = @"";
+            if ([url query]) {
+                actKey = [[[NSString stringWithFormat:@"%@", [url query]] componentsSeparatedByString:@"="] objectAtIndex:1];
+                actDetail = [[[NSString stringWithFormat:@"%@", [url query]] componentsSeparatedByString:@"="] objectAtIndex:0];
+            }
+            
+            [self gotoAppPage:actKey switchDetails:actDetail];
+        }
+        
+        return YES;
     }else{
         return [UMSocialSnsService handleOpenURL:url wxApiDelegate:self];
         //        [UMSocialSnsService handleOpenURL:url
         //                            wxDelegate:self];
     }
-    return YES;
+//    return YES;
 }
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation

@@ -805,12 +805,32 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
             [[NSNotificationCenter defaultCenter] postNotificationName:@"show" object:nil];
             [self presentViewController:alertView animated:YES completion:nil];
         }];
+        
         return;
     }
 }
 #pragma mark -- 网页 跳转活动详情
 - (void)PushJGTeamActibityNameViewController:(NSNotification *)not{
-    [self isLoginUp];
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"userId"]) {
+        
+    }
+    else
+    {
+        [Helper alertViewWithTitle:@"是否立即登录?" withBlockCancle:^{
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"show" object:nil];
+        } withBlockSure:^{
+            JGHLoginViewController *vc = [[JGHLoginViewController alloc] init];
+            vc.reloadCtrlData = ^(){
+                [self loadIndexdata];
+            };
+            [self.navigationController pushViewController:vc animated:YES];
+        } withBlock:^(UIAlertController *alertView) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"show" object:nil];
+            [self presentViewController:alertView animated:YES completion:nil];
+        }];
+        
+        return;
+    }
     
     if ([not.userInfo[@"details"] isEqualToString:@"activityKey"]) {
         //活动

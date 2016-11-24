@@ -279,7 +279,6 @@
 		20D5151B1DBB82280006EFCB /* JGHGameSetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 20D515111DBB82280006EFCB /* JGHGameSetViewController.m */; };
 		20D5151C1DBB82280006EFCB /* JGHPublishEventSaveViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 20D515131DBB82280006EFCB /* JGHPublishEventSaveViewController.m */; };
 		20D5151D1DBB82280006EFCB /* JGHPublishEventViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 20D515151DBB82280006EFCB /* JGHPublishEventViewController.m */; };
-		20D564A51DE3E755005535A6 /* JGHMessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 20D564A41DE3E755005535A6 /* JGHMessageViewController.m */; };
 		20D564B41DE4216F005535A6 /* JGHSystemNotViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 20D564B31DE4216F005535A6 /* JGHSystemNotViewController.m */; };
 		20D564B81DE4246E005535A6 /* JGHTeamInformCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 20D564B71DE4246E005535A6 /* JGHTeamInformCell.m */; };
 		20D564BB1DE43AA2005535A6 /* JGHTeamNotViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 20D564BA1DE43AA2005535A6 /* JGHTeamNotViewController.m */; };
@@ -1738,8 +1737,6 @@
 		20D515131DBB82280006EFCB /* JGHPublishEventSaveViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHPublishEventSaveViewController.m; sourceTree = "<group>"; };
 		20D515141DBB82280006EFCB /* JGHPublishEventViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHPublishEventViewController.h; sourceTree = "<group>"; };
 		20D515151DBB82280006EFCB /* JGHPublishEventViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHPublishEventViewController.m; sourceTree = "<group>"; };
-		20D564A31DE3E755005535A6 /* JGHMessageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHMessageViewController.h; sourceTree = "<group>"; };
-		20D564A41DE3E755005535A6 /* JGHMessageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHMessageViewController.m; sourceTree = "<group>"; };
 		20D564B21DE4216F005535A6 /* JGHSystemNotViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHSystemNotViewController.h; sourceTree = "<group>"; };
 		20D564B31DE4216F005535A6 /* JGHSystemNotViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHSystemNotViewController.m; sourceTree = "<group>"; };
 		20D564B61DE4246E005535A6 /* JGHTeamInformCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHTeamInformCell.h; sourceTree = "<group>"; };
@@ -4815,8 +4812,6 @@
 				36067BBE1C97EEA8001AE22C /* 球友列表 */,
 				36067BC51C97F45B001AE22C /* 新朋友 */,
 				36067BB71C96B43B001AE22C /* 会话 */,
-				20D564A31DE3E755005535A6 /* JGHMessageViewController.h */,
-				20D564A41DE3E755005535A6 /* JGHMessageViewController.m */,
 			);
 			path = "消息";
 			sourceTree = "<group>";
@@ -9693,7 +9688,6 @@
 				207FEC961D1BC98F0098E23C /* JGHCancelApplyBaseCell.m in Sources */,
 				36E300EB1C3FF3F9005C3F08 /* MJRefreshAutoFooter.m in Sources */,
 				36BFFF631BC76D09005B3CE2 /* README.md in Sources */,
-				20D564A51DE3E755005535A6 /* JGHMessageViewController.m in Sources */,
 				F5E1BB511D6B006100414727 /* ZXMultiFormatUPCEANReader.m in Sources */,
 				F5E1BACA1D6B006100414727 /* ZXEmailDoCoMoResultParser.m in Sources */,
 				36DF56321C151F940006D9BA /* ScoreProWriteCell.m in Sources */,
