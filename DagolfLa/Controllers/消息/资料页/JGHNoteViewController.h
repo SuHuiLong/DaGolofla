@@ -10,4 +10,7 @@
 
 @interface JGHNoteViewController : ViewController
 
+typedef void(^BlockRereshNote)(NSString *);
+@property(nonatomic,copy)BlockRereshNote blockRereshNote;
+
 @end

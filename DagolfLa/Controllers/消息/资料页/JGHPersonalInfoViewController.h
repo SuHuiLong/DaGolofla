@@ -24,6 +24,7 @@
 
 @property (nonatomic, retain)UIView *dynamicView;
 
+@property (nonatomic, retain)UILabel *nick;
 
 //用户key
 @property (nonatomic, retain)NSNumber *otherKey;
