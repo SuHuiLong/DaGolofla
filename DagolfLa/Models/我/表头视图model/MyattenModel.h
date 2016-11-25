@@ -21,6 +21,7 @@
 @property (copy, nonatomic) NSString* birthday;
 @property (copy, nonatomic) NSNumber* almost;
 @property (copy, nonatomic) NSString* address;
+@property (copy, nonatomic) NSNumber* friendUserKey;
 
 @property (strong,nonatomic) ChineseString *chineseString;
 
