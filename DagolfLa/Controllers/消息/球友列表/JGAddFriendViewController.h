@@ -10,5 +10,9 @@
 
 @interface JGAddFriendViewController : ViewController
 
+@property (nonatomic, strong) NSNumber *otherUserKey;
+
+@property (nonatomic, copy) void (^popToVC)(NSInteger num);  // 1 请求发出  0 请求失败（列表不删除）
+
 
 @end

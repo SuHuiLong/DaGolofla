@@ -56,7 +56,7 @@
 }
 
 - (void)nextFriend{
-    NSLog(@"NEXTFRIEND");
+    [self downLoawdDataWithRecommend];
 }
 
 -(void)uiConfig
@@ -71,13 +71,16 @@
         [self downLoawdDataWithNewFriend];
         _tableView.footer=[MJDIYBackFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRereshing)];
     }else{
-        _tableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
-        [_tableView.header beginRefreshing];
+        
+        [self downLoawdDataWithRecommend];
+//        _tableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
+//        [_tableView.header beginRefreshing];
 
     }
 }
 
 
+// 新朋友
 - (void)downLoawdDataWithNewFriend{
     
     [[ShowHUD showHUD] showAnimationWithText:@"加载中…" FromView:self.view];
@@ -90,7 +93,8 @@
     
     
     [[JsonHttp jsonHttp] httpRequest:@"userFriend/getUserNewFriendList" JsonKey:nil withData:dic requestMethod:@"GET" failedBlock:^(id errType) {
-        
+        [[ShowHUD showHUD] hideAnimationFromView:self.view];
+
     } completionBlock:^(id data) {
         
         [[ShowHUD showHUD] hideAnimationFromView:self.view];
@@ -101,12 +105,12 @@
                 
                 [_dataArray removeAllObjects];
                 
-                for (NSDictionary *dataDict in [data objectForKey:@"rows"]) {
+                for (NSDictionary *dataDict in [data objectForKey:@"list"]) {
                     NewFriendModel *model = [[NewFriendModel alloc] init];
                     [model setValuesForKeysWithDictionary:dataDict];
                     [_dataArray addObject:model];
                 }
-                
+                [_tableView reloadData];
             }
         }else{
             if ([data objectForKey:@"packResultMsg"]) {
@@ -117,10 +121,52 @@
     }];
     
 }
+
+
+// 推荐好友	recommend
+
+- (void)downLoawdDataWithRecommend{
+    
+    [[ShowHUD showHUD] showAnimationWithText:@"加载中…" FromView:self.view];
+    
+    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+    [dic setObject:DEFAULF_USERID forKey:@"userKey"];
+    
+    [dic setObject:[Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@dagolfla.com",DEFAULF_USERID]] forKey:@"md5"];
+    [dic setObject:@(_page) forKey:@"offset"];
+    
+    [[JsonHttp jsonHttp] httpRequest:@"userFriend/getRecommendFriendList" JsonKey:nil withData:dic requestMethod:@"GET" failedBlock:^(id errType) {
+        [[ShowHUD showHUD] hideAnimationFromView:self.view];
+        
+    } completionBlock:^(id data) {
+        
+        [[ShowHUD showHUD] hideAnimationFromView:self.view];
+        
+        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+            
+            if ([data objectForKey:@"list"]) {
+                _page ++;
+                [_dataArray removeAllObjects];
+                
+                for (NSDictionary *dataDict in [data objectForKey:@"list"]) {
+                    NewFriendModel *model = [[NewFriendModel alloc] init];
+                    [model setValuesForKeysWithDictionary:dataDict];
+                    [_dataArray addObject:model];
+                }
+                [_tableView reloadData];
+            }
+        }else{
+            if ([data objectForKey:@"packResultMsg"]) {
+                [LQProgressHud showMessage:[data objectForKey:@"packResultMsg"]];
+            }
+        }
+        
+    }];
+    
+}
+
 #pragma mark - 下载数据
 - (void)downLoadData:(int)page isReshing:(BOOL)isReshing{
-    
-    
     
     [[PostDataRequest sharedInstance] postDataRequest:@"UserFollow/querbyUserFollowList.do" parameter:@{@"userId":@0,@"otherUserId":[[NSUserDefaults standardUserDefaults] objectForKey:@"userId"],@"page":[NSNumber numberWithInt:page],@"rows":@10} success:^(id respondsData) {
         NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:respondsData options:NSJSONReadingMutableContainers error:nil];
@@ -193,23 +239,49 @@
     
     if (_fromWitchVC == 1) {
         [cell showData:_dataArray[indexPath.row]];
+        [cell.btnFocus addTarget:self action:@selector(cellBtnClicked:event:) forControlEvents:UIControlEventTouchUpInside];
 
     }else{
-        [cell exhibitionData:_dataArray[indexPath.row]];
+        [cell exhibitionData:_dataArray[indexPath.row]]; // 新朋友
+        [cell.btnFocus addTarget:self action:@selector(selfDetClick:event:) forControlEvents:UIControlEventTouchUpInside];
+
     }
     cell.btnIcon.tag = indexPath.row + 10000;
-    [cell.btnIcon addTarget:self action:@selector(selfDetClick:) forControlEvents:UIControlEventTouchUpInside];
     
     cell.btnFocus.tag = indexPath.row + 100000;
-    [cell.btnFocus addTarget:self action:@selector(cellBtnClicked:event:) forControlEvents:UIControlEventTouchUpInside];
     return cell;
 }
 
--(void)selfDetClick:(UIButton *)btn
+-(void)selfDetClick:(UIButton *)btn event:(id)event
 {
-    PersonHomeController *selfVC = [[PersonHomeController alloc] init];
-    selfVC.strMoodId = [_dataArray[btn.tag - 10000] userId];
-    [self.navigationController pushViewController:selfVC animated:YES];
+    NSSet *touches =[event allTouches];
+    UITouch *touch =[touches anyObject];
+    CGPoint currentTouchPosition = [touch locationInView:_tableView];
+    NSIndexPath *indexPath= [_tableView indexPathForRowAtPoint:currentTouchPosition];
+    
+    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+    [dic setObject:[_dataArray[indexPath.row] timeKey] forKey:@"userFriendKey"];
+    [dic setValue:@1 forKey:@"state"];
+    [[ShowHUD showHUD] showAnimationWithText:@"添加中…" FromView:self.view];
+
+    [[JsonHttp jsonHttp] httpRequestWithMD5:@"userFriend/doApplyHandle" JsonKey:nil withData:dic failedBlock:^(id errType) {
+        [[ShowHUD showHUD] hideAnimationFromView:self.view];
+
+    } completionBlock:^(id data) {
+        
+        [[ShowHUD showHUD] hideAnimationFromView:self.view];
+        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+            [LQProgressHud showMessage:@"添加成功"];
+            
+        }else{
+            if ([data objectForKey:@"packResultMsg"]) {
+                [LQProgressHud showMessage:[data objectForKey:@"packResultMsg"]];
+            }
+        }
+    }];
+    
+
+
 }
 
 
@@ -221,10 +293,15 @@
     CGPoint currentTouchPosition = [touch locationInView:_tableView];
     NSIndexPath *indexPath= [_tableView indexPathForRowAtPoint:currentTouchPosition];
     
-    NewFriendTableViewCell* cell = [_tableView cellForRowAtIndexPath:indexPath];
-    
     if (_fromWitchVC == 1) {
         JGAddFriendViewController *addFriVC = [[JGAddFriendViewController alloc] init];
+        addFriVC.otherUserKey = [_dataArray[indexPath.row] userId];
+        addFriVC.popToVC = ^(NSInteger num){
+            if (num == 1) {
+                [_dataArray removeObjectAtIndex:indexPath.row];
+                [_tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:YES];
+            }
+        };
         [self.navigationController pushViewController:addFriVC animated:YES];
     }
     
@@ -269,6 +346,8 @@
     vc.displayUserNameInCell = NO;
     [self.navigationController pushViewController:vc animated:YES];
 }
+
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

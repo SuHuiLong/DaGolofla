@@ -32,6 +32,7 @@
 
 #import "JGLBarCodeViewController.h"  // 扫码框
 
+#import "JGAddFriendViewController.h"
 
 @interface TeamFriListViewController ()<UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate,UISearchResultsUpdating>
 
@@ -392,27 +393,36 @@
 //    JGSearchNewFriendTableViewCell* cell = [_tableView cellForRowAtIndexPath:indexPath];
     
     NewFriendModel *myAtModel = self.searchArray[indexPath.row];
-    
-    [[ShowHUD showHUD] showAnimationWithText:@"发送中…" FromView:self.view];
-    NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
-    [dic setObject:DEFAULF_USERID forKey:@"userKey"];
-    [dic setObject:myAtModel.userId forKey:@"friendUserKey"];
-    [[JsonHttp jsonHttp] httpRequestWithMD5:@"userFriend/doApply" JsonKey:nil withData:dic failedBlock:^(id errType) {
-        [[ShowHUD showHUD] hideAnimationFromView:self.view];
 
-    } completionBlock:^(id data) {
-        [[ShowHUD showHUD] hideAnimationFromView:self.view];
-        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
-            
-            [LQProgressHud showMessage:@"添加请求已发送"];
-            [self.searchArray removeObjectAtIndex:indexPath.row];
-            [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:YES];
-        }else{
-            if ([data objectForKey:@"packResultMsg"]) {
-                [LQProgressHud showMessage:[data objectForKey:@"packResultMsg"]];
-            }
-        }
-    }];
+    JGAddFriendViewController *addFriendVC = [[JGAddFriendViewController alloc] init];
+    addFriendVC.otherUserKey = myAtModel.userId;
+    addFriendVC.popToVC = ^(NSInteger num){
+        
+    };
+    [self.navigationController pushViewController:addFriendVC animated:YES];
+    
+    
+    
+//    [[ShowHUD showHUD] showAnimationWithText:@"发送中…" FromView:self.view];
+//    NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
+//    [dic setObject:DEFAULF_USERID forKey:@"userKey"];
+//    [dic setObject:myAtModel.userId forKey:@"friendUserKey"];
+//    [[JsonHttp jsonHttp] httpRequestWithMD5:@"userFriend/doApply" JsonKey:nil withData:dic failedBlock:^(id errType) {
+//        [[ShowHUD showHUD] hideAnimationFromView:self.view];
+//
+//    } completionBlock:^(id data) {
+//        [[ShowHUD showHUD] hideAnimationFromView:self.view];
+//        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+//            
+//            [LQProgressHud showMessage:@"添加请求已发送"];
+//            [self.searchArray removeObjectAtIndex:indexPath.row];
+//            [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:YES];
+//        }else{
+//            if ([data objectForKey:@"packResultMsg"]) {
+//                [LQProgressHud showMessage:[data objectForKey:@"packResultMsg"]];
+//            }
+//        }
+//    }];
 }
 
 
