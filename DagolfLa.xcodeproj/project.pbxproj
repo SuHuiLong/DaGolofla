@@ -289,6 +289,7 @@
 		20D564CB1DE57227005535A6 /* JGHNotDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 20D564CA1DE57227005535A6 /* JGHNotDetailViewController.m */; };
 		20D564CE1DE68D5D005535A6 /* RCDTabBarBtn.m in Sources */ = {isa = PBXBuildFile; fileRef = 20D564CD1DE68D5D005535A6 /* RCDTabBarBtn.m */; };
 		20D564D11DE68DAF005535A6 /* UIColor+RCColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 20D564D01DE68DAF005535A6 /* UIColor+RCColor.m */; };
+		20D564D51DE803A1005535A6 /* JGHUserModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 20D564D41DE803A1005535A6 /* JGHUserModel.m */; };
 		20F025361D6FD59300D7D7B6 /* JGHAddTeamPlaysViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 20F025351D6FD59300D7D7B6 /* JGHAddTeamPlaysViewController.m */; };
 		20F0253A1D6FDC1000D7D7B6 /* JGHAddPlaysCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 20F025381D6FDC1000D7D7B6 /* JGHAddPlaysCell.m */; };
 		20F0253B1D6FDC1000D7D7B6 /* JGHAddPlaysCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 20F025391D6FDC1000D7D7B6 /* JGHAddPlaysCell.xib */; };
@@ -1759,6 +1760,8 @@
 		20D564CD1DE68D5D005535A6 /* RCDTabBarBtn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCDTabBarBtn.m; sourceTree = "<group>"; };
 		20D564CF1DE68DAF005535A6 /* UIColor+RCColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+RCColor.h"; sourceTree = "<group>"; };
 		20D564D01DE68DAF005535A6 /* UIColor+RCColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+RCColor.m"; sourceTree = "<group>"; };
+		20D564D31DE803A1005535A6 /* JGHUserModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHUserModel.h; sourceTree = "<group>"; };
+		20D564D41DE803A1005535A6 /* JGHUserModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHUserModel.m; sourceTree = "<group>"; };
 		20F025341D6FD59300D7D7B6 /* JGHAddTeamPlaysViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHAddTeamPlaysViewController.h; sourceTree = "<group>"; };
 		20F025351D6FD59300D7D7B6 /* JGHAddTeamPlaysViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHAddTeamPlaysViewController.m; sourceTree = "<group>"; };
 		20F025371D6FDC1000D7D7B6 /* JGHAddPlaysCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHAddPlaysCell.h; sourceTree = "<group>"; };
@@ -4758,6 +4761,15 @@
 			path = " 系统球队通知";
 			sourceTree = "<group>";
 		};
+		20D564D21DE80382005535A6 /* 个人信息 */ = {
+			isa = PBXGroup;
+			children = (
+				20D564D31DE803A1005535A6 /* JGHUserModel.h */,
+				20D564D41DE803A1005535A6 /* JGHUserModel.m */,
+			);
+			path = "个人信息";
+			sourceTree = "<group>";
+		};
 		20F025321D6FD50100D7D7B6 /* 添加打球人 */ = {
 			isa = PBXGroup;
 			children = (
@@ -6383,6 +6395,7 @@
 		36DC9D541C99391E003E4FCC /* 消息 */ = {
 			isa = PBXGroup;
 			children = (
+				20D564D21DE80382005535A6 /* 个人信息 */,
 				20D564C51DE56794005535A6 /*  系统球队通知 */,
 				36DC9D551C993974003E4FCC /* 新朋友 */,
 			);
@@ -10043,6 +10056,7 @@
 				82F254581D3CA731008BE0AF /* JGLFriendAddViewController.m in Sources */,
 				36BFFF6B1BC76D09005B3CE2 /* UIWebView+AFNetworking.m in Sources */,
 				F5E1BB6C1D6B006100414727 /* ZXPDF417BarcodeMatrix.m in Sources */,
+				20D564D51DE803A1005535A6 /* JGHUserModel.m in Sources */,
 				36BFFF8A1BC76D09005B3CE2 /* FDCalendar.m in Sources */,
 				20F7D4511D88E7FC00302406 /* FCUUID.m in Sources */,
 				82266D681D4EDFD1001A4F9D /* JGLScoreRankTableViewCell.m in Sources */,

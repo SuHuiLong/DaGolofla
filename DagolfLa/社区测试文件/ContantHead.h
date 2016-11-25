@@ -27,6 +27,7 @@ typedef NS_ENUM(NSInteger, GestureType) {
 #define userID @"userId"
 #define Mobile @"mobile"
 #define PHPState @"phpstate"
+#define UserName @"userName"
 #define DEFAULF_USERID [[NSUserDefaults standardUserDefaults] objectForKey:@"userId"]
 //提示框时间
 #define TIMESlEEP 1.5
@@ -151,6 +152,6 @@ typedef NS_ENUM(NSInteger, GestureType) {
 #import "JGHLoginViewController.h"
 #import "UITool.h"
 #import "UMMobClick/MobClick.h"
-
+#import "JGHPersonalInfoViewController.h"
 
 #endif

@@ -280,7 +280,7 @@
                 [userdef setObject:[userDict objectForKey:@"sex"] forKey:@"sex"];
                 //判断是否登录，用来社区的刷新
                 [userdef setObject:@1 forKey:@"isFirstEnter"];
-                [userdef setObject:[userDict objectForKey:@"userName"] forKey:@"userName"];
+                [userdef setObject:[userDict objectForKey:UserName] forKey:UserName];
                 [userdef setObject:[userDict objectForKey:@"rongTk"] forKey:@"rongTk"];
                 [userdef synchronize];
                 
