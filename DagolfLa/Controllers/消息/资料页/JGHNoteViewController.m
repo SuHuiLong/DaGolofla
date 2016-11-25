@@ -28,7 +28,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.view.backgroundColor = [UIColor whiteColor];
+    self.view.backgroundColor = [UIColor colorWithHexString:BG_color];
     self.navigationItem.title = @"备注";
     
     [self createNoteText];
@@ -39,6 +39,8 @@
         [[ShowHUD showHUD]showToastWithText:@"请输入备注" FromView:self.view];
         return;
     }
+    
+    _blockRereshNote(self.noteText.text);
 }
 
 - (void)createNoteText{
@@ -46,7 +48,7 @@
     oneview.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:oneview];
     
-    self.noteText = [[UITextField alloc]initWithFrame:CGRectMake(10 *ProportionAdapter, 10 *ProportionAdapter, screenWidth - 20*ProportionAdapter, 30 *ProportionAdapter)];
+    self.noteText = [[UITextField alloc]initWithFrame:CGRectMake(10 *ProportionAdapter, 0, screenWidth - 20*ProportionAdapter, 40 *ProportionAdapter)];
     self.noteText.placeholder = @"请输入备注";
     self.noteText.font = [UIFont systemFontOfSize:16*ProportionAdapter];
     self.noteText.delegate = self;
@@ -54,12 +56,29 @@
     
     UILabel *proLable = [[UILabel alloc]initWithFrame:CGRectMake(screenWidth -50 *ProportionAdapter, 50 *ProportionAdapter, 40 *ProportionAdapter, 20*ProportionAdapter)];
     proLable.font = [UIFont systemFontOfSize:16 *ProportionAdapter];
+    proLable.textColor = [UIColor lightGrayColor];
     proLable.text = @"20";
+    proLable.textAlignment = NSTextAlignmentRight;
     [oneview addSubview:proLable];
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField{
     
+}
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string;
+{
+    if ([string isEqualToString:@"\n"]){
+        return YES;
+    }
+    
+    NSString *str = [textField.text stringByReplacingCharactersInRange:range withString:string];
+    
+    if ([str length] > 20) {
+        textField.text = [str substringToIndex:20];
+        return NO;
+    }
+    
+    return YES;
 }
 
 - (void)didReceiveMemoryWarning {
