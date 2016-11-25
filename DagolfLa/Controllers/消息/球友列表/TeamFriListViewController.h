@@ -8,6 +8,12 @@
 
 #import "ViewController.h"
 
-@interface TeamFriListViewController : ViewController
+#import "JGTeamMemberManager.h"
+
+#import "TKAddressModel.h"
+#import <AddressBook/AddressBook.h>
+#import <AddressBookUI/AddressBookUI.h>
+
+@interface TeamFriListViewController : ViewController<ABPeoplePickerNavigationControllerDelegate>
 
 @end

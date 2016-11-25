@@ -1,14 +1,13 @@
 //
-//  JGAddFriendViewController.h
+//  JGScanAddTableViewCell.h
 //  DagolfLa
 //
 //  Created by 東 on 16/11/23.
 //  Copyright © 2016年 bhxx. All rights reserved.
 //
 
-#import "ViewController.h"
+#import <UIKit/UIKit.h>
 
-@interface JGAddFriendViewController : ViewController
-
+@interface JGScanAddTableViewCell : UITableViewCell
 
 @end

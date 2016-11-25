@@ -40,7 +40,7 @@
     self.fieldTF.backgroundColor = [UIColor whiteColor];
     [self.fieldTF setValue:[NSNumber numberWithInt:20] forKey:@"paddingLeft"];
     self.fieldTF.placeholder = @"请输入验证申请";
-    
+
     
     [self.view addSubview:self.fieldTF];
 //    [self.fieldTF becomeFirstResponder];

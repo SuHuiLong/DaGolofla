@@ -856,6 +856,7 @@
 		F543ACC71CF42E1200C6B111 /* JGDisplayInfoTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F543ACC61CF42E1200C6B111 /* JGDisplayInfoTableViewCell.m */; };
 		F543ACCA1CF476D400C6B111 /* JGNewCreateTeamTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F543ACC91CF476D400C6B111 /* JGNewCreateTeamTableViewController.m */; };
 		F54564E71DE5228600596211 /* JGAddFriendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F54564E61DE5228600596211 /* JGAddFriendViewController.m */; };
+		F54564EA1DE563E000596211 /* JGScanAddTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F54564E91DE563E000596211 /* JGScanAddTableViewCell.m */; };
 		F54CC1831D83C75700A194F2 /* JGDAlmostStlyleSetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F54CC1821D83C75700A194F2 /* JGDAlmostStlyleSetViewController.m */; };
 		F54CC1861D83FA6800A194F2 /* JGDAlmostSetTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F54CC1851D83FA6800A194F2 /* JGDAlmostSetTableViewCell.m */; };
 		F54CC18A1D8428CE00A194F2 /* JGLWriteReplyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F54CC1891D8428CE00A194F2 /* JGLWriteReplyViewController.m */; };
@@ -928,6 +929,7 @@
 		F5AEF73E1D41B98E009A8C34 /* JGDHistoryScoreTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F5AEF72E1D41B98E009A8C34 /* JGDHistoryScoreTableViewCell.m */; };
 		F5AEF73F1D41B98E009A8C34 /* JGDTrueOrFalseTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F5AEF7301D41B98E009A8C34 /* JGDTrueOrFalseTableViewCell.m */; };
 		F5AEF74D1D423E54009A8C34 /* JGDWrongViewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5AEF74C1D423E54009A8C34 /* JGDWrongViewViewController.m */; };
+		F5B431D71DE6A98C00330259 /* JGSearchNewFriendTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F5B431D61DE6A98C00330259 /* JGSearchNewFriendTableViewCell.m */; };
 		F5B5498F1CE98F5B0091C962 /* JGTeamManageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5B5498E1CE98F5B0091C962 /* JGTeamManageViewController.m */; };
 		F5B549931CE9AC9C0091C962 /* JGApplyMaterialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5B549921CE9AC9C0091C962 /* JGApplyMaterialViewController.m */; };
 		F5B549971CE9B0710091C962 /* JGApplyMaterialTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F5B549961CE9B0710091C962 /* JGApplyMaterialTableViewCell.m */; };
@@ -2819,6 +2821,8 @@
 		F543ACC91CF476D400C6B111 /* JGNewCreateTeamTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGNewCreateTeamTableViewController.m; sourceTree = "<group>"; };
 		F54564E51DE5228600596211 /* JGAddFriendViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGAddFriendViewController.h; sourceTree = "<group>"; };
 		F54564E61DE5228600596211 /* JGAddFriendViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGAddFriendViewController.m; sourceTree = "<group>"; };
+		F54564E81DE563E000596211 /* JGScanAddTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGScanAddTableViewCell.h; sourceTree = "<group>"; };
+		F54564E91DE563E000596211 /* JGScanAddTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGScanAddTableViewCell.m; sourceTree = "<group>"; };
 		F54CC1811D83C75700A194F2 /* JGDAlmostStlyleSetViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGDAlmostStlyleSetViewController.h; sourceTree = "<group>"; };
 		F54CC1821D83C75700A194F2 /* JGDAlmostStlyleSetViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGDAlmostStlyleSetViewController.m; sourceTree = "<group>"; };
 		F54CC1841D83FA6800A194F2 /* JGDAlmostSetTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGDAlmostSetTableViewCell.h; sourceTree = "<group>"; };
@@ -2959,6 +2963,8 @@
 		F5AEF7301D41B98E009A8C34 /* JGDTrueOrFalseTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGDTrueOrFalseTableViewCell.m; sourceTree = "<group>"; };
 		F5AEF74B1D423E54009A8C34 /* JGDWrongViewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGDWrongViewViewController.h; sourceTree = "<group>"; };
 		F5AEF74C1D423E54009A8C34 /* JGDWrongViewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGDWrongViewViewController.m; sourceTree = "<group>"; };
+		F5B431D51DE6A98C00330259 /* JGSearchNewFriendTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGSearchNewFriendTableViewCell.h; sourceTree = "<group>"; };
+		F5B431D61DE6A98C00330259 /* JGSearchNewFriendTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGSearchNewFriendTableViewCell.m; sourceTree = "<group>"; };
 		F5B5498D1CE98F5B0091C962 /* JGTeamManageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGTeamManageViewController.h; sourceTree = "<group>"; };
 		F5B5498E1CE98F5B0091C962 /* JGTeamManageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGTeamManageViewController.m; sourceTree = "<group>"; };
 		F5B549911CE9AC9C0091C962 /* JGApplyMaterialViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGApplyMaterialViewController.h; sourceTree = "<group>"; };
@@ -4864,6 +4870,8 @@
 			children = (
 				36067BC61C97F46D001AE22C /* NewFriendViewController.h */,
 				36067BC71C97F46D001AE22C /* NewFriendViewController.m */,
+				F54564E81DE563E000596211 /* JGScanAddTableViewCell.h */,
+				F54564E91DE563E000596211 /* JGScanAddTableViewCell.m */,
 			);
 			path = "新朋友";
 			sourceTree = "<group>";
@@ -4883,6 +4891,8 @@
 			children = (
 				36067BCC1C97F915001AE22C /* NewFriendTableViewCell.h */,
 				36067BCD1C97F915001AE22C /* NewFriendTableViewCell.m */,
+				F5B431D51DE6A98C00330259 /* JGSearchNewFriendTableViewCell.h */,
+				F5B431D61DE6A98C00330259 /* JGSearchNewFriendTableViewCell.m */,
 			);
 			path = "新朋友";
 			sourceTree = "<group>";
@@ -9515,6 +9525,7 @@
 				36BF004C1BC77213005B3CE2 /* ComDeatailModel.m in Sources */,
 				65B596E81CAD43AC007AB83A /* WFHudView.m in Sources */,
 				F5EE48891D462625001D5E44 /* JGLScoreNewModel.m in Sources */,
+				F54564EA1DE563E000596211 /* JGScanAddTableViewCell.m in Sources */,
 				F5AAAA251D58A64A0016E6F6 /* JGMeMoreViewController.m in Sources */,
 				F5E1BB711D6B006100414727 /* ZXPDF417Common.m in Sources */,
 				F5E1BB121D6B006100414727 /* ZXDataMatrixBase256Encoder.m in Sources */,
@@ -10133,6 +10144,7 @@
 				20D515161DBB82280006EFCB /* JGHEventDetailsViewController.m in Sources */,
 				F5E1B87E1D6AE13800414727 /* JGDGuestPayViewController.m in Sources */,
 				20D514F11DB63DA60006EFCB /* JGHGameSetCell.m in Sources */,
+				F5B431D71DE6A98C00330259 /* JGSearchNewFriendTableViewCell.m in Sources */,
 				3660E1DF1BFC64020033B4D7 /* ScoredCardViewController.m in Sources */,
 				65B801001CD04D150077A324 /* DeatilModel.m in Sources */,
 				F5E1BB311D6B006100414727 /* ZXRSSExpandedCurrentParsingState.m in Sources */,

@@ -10,4 +10,14 @@
 
 @implementation NewFriendModel
 
+- (void)setValue:(id)value forKey:(NSString *)key{
+    if ([key isEqualToString:@"userKey"]) {
+        [super setValue:value forKey:@"userId"];
+        
+    }else{
+        [super setValue:value forKey:key];
+    }
+}
+
+
 @end

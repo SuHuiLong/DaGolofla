@@ -12,5 +12,7 @@
 //二维码添加好友
 @property (copy, nonatomic) void (^blockDict)(NSMutableDictionary* );
 
+@property (nonatomic, assign) NSInteger fromWitchVC; // 2 添加好友
+
 
 @end
