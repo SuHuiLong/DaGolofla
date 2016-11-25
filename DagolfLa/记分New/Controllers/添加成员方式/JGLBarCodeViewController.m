@@ -328,32 +328,42 @@
             NSMutableDictionary* dict =[[NSMutableDictionary alloc]init];
             [dict setObject:[Helper returnUrlString:str WithKey:@"userKey"] forKey:@"userKey"];
             [dict setObject:[Helper returnUrlString:str WithKey:@"md5"] forKey:@"md5"];
-        
             
-            [[JsonHttp jsonHttp]httpRequest:@"qcode/getUserInfo" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
+            if (_fromWitchVC == 2) {
                 
-            } completionBlock:^(id data) {
                 
-                if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
-                    NSMutableDictionary* dictDa = [[NSMutableDictionary alloc]init];
-                    [dictDa setObject:[[data objectForKey:@"user"] objectForKey:@"userName"] forKey:[Helper returnUrlString:str WithKey:@"userKey"]];
-                    _blockDict(dictDa);
-                    [self.navigationController popViewControllerAnimated:YES];
-                }
-                else{
-                    [_session startRunning];
-                    [Helper alertViewWithTitle:[data objectForKey:@"packResultMsg"] withBlock:^(UIAlertController *alertView) {
-                        [self presentViewController:alertView animated:YES completion:nil];
-                    }];
-                }
                 
-                NSLog(@"%@", data);
-                if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+                
+            }else{
+                [[JsonHttp jsonHttp]httpRequest:@"qcode/getUserInfo" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
                     
-                }else{
+                } completionBlock:^(id data) {
                     
-                }
-            }];
+                    if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+                        NSMutableDictionary* dictDa = [[NSMutableDictionary alloc]init];
+                        [dictDa setObject:[[data objectForKey:@"user"] objectForKey:@"userName"] forKey:[Helper returnUrlString:str WithKey:@"userKey"]];
+                        _blockDict(dictDa);
+                        [self.navigationController popViewControllerAnimated:YES];
+                    }
+                    else{
+                        [_session startRunning];
+                        [Helper alertViewWithTitle:[data objectForKey:@"packResultMsg"] withBlock:^(UIAlertController *alertView) {
+                            [self presentViewController:alertView animated:YES completion:nil];
+                        }];
+                    }
+                    
+                    NSLog(@"%@", data);
+                    if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+                        
+                    }else{
+                        
+                    }
+                }];
+
+            }
+            
+            
+            
         }
     }
 }

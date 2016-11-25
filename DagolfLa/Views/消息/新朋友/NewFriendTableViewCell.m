@@ -72,7 +72,9 @@
 // 球友推荐
 -(void)showData:(NewFriendModel *)model
 {
-    [_btnIcon sd_setImageWithURL:[Helper imageIconUrl:model.pic] forState:UIControlStateNormal];
+    [_btnIcon sd_setImageWithURL:[Helper imageIconUrl:model.pic] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
+    
+    
     if (![Helper isBlankString:model.userName]) {
         _nameLabel.text = model.userName;
     }
@@ -104,7 +106,8 @@
 // 新朋友
 -(void)exhibitionData:(NewFriendModel *)model
 {
-    [_btnIcon sd_setImageWithURL:[Helper imageIconUrl:model.pic] forState:UIControlStateNormal];
+    [_btnIcon sd_setImageWithURL:[Helper imageIconUrl:model.pic] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
+
     if (![Helper isBlankString:model.userName]) {
         _nameLabel.text = model.userName;
     }

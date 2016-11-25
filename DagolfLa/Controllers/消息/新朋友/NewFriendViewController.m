@@ -68,15 +68,59 @@
     [_tableView registerClass:[NewFriendTableViewCell class] forCellReuseIdentifier:@"NewFriendTableViewCell"];
     
     if (_fromWitchVC == 2) {
+        [self downLoawdDataWithNewFriend];
         _tableView.footer=[MJDIYBackFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRereshing)];
+    }else{
+        _tableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
+        [_tableView.header beginRefreshing];
+
     }
-    _tableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
-    [_tableView.header beginRefreshing];
 }
 
 
+- (void)downLoawdDataWithNewFriend{
+    
+    [[ShowHUD showHUD] showAnimationWithText:@"加载中…" FromView:self.view];
+    
+    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+    [dic setObject:DEFAULF_USERID forKey:@"userKey"];
+    
+    [dic setObject:[Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@dagolfla.com",DEFAULF_USERID]] forKey:@"md5"];
+    
+    
+    
+    [[JsonHttp jsonHttp] httpRequest:@"userFriend/getUserNewFriendList" JsonKey:nil withData:dic requestMethod:@"GET" failedBlock:^(id errType) {
+        
+    } completionBlock:^(id data) {
+        
+        [[ShowHUD showHUD] hideAnimationFromView:self.view];
+        
+        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+            
+            if ([data objectForKey:@"list"]) {
+                
+                [_dataArray removeAllObjects];
+                
+                for (NSDictionary *dataDict in [data objectForKey:@"rows"]) {
+                    NewFriendModel *model = [[NewFriendModel alloc] init];
+                    [model setValuesForKeysWithDictionary:dataDict];
+                    [_dataArray addObject:model];
+                }
+                
+            }
+        }else{
+            if ([data objectForKey:@"packResultMsg"]) {
+                [LQProgressHud showMessage:[data objectForKey:@"packResultMsg"]];
+            }
+        }
+        
+    }];
+    
+}
 #pragma mark - 下载数据
 - (void)downLoadData:(int)page isReshing:(BOOL)isReshing{
+    
+    
     
     [[PostDataRequest sharedInstance] postDataRequest:@"UserFollow/querbyUserFollowList.do" parameter:@{@"userId":@0,@"otherUserId":[[NSUserDefaults standardUserDefaults] objectForKey:@"userId"],@"page":[NSNumber numberWithInt:page],@"rows":@10} success:^(id respondsData) {
         NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:respondsData options:NSJSONReadingMutableContainers error:nil];
