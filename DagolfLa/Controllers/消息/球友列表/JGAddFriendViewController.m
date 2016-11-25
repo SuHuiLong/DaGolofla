@@ -8,13 +8,18 @@
 
 #import "JGAddFriendViewController.h"
 
-@interface JGAddFriendViewController ()
+@interface JGAddFriendViewController ()<UITextFieldDelegate>
 
 @property (nonatomic, strong) UITextField *fieldTF;
 
 @end
 
 @implementation JGAddFriendViewController
+
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:YES];
+    self.navigationController.navigationBarHidden = NO;
+}
 
 
 - (void)viewDidLoad {
@@ -36,11 +41,12 @@
     
     
     self.fieldTF = [[UITextField alloc] initWithFrame:CGRectMake(0, 50 * ProportionAdapter, screenWidth, 49 * ProportionAdapter)];
+    self.fieldTF.delegate = self;
     self.fieldTF.clearButtonMode = UITextFieldViewModeAlways;
     self.fieldTF.backgroundColor = [UIColor whiteColor];
     [self.fieldTF setValue:[NSNumber numberWithInt:20] forKey:@"paddingLeft"];
     self.fieldTF.placeholder = @"请输入验证申请";
-
+    self.fieldTF.text = [NSString stringWithFormat:@"我是 %@", DEFAULF_UserName];
     
     [self.view addSubview:self.fieldTF];
 //    [self.fieldTF becomeFirstResponder];
@@ -84,6 +90,19 @@
     }];
 
     
+}
+
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
+    
+    NSString * toBeString = [textField.text stringByReplacingCharactersInRange:range withString:string];
+    
+    if (toBeString.length > 20 && range.length!=1){
+        textField.text = [toBeString substringToIndex:20];
+        return NO;
+        
+    }
+    return YES;  
 }
 
 - (void)didReceiveMemoryWarning {

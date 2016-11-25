@@ -24,6 +24,8 @@
 @property (strong, nonatomic) NSString* address;
 @property (strong, nonatomic) NSNumber* isFollow;
 @property (strong, nonatomic) NSNumber* age;
+@property (copy, nonatomic) NSString* reason;
+@property (strong, nonatomic) NSNumber* timeKey;
 
 
 @end

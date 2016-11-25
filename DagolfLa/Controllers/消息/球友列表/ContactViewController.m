@@ -33,6 +33,8 @@
 @property (strong, nonatomic)NSMutableArray *listArray;
 @property (strong, nonatomic)UITapGestureRecognizer *infoTap;
 
+@property (nonatomic, strong) UIImageView *cryImageV;
+@property (nonatomic, strong) UILabel *tipLB;
 @end
 
 @implementation ContactViewController
@@ -44,21 +46,26 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
-
+    
+    
     UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"jqy"] style:UIBarButtonItemStylePlain target:self action:@selector(contact)];
     item.tintColor = [UIColor whiteColor];
     self.navigationItem.rightBarButtonItem = item;
     
     self.title = @"球友通讯录";
-    self.tableView = [[UITableView alloc] initWithFrame:[UIScreen mainScreen].bounds style:(UITableViewStylePlain)];
+//    self.tableView = [[UITableView alloc] initWithFrame:[UIScreen mainScreen].bounds style:(UITableViewStylePlain)];
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 10 * ProportionAdapter, screenWidth, screenHeight - 50 * ProportionAdapter)];
     self.tableView.rowHeight = 49 * ScreenWidth / 375;
     self.view = self.tableView;
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.bounces = NO;
-//    [self setData];
+    //    [self setData];
+    self.tableView.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];
     
+    UIView *EEEVIew = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 10 * ProportionAdapter)];
+    EEEVIew.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];
+    self.tableView.tableHeaderView = EEEVIew;
     
     // Do any additional setup after loading the view.
 }
@@ -123,7 +130,7 @@
             cell1.myLabel.text = @"新朋友";
             cell1.myImageV.image = [UIImage imageNamed:@"xxpy"];
         }
-
+        
         return cell1;
     }else{
         self.infoTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(infotapclick:)];
@@ -132,12 +139,12 @@
         MyattenModel *model = self.listArray[indexPath.section - 1][indexPath.row];
         NoteModel *modell = [NoteHandlle selectNoteWithUID:model.otherUserId];
         if ([modell.userremarks isEqualToString:@"(null)"] || [modell.userremarks isEqualToString:@""] || modell.userremarks == nil) {
-
+            
         }else{
             model.userName = modell.userremarks;
         }
         
-
+        
         cell.myModel = model;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
@@ -151,12 +158,12 @@
             NewFriendViewController *newVC = [[NewFriendViewController alloc] init];
             newVC.fromWitchVC = 1;
             [self.navigationController pushViewController:newVC animated:YES];
-
+            
         }else{
             NewFriendViewController *newVC = [[NewFriendViewController alloc] init];
             newVC.fromWitchVC = 2;
             [self.navigationController pushViewController:newVC animated:YES];
-
+            
         }
         
     }else{
@@ -212,50 +219,126 @@
 // 获取所有关注好友信息
 - (void)setData{
     
-    [[PostDataRequest sharedInstance] postDataRequest:@"UserFollow/querbyUserFollowList.do" parameter:@{@"userId":[[NSUserDefaults standardUserDefaults] objectForKey:@"userId"],@"otherUserId":@0,@"page":@0,@"rows":@0} success:^(id respondsData) {
-        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:respondsData options:NSJSONReadingMutableContainers error:nil];
+    
+    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+    [dic setObject:DEFAULF_USERID forKey:@"userKey"];
+    [dic setObject: [Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@dagolfla.com", DEFAULF_USERID]] forKey:@"md5"];
+    [[ShowHUD showHUD] showAnimationWithText:@"加载中…" FromView:self.view];
+    
+    [[JsonHttp jsonHttp] httpRequest:@"userFriend/getUserFriendList" JsonKey:nil withData:dic requestMethod:@"GET" failedBlock:^(id errType) {
+        [[ShowHUD showHUD] hideAnimationFromView:self.view];
         
-        if ([[dict objectForKey:@"success"] boolValue]) {
-            NSArray *array = [dict objectForKey:@"rows"];
-            NSMutableArray *allFriarr = [[NSMutableArray alloc] init];
-            for (NSDictionary *dic in array) {
-                MyattenModel *model = [[MyattenModel alloc] init];
-                [model setValuesForKeysWithDictionary:dic];
-                if (![model.userName isEqualToString:@""]) {
-                    NoteModel *modell = [NoteHandlle selectNoteWithUID:model.otherUserId];
-                    if ([modell.userremarks isEqualToString:@"(null)"] || [modell.userremarks isEqualToString:@""] || modell.userremarks == nil) {
+    } completionBlock:^(id data) {
+        [[ShowHUD showHUD] hideAnimationFromView:self.view];
+        
+        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+            if ([data objectForKey:@"list"]) {
+                
+                NSArray *array = [data objectForKey:@"list"];
+                NSMutableArray *allFriarr = [[NSMutableArray alloc] init];
+                for (NSDictionary *dic in array) {
+                    MyattenModel *model = [[MyattenModel alloc] init];
+                    [model setValuesForKeysWithDictionary:dic];
+                    if (![model.userName isEqualToString:@""]) {
+                        NoteModel *modell = [NoteHandlle selectNoteWithUID:model.otherUserId];
+                        if ([modell.userremarks isEqualToString:@"(null)"] || [modell.userremarks isEqualToString:@""] || modell.userremarks == nil) {
+                            
+                        }else{
+                            model.userName = modell.userremarks;
+                        }
                         
-                    }else{
-                        model.userName = modell.userremarks;
+                        [allFriarr addObject:model];
+                        //                [self.keyArray addObject:model.userName];
                     }
                     
-                    [allFriarr addObject:model];
-                    //                [self.keyArray addObject:model.userName];
                 }
+                
+                self.listArray = [[NSMutableArray alloc]initWithArray:[PYTableViewIndexManager archiveNumbers:allFriarr]];
+                
+                _keyArray = [[NSMutableArray alloc]initWithObjects:@"A",@"B",@"C",@"D",@"E",@"F",@"G",@"H",@"I",@"J",@"K",@"L",@"M",@"N",@"O",@"P",@"Q",@"R",@"S",@"T",@"U",@"V",@"W",@"X",@"Y",@"Z",@"#", nil];
+                
+                for (int i = (int)self.listArray.count-1; i>=0; i--) {
+                    if ([self.listArray[i] count] == 0) {
+                        [self.keyArray removeObjectAtIndex:i];
+                        [self.listArray removeObjectAtIndex:i];
+                    }
+                }
+                
+                if ([self.tableView.subviews containsObject:self.cryImageV]) {
+                    self.cryImageV.hidden = YES;
+                    self.tipLB.hidden = YES;
+                }
+                
+                [self.tableView reloadData];
+                
+            }else{
+
+                self.cryImageV = [[UIImageView alloc] initWithFrame:CGRectMake(120 * ProportionAdapter, 200 * ProportionAdapter, 107 * ProportionAdapter, 107 * ProportionAdapter)];
+                self.cryImageV.image = [UIImage imageNamed:@"bg-shy"];
+                [self.tableView addSubview:self.cryImageV];
+                
+                self.tipLB = [[UILabel alloc] initWithFrame:CGRectMake(10, 330 * ProportionAdapter, screenWidth - 20 * ProportionAdapter, 20 * ProportionAdapter)];
+                self.tipLB.text = @"您还没有球友哦，赶快去添加吧！";
+                self.tipLB.textAlignment = NSTextAlignmentCenter;
+                self.tipLB.textColor = [UIColor colorWithHexString:@"#a0a0a0"];
+                [self.tableView addSubview:self.tipLB];
 
             }
-            
-            self.listArray = [[NSMutableArray alloc]initWithArray:[PYTableViewIndexManager archiveNumbers:allFriarr]];
-            
-            _keyArray = [[NSMutableArray alloc]initWithObjects:@"A",@"B",@"C",@"D",@"E",@"F",@"G",@"H",@"I",@"J",@"K",@"L",@"M",@"N",@"O",@"P",@"Q",@"R",@"S",@"T",@"U",@"V",@"W",@"X",@"Y",@"Z",@"#", nil];
-
-            for (int i = (int)self.listArray.count-1; i>=0; i--) {
-                if ([self.listArray[i] count] == 0) {
-                    [self.keyArray removeObjectAtIndex:i];
-                    [self.listArray removeObjectAtIndex:i];
-                }
+        }else{
+            if ([data objectForKey:@"packResultMsg"]) {
+                [LQProgressHud showMessage:[data objectForKey:@"packResultMsg"]];
             }
-            [self.tableView reloadData];
-        }else {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:[dict objectForKey:@"message"] delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-            [alert show];
         }
         
-    } failed:^(NSError *error) {
-        
-        
     }];
- 
+    
+    
+    
+    
+    //    [[PostDataRequest sharedInstance] postDataRequest:@"UserFollow/querbyUserFollowList.do" parameter:@{@"userId":[[NSUserDefaults standardUserDefaults] objectForKey:@"userId"],@"otherUserId":@0,@"page":@0,@"rows":@0} success:^(id respondsData) {
+    //        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:respondsData options:NSJSONReadingMutableContainers error:nil];
+    //
+    //        if ([[dict objectForKey:@"success"] boolValue]) {
+    //            NSArray *array = [dict objectForKey:@"rows"];
+    //            NSMutableArray *allFriarr = [[NSMutableArray alloc] init];
+    //            for (NSDictionary *dic in array) {
+    //                MyattenModel *model = [[MyattenModel alloc] init];
+    //                [model setValuesForKeysWithDictionary:dic];
+    //                if (![model.userName isEqualToString:@""]) {
+    //                    NoteModel *modell = [NoteHandlle selectNoteWithUID:model.otherUserId];
+    //                    if ([modell.userremarks isEqualToString:@"(null)"] || [modell.userremarks isEqualToString:@""] || modell.userremarks == nil) {
+    //
+    //                    }else{
+    //                        model.userName = modell.userremarks;
+    //                    }
+    //
+    //                    [allFriarr addObject:model];
+    //                    //                [self.keyArray addObject:model.userName];
+    //                }
+    //
+    //            }
+    //
+    //            self.listArray = [[NSMutableArray alloc]initWithArray:[PYTableViewIndexManager archiveNumbers:allFriarr]];
+    //
+    //            _keyArray = [[NSMutableArray alloc]initWithObjects:@"A",@"B",@"C",@"D",@"E",@"F",@"G",@"H",@"I",@"J",@"K",@"L",@"M",@"N",@"O",@"P",@"Q",@"R",@"S",@"T",@"U",@"V",@"W",@"X",@"Y",@"Z",@"#", nil];
+    //
+    //            for (int i = (int)self.listArray.count-1; i>=0; i--) {
+    //                if ([self.listArray[i] count] == 0) {
+    //                    [self.keyArray removeObjectAtIndex:i];
+    //                    [self.listArray removeObjectAtIndex:i];
+    //                }
+    //            }
+    //            [self.tableView reloadData];
+    //        }else {
+    //            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:[dict objectForKey:@"message"] delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+    //            [alert show];
+    //        }
+    //
+    //    } failed:^(NSError *error) {
+    //
+    //
+    //    }];
+    
 }
 
 - (NSArray<UITableViewRowAction *> *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -276,7 +359,7 @@
         
         [self.navigationController pushViewController:AVC animated:YES];
     }];
-
+    
     return @[note];
     
 }

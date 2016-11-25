@@ -72,7 +72,7 @@
 // 球友推荐
 -(void)showData:(NewFriendModel *)model
 {
-    [_btnIcon sd_setImageWithURL:[Helper imageIconUrl:model.pic] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
+    [_btnIcon sd_setImageWithURL:[Helper setImageIconUrl:@"user" andTeamKey:[model.userId integerValue] andIsSetWidth:YES andIsBackGround:NO] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
     
     
     if (![Helper isBlankString:model.userName]) {
@@ -92,13 +92,10 @@
     
     _ageLabel.text = [NSString stringWithFormat:@"%@",model.age];
     
-    if (![Helper isBlankString:model.userSign]) {
-        _detailLabel.text = model.userSign;
+    if (![Helper isBlankString:model.reason]) {
+        _detailLabel.text = model.reason;
     }
-    else
-    {
-        _detailLabel.text = @"用户暂无签名";
-    }
+    
     [_btnFocus setTitle:@"添加" forState:UIControlStateNormal];
     
 }
@@ -106,8 +103,9 @@
 // 新朋友
 -(void)exhibitionData:(NewFriendModel *)model
 {
-    [_btnIcon sd_setImageWithURL:[Helper imageIconUrl:model.pic] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
-
+    [_btnIcon sd_setImageWithURL:[Helper setImageIconUrl:@"user" andTeamKey:[model.userId integerValue] andIsSetWidth:YES andIsBackGround:NO] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
+    
+    
     if (![Helper isBlankString:model.userName]) {
         _nameLabel.text = model.userName;
     }
@@ -125,13 +123,10 @@
     
     _ageLabel.text = [NSString stringWithFormat:@"%@",model.age];
     
-    if (![Helper isBlankString:model.userSign]) {
-        _detailLabel.text = model.userSign;
+    if (![Helper isBlankString:model.reason]) {
+        _detailLabel.text = model.reason;
     }
-    else
-    {
-        _detailLabel.text = @"用户暂无签名";
-    }
+
     [_btnFocus setTitle:@"接受" forState:UIControlStateNormal];
     
 }
