@@ -20,11 +20,9 @@
 #import "NoteModel.h"
 
 #import <RongIMKit/RCIM.h>
+#import "JGHSystemNotViewController.h"
+#import "JGHTeamNotViewController.h"
 
-
-
-#define ScreenHeight [[UIScreen mainScreen] bounds].size.height
-#define ScreenWidth [[UIScreen mainScreen] bounds].size.width
 @interface ChatListViewController ()<UITextFieldDelegate, RCIMUserInfoDataSource>
 {
     UITextField* _textField;
@@ -51,13 +49,13 @@
     if ([[NSUserDefaults standardUserDefaults] objectForKey:@"userId"])
     {
         if ([[RCIMClient sharedRCIMClient]getUnreadCount:self.displayConversationTypeArray] == 0) {
-             [self.tabBarController.tabBar hideBadgeOnItemIndex:3];
+             [self.tabBarController.tabBar hideBadgeOnItemIndex:2];
         }
         [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
         [self refreshConversationTableViewIfNeeded];
 //        [self.tabBarController.tabBar hideBadgeOnItemIndex:4];
 //        [self.tabBarController.tabBar showBadgeOnItemIndex:4];
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"show" object:self];
+        
     }
     else
     {
@@ -66,13 +64,16 @@
         [alertView show];
     }
 
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"show" object:self];
 }
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (buttonIndex == 1) {
+        
         JGHLoginViewController *vc = [[JGHLoginViewController alloc] init];
         vc.reloadCtrlData = ^(){
             
         };
+        
         [self.navigationController pushViewController:vc animated:YES];
     }
 }
@@ -91,12 +92,12 @@
     item.tintColor = [UIColor whiteColor];
     self.navigationItem.rightBarButtonItem = item;
     
-    self.conversationListTableView.backgroundColor=[UITool colorWithHexString:@"DBDBDB" alpha:1];
-    self.conversationListTableView.frame = CGRectMake(0, 0, ScreenWidth, ScreenHeight);
+    self.conversationListTableView.backgroundColor=[UIColor whiteColor];
+    self.conversationListTableView.frame = CGRectMake(0, 0, screenWidth, screenHeight);
     //设置要显示的会话类型
     [self setDisplayConversationTypes:@[@(ConversationType_PRIVATE)]];
     
-    [self createHeaderView];
+    [self createTableHeaderView];
     
 //    self.title = @"消息";
     
@@ -142,105 +143,155 @@
 
 
 
-#pragma mark --创建表头
--(void)createHeaderView
-{
-    _viewHeader = [[UIView alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, 100*ScreenWidth/375)];
-    _viewHeader.backgroundColor = [UIColor redColor];
-    self.conversationListTableView.tableHeaderView = _viewHeader;
-    
-    
-//    [self createSeachBar];
-    
-    [self createInvite];
-    
-}
+//#pragma mark --创建表头
+//-(void)createHeaderView
+//{
+////    _viewHeader = [[UIView alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, 100*ScreenWidth/375)];
+//    _viewHeader.backgroundColor = [UIColor redColor];
+//    self.conversationListTableView.tableHeaderView = _viewHeader;
+//    
+//    
+////    [self createSeachBar];
+//    
+//    [self createInvite];
+//    
+//}
 
 
 //自定义searchbar
 #pragma mark --自定义searchbar
--(void)createSeachBar{
-    UIView *view=[[UIView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 37*ScreenWidth/375)];
-    view.backgroundColor = [UIColor colorWithRed:0.87f green:0.87f blue:0.87f alpha:1.00f];
-    [_viewHeader addSubview:view];
-    
-    UIImageView *imageView=[[UIImageView alloc] initWithFrame:CGRectMake(13*ScreenWidth/375, 5*ScreenWidth/375, ScreenWidth-80*ScreenWidth/375, 27*ScreenWidth/375)];
-    imageView.backgroundColor=[UIColor colorWithRed:239.0/255 green:239.0/255 blue:239.0/255 alpha:239.0/255];
-    imageView.layer.cornerRadius=13*ScreenWidth/375;
-    imageView.tag=88;
-    imageView.userInteractionEnabled=YES;
-    imageView.clipsToBounds=YES;
-    [view addSubview:imageView];
-    
-    UIImageView *imageView2=[[UIImageView alloc] init];
-    imageView2.image=[UIImage imageNamed:@"search"];
-    imageView2.frame=CGRectMake(10*ScreenWidth/375, 4*ScreenWidth/375, 16*ScreenWidth/375, 16*ScreenWidth/375);
-    [imageView addSubview:imageView2];
-    
-    _textField = [[UITextField alloc] initWithFrame:CGRectMake(30*ScreenWidth/375, 0, ScreenWidth-115*ScreenWidth/375, 27*ScreenWidth/375)];
-    _textField.textColor=[UIColor lightGrayColor];
-    _textField.tag=888;
-    _textField.placeholder=@"请输入约球名称进行搜索";
-    _textField.font = [UIFont systemFontOfSize:16*ScreenWidth/375];
-    [imageView addSubview:_textField];
-    _textField.delegate = self;
-    
-    UIButton *SeachButton=[UIButton buttonWithType:UIButtonTypeCustom];
-    SeachButton.frame=CGRectMake(ScreenWidth-60*ScreenWidth/375, 3*ScreenWidth/375, 60*ScreenWidth/375, 30*ScreenWidth/375);
-    [SeachButton setTitle:@"搜索" forState:UIControlStateNormal];
-    SeachButton.titleLabel.font = [UIFont systemFontOfSize:16*ScreenWidth/375];
-    [SeachButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [SeachButton addTarget:self action:@selector(seachcityClick) forControlEvents:UIControlEventTouchUpInside];
-    [view addSubview:SeachButton];
-}
+//-(void)createSeachBar{
+//    UIView *view=[[UIView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 37*ScreenWidth/375)];
+//    view.backgroundColor = [UIColor colorWithRed:0.87f green:0.87f blue:0.87f alpha:1.00f];
+//    [_viewHeader addSubview:view];
+//    
+//    UIImageView *imageView=[[UIImageView alloc] initWithFrame:CGRectMake(13*ScreenWidth/375, 5*ScreenWidth/375, ScreenWidth-80*ScreenWidth/375, 27*ScreenWidth/375)];
+//    imageView.backgroundColor=[UIColor colorWithRed:239.0/255 green:239.0/255 blue:239.0/255 alpha:239.0/255];
+//    imageView.layer.cornerRadius=13*ScreenWidth/375;
+//    imageView.tag=88;
+//    imageView.userInteractionEnabled=YES;
+//    imageView.clipsToBounds=YES;
+//    [view addSubview:imageView];
+//    
+//    UIImageView *imageView2=[[UIImageView alloc] init];
+//    imageView2.image=[UIImage imageNamed:@"search"];
+//    imageView2.frame=CGRectMake(10*ScreenWidth/375, 4*ScreenWidth/375, 16*ScreenWidth/375, 16*ScreenWidth/375);
+//    [imageView addSubview:imageView2];
+//    
+//    _textField = [[UITextField alloc] initWithFrame:CGRectMake(30*ScreenWidth/375, 0, ScreenWidth-115*ScreenWidth/375, 27*ScreenWidth/375)];
+//    _textField.textColor=[UIColor lightGrayColor];
+//    _textField.tag=888;
+//    _textField.placeholder=@"请输入约球名称进行搜索";
+//    _textField.font = [UIFont systemFontOfSize:16*ScreenWidth/375];
+//    [imageView addSubview:_textField];
+//    _textField.delegate = self;
+//    
+//    UIButton *SeachButton=[UIButton buttonWithType:UIButtonTypeCustom];
+//    SeachButton.frame=CGRectMake(ScreenWidth-60*ScreenWidth/375, 3*ScreenWidth/375, 60*ScreenWidth/375, 30*ScreenWidth/375);
+//    [SeachButton setTitle:@"搜索" forState:UIControlStateNormal];
+//    SeachButton.titleLabel.font = [UIFont systemFontOfSize:16*ScreenWidth/375];
+//    [SeachButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+//    [SeachButton addTarget:self action:@selector(seachcityClick) forControlEvents:UIControlEventTouchUpInside];
+//    [view addSubview:SeachButton];
+//}
 //搜索点击事件
--(void)seachcityClick{
-    [_textField resignFirstResponder];
+//-(void)seachcityClick{
+//    [_textField resignFirstResponder];
+//    
+//    if ([[NSUserDefaults standardUserDefaults]objectForKey:@"userId"]) {
+////        [_tableView.header endRefreshing];
+////        _tableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
+////        [_tableView.header beginRefreshing];
+//    }else {
+//        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"打高尔夫啦" message:@"确定是否立即登录？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+//        [alertView show];
+//    }
+//    
+//}
+
+#pragma mark --头视图
+-(void)createTableHeaderView
+{
     
-    if ([[NSUserDefaults standardUserDefaults]objectForKey:@"userId"]) {
-//        [_tableView.header endRefreshing];
-//        _tableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
-//        [_tableView.header beginRefreshing];
-    }else {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"打高尔夫啦" message:@"确定是否立即登录？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
-        [alertView show];
-    }
+    _viewHeader = [[UIView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, 186*ProportionAdapter)];
+    _viewHeader.backgroundColor = [UIColor whiteColor];
+    
+    UIImageView *sysMessImageView = [[UIImageView alloc]initWithFrame:CGRectMake(10 *ProportionAdapter, 10 *ProportionAdapter, 50 *ProportionAdapter, 47 *ProportionAdapter)];
+    sysMessImageView.image = [UIImage imageNamed:@"app-message"];
+    [_viewHeader addSubview:sysMessImageView];
+    
+    UILabel *sysNotLable = [[UILabel alloc]initWithFrame:CGRectMake(70 *ProportionAdapter, 10 *ProportionAdapter, 100 *ProportionAdapter, 20 *ProportionAdapter)];
+    sysNotLable.text = @"系统通知";
+    sysNotLable.font = [UIFont systemFontOfSize:16 *ProportionAdapter];
+    [_viewHeader addSubview:sysNotLable];
+    
+    UILabel *sysDetailLable = [[UILabel alloc]initWithFrame:CGRectMake(70 *ProportionAdapter, 40 *ProportionAdapter, screenWidth -100*ProportionAdapter, 20 *ProportionAdapter)];
+    sysDetailLable.font = [UIFont systemFontOfSize:15 *ProportionAdapter];
+    sysDetailLable.text = @"系统消息第几纷纷大幅";
+    [_viewHeader addSubview:sysDetailLable];
+    
+    UILabel *oneLine = [[UILabel alloc]initWithFrame:CGRectMake(10*ProportionAdapter, 67 *ProportionAdapter, screenWidth -10 *ProportionAdapter, 1)];
+    oneLine.backgroundColor = [UIColor colorWithHexString:@"#d9d9d9"];
+    [_viewHeader addSubview:oneLine];
+    
+    UIButton *sysMessbtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, screenWidth, 67*ProportionAdapter)];
+    [sysMessbtn addTarget:self action:@selector(sysMessbtn:) forControlEvents:UIControlEventTouchUpInside];
+    [_viewHeader addSubview:sysMessbtn];
+    
+    //球队通知
+    UIImageView *teamImageView = [[UIImageView alloc]initWithFrame:CGRectMake(10 *ProportionAdapter, 78 *ProportionAdapter, 50 *ProportionAdapter, 47*ProportionAdapter)];
+    teamImageView.image = [UIImage imageNamed:@"team-message"];
+    [_viewHeader addSubview:teamImageView];
+    
+    UILabel *teamNotLable = [[UILabel alloc]initWithFrame:CGRectMake(70 *ProportionAdapter, 78 *ProportionAdapter, 100 *ProportionAdapter, 20 *ProportionAdapter)];
+    teamNotLable.font = [UIFont systemFontOfSize:16 *ProportionAdapter];
+    teamNotLable.text = @"球队通知";
+    [_viewHeader addSubview:teamNotLable];
+    
+    UILabel *teamNotDetailLable = [[UILabel alloc]initWithFrame:CGRectMake(70 *ProportionAdapter, 108 *ProportionAdapter, screenWidth -100*ProportionAdapter, 20 *ProportionAdapter)];
+    teamNotDetailLable.font = [UIFont systemFontOfSize:15 *ProportionAdapter];
+    teamNotDetailLable.text = @"球队通知详情";
+    [_viewHeader addSubview:teamNotDetailLable];
+    
+    UILabel *twoLine = [[UILabel alloc]initWithFrame:CGRectMake(10 *ProportionAdapter, 138 *ProportionAdapter, screenWidth -10*ProportionAdapter, 1)];
+    twoLine.backgroundColor = [UIColor colorWithHexString:@"#d9d9d9"];
+    [_viewHeader addSubview:twoLine];
+    
+    UILabel *proLable = [[UILabel alloc]initWithFrame:CGRectMake(10*ProportionAdapter, 149 *ProportionAdapter, 200 *ProportionAdapter, 28 *ProportionAdapter)];
+    proLable.font = [UIFont systemFontOfSize:18 *ProportionAdapter];
+    proLable.text = @"好友列表";
+    [_viewHeader addSubview:proLable];
+    
+    UILabel *threeLine = [[UILabel alloc]initWithFrame:CGRectMake(0, 185 *ProportionAdapter, screenWidth, 1)];
+    threeLine.backgroundColor = [UIColor colorWithHexString:@"#d9d9d9"];
+    [_viewHeader addSubview:threeLine];
+    
+    UIButton *teamNotbtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 68 *ProportionAdapter, screenWidth, 67*ProportionAdapter)];
+    [teamNotbtn addTarget:self action:@selector(teamNotbtn:) forControlEvents:UIControlEventTouchUpInside];
+    [_viewHeader addSubview:teamNotbtn];
+    
+    self.conversationListTableView.tableHeaderView = _viewHeader;
     
 }
 
-#pragma mark --邀请视图
--(void)createInvite
-{
-    _btnInvite = [UIButton buttonWithType:UIButtonTypeCustom];
-    _btnInvite.frame = CGRectMake(0, 0, ScreenWidth, 70*ScreenWidth/375);
-    _btnInvite.backgroundColor = [UIColor whiteColor];
-    [_viewHeader addSubview:_btnInvite];
-    [_btnInvite addTarget:self action:@selector(messageCLick) forControlEvents:UIControlEventTouchUpInside];
+#pragma mark -- 系统通知
+- (void)sysMessbtn:(UIButton *)btn{
+    btn.userInteractionEnabled = NO;
+    JGHSystemNotViewController *sysCtrl = [[JGHSystemNotViewController alloc]init];
+    sysCtrl.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:sysCtrl animated:YES];
     
-    UIImageView* imgv = [[UIImageView alloc]initWithFrame:CGRectMake(12*ScreenWidth/375, 15*ScreenWidth/375, 40*ScreenWidth/375, 40*ScreenWidth/375)];
-    imgv.image = [UIImage imageNamed:@"xpy"];
-    [_btnInvite addSubview:imgv];
+    btn.userInteractionEnabled = YES;
+}
+#pragma mark -- 球队通知
+- (void)teamNotbtn:(UIButton *)btn{
+    btn.userInteractionEnabled = NO;
     
+    JGHTeamNotViewController *teamCtrl = [[JGHTeamNotViewController alloc]init];
+    teamCtrl.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:teamCtrl animated:YES];
     
-    UILabel* labelTitle = [[UILabel alloc]initWithFrame:CGRectMake(65*ScreenWidth/375, 25*ScreenWidth/375, 100*ScreenWidth/375, 20*ScreenWidth/375)];
-    labelTitle.text = @"邀请消息";
-    [_btnInvite addSubview:labelTitle];
-    labelTitle.font = [UIFont systemFontOfSize:16*ScreenWidth/375];
-    
-    UIImageView* imgvJian = [[UIImageView alloc]initWithFrame:CGRectMake(ScreenWidth - 20*ScreenWidth/375, 28*ScreenWidth/375, 10*ScreenWidth/375, 14*ScreenWidth/375)];
-    imgvJian.image = [UIImage imageNamed:@"left_jt"];
-    [_btnInvite addSubview:imgvJian];
-    
-    UIView* viewLine = [[UIView alloc]initWithFrame:CGRectMake(0, 70*ScreenWidth/375, ScreenWidth, 30*ScreenWidth/375)];
-    viewLine.backgroundColor = [UIColor lightGrayColor];
-    [_viewHeader addSubview:viewLine];
-    
-    
-    UILabel* labelRK = [[UILabel alloc]initWithFrame:CGRectMake(10*ScreenWidth/375, 0, 100*ScreenWidth/375, 30*ScreenWidth/375)];
-    labelRK.text = @"会话列表";
-    [viewLine addSubview:labelRK];
-    labelRK.font = [UIFont systemFontOfSize:15*ScreenWidth/375];
-    
+    btn.userInteractionEnabled = YES;
 }
 
 -(void)messageCLick
@@ -329,19 +380,37 @@
 
 - (void)updateBadgeValueForTabBarItem
 {
-//    __weak typeof(self) __weakSelf = self;
-//    dispatch_async(dispatch_get_main_queue(), ^{
-        int count = [[RCIMClient sharedRCIMClient]getUnreadCount:self.displayConversationTypeArray];
-        if (count>0) {
-//            __weakSelf.tabBarItem.badgeValue = [[NSString alloc]initWithFormat:@"%d",count];
-//            self.tabBarItem.badgeValue = [[NSString alloc]initWithFormat:@"%d",count];
-            [self.tabBarController.tabBar showBadgeOnItemIndex:3];
-        }else
-        {
-            [self.tabBarController.tabBar hideBadgeOnItemIndex:3];
+    
+    __weak typeof(self) __weakSelf = self;
+    dispatch_async(dispatch_get_main_queue(), ^{
+        int count = [[RCIMClient sharedRCIMClient]
+                     getUnreadCount:self.displayConversationTypeArray];
+        if (count > 0) {
+            //      __weakSelf.tabBarItem.badgeValue =
+            //          [[NSString alloc] initWithFormat:@"%d", count];
+            [__weakSelf.tabBarController.tabBar showBadgeOnItemIndex:2 badgeValue:count];
+            
+        } else {
+            //      __weakSelf.tabBarItem.badgeValue = nil;
+            [__weakSelf.tabBarController.tabBar hideBadgeOnItemIndex:2];
         }
         
-//    });
+    });
+    
+////    __weak typeof(self) __weakSelf = self;
+////    dispatch_async(dispatch_get_main_queue(), ^{
+//        int count = [[RCIMClient sharedRCIMClient]getUnreadCount:self.displayConversationTypeArray];
+//        if (count>0) {
+////            __weakSelf.tabBarItem.badgeValue = [[NSString alloc]initWithFormat:@"%d",count];
+//            self.tabBarItem.badgeValue = [[NSString alloc]initWithFormat:@"%d",count];
+//            [self.tabBarController.tabBar showBadgeOnItemIndex:2];
+//        }
+////        else
+////        {
+////            [self.tabBarController.tabBar hideBadgeOnItemIndex:2];
+////        }
+//    
+////    });
 }
 
 @end

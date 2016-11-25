@@ -45,19 +45,21 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-#warning 推荐功能还没完善
-//    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"jqy"] style:UIBarButtonItemStylePlain target:self action:@selector(contact)];
-//    item.tintColor = [UIColor whiteColor];
-//    self.navigationItem.rightBarButtonItem = item;
+
+    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"jqy"] style:UIBarButtonItemStylePlain target:self action:@selector(contact)];
+    item.tintColor = [UIColor whiteColor];
+    self.navigationItem.rightBarButtonItem = item;
     
     self.title = @"球友通讯录";
     self.tableView = [[UITableView alloc] initWithFrame:[UIScreen mainScreen].bounds style:(UITableViewStylePlain)];
-    self.tableView.rowHeight = 60 * ScreenWidth / 375;
+    self.tableView.rowHeight = 49 * ScreenWidth / 375;
     self.view = self.tableView;
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.bounces = NO;
 //    [self setData];
+    
+    
     // Do any additional setup after loading the view.
 }
 
@@ -70,7 +72,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     if (section == 0) {
-        return 1;
+        return 2;
     }else{
         return [self.listArray[section - 1] count];
     }
@@ -93,6 +95,7 @@
     return nil;
 }
 
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
     static NSString *identifier = @"identifier";
@@ -101,15 +104,26 @@
         cell = [[BallFriListCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:identifier];
     }
     if (indexPath.section == 0) {
+        
+        
         BallFriListCell* cell1 = [[BallFriListCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:@"1"];
-        cell1.myImageV.image = [UIImage imageNamed:@"xxpy"];
-        cell1.myImageV.frame = CGRectMake(10* ProportionAdapter, 10* ProportionAdapter, 40* ProportionAdapter, 40* ProportionAdapter);
-        cell1.myLabel.text = @"新朋友";
-        cell1.myLabel.frame = CGRectMake(80*ProportionAdapter, 10 * ProportionAdapter, 200, 40 *ProportionAdapter);
-        cell1.myLabel.textColor = [UIColor blueColor];
+        cell1.myImageV.frame = CGRectMake(20*ScreenWidth/375,13*ScreenWidth/375, 26*ScreenWidth/375, 23*ScreenWidth/375);
+        cell1.myLabel.frame = CGRectMake(cell1.myImageV.frame.size.width + 5 * 5 * ScreenWidth / 375 + 3 * ScreenWidth / 375, 0, 200, 49 * ScreenWidth/375);
+        cell1.myLabel.textColor = [UIColor colorWithHexString:@"#0054bd"];
+        cell1.myLabel.font = [UIFont systemFontOfSize:16 * ProportionAdapter];
+        cell1.myImageV.layer.masksToBounds = NO;
         cell1.myImageV.contentMode = UIViewContentModeScaleAspectFit;
         cell1.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        cell1.selectionStyle = UITableViewCellSelectionStyleNone;
+        cell1.sexImageV.hidden = YES;
+        if (indexPath.row == 0) {
+            cell1.myLabel.text = @"球友推荐";
+            cell1.myImageV.image = [UIImage imageNamed:@"icon_intro-new"];
+        }else{
+            cell1.myLabel.text = @"新朋友";
+            cell1.myImageV.image = [UIImage imageNamed:@"xxpy"];
+        }
+
         return cell1;
     }else{
         self.infoTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(infotapclick:)];
@@ -133,8 +147,17 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
     if (indexPath.section == 0) {
-        NewFriendViewController *newVC = [[NewFriendViewController alloc] init];
-        [self.navigationController pushViewController:newVC animated:YES];
+        if (indexPath.row == 0) {
+            NewFriendViewController *newVC = [[NewFriendViewController alloc] init];
+            newVC.fromWitchVC = 1;
+            [self.navigationController pushViewController:newVC animated:YES];
+
+        }else{
+            NewFriendViewController *newVC = [[NewFriendViewController alloc] init];
+            newVC.fromWitchVC = 2;
+            [self.navigationController pushViewController:newVC animated:YES];
+
+        }
         
     }else{
         ChatDetailViewController *vc = [[ChatDetailViewController alloc] init];

@@ -31,5 +31,6 @@
 
 @property (nonatomic, assign)NSInteger state;//消息状态 0 : 未查看 , 1 : 已查看
 
+@property (nonatomic, retain)NSNumber *timeKey;
 
 @end

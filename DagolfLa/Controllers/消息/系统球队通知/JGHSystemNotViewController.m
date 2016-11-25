@@ -30,11 +30,6 @@ static NSString *const JGHSysInformCellIdentifier = @"JGHSysInformCell";
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     
-//    UIBarButtonItem *item = [[UIBarButtonItem alloc]initWithTitle:@"全选" style:UIBarButtonItemStylePlain target:self action:@selector(selectAllBtn)];
-//    item.tintColor = [UIColor whiteColor];
-//    self.navigationItem.rightBarButtonItem = item;
-    
-//    _selectCatory = 0;
 }
 
 - (void)viewDidLoad {
@@ -51,20 +46,10 @@ static NSString *const JGHSysInformCellIdentifier = @"JGHSysInformCell";
     
     [self loadData];
 }
-#pragma mark -- 全选 取消全选
-//- (void)selectAllBtn{
-//    if (_selectCatory == 0) {
-//        self.navigationItem.rightBarButtonItem.title = @"取消全选";
-//        _selectCatory = 1;
-//    }else{
-//        self.navigationItem.rightBarButtonItem.title = @"全选";
-//        _selectCatory = 0;
-//    }
-//}
 #pragma mark -- 下载数据
 - (void)loadData{
+    [LQProgressHud showLoading:@"加载中..."];
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    //[Helper md5HexDigest:[NSString stringWithFormat:@"ballKey=%td&region1=%@&region2=%@dagolfla.com", ballKey, region1, region2]];
     [dict setObject:DEFAULF_USERID forKey:@"userKey"];
     [dict setObject:@0 forKey:@"nSrc"];
     [dict setObject:@(_page) forKey:@"offset"];
@@ -72,8 +57,10 @@ static NSString *const JGHSysInformCellIdentifier = @"JGHSysInformCell";
     [[JsonHttp jsonHttp]httpRequest:@"msg/getMsgList" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
         [self.systemNotTableView.header endRefreshing];
         [self.systemNotTableView.footer endRefreshing];
+        [LQProgressHud hide];
     } completionBlock:^(id data) {
         NSLog(@"%@", data);
+        [LQProgressHud hide];
         if (_page == 0) {
             [self.dataArray removeAllObjects];
         }
@@ -167,7 +154,29 @@ static NSString *const JGHSysInformCellIdentifier = @"JGHSysInformCell";
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-
+        [LQProgressHud showLoading:@"加载中..."];
+        JGHInformModel *model = [[JGHInformModel alloc]init];
+        model = self.dataArray[indexPath.row];
+        NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+        NSMutableArray *keyList = [NSMutableArray array];
+        [keyList addObject:model.timeKey];
+        [dict setObject:keyList forKey:@"keyList"];
+        [dict setObject:DEFAULF_USERID forKey:@"userKey"];
+        [[JsonHttp jsonHttp]httpRequestWithMD5:@"msg/batchDeleteMsg" JsonKey:nil withData:dict failedBlock:^(id errType) {
+            [LQProgressHud hide];
+        } completionBlock:^(id data) {
+            NSLog(@"%@", data);
+            [LQProgressHud hide];
+            if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+                [self loadData];
+                [self.dataArray removeObjectAtIndex:indexPath.row];
+                [self.systemNotTableView reloadData];
+            }else{
+                if ([data objectForKey:@"packResultMsg"]) {
+                    [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+                }
+            }
+        }];
     }
 }
 - (void)didReceiveMemoryWarning {

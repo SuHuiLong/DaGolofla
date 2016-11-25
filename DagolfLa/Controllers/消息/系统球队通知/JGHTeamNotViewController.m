@@ -30,11 +30,6 @@ static NSString *const JGHTeamInformCellIdentifier = @"JGHTeamInformCell";
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     
-//    UIBarButtonItem *item = [[UIBarButtonItem alloc]initWithTitle:@"全选" style:UIBarButtonItemStylePlain target:self action:@selector(selectAllBtn)];
-//    item.tintColor = [UIColor whiteColor];
-//    self.navigationItem.rightBarButtonItem = item;
-//    
-//    _selectCatory = 0;
 }
 
 - (void)viewDidLoad {
@@ -51,29 +46,21 @@ static NSString *const JGHTeamInformCellIdentifier = @"JGHTeamInformCell";
     
     [self loadData];
 }
-//#pragma mark -- 全选 取消全选
-//- (void)selectAllBtn{
-//    if (_selectCatory == 0) {
-//        self.navigationItem.rightBarButtonItem.title = @"取消全选";
-//        _selectCatory = 1;
-//    }else{
-//        self.navigationItem.rightBarButtonItem.title = @"全选";
-//        _selectCatory = 0;
-//    }
-//}
-
 #pragma mark -- 下载数据
 - (void)loadData{
+    [LQProgressHud showLoading:@"加载中..."];
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    //[Helper md5HexDigest:[NSString stringWithFormat:@"ballKey=%td&region1=%@&region2=%@dagolfla.com", ballKey, region1, region2]];
     [dict setObject:DEFAULF_USERID forKey:@"userKey"];
     [dict setObject:@1 forKey:@"nSrc"];
     [dict setObject:@(_page) forKey:@"offset"];
     [dict setObject:[Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@&nSrc=1dagolfla.com", DEFAULF_USERID]] forKey:@"md5"];
     [[JsonHttp jsonHttp]httpRequest:@"msg/getMsgList" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
-        
+        [self.systemNotTableView.header endRefreshing];
+        [self.systemNotTableView.footer endRefreshing];
+        [LQProgressHud hide];
     } completionBlock:^(id data) {
         NSLog(@"%@", data);
+        [LQProgressHud hide];
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
             NSArray *list = [data objectForKey:@"list"];
             for (int i=0; i<list.count; i++) {
@@ -88,6 +75,9 @@ static NSString *const JGHTeamInformCellIdentifier = @"JGHTeamInformCell";
                 [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
             }
         }
+        
+        [self.systemNotTableView.header endRefreshing];
+        [self.systemNotTableView.footer endRefreshing];
     }];
     
 }
@@ -104,11 +94,17 @@ static NSString *const JGHTeamInformCellIdentifier = @"JGHTeamInformCell";
 }
 #pragma mark -- headRereshing
 - (void)headRereshing{
-    
+    _page = 0;
+    [self loadData];
+}
+#pragma mark -- footerRefreshing
+- (void)footerRefreshing{
+    _page++;
+    [self loadData];
 }
 #pragma mark -- tableView代理
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 7;
+    return _dataArray.count;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
@@ -118,15 +114,18 @@ static NSString *const JGHTeamInformCellIdentifier = @"JGHTeamInformCell";
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     JGHInformModel *model = [[JGHInformModel alloc]init];
     model = _dataArray[indexPath.row];
-    CGSize titleSize = [model.content boundingRectWithSize:CGSizeMake(screenWidth, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:17*ProportionAdapter]} context:nil].size;
+    CGSize titleSize = [model.title boundingRectWithSize:CGSizeMake(screenWidth, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:17*ProportionAdapter]} context:nil].size;
     
-//    CGSize contentSize = [model.content boundingRectWithSize:CGSizeMake(screenWidth, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:15*ProportionAdapter]} context:nil].size;
+    CGSize contentSize = [model.content boundingRectWithSize:CGSizeMake(screenWidth, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:15*ProportionAdapter]} context:nil].size;
     
-    return 70 *ProportionAdapter +titleSize.height;
+    return 70 *ProportionAdapter + contentSize.height +titleSize.height;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     JGHTeamInformCell *teamInformCell = [tableView dequeueReusableCellWithIdentifier:JGHTeamInformCellIdentifier forIndexPath:indexPath];
+    teamInformCell.selectionStyle = UITableViewCellSelectionStyleNone;
+    
+    [teamInformCell configJGHTeamInformCell:_dataArray[indexPath.row]];
     
     return teamInformCell;
 }
@@ -135,7 +134,9 @@ static NSString *const JGHTeamInformCellIdentifier = @"JGHTeamInformCell";
     return 0;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    
+    JGHNotDetailViewController *noteCtrl = [[JGHNotDetailViewController alloc]init];
+    noteCtrl.model = _dataArray[indexPath.row];
+    [self.navigationController pushViewController:noteCtrl animated:YES];
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -148,7 +149,29 @@ static NSString *const JGHTeamInformCellIdentifier = @"JGHTeamInformCell";
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        
+        [LQProgressHud showLoading:@"加载中..."];
+        JGHInformModel *model = [[JGHInformModel alloc]init];
+        model = self.dataArray[indexPath.row];
+        NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+        NSMutableArray *keyList = [NSMutableArray array];
+        [keyList addObject:model.timeKey];
+        [dict setObject:keyList forKey:@"keyList"];
+        [dict setObject:DEFAULF_USERID forKey:@"userKey"];
+        [[JsonHttp jsonHttp]httpRequestWithMD5:@"msg/batchDeleteMsg" JsonKey:nil withData:dict failedBlock:^(id errType) {
+            [LQProgressHud hide];
+        } completionBlock:^(id data) {
+            NSLog(@"%@", data);
+            [LQProgressHud hide];
+            if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+                [self loadData];
+                [self.dataArray removeObjectAtIndex:indexPath.row];
+                [self.systemNotTableView reloadData];
+            }else{
+                if ([data objectForKey:@"packResultMsg"]) {
+                    [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+                }
+            }
+        }];
     }
 }
 
