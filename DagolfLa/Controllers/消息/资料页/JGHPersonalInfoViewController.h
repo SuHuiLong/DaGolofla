@@ -24,4 +24,8 @@
 
 @property (nonatomic, retain)UIView *dynamicView;
 
+
+//用户key
+@property (nonatomic, retain)NSNumber *otherKey;
+
 @end

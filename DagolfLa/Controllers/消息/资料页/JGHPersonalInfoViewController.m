@@ -7,8 +7,16 @@
 //
 
 #import "JGHPersonalInfoViewController.h"
+#import "JGHUserModel.h"
 
 @interface JGHPersonalInfoViewController ()
+{
+    NSString *_handImgUrl;
+}
+
+@property (nonatomic, retain)NSMutableArray *momentsPicList;
+
+@property (nonatomic, retain)JGHUserModel *model;
 
 @end
 
@@ -24,8 +32,37 @@
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor colorWithHexString:BG_color];
     self.navigationItem.title = @"个人信息";
+    self.momentsPicList = [NSMutableArray array];
     
     [self createView];
+    
+    [self loadData];
+}
+- (void)loadData{
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    [dict setObject:_otherKey forKey:@"seeUserKey"];
+    [dict setObject:DEFAULF_USERID forKey:@"userKey"];
+    [dict setObject:[Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@&seeUserKey=%@dagolfla.com", DEFAULF_USERID, _otherKey]] forKey:@"md5"];
+    [[JsonHttp jsonHttp]httpRequest:@"user/getUserMainInfo" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
+        
+    } completionBlock:^(id data) {
+        NSLog(@"%@", data);
+        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+            [self.model setValuesForKeysWithDictionary:[data objectForKey:@"user"]];
+            
+            _handImgUrl = [data objectForKey:@"handImgUrl"];
+
+            if ([data objectForKey:@"momentsPicList"]) {
+                self.momentsPicList = [data objectForKey:@"momentsPicList"];
+            }
+            
+            
+        }else{
+            if ([data objectForKey:@"packResultMsg"]) {
+                [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+            }
+        }
+    }];
 }
 
 - (void)createView{
@@ -42,7 +79,7 @@
     [oneView addSubview:self.name];
     
     self.sexImageView = [[UIImageView alloc]initWithFrame:CGRectMake(180 *ProportionAdapter, 10 *ProportionAdapter, 15 *ProportionAdapter, 15 *ProportionAdapter)];
-    self.sexImageView.image = [UIImage imageNamed:@""];
+    self.sexImageView.image = [UIImage imageNamed:DefaultHeaderImage];
     [oneView addSubview:self.sexImageView];
     
     //昵称
@@ -79,7 +116,7 @@
     noteLable.font = [UIFont systemFontOfSize:16*ProportionAdapter];
     [twoView addSubview:noteLable];
     
-    UIImageView *noteArrow = [[UIImageView alloc]initWithFrame:CGRectMake(screenWidth-20*ProportionAdapter, 23 *ProportionAdapter, 10 *ProportionAdapter, 14*ProportionAdapter)];
+    UIImageView *noteArrow = [[UIImageView alloc]initWithFrame:CGRectMake(screenWidth-20*ProportionAdapter, 18 *ProportionAdapter, 10 *ProportionAdapter, 14*ProportionAdapter)];
     noteArrow.image = [UIImage imageNamed:@")"];
     [twoView addSubview:noteArrow];
     
@@ -94,6 +131,7 @@
     
     UILabel *dynamic = [[UILabel alloc]initWithFrame:CGRectMake(10 *ProportionAdapter, 10 *ProportionAdapter, 40 *ProportionAdapter, 64 *ProportionAdapter)];
     dynamic.font = [UIFont systemFontOfSize:16 *ProportionAdapter];
+    dynamic.backgroundColor = [UIColor whiteColor];
     dynamic.text = @"动态";
     [self.dynamicView addSubview:dynamic];
     

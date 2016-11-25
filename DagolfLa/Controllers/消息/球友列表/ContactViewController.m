@@ -160,17 +160,10 @@
         }
         
     }else{
-        ChatDetailViewController *vc = [[ChatDetailViewController alloc] init];
-        //设置聊天类型
-        vc.conversationType = ConversationType_PRIVATE;
+        JGHPersonalInfoViewController *vc = [[JGHPersonalInfoViewController alloc] init];
+        
         //设置对方的id
-        vc.targetId = [NSString stringWithFormat:@"%@",[_listArray[indexPath.section - 1][indexPath.row] otherUserId]];
-        //设置对方的名字
-        //    vc.userName = model.conversationTitle;
-        //设置聊天标题
-        vc.title = [_listArray[indexPath.section - 1][indexPath.row] userName];
-        //设置不现实自己的名称  NO表示不现实
-        vc.displayUserNameInCell = NO;
+        vc.otherKey = [_listArray[indexPath.section - 1][indexPath.row] otherUserId];
         [self.navigationController pushViewController:vc animated:YES];
     }
 }
