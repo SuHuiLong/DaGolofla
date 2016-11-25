@@ -221,10 +221,15 @@
     CGPoint currentTouchPosition = [touch locationInView:_tableView];
     NSIndexPath *indexPath= [_tableView indexPathForRowAtPoint:currentTouchPosition];
     
-    NewFriendTableViewCell* cell = [_tableView cellForRowAtIndexPath:indexPath];
-    
     if (_fromWitchVC == 1) {
         JGAddFriendViewController *addFriVC = [[JGAddFriendViewController alloc] init];
+        addFriVC.otherUserKey = [_dataArray[indexPath.row] userId];
+        addFriVC.popToVC = ^(NSInteger num){
+            if (num == 1) {
+                [_dataArray removeObjectAtIndex:indexPath.row];
+                [_tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:YES];
+            }
+        };
         [self.navigationController pushViewController:addFriVC animated:YES];
     }
     

@@ -51,6 +51,39 @@
 
 - (void)sendAct{
     
+    
+    [[ShowHUD showHUD] showAnimationWithText:@"发送中…" FromView:self.view];
+    NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
+    [dic setObject:DEFAULF_USERID forKey:@"userKey"];
+    [dic setObject:self.otherUserKey forKey:@"friendUserKey"];
+    [dic setObject:self.fieldTF.text forKey:@"reason"];
+    [[JsonHttp jsonHttp] httpRequestWithMD5:@"userFriend/doApply" JsonKey:nil withData:dic failedBlock:^(id errType) {
+        
+        [[ShowHUD showHUD] hideAnimationFromView:self.view];
+        [self.navigationController popViewControllerAnimated:YES];
+        self.popToVC(0);
+
+        
+    } completionBlock:^(id data) {
+        [[ShowHUD showHUD] hideAnimationFromView:self.view];
+        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+            
+            [LQProgressHud showMessage:@"添加请求已发送"];
+            [self.navigationController popViewControllerAnimated:YES];
+            self.popToVC(1);
+
+            
+        }else{
+            if ([data objectForKey:@"packResultMsg"]) {
+                [LQProgressHud showMessage:[data objectForKey:@"packResultMsg"]];
+                [self.navigationController popViewControllerAnimated:YES];
+                self.popToVC(0);
+
+            }
+        }
+    }];
+
+    
 }
 
 - (void)didReceiveMemoryWarning {
