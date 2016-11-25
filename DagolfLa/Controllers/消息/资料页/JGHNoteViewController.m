@@ -40,7 +40,24 @@
         return;
     }
     
-    _blockRereshNote(self.noteText.text);
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    [dict setObject:DEFAULF_USERID forKey:@"userKey"];
+    [dict setObject:_friendUserKey forKey:@"friendUserKey"];
+    [dict setObject:self.noteText.text forKey:@"remark"];
+    [[JsonHttp jsonHttp]httpRequestWithMD5:@"userFriend/doUpdateUserRemark" JsonKey:nil withData:dict failedBlock:^(id errType) {
+        
+    } completionBlock:^(id data) {
+        NSLog(@"%@", data);
+        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+            _blockRereshNote(self.noteText.text);
+            
+            [self.navigationController popViewControllerAnimated:YES];
+        }else{
+            if ([data objectForKey:@"packResultMsg"]) {
+                [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+            }
+        }
+    }];
 }
 
 - (void)createNoteText{
