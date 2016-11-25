@@ -46,6 +46,10 @@
     UIButton *_getCodeBtn;
     
     NSUInteger _timeNumber;
+    
+    UIButton *_passwordLoginBtn;//
+    
+    UIButton *_codeLoginBtn;
 }
 
 @property (nonatomic, strong)NSMutableDictionary *weiChetDict;
@@ -103,26 +107,27 @@
 }
 - (void)createNavViewBtn{
     //密码登陆
-    UIButton *passwordLoginBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, screenWidth/2, 50 *ProportionAdapter)];
-    [passwordLoginBtn setTitle:@"账户密码登录" forState:UIControlStateNormal];
-    passwordLoginBtn.titleLabel.font = [UIFont systemFontOfSize:18 *ProportionAdapter];
-    [passwordLoginBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [passwordLoginBtn addTarget:self action:@selector(passwordLoginBtn) forControlEvents:UIControlEventTouchUpInside];
-    [passwordLoginBtn setBackgroundColor:[UIColor whiteColor]];
-    [self.view addSubview:passwordLoginBtn];
+    _passwordLoginBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, screenWidth/2, 50 *ProportionAdapter)];
+    [_passwordLoginBtn setTitle:@"账户密码登录" forState:UIControlStateNormal];
+    _passwordLoginBtn.titleLabel.font = [UIFont systemFontOfSize:18 *ProportionAdapter];
+    [_passwordLoginBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [_passwordLoginBtn addTarget:self action:@selector(passwordLoginBtn) forControlEvents:UIControlEventTouchUpInside];
+    [_passwordLoginBtn setBackgroundColor:[UIColor whiteColor]];
+    [self.view addSubview:_passwordLoginBtn];
     
     _loginLable = [[UILabel alloc]initWithFrame:CGRectMake(30 *ProportionAdapter, 50 *ProportionAdapter -2, screenWidth/2-60*ProportionAdapter, 2)];
     _loginLable.backgroundColor = [UIColor colorWithHexString:Bar_Color];
     [self.view addSubview:_loginLable];
     
     //验证码登录
-    UIButton *codeLoginBtn = [[UIButton alloc]initWithFrame:CGRectMake(screenWidth/2, 0, screenWidth/2, 50 *ProportionAdapter)];
-    [codeLoginBtn setTitle:@"动态密码登录" forState:UIControlStateNormal];
-    codeLoginBtn.titleLabel.font = [UIFont systemFontOfSize:18 *ProportionAdapter];
-    [codeLoginBtn addTarget:self action:@selector(codeLoginBtn:) forControlEvents:UIControlEventTouchUpInside];
-    [codeLoginBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [codeLoginBtn setBackgroundColor:[UIColor whiteColor]];
-    [self.view addSubview:codeLoginBtn];
+    _codeLoginBtn = [[UIButton alloc]initWithFrame:CGRectMake(screenWidth/2, 0, screenWidth/2, 50 *ProportionAdapter)];
+    [_codeLoginBtn setTitle:@"动态密码登录" forState:UIControlStateNormal];
+    _codeLoginBtn.titleLabel.font = [UIFont systemFontOfSize:18 *ProportionAdapter];
+    [_codeLoginBtn addTarget:self action:@selector(codeLoginBtn:) forControlEvents:UIControlEventTouchUpInside];
+    [_codeLoginBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+    [_codeLoginBtn setBackgroundColor:[UIColor whiteColor]];
+    
+    [self.view addSubview:_codeLoginBtn];
     
     _bgView = [[UIView alloc]initWithFrame:CGRectMake(0, 50*ProportionAdapter, screenWidth, screenHeight -50*ProportionAdapter -44)];
     _bgView.backgroundColor = [UIColor colorWithHexString:BG_color];
@@ -427,6 +432,9 @@
     _passwordView.layer.borderColor = [UIColor colorWithHexString:Line_Color].CGColor;
     _passwordView.layer.cornerRadius = 3.0 *ProportionAdapter;
     
+    [_passwordLoginBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [_codeLoginBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+    
     UIButton *passwordBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 50*ProportionAdapter, 50 *ProportionAdapter)];
     passwordBtn.titleLabel.textAlignment = NSTextAlignmentCenter;
     passwordBtn.titleLabel.font = [UIFont systemFontOfSize:17*ProportionAdapter];
@@ -475,6 +483,9 @@
     _codeView.layer.borderWidth = 0.5;
     _codeView.layer.borderColor = [UIColor colorWithHexString:Line_Color].CGColor;
     _codeView.layer.cornerRadius = 3.0 *ProportionAdapter;
+    
+    [_codeLoginBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [_passwordLoginBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
     
     UIButton *passwordBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 50*ProportionAdapter, 50 *ProportionAdapter)];
     passwordBtn.titleLabel.textAlignment = NSTextAlignmentCenter;

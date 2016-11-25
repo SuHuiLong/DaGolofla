@@ -20,6 +20,7 @@
 #import "UserDataInformation.h"
 #import "PersonHomeController.h"
 #import "ChatListViewController.h"
+//#import "JGHMessageViewController.h"
 #import "UITabBar+badge.h"
 #import "UITool.h"
 
@@ -32,6 +33,15 @@
 @end
 
 @implementation TabBarController
+
++ (TabBarController *)shareInstance {
+    static TabBarController *instance = nil;
+    static dispatch_once_t predicate;
+    dispatch_once(&predicate, ^{
+        instance = [[[self class] alloc] init];
+    });
+    return instance;
+}
 
 -(void)viewWillAppear:(BOOL)animated
 {

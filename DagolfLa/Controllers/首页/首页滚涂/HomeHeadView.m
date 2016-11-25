@@ -68,6 +68,8 @@
         _imageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, self.bounds.size.width,self.bounds.size.height)];
         [_imageView setImage:[UIImage imageNamed:@"selfBackPic.jpg"]];
         [_scrollView addSubview:_imageView];
+        
+        
     }
     return self;
 }
@@ -75,6 +77,15 @@
 
 - (void)config:(NSArray *)dataArray data:(NSArray *)url title:(NSArray *)name ts:(NSArray *)ts;
 {
+    
+    if (![_timer isValid]) {
+        _timer.fireDate = [NSDate distantPast];
+        
+    }else{
+        [_timer invalidate];
+        [_scrollView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    }
+    
     _modelArray = dataArray;
     _urlArray = url;
     _titleArray = name;
@@ -132,8 +143,7 @@
     _pageCtrl.currentPageIndicatorTintColor = [UIColor colorWithRed:0.33f green:0.70f blue:0.31f alpha:1.00f];
     
     //启动定时器
-    _timer = [NSTimer scheduledTimerWithTimeInterval:5 target:self selector:@selector(timeAction) userInfo:nil repeats:YES];
-  
+    _timer = [NSTimer scheduledTimerWithTimeInterval:dataArray.count target:self selector:@selector(timeAction) userInfo:nil repeats:YES];
 }
 
 - (void)timeAction

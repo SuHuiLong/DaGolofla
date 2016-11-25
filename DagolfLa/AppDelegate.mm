@@ -61,8 +61,6 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
-
-    
     //初始化趣拍
     [[TaeSDK sharedInstance] asyncInit:^{
         
@@ -257,6 +255,29 @@
     //调用PHP登录
     [self phpLogin];
     
+    NSURL *url = [launchOptions objectForKey:UIApplicationLaunchOptionsURLKey];
+//    NSLog(@"%@", UIApplicationLaunchOptionsURLKey);
+    if (url != nil) {
+        if ([[url query] containsString:@"safepay"]) {
+            //跳转支付宝钱包进行支付，处理支付结果
+//            [[AlipaySDK defaultService] processOrderWithPaymentResult:url standbyCallback:^(NSDictionary *resultDic) {
+//                NSLog(@"result = %@",resultDic);
+//                NSLog(@"客户端支付");
+//            }];
+            
+        }else{
+            NSString *actKey = @"";
+            NSString *actDetail = @"";
+            if ([url query]) {
+                actKey = [[[NSString stringWithFormat:@"%@", [url query]] componentsSeparatedByString:@"="] objectAtIndex:1];
+                actDetail = [[[NSString stringWithFormat:@"%@", [url query]] componentsSeparatedByString:@"="] objectAtIndex:0];
+            }
+            
+            [self gotoAppPage:actKey switchDetails:actDetail];
+        }
+
+    }
+    
     return YES;
 }
 - (void)phpLogin{
@@ -340,38 +361,28 @@
     if ([[NSString stringWithFormat:@"%@",url] rangeOfString:[NSString stringWithFormat:@"wxdcdc4e20544ed728://pay"]].location != NSNotFound) {
         return  [WXApi handleOpenURL:url delegate:self];
         //不是上面的情况的话，就正常用shareSDK调起相应的分享页面
-    }
-    else if ([url.host isEqualToString:@"safepay"]) {
-        //这个是进程KILL掉之后也会调用，这个只是第一次授权回调，同时也会返回支付信息
-        [[AlipaySDK defaultService]processAuth_V2Result:url standbyCallback:^(NSDictionary *resultDic) {
-            NSString * str = resultDic[@"result"];
-            NSLog(@"result = %@",str);
-        }];
-        //跳转支付宝钱包进行支付，处理支付结果，这个只是辅佐订单支付结果回调
-        [[AlipaySDK defaultService] processOrderWithPaymentResult:url standbyCallback:^(NSDictionary *resultDic) {
-//            NSString * query = [[url query] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-//            id<DataVerifier> dataVeri = CreateRSADataVerifier(@"public");
-            //验证签名是否一致
-            if ([resultDic[@"resultStatus"] isEqualToString:@"9000"]) {
-//                [[ShowHUD showHUD]showToastWithText:@"支付成功！" FromView:self.view];
-                //跳转分组页面
-//                [self performSelector:@selector(popToChannel) withObject:self afterDelay:TIMESlEEP];
-                
-            } else if ([resultDic[@"resultStatus"] isEqualToString:@"4000"]) {
-                NSLog(@"失败");
-//                [[ShowHUD showHUD]showToastWithText:@"支付失败！" FromView:self.view];
-            } else if ([resultDic[@"resultStatus"] isEqualToString:@"6002"]) {
-                NSLog(@"网络错误");
-//                [[ShowHUD showHUD]showToastWithText:@"网络异常，支付失败！" FromView:self.view];
-            } else if ([resultDic[@"resultStatus"] isEqualToString:@"6001"]) {
-                NSLog(@"取消支付");
-//                [[ShowHUD showHUD]showToastWithText:@"支付已取消！" FromView:self.view];
-            } else {
-                NSLog(@"支付失败");
-//                [[ShowHUD showHUD]showToastWithText:@"支付失败！" FromView:self.view];
+    }else if ([url.scheme isEqualToString:@"dagolfla"]){
+//        NSLog(@"Calling Application Bundle ID: %@", sourceApplication);
+        NSLog(@"URL scheme:%@", [url scheme]);
+        NSLog(@"URL query: %@", [url query]);
+        if ([[url query] containsString:@"safepay"]) {
+            //跳转支付宝钱包进行支付，处理支付结果
+            [[AlipaySDK defaultService] processOrderWithPaymentResult:url standbyCallback:^(NSDictionary *resultDic) {
+                NSLog(@"result = %@",resultDic);
+                NSLog(@"客户端支付");
+            }];
+            
+        }else{
+            NSString *actKey = @"";
+            NSString *actDetail = @"";
+            if ([url query]) {
+                actKey = [[[NSString stringWithFormat:@"%@", [url query]] componentsSeparatedByString:@"="] objectAtIndex:1];
+                actDetail = [[[NSString stringWithFormat:@"%@", [url query]] componentsSeparatedByString:@"="] objectAtIndex:0];
             }
             
-        }];
+            [self gotoAppPage:actKey switchDetails:actDetail];
+        }
+        
         return YES;
     }
     else{
@@ -388,12 +399,35 @@
     if ([[NSString stringWithFormat:@"%@",url] rangeOfString:[NSString stringWithFormat:@"wxdcdc4e20544ed728://pay"]].location != NSNotFound) {
         return  [WXApi handleOpenURL:url delegate:self];
         //不是上面的情况的话，就正常用shareSDK调起相应的分享页面
+    }else if ([url.scheme isEqualToString:@"dagolfla"]){
+//        NSLog(@"Calling Application Bundle ID: %@", sourceApplication);
+        NSLog(@"URL scheme:%@", [url scheme]);
+        NSLog(@"URL query: %@", [url query]);
+        if ([[url query] containsString:@"safepay"]) {
+            //跳转支付宝钱包进行支付，处理支付结果
+            [[AlipaySDK defaultService] processOrderWithPaymentResult:url standbyCallback:^(NSDictionary *resultDic) {
+                NSLog(@"result = %@",resultDic);
+                NSLog(@"客户端支付");
+            }];
+            
+        }else{
+            NSString *actKey = @"";
+            NSString *actDetail = @"";
+            if ([url query]) {
+                actKey = [[[NSString stringWithFormat:@"%@", [url query]] componentsSeparatedByString:@"="] objectAtIndex:1];
+                actDetail = [[[NSString stringWithFormat:@"%@", [url query]] componentsSeparatedByString:@"="] objectAtIndex:0];
+            }
+            
+            [self gotoAppPage:actKey switchDetails:actDetail];
+        }
+        
+        return YES;
     }else{
         return [UMSocialSnsService handleOpenURL:url wxApiDelegate:self];
         //        [UMSocialSnsService handleOpenURL:url
         //                            wxDelegate:self];
     }
-    return YES;
+//    return YES;
 }
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
@@ -623,6 +657,10 @@
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+    if ([[RCIMClient sharedRCIMClient] getConnectionStatus] == ConnectionStatus_Connected) {
+        // 插入分享消息
+//        [self insertSharedMessageIfNeed];
+    }
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {

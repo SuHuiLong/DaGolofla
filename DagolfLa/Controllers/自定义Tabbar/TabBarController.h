@@ -10,4 +10,8 @@
 
 @interface TabBarController : UITabBarController
 
++ (TabBarController *)shareInstance;
+
+@property (nonatomic, assign) NSUInteger selectedTabBarIndex;
+
 @end

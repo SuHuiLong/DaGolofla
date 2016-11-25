@@ -22,6 +22,11 @@
     addLB.textAlignment = NSTextAlignmentRight;
     addLB.font = [UIFont systemFontOfSize:28 * ProportionAdapter];
     [self.addTeamBtn addSubview:addLB];
+    
+    self.allBtn = [[UIButton alloc]initWithFrame:CGRectMake(40 *ProportionAdapter, 0, screenWidth -80 *ProportionAdapter, self.frame.size.height)];
+    [self bringSubviewToFront:self.allBtn];
+    [self.allBtn addTarget:self action:@selector(addTeamBtn:) forControlEvents:UIControlEventTouchUpInside];
+    [self addSubview:self.allBtn];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -30,11 +35,11 @@
     // Configure the view for the selected state
 }
 
-- (IBAction)addTeamBtn:(UIButton *)sender {
-    
+- (void)addTeamBtn:(UIButton *)allBtn{
     if ([self.delegate respondsToSelector:@selector(didSelectAddMoreBtn:)]) {
-        [self.delegate didSelectAddMoreBtn:sender];
+        [self.delegate didSelectAddMoreBtn:allBtn];
     }
-    
 }
+
+
 @end

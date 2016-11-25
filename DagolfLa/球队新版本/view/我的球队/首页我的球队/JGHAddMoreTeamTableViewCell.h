@@ -19,7 +19,8 @@
 @property (weak, nonatomic)id <JGHAddMoreTeamTableViewCellDelegate> delegate;
 
 @property (weak, nonatomic) IBOutlet UIButton *addTeamBtn;
-- (IBAction)addTeamBtn:(UIButton *)sender;
+
+@property (nonatomic, strong)UIButton *allBtn;
 
 
 @end

@@ -33,11 +33,11 @@
         if (i%2 == 0) {
             _suppliesMallView = [[JGHSuppliesMallView alloc]initWithFrame:CGRectMake(8*ProportionAdapter, (i/2 +1)*8*ProportionAdapter + (i/2)*(104 +imageW)*ProportionAdapter, (screenWidth-24*ProportionAdapter)/2, (104 +imageH) *ProportionAdapter)];
         }else{
-            _suppliesMallView = [[JGHSuppliesMallView alloc]initWithFrame:CGRectMake(16*ProportionAdapter +(screenWidth-16*ProportionAdapter)/2, (i/2 +1)*8*ProportionAdapter + (i/2)*(104 +imageW)*ProportionAdapter, (screenWidth-24*ProportionAdapter)/2, (104 +imageH) *ProportionAdapter)];
+            _suppliesMallView = [[JGHSuppliesMallView alloc]initWithFrame:CGRectMake(12*ProportionAdapter +(screenWidth-24*ProportionAdapter)/2, (i/2 +1)*8*ProportionAdapter + (i/2)*(104 +imageW)*ProportionAdapter, (screenWidth-24*ProportionAdapter)/2, (104 +imageH) *ProportionAdapter)];
         }
         
         [_suppliesMallView configJGHSuppliesMallView:array[i] andImageW:imageW andImageH:imageH];
-        UIButton *selectBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, self.frame.size.width, (104 +imageW) *ProportionAdapter)];
+        UIButton *selectBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, (screenWidth-24*ProportionAdapter)/2, (104 +imageW) *ProportionAdapter)];
         selectBtn.tag = 500 +i;
         [selectBtn addTarget:self action:@selector(suppliesMallClick:) forControlEvents:UIControlEventTouchUpInside];
         [_suppliesMallView addSubview:selectBtn];

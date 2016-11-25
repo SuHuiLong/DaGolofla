@@ -30,11 +30,10 @@
         //      cell.myImageV.contentMode = UIViewContentModeScaleAspectFill;
         
         
-        self.myLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.myImageV.frame.size.width + 5 * 5 * ScreenWidth / 375 + 3 * ScreenWidth / 375, 7 * ProportionAdapter, 200, 18 * ScreenWidth/375)];
-        self.myLabel.font = [UIFont systemFontOfSize:13 * ProportionAdapter];
+        self.myLabel = [[UILabel alloc] initWithFrame:CGRectMake(80*ProportionAdapter, 4 * ProportionAdapter, 200, 20 *ProportionAdapter)];
+        self.myLabel.font = [UIFont systemFontOfSize:17 * ProportionAdapter];
         
-        
-        self.sexImageV = [[UIImageView alloc] initWithFrame:CGRectMake(self.myImageV.frame.size.width + 5 * 5 * ScreenWidth / 375 + 3 * ScreenWidth / 375, 28 * ProportionAdapter, 12 * ProportionAdapter, 12 * ProportionAdapter)];
+        self.sexImageV = [[UIImageView alloc] initWithFrame:CGRectMake(80*ProportionAdapter, 28 * ProportionAdapter, 12 * ProportionAdapter, 12 * ProportionAdapter)];
 
         
         [self.contentView addSubview:self.sexImageV];

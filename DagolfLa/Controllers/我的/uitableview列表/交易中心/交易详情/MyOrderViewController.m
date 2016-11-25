@@ -26,6 +26,8 @@
     UIAlertController *_actionView;
     NSString *_price;
     UIView *_bgView;
+    
+    UIImageView *_statusView;
 }
 @property(nonatomic,retain)UIWebView *webView;
 
@@ -115,6 +117,26 @@
         [[NSUserDefaults standardUserDefaults] registerDefaults:@{@"UserAgent":customUserAgent}];
         [self.webView loadRequest:[NSURLRequest requestWithURL:url]];
         
+        if ([[url query] containsString:@"www.dagolfla.com"] || [[url query] containsString:@"dagolfla://"]) {
+            self.navigationController.navigationBarHidden = YES;
+            _statusView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 20, ScreenWidth, 20)];
+            
+            _statusView.image = [UIImage imageNamed:@"nav_bg"];
+            CGRect frame = _statusView.frame;
+            
+            frame.origin = CGPointMake(0, 0);
+            
+            _statusView.frame = frame;
+            [self.view addSubview:_statusView];
+            self.webView.frame=CGRectMake(0, 0, ScreenWidth, ScreenHeight+44);
+        }else{
+            self.navigationController.navigationBarHidden = NO;
+            self.webView.frame=CGRectMake(0, 0, ScreenWidth, ScreenHeight);
+            if (_statusView != nil) {
+                [_statusView removeFromSuperview];
+            }
+        }
+        
 
     } failed:^(NSError *error) {
         [_actIndicatorView stopAnimating];
@@ -138,6 +160,27 @@
     NSArray  * array= [[request.URL absoluteString] componentsSeparatedByString:@":"];
     NSArray  * arrayUrl= [[request.URL absoluteString] componentsSeparatedByString:@"privatemsg:"];
     NSString *xinWenURL = @"privatemsg";
+    
+    if ([str containsString:@"www.dagolfla.com"] || [str containsString:@"dagolfla://"]) {
+        self.navigationController.navigationBarHidden = YES;
+        _statusView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 20, ScreenWidth, 20)];
+        
+        _statusView.image = [UIImage imageNamed:@"nav_bg"];
+        CGRect frame = _statusView.frame;
+        
+        frame.origin = CGPointMake(0, 0);
+        
+        _statusView.frame = frame;
+        [self.view addSubview:_statusView];
+        self.webView.frame=CGRectMake(0, 0, ScreenWidth, ScreenHeight+44);
+    }else{
+        self.navigationController.navigationBarHidden = NO;
+        self.webView.frame=CGRectMake(0, 0, ScreenWidth, ScreenHeight);
+        if (_statusView != nil) {
+            [_statusView removeFromSuperview];
+        }
+    }
+    
     //聊天
     if ([array[0] isEqual:xinWenURL]) {
         ////NSLog(@"%@",arrayUrl[1]);

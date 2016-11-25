@@ -35,12 +35,12 @@
         if (i%2 == 0) {
             _wonderfulView = [[JGHWonderfulView alloc]initWithFrame:CGRectMake(8*ProportionAdapter, (i/2 +1)*8*ProportionAdapter + (i/2)*(imageH +35)*ProportionAdapter, (screenWidth-24*ProportionAdapter)/2, (imageH +35) *ProportionAdapter)];
         }else{
-            _wonderfulView = [[JGHWonderfulView alloc]initWithFrame:CGRectMake(16*ProportionAdapter +(screenWidth-16*ProportionAdapter)/2, (i/2 +1)*8*ProportionAdapter + (i/2)*(imageH +35)*ProportionAdapter, (screenWidth-24*ProportionAdapter)/2, (imageH +35) *ProportionAdapter)];
+            _wonderfulView = [[JGHWonderfulView alloc]initWithFrame:CGRectMake(12*ProportionAdapter +(screenWidth-24*ProportionAdapter)/2, (i/2 +1)*8*ProportionAdapter + (i/2)*(imageH +35)*ProportionAdapter, (screenWidth-24*ProportionAdapter)/2, (imageH +35) *ProportionAdapter)];
         }
         
         NSLog(@"%d", i/2);
         _wonderfulView.backgroundColor = [UIColor whiteColor];
-        UIButton *selectBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, screenWidth -16*ProportionAdapter, (imageH +35) *ProportionAdapter)];
+        UIButton *selectBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, (screenWidth -24*ProportionAdapter)/2, (imageH +35) *ProportionAdapter)];
         selectBtn.tag = 300 +i;
         [selectBtn addTarget:self action:@selector(wonderfulClick:) forControlEvents:UIControlEventTouchUpInside];
         [_wonderfulView addSubview:selectBtn];
