@@ -34,6 +34,8 @@
 #import "JGHIndexTableViewCell.h"
 
 #import "UMMobClick/MobClick.h"
+#import "UITabBar+badge.h"
+#import <RongIMKit/RCIM.h>
 
 static NSString *const JGHPASHeaderTableViewCellIdentifier = @"JGHPASHeaderTableViewCell";
 static NSString *const JGHShowSectionTableViewCellIdentifier = @"JGHShowSectionTableViewCell";
@@ -106,6 +108,48 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
     [self createBanner];
     
     [self loadingPHP];
+    
+    [self loadMessageData];
+}
+#pragma mark -- 下载未读消息数量
+- (void)loadMessageData{
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    [dict setObject:DEFAULF_USERID forKey:@"userKey"];
+    [dict setObject:[Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@dagolfla.com", DEFAULF_USERID]] forKey:@"md5"];
+    [[JsonHttp jsonHttp]httpRequest:@"msg/geSumtUnread" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
+        
+    } completionBlock:^(id data) {
+        NSLog(@"%@", data);
+        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+            int teamUnread = [[data objectForKey:@"teamUnread"] intValue];
+            int systemUnread = [[data objectForKey:@"systemUnread"] intValue];
+            
+            __weak typeof(self) __weakSelf = self;
+            dispatch_async(dispatch_get_main_queue(), ^{
+                NSMutableArray *displayConversationTypeArray = [NSMutableArray array];
+                [displayConversationTypeArray addObject:@1];
+                int count = [[RCIMClient sharedRCIMClient]
+                             getUnreadCount:displayConversationTypeArray];
+                if ((systemUnread +teamUnread +count) > 0) {
+                    [__weakSelf.tabBarController.tabBar showBadgeOnItemIndex:2 badgeValue:(systemUnread +teamUnread)];
+                    
+                } else {
+                    [__weakSelf.tabBarController.tabBar hideBadgeOnItemIndex:2];
+                }
+                
+            });
+            
+        }else{
+            if ([data objectForKey:@"packResultMsg"]) {
+                [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+            }
+        }
+    }];
+}
+- (void)updateBadgeValueForTabBarItem
+{
+    
+    
 }
 #pragma mark -- 登录PHP
 - (void)loadingPHP{

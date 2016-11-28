@@ -151,7 +151,6 @@
                 self.sexImageView.image = [UIImage imageNamed:@"xb_nn"];
             }
             
-            
         }else{
             if ([data objectForKey:@"packResultMsg"]) {
                 [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
@@ -169,8 +168,9 @@
     self.headerImageView.image = [UIImage imageNamed:DefaultHeaderImage];
     self.headerImageView.layer.masksToBounds = YES;
     self.headerImageView.layer.cornerRadius = 3.0;
+    self.headerImageView.userInteractionEnabled = YES;
     
-    UIButton *headerImageBtn = [[UIButton alloc]initWithFrame:CGRectMake(10 *ProportionAdapter, 10*ProportionAdapter, 65 *ProportionAdapter, 65 *ProportionAdapter)];
+    UIButton *headerImageBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 65 *ProportionAdapter, 65 *ProportionAdapter)];
     [headerImageBtn addTarget:self action:@selector(headerImageBtn:) forControlEvents:UIControlEventTouchUpInside];
     [self.headerImageView addSubview:headerImageBtn];
     
@@ -270,7 +270,7 @@
     [footprintBtn addTarget:self action:@selector(footprintBtn:) forControlEvents:UIControlEventTouchUpInside];
     [self.dynamicView addSubview:footprintBtn];
     
-    self.submitBtn = [[UIButton alloc]initWithFrame:CGRectMake(10 *ProportionAdapter, 400 *ProportionAdapter, screenWidth -20 *ProportionAdapter, 50 *ProportionAdapter)];
+    self.submitBtn = [[UIButton alloc]initWithFrame:CGRectMake(10 *ProportionAdapter, 400 *ProportionAdapter, screenWidth -20 *ProportionAdapter, 45 *ProportionAdapter)];
     [self.submitBtn setTitle:@"发消息" forState:UIControlStateNormal];
     [self.submitBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     self.submitBtn.backgroundColor = [UIColor orangeColor];
