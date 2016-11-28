@@ -170,7 +170,8 @@
         JGHPersonalInfoViewController *vc = [[JGHPersonalInfoViewController alloc] init];
         
         //设置对方的id
-        vc.otherKey = [_listArray[indexPath.section - 1][indexPath.row] otherUserId];
+        vc.otherKey = [_listArray[indexPath.section - 1][indexPath.row] friendUserKey];
+
         [self.navigationController pushViewController:vc animated:YES];
     }
 }
