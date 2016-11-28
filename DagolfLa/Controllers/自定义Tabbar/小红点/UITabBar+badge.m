@@ -114,7 +114,7 @@
     }
     if (badgeValue >= 100) {
         RCDTabBarBtn *btn = [[RCDTabBarBtn alloc] initWithFrame:CGRectMake(x, y, 22, 18)];
-        [btn setImage:[UIImage imageNamed:@"more"] forState:UIControlStateNormal];
+        [btn setImage:[UIImage imageNamed:@"icn_mesg_99+"] forState:UIControlStateNormal];
         [self addSubview:btn];
         btn.tag = 888+index;
         // btn.layer.cornerRadius = 9;//圆形

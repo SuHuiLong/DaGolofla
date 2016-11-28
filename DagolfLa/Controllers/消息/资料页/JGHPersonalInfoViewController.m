@@ -44,6 +44,9 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor colorWithHexString:BG_color];
+    
+    self.navigationController.navigationBarHidden = NO;
+    
     self.navigationItem.title = @"个人信息";
     self.momentsPicList = [NSMutableArray array];
     self.model = [[JGHUserModel alloc]init];
