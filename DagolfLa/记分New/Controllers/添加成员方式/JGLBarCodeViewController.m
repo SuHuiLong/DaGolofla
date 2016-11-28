@@ -14,6 +14,9 @@
 #import "JGLBarCodeViewController.h"
 #import "JGMyBarCodeViewController.h"
 #import "UITool.h"
+
+#import "JGHPersonalInfoViewController.h"
+
 @interface JGLBarCodeViewController ()<AVCaptureMetadataOutputObjectsDelegate>
 {
     AVCaptureSession *_session;//输入输出的中间桥梁
@@ -331,8 +334,13 @@
             
             if (_fromWitchVC == 2) {
                 
-                
-                
+                NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
+                [numberFormatter setNumberStyle:NSNumberFormatterDecimalStyle];
+                NSNumber *numTemp = [numberFormatter numberFromString:[Helper returnUrlString:str WithKey:@"userKey"]];
+
+                JGHPersonalInfoViewController *personInfoVC = [[JGHPersonalInfoViewController alloc] init];
+                personInfoVC.otherKey = numTemp;
+                [self.navigationController pushViewController:personInfoVC animated:YES];
                 
             }else{
                 [[JsonHttp jsonHttp]httpRequest:@"qcode/getUserInfo" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
@@ -361,7 +369,6 @@
                 }];
 
             }
-            
             
             
         }

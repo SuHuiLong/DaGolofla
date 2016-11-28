@@ -20,13 +20,16 @@
 @property (strong, nonatomic) NSString* pic;
 @property (strong, nonatomic) NSString* userSign;
 @property (strong, nonatomic) NSString* birthday;
-@property (strong, nonatomic) NSNumber* almost;
+@property (strong, nonatomic) NSNumber* almost; // 差点
 @property (strong, nonatomic) NSString* address;
 @property (strong, nonatomic) NSNumber* isFollow;
 @property (strong, nonatomic) NSNumber* age;
-@property (copy, nonatomic) NSString* reason;
+@property (copy, nonatomic) NSString* reason;  // 推荐理由
+@property (copy, nonatomic) NSString* workName; // 工作行业
+
 @property (strong, nonatomic) NSNumber* timeKey;
 
+@property (strong, nonatomic) NSNumber* state; // 是否是好友  1 是好友
 
 @end
 

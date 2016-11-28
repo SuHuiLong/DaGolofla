@@ -45,12 +45,12 @@
     _imgvSex.image = [UIImage imageNamed:@"xb_n"];
     [self addSubview:_imgvSex];
     
-    _ageLabel = [[UILabel alloc]initWithFrame:CGRectMake(100*ScreenWidth/375, 28*ScreenWidth/375, 150*ScreenWidth/375, 20*ScreenWidth/375)];
+    _ageLabel = [[UILabel alloc]initWithFrame:CGRectMake(100*ScreenWidth/375, 28*ScreenWidth/375, 180*ScreenWidth/375, 20*ScreenWidth/375)];
     _ageLabel.font = [UIFont systemFontOfSize:12*ScreenWidth/375];
     _ageLabel.text = @"18";
     [self addSubview:_ageLabel];
     
-    _detailLabel = [[UILabel alloc]initWithFrame:CGRectMake(80*ScreenWidth/375, 50*ScreenWidth/375, 200*ScreenWidth/375, 20*ScreenWidth/375)];
+    _detailLabel = [[UILabel alloc]initWithFrame:CGRectMake(80*ScreenWidth/375, 50*ScreenWidth/375, 220*ScreenWidth/375, 20*ScreenWidth/375)];
     _detailLabel.font = [UIFont systemFontOfSize:12*ScreenWidth/375];
     _detailLabel.textColor = [UIColor colorWithHexString:@"#a0a0a0"];
     _detailLabel.text = @"我需要三件东西。。";
@@ -90,10 +90,17 @@
         _imgvSex.image = [UIImage imageNamed:@"xb_nn"];
     }
     
-    _ageLabel.text = [NSString stringWithFormat:@"%@",model.age];
+    if (model.workName) {
+        _ageLabel.text = [NSString stringWithFormat:@"%.1f | %@",[model.almost floatValue], model.workName];
+
+    }else{
+        _ageLabel.text = [NSString stringWithFormat:@"%@",model.almost];
+
+    }
+//    _ageLabel.text = [NSString stringWithFormat:@"%@",model.age];
     
     if (![Helper isBlankString:model.reason]) {
-        _detailLabel.text = model.reason;
+        _detailLabel.text = [NSString stringWithFormat:@"推荐理由:%@", model.reason];
     }
     
     [_btnFocus setTitle:@"添加" forState:UIControlStateNormal];
@@ -121,7 +128,13 @@
         _imgvSex.image = [UIImage imageNamed:@"xb_nn"];
     }
     
-    _ageLabel.text = [NSString stringWithFormat:@"%@",model.age];
+    if (model.workName) {
+        _ageLabel.text = [NSString stringWithFormat:@"%.1f | %@",[model.almost floatValue], model.workName];
+        
+    }else{
+        _ageLabel.text = [NSString stringWithFormat:@"%@",model.almost];
+        
+    }
     
     if (![Helper isBlankString:model.reason]) {
         _detailLabel.text = model.reason;

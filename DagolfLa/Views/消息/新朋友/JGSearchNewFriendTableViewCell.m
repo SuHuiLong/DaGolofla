@@ -42,8 +42,8 @@
         self.addBtn = [[UIButton alloc] initWithFrame:CGRectMake(300 * ProportionAdapter, 10 * ProportionAdapter, 60 * ProportionAdapter, 30 * ProportionAdapter)];
         self.addBtn.layer.cornerRadius = 6 * ProportionAdapter;
         self.addBtn.clipsToBounds = YES;
-        [self.addBtn setTitle:@"添加" forState:(UIControlStateNormal)];
-        self.addBtn.backgroundColor = [UIColor colorWithHexString:Bar_Color];
+//        [self.addBtn setTitle:@"添加" forState:(UIControlStateNormal)];
+//        self.addBtn.backgroundColor = [UIColor colorWithHexString:Bar_Color];
         [self.contentView addSubview:self.addBtn];
         
     }
@@ -91,6 +91,18 @@
         self.signLB.text = @"用户暂无签名";
     }
 
+    if ([model.state integerValue] == 1) {
+        [self.addBtn setTitle:@"已添加" forState:(UIControlStateNormal)];
+        self.addBtn.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];
+        self.addBtn.userInteractionEnabled = NO;
+    }else{
+        [self.addBtn setTitle:@"添加" forState:(UIControlStateNormal)];
+        self.addBtn.backgroundColor = [UIColor colorWithHexString:Bar_Color];
+        self.addBtn.userInteractionEnabled =  YES;
+
+    }
+    
+    
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

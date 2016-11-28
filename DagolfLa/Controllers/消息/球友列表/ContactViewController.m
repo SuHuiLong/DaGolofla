@@ -246,8 +246,9 @@
                         }else{
                             model.userName = modell.userremarks;
                         }
-                        
-                        [allFriarr addObject:model];
+                        if (model.userName) {
+                            [allFriarr addObject:model];
+                        }
                         //                [self.keyArray addObject:model.userName];
                     }
                     

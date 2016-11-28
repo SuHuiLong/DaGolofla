@@ -80,8 +80,8 @@
     [super viewDidLoad];
     
     self.title = @"添加球友";
-
-    _tableView = [[UITableView alloc] initWithFrame:[UIScreen mainScreen].bounds style:(UITableViewStylePlain)];
+    _page = 0;
+    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight + 50) style:(UITableViewStylePlain)];
 //    self.view = _tableView;
     [self.view addSubview:_tableView];
     _tableView.delegate = self;
@@ -93,7 +93,7 @@
     _searchController.hidesNavigationBarDuringPresentation = NO;
     _searchController.searchBar.frame = CGRectMake(self.searchController.searchBar.frame.origin.x, self.searchController.searchBar.frame.origin.y, self.searchController.searchBar.frame.size.width, 44.0);
     self.searchController.searchBar.tintColor = [UIColor colorWithRed:0.36f green:0.66f blue:0.31f alpha:1.00f];
-    self.searchController.searchBar.placeholder = @"请输入昵称／手机号添加好友";
+    self.searchController.searchBar.placeholder = @"请输入昵称／手机号添加好友            ";
     self.searchController.searchBar.delegate = self;
     self.tableView.tableHeaderView = self.searchController.searchBar;
     self.tableView.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];
@@ -110,7 +110,7 @@
 //    searchTextField.backgroundColor = [UIColor whiteColor];
     searchTextField.clearButtonMode = UITextFieldViewModeNever;
     searchTextField.font = [UIFont systemFontOfSize:16 * ProportionAdapter];
-    searchTextField.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"msg_search_kuang"]];
+//    searchTextField.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"msg_search_kuang"]];
     
     self.contactBtn = [[UIButton alloc] initWithFrame:CGRectMake(333 * ProportionAdapter, searchBar.frame.origin.y + 13, 20 * ProportionAdapter, 20 * ProportionAdapter)];
     [self.contactBtn setImage:[UIImage imageNamed:@"phonenumber"] forState:(UIControlStateNormal)];
@@ -120,6 +120,10 @@
     
     self.begainSearch = NO;
     self.contactISOpen = NO;
+    
+    
+    _tableView.footer=[MJDIYBackFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRereshing)];
+
     // Do any additional setup after loading the view.
 }
 
@@ -128,13 +132,17 @@
 
 - (void)contantAct:(UIButton *)btn{
     
+    if ([self.view.subviews containsObject:self.contactTableView]) {
+        return;
+    }
+    
     [self.searchController.searchBar endEditing:YES];
 
     self.tableView.scrollEnabled = NO;
 
     
     
-    self.contactTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 54 * ProportionAdapter, screenWidth, screenHeight-15*screenWidth/375)];
+    self.contactTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 70 * ProportionAdapter, screenWidth, screenHeight - 70 * ProportionAdapter)];
     self.contactTableView.delegate = self;
     self.contactTableView.dataSource = self;
     [self.view addSubview:self.contactTableView];
@@ -311,7 +319,7 @@
             return [self.searchArray count];
         }
     }else{
-        self.tableView.footer = nil;
+//        self.tableView.footer = nil;
         return 1;
     }
 }
@@ -430,13 +438,14 @@
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
     
+    _page = 0;
+
     [[ShowHUD showHUD] showAnimationWithText:@"搜索中…" FromView:self.view];
     
     NSMutableDictionary *dic = [NSMutableDictionary dictionary];
     [dic setValue:DEFAULF_USERID forKey:@"userKey"];
     [dic setValue:searchBar.text forKey:@"searchStr"];
     [dic setValue:@"0" forKey:@"offset"];
-    
     
     [[JsonHttp jsonHttp] httpRequestWithMD5:@"userFriend/getSearchUser" JsonKey:nil withData:dic failedBlock:^(id errType) {
         [[ShowHUD showHUD] hideAnimationFromView:self.view];
@@ -504,6 +513,13 @@
             self.searchController.searchBar.text = addressBook.mobile;
             [self.contactTableView removeFromSuperview];
             [self.searchController.searchBar becomeFirstResponder];
+        }else{
+
+            JGHPersonalInfoViewController *personInfoVC = [[JGHPersonalInfoViewController alloc] init];
+            MyattenModel *myModel = self.searchArray[indexPath.row];
+            personInfoVC.otherKey = myModel.userId;
+            [self.navigationController pushViewController:personInfoVC animated:YES];
+
         }
     }
     else
@@ -521,30 +537,80 @@
 }
 
 
-- (void)refrenshing1{
+- (void)footRereshing{
     _page ++;
-    [self.paraDic setObject:[NSNumber numberWithInt:_page] forKey:@"page"];
-    [[PostDataRequest sharedInstance] postDataRequest:@"user/searchTuser.do" parameter:self.paraDic success:^(id respondsData) {
-        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:respondsData options:NSJSONReadingMutableContainers error:nil];
+   
+    [[ShowHUD showHUD] showAnimationWithText:@"加载中…" FromView:self.view];
+    
+    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+    [dic setValue:DEFAULF_USERID forKey:@"userKey"];
+    [dic setValue:self.searchController.searchBar.text forKey:@"searchStr"];
+    [dic setValue:@(_page) forKey:@"offset"];
+    
+    
+    [[JsonHttp jsonHttp] httpRequestWithMD5:@"userFriend/getSearchUser" JsonKey:nil withData:dic failedBlock:^(id errType) {
+        [[ShowHUD showHUD] hideAnimationFromView:self.view];
         
-        if ([[dict objectForKey:@"success"] boolValue]) {
-            NSArray *arra = [dict objectForKey:@"rows"];
+    } completionBlock:^(id data) {
+        [[ShowHUD showHUD] hideAnimationFromView:self.view];
+        
+        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
             
-            for (NSDictionary *dic in arra) {
-                NewFriendModel *myModel = [[NewFriendModel alloc] init];
-                [myModel setValuesForKeysWithDictionary:dic];
-                [self.searchArray addObject:myModel];
+            if ([data objectForKey:@"list"]) {
+//                [self.searchArray removeAllObjects];
+                
+                    
+                
+                for (NSDictionary *dic in [data objectForKey:@"list"]) {
+                    NewFriendModel *myAtModel = [[NewFriendModel alloc] init];
+                    [myAtModel setValuesForKeysWithDictionary:dic];
+                    [self.searchArray addObject:myAtModel];
+                }
+                NSMutableArray *indexPathArray = [[NSMutableArray alloc] init];
+                
+                for (int i = 0; i < [data[@"list"] count]; i ++) {
+                    [indexPathArray addObject:[NSIndexPath indexPathForRow:20 * _page + i inSection:0]];
+                }
+                [self.tableView insertRowsAtIndexPaths:indexPathArray withRowAnimation:UITableViewRowAnimationFade];
+                
+//                [self.tableView reloadData];
+            }else{
+                [LQProgressHud showMessage:@"没有更多"];
             }
-            
-            [self.tableView reloadData];
-        }else {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:[dict objectForKey:@"message"] delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-            [alert show];
+        }else{
+            if ([data objectForKey:@"packResultMsg"]) {
+                [LQProgressHud showMessage:[data objectForKey:@"packResultMsg"]];
+            }
         }
         [self.tableView.footer endRefreshing];
-    } failed:^(NSError *error) {
-        
+
     }];
+
+    
+    
+    
+//    [self.paraDic setObject:[NSNumber numberWithInt:_page] forKey:@"page"];
+//    [[PostDataRequest sharedInstance] postDataRequest:@"user/searchTuser.do" parameter:self.paraDic success:^(id respondsData) {
+//        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:respondsData options:NSJSONReadingMutableContainers error:nil];
+//        
+//        if ([[dict objectForKey:@"success"] boolValue]) {
+//            NSArray *arra = [dict objectForKey:@"rows"];
+//            
+//            for (NSDictionary *dic in arra) {
+//                NewFriendModel *myModel = [[NewFriendModel alloc] init];
+//                [myModel setValuesForKeysWithDictionary:dic];
+//                [self.searchArray addObject:myModel];
+//            }
+//            
+//            [self.tableView reloadData];
+//        }else {
+//            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:[dict objectForKey:@"message"] delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+//            [alert show];
+//        }
+//        [self.tableView.footer endRefreshing];
+//    } failed:^(NSError *error) {
+//        
+//    }];
     
 }
 
