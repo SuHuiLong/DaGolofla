@@ -23,6 +23,8 @@
 #import "JGHSystemNotViewController.h"
 #import "JGHTeamNotViewController.h"
 
+#import "RCDTabBarBtn.h"
+
 @interface ChatListViewController ()<UITextFieldDelegate, RCIMUserInfoDataSource>
 {
     UITextField* _textField;
@@ -30,6 +32,9 @@
     UIView* _viewHeader;
     
     UIButton* _btnInvite;
+    
+    NSInteger _teamUnread;
+    NSInteger _systemUnread;
 }
 
 @end
@@ -106,13 +111,65 @@
     //聚合会话类型
 //   [self setCollectionConversationType:@[@(ConversationType_GROUP),@(ConversationType_PRIVATE)]];
 
-    
+    [self loadMessageData];
     
 
 }
-
-
-
+#pragma mark -- 下载未读消息数量
+- (void)loadMessageData{
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    [dict setObject:DEFAULF_USERID forKey:@"userKey"];
+    [dict setObject:[Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@dagolfla.com", DEFAULF_USERID]] forKey:@"md5"];
+    [[JsonHttp jsonHttp]httpRequest:@"msg/geSumtUnread" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
+        
+    } completionBlock:^(id data) {
+        NSLog(@"%@", data);
+        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+            _teamUnread = [[data objectForKey:@"teamUnread"] integerValue];
+            _systemUnread = [[data objectForKey:@"systemUnread"] integerValue];
+            
+            [[_viewHeader viewWithTag:1000] removeFromSuperview];
+            [[_viewHeader viewWithTag:1001] removeFromSuperview];
+            [[_viewHeader viewWithTag:1002] removeFromSuperview];
+            [[_viewHeader viewWithTag:1003] removeFromSuperview];
+            
+            if (100 > _systemUnread > 0) {
+                RCDTabBarBtn *btn = [[RCDTabBarBtn alloc] initWithFrame:CGRectMake(50 *ProportionAdapter, 10 *ProportionAdapter, 20 *ProportionAdapter, 20 *ProportionAdapter)];
+                btn.layer.cornerRadius = 9;//圆形
+                btn.unreadCount = [NSString stringWithFormat:@"%td", _systemUnread];
+                btn.tag = 1000;
+                [_viewHeader addSubview:btn];
+            }else{
+                RCDTabBarBtn *btn = [[RCDTabBarBtn alloc] initWithFrame:CGRectMake(50 *ProportionAdapter, 10 *ProportionAdapter, 20 *ProportionAdapter, 20 *ProportionAdapter)];
+                btn.layer.cornerRadius = 9;//圆形
+                [btn setImage:[UIImage imageNamed:@"icn_mesg_99+"] forState:UIControlStateNormal];
+                btn.tag = 1001;
+                [_viewHeader addSubview:btn];
+            }
+            
+            if (100 > _teamUnread > 0) {
+                RCDTabBarBtn *btn = [[RCDTabBarBtn alloc] initWithFrame:CGRectMake(50 *ProportionAdapter, 78 *ProportionAdapter, 20 *ProportionAdapter, 20 *ProportionAdapter)];
+                btn.layer.cornerRadius = 9;//圆形
+                btn.unreadCount = [NSString stringWithFormat:@"%td", _teamUnread];
+                btn.tag = 1002;
+                [_viewHeader addSubview:btn];
+            }else{
+                RCDTabBarBtn *btn = [[RCDTabBarBtn alloc] initWithFrame:CGRectMake(50 *ProportionAdapter, 78 *ProportionAdapter, 20 *ProportionAdapter, 20 *ProportionAdapter)];
+                btn.layer.cornerRadius = 9;//圆形
+                [btn setImage:[UIImage imageNamed:@"icn_mesg_99+"] forState:UIControlStateNormal];
+                btn.tag = 1003;
+                [_viewHeader addSubview:btn];
+            }
+            
+            [self updateBadgeValueForTabBarItem];
+            
+        }else{
+            if ([data objectForKey:@"packResultMsg"]) {
+                [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+            }
+        }
+    }];
+}
 
 //导航栏右按钮点击事件
 -(void)teamFClick
@@ -136,79 +193,7 @@
             [self presentViewController:alertView animated:YES completion:nil];
         }];
     }
-    
 }
-
-
-
-
-
-//#pragma mark --创建表头
-//-(void)createHeaderView
-//{
-////    _viewHeader = [[UIView alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, 100*ScreenWidth/375)];
-//    _viewHeader.backgroundColor = [UIColor redColor];
-//    self.conversationListTableView.tableHeaderView = _viewHeader;
-//    
-//    
-////    [self createSeachBar];
-//    
-//    [self createInvite];
-//    
-//}
-
-
-//自定义searchbar
-#pragma mark --自定义searchbar
-//-(void)createSeachBar{
-//    UIView *view=[[UIView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 37*ScreenWidth/375)];
-//    view.backgroundColor = [UIColor colorWithRed:0.87f green:0.87f blue:0.87f alpha:1.00f];
-//    [_viewHeader addSubview:view];
-//    
-//    UIImageView *imageView=[[UIImageView alloc] initWithFrame:CGRectMake(13*ScreenWidth/375, 5*ScreenWidth/375, ScreenWidth-80*ScreenWidth/375, 27*ScreenWidth/375)];
-//    imageView.backgroundColor=[UIColor colorWithRed:239.0/255 green:239.0/255 blue:239.0/255 alpha:239.0/255];
-//    imageView.layer.cornerRadius=13*ScreenWidth/375;
-//    imageView.tag=88;
-//    imageView.userInteractionEnabled=YES;
-//    imageView.clipsToBounds=YES;
-//    [view addSubview:imageView];
-//    
-//    UIImageView *imageView2=[[UIImageView alloc] init];
-//    imageView2.image=[UIImage imageNamed:@"search"];
-//    imageView2.frame=CGRectMake(10*ScreenWidth/375, 4*ScreenWidth/375, 16*ScreenWidth/375, 16*ScreenWidth/375);
-//    [imageView addSubview:imageView2];
-//    
-//    _textField = [[UITextField alloc] initWithFrame:CGRectMake(30*ScreenWidth/375, 0, ScreenWidth-115*ScreenWidth/375, 27*ScreenWidth/375)];
-//    _textField.textColor=[UIColor lightGrayColor];
-//    _textField.tag=888;
-//    _textField.placeholder=@"请输入约球名称进行搜索";
-//    _textField.font = [UIFont systemFontOfSize:16*ScreenWidth/375];
-//    [imageView addSubview:_textField];
-//    _textField.delegate = self;
-//    
-//    UIButton *SeachButton=[UIButton buttonWithType:UIButtonTypeCustom];
-//    SeachButton.frame=CGRectMake(ScreenWidth-60*ScreenWidth/375, 3*ScreenWidth/375, 60*ScreenWidth/375, 30*ScreenWidth/375);
-//    [SeachButton setTitle:@"搜索" forState:UIControlStateNormal];
-//    SeachButton.titleLabel.font = [UIFont systemFontOfSize:16*ScreenWidth/375];
-//    [SeachButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-//    [SeachButton addTarget:self action:@selector(seachcityClick) forControlEvents:UIControlEventTouchUpInside];
-//    [view addSubview:SeachButton];
-//}
-//搜索点击事件
-//-(void)seachcityClick{
-//    [_textField resignFirstResponder];
-//    
-//    if ([[NSUserDefaults standardUserDefaults]objectForKey:@"userId"]) {
-////        [_tableView.header endRefreshing];
-////        _tableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
-////        [_tableView.header beginRefreshing];
-//    }else {
-//        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"打高尔夫啦" message:@"确定是否立即登录？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
-//        [alertView show];
-//    }
-//    
-//}
-
 #pragma mark --头视图
 -(void)createTableHeaderView
 {
@@ -272,8 +257,14 @@
     
     self.conversationListTableView.tableHeaderView = _viewHeader;
     
+    self.conversationListTableView.header = [MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
+//    self.conversationListTableView.footer=[MJDIYBackFooter footerWithRefreshingTarget:self refreshingAction:@selector(footerRefreshing)];
 }
 
+#pragma mark -- headRereshing
+- (void)headRereshing{
+    [self loadMessageData];
+}
 #pragma mark -- 系统通知
 - (void)sysMessbtn:(UIButton *)btn{
     btn.userInteractionEnabled = NO;
@@ -388,7 +379,8 @@
         if (count > 0) {
             //      __weakSelf.tabBarItem.badgeValue =
             //          [[NSString alloc] initWithFormat:@"%d", count];
-            [__weakSelf.tabBarController.tabBar showBadgeOnItemIndex:2 badgeValue:count];
+//            int badgeValue = count+_teamUnread+_systemUnread;
+            [__weakSelf.tabBarController.tabBar showBadgeOnItemIndex:2 badgeValue:count+ (int)_teamUnread + (int)_systemUnread];
             
         } else {
             //      __weakSelf.tabBarItem.badgeValue = nil;
