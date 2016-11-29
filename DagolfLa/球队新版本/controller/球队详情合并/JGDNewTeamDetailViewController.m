@@ -389,7 +389,7 @@ static CGFloat ImageHeight  = 210.0;
     }else{
         UMSocialData *data = [UMSocialData defaultData];
         data.shareImage = [UIImage imageNamed:@"logo"];
-        data.shareText = [NSString stringWithFormat:@"%@%@",@"打高尔夫啦",shareUrl];
+        data.shareText = [NSString stringWithFormat:@"%@%@",@"君高高尔夫",shareUrl];
         [[UMSocialControllerService defaultControllerService] setSocialData:data];
         //2.设置分享平台
         [UMSocialSnsPlatformManager getSocialPlatformWithName:UMShareToSina].snsClickHandler(self,[UMSocialControllerService defaultControllerService],YES);

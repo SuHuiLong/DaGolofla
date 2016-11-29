@@ -82,7 +82,7 @@
     [super viewDidLoad];
     //设置任务栏不占位置
     self.automaticallyAdjustsScrollViewInsets = NO;
-    self.navigationItem.title = @"打高尔夫啦";
+    self.navigationItem.title = @"君高高尔夫";
     self.view.backgroundColor = [UIColor whiteColor];
     
     //监听分组页面返回，刷新数据
