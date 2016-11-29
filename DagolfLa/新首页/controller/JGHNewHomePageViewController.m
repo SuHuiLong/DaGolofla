@@ -131,7 +131,7 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
                 int count = [[RCIMClient sharedRCIMClient]
                              getUnreadCount:displayConversationTypeArray];
                 if ((systemUnread +teamUnread +count) > 0) {
-                    [__weakSelf.tabBarController.tabBar showBadgeOnItemIndex:2 badgeValue:(systemUnread +teamUnread)];
+                    [__weakSelf.tabBarController.tabBar showBadgeOnItemIndex:2 badgeValue:(systemUnread +teamUnread +count)];
                     
                 } else {
                     [__weakSelf.tabBarController.tabBar hideBadgeOnItemIndex:2];

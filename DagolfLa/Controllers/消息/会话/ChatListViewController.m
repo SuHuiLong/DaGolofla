@@ -53,6 +53,8 @@
 //    [self.tabBarController.tabBar showBadgeOnItemIndex:3];
     if ([[NSUserDefaults standardUserDefaults] objectForKey:@"userId"])
     {
+        [self loadMessageData];
+        
         if ([[RCIMClient sharedRCIMClient]getUnreadCount:self.displayConversationTypeArray] == 0) {
              [self.tabBarController.tabBar hideBadgeOnItemIndex:2];
         }
@@ -85,7 +87,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self notifyUpdateUnreadMessageCount];
+    
     if ([[[UIDevice currentDevice] systemVersion] doubleValue] >7.0) {
         [self.navigationController.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor],UITextAttributeTextColor, nil]];
     }else {
@@ -110,9 +112,6 @@
 
     //聚合会话类型
 //   [self setCollectionConversationType:@[@(ConversationType_GROUP),@(ConversationType_PRIVATE)]];
-
-    [self loadMessageData];
-    
 
 }
 #pragma mark -- 下载未读消息数量
@@ -165,13 +164,15 @@
                 [_viewHeader addSubview:btn];
             }
             
-            [self updateBadgeValueForTabBarItem];
+            [self notifyUpdateUnreadMessageCount];
             
         }else{
             if ([data objectForKey:@"packResultMsg"]) {
                 [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
             }
         }
+        
+        [self.conversationListTableView.header endRefreshing];
     }];
 }
 
@@ -272,6 +273,10 @@
 #pragma mark -- 系统通知
 - (void)sysMessbtn:(UIButton *)btn{
     btn.userInteractionEnabled = NO;
+    
+    _systemUnread = 0;
+    [self updateBadgeValueForTabBarItem];
+    
     JGHSystemNotViewController *sysCtrl = [[JGHSystemNotViewController alloc]init];
     sysCtrl.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:sysCtrl animated:YES];
@@ -281,6 +286,9 @@
 #pragma mark -- 球队通知
 - (void)teamNotbtn:(UIButton *)btn{
     btn.userInteractionEnabled = NO;
+    
+    _teamUnread = 0;
+    [self updateBadgeValueForTabBarItem];
     
     JGHTeamNotViewController *teamCtrl = [[JGHTeamNotViewController alloc]init];
     teamCtrl.hidesBottomBarWhenPushed = YES;
