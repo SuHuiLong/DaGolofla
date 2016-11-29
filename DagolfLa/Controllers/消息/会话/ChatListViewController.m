@@ -139,7 +139,9 @@
                 btn.unreadCount = [NSString stringWithFormat:@"%td", _systemUnread];
                 btn.tag = 1000;
                 [_viewHeader addSubview:btn];
-            }else{
+            }
+            
+            if (_systemUnread > 100) {
                 RCDTabBarBtn *btn = [[RCDTabBarBtn alloc] initWithFrame:CGRectMake(50 *ProportionAdapter, 10 *ProportionAdapter, 20 *ProportionAdapter, 20 *ProportionAdapter)];
                 btn.layer.cornerRadius = 9;//圆形
                 [btn setImage:[UIImage imageNamed:@"icn_mesg_99+"] forState:UIControlStateNormal];
@@ -153,7 +155,9 @@
                 btn.unreadCount = [NSString stringWithFormat:@"%td", _teamUnread];
                 btn.tag = 1002;
                 [_viewHeader addSubview:btn];
-            }else{
+            }
+            
+            if (_teamUnread > 100) {
                 RCDTabBarBtn *btn = [[RCDTabBarBtn alloc] initWithFrame:CGRectMake(50 *ProportionAdapter, 78 *ProportionAdapter, 20 *ProportionAdapter, 20 *ProportionAdapter)];
                 btn.layer.cornerRadius = 9;//圆形
                 [btn setImage:[UIImage imageNamed:@"icn_mesg_99+"] forState:UIControlStateNormal];
@@ -376,7 +380,7 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         int count = [[RCIMClient sharedRCIMClient]
                      getUnreadCount:self.displayConversationTypeArray];
-        if (count > 0) {
+        if ((count + (int)_teamUnread +(int)_systemUnread) > 0) {
             //      __weakSelf.tabBarItem.badgeValue =
             //          [[NSString alloc] initWithFormat:@"%d", count];
 //            int badgeValue = count+_teamUnread+_systemUnread;
