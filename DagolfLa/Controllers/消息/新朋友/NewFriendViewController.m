@@ -271,6 +271,10 @@
         
         [[ShowHUD showHUD] hideAnimationFromView:self.view];
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+            
+            [_dataArray removeObjectAtIndex:indexPath.row];
+            [_tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:YES];
+            
             [LQProgressHud showMessage:@"添加成功"];
             
         }else{
@@ -333,18 +337,23 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    ChatDetailViewController *vc = [[ChatDetailViewController alloc] init];
-    //设置聊天类型
-    vc.conversationType = ConversationType_PRIVATE;
-    //设置对方的id
-    vc.targetId = [NSString stringWithFormat:@"%@",[_dataArray[indexPath.row] userId]];
-    //设置对方的名字
-    //    vc.userName = model.conversationTitle;
-    //设置聊天标题
-    vc.title = [_dataArray[indexPath.row] userName];
-    //设置不现实自己的名称  NO表示不现实
-    vc.displayUserNameInCell = NO;
-    [self.navigationController pushViewController:vc animated:YES];
+    
+    JGHPersonalInfoViewController *personInfoVC = [[JGHPersonalInfoViewController alloc] init];
+    personInfoVC.otherKey = [_dataArray[indexPath.row] userId];
+    [self.navigationController pushViewController:personInfoVC animated:YES];
+
+//    ChatDetailViewController *vc = [[ChatDetailViewController alloc] init];
+//    //设置聊天类型
+//    vc.conversationType = ConversationType_PRIVATE;
+//    //设置对方的id
+//    vc.targetId = [NSString stringWithFormat:@"%@",[_dataArray[indexPath.row] userId]];
+//    //设置对方的名字
+//    //    vc.userName = model.conversationTitle;
+//    //设置聊天标题
+//    vc.title = [_dataArray[indexPath.row] userName];
+//    //设置不现实自己的名称  NO表示不现实
+//    vc.displayUserNameInCell = NO;
+//    [self.navigationController pushViewController:vc animated:YES];
 }
 
 

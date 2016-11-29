@@ -91,7 +91,7 @@
     }
     
     if (model.workName) {
-        _ageLabel.text = [NSString stringWithFormat:@"%.1f | %@",[model.almost floatValue], model.workName];
+        _ageLabel.text = [NSString stringWithFormat:@"%.1f  |  %@",[model.almost floatValue], model.workName];
 
     }else{
         _ageLabel.text = [NSString stringWithFormat:@"%@",model.almost];
@@ -129,7 +129,7 @@
     }
     
     if (model.workName) {
-        _ageLabel.text = [NSString stringWithFormat:@"%.1f | %@",[model.almost floatValue], model.workName];
+        _ageLabel.text = [NSString stringWithFormat:@"%.1f  |  %@",[model.almost floatValue], model.workName];
         
     }else{
         _ageLabel.text = [NSString stringWithFormat:@"%@",model.almost];
