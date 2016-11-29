@@ -54,7 +54,7 @@
     
 //    [self.myImageV sd_setImageWithURL:[Helper imageIconUrl:myModel.pic]];
     
-    [self.myImageV sd_setImageWithURL:[Helper setImageIconUrl:@"user" andTeamKey:[myModel.otherUserId integerValue] andIsSetWidth:YES andIsBackGround:NO] placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
+    [self.myImageV sd_setImageWithURL:[Helper setImageIconUrl:@"user" andTeamKey:[myModel.friendUserKey integerValue] andIsSetWidth:YES andIsBackGround:NO] placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
 
     
     if ([myModel.sex integerValue] == 0) {

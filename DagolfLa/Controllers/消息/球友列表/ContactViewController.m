@@ -20,7 +20,7 @@
 #import "NewFriendViewController.h"
 #import "ChatDetailViewController.h"
 
-#import "AddNoteViewController.h"
+#import "JGHNoteViewController.h"
 
 #import "NoteModel.h"
 #import "NoteHandlle.h"
@@ -41,7 +41,6 @@
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:YES];
-    [self setData];
 }
 
 - (void)viewDidLoad {
@@ -67,6 +66,8 @@
     EEEVIew.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];
     self.tableView.tableHeaderView = EEEVIew;
     
+    [self setData];
+
     // Do any additional setup after loading the view.
 }
 
@@ -352,13 +353,14 @@
         // ...
         // 在最后希望cell可以自动回到默认状态，所以需要退出编辑模式
         tableView.editing = NO;
-        AddNoteViewController *AVC = [[AddNoteViewController alloc] init];
-        AVC.isFollow = YES;
-        AVC.userRemark = cell.myLabel.text;
+        JGHNoteViewController *AVC = [[JGHNoteViewController alloc] init];
+
         MyattenModel *model = self.listArray[indexPath.section - 1][indexPath.row];
-        
-        AVC.otherUid = model.otherUserId;
-        
+        AVC.friendUserKey = model.friendUserKey;
+        AVC.blockRereshNote = ^(NSString *name){
+            cell.myLabel.text = name;
+            model.userName = name;
+        };
         [self.navigationController pushViewController:AVC animated:YES];
     }];
     
