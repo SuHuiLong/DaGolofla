@@ -46,7 +46,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    
+    _addFriendSum = @3;
     UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"jqy"] style:UIBarButtonItemStylePlain target:self action:@selector(contact)];
     item.tintColor = [UIColor whiteColor];
     self.navigationItem.rightBarButtonItem = item;
@@ -137,9 +137,12 @@
             LB.backgroundColor = [UIColor  redColor];
             LB.textAlignment = NSTextAlignmentCenter;
             LB.font = [UIFont systemFontOfSize:13 * ProportionAdapter];
-            LB.text = @"6";
             LB.textColor = [UIColor whiteColor];
-            [cell1.myImageV addSubview:LB];
+
+            if ([_addFriendSum integerValue] > 0) {
+                LB.text = [_addFriendSum stringValue];
+                [cell1.myImageV addSubview:LB];
+            }
 
         }
         
@@ -174,6 +177,8 @@
         }else{
             NewFriendViewController *newVC = [[NewFriendViewController alloc] init];
             newVC.fromWitchVC = 2;
+            _addFriendSum = 0;
+            [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:NO];
             [self.navigationController pushViewController:newVC animated:YES];
             
         }
