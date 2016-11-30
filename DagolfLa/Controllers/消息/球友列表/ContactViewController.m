@@ -35,6 +35,9 @@
 
 @property (nonatomic, strong) UIImageView *cryImageV;
 @property (nonatomic, strong) UILabel *tipLB;
+
+@property (nonatomic, strong) UILabel *addFriendSumLB;
+
 @end
 
 @implementation ContactViewController
@@ -46,7 +49,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    _addFriendSum = @3;
+
     UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"jqy"] style:UIBarButtonItemStylePlain target:self action:@selector(contact)];
     item.tintColor = [UIColor whiteColor];
     self.navigationItem.rightBarButtonItem = item;
@@ -131,17 +134,9 @@
             cell1.myLabel.text = @"新朋友";
             cell1.myImageV.image = [UIImage imageNamed:@"icon_intro-new"];
             
-            UILabel *LB = [[UILabel alloc] initWithFrame:CGRectMake(15 * ProportionAdapter, -5 * ProportionAdapter, 16 * ProportionAdapter, 16 * ProportionAdapter)];
-            LB.layer.cornerRadius = 8 * ProportionAdapter;
-            LB.clipsToBounds = YES;
-            LB.backgroundColor = [UIColor  redColor];
-            LB.textAlignment = NSTextAlignmentCenter;
-            LB.font = [UIFont systemFontOfSize:13 * ProportionAdapter];
-            LB.textColor = [UIColor whiteColor];
-
             if ([_addFriendSum integerValue] > 0) {
-                LB.text = [_addFriendSum stringValue];
-                [cell1.myImageV addSubview:LB];
+                self.addFriendSumLB.text = [_addFriendSum stringValue];
+                [cell1.myImageV addSubview:self.addFriendSumLB];
             }
 
         }
@@ -390,6 +385,18 @@
     return _keyArray;
 }
 
+- (UILabel *)addFriendSumLB{
+    if (!_addFriendSumLB) {
+        _addFriendSumLB = [[UILabel alloc] initWithFrame:CGRectMake(15 * ProportionAdapter, -5 * ProportionAdapter, 16 * ProportionAdapter, 16 * ProportionAdapter)];
+        _addFriendSumLB.layer.cornerRadius = 8 * ProportionAdapter;
+        _addFriendSumLB.clipsToBounds = YES;
+        _addFriendSumLB.backgroundColor = [UIColor  redColor];
+        _addFriendSumLB.textAlignment = NSTextAlignmentCenter;
+        _addFriendSumLB.font = [UIFont systemFontOfSize:13 * ProportionAdapter];
+        _addFriendSumLB.textColor = [UIColor whiteColor];
+    }
+    return _addFriendSumLB;
+}
 
 
 - (void)didReceiveMemoryWarning {
