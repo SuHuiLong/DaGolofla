@@ -35,6 +35,8 @@
     
     NSInteger _teamUnread;
     NSInteger _systemUnread;
+    
+    NSInteger _newFriendUnread;
 }
 
 @end
@@ -126,6 +128,7 @@
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
             _teamUnread = [[data objectForKey:@"teamUnread"] integerValue];
             _systemUnread = [[data objectForKey:@"systemUnread"] integerValue];
+            _newFriendUnread = [[data objectForKey:@"newFriendUnread"] integerValue];
             
             [[_viewHeader viewWithTag:1000] removeFromSuperview];
             [[_viewHeader viewWithTag:1001] removeFromSuperview];
@@ -182,6 +185,7 @@
     if ([[NSUserDefaults standardUserDefaults] objectForKey:@"userId"]) {
         ContactViewController* tVc = [[ContactViewController alloc]init];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
+        tVc.addFriendSum = [NSNumber numberWithInteger:_newFriendUnread];
         [self.navigationController pushViewController:tVc animated:YES];
     }
     else

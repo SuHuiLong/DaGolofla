@@ -48,6 +48,10 @@
 
 }
 @property (strong, nonatomic) UITableView* tableView;
+
+
+@property (nonatomic, retain)NSMutableArray *preListArray;
+
 @end
 
 @implementation JGLSelfScoreViewController
@@ -55,6 +59,17 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"记分";
+    self.preListArray = [NSMutableArray array];
+    
+    NSMutableDictionary *selfDict = [NSMutableDictionary dictionary];
+    [selfDict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:UserName] forKey:UserName];
+    [selfDict setObject:DEFAULF_USERID forKey:UserKey];
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:Mobile]) {
+        [selfDict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:Mobile] forKey:@"userMobile"];
+    }
+    
+    [self.preListArray addObject:selfDict];
+    
     _dataBallArray = [[NSMutableArray alloc]init];
     _dictPeo       = [[NSMutableDictionary alloc]init];
     _dictFri       = [[NSMutableDictionary alloc]init];
@@ -525,9 +540,10 @@
                         [_tableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationAutomatic];
                     };
                     //                addVc.dictFin = _dictPeo;
-                    addVc.dictPeople = _dictPeo;
-                    addVc.peoAddress = _dictAdd;
-                    addVc.peoFriend  = _dictFri;
+//                    addVc.dictPeople = _dictPeo;
+//                    addVc.peoAddress = _dictAdd;
+//                    addVc.peoFriend  = _dictFri;
+                    addVc.preListArray = _preListArray;
                     [self.navigationController pushViewController:addVc animated:YES];
                     
                 }

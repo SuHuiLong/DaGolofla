@@ -16,4 +16,7 @@
 @property (copy, nonatomic) NSMutableDictionary* dictPeople, *peoAddress,* peoFriend;
 //通讯录返回数据    peoAddress
 //球友列表返回数据;   _peoFriend
+
+@property (nonatomic, retain)NSMutableArray *preListArray;
+
 @end

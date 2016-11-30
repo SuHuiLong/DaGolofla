@@ -105,6 +105,12 @@
             _peoAddress = dict;
             [_dictPeople addEntriesFromDictionary:dict];
             
+            NSMutableDictionary *addressdict = [NSMutableDictionary dictionary];
+            [addressdict setObject:[dict allKeys][0] forKey:Mobile];
+            [addressdict setObject:[dict objectForKey:[dict allKeys][0]] forKey:UserName];
+            [addressdict setObject:@0 forKey:UserKey];
+            [self.preListArray addObject:addressdict];
+
             [_tableView reloadData];
         };
         addVc.dictFinish = _peoAddress;
@@ -317,6 +323,7 @@
     if (![Helper isBlankString:textF.text]) {
         if (_dictPeople.count < 3) {
             [_dictPeople setObject:textF.text forKey:textF.text];
+            [_dictPeople setObject:@"0" forKey:@"sourceKey"];
             textF.text = @"";
             [_tableView reloadData];
             _isClick = NO;
