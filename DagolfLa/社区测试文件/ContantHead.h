@@ -28,6 +28,8 @@ typedef NS_ENUM(NSInteger, GestureType) {
 #define Mobile @"mobile"
 #define PHPState @"phpstate"
 #define UserName @"userName"
+#define UserKey @"userKey"
+
 #define DEFAULF_UserName [[NSUserDefaults standardUserDefaults] objectForKey:@"userName"]
 #define DEFAULF_USERID [[NSUserDefaults standardUserDefaults] objectForKey:@"userId"]
 //提示框时间
