@@ -67,7 +67,7 @@
     else
     {
         
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"打高尔夫啦" message:@"确定是否立即登录？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"君高高尔夫" message:@"确定是否立即登录？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
         [alertView show];
     }
 

@@ -31,7 +31,7 @@
         
         self.detail = [[UILabel alloc]initWithFrame:CGRectMake(0, 70 *ProportionAdapter, self.frame.size.width, 18 *ProportionAdapter)];
         self.detail.textAlignment = NSTextAlignmentCenter;
-        self.detail.text = @"打高尔夫啦";
+        self.detail.text = @"君高高尔夫";
         self.detail.font = [UIFont systemFontOfSize:15 *ProportionAdapter];
         [self addSubview:self.detail];
         

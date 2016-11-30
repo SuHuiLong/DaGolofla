@@ -81,7 +81,7 @@
         UILabel *promLbale = [[UILabel alloc]initWithFrame:CGRectMake(10 *ProportionAdapter, 278*ProportionAdapter, screenWidth-20*ProportionAdapter, 35*ProportionAdapter)];
         promLbale.numberOfLines = 0;
         promLbale.font = [UIFont systemFontOfSize:13*ProportionAdapter];
-        promLbale.text = @"客户可在“打高尔夫啦App”－－记分——历史记分卡中，查看成绩。";
+        promLbale.text = @"客户可在“君高高尔夫App”－－记分——历史记分卡中，查看成绩。";
         [self.view addSubview:promLbale];
         
     }else{
@@ -95,7 +95,7 @@
         UILabel *promLbale = [[UILabel alloc]initWithFrame:CGRectMake(10 *ProportionAdapter, (40 +20 +10 +64)*ProportionAdapter, screenWidth-20*ProportionAdapter, 35*ProportionAdapter)];
         promLbale.numberOfLines = 0;
         promLbale.font = [UIFont systemFontOfSize:13*ProportionAdapter];
-        promLbale.text = @"客户可在“打高尔夫啦App”－－记分——历史记分卡中，查看成绩。";
+        promLbale.text = @"客户可在“君高高尔夫App”－－记分——历史记分卡中，查看成绩。";
         [self.view addSubview:promLbale];
         
         //红包默认图片

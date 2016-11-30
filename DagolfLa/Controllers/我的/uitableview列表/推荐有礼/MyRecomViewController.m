@@ -95,13 +95,13 @@
 -(void)shareInfo:(NSInteger)index
 {
     NSString*  shareUrl = [NSString stringWithFormat:@"http://www.dagolfla.com:8081/dagaoerfu/html5/team/Share.html?userId=%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"userId"]];
-    [UMSocialData defaultData].extConfig.title=@"打高尔夫啦";
+    [UMSocialData defaultData].extConfig.title=@"君高高尔夫";
     if(index==0)
     {
         //微信
         [UMSocialWechatHandler setWXAppId:@"wxdcdc4e20544ed728" appSecret:@"fdc75aae5a98f2aa0f62ef8cba2b08e9" url:shareUrl];
         [UMSocialConfig hiddenNotInstallPlatforms:@[UMShareToWechatSession,UMShareToWechatTimeline,UMShareToSina]];
-        [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatSession] content:@"打高尔夫啦" image:[UIImage imageNamed:@"logo"] location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
+        [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatSession] content:@"君高高尔夫" image:[UIImage imageNamed:@"logo"] location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
             if (response.responseCode == UMSResponseCodeSuccess) {
                 ////NSLog(@"分享成功！");
             }
@@ -112,7 +112,7 @@
         //朋友圈
         [UMSocialWechatHandler setWXAppId:@"wxdcdc4e20544ed728" appSecret:@"fdc75aae5a98f2aa0f62ef8cba2b08e9" url:shareUrl];
         [UMSocialConfig hiddenNotInstallPlatforms:@[UMShareToWechatSession,UMShareToWechatTimeline,UMShareToSina]];
-        [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatTimeline] content:@"打高尔夫啦" image:[UIImage imageNamed:@"logo"] location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
+        [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatTimeline] content:@"君高高尔夫" image:[UIImage imageNamed:@"logo"] location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
             if (response.responseCode == UMSResponseCodeSuccess) {
                 ////NSLog(@"分享成功！");
             }
@@ -124,7 +124,7 @@
         
         UMSocialData *data = [UMSocialData defaultData];
         data.shareImage = [UIImage imageNamed:@"logo"];
-        data.shareText = [NSString stringWithFormat:@"%@%@",@"打高尔夫啦",shareUrl];
+        data.shareText = [NSString stringWithFormat:@"%@%@",@"君高高尔夫",shareUrl];
         [[UMSocialControllerService defaultControllerService] setSocialData:data];
         //2.设置分享平台
         [UMSocialSnsPlatformManager getSocialPlatformWithName:UMShareToSina].snsClickHandler(self,[UMSocialControllerService defaultControllerService],YES);

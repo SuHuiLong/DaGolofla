@@ -10,4 +10,6 @@
 
 @interface ContactViewController : ViewController
 
+@property (nonatomic, strong) NSNumber *addFriendSum;
+
 @end
