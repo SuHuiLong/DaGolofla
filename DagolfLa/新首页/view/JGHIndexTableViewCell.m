@@ -35,19 +35,20 @@
 }
 
 - (void)configJGHWonderfulTableViewCell:(NSArray *)wonderfulArray andImageW:(NSInteger)imageW andImageH:(NSInteger)imageH{
+    self.backgroundColor = [UIColor whiteColor];
     [self.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
     
     for (int i=0; i<wonderfulArray.count; i++) {
         
         if (i%2 == 0) {
-            _wonderfulView = [[JGHWonderfulView alloc]initWithFrame:CGRectMake(8*ProportionAdapter, (i/2 +1)*8*ProportionAdapter + (i/2)*(imageH +35)*ProportionAdapter, (screenWidth-24*ProportionAdapter)/2, (imageH +35) *ProportionAdapter)];
+            _wonderfulView = [[JGHWonderfulView alloc]initWithFrame:CGRectMake(8*ProportionAdapter, (i/2 +1)*8*ProportionAdapter + (i/2)*(imageH +35)*ProportionAdapter, screenWidth/2 -12*ProportionAdapter, (imageH +35) *ProportionAdapter)];
         }else{
-            _wonderfulView = [[JGHWonderfulView alloc]initWithFrame:CGRectMake(16*ProportionAdapter +(screenWidth-16*ProportionAdapter)/2, (i/2 +1)*8*ProportionAdapter + (i/2)*(imageH +35)*ProportionAdapter, (screenWidth-24*ProportionAdapter)/2, (imageH +35) *ProportionAdapter)];
+            _wonderfulView = [[JGHWonderfulView alloc]initWithFrame:CGRectMake( screenWidth/2 +4*ProportionAdapter, (i/2 +1)*8*ProportionAdapter + (i/2)*(imageH +35)*ProportionAdapter, screenWidth/2 -12*ProportionAdapter, (imageH +35) *ProportionAdapter)];
         }
         
         NSLog(@"%d", i/2);
         _wonderfulView.backgroundColor = [UIColor whiteColor];
-        UIButton *selectBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, screenWidth -16*ProportionAdapter, (imageH +35) *ProportionAdapter)];
+        UIButton *selectBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, _wonderfulView.frame.size.width, (imageH +35) *ProportionAdapter)];
         selectBtn.tag = 300 +i;
         [selectBtn addTarget:self action:@selector(wonderfulClick:) forControlEvents:UIControlEventTouchUpInside];
         [_wonderfulView addSubview:selectBtn];
@@ -57,16 +58,17 @@
     }
 }
 - (void)configJGHShowRecomStadiumTableViewCell:(NSArray *)array andImageW:(NSInteger)imageW andImageH:(NSInteger)imageH{
+    self.backgroundColor = [UIColor whiteColor];
     [self.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
     for (int i=0; i<array.count; i++) {
         if (i%2 == 0) {
-            _recomStadiumView = [[JGHRecomStadiumView alloc]initWithFrame:CGRectMake(8*ProportionAdapter, (i/2 +1)*8*ProportionAdapter + (i/2)*(imageH +56)*ProportionAdapter, (screenWidth-24*ProportionAdapter)/2, (imageH +56) *ProportionAdapter)];
+            _recomStadiumView = [[JGHRecomStadiumView alloc]initWithFrame:CGRectMake(8*ProportionAdapter, (i/2 +1)*8*ProportionAdapter + (i/2)*(imageH +56)*ProportionAdapter, screenWidth/2 -12*ProportionAdapter, (imageH +56) *ProportionAdapter)];
         }else{
-            _recomStadiumView = [[JGHRecomStadiumView alloc]initWithFrame:CGRectMake(16*ProportionAdapter +(screenWidth-16*ProportionAdapter)/2, (i/2 +1)*8*ProportionAdapter + (i/2)*(imageH +56)*ProportionAdapter, (screenWidth-24*ProportionAdapter)/2, (imageH +56)*ProportionAdapter)];
+            _recomStadiumView = [[JGHRecomStadiumView alloc]initWithFrame:CGRectMake(screenWidth/2 +4*ProportionAdapter, (i/2 +1)*8*ProportionAdapter + (i/2)*(imageH +56)*ProportionAdapter, screenWidth/2 -12*ProportionAdapter, (imageH +56)*ProportionAdapter)];
         }
         
         [_recomStadiumView configJGHRecomStadiumView:array[i] andImageW:imageW andImageH:imageH];
-        UIButton *selectBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, screenWidth - 16*ProportionAdapter, (imageH +56)*ProportionAdapter)];
+        UIButton *selectBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, _recomStadiumView.frame.size.width, (imageH +56)*ProportionAdapter)];
         selectBtn.tag = 400 +i;
         [selectBtn addTarget:self action:@selector(recomStadiumClick:) forControlEvents:UIControlEventTouchUpInside];
         [_recomStadiumView addSubview:selectBtn];
@@ -75,16 +77,29 @@
 }
 
 - (void)configJGHShowSuppliesMallTableViewCell:(NSArray *)array andImageW:(NSInteger)imageW andImageH:(NSInteger)imageH{
+    self.backgroundColor = [UIColor colorWithHexString:BG_color];
     [self.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
     for (int i=0; i<array.count; i++) {
         if (i%2 == 0) {
-            _suppliesMallView = [[JGHSuppliesMallView alloc]initWithFrame:CGRectMake(8*ProportionAdapter, (i/2 +1)*8*ProportionAdapter + (i/2)*(104 +imageW)*ProportionAdapter, (screenWidth-24*ProportionAdapter)/2, (104 +imageH) *ProportionAdapter)];
+            _suppliesMallView = [[JGHSuppliesMallView alloc]initWithFrame:CGRectMake(0, (i/2)*4*ProportionAdapter + (i/2)*(104 +imageW)*ProportionAdapter, screenWidth/2 -2*ProportionAdapter, (104 +imageH) *ProportionAdapter)];
         }else{
-            _suppliesMallView = [[JGHSuppliesMallView alloc]initWithFrame:CGRectMake(16*ProportionAdapter +(screenWidth-16*ProportionAdapter)/2, (i/2 +1)*8*ProportionAdapter + (i/2)*(104 +imageW)*ProportionAdapter, (screenWidth-24*ProportionAdapter)/2, (104 +imageH) *ProportionAdapter)];
+            _suppliesMallView = [[JGHSuppliesMallView alloc]initWithFrame:CGRectMake(screenWidth/2 +2*ProportionAdapter, (i/2)*4*ProportionAdapter + (i/2)*(104 +imageW)*ProportionAdapter, screenWidth/2 -2*ProportionAdapter, (104 +imageH) *ProportionAdapter)];
+        }
+        
+        if (i == 0) {
+            UILabel *topLine = [[UILabel alloc]initWithFrame:CGRectMake(10 *ProportionAdapter, 0, _suppliesMallView.frame.size.width -10 *ProportionAdapter, 0.5)];
+            topLine.backgroundColor = [UIColor colorWithHexString:BG_color];
+            [_suppliesMallView addSubview:topLine];
+        }
+        
+        if (i == 1) {
+            UILabel *topLine = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, _suppliesMallView.frame.size.width -10 *ProportionAdapter, 0.5)];
+            topLine.backgroundColor = [UIColor colorWithHexString:BG_color];
+            [_suppliesMallView addSubview:topLine];
         }
         
         [_suppliesMallView configJGHSuppliesMallView:array[i] andImageW:imageW andImageH:imageH];
-        UIButton *selectBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, self.frame.size.width, (104 +imageW) *ProportionAdapter)];
+        UIButton *selectBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, _suppliesMallView.frame.size.width, (104 +imageW) *ProportionAdapter)];
         selectBtn.tag = 500 +i;
         [selectBtn addTarget:self action:@selector(suppliesMallClick:) forControlEvents:UIControlEventTouchUpInside];
         [_suppliesMallView addSubview:selectBtn];
@@ -94,11 +109,12 @@
 
 - (void)configJGDHotTeamCell:(NSArray *)array andImageW:(NSInteger)imageW andImageH:(NSInteger)imageH{
     [self.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    self.backgroundColor = [UIColor whiteColor];
     for (int i=0; i<array.count; i++) {
         _hotTeamView = [[JGDHotTeamView alloc]initWithFrame:CGRectMake(0, i*(imageH +25)*ProportionAdapter, screenWidth, (imageH +25) *ProportionAdapter)];
         [_hotTeamView configJGHShowFavouritesCell:array[i] andImageW:imageW andImageH:imageH];
         
-        UIButton *selectBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, screenWidth, (imageH +25) *ProportionAdapter)];
+        UIButton *selectBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, _hotTeamView.frame.size.width, (imageH +25) *ProportionAdapter)];
         selectBtn.tag = 600 +i;
         [selectBtn addTarget:self action:@selector(hotTeamClick:) forControlEvents:UIControlEventTouchUpInside];
         [_hotTeamView addSubview:selectBtn];

@@ -59,16 +59,19 @@
         
         BMKPointAnnotation* annotation = [[BMKPointAnnotation alloc]init];
         CLLocationCoordinate2D coor;
-        if (self.lat) {
-            coor.latitude = [self.lat doubleValue];
+        
+        NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
+        
+        if ([user objectForKey:BDMAPLAT]) {
+            coor.latitude = [[user objectForKey:BDMAPLAT] doubleValue];
 
         }else{
             coor.latitude = 31.2;
 
         }
         
-        if (self.lng) {
-            coor.longitude = [self.lng doubleValue];
+        if ([user objectForKey:BDMAPLNG]) {
+            coor.longitude = [[user objectForKey:BDMAPLNG] doubleValue];
             
         }else{
             coor.longitude = 121.4;

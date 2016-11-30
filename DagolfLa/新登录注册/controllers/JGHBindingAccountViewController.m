@@ -213,6 +213,10 @@
                 [userdef setObject:[userDict objectForKey:@"rongTk"] forKey:@"rongTk"];
                 [userdef synchronize];
                 
+                NSNotification * notice = [NSNotification notificationWithName:@"loadMessageData" object:nil userInfo:nil];
+                //发送消息
+                [[NSNotificationCenter defaultCenter]postNotification:notice];
+                
                 NSString *token = [[userDict objectForKey:@"rows"] objectForKey:@"rongTk"];
                 //注册融云
                 [self requestRCIMWithToken:token];

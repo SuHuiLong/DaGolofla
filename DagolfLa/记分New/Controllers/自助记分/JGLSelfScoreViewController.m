@@ -156,7 +156,7 @@
             NSArray* arr = [_dictPeo allKeys];
             NSString* str = [NSString stringWithFormat:@"%@",arr[i-1]];
 //            if (str.length >= 11) {
-            if (![Helper isBlankString:str]) {
+            if (![Helper isBlankString:str] && ![str isEqualToString:[_dictPeo objectForKey:str]]) {
                 [dict1 setObject:str forKey:@"userKey"];//用户Key
             }
             else{

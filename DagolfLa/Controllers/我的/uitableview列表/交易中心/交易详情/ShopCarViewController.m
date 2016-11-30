@@ -17,6 +17,7 @@
 #import "JGHbalanceView.h"
 #import "WCLPassWordView.h"
 #import "JGDSetBusinessPWDViewController.h"
+#import "MyOrderViewController.h"
 
 @interface ShopCarViewController ()<UIWebViewDelegate, JGHbalanceViewDelegate, WCLPassWordViewDelegate>
 {
@@ -74,7 +75,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     _dictCan = [[NSMutableDictionary alloc]init];
-    self.webView.frame=CGRectMake(0, 0, ScreenWidth, ScreenHeight-7*ScreenWidth/375+64);
+    self.webView.frame=CGRectMake(0, 0, ScreenWidth, ScreenHeight+44+10*ProportionAdapter);
     self.webView.delegate=self;
     
     [self.view addSubview:self.webView];
@@ -327,10 +328,10 @@
         [[ShowHUD showHUD]hideAnimationFromView:self.view];
         //
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
-            //MyOrderViewController *groupCtrl = [[MyOrderViewController alloc]init];
-            //groupCtrl.header = 1;
-            //[self.navigationController pushViewController:groupCtrl animated:YES];
-            [self.webView reload];
+            MyOrderViewController *groupCtrl = [[MyOrderViewController alloc]init];
+//            groupCtrl.header = 1;
+            [self.navigationController pushViewController:groupCtrl animated:YES];
+//            [self.webView reload];
         }else{
             _passWordView.textStore = [@"" mutableCopy];
             [_passWordView deleteBackward];
@@ -360,6 +361,8 @@
             NSLog(@"支付宝=====%@",resultDic[@"resultStatus"]);
             if ([resultDic[@"resultStatus"] isEqualToString:@"9000"]) {
                 NSLog(@"陈公");
+                MyOrderViewController *orderCtrl = [[MyOrderViewController alloc]init];
+                [self.navigationController pushViewController:orderCtrl animated:YES];
             } else if ([resultDic[@"resultStatus"] isEqualToString:@"4000"]) {
                 [Helper alertViewWithTitle:@"对不起，您的支付失败了" withBlock:^(UIAlertController *alertView) {
                     [self.navigationController presentViewController:alertView animated:YES completion:nil];
@@ -411,7 +414,20 @@
     }];
 }
 
-
+#pragma mark -- 微信支付成功后返回的通知
+- (void)notice:(NSNotification *)not{
+    NSInteger secess = [[not.userInfo objectForKey:@"secess"] integerValue];
+    if (secess == 1) {
+        //
+        MyOrderViewController *groupCtrl = [[MyOrderViewController alloc]init];
+//        groupCtrl.header = 1;
+        [self.navigationController pushViewController:groupCtrl animated:YES];
+    }else if (secess == 2){
+        [[ShowHUD showHUD]showToastWithText:@"支付已取消！" FromView:self.view];
+    }else{
+        [[ShowHUD showHUD]showToastWithText:@"支付失败！" FromView:self.view];
+    }
+}
 
 
 -(void)webViewDidFinishLoad:(UIWebView *)webView

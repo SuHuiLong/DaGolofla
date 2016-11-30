@@ -20,6 +20,8 @@
 
 @property (nonatomic ,strong)UILabel *ellipsisLable;
 
+@property (nonatomic ,strong)UILabel *line;
+
 - (void)configJGHSuppliesMallView:(NSDictionary *)dict  andImageW:(NSInteger)imageW andImageH:(NSInteger)imageH;
 
 @end

@@ -292,6 +292,7 @@
         self.navigationItem.leftBarButtonItem.enabled = YES;
         
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+            
             NSDictionary *userDict = [NSDictionary dictionary];
             if ([data objectForKey:@"user"]) {
                 userDict = [data objectForKey:@"user"];
@@ -312,6 +313,10 @@
                 [userdef synchronize];
                 
                 NSLog(@"----%@", DEFAULF_USERID);
+                //获取消息
+                NSNotification * notice = [NSNotification notificationWithName:@"loadMessageData" object:nil userInfo:nil];
+                //发送消息
+                [[NSNotificationCenter defaultCenter]postNotification:notice];
                 
                 NSString *token = [[userDict objectForKey:@"rows"] objectForKey:@"rongTk"];
                 //注册融云
@@ -362,6 +367,7 @@
                 NSLog(@"%@", data);
                 [[ShowHUD showHUD]hideAnimationFromView:self.view];
                 if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+                    
                     if ([[data objectForKey:@"needRegister"] integerValue] == 0) {
                         NSDictionary *userDict = [NSDictionary dictionary];
                         if ([data objectForKey:@"user"]) {
@@ -382,6 +388,9 @@
                             [userdef setObject:[userDict objectForKey:@"rongTk"] forKey:@"rongTk"];
                             [userdef synchronize];
                             
+                            NSNotification * notice = [NSNotification notificationWithName:@"loadMessageData" object:nil userInfo:nil];
+                            //发送消息
+                            [[NSNotificationCenter defaultCenter]postNotification:notice];
                             
                             NSString *token = [[userDict objectForKey:@"rows"] objectForKey:@"rongTk"];
                             

@@ -37,12 +37,13 @@
 
 #import "JGLAnimationViewController.h"
 #define ImgUrlString2 @"http://res.dagolfla.com/h5/ad/app.jpg"
-@interface AppDelegate ()
+@interface AppDelegate ()<CLLocationManagerDelegate>
 {
     BMKMapManager* _mapManager;
 }
 //@property (strong, nonatomic) UIView *lunchView;
 //@property (strong, nonatomic) UIWebView* webView;
+@property (strong, nonatomic) CLLocationManager* locationManager;
 @end
 
 @implementation AppDelegate
@@ -60,6 +61,13 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
+    [user setObject:[NSNumber numberWithFloat:31.15] forKey:BDMAPLAT];//纬度
+    [user setObject:[NSNumber numberWithFloat:121.56] forKey:BDMAPLNG];//经度
+    [user setObject:@"上海" forKey:CITYNAME];//城市名
+    [user synchronize];
+    //定位
+    [self getCurPosition];
     
     //初始化趣拍
     [[TaeSDK sharedInstance] asyncInit:^{
@@ -107,7 +115,7 @@
     [defaultCenter addObserver:self selector:@selector(networkDidReceiveMessage:) name:kJPFNetworkDidReceiveMessageNotification object:nil];
     
     //融云
-    NSUserDefaults *user=[NSUserDefaults standardUserDefaults];
+//    NSUserDefaults *user=[NSUserDefaults standardUserDefaults];
     if ([user objectForKey:@"userId"]) {
         
         
@@ -661,6 +669,8 @@
         // 插入分享消息
 //        [self insertSharedMessageIfNeed];
     }
+    
+    [self getCurPosition];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
@@ -675,6 +685,72 @@
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
-
+#pragma MARK --定位方法
+-(void)getCurPosition{
+    if (_locationManager==nil) {
+        _locationManager=[[CLLocationManager alloc] init];
+    }
+    if ([CLLocationManager locationServicesEnabled]) {
+        _locationManager.delegate=self;
+        _locationManager.desiredAccuracy=kCLLocationAccuracyBest;
+        _locationManager.distanceFilter=10.0f;
+        if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0)
+        {
+            [_locationManager requestWhenInUseAuthorization];  //调用了这句,就会弹出允许框了.
+        }
+        [_locationManager startUpdatingLocation];
+    }
+}
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
+{
+    CLLocation *currLocation = [locations lastObject];
+    //NSLog(@"经度=%f 纬度=%f 高度=%f", currLocation.coordinate.latitude, currLocation.coordinate.longitude, currLocation.altitude);
+    NSUserDefaults *user=[NSUserDefaults standardUserDefaults];
+    // 获取当前所在的城市名
+    CLGeocoder *geocoder = [[CLGeocoder alloc] init];
+    //根据经纬度反向地理编译出地址信息
+    [geocoder reverseGeocodeLocation:currLocation completionHandler:^(NSArray *array, NSError *error)
+     {
+         if (array.count > 0)
+         {
+             CLPlacemark *placemark = [array objectAtIndex:0];
+             //将获得的所有信息显示到label上
+             NSLog(@"%@",placemark.name);
+             //获取城市
+             NSString *city = placemark.locality;
+             if (!city) {
+                 //四大直辖市的城市信息无法通过locality获得，只能通过获取省份的方法来获得（如果city为空，则可知为直辖市）
+                 city = placemark.administrativeArea;
+             }
+             
+             [user setObject:city forKey:CITYNAME];
+             [user synchronize];
+             
+         } else {
+             
+         }
+     }];
+    
+    
+    [user setObject:[NSNumber numberWithFloat:currLocation.coordinate.latitude] forKey:BDMAPLAT];//纬度
+    [user setObject:[NSNumber numberWithFloat:currLocation.coordinate.longitude] forKey:BDMAPLNG];//经度
+    [_locationManager stopUpdatingLocation];
+    [user synchronize];
+}
+- (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
+{
+    if ([error code] == kCLErrorDenied)
+    {
+        //访问被拒绝
+        //NSLog(@"访问被拒绝");
+    }
+    if ([error code] == kCLErrorLocationUnknown) {
+        //无法获取位置信息
+        //NSLog(@"无法获取位置信息");
+    }
+    
+    //定位失败后也下载数据
+//    [self loadIndexdata];
+}
 
 @end

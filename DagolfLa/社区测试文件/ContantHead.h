@@ -43,6 +43,10 @@ typedef NS_ENUM(NSInteger, GestureType) {
 #define IconLogo @"iconlogo"//绿色app logo
 #define ActivityBGImage @"teamBGImage"
 
+#define BDMAPLAT @"lat"
+#define BDMAPLNG @"lng"
+#define CITYNAME @"cityName"
+
 #define loadingString @"加载中..."
 
 #define kDistance 10*screenWidth/375 //说说和图片的间隔
