@@ -623,7 +623,7 @@
     if (secess == 1) {
         //
         MyOrderViewController *groupCtrl = [[MyOrderViewController alloc]init];
-        groupCtrl.header = 1;
+//        groupCtrl.header = 1;
         [self.navigationController pushViewController:groupCtrl animated:YES];
     }else if (secess == 2){
         [[ShowHUD showHUD]showToastWithText:@"支付已取消！" FromView:self.view];

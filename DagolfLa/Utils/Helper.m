@@ -700,4 +700,10 @@
     }];
 }
 
++ (NSString *)returnPasswordString:(NSString *)pass{
+    NSCharacterSet *setToRemove = [[ NSCharacterSet characterSetWithCharactersInString:@"0123456789"]
+                                   invertedSet ];
+    return [[pass componentsSeparatedByCharactersInSet:setToRemove] componentsJoinedByString:@""];
+}
+
 @end

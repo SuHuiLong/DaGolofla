@@ -11,9 +11,6 @@
 #import "JGHPASHeaderTableViewCell.h"
 #import "JGHShowSectionTableViewCell.h"
 #import "JGHShowActivityPhotoCell.h"
-#import "JGHWonderfulTableViewCell.h"
-#import "JGHShowRecomStadiumTableViewCell.h"
-#import "JGHShowSuppliesMallTableViewCell.h"
 #import "JGHIndexModel.h"
 #import "JGHNavListView.h"
 #import "JGLScoreNewViewController.h"
@@ -39,14 +36,10 @@
 
 static NSString *const JGHPASHeaderTableViewCellIdentifier = @"JGHPASHeaderTableViewCell";
 static NSString *const JGHShowSectionTableViewCellIdentifier = @"JGHShowSectionTableViewCell";
-static NSString *const JGHShowFavouritesCellIdentifier = @"JGHShowFavouritesCell";
 static NSString *const JGHShowActivityPhotoCellIdentifier = @"JGHShowActivityPhotoCell";
-static NSString *const JGHWonderfulTableViewCellIdentifier = @"JGHWonderfulTableViewCell";
-static NSString *const JGHShowRecomStadiumTableViewCellIdentifier = @"JGHShowRecomStadiumTableViewCell";
-static NSString *const JGHShowSuppliesMallTableViewCellIdentifier = @"JGHShowSuppliesMallTableViewCell";
 static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell";
 
-@interface JGHNewHomePageViewController ()<UITableViewDelegate, UITableViewDataSource, JGHShowSectionTableViewCellDelegate, CLLocationManagerDelegate, JGHShowActivityPhotoCellDelegate, JGHWonderfulTableViewCellDelegate, JGHShowRecomStadiumTableViewCellDelegate, JGHShowSuppliesMallTableViewCellDelegate, JGHNavListViewDelegate, JGHPASHeaderTableViewCellDelegate, JGHIndexTableViewCellDelegate>
+@interface JGHNewHomePageViewController ()<UITableViewDelegate, UITableViewDataSource, JGHShowSectionTableViewCellDelegate, JGHShowActivityPhotoCellDelegate, JGHNavListViewDelegate, JGHPASHeaderTableViewCellDelegate, JGHIndexTableViewCellDelegate>
 {
     NSInteger _showLineID;//0-活动，1-相册，2-成绩
 }
@@ -54,7 +47,7 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
 
 @property (nonatomic, strong)UITableView *homeTableView;//TB
 
-@property (strong, nonatomic) CLLocationManager* locationManager;
+//@property (strong, nonatomic) CLLocationManager* locationManager;
 
 @property (nonatomic, strong)JGHIndexModel *indexModel;
 
@@ -103,13 +96,21 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
     
     [self loadIndexdata];//上线不注释
     
-    [self getCurPosition];
+//    [self getCurPosition];
     
     [self createBanner];
     
     [self loadingPHP];
     
-    [self loadMessageData];
+    if (DEFAULF_USERID) {
+        [self loadMessageData];
+    }
+    
+    //获取通知中心单例对象
+//    NSNotificationCenter *messageCenter = [NSNotificationCenter defaultCenter];
+    //添加当前类对象为一个观察者，name和object设置为nil，表示接收一切通知
+    [center addObserver:self selector:@selector(loadMessageData) name:@"loadMessageData" object:nil];
+    
 }
 #pragma mark -- 下载未读消息数量
 - (void)loadMessageData{
@@ -205,8 +206,8 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
     }
     
     if ([userDef objectForKey:@"lat"]) {
-        [getDict setObject:[userDef objectForKey:@"lng"] forKey:@"longitude"];
-        [getDict setObject:[userDef objectForKey:@"lat"] forKey:@"latitude"];
+        [getDict setObject:[userDef objectForKey:BDMAPLNG] forKey:@"longitude"];
+        [getDict setObject:[userDef objectForKey:BDMAPLAT] forKey:@"latitude"];
     }
     
     [[JsonHttp jsonHttp]httpRequest:@"index/getIndex" JsonKey:nil withData:getDict requestMethod:@"GET" failedBlock:^(id errType) {
@@ -231,8 +232,6 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
             NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:archiverData];
             //3. 添加归档内容 （设置键值对）
             [archiver encodeObject:_indexModel forKey:@"indexModel"];
-            //        [archiver encodeInt:20 forKey:@"age"];
-            //        [archiver encodeObject:@[@"ios",@"oc"] forKey:@"language"];
             //4. 完成归档
             [archiver finishEncoding];
             //5. 将归档的信息存储到磁盘上
@@ -259,17 +258,8 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
     UINib *showSectionTableViewCellNib = [UINib nibWithNibName:@"JGHShowSectionTableViewCell" bundle: [NSBundle mainBundle]];
     [self.homeTableView registerNib:showSectionTableViewCellNib forCellReuseIdentifier:JGHShowSectionTableViewCellIdentifier];
     
-    UINib *showFavouritesCellNib = [UINib nibWithNibName:@"JGHShowFavouritesCell" bundle: [NSBundle mainBundle]];
-    [self.homeTableView registerNib:showFavouritesCellNib forCellReuseIdentifier:JGHShowFavouritesCellIdentifier];
-    
-    [self.homeTableView registerClass:[JGHWonderfulTableViewCell class] forCellReuseIdentifier:JGHWonderfulTableViewCellIdentifier];
-    
     [self.homeTableView registerClass:[JGHShowActivityPhotoCell class] forCellReuseIdentifier:JGHShowActivityPhotoCellIdentifier];
-    
-    [self.homeTableView registerClass:[JGHShowRecomStadiumTableViewCell class] forCellReuseIdentifier:JGHShowRecomStadiumTableViewCellIdentifier];
-    
-    [self.homeTableView registerClass:[JGHShowSuppliesMallTableViewCell class] forCellReuseIdentifier:JGHShowSuppliesMallTableViewCellIdentifier];
-    
+
     [self.homeTableView registerClass:[JGHIndexTableViewCell class] forCellReuseIdentifier:JGHIndexTableViewCellIdentifier];
     
     self.homeTableView.dataSource = self;
@@ -445,7 +435,7 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
                 return ((bodyList.count-1)/2+1) *(imgHeight +35 +8) *ProportionAdapter + 8*ProportionAdapter;
             }else if (bodyLayoutType == 1){
                 //用品商城
-                return ((bodyList.count-1)/2+1) *(imgHeight +104 +8) *ProportionAdapter + 8*ProportionAdapter;
+                return ((bodyList.count-1)/2+1) *(imgHeight +104) *ProportionAdapter;
             }else if (bodyLayoutType == 2){
                 //热门球队
                 return ((25 +imgHeight) *ProportionAdapter) *bodyList.count;
@@ -723,75 +713,6 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
-}
-#pragma MARK --定位方法
--(void)getCurPosition{
-    if (_locationManager==nil) {
-        _locationManager=[[CLLocationManager alloc] init];
-    }
-    if ([CLLocationManager locationServicesEnabled]) {
-        _locationManager.delegate=self;
-        _locationManager.desiredAccuracy=kCLLocationAccuracyBest;
-        _locationManager.distanceFilter=10.0f;
-        if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0)
-        {
-            [_locationManager requestWhenInUseAuthorization];  //调用了这句,就会弹出允许框了.
-        }
-        [_locationManager startUpdatingLocation];
-    }
-}
-- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
-{
-    CLLocation *currLocation = [locations lastObject];
-    //NSLog(@"经度=%f 纬度=%f 高度=%f", currLocation.coordinate.latitude, currLocation.coordinate.longitude, currLocation.altitude);
-    NSUserDefaults *user=[NSUserDefaults standardUserDefaults];
-    // 获取当前所在的城市名
-    CLGeocoder *geocoder = [[CLGeocoder alloc] init];
-    //根据经纬度反向地理编译出地址信息
-    [geocoder reverseGeocodeLocation:currLocation completionHandler:^(NSArray *array, NSError *error)
-     {
-         if (array.count > 0)
-         {
-             CLPlacemark *placemark = [array objectAtIndex:0];
-             //将获得的所有信息显示到label上
-             NSLog(@"%@",placemark.name);
-             //获取城市
-             NSString *city = placemark.locality;
-             if (!city) {
-                 //四大直辖市的城市信息无法通过locality获得，只能通过获取省份的方法来获得（如果city为空，则可知为直辖市）
-                 city = placemark.administrativeArea;
-             }
-             [user setObject:city forKey:@"currentCity"];
-             [user synchronize];
-             
-             //定位成功后下载数据
-             [self loadIndexdata];
-         } else {
-             //定位失败后也下载数据
-             [self loadIndexdata];
-         }
-     }];
-    
-    
-    [user setObject:[NSNumber numberWithFloat:currLocation.coordinate.latitude] forKey:@"lat"];//纬度
-    [user setObject:[NSNumber numberWithFloat:currLocation.coordinate.longitude] forKey:@"lng"];//经度
-    [_locationManager stopUpdatingLocation];
-    [user synchronize];
-}
-- (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
-{
-    if ([error code] == kCLErrorDenied)
-    {
-        //访问被拒绝
-        //NSLog(@"访问被拒绝");
-    }
-    if ([error code] == kCLErrorLocationUnknown) {
-        //无法获取位置信息
-        //NSLog(@"无法获取位置信息");
-    }
-    
-    //定位失败后也下载数据
-    [self loadIndexdata];
 }
 #pragma mark -- 通过URL 判断跳转
 - (void)pushctrlWithUrl:(NSString *)url{

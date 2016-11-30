@@ -9,7 +9,6 @@
 #import "JGHPublishEventViewController.h"
 #import "JGTableViewCell.h"
 #import "DateTimeViewController.h"
-#import "TeamAreaViewController.h"
 #import "SXPickPhoto.h"
 #import "JGHTeamContactTableViewCell.h"
 #import "BallParkViewController.h"

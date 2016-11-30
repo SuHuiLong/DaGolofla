@@ -117,5 +117,8 @@
 //登录PHP
 + (void)callPHPLoginUserId:(NSString *)userId;
 
+//返回密码
++ (NSString *)returnPasswordString:(NSString *)pass;
+
 
 @end

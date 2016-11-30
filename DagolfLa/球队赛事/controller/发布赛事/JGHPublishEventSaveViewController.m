@@ -10,7 +10,6 @@
 #import "JGTableViewCell.h"
 #import "JGHConcentTextViewController.h"
 #import "DateTimeViewController.h"
-#import "TeamAreaViewController.h"
 #import "JGHPublishEventModel.h"
 #import "JGHTeamContactTableViewCell.h"
 #import "JGCostSetViewController.h"

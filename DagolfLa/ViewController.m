@@ -48,15 +48,15 @@
     self.view.backgroundColor = [UIColor whiteColor];
     self.navigationController.navigationBar.translucent = NO;
     NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
-    if ([user objectForKey:@"lat"] != nil) {
-        self.lat = [user objectForKey:@"lat"];
+    if ([user objectForKey:BDMAPLAT] != nil) {
+        self.lat = [user objectForKey:BDMAPLAT];
     }
     else
     {
         _lat = @31.156063;
     }
-    if ([user objectForKey:@"lng"] != nil) {
-        self.lng = [user objectForKey:@"lng"];
+    if ([user objectForKey:BDMAPLNG] != nil) {
+        self.lng = [user objectForKey:BDMAPLNG];
     }
     else
     {

@@ -32,7 +32,7 @@
 #import "JGDNewTeamDetailViewController.h"
 
 
-@interface JGTeamMainhallViewController ()<UITableViewDelegate,UITableViewDataSource,CLLocationManagerDelegate,UIBarPositioningDelegate,UITextFieldDelegate>
+@interface JGTeamMainhallViewController ()<UITableViewDelegate,UITableViewDataSource,UIBarPositioningDelegate,UITextFieldDelegate>
 {
     UITextField *_textField;
     NSString* _strSearch;//搜索的字符串
@@ -44,9 +44,9 @@
 
 @property (strong, nonatomic) UITableView *tableView;
 @property (strong, nonatomic) NSMutableArray *searchArray;
-@property (nonatomic, strong) NSMutableDictionary *paraDic;
+//@property (nonatomic, strong) NSMutableDictionary *paraDic;
 @property (assign, nonatomic) NSInteger page;
-@property (strong, nonatomic) CLLocationManager* locationManager;
+//@property (strong, nonatomic) CLLocationManager* locationManager;
 @property (strong, nonatomic) NSMutableArray *modelArray; //数据源
 @property (strong, nonatomic) UILabel *labelCity; //数据源
 @property (strong, nonatomic) JGLViewCityChoose* viewCityChoose;
@@ -94,7 +94,7 @@
         _labelCity.text = _strProvince;
         _textField.text = _strProvince;
     }else{
-        _labelCity.text = @"全国";
+        _labelCity.text = [[NSUserDefaults standardUserDefaults] objectForKey:CITYNAME];
         _textField.text = @"";
     }
     
@@ -181,7 +181,7 @@
         _viewCityChoose.strProVince = _strProvince;
         [_viewCityChoose initwithStr:_strProvince];
     }else{
-        _viewCityChoose.strProVince = @"全国";
+        _viewCityChoose.strProVince = [[NSUserDefaults standardUserDefaults] objectForKey:CITYNAME];
         [_viewCityChoose initwithStr:_strProvince];
     }
     __weak JGTeamMainhallViewController* weakSelf = self;
@@ -198,6 +198,7 @@
 #pragma mark --搜索按钮点击事件
 -(void)searchBarSearchButtonClick{
     [self.searchArray removeAllObjects];
+    [self.view endEditing:YES];
     _viewCityChoose.hidden = YES;
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     [dict setObject:_textField.text forKey:@"likeName"];
@@ -232,7 +233,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    _strProvince = @"全国";
+    _strProvince = [NSString stringWithFormat:@"%@", [[NSUserDefaults standardUserDefaults]objectForKey:CITYNAME]];
     UIBarButtonItem *bar = [[UIBarButtonItem alloc] initWithTitle:@"创建球队" style:(UIBarButtonItemStylePlain) target:self action:@selector(creatTeam)];
     bar.tintColor = [UIColor whiteColor];
     [bar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:15 * ProportionAdapter], NSFontAttributeName, nil] forState:UIControlStateNormal];
@@ -252,7 +253,7 @@
     _tableView.delegate = self;
     _tableView.dataSource = self;
     
-    [self getCurPosition];
+//    [self getCurPosition];
     [self createSeachBar];
     
     _tableView.rowHeight = 80 * ScreenWidth/320;
@@ -310,11 +311,17 @@
     _viewCityChoose.hidden = YES;
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     [dict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"userId"] forKey:@"userKey"];
-    if (![Helper isBlankString:_strProvince]) {
-//        if ([_strProvince containsString:@"全国"] == NO) {
-            [dict setObject:_strProvince forKey:@"province"];
-//        }
+    NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
+    
+    if ([user objectForKey:BDMAPLAT]) {
+        [dict setObject:[user objectForKey:BDMAPLAT] forKey:@"latitude"];
+        [dict setObject:[user objectForKey:BDMAPLNG] forKey:@"longitude"];
     }
+    
+    if (![Helper isBlankString:_strProvince]) {
+        [dict setObject:_strProvince forKey:@"province"];
+    }
+
     [dict setObject:[NSNumber numberWithInteger:_page] forKey:@"offset"];
     [[JsonHttp jsonHttp]httpRequest:@"team/getTeamList" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
         if (isReshing) {
@@ -349,78 +356,79 @@
 }
 
 
+//
+//-(void)getCurPosition{
+//    
+//    if (_locationManager==nil) {
+//        _locationManager=[[CLLocationManager alloc] init];
+//    }
+//    if ([CLLocationManager locationServicesEnabled]) {
+//        _locationManager.delegate=self;
+//        _locationManager.desiredAccuracy=kCLLocationAccuracyBest;
+//        _locationManager.distanceFilter=10.0f;
+//        if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0)
+//        {
+//            [_locationManager requestWhenInUseAuthorization];  //调用了这句,就会弹出允许框了.
+//        }
+//        [_locationManager startUpdatingLocation];
+//    }
+//}
+//
+//- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
+//{
+//    CLLocation *currLocation = [locations lastObject];
+//    //NSLog(@"经度=%f 纬度=%f 高度=%f", currLocation.coordinate.latitude, currLocation.coordinate.longitude, currLocation.altitude);
+//    NSUserDefaults *user=[NSUserDefaults standardUserDefaults];
+//    CLGeocoder *geocoder = [[CLGeocoder alloc] init];
+//    //根据经纬度反向地理编译出地址信息
+//    [geocoder reverseGeocodeLocation:currLocation completionHandler:^(NSArray *array, NSError *error)
+//     {
+//         if (array.count > 0)
+//         {
+//             CLPlacemark *placemark = [array objectAtIndex:0];
+//             //将获得的所有信息显示到label上
+//             NSLog(@"%@",placemark.name);
+//             //获取城市
+//             NSString *city = placemark.locality;
+//             if (!city) {
+//                 city = placemark.administrativeArea;
+//             }
+//             _strProvince = city;
+//             _labelCity.text = city;
+//         }
+//         else if (error == nil && [array count] == 0)
+//         {
+//             NSLog(@"No results were returned.");
+//         }
+//         else if (error != nil)
+//         {
+//             NSLog(@"An error occurred = %@", error);
+//         }
+//     }];
+//    
+////    [self.paraDic setObject:[NSNumber numberWithFloat:currLocation.coordinate.latitude] forKey:@"likeName"];
+//    [user setObject:[NSNumber numberWithFloat:currLocation.coordinate.latitude] forKey:@"lat"];
+//    [user setObject:[NSNumber numberWithFloat:currLocation.coordinate.longitude] forKey:@"lng"];
+//    [_locationManager stopUpdatingLocation];
+//    [user synchronize];
+//    //[_tableView.header beginRefreshing];
+//    //_tableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
+//    //[_tableView.header beginRefreshing];
+//
+//}
 
--(void)getCurPosition{
-    
-    if (_locationManager==nil) {
-        _locationManager=[[CLLocationManager alloc] init];
-    }
-    if ([CLLocationManager locationServicesEnabled]) {
-        _locationManager.delegate=self;
-        _locationManager.desiredAccuracy=kCLLocationAccuracyBest;
-        _locationManager.distanceFilter=10.0f;
-        if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0)
-        {
-            [_locationManager requestWhenInUseAuthorization];  //调用了这句,就会弹出允许框了.
-        }
-        [_locationManager startUpdatingLocation];
-    }
-}
-
-- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
-{
-    CLLocation *currLocation = [locations lastObject];
-    //NSLog(@"经度=%f 纬度=%f 高度=%f", currLocation.coordinate.latitude, currLocation.coordinate.longitude, currLocation.altitude);
-    NSUserDefaults *user=[NSUserDefaults standardUserDefaults];
-    CLGeocoder *geocoder = [[CLGeocoder alloc] init];
-    //根据经纬度反向地理编译出地址信息
-    [geocoder reverseGeocodeLocation:currLocation completionHandler:^(NSArray *array, NSError *error)
-     {
-         if (array.count > 0)
-         {
-             CLPlacemark *placemark = [array objectAtIndex:0];
-             //将获得的所有信息显示到label上
-             NSLog(@"%@",placemark.name);
-             //获取城市
-             NSString *city = placemark.locality;
-             if (!city) {
-                 city = placemark.administrativeArea;
-             }
-             _strProvince = city;
-             _labelCity.text = city;
-         }
-         else if (error == nil && [array count] == 0)
-         {
-             NSLog(@"No results were returned.");
-         }
-         else if (error != nil)
-         {
-             NSLog(@"An error occurred = %@", error);
-         }
-     }];
-    [self.paraDic setObject:[NSNumber numberWithFloat:currLocation.coordinate.latitude] forKey:@"likeName"];
-    [user setObject:[NSNumber numberWithFloat:currLocation.coordinate.latitude] forKey:@"lat"];
-    [user setObject:[NSNumber numberWithFloat:currLocation.coordinate.longitude] forKey:@"lng"];
-    [_locationManager stopUpdatingLocation];
-    [user synchronize];
-    //[_tableView.header beginRefreshing];
-    //_tableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
-    //[_tableView.header beginRefreshing];
-
-}
-
-- (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
-{
-    if ([error code] == kCLErrorDenied)
-    {
-        //访问被拒绝
-        //NSLog(@"访问被拒绝");
-    }
-    if ([error code] == kCLErrorLocationUnknown) {
-        //无法获取位置信息
-        //NSLog(@"无法获取位置信息");
-    }
-}
+//- (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
+//{
+//    if ([error code] == kCLErrorDenied)
+//    {
+//        //访问被拒绝
+//        //NSLog(@"访问被拒绝");
+//    }
+//    if ([error code] == kCLErrorLocationUnknown) {
+//        //无法获取位置信息
+//        //NSLog(@"无法获取位置信息");
+//    }
+//}
 
 
 //设置区域的行数
@@ -491,12 +499,12 @@
     return _searchArray;
 }
 
-- (NSMutableDictionary *)paraDic{
-    if (!_paraDic) {
-        _paraDic = [[NSMutableDictionary alloc] init];
-    }
-    return _paraDic;
-}
+//- (NSMutableDictionary *)paraDic{
+//    if (!_paraDic) {
+//        _paraDic = [[NSMutableDictionary alloc] init];
+//    }
+//    return _paraDic;
+//}
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {

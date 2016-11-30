@@ -132,7 +132,7 @@
             [[_viewHeader viewWithTag:1002] removeFromSuperview];
             [[_viewHeader viewWithTag:1003] removeFromSuperview];
             
-            if (100 > _systemUnread > 0) {
+            if (100 > _systemUnread && _systemUnread >0) {
                 RCDTabBarBtn *btn = [[RCDTabBarBtn alloc] initWithFrame:CGRectMake(50 *ProportionAdapter, 10 *ProportionAdapter, 20 *ProportionAdapter, 20 *ProportionAdapter)];
                 btn.layer.cornerRadius = 9;//圆形
                 btn.unreadCount = [NSString stringWithFormat:@"%td", _systemUnread];
@@ -148,7 +148,7 @@
                 [_viewHeader addSubview:btn];
             }
             
-            if (100 > _teamUnread > 0) {
+            if (100 > _teamUnread && _teamUnread>0) {
                 RCDTabBarBtn *btn = [[RCDTabBarBtn alloc] initWithFrame:CGRectMake(50 *ProportionAdapter, 78 *ProportionAdapter, 20 *ProportionAdapter, 20 *ProportionAdapter)];
                 btn.layer.cornerRadius = 9;//圆形
                 btn.unreadCount = [NSString stringWithFormat:@"%td", _teamUnread];

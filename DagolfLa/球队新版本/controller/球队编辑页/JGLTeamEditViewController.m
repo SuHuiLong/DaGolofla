@@ -12,7 +12,6 @@
 #import "JGTableViewCell.h"
 #import "JGHConcentTextViewController.h"
 #import "DateTimeViewController.h"
-#import "TeamAreaViewController.h"
 
 #import "SXPickPhoto.h"
 #import "JGCostSetViewController.h"
