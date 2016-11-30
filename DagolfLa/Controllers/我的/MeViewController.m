@@ -133,6 +133,9 @@
                     [user setObject:[[data objectForKey:@"user"] objectForKey:@"userName"] forKey:@"userName"];
                 }
                 [user setObject:[[data objectForKey:@"user"] objectForKey:@"sex"] forKey:@"sex"];
+                [user setObject:[[data objectForKey:@"user"] objectForKey:@"msg_team_setting"] forKey:@"msg_team_setting"];
+                [user setObject:[[data objectForKey:@"user"] objectForKey:@"msg_system_setting"] forKey:@"msg_system_setting"];
+                
                 [user synchronize];
                 
                 NSIndexSet *indexSet=[[NSIndexSet alloc]initWithIndex:0];
