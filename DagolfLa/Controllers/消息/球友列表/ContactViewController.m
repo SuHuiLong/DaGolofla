@@ -126,10 +126,21 @@
         cell1.sexImageV.hidden = YES;
         if (indexPath.row == 0) {
             cell1.myLabel.text = @"球友推荐";
-            cell1.myImageV.image = [UIImage imageNamed:@"icon_intro-new"];
+            cell1.myImageV.image = [UIImage imageNamed:@"xxpy"];
         }else{
             cell1.myLabel.text = @"新朋友";
-            cell1.myImageV.image = [UIImage imageNamed:@"xxpy"];
+            cell1.myImageV.image = [UIImage imageNamed:@"icon_intro-new"];
+            
+            UILabel *LB = [[UILabel alloc] initWithFrame:CGRectMake(15 * ProportionAdapter, -5 * ProportionAdapter, 16 * ProportionAdapter, 16 * ProportionAdapter)];
+            LB.layer.cornerRadius = 8 * ProportionAdapter;
+            LB.clipsToBounds = YES;
+            LB.backgroundColor = [UIColor  redColor];
+            LB.textAlignment = NSTextAlignmentCenter;
+            LB.font = [UIFont systemFontOfSize:13 * ProportionAdapter];
+            LB.text = @"6";
+            LB.textColor = [UIColor whiteColor];
+            [cell1.myImageV addSubview:LB];
+
         }
         
         return cell1;
@@ -367,7 +378,6 @@
     return @[note];
     
 }
-
 - (NSMutableArray *)keyArray{
     if (!_keyArray) {
         _keyArray = [[NSMutableArray alloc]initWithObjects:@"A",@"B",@"C",@"D",@"E",@"F",@"G",@"H",@"I",@"J",@"K",@"L",@"M",@"N",@"O",@"P",@"Q",@"R",@"S",@"T",@"U",@"V",@"W",@"X",@"Y",@"Z",@"#", nil];
@@ -384,12 +394,13 @@
 
 /*
  #pragma mark - Navigation
-
+ 
  // In a storyboard-based application, you will often want to do a little preparation before navigation
  - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
  // Get the new view controller using [segue destinationViewController].
  // Pass the selected object to the new view controller.
  }
+ 
  */
 
 @end
