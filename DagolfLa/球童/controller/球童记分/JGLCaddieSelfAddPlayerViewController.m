@@ -173,13 +173,13 @@
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         if (indexPath.row == 0) {
             cell.labelName.hidden = YES;
-            cell.imgvIcon.hidden = YES;
+            cell.deleteBtn.hidden = YES;
             cell.labelTitle.text = @"已添加打球人";//titile，可以不用管
         }
         else{
             if (indexPath.row == 1) {
                 cell.labelTitle.hidden = YES;
-                cell.imgvIcon.hidden = YES;
+                cell.deleteBtn.hidden = YES;
                 cell.labelName.text = _strPlayerName;//显示第一个人的名字，这是球童添加的那个打球人
             }
             else{

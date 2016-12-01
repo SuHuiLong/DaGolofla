@@ -12,9 +12,9 @@
 #import <AddressBookUI/AddressBookUI.h>
 @interface JGLAddressAddViewController : ViewController<ABPeoplePickerNavigationControllerDelegate>
 ///通讯录添加好友
-@property (copy, nonatomic) void (^blockAddressPeople)(NSMutableDictionary* dict);
+@property (copy, nonatomic) void (^blockAddressArray)(NSMutableArray* addressArray);
 
-@property (strong, nonatomic) NSMutableDictionary* dictFinish;
+@property (strong, nonatomic) NSMutableArray* addressArray;
 
 @property (assign, nonatomic) NSInteger lastIndex;
 

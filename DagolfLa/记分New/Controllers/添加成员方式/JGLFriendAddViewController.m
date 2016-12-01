@@ -53,9 +53,11 @@
     
     _keyArray        = [[NSMutableArray alloc]init];
     _listArray       = [[NSMutableArray alloc]init];
-    if (_dictFinish.count == 0) {//上层界面如果传值过来就不用创建，否则初始化数组
-        _dictFinish      = [[NSMutableDictionary alloc]init];
+    
+    if (_playArray.count == 0) {
+        _playArray = [NSMutableArray array];
     }
+    
     _dataArray       = [[NSMutableArray alloc]init];
     _dataAccountDict = [[NSMutableDictionary alloc]init];
     _dictData        = [[NSMutableDictionary alloc]init];
@@ -77,7 +79,7 @@
 
 -(void)finishAction
 {
-    _blockFriendDict(_dictFinish);
+    _playArrayBlock(_playArray);
     [self.navigationController popViewControllerAnimated:YES];
 }
 
@@ -222,80 +224,70 @@
         model.userName = modell.userremarks;
     }
     cell.myModel = model;
-    NSString *str=[_dictFinish objectForKey:[self.listArray[indexPath.section][indexPath.row] otherUserId]];
+//    NSString *str=[_dictFinish objectForKey:[self.listArray[indexPath.section][indexPath.row] otherUserId]];
     //从存储人员的字典中按照userid查找信息，如果str为空，不勾选，否则勾选
-    if ([Helper isBlankString:str]==NO) {
+    
+    NSInteger isContains;
+    isContains = 0;
+    for (int i=0; i<self.playArray.count; i++) {
+        MyattenModel *palyModel = [[MyattenModel alloc]init];
+        palyModel = self.playArray[i];
+        
+        if ([palyModel.otherUserId integerValue] == [model.otherUserId integerValue]) {
+            isContains = 1;
+        }
+    }
+    
+    if (isContains == 1) {
         cell.imgvState.image=[UIImage imageNamed:@"gou_x"];
     }else{
         cell.imgvState.image=[UIImage imageNamed:@"gou_w"];
     }
+    
     return cell;
-    
-
-    
-    
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (_dictFinish.count != 0) {//已选择过
-        //lastindex是上一层页面一共的人数，当他大于三个或者和本页选择人数相加大于3个，则提示信息
-        //否则进入else
-        if (_lastIndex >= 3 || (_lastIndex == 0 ? (_dictFinish.count >= 3) : _dictFinish.count + _lastIndex >= 3)) {
-            NSString *str=[_dictFinish objectForKey:[self.listArray[indexPath.section][indexPath.row] otherUserId]];
-            if ([Helper isBlankString:str]==YES) {
-                [[ShowHUD showHUD]showToastWithText:@"您最多只能选择3个人" FromView:self.view];
-            }else{
-                [_dictFinish removeObjectForKey:[self.listArray[indexPath.section][indexPath.row] otherUserId]];
-                NSIndexPath *indexPath_1=[NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section];
-                NSArray *indexArray=[NSArray arrayWithObject:indexPath_1];
-                [_tableView reloadRowsAtIndexPaths:indexArray withRowAnimation:UITableViewRowAnimationAutomatic];
-            }
-        }
-        //当点选人数不超过三个，根据str找到当前点击的index是否有数据
-        //
-        else{
-            NSString *str=[_dictFinish objectForKey:[self.listArray[indexPath.section][indexPath.row] otherUserId]];
-            if ([Helper isBlankString:str]==YES) {
-                //有数据按userid存入数据
-                [_dictFinish setObject:[self.listArray[indexPath.section][indexPath.row] userName] forKey:[self.listArray[indexPath.section][indexPath.row] otherUserId]];
-                
-            }else{
-                //删除该键值对
-                [_dictFinish removeObjectForKey:[self.listArray[indexPath.section][indexPath.row] otherUserId]];
-            }
-            
-            NSIndexPath *indexPath_1=[NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section];
-            NSArray *indexArray=[NSArray arrayWithObject:indexPath_1];
-            [_tableView reloadRowsAtIndexPaths:indexArray withRowAnimation:UITableViewRowAnimationAutomatic];
+    MyattenModel *model = [[MyattenModel alloc]init];
+    model = self.listArray[indexPath.section][indexPath.row];
+    
+    NSInteger isContains;
+    isContains = 0;
+    for (int i=0; i<self.playArray.count; i++) {
+        MyattenModel *palyModel = [[MyattenModel alloc]init];
+        palyModel = self.playArray[i];
+        
+        if ([palyModel.otherUserId integerValue] == [model.otherUserId integerValue]) {
+            isContains = 1;
         }
     }
-    else{//第一次勾选
-        //这个基本可以不考虑
-        if (_lastIndex >= 3 || (_lastIndex == 0 ? (_dictFinish.count >= 3) : _dictFinish.count + _lastIndex >= 3)) {
+    
+    if (isContains == 0) {
+        if (_playArray.count >= _lastIndex) {
             [[ShowHUD showHUD]showToastWithText:@"您最多只能选择3个人" FromView:self.view];
-            
+        }else{
+            [self.playArray addObject:model];
         }
-        //存入新数据，和258行一样
-        else{
-            NSString *str=[_dictFinish objectForKey:[self.listArray[indexPath.section][indexPath.row] otherUserId]];
-            if ([Helper isBlankString:str]==YES) {
-                
-                [_dictFinish setObject:[self.listArray[indexPath.section][indexPath.row] userName] forKey:[self.listArray[indexPath.section][indexPath.row] otherUserId]];
-                
-            }else{
-                [_dictFinish removeObjectForKey:[self.listArray[indexPath.section][indexPath.row] otherUserId]];
+    }else{
+        NSMutableArray *modelArray = self.playArray;
+        for (int i=0; i<self.playArray.count; i++) {
+            MyattenModel *palyModel = [[MyattenModel alloc]init];
+            palyModel = self.playArray[i];
+            
+            if ([palyModel.otherUserId integerValue] == [model.otherUserId integerValue]) {
+                [modelArray removeObjectAtIndex:i];
             }
-            
-            NSIndexPath *indexPath_1=[NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section];
-            NSArray *indexArray=[NSArray arrayWithObject:indexPath_1];
-            [_tableView reloadRowsAtIndexPaths:indexArray withRowAnimation:UITableViewRowAnimationAutomatic];
         }
-
+        
+        self.playArray = [modelArray mutableCopy];
     }
+    
+    NSIndexPath *indexPath_1=[NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section];
+    NSArray *indexArray=[NSArray arrayWithObject:indexPath_1];
+    [_tableView reloadRowsAtIndexPaths:indexArray withRowAnimation:UITableViewRowAnimationAutomatic];
+    
 }
-
-
 
 // 右侧索引
 - (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView {

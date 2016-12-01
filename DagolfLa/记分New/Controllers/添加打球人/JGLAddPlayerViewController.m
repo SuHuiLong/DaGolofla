@@ -13,12 +13,19 @@
 #import "JGLAddressAddViewController.h"
 #import "UITool.h"
 #import "JGLBarCodeViewController.h"
-@interface JGLAddPlayerViewController ()<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate>
+#import "MyattenModel.h"
+#import "TKAddressModel.h"
+
+@interface JGLAddPlayerViewController ()<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate, JGLPlayerNumberTableViewCellDelegate>
 {
     UITableView* _tableView;
     UIView* _viewHeader;
     
+    NSArray *_numberPlayArray;
     
+    NSMutableArray *_palyArray;
+    
+    NSMutableArray *_addressArray;
     
     BOOL _isClick;
 }
@@ -37,17 +44,11 @@
     self.view.backgroundColor = [UITool colorWithHexString:@"eeeeee" alpha:1];
     UIView* view = [[UIView alloc]initWithFrame:CGRectMake(1, 1, 1, 1)];
     [self.view addSubview:view];
-//    if (_dictPeople.count == 0) {
-        _dictPeople = [[NSMutableDictionary alloc]init];
-//    }
-//    if (_peoFriend.count == 0) {
-        _peoFriend  = [[NSMutableDictionary alloc]init];
-//    }
-//    if (_peoAddress.count == 0) {
-        _peoAddress = [[NSMutableDictionary alloc]init];
-//    }
     
+    _palyArray = [NSMutableArray array];
+    _addressArray = [NSMutableArray array];
     
+    _numberPlayArray = @[@"", @"二", @"三", @"四"];
     
     [self uiConfig];
     [self createHeader];
@@ -55,7 +56,7 @@
 
 -(void)finishAction
 {
-    _blockSurePlayer(_dictPeople,_peoAddress,_peoAddress);
+    _blockSurePlayer([self.preListArray mutableCopy]);
     [self.navigationController popViewControllerAnimated:YES];
 }
 -(void)createHeader
@@ -64,10 +65,9 @@
     _viewHeader = [[UIView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, 100*screenWidth/375)];
     _viewHeader.backgroundColor = [UIColor whiteColor];
     _tableView.tableHeaderView = _viewHeader;
-//    _tableView.tableHeaderView.userInteractionEnabled = YES;
-//    _viewHeader.userInteractionEnabled = YES;
+
     NSArray* arrTit = @[@"通讯录添加",@"扫描添加",@"球友列表添加"];
-    NSArray* arrImg = @[@"addressBook",@"saomiao",@"tjdqr_qiuyou"];
+    NSArray* arrImg = @[@"addressBook",@"erweima",@"tjdqr_qiuyou"];
     for (int i = 0; i < 3; i ++) {
         
         UIButton* btnAdd = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -97,37 +97,70 @@
 
 -(void)chooseStyleClick:(UIButton *)btn
 {
+    if (self.preListArray.count > 4) {
+        [[ShowHUD showHUD]showToastWithText:@"您最多只能选择3个人" FromView:self.view];
+        return;
+    }
+    
     //通讯录成员添加按钮
     if (btn.tag == 100) {
         JGLAddressAddViewController* addVc = [[JGLAddressAddViewController alloc]init];
         //选择好的通讯录成员
-        addVc.blockAddressPeople = ^(NSMutableDictionary* dict){
-            _peoAddress = dict;
-            [_dictPeople addEntriesFromDictionary:dict];
+        addVc.blockAddressArray= ^(NSMutableArray* addressArray){
+            _addressArray = [addressArray mutableCopy];
             
-            NSMutableDictionary *addressdict = [NSMutableDictionary dictionary];
-            [addressdict setObject:[dict allKeys][0] forKey:Mobile];
-            [addressdict setObject:[dict objectForKey:[dict allKeys][0]] forKey:UserName];
-            [addressdict setObject:@0 forKey:UserKey];
-            [self.preListArray addObject:addressdict];
-
+            //先清除原先添加的球友
+            NSMutableArray *copyPreListArray = [self.preListArray mutableCopy];
+            for (int i=0; i<self.preListArray.count; i++) {
+                NSMutableDictionary *addressdict = self.preListArray[i];
+                if ([[addressdict objectForKey:@"sourceKey"] integerValue] == 1) {
+                    [copyPreListArray removeObjectAtIndex:i];
+                }
+            }
+            
+            self.preListArray = copyPreListArray;
+            
+            //添加球友
+            for (int i=0; i<_addressArray.count; i++) {
+                TKAddressModel *addressModel = [[TKAddressModel alloc]init];
+                addressModel = _addressArray[i];
+                NSMutableDictionary *addressdict = [NSMutableDictionary dictionary];
+                if (addressModel.userName == nil) {
+                    [addressdict setObject:@"通讯录成员" forKey:UserName];
+                }else{
+                    [addressdict setObject:addressModel.userName forKey:UserName];
+                }
+                
+                if (addressModel.mobile == nil) {
+                    
+                }else{
+                    [addressdict setObject:[NSString stringWithFormat:@"%@", addressModel.mobile] forKey:Mobile];
+                }
+                
+                [addressdict setObject:@0 forKey:UserKey];
+                [addressdict setObject:@1 forKey:@"sourceKey"];//球员列表
+                [self.preListArray addObject:addressdict];
+            }
+            
             [_tableView reloadData];
         };
-        addVc.dictFinish = _peoAddress;
-        if (_dictPeople.count != 0) {
-            addVc.lastIndex = _dictPeople.count;
-        }
-        else{
-            addVc.lastIndex = 0;
-        }
-        _isClick = NO;
+        
+        addVc.addressArray = _addressArray;
+        addVc.lastIndex = 4 -self.preListArray.count;
         [self.navigationController pushViewController:addVc animated:YES];
     }
     else if (btn.tag == 101)
     {
         JGLBarCodeViewController* barVc = [[JGLBarCodeViewController alloc]init];
         barVc.blockDict = ^(NSMutableDictionary *dict){
-            [_dictPeople addEntriesFromDictionary:dict];
+            
+            NSMutableDictionary *addressdict = [NSMutableDictionary dictionary];
+            addressdict = [dict mutableCopy];
+            
+            [addressdict setObject:@2 forKey:@"sourceKey"];//扫描
+            
+            [self.preListArray addObject:addressdict];
+            
             [_tableView reloadData];
         };
         [self.navigationController pushViewController:barVc animated:YES];
@@ -135,18 +168,37 @@
     else{
         JGLFriendAddViewController* fVc = [[JGLFriendAddViewController alloc]init];
         //选择好的好友成员
-        fVc.blockFriendDict = ^(NSMutableDictionary* dict){
-            _peoFriend = dict;
-            [_dictPeople addEntriesFromDictionary:dict];
+        fVc.playArrayBlock = ^(NSMutableArray* playArray){
+            _palyArray = playArray;
+            
+            //先清除原先添加的球友
+            NSMutableArray *copyPreListArray = [self.preListArray mutableCopy];
+            for (int i=0; i<self.preListArray.count; i++) {
+                NSMutableDictionary *addressdict = self.preListArray[i];
+                if ([[addressdict objectForKey:@"sourceKey"] integerValue] == 3) {
+                    [copyPreListArray removeObjectAtIndex:i];
+                }
+            }
+            
+            self.preListArray = copyPreListArray;
+            
+            //添加球友
+            for (int i=0; i<_palyArray.count; i++) {
+                MyattenModel *myModel = [[MyattenModel alloc]init];
+                myModel = _palyArray[i];
+                NSMutableDictionary *addressdict = [NSMutableDictionary dictionary];
+                [addressdict setObject:myModel.userName forKey:UserName];
+                [addressdict setObject:myModel.otherUserId forKey:UserKey];
+                [addressdict setObject:myModel.sex forKey:@"sex"];
+                [addressdict setObject:@3 forKey:@"sourceKey"];//球员列表
+                [self.preListArray addObject:addressdict];
+            }
+            
             [_tableView reloadData];
         };
-        fVc.dictFinish = _peoFriend;
-        if (_dictPeople.count != 0) {
-            fVc.lastIndex = _dictPeople.count;
-        }
-        else{
-            fVc.lastIndex = 0;
-        }
+        
+        fVc.playArray = _palyArray;
+        fVc.lastIndex = 4 -self.preListArray.count;
         
         _isClick = NO;
         [self.navigationController pushViewController:fVc animated:YES];
@@ -157,7 +209,7 @@
 {
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 100 * screenWidth / 375)];
     view.backgroundColor = [UITool colorWithHexString:@"eeeeee" alpha:1];
-    UILabel* label = [[UILabel alloc]initWithFrame:CGRectMake(10*screenWidth/375, 10*screenWidth/375, screenWidth - 20*screenWidth/375, 80*screenWidth/375)];
+    UILabel* label = [[UILabel alloc]initWithFrame:CGRectMake(10*screenWidth/375, 10*screenWidth/375, screenWidth - 20*screenWidth/375, 100*screenWidth/375)];
     label.text = @"记分完成后会生成唯一秘钥，用户注册APP会员后，点击“历史记分卡”右上角”取回记分”，填写秘钥即可得到该成绩；通过“球友列表”与“扫描二维码”添加的打球人，记分开始后，成绩会自动同步到被添加人的历史记分卡。";
     [view addSubview:label];
     label.font = [UIFont systemFontOfSize:14*screenWidth/375];
@@ -203,108 +255,41 @@
     }
     else{
         JGLPlayerNumberTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"JGLPlayerNumberTableViewCell" forIndexPath:indexPath];
+        cell.delegate = self;
+        cell.deleteBtn.tag = 100 + indexPath.row-1;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         if (indexPath.row == 0) {
             cell.labelName.hidden = YES;
-            cell.imgvIcon.hidden = YES;
+            cell.deleteBtn.hidden = YES;
             cell.labelTitle.text = @"已添加打球人";
-        }
-        else{
-            if (indexPath.row == 1) {
-                cell.labelTitle.hidden = YES;
-                cell.imgvIcon.hidden = YES;
-                cell.labelName.text = [[NSUserDefaults standardUserDefaults] objectForKey:@"userName"];
-            }
-            else{
+        }else{
+            
+            if (indexPath.row -1 < self.preListArray.count) {
                 cell.labelTitle.hidden = YES;
                 
-                if (_dictPeople.count != 0) {
-                    NSLog(@"%td",indexPath.row);
-                    if ([_dictPeople allValues].count < 4) {
-                        if (indexPath.row-2 < [_dictPeople allValues].count) {
-                            if (_isClick == YES) {
-                                if (indexPath.row-2 < [_dictPeople allValues].count) {
-                                    cell.labelName.text = [_dictPeople allValues][indexPath.row - 2];
-                                }
-                                else{
-                                    cell.labelName.text = @"暂无成员，请添加";
-                                }
-                            }
-                            else{
-                                cell.labelName.text = [_dictPeople allValues][indexPath.row - 2];
-                            }
-                        }
-                        else{
-                            cell.labelName.text = @"暂无成员，请添加";
-                        }
-                    }
-                    else{
-                        [[ShowHUD showHUD]showToastWithText:@"您最多只能添加四个人一起打球" FromView:self.view];
-                    }
+                if (indexPath.row == 1) {
+                    cell.deleteBtn.hidden = YES;
+                }else{
+                    cell.deleteBtn.hidden = NO;
                 }
-                else{
-                    cell.labelName.text = @"暂无成员，请添加";
-                }
+                
+                NSLog(@"%td", indexPath.row);
+                NSDictionary *indexDict = self.preListArray[indexPath.row -1];
+                
+                cell.labelName.textColor = [UIColor blackColor];
+                cell.labelName.text = [indexDict objectForKey:UserName];
+                
+            }else{
+                cell.labelTitle.hidden = NO;
+                cell.deleteBtn.hidden = YES;
+                
+                cell.labelName.textColor = [UIColor lightGrayColor];
+                cell.labelName.text = [NSString stringWithFormat:@"打球人%@", _numberPlayArray[indexPath.row -1]];
             }
-            
-            
         }
         cell.backgroundColor = [UITool colorWithHexString:@"ffffff" alpha:1];
         return cell;
     }
-}
-
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (indexPath.section == 1) {
-        if (indexPath.row > 0) {
-            if (indexPath.row-2 < [_dictPeople allValues].count) {
-                NSLog(@"%@",[_dictPeople allKeys][indexPath.row-2]);
-                
-                [_peoAddress removeObjectForKey:[_dictPeople allKeys][indexPath.row-2]];
-                [_peoFriend removeObjectForKey:[_dictPeople allKeys][indexPath.row-2]];
-                [_dictPeople removeObjectForKey:[_dictPeople allKeys][indexPath.row-2]];
-                [_tableView reloadData];
-                _isClick = YES;
-            }
-        }
-    }
-    
-    
-    
-//            if (indexPath.row - 2 < _dictPeople.count) {
-//                bool isChange1 = false;
-//                for (int i = 0; i < _dictPeople.count; i ++) {
-//                    if (isChange1 == YES) {
-//                        continue;
-//                    }
-////                    if ([[_dictPeople objectForKey:_dataKey[i]] isEqualToString:_dataPeoArr[indexPath.row-1]] == YES) {
-////                        NSLog(@"%@",[_dictPeople allValues][i]);
-////                        [_dictPeople removeObjectForKey:_dataKey[i]];
-////                        [_dataKey removeObjectAtIndex:indexPath.row-1];
-////                        [_userKey removeObjectAtIndex:indexPath.row-1];
-////                        [_mobileArr removeObjectAtIndex:indexPath.row - 1];
-////                        [_dataPeoArr removeObjectAtIndex:indexPath.row-1];
-////                        isChange1 = YES;
-////                        continue;
-////                    }
-//                    if (indexPath.row-2 < [_dictFin allValues].count) {
-//                        NSLog(@"%@    %@",[_dictFin allKeys][indexPath.row-2],[_dictPeople allKeys][indexPath.row-2]);
-//                        [_dictPeople removeObjectForKey:[_dictPeople allKeys][indexPath.row-2]];
-//                        [_tableView reloadData];
-//                        _isClick = YES;
-//                        isChange1 = YES;
-//                        continue;
-//                    }
-//                    
-//                }
-//                [_tableView reloadData];
-//                isChange1 = NO;
-//                
-//            }
-//            
-//        }
-//    }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
@@ -313,7 +298,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    return indexPath.section == 0 ? 80 * screenWidth / 375 : 40 * screenWidth / 375;
+    return indexPath.section == 0 ? 100 * screenWidth / 375 : 40 * screenWidth / 375;
 }
 
 
@@ -321,9 +306,17 @@
 {
     UITextField* textF = (UITextField *)[self.view viewWithTag:1234];
     if (![Helper isBlankString:textF.text]) {
-        if (_dictPeople.count < 3) {
-            [_dictPeople setObject:textF.text forKey:textF.text];
-            [_dictPeople setObject:@"0" forKey:@"sourceKey"];
+        if (self.preListArray.count < 3) {
+//            [_dictPeople setObject:textF.text forKey:textF.text];
+            
+            NSMutableDictionary *addressdict = [NSMutableDictionary dictionary];
+            //            [addressdict setObject:[dict allKeys][0] forKey:Mobile];
+            [addressdict setObject:textF.text forKey:UserName];
+            [addressdict setObject:@0 forKey:UserKey];
+            [addressdict setObject:@4 forKey:@"sourceKey"];//手动添加
+            
+            [self.preListArray addObject:addressdict];
+            
             textF.text = @"";
             [_tableView reloadData];
             _isClick = NO;
@@ -338,7 +331,16 @@
     
     
 }
-
+#pragma mark -- 删除打球人
+- (void)didSelectDeleteBtn:(UIButton *)btn{
+    NSLog(@"%ld", (long)btn.tag);
+    btn.userInteractionEnabled = NO;
+    
+    [self.preListArray removeObjectAtIndex:btn.tag -100];
+    [_tableView reloadData];
+    
+    btn.userInteractionEnabled = YES;
+}
 
 #pragma mark --uitextfield代理
 

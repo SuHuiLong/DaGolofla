@@ -26,7 +26,7 @@
         _labelName.font = [UIFont systemFontOfSize:15*ScreenWidth/375];
         [self.contentView addSubview:_labelName];
         
-        _iconImgv = [[UIImageView alloc]initWithFrame:CGRectMake(screenWidth-110*ScreenWidth/375, 12.5*ScreenWidth/375, 25*ScreenWidth/375, 25*ScreenWidth/375)];
+        _iconImgv = [[UIImageView alloc]initWithFrame:CGRectMake(screenWidth-100*ScreenWidth/375, 15*ScreenWidth/375, 20*ScreenWidth/375, 20*ScreenWidth/375)];
         _iconImgv.backgroundColor = [UIColor redColor];
         [self.contentView addSubview:_iconImgv];
         

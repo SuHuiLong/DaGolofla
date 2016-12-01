@@ -8,6 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol JGLPlayerNumberTableViewCellDelegate <NSObject>
+
+- (void)didSelectDeleteBtn:(UIButton *)btn;
+
+@end
+
 @interface JGLPlayerNumberTableViewCell : UITableViewCell
 
 
@@ -15,7 +21,10 @@
 
 @property (strong, nonatomic) UILabel* labelName;
 
-@property (strong, nonatomic) UIImageView* imgvIcon;
+
+@property (strong, nonatomic) UIButton *deleteBtn;
+
+@property (nonatomic, weak)id <JGLPlayerNumberTableViewCellDelegate> delegate;
 
 
 @end
