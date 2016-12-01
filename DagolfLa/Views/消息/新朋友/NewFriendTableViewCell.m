@@ -72,7 +72,7 @@
 // 球友推荐
 -(void)showData:(NewFriendModel *)model
 {
-    [_btnIcon sd_setImageWithURL:[Helper setImageIconUrl:@"user" andTeamKey:[model.otherUserId integerValue] andIsSetWidth:YES andIsBackGround:NO] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
+    [_btnIcon sd_setImageWithURL:[Helper setImageIconUrl:@"user" andTeamKey:[model.userId integerValue] andIsSetWidth:YES andIsBackGround:NO] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
     
     
     if (![Helper isBlankString:model.userName]) {
@@ -110,7 +110,7 @@
 // 新朋友
 -(void)exhibitionData:(NewFriendModel *)model
 {
-    [_btnIcon sd_setImageWithURL:[Helper setImageIconUrl:@"user" andTeamKey:[model.otherUserId integerValue] andIsSetWidth:YES andIsBackGround:NO] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
+    [_btnIcon sd_setImageWithURL:[Helper setImageIconUrl:@"user" andTeamKey:[model.friendUserKey integerValue] andIsSetWidth:YES andIsBackGround:NO] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
     
     
     if (![Helper isBlankString:model.userName]) {

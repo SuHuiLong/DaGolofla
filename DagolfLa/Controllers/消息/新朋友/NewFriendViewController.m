@@ -319,7 +319,7 @@
 
 -(void)focusClick:(UIButton *)btn
 {
-    [[PostDataRequest sharedInstance] postDataRequest:@"UserFollow/saveFollow.do" parameter:@{@"userId":[[NSUserDefaults standardUserDefaults] objectForKey:@"userId"],@"otherUserId":[_dataArray[btn.tag - 100000] userId]} success:^(id respondsData) {
+    [[PostDataRequest sharedInstance] postDataRequest:@"UserFollow/saveFollow.do" parameter:@{@"userId":[[NSUserDefaults standardUserDefaults] objectForKey:@"userId"],@"otherUserId":[_dataArray[btn.tag - 100000] friendUserKey]} success:^(id respondsData) {
         NSDictionary* dict = [NSJSONSerialization JSONObjectWithData:respondsData options:NSJSONReadingMutableContainers error:nil];
         if ([[dict objectForKey:@"success"] integerValue] == 1) {
             NewFriendTableViewCell* cell = (NewFriendTableViewCell* )[[btn superview] superview];
@@ -338,8 +338,14 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
+    
     JGHPersonalInfoViewController *personInfoVC = [[JGHPersonalInfoViewController alloc] init];
-    personInfoVC.otherKey = [_dataArray[indexPath.row] userId];
+    if (_fromWitchVC == 1) {
+        personInfoVC.otherKey = [_dataArray[indexPath.row] userId];
+    }else{
+        personInfoVC.otherKey = [_dataArray[indexPath.row] friendUserKey];
+    }
+    
     [self.navigationController pushViewController:personInfoVC animated:YES];
 
 //    ChatDetailViewController *vc = [[ChatDetailViewController alloc] init];
