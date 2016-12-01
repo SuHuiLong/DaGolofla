@@ -50,9 +50,17 @@
     [super viewDidLoad];
     
 
-    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"jqy"] style:UIBarButtonItemStylePlain target:self action:@selector(contact)];
-    item.tintColor = [UIColor whiteColor];
-    self.navigationItem.rightBarButtonItem = item;
+    UIButton *costumBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 21 * ProportionAdapter, 21 * ProportionAdapter)];
+    [costumBtn setImage:[UIImage imageNamed:@"jqy"] forState:(UIControlStateNormal)];
+    [costumBtn addTarget:self action:@selector(contact) forControlEvents:(UIControlEventTouchUpInside)];
+    UIBarButtonItem *itm = [[UIBarButtonItem alloc] initWithCustomView:costumBtn];
+    
+    self.navigationItem.rightBarButtonItem = itm;
+
+//    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"jqy"] style:UIBarButtonItemStylePlain target:self action:@selector(contact)];
+//    
+//    item.tintColor = [UIColor whiteColor];
+//    self.navigationItem.rightBarButtonItem = item;
     
     self.title = @"球友通讯录";
 //    self.tableView = [[UITableView alloc] initWithFrame:[UIScreen mainScreen].bounds style:(UITableViewStylePlain)];
@@ -131,7 +139,7 @@
             cell1.myLabel.text = @"球友推荐";
             cell1.myImageV.image = [UIImage imageNamed:@"xxpy"];
         }else{
-            cell1.myLabel.text = @"新朋友";
+            cell1.myLabel.text = @"新球友";
             cell1.myImageV.image = [UIImage imageNamed:@"icon_intro-new"];
             
             if ([_addFriendSum integerValue] > 0) {
@@ -378,6 +386,19 @@
     return @[note];
     
 }
+
+
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    if (indexPath.section == 0) {
+        return NO;
+    }else{
+        return YES;
+    }
+    
+}
+
 - (NSMutableArray *)keyArray{
     if (!_keyArray) {
         _keyArray = [[NSMutableArray alloc]initWithObjects:@"A",@"B",@"C",@"D",@"E",@"F",@"G",@"H",@"I",@"J",@"K",@"L",@"M",@"N",@"O",@"P",@"Q",@"R",@"S",@"T",@"U",@"V",@"W",@"X",@"Y",@"Z",@"#", nil];

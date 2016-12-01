@@ -39,14 +39,14 @@
     if (_fromWitchVC == 1) {
         self.title = @"推荐球友";
         
-        UIBarButtonItem *rightBar = [[UIBarButtonItem alloc] initWithTitle:@"下一批" style:(UIBarButtonItemStyleDone) target:self action:@selector(nextFriend)];
+        UIBarButtonItem *rightBar = [[UIBarButtonItem alloc] initWithTitle:@"下一批" style:(UIBarButtonItemStyleDone) target:self action:@selector(downLoawdDataWithRecommend:)];
         rightBar.tintColor = [UIColor whiteColor];
         [rightBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:15 * ProportionAdapter], NSFontAttributeName, nil] forState:UIControlStateNormal];
 
         self.navigationItem.rightBarButtonItem = rightBar;
         
     }else{
-        self.title = @"新朋友";
+        self.title = @"新球友";
 
     }
     _page = 1;
@@ -55,12 +55,9 @@
     
 }
 
-- (void)nextFriend{
-    [self downLoawdDataWithRecommend];
-}
-
 -(void)uiConfig
 {
+
     _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight)];
     _tableView.delegate = self;
     _tableView.dataSource = self;
@@ -72,7 +69,7 @@
         _tableView.footer=[MJDIYBackFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRereshing)];
     }else{
         
-        [self downLoawdDataWithRecommend];
+        [self downLoawdDataWithRecommend: nil];
 //        _tableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
 //        [_tableView.header beginRefreshing];
 
@@ -111,7 +108,15 @@
                     [_dataArray addObject:model];
                 }
                 [_tableView reloadData];
+            }else{
+                [_tableView removeFromSuperview];
+                UILabel *tipLB = [[UILabel alloc] initWithFrame:CGRectMake(0, 180, screenWidth, 30)];
+                tipLB.text = @"暂无好友申请";
+                tipLB.textColor = [UIColor colorWithHexString:@"#a0a0a0"];
+                tipLB.textAlignment = NSTextAlignmentCenter;
+                [self.view addSubview:tipLB];
             }
+            
         }else{
             if ([data objectForKey:@"packResultMsg"]) {
                 [LQProgressHud showMessage:[data objectForKey:@"packResultMsg"]];
@@ -125,10 +130,10 @@
 
 // 推荐好友	recommend
 
-- (void)downLoawdDataWithRecommend{
+- (void)downLoawdDataWithRecommend:(UIBarButtonItem *)barBtn{
     
     [[ShowHUD showHUD] showAnimationWithText:@"加载中…" FromView:self.view];
-    
+    barBtn.enabled = NO;
     NSMutableDictionary *dic = [NSMutableDictionary dictionary];
     [dic setObject:DEFAULF_USERID forKey:@"userKey"];
     
@@ -137,11 +142,12 @@
     
     [[JsonHttp jsonHttp] httpRequest:@"userFriend/getRecommendFriendList" JsonKey:nil withData:dic requestMethod:@"GET" failedBlock:^(id errType) {
         [[ShowHUD showHUD] hideAnimationFromView:self.view];
-        
+        barBtn.enabled = YES;
     } completionBlock:^(id data) {
         
         [[ShowHUD showHUD] hideAnimationFromView:self.view];
-        
+        barBtn.enabled = YES;
+
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
             
             if ([data objectForKey:@"list"]) {
@@ -225,7 +231,7 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 70*ScreenWidth/320;
+    return 67 * ProportionAdapter;
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -363,6 +369,58 @@
 }
 
 
+
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    if (_fromWitchVC == 1) {
+        return NO;
+    }else{
+        return YES;
+    }
+
+}
+
+
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (!_tableView.isEditing)
+    {
+        return UITableViewCellEditingStyleDelete;
+    }
+    return UITableViewCellEditingStyleDelete | UITableViewCellEditingStyleInsert;
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        
+        NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+        [dic setObject:[_dataArray[indexPath.row] timeKey] forKey:@"userFriendKey"];
+        [dic setValue:@2 forKey:@"state"];
+        [[ShowHUD showHUD] showAnimationWithText:@"删除中…" FromView:self.view];
+        
+        [[JsonHttp jsonHttp] httpRequestWithMD5:@"userFriend/doApplyHandle" JsonKey:nil withData:dic failedBlock:^(id errType) {
+            [[ShowHUD showHUD] hideAnimationFromView:self.view];
+            
+        } completionBlock:^(id data) {
+            
+            [[ShowHUD showHUD] hideAnimationFromView:self.view];
+            if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+                
+                [_dataArray removeObjectAtIndex:indexPath.row];
+                [_tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            }else{
+                if ([data objectForKey:@"packResultMsg"]) {
+                    [LQProgressHud showMessage:[data objectForKey:@"packResultMsg"]];
+                }
+            }
+        }];
+
+        
+
+    }
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

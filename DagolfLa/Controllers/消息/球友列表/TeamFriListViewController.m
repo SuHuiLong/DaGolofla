@@ -117,6 +117,7 @@
     [self.contactBtn addTarget:self action:@selector(contantAct:) forControlEvents:(UIControlEventTouchUpInside)];
     [self.searchController.searchBar addSubview:self.contactBtn];
     self.contactBtn.enabled = NO;
+    self.contactBtn.hidden = YES;
     
     self.begainSearch = NO;
     self.contactISOpen = NO;
@@ -627,6 +628,8 @@
     self.begainSearch = YES;
     _tableView.scrollEnabled = YES;
     self.contactBtn.enabled = YES;
+    self.contactBtn.hidden = NO;
+
     [self.tableView reloadData];
     return YES;
 }
@@ -647,6 +650,7 @@
     _tableView.scrollEnabled = NO;
     self.contactBtn.frame = CGRectMake(333 * ProportionAdapter,  self.searchController.searchBar.frame.origin.y + 13, 20 * ProportionAdapter, 20 * ProportionAdapter);
     self.contactBtn.enabled = NO;
+    self.contactBtn.hidden = YES;
 
 }
 
