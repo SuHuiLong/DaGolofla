@@ -35,6 +35,9 @@
 
 @property (nonatomic, strong) UIImageView *cryImageV;
 @property (nonatomic, strong) UILabel *tipLB;
+
+@property (nonatomic, strong) UILabel *addFriendSumLB;
+
 @end
 
 @implementation ContactViewController
@@ -46,10 +49,18 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    _addFriendSum = @3;
-    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"jqy"] style:UIBarButtonItemStylePlain target:self action:@selector(contact)];
-    item.tintColor = [UIColor whiteColor];
-    self.navigationItem.rightBarButtonItem = item;
+
+    UIButton *costumBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 21 * ProportionAdapter, 21 * ProportionAdapter)];
+    [costumBtn setImage:[UIImage imageNamed:@"jqy"] forState:(UIControlStateNormal)];
+    [costumBtn addTarget:self action:@selector(contact) forControlEvents:(UIControlEventTouchUpInside)];
+    UIBarButtonItem *itm = [[UIBarButtonItem alloc] initWithCustomView:costumBtn];
+    
+    self.navigationItem.rightBarButtonItem = itm;
+
+//    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"jqy"] style:UIBarButtonItemStylePlain target:self action:@selector(contact)];
+//    
+//    item.tintColor = [UIColor whiteColor];
+//    self.navigationItem.rightBarButtonItem = item;
     
     self.title = @"球友通讯录";
 //    self.tableView = [[UITableView alloc] initWithFrame:[UIScreen mainScreen].bounds style:(UITableViewStylePlain)];
@@ -128,20 +139,12 @@
             cell1.myLabel.text = @"球友推荐";
             cell1.myImageV.image = [UIImage imageNamed:@"xxpy"];
         }else{
-            cell1.myLabel.text = @"新朋友";
+            cell1.myLabel.text = @"新球友";
             cell1.myImageV.image = [UIImage imageNamed:@"icon_intro-new"];
             
-            UILabel *LB = [[UILabel alloc] initWithFrame:CGRectMake(15 * ProportionAdapter, -5 * ProportionAdapter, 16 * ProportionAdapter, 16 * ProportionAdapter)];
-            LB.layer.cornerRadius = 8 * ProportionAdapter;
-            LB.clipsToBounds = YES;
-            LB.backgroundColor = [UIColor  redColor];
-            LB.textAlignment = NSTextAlignmentCenter;
-            LB.font = [UIFont systemFontOfSize:13 * ProportionAdapter];
-            LB.textColor = [UIColor whiteColor];
-
             if ([_addFriendSum integerValue] > 0) {
-                LB.text = [_addFriendSum stringValue];
-                [cell1.myImageV addSubview:LB];
+                self.addFriendSumLB.text = [_addFriendSum stringValue];
+                [cell1.myImageV addSubview:self.addFriendSumLB];
             }
 
         }
@@ -383,6 +386,19 @@
     return @[note];
     
 }
+
+
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    if (indexPath.section == 0) {
+        return NO;
+    }else{
+        return YES;
+    }
+    
+}
+
 - (NSMutableArray *)keyArray{
     if (!_keyArray) {
         _keyArray = [[NSMutableArray alloc]initWithObjects:@"A",@"B",@"C",@"D",@"E",@"F",@"G",@"H",@"I",@"J",@"K",@"L",@"M",@"N",@"O",@"P",@"Q",@"R",@"S",@"T",@"U",@"V",@"W",@"X",@"Y",@"Z",@"#", nil];
@@ -390,6 +406,18 @@
     return _keyArray;
 }
 
+- (UILabel *)addFriendSumLB{
+    if (!_addFriendSumLB) {
+        _addFriendSumLB = [[UILabel alloc] initWithFrame:CGRectMake(15 * ProportionAdapter, -5 * ProportionAdapter, 16 * ProportionAdapter, 16 * ProportionAdapter)];
+        _addFriendSumLB.layer.cornerRadius = 8 * ProportionAdapter;
+        _addFriendSumLB.clipsToBounds = YES;
+        _addFriendSumLB.backgroundColor = [UIColor  redColor];
+        _addFriendSumLB.textAlignment = NSTextAlignmentCenter;
+        _addFriendSumLB.font = [UIFont systemFontOfSize:13 * ProportionAdapter];
+        _addFriendSumLB.textColor = [UIColor whiteColor];
+    }
+    return _addFriendSumLB;
+}
 
 
 - (void)didReceiveMemoryWarning {

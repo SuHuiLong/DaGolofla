@@ -54,6 +54,13 @@
         self.labelTitle.text = model.userremarks;
     }
     [self.imgvIcon sd_setImageWithURL:[Helper imageIconUrl:myModel.pic] placeholderImage:[UIImage imageNamed:TeamLogoImage]];
+    
+    if ([myModel.sex integerValue] == 0) {
+        _imgvSex.image = [UIImage imageNamed:@"xb_n"];
+    }else{
+        _imgvSex.image = [UIImage imageNamed:@"xb_nn"];
+    }
+    
     self.imgvIcon.layer.cornerRadius  = self.imgvIcon.frame.size.width /2;
     self.imgvIcon.layer.masksToBounds = YES;
 }

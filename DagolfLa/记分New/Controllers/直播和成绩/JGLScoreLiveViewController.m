@@ -131,6 +131,7 @@
             //同一个cell，加载数据
             JGLScoreLiveDetailTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"JGLScoreLiveDetailTableViewCell" forIndexPath:indexPath];
                 [cell showData:_dataArray[indexPath.row - 1]];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
             return cell;
         }
 
