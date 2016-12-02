@@ -137,11 +137,6 @@ static NSString *const JGHSysInformCellIdentifier = @"JGHSysInformCell";
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     return 0;
 }
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    JGHNotDetailViewController *noteCtrl = [[JGHNotDetailViewController alloc]init];
-    noteCtrl.model = _dataArray[indexPath.row];
-    [self.navigationController pushViewController:noteCtrl animated:YES];
-}
 
 - (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath{
     return @"删除";
