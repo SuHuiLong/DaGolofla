@@ -18,6 +18,8 @@
 
 @property (nonatomic, retain)UILabel *nickname;
 
+@property (nonatomic, retain)UILabel *alm;
+
 @property (nonatomic, retain)UILabel *almost;
 
 @property (nonatomic, retain)UILabel *note;

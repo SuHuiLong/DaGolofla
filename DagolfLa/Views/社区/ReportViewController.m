@@ -5,9 +5,7 @@
 //  Created by 豆凯强 on 16/3/3.
 //  Copyright © 2016年 bhxx. All rights reserved.
 //
-#import "EnrollViewController.h"
 
-#import "PasswordViewController.h"
 
 #define kRegist_URL @"shileAndRep/repeaboutball.do"
 

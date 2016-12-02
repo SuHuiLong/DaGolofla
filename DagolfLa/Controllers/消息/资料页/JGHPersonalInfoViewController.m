@@ -11,6 +11,8 @@
 #import "JGHNoteViewController.h"
 #import "SXPickPhoto.h"
 #import "ChatDetailViewController.h"
+#import "JGAddFriendViewController.h"
+#import "PersonHomeController.h"
 
 @interface JGHPersonalInfoViewController ()
 {
@@ -91,7 +93,7 @@
                 NSInteger state = [[userFriend objectForKey:@"state"] integerValue];
                 if (state == -1) {
                     //加好友
-                    [self.submitBtn setTitle:@"加好友" forState:UIControlStateNormal];
+                    [self.submitBtn setTitle:@"加球友" forState:UIControlStateNormal];
                 }else if (state == 0){
                     //待验证
                     [self.submitBtn setTitle:@"待验证" forState:UIControlStateNormal];
@@ -100,20 +102,20 @@
                     [self.submitBtn setTitle:@"发消息" forState:UIControlStateNormal];
                 }else{
                     //2 -- 拒绝
-                    [self.submitBtn setTitle:@"加好友" forState:UIControlStateNormal];
+                    [self.submitBtn setTitle:@"加球友" forState:UIControlStateNormal];
                 }
                 
                 _state = state;
                 
-                if ([data objectForKey:@"remark"]) {
-                    CGSize remarkSize = [[data objectForKey:@"remark"] boundingRectWithSize:CGSizeMake(screenWidth, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:18*ProportionAdapter]} context:nil].size;
+                if ([userFriend objectForKey:@"remark"]) {
+                    CGSize remarkSize = [[userFriend objectForKey:@"remark"] boundingRectWithSize:CGSizeMake(screenWidth, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:18*ProportionAdapter]} context:nil].size;
                     if ((screenWidth -remarkSize.width) <120) {
                         self.name.frame = CGRectMake(90 *ProportionAdapter, 10 *ProportionAdapter, screenWidth -120 *ProportionAdapter, 20 *ProportionAdapter);
                     }else{
                         self.name.frame = CGRectMake(90 *ProportionAdapter, 10 *ProportionAdapter, remarkSize.width, 20 *ProportionAdapter);
                     }
                     
-                    self.name.text = [NSString stringWithFormat:@"%@", [data objectForKey:@"remark"]];
+                    self.name.text = [NSString stringWithFormat:@"%@", [userFriend objectForKey:@"remark"]];
                     
                     self.nick.frame = CGRectMake(90 *ProportionAdapter, 40 *ProportionAdapter, 40 *ProportionAdapter, 15 *ProportionAdapter);
                     self.nick.text = @"昵称";
@@ -128,6 +130,8 @@
                     self.nickname.text = @"";
                     self.nick.text = @"";
                     
+                    self.alm.frame = CGRectMake(90 *ProportionAdapter, 40 *ProportionAdapter, 40 *ProportionAdapter, 15 *ProportionAdapter);
+                    self.almost.frame = CGRectMake(130 *ProportionAdapter, 40 *ProportionAdapter, screenWidth -140*ProportionAdapter, 15 *ProportionAdapter);
                     self.almost.text = [NSString stringWithFormat:@"%@", _model.almost];
                 }
                 
@@ -167,7 +171,7 @@
     self.headerImageView = [[UIImageView alloc]initWithFrame:CGRectMake(10 *ProportionAdapter, 10*ProportionAdapter, 65 *ProportionAdapter, 65 *ProportionAdapter)];
     self.headerImageView.image = [UIImage imageNamed:DefaultHeaderImage];
     self.headerImageView.layer.masksToBounds = YES;
-    self.headerImageView.layer.cornerRadius = 3.0;
+    self.headerImageView.layer.cornerRadius = 5.0 *ProportionAdapter;
     self.headerImageView.userInteractionEnabled = YES;
     
     UIButton *headerImageBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 65 *ProportionAdapter, 65 *ProportionAdapter)];
@@ -188,23 +192,27 @@
     //昵称
     self.nick = [[UILabel alloc]initWithFrame:CGRectMake(90 *ProportionAdapter, 40 *ProportionAdapter, 40 *ProportionAdapter, 15 *ProportionAdapter)];
     self.nick.font = [UIFont systemFontOfSize:15 *ProportionAdapter];
-    self.nick.text = @"昵称";
+    self.nick.text = @"昵称:";
+    self.nick.textColor = [UIColor colorWithHexString:@"#a0a0a0"];
     [oneView addSubview:self.nick];
     
     self.nickname = [[UILabel alloc]initWithFrame:CGRectMake(130 *ProportionAdapter, 40 *ProportionAdapter, screenWidth -140*ProportionAdapter, 15 *ProportionAdapter)];
     self.nickname.font = [UIFont systemFontOfSize:15 *ProportionAdapter];
     self.nickname.text = @"";
+    self.nickname.textColor = [UIColor colorWithHexString:@"#a0a0a0"];
     [oneView addSubview:self.nickname];
     
     //差点
-    UILabel *alm = [[UILabel alloc]initWithFrame:CGRectMake(90 *ProportionAdapter, 60 *ProportionAdapter, 40 *ProportionAdapter, 15 *ProportionAdapter)];
-    alm.font = [UIFont systemFontOfSize:15 *ProportionAdapter];
-    alm.text = @"差点";
-    [oneView addSubview:alm];
+    self.alm = [[UILabel alloc]initWithFrame:CGRectMake(90 *ProportionAdapter, 60 *ProportionAdapter, 40 *ProportionAdapter, 15 *ProportionAdapter)];
+    self.alm.font = [UIFont systemFontOfSize:15 *ProportionAdapter];
+    self.alm.text = @"差点:";
+    self.alm.textColor = [UIColor colorWithHexString:@"#a0a0a0"];
+    [oneView addSubview:self.alm];
     
     self.almost = [[UILabel alloc]initWithFrame:CGRectMake(130 *ProportionAdapter, 60 *ProportionAdapter, 100 *ProportionAdapter, 15 *ProportionAdapter)];
     self.almost.font = [UIFont systemFontOfSize:15 *ProportionAdapter];
     self.almost.text = @"";
+    self.almost.textColor = [UIColor colorWithHexString:@"#a0a0a0"];
     [oneView addSubview:self.almost];
     
     //备注
@@ -350,7 +358,12 @@
 - (void)dynamicBtn:(UIButton *)btn{
     btn.userInteractionEnabled = NO;
     
+    PersonHomeController* selfVc = [[PersonHomeController alloc]init];
+    selfVc.strMoodId = _otherKey;
+    selfVc.messType = @2;
+    [self.navigationController pushViewController:selfVc animated:YES];
     
+    btn.userInteractionEnabled = YES;
     
     btn.userInteractionEnabled = YES;
 }
@@ -359,7 +372,10 @@
 - (void)footprintBtn:(UIButton *)btn{
     btn.userInteractionEnabled = NO;
     
-    
+    PersonHomeController* selfVc = [[PersonHomeController alloc]init];
+    selfVc.strMoodId = _otherKey;
+    selfVc.messType = @2;
+    [self.navigationController pushViewController:selfVc animated:YES];
     
     btn.userInteractionEnabled = YES;
 }
@@ -368,10 +384,16 @@
     btn.userInteractionEnabled = NO;
     if (_state == -1) {
         //陌生人
-        
+        JGAddFriendViewController *addFriendVC = [[JGAddFriendViewController alloc] init];
+        addFriendVC.otherUserKey = _otherKey;
+        addFriendVC.popToVC = ^(NSInteger num){
+            [self loadData];
+        };
+        [self.navigationController pushViewController:addFriendVC animated:YES];
     }else if (_state == 0){
         //待验证
-        
+        self.submitBtn.userInteractionEnabled = NO;
+        [self.submitBtn setTitleColor:[UIColor colorWithHexString:@"#a0a0a0"] forState:UIControlStateNormal];
     }else if (_state == 1){
         //好友
         ChatDetailViewController *vc = [[ChatDetailViewController alloc] init];

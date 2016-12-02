@@ -12,6 +12,8 @@
 
 @property (nonatomic, retain)UITextField *noteText;
 
+@property (nonatomic, retain)UILabel *proLable;
+
 @end
 
 @implementation JGHNoteViewController
@@ -35,6 +37,8 @@
 }
 #pragma mark -- 完成
 - (void)complete{
+    [self.view endEditing:YES];
+    
     if (self.noteText.text.length == 0) {
         [[ShowHUD showHUD]showToastWithText:@"请输入备注" FromView:self.view];
         return;
@@ -71,12 +75,12 @@
     self.noteText.delegate = self;
     [oneview addSubview:self.noteText];
     
-    UILabel *proLable = [[UILabel alloc]initWithFrame:CGRectMake(screenWidth -50 *ProportionAdapter, 50 *ProportionAdapter, 40 *ProportionAdapter, 20*ProportionAdapter)];
-    proLable.font = [UIFont systemFontOfSize:16 *ProportionAdapter];
-    proLable.textColor = [UIColor lightGrayColor];
-    proLable.text = @"20";
-    proLable.textAlignment = NSTextAlignmentRight;
-    [oneview addSubview:proLable];
+    self.proLable = [[UILabel alloc]initWithFrame:CGRectMake(screenWidth -50 *ProportionAdapter, 50 *ProportionAdapter, 40 *ProportionAdapter, 20*ProportionAdapter)];
+    self.proLable.font = [UIFont systemFontOfSize:16 *ProportionAdapter];
+    self.proLable.textColor = [UIColor lightGrayColor];
+    self.proLable.text = @"20";
+    self.proLable.textAlignment = NSTextAlignmentRight;
+    [oneview addSubview:self.proLable];
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField{
@@ -89,8 +93,10 @@
     }
     
     NSString *str = [textField.text stringByReplacingCharactersInRange:range withString:string];
+    self.proLable.text = [NSString stringWithFormat:@"%td", 20 -[str length]];
     
     if ([str length] > 20) {
+        self.proLable.text = @"0";
         textField.text = [str substringToIndex:20];
         return NO;
     }
