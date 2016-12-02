@@ -54,7 +54,7 @@
     _detailLabel = [[UILabel alloc]initWithFrame:CGRectMake(80*ScreenWidth/375, 44*ScreenWidth/375, 220*ScreenWidth/375, 20*ScreenWidth/375)];
     _detailLabel.font = [UIFont systemFontOfSize:12*ScreenWidth/375];
     _detailLabel.textColor = [UIColor colorWithHexString:@"#a0a0a0"];
-    _detailLabel.text = @"我需要三件东西。。";
+//    _detailLabel.text = @"我需要三件东西。。";
     [self addSubview:_detailLabel];
     
     _btnFocus = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -104,7 +104,15 @@
         _detailLabel.text = [NSString stringWithFormat:@"推荐理由:%@", model.reason];
     }
     
-    [_btnFocus setTitle:@"添加" forState:UIControlStateNormal];
+    if ([model.state integerValue] == 3) {
+        _btnFocus.frame = CGRectMake(ScreenWidth-75*ScreenWidth/375, 18*ScreenWidth/375, 65*ScreenWidth/375, 30*ScreenWidth/375);
+        [_btnFocus setTitle:@"等待验证" forState:UIControlStateNormal];
+        [_btnFocus setTitleColor:[UIColor colorWithHexString:@"#a0a0a0"] forState:(UIControlStateNormal)];
+        _btnFocus.backgroundColor = [UIColor clearColor];
+        _btnFocus.enabled = NO;
+    }else{
+        [_btnFocus setTitle:@"添加" forState:UIControlStateNormal];
+    }
     
 }
 
@@ -141,7 +149,15 @@
         _detailLabel.text = model.reason;
     }
 
-    [_btnFocus setTitle:@"接受" forState:UIControlStateNormal];
+    if ([model.state integerValue] == 0) {
+        [_btnFocus setTitle:@"接受" forState:UIControlStateNormal];
+    }else{
+        [_btnFocus setTitle:@"已添加" forState:UIControlStateNormal];
+        [_btnFocus setTitleColor:[UIColor colorWithHexString:@"#a0a0a0"] forState:(UIControlStateNormal)];
+        _btnFocus.backgroundColor = [UIColor clearColor];
+        _btnFocus.enabled = NO;
+    }
+    
     
 }
 

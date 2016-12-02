@@ -258,6 +258,7 @@
     return cell;
 }
 
+// 新朋友
 -(void)selfDetClick:(UIButton *)btn event:(id)event
 {
     NSSet *touches =[event allTouches];
@@ -278,9 +279,10 @@
         [[ShowHUD showHUD] hideAnimationFromView:self.view];
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
             
-            [_dataArray removeObjectAtIndex:indexPath.row];
-            [_tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:YES];
-            
+            [btn setTitle:@"已添加" forState:UIControlStateNormal];
+            [btn setTitleColor:[UIColor colorWithHexString:@"#a0a0a0"] forState:(UIControlStateNormal)];
+            btn.backgroundColor = [UIColor clearColor];
+            btn.enabled = NO;
             [LQProgressHud showMessage:@"添加成功"];
             
         }else{
@@ -295,8 +297,8 @@
 }
 
 
-// 添加球友
-- (void)cellBtnClicked:(id)sender event:(id)event
+// 添加球友 推荐
+- (void)cellBtnClicked:(UIButton *)btn event:(id)event
 {
     NSSet *touches =[event allTouches];
     UITouch *touch =[touches anyObject];
@@ -308,8 +310,15 @@
         addFriVC.otherUserKey = [_dataArray[indexPath.row] userId];
         addFriVC.popToVC = ^(NSInteger num){
             if (num == 1) {
-                [_dataArray removeObjectAtIndex:indexPath.row];
-                [_tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:YES];
+
+                NewFriendModel *model = _dataArray[indexPath.row];
+                model.state = @3;
+                btn.frame = CGRectMake(ScreenWidth-75*ScreenWidth/375, 18*ScreenWidth/375, 65*ScreenWidth/375, 30*ScreenWidth/375);
+                [btn setTitle:@"等待验证" forState:(UIControlStateNormal)];
+                [btn setTitleColor:[UIColor colorWithHexString:@"#a0a0a0"] forState:(UIControlStateNormal)];
+                btn.backgroundColor = [UIColor clearColor];
+                btn.enabled = NO;
+
             }
         };
         [self.navigationController pushViewController:addFriVC animated:YES];

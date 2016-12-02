@@ -29,7 +29,7 @@
 
 @property (strong, nonatomic) NSNumber* timeKey;
 
-@property (strong, nonatomic) NSNumber* state; // 是否是好友  1 是好友
+@property (strong, nonatomic) NSNumber* state; // 是否是好友  1 是好友  ／／ 非好友
 
 @property (strong, nonatomic) NSNumber* friendUserKey;
 

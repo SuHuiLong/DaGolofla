@@ -44,7 +44,7 @@
     }
     self.navigationItem.leftBarButtonItem = nil;
     self.view.backgroundColor = [UIColor whiteColor];
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"show" object:nil];
+//    [[NSNotificationCenter defaultCenter] postNotificationName:@"show" object:nil];
     
     UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"backL"] style:UIBarButtonItemStylePlain target:self action:@selector(backButtonClcik)];
     item.tintColor=[UIColor whiteColor];

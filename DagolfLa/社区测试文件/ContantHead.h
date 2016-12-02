@@ -89,6 +89,9 @@ typedef NS_ENUM(NSInteger, GestureType) {
 #define RGBA(r,g,b,a)   [UIColor colorWithRed:(float)r/255.0f green:(float)g/255.0f blue:(float)b/255.0f alpha:a]
 #define kScreenHeight ([[UIScreen mainScreen] bounds].size.height)
 
+// 判断是否为空
+#define NULLString(string) ((![string isKindOfClass:[NSString class]])||[string isEqualToString:@""] || (string == nil) || [string isEqualToString:@""] || [string isKindOfClass:[NSNull class]]||[[string stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] length]==0)
+
 #define SY_PriceColor @"#ef491c"
 #define BG_color @"#EEEEEE"
 #define Prompt_Color @"#F39800"

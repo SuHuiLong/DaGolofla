@@ -56,15 +56,27 @@
 
 @end
 
-//static int page = 1;
+
 @implementation TeamFriListViewController
 
 //- (void)dealloc{
 //    self.searchController = nil;
 //}
 - (void)viewWillAppear:(BOOL)animated{
+    
     [super viewWillAppear:animated];
+    
     self.searchController.searchBar.hidden = NO;
+    
+    if (_begainSearch == YES) {
+        self.navigationController.navigationBarHidden = YES;
+        self.searchController.active = true;
+
+
+    }else{
+        self.navigationController.navigationBarHidden = NO;
+
+    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -74,6 +86,12 @@
         //        [self.searchController.searchBar removeFromSuperview];
         self.searchController.searchBar.hidden = YES;
     }
+}
+
+- (void)didPresentSearchController:(UISearchController *)searchController {
+    [UIView animateWithDuration:0.1 animations:^{} completion:^(BOOL finished) {
+        [self.searchController.searchBar becomeFirstResponder];
+    }];
 }
 
 - (void)viewDidLoad {
