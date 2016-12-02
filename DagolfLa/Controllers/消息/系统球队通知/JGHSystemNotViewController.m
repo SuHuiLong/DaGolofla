@@ -9,7 +9,6 @@
 #import "JGHSystemNotViewController.h"
 #import "JGHSysInformCell.h"
 #import "JGHInformModel.h"
-#import "JGHNotDetailViewController.h"
 
 static NSString *const JGHSysInformCellIdentifier = @"JGHSysInformCell";
 

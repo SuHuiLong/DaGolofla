@@ -283,7 +283,6 @@
 		20D564C11DE44623005535A6 /* JGHPersonalInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 20D564C01DE44623005535A6 /* JGHPersonalInfoViewController.m */; };
 		20D564C41DE53563005535A6 /* JGHNoteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 20D564C31DE53563005535A6 /* JGHNoteViewController.m */; };
 		20D564C81DE56830005535A6 /* JGHInformModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 20D564C71DE56830005535A6 /* JGHInformModel.m */; };
-		20D564CB1DE57227005535A6 /* JGHNotDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 20D564CA1DE57227005535A6 /* JGHNotDetailViewController.m */; };
 		20D564CE1DE68D5D005535A6 /* RCDTabBarBtn.m in Sources */ = {isa = PBXBuildFile; fileRef = 20D564CD1DE68D5D005535A6 /* RCDTabBarBtn.m */; };
 		20D564D11DE68DAF005535A6 /* UIColor+RCColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 20D564D01DE68DAF005535A6 /* UIColor+RCColor.m */; };
 		20D564D51DE803A1005535A6 /* JGHUserModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 20D564D41DE803A1005535A6 /* JGHUserModel.m */; };
@@ -1744,8 +1743,6 @@
 		20D564C31DE53563005535A6 /* JGHNoteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHNoteViewController.m; sourceTree = "<group>"; };
 		20D564C61DE56830005535A6 /* JGHInformModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHInformModel.h; sourceTree = "<group>"; };
 		20D564C71DE56830005535A6 /* JGHInformModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHInformModel.m; sourceTree = "<group>"; };
-		20D564C91DE57226005535A6 /* JGHNotDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHNotDetailViewController.h; sourceTree = "<group>"; };
-		20D564CA1DE57227005535A6 /* JGHNotDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHNotDetailViewController.m; sourceTree = "<group>"; };
 		20D564CC1DE68D5C005535A6 /* RCDTabBarBtn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCDTabBarBtn.h; sourceTree = "<group>"; };
 		20D564CD1DE68D5D005535A6 /* RCDTabBarBtn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCDTabBarBtn.m; sourceTree = "<group>"; };
 		20D564CF1DE68DAF005535A6 /* UIColor+RCColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+RCColor.h"; sourceTree = "<group>"; };
@@ -4717,8 +4714,6 @@
 				20D564B31DE4216F005535A6 /* JGHSystemNotViewController.m */,
 				20D564B91DE43AA2005535A6 /* JGHTeamNotViewController.h */,
 				20D564BA1DE43AA2005535A6 /* JGHTeamNotViewController.m */,
-				20D564C91DE57226005535A6 /* JGHNotDetailViewController.h */,
-				20D564CA1DE57227005535A6 /* JGHNotDetailViewController.m */,
 			);
 			path = "系统球队通知";
 			sourceTree = "<group>";
@@ -8954,7 +8949,7 @@
 				TargetAttributes = {
 					36BFFD271BC76C8D005B3CE2 = {
 						CreatedOnToolsVersion = 6.3.2;
-						DevelopmentTeam = 5P6JNXBH3C;
+						DevelopmentTeam = AKVZK78CBX;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
@@ -9808,7 +9803,6 @@
 				82D595E31CE42E7B00CD9587 /* JGMemHalfTableViewCell.m in Sources */,
 				F5E1BAE71D6B006100414727 /* ZXImage.m in Sources */,
 				207F70371DBF59CD00667E26 /* JGHShowActivityPhotoCell.m in Sources */,
-				20D564CB1DE57227005535A6 /* JGHNotDetailViewController.m in Sources */,
 				36D9F7221C23BD4700699569 /* ScoreCardModel.m in Sources */,
 				200200FC1D61B2C900308C44 /* JGHStarScoreViewController.m in Sources */,
 				36B08F711C2D322600CD660E /* UITableViewRowAction+JZExtension.m in Sources */,
@@ -10306,7 +10300,7 @@
 				CODE_SIGN_ENTITLEMENTS = DagolfLa/DagolfLa.entitlements;
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = 5P6JNXBH3C;
+				DEVELOPMENT_TEAM = AKVZK78CBX;
 				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -10357,7 +10351,7 @@
 				CODE_SIGN_ENTITLEMENTS = DagolfLa/DagolfLa.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = 5P6JNXBH3C;
+				DEVELOPMENT_TEAM = AKVZK78CBX;
 				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = NO;
 				FRAMEWORK_SEARCH_PATHS = (

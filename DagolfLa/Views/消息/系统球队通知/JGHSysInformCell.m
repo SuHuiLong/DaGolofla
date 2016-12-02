@@ -25,7 +25,8 @@
 //        [self addSubview:self.read];
         
         self.name = [[UILabel alloc]initWithFrame:CGRectMake(10 *ProportionAdapter, 15 *ProportionAdapter, screenWidth -(30 +100)*ProportionAdapter, 20 *ProportionAdapter)];
-        self.name.font = [UIFont systemFontOfSize:17 *ProportionAdapter];
+        self.name.font = [UIFont systemFontOfSize:16 *ProportionAdapter];
+        self.name.textColor = [UIColor colorWithHexString:@"a0a0a0"];
         self.name.text = @"球队通知";
         self.name.numberOfLines = 0;
         [self addSubview:self.name];
@@ -37,8 +38,9 @@
         [self addSubview:self.time];
         
         self.detail = [[UILabel alloc]initWithFrame:CGRectMake(10 *ProportionAdapter, 45 *ProportionAdapter, screenWidth -20 *ProportionAdapter, 40 *ProportionAdapter)];
-        self.detail.font = [UIFont systemFontOfSize:15 *ProportionAdapter];
+        self.detail.font = [UIFont systemFontOfSize:13 *ProportionAdapter];
         self.detail.numberOfLines = 0;
+        self.detail.textColor = [UIColor colorWithHexString:@"a0a0a0"];
         self.detail.text = @"农夫农夫就是奶粉是地方就是办公室就看到不少的身份丹江口市净空法师能看到积分榜上看见对方 那就是打开妇女健康是否能看见是地方暖色调肌肤是你看地方";
         [self addSubview:self.detail];
     }

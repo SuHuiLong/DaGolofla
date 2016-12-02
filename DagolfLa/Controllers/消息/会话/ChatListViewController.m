@@ -37,6 +37,9 @@
     NSInteger _systemUnread;
     
     NSInteger _newFriendUnread;
+    
+    UILabel *_sysDetailLable;
+    UILabel *_teamNotDetailLable;
 }
 
 @end
@@ -130,6 +133,14 @@
             _systemUnread = [[data objectForKey:@"systemUnread"] integerValue];
             _newFriendUnread = [[data objectForKey:@"newFriendUnread"] integerValue];
             
+            if ([data objectForKey:@"teamMsgNewest"]) {
+                _teamNotDetailLable.text = [NSString stringWithFormat:@"%@", [[data objectForKey:@"teamMsgNewest"] objectForKey:@"title"]];
+            }
+            
+            if ([data objectForKey:@"systemMsgNewest"]) {
+                _sysDetailLable.text = [NSString stringWithFormat:@"%@", [[data objectForKey:@"systemMsgNewest"] objectForKey:@"title"]];
+            }
+            
             [[_viewHeader viewWithTag:1000] removeFromSuperview];
             [[_viewHeader viewWithTag:1001] removeFromSuperview];
             [[_viewHeader viewWithTag:1002] removeFromSuperview];
@@ -206,61 +217,72 @@
 #pragma mark --头视图
 -(void)createTableHeaderView
 {
-    
-    _viewHeader = [[UIView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, 186*ProportionAdapter)];
+    _viewHeader = [[UIView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, 196*ProportionAdapter)];
     _viewHeader.backgroundColor = [UIColor whiteColor];
     
-    UIImageView *sysMessImageView = [[UIImageView alloc]initWithFrame:CGRectMake(10 *ProportionAdapter, 10 *ProportionAdapter, 50 *ProportionAdapter, 47 *ProportionAdapter)];
+    UIView *heView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, 10 *ProportionAdapter)];
+    heView.backgroundColor = [UIColor colorWithHexString:BG_color];
+    [_viewHeader addSubview:heView];
+    
+    UIImageView *sysMessImageView = [[UIImageView alloc]initWithFrame:CGRectMake(10 *ProportionAdapter, 20 *ProportionAdapter, 50 *ProportionAdapter, 47 *ProportionAdapter)];
     sysMessImageView.image = [UIImage imageNamed:@"app-message"];
     [_viewHeader addSubview:sysMessImageView];
     
-    UILabel *sysNotLable = [[UILabel alloc]initWithFrame:CGRectMake(70 *ProportionAdapter, 10 *ProportionAdapter, 100 *ProportionAdapter, 20 *ProportionAdapter)];
+    UIImageView *sysPointed = [[UIImageView alloc]initWithFrame:CGRectMake( screenWidth -18*ProportionAdapter, 37*ProportionAdapter, 8*ProportionAdapter, 13 *ProportionAdapter)];
+    [sysPointed setImage:[UIImage imageNamed:@")"]];
+    [_viewHeader addSubview:sysPointed];
+    
+    UILabel *sysNotLable = [[UILabel alloc]initWithFrame:CGRectMake(70 *ProportionAdapter, 20 *ProportionAdapter, 100 *ProportionAdapter, 20 *ProportionAdapter)];
     sysNotLable.text = @"系统通知";
     sysNotLable.font = [UIFont systemFontOfSize:16 *ProportionAdapter];
     [_viewHeader addSubview:sysNotLable];
     
-    UILabel *sysDetailLable = [[UILabel alloc]initWithFrame:CGRectMake(70 *ProportionAdapter, 40 *ProportionAdapter, screenWidth -100*ProportionAdapter, 20 *ProportionAdapter)];
-    sysDetailLable.font = [UIFont systemFontOfSize:15 *ProportionAdapter];
-    sysDetailLable.text = @"系统消息第几纷纷大幅";
-    [_viewHeader addSubview:sysDetailLable];
+    _sysDetailLable = [[UILabel alloc]initWithFrame:CGRectMake(70 *ProportionAdapter, 50 *ProportionAdapter, screenWidth -100*ProportionAdapter, 20 *ProportionAdapter)];
+    _sysDetailLable.font = [UIFont systemFontOfSize:15 *ProportionAdapter];
+    _sysDetailLable.text = @"暂无系统消息";
+    [_viewHeader addSubview:_sysDetailLable];
     
-    UILabel *oneLine = [[UILabel alloc]initWithFrame:CGRectMake(10*ProportionAdapter, 67 *ProportionAdapter, screenWidth -10 *ProportionAdapter, 1)];
+    UILabel *oneLine = [[UILabel alloc]initWithFrame:CGRectMake(10*ProportionAdapter, 77 *ProportionAdapter, screenWidth -10 *ProportionAdapter, 0.5)];
     oneLine.backgroundColor = [UIColor colorWithHexString:@"#d9d9d9"];
     [_viewHeader addSubview:oneLine];
     
-    UIButton *sysMessbtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, screenWidth, 67*ProportionAdapter)];
+    UIButton *sysMessbtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, screenWidth, 77*ProportionAdapter)];
     [sysMessbtn addTarget:self action:@selector(sysMessbtn:) forControlEvents:UIControlEventTouchUpInside];
     [_viewHeader addSubview:sysMessbtn];
     
     //球队通知
-    UIImageView *teamImageView = [[UIImageView alloc]initWithFrame:CGRectMake(10 *ProportionAdapter, 78 *ProportionAdapter, 50 *ProportionAdapter, 47*ProportionAdapter)];
+    UIImageView *teamImageView = [[UIImageView alloc]initWithFrame:CGRectMake(10 *ProportionAdapter, 88 *ProportionAdapter, 50 *ProportionAdapter, 47*ProportionAdapter)];
     teamImageView.image = [UIImage imageNamed:@"team-message"];
     [_viewHeader addSubview:teamImageView];
     
-    UILabel *teamNotLable = [[UILabel alloc]initWithFrame:CGRectMake(70 *ProportionAdapter, 78 *ProportionAdapter, 100 *ProportionAdapter, 20 *ProportionAdapter)];
+    UIImageView *teamPointed = [[UIImageView alloc]initWithFrame:CGRectMake( screenWidth -18*ProportionAdapter, 105*ProportionAdapter, 8*ProportionAdapter, 13 *ProportionAdapter)];
+    [teamPointed setImage:[UIImage imageNamed:@")"]];
+    [_viewHeader addSubview:teamPointed];
+    
+    UILabel *teamNotLable = [[UILabel alloc]initWithFrame:CGRectMake(70 *ProportionAdapter, 88 *ProportionAdapter, 100 *ProportionAdapter, 20 *ProportionAdapter)];
     teamNotLable.font = [UIFont systemFontOfSize:16 *ProportionAdapter];
     teamNotLable.text = @"球队通知";
     [_viewHeader addSubview:teamNotLable];
     
-    UILabel *teamNotDetailLable = [[UILabel alloc]initWithFrame:CGRectMake(70 *ProportionAdapter, 108 *ProportionAdapter, screenWidth -100*ProportionAdapter, 20 *ProportionAdapter)];
-    teamNotDetailLable.font = [UIFont systemFontOfSize:15 *ProportionAdapter];
-    teamNotDetailLable.text = @"球队通知详情";
-    [_viewHeader addSubview:teamNotDetailLable];
+    _teamNotDetailLable = [[UILabel alloc]initWithFrame:CGRectMake(70 *ProportionAdapter, 118 *ProportionAdapter, screenWidth -100*ProportionAdapter, 20 *ProportionAdapter)];
+    _teamNotDetailLable.font = [UIFont systemFontOfSize:15 *ProportionAdapter];
+    _teamNotDetailLable.text = @"暂无球队消息";
+    [_viewHeader addSubview:_teamNotDetailLable];
     
-    UILabel *twoLine = [[UILabel alloc]initWithFrame:CGRectMake(10 *ProportionAdapter, 138 *ProportionAdapter, screenWidth -10*ProportionAdapter, 1)];
+    UILabel *twoLine = [[UILabel alloc]initWithFrame:CGRectMake(10 *ProportionAdapter, 148 *ProportionAdapter, screenWidth -10*ProportionAdapter, 0.5)];
     twoLine.backgroundColor = [UIColor colorWithHexString:@"#d9d9d9"];
     [_viewHeader addSubview:twoLine];
     
-    UILabel *proLable = [[UILabel alloc]initWithFrame:CGRectMake(10*ProportionAdapter, 149 *ProportionAdapter, 200 *ProportionAdapter, 28 *ProportionAdapter)];
+    UILabel *proLable = [[UILabel alloc]initWithFrame:CGRectMake(10*ProportionAdapter, 159 *ProportionAdapter, 200 *ProportionAdapter, 28 *ProportionAdapter)];
     proLable.font = [UIFont systemFontOfSize:18 *ProportionAdapter];
     proLable.text = @"好友列表";
     [_viewHeader addSubview:proLable];
     
-    UILabel *threeLine = [[UILabel alloc]initWithFrame:CGRectMake(0, 185 *ProportionAdapter, screenWidth, 1)];
+    UILabel *threeLine = [[UILabel alloc]initWithFrame:CGRectMake(0, 195 *ProportionAdapter, screenWidth, 1)];
     threeLine.backgroundColor = [UIColor colorWithHexString:@"#d9d9d9"];
     [_viewHeader addSubview:threeLine];
     
-    UIButton *teamNotbtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 68 *ProportionAdapter, screenWidth, 67*ProportionAdapter)];
+    UIButton *teamNotbtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 78 *ProportionAdapter, screenWidth, 67*ProportionAdapter)];
     [teamNotbtn addTarget:self action:@selector(teamNotbtn:) forControlEvents:UIControlEventTouchUpInside];
     [_viewHeader addSubview:teamNotbtn];
     

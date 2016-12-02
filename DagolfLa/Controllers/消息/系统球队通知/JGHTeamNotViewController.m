@@ -9,7 +9,6 @@
 #import "JGHTeamNotViewController.h"
 #import "JGHTeamInformCell.h"
 #import "JGHInformModel.h"
-#import "JGHNotDetailViewController.h"
 
 static NSString *const JGHTeamInformCellIdentifier = @"JGHTeamInformCell";
 
@@ -63,13 +62,17 @@ static NSString *const JGHTeamInformCellIdentifier = @"JGHTeamInformCell";
         [LQProgressHud hide];
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
             NSArray *list = [data objectForKey:@"list"];
-            for (int i=0; i<list.count; i++) {
-                JGHInformModel *model = [[JGHInformModel alloc]init];
-                [model setValuesForKeysWithDictionary:list[i]];
-                [self.dataArray addObject:model];
+            if (list.count == 0) {
+                
+            }else{
+                for (int i=0; i<list.count; i++) {
+                    JGHInformModel *model = [[JGHInformModel alloc]init];
+                    [model setValuesForKeysWithDictionary:list[i]];
+                    [self.dataArray addObject:model];
+                }
+                
+                [self.systemNotTableView reloadData];
             }
-            
-            [self.systemNotTableView reloadData];
         }else{
             if ([data objectForKey:@"packResultMsg"]) {
                 [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
@@ -133,12 +136,6 @@ static NSString *const JGHTeamInformCellIdentifier = @"JGHTeamInformCell";
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     return 0;
 }
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    JGHNotDetailViewController *noteCtrl = [[JGHNotDetailViewController alloc]init];
-    noteCtrl.model = _dataArray[indexPath.row];
-    [self.navigationController pushViewController:noteCtrl animated:YES];
-}
-
 - (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath{
     return @"删除";
 }
