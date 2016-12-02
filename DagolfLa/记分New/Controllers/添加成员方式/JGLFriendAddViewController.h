@@ -11,8 +11,9 @@
 @interface JGLFriendAddViewController : ViewController
 
 //球友列表
-@property (copy, nonatomic) void (^blockFriendDict)(NSMutableDictionary *);
-@property (strong, nonatomic) NSMutableDictionary* dictFinish;
+@property (copy, nonatomic) void (^playArrayBlock)(NSMutableArray *);
+
+@property (strong, nonatomic) NSMutableArray *playArray;
 
 @property (assign, nonatomic) NSInteger lastIndex;//还剩多少个
 

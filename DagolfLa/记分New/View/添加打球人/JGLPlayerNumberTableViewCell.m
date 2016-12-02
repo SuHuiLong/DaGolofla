@@ -27,13 +27,18 @@
         _labelName.font = [UIFont systemFontOfSize:15*screenWidth/375];
         [self addSubview:_labelName];
         
-        _imgvIcon = [[UIImageView alloc]initWithFrame:CGRectMake(screenWidth - 40*screenWidth/375, 10*screenWidth/375, 20*screenWidth/375, 20*screenWidth/375)];
-        _imgvIcon.image = [UIImage imageNamed:@"remove"];
-        [self addSubview:_imgvIcon];
-        
-        
+        _deleteBtn = [[UIButton alloc]initWithFrame:CGRectMake(screenWidth - 40*screenWidth/375, 10*screenWidth/375, 20*screenWidth/375, 20*screenWidth/375)];
+        [_deleteBtn setImage:[UIImage imageNamed:@"remove"] forState:UIControlStateNormal];
+        [_deleteBtn addTarget:self action:@selector(deleteBtn:) forControlEvents:UIControlEventTouchUpInside];
+        [self addSubview:_deleteBtn];
     }
     return self;
+}
+
+- (void)deleteBtn:(UIButton *)btn{
+    if ([self.delegate respondsToSelector:@selector(didSelectDeleteBtn:)]) {
+        [self.delegate didSelectDeleteBtn:btn];
+    }
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

@@ -349,7 +349,25 @@
                     
                     if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
                         NSMutableDictionary* dictDa = [[NSMutableDictionary alloc]init];
-                        [dictDa setObject:[[data objectForKey:@"user"] objectForKey:@"userName"] forKey:[Helper returnUrlString:str WithKey:@"userKey"]];
+                        
+                        if ([data objectForKey:UserName]) {
+                            [dictDa setObject:[data objectForKey:UserName] forKey:UserName];
+                        }
+                        
+                        if ([data objectForKey:@"userId"]) {
+                            [dictDa setObject:[data objectForKey:@"userId"] forKey:@"userKey"];
+                        }
+                        
+                        if ([data objectForKey:@"sex"]) {
+                            [dictDa setObject:[data objectForKey:@"sex"] forKey:@"sex"];
+                        }else{
+                            [dictDa setObject:@1 forKey:@"sex"];
+                        }
+                        
+                        if ([data objectForKey:@"almost"]) {
+                            [dictDa setObject:[data objectForKey:@"almost"] forKey:@"almost"];
+                        }
+                        
                         _blockDict(dictDa);
                         [self.navigationController popViewControllerAnimated:YES];
                     }
