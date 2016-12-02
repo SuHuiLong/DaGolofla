@@ -366,7 +366,6 @@
 		368B73341C102A710002A618 /* ScoreProfessViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 368B73311C102A710002A618 /* ScoreProfessViewController.m */; };
 		368B73371C103B230002A618 /* ScoreSimpleTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 368B73361C103B230002A618 /* ScoreSimpleTableViewCell.m */; };
 		368B733B1C1045DE0002A618 /* ScoreGameModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 368B733A1C1045DE0002A618 /* ScoreGameModel.m */; };
-		368DCA611C88152700871D28 /* ResponseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 368DCA601C88152700871D28 /* ResponseViewController.m */; };
 		368DCA641C88285000871D28 /* ReportViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 368DCA631C88285000871D28 /* ReportViewController.m */; };
 		369B2B671C61B23F00366AA2 /* NewsDetailViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 369B2B661C61B23F00366AA2 /* NewsDetailViewCell.m */; };
 		369F7D1E1CB62BAA000BC13D /* MeHeadTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 369F7D1D1CB62BAA000BC13D /* MeHeadTableViewCell.m */; };
@@ -509,11 +508,6 @@
 		36BFFF951BC76D6B005B3CE2 /* TabBarItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 36BFFF931BC76D6B005B3CE2 /* TabBarItem.m */; };
 		36BFFF9E1BC76FD4005B3CE2 /* CommunityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 36BFFF9D1BC76FD4005B3CE2 /* CommunityViewController.m */; };
 		36BFFFA11BC76FE3005B3CE2 /* MeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 36BFFFA01BC76FE3005B3CE2 /* MeViewController.m */; };
-		36BFFFAD1BC76FF3005B3CE2 /* EnrollViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 36BFFFA41BC76FF3005B3CE2 /* EnrollViewController.m */; };
-		36BFFFAE1BC76FF3005B3CE2 /* EnterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 36BFFFA61BC76FF3005B3CE2 /* EnterViewController.m */; };
-		36BFFFAF1BC76FF3005B3CE2 /* ForgetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 36BFFFA81BC76FF3005B3CE2 /* ForgetViewController.m */; };
-		36BFFFB01BC76FF3005B3CE2 /* PasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 36BFFFAA1BC76FF3005B3CE2 /* PasswordViewController.m */; };
-		36BFFFB11BC76FF3005B3CE2 /* ResetPassViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 36BFFFAC1BC76FF3005B3CE2 /* ResetPassViewController.m */; };
 		36BFFFC81BC770B1005B3CE2 /* AreaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 36BFFFB41BC770B1005B3CE2 /* AreaViewController.m */; };
 		36BFFFC91BC770B1005B3CE2 /* ComDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 36BFFFB61BC770B1005B3CE2 /* ComDetailViewController.m */; };
 		36BFFFCC1BC770B1005B3CE2 /* ZanNumViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 36BFFFBC1BC770B1005B3CE2 /* ZanNumViewController.m */; };
@@ -1894,8 +1888,6 @@
 		368B73361C103B230002A618 /* ScoreSimpleTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScoreSimpleTableViewCell.m; sourceTree = "<group>"; };
 		368B73391C1045DE0002A618 /* ScoreGameModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScoreGameModel.h; sourceTree = "<group>"; };
 		368B733A1C1045DE0002A618 /* ScoreGameModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScoreGameModel.m; sourceTree = "<group>"; };
-		368DCA5F1C88152600871D28 /* ResponseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResponseViewController.h; sourceTree = "<group>"; };
-		368DCA601C88152700871D28 /* ResponseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResponseViewController.m; sourceTree = "<group>"; };
 		368DCA621C88285000871D28 /* ReportViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReportViewController.h; sourceTree = "<group>"; };
 		368DCA631C88285000871D28 /* ReportViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReportViewController.m; sourceTree = "<group>"; };
 		369B2B661C61B23F00366AA2 /* NewsDetailViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewsDetailViewCell.m; sourceTree = "<group>"; };
@@ -2163,16 +2155,6 @@
 		36BFFF9D1BC76FD4005B3CE2 /* CommunityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CommunityViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		36BFFF9F1BC76FE3005B3CE2 /* MeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MeViewController.h; sourceTree = "<group>"; };
 		36BFFFA01BC76FE3005B3CE2 /* MeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = MeViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		36BFFFA31BC76FF3005B3CE2 /* EnrollViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EnrollViewController.h; sourceTree = "<group>"; };
-		36BFFFA41BC76FF3005B3CE2 /* EnrollViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EnrollViewController.m; sourceTree = "<group>"; };
-		36BFFFA51BC76FF3005B3CE2 /* EnterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EnterViewController.h; sourceTree = "<group>"; };
-		36BFFFA61BC76FF3005B3CE2 /* EnterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EnterViewController.m; sourceTree = "<group>"; };
-		36BFFFA71BC76FF3005B3CE2 /* ForgetViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ForgetViewController.h; sourceTree = "<group>"; };
-		36BFFFA81BC76FF3005B3CE2 /* ForgetViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ForgetViewController.m; sourceTree = "<group>"; };
-		36BFFFA91BC76FF3005B3CE2 /* PasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PasswordViewController.h; sourceTree = "<group>"; };
-		36BFFFAA1BC76FF3005B3CE2 /* PasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PasswordViewController.m; sourceTree = "<group>"; };
-		36BFFFAB1BC76FF3005B3CE2 /* ResetPassViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResetPassViewController.h; sourceTree = "<group>"; };
-		36BFFFAC1BC76FF3005B3CE2 /* ResetPassViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResetPassViewController.m; sourceTree = "<group>"; };
 		36BFFFB31BC770B1005B3CE2 /* AreaViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AreaViewController.h; sourceTree = "<group>"; };
 		36BFFFB41BC770B1005B3CE2 /* AreaViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AreaViewController.m; sourceTree = "<group>"; };
 		36BFFFB51BC770B1005B3CE2 /* ComDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ComDetailViewController.h; sourceTree = "<group>"; };
@@ -5226,15 +5208,6 @@
 			path = "查询比赛活动数据";
 			sourceTree = "<group>";
 		};
-		368DCA5E1C88150300871D28 /* 用户条款 */ = {
-			isa = PBXGroup;
-			children = (
-				368DCA5F1C88152600871D28 /* ResponseViewController.h */,
-				368DCA601C88152700871D28 /* ResponseViewController.m */,
-			);
-			name = "用户条款";
-			sourceTree = "<group>";
-		};
 		369F7D1B1CB611B9000BC13D /* 我的主页 */ = {
 			isa = PBXGroup;
 			children = (
@@ -6031,7 +6004,6 @@
 				3660E0931BFC530B0033B4D7 /* 计分 */,
 				36067BA41C96617C001AE22C /* 消息 */,
 				36BFFF981BC76FB4005B3CE2 /* 我的 */,
-				36BFFFA21BC76FF3005B3CE2 /* 登录注册 */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -6118,24 +6090,6 @@
 				654A031A1CC89F6F007F5243 /* PersonHomeController.m */,
 			);
 			path = "我的";
-			sourceTree = "<group>";
-		};
-		36BFFFA21BC76FF3005B3CE2 /* 登录注册 */ = {
-			isa = PBXGroup;
-			children = (
-				368DCA5E1C88150300871D28 /* 用户条款 */,
-				36BFFFA31BC76FF3005B3CE2 /* EnrollViewController.h */,
-				36BFFFA41BC76FF3005B3CE2 /* EnrollViewController.m */,
-				36BFFFA51BC76FF3005B3CE2 /* EnterViewController.h */,
-				36BFFFA61BC76FF3005B3CE2 /* EnterViewController.m */,
-				36BFFFA71BC76FF3005B3CE2 /* ForgetViewController.h */,
-				36BFFFA81BC76FF3005B3CE2 /* ForgetViewController.m */,
-				36BFFFA91BC76FF3005B3CE2 /* PasswordViewController.h */,
-				36BFFFAA1BC76FF3005B3CE2 /* PasswordViewController.m */,
-				36BFFFAB1BC76FF3005B3CE2 /* ResetPassViewController.h */,
-				36BFFFAC1BC76FF3005B3CE2 /* ResetPassViewController.m */,
-			);
-			path = "登录注册";
 			sourceTree = "<group>";
 		};
 		36BFFFB21BC770B1005B3CE2 /* 详细 */ = {
@@ -9284,7 +9238,6 @@
 				F5E1BB5E1D6B006100414727 /* ZXPDF417ECErrorCorrection.m in Sources */,
 				821DB9CC1D5D6FAB00C882C2 /* JGLCaddieScoreTableViewCell.m in Sources */,
 				F5E1BAD31D6B006100414727 /* ZXProductResultParser.m in Sources */,
-				368DCA611C88152700871D28 /* ResponseViewController.m in Sources */,
 				2012AD661D2BB1A200F70E40 /* JGHAwardModel.m in Sources */,
 				F5E1BABD1D6B006100414727 /* ZXAztecToken.m in Sources */,
 				36BFFF841BC76D09005B3CE2 /* IWTextView.m in Sources */,
@@ -9386,7 +9339,6 @@
 				2012AD9E1D36192F00F70E40 /* JGHScoresMainViewController.m in Sources */,
 				36BF00E11BC77428005B3CE2 /* StadiumViewController.m in Sources */,
 				F51E5EF01D80237000AE254E /* JGDActAlmostDetailViewController.m in Sources */,
-				36BFFFB11BC76FF3005B3CE2 /* ResetPassViewController.m in Sources */,
 				36E300FC1C3FF3F9005C3F08 /* UIScrollView+MJRefresh.m in Sources */,
 				36BFFF811BC76D09005B3CE2 /* UIView+WebCacheOperation.m in Sources */,
 				82E6A6F61CF5812C009DD179 /* JGLAuthorityTableViewCell.m in Sources */,
@@ -9553,7 +9505,6 @@
 				F5E1BB571D6B006100414727 /* ZXUPCEANExtension5Support.m in Sources */,
 				F5E1BB051D6B006100414727 /* ZXInvertedLuminanceSource.m in Sources */,
 				2088379C1D192213004C7B5D /* JGHApplyListView.m in Sources */,
-				36BFFFAD1BC76FF3005B3CE2 /* EnrollViewController.m in Sources */,
 				F5838D901D4B271200A7FFC6 /* JGTeamHisScoreViewController.m in Sources */,
 				2066E88F1D603BA200A3A2B8 /* JGHCabbieWalletViewController.m in Sources */,
 				65B596D81CAD43AC007AB83A /* WFMessageBody.m in Sources */,
@@ -9620,7 +9571,6 @@
 				F5E1BAB61D6B006100414727 /* ZXAztecDetector.m in Sources */,
 				8200F31B1D17BF4C00BAF7A9 /* JGLManageCancelViewController.m in Sources */,
 				826FB50C1D53650500B13155 /* JGLGuestAddressViewController.m in Sources */,
-				36BFFFAE1BC76FF3005B3CE2 /* EnterViewController.m in Sources */,
 				F5E1BB4A1D6B006100414727 /* ZXEAN13Writer.m in Sources */,
 				F5E1BAEE1D6B006100414727 /* ZXReedSolomonEncoder.m in Sources */,
 				82AAB7AE1CE5BEB8005F5633 /* JGLSelfSetViewController.m in Sources */,
@@ -9702,7 +9652,6 @@
 				826FB5181D5433F300B13155 /* JGLGuestActiveMemberTableViewCell.m in Sources */,
 				F5E1BB3A1D6B006100414727 /* ZXRSSExpandedReader.m in Sources */,
 				F5E1BB8A1D6B006100414727 /* ZXMultiDetector.m in Sources */,
-				36BFFFAF1BC76FF3005B3CE2 /* ForgetViewController.m in Sources */,
 				20D5151B1DBB82280006EFCB /* JGHGameSetViewController.m in Sources */,
 				20CA137B1CE56B6100DA15B9 /* JGHLaunchActivityViewController.m in Sources */,
 				F5EB44671C995788008ACD73 /* BallFriListCell.m in Sources */,
@@ -9938,7 +9887,6 @@
 				F5E1BB4E1D6B006100414727 /* ZXITFReader.m in Sources */,
 				3660E1BC1BFC58B70033B4D7 /* TeamApplyViewController.m in Sources */,
 				36BFFF7A1BC76D09005B3CE2 /* SDWebImageManager.m in Sources */,
-				36BFFFB01BC76FF3005B3CE2 /* PasswordViewController.m in Sources */,
 				F5E1BB881D6B006100414727 /* ZXQRCodeMaskUtil.m in Sources */,
 				F5E1BAC21D6B006100414727 /* ZXAddressBookAUResultParser.m in Sources */,
 				F59A8B961D5B514A00E8292B /* JGDPlayerHisScoreDetailViewController.m in Sources */,

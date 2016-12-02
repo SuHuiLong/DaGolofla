@@ -12,7 +12,6 @@
 #import "PostDataRequest.h"
 #import "MBProgressHUD.h"
 #import "UserDataInformation.h"
-#import "ResetPassViewController.h"
 #import "UserInformationModel.h"
 
 //#import "APService.h"
@@ -129,13 +128,13 @@
                 }else {
                     //注册失败
                     //////NSLog(@"%@",[userData objectForKey:@"message"]);
-                    ResetPassViewController * resetVc = [[ResetPassViewController alloc]init];
-                    resetVc.tokenStr = _tokenStr;
-                    resetVc.uid = _uid;
-                    resetVc.mobile = _textPhone.text;
-                    resetVc.vcode = _textCaptChe.text;
-                    resetVc.pic = _pic;
-                    [self.navigationController pushViewController:resetVc animated:YES];
+//                    ResetPassViewController * resetVc = [[ResetPassViewController alloc]init];
+//                    resetVc.tokenStr = _tokenStr;
+//                    resetVc.uid = _uid;
+//                    resetVc.mobile = _textPhone.text;
+//                    resetVc.vcode = _textCaptChe.text;
+//                    resetVc.pic = _pic;
+//                    [self.navigationController pushViewController:resetVc animated:YES];
                     
                 }
             } failed:^(NSError *error) {
