@@ -15,6 +15,10 @@
 @property (nonatomic, assign) CGFloat progress;
 @property (nonatomic, assign) BOOL hasLoadedImage;
 
+@property (nonatomic, retain)UIScrollView *scroll;
+@property (nonatomic, retain)UIImageView *scrollImageView;
+
+
 - (void)setImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder;
 
 -(void)reset : (UIImage*)placeholder;

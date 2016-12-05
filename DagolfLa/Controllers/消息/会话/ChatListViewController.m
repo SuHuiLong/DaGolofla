@@ -236,12 +236,12 @@
     [sysPointed setImage:[UIImage imageNamed:@")"]];
     [_viewHeader addSubview:sysPointed];
     
-    UILabel *sysNotLable = [[UILabel alloc]initWithFrame:CGRectMake(70 *ProportionAdapter, 20 *ProportionAdapter, 100 *ProportionAdapter, 20 *ProportionAdapter)];
+    UILabel *sysNotLable = [[UILabel alloc]initWithFrame:CGRectMake(70 *ProportionAdapter, 23 *ProportionAdapter, 100 *ProportionAdapter, 20 *ProportionAdapter)];
     sysNotLable.text = @"系统通知";
     sysNotLable.font = [UIFont systemFontOfSize:16 *ProportionAdapter];
     [_viewHeader addSubview:sysNotLable];
     
-    _sysDetailLable = [[UILabel alloc]initWithFrame:CGRectMake(70 *ProportionAdapter, 50 *ProportionAdapter, screenWidth -100*ProportionAdapter, 20 *ProportionAdapter)];
+    _sysDetailLable = [[UILabel alloc]initWithFrame:CGRectMake(70 *ProportionAdapter, 47 *ProportionAdapter, screenWidth -100*ProportionAdapter, 20 *ProportionAdapter)];
     _sysDetailLable.font = [UIFont systemFontOfSize:13 *ProportionAdapter];
     _sysDetailLable.text = @"暂无系统消息";
     [_viewHeader addSubview:_sysDetailLable];
@@ -263,12 +263,12 @@
     [teamPointed setImage:[UIImage imageNamed:@")"]];
     [_viewHeader addSubview:teamPointed];
     
-    UILabel *teamNotLable = [[UILabel alloc]initWithFrame:CGRectMake(70 *ProportionAdapter, 88 *ProportionAdapter, 100 *ProportionAdapter, 20 *ProportionAdapter)];
+    UILabel *teamNotLable = [[UILabel alloc]initWithFrame:CGRectMake(70 *ProportionAdapter, 91 *ProportionAdapter, 100 *ProportionAdapter, 20 *ProportionAdapter)];
     teamNotLable.font = [UIFont systemFontOfSize:16 *ProportionAdapter];
     teamNotLable.text = @"球队通知";
     [_viewHeader addSubview:teamNotLable];
     
-    _teamNotDetailLable = [[UILabel alloc]initWithFrame:CGRectMake(70 *ProportionAdapter, 118 *ProportionAdapter, screenWidth -100*ProportionAdapter, 20 *ProportionAdapter)];
+    _teamNotDetailLable = [[UILabel alloc]initWithFrame:CGRectMake(70 *ProportionAdapter, 115 *ProportionAdapter, screenWidth -100*ProportionAdapter, 20 *ProportionAdapter)];
     _teamNotDetailLable.font = [UIFont systemFontOfSize:13 *ProportionAdapter];
     _teamNotDetailLable.text = @"暂无球队消息";
     [_viewHeader addSubview:_teamNotDetailLable];

@@ -24,6 +24,8 @@
 
 #import "JGLPhotosUpDataViewController.h"
 #import "SDPhotoBrowser.h"
+#import "SDBrowserImageView.h"
+
 #define SDPhotoBrowserShowImageAnimationDuration 0.8f
 
 
@@ -40,6 +42,11 @@
     
     NSString* _teamName;
     UIBarButtonItem* _rightItem;
+    
+    NSInteger _shouldAutorotate;//0-不能旋转，1-旋转；实现逻辑点开图片后可以旋转，回到图片列表后不支持旋转
+    
+    CGRect _imageViewRect;//记录旋转试图的frame
+    NSInteger _rotating;//记录是否旋转过，0-表示第一次旋转，第一次记录frame
 }
 @property (nonatomic,strong)  SXPickPhoto * pickPhoto;//相册类
 @property (strong, nonatomic) JGPhotoTimeReusableView *headView;
@@ -65,6 +72,9 @@
     _dictPhoto = [[NSMutableDictionary alloc]init];
     self.pickPhoto = [[SXPickPhoto alloc]init];
     _dataArray = [[NSMutableArray alloc]init];
+    
+    _shouldAutorotate = 0;//不能旋转
+    _rotating = 0;
     
     if (![Helper isBlankString:_strTitle]) {
         self.title = _strTitle;
@@ -225,34 +235,9 @@
     return 1;
 }
 
-
-//- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath{
-//
-//    //设置SectionHeader
-//    if ([kind isEqualToString: UICollectionElementKindSectionHeader]) {
-//        _headView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"JGPhotoTimeReusableView"forIndexPath:indexPath];
-//
-//
-//        _headView.timeLabel.text = [NSString stringWithFormat:@"2016年5月%ld号",(long)indexPath.section];
-//        _headView.backgroundColor = [UIColor lightGrayColor];
-//        return _headView;
-//    }
-//    return nil;
-//}
-
 //每个UICollectionView展示的内容
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    //    if (indexPath.row == 7) {
-    //        JGPhotoShowCollectionViewCell *cell = [[JGPhotoShowCollectionViewCell alloc]init];
-    //        cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"JGPhotoShowCollectionViewCell" forIndexPath:indexPath];
-    //        cell.backgroundColor = [UIColor whiteColor];
-    //        cell.iconImgv.hidden = YES;
-    //        cell.addBtn.hidden = NO;
-    //        return cell;
-    //    }
-    //    else
-    //    {
     JGPhotoShowCollectionViewCell *cell = [[JGPhotoShowCollectionViewCell alloc]init];
     cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"JGPhotoShowCollectionViewCell" forIndexPath:indexPath];
     cell.backgroundColor = [UIColor whiteColor];
@@ -262,9 +247,6 @@
     cell.addBtn.hidden = YES;
     [cell.iconImgv sd_setImageWithURL:[Helper setImageIconUrl:@"album/media" andTeamKey:[[_dataArray[indexPath.row] timeKey] integerValue] andIsSetWidth:YES andIsBackGround:NO] placeholderImage:[UIImage imageNamed:@"xcback"]];
     return cell;
-    //    }
-    
-    
 }
 //定义每个UICollectionView 的大小
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
@@ -279,37 +261,12 @@
 //UICollectionView被选中时调用的方法
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    //    NSMutableArray * arr = [[NSMutableArray alloc]init];
-    //    for (int i = 0; i < _dataArray.count; i++) {
-    //        [arr addObject:[_dataArray[i]timeKey]];
-    //    }
-    //    JGTeamPhotoShowViewController *picVC = [[JGTeamPhotoShowViewController alloc]initWithIndex:indexPath.row];
-    //    picVC.selectImages = arr;
-    //    picVC.power = _power;
-    //    picVC.dataArray = [[NSMutableArray alloc]init];
-    //    for (int i = 0;  i < _dataArray.count; i ++) {
-    //        [picVC.dataArray addObject:_dataArray[i]];
-    //    }
-    //    picVC.state = _state;
-    //    picVC.teamTimeKey = _teamTimeKey;
-    //    picVC.userKey = _userKey;
-    //    picVC.teamName = _teamName;
-    //    picVC.strTitle = _strTitle;
-    //    picVC.deleteBlock = ^(NSInteger index) {
-    //        _collectionView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
-    //        [_collectionView.header beginRefreshing];
-    //        [_collectionView reloadData];
-    //    };
-    //
-    //    [self.navigationController pushViewController:picVC animated:YES];
-    
-    
-    //    SDBrowserImageView *ymImageV = [[SDBrowserImageView alloc] initWithFrame:self.view.bounds byClick:clickTag appendArray:imageViews withLittleArray:littleArray];
     NSMutableArray * arr = [[NSMutableArray alloc]init];
     for (int i = 0; i < _dataArray.count; i++) {
         [arr addObject:[_dataArray[i]timeKey]];
     }
     SDPhotoBrowser *browser = [[SDPhotoBrowser alloc] init];
+    browser.tag = 100;
     
     JGPhotoShowCollectionViewCell *cell = (JGPhotoShowCollectionViewCell *)[self collectionView:collectionView cellForItemAtIndexPath:indexPath];
     browser.sourceImagesContainerView = cell;
@@ -338,32 +295,8 @@
         [browser show];
     }];
     
-    
-    
-    //    [sdImgV show:maskview didFinish:^(){
-    //
-    //        [UIView animateWithDuration:0.5f animations:^{
-    //
-    //            ymImageV.alpha = 0.0f;
-    //            maskview.alpha = 0.0f;
-    //
-    //            JKSlideViewController *jks = self.navc.viewControllers[0];
-    //            [UIApplication sharedApplication].windows[0].backgroundColor = [UIColor blackColor];
-    //            jks.leftBtn.hidden = NO;
-    //            jks.rightBtn.hidden = NO;
-    //            jks.slideSwitchView.topView.hidden = NO;
-    //
-    //        } completion:^(BOOL finished) {
-    //
-    //            scrol.scrollEnabled = YES;
-    //            [ymImageV removeFromSuperview];
-    //            [maskview removeFromSuperview];
-    //        }];
-    //
-    //    }];
-    
-    
-    
+    _shouldAutorotate = 1;
+    [self shouldAutorotate];
 }
 
 -(NSURL *)photoBrowser:(SDPhotoBrowser *)browser highQualityImageURLForIndex:(NSInteger)index
@@ -380,6 +313,61 @@
 -(UIImage *)photoBrowser:(SDPhotoBrowser *)browser placeholderImageForIndex:(NSInteger)index
 {
     return [UIImage imageNamed:@"xiangcemoren"];
+}
+
+- (BOOL)shouldAutorotate
+{
+    // 因为是取反值，所以返回NO的控制器，就可以旋转
+    // 因为是取反值，不重写这个方法的控制器，默认就不支持旋转
+    if (_shouldAutorotate == 0) {
+        return YES;//不能旋转
+    }else{
+        return NO;
+    }
+}
+
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation{
+    NSLog(@"fromInterfaceOrientation == %td", fromInterfaceOrientation);
+    UIWindow *window = [UIApplication sharedApplication].keyWindow;
+    SDPhotoBrowser *browser = [window viewWithTag:100];
+    
+    SDBrowserImageView *browserImageView = [browser.scrollView viewWithTag:browser.currentImageIndex];
+    browser.center = window.center;
+    browser.frame = window.frame;
+    browser.scrollView.frame = window.frame;
+    
+    UIImageView *subImageView = [browserImageView.scroll viewWithTag:1000];
+    
+    if (_rotating == 0) {
+        _imageViewRect = subImageView.frame;
+    }
+    
+    _rotating ++;
+    
+    if (fromInterfaceOrientation == 3) {
+        
+//        subImageView.frame = CGRectMake(0, 198*ProportionAdapter, screenWidth, screenHeight -2*198*ProportionAdapter);
+        subImageView.frame = _imageViewRect;
+    }else{
+        self.navigationController.navigationBarHidden = YES;
+
+        subImageView.frame = window.frame;
+    }
+}
+
+#pragma mark -- 移除 SDPhotoBrowser
+- (void)removePhotoBrowser{
+    self.navigationController.navigationBarHidden = NO;
+    
+    NSNumber *orientationUnknown = [NSNumber numberWithInt:UIInterfaceOrientationUnknown];
+    [[UIDevice currentDevice] setValue:orientationUnknown forKey:@"orientation"];
+    
+    NSNumber *orientationTarget = [NSNumber numberWithInt:UIDeviceOrientationPortrait];
+    [[UIDevice currentDevice] setValue:orientationTarget forKey:@"orientation"];
+    //UIDeviceOrientationPortrait
+    _shouldAutorotate = 0;
+    _rotating = 0;
+    [self shouldAutorotate];
 }
 
 - (void)didReceiveMemoryWarning {

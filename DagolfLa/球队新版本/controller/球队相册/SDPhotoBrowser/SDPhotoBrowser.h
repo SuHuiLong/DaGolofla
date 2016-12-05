@@ -22,6 +22,9 @@
 
 - (NSURL *)photoBrowser:(SDPhotoBrowser *)browser highQualityImageURLForIndex:(NSInteger)index;
 
+//移除图片
+- (void)removePhotoBrowser;
+
 @end
 
 
@@ -40,6 +43,8 @@
 @property (nonatomic, weak) id<SDPhotoBrowserDelegate> delegate;
 
 @property (copy, nonatomic) void (^blockRef)();
+
+@property (retain, nonatomic)UIScrollView *scrollView;
 
 - (void)show;
 
