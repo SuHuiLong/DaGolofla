@@ -124,7 +124,7 @@
                     
                     self.nickname.frame = CGRectMake(130 *ProportionAdapter, 40 *ProportionAdapter, screenWidth -140*ProportionAdapter, 15 *ProportionAdapter);
                     self.nickname.text = [NSString stringWithFormat:@"%@", _model.userName];
-                    self.almost.text = [NSString stringWithFormat:@"%@", _model.almost];
+                    self.almost.text = [NSString stringWithFormat:@"%.1f", [_model.almost floatValue]];
                 }else{
                     CGSize nameSize = [_model.userName boundingRectWithSize:CGSizeMake(screenWidth, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:18*ProportionAdapter]} context:nil].size;
                     self.name.frame = CGRectMake(90 *ProportionAdapter, 10 *ProportionAdapter, nameSize.width, 20 *ProportionAdapter);
@@ -134,7 +134,7 @@
                     
                     self.alm.frame = CGRectMake(90 *ProportionAdapter, 40 *ProportionAdapter, 40 *ProportionAdapter, 15 *ProportionAdapter);
                     self.almost.frame = CGRectMake(130 *ProportionAdapter, 40 *ProportionAdapter, screenWidth -140*ProportionAdapter, 15 *ProportionAdapter);
-                    self.almost.text = [NSString stringWithFormat:@"%@", _model.almost];
+                    self.almost.text = [NSString stringWithFormat:@"%.1f", [_model.almost floatValue]];
                 }
                 
                 self.sexImageView.frame = CGRectMake(self.name.frame.origin.x +10*ProportionAdapter + self.name.frame.size.width, self.name.frame.origin.y +2*ProportionAdapter, 15*ProportionAdapter, 15*ProportionAdapter);
@@ -148,7 +148,7 @@
                 [self.submitBtn setTitle:@"加好友" forState:UIControlStateNormal];
                 self.nickname.text = @"";
                 self.nick.text = @"";
-                self.almost.text = [NSString stringWithFormat:@"%@", _model.almost];
+                self.almost.text = [NSString stringWithFormat:@"%.1f", [_model.almost floatValue]];
             }
             
             if (_model.sex == 0) {
@@ -310,7 +310,7 @@
             self.name.text = note;
             
             self.nick.frame = CGRectMake(90 *ProportionAdapter, 40 *ProportionAdapter, 40 *ProportionAdapter, 15 *ProportionAdapter);
-            self.nick.text = @"昵称";
+            self.nick.text = @"昵称:";
             
             self.nickname.frame = CGRectMake(130 *ProportionAdapter, 40 *ProportionAdapter, screenWidth -140*ProportionAdapter, 15 *ProportionAdapter);
             self.nickname.text = [NSString stringWithFormat:@"%@", _model.userName];
@@ -325,12 +325,17 @@
         
         }else{
             
-            self.name.frame = CGRectMake(90 *ProportionAdapter, 10 *ProportionAdapter, screenWidth -120 *ProportionAdapter, 20 *ProportionAdapter);
+            CGSize remarkSize = [_model.userName boundingRectWithSize:CGSizeMake(screenWidth, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:18*ProportionAdapter]} context:nil].size;
+            
+            self.name.frame = CGRectMake(90 *ProportionAdapter, 10 *ProportionAdapter, remarkSize.width, 20 *ProportionAdapter);
             self.name.text = [NSString stringWithFormat:@"%@", _model.userName];
 
+            self.sexImageView.frame = CGRectMake(self.name.frame.origin.x +10*ProportionAdapter + self.name.frame.size.width, self.name.frame.origin.y +2*ProportionAdapter, 15*ProportionAdapter, 15*ProportionAdapter);
+
+            
             self.alm.frame = CGRectMake(90 *ProportionAdapter, 40 *ProportionAdapter, 40 *ProportionAdapter, 15 *ProportionAdapter);
             self.almost.frame = CGRectMake(130 *ProportionAdapter, 40 *ProportionAdapter, screenWidth -140*ProportionAdapter, 15 *ProportionAdapter);
-            self.almost.text = [NSString stringWithFormat:@"%@", _model.almost];
+            self.almost.text = [NSString stringWithFormat:@"%.1f", [_model.almost floatValue]];
             
             self.nick.hidden = YES;
             self.nickname.hidden = YES;
