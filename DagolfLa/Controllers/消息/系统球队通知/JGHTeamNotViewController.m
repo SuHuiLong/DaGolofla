@@ -62,6 +62,10 @@ static NSString *const JGHTeamInformCellIdentifier = @"JGHTeamInformCell";
     } completionBlock:^(id data) {
         NSLog(@"%@", data);
         [LQProgressHud hide];
+        if (_page == 0) {
+            [self.dataArray removeAllObjects];
+        }
+        
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
             NSArray *list = [data objectForKey:@"list"];
             if (list.count == 0) {
@@ -139,7 +143,7 @@ static NSString *const JGHTeamInformCellIdentifier = @"JGHTeamInformCell";
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     JGHInformModel *model = [[JGHInformModel alloc]init];
     model = _dataArray[indexPath.row];
-    CGSize titleSize = [model.content boundingRectWithSize:CGSizeMake(screenWidth, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:17*ProportionAdapter]} context:nil].size;
+    CGSize titleSize = [model.title boundingRectWithSize:CGSizeMake(screenWidth, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:16*ProportionAdapter]} context:nil].size;
     
 //    CGSize contentSize = [model.content boundingRectWithSize:CGSizeMake(screenWidth, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:15*ProportionAdapter]} context:nil].size;
     
