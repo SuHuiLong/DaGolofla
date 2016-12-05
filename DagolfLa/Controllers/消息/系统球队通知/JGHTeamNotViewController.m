@@ -16,6 +16,8 @@ static NSString *const JGHTeamInformCellIdentifier = @"JGHTeamInformCell";
 {
 //    NSInteger _selectCatory;//0-全选；1-取消全选
     NSInteger _page;
+    
+    UILabel *_promptLable;
 }
 
 @property (nonatomic, retain)UITableView *systemNotTableView;
@@ -79,6 +81,26 @@ static NSString *const JGHTeamInformCellIdentifier = @"JGHTeamInformCell";
             }
         }
         
+        if (self.dataArray.count == 0) {
+            self.systemNotTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+            if (_promptLable != nil) {
+                [_promptLable removeFromSuperview];
+                _promptLable = nil;
+            }
+            
+            _promptLable = [[UILabel alloc]initWithFrame:CGRectMake(0, 20*ProportionAdapter, screenWidth, 20 *ProportionAdapter)];
+            _promptLable.font = [UIFont systemFontOfSize:16*ProportionAdapter];
+            _promptLable.textAlignment = NSTextAlignmentCenter;
+            _promptLable.text = @"暂无球队通知";
+            [self.systemNotTableView addSubview:_promptLable];
+        }else{
+            self.systemNotTableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+            if (_promptLable != nil) {
+                [_promptLable removeFromSuperview];
+                _promptLable = nil;
+            }
+        }
+        
         [self.systemNotTableView.header endRefreshing];
         [self.systemNotTableView.footer endRefreshing];
     }];
@@ -87,12 +109,12 @@ static NSString *const JGHTeamInformCellIdentifier = @"JGHTeamInformCell";
 #pragma mark -- 创建TableView
 - (void)createSystemNotTableView{
     self.systemNotTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight -64) style:UITableViewStylePlain];
+    self.systemNotTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.systemNotTableView.delegate = self;
     self.systemNotTableView.dataSource = self;
     [self.systemNotTableView registerClass:[JGHTeamInformCell class] forCellReuseIdentifier:JGHTeamInformCellIdentifier];
     
     self.systemNotTableView.header = [MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
-    self.systemNotTableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     [self.view addSubview:self.systemNotTableView];
 }
 #pragma mark -- headRereshing

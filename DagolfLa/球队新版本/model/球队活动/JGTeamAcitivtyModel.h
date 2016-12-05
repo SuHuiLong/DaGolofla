@@ -23,7 +23,7 @@
 //用户id
 @property (assign, nonatomic) NSInteger userKey;
 //创建时间
-@property (assign, nonatomic) NSInteger createTime;
+@property (copy, nonatomic) NSString *createTime;
 //开始时间
 @property (copy, nonatomic) NSString *beginDate;
 //结束时间

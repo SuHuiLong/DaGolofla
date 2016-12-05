@@ -16,6 +16,8 @@ static NSString *const JGHSysInformCellIdentifier = @"JGHSysInformCell";
 {
 //    NSInteger _selectCatory;//0-全选；1-取消全选
     NSInteger _page;
+    
+    UILabel *_promptLable;//无数据提示语
 }
 
 @property (nonatomic, retain)UITableView *systemNotTableView;
@@ -79,6 +81,26 @@ static NSString *const JGHSysInformCellIdentifier = @"JGHSysInformCell";
             }
         }
         
+        if (self.dataArray.count == 0) {
+            self.systemNotTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+            if (_promptLable != nil) {
+                [_promptLable removeFromSuperview];
+                _promptLable = nil;
+            }
+            
+            _promptLable = [[UILabel alloc]initWithFrame:CGRectMake(0, 20*ProportionAdapter, screenWidth, 20 *ProportionAdapter)];
+            _promptLable.font = [UIFont systemFontOfSize:16*ProportionAdapter];
+            _promptLable.textAlignment = NSTextAlignmentCenter;
+            _promptLable.text = @"暂无系统通知";
+            [self.systemNotTableView addSubview:_promptLable];
+        }else{
+            self.systemNotTableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+            if (_promptLable != nil) {
+                [_promptLable removeFromSuperview];
+                _promptLable = nil;
+            }
+        }
+        
         [self.systemNotTableView.header endRefreshing];
         [self.systemNotTableView.footer endRefreshing];
     }];
@@ -87,6 +109,7 @@ static NSString *const JGHSysInformCellIdentifier = @"JGHSysInformCell";
 #pragma mark -- 创建TableView
 - (void)createSystemNotTableView{
     self.systemNotTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight -64) style:UITableViewStylePlain];
+    self.systemNotTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.systemNotTableView.delegate = self;
     self.systemNotTableView.dataSource = self;
     [self.systemNotTableView registerClass:[JGHSysInformCell class] forCellReuseIdentifier:JGHSysInformCellIdentifier];

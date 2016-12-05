@@ -40,6 +40,8 @@
     
     UILabel *_sysDetailLable;
     UILabel *_teamNotDetailLable;
+    
+    UILabel *_promptLable;
 }
 
 @end
@@ -181,6 +183,8 @@
             [self notifyUpdateUnreadMessageCount];
             
         }else{
+            [self notifyUpdateUnreadMessageCount];
+            
             if ([data objectForKey:@"packResultMsg"]) {
                 [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
             }
@@ -410,8 +414,29 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         int count = [[RCIMClient sharedRCIMClient]
                      getUnreadCount:self.displayConversationTypeArray];
+        
+        if (count == 0) {
+            if (_promptLable != nil) {
+                [_promptLable removeFromSuperview];
+                _promptLable = nil;
+            }
+            
+            _promptLable = [[UILabel alloc]initWithFrame:CGRectMake(0, 220*ProportionAdapter, screenWidth, 20 *ProportionAdapter)];
+            _promptLable.font = [UIFont systemFontOfSize:16*ProportionAdapter];
+            _promptLable.textAlignment = NSTextAlignmentCenter;
+            _promptLable.text = @"暂无会话消息";
+            [self.conversationListTableView addSubview:_promptLable];
+        }else{
+            if (_promptLable != nil) {
+                [_promptLable removeFromSuperview];
+                _promptLable = nil;
+            }
+        }
+        
         if (count > 10) {
             self.conversationListTableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+        }else{
+            self.conversationListTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         }
         
         if ((count + (int)_teamUnread +(int)_systemUnread) > 0) {

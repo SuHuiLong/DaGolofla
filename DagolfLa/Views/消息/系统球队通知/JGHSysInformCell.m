@@ -71,7 +71,7 @@
     
     self.name.text = [NSString stringWithFormat:@"%@", model.title];
     
-    self.time.text = [NSString stringWithFormat:@"%@", model.createTime];
+    self.time.text = [NSString stringWithFormat:@"%@", [Helper distanceTimeWithBeforeTime:model.createTime]];
     
     self.detail.text = [NSString stringWithFormat:@"%@", model.content];
 }

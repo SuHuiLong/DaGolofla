@@ -185,7 +185,7 @@
     self.name.text = @"";
     [oneView addSubview:self.name];
     
-    self.sexImageView = [[UIImageView alloc]initWithFrame:CGRectMake(180 *ProportionAdapter, 12 *ProportionAdapter, 15 *ProportionAdapter, 15 *ProportionAdapter)];
+    self.sexImageView = [[UIImageView alloc]initWithFrame:CGRectMake(180 *ProportionAdapter, 14 *ProportionAdapter, 10 *ProportionAdapter, 15 *ProportionAdapter)];
     self.sexImageView.image = [UIImage imageNamed:@"xb_nn"];
     [oneView addSubview:self.sexImageView];
     
@@ -229,7 +229,7 @@
 //    noteLable.font = [UIFont systemFontOfSize:16*ProportionAdapter];
 //    [twoView addSubview:noteLable];
     
-    UIImageView *noteArrow = [[UIImageView alloc]initWithFrame:CGRectMake(screenWidth-20*ProportionAdapter, 18 *ProportionAdapter, 10 *ProportionAdapter, 14*ProportionAdapter)];
+    UIImageView *noteArrow = [[UIImageView alloc]initWithFrame:CGRectMake(screenWidth-20*ProportionAdapter, 18 *ProportionAdapter, 8 *ProportionAdapter, 13*ProportionAdapter)];
     noteArrow.image = [UIImage imageNamed:@")"];
     [twoView addSubview:noteArrow];
     
@@ -252,7 +252,7 @@
     self.dynamicImageView.backgroundColor = [UIColor whiteColor];
     [self.dynamicView addSubview:self.dynamicImageView];
     
-    UIImageView *dynamicarrow = [[UIImageView alloc]initWithFrame:CGRectMake(screenWidth -20*ProportionAdapter, 35*ProportionAdapter, 10*ProportionAdapter, 14 *ProportionAdapter)];
+    UIImageView *dynamicarrow = [[UIImageView alloc]initWithFrame:CGRectMake(screenWidth -20*ProportionAdapter, 35*ProportionAdapter, 8*ProportionAdapter, 13 *ProportionAdapter)];
     dynamicarrow.image = [UIImage imageNamed:@")"];
     [self.dynamicView addSubview:dynamicarrow];
     
@@ -270,7 +270,7 @@
     footprint.text = @"足迹";
     [self.dynamicView addSubview:footprint];
     
-    UIImageView *footprintarrow = [[UIImageView alloc]initWithFrame:CGRectMake(screenWidth -20*ProportionAdapter, 95*ProportionAdapter, 10*ProportionAdapter, 14 *ProportionAdapter)];
+    UIImageView *footprintarrow = [[UIImageView alloc]initWithFrame:CGRectMake(screenWidth -20*ProportionAdapter, 100*ProportionAdapter, 8*ProportionAdapter, 13 *ProportionAdapter)];
     footprintarrow.image = [UIImage imageNamed:@")"];
     [self.dynamicView addSubview:footprintarrow];
     
