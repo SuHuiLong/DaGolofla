@@ -145,7 +145,7 @@
                 self.name.text = [NSString stringWithFormat:@"%@", _model.userName];
                 self.sexImageView.frame = CGRectMake(self.name.frame.origin.x +10*ProportionAdapter + self.name.frame.size.width, self.name.frame.origin.y +2*ProportionAdapter, 15*ProportionAdapter, 15*ProportionAdapter);
                 
-                [self.submitBtn setTitle:@"加好友" forState:UIControlStateNormal];
+                [self.submitBtn setTitle:@"加球友" forState:UIControlStateNormal];
                 self.nickname.text = @"";
                 self.nick.text = @"";
                 self.almost.text = [NSString stringWithFormat:@"%.1f", [_model.almost floatValue]];

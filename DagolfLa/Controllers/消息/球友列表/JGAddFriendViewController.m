@@ -76,7 +76,7 @@
             
             [LQProgressHud showMessage:@"已发送"];
             
-            [self performSelector:@selector(waitAct) withObject:self afterDelay:1.5];
+            [self performSelector:@selector(waitAct) withObject:self afterDelay:1];
             
 
             

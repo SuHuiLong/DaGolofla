@@ -39,7 +39,7 @@
         self.signLB.textColor = [UIColor colorWithHexString:@"#a0a0a0"];
         [self.contentView addSubview:self.signLB];
         
-        self.addBtn = [[UIButton alloc] initWithFrame:CGRectMake(300 * ProportionAdapter, 10 * ProportionAdapter, 60 * ProportionAdapter, 30 * ProportionAdapter)];
+        self.addBtn = [[UIButton alloc] initWithFrame:CGRectMake(300 * ProportionAdapter, 10 * ProportionAdapter, 55 * ProportionAdapter, 30 * ProportionAdapter)];
         self.addBtn.layer.cornerRadius = 6 * ProportionAdapter;
         self.addBtn.clipsToBounds = YES;
 //        [self.addBtn setTitle:@"添加" forState:(UIControlStateNormal)];
