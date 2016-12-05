@@ -111,7 +111,7 @@
     _searchController.hidesNavigationBarDuringPresentation = NO;
     _searchController.searchBar.frame = CGRectMake(self.searchController.searchBar.frame.origin.x, self.searchController.searchBar.frame.origin.y, self.searchController.searchBar.frame.size.width, 44.0);
     self.searchController.searchBar.tintColor = [UIColor colorWithRed:0.36f green:0.66f blue:0.31f alpha:1.00f];
-    self.searchController.searchBar.placeholder = @"请输入昵称／手机号添加好友            ";
+    self.searchController.searchBar.placeholder = @"请输入昵称／手机号添加球友            ";
     self.searchController.searchBar.delegate = self;
     self.tableView.tableHeaderView = self.searchController.searchBar;
     self.tableView.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];

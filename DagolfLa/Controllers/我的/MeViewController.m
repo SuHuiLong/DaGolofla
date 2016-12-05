@@ -357,9 +357,9 @@
     _arrayTitle = [[NSArray alloc]init];
     _arrayPic = [[NSArray alloc]init];
 //    _arrayTitle = @[@[@"我的聊天",@"我的消息",@"交易中心",@"我的活动",@"推荐有礼"],@[@"设置"]];
-    _arrayTitle = @[@[@""],@[@"球友",@"足迹",@"我的二维码"],@[@"个人帐户",@"交易中心"],@[@"推荐有礼",@"设置",@"更多"]];
-    _arrayPic = @[@[@""],@[@"qyIcon",@"zuji",@"saomiao"],@[@"gerenzhanghu",@"jyIcon"],@[@"tjIcon",@"setIcon",@"btn_more"]];
-    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, 44*8*ScreenWidth/375+40*ScreenWidth/375+78*ScreenWidth/375)];
+    _arrayTitle = @[@[@""],@[@"球友",@"足迹",@"我的二维码"],@[@"个人帐户",@"交易中心"],@[@"设置",@"更多"]];
+    _arrayPic = @[@[@""],@[@"qyIcon",@"zuji",@"saomiao"],@[@"gerenzhanghu",@"jyIcon"],@[@"setIcon",@"btn_more"]];
+    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, 44*7*ScreenWidth/375+40*ScreenWidth/375+78*ScreenWidth/375)];
     
     _tableView.delegate = self;
     _tableView.dataSource = self;
@@ -402,7 +402,7 @@
     }
     else if (section == 3)
     {
-        count = 3;
+        count = 2;
     }
     
     return count;
@@ -468,9 +468,9 @@
     
     if ([[NSUserDefaults standardUserDefaults] objectForKey:@"userId"]) {
 //        NSArray *titleArr = @[@"我的聊天",@"我的消息",@"交易中心",@"我的活动",@"推荐有礼",@"设置"];
-        NSArray *titleArr = @[@"个人资料",@"球友",@"我的二维码",@"足迹",@"交易中心",@"交易中心",@"推荐有礼",@"设置", @"更多"];
+        NSArray *titleArr = @[@"个人资料",@"球友",@"我的二维码",@"足迹",@"交易中心",@"交易中心",@"设置", @"更多"];
 //PersonHomeController   PersonHomeController
-        NSArray* VcArr = @[@"PersonHomeController",@"ContactViewController",@"JGMyBarCodeViewController",@"MyFootViewController",@"JGDPrivateAccountViewController",@"MyTradeViewController",@"MyRecomViewController",@"MySetViewController", @"JGMeMoreViewController"];
+        NSArray* VcArr = @[@"PersonHomeController",@"ContactViewController",@"JGMyBarCodeViewController",@"MyFootViewController",@"JGDPrivateAccountViewController",@"MyTradeViewController",@"MySetViewController", @"JGMeMoreViewController"];
         NSMutableArray *arr = [[NSMutableArray alloc]init];
         for (int i = 0; i < VcArr.count; i++) {
 //            if (i != 8) {
@@ -551,13 +551,13 @@
                     break;
                 }
                     
-                case 2:
-                {
-                    [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
-                    [self.navigationController pushViewController:arr[8] animated:YES];
-
-                    break;
-                }
+//                case 2:
+//                {
+//                    [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
+//                    [self.navigationController pushViewController:arr[8] animated:YES];
+//
+//                    break;
+//                }
                 default:
                     break;
             }

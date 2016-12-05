@@ -25,7 +25,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.title = @"新朋友";
+    self.title = @"球友验证";
     
     UIBarButtonItem *rightBar = [[UIBarButtonItem alloc] initWithTitle:@"发送" style:(UIBarButtonItemStyleDone) target:self action:@selector(sendAct)];
     rightBar.tintColor = [UIColor whiteColor];
@@ -74,9 +74,10 @@
         [[ShowHUD showHUD] hideAnimationFromView:self.view];
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
             
-            [LQProgressHud showMessage:@"添加请求已发送"];
-            [self.navigationController popViewControllerAnimated:YES];
-            self.popToVC(1);
+            [LQProgressHud showMessage:@"已发送"];
+            
+            [self performSelector:@selector(waitAct) withObject:self afterDelay:1.5];
+            
 
             
         }else{
@@ -92,6 +93,12 @@
     
 }
 
+- (void)waitAct{
+    
+    [self.navigationController popViewControllerAnimated:YES];
+    self.popToVC(1);
+
+}
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
     

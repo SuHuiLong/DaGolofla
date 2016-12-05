@@ -67,7 +67,7 @@
     _tableView.tableHeaderView = _viewHeader;
 
     NSArray* arrTit = @[@"通讯录添加",@"扫描添加",@"球友列表添加"];
-    NSArray* arrImg = @[@"addressBook",@"erweima",@"tjdqr_qiuyou"];
+    NSArray* arrImg = @[@"addressBook",@"blueErerima",@"tjdqr_qiuyou"];
     for (int i = 0; i < 3; i ++) {
         
         UIButton* btnAdd = [UIButton buttonWithType:UIButtonTypeCustom];

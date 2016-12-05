@@ -39,15 +39,19 @@
 - (void)complete{
     [self.view endEditing:YES];
     
-    if (self.noteText.text.length == 0) {
-        [[ShowHUD showHUD]showToastWithText:@"请输入备注" FromView:self.view];
-        return;
-    }
-    
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     [dict setObject:DEFAULF_USERID forKey:@"userKey"];
     [dict setObject:_friendUserKey forKey:@"friendUserKey"];
-    [dict setObject:self.noteText.text forKey:@"remark"];
+    
+    if (self.noteText.text.length == 0) {
+        //        [[ShowHUD showHUD]showToastWithText:@"请输入备注" FromView:self.view];
+        //        return;
+        [dict setObject:@"" forKey:@"remark"];
+        
+    }else{
+        [dict setObject:self.noteText.text forKey:@"remark"];
+    }
+    
     [[JsonHttp jsonHttp]httpRequestWithMD5:@"userFriend/doUpdateUserRemark" JsonKey:nil withData:dict failedBlock:^(id errType) {
         
     } completionBlock:^(id data) {
@@ -70,7 +74,7 @@
     [self.view addSubview:oneview];
     
     self.noteText = [[UITextField alloc]initWithFrame:CGRectMake(10 *ProportionAdapter, 0, screenWidth - 20*ProportionAdapter, 40 *ProportionAdapter)];
-    self.noteText.placeholder = @"请输入备注";
+    self.noteText.placeholder = @"请输入备注信息";
     self.noteText.font = [UIFont systemFontOfSize:16*ProportionAdapter];
     self.noteText.delegate = self;
     [oneview addSubview:self.noteText];

@@ -14,6 +14,7 @@
 #import "JGHCabbieCertSuccessViewController.h"
 
 #import "JGLFeedbackViewController.h"
+#import "MyRecomViewController.h"
 
 @interface JGMeMoreViewController ()<UITableViewDelegate, UITableViewDataSource>
 
@@ -30,7 +31,7 @@
     
     self.view.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];
     
-    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 174 * ProportionAdapter) style:(UITableViewStylePlain)];
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 218 * ProportionAdapter) style:(UITableViewStylePlain)];
     self.tableView.rowHeight = 44 * ProportionAdapter;
     [self.tableView registerClass:[MeDetailTableViewCell class] forCellReuseIdentifier:@"MeDetailTableViewCell"];
     self.tableView.dataSource = self;
@@ -82,15 +83,26 @@
             
             break;
             
+            
         case 1:
         {
+            
+            MyRecomViewController *recVC = [[MyRecomViewController alloc] init];
+            recVC.title = @"";
+            [self.navigationController pushViewController:recVC animated:YES];
+        }
+            break;
+   
+        case 2:
+        {
+            
             MySetAboutController *abVC = [[MySetAboutController alloc] init];
             abVC.title = @"关于";
             [self.navigationController pushViewController:abVC animated:YES];
         }
             break;
             
-        case 2:
+        case 3:
         {
             [Helper alertViewWithTitle:@"是否立即前往appStore进行评价" withBlockCancle:^{
                 
@@ -101,12 +113,15 @@
             }];
         }
             break;
-        case 3:
+        case 4:
         {
             JGLFeedbackViewController* feedVc = [[JGLFeedbackViewController alloc]init];
             [self.navigationController pushViewController:feedVc animated:YES];
         }
             break;
+          
+
+            
             
         default:
             break;
@@ -115,19 +130,19 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 4;
+    return 5;
 }
 
 - (NSMutableArray *)titleArray{
     if (!_titleArray) {
-        _titleArray = [NSMutableArray arrayWithObjects:@"我是球童",@"关于我们",@"产品评价",@"建议与反馈",nil];//
+        _titleArray = [NSMutableArray arrayWithObjects:@"我是球童",@"推荐有礼",@"关于我们",@"产品评价",@"建议与反馈",nil];//
     }
     return _titleArray;
 }
 
 - (NSMutableArray *)imageArray{
     if (!_imageArray) {
-        _imageArray = [NSMutableArray arrayWithObjects:@"icn_qiutong", @"icn_about", @"icn_pingjia",@"icn_advice", nil];
+        _imageArray = [NSMutableArray arrayWithObjects:@"smallIcn_qiutong", @"tjIcon", @"icn_about", @"icn_pingjia",@"icn_advice", nil];
     }
     return _imageArray;
 }

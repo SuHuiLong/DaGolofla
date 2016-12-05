@@ -35,7 +35,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor blackColor];
-    self.title = @"扫一扫";
+    if (_fromWitchVC == 2) {
+        self.title = @"扫码添加球友";
+    }else{
+        self.title = @"扫一扫";
+    }
     [self.navigationController.navigationBar setBarTintColor:[UIColor blackColor]];
     //    [self setNavigationBarItem];
     [self setupMaskView];//设置扫描区域之外的阴影视图
