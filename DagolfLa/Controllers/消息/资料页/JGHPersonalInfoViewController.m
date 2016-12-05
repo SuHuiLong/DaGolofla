@@ -318,6 +318,16 @@
 }
 #pragma mark -- 头像
 - (void)headerImageBtn:(UIButton *)btn{
+    
+    NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
+    NSString* userKeySelf = [[NSUserDefaults standardUserDefaults] objectForKey:@"userId"];
+    
+    NSString* otherKey = [numberFormatter stringFromNumber:_otherKey];
+    
+    if (![userKeySelf isEqualToString:otherKey]) {
+        return;
+    }
+    
     btn.userInteractionEnabled = NO;
     
     UIAlertAction * act1 = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
@@ -361,6 +371,7 @@
     PersonHomeController* selfVc = [[PersonHomeController alloc]init];
     selfVc.strMoodId = _otherKey;
     selfVc.messType = @2;
+    selfVc.selectedIndex = 0;
     [self.navigationController pushViewController:selfVc animated:YES];
     
     btn.userInteractionEnabled = YES;
@@ -375,6 +386,7 @@
     PersonHomeController* selfVc = [[PersonHomeController alloc]init];
     selfVc.strMoodId = _otherKey;
     selfVc.messType = @2;
+    selfVc.selectedIndex = 1;
     [self.navigationController pushViewController:selfVc animated:YES];
     
     btn.userInteractionEnabled = YES;
