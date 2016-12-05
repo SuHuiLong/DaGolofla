@@ -122,6 +122,19 @@
 }
 #pragma mark -- 下载未读消息数量
 - (void)loadMessageData{
+    
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"userId"])
+    {
+        
+    }
+    else
+    {
+        
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"君高高尔夫" message:@"确定是否立即登录？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+        [alertView show];
+        return;
+    }
+    
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     [dict setObject:DEFAULF_USERID forKey:@"userKey"];
     [dict setObject:[Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@dagolfla.com", DEFAULF_USERID]] forKey:@"md5"];
