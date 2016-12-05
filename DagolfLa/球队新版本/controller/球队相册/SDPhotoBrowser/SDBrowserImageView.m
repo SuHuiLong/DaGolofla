@@ -13,8 +13,8 @@
 @implementation SDBrowserImageView
 {
     SDWaitingView *_waitingView;
-    UIScrollView *_scroll;
-    UIImageView *_scrollImageView;
+//    UIScrollView *_scroll;
+//    UIImageView *_scrollImageView;
 }
 
 
@@ -55,6 +55,7 @@
             _scroll.backgroundColor = [UIColor whiteColor];
             _scroll.delegate  =  self;
             _scrollImageView = [[UIImageView alloc] init];
+            _scrollImageView.tag = 1000;
             _scrollImageView.image = self.image;
             [_scroll addSubview:_scrollImageView];
 
@@ -75,9 +76,19 @@
 }
 
 #pragma mark - UIScrollViewDelegate
+//显示的图片
 - (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView {
     return _scrollImageView;
 }
+// 当scrollView缩放时，调用该方法。在缩放过程中，回多次调用
+- (void)scrollViewDidZoom:(UIScrollView *)scrollView{
+    //居中显示
+    CGFloat offsetX = (scrollView.bounds.size.width > scrollView.contentSize.width)?(scrollView.bounds.size.width - scrollView.contentSize.width)/2 : 0.0;
+    CGFloat offsetY = (scrollView.bounds.size.height > scrollView.contentSize.height)?(scrollView.bounds.size.height - scrollView.contentSize.height)/2 : 0.0;
+    _scrollImageView.center = CGPointMake(scrollView.contentSize.width/2 + offsetX,scrollView.contentSize.height/2 + offsetY);
+    
+}
+
 
 - (void)setProgress:(CGFloat)progress
 {
@@ -179,6 +190,7 @@
     }
     
     _scrollImageView.frame = imageFrame;
+    
 }
 
 - (void)removeWaitingView

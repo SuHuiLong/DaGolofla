@@ -25,7 +25,7 @@
 @class JGPhotoAlbumViewController;
 @implementation SDPhotoBrowser 
 {
-    UIScrollView *_scrollView;
+//    UIScrollView *_scrollView;
     BOOL _hasShowedFistView;
     UILabel *_indexLabel;
     UIButton *_saveButton, * _shareButton,*_deleteButton;
@@ -292,6 +292,8 @@ static int _indexScroll = 0;
     
     for (int i = 0; i < self.imageCount; i++) {
         SDBrowserImageView *imageView = [[SDBrowserImageView alloc] init];
+//        imageView.tag = 1000;
+        
         imageView.tag = i;
         
         // 监听点击
@@ -330,6 +332,11 @@ static int _indexScroll = 0;
     [UIView animateWithDuration:SDPhotoBrowserShowImageAnimationDuration animations:^{
         
     } completion:^(BOOL finished) {
+        
+        if ([self.delegate respondsToSelector:@selector(removePhotoBrowser)]) {
+            [self.delegate removePhotoBrowser];
+        }
+        
         [self removeFromSuperview];
     }];
     

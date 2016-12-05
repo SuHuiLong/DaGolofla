@@ -11,7 +11,7 @@
 @interface JGPhotoAlbumViewController : ViewController
 
 
-@property (strong, nonatomic) NSString* strTitle;//相册标题
+@property (copy, nonatomic) NSString *strTitle;//相册标题
 
 //相册的key
 @property (strong, nonatomic) NSNumber* albumKey;//相册key------首页改动后只要相册key，别的暂时都不用
