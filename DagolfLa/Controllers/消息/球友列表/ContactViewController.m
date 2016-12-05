@@ -382,8 +382,14 @@
         MyattenModel *model = self.listArray[indexPath.section - 1][indexPath.row];
         AVC.friendUserKey = model.friendUserKey;
         AVC.blockRereshNote = ^(NSString *name){
-            cell.myLabel.text = name;
-            model.userName = name;
+            
+            if ([name length] > 0) {
+                cell.myLabel.text = name;
+                model.remark = name;
+            }else{
+                cell.myLabel.text = model.userName;
+            }
+
         };
         [self.navigationController pushViewController:AVC animated:YES];
     }];
