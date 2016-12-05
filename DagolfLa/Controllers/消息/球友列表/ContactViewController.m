@@ -151,8 +151,8 @@
         
         return cell1;
     }else{
-        self.infoTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(infotapclick:)];
-        [cell.myImageV addGestureRecognizer:self.infoTap];
+//        self.infoTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(infotapclick:)];
+//        [cell.myImageV addGestureRecognizer:self.infoTap];
         
         MyattenModel *model = self.listArray[indexPath.section - 1][indexPath.row];
         NoteModel *modell = [NoteHandlle selectNoteWithUID:model.otherUserId];
