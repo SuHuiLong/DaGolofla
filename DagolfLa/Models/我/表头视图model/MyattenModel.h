@@ -22,6 +22,7 @@
 @property (copy, nonatomic) NSNumber* almost;
 @property (copy, nonatomic) NSString* address;
 @property (copy, nonatomic) NSNumber* friendUserKey;
+@property (copy, nonatomic) NSString* remark; // 备注
 
 @property (strong,nonatomic) ChineseString *chineseString;
 

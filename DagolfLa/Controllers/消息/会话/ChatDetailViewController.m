@@ -56,38 +56,43 @@
     NSUserDefaults *user=[NSUserDefaults standardUserDefaults];
     if ([userId integerValue]!=[[user objectForKey:@"userId"] integerValue]) {
         
-        AddNoteViewController *addVC = [[AddNoteViewController alloc] init];
+//        AddNoteViewController *addVC = [[AddNoteViewController alloc] init];
+//    
+//    NSMutableDictionary *paraDic = [[NSMutableDictionary alloc] init];
+//    [paraDic setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"userId"] forKey:@"userId"];
+//    [paraDic setObject:userId forKey:@"otherUserId"];
+//    [[PostDataRequest sharedInstance] postDataRequest:@"user/queryByIds.do" parameter:paraDic success:^(id respondsData) {
+//        
+//        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:respondsData options:NSJSONReadingMutableContainers error:nil];
+//        if ([[dict objectForKey:@"success"] boolValue]) {
+//            NSDictionary *dic = [dict objectForKey:@"rows"];
+//            if ( [dic objectForKey:@"followState"]) {
+//                addVC.isFollow = YES;
+//            }else{
+//                addVC.isFollow = NO;
+//            }
+//            
+//            addVC.isInfo = YES;
+//            addVC.otherUid = [NSNumber numberWithInteger:[userId integerValue]];
+//            [self.navigationController pushViewController:addVC animated:YES];
+//            
+//            
+//            
+//
+//        }else {
+//           
+//            
+//        }
+//    } failed:^(NSError *error) {
+//        
+//    }];
+        NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
+        [numberFormatter setNumberStyle:NSNumberFormatterDecimalStyle];
+        NSNumber *numTemp = [numberFormatter numberFromString:userId];
     
-    NSMutableDictionary *paraDic = [[NSMutableDictionary alloc] init];
-    [paraDic setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"userId"] forKey:@"userId"];
-    [paraDic setObject:userId forKey:@"otherUserId"];
-    [[PostDataRequest sharedInstance] postDataRequest:@"user/queryByIds.do" parameter:paraDic success:^(id respondsData) {
-        
-        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:respondsData options:NSJSONReadingMutableContainers error:nil];
-        if ([[dict objectForKey:@"success"] boolValue]) {
-            NSDictionary *dic = [dict objectForKey:@"rows"];
-            if ( [dic objectForKey:@"followState"]) {
-                addVC.isFollow = YES;
-            }else{
-                addVC.isFollow = NO;
-            }
-            
-            addVC.isInfo = YES;
-            addVC.otherUid = [NSNumber numberWithInteger:[userId integerValue]];
-            [self.navigationController pushViewController:addVC animated:YES];
-            
-            
-            
-
-        }else {
-           
-            
-        }
-    } failed:^(NSError *error) {
-        
-    }];
-    
-    
+        JGHPersonalInfoViewController *personVC = [[JGHPersonalInfoViewController alloc] init];
+        personVC.otherKey = numTemp;
+        [self.navigationController pushViewController:personVC animated:YES];
     
         
     }

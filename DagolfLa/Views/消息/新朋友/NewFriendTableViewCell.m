@@ -114,7 +114,12 @@
         _btnFocus.backgroundColor = [UIColor clearColor];
         _btnFocus.enabled = NO;
     }else{
+        _btnFocus.frame = CGRectMake(ScreenWidth-65*ScreenWidth/375, 18*ScreenWidth/375, 55*ScreenWidth/375, 30*ScreenWidth/375);
         [_btnFocus setTitle:@"添加" forState:UIControlStateNormal];
+        _btnFocus.backgroundColor = [UIColor colorWithHexString:Bar_Color];
+        [_btnFocus setTitleColor:[UIColor whiteColor] forState:(UIControlStateNormal)];
+        _btnFocus.enabled = YES;
+
     }
     
 }

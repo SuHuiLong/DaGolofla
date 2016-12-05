@@ -40,6 +40,8 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     
+    
+    
 }
 
 - (void)viewDidLoad {
@@ -120,7 +122,7 @@
                     self.nick.frame = CGRectMake(90 *ProportionAdapter, 40 *ProportionAdapter, 40 *ProportionAdapter, 15 *ProportionAdapter);
                     self.nick.text = @"昵称";
                     
-                    self.nickname = [[UILabel alloc]initWithFrame:CGRectMake(130 *ProportionAdapter, 40 *ProportionAdapter, screenWidth -140*ProportionAdapter, 15 *ProportionAdapter)];
+                    self.nickname.frame = CGRectMake(130 *ProportionAdapter, 40 *ProportionAdapter, screenWidth -140*ProportionAdapter, 15 *ProportionAdapter);
                     self.nickname.text = [NSString stringWithFormat:@"%@", _model.userName];
                     self.almost.text = [NSString stringWithFormat:@"%@", _model.almost];
                 }else{
@@ -295,22 +297,45 @@
     JGHNoteViewController *noteCtrl = [[JGHNoteViewController alloc]init];
     noteCtrl.blockRereshNote = ^(NSString *note){
 //        _model.userName = note;
-        CGSize remarkSize = [note boundingRectWithSize:CGSizeMake(screenWidth, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:18*ProportionAdapter]} context:nil].size;
-        if ((screenWidth -remarkSize.width) <120) {
-            self.name.frame = CGRectMake(90 *ProportionAdapter, 10 *ProportionAdapter, screenWidth -120 *ProportionAdapter, 20 *ProportionAdapter);
+        
+        // 备注为空   取消备注
+        if ([note length] > 0) {
+            CGSize remarkSize = [note boundingRectWithSize:CGSizeMake(screenWidth, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:18*ProportionAdapter]} context:nil].size;
+            if ((screenWidth -remarkSize.width) <120) {
+                self.name.frame = CGRectMake(90 *ProportionAdapter, 10 *ProportionAdapter, screenWidth -120 *ProportionAdapter, 20 *ProportionAdapter);
+            }else{
+                self.name.frame = CGRectMake(90 *ProportionAdapter, 10 *ProportionAdapter, remarkSize.width, 20 *ProportionAdapter);
+            }
+            
+            self.name.text = note;
+            
+            self.nick.frame = CGRectMake(90 *ProportionAdapter, 40 *ProportionAdapter, 40 *ProportionAdapter, 15 *ProportionAdapter);
+            self.nick.text = @"昵称";
+            
+            self.nickname.frame = CGRectMake(130 *ProportionAdapter, 40 *ProportionAdapter, screenWidth -140*ProportionAdapter, 15 *ProportionAdapter);
+            self.nickname.text = [NSString stringWithFormat:@"%@", _model.userName];
+            
+            self.sexImageView.frame = CGRectMake(self.name.frame.origin.x +10*ProportionAdapter + self.name.frame.size.width, self.name.frame.origin.y +2*ProportionAdapter, 15*ProportionAdapter, 15*ProportionAdapter);
+        
+            self.alm.frame = CGRectMake(90 *ProportionAdapter, 60 *ProportionAdapter, 40 *ProportionAdapter, 15 *ProportionAdapter);
+            self.almost.frame = CGRectMake(130 *ProportionAdapter, 60 *ProportionAdapter, 100 *ProportionAdapter, 15 *ProportionAdapter);
+            self.nick.hidden = NO;
+            self.nickname.hidden = NO;
+
+        
         }else{
-            self.name.frame = CGRectMake(90 *ProportionAdapter, 10 *ProportionAdapter, remarkSize.width, 20 *ProportionAdapter);
+            
+            self.name.frame = CGRectMake(90 *ProportionAdapter, 10 *ProportionAdapter, screenWidth -120 *ProportionAdapter, 20 *ProportionAdapter);
+            self.name.text = [NSString stringWithFormat:@"%@", _model.userName];
+
+            self.alm.frame = CGRectMake(90 *ProportionAdapter, 40 *ProportionAdapter, 40 *ProportionAdapter, 15 *ProportionAdapter);
+            self.almost.frame = CGRectMake(130 *ProportionAdapter, 40 *ProportionAdapter, screenWidth -140*ProportionAdapter, 15 *ProportionAdapter);
+            self.almost.text = [NSString stringWithFormat:@"%@", _model.almost];
+            
+            self.nick.hidden = YES;
+            self.nickname.hidden = YES;
         }
-        
-        self.name.text = note;
-        
-        self.nick.frame = CGRectMake(90 *ProportionAdapter, 40 *ProportionAdapter, 40 *ProportionAdapter, 15 *ProportionAdapter);
-        self.nick.text = @"昵称";
-        
-        self.nickname.frame = CGRectMake(130 *ProportionAdapter, 40 *ProportionAdapter, screenWidth -140*ProportionAdapter, 15 *ProportionAdapter);
-        self.nickname.text = [NSString stringWithFormat:@"%@", _model.userName];
-        
-        self.sexImageView.frame = CGRectMake(self.name.frame.origin.x +10*ProportionAdapter + self.name.frame.size.width, self.name.frame.origin.y +2*ProportionAdapter, 15*ProportionAdapter, 15*ProportionAdapter);
+
     };
     noteCtrl.friendUserKey = _model.userId;
     [self.navigationController pushViewController:noteCtrl animated:YES];
@@ -318,6 +343,16 @@
 }
 #pragma mark -- 头像
 - (void)headerImageBtn:(UIButton *)btn{
+    
+    NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
+    NSString* userKeySelf = [[NSUserDefaults standardUserDefaults] objectForKey:@"userId"];
+    
+    NSString* otherKey = [numberFormatter stringFromNumber:_otherKey];
+    
+    if (![userKeySelf isEqualToString:otherKey]) {
+        return;
+    }
+    
     btn.userInteractionEnabled = NO;
     
     UIAlertAction * act1 = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
@@ -361,6 +396,7 @@
     PersonHomeController* selfVc = [[PersonHomeController alloc]init];
     selfVc.strMoodId = _otherKey;
     selfVc.messType = @2;
+    selfVc.selectedIndex = 0;
     [self.navigationController pushViewController:selfVc animated:YES];
     
     btn.userInteractionEnabled = YES;
@@ -375,6 +411,7 @@
     PersonHomeController* selfVc = [[PersonHomeController alloc]init];
     selfVc.strMoodId = _otherKey;
     selfVc.messType = @2;
+    selfVc.selectedIndex = 1;
     [self.navigationController pushViewController:selfVc animated:YES];
     
     btn.userInteractionEnabled = YES;

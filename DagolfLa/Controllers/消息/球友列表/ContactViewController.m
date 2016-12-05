@@ -155,12 +155,12 @@
 //        [cell.myImageV addGestureRecognizer:self.infoTap];
         
         MyattenModel *model = self.listArray[indexPath.section - 1][indexPath.row];
-        NoteModel *modell = [NoteHandlle selectNoteWithUID:model.otherUserId];
-        if ([modell.userremarks isEqualToString:@"(null)"] || [modell.userremarks isEqualToString:@""] || modell.userremarks == nil) {
-            
-        }else{
-            model.userName = modell.userremarks;
-        }
+//        NoteModel *modell = [NoteHandlle selectNoteWithUID:model.otherUserId];
+//        if ([modell.userremarks isEqualToString:@"(null)"] || [modell.userremarks isEqualToString:@""] || modell.userremarks == nil) {
+//            
+//        }else{
+//            model.userName = modell.userremarks;
+//        }
         
         
         cell.myModel = model;
@@ -262,12 +262,12 @@
                     MyattenModel *model = [[MyattenModel alloc] init];
                     [model setValuesForKeysWithDictionary:dic];
                     if (![model.userName isEqualToString:@""]) {
-                        NoteModel *modell = [NoteHandlle selectNoteWithUID:model.otherUserId];
-                        if ([modell.userremarks isEqualToString:@"(null)"] || [modell.userremarks isEqualToString:@""] || modell.userremarks == nil) {
-                            
-                        }else{
-                            model.userName = modell.userremarks;
-                        }
+//                        NoteModel *modell = [NoteHandlle selectNoteWithUID:model.otherUserId];
+//                        if ([modell.userremarks isEqualToString:@"(null)"] || [modell.userremarks isEqualToString:@""] || modell.userremarks == nil) {
+//                            
+//                        }else{
+//                            model.userName = modell.userremarks;
+//                        }
                         if (model.userName) {
                             [allFriarr addObject:model];
                         }

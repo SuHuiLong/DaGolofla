@@ -45,11 +45,18 @@
 
 - (void)setMyModel:(MyattenModel *)myModel{
     
-       NoteModel *model = [NoteHandlle selectNoteWithUID:myModel.otherUserId];
-    if ([model.userremarks isEqualToString:@"(null)"] || [model.userremarks isEqualToString:@""] || model.userremarks == nil) {
-        self.myLabel.text = myModel.userName;
+//       NoteModel *model = [NoteHandlle selectNoteWithUID:myModel.otherUserId];
+//    if ([model.userremarks isEqualToString:@"(null)"] || [model.userremarks isEqualToString:@""] || model.userremarks == nil) {
+//        self.myLabel.text = myModel.userName;
+//    }else{
+//        self.myLabel.text = model.userremarks;
+//    }
+    
+    if (myModel.remark) {
+        self.myLabel.text = myModel.remark;
+
     }else{
-        self.myLabel.text = model.userremarks;
+        self.myLabel.text = myModel.userName;
     }
     
 //    [self.myImageV sd_setImageWithURL:[Helper imageIconUrl:myModel.pic]];
