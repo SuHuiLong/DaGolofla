@@ -382,19 +382,7 @@
 #pragma mark -- 加好友、发送消息、通过验证
 - (void)submitBtn:(UIButton *)btn{
     btn.userInteractionEnabled = NO;
-    if (_state == -1) {
-        //陌生人
-        JGAddFriendViewController *addFriendVC = [[JGAddFriendViewController alloc] init];
-        addFriendVC.otherUserKey = _otherKey;
-        addFriendVC.popToVC = ^(NSInteger num){
-            [self loadData];
-        };
-        [self.navigationController pushViewController:addFriendVC animated:YES];
-    }else if (_state == 0){
-        //待验证
-        self.submitBtn.userInteractionEnabled = NO;
-        [self.submitBtn setTitleColor:[UIColor colorWithHexString:@"#a0a0a0"] forState:UIControlStateNormal];
-    }else if (_state == 1){
+    if (_state == 1){
         //好友
         ChatDetailViewController *vc = [[ChatDetailViewController alloc] init];
         //设置聊天类型
@@ -409,7 +397,12 @@
         vc.displayUserNameInCell = NO;
         [self.navigationController pushViewController:vc animated:YES];
     }else{
-        //拒绝
+        JGAddFriendViewController *addFriendVC = [[JGAddFriendViewController alloc] init];
+        addFriendVC.otherUserKey = _otherKey;
+        addFriendVC.popToVC = ^(NSInteger num){
+            [self loadData];
+        };
+        [self.navigationController pushViewController:addFriendVC animated:YES];
     }
     
     

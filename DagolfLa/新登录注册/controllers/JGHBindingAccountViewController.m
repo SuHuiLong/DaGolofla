@@ -258,12 +258,17 @@
 -(void)postAppJpost
 {
     NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
-    [dict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:userID] forKey:userID];
+    [dict setObject:DEFAULF_USERID forKey:userID];
+    
     if ([JPUSHService registrationID] != nil) {
         [dict setObject:[JPUSHService registrationID] forKey:@"jgpush"];
     }
-    [[PostDataRequest sharedInstance] postDataRequest:@"user/updateUserInfo.do" parameter:dict success:^(id respondsData) {
-    } failed:^(NSError *error) {
+    
+    [[JsonHttp jsonHttp]httpRequestWithMD5:@"user/doUpdateUserInfo" JsonKey:nil withData:dict failedBlock:^(id errType) {
+        
+    } completionBlock:^(id data) {
+        NSLog(@"%@", data);
+        
     }];
 }
 

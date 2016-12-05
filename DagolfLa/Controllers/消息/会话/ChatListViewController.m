@@ -238,7 +238,7 @@
     [_viewHeader addSubview:sysNotLable];
     
     _sysDetailLable = [[UILabel alloc]initWithFrame:CGRectMake(70 *ProportionAdapter, 50 *ProportionAdapter, screenWidth -100*ProportionAdapter, 20 *ProportionAdapter)];
-    _sysDetailLable.font = [UIFont systemFontOfSize:15 *ProportionAdapter];
+    _sysDetailLable.font = [UIFont systemFontOfSize:13 *ProportionAdapter];
     _sysDetailLable.text = @"暂无系统消息";
     [_viewHeader addSubview:_sysDetailLable];
     
@@ -265,7 +265,7 @@
     [_viewHeader addSubview:teamNotLable];
     
     _teamNotDetailLable = [[UILabel alloc]initWithFrame:CGRectMake(70 *ProportionAdapter, 118 *ProportionAdapter, screenWidth -100*ProportionAdapter, 20 *ProportionAdapter)];
-    _teamNotDetailLable.font = [UIFont systemFontOfSize:15 *ProportionAdapter];
+    _teamNotDetailLable.font = [UIFont systemFontOfSize:13 *ProportionAdapter];
     _teamNotDetailLable.text = @"暂无球队消息";
     [_viewHeader addSubview:_teamNotDetailLable];
     
@@ -275,7 +275,7 @@
     
     UILabel *proLable = [[UILabel alloc]initWithFrame:CGRectMake(10*ProportionAdapter, 159 *ProportionAdapter, 200 *ProportionAdapter, 28 *ProportionAdapter)];
     proLable.font = [UIFont systemFontOfSize:18 *ProportionAdapter];
-    proLable.text = @"好友列表";
+    proLable.text = @"会话列表";
     [_viewHeader addSubview:proLable];
     
     UILabel *threeLine = [[UILabel alloc]initWithFrame:CGRectMake(0, 195 *ProportionAdapter, screenWidth, 1)];
@@ -287,6 +287,7 @@
     [_viewHeader addSubview:teamNotbtn];
     
     self.conversationListTableView.tableHeaderView = _viewHeader;
+    self.conversationListTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     self.conversationListTableView.header = [MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
 //    self.conversationListTableView.footer=[MJDIYBackFooter footerWithRefreshingTarget:self refreshingAction:@selector(footerRefreshing)];
@@ -351,9 +352,6 @@
 }
 
 
-
-
-
 //无消息的时候的视图  背景图
 - (void)showEmptyConversationView {
     
@@ -394,8 +392,6 @@
     return [super rcConversationListTableView:tableView cellForRowAtIndexPath:indexPath];
 }
 
-
-
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -414,6 +410,10 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         int count = [[RCIMClient sharedRCIMClient]
                      getUnreadCount:self.displayConversationTypeArray];
+        if (count > 10) {
+            self.conversationListTableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+        }
+        
         if ((count + (int)_teamUnread +(int)_systemUnread) > 0) {
             //      __weakSelf.tabBarItem.badgeValue =
             //          [[NSString alloc] initWithFormat:@"%d", count];
@@ -426,21 +426,6 @@
         }
         
     });
-    
-////    __weak typeof(self) __weakSelf = self;
-////    dispatch_async(dispatch_get_main_queue(), ^{
-//        int count = [[RCIMClient sharedRCIMClient]getUnreadCount:self.displayConversationTypeArray];
-//        if (count>0) {
-////            __weakSelf.tabBarItem.badgeValue = [[NSString alloc]initWithFormat:@"%d",count];
-//            self.tabBarItem.badgeValue = [[NSString alloc]initWithFormat:@"%d",count];
-//            [self.tabBarController.tabBar showBadgeOnItemIndex:2];
-//        }
-////        else
-////        {
-////            [self.tabBarController.tabBar hideBadgeOnItemIndex:2];
-////        }
-//    
-////    });
 }
 
 @end

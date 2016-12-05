@@ -28,6 +28,7 @@
 #import "Helper.h"
 #import "PostDataRequest.h"
 #import "JPUSHService.h"
+#import <AdSupport/AdSupport.h>
 
 #import <TAESDK/TaeSDK.h>
 
@@ -37,7 +38,12 @@
 
 #import "JGLAnimationViewController.h"
 #define ImgUrlString2 @"http://res.dagolfla.com/h5/ad/app.jpg"
-@interface AppDelegate ()<CLLocationManagerDelegate>
+
+#ifdef NSFoundationVersionNumber_iOS_9_x_Max
+#import <UserNotifications/UserNotifications.h>
+#endif
+
+@interface AppDelegate ()<CLLocationManagerDelegate, JPUSHRegisterDelegate>
 {
     BMKMapManager* _mapManager;
 }
@@ -57,7 +63,6 @@
     [MobClick startWithConfigure:UMConfigInstance];
     [MobClick beginLogPageView:@""];
 }
-
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
@@ -100,17 +105,60 @@
     [self.window makeKeyAndVisible];
     
     //极光推送
-    if ([[UIDevice currentDevice].systemVersion floatValue] >= 8.0) {
+    if ([[UIDevice currentDevice].systemVersion floatValue] >= 10.0) {
+#ifdef NSFoundationVersionNumber_iOS_9_x_Max
+        JPUSHRegisterEntity * entity = [[JPUSHRegisterEntity alloc] init];
+        entity.types = UNAuthorizationOptionAlert | UNAuthorizationOptionBadge | UNAuthorizationOptionSound;
+        [JPUSHService registerForRemoteNotificationConfig:entity delegate:self];
+#endif
+    } else if ([[UIDevice currentDevice].systemVersion floatValue] >= 8.0) {
         //可以添加自定义categories
         [JPUSHService registerForRemoteNotificationTypes:(UIUserNotificationTypeBadge |
                                                           UIUserNotificationTypeSound |
                                                           UIUserNotificationTypeAlert)
                                               categories:nil];
+    } else {
+        //categories 必须为nil
+        [JPUSHService registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert) categories:nil];
     }
     
+    //如不需要使用IDFA，advertisingIdentifier 可为nil
+//    [JPUSHService setupWithOption:launchOptions appKey:@"831cd22faea3454090c15bbe" channel:nil apsForProduction:YES];
+    
+//    JPUSHService.delivered = NO;
+    //测试NO，线上YES；
+    [JPUSHService setupWithOption:launchOptions appKey:@"831cd22faea3454090c15bbe" channel:@"Publish chanel" apsForProduction:NO];
+//    [JPUSHService setupWithOption:launchOptions appKey:@"831cd22faea3454090c15bbe"
+//                          channel:nil
+//                 apsForProduction:NO
+//            advertisingIdentifier:nil];
+    
+    //2.1.9版本新增获取registration id block接口。
+    [JPUSHService registrationIDCompletionHandler:^(int resCode, NSString *registrationID) {
+        if(resCode == 0){
+            NSLog(@"registrationID获取成功：%@",registrationID);
+            
+        }
+        else{
+            NSLog(@"registrationID获取失败，code：%d",resCode);
+        }
+    }];
+    
+    
+//    NSDictionary *remoteNotification = [launchOptions objectForKey: UIApplicationLaunchOptionsRemoteNotificationKey];
+//    
+//    if ([[UIDevice currentDevice].systemVersion floatValue] >= 8.0) {
+//        //可以添加自定义categories
+//        [JPUSHService registerForRemoteNotificationTypes:(UIUserNotificationTypeBadge |
+//                                                          UIUserNotificationTypeSound |
+//                                                          UIUserNotificationTypeAlert)
+//                                              categories:nil];
+//    }
+//    
     // Required
     //如需兼容旧版本的方式，请依旧使用[JPUSHService setupWithOption:launchOptions]方式初始化和同时使用pushConfig.plist文件声明appKey等配置内容。
-    [JPUSHService setupWithOption:launchOptions appKey:@"831cd22faea3454090c15bbe" channel:nil apsForProduction:YES];
+//    [JPUSHService setupWithOption:launchOptions appKey:@"831cd22faea3454090c15bbe" channel:nil apsForProduction:YES];
+    //-------------
     NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
     [defaultCenter addObserver:self selector:@selector(networkDidReceiveMessage:) name:kJPFNetworkDidReceiveMessageNotification object:nil];
     
@@ -594,7 +642,20 @@
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
     // Required,For systems with less than or equal to iOS6
-    [JPUSHService handleRemoteNotification:userInfo];
+//    [JPUSHService handleRemoteNotification:userInfo];
+    
+     // 取得 APNs 标准信息内容
+//     NSDictionary *aps = [userInfo valueForKey:@"aps"];
+//     NSString *content = [aps valueForKey:@"alert"]; //推送显示的内容
+//     NSInteger badge = [[aps valueForKey:@"badge"] integerValue]; //badge数量
+//     NSString *sound = [aps valueForKey:@"sound"]; //播放的声音
+//     
+//     // 取得Extras字段内容
+//     NSString *customizeField1 = [userInfo valueForKey:@"customizeExtras"]; //服务端中Extras字段，key是自己定义的
+//     NSLog(@"content =[%@], badge=[%d], sound=[%@], customize field  =[%@]",content, badge,sound,customizeField1);
+    
+     // iOS 10 以下 Required
+     [JPUSHService handleRemoteNotification:userInfo];
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
@@ -603,7 +664,6 @@
     //推送的自定义消息
     [JPUSHService handleRemoteNotification:userInfo];
     completionHandler(UIBackgroundFetchResultNewData);
-    
 
     NSString* str = [userInfo objectForKey:@"url"];
     NSURL *url = [NSURL URLWithString:str];
@@ -619,14 +679,42 @@
         
         [self gotoAppPage:actKey switchDetails:actDetail];
     }
+}
+- (void)application:(UIApplication *)application
+didReceiveLocalNotification:(UILocalNotification *)notification {
+    [JPUSHService showLocalNotificationAtFront:notification identifierKey:nil];
+}
+// iOS 10 Support
+- (void)jpushNotificationCenter:(UNUserNotificationCenter *)center  willPresentNotification:(UNNotification *)notification withCompletionHandler:(void (^)(NSInteger))completionHandler {
+    // Required
+    NSDictionary * userInfo = notification.request.content.userInfo;
+    if([notification.request.trigger isKindOfClass:[UNPushNotificationTrigger class]]) {
+        [JPUSHService handleRemoteNotification:userInfo];
+    }
+    else {
+        // 本地通知
+    }
+    
+    completionHandler(UNNotificationPresentationOptionBadge|UNNotificationPresentationOptionSound|UNNotificationPresentationOptionAlert);; // 需要执行这个方法，选择是否提醒用户，有Badge、Sound、Alert三种类型可以选择设置
+}
 
-    
-    
+// iOS 10 Support
+- (void)jpushNotificationCenter:(UNUserNotificationCenter *)center didReceiveNotificationResponse:(UNNotificationResponse *)response withCompletionHandler: (void (^)())completionHandler {
+    // Required
+    NSDictionary * userInfo = response.notification.request.content.userInfo;
+    if([response.notification.request.trigger isKindOfClass:[UNPushNotificationTrigger class]]) {
+        [JPUSHService handleRemoteNotification:userInfo];
+    }
+    else {
+        // 本地通知
+    }
+    completionHandler();  // 系统要求执行这个方法
 }
 
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
     
     //Optional
+    NSLog(@"did Fail To Register For Remote Notifications With Error: %@", error);
 }
 
 // 设置消息推送的样式
@@ -661,6 +749,7 @@
 - (void)applicationDidEnterBackground:(UIApplication *)application {
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+    [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
@@ -670,7 +759,8 @@
 //        [self insertSharedMessageIfNeed];
     }
     
-    [self getCurPosition];
+    [application setApplicationIconBadgeNumber:0];
+    [application cancelAllLocalNotifications];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
@@ -678,7 +768,9 @@
     [UMSocialSnsService  applicationDidBecomeActive];
     [application setApplicationIconBadgeNumber:0];
     [application cancelAllLocalNotifications];
-    [JPUSHService resetBadge];
+//    [JPUSHService resetBadge];
+    
+    [self getCurPosition];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {

@@ -59,6 +59,9 @@
 		202EC80C1D5852F80090FE4B /* JGHCaddieViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 202EC80A1D5852F80090FE4B /* JGHCaddieViewController.m */; };
 		202EC80D1D5852F80090FE4B /* JGHCaddieViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 202EC80B1D5852F80090FE4B /* JGHCaddieViewController.xib */; };
 		202F967E1DCC5F2500C5DBE6 /* JGHUserAgreementViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 202F967D1DCC5F2500C5DBE6 /* JGHUserAgreementViewController.m */; };
+		20451C291DF15224003B2FC8 /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 20451C281DF15224003B2FC8 /* libresolv.tbd */; };
+		20451C2B1DF152A3003B2FC8 /* jpush-ios-2.2.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 20451C2A1DF152A3003B2FC8 /* jpush-ios-2.2.0.a */; };
+		20451C2D1DF15307003B2FC8 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 20451C2C1DF15307003B2FC8 /* UserNotifications.framework */; };
 		2048E8EA1D4B369E00A2C024 /* JGHSetAlmostPromptViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2048E8E81D4B369E00A2C024 /* JGHSetAlmostPromptViewController.m */; };
 		2048E8EB1D4B369E00A2C024 /* JGHSetAlmostPromptViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2048E8E91D4B369E00A2C024 /* JGHSetAlmostPromptViewController.xib */; };
 		2048E8EF1D4B528E00A2C024 /* JGHSimpleScoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2048E8EE1D4B528E00A2C024 /* JGHSimpleScoreViewController.m */; };
@@ -336,7 +339,6 @@
 		3623174B1BDA6B2800257862 /* CommunMessageViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 362317491BDA6B2800257862 /* CommunMessageViewCell.m */; };
 		3623174C1BDA6B2800257862 /* CommunMessageViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3623174A1BDA6B2800257862 /* CommunMessageViewCell.xib */; };
 		363053271BDE3DEB00B02C68 /* ShareAlert.m in Sources */ = {isa = PBXBuildFile; fileRef = 363053261BDE3DEB00B02C68 /* ShareAlert.m */; };
-		363D4F2E1C86DACC0089E52C /* jpush-ios-2.1.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 363D4F2C1C86DACC0089E52C /* jpush-ios-2.1.0.a */; };
 		363D4F301C86DAF00089E52C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 363D4F2F1C86DAF00089E52C /* CoreFoundation.framework */; };
 		363D4F321C86DB1C0089E52C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 363D4F311C86DB1C0089E52C /* Foundation.framework */; };
 		363D4F341C86E1C70089E52C /* PushConfig.plist in Resources */ = {isa = PBXBuildFile; fileRef = 363D4F331C86E1C70089E52C /* PushConfig.plist */; };
@@ -1289,6 +1291,9 @@
 		202EC80B1D5852F80090FE4B /* JGHCaddieViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JGHCaddieViewController.xib; sourceTree = "<group>"; };
 		202F967C1DCC5F2500C5DBE6 /* JGHUserAgreementViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHUserAgreementViewController.h; sourceTree = "<group>"; };
 		202F967D1DCC5F2500C5DBE6 /* JGHUserAgreementViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHUserAgreementViewController.m; sourceTree = "<group>"; };
+		20451C281DF15224003B2FC8 /* libresolv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libresolv.tbd; path = usr/lib/libresolv.tbd; sourceTree = SDKROOT; };
+		20451C2A1DF152A3003B2FC8 /* jpush-ios-2.2.0.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "jpush-ios-2.2.0.a"; sourceTree = "<group>"; };
+		20451C2C1DF15307003B2FC8 /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
 		2048E8E71D4B369E00A2C024 /* JGHSetAlmostPromptViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHSetAlmostPromptViewController.h; sourceTree = "<group>"; };
 		2048E8E81D4B369E00A2C024 /* JGHSetAlmostPromptViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHSetAlmostPromptViewController.m; sourceTree = "<group>"; };
 		2048E8E91D4B369E00A2C024 /* JGHSetAlmostPromptViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JGHSetAlmostPromptViewController.xib; sourceTree = "<group>"; };
@@ -1832,7 +1837,6 @@
 		363053231BDE3B9700B02C68 /* UMSocialSinaHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMSocialSinaHandler.h; sourceTree = "<group>"; };
 		363053251BDE3DEB00B02C68 /* ShareAlert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShareAlert.h; sourceTree = "<group>"; };
 		363053261BDE3DEB00B02C68 /* ShareAlert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShareAlert.m; sourceTree = "<group>"; };
-		363D4F2C1C86DACC0089E52C /* jpush-ios-2.1.0.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "jpush-ios-2.1.0.a"; sourceTree = "<group>"; };
 		363D4F2D1C86DACC0089E52C /* JPUSHService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPUSHService.h; sourceTree = "<group>"; };
 		363D4F2F1C86DAF00089E52C /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		363D4F311C86DB1C0089E52C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -3475,11 +3479,16 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				36CFDB941BCDF74F00301269 /* CoreGraphics.framework in Frameworks */,
+				363D4F301C86DAF00089E52C /* CoreFoundation.framework in Frameworks */,
+				36C165641BCE82C400194436 /* CoreTelephony.framework in Frameworks */,
+				36CFDB921BCDF74600301269 /* SystemConfiguration.framework in Frameworks */,
 				36CFDB961BCDF75700301269 /* Security.framework in Frameworks */,
+				20451C2D1DF15307003B2FC8 /* UserNotifications.framework in Frameworks */,
+				20451C291DF15224003B2FC8 /* libresolv.tbd in Frameworks */,
 				36E6EB431BDDB93000A17B43 /* libz.tbd in Frameworks */,
 				36D0B1091C80165300C7245E /* libc++.tbd in Frameworks */,
 				82E6A6FE1CF58C9A009DD179 /* libsqlite3.0.tbd in Frameworks */,
-				36CFDB921BCDF74600301269 /* SystemConfiguration.framework in Frameworks */,
 				20BA613C1CDC9B8E004B61F5 /* CoreMotion.framework in Frameworks */,
 				20BA613A1CDC9A89004B61F5 /* Photos.framework in Frameworks */,
 				20BA61381CDC9A66004B61F5 /* MediaPlayer.framework in Frameworks */,
@@ -3487,11 +3496,9 @@
 				20BA612F1CDC99D0004B61F5 /* SecurityGuardSDK.framework in Frameworks */,
 				36D0B10F1C8016EC00C7245E /* UIKit.framework in Frameworks */,
 				363D4F321C86DB1C0089E52C /* Foundation.framework in Frameworks */,
-				36CFDB941BCDF74F00301269 /* CoreGraphics.framework in Frameworks */,
-				36C165641BCE82C400194436 /* CoreTelephony.framework in Frameworks */,
-				363D4F301C86DAF00089E52C /* CoreFoundation.framework in Frameworks */,
 				36D0B1011C8015E900C7245E /* CFNetwork.framework in Frameworks */,
 				82D595DF1CE42BDF00CD9587 /* BaiduMapAPI.framework in Frameworks */,
+				20451C2B1DF152A3003B2FC8 /* jpush-ios-2.2.0.a in Frameworks */,
 				36CFDB8E1BCDF72700301269 /* QuartzCore.framework in Frameworks */,
 				36CFDB901BCDF73600301269 /* OpenGLES.framework in Frameworks */,
 				36C164BF1BCE6B8D00194436 /* MapKit.framework in Frameworks */,
@@ -3521,7 +3528,6 @@
 				36D0B0F41C80151C00C7245E /* libopencore-amrnb.a in Frameworks */,
 				20BA61311CDC99D0004B61F5 /* TAESDK.framework in Frameworks */,
 				36CFDB9E1BCE2E7300301269 /* AddressBook.framework in Frameworks */,
-				363D4F2E1C86DACC0089E52C /* jpush-ios-2.1.0.a in Frameworks */,
 				36D0B0F71C80151C00C7245E /* RongIMKit.framework in Frameworks */,
 				36E300B01C3F4FC0005C3F08 /* libWeChatSDK.a in Frameworks */,
 				36E300AC1C3F4F3C005C3F08 /* libSocialSina.a in Frameworks */,
@@ -3794,6 +3800,15 @@
 				202EC80B1D5852F80090FE4B /* JGHCaddieViewController.xib */,
 			);
 			path = "球童";
+			sourceTree = "<group>";
+		};
+		20451C271DF15224003B2FC8 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				20451C2C1DF15307003B2FC8 /* UserNotifications.framework */,
+				20451C281DF15224003B2FC8 /* libresolv.tbd */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		2048E8E61D4B364C00A2C024 /* 差点设置 */ = {
@@ -4891,7 +4906,7 @@
 		363D4F2B1C86DACC0089E52C /* lib */ = {
 			isa = PBXGroup;
 			children = (
-				363D4F2C1C86DACC0089E52C /* jpush-ios-2.1.0.a */,
+				20451C2A1DF152A3003B2FC8 /* jpush-ios-2.2.0.a */,
 				363D4F2D1C86DACC0089E52C /* JPUSHService.h */,
 			);
 			path = lib;
@@ -5724,6 +5739,7 @@
 				36BFFD2A1BC76C8D005B3CE2 /* DagolfLa */,
 				36BFFD441BC76C8D005B3CE2 /* DagolfLaTests */,
 				36BFFD291BC76C8D005B3CE2 /* Products */,
+				20451C271DF15224003B2FC8 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -8903,13 +8919,16 @@
 				TargetAttributes = {
 					36BFFD271BC76C8D005B3CE2 = {
 						CreatedOnToolsVersion = 6.3.2;
-						DevelopmentTeam = AKVZK78CBX;
+						DevelopmentTeam = 5P6JNXBH3C;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
 							};
 							com.apple.Keychain = {
+								enabled = 1;
+							};
+							com.apple.Push = {
 								enabled = 1;
 							};
 						};
@@ -10248,7 +10267,7 @@
 				CODE_SIGN_ENTITLEMENTS = DagolfLa/DagolfLa.entitlements;
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = AKVZK78CBX;
+				DEVELOPMENT_TEAM = 5P6JNXBH3C;
 				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -10299,7 +10318,7 @@
 				CODE_SIGN_ENTITLEMENTS = DagolfLa/DagolfLa.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = AKVZK78CBX;
+				DEVELOPMENT_TEAM = 5P6JNXBH3C;
 				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = NO;
 				FRAMEWORK_SEARCH_PATHS = (
