@@ -213,7 +213,8 @@
 // 右侧索引
 - (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView {
     //  改变索引颜色
-    self.tableView.sectionIndexColor = [UIColor colorWithRed:0.36f green:0.66f blue:0.31f alpha:1.00f];;
+    self.tableView.sectionIndexColor = [UIColor colorWithRed:0.36f green:0.66f blue:0.31f alpha:1.00f];
+    self.tableView.sectionIndexBackgroundColor = [UIColor clearColor];
     NSInteger number = [self.listArray count];
     return [self.keyArray subarrayWithRange:NSMakeRange(0, number)];
 }
@@ -295,15 +296,19 @@
                 
             }else{
 
-                self.cryImageV = [[UIImageView alloc] initWithFrame:CGRectMake(120 * ProportionAdapter, 200 * ProportionAdapter, 107 * ProportionAdapter, 107 * ProportionAdapter)];
-                self.cryImageV.image = [UIImage imageNamed:@"bg-shy"];
-                [self.tableView addSubview:self.cryImageV];
+                UIView *bgView = [[UIView alloc] initWithFrame:CGRectMake(0, 110 * ProportionAdapter, screenWidth, screenHeight)];
+                bgView.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];
+                [self.tableView addSubview:bgView];
                 
-                self.tipLB = [[UILabel alloc] initWithFrame:CGRectMake(10, 330 * ProportionAdapter, screenWidth - 20 * ProportionAdapter, 20 * ProportionAdapter)];
+                self.cryImageV = [[UIImageView alloc] initWithFrame:CGRectMake(120 * ProportionAdapter, 100 * ProportionAdapter, 107 * ProportionAdapter, 107 * ProportionAdapter)];
+                self.cryImageV.image = [UIImage imageNamed:@"bg-shy"];
+                [bgView addSubview:self.cryImageV];
+                
+                self.tipLB = [[UILabel alloc] initWithFrame:CGRectMake(10, 230 * ProportionAdapter, screenWidth - 20 * ProportionAdapter, 20 * ProportionAdapter)];
                 self.tipLB.text = @"您还没有球友哦，赶快去添加吧！";
                 self.tipLB.textAlignment = NSTextAlignmentCenter;
                 self.tipLB.textColor = [UIColor colorWithHexString:@"#a0a0a0"];
-                [self.tableView addSubview:self.tipLB];
+                [bgView addSubview:self.tipLB];
 
             }
         }else{

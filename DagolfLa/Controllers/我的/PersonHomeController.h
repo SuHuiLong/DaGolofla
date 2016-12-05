@@ -17,5 +17,6 @@
 
 @property (assign, nonatomic) NSInteger sexType;
 
+@property (nonatomic, assign) NSInteger selectedIndex;  //  0是动态    1是足迹
 
 @end

@@ -34,7 +34,10 @@
     [_btnIcon setImage:[UIImage imageNamed:@"moren.jpg"] forState:UIControlStateNormal];
     _btnIcon.layer.cornerRadius = 25*ScreenWidth/375;
     _btnIcon.layer.masksToBounds = YES;
-    _btnIcon.contentMode = UIViewContentModeScaleAspectFill;
+//    _btnIcon.contentMode = UIViewContentModeScaleAspectFill;
+    [[_btnIcon imageView] setContentMode:UIViewContentModeScaleAspectFill];
+    
+
     [self addSubview:_btnIcon];
     
     _nameLabel = [[UILabel alloc]initWithFrame:CGRectMake(80*ScreenWidth/375, 7*ScreenWidth/375, 200*ScreenWidth/375, 20*ScreenWidth/375)];

@@ -86,7 +86,6 @@ static NSString *const orderDetailCellIdentifier = @"OtherDataTableViewCell";
 @implementation PersonHomeController
 
 
-
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:YES];
     self.navigationController.navigationBarHidden = NO;
@@ -101,6 +100,8 @@ static NSString *const orderDetailCellIdentifier = @"OtherDataTableViewCell";
         self.title = model.userremarks;
     }
     [_mapView viewWillAppear];
+
+    
 }
 
 -(void)viewWillDisappear:(BOOL)animated{
@@ -122,6 +123,8 @@ static NSString *const orderDetailCellIdentifier = @"OtherDataTableViewCell";
     
     [self creatScrollView];
     [self gerenPostData];
+    
+
 }
 
 -(void)creatScrollView {
@@ -333,10 +336,10 @@ static NSString *const orderDetailCellIdentifier = @"OtherDataTableViewCell";
     [topView addSubview:lb];
     [topView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|[lb]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(lb)]];
     [topView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[lb(==1)]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(lb)]];
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        //_pageView.selectedIndex=4;
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.01 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        _pageView.selectedIndex = _selectedIndex;
     });
-    
+
 }
 
 
