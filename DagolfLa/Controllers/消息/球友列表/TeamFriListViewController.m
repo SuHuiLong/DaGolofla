@@ -123,6 +123,7 @@
     barImageView.layer.borderColor = RGBA(238,238,238,1).CGColor;
     barImageView.layer.borderWidth = 1;
     
+
     
     UITextField *searchTextField = [[[searchBar.subviews firstObject] subviews] lastObject];
 //    searchTextField.backgroundColor = [UIColor whiteColor];

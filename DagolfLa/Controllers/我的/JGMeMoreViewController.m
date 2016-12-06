@@ -142,7 +142,7 @@
 
 - (NSMutableArray *)imageArray{
     if (!_imageArray) {
-        _imageArray = [NSMutableArray arrayWithObjects:@"smallIcn_qiutong", @"tjIcon", @"icn_about", @"icn_pingjia",@"icn_advice", nil];
+        _imageArray = [NSMutableArray arrayWithObjects:@"smallIcn_qiutong", @"icn_youli", @"icn_about", @"icn_pingjia",@"icn_advice", nil];
     }
     return _imageArray;
 }
