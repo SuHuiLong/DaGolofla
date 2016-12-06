@@ -46,6 +46,8 @@
 
 @property (retain, nonatomic)UIScrollView *scrollView;
 
+@property (retain, nonatomic)UILabel *indexLabel;
+
 - (void)show;
 
 @end

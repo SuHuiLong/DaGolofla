@@ -175,7 +175,7 @@
 
 -(void)uiConfig
 {
-    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight-64*screenWidth/375) style:UITableViewStylePlain];
+    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight-118*ProportionAdapter) style:UITableViewStylePlain];
     _tableView.delegate = self;
     _tableView.dataSource = self;
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -356,27 +356,36 @@
         [self.navigationController pushViewController:ballVc animated:YES];
     }else if (indexPath.section == 1) {
         NSLog(@"%td", indexPath.row);
+        
+        
+//        if (selectCount >= 2) {
+//            [[ShowHUD showHUD]showToastWithText:@"请先取消一项，再点选 !" FromView:self.view];
+//        }else{
+            if ([[_selectAreaArray objectAtIndex:indexPath.row] integerValue] == 0) {
+                
+                
+                [_selectAreaArray replaceObjectAtIndex:indexPath.row withObject:@1];
+            }else{
+                
+                [_selectAreaArray replaceObjectAtIndex:indexPath.row withObject:@0];
+                
+            }
+        
         //最多勾选2个
         NSInteger selectCount = 0;
         for (int i=0; i<_selectAreaArray.count; i++) {
             selectCount += [_selectAreaArray[i] integerValue];
         }
         
-        if (selectCount >= 2) {
+        if (selectCount > 2) {
+            [_selectAreaArray replaceObjectAtIndex:indexPath.row withObject:@0];
             [[ShowHUD showHUD]showToastWithText:@"请先取消一项，再点选 !" FromView:self.view];
-        }else{
-            if ([[_selectAreaArray objectAtIndex:indexPath.row] integerValue] == 0) {
-                
-                [_selectAreaArray replaceObjectAtIndex:indexPath.row withObject:@1];
-            }else{
-                
-                [_selectAreaArray replaceObjectAtIndex:indexPath.row withObject:@0];
-            }
-            
+        }
+        
             NSIndexPath *indexPath_1=[NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section];
             NSArray *indexArray=[NSArray arrayWithObject:indexPath_1];
             [_tableView reloadRowsAtIndexPaths:indexArray withRowAnimation:UITableViewRowAnimationAutomatic];
-        }
+//        }
         
     }else if (indexPath.section == 2){
 

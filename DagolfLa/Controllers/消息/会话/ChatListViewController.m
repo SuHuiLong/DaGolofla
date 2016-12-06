@@ -233,7 +233,7 @@
 #pragma mark --头视图
 -(void)createTableHeaderView
 {
-    _viewHeader = [[UIView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, 196*ProportionAdapter)];
+    _viewHeader = [[UIView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, 200*ProportionAdapter)];
     _viewHeader.backgroundColor = [UIColor whiteColor];
     
     UIView *heView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, 10 *ProportionAdapter)];
@@ -287,17 +287,17 @@
     _teamNotDetailLable.textColor = [UIColor colorWithHexString:@"#a0a0a0"];
     [_viewHeader addSubview:_teamNotDetailLable];
     
-    UILabel *twoLine = [[UILabel alloc]initWithFrame:CGRectMake(10 *ProportionAdapter, 148 *ProportionAdapter, screenWidth -10*ProportionAdapter, 0.5)];
-    twoLine.backgroundColor = [UIColor colorWithHexString:@"#d9d9d9"];
+    UILabel *twoLine = [[UILabel alloc]initWithFrame:CGRectMake(0, 148 *ProportionAdapter, screenWidth, 1)];
+    twoLine.backgroundColor = [UIColor colorWithHexString:@"#DADADA"];
     [_viewHeader addSubview:twoLine];
     
-    UILabel *proLable = [[UILabel alloc]initWithFrame:CGRectMake(10*ProportionAdapter, 159 *ProportionAdapter, 200 *ProportionAdapter, 28 *ProportionAdapter)];
+    UILabel *proLable = [[UILabel alloc]initWithFrame:CGRectMake(10*ProportionAdapter, 160 *ProportionAdapter, 200 *ProportionAdapter, 28 *ProportionAdapter)];
     proLable.font = [UIFont systemFontOfSize:18 *ProportionAdapter];
     proLable.text = @"会话列表";
     proLable.textColor = [UIColor colorWithHexString:@"#313131"];
     [_viewHeader addSubview:proLable];
     
-    UILabel *threeLine = [[UILabel alloc]initWithFrame:CGRectMake(0, 195 *ProportionAdapter, screenWidth, 1)];
+    UILabel *threeLine = [[UILabel alloc]initWithFrame:CGRectMake(0, 199 *ProportionAdapter, screenWidth, 1)];
     threeLine.backgroundColor = [UIColor colorWithHexString:@"#d9d9d9"];
     [_viewHeader addSubview:threeLine];
     

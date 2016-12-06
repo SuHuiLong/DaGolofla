@@ -66,6 +66,23 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    //强制正立屏幕
+//    if ([[UIApplication sharedApplication] respondsToSelector:@selector(setStatusBarOrientation:)]){
+//        SEL selector = NSSelectorFromString(@"setStatusBarOrientation:");
+//        NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:[UIApplication instanceMethodSignatureForSelector:selector]];
+//        UIDeviceOrientation orentation = UIDeviceOrientationPortrait;
+//        [invocation setSelector:selector];
+//        [invocation setTarget:[UIApplication sharedApplication]];
+//        [invocation setArgument:&orentation atIndex:2];
+//        [invocation invoke];
+//    }
+//
+    NSNumber *orientationUnknown = [NSNumber numberWithInt:UIInterfaceOrientationUnknown];
+    [[UIDevice currentDevice] setValue:orientationUnknown forKey:@"orientation"];
+    
+    NSNumber *orientationTarget = [NSNumber numberWithInt:UIDeviceOrientationPortrait];
+    [[UIDevice currentDevice] setValue:orientationTarget forKey:@"orientation"];
+    
     NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
     [user setObject:[NSNumber numberWithFloat:31.15] forKey:BDMAPLAT];//纬度
     [user setObject:[NSNumber numberWithFloat:121.56] forKey:BDMAPLNG];//经度

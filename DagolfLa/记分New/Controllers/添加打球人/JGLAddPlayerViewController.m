@@ -48,6 +48,26 @@
     _palyArray = [NSMutableArray array];
     _addressArray = [NSMutableArray array];
     
+    for (int i=0; i<self.preListArray.count; i++) {
+        NSDictionary *dict = self.preListArray[i];
+        if ([[dict objectForKey:@"sourceKey"] integerValue] == 1) {
+            TKAddressModel *myModel = [[TKAddressModel alloc]init];
+            myModel.recordID = [[dict objectForKey:@"recordID"] integerValue];
+            myModel.userName = [dict objectForKey:UserName];
+            myModel.mobile = [dict objectForKey:Mobile];
+//            myModel.
+            [_addressArray addObject:myModel];
+        }
+        
+        if ([[dict objectForKey:@"sourceKey"] integerValue] == 3) {
+            MyattenModel *myModel = [[MyattenModel alloc]init];
+            myModel.otherUserId = [NSNumber numberWithInteger:[[dict objectForKey:@"userKey"] integerValue]];
+            
+            
+            [_palyArray addObject:myModel];
+        }
+    }
+    
     _numberPlayArray = @[@"", @"二", @"三", @"四"];
     
     [self uiConfig];
@@ -97,7 +117,7 @@
 
 -(void)chooseStyleClick:(UIButton *)btn
 {
-    if (self.preListArray.count > 4) {
+    if (self.preListArray.count >= 4) {
         [[ShowHUD showHUD]showToastWithText:@"您最多只能选择3个人" FromView:self.view];
         return;
     }
@@ -110,15 +130,13 @@
             _addressArray = [addressArray mutableCopy];
             
             //先清除原先添加的球友
-            NSMutableArray *copyPreListArray = [self.preListArray mutableCopy];
             for (int i=0; i<self.preListArray.count; i++) {
                 NSMutableDictionary *addressdict = self.preListArray[i];
                 if ([[addressdict objectForKey:@"sourceKey"] integerValue] == 1) {
-                    [copyPreListArray removeObjectAtIndex:i];
+                    [self.preListArray removeObjectAtIndex:i];
+                    i -= 1;
                 }
             }
-            
-            self.preListArray = copyPreListArray;
             
             //添加球友
             for (int i=0; i<_addressArray.count; i++) {
@@ -137,6 +155,7 @@
                     [addressdict setObject:[NSString stringWithFormat:@"%@", addressModel.mobile] forKey:Mobile];
                 }
                 
+                [addressdict setObject:@(addressModel.recordID) forKey:@"recordID"];
                 [addressdict setObject:@0 forKey:UserKey];
                 [addressdict setObject:@1 forKey:@"sourceKey"];//球员列表
                 [self.preListArray addObject:addressdict];
@@ -146,7 +165,7 @@
         };
         
         addVc.addressArray = _addressArray;
-        addVc.lastIndex = 4 -self.preListArray.count;
+        addVc.lastIndex = 4 -self.preListArray.count +_addressArray.count;
         [self.navigationController pushViewController:addVc animated:YES];
     }
     else if (btn.tag == 101)
@@ -172,15 +191,13 @@
             _palyArray = playArray;
             
             //先清除原先添加的球友
-            NSMutableArray *copyPreListArray = [self.preListArray mutableCopy];
             for (int i=0; i<self.preListArray.count; i++) {
                 NSMutableDictionary *addressdict = self.preListArray[i];
                 if ([[addressdict objectForKey:@"sourceKey"] integerValue] == 3) {
-                    [copyPreListArray removeObjectAtIndex:i];
+                    [self.preListArray removeObjectAtIndex:i];
+                    i -= 1;
                 }
             }
-            
-            self.preListArray = copyPreListArray;
             
             //添加球友
             for (int i=0; i<_palyArray.count; i++) {
@@ -198,7 +215,7 @@
         };
         
         fVc.playArray = _palyArray;
-        fVc.lastIndex = 4 -self.preListArray.count;
+        fVc.lastIndex = 4 -self.preListArray.count +_palyArray.count;
         
         _isClick = NO;
         [self.navigationController pushViewController:fVc animated:YES];
@@ -306,7 +323,7 @@
 {
     UITextField* textF = (UITextField *)[self.view viewWithTag:1234];
     if (![Helper isBlankString:textF.text]) {
-        if (self.preListArray.count < 3) {
+        if (self.preListArray.count < 4) {
 //            [_dictPeople setObject:textF.text forKey:textF.text];
             
             NSMutableDictionary *addressdict = [NSMutableDictionary dictionary];

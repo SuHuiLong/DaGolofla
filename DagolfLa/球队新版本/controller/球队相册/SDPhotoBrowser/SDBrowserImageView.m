@@ -53,9 +53,10 @@
             _scroll = [[UIScrollView alloc] init];
             _scroll.frame = self.bounds;
             _scroll.backgroundColor = [UIColor whiteColor];
+            _scroll.tag = 1000;
             _scroll.delegate  =  self;
             _scrollImageView = [[UIImageView alloc] init];
-            _scrollImageView.tag = 1000;
+            _scrollImageView.tag = 10000;
             _scrollImageView.image = self.image;
             [_scroll addSubview:_scrollImageView];
 

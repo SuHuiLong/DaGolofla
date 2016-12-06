@@ -27,7 +27,7 @@
 {
 //    UIScrollView *_scrollView;
     BOOL _hasShowedFistView;
-    UILabel *_indexLabel;
+//    UILabel *_indexLabel;
     UIButton *_saveButton, * _shareButton,*_deleteButton;
     UIButton* _btnBack;
     UIActivityIndicatorView *_indicatorView;
@@ -80,6 +80,7 @@
     indexLabel.center = CGPointMake(self.bounds.size.width * 0.5, 30);
     indexLabel.textAlignment = NSTextAlignmentCenter;
     indexLabel.textColor = [UIColor whiteColor];
+    indexLabel.tag = 200;
     indexLabel.font = [UIFont boldSystemFontOfSize:20];
     indexLabel.backgroundColor = [UIColor clearColor];
     if (self.imageCount > 1) {
