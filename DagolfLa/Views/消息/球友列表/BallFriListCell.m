@@ -30,10 +30,10 @@
         //      cell.myImageV.contentMode = UIViewContentModeScaleAspectFill;
         
         
-        self.myLabel = [[UILabel alloc] initWithFrame:CGRectMake(80*ProportionAdapter, 4 * ProportionAdapter, 200, 20 *ProportionAdapter)];
+        self.myLabel = [[UILabel alloc] initWithFrame:CGRectMake(70*ProportionAdapter, 4 * ProportionAdapter, 200, 20 *ProportionAdapter)];
         self.myLabel.font = [UIFont systemFontOfSize:17 * ProportionAdapter];
         
-        self.sexImageV = [[UIImageView alloc] initWithFrame:CGRectMake(80*ProportionAdapter, 28 * ProportionAdapter, 12 * ProportionAdapter, 12 * ProportionAdapter)];
+        self.sexImageV = [[UIImageView alloc] initWithFrame:CGRectMake(70*ProportionAdapter, 28 * ProportionAdapter, 12 * ProportionAdapter, 12 * ProportionAdapter)];
 
         
         [self.contentView addSubview:self.sexImageV];
@@ -60,6 +60,10 @@
     }
     
 //    [self.myImageV sd_setImageWithURL:[Helper imageIconUrl:myModel.pic]];
+    
+    NSString *head = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/user/head/%@.jpg@200w_200h_2o",myModel.friendUserKey];
+    
+    [[SDImageCache sharedImageCache] removeImageForKey:head fromDisk:YES];
     
     [self.myImageV sd_setImageWithURL:[Helper setImageIconUrl:@"user" andTeamKey:[myModel.friendUserKey integerValue] andIsSetWidth:YES andIsBackGround:NO] placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
 

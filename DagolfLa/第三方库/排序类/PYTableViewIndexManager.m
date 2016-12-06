@@ -24,7 +24,13 @@
         MyattenModel *model = stringsToSort[i];
         
         model.chineseString = [[ChineseString alloc]init];
-        model.chineseString.string = model.userName;
+        
+        if (model.remark) {
+            model.chineseString.string = model.remark;
+        }else{
+            model.chineseString.string = model.userName;
+        }
+
         
         if(model.chineseString.string==nil){
             model.chineseString.string=@"";

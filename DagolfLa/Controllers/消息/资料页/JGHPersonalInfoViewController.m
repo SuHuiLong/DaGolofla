@@ -79,6 +79,8 @@
             
             _handImgUrl = [data objectForKey:@"handImgUrl"];
             
+            [[SDImageCache sharedImageCache] removeImageForKey:_handImgUrl fromDisk:YES];
+
             [self.headerImageView sd_setImageWithURL:[NSURL URLWithString:_handImgUrl] placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
 
             [self.dynamicImageView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
@@ -134,7 +136,7 @@
                     self.nick.frame = CGRectMake(90 *ProportionAdapter, 40 *ProportionAdapter, 40 *ProportionAdapter, 15 *ProportionAdapter);
                     self.nick.text = @"昵称";
                     
-                    self.nickname.frame = CGRectMake(130 *ProportionAdapter, 40 *ProportionAdapter, screenWidth -140*ProportionAdapter, 15 *ProportionAdapter);
+                    self.nickname.frame = CGRectMake(130 *ProportionAdapter, 39 *ProportionAdapter, screenWidth -140*ProportionAdapter, 17 *ProportionAdapter);
                     self.nickname.text = [NSString stringWithFormat:@"%@", _model.userName];
                     self.almost.text = [NSString stringWithFormat:@"%.1f", [_model.almost floatValue]];
                 }else{
@@ -213,7 +215,7 @@
     self.nick.textColor = [UIColor colorWithHexString:@"#a0a0a0"];
     [oneView addSubview:self.nick];
     
-    self.nickname = [[UILabel alloc]initWithFrame:CGRectMake(130 *ProportionAdapter, 40 *ProportionAdapter, screenWidth -140*ProportionAdapter, 15 *ProportionAdapter)];
+    self.nickname = [[UILabel alloc]initWithFrame:CGRectMake(130 *ProportionAdapter, 39 *ProportionAdapter, screenWidth -140*ProportionAdapter, 15 *ProportionAdapter)];
     self.nickname.font = [UIFont systemFontOfSize:15 *ProportionAdapter];
     self.nickname.text = @"";
     self.nickname.textColor = [UIColor colorWithHexString:@"#a0a0a0"];
@@ -310,6 +312,7 @@
 - (void)noteBtn:(UIButton *)btn{
     btn.userInteractionEnabled = NO;
     JGHNoteViewController *noteCtrl = [[JGHNoteViewController alloc]init];
+    noteCtrl.userName = _model.userName;
     noteCtrl.blockRereshNote = ^(NSString *note){
 //        _model.userName = note;
         
@@ -327,7 +330,7 @@
             self.nick.frame = CGRectMake(90 *ProportionAdapter, 40 *ProportionAdapter, 40 *ProportionAdapter, 15 *ProportionAdapter);
             self.nick.text = @"昵称:";
             
-            self.nickname.frame = CGRectMake(130 *ProportionAdapter, 40 *ProportionAdapter, screenWidth -140*ProportionAdapter, 15 *ProportionAdapter);
+            self.nickname.frame = CGRectMake(130 *ProportionAdapter, 39 *ProportionAdapter, screenWidth -140*ProportionAdapter, 17 *ProportionAdapter);
             self.nickname.text = [NSString stringWithFormat:@"%@", _model.userName];
             
             self.sexImageView.frame = CGRectMake(self.name.frame.origin.x +10*ProportionAdapter + self.name.frame.size.width, self.name.frame.origin.y +2*ProportionAdapter, 15*ProportionAdapter, 15*ProportionAdapter);

@@ -24,9 +24,15 @@
 
 #import "NoteModel.h"
 #import "NoteHandlle.h"
+
+#import "UserDataInformation.h"
+#import <RongIMLib/RongIMLib.h>
+#import <RongIMKit/RongIMKit.h>
+#import <Foundation/Foundation.h>
+
 //#import "OtherDataModel.h"
 
-@interface ContactViewController ()<UITableViewDelegate, UITableViewDataSource>
+@interface ContactViewController ()<UITableViewDelegate, UITableViewDataSource,RCIMUserInfoDataSource>
 
 @property (strong, nonatomic)UITableView *tableView;
 @property (strong, nonatomic)NSMutableArray *keyArray;
@@ -41,6 +47,7 @@
 @end
 
 @implementation ContactViewController
+
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:YES];
@@ -188,7 +195,6 @@
         
     }else{
         JGHPersonalInfoViewController *vc = [[JGHPersonalInfoViewController alloc] init];
-        
         //设置对方的id
         vc.otherKey = [_listArray[indexPath.section - 1][indexPath.row] friendUserKey];
 
@@ -269,6 +275,9 @@
 //                            model.userName = modell.userremarks;
 //                        }
                         if (model.userName) {
+                            if ([model.userName isEqualToString:@""]) {
+                                model.userName = @"该用户名暂无用户名";
+                            }
                             [allFriarr addObject:model];
                         }
                         //                [self.keyArray addObject:model.userName];
@@ -368,6 +377,8 @@
     
 }
 
+#pragma mark -----备注
+
 - (NSArray<UITableViewRowAction *> *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath{
     
     BallFriListCell *cell = [_tableView cellForRowAtIndexPath:indexPath];
@@ -378,18 +389,31 @@
         // 在最后希望cell可以自动回到默认状态，所以需要退出编辑模式
         tableView.editing = NO;
         JGHNoteViewController *AVC = [[JGHNoteViewController alloc] init];
-
         MyattenModel *model = self.listArray[indexPath.section - 1][indexPath.row];
+        AVC.userName =  model.userName;
         AVC.friendUserKey = model.friendUserKey;
         AVC.blockRereshNote = ^(NSString *name){
             
             if ([name length] > 0) {
                 cell.myLabel.text = name;
                 model.remark = name;
+                
+//                NSString *friendUserKey = [NSString stringWithFormat:@"%@", model.friendUserKey];
+//                RCUserInfo *friendUser = [[RCUserInfo alloc] initWithUserId: friendUserKey name:name portrait:[NSString stringWithFormat:@"http://imgcache.dagolfla.com/user/head/%@.jpg@200w_200h_2o",friendUserKey]];
+//                
+//                [[RCIM sharedRCIM] refreshUserInfoCache:friendUser  withUserId:friendUserKey];
+
             }else{
                 cell.myLabel.text = model.userName;
-            }
+                
+//                NSString *friendUserKey = [NSString stringWithFormat:@"%@", model.friendUserKey];
+//                RCUserInfo *friendUser = [[RCUserInfo alloc] initWithUserId: friendUserKey name:model.userName portrait:[NSString stringWithFormat:@"http://imgcache.dagolfla.com/user/head/%@.jpg@200w_200h_2o",friendUserKey]];
+//                
+//                [[RCIM sharedRCIM] refreshUserInfoCache:friendUser  withUserId:friendUserKey];
 
+            }
+            
+   
         };
         [self.navigationController pushViewController:AVC animated:YES];
     }];

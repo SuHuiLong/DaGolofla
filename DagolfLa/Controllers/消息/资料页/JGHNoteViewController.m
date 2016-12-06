@@ -7,6 +7,8 @@
 //
 
 #import "JGHNoteViewController.h"
+#import <RongIMLib/RongIMLib.h>
+#import <RongIMKit/RongIMKit.h>
 
 @interface JGHNoteViewController ()<UITextFieldDelegate>
 
@@ -48,9 +50,20 @@
         //        return;
         [dict setObject:@"" forKey:@"remark"];
         
+        NSString *friendUserKey = [NSString stringWithFormat:@"%@", _friendUserKey];
+        RCUserInfo *friendUser = [[RCUserInfo alloc] initWithUserId: friendUserKey name:_userName portrait:[NSString stringWithFormat:@"http://imgcache.dagolfla.com/user/head/%@.jpg@200w_200h_2o",friendUserKey]];
+        
+        [[RCIM sharedRCIM] refreshUserInfoCache:friendUser  withUserId:friendUserKey];
+        
     }else{
         [dict setObject:self.noteText.text forKey:@"remark"];
-    }
+    
+        NSString *friendUserKey = [NSString stringWithFormat:@"%@", _friendUserKey];
+        RCUserInfo *friendUser = [[RCUserInfo alloc] initWithUserId: friendUserKey name:self.noteText.text portrait:[NSString stringWithFormat:@"http://imgcache.dagolfla.com/user/head/%@.jpg@200w_200h_2o",friendUserKey]];
+        
+        [[RCIM sharedRCIM] refreshUserInfoCache:friendUser  withUserId:friendUserKey];
+        
+}
     
     [[JsonHttp jsonHttp]httpRequestWithMD5:@"userFriend/doUpdateUserRemark" JsonKey:nil withData:dict failedBlock:^(id errType) {
         
