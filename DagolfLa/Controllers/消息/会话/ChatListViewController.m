@@ -256,6 +256,7 @@
     _sysDetailLable = [[UILabel alloc]initWithFrame:CGRectMake(70 *ProportionAdapter, 47 *ProportionAdapter, screenWidth -100*ProportionAdapter, 20 *ProportionAdapter)];
     _sysDetailLable.font = [UIFont systemFontOfSize:13 *ProportionAdapter];
     _sysDetailLable.text = @"暂无系统消息";
+    _sysDetailLable.textColor = [UIColor colorWithHexString:@"#a0a0a0"];
     [_viewHeader addSubview:_sysDetailLable];
     
     UILabel *oneLine = [[UILabel alloc]initWithFrame:CGRectMake(10*ProportionAdapter, 77 *ProportionAdapter, screenWidth -10 *ProportionAdapter, 0.5)];
@@ -283,6 +284,7 @@
     _teamNotDetailLable = [[UILabel alloc]initWithFrame:CGRectMake(70 *ProportionAdapter, 115 *ProportionAdapter, screenWidth -100*ProportionAdapter, 20 *ProportionAdapter)];
     _teamNotDetailLable.font = [UIFont systemFontOfSize:13 *ProportionAdapter];
     _teamNotDetailLable.text = @"暂无球队消息";
+    _teamNotDetailLable.textColor = [UIColor colorWithHexString:@"#a0a0a0"];
     [_viewHeader addSubview:_teamNotDetailLable];
     
     UILabel *twoLine = [[UILabel alloc]initWithFrame:CGRectMake(10 *ProportionAdapter, 148 *ProportionAdapter, screenWidth -10*ProportionAdapter, 0.5)];
@@ -292,6 +294,7 @@
     UILabel *proLable = [[UILabel alloc]initWithFrame:CGRectMake(10*ProportionAdapter, 159 *ProportionAdapter, 200 *ProportionAdapter, 28 *ProportionAdapter)];
     proLable.font = [UIFont systemFontOfSize:18 *ProportionAdapter];
     proLable.text = @"会话列表";
+    proLable.textColor = [UIColor colorWithHexString:@"#313131"];
     [_viewHeader addSubview:proLable];
     
     UILabel *threeLine = [[UILabel alloc]initWithFrame:CGRectMake(0, 195 *ProportionAdapter, screenWidth, 1)];

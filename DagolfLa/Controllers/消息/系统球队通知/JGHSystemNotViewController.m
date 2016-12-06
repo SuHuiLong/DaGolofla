@@ -31,6 +31,17 @@ static NSString *const JGHSysInformCellIdentifier = @"JGHSysInformCell";
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     
+    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"backL"] style:UIBarButtonItemStylePlain target:self action:@selector(backButtonClcik)];
+    item.tintColor=[UIColor whiteColor];
+    self.navigationItem.leftBarButtonItem = item;
+}
+
+- (void)backButtonClcik{
+    
+    [self.navigationController popViewControllerAnimated:YES];
+    
+    [_promptLable removeFromSuperview];
+    
 }
 
 - (void)viewDidLoad {
@@ -88,11 +99,14 @@ static NSString *const JGHSysInformCellIdentifier = @"JGHSysInformCell";
                 _promptLable = nil;
             }
             
-            _promptLable = [[UILabel alloc]initWithFrame:CGRectMake(0, 20*ProportionAdapter, screenWidth, 20 *ProportionAdapter)];
+            _promptLable = [[UILabel alloc]initWithFrame:CGRectMake(0, (screenHeight/2)-10*ProportionAdapter, screenWidth, 20 *ProportionAdapter)];
+            
+            UIWindow *window = [UIApplication sharedApplication].keyWindow;
+            _promptLable.center = window.center;
             _promptLable.font = [UIFont systemFontOfSize:16*ProportionAdapter];
             _promptLable.textAlignment = NSTextAlignmentCenter;
             _promptLable.text = @"暂无系统通知";
-            [self.systemNotTableView addSubview:_promptLable];
+            [window addSubview:_promptLable];
         }else{
             self.systemNotTableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
             if (_promptLable != nil) {
@@ -141,11 +155,11 @@ static NSString *const JGHSysInformCellIdentifier = @"JGHSysInformCell";
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     JGHInformModel *model = [[JGHInformModel alloc]init];
     model = _dataArray[indexPath.row];
-    CGSize titleSize = [model.title boundingRectWithSize:CGSizeMake(screenWidth, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:17*ProportionAdapter]} context:nil].size;
+//    CGSize titleSize = [model.title boundingRectWithSize:CGSizeMake(screenWidth, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:17*ProportionAdapter]} context:nil].size;
     
-    CGSize contentSize = [model.content boundingRectWithSize:CGSizeMake(screenWidth, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:15*ProportionAdapter]} context:nil].size;
+    CGSize contentSize = [[NSString stringWithFormat:@"    %@", model.content] boundingRectWithSize:CGSizeMake(screenWidth -20 *ProportionAdapter, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:15*ProportionAdapter]} context:nil].size;
     
-    return 70 *ProportionAdapter + contentSize.height +titleSize.height;
+    return 60 *ProportionAdapter + contentSize.height;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{

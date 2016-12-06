@@ -225,7 +225,6 @@
     [dict setObject:[user objectForKey:BDMAPLAT] forKey:@"xIndex"];
     [dict setObject:[user objectForKey:BDMAPLNG] forKey:@"yIndex"];
     
-    
     [[JsonHttp jsonHttp]httpRequest:@"ball/getBallSearchList" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
         
     } completionBlock:^(id data) {
