@@ -12,8 +12,8 @@
 @interface MyattenModel : BaseModel
 
 @property (copy, nonatomic) NSNumber* userFollowId;
-@property (copy, nonatomic) NSNumber* userId;
-@property (copy, nonatomic) NSNumber* otherUserId;
+@property (strong, nonatomic) NSNumber* userId;
+@property (strong, nonatomic) NSNumber* otherUserId;
 @property (copy, nonatomic) NSString* createTime;
 @property (copy, nonatomic) NSNumber* sex;
 @property (copy, nonatomic) NSString* userName;
@@ -21,7 +21,7 @@
 @property (copy, nonatomic) NSString* birthday;
 @property (copy, nonatomic) NSNumber* almost;
 @property (copy, nonatomic) NSString* address;
-@property (copy, nonatomic) NSNumber* friendUserKey;
+@property (strong, nonatomic) NSNumber* friendUserKey;
 @property (copy, nonatomic) NSString* remark; // 备注
 
 @property (strong,nonatomic) ChineseString *chineseString;

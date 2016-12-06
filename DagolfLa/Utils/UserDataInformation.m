@@ -45,46 +45,34 @@
 }
 
 - (void)getUserInfoWithUserId:(NSString *)userId completion:(void (^)(RCUserInfo *))completion {
-    NSUserDefaults *user=[NSUserDefaults standardUserDefaults];
-    NSMutableDictionary *dict=[[NSMutableDictionary alloc] init];
-    if ([user objectForKey:@"chatDict"]) {
-        NSDictionary *dict0=[user objectForKey:@"chatDict"];
-        dict=[[NSMutableDictionary alloc] initWithDictionary:dict0];
-    }
-    [dict setObject:@"1" forKey:userId];
-    [user setObject:dict forKey:@"chatDict"];
-    [user synchronize];
-    //NSLog(@"%@   %@",[user objectForKey:@"userId"],userId);
-    [[PostDataRequest sharedInstance] postDataRequest:@"user/getUserNameandPic.do" parameter:@{@"uid":[user objectForKey:@"userId"],@"orderUserId":userId} success:^(id respondsData) {
-        NSDictionary *dict=[NSJSONSerialization JSONObjectWithData:respondsData options:NSJSONReadingAllowFragments error:nil];
-        if ([[dict objectForKey:@"success"] boolValue]) {
+    
+    NSMutableDictionary *dataDic = [NSMutableDictionary dictionary];
+    [dataDic setObject:DEFAULF_USERID forKey:@"userKey"];
+    [dataDic setObject:userId forKey:@"seeUserKey"];
+    [dataDic setObject:[NSString stringWithFormat:@"userKey=%@&seeUserKey=%@dagolfla.com",DEFAULF_USERID, userId] forKey:@"md5"];
+    
+    [[JsonHttp jsonHttp] httpRequest:@"user/getUserMainInfo" JsonKey:nil withData:dataDic requestMethod:@"GET" failedBlock:^(id errType) {
+        
+    } completionBlock:^(id data) {
+        
+        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+
             RCUserInfo *userInfo = [[RCUserInfo alloc] init];
             userInfo.userId = userId;
-            if ([[dict objectForKey:@"rows"] objectForKey:@"other"] != [NSNull null]) {
-                if (![Helper isBlankString:[[[dict objectForKey:@"rows"] objectForKey:@"other"]objectForKey:@"userName"]]) {
-                    
-                    NoteModel *model = [NoteHandlle selectNoteWithUID:[[[dict objectForKey:@"rows"] objectForKey:@"other"]objectForKey:@"userId"]];
-                    if ([model.userremarks isEqualToString:@"(null)"] || [model.userremarks isEqualToString:@""] || model.userremarks == nil) {
-                        userInfo.name = [[[dict objectForKey:@"rows"] objectForKey:@"other"]objectForKey:@"userName"];
-                    }else{
-                        userInfo.name = model.userremarks;
-                    }
-                    
-//                    userInfo.name = [[[dict objectForKey:@"rows"] objectForKey:@"other"]objectForKey:@"userName"];
-                }
-                if(![Helper isBlankString:[[[dict objectForKey:@"rows"] objectForKey:@"other"]objectForKey:@"pic"]])
-                    userInfo.portraitUri = [NSString stringWithFormat:@"http://www.dagolfla.com:8081/small_%@",[[[dict objectForKey:@"rows"] objectForKey:@"other"]objectForKey:@"pic"]];
+
+            if ([data objectForKey:@"userFriend"]) {
+                
+                userInfo.name = [[data objectForKey:@"userFriend"] objectForKey:@"remark"] ? [[data objectForKey:@"userFriend"] objectForKey:@"remark"] : [[data objectForKey:@"userFriend"] objectForKey:@"userName"];
+                userInfo.portraitUri = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/user/head/%@.jpg@200w_200h_2o",userId];
+                
+                completion(userInfo);
             }
             
-            
-            completion(userInfo);
-        }else {
-            completion(nil);
         }
-    } failed:^(NSError *error) {
-        completion(nil);
     }];
+
 }
+
 - (void)getGroupInfoWithGroupId:(NSString *)groupId completion:(void (^)(RCGroup *))completion {
     NSUserDefaults *user=[NSUserDefaults standardUserDefaults];
     NSMutableDictionary *dict=[[NSMutableDictionary alloc] init];

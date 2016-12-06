@@ -15,4 +15,6 @@ typedef void(^BlockRereshNote)(NSString *);
 
 @property (nonatomic, retain)NSNumber *friendUserKey;
 
+@property (nonatomic, copy) NSString *userName;
+
 @end
