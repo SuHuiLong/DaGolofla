@@ -20,7 +20,7 @@
 //        self.isReadImageView = [[UIImageView alloc]initWithFrame:CGRectMake(20 *ProportionAdapter, 15 *ProportionAdapter, 10 *ProportionAdapter, 10*ProportionAdapter)];
         
         self.name = [[UILabel alloc]initWithFrame:CGRectMake(10 *ProportionAdapter, 15 *ProportionAdapter, screenWidth -60*ProportionAdapter, 40 *ProportionAdapter)];
-        self.name.font = [UIFont systemFontOfSize:17 *ProportionAdapter];
+        self.name.font = [UIFont systemFontOfSize:16 *ProportionAdapter];
         self.name.numberOfLines = 0;
         self.name.text = @"球队通知u 十多年的南非进口你的看法就给法国的风格到逢年过节看地方能够看地方能见度开放给你空间的风格";
         [self addSubview:self.name];
@@ -71,11 +71,11 @@
     self.time.frame = CGRectMake(screenWidth -100 *ProportionAdapter, titleSize.height + 25*ProportionAdapter, 80 *ProportionAdapter, 20 *ProportionAdapter);
     
     
-    self.name.text = model.content;
+    self.name.text = model.title;
     
-    self.teamName.text = model.title;
+    self.teamName.text = model.nSrcName;
     
-    self.time.text = model.createTime;
+    self.time.text = [NSString stringWithFormat:@"%@", [Helper distanceTimeWithBeforeTime:model.createTime]];
 }
 
 @end

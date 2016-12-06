@@ -41,7 +41,6 @@
     UILabel *_sysDetailLable;
     UILabel *_teamNotDetailLable;
     
-    UILabel *_promptLable;
 }
 
 @end
@@ -123,6 +122,19 @@
 }
 #pragma mark -- 下载未读消息数量
 - (void)loadMessageData{
+    
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"userId"])
+    {
+        
+    }
+    else
+    {
+        
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"君高高尔夫" message:@"确定是否立即登录？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+        [alertView show];
+        return;
+    }
+    
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     [dict setObject:DEFAULF_USERID forKey:@"userKey"];
     [dict setObject:[Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@dagolfla.com", DEFAULF_USERID]] forKey:@"md5"];
@@ -414,24 +426,6 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         int count = [[RCIMClient sharedRCIMClient]
                      getUnreadCount:self.displayConversationTypeArray];
-        
-        if (count == 0) {
-            if (_promptLable != nil) {
-                [_promptLable removeFromSuperview];
-                _promptLable = nil;
-            }
-            
-            _promptLable = [[UILabel alloc]initWithFrame:CGRectMake(0, 220*ProportionAdapter, screenWidth, 20 *ProportionAdapter)];
-            _promptLable.font = [UIFont systemFontOfSize:16*ProportionAdapter];
-            _promptLable.textAlignment = NSTextAlignmentCenter;
-            _promptLable.text = @"暂无会话消息";
-            [self.conversationListTableView addSubview:_promptLable];
-        }else{
-            if (_promptLable != nil) {
-                [_promptLable removeFromSuperview];
-                _promptLable = nil;
-            }
-        }
         
         if (count > 10) {
             self.conversationListTableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;

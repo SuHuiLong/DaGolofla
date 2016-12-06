@@ -33,4 +33,6 @@
 
 @property (nonatomic, retain)NSNumber *timeKey;
 
+@property (nonatomic, retain)NSString *nSrcName;//球队名称
+
 @end

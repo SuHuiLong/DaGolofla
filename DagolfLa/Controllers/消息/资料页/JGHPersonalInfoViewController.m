@@ -148,6 +148,9 @@
                 [self.submitBtn setTitle:@"加球友" forState:UIControlStateNormal];
                 self.nickname.text = @"";
                 self.nick.text = @"";
+                
+                self.alm.frame = CGRectMake(90 *ProportionAdapter, 40 *ProportionAdapter, 40 *ProportionAdapter, 15 *ProportionAdapter);
+                self.almost.frame = CGRectMake(130 *ProportionAdapter, 40 *ProportionAdapter, screenWidth -140*ProportionAdapter, 15 *ProportionAdapter);
                 self.almost.text = [NSString stringWithFormat:@"%.1f", [_model.almost floatValue]];
             }
             
