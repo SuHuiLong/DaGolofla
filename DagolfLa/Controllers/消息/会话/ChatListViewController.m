@@ -41,6 +41,7 @@
     UILabel *_sysDetailLable;
     UILabel *_teamNotDetailLable;
     
+    UIButton *_costumBtn;
 }
 
 @end
@@ -101,9 +102,16 @@
     }
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"nav_bg"] forBarMetrics:UIBarMetricsDefault];
 
-    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"qytxl"] style:UIBarButtonItemStylePlain target:self action:@selector(teamFClick)];
-    item.tintColor = [UIColor whiteColor];
-    self.navigationItem.rightBarButtonItem = item;
+    _costumBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44 * ProportionAdapter, 44 * ProportionAdapter)];
+    [_costumBtn setImage:[UIImage imageNamed:@"qytxl"] forState:(UIControlStateNormal)];
+    [_costumBtn addTarget:self action:@selector(teamFClick) forControlEvents:(UIControlEventTouchUpInside)];
+    UIBarButtonItem *itm = [[UIBarButtonItem alloc] initWithCustomView:_costumBtn];
+    
+    self.navigationItem.rightBarButtonItem = itm;
+    
+//    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"qytxl"] style:UIBarButtonItemStylePlain target:self action:@selector(teamFClick)];
+//    item.tintColor = [UIColor whiteColor];
+//    self.navigationItem.rightBarButtonItem = item;
     
     self.conversationListTableView.backgroundColor=[UIColor whiteColor];
     self.conversationListTableView.frame = CGRectMake(0, 0, screenWidth, screenHeight);
@@ -159,6 +167,23 @@
             [[_viewHeader viewWithTag:1001] removeFromSuperview];
             [[_viewHeader viewWithTag:1002] removeFromSuperview];
             [[_viewHeader viewWithTag:1003] removeFromSuperview];
+            
+            [[_costumBtn viewWithTag:900] removeFromSuperview];
+            if (100 > _newFriendUnread && _newFriendUnread >0) {
+                RCDTabBarBtn *btn = [[RCDTabBarBtn alloc] initWithFrame:CGRectMake(24 *ProportionAdapter, 5 *ProportionAdapter, 20 *ProportionAdapter, 20 *ProportionAdapter)];
+                btn.layer.cornerRadius = 9;//圆形
+                btn.unreadCount = [NSString stringWithFormat:@"%td", _newFriendUnread];
+                btn.tag = 900;
+                [_costumBtn addSubview:btn];
+            }
+            
+            if (_newFriendUnread > 100) {
+                RCDTabBarBtn *btn = [[RCDTabBarBtn alloc] initWithFrame:CGRectMake(24 *ProportionAdapter, 5 *ProportionAdapter, 20 *ProportionAdapter, 20 *ProportionAdapter)];
+                btn.layer.cornerRadius = 9;//圆形
+                [btn setImage:[UIImage imageNamed:@"icn_mesg_99+"] forState:UIControlStateNormal];
+                btn.tag = 900;
+                [_costumBtn addSubview:btn];
+            }
             
             if (100 > _systemUnread && _systemUnread >0) {
                 RCDTabBarBtn *btn = [[RCDTabBarBtn alloc] initWithFrame:CGRectMake(50 *ProportionAdapter, 10 *ProportionAdapter, 20 *ProportionAdapter, 20 *ProportionAdapter)];
@@ -424,23 +449,22 @@
 
 - (void)updateBadgeValueForTabBarItem
 {
-    
     __weak typeof(self) __weakSelf = self;
     dispatch_async(dispatch_get_main_queue(), ^{
         int count = [[RCIMClient sharedRCIMClient]
                      getUnreadCount:self.displayConversationTypeArray];
         
-        if (count > 10) {
-            self.conversationListTableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
-        }else{
-            self.conversationListTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-        }
+//        if (count > 10) {
+//            self.conversationListTableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+//        }else{
+//            self.conversationListTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+//        }
         
-        if ((count + (int)_teamUnread +(int)_systemUnread) > 0) {
+        if ((count + (int)_teamUnread +(int)_systemUnread +(int)_newFriendUnread) > 0) {
             //      __weakSelf.tabBarItem.badgeValue =
             //          [[NSString alloc] initWithFormat:@"%d", count];
 //            int badgeValue = count+_teamUnread+_systemUnread;
-            [__weakSelf.tabBarController.tabBar showBadgeOnItemIndex:2 badgeValue:count+ (int)_teamUnread + (int)_systemUnread];
+            [__weakSelf.tabBarController.tabBar showBadgeOnItemIndex:2 badgeValue:count+ (int)_teamUnread + (int)_systemUnread + (int)_newFriendUnread];
             
         } else {
             //      __weakSelf.tabBarItem.badgeValue = nil;
