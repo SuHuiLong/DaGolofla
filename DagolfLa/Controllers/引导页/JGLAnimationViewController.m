@@ -23,6 +23,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     //设置背景(注意这个图片其实在根图层)
     _imgv = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight)];
     [self.view addSubview:_imgv];
@@ -195,5 +196,15 @@ static int timeNumber = 0;
 #pragma mark 动画完成
 -(void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag{
 }
+
+- (BOOL)shouldAutorotate
+{
+    return NO;
+}
+
+//- (UIInterfaceOrientationMask)supportedInterfaceOrientations
+//{
+//    return UIInterfaceOrientationMaskPortrait | UIDeviceOrientationLandscapeRight;
+//}
 
 @end

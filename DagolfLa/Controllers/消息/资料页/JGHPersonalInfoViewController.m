@@ -21,6 +21,8 @@
     NSInteger _state;//好友状态
     
     UIImage *_headerImage;
+    
+    NSString *_userFriendTimeKey;//关系Key
 }
 
 @property (nonatomic, retain)NSMutableArray *momentsPicList;
@@ -94,18 +96,28 @@
             if ([data objectForKey:@"userFriend"]) {
                 NSDictionary *userFriend = [NSDictionary dictionary];
                 userFriend = [data objectForKey:@"userFriend"];
+                _userFriendTimeKey = [NSString stringWithFormat:@"%@", [userFriend objectForKey:@"timeKey"]];
                 NSInteger state = [[userFriend objectForKey:@"state"] integerValue];
-                if (state == -1) {
-                    //加好友
-                    [self.submitBtn setTitle:@"加球友" forState:UIControlStateNormal];
-                }else if (state == 0){
-                    //待验证
-                    [self.submitBtn setTitle:@"待验证" forState:UIControlStateNormal];
-                }else if (state == 1){
+//                if (state == -1) {
+//                    //加好友
+//                    [self.submitBtn setTitle:@"加球友" forState:UIControlStateNormal];
+//                }else if (state == 0){
+//                    //待验证
+//                    [self.submitBtn setTitle:@"待验证" forState:UIControlStateNormal];
+//                }else if (state == 1){
+//                    //发消息
+//                    [self.submitBtn setTitle:@"发消息" forState:UIControlStateNormal];
+//                }else{
+//                    //2 -- 拒绝
+//                    [self.submitBtn setTitle:@"加球友" forState:UIControlStateNormal];
+//                }
+                
+                if (state == 1) {
                     //发消息
                     [self.submitBtn setTitle:@"发消息" forState:UIControlStateNormal];
+                }else if (state == 0){
+                    [self.submitBtn setTitle:@"通过验证" forState:UIControlStateNormal];
                 }else{
-                    //2 -- 拒绝
                     [self.submitBtn setTitle:@"加球友" forState:UIControlStateNormal];
                 }
                 
@@ -444,6 +456,27 @@
         //设置不现实自己的名称  NO表示不现实
         vc.displayUserNameInCell = NO;
         [self.navigationController pushViewController:vc animated:YES];
+    }else if (_state == 0){
+        [LQProgressHud showLoading:@"加载中..."];
+        NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+        [dict setObject:_otherKey forKey:@"userFriendKey"];
+        [dict setObject:@1 forKey:@"state"];
+        [dict setObject:_userFriendTimeKey forKey:@"timeKey"];
+        [[JsonHttp jsonHttp]httpRequestWithMD5:@"userFriend/doApplyHandle" JsonKey:nil withData:dict failedBlock:^(id errType) {
+            [LQProgressHud hide];
+        } completionBlock:^(id data) {
+            NSLog(@"%@", data);
+            [LQProgressHud hide];
+            
+            if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+                [self loadData];
+            }else{
+                if ([data objectForKey:@"packResultMsg"]) {
+                    [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+                }
+            }
+        }];
+        
     }else{
         JGAddFriendViewController *addFriendVC = [[JGAddFriendViewController alloc] init];
         addFriendVC.otherUserKey = _otherKey;
@@ -452,7 +485,6 @@
         };
         [self.navigationController pushViewController:addFriendVC animated:YES];
     }
-    
     
     btn.userInteractionEnabled = YES;
 }

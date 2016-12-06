@@ -326,6 +326,11 @@
     }
 }
 
+//- (UIInterfaceOrientationMask)supportedInterfaceOrientations
+//{
+//    return UIInterfaceOrientationMaskPortrait | UIDeviceOrientationLandscapeRight;
+//}
+
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation{
     NSLog(@"fromInterfaceOrientation == %td", fromInterfaceOrientation);
     UIWindow *window = [UIApplication sharedApplication].keyWindow;
@@ -336,7 +341,16 @@
     browser.frame = window.frame;
     browser.scrollView.frame = window.frame;
     
-    UIImageView *subImageView = [browserImageView.scroll viewWithTag:1000];
+    NSLog(@"%@", browserImageView);
+   
+    
+    UIScrollView *browserImageViewScroll = [browserImageView viewWithTag:1000];
+    
+    NSLog(@"browserImageViewScroll == %@", browserImageViewScroll.subviews);
+    
+    UIImageView *subImageView = [browserImageViewScroll viewWithTag:10000];
+    
+     NSLog(@"subviews == %@", subImageView.subviews);
     
     if (_rotating == 0) {
         _imageViewRect = subImageView.frame;
@@ -344,13 +358,20 @@
     
     _rotating ++;
     
+    //张数
+    UILabel *indexLabel = [browser viewWithTag:200];
+    
     if (fromInterfaceOrientation == 3) {
         
-//        subImageView.frame = CGRectMake(0, 198*ProportionAdapter, screenWidth, screenHeight -2*198*ProportionAdapter);
         subImageView.frame = _imageViewRect;
+        
+        indexLabel.center = CGPointMake(screenHeight * 0.5, 30);
     }else{
         self.navigationController.navigationBarHidden = YES;
 
+        indexLabel.bounds = CGRectMake(0, 0, 80, 30);
+        indexLabel.center = CGPointMake(screenWidth * 0.5, 30);
+        
         subImageView.frame = window.frame;
     }
 }
@@ -364,7 +385,7 @@
     
     NSNumber *orientationTarget = [NSNumber numberWithInt:UIDeviceOrientationPortrait];
     [[UIDevice currentDevice] setValue:orientationTarget forKey:@"orientation"];
-    //UIDeviceOrientationPortrait
+    //
     _shouldAutorotate = 0;
     _rotating = 0;
     [self shouldAutorotate];

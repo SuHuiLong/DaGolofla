@@ -66,6 +66,7 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    
     NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
     [user setObject:[NSNumber numberWithFloat:31.15] forKey:BDMAPLAT];//纬度
     [user setObject:[NSNumber numberWithFloat:121.56] forKey:BDMAPLNG];//经度
@@ -84,8 +85,6 @@
     [IQKeyboardManager sharedManager].enable = YES;
     [IQKeyboardManager sharedManager].enableAutoToolbar = NO;
     [IQKeyboardManager sharedManager].shouldResignOnTouchOutside = YES;
-    
-    
     
     [UMSocialData setAppKey:@"561e0d97e0f55a66640014e2"];
     
@@ -122,16 +121,8 @@
         [JPUSHService registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert) categories:nil];
     }
     
-    //如不需要使用IDFA，advertisingIdentifier 可为nil
-//    [JPUSHService setupWithOption:launchOptions appKey:@"831cd22faea3454090c15bbe" channel:nil apsForProduction:YES];
-    
-//    JPUSHService.delivered = NO;
     //测试NO，线上YES；
     [JPUSHService setupWithOption:launchOptions appKey:@"831cd22faea3454090c15bbe" channel:@"Publish chanel" apsForProduction:NO];
-//    [JPUSHService setupWithOption:launchOptions appKey:@"831cd22faea3454090c15bbe"
-//                          channel:nil
-//                 apsForProduction:NO
-//            advertisingIdentifier:nil];
     
     //2.1.9版本新增获取registration id block接口。
     [JPUSHService registrationIDCompletionHandler:^(int resCode, NSString *registrationID) {
@@ -144,20 +135,6 @@
         }
     }];
     
-    
-//    NSDictionary *remoteNotification = [launchOptions objectForKey: UIApplicationLaunchOptionsRemoteNotificationKey];
-//    
-//    if ([[UIDevice currentDevice].systemVersion floatValue] >= 8.0) {
-//        //可以添加自定义categories
-//        [JPUSHService registerForRemoteNotificationTypes:(UIUserNotificationTypeBadge |
-//                                                          UIUserNotificationTypeSound |
-//                                                          UIUserNotificationTypeAlert)
-//                                              categories:nil];
-//    }
-//    
-    // Required
-    //如需兼容旧版本的方式，请依旧使用[JPUSHService setupWithOption:launchOptions]方式初始化和同时使用pushConfig.plist文件声明appKey等配置内容。
-//    [JPUSHService setupWithOption:launchOptions appKey:@"831cd22faea3454090c15bbe" channel:nil apsForProduction:YES];
     //-------------
     NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
     [defaultCenter addObserver:self selector:@selector(networkDidReceiveMessage:) name:kJPFNetworkDidReceiveMessageNotification object:nil];
@@ -170,8 +147,6 @@
         [[PostDataRequest sharedInstance] postDataRequest:@"user/queryById.do" parameter:@{@"userId":[user objectForKey:@"userId"]} success:^(id respondsData) {
             NSDictionary *dict=[NSJSONSerialization JSONObjectWithData:respondsData options:NSJSONReadingAllowFragments error:nil];
             if ([[dict objectForKey:@"success"] integerValue]==1) {
-                
-                
                 //保存用户数据信息
                 UserInformationModel *model = [[UserInformationModel alloc] init];
                 [model setValuesForKeysWithDictionary:[dict objectForKey:@"rows"]];
@@ -645,7 +620,7 @@
 //    [JPUSHService handleRemoteNotification:userInfo];
     
      // 取得 APNs 标准信息内容
-//     NSDictionary *aps = [userInfo valueForKey:@"aps"];
+     NSDictionary *aps = [userInfo valueForKey:@"aps"];
 //     NSString *content = [aps valueForKey:@"alert"]; //推送显示的内容
 //     NSInteger badge = [[aps valueForKey:@"badge"] integerValue]; //badge数量
 //     NSString *sound = [aps valueForKey:@"sound"]; //播放的声音
