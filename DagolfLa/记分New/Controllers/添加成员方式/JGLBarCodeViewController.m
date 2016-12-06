@@ -343,6 +343,9 @@
                 NSNumber *numTemp = [numberFormatter numberFromString:[Helper returnUrlString:str WithKey:@"userKey"]];
 
                 JGHPersonalInfoViewController *personInfoVC = [[JGHPersonalInfoViewController alloc] init];
+                personInfoVC.personRemark = ^(NSString *remark){
+                    
+                };
                 personInfoVC.otherKey = numTemp;
                 [self.navigationController pushViewController:personInfoVC animated:YES];
                 

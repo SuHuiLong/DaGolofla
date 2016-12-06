@@ -361,6 +361,10 @@
         personInfoVC.otherKey = [_dataArray[indexPath.row] friendUserKey];
     }
     
+    personInfoVC.personRemark = ^(NSString *remark){
+        
+    };
+    
     [self.navigationController pushViewController:personInfoVC animated:YES];
 
 //    ChatDetailViewController *vc = [[ChatDetailViewController alloc] init];

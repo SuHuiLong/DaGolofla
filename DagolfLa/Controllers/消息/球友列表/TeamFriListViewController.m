@@ -538,6 +538,9 @@
             JGHPersonalInfoViewController *personInfoVC = [[JGHPersonalInfoViewController alloc] init];
             MyattenModel *myModel = self.searchArray[indexPath.row];
             personInfoVC.otherKey = myModel.userId;
+            personInfoVC.personRemark = ^(NSString *remark){
+                
+            };
             [self.navigationController pushViewController:personInfoVC animated:YES];
 
         }

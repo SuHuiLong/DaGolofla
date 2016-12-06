@@ -140,6 +140,9 @@
         
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"君高高尔夫" message:@"确定是否立即登录？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
         [alertView show];
+        
+        [self.conversationListTableView.header endRefreshing];
+        
         return;
     }
     
@@ -344,6 +347,21 @@
 #pragma mark -- 系统通知
 - (void)sysMessbtn:(UIButton *)btn{
     btn.userInteractionEnabled = NO;
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"userId"])
+    {
+        
+    }
+    else
+    {
+        
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"君高高尔夫" message:@"确定是否立即登录？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+        [alertView show];
+        
+        [self.conversationListTableView.header endRefreshing];
+        btn.userInteractionEnabled = YES;
+        
+        return;
+    }
     
     _systemUnread = 0;
     [self updateBadgeValueForTabBarItem];
@@ -357,6 +375,21 @@
 #pragma mark -- 球队通知
 - (void)teamNotbtn:(UIButton *)btn{
     btn.userInteractionEnabled = NO;
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"userId"])
+    {
+        
+    }
+    else
+    {
+        
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"君高高尔夫" message:@"确定是否立即登录？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+        [alertView show];
+        
+        [self.conversationListTableView.header endRefreshing];
+        btn.userInteractionEnabled = YES;
+        
+        return;
+    }
     
     _teamUnread = 0;
     [self updateBadgeValueForTabBarItem];
