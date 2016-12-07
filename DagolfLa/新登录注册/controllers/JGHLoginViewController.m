@@ -318,7 +318,7 @@
                 //发送消息
                 [[NSNotificationCenter defaultCenter]postNotification:notice];
                 
-                NSString *token = [[userDict objectForKey:@"rows"] objectForKey:@"rongTk"];
+                NSString *token = [userDict objectForKey:@"rongTk"];
                 //注册融云
                 [self requestRCIMWithToken:token];
                 [self postAppJpost];
@@ -392,7 +392,7 @@
                             //发送消息
                             [[NSNotificationCenter defaultCenter]postNotification:notice];
                             
-                            NSString *token = [[userDict objectForKey:@"rows"] objectForKey:@"rongTk"];
+                            NSString *token = [userDict objectForKey:@"rongTk"];
                             
                             _reloadCtrlData();
                             [self.navigationController popViewControllerAnimated:YES];
@@ -661,7 +661,8 @@
     [[RCIM sharedRCIM] setGroupInfoDataSource:[UserDataInformation sharedInstance]];
     NSString *str1=[NSString stringWithFormat:@"%@",[user objectForKey:userID]];
     NSString *str2=[NSString stringWithFormat:@"%@",[user objectForKey:@"userName"]];
-    NSString *str3=[NSString stringWithFormat:@"http://www.dagolfla.com:8081/small_%@",[user objectForKey:@"pic"]];
+    NSString *str3=[NSString stringWithFormat:@"http://imgcache.dagolfla.com/user/head/%@.jpg@200w_200h_2o",[user objectForKey:userID]];
+//    NSString *str31=[NSString stringWithFormat:@"http://www.dagolfla.com:8081/small_%@",[user objectForKey:@"pic"]];
     RCUserInfo *userInfo=[[RCUserInfo alloc] initWithUserId:str1 name:str2 portrait:str3];
     [RCIM sharedRCIM].currentUserInfo=userInfo;
     [RCIM sharedRCIM].enableMessageAttachUserInfo=NO;

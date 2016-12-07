@@ -196,6 +196,16 @@
     }else{
         JGHPersonalInfoViewController *vc = [[JGHPersonalInfoViewController alloc] init];
         //设置对方的id
+        MyattenModel *model = self.listArray[indexPath.section - 1][indexPath.row];
+        vc.personRemark = ^(NSString *markName){
+            if ([markName length] > 0) {
+                model.remark = markName;
+                
+            }else{
+                model.remark = nil;
+            }
+            [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:YES];
+        };
         vc.otherKey = [_listArray[indexPath.section - 1][indexPath.row] friendUserKey];
 
         [self.navigationController pushViewController:vc animated:YES];

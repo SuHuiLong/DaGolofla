@@ -51,6 +51,7 @@
 @property (nonatomic, retain)NSString *rongTk;//融云唯一标识,用于融云及时聊天
 @property (nonatomic, retain)NSString *jgpush;//极光推送唯一标识
 
+@property (copy, nonatomic) NSString* remark; // 备注
 
 
 @end
