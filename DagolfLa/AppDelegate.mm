@@ -70,7 +70,7 @@
     NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
     [user setObject:[NSNumber numberWithFloat:31.15] forKey:BDMAPLAT];//纬度
     [user setObject:[NSNumber numberWithFloat:121.56] forKey:BDMAPLNG];//经度
-    [user setObject:@"上海" forKey:CITYNAME];//城市名
+    [user setObject:@"上海市" forKey:CITYNAME];//城市名
     [user synchronize];
     //定位
     [self getCurPosition];
@@ -136,8 +136,8 @@
     }];
     
     //-------------
-    NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
-    [defaultCenter addObserver:self selector:@selector(networkDidReceiveMessage:) name:kJPFNetworkDidReceiveMessageNotification object:nil];
+//    NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
+//    [defaultCenter addObserver:self selector:@selector(networkDidReceiveMessage:) name:kJPFNetworkDidReceiveMessageNotification object:nil];
     
     //融云
 //    NSUserDefaults *user=[NSUserDefaults standardUserDefaults];
@@ -297,14 +297,8 @@
 //            }];
             
         }else{
-            NSString *actKey = @"";
-            NSString *actDetail = @"";
-            if ([url query]) {
-                actKey = [[[NSString stringWithFormat:@"%@", [url query]] componentsSeparatedByString:@"="] objectAtIndex:1];
-                actDetail = [[[NSString stringWithFormat:@"%@", [url query]] componentsSeparatedByString:@"="] objectAtIndex:0];
-            }
             
-            [self gotoAppPage:actKey switchDetails:actDetail];
+            [self APSHomeDealUrl:[url query]];
         }
 
     }
@@ -404,14 +398,7 @@
             }];
             
         }else{
-            NSString *actKey = @"";
-            NSString *actDetail = @"";
-            if ([url query]) {
-                actKey = [[[NSString stringWithFormat:@"%@", [url query]] componentsSeparatedByString:@"="] objectAtIndex:1];
-                actDetail = [[[NSString stringWithFormat:@"%@", [url query]] componentsSeparatedByString:@"="] objectAtIndex:0];
-            }
-            
-            [self gotoAppPage:actKey switchDetails:actDetail];
+            [self APSHomeDealUrl:[url query]];
         }
         
         return YES;
@@ -442,14 +429,7 @@
             }];
             
         }else{
-            NSString *actKey = @"";
-            NSString *actDetail = @"";
-            if ([url query]) {
-                actKey = [[[NSString stringWithFormat:@"%@", [url query]] componentsSeparatedByString:@"="] objectAtIndex:1];
-                actDetail = [[[NSString stringWithFormat:@"%@", [url query]] componentsSeparatedByString:@"="] objectAtIndex:0];
-            }
-            
-            [self gotoAppPage:actKey switchDetails:actDetail];
+            [self APSHomeDealUrl:[url query]];
         }
         
         return YES;
@@ -494,14 +474,7 @@
             }];
             
         }else{
-            NSString *actKey = @"";
-            NSString *actDetail = @"";
-            if ([url query]) {
-                actKey = [[[NSString stringWithFormat:@"%@", [url query]] componentsSeparatedByString:@"="] objectAtIndex:1];
-                actDetail = [[[NSString stringWithFormat:@"%@", [url query]] componentsSeparatedByString:@"="] objectAtIndex:0];
-            }
-            
-            [self gotoAppPage:actKey switchDetails:actDetail];
+            [self APSHomeDealUrl:[url query]];
         }
         
         return YES;
@@ -511,38 +484,45 @@
         return YES;
     }
 }
-
-#pragma mark -- 跳转到指定活动详情页面
--(void)gotoAppPage:(NSString *)timekey switchDetails:(NSString *)details
-{
-    if ([timekey integerValue]>0) {
-        NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-        
-        [dict setObject:[NSString stringWithFormat:@"%td", [timekey integerValue]] forKey:@"timekey"];
-        [dict setObject:[NSString stringWithFormat:@"%@", details] forKey:@"details"];
-        //创建一个消息对象
-        NSNotification * notice = [NSNotification notificationWithName:@"PushJGTeamActibityNameViewController" object:nil userInfo:dict];
-        //发送消息
-        [[NSNotificationCenter defaultCenter]postNotification:notice];
-
-    }
-    else{
-        if (![Helper isBlankString:timekey]) {
-            NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-            
-            timekey = [timekey stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-            [dict setObject:[NSString stringWithFormat:@"%@", timekey] forKey:@"timekey"];
-            
-            [dict setObject:[NSString stringWithFormat:@"%@", details] forKey:@"details"];
-            //创建一个消息对象
-            NSNotification * notice = [NSNotification notificationWithName:@"PushJGTeamActibityNameViewController" object:nil userInfo:dict];
-            //发送消息
-            [[NSNotificationCenter defaultCenter]postNotification:notice];
-        }
-    }
+#pragma mark -- 极光推送跳转
+- (void)APSHomeDealUrl:(NSString *)dealURLString{
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    
+    [dict setObject:dealURLString forKey:@"details"];
+    //创建一个消息对象
+    NSNotification * notice = [NSNotification notificationWithName:@"PushJGTeamActibityNameViewController" object:nil userInfo:dict];
+    //发送消息
+    [[NSNotificationCenter defaultCenter]postNotification:notice];
 }
-
-
+#pragma mark -- 跳转到指定活动详情页面
+//-(void)gotoAppPage:(NSString *)timekey switchDetails:(NSString *)details
+//{
+//    if ([timekey integerValue]>0) {
+//        NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+//        
+//        [dict setObject:[NSString stringWithFormat:@"%td", [timekey integerValue]] forKey:@"timekey"];
+//        [dict setObject:[NSString stringWithFormat:@"%@", details] forKey:@"details"];
+//        //创建一个消息对象
+//        NSNotification * notice = [NSNotification notificationWithName:@"PushJGTeamActibityNameViewController" object:nil userInfo:dict];
+//        //发送消息
+//        [[NSNotificationCenter defaultCenter]postNotification:notice];
+//
+//    }
+//    else{
+//        if (![Helper isBlankString:timekey]) {
+//            NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+//            
+//            timekey = [timekey stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+//            [dict setObject:[NSString stringWithFormat:@"%@", timekey] forKey:@"timekey"];
+//            
+//            [dict setObject:[NSString stringWithFormat:@"%@", details] forKey:@"details"];
+//            //创建一个消息对象
+//            NSNotification * notice = [NSNotification notificationWithName:@"PushJGTeamActibityNameViewController" object:nil userInfo:dict];
+//            //发送消息
+//            [[NSNotificationCenter defaultCenter]postNotification:notice];
+//        }
+//    }
+//}
 
 #pragma mark --消息推送
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
@@ -640,20 +620,7 @@
     [JPUSHService handleRemoteNotification:userInfo];
     completionHandler(UIBackgroundFetchResultNewData);
 
-    NSString* str = [userInfo objectForKey:@"url"];
-    NSURL *url = [NSURL URLWithString:str];
-    if ([url.scheme isEqualToString:@"dagolfla"]){
-        NSLog(@"URL scheme:%@", [url scheme]);
-        NSLog(@"URL query: %@", [url query]);
-        NSString *actKey = @"";
-        NSString *actDetail = @"";
-        if ([url query]) {
-            actKey = [[[NSString stringWithFormat:@"%@", [url query]] componentsSeparatedByString:@"="] objectAtIndex:1];
-            actDetail = [[[NSString stringWithFormat:@"%@", [url query]] componentsSeparatedByString:@"="] objectAtIndex:0];
-        }
-        
-        [self gotoAppPage:actKey switchDetails:actDetail];
-    }
+    [self APSHomeDealUrl:[userInfo objectForKey:@"url"]];
 }
 - (void)application:(UIApplication *)application
 didReceiveLocalNotification:(UILocalNotification *)notification {
@@ -678,7 +645,11 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
     // Required
     NSDictionary * userInfo = response.notification.request.content.userInfo;
     if([response.notification.request.trigger isKindOfClass:[UNPushNotificationTrigger class]]) {
+        
+        [self APSHomeDealUrl:[userInfo objectForKey:@"url"]];
+        
         [JPUSHService handleRemoteNotification:userInfo];
+        
     }
     else {
         // 本地通知
@@ -699,16 +670,16 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
 }
 
 //自定义消息
-- (void)networkDidReceiveMessage:(NSNotification *)notification
-{
-    //网站推送
-    NSDictionary * userInfo = [notification userInfo];
-    NSString *content = [userInfo valueForKey:@"content"];
-    NSDictionary *extras = [userInfo valueForKey:@"extras"];
-    
-    NSString *customizeField1 = [extras valueForKey:@"content"]; //自定义参数，key是自己定义的
-    
-}
+//- (void)networkDidReceiveMessage:(NSNotification *)notification
+//{
+//    //网站推送
+//    NSDictionary * userInfo = [notification userInfo];
+//    NSString *content = [userInfo valueForKey:@"content"];
+//    NSDictionary *extras = [userInfo valueForKey:@"extras"];
+//    
+//    NSString *customizeField1 = [extras valueForKey:@"content"]; //自定义参数，key是自己定义的
+//    
+//}
 
 
 - (void)applicationDidReceiveMemoryWarning:(UIApplication*)application

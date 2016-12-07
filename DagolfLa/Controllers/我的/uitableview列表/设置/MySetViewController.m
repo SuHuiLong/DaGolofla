@@ -200,6 +200,11 @@
             
         }];
         
+        //退出前－保存当前位置
+        float lat = [[[NSUserDefaults standardUserDefaults]objectForKey:BDMAPLAT] floatValue];
+        float lng = [[[NSUserDefaults standardUserDefaults]objectForKey:BDMAPLNG] floatValue];
+        NSString *cityName = [[NSUserDefaults standardUserDefaults]objectForKey:CITYNAME];
+        
         [[NSURLCache sharedURLCache] removeAllCachedResponses];
         //
         [[RCIMClient sharedRCIMClient]logout];
@@ -233,7 +238,11 @@
 //        EnterViewController *vc = [[EnterViewController alloc] init];
 //        vc.popViewNumber = 101;
 //        [self.navigationController pushViewController:vc animated:YES];
-
+        //重新存储 定位信息
+        [user setObject:@(lat) forKey:BDMAPLAT];
+        [user setObject:@(lng) forKey:BDMAPLNG];
+        [user setObject:cityName forKey:CITYNAME];
+        [user synchronize];
         
         JGHLoginViewController *vc = [[JGHLoginViewController alloc] init];
         vc.index = 1;
