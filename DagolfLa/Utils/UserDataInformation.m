@@ -63,7 +63,12 @@
             if ([data objectForKey:@"userFriend"]) {
                 
                 userInfo.name = [[data objectForKey:@"userFriend"] objectForKey:@"remark"] ? [[data objectForKey:@"userFriend"] objectForKey:@"remark"] : [[data objectForKey:@"userFriend"] objectForKey:@"userName"];
+                
+
                 userInfo.portraitUri = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/user/head/%@.jpg@200w_200h_2o",userId];
+                
+                [[SDImageCache sharedImageCache] removeImageForKey:userInfo.portraitUri fromDisk:YES];
+
                 
                 completion(userInfo);
             }
