@@ -19,7 +19,7 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         
-        self.iconImage = [[UIImageView alloc] initWithFrame:CGRectMake(10 * ProportionAdapter, 10 * ProportionAdapter, 48 * ProportionAdapter, 48 * ProportionAdapter)];
+        self.iconImage = [[UIImageView alloc] initWithFrame:CGRectMake(10 * ProportionAdapter, 7 * ProportionAdapter, 48 * ProportionAdapter, 48 * ProportionAdapter)];
         self.iconImage.layer.cornerRadius = 24 * ProportionAdapter;
         self.iconImage.clipsToBounds = YES;
         [self.contentView addSubview:self.iconImage];
@@ -48,7 +48,7 @@
         [self.contentView addSubview:self.addBtn];
         
         UIView *lineV = [[UIView alloc] initWithFrame:CGRectMake(10 * ProportionAdapter, 59.5 * ProportionAdapter, screenWidth - 10 * ProportionAdapter, 0.5 * ProportionAdapter)];
-        lineV.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];
+        lineV.backgroundColor = [UIColor colorWithHexString:@"#d9d9d9"];
         [self.contentView addSubview:lineV];
         
         
