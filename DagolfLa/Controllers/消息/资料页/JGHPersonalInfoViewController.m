@@ -314,10 +314,14 @@
     JGHNoteViewController *noteCtrl = [[JGHNoteViewController alloc]init];
     noteCtrl.userName = _model.userName;
     noteCtrl.blockRereshNote = ^(NSString *note){
-//        _model.userName = note;
+        
+        
         
         // 备注为空   取消备注
         if ([note length] > 0) {
+            
+            _personRemark(note);//返回备注到列表
+            
             CGSize remarkSize = [note boundingRectWithSize:CGSizeMake(screenWidth, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:18*ProportionAdapter]} context:nil].size;
             if ((screenWidth -remarkSize.width) <120) {
                 self.name.frame = CGRectMake(90 *ProportionAdapter, 10 *ProportionAdapter, screenWidth -120 *ProportionAdapter, 20 *ProportionAdapter);

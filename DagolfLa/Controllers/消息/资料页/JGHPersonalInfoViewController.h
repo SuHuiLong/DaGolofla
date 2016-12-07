@@ -28,6 +28,9 @@
 
 @property (nonatomic, retain)UILabel *nick;
 
+typedef void(^PersonRemark)(NSString *);
+@property(nonatomic,copy)PersonRemark personRemark;
+
 //用户key
 @property (nonatomic, retain)NSNumber *otherKey;
 
