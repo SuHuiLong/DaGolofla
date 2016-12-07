@@ -90,6 +90,10 @@
     _labelCity.font = [UIFont systemFontOfSize:14*ScreenWidth/375];
     _labelCity.textAlignment = NSTextAlignmentCenter;
     [btnCity addSubview:_labelCity];
+    
+    //默认城市名称
+//    _strProvince = [[NSUserDefaults standardUserDefaults]objectForKey:CITYNAME];
+    
     if (![Helper isBlankString:_strProvince]) {
         _labelCity.text = _strProvince;
         _textField.text = _strProvince;

@@ -153,7 +153,7 @@
                 
                 self.sexImageView.frame = CGRectMake(self.name.frame.origin.x +10*ProportionAdapter + self.name.frame.size.width, self.name.frame.origin.y +2*ProportionAdapter, 15*ProportionAdapter, 15*ProportionAdapter);
             }else{
-                _state = 0;
+                _state = -1;
                 CGSize nameSize = [_model.userName boundingRectWithSize:CGSizeMake(screenWidth, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:18*ProportionAdapter]} context:nil].size;
                 self.name.frame = CGRectMake(90 *ProportionAdapter, 10 *ProportionAdapter, nameSize.width, 20 *ProportionAdapter);
                 self.name.text = [NSString stringWithFormat:@"%@", _model.userName];
@@ -316,11 +316,11 @@
     noteCtrl.blockRereshNote = ^(NSString *note){
         
         
-        
+        _personRemark(note);//返回备注到列表
+
         // 备注为空   取消备注
         if ([note length] > 0) {
             
-            _personRemark(note);//返回备注到列表
             
             CGSize remarkSize = [note boundingRectWithSize:CGSizeMake(screenWidth, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:18*ProportionAdapter]} context:nil].size;
             if ((screenWidth -remarkSize.width) <120) {
@@ -420,6 +420,12 @@
 - (void)dynamicBtn:(UIButton *)btn{
     btn.userInteractionEnabled = NO;
     
+    if (_state == 0 || _state == -1) {
+        [[ShowHUD showHUD]showToastWithText:@"请先添加好友！" FromView:self.view];
+        btn.userInteractionEnabled = YES;
+        return;
+    }
+    
     PersonHomeController* selfVc = [[PersonHomeController alloc]init];
     selfVc.strMoodId = _otherKey;
     selfVc.messType = @2;
@@ -427,13 +433,16 @@
     [self.navigationController pushViewController:selfVc animated:YES];
     
     btn.userInteractionEnabled = YES;
-    
-    btn.userInteractionEnabled = YES;
 }
 //
 #pragma mark -- 足迹
 - (void)footprintBtn:(UIButton *)btn{
     btn.userInteractionEnabled = NO;
+    if (_state == 0 || _state == -1) {
+        [[ShowHUD showHUD]showToastWithText:@"请先添加好友！" FromView:self.view];
+        btn.userInteractionEnabled = YES;
+        return;
+    }
     
     PersonHomeController* selfVc = [[PersonHomeController alloc]init];
     selfVc.strMoodId = _otherKey;
@@ -456,12 +465,32 @@
         //设置对方的名字
         //    vc.userName = model.conversationTitle;
         //设置聊天标题
-        vc.title = _model.userName;
+        vc.title = _name.text;
         //设置不现实自己的名称  NO表示不现实
         vc.displayUserNameInCell = NO;
         [self.navigationController pushViewController:vc animated:YES];
-    }else if (_state == 0){
+    }else if (_state == -1){
         [LQProgressHud showLoading:@"加载中..."];
+        NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+        [dict setObject:_otherKey forKey:@"friendUserKey"];
+        [dict setObject:[NSString stringWithFormat:@"我是 %@", DEFAULF_UserName] forKey:@"reason"];
+        [dict setObject:DEFAULF_USERID forKey:@"userKey"];
+        [[JsonHttp jsonHttp]httpRequestWithMD5:@"userFriend/doApply" JsonKey:nil withData:dict failedBlock:^(id errType) {
+            [LQProgressHud hide];
+        } completionBlock:^(id data) {
+            NSLog(@"%@", data);
+            [LQProgressHud hide];
+            
+            if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+                [self loadData];
+            }else{
+                if ([data objectForKey:@"packResultMsg"]) {
+                    [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+                }
+            }
+        }];
+    }else if (_state == 0){
+        [LQProgressHud showLoading:@"申请中..."];
         NSMutableDictionary *dict = [NSMutableDictionary dictionary];
         [dict setObject:_otherKey forKey:@"userFriendKey"];
         [dict setObject:@1 forKey:@"state"];
