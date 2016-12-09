@@ -356,23 +356,28 @@
                     
                     if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
                         NSMutableDictionary* dictDa = [[NSMutableDictionary alloc]init];
+                        NSDictionary *userDict = [data objectForKey:@"user"];
                         
-                        if ([data objectForKey:UserName]) {
-                            [dictDa setObject:[data objectForKey:UserName] forKey:UserName];
+                        if ([userDict objectForKey:UserName]) {
+                            [dictDa setObject:[userDict objectForKey:UserName] forKey:UserName];
                         }
                         
-                        if ([data objectForKey:@"userId"]) {
-                            [dictDa setObject:[data objectForKey:@"userId"] forKey:@"userKey"];
+                        if ([userDict objectForKey:@"userId"]) {
+                            [dictDa setObject:[userDict objectForKey:@"userId"] forKey:@"userKey"];
                         }
                         
-                        if ([data objectForKey:@"sex"]) {
-                            [dictDa setObject:[data objectForKey:@"sex"] forKey:@"sex"];
+                        if ([userDict objectForKey:@"sex"]) {
+                            [dictDa setObject:[userDict objectForKey:@"sex"] forKey:@"sex"];
                         }else{
                             [dictDa setObject:@1 forKey:@"sex"];
                         }
                         
-                        if ([data objectForKey:@"almost"]) {
-                            [dictDa setObject:[data objectForKey:@"almost"] forKey:@"almost"];
+                        if ([userDict objectForKey:@"almost"]) {
+                            [dictDa setObject:[userDict objectForKey:@"almost"] forKey:@"almost"];
+                        }
+                        
+                        if ([userDict objectForKey:Mobile]) {
+                            [dictDa setObject:[userDict objectForKey:Mobile] forKey:Mobile];
                         }
                         
                         _blockDict(dictDa);

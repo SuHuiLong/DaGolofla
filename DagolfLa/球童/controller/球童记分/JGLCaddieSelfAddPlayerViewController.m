@@ -13,11 +13,12 @@
 #import "JGLAddressAddViewController.h"
 #import "UITool.h"
 #import "JGLBarCodeViewController.h"
-@interface JGLCaddieSelfAddPlayerViewController ()<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate>
+@interface JGLCaddieSelfAddPlayerViewController ()<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate, JGLPlayerNumberTableViewCellDelegate>
 {
     UITableView* _tableView;
     UIView* _viewHeader;
     
+//    NSMutableArray *_palyArray;
     
     BOOL _isClick;
 }
@@ -37,16 +38,18 @@
     UIView* view = [[UIView alloc]initWithFrame:CGRectMake(1, 1, 1, 1)];
     [self.view addSubview:view];
     //    if (_dictPeople.count == 0) {
-    _dictPeople = [[NSMutableDictionary alloc]init];//添加的成员
+//    _dictPeople = [[NSMutableDictionary alloc]init];//添加的成员
     //    }
     //    if (_peoFriend.count == 0) {
-    _peoFriend  = [[NSMutableDictionary alloc]init];//球友数据
+//    _peoFriend  = [[NSMutableDictionary alloc]init];//球友数据
     //    }
     //    if (_peoAddress.count == 0) {
-    _peoAddress = [[NSMutableDictionary alloc]init];//通讯录数据
+//    _peoAddress = [[NSMutableDictionary alloc]init];//通讯录数据
     //    }
     
-    
+    if (_palyArray.count == 0) {
+        _palyArray = [NSMutableArray array];
+    }
     
     [self uiConfig];
     [self createHeader];
@@ -55,7 +58,7 @@
 -(void)finishAction
 {
     //    [_dictFin setObject:[[NSUserDefaults standardUserDefaults]objectForKey:@"userName"] forKey:DEFAULF_USERID];
-    _blockSurePlayer(_dictPeople);//返回用户数据倒上一层页面
+    _blockSurePlayer(_palyArray);//返回用户数据倒上一层页面
     [self.navigationController popViewControllerAnimated:YES];
     
 }
@@ -114,7 +117,17 @@
 {
     JGLBarCodeViewController* barVc = [[JGLBarCodeViewController alloc]init];
     barVc.blockDict = ^(NSMutableDictionary *dict){
-        [_dictPeople addEntriesFromDictionary:dict];
+        //先甩选掉重复的打球人
+        for (int i=0; i<_palyArray.count; i++) {
+            NSMutableDictionary *palyDict = [NSMutableDictionary dictionary];
+            if ([[palyDict objectForKey:@"userKey"] integerValue] == [[dict objectForKey:@"userKey"] integerValue]) {
+                [[ShowHUD showHUD]showToastWithText:@"请勿重复添加打球人！" FromView:self.view];
+            }else{
+                [_palyArray addObject:dict];
+            }
+        }
+        
+//        [_palyArray addObject:dict];
         [_tableView reloadData];
     };
     [self.navigationController pushViewController:barVc animated:YES];
@@ -171,6 +184,9 @@
     else{
         JGLPlayerNumberTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"JGLPlayerNumberTableViewCell" forIndexPath:indexPath];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        cell.delegate = self;
+        cell.deleteBtn.tag = indexPath.row;
+        
         if (indexPath.row == 0) {
             cell.labelName.hidden = YES;
             cell.deleteBtn.hidden = YES;
@@ -178,99 +194,26 @@
         }
         else{
             if (indexPath.row == 1) {
-                cell.labelTitle.hidden = YES;
+                
                 cell.deleteBtn.hidden = YES;
-                cell.labelName.text = _strPlayerName;//显示第一个人的名字，这是球童添加的那个打球人
-            }
-            else{
-                cell.labelTitle.hidden = YES;
-                if (_dictPeople.count != 0) {
-                    if ([_dictPeople allValues].count < 4) {//添加的成员必须小于4个人
-                        if (indexPath.row-2 < [_dictPeople allValues].count) {
-                            if (_isClick == YES) {
-                                if (indexPath.row-2 < [_dictPeople allValues].count) {
-                                    cell.labelName.text = [_dictPeople allValues][indexPath.row - 2];//
-                                }
-                                else{
-                                    cell.labelName.text = @"暂无成员，请添加";
-                                }
-                            }
-                            else{
-                                cell.labelName.text = [_dictPeople allValues][indexPath.row - 2];
-                            }
-                        }
-                        else{
-                            cell.labelName.text = @"暂无成员，请添加";
-                        }
-                    }
-                    else{
-                        [[ShowHUD showHUD]showToastWithText:@"您最多只能添加四个人一起打球" FromView:self.view];
-                    }
-                }
-                else{
-                    cell.labelName.text = @"暂无成员，请添加";
-                }
+            }else{
+                cell.deleteBtn.hidden = NO;
             }
             
+            cell.labelTitle.hidden = YES;
+            
+            NSLog(@"indexPath.row == %td", indexPath.row);
+            
+            if (indexPath.row -1 < _palyArray.count) {
+                [cell configJGLPlayerNumberTableViewCell:_palyArray[indexPath.row -1]];
+            }else{
+                cell.labelName.text = @"请添加打球人";
+            }
             
         }
         cell.backgroundColor = [UITool colorWithHexString:@"ffffff" alpha:1];
         return cell;
     }
-}
-
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (indexPath.section == 1) {
-        if (indexPath.row > 0) {
-            if ([_dictPeople allValues].count < 4) {//数量小于四
-                if (indexPath.row-2 < [_dictPeople allValues].count) {//点击的行数小于人数个数
-                    [_peoAddress removeObjectForKey:[_dictPeople allKeys][indexPath.row-2]];
-                    [_peoFriend removeObjectForKey:[_dictPeople allKeys][indexPath.row-2]];
-                    [_dictPeople removeObjectForKey:[_dictPeople allKeys][indexPath.row-2]];
-                    //根据key，删除对应的人，
-                    [_tableView reloadData];
-                    _isClick = YES;
-                }
-            }
-        }
-    }
-    
-    
-    
-    //            if (indexPath.row - 2 < _dictPeople.count) {
-    //                bool isChange1 = false;
-    //                for (int i = 0; i < _dictPeople.count; i ++) {
-    //                    if (isChange1 == YES) {
-    //                        continue;
-    //                    }
-    ////                    if ([[_dictPeople objectForKey:_dataKey[i]] isEqualToString:_dataPeoArr[indexPath.row-1]] == YES) {
-    ////                        NSLog(@"%@",[_dictPeople allValues][i]);
-    ////                        [_dictPeople removeObjectForKey:_dataKey[i]];
-    ////                        [_dataKey removeObjectAtIndex:indexPath.row-1];
-    ////                        [_userKey removeObjectAtIndex:indexPath.row-1];
-    ////                        [_mobileArr removeObjectAtIndex:indexPath.row - 1];
-    ////                        [_dataPeoArr removeObjectAtIndex:indexPath.row-1];
-    ////                        isChange1 = YES;
-    ////                        continue;
-    ////                    }
-    //                    if (indexPath.row-2 < [_dictFin allValues].count) {
-    //                        NSLog(@"%@    %@",[_dictFin allKeys][indexPath.row-2],[_dictPeople allKeys][indexPath.row-2]);
-    //                        [_dictPeople removeObjectForKey:[_dictPeople allKeys][indexPath.row-2]];
-    //                        [_tableView reloadData];
-    //                        _isClick = YES;
-    //                        isChange1 = YES;
-    //                        continue;
-    //                    }
-    //
-    //                }
-    //                [_tableView reloadData];
-    //                isChange1 = NO;
-    //
-    //            }
-    //
-    //        }
-    //    }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
@@ -287,11 +230,15 @@
 {
     UITextField* textF = (UITextField *)[self.view viewWithTag:1234];
     if (![Helper isBlankString:textF.text]) {
-        if (_dictPeople.count < 3) {
-            [_dictPeople setObject:textF.text forKey:textF.text];
+        if (_palyArray.count <= 4) {
+            NSMutableDictionary *palyDict = [NSMutableDictionary dictionary];
+            [palyDict setObject:textF.text forKey:UserName];
+            [palyDict setObject:@0 forKey:@"userKey"];
+            [palyDict setObject:@2 forKey:@"sex"];
+            [_palyArray addObject:palyDict];
             textF.text = @"";
             [_tableView reloadData];
-            _isClick = NO;
+//            _isClick = NO;
         }
         else{
             [[ShowHUD showHUD]showToastWithText:@"您最多只能添加三个人" FromView:self.view];
@@ -304,7 +251,12 @@
     
 }
 
-
+#pragma mark -- 删除打球人
+- (void)didSelectDeleteBtn:(UIButton *)btn{
+    NSLog(@"btn.tag = %td", btn.tag -1);
+    [_palyArray removeObjectAtIndex:btn.tag -1];
+    [_tableView reloadData];
+}
 #pragma mark --uitextfield代理
 
 //-(void)textFieldDidEndEditing:(UITextField *)textField{

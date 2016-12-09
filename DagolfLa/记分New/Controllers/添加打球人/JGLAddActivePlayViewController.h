@@ -8,26 +8,16 @@
 
 #import "ViewController.h"
 #import "JGLChooseScoreModel.h"
+
 @interface JGLAddActivePlayViewController : ViewController
 
-/**
- *      NSMutableDictionary* _dictFinish;//完成的成员字典
- NSMutableArray* _dataPeoArr;//第二个列表数据
- NSMutableArray* _dataKey;//存选择的成员的key，用来第二个列表的删除操作
- */
 @property (strong, nonatomic) JGLChooseScoreModel* model;
 
-@property (strong, nonatomic) NSMutableDictionary* dictFinish;
+@property (retain, nonatomic) NSMutableArray *palyArray;
 
-@property (strong, nonatomic) NSMutableArray* dataKey;//timeKey
+@property (assign, nonatomic)NSInteger iscabblie;//0-非球童;1-球童
+@property (strong, nonatomic)NSNumber *userKeyPlayer;//球童扫描的打球人Key
 
-@property (strong, nonatomic) NSMutableArray* dataUserKey;//userkey
-
-@property (strong, nonatomic) NSMutableArray* allMostArray;
-
-@property (strong, nonatomic) NSMutableArray* arrMobile;
-
-
-@property (copy, nonatomic) void (^blockSurePlayer)(NSMutableDictionary *  , NSMutableArray*,NSMutableArray* ,NSMutableArray*, NSMutableArray*);
+@property (copy, nonatomic) void (^blockSurePlayer)( NSMutableArray *);
 
 @end

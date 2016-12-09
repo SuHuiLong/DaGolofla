@@ -118,7 +118,7 @@
 -(void)chooseStyleClick:(UIButton *)btn
 {
     if (self.preListArray.count >= 4) {
-        [[ShowHUD showHUD]showToastWithText:@"您最多只能选择3个人" FromView:self.view];
+        [[ShowHUD showHUD]showToastWithText:@"您最多只能选择3个人！" FromView:self.view];
         return;
     }
     

@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+@class JGLAddActiivePlayModel;
 
 @interface JGLActiveAddPlayTableViewCell : UITableViewCell
 
@@ -18,5 +19,6 @@
 
 //@property (strong, nonatomic) UILabel*     labelMobiel;
 
+- (void)configJGLAddActiivePlayModel:(JGLAddActiivePlayModel *)model;
 
 @end

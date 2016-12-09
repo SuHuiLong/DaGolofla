@@ -8,6 +8,7 @@
 //
 
 #import "JGLActiveAddPlayTableViewCell.h"
+#import "JGLAddActiivePlayModel.h"
 
 @implementation JGLActiveAddPlayTableViewCell
 
@@ -47,6 +48,21 @@
     [super setSelected:selected animated:animated];
 
     // Configure the view for the selected state
+}
+
+- (void)configJGLAddActiivePlayModel:(JGLAddActiivePlayModel *)model{
+    
+    _labelName.text = model.name;
+    [_imgvIcon sd_setImageWithURL:[Helper setImageIconUrl:@"user" andTeamKey:[model.userKey integerValue] andIsSetWidth:YES andIsBackGround:NO] placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
+    _imgvIcon.layer.cornerRadius = 6*screenWidth/375;
+    _imgvIcon.layer.masksToBounds = YES;
+    
+    if (model.select == 1) {
+        _imgvState.image=[UIImage imageNamed:@"gou_x"];
+    }else{
+        _imgvState.image=[UIImage imageNamed:@"gou_w"];
+    }
+
 }
 
 @end

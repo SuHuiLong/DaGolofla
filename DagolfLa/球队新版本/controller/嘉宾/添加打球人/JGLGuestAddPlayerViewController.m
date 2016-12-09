@@ -265,7 +265,7 @@
         JGLActiveChooseSTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"JGLActiveChooseSTableViewCell" forIndexPath:indexPath];
         if (indexPath.row == 0) {
             cell.labelTitle.font = [UIFont systemFontOfSize:15*screenWidth/375];
-            cell.imgvDel.hidden = YES;
+//            cell.imgvDel.hidden = YES;
             if (_arrayAddress.count + _arrayTeamMember.count == 0) {
                 cell.labelTitle.text = @"";
             }
@@ -275,7 +275,7 @@
         }
         else{
             cell.labelTitle.font = [UIFont systemFontOfSize:14*screenWidth/375];
-            cell.imgvDel.hidden = NO;
+//            cell.imgvDel.hidden = NO;
             if (indexPath.row <= _arrayAddress.count) {
                 cell.labelTitle.text = [_arrayAddress[indexPath.row - 1] objectForKey:@"name"];
             }

@@ -7,12 +7,24 @@
 //
 
 #import <UIKit/UIKit.h>
+@class JGLAddActiivePlayModel;
+
+@protocol JGLActiveChooseSTableViewCellDelegate <NSObject>
+
+- (void)deleteActivityScorePlayrBtn:(UIButton *)btn;
+
+@end
 
 @interface JGLActiveChooseSTableViewCell : UITableViewCell
 
 @property (strong, nonatomic) UILabel* labelTitle;
 
-@property (strong, nonatomic) UIImageView* imgvDel;
+@property (strong, nonatomic) UIButton* deleteBtn;
+
+@property (nonatomic, weak)id <JGLActiveChooseSTableViewCellDelegate> delegate;
+
+
+- (void)configJGLAddActiivePlayModel:(JGLAddActiivePlayModel *)model;
 
 
 @end

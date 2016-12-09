@@ -15,6 +15,7 @@
 #import "JGHCabbieWalletViewController.h"
 #import "JGLCaddieScoreViewController.h"
 #import "JGHPoorScoreHoleView.h"
+#import "JGLScoreNewViewController.h"
 
 //static NSInteger switchMode;
 
@@ -38,15 +39,15 @@
     
     NSInteger _selectPage;
     
-    NSInteger _selectcompleteHole;
+//    NSInteger _selectcompleteHole;
     
     NSInteger _isEdtor;// 0-未修改， 1- 修改
     
-    NSInteger _isFinishScore;//是否完成记分0 1
+//    NSInteger _isFinishScore;//是否完成记分0 1
     
     NSNumber *_walletMonay;//红包金额
     
-    NSInteger _cabbieFinishScore;//是否结束所有记分 1- 结束，0－不结束
+//    NSInteger _cabbieFinishScore;//是否结束所有记分 1- 结束，0－不结束
     
     NSArray *_areaArray;
     
@@ -85,19 +86,26 @@
 {
     [super viewWillAppear:animated];
     navBarHairlineImageView.hidden = YES;
-    if (_backId != 1) {
+//    if (_backId != 1) {
         UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
         btn.frame = BackBtnFrame;
         btn.titleLabel.font = [UIFont systemFontOfSize:FontSize_Normal];
-        [btn setImage:[UIImage imageNamed:@")-2"] forState:UIControlStateNormal];
-        [btn addTarget:self action:@selector(saveScoresAndBackClick:) forControlEvents:UIControlEventTouchUpInside];
+//        [btn setImage:[UIImage imageNamed:@")-2"] forState:UIControlStateNormal];
+//        [btn addTarget:self action:@selector(saveScoresAndBackClick:) forControlEvents:UIControlEventTouchUpInside];
         UIBarButtonItem *leftItem = [[UIBarButtonItem alloc]initWithCustomView:btn];
         self.navigationItem.leftBarButtonItem = leftItem;
-    }
+//    }
     
     NSUserDefaults *usedef = [NSUserDefaults standardUserDefaults];
     if (![usedef objectForKey:@"userFristScore"]) {
-        UIImageView *userFristScoreImageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"-2"]];
+        
+        UIImageView *userFristScoreImageView = [[UIImageView alloc]init];
+        if (_userScoreArray.count > 2) {
+            [userFristScoreImageView setImage:[UIImage imageNamed:@"-3"]];
+        }else{
+            [userFristScoreImageView setImage:[UIImage imageNamed:@"-2"]];
+        }
+        
         userFristScoreImageView.userInteractionEnabled = YES;
         userFristScoreImageView.tag = 7777;
         userFristScoreImageView.frame = CGRectMake(0, 0, screenWidth, screenHeight);
@@ -105,7 +113,7 @@
         UITapGestureRecognizer *imageViewTap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(removeUserFristScoreImageView)];
         [userFristScoreImageView addGestureRecognizer:imageViewTap];
         [appDelegate.window addSubview:userFristScoreImageView];
-        [usedef setObject:@"1" forKey:@"userFristScore"];
+        
     }
 }
 
@@ -125,7 +133,7 @@
     
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"bg_white"] forBarMetrics:UIBarMetricsDefault];
     [self.navigationController.navigationBar setBackgroundColor:[UIColor whiteColor]];
-    _cabbieFinishScore = 0;//不结束
+//    _cabbieFinishScore = 0;//不结束
 
     _ballDict = [NSMutableDictionary dictionary];
     NSUserDefaults *userdf = [NSUserDefaults standardUserDefaults];
@@ -172,8 +180,8 @@
     }
     
     _isEdtor = 0;
-    _isFinishScore = 0;
-    _selectcompleteHole = 0;
+//    _isFinishScore = 0;
+//    _selectcompleteHole = 0;
     _item = [[UIBarButtonItem alloc]initWithTitle:@"保存" style:UIBarButtonItemStylePlain target:self action:@selector(saveScoresClick)];
     _item.tintColor=[UIColor colorWithHexString:@"#32b14d"];
     [_item setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:15 * ProportionAdapter], NSFontAttributeName, nil] forState:(UIControlStateNormal)];
@@ -187,7 +195,7 @@
     [self getScoreList];
     
     navBarHairlineImageView = [self findHairlineImageViewUnder:self.navigationController.navigationBar];
-
+    
 }
 
 - (UIImageView *)findHairlineImageViewUnder:(UIView *)view {
@@ -284,6 +292,7 @@
     }
 }
 #pragma mark -- 返回
+/*
 - (void)saveScoresAndBackClick:(UIButton *)btn{
     [_timer invalidate];
     _timer = nil;
@@ -359,11 +368,12 @@
         }
     }];
 }
-
+*/
 #pragma mark -- 所有记分完成后
 - (void)noticeAllScoresCtrl{
     //
-    _selectcompleteHole = 1;
+//    _selectcompleteHole = 1;
+    _scoreFinish = 1;
     [_item setTitle:@"完成"];
 }
 #pragma mark -- getScoreList 获取活动计分列表
@@ -473,7 +483,11 @@
                 }
                 
                 NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
-                if (![userdef objectForKey:[NSString stringWithFormat:@"%@", _scorekey]]) {
+//                if (![userdef objectForKey:[NSString stringWithFormat:@"%@", _scorekey]]) {
+//                    [self titleBtnClick];
+//                }
+                //userFristScore
+                if (![userdef objectForKey:@"userFristScore"]) {
                     [self titleBtnClick];
                 }
             }
@@ -487,12 +501,14 @@
 #pragma mark -- titleBtn 点击事件
 - (void)titleBtnClick{
     NSLog(@"XXX dong");
+    NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
+    
     if (_selectHole == 0) {
         _selectHole = 1;
         if (_scoreFinish == 1) {
             [_item setTitle:@"完成"];
         }else{
-            [_item setTitle:@"结束记分"];
+            [_item setTitle:@"退出记分"];//结束记分
         }
         
         [_arrowBtn setImage:[UIImage imageNamed:@"zk1"] forState:UIControlStateNormal];
@@ -507,7 +523,13 @@
             _scoresView.curPage = _selectPage;
             
             [self.view addSubview:_scoresView];
-            [_scoresView reloadScoreList:_currentAreaArray andAreaArray:_areaArray];//更新UI位置
+            
+            if (![userdef objectForKey:@"userFristScore"]) {
+                [_scoresView reloadScoreList:_currentAreaArray andAreaArray:_areaArray andIsShowArea:1];//更新UI位置
+            }else{
+                [_scoresView reloadScoreList:_currentAreaArray andAreaArray:_areaArray andIsShowArea:0];//更新UI位置
+            }
+            
             _tranView = [[UIView alloc]initWithFrame:CGRectMake(0, _scoresView.frame.size.height, screenWidth, (screenHeight -64)-(194 +20 +20 + self.userScoreArray.count * 70)*ProportionAdapter)];
             _tranView.backgroundColor = [UIColor blackColor];
             _tranView.alpha = 0.3;
@@ -526,7 +548,13 @@
             _poorScoreView.curPage = _selectPage;
            // _poorScoreView.curPage = [[userdf objectForKey:[NSString stringWithFormat:@"%@", _scorekey]] integerValue];
             [self.view addSubview:_scoresView];
-            [_poorScoreView reloadScoreList:_currentAreaArray andAreaArray:_areaArray];//更新UI位置
+            
+            if (![userdef objectForKey:@"userFristScore"]) {
+                [_poorScoreView reloadScoreList:_currentAreaArray andAreaArray:_areaArray andIsShowArea:1];//更新UI位置
+            }else{
+                [_poorScoreView reloadScoreList:_currentAreaArray andAreaArray:_areaArray andIsShowArea:0];//更新UI位置
+            }            
+            
             _tranView = [[UIView alloc]initWithFrame:CGRectMake(0, _poorScoreView.frame.size.height, screenWidth, (screenHeight -64)-(194 +20 +20 + self.userScoreArray.count * 70)*ProportionAdapter)];
             _tranView.backgroundColor = [UIColor blackColor];
             _tranView.alpha = 0.3;
@@ -563,6 +591,9 @@
             [usedef setObject:@"1" forKey:@"userSeccondScore"];
         }
     }
+    
+    [userdef setObject:@"1" forKey:@"userFristScore"];
+    [userdef synchronize];
 }
 #pragma mark -- 移除imageView
 - (void)removeUserSeccondScoreImageView{
@@ -803,27 +834,34 @@
                 [userdef synchronize];
             }
             
-            if ((_selectcompleteHole == 1 || _selectHole == 1) && _scoreFinish == 0) {
-                if (_selectHole == 1 && _isCabbie == 0 && _selectcompleteHole != 1 && _cabbieFinishScore == 0) {
+            if ((_selectHole == 1) && _scoreFinish == 0) {
+//                if (_selectHole == 1 && _isCabbie == 0) {
                     //球童结束记分--1、判断18洞是否完成
                     [Helper alertViewWithTitle:@"您尚未完成所有成绩录入，是否确定结束记分？" withBlockCancle:^{
-                        _cabbieFinishScore = 0;//不结束
+//                        _cabbieFinishScore = 0;//不结束
                     } withBlockSure:^{
-                        _cabbieFinishScore = 1;//结束
-                        [self finishScore];
+//                        _cabbieFinishScore = 1;//结束
+//                        [self finishScore];
+                        for (UIViewController *controller in self.navigationController.viewControllers) {
+                            if ([controller isKindOfClass:[JGLScoreNewViewController class]]) {
+                                [self.navigationController popToViewController:controller animated:YES];
+                            }
+                        }
                     } withBlock:^(UIAlertController *alertView) {
                         [self presentViewController:alertView animated:YES completion:nil];
                     }];
                     return;
-                }
+//                }
                 
-                [self finishScore];
+//                [self finishScore];
             }else{
                 if (_scoreFinish == 1) {
                     [self finishScore];
-                }else if (_selectcompleteHole != 1) {
-                    [[ShowHUD showHUD]showToastWithText:@"记分保存成功！" FromView:self.view];
-                    [self performSelector:@selector(scoresResult) withObject:self afterDelay:TIMESlEEP];
+                }else{
+                    
+                    [self titleBtnClick];
+//                    [[ShowHUD showHUD]showToastWithText:@"记分保存成功！" FromView:self.view];
+//                    [self performSelector:@selector(scoresResult) withObject:self afterDelay:TIMESlEEP];
                 }
             }
         }else{
@@ -831,7 +869,7 @@
                 [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
             }
             
-            [self performSelector:@selector(scoresResult) withObject:self afterDelay:TIMESlEEP];
+//            [self performSelector:@selector(scoresResult) withObject:self afterDelay:TIMESlEEP];
         }
     }];
 }
@@ -860,7 +898,7 @@
             if ([data objectForKey:@"money"]) {
                 _walletMonay = [data objectForKey:@"money"];
             }
-            
+     // ----------------------11111
             //获取主线层
             if ([NSThread isMainThread]) {
                 NSLog(@"Yay!");
@@ -921,7 +959,7 @@
 #pragma mark -- 完成记分---跳转
 - (void)pushJGHEndScoresViewController{
     
-    if (_cabbieFinishScore == 1 && _isCabbie == 1) {
+    if (_scoreFinish == 1 && _isCabbie == 1) {
         for (UIViewController *controller in self.navigationController.viewControllers) {
             if ([controller isKindOfClass:[JGLCaddieScoreViewController class]]) {
                 NSNotification * notice = [NSNotification notificationWithName:@"reloadCaddieScoreData" object:nil userInfo:nil];
@@ -931,21 +969,6 @@
                 [self.navigationController popToViewController:controller animated:YES];
             }
         }
-    }else if (_scoreFinish == 1){
-        /*
-        NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
-        if (_currentPage > 0) {
-            [userdef setObject:@(_currentPage) forKey:[NSString stringWithFormat:@"%@", _scorekey]];
-        }else{
-            [userdef setObject:@0 forKey:[NSString stringWithFormat:@"%@", _scorekey]];
-        }
-        
-        [userdef synchronize];
-         */
-        
-        //NSLog(@"%@", [userdef objectForKey:[NSString stringWithFormat:@"%@", _scorekey]]);
-        JGDHistoryScoreViewController *historyCtrl = [[JGDHistoryScoreViewController alloc]init];
-        [self.navigationController pushViewController:historyCtrl animated:YES];
     }else{
         // && [_walletMonay floatValue] > 0
         if (_isCabbie == 1) {

@@ -37,11 +37,10 @@
     
     NSNumber* _numTimeKeyLogo;//记录球场头像
     
-    NSMutableArray *_selectAreaArray;
+    NSMutableArray *_selectAreaArray;//记录选择的区域0-1
     
 }
 @property (strong, nonatomic) UITableView* tableView;
-
 
 @property (nonatomic, retain)NSMutableArray *preListArray;
 
@@ -152,7 +151,6 @@
     [dict setObject:[NSNumber numberWithInteger:_ballId] forKey:@"ballKey"];
     [dict setObject:@0 forKey:@"srcKey"];//
     [dict setObject:@(0) forKey:@"srcType"];//活动传1，罗开创说的
-    
     [dict setObject:self.preListArray forKey:@"userList"];
 
     [[JsonHttp jsonHttp]httpRequestHaveSpaceWithMD5:@"score/createScore" JsonKey:nil withData:dict failedBlock:^(id errType) {

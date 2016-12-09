@@ -24,15 +24,12 @@
 #import "JGLAddActiivePlayModel.h"
 #import "JGLActiveAddPlayTableViewCell.h"
 #import "JGLActiveChooseSTableViewCell.h"
-@interface JGLAddActivePlayViewController ()<UITableViewDelegate, UITableViewDataSource,UISearchBarDelegate,UISearchResultsUpdating>
+@interface JGLAddActivePlayViewController ()<UITableViewDelegate, UITableViewDataSource,UISearchBarDelegate,UISearchResultsUpdating, JGLActiveChooseSTableViewCellDelegate>
 {
     UITableView* _tableView;
     UITableView* _tableChoose;
     NSInteger _page;
     NSMutableArray* _dataArray;
-    
-    NSMutableDictionary* _dataAccountDict;
-    
     
 }
 @property (nonatomic, strong) UISearchController *searchController;
@@ -52,24 +49,15 @@
     _keyArray        = [[NSMutableArray alloc]init];
     _listArray       = [[NSMutableArray alloc]init];
     _dataArray       = [[NSMutableArray alloc]init];
-    if (_dataKey.count == 0) {
-        _dataKey         = [[NSMutableArray alloc]init];
+    
+    if (self.palyArray.count == 0) {
+        self.palyArray = [NSMutableArray array];
     }
-    if (_dictFinish.count == 0) {
-        _dictFinish      = [[NSMutableDictionary alloc]init];
-    }
-    if (_arrMobile.count == 0) {
-        _arrMobile       = [[NSMutableArray alloc]init];
-    }
-    if (_dataUserKey.count == 0) {
-        _dataUserKey     = [[NSMutableArray alloc]init];
-    }
-    if (_allMostArray.count == 0) {
-        _allMostArray    = [[NSMutableArray alloc]init];
-    }
-    _dataAccountDict = [[NSMutableDictionary alloc]init];
+    
+    [self downLoadData];
+    
     [self uiConfig];
-    //    [self createHeadSearch];
+    
     [self createBtn];
 }
 - (void)viewWillDisappear:(BOOL)animated {
@@ -100,58 +88,29 @@
 
 -(void)finishClick
 {
-    _blockSurePlayer(_dictFinish,_dataKey,_arrMobile,_dataUserKey,_allMostArray);
+    _blockSurePlayer(_palyArray);
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-//-(void)createHeadSearch
-//{
-//    _searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
-//    _searchController.searchResultsUpdater = self;
-//    _searchController.searchBar.barTintColor = [UIColor colorWithRed:0.94 green:0.94 blue:0.94 alpha:1];
-//    _searchController.dimsBackgroundDuringPresentation = NO;
-//    _searchController.hidesNavigationBarDuringPresentation = NO;
-//    _searchController.searchBar.frame = CGRectMake(self.searchController.searchBar.frame.origin.x, self.searchController.searchBar.frame.origin.y, self.searchController.searchBar.frame.size.width, 44.0);
-//    _searchController.searchBar.tintColor = [UIColor colorWithRed:0.36f green:0.66f blue:0.31f alpha:1.00f];
-//    _searchController.searchBar.placeholder = @"输入队友昵称搜索";
-//    _tableView.tableHeaderView = _searchController.searchBar;
-//    _searchController.searchBar.delegate = self;
-//}
-//-(void)updateSearchResultsForSearchController:(UISearchController *)searchController {
-//}
-//-(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
-//
-//}
-//
-
-
-
-
 -(void)uiConfig
 {
-    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight-15*screenWidth/375 - 40*4*screenWidth/375 - 54*screenWidth/375) style:UITableViewStylePlain];
+    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight-15*screenWidth/375 - 40*5*screenWidth/375 - 54*screenWidth/375 -64) style:UITableViewStylePlain];
     _tableView.delegate = self;
     _tableView.dataSource = self;
     [self.view addSubview:_tableView];
     [_tableView registerClass:[JGLActiveAddPlayTableViewCell class] forCellReuseIdentifier:@"JGLActiveAddPlayTableViewCell"];
     _tableView.tag = 1001;
-    _tableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
-    [_tableView.header beginRefreshing];
     
-    _tableChoose = [[UITableView alloc]initWithFrame:CGRectMake(0, screenHeight -15*screenWidth/375 - 40*4*screenWidth/375 - 54*screenWidth/375 - 64, screenWidth, 40*4*screenWidth/375) style:UITableViewStylePlain];
+    _tableChoose = [[UITableView alloc]initWithFrame:CGRectMake(0, screenHeight -15*screenWidth/375 - 40*5*screenWidth/375 - 54*screenWidth/375 - 64, screenWidth, 40*5*screenWidth/375) style:UITableViewStylePlain];
     _tableChoose.delegate = self;
     _tableChoose.dataSource = self;
     _tableChoose.tag = 1002;
     [self.view addSubview:_tableChoose];
     [_tableChoose registerClass:[JGLActiveChooseSTableViewCell class] forCellReuseIdentifier:@"JGLActiveChooseSTableViewCell"];
     _tableChoose.scrollEnabled = NO;
-    
-    
 }
-
-
 #pragma mark - 下载数据
-- (void)downLoadData:(int)page isReshing:(BOOL)isReshing{
+- (void)downLoadData{
     NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
     //    [dict setObject:[NSNumber numberWithInteger:] forKey:@"activityKey"];
     [dict setObject:_model.timeKey forKey:@"activityKey"];
@@ -161,25 +120,60 @@
     NSString *strMD = [JGReturnMD5Str getTeamActivitySignUpListWithTeamKey:[_model.teamKey integerValue] activityKey:[_model.timeKey integerValue] userKey:[_model.userKey integerValue]];
     [dict setObject:strMD forKey:@"md5"];
     [[JsonHttp jsonHttp]httpRequest:@"team/getTeamActivitySignUpList" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
-        if (isReshing) {
-            [_tableView.header endRefreshing];
-        }else {
-            [_tableView.footer endRefreshing];
-        }
+        
     } completionBlock:^(id data) {
-        if (_page == 0)
-        {
-            //清除数组数据  signUpInfoKey
-            [_dataArray removeAllObjects];
-        }
         if ([[data objectForKey:@"packSuccess"]integerValue] == 1) {
             for (NSDictionary *dic in [data objectForKey:@"teamSignUpList"]) {
                 JGLAddActiivePlayModel *model = [[JGLAddActiivePlayModel alloc]init];
                 [model setValuesForKeysWithDictionary:dic];
-                //                [model setValue:[dict objectForKey:@"name"] forKey:@"userName"];
-                model.userName = model.name;
+                //记录上个页面传过来的数据--
+                for (int i=0; i<_palyArray.count; i++) {
+                    JGLAddActiivePlayModel *palyModel = [[JGLAddActiivePlayModel alloc]init];
+                    palyModel = _palyArray[i];
+                    
+                    if (_iscabblie == 1) {
+                        //球童
+                        if ([model.userKey integerValue] == [_userKeyPlayer integerValue]) {
+                            model.select = 1;
+                            model.tTaiwan = palyModel.tTaiwan;
+                            break;
+                        }else{
+                            //
+                            if ([model.timeKey integerValue] == [palyModel.timeKey integerValue]) {
+                                model.select = 1;
+                                model.tTaiwan = palyModel.tTaiwan;
+                                break;
+                            }else{
+                                model.select = 0;
+                            }
+                        }
+                    }else{
+                        //非球童
+                        if ([model.userKey integerValue] == [DEFAULF_USERID integerValue]) {
+                            model.select = 1;
+                            model.tTaiwan = palyModel.tTaiwan;
+                            break;
+                        }else{
+                            //
+                            if ([model.timeKey integerValue] == [palyModel.timeKey integerValue]) {
+                                model.select = 1;
+                                model.tTaiwan = palyModel.tTaiwan;
+                                break;
+                            }else{
+                                model.select = 0;
+                            }
+                        }
+                    }
+                }
+                
+                model.remark = model.name;
+                
                 [_dataArray addObject:model];
             }
+            
+            //刷新选中的记分人
+            [self returnPalyArray];
+            
             self.listArray = [[NSMutableArray alloc]initWithArray:[PYTableViewIndexManager archiveNumbers:_dataArray]];
             
             _keyArray = [[NSMutableArray alloc]initWithObjects:@"A",@"B",@"C",@"D",@"E",@"F",@"G",@"H",@"I",@"J",@"K",@"L",@"M",@"N",@"O",@"P",@"Q",@"R",@"S",@"T",@"U",@"V",@"W",@"X",@"Y",@"Z",@"#", nil];
@@ -189,6 +183,7 @@
                     [self.listArray removeObjectAtIndex:i];
                 }
             }
+            
             [_tableView reloadData];
             
         }else{
@@ -196,21 +191,40 @@
                 [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
             }
         }
-        if (isReshing) {
-            [_tableView.header endRefreshing];
-        }else {
-            [_tableView.footer endRefreshing];
-        }
+        
     }];
 }
-
-#pragma mark 开始进入刷新状态
-- (void)headRereshing
-{
-    _page = 0;
-    [self downLoadData:_page isReshing:YES];
+#pragma mark -- 获取已选中的记分人
+- (void)returnPalyArray{
+    [self.palyArray removeAllObjects];
+    //添加选中的记分人
+    for (int i=0; i<_dataArray.count; i++) {
+        JGLAddActiivePlayModel *model = [[JGLAddActiivePlayModel alloc]init];
+        model = _dataArray[i];
+        if (model.select == 1) {
+            [self.palyArray addObject:model];
+        }
+    }
+    //把自己排在第一位
+    for (int i=0; i<self.palyArray.count; i++) {
+        JGLAddActiivePlayModel *model = [[JGLAddActiivePlayModel alloc]init];
+        model = self.palyArray[i];
+        if (_iscabblie == 1) {
+            //球童
+            if ([model.userKey integerValue] == [_userKeyPlayer integerValue]) {
+                [self.palyArray exchangeObjectAtIndex:0 withObjectAtIndex:i];
+            }
+        }else{
+            //非球童
+            if ([model.userKey integerValue] == [DEFAULF_USERID integerValue]) {
+                [self.palyArray exchangeObjectAtIndex:0 withObjectAtIndex:i];
+            }
+        }
+        
+    }
+    
+    [_tableChoose reloadData];
 }
-
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return tableView.tag == 1001 ? 50*ScreenWidth/375 : 40*ScreenWidth/375;
@@ -218,7 +232,7 @@
 //每个分区内的row个数
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return tableView.tag == 1001 ?[self.listArray[section] count] : 4;
+    return tableView.tag == 1001 ?[self.listArray[section] count] : 5;
 }
 //
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
@@ -245,117 +259,93 @@
         
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
-        JGLAddActiivePlayModel *model = self.listArray[indexPath.section][indexPath.row];
-        cell.labelName.text = model.userName;
-        [cell.imgvIcon sd_setImageWithURL:[Helper setImageIconUrl:@"user" andTeamKey:[model.userKey integerValue] andIsSetWidth:YES andIsBackGround:NO] placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
-        cell.imgvIcon.layer.cornerRadius = 6*screenWidth/375;
-        cell.imgvIcon.layer.masksToBounds = YES;
-        
-        
-        NSString *str=[_dictFinish objectForKey:[self.listArray[indexPath.section][indexPath.row] timeKey]];
-        
-        if ([Helper isBlankString:str]==NO) {
-            cell.imgvState.image=[UIImage imageNamed:@"gou_x"];
-        }else{
-            cell.imgvState.image=[UIImage imageNamed:@"gou_w"];
-        }
+        [cell configJGLAddActiivePlayModel:self.listArray[indexPath.section][indexPath.row]];
         
         return cell;
     }
     else{
         JGLActiveChooseSTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"JGLActiveChooseSTableViewCell" forIndexPath:indexPath];
+        cell.delegate = self;
+        cell.deleteBtn.tag = indexPath.row -1;
+        
         if (indexPath.row == 0) {
-            cell.labelTitle.font = [UIFont systemFontOfSize:15*screenWidth/375];
-            cell.imgvDel.hidden = YES;
+            cell.labelTitle.font = [UIFont systemFontOfSize:15*ProportionAdapter];
+            cell.deleteBtn.hidden = YES;
             cell.labelTitle.text = @"已添加打球人";
         }
         else{
-            cell.labelTitle.font = [UIFont systemFontOfSize:14*screenWidth/375];
-            cell.imgvDel.hidden = NO;
-            
-            if (_dataKey.count != 0) {
-                if (_dataKey.count > indexPath.row - 1) {
-                    if (![Helper isBlankString:_dataKey[indexPath.row-1]]) {
-                        cell.labelTitle.text = [_dictFinish objectForKey:_dataKey[indexPath.row-1]];
-                    }else{
-                        cell.labelTitle.text = @"请添加打球人";
-                    }
-                }
-                else{
-                    cell.labelTitle.text = @"请添加打球人";
-                }
+            if (indexPath.row -1 < _palyArray.count) {
+                [cell configJGLAddActiivePlayModel:_palyArray[indexPath.row -1]];
+            }else{
+                cell.labelTitle.font = [UIFont systemFontOfSize:12*ProportionAdapter];
+                cell.labelTitle.textColor = [UIColor colorWithHexString:@"#313131"];
+                cell.labelTitle.text = @"    请添加打球人";
+                cell.deleteBtn.hidden = YES;
             }
-            else{
-                cell.labelTitle.text = @"请添加打球人";
-            }
-            
         }
         return cell;
     }
-    
-    
-    
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (tableView.tag == 1001) {
         
-        NSString *str=[_dictFinish objectForKey:[self.listArray[indexPath.section][indexPath.row] timeKey]];
-        //选择当前行，查询对应的name，如果为空加入字典，否则删除
-        if ([Helper isBlankString:str]) {
-            if (_dictFinish.count < 3) {
-                if ([[[NSUserDefaults standardUserDefaults] objectForKey:@"userId"] integerValue] != [[self.listArray[indexPath.section][indexPath.row] userKey] integerValue]) {
-                    [_dictFinish setObject:[self.listArray[indexPath.section][indexPath.row] userName] forKey:[self.listArray[indexPath.section][indexPath.row] timeKey]];
-                    [_dataKey addObject:[self.listArray[indexPath.section][indexPath.row] timeKey]];
-                    [_dataUserKey addObject:[self.listArray[indexPath.section][indexPath.row] userKey]];
-                    [_allMostArray addObject:[self.listArray[indexPath.section][indexPath.row] almost]];
-                    if (![Helper isBlankString:[self.listArray[indexPath.section][indexPath.row] mobile]]) {
-                        [_arrMobile addObject:[self.listArray[indexPath.section][indexPath.row] mobile]];
-                    }
-                    else
-                    {
-                        [_arrMobile addObject:@"0"];
-                    }
-                }
-                else{
-                    [[ShowHUD showHUD]showToastWithText:@"您不能添加自己" FromView:self.view];
-                }
+        JGLAddActiivePlayModel *model = [[JGLAddActiivePlayModel alloc]init];
+        model = self.listArray[indexPath.section][indexPath.row];
+        
+        if (_iscabblie == 1) {
+            //不能取消球童扫描的客户
+            if ([model.userKey integerValue] == [_userKeyPlayer integerValue]) {
+                return;
             }
-            else{
-                [[ShowHUD showHUD]showToastWithText:@"您最多只能添加四个人一起打球" FromView:self.view];
+        }else{
+            //不能取消自己
+            if ([model.userKey integerValue] == [DEFAULF_USERID integerValue]) {
+                return;
             }
         }
-        else{
-            [_dictFinish removeObjectForKey:[self.listArray[indexPath.section][indexPath.row] timeKey]];
-            [_dataKey removeObject:[self.listArray[indexPath.section][indexPath.row] timeKey]];
-            [_dataUserKey removeObject:[self.listArray[indexPath.section][indexPath.row] userKey]];
-            [_allMostArray removeObject:[self.listArray[indexPath.section][indexPath.row] almost]];
-            [_arrMobile removeObject:[self.listArray[indexPath.section][indexPath.row] mobile]];
+        
+        
+        if (model.select == 0) {
+            //计算当前选中的总数
+            NSInteger selectCount = 0;
+            for (int i=0; i<self.listArray.count; i++) {
+                NSArray *listModelArray = self.listArray[i];
+                for (int j=0; j<listModelArray.count; j++) {
+                    JGLAddActiivePlayModel *actvityModel = [[JGLAddActiivePlayModel alloc]init];
+                    actvityModel = listModelArray[j];
+                    if (actvityModel.select == 1) {
+                        selectCount += 1;
+                    }
+                }
+            }
+            
+            if (selectCount >= 4) {
+                [[ShowHUD showHUD]showToastWithText:@"您最多只能选择3个人！" FromView:self.view];
+                return;
+            }
+            
+            model.select = 1;
+            
+        }else{
+            model.select = 0;
         }
+        
+        NSMutableArray *array = [NSMutableArray arrayWithArray:self.listArray[indexPath.section]];
+        [array replaceObjectAtIndex:indexPath.row withObject:model];
+        
+        [self.listArray replaceObjectAtIndex:indexPath.section withObject:array];
+        
+        [self returnPalyArray];
+        
         [_tableView reloadData];
-        [_tableChoose reloadData];
+        
     }
     else{
-        if (indexPath.row - 1 < _dictFinish.count) {
-            [_dictFinish removeObjectForKey:_dataKey[indexPath.row-1]];
-            [_dataKey removeObjectAtIndex:indexPath.row-1];
-            if (_dataUserKey.count != 0) {
-                [_dataUserKey removeObjectAtIndex:indexPath.row-1];
-            }
-            
-            [_arrMobile removeObjectAtIndex:indexPath.row-1];
-            [_allMostArray removeObjectAtIndex:indexPath.row-1];
-            
-            [_tableView reloadData];
-            [_tableChoose reloadData];
-        }
+
     }
-    
 }
-
-
-
 // 右侧索引
 - (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView {
     if (tableView.tag == 1001) {
@@ -367,9 +357,7 @@
     else{
         return nil;
     }
-    
 }
-
 //点击索引跳转到相应位置
 - (NSInteger)tableView:(UITableView *)tableView sectionForSectionIndexTitle:(NSString *)title atIndex:(NSInteger)index
 {
@@ -394,5 +382,37 @@
     
 }
 
+#pragma mark -- 删除
+- (void)deleteActivityScorePlayrBtn:(UIButton *)btn{
+    NSLog(@"%td", btn.tag);
+    if (btn.tag >= _palyArray.count -1) {
+        JGLAddActiivePlayModel *palyModel = [[JGLAddActiivePlayModel alloc]init];
+        palyModel = _palyArray[btn.tag];
+        
+        for (int i=0; i<self.listArray.count; i++) {
+            NSArray *listModelArray = self.listArray[i];
+            for (int j=0; j<listModelArray.count; j++) {
+                JGLAddActiivePlayModel *actvityModel = [[JGLAddActiivePlayModel alloc]init];
+                actvityModel = listModelArray[j];
+                if ([actvityModel.timeKey integerValue] == [palyModel.timeKey integerValue]) {
+                    //取消球童
+                    //取消非球童
+                    actvityModel.select = 0;
+                    break;
+                }else{
+                    //timeKey不相同，
+                    //球童：只有添加的客户，不能取消选择
+                    //非球童：自己不能取消
+                }
+            }
+        }
+        [_palyArray removeObjectAtIndex:btn.tag];
+        
+        [_tableView reloadData];
+        [_tableChoose reloadData];
+    }else{
+        
+    }
+}
 
 @end

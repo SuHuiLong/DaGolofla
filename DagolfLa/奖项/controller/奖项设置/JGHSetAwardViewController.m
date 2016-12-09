@@ -199,7 +199,7 @@ static NSString *const JGHActivityBaseCellIdentifier = @"JGHActivityBaseCell";
 }
 #pragma mark -- 创建TB
 - (void)createAwardTableView{
-    self.awardTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight - 65*ProportionAdapter - 20 *ProportionAdapter) style:UITableViewStylePlain];
+    self.awardTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight - 65*ProportionAdapter -20 *ProportionAdapter) style:UITableViewStylePlain];
     self.awardTableView.delegate = self;
     self.awardTableView.dataSource = self;
     
