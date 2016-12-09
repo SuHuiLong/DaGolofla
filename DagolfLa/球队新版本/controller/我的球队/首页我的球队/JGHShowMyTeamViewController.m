@@ -158,31 +158,31 @@ static NSString *const JGHAddMoreTeamTableViewCellIdentifier = @"JGHAddMoreTeamT
                 
                 [self.showMyTeamTableView reloadData];
             }else{
-                [self.showMyTeamTableView removeFromSuperview];
-                self.view.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];
-                UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake(134 * ProportionAdapter, 105 * ProportionAdapter, 107 * ProportionAdapter, 107 * ProportionAdapter)];
-                imageV.image = [UIImage imageNamed:@"bg-shy"];
-                [self.view addSubview:imageV];
-                
-                UILabel *label1 = [[UILabel alloc] initWithFrame:CGRectMake(100 * ProportionAdapter, 251 * ProportionAdapter, 200 * ProportionAdapter, 30 * ProportionAdapter)];
-                label1.text = @"您还没有自己的球队哦";
-                label1.font = [UIFont systemFontOfSize:18 * ProportionAdapter];
-                label1.textColor = [UIColor colorWithHexString:@"a0a0a0"];
-                [self.view addSubview:label1];
-                
-                UILabel *label2 = [[UILabel alloc] initWithFrame:CGRectMake(20 * ProportionAdapter, 300 * ProportionAdapter, screenWidth - 40 * ProportionAdapter, 80 * ProportionAdapter)];
-                label2.textColor = [UIColor colorWithHexString:@"a0a0a0"];
-                label2.font = [UIFont systemFontOfSize:15 * ProportionAdapter];
-                NSMutableAttributedString *attriString = [[NSMutableAttributedString alloc] initWithString:@"您可以点击右上角创建自己的球队，也可到球队大厅快速加入别人的球队！"];
-                [attriString addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:18 * ProportionAdapter] range:NSMakeRange(19, 4)];
-                [attriString addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"#32b148"] range:NSMakeRange(19, 4)];
-                label2.attributedText = attriString;
-                label2.numberOfLines = 0;
-                [self.view addSubview:label2];
-                
-                UITapGestureRecognizer *gapVC = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapAvt)];
-                [label2 addGestureRecognizer:gapVC];
-                label2.userInteractionEnabled = YES;
+//                [self.showMyTeamTableView removeFromSuperview];
+//                self.view.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];
+//                UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake(134 * ProportionAdapter, 105 * ProportionAdapter, 107 * ProportionAdapter, 107 * ProportionAdapter)];
+//                imageV.image = [UIImage imageNamed:@"bg-shy"];
+//                [self.view addSubview:imageV];
+//                
+//                UILabel *label1 = [[UILabel alloc] initWithFrame:CGRectMake(100 * ProportionAdapter, 251 * ProportionAdapter, 200 * ProportionAdapter, 30 * ProportionAdapter)];
+//                label1.text = @"您还没有自己的球队哦";
+//                label1.font = [UIFont systemFontOfSize:18 * ProportionAdapter];
+//                label1.textColor = [UIColor colorWithHexString:@"a0a0a0"];
+//                [self.view addSubview:label1];
+//                
+//                UILabel *label2 = [[UILabel alloc] initWithFrame:CGRectMake(20 * ProportionAdapter, 300 * ProportionAdapter, screenWidth - 40 * ProportionAdapter, 80 * ProportionAdapter)];
+//                label2.textColor = [UIColor colorWithHexString:@"a0a0a0"];
+//                label2.font = [UIFont systemFontOfSize:15 * ProportionAdapter];
+//                NSMutableAttributedString *attriString = [[NSMutableAttributedString alloc] initWithString:@"您可以点击右上角创建自己的球队，也可 搜索大厅 快速加入别人的球队！"];
+//                [attriString addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:18 * ProportionAdapter] range:NSMakeRange(19, 4)];
+//                [attriString addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"#32b148"] range:NSMakeRange(19, 4)];
+//                label2.attributedText = attriString;
+//                label2.numberOfLines = 0;
+//                [self.view addSubview:label2];
+//                
+//                UITapGestureRecognizer *gapVC = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapAvt)];
+//                [label2 addGestureRecognizer:gapVC];
+//                label2.userInteractionEnabled = YES;
             }
             
             

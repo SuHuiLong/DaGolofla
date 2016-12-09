@@ -76,7 +76,7 @@
 // 球友推荐
 -(void)showData:(NewFriendModel *)model
 {
-    [_btnIcon sd_setImageWithURL:[Helper setImageIconUrl:@"user" andTeamKey:[model.userId integerValue] andIsSetWidth:YES andIsBackGround:NO] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
+    [_btnIcon sd_setImageWithURL:[Helper setImageIconUrl:@"user" andTeamKey:[model.friendKey integerValue] andIsSetWidth:YES andIsBackGround:NO] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
     
     
     if (![Helper isBlankString:model.userName]) {

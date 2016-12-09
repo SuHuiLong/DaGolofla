@@ -59,16 +59,19 @@
 
             RCUserInfo *userInfo = [[RCUserInfo alloc] init];
             userInfo.userId = userId;
-
+            
             if ([data objectForKey:@"userFriend"]) {
                 
                 userInfo.name = [[data objectForKey:@"userFriend"] objectForKey:@"remark"] ? [[data objectForKey:@"userFriend"] objectForKey:@"remark"] : [[data objectForKey:@"userFriend"] objectForKey:@"userName"];
                 
-
+//                userInfo.portraitUri = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/user/head/%@.jpg@_2o",userId];
+//                
+//                [[RCIM sharedRCIM] refreshUserInfoCache:userInfo  withUserId:userId];
+                
                 userInfo.portraitUri = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/user/head/%@.jpg@200w_200h_2o",userId];
                 
-                [[SDImageCache sharedImageCache] removeImageForKey:userInfo.portraitUri fromDisk:YES];
-
+                [[RCIM sharedRCIM] refreshUserInfoCache:userInfo  withUserId:userId];
+                
                 
                 completion(userInfo);
             }

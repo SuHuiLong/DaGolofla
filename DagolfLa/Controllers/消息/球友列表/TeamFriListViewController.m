@@ -116,14 +116,11 @@
     self.tableView.tableHeaderView = self.searchController.searchBar;
     self.tableView.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-
     self.searchController.searchBar.barTintColor = [UIColor colorWithHexString:@"#EEEEEE"];
     UISearchBar *searchBar = self.searchController.searchBar;
     UIImageView *barImageView = [[[searchBar.subviews firstObject] subviews] firstObject];
     barImageView.layer.borderColor = RGBA(238,238,238,1).CGColor;
     barImageView.layer.borderWidth = 1;
-    
-
     
     UITextField *searchTextField = [[[searchBar.subviews firstObject] subviews] lastObject];
 //    searchTextField.backgroundColor = [UIColor whiteColor];

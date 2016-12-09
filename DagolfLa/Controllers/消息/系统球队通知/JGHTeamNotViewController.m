@@ -10,6 +10,18 @@
 #import "JGHTeamInformCell.h"
 #import "JGHInformModel.h"
 
+#import "NewFriendViewController.h"
+#import "JGTeamActibityNameViewController.h"
+#import "JGTeamGroupViewController.h"
+#import "JGDActSelfHistoryScoreViewController.h"
+#import "JGLPresentAwardViewController.h"
+#import "UseMallViewController.h"
+#import "JGLPushDetailsViewController.h"
+#import "DetailViewController.h"
+#import "JGNewCreateTeamTableViewController.h"
+#import "JGDNewTeamDetailViewController.h"
+#import "JGPhotoAlbumViewController.h"
+
 static NSString *const JGHTeamInformCellIdentifier = @"JGHTeamInformCell";
 
 @interface JGHTeamNotViewController ()<UITableViewDelegate, UITableViewDataSource>
@@ -156,9 +168,18 @@ static NSString *const JGHTeamInformCellIdentifier = @"JGHTeamInformCell";
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     JGHInformModel *model = [[JGHInformModel alloc]init];
     model = _dataArray[indexPath.row];
-    CGSize titleSize = [[NSString stringWithFormat:@"    %@", model.title] boundingRectWithSize:CGSizeMake(screenWidth, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:16*ProportionAdapter]} context:nil].size;
     
-//    CGSize contentSize = [model.content boundingRectWithSize:CGSizeMake(screenWidth, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:15*ProportionAdapter]} context:nil].size;
+    CGSize titleSize;
+    
+    if (model.linkURL) {
+        titleSize = [[NSString stringWithFormat:@"    %@", model.title] boundingRectWithSize:CGSizeMake(screenWidth - 50 * ProportionAdapter, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:16*ProportionAdapter]} context:nil].size;
+        
+    }else{
+        titleSize = [[NSString stringWithFormat:@"    %@", model.title] boundingRectWithSize:CGSizeMake(screenWidth - 30 * ProportionAdapter, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:16*ProportionAdapter]} context:nil].size;
+    }
+    
+    
+    //    CGSize contentSize = [model.content boundingRectWithSize:CGSizeMake(screenWidth, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:15*ProportionAdapter]} context:nil].size;
     
     return 60 *ProportionAdapter +titleSize.height;
 }
@@ -166,8 +187,22 @@ static NSString *const JGHTeamInformCellIdentifier = @"JGHTeamInformCell";
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     JGHTeamInformCell *teamInformCell = [tableView dequeueReusableCellWithIdentifier:JGHTeamInformCellIdentifier forIndexPath:indexPath];
     teamInformCell.selectionStyle = UITableViewCellSelectionStyleNone;
+
+    JGHInformModel *model = _dataArray[indexPath.row];
+
+    [teamInformCell configJGHTeamInformCell:model];
     
-    [teamInformCell configJGHTeamInformCell:_dataArray[indexPath.row]];
+    if (model.linkURL) {
+        teamInformCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        UIImageView *accImageV = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 10, 10)];
+        accImageV.image = [UIImage imageNamed:@"more"];
+        teamInformCell.accessoryView = accImageV;
+
+    }else{
+        teamInformCell.accessoryType = UITableViewCellAccessoryNone;
+
+    }
+    
     
     return teamInformCell;
 }
@@ -209,6 +244,135 @@ static NSString *const JGHTeamInformCellIdentifier = @"JGHTeamInformCell";
             }
         }];
     }
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    JGHInformModel *model = _dataArray[indexPath.row];
+
+    if ([model.linkURL containsString:@"dagolfla://"]) {
+        //新球友
+        if ([model.linkURL containsString:@"newUserFriendList"]) {
+            NewFriendViewController *friendCtrl = [[NewFriendViewController alloc]init];
+            friendCtrl.fromWitchVC = 2;
+            [self.navigationController pushViewController:friendCtrl animated:YES];
+        }
+        
+        // 相册
+        if ([model.linkURL containsString:@"teamMediaList"]) {
+            JGPhotoAlbumViewController *albumVC = [[JGPhotoAlbumViewController alloc]init];
+            albumVC.albumKey = [NSNumber numberWithInteger:[[Helper returnKeyVlaueWithUrlString:model.linkURL andKey:@"albumKey"] integerValue]];
+            albumVC.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:albumVC animated:YES];
+        }
+
+        //活动详情
+        if ([model.linkURL containsString:@"teamActivityDetail"]) {
+            JGTeamActibityNameViewController *teamCtrl= [[JGTeamActibityNameViewController alloc]init];
+            teamCtrl.teamKey = [[Helper returnKeyVlaueWithUrlString:model.linkURL andKey:@"activityKey"] integerValue];
+            teamCtrl.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:teamCtrl animated:YES];
+        }
+        
+        //分组--普通用户
+        if ([model.linkURL containsString:@"activityGroup"]) {
+            JGTeamGroupViewController *teamGroupCtrl= [[JGTeamGroupViewController alloc]init];
+            teamGroupCtrl.teamActivityKey = [[Helper returnKeyVlaueWithUrlString:model.linkURL andKey:@"activityKey"] integerValue];
+            teamGroupCtrl.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:teamGroupCtrl animated:YES];
+        }
+        
+        //分组--管理
+        if ([model.linkURL containsString:@"activityGroupAdmin"]) {
+            JGTeamGroupViewController *teamGroupCtrl= [[JGTeamGroupViewController alloc]init];
+            teamGroupCtrl.teamActivityKey = [[Helper returnKeyVlaueWithUrlString:model.linkURL andKey:@"activityKey"] integerValue];
+            teamGroupCtrl.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:teamGroupCtrl animated:YES];
+        }
+        
+        //活动成绩详情 --
+        if ([model.linkURL containsString:@"activityScore"]) {
+            JGDActSelfHistoryScoreViewController *teamGroupCtrl= [[JGDActSelfHistoryScoreViewController alloc]init];
+            teamGroupCtrl.teamKey = [NSNumber numberWithInteger:[[Helper returnKeyVlaueWithUrlString:model.linkURL andKey:@"teamKey"] integerValue]];
+            teamGroupCtrl.timeKey = [Helper returnKeyVlaueWithUrlString:model.linkURL andKey:@"activityKey"];
+            teamGroupCtrl.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:teamGroupCtrl animated:YES];
+        }
+        
+        //获奖详情 --
+        if ([model.linkURL containsString:@"awardedInfo"]) {
+            JGLPresentAwardViewController *teamGroupCtrl= [[JGLPresentAwardViewController alloc]init];
+            teamGroupCtrl.activityKey = [[Helper returnKeyVlaueWithUrlString:model.linkURL andKey:@"activityKey"] integerValue];
+            teamGroupCtrl.teamKey = [[Helper returnKeyVlaueWithUrlString:model.linkURL andKey:@"teamKey"] integerValue];
+            teamGroupCtrl.isManager = 0;//0-非管理员
+            teamGroupCtrl.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:teamGroupCtrl animated:YES];
+        }
+        
+        //球队详情
+        if ([model.linkURL containsString:@"teamDetail"]) {
+            JGDNewTeamDetailViewController *newTeamVC = [[JGDNewTeamDetailViewController alloc] init];
+            newTeamVC.timeKey = [NSNumber numberWithInteger:[[Helper returnKeyVlaueWithUrlString:model.linkURL andKey:@"timekey"] integerValue]];
+            newTeamVC.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:newTeamVC animated:YES];
+        }
+        
+        //商品详情
+        if ([model.linkURL containsString:@"goodDetail"]) {
+            UseMallViewController* userVc = [[UseMallViewController alloc]init];
+            userVc.linkUrl = [NSString stringWithFormat:@"http://www.dagolfla.com/app/ProductDetails.html?proid=%td", [[Helper returnKeyVlaueWithUrlString:model.linkURL andKey:@"timekey"] integerValue]];
+            userVc.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:userVc animated:YES];
+        }
+        
+        //H5
+        if ([model.linkURL containsString:@"openURL"]) {
+            JGLPushDetailsViewController* puVc = [[JGLPushDetailsViewController alloc]init];
+            puVc.strUrl = [Helper returnKeyVlaueWithUrlString:model.linkURL andKey:@"timekey"];
+            puVc.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:puVc animated:YES];
+        }
+        
+        //社区
+        if ([model.linkURL containsString:@"moodKey"]) {
+            DetailViewController * comDevc = [[DetailViewController alloc]init];
+            comDevc.detailId = [NSNumber numberWithInteger:[[Helper returnKeyVlaueWithUrlString:model.linkURL andKey:@"timekey"] integerValue]];
+            comDevc.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:comDevc animated:YES];
+        }
+        
+        //创建球队
+        if ([model.linkURL containsString:@"createTeam"]) {
+            NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
+            
+            if ([user objectForKey:@"cacheCreatTeamDic"]) {
+                UIAlertController *alert=[UIAlertController alertControllerWithTitle:@"提示" message:@"是否继续上次编辑" preferredStyle:UIAlertControllerStyleAlert];
+                
+                UIAlertAction *action1=[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                    [user setObject:0 forKey:@"cacheCreatTeamDic"];
+                    JGNewCreateTeamTableViewController *creatteamVc = [[JGNewCreateTeamTableViewController alloc] init];
+                    creatteamVc.hidesBottomBarWhenPushed = YES;
+                    [self.navigationController pushViewController:creatteamVc animated:YES];
+                }];
+                UIAlertAction* action2=[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                    JGNewCreateTeamTableViewController *creatteamVc = [[JGNewCreateTeamTableViewController alloc] init];
+                    creatteamVc.detailDic = [[user objectForKey:@"cacheCreatTeamDic"] mutableCopy];
+                    creatteamVc.titleField.text = [[user objectForKey:@"cacheCreatTeamDic"] objectForKey:@"name"];
+                    creatteamVc.hidesBottomBarWhenPushed = YES;
+                    [self.navigationController pushViewController:creatteamVc animated:YES];
+                }];
+                
+                [alert addAction:action1];
+                [alert addAction:action2];
+                [self presentViewController:alert animated:YES completion:nil];
+                
+            }else{
+                JGNewCreateTeamTableViewController *creatteamVc = [[JGNewCreateTeamTableViewController alloc] init];
+                [self.navigationController pushViewController:creatteamVc animated:YES];
+            }
+        }
+    }
+
 }
 
 - (void)didReceiveMemoryWarning {

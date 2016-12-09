@@ -19,18 +19,18 @@
 //        
 //        self.isReadImageView = [[UIImageView alloc]initWithFrame:CGRectMake(20 *ProportionAdapter, 15 *ProportionAdapter, 10 *ProportionAdapter, 10*ProportionAdapter)];
         
-        self.name = [[UILabel alloc]initWithFrame:CGRectMake(10 *ProportionAdapter, 15 *ProportionAdapter, screenWidth -60*ProportionAdapter, 40 *ProportionAdapter)];
+        self.name = [[UILabel alloc]initWithFrame:CGRectMake(15 *ProportionAdapter, 15 *ProportionAdapter, screenWidth -60*ProportionAdapter, 40 *ProportionAdapter)];
         self.name.font = [UIFont systemFontOfSize:16 *ProportionAdapter];
         self.name.numberOfLines = 0;
         self.name.text = @"球队通知u 十多年的南非进口你的看法就给法国的风格到逢年过节看地方能够看地方能见度开放给你空间的风格";
         self.name.textColor = [UIColor colorWithHexString:@"#313131"];
         [self addSubview:self.name];
         
-        self.teamNameLine = [[UILabel alloc]initWithFrame:CGRectMake(10 *ProportionAdapter, 75*ProportionAdapter, 40*ProportionAdapter, 1)];
-        self.teamNameLine.backgroundColor = [UIColor colorWithHexString:@"#a0a0a0"];
-        [self addSubview:self.teamNameLine];
+//        self.teamNameLine = [[UILabel alloc]initWithFrame:CGRectMake(10 *ProportionAdapter, 75*ProportionAdapter, 40*ProportionAdapter, 1)];
+//        self.teamNameLine.backgroundColor = [UIColor colorWithHexString:@"#a0a0a0"];
+//        [self addSubview:self.teamNameLine];
         
-        self.teamName = [[UILabel alloc]initWithFrame:CGRectMake(60 *ProportionAdapter, 65 *ProportionAdapter, screenWidth -220 *ProportionAdapter, 20 *ProportionAdapter)];
+        self.teamName = [[UILabel alloc]initWithFrame:CGRectMake(15 *ProportionAdapter, 65 *ProportionAdapter, screenWidth - 175 *ProportionAdapter, 20 *ProportionAdapter)];
         self.teamName.font = [UIFont systemFontOfSize:15 *ProportionAdapter];
         self.teamName.text = @"优高客俱乐部";
         self.teamName.textAlignment = NSTextAlignmentLeft;
@@ -60,18 +60,35 @@
 }
 
 - (void)configJGHTeamInformCell:(JGHInformModel *)model{
-    CGSize titleSize = [[NSString stringWithFormat:@"    %@", model.title] boundingRectWithSize:CGSizeMake(screenWidth, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:16*ProportionAdapter]} context:nil].size;
+//    CGSize titleSize = [[NSString stringWithFormat:@"    %@", model.title] boundingRectWithSize:CGSizeMake(screenWidth, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:16*ProportionAdapter]} context:nil].size;
     
 //    CGSize contentSize = [model.content boundingRectWithSize:CGSizeMake(screenWidth, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:15*ProportionAdapter]} context:nil].size;
     
-    
-    self.name.frame = CGRectMake(10 *ProportionAdapter, 15 *ProportionAdapter, screenWidth -20*ProportionAdapter, titleSize.height);
-    
-    self.teamNameLine.frame = CGRectMake(10 *ProportionAdapter, titleSize.height +35*ProportionAdapter, 20*ProportionAdapter, 1);
-    
-    self.teamName.frame = CGRectMake(35 *ProportionAdapter, titleSize.height + 25*ProportionAdapter, screenWidth -120 *ProportionAdapter, 20 *ProportionAdapter);
-    
-    self.time.frame = CGRectMake(screenWidth -100 *ProportionAdapter, titleSize.height + 25*ProportionAdapter, 80 *ProportionAdapter, 20 *ProportionAdapter);
+    if (model.linkURL) {
+        
+        CGSize titleSize = [[NSString stringWithFormat:@"    %@", model.title] boundingRectWithSize:CGSizeMake(screenWidth - 50 * ProportionAdapter, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:16*ProportionAdapter]} context:nil].size;
+
+        
+        self.name.frame = CGRectMake(15 *ProportionAdapter, 15 *ProportionAdapter, screenWidth -50*ProportionAdapter, titleSize.height);
+        
+        //    self.teamNameLine.frame = CGRectMake(10 *ProportionAdapter, titleSize.height +35*ProportionAdapter, 20*ProportionAdapter, 1);
+        
+        self.teamName.frame = CGRectMake(15 *ProportionAdapter, titleSize.height + 25*ProportionAdapter, screenWidth -120 *ProportionAdapter, 20 *ProportionAdapter);
+        
+        self.time.frame = CGRectMake(screenWidth -120 *ProportionAdapter, titleSize.height + 25*ProportionAdapter, 80 *ProportionAdapter, 20 *ProportionAdapter);
+    }else{
+        
+        CGSize titleSize = [[NSString stringWithFormat:@"    %@", model.title] boundingRectWithSize:CGSizeMake(screenWidth - 30 * ProportionAdapter, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:16*ProportionAdapter]} context:nil].size;
+
+        self.name.frame = CGRectMake(15 *ProportionAdapter, 15 *ProportionAdapter, screenWidth -30*ProportionAdapter, titleSize.height);
+        
+        //    self.teamNameLine.frame = CGRectMake(10 *ProportionAdapter, titleSize.height +35*ProportionAdapter, 20*ProportionAdapter, 1);
+        
+        self.teamName.frame = CGRectMake(15 *ProportionAdapter, titleSize.height + 25*ProportionAdapter, screenWidth -100 *ProportionAdapter, 20 *ProportionAdapter);
+        
+        self.time.frame = CGRectMake(screenWidth -100 *ProportionAdapter, titleSize.height + 25*ProportionAdapter, 80 *ProportionAdapter, 20 *ProportionAdapter);
+    }
+
     
     
     self.name.text = [NSString stringWithFormat:@"    %@", model.title];

@@ -34,4 +34,8 @@ typedef void(^PersonRemark)(NSString *);
 //用户key
 @property (nonatomic, retain)NSNumber *otherKey;
 
+
+@property (nonatomic, assign) NSInteger fromChat; // 1 从聊天进入
+@property (nonatomic, assign) NSInteger friendNew; // 1  是新加好友列表进入
+
 @end
