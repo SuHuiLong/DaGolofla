@@ -27,8 +27,8 @@
         self.myImageV.layer.masksToBounds = YES;
         self.myImageV.layer.cornerRadius = 20 * ProportionAdapter;
         self.myImageV.userInteractionEnabled = YES;
-        //      cell.myImageV.contentMode = UIViewContentModeScaleAspectFill;
-        
+        self.myImageV.contentMode = UIViewContentModeScaleAspectFill;
+
         
         self.myLabel = [[UILabel alloc] initWithFrame:CGRectMake(70*ProportionAdapter, 4 * ProportionAdapter, 200, 20 *ProportionAdapter)];
         self.myLabel.font = [UIFont systemFontOfSize:17 * ProportionAdapter];

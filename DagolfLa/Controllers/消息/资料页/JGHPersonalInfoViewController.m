@@ -14,6 +14,8 @@
 #import "JGAddFriendViewController.h"
 #import "PersonHomeController.h"
 
+#import "JGAddFriendViewController.h"
+
 @interface JGHPersonalInfoViewController ()
 {
     NSString *_handImgUrl;
@@ -158,8 +160,12 @@
                 self.name.frame = CGRectMake(90 *ProportionAdapter, 10 *ProportionAdapter, nameSize.width, 20 *ProportionAdapter);
                 self.name.text = [NSString stringWithFormat:@"%@", _model.userName];
                 self.sexImageView.frame = CGRectMake(self.name.frame.origin.x +10*ProportionAdapter + self.name.frame.size.width, self.name.frame.origin.y +2*ProportionAdapter, 15*ProportionAdapter, 15*ProportionAdapter);
-                
+                if (_friendNew == 1) {
+                    _state = 0;
+                    [self.submitBtn setTitle:@"通过验证" forState:UIControlStateNormal];
+                }else{
                 [self.submitBtn setTitle:@"加球友" forState:UIControlStateNormal];
+                }
                 self.nickname.text = @"";
                 self.nick.text = @"";
                 
@@ -192,6 +198,7 @@
     self.headerImageView.layer.masksToBounds = YES;
     self.headerImageView.layer.cornerRadius = 5.0 *ProportionAdapter;
     self.headerImageView.userInteractionEnabled = YES;
+    self.headerImageView.contentMode = UIViewContentModeScaleAspectFill;
     
     UIButton *headerImageBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 65 *ProportionAdapter, 65 *ProportionAdapter)];
     [headerImageBtn addTarget:self action:@selector(headerImageBtn:) forControlEvents:UIControlEventTouchUpInside];
@@ -421,7 +428,7 @@
     btn.userInteractionEnabled = NO;
     
     if (_state == 0 || _state == -1) {
-        [[ShowHUD showHUD]showToastWithText:@"请先添加好友！" FromView:self.view];
+        [[ShowHUD showHUD]showToastWithText:@"请先添加球友！" FromView:self.view];
         btn.userInteractionEnabled = YES;
         return;
     }
@@ -439,7 +446,7 @@
 - (void)footprintBtn:(UIButton *)btn{
     btn.userInteractionEnabled = NO;
     if (_state == 0 || _state == -1) {
-        [[ShowHUD showHUD]showToastWithText:@"请先添加好友！" FromView:self.view];
+        [[ShowHUD showHUD]showToastWithText:@"请先添加球友！" FromView:self.view];
         btn.userInteractionEnabled = YES;
         return;
     }
@@ -456,45 +463,67 @@
 - (void)submitBtn:(UIButton *)btn{
     btn.userInteractionEnabled = NO;
     if (_state == 1){
-        //好友
-        ChatDetailViewController *vc = [[ChatDetailViewController alloc] init];
-        //设置聊天类型
-        vc.conversationType = ConversationType_PRIVATE;
-        //设置对方的id
-        vc.targetId = [NSString stringWithFormat:@"%@", _otherKey];
-        //设置对方的名字
-        //    vc.userName = model.conversationTitle;
-        //设置聊天标题
-        vc.title = _name.text;
-        //设置不现实自己的名称  NO表示不现实
-        vc.displayUserNameInCell = NO;
-        [self.navigationController pushViewController:vc animated:YES];
+        
+        if (_fromChat == 1) {
+            [self.navigationController popViewControllerAnimated:YES];
+        }else{
+            //好友
+            ChatDetailViewController *vc = [[ChatDetailViewController alloc] init];
+            //设置聊天类型
+            vc.conversationType = ConversationType_PRIVATE;
+            //设置对方的id
+            vc.targetId = [NSString stringWithFormat:@"%@", _otherKey];
+            //设置对方的名字
+            //    vc.userName = model.conversationTitle;
+            //设置聊天标题
+            vc.title = _name.text;
+            //设置不现实自己的名称  NO表示不现实
+            vc.displayUserNameInCell = NO;
+            [self.navigationController pushViewController:vc animated:YES];
+        }
+        
+
     }else if (_state == -1){
-        [LQProgressHud showLoading:@"加载中..."];
-        NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-        [dict setObject:_otherKey forKey:@"friendUserKey"];
-        [dict setObject:[NSString stringWithFormat:@"我是 %@", DEFAULF_UserName] forKey:@"reason"];
-        [dict setObject:DEFAULF_USERID forKey:@"userKey"];
-        [[JsonHttp jsonHttp]httpRequestWithMD5:@"userFriend/doApply" JsonKey:nil withData:dict failedBlock:^(id errType) {
-            [LQProgressHud hide];
-        } completionBlock:^(id data) {
-            NSLog(@"%@", data);
-            [LQProgressHud hide];
+        
+        
+        JGAddFriendViewController *addFriendVC = [[JGAddFriendViewController alloc] init];
+        addFriendVC.otherUserKey = _otherKey;
+        addFriendVC.popToVC = ^(NSInteger sendNum){
             
-            if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
-                [self loadData];
-            }else{
-                if ([data objectForKey:@"packResultMsg"]) {
-                    [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
-                }
-            }
-        }];
+//            if (sendNum) {
+//                [btn setTitle:@"等待验证" forState:(UIControlStateNormal)];
+//                btn.enabled = NO;
+//            }
+        };
+        
+        [self.navigationController pushViewController:addFriendVC animated:YES];
+        
+        
+//        [LQProgressHud showLoading:@"加载中..."];
+//        NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+//        [dict setObject:_otherKey forKey:@"friendUserKey"];
+//        [dict setObject:[NSString stringWithFormat:@"我是 %@", DEFAULF_UserName] forKey:@"reason"];
+//        [dict setObject:DEFAULF_USERID forKey:@"userKey"];
+//        [[JsonHttp jsonHttp]httpRequestWithMD5:@"userFriend/doApply" JsonKey:nil withData:dict failedBlock:^(id errType) {
+//            [LQProgressHud hide];
+//        } completionBlock:^(id data) {
+//            NSLog(@"%@", data);
+//            [LQProgressHud hide];
+//            
+//            if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+//                [self loadData];
+//            }else{
+//                if ([data objectForKey:@"packResultMsg"]) {
+//                    [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+//                }
+//            }
+//        }];
     }else if (_state == 0){
         [LQProgressHud showLoading:@"申请中..."];
         NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-        [dict setObject:_otherKey forKey:@"userFriendKey"];
+//        [dict setObject:_otherKey forKey:@"userFriendKey"];
         [dict setObject:@1 forKey:@"state"];
-        [dict setObject:_userFriendTimeKey forKey:@"timeKey"];
+        [dict setObject:_userFriendTimeKey forKey:@"userFriendKey"];
         [[JsonHttp jsonHttp]httpRequestWithMD5:@"userFriend/doApplyHandle" JsonKey:nil withData:dict failedBlock:^(id errType) {
             [LQProgressHud hide];
         } completionBlock:^(id data) {

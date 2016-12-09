@@ -177,9 +177,9 @@ static NSString *const orderDetailCellIdentifier = @"OtherDataTableViewCell";
     [_iconImg.layer setBorderWidth:1.0];
     _iconImg.clipsToBounds = YES;
     
-    _iconImg.userInteractionEnabled = YES;
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(imageIconACt)];
-    [_iconImg addGestureRecognizer:tap];
+//    _iconImg.userInteractionEnabled = YES;
+//    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(imageIconACt)];
+//    [_iconImg addGestureRecognizer:tap];
     [_profileView addSubview:_iconImg];
     
     //用户名

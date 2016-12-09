@@ -25,6 +25,7 @@
         self.iconImageV.layer.cornerRadius = 5 * screenWidth / 320;
         self.iconImageV.clipsToBounds = YES;
         [self.contentView addSubview:self.iconImageV];
+        [self.iconImageV setContentMode:UIViewContentModeScaleAspectFill];
         
         self.iconState = [[UIImageView alloc] initWithFrame:CGRectMake(40* screenWidth / 320 , 0, 30 * screenWidth / 320, 30 * screenWidth / 320)];
         [self.iconImageV addSubview:self.iconState];

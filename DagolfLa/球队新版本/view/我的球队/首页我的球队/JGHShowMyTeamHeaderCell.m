@@ -24,8 +24,8 @@
     
     self.arrowRight.constant = 10 *ProportionAdapter;
     
-    self.lineLeft.constant = 10 *ProportionAdapter;
-    self.lineRight.constant = 10 *ProportionAdapter;
+    self.lineLeft.constant = 0;
+    self.lineRight.constant = 0;
 }
 
 - (void)configJGHShowMyTeamHeaderCell:(NSString *)name andSection:(NSInteger)section{

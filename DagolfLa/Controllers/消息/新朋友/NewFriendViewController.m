@@ -307,7 +307,7 @@
     
     if (_fromWitchVC == 1) {
         JGAddFriendViewController *addFriVC = [[JGAddFriendViewController alloc] init];
-        addFriVC.otherUserKey = [_dataArray[indexPath.row] userId];
+        addFriVC.otherUserKey = [_dataArray[indexPath.row] friendKey];
         addFriVC.popToVC = ^(NSInteger num){
             if (num == 1) {
 
@@ -352,19 +352,21 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
-    
     JGHPersonalInfoViewController *personInfoVC = [[JGHPersonalInfoViewController alloc] init];
-    if (_fromWitchVC == 1) {
-        personInfoVC.otherKey = [_dataArray[indexPath.row] userId];
+
+    if (_fromWitchVC == 1) { // 球友推荐
+        
+        personInfoVC.otherKey = [_dataArray[indexPath.row] friendKey];
+        
     }else{
+        
         personInfoVC.otherKey = [_dataArray[indexPath.row] friendUserKey];
+        personInfoVC.friendNew = 1;
     }
     
     personInfoVC.personRemark = ^(NSString *remark){
         
     };
-    
     [self.navigationController pushViewController:personInfoVC animated:YES];
 
 //    ChatDetailViewController *vc = [[ChatDetailViewController alloc] init];

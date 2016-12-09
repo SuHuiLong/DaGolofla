@@ -337,7 +337,7 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
 }
 #pragma mark - UITableViewDataSource 协议方法
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
+{  
 //    return _dataArray.count +1;
     return _indexModel.plateList.count +1;
 }
@@ -815,16 +815,24 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
             [self.navigationController pushViewController:friendCtrl animated:YES];
         }
         
+        // 相册
+        if ([urlString containsString:@"teamMediaList"]) {
+            JGPhotoAlbumViewController *albumVC = [[JGPhotoAlbumViewController alloc]init];
+            albumVC.albumKey = [NSNumber numberWithInteger:[[Helper returnKeyVlaueWithUrlString:urlString andKey:@"albumKey"] integerValue]];
+            albumVC.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:albumVC animated:YES];
+        }
+
         //活动详情
-        if ([urlString isEqualToString:@"activityKey"]) {
+        if ([urlString containsString:@"teamActivityDetail"]) {
             JGTeamActibityNameViewController *teamCtrl= [[JGTeamActibityNameViewController alloc]init];
-            teamCtrl.teamKey = [[Helper returnKeyVlaueWithUrlString:urlString andKey:@"timekey"] integerValue];
+            teamCtrl.teamKey = [[Helper returnKeyVlaueWithUrlString:urlString andKey:@"activityKey"] integerValue];
             teamCtrl.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:teamCtrl animated:YES];
         }
         
         //分组--普通用户
-        if ([urlString isEqualToString:@"activityGroup"]) {
+        if ([urlString containsString:@"activityGroup"]) {
             JGTeamGroupViewController *teamGroupCtrl= [[JGTeamGroupViewController alloc]init];
             teamGroupCtrl.teamActivityKey = [[Helper returnKeyVlaueWithUrlString:urlString andKey:@"activityKey"] integerValue];
             teamGroupCtrl.hidesBottomBarWhenPushed = YES;
@@ -832,7 +840,7 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
         }
         
         //分组--管理
-        if ([urlString isEqualToString:@"activityGroupAdmin"]) {
+        if ([urlString containsString:@"activityGroupAdmin"]) {
             JGTeamGroupViewController *teamGroupCtrl= [[JGTeamGroupViewController alloc]init];
             teamGroupCtrl.teamActivityKey = [[Helper returnKeyVlaueWithUrlString:urlString andKey:@"activityKey"] integerValue];
             teamGroupCtrl.hidesBottomBarWhenPushed = YES;
@@ -840,7 +848,7 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
         }
         
         //活动成绩详情 --
-        if ([urlString isEqualToString:@"activityScore"]) {
+        if ([urlString containsString:@"activityScore"]) {
             JGDActSelfHistoryScoreViewController *teamGroupCtrl= [[JGDActSelfHistoryScoreViewController alloc]init];
             teamGroupCtrl.teamKey = [NSNumber numberWithInteger:[[Helper returnKeyVlaueWithUrlString:urlString andKey:@"teamKey"] integerValue]];
             teamGroupCtrl.timeKey = [Helper returnKeyVlaueWithUrlString:urlString andKey:@"activityKey"];
@@ -849,7 +857,7 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
         }
         
         //获奖详情 -- 
-        if ([urlString isEqualToString:@"awardedInfo"]) {
+        if ([urlString containsString:@"awardedInfo"]) {
             JGLPresentAwardViewController *teamGroupCtrl= [[JGLPresentAwardViewController alloc]init];
             teamGroupCtrl.activityKey = [[Helper returnKeyVlaueWithUrlString:urlString andKey:@"activityKey"] integerValue];
             teamGroupCtrl.teamKey = [[Helper returnKeyVlaueWithUrlString:urlString andKey:@"teamKey"] integerValue];
@@ -859,7 +867,7 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
         }
         
         //球队详情
-        if ([urlString isEqualToString:@"activityKey"]) {
+        if ([urlString containsString:@"teamDetail"]) {
             JGDNewTeamDetailViewController *newTeamVC = [[JGDNewTeamDetailViewController alloc] init];
             newTeamVC.timeKey = [NSNumber numberWithInteger:[[Helper returnKeyVlaueWithUrlString:urlString andKey:@"timekey"] integerValue]];
             newTeamVC.hidesBottomBarWhenPushed = YES;
@@ -867,7 +875,7 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
         }
         
         //商品详情
-        if ([urlString isEqualToString:@"goodDetail"]) {
+        if ([urlString containsString:@"goodDetail"]) {
             UseMallViewController* userVc = [[UseMallViewController alloc]init];
             userVc.linkUrl = [NSString stringWithFormat:@"http://www.dagolfla.com/app/ProductDetails.html?proid=%td", [[Helper returnKeyVlaueWithUrlString:urlString andKey:@"timekey"] integerValue]];
             userVc.hidesBottomBarWhenPushed = YES;
@@ -875,7 +883,7 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
         }
         
         //H5
-        if ([urlString isEqualToString:@"openURL"]) {
+        if ([urlString containsString:@"openURL"]) {
             JGLPushDetailsViewController* puVc = [[JGLPushDetailsViewController alloc]init];
             puVc.strUrl = [Helper returnKeyVlaueWithUrlString:urlString andKey:@"timekey"];
             puVc.hidesBottomBarWhenPushed = YES;
@@ -883,7 +891,7 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
         }
         
         //社区
-        if ([urlString isEqualToString:@"moodKey"]) {
+        if ([urlString containsString:@"moodKey"]) {
             DetailViewController * comDevc = [[DetailViewController alloc]init];
             comDevc.detailId = [NSNumber numberWithInteger:[[Helper returnKeyVlaueWithUrlString:urlString andKey:@"timekey"] integerValue]];
             comDevc.hidesBottomBarWhenPushed = YES;
@@ -891,7 +899,7 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
         }
         
         //创建球队
-        if ([urlString isEqualToString:@"createTeam"]) {
+        if ([urlString containsString:@"createTeam"]) {
             NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
             
             if ([user objectForKey:@"cacheCreatTeamDic"]) {

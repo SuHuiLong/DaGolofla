@@ -320,7 +320,7 @@
 - (void)onRCIMReceiveMessage:(RCMessage *)message
                         left:(int)left
 {
-    [self.tabBarController.tabBar showBadgeOnItemIndex:3];
+//    [self.tabBarController.tabBar showBadgeOnItemIndex:3];
 }
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (buttonIndex == 1) {

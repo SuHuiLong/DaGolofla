@@ -38,6 +38,9 @@
 //更改聊天的字体
 -(void)willDisplayConversationTableCell:(RCMessageBaseCell *)cell atIndexPath:(NSIndexPath *)indexPath{
     if ([cell isMemberOfClass:[RCTextMessageCell class]]) {
+        
+        
+        
         RCTextMessageCell *textCell=(RCTextMessageCell *)cell;
         RCMessageModel *model=self.conversationDataRepository[indexPath.row];
         NSInteger mmm=[[[NSUserDefaults standardUserDefaults] objectForKey:@"userId"] integerValue];
@@ -92,6 +95,7 @@
     
         JGHPersonalInfoViewController *personVC = [[JGHPersonalInfoViewController alloc] init];
         personVC.otherKey = numTemp;
+        personVC.fromChat = 1;
         [self.navigationController pushViewController:personVC animated:YES];
     
         

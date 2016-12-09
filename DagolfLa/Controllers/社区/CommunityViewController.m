@@ -95,7 +95,7 @@
 - (void)onRCIMReceiveMessage:(RCMessage *)message
                         left:(int)left
 {
-    [self.tabBarController.tabBar showBadgeOnItemIndex:3];
+//    [self.tabBarController.tabBar showBadgeOnItemIndex:3];
 }
 
 - (void)viewDidLoad {

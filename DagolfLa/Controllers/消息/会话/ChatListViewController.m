@@ -56,7 +56,8 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:YES];
     self.isShowNetworkIndicatorView = NO;
-    //    [self.tabBarController.tabBar hideBadgeOnItemIndex:3];
+    
+//    [self.tabBarController.tabBar hideBadgeOnItemIndex:3];
 //    [self.tabBarController.tabBar showBadgeOnItemIndex:3];
     if ([[NSUserDefaults standardUserDefaults] objectForKey:@"userId"])
     {
@@ -69,13 +70,15 @@
         [self refreshConversationTableViewIfNeeded];
 //        [self.tabBarController.tabBar hideBadgeOnItemIndex:4];
 //        [self.tabBarController.tabBar showBadgeOnItemIndex:4];
-        
     }
     else
     {
         
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"君高高尔夫" message:@"确定是否立即登录？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"君高高尔夫" message:@"是否立即登录？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
         [alertView show];
+        
+        [self refreshConversationTableViewIfNeeded];
+
     }
 
     [[NSNotificationCenter defaultCenter] postNotificationName:@"show" object:self];
@@ -85,7 +88,8 @@
         
         JGHLoginViewController *vc = [[JGHLoginViewController alloc] init];
         vc.reloadCtrlData = ^(){
-            
+            [self.conversationListTableView.header beginRefreshing];
+
         };
         
         [self.navigationController pushViewController:vc animated:YES];
@@ -95,6 +99,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+
     if ([[[UIDevice currentDevice] systemVersion] doubleValue] >7.0) {
         [self.navigationController.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor],UITextAttributeTextColor, nil]];
     }else {
@@ -116,13 +121,15 @@
     self.conversationListTableView.backgroundColor=[UIColor whiteColor];
     self.conversationListTableView.frame = CGRectMake(0, 0, screenWidth, screenHeight);
     //设置要显示的会话类型
+    [self setShowConversationListWhileLogOut:NO];
     [self setDisplayConversationTypes:@[@(ConversationType_PRIVATE)]];
     
     [self createTableHeaderView];
     
+
 //    self.title = @"消息";
     
-    
+
 
     //聚合会话类型
 //   [self setCollectionConversationType:@[@(ConversationType_GROUP),@(ConversationType_PRIVATE)]];
@@ -131,20 +138,21 @@
 #pragma mark -- 下载未读消息数量
 - (void)loadMessageData{
     
-    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"userId"])
-    {
-        
-    }
-    else
-    {
-        
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"君高高尔夫" message:@"确定是否立即登录？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
-        [alertView show];
-        
-        [self.conversationListTableView.header endRefreshing];
-        
-        return;
-    }
+//    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"userId"])
+//    {
+//        
+//    }
+//    else
+//    {
+//        
+//        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"君高高尔夫" message:@"是否立即登录？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+//        [alertView show];
+//
+//        
+//        [self.conversationListTableView.header endRefreshing];
+//        
+//        return;
+//    }
     
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     [dict setObject:DEFAULF_USERID forKey:@"userKey"];
@@ -221,7 +229,8 @@
             }
             
             [self notifyUpdateUnreadMessageCount];
-            
+            [self refreshConversationTableViewIfNeeded];
+
         }else{
             [self notifyUpdateUnreadMessageCount];
             
@@ -258,6 +267,7 @@
         }];
     }
 }
+
 #pragma mark --头视图
 -(void)createTableHeaderView
 {
@@ -354,7 +364,7 @@
     else
     {
         
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"君高高尔夫" message:@"确定是否立即登录？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"君高高尔夫" message:@"是否立即登录？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
         [alertView show];
         
         [self.conversationListTableView.header endRefreshing];
@@ -382,7 +392,7 @@
     else
     {
         
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"君高高尔夫" message:@"确定是否立即登录？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"君高高尔夫" message:@"是否立即登录？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
         [alertView show];
         
         [self.conversationListTableView.header endRefreshing];
@@ -455,6 +465,7 @@
 #pragma mark - 消息数据
 - (NSMutableArray *)willReloadTableData:(NSMutableArray *)dataSource {
 
+
     return [super willReloadTableData:dataSource];
 }
 
@@ -466,7 +477,11 @@
 }
 
 - (RCConversationBaseCell *)rcConversationListTableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return [super rcConversationListTableView:tableView cellForRowAtIndexPath:indexPath];
+    if ([[NSUserDefaults standardUserDefaults]objectForKey:@"userId"]) {
+        return nil;
+    }else{
+        return [super rcConversationListTableView:tableView cellForRowAtIndexPath:indexPath];
+    }
 }
 
 - (void)didReceiveMemoryWarning {

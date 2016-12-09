@@ -298,13 +298,14 @@
             
         }else{
             
-            [self APSHomeDealUrl:[url query]];
+            [self APSHomeDealUrl:[NSString stringWithFormat:@"%@", url]];
         }
 
     }
     
     return YES;
 }
+
 - (void)phpLogin{
     NSString *url = [NSString stringWithFormat:@"http://www.dagolfla.com/app/api/client/api.php?Action=UserLoginUserid&uid=%@&url=dsadsa", DEFAULF_USERID];
     
@@ -398,7 +399,7 @@
             }];
             
         }else{
-            [self APSHomeDealUrl:[url query]];
+            [self APSHomeDealUrl:[NSString stringWithFormat:@"%@", url]];
         }
         
         return YES;
@@ -429,7 +430,7 @@
             }];
             
         }else{
-            [self APSHomeDealUrl:[url query]];
+            [self APSHomeDealUrl:[NSString stringWithFormat:@"%@", url]];
         }
         
         return YES;
@@ -474,7 +475,7 @@
             }];
             
         }else{
-            [self APSHomeDealUrl:[url query]];
+            [self APSHomeDealUrl:[NSString stringWithFormat:@"%@", url]];
         }
         
         return YES;
