@@ -353,8 +353,40 @@
     NSLog(@"%ld", (long)btn.tag);
     btn.userInteractionEnabled = NO;
     
+    NSDictionary *preDict = [NSDictionary dictionary];
+    preDict = self.preListArray[btn.tag -100];
+    
     [self.preListArray removeObjectAtIndex:btn.tag -100];
     [_tableView reloadData];
+    
+    //删除来源数据 数据  sourceKey
+    NSInteger sourceKey = [[preDict objectForKey:@"sourceKey"] integerValue];
+
+    if (sourceKey == 4) {
+        //手动添加
+        
+    }else if (sourceKey ==1){
+        //通讯录
+        for (int i=0; i<_addressArray.count; i++) {
+            TKAddressModel *model = [[TKAddressModel alloc]init];
+            model = _addressArray[i];
+            if (model.recordID == [[preDict objectForKey:@"recordID"] integerValue]) {
+                [_addressArray removeObjectAtIndex:i];
+            }
+        }
+    }else if (sourceKey == 2){
+        //扫码
+        
+    }else{
+        //好友通讯录
+        for (int i=0; i<_palyArray.count; i++) {
+            MyattenModel *model = [[MyattenModel alloc]init];
+            model = _palyArray[i];
+            if ([model.userId integerValue] == [[preDict objectForKey:@"userKey"] integerValue]) {
+                [_palyArray removeObjectAtIndex:i];
+            }
+        }
+    }
     
     btn.userInteractionEnabled = YES;
 }
