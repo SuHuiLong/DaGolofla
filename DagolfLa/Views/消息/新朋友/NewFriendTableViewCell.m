@@ -98,7 +98,7 @@
         _ageLabel.text = [NSString stringWithFormat:@"%.1f  |  %@",[model.almost floatValue], model.workName];
 
     }else{
-        _ageLabel.text = [NSString stringWithFormat:@"%@",model.almost];
+        _ageLabel.text = [NSString stringWithFormat:@"%.1f",[model.almost floatValue]];
 
     }
 //    _ageLabel.text = [NSString stringWithFormat:@"%@",model.age];

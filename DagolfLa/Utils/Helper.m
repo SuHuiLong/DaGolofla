@@ -497,7 +497,7 @@
 }
 
 
-// 返回距离当前时间。。。
+// 返回距离当前时间。。。刚刚 今天
 + (NSString *)distanceTimeWithBeforeTime:(NSString *)strTime
 {
     CGFloat beTime = [Helper stringConversionToDate:strTime];
@@ -547,6 +547,18 @@
     return distanceStr;
 }
 
+// 标准时间
++ (NSString *)distanceTimeWithBeforeTimeNotificat:(NSString *)strTime
+{
+    CGFloat beTime = [Helper stringConversionToDate:strTime];
+        
+    NSDate * beDate = [NSDate dateWithTimeIntervalSince1970:beTime];
+    NSDateFormatter * df = [[NSDateFormatter alloc]init];
+    
+    [df setDateFormat:@"yyyy-MM-dd"];
+
+    return [df stringFromDate:beDate];
+}
 
 - (BOOL)isPureNumandCharacters:(NSString *)string
 {
