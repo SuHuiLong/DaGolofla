@@ -37,6 +37,9 @@
 #import "JGTeamGroupViewController.h"
 #import "JGLPresentAwardViewController.h"
 #import "JGDActSelfHistoryScoreViewController.h"
+#import "JGDWithDrawTeamMoneyViewController.h"
+#import "JGTeamMemberController.h"
+#import "JGLJoinManageViewController.h"
 
 static NSString *const JGHPASHeaderTableViewCellIdentifier = @"JGHPASHeaderTableViewCell";
 static NSString *const JGHShowSectionTableViewCellIdentifier = @"JGHShowSectionTableViewCell";
@@ -808,6 +811,51 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
     NSString *urlString = [NSString stringWithFormat:@"%@", not.userInfo[@"details"]];
     
     if ([urlString containsString:@"dagolfla://"]) {
+        
+        
+
+        // 球队提现
+        
+        if ([urlString containsString:@"teamWithDraw"]) {
+            if ([urlString containsString:@"?"]) {
+                JGDWithDrawTeamMoneyViewController *vc = [[JGDWithDrawTeamMoneyViewController alloc] init];
+                vc.teamKey = [NSNumber numberWithInteger:[[Helper returnKeyVlaueWithUrlString:urlString andKey:@"teamKey"] integerValue]];
+                [self.navigationController pushViewController:vc animated:YES];        }
+        }
+        
+        // 球队大厅
+            
+            if ([urlString containsString:@"teamHall"]) {
+                JGTeamMainhallViewController *teamMainCtrl = [[JGTeamMainhallViewController alloc]init];
+                [self.navigationController pushViewController:teamMainCtrl animated:YES];
+        }
+        
+        // 成员管理
+        
+        if ([urlString containsString:@"teamMemberMgr"]) {
+            JGTeamMemberController* menVc = [[JGTeamMemberController alloc]init];
+            menVc.title = @"队员管理";
+            menVc.power = @"1004,1001,1002,1005";
+            menVc.teamManagement = 1;
+            menVc.teamKey = [NSNumber numberWithInteger:[[Helper returnKeyVlaueWithUrlString:urlString andKey:@"teamKey"] integerValue]];
+            [self.navigationController pushViewController:menVc animated:YES];
+        }
+        
+        // 入队审核页面
+        
+        if ([urlString containsString:@"auditTeamMember"]) {
+            JGLJoinManageViewController *jgJoinVC = [[JGLJoinManageViewController alloc] init];
+            jgJoinVC.teamKey = [NSNumber numberWithInteger:[[Helper returnKeyVlaueWithUrlString:urlString andKey:@"teamKey"] integerValue]];
+            [self.navigationController pushViewController:jgJoinVC animated:YES];
+        }
+
+        
+        
+        
+        
+        
+        
+        
         //新球友
         if ([urlString containsString:@"newUserFriendList"]) {
             NewFriendViewController *friendCtrl = [[NewFriendViewController alloc]init];

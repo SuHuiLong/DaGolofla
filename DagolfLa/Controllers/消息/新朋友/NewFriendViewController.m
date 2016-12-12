@@ -49,7 +49,7 @@
         self.title = @"新球友";
 
     }
-    _page = 1;
+    _page = 0;
     _dataArray = [[NSMutableArray alloc]init];
     [self uiConfig];
     
@@ -57,8 +57,8 @@
 
 -(void)uiConfig
 {
-
-    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight)];
+    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight - 44 * ProportionAdapter)];
+    
     _tableView.delegate = self;
     _tableView.dataSource = self;
     [self.view addSubview:_tableView];
@@ -66,7 +66,7 @@
     
     if (_fromWitchVC == 2) {
         [self downLoawdDataWithNewFriend];
-        _tableView.footer=[MJDIYBackFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRereshing)];
+//        _tableView.footer=[MJDIYBackFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRereshing)];
     }else{
         
         [self downLoawdDataWithRecommend: nil];
@@ -111,7 +111,7 @@
             }else{
                 [_tableView removeFromSuperview];
                 UILabel *tipLB = [[UILabel alloc] initWithFrame:CGRectMake(0, 180, screenWidth, 30)];
-                tipLB.text = @"暂无好友申请";
+                tipLB.text = @"暂无球友申请";
                 tipLB.textColor = [UIColor colorWithHexString:@"#a0a0a0"];
                 tipLB.textAlignment = NSTextAlignmentCenter;
                 [self.view addSubview:tipLB];

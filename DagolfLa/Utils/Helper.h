@@ -120,5 +120,6 @@
 //返回密码
 + (NSString *)returnPasswordString:(NSString *)pass;
 
++ (NSString *)distanceTimeWithBeforeTimeNotificat:(NSString *)strTime;
 
 @end

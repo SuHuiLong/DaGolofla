@@ -37,7 +37,7 @@
         self.teamName.textColor = [UIColor colorWithHexString:@"#a0a0a0"];
         [self addSubview:self.teamName];
         
-        self.time = [[UILabel alloc]initWithFrame:CGRectMake(screenWidth -100 *ProportionAdapter, 65 *ProportionAdapter, 80 *ProportionAdapter, 20 *ProportionAdapter)];
+        self.time = [[UILabel alloc]initWithFrame:CGRectMake(screenWidth -110 *ProportionAdapter, 65 *ProportionAdapter, 85 *ProportionAdapter, 20 *ProportionAdapter)];
         self.time.font = [UIFont systemFontOfSize:15 *ProportionAdapter];
         self.time.text = @"2016-10-23";
         self.time.textColor = [UIColor colorWithHexString:@"#a0a0a0"];
@@ -66,7 +66,7 @@
     
     if (model.linkURL) {
         
-        CGSize titleSize = [[NSString stringWithFormat:@"    %@", model.title] boundingRectWithSize:CGSizeMake(screenWidth - 50 * ProportionAdapter, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:16*ProportionAdapter]} context:nil].size;
+        CGSize titleSize = [[NSString stringWithFormat:@"%@", model.title] boundingRectWithSize:CGSizeMake(screenWidth - 50 * ProportionAdapter, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:16*ProportionAdapter]} context:nil].size;
 
         
         self.name.frame = CGRectMake(15 *ProportionAdapter, 15 *ProportionAdapter, screenWidth -50*ProportionAdapter, titleSize.height);
@@ -75,10 +75,10 @@
         
         self.teamName.frame = CGRectMake(15 *ProportionAdapter, titleSize.height + 25*ProportionAdapter, screenWidth -120 *ProportionAdapter, 20 *ProportionAdapter);
         
-        self.time.frame = CGRectMake(screenWidth -120 *ProportionAdapter, titleSize.height + 25*ProportionAdapter, 80 *ProportionAdapter, 20 *ProportionAdapter);
+        self.time.frame = CGRectMake(screenWidth -130 *ProportionAdapter, titleSize.height + 25*ProportionAdapter, 85 *ProportionAdapter, 20 *ProportionAdapter);
     }else{
         
-        CGSize titleSize = [[NSString stringWithFormat:@"    %@", model.title] boundingRectWithSize:CGSizeMake(screenWidth - 30 * ProportionAdapter, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:16*ProportionAdapter]} context:nil].size;
+        CGSize titleSize = [[NSString stringWithFormat:@"%@", model.title] boundingRectWithSize:CGSizeMake(screenWidth - 30 * ProportionAdapter, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:16*ProportionAdapter]} context:nil].size;
 
         self.name.frame = CGRectMake(15 *ProportionAdapter, 15 *ProportionAdapter, screenWidth -30*ProportionAdapter, titleSize.height);
         
@@ -86,16 +86,16 @@
         
         self.teamName.frame = CGRectMake(15 *ProportionAdapter, titleSize.height + 25*ProportionAdapter, screenWidth -100 *ProportionAdapter, 20 *ProportionAdapter);
         
-        self.time.frame = CGRectMake(screenWidth -100 *ProportionAdapter, titleSize.height + 25*ProportionAdapter, 80 *ProportionAdapter, 20 *ProportionAdapter);
+        self.time.frame = CGRectMake(screenWidth -110 *ProportionAdapter, titleSize.height + 25*ProportionAdapter, 85 *ProportionAdapter, 20 *ProportionAdapter);
     }
 
     
     
-    self.name.text = [NSString stringWithFormat:@"    %@", model.title];
+    self.name.text = [NSString stringWithFormat:@"%@", model.title];
     
     self.teamName.text = model.nSrcName;
     
-    self.time.text = [NSString stringWithFormat:@"%@", [Helper distanceTimeWithBeforeTime:model.createTime]];
+    self.time.text = [NSString stringWithFormat:@"%@", [Helper distanceTimeWithBeforeTimeNotificat:model.createTime]];
 }
 
 @end
