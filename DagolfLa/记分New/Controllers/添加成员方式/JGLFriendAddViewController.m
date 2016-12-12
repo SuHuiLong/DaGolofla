@@ -99,7 +99,7 @@
 -(void)updateSearchResultsForSearchController:(UISearchController *)searchController {
 }
 -(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
-    [_dictData setObject:searchBar.text forKey:@"userName"];
+    [_dictData setObject:searchBar.text forKey:@"searchStr"];
     _tableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
     [_tableView.header beginRefreshing];
 }
@@ -127,18 +127,18 @@
 #pragma mark - 下载数据
 //1.0的借口，可能要替换
 - (void)downLoadData:(int)page isReshing:(BOOL)isReshing{
-    [_dictData setObject:DEFAULF_USERID forKey:@"userId"];
-    [_dictData setObject:@0 forKey:@"otherUserId"];
-    [_dictData setObject:@0 forKey:@"page"];
-    [_dictData setObject:@0 forKey:@"rows"];
-    
+    [_dictData setObject:DEFAULF_USERID forKey:@"userKey"];
+//    [_dictData setObject:@0 forKey:@"otherUserId"];
+//    [_dictData setObject:@0 forKey:@"page"];
+//    [_dictData setObject:@0 forKey:@"rows"];
+    [_dictData setObject: [Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@dagolfla.com", DEFAULF_USERID]] forKey:@"md5"];
     [[JsonHttp jsonHttp]httpRequest:@"userFriend/getUserFriendList" JsonKey:nil withData:_dictData requestMethod:@"GET" failedBlock:^(id errType) {
         [_tableView.header endRefreshing];
         [_tableView.footer endRefreshing];
     } completionBlock:^(id data) {
         //拿到数据，model接手后存入数组排序
         if ([[data objectForKey:@"packSuccess"] boolValue]) {
-            NSArray *array = [data objectForKey:@"rows"];
+            NSArray *array = [data objectForKey:@"list"];
             NSMutableArray *allFriarr = [[NSMutableArray alloc] init];
             for (NSDictionary *dic in array) {
                 MyattenModel *model = [[MyattenModel alloc] init];
