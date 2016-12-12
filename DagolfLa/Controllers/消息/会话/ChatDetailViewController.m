@@ -94,6 +94,11 @@
         NSNumber *numTemp = [numberFormatter numberFromString:userId];
     
         JGHPersonalInfoViewController *personVC = [[JGHPersonalInfoViewController alloc] init];
+        personVC.personRemark = ^(NSString *remark){
+            if ([remark length] != 0) {
+                self.title = remark;
+            }
+        };
         personVC.otherKey = numTemp;
         personVC.fromChat = 1;
         [self.navigationController pushViewController:personVC animated:YES];
