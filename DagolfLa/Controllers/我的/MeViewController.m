@@ -10,7 +10,6 @@
 //表头大按钮
 #import "SelfViewController.h"
 //表头小按钮
-#import "MyAttentionController.h"
 #import "MyFootViewController.h"
 //列表点击视图
 #import "MyAccountViewController.h"

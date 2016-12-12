@@ -119,16 +119,11 @@
     [_dictData setObject:@0 forKey:@"page"];
     [_dictData setObject:@0 forKey:@"rows"];
     [[JsonHttp jsonHttp]httpRequest:@"userFriend/getUserFriendList" JsonKey:nil withData:_dictData requestMethod:@"GET" failedBlock:^(id errType) {
-        
+        [_tableView.header endRefreshing];
+        [_tableView.footer endRefreshing];
     } completionBlock:^(id data) {
-        
-    }];
-    
-    [[PostDataRequest sharedInstance] postDataRequest:@"UserFollow/querbyUserFollowList.do" parameter:_dictData success:^(id respondsData) {
-        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:respondsData options:NSJSONReadingMutableContainers error:nil];
-        
-        if ([[dict objectForKey:@"success"] boolValue]) {
-            NSArray *array = [dict objectForKey:@"rows"];
+        if ([[data objectForKey:@"packSuccess"] boolValue]) {
+            NSArray *array = [data objectForKey:@"rows"];
             NSMutableArray *allFriarr = [[NSMutableArray alloc] init];
             for (NSDictionary *dic in array) {
                 MyattenModel *model = [[MyattenModel alloc] init];
@@ -159,21 +154,13 @@
             
             [_tableView reloadData];
         }else {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:[dict objectForKey:@"message"] delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-            [alert show];
-        }
-        if (isReshing) {
-            [_tableView.header endRefreshing];
-        }else {
-            [_tableView.footer endRefreshing];
-        }
-    } failed:^(NSError *error) {
-        if (isReshing) {
-            [_tableView.header endRefreshing];
-        }else {
-            [_tableView.footer endRefreshing];
+            if ([data objectForKey:@"packResultMsg"]) {
+                [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+            }
         }
         
+        [_tableView.header endRefreshing];
+        [_tableView.footer endRefreshing];
     }];
 }
 

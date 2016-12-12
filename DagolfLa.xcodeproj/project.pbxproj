@@ -396,7 +396,6 @@
 		36BF004E1BC77213005B3CE2 /* OtherDataModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 36BF00491BC77212005B3CE2 /* OtherDataModel.m */; };
 		36BF004F1BC77213005B3CE2 /* UserAssistModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 36BF004B1BC77212005B3CE2 /* UserAssistModel.m */; };
 		36BF00531BC7726D005B3CE2 /* SelfViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 36BF00521BC7726D005B3CE2 /* SelfViewController.m */; };
-		36BF005C1BC77296005B3CE2 /* MyAttentionController.m in Sources */ = {isa = PBXBuildFile; fileRef = 36BF00561BC77296005B3CE2 /* MyAttentionController.m */; };
 		36BF005D1BC77296005B3CE2 /* AddFootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 36BF00591BC77296005B3CE2 /* AddFootViewController.m */; };
 		36BF005E1BC77296005B3CE2 /* MyFootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 36BF005B1BC77296005B3CE2 /* MyFootViewController.m */; };
 		36BF00851BC772EF005B3CE2 /* MyTradeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 36BF00621BC772EF005B3CE2 /* MyTradeViewController.m */; };
@@ -1938,8 +1937,6 @@
 		36BF004B1BC77212005B3CE2 /* UserAssistModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserAssistModel.m; sourceTree = "<group>"; };
 		36BF00511BC7726D005B3CE2 /* SelfViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelfViewController.h; sourceTree = "<group>"; };
 		36BF00521BC7726D005B3CE2 /* SelfViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelfViewController.m; sourceTree = "<group>"; };
-		36BF00551BC77296005B3CE2 /* MyAttentionController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyAttentionController.h; sourceTree = "<group>"; };
-		36BF00561BC77296005B3CE2 /* MyAttentionController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = MyAttentionController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		36BF00581BC77296005B3CE2 /* AddFootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddFootViewController.h; sourceTree = "<group>"; };
 		36BF00591BC77296005B3CE2 /* AddFootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = AddFootViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		36BF005A1BC77296005B3CE2 /* MyFootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyFootViewController.h; sourceTree = "<group>"; };
@@ -5331,19 +5328,9 @@
 			children = (
 				36BF00511BC7726D005B3CE2 /* SelfViewController.h */,
 				36BF00521BC7726D005B3CE2 /* SelfViewController.m */,
-				36BF00541BC77296005B3CE2 /* 关注 */,
 				36BF00571BC77296005B3CE2 /* 足迹 */,
 			);
 			path = "表头";
-			sourceTree = "<group>";
-		};
-		36BF00541BC77296005B3CE2 /* 关注 */ = {
-			isa = PBXGroup;
-			children = (
-				36BF00551BC77296005B3CE2 /* MyAttentionController.h */,
-				36BF00561BC77296005B3CE2 /* MyAttentionController.m */,
-			);
-			path = "关注";
 			sourceTree = "<group>";
 		};
 		36BF00571BC77296005B3CE2 /* 足迹 */ = {
@@ -10016,7 +10003,6 @@
 				82266D681D4EDFD1001A4F9D /* JGLScoreRankTableViewCell.m in Sources */,
 				F51E5EFA1D81309200AE254E /* JGDPlayerNotActScoreDetailViewController.m in Sources */,
 				829C16F41D37944A008ABB25 /* JGLChooseScoreViewController.m in Sources */,
-				36BF005C1BC77296005B3CE2 /* MyAttentionController.m in Sources */,
 				F5AEF6E61D408F3F009A8C34 /* JGDHIstoryScoreDetailViewController.m in Sources */,
 				20D5151A1DBB82280006EFCB /* JGHGameRoundsViewController.m in Sources */,
 				82266D6E1D4F1FC5001A4F9D /* JGLScoreLiveDetailTableViewCell.m in Sources */,
