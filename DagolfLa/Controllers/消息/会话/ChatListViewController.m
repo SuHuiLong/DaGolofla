@@ -49,7 +49,7 @@
 @implementation ChatListViewController
 
 - (void)getUserInfoWithUserId:(NSString *)userId completion:(void (^)(RCUserInfo *))completion{
-
+    
 }
 
 
@@ -57,19 +57,19 @@
     [super viewWillAppear:YES];
     self.isShowNetworkIndicatorView = NO;
     
-//    [self.tabBarController.tabBar hideBadgeOnItemIndex:3];
-//    [self.tabBarController.tabBar showBadgeOnItemIndex:3];
+    //    [self.tabBarController.tabBar hideBadgeOnItemIndex:3];
+    //    [self.tabBarController.tabBar showBadgeOnItemIndex:3];
     if ([[NSUserDefaults standardUserDefaults] objectForKey:@"userId"])
     {
         [self loadMessageData];
         
         if ([[RCIMClient sharedRCIMClient]getUnreadCount:self.displayConversationTypeArray] == 0) {
-             [self.tabBarController.tabBar hideBadgeOnItemIndex:2];
+            [self.tabBarController.tabBar hideBadgeOnItemIndex:2];
         }
         [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
         [self refreshConversationTableViewIfNeeded];
-//        [self.tabBarController.tabBar hideBadgeOnItemIndex:4];
-//        [self.tabBarController.tabBar showBadgeOnItemIndex:4];
+        //        [self.tabBarController.tabBar hideBadgeOnItemIndex:4];
+        //        [self.tabBarController.tabBar showBadgeOnItemIndex:4];
     }
     else
     {
@@ -78,9 +78,9 @@
         [alertView show];
         
         [self refreshConversationTableViewIfNeeded];
-
+        
     }
-
+    
     [[NSNotificationCenter defaultCenter] postNotificationName:@"show" object:self];
 }
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
@@ -89,7 +89,7 @@
         JGHLoginViewController *vc = [[JGHLoginViewController alloc] init];
         vc.reloadCtrlData = ^(){
             [self.conversationListTableView.header beginRefreshing];
-
+            
         };
         
         [self.navigationController pushViewController:vc animated:YES];
@@ -99,14 +99,14 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-
+    
     if ([[[UIDevice currentDevice] systemVersion] doubleValue] >7.0) {
         [self.navigationController.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor],UITextAttributeTextColor, nil]];
     }else {
         [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
     }
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"nav_bg"] forBarMetrics:UIBarMetricsDefault];
-
+    
     _costumBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44 * ProportionAdapter, 44 * ProportionAdapter)];
     [_costumBtn setImage:[UIImage imageNamed:@"qytxl"] forState:(UIControlStateNormal)];
     [_costumBtn addTarget:self action:@selector(teamFClick) forControlEvents:(UIControlEventTouchUpInside)];
@@ -114,9 +114,9 @@
     
     self.navigationItem.rightBarButtonItem = itm;
     
-//    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"qytxl"] style:UIBarButtonItemStylePlain target:self action:@selector(teamFClick)];
-//    item.tintColor = [UIColor whiteColor];
-//    self.navigationItem.rightBarButtonItem = item;
+    //    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"qytxl"] style:UIBarButtonItemStylePlain target:self action:@selector(teamFClick)];
+    //    item.tintColor = [UIColor whiteColor];
+    //    self.navigationItem.rightBarButtonItem = item;
     
     self.conversationListTableView.backgroundColor=[UIColor whiteColor];
     self.conversationListTableView.frame = CGRectMake(0, 0, screenWidth, screenHeight);
@@ -126,33 +126,33 @@
     
     [self createTableHeaderView];
     
-
-//    self.title = @"消息";
     
-
-
+    //    self.title = @"消息";
+    
+    
+    
     //聚合会话类型
-//   [self setCollectionConversationType:@[@(ConversationType_GROUP),@(ConversationType_PRIVATE)]];
-
+    //   [self setCollectionConversationType:@[@(ConversationType_GROUP),@(ConversationType_PRIVATE)]];
+    
 }
 #pragma mark -- 下载未读消息数量
 - (void)loadMessageData{
     
-//    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"userId"])
-//    {
-//        
-//    }
-//    else
-//    {
-//        
-//        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"君高高尔夫" message:@"是否立即登录？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
-//        [alertView show];
-//
-//        
-//        [self.conversationListTableView.header endRefreshing];
-//        
-//        return;
-//    }
+    //    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"userId"])
+    //    {
+    //
+    //    }
+    //    else
+    //    {
+    //
+    //        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"君高高尔夫" message:@"是否立即登录？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+    //        [alertView show];
+    //
+    //
+    //        [self.conversationListTableView.header endRefreshing];
+    //
+    //        return;
+    //    }
     
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     [dict setObject:DEFAULF_USERID forKey:@"userKey"];
@@ -230,7 +230,7 @@
             
             [self notifyUpdateUnreadMessageCount];
             [self refreshConversationTableViewIfNeeded];
-
+            
         }else{
             [self notifyUpdateUnreadMessageCount];
             
@@ -344,10 +344,10 @@
     [_viewHeader addSubview:teamNotbtn];
     
     self.conversationListTableView.tableHeaderView = _viewHeader;
-    self.conversationListTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    //    self.conversationListTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     self.conversationListTableView.header = [MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
-//    self.conversationListTableView.footer=[MJDIYBackFooter footerWithRefreshingTarget:self refreshingAction:@selector(footerRefreshing)];
+    //    self.conversationListTableView.footer=[MJDIYBackFooter footerWithRefreshingTarget:self refreshingAction:@selector(footerRefreshing)];
 }
 
 #pragma mark -- headRereshing
@@ -435,7 +435,7 @@
         }];
         
     }
-   
+    
 }
 
 
@@ -454,7 +454,7 @@
     //设置对方的id
     vc.targetId = model.targetId;
     //设置对方的名字
-//    vc.userName = model.conversationTitle;
+    //    vc.userName = model.conversationTitle;
     //设置聊天标题
     vc.title = model.conversationTitle;
     //设置不现实自己的名称  NO表示不现实
@@ -464,8 +464,8 @@
 
 #pragma mark - 消息数据
 - (NSMutableArray *)willReloadTableData:(NSMutableArray *)dataSource {
-
-
+    
+    
     return [super willReloadTableData:dataSource];
 }
 
@@ -499,19 +499,24 @@
 {
     __weak typeof(self) __weakSelf = self;
     dispatch_async(dispatch_get_main_queue(), ^{
+        
+        NSArray *count1 =  [[RCIMClient sharedRCIMClient] getConversationList:self.displayConversationTypeArray];
+        
+        if ([count1 count] > 0) {
+            self.conversationListTableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+        }else{
+            self.conversationListTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+        }
+        
+        
         int count = [[RCIMClient sharedRCIMClient]
                      getUnreadCount:self.displayConversationTypeArray];
         
-//        if (count > 10) {
-//            self.conversationListTableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
-//        }else{
-//            self.conversationListTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-//        }
         
         if ((count + (int)_teamUnread +(int)_systemUnread +(int)_newFriendUnread) > 0) {
             //      __weakSelf.tabBarItem.badgeValue =
             //          [[NSString alloc] initWithFormat:@"%d", count];
-//            int badgeValue = count+_teamUnread+_systemUnread;
+            //            int badgeValue = count+_teamUnread+_systemUnread;
             [__weakSelf.tabBarController.tabBar showBadgeOnItemIndex:2 badgeValue:count+ (int)_teamUnread + (int)_systemUnread + (int)_newFriendUnread];
             
         } else {
