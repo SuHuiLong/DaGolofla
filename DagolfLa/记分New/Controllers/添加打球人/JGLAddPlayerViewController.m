@@ -158,7 +158,29 @@
                 [addressdict setObject:@(addressModel.recordID) forKey:@"recordID"];
                 [addressdict setObject:@0 forKey:UserKey];
                 [addressdict setObject:@1 forKey:@"sourceKey"];//球员列表
-                [self.preListArray addObject:addressdict];
+                
+                NSInteger preCount = 0;
+                for (int i=0; i<self.preListArray.count; i++) {
+                    NSDictionary *predict = [NSDictionary dictionary];
+                    predict = self.preListArray[i];
+                    if ([predict objectForKey:Mobile]) {
+                        //先判断手机号是否相同
+                        if ([[predict objectForKey:Mobile] isEqualToString:addressModel.mobile] || [[predict objectForKey:UserName] caseInsensitiveCompare:addressModel.userName] == NSOrderedSame) {
+                            preCount = 1;
+                        }else{
+                            
+                        }
+                    }else{
+                        //在判断名字
+                        if ([[predict objectForKey:UserName] caseInsensitiveCompare:addressModel.userName] == NSOrderedSame) {
+                            preCount = 1;
+                        }
+                    }
+                }
+                
+                if (preCount == 0) {
+                    [self.preListArray addObject:addressdict];
+                }
             }
             
             [_tableView reloadData];
@@ -178,7 +200,28 @@
             
             [addressdict setObject:@2 forKey:@"sourceKey"];//扫描
             
-            [self.preListArray addObject:addressdict];
+            
+            NSInteger preCount = 0;
+            for (int i=0; i<self.preListArray.count; i++) {
+                NSDictionary *predict = [NSDictionary dictionary];
+                predict = self.preListArray[i];
+                if ([predict objectForKey:Mobile]) {
+                    //先判断手机号是否相同
+                    if ([[predict objectForKey:Mobile] isEqualToString:[addressdict objectForKey:Mobile]]) {
+                        preCount = 1;
+                    }else{
+                        
+                    }
+                }else{
+                    //在判断名字
+                    if ([[predict objectForKey:UserName] caseInsensitiveCompare:[addressdict objectForKey:UserName]] == NSOrderedSame) {
+                        preCount = 1;
+                    }
+                }
+            }
+            if (preCount == 0) {
+                [self.preListArray addObject:addressdict];
+            }
             
             [_tableView reloadData];
         };
@@ -207,8 +250,31 @@
                 [addressdict setObject:myModel.userName forKey:UserName];
                 [addressdict setObject:myModel.otherUserId forKey:UserKey];
                 [addressdict setObject:myModel.sex forKey:@"sex"];
+                [addressdict setObject:myModel.fMobile forKey:Mobile];
                 [addressdict setObject:@3 forKey:@"sourceKey"];//球员列表
-                [self.preListArray addObject:addressdict];
+                
+                NSInteger preCount = 0;
+                for (int i=0; i<self.preListArray.count; i++) {
+                    NSDictionary *predict = [NSDictionary dictionary];
+                    predict = self.preListArray[i];
+                    if ([predict objectForKey:Mobile]) {
+                        //先判断手机号是否相同
+                        if ([[predict objectForKey:Mobile] isEqualToString:myModel.fMobile]) {
+                            preCount = 1;//存在相同
+                        }else{
+                            
+                        }
+                    }else{
+                        //在判断名字
+                        if ([[predict objectForKey:UserName] caseInsensitiveCompare:myModel.userName] == NSOrderedSame) {
+                            preCount = 1;//名字相同
+                        }
+                    }
+                }
+                
+                if (preCount == 0) {
+                    [self.preListArray addObject:addressdict];
+                }
             }
             
             [_tableView reloadData];
@@ -262,6 +328,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 0) {
         JGLAddPlayerTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"JGLAddPlayerTableViewCell" forIndexPath:indexPath];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.backgroundColor = [UITool colorWithHexString:@"eeeeee" alpha:1];
         cell.labelTitle.text = @"手动添加打球人";
         
@@ -332,7 +399,23 @@
             [addressdict setObject:@0 forKey:UserKey];
             [addressdict setObject:@4 forKey:@"sourceKey"];//手动添加
             
-            [self.preListArray addObject:addressdict];
+//            [self.preListArray addObject:addressdict];
+            
+            NSInteger preCount =0;
+            for (int i=0; i<self.preListArray.count; i++) {
+                NSDictionary *predict = [NSDictionary dictionary];
+                predict = self.preListArray[i];
+                
+                //在判断名字[string caseInsensitiveCompare:string2] == NSOrderedSame
+//                [ isEqualToString:]
+                if ([[predict objectForKey:UserName] caseInsensitiveCompare:[addressdict objectForKey:UserName]] == NSOrderedSame) {
+                    preCount =1;
+                }
+            }
+            
+            if (preCount == 0) {
+                [self.preListArray addObject:addressdict];
+            }
             
             textF.text = @"";
             [_tableView reloadData];

@@ -115,9 +115,10 @@
 #pragma mark - 下载数据
 - (void)downLoadData:(int)page isReshing:(BOOL)isReshing{
     [_dictData setObject:DEFAULF_USERID forKey:@"userId"];
-    [_dictData setObject:@0 forKey:@"otherUserId"];
-    [_dictData setObject:@0 forKey:@"page"];
-    [_dictData setObject:@0 forKey:@"rows"];
+//    [_dictData setObject:@0 forKey:@"otherUserId"];
+//    [_dictData setObject:@0 forKey:@"page"];
+//    [_dictData setObject:@0 forKey:@"rows"];
+    [_dictData setObject: [Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@dagolfla.com", DEFAULF_USERID]] forKey:@"md5"];
     [[JsonHttp jsonHttp]httpRequest:@"userFriend/getUserFriendList" JsonKey:nil withData:_dictData requestMethod:@"GET" failedBlock:^(id errType) {
         [_tableView.header endRefreshing];
         [_tableView.footer endRefreshing];
