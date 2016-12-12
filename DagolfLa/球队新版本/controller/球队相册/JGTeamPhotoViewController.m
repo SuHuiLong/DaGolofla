@@ -18,6 +18,8 @@
 
 #import "JGLPhotoAlbumModel.h"
 
+#import "JGDDPhotoAlbumViewController.h"
+
 @interface JGTeamPhotoViewController ()<UICollectionViewDataSource,UICollectionViewDelegate>
 {
     UICollectionView* _collectionView;
@@ -251,7 +253,8 @@
 //UICollectionView被选中时调用的方法
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    JGPhotoAlbumViewController* phoVc = [[JGPhotoAlbumViewController alloc]init];
+    JGDDPhotoAlbumViewController *phoVc = [[JGDDPhotoAlbumViewController alloc] init];
+//    JGPhotoAlbumViewController* phoVc = [[JGPhotoAlbumViewController alloc]init];
     phoVc.strTitle = [_dataArray[indexPath.row] name];
     phoVc.albumKey = [_dataArray[indexPath.row] timeKey];
     phoVc.power = _powerPho;
@@ -259,11 +262,11 @@
     phoVc.teamTimeKey = _teamKey;
     phoVc.dictMember = _dictMember;
     phoVc.userKey = [_dataArray[indexPath.row] userKey];
-    phoVc.blockRefresh = ^(){
-        _collectionView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
-        [_collectionView.header beginRefreshing];
-        [_collectionView reloadData];
-    };
+//    phoVc.blockRefresh = ^(){
+//        _collectionView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
+//        [_collectionView.header beginRefreshing];
+//        [_collectionView reloadData];
+//    };
     if (_dictMember != nil) {
         if ([[_dictMember objectForKey:@"state"] integerValue] == 1) {
             //需要跳转

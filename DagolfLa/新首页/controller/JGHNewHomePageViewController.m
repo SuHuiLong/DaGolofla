@@ -41,6 +41,10 @@
 #import "JGTeamMemberController.h"
 #import "JGLJoinManageViewController.h"
 
+
+#import "JGDDPhotoAlbumViewController.h"
+
+
 static NSString *const JGHPASHeaderTableViewCellIdentifier = @"JGHPASHeaderTableViewCell";
 static NSString *const JGHShowSectionTableViewCellIdentifier = @"JGHShowSectionTableViewCell";
 static NSString *const JGHShowActivityPhotoCellIdentifier = @"JGHShowActivityPhotoCell";
@@ -509,12 +513,13 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
         cell.photoBlock = ^(NSInteger numB){
             [self isLoginUp];
             
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
+//            [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
             
-            JGPhotoAlbumViewController *photoVC = [[JGPhotoAlbumViewController alloc] init];
-            photoVC.blockRefresh = ^(){
+            JGDDPhotoAlbumViewController *photoVC = [[JGDDPhotoAlbumViewController alloc] init];
+//            photoVC.blockRefresh = ^(){
               //只是实现，不作操作
-            };
+//            };
+            photoVC.hidesBottomBarWhenPushed = YES;
             photoVC.albumKey = [_indexModel.albumList[numB] objectForKey:@"timeKey"];
             [self.navigationController pushViewController:photoVC animated:YES];
         };
@@ -610,7 +615,9 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
     if (mallListDict) {
         NSArray *bodyList = [mallListDict objectForKey:@"bodyList"];
         NSDictionary *ablumListDict = bodyList[btn.tag -300];
-        JGPhotoAlbumViewController *photoAlbumCtrl = [[JGPhotoAlbumViewController alloc]init];
+
+        JGDDPhotoAlbumViewController *photoAlbumCtrl = [[JGDDPhotoAlbumViewController alloc] init];
+//        JGPhotoAlbumViewController *photoAlbumCtrl = [[JGPhotoAlbumViewController alloc]init];
         photoAlbumCtrl.albumKey = [NSNumber numberWithInteger:[[ablumListDict objectForKey:@"timeKey"] integerValue]];
         photoAlbumCtrl.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:photoAlbumCtrl animated:YES];

@@ -98,7 +98,6 @@ static NSString *const JGHTeamInformCellIdentifier = @"JGHTeamInformCell";
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
             NSArray *list = [data objectForKey:@"list"];
             if (list.count == 0) {
-                [[ShowHUD showHUD]showToastWithText:@"没有更多通知" FromView:self.view];
 
             }else{
                 for (int i=0; i<list.count; i++) {
