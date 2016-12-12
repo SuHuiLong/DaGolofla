@@ -31,7 +31,7 @@
         self.name.textAlignment = NSTextAlignmentLeft;
         [self addSubview:self.name];
         
-        self.time = [[UILabel alloc]initWithFrame:CGRectMake(screenWidth -90 *ProportionAdapter, 15 *ProportionAdapter, 80 *ProportionAdapter, 20 *ProportionAdapter)];
+        self.time = [[UILabel alloc]initWithFrame:CGRectMake(screenWidth -100 *ProportionAdapter, 15 *ProportionAdapter, 85 *ProportionAdapter, 20 *ProportionAdapter)];
         self.time.textAlignment = NSTextAlignmentRight;
         self.time.font = [UIFont systemFontOfSize:12 *ProportionAdapter];
         self.time.text = @"2016-10-23";
@@ -63,28 +63,27 @@
 - (void)configJGHSysInformCell:(JGHInformModel *)model{
 //    CGSize titleSize = [model.title boundingRectWithSize:CGSizeMake(screenWidth, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:16*ProportionAdapter]} context:nil].size;
     
-    CGSize contentSize = [[NSString stringWithFormat:@"    %@", model.title] boundingRectWithSize:CGSizeMake(screenWidth -20 *ProportionAdapter, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:15*ProportionAdapter]} context:nil].size;
     
 //    self.name.frame = CGRectMake(10 *ProportionAdapter, 15 *ProportionAdapter, screenWidth -20*ProportionAdapter, titleSize.height);
     
 //    self.detail.frame = CGRectMake(10 *ProportionAdapter, titleSize.height + 30*ProportionAdapter, screenWidth -20 *ProportionAdapter, contentSize.height);
     
     if (model.linkURL) {
-        CGSize contentSize = [[NSString stringWithFormat:@"    %@", model.content] boundingRectWithSize:CGSizeMake(screenWidth -50 *ProportionAdapter, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:15*ProportionAdapter]} context:nil].size;
+        CGSize contentSize = [[NSString stringWithFormat:@"%@", model.content] boundingRectWithSize:CGSizeMake(screenWidth -50 *ProportionAdapter, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:15*ProportionAdapter]} context:nil].size;
 
         self.detail.frame = CGRectMake(10 *ProportionAdapter, 45 *ProportionAdapter, screenWidth -50 *ProportionAdapter, contentSize.height);
 
     }else{
-        CGSize contentSize = [[NSString stringWithFormat:@"    %@", model.content] boundingRectWithSize:CGSizeMake(screenWidth -30 *ProportionAdapter, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:15*ProportionAdapter]} context:nil].size;
+        CGSize contentSize = [[NSString stringWithFormat:@"%@", model.content] boundingRectWithSize:CGSizeMake(screenWidth -30 *ProportionAdapter, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:15*ProportionAdapter]} context:nil].size;
 
         self.detail.frame = CGRectMake(10 *ProportionAdapter, 45 *ProportionAdapter, screenWidth -30 *ProportionAdapter, contentSize.height);
 
     }
     self.name.text = [NSString stringWithFormat:@"%@", model.title];
     
-    self.time.text = [NSString stringWithFormat:@"%@", [Helper distanceTimeWithBeforeTime:model.createTime]];
+    self.time.text = [NSString stringWithFormat:@"%@", [Helper distanceTimeWithBeforeTimeNotificat:model.createTime]];
     
-    self.detail.text = [NSString stringWithFormat:@"    %@", model.title];
+    self.detail.text = [NSString stringWithFormat:@"%@", model.content];
 }
 
 

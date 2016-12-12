@@ -22,6 +22,11 @@
 #import "JGDNewTeamDetailViewController.h"
 #import "JGPhotoAlbumViewController.h"
 
+#import "JGDWithDrawTeamMoneyViewController.h"
+#import "JGTeamMainhallViewController.h"
+#import "JGTeamMemberController.h"
+#import "JGLJoinManageViewController.h"
+
 static NSString *const JGHSysInformCellIdentifier = @"JGHSysInformCell";
 
 @interface JGHSystemNotViewController ()<UITableViewDelegate, UITableViewDataSource>
@@ -168,8 +173,19 @@ static NSString *const JGHSysInformCellIdentifier = @"JGHSysInformCell";
     JGHInformModel *model = [[JGHInformModel alloc]init];
     model = _dataArray[indexPath.row];
 //    CGSize titleSize = [model.title boundingRectWithSize:CGSizeMake(screenWidth, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:17*ProportionAdapter]} context:nil].size;
-    
-    CGSize contentSize = [[NSString stringWithFormat:@"    %@", model.title] boundingRectWithSize:CGSizeMake(screenWidth -20 *ProportionAdapter, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:15*ProportionAdapter]} context:nil].size;
+    CGSize contentSize;
+
+    if (model.linkURL) {
+        
+        contentSize = [[NSString stringWithFormat:@"    %@", model.content] boundingRectWithSize:CGSizeMake(screenWidth -50 *ProportionAdapter, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:15*ProportionAdapter]} context:nil].size;
+
+        
+    }else{
+        contentSize = [[NSString stringWithFormat:@"    %@", model.content] boundingRectWithSize:CGSizeMake(screenWidth -30 *ProportionAdapter, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:15*ProportionAdapter]} context:nil].size;
+
+        
+    }
+
     
     return 60 *ProportionAdapter + contentSize.height;
 }
@@ -184,7 +200,7 @@ static NSString *const JGHSysInformCellIdentifier = @"JGHSysInformCell";
     
     if (model.linkURL) {
         teamInformCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        UIImageView *accImageV = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 10, 10)];
+        UIImageView *accImageV = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 10 * ProportionAdapter, 12 * ProportionAdapter)];
         accImageV.image = [UIImage imageNamed:@"more"];
         teamInformCell.accessoryView = accImageV;
         
@@ -243,6 +259,53 @@ static NSString *const JGHSysInformCellIdentifier = @"JGHSysInformCell";
     JGHInformModel *model = _dataArray[indexPath.row];
     
     if ([model.linkURL containsString:@"dagolfla://"]) {
+        
+        
+        
+        // 球队提现
+        
+        if ([model.linkURL containsString:@"teamWithDraw"]) {
+            if ([model.linkURL containsString:@"?"]) {
+                JGDWithDrawTeamMoneyViewController *vc = [[JGDWithDrawTeamMoneyViewController alloc] init];
+                vc.teamKey = [NSNumber numberWithInteger:[[Helper returnKeyVlaueWithUrlString:model.linkURL andKey:@"teamKey"] integerValue]];
+                [self.navigationController pushViewController:vc animated:YES];        }
+        }
+        
+        // 球队大厅
+        
+        if ([model.linkURL containsString:@"teamHall"]) {
+            JGTeamMainhallViewController *teamMainCtrl = [[JGTeamMainhallViewController alloc]init];
+            [self.navigationController pushViewController:teamMainCtrl animated:YES];
+        }
+        
+        // 成员管理
+        
+        if ([model.linkURL containsString:@"teamMemberMgr"]) {
+            JGTeamMemberController* menVc = [[JGTeamMemberController alloc]init];
+            menVc.title = @"队员管理";
+            menVc.power = @"1004,1001,1002,1005";
+            menVc.teamManagement = 1;
+            menVc.teamKey = [NSNumber numberWithInteger:[[Helper returnKeyVlaueWithUrlString:model.linkURL andKey:@"teamKey"] integerValue]];
+            [self.navigationController pushViewController:menVc animated:YES];
+        }
+        
+        // 入队审核页面
+        
+        if ([model.linkURL containsString:@"auditTeamMember"]) {
+            JGLJoinManageViewController *jgJoinVC = [[JGLJoinManageViewController alloc] init];
+            jgJoinVC.teamKey = [NSNumber numberWithInteger:[[Helper returnKeyVlaueWithUrlString:model.linkURL andKey:@"teamKey"] integerValue]];
+            [self.navigationController pushViewController:jgJoinVC animated:YES];
+        }
+        
+
+        
+        
+        
+        
+        
+        
+        
+        
         //新球友
         if ([model.linkURL containsString:@"newUserFriendList"]) {
             NewFriendViewController *friendCtrl = [[NewFriendViewController alloc]init];
