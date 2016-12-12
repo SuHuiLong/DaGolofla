@@ -25,7 +25,7 @@
         self.contentView.frame = self.bounds;
         _imgvYuan = [[UIImageView alloc]initWithFrame:CGRectMake(self.contentView.frame.size.width/2-7*ScreenWidth/375, 7*ScreenWidth/375, 14*ScreenWidth/375, 14*ScreenWidth/375)];
         [self.contentView addSubview:_imgvYuan];
-        _imgvYuan.image = [UIImage imageNamed:@"headY"];
+        _imgvYuan.image = [UIImage imageNamed:@"yuanquan"];
         
         _line = [[UIView alloc]initWithFrame:CGRectMake(ScreenWidth/2-1*ScreenWidth/375, 21*ScreenWidth/375, 2*ScreenWidth/375, 23*ScreenWidth/375)];
         [self.contentView addSubview:_line];

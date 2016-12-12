@@ -74,6 +74,7 @@
     }
     
     [selfDict setObject:@0 forKey:@"sourceKey"];// 自己
+    
     [self.preListArray addObject:selfDict];
     
     _selectAreaArray = [NSMutableArray array];

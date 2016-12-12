@@ -61,7 +61,7 @@
 
 -(void)showData:(ComDeatailModel *)model
 {
-    [_iconImage sd_setImageWithURL:[Helper imageIconUrl:model.pic] placeholderImage:[UIImage imageNamed:@"zwt"]];
+    [_iconImage sd_setImageWithURL:[Helper imageIconUrl:model.pic] placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
     _iconImage.layer.cornerRadius = 8*ScreenWidth/375;
     _iconImage.layer.masksToBounds = YES;
 
@@ -84,7 +84,7 @@
 }
 -(void)showAppData:(AppraiseModel *)model
 {
-    [_iconImage sd_setImageWithURL:[Helper imageIconUrl:model.uPic] placeholderImage:[UIImage imageNamed:@"zwt"]];
+    [_iconImage sd_setImageWithURL:[Helper imageIconUrl:model.uPic] placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
     
     _labelTime.text = [model.createTime substringToIndex:10];
     

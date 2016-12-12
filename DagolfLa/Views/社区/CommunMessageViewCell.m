@@ -40,7 +40,7 @@
     
 }
 -(void)showData:(NewsDetailModel *)model{
-    [_iconImage sd_setImageWithURL:[Helper imageIconUrl:model.pic] placeholderImage:[UIImage imageNamed:@"zwt"]];
+    [_iconImage sd_setImageWithURL:[Helper imageIconUrl:model.pic] placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
     
     _nameLabel.text = [NSString stringWithFormat:@"%@", model.sender];
     _timeLabel.text = model.createTime;

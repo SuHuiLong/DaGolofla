@@ -141,7 +141,7 @@
     [_disMissBtn addTarget:self action:@selector(disJoinClick) forControlEvents:UIControlEventTouchUpInside];
     [_btnDetail addTarget:self action:@selector(detailClick) forControlEvents:UIControlEventTouchUpInside];
     
-    [_iconImage sd_setImageWithURL:[Helper imageIconUrl:model.pic] placeholderImage:[UIImage imageNamed:@"zwt"]];
+    [_iconImage sd_setImageWithURL:[Helper imageIconUrl:model.pic] placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
     
     if (![Helper isBlankString:model.userName]) {
         _nameLabel.text = model.userName;

@@ -29,7 +29,7 @@
 
 -(void)showData:(MyattenModel *)model
 {
-    [_iconImage sd_setImageWithURL:[Helper imageIconUrl:model.pic] placeholderImage:[UIImage imageNamed:@"zwt"]];
+    [_iconImage sd_setImageWithURL:[Helper imageIconUrl:model.pic] placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
     if ([model.sex intValue] == 0) {
         _sexImage.image = [UIImage imageNamed:@"xb_n"];
     }

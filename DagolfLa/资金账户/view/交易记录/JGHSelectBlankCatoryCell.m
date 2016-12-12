@@ -84,7 +84,7 @@
     }
     
     if (selectBlank == currentSelect) {
-        self.selectImageView.image = [UIImage imageNamed:@"kuangwx"];
+        self.selectImageView.image = [UIImage imageNamed:@"kuang_xz"];
     }else{
         self.selectImageView.image = [UIImage imageNamed:@"kuang"];
     }

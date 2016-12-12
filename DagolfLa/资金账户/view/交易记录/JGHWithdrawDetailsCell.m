@@ -67,6 +67,8 @@
         NSArray *arraySeccessful = [NSArray array];
         arraySeccessful = [seccessful componentsSeparatedByString:@" "];
         self.seccessful.text = [NSString stringWithFormat:@"%@\n%@", [arraySeccessful objectAtIndex:0], [arraySeccessful objectAtIndex:1]];
+        self.seccessfulImageView.image = [UIImage imageNamed:@"successful"];
+
     }
 }
 

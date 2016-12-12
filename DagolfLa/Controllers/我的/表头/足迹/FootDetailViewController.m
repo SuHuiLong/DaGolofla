@@ -49,7 +49,7 @@
     
 
     _iconImgv = [[UIImageView alloc]initWithFrame:CGRectMake(10*ScreenWidth/375, 10*ScreenWidth/375, 36*ScreenWidth/375, 36*ScreenWidth/375)];
-    [_iconImgv sd_setImageWithURL:[Helper imageIconUrl:_myFoot.uPic] placeholderImage:[UIImage imageNamed:@"zwt"]];
+    [_iconImgv sd_setImageWithURL:[Helper imageIconUrl:_myFoot.uPic] placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
     [self.view addSubview:_iconImgv];
     _iconImgv.layer.masksToBounds = YES;
     _iconImgv.userInteractionEnabled = YES;
@@ -122,7 +122,7 @@
             [tap addTarget:self action:@selector(showPicController:)];
             [_isUseImgv addGestureRecognizer:tap];
             _isUseImgv.tag = 10000 + i;
-            [_isUseImgv sd_setImageWithURL:[Helper imageIconUrl:_picsArr[i]] placeholderImage:[UIImage imageNamed:@"zwt"]];
+            [_isUseImgv sd_setImageWithURL:[Helper imageIconUrl:_picsArr[i]] placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
             [self.view addSubview:_isUseImgv];
             
             if (i == picNumber - 1) {

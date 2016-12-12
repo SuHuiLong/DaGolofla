@@ -322,9 +322,9 @@
             imgv.layer.masksToBounds = YES;
             imgv.layer.cornerRadius = imgv.frame.size.height/2;
             if (![Helper isBlankString:[[NSUserDefaults standardUserDefaults] objectForKey:@"pic"]]) {
-                [imgv sd_setImageWithURL:[Helper imageIconUrl:[[NSUserDefaults standardUserDefaults] objectForKey:@"pic"]] placeholderImage:[UIImage imageNamed:@"zwt"]];
+                [imgv sd_setImageWithURL:[Helper imageIconUrl:[[NSUserDefaults standardUserDefaults] objectForKey:@"pic"]] placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
             }else{
-                 imgv.image = [UIImage imageNamed:@"logo"];
+                 imgv.image = [UIImage imageNamed:DefaultHeaderImage];
             }
             
         }
@@ -510,7 +510,7 @@
                             //                        }
                             _isaddImgv2 = YES;
                             //                        [_buttonImg2 setImage:[UIImage imageNamed:@"tx3"] forState:UIControlStateNormal];
-                            [_buttonImg2 sd_setImageWithURL:[Helper imageIconUrl:[_dataArray1[0] userPic]] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"zwt"]];
+                            [_buttonImg2 sd_setImageWithURL:[Helper imageIconUrl:[_dataArray1[0] userPic]] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
                             _buttonImg2.frame = CGRectMake(140*ScreenWidth/375 + 61*ScreenWidth/375, 2*ScreenWidth/375, 33*ScreenWidth/375, 33*ScreenWidth/375);
                             _buttonImg2.userInteractionEnabled = NO;
                             _labelDetail = [[UILabel alloc]initWithFrame:CGRectMake(132*ScreenWidth/375 + 61*ScreenWidth/375, 35*ScreenWidth/375, 50*ScreenWidth/375, 15*ScreenWidth/375)];
@@ -527,7 +527,7 @@
                             _isaddImgv2 = YES;
                             UITextField* text = (UITextField *)[self.view viewWithTag:2003];
                             text.userInteractionEnabled = YES;
-                            [_buttonImg2 setImage:[UIImage imageNamed:@"logo"] forState:UIControlStateNormal];
+                            [_buttonImg2 setImage:[UIImage imageNamed:DefaultHeaderImage] forState:UIControlStateNormal];
                             _buttonImg2.frame = CGRectMake(140*ScreenWidth/375 + 61*ScreenWidth/375, 2*ScreenWidth/375, 33*ScreenWidth/375, 33*ScreenWidth/375);
                             _buttonImg2.userInteractionEnabled = NO;
                             _labelDetail = [[UILabel alloc]initWithFrame:CGRectMake(132*ScreenWidth/375 + 61*ScreenWidth/375, 35*ScreenWidth/375, 50*ScreenWidth/375, 15*ScreenWidth/375)];
@@ -577,7 +577,7 @@
                             text.userInteractionEnabled = YES;
                             [_arrayUserId addObject:model.userId];
                             _isaddImgv3 = YES;
-                            [_buttonImg3 sd_setImageWithURL:[Helper imageIconUrl:[_dataArray2[0] userPic]] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"zwt"]];
+                            [_buttonImg3 sd_setImageWithURL:[Helper imageIconUrl:[_dataArray2[0] userPic]] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
                             _buttonImg3.frame = CGRectMake(140*ScreenWidth/375 + 61*ScreenWidth/375*2, 2*ScreenWidth/375, 33*ScreenWidth/375, 33*ScreenWidth/375);
                             _buttonImg3.userInteractionEnabled = NO;
                             _labelDetail1 = [[UILabel alloc]initWithFrame:CGRectMake(132*ScreenWidth/375 + 61*ScreenWidth/375*2, 35*ScreenWidth/375, 50*ScreenWidth/375, 15*ScreenWidth/375)];
@@ -593,7 +593,7 @@
                             [_arrayUserId addObject:@0];
                             UITextField* text = (UITextField *)[self.view viewWithTag:2004];
                             text.userInteractionEnabled = YES;
-                            [_buttonImg3 setImage:[UIImage imageNamed:@"logo"] forState:UIControlStateNormal];
+                            [_buttonImg3 setImage:[UIImage imageNamed:DefaultHeaderImage] forState:UIControlStateNormal];
                             _buttonImg3.frame = CGRectMake(140*ScreenWidth/375 + 61*ScreenWidth/375*2, 2*ScreenWidth/375, 33*ScreenWidth/375, 33*ScreenWidth/375);
                             _buttonImg3.userInteractionEnabled = NO;
                             _labelDetail1 = [[UILabel alloc]initWithFrame:CGRectMake(132*ScreenWidth/375 + 61*ScreenWidth/375*2, 35*ScreenWidth/375, 50*ScreenWidth/375, 15*ScreenWidth/375)];
@@ -644,7 +644,7 @@
                             text.userInteractionEnabled = YES;
                             [_arrayUserId addObject:model.userId];
                             _isaddImgv4 = YES;
-                            [_buttonImg4 sd_setImageWithURL:[Helper imageIconUrl:[_dataArray3[0] userPic]] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"zwt"]];
+                            [_buttonImg4 sd_setImageWithURL:[Helper imageIconUrl:[_dataArray3[0] userPic]] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
                             _buttonImg4.frame = CGRectMake(140*ScreenWidth/375 + 61*ScreenWidth/375*3, 2*ScreenWidth/375, 33*ScreenWidth/375, 33*ScreenWidth/375);
                             _buttonImg4.userInteractionEnabled = NO;
                             _labelDetail2 = [[UILabel alloc]initWithFrame:CGRectMake(132*ScreenWidth/375 + 61*ScreenWidth/375*3, 35*ScreenWidth/375, 50*ScreenWidth/375, 15*ScreenWidth/375)];
@@ -660,7 +660,7 @@
                             [_arrayUserId addObject:@0];
                             UITextField* text = (UITextField *)[self.view viewWithTag:2005];
                             text.userInteractionEnabled = YES;
-                            [_buttonImg4 setImage:[UIImage imageNamed:@"logo"] forState:UIControlStateNormal];
+                            [_buttonImg4 setImage:[UIImage imageNamed:DefaultHeaderImage] forState:UIControlStateNormal];
                             _buttonImg4.frame = CGRectMake(140*ScreenWidth/375 + 61*ScreenWidth/375*3, 2*ScreenWidth/375, 33*ScreenWidth/375, 33*ScreenWidth/375);
                             _buttonImg4.userInteractionEnabled = NO;
                             _labelDetail2 = [[UILabel alloc]initWithFrame:CGRectMake(132*ScreenWidth/375 + 61*ScreenWidth/375*3, 35*ScreenWidth/375, 50*ScreenWidth/375, 15*ScreenWidth/375)];

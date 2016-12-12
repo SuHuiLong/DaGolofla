@@ -234,7 +234,7 @@ static NSString *const JGHHeaderLabelCellIdentifier = @"JGHHeaderLabelCell";
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     dict = [self.applistArray objectAtIndex:btn.tag];
     if ([[dict objectForKey:@"select"] integerValue] == 0) {
-        [btn setImage:[UIImage imageNamed:@"kuangwx"] forState:UIControlStateNormal];
+        [btn setImage:[UIImage imageNamed:@"kuang_xz"] forState:UIControlStateNormal];
         [dict setObject:@"1" forKey:@"isOnlinePay"];
         [dict setObject:@"1" forKey:@"select"];
         [self.applistArray replaceObjectAtIndex:btn.tag withObject:dict];

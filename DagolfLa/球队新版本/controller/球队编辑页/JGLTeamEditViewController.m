@@ -158,7 +158,7 @@ static CGFloat ImageHeight  = 210.0;
     
     //头像
     self.headPortraitBtn = [[UIButton alloc]initWithFrame:CGRectMake(20 * screenWidth / 375, 150 * screenWidth / 375, 50 * screenWidth / 375, 50 * screenWidth / 375)];
-    [self.headPortraitBtn setImage:[UIImage imageNamed:@"relogo"] forState:UIControlStateNormal];
+    [self.headPortraitBtn setImage:[UIImage imageNamed:DefaultHeaderImage] forState:UIControlStateNormal];
     [self.headPortraitBtn addTarget:self action:@selector(replaceWithPicture:) forControlEvents:UIControlEventTouchUpInside];
     self.headPortraitBtn.tag = 522;
     [self.imgProfile addSubview:self.headPortraitBtn];

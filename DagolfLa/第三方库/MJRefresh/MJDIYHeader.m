@@ -37,7 +37,7 @@
     
     // logo
     //图片
-    UIImageView *logo = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"relogo"]];
+    UIImageView *logo = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"mjlogo"]];
     [self addSubview:logo];
     self.logo = logo;
     

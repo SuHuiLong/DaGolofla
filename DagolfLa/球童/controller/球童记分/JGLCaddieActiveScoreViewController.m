@@ -206,8 +206,18 @@
             [userDict setObject:model.mobile forKey:Mobile];
         }
         
+        [userDict setObject:@0 forKey:@"userType"];
+        [userDict setObject:model.tTaiwan forKey:@"tTaiwan"];
         [userArray addObject:userDict];
     }
+    
+    //球童记分必须包含自己
+    NSMutableDictionary *selfDict = [NSMutableDictionary dictionary];
+    [selfDict setObject:DEFAULF_USERID forKey:@"userKey"];
+    [selfDict setObject:@1 forKey:@"userType"];
+    [selfDict setObject:@"蓝T" forKey:@"tTaiwan"];
+    [selfDict setObject:DEFAULF_UserName forKey:UserName];
+    [userArray addObject:selfDict];
     
     [dict setObject:userArray forKey:@"userList"];
     

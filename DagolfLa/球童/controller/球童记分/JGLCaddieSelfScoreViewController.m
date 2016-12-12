@@ -75,6 +75,7 @@
         [defDict setObject:@"蓝T" forKey:@"tTaiwan"];
     }
     
+    [defDict setObject:@0 forKey:@"userType"];
     [self.palyArray addObject:defDict];
     
     _selectAreaArray = [NSMutableArray array];
@@ -153,6 +154,15 @@
     [dict setObject:[NSNumber numberWithInteger:_ballId] forKey:@"ballKey"];
     [dict setObject:@0 forKey:@"srcKey"];//
     [dict setObject:@(0) forKey:@"srcType"];//活动传1，罗开创说的
+    
+    //球童记分必须包含自己
+    NSMutableDictionary *selfDict = [NSMutableDictionary dictionary];
+    [selfDict setObject:DEFAULF_USERID forKey:@"userKey"];
+    [selfDict setObject:@1 forKey:@"userType"];
+    [selfDict setObject:@"蓝T" forKey:@"tTaiwan"];
+    [selfDict setObject:DEFAULF_UserName forKey:UserName];
+    [self.palyArray addObject:selfDict];
+    
     [dict setObject:self.palyArray forKey:@"userList"];
     
     [[JsonHttp jsonHttp]httpRequestHaveSpaceWithMD5:@"score/createScore" JsonKey:nil withData:dict failedBlock:^(id errType) {
@@ -439,7 +449,7 @@
                             palyDict = array[i];
                             
                             if ([palyDict objectForKey:@"tTaiwan"]) {
-                                break;
+//                                break;
                             }else{
                                 if ([[palyDict objectForKey:@"sex"] integerValue] == 0) {
                                     [palyDict setObject:@"红T" forKey:@"tTaiwan"];
@@ -447,6 +457,8 @@
                                     [palyDict setObject:@"蓝T" forKey:@"tTaiwan"];
                                 }
                             }
+                            
+                            [palyDict setObject:@0 forKey:@"userType"];
                             
                             [array replaceObjectAtIndex:i withObject:palyDict];
                         }

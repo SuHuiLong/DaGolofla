@@ -505,7 +505,7 @@
     
     
     UIImageView* imgv = [[UIImageView alloc]initWithFrame:CGRectMake(_viewArea.frame.size.width - 30, 13*ScreenWidth/375, 13*ScreenWidth/375, 16*ScreenWidth/375)];
-    imgv.image = [UIImage imageNamed:@"left_jt"];
+    imgv.image = [UIImage imageNamed:@")"];
     [btnArea addSubview:imgv];
     
     

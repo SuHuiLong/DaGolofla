@@ -279,7 +279,7 @@
      头像 姓名 时间 内容 赋值
      */
     //头像 + 点击跳转个人主页block
-    [_iconImgv sd_setImageWithURL:[Helper imageIconUrl:model.uPic] placeholderImage:[UIImage imageNamed:@"zwt"]];
+    [_iconImgv sd_setImageWithURL:[Helper imageIconUrl:model.uPic] placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
     _btn.tag = 1000 + _cellIndexPath;
     
     [_btn addTarget:self action:@selector(selfDataClick:) forControlEvents:UIControlEventTouchUpInside];
@@ -408,7 +408,7 @@
             if (i < iconArr.count) {
                 _ZanView.hidden = NO;
                 zanPeopleIcon.hidden = NO;
-                [zanPeopleIcon sd_setImageWithURL:[Helper imageIconUrl:[iconArr[i] userPic]] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"zwt"]];
+                [zanPeopleIcon sd_setImageWithURL:[Helper imageIconUrl:[iconArr[i] userPic]] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
                 [zanPeopleIcon addTarget:self action:@selector(selfDataClickZanArray:) forControlEvents:UIControlEventTouchUpInside];
             }else{
                 if (iconArr.count == 0) {

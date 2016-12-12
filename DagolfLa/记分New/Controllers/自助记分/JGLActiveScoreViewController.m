@@ -207,6 +207,8 @@
             [userDict setObject:model.mobile forKey:Mobile];
         }
         
+        [userDict setObject:model.tTaiwan forKey:@"tTaiwan"];
+        
         [userArray addObject:userDict];
     }
     

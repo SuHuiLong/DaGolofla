@@ -96,7 +96,7 @@
         }];
     }else{
         UMSocialData *data = [UMSocialData defaultData];
-        data.shareImage = [UIImage imageNamed:@"logo"];
+        data.shareImage = [UIImage imageNamed:DefaultHeaderImage];
         data.shareText = [NSString stringWithFormat:@"%@%@",@"君高高尔夫",shareUrl];
         [[UMSocialControllerService defaultControllerService] setSocialData:fiData];
         //2.设置分享平台

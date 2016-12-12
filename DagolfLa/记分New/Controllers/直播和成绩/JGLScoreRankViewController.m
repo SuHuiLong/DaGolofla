@@ -76,7 +76,7 @@
     [_seg addTarget:self action:@selector(segTypeClick:) forControlEvents:UIControlEventValueChanged];
     
     //分享按钮
-    UIBarButtonItem *bar = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"iconfont-fenxiang"] style:(UIBarButtonItemStylePlain) target:self action:@selector(addShare)];
+    UIBarButtonItem *bar = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"fenxiang"] style:(UIBarButtonItemStylePlain) target:self action:@selector(addShare)];
     bar.tintColor = [UIColor whiteColor];
     self.navigationItem.rightBarButtonItem = bar;
 }
@@ -146,7 +146,7 @@
         }];
     }else{
         UMSocialData *data = [UMSocialData defaultData];
-        data.shareImage = [UIImage imageNamed:@"logo"];
+        data.shareImage = [UIImage imageNamed:DefaultHeaderImage];
         data.shareText = [NSString stringWithFormat:@"%@%@",@"君高高尔夫",shareUrl];
         [[UMSocialControllerService defaultControllerService] setSocialData:data];
         //2.设置分享平台

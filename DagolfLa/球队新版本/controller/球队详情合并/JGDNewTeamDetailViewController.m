@@ -296,7 +296,7 @@ static CGFloat ImageHeight  = 210.0;
     
     //头像
     self.headPortraitBtn = [[UIButton alloc]initWithFrame:CGRectMake(20 * screenWidth / 320, 150, 50, 50)];
-    [self.headPortraitBtn setImage:[UIImage imageNamed:@"logo"] forState:UIControlStateNormal];
+    [self.headPortraitBtn setImage:[UIImage imageNamed:DefaultHeaderImage] forState:UIControlStateNormal];
     self.headPortraitBtn.userInteractionEnabled = NO;
     //    [self.headPortraitBtn addTarget:self action:@selector(replaceWithPicture:) forControlEvents:UIControlEventTouchUpInside];
     self.headPortraitBtn.imageView.contentMode = UIViewContentModeScaleAspectFill;
@@ -387,7 +387,7 @@ static CGFloat ImageHeight  = 210.0;
         }];
     }else{
         UMSocialData *data = [UMSocialData defaultData];
-        data.shareImage = [UIImage imageNamed:@"logo"];
+        data.shareImage = [UIImage imageNamed:DefaultHeaderImage];
         data.shareText = [NSString stringWithFormat:@"%@%@",@"君高高尔夫",shareUrl];
         [[UMSocialControllerService defaultControllerService] setSocialData:data];
         //2.设置分享平台
@@ -636,7 +636,7 @@ static CGFloat ImageHeight  = 210.0;
                 case 2:
                     
                     launchActivityCell.promptLB.text = @"球队相册";
-                    launchActivityCell.imageV.image = [UIImage imageNamed:@"xc"];
+                    launchActivityCell.imageV.image = [UIImage imageNamed:@"xcgl"];
                     //                launchActivityCell.contentLB.text = [NSString stringWithFormat:@"%td人", self.detailModel.userSum];
                     
                     break;
@@ -741,7 +741,7 @@ static CGFloat ImageHeight  = 210.0;
                 launchActivityCell.imageV.image = [UIImage imageNamed:@"hd-2"];
             }else if (indexPath.row == 1){
                 launchActivityCell.promptLB.text = @"球队相册";
-                launchActivityCell.imageV.image = [UIImage imageNamed:@"xc"];
+                launchActivityCell.imageV.image = [UIImage imageNamed:@"xcgl"];
             }else{
                 launchActivityCell.promptLB.text = @"球队历史记分卡";
                 launchActivityCell.imageV.image = [UIImage imageNamed:@"qiuduilist"];

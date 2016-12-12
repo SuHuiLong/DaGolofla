@@ -101,7 +101,7 @@
         //微信
         [UMSocialWechatHandler setWXAppId:@"wxdcdc4e20544ed728" appSecret:@"fdc75aae5a98f2aa0f62ef8cba2b08e9" url:shareUrl];
         [UMSocialConfig hiddenNotInstallPlatforms:@[UMShareToWechatSession,UMShareToWechatTimeline,UMShareToSina]];
-        [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatSession] content:@"君高高尔夫" image:[UIImage imageNamed:@"logo"] location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
+        [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatSession] content:@"君高高尔夫" image:[UIImage imageNamed:DefaultHeaderImage] location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
             if (response.responseCode == UMSResponseCodeSuccess) {
                 ////NSLog(@"分享成功！");
             }
@@ -112,7 +112,7 @@
         //朋友圈
         [UMSocialWechatHandler setWXAppId:@"wxdcdc4e20544ed728" appSecret:@"fdc75aae5a98f2aa0f62ef8cba2b08e9" url:shareUrl];
         [UMSocialConfig hiddenNotInstallPlatforms:@[UMShareToWechatSession,UMShareToWechatTimeline,UMShareToSina]];
-        [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatTimeline] content:@"君高高尔夫" image:[UIImage imageNamed:@"logo"] location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
+        [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatTimeline] content:@"君高高尔夫" image:[UIImage imageNamed:DefaultHeaderImage] location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
             if (response.responseCode == UMSResponseCodeSuccess) {
                 ////NSLog(@"分享成功！");
             }
@@ -123,23 +123,11 @@
     {
         
         UMSocialData *data = [UMSocialData defaultData];
-        data.shareImage = [UIImage imageNamed:@"logo"];
+        data.shareImage = [UIImage imageNamed:DefaultHeaderImage];
         data.shareText = [NSString stringWithFormat:@"%@%@",@"君高高尔夫",shareUrl];
         [[UMSocialControllerService defaultControllerService] setSocialData:data];
         //2.设置分享平台
         [UMSocialSnsPlatformManager getSocialPlatformWithName:UMShareToSina].snsClickHandler(self,[UMSocialControllerService defaultControllerService],YES);
-        
-//        [[UMSocialControllerService defaultControllerService] setShareText:@"分享内嵌文字" shareImage:[UIImage imageNamed:@"logo"] socialUIDelegate:self];        //设置分享内容和回调对象
-
-        
-    
-        
-//        [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToSina] content:[NSString stringWithFormat:@"一起打高尔夫啦！！！！！ %@",shareUrl] image:[UIImage imageNamed:@"logo"] location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *shareResponse){
-//            
-//            if (shareResponse.responseCode == UMSResponseCodeSuccess) {
-//                ////NSLog(@"分享成功！");
-//            }
-//        }];
         
         
     }
@@ -153,7 +141,7 @@
 -(void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
 {
     ////NSLog(@"webview下载失败，error = %@",[error localizedDescription]);
-    self.imageView.image = [UIImage imageNamed:@"logo"];
+    self.imageView.image = [UIImage imageNamed:DefaultHeaderImage];
 }
 
 @end

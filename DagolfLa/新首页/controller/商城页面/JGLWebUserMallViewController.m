@@ -307,7 +307,6 @@
 -(void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
 {
     ////NSLog(@"webview下载失败，error = %@",[error localizedDescription]);
-//    self.imageView.image = [UIImage imageNamed:@"logo"];
 }
 - (void)userContentController:(WKUserContentController *)userContentController didReceiveScriptMessage:(WKScriptMessage *)message
 {

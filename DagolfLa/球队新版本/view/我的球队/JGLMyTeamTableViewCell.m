@@ -69,7 +69,7 @@
     self.describLabel.text = model.info;
     if ([model.state integerValue] == 0) {
 //        self.stateLabel.text = @"正在审核";
-        _iconState.image  = [UIImage imageNamed:@"dsh-1"];
+        _iconState.image  = [UIImage imageNamed:@"dsh"];
     }else if ([model.state integerValue] == 2){
 //        self.stateLabel.text = @"审核未通过";
 //        _iconState.image  = [UIImage imageNamed:@"jj"];
@@ -90,7 +90,7 @@
     self.describLabel.text = model.info;
     if ([model.state integerValue] == 0) {
         //        self.stateLabel.text = @"正在审核";
-        _iconState.image  = [UIImage imageNamed:@"dsh-1"];
+        _iconState.image  = [UIImage imageNamed:@"dsh"];
     }else if ([model.state integerValue] == 2){
         //        self.stateLabel.text = @"审核未通过";
         //        _iconState.image  = [UIImage imageNamed:@"jj"];

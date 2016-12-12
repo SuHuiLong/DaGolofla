@@ -65,7 +65,7 @@
 
 - (void)showData:(MyfootModel*)model
 {
-    [_iconImage sd_setImageWithURL:[Helper imageIconUrl:model.ballPic] placeholderImage:[UIImage imageNamed:@"zwt"]];
+    [_iconImage sd_setImageWithURL:[Helper imageIconUrl:model.ballPic] placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
     _labelTime.text = [NSString stringWithFormat:@"%@",model.createTime];
     _labelTitle.text = model.golfName;
 }

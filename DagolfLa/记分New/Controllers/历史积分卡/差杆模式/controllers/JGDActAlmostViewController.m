@@ -466,13 +466,6 @@
         //2.设置分享平台
         [UMSocialSnsPlatformManager getSocialPlatformWithName:UMShareToSina].snsClickHandler(self,[UMSocialControllerService defaultControllerService],YES);
         
-        
-        //  [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToSina] content:@"打高尔夫啦" image:[UIImage imageNamed:@"logo"] location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *shareResponse){
-        //
-        //        if (shareResponse.responseCode == UMSResponseCodeSuccess) {
-        //              ////NSLog(@"分享成功！");
-        //        }
-        //   }];
         //
         
     }

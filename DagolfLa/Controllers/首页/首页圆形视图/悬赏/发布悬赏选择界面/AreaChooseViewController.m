@@ -50,7 +50,7 @@
     backButton.frame=CGRectMake(10, 27, 30, 30);
     [backButton addTarget:self action:@selector(backButtonClick) forControlEvents:UIControlEventTouchUpInside];
     backButton.tintColor=[UIColor lightGrayColor];
-    [backButton setBackgroundImage:[UIImage imageNamed:@"top_back.png"] forState:UIControlStateNormal];
+    [backButton setBackgroundImage:[UIImage imageNamed:@"sildLefth"] forState:UIControlStateNormal];
     [self.view addSubview:backButton];
     
     UIView *view=[[UIView alloc] init];

@@ -556,7 +556,7 @@
                             //NSLog(@"11%@",_dataArray1[0]);
                             if ([[dictD objectForKey:@"success"] integerValue] == 1) {
                                 _isaddImgv2 = YES;
-                                [_buttonImg2 sd_setImageWithURL:[Helper imageIconUrl:[_dataArray1[0] pic]] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"zwt"]];
+                                [_buttonImg2 sd_setImageWithURL:[Helper imageIconUrl:[_dataArray1[0] pic]] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
                                 _buttonImg2.frame = CGRectMake(140*ScreenWidth/375 + 61*ScreenWidth/375, 2*ScreenWidth/375, 33*ScreenWidth/375, 33*ScreenWidth/375);
                                 _buttonImg2.imageView.layer.cornerRadius = _buttonImg2.imageView.frame.size.height/2;
                                 _buttonImg2.imageView.layer.masksToBounds = YES;
@@ -622,7 +622,7 @@
                                 
                                 //                        }
                                 _isaddImgv3 = YES;
-                                [_buttonImg3 sd_setImageWithURL:[Helper imageIconUrl:[_dataArray2[0] pic]] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"zwt"]];
+                                [_buttonImg3 sd_setImageWithURL:[Helper imageIconUrl:[_dataArray2[0] pic]] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
                                 _buttonImg3.frame = CGRectMake(140*ScreenWidth/375 + 61*ScreenWidth/375*2, 2*ScreenWidth/375, 33*ScreenWidth/375, 33*ScreenWidth/375);
                                 _buttonImg3.imageView.layer.cornerRadius = _buttonImg3.imageView.frame.size.height/2;
                                 _buttonImg3.imageView.layer.masksToBounds = YES;
@@ -690,7 +690,7 @@
                                 
                                 //                        }
                                 _isaddImgv4 = YES;
-                                [_buttonImg4 sd_setImageWithURL:[Helper imageIconUrl:[_dataArray3[0] pic]] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"zwt"]];
+                                [_buttonImg4 sd_setImageWithURL:[Helper imageIconUrl:[_dataArray3[0] pic]] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
                                 _buttonImg4.frame = CGRectMake(140*ScreenWidth/375 + 61*ScreenWidth/375*3, 2*ScreenWidth/375, 33*ScreenWidth/375, 33*ScreenWidth/375);
                                 _buttonImg4.imageView.layer.cornerRadius = _buttonImg4.imageView.frame.size.height/2;
                                 _buttonImg3.imageView.layer.masksToBounds = YES;
@@ -792,7 +792,7 @@
             _labelTime.text = [_dataArrayPro[0] scoreCreateTime];
             if (_arrayMobile.count == 0) {
                 //设置自己的头像和姓名
-                [_imgvSelf sd_setImageWithURL:[Helper imageIconUrl:[_dataArrayPro[0] userPic]] placeholderImage:[UIImage imageNamed:@"zwt"]];
+                [_imgvSelf sd_setImageWithURL:[Helper imageIconUrl:[_dataArrayPro[0] userPic]] placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
                 _labelSelfName.text = [_dataArrayPro[0] userName];
                 //把头像和姓名存入数组
                 if (![Helper isBlankString:[_dataArrayPro[0] userName]]) {
@@ -833,7 +833,7 @@
                     //当有未完成记分的时候，刷新表头的头像，并且赋值
                     _isaddImgv2 = YES;
                     
-                    [_buttonImg2 sd_setImageWithURL:[Helper imageIconUrl:[_dataArrayPro[1] userPic]] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"zwt"]];
+                    [_buttonImg2 sd_setImageWithURL:[Helper imageIconUrl:[_dataArrayPro[1] userPic]] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
                     _buttonImg2.frame = CGRectMake(140*ScreenWidth/375 + 61*ScreenWidth/375, 2*ScreenWidth/375, 33*ScreenWidth/375, 33*ScreenWidth/375);
                     _buttonImg2.imageView.layer.cornerRadius = _buttonImg2.imageView.frame.size.height/2;
                     _buttonImg2.imageView.layer.masksToBounds = YES;
@@ -892,7 +892,7 @@
                     //当有未完成记分的时候，刷新表头的头像，并且赋值
                     _isaddImgv2 = YES;
                     
-                    [_buttonImg2 sd_setImageWithURL:[Helper imageIconUrl:[_dataArrayPro[1] userPic]] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"zwt"]];
+                    [_buttonImg2 sd_setImageWithURL:[Helper imageIconUrl:[_dataArrayPro[1] userPic]] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
                     _buttonImg2.frame = CGRectMake(140*ScreenWidth/375 + 61*ScreenWidth/375, 2*ScreenWidth/375, 33*ScreenWidth/375, 33*ScreenWidth/375);
                     _buttonImg2.imageView.layer.cornerRadius = _buttonImg2.imageView.frame.size.height/2;
                     _buttonImg2.imageView.layer.masksToBounds = YES;
@@ -923,7 +923,7 @@
                     
                     //第三个人的头像信息
                     _isaddImgv3 = YES;
-                    [_buttonImg3 sd_setImageWithURL:[Helper imageIconUrl:[_dataArrayPro[2] userPic]] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"zwt"]];
+                    [_buttonImg3 sd_setImageWithURL:[Helper imageIconUrl:[_dataArrayPro[2] userPic]] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
                     _buttonImg3.frame = CGRectMake(140*ScreenWidth/375 + 61*ScreenWidth/375*2, 2*ScreenWidth/375, 33*ScreenWidth/375, 33*ScreenWidth/375);
                     _buttonImg3.imageView.layer.cornerRadius = _buttonImg3.imageView.frame.size.height/2;
                     _buttonImg3.imageView.layer.masksToBounds = YES;
@@ -993,7 +993,7 @@
                     //当有未完成记分的时候，刷新表头的头像，并且赋值
                     _isaddImgv2 = YES;
                     
-                    [_buttonImg2 sd_setImageWithURL:[Helper imageIconUrl:[_dataArrayPro[1] userPic]] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"zwt"]];
+                    [_buttonImg2 sd_setImageWithURL:[Helper imageIconUrl:[_dataArrayPro[1] userPic]] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
                     _buttonImg2.frame = CGRectMake(140*ScreenWidth/375 + 61*ScreenWidth/375, 2*ScreenWidth/375, 33*ScreenWidth/375, 33*ScreenWidth/375);
                     _buttonImg2.imageView.layer.cornerRadius = _buttonImg2.imageView.frame.size.height/2;
                     _buttonImg2.imageView.layer.masksToBounds = YES;
@@ -1023,7 +1023,7 @@
                     
                     //第三个人的头像信息
                     _isaddImgv3 = YES;
-                    [_buttonImg3 sd_setImageWithURL:[Helper imageIconUrl:[_dataArrayPro[2] userPic]] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"zwt"]];
+                    [_buttonImg3 sd_setImageWithURL:[Helper imageIconUrl:[_dataArrayPro[2] userPic]] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
                     _buttonImg3.frame = CGRectMake(140*ScreenWidth/375 + 61*ScreenWidth/375*2, 2*ScreenWidth/375, 33*ScreenWidth/375, 33*ScreenWidth/375);
                     _buttonImg3.imageView.layer.cornerRadius = _buttonImg3.imageView.frame.size.height/2;
                     _buttonImg3.imageView.layer.masksToBounds = YES;
@@ -1051,7 +1051,7 @@
                     }
   
                     _isaddImgv4 = YES;
-                    [_buttonImg4 sd_setImageWithURL:[Helper imageIconUrl:[_dataArrayPro[3] userPic]] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"zwt"]];
+                    [_buttonImg4 sd_setImageWithURL:[Helper imageIconUrl:[_dataArrayPro[3] userPic]] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
                     _buttonImg4.frame = CGRectMake(140*ScreenWidth/375 + 61*ScreenWidth/375*3, 2*ScreenWidth/375, 33*ScreenWidth/375, 33*ScreenWidth/375);
                     _buttonImg4.imageView.layer.cornerRadius = _buttonImg4.imageView.frame.size.height/2;
                     _buttonImg4.imageView.layer.masksToBounds = YES;

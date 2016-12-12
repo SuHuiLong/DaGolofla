@@ -812,8 +812,6 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
     
     if ([urlString containsString:@"dagolfla://"]) {
         
-        
-
         // 球队提现
         
         if ([urlString containsString:@"teamWithDraw"]) {
@@ -848,13 +846,6 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
             jgJoinVC.teamKey = [NSNumber numberWithInteger:[[Helper returnKeyVlaueWithUrlString:urlString andKey:@"teamKey"] integerValue]];
             [self.navigationController pushViewController:jgJoinVC animated:YES];
         }
-
-        
-        
-        
-        
-        
-        
         
         //新球友
         if ([urlString containsString:@"newUserFriendList"]) {

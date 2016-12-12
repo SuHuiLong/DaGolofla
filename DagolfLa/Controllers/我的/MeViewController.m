@@ -147,7 +147,7 @@
         [MBProgressHUD hideHUDForView:self.view animated:YES];
         NSIndexSet *indexSet=[[NSIndexSet alloc]initWithIndex:0];
         [_tableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationAutomatic];
-        _imgvIcon.image = [UIImage imageNamed:@"zwt"];
+        _imgvIcon.image = [UIImage imageNamed:DefaultHeaderImage];
         _labelnickName.text = nil;
         [Helper alertViewWithTitle:@"是否立即登录?" withBlockCancle:^{
             
@@ -357,7 +357,7 @@
     _arrayPic = [[NSArray alloc]init];
 //    _arrayTitle = @[@[@"我的聊天",@"我的消息",@"交易中心",@"我的活动",@"推荐有礼"],@[@"设置"]];
     _arrayTitle = @[@[@""],@[@"球友",@"足迹",@"我的二维码"],@[@"个人帐户",@"交易中心"],@[@"设置",@"更多"]];
-    _arrayPic = @[@[@""],@[@"qyIcon",@"zuji",@"saomiao"],@[@"gerenzhanghu",@"jyIcon"],@[@"setIcon",@"btn_more"]];
+    _arrayPic = @[@[@""],@[@"qyIcon",@"zuji",@"saomiao"],@[@"gerenzhanghu",@"jyIcon"],@[@"sz",@"btn_more"]];
     _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, 44*7*ScreenWidth/375+40*ScreenWidth/375+78*ScreenWidth/375)];
     
     _tableView.delegate = self;
@@ -439,7 +439,7 @@
         }
         else
         {
-            [cell.iconImgv setImage:[UIImage imageNamed:@"zwt"]];
+            [cell.iconImgv setImage:[UIImage imageNamed:DefaultHeaderImage]];
             cell.nameLabel.text = @"";
             cell.detailLabel.text = @"您还没有登录，赶快登陆哦";
             cell.imgvSex.image = [UIImage imageNamed:@"xb_n"];

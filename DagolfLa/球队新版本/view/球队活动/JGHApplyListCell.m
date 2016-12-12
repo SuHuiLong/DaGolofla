@@ -28,7 +28,7 @@
 }
 #pragma mark -- 勾选按钮事件
 - (IBAction)chooseBtn:(UIButton *)sender {
-    [self.chooseBtn setImage:[UIImage imageNamed:@"kuangwx"] forState:UIControlStateNormal];
+    [self.chooseBtn setImage:[UIImage imageNamed:@"kuang_xz"] forState:UIControlStateNormal];
     if (self.delegate) {
         [self.delegate didChooseBtn:sender];
     }
@@ -48,7 +48,7 @@
     self.price.text = [NSString stringWithFormat:@"%.2f", [[dict objectForKey:@"money"] floatValue]];
 //    @property (weak, nonatomic) IBOutlet UILabel *price;
     if ([[dict objectForKey:@"select"]isEqualToString:@"1"]) {
-        [self.chooseBtn setImage:[UIImage imageNamed:@"kuangwx"] forState:UIControlStateNormal];
+        [self.chooseBtn setImage:[UIImage imageNamed:@"kuang_xz"] forState:UIControlStateNormal];
     }else{
         [self.chooseBtn setImage:[UIImage imageNamed:@"kuang"] forState:UIControlStateNormal];
     }
@@ -85,7 +85,7 @@
     
     //    @property (weak, nonatomic) IBOutlet UILabel *price;
     if ([[dict objectForKey:@"select"]isEqualToString:@"1"]) {
-        [self.chooseBtn setImage:[UIImage imageNamed:@"kuangwx"] forState:UIControlStateNormal];
+        [self.chooseBtn setImage:[UIImage imageNamed:@"kuang_xz"] forState:UIControlStateNormal];
     }else{
         [self.chooseBtn setImage:[UIImage imageNamed:@"kuang"] forState:UIControlStateNormal];
     }

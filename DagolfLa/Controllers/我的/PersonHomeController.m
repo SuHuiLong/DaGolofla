@@ -627,7 +627,7 @@ static NSString *const orderDetailCellIdentifier = @"OtherDataTableViewCell";
     [btnText addTarget:self action:@selector(addFootClick) forControlEvents:UIControlEventTouchUpInside];
     
     UIImageView* imgvJian = [[UIImageView alloc]initWithFrame:CGRectMake(ScreenWidth - 20*ScreenWidth/375, 8*ScreenWidth/375, 10*ScreenWidth/375, 14*ScreenWidth/375)];
-    imgvJian.image = [UIImage imageNamed:@"left_jt"];
+    imgvJian.image = [UIImage imageNamed:@")"];
     [viewBtn addSubview:imgvJian];
     
     if ([self.strMoodId integerValue] == [DEFAULF_USERID integerValue]) {

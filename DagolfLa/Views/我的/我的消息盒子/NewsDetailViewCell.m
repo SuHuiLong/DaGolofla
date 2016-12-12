@@ -24,14 +24,14 @@
 -(void)showData:(NewsDetailModel *)model
 {
     _timeLabel.text = model.createTime;
-    [_iconImage sd_setImageWithURL:[Helper imageIconUrl:model.senderPic] placeholderImage:[UIImage imageNamed:@"zwt"]];
+    [_iconImage sd_setImageWithURL:[Helper imageIconUrl:model.senderPic] placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
     _titleLabel.text = model.content;
 }
 
 -(void)showPeople:(NewsDetailModel *)model
 {
     _timeLabel.text = model.content;
-    [_iconImage sd_setImageWithURL:[Helper imageIconUrl:model.senderPic] placeholderImage:[UIImage imageNamed:@"zwt"]];
+    [_iconImage sd_setImageWithURL:[Helper imageIconUrl:model.senderPic] placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
     _titleLabel.text = model.uName;
 }
 

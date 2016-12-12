@@ -419,7 +419,7 @@
     {
         buttonJt.frame = CGRectMake(ScreenWidth-22*ScreenWidth/375, 14*ScreenWidth/375, 12*ScreenWidth/375, 16*ScreenWidth/375);
     }
-    [buttonJt setBackgroundImage:[UIImage imageNamed:@"left_jt"] forState:UIControlStateNormal];
+    [buttonJt setBackgroundImage:[UIImage imageNamed:@")"] forState:UIControlStateNormal];
     SEL a = @selector(headerButtonClick:);
     [buttonJt addTarget:self action:a forControlEvents:UIControlEventTouchUpInside];
     [headerView addSubview:buttonJt];

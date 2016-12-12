@@ -179,7 +179,7 @@
                     }
                     
                     UIImageView* imgv = [[UIImageView alloc]initWithFrame:CGRectMake(10*ScreenWidth/375, 10*ScreenWidth/375, 70*ScreenWidth/375, 70*ScreenWidth/375)];
-                    [imgv sd_setImageWithURL:[Helper imageIconUrl:_pic] placeholderImage:[UIImage imageNamed:@"zwt"]];
+                    [imgv sd_setImageWithURL:[Helper imageIconUrl:_pic] placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
                     [_viewBase addSubview:imgv];
                     
                     _textTitle = [[UITextField alloc]initWithFrame:CGRectMake(90*ScreenWidth/375, 30*ScreenWidth/375, ScreenWidth-120*ScreenWidth/375, 30*ScreenWidth/375)];
@@ -243,7 +243,7 @@
                     }
                     
                     UIImageView* imgv = [[UIImageView alloc]initWithFrame:CGRectMake(10*ScreenWidth/375, 10*ScreenWidth/375, 70*ScreenWidth/375, 70*ScreenWidth/375)];
-                    [imgv sd_setImageWithURL:[Helper imageIconUrl:_pic] placeholderImage:[UIImage imageNamed:@"zwt"]];
+                    [imgv sd_setImageWithURL:[Helper imageIconUrl:_pic] placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
                     [_viewBase addSubview:imgv];
                     
                     _textTitle = [[UITextField alloc]initWithFrame:CGRectMake(90*ScreenWidth/375, 30*ScreenWidth/375, ScreenWidth-120*ScreenWidth/375, 30*ScreenWidth/375)];
@@ -302,7 +302,7 @@
         }
         
         UIImageView* imgv = [[UIImageView alloc]initWithFrame:CGRectMake(10*ScreenWidth/375, 10*ScreenWidth/375, 70*ScreenWidth/375, 70*ScreenWidth/375)];
-        [imgv sd_setImageWithURL:[Helper imageIconUrl:_pic] placeholderImage:[UIImage imageNamed:@"zwt"]];
+        [imgv sd_setImageWithURL:[Helper imageIconUrl:_pic] placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
         [_viewBase addSubview:imgv];
         
         _textTitle = [[UITextField alloc]initWithFrame:CGRectMake(90*ScreenWidth/375, 30*ScreenWidth/375, ScreenWidth-120*ScreenWidth/375, 30*ScreenWidth/375)];
@@ -416,7 +416,7 @@
     _tableView.tableHeaderView = _viewBase;
     
     _imgvAct = [[UIImageView alloc]initWithFrame:CGRectMake(10*ScreenWidth/375, 10*ScreenWidth/375, 70*ScreenWidth/375, 70*ScreenWidth/375)];
-    [_imgvAct sd_setImageWithURL:[Helper imageIconUrl:_pic] placeholderImage:[UIImage imageNamed:@"zwt"]];
+    [_imgvAct sd_setImageWithURL:[Helper imageIconUrl:_pic] placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
     [_viewBase addSubview:_imgvAct];
     
     _labelTitleAct = [[UILabel alloc]initWithFrame:CGRectMake(90*ScreenWidth/375, 30*ScreenWidth/375, ScreenWidth-120*ScreenWidth/375, 30*ScreenWidth/375)];
@@ -572,7 +572,7 @@
             _scoreType = _dataTypeArray[0];
             [_alertView close];
             
-            [_imgvAct sd_setImageWithURL:[Helper imageIconUrl:[_dataArray[0] loginPic]] placeholderImage:[UIImage imageNamed:@"zwt"]];
+            [_imgvAct sd_setImageWithURL:[Helper imageIconUrl:[_dataArray[0] loginPic]] placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
             _labelTitleAct.text = [_dataArray[0] title];
             _labelTimeAct.text = [_dataArray[0] startDate];
             _labelParkAct.text = _dataBallNameArr[0];
@@ -609,7 +609,7 @@
             
             [_alertView close];
             
-            [_imgvAct sd_setImageWithURL:[Helper imageIconUrl:[_dataArray[1] loginPic]] placeholderImage:[UIImage imageNamed:@"zwt"]];
+            [_imgvAct sd_setImageWithURL:[Helper imageIconUrl:[_dataArray[1] loginPic]] placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
             _labelTitleAct.text = [_dataArray[1] title];
             _labelTimeAct.text = [_dataArray[1] startDate];
             _labelParkAct.text = _dataBallNameArr[1];
@@ -644,7 +644,7 @@
             
             [_alertView close];
             
-            [_imgvAct sd_setImageWithURL:[Helper imageIconUrl:[_dataArray[2] loginPic]] placeholderImage:[UIImage imageNamed:@"zwt"]];
+            [_imgvAct sd_setImageWithURL:[Helper imageIconUrl:[_dataArray[2] loginPic]] placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
             _labelTitleAct.text = [_dataArray[2] title];
             _labelTimeAct.text = [_dataArray[2] startDate];
             _labelParkAct.text = _dataBallNameArr[2];
@@ -663,7 +663,7 @@
     }
     
     UIImageView* imgv = [[UIImageView alloc]initWithFrame:CGRectMake(10*ScreenWidth/375, 10*ScreenWidth/375, 70*ScreenWidth/375, 70*ScreenWidth/375)];
-    [imgv sd_setImageWithURL:[Helper imageIconUrl:_pic] placeholderImage:[UIImage imageNamed:@"zwt"]];
+    [imgv sd_setImageWithURL:[Helper imageIconUrl:_pic] placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
     [_viewBase addSubview:imgv];
     
     _textTitle = [[UITextField alloc]initWithFrame:CGRectMake(90*ScreenWidth/375, 30*ScreenWidth/375, ScreenWidth-120*ScreenWidth/375, 30*ScreenWidth/375)];
@@ -1034,7 +1034,7 @@
     {
         buttonJt.frame = CGRectMake(ScreenWidth-22*ScreenWidth/375, 14*ScreenWidth/375, 12*ScreenWidth/375, 16*ScreenWidth/375);
     }
-    [buttonJt setBackgroundImage:[UIImage imageNamed:@"left_jt"] forState:UIControlStateNormal];
+    [buttonJt setBackgroundImage:[UIImage imageNamed:@")"] forState:UIControlStateNormal];
     SEL a = @selector(headerButtonClick:);
     [buttonJt addTarget:self action:a forControlEvents:UIControlEventTouchUpInside];
     [headerView addSubview:buttonJt];

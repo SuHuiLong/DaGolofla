@@ -31,7 +31,7 @@
         
         
         self.sexImage = [[UIImageView alloc] initWithFrame:CGRectMake(73 * ProportionAdapter , 10 * ProportionAdapter, 12 * ProportionAdapter, 12 * ProportionAdapter)];
-        self.sexImage.image = [UIImage imageNamed:@"sexIcon"];
+        self.sexImage.image = [UIImage imageNamed:@"xb_n"];
         [self.contentView addSubview:self.sexImage];
         
         self.signLB = [[UILabel alloc] initWithFrame:CGRectMake(73 * ProportionAdapter, 35 * ProportionAdapter, 200 * ProportionAdapter, 14 * ProportionAdapter)];

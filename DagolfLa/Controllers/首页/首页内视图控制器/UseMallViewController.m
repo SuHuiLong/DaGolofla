@@ -394,7 +394,7 @@
 -(void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
 {
     ////NSLog(@"webview下载失败，error = %@",[error localizedDescription]);
-    self.imageView.image = [UIImage imageNamed:@"logo"];
+    self.imageView.image = [UIImage imageNamed:DefaultHeaderImage];
 }
 
 

@@ -161,7 +161,6 @@
     
 //    JGLScoreNewViewController *scoVc = [[JGLScoreNewViewController alloc] init];
 //    scoVc.title = @"记分";
-//    [self setUpOneChildViewController:scoVc image:[UIImage imageNamed:@"score_gray"] selectImage:[[UIImage imageNamed:@"score_green"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
     
     ChatListViewController *chatVc = [[ChatListViewController alloc] init];
     chatVc.title = @"消息";

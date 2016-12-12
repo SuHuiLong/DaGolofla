@@ -463,7 +463,7 @@
         }];
     }else{
         UMSocialData *data = [UMSocialData defaultData];
-        data.shareImage = [UIImage imageNamed:@"logo"];
+        data.shareImage = [UIImage imageNamed:DefaultHeaderImage];
         data.shareText = [NSString stringWithFormat:@"%@%@的获奖名单", _strTeamName,_model.name];
         [[UMSocialControllerService defaultControllerService] setSocialData:data];
         //2.设置分享平台

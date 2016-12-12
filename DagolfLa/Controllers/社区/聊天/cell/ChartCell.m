@@ -44,10 +44,10 @@
     self.icon.frame=cellFrame.iconRect;
 
     if (chartMessage.messageType == 1) {
-        [self.icon sd_setImageWithURL:[Helper imageIconUrl:chartMessage.icon] placeholderImage:[UIImage imageNamed:@"zwt"]];
+        [self.icon sd_setImageWithURL:[Helper imageIconUrl:chartMessage.icon] placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
     }
     else{
-        [self.icon sd_setImageWithURL:[Helper imageIconUrl:chartMessage.icon] placeholderImage:[UIImage imageNamed:@"zwt"]];
+        [self.icon sd_setImageWithURL:[Helper imageIconUrl:chartMessage.icon] placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
     }
     
     

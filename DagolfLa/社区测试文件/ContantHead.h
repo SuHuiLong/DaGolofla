@@ -34,11 +34,7 @@ typedef NS_ENUM(NSInteger, GestureType) {
 #define DEFAULF_USERID [[NSUserDefaults standardUserDefaults] objectForKey:@"userId"]
 //提示框时间
 #define TIMESlEEP 1.5
-//1001-活动，1003,1001,1004,1002,1005
-//#define ActivityKey @"activityKey"
-//#define HEADERRImage @"logo"//头像默认图片
 #define BACKImage @"backL"//返回按钮
-//#define BGImage @"selfBackPic.jpg"//背景图片
 
 #define TeamBGImage @"teamBGImage"// 球队背景图片
 #define TeamLogoImage @"teamLogo"//logo白色图片

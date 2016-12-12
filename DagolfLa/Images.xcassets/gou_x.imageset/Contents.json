@@ -2,18 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "scale" : "1x",
-      "filename" : "gou_x.png"
+      "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "scale" : "2x",
-      "filename" : "gou_x@2x.png"
+      "filename" : "gou_x@2x.png",
+      "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "scale" : "3x",
-      "filename" : "gou_x@3x.png"
+      "filename" : "gou_x@3x.png",
+      "scale" : "3x"
     }
   ],
   "info" : {

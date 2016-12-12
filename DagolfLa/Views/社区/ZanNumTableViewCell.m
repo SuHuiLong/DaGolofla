@@ -31,9 +31,9 @@
     
     if (![Helper isBlankString:userAssisModel.userPic]) {
         
-        [_iconImage sd_setImageWithURL:[Helper imageIconUrl:userAssisModel.userPic] placeholderImage:[UIImage imageNamed:@"zwt"]];
+        [_iconImage sd_setImageWithURL:[Helper imageIconUrl:userAssisModel.userPic] placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
     }else{
-        _iconImage.image = [UIImage imageNamed:@"zwt"];
+        _iconImage.image = [UIImage imageNamed:DefaultHeaderImage];
     }
     
     
@@ -62,7 +62,7 @@
 
 -(void)showTeamPeopleData:(TeamPeopleModel *)model
 {
-    [_iconImage sd_setImageWithURL:[Helper imageIconUrl:model.userPic] placeholderImage:[UIImage imageNamed:@"zwt"]];
+    [_iconImage sd_setImageWithURL:[Helper imageIconUrl:model.userPic] placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
     
     _nameLabel.text = model.userName;
 //    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];

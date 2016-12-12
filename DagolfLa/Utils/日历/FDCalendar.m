@@ -166,7 +166,7 @@ static NSDateFormatter *dateFormattor;
     leftButton.frame = CGRectMake(5, 10, 32, 24);
     [leftButton setTintColor:[UIColor whiteColor]];
 //    UIButton *leftButton = [[UIButton alloc] initWithFrame:CGRectMake(5, 10, 32, 24)];
-    [leftButton setImage:[UIImage imageNamed:@"right_jt"] forState:UIControlStateNormal];
+    [leftButton setImage:[UIImage imageNamed:@"all_back"] forState:UIControlStateNormal];
     [leftButton setTintColor:[UIColor lightGrayColor]];
     [leftButton addTarget:self action:@selector(setPreviousMonthDate) forControlEvents:UIControlEventTouchUpInside];
     [titleView addSubview:leftButton];
@@ -175,7 +175,7 @@ static NSDateFormatter *dateFormattor;
     UIButton* rightButton = [UIButton buttonWithType:UIButtonTypeSystem];
     rightButton.frame = CGRectMake(titleView.frame.size.width - 37, 10, 32, 24);
     [rightButton setTintColor:[UIColor lightGrayColor]];
-    [rightButton setImage:[UIImage imageNamed:@"left_jt"] forState:UIControlStateNormal];
+    [rightButton setImage:[UIImage imageNamed:@")"] forState:UIControlStateNormal];
     [rightButton addTarget:self action:@selector(setNextMonthDate) forControlEvents:UIControlEventTouchUpInside];
     [titleView addSubview:rightButton];
     

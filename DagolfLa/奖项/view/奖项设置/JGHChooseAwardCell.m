@@ -45,7 +45,7 @@
     if (model.select == 0) {
         [self.chooseBtn setImage:[UIImage imageNamed:@"kuang"] forState:UIControlStateNormal];
     }else{
-        [self.chooseBtn setImage:[UIImage imageNamed:@"kuangwx"] forState:UIControlStateNormal];
+        [self.chooseBtn setImage:[UIImage imageNamed:@"kuang_xz"] forState:UIControlStateNormal];
     }
 
 }
