@@ -147,7 +147,6 @@
         }
     }
     
-    
     self.webView.delegate=self;
     
     [self.view addSubview:self.webView];

@@ -74,8 +74,8 @@
     else
     {
         
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"君高高尔夫" message:@"是否立即登录？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
-        [alertView show];
+//        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"君高高尔夫" message:@"是否立即登录？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+//        [alertView show];
         
         [self refreshConversationTableViewIfNeeded];
         
@@ -138,21 +138,19 @@
 #pragma mark -- 下载未读消息数量
 - (void)loadMessageData{
     
-    //    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"userId"])
-    //    {
-    //
-    //    }
-    //    else
-    //    {
-    //
-    //        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"君高高尔夫" message:@"是否立即登录？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
-    //        [alertView show];
-    //
-    //
-    //        [self.conversationListTableView.header endRefreshing];
-    //
-    //        return;
-    //    }
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"userId"])
+    {
+        
+    }
+    else
+    {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"君高高尔夫" message:@"是否立即登录？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+        [alertView show];
+        
+        [self.conversationListTableView.header endRefreshing];
+        
+        return;
+    }
     
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     [dict setObject:DEFAULF_USERID forKey:@"userKey"];
@@ -344,9 +342,10 @@
     [_viewHeader addSubview:teamNotbtn];
     
     self.conversationListTableView.tableHeaderView = _viewHeader;
-    //    self.conversationListTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+        self.conversationListTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     self.conversationListTableView.header = [MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
+    [self.conversationListTableView.header beginRefreshing];
     //    self.conversationListTableView.footer=[MJDIYBackFooter footerWithRefreshingTarget:self refreshingAction:@selector(footerRefreshing)];
 }
 
