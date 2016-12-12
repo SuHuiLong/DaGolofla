@@ -19,5 +19,6 @@
 
 @property (strong, nonatomic) NSString* userMobilePlayer;//打球人手机号
 
+@property (assign, nonatomic)NSInteger sex;//性别
 
 @end

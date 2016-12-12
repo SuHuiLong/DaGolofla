@@ -30,7 +30,7 @@
 
 //@property (nonatomic, strong)NSArray *twoAreaArray;//球道区域
 
-- (void)reloadScoreList:(NSArray *)currentAreaArray andAreaArray:(NSArray *)areaArray;
+- (void)reloadScoreList:(NSArray *)currentAreaArray andAreaArray:(NSArray *)areaArray andIsShowArea:(NSInteger)isShowArea;
 
 - (void)removeOneAreaView;
 

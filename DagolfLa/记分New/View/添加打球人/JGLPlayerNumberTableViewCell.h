@@ -27,4 +27,6 @@
 @property (nonatomic, weak)id <JGLPlayerNumberTableViewCellDelegate> delegate;
 
 
+- (void)configJGLPlayerNumberTableViewCell:(NSDictionary *)dict;
+
 @end

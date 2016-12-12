@@ -63,6 +63,7 @@
 - (void)configJGHSysInformCell:(JGHInformModel *)model{
 //    CGSize titleSize = [model.title boundingRectWithSize:CGSizeMake(screenWidth, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:16*ProportionAdapter]} context:nil].size;
     
+    CGSize contentSize = [[NSString stringWithFormat:@"    %@", model.title] boundingRectWithSize:CGSizeMake(screenWidth -20 *ProportionAdapter, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:15*ProportionAdapter]} context:nil].size;
     
 //    self.name.frame = CGRectMake(10 *ProportionAdapter, 15 *ProportionAdapter, screenWidth -20*ProportionAdapter, titleSize.height);
     
@@ -83,7 +84,7 @@
     
     self.time.text = [NSString stringWithFormat:@"%@", [Helper distanceTimeWithBeforeTime:model.createTime]];
     
-    self.detail.text = [NSString stringWithFormat:@"    %@", model.content];
+    self.detail.text = [NSString stringWithFormat:@"    %@", model.title];
 }
 
 

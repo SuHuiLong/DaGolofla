@@ -8,6 +8,8 @@
 
 #import "JGLPlayerNameTableViewCell.h"
 #import "UITool.h"
+#import "JGLAddActiivePlayModel.h"
+
 @implementation JGLPlayerNameTableViewCell
 
 - (void)awakeFromNib {
@@ -64,6 +66,33 @@
     
     _labelTee.text = str;
 }
+
+- (void)configJGLAddActiivePlayModel:(JGLAddActiivePlayModel *)model{
+    _labelName.text = model.remark;
+    
+    if ([model.tTaiwan isEqualToString:@"红T"] == YES) {
+        _iconImgv.backgroundColor = [UITool colorWithHexString:@"e21f23" alpha:1];
+    }
+    else if ([model.tTaiwan isEqualToString:@"蓝T"] == YES)
+    {
+        _iconImgv.backgroundColor = [UITool colorWithHexString:@"2474ac" alpha:1];
+    }
+    else if ([model.tTaiwan isEqualToString:@"黑T"] == YES)
+    {
+        _iconImgv.backgroundColor = [UITool colorWithHexString:@"000000" alpha:1];
+    }
+    else if ([model.tTaiwan isEqualToString:@"黄T"] == YES || [model.tTaiwan isEqualToString:@"金T"] == YES)
+    {
+        _iconImgv.backgroundColor = [UITool colorWithHexString:@"bedd00" alpha:1];
+    }
+    else
+    {
+        _iconImgv.backgroundColor = [UITool colorWithHexString:@"eeeeee" alpha:1];
+    }
+    
+    _labelTee.text = model.tTaiwan;
+}
+
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];

@@ -118,6 +118,12 @@
     [_dictData setObject:@0 forKey:@"otherUserId"];
     [_dictData setObject:@0 forKey:@"page"];
     [_dictData setObject:@0 forKey:@"rows"];
+    [[JsonHttp jsonHttp]httpRequest:@"userFriend/getUserFriendList" JsonKey:nil withData:_dictData requestMethod:@"GET" failedBlock:^(id errType) {
+        
+    } completionBlock:^(id data) {
+        
+    }];
+    
     [[PostDataRequest sharedInstance] postDataRequest:@"UserFollow/querbyUserFollowList.do" parameter:_dictData success:^(id respondsData) {
         NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:respondsData options:NSJSONReadingMutableContainers error:nil];
         

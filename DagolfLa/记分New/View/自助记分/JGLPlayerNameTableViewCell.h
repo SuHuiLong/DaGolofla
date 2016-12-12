@@ -7,10 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+@class JGLAddActiivePlayModel;
 
 @interface JGLPlayerNameTableViewCell : UITableViewCell
-
-
 
 @property (strong, nonatomic) UILabel*     labelTitle;
 
@@ -21,6 +20,8 @@
 @property (strong, nonatomic) UILabel*     labelTee;
 
 -(void)showTee:(NSString *)str;
+
+- (void)configJGLAddActiivePlayModel:(JGLAddActiivePlayModel *)model;
 
 
 @end

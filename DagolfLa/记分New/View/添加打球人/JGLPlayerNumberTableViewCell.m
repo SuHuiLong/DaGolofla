@@ -41,6 +41,14 @@
     }
 }
 
+- (void)configJGLPlayerNumberTableViewCell:(NSDictionary *)dict{
+    if ([dict objectForKey:UserName]) {
+        _labelName.text = [NSString stringWithFormat:@"%@", [dict objectForKey:UserName]];
+    }
+    
+    
+}
+
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
 

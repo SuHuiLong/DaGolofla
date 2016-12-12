@@ -73,7 +73,7 @@
         }
     }
     
-    _scroll.contentSize = CGSizeMake(0, self.image.size.height);
+//    _scroll.contentSize = CGSizeMake(0, self.image.size.height);
 }
 
 #pragma mark - UIScrollViewDelegate

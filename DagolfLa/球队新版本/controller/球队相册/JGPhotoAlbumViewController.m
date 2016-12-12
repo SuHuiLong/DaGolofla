@@ -123,7 +123,7 @@
     flowLayout.minimumLineSpacing=1.f;
     
     
-    _collectionView = [[UICollectionView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight-44*ProportionAdapter - 15*ProportionAdapter) collectionViewLayout:flowLayout];
+    _collectionView = [[UICollectionView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight) collectionViewLayout:flowLayout];
     //    _collectionView.frame = _yuansuScrollview.frame;
     [self.view addSubview:_collectionView];
     _collectionView.delegate=self;
@@ -331,8 +331,20 @@
 //    return UIInterfaceOrientationMaskPortrait | UIDeviceOrientationLandscapeRight;
 //}
 
+//- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator{
+//    [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context)
+//     {
+//         NSLog(@"转屏前调入");
+//     } completion:^(id<UIViewControllerTransitionCoordinatorContext> context)
+//     {
+//         NSLog(@"转屏后调入");
+//     }];
+//    
+////    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+//}
+
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation{
-    NSLog(@"fromInterfaceOrientation == %td", fromInterfaceOrientation);
+//    NSLog(@"fromInterfaceOrientation == %td", fromInterfaceOrientation);
     UIWindow *window = [UIApplication sharedApplication].keyWindow;
     SDPhotoBrowser *browser = [window viewWithTag:100];
     
@@ -368,13 +380,46 @@
         indexLabel.center = CGPointMake(screenHeight * 0.5, 30);
     }else{
         self.navigationController.navigationBarHidden = YES;
-
+        
         indexLabel.bounds = CGRectMake(0, 0, 80, 30);
         indexLabel.center = CGPointMake(screenWidth * 0.5, 30);
         
-        subImageView.frame = window.frame;
+        subImageView.frame = CGRectMake(0, 0, screenWidth, screenHeight);
+//
+        
+//        browserImageViewScroll.frame = CGRectMake(0, 0, screenWidth, screenHeight);
+        
+        //逆时针 旋转180度
+//        [UIView beginAnimations:nil context:nil];
+//        [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
+//        [UIView setAnimationDuration:0.2]; //动画时长
+//        browserImageViewScroll.transform = CGAffineTransformMakeRotation(180 *M_PI / 180.0);
+//        CGAffineTransform tranform = browserImageViewScroll.transform;
+//        //第二个值表示横向放大的倍数，第三个值表示纵向缩小的程度
+//        tranform = CGAffineTransformScale(tranform, 1,1);
+//        browserImageViewScroll.transform = tranform;
+//        [UIView commitAnimations];
+//        
+//        //逆时针 旋转180度
+//        [UIView beginAnimations:nil context:nil];
+//        [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
+//        [UIView setAnimationDuration:0.2]; //动画时长
+//        subImageView.transform = CGAffineTransformMakeRotation(180 *M_PI / 180.0);
+//        CGAffineTransform transform = subImageView.transform;
+//        //第二个值表示横向放大的倍数，第三个值表示纵向缩小的程度
+//        transform = CGAffineTransformScale(transform, 1,1);
+//        subImageView.transform = transform;
+//        [UIView commitAnimations];
+        
     }
 }
+- (void)viewDidLayoutSubviews{
+    
+}
+
+//- (void)loadView{
+//    
+//}
 
 #pragma mark -- 移除 SDPhotoBrowser
 - (void)removePhotoBrowser{

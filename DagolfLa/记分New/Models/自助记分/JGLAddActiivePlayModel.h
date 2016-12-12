@@ -18,9 +18,13 @@
 
 @property (strong, nonatomic) NSString* name;
 
+@property (strong, nonatomic) NSString* remark;
+
 @property (strong, nonatomic) NSString* userName;
+
+@property (copy, nonatomic)NSString *tTaiwan;
 //
-@property (strong, nonatomic) NSNumber* timeKey;
+@property (copy, nonatomic) NSString* timeKey;
 //
 @property (strong, nonatomic) ChineseString* chineseString;
 //
@@ -33,6 +37,8 @@
 @property (strong, nonatomic) NSNumber* payMoney;
 
 @property (strong, nonatomic) NSNumber* sex; // 1 男   0女
+
+@property (assign , nonatomic)NSInteger select;//是否选中0-未，1-选中
 
 
 /**
