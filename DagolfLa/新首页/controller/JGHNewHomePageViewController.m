@@ -540,12 +540,6 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
             JGLScoreLiveViewController *liveVC = [[JGLScoreLiveViewController alloc] init];
             
             liveVC.activity = [_indexModel.scoreList[numB] objectForKey:@"timeKey"];
-            
-            JGTeamAcitivtyModel* liveModel = [[JGTeamAcitivtyModel alloc] init];
-            [liveModel setValuesForKeysWithDictionary:_indexModel.scoreList[numB]];
-            
-            liveVC.model = liveModel;
-            
             [self.navigationController pushViewController:liveVC animated:YES];
         };
     }
@@ -895,11 +889,10 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
         
         //活动成绩详情 --
         if ([urlString containsString:@"activityScore"]) {
-            JGDActSelfHistoryScoreViewController *teamGroupCtrl= [[JGDActSelfHistoryScoreViewController alloc]init];
-            teamGroupCtrl.teamKey = [NSNumber numberWithInteger:[[Helper returnKeyVlaueWithUrlString:urlString andKey:@"teamKey"] integerValue]];
-            teamGroupCtrl.timeKey = [Helper returnKeyVlaueWithUrlString:urlString andKey:@"activityKey"];
-            teamGroupCtrl.hidesBottomBarWhenPushed = YES;
-            [self.navigationController pushViewController:teamGroupCtrl animated:YES];
+            JGLScoreLiveViewController *scoreLiveCtrl= [[JGLScoreLiveViewController alloc]init];
+            scoreLiveCtrl.activity = [NSNumber numberWithInteger:[[Helper returnKeyVlaueWithUrlString:urlString andKey:@"activityKey"] integerValue]];
+            scoreLiveCtrl.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:scoreLiveCtrl animated:YES];
         }
         
         //获奖详情 -- 

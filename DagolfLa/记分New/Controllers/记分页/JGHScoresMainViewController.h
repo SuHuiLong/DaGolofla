@@ -11,7 +11,7 @@
 
 //@protocol JGHScoresMainViewControllerdelegate <NSObject>
 //
-//- (void)returnSwitchMode:(NSInteger)switchMode;
+//- (void)leftOrRightswitchScore:(NSInteger)switchMode;
 //
 //@end
 

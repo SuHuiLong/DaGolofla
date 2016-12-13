@@ -495,43 +495,12 @@
     //发送消息
     [[NSNotificationCenter defaultCenter]postNotification:notice];
 }
-#pragma mark -- 跳转到指定活动详情页面
-//-(void)gotoAppPage:(NSString *)timekey switchDetails:(NSString *)details
-//{
-//    if ([timekey integerValue]>0) {
-//        NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-//        
-//        [dict setObject:[NSString stringWithFormat:@"%td", [timekey integerValue]] forKey:@"timekey"];
-//        [dict setObject:[NSString stringWithFormat:@"%@", details] forKey:@"details"];
-//        //创建一个消息对象
-//        NSNotification * notice = [NSNotification notificationWithName:@"PushJGTeamActibityNameViewController" object:nil userInfo:dict];
-//        //发送消息
-//        [[NSNotificationCenter defaultCenter]postNotification:notice];
-//
-//    }
-//    else{
-//        if (![Helper isBlankString:timekey]) {
-//            NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-//            
-//            timekey = [timekey stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-//            [dict setObject:[NSString stringWithFormat:@"%@", timekey] forKey:@"timekey"];
-//            
-//            [dict setObject:[NSString stringWithFormat:@"%@", details] forKey:@"details"];
-//            //创建一个消息对象
-//            NSNotification * notice = [NSNotification notificationWithName:@"PushJGTeamActibityNameViewController" object:nil userInfo:dict];
-//            //发送消息
-//            [[NSNotificationCenter defaultCenter]postNotification:notice];
-//        }
-//    }
-//}
 
 #pragma mark --消息推送
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
     // Required
     [JPUSHService registerDeviceToken:deviceToken];
 }
-
-
 
 -(void)onReq:(BaseReq *)req{
     

@@ -143,17 +143,11 @@
             for (NSDictionary *dic in array) {
                 MyattenModel *model = [[MyattenModel alloc] init];
                 [model setValuesForKeysWithDictionary:dic];
-                if (![model.userName isEqualToString:@""]) {
-                    
-                    NoteModel *modell = [NoteHandlle selectNoteWithUID:model.otherUserId];
-                    if ([modell.userremarks isEqualToString:@"(null)"] || [modell.userremarks isEqualToString:@""] || modell.userremarks == nil) {
-                        
-                    }else{
-                        model.userName = modell.userremarks;
+                if (model.userName) {
+                    if ([model.userName isEqualToString:@""]) {
+                        model.userName = @"该用户名暂无用户名";
                     }
                     [allFriarr addObject:model];
-                    [_dictData removeObjectForKey:@"userName"];
-                    //                [self.keyArray addObject:model.userName];
                 }
             }
             self.listArray = [[NSMutableArray alloc]initWithArray:[PYTableViewIndexManager archiveNumbers:allFriarr]];

@@ -13,6 +13,8 @@
 
 {
     NSString *_dateString;
+    
+    UUDatePicker *_datePicker;
 }
 
 @end
@@ -42,15 +44,17 @@
     NSDate *now = [NSDate date];
     
     //delegate
-    UUDatePicker *datePicker= [[UUDatePicker alloc]initWithframe:CGRectMake(10*ProportionAdapter, ((screenHeight-200*ProportionAdapter-64)/2)*ProportionAdapter, screenWidth-20*ProportionAdapter, 200*ProportionAdapter)
-                                                        Delegate:self
-                                                     PickerStyle:UUDateStyle_YearMonthDayHourMinute];
-    datePicker.ScrollToDate = now;
+//    _datePicker = [[UUDatePicker alloc]initWithframe:CGRectMake(10*ProportionAdapter, ((screenHeight-200*ProportionAdapter-64)/2)*ProportionAdapter, screenWidth-20*ProportionAdapter, 200*ProportionAdapter) Delegate:self PickerStyle:UUDateStyle_YearMonthDayHourMinute];
+    _datePicker = [[UUDatePicker alloc]initWithFrame:CGRectMake(0, ((screenHeight-200*ProportionAdapter-64)/2)*ProportionAdapter, screenWidth, 200*ProportionAdapter)];
+    _datePicker.datePickerStyle = UUDateStyle_YearMonthDayHourMinute;
+    
+    
+    _datePicker.ScrollToDate = now;
 //    datePicker.maxLimitDate = now;
-    datePicker.minLimitDate = now;
+    _datePicker.minLimitDate = now;
 //    datePicker.minLimitDate = [now dateByAddingTimeInterval:-111111111];
 //    datePicker.minLimitDate = [[NSDate date]dateByAddingTimeInterval:-2222];
-    [self.view addSubview:datePicker];
+    [self.view addSubview:_datePicker];
 }
 
 #pragma mark - UUDatePicker's delegate

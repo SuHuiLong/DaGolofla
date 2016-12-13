@@ -224,18 +224,6 @@
     
     if (_isEdtor == 1) {
         //保存洞号
-        /*
-        NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
-        if (_currentPage > 0) {
-            [userdef setObject:@(_currentPage) forKey:[NSString stringWithFormat:@"%@", _scorekey]];
-        }else{
-            [userdef setObject:@0 forKey:[NSString stringWithFormat:@"%@", _scorekey]];
-        }
-         
-        
-        [userdef synchronize];
-        */
-        
         _isEdtor = 0;
         NSMutableDictionary *dict = [NSMutableDictionary dictionary];
         [dict setObject:DEFAULF_USERID forKey:@"userKey"];
@@ -291,84 +279,7 @@
         }];
     }
 }
-#pragma mark -- 返回
-/*
-- (void)saveScoresAndBackClick:(UIButton *)btn{
-    [_timer invalidate];
-    _timer = nil;
-    btn.enabled = NO;
-    self.view.userInteractionEnabled = NO;
-    [[JsonHttp jsonHttp]cancelRequest];//取消所有请求
-    //保存
-    
-    NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
-    if (_currentPage > 0) {
-        [userdef setObject:@(_currentPage -1) forKey:[NSString stringWithFormat:@"%@", _scorekey]];
-    }else{
-        [userdef setObject:@0 forKey:[NSString stringWithFormat:@"%@", _scorekey]];
-    }
-    
-    [userdef synchronize];
-     
-    //保存
-    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    [dict setObject:DEFAULF_USERID forKey:@"userKey"];
-    NSMutableArray *listArray = [NSMutableArray array];
-    for (JGHScoreListModel *model in self.userScoreArray) {
-        NSMutableDictionary *listDict = [NSMutableDictionary dictionary];
-        if (model.userKey) {
-            [listDict setObject:model.userKey forKey:@"userKey"];// 用户Key
-        }else{
-            [listDict setObject:@(0) forKey:@"userKey"];// 用户Key
-        }
-        
-        [listDict setObject:model.userName forKey:@"userName"];// 用户名称
-        if (model.userMobile) {
-            [listDict setObject:model.userMobile forKey:@"userMobile"];// 手机号
-        }else{
-            [listDict setObject:@"" forKey:@"userMobile"];// 手机号
-        }
-        
-        if (model.tTaiwan) {
-            [listDict setObject:model.tTaiwan forKey:@"tTaiwan"];// T台
-        }else{
-            [listDict setObject:@"" forKey:@"tTaiwan"];// T台
-        }
-        
-        [listDict setObject:_currentAreaArray[0] forKey:@"region1"];//region1
-        [listDict setObject:_currentAreaArray[1] forKey:@"region2"];//region2
-        [listDict setObject:model.poleNameList forKey:@"poleNameList"];// 球洞名称
-        [listDict setObject:model.poleNumber forKey:@"poleNumber"];// 球队杆数
-        [listDict setObject:model.pushrod forKey:@"pushrod"];// 推杆
-        [listDict setObject:model.onthefairway forKey:@"onthefairway"];// 是否上球道
-        [listDict setObject:model.timeKey forKey:@"timeKey"];// 是否上球道
-        [listDict setObject:@(_switchMode) forKey:@"scoreModel"];//记分模式
-        [listArray addObject:listDict];
-    }
-    
-    [dict setObject:listArray forKey:@"list"];
-    
-    NSLog(@"mainThread == %@", [NSThread mainThread]);
-    [[JsonHttp jsonHttp]httpRequestHaveSpaceWithMD5:@"score/saveScore" JsonKey:nil withData:dict failedBlock:^(id errType) {
-        self.view.userInteractionEnabled = YES;
-        btn.enabled = YES;
-    } completionBlock:^(id data) {
-        self.view.userInteractionEnabled = YES;
-        btn.enabled = YES;
-        NSLog(@"%@", data);
-        if ([[data objectForKey:@"packSuccess"]integerValue] == 1) {
-            
-            [self scoresResult];
-        }else{
-            if ([data objectForKey:@"packResultMsg"]) {
-                [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
-            }
-            
-            [self performSelector:@selector(scoresResult) withObject:self afterDelay:TIMESlEEP];
-        }
-    }];
-}
-*/
+
 #pragma mark -- 所有记分完成后
 - (void)noticeAllScoresCtrl{
     //
@@ -515,12 +426,14 @@
         NSUserDefaults *userdf = [NSUserDefaults standardUserDefaults];
         _switchMode = [[userdf objectForKey:[NSString stringWithFormat:@"switchMode%@", _scorekey]] integerValue];
         if (_switchMode == 0) {
+            
             _scoresView = [[JGHScoresHoleView alloc]init];
             _scoresView.delegate = self;
             _scoresView.frame = CGRectMake(0, 0, screenWidth, (194 +20 +20 + self.userScoreArray.count * 70)*ProportionAdapter);
             _scoresView.dataArray = self.userScoreArray;
             _scoresView.scorekey = _scorekey;
             _scoresView.curPage = _selectPage;
+            _scoresView.alpha = 0;
             
             [self.view addSubview:_scoresView];
             
@@ -530,40 +443,62 @@
                 [_scoresView reloadScoreList:_currentAreaArray andAreaArray:_areaArray andIsShowArea:0];//更新UI位置
             }
             
+            [self.view addSubview:_scoresView];
+            
+            [UIView animateWithDuration:1.0f animations:^{
+                _scoresView.alpha = 1;
+            }];
+            
             _tranView = [[UIView alloc]initWithFrame:CGRectMake(0, _scoresView.frame.size.height, screenWidth, (screenHeight -64)-(194 +20 +20 + self.userScoreArray.count * 70)*ProportionAdapter)];
             _tranView.backgroundColor = [UIColor blackColor];
-            _tranView.alpha = 0.3;
+            _tranView.alpha = 0;
             
             UITapGestureRecognizer *tag = [[UITapGestureRecognizer alloc]init];
             [tag addTarget:self action:@selector(titleBtnClick)];
             [_tranView addGestureRecognizer:tag];
             [self.view addSubview:_tranView];
-            [self.view addSubview:_scoresView];
+            
+            [UIView animateWithDuration:1.0f animations:^{
+                _tranView.alpha = 0.3;
+            }];
+            
         }else{
+            
             _poorScoreView = [[JGHPoorScoreHoleView alloc]init];
             _poorScoreView.delegate = self;
+            _poorScoreView.alpha = 0;
             _poorScoreView.frame = CGRectMake(0, 0, screenWidth, (194 + 20 +20+ self.userScoreArray.count * 70)*ProportionAdapter);
             _poorScoreView.dataArray = self.userScoreArray;
             _poorScoreView.scorekey = _scorekey;
             _poorScoreView.curPage = _selectPage;
-           // _poorScoreView.curPage = [[userdf objectForKey:[NSString stringWithFormat:@"%@", _scorekey]] integerValue];
+            // _poorScoreView.curPage = [[userdf objectForKey:[NSString stringWithFormat:@"%@", _scorekey]] integerValue];
             [self.view addSubview:_scoresView];
             
             if (![userdef objectForKey:@"userFristScore"]) {
                 [_poorScoreView reloadScoreList:_currentAreaArray andAreaArray:_areaArray andIsShowArea:1];//更新UI位置
             }else{
                 [_poorScoreView reloadScoreList:_currentAreaArray andAreaArray:_areaArray andIsShowArea:0];//更新UI位置
-            }            
+            }
+            
+            [self.view addSubview:_poorScoreView];
+            
+            [UIView animateWithDuration:0.5f animations:^{
+//                _poorScoreView.frame = CGRectMake(0, 0, screenWidth, (194 + 20 +20+ self.userScoreArray.count * 70)*ProportionAdapter);
+                _poorScoreView.alpha = 1.0;
+            }];
             
             _tranView = [[UIView alloc]initWithFrame:CGRectMake(0, _poorScoreView.frame.size.height, screenWidth, (screenHeight -64)-(194 +20 +20 + self.userScoreArray.count * 70)*ProportionAdapter)];
             _tranView.backgroundColor = [UIColor blackColor];
-            _tranView.alpha = 0.3;
+            _tranView.alpha = 0;
             
             UITapGestureRecognizer *tag = [[UITapGestureRecognizer alloc]init];
             [tag addTarget:self action:@selector(titleBtnClick)];
             [_tranView addGestureRecognizer:tag];
             [self.view addSubview:_tranView];
-            [self.view addSubview:_poorScoreView];
+            
+            [UIView animateWithDuration:1.0f animations:^{
+                _tranView.alpha = 0.3;
+            }];
         }
     }else{
         [_arrowBtn setImage:[UIImage imageNamed:@"zk"] forState:UIControlStateNormal];
@@ -835,25 +770,25 @@
             }
             
             if ((_selectHole == 1) && _scoreFinish == 0) {
-//                if (_selectHole == 1 && _isCabbie == 0) {
-                    //球童结束记分--1、判断18洞是否完成
-                    [Helper alertViewWithTitle:@"您尚未完成所有成绩录入，是否确定结束记分？" withBlockCancle:^{
-//                        _cabbieFinishScore = 0;//不结束
-                    } withBlockSure:^{
-//                        _cabbieFinishScore = 1;//结束
-//                        [self finishScore];
-                        for (UIViewController *controller in self.navigationController.viewControllers) {
-                            if ([controller isKindOfClass:[JGLScoreNewViewController class]]) {
-                                [self.navigationController popToViewController:controller animated:YES];
-                            }
+                //                if (_selectHole == 1 && _isCabbie == 0) {
+                //球童结束记分--1、判断18洞是否完成
+                [Helper alertViewWithTitle:@"您尚未完成所有成绩录入，是否确定退出记分？" withBlockCancle:^{
+                    //                        _cabbieFinishScore = 0;//不结束
+                } withBlockSure:^{
+                    //                        _cabbieFinishScore = 1;//结束
+                    //                        [self finishScore];
+                    for (UIViewController *controller in self.navigationController.viewControllers) {
+                        if ([controller isKindOfClass:[JGLScoreNewViewController class]]) {
+                            [self.navigationController popToViewController:controller animated:YES];
                         }
-                    } withBlock:^(UIAlertController *alertView) {
-                        [self presentViewController:alertView animated:YES completion:nil];
-                    }];
-                    return;
-//                }
+                    }
+                } withBlock:^(UIAlertController *alertView) {
+                    [self presentViewController:alertView animated:YES completion:nil];
+                }];
+                return;
+                //                }
                 
-//                [self finishScore];
+                //                [self finishScore];
             }else{
                 if (_scoreFinish == 1) {
                     [self finishScore];
