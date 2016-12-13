@@ -269,7 +269,7 @@
 #pragma mark --头视图
 -(void)createTableHeaderView
 {
-    _viewHeader = [[UIView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, 200*ProportionAdapter)];
+    _viewHeader = [[UIView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, 203*ProportionAdapter)];
     _viewHeader.backgroundColor = [UIColor whiteColor];
     
     UIView *heView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, 10 *ProportionAdapter)];
