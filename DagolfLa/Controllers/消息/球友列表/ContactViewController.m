@@ -230,7 +230,7 @@
 - (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView {
     //  改变索引颜色
     self.tableView.sectionIndexColor = [UIColor colorWithRed:0.36f green:0.66f blue:0.31f alpha:1.00f];
-    self.tableView.sectionIndexBackgroundColor = [UIColor clearColor];
+    self.tableView.sectionIndexBackgroundColor = [UIColor whiteColor];
     NSInteger number = [self.listArray count];
     return [self.keyArray subarrayWithRange:NSMakeRange(0, number)];
 }

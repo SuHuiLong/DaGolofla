@@ -304,18 +304,29 @@
     _browseActionSheet = nil;
     __weak __typeof(self)weakSelf = self;
     
-    if ([[_browseItemArray[0] power] containsString:@"1005"] == YES) {
-        _browseActionSheet = [[MSSBrowseActionSheet alloc]initWithTitleArray:@[@"保存",@"分享",@"删除"] cancelButtonTitle:@"取消" didSelectedBlock:^(NSInteger index) {
-            __strong __typeof(weakSelf)strongSelf = weakSelf;
-            [strongSelf browseActionSheetDidSelectedAtIndex:index currentCell:browseCell];
-        }];
-        
+    
+    if ([_browseItemArray[0] power]) {
+        if ([[_browseItemArray[0] power] containsString:@"1005"] == YES) {
+            _browseActionSheet = [[MSSBrowseActionSheet alloc]initWithTitleArray:@[@"保存",@"分享",@"删除"] cancelButtonTitle:@"取消" didSelectedBlock:^(NSInteger index) {
+                __strong __typeof(weakSelf)strongSelf = weakSelf;
+                [strongSelf browseActionSheetDidSelectedAtIndex:index currentCell:browseCell];
+            }];
+            
+        }else{
+            _browseActionSheet = [[MSSBrowseActionSheet alloc]initWithTitleArray:@[@"保存",@"分享"] cancelButtonTitle:@"取消" didSelectedBlock:^(NSInteger index) {
+                __strong __typeof(weakSelf)strongSelf = weakSelf;
+                [strongSelf browseActionSheetDidSelectedAtIndex:index currentCell:browseCell];
+            }];
+        }
     }else{
-        _browseActionSheet = [[MSSBrowseActionSheet alloc]initWithTitleArray:@[@"保存",@"分享"] cancelButtonTitle:@"取消" didSelectedBlock:^(NSInteger index) {
+        // 社区过来的
+        _browseActionSheet = [[MSSBrowseActionSheet alloc]initWithTitleArray:@[@"保存图片"] cancelButtonTitle:@"取消" didSelectedBlock:^(NSInteger index) {
             __strong __typeof(weakSelf)strongSelf = weakSelf;
             [strongSelf browseActionSheetDidSelectedAtIndex:index currentCell:browseCell];
         }];
+
     }
+    
 
     [_browseActionSheet showInView:_bgView];
 }

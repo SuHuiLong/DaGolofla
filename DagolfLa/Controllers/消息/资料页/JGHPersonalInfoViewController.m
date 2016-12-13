@@ -479,6 +479,8 @@
             vc.title = _name.text;
             //设置不现实自己的名称  NO表示不现实
             vc.displayUserNameInCell = NO;
+            
+            vc.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:vc animated:YES];
         }
         

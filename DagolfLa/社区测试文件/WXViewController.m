@@ -53,6 +53,10 @@
 #import "JKSlideViewController.h"
 
 
+
+#import "MSSBrowseModel.h"
+#import "MSSBrowseNetworkViewController.h"
+
 @interface WXViewController ()<UITableViewDataSource,UITableViewDelegate,cellDelegate,InputDelegate,UIActionSheetDelegate, VedioPlayViewControllerDelegate>
 {
     NSMutableArray *_imageDataSource;
@@ -958,44 +962,66 @@
 #pragma mark - 图片点击事件回调
 - (void)showImageViewWithImageViews:(NSArray *)imageViews byClickWhich:(NSInteger)clickTag withLittleArray:(NSMutableArray *)littleArray{
     
-    UIScrollView* scrol = (UIScrollView*)[self.view superview];
-    scrol.scrollEnabled = NO;
     
-    
-    JKSlideViewController *jks = self.navc.viewControllers[0];
-    [UIApplication sharedApplication].windows[0].backgroundColor = [UIColor blackColor];
-    jks.leftBtn.hidden = YES;
-    jks.rightBtn.hidden = YES;
-    jks.slideSwitchView.topView.hidden = YES;
-    jks.slideSwitchView.backgroundColor = [UIColor blackColor];
-    
-    UIView *maskview = [[UIView alloc] initWithFrame:self.view.bounds];
-    maskview.backgroundColor = [UIColor blackColor];
-    [self.view addSubview:maskview];
-    
-    YMShowImageView *ymImageV = [[YMShowImageView alloc] initWithFrame:self.view.bounds byClick:clickTag appendArray:imageViews withLittleArray:littleArray];
-    
-    [ymImageV show:maskview didFinish:^(){
+    NSMutableArray *browseItemArray = [[NSMutableArray alloc]init];
+    int i = 0;
+    for(i = 0;i < [imageViews count];i++)
+    {
+        MSSBrowseModel *browseItem = [[MSSBrowseModel alloc]init];
+        browseItem.bigImageUrl = [NSString stringWithFormat:@"http://www.dagolfla.com:8081/%@",[imageViews objectAtIndex:i]];// 加载网络图片大图地址
+        browseItem.smallImageView = littleArray[i];// 小图
         
-        [UIView animateWithDuration:0.5f animations:^{
-            
-            ymImageV.alpha = 0.0f;
-            maskview.alpha = 0.0f;
-            
-            JKSlideViewController *jks = self.navc.viewControllers[0];
-            [UIApplication sharedApplication].windows[0].backgroundColor = [UIColor blackColor];
-            jks.leftBtn.hidden = NO;
-            jks.rightBtn.hidden = NO;
-            jks.slideSwitchView.topView.hidden = NO;
-            
-        } completion:^(BOOL finished) {
-            
-            scrol.scrollEnabled = YES;
-            [ymImageV removeFromSuperview];
-            [maskview removeFromSuperview];
-        }];
+        [browseItemArray addObject:browseItem];
+    }
+    MSSBrowseNetworkViewController *bvc = [[MSSBrowseNetworkViewController alloc]initWithBrowseItemArray:browseItemArray currentIndex:clickTag - 9999];
+    bvc.blockRef = ^(){
+    };
+    bvc.closeAutorotate = ^(){
         
-    }];
+    };
+    //    bvc.isEqualRatio = NO;// 大图小图不等比时需要设置这个属性（建议等比）
+    [bvc showBrowseViewController];
+    
+    
+    
+//    UIScrollView* scrol = (UIScrollView*)[self.view superview];
+//    scrol.scrollEnabled = NO;
+//    
+//    
+//    JKSlideViewController *jks = self.navc.viewControllers[0];
+//    [UIApplication sharedApplication].windows[0].backgroundColor = [UIColor blackColor];
+//    jks.leftBtn.hidden = YES;
+//    jks.rightBtn.hidden = YES;
+//    jks.slideSwitchView.topView.hidden = YES;
+//    jks.slideSwitchView.backgroundColor = [UIColor blackColor];
+//    
+//    UIView *maskview = [[UIView alloc] initWithFrame:self.view.bounds];
+//    maskview.backgroundColor = [UIColor blackColor];
+//    [self.view addSubview:maskview];
+//    
+//    YMShowImageView *ymImageV = [[YMShowImageView alloc] initWithFrame:self.view.bounds byClick:clickTag appendArray:imageViews withLittleArray:littleArray];
+//
+//    [ymImageV show:maskview didFinish:^(){
+//        
+//        [UIView animateWithDuration:0.5f animations:^{
+//            
+//            ymImageV.alpha = 0.0f;
+//            maskview.alpha = 0.0f;
+//            
+//            JKSlideViewController *jks = self.navc.viewControllers[0];
+//            [UIApplication sharedApplication].windows[0].backgroundColor = [UIColor blackColor];
+//            jks.leftBtn.hidden = NO;
+//            jks.rightBtn.hidden = NO;
+//            jks.slideSwitchView.topView.hidden = NO;
+//            
+//        } completion:^(BOOL finished) {
+//            
+//            scrol.scrollEnabled = YES;
+//            [ymImageV removeFromSuperview];
+//            [maskview removeFromSuperview];
+//        }];
+//        
+//    }];
 }
 
 #pragma mark -- 点击图片－播放视频
