@@ -7,12 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "JGTeamAcitivtyModel.h"
+
 @interface JGLScoreLiveViewController : ViewController
 
 @property (strong, nonatomic) NSNumber* activity;//key,srcKey
 
-@property (strong, nonatomic) JGTeamAcitivtyModel* model;
+//@property (strong, nonatomic) NSNumber* teamKey;
+
+
 
 
 @end

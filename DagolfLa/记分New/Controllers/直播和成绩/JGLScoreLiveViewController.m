@@ -21,6 +21,9 @@
     NSInteger _page;
     NSMutableArray* _dataArray;
 }
+
+@property (strong, nonatomic) JGTeamAcitivtyModel* model;
+
 @end
 
 @implementation JGLScoreLiveViewController
@@ -31,6 +34,7 @@
     _dataArray = [[NSMutableArray alloc]init];
     _page = 0;
     [self uiConfig];
+    
     
 }
 
@@ -52,6 +56,9 @@
 
 #pragma mark - 下载数据
 - (void)downLoadData:(int)page isReshing:(BOOL)isReshing{
+    
+    [self getTeamActivity];
+    
     NSMutableDictionary *dict = [[NSMutableDictionary alloc]init];
     
     [dict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:userID] forKey:@"userKey"];
@@ -101,7 +108,38 @@
     [self downLoadData:_page isReshing:YES];
 }
 
-
+#pragma mark -- 获取活动详情
+- (void)getTeamActivity{
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    
+//    [dict setObject:_teamKey forKey:@"teamKey"];
+    [dict setObject:_activity forKey:@"activityKey"];
+    [dict setObject:DEFAULF_USERID forKey:@"userKey"];
+    [[JsonHttp jsonHttp]httpRequest:@"team/getTeamActivity" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
+        
+    } completionBlock:^(id data) {
+        NSLog(@"%@", data);
+        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+            
+//            NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+//            
+//            if ([data objectForKey:@"teamMember"]) {
+//                dict = [data objectForKey:@"teamMember"];
+//                self.teamMemberDic = dict;
+//                _userName = [dict objectForKey:@"userName"];//获取用户在球队的真实姓名
+//                if ([dict objectForKey:@"power"]) {
+//                    _power = [dict objectForKey:@"power"];
+//                }
+//            }else{
+//                _isTeamMember = 1;//非球队成员
+//                [self.applyBtn setBackgroundColor:[UIColor lightGrayColor]];
+//            }
+            
+            [self.model setValuesForKeysWithDictionary:[data objectForKey:@"activity"]];
+            [_tableView reloadData];
+        }
+    }];
+}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {

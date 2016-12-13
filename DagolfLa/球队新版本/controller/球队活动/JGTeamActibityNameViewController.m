@@ -775,7 +775,8 @@ static CGFloat ImageHeight  = 210.0;
         //记分直播
         JGLScoreLiveViewController *scoreLiveCtrl = [[JGLScoreLiveViewController alloc]init];
         scoreLiveCtrl.activity = [NSNumber numberWithInteger:_teamKey];
-        scoreLiveCtrl.model = _model;
+//        scoreLiveCtrl.model = _model;
+//        scoreLiveCtrl.teamKey = [NSNumber numberWithInteger:_teamKey];
         [self.navigationController pushViewController:scoreLiveCtrl animated:YES];
     }else{
         JGLScoreRankViewController *rankCtrl = [[JGLScoreRankViewController alloc]init];

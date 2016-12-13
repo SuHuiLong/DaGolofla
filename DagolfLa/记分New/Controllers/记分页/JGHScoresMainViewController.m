@@ -120,13 +120,18 @@ static NSString *const JGHNewScoresPageCellIdentifier = @"JGHNewScoresPageCell";
 #pragma mark -- 总杆／差杆
 - (void)creteSlidingView{
     UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, screenHeight - 64 - 30*ProportionAdapter, screenWidth, 30*ProportionAdapter)];
-    UIImageView *imageLeftView = [[UIImageView alloc]initWithFrame:CGRectMake(20*ProportionAdapter, 8*ProportionAdapter, 14*ProportionAdapter, 14*ProportionAdapter)];
-    imageLeftView.image = [UIImage imageNamed:@"sildLeft"];
-    [view addSubview:imageLeftView];
     
-    UIImageView *imageRightView = [[UIImageView alloc]initWithFrame:CGRectMake(screenWidth -20*ProportionAdapter -14 *ProportionAdapter, 8*ProportionAdapter, 14*ProportionAdapter, 14*ProportionAdapter)];
-    imageRightView.image = [UIImage imageNamed:@"sildRight"];
-    [view addSubview:imageRightView];
+    UIButton *leftBtn = [[UIButton alloc]initWithFrame:CGRectMake(10 *ProportionAdapter, 0, 40 *ProportionAdapter, 30*ProportionAdapter)];
+    [leftBtn setImage:[UIImage imageNamed:@"sildLeft"] forState:UIControlStateNormal];
+    leftBtn.tag = 20;
+    [leftBtn addTarget:self action:@selector(leftScoreBtn:) forControlEvents:UIControlEventTouchUpInside];
+    [view addSubview:leftBtn];
+    
+    UIButton *rightBtn = [[UIButton alloc]initWithFrame:CGRectMake(screenWidth -50*ProportionAdapter, 0, 40 *ProportionAdapter, 30*ProportionAdapter)];
+    [rightBtn setImage:[UIImage imageNamed:@"sildRight"] forState:UIControlStateNormal];
+    rightBtn.tag = 21;
+    [rightBtn addTarget:self action:@selector(leftScoreBtn:) forControlEvents:UIControlEventTouchUpInside];
+    [view addSubview:rightBtn];
 
     _totalPoleBtn = [[UIButton alloc]initWithFrame:CGRectMake((screenWidth-140*ProportionAdapter)/2, 0, 140*ProportionAdapter, 30*ProportionAdapter)];
     NSUserDefaults *userdf = [NSUserDefaults standardUserDefaults];
@@ -145,6 +150,40 @@ static NSString *const JGHNewScoresPageCellIdentifier = @"JGHNewScoresPageCell";
     
     [self.scoresTableView addSubview:view];
 }
+#pragma mark -- LeftBtn 左切换 右切换
+- (void)leftScoreBtn:(UIButton *)btn{
+    NSLog(@"切换");
+    NSMutableDictionary *userDict = [NSMutableDictionary dictionary];
+//    if ((cellTag%100/10) == 0) {
+//        [userDict setObject:@(_index) forKey:@"index"];
+//    }else{
+//        [userDict setObject:@(btnTag - 1 + 9) forKey:@"index"];
+//    }
+    NSInteger indx = 0;
+    if (btn.tag == 20) {
+        //左
+        if (_index -1 < 0) {
+            indx = 17;
+        }else{
+            indx = _index -1;
+        }
+    }else{
+        //右
+        if (_index +1 > 17) {
+            indx = 0;
+        }else{
+            indx = _index +1;
+        }
+    }
+    
+    [userDict setObject:@(indx) forKey:@"index"];
+    //创建一个消息对象
+    NSNotification * notice = [NSNotification notificationWithName:@"noticePushScores" object:nil userInfo:userDict];
+    
+    //发送消息
+    [[NSNotificationCenter defaultCenter]postNotification:notice];
+}
+
 #pragma mark -- 记分模式切换
 - (void)switchMode:(UIButton *)btn{
     NSLog(@"记分模式");
