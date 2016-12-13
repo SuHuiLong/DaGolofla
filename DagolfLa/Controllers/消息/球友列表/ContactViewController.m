@@ -71,7 +71,7 @@
     
     self.title = @"球友通讯录";
 //    self.tableView = [[UITableView alloc] initWithFrame:[UIScreen mainScreen].bounds style:(UITableViewStylePlain)];
-    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 10 * ProportionAdapter, screenWidth, screenHeight - 50 * ProportionAdapter)];
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight - 64)];
     self.tableView.rowHeight = 49 * ScreenWidth / 375;
     self.view = self.tableView;
     self.tableView.delegate = self;

@@ -28,7 +28,9 @@
 @implementation JGApplyMaterialViewController
 
 - (void)viewDidLoad {
+    
     [super viewDidLoad];
+    
     if (self.isSelfSet) {
         self.title  = @"个人设置";
     }else{

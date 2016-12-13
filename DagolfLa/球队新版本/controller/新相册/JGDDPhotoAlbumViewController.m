@@ -52,10 +52,11 @@
     
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc]init];
 //    flowLayout.minimumLineSpacing = 0;
-    flowLayout.sectionInset = UIEdgeInsetsMake(5 * ProportionAdapter, 5 * ProportionAdapter, 5 * ProportionAdapter, 5 * ProportionAdapter);
-    flowLayout.itemSize = CGSizeMake((screenWidth - 20 * ProportionAdapter)/3, 115 * ProportionAdapter);
-    flowLayout.minimumLineSpacing = 5 * ProportionAdapter;
-    flowLayout.minimumInteritemSpacing = 5 * ProportionAdapter;
+    flowLayout.sectionInset = UIEdgeInsetsMake(5 , 5 , 5 , 5 );
+    flowLayout.itemSize = CGSizeMake((screenWidth - 20)/3, (screenWidth - 20)/3);
+//    flowLayout.itemSize = CGSizeMake((screenWidth - 20)/3, 115);
+    flowLayout.minimumLineSpacing = 5 ;
+    flowLayout.minimumInteritemSpacing = 5 ;
 
     _collectionView = [[UICollectionView alloc]initWithFrame:CGRectMake(0, 0, MSS_SCREEN_WIDTH, MSS_SCREEN_HEIGHT - 64 * ProportionAdapter) collectionViewLayout:flowLayout];
     NSLog(@"%f", _collectionView.frame.origin.y);

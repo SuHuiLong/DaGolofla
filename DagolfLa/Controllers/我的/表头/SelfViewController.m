@@ -510,7 +510,9 @@
                 [_arrayChange replaceObjectAtIndex:1 withObject:jobtitle];
                 NSIndexPath *indexPath=[NSIndexPath indexPathForRow:4 inSection:0];
                 [_tableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath,nil] withRowAnimation:UITableViewRowAnimationNone];
-                [self post:@{@"userId":_str,@"workId":[NSNumber numberWithInteger:jobid]}];
+//                [self post:@{@"userId":_str,@"workId":[NSNumber numberWithInteger:jobid]}];
+                [self post:@{@"userId":_str,@"workName":jobtitle}];
+
                 ////NSLog(@"%@",_arrayChange);
             }];
             [self.navigationController pushViewController:jobVc animated:YES];
@@ -519,10 +521,12 @@
             DateTimeViewController* dateVc = [[DateTimeViewController alloc]init];
             dateVc.typeIndex = @5;
             [dateVc setCallback:^(NSString *dateStr, NSString *dateWeek, NSString *str) {
-                [_arrayChange replaceObjectAtIndex:0 withObject:dateStr];
+//                [_arrayChange replaceObjectAtIndex:0 withObject:[NSString stringWithFormat:@"%@ 00:00:00", dateStr]];
+                [_arrayChange replaceObjectAtIndex:0 withObject: dateStr];
+
                 NSIndexPath *indexPath=[NSIndexPath indexPathForRow:3 inSection:0];
                 [_tableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath,nil] withRowAnimation:UITableViewRowAnimationNone];
-                [self post:@{@"userId":_str,@"birthdays":_arrayChange[0]}];
+                [self post:@{@"userId":_str,@"birthday":_arrayChange[0]}];
                 //                _userModel.birthday = _arrayChange[0];
                 
                 NSArray* timeArr = [dateStr componentsSeparatedByString:@"-"];
@@ -654,11 +658,17 @@
 -(void)post:(NSDictionary *)dict
 {
     
-    [[JsonHttp jsonHttp]httpRequestWithMD5:@"user/doUpdateUserInfo" JsonKey:@"TUser" withData:dict failedBlock:^(id errType) {
+    [[JsonHttp jsonHttp] httpRequestHaveSpaceWithMD5:@"user/doUpdateUserInfo" JsonKey:@"TUser" withData:dict failedBlock:^(id errType) {
         
     } completionBlock:^(id data) {
         
     }];
+    
+//    [[JsonHttp jsonHttp]httpRequestWithMD5:@"user/doUpdateUserInfo" JsonKey:@"TUser" withData:dict failedBlock:^(id errType) {
+//        
+//    } completionBlock:^(id data) {
+//        
+//    }];
     
     
     
