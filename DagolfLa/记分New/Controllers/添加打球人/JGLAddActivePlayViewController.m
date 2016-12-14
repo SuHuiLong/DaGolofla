@@ -277,6 +277,11 @@
         else{
             if (indexPath.row -1 < _palyArray.count) {
                 [cell configJGLAddActiivePlayModel:_palyArray[indexPath.row -1]];
+                if (indexPath.row == 1) {
+                    cell.deleteBtn.hidden = YES;
+                }else{
+                    cell.deleteBtn.hidden = NO;
+                }
             }else{
                 cell.labelTitle.font = [UIFont systemFontOfSize:15*ProportionAdapter];
                 cell.labelTitle.textColor = [UIColor lightGrayColor];
