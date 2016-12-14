@@ -497,7 +497,7 @@ void ContactsChangeCallback (ABAddressBookRef addressBook,
                 _reloadCtrlData();
                 
                 // 同步通讯录
-                [self contanctUpload];
+//                [self contanctUpload];
                 
                 
                 [self.navigationController popViewControllerAnimated:YES];
@@ -579,7 +579,7 @@ void ContactsChangeCallback (ABAddressBookRef addressBook,
                             [self postAppJpost];
 
                             // 同步通讯录
-                            [self contanctUpload];
+//                            [self contanctUpload];
 
                         }
                         

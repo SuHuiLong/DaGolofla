@@ -265,25 +265,35 @@ static NSString *const JGHBtnCellIdentifier = @"JGHBtnCell";
     
     if ([_ballName isEqualToString:@"1"]) {
         [[ShowHUD showHUD]showToastWithText:@"请选择球场！" FromView:self.view];
+        btn.enabled = YES;
+
         return;
     }
     
     if (_name == nil) {
         [[ShowHUD showHUD]showToastWithText:@"请填写姓名！" FromView:self.view];
+        btn.enabled = YES;
+
         return;
     }
     
     if (_cabbieNumber == nil) {
         [[ShowHUD showHUD]showToastWithText:@"请填写球童编号！" FromView:self.view];
+        btn.enabled = YES;
+
         return;
     }
     
     if (_cabbieYear == nil) {
         [[ShowHUD showHUD]showToastWithText:@"请填写服务年限！" FromView:self.view];
+        btn.enabled = YES;
+
         return;
     }
     
     if (_cabbieImage == nil) {
+        btn.enabled = YES;
+
         [[ShowHUD showHUD]showToastWithText:@"请选择头像！" FromView:self.view];
         return;
     }
