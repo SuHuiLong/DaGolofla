@@ -200,10 +200,13 @@
         ballNameLB.font = [UIFont systemFontOfSize:15 * ProportionAdapter];
         [viewTitle addSubview:ballNameLB];
         
-        UIButton *changeModelBtn = [[UIButton alloc] initWithFrame:CGRectMake(270 * ProportionAdapter, 5 * ProportionAdapter, 91 * ProportionAdapter, 38 * ProportionAdapter)];
-        [changeModelBtn setImage:[UIImage imageNamed:@"btn_zonggan"] forState:(UIControlStateNormal)];
-        [changeModelBtn addTarget:self action:@selector(changeAct) forControlEvents:(UIControlEventTouchUpInside)];
-        [viewTitle addSubview:changeModelBtn];
+        if (self.retrievBack != 1) {
+            UIButton *changeModelBtn = [[UIButton alloc] initWithFrame:CGRectMake(270 * ProportionAdapter, 5 * ProportionAdapter, 91 * ProportionAdapter, 38 * ProportionAdapter)];
+            [changeModelBtn setImage:[UIImage imageNamed:@"btn_zonggan"] forState:(UIControlStateNormal)];
+            [changeModelBtn addTarget:self action:@selector(changeAct) forControlEvents:(UIControlEventTouchUpInside)];
+            [viewTitle addSubview:changeModelBtn];
+        }
+
         
         UILabel *timeLB = [[UILabel alloc] initWithFrame:CGRectMake(10 * ProportionAdapter, 50 * ProportionAdapter, 90 * ProportionAdapter, 30 * ProportionAdapter)];
         NSString *timeStr = [self.dataDic objectForKey:@"createtime"];
@@ -386,17 +389,21 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (indexPath.row > 1) {
-        JGDNotActivityHisDetailViewController *detailV = [[JGDNotActivityHisDetailViewController alloc] init];
-        JGDHistoryScoreShowModel *model = self.dataArray[indexPath.row - 2];
-        detailV.model = model;
-        detailV.dataDic = self.dataDic;
-        detailV.isReversal = self.isReversal;
-        [self.navigationController pushViewController:detailV animated:YES];
+  
+    if (self.retrievBack != 1) {
+        if (indexPath.row > 1) {
+            JGDNotActivityHisDetailViewController *detailV = [[JGDNotActivityHisDetailViewController alloc] init];
+            JGDHistoryScoreShowModel *model = self.dataArray[indexPath.row - 2];
+            detailV.model = model;
+            detailV.dataDic = self.dataDic;
+            detailV.isReversal = self.isReversal;
+            [self.navigationController pushViewController:detailV animated:YES];
+        }
     }
+    
+
 }
-
-
+ 
 // 分享
 //统计记分点击事件
 -(void)shareStatisticsDataClick
