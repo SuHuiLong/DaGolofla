@@ -14,6 +14,7 @@
 #import "JGHForgotPasswordViewController.h"
 #import "JGHRegistersViewController.h"
 #import "JGHBindingAccountViewController.h"
+#import <AddressBook/AddressBook.h>
 
 @interface JGHLoginViewController ()<UITextFieldDelegate, UIPickerViewDataSource,UIPickerViewDelegate, JGHRegistersViewControllerDelegate>
 
@@ -61,7 +62,7 @@
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:nil];
-//    [super viewWillAppear:YES];
+    //    [super viewWillAppear:YES];
     
     UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"backL"] style:UIBarButtonItemStylePlain target:self action:@selector(backClcik)];
     item.tintColor=[UIColor whiteColor];
@@ -105,6 +106,177 @@
         [self.navigationController popViewControllerAnimated:YES];
     }
 }
+
+
+void ContactsChangeCallback (ABAddressBookRef addressBook,
+                             CFDictionaryRef info,
+                             void *context){
+    
+    NSLog(@"ContactsChangeCallbackContactsChangeCallback哈哈哈哈哈哈哈");
+}
+//  上传通讯录
+
+- (void)contanctUpload{
+    
+    NSMutableDictionary *DataDic = [NSMutableDictionary dictionary];
+    [DataDic setObject:DEFAULF_USERID forKey:@"userKey"];
+    [DataDic setObject:[Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@dagolfla.com", DEFAULF_USERID]] forKey:@"md5"];
+    
+    [[JsonHttp jsonHttp] httpRequest:@"mobileContact/getLastUploadTime" JsonKey:nil withData:DataDic requestMethod:@"GET" failedBlock:^(id errType) {
+        
+    } completionBlock:^(id data) {
+        
+        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+            
+            // 是否允许同步通讯录
+            if ([[data objectForKey:@"upLoadEnable"] boolValue]) {
+                
+                
+                NSMutableArray *commitContactArray = [NSMutableArray array];
+                
+                ABAddressBookRef addresBook = ABAddressBookCreateWithOptions(NULL, NULL);
+                
+                
+                if ([[UIDevice currentDevice].systemVersion floatValue] >= 6.0)
+                {
+                    addresBook =  ABAddressBookCreateWithOptions(NULL, NULL);
+                    //获取通讯录权限
+                    dispatch_semaphore_t sema = dispatch_semaphore_create(0);
+                    ABAddressBookRequestAccessWithCompletion(addresBook, ^(bool granted, CFErrorRef error){dispatch_semaphore_signal(sema);});
+                    
+                    dispatch_semaphore_wait(sema, DISPATCH_TIME_FOREVER);
+                    
+                }
+                else
+                {
+                    addresBook = ABAddressBookCreate();
+                    
+                }
+                
+                
+                
+                ABAddressBookRegisterExternalChangeCallback(addresBook, ContactsChangeCallback, (__bridge void *)(self));
+                
+                //获取通讯录中的所有人
+                CFArrayRef allPeople = ABAddressBookCopyArrayOfAllPeople(addresBook);
+                //通讯录中人数
+                CFIndex nPeople = ABAddressBookGetPersonCount(addresBook);
+                
+                for (NSInteger i = 0; i < nPeople; i++)
+                {
+                    //获取个人
+                    ABRecordRef person = CFArrayGetValueAtIndex(allPeople, i);
+                    
+                    //电话
+                    ABMultiValueRef phone = ABRecordCopyValue(person, kABPersonPhoneProperty);
+                    for (int k = 0; k<ABMultiValueGetCount(phone); k++)
+                    {
+                        
+                        NSMutableDictionary *personDic = [NSMutableDictionary dictionary];
+                        
+                        NSString * personPhone = (__bridge NSString*)ABMultiValueCopyValueAtIndex(phone, k);
+                        
+                        if (personPhone) {
+                            [personDic setObject:personPhone forKey:@"phone"];
+                        }else{
+                            continue;
+                        }
+                        
+                        //名字
+                        CFTypeRef abName = ABRecordCopyValue(person, kABPersonFirstNameProperty);
+                        CFTypeRef abLastName = ABRecordCopyValue(person, kABPersonLastNameProperty);
+                        CFStringRef abFullName = ABRecordCopyCompositeName(person);
+                        NSString *nameString = (__bridge NSString *)abName;
+                        NSString *lastNameString = (__bridge NSString *)abLastName;
+                        
+                        if ((__bridge id)abFullName != nil) {
+                            nameString = (__bridge NSString *)abFullName;
+                        } else {
+                            if ((__bridge id)abLastName != nil)
+                            {
+                                nameString = [NSString stringWithFormat:@"%@ %@", nameString, lastNameString];
+                            }
+                        }
+                        
+                        if (nameString) {
+                            [personDic setObject:nameString forKey:@"cName"];
+                        }
+                        
+                        
+                        // 公司
+                        NSString *organization = (__bridge NSString*)ABRecordCopyValue(person, kABPersonOrganizationProperty);
+                        
+                        //      工作         NSString *jobtitle = (__bridge NSString*)ABRecordCopyValue(person, kABPersonJobTitleProperty);
+                        
+                        if (organization) {
+                            [personDic setObject:organization forKey:@"workUnit"];
+                        }
+                        
+                        
+                        //第一次添加该条记录的时间
+                        NSString *firstknow = (__bridge NSString*)ABRecordCopyValue(person, kABPersonCreationDateProperty);
+                        NSLog(@"第一次添加该条记录的时间%@\n",firstknow);
+                        //最后一次修改該条记录的时间
+                        NSDate *lastknow = (__bridge NSDate*)ABRecordCopyValue(person, kABPersonModificationDateProperty);
+                        NSLog(@"最后一次修改該条记录的时间%@\n",lastknow);
+                        ;
+                        
+                        
+            // 最后一次上传的时间  如果第一次上传没有该参数
+                        if ([data objectForKey:@"lastTime"]) {
+                            
+                           // 最后一次修改的时间
+                            CGFloat last = [[Helper getNowDateFromatAnDate:lastknow] timeIntervalSince1970];
+                            
+                            // 最后一次上传的时间
+                            NSString *current = [data objectForKey:@"lastTime"];
+                            NSDateFormatter * dm = [[NSDateFormatter alloc]init];
+                            [dm setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+                            NSDate * newdate = [dm dateFromString:current];
+                            NSDate *lastDate = [Helper getNowDateFromatAnDate:newdate];
+                            CGFloat currentDate = [lastDate timeIntervalSince1970];
+                            
+                            
+                            if (last > currentDate) {
+                                [commitContactArray addObject:personDic];
+                            }
+                            
+                            
+                        }else{
+                            [commitContactArray addObject:personDic];
+                        }
+
+                        
+                    }
+                    
+                }
+                
+                NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+                [dic setObject:DEFAULF_USERID forKey:@"userKey"];
+                [dic setObject:commitContactArray forKey:@"contactList"];
+                
+                
+                [[JsonHttp jsonHttp] httpRequestWithMD5:@"mobileContact/doUploadContacts" JsonKey:nil withData:dic failedBlock:^(id errType) {
+                    
+                } completionBlock:^(id data) {
+                    
+                    if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+                        NSLog(@"mobileContact/doUploadContacts success");
+                    }
+                }];
+                
+            }
+            
+        }
+        
+    }];
+    
+}
+
+
+
+
+
 - (void)createNavViewBtn{
     //密码登陆
     _passwordLoginBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, screenWidth/2, 50 *ProportionAdapter)];
@@ -163,7 +335,7 @@
     [mobileView addSubview:_mobileText];
     
     [_bgView addSubview:mobileView];
-
+    
     UIButton *loginBtn = [[UIButton alloc]initWithFrame:CGRectMake(8*ProportionAdapter, 245 *ProportionAdapter, screenWidth - 16 *ProportionAdapter, 50 *ProportionAdapter)];
     [loginBtn setBackgroundColor:[UIColor colorWithHexString:Bar_Color]];
     [loginBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -323,6 +495,11 @@
                 [self requestRCIMWithToken:token];
                 [self postAppJpost];
                 _reloadCtrlData();
+                
+                // 同步通讯录
+                [self contanctUpload];
+                
+                
                 [self.navigationController popViewControllerAnimated:YES];
             }
         }else{
@@ -345,7 +522,7 @@
             UMSocialAccountEntity *snsAccount = [[UMSocialAccountManager socialAccountDictionary]valueForKey:UMShareToWechatSession];
             
             NSMutableDictionary* dictWx = [[NSMutableDictionary alloc]init];
-//            [dictWx setObject:@1 forKey:@"login"];
+            //            [dictWx setObject:@1 forKey:@"login"];
             if (![Helper isBlankString:snsAccount.openId]) {
                 [dictWx setObject:snsAccount.openId forKey:@"openid"];
                 [_weiChetDict setObject:snsAccount.openId forKey:@"openid"];
@@ -359,7 +536,7 @@
             
             [_weiChetDict setObject:snsAccount.userName forKey:@"uid"];
             [_weiChetDict setObject:snsAccount.iconURL forKey:@"wxPicUrl"];
-//            [_weiChetDict setObject:snsAccount.gender forKey:@"sex"];
+            //            [_weiChetDict setObject:snsAccount.gender forKey:@"sex"];
             [[ShowHUD showHUD]showAnimationWithText:@"登录中..." FromView:self.view];
             [[JsonHttp jsonHttp]httpRequestWithMD5:@"login/doWeiXinLogin" JsonKey:nil withData:dictWx failedBlock:^(id errType) {
                 [[ShowHUD showHUD]hideAnimationFromView:self.view];
@@ -400,8 +577,12 @@
                             //注册融云
                             [self requestRCIMWithToken:token];
                             [self postAppJpost];
-                        }
 
+                            // 同步通讯录
+                            [self contanctUpload];
+
+                        }
+                        
                         self.navigationItem.leftBarButtonItem.enabled = YES;
                     }else{
                         JGHBindingAccountViewController *bindctrl = [[JGHBindingAccountViewController alloc]initWithNibName:@"JGHBindingAccountViewController" bundle:nil];
@@ -620,7 +801,7 @@
     if (_showId == 1) {
         [_passwordView removeFromSuperview];
     }
-
+    
     _timeNumber = 60;
     
     [self createlogInView];
@@ -662,7 +843,7 @@
     NSString *str1=[NSString stringWithFormat:@"%@",[user objectForKey:userID]];
     NSString *str2=[NSString stringWithFormat:@"%@",[user objectForKey:@"userName"]];
     NSString *str3=[NSString stringWithFormat:@"http://imgcache.dagolfla.com/user/head/%@.jpg@200w_200h_2o",[user objectForKey:userID]];
-//    NSString *str31=[NSString stringWithFormat:@"http://www.dagolfla.com:8081/small_%@",[user objectForKey:@"pic"]];
+    //    NSString *str31=[NSString stringWithFormat:@"http://www.dagolfla.com:8081/small_%@",[user objectForKey:@"pic"]];
     RCUserInfo *userInfo=[[RCUserInfo alloc] initWithUserId:str1 name:str2 portrait:str3];
     [RCIM sharedRCIM].currentUserInfo=userInfo;
     [RCIM sharedRCIM].enableMessageAttachUserInfo=NO;
@@ -776,13 +957,13 @@
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end
