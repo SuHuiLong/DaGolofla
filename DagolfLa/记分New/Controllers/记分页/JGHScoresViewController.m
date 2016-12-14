@@ -62,6 +62,8 @@
     NSInteger _scoreFinish;//是否完成记分0-,1-完成
     
     NSInteger _switchMode;// 0- 总；1- 差
+    
+    NSInteger _refreshArea;
 }
 
 @property (nonatomic, strong)NSMutableArray *userScoreArray;
@@ -135,6 +137,8 @@
     [self.navigationController.navigationBar setBackgroundColor:[UIColor whiteColor]];
 //    _cabbieFinishScore = 0;//不结束
 
+    _refreshArea = 0;
+    
     _ballDict = [NSMutableDictionary dictionary];
     NSUserDefaults *userdf = [NSUserDefaults standardUserDefaults];
     
@@ -393,14 +397,14 @@
                     }
                 }
                 
-                NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
+//                NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
 //                if (![userdef objectForKey:[NSString stringWithFormat:@"%@", _scorekey]]) {
 //                    [self titleBtnClick];
 //                }
                 //userFristScore
-                if (![userdef objectForKey:@"userFristScore"]) {
+//                if (![userdef objectForKey:@"userFristScore"]) {
                     [self titleBtnClick];
-                }
+//                }
             }
         }else{
             if ([data objectForKey:@"packResultMsg"]) {
@@ -423,6 +427,7 @@
         }
         
         [_arrowBtn setImage:[UIImage imageNamed:@"zk1"] forState:UIControlStateNormal];
+        
         NSUserDefaults *userdf = [NSUserDefaults standardUserDefaults];
         _switchMode = [[userdf objectForKey:[NSString stringWithFormat:@"switchMode%@", _scorekey]] integerValue];
         if (_switchMode == 0) {
@@ -508,7 +513,7 @@
         }else{
             [_item setTitle:@"保存"];
         }
-        
+
         [_scoresView removeFromSuperview];
         [_poorScoreView removeFromSuperview];
         [_tranView removeFromSuperview];
@@ -538,16 +543,26 @@
 #pragma mark -- 点击杆数跳转到指定的积分页面
 - (void)noticePushScoresCtrl:(NSNotification *)not{
     //
-    _selectHole = 0;
+    [_arrowBtn setImage:[UIImage imageNamed:@"zk"] forState:UIControlStateNormal];
+    
     if (_scoreFinish == 1) {
         [_item setTitle:@"完成"];
     }else{
         [_item setTitle:@"保存"];
     }
     
-    [_scoresView removeFromSuperview];
-    [_poorScoreView removeFromSuperview];
-    [_tranView removeFromSuperview];
+    if (_refreshArea == 0) {
+        _selectHole = 0;
+        [_scoresView removeFromSuperview];
+        [_poorScoreView removeFromSuperview];
+        [_tranView removeFromSuperview];
+        
+    }else{
+        _selectHole = 1;
+    }
+    
+    _refreshArea = 0;
+    
     [self.titleBtn setTitle:[NSString stringWithFormat:@"%td Hole PAR %td", [self returnPoleNameList:[[not.userInfo objectForKey:@"index"] integerValue]], [self returnStandardlever:[[not.userInfo objectForKey:@"index"] integerValue]]] forState:UIControlStateNormal];
     
     _currentPage = [[not.userInfo objectForKey:@"index"] integerValue];
@@ -894,55 +909,60 @@
 #pragma mark -- 完成记分---跳转
 - (void)pushJGHEndScoresViewController{
     
-    if (_scoreFinish == 1 && _isCabbie == 1) {
-        for (UIViewController *controller in self.navigationController.viewControllers) {
-            if ([controller isKindOfClass:[JGLCaddieScoreViewController class]]) {
-                NSNotification * notice = [NSNotification notificationWithName:@"reloadCaddieScoreData" object:nil userInfo:nil];
-                //发送消息
-                [[NSNotificationCenter defaultCenter]postNotification:notice];
-                
-                [self.navigationController popToViewController:controller animated:YES];
-            }
-        }
+    if (_backHistory == 1) {//历史记分卡，长按删除
+        [self.navigationController popViewControllerAnimated:YES];
     }else{
-        // && [_walletMonay floatValue] > 0
-        if (_isCabbie == 1) {
-            JGHCabbieWalletViewController *wealetCtrl = [[JGHCabbieWalletViewController alloc]init];
-            wealetCtrl.wealMony = _walletMonay;
-            NSString *userNameString = @"";
-            for (JGHScoreListModel *model in self.userScoreArray) {
-                if (model.userName) {
-                    [userNameString stringByAppendingString:model.userName];
+        if (_scoreFinish == 1 && _isCabbie == 1) {
+            for (UIViewController *controller in self.navigationController.viewControllers) {
+                if ([controller isKindOfClass:[JGLCaddieScoreViewController class]]) {
+                    NSNotification * notice = [NSNotification notificationWithName:@"reloadCaddieScoreData" object:nil userInfo:nil];
+                    //发送消息
+                    [[NSNotificationCenter defaultCenter]postNotification:notice];
+                    
+                    [self.navigationController popToViewController:controller animated:YES];
                 }
             }
-            
-            wealetCtrl.customerName = userNameString;
-            [self.navigationController pushViewController:wealetCtrl animated:YES];
         }else{
-            NSInteger scoreCount = 0;
-            for (int i=0; i<_userScoreArray.count; i++) {
-                JGHScoreListModel *model = [[JGHScoreListModel alloc]init];
-                model = _userScoreArray[i];
-                if ([model.userKey integerValue] == [DEFAULF_USERID integerValue]) {
-                    for (int i=0; i<model.poleNumber.count; i++) {
-                        if ([model.poleNumber[i] integerValue] != -1) {
-                            scoreCount += [model.poleNumber[i] integerValue];
+            // && [_walletMonay floatValue] > 0
+            if (_isCabbie == 1) {
+                JGHCabbieWalletViewController *wealetCtrl = [[JGHCabbieWalletViewController alloc]init];
+                wealetCtrl.wealMony = _walletMonay;
+                NSString *userNameString = @"";
+                for (JGHScoreListModel *model in self.userScoreArray) {
+                    if (model.userName) {
+                        [userNameString stringByAppendingString:model.userName];
+                    }
+                }
+                
+                wealetCtrl.customerName = userNameString;
+                [self.navigationController pushViewController:wealetCtrl animated:YES];
+            }else{
+                NSInteger scoreCount = 0;
+                for (int i=0; i<_userScoreArray.count; i++) {
+                    JGHScoreListModel *model = [[JGHScoreListModel alloc]init];
+                    model = _userScoreArray[i];
+                    if ([model.userKey integerValue] == [DEFAULF_USERID integerValue]) {
+                        for (int i=0; i<model.poleNumber.count; i++) {
+                            if ([model.poleNumber[i] integerValue] != -1) {
+                                scoreCount += [model.poleNumber[i] integerValue];
+                            }
                         }
                     }
                 }
-            }
-            [_macthDict setObject:@(scoreCount) forKey:@"poleNum"];
-            JGHEndScoresViewController *endScoresCtrl = [[JGHEndScoresViewController alloc]init];
-            endScoresCtrl.dict = _macthDict;
-            [self.navigationController pushViewController:endScoresCtrl animated:YES];
-        }    
+                [_macthDict setObject:@(scoreCount) forKey:@"poleNum"];
+                JGHEndScoresViewController *endScoresCtrl = [[JGHEndScoresViewController alloc]init];
+                endScoresCtrl.dict = _macthDict;
+                [self.navigationController pushViewController:endScoresCtrl animated:YES];
+            }    
+        }
     }
 }
 #pragma mark -- 切换球场区域 -- 总杆模式
 - (void)oneAreaBtnDelegate:(UIButton *)btn{
     
     [Helper alertViewWithTitle:@"确定切换打球区吗？该区切换前的记分数据会被清空！" withBlockCancle:^{
-        
+        [_scoresView removeOneAreaView];
+        [_poorScoreView removePoorOneAreaView];
     } withBlockSure:^{
         
         [self loadOneAreaData:btn.currentTitle andBtnTag:btn.tag];
@@ -970,7 +990,7 @@
             if (tag < 400) {
                 [_scoresView removeOneAreaView];
                 [_poorScoreView removePoorOneAreaView];
-                
+                //更换区域信息
                 [_currentAreaArray replaceObjectAtIndex:0 withObject:btnString];
                 
                 //userScoreArray--poleNameList
@@ -1004,6 +1024,7 @@
             }else{
                 [_scoresView removeTwoAreaView];
                 [_poorScoreView removePoorTwoAreaView];
+                //更换区域信息
                 [_currentAreaArray replaceObjectAtIndex:1 withObject:btnString];
                 
                 for (int j=0; j<self.userScoreArray.count; j++) {
@@ -1044,8 +1065,25 @@
         }
         
         [self.titleBtn setTitle:[NSString stringWithFormat:@"%td Hole PAR %td", [self returnPoleNameList:_selectPage -1], [self returnStandardlever:_selectPage -1]] forState:UIControlStateNormal];
+        
+        //========================
+//        if (_refreshArea == 1) {
+//            _refreshArea = 0;
+        _refreshArea = 1;
+        
+            NSLog(@"_selectPage == %td", _selectPage);
+            NSMutableDictionary *userDict = [NSMutableDictionary dictionary];
+            [userDict setObject:@(_currentPage) forKey:@"index"];
+            //创建一个消息对象
+            NSNotification * notice = [NSNotification notificationWithName:@"noticePushScores" object:nil userInfo:userDict];
+            
+            //发送消息
+            [[NSNotificationCenter defaultCenter]postNotification:notice];
+        
+//        }
     }];
 }
+#pragma mark -- 切换区域 主页面改变区域
 - (void)twoAreaBtnDelegate:(UIButton *)btn{
     [Helper alertViewWithTitle:@"确定切换打球区吗？该区切换前的记分数据会被清空！" withBlockCancle:^{
         
@@ -1058,7 +1096,8 @@
 #pragma mark -- 差杆模式。切换区域
 - (void)oneAreaPoorBtnDelegate:(UIButton *)btn{
     [Helper alertViewWithTitle:@"确定切换打球区吗？该区切换前的记分数据会被清空！" withBlockCancle:^{
-        
+        [_scoresView removeOneAreaView];
+        [_poorScoreView removePoorOneAreaView];
     } withBlockSure:^{
         
         [self loadOneAreaData:btn.currentTitle andBtnTag:btn.tag];

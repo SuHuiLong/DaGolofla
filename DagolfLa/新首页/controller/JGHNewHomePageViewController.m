@@ -24,6 +24,7 @@
 #import "JGDHistoryScoreViewController.h"
 #import "JGTeamActibityNameViewController.h" // 活动
 #import "JGLScoreLiveViewController.h"   // 直播
+#import "JGLScoreRankViewController.h"
 #import "UseMallViewController.h"
 #import "JGNewCreateTeamTableViewController.h"
 #import "DetailViewController.h"
@@ -889,8 +890,9 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
         
         //活动成绩详情 --
         if ([urlString containsString:@"activityScore"]) {
-            JGLScoreLiveViewController *scoreLiveCtrl= [[JGLScoreLiveViewController alloc]init];
+            JGLScoreRankViewController *scoreLiveCtrl= [[JGLScoreRankViewController alloc]init];
             scoreLiveCtrl.activity = [NSNumber numberWithInteger:[[Helper returnKeyVlaueWithUrlString:urlString andKey:@"activityKey"] integerValue]];
+            scoreLiveCtrl.teamKey = [NSNumber numberWithInteger:[[Helper returnKeyVlaueWithUrlString:urlString andKey:@"teamKey"] integerValue]];
             scoreLiveCtrl.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:scoreLiveCtrl animated:YES];
         }

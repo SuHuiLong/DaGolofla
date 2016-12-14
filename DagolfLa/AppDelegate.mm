@@ -687,6 +687,28 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
 //    [JPUSHService resetBadge];
     
     [self getCurPosition];
+    
+    [self postAppJpost];
+}
+#pragma mark -- 极光推送的id和数据
+-(void)postAppJpost
+{
+    if (DEFAULF_USERID) {
+        NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
+        [dict setObject:DEFAULF_USERID forKey:userID];
+        
+        if ([JPUSHService registrationID] != nil) {
+            [dict setObject:[JPUSHService registrationID] forKey:@"jgpush"];
+        }
+        
+        [[JsonHttp jsonHttp]httpRequestWithMD5:@"user/doUpdateUserInfo" JsonKey:nil withData:dict failedBlock:^(id errType) {
+            
+        } completionBlock:^(id data) {
+            NSLog(@"%@", data);
+            
+        }];
+    }
+    
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {

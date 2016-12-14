@@ -672,29 +672,15 @@
 }
 
 + (NSString *)returnKeyVlaueWithUrlString:(NSString *)string andKey:(NSString *)key{
-    NSArray *parameterArray = [NSArray array];
-    NSString *timeKey;
-    NSArray *timeKeyArray = [string componentsSeparatedByString:@"?"];
-    if ([timeKeyArray count] == 2) {
-        NSString *parameterStr = [timeKeyArray objectAtIndex:1];
-        if ([parameterStr containsString:@"&"]) {
-            parameterArray = [parameterStr componentsSeparatedByString:@"&"];
-            if (parameterArray.count > 0) {
-                for (int i=0; i<parameterArray.count; i++) {
-                    NSString *keyString = [parameterArray objectAtIndex:i];
-                    if ([keyString containsString:key]) {
-                        timeKey = [[[parameterArray objectAtIndex:0]componentsSeparatedByString:@"="] objectAtIndex:1];
-                    }
-                }
-            }
-        }else{
-            if ([parameterStr containsString:key]) {
-                timeKey = [[parameterStr componentsSeparatedByString:@"="] objectAtIndex:1];
-            }
-        }
-    }
     
-    return timeKey;
+    NSString *lastKey = [[string componentsSeparatedByString:key] lastObject];
+    NSArray *lastAllKey = [lastKey componentsSeparatedByString:@"&"];
+    
+    NSMutableString *allValueString = [lastAllKey firstObject];
+    
+    NSString *value = [allValueString stringByReplacingOccurrencesOfString:@"=" withString:@""];
+    
+    return value;
 }
 
 + (void)callPHPLoginUserId:(NSString *)userId{

@@ -12,7 +12,7 @@
 
 @property (nonatomic, strong)NSString *scorekey;
 
-@property (nonatomic, assign)NSInteger backId;//1-记分
+@property (nonatomic, assign)NSInteger backHistory;//1-返回历史积分卡
 
 @property (nonatomic, assign)NSInteger currentPage;
 

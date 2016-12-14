@@ -198,7 +198,7 @@
 
 - (void)addLabelWithNames:(NSString *)name withPointX:(NSInteger)point_x
 {
-    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(point_x, 99, 20, 20)];
+    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(point_x *ProportionAdapter, 99 *ProportionAdapter, 20 *ProportionAdapter, 20 *ProportionAdapter)];
     label.text = name;
     label.textAlignment = NSTextAlignmentCenter;
     label.font = [UIFont systemFontOfSize:18];
@@ -286,29 +286,29 @@
 {
     switch (self.datePickerStyle) {
         case UUDateStyle_YearMonthDayHourMinute:{
-            if (component==0) return 70;
-            if (component==1) return 50;
-            if (component==2) return 50;
-            if (component==3) return 50;
-            if (component==4) return 50;
+            if (component==0) return 70 *ProportionAdapter;
+            if (component==1) return 50*ProportionAdapter;
+            if (component==2) return 50*ProportionAdapter;
+            if (component==3) return 50*ProportionAdapter;
+            if (component==4) return 50*ProportionAdapter;
         }
             break;
         case UUDateStyle_YearMonthDay:{
-            if (component==0) return 70;
-            if (component==1) return 100;
-            if (component==2) return 50;
+            if (component==0) return 70*ProportionAdapter;
+            if (component==1) return 100*ProportionAdapter;
+            if (component==2) return 50*ProportionAdapter;
         }
             break;
         case UUDateStyle_MonthDayHourMinute:{
-            if (component==0) return 70;
-            if (component==1) return 60;
-            if (component==2) return 60;
-            if (component==3) return 60;
+            if (component==0) return 70*ProportionAdapter;
+            if (component==1) return 60*ProportionAdapter;
+            if (component==2) return 60*ProportionAdapter;
+            if (component==3) return 60*ProportionAdapter;
         }
             break;
         case UUDateStyle_HourMinute:{
-            if (component==0) return 100;
-            if (component==1) return 100;
+            if (component==0) return 100*ProportionAdapter;
+            if (component==1) return 100*ProportionAdapter;
         }
             break;
             

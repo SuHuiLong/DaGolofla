@@ -13,7 +13,7 @@
 #import "NewFriendViewController.h"
 #import "JGTeamActibityNameViewController.h"
 #import "JGTeamGroupViewController.h"
-#import "JGDActSelfHistoryScoreViewController.h"
+#import "JGLScoreRankViewController.h"
 #import "JGLPresentAwardViewController.h"
 #import "UseMallViewController.h"
 #import "JGLPushDetailsViewController.h"
@@ -353,11 +353,11 @@ static NSString *const JGHSysInformCellIdentifier = @"JGHSysInformCell";
         
         //活动成绩详情 --
         if ([model.linkURL containsString:@"activityScore"]) {
-            JGDActSelfHistoryScoreViewController *teamGroupCtrl= [[JGDActSelfHistoryScoreViewController alloc]init];
-            teamGroupCtrl.teamKey = [NSNumber numberWithInteger:[[Helper returnKeyVlaueWithUrlString:model.linkURL andKey:@"teamKey"] integerValue]];
-            teamGroupCtrl.timeKey = [Helper returnKeyVlaueWithUrlString:model.linkURL andKey:@"activityKey"];
-            teamGroupCtrl.hidesBottomBarWhenPushed = YES;
-            [self.navigationController pushViewController:teamGroupCtrl animated:YES];
+            JGLScoreRankViewController *scoreLiveCtrl= [[JGLScoreRankViewController alloc]init];
+            scoreLiveCtrl.activity = [NSNumber numberWithInteger:[[Helper returnKeyVlaueWithUrlString:model.linkURL andKey:@"activityKey"] integerValue]];
+            scoreLiveCtrl.teamKey = [NSNumber numberWithInteger:[[Helper returnKeyVlaueWithUrlString:model.linkURL andKey:@"teamKey"] integerValue]];
+            scoreLiveCtrl.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:scoreLiveCtrl animated:YES];
         }
         
         //获奖详情 --

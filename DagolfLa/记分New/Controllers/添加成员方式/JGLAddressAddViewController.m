@@ -401,7 +401,7 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
 //    if (_addressArray.count >= _lastIndex) {
-//        [[ShowHUD showHUD]showToastWithText:@"您最多只能选择3个人" FromView:self.view];
+//        [[ShowHUD showHUD]showToastWithText:@"您最多只能选择三个人" FromView:self.view];
 //    }else{
         TKAddressModel *model = [[TKAddressModel alloc]init];
         model = self.listArray[indexPath.section][indexPath.row];
@@ -419,7 +419,7 @@
         
         if (isContains == 0) {
             if (_addressArray.count >= _lastIndex) {
-                [[ShowHUD showHUD]showToastWithText:@"您最多只能选择3个人" FromView:self.view];
+                [[ShowHUD showHUD]showToastWithText:@"您最多只能选择三个人" FromView:self.view];
             }else{
                 [self.addressArray addObject:model];
             }
