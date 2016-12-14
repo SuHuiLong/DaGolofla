@@ -89,7 +89,7 @@ static NSString *const JGHTwoScoreAreaCellIdentifier = @"JGHTwoScoreAreaCell";
     _currentAreaArray = currentAreaArray;
     _imageSelectOne = 0;
     _imageSelectTwo = 0;
-    if (_curPage < 9) {
+    if (_curPage <= 9) {
         _headLB.text = currentAreaArray[0];
     }else{
         _headLB.text = currentAreaArray[1];

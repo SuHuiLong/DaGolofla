@@ -114,7 +114,7 @@
 
 #pragma mark - 下载数据
 - (void)downLoadData:(int)page isReshing:(BOOL)isReshing{
-    [_dictData setObject:DEFAULF_USERID forKey:@"userId"];
+    [_dictData setObject:DEFAULF_USERID forKey:@"userKey"];
 //    [_dictData setObject:@0 forKey:@"otherUserId"];
 //    [_dictData setObject:@0 forKey:@"page"];
 //    [_dictData setObject:@0 forKey:@"rows"];
@@ -124,28 +124,21 @@
         [_tableView.footer endRefreshing];
     } completionBlock:^(id data) {
         if ([[data objectForKey:@"packSuccess"] boolValue]) {
-            NSArray *array = [data objectForKey:@"rows"];
+            NSArray *array = [data objectForKey:@"list"];
             NSMutableArray *allFriarr = [[NSMutableArray alloc] init];
             for (NSDictionary *dic in array) {
                 MyattenModel *model = [[MyattenModel alloc] init];
                 [model setValuesForKeysWithDictionary:dic];
-                if (![model.userName isEqualToString:@""]) {
-                    
-                    NoteModel *modell = [NoteHandlle selectNoteWithUID:model.otherUserId];
-                    if ([modell.userremarks isEqualToString:@"(null)"] || [modell.userremarks isEqualToString:@""] || modell.userremarks == nil) {
-                        
-                    }else{
-                        model.userName = modell.userremarks;
+                if (model.userName) {
+                    if ([model.userName isEqualToString:@""]) {
+                        model.userName = @"该用户名暂无用户名";
                     }
                     [allFriarr addObject:model];
-                    [_dictData removeObjectForKey:@"userName"];
-                    //                [self.keyArray addObject:model.userName];
                 }
             }
             self.listArray = [[NSMutableArray alloc]initWithArray:[PYTableViewIndexManager archiveNumbers:allFriarr]];
             
             _keyArray = [[NSMutableArray alloc]initWithObjects:@"A",@"B",@"C",@"D",@"E",@"F",@"G",@"H",@"I",@"J",@"K",@"L",@"M",@"N",@"O",@"P",@"Q",@"R",@"S",@"T",@"U",@"V",@"W",@"X",@"Y",@"Z",@"#", nil];
-            
             for (int i = (int)self.listArray.count-1; i>=0; i--) {
                 if ([self.listArray[i] count] == 0) {
                     [self.keyArray removeObjectAtIndex:i];
