@@ -39,11 +39,16 @@
 
 - (void)backBtn{
     
-    for (UIViewController *vc in self.navigationController.viewControllers) {
-        if ([vc isKindOfClass:[JGDHistoryScoreViewController class]]) {
-            [self.navigationController popToViewController:vc animated:YES];
+    if (self.retrievBack == 1) {
+        [self.navigationController popViewControllerAnimated:YES];
+    }else{
+        for (UIViewController *vc in self.navigationController.viewControllers) {
+            if ([vc isKindOfClass:[JGDHistoryScoreViewController class]]) {
+                [self.navigationController popToViewController:vc animated:YES];
+            }
         }
     }
+
 }
 
 - (void)viewDidLoad {

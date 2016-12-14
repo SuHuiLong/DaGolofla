@@ -67,6 +67,7 @@
         NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
         [dic setObject:DEFAULF_USERID forKey:@"qcodeUserKey"];
         [dic setObject:self.qcodeID forKey:@"qCodeID"];
+        NSLog(@"%@-1215", self.qcodeID);
         NSLog(@"%@", DEFAULF_USERID);
         [[JsonHttp jsonHttp] httpRequestWithMD5:@"score/doRegUserQCode" JsonKey:nil withData:dic failedBlock:^(id errType) {
             [[ShowHUD showHUD]showToastWithText:[NSString stringWithFormat:@"%@",errType] FromView:self.view];

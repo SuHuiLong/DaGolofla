@@ -205,15 +205,17 @@
                 [dic setObject:DEFAULF_USERID forKey:@"userKey"];
                 [dic setObject:commitContactArray forKey:@"contactList"];
                 
-                
-                [[JsonHttp jsonHttp] httpRequestWithMD5:@"mobileContact/doUploadContacts" JsonKey:nil withData:dic failedBlock:^(id errType) {
-                    
-                } completionBlock:^(id data) {
-                    
-                    if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
-                        NSLog(@"mobileContact/doUploadContacts success");
-                    }
-                }];
+                if ([commitContactArray count] != 0) {
+                    [[JsonHttp jsonHttp] httpRequestWithMD5:@"mobileContact/doUploadContacts" JsonKey:nil withData:dic failedBlock:^(id errType) {
+                        
+                    } completionBlock:^(id data) {
+                        
+                        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+                            NSLog(@"mobileContact/doUploadContacts success");
+                        }
+                    }];
+
+                }
                 
             }
             

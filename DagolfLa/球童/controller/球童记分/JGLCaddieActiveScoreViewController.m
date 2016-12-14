@@ -206,7 +206,7 @@
             [userDict setObject:model.mobile forKey:Mobile];
         }
         
-        [userDict setObject:@0 forKey:@"userType"];
+        [userDict setObject:@1 forKey:@"userType"];
         [userDict setObject:model.tTaiwan forKey:@"tTaiwan"];
         [userArray addObject:userDict];
     }
@@ -216,8 +216,18 @@
     [selfDict setObject:DEFAULF_USERID forKey:@"userKey"];
     [selfDict setObject:@1 forKey:@"userType"];
     [selfDict setObject:@"蓝T" forKey:@"tTaiwan"];
-    [selfDict setObject:DEFAULF_UserName forKey:UserName];
+    [selfDict setObject:_userNamePlayer forKey:UserName];
     [userArray addObject:selfDict];
+    
+    for (int i=0; i<userArray.count; i++) {
+        NSMutableDictionary *palDict = [NSMutableDictionary dictionary];
+        palDict = userArray[i];
+        [palDict setObject:@1 forKey:@"userType"];
+        [userArray replaceObjectAtIndex:i withObject:palDict];
+    }
+    
+    //球童必须第一位
+    [userArray exchangeObjectAtIndex:0 withObjectAtIndex:userArray.count-1];
     
     [dict setObject:userArray forKey:@"userList"];
     

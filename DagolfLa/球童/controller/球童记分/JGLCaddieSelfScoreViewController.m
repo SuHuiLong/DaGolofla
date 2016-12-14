@@ -75,7 +75,7 @@
         [defDict setObject:@"蓝T" forKey:@"tTaiwan"];
     }
     
-    [defDict setObject:@0 forKey:@"userType"];
+    [defDict setObject:@1 forKey:@"userType"];
     [self.palyArray addObject:defDict];
     
     _selectAreaArray = [NSMutableArray array];
@@ -152,7 +152,7 @@
     
     [dict setObject:DEFAULF_USERID forKey:@"userKey"];
     [dict setObject:[NSNumber numberWithInteger:_ballId] forKey:@"ballKey"];
-    [dict setObject:@0 forKey:@"srcKey"];//
+    [dict setObject:@02 forKey:@"srcKey"];//
     [dict setObject:@(0) forKey:@"srcType"];//活动传1，罗开创说的
     
     //球童记分必须包含自己
@@ -160,8 +160,18 @@
     [selfDict setObject:DEFAULF_USERID forKey:@"userKey"];
     [selfDict setObject:@1 forKey:@"userType"];
     [selfDict setObject:@"蓝T" forKey:@"tTaiwan"];
-    [selfDict setObject:DEFAULF_UserName forKey:UserName];
+    [selfDict setObject:_userNamePlayer forKey:UserName];
     [self.palyArray addObject:selfDict];
+    
+    for (int i=0; i<_palyArray.count; i++) {
+        NSMutableDictionary *palDict = [NSMutableDictionary dictionary];
+        palDict = _palyArray[i];
+        [palDict setObject:@1 forKey:@"userType"];
+        [self.palyArray replaceObjectAtIndex:i withObject:palDict];
+    }
+    
+    //球童必须第一位
+    [self.palyArray exchangeObjectAtIndex:0 withObjectAtIndex:self.palyArray.count-1];
     
     [dict setObject:self.palyArray forKey:@"userList"];
     
@@ -458,7 +468,7 @@
                                 }
                             }
                             
-                            [palyDict setObject:@0 forKey:@"userType"];
+                            [palyDict setObject:@1 forKey:@"userType"];
                             
                             [array replaceObjectAtIndex:i withObject:palyDict];
                         }
