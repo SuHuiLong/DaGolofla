@@ -907,7 +907,7 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
         //球队详情
         if ([urlString containsString:@"teamDetail"]) {
             JGDNewTeamDetailViewController *newTeamVC = [[JGDNewTeamDetailViewController alloc] init];
-            newTeamVC.timeKey = [NSNumber numberWithInteger:[[Helper returnKeyVlaueWithUrlString:urlString andKey:@"timekey"] integerValue]];
+            newTeamVC.timeKey = [NSNumber numberWithInteger:[[Helper returnKeyVlaueWithUrlString:urlString andKey:@"teamKey"] integerValue]];
             newTeamVC.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:newTeamVC animated:YES];
         }
