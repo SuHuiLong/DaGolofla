@@ -36,9 +36,8 @@
 
 - (void)reloadScoreList:(NSArray *)currentAreaArray andAreaArray:(NSArray *)areaArray andIsShowArea:(NSInteger)isShowArea;
 
-- (void)removeOneAreaView;
+- (void)removeAreaView;
 
-- (void)removeTwoAreaView;
 
 //选择区域后－－刷新试图数据
 - (void)reloadViewData:(NSMutableArray *)dataArray andCurrentAreaArrat:(NSArray *)currentAreaArray;

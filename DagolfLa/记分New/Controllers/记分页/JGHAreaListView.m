@@ -39,7 +39,7 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 35 *ProportionAdapter;
+    return 40 *ProportionAdapter;
 }
 //每个分区内的row个数
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section

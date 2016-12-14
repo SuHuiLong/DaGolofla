@@ -208,6 +208,8 @@
                 [cell configJGLPlayerNumberTableViewCell:_palyArray[indexPath.row -1]];
             }else{
                 cell.labelName.text = @"请添加打球人";
+                cell.labelName.textColor = [UIColor lightGrayColor];
+                cell.deleteBtn.hidden = YES;
             }
             
         }

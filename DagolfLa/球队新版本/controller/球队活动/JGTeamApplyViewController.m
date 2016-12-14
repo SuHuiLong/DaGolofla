@@ -150,7 +150,7 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
 
     [_baseInfoArray addObject:[NSString stringWithFormat:@"%@-活动名称", _modelss.name]];
     [_baseInfoArray addObject:[NSString stringWithFormat:@"%@-活动地址", _modelss.ballName]];
-    [_baseInfoArray addObject:[NSString stringWithFormat:@"%@-活动日期", [Helper returnDateformatString:_modelss.endDate]]];
+    [_baseInfoArray addObject:[NSString stringWithFormat:@"%@-活动日期", [Helper returnDateformatString:_modelss.beginDate]]];
     //基础信息
     for (NSDictionary *dict in _costListArray) {
         NSString *string = nil;

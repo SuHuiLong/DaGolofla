@@ -24,8 +24,8 @@ static NSString *const JGHTwoScoreAreaCellIdentifier = @"JGHTwoScoreAreaCell";
     NSArray *_colorArray;
     NSInteger _areaId;// 0-无区域，1- ； 2-；
     
-    UIView *_oneAreaView;
-    UIView *_twoAreaView;
+//    UIView *_oneAreaView;
+//    UIView *_twoAreaView;
     
     NSInteger _imageSelectOne;
     NSInteger _imageSelectTwo;
@@ -197,17 +197,17 @@ static NSString *const JGHTwoScoreAreaCellIdentifier = @"JGHTwoScoreAreaCell";
     NSLog(@"cell10 = %td", cellTag%100/10);
     NSLog(@"cell100  = %td", cellTag/100);
     
-    if (_oneAreaView != nil) {
-        [_oneAreaView removeFromSuperview];
-        _oneAreaView = nil;
-        return;
-    }
-    
-    if (_twoAreaView != nil) {
-        [_twoAreaView removeFromSuperview];
-        _twoAreaView = nil;
-        return;
-    }
+//    if (_oneAreaView != nil) {
+//        [_oneAreaView removeFromSuperview];
+//        _oneAreaView = nil;
+//        return;
+//    }
+//    
+//    if (_twoAreaView != nil) {
+//        [_twoAreaView removeFromSuperview];
+//        _twoAreaView = nil;
+//        return;
+//    }
     
     NSMutableDictionary *userDict = [NSMutableDictionary dictionary];
     if ((cellTag%100/10) == 0) {
@@ -233,6 +233,12 @@ static NSString *const JGHTwoScoreAreaCellIdentifier = @"JGHTwoScoreAreaCell";
         [self.delegate poorTwoAreaString:areaString andID:selectId +400];
     }
     
+
+    _imageSelectTwo = 0;
+    _imageSelectOne = 0;
+    
+    [self.scoreTableView reloadData];
+    
     [_areaListView removeFromSuperview];
     _areaListView = nil;
 }
@@ -248,30 +254,37 @@ static NSString *const JGHTwoScoreAreaCellIdentifier = @"JGHTwoScoreAreaCell";
         _imageSelectOne = 0;
     }
     
+    if (_imageSelectTwo == 1) {
+        _imageSelectTwo = 0;
+    }
+    
     [self.scoreTableView reloadData];
     
     if (_areaListView != nil) {
+        _imageSelectOne = 0;
+        [self.scoreTableView reloadData];
         [_areaListView removeFromSuperview];
         _areaListView = nil;
         return;
     }
     
+//    _imageSelectTwo = 0;
+//    [self.scoreTableView reloadData];
+    
     _areaSourceID = 0;
-    float btnW = 0.0;
+    float btnW = 100 *ProportionAdapter;
     for (int i = 0; i<_areaArray.count; i++) {
         NSString *str = _areaArray[i];
         CGSize postSize = [str boundingRectWithSize:CGSizeMake(screenWidth, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:15 *ProportionAdapter]} context:nil].size;
-        if (postSize.width > 84 *ProportionAdapter) {
+        if (postSize.width > 100 *ProportionAdapter) {
             btnW = postSize.width;
-        }else{
-            btnW = 84 *ProportionAdapter;
         }
     }
     
     if (_areaArray.count > 2) {
         _areaListView = [[JGHAreaListView alloc]initWithFrame:CGRectMake(10 *ProportionAdapter, 40*ProportionAdapter + 20 *ProportionAdapter, btnW +20 *ProportionAdapter, 3* 35 *ProportionAdapter)];
     }else{
-        _areaListView = [[JGHAreaListView alloc]initWithFrame:CGRectMake(10 *ProportionAdapter, 40*ProportionAdapter + 20 *ProportionAdapter, btnW +20 *ProportionAdapter, 2* 35 *ProportionAdapter)];
+        _areaListView = [[JGHAreaListView alloc]initWithFrame:CGRectMake(10 *ProportionAdapter, 40*ProportionAdapter + 20 *ProportionAdapter, btnW +20 *ProportionAdapter, 2* 45 *ProportionAdapter)];
     }
     
     _areaListView.delegate = self;
@@ -290,10 +303,15 @@ static NSString *const JGHTwoScoreAreaCellIdentifier = @"JGHTwoScoreAreaCell";
         _imageSelectTwo = 0;
     }
     
+    if (_imageSelectOne == 1) {
+        _imageSelectOne = 0;
+    }
+    
     [self.scoreTableView reloadData];
     
-
     if (_areaListView != nil) {
+        _imageSelectTwo = 0;
+        [self.scoreTableView reloadData];
         [_areaListView removeFromSuperview];
         _areaListView = nil;
         return;
@@ -301,23 +319,22 @@ static NSString *const JGHTwoScoreAreaCellIdentifier = @"JGHTwoScoreAreaCell";
     
     _areaSourceID = 1;
     
-    float btnW = 0.0;
+    float btnW = 100 *ProportionAdapter;
     for (int i = 0; i<_areaArray.count; i++) {
         NSString *str = _areaArray[i];
         CGSize postSize = [str boundingRectWithSize:CGSizeMake(screenWidth, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:15 *ProportionAdapter]} context:nil].size;
-        if (postSize.width > 84 *ProportionAdapter) {
+        if (postSize.width > 100 *ProportionAdapter) {
             btnW = postSize.width;
-        }else{
-            btnW = 84 *ProportionAdapter;
         }
     }
     
     if (_areaArray.count > 2) {
-        _areaListView = [[JGHAreaListView alloc]initWithFrame:CGRectMake(10 *ProportionAdapter, btn.frame.origin.y + btn.frame.size.height + (_dataArray.count +2) *35 *ProportionAdapter + 37 *ProportionAdapter + 20 *ProportionAdapter, btnW +20 *ProportionAdapter, 3* 35 *ProportionAdapter)];
+        _areaListView = [[JGHAreaListView alloc]initWithFrame:CGRectMake(10 *ProportionAdapter, btn.frame.origin.y + btn.frame.size.height + (_dataArray.count +2) *35 *ProportionAdapter + 37 *ProportionAdapter + 25 *ProportionAdapter, btnW +20 *ProportionAdapter, 3* 35 *ProportionAdapter)];
     }else{
-        _areaListView = [[JGHAreaListView alloc]initWithFrame:CGRectMake(10 *ProportionAdapter, btn.frame.origin.y + btn.frame.size.height + (_dataArray.count +2) *30 *ProportionAdapter + 37 *ProportionAdapter + 20 *ProportionAdapter, btnW +20 *ProportionAdapter, 2* 35 *ProportionAdapter)];
+        _areaListView = [[JGHAreaListView alloc]initWithFrame:CGRectMake(10 *ProportionAdapter, btn.frame.origin.y + btn.frame.size.height + (_dataArray.count +2) *35 *ProportionAdapter + 37 *ProportionAdapter + 25 *ProportionAdapter, btnW +20 *ProportionAdapter, 2* 45 *ProportionAdapter)];
     }
     
+    _areaListView.delegate = self;
     [_areaListView reloadAreaListView:_areaArray];
     
     [self addSubview:_areaListView];
@@ -334,6 +351,12 @@ static NSString *const JGHTwoScoreAreaCellIdentifier = @"JGHTwoScoreAreaCell";
     }
     
     [self.scoreTableView reloadData];
+}
+
+- (void)removePoorAreaView{
+    if (_areaListView != nil) {
+        [_areaListView removeFromSuperview];
+    }
 }
 
 /*

@@ -34,11 +34,11 @@
 - (void)configJGLAddActiivePlayModel:(JGLAddActiivePlayModel *)model{
 //    _labelTitle.font = [UIFont systemFontOfSize:14*screenWidth/375];
     
-    if ([model.userKey integerValue] == [DEFAULF_USERID integerValue]) {
-        _deleteBtn.hidden = YES;
-    }else{
-        _deleteBtn.hidden = NO;
-    }
+//    if ([model.userKey integerValue] == [DEFAULF_USERID integerValue]) {
+//        _deleteBtn.hidden = YES;
+//    }else{
+//        _deleteBtn.hidden = NO;
+//    }
     
     _labelTitle.font = [UIFont systemFontOfSize:15*ProportionAdapter];
     _labelTitle.textColor = [UIColor colorWithHexString:@"#313131"];

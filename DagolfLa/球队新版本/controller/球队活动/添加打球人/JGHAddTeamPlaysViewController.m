@@ -284,6 +284,10 @@ static NSString *const JGPlayPayBaseCellIdentifier = @"JGPlayPayBaseCell";
             [_playsBaseDict setObject:@1 forKey:@"sex"];
         }
         
+        if (model.almost) {
+            [_playsBaseDict setObject:model.almost forKey:@"almost"];
+        }
+        
         NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:1];
         NSArray *indexArray=[NSArray arrayWithObject:indexPath];
         [weakSelf.addTeamPlaysTableView reloadRowsAtIndexPaths:indexArray withRowAnimation:UITableViewRowAnimationAutomatic];

@@ -209,7 +209,7 @@
 {
     MyattenModel *model = [[MyattenModel alloc]init];
     model = _listArray[indexPath.section][indexPath.row];
-    NSInteger userKey = [model.otherUserId integerValue];
+    NSInteger userKey = [model.friendUserKey integerValue];
     
     for (int i=0; i<_userKeyArray.count; i++) {
         NSInteger useID = [_userKeyArray[i] integerValue];

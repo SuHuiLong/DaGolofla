@@ -202,7 +202,7 @@
         NSMutableDictionary *userDict = [NSMutableDictionary dictionary];
         [userDict setObject:model.userKey forKey:@"userKey"];
         [userDict setObject:model.remark forKey:UserName];
-        if (model.mobile == nil) {
+        if (model.mobile != nil) {
             [userDict setObject:model.mobile forKey:Mobile];
         }
         
@@ -318,9 +318,16 @@
             cell.labelTitle.text = @"打球人";
             return cell;
         }else if (indexPath.row -1 <_palyArray.count){
+            
             JGLPlayerNameTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"JGLPlayerNameTableViewCell" forIndexPath:indexPath];
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            
+//            if (indexPath.row == 1) {
+//                cell.iconImgv.hidden = YES;
+//            }else{
+//                cell.iconImgv.hidden = NO;
+//            }
             
             NSLog(@"%td", indexPath.row);
             [cell configJGLAddActiivePlayModel:_palyArray[indexPath.row -1]];

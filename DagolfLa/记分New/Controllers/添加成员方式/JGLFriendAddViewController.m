@@ -214,9 +214,19 @@
         MyattenModel *palyModel = [[MyattenModel alloc]init];
         palyModel = self.playArray[i];
         
-        if ([palyModel.friendUserKey integerValue] == [model.friendUserKey integerValue]) {
-            isContains = 1;
+        //判断Key 是否相等
+        if (palyModel.friendUserKey) {
+            if ([palyModel.friendUserKey integerValue] == [model.friendUserKey integerValue]) {
+                isContains = 1;
+                [self.playArray replaceObjectAtIndex:i withObject:model];
+            }
+        }else{
+            if ([palyModel.otherUserId integerValue] == [model.friendUserKey integerValue]) {
+                isContains = 1;
+                [self.playArray replaceObjectAtIndex:i withObject:model];
+            }
         }
+        
     }
     
     cell.imgvState.image=[UIImage imageNamed:@"gou_w"];

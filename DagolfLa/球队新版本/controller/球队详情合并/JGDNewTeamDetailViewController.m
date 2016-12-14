@@ -660,7 +660,7 @@ static CGFloat ImageHeight  = 210.0;
         }else if (indexPath.section == 3){
             JGImageAndLabelAndLabelTableViewCell *launchActivityCell = [tableView dequeueReusableCellWithIdentifier:@"lMGbVSlb" forIndexPath:indexPath];
             launchActivityCell.selectionStyle = UITableViewCellSelectionStyleNone;
-            launchActivityCell.imageV.image = [UIImage imageNamed:@"sz"];
+            launchActivityCell.imageV.image = [UIImage imageNamed:@"selfSZ"];
             launchActivityCell.promptLB.text = @"个人设置";
             
             launchActivityCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
