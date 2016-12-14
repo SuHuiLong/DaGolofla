@@ -422,6 +422,7 @@
         NSLog(@"－－－cancle");
     } withBlockSure:^{
         JGHScoresViewController *scoreVC = [[JGHScoresViewController alloc] init];
+        scoreVC.backHistory = 1;
         if ([self.isReversal integerValue] == 1) {
             scoreVC.currentPage = [longPG view].tag - 777 + 9;
         }else{
@@ -454,6 +455,7 @@
         NSLog(@"cancle");
     } withBlockSure:^{
         JGHScoresViewController *scoreVC = [[JGHScoresViewController alloc] init];
+        scoreVC.backHistory = 1;
         if ([self.isReversal integerValue] == 1) {
             scoreVC.currentPage = [longPG view].tag - 777;
         }else{

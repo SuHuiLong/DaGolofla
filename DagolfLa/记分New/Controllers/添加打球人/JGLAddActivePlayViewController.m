@@ -278,7 +278,7 @@
             if (indexPath.row -1 < _palyArray.count) {
                 [cell configJGLAddActiivePlayModel:_palyArray[indexPath.row -1]];
             }else{
-                cell.labelTitle.font = [UIFont systemFontOfSize:13*ProportionAdapter];
+                cell.labelTitle.font = [UIFont systemFontOfSize:15*ProportionAdapter];
                 cell.labelTitle.textColor = [UIColor lightGrayColor];
                 cell.labelTitle.text = @"    请添加打球人";
                 cell.deleteBtn.hidden = YES;
@@ -386,7 +386,7 @@
 #pragma mark -- 删除
 - (void)deleteActivityScorePlayrBtn:(UIButton *)btn{
     NSLog(@"%td", btn.tag);
-    if (btn.tag >= _palyArray.count -1) {
+    if (btn.tag <= _palyArray.count -1) {
         JGLAddActiivePlayModel *palyModel = [[JGLAddActiivePlayModel alloc]init];
         palyModel = _palyArray[btn.tag];
         

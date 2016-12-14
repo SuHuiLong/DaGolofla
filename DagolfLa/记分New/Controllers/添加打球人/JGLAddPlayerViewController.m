@@ -465,7 +465,7 @@
         for (int i=0; i<_palyArray.count; i++) {
             MyattenModel *model = [[MyattenModel alloc]init];
             model = _palyArray[i];
-            if ([model.userId integerValue] == [[preDict objectForKey:@"userKey"] integerValue]) {
+            if ([model.friendUserKey integerValue] == [[preDict objectForKey:@"userKey"] integerValue]) {
                 [_palyArray removeObjectAtIndex:i];
             }
         }
