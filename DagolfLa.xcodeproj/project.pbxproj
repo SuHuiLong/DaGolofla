@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		200200FC1D61B2C900308C44 /* JGHStarScoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 200200FB1D61B2C900308C44 /* JGHStarScoreViewController.m */; };
 		200200FF1D61BC0200308C44 /* JGHCabbieEditorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 200200FE1D61BC0200308C44 /* JGHCabbieEditorViewController.m */; };
-		2006C0621E0171C1008B85DF /* JGHAreaListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2006C0611E0171C1008B85DF /* JGHAreaListViewController.m */; };
+		2006C0651E01729D008B85DF /* JGHAreaListView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2006C0641E01729D008B85DF /* JGHAreaListView.m */; };
 		200D4C151D95244700DDD51D /* JGHScoreHoleListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 200D4C141D95244700DDD51D /* JGHScoreHoleListCell.m */; };
 		201056131D59C92800C90FDE /* JGHBtnCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 201056051D59C92800C90FDE /* JGHBtnCell.m */; };
 		201056141D59C92800C90FDE /* JGHBtnCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 201056061D59C92800C90FDE /* JGHBtnCell.xib */; };
@@ -1224,8 +1224,8 @@
 		200200FB1D61B2C900308C44 /* JGHStarScoreViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHStarScoreViewController.m; sourceTree = "<group>"; };
 		200200FD1D61BC0200308C44 /* JGHCabbieEditorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHCabbieEditorViewController.h; sourceTree = "<group>"; };
 		200200FE1D61BC0200308C44 /* JGHCabbieEditorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHCabbieEditorViewController.m; sourceTree = "<group>"; };
-		2006C0601E0171C1008B85DF /* JGHAreaListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHAreaListViewController.h; sourceTree = "<group>"; };
-		2006C0611E0171C1008B85DF /* JGHAreaListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHAreaListViewController.m; sourceTree = "<group>"; };
+		2006C0631E01729D008B85DF /* JGHAreaListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHAreaListView.h; sourceTree = "<group>"; };
+		2006C0641E01729D008B85DF /* JGHAreaListView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHAreaListView.m; sourceTree = "<group>"; };
 		200D4C131D95244700DDD51D /* JGHScoreHoleListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHScoreHoleListCell.h; sourceTree = "<group>"; };
 		200D4C141D95244700DDD51D /* JGHScoreHoleListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHScoreHoleListCell.m; sourceTree = "<group>"; };
 		201056041D59C92800C90FDE /* JGHBtnCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHBtnCell.h; sourceTree = "<group>"; };
@@ -3757,8 +3757,8 @@
 				2064DE8B1D367FEC00F0D52A /* JGHScoresHoleView.m */,
 				202E05381D815E2800566CA9 /* JGHPoorScoreHoleView.h */,
 				202E05391D815E2800566CA9 /* JGHPoorScoreHoleView.m */,
-				2006C0601E0171C1008B85DF /* JGHAreaListViewController.h */,
-				2006C0611E0171C1008B85DF /* JGHAreaListViewController.m */,
+				2006C0631E01729D008B85DF /* JGHAreaListView.h */,
+				2006C0641E01729D008B85DF /* JGHAreaListView.m */,
 			);
 			path = "记分页";
 			sourceTree = "<group>";
@@ -9702,6 +9702,7 @@
 				8200F31B1D17BF4C00BAF7A9 /* JGLManageCancelViewController.m in Sources */,
 				826FB50C1D53650500B13155 /* JGLGuestAddressViewController.m in Sources */,
 				F5E1BB4A1D6B006100414727 /* ZXEAN13Writer.m in Sources */,
+				2006C0651E01729D008B85DF /* JGHAreaListView.m in Sources */,
 				F5E1BAEE1D6B006100414727 /* ZXReedSolomonEncoder.m in Sources */,
 				82AAB7AE1CE5BEB8005F5633 /* JGLSelfSetViewController.m in Sources */,
 				F51944341DFE4A8E0009653B /* MSSBrowseLocalViewController.m in Sources */,
@@ -10164,7 +10165,6 @@
 				36DA6ABC1C018AAD00AE5001 /* TeamPeopleModel.m in Sources */,
 				65B596D91CAD43AC007AB83A /* WFReplyBody.m in Sources */,
 				65B596DA1CAD43AC007AB83A /* YMTextData.m in Sources */,
-				2006C0621E0171C1008B85DF /* JGHAreaListViewController.m in Sources */,
 				36BF00881BC772EF005B3CE2 /* MySetApplyController.m in Sources */,
 				82E6A7081CF59F2E009DD179 /* payRequsestHandler.mm in Sources */,
 				3684FDB21C4A3635002A14FC /* TeamJoinSetTableViewCell.m in Sources */,

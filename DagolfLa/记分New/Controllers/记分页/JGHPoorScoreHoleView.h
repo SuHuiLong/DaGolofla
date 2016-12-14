@@ -10,9 +10,13 @@
 
 @protocol JGHPoorScoreHoleViewDelegate <NSObject>
 
-- (void)oneAreaPoorBtnDelegate:(UIButton *)btn;
+//- (void)oneAreaPoorBtnDelegate:(UIButton *)btn;
+//
+//- (void)twoAreaPoorBtnDelegate:(UIButton *)btn;
 
-- (void)twoAreaPoorBtnDelegate:(UIButton *)btn;
+- (void)poorOneAreaString:(NSString *)areaString andID:(NSInteger)selectId;
+
+- (void)poorTwoAreaString:(NSString *)areaString andID:(NSInteger)selectId;
 
 @end
 
