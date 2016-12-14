@@ -11,6 +11,7 @@
 #import "JGHScoreListModel.h"
 #import "JGHScoreAreaCell.h"
 #import "JGHTwoScoreAreaCell.h"
+#import "JGHAreaListView.h"
 
 #define BGScoreColor @"#B3E4BF"
 
@@ -18,7 +19,7 @@ static NSString *const JGHScoresHoleCellIdentifier = @"JGHScoresHoleCell";
 static NSString *const JGHScoreAreaCellIdentifier = @"JGHScoreAreaCell";
 static NSString *const JGHTwoScoreAreaCellIdentifier = @"JGHTwoScoreAreaCell";
 
-@interface JGHPoorScoreHoleView ()<UITableViewDelegate, UITableViewDataSource, JGHScoreAreaCellDelegate, JGHScoresHoleCellDelegate, JGHTwoScoreAreaCellDelegate>
+@interface JGHPoorScoreHoleView ()<UITableViewDelegate, UITableViewDataSource, JGHScoreAreaCellDelegate, JGHScoresHoleCellDelegate, JGHTwoScoreAreaCellDelegate, JGHAreaListViewDelegate>
 {
     NSArray *_colorArray;
     NSInteger _areaId;// 0-无区域，1- ； 2-；
@@ -33,6 +34,10 @@ static NSString *const JGHTwoScoreAreaCellIdentifier = @"JGHTwoScoreAreaCell";
     NSArray *_areaArray;//区域列表
     
     UILabel *_headLB;
+    
+    JGHAreaListView *_areaListView;
+    
+    NSInteger _areaSourceID;
 }
 
 @property (nonatomic, strong)UITableView *scoreTableView;
@@ -215,6 +220,23 @@ static NSString *const JGHTwoScoreAreaCellIdentifier = @"JGHTwoScoreAreaCell";
     //发送消息
     [[NSNotificationCenter defaultCenter]postNotification:notice];
 }
+
+#pragma mark -- 区域点击事件
+- (void)areaString:(NSString *)areaString andID:(NSInteger)selectId{
+    if (_areaSourceID == 0) {
+        //第一区域
+        if (self.delegate) {
+            [self.delegate poorOneAreaString:areaString andID:selectId];
+        }
+    }else{
+        //第二区域
+        [self.delegate poorTwoAreaString:areaString andID:selectId +400];
+    }
+    
+    [_areaListView removeFromSuperview];
+    _areaListView = nil;
+}
+
 #pragma mark -- 选择第一区域
 - (void)oneAreaNameBtn:(UIButton *)btn{
     NSLog(@"第一个区域");
@@ -228,66 +250,35 @@ static NSString *const JGHTwoScoreAreaCellIdentifier = @"JGHTwoScoreAreaCell";
     
     [self.scoreTableView reloadData];
     
-    [_twoAreaView removeFromSuperview];
-    _twoAreaView = nil;
-    if (_oneAreaView != nil) {
-        [_oneAreaView removeFromSuperview];
-        _oneAreaView = nil;
+    if (_areaListView != nil) {
+        [_areaListView removeFromSuperview];
+        _areaListView = nil;
         return;
     }
     
+    _areaSourceID = 0;
     float btnW = 0.0;
     for (int i = 0; i<_areaArray.count; i++) {
         NSString *str = _areaArray[i];
         CGSize postSize = [str boundingRectWithSize:CGSizeMake(screenWidth, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:15 *ProportionAdapter]} context:nil].size;
         if (postSize.width > 84 *ProportionAdapter) {
             btnW = postSize.width;
+        }else{
+            btnW = 84 *ProportionAdapter;
         }
     }
     
-    _areaId = 1;
-    if (btnW == 0.0) {
-        _oneAreaView = [[UIView alloc]initWithFrame:CGRectMake(10 *ProportionAdapter, 40*ProportionAdapter + 20 *ProportionAdapter, 84 *ProportionAdapter, _areaArray.count *40 *ProportionAdapter + 4*ProportionAdapter)];
+    if (_areaArray.count > 2) {
+        _areaListView = [[JGHAreaListView alloc]initWithFrame:CGRectMake(10 *ProportionAdapter, 40*ProportionAdapter + 20 *ProportionAdapter, btnW +20 *ProportionAdapter, 3* 35 *ProportionAdapter)];
     }else{
-        _oneAreaView = [[UIView alloc]initWithFrame:CGRectMake(10 *ProportionAdapter, 40*ProportionAdapter + 20 *ProportionAdapter, btnW + 4 *ProportionAdapter, _areaArray.count *40 *ProportionAdapter + 4*ProportionAdapter)];
+        _areaListView = [[JGHAreaListView alloc]initWithFrame:CGRectMake(10 *ProportionAdapter, 40*ProportionAdapter + 20 *ProportionAdapter, btnW +20 *ProportionAdapter, 2* 35 *ProportionAdapter)];
     }
     
-    [_oneAreaView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"alertViewBG"]]];
-    for (int i=0; i < _areaArray.count; i++) {
-        NSInteger btnY;
-        if (i == 0) {
-            btnY = 2 *ProportionAdapter;
-        }else{
-            btnY = (i * 40 + 2) *ProportionAdapter;
-        }
-        UIButton *btn = [[UIButton alloc]initWithFrame:CGRectMake(2 *ProportionAdapter, btnY, _oneAreaView.frame.size.width -4 *ProportionAdapter, 40 *ProportionAdapter)];
-        [btn setTitle:[NSString stringWithFormat:@"%@", _areaArray[i]] forState:UIControlStateNormal];
-        btn.tag = 300 + i;
-        if ([_areaArray[i] isEqualToString:_currentAreaArray[0]]) {
-            [btn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
-        }else{
-            [btn addTarget:self action:@selector(oneAreaBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-            [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        }
-        
-        btn.titleLabel.font = [UIFont systemFontOfSize:15 *ProportionAdapter];
-        btn.backgroundColor = [UIColor whiteColor];
-        [_oneAreaView addSubview:btn];
-    }
-    [self addSubview:_oneAreaView];
-}
-- (void)oneAreaBtnClick:(UIButton *)btn{
-    if (self.delegate) {
-        [self.delegate oneAreaPoorBtnDelegate:btn];
-    }
+    _areaListView.delegate = self;
+    [_areaListView reloadAreaListView:_areaArray];
     
-    _imageSelectOne = 0;
-    
-    [self.scoreTableView reloadData];
-}
-- (void)removePoorOneAreaView{
-    [_oneAreaView removeFromSuperview];
-    _oneAreaView = nil;
+    [self addSubview:_areaListView];
+
 }
 #pragma mark -- 第二个区域
 - (void)twoAreaNameBtn:(UIButton *)btn{
@@ -301,13 +292,14 @@ static NSString *const JGHTwoScoreAreaCellIdentifier = @"JGHTwoScoreAreaCell";
     
     [self.scoreTableView reloadData];
     
-    [_oneAreaView removeFromSuperview];
-    _oneAreaView = nil;
-    if (_twoAreaView != nil) {
-        [_twoAreaView removeFromSuperview];
-        _twoAreaView = nil;
+
+    if (_areaListView != nil) {
+        [_areaListView removeFromSuperview];
+        _areaListView = nil;
         return;
     }
+    
+    _areaSourceID = 1;
     
     float btnW = 0.0;
     for (int i = 0; i<_areaArray.count; i++) {
@@ -315,59 +307,21 @@ static NSString *const JGHTwoScoreAreaCellIdentifier = @"JGHTwoScoreAreaCell";
         CGSize postSize = [str boundingRectWithSize:CGSizeMake(screenWidth, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:15 *ProportionAdapter]} context:nil].size;
         if (postSize.width > 84 *ProportionAdapter) {
             btnW = postSize.width;
+        }else{
+            btnW = 84 *ProportionAdapter;
         }
     }
     
-    if (btnW == 0.0) {
-        _twoAreaView = [[UIView alloc]initWithFrame:CGRectMake(10 *ProportionAdapter, btn.frame.origin.y + btn.frame.size.height + (_dataArray.count +2) *35 *ProportionAdapter + 37 *ProportionAdapter + 20 *ProportionAdapter, 84 *ProportionAdapter, _areaArray.count *40 *ProportionAdapter + 4*ProportionAdapter)];
+    if (_areaArray.count > 2) {
+        _areaListView = [[JGHAreaListView alloc]initWithFrame:CGRectMake(10 *ProportionAdapter, btn.frame.origin.y + btn.frame.size.height + (_dataArray.count +2) *35 *ProportionAdapter + 37 *ProportionAdapter + 20 *ProportionAdapter, btnW +20 *ProportionAdapter, 3* 35 *ProportionAdapter)];
     }else{
-        _twoAreaView = [[UIView alloc]initWithFrame:CGRectMake(10 *ProportionAdapter, btn.frame.origin.y + btn.frame.size.height + (_dataArray.count +2) *35 *ProportionAdapter + 37 *ProportionAdapter + 20 *ProportionAdapter, btnW + 4 *ProportionAdapter, _areaArray.count *40 *ProportionAdapter + 4*ProportionAdapter)];
+        _areaListView = [[JGHAreaListView alloc]initWithFrame:CGRectMake(10 *ProportionAdapter, btn.frame.origin.y + btn.frame.size.height + (_dataArray.count +2) *30 *ProportionAdapter + 37 *ProportionAdapter + 20 *ProportionAdapter, btnW +20 *ProportionAdapter, 2* 35 *ProportionAdapter)];
     }
     
-    _areaId = 2;
+    [_areaListView reloadAreaListView:_areaArray];
     
-    NSLog(@"%f", btn.frame.origin.y);
-    
-    [_twoAreaView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"alertViewBG"]]];
-    for (int i=0; i < _areaArray.count; i++) {
-        NSInteger btnY;
-        if (i == 0) {
-            btnY = 2 *ProportionAdapter;
-        }else{
-            btnY = (i * 40 + 2) *ProportionAdapter;
-        }
-        
-        UIButton *btn = [[UIButton alloc]initWithFrame:CGRectMake(2 *ProportionAdapter, btnY, _twoAreaView.frame.size.width -4 *ProportionAdapter, 40 *ProportionAdapter)];
-        [btn setTitle:[NSString stringWithFormat:@"%@", _areaArray[i]] forState:UIControlStateNormal];
-        btn.tag = 400 + i;
-        if ([_areaArray[i] isEqualToString:_currentAreaArray[1]]) {
-            [btn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
-        }else{
-            [btn addTarget:self action:@selector(twoAreaBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-            [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        }
-        
-        btn.titleLabel.font = [UIFont systemFontOfSize:15 *ProportionAdapter];
-        btn.backgroundColor = [UIColor whiteColor];
-        [_twoAreaView addSubview:btn];
-    }
-    [self addSubview:_twoAreaView];
+    [self addSubview:_areaListView];
 }
-#pragma mark -- 第二区域点击事件
-- (void)twoAreaBtnClick:(UIButton *)btn{
-    if (self.delegate) {
-        [self.delegate twoAreaPoorBtnDelegate:btn];
-    }
-    
-    _imageSelectTwo = 1;
-    
-    [self.scoreTableView reloadData];
-}
--(void)removePoorTwoAreaView{
-    [_twoAreaView removeFromSuperview];
-    _twoAreaView = nil;
-}
-
 #pragma mark -- 刷新数据
 - (void)reloadPoorViewData:(NSMutableArray *)dataArray andCurrentAreaArrat:(NSArray *)currentAreaArray{
     self.dataArray = dataArray;

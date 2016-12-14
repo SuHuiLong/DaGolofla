@@ -1010,17 +1010,32 @@
     }
 }
 #pragma mark -- 切换球场区域 -- 总杆模式
-- (void)oneAreaBtnDelegate:(UIButton *)btn{
-    
+- (void)oneAreaString:(NSString *)areaString andID:(NSInteger)selectId{
     [Helper alertViewWithTitle:@"确定切换打球区吗？该区切换前的记分数据会被清空！" withBlockCancle:^{
         [_scoresView removeOneAreaView];
         [_poorScoreView removePoorOneAreaView];
     } withBlockSure:^{
         
-        [self loadOneAreaData:btn.currentTitle andBtnTag:btn.tag];
+        [self loadOneAreaData:areaString andBtnTag:selectId];
     } withBlock:^(UIAlertController *alertView) {
         [self presentViewController:alertView animated:YES completion:nil];
     }];
+}
+
+- (void)twoAreaString:(NSString *)areaString andID:(NSInteger)selectId{
+    [Helper alertViewWithTitle:@"确定切换打球区吗？该区切换前的记分数据会被清空！" withBlockCancle:^{
+        [_scoresView removeOneAreaView];
+        [_poorScoreView removePoorOneAreaView];
+    } withBlockSure:^{
+        
+        [self loadOneAreaData:areaString andBtnTag:selectId];
+    } withBlock:^(UIAlertController *alertView) {
+        [self presentViewController:alertView animated:YES completion:nil];
+    }];
+}
+- (void)oneAreaBtnDelegate:(UIButton *)btn{
+    
+    
 }
 #pragma mark -- 切换第一区 -- 总杆模式
 - (void)loadOneAreaData:(NSString *)btnString andBtnTag:(NSInteger)tag{
@@ -1136,24 +1151,24 @@
     }];
 }
 #pragma mark -- 切换区域 主页面改变区域
-- (void)twoAreaBtnDelegate:(UIButton *)btn{
+- (void)poorOneAreaString:(NSString *)areaString andID:(NSInteger)selectId{
     [Helper alertViewWithTitle:@"确定切换打球区吗？该区切换前的记分数据会被清空！" withBlockCancle:^{
         [_scoresView removeOneAreaView];
         [_poorScoreView removePoorOneAreaView];
     } withBlockSure:^{
-        [self loadOneAreaData:btn.currentTitle andBtnTag:btn.tag];
+        [self loadOneAreaData:areaString andBtnTag:selectId];
     } withBlock:^(UIAlertController *alertView) {
         [self presentViewController:alertView animated:YES completion:nil];
     }];
 }
 #pragma mark -- 差杆模式。切换区域
-- (void)oneAreaPoorBtnDelegate:(UIButton *)btn{
+- (void)poorTwoAreaString:(NSString *)areaString andID:(NSInteger)selectId{
     [Helper alertViewWithTitle:@"确定切换打球区吗？该区切换前的记分数据会被清空！" withBlockCancle:^{
         [_scoresView removeOneAreaView];
         [_poorScoreView removePoorOneAreaView];
     } withBlockSure:^{
         
-        [self loadOneAreaData:btn.currentTitle andBtnTag:btn.tag];
+        [self loadOneAreaData:areaString andBtnTag:selectId];
     } withBlock:^(UIAlertController *alertView) {
         [self presentViewController:alertView animated:YES completion:nil];
     }];

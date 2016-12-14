@@ -10,9 +10,13 @@
 
 @protocol JGHScoresHoleViewDelegate <NSObject>
 
-- (void)oneAreaBtnDelegate:(UIButton *)btn;
+//- (void)oneAreaBtnDelegate:(UIButton *)btn;
+//
+//- (void)twoAreaBtnDelegate:(UIButton *)btn;
 
-- (void)twoAreaBtnDelegate:(UIButton *)btn;
+- (void)oneAreaString:(NSString *)areaString andID:(NSInteger)selectId;
+
+- (void)twoAreaString:(NSString *)areaString andID:(NSInteger)selectId;
 
 @end
 
