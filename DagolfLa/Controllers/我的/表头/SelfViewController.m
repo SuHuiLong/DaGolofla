@@ -608,7 +608,12 @@
 //    [UserDataInformation sharedInstance].userInfor.userName
     userInfo.userId = [NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"userId"]];
     userInfo.name = [NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"userName"]];
-    userInfo.portraitUri = [NSString stringWithFormat:@"%@",[Helper imageIconUrl:[[NSUserDefaults standardUserDefaults] objectForKey:@"pic"]]];
+//    userInfo.portraitUri = [NSString stringWithFormat:@"%@",[Helper imageIconUrl:[[NSUserDefaults standardUserDefaults] objectForKey:@"pic"]]];
+    
+    userInfo.portraitUri = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/user/head/%@.jpg", DEFAULF_USERID];
+
+    
+    
     return userInfo;
 }
 

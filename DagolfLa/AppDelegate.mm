@@ -227,8 +227,9 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
-    
-    [self contanctUpload];
+    if (DEFAULF_USERID) {
+        [self contanctUpload];
+    }
     
     NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
     [user setObject:[NSNumber numberWithFloat:31.15] forKey:BDMAPLAT];//纬度
