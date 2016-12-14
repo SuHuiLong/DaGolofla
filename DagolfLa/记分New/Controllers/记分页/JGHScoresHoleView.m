@@ -253,19 +253,19 @@ static NSString *const JGHTwoScoreAreaCellIdentifier = @"JGHTwoScoreAreaCell";
     
     _areaSourceID = 0;
     
-    float btnW = 84 *ProportionAdapter;
+    float btnW = 100 *ProportionAdapter;
     for (int i = 0; i<_areaArray.count; i++) {
         NSString *str = _areaArray[i];
         CGSize postSize = [str boundingRectWithSize:CGSizeMake(screenWidth, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:15 *ProportionAdapter]} context:nil].size;
-        if (postSize.width > 84 *ProportionAdapter) {
+        if (postSize.width > 100 *ProportionAdapter) {
             btnW = postSize.width;
         }
     }
     
     if (_areaArray.count > 2) {
-        _areaListView = [[JGHAreaListView alloc]initWithFrame:CGRectMake(10 *ProportionAdapter, 40*ProportionAdapter + 20 *ProportionAdapter, btnW +20 *ProportionAdapter, 3* 35 *ProportionAdapter)];
+        _areaListView = [[JGHAreaListView alloc]initWithFrame:CGRectMake(10 *ProportionAdapter, 40*ProportionAdapter + 20 *ProportionAdapter, btnW +30 *ProportionAdapter, 3* 35 *ProportionAdapter)];
     }else{
-        _areaListView = [[JGHAreaListView alloc]initWithFrame:CGRectMake(10 *ProportionAdapter, 40*ProportionAdapter + 20 *ProportionAdapter, btnW +20 *ProportionAdapter, 2* 35 *ProportionAdapter)];
+        _areaListView = [[JGHAreaListView alloc]initWithFrame:CGRectMake(10 *ProportionAdapter, 40*ProportionAdapter + 20 *ProportionAdapter, btnW +30 *ProportionAdapter, 2* 35 *ProportionAdapter)];
     }
     
     _areaListView.delegate = self;
@@ -288,6 +288,7 @@ static NSString *const JGHTwoScoreAreaCellIdentifier = @"JGHTwoScoreAreaCell";
     }
     
     _imageSelectTwo = 0;
+    _imageSelectOne = 0;
     
     [self.scoreTableView reloadData];
     
@@ -318,19 +319,19 @@ static NSString *const JGHTwoScoreAreaCellIdentifier = @"JGHTwoScoreAreaCell";
     
     _areaSourceID = 1;
     
-    float btnW = 84*ProportionAdapter;
+    float btnW = 100*ProportionAdapter;
     for (int i = 0; i<_areaArray.count; i++) {
         NSString *str = _areaArray[i];
         CGSize postSize = [str boundingRectWithSize:CGSizeMake(screenWidth, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:15 *ProportionAdapter]} context:nil].size;
-        if (postSize.width > 84 *ProportionAdapter) {
+        if (postSize.width > 100 *ProportionAdapter) {
             btnW = postSize.width;
         }
     }
     
     if (_areaArray.count > 2) {
-        _areaListView = [[JGHAreaListView alloc]initWithFrame:CGRectMake(10 *ProportionAdapter, btn.frame.origin.y + btn.frame.size.height + (_dataArray.count +2) *35 *ProportionAdapter + 37 *ProportionAdapter + 20 *ProportionAdapter, btnW +20 *ProportionAdapter, 3* 35 *ProportionAdapter)];
+        _areaListView = [[JGHAreaListView alloc]initWithFrame:CGRectMake(10 *ProportionAdapter, btn.frame.origin.y + btn.frame.size.height + (_dataArray.count +2) *35 *ProportionAdapter + 37 *ProportionAdapter + 25 *ProportionAdapter, btnW +30 *ProportionAdapter, 3* 35 *ProportionAdapter)];
     }else{
-        _areaListView = [[JGHAreaListView alloc]initWithFrame:CGRectMake(10 *ProportionAdapter, btn.frame.origin.y + btn.frame.size.height + (_dataArray.count +2) *35 *ProportionAdapter + 37 *ProportionAdapter + 20 *ProportionAdapter, btnW +20 *ProportionAdapter, 2* 35 *ProportionAdapter)];
+        _areaListView = [[JGHAreaListView alloc]initWithFrame:CGRectMake(10 *ProportionAdapter, btn.frame.origin.y + btn.frame.size.height + (_dataArray.count +2) *35 *ProportionAdapter + 37 *ProportionAdapter + 25 *ProportionAdapter, btnW +30 *ProportionAdapter, 2* 35 *ProportionAdapter)];
     }
     
     _areaListView.delegate = self;

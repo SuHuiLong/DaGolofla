@@ -878,6 +878,7 @@
                         if ([controller isKindOfClass:[JGLScoreNewViewController class]]) {
                             [self.navigationController popToViewController:controller animated:YES];
                             soureKey = 1;
+                            break;
                         }else{
                             soureKey = 0;
                         }
