@@ -200,6 +200,9 @@
     
     navBarHairlineImageView = [self findHairlineImageViewUnder:self.navigationController.navigationBar];
     
+    if (_backHistory == 1) {
+        [self historyScoreList];
+    }
 }
 
 - (UIImageView *)findHairlineImageViewUnder:(UIView *)view {
@@ -347,11 +350,14 @@
                     [_currentAreaArray addObject:model.region2];
                 }
                 
-                if (_currentPage != 0) {
-                    [self.titleBtn setTitle:[NSString stringWithFormat:@"%@ Hole PAR %@", model.poleNameList[_currentPage], model.standardlever[_currentPage]] forState:UIControlStateNormal];
-                }else{
-                    [self.titleBtn setTitle:[NSString stringWithFormat:@"%@ Hole PAR %@", model.poleNameList[0], model.standardlever[0]] forState:UIControlStateNormal];
+                if (_backHistory != 1) {
+                    if (_currentPage != 0) {
+                        [self.titleBtn setTitle:[NSString stringWithFormat:@"%@ Hole PAR %@", model.poleNameList[_currentPage], model.standardlever[_currentPage]] forState:UIControlStateNormal];
+                    }else{
+                        [self.titleBtn setTitle:[NSString stringWithFormat:@"%@ Hole PAR %@", model.poleNameList[0], model.standardlever[0]] forState:UIControlStateNormal];
+                    }
                 }
+                
                 
                 self.timer =[NSTimer scheduledTimerWithTimeInterval:[[data objectForKey:@"interval"] integerValue] target:self
                                                            selector:@selector(changeTimeAtTimeDoClick) userInfo:nil repeats:YES];
@@ -599,6 +605,51 @@
     };
     [_pageViewController setViewControllers:@[vc2] direction:0 animated:NO completion:nil];
 
+    
+    [self pageViewController:_pageViewController viewControllerAfterViewController:vc2];
+}
+#pragma mark -- 历史记分卡－－修改页面 
+- (void)historyScoreList{
+    
+//    if (_currentPage > 0) {
+//        [self.titleBtn setTitle:[NSString stringWithFormat:@"%td Hole PAR 3", _currentPage] forState:UIControlStateNormal];
+//    }else{
+//        [self.titleBtn setTitle:@"1 Hole PAR 3" forState:UIControlStateNormal];
+//    }
+    
+    JGHScoresMainViewController *vc2;
+    for (JGHScoresMainViewController *vc in _pageViewController.viewControllers) {
+        if (vc.index == _currentPage){
+            vc2 = vc;
+        }
+    }
+    if (vc2 == nil) {
+        vc2 = [[JGHScoresMainViewController alloc] init];
+        vc2.index = _currentPage;
+    }
+    
+    vc2.dataArray = self.userScoreArray;
+    vc2.currentAreaArray = _currentAreaArray;
+    vc2.switchMode = _switchMode;
+    vc2.scorekey = _scorekey;
+//    _currentPage = vc2.index;
+    _selectPage = _currentPage +1;
+    //保存
+    NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
+    if (vc2.index > 0) {
+        [userdef setObject:@(vc2.index) forKey:[NSString stringWithFormat:@"%@", _scorekey]];
+    }else{
+        [userdef setObject:@0 forKey:[NSString stringWithFormat:@"%@", _scorekey]];
+    }
+    
+    [userdef synchronize];
+    __weak JGHScoresViewController *weakSelf = self;
+    vc2.returnScoresDataArray= ^(NSMutableArray *dataArray){
+        weakSelf.userScoreArray = dataArray;
+        _isEdtor = 1;
+    };
+    [_pageViewController setViewControllers:@[vc2] direction:0 animated:NO completion:nil];
+    
     
     [self pageViewController:_pageViewController viewControllerAfterViewController:vc2];
 }
@@ -910,7 +961,8 @@
 - (void)pushJGHEndScoresViewController{
     
     if (_backHistory == 1) {//历史记分卡，长按删除
-        [self.navigationController popViewControllerAnimated:YES];
+        JGDHistoryScoreViewController *historyCtrl = [[JGDHistoryScoreViewController alloc]init];
+        [self.navigationController pushViewController:historyCtrl animated:YES];
     }else{
         if (_scoreFinish == 1 && _isCabbie == 1) {
             for (UIViewController *controller in self.navigationController.viewControllers) {
@@ -1086,7 +1138,8 @@
 #pragma mark -- 切换区域 主页面改变区域
 - (void)twoAreaBtnDelegate:(UIButton *)btn{
     [Helper alertViewWithTitle:@"确定切换打球区吗？该区切换前的记分数据会被清空！" withBlockCancle:^{
-        
+        [_scoresView removeOneAreaView];
+        [_poorScoreView removePoorOneAreaView];
     } withBlockSure:^{
         [self loadOneAreaData:btn.currentTitle andBtnTag:btn.tag];
     } withBlock:^(UIAlertController *alertView) {
@@ -1107,7 +1160,8 @@
 }
 - (void)twoAreaPoorBtnDelegate:(UIButton *)btn{
     [Helper alertViewWithTitle:@"确定切换打球区吗？该区切换前的记分数据会被清空！" withBlockCancle:^{
-        
+        [_scoresView removeOneAreaView];
+        [_poorScoreView removePoorOneAreaView];
     } withBlockSure:^{
         [self loadOneAreaData:btn.currentTitle andBtnTag:btn.tag];
     } withBlock:^(UIAlertController *alertView) {

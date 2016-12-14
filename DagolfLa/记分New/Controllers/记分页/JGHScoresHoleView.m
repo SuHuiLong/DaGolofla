@@ -228,7 +228,11 @@ static NSString *const JGHTwoScoreAreaCellIdentifier = @"JGHTwoScoreAreaCell";
     NSLog(@"第一个区域");
     NSLog(@"%f", btn.frame.origin.y);
     
-    _imageSelectOne = 1;
+    if (_imageSelectOne == 1) {
+        _imageSelectOne = 0;
+    }else{
+        _imageSelectOne = 1;
+    }
     
     [self.scoreTableView reloadData];
     
@@ -299,7 +303,11 @@ static NSString *const JGHTwoScoreAreaCellIdentifier = @"JGHTwoScoreAreaCell";
 - (void)twoAreaNameBtn:(UIButton *)btn{
     NSLog(@"第二个区域");
     
-    _imageSelectTwo = 1;
+    if (_imageSelectTwo == 0) {
+        _imageSelectTwo = 1;
+    }else{
+        _imageSelectTwo = 0;
+    }
     
     [self.scoreTableView reloadData];
     

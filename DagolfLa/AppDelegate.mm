@@ -72,6 +72,14 @@
     [user setObject:[NSNumber numberWithFloat:121.56] forKey:BDMAPLNG];//经度
     [user setObject:@"上海市" forKey:CITYNAME];//城市名
     [user synchronize];
+    
+//    if ([launchOptions objectForKey:UIApplicationLaunchOptionsURLKey]) {
+//        //非用户手动打开
+//        NSString *openUrlString = [NSString stringWithFormat:@"%@", [launchOptions objectForKey:UIApplicationLaunchOptionsURLKey]];
+//
+//        [self APSHomeDealUrl:openUrlString];
+//    }
+    
     //定位
     [self getCurPosition];
     
@@ -485,7 +493,7 @@
         return YES;
     }
 }
-#pragma mark -- 极光推送跳转
+#pragma mark -- URL拦截跳转
 - (void)APSHomeDealUrl:(NSString *)dealURLString{
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     

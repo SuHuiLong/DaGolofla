@@ -478,9 +478,9 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
     }
     [dic setObject:[dict objectForKey:@"timeKey"] forKey:@"teamKey"];
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
     JGDNewTeamDetailViewController *newTeamVC = [[JGDNewTeamDetailViewController alloc] init];
     newTeamVC.timeKey = [dict objectForKey:@"timeKey"];
+    newTeamVC.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:newTeamVC animated:YES];
 }
 #pragma mark -- 1001(活动) －－1002(相册) －－ 1003（成绩）
@@ -514,12 +514,10 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
         cell.photoBlock = ^(NSInteger numB){
             [self isLoginUp];
             
-//            [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
-            
             JGDDPhotoAlbumViewController *photoVC = [[JGDDPhotoAlbumViewController alloc] init];
-//            photoVC.blockRefresh = ^(){
-              //只是实现，不作操作
-//            };
+            //            photoVC.blockRefresh = ^(){
+            //只是实现，不作操作
+            //            };
             photoVC.hidesBottomBarWhenPushed = YES;
             photoVC.albumKey = [_indexModel.albumList[numB] objectForKey:@"timeKey"];
             [self.navigationController pushViewController:photoVC animated:YES];
@@ -536,11 +534,10 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
         cell.liveBlock = ^(NSInteger numB){
             [self isLoginUp];
             
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
-            
             JGLScoreLiveViewController *liveVC = [[JGLScoreLiveViewController alloc] init];
             
             liveVC.activity = [_indexModel.scoreList[numB] objectForKey:@"timeKey"];
+            liveVC.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:liveVC animated:YES];
         };
     }
@@ -588,10 +585,10 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
 - (void)activityListSelectClick:(UIButton *)btn{
     [self isLoginUp];
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
     NSDictionary *dic = _indexModel.activityList[btn.tag - 200];
     JGTeamActibityNameViewController *teamActVC = [[JGTeamActibityNameViewController alloc] init];
     teamActVC.teamKey = [[dic objectForKey:@"timeKey"] integerValue];
+    teamActVC.hidesBottomBarWhenPushed = YES;//6598520
     [self.navigationController pushViewController:teamActVC animated:YES];
 }
 #pragma mark -- 精彩推荐 -- 相册
