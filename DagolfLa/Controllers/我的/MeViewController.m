@@ -422,7 +422,7 @@
             [cell.iconImgv sd_setImageWithURL:[NSURL URLWithString:bgUrl] placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
             cell.iconImgv.contentMode = UIViewContentModeScaleAspectFill;
             cell.nameLabel.text = _model.userName;
-            if (![Helper isBlankString:_model.pic] && ![Helper isBlankString:_model.userName] && ![Helper isBlankString:_model.userSign]) {
+            if (![Helper isBlankString:_model.userName] && ![Helper isBlankString:_model.userSign]) {
                 cell.detailLabel.text = _model.userSign;
             }
             else
@@ -442,7 +442,7 @@
             [cell.iconImgv setImage:[UIImage imageNamed:DefaultHeaderImage]];
             cell.nameLabel.text = @"";
             cell.detailLabel.text = @"您还没有登录，赶快登陆哦";
-            cell.imgvSex.image = [UIImage imageNamed:@"xb_n"];
+            cell.imgvSex.image = [UIImage imageNamed:@"xb_nn"];
         }
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -493,8 +493,10 @@
             switch (indexPath.row) {
                 case 0:
                 {
-                    [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
-                    [self.navigationController pushViewController:arr[1] animated:YES];
+//                    [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
+                    ContactViewController *VC = arr[1];
+                    VC.hidesBottomBarWhenPushed = YES;
+                    [self.navigationController pushViewController:VC animated:YES];
                     break;
                 }
                 case 1:

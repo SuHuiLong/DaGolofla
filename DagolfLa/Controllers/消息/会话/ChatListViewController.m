@@ -246,7 +246,8 @@
 {
     if ([[NSUserDefaults standardUserDefaults] objectForKey:@"userId"]) {
         ContactViewController* tVc = [[ContactViewController alloc]init];
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
+//        [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
+        tVc.hidesBottomBarWhenPushed = YES;
         tVc.addFriendSum = [NSNumber numberWithInteger:_newFriendUnread];
         [self.navigationController pushViewController:tVc animated:YES];
     }

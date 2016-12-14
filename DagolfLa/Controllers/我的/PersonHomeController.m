@@ -140,6 +140,7 @@ static NSString *const orderDetailCellIdentifier = @"OtherDataTableViewCell";
     _backImg = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, 238*ScreenWidth/375)];
     _backImg.backgroundColor = [UIColor whiteColor];
     _backImg.userInteractionEnabled = YES;
+    _backImg.contentMode = UIViewContentModeScaleAspectFill;
     [_mainScrollView addSubview:_backImg];
     
     
@@ -176,7 +177,8 @@ static NSString *const orderDetailCellIdentifier = @"OtherDataTableViewCell";
     [_iconImg.layer setBorderColor:[UIColor whiteColor].CGColor];
     [_iconImg.layer setBorderWidth:1.0];
     _iconImg.clipsToBounds = YES;
-    
+    _iconImg.contentMode = UIViewContentModeScaleAspectFill;
+
 //    _iconImg.userInteractionEnabled = YES;
 //    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(imageIconACt)];
 //    [_iconImg addGestureRecognizer:tap];
@@ -361,14 +363,18 @@ static NSString *const orderDetailCellIdentifier = @"OtherDataTableViewCell";
                 [_model setValuesForKeysWithDictionary:[data objectForKey:@"user"]];
                 
                 self.title = _model.userName;
-                
-                NSString *bgUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/user/head/%td_background.jpg",[_strMoodId integerValue]];
-                [[SDImageCache sharedImageCache] removeImageForKey:bgUrl fromDisk:YES];
-                [_backImg sd_setImageWithURL:[NSURL URLWithString:bgUrl] placeholderImage:[UIImage imageNamed:@"selfBackPic.jpg"]];
-                
-                NSString *iconUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/%@/head/%td.jpg@200w_200h_2o",@"user",[_strMoodId integerValue]];
-                [[SDImageCache sharedImageCache] removeImageForKey:iconUrl fromDisk:YES];
-                [_iconImg sd_setImageWithURL:[NSURL URLWithString:iconUrl] placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
+
+                dispatch_main_async_safe((^{
+                    NSString *bgUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/user/head/%td_background.jpg",[_strMoodId integerValue]];
+                    [[SDImageCache sharedImageCache] removeImageForKey:bgUrl fromDisk:YES];
+                    [_backImg sd_setImageWithURL:[NSURL URLWithString:bgUrl] placeholderImage:[UIImage imageNamed:@"selfBackPic.jpg"]];
+                    
+                    NSString *iconUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/%@/head/%td.jpg@200w_200h_2o",@"user",[_strMoodId integerValue]];
+                    [[SDImageCache sharedImageCache] removeImageForKey:iconUrl fromDisk:YES];
+                    [_iconImg sd_setImageWithURL:[NSURL URLWithString:iconUrl] placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
+                    
+                }));
+
                 
                 //替换备注名称
                 NoteModel *model = [NoteHandlle selectNoteWithUID:self.strMoodId];
@@ -383,8 +389,19 @@ static NSString *const orderDetailCellIdentifier = @"OtherDataTableViewCell";
                 }else{
                     _sexImg.image = [UIImage imageNamed:@"xb_nn"];
                 }
-                if (_model.age != nil && _model.almost != nil) {
-                    _infoLabel.text = [NSString stringWithFormat:@"%@岁  差点:%@",_model.age,_model.almost];
+                if (_model.birthday != nil && _model.almost != nil) {
+                    
+                    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
+                    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+                    //生日
+                    NSDate *birthDay = [dateFormatter dateFromString:_model.birthday];
+                    //当前时间
+                    NSString *currentDateStr = [dateFormatter stringFromDate:[NSDate date]];
+                    NSDate *currentDate = [dateFormatter dateFromString:currentDateStr];
+                    NSTimeInterval time=[currentDate timeIntervalSinceDate:birthDay];
+                    int age = ((int)time)/(3600*24*365);
+                    
+                    _infoLabel.text = [NSString stringWithFormat:@"%d岁  差点:%@",age,_model.almost];
                 }
                 else if (_model.age == nil && _model.almost != nil)
                 {
@@ -416,16 +433,21 @@ static NSString *const orderDetailCellIdentifier = @"OtherDataTableViewCell";
                 
                 self.title = _model.userName;
                 
-                NSString *bgUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/user/head/%td_background.jpg",[_strMoodId integerValue]];
-                [[SDImageCache sharedImageCache] removeImageForKey:bgUrl fromDisk:YES];
-                [_backImg sd_setImageWithURL:[NSURL URLWithString:bgUrl] placeholderImage:[UIImage imageNamed:@"selfBackPic.jpg"]];
-                
-                NSString *iconUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/%@/head/%td.jpg@200w_200h_2o",@"user",[_strMoodId integerValue]];
-                [[SDImageCache sharedImageCache] removeImageForKey:iconUrl fromDisk:YES];
-                [_iconImg sd_setImageWithURL:[NSURL URLWithString:iconUrl] placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
                 
                 
-                
+                dispatch_main_async_safe((^{
+                    
+                    NSString *bgUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/user/head/%td_background.jpg",[_strMoodId integerValue]];
+                    [[SDImageCache sharedImageCache] removeImageForKey:bgUrl fromDisk:YES];
+                    [_backImg sd_setImageWithURL:[NSURL URLWithString:bgUrl] placeholderImage:[UIImage imageNamed:@"selfBackPic.jpg"]];
+                    
+                    NSString *iconUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/%@/head/%td.jpg@200w_200h_2o",@"user",[_strMoodId integerValue]];
+                    [[SDImageCache sharedImageCache] removeImageForKey:iconUrl fromDisk:YES];
+                    [_iconImg sd_setImageWithURL:[NSURL URLWithString:iconUrl] placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
+                    
+                    
+                }));
+
                 //替换备注名称
                 NoteModel *model = [NoteHandlle selectNoteWithUID:self.strMoodId];
                 if ([model.userremarks isEqualToString:@"(null)"] || [model.userremarks isEqualToString:@""] || model.userremarks == nil) {
@@ -882,7 +904,10 @@ static NSString *const orderDetailCellIdentifier = @"OtherDataTableViewCell";
 //        NSString *bgUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/user/head/%td_background.jpg",[_strMoodId integerValue]];
 //        [[SDImageCache sharedImageCache] removeImageForKey:bgUrl fromDisk:YES];
 //        [_backImg sd_setImageWithURL:[NSURL URLWithString:bgUrl] placeholderImage:[UIImage imageNamed:@"selfBackPic.jpg"]];
-        [_backImg setImage:image];
+        
+        dispatch_main_async_safe(^{
+            [_backImg setImage:image];
+        });
     }];
 }
 

@@ -485,10 +485,10 @@
     
     //meida的timekey和球队key
     //    JGPhotoListModel* model = _arrayData[self.currentImageIndex];
-    NSString*  shareUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/team/teamPhotoShare.html?mediaKey=%@&teamKey=%@",[_browseItemArray[self.currentIndex] albumKey], [_browseItemArray[self.currentIndex] timeKey]];
+    NSString*  shareUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/team/teamPhotoShare.html?mediaKey=%@&teamKey=%@",[_browseItemArray[self.currentIndex] currentPhotoKey], [_browseItemArray[self.currentIndex] timeKey]];
     [UMSocialData defaultData].extConfig.title = [_browseItemArray[self.currentIndex] albumTitle];
     NSData* fiData;
-    fiData = [NSData dataWithContentsOfURL:[Helper setImageIconUrl:@"album/media" andTeamKey:[[_browseItemArray[self.currentIndex] albumKey] integerValue] andIsSetWidth:NO andIsBackGround:NO]];
+    fiData = [NSData dataWithContentsOfURL:[Helper setImageIconUrl:@"album/media" andTeamKey:[[_browseItemArray[self.currentIndex] currentPhotoKey] integerValue] andIsSetWidth:NO andIsBackGround:NO]];
     if (index == 0){
         
         //微信

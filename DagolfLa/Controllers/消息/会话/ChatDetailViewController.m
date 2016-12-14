@@ -29,6 +29,9 @@
     
     //    [self.];
     [self.conversationMessageCollectionView reloadData];
+    [self.chatSessionInputBarControl.pluginBoardView removeItemAtIndex:2];
+    //    [self.chatSessionInputBarControl setInputBarType:RCChatSessionInputBarControlDefaultType style:5];
+    
     [self scrollToBottomAnimated:NO];
     
 }

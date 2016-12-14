@@ -25,11 +25,11 @@
         _iconImgv.image = [UIImage imageNamed:@"moren.jpg"];
         [self addSubview:_iconImgv];
         
-        _imgvSex = [[UIImageView alloc]initWithFrame:CGRectMake(90*ScreenWidth/375, 24*ScreenWidth/375, 10*ScreenWidth/375, 13*ScreenWidth/375)];
-        _imgvSex.image = [UIImage imageNamed:@"xb_n"];
+        _imgvSex = [[UIImageView alloc]initWithFrame:CGRectMake(90*ScreenWidth/375, 24*ScreenWidth/375, 13*ScreenWidth/375, 13*ScreenWidth/375)];
+        _imgvSex.image = [UIImage imageNamed:@"xb_nn"];
         [self addSubview:_imgvSex];
         
-        _nameLabel = [[UILabel alloc]initWithFrame:CGRectMake(105*ScreenWidth/375, 15*ScreenWidth/375, 200*ScreenWidth/375, 30*ScreenWidth/375)];
+        _nameLabel = [[UILabel alloc]initWithFrame:CGRectMake(108*ScreenWidth/375, 15*ScreenWidth/375, 200*ScreenWidth/375, 30*ScreenWidth/375)];
         _nameLabel.text = @"你是对方水电费地方大幅度发放到大幅度发大幅度发";
         _nameLabel.font = [UIFont systemFontOfSize:15*ScreenWidth/375];
         [self addSubview:_nameLabel];
