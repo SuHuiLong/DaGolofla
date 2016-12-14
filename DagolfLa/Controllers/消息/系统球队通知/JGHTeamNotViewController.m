@@ -78,7 +78,7 @@ static NSString *const JGHTeamInformCellIdentifier = @"JGHTeamInformCell";
 }
 #pragma mark -- 下载数据
 - (void)loadData{
-    [LQProgressHud showLoading:@"加载中..."];
+
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     [dict setObject:DEFAULF_USERID forKey:@"userKey"];
     [dict setObject:@1 forKey:@"nSrc"];
@@ -87,10 +87,10 @@ static NSString *const JGHTeamInformCellIdentifier = @"JGHTeamInformCell";
     [[JsonHttp jsonHttp]httpRequest:@"msg/getMsgList" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
         [self.systemNotTableView.header endRefreshing];
         [self.systemNotTableView.footer endRefreshing];
-        [LQProgressHud hide];
+
     } completionBlock:^(id data) {
         NSLog(@"%@", data);
-        [LQProgressHud hide];
+
         if (_page == 0) {
             [self.dataArray removeAllObjects];
         }
