@@ -381,6 +381,7 @@
                         }
                         
                         _blockDict(dictDa);
+                        
                         [self.navigationController popViewControllerAnimated:YES];
                     }
                     else{
