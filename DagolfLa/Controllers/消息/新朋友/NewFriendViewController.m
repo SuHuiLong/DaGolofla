@@ -57,7 +57,7 @@
 
 -(void)uiConfig
 {
-    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight  -20 * ProportionAdapter) style:(UITableViewStyleGrouped)];
+    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight  - 30 * ProportionAdapter) style:(UITableViewStyleGrouped)];
     _tableView.delegate = self;
     _tableView.dataSource = self;
 
