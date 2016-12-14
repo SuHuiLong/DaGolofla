@@ -203,7 +203,7 @@
         NSMutableDictionary *userDict = [NSMutableDictionary dictionary];
         [userDict setObject:model.userKey forKey:@"userKey"];
         [userDict setObject:model.remark forKey:UserName];
-        if (model.mobile == nil) {
+        if (model.mobile != nil) {
             [userDict setObject:model.mobile forKey:Mobile];
         }
         

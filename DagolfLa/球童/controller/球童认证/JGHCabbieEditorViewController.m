@@ -44,7 +44,7 @@ static NSString *const JGHLableAndLableCellIdentifier = @"JGHLableAndLableCell";
     _titleArray = @[@"", @"所属场地", @"姓名", @"姓别", @"球童编号", @"服务年限"];
     self.pickPhoto = [[SXPickPhoto alloc]init];
     
-    UIBarButtonItem *item = [[UIBarButtonItem alloc]initWithTitle:@"保存" style:UIBarButtonItemStylePlain target:self action:@selector(saveBtnClick)];
+    UIBarButtonItem *item = [[UIBarButtonItem alloc]initWithTitle:@"保存" style:UIBarButtonItemStylePlain target:self action:@selector(saveBtnClick:)];
     item.tintColor=[UIColor whiteColor];
     self.navigationItem.rightBarButtonItem = item;
     
@@ -52,30 +52,39 @@ static NSString *const JGHLableAndLableCellIdentifier = @"JGHLableAndLableCell";
     
 }
 #pragma mark -- 保存
-- (void)saveBtnClick{
+- (void)saveBtnClick:(UIBarButtonItem *)btn{
     [self.view endEditing:YES];
+    btn.enabled = NO;
     
     if (!_model.ballName) {
         [[ShowHUD showHUD]showToastWithText:@"请选择球场！" FromView:self.view];
+        btn.enabled = YES;
+
         return;
     }
     
     if (!_model.name) {
         [[ShowHUD showHUD]showToastWithText:@"请填写姓名！" FromView:self.view];
+        btn.enabled = YES;
+
         return;
     }
     
     if (!_model.number) {
         [[ShowHUD showHUD]showToastWithText:@"请填写球童编号！" FromView:self.view];
+        btn.enabled = YES;
+
         return;
     }
     
     if (!_model.serviceTime) {
         [[ShowHUD showHUD]showToastWithText:@"请填写服务年限！" FromView:self.view];
+        btn.enabled = YES;
+
         return;
     }
     
-//    [[ShowHUD showHUD]showAnimationWithText:@"保存中..." FromView:self.view];
+    [[ShowHUD showHUD]showAnimationWithText:@"保存中..." FromView:self.view];
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     NSMutableDictionary *caddieAuthDict = [NSMutableDictionary dictionary];
     [caddieAuthDict setObject:_model.ballKey forKey:@"ballKey"];
@@ -88,10 +97,14 @@ static NSString *const JGHLableAndLableCellIdentifier = @"JGHLableAndLableCell";
     [dict setObject:caddieAuthDict forKey:@"caddieAuth"];
     [dict setObject:DEFAULF_USERID forKey:@"userKey"];
     [[JsonHttp jsonHttp]httpRequestWithMD5:@"score/doSaveCaddieAuth" JsonKey:nil withData:dict failedBlock:^(id errType) {
-//        [[ShowHUD showHUD]hideAnimationFromView:self.view];
+        btn.enabled = YES;
+
+        [[ShowHUD showHUD]hideAnimationFromView:self.view];
     } completionBlock:^(id data) {
         NSLog(@"%@", data);
-//        [[ShowHUD showHUD]hideAnimationFromView:self.view];
+        btn.enabled = YES;
+
+        [[ShowHUD showHUD]hideAnimationFromView:self.view];
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
             
             if (_cabbieImage != nil) {
@@ -117,26 +130,31 @@ static NSString *const JGHLableAndLableCellIdentifier = @"JGHLableAndLableCell";
                         //获取主线层
                         if ([NSThread isMainThread]) {
                             NSLog(@"Yay!");
-                            [[ShowHUD showHUD]showToastWithText:@"保存成功!" FromView:self.view];
+                            [LQProgressHud showMessage:@"保存成功!"];
+//                            [[ShowHUD showHUD]showToastWithText:@"保存成功!" FromView:self.view];
                             [self performSelector:@selector(popCtrl) withObject:self afterDelay:TIMESlEEP];
                         } else {
                             NSLog(@"Humph, switching to main");
                             dispatch_async(dispatch_get_main_queue(), ^{
-                                [[ShowHUD showHUD]showToastWithText:@"保存成功!" FromView:self.view];
+                                [LQProgressHud showMessage:@"保存成功!"];
+//                                [[ShowHUD showHUD]showToastWithText:@"保存成功!" FromView:self.view];
                                 [self performSelector:@selector(popCtrl) withObject:self afterDelay:TIMESlEEP];
                             });
                         }
                     }else{
-                        [[ShowHUD showHUD]showToastWithText:@"头像上传失败!" FromView:self.view];
+                        [LQProgressHud showMessage:@"头像上传失败!"];
+//                        [[ShowHUD showHUD]showToastWithText:@"头像上传失败!" FromView:self.view];
                     }
                 }];
             }else{
-                [[ShowHUD showHUD]showToastWithText:@"保存成功!" FromView:self.view];
+                [LQProgressHud showMessage:@"保存成功!"];
+//                [[ShowHUD showHUD]showToastWithText:@"保存成功!" FromView:self.view];
                 [self performSelector:@selector(popCtrl) withObject:self afterDelay:TIMESlEEP];
             }
         }else{
             if ([data objectForKey:@"packResultMsg"]) {
-                [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+                [LQProgressHud showMessage:[data objectForKey:@"packResultMsg"]];
+//                [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
             }
         }
     }];
