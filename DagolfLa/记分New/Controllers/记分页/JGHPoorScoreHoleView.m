@@ -272,14 +272,12 @@ static NSString *const JGHTwoScoreAreaCellIdentifier = @"JGHTwoScoreAreaCell";
 //    [self.scoreTableView reloadData];
     
     _areaSourceID = 0;
-    float btnW = 0.0;
+    float btnW = 84 *ProportionAdapter;
     for (int i = 0; i<_areaArray.count; i++) {
         NSString *str = _areaArray[i];
         CGSize postSize = [str boundingRectWithSize:CGSizeMake(screenWidth, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:15 *ProportionAdapter]} context:nil].size;
         if (postSize.width > 84 *ProportionAdapter) {
             btnW = postSize.width;
-        }else{
-            btnW = 84 *ProportionAdapter;
         }
     }
     
@@ -321,14 +319,12 @@ static NSString *const JGHTwoScoreAreaCellIdentifier = @"JGHTwoScoreAreaCell";
     
     _areaSourceID = 1;
     
-    float btnW = 0.0;
+    float btnW = 84 *ProportionAdapter;
     for (int i = 0; i<_areaArray.count; i++) {
         NSString *str = _areaArray[i];
         CGSize postSize = [str boundingRectWithSize:CGSizeMake(screenWidth, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:15 *ProportionAdapter]} context:nil].size;
         if (postSize.width > 84 *ProportionAdapter) {
             btnW = postSize.width;
-        }else{
-            btnW = 84 *ProportionAdapter;
         }
     }
     

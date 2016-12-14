@@ -64,6 +64,7 @@
     NSInteger _switchMode;// 0- 总；1- 差
     
     NSInteger _refreshArea;
+    
 }
 
 @property (nonatomic, strong)NSMutableArray *userScoreArray;
@@ -561,18 +562,8 @@
 #pragma mark -- 点击杆数跳转到指定的积分页面
 - (void)noticePushScoresCtrl:(NSNotification *)not{
     //
-    [_arrowBtn setImage:[UIImage imageNamed:@"zk"] forState:UIControlStateNormal];
     
-    if (_scoreFinish == 1) {
-        [_item setTitle:@"完成"];
-    }else{
-        if (_selectHole == 1) {
-            [_item setTitle:@"退出记分"];
-        }else{
-            [_item setTitle:@"保存"];
-        }
-        
-    }
+    [_arrowBtn setImage:[UIImage imageNamed:@"zk"] forState:UIControlStateNormal];
     
     if (_refreshArea == 0) {
         _selectHole = 0;
@@ -593,6 +584,17 @@
         
     }else{
         _selectHole = 1;
+    }
+    
+    if (_scoreFinish == 1) {
+        [_item setTitle:@"完成"];
+    }else{
+        if (_selectHole == 1) {
+            [_item setTitle:@"退出记分"];
+        }else{
+            [_item setTitle:@"保存"];
+        }
+        
     }
     
     _refreshArea = 0;
@@ -871,10 +873,18 @@
                 } withBlockSure:^{
                     //                        _cabbieFinishScore = 1;//结束
                     //                        [self finishScore];
+                    NSInteger soureKey = 0;
                     for (UIViewController *controller in self.navigationController.viewControllers) {
                         if ([controller isKindOfClass:[JGLScoreNewViewController class]]) {
                             [self.navigationController popToViewController:controller animated:YES];
+                            soureKey = 1;
+                        }else{
+                            soureKey = 0;
                         }
+                    }
+                    
+                    if (soureKey == 0) {
+                        [self.navigationController popViewControllerAnimated:YES];
                     }
                 } withBlock:^(UIAlertController *alertView) {
                     [self presentViewController:alertView animated:YES completion:nil];
@@ -1066,6 +1076,7 @@
 - (void)loadOneAreaData:(NSString *)btnString andBtnTag:(NSInteger)tag{
     NSLog(@"%@", btnString);
     //getOperationScoreList
+    
     [[ShowHUD showHUD]showAnimationWithText:@"切换中..." FromView:self.view];
     [_ballDict setObject:btnString forKey:@"area"];// 区域名
     [_ballDict setObject:[JGReturnMD5Str getHoleNameAndPolesBallKey:[[_ballDict objectForKey:@"ballKey"] integerValue] andArea:btnString] forKey:@"md5"];
