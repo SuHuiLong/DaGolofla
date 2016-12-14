@@ -122,4 +122,8 @@
 
 + (NSString *)distanceTimeWithBeforeTimeNotificat:(NSString *)strTime;
 
+
+// 时区转换  转换为当前的
++ (NSDate *)getNowDateFromatAnDate:(NSDate *)anyDate;
+
 @end
