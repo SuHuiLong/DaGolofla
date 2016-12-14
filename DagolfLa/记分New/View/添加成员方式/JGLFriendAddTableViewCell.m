@@ -47,12 +47,13 @@
 
 - (void)setMyModel:(MyattenModel *)myModel{
     
-    NoteModel *model = [NoteHandlle selectNoteWithUID:myModel.otherUserId];
-    if ([model.userremarks isEqualToString:@"(null)"] || [model.userremarks isEqualToString:@""] || model.userremarks == nil) {
+//    NoteModel *model = [NoteHandlle selectNoteWithUID:myModel.otherUserId];
+//    if (myModel.userName == nil) {
         self.labelTitle.text = myModel.userName;
-    }else{
-        self.labelTitle.text = model.userremarks;
-    }
+//    }else{
+//        self.labelTitle.text = model.userremarks;
+//    }
+    
     [self.imgvIcon sd_setImageWithURL:[Helper imageIconUrl:myModel.pic] placeholderImage:[UIImage imageNamed:TeamLogoImage]];
     
     if ([myModel.sex integerValue] == 0) {

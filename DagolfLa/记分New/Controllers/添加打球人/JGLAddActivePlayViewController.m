@@ -265,6 +265,7 @@
     }
     else{
         JGLActiveChooseSTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"JGLActiveChooseSTableViewCell" forIndexPath:indexPath];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.delegate = self;
         cell.deleteBtn.tag = indexPath.row -1;
         
@@ -277,8 +278,8 @@
             if (indexPath.row -1 < _palyArray.count) {
                 [cell configJGLAddActiivePlayModel:_palyArray[indexPath.row -1]];
             }else{
-                cell.labelTitle.font = [UIFont systemFontOfSize:12*ProportionAdapter];
-                cell.labelTitle.textColor = [UIColor colorWithHexString:@"#313131"];
+                cell.labelTitle.font = [UIFont systemFontOfSize:13*ProportionAdapter];
+                cell.labelTitle.textColor = [UIColor lightGrayColor];
                 cell.labelTitle.text = @"    请添加打球人";
                 cell.deleteBtn.hidden = YES;
             }
@@ -322,7 +323,7 @@
             }
             
             if (selectCount >= 4) {
-                [[ShowHUD showHUD]showToastWithText:@"您最多只能选择3个人！" FromView:self.view];
+                [[ShowHUD showHUD]showToastWithText:@"您最多只能选择三个人！" FromView:self.view];
                 return;
             }
             

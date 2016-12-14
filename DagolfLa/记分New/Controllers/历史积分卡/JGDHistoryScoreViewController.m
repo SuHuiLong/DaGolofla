@@ -365,6 +365,7 @@
             }
             NSLog(@"%@", [userdef objectForKey:[NSString stringWithFormat:@"%@", model.timeKey]]);
             scoreVC.scorekey = [NSString stringWithFormat:@"%@", model.timeKey];
+            scoreVC.backHistory = 1;
             [self.navigationController pushViewController:scoreVC animated:YES];
         }else{
             

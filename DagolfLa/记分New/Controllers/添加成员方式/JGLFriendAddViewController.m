@@ -110,7 +110,7 @@
 
 -(void)uiConfig
 {
-    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight-15*screenWidth/375)];
+    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight-64)];
     _tableView.delegate = self;
     _tableView.dataSource = self;
     [self.view addSubview:_tableView];
@@ -205,16 +205,8 @@
     JGLFriendAddTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"JGLFriendAddTableViewCell" forIndexPath:indexPath];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     MyattenModel *model = self.listArray[indexPath.section][indexPath.row];
-    NoteModel *modell = [NoteHandlle selectNoteWithUID:model.otherUserId];
-    //判断用户的备注是否为空，不为空则显示备注，否则显示用户信息
-    if ([modell.userremarks isEqualToString:@"(null)"] || [modell.userremarks isEqualToString:@""] || modell.userremarks == nil) {
-        
-    }else{
-        model.userName = modell.userremarks;
-    }
+
     cell.myModel = model;
-//    NSString *str=[_dictFinish objectForKey:[self.listArray[indexPath.section][indexPath.row] otherUserId]];
-    //从存储人员的字典中按照userid查找信息，如果str为空，不勾选，否则勾选
     
     NSInteger isContains;
     isContains = 0;
@@ -222,11 +214,12 @@
         MyattenModel *palyModel = [[MyattenModel alloc]init];
         palyModel = self.playArray[i];
         
-        if ([palyModel.otherUserId integerValue] == [model.otherUserId integerValue]) {
+        if ([palyModel.friendUserKey integerValue] == [model.friendUserKey integerValue]) {
             isContains = 1;
         }
     }
     
+    cell.imgvState.image=[UIImage imageNamed:@"gou_w"];
     if (isContains == 1) {
         cell.imgvState.image=[UIImage imageNamed:@"gou_x"];
     }else{
@@ -247,14 +240,14 @@
         MyattenModel *palyModel = [[MyattenModel alloc]init];
         palyModel = self.playArray[i];
         
-        if ([palyModel.otherUserId integerValue] == [model.otherUserId integerValue]) {
+        if ([palyModel.friendUserKey integerValue] == [model.friendUserKey integerValue]) {
             isContains = 1;
         }
     }
     
     if (isContains == 0) {
         if (_playArray.count >= _lastIndex) {
-            [[ShowHUD showHUD]showToastWithText:@"您最多只能选择3个人" FromView:self.view];
+            [[ShowHUD showHUD]showToastWithText:@"您最多只能选择三个人" FromView:self.view];
         }else{
             [self.playArray addObject:model];
         }
@@ -264,7 +257,7 @@
             MyattenModel *palyModel = [[MyattenModel alloc]init];
             palyModel = self.playArray[i];
             
-            if ([palyModel.otherUserId integerValue] == [model.otherUserId integerValue]) {
+            if ([palyModel.friendUserKey integerValue] == [model.friendUserKey integerValue]) {
                 [modelArray removeObjectAtIndex:i];
             }
         }

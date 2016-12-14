@@ -32,10 +32,9 @@
     [super viewDidLoad];
     self.title = @"活动成绩";
     _dataArray = [[NSMutableArray alloc]init];
+    self.model = [[JGTeamAcitivtyModel alloc]init];
     _page = 0;
     [self uiConfig];
-    
-    
 }
 
 

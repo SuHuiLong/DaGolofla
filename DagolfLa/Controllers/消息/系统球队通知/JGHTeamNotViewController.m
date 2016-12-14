@@ -21,7 +21,7 @@
 #import "JGNewCreateTeamTableViewController.h"
 #import "JGDNewTeamDetailViewController.h"
 #import "JGPhotoAlbumViewController.h"
-
+#import "JGLScoreRankViewController.h"
 #import "JGDWithDrawTeamMoneyViewController.h"
 #import "JGTeamMainhallViewController.h"
 #import "JGTeamMemberController.h"
@@ -351,8 +351,9 @@ static NSString *const JGHTeamInformCellIdentifier = @"JGHTeamInformCell";
         
         //活动成绩详情 --
         if ([model.linkURL containsString:@"activityScore"]) {
-            JGLScoreLiveViewController *scoreLiveCtrl= [[JGLScoreLiveViewController alloc]init];
+            JGLScoreRankViewController *scoreLiveCtrl= [[JGLScoreRankViewController alloc]init];
             scoreLiveCtrl.activity = [NSNumber numberWithInteger:[[Helper returnKeyVlaueWithUrlString:model.linkURL andKey:@"activityKey"] integerValue]];
+            scoreLiveCtrl.teamKey = [NSNumber numberWithInteger:[[Helper returnKeyVlaueWithUrlString:model.linkURL andKey:@"teamKey"] integerValue]];
             scoreLiveCtrl.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:scoreLiveCtrl animated:YES];
         }

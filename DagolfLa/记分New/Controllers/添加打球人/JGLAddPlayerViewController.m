@@ -118,7 +118,7 @@
 -(void)chooseStyleClick:(UIButton *)btn
 {
     if (self.preListArray.count >= 4) {
-        [[ShowHUD showHUD]showToastWithText:@"您最多只能选择3个人！" FromView:self.view];
+        [[ShowHUD showHUD]showToastWithText:@"您最多只能选择三个人！" FromView:self.view];
         return;
     }
     
@@ -248,7 +248,7 @@
                 myModel = _palyArray[i];
                 NSMutableDictionary *addressdict = [NSMutableDictionary dictionary];
                 [addressdict setObject:myModel.userName forKey:UserName];
-                [addressdict setObject:myModel.otherUserId forKey:UserKey];
+                [addressdict setObject:myModel.friendUserKey forKey:UserKey];
                 [addressdict setObject:myModel.sex forKey:@"sex"];
                 [addressdict setObject:myModel.fMobile forKey:Mobile];
                 [addressdict setObject:@3 forKey:@"sourceKey"];//球员列表

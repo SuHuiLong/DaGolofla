@@ -220,11 +220,7 @@ static NSString *const JGHTwoScoreAreaCellIdentifier = @"JGHTwoScoreAreaCell";
     NSLog(@"第一个区域");
     NSLog(@"%f", btn.frame.origin.y);
     
-    if (_imageSelectOne == 0) {
-        _imageSelectOne = 1;
-    }else{
-        _imageSelectOne = 0;
-    }
+    _imageSelectOne = 1;
     
     [self.scoreTableView reloadData];
     
@@ -280,6 +276,10 @@ static NSString *const JGHTwoScoreAreaCellIdentifier = @"JGHTwoScoreAreaCell";
     if (self.delegate) {
         [self.delegate oneAreaPoorBtnDelegate:btn];
     }
+    
+    _imageSelectOne = 0;
+    
+    [self.scoreTableView reloadData];
 }
 - (void)removePoorOneAreaView{
     [_oneAreaView removeFromSuperview];
@@ -288,11 +288,8 @@ static NSString *const JGHTwoScoreAreaCellIdentifier = @"JGHTwoScoreAreaCell";
 #pragma mark -- 第二个区域
 - (void)twoAreaNameBtn:(UIButton *)btn{
     NSLog(@"第二个区域");
-    if (_imageSelectTwo == 0) {
-        _imageSelectTwo = 1;
-    }else{
-        _imageSelectTwo = 0;
-    }
+    
+    _imageSelectTwo = 1;
     
     [self.scoreTableView reloadData];
     
@@ -353,6 +350,10 @@ static NSString *const JGHTwoScoreAreaCellIdentifier = @"JGHTwoScoreAreaCell";
     if (self.delegate) {
         [self.delegate twoAreaPoorBtnDelegate:btn];
     }
+    
+    _imageSelectTwo = 1;
+    
+    [self.scoreTableView reloadData];
 }
 -(void)removePoorTwoAreaView{
     [_twoAreaView removeFromSuperview];
@@ -363,6 +364,12 @@ static NSString *const JGHTwoScoreAreaCellIdentifier = @"JGHTwoScoreAreaCell";
 - (void)reloadPoorViewData:(NSMutableArray *)dataArray andCurrentAreaArrat:(NSArray *)currentAreaArray{
     self.dataArray = dataArray;
     _currentAreaArray = currentAreaArray;
+    
+    if (_curPage < 9) {
+        _headLB.text = currentAreaArray[0];
+    }else{
+        _headLB.text = currentAreaArray[1];
+    }
     
     [self.scoreTableView reloadData];
 }
