@@ -520,9 +520,21 @@
             [_item setTitle:@"保存"];
         }
 
-        [_scoresView removeFromSuperview];
-        [_poorScoreView removeFromSuperview];
-        [_tranView removeFromSuperview];
+        if (_scoresView != nil) {
+            [_scoresView removeFromSuperview];
+            _scoresView = nil;
+        }
+        
+        if (_poorScoreView != nil) {
+            [_poorScoreView removeFromSuperview];
+            _poorScoreView = nil;
+        }
+        
+        if (_tranView != nil) {
+            [_tranView removeFromSuperview];
+            _tranView = nil;
+        }
+
         
         NSUserDefaults *usedef = [NSUserDefaults standardUserDefaults];
         if (![usedef objectForKey:@"userSeccondScore"]) {
@@ -554,14 +566,30 @@
     if (_scoreFinish == 1) {
         [_item setTitle:@"完成"];
     }else{
-        [_item setTitle:@"保存"];
+        if (_selectHole == 1) {
+            [_item setTitle:@"退出记分"];
+        }else{
+            [_item setTitle:@"保存"];
+        }
+        
     }
     
     if (_refreshArea == 0) {
         _selectHole = 0;
-        [_scoresView removeFromSuperview];
-        [_poorScoreView removeFromSuperview];
-        [_tranView removeFromSuperview];
+        if (_scoresView != nil) {
+            [_scoresView removeFromSuperview];
+            _scoresView = nil;
+        }
+        
+        if (_poorScoreView != nil) {
+            [_poorScoreView removeFromSuperview];
+            _poorScoreView = nil;
+        }
+        
+        if (_tranView != nil) {
+            [_tranView removeFromSuperview];
+            _tranView = nil;
+        }
         
     }else{
         _selectHole = 1;
@@ -1012,8 +1040,8 @@
 #pragma mark -- 切换球场区域 -- 总杆模式
 - (void)oneAreaString:(NSString *)areaString andID:(NSInteger)selectId{
     [Helper alertViewWithTitle:@"确定切换打球区吗？该区切换前的记分数据会被清空！" withBlockCancle:^{
-        [_scoresView removeOneAreaView];
-        [_poorScoreView removePoorOneAreaView];
+        [_scoresView removeAreaView];
+        [_poorScoreView removePoorAreaView];
     } withBlockSure:^{
         
         [self loadOneAreaData:areaString andBtnTag:selectId];
@@ -1024,8 +1052,8 @@
 
 - (void)twoAreaString:(NSString *)areaString andID:(NSInteger)selectId{
     [Helper alertViewWithTitle:@"确定切换打球区吗？该区切换前的记分数据会被清空！" withBlockCancle:^{
-        [_scoresView removeOneAreaView];
-        [_poorScoreView removePoorOneAreaView];
+        [_scoresView removeAreaView];
+        [_poorScoreView removePoorAreaView];
     } withBlockSure:^{
         
         [self loadOneAreaData:areaString andBtnTag:selectId];
@@ -1033,10 +1061,7 @@
         [self presentViewController:alertView animated:YES completion:nil];
     }];
 }
-- (void)oneAreaBtnDelegate:(UIButton *)btn{
-    
-    
-}
+
 #pragma mark -- 切换第一区 -- 总杆模式
 - (void)loadOneAreaData:(NSString *)btnString andBtnTag:(NSInteger)tag{
     NSLog(@"%@", btnString);
@@ -1055,8 +1080,8 @@
             NSArray *standardleverArray = [NSArray array];//标准杆
             standardleverArray = [data objectForKey:@"poles"];
             if (tag < 400) {
-                [_scoresView removeOneAreaView];
-                [_poorScoreView removePoorOneAreaView];
+                [_scoresView removeAreaView];
+                [_poorScoreView removePoorAreaView];
                 //更换区域信息
                 [_currentAreaArray replaceObjectAtIndex:0 withObject:btnString];
                 
@@ -1089,8 +1114,8 @@
                 }
                 
             }else{
-                [_scoresView removeTwoAreaView];
-                [_poorScoreView removePoorTwoAreaView];
+                [_scoresView removeAreaView];
+                [_poorScoreView removePoorAreaView];
                 //更换区域信息
                 [_currentAreaArray replaceObjectAtIndex:1 withObject:btnString];
                 
@@ -1153,8 +1178,8 @@
 #pragma mark -- 切换区域 主页面改变区域
 - (void)poorOneAreaString:(NSString *)areaString andID:(NSInteger)selectId{
     [Helper alertViewWithTitle:@"确定切换打球区吗？该区切换前的记分数据会被清空！" withBlockCancle:^{
-        [_scoresView removeOneAreaView];
-        [_poorScoreView removePoorOneAreaView];
+        [_scoresView removeAreaView];
+        [_poorScoreView removePoorAreaView];
     } withBlockSure:^{
         [self loadOneAreaData:areaString andBtnTag:selectId];
     } withBlock:^(UIAlertController *alertView) {
@@ -1164,8 +1189,8 @@
 #pragma mark -- 差杆模式。切换区域
 - (void)poorTwoAreaString:(NSString *)areaString andID:(NSInteger)selectId{
     [Helper alertViewWithTitle:@"确定切换打球区吗？该区切换前的记分数据会被清空！" withBlockCancle:^{
-        [_scoresView removeOneAreaView];
-        [_poorScoreView removePoorOneAreaView];
+        [_scoresView removeAreaView];
+        [_poorScoreView removePoorAreaView];
     } withBlockSure:^{
         
         [self loadOneAreaData:areaString andBtnTag:selectId];
@@ -1175,8 +1200,10 @@
 }
 - (void)twoAreaPoorBtnDelegate:(UIButton *)btn{
     [Helper alertViewWithTitle:@"确定切换打球区吗？该区切换前的记分数据会被清空！" withBlockCancle:^{
-        [_scoresView removeOneAreaView];
-        [_poorScoreView removePoorOneAreaView];
+        [_scoresView removeAreaView];
+        
+            [_poorScoreView removePoorAreaView];
+        
     } withBlockSure:^{
         [self loadOneAreaData:btn.currentTitle andBtnTag:btn.tag];
     } withBlock:^(UIAlertController *alertView) {

@@ -38,7 +38,7 @@
 
 - (void)reloadScoreList:(NSArray *)currentAreaArray andAreaArray:(NSArray *)areaArray andIsShowArea:(NSInteger)isShowArea;
 
-- (void)removePoorOneAreaView;
+- (void)removePoorAreaView;
 
 - (void)removePoorTwoAreaView;
 

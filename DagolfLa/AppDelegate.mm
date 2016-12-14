@@ -667,11 +667,11 @@
     //发送消息
     [[NSNotificationCenter defaultCenter]postNotification:notice];
 }
-
 #pragma mark --消息推送
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
     // Required
     [JPUSHService registerDeviceToken:deviceToken];
+    
 }
 
 -(void)onReq:(BaseReq *)req{

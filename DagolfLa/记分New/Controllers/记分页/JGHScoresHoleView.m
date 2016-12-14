@@ -25,8 +25,8 @@ static NSString *const JGHTwoScoreAreaCellIdentifier = @"JGHTwoScoreAreaCell";
     NSArray *_colorArray;
     NSInteger _areaId;// 0-无区域，1- ； 2-；
     
-    UIView *_oneAreaView;
-    UIView *_twoAreaView;
+//    UIView *_oneAreaView;
+//    UIView *_twoAreaView;
     
     NSArray *_currentAreaArray;//当前区域
     NSArray *_areaArray;//区域列表
@@ -204,17 +204,17 @@ static NSString *const JGHTwoScoreAreaCellIdentifier = @"JGHTwoScoreAreaCell";
     NSLog(@"%td", cellTag);//101
     NSLog(@"cell10 = %td", cellTag%100/10);
     NSLog(@"cell100  = %td", cellTag/100);
-    if (_oneAreaView != nil) {
-        [_oneAreaView removeFromSuperview];
-        _oneAreaView = nil;
-        return;
-    }
-    
-    if (_twoAreaView != nil) {
-        [_twoAreaView removeFromSuperview];
-        _twoAreaView = nil;
-        return;
-    }
+//    if (_oneAreaView != nil) {
+//        [_oneAreaView removeFromSuperview];
+//        _oneAreaView = nil;
+//        return;
+//    }
+//    
+//    if (_twoAreaView != nil) {
+//        [_twoAreaView removeFromSuperview];
+//        _twoAreaView = nil;
+//        return;
+//    }
     
     NSMutableDictionary *userDict = [NSMutableDictionary dictionary];
     if ((cellTag%100/10) == 0) {
@@ -239,9 +239,13 @@ static NSString *const JGHTwoScoreAreaCellIdentifier = @"JGHTwoScoreAreaCell";
         _imageSelectOne = 1;
     }
     
+    _imageSelectTwo = 0;
+    
     [self.scoreTableView reloadData];
     
     if (_areaListView != nil) {
+        _imageSelectOne = 0;
+        [self.scoreTableView reloadData];
         [_areaListView removeFromSuperview];
         _areaListView = nil;
         return;
@@ -285,6 +289,10 @@ static NSString *const JGHTwoScoreAreaCellIdentifier = @"JGHTwoScoreAreaCell";
         [self.delegate twoAreaString:areaString andID:selectId +400];
     }
     
+    _imageSelectTwo = 0;
+    
+    [self.scoreTableView reloadData];
+    
     [_areaListView removeFromSuperview];
     _areaListView = nil;
 }
@@ -298,9 +306,13 @@ static NSString *const JGHTwoScoreAreaCellIdentifier = @"JGHTwoScoreAreaCell";
         _imageSelectTwo = 0;
     }
     
+    _imageSelectOne = 0;
+    
     [self.scoreTableView reloadData];
     
     if (_areaListView != nil) {
+        _imageSelectTwo = 0;
+        [self.scoreTableView reloadData];
         [_areaListView removeFromSuperview];
         _areaListView = nil;
         return;
@@ -345,6 +357,14 @@ static NSString *const JGHTwoScoreAreaCellIdentifier = @"JGHTwoScoreAreaCell";
     }
     
     [self.scoreTableView reloadData];
+}
+
+- (void)removeAreaView{
+    if (_areaListView != nil) {
+        [_areaListView removeFromSuperview];
+        _areaListView = nil;
+    }
+    
 }
 /*
  // Only override drawRect: if you perform custom drawing.
