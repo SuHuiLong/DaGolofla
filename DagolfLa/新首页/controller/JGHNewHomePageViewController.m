@@ -96,11 +96,6 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
     self.view.backgroundColor = [UIColor colorWithHexString:BG_color];
     self.indexModel = [[JGHIndexModel alloc]init];
     _showLineID = 0;
-    
-    //监听分组页面返回，刷新数据
-    NSNotificationCenter * center = [NSNotificationCenter defaultCenter];
-    //添加当前类对象为一个观察者，name和object设置为nil，表示接收一切通知
-    [center addObserver:self selector:@selector(PushJGTeamActibityNameViewController:) name:@"PushJGTeamActibityNameViewController" object:nil];
 
     [self createHomeTableView];
     
@@ -119,7 +114,7 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
     }
     
     //获取通知中心单例对象
-//    NSNotificationCenter *messageCenter = [NSNotificationCenter defaultCenter];
+    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
     //添加当前类对象为一个观察者，name和object设置为nil，表示接收一切通知
     [center addObserver:self selector:@selector(loadMessageData) name:@"loadMessageData" object:nil];
     
@@ -780,194 +775,7 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
         return;
     }
 }
-#pragma mark -- 网页 跳转活动详情
-- (void)PushJGTeamActibityNameViewController:(NSNotification *)not{
-    //回到首页
-    [self.navigationController popToRootViewControllerAnimated:YES];
-    self.tabBarController.selectedIndex = 0;
-    
-    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"userId"]) {
-        
-    }
-    else
-    {
-        [Helper alertViewWithTitle:@"是否立即登录?" withBlockCancle:^{
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"show" object:nil];
-        } withBlockSure:^{
-            JGHLoginViewController *vc = [[JGHLoginViewController alloc] init];
-            vc.reloadCtrlData = ^(){
-                [self loadIndexdata];
-            };
-            [self.navigationController pushViewController:vc animated:YES];
-        } withBlock:^(UIAlertController *alertView) {
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"show" object:nil];
-            [self presentViewController:alertView animated:YES completion:nil];
-        }];
-        
-        return;
-    }
-    
-    NSString *urlString = [NSString stringWithFormat:@"%@", not.userInfo[@"details"]];
-    
-    if ([urlString containsString:@"dagolfla://"]) {
-        
-        // 球队提现
-        
-        if ([urlString containsString:@"teamWithDraw"]) {
-            if ([urlString containsString:@"?"]) {
-                JGDWithDrawTeamMoneyViewController *vc = [[JGDWithDrawTeamMoneyViewController alloc] init];
-                vc.teamKey = [NSNumber numberWithInteger:[[Helper returnKeyVlaueWithUrlString:urlString andKey:@"teamKey"] integerValue]];
-                [self.navigationController pushViewController:vc animated:YES];        }
-        }
-        
-        // 球队大厅
-            
-            if ([urlString containsString:@"teamHall"]) {
-                JGTeamMainhallViewController *teamMainCtrl = [[JGTeamMainhallViewController alloc]init];
-                [self.navigationController pushViewController:teamMainCtrl animated:YES];
-        }
-        
-        // 成员管理
-        
-        if ([urlString containsString:@"teamMemberMgr"]) {
-            JGTeamMemberController* menVc = [[JGTeamMemberController alloc]init];
-            menVc.title = @"队员管理";
-            menVc.power = @"1004,1001,1002,1005";
-            menVc.teamManagement = 1;
-            menVc.teamKey = [NSNumber numberWithInteger:[[Helper returnKeyVlaueWithUrlString:urlString andKey:@"teamKey"] integerValue]];
-            [self.navigationController pushViewController:menVc animated:YES];
-        }
-        
-        // 入队审核页面
-        
-        if ([urlString containsString:@"auditTeamMember"]) {
-            JGLJoinManageViewController *jgJoinVC = [[JGLJoinManageViewController alloc] init];
-            jgJoinVC.teamKey = [NSNumber numberWithInteger:[[Helper returnKeyVlaueWithUrlString:urlString andKey:@"teamKey"] integerValue]];
-            [self.navigationController pushViewController:jgJoinVC animated:YES];
-        }
-        
-        //新球友
-        if ([urlString containsString:@"newUserFriendList"]) {
-            NewFriendViewController *friendCtrl = [[NewFriendViewController alloc]init];
-            friendCtrl.fromWitchVC = 2;
-            [self.navigationController pushViewController:friendCtrl animated:YES];
-        }
-        
-        // 相册
-        if ([urlString containsString:@"teamMediaList"]) {
-            JGPhotoAlbumViewController *albumVC = [[JGPhotoAlbumViewController alloc]init];
-            albumVC.albumKey = [NSNumber numberWithInteger:[[Helper returnKeyVlaueWithUrlString:urlString andKey:@"albumKey"] integerValue]];
-            albumVC.hidesBottomBarWhenPushed = YES;
-            [self.navigationController pushViewController:albumVC animated:YES];
-        }
 
-        //活动详情
-        if ([urlString containsString:@"teamActivityDetail"]) {
-            JGTeamActibityNameViewController *teamCtrl= [[JGTeamActibityNameViewController alloc]init];
-            teamCtrl.teamKey = [[Helper returnKeyVlaueWithUrlString:urlString andKey:@"activityKey"] integerValue];
-            teamCtrl.hidesBottomBarWhenPushed = YES;
-            [self.navigationController pushViewController:teamCtrl animated:YES];
-        }
-        
-        //分组--普通用户
-        if ([urlString containsString:@"activityGroup"]) {
-            JGTeamGroupViewController *teamGroupCtrl= [[JGTeamGroupViewController alloc]init];
-            teamGroupCtrl.teamActivityKey = [[Helper returnKeyVlaueWithUrlString:urlString andKey:@"activityKey"] integerValue];
-            teamGroupCtrl.hidesBottomBarWhenPushed = YES;
-            [self.navigationController pushViewController:teamGroupCtrl animated:YES];
-        }
-        
-        //分组--管理
-        if ([urlString containsString:@"activityGroupAdmin"]) {
-            JGTeamGroupViewController *teamGroupCtrl= [[JGTeamGroupViewController alloc]init];
-            teamGroupCtrl.teamActivityKey = [[Helper returnKeyVlaueWithUrlString:urlString andKey:@"activityKey"] integerValue];
-            teamGroupCtrl.hidesBottomBarWhenPushed = YES;
-            [self.navigationController pushViewController:teamGroupCtrl animated:YES];
-        }
-        
-        //活动成绩详情 --
-        if ([urlString containsString:@"activityScore"]) {
-            JGLScoreRankViewController *scoreLiveCtrl= [[JGLScoreRankViewController alloc]init];
-            scoreLiveCtrl.activity = [NSNumber numberWithInteger:[[Helper returnKeyVlaueWithUrlString:urlString andKey:@"activityKey"] integerValue]];
-            scoreLiveCtrl.teamKey = [NSNumber numberWithInteger:[[Helper returnKeyVlaueWithUrlString:urlString andKey:@"teamKey"] integerValue]];
-            scoreLiveCtrl.hidesBottomBarWhenPushed = YES;
-            [self.navigationController pushViewController:scoreLiveCtrl animated:YES];
-        }
-        
-        //获奖详情 -- 
-        if ([urlString containsString:@"awardedInfo"]) {
-            JGLPresentAwardViewController *teamGroupCtrl= [[JGLPresentAwardViewController alloc]init];
-            teamGroupCtrl.activityKey = [[Helper returnKeyVlaueWithUrlString:urlString andKey:@"activityKey"] integerValue];
-            teamGroupCtrl.teamKey = [[Helper returnKeyVlaueWithUrlString:urlString andKey:@"teamKey"] integerValue];
-            teamGroupCtrl.isManager = 0;//0-非管理员
-            teamGroupCtrl.hidesBottomBarWhenPushed = YES;
-            [self.navigationController pushViewController:teamGroupCtrl animated:YES];
-        }
-        
-        //球队详情
-        if ([urlString containsString:@"teamDetail"]) {
-            JGDNewTeamDetailViewController *newTeamVC = [[JGDNewTeamDetailViewController alloc] init];
-            newTeamVC.timeKey = [NSNumber numberWithInteger:[[Helper returnKeyVlaueWithUrlString:urlString andKey:@"timekey"] integerValue]];
-            newTeamVC.hidesBottomBarWhenPushed = YES;
-            [self.navigationController pushViewController:newTeamVC animated:YES];
-        }
-        
-        //商品详情
-        if ([urlString containsString:@"goodDetail"]) {
-            UseMallViewController* userVc = [[UseMallViewController alloc]init];
-            userVc.linkUrl = [NSString stringWithFormat:@"http://www.dagolfla.com/app/ProductDetails.html?proid=%td", [[Helper returnKeyVlaueWithUrlString:urlString andKey:@"timekey"] integerValue]];
-            userVc.hidesBottomBarWhenPushed = YES;
-            [self.navigationController pushViewController:userVc animated:YES];
-        }
-        
-        //H5
-        if ([urlString containsString:@"openURL"]) {
-            JGLPushDetailsViewController* puVc = [[JGLPushDetailsViewController alloc]init];
-            puVc.strUrl = [Helper returnKeyVlaueWithUrlString:urlString andKey:@"timekey"];
-            puVc.hidesBottomBarWhenPushed = YES;
-            [self.navigationController pushViewController:puVc animated:YES];
-        }
-        
-        //社区
-        if ([urlString containsString:@"moodKey"]) {
-            DetailViewController * comDevc = [[DetailViewController alloc]init];
-            comDevc.detailId = [NSNumber numberWithInteger:[[Helper returnKeyVlaueWithUrlString:urlString andKey:@"timekey"] integerValue]];
-            comDevc.hidesBottomBarWhenPushed = YES;
-            [self.navigationController pushViewController:comDevc animated:YES];
-        }
-        
-        //创建球队
-        if ([urlString containsString:@"createTeam"]) {
-            NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
-            
-            if ([user objectForKey:@"cacheCreatTeamDic"]) {
-                UIAlertController *alert=[UIAlertController alertControllerWithTitle:@"提示" message:@"是否继续上次编辑" preferredStyle:UIAlertControllerStyleAlert];
-                
-                UIAlertAction *action1=[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                    [user setObject:0 forKey:@"cacheCreatTeamDic"];
-                    JGNewCreateTeamTableViewController *creatteamVc = [[JGNewCreateTeamTableViewController alloc] init];
-                    creatteamVc.hidesBottomBarWhenPushed = YES;
-                    [self.navigationController pushViewController:creatteamVc animated:YES];
-                }];
-                UIAlertAction* action2=[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                    JGNewCreateTeamTableViewController *creatteamVc = [[JGNewCreateTeamTableViewController alloc] init];
-                    creatteamVc.detailDic = [[user objectForKey:@"cacheCreatTeamDic"] mutableCopy];
-                    creatteamVc.titleField.text = [[user objectForKey:@"cacheCreatTeamDic"] objectForKey:@"name"];
-                    creatteamVc.hidesBottomBarWhenPushed = YES;
-                    [self.navigationController pushViewController:creatteamVc animated:YES];
-                }];
-                
-                [alert addAction:action1];
-                [alert addAction:action2];
-                [self presentViewController:alert animated:YES completion:nil];
-                
-            }else{
-                JGNewCreateTeamTableViewController *creatteamVc = [[JGNewCreateTeamTableViewController alloc] init];
-                [self.navigationController pushViewController:creatteamVc animated:YES];
-            }
-        }
-    }
-}
 /*
 #pragma mark - Navigation
 

@@ -72,7 +72,6 @@
 -(void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    //    [[NSNotificationCenter defaultCenter] postNotificationName:@"show" object:nil];
 }
 
 - (void)viewDidLoad {

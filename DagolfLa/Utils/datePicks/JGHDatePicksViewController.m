@@ -44,10 +44,10 @@
     NSDate *now = [NSDate date];
     
     //delegate
-//    _datePicker = [[UUDatePicker alloc]initWithframe:CGRectMake(10*ProportionAdapter, ((screenHeight-200*ProportionAdapter-64)/2)*ProportionAdapter, screenWidth-20*ProportionAdapter, 200*ProportionAdapter) Delegate:self PickerStyle:UUDateStyle_YearMonthDayHourMinute];
+    _datePicker = [[UUDatePicker alloc]initWithframe:CGRectMake(10*ProportionAdapter, ((screenHeight-200*ProportionAdapter-64)/2)*ProportionAdapter, screenWidth-20*ProportionAdapter, 200*ProportionAdapter) Delegate:self PickerStyle:UUDateStyle_YearMonthDayHourMinute];
 //    _datePicker = [[UUDatePicker alloc]initWithFrame:CGRectMake(0, ((screenHeight-200*ProportionAdapter-64)/2)*ProportionAdapter, screenWidth, 200*ProportionAdapter)];
-    _datePicker = [[UUDatePicker alloc]initWithFrame:CGRectMake(0, ((screenHeight-200*ProportionAdapter)/2)*ProportionAdapter, screenWidth, 200*ProportionAdapter)];
-    _datePicker.datePickerStyle = UUDateStyle_YearMonthDayHourMinute;
+//    _datePicker = [[UUDatePicker alloc]initWithFrame:CGRectMake(0, ((screenHeight-200*ProportionAdapter)/2)*ProportionAdapter, screenWidth, 200*ProportionAdapter)];
+//    _datePicker.datePickerStyle = UUDateStyle_YearMonthDayHourMinute;
     
     
     _datePicker.ScrollToDate = now;

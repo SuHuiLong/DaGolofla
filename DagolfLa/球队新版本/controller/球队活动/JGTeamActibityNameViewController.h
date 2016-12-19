@@ -7,7 +7,6 @@
 //
 
 #import "ViewController.h"
-@class JGTeamAcitivtyModel;
 
 typedef void (^LoadData)(void);
 

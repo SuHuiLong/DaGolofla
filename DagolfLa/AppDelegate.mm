@@ -26,18 +26,32 @@
 #import <RongIMKit/RongIMKit.h>
 #import <AddressBook/AddressBook.h>
 
-#import "Helper.h"
-#import "PostDataRequest.h"
 #import "JPUSHService.h"
 #import <AdSupport/AdSupport.h>
 
 #import <TAESDK/TaeSDK.h>
-
 #import <AlipaySDK/AlipaySDK.h>
 
 #import "UMMobClick/MobClick.h"
-
+#import "JGHNewHomePageViewController.h"
+#import "JGTeamMainhallViewController.h"
 #import "JGLAnimationViewController.h"
+#import "NewFriendViewController.h"
+#import "JGTeamGroupViewController.h"
+#import "JGLPresentAwardViewController.h"
+#import "JGDActSelfHistoryScoreViewController.h"
+#import "JGDWithDrawTeamMoneyViewController.h"
+#import "JGTeamMemberController.h"
+#import "JGLJoinManageViewController.h"
+#import "JGPhotoAlbumViewController.h"
+#import "JGTeamActibityNameViewController.h"
+#import "JGLScoreRankViewController.h"
+#import "JGNewCreateTeamTableViewController.h"
+#import "UseMallViewController.h"
+#import "JGDNewTeamDetailViewController.h"
+#import "JGLPushDetailsViewController.h"
+#import "DetailViewController.h"
+
 #define ImgUrlString2 @"http://res.dagolfla.com/h5/ad/app.jpg"
 
 #ifdef NSFoundationVersionNumber_iOS_9_x_Max
@@ -47,6 +61,8 @@
 @interface AppDelegate ()<CLLocationManagerDelegate, JPUSHRegisterDelegate>
 {
     BMKMapManager* _mapManager;
+    
+    NSInteger _pushID;//双击Homde退出时，通过链接重新打开APP时openURL方法会调用，导致2次Push页面；
 }
 //@property (strong, nonatomic) UIView *lunchView;
 //@property (strong, nonatomic) UIWebView* webView;
@@ -195,10 +211,7 @@
                         }else{
                             [commitContactArray addObject:personDic];
                         }
-                        
-                        
                     }
-                    
                 }
                 
                 NSMutableDictionary *dic = [NSMutableDictionary dictionary];
@@ -214,20 +227,14 @@
                             NSLog(@"mobileContact/doUploadContacts success");
                         }
                     }];
-
                 }
-                
             }
-            
         }
-        
     }];
-    
 }
 
-
-
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    _pushID = 0;
     
     if (DEFAULF_USERID) {
         [self contanctUpload];
@@ -238,14 +245,7 @@
     [user setObject:[NSNumber numberWithFloat:121.56] forKey:BDMAPLNG];//经度
     [user setObject:@"上海市" forKey:CITYNAME];//城市名
     [user synchronize];
-    
-//    if ([launchOptions objectForKey:UIApplicationLaunchOptionsURLKey]) {
-//        //非用户手动打开
-//        NSString *openUrlString = [NSString stringWithFormat:@"%@", [launchOptions objectForKey:UIApplicationLaunchOptionsURLKey]];
-//
-//        [self APSHomeDealUrl:openUrlString];
-//    }
-    
+
     //定位
     [self getCurPosition];
     
@@ -365,7 +365,7 @@
                 [[RCIM sharedRCIM] initWithAppKey:@"0vnjpoadnkihz"];//pgyu6atqylmiu
                 //网页端同步退出
                 [[PostDataRequest sharedInstance] getDataRequest:[NSString stringWithFormat:@"http://www.dagolfla.com/app/api/client/api.php?Action=UserLogOut"] success:^(id respondsData) {
-                    NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:respondsData options:NSJSONReadingMutableContainers error:nil];
+//                    NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:respondsData options:NSJSONReadingMutableContainers error:nil];
                 } failed:^(NSError *error) {
                     
                 }];
@@ -395,7 +395,7 @@
             [[RCIM sharedRCIM] initWithAppKey:@"0vnjpoadnkihz"];//pgyu6atqylmiu
             //网页端同步退出
             [[PostDataRequest sharedInstance] getDataRequest:[NSString stringWithFormat:@"http://www.dagolfla.com/app/api/client/api.php?Action=UserLogOut"] success:^(id respondsData) {
-                NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:respondsData options:NSJSONReadingMutableContainers error:nil];
+//                NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:respondsData options:NSJSONReadingMutableContainers error:nil];
             } failed:^(NSError *error) {
                 
             }];
@@ -431,51 +431,59 @@
     //微信支付
     [WXApi registerApp:@"wxdcdc4e20544ed728"];
     [self umengTrack];
-
-    //    //取出新版本号
-    NSString* versionKey = (NSString*)kCFBundleVersionKey;
-    NSString* version = [NSBundle mainBundle].infoDictionary[versionKey];
-    //取出老的版本号
-    NSString* lastVerson = [[NSUserDefaults standardUserDefaults]valueForKey:versionKey];
-    if(![version isEqualToString:lastVerson])
+    
+    NSURL *url = [launchOptions objectForKey:UIApplicationLaunchOptionsURLKey];
+    NSDictionary* pushInfo = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
+    if (pushInfo)
     {
-        PageViewController* pageview = [[PageViewController alloc]init];
-        self.window.rootViewController = pageview;
-        [pageview setCallBack:^{
-            [[NSUserDefaults standardUserDefaults]setValue:version forKey:versionKey];
-            [[NSUserDefaults standardUserDefaults]synchronize];
+        NSDictionary *apsInfo = [pushInfo objectForKey:@"aps"];
+        if(apsInfo)
+        {
             [self startApp];
-        }];
-    }
-    else
-    {
-        JGLAnimationViewController* aniVc = [[JGLAnimationViewController alloc]init];
-        self.window.rootViewController = aniVc;
-        [aniVc setCallBack:^{
-            [self startApp];
-        }];
+            
+            [self pushSpecifiedViewCtrl:[NSString stringWithFormat:@"%@", url]];
+        }
         
+    }else if (url != nil) {
+        if ([[url query] containsString:@"safepay"]) {
+            
+        }else{
+            if ([[url scheme] isEqualToString:@"dagolfla"]) {
+                NSLog(@"%@", self.window.rootViewController);
+                [self startApp];
+                
+                [self pushSpecifiedViewCtrl:[NSString stringWithFormat:@"%@", url]];
+            }
+        }
+    }else{
+        //    //取出新版本号
+        NSString* versionKey = (NSString*)kCFBundleVersionKey;
+        NSString* version = [NSBundle mainBundle].infoDictionary[versionKey];
+        //取出老的版本号
+        NSString* lastVerson = [[NSUserDefaults standardUserDefaults]valueForKey:versionKey];
+        if(![version isEqualToString:lastVerson])
+        {
+            PageViewController* pageview = [[PageViewController alloc]init];
+            self.window.rootViewController = pageview;
+            [pageview setCallBack:^{
+                [[NSUserDefaults standardUserDefaults]setValue:version forKey:versionKey];
+                [[NSUserDefaults standardUserDefaults]synchronize];
+                [self startApp];
+            }];
+        }
+        else
+        {
+            JGLAnimationViewController* aniVc = [[JGLAnimationViewController alloc]init];
+            self.window.rootViewController = aniVc;
+            [aniVc setCallBack:^{
+                [self startApp];
+            }];
+            
+        }
     }
     
     //调用PHP登录
     [self phpLogin];
-    
-    NSURL *url = [launchOptions objectForKey:UIApplicationLaunchOptionsURLKey];
-//    NSLog(@"%@", UIApplicationLaunchOptionsURLKey);
-    if (url != nil) {
-        if ([[url query] containsString:@"safepay"]) {
-            //跳转支付宝钱包进行支付，处理支付结果
-//            [[AlipaySDK defaultService] processOrderWithPaymentResult:url standbyCallback:^(NSDictionary *resultDic) {
-//                NSLog(@"result = %@",resultDic);
-//                NSLog(@"客户端支付");
-//            }];
-            
-        }else{
-            
-            [self APSHomeDealUrl:[NSString stringWithFormat:@"%@", url]];
-        }
-
-    }
     
     return YES;
 }
@@ -498,7 +506,6 @@
 
 -(void)startApp
 {
-//    [self gifReLoad];
     self.window.rootViewController = [[TabBarController alloc]init];
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
@@ -573,15 +580,16 @@
             }];
             
         }else{
-            [self APSHomeDealUrl:[NSString stringWithFormat:@"%@", url]];
+            if (_pushID != 1) {
+                [self pushSpecifiedViewCtrl:[NSString stringWithFormat:@"%@", url]];
+            }else{
+                _pushID = 0;
+            }
         }
         
         return YES;
-    }
-    else{
+    }else{
         return [UMSocialSnsService handleOpenURL:url wxApiDelegate:self];
-//        [UMSocialSnsService handleOpenURL:url
-//                            wxDelegate:self];
     }
     
 }
@@ -604,16 +612,17 @@
             }];
             
         }else{
-            [self APSHomeDealUrl:[NSString stringWithFormat:@"%@", url]];
+            if (_pushID != 1) {
+                [self pushSpecifiedViewCtrl:[NSString stringWithFormat:@"%@", url]];
+            }else{
+                _pushID = 0;
+            }
         }
         
         return YES;
     }else{
         return [UMSocialSnsService handleOpenURL:url wxApiDelegate:self];
-        //        [UMSocialSnsService handleOpenURL:url
-        //                            wxDelegate:self];
     }
-//    return YES;
 }
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
@@ -649,7 +658,11 @@
             }];
             
         }else{
-            [self APSHomeDealUrl:[NSString stringWithFormat:@"%@", url]];
+            if (_pushID != 1) {
+                [self pushSpecifiedViewCtrl:[NSString stringWithFormat:@"%@", url]];
+            }else{
+                _pushID = 0;
+            }
         }
         
         return YES;
@@ -658,16 +671,6 @@
     {
         return YES;
     }
-}
-#pragma mark -- URL拦截跳转
-- (void)APSHomeDealUrl:(NSString *)dealURLString{
-    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    
-    [dict setObject:dealURLString forKey:@"details"];
-    //创建一个消息对象
-    NSNotification * notice = [NSNotification notificationWithName:@"PushJGTeamActibityNameViewController" object:nil userInfo:dict];
-    //发送消息
-    [[NSNotificationCenter defaultCenter]postNotification:notice];
 }
 #pragma mark --消息推送
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
@@ -744,7 +747,7 @@
 //    [JPUSHService handleRemoteNotification:userInfo];
     
      // 取得 APNs 标准信息内容
-     NSDictionary *aps = [userInfo valueForKey:@"aps"];
+//     NSDictionary *aps = [userInfo valueForKey:@"aps"];
 //     NSString *content = [aps valueForKey:@"alert"]; //推送显示的内容
 //     NSInteger badge = [[aps valueForKey:@"badge"] integerValue]; //badge数量
 //     NSString *sound = [aps valueForKey:@"sound"]; //播放的声音
@@ -764,7 +767,7 @@
     [JPUSHService handleRemoteNotification:userInfo];
     completionHandler(UIBackgroundFetchResultNewData);
 
-    [self APSHomeDealUrl:[userInfo objectForKey:@"url"]];
+    [self pushSpecifiedViewCtrl:[NSString stringWithFormat:@"%@", [userInfo objectForKey:@"url"]]];
 }
 - (void)application:(UIApplication *)application
 didReceiveLocalNotification:(UILocalNotification *)notification {
@@ -790,7 +793,7 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
     NSDictionary * userInfo = response.notification.request.content.userInfo;
     if([response.notification.request.trigger isKindOfClass:[UNPushNotificationTrigger class]]) {
         
-        [self APSHomeDealUrl:[userInfo objectForKey:@"url"]];
+        [self pushSpecifiedViewCtrl:[NSString stringWithFormat:@"%@", [userInfo objectForKey:@"url"]]];
         
         [JPUSHService handleRemoteNotification:userInfo];
         
@@ -855,6 +858,8 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    _pushID = 0;
+    
     [UMSocialSnsService  applicationDidBecomeActive];
     [application setApplicationIconBadgeNumber:0];
     [application cancelAllLocalNotifications];
@@ -954,7 +959,190 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
     }
     
     //定位失败后也下载数据
-//    [self loadIndexdata];
 }
+#pragma mark -- 通知、短信URL跳转
+- (void)pushSpecifiedViewCtrl:(NSString *)urlString{
+    _pushID = 1;
+    
+    // 获取导航控制器
+    TabBarController *tabVC = (TabBarController *)self.window.rootViewController;
+    UINavigationController *pushClassStance = (UINavigationController *)tabVC.viewControllers[0];
+    [pushClassStance popToRootViewControllerAnimated:YES];
+    
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"userId"]) {
+        
+    }
+    else
+    {
+        [Helper alertViewWithTitle:@"是否立即登录?" withBlockCancle:^{
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"show" object:nil];
+        } withBlockSure:^{
+            JGHLoginViewController *vc = [[JGHLoginViewController alloc] init];
+            vc.reloadCtrlData = ^(){
+                
+            };
+            [pushClassStance pushViewController:vc animated:YES];
+        } withBlock:^(UIAlertController *alertView) {
+            [pushClassStance presentViewController:alertView animated:YES completion:nil];
+        }];
+        
+        return;
+    }
+    
+    if ([urlString containsString:@"dagolfla://"]) {
+        // 球队提现
+        if ([urlString containsString:@"teamWithDraw"]) {
+            if ([urlString containsString:@"?"]) {
+                JGDWithDrawTeamMoneyViewController *vc = [[JGDWithDrawTeamMoneyViewController alloc] init];
+                vc.teamKey = [NSNumber numberWithInteger:[[Helper returnKeyVlaueWithUrlString:urlString andKey:@"teamKey"] integerValue]];
+                [pushClassStance pushViewController:vc animated:YES];        }
+        }
+        
+        // 球队大厅
+        if ([urlString containsString:@"teamHall"]) {
+            JGTeamMainhallViewController *teamMainCtrl = [[JGTeamMainhallViewController alloc]init];
+            [pushClassStance pushViewController:teamMainCtrl animated:YES];
+        }
+        
+        // 成员管理
+        if ([urlString containsString:@"teamMemberMgr"]) {
+            JGTeamMemberController* menVc = [[JGTeamMemberController alloc]init];
+            menVc.title = @"队员管理";
+            menVc.power = @"1004,1001,1002,1005";
+            menVc.teamManagement = 1;
+            menVc.teamKey = [NSNumber numberWithInteger:[[Helper returnKeyVlaueWithUrlString:urlString andKey:@"teamKey"] integerValue]];
+            [pushClassStance pushViewController:menVc animated:YES];
+        }
+        
+        // 入队审核页面
+        if ([urlString containsString:@"auditTeamMember"]) {
+            JGLJoinManageViewController *jgJoinVC = [[JGLJoinManageViewController alloc] init];
+            jgJoinVC.teamKey = [NSNumber numberWithInteger:[[Helper returnKeyVlaueWithUrlString:urlString andKey:@"teamKey"] integerValue]];
+            [pushClassStance pushViewController:jgJoinVC animated:YES];
+        }
+        
+        //新球友
+        if ([urlString containsString:@"newUserFriendList"]) {
+            NewFriendViewController *friendCtrl = [[NewFriendViewController alloc]init];
+            friendCtrl.fromWitchVC = 2;
+            [pushClassStance pushViewController:friendCtrl animated:YES];
+        }
+        
+        // 相册
+        if ([urlString containsString:@"teamMediaList"]) {
+            JGPhotoAlbumViewController *albumVC = [[JGPhotoAlbumViewController alloc]init];
+            albumVC.albumKey = [NSNumber numberWithInteger:[[Helper returnKeyVlaueWithUrlString:urlString andKey:@"albumKey"] integerValue]];
+            albumVC.hidesBottomBarWhenPushed = YES;
+            [pushClassStance pushViewController:albumVC animated:YES];
+        }
+        
+        //活动详情
+        if ([urlString containsString:@"teamActivityDetail"]) {
+            JGTeamActibityNameViewController *teamCtrl= [[JGTeamActibityNameViewController alloc]init];
+            teamCtrl.teamKey = [[Helper returnKeyVlaueWithUrlString:urlString andKey:@"activityKey"] integerValue];
+            teamCtrl.hidesBottomBarWhenPushed = YES;
+            [pushClassStance pushViewController:teamCtrl animated:YES];
+        }
+        
+        //分组--普通用户
+        if ([urlString containsString:@"activityGroup"]) {
+            JGTeamGroupViewController *teamGroupCtrl= [[JGTeamGroupViewController alloc]init];
+            teamGroupCtrl.teamActivityKey = [[Helper returnKeyVlaueWithUrlString:urlString andKey:@"activityKey"] integerValue];
+            teamGroupCtrl.hidesBottomBarWhenPushed = YES;
+            [pushClassStance pushViewController:teamGroupCtrl animated:YES];
+        }
+        
+        //分组--管理
+        if ([urlString containsString:@"activityGroupAdmin"]) {
+            JGTeamGroupViewController *teamGroupCtrl= [[JGTeamGroupViewController alloc]init];
+            teamGroupCtrl.teamActivityKey = [[Helper returnKeyVlaueWithUrlString:urlString andKey:@"activityKey"] integerValue];
+            teamGroupCtrl.hidesBottomBarWhenPushed = YES;
+            [pushClassStance pushViewController:teamGroupCtrl animated:YES];
+        }
+        
+        //活动成绩详情 --
+        if ([urlString containsString:@"activityScore"]) {
+            JGLScoreRankViewController *scoreLiveCtrl= [[JGLScoreRankViewController alloc]init];
+            scoreLiveCtrl.activity = [NSNumber numberWithInteger:[[Helper returnKeyVlaueWithUrlString:urlString andKey:@"activityKey"] integerValue]];
+            scoreLiveCtrl.teamKey = [NSNumber numberWithInteger:[[Helper returnKeyVlaueWithUrlString:urlString andKey:@"teamKey"] integerValue]];
+            scoreLiveCtrl.hidesBottomBarWhenPushed = YES;
+            [pushClassStance pushViewController:scoreLiveCtrl animated:YES];
+        }
+        
+        //获奖详情 --
+        if ([urlString containsString:@"awardedInfo"]) {
+            JGLPresentAwardViewController *teamGroupCtrl= [[JGLPresentAwardViewController alloc]init];
+            teamGroupCtrl.activityKey = [[Helper returnKeyVlaueWithUrlString:urlString andKey:@"activityKey"] integerValue];
+            teamGroupCtrl.teamKey = [[Helper returnKeyVlaueWithUrlString:urlString andKey:@"teamKey"] integerValue];
+            teamGroupCtrl.isManager = 0;//0-非管理员
+            teamGroupCtrl.hidesBottomBarWhenPushed = YES;
+            [pushClassStance pushViewController:teamGroupCtrl animated:YES];
+        }
+        
+        //球队详情
+        if ([urlString containsString:@"teamDetail"]) {
+            JGDNewTeamDetailViewController *newTeamVC = [[JGDNewTeamDetailViewController alloc] init];
+            newTeamVC.timeKey = [NSNumber numberWithInteger:[[Helper returnKeyVlaueWithUrlString:urlString andKey:@"timekey"] integerValue]];
+            newTeamVC.hidesBottomBarWhenPushed = YES;
+            [pushClassStance pushViewController:newTeamVC animated:YES];
+        }
+        
+        //商品详情
+        if ([urlString containsString:@"goodDetail"]) {
+            UseMallViewController* userVc = [[UseMallViewController alloc]init];
+            userVc.linkUrl = [NSString stringWithFormat:@"http://www.dagolfla.com/app/ProductDetails.html?proid=%td", [[Helper returnKeyVlaueWithUrlString:urlString andKey:@"timekey"] integerValue]];
+            userVc.hidesBottomBarWhenPushed = YES;
+            [pushClassStance pushViewController:userVc animated:YES];
+        }
+        
+        //H5
+        if ([urlString containsString:@"openURL"]) {
+            JGLPushDetailsViewController* puVc = [[JGLPushDetailsViewController alloc]init];
+            puVc.strUrl = [Helper returnKeyVlaueWithUrlString:urlString andKey:@"timekey"];
+            puVc.hidesBottomBarWhenPushed = YES;
+            [pushClassStance pushViewController:puVc animated:YES];
+        }
+        
+        //社区
+        if ([urlString containsString:@"moodKey"]) {
+            DetailViewController * comDevc = [[DetailViewController alloc]init];
+            comDevc.detailId = [NSNumber numberWithInteger:[[Helper returnKeyVlaueWithUrlString:urlString andKey:@"timekey"] integerValue]];
+            comDevc.hidesBottomBarWhenPushed = YES;
+            [pushClassStance pushViewController:comDevc animated:YES];
+        }
+        
+        //创建球队
+        if ([urlString containsString:@"createTeam"]) {
+            NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
+            
+            if ([user objectForKey:@"cacheCreatTeamDic"]) {
+                UIAlertController *alert=[UIAlertController alertControllerWithTitle:@"提示" message:@"是否继续上次编辑" preferredStyle:UIAlertControllerStyleAlert];
+                
+                UIAlertAction *action1=[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                    [user setObject:0 forKey:@"cacheCreatTeamDic"];
+                    JGNewCreateTeamTableViewController *creatteamVc = [[JGNewCreateTeamTableViewController alloc] init];
+                    creatteamVc.hidesBottomBarWhenPushed = YES;
+                    [pushClassStance pushViewController:creatteamVc animated:YES];
+                }];
+                UIAlertAction* action2=[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                    JGNewCreateTeamTableViewController *creatteamVc = [[JGNewCreateTeamTableViewController alloc] init];
+                    creatteamVc.detailDic = [[user objectForKey:@"cacheCreatTeamDic"] mutableCopy];
+                    creatteamVc.titleField.text = [[user objectForKey:@"cacheCreatTeamDic"] objectForKey:@"name"];
+                    creatteamVc.hidesBottomBarWhenPushed = YES;
+                    [pushClassStance pushViewController:creatteamVc animated:YES];
+                }];
+                
+                [alert addAction:action1];
+                [alert addAction:action2];
+                [pushClassStance presentViewController:alert animated:YES completion:nil];
+                
+            }else{
+                JGNewCreateTeamTableViewController *creatteamVc = [[JGNewCreateTeamTableViewController alloc] init];
+                [pushClassStance pushViewController:creatteamVc animated:YES];
+            }
+        }
+    }
+}
+
 
 @end
