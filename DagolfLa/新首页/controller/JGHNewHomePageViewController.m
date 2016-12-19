@@ -41,10 +41,11 @@
 #import "JGDWithDrawTeamMoneyViewController.h"
 #import "JGTeamMemberController.h"
 #import "JGLJoinManageViewController.h"
-
+#import "UITabBar+badge.h"
 
 #import "JGDDPhotoAlbumViewController.h"
 #import "JGDServiceViewController.h" // 定制服务
+#import "RCDTabBarBtn.h"
 
 
 static NSString *const JGHPASHeaderTableViewCellIdentifier = @"JGHPASHeaderTableViewCell";
@@ -55,6 +56,11 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
 @interface JGHNewHomePageViewController ()<UITableViewDelegate, UITableViewDataSource, JGHShowSectionTableViewCellDelegate, JGHShowActivityPhotoCellDelegate, JGHNavListViewDelegate, JGHPASHeaderTableViewCellDelegate, JGHIndexTableViewCellDelegate>
 {
     NSInteger _showLineID;//0-活动，1-相册，2-成绩
+    
+    NSInteger _teamUnread;
+    NSInteger _systemUnread;
+    
+    NSInteger _newFriendUnread;
 }
 @property (nonatomic, strong)HomeHeadView *topScrollView;//BANNAER图
 
@@ -130,8 +136,22 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
 //    [center addObserver:self selector:@selector(loadMessageData) name:@"loadMessageData" object:nil];
     
 }
+
 #pragma mark -- 下载未读消息数量
 - (void)loadMessageData{
+    
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"userId"])
+    {
+        
+    }
+    else
+    {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"君高高尔夫" message:@"是否立即登录？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+        [alertView show];
+        
+        return;
+    }
+    
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     [dict setObject:DEFAULF_USERID forKey:@"userKey"];
     [dict setObject:[Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@dagolfla.com", DEFAULF_USERID]] forKey:@"md5"];
@@ -140,35 +160,48 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
     } completionBlock:^(id data) {
         NSLog(@"%@", data);
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
-            int teamUnread = [[data objectForKey:@"teamUnread"] intValue];
-            int systemUnread = [[data objectForKey:@"systemUnread"] intValue];
+            _teamUnread = [[data objectForKey:@"teamUnread"] integerValue];
+            _systemUnread = [[data objectForKey:@"systemUnread"] integerValue];
+            _newFriendUnread = [[data objectForKey:@"newFriendUnread"] integerValue];
             
-            __weak typeof(self) __weakSelf = self;
-            dispatch_async(dispatch_get_main_queue(), ^{
-                NSMutableArray *displayConversationTypeArray = [NSMutableArray array];
-                [displayConversationTypeArray addObject:@1];
-                int count = [[RCIMClient sharedRCIMClient]
-                             getUnreadCount:displayConversationTypeArray];
-                if ((systemUnread +teamUnread +count) > 0) {
-                    [__weakSelf.tabBarController.tabBar showBadgeOnItemIndex:2 badgeValue:(systemUnread +teamUnread +count)];
-                    
-                } else {
-                    [__weakSelf.tabBarController.tabBar hideBadgeOnItemIndex:2];
-                }
-                
-            });
+            [self notifyUpdateUnreadMessageCount];
+//            [self refreshConversationTableViewIfNeeded];
             
         }else{
+            [self notifyUpdateUnreadMessageCount];
+            
             if ([data objectForKey:@"packResultMsg"]) {
                 [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
             }
         }
     }];
 }
+
+- (void)notifyUpdateUnreadMessageCount
+{
+    [self updateBadgeValueForTabBarItem];
+}
+
 - (void)updateBadgeValueForTabBarItem
 {
-    
-    
+    __weak typeof(self) __weakSelf = self;
+    dispatch_async(dispatch_get_main_queue(), ^{
+        
+        int count = [[RCIMClient sharedRCIMClient]
+                     getUnreadCount:0];
+        
+        if ((count + (int)_teamUnread +(int)_systemUnread +(int)_newFriendUnread) > 0) {
+            //      __weakSelf.tabBarItem.badgeValue =
+            //          [[NSString alloc] initWithFormat:@"%d", count];
+            //            int badgeValue = count+_teamUnread+_systemUnread;
+            [__weakSelf.tabBarController.tabBar showBadgeOnItemIndex:2 badgeValue:count+ (int)_teamUnread + (int)_systemUnread + (int)_newFriendUnread];
+            
+        } else {
+            //      __weakSelf.tabBarItem.badgeValue = nil;
+            [__weakSelf.tabBarController.tabBar hideBadgeOnItemIndex:2];
+        }
+        
+    });
 }
 #pragma mark -- 登录PHP
 - (void)loadingPHP{
@@ -787,6 +820,7 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
             JGHLoginViewController *vc = [[JGHLoginViewController alloc] init];
             vc.reloadCtrlData = ^(){
                 [self loadIndexdata];
+                [self loadMessageData];
             };
             [self.navigationController pushViewController:vc animated:YES];
         } withBlock:^(UIAlertController *alertView) {

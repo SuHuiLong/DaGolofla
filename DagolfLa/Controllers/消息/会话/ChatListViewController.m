@@ -13,7 +13,6 @@
 #import "ContactViewController.h"
 
 #import "NewsDetailController.h"
-#import "Helper.h"
 #import "UITabBar+badge.h"
 
 #import "NoteHandlle.h"
