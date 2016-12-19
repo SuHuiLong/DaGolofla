@@ -956,6 +956,8 @@
 		F5CB6EA81DB9B6540068F768 /* JGDInvateTeamViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5CB6EA71DB9B6540068F768 /* JGDInvateTeamViewController.m */; };
 		F5CB6EAB1DB9BB190068F768 /* JGDInviteTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F5CB6EAA1DB9BB190068F768 /* JGDInviteTableViewCell.m */; };
 		F5CB6EAD1DBA29150068F768 /* bg_image_pk@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F5CB6EAC1DBA29150068F768 /* bg_image_pk@2x.jpg */; };
+		F5D2F9B71E03DB550070D26C /* JGDServiceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5D2F9B61E03DB540070D26C /* JGDServiceViewController.m */; };
+		F5D2F9BA1E03DB6C0070D26C /* JGDServiceTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F5D2F9B91E03DB6C0070D26C /* JGDServiceTableViewCell.m */; };
 		F5D794421D9B6DF50095EF0B /* JGConfrontChannelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5D794411D9B6DF50095EF0B /* JGConfrontChannelViewController.m */; };
 		F5E1B87B1D6ADF6100414727 /* JGDGuestChannelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5E1B87A1D6ADF6100414727 /* JGDGuestChannelViewController.m */; };
 		F5E1B87E1D6AE13800414727 /* JGDGuestPayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5E1B87D1D6AE13800414727 /* JGDGuestPayViewController.m */; };
@@ -3013,6 +3015,10 @@
 		F5CB6EA91DB9BB190068F768 /* JGDInviteTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGDInviteTableViewCell.h; sourceTree = "<group>"; };
 		F5CB6EAA1DB9BB190068F768 /* JGDInviteTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGDInviteTableViewCell.m; sourceTree = "<group>"; };
 		F5CB6EAC1DBA29150068F768 /* bg_image_pk@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "bg_image_pk@2x.jpg"; sourceTree = "<group>"; };
+		F5D2F9B51E03DB540070D26C /* JGDServiceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGDServiceViewController.h; sourceTree = "<group>"; };
+		F5D2F9B61E03DB540070D26C /* JGDServiceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGDServiceViewController.m; sourceTree = "<group>"; };
+		F5D2F9B81E03DB6C0070D26C /* JGDServiceTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGDServiceTableViewCell.h; sourceTree = "<group>"; };
+		F5D2F9B91E03DB6C0070D26C /* JGDServiceTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGDServiceTableViewCell.m; sourceTree = "<group>"; };
 		F5D794401D9B6DF50095EF0B /* JGConfrontChannelViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGConfrontChannelViewController.h; sourceTree = "<group>"; };
 		F5D794411D9B6DF50095EF0B /* JGConfrontChannelViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGConfrontChannelViewController.m; sourceTree = "<group>"; };
 		F5E1B8791D6ADF6100414727 /* JGDGuestChannelViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGDGuestChannelViewController.h; sourceTree = "<group>"; };
@@ -4026,6 +4032,7 @@
 		2053ED951DBEF7650076BFE4 /* controller */ = {
 			isa = PBXGroup;
 			children = (
+				F5D2F9B31E03DB130070D26C /* 服务定制 */,
 				827E12C11DC21816000BDF65 /* 商城页面 */,
 				2053ED981DBEF7F00076BFE4 /* JGHNewHomePageViewController.h */,
 				2053ED991DBEF7F00076BFE4 /* JGHNewHomePageViewController.m */,
@@ -4045,6 +4052,7 @@
 		2053ED971DBEF7650076BFE4 /* view */ = {
 			isa = PBXGroup;
 			children = (
+				F5D2F9B41E03DB1C0070D26C /* 服务定制 */,
 				20A4CFB41DC85D3F00F5A81D /* JGHIndexTableViewCell.h */,
 				20A4CFB51DC85D3F00F5A81D /* JGHIndexTableViewCell.m */,
 				207F70551DC194F900667E26 /* 导航列表 */,
@@ -8098,6 +8106,24 @@
 			path = "邀请球队";
 			sourceTree = "<group>";
 		};
+		F5D2F9B31E03DB130070D26C /* 服务定制 */ = {
+			isa = PBXGroup;
+			children = (
+				F5D2F9B51E03DB540070D26C /* JGDServiceViewController.h */,
+				F5D2F9B61E03DB540070D26C /* JGDServiceViewController.m */,
+			);
+			path = "服务定制";
+			sourceTree = "<group>";
+		};
+		F5D2F9B41E03DB1C0070D26C /* 服务定制 */ = {
+			isa = PBXGroup;
+			children = (
+				F5D2F9B81E03DB6C0070D26C /* JGDServiceTableViewCell.h */,
+				F5D2F9B91E03DB6C0070D26C /* JGDServiceTableViewCell.m */,
+			);
+			path = "服务定制";
+			sourceTree = "<group>";
+		};
 		F5D7943F1D9B6D670095EF0B /* 赛事对抗频道 */ = {
 			isa = PBXGroup;
 			children = (
@@ -10125,6 +10151,7 @@
 				F5E1BAF71D6B006100414727 /* ZXDetectorResult.m in Sources */,
 				F5E1BAB81D6B006100414727 /* ZXAztecCode.m in Sources */,
 				208837A31D1A9D88004C7B5D /* JGHActivityBaseInfoCell.m in Sources */,
+				F5D2F9B71E03DB550070D26C /* JGDServiceViewController.m in Sources */,
 				36BFFD311BC76C8D005B3CE2 /* AppDelegate.mm in Sources */,
 				829960E01D23732000E121A8 /* JGLBankListViewController.m in Sources */,
 				F5E1BB231D6B006100414727 /* ZXByQuadrantReader.m in Sources */,
@@ -10195,6 +10222,7 @@
 				F51E5EFD1D8130AA00AE254E /* JGDPlayerNotActScoreCardViewController.m in Sources */,
 				F5838D8D1D4B26EE00A7FFC6 /* JGDActSelfHistoryScoreViewController.m in Sources */,
 				F51472F91DA8D43100029C59 /* JGDHotMatchTableViewCell.m in Sources */,
+				F5D2F9BA1E03DB6C0070D26C /* JGDServiceTableViewCell.m in Sources */,
 				2048E8FD1D4F28F900A2C024 /* JGHActivityMembersViewController.m in Sources */,
 				20C1B8AB1CE313A200508ABC /* JGTeamApplyViewController.m in Sources */,
 				8215EE121D0FD9F90099F161 /* JGTeamMemberManager.m in Sources */,

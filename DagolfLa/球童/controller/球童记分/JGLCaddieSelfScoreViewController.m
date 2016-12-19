@@ -69,10 +69,11 @@
         [defDict setObject:_userMobilePlayer forKey:Mobile];
     }
     
+    //问题，这个性别是死数据
     if (_sex == 0) {
-        [defDict setObject:@"红T" forKey:@"tTaiwan"];
-    }else{
         [defDict setObject:@"蓝T" forKey:@"tTaiwan"];
+    }else{
+        [defDict setObject:@"红T" forKey:@"tTaiwan"];
     }
     
     [defDict setObject:@1 forKey:@"userType"];
@@ -171,7 +172,7 @@
     }
     
     //球童必须第一位
-    [self.palyArray exchangeObjectAtIndex:0 withObjectAtIndex:self.palyArray.count-1];
+//    [self.palyArray exchangeObjectAtIndex:0 withObjectAtIndex:self.palyArray.count-1];
     
     [dict setObject:self.palyArray forKey:@"userList"];
     

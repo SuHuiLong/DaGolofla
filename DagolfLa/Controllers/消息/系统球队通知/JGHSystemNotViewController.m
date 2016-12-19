@@ -373,7 +373,7 @@ static NSString *const JGHSysInformCellIdentifier = @"JGHSysInformCell";
         //球队详情
         if ([model.linkURL containsString:@"teamDetail"]) {
             JGDNewTeamDetailViewController *newTeamVC = [[JGDNewTeamDetailViewController alloc] init];
-            newTeamVC.timeKey = [NSNumber numberWithInteger:[[Helper returnKeyVlaueWithUrlString:model.linkURL andKey:@"timekey"] integerValue]];
+            newTeamVC.timeKey = [NSNumber numberWithInteger:[[Helper returnKeyVlaueWithUrlString:model.linkURL andKey:@"teamKey"] integerValue]];
             newTeamVC.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:newTeamVC animated:YES];
         }

@@ -227,7 +227,7 @@
     }
     
     //球童必须第一位
-    [userArray exchangeObjectAtIndex:0 withObjectAtIndex:userArray.count-1];
+//    [userArray exchangeObjectAtIndex:0 withObjectAtIndex:userArray.count-1];
     
     [dict setObject:userArray forKey:@"userList"];
     

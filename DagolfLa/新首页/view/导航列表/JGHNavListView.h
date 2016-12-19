@@ -16,6 +16,8 @@
 
 - (void)didSelectHistoryResultsBtn:(UIButton *)btn;
 
+- (void)didSelectShitaBtn:(UIButton *)btn;
+
 @end
 
 @interface JGHNavListView : UIView

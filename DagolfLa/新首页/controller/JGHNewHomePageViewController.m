@@ -44,6 +44,7 @@
 
 
 #import "JGDDPhotoAlbumViewController.h"
+#import "JGDServiceViewController.h" // 定制服务
 
 
 static NSString *const JGHPASHeaderTableViewCellIdentifier = @"JGHPASHeaderTableViewCell";
@@ -77,6 +78,16 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
     [[NSNotificationCenter defaultCenter] postNotificationName:@"show" object:nil];
     self.navigationController.navigationBarHidden = YES;
     
+}
+
+- (void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    //监听分组页面返回，刷新数据
+    NSNotificationCenter * center = [NSNotificationCenter defaultCenter];
+    //添加当前类对象为一个观察者，name和object设置为nil，表示接收一切通知
+    [center addObserver:self selector:@selector(PushJGTeamActibityNameViewController:) name:@"PushJGTeamActibityNameViewController" object:nil];
+    [center addObserver:self selector:@selector(loadMessageData) name:@"loadMessageData" object:nil];
+
 }
 
 -(void)viewWillDisappear:(BOOL)animated
@@ -116,7 +127,7 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
     //获取通知中心单例对象
     NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
     //添加当前类对象为一个观察者，name和object设置为nil，表示接收一切通知
-    [center addObserver:self selector:@selector(loadMessageData) name:@"loadMessageData" object:nil];
+//    [center addObserver:self selector:@selector(loadMessageData) name:@"loadMessageData" object:nil];
     
 }
 #pragma mark -- 下载未读消息数量
@@ -284,14 +295,14 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
 -(void)createBanner
 {
     //头视图
-    UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, screenWidth/2 +115 *ProportionAdapter)];
+    UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, screenWidth/2 +214 *ProportionAdapter)];
     headerView.backgroundColor = [UIColor whiteColor];
     //banner
     self.topScrollView = [[HomeHeadView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, screenWidth/2)];
     self.topScrollView.userInteractionEnabled = YES;
     [headerView addSubview:self.topScrollView];
     
-    self.navListView = [[JGHNavListView alloc]initWithFrame:CGRectMake(0, screenWidth/2 +10*ProportionAdapter, screenWidth, 105 *ProportionAdapter)];
+    self.navListView = [[JGHNavListView alloc]initWithFrame:CGRectMake(0, screenWidth/2 +10*ProportionAdapter, screenWidth, 204 *ProportionAdapter)];
     self.navListView.delegate = self;
     [headerView addSubview:self.navListView];
     
@@ -538,6 +549,17 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
     }
     
 }
+
+
+- (void)didSelectShitaBtn:(UIButton *)btn{
+    
+    if (btn.tag == 700) {
+        JGDServiceViewController *serviceVC = [[JGDServiceViewController alloc] init];
+        [self.navigationController pushViewController:serviceVC animated:YES];
+    }
+}
+
+
 #pragma mark -- 我的球队
 - (void)didSelectMyTeamBtn:(UIButton *)btn{
     [self isLoginUp];

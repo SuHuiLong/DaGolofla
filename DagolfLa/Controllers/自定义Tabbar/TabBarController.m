@@ -76,8 +76,11 @@
 //    [self.tabBar setTitleTextAttributes:[UITool colorWithHexString:@"" alpha:1];
     
     
-    [[UITabBarItem appearance] setTitleTextAttributes:@{ NSForegroundColorAttributeName:[UITool colorWithHexString:@"929292" alpha:1]} forState:UIControlStateNormal];
-    [[UITabBarItem appearance] setTitleTextAttributes:@{ NSForegroundColorAttributeName:[UITool colorWithHexString:@"32b14d" alpha:1]} forState:UIControlStateSelected];
+//    [[UITabBarItem appearance] setTitleTextAttributes:@{ NSForegroundColorAttributeName:[UITool colorWithHexString:@"929292" alpha:1]} forState:UIControlStateNormal];
+//    [[UITabBarItem appearance] setTitleTextAttributes:@{ NSForegroundColorAttributeName:[UITool colorWithHexString:@"32b14d" alpha:1]} forState:UIControlStateSelected];
+    [[UITabBarItem appearance] setTitleTextAttributes:@{ NSForegroundColorAttributeName:[UIColor blackColor]} forState:UIControlStateNormal];
+
+    [[UITabBarItem appearance] setTitleTextAttributes:@{ NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#015836"]} forState:UIControlStateSelected];
     
     // 去掉系统的横线
 //    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 6)

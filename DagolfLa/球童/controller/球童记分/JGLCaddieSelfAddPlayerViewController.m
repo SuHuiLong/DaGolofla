@@ -118,12 +118,15 @@
     JGLBarCodeViewController* barVc = [[JGLBarCodeViewController alloc]init];
     barVc.blockDict = ^(NSMutableDictionary *dict){
         //先甩选掉重复的打球人
-        for (int i=0; i<_palyArray.count; i++) {
+        NSArray *array = [NSArray arrayWithArray:_palyArray];
+        for (int i=0; i<array.count; i++) {
             NSMutableDictionary *palyDict = [NSMutableDictionary dictionary];
+            palyDict = array[i];
             if ([[palyDict objectForKey:@"userKey"] integerValue] == [[dict objectForKey:@"userKey"] integerValue]) {
                 [[ShowHUD showHUD]showToastWithText:@"请勿重复添加打球人！" FromView:self.view];
             }else{
                 [_palyArray addObject:dict];
+                break;
             }
         }
         
@@ -206,6 +209,7 @@
             
             if (indexPath.row -1 < _palyArray.count) {
                 [cell configJGLPlayerNumberTableViewCell:_palyArray[indexPath.row -1]];
+                cell.labelName.textColor = [UIColor colorWithHexString:@"#313131"];
             }else{
                 cell.labelName.text = @"请添加打球人";
                 cell.labelName.textColor = [UIColor lightGrayColor];
