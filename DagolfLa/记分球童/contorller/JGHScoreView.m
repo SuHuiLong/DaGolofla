@@ -1,40 +1,27 @@
 //
-//  JGLSelfScoreViewController.m
+//  JGHScoreView.m
 //  DagolfLa
 //
-//  Created by 黄达明 on 16/7/14.
+//  Created by 黄安 on 16/12/20.
 //  Copyright © 2016年 bhxx. All rights reserved.
 //
 
-#import "JGLSelfScoreViewController.h"
-#import "JGHScoresViewController.h"
-
-#import "JGLAddPlayerViewController.h"
-#import "JGLChooseScoreViewController.h"
-#import "BallParkViewController.h"
-#import "DateTimeViewController.h"
-
+#import "JGHScoreView.h"
+#import "JGLTeeChooseView.h"
 #import "JGLChooseBallTableViewCell.h"
 #import "ScoreTableViewCell.h"
 #import "JGLPlayDateTableViewCell.h"
 #import "JGLPlayerNameTableViewCell.h"
 #import "JGLChangePlayerTableViewCell.h"
 
-#import "JGLTeeChooseView.h"//tee台视图
-
-#import "JGLBarCodeViewController.h"
-
-#define HEADER_BUTTON1_TAG 100
-#define HEADER_BUTTON2_TAG 1000
-#define HEADER_BUTTON3_TAG 10000
-@interface JGLSelfScoreViewController ()<UITableViewDelegate,UITableViewDataSource>
+@interface JGHScoreView ()<UITableViewDelegate,UITableViewDataSource>
 {
     NSString* _strBall;//球场名
     NSInteger _ballId;//存球场id
     NSMutableArray* _dataBallArray;//球场对应数据
     NSString* _strDateBegin;//球场时间
     
-    NSNumber* _numTimeKeyLogo;//记录球场头像
+    NSInteger _numTimeKeyLogo;//记录球场头像
     
     NSMutableArray *_selectAreaArray;//记录选择的区域0-1
     
@@ -47,48 +34,103 @@
 
 @end
 
-@implementation JGLSelfScoreViewController
+@implementation JGHScoreView
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    self.title = @"记分";
-    self.preListArray = [NSMutableArray array];
-    
-    NSMutableDictionary *selfDict = [NSMutableDictionary dictionary];
-    [selfDict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:UserName] forKey:UserName];
-    [selfDict setObject:DEFAULF_USERID forKey:UserKey];
-    if ([[NSUserDefaults standardUserDefaults] objectForKey:Mobile]) {
-        [selfDict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:Mobile] forKey:@"userMobile"];
+
+- (instancetype)initWithFrame:(CGRect)frame{
+    if ([super initWithFrame:frame]) {
+        self.preListArray = [NSMutableArray array];
+        
+        NSMutableDictionary *selfDict = [NSMutableDictionary dictionary];
+        [selfDict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:UserName] forKey:UserName];
+        [selfDict setObject:DEFAULF_USERID forKey:UserKey];
+        if ([[NSUserDefaults standardUserDefaults] objectForKey:Mobile]) {
+            [selfDict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:Mobile] forKey:@"userMobile"];
+        }
+        
+        NSInteger sex;
+        if ([[NSUserDefaults standardUserDefaults] objectForKey:@"sex"]) {
+            sex = [[[NSUserDefaults standardUserDefaults] objectForKey:@"sex"] integerValue];
+        }
+        
+        if (sex == 0) {
+            [selfDict setObject:@"红T" forKey:@"tTaiwan"];
+        }else{
+            [selfDict setObject:@"蓝T" forKey:@"tTaiwan"];
+        }
+        
+        [selfDict setObject:@0 forKey:@"sourceKey"];// 自己
+        
+        [self.preListArray addObject:selfDict];
+        
+        _selectAreaArray = [NSMutableArray array];
+        
+        _dataBallArray = [[NSMutableArray alloc]init];
+        
+        NSString* str = [Helper returnCurrentDateString];
+        NSArray* arr = [str componentsSeparatedByString:@" "];///截断时间，存入字符串
+        _strDateBegin = arr[0];
+        [self uiConfig];
+        [self createScoreBtn];
     }
-    
-    NSInteger sex;
-    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"sex"]) {
-        sex = [[[NSUserDefaults standardUserDefaults] objectForKey:@"sex"] integerValue];
-    }
-    
-    if (sex == 0) {
-        [selfDict setObject:@"红T" forKey:@"tTaiwan"];
-    }else{
-        [selfDict setObject:@"蓝T" forKey:@"tTaiwan"];
-    }
-    
-    [selfDict setObject:@0 forKey:@"sourceKey"];// 自己
-    
-    [self.preListArray addObject:selfDict];
-    
-    _selectAreaArray = [NSMutableArray array];
-    
-    _dataBallArray = [[NSMutableArray alloc]init];
-    
-    NSString* str = [Helper returnCurrentDateString];
-    NSArray* arr = [str componentsSeparatedByString:@" "];///截断时间，存入字符串
-    _strDateBegin = arr[0];
-    [self uiConfig];
-    [self createScoreBtn];
-    
+    return self;
 }
 
-
+- (void)reloadDataBallArray:(NSArray *)dataBallArray andSelectAreaArray:(NSArray *)selectAreaArray andNumTimeKeyLogo:(NSInteger)numTimeKeyLogo{
+    _dataBallArray = [dataBallArray mutableCopy];
+    _selectAreaArray = [selectAreaArray mutableCopy];
+    _numTimeKeyLogo = numTimeKeyLogo;
+    [self.tableView reloadData];
+}
+- (void)reloadBallName:(NSString *)ballName andBallId:(NSInteger)ballID{
+    _strBall = ballName;
+    _ballId = ballID;
+    NSIndexPath *indexBall = [NSIndexPath indexPathForRow:0 inSection:0];
+    NSArray *indexArray=[NSArray arrayWithObject:indexBall];
+    [self.tableView reloadRowsAtIndexPaths:indexArray withRowAnimation:UITableViewRowAnimationAutomatic];
+}
+- (void)reloadTime:(NSString *)time{
+    _strDateBegin = time;
+    NSIndexSet *indexSet = [NSIndexSet indexSetWithIndex:2];
+    [_tableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationNone];
+}
+- (void)reloadPalyerArray:(NSArray *)palerArray{
+    self.preListArray = [palerArray mutableCopy];
+    
+    //判断是否包含红、蓝T
+    NSArray *tTaiwanArray = [NSArray array];
+    if (_dataBallArray.count > 1) {
+        tTaiwanArray = _dataBallArray[1];
+    }
+    
+    NSMutableArray *copyPreListArray = [self.preListArray mutableCopy];
+    //默认T台--自己除外
+    for (int i=1; i<self.preListArray.count; i++) {
+        NSMutableDictionary *preDict = [self.preListArray[i] mutableCopy];
+        if (![preDict objectForKey:@"tTaiwan"]) {
+            if ([preDict objectForKey:@"sex"]) {
+                if ([[preDict objectForKey:@"sex"] integerValue] == 0) {
+                    [preDict setObject:@"红T" forKey:@"tTaiwan"];
+                }else{
+                    [preDict setObject:@"蓝T" forKey:@"tTaiwan"];
+                }
+            }else{
+                if (tTaiwanArray.count == 0) {
+                    [preDict setObject:[tTaiwanArray objectAtIndex:0] forKey:@"tTaiwan"];
+                }else{
+                    [preDict setObject:@"蓝T" forKey:@"tTaiwan"];
+                }
+            }
+        }
+        
+        [copyPreListArray replaceObjectAtIndex:i withObject:preDict];
+    }
+    
+    self.preListArray = [copyPreListArray mutableCopy];
+    
+    NSIndexSet *indexSet=[[NSIndexSet alloc]initWithIndex:3];
+    [_tableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationAutomatic];
+}
 -(void)createScoreBtn
 {
     UIButton* btn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -98,13 +140,13 @@
     btn.layer.masksToBounds = YES;
     [btn addTarget:self action:@selector(professionalScore:) forControlEvents:UIControlEventTouchUpInside];
     btn.layer.cornerRadius = 8*ScreenWidth/375;
-    btn.frame = CGRectMake(10*ScreenWidth/375, screenHeight - 54*ScreenWidth/375 - 64, ScreenWidth-20*ScreenWidth/375, 44*ScreenWidth/375);
-    [self.view addSubview:btn];
+    btn.frame = CGRectMake(10*ScreenWidth/375, self.frame.size.height - 54*ScreenWidth/375, ScreenWidth-20*ScreenWidth/375, 44*ScreenWidth/375);
+    [self addSubview:btn];
 }
 #pragma mark -- 开始记分
 - (void)professionalScore:(UIButton *)btn{
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-
+    
     NSInteger selectCount = 0;
     for (int i=0; i<_selectAreaArray.count; i++) {
         NSInteger select = [_selectAreaArray[i] integerValue];
@@ -114,7 +156,7 @@
     }
     
     if (_dataBallArray.count == 0) {
-        [[ShowHUD showHUD]showToastWithText:@"球场信息不全！" FromView:self.view];
+        [[ShowHUD showHUD]showToastWithText:@"球场信息不全！" FromView:self];
         return;
     }
     
@@ -134,14 +176,14 @@
             }
         }
     }else{
-        [[ShowHUD showHUD]showToastWithText:@"请选择2个球场区域" FromView:self.view];
+        [[ShowHUD showHUD]showToastWithText:@"请选择2个球场区域" FromView:self];
         return;
     }
     
     if (![Helper isBlankString:_strDateBegin]) {
         [dict setObject:[NSString stringWithFormat:@"%@ 00:00:00",_strDateBegin] forKey:@"createTime"];
     }else{
-        [[ShowHUD showHUD]showToastWithText:@"请选择打球时间" FromView:self.view];
+        [[ShowHUD showHUD]showToastWithText:@"请选择打球时间" FromView:self];
         return;
     }
     
@@ -152,32 +194,28 @@
     [dict setObject:@0 forKey:@"srcKey"];//
     [dict setObject:@(0) forKey:@"srcType"];//活动传1，罗开创说的
     [dict setObject:self.preListArray forKey:@"userList"];
-
+    
     [[JsonHttp jsonHttp]httpRequestHaveSpaceWithMD5:@"score/createScore" JsonKey:nil withData:dict failedBlock:^(id errType) {
         btn.userInteractionEnabled = YES;
     } completionBlock:^(id data) {
         NSLog(@"%@", data);
         btn.userInteractionEnabled = YES;
         if ([[data objectForKey:@"packSuccess"]integerValue] == 1) {
-            JGHScoresViewController *scoresCtrl = [[JGHScoresViewController alloc]init];
-            scoresCtrl.scorekey = [data objectForKey:@"scorekey"];
-            [self.navigationController pushViewController:scoresCtrl animated:YES];
+            _blockSelectScore([data objectForKey:@"scorekey"]);
         }else{
             if ([data objectForKey:@"packResultMsg"]) {
-                [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+                [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self];
             }
         }
     }];
-
 }
-
 -(void)uiConfig
 {
-    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight-118*ProportionAdapter) style:UITableViewStylePlain];
+    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, self.frame.size.height -54 *ProportionAdapter) style:UITableViewStylePlain];
     _tableView.delegate = self;
     _tableView.dataSource = self;
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    [self.view addSubview:_tableView];
+    [self addSubview:_tableView];
     
     [_tableView registerClass:[JGLChooseBallTableViewCell class] forCellReuseIdentifier:@"JGLChooseBallTableViewCell"];
     [_tableView registerClass:[ScoreTableViewCell class] forCellReuseIdentifier:@"ScoreTableViewCell"];
@@ -186,8 +224,6 @@
     [_tableView registerClass:[JGLChangePlayerTableViewCell class] forCellReuseIdentifier:@"JGLChangePlayerTableViewCell"];
 }
 
-
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 0) {
         JGLChooseBallTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"JGLChooseBallTableViewCell"];
@@ -195,7 +231,7 @@
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         if (![Helper isBlankString:_strBall]) {
             cell.labelTitle.text = _strBall;
-            [cell.iconImg sd_setImageWithURL:[Helper setImageIconUrl:@"ball" andTeamKey:[_numTimeKeyLogo integerValue] andIsSetWidth:YES andIsBackGround:NO] placeholderImage:[UIImage imageNamed:TeamLogoImage]];
+            [cell.iconImg sd_setImageWithURL:[Helper setImageIconUrl:@"ball" andTeamKey:_numTimeKeyLogo andIsSetWidth:YES andIsBackGround:NO] placeholderImage:[UIImage imageNamed:TeamLogoImage]];
         }
         else{
             cell.labelTitle.text = @"请选择球场";
@@ -208,7 +244,7 @@
         
         NSLog(@"%td", indexPath.row);
         if ([[_selectAreaArray objectAtIndex:indexPath.row] integerValue] == 0) {
-
+            
             cell.imgvState.image = [UIImage imageNamed:@"wuGou"];
         }else{
             
@@ -279,7 +315,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 0) {
-       return  60* screenWidth / 375;
+        return  60* screenWidth / 375;
     }
     else if (indexPath.section == 1){
         return _dataBallArray.count == 0 ? 0* screenWidth / 375 : 50* screenWidth / 375;
@@ -313,7 +349,6 @@
         return 1;
     }
 }
-
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (_chooseView != nil)  {
@@ -323,51 +358,17 @@
     
     if (indexPath.section == 0) {
         //球场
-        BallParkViewController* ballVc = [[BallParkViewController alloc]init];
-        ballVc.type1=1;
-        ballVc.callback1=^(NSDictionary *dict, NSNumber *num){
-            [_dataBallArray removeAllObjects];
-            [_selectAreaArray removeAllObjects];
-            
-            if (dict.count != 0) {
-                //添加默认勾选区域，2个全勾，其他不勾
-                NSArray *ballAreasArray = [dict objectForKey:@"ballAreas"];
-                if (ballAreasArray.count == 2) {
-                    [_selectAreaArray addObject:@1];
-                    [_selectAreaArray addObject:@1];
-                }else{
-                    for (int i=0; i<ballAreasArray.count; i++) {
-                        [_selectAreaArray addObject:@0];
-                    }
-                }
-                
-                [_dataBallArray addObject:[dict objectForKey:@"ballAreas"]];
-                [_dataBallArray addObject:[dict objectForKey:@"tAll"]];
-                _numTimeKeyLogo = num;
-            }
-            [_tableView reloadData];
-        };
-        [ballVc setCallback:^(NSString *balltitle, NSInteger ballid) {
-            _strBall = balltitle;
-            _ballId = ballid;
-        }];
-        [self.navigationController pushViewController:ballVc animated:YES];
+        _blockSelectBall();
     }else if (indexPath.section == 1) {
         NSLog(@"%td", indexPath.row);
         
-        
-//        if (selectCount >= 2) {
-//            [[ShowHUD showHUD]showToastWithText:@"请先取消一项，再点选 !" FromView:self.view];
-//        }else{
-            if ([[_selectAreaArray objectAtIndex:indexPath.row] integerValue] == 0) {
-                
-                
-                [_selectAreaArray replaceObjectAtIndex:indexPath.row withObject:@1];
-            }else{
-                
-                [_selectAreaArray replaceObjectAtIndex:indexPath.row withObject:@0];
-                
-            }
+        if ([[_selectAreaArray objectAtIndex:indexPath.row] integerValue] == 0) {
+            
+            [_selectAreaArray replaceObjectAtIndex:indexPath.row withObject:@1];
+        }else{
+            
+            [_selectAreaArray replaceObjectAtIndex:indexPath.row withObject:@0];
+        }
         
         //最多勾选2个
         NSInteger selectCount = 0;
@@ -377,24 +378,15 @@
         
         if (selectCount > 2) {
             [_selectAreaArray replaceObjectAtIndex:indexPath.row withObject:@0];
-            [[ShowHUD showHUD]showToastWithText:@"请先取消一项，再点选 !" FromView:self.view];
+            [[ShowHUD showHUD]showToastWithText:@"请先取消一项，再点选 !" FromView:self];
         }
         
-            NSIndexPath *indexPath_1=[NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section];
-            NSArray *indexArray=[NSArray arrayWithObject:indexPath_1];
-            [_tableView reloadRowsAtIndexPaths:indexArray withRowAnimation:UITableViewRowAnimationAutomatic];
-//        }
+        NSIndexPath *indexPath_1=[NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section];
+        NSArray *indexArray=[NSArray arrayWithObject:indexPath_1];
+        [_tableView reloadRowsAtIndexPaths:indexArray withRowAnimation:UITableViewRowAnimationAutomatic];
         
     }else if (indexPath.section == 2){
-
-        DateTimeViewController* dateVc = [[DateTimeViewController alloc]init];
-        dateVc.typeIndex = @1;
-        [dateVc setCallback:^(NSString *dateStr, NSString *dateWeek, NSString *str) {
-            _strDateBegin = dateStr;
-            NSIndexSet *indexSet = [NSIndexSet indexSetWithIndex:2];
-            [_tableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationNone];
-        }];
-        [self.navigationController pushViewController:dateVc animated:YES];
+        _blockSelectTime();
     }else{
         
         if (![Helper isBlankString:_strBall]) {
@@ -410,7 +402,7 @@
                     _chooseView = [[JGLTeeChooseView alloc]initWithFrame:CGRectMake(screenWidth - 120*screenWidth/375,  cell.frame.origin.y - [_dataBallArray[1] count]* 40*screenWidth/375, 100*screenWidth/375, [_dataBallArray[1] count]* 40*screenWidth/375) withArray:_dataBallArray[1]];
                     [tableView addSubview:_chooseView];
                     
-                    __weak JGLSelfScoreViewController *weakSelf = self;
+                    __weak JGHScoreView *weakSelf = self;
                     _chooseView.blockTeeName = ^(NSString *strT){
                         NSLog(@"%td",indexPath.row);
                         //替换T台
@@ -429,68 +421,20 @@
                     };
                     
                 }else{
-                    JGLAddPlayerViewController* addVc = [[JGLAddPlayerViewController alloc]init];
-                    addVc.blockSurePlayer = ^(NSMutableArray *array){
-                        self.preListArray = array;
-                        
-                        //判断是否包含红、蓝T
-                        NSArray *tTaiwanArray = [NSArray array];
-                        if (_dataBallArray.count > 1) {
-                            tTaiwanArray = _dataBallArray[1];
-                        }
-                        
-                        NSMutableArray *copyPreListArray = [self.preListArray mutableCopy];
-                        //默认T台--自己除外
-                        for (int i=1; i<self.preListArray.count; i++) {
-                            NSMutableDictionary *preDict = [self.preListArray[i] mutableCopy];
-                            if (![preDict objectForKey:@"tTaiwan"]) {
-                                if ([preDict objectForKey:@"sex"]) {
-                                    if ([[preDict objectForKey:@"sex"] integerValue] == 0) {
-                                        [preDict setObject:@"红T" forKey:@"tTaiwan"];
-                                    }else{
-                                        [preDict setObject:@"蓝T" forKey:@"tTaiwan"];
-                                    }
-                                }else{
-                                    if (tTaiwanArray.count == 0) {
-                                        [preDict setObject:[tTaiwanArray objectAtIndex:0] forKey:@"tTaiwan"];
-                                    }else{
-                                        [preDict setObject:@"蓝T" forKey:@"tTaiwan"];
-                                    }
-                                }
-                            }
-                            
-                            [copyPreListArray replaceObjectAtIndex:i withObject:preDict];
-                        }
-                        
-                        self.preListArray = [copyPreListArray mutableCopy];
-                        
-                        NSIndexSet *indexSet=[[NSIndexSet alloc]initWithIndex:3];
-                        [_tableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationAutomatic];
-                    };
-                    
-                    addVc.preListArray = _preListArray;
-                    [self.navigationController pushViewController:addVc animated:YES];
+                    _blockSelectPalyer(self.preListArray);
                 }
             }
         }else{
-            [[ShowHUD showHUD]showToastWithText:@"请先选择球场" FromView:self.view];
+            [[ShowHUD showHUD]showToastWithText:@"请先选择球场" FromView:self];
         }
     }
 }
 
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+// Only override drawRect: if you perform custom drawing.
+// An empty implementation adversely affects performance during animation.
+- (void)drawRect:(CGRect)rect {
+    // Drawing code
 }
 */
 

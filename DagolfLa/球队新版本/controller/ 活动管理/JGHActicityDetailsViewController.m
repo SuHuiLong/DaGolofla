@@ -37,7 +37,7 @@
 #import "JGHConcentTextViewController.h"
 #import "JGHSetAwardViewController.h"
 #import "JGLPresentAwardViewController.h"
-
+#import "JGHDatePicksViewController.h"
 #import "JGHActivityScoreManagerViewController.h"
 #import "JGLActivityMemberSetViewController.h"
 

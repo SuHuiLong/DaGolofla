@@ -11,8 +11,6 @@
 #import "UIImageView+AFNetworking.h"
 #import "Helper.h"
 
-#import "NoteHandlle.h"
-#import "NoteModel.h"
 @implementation JGLFriendAddTableViewCell
 
 - (void)awakeFromNib {

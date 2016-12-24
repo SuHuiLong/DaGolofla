@@ -10,15 +10,9 @@
 #import "JGMenberTableViewCell.h"
 
 #import "PYTableViewIndexManager.h"
-
-#import "MJRefresh.h"
 #import "MJDIYBackFooter.h"
 #import "MJDIYHeader.h"
-
 #import "MyattenModel.h"
-#import "NoteModel.h"
-#import "NoteHandlle.h"
-
 #import "ChatDetailViewController.h"
 #import "JGTeamMemberManager.h"
 #import "JGReturnMD5Str.h"
@@ -193,12 +187,6 @@
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     MyattenModel *model = self.listArray[indexPath.section][indexPath.row];
-    NoteModel *modell = [NoteHandlle selectNoteWithUID:model.otherUserId];
-    if ([modell.userremarks isEqualToString:@"(null)"] || [modell.userremarks isEqualToString:@""] || modell.userremarks == nil) {
-        
-    }else{
-        model.userName = modell.userremarks;
-    }
     
     cell.myModel = model;
     cell.imgvState.hidden = YES;

@@ -26,9 +26,6 @@
 #import "JKSlideSwitchView.h"
 #import "PersonHomeController.h"
 
-#import "NoteHandlle.h"
-#import "NoteModel.h"
-
 #define kImageTag 9999
 
 
@@ -207,12 +204,12 @@
     _userHeaderImage.tag = [ymData.uId intValue];
     
     
-    NoteModel *model = [NoteHandlle selectNoteWithUID:ymData.uId];
-    if ([model.userremarks isEqualToString:@"(null)"] || [model.userremarks isEqualToString:@""] || model.userremarks == nil) {
+//    NoteModel *model = [NoteHandlle selectNoteWithUID:ymData.uId];
+//    if ([model.userremarks isEqualToString:@"(null)"] || [model.userremarks isEqualToString:@""] || model.userremarks == nil) {
         _userNameLbl.text = [NSString stringWithFormat:@"%@",tempDate.messageBody.posterName];
-    }else{
-        _userNameLbl.text = model.userremarks;
-    }
+//    }else{
+//        _userNameLbl.text = model.userremarks;
+//    }
     
     //    _userNameLbl.text = [NSString stringWithFormat:@"%@",tempDate.messageBody.posterName];
     _userNameLbl.tag = [ymData.uId intValue];

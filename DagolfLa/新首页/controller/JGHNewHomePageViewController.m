@@ -30,6 +30,7 @@
 #import "DetailViewController.h"
 #import "JGLPushDetailsViewController.h"
 #import "JGHIndexTableViewCell.h"
+#import "JGHNewStartScoreViewController.h"
 
 #import "UMMobClick/MobClick.h"
 #import "UITabBar+badge.h"
@@ -46,6 +47,7 @@
 #import "JGDDPhotoAlbumViewController.h"
 #import "JGDServiceViewController.h" // 定制服务
 #import "RCDTabBarBtn.h"
+#import "JGHScoresViewController.h"
 
 
 static NSString *const JGHPASHeaderTableViewCellIdentifier = @"JGHPASHeaderTableViewCell";
@@ -618,10 +620,15 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
 #pragma mark -- 开局记分
 - (void)didSelectStartScoreBtn:(UIButton *)btn{
     [self isLoginUp];
+    
+    btn.userInteractionEnabled = NO;
+    
     [MobClick event:@"beginKeepScore"];
-    JGLScoreNewViewController *scoreCtrl = [[JGLScoreNewViewController alloc]init];
+    JGHNewStartScoreViewController *scoreCtrl = [[JGHNewStartScoreViewController alloc]init];
     scoreCtrl.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:scoreCtrl animated:YES];
+    
+    btn.userInteractionEnabled = YES;
 }
 #pragma mark -- 历史成绩
 - (void)didSelectHistoryResultsBtn:(UIButton *)btn{

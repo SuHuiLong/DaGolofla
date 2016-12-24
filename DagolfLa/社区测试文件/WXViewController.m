@@ -45,9 +45,6 @@
 #import "UMSocialWechatHandler.h"
 #import "UMSocialControllerService.h"
 
-#import "NoteHandlle.h"
-#import "NoteModel.h"
-
 #import "VedioPlayViewController.h"
 
 #import "JKSlideViewController.h"
@@ -244,20 +241,20 @@
                         
                         WFReplyBody *body = [[WFReplyBody alloc] init];
                         
-                        NoteModel *model1 = [NoteHandlle selectNoteWithUID:[replyDic objectForKey:@"uId"]];
-                        if ([model1.userremarks isEqualToString:@"(null)"] || [model1.userremarks isEqualToString:@""] || model1.userremarks == nil) {
+//                        NoteModel *model1 = [NoteHandlle selectNoteWithUID:[replyDic objectForKey:@"uId"]];
+//                        if ([model1.userremarks isEqualToString:@"(null)"] || [model1.userremarks isEqualToString:@""] || model1.userremarks == nil) {
                             body.replyUser = [NSString stringWithFormat:@"%@",[replyDic objectForKey:@"userName"]];
-                        }else{
-                            body.replyUser= model1.userremarks;
-                        }
+//                        }else{
+//                            body.replyUser= model1.userremarks;
+//                        }
                         
                         
-                        NoteModel *model = [NoteHandlle selectNoteWithUID:[replyDic objectForKey:@"replyUid"]];
-                        if ([model.userremarks isEqualToString:@"(null)"] || [model.userremarks isEqualToString:@""] || model.userremarks == nil) {
+//                        NoteModel *model = [NoteHandlle selectNoteWithUID:[replyDic objectForKey:@"replyUid"]];
+//                        if ([model.userremarks isEqualToString:@"(null)"] || [model.userremarks isEqualToString:@""] || model.userremarks == nil) {
                             body.repliedUser = [NSString stringWithFormat:@"%@",[replyDic objectForKey:@"replyUserName"]];
-                        }else{
-                            body.repliedUser = model.userremarks;
-                        }
+//                        }else{
+//                            body.repliedUser = model.userremarks;
+//                        }
                         
                         body.replyInfo = [NSString stringWithFormat:@"%@",[replyDic objectForKey:@"commentContent"]];
                         body.replyId =  [replyDic objectForKey:@"replyUid"];
@@ -290,12 +287,12 @@
                 NSMutableArray *newFavourArray = [NSMutableArray array];
                 for (NSDictionary *favourDic in [dataDict objectForKey:@"tUserAssists"]) {
                     
-                    NoteModel *model = [NoteHandlle selectNoteWithUID:[favourDic objectForKey:@"uId"]];
-                    if ([model.userremarks isEqualToString:@"(null)"] || [model.userremarks isEqualToString:@""] || model.userremarks == nil) {
+//                    NoteModel *model = [NoteHandlle selectNoteWithUID:[favourDic objectForKey:@"uId"]];
+//                    if ([model.userremarks isEqualToString:@"(null)"] || [model.userremarks isEqualToString:@""] || model.userremarks == nil) {
                         [newFavourArray addObject:[favourDic objectForKey:@"userName"]];
-                    }else{
-                        [newFavourArray addObject:model.userremarks];
-                    }
+//                    }else{
+//                        [newFavourArray addObject:model.userremarks];
+//                    }
                     
                     
                     //                    [newFavourArray addObject:[favourDic objectForKey:@"userName"]];
@@ -305,12 +302,12 @@
                 NSMutableArray *newShareArray = [NSMutableArray array];
                 for (NSDictionary *shareDic in [dataDict objectForKey:@"userForwards"]) {
                     
-                    NoteModel *model = [NoteHandlle selectNoteWithUID:[shareDic objectForKey:@"uId"]];
-                    if ([model.userremarks isEqualToString:@"(null)"] || [model.userremarks isEqualToString:@""] || model.userremarks == nil) {
+//                    NoteModel *model = [NoteHandlle selectNoteWithUID:[shareDic objectForKey:@"uId"]];
+//                    if ([model.userremarks isEqualToString:@"(null)"] || [model.userremarks isEqualToString:@""] || model.userremarks == nil) {
                         [newShareArray addObject:[shareDic objectForKey:@"userName"]];
-                    }else{
-                        [newShareArray addObject:model.userremarks];
-                    }
+//                    }else{
+//                        [newShareArray addObject:model.userremarks];
+//                    }
                     
                     //                    [newShareArray addObject:[shareDic objectForKey:@"userName"]];
                 }

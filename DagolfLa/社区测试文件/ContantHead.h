@@ -106,6 +106,11 @@ typedef NS_ENUM(NSInteger, GestureType) {
 #define Par_Par @"#ffd2a6"
 #define Par_Bogey @"#ffaaa5"
 
+#define Bar_Segment @"#32b14b"
+
+#define B31_Color @"#313131"
+#define Ba0_Color @"#a0a0a0"
+
 #define ProportionAdapter screenWidth/375
 
 #define NUMBERS @"0123456789\n"
@@ -153,7 +158,6 @@ typedef NS_ENUM(NSInteger, GestureType) {
 #import "MJDIYBackFooter.h"
 #import "MJDIYHeader.h"
 
-#import "JGHDatePicksViewController.h"
 #import "FCUUID.h"
 #import "JGHLoginViewController.h"
 #import "UITool.h"
