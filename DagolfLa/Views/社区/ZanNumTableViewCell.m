@@ -11,9 +11,6 @@
 #import "UIImageView+WebCache.h"
 #import "Helper.h"
 
-#import "NoteHandlle.h"
-#import "NoteModel.h"
-
 @implementation ZanNumTableViewCell
 
 - (void)awakeFromNib {
@@ -37,13 +34,13 @@
     }
     
     
-    NoteModel *model = [NoteHandlle selectNoteWithUID:userAssisModel.uId];
-    if ([model.userremarks isEqualToString:@"(null)"] || [model.userremarks isEqualToString:@""] || model.userremarks == nil) {
+//    NoteModel *model = [NoteHandlle selectNoteWithUID:userAssisModel.uId];
+//    if ([model.userremarks isEqualToString:@"(null)"] || [model.userremarks isEqualToString:@""] || model.userremarks == nil) {
         _nameLabel.text = userAssisModel.userName;
         
-    }else{
-        _nameLabel.text = model.userremarks;
-    }
+//    }else{
+//        _nameLabel.text = model.userremarks;
+//    }
     
     
     _ageLabel.text = [NSString stringWithFormat:@"%@",userAssisModel.age];

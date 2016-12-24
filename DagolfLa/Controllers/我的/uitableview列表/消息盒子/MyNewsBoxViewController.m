@@ -12,7 +12,6 @@
 #import "NewsModel.h"
 
 #import "PostDataRequest.h"
-#import "Helper.h"
 
 #import "ComDetailViewController.h"
 
@@ -22,14 +21,10 @@
 #import "UIImageView+WebCache.h"
 #import "DetailViewController.h"
 
-
 #import "MJDIYBackFooter.h"
 #import "MJRefreshComponent.h"
 #import "MJRefreshConst.h"
 #import "UIView+MJExtension.h"
-
-#import "NoteHandlle.h"
-#import "NoteModel.h"
 
 @interface MyNewsBoxViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
@@ -93,13 +88,13 @@
                 MyNewsListModel * newsListModel = [[MyNewsListModel alloc]init];
                 [newsListModel setValuesForKeysWithDictionary:messageDic];
                 
-                        NoteModel *model = [NoteHandlle selectNoteWithUID:[messageDic objectForKey:@"sender"]];
-                        if ([model.userremarks isEqualToString:@"(null)"] || [model.userremarks isEqualToString:@""] || model.userremarks == nil) {
-                       
-                        }else{
-                            newsListModel.title = [NSString stringWithFormat:@"%@评论了你", model.userremarks];
+//                        NoteModel *model = [NoteHandlle selectNoteWithUID:[messageDic objectForKey:@"sender"]];
+//                        if ([model.userremarks isEqualToString:@"(null)"] || [model.userremarks isEqualToString:@""] || model.userremarks == nil) {
+//                       
+//                        }else{
+                            newsListModel.title = [NSString stringWithFormat:@"%@评论了你", newsListModel.title];
                         
-                        }
+//                        }
                 [_dataArray addObject:newsListModel];
             };
             
@@ -140,12 +135,12 @@
                 MyNewsListModel * newsListModel = [[MyNewsListModel alloc]init];
                 [newsListModel setValuesForKeysWithDictionary:dic];
                 
-                NoteModel *model = [NoteHandlle selectNoteWithUID:[dic objectForKey:@"sender"]];
-                if ([model.userremarks isEqualToString:@"(null)"] || [model.userremarks isEqualToString:@""] || model.userremarks == nil) {
-                    
-                }else{
-                    newsListModel.title = [NSString stringWithFormat:@"%@评论了你", model.userremarks];
-                }
+//                NoteModel *model = [NoteHandlle selectNoteWithUID:[dic objectForKey:@"sender"]];
+//                if ([model.userremarks isEqualToString:@"(null)"] || [model.userremarks isEqualToString:@""] || model.userremarks == nil) {
+//                    
+//                }else{
+                    newsListModel.title = [NSString stringWithFormat:@"%@评论了你", newsListModel.title];
+//                }
                 
                 [_dataArray addObject:newsListModel];
             }

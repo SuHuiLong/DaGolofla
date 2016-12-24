@@ -33,9 +33,6 @@
 #import "SelfViewController.h"
 #import "AddNoteViewController.h"
 
-#import "NoteHandlle.h"
-#import "NoteModel.h"
-
 #define kUpDateData_URL @"user/updateUserInfo.do"
 
 #define kqueryIDs_URL @"user/queryByIds.do"
@@ -84,14 +81,14 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:YES];
     
-    NoteModel *model = [NoteHandlle selectNoteWithUID:self.strMoodId];
-    if ([model.userremarks isEqualToString:@"(null)"] || [model.userremarks isEqualToString:@""] || model.userremarks == nil) {
+//    NoteModel *model = [NoteHandlle selectNoteWithUID:self.strMoodId];
+//    if ([model.userremarks isEqualToString:@"(null)"] || [model.userremarks isEqualToString:@""] || model.userremarks == nil) {
         _labelName.text = _model.userName;
         self.title = _model.userName;
-    }else{
-        _labelName.text = model.userremarks;
-        self.title = model.userremarks;
-    }
+//    }else{
+//        _labelName.text = model.userremarks;
+//        self.title = model.userremarks;
+//    }
 
     
     self.navigationController.navigationBarHidden = NO;
@@ -368,12 +365,12 @@
     //昵称
     _labelName = [[UILabel alloc]initWithFrame:CGRectMake(90*ScreenWidth/375, 243*ScreenWidth/375, 100*ScreenWidth/375, 26*ScreenWidth/375)];
     _labelName.font = [UIFont systemFontOfSize:14*ScreenWidth/375];
-    NoteModel *model = [NoteHandlle selectNoteWithUID:self.strMoodId];
-    if ([model.userremarks isEqualToString:@"(null)"] || [model.userremarks isEqualToString:@""] || model.userremarks == nil) {
+//    NoteModel *model = [NoteHandlle selectNoteWithUID:self.strMoodId];
+//    if ([model.userremarks isEqualToString:@"(null)"] || [model.userremarks isEqualToString:@""] || model.userremarks == nil) {
         _labelName.text = _model.userName;
-    }else{
-        _labelName.text = model.userremarks;
-    }
+//    }else{
+//        _labelName.text = model.userremarks;
+//    }
 
     [self.view addSubview:_labelName];
     

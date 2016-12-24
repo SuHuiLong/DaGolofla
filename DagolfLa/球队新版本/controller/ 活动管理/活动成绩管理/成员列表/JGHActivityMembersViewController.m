@@ -10,7 +10,7 @@
 #import "MyattenModel.h"
 #import "JGLActivityMemberNumTableViewCell.h"
 #import "JGLAddActiivePlayModel.h"
-#import "NoteHandlle.h"
+//#import "NoteHandlle.h"
 #import "PYTableViewIndexManager.h"
 #import "JGHSimpleScoreViewController.h"
 #import "JGTeamAcitivtyModel.h"

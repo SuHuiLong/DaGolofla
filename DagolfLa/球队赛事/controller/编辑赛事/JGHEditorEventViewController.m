@@ -19,6 +19,7 @@
 #import "JGHEditorGameRoundsViewController.h"
 #import "BallParkViewController.h"
 #import "DateTimeViewController.h"
+#import "JGHDatePicksViewController.h"
 
 static CGFloat ImageHeight  = 210.0;
 static NSString *const JGHTeamContactCellIdentifier = @"JGHTeamContactTableViewCell";

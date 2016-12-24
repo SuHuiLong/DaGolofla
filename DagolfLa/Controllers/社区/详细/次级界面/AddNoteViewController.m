@@ -13,9 +13,6 @@
 #import "UIImageView+AFNetworking.h"
 #import "Helper.h"
 
-#import "NoteHandlle.h"
-#import "NoteModel.h"
-
 //#import "SelfDataViewController.h"
 #import "PersonHomeController.h"
 
@@ -40,22 +37,22 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     
-    NoteModel *newModle = [NoteHandlle selectNoteWithUID:self.otherUid];
-    if ([newModle.userremarks isEqualToString:@"(null)"] || [newModle.userremarks isEqualToString:@""] || newModle.userremarks == nil) {
-    }else{
-        self.nameTF.text = newModle.userremarks;
-        self.nameLB.text = newModle.userremarks;
-    }
+//    NoteModel *newModle = [NoteHandlle selectNoteWithUID:self.otherUid];
+//    if ([newModle.userremarks isEqualToString:@"(null)"] || [newModle.userremarks isEqualToString:@""] || newModle.userremarks == nil) {
+//    }else{
+//        self.nameTF.text = newModle.userremarks;
+//        self.nameLB.text = newModle.userremarks;
+//    }
     
-    if ([newModle.userMobile isEqualToString:@"(null)"] || [newModle.userMobile isEqualToString:@""] || newModle.userMobile == nil) {
-    }else{
-        self.phoneNumberTF.text = newModle.userMobile;
-    }
+//    if ([newModle.userMobile isEqualToString:@"(null)"] || [newModle.userMobile isEqualToString:@""] || newModle.userMobile == nil) {
+//    }else{
+//        self.phoneNumberTF.text = newModle.userMobile;
+//    }
     
-    if ([newModle.userSign isEqualToString:@"(null)"] || [newModle.userSign isEqualToString:@""] || newModle.userSign == nil) {
-    }else{
-        self.describeTV.text = newModle.userSign;
-    }
+//    if ([newModle.userSign isEqualToString:@"(null)"] || [newModle.userSign isEqualToString:@""] || newModle.userSign == nil) {
+//    }else{
+//        self.describeTV.text = newModle.userSign;
+//    }
     
     NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
     [dic setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"userId"] forKey:@"userId"];
@@ -104,17 +101,17 @@
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:respondsData options:NSJSONReadingMutableContainers error:nil];
         if ([dic objectForKey:@"success"]) {
             
-            NoteModel *model = [[NoteModel alloc] init];
-            model.userremarks = self.nameTF.text;
-            model.userMobile = self.phoneNumberTF.text;
-            model.userSign = self.describeTV.text;
-            model.otherUserId = self.otherUid;
-            NoteModel *newModle = [NoteHandlle selectNoteWithUID:self.otherUid];
-            if (newModle.userremarks || newModle.userMobile || newModle.userSign) {
-                [NoteHandlle updateNoteWithUID:self.otherUid newInfo:model];
-            }else{
-                [NoteHandlle insertNote:model];
-            }
+//            NoteModel *model = [[NoteModel alloc] init];
+//            model.userremarks = self.nameTF.text;
+//            model.userMobile = self.phoneNumberTF.text;
+//            model.userSign = self.describeTV.text;
+//            model.otherUserId = self.otherUid;
+//            NoteModel *newModle = [NoteHandlle selectNoteWithUID:self.otherUid];
+//            if (newModle.userremarks || newModle.userMobile || newModle.userSign) {
+//                [NoteHandlle updateNoteWithUID:self.otherUid newInfo:model];
+//            }else{
+//                [NoteHandlle insertNote:model];
+//            }
         }
         
         [self.navigationController popViewControllerAnimated:YES];

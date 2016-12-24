@@ -15,8 +15,6 @@
 #import "MJDIYHeader.h"
 
 #import "MyattenModel.h"
-#import "NoteModel.h"
-#import "NoteHandlle.h"
 
 #import "JGLAddActiivePlayModel.h"
 #import "JGLGuestActiveMemberTableViewCell.h"

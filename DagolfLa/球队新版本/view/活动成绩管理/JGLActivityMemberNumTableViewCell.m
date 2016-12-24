@@ -11,8 +11,6 @@
 #import "UIImageView+AFNetworking.h"
 #import "Helper.h"
 
-#import "NoteHandlle.h"
-#import "NoteModel.h"
 @implementation JGLActivityMemberNumTableViewCell
 
 - (void)awakeFromNib {
@@ -43,12 +41,12 @@
 
 - (void)setMyModel:(MyattenModel *)myModel{
     
-    NoteModel *model = [NoteHandlle selectNoteWithUID:myModel.otherUserId];
-    if ([model.userremarks isEqualToString:@"(null)"] || [model.userremarks isEqualToString:@""] || model.userremarks == nil) {
+//    NoteModel *model = [NoteHandlle selectNoteWithUID:myModel.otherUserId];
+//    if ([model.userremarks isEqualToString:@"(null)"] || [model.userremarks isEqualToString:@""] || model.userremarks == nil) {
         self.labelTitle.text = myModel.userName;
-    }else{
-        self.labelTitle.text = model.userremarks;
-    }
+//    }else{
+//        self.labelTitle.text = model.userremarks;
+//    }
     [self.imgvIcon sd_setImageWithURL:[Helper imageIconUrl:myModel.pic] placeholderImage:[UIImage imageNamed:TeamLogoImage]];
     self.imgvIcon.layer.cornerRadius  = 6*screenWidth/375;
     self.imgvIcon.layer.masksToBounds = YES;

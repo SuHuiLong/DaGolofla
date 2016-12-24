@@ -16,6 +16,7 @@
 #import "JGHGameSetViewController.h"
 #import "JGHPublishEventSaveViewController.h"
 #import "JGHPublishEventModel.h"
+#import "JGHDatePicksViewController.h"
 
 static NSString *const JGTableViewCellIdentifier = @"JGTableViewCell";
 static NSString *const JGHTeamContactCellIdentifier = @"JGHTeamContactTableViewCell";

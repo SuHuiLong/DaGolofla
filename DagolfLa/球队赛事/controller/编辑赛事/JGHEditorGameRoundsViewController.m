@@ -12,6 +12,7 @@
 #import "JGHAddEventRoundsBtnCell.h"
 #import "JGHEditorGameRoundsRulesViewController.h"
 #import "BallParkViewController.h"
+#import "JGHDatePicksViewController.h"
 
 static NSString *const JGHEventRulesHeaderCellIdentifier = @"JGHEventRulesHeaderCell";
 static NSString *const JGHEventRulesContentCellIdentifier = @"JGHEventRulesContentCell";

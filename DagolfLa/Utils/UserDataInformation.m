@@ -12,9 +12,6 @@
 #import "PostDataRequest.h"
 #import "AppDelegate.h"
 
-#import "NoteModel.h"
-#import "NoteHandlle.h"
-
 @implementation UserDataInformation
 
 - (instancetype)init

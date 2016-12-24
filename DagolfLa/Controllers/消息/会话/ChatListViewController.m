@@ -15,9 +15,6 @@
 #import "NewsDetailController.h"
 #import "UITabBar+badge.h"
 
-#import "NoteHandlle.h"
-#import "NoteModel.h"
-
 #import <RongIMKit/RCIM.h>
 #import "JGHSystemNotViewController.h"
 #import "JGHTeamNotViewController.h"

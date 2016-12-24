@@ -163,5 +163,6 @@ typedef NS_ENUM(NSInteger, GestureType) {
 #import "UITool.h"
 #import "UMMobClick/MobClick.h"
 #import "JGHPersonalInfoViewController.h"
+#import "JGHDatePicksViewController.h"
 
 #endif

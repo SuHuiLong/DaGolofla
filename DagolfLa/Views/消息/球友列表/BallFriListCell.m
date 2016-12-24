@@ -11,9 +11,6 @@
 #import "UIImageView+AFNetworking.h"
 #import "Helper.h"
 
-#import "NoteHandlle.h"
-#import "NoteModel.h"
-
 #define ScreenHeight [[UIScreen mainScreen] bounds].size.height
 #define ScreenWidth [[UIScreen mainScreen] bounds].size.width
 

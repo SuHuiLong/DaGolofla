@@ -43,8 +43,6 @@
 #import "SelfViewController.h"
 #import "DetailViewController.h"
 
-#import "NoteHandlle.h"
-#import "NoteModel.h"
 #import "AddNoteViewController.h"
 #import "SXPickPhoto.h"
 
@@ -91,14 +89,14 @@ static NSString *const orderDetailCellIdentifier = @"OtherDataTableViewCell";
     self.navigationController.navigationBarHidden = NO;
     //发出通知隐藏标签栏
     [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:nil];
-    NoteModel *model = [NoteHandlle selectNoteWithUID:self.strMoodId];
-    if ([model.userremarks isEqualToString:@"(null)"] || [model.userremarks isEqualToString:@""] || model.userremarks == nil) {
+//    NoteModel *model = [NoteHandlle selectNoteWithUID:self.strMoodId];
+//    if ([model.userremarks isEqualToString:@"(null)"] || [model.userremarks isEqualToString:@""] || model.userremarks == nil) {
         _nameLabel.text = _model.userName;
         self.title = _model.userName;
-    }else{
-        _nameLabel.text = model.userremarks;
-        self.title = model.userremarks;
-    }
+//    }else{
+//        _nameLabel.text = model.userremarks;
+//        self.title = model.userremarks;
+//    }
     [_mapView viewWillAppear];
 
     
@@ -377,12 +375,12 @@ static NSString *const orderDetailCellIdentifier = @"OtherDataTableViewCell";
 
                 
                 //替换备注名称
-                NoteModel *model = [NoteHandlle selectNoteWithUID:self.strMoodId];
-                if ([model.userremarks isEqualToString:@"(null)"] || [model.userremarks isEqualToString:@""] || model.userremarks == nil) {
+//                NoteModel *model = [NoteHandlle selectNoteWithUID:self.strMoodId];
+//                if ([model.userremarks isEqualToString:@"(null)"] || [model.userremarks isEqualToString:@""] || model.userremarks == nil) {
                     _nameLabel.text = _model.userName;
-                }else{
-                    _nameLabel.text = model.userremarks;
-                }
+//                }else{
+//                    _nameLabel.text = model.userremarks;
+//                }
                 
                 if ([_model.sex integerValue] == 0) {
                     _sexImg.image = [UIImage imageNamed:@"xb_n"];
@@ -449,12 +447,12 @@ static NSString *const orderDetailCellIdentifier = @"OtherDataTableViewCell";
                 }));
 
                 //替换备注名称
-                NoteModel *model = [NoteHandlle selectNoteWithUID:self.strMoodId];
-                if ([model.userremarks isEqualToString:@"(null)"] || [model.userremarks isEqualToString:@""] || model.userremarks == nil) {
+//                NoteModel *model = [NoteHandlle selectNoteWithUID:self.strMoodId];
+//                if ([model.userremarks isEqualToString:@"(null)"] || [model.userremarks isEqualToString:@""] || model.userremarks == nil) {
                     _nameLabel.text = _model.userName;
-                }else{
-                    _nameLabel.text = model.userremarks;
-                }
+//                }else{
+//                    _nameLabel.text = model.userremarks;
+//                }
                 
                 if ([_model.sex integerValue] == 0) {
                     _sexImg.image = [UIImage imageNamed:@"xb_n"];
