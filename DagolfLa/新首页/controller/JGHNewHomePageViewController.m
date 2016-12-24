@@ -586,11 +586,42 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
 }
 
 
+#pragma mark -- 服务定制
 - (void)didSelectShitaBtn:(UIButton *)btn{
-    
+
+    [self isLoginUp];
+
     if (btn.tag == 700) {
+        // 服务定制
         JGDServiceViewController *serviceVC = [[JGDServiceViewController alloc] init];
         [self.navigationController pushViewController:serviceVC animated:YES];
+        
+    }else if (btn.tag == 701) {
+        
+        NSString *urlRequest = @"http://www.dagolfla.com/app/index.html"; // 用品商城
+        
+        JGLWebUserMallViewController *mallCtrl = [[JGLWebUserMallViewController alloc]init];
+        mallCtrl.urlRequest = urlRequest;
+        mallCtrl.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:mallCtrl animated:YES];
+        
+    }else if (btn.tag == 702) {
+        
+        NSString *urlRequest = @"http://www.dagolfla.com/app/Packbookserch.html"; // 商旅套餐
+        
+        JGLWebUserMallViewController *mallCtrl = [[JGLWebUserMallViewController alloc]init];
+        mallCtrl.urlRequest = urlRequest;
+        mallCtrl.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:mallCtrl animated:YES];
+
+    } else{
+        // 历史成绩
+        [MobClick event:@"historyScore"];
+        JGDHistoryScoreViewController *historyCtrl = [[JGDHistoryScoreViewController alloc]init];
+        historyCtrl.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:historyCtrl animated:YES];
+
+        
     }
 }
 
@@ -630,13 +661,17 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
     
     btn.userInteractionEnabled = YES;
 }
-#pragma mark -- 历史成绩
+#pragma mark -- 球场预定
 - (void)didSelectHistoryResultsBtn:(UIButton *)btn{
     [self isLoginUp];
-    [MobClick event:@"historyScore"];
-    JGDHistoryScoreViewController *historyCtrl = [[JGDHistoryScoreViewController alloc]init];
-    historyCtrl.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:historyCtrl animated:YES];
+
+    NSString *urlRequest = @"http://www.dagolfla.com/app/bookserch.html";
+    
+    JGLWebUserMallViewController *mallCtrl = [[JGLWebUserMallViewController alloc]init];
+    mallCtrl.urlRequest = urlRequest;
+    mallCtrl.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:mallCtrl animated:YES];
+
 }
 #pragma mark -- 活动点击事件
 - (void)activityListSelectClick:(UIButton *)btn{
@@ -777,6 +812,7 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
 #pragma mark -- 通过URL 判断跳转
 - (void)pushctrlWithUrl:(NSString *)url{
     
@@ -814,6 +850,7 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
         return;
     }
 }
+
 #pragma mark -- 判断是否需要登录
 - (void)isLoginUp{
     if ([[NSUserDefaults standardUserDefaults] objectForKey:@"userId"]) {
