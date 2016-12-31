@@ -40,7 +40,7 @@
     }else{
         self.title = @"扫一扫";
     }
-    [self.navigationController.navigationBar setBarTintColor:[UIColor blackColor]];
+//    [self.navigationController.navigationBar setBarTintColor:[UIColor blackColor]];
     //    [self setNavigationBarItem];
     [self setupMaskView];//设置扫描区域之外的阴影视图
     
@@ -428,7 +428,7 @@
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    [self.navigationController.navigationBar setBarTintColor:[UIColor colorWithRed:0.23 green:0.71 blue:0.29 alpha:1]];
+//    [self.navigationController.navigationBar setBarTintColor:[UIColor colorWithRed:0.23 green:0.71 blue:0.29 alpha:1]];
     
 }
 

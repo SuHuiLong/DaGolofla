@@ -19,5 +19,7 @@
 
 @property (nonatomic, strong) UITableView *tableView;
 
+//- (void)downLoadData:(NSInteger)page;
+
 
 @end

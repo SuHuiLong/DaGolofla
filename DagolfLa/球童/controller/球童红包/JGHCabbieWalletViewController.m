@@ -10,6 +10,7 @@
 #import "JGLCaddieScoreViewController.h"
 #import "JGHCabbieRewardViewController.h"
 #import "JGHNewStartScoreViewController.h"
+#import "JGHHistoryAndResultsViewController.h"
 
 @interface JGHCabbieWalletViewController ()
 {
@@ -136,22 +137,34 @@
 }
 - (void)BackBtnClick:(UIButton *)btn{
     self.navigationController.navigationBarHidden = NO;
+    
     [_barView removeFromSuperview];
     if ([NSThread isMainThread]) {
         NSLog(@"Yay!");
+        
+        
         for (UIViewController *controller in self.navigationController.viewControllers) {
-            if ([controller isKindOfClass:[JGLCaddieScoreViewController class]]) {
+            if ([controller isKindOfClass:[JGHHistoryAndResultsViewController class]]) {
                 [self.navigationController popToViewController:controller animated:YES];
+                return;
             }
         }
+        
+        [self.navigationController popToRootViewControllerAnimated:YES];
+        return;
     } else {
         NSLog(@"Humph, switching to main");
         dispatch_async(dispatch_get_main_queue(), ^{
             for (UIViewController *controller in self.navigationController.viewControllers) {
-                if ([controller isKindOfClass:[JGLCaddieScoreViewController class]]) {
+                if ([controller isKindOfClass:[JGHHistoryAndResultsViewController class]]) {
                     [self.navigationController popToViewController:controller animated:YES];
+                    return;
+                    
                 }
+                
             }
+            [self.navigationController popToRootViewControllerAnimated:YES];
+            return;
         });
     }
      

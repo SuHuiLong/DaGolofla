@@ -880,10 +880,10 @@
                 } withBlockSure:^{
                     //                        _cabbieFinishScore = 1;//结束
                     //                        [self finishScore];
-                    /*
+                    
                     NSInteger soureKey = 0;
                     for (UIViewController *controller in self.navigationController.viewControllers) {
-                        if ([controller isKindOfClass:[JGLScoreNewViewController class]]) {
+                        if ([controller isKindOfClass:[JGHHistoryAndResultsViewController class]]) {
                             [self.navigationController popToViewController:controller animated:YES];
                             soureKey = 1;
                             break;
@@ -893,15 +893,15 @@
                     }
                     
                     if (soureKey == 0) {
-                        [self.navigationController popViewControllerAnimated:YES];
-                    }
-                     */
-                    if (_backHistory == 1) {
                         [self.navigationController popToRootViewControllerAnimated:YES];
-                        
-                    }else{
-                        [self.navigationController popViewControllerAnimated:YES];
                     }
+                     
+//                    if (_backHistory == 1) {
+//                        [self.navigationController popToRootViewControllerAnimated:YES];
+//                        
+//                    }else{
+//                        [self.navigationController popViewControllerAnimated:YES];
+//                    }
                 } withBlock:^(UIAlertController *alertView) {
                     [self presentViewController:alertView animated:YES completion:nil];
                 }];

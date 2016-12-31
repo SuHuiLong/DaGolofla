@@ -30,6 +30,7 @@
 #import "JGDNotActScoreViewController.h"
 #import "JGHCaddieActivityScoreView.h"
 #import "JGHCaddieScoreView.h"
+#import "JGLCaddieSelfAddPlayerViewController.h"
 
 @interface JGHNewStartScoreViewController ()
 
@@ -357,7 +358,7 @@
                     [userdef synchronize];
                     
                     [weakSelf createPalyerView];
-                    if (_willCaddie == 1) {
+                    if (_willCaddie == 1 && self.segment.selectedSegmentIndex == 1) {
                         [weakSelf createCaddieItem];
                     }
                     
@@ -376,7 +377,7 @@
         weakSelf.optionView = nil;
         //打球人
         [weakSelf createPalyerView];
-        if (_willCaddie == 1) {
+        if (_willCaddie == 1 && self.segment.selectedSegmentIndex == 1) {
             [weakSelf createCaddieItem];
         }
         
@@ -530,13 +531,14 @@
     
     //添加打球人
     self.caddieScoreView.blockSelectPalyer = ^(NSMutableArray *palyArray){
-        JGLAddPlayerViewController* addVc = [[JGLAddPlayerViewController alloc]init];
-        addVc.blockSurePlayer = ^(NSMutableArray *array){
-            [weakSelf.scoreView reloadPalyerArray:array];
+        JGLCaddieSelfAddPlayerViewController *addCtrl = [[JGLCaddieSelfAddPlayerViewController alloc]init];
+        
+        addCtrl.blockSurePlayer = ^(NSMutableArray *array){
+            [weakSelf.caddieScoreView reloadPalyerArray:array];
         };
         
-        addVc.preListArray = palyArray;
-        [weakSelf.navigationController pushViewController:addVc animated:YES];
+        addCtrl.palyArray = palyArray;
+        [weakSelf.navigationController pushViewController:addCtrl animated:YES];
     };
     
     [self.baseScrollView addSubview:self.caddieScoreView];
@@ -629,7 +631,10 @@
     
     //我是球童
     _caddieWithPalyerScoreView.blockShowCaddieBtn = ^(){
-        [weakSelf createCaddieItem];
+        if (self.segment.selectedSegmentIndex == 1) {
+            [weakSelf createCaddieItem];
+        }
+        
         _willCaddie = 1;
     };
     
@@ -741,7 +746,7 @@
             [userdef synchronize];
             
             [weakSelf createPalyerView];
-            if (_willCaddie == 1) {
+            if (_willCaddie == 1 && self.segment.selectedSegmentIndex == 1) {
                 [weakSelf createCaddieItem];
             }
             
@@ -775,6 +780,7 @@
             
             if ([[data objectForKey:@"scoreKey"] integerValue] != 0) {
                 
+                /*
                 [Helper alertViewWithTitle:@"您还有记分尚未完成，是否前往继续记分" withBlockCancle:^{
                     if ([[data objectForKey:@"acBoolean"] integerValue] == 1){
                         [self.caddieActivityScoreListView loadAnimate];
@@ -795,15 +801,16 @@
                 } withBlock:^(UIAlertController *alertView) {
                     [self.navigationController presentViewController:alertView animated:YES completion:nil];
                 }];
+                 */
             }
             
             if ([[data objectForKey:@"acBoolean"] integerValue] == 1) {
                 //存在近三天记分活动
                 [self createCaddieActivityListViewWithPalyerUserKey:palyerId];
                 
-                if ([[data objectForKey:@"scoreKey"] integerValue] == 0) {
+//                if ([[data objectForKey:@"scoreKey"] integerValue] == 0) {
                     [self.caddieActivityScoreListView loadAnimate];
-                }
+//                }
             }
             else{
                 //                [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];

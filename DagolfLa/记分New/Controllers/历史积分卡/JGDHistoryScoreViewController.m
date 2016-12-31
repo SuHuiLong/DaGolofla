@@ -127,7 +127,7 @@
             if (indexPath.row == 0) {
                 JGDHistoryScore2TableViewCell *cell = [[JGDHistoryScore2TableViewCell alloc] initWithStyle:(UITableViewCellStyleValue1) reuseIdentifier:@"123"];
                 cell.selectionStyle = UITableViewCellSelectionStyleNone;
-                cell.lineLimageV.frame = CGRectMake(90 * ProportionAdapter, 25 * ProportionAdapter, 2 * ProportionAdapter, 40 * ProportionAdapter);
+                cell.lineLimageV.frame = CGRectMake(90 * ProportionAdapter, 25 * ProportionAdapter, 2 * ProportionAdapter, 60 * ProportionAdapter);
                 if ([self.dataArray count] > indexPath.row) {
                     cell.model = self.dataArray[indexPath.row];
                 }

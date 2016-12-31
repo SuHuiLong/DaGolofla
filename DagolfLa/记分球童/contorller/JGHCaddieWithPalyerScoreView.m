@@ -97,9 +97,9 @@
         [[ShowHUD showHUD]showToastWithText:[NSString stringWithFormat:@"%@",errType] FromView:self];
     } completionBlock:^(id data) {
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+            [self.dataArray removeAllObjects];
             
             if ([data objectForKey:@"list"]) {
-                [self.dataArray removeAllObjects];
                 for (NSDictionary *dic in [data objectForKey:@"list"]) {
                     JGDPlayerModel *model =[[JGDPlayerModel alloc] init];
                     [model setValuesForKeysWithDictionary:dic];
@@ -110,7 +110,7 @@
                 self.tableView.tableFooterView = nil;
                 _blockHideCaddieBtn();
                 
-                [self.tableView reloadData];
+                
             }else{
                 self.tipLabel.hidden = YES;
                 self.footView.hidden = YES;
@@ -149,6 +149,8 @@
                 [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self];
             }
         }
+        
+        [self.tableView reloadData];
         
         [_tableView.header endRefreshing];
         [_tableView.footer endRefreshing];
