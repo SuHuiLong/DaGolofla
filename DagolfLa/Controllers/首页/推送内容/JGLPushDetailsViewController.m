@@ -51,7 +51,7 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
+//    [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
 }
 -(void)viewDidDisappear:(BOOL)animated
 {

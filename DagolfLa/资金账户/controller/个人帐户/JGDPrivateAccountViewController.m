@@ -33,6 +33,8 @@
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:YES];
+    
+    self.tabBarController.tabBar.hidden = YES;
 
     NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
     [dic setObject:DEFAULF_USERID forKey:@"userKey"];

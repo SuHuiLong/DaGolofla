@@ -13,4 +13,10 @@
 
 @property (copy, nonatomic) void (^blockChangeActivityStartScore)(JGLChooseScoreModel *);
 
+- (void)loadActivityListData:(NSString *)userKey;
+
+
+- (void)loadAnimate;
+
+
 @end

@@ -284,6 +284,17 @@
 		20301A101E0E4293005568E2 /* ZXQRCodeWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 2030192E1E0E4292005568E2 /* ZXQRCodeWriter.m */; };
 		20301A111E0E4293005568E2 /* ZXMultiFormatReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 203019311E0E4292005568E2 /* ZXMultiFormatReader.m */; };
 		20301A121E0E4293005568E2 /* ZXMultiFormatWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 203019331E0E4292005568E2 /* ZXMultiFormatWriter.m */; };
+		20301A151E1104F1005568E2 /* JGHCaddieActivityScoreView.m in Sources */ = {isa = PBXBuildFile; fileRef = 20301A141E1104F1005568E2 /* JGHCaddieActivityScoreView.m */; };
+		20301A181E113932005568E2 /* JGHCaddieScoreView.m in Sources */ = {isa = PBXBuildFile; fileRef = 20301A171E113932005568E2 /* JGHCaddieScoreView.m */; };
+		20301A6C1E1269EB005568E2 /* LGLCalendarDate.m in Sources */ = {isa = PBXBuildFile; fileRef = 20301A5A1E1269EB005568E2 /* LGLCalendarDate.m */; };
+		20301A6D1E1269EB005568E2 /* LGLCalenderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 20301A5C1E1269EB005568E2 /* LGLCalenderCell.m */; };
+		20301A6E1E1269EB005568E2 /* LGLCalenderModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 20301A5E1E1269EB005568E2 /* LGLCalenderModel.m */; };
+		20301A6F1E1269EB005568E2 /* LGLCalenderSubModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 20301A601E1269EB005568E2 /* LGLCalenderSubModel.m */; };
+		20301A701E1269EB005568E2 /* LGLCalenderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 20301A621E1269EB005568E2 /* LGLCalenderViewController.m */; };
+		20301A711E1269EB005568E2 /* LGLHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 20301A641E1269EB005568E2 /* LGLHeaderView.m */; };
+		20301A721E1269EB005568E2 /* LGLWeekView.m in Sources */ = {isa = PBXBuildFile; fileRef = 20301A661E1269EB005568E2 /* LGLWeekView.m */; };
+		20301A731E1269EB005568E2 /* UIView+Frame.m in Sources */ = {isa = PBXBuildFile; fileRef = 20301A681E1269EB005568E2 /* UIView+Frame.m */; };
+		20301A741E1269EB005568E2 /* XLPlainFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 20301A6B1E1269EB005568E2 /* XLPlainFlowLayout.m */; };
 		20451C291DF15224003B2FC8 /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 20451C281DF15224003B2FC8 /* libresolv.tbd */; };
 		20451C2B1DF152A3003B2FC8 /* jpush-ios-2.2.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 20451C2A1DF152A3003B2FC8 /* jpush-ios-2.2.0.a */; };
 		20451C2D1DF15307003B2FC8 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 20451C2C1DF15307003B2FC8 /* UserNotifications.framework */; };
@@ -525,6 +536,7 @@
 		20F025521D70390700D7D7B6 /* JGHAddressBookPlaysViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 20F025511D70390700D7D7B6 /* JGHAddressBookPlaysViewController.m */; };
 		20F025551D703C9F00D7D7B6 /* JGHAddTeamMemberViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 20F025541D703C9F00D7D7B6 /* JGHAddTeamMemberViewController.m */; };
 		20F025581D7040AD00D7D7B6 /* JGHAddApplyTeamPlaysViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 20F025571D7040AD00D7D7B6 /* JGHAddApplyTeamPlaysViewController.m */; };
+		20F661181E1514BF004E89E3 /* JGHTimeListView.m in Sources */ = {isa = PBXBuildFile; fileRef = 20F661171E1514BF004E89E3 /* JGHTimeListView.m */; };
 		20F6A5C41CF3EDE800DD9383 /* JGHTeamContactTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 20F6A5C21CF3EDE800DD9383 /* JGHTeamContactTableViewCell.m */; };
 		20F6A5C51CF3EDE800DD9383 /* JGHTeamContactTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 20F6A5C31CF3EDE800DD9383 /* JGHTeamContactTableViewCell.xib */; };
 		20F6A5C91CF3F78200DD9383 /* JGCostSetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 20F6A5C71CF3F78200DD9383 /* JGCostSetViewController.m */; };
@@ -1781,6 +1793,28 @@
 		203019311E0E4292005568E2 /* ZXMultiFormatReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXMultiFormatReader.m; sourceTree = "<group>"; };
 		203019321E0E4292005568E2 /* ZXMultiFormatWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXMultiFormatWriter.h; sourceTree = "<group>"; };
 		203019331E0E4292005568E2 /* ZXMultiFormatWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXMultiFormatWriter.m; sourceTree = "<group>"; };
+		20301A131E1104F1005568E2 /* JGHCaddieActivityScoreView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHCaddieActivityScoreView.h; sourceTree = "<group>"; };
+		20301A141E1104F1005568E2 /* JGHCaddieActivityScoreView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHCaddieActivityScoreView.m; sourceTree = "<group>"; };
+		20301A161E113932005568E2 /* JGHCaddieScoreView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHCaddieScoreView.h; sourceTree = "<group>"; };
+		20301A171E113932005568E2 /* JGHCaddieScoreView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHCaddieScoreView.m; sourceTree = "<group>"; };
+		20301A591E1269EB005568E2 /* LGLCalendarDate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LGLCalendarDate.h; sourceTree = "<group>"; };
+		20301A5A1E1269EB005568E2 /* LGLCalendarDate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LGLCalendarDate.m; sourceTree = "<group>"; };
+		20301A5B1E1269EB005568E2 /* LGLCalenderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LGLCalenderCell.h; sourceTree = "<group>"; };
+		20301A5C1E1269EB005568E2 /* LGLCalenderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LGLCalenderCell.m; sourceTree = "<group>"; };
+		20301A5D1E1269EB005568E2 /* LGLCalenderModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LGLCalenderModel.h; sourceTree = "<group>"; };
+		20301A5E1E1269EB005568E2 /* LGLCalenderModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LGLCalenderModel.m; sourceTree = "<group>"; };
+		20301A5F1E1269EB005568E2 /* LGLCalenderSubModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LGLCalenderSubModel.h; sourceTree = "<group>"; };
+		20301A601E1269EB005568E2 /* LGLCalenderSubModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LGLCalenderSubModel.m; sourceTree = "<group>"; };
+		20301A611E1269EB005568E2 /* LGLCalenderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LGLCalenderViewController.h; sourceTree = "<group>"; };
+		20301A621E1269EB005568E2 /* LGLCalenderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LGLCalenderViewController.m; sourceTree = "<group>"; };
+		20301A631E1269EB005568E2 /* LGLHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LGLHeaderView.h; sourceTree = "<group>"; };
+		20301A641E1269EB005568E2 /* LGLHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LGLHeaderView.m; sourceTree = "<group>"; };
+		20301A651E1269EB005568E2 /* LGLWeekView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LGLWeekView.h; sourceTree = "<group>"; };
+		20301A661E1269EB005568E2 /* LGLWeekView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LGLWeekView.m; sourceTree = "<group>"; };
+		20301A671E1269EB005568E2 /* UIView+Frame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Frame.h"; sourceTree = "<group>"; };
+		20301A681E1269EB005568E2 /* UIView+Frame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Frame.m"; sourceTree = "<group>"; };
+		20301A6A1E1269EB005568E2 /* XLPlainFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XLPlainFlowLayout.h; sourceTree = "<group>"; };
+		20301A6B1E1269EB005568E2 /* XLPlainFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XLPlainFlowLayout.m; sourceTree = "<group>"; };
 		20451C281DF15224003B2FC8 /* libresolv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libresolv.tbd; path = usr/lib/libresolv.tbd; sourceTree = SDKROOT; };
 		20451C2A1DF152A3003B2FC8 /* jpush-ios-2.2.0.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "jpush-ios-2.2.0.a"; sourceTree = "<group>"; };
 		20451C2C1DF15307003B2FC8 /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
@@ -2255,6 +2289,8 @@
 		20F025541D703C9F00D7D7B6 /* JGHAddTeamMemberViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHAddTeamMemberViewController.m; sourceTree = "<group>"; };
 		20F025561D7040AD00D7D7B6 /* JGHAddApplyTeamPlaysViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHAddApplyTeamPlaysViewController.h; sourceTree = "<group>"; };
 		20F025571D7040AD00D7D7B6 /* JGHAddApplyTeamPlaysViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHAddApplyTeamPlaysViewController.m; sourceTree = "<group>"; };
+		20F661161E1514BF004E89E3 /* JGHTimeListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHTimeListView.h; sourceTree = "<group>"; };
+		20F661171E1514BF004E89E3 /* JGHTimeListView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHTimeListView.m; sourceTree = "<group>"; };
 		20F6A5C11CF3EDE800DD9383 /* JGHTeamContactTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHTeamContactTableViewCell.h; sourceTree = "<group>"; };
 		20F6A5C21CF3EDE800DD9383 /* JGHTeamContactTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHTeamContactTableViewCell.m; sourceTree = "<group>"; };
 		20F6A5C31CF3EDE800DD9383 /* JGHTeamContactTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JGHTeamContactTableViewCell.xib; sourceTree = "<group>"; };
@@ -4620,6 +4656,41 @@
 			path = detector;
 			sourceTree = "<group>";
 		};
+		20301A581E1269EB005568E2 /* LGLCalender */ = {
+			isa = PBXGroup;
+			children = (
+				20301A691E1269EB005568E2 /* XLPlainFlowLayout */,
+				20301A591E1269EB005568E2 /* LGLCalendarDate.h */,
+				20301A5A1E1269EB005568E2 /* LGLCalendarDate.m */,
+				20301A5B1E1269EB005568E2 /* LGLCalenderCell.h */,
+				20301A5C1E1269EB005568E2 /* LGLCalenderCell.m */,
+				20301A5D1E1269EB005568E2 /* LGLCalenderModel.h */,
+				20301A5E1E1269EB005568E2 /* LGLCalenderModel.m */,
+				20301A5F1E1269EB005568E2 /* LGLCalenderSubModel.h */,
+				20301A601E1269EB005568E2 /* LGLCalenderSubModel.m */,
+				20301A611E1269EB005568E2 /* LGLCalenderViewController.h */,
+				20301A621E1269EB005568E2 /* LGLCalenderViewController.m */,
+				20301A631E1269EB005568E2 /* LGLHeaderView.h */,
+				20301A641E1269EB005568E2 /* LGLHeaderView.m */,
+				20301A651E1269EB005568E2 /* LGLWeekView.h */,
+				20301A661E1269EB005568E2 /* LGLWeekView.m */,
+				20301A671E1269EB005568E2 /* UIView+Frame.h */,
+				20301A681E1269EB005568E2 /* UIView+Frame.m */,
+				20F661161E1514BF004E89E3 /* JGHTimeListView.h */,
+				20F661171E1514BF004E89E3 /* JGHTimeListView.m */,
+			);
+			path = LGLCalender;
+			sourceTree = "<group>";
+		};
+		20301A691E1269EB005568E2 /* XLPlainFlowLayout */ = {
+			isa = PBXGroup;
+			children = (
+				20301A6A1E1269EB005568E2 /* XLPlainFlowLayout.h */,
+				20301A6B1E1269EB005568E2 /* XLPlainFlowLayout.m */,
+			);
+			path = XLPlainFlowLayout;
+			sourceTree = "<group>";
+		};
 		20451C271DF15224003B2FC8 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -5637,6 +5708,10 @@
 				20FBE4641E0BD7A600E7419D /* JGHHistoryScoreView.m */,
 				20FBE46A1E0CE87A00E7419D /* JGHScoreResultWKwebView.h */,
 				20FBE46B1E0CE87A00E7419D /* JGHScoreResultWKwebView.m */,
+				20301A131E1104F1005568E2 /* JGHCaddieActivityScoreView.h */,
+				20301A141E1104F1005568E2 /* JGHCaddieActivityScoreView.m */,
+				20301A161E113932005568E2 /* JGHCaddieScoreView.h */,
+				20301A171E113932005568E2 /* JGHCaddieScoreView.m */,
 			);
 			path = contorller;
 			sourceTree = "<group>";
@@ -6791,6 +6866,7 @@
 		36BFFF431BC76D09005B3CE2 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				20301A581E1269EB005568E2 /* LGLCalender */,
 				203017451E0E4291005568E2 /* ZXingObjC */,
 				2030173B1E0E3EAA005568E2 /* datePicks */,
 				20D1E1A81DD41DC100EB25C3 /* 支付密码框 */,
@@ -9330,6 +9406,7 @@
 				F5EE48931D4626D4001D5E44 /* JGLAddActivePlayViewController.h in Sources */,
 				203019EA1E0E4293005568E2 /* ZXPDF417ScanningDecoder.m in Sources */,
 				F5EE48941D4626D4001D5E44 /* JGLAddActivePlayViewController.m in Sources */,
+				20301A6D1E1269EB005568E2 /* LGLCalenderCell.m in Sources */,
 				F5EE48911D4626AE001D5E44 /* JGLActiveScoreViewController.h in Sources */,
 				F5EE48921D4626AE001D5E44 /* JGLActiveScoreViewController.m in Sources */,
 				F50800961DAC8ECF00D26A82 /* JGDSetConfrontViewController.m in Sources */,
@@ -9467,6 +9544,7 @@
 				203019831E0E4292005568E2 /* ZXDecodeHints.m in Sources */,
 				36E300F41C3FF3F9005C3F08 /* MJRefreshBackNormalFooter.m in Sources */,
 				8219ADDA1D91112800793110 /* JGLFinishBtnTableViewCell.m in Sources */,
+				20F661181E1514BF004E89E3 /* JGHTimeListView.m in Sources */,
 				364E77E21C156F810064F130 /* ScorePeopleModel.m in Sources */,
 				F55426721D22533300233B20 /* JGDSetPayPasswordTableViewCell.m in Sources */,
 				F54CC18A1D8428CE00A194F2 /* JGLWriteReplyViewController.m in Sources */,
@@ -9517,6 +9595,7 @@
 				F5EE48991D462730001D5E44 /* JGLActiveAddPlayTableViewCell.m in Sources */,
 				203019D71E0E4293005568E2 /* ZXUPCAWriter.m in Sources */,
 				20591C561D215BCD003271EC /* JGDPrivateAccountTableViewCell.m in Sources */,
+				20301A721E1269EB005568E2 /* LGLWeekView.m in Sources */,
 				203019B21E0E4292005568E2 /* ZXRSSExpandedBlockParsedResult.m in Sources */,
 				F53A05671D518F32009DD489 /* JGHPlayersScoreTableViewCell.m in Sources */,
 				2012AD821D2BB1B200F70E40 /* JGHAwardCell.m in Sources */,
@@ -9541,6 +9620,7 @@
 				F5AEF7311D41B98E009A8C34 /* JGHScoresHoleCell.m in Sources */,
 				36BFFF851BC76D09005B3CE2 /* LazyPageScrollView.m in Sources */,
 				F59A8BA81D5DC27E00E8292B /* JGDPlayerScanViewController.m in Sources */,
+				20301A701E1269EB005568E2 /* LGLCalenderViewController.m in Sources */,
 				82F2545F1D3CE1E1008BE0AF /* JGLAddressAddViewController.m in Sources */,
 				F5AEF73E1D41B98E009A8C34 /* JGDHistoryScoreTableViewCell.m in Sources */,
 				F5AEF7391D41B98E009A8C34 /* JGLChoosesScoreTableViewCell.m in Sources */,
@@ -9573,6 +9653,7 @@
 				203019ED1E0E4293005568E2 /* ZXPDF417.m in Sources */,
 				F5AAAA311D59B08D0016E6F6 /* JGDPlayPersonTableViewCell.m in Sources */,
 				82EDDF7F1D6154A8003D51EB /* JGLCaddieSelfScoreViewController.m in Sources */,
+				20301A741E1269EB005568E2 /* XLPlainFlowLayout.m in Sources */,
 				36B9B5921C3DFFCE0053B227 /* ShopCarViewController.m in Sources */,
 				2030194D1E0E4292005568E2 /* ZXExpandedProductParsedResult.m in Sources */,
 				36BF01DA1BC77BB0005B3CE2 /* CaptchaModel.m in Sources */,
@@ -9640,6 +9721,7 @@
 				36BF00911BC772EF005B3CE2 /* MyAccountViewController.m in Sources */,
 				F569A1401CE35A9C00CD0FD5 /* JGTeamDetailViewController.m in Sources */,
 				F54E161C1DB23B4D0018B3AB /* JGLCompeteMemberModel.m in Sources */,
+				20301A181E113932005568E2 /* JGHCaddieScoreView.m in Sources */,
 				205FA1C21DBDA37F003B9668 /* JGHEventViewController.m in Sources */,
 				2012AD5C1D2BB19400F70E40 /* JGHChooseAwardViewController.m in Sources */,
 				207F70511DC0450800667E26 /* JGHSuppliesMallView.m in Sources */,
@@ -9905,6 +9987,7 @@
 				203019E01E0E4293005568E2 /* ZXPDF417ECErrorCorrection.m in Sources */,
 				2053FE961DC9D5DD00975203 /* JGHForgotPasswordViewController.m in Sources */,
 				20591CAA1D23C308003271EC /* JGHSelectBlankCatoryCell.m in Sources */,
+				20301A151E1104F1005568E2 /* JGHCaddieActivityScoreView.m in Sources */,
 				36DC9D5C1C994E6E003E4FCC /* RecomeFriendViewController.m in Sources */,
 				203019B31E0E4292005568E2 /* ZXRSSExpandedCurrentParsingState.m in Sources */,
 				36BF01DB1BC77BB0005B3CE2 /* EnrollModel.m in Sources */,
@@ -9959,6 +10042,7 @@
 				209B3FEB1D10182B00A6FF72 /* JGHManagerViewController.m in Sources */,
 				203019591E0E4292005568E2 /* ZXSMSTOMMSTOResultParser.m in Sources */,
 				F5CB6EAB1DB9BB190068F768 /* JGDInviteTableViewCell.m in Sources */,
+				20301A6C1E1269EB005568E2 /* LGLCalendarDate.m in Sources */,
 				20203B1C1D9B6013009A75F3 /* JGHPublishEventModel.m in Sources */,
 				368DCA641C88285000871D28 /* ReportViewController.m in Sources */,
 				20301A0F1E0E4293005568E2 /* ZXQRCodeReader.m in Sources */,
@@ -10015,6 +10099,7 @@
 				82434E3A1DB49A31006DE8DD /* JGLGroupRoundModel.m in Sources */,
 				20A4CFB61DC85D3F00F5A81D /* JGHIndexTableViewCell.m in Sources */,
 				821DB9D01D5DB5F300C882C2 /* JGLCaddieModel.m in Sources */,
+				20301A6F1E1269EB005568E2 /* LGLCalenderSubModel.m in Sources */,
 				20D514E91DB63DA60006EFCB /* JGHGameBaseHeaderCell.m in Sources */,
 				F53A05611D518F32009DD489 /* JGHOperationScoreListCell.m in Sources */,
 				36067BCE1C97F915001AE22C /* NewFriendTableViewCell.m in Sources */,
@@ -10128,6 +10213,7 @@
 				203019921E0E4292005568E2 /* ZXDataMatrixDetector.m in Sources */,
 				207F70581DC1952E00667E26 /* JGHNavListView.m in Sources */,
 				F5AEF6EA1D408F3F009A8C34 /* JGDNotActivityHisDetailViewController.m in Sources */,
+				20301A731E1269EB005568E2 /* UIView+Frame.m in Sources */,
 				203019E11E0E4293005568E2 /* ZXPDF417BarcodeMetadata.m in Sources */,
 				203019CB1E0E4293005568E2 /* ZXEAN13Reader.m in Sources */,
 				203019BA1E0E4292005568E2 /* ZXBitArrayBuilder.m in Sources */,
@@ -10155,6 +10241,7 @@
 				827AA0141D1D1BFF00F6B80B /* JGHCancelApplyViewController.m in Sources */,
 				821C0D961D533661001BB913 /* JGLGuestAddPlayerTableViewCell.m in Sources */,
 				F51944371DFE4A8E0009653B /* MSSBrowseRemindView.m in Sources */,
+				20301A6E1E1269EB005568E2 /* LGLCalenderModel.m in Sources */,
 				F5EEB1571D1BC2BB009D37CE /* JGActivityMemNonmangerTableViewCell.m in Sources */,
 				36BF00871BC772EF005B3CE2 /* MySetAboutController.m in Sources */,
 				36BFFF801BC76D09005B3CE2 /* UIImageView+WebCache.m in Sources */,
@@ -10299,6 +10386,7 @@
 				2030197E1E0E4292005568E2 /* ZXPerspectiveTransform.m in Sources */,
 				20D515161DBB82280006EFCB /* JGHEventDetailsViewController.m in Sources */,
 				F5E1B87E1D6AE13800414727 /* JGDGuestPayViewController.m in Sources */,
+				20301A711E1269EB005568E2 /* LGLHeaderView.m in Sources */,
 				20D514F11DB63DA60006EFCB /* JGHGameSetCell.m in Sources */,
 				2030198A1E0E4292005568E2 /* ZXResult.m in Sources */,
 				F5B431D71DE6A98C00330259 /* JGSearchNewFriendTableViewCell.m in Sources */,
@@ -10385,10 +10473,11 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: nie yi (YKPG8Q2G6Y)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: nie yi (YKPG8Q2G6Y)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = 5P6JNXBH3C;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/";
@@ -10415,7 +10504,7 @@
 				LIBRARY_SEARCH_PATHS = "";
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "bb7656af-80f1-4584-b514-6868ecc0b169";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -10437,10 +10526,11 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: nie yi (YKPG8Q2G6Y)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: nie yi (YKPG8Q2G6Y)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = 5P6JNXBH3C;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/";
@@ -10459,7 +10549,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LIBRARY_SEARCH_PATHS = "";
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "bb7656af-80f1-4584-b514-6868ecc0b169";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -10471,7 +10561,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = DagolfLa/DagolfLa.entitlements;
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer: nie yi (YKPG8Q2G6Y)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 5P6JNXBH3C;
 				ENABLE_BITCODE = NO;
@@ -10513,6 +10603,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = bihuaxinxi.DagolfLa;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/DagolfLa/第三方库/lib";
 				VALID_ARCHS = "arm64 armv7 armv7s";
@@ -10525,7 +10616,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = DagolfLa/DagolfLa.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: nie yi (YKPG8Q2G6Y)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 5P6JNXBH3C;
 				ENABLE_BITCODE = NO;
@@ -10567,6 +10658,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = bihuaxinxi.DagolfLa;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/DagolfLa/第三方库/lib";
 				VALID_ARCHS = "arm64 armv7 armv7s";

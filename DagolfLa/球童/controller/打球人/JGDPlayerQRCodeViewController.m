@@ -136,7 +136,9 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    self.view.backgroundColor = [UITool colorWithHexString:@"eeeeee" alpha:1];
+    self.view.backgroundColor = [UIColor colorWithHexString:BG_color];
+    self.navigationItem.title = @"我的二维码";
+    
     [self createView];
 }
 
@@ -180,30 +182,45 @@
                                 
                             } completionBlock:^(id data) {
                                 if ([[data objectForKey:@"acBoolean"] integerValue] == 1) {
-                                    JGLCaddieChooseStyleViewController* choVc = [[JGLCaddieChooseStyleViewController alloc]init];
+                                    //活动记分选择列表
                                     if ([[dictData objectForKey:@"isQCodeCaddie"] integerValue] == 1) {//球童扫码
-                                        choVc.userKeyPlayer = [dictData objectForKey:@"scanUserKey"];
-                                        choVc.userNamePlayer = [NSString stringWithFormat:@"%@",[dictData objectForKey:@"scanUserName"]];//
+                                        _blockCaddieAcitivtyScore([dictData objectForKey:@"scanUserKey"], [dictData objectForKey:@"scanUserName"], [[dictData objectForKey:@"sex"] integerValue]);
+                                    }else{//客户扫码
+                                        _blockCaddieAcitivtyScore([dictData objectForKey:@"qcodeUserKey"], [dictData objectForKey:@"qcodeUserName"], [[dictData objectForKey:@"sex"] integerValue]);
                                     }
-                                    else{//客户扫码
-                                        choVc.userKeyPlayer = [dictData objectForKey:@"qcodeUserKey"];
-                                        choVc.userNamePlayer = [NSString stringWithFormat:@"%@",[dictData objectForKey:@"qcodeUserName"]];
-                                    }
-                                    [self.navigationController pushViewController:choVc animated:YES];
+                                    
+//                                    JGLCaddieChooseStyleViewController* choVc = [[JGLCaddieChooseStyleViewController alloc]init];
+//                                    if ([[dictData objectForKey:@"isQCodeCaddie"] integerValue] == 1) {//球童扫码
+//                                        choVc.userKeyPlayer = [dictData objectForKey:@"scanUserKey"];
+//                                        choVc.userNamePlayer = [NSString stringWithFormat:@"%@",[dictData objectForKey:@"scanUserName"]];//
+//                                    }
+//                                    else{//客户扫码
+//                                        choVc.userKeyPlayer = [dictData objectForKey:@"qcodeUserKey"];
+//                                        choVc.userNamePlayer = [NSString stringWithFormat:@"%@",[dictData objectForKey:@"qcodeUserName"]];
+//                                    }
+//                                    [self.navigationController pushViewController:choVc animated:YES];
                                 }
                                 else{
-                                    JGLCaddieSelfScoreViewController* selfVc = [[JGLCaddieSelfScoreViewController alloc]init];
+                                    //普通
                                     if ([[dictData objectForKey:@"isQCodeCaddie"] integerValue] == 1) {//球童扫码
-                                        selfVc.userKeyPlayer = [dictData objectForKey:@"scanUserKey"];
-                                        selfVc.userNamePlayer = [NSString stringWithFormat:@"%@",[dictData objectForKey:@"scanUserName"]];//
+                                        _blockStartCaddieScore([dictData objectForKey:@"scanUserKey"], [dictData objectForKey:@"scanUserName"], [[dictData objectForKey:@"sex"] integerValue]);
+                                    }else{
+                                        _blockStartCaddieScore([dictData objectForKey:@"qcodeUserKey"], [dictData objectForKey:@"qcodeUserName"], [[dictData objectForKey:@"sex"] integerValue]);
                                     }
-                                    else{//客户扫码
-                                        selfVc.userKeyPlayer = [dictData objectForKey:@"qcodeUserKey"];
-                                        selfVc.userNamePlayer = [NSString stringWithFormat:@"%@",[dictData objectForKey:@"qcodeUserName"]];
-                                    }
-                                    [self.navigationController pushViewController:selfVc animated:YES];
+                                    
+//                                    JGLCaddieSelfScoreViewController* selfVc = [[JGLCaddieSelfScoreViewController alloc]init];
+//                                    if ([[dictData objectForKey:@"isQCodeCaddie"] integerValue] == 1) {//球童扫码
+//                                        selfVc.userKeyPlayer = [dictData objectForKey:@"scanUserKey"];
+//                                        selfVc.userNamePlayer = [NSString stringWithFormat:@"%@",[dictData objectForKey:@"scanUserName"]];//
+//                                    }
+//                                    else{//客户扫码
+//                                        selfVc.userKeyPlayer = [dictData objectForKey:@"qcodeUserKey"];
+//                                        selfVc.userNamePlayer = [NSString stringWithFormat:@"%@",[dictData objectForKey:@"qcodeUserName"]];
+//                                    }
+//                                    [self.navigationController pushViewController:selfVc animated:YES];
                                 }
                                 
+                                [self.navigationController popViewControllerAnimated:YES];
                             }];
                         }
                     }

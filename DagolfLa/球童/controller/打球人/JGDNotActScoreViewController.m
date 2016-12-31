@@ -16,6 +16,8 @@
 #import "JGDHistoryScoreViewController.h"
 #import "JGDPlayPersonViewController.h"
 #import "JGLCaddieScoreViewController.h"
+#import "JGHHistoryAndResultsViewController.h"
+#import "JGHNewStartScoreViewController.h"
 
 @interface JGDNotActScoreViewController ()<UITableViewDelegate, UITableViewDataSource>
 
@@ -41,19 +43,25 @@
 }
 
 - (void)backBtn{
+//    if (_ballkid == 1) {
+//        [self.navigationController popViewControllerAnimated:YES];
+//    }else{
+//        [self.navigationController popToRootViewControllerAnimated:YES];
+//    }
     
     for (UIViewController *vc in self.navigationController.viewControllers) {
-        if ([vc isKindOfClass:[JGDHistoryScoreViewController class]]) {
+        if ([vc isKindOfClass:[JGHHistoryAndResultsViewController class]]) {
             [self.navigationController popToViewController:vc animated:YES];
             return;
         }
     }
     for (UIViewController *vc in self.navigationController.viewControllers) {
-        if ([vc isKindOfClass:[JGDPlayPersonViewController class]] || [vc isKindOfClass:[JGLCaddieScoreViewController class]]) {
+        if ([vc isKindOfClass:[JGHNewStartScoreViewController class]]) {
             [self.navigationController popToViewController:vc animated:YES];
             return;
         }
     }
+     
 }
 
 - (void)viewDidLoad {
@@ -177,7 +185,7 @@
     }
     for (int i = 0; i < 4; i ++) {
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(screenWidth / 4 * i, 110 * ProportionAdapter, screenWidth / 4, 30 * ProportionAdapter)];
-        label.text = @"张小章";
+        label.text = @" ";
         label.textAlignment = NSTextAlignmentCenter;
         label.font = [UIFont systemFontOfSize:15 * ProportionAdapter];
         [view addSubview:label];

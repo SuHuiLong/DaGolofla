@@ -37,6 +37,8 @@
     leftBar.tintColor = [UIColor whiteColor];
     self.navigationItem.leftBarButtonItem = leftBar;
     //    [self.tableView reloadData];
+    
+    
 }
 
 - (void)backBtn{

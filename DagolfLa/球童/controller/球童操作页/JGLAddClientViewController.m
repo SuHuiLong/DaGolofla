@@ -17,6 +17,7 @@
 #import "JGLScoreSureViewController.h"
 #import "JGLCaddieChooseStyleViewController.h"
 #import "JGLCaddieSelfScoreViewController.h"
+#import "JGDPlayerQRCodeViewController.h"
 
 @interface JGLAddClientViewController ()<AVCaptureMetadataOutputObjectsDelegate>
 {
@@ -180,7 +181,7 @@
     label.textColor = [UIColor whiteColor];
     [self.view addSubview:label];
     
-    
+    /*
     UIButton* btn = [UIButton buttonWithType:UIButtonTypeSystem];
     btn.frame = CGRectMake(0, QRCodeWidth+topView.frame.size.height-64 + 60*screenWidth/375, screenWidth, 40);
     [btn setTintColor:[UITool colorWithHexString:@"#32b14d" alpha:1]];
@@ -188,7 +189,7 @@
     btn.titleLabel.font = [UIFont systemFontOfSize:15*screenWidth/375];
     [self.view addSubview:btn];
     [btn addTarget:self action:@selector(myCodeBarClick) forControlEvents:UIControlEventTouchUpInside];
-    
+    */
 }
 
 
@@ -243,7 +244,10 @@
 }
 -(void)myCodeBarClick
 {
-    JGMyBarCodeViewController* barVc = [[JGMyBarCodeViewController alloc]init];
+//    JGMyBarCodeViewController* barVc = [[JGMyBarCodeViewController alloc]init];
+//    [self.navigationController pushViewController:barVc animated:YES];
+    
+    JGDPlayerQRCodeViewController* barVc = [[JGDPlayerQRCodeViewController alloc]init];
     [self.navigationController pushViewController:barVc animated:YES];
 }
 #pragma mark - 启动扫码
@@ -344,33 +348,44 @@
                         
                         NSDictionary *dataDic = [data objectForKey:@"bean"];
                         if ([[data objectForKey:@"acBoolean"] integerValue] == 1) {
-                            JGLCaddieChooseStyleViewController* choVc = [[JGLCaddieChooseStyleViewController alloc]init];
+//                            JGLCaddieChooseStyleViewController* choVc = [[JGLCaddieChooseStyleViewController alloc]init];
                             if ([[dataDic objectForKey:@"isQCodeCaddie"] integerValue] == 1) {//球童扫码
-                                choVc.userKeyPlayer = [dataDic objectForKey:@"scanUserKey"];
-                                choVc.userNamePlayer = [NSString stringWithFormat:@"%@",[dataDic objectForKey:@"scanUserName"]];//
+//                                choVc.userKeyPlayer = [dataDic objectForKey:@"scanUserKey"];
+//                                choVc.userNamePlayer = [NSString stringWithFormat:@"%@",[dataDic objectForKey:@"scanUserName"]];//
+                                _blockQcodeActivityScore([dataDic objectForKey:@"scanUserKey"], [dataDic objectForKey:@"scanUserName"], [[dataDic objectForKey:@"scanUserName"] integerValue]);
+                            }else{//客户扫码
+                                _blockQcodeActivityScore([dataDic objectForKey:@"qcodeUserKey"], [dataDic objectForKey:@"qcodeUserName"], [[dataDic objectForKey:@"scanUserName"] integerValue]);
+//                                choVc.userKeyPlayer = [dataDic objectForKey:@"qcodeUserKey"];
+//                                choVc.userNamePlayer = [NSString stringWithFormat:@"%@",[dataDic objectForKey:@"qcodeUserName"]];
+                                
                             }
-                            else{//客户扫码
-                                choVc.userKeyPlayer = [dataDic objectForKey:@"qcodeUserKey"];
-                                choVc.userNamePlayer = [NSString stringWithFormat:@"%@",[dataDic objectForKey:@"qcodeUserName"]];
-                            }
-                            [self.navigationController pushViewController:choVc animated:YES];
+//                            [self.navigationController pushViewController:choVc animated:YES];
+                            [self.navigationController popViewControllerAnimated:YES];
                         }
                         else{
-                            JGLCaddieSelfScoreViewController* selfVc = [[JGLCaddieSelfScoreViewController alloc]init];
+                            
+                            
+//                            JGLCaddieSelfScoreViewController* selfVc = [[JGLCaddieSelfScoreViewController alloc]init];
                             if ([[dataDic objectForKey:@"isQCodeCaddie"] integerValue] == 1) {//球童扫码
-                                selfVc.userKeyPlayer = [dataDic objectForKey:@"scanUserKey"];
-                                selfVc.userNamePlayer = [NSString stringWithFormat:@"%@",[dataDic objectForKey:@"scanUserName"]];//
+                                _blockQcodeScore([dataDic objectForKey:@"scanUserKey"], [dataDic objectForKey:@"scanUserName"], [[dataDic objectForKey:@"scanUserName"] integerValue]);
+//                                selfVc.userKeyPlayer = [dataDic objectForKey:@"scanUserKey"];
+//                                selfVc.userNamePlayer = [NSString stringWithFormat:@"%@",[dataDic objectForKey:@"scanUserName"]];//
                             }
                             else{//客户扫码
-                                selfVc.userKeyPlayer = [dataDic objectForKey:@"qcodeUserKey"];
-                                selfVc.userNamePlayer = [NSString stringWithFormat:@"%@",[dataDic objectForKey:@"qcodeUserName"]];
+                                _blockQcodeScore([dataDic objectForKey:@"qcodeUserKey"], [dataDic objectForKey:@"qcodeUserName"], [[dataDic objectForKey:@"scanUserName"] integerValue]);
+//                                selfVc.userKeyPlayer = [dataDic objectForKey:@"qcodeUserKey"];
+//                                selfVc.userNamePlayer = [NSString stringWithFormat:@"%@",[dataDic objectForKey:@"qcodeUserName"]];
                             }
-                            [self.navigationController pushViewController:selfVc animated:YES];
+//                            [self.navigationController pushViewController:selfVc animated:YES];
+                            [self.navigationController popViewControllerAnimated:YES];
                         }
                         
                     }
                 }
                 else{
+                    
+                    [self.timer invalidate];
+                    self.timer = nil;
                     //1，二维码未找到，2，球童扫描球童，3，打球人扫打球人
                     if ([[data objectForKey:@"errorState"] integerValue] == 2) {
                         JGLScoreSureViewController* suVc = [[JGLScoreSureViewController alloc]init];
@@ -411,11 +426,11 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
-    [self.navigationController.navigationBar setBarTintColor:[UIColor colorWithRed:0.23 green:0.71 blue:0.29 alpha:1]];
-    
-}
+//- (void)viewWillDisappear:(BOOL)animated {
+//    [super viewWillDisappear:animated];
+//    [self.navigationController.navigationBar setBarTintColor:[UIColor colorWithRed:0.23 green:0.71 blue:0.29 alpha:1]];
+//    
+//}
 
 //- (UIAlertController *)alertController{
 //    if (!_alertController) {

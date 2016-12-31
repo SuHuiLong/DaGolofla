@@ -13,6 +13,7 @@
 #import "JGDHistoryScoreShowModel.h"
 #import "JGDHistoryScoreShowViewController.h"
 #import "JGDHistoryScoreViewController.h"
+#import "JGDHistoryScoreShowViewController.h"
 
 @interface JGDActAlmostViewController ()<UITableViewDelegate, UITableViewDataSource>
 
@@ -37,10 +38,11 @@
 - (void)backBtn{
     
     for (UIViewController *vc in self.navigationController.viewControllers) {
-        if ([vc isKindOfClass:[JGDHistoryScoreViewController class]]) {
+        if ([vc isKindOfClass:[JGDHistoryScoreShowViewController class]]) {
             [self.navigationController popToViewController:vc animated:YES];
         }
     }
+//    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)viewDidLoad {

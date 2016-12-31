@@ -9,9 +9,9 @@
 #import "MJDIYBackFooter.h"
 
 @interface MJDIYBackFooter()
-@property (weak, nonatomic) UILabel *label;
+//@property (weak, nonatomic) UILabel *label;
 @property (weak, nonatomic) UISwitch *s;
-@property (weak, nonatomic) UIImageView *logo;
+//@property (weak, nonatomic) UIImageView *logo;
 @property (weak, nonatomic) UIActivityIndicatorView *loading;
 @end
 
@@ -26,18 +26,18 @@
     self.mj_h = 50;
     
     // 添加label
-    UILabel *label = [[UILabel alloc] init];
-    label.textColor = [UIColor colorWithRed:1.0 green:0.5 blue:0.0 alpha:1.0];
-    label.font = [UIFont boldSystemFontOfSize:16];
-    label.textAlignment = NSTextAlignmentCenter;
-    [self addSubview:label];
-    self.label = label;
+//    UILabel *label = [[UILabel alloc] init];
+//    label.textColor = [UIColor colorWithRed:1.0 green:0.5 blue:0.0 alpha:1.0];
+//    label.font = [UIFont boldSystemFontOfSize:16];
+//    label.textAlignment = NSTextAlignmentCenter;
+//    [self addSubview:label];
+//    self.label = label;
     
 
     // logo
-    UIImageView *logo = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"mjlogo"]];
-    [self addSubview:logo];
-    self.logo = logo;
+//    UIImageView *logo = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"mjlogo"]];
+//    [self addSubview:logo];
+//    self.logo = logo;
     
     // loading
     UIActivityIndicatorView *loading = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
@@ -50,8 +50,8 @@
 {
     [super placeSubviews];
     
-    self.label.frame = CGRectMake(0, self.mj_h-20, self.mj_w, 20);
-    self.logo.frame = CGRectMake(self.mj_w/2-15, 0, 30, 30);
+//    self.label.frame = CGRectMake(0, self.mj_h-20, self.mj_w, 20);
+//    self.logo.frame = CGRectMake(self.mj_w/2-15, 0, 30, 30);
     
     self.loading.center = CGPointMake(self.mj_w - 30, self.mj_h * 0.5);
 }
@@ -86,21 +86,21 @@
         case MJRefreshStateIdle:
             [self.loading stopAnimating];
             [self.s setOn:NO animated:YES];
-            self.label.text = @"赶紧上拉吖";
+//            self.label.text = @"赶紧上拉吖";
             break;
         case MJRefreshStatePulling:
             [self.loading stopAnimating];
             [self.s setOn:YES animated:YES];
-            self.label.text = @"赶紧放开我吧";
+//            self.label.text = @"赶紧放开我吧";
             break;
         case MJRefreshStateRefreshing:
             [self.loading startAnimating];
             [self.s setOn:YES animated:YES];
-            self.label.text = @"加载数据中";
+//            self.label.text = @"加载数据中";
             break;
         case MJRefreshStateNoMoreData:
             [self.loading stopAnimating];
-            self.label.text = @"木有数据了";
+//            self.label.text = @"木有数据了";
             [self.s setOn:NO animated:YES];
         default:
             break;
@@ -114,10 +114,10 @@
     
     // 1.0 0.5 0.0
     // 0.5 0.0 0.5
-    CGFloat red = 1.0 - pullingPercent * 0.5;
-    CGFloat green = 0.5 - 0.5 * pullingPercent;
-    CGFloat blue = 0.5 * pullingPercent;
-    self.label.textColor = [UIColor colorWithRed:red green:green blue:blue alpha:1.0];
+//    CGFloat red = 1.0 - pullingPercent * 0.5;
+//    CGFloat green = 0.5 - 0.5 * pullingPercent;
+//    CGFloat blue = 0.5 * pullingPercent;
+//    self.label.textColor = [UIColor colorWithRed:red green:green blue:blue alpha:1.0];
 }
 
 @end

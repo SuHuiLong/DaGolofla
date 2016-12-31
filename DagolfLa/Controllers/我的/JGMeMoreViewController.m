@@ -26,6 +26,12 @@
 
 @implementation JGMeMoreViewController
 
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    
+    self.tabBarController.tabBar.hidden = YES;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -67,6 +73,14 @@
                 if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
                     if ([[data objectForKey:@"has"] integerValue] == 0) {
                         JGHCabbieCertViewController *caddieCtrl = [[JGHCabbieCertViewController alloc]init];
+                        caddieCtrl.blockCabbie = ^(){
+                            //        NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
+                            //        if ([userdef objectForKey:@"isCaddie"]) {
+                            //            //认证球童
+                            //            [self createCaddieView];
+                            //        }
+                        };
+
                         [self.navigationController pushViewController:caddieCtrl animated:YES];
                     }else{
                         JGHCabbieCertSuccessViewController *certSuflCtrl = [[JGHCabbieCertSuccessViewController alloc]init];

@@ -12,4 +12,11 @@
 
 @property (nonatomic, copy) void (^clipBlock)(NSString *, NSInteger );
 
+//活动记分
+@property (nonatomic, copy) void (^blockCaddieAcitivtyScore)(NSString *, NSString * , NSInteger);
+
+//普通记分
+@property (nonatomic, copy) void (^blockStartCaddieScore)(NSString *, NSString * , NSInteger);
+
+
 @end

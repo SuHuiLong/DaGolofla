@@ -46,6 +46,7 @@
         
         UIButton *selectBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, screenWidth, 60 *ProportionAdapter)];
         selectBtn.tag = 200 +i;
+//        [selectBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
         [selectBtn addTarget:self action:@selector(activityClick:) forControlEvents:UIControlEventTouchUpInside];
         [_showActivityView addSubview:selectBtn];
         _showActivityView.backgroundColor = [UIColor whiteColor];

@@ -48,8 +48,8 @@
     [super viewWillAppear:animated];
     ////NSLog(@"100");
     //    self.tabBarController.tabBar.hidden = YES;
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hideTabBar) name:@"hide" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showTabBar) name:@"show" object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hideTabBar) name:@"hide" object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showTabBar) name:@"show" object:nil];
     ////NSLog(@"88");
     
     
@@ -61,8 +61,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"hide" object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"show" object:nil];
+//    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"hide" object:nil];
+//    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"show" object:nil];
     //创建视图控制器数组
     //
     //    //创建标签

@@ -94,6 +94,8 @@
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
 //    self.navigationController.navigationBarHidden = YES;
+    [[UIApplication sharedApplication]setStatusBarStyle:UIStatusBarStyleLightContent];
+    
 }
 
 -(void)viewWillDisappear:(BOOL)animated{
@@ -104,6 +106,7 @@
 }
 
 - (void)returnFirRef{
+    
     self.mainTable.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
     self.mainTable.footer=[MJDIYBackFooter footerWithRefreshingTarget:self refreshingAction:@selector(footerRereshing)];
     [self.mainTable.header endRefreshing];

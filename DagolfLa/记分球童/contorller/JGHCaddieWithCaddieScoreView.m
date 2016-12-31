@@ -22,7 +22,6 @@
     UIButton *_footerFinishBtn;//点击完成的按钮和存放按钮的视图
     NSInteger _isHaveData;
 }
-@property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic ,strong) UILabel *tipLabel;
 
 @property (nonatomic, strong)  NSTimer * timer;
@@ -335,38 +334,9 @@
 
 -(void)finishClick:(UIButton *)btn
 {
-    /*
-    if ([[_dataArray[btn.tag - 1000] scoreFinish] integerValue] == 0) {
-        JGHScoresViewController* scrVc = [[JGHScoresViewController alloc]init];
-        scrVc.scorekey = [NSString stringWithFormat:@"%@",[_dataArray[btn.tag - 1000] timeKey]];
-        NSLog(@"%@",[_dataArray[btn.tag - 1000] timeKey]);
-        scrVc.isCabbie = 1;
-        NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
-        
-        //    if ([userdef objectForKey:[NSString stringWithFormat:@"%@", [_dataArray[btn.tag - 1000] timeKey]]]) {
-        scrVc.currentPage = [[userdef objectForKey:[NSString stringWithFormat:@"%@", [_dataArray[btn.tag - 1000] timeKey]]] integerValue];
-        //    }
-        //    scrVc.refreshBlock = ^(){
-        //        [self headRereshing];
-        //    };
-        
-        [self.navigationController pushViewController:scrVc animated:YES];
-    }
-    else{
-        if ([[_dataArray[btn.tag - 1000] srcType] integerValue] == 1) {
-            JGDPlayerHisScoreCardViewController *DPHVC = [[JGDPlayerHisScoreCardViewController alloc] init];
-            DPHVC.timeKey = [_dataArray[btn.tag - 1000] timeKey];
-            DPHVC.ballkid = 11;//表示已经记分完成
-            [self.navigationController pushViewController:DPHVC animated:YES];
-        }else{
-            JGDNotActScoreViewController *noActVC = [[JGDNotActScoreViewController alloc] init];
-            noActVC.timeKey = [_dataArray[btn.tag - 1000] timeKey];
-            noActVC.ballkid = 11;//表示已经完成记分
-            NSLog(@"%@",[_dataArray[btn.tag - 1000] timeKey]);
-            [self.navigationController pushViewController:noActVC animated:YES];
-        }
-    }
-     */
+    JGLCaddieModel *model = [[JGLCaddieModel alloc]init];
+    model = _dataArray[btn.tag - 1000];
+    _blockCaddieContinueScore(model);
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{

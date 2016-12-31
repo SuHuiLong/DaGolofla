@@ -123,7 +123,7 @@ static NSString *const JGHSysInformCellIdentifier = @"JGHSysInformCell";
             _promptLable.font = [UIFont systemFontOfSize:16*ProportionAdapter];
             _promptLable.textAlignment = NSTextAlignmentCenter;
             _promptLable.text = @"暂无系统通知";
-            [window addSubview:_promptLable];
+            [self.systemNotTableView addSubview:_promptLable];
         }else{
             self.systemNotTableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
             if (_promptLable != nil) {
@@ -302,14 +302,6 @@ static NSString *const JGHSysInformCellIdentifier = @"JGHSysInformCell";
             [self.navigationController pushViewController:jgJoinVC animated:YES];
         }
         
-
-        
-        
-        
-        
-        
-        
-        
         
         //新球友
         if ([model.linkURL containsString:@"newUserFriendList"]) {
@@ -389,7 +381,7 @@ static NSString *const JGHSysInformCellIdentifier = @"JGHSysInformCell";
         //H5
         if ([model.linkURL containsString:@"openURL"]) {
             JGLPushDetailsViewController* puVc = [[JGLPushDetailsViewController alloc]init];
-            puVc.strUrl = [Helper returnKeyVlaueWithUrlString:model.linkURL andKey:@"timekey"];
+            puVc.strUrl = [Helper returnKeyVlaueWithUrlString:model.linkURL andKey:@"url"];
             puVc.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:puVc animated:YES];
         }

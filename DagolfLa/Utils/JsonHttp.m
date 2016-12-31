@@ -373,7 +373,8 @@ static JsonHttp *jsonHttp = nil;
     //发送请求
    [NSURLConnection sendAsynchronousRequest:request queue:queue completionHandler:^(NSURLResponse * _Nullable response, NSData * _Nullable data, NSError * _Nullable connectionError) {
        NSDictionary *dataDict = nil;
-       if ([NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil]) {
+       //[NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil]
+       if (data) {
            dataDict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
        }else{
            return ;

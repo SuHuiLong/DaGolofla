@@ -12,8 +12,8 @@
 
 @interface JGHHistoryScoreView ()<UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate,UISearchResultsUpdating>
 
-@property (nonatomic, strong) UITableView *tableView;
-@property (nonatomic, strong) UISearchController *searchController;
+
+
 @property (nonatomic, assign) NSInteger page;
 @property (nonatomic, strong) NSMutableArray *dataArray;
 
@@ -52,7 +52,7 @@
     
     self.tableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
     self.tableView.footer=[MJDIYBackFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRereshing)];
-    [self.tableView.header beginRefreshing];
+//    [self downLoadData:0];
     
     
     self.tableView.tableHeaderView = self.searchController.searchBar;
@@ -128,13 +128,13 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    JGDHistoryScoreModel *model = self.dataArray[indexPath.row];
+//    JGDHistoryScoreModel *model = self.dataArray[indexPath.row];
     
-    if ([model.srcType integerValue] == 0) {
-        return 65 * ProportionAdapter;
-    }else{
+//    if ([model.srcType integerValue] == 0) {
+//        return 65 * ProportionAdapter;
+//    }else{
         return 85 * ProportionAdapter;
-    }
+//    }
 }
 
 -(void)updateSearchResultsForSearchController:(UISearchController *)searchController {

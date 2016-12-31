@@ -67,6 +67,7 @@
     leftBar.tintColor = [UIColor whiteColor];
     self.navigationItem.leftBarButtonItem = leftBar;
     //[[NSNotificationCenter defaultCenter] postNotificationName:@"show" object:nil];
+    self.tabBarController.tabBar.hidden = YES;
 }
 
 - (void)viewDidLoad {
@@ -253,7 +254,7 @@
         
     } withBlock:^(UIAlertController *alertView) {
         
-        [self.navigationController presentViewController:alertView animated:YES completion:nil];
+        [self presentViewController:alertView animated:YES completion:nil];
     }];
     
     
@@ -308,7 +309,7 @@
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
+//    [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
 
     if (indexPath.row == 0) {
         InformViewController* inforVc = [[InformViewController alloc]init];

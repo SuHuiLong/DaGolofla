@@ -31,7 +31,8 @@
     self.slideSwitchView.hidden = NO;
     self.tabBarController.view.backgroundColor = [UIColor blackColor];
     self.navigationController.navigationBarHidden = YES;
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"show" object:nil];
+//    [[NSNotificationCenter defaultCenter] postNotificationName:@"show" object:nil];
+    self.tabBarController.tabBar.hidden = NO;
 }
 
 -(void)viewWillDisappear:(BOOL)animated{
@@ -110,7 +111,7 @@
     if ([[NSUserDefaults standardUserDefaults]objectForKey:@"userId"]) {
         [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:nil];
         PublishViewController* pubVc = [[PublishViewController alloc]init];
-        
+        pubVc.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:pubVc animated:YES];
         //       //发布完成回调刷新
         pubVc.blockRereshing = ^(){
@@ -127,6 +128,7 @@
             vc.reloadCtrlData = ^(){
                 
             };
+            vc.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:vc animated:YES];
         } withBlock:^(UIAlertController *alertView) {
             [self presentViewController:alertView animated:YES completion:nil];
@@ -144,7 +146,7 @@
        
         WXViewController *vc = _muArray[0];
         tVc.nnewDataArray = vc.tableDataSource;
-        
+        tVc.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:tVc animated:YES];
         
     }else {
@@ -154,6 +156,7 @@
             vc.reloadCtrlData = ^(){
                 
             };
+            vc.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:vc animated:YES];
         } withBlock:^(UIAlertController *alertView) {
             [self presentViewController:alertView animated:YES completion:nil];

@@ -137,7 +137,7 @@ static CGFloat ImageHeight  = 210.0;
     _photos = 1;
     //返回按钮
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    btn.frame = BackBtnFrame;
+    btn.frame = CGRectMake(0, 20, 44, 44);
     btn.titleLabel.font = [UIFont systemFontOfSize:FontSize_Normal];
     btn.tag = 521;
     [btn setImage:[UIImage imageNamed:@"backL"] forState:UIControlStateNormal];
@@ -145,7 +145,7 @@ static CGFloat ImageHeight  = 210.0;
     [self.titleView addSubview:btn];
     //点击更换背景
     UIButton *replaceBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    replaceBtn.frame = CGRectMake(screenWidth-64, 0, 54, 44);
+    replaceBtn.frame = CGRectMake(screenWidth-64, 20, 64, 44);
     replaceBtn.titleLabel.font = [UIFont systemFontOfSize:FontSize_Normal];
     [replaceBtn setTitle:@"点击更换" forState:UIControlStateNormal];
     replaceBtn.titleLabel.font = [UIFont systemFontOfSize:13];
@@ -153,14 +153,14 @@ static CGFloat ImageHeight  = 210.0;
     [replaceBtn addTarget:self action:@selector(initItemsBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.titleView addSubview:replaceBtn];
     //输入框
-    self.titleField = [[UITextField alloc]initWithFrame:CGRectMake(64, 7, screenWidth - 128, 30)];
+    self.titleField = [[UITextField alloc]initWithFrame:CGRectMake(64, 20, screenWidth - 128, 40)];
     self.titleField.placeholder = @"请输入活动名称";
     [self.titleField setValue:[UIColor whiteColor] forKeyPath:@"_placeholderLabel.textColor"];
-    [self.titleField setValue:[UIFont boldSystemFontOfSize:15] forKeyPath:@"_placeholderLabel.font"];
+    [self.titleField setValue:[UIFont boldSystemFontOfSize:15*ProportionAdapter] forKeyPath:@"_placeholderLabel.font"];
     self.titleField.tag = 345;
     self.titleField.delegate = self;
     self.titleField.textAlignment = NSTextAlignmentCenter;
-    self.titleField.font = [UIFont systemFontOfSize:15];
+    self.titleField.font = [UIFont systemFontOfSize:15*ProportionAdapter];
     
     //头像
     self.headPortraitBtn = [[UIButton alloc]initWithFrame:CGRectMake(10, 135, 65, 65)];
@@ -168,6 +168,7 @@ static CGFloat ImageHeight  = 210.0;
     self.model.headerImage = [UIImage imageNamed:TeamLogoImage];
     self.headPortraitBtn.layer.cornerRadius = 8.0;
     [self.imgProfile addSubview:self.headPortraitBtn];
+    [self.headPortraitBtn bringSubviewToFront:self.imgProfile];
     [self.titleView addSubview:self.titleField];
     
     //地址
@@ -177,6 +178,7 @@ static CGFloat ImageHeight  = 210.0;
     self.addressBtn.titleLabel.font = [UIFont systemFontOfSize:13];
     self.addressBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     [self.addressBtn addTarget:self action:@selector(replaceWithPicture:) forControlEvents:UIControlEventTouchUpInside];
+    [self.addressBtn bringSubviewToFront:self.imgProfile];
     [self.imgProfile addSubview:self.addressBtn];
     
     if (self.model.name != nil) {

@@ -292,7 +292,8 @@
         [weakSelf updateUserInterface];
     };
     //发出通知隐藏标签栏
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:nil];
+//    [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:nil];
+    vc.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:vc animated:YES];
     
 }

@@ -130,6 +130,7 @@
             vc.reloadCtrlData = ^(){
                 
             };
+            vc.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:vc animated:YES];
         } withBlock:^(UIAlertController *alertView) {
             [self.navigationController presentViewController:alertView animated:YES completion:nil];
@@ -413,6 +414,7 @@
                     vc.reloadCtrlData = ^(){
                         
                     };
+                    vc.hidesBottomBarWhenPushed = YES;
                     [self.navigationController pushViewController:vc animated:YES];
                 } withBlock:^(UIAlertController *alertView) {
                     [self.navigationController presentViewController:alertView animated:YES completion:nil];
@@ -432,7 +434,7 @@
             
             if ([[NSUserDefaults standardUserDefaults]objectForKey:@"userId"]) {
                 
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
+//                [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
                 
                 ComDetailViewController* comVc = [[ComDetailViewController alloc]init];
                 comVc.firstDataArray = _dataArray;
@@ -447,6 +449,7 @@
                     [_tableView reloadRowsAtIndexPaths:indexArray withRowAnimation:UITableViewRowAnimationAutomatic];
                 };
                 
+                comVc.hidesBottomBarWhenPushed = YES;
                 [self.navigationController pushViewController:comVc animated:YES];
                 
             }else {
@@ -456,6 +459,8 @@
                     vc.reloadCtrlData = ^(){
                         
                     };
+                    
+                    vc.hidesBottomBarWhenPushed = YES;
                     [self.navigationController pushViewController:vc animated:YES];
                 } withBlock:^(UIAlertController *alertView) {
                     [self.navigationController presentViewController:alertView animated:YES completion:nil];
@@ -472,6 +477,7 @@
                 vc.reloadCtrlData = ^(){
                     
                 };
+                vc.hidesBottomBarWhenPushed = YES;
                 [self.navigationController pushViewController:vc animated:YES];
             } withBlock:^(UIAlertController *alertView) {
                 [self.navigationController presentViewController:alertView animated:YES completion:nil];
@@ -615,6 +621,7 @@
                     vc.reloadCtrlData = ^(){
                         
                     };
+                    vc.hidesBottomBarWhenPushed = YES;
                     [self.navigationController pushViewController:vc animated:YES];
                 } withBlock:^(UIAlertController *alertView) {
                     [self.navigationController presentViewController:alertView animated:YES completion:nil];
@@ -646,6 +653,7 @@
                     vc.reloadCtrlData = ^(){
                         
                     };
+                    vc.hidesBottomBarWhenPushed = YES;
                     [self.navigationController pushViewController:vc animated:YES];
                 } withBlock:^(UIAlertController *alertView) {
                     [self.navigationController presentViewController:alertView animated:YES completion:nil];
@@ -779,6 +787,7 @@
             vc.reloadCtrlData = ^(){
                 
             };
+            vc.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:vc animated:YES];
         } withBlock:^(UIAlertController *alertView) {
             [self.navigationController presentViewController:alertView animated:YES completion:nil];
@@ -839,7 +848,7 @@
     if ([[NSUserDefaults standardUserDefaults]objectForKey:@"userId"]) {
         
         //点击cell进入详情
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
+//        [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
         ComDetailViewController* comDevc = [[ComDetailViewController alloc]init];
         comDevc.firstDataArray = _dataArray;
         comDevc.firstIndexPath = indexPath.row;
@@ -851,6 +860,7 @@
             NSArray *indexArray=[NSArray arrayWithObject:indexPath_1];
             [_tableView reloadRowsAtIndexPaths:indexArray withRowAnimation:UITableViewRowAnimationAutomatic];
         };
+        comDevc.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:comDevc animated:YES];
         
     }else {
@@ -862,6 +872,7 @@
             vc.reloadCtrlData = ^(){
                 
             };
+            vc.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:vc animated:YES];
         } withBlock:^(UIAlertController *alertView) {
             [self.navigationController presentViewController:alertView animated:YES completion:nil];

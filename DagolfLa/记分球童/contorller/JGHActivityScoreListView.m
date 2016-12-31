@@ -59,7 +59,7 @@
         self.activityListTableView.tableHeaderView = headerView;
         [self.whiteBG addSubview:self.activityListTableView];
         
-        [self loadActivityListData];
+//        [self loadActivityListData];
     }
     return self;
 }
@@ -67,11 +67,11 @@
 - (void)deleteBtn:(UIButton *)deleteBtn{
     [self removeFromSuperview];
 }
-- (void)loadActivityListData{
+- (void)loadActivityListData:(NSString *)userKey{
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     
-    [dict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:userID] forKey:@"userKey"];
-    [dict setObject:[Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@dagolfla.com", DEFAULF_USERID]] forKey:@"md5"];
+    [dict setObject:userKey forKey:@"userKey"];
+    [dict setObject:[Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@dagolfla.com", userKey]] forKey:@"md5"];
     [[JsonHttp jsonHttp]httpRequest:@"score/getUserLatelyActivity" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
         
     } completionBlock:^(id data) {
@@ -86,7 +86,6 @@
                     [_dataArray addObject:model];
                 }
                 
-                //判断UI
                 float activityListH = 0.0;
                 if (_dataArray.count == 1) {
                     activityListH = 210 *ProportionAdapter;
@@ -96,11 +95,12 @@
                 
                 //动画
                 [UIView animateWithDuration:0.5f animations:^{
-                    self.backgroundColor = [UIColor colorWithWhite:0.f alpha:0.5];
-                    self.whiteBG.frame = CGRectMake(12 *ProportionAdapter, 100 *ProportionAdapter, screenWidth - 24 *ProportionAdapter, activityListH);
                     
-                    self.deleteBtn.frame = CGRectMake((screenWidth -32*ProportionAdapter)/2, activityListH + 100 *ProportionAdapter +20 *ProportionAdapter, 32*ProportionAdapter, 32*ProportionAdapter);
+                    self.whiteBG.frame = CGRectMake(self.whiteBG.frame.origin.x, self.whiteBG.frame.origin.y, screenWidth - 24 *ProportionAdapter, activityListH);
+                    
+                    self.deleteBtn.frame = CGRectMake(self.deleteBtn.frame.origin.x, self.deleteBtn.frame.origin.y, 32*ProportionAdapter, 32*ProportionAdapter);
                 }];
+                
                 [self.activityListTableView reloadData];
             }else{
                 if ([data objectForKey:@"packResultMsg"]) {
@@ -114,7 +114,16 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     JGHActicityScoreDictCell *cell = [tableView dequeueReusableCellWithIdentifier:@"JGHActicityScoreDictCell"];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    [cell configJGLChooseScoreModel:_dataArray[indexPath.row]];
+    [cell configJGLChooseScoreModel:_dataArray[indexPath.section]];
+    
+    NSLog(@"indexPath.row ==%td", indexPath.row);
+    NSLog(@"indexPath.row1 == %td", _dataArray.count -1);
+    if (indexPath.section == _dataArray.count -1) {
+        cell.line.hidden = YES;
+    }else{
+        cell.line.hidden = NO;
+    }
+    
     return cell;
 }
 
@@ -130,8 +139,26 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    _blockChangeActivityStartScore(_dataArray[indexPath.row]);
+    _blockChangeActivityStartScore(_dataArray[indexPath.section]);
     [self removeFromSuperview];
+}
+
+- (void)loadAnimate{
+    //判断UI
+    float activityListH = 0.0;
+    if (_dataArray.count == 1) {
+        activityListH = 210 *ProportionAdapter;
+    }else {
+        activityListH = 300 *ProportionAdapter;
+    }
+    
+    //动画
+    [UIView animateWithDuration:0.5f animations:^{
+        self.backgroundColor = [UIColor colorWithWhite:0.f alpha:0.5];
+        self.whiteBG.frame = CGRectMake(12 *ProportionAdapter, 100 *ProportionAdapter, screenWidth - 24 *ProportionAdapter, activityListH);
+        
+        self.deleteBtn.frame = CGRectMake((screenWidth -32*ProportionAdapter)/2, activityListH + 100 *ProportionAdapter +20 *ProportionAdapter, 32*ProportionAdapter, 32*ProportionAdapter);
+    }];
 }
 
 /*

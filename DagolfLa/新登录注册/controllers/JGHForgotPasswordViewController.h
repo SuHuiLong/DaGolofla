@@ -69,4 +69,7 @@ typedef void(^BlackCtrl)();
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *oneviewH;
 
 
+
+
+
 @end

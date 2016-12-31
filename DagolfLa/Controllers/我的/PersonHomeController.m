@@ -86,9 +86,11 @@ static NSString *const orderDetailCellIdentifier = @"OtherDataTableViewCell";
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:YES];
+    
+    
     self.navigationController.navigationBarHidden = NO;
     //发出通知隐藏标签栏
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:nil];
+//    [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:nil];
 //    NoteModel *model = [NoteHandlle selectNoteWithUID:self.strMoodId];
 //    if ([model.userremarks isEqualToString:@"(null)"] || [model.userremarks isEqualToString:@""] || model.userremarks == nil) {
         _nameLabel.text = _model.userName;
@@ -99,19 +101,21 @@ static NSString *const orderDetailCellIdentifier = @"OtherDataTableViewCell";
 //    }
     [_mapView viewWillAppear];
 
-    
+    self.tabBarController.tabBar.hidden = YES;
 }
 
 -(void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
-
+    
     [_mapView viewWillDisappear];
     _mapView.delegate = nil; // 不用时，置nil
+    
+//    self.tabBarController.tabBar.hidden = NO;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:nil];
+//    [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:nil];
     self.view.backgroundColor = [UIColor whiteColor];
     NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
     [user setValue:@"00" forKey:@"data"];
@@ -177,9 +181,9 @@ static NSString *const orderDetailCellIdentifier = @"OtherDataTableViewCell";
     _iconImg.clipsToBounds = YES;
     _iconImg.contentMode = UIViewContentModeScaleAspectFill;
 
-//    _iconImg.userInteractionEnabled = YES;
-//    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(imageIconACt)];
-//    [_iconImg addGestureRecognizer:tap];
+    _iconImg.userInteractionEnabled = YES;
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(imageIconACt)];
+    [_iconImg addGestureRecognizer:tap];
     [_profileView addSubview:_iconImg];
     
     //用户名
@@ -474,6 +478,7 @@ static NSString *const orderDetailCellIdentifier = @"OtherDataTableViewCell";
 }
 
 -(void)detailPostData {
+    
     [[PostDataRequest sharedInstance] postDataRequest:@"userMood/getUserMood.do" parameter:@{@"userId":_strMoodId, @"page":@1,@"rows":@10} success:^(id respondsData) {
         NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:respondsData options:NSJSONReadingMutableContainers error:nil];
         //NSLog(@">>>>>>>>>>%@",[dict objectForKey:@"rows"]);
@@ -999,12 +1004,12 @@ static NSString *const orderDetailCellIdentifier = @"OtherDataTableViewCell";
     
     if (_dataArray.count != 0) {
         //点击cell进入详情
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
+//        [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
         
         DetailViewController * comDevc = [[DetailViewController alloc]init];
         
         comDevc.detailId = [_dataArray[indexPath.row] userMoodId];
-        
+        comDevc.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:comDevc animated:YES];
     }
     

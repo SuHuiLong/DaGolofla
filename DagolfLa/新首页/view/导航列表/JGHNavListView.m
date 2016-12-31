@@ -19,7 +19,7 @@
         [_teamBtn addTarget:self action:@selector(scoreBtnClick:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:_teamBtn];
         
-        _teamLable = [[UILabel alloc]initWithFrame:CGRectMake(6*ProportionAdapter, 55 *ProportionAdapter, self.frame.size.width/3 -10 *ProportionAdapter, 20 *ProportionAdapter)];
+        _teamLable = [[UILabel alloc]initWithFrame:CGRectMake(6*ProportionAdapter, 52 *ProportionAdapter, self.frame.size.width/3 -10 *ProportionAdapter, 20 *ProportionAdapter)];
         _teamLable.text = @"开局记分";
         _teamLable.font = [UIFont systemFontOfSize:16 *ProportionAdapter];
         _teamLable.textAlignment = NSTextAlignmentCenter;
@@ -29,14 +29,16 @@
         [teamBtn addTarget:self action:@selector(scoreBtnClick:) forControlEvents:(UIControlEventTouchUpInside)];
         [self addSubview:teamBtn];
         
+        UILabel *oneLine = [[UILabel alloc]initWithFrame:CGRectMake(self.frame.size.width/3, 15 * ProportionAdapter, 0.5, 60 * ProportionAdapter)];
+        oneLine.backgroundColor = [UIColor colorWithHexString:BG_color];
+        [self addSubview:oneLine];
+        
         _scoreBtn = [[UIButton alloc]initWithFrame:CGRectMake(165 *ProportionAdapter, 15 *ProportionAdapter, 46 *ProportionAdapter, 30*ProportionAdapter)];
         [_scoreBtn setImage:[UIImage imageNamed:@"team"] forState:UIControlStateNormal];
         [_scoreBtn addTarget:self action:@selector(teamBtnClick:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:_scoreBtn];
         
-//        UIButton
-        
-        _scoreLable = [[UILabel alloc]initWithFrame:CGRectMake(self.frame.size.width/3 +10 *ProportionAdapter, 55 *ProportionAdapter, self.frame.size.width/3 -20*ProportionAdapter, 20*ProportionAdapter)];
+        _scoreLable = [[UILabel alloc]initWithFrame:CGRectMake(self.frame.size.width/3 +10 *ProportionAdapter, 52 *ProportionAdapter, self.frame.size.width/3 -20*ProportionAdapter, 20*ProportionAdapter)];
         _scoreLable.text = @"球队部落";
         _scoreLable.font = [UIFont systemFontOfSize:16 *ProportionAdapter];
         _scoreLable.textAlignment = NSTextAlignmentCenter;
@@ -46,31 +48,28 @@
         [scoreBtn addTarget:self action:@selector(teamBtnClick:) forControlEvents:(UIControlEventTouchUpInside)];
         [self addSubview:scoreBtn];
         
+        UILabel *twoLine = [[UILabel alloc]initWithFrame:CGRectMake(self.frame.size.width/3*2, 15 * ProportionAdapter, 0.5, 60 * ProportionAdapter)];
+        twoLine.backgroundColor = [UIColor colorWithHexString:BG_color];
+        [self addSubview:twoLine];
+        
         _resultsBtn = [[UIButton alloc]initWithFrame:CGRectMake(290 *ProportionAdapter, 15 *ProportionAdapter, 46 *ProportionAdapter, 30 *ProportionAdapter)];
         [_resultsBtn setImage:[UIImage imageNamed:@"home_icon_booking"] forState:UIControlStateNormal];
         [_resultsBtn addTarget:self action:@selector(resultsBtnClick:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:_resultsBtn];
         
-        _resultsLable = [[UILabel alloc]initWithFrame:CGRectMake(self.frame.size.width/3*2 +10*ProportionAdapter, 55 *ProportionAdapter, self.frame.size.width/3 -20*ProportionAdapter, 20 *ProportionAdapter)];
-        _resultsLable.text = @"球场预定";
+        _resultsLable = [[UILabel alloc]initWithFrame:CGRectMake(self.frame.size.width/3*2 +10*ProportionAdapter, 52 *ProportionAdapter, self.frame.size.width/3 -20*ProportionAdapter, 20 *ProportionAdapter)];
+        _resultsLable.text = @"球场预订";
         _resultsLable.font = [UIFont systemFontOfSize:16 *ProportionAdapter];
         _resultsLable.textAlignment = NSTextAlignmentCenter;
         [self addSubview:_resultsLable];
-        
-        
         
         UIButton *resultBtn = [[UIButton alloc] initWithFrame:CGRectMake(self.frame.size.width/3*2, 15 * ProportionAdapter, self.frame.size.width/3 -20*ProportionAdapter, 70 * ProportionAdapter)];
         [resultBtn addTarget:self action:@selector(resultsBtnClick:) forControlEvents:(UIControlEventTouchUpInside)];
         [self addSubview:resultBtn];
         
-        
-        
-        UILabel *nakaLable = [[UILabel alloc]initWithFrame:CGRectMake(0, 93 * ProportionAdapter, self.frame.size.width, 0.5 *ProportionAdapter)];
+        UILabel *nakaLable = [[UILabel alloc]initWithFrame:CGRectMake(15 *ProportionAdapter, 93 * ProportionAdapter, screenWidth -30*ProportionAdapter, 0.5 *ProportionAdapter)];
         nakaLable.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];
         [self addSubview:nakaLable];
-        
-
-        
         
         NSArray *iconArray = [NSArray arrayWithObjects:@"home_serve", @"home_restore", @"home_icon_package", @"home_icon_score",   nil];
         NSArray *titleArray = [NSArray arrayWithObjects:@"服务定制", @"用品商城", @"高旅套餐", @"历史成绩",   nil];

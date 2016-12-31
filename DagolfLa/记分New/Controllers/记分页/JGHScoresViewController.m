@@ -16,6 +16,7 @@
 #import "JGLCaddieScoreViewController.h"
 #import "JGHPoorScoreHoleView.h"
 #import "JGLScoreNewViewController.h"
+#import "JGHHistoryAndResultsViewController.h"
 
 //static NSInteger switchMode;
 
@@ -88,6 +89,8 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    //替换任务栏
+    [[UIApplication sharedApplication]setStatusBarStyle:UIStatusBarStyleDefault];
     navBarHairlineImageView.hidden = YES;
 //    if (_backId != 1) {
         UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -122,10 +125,13 @@
 
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
+    [[UIApplication sharedApplication]setStatusBarStyle:UIStatusBarStyleLightContent];
     navBarHairlineImageView.hidden = NO;
 }
 #pragma mark -- 移除imageView 
 - (void)removeUserFristScoreImageView{
+    [_scoresView removeAreaView];
+    [_poorScoreView removePoorAreaView];
     UIImageView *removeImageview = (UIImageView *)[appDelegate.window viewWithTag:7777];
     [removeImageview removeFromSuperview];
 }
@@ -133,7 +139,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor colorWithHexString:BG_color];
-    
+    _walletMonay = 0;//红包金额
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"bg_white"] forBarMetrics:UIBarMetricsDefault];
     [self.navigationController.navigationBar setBackgroundColor:[UIColor whiteColor]];
 //    _cabbieFinishScore = 0;//不结束
@@ -423,6 +429,7 @@
 #pragma mark -- titleBtn 点击事件
 - (void)titleBtnClick{
     NSLog(@"XXX dong");
+    _item.enabled = YES;
     NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
     
     if (_selectHole == 0) {
@@ -441,7 +448,7 @@
             
             _scoresView = [[JGHScoresHoleView alloc]init];
             _scoresView.delegate = self;
-            _scoresView.frame = CGRectMake(0, 0, screenWidth, (194 +20 +20 + self.userScoreArray.count * 70)*ProportionAdapter);
+            _scoresView.frame = CGRectMake(0, 0, screenWidth, (200 +20 +20 + self.userScoreArray.count * 70)*ProportionAdapter);
             _scoresView.dataArray = self.userScoreArray;
             _scoresView.scorekey = _scorekey;
             _scoresView.curPage = _selectPage;
@@ -461,7 +468,7 @@
                 _scoresView.alpha = 1;
             }];
             
-            _tranView = [[UIView alloc]initWithFrame:CGRectMake(0, _scoresView.frame.size.height, screenWidth, (screenHeight -64)-(194 +20 +20 + self.userScoreArray.count * 70)*ProportionAdapter)];
+            _tranView = [[UIView alloc]initWithFrame:CGRectMake(0, _scoresView.frame.size.height, screenWidth, (screenHeight -64)-(200 +20 +20 + self.userScoreArray.count * 70)*ProportionAdapter)];
             _tranView.backgroundColor = [UIColor blackColor];
             _tranView.alpha = 0;
             
@@ -479,7 +486,7 @@
             _poorScoreView = [[JGHPoorScoreHoleView alloc]init];
             _poorScoreView.delegate = self;
             _poorScoreView.alpha = 0;
-            _poorScoreView.frame = CGRectMake(0, 0, screenWidth, (194 + 20 +20+ self.userScoreArray.count * 70)*ProportionAdapter);
+            _poorScoreView.frame = CGRectMake(0, 0, screenWidth, (200 + 20 +20+ self.userScoreArray.count * 70)*ProportionAdapter);
             _poorScoreView.dataArray = self.userScoreArray;
             _poorScoreView.scorekey = _scorekey;
             _poorScoreView.curPage = _selectPage;
@@ -499,7 +506,7 @@
                 _poorScoreView.alpha = 1.0;
             }];
             
-            _tranView = [[UIView alloc]initWithFrame:CGRectMake(0, _poorScoreView.frame.size.height, screenWidth, (screenHeight -64)-(194 +20 +20 + self.userScoreArray.count * 70)*ProportionAdapter)];
+            _tranView = [[UIView alloc]initWithFrame:CGRectMake(0, _poorScoreView.frame.size.height, screenWidth, (screenHeight -64)-(200 +20 +20 + self.userScoreArray.count * 70)*ProportionAdapter)];
             _tranView.backgroundColor = [UIColor blackColor];
             _tranView.alpha = 0;
             
@@ -873,6 +880,7 @@
                 } withBlockSure:^{
                     //                        _cabbieFinishScore = 1;//结束
                     //                        [self finishScore];
+                    /*
                     NSInteger soureKey = 0;
                     for (UIViewController *controller in self.navigationController.viewControllers) {
                         if ([controller isKindOfClass:[JGLScoreNewViewController class]]) {
@@ -885,6 +893,13 @@
                     }
                     
                     if (soureKey == 0) {
+                        [self.navigationController popViewControllerAnimated:YES];
+                    }
+                     */
+                    if (_backHistory == 1) {
+                        [self.navigationController popToRootViewControllerAnimated:YES];
+                        
+                    }else{
                         [self.navigationController popViewControllerAnimated:YES];
                     }
                 } withBlock:^(UIAlertController *alertView) {
@@ -931,8 +946,9 @@
         _item.enabled = YES;
     } completionBlock:^(id data) {
         NSLog(@"%@", data);
-        _item.enabled = YES;
+        
         self.view.userInteractionEnabled = YES;
+        _item.enabled = YES;
         [[ShowHUD showHUD]hideAnimationFromView:self.view];
         if ([[data objectForKey:@"packSuccess"]integerValue] == 1) {
             if ([data objectForKey:@"money"]) {
@@ -964,6 +980,7 @@
     if (_isCabbie == 1) {
         // isCaddie;//是否是球童，1，是球童，
         NSInteger _isPushCtrl =0;
+        
         for (UIViewController *controller in self.navigationController.viewControllers) {
             if ([controller isKindOfClass:[JGLCaddieScoreViewController class]]) {
                 //                [[NSNotificationCenter defaultCenter] postNotificationName:@"CaddieScoreRefreshing" object:@{@"cabbie": @"1"}];
@@ -999,11 +1016,19 @@
 #pragma mark -- 完成记分---跳转
 - (void)pushJGHEndScoresViewController{
     
-    if (_backHistory == 1) {//历史记分卡，长按删除
-        JGDHistoryScoreViewController *historyCtrl = [[JGDHistoryScoreViewController alloc]init];
-        [self.navigationController pushViewController:historyCtrl animated:YES];
+    if (_backHistory == 1) {// 长按返回历史记分卡
+//        JGDHistoryScoreViewController *historyCtrl = [[JGDHistoryScoreViewController alloc]init];
+//        [self.navigationController pushViewController:historyCtrl animated:YES];
+        for (UIViewController *controller in self.navigationController.viewControllers) {
+            if ([controller isKindOfClass:[JGHHistoryAndResultsViewController class]]) {
+                [self.navigationController popToViewController:controller animated:YES];
+                return;
+            }
+        }
+        
+        [self.navigationController popViewControllerAnimated:YES];
     }else{
-        if (_scoreFinish == 1 && _isCabbie == 1) {
+        if (_scoreFinish == 1 && _isCabbie == 1 && _walletMonay == 0) {
             for (UIViewController *controller in self.navigationController.viewControllers) {
                 if ([controller isKindOfClass:[JGLCaddieScoreViewController class]]) {
                     NSNotification * notice = [NSNotification notificationWithName:@"reloadCaddieScoreData" object:nil userInfo:nil];

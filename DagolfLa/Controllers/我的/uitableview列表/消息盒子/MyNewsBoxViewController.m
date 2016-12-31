@@ -186,12 +186,12 @@
     if ([[NSUserDefaults standardUserDefaults]objectForKey:@"userId"]) {
         
         //点击cell进入详情
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
+//        [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
        
         DetailViewController * comDevc = [[DetailViewController alloc]init];
         
         comDevc.detailId = [_dataArray[indexPath.row] messObjid];
-
+        comDevc.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:comDevc animated:YES];
         
     }else {

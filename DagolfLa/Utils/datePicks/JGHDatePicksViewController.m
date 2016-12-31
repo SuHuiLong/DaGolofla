@@ -69,41 +69,55 @@
     
     [self.view addSubview:_dataPickView];
 
-    NSDate *loadDate = [Helper getNowDateFromatAnDate:[NSDate date]];
+//    NSDate *loadDate = [Helper getNowDateFromatAnDate:[NSDate date]];
+    NSDate *loadDate = [NSDate date];
+    
+    
         
     NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
-    [formatter setDateFormat:@"yyyy"];
-    NSString *currentyearString = [NSString stringWithFormat:@"%@",
-                                   [formatter stringFromDate:loadDate]];
-    // Get Current  Month
-    [formatter setDateFormat:@"MM"];
-    currentMonthString = [NSString stringWithFormat:@"%ld",(long)[[formatter stringFromDate:loadDate] integerValue]];
-    if (currentMonthString.length == 1) {
-        currentMonthString = [NSString stringWithFormat:@"0%@", currentMonthString];
-    }
-    // Get Current  Date
-    [formatter setDateFormat:@"dd"];
-    NSString *currentDateString = [NSString stringWithFormat:@"%@",[formatter stringFromDate:loadDate]];
+    [formatter setDateFormat: @"yyyy-MM-dd HH:mm:ss"];
+    NSString *loadDateString = [formatter stringFromDate:loadDate];
     
-    //HH
-    [formatter setDateFormat:@"HH"];
-    NSString *currentHourString = [NSString stringWithFormat:@"%@",[formatter stringFromDate:loadDate]];
-    //mm
-    [formatter setDateFormat:@"mm"];
-    NSString *currentMinString = [NSString stringWithFormat:@"%@",[formatter stringFromDate:loadDate]];
+    
+    
+//    [formatter setDateFormat:@"yyyy"];
+//    NSString *currentyearString = [NSString stringWithFormat:@"%@",
+//                                   [formatter stringFromDate:loadDate]];
+//    // Get Current  Month
+//    [formatter setDateFormat:@"MM"];
+//    currentMonthString = [NSString stringWithFormat:@"%ld",(long)[[formatter stringFromDate:loadDate] integerValue]];
+//    if (currentMonthString.length == 1) {
+    
+    NSString *dateString = [[loadDateString componentsSeparatedByString:@" "] firstObject];
+    
+    NSString *timeString = [[loadDateString componentsSeparatedByString:@" "] lastObject];
+    
+    currentMonthString = [[dateString componentsSeparatedByString:@"-"] objectAtIndex:1];
+    
+    NSString *currentYearString = [[dateString componentsSeparatedByString:@"-"] firstObject];
+    
+    NSString *currentDayString = [[dateString componentsSeparatedByString:@"-"] lastObject];
+    //
+    NSString *currentHourString = [[timeString componentsSeparatedByString:@":"] firstObject];
+    NSString *currentMinString = [[timeString componentsSeparatedByString:@":"] objectAtIndex:1];
     
     _yearArray = [[NSMutableArray alloc]init];
-    for (int i = [currentyearString intValue]; i <= [currentyearString intValue]+3 ; i++)
+    for (int i = [currentYearString intValue]; i <= [currentYearString intValue]+3 ; i++)
     {
         [_yearArray addObject:[NSString stringWithFormat:@"%d",i]];
     }
     // PickerView -  Months data
-    _monthArray = @[@"1",@"2",@"3",@"4",@"5",@"6",@"7",@"8",@"9",@"10",@"11",@"12"];
+    _monthArray = @[@"01",@"02",@"03",@"04",@"05",@"06",@"07",@"08",@"09",@"10",@"11",@"12"];
     // PickerView -  days data
     _daysArray = [[NSMutableArray alloc]init];
     for (int i = 1; i <= 31; i++)
     {
-        [_daysArray addObject:[NSString stringWithFormat:@"%d",i]];
+        if (i < 10) {
+             [_daysArray addObject:[NSString stringWithFormat:@"0%d",i]];
+        }else{
+            [_daysArray addObject:[NSString stringWithFormat:@"%d",i]];
+        }
+       
     }
     
     //点
@@ -111,6 +125,8 @@
     for (int i=1; i<=24; i++) {
         if (i < 10) {
             [_hoursArray addObject:[NSString stringWithFormat:@"0%d", i]];
+        }else if (i == 24){
+            [_hoursArray addObject:[NSString stringWithFormat:@"00"]];
         }else{
             [_hoursArray addObject:[NSString stringWithFormat:@"%d", i]];
         }
@@ -126,11 +142,28 @@
     }
     
     // PickerView - Default Selection as per current Date
-    selectedYearRow = [_yearArray indexOfObject:currentyearString];
+//    selectedYearRow = [_yearArray indexOfObject:currentYearString];
+    selectedYearRow = 0;
     selectedMonthRow = [_monthArray indexOfObject:currentMonthString];
-    selectedDayRow = [_daysArray indexOfObject:currentDateString] -1;
+    
+    if (selectedMonthRow <0 || selectedMonthRow > 100) {
+        selectedMonthRow = 0;
+    }
+    
+    selectedDayRow = [_daysArray indexOfObject:currentDayString];
+    if (selectedDayRow <0 || selectedDayRow > 100) {
+        selectedDayRow = 0;
+    }
+    
     selectedHoursRow = [_hoursArray indexOfObject:currentHourString];
+    if (selectedHoursRow <0 || selectedHoursRow > 100) {
+        selectedHoursRow = 0;
+    }
+    
     selectedMinutesRow = [_minutesArray indexOfObject:currentMinString];
+    if (selectedMinutesRow <0 || selectedMinutesRow > 100) {
+        selectedMinutesRow = 0;
+    }
     
     [_dataPickView selectRow:selectedYearRow inComponent:0 animated:YES];
     
@@ -163,12 +196,12 @@
         selectedDayRow = row;
         
         [_dataPickView reloadAllComponents];
-    }else if (component == 2)
+    }else if (component == 3)
     {
         selectedHoursRow = row;
         
         [_dataPickView reloadAllComponents];
-    }else if (component == 2)
+    }else if (component == 4)
     {
         selectedMinutesRow = row;
         
@@ -215,18 +248,18 @@
     }
     
     NSString *newMonth;
-    if ([[_monthArray objectAtIndex:selectedMonthRow] intValue] > 9) {
+//    if ([[_monthArray objectAtIndex:selectedMonthRow] intValue] > 9) {
         newMonth = [NSString stringWithFormat:@"%@", [_monthArray objectAtIndex:selectedMonthRow]];
-    }else{
-        newMonth = [NSString stringWithFormat:@"0%@", [_monthArray objectAtIndex:selectedMonthRow]];
-    }
+//    }else{
+//        newMonth = [NSString stringWithFormat:@"0%@", [_monthArray objectAtIndex:selectedMonthRow]];
+//    }
     
     NSString *newDay;
-    if ([[_daysArray objectAtIndex:selectedMonthRow] intValue] > 9) {
+//    if ([[_daysArray objectAtIndex:selectedMonthRow] intValue] > 9) {
         newDay = [NSString stringWithFormat:@"%@", [_daysArray objectAtIndex:selectedDayRow]];
-    }else{
-        newDay = [NSString stringWithFormat:@"0%@", [_daysArray objectAtIndex:selectedDayRow]];
-    }
+//    }else{
+//        newDay = [NSString stringWithFormat:@"0%@", [_daysArray objectAtIndex:selectedDayRow]];
+//    }
     
     _dateString = [NSString stringWithFormat:@"%@-%@-%@ %@:%@:00", _yearArray[selectedYearRow], newMonth, newDay, _hoursArray[selectedHoursRow], _minutesArray[selectedMinutesRow]];
     return pickerLabel;

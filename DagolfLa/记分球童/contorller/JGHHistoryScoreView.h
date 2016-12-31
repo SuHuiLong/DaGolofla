@@ -11,9 +11,13 @@
 
 @interface JGHHistoryScoreView : UIView
 
+@property (nonatomic, strong) UISearchController *searchController;
+
 @property (copy, nonatomic) void (^blockSelectHistoryScore)(JGDHistoryScoreModel *);
 
 @property (copy, nonatomic) void (^blockSelectHistoryScoreAlert)(UIAlertController *);
+
+@property (nonatomic, strong) UITableView *tableView;
 
 
 @end

@@ -52,6 +52,7 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:YES];
     self.isShowNetworkIndicatorView = NO;
+    self.tabBarController.tabBar.hidden = NO;
     
     //    [self.tabBarController.tabBar hideBadgeOnItemIndex:3];
     //    [self.tabBarController.tabBar showBadgeOnItemIndex:3];
@@ -77,7 +78,7 @@
         
     }
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"show" object:self];
+    [[UIApplication sharedApplication]setStatusBarStyle:UIStatusBarStyleLightContent];
 }
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (buttonIndex == 1) {
@@ -88,6 +89,7 @@
             
         };
         
+        vc.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:vc animated:YES];
     }
 }
@@ -244,6 +246,7 @@
         ContactViewController* tVc = [[ContactViewController alloc]init];
 //        [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
         tVc.hidesBottomBarWhenPushed = YES;
+        tVc.hidesBottomBarWhenPushed = YES;
         tVc.addFriendSum = [NSNumber numberWithInteger:_newFriendUnread];
         [self.navigationController pushViewController:tVc animated:YES];
     }
@@ -256,6 +259,8 @@
             vc.reloadCtrlData = ^(){
                 
             };
+            
+            vc.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:vc animated:YES];
         } withBlock:^(UIAlertController *alertView) {
             [self presentViewController:alertView animated:YES completion:nil];
@@ -413,7 +418,8 @@
     if ([[NSUserDefaults standardUserDefaults]objectForKey:@"userId"])
     {
         NewsDetailController* myVc = [[NewsDetailController alloc]init];
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
+//        [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
+        myVc.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:myVc animated:YES];
     }
     else
@@ -425,6 +431,7 @@
             vc.reloadCtrlData = ^(){
                 
             };
+            vc.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:vc animated:YES];
         } withBlock:^(UIAlertController *alertView) {
             [self presentViewController:alertView animated:YES completion:nil];
@@ -444,7 +451,8 @@
 #pragma mark - 点击事件
 - (void)onSelectedTableRow:(RCConversationModelType)conversationModelType conversationModel:(RCConversationModel *)model atIndexPath:(NSIndexPath *)indexPath {
     ChatDetailViewController *vc = [[ChatDetailViewController alloc] init];
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
+//    [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
+    vc.hidesBottomBarWhenPushed = YES;
     //设置聊天类型
     vc.conversationType = ConversationType_PRIVATE;
     //设置对方的id

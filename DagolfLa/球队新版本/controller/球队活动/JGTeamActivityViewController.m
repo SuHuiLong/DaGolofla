@@ -50,13 +50,14 @@
         self.navigationItem.title = @"球队活动";
     }
     self.page = 1;
+    
+    [self loadData];
+    
     [self createTeamActivityTabelView];
     
     if (_myActivityList == 1 || [self.power containsString:@"1001"]) {
         [self createAdminBtn];
     }
-    
-    [self loadData];
     
 }
 
@@ -83,23 +84,23 @@
         _urlString = @"team/getMyTeamActivityList";
     }
     
-    [[JsonHttp jsonHttp]httpRequest:_urlString JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
-        NSLog(@"errType == %@", errType);
-    } completionBlock:^(id data) {
-        NSLog(@"data == %@", data);
-        [self.dataArray removeAllObjects];
-        
-        NSArray *array = [data objectForKey:@"activityList"];
-        
-        for (NSDictionary *dict in array) {
-            JGTeamAcitivtyModel *model = [[JGTeamAcitivtyModel alloc]init];
-            
-            [model setValuesForKeysWithDictionary:dict];
-            [self.dataArray addObject:model];
-        }
-        
-        [self.teamActivityTableView reloadData];
-    }];
+//    [[JsonHttp jsonHttp]httpRequest:_urlString JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
+//        NSLog(@"errType == %@", errType);
+//    } completionBlock:^(id data) {
+//        NSLog(@"data == %@", data);
+//        [self.dataArray removeAllObjects];
+//        
+//        NSArray *array = [data objectForKey:@"activityList"];
+//        
+//        for (NSDictionary *dict in array) {
+//            JGTeamAcitivtyModel *model = [[JGTeamAcitivtyModel alloc]init];
+//            
+//            [model setValuesForKeysWithDictionary:dict];
+//            [self.dataArray addObject:model];
+//        }
+//        
+//        [self.teamActivityTableView reloadData];
+//    }];
 }
 
 #pragma mark -- 创建发布活动
@@ -210,7 +211,7 @@
                 }
                 self.page++;
                 
-                [self.teamActivityTableView reloadData];
+//                [self.teamActivityTableView reloadData];
             }
 
         }

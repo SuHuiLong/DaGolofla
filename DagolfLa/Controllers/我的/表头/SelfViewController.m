@@ -69,7 +69,7 @@
     self.navigationItem.leftBarButtonItem = item;
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"nav_bg"] forBarMetrics:UIBarMetricsDefault];
     
-    
+    self.tabBarController.tabBar.hidden = YES;
 //    [[PostDataRequest sharedInstance] postDataRequest:@"user/queryById.do" parameter:@{@"userId":_str} success:^(id respondsData) {
 //        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:respondsData options:NSJSONReadingMutableContainers error:nil];
 //        _model = nil;
@@ -110,7 +110,7 @@
 }
 
 -(void)backButtonClcik{
-    
+    [self.view endEditing:YES];
     if ([_fromEnroll integerValue] == 1) {
         [self.navigationController popToRootViewControllerAnimated:YES];
     }

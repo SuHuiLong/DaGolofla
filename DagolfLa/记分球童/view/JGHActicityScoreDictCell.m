@@ -21,38 +21,42 @@
         _headerImageView.layer.cornerRadius = 3.0 *ProportionAdapter;
         [self addSubview:_headerImageView];
         
-        _title = [[UILabel alloc]initWithFrame:CGRectMake(90 *ProportionAdapter, 20 *ProportionAdapter, 170*ProportionAdapter, 20 *ProportionAdapter)];
+        _title = [[UILabel alloc]initWithFrame:CGRectMake(90 *ProportionAdapter, 12 *ProportionAdapter, 255*ProportionAdapter, 20 *ProportionAdapter)];
         _title.font = [UIFont systemFontOfSize:15 *ProportionAdapter];
         _title.textColor = [UIColor colorWithHexString:B31_Color];
         _title.text = @"1111";
         _title.textAlignment = NSTextAlignmentLeft;
         [self addSubview:_title];
         
-        _startScore = [[UILabel alloc]initWithFrame:CGRectMake(265 *ProportionAdapter, 20*ProportionAdapter, 65 *ProportionAdapter, 20 *ProportionAdapter)];
+        _addressImageView = [[UIImageView alloc]initWithFrame:CGRectMake(90 *ProportionAdapter, 39 *ProportionAdapter, 10*ProportionAdapter, 13 *ProportionAdapter)];
+        _addressImageView.image = [UIImage imageNamed:@"juli"];
+        [self addSubview:_addressImageView];
+        
+        _address = [[UILabel alloc]initWithFrame:CGRectMake(105 *ProportionAdapter, 35 *ProportionAdapter, 240 *ProportionAdapter, 20 *ProportionAdapter)];
+        _address.textColor = [UIColor colorWithHexString:Ba0_Color];
+        _address.textAlignment = NSTextAlignmentLeft;
+        _address.font = [UIFont systemFontOfSize:14 *ProportionAdapter];
+        [self addSubview:_address];
+        
+        _startScore = [[UILabel alloc]initWithFrame:CGRectMake(265 *ProportionAdapter, 58*ProportionAdapter, 65 *ProportionAdapter, 20 *ProportionAdapter)];
         _startScore.font = [UIFont systemFontOfSize:14 *ProportionAdapter];
         _startScore.textAlignment = NSTextAlignmentRight;
         _startScore.textColor = [UIColor colorWithHexString:@"#f39800"];
         _startScore.text = @"开始记分";
         [self addSubview:_startScore];
         
-        _directionImageView = [[UIImageView alloc]initWithFrame:CGRectMake(335 *ProportionAdapter, 23 *ProportionAdapter, 7*ProportionAdapter, 13*ProportionAdapter)];
+        _directionImageView = [[UIImageView alloc]initWithFrame:CGRectMake(335 *ProportionAdapter, 62 *ProportionAdapter, 7*ProportionAdapter, 13*ProportionAdapter)];
         _directionImageView.image = [UIImage imageNamed:@")"];
         [self addSubview:_directionImageView];
         
-        _addressImageView = [[UIImageView alloc]initWithFrame:CGRectMake(90 *ProportionAdapter, 52 *ProportionAdapter, 11*ProportionAdapter, 15 *ProportionAdapter)];
-        _addressImageView.image = [UIImage imageNamed:@"juli"];
-        [self addSubview:_addressImageView];
+        _timeImageView = [[UIImageView alloc]initWithFrame:CGRectMake(90 *ProportionAdapter, 62 *ProportionAdapter, 11 *ProportionAdapter, 13*ProportionAdapter)];
+        _timeImageView.image = [UIImage imageNamed:@"yueqiu_time"];
+        [self addSubview:_timeImageView];
         
-        _address = [[UILabel alloc]initWithFrame:CGRectMake(105 *ProportionAdapter, 50 *ProportionAdapter, 160 *ProportionAdapter, 20 *ProportionAdapter)];
-        _address.textColor = [UIColor colorWithHexString:Ba0_Color];
-        _address.textAlignment = NSTextAlignmentLeft;
-        _address.font = [UIFont systemFontOfSize:14 *ProportionAdapter];
-        [self addSubview:_address];
-        
-        _time = [[UILabel alloc]initWithFrame:CGRectMake(265*ProportionAdapter, 50 *ProportionAdapter, 65 *ProportionAdapter, 20*ProportionAdapter)];
+        _time = [[UILabel alloc]initWithFrame:CGRectMake(105*ProportionAdapter, 58 *ProportionAdapter, 85 *ProportionAdapter, 20*ProportionAdapter)];
         _time.font = [UIFont systemFontOfSize:14*ProportionAdapter];
         _time.textColor = [UIColor colorWithHexString:Ba0_Color];
-        _time.textAlignment = NSTextAlignmentRight;
+        _time.textAlignment = NSTextAlignmentLeft;
         [self addSubview:_time];
         
         _line = [[UILabel alloc]initWithFrame:CGRectMake(12 *ProportionAdapter, 89 *ProportionAdapter, screenWidth -48*ProportionAdapter, 1*ProportionAdapter)];

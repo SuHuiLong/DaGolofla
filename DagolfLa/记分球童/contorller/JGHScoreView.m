@@ -39,6 +39,7 @@
 
 - (instancetype)initWithFrame:(CGRect)frame{
     if ([super initWithFrame:frame]) {
+        self.backgroundColor = [UIColor whiteColor];
         self.preListArray = [NSMutableArray array];
         
         NSMutableDictionary *selfDict = [NSMutableDictionary dictionary];
@@ -211,7 +212,7 @@
 }
 -(void)uiConfig
 {
-    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, self.frame.size.height -54 *ProportionAdapter) style:UITableViewStylePlain];
+    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight -64) style:UITableViewStylePlain];
     _tableView.delegate = self;
     _tableView.dataSource = self;
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -255,7 +256,7 @@
         //将数组显示至每行
         cell.textLabel.text = [allValues objectAtIndex:indexPath.row];
         cell.textLabel.font = [UIFont systemFontOfSize:15*ScreenWidth/375];
-        cell.backgroundColor = [UIColor colorWithRed:0.93f green:0.93f blue:0.93f alpha:1.00f];
+//        cell.backgroundColor = [UIColor colorWithRed:0.93f green:0.93f blue:0.93f alpha:1.00f];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
     }

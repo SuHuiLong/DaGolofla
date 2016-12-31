@@ -8,11 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import "WXApi.h"
+#import <RongIMKit/RongIMKit.h>
 
 #define ScreenHeight [[UIScreen mainScreen] bounds].size.height
 #define ScreenWidth [[UIScreen mainScreen] bounds].size.width
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate,WXApiDelegate>
+@interface AppDelegate : UIResponder <UIApplicationDelegate,WXApiDelegate,RCIMConnectionStatusDelegate, RCIMReceiveMessageDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 

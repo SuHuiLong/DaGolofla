@@ -76,6 +76,6 @@
 
 @property (nonatomic, copy) NSString *invitationCode;//  邀请码
 
-
+@property (nonatomic, assign)NSInteger history;//区分提示框
 
 @end

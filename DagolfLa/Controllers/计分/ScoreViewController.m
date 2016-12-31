@@ -419,6 +419,7 @@
             
         }
         [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
+        
         [self.navigationController pushViewController:arr[indexPath.row] animated:YES];
     }
     else

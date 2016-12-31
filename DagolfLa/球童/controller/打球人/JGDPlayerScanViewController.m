@@ -185,7 +185,7 @@
     label.textColor = [UIColor whiteColor];
     [self.view addSubview:label];
     
-    
+    /*
     UIButton* btn = [UIButton buttonWithType:UIButtonTypeSystem];
     btn.frame = CGRectMake(0, QRCodeWidth+topView.frame.size.height-64 + 60*screenWidth/375, screenWidth, 40);
     [btn setTintColor:[UITool colorWithHexString:@"#32b14d" alpha:1]];
@@ -193,7 +193,7 @@
     btn.titleLabel.font = [UIFont systemFontOfSize:15*screenWidth/375];
     [self.view addSubview:btn];
     [btn addTarget:self action:@selector(myCodeBarClick) forControlEvents:UIControlEventTouchUpInside];
-    
+    */
 }
 
 

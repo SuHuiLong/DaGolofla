@@ -167,6 +167,14 @@
 
 - (void)ballBoy{
     JGHCabbieCertViewController *cabVC = [[JGHCabbieCertViewController alloc] init];
+    cabVC.blockCabbie = ^(){
+        //        NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
+        //        if ([userdef objectForKey:@"isCaddie"]) {
+        //            //认证球童
+        //            [self createCaddieView];
+        //        }
+    };
+
     [self.navigationController pushViewController:cabVC animated:YES];
 }
 

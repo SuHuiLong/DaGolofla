@@ -14,4 +14,6 @@
 
 @property (nonatomic, assign) NSInteger ballkid;
 
+//@property (nonatomic, assign)NSInteger blackId;
+
 @end

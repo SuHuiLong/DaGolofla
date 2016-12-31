@@ -44,6 +44,22 @@ static NSString *const JGHBtnCellIdentifier = @"JGHBtnCell";
 
 @implementation JGHCabbieCertViewController
 
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    
+    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"backL"] style:UIBarButtonItemStylePlain target:self action:@selector(backButtonClcik)];
+    item.tintColor=[UIColor whiteColor];
+    self.navigationItem.leftBarButtonItem = item;
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"nav_bg"] forBarMetrics:UIBarMetricsDefault];
+}
+
+- (void)backButtonClcik{
+    
+    _blockCabbie();
+    
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -339,6 +355,12 @@ static NSString *const JGHBtnCellIdentifier = @"JGHBtnCell";
                     }];
                     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"系统提示" message:@"球童认证成功!" preferredStyle:UIAlertControllerStyleAlert];
                     [alertController addAction:commitAction];
+                    //本地存储
+                    NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
+                    [userdef setObject:@1 forKey:@"isCaddie"];
+                    [userdef synchronize];
+
+                    
                     //获取主线层
                     if ([NSThread isMainThread]) {
                         NSLog(@"Yay!");

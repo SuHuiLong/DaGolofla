@@ -276,7 +276,7 @@
 -(void)requestRCIMWithToken:(NSString *)token{
     NSUserDefaults *user=[NSUserDefaults standardUserDefaults];
     [RCIM sharedRCIM].globalConversationPortraitSize = CGSizeMake(40*ScreenWidth/375, 40*ScreenWidth/375);
-    [[RCIM sharedRCIM] initWithAppKey:@"0vnjpoadnkihz"];
+    [[RCIM sharedRCIM] initWithAppKey:RongYunAPPKEY];
     [RCIM sharedRCIM].globalConversationAvatarStyle=RC_USER_AVATAR_CYCLE;
     [RCIM sharedRCIM].globalMessageAvatarStyle=RC_USER_AVATAR_CYCLE;
     [[RCIM sharedRCIM] setUserInfoDataSource:[UserDataInformation sharedInstance]];

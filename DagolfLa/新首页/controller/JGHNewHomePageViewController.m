@@ -22,6 +22,7 @@
 #import "JGLWebUserMallViewController.h"
 #import "JGTeamMainhallViewController.h"
 #import "JGDHistoryScoreViewController.h"
+#import "JGHHistoryAndResultsViewController.h"
 #import "JGTeamActibityNameViewController.h" // 活动
 #import "JGLScoreLiveViewController.h"   // 直播
 #import "JGLScoreRankViewController.h"
@@ -48,7 +49,7 @@
 #import "JGDServiceViewController.h" // 定制服务
 #import "RCDTabBarBtn.h"
 #import "JGHScoresViewController.h"
-
+#import "LGLCalenderViewController.h"
 
 static NSString *const JGHPASHeaderTableViewCellIdentifier = @"JGHPASHeaderTableViewCell";
 static NSString *const JGHShowSectionTableViewCellIdentifier = @"JGHShowSectionTableViewCell";
@@ -74,38 +75,37 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
 
 @property (nonatomic, strong)JGHNavListView *navListView;
 
+@property (nonatomic, strong)UIView *toolView;
+
 @end
 
 @implementation JGHNewHomePageViewController
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:YES];
-    
+    [[UIApplication sharedApplication]setStatusBarStyle:UIStatusBarStyleLightContent];
     self.navigationItem.leftBarButtonItem = nil;
-    //发出通知显示标签栏
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"show" object:nil];
     self.navigationController.navigationBarHidden = YES;
     
+   self.tabBarController.tabBar.hidden = NO;
 }
 
 - (void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
+    [[UIApplication sharedApplication]setStatusBarStyle:UIStatusBarStyleDefault];
     //监听分组页面返回，刷新数据
     NSNotificationCenter * center = [NSNotificationCenter defaultCenter];
     //添加当前类对象为一个观察者，name和object设置为nil，表示接收一切通知
-    [center addObserver:self selector:@selector(PushJGTeamActibityNameViewController:) name:@"PushJGTeamActibityNameViewController" object:nil];
     [center addObserver:self selector:@selector(loadMessageData) name:@"loadMessageData" object:nil];
-
 }
 
 -(void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    //把当前页面的任务栏影藏
-    [[UIApplication sharedApplication] setStatusBarHidden:YES];
     //把当前界面的导航栏隐藏
     self.navigationController.navigationBarHidden = NO;
-//    [[NSNotificationCenter defaultCenter] postNotificationName:@"show" object:nil];
+    
+    [[UIApplication sharedApplication]setStatusBarStyle:UIStatusBarStyleLightContent];
 }
 
 - (void)viewDidLoad {
@@ -113,6 +113,10 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
     // Do any additional setup after loading the view.
     self.automaticallyAdjustsScrollViewInsets = NO;
     self.view.backgroundColor = [UIColor colorWithHexString:BG_color];
+    [self.navigationController.navigationBar
+     setBackgroundImage:[UIImage imageNamed:@"segselectleft"]
+     forBarMetrics:UIBarMetricsCompactPrompt];
+    
     self.indexModel = [[JGHIndexModel alloc]init];
     _showLineID = 0;
 
@@ -317,6 +321,7 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
     
     self.homeTableView.dataSource = self;
     self.homeTableView.delegate = self;
+//    self.homeTableView.
     self.homeTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.homeTableView.header = [MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
     self.homeTableView.backgroundColor = [UIColor colorWithHexString:BG_color];
@@ -377,8 +382,9 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
                 [self.topScrollView setClick:^(UIViewController *vc) {
                     [weakSelf isLoginUp];
                     
+                    weakSelf.hidesBottomBarWhenPushed = YES;
                     [weakSelf.navigationController pushViewController:vc animated:YES];
-                    [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:nil];
+//                    [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:nil];
                 }];
             }
         }
@@ -533,6 +539,13 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
     UILabel *photoLable = [self.view viewWithTag:30002];
     UILabel *scoreLable = [self.view viewWithTag:30003];
     
+//    UIButton *oneBtn = [self.view viewWithTag:1001];
+//    UIButton *twoBtn = [self.view viewWithTag:1002];
+//    UIButton *threeBtn = [self.view viewWithTag:1003];
+//    [oneBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+//    [twoBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+//    [threeBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+    
     if (btn.tag == 1001) {
         
         [MobClick event:@"activity"];
@@ -541,6 +554,7 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
         activityLable.hidden = NO;
         photoLable.hidden = YES;
         scoreLable.hidden = YES;
+//        [oneBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [cell configJGHShowActivityPhotoCell:_indexModel.activityList];
         
     } else if (btn.tag == 1002) {
@@ -551,6 +565,7 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
         activityLable.hidden = YES;
         photoLable.hidden = NO;
         scoreLable.hidden = YES;
+//        [twoBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [cell configJGHShowPhotoCell:_indexModel.albumList];
         cell.photoBlock = ^(NSInteger numB){
             [self isLoginUp];
@@ -571,6 +586,7 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
         activityLable.hidden = YES;
         photoLable.hidden = YES;
         scoreLable.hidden = NO;
+//        [threeBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [cell configJGHShowLiveCell:_indexModel.scoreList];
         cell.liveBlock = ^(NSInteger numB){
             [self isLoginUp];
@@ -594,7 +610,15 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
     if (btn.tag == 700) {
         // 服务定制
         JGDServiceViewController *serviceVC = [[JGDServiceViewController alloc] init];
+        serviceVC.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:serviceVC animated:YES];
+        
+//        LGLCalenderViewController *calCtrl = [[LGLCalenderViewController alloc]init];
+//        calCtrl.blockTimeWeekPriceDict = ^(NSDictionary *dict){
+//            
+//        };
+//        calCtrl.hidesBottomBarWhenPushed = YES;
+//        [self.navigationController pushViewController:calCtrl animated:YES];
         
     }else if (btn.tag == 701) {
         
@@ -617,11 +641,9 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
     } else{
         // 历史成绩
         [MobClick event:@"historyScore"];
-        JGDHistoryScoreViewController *historyCtrl = [[JGDHistoryScoreViewController alloc]init];
+        JGHHistoryAndResultsViewController *historyCtrl = [[JGHHistoryAndResultsViewController alloc]init];
         historyCtrl.hidesBottomBarWhenPushed = YES;
-        [self.navigationController pushViewController:historyCtrl animated:YES];
-
-        
+        [self.navigationController pushViewController:historyCtrl animated:YES];        
     }
 }
 
@@ -859,21 +881,48 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
     else
     {
         [Helper alertViewWithTitle:@"是否立即登录?" withBlockCancle:^{
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"show" object:nil];
+//            [[NSNotificationCenter defaultCenter] postNotificationName:@"show" object:nil];
         } withBlockSure:^{
             JGHLoginViewController *vc = [[JGHLoginViewController alloc] init];
             vc.reloadCtrlData = ^(){
                 [self loadIndexdata];
                 [self loadMessageData];
             };
+            
+            vc.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:vc animated:YES];
         } withBlock:^(UIAlertController *alertView) {
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"show" object:nil];
+//            [[NSNotificationCenter defaultCenter] postNotificationName:@"show" object:nil];
             [self presentViewController:alertView animated:YES completion:nil];
         }];
         
         return;
     }
+}
+#pragma mark - Table View Delegate
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    NSLog(@"scrollView11 == %f", scrollView.contentOffset.y);
+    if (scrollView.contentOffset.y > screenWidth/2 -20) {
+//        [[UIApplication sharedApplication]setStatusBarStyle:UIStatusBarStyleLightContent];
+        [self.view addSubview:self.toolView];
+        _toolView.alpha = 1.0;
+    }else{
+//        [[UIApplication sharedApplication]setStatusBarStyle:UIStatusBarStyleDefault];
+        [self.view addSubview:self.toolView];
+        _toolView.alpha = 0.0;
+    }
+}
+//替换任务栏
+- (UIView *)toolView{
+    if (_toolView == nil) {
+        _toolView = [[UIView alloc]initWithFrame:CGRectMake(0, 20, ScreenWidth, 20)];
+        CGRect frame = _toolView.frame;
+        frame.origin = CGPointMake(0, 0);
+        _toolView.frame = frame;
+        _toolView.alpha = 0.0;
+        _toolView.backgroundColor = [UIColor colorWithHexString:@"#EEEEEA"];
+    }
+    return _toolView;
 }
 
 /*

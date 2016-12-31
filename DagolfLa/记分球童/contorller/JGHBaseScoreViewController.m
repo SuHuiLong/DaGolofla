@@ -24,6 +24,7 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     
+    
     [self createItem];
 }
 
@@ -83,6 +84,8 @@
     _baseScrollView.pagingEnabled = YES;
     _baseScrollView.delegate = self;
     
+    _baseScrollView.scrollEnabled = NO;
+    
     [self.view addSubview:self.baseScrollView];
 }
 
@@ -111,7 +114,10 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
+- (BOOL)shouldAutorotate
+{
+    return YES;
+}
 
 /*
 #pragma mark - Navigation

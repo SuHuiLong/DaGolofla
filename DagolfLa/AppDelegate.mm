@@ -10,7 +10,6 @@
 #import "TabBarController.h"
 #import "XHLaunchAd.h"
 #import "IQKeyboardManager.h"
-
 #import "UMSocial.h"
 #import "UMSocialWechatHandler.h"
 #import "UMSocialSinaHandler.h"
@@ -24,7 +23,15 @@
 #import "UserDataInformation.h"
 //融云
 #import <RongIMKit/RongIMKit.h>
+#import <RongIMLib/RongIMLib.h>
 #import <AddressBook/AddressBook.h>
+#import <RongIMKit/RCIM.h>
+#import "UITabBar+badge.h"
+#import "RCDTabBarBtn.h"
+
+#import "UIColor+RCColor.h"
+#import "UIImageView+WebCache.h"
+#import <AudioToolbox/AudioToolbox.h>
 
 #import "JPUSHService.h"
 #import <AdSupport/AdSupport.h>
@@ -54,11 +61,12 @@
 
 #define ImgUrlString2 @"http://res.dagolfla.com/h5/ad/app.jpg"
 
+
 #ifdef NSFoundationVersionNumber_iOS_9_x_Max
 #import <UserNotifications/UserNotifications.h>
 #endif
 
-@interface AppDelegate ()<CLLocationManagerDelegate, JPUSHRegisterDelegate>
+@interface AppDelegate ()<CLLocationManagerDelegate, JPUSHRegisterDelegate, RCIMConnectionStatusDelegate>
 {
     BMKMapManager* _mapManager;
     
@@ -73,7 +81,7 @@
 
 - (void)umengTrack {
     //    [MobClick setAppVersion:XcodeAppVersion]; //参数为NSString * 类型,自定义app版本信息，如果不设置，默认从CFBundleVersion里取
-    [MobClick setLogEnabled:YES];
+    [MobClick setLogEnabled:YES];// 打开友盟sdk调试，注意Release发布时需要注释掉此行,减少io消耗
     UMConfigInstance.appKey = @"574c75ed67e58ecb16003314";
     UMConfigInstance.secret = nil;
     //    UMConfigInstance.eSType = E_UM_GAME;
@@ -243,18 +251,26 @@
     NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
     [user setObject:[NSNumber numberWithFloat:31.15] forKey:BDMAPLAT];//纬度
     [user setObject:[NSNumber numberWithFloat:121.56] forKey:BDMAPLNG];//经度
-    [user setObject:@"上海市" forKey:CITYNAME];//城市名
+    [user setObject:@"上海" forKey:CITYNAME];//城市名
     [user synchronize];
+    
+    //设置状态栏字体颜色
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
+    
+    //---------------------------友盟-------------------------------
+    [self umengTrack];
 
-    //定位
+    //-------------------------定位-------------------------
     [self getCurPosition];
     
-    //初始化趣拍
+    //-------------------------初始化趣拍-------------------------
     [[TaeSDK sharedInstance] asyncInit:^{
         
     } failedCallback:^(NSError *error) {
         NSLog(@"TaeSDK init failed!!!");
     }];
+    
+    //-------------------------友盟-------------------------
     //键盘自动收起
     [IQKeyboardManager sharedManager].enable = YES;
     [IQKeyboardManager sharedManager].enableAutoToolbar = NO;
@@ -277,7 +293,7 @@
     // Add the navigation controller's view to the window and display.
     [self.window makeKeyAndVisible];
     
-    //极光推送
+    //-------------------------极光推送-------------------------
     if ([[UIDevice currentDevice].systemVersion floatValue] >= 10.0) {
 #ifdef NSFoundationVersionNumber_iOS_9_x_Max
         JPUSHRegisterEntity * entity = [[JPUSHRegisterEntity alloc] init];
@@ -296,7 +312,7 @@
     }
     
     //测试NO，线上YES；
-    [JPUSHService setupWithOption:launchOptions appKey:@"831cd22faea3454090c15bbe" channel:@"Publish chanel" apsForProduction:YES];
+    [JPUSHService setupWithOption:launchOptions appKey:@"831cd22faea3454090c15bbe" channel:@"Publish chanel" apsForProduction:NO];
     
     //2.1.9版本新增获取registration id block接口。
     [JPUSHService registrationIDCompletionHandler:^(int resCode, NSString *registrationID) {
@@ -313,15 +329,17 @@
 //    NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
 //    [defaultCenter addObserver:self selector:@selector(networkDidReceiveMessage:) name:kJPFNetworkDidReceiveMessageNotification object:nil];
     
-    //融云
-//    NSUserDefaults *user=[NSUserDefaults standardUserDefaults];
+    //-------------------------融云-------------------------
+    //初始化融云SDK
+    [[RCIM sharedRCIM] initWithAppKey:RongYunAPPKEY];//pgyu6atqylmiu
+    
     if ([user objectForKey:@"userId"]) {
-        
         
         [[PostDataRequest sharedInstance] postDataRequest:@"user/queryById.do" parameter:@{@"userId":[user objectForKey:@"userId"]} success:^(id respondsData) {
             NSDictionary *dict=[NSJSONSerialization JSONObjectWithData:respondsData options:NSJSONReadingAllowFragments error:nil];
             if ([[dict objectForKey:@"success"] integerValue]==1) {
                 //保存用户数据信息
+//                [[RCIM sharedRCIM] initWithAppKey:TESTRongYunAPPKEY];//pgyu6atqylmiu
                 UserInformationModel *model = [[UserInformationModel alloc] init];
                 [model setValuesForKeysWithDictionary:[dict objectForKey:@"rows"]];
                 [[UserDataInformation sharedInstance] saveUserInformation:model];
@@ -331,7 +349,6 @@
                 [RCIM sharedRCIM].globalConversationPortraitSize = CGSizeMake(40*ScreenWidth/375, 40*ScreenWidth/375);
                 [RCIM sharedRCIM].globalConversationAvatarStyle=RC_USER_AVATAR_CYCLE;
                 [RCIM sharedRCIM].globalMessageAvatarStyle=RC_USER_AVATAR_CYCLE;
-                [[RCIM sharedRCIM] initWithAppKey:@"0vnjpoadnkihz"];//pgyu6atqylmiu
                 
                 [[RCIM sharedRCIM] setUserInfoDataSource:[UserDataInformation sharedInstance]];
                 [[RCIM sharedRCIM] setGroupInfoDataSource:[UserDataInformation sharedInstance]];
@@ -362,10 +379,10 @@
             }
             else
             {
-                [[RCIM sharedRCIM] initWithAppKey:@"0vnjpoadnkihz"];//pgyu6atqylmiu
+//                [[RCIM sharedRCIM] initWithAppKey:TESTRongYunAPPKEY];//pgyu6atqylmiu
                 //网页端同步退出
                 [[PostDataRequest sharedInstance] getDataRequest:[NSString stringWithFormat:@"http://www.dagolfla.com/app/api/client/api.php?Action=UserLogOut"] success:^(id respondsData) {
-//                    NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:respondsData options:NSJSONReadingMutableContainers error:nil];
+                    //                    NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:respondsData options:NSJSONReadingMutableContainers error:nil];
                 } failed:^(NSError *error) {
                     
                 }];
@@ -392,10 +409,10 @@
                 
             }
         } failed:^(NSError *error) {
-            [[RCIM sharedRCIM] initWithAppKey:@"0vnjpoadnkihz"];//pgyu6atqylmiu
+            
             //网页端同步退出
             [[PostDataRequest sharedInstance] getDataRequest:[NSString stringWithFormat:@"http://www.dagolfla.com/app/api/client/api.php?Action=UserLogOut"] success:^(id respondsData) {
-//                NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:respondsData options:NSJSONReadingMutableContainers error:nil];
+                //                NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:respondsData options:NSJSONReadingMutableContainers error:nil];
             } failed:^(NSError *error) {
                 
             }];
@@ -421,17 +438,42 @@
             [user synchronize];
             
         }];
-        
-        
     }
     else
     {
-        [[RCIM sharedRCIM] initWithAppKey:@"0vnjpoadnkihz"];//pgyu6atqylmiu
+//        [[RCIM sharedRCIM] initWithAppKey:TESTRongYunAPPKEY];//pgyu6atqylmiu
     }
-    //微信支付
-    [WXApi registerApp:@"wxdcdc4e20544ed728"];
-    [self umengTrack];
+    /**
+     * 推送处理1
+     */
+    if ([application
+         respondsToSelector:@selector(registerUserNotificationSettings:)]) {
+        //注册推送, 用于iOS8以及iOS8之后的系统
+        UIUserNotificationSettings *settings = [UIUserNotificationSettings
+                                                settingsForTypes:(UIUserNotificationTypeBadge |
+                                                                  UIUserNotificationTypeSound |
+                                                                  UIUserNotificationTypeAlert)
+                                                categories:nil];
+        [application registerUserNotificationSettings:settings];
+    } else {
+        //注册推送，用于iOS8之前的系统
+//        UIRemoteNotificationType myTypes = UIRemoteNotificationTypeBadge |
+//        UIRemoteNotificationTypeAlert |
+//        UIRemoteNotificationTypeSound;
+//        [application registerForRemoteNotificationTypes:myTypes];
+    }
     
+    [[NSNotificationCenter defaultCenter]
+     addObserver:self
+     selector:@selector(didReceiveMessageNotification:)
+     name:RCKitDispatchMessageNotification
+     object:nil];
+    [[RCIM sharedRCIM] setConnectionStatusDelegate:self];
+    
+    //-------------------------微信支付------------------------------
+    [WXApi registerApp:@"wxdcdc4e20544ed728"];
+    
+    //------------------------处理启动事件----------------------------
     NSURL *url = [launchOptions objectForKey:UIApplicationLaunchOptionsURLKey];
     NSDictionary* pushInfo = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
     if (pushInfo)
@@ -487,7 +529,48 @@
     
     return YES;
 }
-
+/**
+ *  网络状态变化。
+ *
+ *  @param status 网络状态。
+ */
+- (void)onRCIMConnectionStatusChanged:(RCConnectionStatus)status {
+    if (status == ConnectionStatus_KICKED_OFFLINE_BY_OTHER_CLIENT) {
+        
+    } else if (status == ConnectionStatus_TOKEN_INCORRECT) {
+        
+    }
+}
+- (void)didReceiveMessageNotification:(NSNotification *)notification {
+    NSNumber *left = [notification.userInfo objectForKey:@"left"];
+    if ([RCIMClient sharedRCIMClient].sdkRunningMode ==
+        RCSDKRunningMode_Backgroud &&
+        0 == left.integerValue) {
+        int unreadMsgCount = [[RCIMClient sharedRCIMClient] getUnreadCount:@[
+                                                                             @(ConversationType_PRIVATE),
+                                                                             @(ConversationType_DISCUSSION),
+                                                                             @(ConversationType_APPSERVICE),
+                                                                             @(ConversationType_PUBLICSERVICE),
+                                                                             @(ConversationType_GROUP)
+                                                                             ]];
+        [UIApplication sharedApplication].applicationIconBadgeNumber =
+        unreadMsgCount;
+    }
+//    [UIApplication sharedApplication].applicationIconBadgeNumber =
+//    [UIApplication sharedApplication].applicationIconBadgeNumber + 1;
+}
+- (void)application:(UIApplication *)application handleWatchKitExtensionRequest:(NSDictionary *)userInfo
+              reply:(void (^)(NSDictionary *))reply {
+//    RCWKRequestHandler *handler =
+//    [[RCWKRequestHandler alloc] initHelperWithUserInfo:userInfo
+//                                              provider:self
+//                                                 reply:reply];
+//    if (![handler handleWatchKitRequest]) {
+        // can not handled!
+        // app should handle it here
+        NSLog(@"not handled the request: %@", userInfo);
+//    }
+}
 - (void)phpLogin{
     NSString *url = [NSString stringWithFormat:@"http://www.dagolfla.com/app/api/client/api.php?Action=UserLoginUserid&uid=%@&url=dsadsa", DEFAULF_USERID];
     
@@ -677,6 +760,16 @@
     // Required
     [JPUSHService registerDeviceToken:deviceToken];
     
+    //容云
+    NSString *token =
+    [[[[deviceToken description] stringByReplacingOccurrencesOfString:@"<"
+                                                           withString:@""]
+      stringByReplacingOccurrencesOfString:@">"
+      withString:@""]
+     stringByReplacingOccurrencesOfString:@" "
+     withString:@""];
+    
+    [[RCIMClient sharedRCIMClient] setDeviceToken:token];
 }
 
 -(void)onReq:(BaseReq *)req{
@@ -758,6 +851,25 @@
     
      // iOS 10 以下 Required
      [JPUSHService handleRemoteNotification:userInfo];
+    
+    
+    /**
+     * 统计推送打开率2
+     */
+    [[RCIMClient sharedRCIMClient] recordRemoteNotificationEvent:userInfo];
+    /**
+     * 获取融云推送服务扩展字段2
+     */
+    NSDictionary *pushServiceData = [[RCIMClient sharedRCIMClient]
+                                     getPushExtraFromRemoteNotification:userInfo];
+    if (pushServiceData) {
+        NSLog(@"该远程推送包含来自融云的推送服务");
+        for (id key in [pushServiceData allKeys]) {
+            NSLog(@"key = %@, value = %@", key, pushServiceData[key]);
+        }
+    } else {
+        NSLog(@"该远程推送不包含来自融云的推送服务");
+    }
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
@@ -772,6 +884,11 @@
 - (void)application:(UIApplication *)application
 didReceiveLocalNotification:(UILocalNotification *)notification {
     [JPUSHService showLocalNotificationAtFront:notification identifierKey:nil];
+    
+    /**
+     * 统计推送打开率3
+     */
+    [[RCIMClient sharedRCIMClient] recordLocalNotificationEvent:notification];
 }
 // iOS 10 Support
 - (void)jpushNotificationCenter:(UNUserNotificationCenter *)center  willPresentNotification:(UNNotification *)notification withCompletionHandler:(void (^)(NSInteger))completionHandler {
@@ -784,7 +901,7 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
         // 本地通知
     }
     
-    completionHandler(UNNotificationPresentationOptionBadge|UNNotificationPresentationOptionSound|UNNotificationPresentationOptionAlert);; // 需要执行这个方法，选择是否提醒用户，有Badge、Sound、Alert三种类型可以选择设置
+    completionHandler(UNNotificationPresentationOptionBadge|UNNotificationPresentationOptionSound|UNNotificationPresentationOptionAlert);// 需要执行这个方法，选择是否提醒用户，有Badge、Sound、Alert三种类型可以选择设置
 }
 
 // iOS 10 Support
@@ -837,23 +954,58 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
+    RCConnectionStatus status = [[RCIMClient sharedRCIMClient] getConnectionStatus];
+    if (status != ConnectionStatus_SignUp) {
+        int unreadMsgCount = [[RCIMClient sharedRCIMClient]
+                              getUnreadCount:@[
+                                               @(ConversationType_PRIVATE),
+                                               @(ConversationType_DISCUSSION),
+                                               @(ConversationType_APPSERVICE),
+                                               @(ConversationType_PUBLICSERVICE),
+                                               @(ConversationType_GROUP)
+                                               ]];
+        application.applicationIconBadgeNumber = unreadMsgCount;
+    }
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
-    [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
+    // 为消息分享保存会话信息
+//    [self saveConversationInfoForMessageShare];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
     if ([[RCIMClient sharedRCIMClient] getConnectionStatus] == ConnectionStatus_Connected) {
         // 插入分享消息
-//        [self insertSharedMessageIfNeed];
+        [self insertSharedMessageIfNeed];
     }
     
     [application setApplicationIconBadgeNumber:0];
     [application cancelAllLocalNotifications];
+}
+//插入分享消息
+- (void)insertSharedMessageIfNeed {
+//    NSUserDefaults *shareUserDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.cn.rongcloud.im.share"];
+//    
+//    NSArray *sharedMessages = [shareUserDefaults valueForKey:@"sharedMessages"];
+//    if (sharedMessages.count > 0) {
+//        for (NSDictionary *sharedInfo in sharedMessages) {
+//            RCRichContentMessage *richMsg = [[RCRichContentMessage alloc]init];
+//            richMsg.title = [sharedInfo objectForKey:@"title"];
+//            richMsg.digest = [sharedInfo objectForKey:@"content"];
+//            richMsg.url = [sharedInfo objectForKey:@"url"];
+//            richMsg.imageURL = [sharedInfo objectForKey:@"imageURL"];
+//            richMsg.extra = [sharedInfo objectForKey:@"extra"];
+//            //      long long sendTime = [[sharedInfo objectForKey:@"sharedTime"] longLongValue];
+//            //      RCMessage *message = [[RCIMClient sharedRCIMClient] insertOutgoingMessage:[[sharedInfo objectForKey:@"conversationType"] intValue] targetId:[sharedInfo objectForKey:@"targetId"] sentStatus:SentStatus_SENT content:richMsg sentTime:sendTime];
+//            RCMessage *message = [[RCIMClient sharedRCIMClient] insertOutgoingMessage:[[sharedInfo objectForKey:@"conversationType"] intValue] targetId:[sharedInfo objectForKey:@"targetId"] sentStatus:SentStatus_SENT content:richMsg];
+//            [[NSNotificationCenter defaultCenter] postNotificationName:@"RCDSharedMessageInsertSuccess" object:message];
+//        }
+//        [shareUserDefaults removeObjectForKey:@"sharedMessages"];
+//        [shareUserDefaults synchronize];
+//    }
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
@@ -966,7 +1118,7 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
     
     // 获取导航控制器
     TabBarController *tabVC = (TabBarController *)self.window.rootViewController;
-    UINavigationController *pushClassStance = (UINavigationController *)tabVC.viewControllers[0];
+    UINavigationController *pushClassStance = (UINavigationController *)tabVC.viewControllers[tabVC.selectedIndex];
     [pushClassStance popToRootViewControllerAnimated:YES];
     
     if ([[NSUserDefaults standardUserDefaults] objectForKey:@"userId"]) {
@@ -1082,7 +1234,7 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
         //球队详情
         if ([urlString containsString:@"teamDetail"]) {
             JGDNewTeamDetailViewController *newTeamVC = [[JGDNewTeamDetailViewController alloc] init];
-            newTeamVC.timeKey = [NSNumber numberWithInteger:[[Helper returnKeyVlaueWithUrlString:urlString andKey:@"timekey"] integerValue]];
+            newTeamVC.timeKey = [NSNumber numberWithInteger:[[Helper returnKeyVlaueWithUrlString:urlString andKey:@"teamKey"] integerValue]];
             newTeamVC.hidesBottomBarWhenPushed = YES;
             [pushClassStance pushViewController:newTeamVC animated:YES];
         }

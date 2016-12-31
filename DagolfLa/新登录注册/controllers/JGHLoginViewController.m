@@ -61,7 +61,7 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:nil];
+//    [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:nil];
     //    [super viewWillAppear:YES];
     
     UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"backL"] style:UIBarButtonItemStylePlain target:self action:@selector(backClcik)];
@@ -834,7 +834,7 @@ void ContactsChangeCallback (ABAddressBookRef addressBook,
 -(void)requestRCIMWithToken:(NSString *)token{
     NSUserDefaults *user=[NSUserDefaults standardUserDefaults];
     [RCIM sharedRCIM].globalConversationPortraitSize = CGSizeMake(40*ScreenWidth/375, 40*ScreenWidth/375);
-    [[RCIM sharedRCIM] initWithAppKey:@"0vnjpoadnkihz"];
+    [[RCIM sharedRCIM] initWithAppKey:RongYunAPPKEY];
     [RCIM sharedRCIM].globalConversationAvatarStyle=RC_USER_AVATAR_CYCLE;
     [RCIM sharedRCIM].globalMessageAvatarStyle=RC_USER_AVATAR_CYCLE;
     [[RCIM sharedRCIM] setUserInfoDataSource:[UserDataInformation sharedInstance]];

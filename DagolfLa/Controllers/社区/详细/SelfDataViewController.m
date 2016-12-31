@@ -95,7 +95,7 @@
 
     
     //发出通知隐藏标签栏
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:nil];
+//    [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:nil];
     [_mapView viewWillAppear];
 }
 

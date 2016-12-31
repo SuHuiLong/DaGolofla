@@ -300,9 +300,6 @@
     
     [self.view addSubview:statusView];
 //    [_actIndicatorView stopAnimating];
-    
-    
-    
 }
 -(void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
 {
@@ -630,6 +627,7 @@
         [[ShowHUD showHUD]showToastWithText:@"支付失败！" FromView:self.view];
     }
 }
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

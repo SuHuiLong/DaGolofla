@@ -55,6 +55,9 @@ typedef NS_ENUM(NSInteger, GestureType) {
 #define screenWidth  [UIScreen mainScreen].bounds.size.width
 #define screenHeight  [UIScreen mainScreen].bounds.size.height
 
+#define TESTRongYunAPPKEY @"pgyu6atqylmiu"//pgyu6atqylmiu
+#define RongYunAPPKEY @"pgyu6atqylmiu"//0vnjpoadnkihz
+
 //判断是否是Iphone型号
 #define iPhone6Plus1 ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(1125,2001),[[UIScreen mainScreen] currentMode].size) : NO)
 #define iPhone6Plus ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(1242,2208), [[UIScreen mainScreen] currentMode].size) : NO)

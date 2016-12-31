@@ -92,7 +92,7 @@
     self.navigationItem.hidesBackButton = YES;
     self.navigationItem.leftBarButtonItems = nil;
     
-  
+    [[UIApplication sharedApplication]setStatusBarStyle:UIStatusBarStyleLightContent];
     
     //监听分组页面返回，刷新数据
     NSNotificationCenter * center = [NSNotificationCenter defaultCenter];
@@ -100,8 +100,8 @@
     [center addObserver:self selector:@selector(PushJGTeamActibityNameViewController:) name:@"PushJGTeamActibityNameViewController" object:nil];
     
     
-    
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"show" object:self];
+    self.tabBarController.tabBar.hidden = NO;
+//    [[NSNotificationCenter defaultCenter] postNotificationName:@"show" object:self];
 
     if ([[NSUserDefaults standardUserDefaults] objectForKey:@"userId"]) {
         [RCIM sharedRCIM].receiveMessageDelegate=self;
@@ -156,6 +156,7 @@
             vc.reloadCtrlData = ^(){
                 
             };
+            vc.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:vc animated:YES];
         } withBlock:^(UIAlertController *alertView) {
             [self presentViewController:alertView animated:YES completion:nil];
@@ -180,6 +181,7 @@
             vc.reloadCtrlData = ^(){
                 
             };
+            vc.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:vc animated:YES];
         } withBlock:^(UIAlertController *alertView) {
             [self presentViewController:alertView animated:YES completion:nil];
@@ -193,6 +195,7 @@
         JGTeamActibityNameViewController *teamCtrl= [[JGTeamActibityNameViewController alloc]init];
         teamCtrl.teamKey = [not.userInfo[@"timekey"] integerValue];
         teamCtrl.hidesBottomBarWhenPushed = YES;
+        teamCtrl.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:teamCtrl animated:YES];
         return;
     }
@@ -203,10 +206,11 @@
         [dic setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"userId"] forKey:@"userKey"];
         [dic setObject:@([not.userInfo[@"timekey"] integerValue]) forKey:@"teamKey"];
         
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
+//        [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
 
         JGDNewTeamDetailViewController *newTeamVC = [[JGDNewTeamDetailViewController alloc] init];
         newTeamVC.timeKey = not.userInfo[@"timekey"];
+        newTeamVC.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:newTeamVC animated:YES];
         
 //        [[JsonHttp jsonHttp] httpRequest:@"team/getTeamInfo" JsonKey:nil withData:dic requestMethod:@"GET" failedBlock:^(id errType) {
@@ -252,29 +256,31 @@
     else if ([not.userInfo[@"details"] isEqualToString:@"goodKey"])
     {
         //商城
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
+//        [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
         UseMallViewController* userVc = [[UseMallViewController alloc]init];
         userVc.linkUrl = [NSString stringWithFormat:@"http://www.dagolfla.com/app/ProductDetails.html?proid=%td",[not.userInfo[@"timekey"] integerValue]];
+        userVc.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:userVc animated:YES];
         return;
     }
     else if ([not.userInfo[@"details"] isEqualToString:@"url"])
     {
         //h5
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
+//        [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
         JGLPushDetailsViewController* puVc = [[JGLPushDetailsViewController alloc]init];
         puVc.strUrl = [NSString stringWithFormat:@"%@",not.userInfo[@"timekey"]];
+        puVc.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:puVc animated:YES];
     }
     else if ([not.userInfo[@"details"] isEqualToString:@"moodKey"])
     {
         //社区
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
+//        [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
         
         DetailViewController * comDevc = [[DetailViewController alloc]init];
         
         comDevc.detailId = [NSNumber numberWithInteger:[not.userInfo[@"timekey"] integerValue]];
-        
+        comDevc.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:comDevc animated:YES];
         
     }
@@ -288,6 +294,7 @@
             UIAlertAction *action1=[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                 [user setObject:0 forKey:@"cacheCreatTeamDic"];
                 JGNewCreateTeamTableViewController *creatteamVc = [[JGNewCreateTeamTableViewController alloc] init];
+                creatteamVc.hidesBottomBarWhenPushed = YES;
                 [self.navigationController pushViewController:creatteamVc animated:YES];
             }];
             UIAlertAction* action2=[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
@@ -295,7 +302,7 @@
                 creatteamVc.detailDic = [[user objectForKey:@"cacheCreatTeamDic"] mutableCopy];
                 creatteamVc.titleField.text = [[user objectForKey:@"cacheCreatTeamDic"] objectForKey:@"name"];
                 
-                
+                creatteamVc.hidesBottomBarWhenPushed = YES;
                 [self.navigationController pushViewController:creatteamVc animated:YES];
             }];
             
@@ -305,6 +312,7 @@
             
         }else{
             JGNewCreateTeamTableViewController *creatteamVc = [[JGNewCreateTeamTableViewController alloc] init];
+            creatteamVc.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:creatteamVc animated:YES];
         }
     }
@@ -327,6 +335,7 @@
         vc.reloadCtrlData = ^(){
             
         };
+        vc.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:vc animated:YES];
     }
 }
@@ -444,6 +453,10 @@
             cell.detailLabel.text = @"您还没有登录，赶快登陆哦";
             cell.imgvSex.image = [UIImage imageNamed:@"xb_nn"];
         }
+        
+        UITapGestureRecognizer *iconImgvTap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(headerTapClick)];
+        cell.iconImgv.userInteractionEnabled = YES;
+        [cell.iconImgv addGestureRecognizer:iconImgvTap];
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
@@ -461,7 +474,30 @@
 
     return nil;
 }
-
+#pragma mark --头像点击事件
+- (void)headerTapClick{
+    if (!DEFAULF_USERID) {
+        [Helper alertViewWithTitle:@"是否立即登录?" withBlockCancle:^{
+            
+        } withBlockSure:^{
+            JGHLoginViewController *vc = [[JGHLoginViewController alloc] init];
+            vc.reloadCtrlData = ^(){
+                
+            };
+            vc.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:vc animated:YES];
+        } withBlock:^(UIAlertController *alertView) {
+            [self presentViewController:alertView animated:YES completion:nil];
+        }];
+        return;
+    }
+    
+    PersonHomeController* selfVc = [[PersonHomeController alloc]init];
+    selfVc.sexType = [_model.sex integerValue];
+    selfVc.strMoodId = _model.userId;
+    selfVc.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:selfVc animated:YES];
+}
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
@@ -482,10 +518,38 @@
         }
         
         if (indexPath.section == 0) {
-            PersonHomeController* selfVc = [[PersonHomeController alloc]init];
-            selfVc.sexType = [_model.sex integerValue];
-            selfVc.strMoodId = _model.userId;
-            [self.navigationController pushViewController:selfVc animated:YES];
+//            PersonHomeController* selfVc = [[PersonHomeController alloc]init];
+//            selfVc.sexType = [_model.sex integerValue];
+//            selfVc.strMoodId = _model.userId;
+//            [self.navigationController pushViewController:selfVc animated:YES];
+            
+            SelfViewController* scVc = [[SelfViewController alloc]init];
+            scVc.userModel = _model;
+            
+            scVc.blockRereshingMe = ^(NSArray* arrayData){
+                
+//                _nameLabel.text = _model.userName;
+                
+//                if (_model.age != nil) {
+//                    _infoLabel.text = [NSString stringWithFormat:@"%@岁  差点:%@",_model.age,_model.almost];
+//                }
+//                _sexImg.image = [UIImage imageNamed:@""];
+//                if ([_model.sex integerValue] == 0) {
+//                    
+//                    _sexImg.image = [UIImage imageNamed:@"xb_n"];
+//                }else{
+//                    _sexImg.image = [UIImage imageNamed:@"xb_nn"];
+//                }
+//                
+//                if (arrayData.count != 0) {
+//                    _iconImg.image = [UIImage imageWithData:arrayData[0]];
+//                }
+                NSString *headUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/user/head/%@.jpg@120w_120h", DEFAULF_USERID];
+                [[SDImageCache sharedImageCache] removeImageForKey:headUrl fromDisk:YES];
+                [_tableView reloadData];
+            };
+            
+            [self.navigationController pushViewController:scVc animated:YES];
         }
         else if (indexPath.section == 1)
         {
@@ -501,13 +565,13 @@
                 }
                 case 1:
                 {
-                    [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
+//                    [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
                     [self.navigationController pushViewController:arr[3] animated:YES];
                     break;
                 }
                 case 2:
                 {
-                    [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
+//                    [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
                     [self.navigationController pushViewController:arr[2] animated:YES];
                     break;
                 }
@@ -521,13 +585,13 @@
             switch (indexPath.row) {
                 case 0:
                 {
-                    [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
+//                    [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
                     [self.navigationController pushViewController:arr[4] animated:YES];
                     break;
                 }
                 case 1:
                 {
-                    [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
+//                    [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
                     [self.navigationController pushViewController:arr[5] animated:YES];
                     break;
                 }
@@ -541,13 +605,13 @@
             switch (indexPath.row) {
                 case 0:
                 {
-                    [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
+//                    [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
                     [self.navigationController pushViewController:arr[6] animated:YES];
                     break;
                 }
                     
                 case 1:{
-                    [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
+//                    [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
                     [self.navigationController pushViewController:arr[7] animated:YES];
                     
                     break;
@@ -568,7 +632,7 @@
         {
             
             
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
+//            [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
             [self.navigationController pushViewController:arr[8] animated:YES];
         }
     }
@@ -581,6 +645,8 @@
             vc.reloadCtrlData = ^(){
                 
             };
+            
+            vc.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:vc animated:YES];
         } withBlock:^(UIAlertController *alertView) {
             [self presentViewController:alertView animated:YES completion:nil];

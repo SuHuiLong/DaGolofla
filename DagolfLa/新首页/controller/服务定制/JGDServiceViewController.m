@@ -18,6 +18,31 @@
 
 @implementation JGDServiceViewController
 
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    
+    [[ShowHUD showHUD] showAnimationWithText:@"加载中…" FromView:self.view];
+
+    [[JsonHttp jsonHttp] httpRequest:@"serviceCustom/getServiceCustomMobileList" JsonKey:nil withData:@{} requestMethod:@"GET" failedBlock:^(id errType) {
+        [[ShowHUD showHUD] hideAnimationFromView:self.view];
+
+    } completionBlock:^(id data) {
+        [[ShowHUD showHUD] hideAnimationFromView:self.view];
+
+        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+            
+            if ([data objectForKey:@"list"]) {
+                self.phoneArray = [data objectForKey:@"list"];
+            }
+            
+        }else{
+            if ([data objectForKey:@"packResultMsg"]) {
+                [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+            }
+        }
+    }];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -63,7 +88,7 @@
     cell.detailLB.text = titleArray[indexPath.row];
     cell.contactBtn.tag = 200 + indexPath.row;
     [cell.contactBtn addTarget:self action:@selector(contactAct:) forControlEvents:(UIControlEventTouchUpInside)];
-    [cell.contactBtn setTitle:@" 服务定制" forState:(UIControlStateNormal)];
+    [cell.contactBtn setTitle:@" 服务订制" forState:(UIControlStateNormal)];
     if (indexPath.row == 2) {
         cell.lineView.hidden = YES;
     }
@@ -86,9 +111,11 @@
 
 }
 
+
+
 - (NSMutableArray *)phoneArray{
     if (!_phoneArray) {
-        _phoneArray = [NSMutableArray arrayWithObjects:@"4008605308", @"18721262298", @"18721262298", nil];
+        _phoneArray = [[NSMutableArray alloc] init];
     }
     return _phoneArray;
 }

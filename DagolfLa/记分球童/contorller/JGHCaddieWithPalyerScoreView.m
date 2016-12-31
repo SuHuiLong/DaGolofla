@@ -14,7 +14,7 @@
 
 @interface JGHCaddieWithPalyerScoreView ()<UITableViewDelegate, UITableViewDataSource>
 
-@property (nonatomic, strong) UITableView *tableView;
+//@property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic ,strong) UILabel *tipLabel;
 @property (nonatomic, strong) NSMutableArray *dataArray;
 @property (nonatomic, strong) UIView *footView;
@@ -108,6 +108,8 @@
                 self.tipLabel.hidden = NO;
                 self.footView.hidden = NO;
                 self.tableView.tableFooterView = nil;
+                _blockHideCaddieBtn();
+                
                 [self.tableView reloadData];
             }else{
                 self.tipLabel.hidden = YES;
@@ -135,6 +137,7 @@
                 
                 self.tableView.tableFooterView = footView;
                 
+                _blockShowCaddieBtn();//存在记录  显示我市球童
 //                UIBarButtonItem *rightBtn = [[UIBarButtonItem alloc] initWithTitle:@"我是球童" style:UIBarButtonItemStyleDone target:self action:@selector(ballBoy)];
 //                [rightBtn setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:15 * ProportionAdapter], NSFontAttributeName, nil] forState:(UIControlStateNormal)];
 //                rightBtn.tintColor = [UIColor whiteColor];
@@ -256,22 +259,24 @@
         
 //        JGDHistoryScoreViewController *hisVC = [[JGDHistoryScoreViewController alloc] init];
 //        [self.navigationController pushViewController:hisVC animated:YES];
-        
+        _blockHistoryScore();
     }else{
-        //        JGDPlayPersoningTableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-        //        [cell.checkBtn addTarget:self action:@selector(checkAct:) forControlEvents:(UIControlEventTouchUpInside)];
-        //        cell.tag = indexPath.section;
+        JGDPlayPersoningTableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+        [cell.checkBtn addTarget:self action:@selector(checkAct:) forControlEvents:(UIControlEventTouchUpInside)];
+        cell.tag = indexPath.section;
     }
 }
 
 - (void)checkAct:(UIButton *)btn{
     JGDPlayerModel *model = self.dataArray[btn.tag];
     if ([model.srcType integerValue] == 1) {
+        _blockPlayerHisScoreCard(model.timeKey);
 //        JGDPlayerHisScoreCardViewController *DPHVC = [[JGDPlayerHisScoreCardViewController alloc] init];
 //        DPHVC.timeKey = model.timeKey;
 //        DPHVC.ballkid = 10;
 //        [self.navigationController pushViewController:DPHVC animated:YES];
     }else{
+        _blockNotActScore(model.timeKey);
 //        JGDNotActScoreViewController *noActVC = [[JGDNotActScoreViewController alloc] init];
 //        noActVC.timeKey = model.timeKey;
 //        noActVC.ballkid = 10;

@@ -73,6 +73,13 @@
     [def synchronize];
     JGHCabbieCertViewController* cadVc = [[JGHCabbieCertViewController alloc]init];
 //    cadVc.isCaddie = 1;
+    cadVc.blockCabbie = ^(){
+//        NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
+//        if ([userdef objectForKey:@"isCaddie"]) {
+//            //认证球童
+//            [self createCaddieView];
+//        }
+    };
     [self.navigationController pushViewController:cadVc animated:YES];
 }
 @end

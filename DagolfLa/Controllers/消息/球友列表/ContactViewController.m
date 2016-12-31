@@ -45,9 +45,15 @@
 
 @implementation ContactViewController
 
-
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    
+//    self.tabBarController.tabBar.hidden = NO;
+    
+}
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:YES];
+    self.tabBarController.tabBar.hidden = YES;
 }
 
 - (void)viewDidLoad {

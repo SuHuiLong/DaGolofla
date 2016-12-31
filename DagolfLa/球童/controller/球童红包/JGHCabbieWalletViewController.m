@@ -9,6 +9,7 @@
 #import "JGHCabbieWalletViewController.h"
 #import "JGLCaddieScoreViewController.h"
 #import "JGHCabbieRewardViewController.h"
+#import "JGHNewStartScoreViewController.h"
 
 @interface JGHCabbieWalletViewController ()
 {
@@ -30,12 +31,19 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:YES];
     self.navigationController.navigationBarHidden = YES;
+    
+//    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"backL"] style:UIBarButtonItemStylePlain target:self action:@selector(backButtonClcik)];
+//    item.tintColor=[UIColor whiteColor];
+//    self.navigationItem.leftBarButtonItem = item;
+//    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"nav_bg"] forBarMetrics:UIBarMetricsDefault];
 }
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:YES];
     self.navigationController.navigationBarHidden = NO;
 }
-
+//- (void)backButtonClcik{
+//    [self.navigationController popToRootViewControllerAnimated:YES];
+//}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -128,7 +136,7 @@
 }
 - (void)BackBtnClick:(UIButton *)btn{
     self.navigationController.navigationBarHidden = NO;
-    
+    [_barView removeFromSuperview];
     if ([NSThread isMainThread]) {
         NSLog(@"Yay!");
         for (UIViewController *controller in self.navigationController.viewControllers) {

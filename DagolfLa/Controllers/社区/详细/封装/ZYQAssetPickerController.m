@@ -11,11 +11,12 @@
 #import "ZYQAssetPickerController.h"
 
 #define IS_IOS7             ([[[UIDevice currentDevice] systemVersion] compare:@"7.0" options:NSNumericSearch] != NSOrderedAscending)
-#define kThumbnailLength    78.0f
+#define kThumbnailLength    91.0 *ProportionAdapter
 #define kThumbnailSize      CGSizeMake(kThumbnailLength, kThumbnailLength)
-#define kPopoverContentSize CGSizeMake(320, 480)
+#define kPopoverContentSize CGSizeMake(screenWidth, screenHeight)
 
 #pragma mark -
+
 
 @interface NSDate (TimeInterval)
 

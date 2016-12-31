@@ -17,6 +17,8 @@
 #import "JGDPlayPersonViewController.h"
 #import "JGDPlayerScoreCardDetailViewController.h"
 #import "JGLCaddieScoreViewController.h"
+#import "JGHHistoryAndResultsViewController.h"
+#import "JGHNewStartScoreViewController.h"
 
 @interface JGDPlayerScoreCardViewController ()<UITableViewDelegate, UITableViewDataSource>
 
@@ -42,13 +44,13 @@
 - (void)backBtn{
     
     for (UIViewController *vc in self.navigationController.viewControllers) {
-        if ([vc isKindOfClass:[JGDHistoryScoreViewController class]]) {
+        if ([vc isKindOfClass:[JGHHistoryAndResultsViewController class]]) {
             [self.navigationController popToViewController:vc animated:YES];
             return;
         }
     }
     for (UIViewController *vc in self.navigationController.viewControllers) {
-        if ([vc isKindOfClass:[JGDPlayPersonViewController class]] || [vc isKindOfClass:[JGLCaddieScoreViewController class]]) {
+        if ([vc isKindOfClass:[JGHNewStartScoreViewController class]]) {
             [self.navigationController popToViewController:vc animated:YES];
             return;
         }

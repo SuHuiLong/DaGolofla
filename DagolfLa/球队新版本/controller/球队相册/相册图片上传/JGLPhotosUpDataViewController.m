@@ -62,8 +62,37 @@
     [self createView];
     [self createAddPhoto];
     [self createBtnSure];
+    [self createProView];
 }
-
+#pragma mark -- 提示文字
+- (void)createProView{
+    UILabel *oneLable = [[UILabel alloc]initWithFrame:CGRectMake(0, screenHeight -64-120 *ProportionAdapter, screenWidth, 20 *ProportionAdapter)];
+    oneLable.text = @"照片太多，手机上传太慢？";
+    oneLable.font = [UIFont systemFontOfSize:14 *ProportionAdapter];
+    oneLable.textColor = [UIColor colorWithHexString:Ba0_Color];
+    oneLable.textAlignment = NSTextAlignmentCenter;
+    [_scrollView addSubview:oneLable];
+    
+    UILabel *twoLable = [[UILabel alloc]initWithFrame:CGRectMake(0, screenHeight -64-100 *ProportionAdapter, screenWidth, 20 *ProportionAdapter)];
+    twoLable.text = @"我们提供了PC端上传工具，海量照片，一键上传！";
+    twoLable.textAlignment = NSTextAlignmentCenter;
+    twoLable.textColor = [UIColor colorWithHexString:Ba0_Color];
+    twoLable.font = [UIFont systemFontOfSize:14 *ProportionAdapter];
+    [_scrollView addSubview:twoLable];
+    
+    UILabel *threeLable = [[UILabel alloc]initWithFrame:CGRectMake(0, screenHeight -64-80 *ProportionAdapter, screenWidth, 20 *ProportionAdapter)];
+    threeLable.text = @"PC端登录地址：http://keeper.dagolfla.com";
+    threeLable.textColor = [UIColor colorWithHexString:Ba0_Color];
+//    self.baseLabel.text = [NSString stringWithFormat:@"用户本人线上支付-%.2f", price];
+    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:threeLable.text];
+    [attributedString addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:B31_Color] range:NSMakeRange(8, threeLable.text.length-8)]; // 0为起始位置 length是从起始位置开始 设置指定颜色的长度
+    threeLable.attributedText = attributedString;
+    
+    threeLable.textAlignment = NSTextAlignmentCenter;
+    threeLable.font = [UIFont systemFontOfSize:14 *ProportionAdapter];
+    [_scrollView addSubview:threeLable];
+    
+}
 -(void)createView
 {
     UILabel* label = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, 40*ScreenWidth/375)];

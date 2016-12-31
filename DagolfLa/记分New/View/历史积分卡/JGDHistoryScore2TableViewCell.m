@@ -38,7 +38,7 @@
         self.timeLB.textColor = [UIColor colorWithHexString:@"#b8b8b8"];
         [self.contentView addSubview:self.timeLB];
         
-        self.lineLimageV = [[UIImageView alloc] initWithFrame:CGRectMake(90 * ProportionAdapter, 0, 2 * ProportionAdapter, 65 * ProportionAdapter)];
+        self.lineLimageV = [[UIImageView alloc] initWithFrame:CGRectMake(90 * ProportionAdapter, 0, 2 * ProportionAdapter, 85 * ProportionAdapter)];
         self.lineLimageV.backgroundColor = [UIColor colorWithHexString:@"#58a9be"];
         [self.contentView addSubview:self.lineLimageV];
         
@@ -51,11 +51,14 @@
         self.numberLB.numberOfLines = 0;
         [self.contentView addSubview:self.numberLB];
         
+
         
-        
-        self.holderImageV = [[UIImageView alloc] initWithFrame:CGRectMake(165 * ProportionAdapter, 10 * ProportionAdapter, 200 * ProportionAdapter, 45 * ProportionAdapter)];
+        self.holderImageV = [[UIImageView alloc] initWithFrame:CGRectMake(165 * ProportionAdapter, 10 * ProportionAdapter, 200 * ProportionAdapter, 65 * ProportionAdapter)];
         self.holderImageV.image = [UIImage imageNamed:@"yousaishi-nocolor"];
         [self.contentView addSubview:self.holderImageV];
+//        self.holderImageV = [[UIImageView alloc] initWithFrame:CGRectMake(165 * ProportionAdapter, 10 * ProportionAdapter, 200 * ProportionAdapter, 45 * ProportionAdapter)];
+//        self.holderImageV.image = [UIImage imageNamed:@"yousaishi-nocolor"];
+//        [self.contentView addSubview:self.holderImageV];
         
         self.unfinishimageV = [[UIImageView alloc] initWithFrame:CGRectMake(200 * ProportionAdapter - 35 * ProportionAdapter, 0, 35 * ProportionAdapter, 35 * ProportionAdapter)];
         
@@ -65,9 +68,16 @@
         [self.holderImageV addSubview:self.activityNameLB];
         
         self.ballName = [[UILabel alloc] initWithFrame:CGRectMake(20 * ProportionAdapter, 10 * ProportionAdapter, 170 * ProportionAdapter, 25 * ProportionAdapter)];
-        self.ballName.textColor = [UIColor colorWithHexString:@"#666666"];
-        self.ballName.font = [UIFont systemFontOfSize:13 * ProportionAdapter];
+        self.ballName.textColor = [UIColor colorWithHexString:@"#313131"];
+        self.ballName.font = [UIFont systemFontOfSize:15 * ProportionAdapter];
         [self.holderImageV addSubview:self.ballName];
+                
+        
+        self.nameList = [[UILabel alloc] initWithFrame:CGRectMake(20 * ProportionAdapter, 35 * ProportionAdapter, 170 * ProportionAdapter, 25 * ProportionAdapter)];
+        self.nameList.font = [UIFont systemFontOfSize:13 * ProportionAdapter];
+        self.nameList.textColor = [UIColor colorWithHexString:@"#666666"];
+        self.nameList.numberOfLines = 0;
+        [self.holderImageV addSubview:self.nameList];
         
         self.contentView.backgroundColor = [UIColor colorWithHexString:@"#f4f4f4"];
         
@@ -79,6 +89,7 @@
     
     self.timeLB.text = [model.createtime substringWithRange:NSMakeRange(0, 10)];
     self.ballName.text = model.ballName;
+    self.nameList.text = model.userNames;
     
     if ([model.scoreFinish integerValue] == 0) {
         self.unfinishimageV.hidden = NO;

@@ -245,8 +245,20 @@
         
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
             //32169
-            [[ShowHUD showHUD]showToastWithText:@"放入记分成功！" FromView:self.view];
-            [self performSelector:@selector(pop) withObject:self afterDelay:TIMESlEEP];
+            if (_history == 1) {
+                [[ShowHUD showHUD]showToastWithText:@"放入记分成功！" FromView:self.view];
+                [self performSelector:@selector(pop) withObject:self afterDelay:TIMESlEEP];
+            }else{
+                UIAlertController *alert=[UIAlertController alertControllerWithTitle:@"提示" message:@"取回记分成功，您可进入历史记分卡查看详情。" preferredStyle:UIAlertControllerStyleAlert];
+                
+                UIAlertAction* action1=[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                    [self pop];
+                }];
+                
+                [alert addAction:action1];
+                
+                [self presentViewController:alert animated:YES completion:nil];
+            }
 
         }else{
             if ([data objectForKey:@"packResultMsg"]) {

@@ -17,6 +17,8 @@
 
 @property (nonatomic, strong) UILabel *numberLB;
 
+@property (nonatomic, strong) UILabel *nameList;
+
 @property (nonatomic, strong) UIImageView *lineLimageV;
 
 @property (nonatomic, strong) JGDHistoryScoreModel *model;

@@ -16,6 +16,19 @@
 
 @property (copy, nonatomic) void (^blockSelectMoreScore)();
 
+@property (copy, nonatomic) void (^blockShowCaddieBtn)();
+
+@property (copy, nonatomic) void (^blockHideCaddieBtn)();
+
+@property (copy, nonatomic) void (^blockHistoryScore)();
+
+
+@property (copy, nonatomic) void (^blockPlayerHisScoreCard)(NSNumber *);
+
+@property (copy, nonatomic) void (^blockNotActScore)(NSNumber *);
+
+
+@property (nonatomic, strong) UITableView *tableView;
 
 - (void)blackQRcodeName:(NSString *)name andThrow:(NSInteger)sourethrow;
 

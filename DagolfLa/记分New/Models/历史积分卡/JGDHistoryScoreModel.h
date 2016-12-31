@@ -27,5 +27,6 @@
 @property (nonatomic, copy) NSString *userName; // 被记分人
 @property (nonatomic, copy) NSString *scoreUserKey; //
 @property (nonatomic, copy) NSString *userKey; //
+@property (nonatomic, copy) NSString *userNames;
 
 @end

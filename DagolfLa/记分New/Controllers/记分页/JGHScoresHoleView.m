@@ -53,7 +53,7 @@ static NSString *const JGHTwoScoreAreaCellIdentifier = @"JGHTwoScoreAreaCell";
         self.backgroundColor = [UIColor colorWithHexString:BG_color];
         _colorArray = @[@"#FFFFFF", @"#EEEEEE", @"#FFFFFF", @"#F9F9F9", @"#FFFFFF", @"#F9F9F9"];
         
-        self.scoreTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, (194 +20 +20 + 70)*ProportionAdapter) style:UITableViewStylePlain];
+        self.scoreTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, (200 +20 +20 + 70)*ProportionAdapter) style:UITableViewStylePlain];
         self.scoreTableView.backgroundColor = [UIColor colorWithHexString:BG_color];
         self.scoreTableView.scrollEnabled = NO;
         self.scoreTableView.delegate = self;
@@ -104,7 +104,7 @@ static NSString *const JGHTwoScoreAreaCellIdentifier = @"JGHTwoScoreAreaCell";
         [self jGHPoorBarHoleCellDelegate:[[UIButton alloc] init]];
     }
     
-    self.scoreTableView.frame = CGRectMake(0, 0, screenWidth, (194 +20 +20 + self.dataArray.count * 70)*ProportionAdapter);
+    self.scoreTableView.frame = CGRectMake(0, 0, screenWidth, (200 +20 +20 + self.dataArray.count * 70)*ProportionAdapter);
 }
 #pragma mark -- tableView代理
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{

@@ -10,7 +10,7 @@
 #import "JGLCaddieChooseStyleViewController.h"
 #import "JGLCaddieSelfScoreViewController.h"
 #import "JGLCaddieScoreViewController.h"
-
+#import "JGHNewStartScoreViewController.h"
 
 //扫描而二维码后跳转的页面
 @interface JGLScoreSureViewController ()
@@ -135,7 +135,7 @@
 -(void)backCaddieClick
 {
     for (UIViewController *controller in self.navigationController.viewControllers) {
-        if ([controller isKindOfClass:[JGLCaddieScoreViewController class]]) {
+        if ([controller isKindOfClass:[JGHNewStartScoreViewController class]]) {
             [self.navigationController popToViewController:controller animated:YES];
         }
     }

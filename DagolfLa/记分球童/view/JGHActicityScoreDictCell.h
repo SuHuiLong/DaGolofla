@@ -24,6 +24,8 @@
 
 @property (nonatomic, retain)UILabel *address;
 
+@property (nonatomic, retain)UIImageView *timeImageView;
+
 @property (nonatomic, retain)UILabel *time;
 
 @property (nonatomic, retain)UILabel *line;

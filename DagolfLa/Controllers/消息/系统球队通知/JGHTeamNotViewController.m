@@ -127,7 +127,7 @@ static NSString *const JGHTeamInformCellIdentifier = @"JGHTeamInformCell";
             _promptLable.font = [UIFont systemFontOfSize:16*ProportionAdapter];
             _promptLable.textAlignment = NSTextAlignmentCenter;
             _promptLable.text = @"暂无球队通知";
-            [window addSubview:_promptLable];
+            [self.systemNotTableView addSubview:_promptLable];
         }else{
             self.systemNotTableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
             if (_promptLable != nil) {

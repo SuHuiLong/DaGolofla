@@ -10,4 +10,6 @@
 
 @interface JGHCabbieCertViewController : ViewController
 
+@property (copy, nonatomic) void (^blockCabbie)();
+
 @end

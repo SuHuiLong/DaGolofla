@@ -13,7 +13,7 @@
 #import "JGDNotActivityHisDetailViewController.h"
 
 #import "JGDAlmostScoreViewController.h" // 差杆模式
-#import "JGDHistoryScoreViewController.h"
+#import "JGHHistoryAndResultsViewController.h"
 
 
 @interface JGDNotActivityHisCoreViewController ()<UITableViewDelegate, UITableViewDataSource>
@@ -43,7 +43,7 @@
         [self.navigationController popViewControllerAnimated:YES];
     }else{
         for (UIViewController *vc in self.navigationController.viewControllers) {
-            if ([vc isKindOfClass:[JGDHistoryScoreViewController class]]) {
+            if ([vc isKindOfClass:[JGHHistoryAndResultsViewController class]]) {
                 [self.navigationController popToViewController:vc animated:YES];
             }
         }
@@ -167,7 +167,7 @@
     }
     for (int i = 0; i < 4; i ++) {
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(screenWidth / 4 * i, 110 * ProportionAdapter, screenWidth / 4, 30 * ProportionAdapter)];
-        label.text = @"张小章";
+        label.text = @" ";
         label.textAlignment = NSTextAlignmentCenter;
         label.font = [UIFont systemFontOfSize:15 * ProportionAdapter];
         [view addSubview:label];
