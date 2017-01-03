@@ -128,7 +128,9 @@
 }
 
 - (void)getData {
+    [LQProgressHud showLoading:@"加载中..."];
     [LGLCalenderModel getCalenderDataWithDate:[NSDate date] block:^(NSMutableArray *result) {
+        [LQProgressHud hide];
         [self.dataSource addObjectsFromArray:result];
         [self.collectionView reloadData];
     }];
