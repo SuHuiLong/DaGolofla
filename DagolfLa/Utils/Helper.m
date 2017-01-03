@@ -8,6 +8,7 @@
 
 #import "Helper.h"
 #import "CommonCrypto/CommonDigest.h"
+#import "UIAlertController+JGHUIAlertController.h"
 
 @implementation Helper
 

@@ -58,7 +58,7 @@
     
     __weak LGLCalenderViewController *weakSelf = self;
     
-    _timeListView.blockSelectTimeAndPrice = ^(NSString *time, NSString *price){
+    _timeListView.blockSelectTimeAndPrice = ^(NSString *time, NSString *price, NSString *paymentMoney){
         
         NSString *month;
         if (weakSelf.month < 10) {
@@ -74,7 +74,7 @@
             day = [NSString stringWithFormat:@"%td", weakSelf.day];
         }
         
-        weakSelf.blockTimeWithPrice([NSString stringWithFormat:@"%td-%@-%@ %@:00", weakSelf.year, month, day, time], price);
+        weakSelf.blockTimeWithPrice([NSString stringWithFormat:@"%td-%@-%@ %@:00", weakSelf.year, month, day, time], price, paymentMoney);
         [weakSelf.navigationController popViewControllerAnimated:YES];
     };
     [_timeListView loadTimeListWithBallKey:_ballKey andDateString:@"2017-01-10 09:00:00"];

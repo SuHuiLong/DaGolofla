@@ -14,7 +14,7 @@
 //
 //@property (nonatomic, retain)NSString *dateString;
 
-@property (copy, nonatomic) void (^blockSelectTimeAndPrice)(NSString *, NSString *);
+@property (copy, nonatomic) void (^blockSelectTimeAndPrice)(NSString *, NSString *, NSString *);
 
 - (void)loadTimeListWithBallKey:(NSNumber *)ballKey andDateString:(NSString *)dateString;
 

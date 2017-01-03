@@ -64,9 +64,8 @@ static NSString *const JGHTimeViewListCellIdentifier = @"JGHTimeViewListCell";
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     JGHTimeViewListCell *timeViewListCell = [tableView dequeueReusableCellWithIdentifier:JGHTimeViewListCellIdentifier];
     [timeViewListCell configJGHTimeViewListCell:_dataArray[indexPath.row]];
-    timeViewListCell.selectionStyle = UITableViewCellSelectionStyleNone;
     
-    if (indexPath.section == _dataArray.count -1) {
+    if (indexPath.row == _dataArray.count -1) {
         timeViewListCell.line.hidden = YES;
     }else{
         timeViewListCell.line.hidden = NO;
@@ -78,7 +77,16 @@ static NSString *const JGHTimeViewListCellIdentifier = @"JGHTimeViewListCell";
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     NSDictionary *dict = [self.dataArray objectAtIndex:indexPath.row];
     if ([dict objectForKey:@"money"]) {
-        _blockSelectTimeAndPrice([NSString stringWithFormat:@"%@", [dict objectForKey:@"halfHour"]], [NSString stringWithFormat:@"%@", [dict objectForKey:@"money"]]);
+        NSString *money = [NSString stringWithFormat:@"%@", [dict objectForKey:@"money"]];
+        NSString *paymentMoney;
+        if ([dict objectForKey:@"paymentMoney"]) {
+            paymentMoney = [dict objectForKey:@"paymentMoney"];
+        }else{
+            paymentMoney = @"";
+        }
+        
+        
+        _blockSelectTimeAndPrice([NSString stringWithFormat:@"%@", [dict objectForKey:@"halfHour"]], money, paymentMoney);
     }else{
         [LQProgressHud showMessage:@"暂无价格，无法预定！"];
     }
