@@ -618,7 +618,7 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
         [self.navigationController pushViewController:serviceVC animated:YES];
         
 //        LGLCalenderViewController *calCtrl = [[LGLCalenderViewController alloc]init];
-//        calCtrl.blockTimeWeekPriceDict = ^(NSDictionary *dict){
+//        calCtrl.blockTimeWithPrice = ^(NSString *dict, NSString *dee){
 //            
 //        };
 //        calCtrl.hidesBottomBarWhenPushed = YES;

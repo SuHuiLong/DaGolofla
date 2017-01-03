@@ -451,6 +451,7 @@
 		20BA613C1CDC9B8E004B61F5 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 20BA613B1CDC9B8E004B61F5 /* CoreMotion.framework */; };
 		20BA61411CDCA180004B61F5 /* VedioPlayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 20BA613F1CDCA180004B61F5 /* VedioPlayViewController.m */; };
 		20BA61421CDCA180004B61F5 /* VedioPlayViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 20BA61401CDCA180004B61F5 /* VedioPlayViewController.xib */; };
+		20BC977F1E1B3F59007DFD34 /* JGHTimeViewListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 20BC977E1E1B3F59007DFD34 /* JGHTimeViewListCell.m */; };
 		20C1B8AB1CE313A200508ABC /* JGTeamApplyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 20C1B8A91CE313A200508ABC /* JGTeamApplyViewController.m */; };
 		20C1B8AC1CE313A200508ABC /* JGTeamApplyViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 20C1B8AA1CE313A200508ABC /* JGTeamApplyViewController.xib */; };
 		20C1B8B01CE3241C00508ABC /* JGTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 20C1B8AE1CE3241C00508ABC /* JGTableViewCell.m */; };
@@ -2162,6 +2163,8 @@
 		20BA613E1CDCA180004B61F5 /* VedioPlayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VedioPlayViewController.h; sourceTree = "<group>"; };
 		20BA613F1CDCA180004B61F5 /* VedioPlayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VedioPlayViewController.m; sourceTree = "<group>"; };
 		20BA61401CDCA180004B61F5 /* VedioPlayViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VedioPlayViewController.xib; sourceTree = "<group>"; };
+		20BC977D1E1B3F59007DFD34 /* JGHTimeViewListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHTimeViewListCell.h; sourceTree = "<group>"; };
+		20BC977E1E1B3F59007DFD34 /* JGHTimeViewListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHTimeViewListCell.m; sourceTree = "<group>"; };
 		20C1B8A81CE313A200508ABC /* JGTeamApplyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGTeamApplyViewController.h; sourceTree = "<group>"; };
 		20C1B8A91CE313A200508ABC /* JGTeamApplyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGTeamApplyViewController.m; sourceTree = "<group>"; };
 		20C1B8AA1CE313A200508ABC /* JGTeamApplyViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JGTeamApplyViewController.xib; sourceTree = "<group>"; };
@@ -4732,6 +4735,8 @@
 				20301A681E1269EB005568E2 /* UIView+Frame.m */,
 				20F661161E1514BF004E89E3 /* JGHTimeListView.h */,
 				20F661171E1514BF004E89E3 /* JGHTimeListView.m */,
+				20BC977D1E1B3F59007DFD34 /* JGHTimeViewListCell.h */,
+				20BC977E1E1B3F59007DFD34 /* JGHTimeViewListCell.m */,
 			);
 			path = LGLCalender;
 			sourceTree = "<group>";
@@ -10538,6 +10543,7 @@
 				36E300EE1C3FF3F9005C3F08 /* MJRefreshFooter.m in Sources */,
 				20301A001E0E4293005568E2 /* ZXQRCodeVersion.m in Sources */,
 				20D514EF1DB63DA60006EFCB /* JGHGameSetBaseCellCell.m in Sources */,
+				20BC977F1E1B3F59007DFD34 /* JGHTimeViewListCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
