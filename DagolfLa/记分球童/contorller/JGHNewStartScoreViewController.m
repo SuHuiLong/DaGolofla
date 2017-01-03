@@ -195,7 +195,7 @@
                     NSLog(@"%@", [userdef objectForKey:[data objectForKey:@"scoreKey"]]);
                     [self.navigationController pushViewController:scrVc animated:YES];
                 } withBlock:^(UIAlertController *alertView) {
-                    [self.navigationController presentViewController:alertView animated:YES completion:nil];
+                    [self presentViewController:alertView animated:YES completion:nil];
                 }];
             }
             
