@@ -11,6 +11,7 @@
 #import "JGDCourtSecDetailViewController.h"
 
 #import "JGDCommitOrderViewController.h"
+#import "LGLCalenderViewController.h" // 日历
 
 static CGFloat ImageHeight  = 210.0;
 
@@ -29,6 +30,14 @@ static CGFloat ImageHeight  = 210.0;
 
 @property (nonatomic, strong) NSMutableDictionary *detailDic;
 
+@property (nonatomic, strong) UILabel *detailLB;
+
+@property (nonatomic, copy) NSString *selectMoney;
+
+@property (nonatomic, copy) NSString *date;
+@property (nonatomic, copy) NSString *week;
+@property (nonatomic, copy) NSString *time;
+
 @end
 
 @implementation JGDCourtDetailViewController
@@ -38,7 +47,9 @@ static CGFloat ImageHeight  = 210.0;
     
     self.navigationController.navigationBarHidden = YES;
     
-    [self downData];
+    if (!self.detailDic) {
+        [self downData];
+    }
 
     NSString *headUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/ball/%@_main.jpg", self.timeKey];
     [[SDImageCache sharedImageCache] removeImageForKey:headUrl fromDisk:YES];
@@ -87,7 +98,6 @@ static CGFloat ImageHeight  = 210.0;
         
     }
     
-    [[ShowHUD showHUD] showAnimationWithText:@"加载中…" FromView:self.view];
     
     return self;
 }
@@ -157,7 +167,8 @@ static CGFloat ImageHeight  = 210.0;
     [dic setObject:self.timeKey forKey:@"ballKey"];
     [dic setObject:[Helper md5HexDigest:[NSString stringWithFormat:@"ballKey=%@dagolfla.com", self.timeKey]] forKey:@"md5"];
 
-    
+    [[ShowHUD showHUD] showAnimationWithText:@"加载中…" FromView:self.view];
+
     [[JsonHttp jsonHttp] httpRequest:@"ball/getBallInfo" JsonKey:nil withData:dic requestMethod:@"GET" failedBlock:^(id errType) {
         [[ShowHUD showHUD] hideAnimationFromView:self.view];
 
@@ -167,7 +178,17 @@ static CGFloat ImageHeight  = 210.0;
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
             
             if ([data objectForKey:@"ball"]) {
+                
                 self.detailDic = [[data objectForKey:@"ball"] mutableCopy];
+                
+                NSString *time = [self.detailDic objectForKey:@"unitPriceDate"];
+                
+                self.selectMoney = [self.detailDic objectForKey:@"unitPrice"];
+                
+                _date = [NSString stringWithFormat:@"%@", [Helper stringFromDateString:time withFormater:@"yyyy年MM月dd日"]];
+                _week = [NSString stringWithFormat:@"%@", [Helper stringFromDateString:time withFormater:@"EEE"]];;
+                _time = [NSString stringWithFormat:@"%@", [Helper stringFromDateString:time withFormater:@"HH:mm"]];
+        
                 [self.courtDetail reloadData];
             }
 
@@ -311,32 +332,36 @@ static CGFloat ImageHeight  = 210.0;
     if (indexPath.section == 0) {
         
         if (indexPath.row == 0) {
-            UILabel *detailLB = [[UILabel alloc] initWithFrame:CGRectMake(10, 20, screenWidth - 20 * ProportionAdapter, 40 * ProportionAdapter)];
-            detailLB.layer.borderWidth = 0.5 * ProportionAdapter;
-            detailLB.layer.borderColor = [[UIColor colorWithHexString:@"#32b14b"] CGColor];
-            detailLB.layer.cornerRadius = 6;
-            detailLB.clipsToBounds = YES;
-            [cell.contentView addSubview:detailLB];
+            self.detailLB = [[UILabel alloc] initWithFrame:CGRectMake(10, 20, screenWidth - 20 * ProportionAdapter, 40 * ProportionAdapter)];
+            self.detailLB.layer.borderWidth = 0.5 * ProportionAdapter;
+            self.detailLB.layer.borderColor = [[UIColor colorWithHexString:@"#32b14b"] CGColor];
+            self.detailLB.layer.cornerRadius = 6;
+            self.detailLB.clipsToBounds = YES;
+            self.detailLB.userInteractionEnabled = YES;
+            [cell.contentView addSubview:self.detailLB];
+            
+            UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(calendarTap)];
+            [self.detailLB addGestureRecognizer:tap];
             
             UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake(22 * ProportionAdapter, 10 * ProportionAdapter, 25 * ProportionAdapter, 20 * ProportionAdapter)];
             imageV.image = [UIImage imageNamed:@"booking_DATE"];
-            [detailLB addSubview:imageV];
+            [self.detailLB addSubview:imageV];
             
             UILabel *lineLB = [[UILabel alloc] initWithFrame:CGRectMake(65 * ProportionAdapter,  12 * ProportionAdapter, 0.5 * ProportionAdapter, 15 * ProportionAdapter)];
             lineLB.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];
-            [detailLB addSubview:lineLB];
+            [self.detailLB addSubview:lineLB];
             
             UILabel *dateLB = [[UILabel alloc] init];
-            [self lableReDraw:dateLB rect:CGRectMake(82 * ProportionAdapter, 0, 160 * ProportionAdapter , 40 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#32b14b"] labelFont:(20 * ProportionAdapter) text:@"2016年12月02日" textAlignment:NSTextAlignmentCenter];
-            [detailLB addSubview:dateLB];
+            [self lableReDraw:dateLB rect:CGRectMake(82 * ProportionAdapter, 0, 160 * ProportionAdapter , 40 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#32b14b"] labelFont:(20 * ProportionAdapter) text:_date textAlignment:NSTextAlignmentCenter];
+            [self.detailLB addSubview:dateLB];
             
             UILabel *weekLB = [[UILabel alloc] init];
-            [self lableReDraw:weekLB rect:CGRectMake(242 * ProportionAdapter, 0, 40 , 40 * ProportionAdapter) labelColor:[UIColor blackColor] labelFont:(17 * ProportionAdapter) text:@"周四" textAlignment:NSTextAlignmentCenter];
-            [detailLB addSubview:weekLB];
+            [self lableReDraw:weekLB rect:CGRectMake(242 * ProportionAdapter, 0, 40 , 40 * ProportionAdapter) labelColor:[UIColor blackColor] labelFont:(17 * ProportionAdapter) text:_week textAlignment:NSTextAlignmentCenter];
+            [self.detailLB addSubview:weekLB];
             
             UILabel *timeLB = [[UILabel alloc] init];
-            [self lableReDraw:timeLB rect:CGRectMake(287 * ProportionAdapter, 0, 60 * ProportionAdapter , 40 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#32b14b"] labelFont:(20 * ProportionAdapter) text:@"20:16" textAlignment:NSTextAlignmentCenter];
-            [detailLB addSubview:timeLB];
+            [self lableReDraw:timeLB rect:CGRectMake(287 * ProportionAdapter, 0, 60 * ProportionAdapter , 40 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#32b14b"] labelFont:(20 * ProportionAdapter) text:_time textAlignment:NSTextAlignmentCenter];
+            [self.detailLB addSubview:timeLB];
             
             UILabel *underLine = [[UILabel alloc] init];
             [self lableReDraw:underLine rect:CGRectMake(0, 79.5 * ProportionAdapter, screenWidth, 0.5 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#EEEEEE"] labelFont:0 text:@"" textAlignment:NSTextAlignmentCenter];
@@ -384,7 +409,7 @@ static CGFloat ImageHeight  = 210.0;
                 [payBtn setTitleColor:[UIColor colorWithHexString:@"#fc5a01"] forState:(UIControlStateNormal)];
                 [self lableReDraw:priceLB rect:CGRectMake(screenWidth - 155 * ProportionAdapter , 35 * ProportionAdapter, 60 * ProportionAdapter, 30 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#fc5a01"] labelFont:17 text:[NSString stringWithFormat:@"¥%@", [self.detailDic objectForKey:@"unitPrice"]] textAlignment:(NSTextAlignmentRight)];
                 
-                NSMutableAttributedString *mutaStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"¥ %@", [self.detailDic objectForKey:@"unitPrice"]]]    ;
+                NSMutableAttributedString *mutaStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"¥ %@", self.selectMoney]];
                 [mutaStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:13 * ProportionAdapter] range:NSMakeRange(0, 1)];
                 priceLB.attributedText = mutaStr;
                 
@@ -433,6 +458,27 @@ static CGFloat ImageHeight  = 210.0;
     
     return cell;
     
+}
+
+
+#pragma mark --- 时间选择
+
+- (void)calendarTap{
+    LGLCalenderViewController *caleVC = [[LGLCalenderViewController alloc] init];
+    caleVC.ballKey = self.timeKey;
+    caleVC.blockTimeWithPrice = ^(NSString *selectTime, NSString *price){
+        _date = [NSString stringWithFormat:@"%@", [Helper stringFromDateString:selectTime withFormater:@"yyyy年MM月dd日"]];
+        _week = [NSString stringWithFormat:@"%@", [Helper stringFromDateString:selectTime withFormater:@"EEE"]];;
+        _time = [NSString stringWithFormat:@"%@", [Helper stringFromDateString:selectTime withFormater:@"HH:mm"]];
+    
+        self.selectMoney = price;
+        
+        NSIndexPath *indexPath1 = [NSIndexPath indexPathForRow:0 inSection:0];
+        NSIndexPath *indexPath2 = [NSIndexPath indexPathForRow:0 inSection:1];
+
+        [self.courtDetail reloadRowsAtIndexPaths:@[indexPath1, indexPath2] withRowAnimation:NO];
+    };
+    [self.navigationController pushViewController:caleVC animated:YES];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
