@@ -116,7 +116,7 @@
     //四周边距
     layout.sectionInset=UIEdgeInsetsMake(0, 0, 0, 0);
     
-    self.collectionView=[[UICollectionView alloc] initWithFrame:CGRectMake(0, 43*ProportionAdapter, WIDTH, HEIGHT -64 -43*ProportionAdapter) collectionViewLayout:layout];
+    self.collectionView=[[UICollectionView alloc] initWithFrame:CGRectMake(0, 43*ProportionAdapter, WIDTH, HEIGHT -64 -240*ProportionAdapter) collectionViewLayout:layout];
     self.collectionView.backgroundColor=[UIColor whiteColor];
     self.collectionView.delegate=self;
     self.collectionView.dataSource=self;
@@ -221,9 +221,23 @@
 //    [dic setValue: [NSString stringWithFormat:@"%@",  subModel.price] forKey:@"price"];
 //    self.blockTimeWeekPriceDict(dic);
     
-    NSString *dataString = [NSString stringWithFormat:@"%td-%td-%td 00:00:00", _year, _month, _day];
+    NSString *month;
+    if (_month < 10) {
+        month = [NSString stringWithFormat:@"0%td", _month];
+    }else{
+        month = [NSString stringWithFormat:@"%td", _month];
+    }
     
-    [_timeListView loadTimeListWithBallKey:@10 andDateString:dataString];
+    NSString *day;
+    if (_day < 10) {
+        day = [NSString stringWithFormat:@"0%td", _day];
+    }else{
+        day = [NSString stringWithFormat:@"%td", _day];
+    }
+    
+    NSString *dataString = [NSString stringWithFormat:@"%td-%@-%@ 00:00:00", _year, month, day];
+    
+    [_timeListView loadTimeListWithBallKey:_ballKey andDateString:dataString];
     
 //    [self.navigationController popViewControllerAnimated:YES];
 }

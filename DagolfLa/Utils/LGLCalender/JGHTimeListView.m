@@ -24,6 +24,7 @@ static NSString *const JGHTimeViewListCellIdentifier = @"JGHTimeViewListCell";
 
 - (instancetype)initWithFrame:(CGRect)frame{
     if (self == [super initWithFrame:frame]) {
+        
         UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, 40 *ProportionAdapter)];
         headerView.backgroundColor = [UIColor colorWithHexString:@"#eff5f0"];
         UILabel *lable = [[UILabel alloc]initWithFrame:CGRectMake(0, 0.5, screenWidth, 39*ProportionAdapter)];
@@ -84,6 +85,7 @@ static NSString *const JGHTimeViewListCellIdentifier = @"JGHTimeViewListCell";
 }
 
 - (void)loadTimeListWithBallKey:(NSNumber *)ballKey andDateString:(NSString *)dateString{
+    self.dataArray = [NSMutableArray array];
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     [dict setObject:DEFAULF_USERID forKey:@"userKey"];
     [dict setObject:ballKey forKey:@"ballKey"];
@@ -96,7 +98,7 @@ static NSString *const JGHTimeViewListCellIdentifier = @"JGHTimeViewListCell";
         
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
             _dataArray = [data objectForKey:@"priceList"];
-            [_dataArray removeAllObjects];
+            
             [self.timeListTableView reloadData];
         }
         else
