@@ -81,8 +81,12 @@
 
 
 - (void)setModel:(JGDCourtModel *)model{
+
+    NSString *headUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/ball/%@_main.jpg", model.timeKey];
+    [[SDImageCache sharedImageCache] removeImageForKey:headUrl fromDisk:YES];
     
-    [self.iconImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://imgcache.dagolfla.com/ball/%@_main.jpg@_2o", model.timeKey]] placeholderImage:[UIImage imageNamed:TeamLogoImage]];
+    
+    [self.iconImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://imgcache.dagolfla.com/ball/%@_main.jpg", model.timeKey]] placeholderImage:[UIImage imageNamed:TeamLogoImage]];
     
     self.courtBallname.text = model.ballName;
     
@@ -91,7 +95,7 @@
     self.adressLB.text = model.address;
 
     CGFloat addresWidth = [Helper textWidthFromTextString:model.address height:20 * ProportionAdapter fontSize:13 * ProportionAdapter];
-    CGFloat distanWidth = [Helper textWidthFromTextString:[NSString stringWithFormat:@"%@千米", model.distance] height:20 * ProportionAdapter fontSize:13 * ProportionAdapter];
+    CGFloat distanWidth = [Helper textWidthFromTextString:[NSString stringWithFormat:@"%.1f千米", [model.distance floatValue]] height:20 * ProportionAdapter fontSize:13 * ProportionAdapter];
 
     if (distanWidth + addresWidth < 177 * ProportionAdapter) {
         self.adressLB.frame = CGRectMake(113 * ProportionAdapter, 60 * ProportionAdapter, addresWidth, 20 * ProportionAdapter);
@@ -101,7 +105,7 @@
         self.distanceLB.frame = CGRectMake(113 * ProportionAdapter + (177 * ProportionAdapter - distanWidth - 15 * ProportionAdapter), 60 * ProportionAdapter, distanWidth, 20 * ProportionAdapter);
     }
     
-    self.distanceLB.text = [NSString stringWithFormat:@"%@千米", model.distance];
+    self.distanceLB.text = [NSString stringWithFormat:@"%.1f千米", [model.distance floatValue]];
     
     if (model.instapaper == 2) {
         self.priceLB.text = @"封场";

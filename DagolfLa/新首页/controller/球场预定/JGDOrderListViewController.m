@@ -39,7 +39,7 @@
     NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
     [dic setObject:DEFAULF_USERID forKey:@"userKey"];
     [dic setObject:[NSNumber numberWithInteger:self.offset] forKey:@"offset"];
-    [dic setObject:[NSNumber numberWithInteger:self.currentType] forKey:@"state"];
+    [dic setObject:[NSNumber numberWithInteger:self.currentType] forKey:@"bType"];
     [dic setObject:[Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@dagolfla.com", DEFAULF_USERID]] forKey:@"md5"];
 //    [[ShowHUD showHUD] showAnimationWithText:@"加载中…" FromView:self.view];
     
@@ -179,16 +179,16 @@
         
     }else if (btn.tag == 201) {
         self.greenView.frame = CGRectMake(100 * ProportionAdapter, 47.5 * ProportionAdapter, 70 * ProportionAdapter, 2.5 * ProportionAdapter);
-        self.currentType = 1;
+        self.currentType = 0;
         
     }else if (btn.tag == 202) {
         self.greenView.frame = CGRectMake(190 * ProportionAdapter, 47.5 * ProportionAdapter, 70 * ProportionAdapter, 2.5 * ProportionAdapter);
-        self.currentType = 0;
+        self.currentType = 1;
 
     }
     else if (btn.tag == 203) {
         self.greenView.frame = CGRectMake(285 * ProportionAdapter, 47.5 * ProportionAdapter, 70 * ProportionAdapter, 2.5 * ProportionAdapter);
-        self.currentType = 5;
+        self.currentType = 2;
 
     }
     

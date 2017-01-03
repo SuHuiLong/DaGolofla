@@ -40,23 +40,12 @@ static CGFloat ImageHeight  = 210.0;
     
     [self downData];
 
-//    NSString *bgUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/team/%@_background.jpg", self.timeKey];
-//    [[SDImageCache sharedImageCache] removeImageForKey:bgUrl fromDisk:YES];
-//    
-//    [self.imgProfile sd_setImageWithURL:[Helper setImageIconUrl:@"team" andTeamKey:[self.timeKey integerValue] andIsSetWidth:NO andIsBackGround:YES] placeholderImage:[UIImage imageNamed:TeamBGImage]];
-//    
-//    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-//    [dict setObject:DEFAULF_USERID forKey:@"userKey"];
-//
-//    [[JsonHttp jsonHttp] httpRequest:@"team/getTeamInfo" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
-//        
-//        [[ShowHUD showHUD] hideAnimationFromView:self.view];
-//        
-//    } completionBlock:^(id data) {
-//        
-//        [[ShowHUD showHUD] hideAnimationFromView:self.view];
-//        
-//    }];
+    NSString *headUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/ball/%@_main.jpg", self.timeKey];
+    [[SDImageCache sharedImageCache] removeImageForKey:headUrl fromDisk:YES];
+    
+    [self.imgProfile sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://imgcache.dagolfla.com/ball/%@_main.jpg", self.timeKey]] placeholderImage:[UIImage imageNamed:TeamBGImage]];
+
+    
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
@@ -379,23 +368,50 @@ static CGFloat ImageHeight  = 210.0;
             underLine.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];
             [cell.contentView addSubview:underLine];
 
+            
+            UILabel *priceLB = [[UILabel alloc] init];
+            [cell addSubview:priceLB];
+            
             UIButton *payBtn = [[UIButton alloc] initWithFrame:CGRectMake(screenWidth - 85 * ProportionAdapter, 22 * ProportionAdapter, 75 * ProportionAdapter, 55 * ProportionAdapter)];
-            [payBtn setBackgroundImage:[UIImage imageNamed:@"booking_paycolor"] forState:(UIControlStateNormal)];
-            [payBtn setTitle:@"全额预付" forState:(UIControlStateNormal)];
+            // 上架  0: 未上架  1: 已上架   2:封场
+            if ([[self.detailDic objectForKey:@"instapaper"] integerValue] == 2) {
+                [payBtn setBackgroundImage:[UIImage imageNamed:@"booking_pay"] forState:(UIControlStateNormal)];
+                [payBtn setTitleColor:[UIColor colorWithHexString:@"#a0a0a0"] forState:(UIControlStateNormal)];
+                [self lableReDraw:priceLB rect:CGRectMake(screenWidth - 155 * ProportionAdapter , 35 * ProportionAdapter, 60 * ProportionAdapter, 30 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#fc5a01"] labelFont:17 text:@"已封场" textAlignment:(NSTextAlignmentRight)];
+                payBtn.enabled = NO;
+            }else if ([[self.detailDic objectForKey:@"instapaper"] integerValue] == 1) {
+                [payBtn setBackgroundImage:[UIImage imageNamed:@"booking_paycolor"] forState:(UIControlStateNormal)];
+                [payBtn setTitleColor:[UIColor colorWithHexString:@"#fc5a01"] forState:(UIControlStateNormal)];
+                [self lableReDraw:priceLB rect:CGRectMake(screenWidth - 155 * ProportionAdapter , 35 * ProportionAdapter, 60 * ProportionAdapter, 30 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#fc5a01"] labelFont:17 text:[NSString stringWithFormat:@"¥%@", [self.detailDic objectForKey:@"unitPrice"]] textAlignment:(NSTextAlignmentRight)];
+                
+                NSMutableAttributedString *mutaStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"¥ %@", [self.detailDic objectForKey:@"unitPrice"]]]    ;
+                [mutaStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:13 * ProportionAdapter] range:NSMakeRange(0, 1)];
+                priceLB.attributedText = mutaStr;
+                
+
+            }else{
+                [payBtn setBackgroundImage:[UIImage imageNamed:@"booking_pay"] forState:(UIControlStateNormal)];
+                [payBtn setTitleColor:[UIColor colorWithHexString:@"#a0a0a0"] forState:(UIControlStateNormal)];
+
+            }
+            // payType  支付类型设置 0: 全额预付  1: 部分预付  2: 球场现付
+            if ([[self.detailDic objectForKey:@"payType"] integerValue] == 2) {
+                [payBtn setTitle:@"球场现付" forState:(UIControlStateNormal)];
+
+            }else if ([[self.detailDic objectForKey:@"payType"] integerValue] == 1) {
+                [payBtn setTitle:@"部分预付" forState:(UIControlStateNormal)];
+
+            }else{
+                [payBtn setTitle:@"全额预付" forState:(UIControlStateNormal)];
+
+            }
+
             [payBtn addTarget:self action:@selector(payAct) forControlEvents:(UIControlEventTouchUpInside)];
-            [payBtn setTitleColor:[UIColor colorWithHexString:@"#fc5a01"] forState:(UIControlStateNormal)];
             payBtn.titleLabel.font = [UIFont systemFontOfSize:15 * ProportionAdapter];
             [payBtn setTitleEdgeInsets:UIEdgeInsetsMake(27 * ProportionAdapter, 0, 0, 0)];
             [cell addSubview:payBtn];
             
-            UILabel *priceLB = [[UILabel alloc] init];
-            [self lableReDraw:priceLB rect:CGRectMake(screenWidth - 155 * ProportionAdapter , 35 * ProportionAdapter, 60 * ProportionAdapter, 30 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#fc5a01"] labelFont:17 text:[NSString stringWithFormat:@"¥%@", [self.detailDic objectForKey:@"unitPrice"]] textAlignment:(NSTextAlignmentRight)];
-            
-            NSMutableAttributedString *mutaStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"¥ %@", [self.detailDic objectForKey:@"unitPrice"]]]    ;
-            [mutaStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:13 * ProportionAdapter] range:NSMakeRange(0, 1)];
-            priceLB.attributedText = mutaStr;
-            
-            [cell addSubview:priceLB];
+
             
         }else{
             
