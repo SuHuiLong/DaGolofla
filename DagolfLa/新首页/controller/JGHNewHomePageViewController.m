@@ -51,6 +51,10 @@
 #import "JGHScoresViewController.h"
 #import "LGLCalenderViewController.h"
 
+
+#import "JGDBookCourtViewController.h"  // 球场预定
+
+
 static NSString *const JGHPASHeaderTableViewCellIdentifier = @"JGHPASHeaderTableViewCell";
 static NSString *const JGHShowSectionTableViewCellIdentifier = @"JGHShowSectionTableViewCell";
 static NSString *const JGHShowActivityPhotoCellIdentifier = @"JGHShowActivityPhotoCell";
@@ -687,12 +691,16 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
 - (void)didSelectHistoryResultsBtn:(UIButton *)btn{
     [self isLoginUp];
 
-    NSString *urlRequest = @"http://www.dagolfla.com/app/bookserch.html";
+    JGDBookCourtViewController *bookVC = [[JGDBookCourtViewController alloc] init];
+    bookVC.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:bookVC animated:YES];
     
-    JGLWebUserMallViewController *mallCtrl = [[JGLWebUserMallViewController alloc]init];
-    mallCtrl.urlRequest = urlRequest;
-    mallCtrl.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:mallCtrl animated:YES];
+//    NSString *urlRequest = @"http://www.dagolfla.com/app/bookserch.html";
+//    
+//    JGLWebUserMallViewController *mallCtrl = [[JGLWebUserMallViewController alloc]init];
+//    mallCtrl.urlRequest = urlRequest;
+//    mallCtrl.hidesBottomBarWhenPushed = YES;
+//    [self.navigationController pushViewController:mallCtrl animated:YES];
 
 }
 #pragma mark -- 活动点击事件
