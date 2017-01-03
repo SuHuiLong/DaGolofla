@@ -13,6 +13,11 @@
 
 @property (nonatomic, strong) NSMutableDictionary *detailDic;
 
+@property (nonatomic, copy) NSString *selectMoney;          //  选择的线上支付价格
+@property (nonatomic, copy) NSString *selectSceneMoney;     //  选择的线下支付价格
+@property (nonatomic, copy) NSString *selectDate;           //  选择的时间
+
+
 //
 //@property (nonatomic, strong) NSNumber *suggestedPrice;
 //@property (nonatomic, copy) NSString *ballName;

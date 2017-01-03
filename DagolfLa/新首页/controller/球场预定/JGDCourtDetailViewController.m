@@ -32,8 +32,9 @@ static CGFloat ImageHeight  = 210.0;
 
 @property (nonatomic, strong) UILabel *detailLB;
 
-@property (nonatomic, copy) NSString *selectMoney;  //  选择的线上支付的价格
-@property (nonatomic, copy) NSString *selectDate;   //  选择的时间
+@property (nonatomic, copy) NSString *selectMoney;          //  选择的线上支付价格
+@property (nonatomic, copy) NSString *selectSceneMoney;     //  选择的线下支付价格
+@property (nonatomic, copy) NSString *selectDate;           //  选择的时间
 
 @property (nonatomic, copy) NSString *date;
 @property (nonatomic, copy) NSString *week;
@@ -467,12 +468,13 @@ static CGFloat ImageHeight  = 210.0;
 - (void)calendarTap{
     LGLCalenderViewController *caleVC = [[LGLCalenderViewController alloc] init];
     caleVC.ballKey = self.timeKey;
-    caleVC.blockTimeWithPrice = ^(NSString *selectTime, NSString *price){
+    caleVC.blockTimeWithPrice = ^(NSString *selectTime, NSString *pay, NSString *scenePay){
         _date = [NSString stringWithFormat:@"%@", [Helper stringFromDateString:selectTime withFormater:@"yyyy年MM月dd日"]];
         _week = [NSString stringWithFormat:@"%@", [Helper stringFromDateString:selectTime withFormater:@"EEE"]];;
         _time = [NSString stringWithFormat:@"%@", [Helper stringFromDateString:selectTime withFormater:@"HH:mm"]];
     
-        self.selectMoney = price;
+        self.selectMoney = pay;
+        self.selectSceneMoney = scenePay;
         self.selectDate = selectTime;
         NSIndexPath *indexPath1 = [NSIndexPath indexPathForRow:0 inSection:0];
         NSIndexPath *indexPath2 = [NSIndexPath indexPathForRow:0 inSection:1];
