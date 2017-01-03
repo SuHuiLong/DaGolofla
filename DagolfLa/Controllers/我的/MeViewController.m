@@ -60,6 +60,7 @@
 #import "JGNewCreateTeamTableViewController.h"
 
 #import "JGMeMoreViewController.h" // 更多
+#import "JGDOrderListViewController.h"
 
 
 @interface MeViewController ()<UITableViewDataSource,UITableViewDelegate>
@@ -365,9 +366,9 @@
     _arrayTitle = [[NSArray alloc]init];
     _arrayPic = [[NSArray alloc]init];
 //    _arrayTitle = @[@[@"我的聊天",@"我的消息",@"交易中心",@"我的活动",@"推荐有礼"],@[@"设置"]];
-    _arrayTitle = @[@[@""],@[@"球友",@"足迹",@"我的二维码"],@[@"个人帐户",@"交易中心"],@[@"设置",@"更多"]];
-    _arrayPic = @[@[@""],@[@"qyIcon",@"zuji",@"saomiao"],@[@"gerenzhanghu",@"jyIcon"],@[@"sz",@"btn_more"]];
-    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, 44*7*ScreenWidth/375+40*ScreenWidth/375+78*ScreenWidth/375)];
+    _arrayTitle = @[@[@""],@[@"球友",@"足迹",@"我的二维码"],@[@"个人帐户", @"球场订单", @"交易中心"],@[@"设置",@"更多"]];
+    _arrayPic = @[@[@""],@[@"qyIcon",@"zuji",@"saomiao"],@[@"gerenzhanghu", @"", @"jyIcon"],@[@"sz",@"btn_more"]];
+    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, 44*8*ScreenWidth/375+40*ScreenWidth/375+78*ScreenWidth/375)];
     
     _tableView.delegate = self;
     _tableView.dataSource = self;
@@ -406,7 +407,7 @@
     }
     else if (section == 2)
     {
-        count = 2;
+        count = 3;
     }
     else if (section == 3)
     {
@@ -504,9 +505,9 @@
     
     if ([[NSUserDefaults standardUserDefaults] objectForKey:@"userId"]) {
 //        NSArray *titleArr = @[@"我的聊天",@"我的消息",@"交易中心",@"我的活动",@"推荐有礼",@"设置"];
-        NSArray *titleArr = @[@"个人资料",@"球友",@"我的二维码",@"足迹",@"交易中心",@"交易中心",@"设置", @"更多"];
+        NSArray *titleArr = @[@"个人资料",@"球友",@"我的二维码",@"足迹",@"交易中心",@"球场订单",@"交易中心",@"设置", @"更多"];
 //PersonHomeController   PersonHomeController
-        NSArray* VcArr = @[@"PersonHomeController",@"ContactViewController",@"JGMyBarCodeViewController",@"MyFootViewController",@"JGDPrivateAccountViewController",@"MyTradeViewController",@"MySetViewController", @"JGMeMoreViewController"];
+        NSArray* VcArr = @[@"PersonHomeController",@"ContactViewController",@"JGMyBarCodeViewController",@"MyFootViewController",@"JGDPrivateAccountViewController",@"JGDOrderListViewController",@"MyTradeViewController",@"MySetViewController", @"JGMeMoreViewController"];
         NSMutableArray *arr = [[NSMutableArray alloc]init];
         for (int i = 0; i < VcArr.count; i++) {
 //            if (i != 8) {
@@ -595,6 +596,13 @@
                     [self.navigationController pushViewController:arr[5] animated:YES];
                     break;
                 }
+                    break;
+                case 2:
+                {
+                    //                    [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
+                    [self.navigationController pushViewController:arr[6] animated:YES];
+                    break;
+                }
                 default:
                     break;
             }
@@ -606,13 +614,13 @@
                 case 0:
                 {
 //                    [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
-                    [self.navigationController pushViewController:arr[6] animated:YES];
+                    [self.navigationController pushViewController:arr[7] animated:YES];
                     break;
                 }
                     
                 case 1:{
 //                    [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
-                    [self.navigationController pushViewController:arr[7] animated:YES];
+                    [self.navigationController pushViewController:arr[8] animated:YES];
                     
                     break;
                 }
@@ -633,7 +641,7 @@
             
             
 //            [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
-            [self.navigationController pushViewController:arr[8] animated:YES];
+            [self.navigationController pushViewController:arr[9] animated:YES];
         }
     }
     else
