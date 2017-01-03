@@ -13,21 +13,32 @@
 #import "LGLCalenderSubModel.h"
 #import "LGLCalendarDate.h"
 #import "LGLWeekView.h"
-
+#import "JGHTimeListView.h"
 #import "XLPlainFlowLayout.h"
+
 #define WIDTH [UIScreen mainScreen].bounds.size.width
 #define HEIGHT [UIScreen mainScreen].bounds.size.height
 #define LGLColor(r, g, b) [UIColor colorWithRed:(r)/255.0 green:(g)/255.0 blue:(b)/255.0 alpha:1.0]
 
 @interface LGLCalenderViewController ()<UICollectionViewDelegate, UICollectionViewDataSource>
 {
-    NSInteger _year;
-    NSInteger _month;
-    NSInteger _day;
+//    NSInteger _year;
+//    NSInteger _month;
+//    NSInteger _day;
+    
+    NSInteger _currentMonth;
+    NSInteger _currentDay;
 }
 @property (nonatomic, strong) UICollectionView * collectionView;
 @property (nonatomic, strong) NSMutableArray * dataSource;
 @property (nonatomic, strong) NSMutableDictionary *cellDic; // 用来存放Cell的唯一标示符
+
+@property (nonatomic, assign) NSInteger year;
+@property (nonatomic, assign) NSInteger month;
+@property (nonatomic, assign) NSInteger day;
+
+@property (nonatomic, strong)JGHTimeListView *timeListView;
+
 @end
 
 @implementation LGLCalenderViewController
@@ -39,7 +50,37 @@
     [self getData];
     [self createCalendarView];
     
+    [self createJGHTimeListView];
 }
+
+- (void)createJGHTimeListView{
+    _timeListView = [[JGHTimeListView alloc]initWithFrame:CGRectMake(0, screenHeight -64 -240*ProportionAdapter, screenWidth, 240 *ProportionAdapter)];
+    
+    __weak LGLCalenderViewController *weakSelf = self;
+    
+    _timeListView.blockSelectTimeAndPrice = ^(NSString *time, NSString *price){
+        
+        NSString *month;
+        if (weakSelf.month < 10) {
+            month = [NSString stringWithFormat:@"0%td", weakSelf.month];
+        }else{
+            month = [NSString stringWithFormat:@"%td", weakSelf.month];
+        }
+        
+        NSString *day;
+        if (weakSelf.day < 10) {
+            day = [NSString stringWithFormat:@"0%td", weakSelf.day];
+        }else{
+            day = [NSString stringWithFormat:@"%td", weakSelf.day];
+        }
+        
+        weakSelf.blockTimeWithPrice([NSString stringWithFormat:@"%td-%@-%@ %@:00", weakSelf.year, month, day, time], price);
+        [weakSelf.navigationController popViewControllerAnimated:YES];
+    };
+    [_timeListView loadTimeListWithBallKey:_ballKey andDateString:@"2017-01-10 09:00:00"];
+    [self.view addSubview:_timeListView];
+}
+
 - (void)addHeaderWeekView {
     LGLWeekView * week = [[LGLWeekView alloc] initWithFrame:CGRectMake(0, 0, WIDTH, 43 *ProportionAdapter)];
     [self.view addSubview:week];
@@ -52,6 +93,9 @@
      _year = [LGLCalendarDate year:[NSDate date]];
      _month = [LGLCalendarDate month:[NSDate date]];
      _day = [LGLCalendarDate day:[NSDate date]];
+    
+    _currentMonth = [LGLCalendarDate month:[NSDate date]];
+    _currentDay  = [LGLCalendarDate day:[NSDate date]];
 }
 
 
@@ -129,7 +173,7 @@
                 cell.backgroundColor =  [UIColor colorWithHexString:Bar_Segment];//LGLColor(65, 207, 79)
             }
             
-            if ((model.year == _year) && (model.month == _month) && (subModel.day < _day)) {
+            if ((model.month == _currentMonth) && (subModel.day < _currentDay)) {
 //                cell.backgroundColor = LGLColor(239, 239, 239);
                 cell.dateL.textColor = [UIColor lightGrayColor];
                 cell.priceL.textColor = [UIColor colorWithHexString:@"#fc5a01"];//[UIColor lightGrayColor];
@@ -170,12 +214,16 @@
     
     [self.collectionView reloadData];
     
-    NSMutableDictionary * dic = [NSMutableDictionary dictionary];
-    [dic setValue: [NSString stringWithFormat:@"%ld", (long)model.year] forKey:@"year"];
-    [dic setValue: [NSString stringWithFormat:@"%ld", (long)model.month] forKey:@"month"];
-    [dic setValue: [NSString stringWithFormat:@"%ld", (long)subModel.day] forKey:@"day"];
-    [dic setValue: [NSString stringWithFormat:@"%@",  subModel.price] forKey:@"price"];
+//    NSMutableDictionary * dic = [NSMutableDictionary dictionary];
+//    [dic setValue: [NSString stringWithFormat:@"%ld", (long)model.year] forKey:@"year"];
+//    [dic setValue: [NSString stringWithFormat:@"%ld", (long)model.month] forKey:@"month"];
+//    [dic setValue: [NSString stringWithFormat:@"%ld", (long)subModel.day] forKey:@"day"];
+//    [dic setValue: [NSString stringWithFormat:@"%@",  subModel.price] forKey:@"price"];
 //    self.blockTimeWeekPriceDict(dic);
+    
+    NSString *dataString = [NSString stringWithFormat:@"%td-%td-%td 00:00:00", _year, _month, _day];
+    
+    [_timeListView loadTimeListWithBallKey:@10 andDateString:dataString];
     
 //    [self.navigationController popViewControllerAnimated:YES];
 }

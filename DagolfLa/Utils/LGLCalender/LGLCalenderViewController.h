@@ -8,11 +8,13 @@
 
 #import "ViewController.h"
 
-typedef void(^SelectDateBalock)(NSMutableDictionary * paramas);
+//typedef void(^SelectDateBalock)(NSMutableDictionary * paramas);
 
 @interface LGLCalenderViewController : ViewController
 
-@property (copy, nonatomic) void (^blockTimeWeekPriceDict)(NSDictionary *);
+@property (nonatomic, retain)NSNumber *ballKey;
+
+@property (copy, nonatomic) void (^blockTimeWithPrice)(NSString *, NSString *);//时间、价格
 
 //@property (nonatomic, copy) SelectDateBalock block;
 //- (void)seleDateWithBlock:(SelectDateBalock)block;
