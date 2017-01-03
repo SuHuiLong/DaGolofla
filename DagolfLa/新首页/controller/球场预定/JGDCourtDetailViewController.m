@@ -32,7 +32,8 @@ static CGFloat ImageHeight  = 210.0;
 
 @property (nonatomic, strong) UILabel *detailLB;
 
-@property (nonatomic, copy) NSString *selectMoney;
+@property (nonatomic, copy) NSString *selectMoney;  //  选择的线上支付的价格
+@property (nonatomic, copy) NSString *selectDate;   //  选择的时间
 
 @property (nonatomic, copy) NSString *date;
 @property (nonatomic, copy) NSString *week;
@@ -472,7 +473,7 @@ static CGFloat ImageHeight  = 210.0;
         _time = [NSString stringWithFormat:@"%@", [Helper stringFromDateString:selectTime withFormater:@"HH:mm"]];
     
         self.selectMoney = price;
-        
+        self.selectDate = selectTime;
         NSIndexPath *indexPath1 = [NSIndexPath indexPathForRow:0 inSection:0];
         NSIndexPath *indexPath2 = [NSIndexPath indexPathForRow:0 inSection:1];
 
