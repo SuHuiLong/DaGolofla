@@ -18,4 +18,6 @@ typedef void(^CallBackBlock)(NSMutableArray * result);
 
 
 + (void)getCalenderDataWithDate:(NSDate *)date block:(CallBackBlock)block;
+
+
 @end

@@ -619,11 +619,11 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
         
 //        LGLCalenderViewController *calCtrl = [[LGLCalenderViewController alloc]init];
 //        calCtrl.blockTimeWithPrice = ^(NSString *dict, NSString *dee){
-//            
+//
 //        };
 //        calCtrl.hidesBottomBarWhenPushed = YES;
 //        [self.navigationController pushViewController:calCtrl animated:YES];
-        
+//        
     }else if (btn.tag == 701) {
         
         NSString *urlRequest = @"http://www.dagolfla.com/app/index.html"; // 用品商城

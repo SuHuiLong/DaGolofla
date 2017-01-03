@@ -85,6 +85,7 @@ static NSString *const JGHTimeViewListCellIdentifier = @"JGHTimeViewListCell";
 }
 
 - (void)loadTimeListWithBallKey:(NSNumber *)ballKey andDateString:(NSString *)dateString{
+    [LQProgressHud showLoading:@"加载中..."];
     self.dataArray = [NSMutableArray array];
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     [dict setObject:DEFAULF_USERID forKey:@"userKey"];
@@ -92,10 +93,10 @@ static NSString *const JGHTimeViewListCellIdentifier = @"JGHTimeViewListCell";
     [dict setObject:dateString forKey:@"date"];
     [dict setObject:[Helper md5HexDigest:[NSString stringWithFormat:@"ballKey=%@dagolfla.com", ballKey]] forKey:@"md5"];
     [[JsonHttp jsonHttp]httpRequest:@"ball/getBallHalfHourPrice" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
-//        block(array);
+        [LQProgressHud hide];
     } completionBlock:^(id data) {
         NSLog(@"%@", data);
-        
+        [LQProgressHud hide];
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
             _dataArray = [data objectForKey:@"priceList"];
             
