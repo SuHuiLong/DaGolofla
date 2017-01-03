@@ -126,4 +126,8 @@
 // 时区转换  转换为当前的
 + (NSDate *)getNowDateFromatAnDate:(NSDate *)anyDate;
 
+
+// return yyyy-MM-dd EEEE HH:mm 
++ (NSString *)stringFromDateString:(NSString *)nowDate withFormater:(NSString *)formate;
+
 @end

@@ -174,7 +174,7 @@
     NSMutableDictionary *orderDic = [NSMutableDictionary dictionary];
     [orderDic setObject:[self.detailDic objectForKey:@"timeKey"] forKey:@"srcKey"];
     [orderDic setObject:self.noteTF.text forKey:@"remark"];
-    [orderDic setObject:@"2017-01-1 9:00:00" forKey:@"teeTime"];
+    [orderDic setObject:@"2017-01-5 9:00:00" forKey:@"teeTime"];
     [orderDic setObject:@([self.playerArray count]) forKey:@"userSum"];
     [orderDic setObject:self.playerArray[0] forKey:@"userName"];
     [orderDic setObject:self.mobile forKey:@"userMobile"];
@@ -258,7 +258,7 @@
         UIImage *img = [UIImage imageNamed:@"order_icn_remark"];
         NSTextAttachment *textAttach = [[NSTextAttachment alloc]init];
         textAttach.image = img;
-        
+        textAttach.bounds = CGRectMake(0, -1 * ProportionAdapter, 14 * ProportionAdapter, 14 * ProportionAdapter);
         NSAttributedString *string = [NSAttributedString attributedStringWithAttachment:textAttach];
         [mutabeAtr insertAttributedString:string atIndex:0];
         

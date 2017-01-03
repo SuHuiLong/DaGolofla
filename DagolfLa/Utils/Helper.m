@@ -738,4 +738,24 @@
 }
 
 
++ (NSString *)stringFromDateString:(NSString *)nowDate withFormater:(NSString *)formate{
+    
+    NSDateFormatter* formater =[[NSDateFormatter alloc] init];
+//    NSLocale* local =[[NSLocale alloc]initWithLocaleIdentifier:@"en_US"];
+//    [formater setLocale: local];
+//    [formater setTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"GMT+0800"]];
+    [formater setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    NSDate* date = [formater dateFromString:nowDate];
+    
+    [formater setDateFormat:formate];
+    NSString *result = [formater stringFromDate:date];
+    
+    return result;
+}
+
+
+
+
+
+
 @end
