@@ -79,7 +79,7 @@
 - (void)setDataDic:(NSDictionary *)dataDic{
     
     self.nameLB.text = [dataDic objectForKey:@"ballName"];
-    self.begainTimeLB.text = [dataDic objectForKey:@"teeTime"];
+    self.begainTimeLB.text = [Helper stringFromDateString:[dataDic objectForKey:@"teeTime"] withFormater:@"yyyy-MM-dd HH:mm"];
     self.sumPeopleNumLB.text = [NSString stringWithFormat:@"%@人", [dataDic objectForKey:@"userSum"]];
     self.sumPriceNumLB.text = [NSString stringWithFormat:@"¥%@", [dataDic objectForKey:@"money"]];
     

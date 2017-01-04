@@ -62,10 +62,10 @@
         
         UIView *footView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 120 * ProportionAdapter)];
         
-        self.payMoneyLB = [self lablerect:CGRectMake(220 * ProportionAdapter, 0, 140 * ProportionAdapter, 40 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#313131"] labelFont:(16 * ProportionAdapter) text:[NSString stringWithFormat:@"支付金额  ¥%@", [self.detailDic objectForKey:@"payMoney"]] textAlignment:(NSTextAlignmentRight)];
-        NSMutableAttributedString *mutaAttStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"支付金额  ¥%@", [self.detailDic objectForKey:@"payMoney"]]];
+        self.payMoneyLB = [self lablerect:CGRectMake(220 * ProportionAdapter, 0, 140 * ProportionAdapter, 40 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#313131"] labelFont:(16 * ProportionAdapter) text:[NSString stringWithFormat:@"支付金额  ¥%@", self.selectMoney] textAlignment:(NSTextAlignmentRight)];
+        NSMutableAttributedString *mutaAttStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"支付金额  ¥%@", self.selectMoney]];
         [mutaAttStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:12 * ProportionAdapter] range:NSMakeRange(6, 1)];
-        [mutaAttStr addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"#fc5a01"] range:NSMakeRange(6, [[NSString stringWithFormat:@"%@",[self.detailDic objectForKey:@"payMoney"]] length] + 1)];
+        [mutaAttStr addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"#fc5a01"] range:NSMakeRange(6, [[NSString stringWithFormat:@"%@",self.selectMoney] length] + 1)];
         self.payMoneyLB.attributedText = mutaAttStr;
         [footView addSubview:self.payMoneyLB];
         
@@ -82,17 +82,17 @@
         
         UIView *footView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 120 * ProportionAdapter)];
         
-        self.scenePayMoneyLB = [self lablerect:CGRectMake(10 * ProportionAdapter, 0, 140 * ProportionAdapter, 40 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#313131"] labelFont:(16 * ProportionAdapter) text:[NSString stringWithFormat:@"现场支付  ¥%@", [self.detailDic objectForKey:@"unitPaymentMoney"]] textAlignment:(NSTextAlignmentLeft)];
-        NSMutableAttributedString *sceneAttStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"现场支付  ¥%@", [self.detailDic objectForKey:@"unitPaymentMoney"]]];
+        self.scenePayMoneyLB = [self lablerect:CGRectMake(10 * ProportionAdapter, 0, 140 * ProportionAdapter, 40 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#313131"] labelFont:(16 * ProportionAdapter) text:[NSString stringWithFormat:@"现场支付  ¥%@", self.selectSceneMoney] textAlignment:(NSTextAlignmentLeft)];
+        NSMutableAttributedString *sceneAttStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"现场支付  ¥%@", self.selectSceneMoney]];
         [sceneAttStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:12 * ProportionAdapter] range:NSMakeRange(6, 1)];
         self.scenePayMoneyLB.attributedText = sceneAttStr;
         [footView addSubview:self.scenePayMoneyLB];
         
         
-        self.payMoneyLB = [self lablerect:CGRectMake(220 * ProportionAdapter, 0, 140 * ProportionAdapter, 40 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#313131"] labelFont:(16 * ProportionAdapter) text:[NSString stringWithFormat:@"支付金额  ¥%@", [self.detailDic objectForKey:@"payMoney"]] textAlignment:(NSTextAlignmentRight)];
-        NSMutableAttributedString *mutaAttStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"支付金额  ¥%@", [self.detailDic objectForKey:@"payMoney"]]];
+        self.payMoneyLB = [self lablerect:CGRectMake(220 * ProportionAdapter, 0, 140 * ProportionAdapter, 40 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#313131"] labelFont:(16 * ProportionAdapter) text:[NSString stringWithFormat:@"支付金额  ¥%@", self.selectMoney] textAlignment:(NSTextAlignmentRight)];
+        NSMutableAttributedString *mutaAttStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"支付金额  ¥%@", self.selectMoney]];
         [mutaAttStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:12 * ProportionAdapter] range:NSMakeRange(6, 1)];
-        [mutaAttStr addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"#fc5a01"] range:NSMakeRange(6, [[NSString stringWithFormat:@"%@",[self.detailDic objectForKey:@"payMoney"]] length] + 1)];
+        [mutaAttStr addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"#fc5a01"] range:NSMakeRange(6, [[NSString stringWithFormat:@"%@",self.selectMoney] length] + 1)];
         self.payMoneyLB.attributedText = mutaAttStr;
         [footView addSubview:self.payMoneyLB];
         
@@ -119,17 +119,17 @@
         [footView addSubview:tipLB];
         
         
-        self.scenePayMoneyLB = [self lablerect:CGRectMake(10 * ProportionAdapter, height + 20, 140 * ProportionAdapter, 40 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#626262"] labelFont:(16 * ProportionAdapter) text:[NSString stringWithFormat:@"现场支付  ¥%@", [self.detailDic objectForKey:@"unitPaymentMoney"]] textAlignment:(NSTextAlignmentLeft)];
-        NSMutableAttributedString *sceneAttStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"现场支付  ¥%@", [self.detailDic objectForKey:@"unitPaymentMoney"]]];
+        self.scenePayMoneyLB = [self lablerect:CGRectMake(10 * ProportionAdapter, height + 20, 140 * ProportionAdapter, 40 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#626262"] labelFont:(16 * ProportionAdapter) text:[NSString stringWithFormat:@"现场支付  ¥%@", self.selectSceneMoney] textAlignment:(NSTextAlignmentLeft)];
+        NSMutableAttributedString *sceneAttStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"现场支付  ¥%@", self.selectSceneMoney]];
         [sceneAttStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:12 * ProportionAdapter] range:NSMakeRange(6, 1)];
         self.scenePayMoneyLB.attributedText = sceneAttStr;
         [footView addSubview:self.scenePayMoneyLB];
         
         
-        self.payMoneyLB = [self lablerect:CGRectMake(220 * ProportionAdapter, height + 20, 140 * ProportionAdapter, 40 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#313131"] labelFont:(16 * ProportionAdapter) text:[NSString stringWithFormat:@"预付押金  ¥%@", [self.detailDic objectForKey:@"payMoney"]] textAlignment:(NSTextAlignmentRight)];
-        NSMutableAttributedString *mutaAttStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"预付押金  ¥%@", [self.detailDic objectForKey:@"payMoney"]]];
+        self.payMoneyLB = [self lablerect:CGRectMake(220 * ProportionAdapter, height + 20, 140 * ProportionAdapter, 40 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#313131"] labelFont:(16 * ProportionAdapter) text:[NSString stringWithFormat:@"预付押金  ¥%@", self.selectMoney] textAlignment:(NSTextAlignmentRight)];
+        NSMutableAttributedString *mutaAttStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"预付押金  ¥%@", self.selectMoney]];
         [mutaAttStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:12 * ProportionAdapter] range:NSMakeRange(6, 1)];
-        [mutaAttStr addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"#fc5a01"] range:NSMakeRange(6, [[NSString stringWithFormat:@"%@",[self.detailDic objectForKey:@"payMoney"]] length] + 1)];
+        [mutaAttStr addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"#fc5a01"] range:NSMakeRange(6, [[NSString stringWithFormat:@"%@",self.selectMoney] length] + 1)];
         self.payMoneyLB.attributedText = mutaAttStr;
         [footView addSubview:self.payMoneyLB];
         
@@ -162,19 +162,12 @@
         }
     }
     
-    /*
-     confirVC.playerArray = self.playerArray;
-     confirVC.suggestedPrice = [[self.detailDic objectForKey:@"payMoney"] integerValue] * [self.playerArray count];
-     confirVC.srcKey = [self.detailDic objectForKey:@"timeKey"];
-     confirVC.mobile = self.mobile;
-     confirVC.remoark = self.noteTF.text;
-     */
-    
+   
     NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
     NSMutableDictionary *orderDic = [NSMutableDictionary dictionary];
     [orderDic setObject:[self.detailDic objectForKey:@"timeKey"] forKey:@"srcKey"];
     [orderDic setObject:self.noteTF.text forKey:@"remark"];
-    [orderDic setObject:@"2017-01-5 9:00:00" forKey:@"teeTime"];
+    [orderDic setObject:self.selectDate forKey:@"teeTime"];
     [orderDic setObject:@([self.playerArray count]) forKey:@"userSum"];
     [orderDic setObject:self.playerArray[0] forKey:@"userName"];
     [orderDic setObject:self.mobile forKey:@"userMobile"];
@@ -203,10 +196,6 @@
                 JGDConfirmPayViewController *confirVC = [[JGDConfirmPayViewController alloc] init];
                 confirVC.payMoney = [[data objectForKey:@"money"] integerValue];
                 confirVC.orderKey = [data objectForKey:@"orderKey"];
-                //                confirVC.playerArray = self.playerArray;
-                //                confirVC.srcKey = [self.detailDic objectForKey:@"timeKey"];
-                //                confirVC.mobile = self.mobile;
-                //                confirVC.remoark = self.noteTF.text;
                 [self.navigationController pushViewController:confirVC animated:YES];
             }
             
@@ -242,23 +231,33 @@
         JGDCostumTableViewCell *cell = [[JGDCostumTableViewCell alloc] init];
         UILabel *titleLB = [self lablerect:CGRectMake(5 * ProportionAdapter, 0, 90 * ProportionAdapter, 50 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#a0a0a0"] labelFont:(16 * ProportionAdapter) text:@"打球时间：" textAlignment:(NSTextAlignmentRight)];
         [cell.contentView addSubview:titleLB];
+        
+        UILabel *dateLB = [self lablerect:CGRectMake(100 * ProportionAdapter, 0, 260 * ProportionAdapter, 50 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#313131"] labelFont:(16 * ProportionAdapter) text:[Helper stringFromDateString:self.selectDate withFormater:@"MM月dd日  EEE  HH:mm"] textAlignment:(NSTextAlignmentLeft)];
+        
+        NSMutableAttributedString *mutabeAtr = [[NSMutableAttributedString alloc] initWithString:[Helper stringFromDateString:self.selectDate withFormater:@"MM月dd日 EEE HH:mm"]];
+        [mutabeAtr addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"a0a0a0"] range:NSMakeRange(7, 2)];
+        dateLB.attributedText = mutabeAtr;
+        [cell.contentView addSubview:dateLB];
+        
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
         return cell;
     }else if (indexPath.row == 2) {
         JGDCostumTableViewCell *cell = [[JGDCostumTableViewCell alloc] init];
         
-        UILabel *tipLB = [self lablerect:CGRectMake(10 * ProportionAdapter, 0, screenWidth - 20 * ProportionAdapter, 35 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#636363"] labelFont:(15 * ProportionAdapter) text:@"将为您提供08:30-09:30（１小时内的开球时间）" textAlignment:(NSTextAlignmentRight)];
+        NSString *begainDate = [NSString stringWithFormat:@"将为您提供%@-%@（１小时内的开球时间）", [Helper dateFromDate:self.selectDate timeInterval:-30 * 60], [Helper dateFromDate:self.selectDate timeInterval:30 * 60]];
+        
+        UILabel *tipLB = [self lablerect:CGRectMake(10 * ProportionAdapter, 0, screenWidth - 20 * ProportionAdapter, 35 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#636363"] labelFont:(15 * ProportionAdapter) text:begainDate textAlignment:(NSTextAlignmentRight)];
         tipLB.backgroundColor = [UIColor colorWithHexString:@"#fefaf3"];
         tipLB.layer.cornerRadius = 6;
         tipLB.clipsToBounds = YES;
         
-        NSMutableAttributedString *mutabeAtr = [[NSMutableAttributedString alloc] initWithString:@" 将为您提供08:30-09:30（１小时内的开球时间）"];
+        NSMutableAttributedString *mutabeAtr = [[NSMutableAttributedString alloc] initWithString:begainDate];
         
         UIImage *img = [UIImage imageNamed:@"order_icn_remark"];
         NSTextAttachment *textAttach = [[NSTextAttachment alloc]init];
         textAttach.image = img;
-        textAttach.bounds = CGRectMake(0, -1 * ProportionAdapter, 14 * ProportionAdapter, 14 * ProportionAdapter);
+        textAttach.bounds = CGRectMake(-3 * ProportionAdapter, -1 * ProportionAdapter, 14 * ProportionAdapter, 14 * ProportionAdapter);
         NSAttributedString *string = [NSAttributedString attributedStringWithAttachment:textAttach];
         [mutabeAtr insertAttributedString:string atIndex:0];
         

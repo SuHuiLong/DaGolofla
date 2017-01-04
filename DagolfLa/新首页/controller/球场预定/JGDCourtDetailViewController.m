@@ -186,7 +186,8 @@ static CGFloat ImageHeight  = 210.0;
                 NSString *time = [self.detailDic objectForKey:@"unitPriceDate"];
                 
                 self.selectMoney = [self.detailDic objectForKey:@"unitPrice"];
-                
+                self.selectDate = time;
+
                 _date = [NSString stringWithFormat:@"%@", [Helper stringFromDateString:time withFormater:@"yyyy年MM月dd日"]];
                 _week = [NSString stringWithFormat:@"%@", [Helper stringFromDateString:time withFormater:@"EEE"]];;
                 _time = [NSString stringWithFormat:@"%@", [Helper stringFromDateString:time withFormater:@"HH:mm"]];
@@ -374,7 +375,11 @@ static CGFloat ImageHeight  = 210.0;
 
         }else{
             UILabel *begainLB = [[UILabel alloc] init];
-            [self lableReDraw:begainLB rect:CGRectMake(0, 0, screenWidth, 60 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#636363"] labelFont:16 text:@"将为您提供08:30-09:30（１小时内的开球时间）" textAlignment:NSTextAlignmentCenter];
+            
+            NSString *begainDate = [NSString stringWithFormat:@"将为您提供%@-%@（１小时内的开球时间）", [Helper dateFromDate:self.selectDate timeInterval:-30 * 60], [Helper dateFromDate:self.selectDate timeInterval:30 * 60]];
+
+            
+            [self lableReDraw:begainLB rect:CGRectMake(0, 0, screenWidth, 60 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#636363"] labelFont:16 text:begainDate textAlignment:NSTextAlignmentCenter];
             [cell.contentView addSubview:begainLB];
         }
         
@@ -476,10 +481,11 @@ static CGFloat ImageHeight  = 210.0;
         self.selectMoney = pay;
         self.selectSceneMoney = scenePay;
         self.selectDate = selectTime;
-        NSIndexPath *indexPath1 = [NSIndexPath indexPathForRow:0 inSection:0];
+        NSIndexPath *indexPath0 = [NSIndexPath indexPathForRow:0 inSection:0];
+        NSIndexPath *indexPath1 = [NSIndexPath indexPathForRow:1 inSection:0];
         NSIndexPath *indexPath2 = [NSIndexPath indexPathForRow:0 inSection:1];
 
-        [self.courtDetail reloadRowsAtIndexPaths:@[indexPath1, indexPath2] withRowAnimation:NO];
+        [self.courtDetail reloadRowsAtIndexPaths:@[indexPath0, indexPath1, indexPath2] withRowAnimation:NO];
     };
     [self.navigationController pushViewController:caleVC animated:YES];
 }
@@ -493,10 +499,9 @@ static CGFloat ImageHeight  = 210.0;
 
 - (void)payAct{
     JGDCommitOrderViewController *commitVC = [[JGDCommitOrderViewController alloc] init];
-//    commitVC.suggestedPrice = [self.detailDic objectForKey:@"suggestedPrice"];
-//    commitVC.ballName = [self.detailDic objectForKey:@"ballName"];
-//    commitVC.ballKey = [self.detailDic objectForKey:@"timeKey"];
-//    commitVC.payType = [self.detailDic objectForKey:@"payType"];
+    commitVC.selectDate = self.selectDate;
+    commitVC.selectMoney = self.selectMoney;
+    commitVC.selectSceneMoney = self.selectSceneMoney;
     commitVC.detailDic = self.detailDic;
     [self.navigationController pushViewController:commitVC animated:YES];
 }

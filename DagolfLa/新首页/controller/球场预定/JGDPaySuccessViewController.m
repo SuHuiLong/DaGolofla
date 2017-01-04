@@ -138,6 +138,7 @@
 - (void)checkORpop:(UIButton *)btn {
     if (btn.tag == 80) {
         JGDOrderDetailViewController *orderVC = [[JGDOrderDetailViewController alloc] init];
+        orderVC.orderKey = self.orderKey;
         [self.navigationController pushViewController:orderVC animated:YES];
     }else if (btn.tag == 81) {
         [self.navigationController popToRootViewControllerAnimated:YES];

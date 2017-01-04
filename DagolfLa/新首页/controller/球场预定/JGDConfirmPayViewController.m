@@ -201,6 +201,7 @@
                 if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
                     JGDPaySuccessViewController *payVC = [[JGDPaySuccessViewController  alloc] init];
                     payVC.payORlaterPay = 1;
+                    payVC.orderKey = self.orderKey;
                     [self.navigationController pushViewController:payVC animated:YES];
                     
                 }
@@ -229,6 +230,7 @@
     }else if (btn.tag == 301) {
         JGDPaySuccessViewController *payVC = [[JGDPaySuccessViewController  alloc] init];
         payVC.payORlaterPay = 2;
+        payVC.orderKey = self.orderKey;
         [self.navigationController pushViewController:payVC animated:YES];
         
     }
