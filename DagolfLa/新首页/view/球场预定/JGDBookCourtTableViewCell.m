@@ -48,7 +48,7 @@
         self.styleANDcount.textColor = [UIColor colorWithHexString:@"#626262"];
         [self.contentView addSubview:self.styleANDcount];
         
-        UIImageView *cityIcon = [[UIImageView alloc] initWithFrame:CGRectMake(93 * ProportionAdapter,  60 * ProportionAdapter, 12 * ProportionAdapter, 18 * ProportionAdapter)];
+        UIImageView *cityIcon = [[UIImageView alloc] initWithFrame:CGRectMake(93 * ProportionAdapter,  62 * ProportionAdapter, 10 * ProportionAdapter, 15 * ProportionAdapter)];
         cityIcon.image = [UIImage imageNamed:@"address"];
         [self.contentView addSubview:cityIcon];
 
@@ -95,17 +95,17 @@
     self.adressLB.text = model.address;
 
     CGFloat addresWidth = [Helper textWidthFromTextString:model.address height:20 * ProportionAdapter fontSize:13 * ProportionAdapter];
-    CGFloat distanWidth = [Helper textWidthFromTextString:[NSString stringWithFormat:@"%.1f千米", [model.distance floatValue]] height:20 * ProportionAdapter fontSize:13 * ProportionAdapter];
+    CGFloat distanWidth = [Helper textWidthFromTextString:[NSString stringWithFormat:@"%.1fkm", [model.distance floatValue]] height:20 * ProportionAdapter fontSize:13 * ProportionAdapter];
 
-    if (distanWidth + addresWidth < 177 * ProportionAdapter) {
+    if (distanWidth + addresWidth < 200 * ProportionAdapter) {
         self.adressLB.frame = CGRectMake(113 * ProportionAdapter, 60 * ProportionAdapter, addresWidth, 20 * ProportionAdapter);
         self.distanceLB.frame = CGRectMake(113 * ProportionAdapter + addresWidth + 15 * ProportionAdapter, 60 * ProportionAdapter, distanWidth, 20 * ProportionAdapter);
     }else{
-        self.adressLB.frame = CGRectMake(113 * ProportionAdapter, 60 * ProportionAdapter, 177 * ProportionAdapter - distanWidth - 15 * ProportionAdapter, 20 * ProportionAdapter);
-        self.distanceLB.frame = CGRectMake(113 * ProportionAdapter + (177 * ProportionAdapter - distanWidth - 15 * ProportionAdapter), 60 * ProportionAdapter, distanWidth, 20 * ProportionAdapter);
+        self.adressLB.frame = CGRectMake(113 * ProportionAdapter, 60 * ProportionAdapter, 200 * ProportionAdapter - distanWidth - 15 * ProportionAdapter, 20 * ProportionAdapter);
+        self.distanceLB.frame = CGRectMake(113 * ProportionAdapter + (200 * ProportionAdapter - distanWidth - 15 * ProportionAdapter), 60 * ProportionAdapter, distanWidth, 20 * ProportionAdapter);
     }
     
-    self.distanceLB.text = [NSString stringWithFormat:@"%.1f千米", [model.distance floatValue]];
+    self.distanceLB.text = [NSString stringWithFormat:@"%.1fkm", [model.distance floatValue]];
     
     if (model.instapaper == 2) {
         self.priceLB.text = @"封场";

@@ -1083,7 +1083,9 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
                  //四大直辖市的城市信息无法通过locality获得，只能通过获取省份的方法来获得（如果city为空，则可知为直辖市）
                  city = placemark.administrativeArea;
              }
-             
+             if ([city containsString:@"市"] || [city containsString:@"省"]) {
+                 city = [city substringToIndex:[city length] - 1];
+             }
              [user setObject:city forKey:CITYNAME];
              [user synchronize];
              

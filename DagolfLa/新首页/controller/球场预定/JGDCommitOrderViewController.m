@@ -32,6 +32,8 @@
 
 @property (nonatomic, strong) UITextField *noteTF; // 备注
 
+@property (nonatomic, copy) NSString *remark; // 备注信息
+
 @end
 
 @implementation JGDCommitOrderViewController
@@ -171,6 +173,8 @@
     [orderDic setObject:@([self.playerArray count]) forKey:@"userSum"];
     [orderDic setObject:self.playerArray[0] forKey:@"userName"];
     [orderDic setObject:self.mobile forKey:@"userMobile"];
+    UITextField *noteTF = [self.commitOrderTableView viewWithTag:999]; // 备注
+    [orderDic setObject:noteTF.text forKey:@"remark"];
     
     NSMutableString *nameString = [[NSMutableString alloc] init];
     for (NSString *name in self.playerArray) {
@@ -247,7 +251,7 @@
         
         NSString *begainDate = [NSString stringWithFormat:@"将为您提供%@-%@（１小时内的开球时间）", [Helper dateFromDate:self.selectDate timeInterval:-30 * 60], [Helper dateFromDate:self.selectDate timeInterval:30 * 60]];
         
-        UILabel *tipLB = [self lablerect:CGRectMake(10 * ProportionAdapter, 0, screenWidth - 20 * ProportionAdapter, 35 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#636363"] labelFont:(15 * ProportionAdapter) text:begainDate textAlignment:(NSTextAlignmentRight)];
+        UILabel *tipLB = [self lablerect:CGRectMake(10 * ProportionAdapter, 0, screenWidth - 20 * ProportionAdapter, 35 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#636363"] labelFont:(15 * ProportionAdapter) text:begainDate textAlignment:(NSTextAlignmentCenter)];
         tipLB.backgroundColor = [UIColor colorWithHexString:@"#fefaf3"];
         tipLB.layer.cornerRadius = 6;
         tipLB.clipsToBounds = YES;
@@ -307,8 +311,11 @@
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         self.noteTF = [[UITextField alloc] initWithFrame:CGRectMake(10 * ProportionAdapter, 10 * ProportionAdapter, screenWidth - 20 * ProportionAdapter, 50 * ProportionAdapter)];
         self.noteTF.placeholder = @"请输入备注信息";
+        self.noteTF.tag = 999;
+        self.noteTF.delegate = self;
         self.noteTF.clearButtonMode = UITextFieldViewModeWhileEditing;
         self.noteTF.font = [UIFont systemFontOfSize:16 * ProportionAdapter];
+        self.noteTF.text = self.remark;
         [cell.contentView addSubview:self.noteTF];
         //        UITextView *noteView = [[UITextView alloc] initWithFrame:CGRectMake(10 * ProportionAdapter, 20 * ProportionAdapter, screenWidth - 20 * ProportionAdapter, 60 * ProportionAdapter)];
         //        [cell addSubview:noteView];
@@ -406,52 +413,62 @@
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
     
-    if ([string isEqualToString:@""] && [textField.text length] == 1) {
-        // 全删
-        JGDBallPlayTableViewCell *cell = (JGDBallPlayTableViewCell *)[[textField superview] superview];
-        cell.phoneImageV.hidden = NO;
-        
-    }else{
-        JGDBallPlayTableViewCell *cell = (JGDBallPlayTableViewCell *)[[textField superview] superview];
-        cell.phoneImageV.hidden = YES;
+    if (textField.tag != 999) {
+        if ([string isEqualToString:@""] && [textField.text length] == 1) {
+            // 全删
+            JGDBallPlayTableViewCell *cell = (JGDBallPlayTableViewCell *)[[textField superview] superview];
+            cell.phoneImageV.hidden = NO;
+            
+        }else{
+            JGDBallPlayTableViewCell *cell = (JGDBallPlayTableViewCell *)[[textField superview] superview];
+            cell.phoneImageV.hidden = YES;
+        }
     }
-    
-    
+
     return YES;
 }
 
 - (BOOL)textFieldShouldClear:(UITextField *)textField{
+    if (textField.tag != 999) {
     JGDBallPlayTableViewCell *cell = (JGDBallPlayTableViewCell *)[[textField superview] superview];
     NSIndexPath *index = [self.commitOrderTableView indexPathForCell:cell];
     cell.phoneImageV.hidden = NO;
     if (index.row >=5) {
         self.playerArray[index.row - 5] = @"";
+        }
     }
     return YES;
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField{
     
-    JGDBallPlayTableViewCell *cell = (JGDBallPlayTableViewCell *)[[textField superview] superview];
-    NSIndexPath *index = [self.commitOrderTableView indexPathForCell:cell];
-    if ([textField.text length] > 0) {
-        cell.phoneImageV.hidden = YES;
+    
+    if (textField.tag == 999) {
+        self.remark = textField.text;
     }else{
-        cell.phoneImageV.hidden = NO;
+        JGDBallPlayTableViewCell *cell = (JGDBallPlayTableViewCell *)[[textField superview] superview];
+        NSIndexPath *index = [self.commitOrderTableView indexPathForCell:cell];
+        if ([textField.text length] > 0) {
+            cell.phoneImageV.hidden = YES;
+        }else{
+            cell.phoneImageV.hidden = NO;
+        }
+        if (index.row >=5) {
+            self.playerArray[index.row - 5] = textField.text;
+        }else if (index.row == 4) {
+            self.mobile = textField.text;
+        }
+
     }
-    if (index.row >=5) {
-        self.playerArray[index.row - 5] = textField.text;
-    }else if (index.row == 4) {
-        self.mobile = textField.text;
-    }
-    
-    
 }
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField{
-    JGDBallPlayTableViewCell *cell = (JGDBallPlayTableViewCell *)[[textField superview] superview];
-    if ([textField.text length] > 0) {
-        cell.phoneImageV.hidden = YES;
+    
+    if (textField.tag != 999) {
+        JGDBallPlayTableViewCell *cell = (JGDBallPlayTableViewCell *)[[textField superview] superview];
+        if ([textField.text length] > 0) {
+            cell.phoneImageV.hidden = YES;
+        }
     }
 }
 
@@ -498,15 +515,15 @@
     }
     
     
-    self.payMoneyLB.text = [NSString stringWithFormat:@"%@  ¥%td", paytypeString, [[self.detailDic objectForKey:@"payMoney"] integerValue] * ([self.playerArray count])];
-    NSMutableAttributedString *mutaAttStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@  ¥%td", paytypeString, [[self.detailDic objectForKey:@"payMoney"] integerValue] * ([self.playerArray count])]];
+    self.payMoneyLB.text = [NSString stringWithFormat:@"%@  ¥%td", paytypeString, [self.selectMoney integerValue] * ([self.playerArray count])];
+    NSMutableAttributedString *mutaAttStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@  ¥%td", paytypeString, [self.selectMoney integerValue] * ([self.playerArray count])]];
     [mutaAttStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:12 * ProportionAdapter] range:NSMakeRange(6, 1)];
-    [mutaAttStr addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"#fc5a01"] range:NSMakeRange(6, [[NSString stringWithFormat:@"%td", [[self.detailDic objectForKey:@"payMoney"] integerValue] * ([self.playerArray count])] length] + 1)];
+    [mutaAttStr addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"#fc5a01"] range:NSMakeRange(6, [[NSString stringWithFormat:@"%td", [self.selectMoney integerValue] * ([self.playerArray count])] length] + 1)];
     self.payMoneyLB.attributedText = mutaAttStr;
     
     
-    self.scenePayMoneyLB.text = [NSString stringWithFormat:@"%@  ¥%td", paytypeString, [[self.detailDic objectForKey:@"unitPaymentMoney"] integerValue] * ([self.playerArray count])];
-    NSMutableAttributedString *sceneAttStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"现场支付  ¥%td", [[self.detailDic objectForKey:@"unitPaymentMoney"] integerValue] * ([self.playerArray count])]];
+    self.scenePayMoneyLB.text = [NSString stringWithFormat:@"%@  ¥%td", paytypeString, [self.selectSceneMoney integerValue] * ([self.playerArray count])];
+    NSMutableAttributedString *sceneAttStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"现场支付  ¥%td", [self.selectSceneMoney integerValue] * ([self.playerArray count])]];
     [sceneAttStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:12 * ProportionAdapter] range:NSMakeRange(6, 1)];
     self.scenePayMoneyLB.attributedText = sceneAttStr;
     

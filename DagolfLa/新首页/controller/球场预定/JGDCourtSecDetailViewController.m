@@ -9,7 +9,7 @@
 #import "JGDCourtSecDetailViewController.h"
 #import "JGDCostumTableViewCell.h"
 
-@interface JGDCourtSecDetailViewController () <UITableViewDelegate, UITableViewDataSource>
+@interface JGDCourtSecDetailViewController () <UITableViewDelegate, UITableViewDataSource, WKUIDelegate, WKNavigationDelegate>
 
 @property (nonatomic, strong) UITableView *detailTableView;
 
@@ -26,6 +26,8 @@
     [super viewDidLoad];
     
     self.title = @"球场详情";
+    
+    self.profileHeight = 0;
     
     [self detailTableView];
     // Do any additional setup after loading the view.
@@ -96,11 +98,19 @@
         UILabel *titleLB = [self lablerect:CGRectMake(10 * ProportionAdapter, 20 * ProportionAdapter, 80 * ProportionAdapter, 20 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#a0a0a0"] labelFont:(17 * ProportionAdapter) text:@"球场简介" textAlignment:(NSTextAlignmentLeft)];
         [cell addSubview:titleLB];
         
-        self.profileHeight = [Helper textHeightFromTextString:[self.detailDic objectForKey:@"profile"] width:screenWidth - 20 * ProportionAdapter fontSize:15 * ProportionAdapter];
+//        self.profileHeight = [Helper textHeightFromTextString:[self.detailDic objectForKey:@"profile"] width:screenWidth - 20 * ProportionAdapter fontSize:15 * ProportionAdapter];
+
+        
+        WKWebView *webView = [[WKWebView alloc]initWithFrame:CGRectMake(0, 50, screenWidth, self.profileHeight)];
+        webView.UIDelegate = self;
+        webView.navigationDelegate = self;
+        webView.scrollView.bounces = NO;
+        [webView loadHTMLString:[self.detailDic objectForKey:@"details"] baseURL:nil];
+        [cell addSubview:webView];
 
         UILabel *profileLB = [self lablerect:CGRectMake(10 * ProportionAdapter, 50 * ProportionAdapter, screenWidth - 20 * ProportionAdapter, self.profileHeight) labelColor:[UIColor colorWithHexString:@"#313131"] labelFont:(15 * ProportionAdapter) text:[self.detailDic objectForKey:@"profile"] textAlignment:(NSTextAlignmentLeft)];
         profileLB.numberOfLines = 0;
-        [cell addSubview:profileLB];
+//        [cell addSubview:profileLB];
         
     }
     
@@ -108,6 +118,23 @@
     
     return cell;
 }
+
+- (void)webView:(WKWebView *)webView didFinishNavigation:(null_unspecified WKNavigation *)navigation
+{
+    // 计算WKWebView高度
+    if (self.profileHeight == 0) {
+        __weak JGDCourtSecDetailViewController *weakSelf = self;
+        [webView evaluateJavaScript:@"document.body.offsetHeight" completionHandler:^(id _Nullable result, NSError * _Nullable error) {
+            CGRect frame =webView.frame;
+            frame.size.height = ([result doubleValue] / 2) * ProportionAdapter;
+            weakSelf.profileHeight = ([result doubleValue] / 2) * ProportionAdapter;
+            webView.frame = frame;
+            [weakSelf.detailTableView reloadSections:[NSIndexSet indexSetWithIndex:3] withRowAnimation:NO];
+        }];
+    }
+
+}
+
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return section == 0 ? 9 : 1;

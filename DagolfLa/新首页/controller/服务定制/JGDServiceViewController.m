@@ -21,8 +21,12 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     
-    [[ShowHUD showHUD] showAnimationWithText:@"加载中…" FromView:self.view];
-
+    NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
+    
+    if (![userdef objectForKey:@"serviceList"]) {
+        [[ShowHUD showHUD] showAnimationWithText:@"加载中…" FromView:self.view];
+    }
+    
     [[JsonHttp jsonHttp] httpRequest:@"serviceCustom/getServiceCustomMobileList" JsonKey:nil withData:@{} requestMethod:@"GET" failedBlock:^(id errType) {
         [[ShowHUD showHUD] hideAnimationFromView:self.view];
 
@@ -33,11 +37,8 @@
             
             if ([data objectForKey:@"list"]) {
                 self.phoneArray = [data objectForKey:@"list"];
-            }
-            
-        }else{
-            if ([data objectForKey:@"packResultMsg"]) {
-                [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+                [userdef setObject:[data objectForKey:@"list"] forKey:@"serviceList"];
+                [userdef synchronize];
             }
         }
     }];
@@ -106,8 +107,12 @@
 }
 
 - (void)contactAct:(UIButton *)btn {
-    NSMutableString * str=[[NSMutableString alloc] initWithFormat:@"telprompt://%@", self.phoneArray[btn.tag - 200]];
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:str]];
+    
+    NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
+    if ([userdef objectForKey:@"serviceList"]) {
+        NSMutableString * str=[[NSMutableString alloc] initWithFormat:@"telprompt://%@", [userdef objectForKey:@"serviceList"][btn.tag - 200]];
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:str]];
+    }
 
 }
 

@@ -111,8 +111,8 @@
     self.orderTableView.delegate = self;
     self.orderTableView.dataSource = self;
     self.orderTableView.rowHeight = 112 * ProportionAdapter;
-    self.orderTableView.separatorStyle = UITableViewCellAccessoryNone;
-    
+    self.orderTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+
     [self.view addSubview:self.orderTableView];
     [self.orderTableView registerClass:[JGDOrderListTableViewCell class] forCellReuseIdentifier:@"orderListCell"];
 
@@ -203,7 +203,7 @@
             [self.headView addSubview:btn];
         }
         
-        self.greenView = [[UIView alloc] initWithFrame:CGRectMake(10 * ProportionAdapter, 49 * ProportionAdapter, 70 * ProportionAdapter, 1 * ProportionAdapter)];
+        self.greenView = [[UIView alloc] initWithFrame:CGRectMake(10 * ProportionAdapter, 47.5 * ProportionAdapter, 70 * ProportionAdapter, 2.5 * ProportionAdapter)];
         self.greenView.backgroundColor = [UIColor colorWithHexString:@"#32b14d"];
         [self.headView addSubview:self.greenView];
         

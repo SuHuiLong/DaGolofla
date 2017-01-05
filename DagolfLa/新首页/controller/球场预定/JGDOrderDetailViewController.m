@@ -10,6 +10,7 @@
 #import "JGDOrderDetailTableViewCell.h"
 
 #import "JGDConfirmPayViewController.h"
+#import "JGDPaySuccessViewController.h"
 
 @interface JGDOrderDetailViewController ()<UITableViewDelegate, UITableViewDataSource>
 
@@ -68,28 +69,28 @@
                 self.orderDetailArray = [[NSMutableArray alloc] init];
                 self.reserveDetailArray = [[NSMutableArray alloc] init];
                 
-                NSArray *orderKeyArray = [NSArray arrayWithObjects:@"stateShowString", @"createTime", @"money", @"payType", @"payMoney", nil];
+                NSArray *orderKeyArray = [NSArray arrayWithObjects: @"ordersn", @"stateShowString", @"createTime", @"money", @"payType", @"payMoney", nil];
                 NSArray *reserveKeyArray = [NSArray arrayWithObjects:@"ballName", [self.dataDic objectForKey:@"confirmedTeeTime"] ? @"confirmedTeeTime" : @"teeTime", @"userSum", @"playPersonNames", @"userMobile", @"servicePj", nil];
                 
-        // section 0
+                // section 0
                 for (int i = 0; i < [orderKeyArray count]; i ++) {
                     if ([self.dataDic objectForKey:orderKeyArray[i]]) {
                         
-                        if (i == 0) {
+                        if (i == 1) {
                             [self.orderDetailArray addObject:[NSString stringWithFormat:@"%@", [self.dataDic objectForKey:orderKeyArray[i]]]];
                             
-                        }else if (i == 1) {
+                        }else if (i == 2) {
                             [self.orderDetailArray addObject:[Helper stringFromDateString:[self.dataDic objectForKey:@"createTime"] withFormater:@"yyyy-MM-dd HH:mm"]];
                             
-                                
-                        }else if (i == 3) {
+                            
+                        }else if (i == 4) {
                             if ([[self.dataDic objectForKey:@"payType"] integerValue] == 0) {
                                 [self.orderDetailArray addObject:@"全额预付"];
                             }else if ([[self.dataDic objectForKey:@"payType"] integerValue] == 1) {
                                 [self.orderDetailArray addObject:@"部分预付"];
                             }else if ([[self.dataDic objectForKey:@"payType"] integerValue] == 2) {
                                 [self.orderDetailArray addObject:@"球场现付"];
-                                self.orderTitleArray[4] = @"已付押金：";
+                                self.orderTitleArray[5] = @"已付押金：";
                             }
                         }else{
                             [self.orderDetailArray addObject:[NSString stringWithFormat:@"%@", [self.dataDic objectForKey:orderKeyArray[i]]]];
@@ -101,7 +102,7 @@
                     }
                 }
                 
-        // section 1
+                // section 1
                 for (int i = 0; i < [reserveKeyArray count]; i ++) {
                     if ([self.dataDic objectForKey:reserveKeyArray[i]]) {
                         NSString *dateString = [self.dataDic objectForKey:reserveKeyArray[i]];
@@ -109,7 +110,7 @@
                         if (i == 1) {
                             
                             [self.reserveDetailArray addObject:[Helper stringFromDateString:dateString withFormater:@"yyyy-MM-dd EEEE HH:mm"]];
-
+                            
                         }else{
                             [self.reserveDetailArray addObject:[NSString stringWithFormat:@"%@", [self.dataDic objectForKey:reserveKeyArray[i]]]];
                             
@@ -120,8 +121,8 @@
                         [self.reserveDetailArray addObject:@""];
                     }
                 }
-
-//                // 底部按钮
+                
+                //                // 底部按钮
                 
                 UIView *shitaView = [[UIView alloc] initWithFrame:CGRectMake(0, screenHeight - 114 * ProportionAdapter, screenWidth, 50 * ProportionAdapter)];
                 shitaView.backgroundColor = [UIColor colorWithHexString:@"EEEEEE"];
@@ -229,7 +230,7 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-//  JGDOrderDetailTableViewCell * cell = [self.orderTableViwe dequeueReusableCellWithIdentifier:@"orderCell"];
+    //  JGDOrderDetailTableViewCell * cell = [self.orderTableViwe dequeueReusableCellWithIdentifier:@"orderCell"];
     JGDOrderDetailTableViewCell * cell = [[JGDOrderDetailTableViewCell alloc] init];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
@@ -259,7 +260,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
     if (section == 0) {
-        return 5;
+        return 6;
     }else if (section == 1) {
         return 6;
     }else{
@@ -483,7 +484,7 @@
     NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
     [dic setObject:self.orderKey forKey:@"orderKey"];
     [dic setObject:DEFAULF_USERID forKey:@"userKey"];
-    [dic setObject:@"哥哥退单不需要理由" forKey:@"cancelReason"];
+    [dic setObject:self.reasonArray[4] forKey:@"cancelReason"];
     
     //    [dic setObject:[Helper md5HexDigest:[NSString stringWithFormat:@"orderKey=%@dagolfla.com", self.orderKey]] forKey:@"md5"];
     
@@ -497,6 +498,14 @@
         
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
             [self.cancelView removeFromSuperview];
+            JGDPaySuccessViewController *cancelVC = [[JGDPaySuccessViewController alloc] init];
+            cancelVC.payORlaterPay = 3 ;
+            cancelVC.orderKey = self.orderKey;
+            [self.navigationController pushViewController:cancelVC animated:YES];
+        }else{
+            if ([data objectForKey:@"packResultMsg"]) {
+                [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+            }
         }
     }
      ];
@@ -516,7 +525,7 @@
 
 - (NSMutableArray *)orderTitleArray{
     if (!_orderTitleArray) {
-        _orderTitleArray = [NSMutableArray arrayWithObjects:@"订单状态：", @"下单时间：", @"订单总价：", @"付款方式：", @"已付金额：", nil];
+        _orderTitleArray = [NSMutableArray arrayWithObjects:@"订单编号：", @"订单状态：", @"下单时间：", @"订单总价：", @"付款方式：", @"已付金额：", nil];
     }
     return _orderTitleArray;
 }
