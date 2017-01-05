@@ -100,6 +100,7 @@
 {
     
     JGLPhotosUpDataViewController* upVc = [[JGLPhotosUpDataViewController alloc]init];
+    upVc.albumName = _teamName;
     upVc.albumKey = _albumKey;
     upVc.blockRefresh = ^(){
         if (_collectionView.header.isRefreshing == YES) {

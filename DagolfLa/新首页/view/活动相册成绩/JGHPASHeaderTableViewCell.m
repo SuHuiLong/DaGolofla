@@ -47,14 +47,27 @@
         self.activityLable.hidden = NO;
         self.photoLable.hidden = YES;
         self.resultsLable.hidden = YES;
+        
+        [self.activityBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [self.photoBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+        [self.resultsBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+        
     }else if (showId == 1){
         self.activityLable.hidden = YES;
         self.photoLable.hidden = NO;
         self.resultsLable.hidden = YES;
+        
+        [self.activityBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+        [self.photoBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [self.resultsBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
     }else{
         self.activityLable.hidden = YES;
         self.photoLable.hidden = YES;
         self.resultsLable.hidden = NO;
+        
+        [self.activityBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+        [self.photoBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+        [self.resultsBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     }
 }
 

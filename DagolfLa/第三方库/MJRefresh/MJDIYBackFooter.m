@@ -53,7 +53,7 @@
 //    self.label.frame = CGRectMake(0, self.mj_h-20, self.mj_w, 20);
 //    self.logo.frame = CGRectMake(self.mj_w/2-15, 0, 30, 30);
     
-    self.loading.center = CGPointMake(self.mj_w - 30, self.mj_h * 0.5);
+    self.loading.center = CGPointMake(self.mj_w/2, self.mj_h * 0.5);
 }
 
 #pragma mark 监听scrollView的contentOffset改变

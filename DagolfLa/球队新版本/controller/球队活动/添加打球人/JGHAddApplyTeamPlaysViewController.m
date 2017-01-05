@@ -8,9 +8,6 @@
 
 #import "JGHAddApplyTeamPlaysViewController.h"
 #import "JGMenberTableViewCell.h"
-
-#import "JGMemManageController.h"
-
 #import "MJRefresh.h"
 #import "MJDIYBackFooter.h"
 #import "MJDIYHeader.h"

@@ -168,22 +168,25 @@ static NSString *const JGHCenterBtnTableViewCellIdentifier = @"JGHCenterBtnTable
             [self.scoreManageTableView reloadData];
             
             
-            for (int i=0; i<_dataArray.count; i++) {
-                JGLScoreLiveModel *model = [[JGLScoreLiveModel alloc] init];
-                model = _dataArray[i];
-                if ([model.publish integerValue] == 0) {
-                    break;
-                }else{
-                    if (i == _dataArray.count-1) {
-                        [_publisView.imageBtn setImage:[UIImage imageNamed:@"gou_x"] forState:UIControlStateNormal];
-                        [_publisView.selectAllBtn setTitle:@"取消" forState:UIControlStateNormal];
-                        _selectAll = 1;
-                    }
-                }
-            }
-            
-            [self countProple];
-            
+//            for (int i=0; i<_dataArray.count; i++) {
+//                JGLScoreLiveModel *model = [[JGLScoreLiveModel alloc] init];
+//                model = _dataArray[i];
+//                if ([model.publish integerValue] == 0) {
+//                    break;
+//                }else{
+//                    if (i == _dataArray.count-1) {
+//                        [_publisView.imageBtn setImage:[UIImage imageNamed:@"gou_x"] forState:UIControlStateNormal];
+//                        [_publisView.selectAllBtn setTitle:@"取消" forState:UIControlStateNormal];
+//                        _selectAll = 1;
+//                    }
+//                }
+//            }
+//            
+//            [self countProple];
+            _selectAll = 0;
+            _publisView.provalue.text = @"0";
+            [_publisView.imageBtn setImage:[UIImage imageNamed:@"gou_w"] forState:UIControlStateNormal];
+            [_publisView.selectAllBtn setTitle:@"全选" forState:UIControlStateNormal];
         }else {
             [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
         }
@@ -205,11 +208,18 @@ static NSString *const JGHCenterBtnTableViewCellIdentifier = @"JGHCenterBtnTable
 
 #pragma mark -- tableView代理
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 1;
+    if (section == 0) {
+        return 1;
+    }else if (section == 1){
+        return _dataArray.count;
+    }else{
+        return 1;
+    }
+//    return 3 + _dataArray.count;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 3 + _dataArray.count;
+    return 3;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -229,48 +239,57 @@ static NSString *const JGHCenterBtnTableViewCellIdentifier = @"JGHCenterBtnTable
         tranCell.selectionStyle = UITableViewCellSelectionStyleNone;
         [tranCell configActivityName:_activityBaseModel.ballName andStartTime:_activityBaseModel.beginDate andEndTime:_activityBaseModel.endDate];
         return tranCell;
-    }else if (indexPath.section == _dataArray.count + 2){
+    }else if (indexPath.section == 2){
         JGHCenterBtnTableViewCell *centerBtnCell = [tableView dequeueReusableCellWithIdentifier:JGHCenterBtnTableViewCellIdentifier];
         centerBtnCell.delegate = self;
         centerBtnCell.selectionStyle = UITableViewCellSelectionStyleNone;
         return centerBtnCell;
     }else{
-        if (indexPath.section == 1) {
+//        if (indexPath.row == 1) {
+//            JGHPlayersScoreTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:JGHPlayersScoreTableViewCellIdentifier];
+//            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+//            cell.imageScore.hidden = YES;
+//            cell.fristLabel.text = @"姓名";
+//            cell.fristLabel.textColor = [UIColor lightGrayColor];
+//            cell.twoLabel.text = @"总杆";
+//            cell.twoLabel.textColor = [UIColor lightGrayColor];
+//            cell.threeLabel.text = @"差点";
+//            cell.threeLabel.textColor = [UIColor lightGrayColor];
+//            cell.fiveLabel.text = @"净杆";
+//            cell.fiveLabel.textColor = [UIColor lightGrayColor];
+//            return cell;
+//        }else{
             JGHPlayersScoreTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:JGHPlayersScoreTableViewCellIdentifier];
-            cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            cell.imageScore.hidden = YES;
-            cell.fristLabel.text = @"姓名";
-            cell.fristLabel.textColor = [UIColor lightGrayColor];
-            cell.twoLabel.text = @"总杆";
-            cell.twoLabel.textColor = [UIColor lightGrayColor];
-            cell.threeLabel.text = @"差点";
-            cell.threeLabel.textColor = [UIColor lightGrayColor];
-            cell.fiveLabel.text = @"净杆";
-            cell.fiveLabel.textColor = [UIColor lightGrayColor];
-            return cell;
-        }else{
-            JGHPlayersScoreTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:JGHPlayersScoreTableViewCellIdentifier];
-            cell.selectBtn.tag = indexPath.section -1 + 100;
+            cell.selectBtn.tag = indexPath.row + 100;
             cell.delegate = self;
-            [cell showData:_dataArray[indexPath.section-2]];
+            [cell showData:_dataArray[indexPath.row]];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             return cell;
-        }
+//        }
     }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     if (section == 1){
-        return 2*ProportionAdapter;
+        return 40*ProportionAdapter;
     }
     return 0;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     if (section == 1){
-        UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, 2*ProportionAdapter)];
-        view.backgroundColor = [UIColor colorWithHexString:@"#3AB152"];
-        return view;
+        JGHPlayersScoreTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:JGHPlayersScoreTableViewCellIdentifier];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        cell.imageScore.hidden = YES;
+        cell.fristLabel.text = @"姓名";
+        cell.fristLabel.textColor = [UIColor lightGrayColor];
+        cell.twoLabel.text = @"总杆";
+        cell.twoLabel.textColor = [UIColor lightGrayColor];
+        cell.threeLabel.text = @"差点";
+        cell.threeLabel.textColor = [UIColor lightGrayColor];
+        cell.fiveLabel.text = @"净杆";
+        cell.fiveLabel.textColor = [UIColor lightGrayColor];
+        return (UIView *)cell;
     }else{
         return nil;
     }
@@ -280,7 +299,7 @@ static NSString *const JGHCenterBtnTableViewCellIdentifier = @"JGHCenterBtnTable
 {
     NSLog(@"%td", indexPath.section);
     NSLog(@"%td", indexPath.row);
-    if (indexPath.section < 2 + _dataArray.count && indexPath.section != 0 && indexPath.section != 1) {
+    if (indexPath.section == 2) {
         JGDActSelfHistoryScoreViewController *actVC = [[JGDActSelfHistoryScoreViewController alloc] init];
         actVC.scoreModel = self.dataArray[indexPath.section - 2];
         actVC.timeKey = _activityBaseModel.timeKey;
@@ -424,7 +443,7 @@ static NSString *const JGHCenterBtnTableViewCellIdentifier = @"JGHCenterBtnTable
             model = _dataArray[i];
             if ([model.publish integerValue] == 0) {
                 model.publish = [NSNumber numberWithInteger:1];
-                [_dataArray replaceObjectAtIndex:i withObject:model];
+//                [_dataArray replaceObjectAtIndex:i withObject:model];
             }
         }
         
@@ -438,7 +457,7 @@ static NSString *const JGHCenterBtnTableViewCellIdentifier = @"JGHCenterBtnTable
             model = _dataArray[i];
             if ([model.publish integerValue] == 1) {
                 model.publish = [NSNumber numberWithInteger:0];
-                [_dataArray replaceObjectAtIndex:i withObject:model];
+//                [_dataArray replaceObjectAtIndex:i withObject:model];
             }
         }
         
@@ -448,6 +467,7 @@ static NSString *const JGHCenterBtnTableViewCellIdentifier = @"JGHCenterBtnTable
     }
     
     _publisView.provalue.text = [NSString stringWithFormat:@"%td", _selectNumber];
+    
     [self.scoreManageTableView reloadData];
 }
 
@@ -456,9 +476,9 @@ static NSString *const JGHCenterBtnTableViewCellIdentifier = @"JGHCenterBtnTable
     _selectNumber = 0;
     NSLog(@"%td", btn.tag);
     JGLScoreLiveModel *model = [[JGLScoreLiveModel alloc] init];
-    model = _dataArray[btn.tag -101];
+    model = _dataArray[btn.tag -100];
     
-    NSLog(@"%td", btn.tag - 101);
+    NSLog(@"%td", btn.tag - 100);
     
     if ([model.publish integerValue] == 0) {
         model.publish = [NSNumber numberWithInteger:1];

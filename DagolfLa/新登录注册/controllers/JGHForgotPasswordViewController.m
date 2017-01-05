@@ -292,8 +292,8 @@
                 //注册融云
                 [self requestRCIMWithToken:token];
                 [self postAppJpost];
-                _blackCtrl();
-                [self.navigationController popViewControllerAnimated:YES];
+//                _blackCtrl();
+                [self.navigationController popToRootViewControllerAnimated:YES];
             }
         }else{
             _getCodeBtn.userInteractionEnabled = YES;

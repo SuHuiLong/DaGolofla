@@ -214,6 +214,7 @@
 - (void)upDataClick{
     
     JGLPhotosUpDataViewController* upVc = [[JGLPhotosUpDataViewController alloc]init];
+    upVc.albumName = _strTitle;
     upVc.albumKey = _albumKey;
     upVc.blockRefresh = ^(){
         if (_collectionView.header.isRefreshing == YES) {

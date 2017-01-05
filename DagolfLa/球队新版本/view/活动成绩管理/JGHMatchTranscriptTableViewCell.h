@@ -37,6 +37,9 @@
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *setAlmostBtnRight;//10
 
+@property (weak, nonatomic) IBOutlet UILabel *line;
+
+
 @property (nonatomic, weak)id <JGHMatchTranscriptTableViewCellDelegate> delegate;
 
 - (void)configActivityName:(NSString *)name andStartTime:(NSString *)startTime andEndTime:(NSString *)endTime;

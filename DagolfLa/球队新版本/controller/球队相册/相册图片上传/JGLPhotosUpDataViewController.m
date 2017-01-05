@@ -26,6 +26,8 @@
     UIButton* _btnAdd;
     MBProgressHUD* _progress;
     NSMutableArray* _arrTimeKey;
+    
+    UILabel *_proLable;//提示文字
 }
 
 @property (strong, nonatomic) UIView *contentView;
@@ -54,10 +56,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    self.title = @"添加照片";
+    self.view.backgroundColor = [UIColor colorWithHexString:BG_color];
+    self.title = @"上传照片";
     _arrayCamera = [[NSMutableArray alloc]init];
-    _scrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 40*ScreenWidth/375, ScreenWidth, ScreenHeight)];
+    _scrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 60*ScreenWidth/375, ScreenWidth, ScreenHeight)];
+    _scrollView.backgroundColor = [UIColor colorWithHexString:BG_color];
     [self.view addSubview:_scrollView];
     [self createView];
     [self createAddPhoto];
@@ -66,21 +69,21 @@
 }
 #pragma mark -- 提示文字
 - (void)createProView{
-    UILabel *oneLable = [[UILabel alloc]initWithFrame:CGRectMake(0, screenHeight -64-120 *ProportionAdapter, screenWidth, 20 *ProportionAdapter)];
+    UILabel *oneLable = [[UILabel alloc]initWithFrame:CGRectMake(0, screenHeight -64-140 *ProportionAdapter, screenWidth, 20 *ProportionAdapter)];
     oneLable.text = @"照片太多，手机上传太慢？";
     oneLable.font = [UIFont systemFontOfSize:14 *ProportionAdapter];
     oneLable.textColor = [UIColor colorWithHexString:Ba0_Color];
     oneLable.textAlignment = NSTextAlignmentCenter;
     [_scrollView addSubview:oneLable];
     
-    UILabel *twoLable = [[UILabel alloc]initWithFrame:CGRectMake(0, screenHeight -64-100 *ProportionAdapter, screenWidth, 20 *ProportionAdapter)];
+    UILabel *twoLable = [[UILabel alloc]initWithFrame:CGRectMake(0, screenHeight -64-120 *ProportionAdapter, screenWidth, 20 *ProportionAdapter)];
     twoLable.text = @"我们提供了PC端上传工具，海量照片，一键上传！";
     twoLable.textAlignment = NSTextAlignmentCenter;
     twoLable.textColor = [UIColor colorWithHexString:Ba0_Color];
     twoLable.font = [UIFont systemFontOfSize:14 *ProportionAdapter];
     [_scrollView addSubview:twoLable];
     
-    UILabel *threeLable = [[UILabel alloc]initWithFrame:CGRectMake(0, screenHeight -64-80 *ProportionAdapter, screenWidth, 20 *ProportionAdapter)];
+    UILabel *threeLable = [[UILabel alloc]initWithFrame:CGRectMake(0, screenHeight -64-100 *ProportionAdapter, screenWidth, 20 *ProportionAdapter)];
     threeLable.text = @"PC端登录地址：http://keeper.dagolfla.com";
     threeLable.textColor = [UIColor colorWithHexString:Ba0_Color];
 //    self.baseLabel.text = [NSString stringWithFormat:@"用户本人线上支付-%.2f", price];
@@ -95,11 +98,15 @@
 }
 -(void)createView
 {
-    UILabel* label = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, 40*ScreenWidth/375)];
+    UILabel* label = [[UILabel alloc]initWithFrame:CGRectMake(0, 10 *ProportionAdapter, ScreenWidth, 40*ScreenWidth/375)];
     [self.view addSubview:label];
-    label.text = @"点击加号按钮添加照片";
+    label.text = [NSString stringWithFormat:@"  相册名称:%@", _albumName];
     label.font = [UIFont systemFontOfSize:16*ScreenWidth/375];
-    label.backgroundColor = [UIColor colorWithRed:0.69f green:0.69f blue:0.69f alpha:1.00f];
+    label.backgroundColor = [UIColor whiteColor];
+    label.textColor = [UIColor lightGrayColor];
+    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:label.text];
+    [attributedString addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(7, label.text.length-7)]; // 0为起始位置 length是从起始位置开始 设置指定颜色的长度
+    label.attributedText = attributedString;
 }
 -(void)createAddPhoto
 {
@@ -115,12 +122,13 @@
 -(void)createBtnSure
 {
     _btnAdd = [UIButton buttonWithType:UIButtonTypeSystem];
-    _btnAdd.frame = CGRectMake(10*ScreenWidth/375, 70*ScreenWidth/375+_imageWidth, ScreenWidth-20*ScreenWidth/375, 44*ScreenWidth/375);
+    _btnAdd.frame = CGRectMake(10*ScreenWidth/375, 70*ScreenWidth/375+_imageWidth +60*ProportionAdapter, ScreenWidth-20*ScreenWidth/375, 44*ScreenWidth/375);
     _btnAdd.layer.masksToBounds = YES;
     _btnAdd.layer.cornerRadius = 8*ScreenWidth/375;
-    [_btnAdd setTitle:@"发布" forState:UIControlStateNormal];
+    [_btnAdd setTitle:@"上传" forState:UIControlStateNormal];
     [_btnAdd setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    _btnAdd.backgroundColor = [UIColor orangeColor];
+    _btnAdd.titleLabel.font = [UIFont systemFontOfSize:17 *ProportionAdapter];
+    _btnAdd.backgroundColor = [UIColor colorWithHexString:@"#F29825"];
     [_scrollView addSubview:_btnAdd];
     [_btnAdd addTarget:self action:@selector(fabuClick:) forControlEvents:UIControlEventTouchUpInside];
     
@@ -236,7 +244,7 @@
     
     _imageWidth = (ScreenWidth - ((LINE_COUNT + 1) * 20*ScreenWidth/375)) / LINE_COUNT;
     
-    _contentView = [[UIView alloc] initWithFrame:CGRectMake(10*ScreenWidth/375, 40*ScreenWidth/375, ScreenWidth-20*ScreenWidth/375, _imageWidth + 2 *10 *ScreenWidth/375)];
+    _contentView = [[UIView alloc] initWithFrame:CGRectMake(10*ScreenWidth/375, 0, ScreenWidth-20*ScreenWidth/375, _imageWidth + 2 *10 *ScreenWidth/375)];
     _contentView.backgroundColor = [UIColor whiteColor];
     _contentView.clipsToBounds = YES;
     [_scrollView addSubview:_contentView];
@@ -245,11 +253,17 @@
     
     _addButton = [UIButton buttonWithType:UIButtonTypeCustom];
     _addButton.frame = CGRectMake(5*ScreenWidth/375, 10*ScreenWidth/375, _imageWidth, _imageWidth);
-    [_addButton setImage:[UIImage imageNamed:@"tianjia"] forState:UIControlStateNormal];
+    [_addButton setImage:[UIImage imageNamed:@"addPIC"] forState:UIControlStateNormal];
     //    _addButton.layer.borderWidth = 1;
     //    _addButton.layer.borderColor = [UIColor orangeColor].CGColor;
     [_addButton addTarget:self action:@selector(addButtonClick:) forControlEvents:UIControlEventTouchUpInside];
     [_contentView addSubview:_addButton];
+    
+    _proLable = [[UILabel alloc]initWithFrame:CGRectMake(80 *ProportionAdapter, 35 *ProportionAdapter, 120 *ProportionAdapter, 20 *ProportionAdapter)];
+    _proLable.font = [UIFont systemFontOfSize:13 *ProportionAdapter];
+    _proLable.textColor = [UIColor lightGrayColor];
+    _proLable.text = @"点此区域添加照片";
+    [_contentView addSubview:_proLable];
     
     _actionSheet = [[UIActionSheet alloc] initWithTitle:@"拍照" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"拍照", @"选照片", nil];
     
@@ -282,6 +296,11 @@
         UIButton *button = [weakSelf.selectButtons objectAtIndex:index];
         [button removeFromSuperview];
         [weakSelf.selectButtons removeObjectAtIndex:index];
+        if (weakSelf.selectButtons.count == 0) {
+            _proLable.hidden = NO;
+        }else{
+            _proLable.hidden = YES;
+        }
         [weakSelf updateUserInterface];
     };
     [self.navigationController pushViewController:vc animated:YES];
@@ -341,6 +360,8 @@
      *
      *  @return return value description
      */
+    _proLable.hidden = YES;
+    
     [_selectImages addObject:UIImageJPEGRepresentation(imageCamera, 0.7)];
     UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(5*ScreenWidth/375, 10*ScreenWidth/375, _imageWidth, _imageWidth)];
     [button setImage:imageCamera forState:UIControlStateNormal];
@@ -382,6 +403,7 @@
          *
          *  @return return value description
          */
+        _proLable.hidden = YES;
         [_selectImages addObject:UIImageJPEGRepresentation(image, 0.7)];
         UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(5*ScreenWidth/375, 10*ScreenWidth/375, _imageWidth, _imageWidth)];
         [button setImage:image forState:UIControlStateNormal];

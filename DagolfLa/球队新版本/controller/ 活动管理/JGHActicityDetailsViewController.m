@@ -486,7 +486,15 @@ static CGFloat ImageHeight  = 210.0;
                     NSLog(@"data == %@", data);
                     if ([[data objectForKey:@"code"] integerValue] == 1) {
                         UIAlertAction *commitAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+                            NSString *bgUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/activity/%@_background.jpg@400w_150h_2o", strTimeKey];
                             
+                            [[SDImageCache sharedImageCache] removeImageForKey:bgUrl fromDisk:YES];
+                            
+                            NSString *bggUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/activity/%@_background.jpg", strTimeKey];
+                            
+                            [[SDImageCache sharedImageCache] removeImageForKey:bggUrl fromDisk:YES];
+                            
+                            _refreshBlock();
                             [self.navigationController popViewControllerAnimated:YES];
                         }];
                         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"系统提示" message:@"活动更新成功!" preferredStyle:UIAlertControllerStyleAlert];

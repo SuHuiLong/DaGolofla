@@ -36,6 +36,8 @@ static CGFloat ImageHeight  = 210.0;
     
     
     NSString* _strInfo, * _strName;
+    
+    UIImageView *_gradientImage;
 }
 @property (nonatomic,strong)SXPickPhoto * pickPhoto;//相册类
 @property (nonatomic, strong)UITableView *launchActivityTableView;
@@ -124,9 +126,9 @@ static CGFloat ImageHeight  = 210.0;
     
     
     //渐变图
-    UIImageView *gradientImage = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, ImageHeight)];
-    [gradientImage setImage:[UIImage imageNamed:@"backChange"]];
-    [self.titleView addSubview:gradientImage];
+    _gradientImage = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, ImageHeight)];
+    [_gradientImage setImage:[UIImage imageNamed:@"backChange"]];
+    [self.titleView addSubview:_gradientImage];
     
     //返回按钮
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -216,9 +218,14 @@ static CGFloat ImageHeight  = 210.0;
             [self.navigationController presentViewController:alertView animated:YES completion:nil];
         }];
     } completionBlock:^(id data) {
+        NSString *head = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/team/%@.jpg@200w_200h_2o", [self.detailDic objectForKey:@"timeKey"]];
+        NSString *headUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/team/%@_background.jpg@", [self.detailDic objectForKey:@"timeKey"]];
+        [[SDImageCache sharedImageCache] removeImageForKey:headUrl fromDisk:YES];
+        [[SDImageCache sharedImageCache] removeImageForKey:head fromDisk:YES];
+        
         [self.navigationController popViewControllerAnimated:YES];
         [Helper alertViewNoHaveCancleWithTitle:@"保存成功" withBlock:^(UIAlertController *alertView) {
-            [self.navigationController presentViewController:alertView animated:YES completion:nil];
+            [self presentViewController:alertView animated:YES completion:nil];
         }];
         
 //  注释
@@ -246,6 +253,8 @@ static CGFloat ImageHeight  = 210.0;
         
         CGRect f = CGRectMake(-(factor-screenWidth)/2, 0, factor, (ImageHeight  * screenWidth / 375)+ABS(yOffset));
         self.imgProfile.frame = f;
+        
+        _gradientImage.frame = self.imgProfile.frame;
         
         CGRect title = self.titleView.frame;
         self.titleView.frame = CGRectMake((factor-screenWidth)/2, 0  * screenWidth / 375, title.size.width, title.size.height);
@@ -411,8 +420,51 @@ static CGFloat ImageHeight  = 210.0;
         [_pickPhoto ShowTakePhotoWithController:self andWithBlock:^(NSObject *Data) {
             if ([Data isKindOfClass:[UIImage class]])
             {
-                self.headPortraitBtn.imageView.image = (UIImage *)Data;
-                [self.launchActivityTableView reloadData];
+                //设置背景
+                if (btn.tag == 520) {
+                    self.imgProfile.image = (UIImage *)Data;
+                    self.imgProfile.contentMode = UIViewContentModeScaleAspectFill;
+                    self.imgProfile.layer.masksToBounds = YES;
+                    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+                    [dict setObject:PHOTO_DAGOLFLA forKey:@"tag"];
+                    [dict setObject:[NSString stringWithFormat:@"%@_background" ,[self.detailDic objectForKey:@"timeKey"]] forKey:@"data"];
+                    [dict setObject:TYPE_TEAM_HEAD forKey:@"nType"];
+                    [[JsonHttp jsonHttp] httpRequestImageOrVedio:@"1" withData:dict andDataArray:[NSArray arrayWithObject:UIImageJPEGRepresentation(self.imgProfile.image, 0.7)] failedBlock:^(id errType) {
+                        NSLog(@"errType===%@", errType);
+                    } completionBlock:^(id data) {
+                        
+//                        NSString *bgUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/team/%@_background.jpg@400w_150h", [self.detailDic objectForKey:@"timeKey"]];
+//                        [[SDImageCache sharedImageCache] removeImageForKey:bgUrl];
+                        //                        [[SDImageCache sharedImageCache]removeImageForKey:bgUrl fromDisk:YES withCompletion:^{
+                        //                        }];
+                        //200w_200h_2o
+                    }];
+                    
+                }else if (btn.tag == 522){
+                    //头像
+                    [self.headPortraitBtn setImage:(UIImage *)Data forState:UIControlStateNormal];
+                    self.headPortraitBtn.layer.masksToBounds = YES;
+                    self.headPortraitBtn.layer.cornerRadius = 8.0;
+                    
+                    NSNumber* strTimeKey = [self.detailDic objectForKey:@"timeKey"];
+                    // 上传图片
+                    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+                    [dict setObject:strTimeKey forKey:@"data"];
+                    [dict setObject:TYPE_TEAM_HEAD forKey:@"nType"];
+                    [dict setObject:PHOTO_DAGOLFLA forKey:@"tag"];
+                    
+                    [[JsonHttp jsonHttp]httpRequestImageOrVedio:@"1" withData:dict andDataArray:[NSArray arrayWithObject:UIImageJPEGRepresentation((UIImage *)Data, 0.7)] failedBlock:^(id errType) {
+                        NSLog(@"errType===%@", errType);
+                    } completionBlock:^(id data) {
+//                        NSString *head = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/team/661.jpg@100w_100h"];
+//                        NSString *headUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/team/%@.jpg@200w_200h_2o", [self.detailDic objectForKey:@"timeKey"]];
+//                        [[SDImageCache sharedImageCache] removeImageForKey:headUrl fromDisk:YES];
+//                        [[SDImageCache sharedImageCache] removeImageForKey:head fromDisk:YES];
+                        //                        [[SDImageCache sharedImageCache]removeImageForKey:headUrl fromDisk:YES withCompletion:^{
+                        //                        }];
+                        
+                    }];
+                }
             }
         }];
     }];
@@ -435,8 +487,8 @@ static CGFloat ImageHeight  = 210.0;
                         NSLog(@"errType===%@", errType);
                     } completionBlock:^(id data) {
 
-                        NSString *bgUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/team/%@_background.jpg@400w_150h", [self.detailDic objectForKey:@"timeKey"]];
-                        [[SDImageCache sharedImageCache] removeImageForKey:bgUrl];
+//                        NSString *bgUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/team/%@_background.jpg@400w_150h", [self.detailDic objectForKey:@"timeKey"]];
+//                        [[SDImageCache sharedImageCache] removeImageForKey:bgUrl];
 //                        [[SDImageCache sharedImageCache]removeImageForKey:bgUrl fromDisk:YES withCompletion:^{
 //                        }];
 
@@ -458,10 +510,7 @@ static CGFloat ImageHeight  = 210.0;
                     [[JsonHttp jsonHttp]httpRequestImageOrVedio:@"1" withData:dict andDataArray:[NSArray arrayWithObject:UIImageJPEGRepresentation((UIImage *)Data, 0.7)] failedBlock:^(id errType) {
                         NSLog(@"errType===%@", errType);
                     } completionBlock:^(id data) {
-                        NSString *head = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/team/661.jpg@100w_100h"];
-                        NSString *headUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/team/%@.jpg@120w_120h", [self.detailDic objectForKey:@"timeKey"]];
-                        [[SDImageCache sharedImageCache] removeImageForKey:headUrl fromDisk:YES];
-                        [[SDImageCache sharedImageCache] removeImageForKey:head fromDisk:YES];
+                        
 //                        [[SDImageCache sharedImageCache]removeImageForKey:headUrl fromDisk:YES withCompletion:^{
 //                        }];
                         

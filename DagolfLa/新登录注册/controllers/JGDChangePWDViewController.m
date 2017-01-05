@@ -102,6 +102,7 @@
     self.PWDTF = [[UITextField alloc] initWithFrame:CGRectMake(70 * ProportionAdapter, 0, 220 * ProportionAdapter, 50 * ProportionAdapter)];
     self.PWDTF.placeholder = @"设置登录密码（至少6位）";
     self.PWDTF.secureTextEntry = NO;
+    self.PWDTF.keyboardType = UIKeyboardTypeAlphabet;
     self.PWDTF.font = [UIFont systemFontOfSize:16 * ProportionAdapter];
     [PWDView addSubview:self.PWDTF];
     

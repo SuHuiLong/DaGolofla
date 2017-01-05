@@ -12,6 +12,8 @@
 #import "JGMemHalfTableViewCell.h"
 
 #import "JGMemAuthorityViewController.h"
+#import "JGHTeamPalerBaseCell.h"
+
 @interface JGMemManageController ()<UITableViewDelegate,UITableViewDataSource>
 {
     UITableView* _tableView;
@@ -33,7 +35,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
+    self.navigationItem.title = @"球队成员管理";
     
     _arrayTitle = [NSArray arrayWithObjects:@"基本信息",@"权限设置", nil];
     _arrayInformation = [NSArray arrayWithObjects:@"姓名",@"性别",@"差点",@"球龄", nil];
@@ -47,23 +49,22 @@
 
 -(void)uiConfig
 {
-    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, 45*6*ScreenWidth/375 + 30*ScreenWidth/375) style:UITableViewStylePlain];
+    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, 280*ScreenWidth/375 + 110*ScreenWidth/375) style:UITableViewStylePlain];
     _tableView.delegate = self;
     _tableView.dataSource = self;
 //    _tableView.scrollEnabled = NO;
     [self.view addSubview:_tableView];
     [_tableView registerClass:[JGMemTitleTableViewCell class] forCellReuseIdentifier:@"JGMemTitleTableViewCell"];
     [_tableView registerClass:[JGMemHalfTableViewCell class] forCellReuseIdentifier:@"JGMemHalfTableViewCell"];
-    
-    
-    
+    [_tableView registerClass:[JGHTeamPalerBaseCell class] forCellReuseIdentifier:@"JGHTeamPalerBaseCell"];
+    _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     UIButton* btnDelete = [UIButton buttonWithType:UIButtonTypeCustom];
     btnDelete.titleLabel.font = [UIFont systemFontOfSize:15*screenWidth/375];
     
     [btnDelete setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     if ([_power rangeOfString:@"1002"].location != NSNotFound) {
         [btnDelete setTitle:@"剔除出队" forState:UIControlStateNormal];
-        btnDelete.backgroundColor = [UIColor orangeColor];
+        btnDelete.backgroundColor = [UIColor colorWithHexString:@"#F29825"];
         [btnDelete addTarget:self action:@selector(deleteClick) forControlEvents:UIControlEventTouchUpInside];
     }
     else{
@@ -73,7 +74,7 @@
    
     btnDelete.layer.cornerRadius = 8 *screenWidth/375;
     btnDelete.layer.masksToBounds = YES;
-    btnDelete.frame = CGRectMake(10*screenWidth/375, 45*6*ScreenWidth/375 + 40*ScreenWidth/375, screenWidth-20*screenWidth/375, 44*screenWidth/375);
+    btnDelete.frame = CGRectMake(10*screenWidth/375, 280*ScreenWidth/375 + 130*ScreenWidth/375, screenWidth-20*screenWidth/375, 44*screenWidth/375);
     
     [self.view addSubview:btnDelete];
     
@@ -123,7 +124,7 @@
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if (section == 0) {
-        return 5;
+        return 2;
     }
     else
     {
@@ -141,12 +142,34 @@
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 45*ScreenWidth/375;
+    if (indexPath.row == 1) {
+        return 280*ScreenWidth/375;
+    }else{
+        return 45*ScreenWidth/375;
+    }
 }
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row == 0) {
-        
+    if (indexPath.section == 0) {
+        if (indexPath.row == 0) {
+            JGMemTitleTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"JGMemTitleTableViewCell" forIndexPath:indexPath];
+            cell.titleLabel.text = _arrayTitle[indexPath.section];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            if (indexPath.section == 1) {
+                cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            }
+            
+            return cell;
+        }else{
+            JGHTeamPalerBaseCell* cell = [tableView dequeueReusableCellWithIdentifier:@"JGHTeamPalerBaseCell" forIndexPath:indexPath];
+            [cell configJGLTeamMemberModel:_model];
+            
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            return cell;
+        }
+    }
+    else
+    {
         JGMemTitleTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"JGMemTitleTableViewCell" forIndexPath:indexPath];
         cell.titleLabel.text = _arrayTitle[indexPath.section];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -154,63 +177,6 @@
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         }
         
-        return cell;
-    }
-    else
-    {
-        JGMemHalfTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"JGMemHalfTableViewCell" forIndexPath:indexPath];
-        
-        cell.titleLabel.text = _arrayInformation[indexPath.row-1];
-        if (indexPath.section == 0) {
-            switch (indexPath.row) {
-                case 1:
-                {
-                    if (![Helper isBlankString:_model.userName]) {
-                        cell.detailLabel.text = _model.userName;
-                    }
-                    else
-                    {
-                        cell.detailLabel.text = @"暂无用户名";
-                    }
-                    
-                }
-                    break;
-                case 2:
-                {
-                    if ([_model.sex integerValue] == 1) {
-                        cell.detailLabel.text = @"男";
-                    }
-                    else if ([_model.sex integerValue] == 2)
-                    {
-                        cell.detailLabel.text = @"女";
-                    }
-                    else
-                    {
-                        cell.detailLabel.text = @"保密";
-                    }
-                }
-                    break;
-                case 3:
-                {
-                    cell.detailLabel.text = [NSString stringWithFormat:@"%.1f",[_model.almost floatValue]];
-                }
-                    break;
-                case 4:
-                {
-                    if (_model.ballage != nil) {
-                        cell.detailLabel.text = [NSString stringWithFormat:@"%@",_model.ballage];
-                    }
-                    else{
-                        cell.detailLabel.text = [NSString stringWithFormat:@"暂无球龄"];
-                    }
-                }
-                    break;
-                    
-                default:
-                    break;
-            }
-        }
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
     }
     return nil;

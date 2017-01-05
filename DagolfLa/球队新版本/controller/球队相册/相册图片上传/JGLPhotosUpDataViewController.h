@@ -12,6 +12,8 @@
  */
 @interface JGLPhotosUpDataViewController : ViewController
 
+@property (nonatomic, retain)NSString *albumName;
+
 @property (strong, nonatomic) NSNumber* albumKey;
 
 @property (copy, nonatomic) void(^blockRefresh)();

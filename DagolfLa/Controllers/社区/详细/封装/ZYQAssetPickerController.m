@@ -107,6 +107,7 @@
     
     UIImage *videoIcon=[UIImage imageWithContentsOfFile:[[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"ZYQAssetPicker.Bundle/Images/AssetsPickerVideo@2x.png"]];
     
+    
     [videoIcon drawAtPoint:CGPointMake(2, (height - videoIcon.size.height) / 2)];
     
 }
@@ -138,6 +139,7 @@ static UIColor *disabledColor;
 -(id)initWithFrame:(CGRect)frame{
     if (self=[super initWithFrame:frame]) {
         _selectView=[[UIImageView alloc] initWithFrame:CGRectMake(frame.size.width-checkedIcon.size.width, frame.size.height-checkedIcon.size.height, checkedIcon.size.width, checkedIcon.size.height)];
+        _selectView.contentMode = UIViewContentModeScaleAspectFill;
         [self addSubview:_selectView];
     }
     return self;
@@ -232,7 +234,11 @@ static UIColor *titleColor;
         self.isAccessibilityElement     = YES;
         self.accessibilityTraits        = UIAccessibilityTraitImage;
         
+        //列表图片
         _imageView=[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, kThumbnailSize.width, kThumbnailSize.height)];
+        [_imageView setContentMode:UIViewContentModeScaleAspectFill];
+        _imageView.clipsToBounds = YES;
+        
         [self addSubview:_imageView];
         
         _videoTitle=[[ZYQVideoTitleView alloc] initWithFrame:CGRectMake(0, kThumbnailSize.height-20, kThumbnailSize.width, titleHeight)];
@@ -259,7 +265,7 @@ static UIColor *titleColor;
 
 //    [_imageView setImage:[UIImage imageWithCGImage:asset.thumbnail]];
     [_imageView setImage:[UIImage imageWithCGImage:asset.aspectRatioThumbnail]];
-    [_imageView setContentMode:UIViewContentModeScaleToFill];
+    [_imageView setContentMode:UIViewContentModeScaleAspectFill];
     __weak typeof(self) weakself = self;
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         //裁切

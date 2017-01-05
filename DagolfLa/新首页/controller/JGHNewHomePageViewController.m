@@ -543,12 +543,12 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
     UILabel *photoLable = [self.view viewWithTag:30002];
     UILabel *scoreLable = [self.view viewWithTag:30003];
     
-//    UIButton *oneBtn = [self.view viewWithTag:1001];
-//    UIButton *twoBtn = [self.view viewWithTag:1002];
-//    UIButton *threeBtn = [self.view viewWithTag:1003];
-//    [oneBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
-//    [twoBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
-//    [threeBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+    UIButton *oneBtn = [self.view viewWithTag:1001];
+    UIButton *twoBtn = [self.view viewWithTag:1002];
+    UIButton *threeBtn = [self.view viewWithTag:1003];
+    [oneBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+    [twoBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+    [threeBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
     
     if (btn.tag == 1001) {
         
@@ -558,7 +558,9 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
         activityLable.hidden = NO;
         photoLable.hidden = YES;
         scoreLable.hidden = YES;
-//        [oneBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [oneBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [twoBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+        [threeBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
         [cell configJGHShowActivityPhotoCell:_indexModel.activityList];
         
     } else if (btn.tag == 1002) {
@@ -569,7 +571,9 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
         activityLable.hidden = YES;
         photoLable.hidden = NO;
         scoreLable.hidden = YES;
-//        [twoBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [oneBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+        [twoBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [threeBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
         [cell configJGHShowPhotoCell:_indexModel.albumList];
         cell.photoBlock = ^(NSInteger numB){
             [self isLoginUp];
@@ -590,7 +594,9 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
         activityLable.hidden = YES;
         photoLable.hidden = YES;
         scoreLable.hidden = NO;
-//        [threeBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [oneBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+        [twoBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+        [threeBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [cell configJGHShowLiveCell:_indexModel.scoreList];
         cell.liveBlock = ^(NSInteger numB){
             [self isLoginUp];

@@ -45,7 +45,7 @@
     }];
     
     
-    UIImage * ballImage = [UIImage imageNamed:@"ball.png"];
+    UIImage * ballImage = [UIImage imageNamed:@"ball"];
     self.ballView = [[UIImageView alloc] initWithFrame:CGRectMake(0,0, 32*ProportionAdapter, 32*ProportionAdapter)];
     self.ballView.center =CGPointMake(150*ProportionAdapter,32*ProportionAdapter);
     self.ballView.image = ballImage;
@@ -93,7 +93,7 @@ static int timeNumber = 0;
     
     CAKeyframeAnimation * animation = [CAKeyframeAnimation animation];
     animation.keyPath =@"position";
-    animation.duration = 0.4;
+    animation.duration = 0.5;
     animation.delegate =self;
     animation.values =@[[NSValue valueWithCGPoint:CGPointMake(240*ProportionAdapter,290*ProportionAdapter)],
                         [NSValue valueWithCGPoint:CGPointMake(240*ProportionAdapter,310*ProportionAdapter)]];
@@ -114,10 +114,10 @@ static int timeNumber = 0;
     CAAnimationGroup * group = [CAAnimationGroup animation];
     group.animations =@[animation,opacityAnim];
     group.duration = animation.duration;
-    group.speed =0.5;
+    group.speed =0.4;
     group.removedOnCompletion = NO;
     group.fillMode = kCAFillModeForwards;
-    group.beginTime=CACurrentMediaTime()+5.1;//设置延迟2秒执行
+    group.beginTime=CACurrentMediaTime()+3.0;//设置延迟2秒执行
     [self.ballView.layer addAnimation:group forKey:nil];
     
 }
@@ -126,13 +126,13 @@ static int timeNumber = 0;
     self.ballView.center =CGPointMake(277*ProportionAdapter,-40*ProportionAdapter);
     CAKeyframeAnimation * animation = [CAKeyframeAnimation animation];
     animation.keyPath =@"position";
-    animation.duration =1.0;
+    animation.duration =0.5;
     animation.delegate =self;
-    animation.values =@[[NSValue valueWithCGPoint:CGPointMake(277*ProportionAdapter,-40*ProportionAdapter)],
+    animation.values =@[[NSValue valueWithCGPoint:CGPointMake(277*ProportionAdapter, -40*ProportionAdapter)],
                         [NSValue valueWithCGPoint:CGPointMake(277*ProportionAdapter,468*ProportionAdapter)],
-                        [NSValue valueWithCGPoint:CGPointMake(277*ProportionAdapter,360*ProportionAdapter)],
+                        [NSValue valueWithCGPoint:CGPointMake(277*ProportionAdapter,320*ProportionAdapter)],
                         [NSValue valueWithCGPoint:CGPointMake(277*ProportionAdapter,468*ProportionAdapter)],
-                        [NSValue valueWithCGPoint:CGPointMake(277*ProportionAdapter,450*ProportionAdapter)],
+                        [NSValue valueWithCGPoint:CGPointMake(277*ProportionAdapter,420*ProportionAdapter)],
                         [NSValue valueWithCGPoint:CGPointMake(277*ProportionAdapter,468*ProportionAdapter)]];
     
     animation.timingFunctions =@[[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn],
@@ -143,7 +143,7 @@ static int timeNumber = 0;
     //  设置每个关键帧的时长
     //@0.0第0s
     //@0.2从开始的第0s，过后的0.2s开始执行
-    animation.keyTimes =@[@0.0, @0.2,@0.3, @0.4,@0.5, @0.6];
+//    animation.keyTimes =@[@0.0, @0.2,@0.3, @0.4,@0.5, @0.6];
     
     self.ballView.layer.position = CGPointMake(277*ProportionAdapter,468*ProportionAdapter);
     
@@ -151,7 +151,7 @@ static int timeNumber = 0;
     CAAnimationGroup * group = [CAAnimationGroup animation];
     group.animations =@[animation];
     group.duration = animation.duration;
-    group.speed =0.2;
+    group.speed =0.4;
     
     [self.ballView.layer addAnimation:group forKey:nil];
 }
@@ -174,19 +174,19 @@ static int timeNumber = 0;
     keyframeAnimation.removedOnCompletion = NO;
     keyframeAnimation.fillMode = kCAFillModeForwards;
     //设置其他属性
-    keyframeAnimation.duration=2.0;
-    keyframeAnimation.beginTime=CACurrentMediaTime()+3.1;//设置延迟2秒执行
+    keyframeAnimation.duration=1.5;
+    keyframeAnimation.beginTime=CACurrentMediaTime()+1.2;//设置延迟2秒执行
     //3.添加动画到图层，添加动画后就会执行动画
     [self.ballView.layer addAnimation:keyframeAnimation forKey:@"KCKeyframeAnimation_Position"];
     
     
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(4.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [UIView animateWithDuration:2.0 animations:^{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.7 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [UIView animateWithDuration:1.0 animations:^{
             self.ballView.alpha = 0;
 //            _callBack();
         }];
     });
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
 
         _callBack();
     });

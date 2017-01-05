@@ -9,8 +9,6 @@
 #import "JGLAddTeaPlayerViewController.h"
 #import "JGLAddTeamPlayerTableViewCell.h"
 
-#import "JGMemManageController.h"
-
 #import "MJRefresh.h"
 #import "MJDIYBackFooter.h"
 #import "MJDIYHeader.h"

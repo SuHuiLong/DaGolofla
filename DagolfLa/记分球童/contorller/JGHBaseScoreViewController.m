@@ -37,9 +37,8 @@
         [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
     }
     
-    UINavigationBar *navigationBar = self.navigationController.navigationBar;
-    [navigationBar setBackgroundImage:[UIImage imageNamed:@"parentTopBackgroupd"] forBarPosition:UIBarPositionAny barMetrics:UIBarMetricsDefault];
-    [navigationBar setShadowImage:[UIImage new]];
+    //消除阴影线
+    self.navigationController.navigationBar.shadowImage = [UIImage new];
     
     UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@")-2"] style:UIBarButtonItemStylePlain target:self action:@selector(backButtonClcik)];
     item.tintColor = [UIColor colorWithHexString:Bar_Segment];

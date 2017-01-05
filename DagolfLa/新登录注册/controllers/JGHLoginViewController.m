@@ -92,6 +92,18 @@
 }
 - (void)backClcik{
     if (_index == 1) {
+        
+        NSArray *arr = self.navigationController.viewControllers;
+        NSLog(@"%@", arr);
+        
+        NSMutableArray *arrr = [NSMutableArray array];
+        [arrr addObject:[arr firstObject]];
+        
+        self.navigationController.viewControllers = arrr;
+        
+//        NSArray *arr1 = self.navigationController.viewControllers;
+//        NSLog(@"%@", arr1);
+        
         [self.navigationController popToRootViewControllerAnimated:YES];
         [[NSNotificationCenter defaultCenter]postNotificationName:@"SetOutToIndexNot" object:nil];
     }else{
@@ -639,6 +651,7 @@ void ContactsChangeCallback (ABAddressBookRef addressBook,
     _passwordText.font = [UIFont systemFontOfSize:17 *ProportionAdapter];
     _passwordText.secureTextEntry = NO;
     _passwordText.clearButtonMode = UITextFieldViewModeAlways;
+    _passwordText.keyboardType = UIKeyboardTypeAlphabet;
     _passwordText.delegate = self;
     [_passwordView addSubview:_passwordText];
     
@@ -659,9 +672,6 @@ void ContactsChangeCallback (ABAddressBookRef addressBook,
 #pragma mark -- 忘记密码
 - (void)forgotPasswordBtn:(UIButton *)btn{
     JGHForgotPasswordViewController *forCtrl = [[JGHForgotPasswordViewController alloc]initWithNibName:@"JGHForgotPasswordViewController" bundle:nil];
-    forCtrl.blackCtrl = ^(){
-        [self backClcik];
-    };
     [self.navigationController pushViewController:forCtrl animated:YES];
 }
 #pragma mark -- 验证码登录试图

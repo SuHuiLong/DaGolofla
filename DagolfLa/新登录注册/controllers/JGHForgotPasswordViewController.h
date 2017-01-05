@@ -18,8 +18,8 @@
 
 @interface JGHForgotPasswordViewController : ViewController
 
-typedef void(^BlackCtrl)();
-@property(nonatomic,copy)BlackCtrl blackCtrl;
+//typedef void(^BlackCtrl)();
+//@property(nonatomic,copy)BlackCtrl blackCtrl;
 
 //@property (weak, nonatomic)id <JGHForgotPasswordViewControllerDelegate> delegate;
 

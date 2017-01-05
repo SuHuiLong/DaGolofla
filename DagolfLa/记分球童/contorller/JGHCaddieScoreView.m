@@ -42,6 +42,8 @@
 
 @property (strong, nonatomic)JGLTeeChooseView* chooseView;//tee台视图
 
+@property (nonatomic, retain)UIButton *scoreBtn;
+
 @end
 
 @implementation JGHCaddieScoreView
@@ -86,15 +88,17 @@
 
 -(void)createScoreBtn
 {
-    UIButton* btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    btn.backgroundColor = [UIColor orangeColor];
-    [btn setTitle:@"开始记分" forState:UIControlStateNormal];
-    [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    btn.layer.masksToBounds = YES;
-    [btn addTarget:self action:@selector(professionalScore:) forControlEvents:UIControlEventTouchUpInside];
-    btn.layer.cornerRadius = 8*ScreenWidth/375;
-    btn.frame = CGRectMake(10*ScreenWidth/375, screenHeight - 54*ScreenWidth/375 - 64, ScreenWidth-20*ScreenWidth/375, 44*ScreenWidth/375);
-    [self addSubview:btn];
+    _scoreBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    
+    [_scoreBtn setTitle:@"开始记分" forState:UIControlStateNormal];
+    [_scoreBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    _scoreBtn.layer.masksToBounds = YES;
+    _scoreBtn.backgroundColor = [UIColor lightGrayColor];
+    _scoreBtn.userInteractionEnabled = NO;
+    [_scoreBtn addTarget:self action:@selector(professionalScore:) forControlEvents:UIControlEventTouchUpInside];
+    _scoreBtn.layer.cornerRadius = 8*ScreenWidth/375;
+    _scoreBtn.frame = CGRectMake(10*ScreenWidth/375, screenHeight - 54*ScreenWidth/375 - 64, ScreenWidth-20*ScreenWidth/375, 44*ScreenWidth/375);
+    [self addSubview:_scoreBtn];
 }
 #pragma mark -- 开始记分
 - (void)professionalScore:(UIButton *)btn{
@@ -419,6 +423,8 @@
     _dataBallArray = [dataBallArray mutableCopy];
     _selectAreaArray = [selectAreaArray mutableCopy];
     _numTimeKeyLogo = [NSNumber numberWithInteger:numTimeKeyLogo];
+    _scoreBtn.backgroundColor = [UIColor orangeColor];
+    _scoreBtn.userInteractionEnabled = YES;
     [self.tableView reloadData];
 }
 - (void)reloadBallName:(NSString *)ballName andBallId:(NSInteger)ballID{

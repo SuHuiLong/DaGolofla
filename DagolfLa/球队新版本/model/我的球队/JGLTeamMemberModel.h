@@ -77,5 +77,11 @@
 
 @property (strong, nonatomic) ChineseString *chineseString;
 
+@property (copy, nonatomic)NSString *company;//公司
+
+@property (copy, nonatomic)NSString *occupation;//职位
+
+@property (copy, nonatomic)NSString *industry;//行业
+
 
 @end

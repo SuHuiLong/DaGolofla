@@ -23,7 +23,7 @@
     
     self.time.font = [UIFont systemFontOfSize:13*ProportionAdapter];
     self.timeLeft.constant = 10 *ProportionAdapter;
-    self.timeDown.constant = 15 *ProportionAdapter;
+    self.timeDown.constant = 17 *ProportionAdapter;
     self.timeRight.constant = 10 *ProportionAdapter;
 
     self.setAlmostBtn.layer.masksToBounds = YES;
@@ -37,6 +37,8 @@
     [self addConstraints:arrayW];
     
     self.setAlmostBtnRight.constant = 10 *ProportionAdapter;
+    
+    self.line.backgroundColor = [UIColor colorWithHexString:Bar_Segment];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

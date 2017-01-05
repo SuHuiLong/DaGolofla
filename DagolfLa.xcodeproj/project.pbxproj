@@ -453,6 +453,7 @@
 		20BA61421CDCA180004B61F5 /* VedioPlayViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 20BA61401CDCA180004B61F5 /* VedioPlayViewController.xib */; };
 		20BC977F1E1B3F59007DFD34 /* JGHTimeViewListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 20BC977E1E1B3F59007DFD34 /* JGHTimeViewListCell.m */; };
 		20BC97831E1BA789007DFD34 /* UIAlertController+JGHUIAlertController.m in Sources */ = {isa = PBXBuildFile; fileRef = 20BC97821E1BA789007DFD34 /* UIAlertController+JGHUIAlertController.m */; };
+		20BC97861E1DFA62007DFD34 /* JGHTeamPalerBaseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 20BC97851E1DFA62007DFD34 /* JGHTeamPalerBaseCell.m */; };
 		20C1B8AB1CE313A200508ABC /* JGTeamApplyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 20C1B8A91CE313A200508ABC /* JGTeamApplyViewController.m */; };
 		20C1B8AC1CE313A200508ABC /* JGTeamApplyViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 20C1B8AA1CE313A200508ABC /* JGTeamApplyViewController.xib */; };
 		20C1B8B01CE3241C00508ABC /* JGTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 20C1B8AE1CE3241C00508ABC /* JGTableViewCell.m */; };
@@ -2168,6 +2169,8 @@
 		20BC977E1E1B3F59007DFD34 /* JGHTimeViewListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHTimeViewListCell.m; sourceTree = "<group>"; };
 		20BC97811E1BA789007DFD34 /* UIAlertController+JGHUIAlertController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIAlertController+JGHUIAlertController.h"; sourceTree = "<group>"; };
 		20BC97821E1BA789007DFD34 /* UIAlertController+JGHUIAlertController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIAlertController+JGHUIAlertController.m"; sourceTree = "<group>"; };
+		20BC97841E1DFA62007DFD34 /* JGHTeamPalerBaseCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHTeamPalerBaseCell.h; sourceTree = "<group>"; };
+		20BC97851E1DFA62007DFD34 /* JGHTeamPalerBaseCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHTeamPalerBaseCell.m; sourceTree = "<group>"; };
 		20C1B8A81CE313A200508ABC /* JGTeamApplyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGTeamApplyViewController.h; sourceTree = "<group>"; };
 		20C1B8A91CE313A200508ABC /* JGTeamApplyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGTeamApplyViewController.m; sourceTree = "<group>"; };
 		20C1B8AA1CE313A200508ABC /* JGTeamApplyViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JGTeamApplyViewController.xib; sourceTree = "<group>"; };
@@ -8002,6 +8005,8 @@
 				828A99FB1CE3549900AF9860 /* JGMemDataTableViewCell.m */,
 				82D595E11CE42E7B00CD9587 /* JGMemHalfTableViewCell.h */,
 				82D595E21CE42E7B00CD9587 /* JGMemHalfTableViewCell.m */,
+				20BC97841E1DFA62007DFD34 /* JGHTeamPalerBaseCell.h */,
+				20BC97851E1DFA62007DFD34 /* JGHTeamPalerBaseCell.m */,
 				829487241CE99A2F0018D3F6 /* JGPhotoShowCollectionViewCell.h */,
 				829487251CE99A2F0018D3F6 /* JGPhotoShowCollectionViewCell.m */,
 				829487261CE99A2F0018D3F6 /* JGPhotoShowCollectionViewCell.xib */,
@@ -9629,6 +9634,7 @@
 				821DB9DA1D5DB64B00C882C2 /* JGLScoreSureViewController.m in Sources */,
 				203019B61E0E4292005568E2 /* ZXRSSExpandedDecodedNumeric.m in Sources */,
 				F5B549971CE9B0710091C962 /* JGApplyMaterialTableViewCell.m in Sources */,
+				20BC97861E1DFA62007DFD34 /* JGHTeamPalerBaseCell.m in Sources */,
 				36BF003F1BC771FB005B3CE2 /* OtherDataTableViewCell.m in Sources */,
 				F543ACC41CF4269D00C6B111 /* JGLableAndLableTableViewCell.m in Sources */,
 				F59A8B931D5B507F00E8292B /* JGDPlayerHisScoreCardViewController.m in Sources */,

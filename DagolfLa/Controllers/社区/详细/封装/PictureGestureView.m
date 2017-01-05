@@ -44,7 +44,7 @@ static BOOL isTap = NO;
     
     self.imageView = ({
         UIImageView * imageView = [[UIImageView alloc] initWithFrame:self.scrollView.bounds];
-        imageView.contentMode = UIViewContentModeScaleAspectFit;
+//        imageView.contentMode = UIViewContentModeScaleAspectFit;
         imageView.contentMode = UIViewContentModeScaleAspectFill;
         imageView.clipsToBounds = YES;
         imageView.userInteractionEnabled = YES;
