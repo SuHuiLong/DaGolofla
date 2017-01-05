@@ -77,7 +77,7 @@
         weakSelf.blockTimeWithPrice([NSString stringWithFormat:@"%td-%@-%@ %@:00", weakSelf.year, month, day, time], price, paymentMoney);
         [weakSelf.navigationController popViewControllerAnimated:YES];
     };
-    [_timeListView loadTimeListWithBallKey:_ballKey andDateString:@"2017-01-10 09:00:00"];
+//    [_timeListView loadTimeListWithBallKey:_ballKey andDateString:@"2017-01-10 09:00:00"];
     [self.view addSubview:_timeListView];
 }
 
@@ -87,7 +87,7 @@
 }
 
 - (void)initOtherData {
-    self.title = @"LGL价格日历";
+    self.title = @"选择日期";
     
     //获取当前的年月日
      _year = [LGLCalendarDate year:[NSDate date]];
@@ -132,7 +132,40 @@
     [LGLCalenderModel getCalenderDataWithDate:[NSDate date] block:^(NSMutableArray *result) {
         [LQProgressHud hide];
         [self.dataSource addObjectsFromArray:result];
-        [self.collectionView reloadData];
+        
+        for (LGLCalenderModel *model in self.dataSource) {
+            for (LGLCalenderSubModel *dayModel in model.details) {
+                if (model.month == _month) {
+                    if (dayModel.price.length > 0) {
+                        
+                        NSString *day;
+                        if (dayModel.day < 10) {
+                            day = [NSString stringWithFormat:@"0%td", dayModel.day];
+                        }else{
+                            day = [NSString stringWithFormat:@"%td", dayModel.day];
+                        }
+                        
+                        _day = dayModel.day;//可预定时间
+                        
+                        NSString *month;
+                        if (_month < 10) {
+                            month = [NSString stringWithFormat:@"0%td", _month];
+                        }else{
+                            month = [NSString stringWithFormat:@"%td", _month];
+                        }
+                        
+                        [self.collectionView reloadData];
+                        [_timeListView loadTimeListWithBallKey:_ballKey andDateString:[NSString stringWithFormat:@"%td-%@-%@", _year, month, day]];
+                        break;
+                    }else{
+                        continue;
+                    }
+                }else{
+                    continue;
+                }
+            }
+        }
+        
     }];
 }
 
@@ -173,15 +206,30 @@
             cell.backgroundColor = [UIColor whiteColor];//LGLColor(244, 243, 231)
             if ((model.year == _year) && (model.month == _month) && (subModel.day == _day))  {
                 cell.backgroundColor =  [UIColor colorWithHexString:Bar_Segment];//LGLColor(65, 207, 79)
+                cell.dateL.textColor = [UIColor whiteColor];
+            }else{
+                cell.dateL.textColor = [UIColor blackColor];
             }
             
-            if ((model.month == _currentMonth) && (subModel.day < _currentDay)) {
+            if ((model.month == _currentMonth) && (subModel.day <= _currentDay)) {
 //                cell.backgroundColor = LGLColor(239, 239, 239);
                 cell.dateL.textColor = [UIColor lightGrayColor];
-                cell.priceL.textColor = [UIColor colorWithHexString:@"#fc5a01"];//[UIColor lightGrayColor];
-                cell.priceL.textColor = [UIColor lightGrayColor];
+//                cell.priceL.textColor = [UIColor colorWithHexString:@"#fc5a01"];//[UIColor lightGrayColor];
+//                cell.priceL.textColor = [UIColor lightGrayColor];
+                if (subModel.day == _currentDay) {
+//                    cell.priceL.textColor = [UIColor lightGrayColor];
+                    cell.dateL.font = [UIFont systemFontOfSize:18*ProportionAdapter];
+//                    cell.priceL.font = [UIFont systemFontOfSize:16*ProportionAdapter];
+                    cell.dateL.text = @"今";
+//                    cell.priceL.text = @"天";
+                    cell.dateL.center = CGPointMake(25 *ProportionAdapter, 25 *ProportionAdapter);
+                }else{
+                    cell.dateL.text = [NSString stringWithFormat:@"%ld",(long)subModel.day];
+                }
+                
                 cell.userInteractionEnabled = NO;
             }
+    
         } else {
             cell.userInteractionEnabled = NO;
         

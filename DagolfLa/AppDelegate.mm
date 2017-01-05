@@ -71,6 +71,11 @@
     BMKMapManager* _mapManager;
     
     NSInteger _pushID;//双击Homde退出时，通过链接重新打开APP时openURL方法会调用，导致2次Push页面；
+    
+    NSInteger _teamUnread;
+    NSInteger _systemUnread;
+    
+    NSInteger _newFriendUnread;
 }
 //@property (strong, nonatomic) UIView *lunchView;
 //@property (strong, nonatomic) UIWebView* webView;
@@ -484,6 +489,8 @@
             [self startApp];
             
             [self pushSpecifiedViewCtrl:[NSString stringWithFormat:@"%@", url]];
+            
+            [self notifyUpdateUnreadMessageCount];
         }
         
     }else if (url != nil) {
@@ -495,6 +502,8 @@
                 [self startApp];
                 
                 [self pushSpecifiedViewCtrl:[NSString stringWithFormat:@"%@", url]];
+                
+                [self notifyUpdateUnreadMessageCount];
             }
         }
     }else{
@@ -1020,6 +1029,8 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
     [self getCurPosition];
     
     [self postAppJpost];
+    
+    [self loadMessageData];
 }
 #pragma mark -- 极光推送的id和数据
 -(void)postAppJpost
@@ -1297,6 +1308,69 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
         }
     }
 }
+#pragma mark -- 获取通知数量
+#pragma mark -- 下载未读消息数量
+- (void)loadMessageData{
+    
+    if (!DEFAULF_USERID)
+    {
+        return;
+    }
+    
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    [dict setObject:DEFAULF_USERID forKey:@"userKey"];
+    [dict setObject:[Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@dagolfla.com", DEFAULF_USERID]] forKey:@"md5"];
+    [[JsonHttp jsonHttp]httpRequest:@"msg/geSumtUnread" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
+        
+    } completionBlock:^(id data) {
+        NSLog(@"%@", data);
+        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+            _teamUnread = [[data objectForKey:@"teamUnread"] integerValue];
+            _systemUnread = [[data objectForKey:@"systemUnread"] integerValue];
+            _newFriendUnread = [[data objectForKey:@"newFriendUnread"] integerValue];
+            
+            [self notifyUpdateUnreadMessageCount];
+            
+        }else{
+            [self notifyUpdateUnreadMessageCount];
+            
+        }
+    }];
+}
+#pragma mark -- 获取融云消息
+- (void)notifyUpdateUnreadMessageCount
+{
+    [self updateBadgeValueForTabBarItem];
+}
 
+- (void)updateBadgeValueForTabBarItem
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        NSArray *displayConversationTypeArray = @[@1];
+//        NSArray *count1 =  [[RCIMClient sharedRCIMClient] getConversationList:displayConversationTypeArray];
+        
+        int count = [[RCIMClient sharedRCIMClient]
+                     getUnreadCount:displayConversationTypeArray];
+        
+        // 获取导航控制器
+        TabBarController *tabVC = (TabBarController *)self.window.rootViewController;
+        if (![tabVC isKindOfClass:[TabBarController class]]) {
+            return ;
+        }
+        
+        UINavigationController *RedVc = (UINavigationController *)tabVC.viewControllers[2];
+        
+        if ((count + (int)_teamUnread +(int)_systemUnread +(int)_newFriendUnread) > 0) {
+            //      __weakSelf.tabBarItem.badgeValue =
+            //          [[NSString alloc] initWithFormat:@"%d", count];
+            //            int badgeValue = count+_teamUnread+_systemUnread;
+            [RedVc.tabBarController.tabBar showBadgeOnItemIndex:2 badgeValue:count+ (int)_teamUnread + (int)_systemUnread + (int)_newFriendUnread];
+        } else {
+            //      __weakSelf.tabBarItem.badgeValue = nil;
+            [RedVc.tabBarController.tabBar hideBadgeOnItemIndex:2];
+        }
+        
+    });
+}
 
 @end
