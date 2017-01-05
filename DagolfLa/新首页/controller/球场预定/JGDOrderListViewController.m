@@ -21,8 +21,24 @@
 
 @property (nonatomic, strong) NSMutableArray *dataArray;
 
+@property (nonatomic, strong) NSMutableArray *countAarray;
+
 @property (nonatomic, assign) NSInteger offset;
 @property (nonatomic, assign) NSInteger currentType;
+
+/*
+ // 填充数量
+ response.putInt("count", count);                        // 总数量
+ response.putInt("waitConfirmCount", waitConfirmCount);  // 待确认
+ response.putInt("waitPayCount", waitPayCount);          // 待付款
+ response.putInt("finishedCount", finishedCount);        // 已完成
+ */
+@property (nonatomic, copy) NSString *count;
+@property (nonatomic, copy) NSString *waitConfirmCount;
+@property (nonatomic, copy) NSString *waitPayCount;
+@property (nonatomic, copy) NSString *finishedCount;
+
+
 
 @end
 
@@ -55,15 +71,25 @@
             
             if (self.offset == 0) {
                 [self.dataArray removeAllObjects];
+                [self.countAarray removeAllObjects];
+                NSArray *nameArray = [NSArray arrayWithObjects:@"count", @"waitConfirmCount", @"waitPayCount", @"finishedCount", nil];
+                for (int i = 0; i < 4; i ++) {
+                    [self.countAarray addObject:[data objectForKey:nameArray[i]]];
+                }
+
             }
             if ([data objectForKey:@"list"]) {
+                
                 [self.dataArray addObjectsFromArray:[data objectForKey:@"list"]];
+                
+                
             }
+            
             [self.orderTableView reloadData];
-
+            
         }
     }];
-
+    
 }
 
 - (void)viewDidLoad {
@@ -81,12 +107,12 @@
 
 - (void)orderTableSet{
     
-    self.orderTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight - 64 * ProportionAdapter) style:(UITableViewStylePlain)];
+    self.orderTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight - 20) style:(UITableViewStylePlain)];
     self.orderTableView.delegate = self;
     self.orderTableView.dataSource = self;
     self.orderTableView.rowHeight = 112 * ProportionAdapter;
-    self.orderTableView.separatorStyle = UITableViewCellAccessoryNone;
-    
+    self.orderTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+
     [self.view addSubview:self.orderTableView];
     [self.orderTableView registerClass:[JGDOrderListTableViewCell class] forCellReuseIdentifier:@"orderListCell"];
 
@@ -111,7 +137,37 @@
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
+    
+    if ([self.countAarray count] == 4) {
+        for (UIButton *btn in self.headView.subviews) {
+            
+            switch (btn.tag) {
+                case 300:
+                    [btn setTitle:[self.countAarray[0] stringValue] forState:(UIControlStateNormal)];
+                    
+                    break;
+                    
+                case 301:
+                    [btn setTitle:[self.countAarray[1] stringValue] forState:(UIControlStateNormal)];
+                    
+                    break;
+                case 302:
+                    [btn setTitle:[self.countAarray[2] stringValue] forState:(UIControlStateNormal)];
+                    
+                    break;
+                case 303:
+                    [btn setTitle:[self.countAarray[3] stringValue] forState:(UIControlStateNormal)];
+                    
+                    break;
+                    
+                default:
+                    break;
+            }
+            
+        }
 
+    }
+    
     return self.headView;
 }
 
@@ -122,20 +178,32 @@
         
         NSArray *array = [NSArray arrayWithObjects:@"全部", @"待确认", @"待付款", @"已完成", nil];
         for (int i = 0; i < 4; i ++) {
+            
+            UIButton *countbtn = [[UIButton alloc] initWithFrame:CGRectMake(i * 91 * ProportionAdapter, 2 * ProportionAdapter, 91 * ProportionAdapter, 30 * ProportionAdapter)];
+            countbtn.tag = 300 + i;
+            if ([self.countAarray count] == 4) {
+                [countbtn setTitle:self.countAarray[i] forState:(UIControlStateNormal)];
+            }
+//            [countbtn addTarget:self action:@selector(clickAct:) forControlEvents:(UIControlEventTouchUpInside)];
+            countbtn.titleLabel.font = [UIFont systemFontOfSize:17 * ProportionAdapter];
+//            [countbtn setTitleColor:[UIColor colorWithHexString:@"#a0a0a0"] forState:(UIControlStateNormal)];
+            [self.headView addSubview:countbtn];
+
             UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(i * 91 * ProportionAdapter, 20 * ProportionAdapter, 91 * ProportionAdapter, 30 * ProportionAdapter)];
             btn.tag = 200 + i;
             [btn addTarget:self action:@selector(clickAct:) forControlEvents:(UIControlEventTouchUpInside)];
+            [btn setTitle:array[i] forState:(UIControlStateNormal)];
             if (i == 0) {
-                [btn setTitle:array[i] forState:(UIControlStateNormal)];
                 [btn setTitleColor:[UIColor colorWithHexString:@"#32b14d"] forState:(UIControlStateNormal)];
+                [countbtn setTitleColor:[UIColor colorWithHexString:@"#32b14d"] forState:(UIControlStateNormal)];
             }else{
-                [btn setTitle:array[i] forState:(UIControlStateNormal)];
                 [btn setTitleColor:[UIColor colorWithHexString:@"#a0a0a0"] forState:(UIControlStateNormal)];
+                [countbtn setTitleColor:[UIColor colorWithHexString:@"#a0a0a0"] forState:(UIControlStateNormal)];
             }
             [self.headView addSubview:btn];
         }
         
-        self.greenView = [[UIView alloc] initWithFrame:CGRectMake(10 * ProportionAdapter, 49 * ProportionAdapter, 70 * ProportionAdapter, 1 * ProportionAdapter)];
+        self.greenView = [[UIView alloc] initWithFrame:CGRectMake(10 * ProportionAdapter, 47.5 * ProportionAdapter, 70 * ProportionAdapter, 2.5 * ProportionAdapter)];
         self.greenView.backgroundColor = [UIColor colorWithHexString:@"#32b14d"];
         [self.headView addSubview:self.greenView];
         
@@ -155,6 +223,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     JGDOrderListTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"orderListCell"];
     cell.dataDic = self.dataArray[indexPath.row];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
 }
 
@@ -171,7 +240,11 @@
         }
     }
     
+    UIButton *titleBtn = [self.headView viewWithTag:btn.tag + 100];
     [btn setTitleColor:[UIColor colorWithHexString:@"#32b14d"] forState:(UIControlStateNormal)];
+    [titleBtn setTitleColor:[UIColor colorWithHexString:@"#32b14d"] forState:(UIControlStateNormal)];
+
+    
     // 0: 待付款  1:待确认  3: 待取消  4: 待退款  5: 已完成
     if (btn.tag == 200) {
         self.greenView.frame = CGRectMake(10 * ProportionAdapter, 47.5* ProportionAdapter, 70 * ProportionAdapter, 2.5 * ProportionAdapter);
@@ -201,6 +274,13 @@
     JGDOrderDetailViewController *detailVC = [[JGDOrderDetailViewController alloc] init];
     detailVC.orderKey = [self.dataArray[indexPath.row] objectForKey:@"timeKey"];
     [self.navigationController pushViewController:detailVC animated:YES];
+}
+
+- (NSMutableArray *)countAarray{
+    if (!_countAarray) {
+        _countAarray = [[NSMutableArray alloc] init];
+    }
+    return _countAarray;
 }
 
 - (NSMutableArray *)dataArray{

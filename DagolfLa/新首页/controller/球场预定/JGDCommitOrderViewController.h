@@ -18,11 +18,4 @@
 @property (nonatomic, copy) NSString *selectDate;           //  选择的时间
 
 
-//
-//@property (nonatomic, strong) NSNumber *suggestedPrice;
-//@property (nonatomic, copy) NSString *ballName;
-//@property (nonatomic, strong) NSNumber *ballKey;
-//
-//@property (nonatomic, strong) NSNumber *payType;
-
 @end

@@ -131,11 +131,11 @@
     [self.courtTableView.header beginRefreshing];
     
     
-    CGFloat width = [Helper textWidthFromTextString:[[NSUserDefaults standardUserDefaults] objectForKey:CITYNAME] height:30 * ProportionAdapter fontSize:17 * ProportionAdapter];
+    CGFloat width = [Helper textWidthFromTextString:[[NSUserDefaults standardUserDefaults] objectForKey:CITYNAME] height:30 * ProportionAdapter fontSize:17];
     
     self.backTitleView = [[UIView alloc] initWithFrame:CGRectMake((screenWidth - width + 30 * ProportionAdapter ) / 2, 0, width + 30 * ProportionAdapter, 30 * ProportionAdapter)];
 
-    self.cityLitleLB = [self lablerect:CGRectMake(0, 0, width, 30 * ProportionAdapter) labelColor:[UIColor whiteColor] labelFont:(17 * ProportionAdapter) text:[[NSUserDefaults standardUserDefaults] objectForKey:CITYNAME] textAlignment:(NSTextAlignmentRight)];
+    self.cityLitleLB = [self lablerect:CGRectMake(0, 0, width, 30 * ProportionAdapter) labelColor:[UIColor whiteColor] labelFont:(17) text:[[NSUserDefaults standardUserDefaults] objectForKey:CITYNAME] textAlignment:(NSTextAlignmentRight)];
     
     self.titleBtn = [[UIButton alloc] initWithFrame:CGRectMake(width, 0, 30 * ProportionAdapter, 30 * ProportionAdapter)];
     [self.titleBtn setImage:[UIImage imageNamed:@"booking_arrow"] forState:(UIControlStateNormal)];
@@ -160,7 +160,7 @@
 - (void)citySearchAct{
     JGDCitySearchViewController *citySearchVC = [[JGDCitySearchViewController alloc] init];
     citySearchVC.blockAddress = ^(NSString *city){
-        CGFloat width = [Helper textWidthFromTextString:city height:screenWidth - 20 * ProportionAdapter fontSize:17 * ProportionAdapter];
+        CGFloat width = [Helper textWidthFromTextString:city height:screenWidth - 20 * ProportionAdapter fontSize:17];
         self.cityLitleLB.text = city;
         self.cityString = city;
         

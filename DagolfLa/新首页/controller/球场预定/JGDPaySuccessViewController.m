@@ -20,8 +20,10 @@
     
     if (_payORlaterPay == 1) {
         self.title = @"支付成功";
-    }else if (_payORlaterPay == 2){
+    }else if (_payORlaterPay == 2) {
         self.title = @"提交成功";
+    }else if (_payORlaterPay == 3) {
+        self.title = @"取消订单";
     }
     self.view.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];
     
@@ -51,7 +53,7 @@
         btn.imageEdgeInsets = UIEdgeInsetsMake(0, -10 * ProportionAdapter, 0, 0);
         [shitaView addSubview:btn];
         
-        UILabel *payTipLB = [self lablerect:CGRectMake(0, 95 * ProportionAdapter , screenWidth, 30 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#626262"] labelFont:(15 * ProportionAdapter) text:@"30分钟内会短信通知您球位确认结束" textAlignment:(NSTextAlignmentCenter)];
+        UILabel *payTipLB = [self lablerect:CGRectMake(0, 95 * ProportionAdapter , screenWidth, 30 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#626262"] labelFont:(15 * ProportionAdapter) text:@"30分钟内会短信通知您球位确认结果" textAlignment:(NSTextAlignmentCenter)];
         [shitaView addSubview:payTipLB];
         
         
@@ -105,16 +107,49 @@
             [ueView addSubview:imageView];
         }
         
+    }else if (_payORlaterPay ==  3) {
+        UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(0, 10, screenWidth, 50 * ProportionAdapter)];
+        [btn setTitle:@"取消状态" forState:(UIControlStateNormal)];
+        [btn setTitleColor:[UIColor colorWithHexString:@"#313131"] forState:(UIControlStateNormal)];
+        [btn setImage:[UIImage imageNamed:@"icn_present_success"] forState:(UIControlStateNormal)];
+        btn.titleLabel.font = [UIFont systemFontOfSize:20 * ProportionAdapter];
+        btn.imageEdgeInsets = UIEdgeInsetsMake(0, -10 * ProportionAdapter, 0, 0);
+        [shitaView addSubview:btn];
+        
+        UILabel *payTipLB = [self lablerect:CGRectMake(0, 95 * ProportionAdapter , screenWidth, 50 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#626262"] labelFont:(15 * ProportionAdapter) text:@"客服人员会尽快与球场联系\n并第一时间告知您取消要求的受理情况" textAlignment:(NSTextAlignmentCenter)];
+        payTipLB.numberOfLines = 0;
+        [shitaView addSubview:payTipLB];
+        
+        
+        UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(35 * ProportionAdapter, 60 * ProportionAdapter, screenWidth - 80 * ProportionAdapter, 1 * ProportionAdapter)];
+        lineView.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];
+        [ueView addSubview:lineView];
+        
+        NSArray *titleArray = [NSArray arrayWithObjects:@"提交取消", @"球场审核", @"    退款" ,nil];
+        for (int i = 0; i < 3; i ++) {
+            UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(35 * ProportionAdapter + i * 145 * ProportionAdapter, 53 * ProportionAdapter, 14 * ProportionAdapter, 14 * ProportionAdapter)];
+            if (i != 0) {
+                imageView.image = [UIImage imageNamed:@"unpresent_dot"];
+            }else{
+                imageView.image = [UIImage imageNamed:@"present_dot"];
+            }
+            imageView.contentMode = UIViewContentModeCenter;
+            [ueView addSubview:imageView];
+            UILabel *tileLB = [self lablerect:CGRectMake(10 * ProportionAdapter + 145 * ProportionAdapter * i, 70 * ProportionAdapter, 80 * ProportionAdapter, 20 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#626262"] labelFont:(15 * ProportionAdapter) text:titleArray[i] textAlignment:(NSTextAlignmentLeft)];
+            [ueView addSubview:tileLB];
+        }
+
     }
     
     
     UILabel *commitTipLB = [self lablerect:CGRectMake(0, 50 * ProportionAdapter , screenWidth, 30 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#a0a0a0"] labelFont:(14 * ProportionAdapter) text:@"客服受理中，请稍后" textAlignment:(NSTextAlignmentCenter)];
     [shitaView addSubview:commitTipLB];
 
-    
-    UILabel *tipLB = [self lablerect:CGRectMake(10 * ProportionAdapter, 290 * ProportionAdapter, screenWidth - 20 * ProportionAdapter, 60 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#a0a0a0"] labelFont:(14 * ProportionAdapter) text:@"温馨提示\n非工作时间（18：00至9:00）提交订单，确认球位时间会延长，可能需工作时间返回确认信息。" textAlignment:(NSTextAlignmentLeft)];
-    tipLB.numberOfLines = 0;
-    [self.view addSubview:tipLB];
+    if (_payORlaterPay != 3) {
+        UILabel *tipLB = [self lablerect:CGRectMake(10 * ProportionAdapter, 290 * ProportionAdapter, screenWidth - 20 * ProportionAdapter, 60 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#a0a0a0"] labelFont:(14 * ProportionAdapter) text:@"温馨提示\n非工作时间（18：00至9:00）提交订单，确认球位时间会延长，可能需工作时间返回确认信息。" textAlignment:(NSTextAlignmentLeft)];
+        tipLB.numberOfLines = 0;
+        [self.view addSubview:tipLB];
+    }
     
     NSArray *array = [NSArray arrayWithObjects:@"查看订单详情", @"返回首页", nil];
     for (int i = 0; i < 2; i ++) {
@@ -138,6 +173,7 @@
 - (void)checkORpop:(UIButton *)btn {
     if (btn.tag == 80) {
         JGDOrderDetailViewController *orderVC = [[JGDOrderDetailViewController alloc] init];
+        orderVC.orderKey = self.orderKey;
         [self.navigationController pushViewController:orderVC animated:YES];
     }else if (btn.tag == 81) {
         [self.navigationController popToRootViewControllerAnimated:YES];

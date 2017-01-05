@@ -201,6 +201,7 @@
                 if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
                     JGDPaySuccessViewController *payVC = [[JGDPaySuccessViewController  alloc] init];
                     payVC.payORlaterPay = 1;
+                    payVC.orderKey = self.orderKey;
                     [self.navigationController pushViewController:payVC animated:YES];
                     
                 }
@@ -229,6 +230,7 @@
     }else if (btn.tag == 301) {
         JGDPaySuccessViewController *payVC = [[JGDPaySuccessViewController  alloc] init];
         payVC.payORlaterPay = 2;
+        payVC.orderKey = self.orderKey;
         [self.navigationController pushViewController:payVC animated:YES];
         
     }
@@ -288,11 +290,14 @@
         
         JGDPaySuccessViewController *payVC = [[JGDPaySuccessViewController  alloc] init];
         payVC.payORlaterPay = 1;
+        payVC.orderKey = self.orderKey;
         [self.navigationController pushViewController:payVC animated:YES];
     }else if (secess == 2){
         [[ShowHUD showHUD]showToastWithText:@"支付已取消！" FromView:self.view];
+        [self doCancelOrderPay];
     }else{
         [[ShowHUD showHUD]showToastWithText:@"支付失败！" FromView:self.view];
+        [self doCancelOrderPay];
     }
     
     //跳转
@@ -329,19 +334,28 @@
                 NSLog(@"成功！");
                 JGDPaySuccessViewController *payVC = [[JGDPaySuccessViewController  alloc] init];
                 payVC.payORlaterPay = 1;
+                payVC.orderKey = self.orderKey;
                 [self.navigationController pushViewController:payVC animated:YES];
             } else if ([resultDic[@"resultStatus"] isEqualToString:@"4000"]) {
                 NSLog(@"失败");
                 [[ShowHUD showHUD]showToastWithText:@"支付失败！" FromView:self.view];
+                [self doCancelOrderPay];
+
             } else if ([resultDic[@"resultStatus"] isEqualToString:@"6002"]) {
                 NSLog(@"网络错误");
                 [[ShowHUD showHUD]showToastWithText:@"网络异常，支付失败！" FromView:self.view];
+                [self doCancelOrderPay];
+
             } else if ([resultDic[@"resultStatus"] isEqualToString:@"6001"]) {
                 NSLog(@"取消支付");
                 [[ShowHUD showHUD]showToastWithText:@"支付已取消！" FromView:self.view];
+                [self doCancelOrderPay];
+
             } else {
                 NSLog(@"支付失败");
                 [[ShowHUD showHUD]showToastWithText:@"支付失败！" FromView:self.view];
+                [self doCancelOrderPay];
+
             }
             
             //跳转
@@ -521,6 +535,18 @@
             
         }
     }
+}
+
+
+#pragma mark ---  支付宝 微信 取消支付 
+
+- (void)doCancelOrderPay{
+    
+    [[JsonHttp jsonHttp] httpRequestWithMD5:@"orderPay/doCancelOrderPay" JsonKey:nil withData:@{@"orderKey": self.orderKey} failedBlock:^(id errType) {
+        
+    } completionBlock:^(id data) {
+        
+    }];
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{

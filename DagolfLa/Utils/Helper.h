@@ -130,4 +130,9 @@
 // return yyyy-MM-dd EEEE HH:mm 
 + (NSString *)stringFromDateString:(NSString *)nowDate withFormater:(NSString *)formate;
 
+
+// 时间加减
++ (NSString *)dateFromDate:(NSString *)date timeInterval:(NSTimeInterval)timeTer;
+
+
 @end

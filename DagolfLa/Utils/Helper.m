@@ -757,6 +757,31 @@
 
 
 
++ (NSString *)dateFromDate:(NSString *)date timeInterval:(NSTimeInterval)timeTer{
+    
+   NSDateFormatter * dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    NSDate* newdate = [dateFormatter dateFromString:date];
+    
+    
+    
+    
+//    NSDate *lastDay = [NSDate dateWithTimeInterval:-timeTer sinceDate:newdate];//前一天
+    
+    [dateFormatter setDateFormat:@"HH:mm"];
+ 
+    return [dateFormatter stringFromDate:[NSDate dateWithTimeInterval:timeTer sinceDate:newdate]];
+}
+
+
+
+
+
+
+
+
+
+
 
 
 @end

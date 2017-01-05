@@ -48,7 +48,7 @@
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     
-//    self.tabBarController.tabBar.hidden = NO;
+    //    self.tabBarController.tabBar.hidden = NO;
     
 }
 - (void)viewWillAppear:(BOOL)animated{
@@ -59,21 +59,19 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-
     UIButton *costumBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 21 * ProportionAdapter, 21 * ProportionAdapter)];
     [costumBtn setImage:[UIImage imageNamed:@"jqy"] forState:(UIControlStateNormal)];
     [costumBtn addTarget:self action:@selector(contact) forControlEvents:(UIControlEventTouchUpInside)];
     UIBarButtonItem *itm = [[UIBarButtonItem alloc] initWithCustomView:costumBtn];
     
     self.navigationItem.rightBarButtonItem = itm;
-
-//    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"jqy"] style:UIBarButtonItemStylePlain target:self action:@selector(contact)];
-//    
-//    item.tintColor = [UIColor whiteColor];
-//    self.navigationItem.rightBarButtonItem = item;
     
+    //    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"jqy"] style:UIBarButtonItemStylePlain target:self action:@selector(contact)];
+    //
+    //    item.tintColor = [UIColor whiteColor];
+    //    self.navigationItem.rightBarButtonItem = item;
     self.title = @"球友通讯录";
-//    self.tableView = [[UITableView alloc] initWithFrame:[UIScreen mainScreen].bounds style:(UITableViewStylePlain)];
+    //    self.tableView = [[UITableView alloc] initWithFrame:[UIScreen mainScreen].bounds style:(UITableViewStylePlain)];
     self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight - 64)];
     self.tableView.rowHeight = 49 * ScreenWidth / 375;
     self.view = self.tableView;
@@ -88,7 +86,7 @@
     self.tableView.tableHeaderView = EEEVIew;
     
     [self setData];
-
+    
     // Do any additional setup after loading the view.
 }
 
@@ -156,21 +154,21 @@
                 self.addFriendSumLB.text = [_addFriendSum stringValue];
                 [cell1.myImageV addSubview:self.addFriendSumLB];
             }
-
+            
         }
         
         return cell1;
     }else{
-//        self.infoTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(infotapclick:)];
-//        [cell.myImageV addGestureRecognizer:self.infoTap];
+        //        self.infoTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(infotapclick:)];
+        //        [cell.myImageV addGestureRecognizer:self.infoTap];
         
         MyattenModel *model = self.listArray[indexPath.section - 1][indexPath.row];
-//        NoteModel *modell = [NoteHandlle selectNoteWithUID:model.otherUserId];
-//        if ([modell.userremarks isEqualToString:@"(null)"] || [modell.userremarks isEqualToString:@""] || modell.userremarks == nil) {
-//            
-//        }else{
-//            model.userName = modell.userremarks;
-//        }
+        //        NoteModel *modell = [NoteHandlle selectNoteWithUID:model.otherUserId];
+        //        if ([modell.userremarks isEqualToString:@"(null)"] || [modell.userremarks isEqualToString:@""] || modell.userremarks == nil) {
+        //
+        //        }else{
+        //            model.userName = modell.userremarks;
+        //        }
         
         
         cell.myModel = model;
@@ -210,7 +208,7 @@
             [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:YES];
         };
         vc.otherKey = [_listArray[indexPath.section - 1][indexPath.row] friendUserKey];
-
+        
         [self.navigationController pushViewController:vc animated:YES];
     }
 }
@@ -281,12 +279,7 @@
                     MyattenModel *model = [[MyattenModel alloc] init];
                     [model setValuesForKeysWithDictionary:dic];
                     if (![model.userName isEqualToString:@""]) {
-//                        NoteModel *modell = [NoteHandlle selectNoteWithUID:model.otherUserId];
-//                        if ([modell.userremarks isEqualToString:@"(null)"] || [modell.userremarks isEqualToString:@""] || modell.userremarks == nil) {
-//                            
-//                        }else{
-//                            model.userName = modell.userremarks;
-//                        }
+ 
                         if (model.userName) {
                             if ([model.userName isEqualToString:@""]) {
                                 model.userName = @"该用户名暂无用户名";
@@ -317,7 +310,7 @@
                 [self.tableView reloadData];
                 
             }else{
-
+                
                 UIView *bgView = [[UIView alloc] initWithFrame:CGRectMake(0, 110 * ProportionAdapter, screenWidth, screenHeight)];
                 bgView.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];
                 [self.tableView addSubview:bgView];
@@ -331,7 +324,7 @@
                 self.tipLB.textAlignment = NSTextAlignmentCenter;
                 self.tipLB.textColor = [UIColor colorWithHexString:@"#a0a0a0"];
                 [bgView addSubview:self.tipLB];
-
+                
             }
         }else{
             if ([data objectForKey:@"packResultMsg"]) {
@@ -411,22 +404,22 @@
                 cell.myLabel.text = name;
                 model.remark = name;
                 
-//                NSString *friendUserKey = [NSString stringWithFormat:@"%@", model.friendUserKey];
-//                RCUserInfo *friendUser = [[RCUserInfo alloc] initWithUserId: friendUserKey name:name portrait:[NSString stringWithFormat:@"http://imgcache.dagolfla.com/user/head/%@.jpg@200w_200h_2o",friendUserKey]];
-//                
-//                [[RCIM sharedRCIM] refreshUserInfoCache:friendUser  withUserId:friendUserKey];
-
+                //                NSString *friendUserKey = [NSString stringWithFormat:@"%@", model.friendUserKey];
+                //                RCUserInfo *friendUser = [[RCUserInfo alloc] initWithUserId: friendUserKey name:name portrait:[NSString stringWithFormat:@"http://imgcache.dagolfla.com/user/head/%@.jpg@200w_200h_2o",friendUserKey]];
+                //
+                //                [[RCIM sharedRCIM] refreshUserInfoCache:friendUser  withUserId:friendUserKey];
+                
             }else{
                 cell.myLabel.text = model.userName;
                 
-//                NSString *friendUserKey = [NSString stringWithFormat:@"%@", model.friendUserKey];
-//                RCUserInfo *friendUser = [[RCUserInfo alloc] initWithUserId: friendUserKey name:model.userName portrait:[NSString stringWithFormat:@"http://imgcache.dagolfla.com/user/head/%@.jpg@200w_200h_2o",friendUserKey]];
-//                
-//                [[RCIM sharedRCIM] refreshUserInfoCache:friendUser  withUserId:friendUserKey];
-
+                //                NSString *friendUserKey = [NSString stringWithFormat:@"%@", model.friendUserKey];
+                //                RCUserInfo *friendUser = [[RCUserInfo alloc] initWithUserId: friendUserKey name:model.userName portrait:[NSString stringWithFormat:@"http://imgcache.dagolfla.com/user/head/%@.jpg@200w_200h_2o",friendUserKey]];
+                //
+                //                [[RCIM sharedRCIM] refreshUserInfoCache:friendUser  withUserId:friendUserKey];
+                
             }
             
-   
+            
         };
         [self.navigationController pushViewController:AVC animated:YES];
     }];

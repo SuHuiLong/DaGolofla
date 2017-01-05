@@ -60,16 +60,16 @@
         self.payStyleLB = [self lablerect:CGRectMake(150 * ProportionAdapter, 80 * ProportionAdapter, 80  * ProportionAdapter, 20 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#313131"] labelFont:(15 * ProportionAdapter) text:@"" textAlignment:(NSTextAlignmentLeft)];
         [self.contentView addSubview:self.payStyleLB];
 
-        self.lineView = [[UIView alloc] initWithFrame:CGRectMake(10 * ProportionAdapter, 111.5, screenWidth - 10 * ProportionAdapter, 0.5 * ProportionAdapter)];
-        self.lineView.backgroundColor = [UIColor colorWithHexString:@"#a0a0a0"];
+        self.lineView = [[UIView alloc] initWithFrame:CGRectMake(10 * ProportionAdapter, 111.5 * ProportionAdapter, screenWidth - 10 * ProportionAdapter, 0.5 * ProportionAdapter)];
+        self.lineView.backgroundColor = [UIColor colorWithHexString:@"#eeeeee"];
         [self.contentView addSubview:self.lineView];
         
         self.payStateLB = [self lablerect:CGRectMake(285 * ProportionAdapter, 50 * ProportionAdapter, 80  * ProportionAdapter, 20 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#fc5a01"] labelFont:(17 * ProportionAdapter) text:@"" textAlignment:(NSTextAlignmentRight)];
         [self.contentView addSubview:self.payStateLB];
         
-        UILabel *lineLB = [self lablerect:CGRectMake(10 * ProportionAdapter, 111.5, screenWidth - 10 * ProportionAdapter, 0.5 * ProportionAdapter) labelColor:[UIColor whiteColor] labelFont:1 text:@"" textAlignment:(NSTextAlignmentCenter)];
-        lineLB.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];
-        [self.contentView addSubview:lineLB];
+//        UILabel *lineLB = [self lablerect:CGRectMake(10 * ProportionAdapter, 111.5 * ProportionAdapter, screenWidth - 10 * ProportionAdapter, 0.5 * ProportionAdapter) labelColor:[UIColor whiteColor] labelFont:1 text:@"" textAlignment:(NSTextAlignmentCenter)];
+//        lineLB.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];
+//        [self.contentView addSubview:lineLB];
 
     }
     return self;
@@ -79,7 +79,7 @@
 - (void)setDataDic:(NSDictionary *)dataDic{
     
     self.nameLB.text = [dataDic objectForKey:@"ballName"];
-    self.begainTimeLB.text = [dataDic objectForKey:@"teeTime"];
+    self.begainTimeLB.text = [Helper stringFromDateString:[dataDic objectForKey:@"teeTime"] withFormater:@"yyyy-MM-dd HH:mm"];
     self.sumPeopleNumLB.text = [NSString stringWithFormat:@"%@人", [dataDic objectForKey:@"userSum"]];
     self.sumPriceNumLB.text = [NSString stringWithFormat:@"¥%@", [dataDic objectForKey:@"money"]];
     

@@ -32,9 +32,11 @@ static CGFloat ImageHeight  = 210.0;
 
 @property (nonatomic, strong) UILabel *detailLB;
 
-@property (nonatomic, copy) NSString *selectMoney;          //  选择的线上支付价格
-@property (nonatomic, copy) NSString *selectSceneMoney;     //  选择的线下支付价格
 @property (nonatomic, copy) NSString *selectDate;           //  选择的时间
+
+@property (nonatomic, copy) NSString *unitPrice;          //  总价
+@property (nonatomic, copy) NSString *payMoney;           //  线上
+@property (nonatomic, copy) NSString *unitPaymentMoney;   //  线下
 
 @property (nonatomic, copy) NSString *date;
 @property (nonatomic, copy) NSString *week;
@@ -185,8 +187,12 @@ static CGFloat ImageHeight  = 210.0;
                 
                 NSString *time = [self.detailDic objectForKey:@"unitPriceDate"];
                 
-                self.selectMoney = [self.detailDic objectForKey:@"unitPrice"];
-                
+                self.unitPrice = [self.detailDic objectForKey:@"unitPrice"];
+                self.payMoney = [self.detailDic objectForKey:@"payMoney"];
+                self.unitPaymentMoney = [self.detailDic objectForKey:@"unitPaymentMoney"];
+
+                self.selectDate = time;
+
                 _date = [NSString stringWithFormat:@"%@", [Helper stringFromDateString:time withFormater:@"yyyy年MM月dd日"]];
                 _week = [NSString stringWithFormat:@"%@", [Helper stringFromDateString:time withFormater:@"EEE"]];;
                 _time = [NSString stringWithFormat:@"%@", [Helper stringFromDateString:time withFormater:@"HH:mm"]];
@@ -280,13 +286,22 @@ static CGFloat ImageHeight  = 210.0;
 }
 #pragma mark -- tableView 代理
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    
-    return 2;
+    if ([[self.detailDic objectForKey:@"instapaper"] integerValue] == 2) {
+        if (section == 0) {
+            return 0;
+        }else{
+            return 2;
+        }
+        
+    }else{
+        return 2;
+ 
+    }
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     
-    return 2;
+   return 2;
 }
 
 
@@ -374,7 +389,11 @@ static CGFloat ImageHeight  = 210.0;
 
         }else{
             UILabel *begainLB = [[UILabel alloc] init];
-            [self lableReDraw:begainLB rect:CGRectMake(0, 0, screenWidth, 60 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#636363"] labelFont:16 text:@"将为您提供08:30-09:30（１小时内的开球时间）" textAlignment:NSTextAlignmentCenter];
+            
+            NSString *begainDate = [NSString stringWithFormat:@"将为您提供%@-%@（１小时内的开球时间）", [Helper dateFromDate:self.selectDate timeInterval:-30 * 60], [Helper dateFromDate:self.selectDate timeInterval:30 * 60]];
+
+            
+            [self lableReDraw:begainLB rect:CGRectMake(0, 0, screenWidth, 60 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#636363"] labelFont:16 * ProportionAdapter text:begainDate textAlignment:NSTextAlignmentCenter];
             [cell.contentView addSubview:begainLB];
         }
         
@@ -411,7 +430,7 @@ static CGFloat ImageHeight  = 210.0;
                 [payBtn setTitleColor:[UIColor colorWithHexString:@"#fc5a01"] forState:(UIControlStateNormal)];
                 [self lableReDraw:priceLB rect:CGRectMake(screenWidth - 155 * ProportionAdapter , 35 * ProportionAdapter, 60 * ProportionAdapter, 30 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#fc5a01"] labelFont:17 text:[NSString stringWithFormat:@"¥%@", [self.detailDic objectForKey:@"unitPrice"]] textAlignment:(NSTextAlignmentRight)];
                 
-                NSMutableAttributedString *mutaStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"¥ %@", self.selectMoney]];
+                NSMutableAttributedString *mutaStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"¥ %@", self.unitPrice]];
                 [mutaStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:13 * ProportionAdapter] range:NSMakeRange(0, 1)];
                 priceLB.attributedText = mutaStr;
                 
@@ -473,13 +492,15 @@ static CGFloat ImageHeight  = 210.0;
         _week = [NSString stringWithFormat:@"%@", [Helper stringFromDateString:selectTime withFormater:@"EEE"]];;
         _time = [NSString stringWithFormat:@"%@", [Helper stringFromDateString:selectTime withFormater:@"HH:mm"]];
     
-        self.selectMoney = pay;
-        self.selectSceneMoney = scenePay;
+        self.unitPrice = pay;
+        self.payMoney = [NSString stringWithFormat:@"%td", [pay integerValue] - [scenePay integerValue]];
+        self.unitPaymentMoney = scenePay;
         self.selectDate = selectTime;
-        NSIndexPath *indexPath1 = [NSIndexPath indexPathForRow:0 inSection:0];
+        NSIndexPath *indexPath0 = [NSIndexPath indexPathForRow:0 inSection:0];
+        NSIndexPath *indexPath1 = [NSIndexPath indexPathForRow:1 inSection:0];
         NSIndexPath *indexPath2 = [NSIndexPath indexPathForRow:0 inSection:1];
 
-        [self.courtDetail reloadRowsAtIndexPaths:@[indexPath1, indexPath2] withRowAnimation:NO];
+        [self.courtDetail reloadRowsAtIndexPaths:@[indexPath0, indexPath1, indexPath2] withRowAnimation:NO];
     };
     [self.navigationController pushViewController:caleVC animated:YES];
 }
@@ -493,10 +514,9 @@ static CGFloat ImageHeight  = 210.0;
 
 - (void)payAct{
     JGDCommitOrderViewController *commitVC = [[JGDCommitOrderViewController alloc] init];
-//    commitVC.suggestedPrice = [self.detailDic objectForKey:@"suggestedPrice"];
-//    commitVC.ballName = [self.detailDic objectForKey:@"ballName"];
-//    commitVC.ballKey = [self.detailDic objectForKey:@"timeKey"];
-//    commitVC.payType = [self.detailDic objectForKey:@"payType"];
+    commitVC.selectDate = self.selectDate;
+    commitVC.selectMoney = self.payMoney;
+    commitVC.selectSceneMoney = self.unitPaymentMoney;
     commitVC.detailDic = self.detailDic;
     [self.navigationController pushViewController:commitVC animated:YES];
 }

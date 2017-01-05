@@ -6,6 +6,7 @@
  *  Copyright 2010 RED/SAFI. All rights reserved.
  *
  */
+
 #define HANZI_START 19968
 #define HANZI_COUNT 20902
 
@@ -230,6 +231,6 @@ char pinyinFirstLetter(unsigned short hanzi)
 	}
 	else
 	{
-		return hanzi;
+		return '#';
 	}
 }

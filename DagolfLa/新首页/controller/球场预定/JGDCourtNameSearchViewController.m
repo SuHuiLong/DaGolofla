@@ -97,7 +97,7 @@
     [headView addSubview:button];
     
     
-   UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake(5 * ProportionAdapter, 5, 23 * ProportionAdapter, 15 * ProportionAdapter)];
+   UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake(5 * ProportionAdapter, 5, 31 * ProportionAdapter, 17 * ProportionAdapter)];
     imageV.image = [UIImage imageNamed:@"Search-1"];
     self.searchTF.leftView = imageV;
     self.searchTF.leftViewMode = UITextFieldViewModeAlways;

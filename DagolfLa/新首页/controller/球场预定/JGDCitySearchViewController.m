@@ -12,6 +12,8 @@
 
 #import <BaiduMapAPI/BMKMapView.h>//只引入所需的单个头文件
 
+#import "ChineseString.h"
+
 @interface JGDCitySearchViewController () <CLLocationManagerDelegate, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate>
 
 @property (nonatomic, strong) UITableView *searchTable;
@@ -22,6 +24,7 @@
 @property (nonatomic, strong) NSMutableArray *hotCityArray;
 
 @property (nonatomic, strong) NSArray *keyArray;
+@property (nonatomic, strong) NSMutableArray *cityArray;
 
 @property (strong, nonatomic) CLLocationManager* locationManager;
 
@@ -47,22 +50,32 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    //http://res.dagolfla.com/download/json/ballCity.json       未分词 json
-    //http://res.dagolfla.com/download/json/ballCitySeg.json    已分词 json
-//  NSURL *url = [NSURL URLWithString:@"http://res.dagolfla.com/download/json/ballCity.json"];
-    NSURL *url = [NSURL URLWithString:@"http://res.dagolfla.com/download/json/ballCitySeg.json"];
-
+    NSURL *url = [NSURL URLWithString:@"http://res.dagolfla.com/download/json/ballCity.json"];
+    
     NSError *error;
     NSString *jsonString = [NSString stringWithContentsOfURL:url encoding:NSUTF8StringEncoding error:&error];
     NSData * data = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
     NSError * error1 = nil;
-    NSDictionary * dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:&error1];
-    self.hotCityArray = [dic objectForKey:@"hotList"];
-    self.cityDic = [dic objectForKey:@"list"];
+    NSDictionary * dataDic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:&error1];
+
+    self.hotCityArray = [dataDic objectForKey:@"hotList"];
+    self.cityDic = [dataDic objectForKey:@"list"];
     
-    self.keyArray = [self.cityDic allKeys];
-    NSSortDescriptor *sortDes1 = [[NSSortDescriptor alloc] initWithKey:@"self" ascending:YES]; // 升序
-    self.keyArray = [self.keyArray sortedArrayUsingDescriptors:@[sortDes1]];
+    NSMutableArray *arr = [NSMutableArray array];
+    for (NSDictionary *dic in [dataDic objectForKey:@"list"]) {
+        if ([dic objectForKey:@"cName"]) {
+            [arr addObject:[dic objectForKey:@"cName"]];
+        }
+    }
+    
+    self.keyArray = [ChineseString IndexArray:arr];
+    self.cityArray = [ChineseString LetterSortArray:arr];
+    
+    
+    
+//    self.keyArray = [self.cityDic allKeys];
+//    NSSortDescriptor *sortDes1 = [[NSSortDescriptor alloc] initWithKey:@"self" ascending:YES]; // 升序
+//    self.keyArray = [self.keyArray sortedArrayUsingDescriptors:@[sortDes1]];
 
     self.automaticallyAdjustsScrollViewInsets = NO;
     [self searchVCSet];
@@ -98,7 +111,7 @@
     [button addTarget:self action:@selector(searchAct) forControlEvents:(UIControlEventTouchUpInside)];
     [headView addSubview:button];
     
-    UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake(5 * ProportionAdapter, 5, 23 * ProportionAdapter, 15 * ProportionAdapter)];
+    UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake(5 * ProportionAdapter, 5, 31 * ProportionAdapter, 17 * ProportionAdapter)];
     imageV.image = [UIImage imageNamed:@"Search-1"];
     searchTF.leftView = imageV;
     searchTF.leftViewMode = UITextFieldViewModeAlways;
@@ -214,7 +227,8 @@
     UITableViewCell *cell = [[UITableViewCell alloc] init];
     
     if (tableView.tag == 50) {
-        cell.textLabel.text = [self.cityDic objectForKey:self.keyArray[indexPath.section]][indexPath.row];
+//        cell.textLabel.text = [self.cityDic objectForKey:self.keyArray[indexPath.section]][indexPath.row];
+        cell.textLabel.text = self.cityArray[indexPath.section][indexPath.row];
     }else{
         cell.textLabel.text = self.resultArray[indexPath.row];
     }
@@ -229,7 +243,8 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
     if (tableView.tag == 50) {
-        return [[self.cityDic objectForKey:self.keyArray[section]] count];
+//        return [[self.cityDic objectForKey:self.keyArray[section]] count];
+        return [self.cityArray[section] count];
     }else{
         return [self.resultArray count];
     }
@@ -247,7 +262,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
     if (tableView.tag == 50) {
-        self.blockAddress([self.cityDic objectForKey:self.keyArray[indexPath.section]][indexPath.row]);
+        self.blockAddress(self.cityArray[indexPath.section][indexPath.row]);
         [self.navigationController popViewControllerAnimated:YES];
     }else{
         self.blockAddress(self.resultArray[indexPath.row]);
@@ -294,6 +309,7 @@
     }
     return YES;
 }
+
 
 - (UITableView *)resultTableView{
     if (!_resultTableView) {
@@ -345,7 +361,8 @@
 
 
 
-#pragma MARK --定位方法
+#pragma mark --定位方法
+
 -(void)getCurPosition{
     if (_locationManager==nil) {
         _locationManager=[[CLLocationManager alloc] init];
@@ -375,14 +392,17 @@
          {
              CLPlacemark *placemark = [array objectAtIndex:0];
              //将获得的所有信息显示到label上
-             self.cityLB.text = placemark.name;
              //获取城市
              NSString *city = placemark.locality;
              if (!city) {
                  //四大直辖市的城市信息无法通过locality获得，只能通过获取省份的方法来获得（如果city为空，则可知为直辖市）
                  city = placemark.administrativeArea;
              }
-             
+             if ([city containsString:@"市"] || [city containsString:@"省"]) {
+                 city = [city substringToIndex:[city length] - 1];
+             }
+
+             self.cityLB.text = city;
              [user setObject:city forKey:CITYNAME];
              [user synchronize];
              
@@ -439,6 +459,13 @@
         _resultArray = [[NSMutableArray alloc] init];
     }
     return _resultArray;
+}
+
+- (NSMutableArray *)cityArray{
+    if (!_cityArray) {
+        _cityArray = [[NSMutableArray alloc] init];
+    }
+    return _cityArray;
 }
 
 //  封装cell方法
