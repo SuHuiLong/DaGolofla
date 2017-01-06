@@ -37,7 +37,7 @@
 
 #import "JGActivityMemNonMangerViewController.h" //test
 #import "JGDGuestChannelViewController.h"
-#import "JGHEventViewController.h"
+//#import "JGHEventViewController.h"
 
 
 @interface JGTeamChannelViewController ()<UITableViewDataSource, UITableViewDelegate>
@@ -498,10 +498,10 @@
         // ---- 存在球队赛事matchKey-跳到赛事详情－否则跳转到活动详情
         JGTeamAcitivtyModel *model = self.myActivityArray[indexPath.row];
         if ([model.matchKey integerValue] > 0) {
-            JGHEventViewController *eventCtrl = [[JGHEventViewController alloc]init];
+//            JGHEventViewController *eventCtrl = [[JGHEventViewController alloc]init];
 //            [eventCtrl getMatchInfo:[model.matchKey integerValue]];
-            [eventCtrl getMatchInfo:[model.timeKey integerValue]];
-            [self.navigationController pushViewController:eventCtrl animated:YES];
+//            [eventCtrl getMatchInfo:[model.timeKey integerValue]];
+//            [self.navigationController pushViewController:eventCtrl animated:YES];
         }else{
             JGTeamActibityNameViewController *teamActivityVC = [[JGTeamActibityNameViewController alloc] init];
             
