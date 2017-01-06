@@ -37,7 +37,7 @@
 
 - (void)configJGHShowActivityPhotoCell:(NSArray *)activtiyList{
     [self.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
-    [self createLineCase:@"left"];
+    [self createLineCase];
     for (int i=0; i<activtiyList.count; i++) {
         
         _showActivityView = [[JGHShowActivityView alloc]initWithFrame:CGRectMake(20 *ProportionAdapter, 60 *i *ProportionAdapter +(i+1)*17 *ProportionAdapter, screenWidth -40*ProportionAdapter, 60 *ProportionAdapter)];
@@ -57,7 +57,7 @@
 
 - (void)configJGHShowLiveCell:(NSArray *)activtiyList{
     [self.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
-    [self createLineCase:@"right"];
+    [self createLineCase];
     for (int i=0; i<activtiyList.count; i++) {
         
         _liveView = [[JGDShowLiveView alloc]initWithFrame:CGRectMake(20 *ProportionAdapter, 60 *i *ProportionAdapter +(i+1)*17 *ProportionAdapter, screenWidth -40*ProportionAdapter, 60 *ProportionAdapter)];
@@ -77,7 +77,7 @@
 
 - (void)configJGHShowPhotoCell:(NSArray *)activtiyList{
     [self.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
-    [self createLineCase:@"middle"];
+    [self createLineCase];
     for (int i = 0; i < [activtiyList count]; i ++) {
         if (i%2 == 0) {
             _photoView = [[JGDShowPhotoView alloc]initWithFrame:CGRectMake(22*ProportionAdapter, (i/2 +1)*10*ProportionAdapter + (i/2)*70*ProportionAdapter, (screenWidth-24*ProportionAdapter)/2, 70 *ProportionAdapter)];
@@ -117,7 +117,7 @@
     btn.enabled = YES;
 }
 
-- (void)createLineCase:(NSString *)imageName{
+- (void)createLineCase{
     UIImageView *bgImageView = [[UIImageView alloc]initWithFrame:CGRectMake(10 *ProportionAdapter, 160 *ProportionAdapter, screenWidth -20*ProportionAdapter, 30 *ProportionAdapter)];
     bgImageView.image = [UIImage imageNamed:@"datouying"];
     UILabel *bgLable = [[UILabel alloc]initWithFrame:CGRectMake(2 *ProportionAdapter, 0*ProportionAdapter, screenWidth - 24 *ProportionAdapter, 16 *ProportionAdapter)];
@@ -129,9 +129,13 @@
     [bgImageView addSubview:downLine];
     [self addSubview:bgImageView];
     
-    UIImageView *topImageview = [[UIImageView alloc]initWithFrame:CGRectMake(10 *ProportionAdapter, 5 *ProportionAdapter, screenWidth -20*ProportionAdapter, 3)];
-    topImageview.image = [UIImage imageNamed:imageName];
-    [self addSubview:topImageview];
+//    UIImageView *topImageview = [[UIImageView alloc]initWithFrame:CGRectMake(10 *ProportionAdapter, 5 *ProportionAdapter, screenWidth -20*ProportionAdapter, 3)];
+//    topImageview.image = [UIImage imageNamed:imageName];
+//    [self addSubview:topImageview];
+    
+    UILabel *topLine = [[UILabel alloc]initWithFrame:CGRectMake(10 *ProportionAdapter, 5 *ProportionAdapter, screenWidth -20*ProportionAdapter, 0.5)];
+    topLine.backgroundColor = [UIColor colorWithHexString:LineColor];
+    [self addSubview:topLine];
     
     UILabel *leftLine = [[UILabel alloc]initWithFrame:CGRectMake(10 *ProportionAdapter, 5 *ProportionAdapter, 0.5, 171 *ProportionAdapter)];
     leftLine.backgroundColor = [UIColor colorWithHexString:LineColor];
