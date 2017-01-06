@@ -144,7 +144,7 @@ static CGFloat ImageHeight  = 210.0;
 
   
     
-    self.detailBtn = [[UIButton alloc]initWithFrame:CGRectMake(300 * ProportionAdapter, 180 * ProportionAdapter, 70 * ProportionAdapter, 30 * ProportionAdapter)];
+    self.detailBtn = [[UIButton alloc]initWithFrame:CGRectMake(300 * ProportionAdapter, self.imgProfile.frame.size.height - 30 * ProportionAdapter, 70 * ProportionAdapter, 20 * ProportionAdapter)];
     self.detailBtn.tag = 522;
     [self.detailBtn addTarget:self action:@selector(initItemsBtnClick:) forControlEvents:(UIControlEventTouchUpInside)];
     [self.detailBtn setImage:[UIImage imageNamed:@"booking_details"] forState:(UIControlStateNormal)];
@@ -222,8 +222,11 @@ static CGFloat ImageHeight  = 210.0;
     if (btn.tag == 521) {
         [self.navigationController popViewControllerAnimated:YES];
     }else if (btn.tag == 520){
-        //分享
-        [self addShare];
+        //咨询4008605308
+        NSMutableString * str=[[NSMutableString alloc] initWithFormat:@"telprompt://%@", Company400];
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:str]];
+
+//        [self addShare];
     }else if (btn.tag == 526){
 
     }else if (btn.tag == 522) {

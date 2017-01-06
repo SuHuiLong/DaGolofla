@@ -44,7 +44,20 @@
     self.title = @"提交订单";
     
     [self commitOrderTable];
+    
+    
+    UIBarButtonItem *rightBar = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"consult"] style:(UIBarButtonItemStyleDone) target:self action:@selector(phoneAct)];
+    rightBar.tintColor = [UIColor whiteColor];
+    self.navigationItem.rightBarButtonItem = rightBar;
+    
     // Do any additional setup after loading the view.
+}
+
+- (void)phoneAct{
+
+    NSMutableString * str=[[NSMutableString alloc] initWithFormat:@"telprompt://%@", Company400];
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:str]];
+
 }
 
 
@@ -221,11 +234,11 @@
         UILabel *titleLB = [self lablerect:CGRectMake(5 * ProportionAdapter, 0, 90 * ProportionAdapter, 50 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#a0a0a0"] labelFont:(16 * ProportionAdapter) text:@"球场：" textAlignment:(NSTextAlignmentRight)];
         [cell.contentView addSubview:titleLB];
         
-        UILabel *ballNameLB = [self lablerect:CGRectMake(100 * ProportionAdapter, 0, 260 * ProportionAdapter, 50 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#313131"] labelFont:(17 * ProportionAdapter) text:[self.detailDic objectForKey:@"ballName"] textAlignment:(NSTextAlignmentLeft)];
+        UILabel *ballNameLB = [self lablerect:CGRectMake(100 * ProportionAdapter, 0, 260 * ProportionAdapter, 50 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#313131"] labelFont:(16 * ProportionAdapter) text:[self.detailDic objectForKey:@"ballName"] textAlignment:(NSTextAlignmentLeft)];
         [cell.contentView addSubview:ballNameLB];
         
         UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(10 * ProportionAdapter, 49.5 * ProportionAdapter, screenWidth - 10 * ProportionAdapter, 0.5 * ProportionAdapter)];
-        lineView.backgroundColor = [UIColor colorWithHexString:@"#a0a0a0"];
+        lineView.backgroundColor = [UIColor colorWithHexString:@"#eeeeee"];
         [cell.contentView addSubview:lineView];
         
         cell.selectionStyle = UITableViewCellSelectionStyleNone;

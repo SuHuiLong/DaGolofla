@@ -80,7 +80,7 @@
                             [self.orderDetailArray addObject:[NSString stringWithFormat:@"%@", [self.dataDic objectForKey:orderKeyArray[i]]]];
                             
                         }else if (i == 2) {
-                            [self.orderDetailArray addObject:[Helper stringFromDateString:[self.dataDic objectForKey:@"createTime"] withFormater:@"yyyy-MM-dd HH:mm"]];
+                            [self.orderDetailArray addObject:[Helper stringFromDateString:[self.dataDic objectForKey:@"createTime"] withFormater:@"yyyy.MM.dd EEE  HH:mm"]];
                             
                             
                         }else if (i == 4) {
