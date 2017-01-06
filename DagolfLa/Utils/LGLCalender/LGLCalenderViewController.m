@@ -207,8 +207,10 @@
             if ((model.year == _year) && (model.month == _month) && (subModel.day == _day))  {
                 cell.backgroundColor =  [UIColor colorWithHexString:Bar_Segment];//LGLColor(65, 207, 79)
                 cell.dateL.textColor = [UIColor whiteColor];
+                cell.priceL.textColor = [UIColor whiteColor];
             }else{
                 cell.dateL.textColor = [UIColor blackColor];
+                cell.priceL.textColor = [UIColor redColor];
             }
             
             if ((model.month == _currentMonth) && (subModel.day <= _currentDay)) {
