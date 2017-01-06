@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 @class JGTeamAcitivtyModel;
-@class JGHPublishEventModel;
+//@class JGHPublishEventModel;
 
 @interface JGTableViewCell : UITableViewCell
 //titles
@@ -30,6 +30,6 @@
 
 - (void)configActivityInfo:(NSString *)info;
 
-- (void)configJGHPublishEventModel:(JGHPublishEventModel *)model andIndexPath:(NSIndexPath *)indexPath;
+//- (void)configJGHPublishEventModel:(JGHPublishEventModel *)model andIndexPath:(NSIndexPath *)indexPath;
 
 @end
