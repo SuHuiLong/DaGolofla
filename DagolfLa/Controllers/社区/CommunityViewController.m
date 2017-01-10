@@ -124,17 +124,7 @@
         [self.navigationController pushViewController:pubVc animated:YES];
         
     }else {
-        [Helper alertViewWithTitle:@"是否立即登录?" withBlockCancle:^{
-        } withBlockSure:^{
-            JGHLoginViewController *vc = [[JGHLoginViewController alloc] init];
-            vc.reloadCtrlData = ^(){
-                
-            };
-            vc.hidesBottomBarWhenPushed = YES;
-            [self.navigationController pushViewController:vc animated:YES];
-        } withBlock:^(UIAlertController *alertView) {
-            [self.navigationController presentViewController:alertView animated:YES completion:nil];
-        }];
+        [self loginOut];
     }
 }
 
@@ -408,17 +398,7 @@
                 selfVc.messType = @2;
                 [self.navigationController pushViewController:selfVc animated:YES];
             }else {
-                [Helper alertViewWithTitle:@"是否立即登录?" withBlockCancle:^{
-                } withBlockSure:^{
-                    JGHLoginViewController *vc = [[JGHLoginViewController alloc] init];
-                    vc.reloadCtrlData = ^(){
-                        
-                    };
-                    vc.hidesBottomBarWhenPushed = YES;
-                    [self.navigationController pushViewController:vc animated:YES];
-                } withBlock:^(UIAlertController *alertView) {
-                    [self.navigationController presentViewController:alertView animated:YES completion:nil];
-                }];
+                [self loginOut];
             }
         };
         
@@ -453,35 +433,14 @@
                 [self.navigationController pushViewController:comVc animated:YES];
                 
             }else {
-                [Helper alertViewWithTitle:@"是否立即登录?" withBlockCancle:^{
-                } withBlockSure:^{
-                    JGHLoginViewController *vc = [[JGHLoginViewController alloc] init];
-                    vc.reloadCtrlData = ^(){
-                        
-                    };
-                    
-                    vc.hidesBottomBarWhenPushed = YES;
-                    [self.navigationController pushViewController:vc animated:YES];
-                } withBlock:^(UIAlertController *alertView) {
-                    [self.navigationController presentViewController:alertView animated:YES completion:nil];
-                }];
+                [self loginOut];
             }
         };
         
         //详情内关注 判断登录
         cell.blockIsLogin=^{
             //暂时未用到
-            [Helper alertViewWithTitle:@"是否立即登录?" withBlockCancle:^{
-            } withBlockSure:^{
-                JGHLoginViewController *vc = [[JGHLoginViewController alloc] init];
-                vc.reloadCtrlData = ^(){
-                    
-                };
-                vc.hidesBottomBarWhenPushed = YES;
-                [self.navigationController pushViewController:vc animated:YES];
-            } withBlock:^(UIAlertController *alertView) {
-                [self.navigationController presentViewController:alertView animated:YES completion:nil];
-            }];
+            [self loginOut];
             
         };
         
@@ -615,17 +574,7 @@
                     }];
                 }
             }else {
-                [Helper alertViewWithTitle:@"是否立即登录?" withBlockCancle:^{
-                } withBlockSure:^{
-                    JGHLoginViewController *vc = [[JGHLoginViewController alloc] init];
-                    vc.reloadCtrlData = ^(){
-                        
-                    };
-                    vc.hidesBottomBarWhenPushed = YES;
-                    [self.navigationController pushViewController:vc animated:YES];
-                } withBlock:^(UIAlertController *alertView) {
-                    [self.navigationController presentViewController:alertView animated:YES completion:nil];
-                }];
+                [self loginOut];
             }
         };
         
@@ -647,17 +596,7 @@
                     [alert show];
                 }];
             }else {
-                [Helper alertViewWithTitle:@"是否立即登录?" withBlockCancle:^{
-                } withBlockSure:^{
-                    JGHLoginViewController *vc = [[JGHLoginViewController alloc] init];
-                    vc.reloadCtrlData = ^(){
-                        
-                    };
-                    vc.hidesBottomBarWhenPushed = YES;
-                    [self.navigationController pushViewController:vc animated:YES];
-                } withBlock:^(UIAlertController *alertView) {
-                    [self.navigationController presentViewController:alertView animated:YES completion:nil];
-                }];
+                [self loginOut];
             }
         };
         //添加长摁举报手势
@@ -694,7 +633,22 @@
     [alertVC addAction:action3];
     [self presentViewController:alertVC animated:YES completion:nil];
 }
-
+#pragma mark -- 判断登录
+- (void)loginOut{
+    [Helper alertViewWithTitle:@"是否立即登录?" withBlockCancle:^{
+    } withBlockSure:^{
+        JGHLoginViewController *vc = [[JGHLoginViewController alloc] init];
+        vc.reloadCtrlData = ^(){
+            [_tableView.header beginRefreshing];
+            NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+            [center postNotificationName:@"loadMessageData" object:nil];
+        };
+        vc.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:vc animated:YES];
+    } withBlock:^(UIAlertController *alertView) {
+        [self.navigationController presentViewController:alertView animated:YES completion:nil];
+    }];
+}
 
 -(void)longPressToDo:(UILongPressGestureRecognizer *)gesture
 {
@@ -776,22 +730,9 @@
                 [self.navigationController presentViewController:alertView animated:YES completion:nil];
             }];
         }];
-        
-        
-        
     }else {
         
-        [Helper alertViewWithTitle:@"是否立即登录?" withBlockCancle:^{
-        } withBlockSure:^{
-            JGHLoginViewController *vc = [[JGHLoginViewController alloc] init];
-            vc.reloadCtrlData = ^(){
-                
-            };
-            vc.hidesBottomBarWhenPushed = YES;
-            [self.navigationController pushViewController:vc animated:YES];
-        } withBlock:^(UIAlertController *alertView) {
-            [self.navigationController presentViewController:alertView animated:YES completion:nil];
-        }];
+        [self loginOut];
     }
 }
 
@@ -865,18 +806,7 @@
         
     }else {
         
-        [Helper alertViewWithTitle:@"是否立即登录?" withBlockCancle:^{
-            
-        } withBlockSure:^{
-            JGHLoginViewController *vc = [[JGHLoginViewController alloc] init];
-            vc.reloadCtrlData = ^(){
-                
-            };
-            vc.hidesBottomBarWhenPushed = YES;
-            [self.navigationController pushViewController:vc animated:YES];
-        } withBlock:^(UIAlertController *alertView) {
-            [self.navigationController presentViewController:alertView animated:YES completion:nil];
-        }];
+        [self loginOut];
     }
 }
 @end

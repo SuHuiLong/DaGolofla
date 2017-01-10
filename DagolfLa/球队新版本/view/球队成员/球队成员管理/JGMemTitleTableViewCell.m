@@ -23,7 +23,7 @@
         
         _titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(10*screenWidth/375, 0, 100*screenWidth/375, 45*screenWidth/375)];
         _titleLabel.font = [UIFont systemFontOfSize:15*screenWidth/375];
-        _titleLabel.textColor = [UIColor lightGrayColor];
+        _titleLabel.textColor = [UIColor colorWithHexString:B31_Color];
         [self addSubview:_titleLabel];
         
         

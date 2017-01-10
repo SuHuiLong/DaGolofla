@@ -400,16 +400,7 @@
             selfVc.messType = @2;
             [self.navc pushViewController:selfVc animated:YES];
         }else {
-            [Helper alertViewWithTitle:@"是否立即登录?" withBlockCancle:^{
-            } withBlockSure:^{
-                JGHLoginViewController *vc = [[JGHLoginViewController alloc] init];
-                vc.reloadCtrlData = ^(){
-                    
-                };
-                [self.navigationController pushViewController:vc animated:YES];
-            } withBlock:^(UIAlertController *alertView) {
-                [self presentViewController:alertView animated:YES completion:nil];
-            }];
+            [self loginOut];
         }
     };
     
@@ -506,16 +497,7 @@
         }];
     }else {
         
-        [Helper alertViewWithTitle:@"是否立即登录?" withBlockCancle:^{
-        } withBlockSure:^{
-            JGHLoginViewController *vc = [[JGHLoginViewController alloc] init];
-            vc.reloadCtrlData = ^(){
-                
-            };
-            [self.navigationController pushViewController:vc animated:YES];
-        } withBlock:^(UIAlertController *alertView) {
-            [self presentViewController:alertView animated:YES completion:nil];
-        }];
+        [self loginOut];
     }
 }
 
@@ -534,16 +516,7 @@
         [self.navc pushViewController:zanVc animated:YES];
         
     }else {
-        [Helper alertViewWithTitle:@"是否立即登录?" withBlockCancle:^{
-        } withBlockSure:^{
-            JGHLoginViewController *vc = [[JGHLoginViewController alloc] init];
-            vc.reloadCtrlData = ^(){
-                
-            };
-            [self.navigationController pushViewController:vc animated:YES];
-        } withBlock:^(UIAlertController *alertView) {
-            [self presentViewController:alertView animated:YES completion:nil];
-        }];
+        [self loginOut];
     }
 }
 
@@ -568,16 +541,7 @@
         
         
     }else {
-        [Helper alertViewWithTitle:@"是否立即登录?" withBlockCancle:^{
-        } withBlockSure:^{
-            JGHLoginViewController *vc = [[JGHLoginViewController alloc] init];
-            vc.reloadCtrlData = ^(){
-                
-            };
-            [self.navigationController pushViewController:vc animated:YES];
-        } withBlock:^(UIAlertController *alertView) {
-            [self presentViewController:alertView animated:YES completion:nil];
-        }];
+        [self loginOut];
     }
     
 };
@@ -627,34 +591,32 @@
         
         
     }else {
-        [Helper alertViewWithTitle:@"是否立即登录?" withBlockCancle:^{
-        } withBlockSure:^{
-            JGHLoginViewController *vc = [[JGHLoginViewController alloc] init];
-            vc.reloadCtrlData = ^(){
-                
-            };
-            [self.navigationController pushViewController:vc animated:YES];
-        } withBlock:^(UIAlertController *alertView) {
-            [self presentViewController:alertView animated:YES completion:nil];
-        }];
+        [self loginOut];
     }
     
+}
+
+#pragma mark -- 登录判断
+- (void)loginOut{
+    [Helper alertViewWithTitle:@"是否立即登录?" withBlockCancle:^{
+    } withBlockSure:^{
+        JGHLoginViewController *vc = [[JGHLoginViewController alloc] init];
+        vc.reloadCtrlData = ^(){
+            [_mainTable.header beginRefreshing];
+            NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+            [center postNotificationName:@"loadMessageData" object:nil];
+        };
+        [self.navigationController pushViewController:vc animated:YES];
+    } withBlock:^(UIAlertController *alertView) {
+        [self presentViewController:alertView animated:YES completion:nil];
+    }];
 }
 
 #pragma mark －－－ 关注/撤销 按钮点击方法
 - (void)attentionAct:(UIButton *)button{
     if (![[NSUserDefaults standardUserDefaults] objectForKey:@"userId"]) {
         
-        [Helper alertViewWithTitle:@"是否立即登录?" withBlockCancle:^{
-        } withBlockSure:^{
-            JGHLoginViewController *vc = [[JGHLoginViewController alloc] init];
-            vc.reloadCtrlData = ^(){
-                
-            };
-            [self.navigationController pushViewController:vc animated:YES];
-        } withBlock:^(UIAlertController *alertView) {
-            [self presentViewController:alertView animated:YES completion:nil];
-        }];
+        [self loginOut];
     }else{
         
         NSIndexPath *indexPath = [self.mainTable indexPathForCell:(YMTableViewCell *)[[button superview] superview]];
@@ -801,18 +763,7 @@
             cell.zanBtn.enabled = YES;
         }
     }else {
-        
-        [Helper alertViewWithTitle:@"是否立即登录?" withBlockCancle:^{
-        } withBlockSure:^{
-            JGHLoginViewController *vc = [[JGHLoginViewController alloc] init];
-            vc.reloadCtrlData = ^(){
-                
-            };
-            [self.navigationController pushViewController:vc animated:YES];
-        } withBlock:^(UIAlertController *alertView) {
-            [self presentViewController:alertView animated:YES completion:nil];
-        }];
-        
+        [self loginOut];
     }
     
     ymData.messageBody = m;
@@ -840,16 +791,7 @@
         [self.view addSubview:replyView];
         
     }else {
-        [Helper alertViewWithTitle:@"是否立即登录?" withBlockCancle:^{
-        } withBlockSure:^{
-            JGHLoginViewController *vc = [[JGHLoginViewController alloc] init];
-            vc.reloadCtrlData = ^(){
-                
-            };
-            [self.navigationController pushViewController:vc animated:YES];
-        } withBlock:^(UIAlertController *alertView) {
-            [self presentViewController:alertView animated:YES completion:nil];
-        }];
+        [self loginOut];
     }
 }
 
@@ -987,16 +929,7 @@
         }
         
     }else {
-        [Helper alertViewWithTitle:@"是否立即登录?" withBlockCancle:^{
-        } withBlockSure:^{
-            JGHLoginViewController *vc = [[JGHLoginViewController alloc] init];
-            vc.reloadCtrlData = ^(){
-                
-            };
-            [self.navigationController pushViewController:vc animated:YES];
-        } withBlock:^(UIAlertController *alertView) {
-            [self presentViewController:alertView animated:YES completion:nil];
-        }];
+        [self loginOut];
     }
     
 }

@@ -122,18 +122,16 @@
     
     //点
     _hoursArray = [NSMutableArray array];
-    for (int i=1; i<=24; i++) {
+    for (int i=0; i<24; i++) {
         if (i < 10) {
             [_hoursArray addObject:[NSString stringWithFormat:@"0%d", i]];
-        }else if (i == 24){
-            [_hoursArray addObject:[NSString stringWithFormat:@"00"]];
         }else{
             [_hoursArray addObject:[NSString stringWithFormat:@"%d", i]];
         }
     }
     //分钟
     _minutesArray = [NSMutableArray array];
-    for (int i=1; i<=60; i++) {
+    for (int i=0; i<60; i++) {
         if (i < 10) {
             [_minutesArray addObject:[NSString stringWithFormat:@"0%d", i]];
         }else{

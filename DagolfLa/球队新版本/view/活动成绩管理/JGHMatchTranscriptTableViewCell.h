@@ -29,7 +29,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *time;
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *timeLeft;//10
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *timeDown;//15
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *timeRight;//10
 
 @property (weak, nonatomic) IBOutlet UIButton *setAlmostBtn;
@@ -38,6 +37,14 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *setAlmostBtnRight;//10
 
 @property (weak, nonatomic) IBOutlet UILabel *line;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *lineTop;//10
+
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *oneTop;//10
+
+@property (weak, nonatomic) IBOutlet UILabel *nameLable;
+@property (weak, nonatomic) IBOutlet UILabel *totalLable;
+@property (weak, nonatomic) IBOutlet UILabel *almostLable;
+@property (weak, nonatomic) IBOutlet UILabel *netBarLable;
 
 
 @property (nonatomic, weak)id <JGHMatchTranscriptTableViewCellDelegate> delegate;

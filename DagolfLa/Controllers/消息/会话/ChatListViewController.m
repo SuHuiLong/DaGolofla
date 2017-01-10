@@ -63,7 +63,7 @@
         if ([[RCIMClient sharedRCIMClient]getUnreadCount:self.displayConversationTypeArray] == 0) {
             [self.tabBarController.tabBar hideBadgeOnItemIndex:2];
         }
-        [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
+//        [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
         [self refreshConversationTableViewIfNeeded];
         //        [self.tabBarController.tabBar hideBadgeOnItemIndex:4];
         //        [self.tabBarController.tabBar showBadgeOnItemIndex:4];
@@ -86,7 +86,8 @@
         JGHLoginViewController *vc = [[JGHLoginViewController alloc] init];
         vc.reloadCtrlData = ^(){
             [self.conversationListTableView.header beginRefreshing];
-            
+            NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+            [center postNotificationName:@"loadMessageData" object:nil];
         };
         
         vc.hidesBottomBarWhenPushed = YES;
@@ -252,19 +253,7 @@
     }
     else
     {
-        [Helper alertViewWithTitle:@"是否立即登录?" withBlockCancle:^{
-            
-        } withBlockSure:^{
-            JGHLoginViewController *vc = [[JGHLoginViewController alloc] init];
-            vc.reloadCtrlData = ^(){
-                
-            };
-            
-            vc.hidesBottomBarWhenPushed = YES;
-            [self.navigationController pushViewController:vc animated:YES];
-        } withBlock:^(UIAlertController *alertView) {
-            [self presentViewController:alertView animated:YES completion:nil];
-        }];
+        [self loginOut];
     }
 }
 
@@ -424,23 +413,28 @@
     }
     else
     {
-        [Helper alertViewWithTitle:@"是否立即登录?" withBlockCancle:^{
-            
-        } withBlockSure:^{
-            JGHLoginViewController *vc = [[JGHLoginViewController alloc] init];
-            vc.reloadCtrlData = ^(){
-                
-            };
-            vc.hidesBottomBarWhenPushed = YES;
-            [self.navigationController pushViewController:vc animated:YES];
-        } withBlock:^(UIAlertController *alertView) {
-            [self presentViewController:alertView animated:YES completion:nil];
-        }];
+        [self loginOut];
         
     }
     
 }
-
+#pragma mark -- 登录
+- (void)loginOut{
+    [Helper alertViewWithTitle:@"是否立即登录?" withBlockCancle:^{
+        
+    } withBlockSure:^{
+        JGHLoginViewController *vc = [[JGHLoginViewController alloc] init];
+        vc.reloadCtrlData = ^(){
+            [self.conversationListTableView.header beginRefreshing];
+            NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+            [center postNotificationName:@"loadMessageData" object:nil];
+        };
+        vc.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:vc animated:YES];
+    } withBlock:^(UIAlertController *alertView) {
+        [self presentViewController:alertView animated:YES completion:nil];
+    }];
+}
 
 //无消息的时候的视图  背景图
 - (void)showEmptyConversationView {
@@ -516,8 +510,14 @@
         int count = [[RCIMClient sharedRCIMClient]
                      getUnreadCount:self.displayConversationTypeArray];
         
+        int iconCount = (count + (int)_teamUnread +(int)_systemUnread +(int)_newFriendUnread);
         
-        if ((count + (int)_teamUnread +(int)_systemUnread +(int)_newFriendUnread) > 0) {
+        //本地存红点数
+        NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
+        [userdef setObject:@(iconCount) forKey:IconCount];
+        [userdef synchronize];
+        
+        if (iconCount > 0) {
             //      __weakSelf.tabBarItem.badgeValue =
             //          [[NSString alloc] initWithFormat:@"%d", count];
             //            int badgeValue = count+_teamUnread+_systemUnread;

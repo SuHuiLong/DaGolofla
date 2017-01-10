@@ -63,7 +63,7 @@
     
     [btnDelete setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     if ([_power rangeOfString:@"1002"].location != NSNotFound) {
-        [btnDelete setTitle:@"剔除出队" forState:UIControlStateNormal];
+        [btnDelete setTitle:@"踢除出队" forState:UIControlStateNormal];
         btnDelete.backgroundColor = [UIColor colorWithHexString:@"#F29825"];
         [btnDelete addTarget:self action:@selector(deleteClick) forControlEvents:UIControlEventTouchUpInside];
     }

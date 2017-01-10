@@ -197,99 +197,61 @@ static NSString *const JGHCenterBtnTableViewCellIdentifier = @"JGHCenterBtnTable
 
     }];
 }
-
 #pragma mark 开始进入刷新状态
 - (void)headRereshing
 {
     _page = 0;
     [self downLoadData:_page isReshing:YES];
 }
-
-
 #pragma mark -- tableView代理
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    if (section == 0) {
-        return 1;
-    }else if (section == 1){
+    if (section == 0){
         return _dataArray.count;
     }else{
         return 1;
     }
-//    return 3 + _dataArray.count;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 3;
+    return 2;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    
-    if (indexPath.section == 0) {
-        return 80 *ProportionAdapter;
-    }else{
-        return 40 *ProportionAdapter;
-    }
+    return 40 *ProportionAdapter;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     NSLog(@"%td", indexPath.section);
-    if (indexPath.section == 0) {
-        JGHMatchTranscriptTableViewCell *tranCell = [tableView dequeueReusableCellWithIdentifier:JGHMatchTranscriptTableViewCellIdentifier];
-        tranCell.delegate = self;
-        tranCell.selectionStyle = UITableViewCellSelectionStyleNone;
-        [tranCell configActivityName:_activityBaseModel.ballName andStartTime:_activityBaseModel.beginDate andEndTime:_activityBaseModel.endDate];
-        return tranCell;
-    }else if (indexPath.section == 2){
+
+    if (indexPath.section == 1){
         JGHCenterBtnTableViewCell *centerBtnCell = [tableView dequeueReusableCellWithIdentifier:JGHCenterBtnTableViewCellIdentifier];
         centerBtnCell.delegate = self;
         centerBtnCell.selectionStyle = UITableViewCellSelectionStyleNone;
         return centerBtnCell;
     }else{
-//        if (indexPath.row == 1) {
-//            JGHPlayersScoreTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:JGHPlayersScoreTableViewCellIdentifier];
-//            cell.selectionStyle = UITableViewCellSelectionStyleNone;
-//            cell.imageScore.hidden = YES;
-//            cell.fristLabel.text = @"姓名";
-//            cell.fristLabel.textColor = [UIColor lightGrayColor];
-//            cell.twoLabel.text = @"总杆";
-//            cell.twoLabel.textColor = [UIColor lightGrayColor];
-//            cell.threeLabel.text = @"差点";
-//            cell.threeLabel.textColor = [UIColor lightGrayColor];
-//            cell.fiveLabel.text = @"净杆";
-//            cell.fiveLabel.textColor = [UIColor lightGrayColor];
-//            return cell;
-//        }else{
-            JGHPlayersScoreTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:JGHPlayersScoreTableViewCellIdentifier];
-            cell.selectBtn.tag = indexPath.row + 100;
-            cell.delegate = self;
-            [cell showData:_dataArray[indexPath.row]];
-            cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            return cell;
-//        }
+        JGHPlayersScoreTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:JGHPlayersScoreTableViewCellIdentifier];
+        cell.selectBtn.tag = indexPath.row + 100;
+        cell.delegate = self;
+        [cell showData:_dataArray[indexPath.row]];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        return cell;
     }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    if (section == 1){
-        return 40*ProportionAdapter;
+    if (section == 0){
+        return 110*ProportionAdapter;
     }
     return 0;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
-    if (section == 1){
-        JGHPlayersScoreTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:JGHPlayersScoreTableViewCellIdentifier];
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        cell.imageScore.hidden = YES;
-        cell.fristLabel.text = @"姓名";
-        cell.fristLabel.textColor = [UIColor lightGrayColor];
-        cell.twoLabel.text = @"总杆";
-        cell.twoLabel.textColor = [UIColor lightGrayColor];
-        cell.threeLabel.text = @"差点";
-        cell.threeLabel.textColor = [UIColor lightGrayColor];
-        cell.fiveLabel.text = @"净杆";
-        cell.fiveLabel.textColor = [UIColor lightGrayColor];
-        return (UIView *)cell;
+    if (section == 0){
+        JGHMatchTranscriptTableViewCell *tranCell = [tableView dequeueReusableCellWithIdentifier:JGHMatchTranscriptTableViewCellIdentifier];
+        tranCell.delegate = self;
+        tranCell.selectionStyle = UITableViewCellSelectionStyleNone;
+        [tranCell configActivityName:_activityBaseModel.ballName andStartTime:_activityBaseModel.beginDate andEndTime:_activityBaseModel.endDate];
+        return (UIView *)tranCell;
     }else{
         return nil;
     }

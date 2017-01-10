@@ -636,7 +636,8 @@
         } withBlockSure:^{
             JGHLoginViewController *vc = [[JGHLoginViewController alloc] init];
             vc.reloadCtrlData = ^(){
-                
+                NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+                [center postNotificationName:@"loadMessageData" object:nil];
             };
             [self.navigationController pushViewController:vc animated:YES];
         } withBlock:^(UIAlertController *alertView) {

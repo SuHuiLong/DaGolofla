@@ -127,18 +127,7 @@
             [self.mainTable.header endRefreshing];
             [self.mainTable.footer endRefreshing];
             
-            [Helper alertViewWithTitle:@"是否立即登录?" withBlockCancle:^{
-            } withBlockSure:^{
-
-                JGHLoginViewController *vc = [[JGHLoginViewController alloc] init];
-                vc.reloadCtrlData = ^(){
-                    
-                };
-                [self.navc pushViewController:vc animated:YES];
-
-            } withBlock:^(UIAlertController *alertView) {
-                [self presentViewController:alertView animated:YES completion:nil];
-            }];
+            [self loaginOut];
         }
     }
 }
@@ -483,18 +472,7 @@
             selfVc.messType = @2;
             [self.navc pushViewController:selfVc animated:YES];
         }else {
-            [Helper alertViewWithTitle:@"是否立即登录?" withBlockCancle:^{
-            } withBlockSure:^{
-                
-                JGHLoginViewController *vc = [[JGHLoginViewController alloc] init];
-                vc.reloadCtrlData = ^(){
-                    
-                };
-                [self.navc pushViewController:vc animated:YES];
-
-            } withBlock:^(UIAlertController *alertView) {
-                [self presentViewController:alertView animated:YES completion:nil];
-            }];
+            [self loaginOut];
         }
     };
     
@@ -504,7 +482,24 @@
     [self.mainTable addGestureRecognizer:longEnt];
     return cell;
 }
-
+#pragma mark -- 登录
+- (void)loaginOut{
+    [Helper alertViewWithTitle:@"是否立即登录?" withBlockCancle:^{
+    } withBlockSure:^{
+        
+        JGHLoginViewController *vc = [[JGHLoginViewController alloc] init];
+        vc.reloadCtrlData = ^(){
+            [_mainTable.header beginRefreshing];
+            
+            NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+            [center postNotificationName:@"loadMessageData" object:nil];
+        };
+        [self.navc pushViewController:vc animated:YES];
+        
+    } withBlock:^(UIAlertController *alertView) {
+        [self presentViewController:alertView animated:YES completion:nil];
+    }];
+}
 //举报事件
 -(void)longPressToDo:(UILongPressGestureRecognizer *)gesture{
     //    YMTextData *ymData = (YMTextData *)[_tableDataSource objectAtIndex:indexPath];
@@ -591,18 +586,7 @@
         }];
     }else {
         
-        [Helper alertViewWithTitle:@"是否立即登录?" withBlockCancle:^{
-        } withBlockSure:^{
-            
-            JGHLoginViewController *vc = [[JGHLoginViewController alloc] init];
-            vc.reloadCtrlData = ^(){
-                
-            };
-            [self.navc pushViewController:vc animated:YES];
-
-        } withBlock:^(UIAlertController *alertView) {
-            [self presentViewController:alertView animated:YES completion:nil];
-        }];
+        [self loaginOut];
     }
 }
 
@@ -621,18 +605,7 @@
         [self.navc pushViewController:zanVc animated:YES];
         
     }else {
-        [Helper alertViewWithTitle:@"是否立即登录?" withBlockCancle:^{
-        } withBlockSure:^{
-           
-            JGHLoginViewController *vc = [[JGHLoginViewController alloc] init];
-            vc.reloadCtrlData = ^(){
-                
-            };
-            [self.navc pushViewController:vc animated:YES];
-
-        } withBlock:^(UIAlertController *alertView) {
-            [self presentViewController:alertView animated:YES completion:nil];
-        }];
+        [self loaginOut];
     }
 }
 
@@ -657,18 +630,7 @@
         
         
     }else {
-        [Helper alertViewWithTitle:@"是否立即登录?" withBlockCancle:^{
-        } withBlockSure:^{
-
-            JGHLoginViewController *vc = [[JGHLoginViewController alloc] init];
-            vc.reloadCtrlData = ^(){
-                
-            };
-            [self.navc pushViewController:vc animated:YES];
-
-        } withBlock:^(UIAlertController *alertView) {
-            [self presentViewController:alertView animated:YES completion:nil];
-        }];
+        [self loaginOut];
     }
     
 };
@@ -718,18 +680,7 @@
         
         
     }else {
-        [Helper alertViewWithTitle:@"是否立即登录?" withBlockCancle:^{
-        } withBlockSure:^{
-            
-            JGHLoginViewController *vc = [[JGHLoginViewController alloc] init];
-            vc.reloadCtrlData = ^(){
-
-            };
-            [self.navc pushViewController:vc animated:YES];
-
-        } withBlock:^(UIAlertController *alertView) {
-            [self presentViewController:alertView animated:YES completion:nil];
-        }];
+        [self loaginOut];
     }
     
 }
@@ -738,18 +689,7 @@
 - (void)attentionAct:(UIButton *)button{
     if (![[NSUserDefaults standardUserDefaults] objectForKey:@"userId"]) {
         
-        [Helper alertViewWithTitle:@"是否立即登录?" withBlockCancle:^{
-        } withBlockSure:^{
-
-            JGHLoginViewController *vc = [[JGHLoginViewController alloc] init];
-            vc.reloadCtrlData = ^(){
-                
-            };
-            [self.navc pushViewController:vc animated:YES];
-
-        } withBlock:^(UIAlertController *alertView) {
-            [self presentViewController:alertView animated:YES completion:nil];
-        }];
+        [self loaginOut];
     }else{
         
         NSIndexPath *indexPath = [self.mainTable indexPathForCell:(YMTableViewCell *)[[button superview] superview]];
@@ -896,17 +836,7 @@
         }
     }else {
         
-        [Helper alertViewWithTitle:@"是否立即登录?" withBlockCancle:^{
-        } withBlockSure:^{
-            JGHLoginViewController *vc = [[JGHLoginViewController alloc] init];
-            vc.reloadCtrlData = ^(){
-                
-            };
-            [self.navc pushViewController:vc animated:YES];
-
-        } withBlock:^(UIAlertController *alertView) {
-            [self presentViewController:alertView animated:YES completion:nil];
-        }];
+        [self loaginOut];
         
     }
     
@@ -936,17 +866,7 @@
         [self.view addSubview:replyView];
         
     }else {
-        [Helper alertViewWithTitle:@"是否立即登录?" withBlockCancle:^{
-        } withBlockSure:^{
-
-            JGHLoginViewController *vc = [[JGHLoginViewController alloc] init];
-            vc.reloadCtrlData = ^(){
-            };
-            [self.navc pushViewController:vc animated:YES];
-
-        } withBlock:^(UIAlertController *alertView) {
-            [self presentViewController:alertView animated:YES completion:nil];
-        }];
+        [self loaginOut];
     }
 }
 
@@ -1128,17 +1048,7 @@
         }
         
     }else {
-        [Helper alertViewWithTitle:@"是否立即登录?" withBlockCancle:^{
-        } withBlockSure:^{
-
-            JGHLoginViewController *vc = [[JGHLoginViewController alloc] init];
-            vc.reloadCtrlData = ^(){
-            };
-            [self.navc pushViewController:vc animated:YES];
-
-        } withBlock:^(UIAlertController *alertView) {
-            [self presentViewController:alertView animated:YES completion:nil];
-        }];
+        [self loaginOut];
     }
     
 }

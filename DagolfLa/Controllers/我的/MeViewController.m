@@ -150,22 +150,29 @@
         [_tableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationAutomatic];
         _imgvIcon.image = [UIImage imageNamed:DefaultHeaderImage];
         _labelnickName.text = nil;
-        [Helper alertViewWithTitle:@"是否立即登录?" withBlockCancle:^{
-            
-        } withBlockSure:^{
-            JGHLoginViewController *vc = [[JGHLoginViewController alloc] init];
-            vc.reloadCtrlData = ^(){
-                
-            };
-            vc.hidesBottomBarWhenPushed = YES;
-            [self.navigationController pushViewController:vc animated:YES];
-        } withBlock:^(UIAlertController *alertView) {
-            [self presentViewController:alertView animated:YES completion:nil];
-        }];
+        
+        [self loginOut];
         return;
     }
 }
-
+#pragma mark -- 登录 
+- (void)loginOut{
+    [Helper alertViewWithTitle:@"是否立即登录?" withBlockCancle:^{
+        
+    } withBlockSure:^{
+        JGHLoginViewController *vc = [[JGHLoginViewController alloc] init];
+        vc.reloadCtrlData = ^(){
+            [_tableView.header beginRefreshing];
+            
+            NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+            [center postNotificationName:@"loadMessageData" object:nil];
+        };
+        vc.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:vc animated:YES];
+    } withBlock:^(UIAlertController *alertView) {
+        [self presentViewController:alertView animated:YES completion:nil];
+    }];
+}
 #pragma mark -- 网页 跳转活动详情
 - (void)PushJGTeamActibityNameViewController:(NSNotification *)not{
     
@@ -175,18 +182,7 @@
     }
     else
     {
-        [Helper alertViewWithTitle:@"是否立即登录?" withBlockCancle:^{
-            
-        } withBlockSure:^{
-            JGHLoginViewController *vc = [[JGHLoginViewController alloc] init];
-            vc.reloadCtrlData = ^(){
-                
-            };
-            vc.hidesBottomBarWhenPushed = YES;
-            [self.navigationController pushViewController:vc animated:YES];
-        } withBlock:^(UIAlertController *alertView) {
-            [self presentViewController:alertView animated:YES completion:nil];
-        }];
+        [self loginOut];
         return;
     }
     
@@ -334,7 +330,10 @@
     if (buttonIndex == 1) {
         JGHLoginViewController *vc = [[JGHLoginViewController alloc] init];
         vc.reloadCtrlData = ^(){
+            [_tableView.header beginRefreshing];
             
+            NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+            [center postNotificationName:@"loadMessageData" object:nil];
         };
         vc.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:vc animated:YES];
@@ -478,18 +477,7 @@
 #pragma mark --头像点击事件
 - (void)headerTapClick{
     if (!DEFAULF_USERID) {
-        [Helper alertViewWithTitle:@"是否立即登录?" withBlockCancle:^{
-            
-        } withBlockSure:^{
-            JGHLoginViewController *vc = [[JGHLoginViewController alloc] init];
-            vc.reloadCtrlData = ^(){
-                
-            };
-            vc.hidesBottomBarWhenPushed = YES;
-            [self.navigationController pushViewController:vc animated:YES];
-        } withBlock:^(UIAlertController *alertView) {
-            [self presentViewController:alertView animated:YES completion:nil];
-        }];
+        [self loginOut];
         return;
     }
     
@@ -646,19 +634,7 @@
     }
     else
     {
-        [Helper alertViewWithTitle:@"是否立即登录?" withBlockCancle:^{
-            
-        } withBlockSure:^{
-            JGHLoginViewController *vc = [[JGHLoginViewController alloc] init];
-            vc.reloadCtrlData = ^(){
-                
-            };
-            
-            vc.hidesBottomBarWhenPushed = YES;
-            [self.navigationController pushViewController:vc animated:YES];
-        } withBlock:^(UIAlertController *alertView) {
-            [self presentViewController:alertView animated:YES completion:nil];
-        }];
+        [self loginOut];
     }
  
 }

@@ -248,6 +248,7 @@
         JGHLoginViewController *vc = [[JGHLoginViewController alloc] init];
         vc.index = 1;
         vc.reloadCtrlData = ^(){
+            [[NSNotificationCenter defaultCenter]postNotificationName:@"loadMessageData" object:nil];
             
         };
         [self.navigationController pushViewController:vc animated:YES];

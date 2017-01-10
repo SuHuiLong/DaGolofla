@@ -85,7 +85,6 @@
 @implementation AppDelegate
 
 - (void)umengTrack {
-    //    [MobClick setAppVersion:XcodeAppVersion]; //参数为NSString * 类型,自定义app版本信息，如果不设置，默认从CFBundleVersion里取
     [MobClick setLogEnabled:YES];// 打开友盟sdk调试，注意Release发布时需要注释掉此行,减少io消耗
     UMConfigInstance.appKey = @"574c75ed67e58ecb16003314";
     UMConfigInstance.secret = nil;
@@ -94,48 +93,20 @@
     [MobClick beginLogPageView:@""];
 }
 
-
 - (void)contanctUpload{
-    
     NSMutableDictionary *DataDic = [NSMutableDictionary dictionary];
     [DataDic setObject:DEFAULF_USERID forKey:@"userKey"];
     [DataDic setObject:[Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@dagolfla.com", DEFAULF_USERID]] forKey:@"md5"];
-    
     [[JsonHttp jsonHttp] httpRequest:@"mobileContact/getLastUploadTime" JsonKey:nil withData:DataDic requestMethod:@"GET" failedBlock:^(id errType) {
         
     } completionBlock:^(id data) {
-        
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
-            
             // 是否允许同步通讯录
             if ([[data objectForKey:@"upLoadEnable"] boolValue]) {
-                
                 
                 NSMutableArray *commitContactArray = [NSMutableArray array];
                 
                 ABAddressBookRef addresBook = ABAddressBookCreateWithOptions(NULL, NULL);
-                
-                
-//                if ([[UIDevice currentDevice].systemVersion floatValue] >= 6.0)
-//                {
-//                    addresBook =  ABAddressBookCreateWithOptions(NULL, NULL);
-//                    //获取通讯录权限
-//                    dispatch_semaphore_t sema = dispatch_semaphore_create(0);
-//                    ABAddressBookRequestAccessWithCompletion(addresBook, ^(bool granted, CFErrorRef error){dispatch_semaphore_signal(sema);});
-//                    
-//                    dispatch_semaphore_wait(sema, DISPATCH_TIME_FOREVER);
-//                    
-//                }
-//                else
-//                {
-//                    addresBook = ABAddressBookCreate();
-//                    
-//                }
-                
-                
-                
-                //                ABAddressBookRegisterExternalChangeCallback(addresBook, ContactsChangeCallback, (__bridge void *)(self));
-                
                 //获取通讯录中的所有人
                 CFArrayRef allPeople = ABAddressBookCopyArrayOfAllPeople(addresBook);
                 //通讯录中人数
@@ -180,18 +151,12 @@
                         if (nameString) {
                             [personDic setObject:nameString forKey:@"cName"];
                         }
-                        
-                        
                         // 公司
                         NSString *organization = (__bridge NSString*)ABRecordCopyValue(person, kABPersonOrganizationProperty);
-                        
                         //      工作         NSString *jobtitle = (__bridge NSString*)ABRecordCopyValue(person, kABPersonJobTitleProperty);
-                        
                         if (organization) {
                             [personDic setObject:organization forKey:@"workUnit"];
                         }
-                        
-                        
                         //第一次添加该条记录的时间
                         NSString *firstknow = (__bridge NSString*)ABRecordCopyValue(person, kABPersonCreationDateProperty);
                         NSLog(@"第一次添加该条记录的时间%@\n",firstknow);
@@ -199,14 +164,10 @@
                         NSDate *lastknow = (__bridge NSDate*)ABRecordCopyValue(person, kABPersonModificationDateProperty);
                         NSLog(@"最后一次修改該条记录的时间%@\n",lastknow);
                         ;
-                        
-                        
                         // 最后一次上传的时间  如果第一次上传没有该参数
                         if ([data objectForKey:@"lastTime"]) {
-                            
                             // 最后一次修改的时间
                             CGFloat last = [[Helper getNowDateFromatAnDate:lastknow] timeIntervalSince1970];
-                            
                             // 最后一次上传的时间
                             NSString *current = [data objectForKey:@"lastTime"];
                             NSDateFormatter * dm = [[NSDateFormatter alloc]init];
@@ -214,12 +175,9 @@
                             NSDate * newdate = [dm dateFromString:current];
                             NSDate *lastDate = [Helper getNowDateFromatAnDate:newdate];
                             CGFloat currentDate = [lastDate timeIntervalSince1970];
-                            
-                            
                             if (last > currentDate) {
                                 [commitContactArray addObject:personDic];
                             }
-                            
                             
                         }else{
                             [commitContactArray addObject:personDic];
@@ -230,7 +188,6 @@
                 NSMutableDictionary *dic = [NSMutableDictionary dictionary];
                 [dic setObject:DEFAULF_USERID forKey:@"userKey"];
                 [dic setObject:commitContactArray forKey:@"contactList"];
-                
                 if ([commitContactArray count] != 0) {
                     [[JsonHttp jsonHttp] httpRequestWithMD5:@"mobileContact/doUploadContacts" JsonKey:nil withData:dic failedBlock:^(id errType) {
                         
@@ -249,6 +206,9 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     _pushID = 0;
     
+//    UIUserNotificationSettings *mySettings = [UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeBadge categories:nil];
+//    [[UIApplication sharedApplication] registerUserNotificationSettings:mySettings];
+    
     if (DEFAULF_USERID) {
         [self contanctUpload];
     }
@@ -261,34 +221,26 @@
     
     //设置状态栏字体颜色
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
-    
     //---------------------------友盟-------------------------------
     [self umengTrack];
-
     //-------------------------定位-------------------------
     [self getCurPosition];
-    
     //-------------------------初始化趣拍-------------------------
     [[TaeSDK sharedInstance] asyncInit:^{
         
     } failedCallback:^(NSError *error) {
         NSLog(@"TaeSDK init failed!!!");
     }];
-    
     //-------------------------友盟-------------------------
     //键盘自动收起
     [IQKeyboardManager sharedManager].enable = YES;
     [IQKeyboardManager sharedManager].enableAutoToolbar = NO;
     [IQKeyboardManager sharedManager].shouldResignOnTouchOutside = YES;
-    
     [UMSocialData setAppKey:@"561e0d97e0f55a66640014e2"];
-    
     //设置微信AppId、appSecret，分享url
     [UMSocialWechatHandler setWXAppId:@"wxdcdc4e20544ed728" appSecret:@"fdc75aae5a98f2aa0f62ef8cba2b08e9" url:@"http://www.umeng.com/social"];
-    
     //打开新浪微博的SSO开关，设置新浪微博回调地址，这里必须要和你在新浪微博后台设置的回调地址一致。若在新浪后台设置我们的回调地址，“http://sns.whalecloud.com/sina2/callback”，这里可以传nil
     [UMSocialSinaHandler openSSOWithRedirectURL:@"http://www.dagolfla.com"];
-    
     _mapManager = [[BMKMapManager alloc]init];
     // 如果要关注网络及授权验证事件，请设定     generalDelegate参数
     BOOL ret = [_mapManager start:@"BvLmax5esQ8rSrLQbhkYZa1b"  generalDelegate:nil];
@@ -297,7 +249,6 @@
     }
     // Add the navigation controller's view to the window and display.
     [self.window makeKeyAndVisible];
-    
     //-------------------------极光推送-------------------------
     if ([[UIDevice currentDevice].systemVersion floatValue] >= 10.0) {
 #ifdef NSFoundationVersionNumber_iOS_9_x_Max
@@ -315,138 +266,33 @@
         //categories 必须为nil
         [JPUSHService registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert) categories:nil];
     }
-    
     //测试NO，线上YES；
     [JPUSHService setupWithOption:launchOptions appKey:@"831cd22faea3454090c15bbe" channel:@"Publish chanel" apsForProduction:NO];
-    
     //2.1.9版本新增获取registration id block接口。
     [JPUSHService registrationIDCompletionHandler:^(int resCode, NSString *registrationID) {
         if(resCode == 0){
             NSLog(@"registrationID获取成功：%@",registrationID);
-            
         }
         else{
             NSLog(@"registrationID获取失败，code：%d",resCode);
         }
     }];
     
-    //-------------
-//    NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
-//    [defaultCenter addObserver:self selector:@selector(networkDidReceiveMessage:) name:kJPFNetworkDidReceiveMessageNotification object:nil];
-    
     //-------------------------融云-------------------------
     //初始化融云SDK
     [[RCIM sharedRCIM] initWithAppKey:RongYunAPPKEY];//pgyu6atqylmiu
-    
     if ([user objectForKey:@"userId"]) {
-        
-        [[PostDataRequest sharedInstance] postDataRequest:@"user/queryById.do" parameter:@{@"userId":[user objectForKey:@"userId"]} success:^(id respondsData) {
-            NSDictionary *dict=[NSJSONSerialization JSONObjectWithData:respondsData options:NSJSONReadingAllowFragments error:nil];
-            if ([[dict objectForKey:@"success"] integerValue]==1) {
-                //保存用户数据信息
-//                [[RCIM sharedRCIM] initWithAppKey:TESTRongYunAPPKEY];//pgyu6atqylmiu
-                UserInformationModel *model = [[UserInformationModel alloc] init];
-                [model setValuesForKeysWithDictionary:[dict objectForKey:@"rows"]];
-                [[UserDataInformation sharedInstance] saveUserInformation:model];
-                //                设置会话列表头像和会话界面头像
-                
-                NSString *token=[UserDataInformation sharedInstance].userInfor.rongTk;
-                [RCIM sharedRCIM].globalConversationPortraitSize = CGSizeMake(40*ScreenWidth/375, 40*ScreenWidth/375);
-                [RCIM sharedRCIM].globalConversationAvatarStyle=RC_USER_AVATAR_CYCLE;
-                [RCIM sharedRCIM].globalMessageAvatarStyle=RC_USER_AVATAR_CYCLE;
-                
-                [[RCIM sharedRCIM] setUserInfoDataSource:[UserDataInformation sharedInstance]];
-                [[RCIM sharedRCIM] setGroupInfoDataSource:[UserDataInformation sharedInstance]];
-                NSString *str1=[NSString stringWithFormat:@"%@",[user objectForKey:@"userId"]];
-                NSString *str2=[NSString stringWithFormat:@"%@",[user objectForKey:@"userName"]];
-                //完整的图片请求路径
-                NSString *str3=[NSString stringWithFormat:@"http://www.dagolfla.com:8081/small_%@",[user objectForKey:@"pic"]];
-                //                NSLog(@"%@",[user objectForKey:@"pic"]);
-                RCUserInfo *userInfo=[[RCUserInfo alloc] initWithUserId:str1 name:str2 portrait:str3];
-                [RCIM sharedRCIM].currentUserInfo=userInfo;
-                [RCIM sharedRCIM].enableMessageAttachUserInfo=NO;
-                //                [RCIM sharedRCIM].receiveMessageDelegate=self;
-                // 快速集成第二步，连接融云服务器
-                [[RCIM sharedRCIM] connectWithToken:token success:^(NSString *userId) {
-                    //NSLog(@"1111");
-                    //自动登录   连接融云服务器
-                    [[UserDataInformation sharedInstance] synchronizeUserInfoRCIM];
-                    
-                }error:^(RCConnectErrorCode status) {
-                    // Connect 失败
-                    //                        NSLog(@"连接失败");
-                }tokenIncorrect:^() {
-                    // Token 失效的状态处理
-                    //
-                    //                         NSLog(@"token失效");
-                }];
-                
-            }
-            else
-            {
-//                [[RCIM sharedRCIM] initWithAppKey:TESTRongYunAPPKEY];//pgyu6atqylmiu
-                //网页端同步退出
-                [[PostDataRequest sharedInstance] getDataRequest:[NSString stringWithFormat:@"http://www.dagolfla.com/app/api/client/api.php?Action=UserLogOut"] success:^(id respondsData) {
-                    //                    NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:respondsData options:NSJSONReadingMutableContainers error:nil];
-                } failed:^(NSError *error) {
-                    
-                }];
-                
-                [[NSURLCache sharedURLCache] removeAllCachedResponses];
-                [[RCIMClient sharedRCIMClient]logout];
-                //清空记分的数据和登录的数据
-                NSUserDefaults *user=[NSUserDefaults standardUserDefaults];
-                
-                [user removeObjectForKey:@"userId"];
-                [user removeObjectForKey:@"scoreObjectTitle"];
-                [user removeObjectForKey:@"scoreballName"];
-                [user removeObjectForKey:@"scoreSite0"];
-                [user removeObjectForKey:@"scoreSite1"];
-                [user removeObjectForKey:@"scoreType"];
-                [user removeObjectForKey:@"scoreTTaiwan"];
-                [user removeObjectForKey:@"scoreObjectId"];
-                [user removeObjectForKey:@"scoreballId"];
-                [user removeObjectForKey:@"openId"];
-                [user removeObjectForKey:@"uid"];
-                [user removeObjectForKey:@"isWeChat"];
-                //
-                [user synchronize];
-                
-            }
-        } failed:^(NSError *error) {
-            
-            //网页端同步退出
-            [[PostDataRequest sharedInstance] getDataRequest:[NSString stringWithFormat:@"http://www.dagolfla.com/app/api/client/api.php?Action=UserLogOut"] success:^(id respondsData) {
-                //                NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:respondsData options:NSJSONReadingMutableContainers error:nil];
-            } failed:^(NSError *error) {
-                
-            }];
-            
-            [[NSURLCache sharedURLCache] removeAllCachedResponses];
-            [[RCIMClient sharedRCIMClient]logout];
-            //清空记分的数据和登录的数据
-            NSUserDefaults *user=[NSUserDefaults standardUserDefaults];
-            
-            [user removeObjectForKey:@"userId"];
-            [user removeObjectForKey:@"scoreObjectTitle"];
-            [user removeObjectForKey:@"scoreballName"];
-            [user removeObjectForKey:@"scoreSite0"];
-            [user removeObjectForKey:@"scoreSite1"];
-            [user removeObjectForKey:@"scoreType"];
-            [user removeObjectForKey:@"scoreTTaiwan"];
-            [user removeObjectForKey:@"scoreObjectId"];
-            [user removeObjectForKey:@"scoreballId"];
-            [user removeObjectForKey:@"openId"];
-            [user removeObjectForKey:@"uid"];
-            [user removeObjectForKey:@"isWeChat"];
-            //
-            [user synchronize];
+        // TODO
+        NSString  *token  = [user objectForKey:@"rongTk"];
+        [[RCIM sharedRCIM] connectWithToken:token success:^(NSString *userId) {
+            NSLog(@":======== userId=%@", userId);
+            //自动登录   连接融云服务器
+            [[UserDataInformation sharedInstance] synchronizeUserInfoRCIM];
+        } error:^(RCConnectErrorCode status) {
+            NSLog(@":======== status=%ld", (long)status);
+        } tokenIncorrect:^{
             
         }];
-    }
-    else
-    {
-//        [[RCIM sharedRCIM] initWithAppKey:TESTRongYunAPPKEY];//pgyu6atqylmiu
     }
     /**
      * 推送处理1
@@ -474,10 +320,8 @@
      name:RCKitDispatchMessageNotification
      object:nil];
     [[RCIM sharedRCIM] setConnectionStatusDelegate:self];
-    
     //-------------------------微信支付------------------------------
     [WXApi registerApp:@"wxdcdc4e20544ed728"];
-    
     //------------------------处理启动事件----------------------------
     NSURL *url = [launchOptions objectForKey:UIApplicationLaunchOptionsURLKey];
     NSDictionary* pushInfo = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
@@ -492,7 +336,6 @@
             
             [self notifyUpdateUnreadMessageCount];
         }
-        
     }else if (url != nil) {
         if ([[url query] containsString:@"safepay"]) {
             
@@ -532,10 +375,8 @@
             
         }
     }
-    
     //调用PHP登录
     [self phpLogin];
-    
     return YES;
 }
 /**
@@ -551,22 +392,32 @@
     }
 }
 - (void)didReceiveMessageNotification:(NSNotification *)notification {
-    NSNumber *left = [notification.userInfo objectForKey:@"left"];
-    if ([RCIMClient sharedRCIMClient].sdkRunningMode ==
-        RCSDKRunningMode_Backgroud &&
-        0 == left.integerValue) {
-        int unreadMsgCount = [[RCIMClient sharedRCIMClient] getUnreadCount:@[
-                                                                             @(ConversationType_PRIVATE),
-                                                                             @(ConversationType_DISCUSSION),
-                                                                             @(ConversationType_APPSERVICE),
-                                                                             @(ConversationType_PUBLICSERVICE),
-                                                                             @(ConversationType_GROUP)
-                                                                             ]];
-        [UIApplication sharedApplication].applicationIconBadgeNumber =
-        unreadMsgCount;
-    }
-//    [UIApplication sharedApplication].applicationIconBadgeNumber =
-//    [UIApplication sharedApplication].applicationIconBadgeNumber + 1;
+//    [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
+//    NSNumber *left = [notification.userInfo objectForKey:@"left"];
+//    if ([RCIMClient sharedRCIMClient].sdkRunningMode ==
+//        RCSDKRunningMode_Backgroud &&
+//        0 == left.integerValue) {
+//        int unreadMsgCount = [[RCIMClient sharedRCIMClient] getUnreadCount:@[
+//                                                                             @(ConversationType_PRIVATE),
+//                                                                             @(ConversationType_DISCUSSION),
+//                                                                             @(ConversationType_APPSERVICE),
+//                                                                             @(ConversationType_PUBLICSERVICE),
+//                                                                             @(ConversationType_GROUP)
+//                                                                             ]];        
+//        if (DEFAULF_IconCount) {
+//            [UIApplication sharedApplication].applicationIconBadgeNumber = unreadMsgCount + [DEFAULF_IconCount integerValue];
+//        }else{
+//            [UIApplication sharedApplication].applicationIconBadgeNumber = unreadMsgCount;
+//        }
+//    }else{
+//        if (DEFAULF_IconCount) {
+//            [UIApplication sharedApplication].applicationIconBadgeNumber =[DEFAULF_IconCount integerValue] +1;
+//        }else{
+//            [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
+//        }
+//    }
+    [UIApplication sharedApplication].applicationIconBadgeNumber =
+    [UIApplication sharedApplication].applicationIconBadgeNumber + 1;
 }
 - (void)application:(UIApplication *)application handleWatchKitExtensionRequest:(NSDictionary *)userInfo
               reply:(void (^)(NSDictionary *))reply {
@@ -592,67 +443,13 @@
         if ([data objectForKey:@"state"]) {
             [userDef setObject:[data objectForKey:@"state"] forKey:PHPState];
         }
-        
     }];
 }
-
 -(void)startApp
 {
     self.window.rootViewController = [[TabBarController alloc]init];
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
-}
--(void)gifReLoad
-{
-    /**
-     *  1.显示启动页广告
-     */
-    [XHLaunchAd showWithAdFrame:CGRectMake(0, 0,self.window.bounds.size.width, self.window.bounds.size.height) setAdImage:^(XHLaunchAd *launchAd) {
-        
-        //未检测到广告数据,启动页停留时间,不设置默认为3,(设置4即表示:启动页显示了4s,还未检测到广告数据,就自动进入window根控制器)
-        launchAd.noDataDuration = 3;
-        
-        
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            //获取广告数据
-            [self requestImageData:^(NSString *imgUrl, NSInteger duration, NSString *openUrl) {
-                
-                /**
-                 *  2.设置广告数据
-                 */
-                
-                //            WEAKLAUNCHAD;//定义一个weakLaunchAd
-                [launchAd setImageUrl:imgUrl duration:duration skipType:SkipTypeTimeText options:XHWebImageDefault completed:^(UIImage *image, NSURL *url) {
-                    
-                    //异步加载图片完成回调(若需根据图片尺寸,刷新广告frame,可在这里操作)
-                    //weakLaunchAd.adFrame = ...;
-                    
-                } click:^{
-                    //打开网页
-                    
-                }];
-                
-            }];
-        });
-    } showFinish:^{
-        self.window.rootViewController = [[TabBarController alloc]init];
-        self.window.backgroundColor = [UIColor whiteColor];
-    }];
-}
-/**
- *  模拟:向服务器请求广告数据
- *
- *  @param imageData 回调imageUrl,及停留时间,跳转链接
- */
--(void)requestImageData:(void(^)(NSString *imgUrl,NSInteger duration,NSString *openUrl))imageData{
-    
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        
-        if(imageData)
-        {
-            imageData(ImgUrlString2,3.5,@"http://www.dagolfla.com");
-        }
-    });
 }
 - (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<NSString*, id> *)options
 {
@@ -670,7 +467,6 @@
                 NSLog(@"result = %@",resultDic);
                 NSLog(@"客户端支付");
             }];
-            
         }else{
             if (_pushID != 1) {
                 [self pushSpecifiedViewCtrl:[NSString stringWithFormat:@"%@", url]];
@@ -678,14 +474,11 @@
                 _pushID = 0;
             }
         }
-        
         return YES;
     }else{
         return [UMSocialSnsService handleOpenURL:url wxApiDelegate:self];
     }
-    
 }
-
 //新浪微博的
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
 {
@@ -702,7 +495,6 @@
                 NSLog(@"result = %@",resultDic);
                 NSLog(@"客户端支付");
             }];
-            
         }else{
             if (_pushID != 1) {
                 [self pushSpecifiedViewCtrl:[NSString stringWithFormat:@"%@", url]];
@@ -710,13 +502,11 @@
                 _pushID = 0;
             }
         }
-        
         return YES;
     }else{
         return [UMSocialSnsService handleOpenURL:url wxApiDelegate:self];
     }
 }
-
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
 {
     
@@ -765,10 +555,12 @@
     }
 }
 #pragma mark --消息推送
+/**
+ * 推送处理3
+ */
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
     // Required
     [JPUSHService registerDeviceToken:deviceToken];
-    
     //容云
     NSString *token =
     [[[[deviceToken description] stringByReplacingOccurrencesOfString:@"<"
@@ -779,6 +571,21 @@
      withString:@""];
     
     [[RCIMClient sharedRCIMClient] setDeviceToken:token];
+    
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    if (DEFAULF_USERID) {
+        [dict setObject:DEFAULF_USERID forKey:@"userKey"];
+    }else{
+        [dict setObject:@-1 forKey:@"userKey"];
+    }
+    
+    [dict setObject:token forKey:@"token"];
+    
+    [[JsonHttp jsonHttp]httpRequest:@"iosDevice/doCommitDeviceToken" JsonKey:nil withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
+        
+    } completionBlock:^(id data) {
+        NSLog(@"data == %@", data);
+    }];
 }
 
 -(void)onReq:(BaseReq *)req{
@@ -835,14 +642,12 @@
                 break;
         }
         //------------------------
-        
         //创建一个消息对象
         NSNotification * notice = [NSNotification notificationWithName:@"weChatNotice" object:nil userInfo:@{@"secess":@(secessFlag)}];
         //发送消息
         [[NSNotificationCenter defaultCenter]postNotification:notice];
     }
 }
-
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
     // Required,For systems with less than or equal to iOS6
@@ -882,7 +687,6 @@
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
-    
     // IOS 7 Support Required
     //推送的自定义消息
     [JPUSHService handleRemoteNotification:userInfo];
@@ -893,7 +697,6 @@
 - (void)application:(UIApplication *)application
 didReceiveLocalNotification:(UILocalNotification *)notification {
     [JPUSHService showLocalNotificationAtFront:notification identifierKey:nil];
-    
     /**
      * 统计推送打开率3
      */
@@ -912,17 +715,13 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
     
     completionHandler(UNNotificationPresentationOptionBadge|UNNotificationPresentationOptionSound|UNNotificationPresentationOptionAlert);// 需要执行这个方法，选择是否提醒用户，有Badge、Sound、Alert三种类型可以选择设置
 }
-
 // iOS 10 Support
 - (void)jpushNotificationCenter:(UNUserNotificationCenter *)center didReceiveNotificationResponse:(UNNotificationResponse *)response withCompletionHandler: (void (^)())completionHandler {
     // Required
     NSDictionary * userInfo = response.notification.request.content.userInfo;
     if([response.notification.request.trigger isKindOfClass:[UNPushNotificationTrigger class]]) {
-        
         [self pushSpecifiedViewCtrl:[NSString stringWithFormat:@"%@", [userInfo objectForKey:@"url"]]];
-        
         [JPUSHService handleRemoteNotification:userInfo];
-        
     }
     else {
         // 本地通知
@@ -931,100 +730,73 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
 }
 
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
-    
     //Optional
     NSLog(@"did Fail To Register For Remote Notifications With Error: %@", error);
 }
-
 // 设置消息推送的样式
 - (void)application:(UIApplication *)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings
 {
+    /**
+     * 推送处理2
+     */
     [application registerForRemoteNotifications];
 }
-
-//自定义消息
-//- (void)networkDidReceiveMessage:(NSNotification *)notification
-//{
-//    //网站推送
-//    NSDictionary * userInfo = [notification userInfo];
-//    NSString *content = [userInfo valueForKey:@"content"];
-//    NSDictionary *extras = [userInfo valueForKey:@"extras"];
-//    
-//    NSString *customizeField1 = [extras valueForKey:@"content"]; //自定义参数，key是自己定义的
-//    
-//}
-
-
 - (void)applicationDidReceiveMemoryWarning:(UIApplication*)application
 {
     [[NSURLCache sharedURLCache] removeAllCachedResponses];
 }
-
 - (void)applicationWillResignActive:(UIApplication *)application {
-    // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
-    // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
-    RCConnectionStatus status = [[RCIMClient sharedRCIMClient] getConnectionStatus];
-    if (status != ConnectionStatus_SignUp) {
-        int unreadMsgCount = [[RCIMClient sharedRCIMClient]
-                              getUnreadCount:@[
-                                               @(ConversationType_PRIVATE),
-                                               @(ConversationType_DISCUSSION),
-                                               @(ConversationType_APPSERVICE),
-                                               @(ConversationType_PUBLICSERVICE),
-                                               @(ConversationType_GROUP)
-                                               ]];
-        application.applicationIconBadgeNumber = unreadMsgCount;
-    }
+    [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
+    
+//    RCConnectionStatus status = [[RCIMClient sharedRCIMClient] getConnectionStatus];
+//    if (status != ConnectionStatus_SignUp) {
+//        int unreadMsgCount = [[RCIMClient sharedRCIMClient]
+//                              getUnreadCount:@[
+//                                               @(ConversationType_PRIVATE),
+//                                               @(ConversationType_DISCUSSION),
+//                                               @(ConversationType_APPSERVICE),
+//                                               @(ConversationType_PUBLICSERVICE),
+//                                               @(ConversationType_GROUP)
+//                                               ]];
+//        if (DEFAULF_IconCount) {
+//            NSLog(@"DEFAULF_IconCount ==%@", DEFAULF_IconCount);
+//            [UIApplication sharedApplication].applicationIconBadgeNumber = unreadMsgCount + [DEFAULF_IconCount integerValue];
+//        }else{
+//            [UIApplication sharedApplication].applicationIconBadgeNumber = unreadMsgCount;
+//        }
+//    }else{
+        if (DEFAULF_IconCount) {
+            NSLog(@"DEFAULF_IconCount ==%@", DEFAULF_IconCount);
+            [UIApplication sharedApplication].applicationIconBadgeNumber = [DEFAULF_IconCount integerValue];
+        }else{
+            [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
+        }
+//    }
 }
-
 - (void)applicationDidEnterBackground:(UIApplication *)application {
-    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
-    // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
     // 为消息分享保存会话信息
 //    [self saveConversationInfoForMessageShare];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
-    // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
     if ([[RCIMClient sharedRCIMClient] getConnectionStatus] == ConnectionStatus_Connected) {
         // 插入分享消息
         [self insertSharedMessageIfNeed];
     }
     
-    [application setApplicationIconBadgeNumber:0];
     [application cancelAllLocalNotifications];
 }
 //插入分享消息
 - (void)insertSharedMessageIfNeed {
-//    NSUserDefaults *shareUserDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.cn.rongcloud.im.share"];
-//    
-//    NSArray *sharedMessages = [shareUserDefaults valueForKey:@"sharedMessages"];
-//    if (sharedMessages.count > 0) {
-//        for (NSDictionary *sharedInfo in sharedMessages) {
-//            RCRichContentMessage *richMsg = [[RCRichContentMessage alloc]init];
-//            richMsg.title = [sharedInfo objectForKey:@"title"];
-//            richMsg.digest = [sharedInfo objectForKey:@"content"];
-//            richMsg.url = [sharedInfo objectForKey:@"url"];
-//            richMsg.imageURL = [sharedInfo objectForKey:@"imageURL"];
-//            richMsg.extra = [sharedInfo objectForKey:@"extra"];
-//            //      long long sendTime = [[sharedInfo objectForKey:@"sharedTime"] longLongValue];
-//            //      RCMessage *message = [[RCIMClient sharedRCIMClient] insertOutgoingMessage:[[sharedInfo objectForKey:@"conversationType"] intValue] targetId:[sharedInfo objectForKey:@"targetId"] sentStatus:SentStatus_SENT content:richMsg sentTime:sendTime];
-//            RCMessage *message = [[RCIMClient sharedRCIMClient] insertOutgoingMessage:[[sharedInfo objectForKey:@"conversationType"] intValue] targetId:[sharedInfo objectForKey:@"targetId"] sentStatus:SentStatus_SENT content:richMsg];
-//            [[NSNotificationCenter defaultCenter] postNotificationName:@"RCDSharedMessageInsertSuccess" object:message];
-//        }
-//        [shareUserDefaults removeObjectForKey:@"sharedMessages"];
-//        [shareUserDefaults synchronize];
-//    }
+
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
-    // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
     _pushID = 0;
     
     [UMSocialSnsService  applicationDidBecomeActive];
-    [application setApplicationIconBadgeNumber:0];
+    
     [application cancelAllLocalNotifications];
-//    [JPUSHService resetBadge];
     
     [self getCurPosition];
     
@@ -1050,13 +822,9 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
             
         }];
     }
-    
 }
-
 - (void)applicationWillTerminate:(UIApplication *)application {
-    // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
-
 #pragma MARK --定位方法
 -(void)getCurPosition{
     if (_locationManager==nil) {
@@ -1105,7 +873,6 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
          }
      }];
     
-    
     [user setObject:[NSNumber numberWithFloat:currLocation.coordinate.latitude] forKey:BDMAPLAT];//纬度
     [user setObject:[NSNumber numberWithFloat:currLocation.coordinate.longitude] forKey:BDMAPLNG];//经度
     [_locationManager stopUpdatingLocation];
@@ -1122,7 +889,6 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
         //无法获取位置信息
         //NSLog(@"无法获取位置信息");
     }
-    
     //定位失败后也下载数据
 }
 #pragma mark -- 通知、短信URL跳转
@@ -1144,13 +910,13 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
         } withBlockSure:^{
             JGHLoginViewController *vc = [[JGHLoginViewController alloc] init];
             vc.reloadCtrlData = ^(){
-                
+                NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+                [center postNotificationName:@"loadMessageData" object:nil];
             };
             [pushClassStance pushViewController:vc animated:YES];
         } withBlock:^(UIAlertController *alertView) {
             [pushClassStance presentViewController:alertView animated:YES completion:nil];
         }];
-        
         return;
     }
     
@@ -1162,13 +928,11 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
                 vc.teamKey = [NSNumber numberWithInteger:[[Helper returnKeyVlaueWithUrlString:urlString andKey:@"teamKey"] integerValue]];
                 [pushClassStance pushViewController:vc animated:YES];        }
         }
-        
         // 球队大厅
         if ([urlString containsString:@"teamHall"]) {
             JGTeamMainhallViewController *teamMainCtrl = [[JGTeamMainhallViewController alloc]init];
             [pushClassStance pushViewController:teamMainCtrl animated:YES];
         }
-        
         // 成员管理
         if ([urlString containsString:@"teamMemberMgr"]) {
             JGTeamMemberController* menVc = [[JGTeamMemberController alloc]init];
@@ -1178,21 +942,18 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
             menVc.teamKey = [NSNumber numberWithInteger:[[Helper returnKeyVlaueWithUrlString:urlString andKey:@"teamKey"] integerValue]];
             [pushClassStance pushViewController:menVc animated:YES];
         }
-        
         // 入队审核页面
         if ([urlString containsString:@"auditTeamMember"]) {
             JGLJoinManageViewController *jgJoinVC = [[JGLJoinManageViewController alloc] init];
             jgJoinVC.teamKey = [NSNumber numberWithInteger:[[Helper returnKeyVlaueWithUrlString:urlString andKey:@"teamKey"] integerValue]];
             [pushClassStance pushViewController:jgJoinVC animated:YES];
         }
-        
         //新球友
         if ([urlString containsString:@"newUserFriendList"]) {
             NewFriendViewController *friendCtrl = [[NewFriendViewController alloc]init];
             friendCtrl.fromWitchVC = 2;
             [pushClassStance pushViewController:friendCtrl animated:YES];
         }
-        
         // 相册
         if ([urlString containsString:@"teamMediaList"]) {
             JGPhotoAlbumViewController *albumVC = [[JGPhotoAlbumViewController alloc]init];
@@ -1200,7 +961,6 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
             albumVC.hidesBottomBarWhenPushed = YES;
             [pushClassStance pushViewController:albumVC animated:YES];
         }
-        
         //活动详情
         if ([urlString containsString:@"teamActivityDetail"]) {
             JGTeamActibityNameViewController *teamCtrl= [[JGTeamActibityNameViewController alloc]init];
@@ -1216,7 +976,6 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
             teamGroupCtrl.hidesBottomBarWhenPushed = YES;
             [pushClassStance pushViewController:teamGroupCtrl animated:YES];
         }
-        
         //分组--管理
         if ([urlString containsString:@"activityGroupAdmin"]) {
             JGTeamGroupViewController *teamGroupCtrl= [[JGTeamGroupViewController alloc]init];
@@ -1224,7 +983,6 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
             teamGroupCtrl.hidesBottomBarWhenPushed = YES;
             [pushClassStance pushViewController:teamGroupCtrl animated:YES];
         }
-        
         //活动成绩详情 --
         if ([urlString containsString:@"activityScore"]) {
             JGLScoreRankViewController *scoreLiveCtrl= [[JGLScoreRankViewController alloc]init];
@@ -1233,7 +991,6 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
             scoreLiveCtrl.hidesBottomBarWhenPushed = YES;
             [pushClassStance pushViewController:scoreLiveCtrl animated:YES];
         }
-        
         //获奖详情 --
         if ([urlString containsString:@"awardedInfo"]) {
             JGLPresentAwardViewController *teamGroupCtrl= [[JGLPresentAwardViewController alloc]init];
@@ -1243,7 +1000,6 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
             teamGroupCtrl.hidesBottomBarWhenPushed = YES;
             [pushClassStance pushViewController:teamGroupCtrl animated:YES];
         }
-        
         //球队详情
         if ([urlString containsString:@"teamDetail"]) {
             JGDNewTeamDetailViewController *newTeamVC = [[JGDNewTeamDetailViewController alloc] init];
@@ -1251,7 +1007,6 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
             newTeamVC.hidesBottomBarWhenPushed = YES;
             [pushClassStance pushViewController:newTeamVC animated:YES];
         }
-        
         //商品详情
         if ([urlString containsString:@"goodDetail"]) {
             UseMallViewController* userVc = [[UseMallViewController alloc]init];
@@ -1259,7 +1014,6 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
             userVc.hidesBottomBarWhenPushed = YES;
             [pushClassStance pushViewController:userVc animated:YES];
         }
-        
         //H5
         if ([urlString containsString:@"openURL"]) {
             JGLPushDetailsViewController* puVc = [[JGLPushDetailsViewController alloc]init];
@@ -1267,7 +1021,6 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
             puVc.hidesBottomBarWhenPushed = YES;
             [pushClassStance pushViewController:puVc animated:YES];
         }
-        
         //社区
         if ([urlString containsString:@"moodKey"]) {
             DetailViewController * comDevc = [[DetailViewController alloc]init];
@@ -1275,7 +1028,6 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
             comDevc.hidesBottomBarWhenPushed = YES;
             [pushClassStance pushViewController:comDevc animated:YES];
         }
-        
         //创建球队
         if ([urlString containsString:@"createTeam"]) {
             NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
@@ -1308,14 +1060,14 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
         }
     }
 }
-#pragma mark -- 获取通知数量
-#pragma mark -- 下载未读消息数量
+#pragma mark -- 下载未读消息数量/获取通知数量
 - (void)loadMessageData{
-    
     if (!DEFAULF_USERID)
     {
         return;
     }
+    
+    
     
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     [dict setObject:DEFAULF_USERID forKey:@"userKey"];
@@ -1342,16 +1094,12 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
 {
     [self updateBadgeValueForTabBarItem];
 }
-
 - (void)updateBadgeValueForTabBarItem
 {
     dispatch_async(dispatch_get_main_queue(), ^{
         NSArray *displayConversationTypeArray = @[@1];
-//        NSArray *count1 =  [[RCIMClient sharedRCIMClient] getConversationList:displayConversationTypeArray];
-        
         int count = [[RCIMClient sharedRCIMClient]
                      getUnreadCount:displayConversationTypeArray];
-        
         // 获取导航控制器
         TabBarController *tabVC = (TabBarController *)self.window.rootViewController;
         if (![tabVC isKindOfClass:[TabBarController class]]) {
@@ -1359,17 +1107,17 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
         }
         
         UINavigationController *RedVc = (UINavigationController *)tabVC.viewControllers[2];
+        int iconCount = (count + (int)_teamUnread +(int)_systemUnread +(int)_newFriendUnread);
+        //本地存红点数
+        NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
+        [userdef setObject:@(iconCount) forKey:IconCount];
+        [userdef synchronize];
         
-        if ((count + (int)_teamUnread +(int)_systemUnread +(int)_newFriendUnread) > 0) {
-            //      __weakSelf.tabBarItem.badgeValue =
-            //          [[NSString alloc] initWithFormat:@"%d", count];
-            //            int badgeValue = count+_teamUnread+_systemUnread;
+        if (iconCount > 0) {
             [RedVc.tabBarController.tabBar showBadgeOnItemIndex:2 badgeValue:count+ (int)_teamUnread + (int)_systemUnread + (int)_newFriendUnread];
         } else {
-            //      __weakSelf.tabBarItem.badgeValue = nil;
             [RedVc.tabBarController.tabBar hideBadgeOnItemIndex:2];
         }
-        
     });
 }
 

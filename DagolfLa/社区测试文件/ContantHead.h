@@ -30,6 +30,9 @@ typedef NS_ENUM(NSInteger, GestureType) {
 #define UserName @"userName"
 #define UserKey @"userKey"
 
+#define IconCount @"iconCount"
+#define DEFAULF_IconCount [[NSUserDefaults standardUserDefaults] objectForKey:IconCount]
+
 #define DEFAULF_UserName [[NSUserDefaults standardUserDefaults] objectForKey:@"userName"]
 #define DEFAULF_USERID [[NSUserDefaults standardUserDefaults] objectForKey:@"userId"]
 //提示框时间

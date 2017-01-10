@@ -36,7 +36,7 @@
 #import "MJDIYHeader.h"
 
 #import "JGActivityMemNonMangerViewController.h" //test
-#import "JGDGuestChannelViewController.h"
+//#import "JGDGuestChannelViewController.h"
 //#import "JGHEventViewController.h"
 
 
@@ -179,8 +179,8 @@
 }
 
 - (void)guestAct{
-    JGDGuestChannelViewController *guestVC = [[JGDGuestChannelViewController alloc] init];
-    [self.navigationController pushViewController:guestVC animated:YES];
+//    JGDGuestChannelViewController *guestVC = [[JGDGuestChannelViewController alloc] init];
+//    [self.navigationController pushViewController:guestVC animated:YES];
 }
 
 #pragma mark ---刷新

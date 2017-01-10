@@ -13,7 +13,7 @@
 #import "JGHAddMoreTeamTableViewCell.h"
 #import "JGLMyTeamModel.h"
 #import "JGTeamAcitivtyModel.h"
-#import "JGDGuestChannelViewController.h"
+//#import "JGDGuestChannelViewController.h"
 #import "JGTeamChannelViewController.h"
 
 #import "JGDNewTeamDetailViewController.h"
@@ -28,7 +28,7 @@ static NSString *const JGLMyTeamTableViewCellIdentifier = @"JGLMyTeamTableViewCe
 static NSString *const JGHShowMyTeamHeaderCellIdentifier = @"JGHShowMyTeamHeaderCell";
 static NSString *const JGHAddMoreTeamTableViewCellIdentifier = @"JGHAddMoreTeamTableViewCell";
 
-@interface JGHShowMyTeamViewController ()<UITableViewDelegate, UITableViewDataSource, JGHShowMyTeamHeaderCellDelegate, JGHAddMoreTeamTableViewCellDelegate>
+@interface JGHShowMyTeamViewController ()<UITableViewDelegate, UITableViewDataSource, JGHAddMoreTeamTableViewCellDelegate>
 {
     NSArray *_titleArray;
     NSInteger _page;
@@ -278,7 +278,6 @@ static NSString *const JGHAddMoreTeamTableViewCellIdentifier = @"JGHAddMoreTeamT
         return addMoreTeamTableViewCell;
     }else{
         JGHShowMyTeamHeaderCell *showMyTeamHeaderCell = [tableView dequeueReusableCellWithIdentifier:JGHShowMyTeamHeaderCellIdentifier];
-        showMyTeamHeaderCell.delegate = self;
         [showMyTeamHeaderCell configJGHShowMyTeamHeaderCell:_titleArray[section] andSection:section];
         return showMyTeamHeaderCell;
     }
@@ -378,15 +377,6 @@ static NSString *const JGHAddMoreTeamTableViewCellIdentifier = @"JGHAddMoreTeamT
 //        }
 //        
 //    }];
-}
-
-#pragma mark -- 嘉宾通道
-- (void)didSelectGuestsBtn:(UIButton *)guestbtn{
-    NSLog(@"嘉宾通道");
-    guestbtn.enabled = NO;
-    JGDGuestChannelViewController *guestChanneCtrl = [[JGDGuestChannelViewController alloc]init];
-    [self.navigationController pushViewController:guestChanneCtrl animated:YES];
-    guestbtn.enabled = YES;
 }
 
 #pragma mark -- 添加更多球队

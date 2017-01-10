@@ -492,8 +492,7 @@ void ContactsChangeCallback (ABAddressBookRef addressBook,
                 //判断是否登录，用来社区的刷新
                 [userdef setObject:@1 forKey:@"isFirstEnter"];
                 [userdef setObject:[userDict objectForKey:UserName] forKey:UserName];
-                [userdef setObject:[userDict objectForKey:@"rongTk"] forKey:@"rongTk"];
-                [userdef synchronize];
+                
                 
                 NSLog(@"----%@", DEFAULF_USERID);
                 //获取消息
@@ -502,8 +501,14 @@ void ContactsChangeCallback (ABAddressBookRef addressBook,
                 [[NSNotificationCenter defaultCenter]postNotification:notice];
                 
                 NSString *token = [userDict objectForKey:@"rongTk"];
+                
+                
+                //本地存融云rongKT
+                [userdef setObject:token forKey:@"rongTk"];
+                [userdef synchronize];
+                
                 //注册融云
-                [self requestRCIMWithToken:token];
+                [self requestRCIMWithToken:token andUserDict:userDict];
                 [self postAppJpost];
                 _reloadCtrlData();
                 
@@ -585,8 +590,10 @@ void ContactsChangeCallback (ABAddressBookRef addressBook,
                             _reloadCtrlData();
                             [self.navigationController popViewControllerAnimated:YES];
                             
+                            
+                            
                             //注册融云
-                            [self requestRCIMWithToken:token];
+                            [self requestRCIMWithToken:token andUserDict:userDict];
                             [self postAppJpost];
 
                             // 同步通讯录
@@ -841,7 +848,11 @@ void ContactsChangeCallback (ABAddressBookRef addressBook,
     }];
 }
 #pragma mark -- 注册融云
--(void)requestRCIMWithToken:(NSString *)token{
+-(void)requestRCIMWithToken:(NSString *)token andUserDict:(NSDictionary *)userDict{
+    UserInformationModel *model = [[UserInformationModel alloc] init];
+    [model setValuesForKeysWithDictionary:userDict];
+    [[UserDataInformation sharedInstance] saveUserInformation:model];
+    
     NSUserDefaults *user=[NSUserDefaults standardUserDefaults];
     [RCIM sharedRCIM].globalConversationPortraitSize = CGSizeMake(40*ScreenWidth/375, 40*ScreenWidth/375);
     [[RCIM sharedRCIM] initWithAppKey:RongYunAPPKEY];
@@ -856,6 +867,9 @@ void ContactsChangeCallback (ABAddressBookRef addressBook,
     RCUserInfo *userInfo=[[RCUserInfo alloc] initWithUserId:str1 name:str2 portrait:str3];
     [RCIM sharedRCIM].currentUserInfo=userInfo;
     [RCIM sharedRCIM].enableMessageAttachUserInfo=NO;
+    
+
+    
     //            [RCIM sharedRCIM].receiveMessageDelegate=self;
     // 快速集成第二步，连接融云服务器
     [[RCIM sharedRCIM] connectWithToken:token success:^(NSString *userId) {

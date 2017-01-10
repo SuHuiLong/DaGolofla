@@ -16,8 +16,6 @@
 #import "JGLScoreNewViewController.h"
 #import "JGHShowMyTeamViewController.h" // 我的球队
 #import "JGDNewTeamDetailViewController.h" // 球队详情
-//#import "JGTeamMemberORManagerViewController.h" // 球队详情 － 自己的球队
-//#import "JGNotTeamMemberDetailViewController.h"  // 球队详情 － 别人的球队
 #import "JGPhotoAlbumViewController.h" // 相册
 #import "JGLWebUserMallViewController.h"
 #import "JGTeamMainhallViewController.h"
@@ -34,8 +32,6 @@
 #import "JGHNewStartScoreViewController.h"
 
 #import "UMMobClick/MobClick.h"
-#import "UITabBar+badge.h"
-#import <RongIMKit/RCIM.h>
 #import "NewFriendViewController.h"
 #import "JGTeamGroupViewController.h"
 #import "JGLPresentAwardViewController.h"
@@ -50,10 +46,8 @@
 #import "RCDTabBarBtn.h"
 #import "JGHScoresViewController.h"
 #import "LGLCalenderViewController.h"
-
-
+#import "JGHNewActivityDetailViewController.h"
 #import "JGDBookCourtViewController.h"  // 球场预定
-
 
 static NSString *const JGHPASHeaderTableViewCellIdentifier = @"JGHPASHeaderTableViewCell";
 static NSString *const JGHShowSectionTableViewCellIdentifier = @"JGHShowSectionTableViewCell";
@@ -72,8 +66,6 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
 @property (nonatomic, strong)HomeHeadView *topScrollView;//BANNAER图
 
 @property (nonatomic, strong)UITableView *homeTableView;//TB
-
-//@property (strong, nonatomic) CLLocationManager* locationManager;
 
 @property (nonatomic, strong)JGHIndexModel *indexModel;
 
@@ -97,10 +89,7 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
 - (void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
     [[UIApplication sharedApplication]setStatusBarStyle:UIStatusBarStyleDefault];
-    //监听分组页面返回，刷新数据
-    NSNotificationCenter * center = [NSNotificationCenter defaultCenter];
-    //添加当前类对象为一个观察者，name和object设置为nil，表示接收一切通知
-    [center addObserver:self selector:@selector(loadMessageData) name:@"loadMessageData" object:nil];
+    
 }
 
 -(void)viewWillDisappear:(BOOL)animated
@@ -115,6 +104,11 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    //监听分组页面返回，刷新数据
+    NSNotificationCenter * center = [NSNotificationCenter defaultCenter];
+    //添加当前类对象为一个观察者，name和object设置为nil，表示接收一切通知
+    [center addObserver:self selector:@selector(reloadViewData) name:@"loadMessageData" object:nil];
+    
     self.automaticallyAdjustsScrollViewInsets = NO;
     self.view.backgroundColor = [UIColor colorWithHexString:BG_color];
     [self.navigationController.navigationBar
@@ -130,29 +124,29 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
     
     [self loadIndexdata];//上线不注释
     
-//    [self getCurPosition];
-    
     [self createBanner];
     
     [self loadingPHP];
     
-//    if (DEFAULF_USERID) {
-//        [self loadMessageData];
-//    }
+    if (DEFAULF_USERID) {
+        [self loadMessageData];
+    }
     
-    //获取通知中心单例对象
-    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
-    //添加当前类对象为一个观察者，name和object设置为nil，表示接收一切通知
-    [center addObserver:self selector:@selector(loadMessageData) name:@"loadMessageData" object:nil];
+//    //获取通知中心单例对象
+//    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+//    //添加当前类对象为一个观察者，name和object设置为nil，表示接收一切通知
+//    [center addObserver:self selector:@selector(loadMessageData) name:@"loadMessageData" object:nil];
     
+}
+#pragma mark --刷新页面
+- (void)reloadViewData{
+    [self.homeTableView.header beginRefreshing];
 }
 
 #pragma mark -- 下载未读消息数量
 - (void)loadMessageData{
-    
     if ([[NSUserDefaults standardUserDefaults] objectForKey:@"userId"])
     {
-        
     }
     else
     {
@@ -173,25 +167,19 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
             _teamUnread = [[data objectForKey:@"teamUnread"] integerValue];
             _systemUnread = [[data objectForKey:@"systemUnread"] integerValue];
             _newFriendUnread = [[data objectForKey:@"newFriendUnread"] integerValue];
-            
             [self notifyUpdateUnreadMessageCount];
-//            [self refreshConversationTableViewIfNeeded];
-            
         }else{
             [self notifyUpdateUnreadMessageCount];
-            
             if ([data objectForKey:@"packResultMsg"]) {
                 [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
             }
         }
     }];
 }
-
 - (void)notifyUpdateUnreadMessageCount
 {
     [self updateBadgeValueForTabBarItem];
 }
-
 - (void)updateBadgeValueForTabBarItem
 {
     __weak typeof(self) __weakSelf = self;
@@ -200,14 +188,15 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
         int count = [[RCIMClient sharedRCIMClient]
                      getUnreadCount:0];
         
-        if ((count + (int)_teamUnread +(int)_systemUnread +(int)_newFriendUnread) > 0) {
-            //      __weakSelf.tabBarItem.badgeValue =
-            //          [[NSString alloc] initWithFormat:@"%d", count];
-            //            int badgeValue = count+_teamUnread+_systemUnread;
+        int iconCount = (count + (int)_teamUnread +(int)_systemUnread +(int)_newFriendUnread);
+        //本地存红点数
+        NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
+        [userdef setObject:@(iconCount) forKey:IconCount];
+        [userdef synchronize];
+        
+        if (iconCount > 0) {
             [__weakSelf.tabBarController.tabBar showBadgeOnItemIndex:2 badgeValue:count+ (int)_teamUnread + (int)_systemUnread + (int)_newFriendUnread];
-            
         } else {
-            //      __weakSelf.tabBarItem.badgeValue = nil;
             [__weakSelf.tabBarController.tabBar hideBadgeOnItemIndex:2];
         }
         
@@ -334,6 +323,7 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
 - (void)headRereshing{
     [self loadIndexdata];
     [self loadBanner];
+    [self loadMessageData];
 }
 #pragma  mark -- 创建Banner
 -(void)createBanner
@@ -529,8 +519,8 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
     }
     [dic setObject:[dict objectForKey:@"timeKey"] forKey:@"teamKey"];
     
-    JGDNewTeamDetailViewController *newTeamVC = [[JGDNewTeamDetailViewController alloc] init];
-    newTeamVC.timeKey = [dict objectForKey:@"timeKey"];
+    JGTeamActibityNameViewController *newTeamVC = [[JGTeamActibityNameViewController alloc] init];
+    newTeamVC.teamKey = [[dict objectForKey:@"timeKey"] integerValue];
     newTeamVC.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:newTeamVC animated:YES];
 }
@@ -714,7 +704,7 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
     [self isLoginUp];
     
     NSDictionary *dic = _indexModel.activityList[btn.tag - 200];
-    JGTeamActibityNameViewController *teamActVC = [[JGTeamActibityNameViewController alloc] init];
+    JGHNewActivityDetailViewController *teamActVC = [[JGHNewActivityDetailViewController alloc] init];
     teamActVC.teamKey = [[dic objectForKey:@"timeKey"] integerValue];
     teamActVC.hidesBottomBarWhenPushed = YES;//6598520
     [self.navigationController pushViewController:teamActVC animated:YES];
@@ -895,18 +885,16 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
     else
     {
         [Helper alertViewWithTitle:@"是否立即登录?" withBlockCancle:^{
-//            [[NSNotificationCenter defaultCenter] postNotificationName:@"show" object:nil];
         } withBlockSure:^{
             JGHLoginViewController *vc = [[JGHLoginViewController alloc] init];
             vc.reloadCtrlData = ^(){
-                [self loadIndexdata];
+                [self.homeTableView.header beginRefreshing];
                 [self loadMessageData];
             };
             
             vc.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:vc animated:YES];
         } withBlock:^(UIAlertController *alertView) {
-//            [[NSNotificationCenter defaultCenter] postNotificationName:@"show" object:nil];
             [self presentViewController:alertView animated:YES completion:nil];
         }];
         

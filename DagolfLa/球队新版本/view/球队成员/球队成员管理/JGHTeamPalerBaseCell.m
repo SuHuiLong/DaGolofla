@@ -17,7 +17,7 @@
         
         _name = [[UILabel alloc]initWithFrame:CGRectMake(40*ProportionAdapter, 10 *ProportionAdapter, 40 *ProportionAdapter, 20 *ProportionAdapter)];
         _name.font = [UIFont systemFontOfSize:15 *ProportionAdapter];
-        _name.textColor = [UIColor colorWithHexString:B31_Color];
+        _name.textColor = [UIColor colorWithHexString:Ba0_Color];
         _name.text = @"姓名";
         [self addSubview:_name];
         
@@ -27,7 +27,7 @@
         
         _age = [[UILabel alloc]initWithFrame:CGRectMake(screenWidth/2, 10 *ProportionAdapter, 40 *ProportionAdapter, 20 *ProportionAdapter)];
         _age.font = [UIFont systemFontOfSize:15 *ProportionAdapter];
-        _age.textColor = [UIColor colorWithHexString:B31_Color];
+        _age.textColor = [UIColor colorWithHexString:Ba0_Color];
         _age.text = @"球龄";
         [self addSubview:_age];
         
@@ -37,7 +37,7 @@
         
         _sex = [[UILabel alloc]initWithFrame:CGRectMake(40*ProportionAdapter, 40 *ProportionAdapter, 40 *ProportionAdapter, 20 *ProportionAdapter)];
         _sex.font = [UIFont systemFontOfSize:15 *ProportionAdapter];
-        _sex.textColor = [UIColor colorWithHexString:B31_Color];
+        _sex.textColor = [UIColor colorWithHexString:Ba0_Color];
         _sex.text = @"性别";
         [self addSubview:_sex];
         
@@ -47,7 +47,7 @@
         
         _almost = [[UILabel alloc]initWithFrame:CGRectMake(screenWidth/2, 40 *ProportionAdapter, 40 *ProportionAdapter, 20 *ProportionAdapter)];
         _almost.font = [UIFont systemFontOfSize:15 *ProportionAdapter];
-        _almost.textColor = [UIColor colorWithHexString:B31_Color];
+        _almost.textColor = [UIColor colorWithHexString:Ba0_Color];
         _almost.text = @"差点";
         [self addSubview:_almost];
         
@@ -57,7 +57,7 @@
         
         _mobile = [[UILabel alloc]initWithFrame:CGRectMake(40 *ProportionAdapter, 70 *ProportionAdapter, 60 *ProportionAdapter, 20 *ProportionAdapter)];
         _mobile.font = [UIFont systemFontOfSize:15 *ProportionAdapter];
-        _mobile.textColor = [UIColor colorWithHexString:B31_Color];
+        _mobile.textColor = [UIColor colorWithHexString:Ba0_Color];
         _mobile.text = @"手机号";
         [self addSubview:_mobile];
         
@@ -67,7 +67,7 @@
         
         _veteran = [[UILabel alloc]initWithFrame:CGRectMake(40 *ProportionAdapter, 100 *ProportionAdapter, 60 *ProportionAdapter, 20 *ProportionAdapter)];
         _veteran.font = [UIFont systemFontOfSize:15 *ProportionAdapter];
-        _veteran.textColor = [UIColor colorWithHexString:B31_Color];
+        _veteran.textColor = [UIColor colorWithHexString:Ba0_Color];
         _veteran.text = @"行业";
         [self addSubview:_veteran];
         
@@ -77,7 +77,7 @@
         
         _company = [[UILabel alloc]initWithFrame:CGRectMake(40 *ProportionAdapter, 130 *ProportionAdapter, 60 *ProportionAdapter, 20 *ProportionAdapter)];
         _company.font = [UIFont systemFontOfSize:15 *ProportionAdapter];
-        _company.textColor = [UIColor colorWithHexString:B31_Color];
+        _company.textColor = [UIColor colorWithHexString:Ba0_Color];
         _company.text = @"公司";
         [self addSubview:_company];
         
@@ -87,7 +87,7 @@
         
         _position = [[UILabel alloc]initWithFrame:CGRectMake(40 *ProportionAdapter, 160 *ProportionAdapter, 60 *ProportionAdapter, 20 *ProportionAdapter)];
         _position.font = [UIFont systemFontOfSize:15 *ProportionAdapter];
-        _position.textColor = [UIColor colorWithHexString:B31_Color];
+        _position.textColor = [UIColor colorWithHexString:Ba0_Color];
         _position.text = @"职位";
         [self addSubview:_position];
         
@@ -97,7 +97,7 @@
         
         _address = [[UILabel alloc]initWithFrame:CGRectMake(40 *ProportionAdapter, 190 *ProportionAdapter, 100 *ProportionAdapter, 20 *ProportionAdapter)];
         _address.font = [UIFont systemFontOfSize:15 *ProportionAdapter];
-        _address.textColor = [UIColor colorWithHexString:B31_Color];
+        _address.textColor = [UIColor colorWithHexString:Ba0_Color];
         _address.text = @"常住地址";
         [self addSubview:_address];
         
@@ -107,7 +107,7 @@
         
         _dressSize = [[UILabel alloc]initWithFrame:CGRectMake(40 *ProportionAdapter, 220 *ProportionAdapter, 100 *ProportionAdapter, 20 *ProportionAdapter)];
         _dressSize.font = [UIFont systemFontOfSize:15 *ProportionAdapter];
-        _dressSize.textColor = [UIColor colorWithHexString:B31_Color];
+        _dressSize.textColor = [UIColor colorWithHexString:Ba0_Color];
         _dressSize.text = @"衣服尺码";
         [self addSubview:_dressSize];
         
@@ -117,7 +117,7 @@
         
         _useHand = [[UILabel alloc]initWithFrame:CGRectMake(40 *ProportionAdapter, 250 *ProportionAdapter, 100 *ProportionAdapter, 20 *ProportionAdapter)];
         _useHand.font = [UIFont systemFontOfSize:15 *ProportionAdapter];
-        _useHand.textColor = [UIColor colorWithHexString:B31_Color];
+        _useHand.textColor = [UIColor colorWithHexString:Ba0_Color];
         _useHand.text = @"惯用手";
         [self addSubview:_useHand];
         

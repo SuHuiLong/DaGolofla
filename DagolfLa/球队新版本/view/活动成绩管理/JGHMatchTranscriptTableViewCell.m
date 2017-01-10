@@ -23,7 +23,6 @@
     
     self.time.font = [UIFont systemFontOfSize:13*ProportionAdapter];
     self.timeLeft.constant = 10 *ProportionAdapter;
-    self.timeDown.constant = 17 *ProportionAdapter;
     self.timeRight.constant = 10 *ProportionAdapter;
 
     self.setAlmostBtn.layer.masksToBounds = YES;
@@ -39,6 +38,21 @@
     self.setAlmostBtnRight.constant = 10 *ProportionAdapter;
     
     self.line.backgroundColor = [UIColor colorWithHexString:Bar_Segment];
+    self.lineTop.constant = 10 *ProportionAdapter;
+    
+    self.oneTop.constant = 10 *ProportionAdapter;
+    
+    self.nameLable.font = [UIFont systemFontOfSize:15 *ProportionAdapter];
+    self.nameLable.textColor = [UIColor colorWithHexString:Ba0_Color];
+    
+    self.totalLable.font = [UIFont systemFontOfSize:15 *ProportionAdapter];
+    self.totalLable.textColor = [UIColor colorWithHexString:Ba0_Color];
+    
+    self.almostLable.font = [UIFont systemFontOfSize:15 *ProportionAdapter];
+    self.almostLable.textColor = [UIColor colorWithHexString:Ba0_Color];
+    
+    self.netBarLable.font = [UIFont systemFontOfSize:15 *ProportionAdapter];
+    self.netBarLable.textColor = [UIColor colorWithHexString:Ba0_Color];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

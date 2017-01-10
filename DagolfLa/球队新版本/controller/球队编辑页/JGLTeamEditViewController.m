@@ -438,6 +438,7 @@ static CGFloat ImageHeight  = 210.0;
                         //                        [[SDImageCache sharedImageCache]removeImageForKey:bgUrl fromDisk:YES withCompletion:^{
                         //                        }];
                         //200w_200h_2o
+                        [self cleakHeaderWithBgImage];
                     }];
                     
                 }else if (btn.tag == 522){
@@ -462,7 +463,7 @@ static CGFloat ImageHeight  = 210.0;
 //                        [[SDImageCache sharedImageCache] removeImageForKey:head fromDisk:YES];
                         //                        [[SDImageCache sharedImageCache]removeImageForKey:headUrl fromDisk:YES withCompletion:^{
                         //                        }];
-                        
+                        [self cleakHeaderWithBgImage];
                     }];
                 }
             }
@@ -491,7 +492,7 @@ static CGFloat ImageHeight  = 210.0;
 //                        [[SDImageCache sharedImageCache] removeImageForKey:bgUrl];
 //                        [[SDImageCache sharedImageCache]removeImageForKey:bgUrl fromDisk:YES withCompletion:^{
 //                        }];
-
+                        [self cleakHeaderWithBgImage];
                     }];
                     
                 }else if (btn.tag == 522){
@@ -510,7 +511,7 @@ static CGFloat ImageHeight  = 210.0;
                     [[JsonHttp jsonHttp]httpRequestImageOrVedio:@"1" withData:dict andDataArray:[NSArray arrayWithObject:UIImageJPEGRepresentation((UIImage *)Data, 0.7)] failedBlock:^(id errType) {
                         NSLog(@"errType===%@", errType);
                     } completionBlock:^(id data) {
-                        
+                        [self cleakHeaderWithBgImage];
 //                        [[SDImageCache sharedImageCache]removeImageForKey:headUrl fromDisk:YES withCompletion:^{
 //                        }];
                         
@@ -546,7 +547,14 @@ static CGFloat ImageHeight  = 210.0;
     NSLog(@"%@", destinationURL);
     NSLog(@"%@", connection);
 }
-
+#pragma mark -- 清除头像及背景缓存
+- (void)cleakHeaderWithBgImage{
+    NSString *headUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/team/%@.jpg", [self.detailDic objectForKey:@"timeKey"]];
+    [[SDImageCache sharedImageCache] removeImageForKey:headUrl fromDisk:YES];
+    
+    NSString *bgUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/team/%@_background.jpg", [self.detailDic objectForKey:@"timeKey"]];
+    [[SDImageCache sharedImageCache] removeImageForKey:bgUrl fromDisk:YES];
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
