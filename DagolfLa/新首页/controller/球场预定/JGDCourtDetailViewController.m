@@ -12,6 +12,7 @@
 
 #import "JGDCommitOrderViewController.h"
 #import "LGLCalenderViewController.h" // 日历
+#import "JGDWKCourtDetailViewController.h"
 
 static CGFloat ImageHeight  = 210.0;
 
@@ -54,12 +55,12 @@ static CGFloat ImageHeight  = 210.0;
     if (!self.detailDic) {
         [self downData];
     }
-
+    
     NSString *headUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/ball/%@_main.jpg", self.timeKey];
     [[SDImageCache sharedImageCache] removeImageForKey:headUrl fromDisk:YES];
     
     [self.imgProfile sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://imgcache.dagolfla.com/ball/%@_main.jpg", self.timeKey]] placeholderImage:[UIImage imageNamed:TeamBGImage]];
-
+    
     
 }
 
@@ -135,14 +136,14 @@ static CGFloat ImageHeight  = 210.0;
     [self.titleView addSubview:consultBtn];
     
     // 球队详情
-//    UILabel *courtLB = [[UILabel alloc] initWithFrame:CGRectMake(50, 10, 270, 44 * ProportionAdapter)];;
-//    courtLB.text = @"AAAAAAAAAAAAA";
-//    courtLB.font = [UIFont systemFontOfSize:18 * ProportionAdapter];
-//    courtLB.textColor = [UIColor whiteColor];
-//    courtLB.textAlignment = NSTextAlignmentCenter;
-//    [self.titleView addSubview:courtLB];
-
-  
+    //    UILabel *courtLB = [[UILabel alloc] initWithFrame:CGRectMake(50, 10, 270, 44 * ProportionAdapter)];;
+    //    courtLB.text = @"AAAAAAAAAAAAA";
+    //    courtLB.font = [UIFont systemFontOfSize:18 * ProportionAdapter];
+    //    courtLB.textColor = [UIColor whiteColor];
+    //    courtLB.textAlignment = NSTextAlignmentCenter;
+    //    [self.titleView addSubview:courtLB];
+    
+    
     
     self.detailBtn = [[UIButton alloc]initWithFrame:CGRectMake(300 * ProportionAdapter, self.imgProfile.frame.size.height - 30 * ProportionAdapter, 70 * ProportionAdapter, 20 * ProportionAdapter)];
     self.detailBtn.tag = 522;
@@ -150,10 +151,10 @@ static CGFloat ImageHeight  = 210.0;
     [self.detailBtn setImage:[UIImage imageNamed:@"booking_details"] forState:(UIControlStateNormal)];
     [self.detailBtn setTitle:@"详情" forState:(UIControlStateNormal)];
     self.detailBtn.imageEdgeInsets = UIEdgeInsetsMake(0, -10 * ProportionAdapter, 0, 0);
-
+    
     //    [self.detailBtn addTarget:self action:@selector(replaceWithPicture:) forControlEvents:UIControlEventTouchUpInside];
     [self.imgProfile addSubview:self.detailBtn];
-
+    
     
     
     self.view.backgroundColor = [UIColor whiteColor];
@@ -170,15 +171,15 @@ static CGFloat ImageHeight  = 210.0;
     [dic setObject:DEFAULF_USERID forKey:@"userKey"];
     [dic setObject:self.timeKey forKey:@"ballKey"];
     [dic setObject:[Helper md5HexDigest:[NSString stringWithFormat:@"ballKey=%@dagolfla.com", self.timeKey]] forKey:@"md5"];
-
+    
     [[ShowHUD showHUD] showAnimationWithText:@"加载中…" FromView:self.view];
-
+    
     [[JsonHttp jsonHttp] httpRequest:@"ball/getBallInfo" JsonKey:nil withData:dic requestMethod:@"GET" failedBlock:^(id errType) {
         [[ShowHUD showHUD] hideAnimationFromView:self.view];
-
+        
     } completionBlock:^(id data) {
         [[ShowHUD showHUD] hideAnimationFromView:self.view];
-
+        
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
             
             if ([data objectForKey:@"ball"]) {
@@ -190,16 +191,16 @@ static CGFloat ImageHeight  = 210.0;
                 self.unitPrice = [self.detailDic objectForKey:@"unitPrice"];
                 self.payMoney = [self.detailDic objectForKey:@"payMoney"];
                 self.unitPaymentMoney = [self.detailDic objectForKey:@"unitPaymentMoney"];
-
+                
                 self.selectDate = time;
-
+                
                 _date = [NSString stringWithFormat:@"%@", [Helper stringFromDateString:time withFormater:@"yyyy年MM月dd日"]];
                 _week = [NSString stringWithFormat:@"%@", [Helper stringFromDateString:time withFormater:@"EEE"]];;
                 _time = [NSString stringWithFormat:@"%@", [Helper stringFromDateString:time withFormater:@"HH:mm"]];
-        
+                
                 [self.courtDetail reloadData];
             }
-
+            
         }else{
             if ([data objectForKey:@"packResultMsg"]) {
                 [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
@@ -225,27 +226,29 @@ static CGFloat ImageHeight  = 210.0;
         //咨询4008605308
         NSMutableString * str=[[NSMutableString alloc] initWithFormat:@"telprompt://%@", Company400];
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:str]];
-
-//        [self addShare];
-    }else if (btn.tag == 526){
-
-    }else if (btn.tag == 522) {
         
-        JGDCourtSecDetailViewController *secDetailVC = [[JGDCourtSecDetailViewController alloc] init];
-        secDetailVC.detailDic = self.detailDic;
-        NSArray *keyArray = [NSArray arrayWithObjects:@"type", @"buildTime", @"areaMeasure", @"greenGrass", @"holesSum", @"designer", @"fairwayLength", @"fairwayGrass", nil];
-        for (int i = 0; i < 8; i ++) {
-            if ([self.detailDic objectForKey:keyArray[i]]) {
-                if (i == 4) {
-                    [secDetailVC.proArray addObject:[NSString stringWithFormat:@"%@", [self.detailDic objectForKey:keyArray[i]]]];
-                }else{
-                    [secDetailVC.proArray addObject:[self.detailDic objectForKey:keyArray[i]]];
-                }
-            }else{
-                [secDetailVC.proArray addObject:@""];
-            }
-        }
-        [self.navigationController pushViewController:secDetailVC animated:YES];
+        //        [self addShare];
+    }else if (btn.tag == 526){
+        
+    }else if (btn.tag == 522) {
+        JGDWKCourtDetailViewController *detailVC = [[JGDWKCourtDetailViewController alloc] init];
+        detailVC.ballKey = self.timeKey;
+        [self.navigationController pushViewController:detailVC animated:YES];
+        //        JGDCourtSecDetailViewController *secDetailVC = [[JGDCourtSecDetailViewController alloc] init];
+        //        secDetailVC.detailDic = self.detailDic;
+        //        NSArray *keyArray = [NSArray arrayWithObjects:@"type", @"buildTime", @"areaMeasure", @"greenGrass", @"holesSum", @"designer", @"fairwayLength", @"fairwayGrass", nil];
+        //        for (int i = 0; i < 8; i ++) {
+        //            if ([self.detailDic objectForKey:keyArray[i]]) {
+        //                if (i == 4) {
+        //                    [secDetailVC.proArray addObject:[NSString stringWithFormat:@"%@", [self.detailDic objectForKey:keyArray[i]]]];
+        //                }else{
+        //                    [secDetailVC.proArray addObject:[self.detailDic objectForKey:keyArray[i]]];
+        //                }
+        //            }else{
+        //                [secDetailVC.proArray addObject:@""];
+        //            }
+        //        }
+        //        [self.navigationController pushViewController:secDetailVC animated:YES];
     }
 }
 
@@ -266,7 +269,7 @@ static CGFloat ImageHeight  = 210.0;
         self.titleView.frame = CGRectMake((factor-screenWidth)/2, 0, title.size.width, title.size.height);
         
         self.detailBtn.hidden = YES;
-//        self.addressBtn.hidden = YES;
+        //        self.addressBtn.hidden = YES;
     } else {
         CGRect f = self.imgProfile.frame;
         f.origin.y = -yOffset;
@@ -278,7 +281,7 @@ static CGFloat ImageHeight  = 210.0;
         
         if (yOffset == 0.0) {
             self.detailBtn.hidden = NO;
-//            self.addressBtn.hidden = NO;
+            //            self.addressBtn.hidden = NO;
         }
     }
 }
@@ -298,13 +301,13 @@ static CGFloat ImageHeight  = 210.0;
         
     }else{
         return 2;
- 
+        
     }
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     
-   return 2;
+    return 2;
 }
 
 
@@ -315,8 +318,7 @@ static CGFloat ImageHeight  = 210.0;
         return indexPath.row == 0 ? 80 * ProportionAdapter : 60 * ProportionAdapter;
         
     }else {
-//        CGFloat height = [Helper textHeightFromTextString:@"深圳/阿斯顿法国/深证观澜湖高尔夫球场深圳/阿斯顿法国/深证观澜湖高尔夫球场深圳/阿斯顿法国/深证观澜湖高尔夫球场深圳/阿斯顿法国/深证观澜湖高尔夫球场深圳/阿斯顿法国/深证观澜湖高尔夫球场深圳/阿斯顿法国/深证观澜湖高尔夫球场" width:screenWidth - 20 * ProportionAdapter fontSize:15 * ProportionAdapter];
-
+        
         CGFloat height = [Helper textHeightFromTextString:self.serviceDetail.text width:screenWidth - 20 * ProportionAdapter fontSize:15 * ProportionAdapter];
         return indexPath.row == 0 ? 100 * ProportionAdapter : 50 * ProportionAdapter + height;
         
@@ -345,7 +347,7 @@ static CGFloat ImageHeight  = 210.0;
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
-  
+    
     JGDCostumTableViewCell *cell = [[JGDCostumTableViewCell alloc] init];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
@@ -387,21 +389,21 @@ static CGFloat ImageHeight  = 210.0;
             [self lableReDraw:underLine rect:CGRectMake(0, 79.5 * ProportionAdapter, screenWidth, 0.5 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#EEEEEE"] labelFont:0 text:@"" textAlignment:NSTextAlignmentCenter];
             underLine.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];
             [cell.contentView addSubview:underLine];
-
             
-
+            
+            
         }else{
             UILabel *begainLB = [[UILabel alloc] init];
             
             NSString *begainDate = [NSString stringWithFormat:@"将为您提供%@-%@（１小时内的开球时间）", [Helper dateFromDate:self.selectDate timeInterval:-30 * 60], [Helper dateFromDate:self.selectDate timeInterval:30 * 60]];
-
+            
             
             [self lableReDraw:begainLB rect:CGRectMake(0, 0, screenWidth, 60 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#636363"] labelFont:16 * ProportionAdapter text:begainDate textAlignment:NSTextAlignmentCenter];
             [cell.contentView addSubview:begainLB];
         }
         
     }else{
-       
+        
         if (indexPath.row == 0) {
             
             UILabel *courtName = [[UILabel alloc] init];
@@ -416,51 +418,71 @@ static CGFloat ImageHeight  = 210.0;
             [self lableReDraw:underLine rect:CGRectMake(0, 99.5 * ProportionAdapter, screenWidth, 0.5 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#EEEEEE"] labelFont:0 text:@"" textAlignment:NSTextAlignmentCenter];
             underLine.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];
             [cell.contentView addSubview:underLine];
-
+            
             
             UILabel *priceLB = [[UILabel alloc] init];
-            [cell addSubview:priceLB];
             
             UIButton *payBtn = [[UIButton alloc] initWithFrame:CGRectMake(screenWidth - 85 * ProportionAdapter, 22 * ProportionAdapter, 75 * ProportionAdapter, 55 * ProportionAdapter)];
-            // 上架  0: 未上架  1: 已上架   2:封场
+    // 0: 未上架  1: 已上架   2:封场
             if ([[self.detailDic objectForKey:@"instapaper"] integerValue] == 2) {
                 [payBtn setBackgroundImage:[UIImage imageNamed:@"booking_pay"] forState:(UIControlStateNormal)];
                 [payBtn setTitleColor:[UIColor colorWithHexString:@"#a0a0a0"] forState:(UIControlStateNormal)];
                 [self lableReDraw:priceLB rect:CGRectMake(screenWidth - 155 * ProportionAdapter , 35 * ProportionAdapter, 60 * ProportionAdapter, 30 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#fc5a01"] labelFont:17 text:@"已封场" textAlignment:(NSTextAlignmentRight)];
                 payBtn.enabled = NO;
+                [cell.contentView addSubview:priceLB];
             }else if ([[self.detailDic objectForKey:@"instapaper"] integerValue] == 1) {
+                
                 [payBtn setBackgroundImage:[UIImage imageNamed:@"booking_paycolor"] forState:(UIControlStateNormal)];
                 [payBtn setTitleColor:[UIColor colorWithHexString:@"#fc5a01"] forState:(UIControlStateNormal)];
-                [self lableReDraw:priceLB rect:CGRectMake(screenWidth - 155 * ProportionAdapter , 35 * ProportionAdapter, 60 * ProportionAdapter, 30 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#fc5a01"] labelFont:17 text:[NSString stringWithFormat:@"¥%@", [self.detailDic objectForKey:@"unitPrice"]] textAlignment:(NSTextAlignmentRight)];
-                
-                NSMutableAttributedString *mutaStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"¥ %@", self.unitPrice]];
-                [mutaStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:13 * ProportionAdapter] range:NSMakeRange(0, 1)];
-                priceLB.attributedText = mutaStr;
-                
 
+                if ([self.detailDic objectForKey:@"instapaper"]) {
+                    // 无立减优惠
+                    [self lableReDraw:priceLB rect:CGRectMake(screenWidth - 155 * ProportionAdapter , 35 * ProportionAdapter, 60 * ProportionAdapter, 30 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#fc5a01"] labelFont:17 text:[NSString stringWithFormat:@"¥%@", [self.detailDic objectForKey:@"unitPrice"]] textAlignment:(NSTextAlignmentRight)];
+                    
+                    NSMutableAttributedString *mutaStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"¥ %@", self.unitPrice]];
+                    [mutaStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:13 * ProportionAdapter] range:NSMakeRange(0, 1)];
+                    priceLB.attributedText = mutaStr;
+                    [cell.contentView addSubview:priceLB];
+                }else{
+                    // 立减优惠
+                    UILabel *greyLB = [self lablerect:CGRectMake(screenWidth - 155 * ProportionAdapter , 30 * ProportionAdapter, 60 * ProportionAdapter, 20 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#a0a0a0"] labelFont:13 text:@"¥999" textAlignment:(NSTextAlignmentRight)];
+                    [cell.contentView addSubview:greyLB];
+                    
+                    CGFloat width = [Helper textWidthFromTextString:@"¥999" height:screenWidth - 20 * ProportionAdapter fontSize:13];
+
+                    UILabel *lineLB = [self lablerect:CGRectMake(screenWidth - 95 * ProportionAdapter - width - 2.5 * ProportionAdapter , 40 * ProportionAdapter, width + 5 * ProportionAdapter, 1 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#a0a0a0"] labelFont:0 text:@"" textAlignment:(NSTextAlignmentCenter)];
+                    lineLB.backgroundColor = [UIColor colorWithHexString:@"#a0a0a0"];
+                    [cell.contentView addSubview:lineLB];
+
+                    
+                    UILabel *orangeLB = [self lablerect:CGRectMake(screenWidth - 155 * ProportionAdapter , 50 * ProportionAdapter, 60 * ProportionAdapter, 20 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#fc5a01"] labelFont:17 text:@"¥999" textAlignment:(NSTextAlignmentRight)];
+                    [cell.contentView addSubview:orangeLB];
+                }
+                
+                
             }else{
                 [payBtn setBackgroundImage:[UIImage imageNamed:@"booking_pay"] forState:(UIControlStateNormal)];
                 [payBtn setTitleColor:[UIColor colorWithHexString:@"#a0a0a0"] forState:(UIControlStateNormal)];
-
+                
             }
             // payType  支付类型设置 0: 全额预付  1: 部分预付  2: 球场现付
             if ([[self.detailDic objectForKey:@"payType"] integerValue] == 2) {
                 [payBtn setTitle:@"球场现付" forState:(UIControlStateNormal)];
-
+                
             }else if ([[self.detailDic objectForKey:@"payType"] integerValue] == 1) {
                 [payBtn setTitle:@"部分预付" forState:(UIControlStateNormal)];
-
+                
             }else{
                 [payBtn setTitle:@"全额预付" forState:(UIControlStateNormal)];
-
+                
             }
-
+            
             [payBtn addTarget:self action:@selector(payAct) forControlEvents:(UIControlEventTouchUpInside)];
             payBtn.titleLabel.font = [UIFont systemFontOfSize:15 * ProportionAdapter];
             [payBtn setTitleEdgeInsets:UIEdgeInsetsMake(27 * ProportionAdapter, 0, 0, 0)];
             [cell addSubview:payBtn];
             
-
+            
             
         }else{
             
@@ -470,7 +492,7 @@ static CGFloat ImageHeight  = 210.0;
             
             
             CGFloat height = [Helper textHeightFromTextString:[self.detailDic objectForKey:@"serviceDetails"] width:screenWidth - 20 * ProportionAdapter fontSize:15 * ProportionAdapter];
-
+            
             self.serviceDetail = [[UILabel alloc] init];
             [self lableReDraw:self.serviceDetail rect:CGRectMake(10 * ProportionAdapter, 40 * ProportionAdapter, screenWidth - 20 * ProportionAdapter, height) labelColor:[UIColor colorWithHexString:@"#a0a0a0"] labelFont:(15 * ProportionAdapter) text:[self.detailDic objectForKey:@"serviceDetails"] textAlignment:NSTextAlignmentLeft];
             self.serviceDetail.numberOfLines = 0;
@@ -494,7 +516,7 @@ static CGFloat ImageHeight  = 210.0;
         _date = [NSString stringWithFormat:@"%@", [Helper stringFromDateString:selectTime withFormater:@"yyyy年MM月dd日"]];
         _week = [NSString stringWithFormat:@"%@", [Helper stringFromDateString:selectTime withFormater:@"EEE"]];;
         _time = [NSString stringWithFormat:@"%@", [Helper stringFromDateString:selectTime withFormater:@"HH:mm"]];
-    
+        
         self.unitPrice = pay;
         self.payMoney = [NSString stringWithFormat:@"%td", [pay integerValue] - [scenePay integerValue]];
         self.unitPaymentMoney = scenePay;
@@ -502,7 +524,7 @@ static CGFloat ImageHeight  = 210.0;
         NSIndexPath *indexPath0 = [NSIndexPath indexPathForRow:0 inSection:0];
         NSIndexPath *indexPath1 = [NSIndexPath indexPathForRow:1 inSection:0];
         NSIndexPath *indexPath2 = [NSIndexPath indexPathForRow:0 inSection:1];
-
+        
         [self.courtDetail reloadRowsAtIndexPaths:@[indexPath0, indexPath1, indexPath2] withRowAnimation:NO];
     };
     [self.navigationController pushViewController:caleVC animated:YES];
@@ -510,7 +532,7 @@ static CGFloat ImageHeight  = 210.0;
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    }
+}
 
 
 #pragma  mark -- 付款
@@ -526,7 +548,7 @@ static CGFloat ImageHeight  = 210.0;
 
 #pragma mark -- 咨询
 - (void)askBtnClick:(UIButton *)btn{
-
+    
     
 }
 
@@ -540,19 +562,39 @@ static CGFloat ImageHeight  = 210.0;
     lable.text = text;
     return lable;
 }
+
+//  封装cell方法 2 。。。
+- (UILabel *)lablerect:(CGRect)rect labelColor:(UIColor *)color labelFont:(NSInteger)font text:(NSString *)text textAlignment:(NSTextAlignment )alignment{
+    
+    UILabel *label = [[UILabel alloc] init];
+    label.textAlignment = alignment;
+    label.frame = rect;
+    label.textColor = color;
+    label.font = [UIFont systemFontOfSize:font];
+    if ([text length] > 1) {
+        NSMutableAttributedString *mutaStr = [[NSMutableAttributedString alloc] initWithString:text];
+        [mutaStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:13] range:NSMakeRange(0, 1)];
+        label.attributedText = mutaStr;
+    }else{
+        label.text = text;
+    }
+    return label;
+}
+
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

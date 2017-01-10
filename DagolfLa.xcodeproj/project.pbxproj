@@ -1158,6 +1158,7 @@
 		F5B646D81D52E1B500F30672 /* JGGuestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5B646D71D52E1B500F30672 /* JGGuestViewController.m */; };
 		F5B647101CE41E7E00A7A056 /* JGTeamDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = F5B6470F1CE41E7E00A7A056 /* JGTeamDetailView.m */; };
 		F5B90E081D1786FE008ACC22 /* JGTeamPayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5B90E071D1786FE008ACC22 /* JGTeamPayViewController.m */; };
+		F5BC6C181E232F6400E850CD /* JGDWKCourtDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5BC6C171E232F6400E850CD /* JGDWKCourtDetailViewController.m */; };
 		F5BDF0A11CEC1B750020175A /* JGTeamDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = F5BDF0A01CEC1B750020175A /* JGTeamDetail.m */; };
 		F5CB6EAD1DBA29150068F768 /* bg_image_pk@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F5CB6EAC1DBA29150068F768 /* bg_image_pk@2x.jpg */; };
 		F5D2F9B71E03DB550070D26C /* JGDServiceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5D2F9B61E03DB540070D26C /* JGDServiceViewController.m */; };
@@ -3426,6 +3427,8 @@
 		F5B6470F1CE41E7E00A7A056 /* JGTeamDetailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGTeamDetailView.m; sourceTree = "<group>"; };
 		F5B90E061D1786FE008ACC22 /* JGTeamPayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGTeamPayViewController.h; sourceTree = "<group>"; };
 		F5B90E071D1786FE008ACC22 /* JGTeamPayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGTeamPayViewController.m; sourceTree = "<group>"; };
+		F5BC6C161E232F6400E850CD /* JGDWKCourtDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGDWKCourtDetailViewController.h; sourceTree = "<group>"; };
+		F5BC6C171E232F6400E850CD /* JGDWKCourtDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGDWKCourtDetailViewController.m; sourceTree = "<group>"; };
 		F5BDF09F1CEC1B750020175A /* JGTeamDetail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGTeamDetail.h; sourceTree = "<group>"; };
 		F5BDF0A01CEC1B750020175A /* JGTeamDetail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGTeamDetail.m; sourceTree = "<group>"; };
 		F5CB6EAC1DBA29150068F768 /* bg_image_pk@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "bg_image_pk@2x.jpg"; sourceTree = "<group>"; };
@@ -8280,6 +8283,8 @@
 				F58C4EBD1E1B3F860057DC9C /* JGDOrderListViewController.m */,
 				F58C4EBE1E1B3F860057DC9C /* JGDPaySuccessViewController.h */,
 				F58C4EBF1E1B3F860057DC9C /* JGDPaySuccessViewController.m */,
+				F5BC6C161E232F6400E850CD /* JGDWKCourtDetailViewController.h */,
+				F5BC6C171E232F6400E850CD /* JGDWKCourtDetailViewController.m */,
 			);
 			path = "球场预定";
 			sourceTree = "<group>";
@@ -9205,6 +9210,7 @@
 				20591C561D215BCD003271EC /* JGDPrivateAccountTableViewCell.m in Sources */,
 				20301A721E1269EB005568E2 /* LGLWeekView.m in Sources */,
 				203019B21E0E4292005568E2 /* ZXRSSExpandedBlockParsedResult.m in Sources */,
+				F5BC6C181E232F6400E850CD /* JGDWKCourtDetailViewController.m in Sources */,
 				F58C4EE21E1B3FC30057DC9C /* JGDBookCourtTableViewCell.m in Sources */,
 				F53A05671D518F32009DD489 /* JGHPlayersScoreTableViewCell.m in Sources */,
 				2012AD821D2BB1B200F70E40 /* JGHAwardCell.m in Sources */,

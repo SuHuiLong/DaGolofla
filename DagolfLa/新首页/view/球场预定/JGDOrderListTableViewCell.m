@@ -38,14 +38,14 @@
         [self.contentView addSubview:self.nameLB];
         
         
-        self.begainLB = [self lablerect:CGRectMake(10 * ProportionAdapter, 33 * ProportionAdapter, 80  * ProportionAdapter, 20 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#a0a0a0"] labelFont:(15 * ProportionAdapter) text:@"开球时间：" textAlignment:(NSTextAlignmentRight)];
+        self.begainLB = [self lablerect:CGRectMake(10 * ProportionAdapter, 33 * ProportionAdapter, 80  * ProportionAdapter, 20 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#a0a0a0"] labelFont:(15 * ProportionAdapter) text:@"开球时间：" textAlignment:(NSTextAlignmentLeft)];
         [self.contentView addSubview:self.begainLB];
         
         
-        self.sumPeopleLB = [self lablerect:CGRectMake(10 * ProportionAdapter, 56 * ProportionAdapter, 80  * ProportionAdapter, 20 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#a0a0a0"] labelFont:(15 * ProportionAdapter) text:@"订单人数：" textAlignment:(NSTextAlignmentRight)];
+        self.sumPeopleLB = [self lablerect:CGRectMake(10 * ProportionAdapter, 56 * ProportionAdapter, 80  * ProportionAdapter, 20 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#a0a0a0"] labelFont:(15 * ProportionAdapter) text:@"订单人数：" textAlignment:(NSTextAlignmentLeft)];
         [self.contentView addSubview:self.sumPeopleLB];
         
-        self.sumPriceLB = [self lablerect:CGRectMake(10 * ProportionAdapter, 80 * ProportionAdapter, 80  * ProportionAdapter, 20 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#fc5a01"] labelFont:(15* ProportionAdapter) text:@"订单总价：" textAlignment:(NSTextAlignmentRight)];
+        self.sumPriceLB = [self lablerect:CGRectMake(10 * ProportionAdapter, 80 * ProportionAdapter, 80  * ProportionAdapter, 20 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#fc5a01"] labelFont:(15* ProportionAdapter) text:@"订单总价：" textAlignment:(NSTextAlignmentLeft)];
         [self.contentView addSubview:self.sumPriceLB];
         
         self.begainTimeLB = [self lablerect:CGRectMake(90 * ProportionAdapter, 33 * ProportionAdapter, screenWidth - 110  * ProportionAdapter, 20 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#313131"] labelFont:(15 * ProportionAdapter) text:@"" textAlignment:(NSTextAlignmentLeft)];

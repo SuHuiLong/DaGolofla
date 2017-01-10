@@ -35,7 +35,7 @@
 }
 
 - (void)saveUserInformation:(UserInformationModel *)model {
-
+    
     self.userInfor  = model;
     
     //刷新Kit层用户数据
@@ -53,7 +53,8 @@
     } completionBlock:^(id data) {
         
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
-
+            int roundId = arc4random()%100;
+            
             RCUserInfo *userInfo = [[RCUserInfo alloc] init];
             userInfo.userId = userId;
             
@@ -61,21 +62,23 @@
                 
                 userInfo.name = [[data objectForKey:@"userFriend"] objectForKey:@"remark"] ? [[data objectForKey:@"userFriend"] objectForKey:@"remark"] : [[data objectForKey:@"userFriend"] objectForKey:@"userName"];
                 
-//                userInfo.portraitUri = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/user/head/%@.jpg@_2o",userId];
-//                
-//                [[RCIM sharedRCIM] refreshUserInfoCache:userInfo  withUserId:userId];
-                
-                userInfo.portraitUri = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/user/head/%@.jpg@200w_200h_2o",userId];
+                userInfo.portraitUri = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/user/head/%@.jpg@200w_%dh_2o",userId, roundId +200];
                 
                 [[RCIM sharedRCIM] refreshUserInfoCache:userInfo  withUserId:userId];
                 
-                
                 completion(userInfo);
+            }else{
+                if ([data objectForKey:@"user"]) {
+                    userInfo.name = [data objectForKey:@"userName"];
+                    userInfo.portraitUri = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/user/head/%@.jpg@200w_%dh_2o",userId, roundId +200];
+                    [[RCIM sharedRCIM] refreshUserInfoCache:userInfo  withUserId:userId];
+                    
+                    completion(userInfo);
+                }
             }
-            
         }
     }];
-
+    
 }
 
 - (void)getGroupInfoWithGroupId:(NSString *)groupId completion:(void (^)(RCGroup *))completion {

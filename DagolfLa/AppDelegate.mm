@@ -764,6 +764,7 @@
         return YES;
     }
 }
+
 #pragma mark --消息推送
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
     // Required

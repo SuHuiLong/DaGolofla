@@ -519,6 +519,50 @@
         
     }
     
+    [self payMoneySet];
+}
+
+
+
+#pragma mark --- 单人删除
+
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    if (indexPath.row > 5) {
+        return YES;
+    }else{
+        return NO;
+    }
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    
+    UIButton *leftBtn = [tableView viewWithTag:500];
+
+    
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+
+        if (self.playerArray.count > 1) {
+            self.countLB.text = [NSString stringWithFormat:@"%td人", [self.playerArray count] - 1];
+            NSLog(@"%td" ,indexPath.row);
+            [self.playerArray removeObjectAtIndex:indexPath.row - 5];
+//            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:5 + [self.playerArray count] inSection:0];
+            [self.commitOrderTableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:YES];
+        }
+        
+        [self.playerArray count] == 1 ?[leftBtn setImage:[UIImage imageNamed:@"order_minus"] forState:(UIControlStateNormal)] : @"";
+
+        
+        [self payMoneySet];
+    }
+}
+
+
+// 加减完人数后设置金额
+
+- (void)payMoneySet{
     NSString *paytypeString = @"";
     
     if ([[self.detailDic objectForKey:@"payType"] integerValue] == 2) {
@@ -542,6 +586,7 @@
     
     
 }
+
 
 //  封装cell方法
 - (UILabel *)lablerect:(CGRect)rect labelColor:(UIColor *)color labelFont:(NSInteger)font text:(NSString *)text textAlignment:(NSTextAlignment )alignment{
