@@ -199,6 +199,8 @@
         
         // 设置可拖拽
         newAnnotationView.draggable = YES;
+        newAnnotationView.selected = YES;
+
         return newAnnotationView;
     }
     return nil;

@@ -92,6 +92,12 @@
     
 }
 
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    
+    self.navigationItem.leftBarButtonItem =  [[UIBarButtonItem alloc] initWithTitle:@"" style:(UIBarButtonItemStyleDone) target:self action:nil];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     

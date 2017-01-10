@@ -12,6 +12,8 @@
 #import "InfoDataViewController.h"
 #import "AddNoteViewController.h"
 #import "PostDataRequest.h"
+#import "UserDataInformation.h"
+
 
 @interface ChatDetailViewController ()
 
@@ -27,7 +29,6 @@
     item.tintColor=[UIColor whiteColor];
     self.navigationItem.leftBarButtonItem = item;
     
-    //    [self.];
     [self.conversationMessageCollectionView reloadData];
     [self.chatSessionInputBarControl.pluginBoardView removeItemAtIndex:2];
     //    [self.chatSessionInputBarControl setInputBarType:RCChatSessionInputBarControlDefaultType style:5];
@@ -38,7 +39,7 @@
 -(void)backButtonClcik{
     [self.navigationController popViewControllerAnimated:YES];
 }
-//更改聊天的字体
+//更改聊天的字体 164981 7965
 -(void)willDisplayConversationTableCell:(RCMessageBaseCell *)cell atIndexPath:(NSIndexPath *)indexPath{
     if ([cell isMemberOfClass:[RCTextMessageCell class]]) {
         
@@ -46,6 +47,13 @@
         
         RCTextMessageCell *textCell=(RCTextMessageCell *)cell;
         RCMessageModel *model=self.conversationDataRepository[indexPath.row];
+        
+        [[UserDataInformation sharedInstance] getUserInfoWithUserId:model.targetId completion:^(RCUserInfo *userInfo) {
+        }];
+        
+        [[UserDataInformation sharedInstance] getUserInfoWithUserId:model.senderUserId completion:^(RCUserInfo *userInfo) {
+        }];
+        
         NSInteger mmm=[[[NSUserDefaults standardUserDefaults] objectForKey:@"userId"] integerValue];
         if (mmm==[model.senderUserId integerValue]) {
             textCell.textLabel.textColor=[UIColor whiteColor];
@@ -58,7 +66,8 @@
 //点击头像
 //一定要设置info，否则肯定拿不到信息
 - (void)didTapCellPortrait:(NSString *)userId{
-    
+ 
+
     NSUserDefaults *user=[NSUserDefaults standardUserDefaults];
     if ([userId integerValue]!=[[user objectForKey:@"userId"] integerValue]) {
         

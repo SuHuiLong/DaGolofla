@@ -156,7 +156,7 @@
     
     for (int i = 0; i < [self.hotCityArray count]; i ++) {
         
-        UIButton *hotBtn = [[UIButton alloc] initWithFrame:CGRectMake(10 * ProportionAdapter + 125 * (i%3), i/3 * 40 * ProportionAdapter + 140 * ProportionAdapter, 80 * ProportionAdapter, 25 * ProportionAdapter)];
+        UIButton *hotBtn = [[UIButton alloc] initWithFrame:CGRectMake(10 * ProportionAdapter + 125 * (i%3) * ProportionAdapter, i/3 * 40 * ProportionAdapter + 140 * ProportionAdapter, 80 * ProportionAdapter, 25 * ProportionAdapter)];
         hotBtn.backgroundColor = [UIColor colorWithHexString:@"#eeeeee"];
         hotBtn.layer.cornerRadius = 6;
         hotBtn.clipsToBounds = YES;
@@ -166,7 +166,7 @@
         [attribStr addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"#313131"] range:NSMakeRange(0, [[self.hotCityArray[i] objectForKey:@"cName"] length])];
         [attribStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:11 * ProportionAdapter] range:NSMakeRange([[self.hotCityArray[i] objectForKey:@"cName"] length] + 1, [[NSString stringWithFormat:@"%@", [self.hotCityArray[i] objectForKey:@"ballCount"]] length] + 2)];
         [attribStr addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"#a0a0a0"] range:NSMakeRange([[self.hotCityArray[i] objectForKey:@"cName"] length] + 1, [[NSString stringWithFormat:@"%@", [self.hotCityArray[i] objectForKey:@"ballCount"]] length] + 2)];
-
+        [hotBtn setTitleEdgeInsets:UIEdgeInsetsMake(0, 0, 3 * ProportionAdapter, 0)];
         [hotBtn setAttributedTitle:attribStr forState:(UIControlStateNormal)];
         
         [hotBtn addTarget:self action:@selector(cityAct:) forControlEvents:(UIControlEventTouchUpInside)];

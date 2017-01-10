@@ -22,6 +22,8 @@
 
 @property (nonatomic, strong) UILabel *distanceLB;
 
+@property (nonatomic, strong) UIButton *fullCutBtn; // 满减
+
 @end
 
 
@@ -71,6 +73,16 @@
         self.priceLB.attributedText = attri;
         [self.contentView addSubview:self.priceLB];
         
+        self.fullCutBtn = [[UIButton alloc] initWithFrame:CGRectMake(290 * ProportionAdapter, 50 * ProportionAdapter, 75 * ProportionAdapter, 30 * ProportionAdapter)];
+        [self.fullCutBtn setTitle:@"¥ 500" forState:(UIControlStateNormal)];
+        self.fullCutBtn.titleLabel.font = [UIFont systemFontOfSize:12];
+        [self.fullCutBtn setTitleEdgeInsets:UIEdgeInsetsMake(0, 5 * ProportionAdapter, 0, 0)];
+        [self.fullCutBtn setImageEdgeInsets:UIEdgeInsetsMake(0, 0, 0, 5 * ProportionAdapter)];
+        [self.fullCutBtn setImage:[UIImage imageNamed:@"icn_fullcut"] forState:(UIControlStateNormal)];
+        [self.fullCutBtn setTitleColor:[UIColor colorWithHexString:@"#fc5a01"] forState:(UIControlStateNormal)];
+        self.fullCutBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
+        [self.contentView addSubview:self.fullCutBtn];
+        
         UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(10 * ProportionAdapter, 89.5 * ProportionAdapter, screenWidth - 20 * ProportionAdapter, 0.5 * ProportionAdapter)];
         lineView.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];
         [self.contentView addSubview:lineView];
@@ -97,12 +109,12 @@
     CGFloat addresWidth = [Helper textWidthFromTextString:model.address height:20 * ProportionAdapter fontSize:13 * ProportionAdapter];
     CGFloat distanWidth = [Helper textWidthFromTextString:[NSString stringWithFormat:@"%.1fkm", [model.distance floatValue]] height:20 * ProportionAdapter fontSize:13 * ProportionAdapter];
 
-    if (distanWidth + addresWidth < 200 * ProportionAdapter) {
+    if (distanWidth + addresWidth  + 15 * ProportionAdapter < 190 * ProportionAdapter) {
         self.adressLB.frame = CGRectMake(113 * ProportionAdapter, 60 * ProportionAdapter, addresWidth, 20 * ProportionAdapter);
         self.distanceLB.frame = CGRectMake(113 * ProportionAdapter + addresWidth + 15 * ProportionAdapter, 60 * ProportionAdapter, distanWidth, 20 * ProportionAdapter);
     }else{
-        self.adressLB.frame = CGRectMake(113 * ProportionAdapter, 60 * ProportionAdapter, 200 * ProportionAdapter - distanWidth - 15 * ProportionAdapter, 20 * ProportionAdapter);
-        self.distanceLB.frame = CGRectMake(113 * ProportionAdapter + (200 * ProportionAdapter - distanWidth - 15 * ProportionAdapter), 60 * ProportionAdapter, distanWidth, 20 * ProportionAdapter);
+        self.adressLB.frame = CGRectMake(113 * ProportionAdapter, 60 * ProportionAdapter, 190 * ProportionAdapter - distanWidth - 15 * ProportionAdapter, 20 * ProportionAdapter);
+        self.distanceLB.frame = CGRectMake(113 * ProportionAdapter + (190 * ProportionAdapter - distanWidth - 15 * ProportionAdapter), 60 * ProportionAdapter, distanWidth, 20 * ProportionAdapter);
     }
     
     self.distanceLB.text = [NSString stringWithFormat:@"%.1fkm", [model.distance floatValue]];

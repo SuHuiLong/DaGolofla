@@ -46,7 +46,7 @@
         [self.contentView addSubview:self.phoneImageV];
         
         self.lineView = [[UIView alloc] initWithFrame:CGRectMake(10 * ProportionAdapter, 0, screenWidth - 10 * ProportionAdapter, 0.5 * ProportionAdapter)];
-        self.lineView.backgroundColor = [UIColor colorWithHexString:@"#a0a0a0"];
+        self.lineView.backgroundColor = [UIColor colorWithHexString:@"#eeeeee"];
         [self.contentView addSubview:self.lineView];
         
     }

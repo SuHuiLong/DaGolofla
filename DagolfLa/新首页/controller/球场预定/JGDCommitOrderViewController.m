@@ -44,7 +44,20 @@
     self.title = @"提交订单";
     
     [self commitOrderTable];
+    
+    
+    UIBarButtonItem *rightBar = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"consult"] style:(UIBarButtonItemStyleDone) target:self action:@selector(phoneAct)];
+    rightBar.tintColor = [UIColor whiteColor];
+    self.navigationItem.rightBarButtonItem = rightBar;
+    
     // Do any additional setup after loading the view.
+}
+
+- (void)phoneAct{
+
+    NSMutableString * str=[[NSMutableString alloc] initWithFormat:@"telprompt://%@", Company400];
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:str]];
+
 }
 
 
@@ -221,11 +234,11 @@
         UILabel *titleLB = [self lablerect:CGRectMake(5 * ProportionAdapter, 0, 90 * ProportionAdapter, 50 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#a0a0a0"] labelFont:(16 * ProportionAdapter) text:@"球场：" textAlignment:(NSTextAlignmentRight)];
         [cell.contentView addSubview:titleLB];
         
-        UILabel *ballNameLB = [self lablerect:CGRectMake(100 * ProportionAdapter, 0, 260 * ProportionAdapter, 50 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#313131"] labelFont:(17 * ProportionAdapter) text:[self.detailDic objectForKey:@"ballName"] textAlignment:(NSTextAlignmentLeft)];
+        UILabel *ballNameLB = [self lablerect:CGRectMake(100 * ProportionAdapter, 0, 260 * ProportionAdapter, 50 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#313131"] labelFont:(16 * ProportionAdapter) text:[self.detailDic objectForKey:@"ballName"] textAlignment:(NSTextAlignmentLeft)];
         [cell.contentView addSubview:ballNameLB];
         
         UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(10 * ProportionAdapter, 49.5 * ProportionAdapter, screenWidth - 10 * ProportionAdapter, 0.5 * ProportionAdapter)];
-        lineView.backgroundColor = [UIColor colorWithHexString:@"#a0a0a0"];
+        lineView.backgroundColor = [UIColor colorWithHexString:@"#eeeeee"];
         [cell.contentView addSubview:lineView];
         
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -506,6 +519,50 @@
         
     }
     
+    [self payMoneySet];
+}
+
+
+
+#pragma mark --- 单人删除
+
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    if (indexPath.row > 5) {
+        return YES;
+    }else{
+        return NO;
+    }
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    
+    UIButton *leftBtn = [tableView viewWithTag:500];
+
+    
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+
+        if (self.playerArray.count > 1) {
+            self.countLB.text = [NSString stringWithFormat:@"%td人", [self.playerArray count] - 1];
+            NSLog(@"%td" ,indexPath.row);
+            [self.playerArray removeObjectAtIndex:indexPath.row - 5];
+//            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:5 + [self.playerArray count] inSection:0];
+            [self.commitOrderTableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:YES];
+        }
+        
+        [self.playerArray count] == 1 ?[leftBtn setImage:[UIImage imageNamed:@"order_minus"] forState:(UIControlStateNormal)] : @"";
+
+        
+        [self payMoneySet];
+    }
+}
+
+
+// 加减完人数后设置金额
+
+- (void)payMoneySet{
     NSString *paytypeString = @"";
     
     if ([[self.detailDic objectForKey:@"payType"] integerValue] == 2) {
@@ -529,6 +586,7 @@
     
     
 }
+
 
 //  封装cell方法
 - (UILabel *)lablerect:(CGRect)rect labelColor:(UIColor *)color labelFont:(NSInteger)font text:(NSString *)text textAlignment:(NSTextAlignment )alignment{

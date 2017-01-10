@@ -251,11 +251,11 @@
         self.currentType = -1;
         
     }else if (btn.tag == 201) {
-        self.greenView.frame = CGRectMake(100 * ProportionAdapter, 47.5 * ProportionAdapter, 70 * ProportionAdapter, 2.5 * ProportionAdapter);
+        self.greenView.frame = CGRectMake(101 * ProportionAdapter, 47.5 * ProportionAdapter, 70 * ProportionAdapter, 2.5 * ProportionAdapter);
         self.currentType = 0;
         
     }else if (btn.tag == 202) {
-        self.greenView.frame = CGRectMake(190 * ProportionAdapter, 47.5 * ProportionAdapter, 70 * ProportionAdapter, 2.5 * ProportionAdapter);
+        self.greenView.frame = CGRectMake(192 * ProportionAdapter, 47.5 * ProportionAdapter, 70 * ProportionAdapter, 2.5 * ProportionAdapter);
         self.currentType = 1;
 
     }
