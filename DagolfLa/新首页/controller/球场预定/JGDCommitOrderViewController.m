@@ -77,15 +77,15 @@
         
         UIView *footView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 120 * ProportionAdapter)];
         
-        self.payMoneyLB = [self lablerect:CGRectMake(220 * ProportionAdapter, 0, 140 * ProportionAdapter, 40 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#313131"] labelFont:(16 * ProportionAdapter) text:[NSString stringWithFormat:@"支付金额  ¥%@", self.selectMoney] textAlignment:(NSTextAlignmentRight)];
-        NSMutableAttributedString *mutaAttStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"支付金额  ¥%@", self.selectMoney]];
+        self.payMoneyLB = [self lablerect:CGRectMake(220 * ProportionAdapter, 0, 140 * ProportionAdapter, 40 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#313131"] labelFont:(16 * ProportionAdapter) text:[NSString stringWithFormat:@"全额预付  ¥%@", self.selectMoney] textAlignment:(NSTextAlignmentRight)];
+        NSMutableAttributedString *mutaAttStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"全额预付  ¥%@", self.selectMoney]];
         [mutaAttStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:12 * ProportionAdapter] range:NSMakeRange(6, 1)];
         [mutaAttStr addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"#fc5a01"] range:NSMakeRange(6, [[NSString stringWithFormat:@"%@",self.selectMoney] length] + 1)];
         self.payMoneyLB.attributedText = mutaAttStr;
         [footView addSubview:self.payMoneyLB];
         
         UIButton *commitBtn = [[UIButton alloc] initWithFrame:CGRectMake(10 * ProportionAdapter, 41 * ProportionAdapter, screenWidth - 20 * ProportionAdapter, 40 * ProportionAdapter)];
-        [commitBtn setTitle:@"确定预定" forState:(UIControlStateNormal)];
+        [commitBtn setTitle:@"确定预订" forState:(UIControlStateNormal)];
         commitBtn.backgroundColor = [UIColor colorWithHexString:@"#fc5a01"];
         [commitBtn addTarget:self action:@selector(ConfirmAct) forControlEvents:(UIControlEventTouchUpInside)];
         commitBtn.layer.cornerRadius = 6;
@@ -112,7 +112,7 @@
         [footView addSubview:self.payMoneyLB];
         
         UIButton *commitBtn = [[UIButton alloc] initWithFrame:CGRectMake(10 * ProportionAdapter, 41 * ProportionAdapter, screenWidth - 20 * ProportionAdapter, 40 * ProportionAdapter)];
-        [commitBtn setTitle:@"确定预定" forState:(UIControlStateNormal)];
+        [commitBtn setTitle:@"确定预订" forState:(UIControlStateNormal)];
         commitBtn.backgroundColor = [UIColor colorWithHexString:@"#fc5a01"];
         [commitBtn addTarget:self action:@selector(ConfirmAct) forControlEvents:(UIControlEventTouchUpInside)];
         commitBtn.layer.cornerRadius = 6;
@@ -149,7 +149,7 @@
         [footView addSubview:self.payMoneyLB];
         
         UIButton *commitBtn = [[UIButton alloc] initWithFrame:CGRectMake(10 * ProportionAdapter, height +  70 * ProportionAdapter, screenWidth - 20 * ProportionAdapter, 40 * ProportionAdapter)];
-        [commitBtn setTitle:@"确定预定" forState:(UIControlStateNormal)];
+        [commitBtn setTitle:@"确定预订" forState:(UIControlStateNormal)];
         commitBtn.backgroundColor = [UIColor colorWithHexString:@"#fc5a01"];
         [commitBtn addTarget:self action:@selector(ConfirmAct) forControlEvents:(UIControlEventTouchUpInside)];
         commitBtn.layer.cornerRadius = 6;

@@ -85,7 +85,7 @@
         btn.imageEdgeInsets = UIEdgeInsetsMake(0, -10 * ProportionAdapter, 0, 0);
         [shitaView addSubview:btn];
         
-        UILabel *commitTipLB = [self lablerect:CGRectMake(0, 95 * ProportionAdapter , screenWidth, 30 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#626262"] labelFont:(15 * ProportionAdapter) text:@"请于30分钟内完成支付，逾期订单自动失效" textAlignment:(NSTextAlignmentCenter)];
+        UILabel *commitTipLB = [self lablerect:CGRectMake(0, 95 * ProportionAdapter , screenWidth, 30 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#626262"] labelFont:(15 * ProportionAdapter) text:@"请于30分钟内完成支付，逾期订单自动失效。" textAlignment:(NSTextAlignmentCenter)];
         [shitaView addSubview:commitTipLB];
         
         
@@ -93,7 +93,7 @@
         lineView.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];
         [ueView addSubview:lineView];
         
-        NSArray *titleArray = [NSArray arrayWithObjects:@"订单受理", @"支付成功", @"球位确定", @"订单完成" ,nil];
+        NSArray *titleArray = [NSArray arrayWithObjects:@"订单受理", @"支付成功", @"球位确认", @"订单完成" ,nil];
         for (int i = 0; i < 4; i ++) {
             UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(35 * ProportionAdapter + i * 98 * ProportionAdapter, 53 * ProportionAdapter, 14 * ProportionAdapter, 14 * ProportionAdapter)];
             if (i != 0) {
@@ -116,7 +116,7 @@
         btn.imageEdgeInsets = UIEdgeInsetsMake(0, -10 * ProportionAdapter, 0, 0);
         [shitaView addSubview:btn];
         
-        UILabel *payTipLB = [self lablerect:CGRectMake(0, 95 * ProportionAdapter , screenWidth, 50 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#626262"] labelFont:(15 * ProportionAdapter) text:@"客服人员会尽快与球场联系\n并第一时间告知您取消要求的受理情况" textAlignment:(NSTextAlignmentCenter)];
+        UILabel *payTipLB = [self lablerect:CGRectMake(0, 95 * ProportionAdapter , screenWidth, 50 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#626262"] labelFont:(15 * ProportionAdapter) text:@"客服人员会尽快与球场联系\n并第一时间告知您取消要求的受理情况。" textAlignment:(NSTextAlignmentCenter)];
         payTipLB.numberOfLines = 0;
         [shitaView addSubview:payTipLB];
         
@@ -146,7 +146,7 @@
     [shitaView addSubview:commitTipLB];
 
     if (_payORlaterPay != 3) {
-        UILabel *tipLB = [self lablerect:CGRectMake(10 * ProportionAdapter, 290 * ProportionAdapter, screenWidth - 20 * ProportionAdapter, 60 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#a0a0a0"] labelFont:(14 * ProportionAdapter) text:@"温馨提示\n非工作时间（18：00至9:00）提交订单，确认球位时间会延长，可能需工作时间返回确认信息。" textAlignment:(NSTextAlignmentLeft)];
+        UILabel *tipLB = [self lablerect:CGRectMake(10 * ProportionAdapter, 290 * ProportionAdapter, screenWidth - 20 * ProportionAdapter, 60 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#a0a0a0"] labelFont:(14 * ProportionAdapter) text:@"温馨提示\n非工作时间（18:00至9:00）提交订单，确认球位时间会延长，可能需工作时间返回确认信息。" textAlignment:(NSTextAlignmentLeft)];
         tipLB.numberOfLines = 0;
         [self.view addSubview:tipLB];
     }

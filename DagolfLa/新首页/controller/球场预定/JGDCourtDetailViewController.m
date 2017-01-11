@@ -407,11 +407,11 @@ static CGFloat ImageHeight  = 210.0;
         if (indexPath.row == 0) {
             
             UILabel *courtName = [[UILabel alloc] init];
-            [self lableReDraw:courtName rect:CGRectMake(10 * ProportionAdapter, 20 * ProportionAdapter, 200 * ProportionAdapter, 20 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#313131"] labelFont:(17 * ProportionAdapter) text:[self.detailDic objectForKey:@"ballName"] textAlignment:NSTextAlignmentLeft];
+            [self lableReDraw:courtName rect:CGRectMake(10 * ProportionAdapter, 25 * ProportionAdapter, 200 * ProportionAdapter, 20 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#313131"] labelFont:(17 * ProportionAdapter) text:[self.detailDic objectForKey:@"ballName"] textAlignment:NSTextAlignmentLeft];
             [cell.contentView addSubview:courtName];
             
             UILabel *serviceName = [[UILabel alloc] init];
-            [self lableReDraw:serviceName rect:CGRectMake(10 * ProportionAdapter, 50 * ProportionAdapter, 200 * ProportionAdapter, 20 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#a0a0a0"] labelFont:(13 * ProportionAdapter) text:[self.detailDic objectForKey:@"servicePj"] textAlignment:NSTextAlignmentLeft];
+            [self lableReDraw:serviceName rect:CGRectMake(10 * ProportionAdapter, 55 * ProportionAdapter, 200 * ProportionAdapter, 20 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#a0a0a0"] labelFont:(13 * ProportionAdapter) text:[self.detailDic objectForKey:@"servicePj"] textAlignment:NSTextAlignmentLeft];
             [cell.contentView addSubview:serviceName];
             
             UILabel *underLine = [[UILabel alloc] init];
@@ -435,7 +435,23 @@ static CGFloat ImageHeight  = 210.0;
                 [payBtn setBackgroundImage:[UIImage imageNamed:@"booking_paycolor"] forState:(UIControlStateNormal)];
                 [payBtn setTitleColor:[UIColor colorWithHexString:@"#fc5a01"] forState:(UIControlStateNormal)];
 
-                if ([self.detailDic objectForKey:@"instapaper"]) {
+                if ([self.detailDic objectForKey:@"deductionMoney"]) {
+                    // 立减优惠
+                    UILabel *greyLB = [self lablerect:CGRectMake(screenWidth - 155 * ProportionAdapter , 30 * ProportionAdapter, 60 * ProportionAdapter, 20 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#a0a0a0"] labelFont:13 text:@"¥999" textAlignment:(NSTextAlignmentRight)];
+                    [cell.contentView addSubview:greyLB];
+                    
+                    CGFloat width = [Helper textWidthFromTextString:@"¥999" height:screenWidth - 20 * ProportionAdapter fontSize:13];
+                    
+                    UILabel *lineLB = [self lablerect:CGRectMake(screenWidth - 95 * ProportionAdapter - width - 2.5 * ProportionAdapter , 40 * ProportionAdapter, width + 5 * ProportionAdapter, 1 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#a0a0a0"] labelFont:0 text:@"" textAlignment:(NSTextAlignmentCenter)];
+                    lineLB.backgroundColor = [UIColor colorWithHexString:@"#a0a0a0"];
+                    [cell.contentView addSubview:lineLB];
+                    
+                    
+                    UILabel *orangeLB = [self lablerect:CGRectMake(screenWidth - 155 * ProportionAdapter , 50 * ProportionAdapter, 60 * ProportionAdapter, 20 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#fc5a01"] labelFont:17 text:@"¥999" textAlignment:(NSTextAlignmentRight)];
+                    [cell.contentView addSubview:orangeLB];
+
+                }else{
+                    
                     // 无立减优惠
                     [self lableReDraw:priceLB rect:CGRectMake(screenWidth - 155 * ProportionAdapter , 35 * ProportionAdapter, 60 * ProportionAdapter, 30 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#fc5a01"] labelFont:17 text:[NSString stringWithFormat:@"¥%@", [self.detailDic objectForKey:@"unitPrice"]] textAlignment:(NSTextAlignmentRight)];
                     
@@ -443,20 +459,6 @@ static CGFloat ImageHeight  = 210.0;
                     [mutaStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:13 * ProportionAdapter] range:NSMakeRange(0, 1)];
                     priceLB.attributedText = mutaStr;
                     [cell.contentView addSubview:priceLB];
-                }else{
-                    // 立减优惠
-                    UILabel *greyLB = [self lablerect:CGRectMake(screenWidth - 155 * ProportionAdapter , 30 * ProportionAdapter, 60 * ProportionAdapter, 20 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#a0a0a0"] labelFont:13 text:@"¥999" textAlignment:(NSTextAlignmentRight)];
-                    [cell.contentView addSubview:greyLB];
-                    
-                    CGFloat width = [Helper textWidthFromTextString:@"¥999" height:screenWidth - 20 * ProportionAdapter fontSize:13];
-
-                    UILabel *lineLB = [self lablerect:CGRectMake(screenWidth - 95 * ProportionAdapter - width - 2.5 * ProportionAdapter , 40 * ProportionAdapter, width + 5 * ProportionAdapter, 1 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#a0a0a0"] labelFont:0 text:@"" textAlignment:(NSTextAlignmentCenter)];
-                    lineLB.backgroundColor = [UIColor colorWithHexString:@"#a0a0a0"];
-                    [cell.contentView addSubview:lineLB];
-
-                    
-                    UILabel *orangeLB = [self lablerect:CGRectMake(screenWidth - 155 * ProportionAdapter , 50 * ProportionAdapter, 60 * ProportionAdapter, 20 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#fc5a01"] labelFont:17 text:@"¥999" textAlignment:(NSTextAlignmentRight)];
-                    [cell.contentView addSubview:orangeLB];
                 }
                 
                 
