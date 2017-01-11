@@ -40,6 +40,8 @@ typedef NS_ENUM(NSInteger, GestureType) {
 // 新朋友ID
 #define NEW_FRIEND_ID @"-3"
 
+#define APPDATA @"appData"
+
 #define DEFAULF_UserName [[NSUserDefaults standardUserDefaults] objectForKey:@"userName"]
 #define DEFAULF_USERID [[NSUserDefaults standardUserDefaults] objectForKey:@"userId"]
 //提示框时间

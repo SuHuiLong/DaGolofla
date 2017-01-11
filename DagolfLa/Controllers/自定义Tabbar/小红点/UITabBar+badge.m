@@ -107,13 +107,13 @@
     CGFloat x = ceilf(percentX * tabFrame.size.width);
     CGFloat y = ceilf(0.1 * tabFrame.size.height);
     if (badgeValue < 10) {
-        [self initUnreadCountButton:CGRectMake(x, y, 18, 18) tag:888+index badgeValue:badgeValue];
+        [self initUnreadCountButton:CGRectMake(x, y, 18*ProportionAdapter, 18*ProportionAdapter) tag:888+index badgeValue:badgeValue];
     }
     if (badgeValue >= 10 && badgeValue < 100 ) {
-        [self initUnreadCountButton:CGRectMake(x, y, 22, 18) tag:888+index badgeValue:badgeValue];
+        [self initUnreadCountButton:CGRectMake(x, y, 22*ProportionAdapter, 18*ProportionAdapter) tag:888+index badgeValue:badgeValue];
     }
     if (badgeValue >= 100) {
-        RCDTabBarBtn *btn = [[RCDTabBarBtn alloc] initWithFrame:CGRectMake(x, y, 22, 18)];
+        RCDTabBarBtn *btn = [[RCDTabBarBtn alloc] initWithFrame:CGRectMake(x, y, 30*ProportionAdapter, 18*ProportionAdapter)];
         [btn setImage:[UIImage imageNamed:@"icn_mesg_99+"] forState:UIControlStateNormal];
         [self addSubview:btn];
         btn.tag = 888+index;

@@ -333,7 +333,10 @@
         {
             [self startApp];
             
-            [self pushSpecifiedViewCtrl:[NSString stringWithFormat:@"%@", url]];
+            if ([apsInfo objectForKey:APPDATA]) {
+                [self pushSpecifiedViewCtrl:[NSString stringWithFormat:@"%@", [apsInfo objectForKey:APPDATA]]];
+            }
+//            [self pushSpecifiedViewCtrl:[NSString stringWithFormat:@"%@", url]];
             
             [self updateBadgeValueForTabBarItem];
         }
@@ -694,7 +697,10 @@
     [JPUSHService handleRemoteNotification:userInfo];
     completionHandler(UIBackgroundFetchResultNewData);
 
-    [self pushSpecifiedViewCtrl:[NSString stringWithFormat:@"%@", [userInfo objectForKey:@"url"]]];
+    if ([userInfo objectForKey:APPDATA]) {
+        [self pushSpecifiedViewCtrl:[NSString stringWithFormat:@"%@", [userInfo objectForKey:APPDATA]]];
+    }
+//    [self pushSpecifiedViewCtrl:[NSString stringWithFormat:@"%@", [userInfo objectForKey:@"url"]]];
 }
 - (void)application:(UIApplication *)application
 didReceiveLocalNotification:(UILocalNotification *)notification {
@@ -722,7 +728,11 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
     // Required
     NSDictionary * userInfo = response.notification.request.content.userInfo;
     if([response.notification.request.trigger isKindOfClass:[UNPushNotificationTrigger class]]) {
-        [self pushSpecifiedViewCtrl:[NSString stringWithFormat:@"%@", [userInfo objectForKey:@"url"]]];
+        
+        if ([userInfo objectForKey:APPDATA]) {
+            [self pushSpecifiedViewCtrl:[NSString stringWithFormat:@"%@", [userInfo objectForKey:APPDATA]]];
+        }
+        
         [JPUSHService handleRemoteNotification:userInfo];
     }
     else {
