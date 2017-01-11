@@ -10,7 +10,6 @@
 #import "RCDraggableButton.h"
 #import "MyOrderViewController.h"
 #import <AlipaySDK/AlipaySDK.h>
-#import "Order.h"
 #import "DataSigner.h"
 #import "JGDSetBusinessPWDViewController.h"
 #import "JGHbalanceView.h"

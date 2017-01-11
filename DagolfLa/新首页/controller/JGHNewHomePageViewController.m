@@ -707,7 +707,7 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
     [self isLoginUp];
     
     NSDictionary *dic = _indexModel.activityList[btn.tag - 200];
-    JGHNewActivityDetailViewController *teamActVC = [[JGHNewActivityDetailViewController alloc] init];
+    JGTeamActibityNameViewController *teamActVC = [[JGTeamActibityNameViewController alloc] init];
     teamActVC.teamKey = [[dic objectForKey:@"timeKey"] integerValue];
     teamActVC.hidesBottomBarWhenPushed = YES;//6598520
     [self.navigationController pushViewController:teamActVC animated:YES];

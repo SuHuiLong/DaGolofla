@@ -20,7 +20,6 @@
 #import "JGHRepeatApplyView.h"
 #import "JGTeamGroupViewController.h"
 #import <AlipaySDK/AlipaySDK.h>
-#import "Order.h"
 #import "DataSigner.h"
 #import "JGTeamApplyViewController.h"
 #import "JGHAddInvoiceViewController.h"

@@ -33,7 +33,6 @@
 #import "UIImageView+WebCache.h"
 #import <AudioToolbox/AudioToolbox.h>
 
-#import "JPUSHService.h"
 #import <AdSupport/AdSupport.h>
 
 #import <TAESDK/TaeSDK.h>
@@ -67,7 +66,7 @@
 #import <UserNotifications/UserNotifications.h>
 #endif
 
-@interface AppDelegate ()<CLLocationManagerDelegate, JPUSHRegisterDelegate, RCIMConnectionStatusDelegate>
+@interface AppDelegate ()<CLLocationManagerDelegate, RCIMConnectionStatusDelegate>
 {
     BMKMapManager* _mapManager;
     
@@ -250,34 +249,6 @@
     }
     // Add the navigation controller's view to the window and display.
     [self.window makeKeyAndVisible];
-    //-------------------------极光推送-------------------------
-    if ([[UIDevice currentDevice].systemVersion floatValue] >= 10.0) {
-#ifdef NSFoundationVersionNumber_iOS_9_x_Max
-        JPUSHRegisterEntity * entity = [[JPUSHRegisterEntity alloc] init];
-        entity.types = UNAuthorizationOptionAlert | UNAuthorizationOptionBadge | UNAuthorizationOptionSound;
-        [JPUSHService registerForRemoteNotificationConfig:entity delegate:self];
-#endif
-    } else if ([[UIDevice currentDevice].systemVersion floatValue] >= 8.0) {
-        //可以添加自定义categories
-        [JPUSHService registerForRemoteNotificationTypes:(UIUserNotificationTypeBadge |
-                                                          UIUserNotificationTypeSound |
-                                                          UIUserNotificationTypeAlert)
-                                              categories:nil];
-    } else {
-        //categories 必须为nil
-        [JPUSHService registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert) categories:nil];
-    }
-    //测试NO，线上YES；
-    [JPUSHService setupWithOption:launchOptions appKey:@"831cd22faea3454090c15bbe" channel:@"Publish chanel" apsForProduction:NO];
-    //2.1.9版本新增获取registration id block接口。
-    [JPUSHService registrationIDCompletionHandler:^(int resCode, NSString *registrationID) {
-        if(resCode == 0){
-            NSLog(@"registrationID获取成功：%@",registrationID);
-        }
-        else{
-            NSLog(@"registrationID获取失败，code：%d",resCode);
-        }
-    }];
     
     //-------------------------融云-------------------------
     //初始化融云SDK
@@ -564,8 +535,6 @@
  * 推送处理3
  */
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
-    // Required
-    [JPUSHService registerDeviceToken:deviceToken];
     //容云
     NSString *token =
     [[[[deviceToken description] stringByReplacingOccurrencesOfString:@"<"
@@ -655,23 +624,6 @@
 }
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
-    // Required,For systems with less than or equal to iOS6
-//    [JPUSHService handleRemoteNotification:userInfo];
-    
-     // 取得 APNs 标准信息内容
-//     NSDictionary *aps = [userInfo valueForKey:@"aps"];
-//     NSString *content = [aps valueForKey:@"alert"]; //推送显示的内容
-//     NSInteger badge = [[aps valueForKey:@"badge"] integerValue]; //badge数量
-//     NSString *sound = [aps valueForKey:@"sound"]; //播放的声音
-//     
-//     // 取得Extras字段内容
-//     NSString *customizeField1 = [userInfo valueForKey:@"customizeExtras"]; //服务端中Extras字段，key是自己定义的
-//     NSLog(@"content =[%@], badge=[%d], sound=[%@], customize field  =[%@]",content, badge,sound,customizeField1);
-    
-     // iOS 10 以下 Required
-     [JPUSHService handleRemoteNotification:userInfo];
-    
-    
     /**
      * 统计推送打开率2
      */
@@ -694,7 +646,6 @@
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
     // IOS 7 Support Required
     //推送的自定义消息
-    [JPUSHService handleRemoteNotification:userInfo];
     completionHandler(UIBackgroundFetchResultNewData);
 
     if ([userInfo objectForKey:APPDATA]) {
@@ -704,7 +655,6 @@
 }
 - (void)application:(UIApplication *)application
 didReceiveLocalNotification:(UILocalNotification *)notification {
-    [JPUSHService showLocalNotificationAtFront:notification identifierKey:nil];
     /**
      * 统计推送打开率3
      */
@@ -715,7 +665,7 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
     // Required
     NSDictionary * userInfo = notification.request.content.userInfo;
     if([notification.request.trigger isKindOfClass:[UNPushNotificationTrigger class]]) {
-        [JPUSHService handleRemoteNotification:userInfo];
+        //远程推送通知
     }
     else {
         // 本地通知
@@ -733,7 +683,6 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
             [self pushSpecifiedViewCtrl:[NSString stringWithFormat:@"%@", [userInfo objectForKey:APPDATA]]];
         }
         
-        [JPUSHService handleRemoteNotification:userInfo];
     }
     else {
         // 本地通知
@@ -761,30 +710,13 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
     [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
     
     [[RCIM sharedRCIM] disconnect];
-//    RCConnectionStatus status = [[RCIMClient sharedRCIMClient] getConnectionStatus];
-//    if (status != ConnectionStatus_SignUp) {
-//        int unreadMsgCount = [[RCIMClient sharedRCIMClient]
-//                              getUnreadCount:@[
-//                                               @(ConversationType_PRIVATE),
-//                                               @(ConversationType_DISCUSSION),
-//                                               @(ConversationType_APPSERVICE),
-//                                               @(ConversationType_PUBLICSERVICE),
-//                                               @(ConversationType_GROUP)
-//                                               ]];
-//        if (DEFAULF_IconCount) {
-//            NSLog(@"DEFAULF_IconCount ==%@", DEFAULF_IconCount);
-//            [UIApplication sharedApplication].applicationIconBadgeNumber = unreadMsgCount + [DEFAULF_IconCount integerValue];
-//        }else{
-//            [UIApplication sharedApplication].applicationIconBadgeNumber = unreadMsgCount;
-//        }
-//    }else{
-        if (DEFAULF_IconCount) {
-            NSLog(@"DEFAULF_IconCount ==%@", DEFAULF_IconCount);
-            [UIApplication sharedApplication].applicationIconBadgeNumber = [DEFAULF_IconCount integerValue];
-        }else{
-            [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
-        }
-//    }
+
+    if (DEFAULF_IconCount) {
+        NSLog(@"DEFAULF_IconCount ==%@", DEFAULF_IconCount);
+        [UIApplication sharedApplication].applicationIconBadgeNumber = [DEFAULF_IconCount integerValue];
+    }else{
+        [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
+    }
 }
 - (void)applicationDidEnterBackground:(UIApplication *)application {
     // 为消息分享保存会话信息
@@ -824,45 +756,17 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
     
     _pushID = 0;
     
-    // 获取导航控制器
-//    TabBarController *tabVC = (TabBarController *)self.window.rootViewController;
-//    if ([tabVC isKindOfClass:[TabBarController class]]) {
-//        TabBarController *tabVC = (TabBarController *)self.window.rootViewController;
-////        ChatListViewController *pushClassStance = (ChatListViewController *)tabVC.viewControllers[tabVC.selectedIndex];
-//        ChatListViewController *nowVC = [(UINavigationController *)self.window.rootViewController viewControllers][tabVC.selectedIndex];
-//        [nowVC.conversationListTableView.header beginRefreshing];
-//    }
-    
     [UMSocialSnsService  applicationDidBecomeActive];
     
     [application cancelAllLocalNotifications];
     
     [self getCurPosition];
-    
-    [self postAppJpost];
-    
+        
     [self loadMessageData];
 }
-#pragma mark -- 极光推送的id和数据
--(void)postAppJpost
-{
-    if (DEFAULF_USERID) {
-        NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
-        [dict setObject:DEFAULF_USERID forKey:userID];
-        
-        if ([JPUSHService registrationID] != nil) {
-            [dict setObject:[JPUSHService registrationID] forKey:@"jgpush"];
-        }
-        
-        [[JsonHttp jsonHttp]httpRequestWithMD5:@"user/doUpdateUserInfo" JsonKey:nil withData:dict failedBlock:^(id errType) {
-            
-        } completionBlock:^(id data) {
-            NSLog(@"%@", data);
-            
-        }];
-    }
-}
+
 - (void)applicationWillTerminate:(UIApplication *)application {
+    
 }
 #pragma MARK --定位方法
 -(void)getCurPosition{
