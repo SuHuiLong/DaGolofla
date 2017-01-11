@@ -19,6 +19,7 @@
 @property (nonatomic, strong) UITableView *searchTable;
 
 @property (nonatomic, strong) UILabel *cityLB;
+@property (nonatomic, strong) UIButton *cityBtn;
 
 @property (nonatomic, strong) NSMutableDictionary *cityDic;
 @property (nonatomic, strong) NSMutableArray *hotCityArray;
@@ -130,8 +131,16 @@
     [tableheaderView addSubview:cityIcon];
 
     
-    self.cityLB = [self lablerect:CGRectMake(30 * ProportionAdapter,  45 * ProportionAdapter, 100, 30 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#313131"] labelFont:(15 * ProportionAdapter) text:[[NSUserDefaults standardUserDefaults] objectForKey:CITYNAME] textAlignment:(NSTextAlignmentLeft)];
-    [tableheaderView addSubview:self.cityLB];
+//    self.cityLB = [self lablerect:CGRectMake(30 * ProportionAdapter,  45 * ProportionAdapter, 100, 30 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#313131"] labelFont:(15 * ProportionAdapter) text:[[NSUserDefaults standardUserDefaults] objectForKey:CITYNAME] textAlignment:(NSTextAlignmentLeft)];
+//    [tableheaderView addSubview:self.cityLB];
+    
+    self.cityBtn = [[UIButton alloc] initWithFrame:CGRectMake(30 * ProportionAdapter,  45 * ProportionAdapter, 200, 30 * ProportionAdapter)];
+    [self.cityBtn setTitle:[[NSUserDefaults standardUserDefaults] objectForKey:CITYNAME] forState:(UIControlStateNormal)];
+    self.cityBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+    self.cityBtn.titleLabel.font = [UIFont systemFontOfSize:15];
+    [self.cityBtn setTitleColor:[UIColor colorWithHexString:@"#313131"] forState:(UIControlStateNormal)];
+    [tableheaderView addSubview:self.cityBtn];
+    [self.cityBtn addTarget:self action:@selector(cityClickAct:) forControlEvents:(UIControlEventTouchUpInside)];
     
     
     UIButton *resetBtn = [[UIButton alloc] initWithFrame:CGRectMake(250 * ProportionAdapter, 45 * ProportionAdapter, 110 * ProportionAdapter, 30 * ProportionAdapter)];
@@ -271,7 +280,10 @@
 
 }
 
-
+- (void)cityClickAct:(UIButton *)btn{
+    self.blockAddress(btn.titleLabel.text);
+    [self.navigationController popViewControllerAnimated:YES];
+}
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField{
     
@@ -409,7 +421,8 @@
                  city = [city substringToIndex:[city length] - 1];
              }
 
-             self.cityLB.text = city;
+//             self.cityLB.text = city;
+             [self.cityBtn setTitle:city forState:(UIControlStateNormal)];
              [user setObject:city forKey:CITYNAME];
              [user synchronize];
 
