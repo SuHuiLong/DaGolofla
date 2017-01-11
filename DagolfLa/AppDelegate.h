@@ -17,7 +17,7 @@
 
 @property (strong, nonatomic) UIWindow *window;
 
-
+- (void)loadMessageData;//下载未读消息数量/获取通知数量
 
 @end
 

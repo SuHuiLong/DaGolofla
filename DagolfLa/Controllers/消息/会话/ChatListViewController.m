@@ -29,16 +29,24 @@
     
     UIButton* _btnInvite;
     
-    NSInteger _teamUnread;
-    NSInteger _systemUnread;
+//    NSInteger _teamUnread;
+//    NSInteger _systemUnread;
     
-    NSInteger _newFriendUnread;
+//    NSInteger _newFriendUnread;
+    
+    int _newFriendUnreadCount;
     
     UILabel *_sysDetailLable;
     UILabel *_teamNotDetailLable;
     
     UIButton *_costumBtn;
 }
+
+@property (nonatomic, retain)RCDTabBarBtn *systemRCDbtn;
+
+@property (nonatomic, retain)RCDTabBarBtn *teamRCDbtn;
+
+@property (nonatomic, retain)RCDTabBarBtn *newfirendRCDbtn;
 
 @end
 
@@ -151,6 +159,9 @@
         return;
     }
     
+    [self notifyUpdateUnreadMessageCount];
+    
+    /*
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     [dict setObject:DEFAULF_USERID forKey:@"userKey"];
     [dict setObject:[Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@dagolfla.com", DEFAULF_USERID]] forKey:@"md5"];
@@ -238,6 +249,8 @@
         
         [self.conversationListTableView.header endRefreshing];
     }];
+     
+     */
 }
 
 //导航栏右按钮点击事件
@@ -248,7 +261,7 @@
 //        [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
         tVc.hidesBottomBarWhenPushed = YES;
         tVc.hidesBottomBarWhenPushed = YES;
-        tVc.addFriendSum = [NSNumber numberWithInteger:_newFriendUnread];
+        tVc.addFriendSum = [NSNumber numberWithInt:_newFriendUnreadCount];
         [self.navigationController pushViewController:tVc animated:YES];
     }
     else
@@ -363,7 +376,11 @@
         return;
     }
     
-    _systemUnread = 0;
+//    _systemUnread = 0;
+    [[RCIMClient sharedRCIMClient] clearMessagesUnreadStatus:ConversationType_SYSTEM targetId:SYSTEM_ID];
+    [_systemRCDbtn removeFromSuperview];
+    _systemRCDbtn = nil;
+//clearMessagesUnreadStatus
     [self updateBadgeValueForTabBarItem];
     
     JGHSystemNotViewController *sysCtrl = [[JGHSystemNotViewController alloc]init];
@@ -391,7 +408,11 @@
         return;
     }
     
-    _teamUnread = 0;
+//    _teamUnread = 0;
+    [[RCIMClient sharedRCIMClient] clearMessagesUnreadStatus:ConversationType_SYSTEM targetId:TEAM_ID];
+    [_teamRCDbtn removeFromSuperview];
+    _teamRCDbtn = nil;
+    
     [self updateBadgeValueForTabBarItem];
     
     JGHTeamNotViewController *teamCtrl = [[JGHTeamNotViewController alloc]init];
@@ -506,29 +527,101 @@
             self.conversationListTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         }
         
-        
-        int count = [[RCIMClient sharedRCIMClient]
+        //会话消息
+        int countChat = [[RCIMClient sharedRCIMClient]
                      getUnreadCount:self.displayConversationTypeArray];
+        //球队消息
+        int teamUnreadCount = [[RCIMClient sharedRCIMClient]
+                               getUnreadCount:ConversationType_SYSTEM targetId:TEAM_ID];
+        //系统消息
+        int systemUnreadCount = [[RCIMClient sharedRCIMClient]
+                                 getUnreadCount:ConversationType_SYSTEM targetId:SYSTEM_ID];
         
-        int iconCount = (count + (int)_teamUnread +(int)_systemUnread +(int)_newFriendUnread);
+        //新球友消息
+        _newFriendUnreadCount = [[RCIMClient sharedRCIMClient]
+                                    getUnreadCount:ConversationType_SYSTEM targetId:NEW_FRIEND_ID];
         
+        int iconCount = countChat +teamUnreadCount +systemUnreadCount +_newFriendUnreadCount;
+        
+//        [[_costumBtn viewWithTag:1002] removeFromSuperview];
+        //新球友
+        if (100 > _newFriendUnreadCount && _newFriendUnreadCount >0) {
+            self.newfirendRCDbtn.frame = CGRectMake(24 *ProportionAdapter, 5 *ProportionAdapter, 20 *ProportionAdapter, 20 *ProportionAdapter);
+            _newfirendRCDbtn.unreadCount = [NSString stringWithFormat:@"%d", _newFriendUnreadCount];
+            [_costumBtn addSubview:_newfirendRCDbtn];
+        }else if (_newFriendUnreadCount == 0){
+            [_newfirendRCDbtn removeFromSuperview];
+            _newfirendRCDbtn = nil;
+        }else{
+            self.newfirendRCDbtn.frame = CGRectMake(24 *ProportionAdapter, 5 *ProportionAdapter, 30 *ProportionAdapter, 20 *ProportionAdapter);
+            [_newfirendRCDbtn setImage:[UIImage imageNamed:@"icn_mesg_99+"] forState:UIControlStateNormal];
+            [_costumBtn addSubview:_newfirendRCDbtn];
+        }
+        //系统
+        if (100 > systemUnreadCount && systemUnreadCount >0) {
+            self.systemRCDbtn.frame = CGRectMake(50 *ProportionAdapter, 10 *ProportionAdapter, 20 *ProportionAdapter, 20 *ProportionAdapter);
+            _systemRCDbtn.unreadCount = [NSString stringWithFormat:@"%d", systemUnreadCount];
+        }else if (systemUnreadCount == 0){
+            [_systemRCDbtn removeFromSuperview];
+            _systemRCDbtn = nil;
+        }else{
+            self.systemRCDbtn.frame = CGRectMake(50 *ProportionAdapter, 10 *ProportionAdapter, 30 *ProportionAdapter, 20 *ProportionAdapter);
+            [_systemRCDbtn setImage:[UIImage imageNamed:@"icn_mesg_99+"] forState:UIControlStateNormal];
+        }
+        //球队
+        if (100 > teamUnreadCount && teamUnreadCount>0) {
+            self.teamRCDbtn.frame = CGRectMake(50 *ProportionAdapter, 78 *ProportionAdapter, 20 *ProportionAdapter, 20 *ProportionAdapter);
+            _teamRCDbtn.unreadCount = [NSString stringWithFormat:@"%d", teamUnreadCount];
+        }else if (teamUnreadCount == 0){
+            [_teamRCDbtn removeFromSuperview];
+            _teamRCDbtn = nil;
+        }else{
+            self.teamRCDbtn.frame = CGRectMake(50 *ProportionAdapter, 78 *ProportionAdapter, 30 *ProportionAdapter, 20 *ProportionAdapter);
+            [_teamRCDbtn setImage:[UIImage imageNamed:@"icn_mesg_99+"] forState:UIControlStateNormal];
+        }
+
         //本地存红点数
         NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
         [userdef setObject:@(iconCount) forKey:IconCount];
         [userdef synchronize];
         
         if (iconCount > 0) {
-            //      __weakSelf.tabBarItem.badgeValue =
-            //          [[NSString alloc] initWithFormat:@"%d", count];
-            //            int badgeValue = count+_teamUnread+_systemUnread;
-            [__weakSelf.tabBarController.tabBar showBadgeOnItemIndex:2 badgeValue:count+ (int)_teamUnread + (int)_systemUnread + (int)_newFriendUnread];
-            
+            [__weakSelf.tabBarController.tabBar showBadgeOnItemIndex:2 badgeValue:iconCount];
         } else {
-            //      __weakSelf.tabBarItem.badgeValue = nil;
             [__weakSelf.tabBarController.tabBar hideBadgeOnItemIndex:2];
         }
         
+        [self.conversationListTableView.header endRefreshing];
     });
 }
 
+- (RCDTabBarBtn *)systemRCDbtn{
+    if (_systemRCDbtn == nil) {
+        _systemRCDbtn = [[RCDTabBarBtn alloc] initWithFrame:CGRectMake(50 *ProportionAdapter, 10 *ProportionAdapter, 20 *ProportionAdapter, 20 *ProportionAdapter)];
+        _systemRCDbtn.layer.cornerRadius = 9;//圆形
+        _systemRCDbtn.tag = 1000;
+        [_viewHeader addSubview:_systemRCDbtn];
+    }
+    return _systemRCDbtn;
+}
+
+- (RCDTabBarBtn *)teamRCDbtn{
+    if (_teamRCDbtn == nil) {
+        _teamRCDbtn = [[RCDTabBarBtn alloc] initWithFrame:CGRectMake(50 *ProportionAdapter, 78 *ProportionAdapter, 20 *ProportionAdapter, 20 *ProportionAdapter)];
+        _teamRCDbtn.layer.cornerRadius = 9;//圆形
+        _teamRCDbtn.tag = 1001;
+        [_viewHeader addSubview:_teamRCDbtn];
+    }
+    return _teamRCDbtn;
+}
+
+- (RCDTabBarBtn *)newfirendRCDbtn{
+    if (_newfirendRCDbtn == nil) {
+        _newfirendRCDbtn = [[RCDTabBarBtn alloc] initWithFrame:CGRectMake(24 *ProportionAdapter, 5 *ProportionAdapter, 20 *ProportionAdapter, 20 *ProportionAdapter)];
+        _newfirendRCDbtn.layer.cornerRadius = 9;//圆形
+        _newfirendRCDbtn.tag = 1002;
+        
+    }
+    return _newfirendRCDbtn;
+}
 @end

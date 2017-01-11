@@ -116,7 +116,7 @@
     //四周边距
     layout.sectionInset=UIEdgeInsetsMake(0, 0, 0, 0);
     
-    self.collectionView=[[UICollectionView alloc] initWithFrame:CGRectMake(0, 43*ProportionAdapter, WIDTH, HEIGHT -64 -240*ProportionAdapter) collectionViewLayout:layout];
+    self.collectionView=[[UICollectionView alloc] initWithFrame:CGRectMake(0, 43*ProportionAdapter, screenWidth, screenHeight -64 -283*ProportionAdapter) collectionViewLayout:layout];
     self.collectionView.backgroundColor=[UIColor whiteColor];
     self.collectionView.delegate=self;
     self.collectionView.dataSource=self;
@@ -129,7 +129,7 @@
 
 - (void)getData {
     [LQProgressHud showLoading:@"加载中..."];
-    [LGLCalenderModel getCalenderDataWithDate:[NSDate date] block:^(NSMutableArray *result) {
+    [LGLCalenderModel getCalenderDataWithDate:[NSDate date] andBallKey:_ballKey block:^(NSMutableArray *result) {
         [LQProgressHud hide];
         [self.dataSource addObjectsFromArray:result];
         
@@ -210,7 +210,7 @@
                 cell.priceL.textColor = [UIColor whiteColor];
             }else{
                 cell.dateL.textColor = [UIColor blackColor];
-                cell.priceL.textColor = [UIColor redColor];
+                cell.priceL.textColor = [UIColor colorWithHexString:@"#fc5a01"];
             }
             
             if ((model.month == _currentMonth) && (subModel.day <= _currentDay)) {

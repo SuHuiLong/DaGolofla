@@ -24,7 +24,7 @@
         self.priceL = [[UILabel alloc] initWithFrame:CGRectMake(0, 30*ProportionAdapter, self.width, 18*ProportionAdapter)];
         self.priceL.textAlignment = NSTextAlignmentCenter;
         self.priceL.backgroundColor = [UIColor clearColor];
-        self.priceL.textColor = [UIColor redColor];
+        self.priceL.textColor = [UIColor colorWithHexString:@"#fc5a01"];
         self.priceL.font = [UIFont systemFontOfSize:12];
         
 //        self.line = [[UILabel alloc]initWithFrame:CGRectMake(0, self.frame.size.height -0.5, self.frame.size.width, 0.5)];

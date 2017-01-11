@@ -63,7 +63,10 @@ static NSString *const JGHTimeViewListCellIdentifier = @"JGHTimeViewListCell";
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     JGHTimeViewListCell *timeViewListCell = [tableView dequeueReusableCellWithIdentifier:JGHTimeViewListCellIdentifier];
-    [timeViewListCell configJGHTimeViewListCell:_dataArray[indexPath.row]];
+    if (_dataArray.count > 0) {
+        [timeViewListCell configJGHTimeViewListCell:_dataArray[indexPath.row]];
+    }
+    
     
     if (indexPath.row == _dataArray.count -1) {
         timeViewListCell.line.hidden = YES;

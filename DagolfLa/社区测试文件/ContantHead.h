@@ -33,6 +33,15 @@ typedef NS_ENUM(NSInteger, GestureType) {
 #define IconCount @"iconCount"
 #define DEFAULF_IconCount [[NSUserDefaults standardUserDefaults] objectForKey:IconCount]
 
+// 系统ID
+#define SYSTEM_ID @"-1"
+// 球队ID
+#define TEAM_ID @"-2"
+// 新朋友ID
+#define NEW_FRIEND_ID @"-3"
+
+#define APPDATA @"appData"
+
 #define DEFAULF_UserName [[NSUserDefaults standardUserDefaults] objectForKey:@"userName"]
 #define DEFAULF_USERID [[NSUserDefaults standardUserDefaults] objectForKey:@"userId"]
 //提示框时间
@@ -63,9 +72,9 @@ typedef NS_ENUM(NSInteger, GestureType) {
 
 
 #ifdef DEBUG
-#define RongYunAPPKEY @"0vnjpoadnkihz"//pgyu6atqylmiu
+#define RongYunAPPKEY @"pgyu6atqylmiu"//pgyu6atqylmiu
 #else
-#define RongYunAPPKEY @"0vnjpoadnkihz"//0vnjpoadnkihz
+#define RongYunAPPKEY @"pgyu6atqylmiu"//0vnjpoadnkihz
 #endif
 //#define TESTRongYunAPPKEY @"pgyu6atqylmiu"//pgyu6atqylmiu
 //#define RongYunAPPKEY @"0vnjpoadnkihz"//0vnjpoadnkihz

@@ -117,7 +117,7 @@
 
 - (RCUserInfo*)userInfoModel {
     RCUserInfo *userInfo = [[RCUserInfo alloc] init];
-    userInfo.userId = [[UserDataInformation sharedInstance].userInfor.userId stringValue];
+    userInfo.userId = [NSString stringWithFormat:@"%@", [UserDataInformation sharedInstance].userInfor.userId];
     userInfo.name = [UserDataInformation sharedInstance].userInfor.userName;
     userInfo.portraitUri = [NSString stringWithFormat:@"%@",[Helper imageUrl:[UserDataInformation sharedInstance].userInfor.pic]];
     return userInfo;
