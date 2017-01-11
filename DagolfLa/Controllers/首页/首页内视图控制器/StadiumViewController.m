@@ -14,8 +14,8 @@
 #import "RCDraggableButton.h"
 #import "MyOrderViewController.h"
 #import <AlipaySDK/AlipaySDK.h>
-#import "Order.h"
 #import "DataSigner.h"
+
 @interface StadiumViewController ()<UIWebViewDelegate>
 {
     NSString* _payUrl;

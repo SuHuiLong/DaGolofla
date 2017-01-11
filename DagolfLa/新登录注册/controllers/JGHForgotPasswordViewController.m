@@ -9,7 +9,6 @@
 #import "JGHForgotPasswordViewController.h"
 #import "UserInformationModel.h"
 #import "UserDataInformation.h"
-#import "JPUSHService.h"
 
 @interface JGHForgotPasswordViewController ()<UITextFieldDelegate, UIPickerViewDataSource,UIPickerViewDelegate>
 
@@ -288,10 +287,9 @@
                 //发送消息
                 [[NSNotificationCenter defaultCenter]postNotification:notice];
                 
-                NSString *token = [[userDict objectForKey:@"rows"] objectForKey:@"rongTk"];
+                NSString *token = [userDict objectForKey:@"rongTk"];
                 //注册融云
-                [self requestRCIMWithToken:token];
-                [self postAppJpost];
+                [Helper requestRCIMWithToken:token andUserDict:userDict];
 //                _blackCtrl();
                 [self.navigationController popToRootViewControllerAnimated:YES];
             }
@@ -303,51 +301,38 @@
         }
     }];
 }
-#pragma mark -- 极光推送的id和数据
--(void)postAppJpost
-{
-    NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
-    [dict setObject:DEFAULF_USERID forKey:userID];
-    
-    if ([JPUSHService registrationID] != nil) {
-        [dict setObject:[JPUSHService registrationID] forKey:@"jgpush"];
-    }
-    
-    [[JsonHttp jsonHttp]httpRequestWithMD5:@"user/doUpdateUserInfo" JsonKey:nil withData:dict failedBlock:^(id errType) {
-        
-    } completionBlock:^(id data) {
-        NSLog(@"%@", data);
-        
-    }];
-}
-#pragma mark -- 注册融云
--(void)requestRCIMWithToken:(NSString *)token{
-    NSUserDefaults *user=[NSUserDefaults standardUserDefaults];
-    [RCIM sharedRCIM].globalConversationPortraitSize = CGSizeMake(40*ScreenWidth/375, 40*ScreenWidth/375);
-    [[RCIM sharedRCIM] initWithAppKey:RongYunAPPKEY];
-    [RCIM sharedRCIM].globalConversationAvatarStyle=RC_USER_AVATAR_CYCLE;
-    [RCIM sharedRCIM].globalMessageAvatarStyle=RC_USER_AVATAR_CYCLE;
-    [[RCIM sharedRCIM] setUserInfoDataSource:[UserDataInformation sharedInstance]];
-    [[RCIM sharedRCIM] setGroupInfoDataSource:[UserDataInformation sharedInstance]];
-    NSString *str1=[NSString stringWithFormat:@"%@",[user objectForKey:userID]];
-    NSString *str2=[NSString stringWithFormat:@"%@",[user objectForKey:@"userName"]];
-    NSString *str3=[NSString stringWithFormat:@"http://www.dagolfla.com:8081/small_%@",[user objectForKey:@"pic"]];
-    RCUserInfo *userInfo=[[RCUserInfo alloc] initWithUserId:str1 name:str2 portrait:str3];
-    [RCIM sharedRCIM].currentUserInfo=userInfo;
-    [RCIM sharedRCIM].enableMessageAttachUserInfo=NO;
-    //            [RCIM sharedRCIM].receiveMessageDelegate=self;
-    // 快速集成第二步，连接融云服务器
-    [[RCIM sharedRCIM] connectWithToken:token success:^(NSString *userId) {
-        //自动登录   连接融云服务器
-        [[UserDataInformation sharedInstance] synchronizeUserInfoRCIM];
-        
-    }error:^(RCConnectErrorCode status) {
-        // Connect 失败
-    }tokenIncorrect:^() {
-        // Token 失效的状态处理
-        
-    }];
-}
+//#pragma mark -- 注册融云
+//-(void)requestRCIMWithToken:(NSString *)token andUserDict:(NSDictionary *)userDict{
+//    UserInformationModel *model = [[UserInformationModel alloc] init];
+//    [model setValuesForKeysWithDictionary:userDict];
+//    [[UserDataInformation sharedInstance] saveUserInformation:model];
+//    
+//    NSUserDefaults *user=[NSUserDefaults standardUserDefaults];
+//    [RCIM sharedRCIM].globalConversationPortraitSize = CGSizeMake(40*ScreenWidth/375, 40*ScreenWidth/375);
+//    [[RCIM sharedRCIM] initWithAppKey:RongYunAPPKEY];
+//    [RCIM sharedRCIM].globalConversationAvatarStyle=RC_USER_AVATAR_CYCLE;
+//    [RCIM sharedRCIM].globalMessageAvatarStyle=RC_USER_AVATAR_CYCLE;
+//    [[RCIM sharedRCIM] setUserInfoDataSource:[UserDataInformation sharedInstance]];
+//    [[RCIM sharedRCIM] setGroupInfoDataSource:[UserDataInformation sharedInstance]];
+//    NSString *str1=[NSString stringWithFormat:@"%@",[user objectForKey:userID]];
+//    NSString *str2=[NSString stringWithFormat:@"%@",[user objectForKey:@"userName"]];
+//    NSString *str3=[NSString stringWithFormat:@"http://www.dagolfla.com:8081/small_%@",[user objectForKey:@"pic"]];
+//    RCUserInfo *userInfo=[[RCUserInfo alloc] initWithUserId:str1 name:str2 portrait:str3];
+//    [RCIM sharedRCIM].currentUserInfo=userInfo;
+//    [RCIM sharedRCIM].enableMessageAttachUserInfo=NO;
+//    //            [RCIM sharedRCIM].receiveMessageDelegate=self;
+//    // 快速集成第二步，连接融云服务器
+//    [[RCIM sharedRCIM] connectWithToken:token success:^(NSString *userId) {
+//        //自动登录   连接融云服务器
+//        [[UserDataInformation sharedInstance] synchronizeUserInfoRCIM];
+//        
+//    }error:^(RCConnectErrorCode status) {
+//        // Connect 失败
+//    }tokenIncorrect:^() {
+//        // Token 失效的状态处理
+//        
+//    }];
+//}
 #pragma mark -- textdelegate
 -(void)textFieldDidEndEditing:(UITextField *)textField
 {

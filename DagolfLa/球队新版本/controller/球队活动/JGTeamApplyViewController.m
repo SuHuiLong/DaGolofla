@@ -22,7 +22,6 @@
 #import "payRequsestHandler.h"
 
 #import <AlipaySDK/AlipaySDK.h>
-#import "Order.h"
 #import "DataSigner.h"
 
 #import "JGHApplyListView.h"

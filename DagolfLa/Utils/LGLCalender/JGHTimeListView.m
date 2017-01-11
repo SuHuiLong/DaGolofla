@@ -88,8 +88,14 @@ static NSString *const JGHTimeViewListCellIdentifier = @"JGHTimeViewListCell";
             paymentMoney = @"";
         }
         
+        NSString *deductionMoney;
+        if ([dict objectForKey:@"deductionMoney"]) {
+            deductionMoney = [dict objectForKey:@"deductionMoney"];
+        }else{
+            deductionMoney = @"";
+        }
         
-        _blockSelectTimeAndPrice([NSString stringWithFormat:@"%@", [dict objectForKey:@"halfHour"]], money, paymentMoney);
+        _blockSelectTimeAndPrice([NSString stringWithFormat:@"%@", [dict objectForKey:@"halfHour"]], money, paymentMoney, deductionMoney);
     }else{
         [LQProgressHud showMessage:@"暂无价格，无法预定！"];
     }

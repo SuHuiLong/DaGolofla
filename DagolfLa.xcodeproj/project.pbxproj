@@ -277,7 +277,6 @@
 		20301A731E1269EB005568E2 /* UIView+Frame.m in Sources */ = {isa = PBXBuildFile; fileRef = 20301A681E1269EB005568E2 /* UIView+Frame.m */; };
 		20301A741E1269EB005568E2 /* XLPlainFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 20301A6B1E1269EB005568E2 /* XLPlainFlowLayout.m */; };
 		20451C291DF15224003B2FC8 /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 20451C281DF15224003B2FC8 /* libresolv.tbd */; };
-		20451C2B1DF152A3003B2FC8 /* jpush-ios-2.2.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 20451C2A1DF152A3003B2FC8 /* jpush-ios-2.2.0.a */; };
 		20451C2D1DF15307003B2FC8 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 20451C2C1DF15307003B2FC8 /* UserNotifications.framework */; };
 		2048E8EA1D4B369E00A2C024 /* JGHSetAlmostPromptViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2048E8E81D4B369E00A2C024 /* JGHSetAlmostPromptViewController.m */; };
 		2048E8EB1D4B369E00A2C024 /* JGHSetAlmostPromptViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2048E8E91D4B369E00A2C024 /* JGHSetAlmostPromptViewController.xib */; };
@@ -295,7 +294,6 @@
 		20513BCF1CF7050A003233FB /* AlipaySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 20513B691CF7050A003233FB /* AlipaySDK.framework */; };
 		20513BD11CF7050A003233FB /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 20513B6C1CF7050A003233FB /* libcrypto.a */; };
 		20513BD21CF7050A003233FB /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 20513B6D1CF7050A003233FB /* libssl.a */; };
-		20513BD31CF7050A003233FB /* Order.m in Sources */ = {isa = PBXBuildFile; fileRef = 20513BBB1CF7050A003233FB /* Order.m */; };
 		20513BD41CF7050A003233FB /* base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 20513BBE1CF7050A003233FB /* base64.m */; };
 		20513BD51CF7050A003233FB /* DataSigner.m in Sources */ = {isa = PBXBuildFile; fileRef = 20513BC11CF7050A003233FB /* DataSigner.m */; };
 		20513BD61CF7050A003233FB /* DataVerifier.m in Sources */ = {isa = PBXBuildFile; fileRef = 20513BC31CF7050A003233FB /* DataVerifier.m */; };
@@ -1744,7 +1742,6 @@
 		20301A6A1E1269EB005568E2 /* XLPlainFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XLPlainFlowLayout.h; sourceTree = "<group>"; };
 		20301A6B1E1269EB005568E2 /* XLPlainFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XLPlainFlowLayout.m; sourceTree = "<group>"; };
 		20451C281DF15224003B2FC8 /* libresolv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libresolv.tbd; path = usr/lib/libresolv.tbd; sourceTree = SDKROOT; };
-		20451C2A1DF152A3003B2FC8 /* jpush-ios-2.2.0.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "jpush-ios-2.2.0.a"; sourceTree = "<group>"; };
 		20451C2C1DF15307003B2FC8 /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
 		2048E8E71D4B369E00A2C024 /* JGHSetAlmostPromptViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHSetAlmostPromptViewController.h; sourceTree = "<group>"; };
 		2048E8E81D4B369E00A2C024 /* JGHSetAlmostPromptViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHSetAlmostPromptViewController.m; sourceTree = "<group>"; };
@@ -1845,8 +1842,6 @@
 		20513BB71CF7050A003233FB /* x509.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = x509.h; sourceTree = "<group>"; };
 		20513BB81CF7050A003233FB /* x509_vfy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = x509_vfy.h; sourceTree = "<group>"; };
 		20513BB91CF7050A003233FB /* x509v3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = x509v3.h; sourceTree = "<group>"; };
-		20513BBA1CF7050A003233FB /* Order.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Order.h; sourceTree = "<group>"; };
-		20513BBB1CF7050A003233FB /* Order.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Order.m; sourceTree = "<group>"; };
 		20513BBD1CF7050A003233FB /* base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = base64.h; sourceTree = "<group>"; };
 		20513BBE1CF7050A003233FB /* base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = base64.m; sourceTree = "<group>"; };
 		20513BBF1CF7050A003233FB /* config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = config.h; sourceTree = "<group>"; };
@@ -2307,7 +2302,6 @@
 		363053231BDE3B9700B02C68 /* UMSocialSinaHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMSocialSinaHandler.h; sourceTree = "<group>"; };
 		363053251BDE3DEB00B02C68 /* ShareAlert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShareAlert.h; sourceTree = "<group>"; };
 		363053261BDE3DEB00B02C68 /* ShareAlert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShareAlert.m; sourceTree = "<group>"; };
-		363D4F2D1C86DACC0089E52C /* JPUSHService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPUSHService.h; sourceTree = "<group>"; };
 		363D4F2F1C86DAF00089E52C /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		363D4F311C86DB1C0089E52C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		363D4F331C86E1C70089E52C /* PushConfig.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = PushConfig.plist; sourceTree = "<group>"; };
@@ -3506,7 +3500,6 @@
 				363D4F321C86DB1C0089E52C /* Foundation.framework in Frameworks */,
 				36D0B1011C8015E900C7245E /* CFNetwork.framework in Frameworks */,
 				82D595DF1CE42BDF00CD9587 /* BaiduMapAPI.framework in Frameworks */,
-				20451C2B1DF152A3003B2FC8 /* jpush-ios-2.2.0.a in Frameworks */,
 				36CFDB8E1BCDF72700301269 /* QuartzCore.framework in Frameworks */,
 				F59D5A781DF50A8500BB376A /* RongIMLib.framework in Frameworks */,
 				F59D5A761DF50A8500BB376A /* libopencore-amrnb.a in Frameworks */,
@@ -4492,8 +4485,6 @@
 				20513B6C1CF7050A003233FB /* libcrypto.a */,
 				20513B6D1CF7050A003233FB /* libssl.a */,
 				20513B6E1CF7050A003233FB /* openssl */,
-				20513BBA1CF7050A003233FB /* Order.h */,
-				20513BBB1CF7050A003233FB /* Order.m */,
 				20513BBC1CF7050A003233FB /* Util */,
 			);
 			path = zhifu;
@@ -5678,15 +5669,6 @@
 			path = Sina;
 			sourceTree = "<group>";
 		};
-		363D4F2B1C86DACC0089E52C /* lib */ = {
-			isa = PBXGroup;
-			children = (
-				20451C2A1DF152A3003B2FC8 /* jpush-ios-2.2.0.a */,
-				363D4F2D1C86DACC0089E52C /* JPUSHService.h */,
-			);
-			path = lib;
-			sourceTree = "<group>";
-		};
 		364E77DF1C156F6C0064F130 /* 添加记分人 */ = {
 			isa = PBXGroup;
 			children = (
@@ -6597,7 +6579,6 @@
 				20BA61131CDC99D0004B61F5 /* ALMoviePlayerController */,
 				20BA611C1CDC99D0004B61F5 /* Qupai */,
 				F5EB44681C9957A6008ACD73 /* 排序类 */,
-				363D4F2B1C86DACC0089E52C /* lib */,
 				AA91C7811C4201B80078DA17 /* IQKeyBoardManager */,
 				36E300BE1C3FF3F9005C3F08 /* MJRefresh */,
 				36B08F6B1C2D322500CD660E /* 左滑按钮操作 */,
@@ -9225,7 +9206,6 @@
 				36BFFF791BC76D09005B3CE2 /* SDWebImageDownloaderOperation.m in Sources */,
 				20F0253A1D6FDC1000D7D7B6 /* JGHAddPlaysCell.m in Sources */,
 				36DBFD3B1BEF452200CA64D3 /* NearByModel.m in Sources */,
-				20513BD31CF7050A003233FB /* Order.m in Sources */,
 				82D595ED1CE4654C00CD9587 /* JGTeamPhotoCollectionViewCell.m in Sources */,
 				F5B647101CE41E7E00A7A056 /* JGTeamDetailView.m in Sources */,
 				F5AEF7311D41B98E009A8C34 /* JGHScoresHoleCell.m in Sources */,

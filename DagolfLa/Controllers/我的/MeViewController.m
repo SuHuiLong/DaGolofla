@@ -27,7 +27,6 @@
 #import "MeselfModel.h"
 #import "UIImageView+WebCache.h"
 
-//登录注册
 #import "UserDataInformation.h"
 
 #import "PersonHomeController.h"

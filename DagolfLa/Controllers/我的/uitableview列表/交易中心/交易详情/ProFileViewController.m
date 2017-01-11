@@ -13,8 +13,8 @@
 #import "RCDraggableButton.h"
 
 #import <AlipaySDK/AlipaySDK.h>
-#import "Order.h"
 #import "DataSigner.h"
+
 @interface ProFileViewController ()<UIWebViewDelegate>
 {
     NSString* _payUrl;

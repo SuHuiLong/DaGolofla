@@ -12,7 +12,6 @@
 #import "ChatDetailViewController.h"
 #import "RCDraggableButton.h"
 #import <AlipaySDK/AlipaySDK.h>
-#import "Order.h"
 #import "DataSigner.h"
 #import "JGHbalanceView.h"
 #import "WCLPassWordView.h"
