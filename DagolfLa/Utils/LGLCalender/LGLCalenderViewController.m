@@ -58,7 +58,7 @@
     
     __weak LGLCalenderViewController *weakSelf = self;
     
-    _timeListView.blockSelectTimeAndPrice = ^(NSString *time, NSString *price, NSString *paymentMoney){
+    _timeListView.blockSelectTimeAndPrice = ^(NSString *time, NSString *price, NSString *paymentMoney ,NSString *deductionMoney){
         
         NSString *month;
         if (weakSelf.month < 10) {
