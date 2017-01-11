@@ -39,6 +39,8 @@ static CGFloat ImageHeight  = 210.0;
 @property (nonatomic, copy) NSString *payMoney;           //  线上
 @property (nonatomic, copy) NSString *unitPaymentMoney;   //  线下
 
+@property (nonatomic, copy) NSString *deductionMoney; // 立减价格
+
 @property (nonatomic, copy) NSString *date;
 @property (nonatomic, copy) NSString *week;
 @property (nonatomic, copy) NSString *time;
@@ -191,9 +193,10 @@ static CGFloat ImageHeight  = 210.0;
                 self.unitPrice = [self.detailDic objectForKey:@"unitPrice"];
                 self.payMoney = [self.detailDic objectForKey:@"payMoney"];
                 self.unitPaymentMoney = [self.detailDic objectForKey:@"unitPaymentMoney"];
-                
                 self.selectDate = time;
-                
+                if ([self.detailDic objectForKey:@"deductionMoney"]) {
+                    self.deductionMoney = [[self.detailDic objectForKey:@"deductionMoney"] stringValue];
+                }
                 _date = [NSString stringWithFormat:@"%@", [Helper stringFromDateString:time withFormater:@"yyyy年MM月dd日"]];
                 _week = [NSString stringWithFormat:@"%@", [Helper stringFromDateString:time withFormater:@"EEE"]];;
                 _time = [NSString stringWithFormat:@"%@", [Helper stringFromDateString:time withFormater:@"HH:mm"]];
@@ -436,24 +439,27 @@ static CGFloat ImageHeight  = 210.0;
                 [payBtn setTitleColor:[UIColor colorWithHexString:@"#fc5a01"] forState:(UIControlStateNormal)];
 
                 if ([self.detailDic objectForKey:@"deductionMoney"]) {
-                    // 立减优惠
-                    UILabel *greyLB = [self lablerect:CGRectMake(screenWidth - 155 * ProportionAdapter , 30 * ProportionAdapter, 60 * ProportionAdapter, 20 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#a0a0a0"] labelFont:13 text:@"¥999" textAlignment:(NSTextAlignmentRight)];
+        // 立减优惠
+                // 优惠前价格
+                    UILabel *greyLB = [self lablerect:CGRectMake(screenWidth - 155 * ProportionAdapter , 30 * ProportionAdapter, 60 * ProportionAdapter, 20 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#a0a0a0"] labelFont:13 text:[NSString stringWithFormat:@"¥ %@",[self.detailDic objectForKey:@"unitPrice"]] textAlignment:(NSTextAlignmentRight)];
                     [cell.contentView addSubview:greyLB];
                     
-                    CGFloat width = [Helper textWidthFromTextString:@"¥999" height:screenWidth - 20 * ProportionAdapter fontSize:13];
+                    CGFloat width = [Helper textWidthFromTextString:[NSString stringWithFormat:@"¥ %@",[self.detailDic objectForKey:@"unitPrice"]] height:screenWidth - 20 * ProportionAdapter fontSize:13];
                     
                     UILabel *lineLB = [self lablerect:CGRectMake(screenWidth - 95 * ProportionAdapter - width - 2.5 * ProportionAdapter , 40 * ProportionAdapter, width + 5 * ProportionAdapter, 1 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#a0a0a0"] labelFont:0 text:@"" textAlignment:(NSTextAlignmentCenter)];
                     lineLB.backgroundColor = [UIColor colorWithHexString:@"#a0a0a0"];
                     [cell.contentView addSubview:lineLB];
                     
-                    
-                    UILabel *orangeLB = [self lablerect:CGRectMake(screenWidth - 155 * ProportionAdapter , 50 * ProportionAdapter, 60 * ProportionAdapter, 20 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#fc5a01"] labelFont:17 text:@"¥999" textAlignment:(NSTextAlignmentRight)];
+                // 优惠后价格
+                    NSInteger orangePrice = [[self.detailDic objectForKey:@"unitPrice"] integerValue] - [[self.detailDic objectForKey:@"deductionMoney"] integerValue];
+
+                    UILabel *orangeLB = [self lablerect:CGRectMake(screenWidth - 155 * ProportionAdapter , 50 * ProportionAdapter, 60 * ProportionAdapter, 20 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#fc5a01"] labelFont:17 text:[NSString stringWithFormat:@"¥ %td", orangePrice] textAlignment:(NSTextAlignmentRight)];
                     [cell.contentView addSubview:orangeLB];
 
                 }else{
                     
-                    // 无立减优惠
-                    [self lableReDraw:priceLB rect:CGRectMake(screenWidth - 155 * ProportionAdapter , 35 * ProportionAdapter, 60 * ProportionAdapter, 30 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#fc5a01"] labelFont:17 text:[NSString stringWithFormat:@"¥%@", [self.detailDic objectForKey:@"unitPrice"]] textAlignment:(NSTextAlignmentRight)];
+            // 无立减优惠
+                    [self lableReDraw:priceLB rect:CGRectMake(screenWidth - 155 * ProportionAdapter , 35 * ProportionAdapter, 60 * ProportionAdapter, 30 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#fc5a01"] labelFont:17 text:[NSString stringWithFormat:@"¥ %@", [self.detailDic objectForKey:@"unitPrice"]] textAlignment:(NSTextAlignmentRight)];
                     
                     NSMutableAttributedString *mutaStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"¥ %@", self.unitPrice]];
                     [mutaStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:13 * ProportionAdapter] range:NSMakeRange(0, 1)];
