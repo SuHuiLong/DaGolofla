@@ -74,7 +74,7 @@
             day = [NSString stringWithFormat:@"%td", weakSelf.day];
         }
         
-        weakSelf.blockTimeWithPrice([NSString stringWithFormat:@"%td-%@-%@ %@:00", weakSelf.year, month, day, time], price, paymentMoney);
+        weakSelf.blockTimeWithPrice([NSString stringWithFormat:@"%td-%@-%@ %@:00", weakSelf.year, month, day, time], price, paymentMoney, deductionMoney);
         [weakSelf.navigationController popViewControllerAnimated:YES];
     };
 //    [_timeListView loadTimeListWithBallKey:_ballKey andDateString:@"2017-01-10 09:00:00"];
