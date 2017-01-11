@@ -71,16 +71,23 @@
                 NSIndexPath *index1 = [NSIndexPath indexPathForRow:1 inSection:1];
                 NSIndexPath *index2 = [NSIndexPath indexPathForRow:2 inSection:1];
                 
-                self.section2Num = 3;
-                [self.payTableView insertRowsAtIndexPaths:@[index1, index2] withRowAnimation:YES];
-                
                 if (self.money >= self.payMoney) {
                     
                     self.numberOfSections = 2;
                     [self.payTableView deleteSections:[NSIndexSet indexSetWithIndex:2] withRowAnimation:NO];
                     
+                    self.section2Num = 2;
+                    [self.payTableView insertRowsAtIndexPaths:@[index1] withRowAnimation:NO];
+                    
+
+                }else{
+                    self.section2Num = 3;
+                    [self.payTableView insertRowsAtIndexPaths:@[index1, index2] withRowAnimation:NO];
+                    
+
                 }
-                
+                self.navigationItem.leftBarButtonItem =  [[UIBarButtonItem alloc] initWithTitle:@"" style:(UIBarButtonItemStyleDone) target:self action:nil];
+
             }else{
                 [LQProgressHud showMessage:@"密码输入有误"];
             }
@@ -134,7 +141,7 @@
             //            self.hasUserBankCard = [data objectForKey:@"hasUserBankCard"];
             //            self.name = [data objectForKey:@"name"];
             //
-            self.leftMoneyTitle.text = [NSString stringWithFormat:@"可用余额¥%.2f",self.money];
+            self.leftMoneyTitle.text = [NSString stringWithFormat:@"可用余额 ¥ %.0f",self.money];
             
         }
     }];
@@ -153,9 +160,10 @@
     self.payTableView.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];
     [self.payTableView registerClass:[JGDCostumTableViewCell class] forCellReuseIdentifier:@"custCell"];
     
+    
     UIButton *confirmBtn = [[UIButton alloc] initWithFrame:CGRectMake(10 * ProportionAdapter, screenHeight - 200 * ProportionAdapter, screenWidth - 20 * ProportionAdapter, 45 * ProportionAdapter)];
     confirmBtn.backgroundColor = [UIColor colorWithHexString:@"#fc5a01"];
-    [confirmBtn setTitle:@"确认支付" forState:(UIControlStateNormal)
+    [confirmBtn setTitle:@"立即支付" forState:(UIControlStateNormal)
      ];
     [confirmBtn addTarget:self action:@selector(payAct:) forControlEvents:(UIControlEventTouchUpInside)];
     confirmBtn.layer.cornerRadius = 6;
@@ -165,7 +173,7 @@
     
     UIButton *laterBtn = [[UIButton alloc] initWithFrame:CGRectMake(10 * ProportionAdapter, screenHeight - 135 * ProportionAdapter, screenWidth - 20 * ProportionAdapter, 45 * ProportionAdapter)];
     [laterBtn setTitleColor:[UIColor colorWithHexString:@"#fc5a01"] forState:(UIControlStateNormal)];
-    [laterBtn setTitle:@"稍后付款" forState:(UIControlStateNormal)
+    [laterBtn setTitle:@"稍后支付" forState:(UIControlStateNormal)
      ];
     [laterBtn addTarget:self action:@selector(payAct:) forControlEvents:(UIControlEventTouchUpInside)];
     laterBtn.layer.borderWidth = 0.5 * ProportionAdapter;
@@ -374,8 +382,9 @@
 #pragma mark --- 咨询
 
 - (void)askAct{
-    NSMutableString * str=[[NSMutableString alloc] initWithFormat:@"telprompt://%@", @""];
+    NSMutableString * str=[[NSMutableString alloc] initWithFormat:@"telprompt://%@", Company400];
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:str]];
+
 }
 
 
@@ -388,10 +397,10 @@
     
     if (indexPath.section == 0) {
         
-        UILabel *priceTitle = [self lablerect:CGRectMake(10 * ProportionAdapter, 0, 100, 50 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#a0a0a0"] labelFont:(17 * ProportionAdapter) text:@"订单总价" textAlignment:(NSTextAlignmentLeft)];
+        UILabel *priceTitle = [self lablerect:CGRectMake(10 * ProportionAdapter, 0, 200, 50 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#a0a0a0"] labelFont:(17 * ProportionAdapter) text:@"线上支付金额" textAlignment:(NSTextAlignmentLeft)];
         [cell.contentView addSubview:priceTitle];
         
-        UILabel *sumPrice = [self lablerect:CGRectMake(screenWidth - 110 * ProportionAdapter, 0, 100 * ProportionAdapter, 50 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#313131"] labelFont:(17 * ProportionAdapter) text:[NSString stringWithFormat:@"¥%.2f", self.payMoney] textAlignment:(NSTextAlignmentRight)];
+        UILabel *sumPrice = [self lablerect:CGRectMake(screenWidth - 110 * ProportionAdapter, 0, 100 * ProportionAdapter, 50 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#313131"] labelFont:(17 * ProportionAdapter) text:[NSString stringWithFormat:@"¥ %.0f", self.payMoney] textAlignment:(NSTextAlignmentRight)];
         [cell.contentView addSubview:sumPrice];
         
     }else if (indexPath.section == 1) {
@@ -419,7 +428,7 @@
             }else{
                 deductible = self.money;
             }
-            UILabel *deductiblePrice = [self lablerect:CGRectMake(screenWidth - 110 * ProportionAdapter, 0, 100 * ProportionAdapter, 50 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#313131"] labelFont:(17 * ProportionAdapter) text:[NSString stringWithFormat:@"¥%.2f",deductible] textAlignment:(NSTextAlignmentRight)];
+            UILabel *deductiblePrice = [self lablerect:CGRectMake(screenWidth - 110 * ProportionAdapter, 0, 100 * ProportionAdapter, 50 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#313131"] labelFont:(17 * ProportionAdapter) text:[NSString stringWithFormat:@"¥%.0f",deductible] textAlignment:(NSTextAlignmentRight)];
             [cell.contentView addSubview:deductiblePrice];
             
         } else{
@@ -433,7 +442,7 @@
             }else{
                 otherPay = self.payMoney - self.money;
             }
-            UILabel *leftPrice = [self lablerect:CGRectMake(screenWidth - 110 * ProportionAdapter, 0, 100 * ProportionAdapter, 50 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#fc5a01"] labelFont:(17 * ProportionAdapter) text:[NSString stringWithFormat:@"¥%.2f",otherPay] textAlignment:(NSTextAlignmentRight)];
+            UILabel *leftPrice = [self lablerect:CGRectMake(screenWidth - 110 * ProportionAdapter, 0, 100 * ProportionAdapter, 50 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#fc5a01"] labelFont:(17 * ProportionAdapter) text:[NSString stringWithFormat:@"¥%.0f",otherPay] textAlignment:(NSTextAlignmentRight)];
             [cell.contentView addSubview:leftPrice];
             
         }
@@ -447,24 +456,26 @@
             
         }else if (indexPath.row == 1) {
             
-            UIImageView *wechatIcon = [[UIImageView alloc] initWithFrame:CGRectMake(10 * ProportionAdapter, 5 *ProportionAdapter, 40 * ProportionAdapter, 40 * ProportionAdapter)];
-            wechatIcon.image = [UIImage imageNamed:@"weixin-2"];
-            [cell.contentView addSubview:wechatIcon];
-            
-            UILabel *titleLB = [self lablerect:CGRectMake(60 * ProportionAdapter, 0, 200, 50 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#313131"] labelFont:(17 * ProportionAdapter) text:@"微信支付" textAlignment:(NSTextAlignmentLeft)];
-            [cell.contentView addSubview:titleLB];
-            
-            [cell.contentView addSubview:self.selectView];
-            self.payType = 2;
-            
-        } else{
-            
             UIImageView *aliPayIcon = [[UIImageView alloc] initWithFrame:CGRectMake(10 * ProportionAdapter, 6.5 *ProportionAdapter, 40 * ProportionAdapter, 37 * ProportionAdapter)];
             aliPayIcon.image = [UIImage imageNamed:@"zhifu"];
             [cell.contentView addSubview:aliPayIcon];
             
             UILabel *titleLB = [self lablerect:CGRectMake(60 * ProportionAdapter, 0, 200, 50 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#313131"] labelFont:(17 * ProportionAdapter) text:@"支付宝" textAlignment:(NSTextAlignmentLeft)];
             [cell.contentView addSubview:titleLB];
+
+            
+            [cell.contentView addSubview:self.selectView];
+            self.payType = 1;
+            
+        } else{
+            
+            UIImageView *wechatIcon = [[UIImageView alloc] initWithFrame:CGRectMake(10 * ProportionAdapter, 5 *ProportionAdapter, 40 * ProportionAdapter, 40 * ProportionAdapter)];
+            wechatIcon.image = [UIImage imageNamed:@"weixin-2"];
+            [cell.contentView addSubview:wechatIcon];
+            
+            UILabel *titleLB = [self lablerect:CGRectMake(60 * ProportionAdapter, 0, 200, 50 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#313131"] labelFont:(17 * ProportionAdapter) text:@"微信支付" textAlignment:(NSTextAlignmentLeft)];
+            [cell.contentView addSubview:titleLB];
+ 
         }
         
     }
@@ -482,7 +493,8 @@
     
     if (mySwitch.on == YES) {
         
-
+        self.navigationItem.leftBarButtonItem =  [[UIBarButtonItem alloc] initWithTitle:@"取消" style:(UIBarButtonItemStyleDone) target:self action:@selector(bgRemoveAct:)];
+        self.navigationItem.leftBarButtonItem.tintColor = [UIColor whiteColor];
         
         NSMutableDictionary *dict = [NSMutableDictionary dictionary];
         [dict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:userID] forKey:@"userKey"];
@@ -491,6 +503,7 @@
             [[ShowHUD showHUD]hideAnimationFromView:self.view];
         } completionBlock:^(id data) {
             NSLog(@"data == %@", data);
+            
             [[ShowHUD showHUD]hideAnimationFromView:self.view];
             if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
                 if ([[data objectForKey:@"isSetPayPassWord"] integerValue] == 1) {
@@ -531,8 +544,15 @@
 
         
     }else{
-        self.section2Num = 1;
-        [self.payTableView deleteRowsAtIndexPaths:@[index1, index2] withRowAnimation:YES];
+        
+        if (self.section2Num == 2) {
+            self.section2Num = 1;
+            [self.payTableView deleteRowsAtIndexPaths:@[index1] withRowAnimation:YES];
+        }else if (self.section2Num == 3) {
+            self.section2Num = 1;
+            [self.payTableView deleteRowsAtIndexPaths:@[index1, index2] withRowAnimation:YES];
+        }
+        
         
         if (self.numberOfSections == 2) {
             
@@ -543,8 +563,13 @@
     }
 }
 
+- (void)bgRemoveAct:(UIBarButtonItem *)bar{
+    self.navigationItem.leftBarButtonItem =  [[UIBarButtonItem alloc] initWithTitle:@"" style:(UIBarButtonItemStyleDone) target:self action:nil];
+    [self.bgView removeFromSuperview];
+    [self.empowerSwitch setOn:NO];
 
-#pragma mark ---  支付宝 微信 取消支付 
+}
+#pragma mark ---  支付宝 微信 取消支付
 
 - (void)doCancelOrderPay{
     
@@ -557,21 +582,23 @@
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     
-    UIView *backView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 60 * ProportionAdapter)];
-    backView.backgroundColor = [UIColor colorWithHexString:@"#eeeeee"];
-    
-    UILabel *timeLB = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 50 * ProportionAdapter)];
-    timeLB.backgroundColor = [UIColor colorWithHexString:@"#fefaf3"];
-    timeLB.text = @"请在30分钟内完成支付";
-    timeLB.textAlignment = NSTextAlignmentCenter;
-    timeLB.textColor = [UIColor colorWithHexString:@"#e88800"];
-    [backView addSubview:timeLB];
-    
-    UILabel *backLB = [self lablerect:CGRectMake(0, 0, screenWidth, 10 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#eeeeee"] labelFont:0 text:@"" textAlignment:(NSTextAlignmentCenter)];
+//    UIView *backView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 60 * ProportionAdapter)];
+//    backView.backgroundColor = [UIColor colorWithHexString:@"#eeeeee"];
+//    
+//    UILabel *timeLB = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 50 * ProportionAdapter)];
+//    timeLB.backgroundColor = [UIColor colorWithHexString:@"#fefaf3"];
+//    timeLB.text = @"请在30分钟内完成支付";
+//    timeLB.textAlignment = NSTextAlignmentCenter;
+//    timeLB.textColor = [UIColor colorWithHexString:@"#e88800"];
+//    [backView addSubview:timeLB];
     
     if (section == 0) {
-        return backView;
+        UILabel *backLB = [self lablerect:CGRectMake(0, 0, screenWidth, 10 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#eeeeee"] labelFont:0 text:@"" textAlignment:(NSTextAlignmentCenter)];
+
+        return backLB;
     }else{
+        UILabel *backLB = [self lablerect:CGRectMake(0, 0, screenWidth, 10 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#eeeeee"] labelFont:0 text:@"" textAlignment:(NSTextAlignmentCenter)];
+
         return backLB;
     }
 }
@@ -580,10 +607,10 @@
     if (indexPath.section == 2 && indexPath.row != 0) {
         
         if (indexPath.row == 1) {
-            self.payType = 2;
+            self.payType = 1;
             
         }else if (indexPath.row == 2) {
-            self.payType = 1;
+            self.payType = 2;
             
         }
         
@@ -593,16 +620,16 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    return section == 0 ? 60 * ProportionAdapter : 10 * ProportionAdapter;
+//    return section == 0 ? 0.001 : 10 * ProportionAdapter;
+    return 10 * ProportionAdapter;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 1 && indexPath.row == 0) {
         return 75 * ProportionAdapter;
     }else{
-        return 50;
+        return 50 * ProportionAdapter;
     }
-    
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{

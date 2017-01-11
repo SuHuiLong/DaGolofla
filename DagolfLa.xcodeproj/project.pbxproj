@@ -8780,7 +8780,7 @@
 					36BFFD271BC76C8D005B3CE2 = {
 						CreatedOnToolsVersion = 6.3.2;
 						DevelopmentTeam = 5P6JNXBH3C;
-						ProvisioningStyle = Manual;
+						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -10128,8 +10128,8 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = DagolfLa/DagolfLa.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer: nie yi (YKPG8Q2G6Y)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: nie yi (YKPG8Q2G6Y)";
-				DEVELOPMENT_TEAM = 5P6JNXBH3C;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -10168,8 +10168,8 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = bihuaxinxi.DagolfLa;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "bb7656af-80f1-4584-b514-6868ecc0b169";
-				PROVISIONING_PROFILE_SPECIFIER = DM_DEVE;
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/DagolfLa/第三方库/lib";
 				VALID_ARCHS = "arm64 armv7 armv7s";
@@ -10183,8 +10183,8 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = DagolfLa/DagolfLa.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer: nie yi (YKPG8Q2G6Y)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: nie yi (YKPG8Q2G6Y)";
-				DEVELOPMENT_TEAM = 5P6JNXBH3C;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -10223,8 +10223,8 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = bihuaxinxi.DagolfLa;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "bb7656af-80f1-4584-b514-6868ecc0b169";
-				PROVISIONING_PROFILE_SPECIFIER = DM_DEVE;
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/DagolfLa/第三方库/lib";
 				VALID_ARCHS = "arm64 armv7 armv7s";

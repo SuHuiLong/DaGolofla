@@ -229,7 +229,7 @@
     [self.navigationController pushViewController:courtVC animated:YES];
 }
 
-
+#pragma mark --- @"推荐排序",@"距离优先",@"价格优先"
 - (UIView *)headerView{
     if (!_headerView) {
         self.headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 50 * ProportionAdapter)];
@@ -243,6 +243,14 @@
             [sortBtn setTitle:sortStyleArray[i] forState:(UIControlStateNormal)];
             [sortBtn addTarget:self action:@selector(sortCourt:) forControlEvents:(UIControlEventTouchUpInside)];
             sortBtn.titleLabel.font = [UIFont systemFontOfSize:17 * ProportionAdapter];
+            
+            if (i == 0) {
+                sortBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+            }else if (i == 2) {
+                sortBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
+            }
+            
+            
             [self.headerView addSubview:sortBtn];
         }
         UILabel *lineLB = [[UILabel alloc] initWithFrame:CGRectMake(0, 49.5 * ProportionAdapter, screenWidth, 0.5 * ProportionAdapter)];

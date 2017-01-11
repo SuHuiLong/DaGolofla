@@ -85,7 +85,7 @@
     
     self.searchTF = [[UITextField alloc] initWithFrame:CGRectMake(10* ProportionAdapter, 25* ProportionAdapter, 300* ProportionAdapter, 30* ProportionAdapter)];
     self.searchTF.borderStyle = UITextBorderStyleRoundedRect;
-    self.searchTF.placeholder = @"请输入关键字";
+    self.searchTF.placeholder = @"请输入球场名称";
     self.searchTF.delegate = self;
     self.searchTF.font = [UIFont systemFontOfSize:16 * ProportionAdapter];
     self.searchTF.returnKeyType = UIReturnKeySearch;
@@ -136,7 +136,7 @@
     }
 
     NSMutableParagraphStyle *style = [[NSMutableParagraphStyle alloc] init];
-    style.firstLineHeadIndent = 18 * ProportionAdapter;
+    style.firstLineHeadIndent = 16 * ProportionAdapter;
     [text addAttribute:NSParagraphStyleAttributeName value:style range:NSMakeRange(0, text.length)];
     hotLB.attributedText = text;
     return hotLB;
@@ -145,9 +145,26 @@
 #pragma mark --- 清除历史
 
 - (void)deleteAllHis{
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"history"];;
-    [[NSUserDefaults standardUserDefaults] synchronize];
-    [self.searchTable reloadData];
+    
+    UIAlertController *alert=[UIAlertController alertControllerWithTitle:@"君高高尔夫" message:@"确认删除全部历史纪录" preferredStyle:UIAlertControllerStyleAlert];
+    
+    
+    UIAlertAction *action1=[UIAlertAction actionWithTitle:@"删除" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"history"];;
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        [self.searchTable reloadData];
+        
+    }];
+    UIAlertAction* action2=[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
+    }];
+    
+    [alert addAction:action1];
+    [alert addAction:action2];
+    
+    [self presentViewController:alert animated:YES completion:nil];
+    
 }
 
 - (CGFloat )tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{

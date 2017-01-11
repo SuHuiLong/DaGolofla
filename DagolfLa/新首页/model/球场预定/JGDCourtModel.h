@@ -22,6 +22,7 @@
 @property (nonatomic, strong) NSNumber *suggestedPrice; // 建议价
 
 @property (nonatomic, strong) NSNumber *unitPrice; // 单价
+@property (nonatomic, strong) NSNumber *deductionMoney; // 减免金额
 
 
 @end

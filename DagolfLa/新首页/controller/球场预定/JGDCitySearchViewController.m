@@ -380,6 +380,13 @@
 }
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
 {
+    
+    UIActivityIndicatorView *cityView = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(250 * ProportionAdapter, 45 * ProportionAdapter, 30 * ProportionAdapter, 30 * ProportionAdapter)];
+    [self.searchTable addSubview:cityView];
+    cityView.backgroundColor = [UIColor whiteColor];
+    cityView.color = [UIColor grayColor];
+    [cityView startAnimating];
+    
     CLLocation *currLocation = [locations lastObject];
     //NSLog(@"经度=%f 纬度=%f 高度=%f", currLocation.coordinate.latitude, currLocation.coordinate.longitude, currLocation.altitude);
     NSUserDefaults *user=[NSUserDefaults standardUserDefaults];
@@ -405,10 +412,12 @@
              self.cityLB.text = city;
              [user setObject:city forKey:CITYNAME];
              [user synchronize];
-             
+
          } else {
              
          }
+         [cityView stopAnimating];
+         [cityView removeFromSuperview];
      }];
     
     

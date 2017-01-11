@@ -73,8 +73,8 @@
         self.priceLB.attributedText = attri;
         [self.contentView addSubview:self.priceLB];
         
-        self.fullCutBtn = [[UIButton alloc] initWithFrame:CGRectMake(290 * ProportionAdapter, 50 * ProportionAdapter, 75 * ProportionAdapter, 30 * ProportionAdapter)];
-        [self.fullCutBtn setTitle:@"¥ 500" forState:(UIControlStateNormal)];
+        self.fullCutBtn = [[UIButton alloc] initWithFrame:CGRectMake(290 * ProportionAdapter, 60 * ProportionAdapter, 75 * ProportionAdapter, 20 * ProportionAdapter)];
+        [self.fullCutBtn setTitle:@"¥ 0" forState:(UIControlStateNormal)];
         self.fullCutBtn.titleLabel.font = [UIFont systemFontOfSize:12];
         [self.fullCutBtn setTitleEdgeInsets:UIEdgeInsetsMake(0, 5 * ProportionAdapter, 0, 0)];
         [self.fullCutBtn setImageEdgeInsets:UIEdgeInsetsMake(0, 0, 0, 5 * ProportionAdapter)];
@@ -109,12 +109,12 @@
     CGFloat addresWidth = [Helper textWidthFromTextString:model.address height:20 * ProportionAdapter fontSize:13 * ProportionAdapter];
     CGFloat distanWidth = [Helper textWidthFromTextString:[NSString stringWithFormat:@"%.1fkm", [model.distance floatValue]] height:20 * ProportionAdapter fontSize:13 * ProportionAdapter];
 
-    if (distanWidth + addresWidth  + 15 * ProportionAdapter < 190 * ProportionAdapter) {
+    if (distanWidth + addresWidth  + 15 * ProportionAdapter < 185 * ProportionAdapter) {
         self.adressLB.frame = CGRectMake(113 * ProportionAdapter, 60 * ProportionAdapter, addresWidth, 20 * ProportionAdapter);
         self.distanceLB.frame = CGRectMake(113 * ProportionAdapter + addresWidth + 15 * ProportionAdapter, 60 * ProportionAdapter, distanWidth, 20 * ProportionAdapter);
     }else{
-        self.adressLB.frame = CGRectMake(113 * ProportionAdapter, 60 * ProportionAdapter, 190 * ProportionAdapter - distanWidth - 15 * ProportionAdapter, 20 * ProportionAdapter);
-        self.distanceLB.frame = CGRectMake(113 * ProportionAdapter + (190 * ProportionAdapter - distanWidth - 15 * ProportionAdapter), 60 * ProportionAdapter, distanWidth, 20 * ProportionAdapter);
+        self.adressLB.frame = CGRectMake(113 * ProportionAdapter, 60 * ProportionAdapter, 185 * ProportionAdapter - distanWidth - 15 * ProportionAdapter, 20 * ProportionAdapter);
+        self.distanceLB.frame = CGRectMake(113 * ProportionAdapter + (185 * ProportionAdapter - distanWidth - 15 * ProportionAdapter), 60 * ProportionAdapter, distanWidth, 20 * ProportionAdapter);
     }
     
     self.distanceLB.text = [NSString stringWithFormat:@"%.1fkm", [model.distance floatValue]];
@@ -126,6 +126,16 @@
         [mutaStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:13 * ProportionAdapter] range:NSMakeRange(0, 1)];
         self.priceLB.attributedText = mutaStr;
     }
+    
+    
+    if (model.deductionMoney) {
+        self.fullCutBtn.hidden = NO;
+        [self.fullCutBtn setTitle:[NSString stringWithFormat:@"¥ %@", model.deductionMoney] forState:(UIControlStateNormal)];
+
+    }else{
+        self.fullCutBtn.hidden = YES;
+    }
+    
 }
 
 

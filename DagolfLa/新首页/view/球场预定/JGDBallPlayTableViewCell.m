@@ -35,7 +35,7 @@
         self.titleLB.textAlignment = NSTextAlignmentRight;
         [self.contentView addSubview:self.titleLB];
         
-        self.nameTF = [[UITextField alloc] initWithFrame:CGRectMake(120 * ProportionAdapter, 0, 245 * ProportionAdapter, 50 * ProportionAdapter)];
+        self.nameTF = [[UITextField alloc] initWithFrame:CGRectMake(100 * ProportionAdapter, 0, 265 * ProportionAdapter, 50 * ProportionAdapter)];
         self.nameTF.font = [UIFont systemFontOfSize:16 * ProportionAdapter];
         self.nameTF.placeholder = @"必填";
         self.nameTF.clearButtonMode = UITextFieldViewModeWhileEditing;
