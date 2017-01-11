@@ -58,6 +58,7 @@
 #import "JGDNewTeamDetailViewController.h"
 #import "JGLPushDetailsViewController.h"
 #import "DetailViewController.h"
+#import "ChatListViewController.h"
 
 #define ImgUrlString2 @"http://res.dagolfla.com/h5/ad/app.jpg"
 
@@ -72,10 +73,10 @@
     
     NSInteger _pushID;//双击Homde退出时，通过链接重新打开APP时openURL方法会调用，导致2次Push页面；
     
-    NSInteger _teamUnread;
-    NSInteger _systemUnread;
-    
-    NSInteger _newFriendUnread;
+//    NSInteger _teamUnread;
+//    NSInteger _systemUnread;
+//    
+//    NSInteger _newFriendUnread;
 }
 //@property (strong, nonatomic) UIView *lunchView;
 //@property (strong, nonatomic) UIWebView* webView;
@@ -334,7 +335,7 @@
             
             [self pushSpecifiedViewCtrl:[NSString stringWithFormat:@"%@", url]];
             
-            [self notifyUpdateUnreadMessageCount];
+            [self updateBadgeValueForTabBarItem];
         }
     }else if (url != nil) {
         if ([[url query] containsString:@"safepay"]) {
@@ -346,7 +347,7 @@
                 
                 [self pushSpecifiedViewCtrl:[NSString stringWithFormat:@"%@", url]];
                 
-                [self notifyUpdateUnreadMessageCount];
+                [self updateBadgeValueForTabBarItem];
             }
         }
     }else{
@@ -749,6 +750,7 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
 - (void)applicationWillResignActive:(UIApplication *)application {
     [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
     
+    [[RCIM sharedRCIM] disconnect];
 //    RCConnectionStatus status = [[RCIMClient sharedRCIMClient] getConnectionStatus];
 //    if (status != ConnectionStatus_SignUp) {
 //        int unreadMsgCount = [[RCIMClient sharedRCIMClient]
@@ -793,7 +795,33 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
+    NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
+    
+    [[RCIM sharedRCIM] initWithAppKey:RongYunAPPKEY];//pgyu6atqylmiu
+    if (DEFAULF_USERID) {
+        // TODO
+        NSString  *token  = [user objectForKey:@"rongTk"];
+        [[RCIM sharedRCIM] connectWithToken:token success:^(NSString *userId) {
+            NSLog(@":======== userId=%@", userId);
+            //自动登录   连接融云服务器
+            [[UserDataInformation sharedInstance] synchronizeUserInfoRCIM];
+        } error:^(RCConnectErrorCode status) {
+            NSLog(@":======== status=%ld", (long)status);
+        } tokenIncorrect:^{
+            
+        }];
+    }
+    
     _pushID = 0;
+    
+    // 获取导航控制器
+//    TabBarController *tabVC = (TabBarController *)self.window.rootViewController;
+//    if ([tabVC isKindOfClass:[TabBarController class]]) {
+//        TabBarController *tabVC = (TabBarController *)self.window.rootViewController;
+////        ChatListViewController *pushClassStance = (ChatListViewController *)tabVC.viewControllers[tabVC.selectedIndex];
+//        ChatListViewController *nowVC = [(UINavigationController *)self.window.rootViewController viewControllers][tabVC.selectedIndex];
+//        [nowVC.conversationListTableView.header beginRefreshing];
+//    }
     
     [UMSocialSnsService  applicationDidBecomeActive];
     
@@ -1068,54 +1096,44 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
         return;
     }
     
-    
-    
-    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    [dict setObject:DEFAULF_USERID forKey:@"userKey"];
-    [dict setObject:[Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@dagolfla.com", DEFAULF_USERID]] forKey:@"md5"];
-    [[JsonHttp jsonHttp]httpRequest:@"msg/geSumtUnread" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
-        
-    } completionBlock:^(id data) {
-        NSLog(@"%@", data);
-        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
-            _teamUnread = [[data objectForKey:@"teamUnread"] integerValue];
-            _systemUnread = [[data objectForKey:@"systemUnread"] integerValue];
-            _newFriendUnread = [[data objectForKey:@"newFriendUnread"] integerValue];
-            
-            [self notifyUpdateUnreadMessageCount];
-            
-        }else{
-            [self notifyUpdateUnreadMessageCount];
-            
-        }
-    }];
-}
-#pragma mark -- 获取融云消息
-- (void)notifyUpdateUnreadMessageCount
-{
     [self updateBadgeValueForTabBarItem];
 }
+#pragma mark -- 获取融云消息
 - (void)updateBadgeValueForTabBarItem
 {
     dispatch_async(dispatch_get_main_queue(), ^{
-        NSArray *displayConversationTypeArray = @[@1];
-        int count = [[RCIMClient sharedRCIMClient]
-                     getUnreadCount:displayConversationTypeArray];
+        
         // 获取导航控制器
         TabBarController *tabVC = (TabBarController *)self.window.rootViewController;
         if (![tabVC isKindOfClass:[TabBarController class]]) {
             return ;
         }
         
+        NSArray *displayConversationTypeArray = @[@1];
+        
+        //会话消息
+        int countChat = [[RCIMClient sharedRCIMClient]
+                         getUnreadCount:displayConversationTypeArray];
+        //球队消息
+        int teamUnreadCount = [[RCIMClient sharedRCIMClient]
+                               getUnreadCount:ConversationType_SYSTEM targetId:TEAM_ID];
+        //系统消息
+        int systemUnreadCount = [[RCIMClient sharedRCIMClient]
+                                 getUnreadCount:ConversationType_SYSTEM targetId:SYSTEM_ID];
+        //新球友消息
+        int newFriendUnreadCount = [[RCIMClient sharedRCIMClient]
+                                    getUnreadCount:ConversationType_SYSTEM targetId:NEW_FRIEND_ID];
+        
+        int iconCount = countChat +teamUnreadCount +systemUnreadCount +newFriendUnreadCount;
+        
         UINavigationController *RedVc = (UINavigationController *)tabVC.viewControllers[2];
-        int iconCount = (count + (int)_teamUnread +(int)_systemUnread +(int)_newFriendUnread);
         //本地存红点数
         NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
         [userdef setObject:@(iconCount) forKey:IconCount];
         [userdef synchronize];
         
         if (iconCount > 0) {
-            [RedVc.tabBarController.tabBar showBadgeOnItemIndex:2 badgeValue:count+ (int)_teamUnread + (int)_systemUnread + (int)_newFriendUnread];
+            [RedVc.tabBarController.tabBar showBadgeOnItemIndex:2 badgeValue:iconCount];
         } else {
             [RedVc.tabBarController.tabBar hideBadgeOnItemIndex:2];
         }

@@ -73,8 +73,8 @@
 //        [defDict setObject:_userMobilePlayer forKey:Mobile];
 //    }
     _userNamePlayer = userNamePlayer;
-    //问题，这个性别是死数据
-    if (sex == 0) {
+    //
+    if (sex == 1) {
         [defDict setObject:@"蓝T" forKey:@"tTaiwan"];
     }else{
         [defDict setObject:@"红T" forKey:@"tTaiwan"];
@@ -189,7 +189,7 @@
 
 -(void)uiConfig
 {
-    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight -64 -44*ProportionAdapter) style:UITableViewStylePlain];
+    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight -64 -54*ProportionAdapter) style:UITableViewStylePlain];
     _tableView.delegate = self;
     _tableView.dataSource = self;
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;

@@ -189,6 +189,7 @@
             NewFriendViewController *newVC = [[NewFriendViewController alloc] init];
             newVC.fromWitchVC = 2;
             _addFriendSum = 0;
+            [[RCIMClient sharedRCIMClient] clearMessagesUnreadStatus:ConversationType_SYSTEM targetId:NEW_FRIEND_ID];
             [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:NO];
             [self.navigationController pushViewController:newVC animated:YES];
             

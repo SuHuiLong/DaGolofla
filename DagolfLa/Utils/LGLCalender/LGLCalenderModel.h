@@ -17,7 +17,7 @@ typedef void(^CallBackBlock)(NSMutableArray * result);
 @property (nonatomic, strong ) NSMutableArray * details;
 
 
-+ (void)getCalenderDataWithDate:(NSDate *)date block:(CallBackBlock)block;
++ (void)getCalenderDataWithDate:(NSDate *)date andBallKey:(NSNumber *)ballKey block:(CallBackBlock)block;
 
 
 @end

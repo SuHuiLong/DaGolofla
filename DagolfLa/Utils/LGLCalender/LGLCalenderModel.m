@@ -12,7 +12,7 @@
 
 @implementation LGLCalenderModel
 
-+ (void)getCalenderDataWithDate:(NSDate *)date block:(CallBackBlock)block {
++ (void)getCalenderDataWithDate:(NSDate *)date andBallKey:(NSNumber *)ballKey block:(CallBackBlock)block {
     
     NSMutableArray * array = [NSMutableArray array];
     NSDate * cdate = date;
@@ -99,8 +99,8 @@
 
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     [dict setObject:DEFAULF_USERID forKey:@"userKey"];
-    [dict setObject:@"10" forKey:@"ballKey"];
-    [dict setObject:[Helper md5HexDigest:[NSString stringWithFormat:@"ballKey=%ddagolfla.com", 10]] forKey:@"md5"];
+    [dict setObject:ballKey forKey:@"ballKey"];
+    [dict setObject:[Helper md5HexDigest:[NSString stringWithFormat:@"ballKey=%@dagolfla.com", ballKey]] forKey:@"md5"];
     [[JsonHttp jsonHttp]httpRequest:@"ball/getBallPriceDate" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
         block(array);
     } completionBlock:^(id data) {

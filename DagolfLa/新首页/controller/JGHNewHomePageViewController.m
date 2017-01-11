@@ -145,63 +145,66 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
 
 #pragma mark -- 下载未读消息数量
 - (void)loadMessageData{
-    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"userId"])
-    {
-    }
-    else
-    {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"君高高尔夫" message:@"是否立即登录？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
-        [alertView show];
-        
-        return;
-    }
+    [appDelegate loadMessageData];
     
-    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    [dict setObject:DEFAULF_USERID forKey:@"userKey"];
-    [dict setObject:[Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@dagolfla.com", DEFAULF_USERID]] forKey:@"md5"];
-    [[JsonHttp jsonHttp]httpRequest:@"msg/geSumtUnread" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
-        
-    } completionBlock:^(id data) {
-        NSLog(@"%@", data);
-        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
-            _teamUnread = [[data objectForKey:@"teamUnread"] integerValue];
-            _systemUnread = [[data objectForKey:@"systemUnread"] integerValue];
-            _newFriendUnread = [[data objectForKey:@"newFriendUnread"] integerValue];
-            [self notifyUpdateUnreadMessageCount];
-        }else{
-            [self notifyUpdateUnreadMessageCount];
-            if ([data objectForKey:@"packResultMsg"]) {
-                [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
-            }
-        }
-    }];
+//    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"userId"])
+//    {
+//    }
+//    else
+//    {
+//        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"君高高尔夫" message:@"是否立即登录？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+//        [alertView show];
+//        
+//        return;
+//    }
+//    
+//    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+//    [dict setObject:DEFAULF_USERID forKey:@"userKey"];
+//    [dict setObject:[Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@dagolfla.com", DEFAULF_USERID]] forKey:@"md5"];
+//    [[JsonHttp jsonHttp]httpRequest:@"msg/geSumtUnread" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
+//        
+//    } completionBlock:^(id data) {
+//        NSLog(@"%@", data);
+//        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+//            _teamUnread = [[data objectForKey:@"teamUnread"] integerValue];
+//            _systemUnread = [[data objectForKey:@"systemUnread"] integerValue];
+//            _newFriendUnread = [[data objectForKey:@"newFriendUnread"] integerValue];
+//            [self notifyUpdateUnreadMessageCount];
+//        }else{
+//            [self notifyUpdateUnreadMessageCount];
+//            if ([data objectForKey:@"packResultMsg"]) {
+//                [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+//            }
+//        }
+//    }];
 }
-- (void)notifyUpdateUnreadMessageCount
-{
-    [self updateBadgeValueForTabBarItem];
-}
-- (void)updateBadgeValueForTabBarItem
-{
-    __weak typeof(self) __weakSelf = self;
-    dispatch_async(dispatch_get_main_queue(), ^{
-        
-        int count = [[RCIMClient sharedRCIMClient]
-                     getUnreadCount:0];
-        
-        int iconCount = (count + (int)_teamUnread +(int)_systemUnread +(int)_newFriendUnread);
-        //本地存红点数
-        NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
-        [userdef setObject:@(iconCount) forKey:IconCount];
-        [userdef synchronize];
-        
-        if (iconCount > 0) {
-            [__weakSelf.tabBarController.tabBar showBadgeOnItemIndex:2 badgeValue:count+ (int)_teamUnread + (int)_systemUnread + (int)_newFriendUnread];
-        } else {
-            [__weakSelf.tabBarController.tabBar hideBadgeOnItemIndex:2];
-        }
-        
-    });
-}
+//- (void)notifyUpdateUnreadMessageCount
+//{
+//    [appDelegate loadMessageData];
+////    [self updateBadgeValueForTabBarItem];
+//}
+//- (void)updateBadgeValueForTabBarItem
+//{
+//    __weak typeof(self) __weakSelf = self;
+//    dispatch_async(dispatch_get_main_queue(), ^{
+//        
+//        int count = [[RCIMClient sharedRCIMClient]
+//                     getUnreadCount:0];
+//        
+//        int iconCount = (count + (int)_teamUnread +(int)_systemUnread +(int)_newFriendUnread);
+//        //本地存红点数
+//        NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
+//        [userdef setObject:@(iconCount) forKey:IconCount];
+//        [userdef synchronize];
+//        
+//        if (iconCount > 0) {
+//            [__weakSelf.tabBarController.tabBar showBadgeOnItemIndex:2 badgeValue:count+ (int)_teamUnread + (int)_systemUnread + (int)_newFriendUnread];
+//        } else {
+//            [__weakSelf.tabBarController.tabBar hideBadgeOnItemIndex:2];
+//        }
+//        
+//    });
+//}
 #pragma mark -- 登录PHP
 - (void)loadingPHP{
     [Helper callPHPLoginUserId:[NSString stringWithFormat:@"%@", DEFAULF_USERID]];

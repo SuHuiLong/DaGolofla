@@ -352,9 +352,9 @@
                             if ([[dataDic objectForKey:@"isQCodeCaddie"] integerValue] == 1) {//球童扫码
 //                                choVc.userKeyPlayer = [dataDic objectForKey:@"scanUserKey"];
 //                                choVc.userNamePlayer = [NSString stringWithFormat:@"%@",[dataDic objectForKey:@"scanUserName"]];//
-                                _blockQcodeActivityScore([dataDic objectForKey:@"scanUserKey"], [dataDic objectForKey:@"scanUserName"], [[dataDic objectForKey:@"scanUserName"] integerValue]);
+                                _blockQcodeActivityScore([dataDic objectForKey:@"scanUserKey"], [dataDic objectForKey:@"scanUserName"], [[dataDic objectForKey:@"sex"] integerValue]);
                             }else{//客户扫码
-                                _blockQcodeActivityScore([dataDic objectForKey:@"qcodeUserKey"], [dataDic objectForKey:@"qcodeUserName"], [[dataDic objectForKey:@"scanUserName"] integerValue]);
+                                _blockQcodeActivityScore([dataDic objectForKey:@"qcodeUserKey"], [dataDic objectForKey:@"qcodeUserName"], [[dataDic objectForKey:@"sex"] integerValue]);
 //                                choVc.userKeyPlayer = [dataDic objectForKey:@"qcodeUserKey"];
 //                                choVc.userNamePlayer = [NSString stringWithFormat:@"%@",[dataDic objectForKey:@"qcodeUserName"]];
                                 
@@ -367,12 +367,12 @@
                             
 //                            JGLCaddieSelfScoreViewController* selfVc = [[JGLCaddieSelfScoreViewController alloc]init];
                             if ([[dataDic objectForKey:@"isQCodeCaddie"] integerValue] == 1) {//球童扫码
-                                _blockQcodeScore([dataDic objectForKey:@"scanUserKey"], [dataDic objectForKey:@"scanUserName"], [[dataDic objectForKey:@"scanUserName"] integerValue]);
+                                _blockQcodeScore([dataDic objectForKey:@"scanUserKey"], [dataDic objectForKey:@"scanUserName"], [[dataDic objectForKey:@"sex"] integerValue]);
 //                                selfVc.userKeyPlayer = [dataDic objectForKey:@"scanUserKey"];
 //                                selfVc.userNamePlayer = [NSString stringWithFormat:@"%@",[dataDic objectForKey:@"scanUserName"]];//
                             }
                             else{//客户扫码
-                                _blockQcodeScore([dataDic objectForKey:@"qcodeUserKey"], [dataDic objectForKey:@"qcodeUserName"], [[dataDic objectForKey:@"scanUserName"] integerValue]);
+                                _blockQcodeScore([dataDic objectForKey:@"qcodeUserKey"], [dataDic objectForKey:@"qcodeUserName"], [[dataDic objectForKey:@"sex"] integerValue]);
 //                                selfVc.userKeyPlayer = [dataDic objectForKey:@"qcodeUserKey"];
 //                                selfVc.userNamePlayer = [NSString stringWithFormat:@"%@",[dataDic objectForKey:@"qcodeUserName"]];
                             }
