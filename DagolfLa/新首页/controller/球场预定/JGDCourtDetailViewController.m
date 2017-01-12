@@ -158,11 +158,8 @@ static CGFloat ImageHeight  = 210.0;
     [self.imgProfile addSubview:self.detailBtn];
     
     
-    
     self.view.backgroundColor = [UIColor whiteColor];
     self.courtDetail.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];;
-    
-    
     
 }
 
@@ -176,7 +173,7 @@ static CGFloat ImageHeight  = 210.0;
     
     [[ShowHUD showHUD] showAnimationWithText:@"加载中…" FromView:self.view];
     
-    [[JsonHttp jsonHttp] httpRequest:@"ball/getBallInfo" JsonKey:nil withData:dic requestMethod:@"GET" failedBlock:^(id errType) {
+    [[JsonHttp jsonHttp] httpRequest:@"bookball/getBallInfo" JsonKey:nil withData:dic requestMethod:@"GET" failedBlock:^(id errType) {
         [[ShowHUD showHUD] hideAnimationFromView:self.view];
         
     } completionBlock:^(id data) {
@@ -194,7 +191,8 @@ static CGFloat ImageHeight  = 210.0;
                 self.payMoney = [self.detailDic objectForKey:@"payMoney"];
                 self.unitPaymentMoney = [self.detailDic objectForKey:@"unitPaymentMoney"];
                 self.selectDate = time;
-                if ([self.detailDic objectForKey:@"deductionMoney"]) {
+                
+                if ([self.detailDic objectForKey:@"deductionMoney"] && [[self.detailDic objectForKey:@"deductionMoney"] integerValue] != 0) {
                     self.deductionMoney = [[self.detailDic objectForKey:@"deductionMoney"] stringValue];
                 }
                 _date = [NSString stringWithFormat:@"%@", [Helper stringFromDateString:time withFormater:@"yyyy年MM月dd日"]];
@@ -438,20 +436,20 @@ static CGFloat ImageHeight  = 210.0;
                 [payBtn setBackgroundImage:[UIImage imageNamed:@"booking_paycolor"] forState:(UIControlStateNormal)];
                 [payBtn setTitleColor:[UIColor colorWithHexString:@"#fc5a01"] forState:(UIControlStateNormal)];
 
-                if ([self.detailDic objectForKey:@"deductionMoney"]) {
+                if (self.deductionMoney) {
         // 立减优惠
                 // 优惠前价格
-                    UILabel *greyLB = [self lablerect:CGRectMake(screenWidth - 155 * ProportionAdapter , 30 * ProportionAdapter, 60 * ProportionAdapter, 20 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#a0a0a0"] labelFont:13 text:[NSString stringWithFormat:@"¥ %@",[self.detailDic objectForKey:@"unitPrice"]] textAlignment:(NSTextAlignmentRight)];
+                    UILabel *greyLB = [self lablerect:CGRectMake(screenWidth - 155 * ProportionAdapter , 30 * ProportionAdapter, 60 * ProportionAdapter, 20 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#a0a0a0"] labelFont:13 text:[NSString stringWithFormat:@"¥ %@",self.unitPrice] textAlignment:(NSTextAlignmentRight)];
                     [cell.contentView addSubview:greyLB];
                     
-                    CGFloat width = [Helper textWidthFromTextString:[NSString stringWithFormat:@"¥ %@",[self.detailDic objectForKey:@"unitPrice"]] height:screenWidth - 20 * ProportionAdapter fontSize:13];
+                    CGFloat width = [Helper textWidthFromTextString:[NSString stringWithFormat:@"¥ %@",self.unitPrice] height:screenWidth - 20 * ProportionAdapter fontSize:13];
                     
                     UILabel *lineLB = [self lablerect:CGRectMake(screenWidth - 95 * ProportionAdapter - width - 2.5 * ProportionAdapter , 40 * ProportionAdapter, width + 5 * ProportionAdapter, 1 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#a0a0a0"] labelFont:0 text:@"" textAlignment:(NSTextAlignmentCenter)];
                     lineLB.backgroundColor = [UIColor colorWithHexString:@"#a0a0a0"];
                     [cell.contentView addSubview:lineLB];
                     
                 // 优惠后价格
-                    NSInteger orangePrice = [[self.detailDic objectForKey:@"unitPrice"] integerValue] - [[self.detailDic objectForKey:@"deductionMoney"] integerValue];
+                    NSInteger orangePrice = [self.unitPrice integerValue] - [self.deductionMoney integerValue];
 
                     UILabel *orangeLB = [self lablerect:CGRectMake(screenWidth - 155 * ProportionAdapter , 50 * ProportionAdapter, 60 * ProportionAdapter, 20 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#fc5a01"] labelFont:17 text:[NSString stringWithFormat:@"¥ %td", orangePrice] textAlignment:(NSTextAlignmentRight)];
                     [cell.contentView addSubview:orangeLB];
@@ -459,7 +457,7 @@ static CGFloat ImageHeight  = 210.0;
                 }else{
                     
             // 无立减优惠
-                    [self lableReDraw:priceLB rect:CGRectMake(screenWidth - 155 * ProportionAdapter , 35 * ProportionAdapter, 60 * ProportionAdapter, 30 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#fc5a01"] labelFont:17 text:[NSString stringWithFormat:@"¥ %@", [self.detailDic objectForKey:@"unitPrice"]] textAlignment:(NSTextAlignmentRight)];
+                    [self lableReDraw:priceLB rect:CGRectMake(screenWidth - 155 * ProportionAdapter , 35 * ProportionAdapter, 60 * ProportionAdapter, 30 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#fc5a01"] labelFont:17 text:[NSString stringWithFormat:@"¥ %@", self.unitPrice] textAlignment:(NSTextAlignmentRight)];
                     
                     NSMutableAttributedString *mutaStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"¥ %@", self.unitPrice]];
                     [mutaStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:13 * ProportionAdapter] range:NSMakeRange(0, 1)];
@@ -528,6 +526,11 @@ static CGFloat ImageHeight  = 210.0;
         self.unitPrice = pay;
         self.payMoney = [NSString stringWithFormat:@"%td", [pay integerValue] - [scenePay integerValue]];
         self.unitPaymentMoney = scenePay;
+        if ([deductionMoney isEqualToString:@""]) {
+            self.deductionMoney = nil;
+        }else{
+            self.deductionMoney = deductionMoney;
+        }
         self.selectDate = selectTime;
         NSIndexPath *indexPath0 = [NSIndexPath indexPathForRow:0 inSection:0];
         NSIndexPath *indexPath1 = [NSIndexPath indexPathForRow:1 inSection:0];
@@ -548,7 +551,12 @@ static CGFloat ImageHeight  = 210.0;
 - (void)payAct{
     JGDCommitOrderViewController *commitVC = [[JGDCommitOrderViewController alloc] init];
     commitVC.selectDate = self.selectDate;
-    commitVC.selectMoney = self.payMoney;
+    
+    if (self.deductionMoney) {
+        commitVC.selectMoney = [NSString stringWithFormat:@"%td", [self.payMoney integerValue] - [self.deductionMoney integerValue]];
+    }else{
+        commitVC.selectMoney = self.payMoney;
+    }
     commitVC.selectSceneMoney = self.unitPaymentMoney;
     commitVC.detailDic = self.detailDic;
     [self.navigationController pushViewController:commitVC animated:YES];
