@@ -109,7 +109,7 @@ static NSString *const JGHTimeViewListCellIdentifier = @"JGHTimeViewListCell";
     [dict setObject:ballKey forKey:@"ballKey"];
     [dict setObject:dateString forKey:@"date"];
     [dict setObject:[Helper md5HexDigest:[NSString stringWithFormat:@"ballKey=%@dagolfla.com", ballKey]] forKey:@"md5"];
-    [[JsonHttp jsonHttp]httpRequest:@"ball/getBallHalfHourPrice" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
+    [[JsonHttp jsonHttp]httpRequest:@"bookball/getBallHalfHourPrice" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
         [LQProgressHud hide];
     } completionBlock:^(id data) {
         NSLog(@"%@", data);

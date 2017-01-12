@@ -526,7 +526,11 @@ static CGFloat ImageHeight  = 210.0;
         self.unitPrice = pay;
         self.payMoney = [NSString stringWithFormat:@"%td", [pay integerValue] - [scenePay integerValue]];
         self.unitPaymentMoney = scenePay;
-        self.deductionMoney = deductionMoney;
+        if ([deductionMoney isEqualToString:@""]) {
+            self.deductionMoney = nil;
+        }else{
+            self.deductionMoney = deductionMoney;
+        }
         self.selectDate = selectTime;
         NSIndexPath *indexPath0 = [NSIndexPath indexPathForRow:0 inSection:0];
         NSIndexPath *indexPath1 = [NSIndexPath indexPathForRow:1 inSection:0];

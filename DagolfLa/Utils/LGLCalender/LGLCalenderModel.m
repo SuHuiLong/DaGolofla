@@ -101,7 +101,7 @@
     [dict setObject:DEFAULF_USERID forKey:@"userKey"];
     [dict setObject:ballKey forKey:@"ballKey"];
     [dict setObject:[Helper md5HexDigest:[NSString stringWithFormat:@"ballKey=%@dagolfla.com", ballKey]] forKey:@"md5"];
-    [[JsonHttp jsonHttp]httpRequest:@"ball/getBallPriceDate" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
+    [[JsonHttp jsonHttp]httpRequest:@"bookball/getBallPriceDate" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
         block(array);
     } completionBlock:^(id data) {
         NSLog(@"%@", data);
