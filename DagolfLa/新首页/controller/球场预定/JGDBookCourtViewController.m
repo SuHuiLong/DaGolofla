@@ -71,7 +71,7 @@
     [dic setObject:[def objectForKey:BDMAPLNG] forKey:@"longitude"];
     //    [dic setObject:DEFAULF_USERID forKey:@"ballName"];
 
-    [[JsonHttp jsonHttp] httpRequest:@"ball/getBallBookingList" JsonKey:nil withData:dic requestMethod:@"GET" failedBlock:^(id errType) {
+    [[JsonHttp jsonHttp] httpRequest:@"bookball/getBallBookingList" JsonKey:nil withData:dic requestMethod:@"GET" failedBlock:^(id errType) {
         [self.courtTableView.header endRefreshing];
         [self.courtTableView.footer endRefreshing];
 

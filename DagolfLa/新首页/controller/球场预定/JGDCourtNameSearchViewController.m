@@ -51,7 +51,7 @@
 - (void)downData{
     
     NSMutableDictionary *dic = [NSMutableDictionary dictionary];
-    [[JsonHttp jsonHttp] httpRequest:@"ball/getHotBallList" JsonKey:nil withData:dic requestMethod:@"GET" failedBlock:^(id errType) {
+    [[JsonHttp jsonHttp] httpRequest:@"bookball/getHotBallList" JsonKey:nil withData:dic requestMethod:@"GET" failedBlock:^(id errType) {
         
     } completionBlock:^(id data) {
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
