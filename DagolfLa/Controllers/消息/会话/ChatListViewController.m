@@ -549,7 +549,7 @@
             self.newfirendRCDbtn.frame = CGRectMake(24 *ProportionAdapter, 5 *ProportionAdapter, 20 *ProportionAdapter, 20 *ProportionAdapter);
             _newfirendRCDbtn.unreadCount = [NSString stringWithFormat:@"%d", _newFriendUnreadCount];
             [_costumBtn addSubview:_newfirendRCDbtn];
-        }else if (_newFriendUnreadCount == 0){
+        }else if (_newFriendUnreadCount <= 0){
             [_newfirendRCDbtn removeFromSuperview];
             _newfirendRCDbtn = nil;
         }else{
@@ -561,7 +561,7 @@
         if (100 > systemUnreadCount && systemUnreadCount >0) {
             self.systemRCDbtn.frame = CGRectMake(50 *ProportionAdapter, 10 *ProportionAdapter, 20 *ProportionAdapter, 20 *ProportionAdapter);
             _systemRCDbtn.unreadCount = [NSString stringWithFormat:@"%d", systemUnreadCount];
-        }else if (systemUnreadCount == 0){
+        }else if (systemUnreadCount <= 0){
             [_systemRCDbtn removeFromSuperview];
             _systemRCDbtn = nil;
         }else{
@@ -572,7 +572,7 @@
         if (100 > teamUnreadCount && teamUnreadCount>0) {
             self.teamRCDbtn.frame = CGRectMake(50 *ProportionAdapter, 78 *ProportionAdapter, 20 *ProportionAdapter, 20 *ProportionAdapter);
             _teamRCDbtn.unreadCount = [NSString stringWithFormat:@"%d", teamUnreadCount];
-        }else if (teamUnreadCount == 0){
+        }else if (teamUnreadCount <= 0){
             [_teamRCDbtn removeFromSuperview];
             _teamRCDbtn = nil;
         }else{

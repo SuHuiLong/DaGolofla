@@ -83,14 +83,14 @@ static NSString *const JGHTimeViewListCellIdentifier = @"JGHTimeViewListCell";
         NSString *money = [NSString stringWithFormat:@"%@", [dict objectForKey:@"money"]];
         NSString *paymentMoney;
         if ([dict objectForKey:@"paymentMoney"]) {
-            paymentMoney = [dict objectForKey:@"paymentMoney"];
+            paymentMoney = [NSString stringWithFormat:@"%@", [dict objectForKey:@"paymentMoney"]];
         }else{
             paymentMoney = @"";
         }
         
         NSString *deductionMoney;
         if ([dict objectForKey:@"deductionMoney"]) {
-            deductionMoney = [dict objectForKey:@"deductionMoney"];
+            deductionMoney = [NSString stringWithFormat:@"%@", [dict objectForKey:@"deductionMoney"]];
         }else{
             deductionMoney = @"";
         }

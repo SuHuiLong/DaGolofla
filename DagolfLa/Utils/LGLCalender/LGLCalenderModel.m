@@ -127,8 +127,10 @@
                     [dataArray addObject:[data objectForKey:@"1"]];
                 }
             }else{
-                [dataArray addObject:[data objectForKey:@"1"]];
-                [dataArray addObject:[data objectForKey:@"2"]];
+                if ([[data allKeys] count] > 3) {
+                    [dataArray addObject:[data objectForKey:@"1"]];
+                    [dataArray addObject:[data objectForKey:@"2"]];
+                }
             }
             
             //配置新数据
