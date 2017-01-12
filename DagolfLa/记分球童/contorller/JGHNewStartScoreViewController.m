@@ -218,9 +218,7 @@
                 }
             }
             else{
-                //                [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
-                //                JGLSelfScoreViewController* SsVc = [[JGLSelfScoreViewController alloc]init];
-                //                [self.navigationController pushViewController:SsVc animated:YES];
+                
             }
 
         }
@@ -813,7 +811,6 @@
 //                }
             }
             else{
-                //                [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
                 //                JGLSelfScoreViewController* SsVc = [[JGLSelfScoreViewController alloc]init];
                 //                [self.navigationController pushViewController:SsVc animated:YES];
             }

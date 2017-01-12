@@ -467,7 +467,7 @@
 
 //图片点击事件
 - (void)TuPianbuttonClick:(UITapGestureRecognizer *)tap{
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
+//    [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
     NSMutableArray *arr = [NSMutableArray array];
     arr = [NSMutableArray arrayWithArray:[_cellDataArray[_cellIndexPath] pics]];
     self.blockPicPush(tap.view.tag-110, arr);

@@ -90,7 +90,7 @@
                 [self presentViewController:alert animated:YES completion:nil];
                 UIAlertAction* action1=[UIAlertAction actionWithTitle:@"继续记分" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                     ScoreProfessViewController *simpVc = [[ScoreProfessViewController alloc]init];
-                    [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
+                    simpVc.hidesBottomBarWhenPushed = YES;
                     simpVc.isSave = @10;
                     simpVc.strTitle = _model.scoreObjectTitle;
                     simpVc.strBallName = _model.scoreballName;
@@ -129,7 +129,7 @@
                             NSDictionary* dict = [NSJSONSerialization JSONObjectWithData:respondsData options:NSJSONReadingMutableContainers error:nil];
                             if ([[dict objectForKey:@"success"] integerValue] == 1) {
                                 ScoreProfessViewController *simpVc = [[ScoreProfessViewController alloc]init];
-                                [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
+                                simpVc.hidesBottomBarWhenPushed = YES;
                                 simpVc.isSave = @10;
                                 simpVc.strTitle = _model.scoreObjectTitle;
                                 simpVc.strBallName = _model.scoreballName;

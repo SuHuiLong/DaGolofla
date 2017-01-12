@@ -56,7 +56,6 @@
 
 - (void)viewDidDisappear:(BOOL)animated{
     [super viewDidDisappear:animated];
-//    self.tabBarController.tabBar.hidden = NO;
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -66,17 +65,9 @@
     
     [_mapView viewWillAppear];
     
-//    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"backL"] style:UIBarButtonItemStylePlain target:self action:@selector(backButtonClcik)];
-//    item.tintColor=[UIColor whiteColor];
-//    self.navigationItem.leftBarButtonItem = item;
-//    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"nav_bg"] forBarMetrics:UIBarMetricsDefault];
     
     self.tabBarController.tabBar.hidden = YES;
 }
-//
-//-(void)backButtonClcik{
-//    [self.navigationController popToRootViewControllerAnimated:YES];
-//}
 
 
 - (void)viewDidLoad {

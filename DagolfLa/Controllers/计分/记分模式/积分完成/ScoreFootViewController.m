@@ -355,9 +355,10 @@
                     
                     [Helper alertViewWithTitle:@"保存成功!" withBlockCancle:^{
                     } withBlockSure:^{
-                        [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
+                        
                         MyFootViewController* footVc = [[MyFootViewController alloc]init];
 //                        footVc.typeNum = 3;
+                        footVc.hidesBottomBarWhenPushed = YES;
                         [self.navigationController pushViewController:footVc animated:YES];
                     } withBlock:^(UIAlertController *alertView) {
                         [self presentViewController:alertView animated:YES completion:nil];

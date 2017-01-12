@@ -31,7 +31,6 @@
     self.slideSwitchView.hidden = NO;
     self.tabBarController.view.backgroundColor = [UIColor blackColor];
     self.navigationController.navigationBarHidden = YES;
-//    [[NSNotificationCenter defaultCenter] postNotificationName:@"show" object:nil];
     self.tabBarController.tabBar.hidden = NO;
 }
 
@@ -109,7 +108,6 @@
 -(void)moreRightClick{
     
     if ([[NSUserDefaults standardUserDefaults]objectForKey:@"userId"]) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:nil];
         PublishViewController* pubVc = [[PublishViewController alloc]init];
         pubVc.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:pubVc animated:YES];
@@ -141,7 +139,6 @@
 -(void)moreLeftClick{
     if ([[NSUserDefaults standardUserDefaults]objectForKey:@"userId"]) {
 
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:nil];
         MyNewsBoxViewController * tVc = [[MyNewsBoxViewController alloc]init];
        
         WXViewController *vc = _muArray[0];

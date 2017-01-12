@@ -70,19 +70,7 @@
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"nav_bg"] forBarMetrics:UIBarMetricsDefault];
     
     self.tabBarController.tabBar.hidden = YES;
-//    [[PostDataRequest sharedInstance] postDataRequest:@"user/queryById.do" parameter:@{@"userId":_str} success:^(id respondsData) {
-//        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:respondsData options:NSJSONReadingMutableContainers error:nil];
-//        _model = nil;
-//        
-//        if ([[dict objectForKey:@"success"]boolValue]) {
-//            _model = [[MeselfModel alloc] init];
-//            [_model setValuesForKeysWithDictionary:[dict objectForKey:@"rows"]];
-//        }else {
-//        }
-//        [_tableView reloadData];
-//        
-//    } failed:^(NSError *error) {
-//    }];
+
     NSMutableDictionary* dictUser = [[NSMutableDictionary alloc]init];
     [dictUser setObject:DEFAULF_USERID forKey:@"userKey"];
     NSString *strMD = [JGReturnMD5Str getCaddieAuthUserKey:[DEFAULF_USERID integerValue]];

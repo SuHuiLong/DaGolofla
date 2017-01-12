@@ -47,22 +47,12 @@
 {
     [super viewWillAppear:animated];
     ////NSLog(@"100");
-    //    self.tabBarController.tabBar.hidden = YES;
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hideTabBar) name:@"hide" object:nil];
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showTabBar) name:@"show" object:nil];
-    ////NSLog(@"88");
-    
-    
-    
 }
 
 
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-//    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"hide" object:nil];
-//    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"show" object:nil];
     //创建视图控制器数组
     //
     //    //创建标签
@@ -92,61 +82,6 @@
     
 }
 
--(void)hideTabBar
-{
-    self.tabBar.hidden = YES;
-}
--(void)showTabBar
-{
-    self.tabBar.hidden = NO;
-}
-
--(void)actionClick:(UIButton *)btn
-{
-    for (UIView *view in btn.superview.subviews) {
-        
-        if ([view isKindOfClass:[TabBarItem class]]) {
-            TabBarItem *item = (TabBarItem *)view;
-            item.selected = NO;
-        }
-    }
-    self.selectedIndex = btn.tag - 100;
-    btn.selected = YES;
-}
-    ///////JKSlideViewController     /////CommunityViewController
-//-(void)configViewControllers
-//{
-//    
-//    NSArray *vcArr = @[@"ShouyeViewController",
-//                       @"JKSlideViewController",
-//                       @"ScoreViewController",
-//                       @"ChatListViewController",
-//                       @"MeViewController"];
-//    
-//    NSArray *titleArr = @[@"首页",@"社区",@"记分",@"消息",@"我的"];
-//    NSMutableArray *arr = [[NSMutableArray alloc]init];
-//    for (int i = 0; i<vcArr.count; i++) {
-//        if (i != 3) {
-//            ViewController *vc = [[NSClassFromString(vcArr[i]) alloc]init];
-//            UINavigationController *navi = [[UINavigationController alloc]initWithRootViewController:vc];
-//            //            vc.type = i;
-//            vc.title = titleArr[i];
-//            [arr addObject:navi];
-//        }
-//        else
-//        {
-//            RCConversationViewController *vc = [[NSClassFromString(vcArr[i]) alloc]init];
-//            UINavigationController *navi = [[UINavigationController alloc]initWithRootViewController:vc];
-//            //            vc.type = i;
-//            vc.title = titleArr[i];
-//            [arr addObject:navi];
-//        }
-//        //
-//    }
-//    self.viewControllers = arr;
-//    
-//}
-
 -(void)setUpAllViewControlller
 {
     JGHNewHomePageViewController *shou = [[JGHNewHomePageViewController alloc] init];
@@ -154,17 +89,9 @@
     [self setUpOneChildViewController:shou image:[UIImage imageNamed:@"home-page_gray"] selectImage:[[UIImage imageNamed:@"home-page_green"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
     JKSlideViewController *comVc = [[JKSlideViewController alloc] init];
     
-    
-    
-    
-    //    USAFreindViewController *fe = [[USAFreindViewController alloc] init];
-//    CommunityViewController *comVc = [[CommunityViewController alloc] init];
     comVc.title = @"球友圈";
     [self setUpOneChildViewController:comVc image:[UIImage imageNamed:@"main_btn_community"] selectImage:[[UIImage imageNamed:@"main_btn_community_select"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
-    
-//    JGLScoreNewViewController *scoVc = [[JGLScoreNewViewController alloc] init];
-//    scoVc.title = @"记分";
-    
+        
     ChatListViewController *chatVc = [[ChatListViewController alloc] init];
     chatVc.title = @"消息";
     [self setUpOneChildViewController:chatVc image:[UIImage imageNamed:@"chat_gray"] selectImage:[[UIImage imageNamed:@"chat_green"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
@@ -181,26 +108,8 @@
     // 防止返回根视图控制器，不走viewWillAppear
     naVC.delegate = self;
     // 调整图片的位置,代码的位置写在tabbar添加子导航控制器
-    //    if ([vController isKindOfClass:[ViewController class]]) {
     naVC.tabBarItem.imageInsets = UIEdgeInsetsMake(0, 0, 0, 0);
-    //    } else {
-    //        naVC.tabBarItem.imageInsets = UIEdgeInsetsMake(3, 0, -3, 0);
-    //    }
-    
-    //    [self.tabBar setBackgroundImage:[UIImage imageNamed:@"tab_bg1"]];
-//    if (ScreenWidth == 320) {
-//        [self.tabBar setSelectionIndicatorImage:[UIImage imageNamed:@"tab_320.png"]];
-//    }
-//    else if (ScreenWidth == 375)
-//    {
-//        [self.tabBar setSelectionIndicatorImage:[UIImage imageNamed:@"tab_375.png"]];
-//    }
-//    else
-//    {
-//        [self.tabBar setSelectionIndicatorImage:[UIImage imageNamed:@"tab_414.png"]];
-//    }
-//    [self.tabBar setSelectionIndicatorImage:[UIImage imageNamed:@"nav_bgcolor"]];
-//    [self.tabBar setBackgroundImage:[UIImage imageNamed:@"nav_bgcolor"]];
+
     [self.tabBar setBackgroundColor:[UITool colorWithHexString:@"f6f7f7" alpha:1]];
     
     naVC.tabBarItem.image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
@@ -212,24 +121,6 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-//- (BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController {
-// 程序不卡的代码
-//    if (self.selectedIndex == 1 || self.selectedIndex == 2 || self.selectedIndex == 3 || self.selectedIndex == 4) {
-//        return YES;
-//    }else {
-//        if ([[NSUserDefaults standardUserDefaults] objectForKey:@"userId"] != nil) {
-//            return YES;
-//        }else {
-//            if (tabBarController.viewControllers[0] == viewController) {
-//                return NO;
-//            }else {
-//                NSNotification *notification = [NSNotification notificationWithName:@"loging" object:nil userInfo:nil];
-//                [[NSNotificationCenter defaultCenter] postNotification:notification];
-//                return NO;
-//            }
-//        }
-//    }
-//}
 
 - (BOOL)shouldAutorotate
 {

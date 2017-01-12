@@ -186,7 +186,6 @@
     if ([[NSUserDefaults standardUserDefaults]objectForKey:@"userId"]) {
         
         //点击cell进入详情
-//        [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
        
         DetailViewController * comDevc = [[DetailViewController alloc]init];
         

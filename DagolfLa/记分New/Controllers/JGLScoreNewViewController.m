@@ -231,19 +231,19 @@
                     btn.userInteractionEnabled = YES;
                     if ([[data objectForKey:@"acBoolean"] integerValue] == 1) {
                         JGLChooseScoreViewController* chooVc = [[JGLChooseScoreViewController alloc]init];
-                        [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
+                        chooVc.hidesBottomBarWhenPushed = YES;
                         [self.navigationController pushViewController:chooVc animated:YES];
                     }
                     else{
-                        [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
                         JGLSelfScoreViewController* SsVc = [[JGLSelfScoreViewController alloc]init];
+                        SsVc.hidesBottomBarWhenPushed = YES;
                         [self.navigationController pushViewController:SsVc animated:YES];
                     }
                     
                 } withBlockSure:^{
                     btn.userInteractionEnabled = YES;
                     JGHScoresViewController* scrVc = [[JGHScoresViewController alloc]init];
-                    [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
+                    scrVc.hidesBottomBarWhenPushed = YES;
                     scrVc.scorekey = [NSString stringWithFormat:@"%@",[data objectForKey:@"scoreKey"]];
                     NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
                     
@@ -261,12 +261,12 @@
                 btn.userInteractionEnabled = YES;
                 if ([[data objectForKey:@"acBoolean"] integerValue] == 1) {
                     JGLChooseScoreViewController* chooVc = [[JGLChooseScoreViewController alloc]init];
-                    [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
+                    chooVc.hidesBottomBarWhenPushed = YES;
                     [self.navigationController pushViewController:chooVc animated:YES];
                 }
                 else{
-                    [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
                     JGLSelfScoreViewController* SsVc = [[JGLSelfScoreViewController alloc]init];
+                    SsVc.hidesBottomBarWhenPushed = YES;
                     [self.navigationController pushViewController:SsVc animated:YES];
                 }
             }
@@ -374,14 +374,14 @@
     {
         if (indexPath.item == 1) {
             JGDHistoryScoreViewController *historyVC = [[JGDHistoryScoreViewController alloc] init];
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
+            historyVC.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:historyVC animated:YES];
         }else if (indexPath.item == 0) {
             JGTeamDeatilWKwebViewController *wkVC = [[JGTeamDeatilWKwebViewController alloc] init];
             wkVC.detailString = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/score/scoreList.html?userKey=%@&md5=%@",DEFAULF_USERID, [Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@dagolfla.com", DEFAULF_USERID]]];
             wkVC.fromWitchVC = 722;
             wkVC.teamName = @"统计数据";
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
+            wkVC.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:wkVC animated:YES];
         }else if (indexPath.item == 2) {
             
@@ -396,7 +396,7 @@
                     
                     if ([[data objectForKey:@"has"] integerValue] == 1) {
                         JGLCaddieScoreViewController *acdieVC = [[JGLCaddieScoreViewController alloc] init];
-                        [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
+                        acdieVC.hidesBottomBarWhenPushed = YES;
                         [self.navigationController pushViewController:acdieVC animated:YES];
                     }else{
                         
@@ -404,13 +404,13 @@
                         if ([def objectForKey:@"isCaddie"]) {
                             
                             JGDPlayPersonViewController *personVC = [[JGDPlayPersonViewController alloc] init];
-                            [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
+                            personVC.hidesBottomBarWhenPushed = YES;
                             [self.navigationController pushViewController:personVC animated:YES];
                             
                         }else{
                             
                             JGHCaddieViewController *caddieCtrl = [[JGHCaddieViewController alloc]initWithNibName:@"JGHCaddieViewController" bundle:nil];
-                            [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
+                            caddieCtrl.hidesBottomBarWhenPushed = YES;
                             [self.navigationController pushViewController:caddieCtrl animated:YES];
                         }
                         

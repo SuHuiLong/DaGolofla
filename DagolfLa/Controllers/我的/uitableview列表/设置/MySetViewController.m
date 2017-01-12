@@ -66,7 +66,6 @@
     UIBarButtonItem *leftBar = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"backL"] style:(UIBarButtonItemStyleDone) target:self action:@selector(backBtn)];
     leftBar.tintColor = [UIColor whiteColor];
     self.navigationItem.leftBarButtonItem = leftBar;
-    //[[NSNotificationCenter defaultCenter] postNotificationName:@"show" object:nil];
     self.tabBarController.tabBar.hidden = YES;
 }
 
@@ -310,7 +309,6 @@
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-//    [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
 
     if (indexPath.row == 0) {
         InformViewController* inforVc = [[InformViewController alloc]init];

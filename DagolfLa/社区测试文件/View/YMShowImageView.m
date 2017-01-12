@@ -148,7 +148,7 @@
 
 - (void)disappear{
     //发出通知隐藏标签栏
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"show" object:nil];
+//    [[NSNotificationCenter defaultCenter] postNotificationName:@"show" object:nil];
 
     _removeImg();
    
@@ -198,7 +198,7 @@
     
      [bgView addSubview:self];
     //发出通知隐藏标签栏
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:nil];
+//    [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:nil];
      _removeImg = tempBlock;
      [UIView animateWithDuration:0.5f animations:^(){
          

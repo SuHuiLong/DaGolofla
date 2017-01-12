@@ -94,14 +94,7 @@
     
     [[UIApplication sharedApplication]setStatusBarStyle:UIStatusBarStyleLightContent];
     
-    //监听分组页面返回，刷新数据
-    NSNotificationCenter * center = [NSNotificationCenter defaultCenter];
-    //添加当前类对象为一个观察者，name和object设置为nil，表示接收一切通知
-    [center addObserver:self selector:@selector(PushJGTeamActibityNameViewController:) name:@"PushJGTeamActibityNameViewController" object:nil];
-    
-    
     self.tabBarController.tabBar.hidden = NO;
-//    [[NSNotificationCenter defaultCenter] postNotificationName:@"show" object:self];
 
     if ([[NSUserDefaults standardUserDefaults] objectForKey:@"userId"]) {
         [RCIM sharedRCIM].receiveMessageDelegate=self;
@@ -172,150 +165,7 @@
         [self presentViewController:alertView animated:YES completion:nil];
     }];
 }
-#pragma mark -- 网页 跳转活动详情
-- (void)PushJGTeamActibityNameViewController:(NSNotification *)not{
-    
-    
-    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"userId"]) {
-        
-    }
-    else
-    {
-        [self loginOut];
-        return;
-    }
-    
-    
-    if ([not.userInfo[@"details"] isEqualToString:@"activityKey"]) {
-        //活动
-        JGTeamActibityNameViewController *teamCtrl= [[JGTeamActibityNameViewController alloc]init];
-        teamCtrl.teamKey = [not.userInfo[@"timekey"] integerValue];
-        teamCtrl.hidesBottomBarWhenPushed = YES;
-        teamCtrl.hidesBottomBarWhenPushed = YES;
-        [self.navigationController pushViewController:teamCtrl animated:YES];
-        return;
-    }
-    else if ([not.userInfo[@"details"] isEqualToString:@"teamKey"])
-    {
-        //球队
-        NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
-        [dic setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"userId"] forKey:@"userKey"];
-        [dic setObject:@([not.userInfo[@"timekey"] integerValue]) forKey:@"teamKey"];
-        
-//        [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
 
-        JGDNewTeamDetailViewController *newTeamVC = [[JGDNewTeamDetailViewController alloc] init];
-        newTeamVC.timeKey = not.userInfo[@"timekey"];
-        newTeamVC.hidesBottomBarWhenPushed = YES;
-        [self.navigationController pushViewController:newTeamVC animated:YES];
-        
-//        [[JsonHttp jsonHttp] httpRequest:@"team/getTeamInfo" JsonKey:nil withData:dic requestMethod:@"GET" failedBlock:^(id errType) {
-//            
-//        } completionBlock:^(id data) {
-//            
-//            
-//            if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
-//                [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
-//                
-//                if (![data objectForKey:@"teamMember"]) {
-//                    JGNotTeamMemberDetailViewController *detailVC = [[JGNotTeamMemberDetailViewController alloc] init];
-//                    detailVC.detailDic = [data objectForKey:@"team"];
-//                    
-//                    [self.navigationController pushViewController:detailVC animated:YES];
-//                }else{
-//                    
-//                    if ([[[data objectForKey:@"teamMember"] objectForKey:@"power"] containsString:@"1005"]){
-//                        JGTeamMemberORManagerViewController *detailVC = [[JGTeamMemberORManagerViewController alloc] init];
-//                        detailVC.detailDic = [data objectForKey:@"team"];
-//                        detailVC.isManager = YES;
-//                        [self.navigationController pushViewController:detailVC animated:YES];
-//                    }else{
-//                        JGTeamMemberORManagerViewController *detailVC = [[JGTeamMemberORManagerViewController alloc] init];
-//                        detailVC.detailDic = [data objectForKey:@"team"];
-//                        detailVC.isManager = NO;
-//                        [self.navigationController pushViewController:detailVC animated:YES];
-//                    }
-//                    
-//                    
-//                }
-//                
-//            }else{
-//                if ([data objectForKey:@"packResultMsg"]) {
-//                    [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
-//                }
-//            }
-//            
-//        }];
-        
-        return;
-    }
-    else if ([not.userInfo[@"details"] isEqualToString:@"goodKey"])
-    {
-        //商城
-//        [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
-        UseMallViewController* userVc = [[UseMallViewController alloc]init];
-        userVc.linkUrl = [NSString stringWithFormat:@"http://www.dagolfla.com/app/ProductDetails.html?proid=%td",[not.userInfo[@"timekey"] integerValue]];
-        userVc.hidesBottomBarWhenPushed = YES;
-        [self.navigationController pushViewController:userVc animated:YES];
-        return;
-    }
-    else if ([not.userInfo[@"details"] isEqualToString:@"url"])
-    {
-        //h5
-//        [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
-        JGLPushDetailsViewController* puVc = [[JGLPushDetailsViewController alloc]init];
-        puVc.strUrl = [NSString stringWithFormat:@"%@",not.userInfo[@"timekey"]];
-        puVc.hidesBottomBarWhenPushed = YES;
-        [self.navigationController pushViewController:puVc animated:YES];
-    }
-    else if ([not.userInfo[@"details"] isEqualToString:@"moodKey"])
-    {
-        //社区
-//        [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
-        
-        DetailViewController * comDevc = [[DetailViewController alloc]init];
-        
-        comDevc.detailId = [NSNumber numberWithInteger:[not.userInfo[@"timekey"] integerValue]];
-        comDevc.hidesBottomBarWhenPushed = YES;
-        [self.navigationController pushViewController:comDevc animated:YES];
-        
-    }
-    //创建球队
-    else if ([not.userInfo[@"details"] isEqualToString:@"createTeam"]) {
-        NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
-        
-        if ([user objectForKey:@"cacheCreatTeamDic"]) {
-            UIAlertController *alert=[UIAlertController alertControllerWithTitle:@"提示" message:@"是否继续上次编辑" preferredStyle:UIAlertControllerStyleAlert];
-            
-            UIAlertAction *action1=[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                [user setObject:0 forKey:@"cacheCreatTeamDic"];
-                JGNewCreateTeamTableViewController *creatteamVc = [[JGNewCreateTeamTableViewController alloc] init];
-                creatteamVc.hidesBottomBarWhenPushed = YES;
-                [self.navigationController pushViewController:creatteamVc animated:YES];
-            }];
-            UIAlertAction* action2=[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                JGNewCreateTeamTableViewController *creatteamVc = [[JGNewCreateTeamTableViewController alloc] init];
-                creatteamVc.detailDic = [[user objectForKey:@"cacheCreatTeamDic"] mutableCopy];
-                creatteamVc.titleField.text = [[user objectForKey:@"cacheCreatTeamDic"] objectForKey:@"name"];
-                
-                creatteamVc.hidesBottomBarWhenPushed = YES;
-                [self.navigationController pushViewController:creatteamVc animated:YES];
-            }];
-            
-            [alert addAction:action1];
-            [alert addAction:action2];
-            [self presentViewController:alert animated:YES completion:nil];
-            
-        }else{
-            JGNewCreateTeamTableViewController *creatteamVc = [[JGNewCreateTeamTableViewController alloc] init];
-            creatteamVc.hidesBottomBarWhenPushed = YES;
-            [self.navigationController pushViewController:creatteamVc animated:YES];
-        }
-    }
-    else{
-        
-    }
-}
 - (void)dealloc{
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
@@ -545,7 +395,6 @@
             switch (indexPath.row) {
                 case 0:
                 {
-//                    [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
                     ContactViewController *VC = arr[1];
                     VC.hidesBottomBarWhenPushed = YES;
                     [self.navigationController pushViewController:VC animated:YES];
@@ -553,13 +402,11 @@
                 }
                 case 1:
                 {
-//                    [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
                     [self.navigationController pushViewController:arr[3] animated:YES];
                     break;
                 }
                 case 2:
                 {
-//                    [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
                     [self.navigationController pushViewController:arr[2] animated:YES];
                     break;
                 }
@@ -573,20 +420,17 @@
             switch (indexPath.row) {
                 case 0:
                 {
-//                    [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
                     [self.navigationController pushViewController:arr[4] animated:YES];
                     break;
                 }
                 case 1:
                 {
-//                    [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
                     [self.navigationController pushViewController:arr[5] animated:YES];
                     break;
                 }
                     break;
                 case 2:
                 {
-                    //                    [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
                     [self.navigationController pushViewController:arr[6] animated:YES];
                     break;
                 }
@@ -600,13 +444,11 @@
             switch (indexPath.row) {
                 case 0:
                 {
-//                    [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
                     [self.navigationController pushViewController:arr[7] animated:YES];
                     break;
                 }
                     
                 case 1:{
-//                    [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
                     [self.navigationController pushViewController:arr[8] animated:YES];
                     
                     break;
@@ -614,8 +456,6 @@
                     
 //                case 2:
 //                {
-//                    [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
-//                    [self.navigationController pushViewController:arr[8] animated:YES];
 //
 //                    break;
 //                }
@@ -627,7 +467,6 @@
         {
             
             
-//            [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
             [self.navigationController pushViewController:arr[9] animated:YES];
         }
     }

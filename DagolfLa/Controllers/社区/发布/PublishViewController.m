@@ -65,10 +65,7 @@
     
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"nav_bg"] forBarMetrics:UIBarMetricsDefault];
     [self.navigationController.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor],UITextAttributeTextColor, nil]];
-    
-    //发出通知隐藏标签栏
-    //    [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:nil];
-    
+        
     _viewLine.frame = CGRectMake(10*ScreenWidth/375, _contentView.frame.size.height - 1, ScreenWidth -40*ScreenWidth/375, 1);
 }
 -(void)viewWillDisappear:(BOOL)animated
@@ -280,7 +277,7 @@
         [weakSelf updateUserInterface];
     };
     //发出通知隐藏标签栏
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:nil];
+    vc.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:vc animated:YES];
     
 }

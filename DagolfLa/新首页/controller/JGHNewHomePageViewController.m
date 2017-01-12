@@ -13,7 +13,6 @@
 #import "JGHShowActivityPhotoCell.h"
 #import "JGHIndexModel.h"
 #import "JGHNavListView.h"
-#import "JGLScoreNewViewController.h"
 #import "JGHShowMyTeamViewController.h" // 我的球队
 #import "JGDNewTeamDetailViewController.h" // 球队详情
 #import "JGPhotoAlbumViewController.h" // 相册
@@ -57,11 +56,6 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
 @interface JGHNewHomePageViewController ()<UITableViewDelegate, UITableViewDataSource, JGHShowSectionTableViewCellDelegate, JGHShowActivityPhotoCellDelegate, JGHNavListViewDelegate, JGHPASHeaderTableViewCellDelegate, JGHIndexTableViewCellDelegate>
 {
     NSInteger _showLineID;//0-活动，1-相册，2-成绩
-    
-    NSInteger _teamUnread;
-    NSInteger _systemUnread;
-    
-    NSInteger _newFriendUnread;
 }
 @property (nonatomic, strong)HomeHeadView *topScrollView;//BANNAER图
 
@@ -83,7 +77,7 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
     self.navigationItem.leftBarButtonItem = nil;
     self.navigationController.navigationBarHidden = YES;
     
-   self.tabBarController.tabBar.hidden = NO;
+    self.tabBarController.tabBar.hidden = NO;
 }
 
 - (void)viewDidAppear:(BOOL)animated{
@@ -131,80 +125,15 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
     if (DEFAULF_USERID) {
         [self loadMessageData];
     }
-    
-//    //获取通知中心单例对象
-//    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
-//    //添加当前类对象为一个观察者，name和object设置为nil，表示接收一切通知
-//    [center addObserver:self selector:@selector(loadMessageData) name:@"loadMessageData" object:nil];
-    
 }
 #pragma mark --刷新页面
 - (void)reloadViewData{
     [self.homeTableView.header beginRefreshing];
 }
-
 #pragma mark -- 下载未读消息数量
 - (void)loadMessageData{
     [appDelegate loadMessageData];
-    
-//    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"userId"])
-//    {
-//    }
-//    else
-//    {
-//        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"君高高尔夫" message:@"是否立即登录？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
-//        [alertView show];
-//        
-//        return;
-//    }
-//    
-//    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-//    [dict setObject:DEFAULF_USERID forKey:@"userKey"];
-//    [dict setObject:[Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@dagolfla.com", DEFAULF_USERID]] forKey:@"md5"];
-//    [[JsonHttp jsonHttp]httpRequest:@"msg/geSumtUnread" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
-//        
-//    } completionBlock:^(id data) {
-//        NSLog(@"%@", data);
-//        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
-//            _teamUnread = [[data objectForKey:@"teamUnread"] integerValue];
-//            _systemUnread = [[data objectForKey:@"systemUnread"] integerValue];
-//            _newFriendUnread = [[data objectForKey:@"newFriendUnread"] integerValue];
-//            [self notifyUpdateUnreadMessageCount];
-//        }else{
-//            [self notifyUpdateUnreadMessageCount];
-//            if ([data objectForKey:@"packResultMsg"]) {
-//                [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
-//            }
-//        }
-//    }];
 }
-//- (void)notifyUpdateUnreadMessageCount
-//{
-//    [appDelegate loadMessageData];
-////    [self updateBadgeValueForTabBarItem];
-//}
-//- (void)updateBadgeValueForTabBarItem
-//{
-//    __weak typeof(self) __weakSelf = self;
-//    dispatch_async(dispatch_get_main_queue(), ^{
-//        
-//        int count = [[RCIMClient sharedRCIMClient]
-//                     getUnreadCount:0];
-//        
-//        int iconCount = (count + (int)_teamUnread +(int)_systemUnread +(int)_newFriendUnread);
-//        //本地存红点数
-//        NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
-//        [userdef setObject:@(iconCount) forKey:IconCount];
-//        [userdef synchronize];
-//        
-//        if (iconCount > 0) {
-//            [__weakSelf.tabBarController.tabBar showBadgeOnItemIndex:2 badgeValue:count+ (int)_teamUnread + (int)_systemUnread + (int)_newFriendUnread];
-//        } else {
-//            [__weakSelf.tabBarController.tabBar hideBadgeOnItemIndex:2];
-//        }
-//        
-//    });
-//}
 #pragma mark -- 登录PHP
 - (void)loadingPHP{
     [Helper callPHPLoginUserId:[NSString stringWithFormat:@"%@", DEFAULF_USERID]];
@@ -273,7 +202,6 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
             [self.indexModel setValuesForKeysWithDictionary:data];
             
             [self.homeTableView reloadData];
-            
             // -----------缓存数据-------------
             //获得文件路径
             NSString *documentPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
@@ -317,7 +245,6 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
     
     self.homeTableView.dataSource = self;
     self.homeTableView.delegate = self;
-//    self.homeTableView.
     self.homeTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.homeTableView.header = [MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
     self.homeTableView.backgroundColor = [UIColor colorWithHexString:BG_color];
@@ -374,14 +301,12 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
             
             if ([arrayIcon count] != 0) {
                 [self.topScrollView config:arrayIcon data:arrayUrl title:arrayTitle ts:arrayTs];
-                //                self.topScrollView.delegate = self;
                 __weak JGHNewHomePageViewController *weakSelf = self;
                 [self.topScrollView setClick:^(UIViewController *vc) {
                     [weakSelf isLoginUp];
                     
                     weakSelf.hidesBottomBarWhenPushed = YES;
                     [weakSelf.navigationController pushViewController:vc animated:YES];
-//                    [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:nil];
                 }];
             }
         }
@@ -390,7 +315,6 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
 #pragma mark - UITableViewDataSource 协议方法
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {  
-//    return _dataArray.count +1;
     return _indexModel.plateList.count +1;
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -601,10 +525,7 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
             [self.navigationController pushViewController:liveVC animated:YES];
         };
     }
-    
 }
-
-
 #pragma mark -- 服务定制
 - (void)didSelectShitaBtn:(UIButton *)btn{
 

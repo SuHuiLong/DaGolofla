@@ -41,14 +41,11 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:YES];
     
-    //发出通知隐藏标签栏
-//    [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:nil];
 }
 -(void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
     //显示
-//    [[NSNotificationCenter defaultCenter] postNotificationName:@"show" object:self];
     
 }
 
