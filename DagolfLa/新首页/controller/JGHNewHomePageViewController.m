@@ -379,7 +379,7 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
                 [self.topScrollView setClick:^(UIViewController *vc) {
                     [weakSelf isLoginUp];
                     
-                    weakSelf.hidesBottomBarWhenPushed = YES;
+//                    weakSelf.hidesBottomBarWhenPushed = YES;
                     [weakSelf.navigationController pushViewController:vc animated:YES];
 //                    [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:nil];
                 }];

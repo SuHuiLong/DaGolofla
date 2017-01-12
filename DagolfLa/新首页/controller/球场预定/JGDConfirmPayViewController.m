@@ -493,8 +493,6 @@
     
     if (mySwitch.on == YES) {
         
-        self.navigationItem.leftBarButtonItem =  [[UIBarButtonItem alloc] initWithTitle:@"取消" style:(UIBarButtonItemStyleDone) target:self action:@selector(bgRemoveAct:)];
-        self.navigationItem.leftBarButtonItem.tintColor = [UIColor whiteColor];
         
         NSMutableDictionary *dict = [NSMutableDictionary dictionary];
         [dict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:userID] forKey:@"userKey"];
@@ -507,6 +505,9 @@
             [[ShowHUD showHUD]hideAnimationFromView:self.view];
             if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
                 if ([[data objectForKey:@"isSetPayPassWord"] integerValue] == 1) {
+
+                    self.navigationItem.leftBarButtonItem =  [[UIBarButtonItem alloc] initWithTitle:@"取消" style:(UIBarButtonItemStyleDone) target:self action:@selector(bgRemoveAct:)];
+                    self.navigationItem.leftBarButtonItem.tintColor = [UIColor whiteColor];
 
                     // 弹出余额支付
                     

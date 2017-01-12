@@ -72,9 +72,9 @@ typedef NS_ENUM(NSInteger, GestureType) {
 
 
 #ifdef DEBUG
-#define RongYunAPPKEY @"pgyu6atqylmiu"//pgyu6atqylmiu
+#define RongYunAPPKEY @"0vnjpoadnkihz"//pgyu6atqylmiu
 #else
-#define RongYunAPPKEY @"pgyu6atqylmiu"//0vnjpoadnkihz
+#define RongYunAPPKEY @"0vnjpoadnkihz"//0vnjpoadnkihz
 #endif
 //#define TESTRongYunAPPKEY @"pgyu6atqylmiu"//pgyu6atqylmiu
 //#define RongYunAPPKEY @"0vnjpoadnkihz"//0vnjpoadnkihz

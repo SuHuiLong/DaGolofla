@@ -379,10 +379,10 @@
         
         UIView *backView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 100 * ProportionAdapter)];
         backView.backgroundColor = [UIColor whiteColor];
-        UILabel *oderLB = [[UILabel alloc] initWithFrame:CGRectMake(10 * ProportionAdapter, 0, 80, 22 * ProportionAdapter)];
+        UILabel *oderLB = [[UILabel alloc] initWithFrame:CGRectMake(8 * ProportionAdapter, 0, 80, 22 * ProportionAdapter)];
         oderLB.textColor = [UIColor colorWithHexString:@"#a0a0a0"];
         oderLB.font = [UIFont systemFontOfSize:15 * ProportionAdapter];
-        oderLB.textAlignment = NSTextAlignmentLeft;
+        oderLB.textAlignment = NSTextAlignmentRight;
         oderLB.text = @"预订说明：";
         
         [backView addSubview:oderLB];
@@ -390,7 +390,7 @@
         CGFloat serviceDetailsHeight = [Helper textHeightFromTextString:[self.dataDic objectForKey:@"serviceDetails"] width:screenWidth - 110 * ProportionAdapter fontSize:15 * ProportionAdapter];
         
         
-        UILabel *oderDetailLB = [[UILabel alloc] initWithFrame:CGRectMake(100 * ProportionAdapter, serviceDetailsHeight >= 22 * ProportionAdapter ? 5 * ProportionAdapter : 0, screenWidth - 110 * ProportionAdapter, serviceDetailsHeight >= 22 * ProportionAdapter ? serviceDetailsHeight : 22 * ProportionAdapter)];
+        UILabel *oderDetailLB = [[UILabel alloc] initWithFrame:CGRectMake(90 * ProportionAdapter, serviceDetailsHeight >= 22 * ProportionAdapter ? 5 * ProportionAdapter : 0, screenWidth - 110 * ProportionAdapter, serviceDetailsHeight >= 22 * ProportionAdapter ? serviceDetailsHeight : 22 * ProportionAdapter)];
         oderDetailLB.textColor = [UIColor colorWithHexString:@"#a0a0a0"];
         oderDetailLB.font = [UIFont systemFontOfSize:15 * ProportionAdapter];
         oderDetailLB.textAlignment = NSTextAlignmentLeft;

@@ -79,6 +79,8 @@
 -(void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
+    self.tabBarController.tabBar.hidden = NO;
+
     //把当前界面的导航栏隐藏
 //    self.navigationController.navigationBarHidden = NO;
     //    [[NSURLCache sharedURLCache]removeAllCachedResponses];
@@ -111,7 +113,7 @@
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    
+    self.tabBarController.tabBar.hidden = YES;
     if ([_payUrl containsString:@"www.dagolfla.com"] || [_payUrl containsString:@"dagolfla://"]) {
         self.navigationController.navigationBarHidden = YES;
         _statusView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 20, ScreenWidth, 20)];
