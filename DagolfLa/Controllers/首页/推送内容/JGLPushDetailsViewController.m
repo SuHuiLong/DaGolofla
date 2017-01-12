@@ -51,7 +51,6 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-//    [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
 }
 -(void)viewDidDisappear:(BOOL)animated
 {
@@ -205,8 +204,7 @@
 //                    
 //                    
 //                    if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
-//                        [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
-//                        
+//
 //                        if (![data objectForKey:@"teamMember"]) {
 //                            JGNotTeamMemberDetailViewController *detailVC = [[JGNotTeamMemberDetailViewController alloc] init];
 //                            detailVC.detailDic = [data objectForKey:@"team"];
@@ -254,9 +252,10 @@
                 actKey = [[[NSString stringWithFormat:@"%@", [url query]] componentsSeparatedByString:@"="] objectAtIndex:1];
                 actDetail = [[[NSString stringWithFormat:@"%@", [url query]] componentsSeparatedByString:@"="] objectAtIndex:0];
                 //商城
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
+                
                 UseMallViewController* userVc = [[UseMallViewController alloc]init];
                 userVc.linkUrl = [NSString stringWithFormat:@"http://www.dagolfla.com/app/ProductDetails.html?proid=%td",[actKey integerValue]];
+                userVc.hidesBottomBarWhenPushed = YES;
                 [self.navigationController pushViewController:userVc animated:YES];
                 return YES;
             }
@@ -275,11 +274,10 @@
                 actKey = [[[NSString stringWithFormat:@"%@", [url query]] componentsSeparatedByString:@"="] objectAtIndex:1];
                 actDetail = [[[NSString stringWithFormat:@"%@", [url query]] componentsSeparatedByString:@"="] objectAtIndex:0];
                 //社区
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
                 DetailViewController * comDevc = [[DetailViewController alloc]init];
                 
                 comDevc.detailId = [NSNumber numberWithInteger:[actKey integerValue]];
-                
+                comDevc.hidesBottomBarWhenPushed = YES;
                 [self.navigationController pushViewController:comDevc animated:YES];
                 return YES;
             }

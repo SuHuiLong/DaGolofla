@@ -362,6 +362,7 @@
 		2067C6D61CE30CC0002900C8 /* JGTeamActivityWithAddressCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2067C6CC1CE30CC0002900C8 /* JGTeamActivityWithAddressCell.m */; };
 		2067C6D71CE30CC0002900C8 /* JGTeamActivityWithAddressCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2067C6CD1CE30CC0002900C8 /* JGTeamActivityWithAddressCell.xib */; };
 		206ECFC21D48D30C00880234 /* JGHActivityScoreManagerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 206ECFC11D48D30C00880234 /* JGHActivityScoreManagerViewController.m */; };
+		2070E9D41E27253000481133 /* JGHPushClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 2070E9D31E27253000481133 /* JGHPushClass.m */; };
 		207F70371DBF59CD00667E26 /* JGHShowActivityPhotoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 207F70361DBF59CD00667E26 /* JGHShowActivityPhotoCell.m */; };
 		207F703F1DBF7C5600667E26 /* JGHShowActivityView.m in Sources */ = {isa = PBXBuildFile; fileRef = 207F703E1DBF7C5600667E26 /* JGHShowActivityView.m */; };
 		207F70451DBF882900667E26 /* JGHWonderfulView.m in Sources */ = {isa = PBXBuildFile; fileRef = 207F70441DBF882900667E26 /* JGHWonderfulView.m */; };
@@ -1961,6 +1962,8 @@
 		2067C6CD1CE30CC0002900C8 /* JGTeamActivityWithAddressCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JGTeamActivityWithAddressCell.xib; sourceTree = "<group>"; };
 		206ECFC01D48D30C00880234 /* JGHActivityScoreManagerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHActivityScoreManagerViewController.h; sourceTree = "<group>"; };
 		206ECFC11D48D30C00880234 /* JGHActivityScoreManagerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHActivityScoreManagerViewController.m; sourceTree = "<group>"; };
+		2070E9D21E27253000481133 /* JGHPushClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHPushClass.h; sourceTree = "<group>"; };
+		2070E9D31E27253000481133 /* JGHPushClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHPushClass.m; sourceTree = "<group>"; };
 		207F70351DBF59CD00667E26 /* JGHShowActivityPhotoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHShowActivityPhotoCell.h; sourceTree = "<group>"; };
 		207F70361DBF59CD00667E26 /* JGHShowActivityPhotoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHShowActivityPhotoCell.m; sourceTree = "<group>"; };
 		207F703D1DBF7C5600667E26 /* JGHShowActivityView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHShowActivityView.h; sourceTree = "<group>"; };
@@ -6738,6 +6741,8 @@
 				36BFFF541BC76D09005B3CE2 /* 日历 */,
 				F54344601D2E82F7008C4D3C /* JGReturnMD5Str.h */,
 				F54344611D2E82F7008C4D3C /* JGReturnMD5Str.m */,
+				2070E9D21E27253000481133 /* JGHPushClass.h */,
+				2070E9D31E27253000481133 /* JGHPushClass.m */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -9468,6 +9473,7 @@
 				20591CAE1D23FDD3003271EC /* JGHNOBlankPasswordViewController.m in Sources */,
 				36B08F721C2D322600CD660E /* UITableViewRowAction.m in Sources */,
 				36D39B361BCCD8D000C0B197 /* AppraiseModel.m in Sources */,
+				2070E9D41E27253000481133 /* JGHPushClass.m in Sources */,
 				20D564C11DE44623005535A6 /* JGHPersonalInfoViewController.m in Sources */,
 				F5AEF73A1D41B98E009A8C34 /* JGLPlayDateTableViewCell.m in Sources */,
 				203019751E0E4292005568E2 /* ZXByteArray.m in Sources */,

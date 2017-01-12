@@ -258,8 +258,6 @@
 {
     if ([[NSUserDefaults standardUserDefaults] objectForKey:@"userId"]) {
         ContactViewController* tVc = [[ContactViewController alloc]init];
-//        [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
-        tVc.hidesBottomBarWhenPushed = YES;
         tVc.hidesBottomBarWhenPushed = YES;
         tVc.addFriendSum = [NSNumber numberWithInt:_newFriendUnreadCount];
         [self.navigationController pushViewController:tVc animated:YES];
@@ -428,7 +426,6 @@
     if ([[NSUserDefaults standardUserDefaults]objectForKey:@"userId"])
     {
         NewsDetailController* myVc = [[NewsDetailController alloc]init];
-//        [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
         myVc.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:myVc animated:YES];
     }
@@ -466,7 +463,6 @@
 #pragma mark - 点击事件
 - (void)onSelectedTableRow:(RCConversationModelType)conversationModelType conversationModel:(RCConversationModel *)model atIndexPath:(NSIndexPath *)indexPath {
     ChatDetailViewController *vc = [[ChatDetailViewController alloc] init];
-//    [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
     vc.hidesBottomBarWhenPushed = YES;
     //设置聊天类型
     vc.conversationType = ConversationType_PRIVATE;

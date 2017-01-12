@@ -188,5 +188,6 @@ typedef NS_ENUM(NSInteger, GestureType) {
 #import "UMMobClick/MobClick.h"
 #import "JGHPersonalInfoViewController.h"
 #import "JGHDatePicksViewController.h"
+#import "JGHPushClass.h"
 
 #endif

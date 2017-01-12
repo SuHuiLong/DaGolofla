@@ -15,7 +15,6 @@
 #import "JGHCabbieWalletViewController.h"
 #import "JGLCaddieScoreViewController.h"
 #import "JGHPoorScoreHoleView.h"
-#import "JGLScoreNewViewController.h"
 #import "JGHHistoryAndResultsViewController.h"
 
 //static NSInteger switchMode;

@@ -60,8 +60,6 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-//    [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:nil];
-    //    [super viewWillAppear:YES];
     
     UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"backL"] style:UIBarButtonItemStylePlain target:self action:@selector(backClcik)];
     item.tintColor=[UIColor whiteColor];

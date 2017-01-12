@@ -52,7 +52,7 @@
     }
     self.navigationItem.leftBarButtonItem = nil;
     self.view.backgroundColor = [UIColor colorWithRed:0.91f green:0.91f blue:0.91f alpha:1.00f];
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"show" object:nil];
+//    [[NSNotificationCenter defaultCenter] postNotificationName:@"show" object:nil];
     
     //    for(UIView *view in [self.view subviews])
     //    {
@@ -138,7 +138,7 @@
                      
                  } withBlockSure:^{
                      ScoreProfessViewController *simpVc = [[ScoreProfessViewController alloc]init];
-                     [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
+                     simpVc.hidesBottomBarWhenPushed = YES;
                      simpVc.isSave = @10;
                      simpVc.strTitle = [user objectForKey:@"scoreObjectTitle"];
                      simpVc.strBallName = [user objectForKey:@"scoreballName"];
@@ -292,8 +292,8 @@
 {
     
     if ([[NSUserDefaults standardUserDefaults]objectForKey:@"userId"]) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
         ScoreBySelfViewController *scVc = [[ScoreBySelfViewController alloc]init];
+        scVc.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:scVc animated:YES];
     }
     else
@@ -418,9 +418,10 @@
             
             
         }
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
         
-        [self.navigationController pushViewController:arr[indexPath.row] animated:YES];
+        UIViewController *arrCtrl = arr[indexPath.row];
+        arrCtrl.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:arrCtrl animated:YES];
     }
     else
     {

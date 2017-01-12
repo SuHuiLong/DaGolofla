@@ -17,7 +17,6 @@
 
 - (void)viewDidDisappear:(BOOL)animated{
     [super viewDidDisappear:animated];
-//    self.tabBarController.tabBar.hidden = NO;
 }
 
 - (void)viewWillAppear:(BOOL)animated{

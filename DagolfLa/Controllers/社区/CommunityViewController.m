@@ -78,7 +78,7 @@
         }
     }
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"show" object:nil];
+//    [[NSNotificationCenter defaultCenter] postNotificationName:@"show" object:nil];
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"nav_bg"] forBarMetrics:UIBarMetricsDefault];
     [self.navigationController.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor],UITextAttributeTextColor, nil]];
     
@@ -413,8 +413,6 @@
         cell.blockPinglunPush = ^(NSInteger i){
             
             if ([[NSUserDefaults standardUserDefaults]objectForKey:@"userId"]) {
-                
-//                [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
                 
                 ComDetailViewController* comVc = [[ComDetailViewController alloc]init];
                 comVc.firstDataArray = _dataArray;
@@ -789,7 +787,6 @@
     if ([[NSUserDefaults standardUserDefaults]objectForKey:@"userId"]) {
         
         //点击cell进入详情
-//        [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
         ComDetailViewController* comDevc = [[ComDetailViewController alloc]init];
         comDevc.firstDataArray = _dataArray;
         comDevc.firstIndexPath = indexPath.row;

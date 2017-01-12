@@ -90,15 +90,9 @@ static NSString *const orderDetailCellIdentifier = @"OtherDataTableViewCell";
     
     self.navigationController.navigationBarHidden = NO;
     //发出通知隐藏标签栏
-//    [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:nil];
-//    NoteModel *model = [NoteHandlle selectNoteWithUID:self.strMoodId];
-//    if ([model.userremarks isEqualToString:@"(null)"] || [model.userremarks isEqualToString:@""] || model.userremarks == nil) {
-        _nameLabel.text = _model.userName;
-        self.title = _model.userName;
-//    }else{
-//        _nameLabel.text = model.userremarks;
-//        self.title = model.userremarks;
-//    }
+    _nameLabel.text = _model.userName;
+    self.title = _model.userName;
+
     [_mapView viewWillAppear];
 
     self.tabBarController.tabBar.hidden = YES;
@@ -110,12 +104,10 @@ static NSString *const orderDetailCellIdentifier = @"OtherDataTableViewCell";
     [_mapView viewWillDisappear];
     _mapView.delegate = nil; // 不用时，置nil
     
-//    self.tabBarController.tabBar.hidden = NO;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-//    [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:nil];
     self.view.backgroundColor = [UIColor whiteColor];
     NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
     [user setValue:@"00" forKey:@"data"];
@@ -1004,7 +996,6 @@ static NSString *const orderDetailCellIdentifier = @"OtherDataTableViewCell";
     
     if (_dataArray.count != 0) {
         //点击cell进入详情
-//        [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
         
         DetailViewController * comDevc = [[DetailViewController alloc]init];
         

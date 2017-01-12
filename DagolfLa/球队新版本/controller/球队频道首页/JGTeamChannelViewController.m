@@ -282,9 +282,11 @@
                 
                 [self.topScrollView config:arrayIcon data:arrayUrl title:arrayTitle ts:arrayTs];
                 self.topScrollView.delegate = self;
+                
+                __weak JGTeamChannelViewController *weakSelf = self;
                 [self.topScrollView setClick:^(UIViewController *vc) {
-                    [[NSNotificationCenter defaultCenter] postNotificationName:@"hide" object:self];
-                    [self.navigationController pushViewController:vc animated:YES];
+                    weakSelf.hidesBottomBarWhenPushed = YES;
+                    [weakSelf.navigationController pushViewController:vc animated:YES];
                 }];
             }
 
