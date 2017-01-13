@@ -51,7 +51,7 @@
     
     self.cityString = [[NSUserDefaults standardUserDefaults] objectForKey:CITYNAME];
     self.offset = 0;
-    [self dataSet:0];
+//    [self dataSet:0];
     [self  tableViewSet];
     
     // Do any additional setup after loading the view. type  [def objectForKey:CITYNAME]
@@ -70,14 +70,21 @@
     [dic setObject:[def objectForKey:BDMAPLAT] forKey:@"latitude"];
     [dic setObject:[def objectForKey:BDMAPLNG] forKey:@"longitude"];
     //    [dic setObject:DEFAULF_USERID forKey:@"ballName"];
-
+    if (self.offset == 0) {
+        [[ShowHUD showHUD] showAnimationWithText:@"加载中…" FromView:self.view];
+    }
     [[JsonHttp jsonHttp] httpRequest:@"bookball/getBallBookingList" JsonKey:nil withData:dic requestMethod:@"GET" failedBlock:^(id errType) {
-        [self.courtTableView.header endRefreshing];
+//        [self.courtTableView.header endRefreshing];
         [self.courtTableView.footer endRefreshing];
+
+        [[ShowHUD showHUD] hideAnimationFromView:self.view];
 
     } completionBlock:^(id data) {
-        [self.courtTableView.header endRefreshing];
+//        [self.courtTableView.header endRefreshing];
         [self.courtTableView.footer endRefreshing];
+        
+        [[ShowHUD showHUD] hideAnimationFromView:self.view];
+
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
             
             if (self.offset == 0) {
@@ -99,8 +106,6 @@
             }
         }
     }];
-    
-    
     
 }
 
@@ -126,10 +131,11 @@
     self.courtTableView.rowHeight = 90 * ProportionAdapter;
     [self.courtTableView registerClass:[JGDBookCourtTableViewCell class] forCellReuseIdentifier:@"bookCourtCell"];
     
-    self.courtTableView.header = [MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRefresh)];
+//    self.courtTableView.header = [MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRefresh)];
     self.courtTableView.footer=[MJDIYBackFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRefresh)];
-    [self.courtTableView.header beginRefreshing];
-    
+//    [self.courtTableView.header beginRefreshing];
+    [self dataSet:0];
+
     
     CGFloat width = [Helper textWidthFromTextString:[[NSUserDefaults standardUserDefaults] objectForKey:CITYNAME] height:30 * ProportionAdapter fontSize:17];
     
@@ -168,7 +174,7 @@
         self.cityLitleLB.frame = CGRectMake(0, 0, width, 30 * ProportionAdapter);
         self.titleBtn.frame = CGRectMake(width, 0, 30 * ProportionAdapter, 30 * ProportionAdapter);
 
-        [self.courtTableView.header beginRefreshing];
+        [self dataSet:self.currentType];
     };
     [self.navigationController pushViewController:citySearchVC animated:YES];
 }
@@ -184,11 +190,13 @@
         }
     }
     
-//    [self dataSet:btn.tag - 300];
+    //    [self dataSet:btn.tag - 300];
+    //    [self.courtTableView.header beginRefreshing];
+
     self.currentType = btn.tag - 300;
     [btn setTitleColor:[UIColor colorWithHexString:@"#32b14d"] forState:(UIControlStateNormal)];
-    [self.courtTableView.header beginRefreshing];
-
+    self.offset = 0;
+    [self dataSet:self.currentType];
 }
 
 // 最右搜索按钮

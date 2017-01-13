@@ -12,6 +12,8 @@
 
 @property (nonatomic, copy) NSString *address;
 @property (nonatomic, copy) NSString *ballName;
+@property (nonatomic, copy) NSString *bookName;
+
 @property (nonatomic, copy) NSString *country;
 @property (nonatomic, copy) NSString *type; // 球场类型
 @property (nonatomic, assign) NSInteger instapaper; // 2 是 封场

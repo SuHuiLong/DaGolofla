@@ -408,7 +408,7 @@ static CGFloat ImageHeight  = 210.0;
         if (indexPath.row == 0) {
             
             UILabel *courtName = [[UILabel alloc] init];
-            [self lableReDraw:courtName rect:CGRectMake(10 * ProportionAdapter, 25 * ProportionAdapter, 200 * ProportionAdapter, 20 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#313131"] labelFont:(17 * ProportionAdapter) text:[self.detailDic objectForKey:@"ballName"] textAlignment:NSTextAlignmentLeft];
+            [self lableReDraw:courtName rect:CGRectMake(10 * ProportionAdapter, 25 * ProportionAdapter, 200 * ProportionAdapter, 20 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#313131"] labelFont:(17 * ProportionAdapter) text:[self.detailDic objectForKey:@"bookName"] textAlignment:NSTextAlignmentLeft];
             [cell.contentView addSubview:courtName];
             
             UILabel *serviceName = [[UILabel alloc] init];
