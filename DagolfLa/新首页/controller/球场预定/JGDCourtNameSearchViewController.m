@@ -263,7 +263,7 @@
     [dic setObject:[def objectForKey:BDMAPLAT] forKey:@"latitude"];
     [dic setObject:[def objectForKey:BDMAPLNG] forKey:@"longitude"];
     
-    [[JsonHttp jsonHttp] httpRequest:@"ball/getBallBookingList" JsonKey:nil withData:dic requestMethod:@"GET" failedBlock:^(id errType) {
+    [[JsonHttp jsonHttp] httpRequest:@"bookball/getBallBookingList" JsonKey:nil withData:dic requestMethod:@"GET" failedBlock:^(id errType) {
         
         [self.resultTableView.footer endRefreshing];
         

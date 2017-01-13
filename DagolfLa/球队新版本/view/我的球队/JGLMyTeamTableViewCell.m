@@ -82,6 +82,9 @@
 - (void)newShowData:(JGLMyTeamModel *)model{
     self.lightGrayView.backgroundColor = [UIColor whiteColor];
     
+    NSString *bgUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/team/%@.jpg@100w_100h", model.teamKey ];
+    [[SDImageCache sharedImageCache] removeImageForKey:bgUrl fromDisk:YES];
+
     NSLog(@"%@",[Helper setImageIconUrl:[model.teamKey integerValue]]);
     [self.iconImageV sd_setImageWithURL:[Helper setImageIconUrl:[model.teamKey integerValue]] placeholderImage:[UIImage imageNamed:TeamLogoImage]];
     

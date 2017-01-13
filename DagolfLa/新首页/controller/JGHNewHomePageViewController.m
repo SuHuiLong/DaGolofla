@@ -255,6 +255,7 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
     [self loadBanner];
     [self loadMessageData];
 }
+
 #pragma  mark -- 创建Banner
 -(void)createBanner
 {
@@ -305,7 +306,7 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
                 [self.topScrollView setClick:^(UIViewController *vc) {
                     [weakSelf isLoginUp];
                     
-                    weakSelf.hidesBottomBarWhenPushed = YES;
+//                    weakSelf.hidesBottomBarWhenPushed = YES;
                     [weakSelf.navigationController pushViewController:vc animated:YES];
                 }];
             }
