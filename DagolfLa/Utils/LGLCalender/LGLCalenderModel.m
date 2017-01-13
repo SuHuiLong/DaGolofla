@@ -143,12 +143,22 @@
                 for (int j=0; j<model.details.count; j++) {
                     LGLCalenderSubModel *priceModel = [[LGLCalenderSubModel alloc]init];
                     //价格字典
-                    NSDictionary *priceDict = [NSDictionary dictionary];
-                    priceDict = priceArray[j];
-                    
                     priceModel = model.details[j];
-                    if ([priceDict objectForKey:@"money"]) {
-                        priceModel.price = [NSString stringWithFormat:@"%@", [priceDict objectForKey:@"money"]];
+                    
+                    NSDictionary *priceDict = [NSDictionary dictionary];
+                    
+                    if (priceArray.count >= j +1) {
+                        priceDict = priceArray[j];
+                        
+                        if (priceModel.day == [[priceDict objectForKey:@"day"] integerValue]) {
+                            if ([priceDict objectForKey:@"money"]) {
+                                priceModel.price = [NSString stringWithFormat:@"%@", [priceDict objectForKey:@"money"]];
+                            }else{
+                                priceModel.price = @"";
+                            }
+                        }else{
+                            priceModel.price = @"";
+                        }
                     }else{
                         priceModel.price = @"";
                     }
