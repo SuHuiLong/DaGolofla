@@ -255,6 +255,7 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
     [self loadBanner];
     [self loadMessageData];
 }
+
 #pragma  mark -- 创建Banner
 -(void)createBanner
 {

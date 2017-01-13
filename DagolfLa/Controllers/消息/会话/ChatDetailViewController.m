@@ -21,8 +21,24 @@
 
 @implementation ChatDetailViewController
 
+
+- (void)deleteLocalCacheDataWithKey:(NSString *)key {
+    
+    NSString *cachesPath = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES)[0]
+                            stringByAppendingPathComponent:key];
+    
+    // 判读缓存数据是否存在
+    if ([[NSFileManager defaultManager] fileExistsAtPath:cachesPath]) {
+        
+        // 删除缓存数据
+        [[NSFileManager defaultManager] removeItemAtPath:cachesPath error:nil];
+    }
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    [self deleteLocalCacheDataWithKey:@"Library/Caches/${appname}/RCloudCache"];
     
     //    self.title = self.title;
     UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"backL"] style:UIBarButtonItemStylePlain target:self action:@selector(backButtonClcik)];
@@ -48,11 +64,11 @@
         RCTextMessageCell *textCell=(RCTextMessageCell *)cell;
         RCMessageModel *model=self.conversationDataRepository[indexPath.row];
         
-        [[UserDataInformation sharedInstance] getUserInfoWithUserId:model.targetId completion:^(RCUserInfo *userInfo) {
-        }];
-        
-        [[UserDataInformation sharedInstance] getUserInfoWithUserId:model.senderUserId completion:^(RCUserInfo *userInfo) {
-        }];
+//        [[UserDataInformation sharedInstance] getUserInfoWithUserId:model.targetId completion:^(RCUserInfo *userInfo) {
+//        }];
+//        
+//        [[UserDataInformation sharedInstance] getUserInfoWithUserId:model.senderUserId completion:^(RCUserInfo *userInfo) {
+//        }];
         
         NSInteger mmm=[[[NSUserDefaults standardUserDefaults] objectForKey:@"userId"] integerValue];
         if (mmm==[model.senderUserId integerValue]) {

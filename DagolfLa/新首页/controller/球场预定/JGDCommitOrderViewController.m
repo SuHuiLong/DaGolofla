@@ -563,10 +563,14 @@
 // 加减完人数后设置金额
 
 - (void)payMoneySet{
+    
     NSString *paytypeString = @"";
     
+    // "付款类型 0: 全额预付  1: 部分预付  2: 球场现付"
     if ([[self.detailDic objectForKey:@"payType"] integerValue] == 2) {
         paytypeString = @"预付押金";
+    }else if ([[self.detailDic objectForKey:@"payType"] integerValue] == 0) {
+        paytypeString = @"全额预付";
     }else{
         paytypeString = @"支付金额";
     }
