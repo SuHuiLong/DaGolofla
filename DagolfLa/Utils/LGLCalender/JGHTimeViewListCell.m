@@ -12,13 +12,13 @@
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
     if (self == [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
-        _timeLable = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, screenWidth/2 -10*ProportionAdapter, 49 *ProportionAdapter)];
+        _timeLable = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, screenWidth/2 +2*ProportionAdapter, 49 *ProportionAdapter)];
         _timeLable.font = [UIFont systemFontOfSize:20 *ProportionAdapter];
         _timeLable.textColor = [UIColor colorWithHexString:B31_Color];
         _timeLable.textAlignment = NSTextAlignmentRight;
         [self addSubview:_timeLable];
         
-        _priceLable = [[UILabel alloc]initWithFrame:CGRectMake(screenWidth/2 +10*ProportionAdapter, 0, screenWidth/2 -10*ProportionAdapter, 49 *ProportionAdapter)];
+        _priceLable = [[UILabel alloc]initWithFrame:CGRectMake(screenWidth/2 +12*ProportionAdapter, 0, screenWidth/2 -12*ProportionAdapter, 49 *ProportionAdapter)];
         _priceLable.font = [UIFont systemFontOfSize:15 *ProportionAdapter];
         _priceLable.textAlignment = NSTextAlignmentLeft;
         _priceLable.textColor = [UIColor colorWithHexString:@"#fc5a01"];

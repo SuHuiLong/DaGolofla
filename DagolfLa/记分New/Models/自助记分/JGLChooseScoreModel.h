@@ -40,12 +40,12 @@
 
 @property (strong, nonatomic) NSString* timeKey;
 
-@property (strong, nonatomic) NSString* choiceName;
-
-@property (strong, nonatomic) NSString* srcKey;
-
-@property (assign, nonatomic) NSInteger sex;
-
-@property (assign, nonatomic) NSInteger srcType;
+//@property (strong, nonatomic) NSString* choiceName;
+//
+//@property (strong, nonatomic) NSString* srcKey;
+//
+//@property (assign, nonatomic) NSInteger sex;
+//
+//@property (assign, nonatomic) NSInteger srcType;
 
 @end

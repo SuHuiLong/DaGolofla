@@ -61,9 +61,9 @@
 
 -(void)showData:(JGLChooseScoreModel *)model
 {
-    [_iconImgv sd_setImageWithURL:[Helper setImageIconUrl:@"activity" andTeamKey:[model.srcKey integerValue] andIsSetWidth:YES andIsBackGround:YES] placeholderImage:[UIImage imageNamed:ActivityBGImage]];
-    if (![Helper isBlankString:model.choiceName]) {
-        _labelName.text = model.choiceName;
+    [_iconImgv sd_setImageWithURL:[Helper setImageIconUrl:@"activity" andTeamKey:[model.timeKey integerValue] andIsSetWidth:YES andIsBackGround:YES] placeholderImage:[UIImage imageNamed:ActivityBGImage]];
+    if (![Helper isBlankString:model.name]) {
+        _labelName.text = model.name;
     }
     else{
         _labelName.text = [NSString stringWithFormat:@"暂无活动名"];
