@@ -155,7 +155,7 @@
         commitBtn.layer.cornerRadius = 6;
         commitBtn.clipsToBounds = YES;
         [footView addSubview:commitBtn];
-        footView.frame = CGRectMake(0, 0, screenWidth, height + 110 * ProportionAdapter);
+        footView.frame = CGRectMake(0, 0, screenWidth, height + 160 * ProportionAdapter);
         self.commitOrderTableView.tableFooterView = footView;
         
     }
@@ -529,7 +529,9 @@
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    if (indexPath.row > 5) {
+    NSInteger row = 5 + [self.playerArray count];
+    
+    if (indexPath.row > 5 && indexPath.row != row) {
         return YES;
     }else{
         return NO;
