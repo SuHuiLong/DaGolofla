@@ -67,9 +67,9 @@
 }
 
 - (void)configJGLChooseScoreModel:(JGLChooseScoreModel *)model{
-    [_headerImageView sd_setImageWithURL:[Helper setImageIconUrl:@"activity" andTeamKey:[model.timeKey integerValue] andIsSetWidth:YES andIsBackGround:YES] placeholderImage:[UIImage imageNamed:ActivityBGImage]];
-    if (![Helper isBlankString:model.name]) {
-        _title.text = model.name;
+    [_headerImageView sd_setImageWithURL:[Helper setImageIconUrl:@"activity" andTeamKey:[model.srcKey integerValue] andIsSetWidth:YES andIsBackGround:YES] placeholderImage:[UIImage imageNamed:ActivityBGImage]];
+    if (![Helper isBlankString:model.choiceName]) {
+        _title.text = model.choiceName;
     }
     else{
         _title.text = [NSString stringWithFormat:@"暂无活动名"];

@@ -156,7 +156,7 @@ static JGHPushClass *pushClass = nil;
     //商品详情
     if ([urlString containsString:@"goodDetail"]) {
         UseMallViewController* userVc = [[UseMallViewController alloc]init];
-        userVc.linkUrl = [NSString stringWithFormat:@"http://www.dagolfla.com/app/ProductDetails.html?proid=%td", [[Helper returnKeyVlaueWithUrlString:urlString andKey:@"timekey"] integerValue]];
+        userVc.linkUrl = [NSString stringWithFormat:@"http://www.dagolfla.com/app/ProductDetails.html?proid=%td", [[Helper returnKeyVlaueWithUrlString:urlString andKey:@"goodKey"] integerValue]];
         if (pushVC) {
             pushVC(userVc);
         }

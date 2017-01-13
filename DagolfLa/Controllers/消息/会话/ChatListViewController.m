@@ -164,96 +164,6 @@
     
     [self notifyUpdateUnreadMessageCount];
     
-    /*
-    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    [dict setObject:DEFAULF_USERID forKey:@"userKey"];
-    [dict setObject:[Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@dagolfla.com", DEFAULF_USERID]] forKey:@"md5"];
-    [[JsonHttp jsonHttp]httpRequest:@"msg/geSumtUnread" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
-        
-    } completionBlock:^(id data) {
-        NSLog(@"%@", data);
-        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
-            _teamUnread = [[data objectForKey:@"teamUnread"] integerValue];
-            _systemUnread = [[data objectForKey:@"systemUnread"] integerValue];
-            _newFriendUnread = [[data objectForKey:@"newFriendUnread"] integerValue];
-            
-            if ([data objectForKey:@"teamMsgNewest"]) {
-                _teamNotDetailLable.text = [NSString stringWithFormat:@"%@", [[data objectForKey:@"teamMsgNewest"] objectForKey:@"title"]];
-            }
-            
-            if ([data objectForKey:@"systemMsgNewest"]) {
-                _sysDetailLable.text = [NSString stringWithFormat:@"%@", [[data objectForKey:@"systemMsgNewest"] objectForKey:@"title"]];
-            }
-            
-            [[_viewHeader viewWithTag:1000] removeFromSuperview];
-            [[_viewHeader viewWithTag:1001] removeFromSuperview];
-            [[_viewHeader viewWithTag:1002] removeFromSuperview];
-            [[_viewHeader viewWithTag:1003] removeFromSuperview];
-            
-            [[_costumBtn viewWithTag:900] removeFromSuperview];
-            if (100 > _newFriendUnread && _newFriendUnread >0) {
-                RCDTabBarBtn *btn = [[RCDTabBarBtn alloc] initWithFrame:CGRectMake(24 *ProportionAdapter, 5 *ProportionAdapter, 20 *ProportionAdapter, 20 *ProportionAdapter)];
-                btn.layer.cornerRadius = 9;//圆形
-                btn.unreadCount = [NSString stringWithFormat:@"%td", _newFriendUnread];
-                btn.tag = 900;
-                [_costumBtn addSubview:btn];
-            }
-            
-            if (_newFriendUnread > 100) {
-                RCDTabBarBtn *btn = [[RCDTabBarBtn alloc] initWithFrame:CGRectMake(24 *ProportionAdapter, 5 *ProportionAdapter, 20 *ProportionAdapter, 20 *ProportionAdapter)];
-                btn.layer.cornerRadius = 9;//圆形
-                [btn setImage:[UIImage imageNamed:@"icn_mesg_99+"] forState:UIControlStateNormal];
-                btn.tag = 900;
-                [_costumBtn addSubview:btn];
-            }
-            
-            if (100 > _systemUnread && _systemUnread >0) {
-                RCDTabBarBtn *btn = [[RCDTabBarBtn alloc] initWithFrame:CGRectMake(50 *ProportionAdapter, 10 *ProportionAdapter, 20 *ProportionAdapter, 20 *ProportionAdapter)];
-                btn.layer.cornerRadius = 9;//圆形
-                btn.unreadCount = [NSString stringWithFormat:@"%td", _systemUnread];
-                btn.tag = 1000;
-                [_viewHeader addSubview:btn];
-            }
-            
-            if (_systemUnread > 100) {
-                RCDTabBarBtn *btn = [[RCDTabBarBtn alloc] initWithFrame:CGRectMake(50 *ProportionAdapter, 10 *ProportionAdapter, 20 *ProportionAdapter, 20 *ProportionAdapter)];
-                btn.layer.cornerRadius = 9;//圆形
-                [btn setImage:[UIImage imageNamed:@"icn_mesg_99+"] forState:UIControlStateNormal];
-                btn.tag = 1001;
-                [_viewHeader addSubview:btn];
-            }
-            
-            if (100 > _teamUnread && _teamUnread>0) {
-                RCDTabBarBtn *btn = [[RCDTabBarBtn alloc] initWithFrame:CGRectMake(50 *ProportionAdapter, 78 *ProportionAdapter, 20 *ProportionAdapter, 20 *ProportionAdapter)];
-                btn.layer.cornerRadius = 9;//圆形
-                btn.unreadCount = [NSString stringWithFormat:@"%td", _teamUnread];
-                btn.tag = 1002;
-                [_viewHeader addSubview:btn];
-            }
-            
-            if (_teamUnread > 100) {
-                RCDTabBarBtn *btn = [[RCDTabBarBtn alloc] initWithFrame:CGRectMake(50 *ProportionAdapter, 78 *ProportionAdapter, 20 *ProportionAdapter, 20 *ProportionAdapter)];
-                btn.layer.cornerRadius = 9;//圆形
-                [btn setImage:[UIImage imageNamed:@"icn_mesg_99+"] forState:UIControlStateNormal];
-                btn.tag = 1003;
-                [_viewHeader addSubview:btn];
-            }
-            
-            [self notifyUpdateUnreadMessageCount];
-            [self refreshConversationTableViewIfNeeded];
-            
-        }else{
-            [self notifyUpdateUnreadMessageCount];
-            
-            if ([data objectForKey:@"packResultMsg"]) {
-                [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
-            }
-        }
-        
-        [self.conversationListTableView.header endRefreshing];
-    }];
-     
-     */
 }
 
 //导航栏右按钮点击事件
@@ -542,7 +452,12 @@
         
         int iconCount = countChat +teamUnreadCount +systemUnreadCount +_newFriendUnreadCount;
         
-//        [[_costumBtn viewWithTag:1002] removeFromSuperview];
+       RCConversation *sysConversation = [[RCIMClient sharedRCIMClient] getConversation:ConversationType_SYSTEM targetId:SYSTEM_ID];
+        _sysDetailLable.text = [(RCTextMessage *)sysConversation.lastestMessage content];
+        
+        RCConversation *teamConversation = [[RCIMClient sharedRCIMClient] getConversation:ConversationType_SYSTEM targetId:TEAM_ID];
+        _teamNotDetailLable.text = [(RCTextMessage *) teamConversation.lastestMessage content];
+        
         //新球友
         if (100 > _newFriendUnreadCount && _newFriendUnreadCount >0) {
             self.newfirendRCDbtn.frame = CGRectMake(24 *ProportionAdapter, 5 *ProportionAdapter, 20 *ProportionAdapter, 20 *ProportionAdapter);
@@ -578,7 +493,9 @@
             self.teamRCDbtn.frame = CGRectMake(50 *ProportionAdapter, 78 *ProportionAdapter, 30 *ProportionAdapter, 20 *ProportionAdapter);
             [_teamRCDbtn setImage:[UIImage imageNamed:@"icn_mesg_99+"] forState:UIControlStateNormal];
         }
-
+        
+        
+        
         //本地存红点数
         NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
         [userdef setObject:@(iconCount) forKey:IconCount];

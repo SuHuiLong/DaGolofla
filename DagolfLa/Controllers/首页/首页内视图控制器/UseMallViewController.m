@@ -56,7 +56,7 @@
 -(void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
-//    self.navigationController.navigationBarHidden=NO;
+    self.navigationController.navigationBarHidden=NO;
     [[NSURLCache sharedURLCache] removeAllCachedResponses];
 }
 
