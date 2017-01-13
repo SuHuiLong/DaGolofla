@@ -52,6 +52,7 @@
 
 @implementation ChatListViewController
 
+
 - (void)getUserInfoWithUserId:(NSString *)userId completion:(void (^)(RCUserInfo *))completion{
     
 }
@@ -62,6 +63,8 @@
     self.isShowNetworkIndicatorView = NO;
     self.tabBarController.tabBar.hidden = NO;
     
+    [[RCIM sharedRCIM] clearUserInfoCache];
+
     //    [self.tabBarController.tabBar hideBadgeOnItemIndex:3];
     //    [self.tabBarController.tabBar showBadgeOnItemIndex:3];
     if ([[NSUserDefaults standardUserDefaults] objectForKey:@"userId"])
