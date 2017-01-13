@@ -485,7 +485,7 @@ static CGFloat ImageHeight  = 210.0;
                 } completionBlock:^(id data) {
                     NSLog(@"data == %@", data);
                     if ([[data objectForKey:@"code"] integerValue] == 1) {
-                        UIAlertAction *commitAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+//                        UIAlertAction *commitAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
                             NSString *bgUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/activity/%@_background.jpg@400w_150h_2o", strTimeKey];
                             
                             [[SDImageCache sharedImageCache] removeImageForKey:bgUrl fromDisk:YES];
@@ -495,26 +495,28 @@ static CGFloat ImageHeight  = 210.0;
                             [[SDImageCache sharedImageCache] removeImageForKey:bggUrl fromDisk:YES];
                             
                             _refreshBlock();
-                            [self.navigationController popViewControllerAnimated:YES];
-                        }];
-                        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"系统提示" message:@"活动更新成功!" preferredStyle:UIAlertControllerStyleAlert];
-                        [alertController addAction:commitAction];
+//                            [self.navigationController popViewControllerAnimated:YES];
+//                        }];
+//                        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"系统提示" message:@"活动更新成功!" preferredStyle:UIAlertControllerStyleAlert];
+//                        [alertController addAction:commitAction];
                         //获取主线层
                         if ([NSThread isMainThread]) {
                             NSLog(@"Yay!");
-                            [self presentViewController:alertController animated:YES completion:nil];
+                            [LQProgressHud showMessage:@"活动更新成功!"];
                             [self.navigationController popViewControllerAnimated:YES];
                         } else {
                             NSLog(@"Humph, switching to main");
                             dispatch_async(dispatch_get_main_queue(), ^{
-                                [self presentViewController:alertController animated:YES completion:nil];
+                                [LQProgressHud showMessage:@"活动更新成功!"];
+                                [self.navigationController popViewControllerAnimated:YES];
                             });
                         }
                         
                     }
                 }];
             }else{
-                [[ShowHUD showHUD]showToastWithText:@"活动更新成功!" FromView:self.view];
+//                [[ShowHUD showHUD]showToastWithText:@"活动更新成功!" FromView:self.view];
+                [LQProgressHud showMessage:@"活动更新成功!"];
                 //获取主线层
                 if ([NSThread isMainThread]) {
                     NSLog(@"Yay!");
@@ -522,6 +524,7 @@ static CGFloat ImageHeight  = 210.0;
                 } else {
                     NSLog(@"Humph, switching to main");
                     dispatch_async(dispatch_get_main_queue(), ^{
+                        [self.navigationController popViewControllerAnimated:YES];
                     });
                 }
             }

@@ -14,8 +14,9 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-//        self.layer.masksToBounds = YES;
-//        self.layer.cornerRadius = 8;
+        self.layer.masksToBounds = YES;
+        self.layer.cornerRadius = 8;
+        
         self.dateL = [[UILabel  alloc] initWithFrame:CGRectMake(0, 10*ProportionAdapter, self.width, 20*ProportionAdapter)];
         self.dateL.textAlignment = NSTextAlignmentCenter;
         self.dateL.backgroundColor = [UIColor clearColor];

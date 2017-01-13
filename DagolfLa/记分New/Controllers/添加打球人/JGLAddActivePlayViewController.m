@@ -7,21 +7,15 @@
 //
 
 #import "JGLAddActivePlayViewController.h"
-//#import "JGMenberTableViewCell.h"
-
 #import "PYTableViewIndexManager.h"
-
 #import "MJRefresh.h"
 #import "MJDIYBackFooter.h"
 #import "MJDIYHeader.h"
-
 #import "MyattenModel.h"
-
-//#import "JGTeamMemberManager.h"
-//#import "JGReturnMD5Str.h"
 #import "JGLAddActiivePlayModel.h"
 #import "JGLActiveAddPlayTableViewCell.h"
 #import "JGLActiveChooseSTableViewCell.h"
+
 @interface JGLAddActivePlayViewController ()<UITableViewDelegate, UITableViewDataSource,UISearchBarDelegate,UISearchResultsUpdating, JGLActiveChooseSTableViewCellDelegate>
 {
     UITableView* _tableView;

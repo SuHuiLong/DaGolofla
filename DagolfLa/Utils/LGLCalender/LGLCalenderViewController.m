@@ -220,26 +220,28 @@
             }
             
             cell.backgroundColor = [UIColor whiteColor];//LGLColor(244, 243, 231)
+            
+            
             if ((model.year == _year) && (model.month == _month) && (subModel.day == _day))  {
                 cell.backgroundColor =  [UIColor colorWithHexString:Bar_Segment];//LGLColor(65, 207, 79)
                 cell.dateL.textColor = [UIColor whiteColor];
                 cell.priceL.textColor = [UIColor whiteColor];
             }else{
-                cell.dateL.textColor = [UIColor blackColor];
+                //周六周天
+                if (indexPath.item %7 == 0 || (indexPath.item +1) %7 == 0) {
+                    cell.dateL.textColor = [UIColor colorWithHexString:Bar_Segment];
+                }else{
+                    cell.dateL.textColor = [UIColor blackColor];
+                }
+                
                 cell.priceL.textColor = [UIColor colorWithHexString:@"#fc5a01"];
             }
             
             if ((model.month == _currentMonth) && (subModel.day <= _currentDay)) {
-//                cell.backgroundColor = LGLColor(239, 239, 239);
                 cell.dateL.textColor = [UIColor lightGrayColor];
-//                cell.priceL.textColor = [UIColor colorWithHexString:@"#fc5a01"];//[UIColor lightGrayColor];
-//                cell.priceL.textColor = [UIColor lightGrayColor];
                 if (subModel.day == _currentDay) {
-//                    cell.priceL.textColor = [UIColor lightGrayColor];
                     cell.dateL.font = [UIFont systemFontOfSize:18*ProportionAdapter];
-//                    cell.priceL.font = [UIFont systemFontOfSize:16*ProportionAdapter];
                     cell.dateL.text = @"今";
-//                    cell.priceL.text = @"天";
                     cell.dateL.center = CGPointMake(25 *ProportionAdapter, 25 *ProportionAdapter);
                 }else{
                     cell.dateL.text = [NSString stringWithFormat:@"%ld",(long)subModel.day];
