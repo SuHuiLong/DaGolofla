@@ -252,20 +252,8 @@
     
     //-------------------------融云-------------------------
     //初始化融云SDK
-    [[RCIM sharedRCIM] initWithAppKey:RongYunAPPKEY];//pgyu6atqylmiu
-    if ([user objectForKey:@"userId"]) {
-        // TODO
-        NSString  *token  = [user objectForKey:@"rongTk"];
-        [[RCIM sharedRCIM] connectWithToken:token success:^(NSString *userId) {
-            NSLog(@":======== userId=%@", userId);
-            //自动登录   连接融云服务器
-            [[UserDataInformation sharedInstance] synchronizeUserInfoRCIM];
-        } error:^(RCConnectErrorCode status) {
-            NSLog(@":======== status=%ld", (long)status);
-        } tokenIncorrect:^{
-            
-        }];
-    }
+    [self connectRongTK];
+    
     /**
      * 推送处理1
      */
@@ -737,9 +725,38 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
-    NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
     
+    [self connectRongTK];
+    
+    _pushID = 0;
+    
+    [UMSocialSnsService  applicationDidBecomeActive];
+    
+    [application cancelAllLocalNotifications];
+    
+    [self getCurPosition];
+        
+    [self loadMessageData];
+}
+#pragma mark --链接融云
+- (void)connectRongTK{
+    NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
     [[RCIM sharedRCIM] initWithAppKey:RongYunAPPKEY];//pgyu6atqylmiu
+    
+    [RCIM sharedRCIM].globalConversationPortraitSize = CGSizeMake(40*ScreenWidth/375, 40*ScreenWidth/375);
+    [[RCIM sharedRCIM] initWithAppKey:RongYunAPPKEY];
+    [RCIM sharedRCIM].globalConversationAvatarStyle=RC_USER_AVATAR_CYCLE;
+    [RCIM sharedRCIM].globalMessageAvatarStyle=RC_USER_AVATAR_CYCLE;
+    [[RCIM sharedRCIM] setUserInfoDataSource:[UserDataInformation sharedInstance]];
+    [[RCIM sharedRCIM] setGroupInfoDataSource:[UserDataInformation sharedInstance]];
+    NSString *str1=[NSString stringWithFormat:@"%@",[user objectForKey:userID]];
+    NSString *str2=[NSString stringWithFormat:@"%@",[user objectForKey:@"userName"]];
+    NSString *str3=[NSString stringWithFormat:@"http://imgcache.dagolfla.com/user/head/%@.jpg@200w_200h_2o",[user objectForKey:userID]];
+    //    NSString *str31=[NSString stringWithFormat:@"http://www.dagolfla.com:8081/small_%@",[user objectForKey:@"pic"]];
+    RCUserInfo *userInfo=[[RCUserInfo alloc] initWithUserId:str1 name:str2 portrait:str3];
+    [RCIM sharedRCIM].currentUserInfo=userInfo;
+    [RCIM sharedRCIM].enableMessageAttachUserInfo=NO;
+    
     if (DEFAULF_USERID) {
         // TODO
         NSString  *token  = [user objectForKey:@"rongTk"];
@@ -753,18 +770,7 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
             
         }];
     }
-    
-    _pushID = 0;
-    
-    [UMSocialSnsService  applicationDidBecomeActive];
-    
-    [application cancelAllLocalNotifications];
-    
-    [self getCurPosition];
-        
-    [self loadMessageData];
 }
-
 - (void)applicationWillTerminate:(UIApplication *)application {
     
 }

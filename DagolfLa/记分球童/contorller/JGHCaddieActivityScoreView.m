@@ -77,7 +77,7 @@
 -(void)getUserInfo
 {
     NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
-    [dict setObject:_model.timeKey forKey:@"activityKey"];
+    [dict setObject:_model.srcKey forKey:@"activityKey"];
     [dict setObject:_userKeyPlayer forKey:@"userKey"];
     //    [dict setObject:_model.teamKey forKey:@"teamKey"];
     [[JsonHttp jsonHttp]httpRequest:@"team/getTeamActivity" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {

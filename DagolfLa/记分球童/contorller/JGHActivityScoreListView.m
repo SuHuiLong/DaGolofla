@@ -72,7 +72,7 @@
     
     [dict setObject:userKey forKey:@"userKey"];
     [dict setObject:[Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@dagolfla.com", userKey]] forKey:@"md5"];
-    [[JsonHttp jsonHttp]httpRequest:@"score/getUserLatelyActivity" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
+    [[JsonHttp jsonHttp]httpRequest:@"score/getUserLatelyChoice" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
         
     } completionBlock:^(id data) {
         if ([[data objectForKey:@"packSuccess"] boolValue]) {
@@ -80,7 +80,7 @@
             [_dataArray removeAllObjects];
             
             if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
-                for (NSDictionary *dataDic in [data objectForKey:@"activityList"]) {
+                for (NSDictionary *dataDic in [data objectForKey:@"list"]) {
                     JGLChooseScoreModel *model = [[JGLChooseScoreModel alloc] init];
                     [model setValuesForKeysWithDictionary:dataDic];
                     [_dataArray addObject:model];

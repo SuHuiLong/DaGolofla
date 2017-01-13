@@ -807,7 +807,7 @@
                 [self createCaddieActivityListViewWithPalyerUserKey:palyerId];
                 
 //                if ([[data objectForKey:@"scoreKey"] integerValue] == 0) {
-                    [self.caddieActivityScoreListView loadAnimate];
+                [self.caddieActivityScoreListView loadAnimate];
 //                }
             }
             else{
