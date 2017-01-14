@@ -41,6 +41,8 @@ static CGFloat ImageHeight  = 210.0;
 
 @property (nonatomic, copy) NSString *deductionMoney; // 立减价格
 
+@property (nonatomic, copy) NSString *depositMoney; // 押金
+
 @property (nonatomic, copy) NSString *date;
 @property (nonatomic, copy) NSString *week;
 @property (nonatomic, copy) NSString *time;
@@ -187,17 +189,25 @@ static CGFloat ImageHeight  = 210.0;
                 
                 NSString *time = [self.detailDic objectForKey:@"unitPriceDate"];
                 
-                self.unitPrice = [self.detailDic objectForKey:@"unitPrice"];
-                self.payMoney = [self.detailDic objectForKey:@"payMoney"];
-                self.unitPaymentMoney = [self.detailDic objectForKey:@"unitPaymentMoney"];
+                self.payMoney = [NSString stringWithFormat:@"%td", [[self.detailDic objectForKey:@"payMoney"] integerValue] + [[self.detailDic objectForKey:@"unitPaymentMoney"] integerValue]];
+                self.unitPaymentMoney = [[self.detailDic objectForKey:@"unitPaymentMoney"] stringValue];
                 self.selectDate = time;
                 
                 if ([self.detailDic objectForKey:@"deductionMoney"] && [[self.detailDic objectForKey:@"deductionMoney"] integerValue] != 0) {
                     self.deductionMoney = [[self.detailDic objectForKey:@"deductionMoney"] stringValue];
+                    self.unitPrice = [NSString stringWithFormat:@"%td", [[self.detailDic objectForKey:@"unitPrice"] integerValue] + [[self.detailDic objectForKey:@"deductionMoney"] integerValue]];
+
+                }else{
+                    self.unitPrice = [[self.detailDic objectForKey:@"unitPrice"] stringValue];
+
                 }
                 _date = [NSString stringWithFormat:@"%@", [Helper stringFromDateString:time withFormater:@"yyyy年MM月dd日"]];
                 _week = [NSString stringWithFormat:@"%@", [Helper stringFromDateString:time withFormater:@"EEE"]];;
                 _time = [NSString stringWithFormat:@"%@", [Helper stringFromDateString:time withFormater:@"HH:mm"]];
+                
+                if ([[self.detailDic objectForKey:@"payType"] integerValue] == 2) {
+                    self.payMoney = [self.detailDic objectForKey:@"depositMoney"];
+                }
                 
                 [self.courtDetail reloadData];
             }
@@ -449,9 +459,9 @@ static CGFloat ImageHeight  = 210.0;
                     [cell.contentView addSubview:lineLB];
                     
                 // 优惠后价格
-                    NSInteger orangePrice = [self.unitPrice integerValue] - [self.deductionMoney integerValue];
+//                    NSInteger orangePrice = [self.unitPrice integerValue] - [self.deductionMoney integerValue];
 
-                    UILabel *orangeLB = [self lablerect:CGRectMake(screenWidth - 155 * ProportionAdapter , 50 * ProportionAdapter, 60 * ProportionAdapter, 20 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#fc5a01"] labelFont:17 text:[NSString stringWithFormat:@"¥ %td", orangePrice] textAlignment:(NSTextAlignmentRight)];
+                    UILabel *orangeLB = [self lablerect:CGRectMake(screenWidth - 155 * ProportionAdapter , 50 * ProportionAdapter, 60 * ProportionAdapter, 20 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#fc5a01"] labelFont:17 text:[NSString stringWithFormat:@"¥%@", self.payMoney] textAlignment:(NSTextAlignmentRight)];
                     [cell.contentView addSubview:orangeLB];
 
                 }else{
@@ -514,7 +524,7 @@ static CGFloat ImageHeight  = 210.0;
 
 
 #pragma mark --- 时间选择
-
+//  money 单价（减免后的）     sence 现场价格  deductionMoney 减免
 - (void)calendarTap{
     LGLCalenderViewController *caleVC = [[LGLCalenderViewController alloc] init];
     caleVC.ballKey = self.timeKey;
@@ -523,13 +533,16 @@ static CGFloat ImageHeight  = 210.0;
         _week = [NSString stringWithFormat:@"%@", [Helper stringFromDateString:selectTime withFormater:@"EEE"]];;
         _time = [NSString stringWithFormat:@"%@", [Helper stringFromDateString:selectTime withFormater:@"HH:mm"]];
         
-        self.unitPrice = pay;
-        self.payMoney = [NSString stringWithFormat:@"%td", [pay integerValue] - [scenePay integerValue]];
+        if ([[self.detailDic objectForKey:@"payType"] integerValue] != 2) {
+            self.payMoney = pay;
+        }
         self.unitPaymentMoney = scenePay;
         if ([deductionMoney isEqualToString:@""]) {
             self.deductionMoney = nil;
+            self.unitPrice = pay;
         }else{
             self.deductionMoney = deductionMoney;
+            self.unitPrice = [NSString stringWithFormat:@"%td", [pay integerValue] + [deductionMoney integerValue]];
         }
         self.selectDate = selectTime;
         NSIndexPath *indexPath0 = [NSIndexPath indexPathForRow:0 inSection:0];
@@ -552,11 +565,35 @@ static CGFloat ImageHeight  = 210.0;
     JGDCommitOrderViewController *commitVC = [[JGDCommitOrderViewController alloc] init];
     commitVC.selectDate = self.selectDate;
     
-    if (self.deductionMoney) {
-        commitVC.selectMoney = [NSString stringWithFormat:@"%td", [self.payMoney integerValue] - [self.deductionMoney integerValue]];
+//    if (self.deductionMoney) {
+//        commitVC.selectMoney = [NSString stringWithFormat:@"%td", [self.payMoney integerValue] - [self.deductionMoney integerValue]];
+//    }else{
+//        commitVC.selectMoney = self.payMoney;
+//    }
+    
+    if ([[self.detailDic objectForKey:@"payType"] integerValue] == 2) {
+//         球场现付
+            commitVC.selectMoney = self.payMoney;
+        
+    }else if ([[self.detailDic objectForKey:@"payType"] integerValue] == 1) {
+//         部分预付
+        if ([self.unitPaymentMoney isEqualToString:@""]) {
+            commitVC.selectMoney = self.payMoney;
+        }else{
+            commitVC.selectMoney = [NSString stringWithFormat:@"%td", [self.payMoney integerValue] - [self.unitPaymentMoney integerValue]];
+        }
+
     }else{
-        commitVC.selectMoney = self.payMoney;
+//         全额预付
+        if ([self.unitPaymentMoney isEqualToString:@""]) {
+            commitVC.selectMoney = self.payMoney;
+        }else{
+            commitVC.selectMoney = [NSString stringWithFormat:@"%td", [self.payMoney integerValue] - [self.unitPaymentMoney integerValue]];
+        }
+
     }
+    
+    
     commitVC.selectSceneMoney = self.unitPaymentMoney;
     commitVC.detailDic = self.detailDic;
     [self.navigationController pushViewController:commitVC animated:YES];
