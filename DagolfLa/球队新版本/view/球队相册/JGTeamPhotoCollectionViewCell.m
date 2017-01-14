@@ -22,9 +22,10 @@
     _iconIngv.layer.masksToBounds = YES;
     _iconIngv.contentMode = UIViewContentModeScaleAspectFill;
     
-    NSArray* array1 = [model.createTime componentsSeparatedByString:@" "];
-    
-    _timeLabel.text = [NSString stringWithFormat:@"%@",array1[0]];
+    _timeLabel.text = [Helper stringFromDateString:model.createTime withFormater:@"yyyy.MM.dd"];
+
+//    NSArray* array1 = [model.createTime componentsSeparatedByString:@" "];
+//    _timeLabel.text = [NSString stringWithFormat:@"%@",array1[0]];
     if (![Helper isBlankString:model.name]) {
 
         _nameLabel.text = [NSString stringWithFormat:@"%@",model.name];

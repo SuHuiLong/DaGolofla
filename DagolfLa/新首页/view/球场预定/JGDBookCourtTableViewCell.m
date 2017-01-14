@@ -132,6 +132,10 @@
         self.fullCutBtn.hidden = NO;
         [self.fullCutBtn setTitle:[NSString stringWithFormat:@"¥ %@", model.deductionMoney] forState:(UIControlStateNormal)];
 
+        NSMutableAttributedString *mutaStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"¥ %td", [model.unitPrice integerValue] + [model.deductionMoney integerValue]]];
+        [mutaStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:13 * ProportionAdapter] range:NSMakeRange(0, 1)];
+        self.priceLB.attributedText = mutaStr;
+        
     }else{
         self.fullCutBtn.hidden = YES;
     }
