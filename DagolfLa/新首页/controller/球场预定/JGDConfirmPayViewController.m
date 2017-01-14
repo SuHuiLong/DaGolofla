@@ -493,7 +493,6 @@
     
     if (mySwitch.on == YES) {
         
-        
         NSMutableDictionary *dict = [NSMutableDictionary dictionary];
         [dict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:userID] forKey:@"userKey"];
         [[JsonHttp jsonHttp]httpRequest:@"user/isSetPayPassWord" JsonKey:nil withData:dict requestMethod:@"POST" failedBlock:^(id errType) {

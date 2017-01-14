@@ -8,12 +8,34 @@
 
 #import "JGDPaySuccessViewController.h"
 #import "JGDOrderDetailViewController.h"
+#import "JGDCourtDetailViewController.h"
 
 @interface JGDPaySuccessViewController ()
 
 @end
 
 @implementation JGDPaySuccessViewController
+
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    
+    UIBarButtonItem *leftBar = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"backL"] style:(UIBarButtonItemStyleDone) target:self action:@selector(backBtn)];
+    leftBar.tintColor = [UIColor whiteColor];
+    self.navigationItem.leftBarButtonItem = leftBar;
+}
+
+
+- (void)backBtn{
+    
+    for (UIViewController *vc in self.navigationController.viewControllers) {
+        if ([vc isKindOfClass:[JGDOrderDetailViewController class]] || [vc isKindOfClass:[JGDCourtDetailViewController class]]) {
+            [self.navigationController popToViewController:vc animated:YES];
+            return;
+        }
+    }
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
