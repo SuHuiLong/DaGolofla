@@ -1,20 +1,20 @@
 //
-//  JGHNewActivityCell.m
+//  JGHNewApplyActivityDetailCell.m
 //  DagolfLa
 //
-//  Created by 黄安 on 17/1/6.
+//  Created by 黄安 on 17/1/14.
 //  Copyright © 2017年 bhxx. All rights reserved.
 //
 
-#import "JGHNewActivityCell.h"
+#import "JGHNewApplyActivityDetailCell.h"
 #import "JGTeamAcitivtyModel.h"
 
-@implementation JGHNewActivityCell
+@implementation JGHNewApplyActivityDetailCell
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
     if (self == [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
         _oneImageView = [[UIImageView alloc]initWithFrame:CGRectMake(10 *ProportionAdapter, 11 *ProportionAdapter, 22 *ProportionAdapter, 22 *ProportionAdapter)];
-        _oneImageView.image = [UIImage imageNamed:@"icn_time"];
+        _oneImageView.image = [UIImage imageNamed:@"icn_teamname"];
         [self addSubview:_oneImageView];
         
         _teeTime = [[UILabel alloc]initWithFrame:CGRectMake(40 *ProportionAdapter, 10 *ProportionAdapter, screenWidth - 50*ProportionAdapter, 24 *ProportionAdapter)];
@@ -27,7 +27,7 @@
         
         
         _twoImageView = [[UIImageView alloc]initWithFrame:CGRectMake(10 *ProportionAdapter, 55 *ProportionAdapter, 22 *ProportionAdapter, 22 *ProportionAdapter)];
-        _twoImageView.image = [UIImage imageNamed:@"icn_registration"];
+        _twoImageView.image = [UIImage imageNamed:@"icn_address"];
         [self addSubview:_twoImageView];
         
         _registration = [[UILabel alloc]initWithFrame:CGRectMake(40 *ProportionAdapter, 54 *ProportionAdapter, screenWidth - 50*ProportionAdapter, 24 *ProportionAdapter)];
@@ -39,7 +39,7 @@
         [self addSubview:_twoline];
         
         _threeImageView = [[UIImageView alloc]initWithFrame:CGRectMake(10 *ProportionAdapter, 99 *ProportionAdapter, 22 *ProportionAdapter, 22 *ProportionAdapter)];
-        _threeImageView.image = [UIImage imageNamed:@"icn_address"];
+        _threeImageView.image = [UIImage imageNamed:@"icn_time"];
         [self addSubview:_threeImageView];
         
         _address = [[UILabel alloc]initWithFrame:CGRectMake(40 *ProportionAdapter, 98 *ProportionAdapter, screenWidth - 50*ProportionAdapter, 24 *ProportionAdapter)];
@@ -54,6 +54,15 @@
 
 - (void)configJGTeamAcitivtyModel:(JGTeamAcitivtyModel *)model{
     
+    if (model.name) {
+        _teeTime.text = [NSString stringWithFormat:@"活动名称：%@", model.name];
+    }
+    
+    if (model.ballAddress) {
+        //截止
+        _registration.text = [NSString stringWithFormat:@"活动地址：%@", model.ballAddress];
+    }
+    
     if (model.beginDate) {
         //        [[model.beginDate componentsSeparatedByString:@" "] objectAtIndex:0];
         NSString *timeString =[[model.beginDate componentsSeparatedByString:@" "] objectAtIndex:1];
@@ -67,16 +76,10 @@
             }
         }
         
-        _teeTime.text = [NSString stringWithFormat:@"开球时间：%@%@", [Helper returnDateformatString:[[model.beginDate componentsSeparatedByString:@" "] objectAtIndex:0]], string];
+        _address.text = [NSString stringWithFormat:@"活动日期：%@%@", [Helper returnDateformatString:[[model.beginDate componentsSeparatedByString:@" "] objectAtIndex:0]], string];
     }
-    
-    if (model.signUpEndTime) {
-        //截止
-        _registration.text = [NSString stringWithFormat:@"报名截止：%@",  [Helper returnDateformatString:model.signUpEndTime]];
-    }
-    
-    _address.text = [NSString stringWithFormat:@"活动地址：%@", model.ballAddress];
 }
+
 
 - (void)awakeFromNib {
     [super awakeFromNib];

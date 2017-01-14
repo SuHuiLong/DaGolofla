@@ -7,29 +7,13 @@
 //
 
 #import "JGHNewActivityDetailViewController.h"
-#import "JGTeamActivityWithAddressCell.h"
-#import "JGTeamActivityDetailsCell.h"
-#import "JGHHeaderLabelCell.h"
-#import "JGTeamApplyViewController.h"
+#import "JGHNewTeamApplyViewController.h"
 #import "JGTeamAcitivtyModel.h"
-#import "SXPickPhoto.h"
 #import "BallParkViewController.h"
 #import "JGHCostListTableViewCell.h"
 #import "JGTeamActivityViewController.h"
 #import "JGTeamDeatilWKwebViewController.h"
 #import "JGTeamGroupViewController.h"
-
-#import "UMSocial.h"
-#import "ShareAlert.h"
-#import "UMSocialData.h"
-#import "ShareAlert.h"
-#import "UMSocialConfig.h"
-#import "UMSocialSinaHandler.h"
-#import "UMSocialDataService.h"
-#import "UMSocialWechatHandler.h"
-#import "CommuniteTableViewCell.h"
-#import "UMSocialWechatHandler.h"
-#import "UMSocialControllerService.h"
 
 #import "JGTeamGroupViewController.h"
 #import "JGActivityNameBaseCell.h"
@@ -41,18 +25,19 @@
 #import "JGLActiveCancelMemViewController.h"
 #import "JGLPresentAwardViewController.h"
 #import "JGLScoreLiveViewController.h"
-//#import "JGLActivityMemberSetViewController.h"
 #import "JGLScoreRankViewController.h"
-//#import "JGDGuestCodeViewController.h"
 #import "JGLActivityMemberSetViewController.h"
 #import "JGHNewActivityCell.h"
+#import "JGHActivityAllCell.h"
+#import "JGHActivityInfoCell.h"
 
-static NSString *const JGTeamActivityWithAddressCellIdentifier = @"JGTeamActivityWithAddressCell";
-static NSString *const JGTeamActivityDetailsCellIdentifier = @"JGTeamActivityDetailsCell";
-static NSString *const JGHHeaderLabelCellIdentifier = @"JGHHeaderLabelCell";
 static NSString *const JGHCostListTableViewCellIdentifier = @"JGHCostListTableViewCell";
 static NSString *const JGActivityNameBaseCellIdentifier = @"JGActivityNameBaseCell";
 static NSString *const JGHNewActivityCellIdentifier = @"JGHNewActivityCell";
+static NSString *const JGHActivityAllCellIdentifier = @"JGHActivityAllCell";
+static NSString *const JGHActivityInfoCellIdentifier = @"JGHActivityInfoCell";
+
+
 static CGFloat ImageHeight  = 210.0;
 
 @interface JGHNewActivityDetailViewController ()<UITableViewDelegate, UITableViewDataSource, JGLActivityMemberSetViewControllerDelegate>
@@ -153,8 +138,8 @@ static CGFloat ImageHeight  = 210.0;
     self.view.backgroundColor = [UIColor colorWithHexString:BG_color];
     self.automaticallyAdjustsScrollViewInsets = NO;
     
-    _titleArray = @[@"开球时间", @"报名截止", @"活动地址", @"参赛费用", @"活动成员及分组", @"查看成绩", @"查看奖项", @"活动详情"];
-    _imageArray = @[@"yueqiu_time", @"icn_registration", @"address", @"", @"", @"", @"", @"", @""];
+    _titleArray = @[@"参赛费用", @"活动成员及分组", @"查看成绩", @"查看奖项", @"活动详情"];
+    _imageArray = @[@"icn_preferential", @"icn_event_group", @"icn_event_score", @"icn_awards", @"icn_event_details"];
     
     //监听分组页面返回，刷新数据
     NSNotificationCenter * center = [NSNotificationCenter defaultCenter];
@@ -162,21 +147,21 @@ static CGFloat ImageHeight  = 210.0;
     [center addObserver:self selector:@selector(reloadActivityData:) name:@"reloadActivityData" object:nil];
     
     self.imgProfile = [[UIImageView alloc] initWithImage:[UIImage imageNamed:TeamBGImage]];
-    self.imgProfile.frame = CGRectMake(0, 0, screenWidth, ImageHeight);
+    self.imgProfile.frame = CGRectMake(0, 0, screenWidth, ImageHeight *ProportionAdapter);
     self.imgProfile.userInteractionEnabled = YES;
     self.teamActibityNameTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight - 44)];
-    UINib *tableViewNib = [UINib nibWithNibName:@"JGHHeaderLabelCell" bundle: [NSBundle mainBundle]];
-    [self.teamActibityNameTableView registerNib:tableViewNib forCellReuseIdentifier:JGHHeaderLabelCellIdentifier];
-    UINib *addressNib = [UINib nibWithNibName:@"JGTeamActivityWithAddressCell" bundle: [NSBundle mainBundle]];
-    [self.teamActibityNameTableView registerNib:addressNib forCellReuseIdentifier:JGTeamActivityWithAddressCellIdentifier];
-    UINib *deetailsNib = [UINib nibWithNibName:@"JGTeamActivityDetailsCell" bundle: [NSBundle mainBundle]];
-    [self.teamActibityNameTableView registerNib:deetailsNib forCellReuseIdentifier:JGTeamActivityDetailsCellIdentifier];
+
     UINib *costListNib = [UINib nibWithNibName:@"JGHCostListTableViewCell" bundle:[NSBundle mainBundle]];
     [self.teamActibityNameTableView registerNib:costListNib forCellReuseIdentifier:JGHCostListTableViewCellIdentifier];
     UINib *costSubsidiesNib = [UINib nibWithNibName:@"JGActivityNameBaseCell" bundle:[NSBundle mainBundle]];
     [self.teamActibityNameTableView registerNib:costSubsidiesNib forCellReuseIdentifier:JGActivityNameBaseCellIdentifier];
     
     [self.teamActibityNameTableView registerClass:[JGHNewActivityCell class] forCellReuseIdentifier:JGHNewActivityCellIdentifier];
+    
+    [self.teamActibityNameTableView registerClass:[JGHActivityAllCell class] forCellReuseIdentifier:JGHActivityAllCellIdentifier];
+    
+    UINib *activityInfoCellNib = [UINib nibWithNibName:JGHActivityInfoCellIdentifier bundle:[NSBundle mainBundle]];
+    [self.teamActibityNameTableView registerNib:activityInfoCellNib forCellReuseIdentifier:JGHActivityInfoCellIdentifier];
     
     self.teamActibityNameTableView.dataSource = self;
     self.teamActibityNameTableView.delegate = self;
@@ -344,58 +329,7 @@ static CGFloat ImageHeight  = 210.0;
         }];
     }
 }
-#pragma mark - 分享
--(void)shareInfo:(NSInteger)index{
-    
-    NSData *fiData = [[NSData alloc]init];
-    NSString*  shareUrl;
-    if ([_model.timeKey integerValue] == 0) {
-        fiData = [NSData dataWithContentsOfURL:[Helper setImageIconUrl:@"activity" andTeamKey:_model.teamActivityKey andIsSetWidth:YES andIsBackGround:YES]];
-        NSString *md5String = [Helper md5HexDigest:[NSString stringWithFormat:@"teamKey=%td&activityKey=%td&userKey=%@&share=1dagolfla.com", _model.teamKey, _model.teamActivityKey, DEFAULF_USERID]];
-        shareUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/team/teamac.html?teamKey=%td&activityKey=%td&userKey=%@&share=1&md5=%@", _model.teamKey, _model.teamActivityKey, DEFAULF_USERID, md5String];
-    }
-    else
-    {
-        NSString *md5String = [Helper md5HexDigest:[NSString stringWithFormat:@"teamKey=%td&activityKey=%@&userKey=%@&share=1dagolfla.com", _model.teamKey, _model.timeKey, DEFAULF_USERID]];
-        fiData = [NSData dataWithContentsOfURL:[Helper setImageIconUrl:@"activity" andTeamKey:[_model.timeKey integerValue]andIsSetWidth:YES andIsBackGround:YES]];
-        shareUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/team/teamac.html?teamKey=%td&activityKey=%@&userKey=%@&share=1&md5=%@", _model.teamKey, _model.timeKey, DEFAULF_USERID, md5String];
-    }
-    
-    
-    [UMSocialData defaultData].extConfig.title=[NSString stringWithFormat:@"%@报名", _model.name];
-    
-    if (index == 0){
-        //微信
-        [UMSocialWechatHandler setWXAppId:@"wxdcdc4e20544ed728" appSecret:@"fdc75aae5a98f2aa0f62ef8cba2b08e9" url:shareUrl];
-        [UMSocialConfig hiddenNotInstallPlatforms:@[UMShareToWechatSession,UMShareToWechatTimeline,UMShareToSina]];
-        
-        NSString* str = [NSString stringWithFormat:@"活动地址:%@。%@",_model.ballName,_strShare];
-        
-        
-        [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatSession] content:[NSString stringWithFormat:@"球队会员：%.2f元，平台补贴：%.2f元，活动地点：%@，活动时间：%@", [_model.memberPrice floatValue],[_model.subsidyPrice floatValue],_model.ballName,_model.beginDate]  image:(fiData != nil && fiData.length > 0) ?fiData : [UIImage imageNamed:TeamBGImage] location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
-            if (response.responseCode == UMSResponseCodeSuccess) {
-                //                [self shareS:indexRow];
-            }
-        }];
-        
-    }else if (index==1){
-        //朋友圈
-        [UMSocialWechatHandler setWXAppId:@"wxdcdc4e20544ed728" appSecret:@"fdc75aae5a98f2aa0f62ef8cba2b08e9" url:shareUrl];
-        [UMSocialConfig hiddenNotInstallPlatforms:@[UMShareToWechatSession,UMShareToWechatTimeline,UMShareToSina]];
-        [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatTimeline] content:[NSString stringWithFormat:@"球队会员：%.2f元，平台补贴：%.2f元，活动地点：%@，活动时间：%@", [_model.memberPrice floatValue],[_model.subsidyPrice floatValue],_model.ballName,_model.beginDate] image:(fiData != nil && fiData.length > 0) ?fiData : [UIImage imageNamed:TeamBGImage] location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
-            if (response.responseCode == UMSResponseCodeSuccess) {
-                //                [self shareS:indexRow];
-            }
-        }];
-    }else{
-        UMSocialData *data = [UMSocialData defaultData];
-        data.shareImage = [UIImage imageNamed:DefaultHeaderImage];
-        data.shareText = [NSString stringWithFormat:@"%@%@",@"君高高尔夫",shareUrl];
-        [[UMSocialControllerService defaultControllerService] setSocialData:data];
-        //2.设置分享平台
-        [UMSocialSnsPlatformManager getSocialPlatformWithName:UMShareToSina].snsClickHandler(self,[UMSocialControllerService defaultControllerService],YES);
-    }
-}
+
 #pragma mark -- 跳转分组页面
 - (void)pushGroupCtrl:(UIButton *)btn{
     JGTeamGroupViewController *teamCtrl = [[JGTeamGroupViewController alloc]init];
@@ -590,7 +524,7 @@ static CGFloat ImageHeight  = 210.0;
         if (_isTeamMember == 1) {
             [[ShowHUD showHUD]showToastWithText:@"您不是该球队队员！" FromView:self.view];
         }else{
-            JGTeamApplyViewController *teamApplyCtrl = [[JGTeamApplyViewController alloc]initWithNibName:@"JGTeamApplyViewController" bundle:nil];
+            JGHNewTeamApplyViewController *teamApplyCtrl = [[JGHNewTeamApplyViewController alloc] init];
             teamApplyCtrl.modelss = self.model;
             teamApplyCtrl.userName = _userName;
             teamApplyCtrl.isApply = (BOOL)[_isApply floatValue];
@@ -612,40 +546,42 @@ static CGFloat ImageHeight  = 210.0;
         //参赛费用列表
         NSLog(@"%td", _costListArray.count + 1);
         return _costListArray.count + 1;
+    }else if (section == 6){
+        return 1;
     }
     return 0;
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 8;//详情页面
+    return 7;//详情页面
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 2) {
-        return 30;
+        return 30*ProportionAdapter;
+    }else if (indexPath.section == 6){
+        static JGHActivityInfoCell *cell;
+        if (!cell) {
+            cell = [self.teamActibityNameTableView dequeueReusableCellWithIdentifier:JGHActivityInfoCellIdentifier];
+        }
+        
+        cell.infoLable.text = self.model.info;
+        
+        return [cell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height + 1;
     }
     return 0;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
-    if (section == 3 || section == 4) {
+    if (section == 3 || section == 4 || section == 6) {
         return 0;
     }
-    return 10;
+    return 10*ProportionAdapter;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     if (section == 0) {
-        return ImageHeight;
+        return ImageHeight *ProportionAdapter;
     }else if (section == 1){
-        return 110;
-    }else if (section == 7){
-        static JGTeamActivityDetailsCell *cell;
-        if (!cell) {
-            cell = [self.teamActibityNameTableView dequeueReusableCellWithIdentifier:JGTeamActivityDetailsCellIdentifier];
-        }
-        
-        cell.activityDetails.text = self.model.info;
-        
-        return [cell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height + 1;
+        return 132 *ProportionAdapter;
     }
-    return 44;
+    return 44*ProportionAdapter;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 2) {
@@ -669,6 +605,10 @@ static CGFloat ImageHeight  = 210.0;
             
             return costListCell;
         }
+    }else if (indexPath.section == 6){
+        JGHActivityInfoCell *infoCell = [tableView dequeueReusableCellWithIdentifier:JGHActivityInfoCellIdentifier];
+        infoCell.infoLable.text = _model.info;
+        return infoCell;
     }
     return nil;
 }
@@ -687,77 +627,35 @@ static CGFloat ImageHeight  = 210.0;
         return (UIView *)launchImageActivityCell;
     }else if (section == 1) {
         JGHNewActivityCell *addressCell = [tableView dequeueReusableCellWithIdentifier:JGHNewActivityCellIdentifier];
-        addressCell.name.text = @"1111";
+        [addressCell configJGTeamAcitivtyModel:_model];
         return (UIView *)addressCell;
-//        JGTeamActivityWithAddressCell *addressCell = [tableView dequeueReusableCellWithIdentifier:JGTeamActivityWithAddressCellIdentifier];
-//        [addressCell configModel:self.model];
-//        return (UIView *)addressCell;
-    }else if (section == 2){
-        JGHHeaderLabelCell *headerCell = [tableView dequeueReusableCellWithIdentifier:JGHHeaderLabelCellIdentifier];
-        return (UIView *)headerCell;
-    }else if (section == 3){
-        JGHHeaderLabelCell *headerCell = [tableView dequeueReusableCellWithIdentifier:JGHHeaderLabelCellIdentifier];
-        UIButton *applyListBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, screenWidth, headerCell.frame.size.height)];
-        [applyListBtn addTarget:self action:@selector(getTeamActivitySignUpList:) forControlEvents:UIControlEventTouchUpInside];
-        [headerCell addSubview:applyListBtn];
-        headerCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        [headerCell congiftitles:@"活动成员及分组"];
-        [headerCell congifCount:self.model.sumCount andSum:self.model.maxCount];
-        return (UIView *)headerCell;
-    }else if (section == 4) {
-        JGHHeaderLabelCell *headerCell = [tableView dequeueReusableCellWithIdentifier:JGHHeaderLabelCellIdentifier];
-        UIButton *applyListBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, screenWidth, headerCell.frame.size.height)];
-        [applyListBtn addTarget:self action:@selector(getTeamActivityResults:) forControlEvents:UIControlEventTouchUpInside];
-        [headerCell addSubview:applyListBtn];
-        headerCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        [headerCell congiftitles:@"查看成绩"];
-        return (UIView *)headerCell;
-    }else if (section == 5) {
-        JGHHeaderLabelCell *headerCell = [tableView dequeueReusableCellWithIdentifier:JGHHeaderLabelCellIdentifier];
-        UIButton *applyListBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, screenWidth, headerCell.frame.size.height)];
-        [applyListBtn addTarget:self action:@selector(getTeamActivityAward:) forControlEvents:UIControlEventTouchUpInside];
-        headerCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        [headerCell addSubview:applyListBtn];
-        [headerCell congiftitles:@"查看奖项"];
-        return (UIView *)headerCell;
-    }else if (section == 6) {
-        JGHHeaderLabelCell *headerCell = [tableView dequeueReusableCellWithIdentifier:JGHHeaderLabelCellIdentifier];
-        UIButton *applyListBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, screenWidth, headerCell.frame.size.height)];
-        [applyListBtn addTarget:self action:@selector(getTeamActivityGuestCode:) forControlEvents:UIControlEventTouchUpInside];
-        headerCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        [headerCell addSubview:applyListBtn];
-        [headerCell congiftitles:@"嘉宾参赛码"];
-        return (UIView *)headerCell;
     }else{
-        JGTeamActivityDetailsCell *detailsCell = [tableView dequeueReusableCellWithIdentifier:JGTeamActivityDetailsCellIdentifier];
-        UIButton *detailsBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, screenWidth, detailsCell.frame.size.height)];
-        [detailsBtn addTarget:self action:@selector(pushDetailSCtrl:) forControlEvents:UIControlEventTouchUpInside];
-        [detailsCell addSubview:detailsBtn];
-        detailsCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        [detailsCell configDetailsText:@"活动详情" AndActivityDetailsText:self.model.info];
-        return (UIView *)detailsCell;
+        JGHActivityAllCell *activityCell = [tableView dequeueReusableCellWithIdentifier:JGHActivityAllCellIdentifier];
+        if (section == 2) {
+            activityCell.accessoryType = UITableViewCellAccessoryNone;
+        }else{
+            activityCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        }
+        
+        if (section == 3) {
+            NSString *group = [NSString stringWithFormat:@"活动成员及分组(%td/%td)", self.model.sumCount, self.model.maxCount];
+            
+            [activityCell configImageName:_imageArray[section -2] withName:group];
+        }else{
+            [activityCell configImageName:_imageArray[section -2] withName:_titleArray[section -2]];
+        }
+        
+        return (UIView *)activityCell;
     }
 }
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
-    UIView *footView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, 10)];
+    UIView *footView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, 10*ProportionAdapter)];
     footView.backgroundColor = [UIColor colorWithHexString:BG_color];
     return footView;
 }
 #pragma mark -- 嘉宾参赛码
 - (void)getTeamActivityGuestCode:(UIButton *)btn{
-    if (_isTeamMember == 1) {
-        [[ShowHUD showHUD]showToastWithText:@"您不是该球队队员！" FromView:self.view];
-        return;
-    }
-    
-    //    JGDGuestCodeViewController *guestVC =[[JGDGuestCodeViewController alloc] init];
-    //    if (_model.teamActivityKey == 0) {
-    //        guestVC.timeKey = _model.timeKey;
-    //    }else{
-    //        guestVC.timeKey = [NSString stringWithFormat:@"%td", _model.teamActivityKey];
-    //    }
-    //    guestVC.activityName = _model.name;
-    //    [self.navigationController pushViewController:guestVC animated:YES];
+
 }
 #pragma mark -- 查看奖项
 - (void)getTeamActivityAward:(UIButton *)btn{
@@ -863,10 +761,10 @@ static CGFloat ImageHeight  = 210.0;
 - (void)updateImg {
     CGFloat yOffset = _teamActibityNameTableView.contentOffset.y;
     NSLog(@"yOffset:%f",yOffset);
-    CGFloat factor = ((ABS(yOffset)+ImageHeight)*screenWidth)/ImageHeight;
+    CGFloat factor = ((ABS(yOffset)+ImageHeight *ProportionAdapter)*screenWidth)/ImageHeight *ProportionAdapter;
     if (yOffset < 0) {
         
-        CGRect f = CGRectMake(-(factor-screenWidth)/2, 0, factor, ImageHeight+ABS(yOffset));
+        CGRect f = CGRectMake(-(factor-screenWidth)/2, 0, factor, ImageHeight *ProportionAdapter+ABS(yOffset));
         self.imgProfile.frame = f;
         
         _gradientImage.frame = self.imgProfile.frame;
@@ -906,6 +804,58 @@ static CGFloat ImageHeight  = 210.0;
 #pragma mark -- 添加意向成员返回刷新数据
 - (void)reloadActivityMemberData{
     [self dataSet];
+}
+#pragma mark - 分享
+-(void)shareInfo:(NSInteger)index{
+    
+    NSData *fiData = [[NSData alloc]init];
+    NSString*  shareUrl;
+    if ([_model.timeKey integerValue] == 0) {
+        fiData = [NSData dataWithContentsOfURL:[Helper setImageIconUrl:@"activity" andTeamKey:_model.teamActivityKey andIsSetWidth:YES andIsBackGround:YES]];
+        NSString *md5String = [Helper md5HexDigest:[NSString stringWithFormat:@"teamKey=%td&activityKey=%td&userKey=%@&share=1dagolfla.com", _model.teamKey, _model.teamActivityKey, DEFAULF_USERID]];
+        shareUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/team/teamac.html?teamKey=%td&activityKey=%td&userKey=%@&share=1&md5=%@", _model.teamKey, _model.teamActivityKey, DEFAULF_USERID, md5String];
+    }
+    else
+    {
+        NSString *md5String = [Helper md5HexDigest:[NSString stringWithFormat:@"teamKey=%td&activityKey=%@&userKey=%@&share=1dagolfla.com", _model.teamKey, _model.timeKey, DEFAULF_USERID]];
+        fiData = [NSData dataWithContentsOfURL:[Helper setImageIconUrl:@"activity" andTeamKey:[_model.timeKey integerValue]andIsSetWidth:YES andIsBackGround:YES]];
+        shareUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/team/teamac.html?teamKey=%td&activityKey=%@&userKey=%@&share=1&md5=%@", _model.teamKey, _model.timeKey, DEFAULF_USERID, md5String];
+    }
+    
+    
+    [UMSocialData defaultData].extConfig.title=[NSString stringWithFormat:@"%@报名", _model.name];
+    
+    if (index == 0){
+        //微信
+        [UMSocialWechatHandler setWXAppId:@"wxdcdc4e20544ed728" appSecret:@"fdc75aae5a98f2aa0f62ef8cba2b08e9" url:shareUrl];
+        [UMSocialConfig hiddenNotInstallPlatforms:@[UMShareToWechatSession,UMShareToWechatTimeline,UMShareToSina]];
+        
+        NSString* str = [NSString stringWithFormat:@"活动地址:%@。%@",_model.ballName,_strShare];
+        
+        
+        [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatSession] content:[NSString stringWithFormat:@"球队会员：%.2f元，平台补贴：%.2f元，活动地点：%@，活动时间：%@", [_model.memberPrice floatValue],[_model.subsidyPrice floatValue],_model.ballName,_model.beginDate]  image:(fiData != nil && fiData.length > 0) ?fiData : [UIImage imageNamed:TeamBGImage] location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
+            if (response.responseCode == UMSResponseCodeSuccess) {
+                //                [self shareS:indexRow];
+            }
+        }];
+        
+    }else if (index==1){
+        //朋友圈
+        [UMSocialWechatHandler setWXAppId:@"wxdcdc4e20544ed728" appSecret:@"fdc75aae5a98f2aa0f62ef8cba2b08e9" url:shareUrl];
+        [UMSocialConfig hiddenNotInstallPlatforms:@[UMShareToWechatSession,UMShareToWechatTimeline,UMShareToSina]];
+        [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatTimeline] content:[NSString stringWithFormat:@"球队会员：%.2f元，平台补贴：%.2f元，活动地点：%@，活动时间：%@", [_model.memberPrice floatValue],[_model.subsidyPrice floatValue],_model.ballName,_model.beginDate] image:(fiData != nil && fiData.length > 0) ?fiData : [UIImage imageNamed:TeamBGImage] location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
+            if (response.responseCode == UMSResponseCodeSuccess) {
+                //                [self shareS:indexRow];
+            }
+        }];
+    }else{
+        UMSocialData *data = [UMSocialData defaultData];
+        data.shareImage = [UIImage imageNamed:DefaultHeaderImage];
+        data.shareText = [NSString stringWithFormat:@"%@%@",@"君高高尔夫",shareUrl];
+        [[UMSocialControllerService defaultControllerService] setSocialData:data];
+        //2.设置分享平台
+        [UMSocialSnsPlatformManager getSocialPlatformWithName:UMShareToSina].snsClickHandler(self,[UMSocialControllerService defaultControllerService],YES);
+    }
 }
 
 - (void)didReceiveMemoryWarning {
