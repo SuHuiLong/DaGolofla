@@ -100,7 +100,7 @@
     
     [self.iconImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://imgcache.dagolfla.com/ball/%@_main.jpg", model.timeKey]] placeholderImage:[UIImage imageNamed:TeamLogoImage]];
     
-    self.courtBallname.text = model.ballName;
+    self.courtBallname.text = model.bookName;
     
     self.styleANDcount.text = [NSString stringWithFormat:@"%@ | %@洞", model.type, model.holesSum];
     

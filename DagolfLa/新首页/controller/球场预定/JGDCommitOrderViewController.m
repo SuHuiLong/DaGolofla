@@ -180,7 +180,7 @@
    
     NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
     NSMutableDictionary *orderDic = [NSMutableDictionary dictionary];
-    [orderDic setObject:[self.detailDic objectForKey:@"timeKey"] forKey:@"srcKey"];
+    
     [orderDic setObject:self.noteTF.text forKey:@"remark"];
     [orderDic setObject:self.selectDate forKey:@"teeTime"];
     [orderDic setObject:@([self.playerArray count]) forKey:@"userSum"];
@@ -197,7 +197,7 @@
     
     [dic setObject:orderDic forKey:@"order"];
     [dic setObject:DEFAULF_USERID forKey:@"userKey"];
-    
+    [dic setObject:[self.detailDic objectForKey:@"timeKey"] forKey:@"bookBallParkKey"];
     [[ShowHUD showHUD] showAnimationWithText:@"加载中…" FromView:self.view];
     
     [[JsonHttp jsonHttp] httpRequestHaveSpaceWithMD5:@"bookingOrder/doCreateBookingOrder" JsonKey:nil withData:dic failedBlock:^(id errType) {
