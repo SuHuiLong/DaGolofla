@@ -83,10 +83,10 @@
 }
 
 
-- (BOOL)shouldAutorotate
-{
-    return NO;
-}
+//- (BOOL)shouldAutorotate
+//{
+//    return NO;
+//}
 
 
 @end

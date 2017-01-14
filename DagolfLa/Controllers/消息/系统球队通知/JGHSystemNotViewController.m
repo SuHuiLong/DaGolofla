@@ -31,6 +31,9 @@ static NSString *const JGHSysInformCellIdentifier = @"JGHSysInformCell";
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     
+    
+    self.navigationController.navigationBarHidden = NO;
+    
     UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"backL"] style:UIBarButtonItemStylePlain target:self action:@selector(backButtonClcik)];
     item.tintColor=[UIColor whiteColor];
     self.navigationItem.leftBarButtonItem = item;
@@ -86,34 +89,36 @@ static NSString *const JGHSysInformCellIdentifier = @"JGHSysInformCell";
             }
             
             [self.systemNotTableView reloadData];
+            
+            if (self.dataArray.count == 0) {
+                self.systemNotTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+                if (_promptLable != nil) {
+                    [_promptLable removeFromSuperview];
+                    _promptLable = nil;
+                }
+                
+                _promptLable = [[UILabel alloc]initWithFrame:CGRectMake(0, (screenHeight/2)-10*ProportionAdapter, screenWidth, 20 *ProportionAdapter)];
+                
+                UIWindow *window = [UIApplication sharedApplication].keyWindow;
+                _promptLable.center = window.center;
+                _promptLable.font = [UIFont systemFontOfSize:16*ProportionAdapter];
+                _promptLable.textAlignment = NSTextAlignmentCenter;
+                _promptLable.text = @"暂无系统通知";
+                [self.systemNotTableView addSubview:_promptLable];
+            }else{
+                self.systemNotTableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+                if (_promptLable != nil) {
+                    [_promptLable removeFromSuperview];
+                    _promptLable = nil;
+                }
+            }
         }else{
             if ([data objectForKey:@"packResultMsg"]) {
                 [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
             }
         }
         
-        if (self.dataArray.count == 0) {
-            self.systemNotTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-            if (_promptLable != nil) {
-                [_promptLable removeFromSuperview];
-                _promptLable = nil;
-            }
-            
-            _promptLable = [[UILabel alloc]initWithFrame:CGRectMake(0, (screenHeight/2)-10*ProportionAdapter, screenWidth, 20 *ProportionAdapter)];
-            
-            UIWindow *window = [UIApplication sharedApplication].keyWindow;
-            _promptLable.center = window.center;
-            _promptLable.font = [UIFont systemFontOfSize:16*ProportionAdapter];
-            _promptLable.textAlignment = NSTextAlignmentCenter;
-            _promptLable.text = @"暂无系统通知";
-            [self.systemNotTableView addSubview:_promptLable];
-        }else{
-            self.systemNotTableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
-            if (_promptLable != nil) {
-                [_promptLable removeFromSuperview];
-                _promptLable = nil;
-            }
-        }
+        
         
         [self.systemNotTableView.header endRefreshing];
         [self.systemNotTableView.footer endRefreshing];
@@ -159,7 +164,10 @@ static NSString *const JGHSysInformCellIdentifier = @"JGHSysInformCell";
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     JGHInformModel *model = [[JGHInformModel alloc]init];
-    model = _dataArray[indexPath.row];
+    if (_dataArray.count > 0) {
+        model = _dataArray[indexPath.row];
+    }
+    
 //    CGSize titleSize = [model.title boundingRectWithSize:CGSizeMake(screenWidth, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:17*ProportionAdapter]} context:nil].size;
     CGSize contentSize;
 
@@ -182,10 +190,12 @@ static NSString *const JGHSysInformCellIdentifier = @"JGHSysInformCell";
     JGHSysInformCell *teamInformCell = [tableView dequeueReusableCellWithIdentifier:JGHSysInformCellIdentifier forIndexPath:indexPath];
     teamInformCell.selectionStyle = UITableViewCellSelectionStyleNone;
 
-    JGHInformModel *model = _dataArray[indexPath.row];
-
-    [teamInformCell configJGHSysInformCell:_dataArray[indexPath.row]];
-    
+    JGHInformModel *model = [[JGHInformModel alloc]init];
+    if (_dataArray.count >0) {
+        model = _dataArray[indexPath.row];
+        [teamInformCell configJGHSysInformCell:_dataArray[indexPath.row]];
+    }
+        
     if (model.linkURL) {
         teamInformCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         UIImageView *accImageV = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 10 * ProportionAdapter, 12 * ProportionAdapter)];

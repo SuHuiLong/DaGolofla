@@ -803,15 +803,15 @@ static UIColor *titleColor;
 
 #pragma mark - Rotation
 
-- (BOOL)shouldAutorotate
-{
-    return YES;
-}
-
-- (NSUInteger)supportedInterfaceOrientations
-{
-    return UIInterfaceOrientationMaskAllButUpsideDown;
-}
+//- (BOOL)shouldAutorotate
+//{
+//    return YES;
+//}
+//
+//- (NSUInteger)supportedInterfaceOrientations
+//{
+//    return UIInterfaceOrientationMaskAllButUpsideDown;
+//}
 
 
 #pragma mark - Setup

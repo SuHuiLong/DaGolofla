@@ -164,11 +164,16 @@ static JGHPushClass *pushClass = nil;
     
     //H5
     if ([urlString containsString:@"openURL"]) {
-        JGLPushDetailsViewController* puVc = [[JGLPushDetailsViewController alloc]init];
-        puVc.strUrl = [Helper returnKeyVlaueWithUrlString:urlString andKey:@"timekey"];
+        UseMallViewController* userVc = [[UseMallViewController alloc]init];
+        userVc.linkUrl = [[Helper returnKeyVlaueWithUrlString:urlString andKey:@"url"] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
         if (pushVC) {
-            pushVC(puVc);
+            pushVC(userVc);
         }
+//        JGLPushDetailsViewController* puVc = [[JGLPushDetailsViewController alloc]init];
+//        puVc.strUrl = [Helper returnKeyVlaueWithUrlString:urlString andKey:@"url"];
+//        if (pushVC) {
+//            pushVC(puVc);
+//        }
     }
     
     //社区
