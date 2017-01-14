@@ -229,6 +229,7 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
         [self.homeTableView.header endRefreshing];
     }];
 }
+
 #pragma mark -- 创建TableView
 - (void)createHomeTableView{
     self.homeTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight -40 *ProportionAdapter) style:UITableViewStyleGrouped];
@@ -275,6 +276,7 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
     
     [self loadBanner];
 }
+
 #pragma mark -- 下载barner数据
 - (void)loadBanner{
     NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
@@ -313,6 +315,7 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
         }
     }];
 }
+
 #pragma mark - UITableViewDataSource 协议方法
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {  
@@ -452,6 +455,7 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
     newTeamVC.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:newTeamVC animated:YES];
 }
+
 #pragma mark -- 1001(活动) －－1002(相册) －－ 1003（成绩）
 - (void)didSelectActivityOrPhotoOrResultsBtn:(UIButton *)btn{
     
@@ -527,6 +531,7 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
         };
     }
 }
+
 #pragma mark -- 服务定制
 - (void)didSelectShitaBtn:(UIButton *)btn{
 
@@ -595,6 +600,7 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
         [self.navigationController pushViewController:myTeamVC animated:YES];
     }
 }
+
 #pragma mark -- 开局记分
 - (void)didSelectStartScoreBtn:(UIButton *)btn{
     [self isLoginUp];
@@ -608,6 +614,7 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
     
     btn.userInteractionEnabled = YES;
 }
+
 #pragma mark -- 球场预定
 - (void)didSelectHistoryResultsBtn:(UIButton *)btn{
     [self isLoginUp];
@@ -624,24 +631,27 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
 //    [self.navigationController pushViewController:mallCtrl animated:YES];
 
 }
+
 #pragma mark -- 活动点击事件
 - (void)activityListSelectClick:(UIButton *)btn{
     [self isLoginUp];
-    /*
     NSDictionary *dic = _indexModel.activityList[btn.tag - 200];
     JGTeamActibityNameViewController *teamActVC = [[JGTeamActibityNameViewController alloc] init];
     teamActVC.teamKey = [[dic objectForKey:@"timeKey"] integerValue];
     teamActVC.hidesBottomBarWhenPushed = YES;//6598520
     [self.navigationController pushViewController:teamActVC animated:YES];
-    */
     //JGHNewActivityDetailViewController
-    
+    /*
+
     NSDictionary *dic = _indexModel.activityList[btn.tag - 200];
     JGHNewActivityDetailViewController *teamActVC = [[JGHNewActivityDetailViewController alloc] init];
     teamActVC.teamKey = [[dic objectForKey:@"timeKey"] integerValue];
     teamActVC.hidesBottomBarWhenPushed = YES;//6598520
     [self.navigationController pushViewController:teamActVC animated:YES];
+     */
+
 }
+
 #pragma mark -- 精彩推荐 -- 相册
 - (void)wonderfulSelectClick:(UIButton *)btn{
     NSLog(@"%td", btn.tag);
@@ -666,6 +676,7 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
         [self.navigationController pushViewController:photoAlbumCtrl animated:YES];
     }
 }
+
 #pragma mark -- 订场推荐
 - (void)recomStadiumSelectClick:(UIButton *)btn{
     NSLog(@"%td", btn.tag);
@@ -688,6 +699,7 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
         return;
     }
 }
+
 #pragma mark -- 用品商城
 - (void)suppliesMallSelectClick:(UIButton *)btn{
     NSLog(@"%td", btn.tag);
@@ -710,6 +722,7 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
         return;
     }
 }
+
 #pragma mark -- 热门球队
 - (void)hotTeamSelectClick:(UIButton *)btn{
     NSLog(@"%td", btn.tag);
@@ -733,6 +746,7 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
         return;
     }
 }
+
 #pragma mark -- 更多
 - (void)didSelectMoreBtn:(UIButton *)moreBtn{
     NSLog(@"%td", moreBtn.tag);
@@ -834,6 +848,7 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
         return;
     }
 }
+
 #pragma mark - Table View Delegate
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     NSLog(@"scrollView11 == %f", scrollView.contentOffset.y);
