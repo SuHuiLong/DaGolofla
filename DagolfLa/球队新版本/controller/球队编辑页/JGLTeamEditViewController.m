@@ -555,13 +555,13 @@ static CGFloat ImageHeight  = 210.0;
     NSString *bgUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/team/%@_background.jpg", [self.detailDic objectForKey:@"timeKey"]];
     [[SDImageCache sharedImageCache] removeImageForKey:bgUrl fromDisk:YES];
 }
-- (BOOL)shouldAutorotate{
-    return YES;
-}
-
-- (NSUInteger)supportedInterfaceOrientations {
-    return UIInterfaceOrientationMaskPortrait;
-}
+//- (BOOL)shouldAutorotate{
+//    return YES;
+//}
+//
+//- (NSUInteger)supportedInterfaceOrientations {
+//    return UIInterfaceOrientationMaskPortrait;
+//}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

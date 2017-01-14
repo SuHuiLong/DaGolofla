@@ -146,12 +146,12 @@
 }
 
 
-- (BOOL)shouldAutorotate
-{
-    // 因为是取反值，所以返回NO的控制器，就可以旋转
-    // 因为是取反值，不重写这个方法的控制器，默认就不支持旋转
-        return YES;//不能旋转
-}
+//- (BOOL)shouldAutorotate
+//{
+//    // 因为是取反值，所以返回NO的控制器，就可以旋转
+//    // 因为是取反值，不重写这个方法的控制器，默认就不支持旋转
+//        return YES;//不能旋转
+//}
 
 - (void)dataDownLoad{
   

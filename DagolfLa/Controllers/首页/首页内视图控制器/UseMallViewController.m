@@ -68,7 +68,7 @@
         _linkUrl = @"http://www.dagolfla.com/app/index.html";
     }
     _dictCan = [[NSMutableDictionary alloc]init];
-    self.webView.frame=CGRectMake(0, 0, ScreenWidth, ScreenHeight-10*ScreenWidth/375+64);
+    self.webView.frame=CGRectMake(0, 0, screenWidth, ScreenHeight);
     self.webView.delegate=self;
     
     [self.view addSubview:self.webView];

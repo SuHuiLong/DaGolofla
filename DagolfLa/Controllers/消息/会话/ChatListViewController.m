@@ -164,6 +164,28 @@
     
     [self notifyUpdateUnreadMessageCount];
     
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    [dict setObject:DEFAULF_USERID forKey:@"userKey"];
+    [dict setObject:[Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@dagolfla.com", DEFAULF_USERID]] forKey:@"md5"];
+    [[JsonHttp jsonHttp]httpRequest:@"msg/geSumtUnread" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
+        
+    } completionBlock:^(id data) {
+        NSLog(@"%@", data);
+        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+            if ([data objectForKey:@"teamMsgNewest"]) {
+                _teamNotDetailLable.text = [NSString stringWithFormat:@"%@", [[data objectForKey:@"teamMsgNewest"] objectForKey:@"title"]];
+            }
+            
+            if ([data objectForKey:@"systemMsgNewest"]) {
+                _sysDetailLable.text = [NSString stringWithFormat:@"%@", [[data objectForKey:@"systemMsgNewest"] objectForKey:@"title"]];
+            }
+        }else{
+            if ([data objectForKey:@"packResultMsg"]) {
+                [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+            }
+        }
+    }];
+    
 }
 
 //导航栏右按钮点击事件
@@ -451,13 +473,13 @@
                                     getUnreadCount:ConversationType_SYSTEM targetId:NEW_FRIEND_ID];
         
         int iconCount = countChat +teamUnreadCount +systemUnreadCount +_newFriendUnreadCount;
-        
+        /*
        RCConversation *sysConversation = [[RCIMClient sharedRCIMClient] getConversation:ConversationType_SYSTEM targetId:SYSTEM_ID];
         _sysDetailLable.text = [(RCTextMessage *)sysConversation.lastestMessage content];
         
         RCConversation *teamConversation = [[RCIMClient sharedRCIMClient] getConversation:ConversationType_SYSTEM targetId:TEAM_ID];
         _teamNotDetailLable.text = [(RCTextMessage *) teamConversation.lastestMessage content];
-        
+        */
         //新球友
         if (100 > _newFriendUnreadCount && _newFriendUnreadCount >0) {
             self.newfirendRCDbtn.frame = CGRectMake(24 *ProportionAdapter, 5 *ProportionAdapter, 20 *ProportionAdapter, 20 *ProportionAdapter);

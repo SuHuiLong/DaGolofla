@@ -197,10 +197,10 @@ static int timeNumber = 0;
 -(void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag{
 }
 
-- (BOOL)shouldAutorotate
-{
-    return NO;
-}
+//- (BOOL)shouldAutorotate
+//{
+//    return NO;
+//}
 
 //- (UIInterfaceOrientationMask)supportedInterfaceOrientations
 //{

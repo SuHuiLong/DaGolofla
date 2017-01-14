@@ -460,6 +460,8 @@
 		20BC97EA1E1F6051007DFD34 /* JGDactivityListTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 20BC97CE1E1F6051007DFD34 /* JGDactivityListTableViewCell.m */; };
 		20BC97EB1E1F6051007DFD34 /* JGLPresentAwardTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 20BC97D11E1F6051007DFD34 /* JGLPresentAwardTableViewCell.m */; };
 		20BC97EC1E1F6051007DFD34 /* JGLWinnersShareTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 20BC97D31E1F6051007DFD34 /* JGLWinnersShareTableViewCell.m */; };
+		20BEF39B1E28D00400E9AED7 /* UINavigationController+JGHUINavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 20BEF39A1E28D00400E9AED7 /* UINavigationController+JGHUINavigationController.m */; };
+		20BEF39E1E28D06500E9AED7 /* UITabBarController+JGHUITabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 20BEF39D1E28D06500E9AED7 /* UITabBarController+JGHUITabBarController.m */; };
 		20C1B8AB1CE313A200508ABC /* JGTeamApplyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 20C1B8A91CE313A200508ABC /* JGTeamApplyViewController.m */; };
 		20C1B8AC1CE313A200508ABC /* JGTeamApplyViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 20C1B8AA1CE313A200508ABC /* JGTeamApplyViewController.xib */; };
 		20C1B8B01CE3241C00508ABC /* JGTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 20C1B8AE1CE3241C00508ABC /* JGTableViewCell.m */; };
@@ -2124,6 +2126,10 @@
 		20BC97D11E1F6051007DFD34 /* JGLPresentAwardTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGLPresentAwardTableViewCell.m; sourceTree = "<group>"; };
 		20BC97D21E1F6051007DFD34 /* JGLWinnersShareTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGLWinnersShareTableViewCell.h; sourceTree = "<group>"; };
 		20BC97D31E1F6051007DFD34 /* JGLWinnersShareTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGLWinnersShareTableViewCell.m; sourceTree = "<group>"; };
+		20BEF3991E28D00400E9AED7 /* UINavigationController+JGHUINavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationController+JGHUINavigationController.h"; sourceTree = "<group>"; };
+		20BEF39A1E28D00400E9AED7 /* UINavigationController+JGHUINavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationController+JGHUINavigationController.m"; sourceTree = "<group>"; };
+		20BEF39C1E28D06500E9AED7 /* UITabBarController+JGHUITabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITabBarController+JGHUITabBarController.h"; sourceTree = "<group>"; };
+		20BEF39D1E28D06500E9AED7 /* UITabBarController+JGHUITabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITabBarController+JGHUITabBarController.m"; sourceTree = "<group>"; };
 		20C1B8A81CE313A200508ABC /* JGTeamApplyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGTeamApplyViewController.h; sourceTree = "<group>"; };
 		20C1B8A91CE313A200508ABC /* JGTeamApplyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGTeamApplyViewController.m; sourceTree = "<group>"; };
 		20C1B8AA1CE313A200508ABC /* JGTeamApplyViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JGTeamApplyViewController.xib; sourceTree = "<group>"; };
@@ -6738,6 +6744,10 @@
 				20BA61401CDCA180004B61F5 /* VedioPlayViewController.xib */,
 				20BC97811E1BA789007DFD34 /* UIAlertController+JGHUIAlertController.h */,
 				20BC97821E1BA789007DFD34 /* UIAlertController+JGHUIAlertController.m */,
+				20BEF3991E28D00400E9AED7 /* UINavigationController+JGHUINavigationController.h */,
+				20BEF39A1E28D00400E9AED7 /* UINavigationController+JGHUINavigationController.m */,
+				20BEF39C1E28D06500E9AED7 /* UITabBarController+JGHUITabBarController.h */,
+				20BEF39D1E28D06500E9AED7 /* UITabBarController+JGHUITabBarController.m */,
 				36BFFF541BC76D09005B3CE2 /* 日历 */,
 				F54344601D2E82F7008C4D3C /* JGReturnMD5Str.h */,
 				F54344611D2E82F7008C4D3C /* JGReturnMD5Str.m */,
@@ -9773,6 +9783,7 @@
 				F56FA2781DC1F08D008281D7 /* JGHShowMyTeamHeaderCell.m in Sources */,
 				F58C4ECA1E1B3F860057DC9C /* JGDPaySuccessViewController.m in Sources */,
 				827BD52B1D20F23D009AF9CA /* JGLActivityMemberTableViewCell.m in Sources */,
+				20BEF39B1E28D00400E9AED7 /* UINavigationController+JGHUINavigationController.m in Sources */,
 				65B596F11CAD43AC007AB83A /* JKSlideSwitchView.m in Sources */,
 				82C16BE81D8FB9970025DDED /* JobChooseViewController.m in Sources */,
 				368B73321C102A710002A618 /* ScoreFootViewController.m in Sources */,
@@ -9837,6 +9848,7 @@
 				207FECB41D1D27E40098E23C /* JGHRepeatApplyView.m in Sources */,
 				20BC97E11E1F6051007DFD34 /* JGHAddAwardImageCell.m in Sources */,
 				F53A05651D518F32009DD489 /* JGHOperScoreBtnListCell.m in Sources */,
+				20BEF39E1E28D06500E9AED7 /* UITabBarController+JGHUITabBarController.m in Sources */,
 				36E1FBB41C7D817A006B1456 /* ChangePicViewController.m in Sources */,
 				206ECFC21D48D30C00880234 /* JGHActivityScoreManagerViewController.m in Sources */,
 				202F967E1DCC5F2500C5DBE6 /* JGHUserAgreementViewController.m in Sources */,
