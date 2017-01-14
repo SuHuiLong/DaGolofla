@@ -22,7 +22,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="170" height="127"/>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2016.02.03" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Mh-bs-OAv">
-                        <rect key="frame" x="50" y="147" width="120" height="16"/>
+                        <rect key="frame" x="40" y="147" width="130" height="16"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="16" id="9bO-gU-Pm9"/>
                         </constraints>
@@ -62,7 +62,7 @@
                         </variation>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="200张" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yaf-f8-dP3">
-                        <rect key="frame" x="0.0" y="147" width="50" height="16"/>
+                        <rect key="frame" x="0.0" y="147" width="40" height="16"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="16" id="Svs-9u-00w"/>
                         </constraints>
@@ -74,9 +74,9 @@
             </view>
             <constraints>
                 <constraint firstItem="Yaf-f8-dP3" firstAttribute="top" secondItem="bgj-WW-C15" secondAttribute="bottom" id="8ss-O8-eNK"/>
-                <constraint firstItem="GEH-gn-fVa" firstAttribute="leading" secondItem="9Mh-bs-OAv" secondAttribute="leading" constant="-50" id="A5e-yu-b8U"/>
+                <constraint firstItem="GEH-gn-fVa" firstAttribute="leading" secondItem="9Mh-bs-OAv" secondAttribute="leading" constant="-40" id="A5e-yu-b8U"/>
                 <constraint firstItem="GEH-gn-fVa" firstAttribute="trailing" secondItem="9Mh-bs-OAv" secondAttribute="trailing" id="CAH-5i-wha"/>
-                <constraint firstItem="9Mh-bs-OAv" firstAttribute="leading" secondItem="bgj-WW-C15" secondAttribute="leading" constant="50" id="HJj-Dq-rtZ"/>
+                <constraint firstItem="9Mh-bs-OAv" firstAttribute="leading" secondItem="bgj-WW-C15" secondAttribute="leading" constant="40" id="HJj-Dq-rtZ"/>
                 <constraint firstItem="GEH-gn-fVa" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="JBP-xs-mp5"/>
                 <constraint firstItem="9Mh-bs-OAv" firstAttribute="trailing" secondItem="bgj-WW-C15" secondAttribute="trailing" id="Kmt-cM-QWp"/>
                 <constraint firstItem="9Mh-bs-OAv" firstAttribute="top" secondItem="GEH-gn-fVa" secondAttribute="bottom" constant="20" id="M3C-GJ-coj"/>
