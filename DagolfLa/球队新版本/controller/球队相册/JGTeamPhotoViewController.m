@@ -70,7 +70,7 @@
     
     UICollectionViewFlowLayout *flowLayout=[[UICollectionViewFlowLayout alloc] init];
     flowLayout.minimumInteritemSpacing=0.f;//左右间隔
-    flowLayout.minimumLineSpacing=0.f;
+    flowLayout.minimumLineSpacing=10.f;
 
     
     _collectionView = [[UICollectionView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight - 44 * ProportionAdapter - 15*screenWidth/375) collectionViewLayout:flowLayout];
