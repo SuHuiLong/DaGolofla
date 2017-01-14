@@ -1,15 +1,15 @@
 //
-//  JGHNewActivityCell.h
+//  JGHNewApplyActivityDetailCell.h
 //  DagolfLa
 //
-//  Created by 黄安 on 17/1/6.
+//  Created by 黄安 on 17/1/14.
 //  Copyright © 2017年 bhxx. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 @class JGTeamAcitivtyModel;
 
-@interface JGHNewActivityCell : UITableViewCell
+@interface JGHNewApplyActivityDetailCell : UITableViewCell
 
 @property (nonatomic, retain)UIImageView *oneImageView;
 
@@ -31,6 +31,5 @@
 
 
 - (void)configJGTeamAcitivtyModel:(JGTeamAcitivtyModel *)model;
-
 
 @end

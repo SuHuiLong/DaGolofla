@@ -177,6 +177,12 @@ typedef NS_ENUM(NSInteger, GestureType) {
 #import "UMSocial.h"
 #import "UMSocialSinaHandler.h"
 #import "UMSocialWechatHandler.h"
+#import "UMSocialData.h"
+
+#import "UMSocialConfig.h"
+#import "UMSocialDataService.h"
+#import "CommuniteTableViewCell.h"
+#import "UMSocialControllerService.h"
 
 #import "MJRefresh.h"
 #import "MJDIYBackFooter.h"
@@ -189,5 +195,6 @@ typedef NS_ENUM(NSInteger, GestureType) {
 #import "JGHPersonalInfoViewController.h"
 #import "JGHDatePicksViewController.h"
 #import "JGHPushClass.h"
+#import "SXPickPhoto.h"
 
 #endif
