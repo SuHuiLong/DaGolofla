@@ -734,7 +734,6 @@
 		36BFFF851BC76D09005B3CE2 /* LazyPageScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 36BFFF4B1BC76D09005B3CE2 /* LazyPageScrollView.m */; };
 		36BFFF871BC76D09005B3CE2 /* Setbutton.m in Sources */ = {isa = PBXBuildFile; fileRef = 36BFFF4F1BC76D09005B3CE2 /* Setbutton.m */; };
 		36BFFF881BC76D09005B3CE2 /* UITool.m in Sources */ = {isa = PBXBuildFile; fileRef = 36BFFF511BC76D09005B3CE2 /* UITool.m */; };
-		36BFFF891BC76D09005B3CE2 /* UserDataInformation.m in Sources */ = {isa = PBXBuildFile; fileRef = 36BFFF531BC76D09005B3CE2 /* UserDataInformation.m */; };
 		36BFFF8A1BC76D09005B3CE2 /* FDCalendar.m in Sources */ = {isa = PBXBuildFile; fileRef = 36BFFF561BC76D09005B3CE2 /* FDCalendar.m */; };
 		36BFFF8B1BC76D09005B3CE2 /* FDCalendarItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 36BFFF581BC76D09005B3CE2 /* FDCalendarItem.m */; };
 		36BFFF941BC76D6B005B3CE2 /* TabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 36BFFF911BC76D6B005B3CE2 /* TabBarController.m */; };
@@ -1072,6 +1071,7 @@
 		F543ACCA1CF476D400C6B111 /* JGNewCreateTeamTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F543ACC91CF476D400C6B111 /* JGNewCreateTeamTableViewController.m */; };
 		F54564E71DE5228600596211 /* JGAddFriendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F54564E61DE5228600596211 /* JGAddFriendViewController.m */; };
 		F54564EA1DE563E000596211 /* JGScanAddTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F54564E91DE563E000596211 /* JGScanAddTableViewCell.m */; };
+		F54682481E2C6C4800BA7EF2 /* UserDataInformation.m in Sources */ = {isa = PBXBuildFile; fileRef = F54682471E2C6C4800BA7EF2 /* UserDataInformation.m */; };
 		F54CC1831D83C75700A194F2 /* JGDAlmostStlyleSetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F54CC1821D83C75700A194F2 /* JGDAlmostStlyleSetViewController.m */; };
 		F54CC1861D83FA6800A194F2 /* JGDAlmostSetTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F54CC1851D83FA6800A194F2 /* JGDAlmostSetTableViewCell.m */; };
 		F54CC18A1D8428CE00A194F2 /* JGLWriteReplyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F54CC1891D8428CE00A194F2 /* JGLWriteReplyViewController.m */; };
@@ -2641,8 +2641,6 @@
 		36BFFF4F1BC76D09005B3CE2 /* Setbutton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Setbutton.m; sourceTree = "<group>"; };
 		36BFFF501BC76D09005B3CE2 /* UITool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UITool.h; sourceTree = "<group>"; };
 		36BFFF511BC76D09005B3CE2 /* UITool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UITool.m; sourceTree = "<group>"; };
-		36BFFF521BC76D09005B3CE2 /* UserDataInformation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserDataInformation.h; sourceTree = "<group>"; };
-		36BFFF531BC76D09005B3CE2 /* UserDataInformation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserDataInformation.m; sourceTree = "<group>"; };
 		36BFFF551BC76D09005B3CE2 /* FDCalendar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FDCalendar.h; sourceTree = "<group>"; };
 		36BFFF561BC76D09005B3CE2 /* FDCalendar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FDCalendar.m; sourceTree = "<group>"; };
 		36BFFF571BC76D09005B3CE2 /* FDCalendarItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FDCalendarItem.h; sourceTree = "<group>"; };
@@ -3282,6 +3280,8 @@
 		F54564E61DE5228600596211 /* JGAddFriendViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGAddFriendViewController.m; sourceTree = "<group>"; };
 		F54564E81DE563E000596211 /* JGScanAddTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGScanAddTableViewCell.h; sourceTree = "<group>"; };
 		F54564E91DE563E000596211 /* JGScanAddTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGScanAddTableViewCell.m; sourceTree = "<group>"; };
+		F54682461E2C6C4800BA7EF2 /* UserDataInformation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserDataInformation.h; path = ../UserDataInformation.h; sourceTree = "<group>"; };
+		F54682471E2C6C4800BA7EF2 /* UserDataInformation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserDataInformation.m; path = ../UserDataInformation.m; sourceTree = "<group>"; };
 		F54CC1811D83C75700A194F2 /* JGDAlmostStlyleSetViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGDAlmostStlyleSetViewController.h; sourceTree = "<group>"; };
 		F54CC1821D83C75700A194F2 /* JGDAlmostStlyleSetViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGDAlmostStlyleSetViewController.m; sourceTree = "<group>"; };
 		F54CC1841D83FA6800A194F2 /* JGDAlmostSetTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGDAlmostSetTableViewCell.h; sourceTree = "<group>"; };
@@ -5573,6 +5573,8 @@
 		20F7D4481D88E7FC00302406 /* UUID */ = {
 			isa = PBXGroup;
 			children = (
+				F54682461E2C6C4800BA7EF2 /* UserDataInformation.h */,
+				F54682471E2C6C4800BA7EF2 /* UserDataInformation.m */,
 				20F7D4491D88E7FC00302406 /* FCUUID.h */,
 				20F7D44A1D88E7FC00302406 /* FCUUID.m */,
 				20F7D44B1D88E7FC00302406 /* KeyChainStore.h */,
@@ -6802,8 +6804,6 @@
 				36BFFF4F1BC76D09005B3CE2 /* Setbutton.m */,
 				36BFFF501BC76D09005B3CE2 /* UITool.h */,
 				36BFFF511BC76D09005B3CE2 /* UITool.m */,
-				36BFFF521BC76D09005B3CE2 /* UserDataInformation.h */,
-				36BFFF531BC76D09005B3CE2 /* UserDataInformation.m */,
 				20BA613E1CDCA180004B61F5 /* VedioPlayViewController.h */,
 				20BA613F1CDCA180004B61F5 /* VedioPlayViewController.m */,
 				20BA61401CDCA180004B61F5 /* VedioPlayViewController.xib */,
@@ -9806,7 +9806,6 @@
 				203019511E0E4292005568E2 /* ZXISBNParsedResult.m in Sources */,
 				203019631E0E4292005568E2 /* ZXVINParsedResult.m in Sources */,
 				F51944301DFE4A8E0009653B /* MSSBrowseActionSheetCell.m in Sources */,
-				36BFFF891BC76D09005B3CE2 /* UserDataInformation.m in Sources */,
 				F54344621D2E82F7008C4D3C /* JGReturnMD5Str.m in Sources */,
 				82FD96261D3F543E0047D7A8 /* JGLTeeChooseView.m in Sources */,
 				203019461E0E4292005568E2 /* ZXAddressBookParsedResult.m in Sources */,
@@ -9847,6 +9846,7 @@
 				201056171D59C92800C90FDE /* JGHLableAndFileTextCell.m in Sources */,
 				36BF008C1BC772EF005B3CE2 /* MySetReceiveController.m in Sources */,
 				203019C71E0E4293005568E2 /* ZXCode128Writer.m in Sources */,
+				F54682481E2C6C4800BA7EF2 /* UserDataInformation.m in Sources */,
 				20FBD5F51D044E5900DEE48D /* ShowHUD.m in Sources */,
 				20F025491D70199B00D7D7B6 /* JGHPalyTypeListCell.m in Sources */,
 				202E053E1D84261000566CA9 /* JGHOperScoreHeaderCell.m in Sources */,

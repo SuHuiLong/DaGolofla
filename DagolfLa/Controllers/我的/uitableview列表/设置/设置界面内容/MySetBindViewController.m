@@ -11,7 +11,6 @@
 #import "Helper.h"
 #import "PostDataRequest.h"
 #import "MBProgressHUD.h"
-#import "UserDataInformation.h"
 #import "UserInformationModel.h"
 
 //#import "APService.h"

@@ -17,7 +17,6 @@
 #import "MeViewController.h"
 //#import "JGLScoreNewViewController.h"
 
-#import "UserDataInformation.h"
 #import "PersonHomeController.h"
 #import "ChatListViewController.h"
 //#import "JGHMessageViewController.h"

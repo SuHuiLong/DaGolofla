@@ -8,7 +8,6 @@
 
 #import "JGHBindingAccountViewController.h"
 #import "UserInformationModel.h"
-#import "UserDataInformation.h"
 
 @interface JGHBindingAccountViewController ()<UITextFieldDelegate, UIPickerViewDataSource,UIPickerViewDelegate>
 {

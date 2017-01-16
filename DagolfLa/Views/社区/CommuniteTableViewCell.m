@@ -15,7 +15,6 @@
 
 //#import "ComDetailViewController.h"
 
-#import "UserDataInformation.h"
 #import "UIView+ChangeFrame.h"
 #import "UIButton+WebCache.h"
 
