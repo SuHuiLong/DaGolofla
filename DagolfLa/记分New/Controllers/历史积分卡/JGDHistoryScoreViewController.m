@@ -444,7 +444,7 @@
 }
 
 - (void)backBtn{
-    
+    NSLog(@"%@", self.navigationController.viewControllers);
     [self.navigationController popToRootViewControllerAnimated:YES];
 }
 

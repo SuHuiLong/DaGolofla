@@ -38,7 +38,7 @@
 }
 
 - (void)backBtn{
-    
+    NSLog(@"%@", self.navigationController.viewControllers);
     if (self.retrievBack == 1) {
         [self.navigationController popViewControllerAnimated:YES];
     }else{
