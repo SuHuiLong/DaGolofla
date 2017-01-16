@@ -21,7 +21,6 @@
 
 @implementation ChatDetailViewController
 
-
 - (void)deleteLocalCacheDataWithKey:(NSString *)key {
     
     NSString *cachesPath = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES)[0]
@@ -58,17 +57,8 @@
 //更改聊天的字体 164981 7965
 -(void)willDisplayConversationTableCell:(RCMessageBaseCell *)cell atIndexPath:(NSIndexPath *)indexPath{
     if ([cell isMemberOfClass:[RCTextMessageCell class]]) {
-        
-        
-        
         RCTextMessageCell *textCell=(RCTextMessageCell *)cell;
         RCMessageModel *model=self.conversationDataRepository[indexPath.row];
-        
-//        [[UserDataInformation sharedInstance] getUserInfoWithUserId:model.targetId completion:^(RCUserInfo *userInfo) {
-//        }];
-//        
-//        [[UserDataInformation sharedInstance] getUserInfoWithUserId:model.senderUserId completion:^(RCUserInfo *userInfo) {
-//        }];
         
         NSInteger mmm=[[[NSUserDefaults standardUserDefaults] objectForKey:@"userId"] integerValue];
         if (mmm==[model.senderUserId integerValue]) {

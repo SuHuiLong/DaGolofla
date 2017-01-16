@@ -52,12 +52,6 @@
 
 @implementation ChatListViewController
 
-
-- (void)getUserInfoWithUserId:(NSString *)userId completion:(void (^)(RCUserInfo *))completion{
-    
-}
-
-
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:YES];
     self.isShowNetworkIndicatorView = NO;
@@ -91,6 +85,9 @@
     
     [[UIApplication sharedApplication]setStatusBarStyle:UIStatusBarStyleLightContent];
 }
+- (void)getUserInfoWithUserId:(NSString *)userId completion:(void (^)(RCUserInfo *))completion {
+    
+};
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (buttonIndex == 1) {
         

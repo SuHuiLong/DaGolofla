@@ -52,9 +52,7 @@
         
     } completionBlock:^(id data) {
         
-        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
-            int roundId = arc4random()%100;
-            
+        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {            
             RCUserInfo *userInfo = [[RCUserInfo alloc] init];
             userInfo.userId = userId;
             
@@ -62,7 +60,9 @@
                 
                 userInfo.name = [[data objectForKey:@"userFriend"] objectForKey:@"remark"] ? [[data objectForKey:@"userFriend"] objectForKey:@"remark"] : [[data objectForKey:@"userFriend"] objectForKey:@"userName"];
                 
-                userInfo.portraitUri = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/user/head/%@.jpg@200w_%dh_2o",userId, roundId +200];
+                if ([data objectForKey:@"handImgUrl"]) {
+                    userInfo.portraitUri = [data objectForKey:@"handImgUrl"];
+                }
                 
                 [[RCIM sharedRCIM] refreshUserInfoCache:userInfo  withUserId:userId];
                 
@@ -70,7 +70,10 @@
             }else{
                 if ([data objectForKey:@"user"]) {
                     userInfo.name = [data objectForKey:@"userName"];
-                    userInfo.portraitUri = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/user/head/%@.jpg@200w_%dh_2o",userId, roundId +200];
+                    if ([data objectForKey:@"handImgUrl"]) {
+                        userInfo.portraitUri = [data objectForKey:@"handImgUrl"];
+                    }
+                    
                     [[RCIM sharedRCIM] refreshUserInfoCache:userInfo  withUserId:userId];
                     
                     completion(userInfo);
