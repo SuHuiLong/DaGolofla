@@ -468,6 +468,9 @@
 		20BEF3C21E29F7C500E9AED7 /* JGHNewActivityCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 20BEF3BE1E29F7C500E9AED7 /* JGHNewActivityCell.m */; };
 		20BEF3C51E29F80200E9AED7 /* JGHNewApplyActivityDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 20BEF3C41E29F80200E9AED7 /* JGHNewApplyActivityDetailCell.m */; };
 		20BEF3C81E2A068500E9AED7 /* JGHNewApplyPepoleCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 20BEF3C71E2A068500E9AED7 /* JGHNewApplyPepoleCell.m */; };
+		20BEF3CB1E2A14E300E9AED7 /* JGHNewApplyerListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 20BEF3CA1E2A14E200E9AED7 /* JGHNewApplyerListCell.m */; };
+		20BEF3CF1E2A1BA900E9AED7 /* JGHNewAddTeamPlaysViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 20BEF3CE1E2A1BA900E9AED7 /* JGHNewAddTeamPlaysViewController.m */; };
+		20BEF3D31E2A24AB00E9AED7 /* JGHApplyerHeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 20BEF3D21E2A24AB00E9AED7 /* JGHApplyerHeaderCell.m */; };
 		20C1B8AB1CE313A200508ABC /* JGTeamApplyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 20C1B8A91CE313A200508ABC /* JGTeamApplyViewController.m */; };
 		20C1B8AC1CE313A200508ABC /* JGTeamApplyViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 20C1B8AA1CE313A200508ABC /* JGTeamApplyViewController.xib */; };
 		20C1B8B01CE3241C00508ABC /* JGTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 20C1B8AE1CE3241C00508ABC /* JGTableViewCell.m */; };
@@ -2147,6 +2150,12 @@
 		20BEF3C41E29F80200E9AED7 /* JGHNewApplyActivityDetailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHNewApplyActivityDetailCell.m; sourceTree = "<group>"; };
 		20BEF3C61E2A068500E9AED7 /* JGHNewApplyPepoleCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHNewApplyPepoleCell.h; sourceTree = "<group>"; };
 		20BEF3C71E2A068500E9AED7 /* JGHNewApplyPepoleCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHNewApplyPepoleCell.m; sourceTree = "<group>"; };
+		20BEF3C91E2A14E200E9AED7 /* JGHNewApplyerListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHNewApplyerListCell.h; sourceTree = "<group>"; };
+		20BEF3CA1E2A14E200E9AED7 /* JGHNewApplyerListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHNewApplyerListCell.m; sourceTree = "<group>"; };
+		20BEF3CD1E2A1BA900E9AED7 /* JGHNewAddTeamPlaysViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHNewAddTeamPlaysViewController.h; sourceTree = "<group>"; };
+		20BEF3CE1E2A1BA900E9AED7 /* JGHNewAddTeamPlaysViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHNewAddTeamPlaysViewController.m; sourceTree = "<group>"; };
+		20BEF3D11E2A24AB00E9AED7 /* JGHApplyerHeaderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHApplyerHeaderCell.h; sourceTree = "<group>"; };
+		20BEF3D21E2A24AB00E9AED7 /* JGHApplyerHeaderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHApplyerHeaderCell.m; sourceTree = "<group>"; };
 		20C1B8A81CE313A200508ABC /* JGTeamApplyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGTeamApplyViewController.h; sourceTree = "<group>"; };
 		20C1B8A91CE313A200508ABC /* JGTeamApplyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGTeamApplyViewController.m; sourceTree = "<group>"; };
 		20C1B8AA1CE313A200508ABC /* JGTeamApplyViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JGTeamApplyViewController.xib; sourceTree = "<group>"; };
@@ -5410,10 +5419,13 @@
 		20BEF3B61E29F76D00E9AED7 /* 报名详情 */ = {
 			isa = PBXGroup;
 			children = (
+				20BEF3D01E2A241A00E9AED7 /* 添加打球人 */,
 				20BEF3C31E29F80200E9AED7 /* JGHNewApplyActivityDetailCell.h */,
 				20BEF3C41E29F80200E9AED7 /* JGHNewApplyActivityDetailCell.m */,
 				20BEF3C61E2A068500E9AED7 /* JGHNewApplyPepoleCell.h */,
 				20BEF3C71E2A068500E9AED7 /* JGHNewApplyPepoleCell.m */,
+				20BEF3C91E2A14E200E9AED7 /* JGHNewApplyerListCell.h */,
+				20BEF3CA1E2A14E200E9AED7 /* JGHNewApplyerListCell.m */,
 			);
 			path = "报名详情";
 			sourceTree = "<group>";
@@ -5430,6 +5442,24 @@
 				20BEF3BE1E29F7C500E9AED7 /* JGHNewActivityCell.m */,
 			);
 			path = "活动详情";
+			sourceTree = "<group>";
+		};
+		20BEF3CC1E2A1B8D00E9AED7 /* 活动添加打球人 */ = {
+			isa = PBXGroup;
+			children = (
+				20BEF3CD1E2A1BA900E9AED7 /* JGHNewAddTeamPlaysViewController.h */,
+				20BEF3CE1E2A1BA900E9AED7 /* JGHNewAddTeamPlaysViewController.m */,
+			);
+			path = "活动添加打球人";
+			sourceTree = "<group>";
+		};
+		20BEF3D01E2A241A00E9AED7 /* 添加打球人 */ = {
+			isa = PBXGroup;
+			children = (
+				20BEF3D11E2A24AB00E9AED7 /* JGHApplyerHeaderCell.h */,
+				20BEF3D21E2A24AB00E9AED7 /* JGHApplyerHeaderCell.m */,
+			);
+			path = "添加打球人";
 			sourceTree = "<group>";
 		};
 		20CA13621CE4276500DA15B9 /* 球队活动 */ = {
@@ -8429,6 +8459,7 @@
 		F5A105421CE309750050461D /* controller */ = {
 			isa = PBXGroup;
 			children = (
+				20BEF3CC1E2A1B8D00E9AED7 /* 活动添加打球人 */,
 				209D7D0B1E1F75DC002BDC7A /* 活动详情 */,
 				F51944101DFE4A2D0009653B /* 新相册 */,
 				F57920871DD30B9B00EAF35C /* 球队详情合并 */,
@@ -9416,6 +9447,7 @@
 				F51E5EE41D7E5F0700AE254E /* JGDAlmostScoreViewController.m in Sources */,
 				65B596E71CAD43AC007AB83A /* WFActionSheet.m in Sources */,
 				203019411E0E4292005568E2 /* ZXAztecReader.m in Sources */,
+				20BEF3CF1E2A1BA900E9AED7 /* JGHNewAddTeamPlaysViewController.m in Sources */,
 				36BF00BB1BC77383005B3CE2 /* MyAttentionViewCell.m in Sources */,
 				2030197F1E0E4292005568E2 /* ZXStringUtils.m in Sources */,
 				203019781E0E4292005568E2 /* ZXDefaultGridSampler.m in Sources */,
@@ -9895,6 +9927,7 @@
 				202F967E1DCC5F2500C5DBE6 /* JGHUserAgreementViewController.m in Sources */,
 				82ABF1CD1D1C072E004493DB /* JGLSignPeoTableViewCell.m in Sources */,
 				36BF00921BC772EF005B3CE2 /* MyNewsBoxViewController.m in Sources */,
+				20BEF3D31E2A24AB00E9AED7 /* JGHApplyerHeaderCell.m in Sources */,
 				F54CC1861D83FA6800A194F2 /* JGDAlmostSetTableViewCell.m in Sources */,
 				82D595E91CE4604500CD9587 /* JGTeamPhotoViewController.m in Sources */,
 				36BFFF5F1BC76D09005B3CE2 /* AFURLRequestSerialization.m in Sources */,
@@ -10002,6 +10035,7 @@
 				368B73281C100A390002A618 /* ScoreTableViewCell.m in Sources */,
 				20D564D11DE68DAF005535A6 /* UIColor+RCColor.m in Sources */,
 				827AA01D1D1D1C5500F6B80B /* JGLActiveMemTableViewCell.m in Sources */,
+				20BEF3CB1E2A14E300E9AED7 /* JGHNewApplyerListCell.m in Sources */,
 				203019BE1E0E4293005568E2 /* ZXAbstractRSSReader.m in Sources */,
 				20301A0E1E0E4293005568E2 /* ZXQRCodeMultiReader.m in Sources */,
 				369B2B671C61B23F00366AA2 /* NewsDetailViewCell.m in Sources */,

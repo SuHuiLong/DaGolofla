@@ -529,8 +529,6 @@ static CGFloat ImageHeight  = 210.0;
             teamApplyCtrl.userName = _userName;
             teamApplyCtrl.isApply = (BOOL)[_isApply floatValue];
             teamApplyCtrl.teamMember = self.teamMemberDic;
-            teamApplyCtrl.costListArray = _costListArray;
-            teamApplyCtrl.canSubsidy = _canSubsidy;
             [self.navigationController pushViewController:teamApplyCtrl animated:YES];
         }
     }

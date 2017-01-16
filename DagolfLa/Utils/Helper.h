@@ -58,6 +58,7 @@
 
 +(void)alertViewWithTitle:(NSString *)title  withBlockCancle:(void(^)())blockCancle withBlockSure:(void(^)())blockSure withBlock:(void(^)(UIAlertController *alertView))blockOver;
 
++(void)alertSubmitWithTitle:(NSString *)title withBlockFirst:(void (^)())blockFirst withBlock:(void(^)(UIAlertController *alertView))block;
 
 +(void)actionSheetWithTitle:(NSString *)title withArrayTitle:(NSArray *)arayTitle withBlockFirst:(void (^)())blockFirst withBlockSecond:(void (^)())blockSecond;
 

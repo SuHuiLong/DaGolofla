@@ -221,14 +221,10 @@
 +(void)alertViewWithTitle:(NSString *)title withBlock:(void(^)(UIAlertController *alertView))block{
     UIAlertController *alert=[UIAlertController alertControllerWithTitle:@"提示" message:title preferredStyle:UIAlertControllerStyleAlert];
     
-    UIAlertAction *action1=[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        
-    }];
     UIAlertAction* action2=[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         
     }];
     
-    [alert addAction:action1];
     [alert addAction:action2];
     block(alert);
 }
@@ -258,7 +254,16 @@
     
 
 }
-
++(void)alertSubmitWithTitle:(NSString *)title withBlockFirst:(void (^)())blockFirst withBlock:(void(^)(UIAlertController *alertView))block{
+    UIAlertController *alert=[UIAlertController alertControllerWithTitle:@"提示" message:title preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction* action=[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        blockFirst();
+    }];
+    
+    [alert addAction:action];
+    block(alert);
+}
 
 #pragma mark --actionsheet
 
