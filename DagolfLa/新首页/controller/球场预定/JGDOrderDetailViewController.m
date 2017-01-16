@@ -146,7 +146,7 @@
                     
                     [self.view addSubview:shitaView];
                     
-                }else if ([@"已付款，待分配，待确认，已确认" containsString:stateString]) {
+                }else if ([@"已付款，待分配，待确认，已确认" containsString:stateString] && [[data objectForKey:@"isCancelOrder"] integerValue] == 1) {
                     
                     UIButton *cancelBtn = [[UIButton alloc] initWithFrame:CGRectMake( 240 * ProportionAdapter, 10 * ProportionAdapter, 125 * ProportionAdapter, 30 * ProportionAdapter)];
                     [cancelBtn setTitle:@"取消订单" forState:(UIControlStateNormal)];

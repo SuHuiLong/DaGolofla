@@ -62,9 +62,40 @@
         rightBtn.tintColor = [UIColor whiteColor];
         self.navigationItem.rightBarButtonItem = rightBtn;
     }
-    
+    [self tipCreate];
     
 }
+
+// http://keeper.dagolfla.com
+
+- (void)tipCreate{
+    UILabel *oneLable = [[UILabel alloc]initWithFrame:CGRectMake(0, screenHeight -64-80 *ProportionAdapter, screenWidth, 20 *ProportionAdapter)];
+    oneLable.text = @"纸质记分如何导入系统？";
+    oneLable.font = [UIFont systemFontOfSize:14 *ProportionAdapter];
+    oneLable.textColor = [UIColor colorWithHexString:Ba0_Color];
+    oneLable.textAlignment = NSTextAlignmentCenter;
+    [self.view addSubview:oneLable];
+    
+    UILabel *twoLable = [[UILabel alloc]initWithFrame:CGRectMake(0, screenHeight -64-60 *ProportionAdapter, screenWidth, 20 *ProportionAdapter)];
+    twoLable.text = @"我们提供了PC端导入工具、excel成绩表一键导入！";
+    twoLable.textAlignment = NSTextAlignmentCenter;
+    twoLable.textColor = [UIColor colorWithHexString:Ba0_Color];
+    twoLable.font = [UIFont systemFontOfSize:14 *ProportionAdapter];
+    [self.view addSubview:twoLable];
+    
+    UILabel *threeLable = [[UILabel alloc]initWithFrame:CGRectMake(0, screenHeight -64-40 *ProportionAdapter, screenWidth, 20 *ProportionAdapter)];
+    threeLable.text = @"PC端登录地址：http://keeper.dagolfla.com";
+    threeLable.textColor = [UIColor colorWithHexString:Ba0_Color];
+    //    self.baseLabel.text = [NSString stringWithFormat:@"用户本人线上支付-%.2f", price];
+    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:threeLable.text];
+    [attributedString addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:B31_Color] range:NSMakeRange(8, threeLable.text.length-8)]; // 0为起始位置 length是从起始位置开始 设置指定颜色的长度
+    threeLable.attributedText = attributedString;
+    
+    threeLable.textAlignment = NSTextAlignmentCenter;
+    threeLable.font = [UIFont systemFontOfSize:14 *ProportionAdapter];
+    [self.view addSubview:threeLable];
+}
+
 #pragma mark --修改
 -(void)upDataClick
 {
