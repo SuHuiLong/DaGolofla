@@ -80,7 +80,7 @@
                             [self.orderDetailArray addObject:[NSString stringWithFormat:@"%@", [self.dataDic objectForKey:orderKeyArray[i]]]];
                             
                         }else if (i == 2) {
-                            [self.orderDetailArray addObject:[Helper stringFromDateString:[self.dataDic objectForKey:@"createTime"] withFormater:@"yyyy.MM.dd EEE  HH:mm"]];
+                            [self.orderDetailArray addObject:[Helper stringFromDateString:[self.dataDic objectForKey:@"createTime"] withFormater:@"yyyy.MM.dd  HH:mm"]];
                             
                             
                         }else if (i == 4) {
@@ -93,7 +93,11 @@
                                 self.orderTitleArray[5] = @"已付押金：";
                             }
                         }else{
-                            [self.orderDetailArray addObject:[NSString stringWithFormat:@"%@", [self.dataDic objectForKey:orderKeyArray[i]]]];
+                            if (i == 0) {
+                                [self.orderDetailArray addObject:[NSString stringWithFormat:@"%@", [self.dataDic objectForKey:orderKeyArray[i]]]];
+                            }else{
+                                [self.orderDetailArray addObject:[NSString stringWithFormat:@"¥ %@", [self.dataDic objectForKey:orderKeyArray[i]]]];
+                            }
                             
                         }
                         
@@ -109,7 +113,7 @@
                         
                         if (i == 1) {
                             
-                            [self.reserveDetailArray addObject:[Helper stringFromDateString:dateString withFormater:@"yyyy-MM-dd EEEE HH:mm"]];
+                            [self.reserveDetailArray addObject:[Helper stringFromDateString:dateString withFormater:@"yyyy-MM-dd EEE HH:mm"]];
                             
                         }else{
                             [self.reserveDetailArray addObject:[NSString stringWithFormat:@"%@", [self.dataDic objectForKey:reserveKeyArray[i]]]];
@@ -187,11 +191,11 @@
     
     [self orderTableV];
     
-    UIBarButtonItem *righrBtn = [[UIBarButtonItem alloc] initWithTitle:@"咨询" style:(UIBarButtonItemStylePlain) target:self action:@selector(askAct)];
-    righrBtn.tintColor = [UIColor whiteColor];
-    self.navigationItem.rightBarButtonItem = righrBtn;
+    UIBarButtonItem *rightBar = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"consult"] style:(UIBarButtonItemStyleDone) target:self action:@selector(askAct)];
+    rightBar.tintColor = [UIColor whiteColor];
+    self.navigationItem.rightBarButtonItem = rightBar;
     
-    //
+
     
     
     

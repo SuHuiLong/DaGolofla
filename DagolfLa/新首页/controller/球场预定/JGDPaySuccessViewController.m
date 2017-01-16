@@ -9,6 +9,7 @@
 #import "JGDPaySuccessViewController.h"
 #import "JGDOrderDetailViewController.h"
 #import "JGDCourtDetailViewController.h"
+#import "JGDOrderListViewController.h"
 
 @interface JGDPaySuccessViewController ()
 
@@ -40,7 +41,18 @@
 
 - (void)backBtn{
     
+    
     for (UIViewController *vc in self.navigationController.viewControllers) {
+        // 取消订单
+        if (_payORlaterPay == 3 && [vc isKindOfClass:[JGDOrderListViewController class]]) {
+            [self.navigationController popToViewController:vc animated:YES];
+            return;
+        }else if (_payORlaterPay == 2) {
+            [self.navigationController popViewControllerAnimated:YES];
+            return;
+        }
+
+        
         if ([vc isKindOfClass:[JGDOrderDetailViewController class]] || [vc isKindOfClass:[JGDCourtDetailViewController class]]) {
             [self.navigationController popToViewController:vc animated:YES];
             return;
