@@ -81,7 +81,7 @@
     self.searchController.searchBar.placeholder = @"搜索你需要的内容";
     self.searchController.searchBar.delegate = self;
     
-    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight -64 -80*ProportionAdapter) style:(UITableViewStylePlain)];
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight -64) style:(UITableViewStylePlain)];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.backgroundColor = [UIColor clearColor];
@@ -102,21 +102,25 @@
 }
 
 - (void)createGuidedView{
-    UILabel *oneLable = [[UILabel alloc]initWithFrame:CGRectMake(0, screenHeight -64-80 *ProportionAdapter, screenWidth, 20 *ProportionAdapter)];
+    
+    
+    UIView *footView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 100 * ProportionAdapter)];
+    
+    UILabel *oneLable = [[UILabel alloc]initWithFrame:CGRectMake(0, 20 *ProportionAdapter, screenWidth, 20 *ProportionAdapter)];
     oneLable.text = @"纸质记分如何导入系统？";
     oneLable.font = [UIFont systemFontOfSize:14 *ProportionAdapter];
     oneLable.textColor = [UIColor colorWithHexString:Ba0_Color];
     oneLable.textAlignment = NSTextAlignmentCenter;
-    [self.view addSubview:oneLable];
+    [footView addSubview:oneLable];
     
-    UILabel *twoLable = [[UILabel alloc]initWithFrame:CGRectMake(0, screenHeight -64-60 *ProportionAdapter, screenWidth, 20 *ProportionAdapter)];
+    UILabel *twoLable = [[UILabel alloc]initWithFrame:CGRectMake(0, 40 *ProportionAdapter, screenWidth, 20 *ProportionAdapter)];
     twoLable.text = @"我们提供了PC端导入工具、excel成绩表一键导入！";
     twoLable.textAlignment = NSTextAlignmentCenter;
     twoLable.textColor = [UIColor colorWithHexString:Ba0_Color];
     twoLable.font = [UIFont systemFontOfSize:14 *ProportionAdapter];
-    [self.view addSubview:twoLable];
+    [footView addSubview:twoLable];
     
-    UILabel *threeLable = [[UILabel alloc]initWithFrame:CGRectMake(0, screenHeight -64-40 *ProportionAdapter, screenWidth, 20 *ProportionAdapter)];
+    UILabel *threeLable = [[UILabel alloc]initWithFrame:CGRectMake(0, 60 *ProportionAdapter, screenWidth, 20 *ProportionAdapter)];
     threeLable.text = @"PC端登录地址：http://keeper.dagolfla.com";
     threeLable.textColor = [UIColor colorWithHexString:Ba0_Color];
     //    self.baseLabel.text = [NSString stringWithFormat:@"用户本人线上支付-%.2f", price];
@@ -126,7 +130,9 @@
     
     threeLable.textAlignment = NSTextAlignmentCenter;
     threeLable.font = [UIFont systemFontOfSize:14 *ProportionAdapter];
-    [self.view addSubview:threeLable];
+    [footView addSubview:threeLable];
+    
+    self.tableView.tableFooterView = footView;
 }
 
 #pragma mark ----- 成绩总览

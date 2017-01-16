@@ -22,8 +22,21 @@
     UIBarButtonItem *leftBar = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"backL"] style:(UIBarButtonItemStyleDone) target:self action:@selector(backBtn)];
     leftBar.tintColor = [UIColor whiteColor];
     self.navigationItem.leftBarButtonItem = leftBar;
+    
+    
+    UIBarButtonItem *rightBar = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"consult"] style:(UIBarButtonItemStyleDone) target:self action:@selector(phoneAct)];
+    rightBar.tintColor = [UIColor whiteColor];
+    self.navigationItem.rightBarButtonItem = rightBar;
+    
+
 }
 
+- (void)phoneAct{
+    
+    NSMutableString * str=[[NSMutableString alloc] initWithFormat:@"telprompt://%@", Company400];
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:str]];
+    
+}
 
 - (void)backBtn{
     

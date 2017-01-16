@@ -22,7 +22,6 @@
 
 #import "JGHNoteViewController.h"
 
-#import "UserDataInformation.h"
 #import <RongIMLib/RongIMLib.h>
 #import <RongIMKit/RongIMKit.h>
 #import <Foundation/Foundation.h>

@@ -16,7 +16,6 @@
 #import "MJDIYHeader.h"
 #import "MJDIYBackFooter.h"
 #import "UIImageView+WebCache.h"
-#import "UserDataInformation.h"
 
 #import "ChatDetailViewController.h"
 

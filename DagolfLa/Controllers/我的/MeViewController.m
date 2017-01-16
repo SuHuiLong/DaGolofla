@@ -27,8 +27,6 @@
 #import "MeselfModel.h"
 #import "UIImageView+WebCache.h"
 
-#import "UserDataInformation.h"
-
 #import "PersonHomeController.h"
 //融云会话列表
 #import "ChatListViewController.h"

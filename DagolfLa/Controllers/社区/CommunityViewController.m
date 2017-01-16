@@ -27,7 +27,6 @@
 #import "PostDataRequest.h"
 #import "Helper.h"
 
-#import "UserDataInformation.h"
 
 #import "PicArrShowViewControllerViewController.h"
 #import "UIButton+WebCache.h"

@@ -8,7 +8,6 @@
 
 #import "JGHForgotPasswordViewController.h"
 #import "UserInformationModel.h"
-#import "UserDataInformation.h"
 
 @interface JGHForgotPasswordViewController ()<UITextFieldDelegate, UIPickerViewDataSource,UIPickerViewDelegate>
 

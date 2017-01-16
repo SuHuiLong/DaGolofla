@@ -25,7 +25,6 @@
 #import "DateTimeViewController.h"
 #define kUpDateData_URL @"user/updateUserInfo.do"
 #import <RongIMKit/RongIMKit.h>
-#import "UserDataInformation.h"
 #import "SXPickPhoto.h"
 @interface SelfViewController ()<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UIActionSheetDelegate>
 {

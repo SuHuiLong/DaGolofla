@@ -9,7 +9,6 @@
 #import "JGHLoginViewController.h"
 #import "UserInformationModel.h"
 #import "MySetBindViewController.h"
-#import "UserDataInformation.h"
 #import "JGHForgotPasswordViewController.h"
 #import "JGHRegistersViewController.h"
 #import "JGHBindingAccountViewController.h"

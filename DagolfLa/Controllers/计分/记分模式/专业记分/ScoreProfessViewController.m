@@ -28,7 +28,6 @@
 #import "UIButton+WebCache.h"
 
 #import "HistoryViewController.h"
-#import "UserDataInformation.h"
 #import "MBProgressHUD.h"
 
 @interface ScoreProfessViewController ()<UITableViewDataSource,UITableViewDelegate,UIScrollViewDelegate,CustomIOSAlertViewDelegate,UITextFieldDelegate>
