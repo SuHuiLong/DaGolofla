@@ -16,7 +16,7 @@
 #import "MBProgressHUD.h"
 #import "CommunityViewController.h"
 #import <TAESDK/TaeSDK.h>
-#import "JGDHistoryScoreViewController.h"
+#import "JGHHistoryAndResultsViewController.h"
 //数据
 #define LINE_COUNT 4
 #define kUsersave_URL @"userMood/save.do"
@@ -520,7 +520,7 @@
     
 }
 - (void)scoresResult{
-    JGDHistoryScoreViewController *historyCtrl = [[JGDHistoryScoreViewController alloc]init];
+    JGHHistoryAndResultsViewController *historyCtrl = [[JGHHistoryAndResultsViewController alloc]init];
     [self.navigationController pushViewController:historyCtrl animated:YES];
 }
 -(void)faClick:(UIButton *)btn{

@@ -37,7 +37,7 @@
 }
 
 - (void)backBtn{
-    
+    NSLog(@"%@", self.navigationController.viewControllers);
     for (UIViewController *vc in self.navigationController.viewControllers) {
         if ([vc isKindOfClass:[JGHHistoryAndResultsViewController class]]) {
             [self.navigationController popToViewController:vc animated:YES];
