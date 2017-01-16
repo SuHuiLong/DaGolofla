@@ -11,17 +11,8 @@
 
 @interface JGHNewTeamApplyViewController : ViewController
 
-
 //activityKey
 @property (nonatomic, strong)JGTeamAcitivtyModel *modelss;
-
-
-@property (copy, nonatomic)NSString *invoiceKey;//发票key
-@property (copy, nonatomic)NSString *invoiceName;//发票name
-@property (copy, nonatomic)NSString *addressKey;//地址
-
-
-@property (assign, nonatomic)NSInteger canSubsidy;//是否可以补贴0-不，1-补贴
 
 //用户在球队的真实姓名
 @property (nonatomic, strong)NSString *userName;
@@ -30,7 +21,5 @@
 @property (nonatomic, assign)BOOL isApply;
 
 @property (nonatomic, strong)NSDictionary *teamMember;
-
-@property (nonatomic, strong)NSMutableArray *costListArray;//报名资费列表
 
 @end

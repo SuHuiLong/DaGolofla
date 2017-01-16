@@ -25,7 +25,7 @@
         _addApplyBtn.layer.masksToBounds = YES;
         _addApplyBtn.layer.cornerRadius = 3.0 *ProportionAdapter;
         [_addApplyBtn setTitleColor:[UIColor colorWithHexString:Bar_Segment] forState:UIControlStateNormal];
-        _addApplyBtn.layer.borderWidth = 1;
+        _addApplyBtn.layer.borderWidth = 0.5;
         _addApplyBtn.layer.borderColor = [UIColor colorWithHexString:Bar_Segment].CGColor;
         [_addApplyBtn setTitle:@"添加打球人" forState:UIControlStateNormal];
         _addApplyBtn.titleLabel.font = [UIFont systemFontOfSize:15 *ProportionAdapter];
