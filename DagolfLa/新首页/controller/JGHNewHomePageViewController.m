@@ -561,8 +561,9 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
         
     }else if (btn.tag == 702) {
         
-        NSString *urlRequest = @"http://www.dagolfla.com/app/Packbookserch.html"; // 商旅套餐
-        
+//        NSString *urlRequest = @"http://www.dagolfla.com/app/Packbookserch.html"; // 商旅套餐
+        NSString *urlRequest = @"http://www.dagolfla.com/app/golftourism.html"; // 商旅套餐
+    
         JGLWebUserMallViewController *mallCtrl = [[JGLWebUserMallViewController alloc]init];
         mallCtrl.urlRequest = urlRequest;
         mallCtrl.hidesBottomBarWhenPushed = YES;
