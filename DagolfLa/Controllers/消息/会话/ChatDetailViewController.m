@@ -37,9 +37,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self deleteLocalCacheDataWithKey:@"Library/Caches/${appname}/RCloudCache"];
+//    [self deleteLocalCacheDataWithKey:@"Library/Caches/${appname}/RCloudCache"];
     
-    //    self.title = self.title;
     UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"backL"] style:UIBarButtonItemStylePlain target:self action:@selector(backButtonClcik)];
     item.tintColor=[UIColor whiteColor];
     self.navigationItem.leftBarButtonItem = item;

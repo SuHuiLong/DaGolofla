@@ -23,6 +23,10 @@
 #import "DetailViewController.h"
 #import "JGNewCreateTeamTableViewController.h"
 
+
+#import "JGDCourtDetailViewController.h" // 球场详情
+#import "JGDBookCourtViewController.h"
+
 static JGHPushClass *pushClass = nil;
 
 @implementation JGHPushClass
@@ -49,6 +53,25 @@ static JGHPushClass *pushClass = nil;
             }
         }
     }
+    
+    
+    // 球场详情
+    if ([urlString containsString:@"bookBallParkDetail"]) {
+        JGDCourtDetailViewController *teamMainCtrl = [[JGDCourtDetailViewController alloc]init];
+        teamMainCtrl.timeKey = [NSNumber numberWithInteger:[[Helper returnKeyVlaueWithUrlString:urlString andKey:@"bookBallParkKey"] integerValue]];
+        if (pushVC) {
+            pushVC(teamMainCtrl);
+        }
+    }
+    
+    // 球场列表
+    if ([urlString containsString:@"bookBallParkList"]) {
+        JGDBookCourtViewController *teamMainCtrl = [[JGDBookCourtViewController alloc]init];
+        if (pushVC) {
+            pushVC(teamMainCtrl);
+        }
+    }
+    
     // 球队大厅
     if ([urlString containsString:@"teamHall"]) {
         JGTeamMainhallViewController *teamMainCtrl = [[JGTeamMainhallViewController alloc]init];
