@@ -53,7 +53,12 @@
     [self.historyScoreView.searchController dismissViewControllerAnimated:YES completion:^{
         
     }];
-    [self.navigationController popViewControllerAnimated:YES];
+    
+    if (_blackId == 1) {
+        [self.navigationController popToRootViewControllerAnimated:YES];
+    }else{
+        [self.navigationController popViewControllerAnimated:YES];
+    }
 }
 
 - (void)viewDidLoad {

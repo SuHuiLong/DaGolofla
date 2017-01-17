@@ -521,6 +521,7 @@
 }
 - (void)scoresResult{
     JGHHistoryAndResultsViewController *historyCtrl = [[JGHHistoryAndResultsViewController alloc]init];
+    historyCtrl.blackId = 1;
     [self.navigationController pushViewController:historyCtrl animated:YES];
 }
 -(void)faClick:(UIButton *)btn{

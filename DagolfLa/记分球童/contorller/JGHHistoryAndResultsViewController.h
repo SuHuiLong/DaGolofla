@@ -10,4 +10,6 @@
 
 @interface JGHHistoryAndResultsViewController : JGHBaseScoreViewController
 
+@property (nonatomic, assign)NSInteger blackId;
+
 @end
