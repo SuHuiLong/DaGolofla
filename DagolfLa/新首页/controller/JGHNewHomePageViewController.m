@@ -15,7 +15,6 @@
 #import "JGHNavListView.h"
 #import "JGHShowMyTeamViewController.h" // 我的球队
 #import "JGDNewTeamDetailViewController.h" // 球队详情
-#import "JGPhotoAlbumViewController.h" // 相册
 #import "JGLWebUserMallViewController.h"
 #import "JGTeamMainhallViewController.h"
 #import "JGDHistoryScoreViewController.h"
@@ -786,13 +785,7 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
      */
     NSDictionary *dict = _indexModel.plateList[moreBtn.tag -100 -1];
     NSString *urlString = [dict objectForKey:@"moreLink"];
-    if ([urlString containsString:@"dagolfla://"]) {
-        
-        [[JGHPushClass pushClass] URLString:urlString pushVC:^(UIViewController *vc) {
-            vc.hidesBottomBarWhenPushed = YES;
-            [self.navigationController pushViewController:vc animated:YES];
-        }];
-    }
+    [self pushctrlWithUrl:urlString];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -801,7 +794,14 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
 
 #pragma mark -- 通过URL 判断跳转
 - (void)pushctrlWithUrl:(NSString *)url{
-    
+    if ([url containsString:@"dagolfla://"]) {
+        
+        [[JGHPushClass pushClass] URLString:url pushVC:^(UIViewController *vc) {
+            vc.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:vc animated:YES];
+        }];
+    }
+    /*
     if ([url containsString:@"goodDetail"]) {//商城／球场预定
         JGLWebUserMallViewController *mallCtrl = [[JGLWebUserMallViewController alloc]init];
         //http://www.dagolfla.com/app/ProductDetails.html?proid=%@
@@ -835,6 +835,7 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
         [self.navigationController pushViewController:mallCtrl animated:YES];
         return;
     }
+     */
 }
 
 #pragma mark -- 判断是否需要登录
