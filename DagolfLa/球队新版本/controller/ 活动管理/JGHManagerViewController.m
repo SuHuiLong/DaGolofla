@@ -12,9 +12,6 @@
 #import "JGHLaunchActivityViewController.h"
 #import "JGTeamGroupViewController.h"
 #import "JGHActicityDetailsViewController.h"
-#import "MJRefresh.h"
-#import "MJDIYBackFooter.h"
-#import "MJDIYHeader.h"
 
 @interface JGHManagerViewController ()<UITableViewDelegate, UITableViewDataSource>
 {

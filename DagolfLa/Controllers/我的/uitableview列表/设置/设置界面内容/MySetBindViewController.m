@@ -114,7 +114,7 @@
                     
                     NSString *token = [[userData objectForKey:@"rows"] objectForKey:@"rongTk"];
                     //注册融云
-                    [Helper requestRCIMWithToken:token andUserDict:userData];
+                    [Helper requestRCIMWithToken:token];
                     //保存信息
                     [self saveUserMobileAndPassword];
                     [self.navigationController popViewControllerAnimated:YES];
@@ -141,36 +141,6 @@
         }
     }
 }
-
-//-(void)requestRCIMWithToken:(NSString *)token andUserDict:(NSDictionary *)userDict{
-//    NSUserDefaults *user=[NSUserDefaults standardUserDefaults];
-//    [RCIM sharedRCIM].globalConversationPortraitSize = CGSizeMake(40*ScreenWidth/375, 40*ScreenWidth/375);
-//    [[RCIM sharedRCIM] initWithAppKey:RongYunAPPKEY];
-//    [RCIM sharedRCIM].globalConversationAvatarStyle=RC_USER_AVATAR_CYCLE;
-//    [RCIM sharedRCIM].globalMessageAvatarStyle=RC_USER_AVATAR_CYCLE;
-//    [[RCIM sharedRCIM] setUserInfoDataSource:[UserDataInformation sharedInstance]];
-//    [[RCIM sharedRCIM] setGroupInfoDataSource:[UserDataInformation sharedInstance]];
-//    NSString *str1=[NSString stringWithFormat:@"%@",[user objectForKey:@"userId"]];
-//    NSString *str2=[NSString stringWithFormat:@"%@",[user objectForKey:@"userName"]];
-//    NSString *str3=[NSString stringWithFormat:@"http://www.dagolfla.com:8081/small_%@",[user objectForKey:@"pic"]];
-//    RCUserInfo *userInfo=[[RCUserInfo alloc] initWithUserId:str1 name:str2 portrait:str3];
-//    [RCIM sharedRCIM].currentUserInfo=userInfo;
-//    [RCIM sharedRCIM].enableMessageAttachUserInfo=NO;
-//    //            [RCIM sharedRCIM].receiveMessageDelegate=self;
-//    // 快速集成第二步，连接融云服务器
-//    [[RCIM sharedRCIM] connectWithToken:token success:^(NSString *userId) {
-//        //NSLog(@"1111");
-//        //自动登录   连接融云服务器
-//        [[UserDataInformation sharedInstance] synchronizeUserInfoRCIM];
-//        
-//    }error:^(RCConnectErrorCode status) {
-//        // Connect 失败
-//        //NSLog(@"11111");
-//    }tokenIncorrect:^() {
-//        // Token 失效的状态处理
-//        
-//    }];
-//}
 
 #pragma mark - 保存登陆信息
 - (void)saveUserMobileAndPassword {

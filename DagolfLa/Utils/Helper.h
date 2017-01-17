@@ -135,7 +135,7 @@
 // 时间加减
 + (NSString *)dateFromDate:(NSString *)date timeInterval:(NSTimeInterval)timeTer;
 
-+ (void)requestRCIMWithToken:(NSString *)token andUserDict:(NSDictionary *)userDict;
++ (void)requestRCIMWithToken:(NSString *)token;
 
 
 @end

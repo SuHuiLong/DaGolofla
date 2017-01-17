@@ -20,6 +20,6 @@
 
 @property (strong, nonatomic) UILabel* mobileLabel;
 
-@property (strong, nonatomic) UILabel *moneyLabel;
+//@property (strong, nonatomic) UILabel *moneyLabel;
 
 @end

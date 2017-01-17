@@ -10,7 +10,6 @@
 #import "JGTeamCreatePhotoController.h" //相册
 #import "JGTeamActivityViewController.h" //活动
 
-#import "JGHLaunchActivityViewController.h"
 #import "JGTableViewCell.h"
 #import "JGHConcentTextViewController.h"
 #import "DateTimeViewController.h"

@@ -22,6 +22,8 @@ static NSString *const JGHNewApplyerListCellIdentifier = @"JGHNewApplyerListCell
 @interface JGHNewTeamApplyViewController ()<UITableViewDelegate, UITableViewDataSource, JGHNewApplyPepoleCellDelegate, JGHNewApplyerListCellDelegate>
 {
     NSMutableArray *_relApplistArray;
+    
+    UIButton *_submitBtn;
 }
 @property (retain, nonatomic) UITableView *teamApplyTableView;
 
@@ -48,16 +50,17 @@ static NSString *const JGHNewApplyerListCellIdentifier = @"JGHNewApplyerListCell
     
     _relApplistArray = [NSMutableArray array];
     
+    [self createSubmitApplyBtn];
     //默认添加自己的信息
     if (!_isApply) {
         NSMutableDictionary *applyDict = [NSMutableDictionary dictionary];
         [applyDict setObject:[NSString stringWithFormat:@"%td", _modelss.teamKey] forKey:@"teamKey"];//球队key
         [applyDict setObject:_modelss.timeKey forKey:@"activityKey"];//球队活动id
         
-        NSDictionary *costDict = [NSDictionary dictionary];
+        //NSDictionary *costDict = [NSDictionary dictionary];
         //costDict = _costListArray[0];
-        [applyDict setObject:[NSString stringWithFormat:@"%@", [costDict objectForKey:@"costType"]] forKey:@"type"];//资费类型
-        [applyDict setObject:[NSString stringWithFormat:@"%@", [costDict objectForKey:@"money"]] forKey:@"money"];//实际付款金额
+        [applyDict setObject:@-1 forKey:@"type"];//资费类型
+        //[applyDict setObject:[NSString stringWithFormat:@"%@", [costDict objectForKey:@"money"]] forKey:@"money"];//实际付款金额
         
         [applyDict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:userID] forKey:@"userKey"];//报名用户key , 没有则是嘉宾
         
@@ -88,9 +91,15 @@ static NSString *const JGHNewApplyerListCellIdentifier = @"JGHNewApplyerListCell
         }
         
         [self.applyArray addObject:applyDict];
+        
+        _submitBtn.backgroundColor = [UIColor colorWithHexString:Nav_Color];
+        _submitBtn.enabled = YES;
+    }else{
+        _submitBtn.enabled = NO;
+        _submitBtn.backgroundColor = [UIColor lightGrayColor];
     }
     
-    self.teamApplyTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight - 44)];
+    self.teamApplyTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight - 44 -64)];
     
     [self.teamApplyTableView registerClass:[JGHNewApplyActivityDetailCell class] forCellReuseIdentifier:JGHNewApplyActivityDetailCellIdentifier];
     
@@ -159,7 +168,6 @@ static NSString *const JGHNewApplyerListCellIdentifier = @"JGHNewApplyerListCell
 - (void)addApplyerBtn:(UIButton *)addApplyBtn{
     addApplyBtn.enabled = NO;
     JGHNewAddTeamPlaysViewController *addTeamPlaysCtrl = [[JGHNewAddTeamPlaysViewController alloc]init];
-    //addTeamPlaysCtrl.costListArray = [NSMutableArray arrayWithArray:_costListArray];
     addTeamPlaysCtrl.playListArray = [NSMutableArray arrayWithArray:_applyArray];
     if (_modelss.teamActivityKey != 0) {
         addTeamPlaysCtrl.activityKey = _modelss.teamActivityKey;
@@ -172,35 +180,23 @@ static NSString *const JGHNewApplyerListCellIdentifier = @"JGHNewApplyerListCell
     __weak JGHNewTeamApplyViewController *weakSelf = self;
     addTeamPlaysCtrl.blockPlayListArray = ^(NSMutableArray *listArray){
         _applyArray = listArray;
+        if (_applyArray.count > 0) {
+            _submitBtn.backgroundColor = [UIColor colorWithHexString:Nav_Color];
+            _submitBtn.enabled = YES;
+        }else{
+            _submitBtn.backgroundColor = [UIColor lightGrayColor];
+            _submitBtn.enabled = NO;
+        }
         [weakSelf.teamApplyTableView reloadData];
     };
     
     [self.navigationController pushViewController:addTeamPlaysCtrl animated:YES];
     addApplyBtn.enabled = YES;
 }
-#pragma mark -- 报名并支付
-- (IBAction)nowPayBtnClick:(UIButton *)sender {
-    if (_applyArray.count == 0) {
-        [[ShowHUD showHUD]showToastWithText:@"请添加打球人，再支付！" FromView:self.view];
-        return;
-    }
-
-}
-
-#pragma mark -- 仅报名
-- (IBAction)scenePayBtnClick:(UIButton *)sender {
-    if (_applyArray.count == 0) {
-        [[ShowHUD showHUD]showToastWithText:@"请添加打球人，再报名！" FromView:self.view];
-        return;
-    }
-    
- 
-}
-
 #pragma mark -- 立即报名 －－ 仅报名
 - (void)didJustApplyListApplyBtn:(UIButton *)btn{
     NSMutableArray *array = [NSMutableArray arrayWithArray:self.applyArray];
-    [self.applyArray removeAllObjects];
+    [_applyArray removeAllObjects];
     NSInteger count = [array count];
     for (int i=0; i<count; i++) {
         NSMutableDictionary *dict = [NSMutableDictionary dictionary];
@@ -222,30 +218,19 @@ static NSString *const JGHNewApplyerListCellIdentifier = @"JGHNewApplyerListCell
 #pragma mark -- 删除打球人
 - (void)selectApplyDeleteBtn:(UIButton *)btn{
     NSLog(@"%td", btn.tag - 100);
-    if ([self.applyArray count]) {
-        NSDictionary *dict = [NSDictionary dictionary];
-        dict = [self.applyArray objectAtIndex:btn.tag-100];
-        if ([[dict objectForKey:@"userKey"] integerValue] == [DEFAULF_USERID integerValue]) {
-            [Helper alertViewWithTitle:@"删除后将不享受平台补贴，是否删除？" withBlockCancle:^{
-                
-            } withBlockSure:^{
-                [self.applyArray removeObjectAtIndex:btn.tag - 100];
-                //计算价格
-            } withBlock:^(UIAlertController *alertView) {
-                [self.navigationController presentViewController:alertView animated:YES completion:nil];
-            }];
-        }else{
-            [self.applyArray removeObjectAtIndex:btn.tag - 100];
-            //计算价格
-        }
+    if (_applyArray.count > 0) {
+        [self.applyArray removeObjectAtIndex:btn.tag - 100];
+    }
+    
+    if (_applyArray.count > 0) {
+        _submitBtn.backgroundColor = [UIColor colorWithHexString:Nav_Color];
+        _submitBtn.enabled = YES;
+    }else{
+        _submitBtn.backgroundColor = [UIColor lightGrayColor];
+        _submitBtn.enabled = NO;
     }
     
     [self.teamApplyTableView reloadData];
-}
-#pragma mark -- 添加打球人页面代理－－－返回打球人数组
-- (void)addGuestListArray:(NSArray *)guestListArray{
-    self.applyArray = [NSMutableArray arrayWithArray:guestListArray];
-    //计算价格
 }
 #pragma mark -- 提交报名信息
 - (void)submitInfo:(NSInteger)type{
@@ -296,7 +281,7 @@ static NSString *const JGHNewApplyerListCellIdentifier = @"JGHNewApplyerListCell
         NSLog(@"data == %@", data);
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
             //跳转分组页面
-            [Helper alertSubmitWithTitle:@"" withBlockFirst:^{
+            [Helper alertSubmitWithTitle:@"报名成功！" withBlockFirst:^{
                 JGTeamGroupViewController *groupCtrl = [[JGTeamGroupViewController alloc]init];
                 groupCtrl.activityFrom = 1;
                 groupCtrl.teamActivityKey = [_modelss.timeKey integerValue];
@@ -319,7 +304,15 @@ static NSString *const JGHNewApplyerListCellIdentifier = @"JGHNewApplyerListCell
         }
     }];
 }
-
+#pragma mark -- 确定报名
+- (void)createSubmitApplyBtn{
+    _submitBtn = [[UIButton alloc]initWithFrame:CGRectMake( 0, screenHeight-44 -64, screenWidth, 44)];
+    [_submitBtn setTitle:@"确定报名" forState:UIControlStateNormal];
+    _submitBtn.titleLabel.font = [UIFont systemFontOfSize:17 *ProportionAdapter];
+    [_submitBtn addTarget:self action:@selector(didJustApplyListApplyBtn:) forControlEvents:UIControlEventTouchUpInside];
+    
+    [self.view addSubview:_submitBtn];
+}
 
 /*
 #pragma mark - Navigation

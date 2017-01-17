@@ -16,7 +16,6 @@
 #import "JGApplyMaterialViewController.h"
 #import "JGSelfSetViewController.h"
 
-#import "JGHLaunchActivityViewController.h"
 #import "JGTableViewCell.h"
 #import "JGHConcentTextViewController.h"
 #import "DateTimeViewController.h"

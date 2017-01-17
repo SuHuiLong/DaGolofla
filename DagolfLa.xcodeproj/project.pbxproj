@@ -24,6 +24,9 @@
 		201056201D59C93600C90FDE /* JGHCabbieCertViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2010561F1D59C93600C90FDE /* JGHCabbieCertViewController.m */; };
 		2012AD9B1D3615AB00F70E40 /* JGHScoresViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2012AD9A1D3615AB00F70E40 /* JGHScoresViewController.m */; };
 		2012AD9E1D36192F00F70E40 /* JGHScoresMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2012AD9D1D36192F00F70E40 /* JGHScoresMainViewController.m */; };
+		201750911E2CA2AF00FB2FE4 /* JGHNewCancelApplyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 201750901E2CA2AF00FB2FE4 /* JGHNewCancelApplyViewController.m */; };
+		201750981E2CA85600FB2FE4 /* JGHNewCancelApplyCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 201750971E2CA85600FB2FE4 /* JGHNewCancelApplyCell.m */; };
+		2017509B1E2CB2D300FB2FE4 /* JGHNewCancelAppListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2017509A1E2CB2D300FB2FE4 /* JGHNewCancelAppListCell.m */; };
 		202E05201D757D6D00566CA9 /* JGHEditorCostViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 202E051E1D757D6D00566CA9 /* JGHEditorCostViewController.m */; };
 		202E05211D757D6D00566CA9 /* JGHEditorCostViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 202E051F1D757D6D00566CA9 /* JGHEditorCostViewController.xib */; };
 		202E05271D7E932200566CA9 /* JGHNewScoresPageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 202E05251D7E932200566CA9 /* JGHNewScoresPageCell.m */; };
@@ -1242,6 +1245,12 @@
 		2012AD9A1D3615AB00F70E40 /* JGHScoresViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHScoresViewController.m; sourceTree = "<group>"; };
 		2012AD9C1D36192F00F70E40 /* JGHScoresMainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHScoresMainViewController.h; sourceTree = "<group>"; };
 		2012AD9D1D36192F00F70E40 /* JGHScoresMainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHScoresMainViewController.m; sourceTree = "<group>"; };
+		2017508F1E2CA2AF00FB2FE4 /* JGHNewCancelApplyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHNewCancelApplyViewController.h; sourceTree = "<group>"; };
+		201750901E2CA2AF00FB2FE4 /* JGHNewCancelApplyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHNewCancelApplyViewController.m; sourceTree = "<group>"; };
+		201750961E2CA85600FB2FE4 /* JGHNewCancelApplyCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHNewCancelApplyCell.h; sourceTree = "<group>"; };
+		201750971E2CA85600FB2FE4 /* JGHNewCancelApplyCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHNewCancelApplyCell.m; sourceTree = "<group>"; };
+		201750991E2CB2D300FB2FE4 /* JGHNewCancelAppListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHNewCancelAppListCell.h; sourceTree = "<group>"; };
+		2017509A1E2CB2D300FB2FE4 /* JGHNewCancelAppListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHNewCancelAppListCell.m; sourceTree = "<group>"; };
 		202E051D1D757D6D00566CA9 /* JGHEditorCostViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHEditorCostViewController.h; sourceTree = "<group>"; };
 		202E051E1D757D6D00566CA9 /* JGHEditorCostViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHEditorCostViewController.m; sourceTree = "<group>"; };
 		202E051F1D757D6D00566CA9 /* JGHEditorCostViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JGHEditorCostViewController.xib; sourceTree = "<group>"; };
@@ -3668,6 +3677,26 @@
 				2006C0641E01729D008B85DF /* JGHAreaListView.m */,
 			);
 			path = "记分页";
+			sourceTree = "<group>";
+		};
+		2017508E1E2CA24D00FB2FE4 /* 取消报名 */ = {
+			isa = PBXGroup;
+			children = (
+				2017508F1E2CA2AF00FB2FE4 /* JGHNewCancelApplyViewController.h */,
+				201750901E2CA2AF00FB2FE4 /* JGHNewCancelApplyViewController.m */,
+			);
+			path = "取消报名";
+			sourceTree = "<group>";
+		};
+		201750921E2CA56F00FB2FE4 /* 取消报名 */ = {
+			isa = PBXGroup;
+			children = (
+				201750961E2CA85600FB2FE4 /* JGHNewCancelApplyCell.h */,
+				201750971E2CA85600FB2FE4 /* JGHNewCancelApplyCell.m */,
+				201750991E2CB2D300FB2FE4 /* JGHNewCancelAppListCell.h */,
+				2017509A1E2CB2D300FB2FE4 /* JGHNewCancelAppListCell.m */,
+			);
+			path = "取消报名";
 			sourceTree = "<group>";
 		};
 		202E05221D7E929100566CA9 /* 记分页New */ = {
@@ -8459,6 +8488,7 @@
 		F5A105421CE309750050461D /* controller */ = {
 			isa = PBXGroup;
 			children = (
+				2017508E1E2CA24D00FB2FE4 /* 取消报名 */,
 				20BEF3CC1E2A1B8D00E9AED7 /* 活动添加打球人 */,
 				209D7D0B1E1F75DC002BDC7A /* 活动详情 */,
 				F51944101DFE4A2D0009653B /* 新相册 */,
@@ -8484,6 +8514,7 @@
 		F5A105471CE309750050461D /* view */ = {
 			isa = PBXGroup;
 			children = (
+				201750921E2CA56F00FB2FE4 /* 取消报名 */,
 				20BEF3B71E29F7C500E9AED7 /* 活动详情 */,
 				20BEF3B61E29F76D00E9AED7 /* 报名详情 */,
 				821C0D921D5335E0001BB913 /* 嘉宾 */,
@@ -9454,6 +9485,7 @@
 				36BF008E1BC772EF005B3CE2 /* MyRecomViewController.m in Sources */,
 				36E300F71C3FF3F9005C3F08 /* MJRefreshNormalHeader.m in Sources */,
 				2030199F1E0E4292005568E2 /* ZXDataMatrixReader.m in Sources */,
+				2017509B1E2CB2D300FB2FE4 /* JGHNewCancelAppListCell.m in Sources */,
 				203019E71E0E4293005568E2 /* ZXPDF417DetectionResult.m in Sources */,
 				20FBE44A1E080C4D00E7419D /* JGHNewStartScoreViewController.m in Sources */,
 				36BF00E21BC77428005B3CE2 /* TeacherViewController.m in Sources */,
@@ -9569,6 +9601,7 @@
 				F5EEB1531D1BC1C7009D37CE /* JGActivityMemNonMangerViewController.m in Sources */,
 				2030195E1E0E4292005568E2 /* ZXURIParsedResult.m in Sources */,
 				36BFFFD01BC770B1005B3CE2 /* NewsMessageViewController.m in Sources */,
+				201750911E2CA2AF00FB2FE4 /* JGHNewCancelApplyViewController.m in Sources */,
 				F5BDF0A11CEC1B750020175A /* JGTeamDetail.m in Sources */,
 				203019A01E0E4292005568E2 /* ZXDataMatrixWriter.m in Sources */,
 				36F721161BE8ADEB001C02C6 /* FootDetailViewController.m in Sources */,
@@ -9889,6 +9922,7 @@
 				2064DEA61D4219BB00F0D52A /* JGHEndScoresViewController.m in Sources */,
 				203019FE1E0E4293005568E2 /* ZXQRCodeFormatInformation.m in Sources */,
 				82AAB7B11CE5C18E005F5633 /* JGSelfSetTableViewCell.m in Sources */,
+				201750981E2CA85600FB2FE4 /* JGHNewCancelApplyCell.m in Sources */,
 				2030193B1E0E4292005568E2 /* ZXAztecEncoder.m in Sources */,
 				2066E87D1D5C585900A3A2B8 /* JGHCaddieAuthModel.m in Sources */,
 				203019E81E0E4293005568E2 /* ZXPDF417DetectionResultColumn.m in Sources */,

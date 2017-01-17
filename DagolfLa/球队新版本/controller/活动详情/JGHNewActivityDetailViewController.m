@@ -15,10 +15,6 @@
 #import "JGTeamDeatilWKwebViewController.h"
 #import "JGTeamGroupViewController.h"
 
-#import "JGTeamGroupViewController.h"
-#import "JGActivityNameBaseCell.h"
-#import "JGHCancelApplyViewController.h"
-
 #import "JGActivityMemNonMangerViewController.h"
 #import "JGLActiveCancelMemViewController.h"
 #import "JGLPaySignUpViewController.h"
@@ -30,9 +26,9 @@
 #import "JGHNewActivityCell.h"
 #import "JGHActivityAllCell.h"
 #import "JGHActivityInfoCell.h"
+#import "JGHNewCancelApplyViewController.h"
 
 static NSString *const JGHCostListTableViewCellIdentifier = @"JGHCostListTableViewCell";
-static NSString *const JGActivityNameBaseCellIdentifier = @"JGActivityNameBaseCell";
 static NSString *const JGHNewActivityCellIdentifier = @"JGHNewActivityCell";
 static NSString *const JGHActivityAllCellIdentifier = @"JGHActivityAllCell";
 static NSString *const JGHActivityInfoCellIdentifier = @"JGHActivityInfoCell";
@@ -40,7 +36,7 @@ static NSString *const JGHActivityInfoCellIdentifier = @"JGHActivityInfoCell";
 
 static CGFloat ImageHeight  = 210.0;
 
-@interface JGHNewActivityDetailViewController ()<UITableViewDelegate, UITableViewDataSource, JGLActivityMemberSetViewControllerDelegate>
+@interface JGHNewActivityDetailViewController ()<UITableViewDelegate, UITableViewDataSource, JGLActivityMemberSetViewControllerDelegate, JGHActivityAllCellDelegate>
 {
     NSInteger _isTeamMember;//是否是球队成员 1 － 不是
     NSString *_userName;//用户在球队的真实姓名
@@ -153,8 +149,6 @@ static CGFloat ImageHeight  = 210.0;
 
     UINib *costListNib = [UINib nibWithNibName:@"JGHCostListTableViewCell" bundle:[NSBundle mainBundle]];
     [self.teamActibityNameTableView registerNib:costListNib forCellReuseIdentifier:JGHCostListTableViewCellIdentifier];
-    UINib *costSubsidiesNib = [UINib nibWithNibName:@"JGActivityNameBaseCell" bundle:[NSBundle mainBundle]];
-    [self.teamActibityNameTableView registerNib:costSubsidiesNib forCellReuseIdentifier:JGActivityNameBaseCellIdentifier];
     
     [self.teamActibityNameTableView registerClass:[JGHNewActivityCell class] forCellReuseIdentifier:JGHNewActivityCellIdentifier];
     
@@ -184,7 +178,6 @@ static CGFloat ImageHeight  = 210.0;
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
     btn.frame = CGRectMake(0, 10, 44, 44);
     btn.titleLabel.font = [UIFont systemFontOfSize:FontSize_Normal];
-    btn.tag = 521;
     [btn setImage:[UIImage imageNamed:@"backL"] forState:UIControlStateNormal];
     [btn addTarget:self action:@selector(initItemsBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.titleView addSubview:btn];
@@ -225,7 +218,6 @@ static CGFloat ImageHeight  = 210.0;
 - (void)dealloc{
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
-
 #pragma mark -- 下载数据 －－－
 - (void)dataSet{
     if (![self.view.subviews containsObject:(UIView *)[ShowHUD showHUD]]) {
@@ -329,7 +321,6 @@ static CGFloat ImageHeight  = 210.0;
         }];
     }
 }
-
 #pragma mark -- 跳转分组页面
 - (void)pushGroupCtrl:(UIButton *)btn{
     JGTeamGroupViewController *teamCtrl = [[JGTeamGroupViewController alloc]init];
@@ -342,87 +333,11 @@ static CGFloat ImageHeight  = 210.0;
     
     [self.navigationController pushViewController:teamCtrl animated:YES];
 }
-#pragma mark -- 获取球场地址
-- (void)replaceWithPicture:(UIButton *)Btn{
-    //球场列表
-    BallParkViewController *ballCtrl = [[BallParkViewController alloc]init];
-    [ballCtrl setCallback:^(NSString *balltitle, NSInteger ballid) {
-        NSLog(@"%@----%ld", balltitle, (long)ballid);
-        self.model.ballKey = *(&(ballid));
-        self.model.ballName = balltitle;
-        NSDictionary *attribute = @{NSFontAttributeName: [UIFont systemFontOfSize:13]};
-        CGSize size = [self.model.ballName boundingRectWithSize:CGSizeMake(screenWidth - 100, 0) options: NSStringDrawingTruncatesLastVisibleLine | NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading attributes:attribute context:nil].size;
-        CGRect address = self.addressBtn.frame;
-        self.addressBtn.frame = CGRectMake(address.origin.x, address.origin.y, size.width, 25);
-        [self.addressBtn setTitle:self.model.ballName forState:UIControlStateNormal];
-    }];
-    
-    [self.navigationController pushViewController:ballCtrl animated:YES];
-}
-#pragma mark -- 页面按钮事件
+#pragma mark -- 返回
 - (void)initItemsBtnClick:(UIButton *)btn{
-    if (btn.tag == 521) {
-        [self.navigationController popViewControllerAnimated:YES];
-    }else if (btn.tag == 520){
-        //更换背景
-        [self SelectPhotoImage:btn];
-    }else if (btn.tag == 740){
-        [self SelectPhotoImage:btn];
-    }
+    [self.navigationController popViewControllerAnimated:YES];
 }
-#pragma mark --添加活动头像
--(void)SelectPhotoImage:(UIButton *)btn{
-    UIAlertAction * act1 = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-    }];
-    //拍照：
-    UIAlertAction * act2 = [UIAlertAction actionWithTitle:@"拍照" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        
-        //打开相机
-        [_pickPhoto ShowTakePhotoWithController:self andWithBlock:^(NSObject *Data) {
-            if ([Data isKindOfClass:[UIImage class]])
-            {
-                _headerImage = (UIImage *)Data;
-                if (btn.tag == 520) {
-                    self.imgProfile.image = _headerImage;
-                }else if (btn.tag == 740){
-                    [self.headPortraitBtn setImage:_headerImage forState:UIControlStateNormal];
-                    self.headPortraitBtn.layer.masksToBounds = YES;
-                    self.headPortraitBtn.layer.cornerRadius = 8.0;
-                }
-                
-                [self.teamActibityNameTableView reloadData];
-            }
-        }];
-    }];
-    //相册
-    UIAlertAction * act3 = [UIAlertAction actionWithTitle:@"相册" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        
-        //打开相册
-        [_pickPhoto SHowLocalPhotoWithController:self andWithBlock:^(NSObject *Data) {
-            if ([Data isKindOfClass:[UIImage class]])
-            {
-                _headerImage = (UIImage *)Data;
-                
-                //设置背景
-                if (btn.tag == 520) {
-                    self.imgProfile.image = _headerImage;
-                }else if (btn.tag == 740){
-                    [self.headPortraitBtn setImage:_headerImage forState:UIControlStateNormal];
-                    self.headPortraitBtn.layer.masksToBounds = YES;
-                    self.headPortraitBtn.layer.cornerRadius = 8.0;
-                }
-            }
-        }];
-    }];
-    
-    UIAlertController * aleVC = [UIAlertController alertControllerWithTitle:@"提示" message:@"选择图片" preferredStyle:UIAlertControllerStyleActionSheet];
-    [aleVC addAction:act1];
-    [aleVC addAction:act2];
-    [aleVC addAction:act3];
-    
-    [self presentViewController:aleVC animated:YES completion:nil];
-}
-#pragma mark -- 取消报名－－报名／支付
+#pragma mark -- 取消报名
 - (void)createCancelBtnAndApplyOrPay:(NSInteger)applercatory{
     self.headPortraitBtn.layer.masksToBounds = YES;
     self.headPortraitBtn.layer.cornerRadius = 8.0;
@@ -432,7 +347,7 @@ static CGFloat ImageHeight  = 210.0;
     [photoBtn addTarget:self action:@selector(telPhotoClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:photoBtn];
     
-    UIButton *cancelApplyBtn = [[UIButton alloc]initWithFrame:CGRectMake(photoBtn.frame.size.width, screenHeight-44, (screenWidth - 75 *ScreenWidth/375)/2, 44)];
+    UIButton *cancelApplyBtn = [[UIButton alloc]initWithFrame:CGRectMake(photoBtn.frame.size.width, screenHeight-44, screenWidth - 75 *ScreenWidth/375, 44)];
     [cancelApplyBtn setTitle:@"取消报名" forState:UIControlStateNormal];
     cancelApplyBtn.titleLabel.font = [UIFont systemFontOfSize:17 *ProportionAdapter];
     if (applercatory == 0) {
@@ -442,40 +357,12 @@ static CGFloat ImageHeight  = 210.0;
         cancelApplyBtn.backgroundColor = [UIColor lightGrayColor];
     }
     
-    
     [self.view addSubview:cancelApplyBtn];
-    
-    UIButton *applyOrPayBtn = [[UIButton alloc]initWithFrame:CGRectMake(photoBtn.frame.size.width + cancelApplyBtn.frame.size.width, screenHeight-44, (screenWidth - 75 *ScreenWidth/375)/2, 44)];
-    [applyOrPayBtn setTitle:@"报名／支付" forState:UIControlStateNormal];
-    applyOrPayBtn.titleLabel.font = [UIFont systemFontOfSize:17 *ProportionAdapter];
-    applyOrPayBtn.backgroundColor = [UIColor colorWithHexString:Cancel_Color];
-    [applyOrPayBtn addTarget:self action:@selector(applyOrPayBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-    
-    [self.view addSubview:applyOrPayBtn];
-}
-#pragma mark -- 报名／支付
-- (void)applyOrPayBtnClick:(UIButton *)btn{
-    JGLPaySignUpViewController *paySignUpCtrl = [[JGLPaySignUpViewController alloc]init];
-    paySignUpCtrl.dictRealDetail = self.teamMemberDic;
-    paySignUpCtrl.canSubsidy = _canSubsidy;
-    if (_model.teamActivityKey == 0) {
-        //球队活动
-        paySignUpCtrl.activityKey = [_model.timeKey integerValue];
-    }else{
-        //我的球队
-        paySignUpCtrl.activityKey = _model.teamActivityKey;
-    }
-    
-    paySignUpCtrl.model = _model;
-    paySignUpCtrl.isApply = (BOOL)[_isApply floatValue];
-    paySignUpCtrl.userName = _userName;
-    paySignUpCtrl.costListArray = _costListArray;
-    [self.navigationController pushViewController:paySignUpCtrl animated:YES];
 }
 #pragma mark -- 取消报名
 - (void)cancelApplyBtnClick:(UIButton *)btn{
     
-    JGHCancelApplyViewController *cancelApplyCtrl = [[JGHCancelApplyViewController alloc]init];
+    JGHNewCancelApplyViewController *cancelApplyCtrl = [[JGHNewCancelApplyViewController alloc]init];
     if (_model.teamActivityKey == 0) {
         //球队活动
         cancelApplyCtrl.activityKey = [_model.timeKey integerValue];
@@ -543,7 +430,7 @@ static CGFloat ImageHeight  = 210.0;
     if (section == 2) {
         //参赛费用列表
         NSLog(@"%td", _costListArray.count + 1);
-        return _costListArray.count + 1;
+        return _costListArray.count;
     }else if (section == 6){
         return 1;
     }
@@ -583,26 +470,14 @@ static CGFloat ImageHeight  = 210.0;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 2) {
-        if (indexPath.row == _costListArray.count) {
-            JGActivityNameBaseCell *costSubCell = [tableView dequeueReusableCellWithIdentifier:JGActivityNameBaseCellIdentifier];
-            costSubCell.selectionStyle = UITableViewCellSelectionStyleNone;
-            if ([_model.subsidyPrice integerValue] > 0 && _canSubsidy == 1) {
-                NSLog(@"%.2f", [_model.subsidyPrice floatValue]);
-                [costSubCell configCostSubInstructionPriceFloat:[_model.subsidyPrice floatValue]];
-            }else{
-                [costSubCell configCostSubInstructionPriceFloat:0.0];
-            }
-            
-            return costSubCell;
-        }else{
-            JGHCostListTableViewCell *costListCell = [tableView dequeueReusableCellWithIdentifier:JGHCostListTableViewCellIdentifier];
-            costListCell.selectionStyle = UITableViewCellSelectionStyleNone;
-            if (_costListArray.count > 0) {
-                [costListCell configCostData:_costListArray[indexPath.row]];
-            }
-            
-            return costListCell;
+        
+        JGHCostListTableViewCell *costListCell = [tableView dequeueReusableCellWithIdentifier:JGHCostListTableViewCellIdentifier];
+        costListCell.selectionStyle = UITableViewCellSelectionStyleNone;
+        if (_costListArray.count > 0) {
+            [costListCell configCostData:_costListArray[indexPath.row]];
         }
+        
+        return costListCell;
     }else if (indexPath.section == 6){
         JGHActivityInfoCell *infoCell = [tableView dequeueReusableCellWithIdentifier:JGHActivityInfoCellIdentifier];
         infoCell.infoLable.text = _model.info;
@@ -629,7 +504,9 @@ static CGFloat ImageHeight  = 210.0;
         return (UIView *)addressCell;
     }else{
         JGHActivityAllCell *activityCell = [tableView dequeueReusableCellWithIdentifier:JGHActivityAllCellIdentifier];
-        if (section == 2) {
+        activityCell.clickBtn.tag = 100 +section;
+        activityCell.delegate = self;
+        if (section == 2 || section == 6) {
             activityCell.accessoryType = UITableViewCellAccessoryNone;
         }else{
             activityCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
@@ -650,10 +527,6 @@ static CGFloat ImageHeight  = 210.0;
     UIView *footView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, 10*ProportionAdapter)];
     footView.backgroundColor = [UIColor colorWithHexString:BG_color];
     return footView;
-}
-#pragma mark -- 嘉宾参赛码
-- (void)getTeamActivityGuestCode:(UIButton *)btn{
-
 }
 #pragma mark -- 查看奖项
 - (void)getTeamActivityAward:(UIButton *)btn{
@@ -750,6 +623,20 @@ static CGFloat ImageHeight  = 210.0;
     nonMangerVC.title = self.model.name;
     nonMangerVC.activityName = self.model.name;
     [self.navigationController  pushViewController:nonMangerVC animated:YES];
+}
+- (void)newdidselectActivityClick:(UIButton *)btn{
+    NSLog(@"newdidselectActivityClick == %td", btn.tag);
+    if (btn.tag == 103) {
+        [self pushGroupCtrl:btn];
+    }
+    
+    if (btn.tag == 104) {
+        [self getTeamActivityResults:btn];
+    }
+    
+    if (btn.tag == 105) {
+        [self getTeamActivityAward:btn];
+    }
 }
 #pragma mark - Table View Delegate
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {

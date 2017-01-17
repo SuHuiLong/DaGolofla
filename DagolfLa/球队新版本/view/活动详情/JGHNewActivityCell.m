@@ -75,7 +75,10 @@
         _registration.text = [NSString stringWithFormat:@"报名截止：%@",  [Helper returnDateformatString:model.signUpEndTime]];
     }
     
-    _address.text = [NSString stringWithFormat:@"活动地址：%@", model.ballAddress];
+    if (model.ballAddress) {
+        _address.text = [NSString stringWithFormat:@"活动地址：%@", model.ballAddress];
+    }
+    
 }
 
 - (void)awakeFromNib {

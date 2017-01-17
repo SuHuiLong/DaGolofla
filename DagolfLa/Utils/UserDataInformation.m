@@ -69,7 +69,10 @@
                 completion(userInfo);
             }else{
                 if ([data objectForKey:@"user"]) {
-                    userInfo.name = [data objectForKey:@"userName"];
+                    if ([[data objectForKey:@"user"] objectForKey:UserName]) {
+                        userInfo.name = [[data objectForKey:@"user"] objectForKey:UserName];
+                    }
+                    
                     if ([data objectForKey:@"handImgUrl"]) {
                         userInfo.portraitUri = [data objectForKey:@"handImgUrl"];
                     }
@@ -111,9 +114,7 @@
         completion(nil);
     }];
 }
--(void)getUserInfoWithUserId:(NSString *)userId inGroup:(NSString *)groupId completion:(void (^)(RCUserInfo *))completion{
-    
-}
+
 - (void)synchronizeUserInfoRCIM {
     [[RCIM sharedRCIM] refreshUserInfoCache:[self userInfoModel] withUserId:[self userInfoModel].userId];
 }

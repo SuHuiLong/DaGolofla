@@ -9,7 +9,6 @@
 #import "JGNewCreateTeamTableViewController.h"
 #import "JGApplyMaterialTableViewCell.h"
 
-#import "JGHLaunchActivityViewController.h"
 #import "JGTableViewCell.h"
 #import "JGHConcentTextViewController.h"
 #import "DateTimeViewController.h"

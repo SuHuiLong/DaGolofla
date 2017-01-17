@@ -38,9 +38,7 @@
     self.baseLabel.text = string;
     self.baseLabel.font = [UIFont systemFontOfSize:13.0];
     self.backgroundColor = [UIColor colorWithHexString:BG_color];
-    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:self.baseLabel.text];
-    [attributedString addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"#F19725"] range:NSMakeRange(23, 29)]; // 0为起始位置 length是从起始位置开始 设置指定颜色的长度
-    self.baseLabel.attributedText = attributedString;
+    self.baseLabel.textColor = [UIColor colorWithHexString:Nav_Color];
 }
 
 -(void)configCancelDrawback:(NSString* )str
