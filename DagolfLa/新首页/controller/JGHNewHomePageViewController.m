@@ -17,33 +17,15 @@
 #import "JGDNewTeamDetailViewController.h" // 球队详情
 #import "JGLWebUserMallViewController.h"
 #import "JGTeamMainhallViewController.h"
-#import "JGDHistoryScoreViewController.h"
 #import "JGHHistoryAndResultsViewController.h"
 #import "JGTeamActibityNameViewController.h" // 活动
 #import "JGLScoreLiveViewController.h"   // 直播
-#import "JGLScoreRankViewController.h"
-#import "UseMallViewController.h"
-#import "JGNewCreateTeamTableViewController.h"
-#import "DetailViewController.h"
-#import "JGLPushDetailsViewController.h"
 #import "JGHIndexTableViewCell.h"
 #import "JGHNewStartScoreViewController.h"
 
 #import "UMMobClick/MobClick.h"
-#import "NewFriendViewController.h"
-#import "JGTeamGroupViewController.h"
-#import "JGLPresentAwardViewController.h"
-#import "JGDActSelfHistoryScoreViewController.h"
-#import "JGDWithDrawTeamMoneyViewController.h"
-#import "JGTeamMemberController.h"
-#import "JGLJoinManageViewController.h"
-#import "UITabBar+badge.h"
-
 #import "JGDDPhotoAlbumViewController.h"
 #import "JGDServiceViewController.h" // 定制服务
-#import "RCDTabBarBtn.h"
-#import "JGHScoresViewController.h"
-#import "LGLCalenderViewController.h"
 #import "JGHNewActivityDetailViewController.h"
 #import "JGDBookCourtViewController.h"  // 球场预定
 
@@ -542,14 +524,6 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
         JGDServiceViewController *serviceVC = [[JGDServiceViewController alloc] init];
         serviceVC.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:serviceVC animated:YES];
-        
-//        LGLCalenderViewController *calCtrl = [[LGLCalenderViewController alloc]init];
-//        calCtrl.blockTimeWithPrice = ^(NSString *dict, NSString *dee){
-//
-//        };
-//        calCtrl.hidesBottomBarWhenPushed = YES;
-//        [self.navigationController pushViewController:calCtrl animated:YES];
-//        
     }else if (btn.tag == 701) {
         
         NSString *urlRequest = @"http://www.dagolfla.com/app/index.html"; // 用品商城
@@ -753,36 +727,7 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
 - (void)didSelectMoreBtn:(UIButton *)moreBtn{
     NSLog(@"%td", moreBtn.tag);
     [self isLoginUp];
-    /*
-    NSDictionary *dict = _indexModel.plateList[moreBtn.tag -100 -1];
-    NSString *url = [dict objectForKey:@"moreLink"];
-    if ([url containsString:@"teamHall"]) {
-        
-        [MobClick event:@"hotTeamLobby"];
 
-        JGTeamMainhallViewController *teamMainCtrl = [[JGTeamMainhallViewController alloc]init];
-        teamMainCtrl.hidesBottomBarWhenPushed = YES;
-        if (![Helper isBlankString:[[NSUserDefaults standardUserDefaults] objectForKey:@"currentCity"]]) {
-            teamMainCtrl.strProvince = [[NSUserDefaults standardUserDefaults] objectForKey:@"currentCity"];
-        }
-        [self.navigationController pushViewController:teamMainCtrl animated:YES];
-    }else {
-        NSString *urlRequest;
-        if ([url containsString:@"index.html"]) {
-            //http://www.dagolfla.com/app/index.html  商城
-            urlRequest = @"http://www.dagolfla.com/app/index.html";
-            [MobClick event:@"marketMore"];
-        }else{
-            urlRequest = @"http://www.dagolfla.com/app/bookserch.html";
-            [MobClick event:@"ballParkMore"];
-        }
-        
-        JGLWebUserMallViewController *mallCtrl = [[JGLWebUserMallViewController alloc]init];
-        mallCtrl.urlRequest = urlRequest;
-        mallCtrl.hidesBottomBarWhenPushed = YES;
-        [self.navigationController pushViewController:mallCtrl animated:YES];
-    }
-     */
     NSDictionary *dict = _indexModel.plateList[moreBtn.tag -100 -1];
     NSString *urlString = [dict objectForKey:@"moreLink"];
     [self pushctrlWithUrl:urlString];
@@ -801,41 +746,6 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
             [self.navigationController pushViewController:vc animated:YES];
         }];
     }
-    /*
-    if ([url containsString:@"goodDetail"]) {//商城／球场预定
-        JGLWebUserMallViewController *mallCtrl = [[JGLWebUserMallViewController alloc]init];
-        //http://www.dagolfla.com/app/ProductDetails.html?proid=%@
-        NSString *urlRequest = [NSString stringWithFormat:@"%@", [Helper returnKeyVlaueWithUrlString:url andKey:@"goodKey"]];
-        mallCtrl.urlRequest = [NSString stringWithFormat:@"http://www.dagolfla.com/app/ProductDetails.html?proid=%@", urlRequest];
-        mallCtrl.hidesBottomBarWhenPushed = YES;
-        [self.navigationController pushViewController:mallCtrl animated:YES];
-        return;
-    }
-    
-    if ([url containsString:@"teamMediaList"]) {//相册
-        JGPhotoAlbumViewController *albumCtrl = [[JGPhotoAlbumViewController alloc]init];
-        NSNumber *albumKey = [NSNumber numberWithInteger:[[Helper returnKeyVlaueWithUrlString:url andKey:@"albumKey"] integerValue]];
-        if ([albumKey integerValue] > 0) {
-            albumCtrl.albumKey = albumKey;
-        }else{
-            albumCtrl.albumKey = 0;
-        }
-        albumCtrl.hidesBottomBarWhenPushed = YES;
-        [self.navigationController pushViewController:albumCtrl animated:YES];
-        return;
-    }
-    
-    if ([url containsString:@"openURL"]) {//相册
-        JGLWebUserMallViewController *mallCtrl = [[JGLWebUserMallViewController alloc]init];
-        //http://www.dagolfla.com/app/ProductDetails.html?proid=%@
-        
-        NSString *urlRequest = [NSString stringWithFormat:@"%@", [Helper returnKeyVlaueWithUrlString:url andKey:@"url"]];
-        mallCtrl.urlRequest = [urlRequest stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-        mallCtrl.hidesBottomBarWhenPushed = YES;
-        [self.navigationController pushViewController:mallCtrl animated:YES];
-        return;
-    }
-     */
 }
 
 #pragma mark -- 判断是否需要登录
