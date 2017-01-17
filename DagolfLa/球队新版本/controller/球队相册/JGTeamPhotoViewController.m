@@ -67,7 +67,6 @@
 
 -(void)uiConfig
 {
-    
     UICollectionViewFlowLayout *flowLayout=[[UICollectionViewFlowLayout alloc] init];
     flowLayout.minimumInteritemSpacing=0.f;//左右间隔
     flowLayout.minimumLineSpacing=10.f;
@@ -86,9 +85,13 @@
     //注册cell
     [_collectionView registerNib: [UINib nibWithNibName:@"JGTeamPhotoCollectionViewCell" bundle:nil] forCellWithReuseIdentifier:@"JGTeamPhotoCollectionViewCell"];
     
-    [_collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:@"FooterView"];
-    flowLayout.footerReferenceSize = CGSizeMake(_collectionView.frame.size.width, 100 * ProportionAdapter);
-
+    NSString *powerStr = [_dictMember objectForKey:@"power"];
+    if ([powerStr containsString:@"1005"]) {
+        // 设置footerView的
+        [_collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:@"FooterView"];
+        flowLayout.footerReferenceSize = CGSizeMake(_collectionView.frame.size.width, 100 * ProportionAdapter);
+    }
+    
     _collectionView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
     _collectionView.footer=[MJDIYBackFooter footerWithRefreshingTarget:self refreshingAction:@selector(footerRereshing)];
     [_collectionView.header beginRefreshing];

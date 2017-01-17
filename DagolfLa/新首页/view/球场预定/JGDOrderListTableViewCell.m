@@ -81,7 +81,7 @@
     self.nameLB.text = [dataDic objectForKey:@"ballName"];
     self.begainTimeLB.text = [Helper stringFromDateString:[dataDic objectForKey:@"teeTime"] withFormater:@"yyyy.MM.dd EEE  HH:mm"];
     self.sumPeopleNumLB.text = [NSString stringWithFormat:@"%@人", [dataDic objectForKey:@"userSum"]];
-    self.sumPriceNumLB.text = [NSString stringWithFormat:@"¥%@", [dataDic objectForKey:@"money"]];
+    self.sumPriceNumLB.text = [NSString stringWithFormat:@"¥%@", [dataDic objectForKey:@"totalMoney"]];
     
     if ([[dataDic objectForKey:@"payType"] integerValue] == 0) {
         self.payStyleLB.text = @"全额预付";

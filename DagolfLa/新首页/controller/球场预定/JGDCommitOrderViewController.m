@@ -124,7 +124,7 @@
         
         UIView *footView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 130 * ProportionAdapter)];
         
-        NSString *ruleString = @"押金退还规则：\n1、预订日打完球后48小时内，系统自动退还押金至您付款账户；\n2、成功取消订单后48小时内，系统自动退还押金到您付款账户；";
+        NSString *ruleString = @"押金退还规则：\n1、预订日打完球后三个工作日内，系统自动退还押金至您付款账户；\n2、成功取消订单后三个工作日内，系统自动退还押金到您付款账户；";
         
         CGFloat height = [Helper textHeightFromTextString:ruleString width:screenWidth - 20 * ProportionAdapter fontSize:14 * ProportionAdapter];
         

@@ -89,7 +89,7 @@
                 self.orderDetailArray = [[NSMutableArray alloc] init];
                 self.reserveDetailArray = [[NSMutableArray alloc] init];
                 
-                NSArray *orderKeyArray = [NSArray arrayWithObjects: @"ordersn", @"stateShowString", @"createTime", @"money", @"payType", @"payMoney", nil];
+                NSArray *orderKeyArray = [NSArray arrayWithObjects: @"ordersn", @"stateShowString", @"createTime", @"totalMoney", @"payType", @"payMoney", nil];
                 NSArray *reserveKeyArray = [NSArray arrayWithObjects:@"ballName", [self.dataDic objectForKey:@"confirmedTeeTime"] ? @"confirmedTeeTime" : @"teeTime", @"userSum", @"playPersonNames", @"userMobile", @"servicePj", nil];
                 
                 // section 0
