@@ -574,6 +574,9 @@
     [[JsonHttp jsonHttp]httpRequestImageOrVedio:@"1" withData:dict andDataArray:array failedBlock:^(id errType) {
         NSLog(@"errType===%@", errType);
     } completionBlock:^(id data) {
+        [self post:@{@"userId": DEFAULF_USERID}];
+        //-(void)post:(NSDictionary *)dict
+        
         NSString *headUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/user/head/%@.jpg@120w_120h", DEFAULF_USERID];
         [[SDImageCache sharedImageCache] removeImageForKey:headUrl fromDisk:YES];
         NSUserDefaults *user=[NSUserDefaults standardUserDefaults];

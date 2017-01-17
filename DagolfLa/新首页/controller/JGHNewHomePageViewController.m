@@ -192,6 +192,7 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
         [getDict setObject:[userDef objectForKey:BDMAPLAT] forKey:@"latitude"];
     }
     
+    [getDict setObject:@1 forKey:@"ballType"];
     [[JsonHttp jsonHttp]httpRequest:@"index/getIndex" JsonKey:nil withData:getDict requestMethod:@"GET" failedBlock:^(id errType) {
         [self.homeTableView.header endRefreshing];
     } completionBlock:^(id data) {
@@ -753,7 +754,7 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
 - (void)didSelectMoreBtn:(UIButton *)moreBtn{
     NSLog(@"%td", moreBtn.tag);
     [self isLoginUp];
-    
+    /*
     NSDictionary *dict = _indexModel.plateList[moreBtn.tag -100 -1];
     NSString *url = [dict objectForKey:@"moreLink"];
     if ([url containsString:@"teamHall"]) {
@@ -781,6 +782,16 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
         mallCtrl.urlRequest = urlRequest;
         mallCtrl.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:mallCtrl animated:YES];
+    }
+     */
+    NSDictionary *dict = _indexModel.plateList[moreBtn.tag -100 -1];
+    NSString *urlString = [dict objectForKey:@"moreLink"];
+    if ([urlString containsString:@"dagolfla://"]) {
+        
+        [[JGHPushClass pushClass] URLString:urlString pushVC:^(UIViewController *vc) {
+            vc.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:vc animated:YES];
+        }];
     }
 }
 - (void)didReceiveMemoryWarning {
