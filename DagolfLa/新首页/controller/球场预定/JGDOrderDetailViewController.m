@@ -11,6 +11,7 @@
 
 #import "JGDConfirmPayViewController.h"
 #import "JGDPaySuccessViewController.h"
+#import "JGDCourtDetailViewController.h"
 
 @interface JGDOrderDetailViewController ()<UITableViewDelegate, UITableViewDataSource>
 
@@ -29,6 +30,7 @@
 @property (nonatomic, copy) NSString *customerTelephone;
 
 @property (nonatomic, strong) UIView *cancelView; // 取消订单的弹窗
+@property (nonatomic, strong) UIView *shitaView; // 底部按钮
 
 @property (nonatomic, strong) NSMutableArray *reasonArray;
 
@@ -41,8 +43,26 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     
+    UIBarButtonItem *leftBar = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"backL"] style:(UIBarButtonItemStyleDone) target:self action:@selector(backBtn)];
+    leftBar.tintColor = [UIColor whiteColor];
+    self.navigationItem.leftBarButtonItem = leftBar;
+
+    [self loadData];
+}
+
+- (void)backBtn{
     
-    
+    for (UIViewController *vc in self.navigationController.viewControllers) {
+        // 取消订单
+            if ([vc isKindOfClass:[JGDCourtDetailViewController class]] && [[self.dataDic objectForKey:@"stateButtonString"] isEqualToString:@"订单失效"]) {
+            [self.navigationController popToViewController:vc animated:YES];
+            return;
+        }
+    }
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void)loadData{
     NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
     [dic setObject:self.orderKey forKey:@"orderKey"];
     [dic setObject:[Helper md5HexDigest:[NSString stringWithFormat:@"orderKey=%@dagolfla.com", self.orderKey]] forKey:@"md5"];
@@ -71,7 +91,7 @@
                 
                 NSArray *orderKeyArray = [NSArray arrayWithObjects: @"ordersn", @"stateShowString", @"createTime", @"money", @"payType", @"payMoney", nil];
                 NSArray *reserveKeyArray = [NSArray arrayWithObjects:@"ballName", [self.dataDic objectForKey:@"confirmedTeeTime"] ? @"confirmedTeeTime" : @"teeTime", @"userSum", @"playPersonNames", @"userMobile", @"servicePj", nil];
-                 
+                
                 // section 0
                 for (int i = 0; i < [orderKeyArray count]; i ++) {
                     if ([self.dataDic objectForKey:orderKeyArray[i]]) {
@@ -113,7 +133,7 @@
                         
                         if (i == 1) {
                             
-                            [self.reserveDetailArray addObject:[Helper stringFromDateString:dateString withFormater:@"yyyy-MM-dd EEE HH:mm"]];
+                            [self.reserveDetailArray addObject:[Helper stringFromDateString:dateString withFormater:@"yyyy.MM.dd EEE HH:mm"]];
                             
                         }else{
                             [self.reserveDetailArray addObject:[NSString stringWithFormat:@"%@", [self.dataDic objectForKey:reserveKeyArray[i]]]];
@@ -128,8 +148,8 @@
                 
                 //                // 底部按钮
                 
-                UIView *shitaView = [[UIView alloc] initWithFrame:CGRectMake(0, screenHeight - 114 * ProportionAdapter, screenWidth, 50 * ProportionAdapter)];
-                shitaView.backgroundColor = [UIColor colorWithHexString:@"EEEEEE"];
+                self.shitaView = [[UIView alloc] initWithFrame:CGRectMake(0, screenHeight - 114 * ProportionAdapter, screenWidth, 50 * ProportionAdapter)];
+                self.shitaView.backgroundColor = [UIColor colorWithHexString:@"EEEEEE"];
                 NSString *stateString = [self.dataDic objectForKey:@"stateButtonString"];
                 
                 if ([stateString isEqualToString:@"待付款"]) {
@@ -145,10 +165,10 @@
                         [cancelBtn setTitleColor:[UIColor colorWithHexString:@"#fc5a01"] forState:(UIControlStateNormal)];
                         cancelBtn.tag = 200 + i;
                         [cancelBtn addTarget:self action:@selector(confirORwaitAct:) forControlEvents:(UIControlEventTouchUpInside)];
-                        [shitaView addSubview:cancelBtn];
+                        [self.shitaView addSubview:cancelBtn];
                     }
                     
-                    [self.view addSubview:shitaView];
+                    [self.view addSubview:self.shitaView];
                     
                 }else if ([@"已付款，待分配，待确认，已确认" containsString:stateString] && [[data objectForKey:@"isCancelOrder"] integerValue] == 1) {
                     
@@ -162,25 +182,19 @@
                     [cancelBtn setTitleColor:[UIColor colorWithHexString:@"#fc5a01"] forState:(UIControlStateNormal)];
                     cancelBtn.tag = 201;
                     [cancelBtn addTarget:self action:@selector(confirORwaitAct:) forControlEvents:(UIControlEventTouchUpInside)];
-                    [shitaView addSubview:cancelBtn];
+                    [self.shitaView addSubview:cancelBtn];
                     
-                    [self.view addSubview:shitaView];
+                    [self.view addSubview:self.shitaView];
                     
                 }else{
                     self.orderTableViwe.frame = CGRectMake(0, 0, screenWidth, screenHeight - 64 * ProportionAdapter);
                 }
-                
-                
-                
                 
                 [self.orderTableViwe reloadData];
                 
             }
         }
     }];
-    
-    
-    
 }
 
 
@@ -480,6 +494,7 @@
 
 - (void)commitAct{
     
+    
     if ([[NSString stringWithFormat:@"%@", self.reasonArray[4]] isEqualToString:@""]) {
         [LQProgressHud showMessage:@"未选择理由"];
         return;
@@ -501,11 +516,27 @@
         [[ShowHUD showHUD] hideAnimationFromView:self.view];
         
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+
+//            [[NSNotificationCenter defaultCenter] postNotificationName:@"orderStateChange" object:nil];
+
             [self.cancelView removeFromSuperview];
-            JGDPaySuccessViewController *cancelVC = [[JGDPaySuccessViewController alloc] init];
-            cancelVC.payORlaterPay = 3 ;
-            cancelVC.orderKey = self.orderKey;
-            [self.navigationController pushViewController:cancelVC animated:YES];
+            
+            if ([[self.dataDic objectForKey:@"stateButtonString"] isEqualToString:@"待付款"]) {
+               
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"orderStateChange" object:nil];
+
+                [LQProgressHud showMessage:@"订单已取消并关闭"];
+                [self.shitaView removeFromSuperview];
+                [self loadData];
+
+            }else{
+
+                JGDPaySuccessViewController *cancelVC = [[JGDPaySuccessViewController alloc] init];
+                cancelVC.payORlaterPay = 3 ;
+                cancelVC.orderKey = self.orderKey;
+                [self.navigationController pushViewController:cancelVC animated:YES];
+
+            }
         }else{
             if ([data objectForKey:@"packResultMsg"]) {
                 [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
@@ -517,7 +548,9 @@
 }
 
 - (void)popAct{
+    
     [self.cancelView removeFromSuperview];
+    
 }
 
 - (NSMutableArray *)reasonArray{

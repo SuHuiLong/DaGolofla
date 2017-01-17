@@ -72,7 +72,7 @@
             if (self.offset == 0) {
                 [self.dataArray removeAllObjects];
                 [self.countAarray removeAllObjects];
-                NSArray *nameArray = [NSArray arrayWithObjects:@"count", @"waitConfirmCount", @"waitPayCount", @"finishedCount", nil];
+                NSArray *nameArray = [NSArray arrayWithObjects:@"count", @"waitPayCount", @"waitConfirmCount", @"finishedCount", nil];
                 for (int i = 0; i < 4; i ++) {
                     [self.countAarray addObject:[data objectForKey:nameArray[i]]];
                 }
@@ -102,6 +102,9 @@
     
     [self orderTableSet];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(afterDelay) name:@"orderStateChange" object:nil];
+
+    
 }
 
 
@@ -120,6 +123,11 @@
     self.orderTableView.footer=[MJDIYBackFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRefresh)];
     [self.orderTableView.header beginRefreshing];
 
+}
+
+
+- (void)afterDelay{
+    [self performSelector:@selector(headRefresh) withObject:self afterDelay:1];
 }
 
 - (void)headRefresh{
@@ -176,7 +184,7 @@
         self.headView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 60 * ProportionAdapter)];
         self.headView.backgroundColor = [UIColor whiteColor];
         
-        NSArray *array = [NSArray arrayWithObjects:@"全部", @"待确认", @"待付款", @"已完成", nil];
+        NSArray *array = [NSArray arrayWithObjects:@"全部", @"待付款", @"待确认", @"已完成", nil];
         for (int i = 0; i < 4; i ++) {
             
             UIButton *countbtn = [[UIButton alloc] initWithFrame:CGRectMake(i * 91 * ProportionAdapter, 2 * ProportionAdapter, 91 * ProportionAdapter, 30 * ProportionAdapter)];
@@ -252,11 +260,11 @@
         
     }else if (btn.tag == 201) {
         self.greenView.frame = CGRectMake(101 * ProportionAdapter, 47.5 * ProportionAdapter, 70 * ProportionAdapter, 2.5 * ProportionAdapter);
-        self.currentType = 0;
+        self.currentType = 1;
         
     }else if (btn.tag == 202) {
         self.greenView.frame = CGRectMake(192 * ProportionAdapter, 47.5 * ProportionAdapter, 70 * ProportionAdapter, 2.5 * ProportionAdapter);
-        self.currentType = 1;
+        self.currentType = 0;
 
     }
     else if (btn.tag == 203) {

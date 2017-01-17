@@ -47,6 +47,8 @@
 #import "UMSocialWechatHandler.h"
 #import "UMSocialControllerService.h"
 
+#import "MSSBrowseModel.h"
+#import "MSSBrowseNetworkViewController.h"
 
 @interface DetailViewController ()<UITableViewDataSource,UITableViewDelegate,cellDelegate,InputDelegate,UIActionSheetDelegate>
 {
@@ -813,26 +815,48 @@
 //    
 //    
     
-    UIView *maskview = [[UIView alloc] initWithFrame:self.view.bounds];
-    maskview.backgroundColor = [UIColor blackColor];
-    [self.view addSubview:maskview];
-    
-    YMShowImageView *ymImageV = [[YMShowImageView alloc] initWithFrame:self.view.bounds byClick:clickTag appendArray:imageViews withLittleArray:littleArray];
-    
-    [ymImageV show:maskview didFinish:^(){
+    NSMutableArray *browseItemArray = [[NSMutableArray alloc]init];
+    int i = 0;
+    for(i = 0;i < [imageViews count];i++)
+    {
+        MSSBrowseModel *browseItem = [[MSSBrowseModel alloc]init];
+        browseItem.bigImageUrl = [NSString stringWithFormat:@"http://www.dagolfla.com:8081/%@",[imageViews objectAtIndex:i]];// 加载网络图片大图地址
+        browseItem.smallImageView = littleArray[i];// 小图
         
-        [UIView animateWithDuration:0.5f animations:^{
-            
-            ymImageV.alpha = 0.0f;
-            maskview.alpha = 0.0f;
-            
-        } completion:^(BOOL finished) {
-//            scrol.scrollEnabled = YES;
-            [ymImageV removeFromSuperview];
-            [maskview removeFromSuperview];
-        }];
+        [browseItemArray addObject:browseItem];
+    }
+    MSSBrowseNetworkViewController *bvc = [[MSSBrowseNetworkViewController alloc]initWithBrowseItemArray:browseItemArray currentIndex:clickTag - 9999];
+    bvc.blockRef = ^(){
+    };
+    bvc.closeAutorotate = ^(){
         
-    }];
+    };
+    //    bvc.isEqualRatio = NO;// 大图小图不等比时需要设置这个属性（建议等比）
+    [bvc showBrowseViewController];
+    
+    
+    
+    
+//    UIView *maskview = [[UIView alloc] initWithFrame:self.view.bounds];
+//    maskview.backgroundColor = [UIColor blackColor];
+//    [self.view addSubview:maskview];
+//    
+//    YMShowImageView *ymImageV = [[YMShowImageView alloc] initWithFrame:self.view.bounds byClick:clickTag appendArray:imageViews withLittleArray:littleArray];
+//    
+//    [ymImageV show:maskview didFinish:^(){
+//        
+//        [UIView animateWithDuration:0.5f animations:^{
+//            
+//            ymImageV.alpha = 0.0f;
+//            maskview.alpha = 0.0f;
+//            
+//        } completion:^(BOOL finished) {
+////            scrol.scrollEnabled = YES;
+//            [ymImageV removeFromSuperview];
+//            [maskview removeFromSuperview];
+//        }];
+//        
+//    }];
 }
 
 

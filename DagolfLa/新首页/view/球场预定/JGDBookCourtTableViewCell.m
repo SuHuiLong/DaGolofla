@@ -94,11 +94,11 @@
 
 - (void)setModel:(JGDCourtModel *)model{
 
-    NSString *headUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/ball/%@_main.jpg", model.timeKey];
+    NSString *headUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/bookball/%@.jpg", model.timeKey];
     [[SDImageCache sharedImageCache] removeImageForKey:headUrl fromDisk:YES];
     
     
-    [self.iconImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://imgcache.dagolfla.com/ball/%@_main.jpg", model.timeKey]] placeholderImage:[UIImage imageNamed:TeamLogoImage]];
+    [self.iconImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://imgcache.dagolfla.com/bookball/%@.jpg", model.timeKey]] placeholderImage:[UIImage imageNamed:TeamLogoImage]];
     
     self.courtBallname.text = model.bookName;
     

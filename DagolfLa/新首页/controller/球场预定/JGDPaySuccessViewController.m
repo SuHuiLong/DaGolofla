@@ -20,10 +20,16 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     
-    UIBarButtonItem *leftBar = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"backL"] style:(UIBarButtonItemStyleDone) target:self action:@selector(backBtn)];
-    leftBar.tintColor = [UIColor whiteColor];
-    self.navigationItem.leftBarButtonItem = leftBar;
-    
+    if (_payORlaterPay == 2) {
+        self.navigationItem.leftBarButtonItem =  [[UIBarButtonItem alloc] initWithTitle:@"" style:(UIBarButtonItemStyleDone) target:self action:nil];
+        
+    }else{
+        UIBarButtonItem *leftBar = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"backL"] style:(UIBarButtonItemStyleDone) target:self action:@selector(backBtn)];
+        leftBar.tintColor = [UIColor whiteColor];
+        self.navigationItem.leftBarButtonItem = leftBar;
+        
+
+    }
     
     UIBarButtonItem *rightBar = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"consult"] style:(UIBarButtonItemStyleDone) target:self action:@selector(phoneAct)];
     rightBar.tintColor = [UIColor whiteColor];
@@ -41,7 +47,6 @@
 
 - (void)backBtn{
     
-    
     for (UIViewController *vc in self.navigationController.viewControllers) {
         // 取消订单
         if (_payORlaterPay == 3 && [vc isKindOfClass:[JGDOrderListViewController class]]) {
@@ -49,6 +54,9 @@
             return;
         }else if (_payORlaterPay == 2) {
             [self.navigationController popViewControllerAnimated:YES];
+            return;
+        }else if (_payORlaterPay == 1 && [vc isKindOfClass:[JGDOrderListViewController class]]) {
+            [self.navigationController popToViewController:vc animated:YES];
             return;
         }
 
@@ -65,6 +73,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"orderStateChange" object:nil];
+
     if (_payORlaterPay == 1) {
         self.title = @"支付成功";
     }else if (_payORlaterPay == 2) {
