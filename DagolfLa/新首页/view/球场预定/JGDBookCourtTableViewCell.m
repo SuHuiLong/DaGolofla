@@ -38,6 +38,7 @@
         self.iconImageView = [[UIImageView alloc] initWithFrame:CGRectMake(10 * ProportionAdapter, 10 * ProportionAdapter, 70 * ProportionAdapter, 70 * ProportionAdapter)];
         self.iconImageView.layer.cornerRadius = 6 * ProportionAdapter;
         self.iconImageView.clipsToBounds = YES;
+        self.iconImageView.contentMode = UIViewContentModeScaleAspectFill;
         [self.contentView addSubview:self.iconImageView];
         
         self.courtBallname = [[UILabel alloc] initWithFrame:CGRectMake(93 * ProportionAdapter, 12 * ProportionAdapter, 260 * ProportionAdapter, 20 * ProportionAdapter)];

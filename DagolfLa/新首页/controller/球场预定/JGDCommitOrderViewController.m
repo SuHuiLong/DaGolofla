@@ -104,8 +104,8 @@
         [footView addSubview:self.scenePayMoneyLB];
         
         
-        self.payMoneyLB = [self lablerect:CGRectMake(220 * ProportionAdapter, 0, 140 * ProportionAdapter, 40 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#313131"] labelFont:(16 * ProportionAdapter) text:[NSString stringWithFormat:@"支付金额  ¥%@", self.selectMoney] textAlignment:(NSTextAlignmentRight)];
-        NSMutableAttributedString *mutaAttStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"支付金额  ¥%@", self.selectMoney]];
+        self.payMoneyLB = [self lablerect:CGRectMake(220 * ProportionAdapter, 0, 140 * ProportionAdapter, 40 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#313131"] labelFont:(16 * ProportionAdapter) text:[NSString stringWithFormat:@"线上预付  ¥%@", self.selectMoney] textAlignment:(NSTextAlignmentRight)];
+        NSMutableAttributedString *mutaAttStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"线上预付  ¥%@", self.selectMoney]];
         [mutaAttStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:12 * ProportionAdapter] range:NSMakeRange(6, 1)];
         [mutaAttStr addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"#fc5a01"] range:NSMakeRange(6, [[NSString stringWithFormat:@"%@",self.selectMoney] length] + 1)];
         self.payMoneyLB.attributedText = mutaAttStr;
@@ -189,7 +189,7 @@
     
     NSMutableString *nameString = [[NSMutableString alloc] init];
     for (NSString *name in self.playerArray) {
-        nameString = [NSMutableString stringWithFormat:@"%@, %@",nameString, name];
+        nameString = [NSMutableString stringWithFormat:@"%@、 %@",nameString, name];
     }
     [orderDic setObject:[nameString substringFromIndex:2] forKey:@"playPersonNames"];
     
@@ -572,7 +572,7 @@
     }else if ([[self.detailDic objectForKey:@"payType"] integerValue] == 0) {
         paytypeString = @"全额预付";
     }else{
-        paytypeString = @"支付金额";
+        paytypeString = @"线上预付";
     }
     
     
