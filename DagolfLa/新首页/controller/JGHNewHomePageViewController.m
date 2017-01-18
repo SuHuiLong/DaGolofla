@@ -610,21 +610,21 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
 #pragma mark -- 活动点击事件
 - (void)activityListSelectClick:(UIButton *)btn{
     [self isLoginUp];
-    
+    /*
     NSDictionary *dic = _indexModel.activityList[btn.tag - 200];
     JGTeamActibityNameViewController *teamActVC = [[JGTeamActibityNameViewController alloc] init];
     teamActVC.teamKey = [[dic objectForKey:@"timeKey"] integerValue];
     teamActVC.hidesBottomBarWhenPushed = YES;//6598520
     [self.navigationController pushViewController:teamActVC animated:YES];
     //JGHNewActivityDetailViewController
+    */
     
-    /*
     NSDictionary *dic = _indexModel.activityList[btn.tag - 200];
     JGHNewActivityDetailViewController *teamActVC = [[JGHNewActivityDetailViewController alloc] init];
     teamActVC.teamKey = [[dic objectForKey:@"timeKey"] integerValue];
     teamActVC.hidesBottomBarWhenPushed = YES;//6598520
     [self.navigationController pushViewController:teamActVC animated:YES];
-        */
+     
 
 }
 

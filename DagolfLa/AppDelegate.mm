@@ -355,30 +355,6 @@
     }
 }
 - (void)didReceiveMessageNotification:(NSNotification *)notification {
-//    [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
-//    NSNumber *left = [notification.userInfo objectForKey:@"left"];
-//    if ([RCIMClient sharedRCIMClient].sdkRunningMode ==
-//        RCSDKRunningMode_Backgroud &&
-//        0 == left.integerValue) {
-//        int unreadMsgCount = [[RCIMClient sharedRCIMClient] getUnreadCount:@[
-//                                                                             @(ConversationType_PRIVATE),
-//                                                                             @(ConversationType_DISCUSSION),
-//                                                                             @(ConversationType_APPSERVICE),
-//                                                                             @(ConversationType_PUBLICSERVICE),
-//                                                                             @(ConversationType_GROUP)
-//                                                                             ]];        
-//        if (DEFAULF_IconCount) {
-//            [UIApplication sharedApplication].applicationIconBadgeNumber = unreadMsgCount + [DEFAULF_IconCount integerValue];
-//        }else{
-//            [UIApplication sharedApplication].applicationIconBadgeNumber = unreadMsgCount;
-//        }
-//    }else{
-//        if (DEFAULF_IconCount) {
-//            [UIApplication sharedApplication].applicationIconBadgeNumber =[DEFAULF_IconCount integerValue] +1;
-//        }else{
-//            [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
-//        }
-//    }
     [UIApplication sharedApplication].applicationIconBadgeNumber =
     [UIApplication sharedApplication].applicationIconBadgeNumber + 1;
 }
