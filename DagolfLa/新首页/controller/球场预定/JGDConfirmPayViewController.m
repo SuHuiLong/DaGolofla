@@ -569,6 +569,7 @@
     [self.empowerSwitch setOn:NO];
 
 }
+
 #pragma mark ---  支付宝 微信 取消支付
 
 - (void)doCancelOrderPay{

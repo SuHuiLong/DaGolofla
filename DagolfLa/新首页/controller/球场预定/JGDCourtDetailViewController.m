@@ -503,7 +503,7 @@ static CGFloat ImageHeight  = 210.0;
         }else{
             
             UILabel *discLB = [[UILabel alloc] init];
-            [self lableReDraw:discLB rect:CGRectMake(10 * ProportionAdapter, 12 * ProportionAdapter, 300 * ProportionAdapter, 20 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#313131"] labelFont:(17 * ProportionAdapter) text:@"预定说明" textAlignment:NSTextAlignmentLeft];
+            [self lableReDraw:discLB rect:CGRectMake(10 * ProportionAdapter, 12 * ProportionAdapter, 300 * ProportionAdapter, 20 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#313131"] labelFont:(17 * ProportionAdapter) text:@"预订说明" textAlignment:NSTextAlignmentLeft];
             [cell.contentView addSubview:discLB];
             
             

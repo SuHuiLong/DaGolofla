@@ -46,7 +46,7 @@
     UIBarButtonItem *leftBar = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"backL"] style:(UIBarButtonItemStyleDone) target:self action:@selector(backBtn)];
     leftBar.tintColor = [UIColor whiteColor];
     self.navigationItem.leftBarButtonItem = leftBar;
-
+    
     [self loadData];
 }
 
@@ -54,7 +54,7 @@
     
     for (UIViewController *vc in self.navigationController.viewControllers) {
         // 取消订单
-            if ([vc isKindOfClass:[JGDCourtDetailViewController class]] && [[self.dataDic objectForKey:@"stateButtonString"] isEqualToString:@"订单失效"]) {
+        if ([vc isKindOfClass:[JGDCourtDetailViewController class]] && [[self.dataDic objectForKey:@"stateButtonString"] isEqualToString:@"订单失效"]) {
             [self.navigationController popToViewController:vc animated:YES];
             return;
         }
@@ -96,12 +96,19 @@
                 for (int i = 0; i < [orderKeyArray count]; i ++) {
                     if ([self.dataDic objectForKey:orderKeyArray[i]]) {
                         
-                        if (i == 1) {
+                        
+                        if (i == 0) {
+                            [self.orderDetailArray addObject:[NSString stringWithFormat:@"%@", [self.dataDic objectForKey:orderKeyArray[i]]]];
+                            
+                        }else if (i == 1) {
                             [self.orderDetailArray addObject:[NSString stringWithFormat:@"%@", [self.dataDic objectForKey:orderKeyArray[i]]]];
                             
                         }else if (i == 2) {
                             [self.orderDetailArray addObject:[Helper stringFromDateString:[self.dataDic objectForKey:@"createTime"] withFormater:@"yyyy.MM.dd  HH:mm"]];
                             
+                            
+                        }else if (i == 3) {
+                            [self.orderDetailArray addObject:[NSString stringWithFormat:@"¥ %@", [self.dataDic objectForKey:orderKeyArray[i]]]];
                             
                         }else if (i == 4) {
                             if ([[self.dataDic objectForKey:@"payType"] integerValue] == 0) {
@@ -112,12 +119,11 @@
                                 [self.orderDetailArray addObject:@"球场现付"];
                                 self.orderTitleArray[5] = @"已付押金：";
                             }
-                        }else{
-                            if (i == 0) {
-                                [self.orderDetailArray addObject:[NSString stringWithFormat:@"%@", [self.dataDic objectForKey:orderKeyArray[i]]]];
-                            }else{
-                                [self.orderDetailArray addObject:[NSString stringWithFormat:@"¥ %@", [self.dataDic objectForKey:orderKeyArray[i]]]];
-                            }
+                        }else if (i == 5) {
+                            
+                            NSInteger payManey = [[self.dataDic objectForKey:@"dedBalanceMoney"] integerValue] + [[self.dataDic objectForKey:@"payMoney"] integerValue];
+                            
+                            [self.orderDetailArray addObject:[NSString stringWithFormat:@"¥ %td", payManey]];
                             
                         }
                         
@@ -209,7 +215,7 @@
     rightBar.tintColor = [UIColor whiteColor];
     self.navigationItem.rightBarButtonItem = rightBar;
     
-
+    
     
     
     
@@ -516,26 +522,26 @@
         [[ShowHUD showHUD] hideAnimationFromView:self.view];
         
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
-
-//            [[NSNotificationCenter defaultCenter] postNotificationName:@"orderStateChange" object:nil];
-
+            
+            //            [[NSNotificationCenter defaultCenter] postNotificationName:@"orderStateChange" object:nil];
+            
             [self.cancelView removeFromSuperview];
             
             if ([[self.dataDic objectForKey:@"stateButtonString"] isEqualToString:@"待付款"]) {
-               
+                
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"orderStateChange" object:nil];
-
+                
                 [LQProgressHud showMessage:@"订单已取消并关闭"];
                 [self.shitaView removeFromSuperview];
                 [self loadData];
-
+                
             }else{
-
+                
                 JGDPaySuccessViewController *cancelVC = [[JGDPaySuccessViewController alloc] init];
                 cancelVC.payORlaterPay = 3 ;
                 cancelVC.orderKey = self.orderKey;
                 [self.navigationController pushViewController:cancelVC animated:YES];
-
+                
             }
         }else{
             if ([data objectForKey:@"packResultMsg"]) {
