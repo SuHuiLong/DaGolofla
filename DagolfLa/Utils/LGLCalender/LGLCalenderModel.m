@@ -105,7 +105,7 @@
         block(array);
     } completionBlock:^(id data) {
         NSLog(@"%@", data);
-        NSLog(@"%@", array);
+        //NSLog(@"%@", array);
         NSDate * curcdate = date;
 //        NSInteger curfirstday = [LGLCalendarDate firstWeekdayInThisMonth:curcdate]; // 本月的第一天是周几
 //        NSInteger curtotalDay = [LGLCalendarDate totaldaysInMonth:cdate];  //月份的所有天数
