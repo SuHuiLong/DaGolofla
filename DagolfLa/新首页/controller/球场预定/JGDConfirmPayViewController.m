@@ -428,7 +428,7 @@
             }else{
                 deductible = self.money;
             }
-            UILabel *deductiblePrice = [self lablerect:CGRectMake(screenWidth - 110 * ProportionAdapter, 0, 100 * ProportionAdapter, 50 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#313131"] labelFont:(17 * ProportionAdapter) text:[NSString stringWithFormat:@"¥%.0f",deductible] textAlignment:(NSTextAlignmentRight)];
+            UILabel *deductiblePrice = [self lablerect:CGRectMake(screenWidth - 110 * ProportionAdapter, 0, 100 * ProportionAdapter, 50 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#313131"] labelFont:(17 * ProportionAdapter) text:[NSString stringWithFormat:@"¥ %.0f",deductible] textAlignment:(NSTextAlignmentRight)];
             [cell.contentView addSubview:deductiblePrice];
             
         } else{
@@ -442,7 +442,7 @@
             }else{
                 otherPay = self.payMoney - self.money;
             }
-            UILabel *leftPrice = [self lablerect:CGRectMake(screenWidth - 110 * ProportionAdapter, 0, 100 * ProportionAdapter, 50 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#fc5a01"] labelFont:(17 * ProportionAdapter) text:[NSString stringWithFormat:@"¥%.0f",otherPay] textAlignment:(NSTextAlignmentRight)];
+            UILabel *leftPrice = [self lablerect:CGRectMake(screenWidth - 110 * ProportionAdapter, 0, 100 * ProportionAdapter, 50 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#fc5a01"] labelFont:(17 * ProportionAdapter) text:[NSString stringWithFormat:@"¥ %.0f",otherPay] textAlignment:(NSTextAlignmentRight)];
             [cell.contentView addSubview:leftPrice];
             
         }

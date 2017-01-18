@@ -26,7 +26,13 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    self.title = @"地图详情";
+    if (self.fromWitchVC == 1) {
+        self.title = @"球场地址";
+
+    }else{
+        self.title = @"地图详情";
+
+    }
     
 //    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"backL"] style:UIBarButtonItemStylePlain target:self action:@selector(backButtonClcik)];
 //    leftItem.tintColor=[UIColor whiteColor];

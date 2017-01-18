@@ -53,6 +53,7 @@
         model.yIndex = [self stringNumberValue:longitude];
         model.golfName = adress;
         ShowMapViewViewController *mapVC = [[ShowMapViewViewController alloc] init];
+        mapVC.fromWitchVC = 1;
         mapVC.mapCLLocationCoordinate2DArr = [NSMutableArray arrayWithObjects:model, nil];
         [self.navigationController pushViewController:mapVC animated:YES];
     }else if ([urlString containsString:@"tel"]) {

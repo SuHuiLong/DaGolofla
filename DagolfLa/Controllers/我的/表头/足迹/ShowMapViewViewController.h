@@ -14,4 +14,6 @@
 
 @property (nonatomic, strong) NSMutableArray *mapCLLocationCoordinate2DArr;
 
+@property (nonatomic, assign) NSInteger fromWitchVC;  // 1 球场
+
 @end
