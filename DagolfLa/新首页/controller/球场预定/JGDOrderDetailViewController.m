@@ -89,7 +89,7 @@
                 self.orderDetailArray = [[NSMutableArray alloc] init];
                 self.reserveDetailArray = [[NSMutableArray alloc] init];
                 
-                NSArray *orderKeyArray = [NSArray arrayWithObjects: @"ordersn", @"stateShowString", @"createTime", @"money", @"payType", @"payMoney", nil];
+                NSArray *orderKeyArray = [NSArray arrayWithObjects: @"ordersn", @"stateShowString", @"createTime", @"totalMoney", @"payType", @"payMoney", nil];
                 NSArray *reserveKeyArray = [NSArray arrayWithObjects:@"ballName", [self.dataDic objectForKey:@"confirmedTeeTime"] ? @"confirmedTeeTime" : @"teeTime", @"userSum", @"playPersonNames", @"userMobile", @"servicePj", nil];
                 
                 // section 0
@@ -356,7 +356,7 @@
         }
     }else{
         
-        CGFloat serviceDetailsHeight = [Helper textHeightFromTextString:[self.dataDic objectForKey:@"serviceDetails"] width:screenWidth - 100 * ProportionAdapter fontSize:15 * ProportionAdapter];
+        CGFloat serviceDetailsHeight = [Helper textHeightFromTextString:[self.dataDic objectForKey:@"serviceDetails"] width:screenWidth - 110 * ProportionAdapter fontSize:15];
         
         return serviceDetailsHeight + 10 * ProportionAdapter;
     }
@@ -405,12 +405,12 @@
         
         [backView addSubview:oderLB];
         
-        CGFloat serviceDetailsHeight = [Helper textHeightFromTextString:[self.dataDic objectForKey:@"serviceDetails"] width:screenWidth - 110 * ProportionAdapter fontSize:15 * ProportionAdapter];
+        CGFloat serviceDetailsHeight = [Helper textHeightFromTextString:[self.dataDic objectForKey:@"serviceDetails"] width:screenWidth - 110 * ProportionAdapter fontSize:15];
         
         
         UILabel *oderDetailLB = [[UILabel alloc] initWithFrame:CGRectMake(90 * ProportionAdapter, serviceDetailsHeight >= 22 * ProportionAdapter ? 5 * ProportionAdapter : 0, screenWidth - 110 * ProportionAdapter, serviceDetailsHeight >= 22 * ProportionAdapter ? serviceDetailsHeight : 22 * ProportionAdapter)];
         oderDetailLB.textColor = [UIColor colorWithHexString:@"#a0a0a0"];
-        oderDetailLB.font = [UIFont systemFontOfSize:15 * ProportionAdapter];
+        oderDetailLB.font = [UIFont systemFontOfSize:15];
         oderDetailLB.textAlignment = NSTextAlignmentLeft;
         oderDetailLB.text = [self.dataDic objectForKey:@"serviceDetails"];
         oderDetailLB.numberOfLines = 0;

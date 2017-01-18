@@ -104,8 +104,8 @@
         [footView addSubview:self.scenePayMoneyLB];
         
         
-        self.payMoneyLB = [self lablerect:CGRectMake(220 * ProportionAdapter, 0, 140 * ProportionAdapter, 40 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#313131"] labelFont:(16 * ProportionAdapter) text:[NSString stringWithFormat:@"支付金额  ¥%@", self.selectMoney] textAlignment:(NSTextAlignmentRight)];
-        NSMutableAttributedString *mutaAttStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"支付金额  ¥%@", self.selectMoney]];
+        self.payMoneyLB = [self lablerect:CGRectMake(220 * ProportionAdapter, 0, 140 * ProportionAdapter, 40 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#313131"] labelFont:(16 * ProportionAdapter) text:[NSString stringWithFormat:@"线上预付  ¥%@", self.selectMoney] textAlignment:(NSTextAlignmentRight)];
+        NSMutableAttributedString *mutaAttStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"线上预付  ¥%@", self.selectMoney]];
         [mutaAttStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:12 * ProportionAdapter] range:NSMakeRange(6, 1)];
         [mutaAttStr addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"#fc5a01"] range:NSMakeRange(6, [[NSString stringWithFormat:@"%@",self.selectMoney] length] + 1)];
         self.payMoneyLB.attributedText = mutaAttStr;
@@ -124,7 +124,7 @@
         
         UIView *footView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 130 * ProportionAdapter)];
         
-        NSString *ruleString = @"押金退还规则：\n1、预订日打完球后48小时内，系统自动退还押金至您付款账户；\n2、成功取消订单后48小时内，系统自动退还押金到您付款账户；";
+        NSString *ruleString = @"押金退还规则：\n1、预订日打完球后三个工作日内，系统自动退还押金至您付款账户；\n2、成功取消订单后三个工作日内，系统自动退还押金到您付款账户；";
         
         CGFloat height = [Helper textHeightFromTextString:ruleString width:screenWidth - 20 * ProportionAdapter fontSize:14 * ProportionAdapter];
         
@@ -189,7 +189,7 @@
     
     NSMutableString *nameString = [[NSMutableString alloc] init];
     for (NSString *name in self.playerArray) {
-        nameString = [NSMutableString stringWithFormat:@"%@, %@",nameString, name];
+        nameString = [NSMutableString stringWithFormat:@"%@、 %@",nameString, name];
     }
     [orderDic setObject:[nameString substringFromIndex:2] forKey:@"playPersonNames"];
     
@@ -572,7 +572,7 @@
     }else if ([[self.detailDic objectForKey:@"payType"] integerValue] == 0) {
         paytypeString = @"全额预付";
     }else{
-        paytypeString = @"支付金额";
+        paytypeString = @"线上预付";
     }
     
     

@@ -118,7 +118,7 @@
         lineView.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];
         [ueView addSubview:lineView];
         
-        NSArray *titleArray = [NSArray arrayWithObjects:@"订单受理", @"球位确定", @"订单完成" ,nil];
+        NSArray *titleArray = [NSArray arrayWithObjects:@"订单受理", @"球位确认", @"订单完成" ,nil];
         for (int i = 0; i < 3; i ++) {
             UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(35 * ProportionAdapter + i * 145 * ProportionAdapter, 53 * ProportionAdapter, 14 * ProportionAdapter, 14 * ProportionAdapter)];
             if (i != 0) {
@@ -166,7 +166,7 @@
         
     }else if (_payORlaterPay ==  3) {
         UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(0, 10, screenWidth, 50 * ProportionAdapter)];
-        [btn setTitle:@"取消状态" forState:(UIControlStateNormal)];
+        [btn setTitle:@"提交成功" forState:(UIControlStateNormal)];
         [btn setTitleColor:[UIColor colorWithHexString:@"#313131"] forState:(UIControlStateNormal)];
         [btn setImage:[UIImage imageNamed:@"icn_present_success"] forState:(UIControlStateNormal)];
         btn.titleLabel.font = [UIFont systemFontOfSize:20 * ProportionAdapter];

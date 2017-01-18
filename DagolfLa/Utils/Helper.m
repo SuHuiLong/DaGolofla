@@ -28,7 +28,7 @@
         //sdhgfsdjkhgfjd
         
         NSDictionary *dict = @{NSFontAttributeName:[UIFont systemFontOfSize:size]};
-        CGRect rect = [text boundingRectWithSize:CGSizeMake(textWidth + 10 * ProportionAdapter, MAXFLOAT) options:NSStringDrawingTruncatesLastVisibleLine|NSStringDrawingUsesFontLeading|NSStringDrawingUsesLineFragmentOrigin attributes:dict context:nil];
+        CGRect rect = [text boundingRectWithSize:CGSizeMake(textWidth, MAXFLOAT) options:NSStringDrawingTruncatesLastVisibleLine|NSStringDrawingUsesFontLeading|NSStringDrawingUsesLineFragmentOrigin attributes:dict context:nil];
         //返回计算出的行高
         return rect.size.height;
         

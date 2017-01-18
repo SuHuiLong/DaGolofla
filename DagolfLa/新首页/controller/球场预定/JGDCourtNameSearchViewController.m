@@ -296,8 +296,12 @@
     if ([def objectForKey:@"history"]) {
         NSArray *array = [def objectForKey:@"history"];
         NSMutableArray *hisArray = [NSMutableArray arrayWithArray:array];
+        for (NSString *his in hisArray) {
+            if ([his isEqualToString:nameStr]) {
+                return;
+            }
+        }
         [hisArray insertObject:nameStr atIndex:0];
-        //        [hisArray addObject:textField.text];
         if ([hisArray count] == 11) {
             [hisArray removeLastObject];
         }
