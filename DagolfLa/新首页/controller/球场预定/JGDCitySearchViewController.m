@@ -52,6 +52,13 @@
     
     [super viewDidLoad];
     
+    NSArray *arr = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
+    NSString *cachePath = [arr lastObject];
+    NSString *filePath = [cachePath stringByAppendingPathComponent:@"hotListWithBallCity.plist"];
+    
+    //缓存数据
+    NSDictionary *dic = [NSDictionary dictionaryWithContentsOfFile:filePath];
+    
     NSURL *url = [NSURL URLWithString:@"http://res.dagolfla.com/download/json/ballCity.json"];
     
     NSError *error;
@@ -59,12 +66,16 @@
     NSData * data = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
     NSError * error1 = nil;
     
-    
     if (data) {
         NSDictionary * dataDic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:&error1];
         
         if ([dataDic objectForKey:@"hotList"]) {
             self.hotCityArray = [dataDic objectForKey:@"hotList"];
+        }
+        
+        //写入缓存数据
+        if (dataDic) {
+            [dataDic writeToFile:filePath atomically:YES];
         }
         
         if ([dataDic objectForKey:@"list"]) {
