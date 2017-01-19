@@ -319,7 +319,7 @@
 #pragma mark -- 下拉刷新
 
 - (void)footRefresh{
-    
+    [self nameSearch:self.searchTF.text];
 }
 
 
