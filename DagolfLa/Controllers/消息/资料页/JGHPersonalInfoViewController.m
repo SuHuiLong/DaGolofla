@@ -90,6 +90,9 @@
                 self.momentsPicList = [data objectForKey:@"momentsPicList"];
                 for (int i=0; i<self.momentsPicList.count; i++) {
                     UIImageView *dynImageView = [[UIImageView alloc]initWithFrame:CGRectMake(i*64*ProportionAdapter + i*10*ProportionAdapter, 0, 64*ProportionAdapter, 64*ProportionAdapter)];
+                    dynImageView.clipsToBounds = YES;
+                    dynImageView.contentMode = UIViewContentModeScaleAspectFill;
+                    
                     [dynImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@", [self.momentsPicList[i] objectForKey:@"picUrl"]]] placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
                     [self.dynamicImageView addSubview:dynImageView];
                 }

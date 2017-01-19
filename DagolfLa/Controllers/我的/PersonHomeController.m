@@ -122,7 +122,7 @@ static NSString *const orderDetailCellIdentifier = @"OtherDataTableViewCell";
 }
 
 -(void)creatScrollView {
-    _mainScrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight)];
+    _mainScrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight -64)];
     _mainScrollView.showsHorizontalScrollIndicator = YES;
     _mainScrollView.showsVerticalScrollIndicator = YES;
     _mainScrollView.backgroundColor = [UIColor whiteColor];
@@ -174,8 +174,8 @@ static NSString *const orderDetailCellIdentifier = @"OtherDataTableViewCell";
     _iconImg.contentMode = UIViewContentModeScaleAspectFill;
 
     _iconImg.userInteractionEnabled = YES;
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(imageIconACt)];
-    [_iconImg addGestureRecognizer:tap];
+//    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(imageIconACt)];
+//    [_iconImg addGestureRecognizer:tap];
     [_profileView addSubview:_iconImg];
     
     //用户名
