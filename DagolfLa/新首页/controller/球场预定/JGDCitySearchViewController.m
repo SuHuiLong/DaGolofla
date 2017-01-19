@@ -52,36 +52,90 @@
     
     [super viewDidLoad];
     
-    NSURL *url = [NSURL URLWithString:@"http://res.dagolfla.com/download/json/ballCity.json"];
+    NSArray *arr = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
+    NSString *cachePath = [arr lastObject];
+    NSString *filePath = [cachePath stringByAppendingPathComponent:@"hotListWithBallCity.plist"];
     
-    NSError *error;
-    NSString *jsonString = [NSString stringWithContentsOfURL:url encoding:NSUTF8StringEncoding error:&error];
-    NSData * data = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
-    NSError * error1 = nil;
-    
-    
-    if (data) {
-        NSDictionary * dataDic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:&error1];
-        
-        if ([dataDic objectForKey:@"hotList"]) {
-            self.hotCityArray = [dataDic objectForKey:@"hotList"];
+    //缓存数据
+    NSDictionary *dic = [NSDictionary dictionaryWithContentsOfFile:filePath];
+    if (dic) {
+        if ([dic objectForKey:@"hotList"]) {
+            self.hotCityArray = [dic objectForKey:@"hotList"];
         }
         
-        if ([dataDic objectForKey:@"list"]) {
+        
+        
+        if ([dic objectForKey:@"list"]) {
             
-            self.cityDic = [dataDic objectForKey:@"list"];
+            self.cityDic = [dic objectForKey:@"list"];
             
             NSMutableArray *arr = [NSMutableArray array];
-            for (NSDictionary *dic in [dataDic objectForKey:@"list"]) {
-                if ([dic objectForKey:@"cName"]) {
-                    [arr addObject:[dic objectForKey:@"cName"]];
+            for (NSDictionary *dict in [dic objectForKey:@"list"]) {
+                if ([dict objectForKey:@"cName"]) {
+                    [arr addObject:[dict objectForKey:@"cName"]];
                 }
             }
             
             self.keyArray = [ChineseString IndexArray:arr];
             self.cityArray = [ChineseString LetterSortArray:arr];
         }
+        
+        [[JsonHttp jsonHttp]httpRequest:@"http://res.dagolfla.com/download/json/ballCity.json" failedBlock:^(id errType) {
+            NSLog(@"%@", errType);
+        } completionBlock:^(id data) {
+            NSLog(@"%@", data);
+            if (data) {
+                [data writeToFile:filePath atomically:YES];
+            }
+        }];
+//        NSURL *url = [NSURL URLWithString:@"http://res.dagolfla.com/download/json/ballCity.json"];
+//        
+//        NSError *error;
+//        NSString *jsonString = [NSString stringWithContentsOfURL:url encoding:NSUTF8StringEncoding error:&error];
+//        NSData * data = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
+//        NSError * error1 = nil;
+//        
+//        if (data) {
+//            NSDictionary * dataDic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:&error1];
+//            
+//            //写入缓存数据
+//            if (dataDic) {
+//                [dataDic writeToFile:filePath atomically:YES];
+//            }
+//        }
+    }else{
+        
+        [[JsonHttp jsonHttp]httpRequest:@"http://res.dagolfla.com/download/json/ballCity.json" failedBlock:^(id errType) {
+            NSLog(@"%@", errType);
+        } completionBlock:^(id data) {
+            NSLog(@"%@", data);
+            if (data) {
+                if ([data objectForKey:@"hotList"]) {
+                    self.hotCityArray = [data objectForKey:@"hotList"];
+                }
+                
+                //写入缓存数据
+                [data writeToFile:filePath atomically:YES];
+                
+                if ([data objectForKey:@"list"]) {
+                    
+                    self.cityDic = [data objectForKey:@"list"];
+                    
+                    NSMutableArray *arr = [NSMutableArray array];
+                    for (NSDictionary *dic in [data objectForKey:@"list"]) {
+                        if ([dic objectForKey:@"cName"]) {
+                            [arr addObject:[dic objectForKey:@"cName"]];
+                        }
+                    }
+                    
+                    self.keyArray = [ChineseString IndexArray:arr];
+                    self.cityArray = [ChineseString LetterSortArray:arr];
+                }
+            }
+        }];
     }
+    
+    
 
     
     self.automaticallyAdjustsScrollViewInsets = NO;
