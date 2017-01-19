@@ -58,7 +58,7 @@
         [self.navigationController pushViewController:mapVC animated:YES];
     }else if ([urlString containsString:@"tel"]) {
         //  球场电话
-        NSArray *array = [urlString componentsSeparatedByString:@":"];
+        NSArray *array = [urlString componentsSeparatedByString:@"tel:"];
         NSMutableString * str=[[NSMutableString alloc] initWithFormat:@"telprompt://%@", array[1]];
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:str]];
 

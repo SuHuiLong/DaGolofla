@@ -49,6 +49,7 @@
 }
 
 - (void)viewDidLoad {
+    
     [super viewDidLoad];
     
     NSURL *url = [NSURL URLWithString:@"http://res.dagolfla.com/download/json/ballCity.json"];
@@ -57,27 +58,32 @@
     NSString *jsonString = [NSString stringWithContentsOfURL:url encoding:NSUTF8StringEncoding error:&error];
     NSData * data = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
     NSError * error1 = nil;
-    NSDictionary * dataDic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:&error1];
-
-    self.hotCityArray = [dataDic objectForKey:@"hotList"];
-    self.cityDic = [dataDic objectForKey:@"list"];
     
-    NSMutableArray *arr = [NSMutableArray array];
-    for (NSDictionary *dic in [dataDic objectForKey:@"list"]) {
-        if ([dic objectForKey:@"cName"]) {
-            [arr addObject:[dic objectForKey:@"cName"]];
+    
+    if (data) {
+        NSDictionary * dataDic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:&error1];
+        
+        if ([dataDic objectForKey:@"hotList"]) {
+            self.hotCityArray = [dataDic objectForKey:@"hotList"];
+        }
+        
+        if ([dataDic objectForKey:@"list"]) {
+            
+            self.cityDic = [dataDic objectForKey:@"list"];
+            
+            NSMutableArray *arr = [NSMutableArray array];
+            for (NSDictionary *dic in [dataDic objectForKey:@"list"]) {
+                if ([dic objectForKey:@"cName"]) {
+                    [arr addObject:[dic objectForKey:@"cName"]];
+                }
+            }
+            
+            self.keyArray = [ChineseString IndexArray:arr];
+            self.cityArray = [ChineseString LetterSortArray:arr];
         }
     }
-    
-    self.keyArray = [ChineseString IndexArray:arr];
-    self.cityArray = [ChineseString LetterSortArray:arr];
-    
-    
-    
-//    self.keyArray = [self.cityDic allKeys];
-//    NSSortDescriptor *sortDes1 = [[NSSortDescriptor alloc] initWithKey:@"self" ascending:YES]; // 升序
-//    self.keyArray = [self.keyArray sortedArrayUsingDescriptors:@[sortDes1]];
 
+    
     self.automaticallyAdjustsScrollViewInsets = NO;
     [self searchVCSet];
     

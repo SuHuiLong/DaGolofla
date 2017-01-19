@@ -98,13 +98,13 @@
     
     [self.tableView registerClass:[JGTeamHIsScoreTableViewCell class] forCellReuseIdentifier:@"cell"];
     
-    [self createGuidedView];
+    [self createGuidedView:YES];
 }
 
-- (void)createGuidedView{
+- (void)createGuidedView:(BOOL)isHaveData{
     
     
-    UIView *footView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 100 * ProportionAdapter)];
+    UIView *footView = [[UIView alloc] initWithFrame:CGRectMake(0,isHaveData ? 0 : (screenHeight - 200 * ProportionAdapter), screenWidth, 100 * ProportionAdapter)];
     
     UILabel *oneLable = [[UILabel alloc]initWithFrame:CGRectMake(0, 20 *ProportionAdapter, screenWidth, 20 *ProportionAdapter)];
     oneLable.text = @"纸质记分如何导入系统？";
@@ -132,7 +132,11 @@
     threeLable.font = [UIFont systemFontOfSize:14 *ProportionAdapter];
     [footView addSubview:threeLable];
     
-    self.tableView.tableFooterView = footView;
+    if (isHaveData) {
+        self.tableView.tableFooterView = footView;
+    }else{
+        [self.view addSubview: footView];
+    }
 }
 
 #pragma mark ----- 成绩总览
@@ -272,7 +276,9 @@
                     label1.font = [UIFont systemFontOfSize:18 * ProportionAdapter];
                     label1.textColor = [UIColor colorWithHexString:@"a0a0a0"];
                     [self.view addSubview:label1];
-                    
+
+                    [self createGuidedView:NO];
+
                     //                    UILabel *label2 = [[UILabel alloc] initWithFrame:CGRectMake(20 * ProportionAdapter, 311 * ProportionAdapter, screenWidth - 40 * ProportionAdapter, 80 * ProportionAdapter)];
                     //                    label2.text = @"您所有的记分都会保留在此，点击右上角“取回记分”，可通过“秘钥”取回别人给你代记的成绩。";
                     //                    label2.font = [UIFont systemFontOfSize:15 * ProportionAdapter];
