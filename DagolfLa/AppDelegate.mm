@@ -287,27 +287,21 @@
     NSDictionary* pushInfo = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
     if (pushInfo)
     {
-        NSDictionary *apsInfo = [pushInfo objectForKey:@"aps"];
-        if(apsInfo)
-        {
-            [self startApp];
-            
-            if ([apsInfo objectForKey:APPDATA]) {
-                [self pushSpecifiedViewCtrl:[NSString stringWithFormat:@"%@", [apsInfo objectForKey:APPDATA]]];
-            }
-//            [self pushSpecifiedViewCtrl:[NSString stringWithFormat:@"%@", url]];
-            
-            [self updateBadgeValueForTabBarItem];
+        [self startApp];
+        
+        if ([pushInfo objectForKey:APPDATA]) {
+            [self pushData:[pushInfo objectForKey:APPDATA]];
         }
+        
+        [self updateBadgeValueForTabBarItem];
+        
     }else if (url != nil) {
         if ([[url query] containsString:@"safepay"]) {
-            
+            [self startApp];
         }else{
             if ([[url scheme] isEqualToString:@"dagolfla"]) {
                 NSLog(@"%@", self.window.rootViewController);
                 [self startApp];
-                
-                [self pushSpecifiedViewCtrl:[NSString stringWithFormat:@"%@", url]];
                 
                 [self updateBadgeValueForTabBarItem];
             }
@@ -613,9 +607,20 @@
     completionHandler(UIBackgroundFetchResultNewData);
 
     if ([userInfo objectForKey:APPDATA]) {
-        [self pushSpecifiedViewCtrl:[NSString stringWithFormat:@"%@", [userInfo objectForKey:APPDATA]]];
+        [self pushData:[userInfo objectForKey:APPDATA]];
     }
-//    [self pushSpecifiedViewCtrl:[NSString stringWithFormat:@"%@", [userInfo objectForKey:@"url"]]];
+}
+#pragma mark -- 跳转数据解析
+- (void)pushData:(NSString *)pushDataString{
+    NSDictionary *dict = [ConvertJson convertJSONToDict:pushDataString];
+    if (dict) {
+        if ([dict objectForKey:@"pushData"]) {
+            if ([dict objectForKey:@"url"]) {
+                NSString *urlString = [NSString stringWithFormat:@"%@", [dict objectForKey:@"url"]];
+                [self pushSpecifiedViewCtrl:urlString];
+            }
+        }
+    }
 }
 - (void)application:(UIApplication *)application
 didReceiveLocalNotification:(UILocalNotification *)notification {
@@ -644,7 +649,7 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
     if([response.notification.request.trigger isKindOfClass:[UNPushNotificationTrigger class]]) {
         
         if ([userInfo objectForKey:APPDATA]) {
-            [self pushSpecifiedViewCtrl:[NSString stringWithFormat:@"%@", [userInfo objectForKey:APPDATA]]];
+            [self pushData:[userInfo objectForKey:APPDATA]];
         }
         
     }

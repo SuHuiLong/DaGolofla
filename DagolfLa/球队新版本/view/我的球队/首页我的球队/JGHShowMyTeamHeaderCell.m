@@ -20,11 +20,22 @@
     self.name.font = [UIFont systemFontOfSize:18 *ProportionAdapter];
     self.nameLeft.constant = 10 *ProportionAdapter;
     
+    self.GuestsBtn.titleLabel.font = [UIFont systemFontOfSize:14 *ProportionAdapter];
+    
+    self.arrowRight.constant = 10 *ProportionAdapter;
+    
     self.lineLeft.constant = 0;
     self.lineRight.constant = 0;
 }
 
 - (void)configJGHShowMyTeamHeaderCell:(NSString *)name andSection:(NSInteger)section{
+    if (section == 0) {
+        self.GuestsBtn.hidden = YES;
+        self.arrowImageView.hidden = YES;
+    }else{
+        self.GuestsBtn.hidden = NO;
+        self.arrowImageView.hidden = NO;
+    }
     
     self.name.text = name;
 }
@@ -35,9 +46,9 @@
     // Configure the view for the selected state
 }
 
-//- (IBAction)GuestsBtn:(UIButton *)sender {
-//    if ([self.delegate respondsToSelector:@selector(didSelectGuestsBtn:)]) {
-//        [self.delegate didSelectGuestsBtn:sender];
-//    }
-//}
+- (IBAction)GuestsBtn:(UIButton *)sender {
+    if ([self.delegate respondsToSelector:@selector(didSelectGuestsBtn:)]) {
+        [self.delegate didSelectGuestsBtn:sender];
+    }
+}
 @end

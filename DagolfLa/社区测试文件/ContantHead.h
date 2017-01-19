@@ -72,9 +72,9 @@ typedef NS_ENUM(NSInteger, GestureType) {
 
 
 #ifdef DEBUG
-#define RongYunAPPKEY @"0vnjpoadnkihz"//pgyu6atqylmiu
+#define RongYunAPPKEY @"pgyu6atqylmiu"//pgyu6atqylmiu
 #else
-#define RongYunAPPKEY @"0vnjpoadnkihz"//0vnjpoadnkihz 正式环境
+#define RongYunAPPKEY @"pgyu6atqylmiu"//0vnjpoadnkihz 正式环境
 #endif
 //#define TESTRongYunAPPKEY @"pgyu6atqylmiu"//pgyu6atqylmiu
 //#define RongYunAPPKEY @"0vnjpoadnkihz"//0vnjpoadnkihz
@@ -196,5 +196,6 @@ typedef NS_ENUM(NSInteger, GestureType) {
 #import "JGHDatePicksViewController.h"
 #import "JGHPushClass.h"
 #import "SXPickPhoto.h"
+#import "ConvertJson.h"
 
 #endif

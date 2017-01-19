@@ -249,17 +249,17 @@
         [cell.sexImgv setImage: [UIImage imageNamed:@"xb_n"]];
     }
     
-//    if ([model.signUpInfoKey integerValue] == -1) {
-//        cell.moneyLabel.text = @"意向成员";
-//        cell.moneyLabel.textColor = [UIColor colorWithHexString:@"#7fc1ff"];
-//    }
-//    else{
-//        NSString* strMoney = [NSString stringWithFormat:@"已付¥%@",model.payMoney];
-//        NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:strMoney];
-//        [attributedString addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"#e00000"] range:NSMakeRange(2, strMoney.length-2)]; // 0为起始位置 length是从起始位置开始 设置指定颜色的长度
-//        [attributedString addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(0, 2)]; // 0为起始位置 length是从起始位置开始 设置指定颜色的长度
-//        cell.moneyLabel.attributedText = attributedString;
-//    }
+    if ([model.signUpInfoKey integerValue] == -1) {
+        cell.moneyLabel.text = @"意向成员";
+        cell.moneyLabel.textColor = [UIColor colorWithHexString:@"#7fc1ff"];
+    }
+    else{
+        NSString* strMoney = [NSString stringWithFormat:@"已付¥%@",model.payMoney];
+        NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:strMoney];
+        [attributedString addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"#e00000"] range:NSMakeRange(2, strMoney.length-2)]; // 0为起始位置 length是从起始位置开始 设置指定颜色的长度
+        [attributedString addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(0, 2)]; // 0为起始位置 length是从起始位置开始 设置指定颜色的长度
+        cell.moneyLabel.attributedText = attributedString;
+    }
     
     if (model.almost) {
         cell.almostLabel.text = [NSString stringWithFormat:@"差点  %.1f", [model.almost floatValue]];
