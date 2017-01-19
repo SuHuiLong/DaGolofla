@@ -234,6 +234,8 @@
                     cell.dateL.textColor = [UIColor blackColor];
                 }
                 
+                
+                
                 cell.priceL.textColor = [UIColor colorWithHexString:@"#fc5a01"];
             }
             
@@ -248,6 +250,11 @@
                 }
                 
                 cell.userInteractionEnabled = NO;
+            }else{
+                //无价格---日期颜色
+                if (subModel.price.length == 0) {
+                    cell.dateL.textColor = [UIColor lightGrayColor];
+                }
             }
     
         } else {
@@ -278,18 +285,15 @@
     NSInteger index = indexPath.row - model.firstday;
     LGLCalenderSubModel * subModel = model.details[index];
     
+    if (subModel.price.length == 0) {
+        return;
+    }
+    
     _year = model.year;
     _month = model.month;
     _day = subModel.day;
     
     [self.collectionView reloadData];
-    
-//    NSMutableDictionary * dic = [NSMutableDictionary dictionary];
-//    [dic setValue: [NSString stringWithFormat:@"%ld", (long)model.year] forKey:@"year"];
-//    [dic setValue: [NSString stringWithFormat:@"%ld", (long)model.month] forKey:@"month"];
-//    [dic setValue: [NSString stringWithFormat:@"%ld", (long)subModel.day] forKey:@"day"];
-//    [dic setValue: [NSString stringWithFormat:@"%@",  subModel.price] forKey:@"price"];
-//    self.blockTimeWeekPriceDict(dic);
     
     NSString *month;
     if (_month < 10) {
