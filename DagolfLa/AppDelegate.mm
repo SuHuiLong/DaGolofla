@@ -615,8 +615,8 @@
     NSDictionary *dict = [ConvertJson convertJSONToDict:pushDataString];
     if (dict) {
         if ([dict objectForKey:@"pushData"]) {
-            if ([dict objectForKey:@"url"]) {
-                NSString *urlString = [NSString stringWithFormat:@"%@", [dict objectForKey:@"url"]];
+            if ([[dict objectForKey:@"pushData"] objectForKey:@"url"]) {
+                NSString *urlString = [NSString stringWithFormat:@"%@", [[dict objectForKey:@"pushData"] objectForKey:@"url"]];
                 [self pushSpecifiedViewCtrl:urlString];
             }
         }
