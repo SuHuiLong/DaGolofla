@@ -88,21 +88,6 @@
                 [data writeToFile:filePath atomically:YES];
             }
         }];
-//        NSURL *url = [NSURL URLWithString:@"http://res.dagolfla.com/download/json/ballCity.json"];
-//        
-//        NSError *error;
-//        NSString *jsonString = [NSString stringWithContentsOfURL:url encoding:NSUTF8StringEncoding error:&error];
-//        NSData * data = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
-//        NSError * error1 = nil;
-//        
-//        if (data) {
-//            NSDictionary * dataDic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:&error1];
-//            
-//            //写入缓存数据
-//            if (dataDic) {
-//                [dataDic writeToFile:filePath atomically:YES];
-//            }
-//        }
     }else{
         
         [[JsonHttp jsonHttp]httpRequest:@"http://res.dagolfla.com/download/json/ballCity.json" failedBlock:^(id errType) {

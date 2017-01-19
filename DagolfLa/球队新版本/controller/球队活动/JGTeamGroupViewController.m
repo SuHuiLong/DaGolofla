@@ -12,7 +12,7 @@
 #import "JGGroupdetailsCollectionViewCell.h"
 #import "JGHTeamMembersViewController.h"
 #import "JGHPlayersModel.h"
-#import "JGHNewActivityDetailViewController.h"
+#import "JGTeamActibityNameViewController.h"
 
 static NSString *const JGTeamGroupCollectionViewCellIdentifier = @"JGTeamGroupCollectionViewCell";
 static NSString *const JGGroupdetailsCollectionViewCellIdentifier = @"JGGroupdetailsCollectionViewCell";
@@ -202,7 +202,7 @@ static NSString *const JGGroupdetailsCollectionViewCellIdentifier = @"JGGroupdet
 - (void)backButtonClcik:(UIButton *)btn{
     if (_activityFrom == 1) {
         for (UIViewController *controller in self.navigationController.viewControllers) {
-            if ([controller isKindOfClass:[JGHNewActivityDetailViewController class]]) {
+            if ([controller isKindOfClass:[JGTeamActibityNameViewController class]]) {
                 //创建一个消息对象
                 NSNotification * notice = [NSNotification notificationWithName:@"reloadActivityData" object:nil userInfo:nil];
                 //发送消息

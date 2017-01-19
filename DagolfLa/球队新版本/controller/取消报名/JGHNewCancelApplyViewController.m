@@ -16,7 +16,6 @@
 #import "JGLCancelDrawbackViewController.h"
 #import "JGHNewCancelApplyCell.h"
 #import "JGHNewCancelAppListCell.h"
-#import "JGHNewActivityDetailViewController.h"
 
 #define ActivityRefundrules @"提示：请勾选退出活动的打球人"
 
