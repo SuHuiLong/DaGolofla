@@ -26,7 +26,6 @@
 #import "UMMobClick/MobClick.h"
 #import "JGDDPhotoAlbumViewController.h"
 #import "JGDServiceViewController.h" // 定制服务
-#import "JGHNewActivityDetailViewController.h"
 #import "JGDBookCourtViewController.h"  // 球场预定
 
 static NSString *const JGHPASHeaderTableViewCellIdentifier = @"JGHPASHeaderTableViewCell";
