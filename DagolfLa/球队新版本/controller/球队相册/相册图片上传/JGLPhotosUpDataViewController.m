@@ -249,6 +249,10 @@
     _contentView.clipsToBounds = YES;
     [_scrollView addSubview:_contentView];
     
+    UITapGestureRecognizer *tapGest = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(addButtonClick:)];
+    _contentView.userInteractionEnabled = YES;
+    [_contentView addGestureRecognizer:tapGest];
+    
     _contentSizeY = _contentSizeY + _imageWidth + 2 *10 *ScreenWidth/375;
     
     _addButton = [UIButton buttonWithType:UIButtonTypeCustom];
