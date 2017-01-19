@@ -70,7 +70,6 @@ typedef NS_ENUM(NSInteger, GestureType) {
 #define screenWidth  [UIScreen mainScreen].bounds.size.width
 #define screenHeight  [UIScreen mainScreen].bounds.size.height
 
-
 //#define RongYunAPPKEY @"pgyu6atqylmiu"//pgyu6atqylmiu 测试
 #define RongYunAPPKEY @"0vnjpoadnkihz"//0vnjpoadnkihz 正式环境
 

@@ -104,8 +104,34 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
     
     if (DEFAULF_USERID) {
         [self loadMessageData];
+        
+        //刷新融云TongKT
+        [self getRongTK];
     }
+    
 }
+
+- (void)getRongTK{
+    NSMutableDictionary* dictUser = [[NSMutableDictionary alloc]init];
+    [dictUser setObject:DEFAULF_USERID forKey:@"userKey"];
+    NSString *strMD = [JGReturnMD5Str getCaddieAuthUserKey:[DEFAULF_USERID integerValue]];
+    [dictUser setObject:strMD forKey:@"md5"];
+    [[JsonHttp jsonHttp]httpRequest:@"user/getUserInfo" JsonKey:nil withData:dictUser requestMethod:@"GET" failedBlock:^(id errType) {
+    } completionBlock:^(id data) {
+        if ([[data objectForKey:@"packSuccess"]boolValue]) {
+            NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
+            
+            if ([data objectForKey:@"user"]) {
+                NSDictionary *dict = [data objectForKey:@"user"];
+                if ([dict objectForKey:@"rongTk"]) {
+                    [userdef setObject:[dict objectForKey:@"rongTk"] forKey:@"rongTk"];
+                    [userdef synchronize];
+                }
+            }            
+        }
+    }];
+}
+
 #pragma mark --刷新页面
 - (void)reloadViewData{
     [self.homeTableView.header beginRefreshing];
