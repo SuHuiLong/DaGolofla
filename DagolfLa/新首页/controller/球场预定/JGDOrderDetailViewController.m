@@ -31,6 +31,7 @@
 
 @property (nonatomic, strong) UIView *cancelView; // 取消订单的弹窗
 @property (nonatomic, strong) UIView *shitaView; // 底部按钮
+@property (nonatomic, strong) UIView *cancelBackView;
 
 @property (nonatomic, strong) NSMutableArray *reasonArray;
 
@@ -238,7 +239,7 @@
         
     }else{
         // cancel
-        [self.view addSubview:self.cancelView];
+        [self.view addSubview:self.cancelBackView];
     }
 }
 
@@ -429,8 +430,14 @@
 
 
 
-- (UIView *)cancelView{
-    if (!_cancelView) {
+- (UIView *)cancelBackView{
+    if (!_cancelBackView) {
+        
+        
+        _cancelBackView = [[UIView alloc] initWithFrame:[UIScreen mainScreen].bounds];
+        _cancelBackView.backgroundColor = [UIColor colorWithWhite:0.f alpha:0.5f];
+        
+        
         _cancelView = [[UIView alloc] initWithFrame:CGRectMake(0, screenHeight - 394 * ProportionAdapter, screenWidth, 380 * ProportionAdapter)];
         _cancelView.backgroundColor = [UIColor whiteColor];
         
@@ -477,9 +484,10 @@
         [commitBtn addTarget:self action:@selector(commitAct) forControlEvents:(UIControlEventTouchUpInside)];
         [commitBtn setTitle:@"提交" forState:(UIControlStateNormal)];
         [_cancelView addSubview:commitBtn];
+        [_cancelBackView addSubview:_cancelView];
         
     }
-    return _cancelView;
+    return _cancelBackView;
 }
 
 - (void)selectAct:(UIButton *)btn{
@@ -525,7 +533,7 @@
             
             //            [[NSNotificationCenter defaultCenter] postNotificationName:@"orderStateChange" object:nil];
             
-            [self.cancelView removeFromSuperview];
+            [self.cancelBackView removeFromSuperview];
             
             if ([[self.dataDic objectForKey:@"stateButtonString"] isEqualToString:@"待付款"]) {
                 
@@ -555,7 +563,7 @@
 
 - (void)popAct{
     
-    [self.cancelView removeFromSuperview];
+    [self.cancelBackView removeFromSuperview];
     
 }
 
