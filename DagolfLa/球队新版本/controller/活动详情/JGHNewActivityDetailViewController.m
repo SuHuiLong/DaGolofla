@@ -480,6 +480,7 @@ static CGFloat ImageHeight  = 210.0;
         return costListCell;
     }else if (indexPath.section == 6){
         JGHActivityInfoCell *infoCell = [tableView dequeueReusableCellWithIdentifier:JGHActivityInfoCellIdentifier];
+        infoCell.selectionStyle = UITableViewCellSelectionStyleNone;
         infoCell.infoLable.text = _model.info;
         return infoCell;
     }

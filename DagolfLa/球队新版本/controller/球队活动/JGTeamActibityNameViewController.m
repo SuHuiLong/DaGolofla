@@ -43,7 +43,6 @@
 #import "JGLScoreLiveViewController.h"
 //#import "JGLActivityMemberSetViewController.h"
 #import "JGLScoreRankViewController.h"
-#import "JGDGuestCodeViewController.h"
 #import "JGLActivityMemberSetViewController.h"
 
 static NSString *const JGTeamActivityWithAddressCellIdentifier = @"JGTeamActivityWithAddressCell";
@@ -736,14 +735,14 @@ static CGFloat ImageHeight  = 210.0;
         return;
     }
     
-    JGDGuestCodeViewController *guestVC =[[JGDGuestCodeViewController alloc] init];
-    if (_model.teamActivityKey == 0) {
-        guestVC.timeKey = _model.timeKey;
-    }else{
-        guestVC.timeKey = [NSString stringWithFormat:@"%td", _model.teamActivityKey];
-    }
-    guestVC.activityName = _model.name;
-    [self.navigationController pushViewController:guestVC animated:YES];
+//    JGDGuestCodeViewController *guestVC =[[JGDGuestCodeViewController alloc] init];
+//    if (_model.teamActivityKey == 0) {
+//        guestVC.timeKey = _model.timeKey;
+//    }else{
+//        guestVC.timeKey = [NSString stringWithFormat:@"%td", _model.teamActivityKey];
+//    }
+//    guestVC.activityName = _model.name;
+//    [self.navigationController pushViewController:guestVC animated:YES];
 }
 #pragma mark -- 查看奖项
 - (void)getTeamActivityAward:(UIButton *)btn{

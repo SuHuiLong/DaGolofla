@@ -13,10 +13,9 @@
 #import "JGHAddMoreTeamTableViewCell.h"
 #import "JGLMyTeamModel.h"
 #import "JGTeamAcitivtyModel.h"
-#import "JGDGuestChannelViewController.h"
 #import "JGTeamChannelViewController.h"
 #import "JGDNewTeamDetailViewController.h"
-#import "JGTeamActibityNameViewController.h" 
+#import "JGHNewActivityDetailViewController.h"
 #import "JGTeamMainhallViewController.h"    // 大厅
 
 #import "JGNewCreateTeamTableViewController.h"
@@ -27,7 +26,7 @@ static NSString *const JGLMyTeamTableViewCellIdentifier = @"JGLMyTeamTableViewCe
 static NSString *const JGHShowMyTeamHeaderCellIdentifier = @"JGHShowMyTeamHeaderCell";
 static NSString *const JGHAddMoreTeamTableViewCellIdentifier = @"JGHAddMoreTeamTableViewCell";
 
-@interface JGHShowMyTeamViewController ()<UITableViewDelegate, UITableViewDataSource, JGHAddMoreTeamTableViewCellDelegate, JGHShowMyTeamHeaderCellDelegate>
+@interface JGHShowMyTeamViewController ()<UITableViewDelegate, UITableViewDataSource, JGHAddMoreTeamTableViewCellDelegate>
 {
     NSArray *_titleArray;
     NSInteger _page;
@@ -277,7 +276,6 @@ static NSString *const JGHAddMoreTeamTableViewCellIdentifier = @"JGHAddMoreTeamT
         return addMoreTeamTableViewCell;
     }else{
         JGHShowMyTeamHeaderCell *showMyTeamHeaderCell = [tableView dequeueReusableCellWithIdentifier:JGHShowMyTeamHeaderCellIdentifier];
-        showMyTeamHeaderCell.delegate = self;
         [showMyTeamHeaderCell configJGHShowMyTeamHeaderCell:_titleArray[section] andSection:section];
         return showMyTeamHeaderCell;
     }
@@ -323,7 +321,7 @@ static NSString *const JGHAddMoreTeamTableViewCellIdentifier = @"JGHAddMoreTeamT
     if (indexPath.section == 0) {
         [self teamAct:indexPath];
     } else if (indexPath.section == 2) {
-        JGTeamActibityNameViewController *actVC = [[JGTeamActibityNameViewController alloc] init];
+        JGHNewActivityDetailViewController *actVC = [[JGHNewActivityDetailViewController alloc] init];
         JGTeamAcitivtyModel *model = _activityArray[indexPath.row];
         if (model.teamActivityKey > 0) {
             actVC.teamKey = model.teamActivityKey;
@@ -391,14 +389,7 @@ static NSString *const JGHAddMoreTeamTableViewCellIdentifier = @"JGHAddMoreTeamT
     [self.navigationController pushViewController:teamMainCtrl animated:YES];
     btn.enabled = YES;
 }
-#pragma mark -- 嘉宾通道
-- (void)didSelectGuestsBtn:(UIButton *)guestbtn{
-    NSLog(@"嘉宾通道");
-    guestbtn.enabled = NO;
-    JGDGuestChannelViewController *guestChanneCtrl = [[JGDGuestChannelViewController alloc]init];
-    [self.navigationController pushViewController:guestChanneCtrl animated:YES];
-    guestbtn.enabled = YES;
-}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

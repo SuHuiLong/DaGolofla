@@ -13,7 +13,7 @@
 #import "JGTeamMainhallViewController.h"
 #import "JGTeamMemberController.h"
 #import "JGLJoinManageViewController.h"
-#import "JGTeamActibityNameViewController.h"
+#import "JGHNewActivityDetailViewController.h"
 #import "JGTeamGroupViewController.h"
 #import "JGLScoreRankViewController.h"
 #import "JGLPresentAwardViewController.h"
@@ -121,7 +121,7 @@ static JGHPushClass *pushClass = nil;
     
     //活动详情
     if ([urlString containsString:@"teamActivityDetail"]) {
-        JGTeamActibityNameViewController *teamCtrl= [[JGTeamActibityNameViewController alloc]init];
+        JGHNewActivityDetailViewController *teamCtrl= [[JGHNewActivityDetailViewController alloc]init];
         teamCtrl.teamKey = [[Helper returnKeyVlaueWithUrlString:urlString andKey:@"activityKey"] integerValue];
         if (pushVC) {
             pushVC(teamCtrl);

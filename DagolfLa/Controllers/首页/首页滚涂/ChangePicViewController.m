@@ -23,7 +23,6 @@
 #import "JGLJoinManageViewController.h"
 #import "NewFriendViewController.h"
 #import "JGPhotoAlbumViewController.h"
-#import "JGTeamActibityNameViewController.h"
 #import "JGTeamGroupViewController.h"
 #import "JGDActSelfHistoryScoreViewController.h"
 #import "JGLPresentAwardViewController.h"

@@ -39,25 +39,7 @@
 #import <AlipaySDK/AlipaySDK.h>
 
 #import "UMMobClick/MobClick.h"
-#import "JGHNewHomePageViewController.h"
-#import "JGTeamMainhallViewController.h"
 #import "JGLAnimationViewController.h"
-#import "NewFriendViewController.h"
-#import "JGTeamGroupViewController.h"
-#import "JGLPresentAwardViewController.h"
-#import "JGDActSelfHistoryScoreViewController.h"
-#import "JGDWithDrawTeamMoneyViewController.h"
-#import "JGTeamMemberController.h"
-#import "JGLJoinManageViewController.h"
-#import "JGPhotoAlbumViewController.h"
-#import "JGTeamActibityNameViewController.h"
-#import "JGLScoreRankViewController.h"
-#import "JGNewCreateTeamTableViewController.h"
-#import "UseMallViewController.h"
-#import "JGDNewTeamDetailViewController.h"
-#import "JGLPushDetailsViewController.h"
-#import "DetailViewController.h"
-#import "ChatListViewController.h"
 
 #define ImgUrlString2 @"http://res.dagolfla.com/h5/ad/app.jpg"
 

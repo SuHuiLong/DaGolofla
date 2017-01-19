@@ -18,7 +18,7 @@
 #import "JGLWebUserMallViewController.h"
 #import "JGTeamMainhallViewController.h"
 #import "JGHHistoryAndResultsViewController.h"
-#import "JGTeamActibityNameViewController.h" // 活动
+#import "JGHNewActivityDetailViewController.h" // 活动
 #import "JGLScoreLiveViewController.h"   // 直播
 #import "JGHIndexTableViewCell.h"
 #import "JGHNewStartScoreViewController.h"
@@ -637,7 +637,7 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
     [self isLoginUp];
     
     NSDictionary *dic = _indexModel.activityList[btn.tag - 200];
-    JGTeamActibityNameViewController *teamActVC = [[JGTeamActibityNameViewController alloc] init];
+    JGHNewActivityDetailViewController *teamActVC = [[JGHNewActivityDetailViewController alloc] init];
     teamActVC.teamKey = [[dic objectForKey:@"timeKey"] integerValue];
     teamActVC.hidesBottomBarWhenPushed = YES;//6598520
     [self.navigationController pushViewController:teamActVC animated:YES];

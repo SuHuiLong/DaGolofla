@@ -46,7 +46,6 @@
 //#import "JGDPrizeViewController.h"
 
 
-#import "JGTeamActibityNameViewController.h"
 #import "JGDNewTeamDetailViewController.h"
 //#import "JGTeamMemberORManagerViewController.h"
 #import "DetailViewController.h"

@@ -43,7 +43,7 @@
         _almostLabel.font = [UIFont systemFontOfSize:14*screenWidth/375];
         
 //        screenWidth -120 *ProportionAdapter
-        _mobileLabel = [[UILabel alloc]initWithFrame:CGRectMake(150 *ProportionAdapter, 20*screenWidth/375, 100*screenWidth/375, 20*screenWidth/375)];
+        _mobileLabel = [[UILabel alloc]initWithFrame:CGRectMake(screenWidth -120 *ProportionAdapter, 20*screenWidth/375, 100*screenWidth/375, 20*screenWidth/375)];
         _mobileLabel.textColor = [UIColor blackColor];
         _mobileLabel.textAlignment = NSTextAlignmentRight;
         _mobileLabel.text = @"188****0055";
@@ -51,15 +51,15 @@
         _mobileLabel.textColor = [UIColor lightGrayColor];
         _mobileLabel.font = [UIFont systemFontOfSize:14*screenWidth/375];
         
-        _moneyLabel = [[UILabel alloc]initWithFrame:CGRectMake(250*screenWidth/375, 20*screenWidth/375, 80*screenWidth/375, 20*screenWidth/375)];
-        _moneyLabel.textColor = [UIColor blackColor];
-        _moneyLabel.textAlignment = NSTextAlignmentCenter;
-        
-        _moneyLabel.hidden = NO;
-        [self addSubview:_moneyLabel];
-        _moneyLabel.layer.cornerRadius = 5*screenWidth/375;
-        _moneyLabel.layer.masksToBounds = YES;
-        _moneyLabel.font = [UIFont systemFontOfSize:14*screenWidth/375];
+//        _moneyLabel = [[UILabel alloc]initWithFrame:CGRectMake(250*screenWidth/375, 20*screenWidth/375, 80*screenWidth/375, 20*screenWidth/375)];
+//        _moneyLabel.textColor = [UIColor blackColor];
+//        _moneyLabel.textAlignment = NSTextAlignmentCenter;
+//        
+//        _moneyLabel.hidden = NO;
+//        [self addSubview:_moneyLabel];
+//        _moneyLabel.layer.cornerRadius = 5*screenWidth/375;
+//        _moneyLabel.layer.masksToBounds = YES;
+//        _moneyLabel.font = [UIFont systemFontOfSize:14*screenWidth/375];
     }
     return self;
 }

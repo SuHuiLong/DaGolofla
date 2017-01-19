@@ -29,7 +29,7 @@
 #import "JGActivityBaseInfoCell.h"
 #import "JGHApplyCatoryPriceView.h"
 #import "JGHAddTeamPlaysViewController.h"
-#import "JGTeamActibityNameViewController.h"
+#import "JGHNewActivityDetailViewController.h"
 #import "JGHbalanceView.h"
 #import "WCLPassWordView.h"
 #import "JGDSetBusinessPWDViewController.h"

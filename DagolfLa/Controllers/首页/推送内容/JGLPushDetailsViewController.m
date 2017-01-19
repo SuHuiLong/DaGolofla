@@ -11,7 +11,7 @@
 #import "Helper.h"
 #import "ChatDetailViewController.h"
 #import "RCDraggableButton.h"
-#import "JGTeamActibityNameViewController.h"
+#import "JGHNewActivityDetailViewController.h"
 #import "UseMallViewController.h"
 #import "DetailViewController.h"
 #import "JGDNewTeamDetailViewController.h"
@@ -166,7 +166,7 @@
                 actKey = [[[NSString stringWithFormat:@"%@", [url query]] componentsSeparatedByString:@"="] objectAtIndex:1];
                 actDetail = [[[NSString stringWithFormat:@"%@", [url query]] componentsSeparatedByString:@"="] objectAtIndex:0];
                 //活动
-                JGTeamActibityNameViewController *teamCtrl= [[JGTeamActibityNameViewController alloc]init];
+                JGHNewActivityDetailViewController *teamCtrl= [[JGHNewActivityDetailViewController alloc]init];
                 teamCtrl.teamKey = [actKey integerValue];
                 teamCtrl.hidesBottomBarWhenPushed = YES;
                 [self.navigationController pushViewController:teamCtrl animated:YES];

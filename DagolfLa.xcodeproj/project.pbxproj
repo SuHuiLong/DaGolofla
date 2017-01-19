@@ -11,10 +11,6 @@
 		200200FF1D61BC0200308C44 /* JGHCabbieEditorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 200200FE1D61BC0200308C44 /* JGHCabbieEditorViewController.m */; };
 		2006C0651E01729D008B85DF /* JGHAreaListView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2006C0641E01729D008B85DF /* JGHAreaListView.m */; };
 		200CE6E61E30A64500055A85 /* ConvertJson.m in Sources */ = {isa = PBXBuildFile; fileRef = 200CE6E51E30A64500055A85 /* ConvertJson.m */; };
-		200CE6F21E30A9EF00055A85 /* JGDGuestChannelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 200CE6EA1E30A9EF00055A85 /* JGDGuestChannelViewController.m */; };
-		200CE6F31E30A9EF00055A85 /* JGDGuestCodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 200CE6EC1E30A9EF00055A85 /* JGDGuestCodeViewController.m */; };
-		200CE6F41E30A9EF00055A85 /* JGDGuestPayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 200CE6EE1E30A9EF00055A85 /* JGDGuestPayViewController.m */; };
-		200CE6F51E30A9EF00055A85 /* JGDGuestTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 200CE6F11E30A9EF00055A85 /* JGDGuestTableViewCell.m */; };
 		200D4C151D95244700DDD51D /* JGHScoreHoleListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 200D4C141D95244700DDD51D /* JGHScoreHoleListCell.m */; };
 		201056131D59C92800C90FDE /* JGHBtnCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 201056051D59C92800C90FDE /* JGHBtnCell.m */; };
 		201056141D59C92800C90FDE /* JGHBtnCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 201056061D59C92800C90FDE /* JGHBtnCell.xib */; };
@@ -1229,14 +1225,6 @@
 		2006C0641E01729D008B85DF /* JGHAreaListView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHAreaListView.m; sourceTree = "<group>"; };
 		200CE6E41E30A64500055A85 /* ConvertJson.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConvertJson.h; sourceTree = "<group>"; };
 		200CE6E51E30A64500055A85 /* ConvertJson.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConvertJson.m; sourceTree = "<group>"; };
-		200CE6E91E30A9EF00055A85 /* JGDGuestChannelViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGDGuestChannelViewController.h; sourceTree = "<group>"; };
-		200CE6EA1E30A9EF00055A85 /* JGDGuestChannelViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGDGuestChannelViewController.m; sourceTree = "<group>"; };
-		200CE6EB1E30A9EF00055A85 /* JGDGuestCodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGDGuestCodeViewController.h; sourceTree = "<group>"; };
-		200CE6EC1E30A9EF00055A85 /* JGDGuestCodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGDGuestCodeViewController.m; sourceTree = "<group>"; };
-		200CE6ED1E30A9EF00055A85 /* JGDGuestPayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGDGuestPayViewController.h; sourceTree = "<group>"; };
-		200CE6EE1E30A9EF00055A85 /* JGDGuestPayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGDGuestPayViewController.m; sourceTree = "<group>"; };
-		200CE6F01E30A9EF00055A85 /* JGDGuestTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGDGuestTableViewCell.h; sourceTree = "<group>"; };
-		200CE6F11E30A9EF00055A85 /* JGDGuestTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGDGuestTableViewCell.m; sourceTree = "<group>"; };
 		200D4C131D95244700DDD51D /* JGHScoreHoleListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHScoreHoleListCell.h; sourceTree = "<group>"; };
 		200D4C141D95244700DDD51D /* JGHScoreHoleListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHScoreHoleListCell.m; sourceTree = "<group>"; };
 		201056041D59C92800C90FDE /* JGHBtnCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHBtnCell.h; sourceTree = "<group>"; };
@@ -3605,37 +3593,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		200CE6E71E30A9EF00055A85 /* 嘉宾通道 */ = {
-			isa = PBXGroup;
-			children = (
-				200CE6E81E30A9EF00055A85 /* controller */,
-				200CE6EF1E30A9EF00055A85 /* view */,
-			);
-			path = "嘉宾通道";
-			sourceTree = "<group>";
-		};
-		200CE6E81E30A9EF00055A85 /* controller */ = {
-			isa = PBXGroup;
-			children = (
-				200CE6E91E30A9EF00055A85 /* JGDGuestChannelViewController.h */,
-				200CE6EA1E30A9EF00055A85 /* JGDGuestChannelViewController.m */,
-				200CE6EB1E30A9EF00055A85 /* JGDGuestCodeViewController.h */,
-				200CE6EC1E30A9EF00055A85 /* JGDGuestCodeViewController.m */,
-				200CE6ED1E30A9EF00055A85 /* JGDGuestPayViewController.h */,
-				200CE6EE1E30A9EF00055A85 /* JGDGuestPayViewController.m */,
-			);
-			path = controller;
-			sourceTree = "<group>";
-		};
-		200CE6EF1E30A9EF00055A85 /* view */ = {
-			isa = PBXGroup;
-			children = (
-				200CE6F01E30A9EF00055A85 /* JGDGuestTableViewCell.h */,
-				200CE6F11E30A9EF00055A85 /* JGDGuestTableViewCell.m */,
-			);
-			path = view;
-			sourceTree = "<group>";
-		};
 		201055D41D58A4C600C90FDE /* view */ = {
 			isa = PBXGroup;
 			children = (
@@ -6653,7 +6610,6 @@
 		36BFFD2A1BC76C8D005B3CE2 /* DagolfLa */ = {
 			isa = PBXGroup;
 			children = (
-				200CE6E71E30A9EF00055A85 /* 嘉宾通道 */,
 				20BC97961E1F6051007DFD34 /* 奖项 */,
 				20FBE43E1E07EA9600E7419D /* 记分球童 */,
 				20A4CFB71DC9B0ED00F5A81D /* 新登录注册 */,
@@ -9305,7 +9261,6 @@
 				F54CC18A1D8428CE00A194F2 /* JGLWriteReplyViewController.m in Sources */,
 				36E300FB1C3FF3F9005C3F08 /* UIScrollView+MJExtension.m in Sources */,
 				20BC97E31E1F6051007DFD34 /* JGHAwardCell.m in Sources */,
-				200CE6F51E30A9EF00055A85 /* JGDGuestTableViewCell.m in Sources */,
 				36BF00AA1BC77326005B3CE2 /* NewsModel.m in Sources */,
 				20591C731D2247BB003271EC /* JGHRefundDetailsViewController.m in Sources */,
 				82EDDF7E1D6154A8003D51EB /* JGLCaddieChooseStyleViewController.m in Sources */,
@@ -9508,7 +9463,6 @@
 				36DCA73C1C22630500E12DF7 /* ScoreProStandedModel.m in Sources */,
 				203019361E0E4292005568E2 /* README.md in Sources */,
 				36D39B3E1BCCE23100C0B197 /* MBProgressHUD.m in Sources */,
-				200CE6F31E30A9EF00055A85 /* JGDGuestCodeViewController.m in Sources */,
 				8252E8641D360D6200448404 /* JGLScoreNewViewController.m in Sources */,
 				82CE500E1D4A280A00447875 /* JGLScoreLiveViewController.m in Sources */,
 				20FBE4591E0A513C00E7419D /* JGHActivityScoreListView.m in Sources */,
@@ -9932,7 +9886,6 @@
 				36BF008C1BC772EF005B3CE2 /* MySetReceiveController.m in Sources */,
 				203019C71E0E4293005568E2 /* ZXCode128Writer.m in Sources */,
 				F54682481E2C6C4800BA7EF2 /* UserDataInformation.m in Sources */,
-				200CE6F41E30A9EF00055A85 /* JGDGuestPayViewController.m in Sources */,
 				20FBD5F51D044E5900DEE48D /* ShowHUD.m in Sources */,
 				20F025491D70199B00D7D7B6 /* JGHPalyTypeListCell.m in Sources */,
 				202E053E1D84261000566CA9 /* JGHOperScoreHeaderCell.m in Sources */,
@@ -10051,7 +10004,6 @@
 				208837A31D1A9D88004C7B5D /* JGHActivityBaseInfoCell.m in Sources */,
 				203019761E0E4292005568E2 /* ZXCharacterSetECI.m in Sources */,
 				F5D2F9B71E03DB550070D26C /* JGDServiceViewController.m in Sources */,
-				200CE6F21E30A9EF00055A85 /* JGDGuestChannelViewController.m in Sources */,
 				36BFFD311BC76C8D005B3CE2 /* AppDelegate.mm in Sources */,
 				829960E01D23732000E121A8 /* JGLBankListViewController.m in Sources */,
 				20301A051E0E4293005568E2 /* ZXQRCodeFinderPatternFinder.m in Sources */,

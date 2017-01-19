@@ -9,7 +9,7 @@
 #import "JGTeamActivityViewController.h"
 #import "JGTeamAcitivtyModel.h"
 #import "JGTeamActivityCell.h"
-#import "JGTeamActibityNameViewController.h"
+#import "JGHNewActivityDetailViewController.h"
 #import "JGHLaunchActivityViewController.h"
 #import "JGTeamGroupViewController.h"
 #import "MJRefresh.h"
@@ -262,7 +262,7 @@
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    JGTeamActibityNameViewController *activityNameCtrl = [[JGTeamActibityNameViewController alloc]init];
+    JGHNewActivityDetailViewController *activityNameCtrl = [[JGHNewActivityDetailViewController alloc]init];
 //    activityNameCtrl.isTeamChannal = 2;
     JGTeamAcitivtyModel *model = [[JGTeamAcitivtyModel alloc]init];
     model = self.dataArray[indexPath.section];

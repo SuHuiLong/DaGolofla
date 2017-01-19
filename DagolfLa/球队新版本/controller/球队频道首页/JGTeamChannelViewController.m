@@ -20,7 +20,7 @@
 #import "JGTeamAcitivtyModel.h"
 #import "JGTeamDetail.h"
 #import "JGTeamActivityCell.h"
-#import "JGTeamActibityNameViewController.h"
+#import "JGHNewActivityDetailViewController.h"
 #import "JGDNewTeamDetailViewController.h"
 #import "JGNewCreateTeamTableViewController.h"
 #import "JGTeamActivityCell.h"
@@ -505,7 +505,7 @@
 //            [eventCtrl getMatchInfo:[model.timeKey integerValue]];
 //            [self.navigationController pushViewController:eventCtrl animated:YES];
         }else{
-            JGTeamActibityNameViewController *teamActivityVC = [[JGTeamActibityNameViewController alloc] init];
+            JGHNewActivityDetailViewController *teamActivityVC = [[JGHNewActivityDetailViewController alloc] init];
             
             //        teamActivityVC.isTeamChannal = 1;
             //        teamActivityVC.model = model;

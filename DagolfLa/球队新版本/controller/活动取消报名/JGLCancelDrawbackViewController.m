@@ -18,7 +18,7 @@
 #import "JGTeamActivityViewController.h"
 #import "JGLCancelDrawbackViewController.h"
 
-#import "JGTeamActibityNameViewController.H"
+#import "JGHNewActivityDetailViewController.h"
 #import "JGDPrivateAccountViewController.h"
 #define ActivityRefundrules @"提示：活动取消后缴纳的费用将退还到个人账户中，实际退款金额为用户实际缴纳金额，平台补贴金额不在退款范围。如有疑问请与活动组织者联系。"
 
@@ -206,7 +206,7 @@ static NSString *const JGHButtonCellIdentifier = @"JGHButtonCell";
 - (void)popToViewCtrl{
     //创建一个消息对象
     for (UIViewController *controller in self.navigationController.viewControllers) {
-        if ([controller isKindOfClass:[JGTeamActibityNameViewController class]]) {
+        if ([controller isKindOfClass:[JGHNewActivityDetailViewController class]]) {
             //创建一个消息对象
             NSNotification * notice = [NSNotification notificationWithName:@"reloadActivityData" object:nil userInfo:nil];
             //            发送消息
