@@ -130,6 +130,8 @@
                     
                     self.keyArray = [ChineseString IndexArray:arr];
                     self.cityArray = [ChineseString LetterSortArray:arr];
+                    
+                    [self.searchTable reloadData];
                 }
             }
         }];
