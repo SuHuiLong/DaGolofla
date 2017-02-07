@@ -134,7 +134,7 @@ static CGFloat ImageHeight  = 210.0;
     self.view.backgroundColor = [UIColor colorWithHexString:BG_color];
     self.automaticallyAdjustsScrollViewInsets = NO;
     
-    _titleArray = @[@"参赛费用", @"活动成员及分组", @"查看成绩", @"查看奖项", @"活动详情"];
+    _titleArray = @[@"参赛费用", @"活动成员及分组", @"查看成绩", @"查看奖项", @"活动说明"];
     _imageArray = @[@"icn_preferential", @"icn_event_group", @"icn_event_score", @"icn_awards", @"icn_event_details"];
     
     //监听分组页面返回，刷新数据
@@ -143,7 +143,7 @@ static CGFloat ImageHeight  = 210.0;
     [center addObserver:self selector:@selector(reloadActivityData:) name:@"reloadActivityData" object:nil];
     
     self.imgProfile = [[UIImageView alloc] initWithImage:[UIImage imageNamed:TeamBGImage]];
-    self.imgProfile.frame = CGRectMake(0, 0, screenWidth, ImageHeight *ProportionAdapter);
+    self.imgProfile.frame = CGRectMake(0, 0, screenWidth, ImageHeight);
     self.imgProfile.userInteractionEnabled = YES;
     self.teamActibityNameTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight - 44)];
 
@@ -462,7 +462,7 @@ static CGFloat ImageHeight  = 210.0;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     if (section == 0) {
-        return ImageHeight *ProportionAdapter;
+        return ImageHeight;
     }else if (section == 1){
         return 132 *ProportionAdapter;
     }
@@ -628,7 +628,8 @@ static CGFloat ImageHeight  = 210.0;
 - (void)newdidselectActivityClick:(UIButton *)btn{
     NSLog(@"newdidselectActivityClick == %td", btn.tag);
     if (btn.tag == 103) {
-        [self pushGroupCtrl:btn];
+//        [self pushGroupCtrl:btn];
+        [self getTeamActivitySignUpList:btn];
     }
     
     if (btn.tag == 104) {
@@ -647,10 +648,10 @@ static CGFloat ImageHeight  = 210.0;
 - (void)updateImg {
     CGFloat yOffset = _teamActibityNameTableView.contentOffset.y;
     NSLog(@"yOffset:%f",yOffset);
-    CGFloat factor = ((ABS(yOffset)+ImageHeight *ProportionAdapter)*screenWidth)/ImageHeight *ProportionAdapter;
+    CGFloat factor = ((ABS(yOffset)+ImageHeight)*screenWidth)/ImageHeight;
     if (yOffset < 0) {
         
-        CGRect f = CGRectMake(-(factor-screenWidth)/2, 0, factor, ImageHeight *ProportionAdapter+ABS(yOffset));
+        CGRect f = CGRectMake(-(factor-screenWidth)/2, 0, factor, ImageHeight+ABS(yOffset));
         self.imgProfile.frame = f;
         
         _gradientImage.frame = self.imgProfile.frame;

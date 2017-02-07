@@ -99,7 +99,7 @@ static NSString *const JGHNewApplyerListCellIdentifier = @"JGHNewApplyerListCell
         _submitBtn.backgroundColor = [UIColor lightGrayColor];
     }
     
-    self.teamApplyTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight - 44 -64)];
+    self.teamApplyTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 10, screenWidth, screenHeight - 44 -64 - 30)];
     
     [self.teamApplyTableView registerClass:[JGHNewApplyActivityDetailCell class] forCellReuseIdentifier:JGHNewApplyActivityDetailCellIdentifier];
     
@@ -256,6 +256,11 @@ static NSString *const JGHNewApplyerListCellIdentifier = @"JGHNewApplyerListCell
     [self.info setObject:[userdef objectForKey:userID] forKey:@"userKey"];//用户Key
     [self.info setObject:@0 forKey:@"timeKey"];//timeKey
     
+    
+    for (NSMutableDictionary *dic in _applyArray) {
+        [dic setObject:@-1 forKey:@"type"];
+    }
+    
     [dict setObject:_applyArray forKey:@"teamSignUpList"];//报名人员数组
     
     if (_relApplistArray.count > 0) {
@@ -281,14 +286,17 @@ static NSString *const JGHNewApplyerListCellIdentifier = @"JGHNewApplyerListCell
         NSLog(@"data == %@", data);
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
             //跳转分组页面
-            [Helper alertSubmitWithTitle:@"报名成功！" withBlockFirst:^{
-                JGTeamGroupViewController *groupCtrl = [[JGTeamGroupViewController alloc]init];
-                groupCtrl.activityFrom = 1;
-                groupCtrl.teamActivityKey = [_modelss.timeKey integerValue];
-                [self.navigationController pushViewController:groupCtrl animated:YES];
-            } withBlock:^(UIAlertController *alertView) {
-                [self presentViewController:alertView animated:YES completion:nil];
-            }];
+//            [Helper alertSubmitWithTitle:@"报名成功！" withBlockFirst:^{
+//                JGTeamGroupViewController *groupCtrl = [[JGTeamGroupViewController alloc]init];
+//                groupCtrl.activityFrom = 1;
+//                groupCtrl.teamActivityKey = [_modelss.timeKey integerValue];
+//                [self.navigationController pushViewController:groupCtrl animated:YES];
+//            } withBlock:^(UIAlertController *alertView) {
+//                [self presentViewController:alertView animated:YES completion:nil];
+//            }];
+            [LQProgressHud showMessage:@"您已成功报名！"];
+            [self performSelector:@selector(pushCtrl) withObject:self afterDelay:2.0f];
+            
         }else{
             if ([data count] == 2) {
                 [Helper alertViewWithTitle:@"报名失败！" withBlock:^(UIAlertController *alertView) {
@@ -304,9 +312,22 @@ static NSString *const JGHNewApplyerListCellIdentifier = @"JGHNewApplyerListCell
         }
     }];
 }
+
+- (void)pushCtrl{
+
+    NSNotification * notice = [NSNotification notificationWithName:@"reloadActivityData" object:nil userInfo:nil];
+    //发送消息
+    [[NSNotificationCenter defaultCenter]postNotification:notice];
+    
+    [self.navigationController popViewControllerAnimated:YES];
+
+}
+
 #pragma mark -- 确定报名
 - (void)createSubmitApplyBtn{
-    _submitBtn = [[UIButton alloc]initWithFrame:CGRectMake( 0, screenHeight-44 -64, screenWidth, 44)];
+    _submitBtn = [[UIButton alloc]initWithFrame:CGRectMake( 10 * ProportionAdapter, screenHeight-44 -64 - 20, screenWidth - 20 * ProportionAdapter, 44)];
+    _submitBtn.layer.cornerRadius = 6 * ProportionAdapter;
+    _submitBtn.clipsToBounds = YES;
     [_submitBtn setTitle:@"确定报名" forState:UIControlStateNormal];
     _submitBtn.titleLabel.font = [UIFont systemFontOfSize:17 *ProportionAdapter];
     [_submitBtn addTarget:self action:@selector(didJustApplyListApplyBtn:) forControlEvents:UIControlEventTouchUpInside];

@@ -49,7 +49,7 @@
     _dataArray       = [[NSMutableArray alloc]init];
     _dataAccountDict = [[NSMutableDictionary alloc]init];
     
-    UIBarButtonItem *item = [[UIBarButtonItem alloc]initWithTitle:@"分组管理" style:UIBarButtonItemStylePlain target:self action:@selector(activityGroupManager)];
+    UIBarButtonItem *item = [[UIBarButtonItem alloc]initWithTitle:@"设置分组" style:UIBarButtonItemStylePlain target:self action:@selector(activityGroupManager)];
     item.tintColor=[UIColor whiteColor];
     self.navigationItem.rightBarButtonItem = item;
     

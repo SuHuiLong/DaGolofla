@@ -17,6 +17,8 @@
     //清楚缓存
 //    [[SDImageCache sharedImageCache] clearDisk];
     
+    self.backgroundColor = [UIColor whiteColor];
+    
     self.almostTop1.constant = 25 *ProportionAdapter;
     self.conViewTop1.constant = -25 *ProportionAdapter;
     self.conViewLeft1.constant = -25 *ProportionAdapter;

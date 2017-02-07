@@ -76,7 +76,6 @@ static NSString *const JGGroupdetailsCollectionViewCellIdentifier = @"JGGroupdet
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor colorWithHexString:BG_color];
-    self.navigationItem.title = @"活动分组";
     
     UIBarButtonItem *bar = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"fenxiang"] style:(UIBarButtonItemStylePlain) target:self action:@selector(shareBtn)];
     bar.tintColor = [UIColor whiteColor];
@@ -102,13 +101,14 @@ static NSString *const JGGroupdetailsCollectionViewCellIdentifier = @"JGGroupdet
     UIButton *autoGroupBtn = [[UIButton alloc]initWithFrame:CGRectMake(screenWidth - 100 *ProportionAdapter, 14.5 *ProportionAdapter, 80 *ProportionAdapter, 21 *ProportionAdapter)];
     [autoGroupBtn setTitle:@"按差点分组" forState:UIControlStateNormal];
     autoGroupBtn.layer.masksToBounds = YES;
-    [autoGroupBtn setTitleColor:[UIColor colorWithHexString:@"#7DDFFD"] forState:UIControlStateNormal];
-    autoGroupBtn.backgroundColor = [UIColor colorWithHexString:BG_color];
-    autoGroupBtn.layer.borderWidth = 1.0;
-    autoGroupBtn.layer.borderColor = [UIColor colorWithHexString:@"#7DDFFD"].CGColor;
+    autoGroupBtn.layer.cornerRadius = 3 *ProportionAdapter;
+    [autoGroupBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    autoGroupBtn.backgroundColor = [UIColor colorWithHexString:Nav_Color];
+//    autoGroupBtn.layer.borderWidth = 1.0;
+//    autoGroupBtn.layer.borderColor = [UIColor colorWithHexString:@"#7DDFFD"].CGColor;
     autoGroupBtn.titleLabel.font = [UIFont systemFontOfSize:12*ProportionAdapter];
     [autoGroupBtn addTarget:self action:@selector(autoGroupBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-    [autoGroupBtn setBackgroundColor:[UIColor whiteColor]];
+//    [autoGroupBtn setBackgroundColor:[UIColor whiteColor]];
     [self.view addSubview:autoGroupBtn];
     
     UILabel *lineLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 29, screenWidth - 20, 1)];
@@ -138,13 +138,13 @@ static NSString *const JGGroupdetailsCollectionViewCellIdentifier = @"JGGroupdet
     self.collectionView = collectionView;
     [self.view addSubview:self.collectionView];
     //提示语
-    UILabel *promptLabel = [[UILabel alloc]initWithFrame:CGRectMake(10 *ProportionAdapter, collectionView.frame.size.height+_waitGroupLabel.frame.size.height+20, screenWidth, 12)];
-    promptLabel.text = @"提示:点击任意“待添加”，实现自动分组";
-    promptLabel.textColor = [UIColor colorWithHexString:Prompt_Color];
-    promptLabel.backgroundColor = [UIColor clearColor];
-    promptLabel.textAlignment = NSTextAlignmentLeft;
-    promptLabel.font = [UIFont systemFontOfSize:12*ProportionAdapter];
-    [self.view addSubview:promptLabel];
+//    UILabel *promptLabel = [[UILabel alloc]initWithFrame:CGRectMake(10 *ProportionAdapter, collectionView.frame.size.height+_waitGroupLabel.frame.size.height+20, screenWidth, 12)];
+//    promptLabel.text = @"提示:点击任意“待添加”，实现自动分组";
+//    promptLabel.textColor = [UIColor colorWithHexString:Prompt_Color];
+//    promptLabel.backgroundColor = [UIColor clearColor];
+//    promptLabel.textAlignment = NSTextAlignmentLeft;
+//    promptLabel.font = [UIFont systemFontOfSize:12*ProportionAdapter];
+//    [self.view addSubview:promptLabel];
     //好友分组label
     UILabel *groupLabel = [[UILabel alloc]initWithFrame:CGRectMake(10 *ProportionAdapter, self.collectionView.frame.size.height+_waitGroupLabel.frame.size.height+30 + 10, screenWidth-90, 21)];
     groupLabel.text = @"好友分组";
@@ -156,10 +156,11 @@ static NSString *const JGGroupdetailsCollectionViewCellIdentifier = @"JGGroupdet
     UIButton *addGroupBtn = [[UIButton alloc]initWithFrame:CGRectMake(screenWidth - 80 *ProportionAdapter, self.collectionView.frame.size.height+_waitGroupLabel.frame.size.height+30+10, 60 *ProportionAdapter, 21 *ProportionAdapter)];
     [addGroupBtn setTitle:@"添加分组" forState:UIControlStateNormal];
     addGroupBtn.layer.masksToBounds = YES;
-    [addGroupBtn setTitleColor:[UIColor colorWithHexString:@"#7DDFFD"] forState:UIControlStateNormal];
-    addGroupBtn.backgroundColor = [UIColor colorWithHexString:BG_color];
-    addGroupBtn.layer.borderWidth = 1.0;
-    addGroupBtn.layer.borderColor = [UIColor colorWithHexString:@"#7DDFFD"].CGColor;
+    addGroupBtn.layer.cornerRadius = 3 *ProportionAdapter;
+    [addGroupBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    addGroupBtn.backgroundColor = [UIColor colorWithHexString:Nav_Color];
+//    addGroupBtn.layer.borderWidth = 1.0;
+//    addGroupBtn.layer.borderColor = [UIColor colorWithHexString:@"#7DDFFD"].CGColor;
     addGroupBtn.titleLabel.font = [UIFont systemFontOfSize:12*ProportionAdapter];
     [addGroupBtn addTarget:self action:@selector(addGroupBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:addGroupBtn];
@@ -168,7 +169,7 @@ static NSString *const JGGroupdetailsCollectionViewCellIdentifier = @"JGGroupdet
     UICollectionViewFlowLayout *gridlayout = [UICollectionViewFlowLayout new];
     gridlayout.scrollDirection = UICollectionViewScrollDirectionVertical;
     self.groupDetailsCollectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, groupLabel.frame.origin.y + groupLabel.frame.size.height + 10, screenWidth, screenHeight - groupLabel.frame.size.height-groupLabel.frame.origin.y - 64) collectionViewLayout:gridlayout];
-    self.groupDetailsCollectionView.backgroundColor = [UIColor whiteColor];
+    self.groupDetailsCollectionView.backgroundColor = [UIColor colorWithHexString:@"#eeeeee"];
     self.groupDetailsCollectionView.dataSource = self;
     self.groupDetailsCollectionView.delegate = self;
     [self.groupDetailsCollectionView registerNib:[UINib nibWithNibName:@"JGGroupdetailsCollectionViewCell" bundle:[NSBundle mainBundle]] forCellWithReuseIdentifier:JGGroupdetailsCollectionViewCellIdentifier];
@@ -321,6 +322,8 @@ static NSString *const JGGroupdetailsCollectionViewCellIdentifier = @"JGGroupdet
         }
         
         NSArray *dataArray = [data objectForKey:@"teamSignUpList"];
+        self.navigationItem.title = [NSString stringWithFormat:@"活动总人数(%td人)", dataArray.count];
+
         _groupDetailsCollectionViewCount = [dataArray count];
         for (NSDictionary *dict in dataArray) {
             JGHPlayersModel *model = [[JGHPlayersModel alloc]init];
@@ -334,7 +337,7 @@ static NSString *const JGGroupdetailsCollectionViewCellIdentifier = @"JGGroupdet
             }
         }
         
-        _waitGroupLabel.text = [NSString stringWithFormat:@"待分组:%ld(人)", (unsigned long)[self.teamGroupAllDataArray count]];
+        _waitGroupLabel.text = [NSString stringWithFormat:@"设置分组:%ld(人)", (unsigned long)[self.teamGroupAllDataArray count]];
         
         if (fenzu == 1) {
             UIAlertAction *commitAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {

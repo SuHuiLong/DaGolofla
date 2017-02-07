@@ -32,6 +32,11 @@
         [_addApplyBtn addTarget:self action:@selector(addApplyBtn:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:_addApplyBtn];
         
+        
+        UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, self.contentView.frame.size.height - 0.5 * ProportionAdapter, screenWidth, 0.5 * ProportionAdapter)];
+        lineView.backgroundColor = [UIColor colorWithHexString:@"#eeeeee"];
+        [self.contentView addSubview:lineView];
+        
         self.backgroundColor = [UIColor whiteColor];
     }
     return self;

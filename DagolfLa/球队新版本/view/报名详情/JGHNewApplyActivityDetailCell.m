@@ -58,9 +58,9 @@
         _teeTime.text = [NSString stringWithFormat:@"活动名称：%@", model.name];
     }
     
-    if (model.ballAddress) {
+    if (model.ballName) {
         //截止
-        _registration.text = [NSString stringWithFormat:@"活动地址：%@", model.ballAddress];
+        _registration.text = [NSString stringWithFormat:@"活动场地：%@", model.ballName];
     }
     
     if (model.beginDate) {
@@ -76,7 +76,7 @@
             }
         }
         
-        _address.text = [NSString stringWithFormat:@"活动日期：%@%@", [Helper returnDateformatString:[[model.beginDate componentsSeparatedByString:@" "] objectAtIndex:0]], string];
+        _address.text = [NSString stringWithFormat:@"开球时间：%@%@", [Helper returnDateformatString:[[model.beginDate componentsSeparatedByString:@" "] objectAtIndex:0]], string];
     }
 }
 

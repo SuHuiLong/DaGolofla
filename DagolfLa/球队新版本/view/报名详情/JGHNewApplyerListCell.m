@@ -17,7 +17,7 @@
         _name.font = [UIFont systemFontOfSize:15 *ProportionAdapter];
         [self addSubview:_name];
         
-        _deleteApplyBtn = [[UIButton alloc]initWithFrame:CGRectMake(screenWidth -35*ProportionAdapter, 5 *ProportionAdapter, 25 *ProportionAdapter, 25*ProportionAdapter)];
+        _deleteApplyBtn = [[UIButton alloc]initWithFrame:CGRectMake(screenWidth -35*ProportionAdapter, 10 *ProportionAdapter, 15 *ProportionAdapter, 15*ProportionAdapter)];
         [_deleteApplyBtn setImage:[UIImage imageNamed:@"deleteplay"] forState:UIControlStateNormal];
         [_deleteApplyBtn addTarget:self action:@selector(selectDeleteApplyBtn:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:_deleteApplyBtn];

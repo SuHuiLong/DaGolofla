@@ -657,7 +657,7 @@ static CGFloat ImageHeight  = 210.0;
         [detailsBtn addTarget:self action:@selector(pushDetailSCtrl:) forControlEvents:UIControlEventTouchUpInside];
         detailsBtn.tag = section + 100;
         [detailsCell addSubview:detailsBtn];
-        [detailsCell configDetailsText:@"活动详情" AndActivityDetailsText:self.model.info];
+        [detailsCell configDetailsText:@"活动说明" AndActivityDetailsText:self.model.info];
         detailsCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         return (UIView *)detailsCell;
     }else if (section == 9){

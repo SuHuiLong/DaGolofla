@@ -607,7 +607,7 @@
 
 - (NSMutableArray *)playerArray{
     if (!_playerArray) {
-        _playerArray = [NSMutableArray arrayWithObjects:[[NSUserDefaults standardUserDefaults] objectForKey:UserName], nil];
+        _playerArray = [NSMutableArray arrayWithObjects:@"", nil];
     }
     return _playerArray;
 }

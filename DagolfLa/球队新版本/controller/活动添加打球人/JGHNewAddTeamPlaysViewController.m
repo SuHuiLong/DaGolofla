@@ -255,6 +255,10 @@ static NSString *const JGHNewApplyerListCellIdentifier = @"JGHNewApplyerListCell
             [_playsBaseDict setObject:model.almost forKey:@"almost"];
         }
         
+        if (model.fMobile) {
+            [_playsBaseDict setObject:model.fMobile forKey:@"mobile"];
+        }
+        
         NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:1];
         NSArray *indexArray=[NSArray arrayWithObject:indexPath];
         [weakSelf.addTeamPlaysTableView reloadRowsAtIndexPaths:indexArray withRowAnimation:UITableViewRowAnimationAutomatic];
