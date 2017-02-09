@@ -19,6 +19,7 @@
 #import "JGLAddActiivePlayModel.h"
 #import "JGLGuestActiveMemberTableViewCell.h"
 #import "JGTeamGroupViewController.h"
+#import "JGHAddIntentionPalyerViewController.h"
 
 @interface JGLActivityMemberSetViewController ()<UITableViewDelegate, UITableViewDataSource,UISearchBarDelegate,UISearchResultsUpdating>
 {
@@ -117,6 +118,26 @@
 
 -(void)finishClick
 {
+    
+    JGHAddIntentionPalyerViewController *addTeamPlaysCtrl = [[JGHAddIntentionPalyerViewController alloc]init];
+//    addTeamPlaysCtrl.playListArray = [NSMutableArray arrayWithArray:_applyArray];
+//    if (_modelss.teamActivityKey != 0) {
+//        addTeamPlaysCtrl.activityKey = _modelss.teamActivityKey;
+//    }else{
+        addTeamPlaysCtrl.activityKey = [_activityKey integerValue];
+//    }
+    
+    addTeamPlaysCtrl.teamKey = [_teamKey integerValue];
+    
+    addTeamPlaysCtrl.blockRefresh = ^(){
+        [_tableView.header endRefreshing];
+        _tableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
+        [_tableView.header beginRefreshing];
+    };
+    
+    [self.navigationController pushViewController:addTeamPlaysCtrl animated:YES];
+    
+    /*
     JGLGuestAddPlayerViewController* addVc = [[JGLGuestAddPlayerViewController alloc]init];
     addVc.teamKey = _teamKey;
     addVc.activityKey = _activityKey;
@@ -126,6 +147,7 @@
         [_tableView.header beginRefreshing];
     };
     [self.navigationController pushViewController:addVc animated:YES];
+     */
 }
 
 

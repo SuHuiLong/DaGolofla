@@ -13,7 +13,7 @@
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
     if (self == [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
         
-        _name = [[UILabel alloc]initWithFrame:CGRectMake(10 *ProportionAdapter, 5*ProportionAdapter, 220*ProportionAdapter, 25 *ProportionAdapter)];
+        _name = [[UILabel alloc]initWithFrame:CGRectMake(10 *ProportionAdapter, 8*ProportionAdapter, 220*ProportionAdapter, 25 *ProportionAdapter)];
         _name.font = [UIFont systemFontOfSize:16 *ProportionAdapter];
         [self addSubview:_name];
         

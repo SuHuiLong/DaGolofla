@@ -11,6 +11,7 @@
 		200200FF1D61BC0200308C44 /* JGHCabbieEditorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 200200FE1D61BC0200308C44 /* JGHCabbieEditorViewController.m */; };
 		2006C0651E01729D008B85DF /* JGHAreaListView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2006C0641E01729D008B85DF /* JGHAreaListView.m */; };
 		200CE6E61E30A64500055A85 /* ConvertJson.m in Sources */ = {isa = PBXBuildFile; fileRef = 200CE6E51E30A64500055A85 /* ConvertJson.m */; };
+		200CE6F81E4C995D00055A85 /* JGHAddIntentionPalyerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 200CE6F71E4C995D00055A85 /* JGHAddIntentionPalyerViewController.m */; };
 		200D4C151D95244700DDD51D /* JGHScoreHoleListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 200D4C141D95244700DDD51D /* JGHScoreHoleListCell.m */; };
 		201056131D59C92800C90FDE /* JGHBtnCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 201056051D59C92800C90FDE /* JGHBtnCell.m */; };
 		201056141D59C92800C90FDE /* JGHBtnCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 201056061D59C92800C90FDE /* JGHBtnCell.xib */; };
@@ -1225,6 +1226,8 @@
 		2006C0641E01729D008B85DF /* JGHAreaListView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHAreaListView.m; sourceTree = "<group>"; };
 		200CE6E41E30A64500055A85 /* ConvertJson.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConvertJson.h; sourceTree = "<group>"; };
 		200CE6E51E30A64500055A85 /* ConvertJson.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConvertJson.m; sourceTree = "<group>"; };
+		200CE6F61E4C995D00055A85 /* JGHAddIntentionPalyerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHAddIntentionPalyerViewController.h; sourceTree = "<group>"; };
+		200CE6F71E4C995D00055A85 /* JGHAddIntentionPalyerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHAddIntentionPalyerViewController.m; sourceTree = "<group>"; };
 		200D4C131D95244700DDD51D /* JGHScoreHoleListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHScoreHoleListCell.h; sourceTree = "<group>"; };
 		200D4C141D95244700DDD51D /* JGHScoreHoleListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHScoreHoleListCell.m; sourceTree = "<group>"; };
 		201056041D59C92800C90FDE /* JGHBtnCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHBtnCell.h; sourceTree = "<group>"; };
@@ -5481,6 +5484,8 @@
 			children = (
 				20BEF3CD1E2A1BA900E9AED7 /* JGHNewAddTeamPlaysViewController.h */,
 				20BEF3CE1E2A1BA900E9AED7 /* JGHNewAddTeamPlaysViewController.m */,
+				200CE6F61E4C995D00055A85 /* JGHAddIntentionPalyerViewController.h */,
+				200CE6F71E4C995D00055A85 /* JGHAddIntentionPalyerViewController.m */,
 			);
 			path = "活动添加打球人";
 			sourceTree = "<group>";
@@ -10062,6 +10067,7 @@
 				36BFFD2E1BC76C8D005B3CE2 /* main.m in Sources */,
 				F51E5EFD1D8130AA00AE254E /* JGDPlayerNotActScoreCardViewController.m in Sources */,
 				F5838D8D1D4B26EE00A7FFC6 /* JGDActSelfHistoryScoreViewController.m in Sources */,
+				200CE6F81E4C995D00055A85 /* JGHAddIntentionPalyerViewController.m in Sources */,
 				F5D2F9BA1E03DB6C0070D26C /* JGDServiceTableViewCell.m in Sources */,
 				2048E8FD1D4F28F900A2C024 /* JGHActivityMembersViewController.m in Sources */,
 				20C1B8AB1CE313A200508ABC /* JGTeamApplyViewController.m in Sources */,
