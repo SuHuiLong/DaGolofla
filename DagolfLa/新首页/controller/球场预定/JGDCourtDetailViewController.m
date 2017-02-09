@@ -596,6 +596,7 @@ static CGFloat ImageHeight  = 210.0;
     
     commitVC.selectSceneMoney = self.unitPaymentMoney;
     commitVC.detailDic = self.detailDic;
+    commitVC.timeKey = self.timeKey;
     [self.navigationController pushViewController:commitVC animated:YES];
 }
 

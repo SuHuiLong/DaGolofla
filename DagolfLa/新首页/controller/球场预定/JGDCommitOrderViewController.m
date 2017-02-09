@@ -13,6 +13,7 @@
 
 #import "JGDConfirmPayViewController.h"
 #import "JGDContactViewController.h"
+#import "LGLCalenderViewController.h"
 
 @interface JGDCommitOrderViewController () <UITableViewDelegate, UITableViewDataSource ,UITextFieldDelegate>
 
@@ -33,6 +34,7 @@
 @property (nonatomic, strong) UITextField *noteTF; // 备注
 
 @property (nonatomic, copy) NSString *remark; // 备注信息
+
 
 @end
 
@@ -421,6 +423,73 @@
     
     //    return indexPath.section == 2 ? 70 * ProportionAdapter : 50 * ProportionAdapter;
 }
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (indexPath.row == 1) {
+        LGLCalenderViewController *caleVC = [[LGLCalenderViewController alloc] init];
+        caleVC.ballKey = self.timeKey;
+        caleVC.blockTimeWithPrice = ^(NSString *selectTime, NSString *pay, NSString *scenePay, NSString *deductionMoney){
+//            _date = [NSString stringWithFormat:@"%@", [Helper stringFromDateString:selectTime withFormater:@"yyyy年MM月dd日"]];
+//            _week = [NSString stringWithFormat:@"%@", [Helper stringFromDateString:selectTime withFormater:@"EEE"]];;
+//            _time = [NSString stringWithFormat:@"%@", [Helper stringFromDateString:selectTime withFormater:@"HH:mm"]];
+            self.selectDate = selectTime;
+           
+            
+            if ([[self.detailDic objectForKey:@"payType"] integerValue] != 2) {
+                self.selectMoney = pay;
+            }
+            self.selectSceneMoney = scenePay;
+            if ([deductionMoney isEqualToString:@""]) {
+//                self.deductionMoney = nil;
+//                self.unitPrice = pay;
+            }else{
+                self.selectSceneMoney = deductionMoney;
+//                self.unitPrice = [NSString stringWithFormat:@"%td", [pay integerValue] + [deductionMoney integerValue]];
+            }
+            self.selectDate = selectTime;
+            
+            
+            
+            
+            if ([[self.detailDic objectForKey:@"payType"] integerValue] == 2) {
+                //         球场现付
+                self.selectMoney = pay;
+                
+            }else if ([[self.detailDic objectForKey:@"payType"] integerValue] == 1) {
+                //         部分预付
+                if ([self.selectSceneMoney isEqualToString:@""]) {
+                    self.selectMoney = pay;
+                }else{
+                    self.selectMoney = [NSString stringWithFormat:@"%td", [pay integerValue] - [self.selectSceneMoney integerValue]];
+                }
+                
+            }else{
+                //         全额预付
+                if ([self.selectSceneMoney isEqualToString:@""]) {
+                    self.selectMoney = pay;
+                }else{
+                    self.selectMoney = [NSString stringWithFormat:@"%td", [pay integerValue] - [self.selectSceneMoney integerValue]];
+                }
+                
+            }
+            
+            
+            
+            [self payMoneySet];
+            
+            
+            NSIndexPath *indexPath0 = [NSIndexPath indexPathForRow:2 inSection:0];
+            NSIndexPath *indexPath1 = [NSIndexPath indexPathForRow:1 inSection:0];
+            
+            [self.commitOrderTableView reloadRowsAtIndexPaths:@[indexPath0, indexPath1] withRowAnimation:NO];
+
+            
+            };
+        [self.navigationController pushViewController:caleVC animated:YES];
+
+    }
+}
+
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
     
