@@ -109,7 +109,7 @@
     UILabel* label = [[UILabel alloc]initWithFrame:CGRectMake(10*screenWidth/375, 10*screenWidth/375, screenWidth-40*screenWidth/375, 24*screenWidth/375)];
     label.font = [UIFont systemFontOfSize:16*screenWidth/375];
     label.textColor = [UIColor whiteColor];
-    label.text = @"添加意向成员(便于预先分组)";
+    label.text = @"批量添加活动成员";
     label.textAlignment = NSTextAlignmentCenter;
     [btn addSubview:label];
     
