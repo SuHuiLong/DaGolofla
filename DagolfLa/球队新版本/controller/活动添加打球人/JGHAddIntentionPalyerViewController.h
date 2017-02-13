@@ -20,5 +20,6 @@
 
 @property (copy, nonatomic) void (^blockRefresh)();
 
+@property (strong, nonatomic)NSMutableArray *allListArray;
 
 @end

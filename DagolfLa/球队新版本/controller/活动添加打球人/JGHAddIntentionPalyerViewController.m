@@ -7,25 +7,29 @@
 //
 
 #import "JGHAddIntentionPalyerViewController.h"
-#import "JGHAddPlaysCell.h"
+//#import "JGHAddPlaysCell.h"
 #import "JGHAddPlaysButtonCell.h"
 #import "JGHPlayBaseInfoCell.h"
 #import "JGHAddressBookPlaysViewController.h"
-#import "JGHAddTeamMemberViewController.h"
-#import "JGHAddApplyTeamPlaysViewController.h"
+#import "JGHNewAddTeamMemberViewController.h"
+#import "JGHNewAddApplyTeamPlaysViewController.h"
 #import "TKAddressModel.h"
 #import "JGLTeamMemberModel.h"
 #import "MyattenModel.h"
 #import "JGHApplyerHeaderCell.h"
 #import "JGHNewApplyerListCell.h"
+#import "JGLAddActiivePlayModel.h"
+#import "JGHNewAddPlaysCell.h"
+#import "JGHNewApplyerHeaderCell.h"
 
-static NSString *const JGHAddPlaysCellIdentifier = @"JGHAddPlaysCell";
+static NSString *const JGHNewAddPlaysCellIdentifier = @"JGHNewAddPlaysCell";
 static NSString *const JGHAddPlaysButtonCellIdentifier = @"JGHAddPlaysButtonCell";
 static NSString *const JGHPlayBaseInfoCellIdentifier = @"JGHPlayBaseInfoCell";
-static NSString *const JGHApplyerHeaderCellIdentifier = @"JGHApplyerHeaderCell";
+static NSString *const JGHNewApplyerHeaderCellIdentifier = @"JGHNewApplyerHeaderCell";
 static NSString *const JGHNewApplyerListCellIdentifier = @"JGHNewApplyerListCell";
+static NSString *const JGHApplyerHeaderCellIdentifier = @"JGHApplyerHeaderCell";
 
-@interface JGHAddIntentionPalyerViewController ()<UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, JGHAddPlaysCellDelegate, JGHAddPlaysButtonCellDelegate, JGHPlayBaseInfoCellDelegate, JGHNewApplyerListCellDelegate>
+@interface JGHAddIntentionPalyerViewController ()<UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, JGHNewAddPlaysCellDelegate, JGHAddPlaysButtonCellDelegate, JGHPlayBaseInfoCellDelegate, JGHNewApplyerListCellDelegate, JGHNewApplyerHeaderCellDelegate>
 {
     NSMutableDictionary *_playsBaseDict;
 }
@@ -89,8 +93,12 @@ static NSString *const JGHNewApplyerListCellIdentifier = @"JGHNewApplyerListCell
 }
 - (void)createAddTeamPlaysTableView{
     self.addTeamPlaysTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight - 64)];
-    UINib *addPlaysCellNib = [UINib nibWithNibName:@"JGHAddPlaysCell" bundle: [NSBundle mainBundle]];
-    [self.addTeamPlaysTableView registerNib:addPlaysCellNib forCellReuseIdentifier:JGHAddPlaysCellIdentifier];
+//    UINib *addPlaysCellNib = [UINib nibWithNibName:@"JGHAddPlaysCell" bundle: [NSBundle mainBundle]];
+//    [self.addTeamPlaysTableView registerNib:addPlaysCellNib forCellReuseIdentifier:JGHAddPlaysCellIdentifier];
+    
+    [self.addTeamPlaysTableView registerClass:[JGHNewAddPlaysCell class] forCellReuseIdentifier:JGHNewAddPlaysCellIdentifier];
+    
+    [self.addTeamPlaysTableView registerClass:[JGHApplyerHeaderCell class] forCellReuseIdentifier:JGHApplyerHeaderCellIdentifier];
     
     UINib *addPlaysButtonCellNib = [UINib nibWithNibName:@"JGHAddPlaysButtonCell" bundle: [NSBundle mainBundle]];
     [self.addTeamPlaysTableView registerNib:addPlaysButtonCellNib forCellReuseIdentifier:JGHAddPlaysButtonCellIdentifier];
@@ -98,7 +106,7 @@ static NSString *const JGHNewApplyerListCellIdentifier = @"JGHNewApplyerListCell
     UINib *playBaseInfoCellNib = [UINib nibWithNibName:@"JGHPlayBaseInfoCell" bundle: [NSBundle mainBundle]];
     [self.addTeamPlaysTableView registerNib:playBaseInfoCellNib forCellReuseIdentifier:JGHPlayBaseInfoCellIdentifier];
     
-    [self.addTeamPlaysTableView registerClass:[JGHApplyerHeaderCell class] forCellReuseIdentifier:JGHApplyerHeaderCellIdentifier];
+    [self.addTeamPlaysTableView registerClass:[JGHNewApplyerHeaderCell class] forCellReuseIdentifier:JGHNewApplyerHeaderCellIdentifier];
     
     [self.addTeamPlaysTableView registerClass:[JGHNewApplyerListCell class] forCellReuseIdentifier:JGHNewApplyerListCellIdentifier];
     
@@ -170,12 +178,13 @@ static NSString *const JGHNewApplyerListCellIdentifier = @"JGHNewApplyerListCell
 }
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     if (section == 0) {
-        JGHAddPlaysCell *addPlaysCell = [tableView dequeueReusableCellWithIdentifier:JGHAddPlaysCellIdentifier];
+        JGHNewAddPlaysCell *addPlaysCell = [tableView dequeueReusableCellWithIdentifier:JGHNewAddPlaysCellIdentifier];
         addPlaysCell.delegate = self;
         return (UIView *)addPlaysCell;
     }else if (section == 1) {
-        JGHApplyerHeaderCell *headerCell = [tableView dequeueReusableCellWithIdentifier:JGHApplyerHeaderCellIdentifier];
-        [headerCell configHeaderName:@"基本信息"];
+        JGHNewApplyerHeaderCell *headerCell = [tableView dequeueReusableCellWithIdentifier:JGHNewApplyerHeaderCellIdentifier];
+        //基本信息
+        headerCell.delegate = self;
         return (UIView *)headerCell;
     }else if (section == 2){
         JGHAddPlaysButtonCell *addPlaysButtonCell = [tableView dequeueReusableCellWithIdentifier:JGHAddPlaysButtonCellIdentifier];
@@ -207,37 +216,63 @@ static NSString *const JGHNewApplyerListCellIdentifier = @"JGHNewApplyerListCell
     
     [self initPlaysBaseInfo];//初始化打球人信息
     
-    JGHAddApplyTeamPlaysViewController *applyPlaysCtrl = [[JGHAddApplyTeamPlaysViewController alloc]init];
+    JGHNewAddApplyTeamPlaysViewController *applyPlaysCtrl = [[JGHNewAddApplyTeamPlaysViewController alloc]init];
     applyPlaysCtrl.teamKey = _teamKey;
     applyPlaysCtrl.activityKey = _activityKey;
     applyPlaysCtrl.userKeyArray = [self returnUserKeyString];
+    applyPlaysCtrl.allListArray = _allListArray;
     
     __weak JGHAddIntentionPalyerViewController *weakSelf = self;
-    applyPlaysCtrl.blockFriendDict = ^(JGLTeamMemberModel *model){
+    applyPlaysCtrl.blockFriendArray = ^(NSMutableArray *listArray){
         
-        if (model.userName) {
-            [_playsBaseDict setObject:model.userName forKey:@"name"];
+        //JGLTeamMemberModel
+        
+        for (int i=0; i<listArray.count; i++) {
+            JGLAddActiivePlayModel *palyModel = [[JGLAddActiivePlayModel alloc]init];
+            palyModel = listArray[i];
+            if (palyModel.selectID == 1) {
+                
+                NSInteger isEquelMobile = 1;
+                for (int i=0; i<_playListArray.count; i++) {
+                    NSDictionary *dict = [NSDictionary dictionary];
+                    dict = _playListArray[i];
+                    if ([[dict objectForKey:Mobile] isEqualToString:palyModel.mobile]) {
+                        isEquelMobile = 0;
+                        break;
+                    }else{
+                        isEquelMobile = 1;
+                    }
+                }
+                
+                if (isEquelMobile == 1) {
+                    NSMutableDictionary *palyDict = [NSMutableDictionary dictionary];
+                    if (palyModel.userName) {
+                        [palyDict setObject:palyModel.userName forKey:@"name"];
+                    }
+                    
+                    if (palyModel.mobile) {
+                        [palyDict setObject:palyModel.mobile forKey:@"mobile"];
+                    }
+                    
+                    [palyDict setObject:@"0" forKey:@"userKey"];
+                    
+                    if (palyModel.almost) {
+                        [palyDict setObject:[NSString stringWithFormat:@"%@", palyModel.almost] forKey:@"almost"];
+                    }
+                    
+                    if ([palyModel.sex integerValue] == 0) {
+                        [palyDict setObject:palyModel.sex forKey:@"sex"];
+                    }else{
+                        [palyDict setObject:@1 forKey:@"sex"];
+                    }
+                    
+                    [_playListArray addObject:palyDict];
+                }
+                
+            }
         }
         
-        if (model.mobile) {
-            [_playsBaseDict setObject:model.mobile forKey:@"mobile"];
-        }
-        
-        [_playsBaseDict setObject:@"0" forKey:@"userKey"];
-        
-        if (model.almost) {
-            [_playsBaseDict setObject:[NSString stringWithFormat:@"%@", model.almost] forKey:@"almost"];
-        }
-        
-        if ([model.sex integerValue] == 0) {
-            [_playsBaseDict setObject:model.sex forKey:@"sex"];
-        }else{
-            [_playsBaseDict setObject:@1 forKey:@"sex"];
-        }
-        
-        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:1];
-        NSArray *indexArray=[NSArray arrayWithObject:indexPath];
-        [weakSelf.addTeamPlaysTableView reloadRowsAtIndexPaths:indexArray withRowAnimation:UITableViewRowAnimationAutomatic];
+        [weakSelf.addTeamPlaysTableView reloadData];
     };
     [self.navigationController pushViewController:applyPlaysCtrl animated:YES];
 }
@@ -248,35 +283,59 @@ static NSString *const JGHNewApplyerListCellIdentifier = @"JGHNewApplyerListCell
     
     [self initPlaysBaseInfo];//初始化打球人信息
     
-    JGHAddTeamMemberViewController *addTeamMemberCtrl = [[JGHAddTeamMemberViewController alloc]init];
+    JGHNewAddTeamMemberViewController *addTeamMemberCtrl = [[JGHNewAddTeamMemberViewController alloc]init];
     addTeamMemberCtrl.userKeyArray = [self returnUserKeyString];
+    addTeamMemberCtrl.allListArray = _allListArray;
     
     __weak JGHAddIntentionPalyerViewController *weakSelf = self;
-    addTeamMemberCtrl.blockFriendModel = ^(MyattenModel *model){
+    addTeamMemberCtrl.blockPalyFriendArray = ^(NSMutableArray *listArray){
         
-        if (model.userName) {
-            [_playsBaseDict setObject:model.userName forKey:@"name"];
+        for (int i=0; i<listArray.count; i++) {
+            JGLAddActiivePlayModel *palyModel = [[JGLAddActiivePlayModel alloc]init];
+            palyModel = listArray[i];
+            if (palyModel.selectID == 2) {
+                
+                NSInteger isEquelMobile = 1;
+                for (int i=0; i<_playListArray.count; i++) {
+                    NSDictionary *dict = [NSDictionary dictionary];
+                    dict = _playListArray[i];
+                    if ([[dict objectForKey:Mobile] isEqualToString:palyModel.mobile]) {
+                        isEquelMobile = 0;
+                        break;
+                    }else{
+                        isEquelMobile = 1;
+                    }
+                }
+                
+                if (isEquelMobile == 1) {
+                    NSMutableDictionary *palyDict = [NSMutableDictionary dictionary];
+                    if (palyModel.userName) {
+                        [palyDict setObject:palyModel.userName forKey:@"name"];
+                    }
+                    
+                    if (palyModel.mobile) {
+                        [palyDict setObject:palyModel.mobile forKey:@"mobile"];
+                    }
+                    
+                    [palyDict setObject:@"0" forKey:@"userKey"];
+                    
+                    if (palyModel.almost) {
+                        [palyDict setObject:[NSString stringWithFormat:@"%@", palyModel.almost] forKey:@"almost"];
+                    }
+                    
+                    if ([palyModel.sex integerValue] == 0) {
+                        [palyDict setObject:palyModel.sex forKey:@"sex"];
+                    }else{
+                        [palyDict setObject:@1 forKey:@"sex"];
+                    }
+                    
+                    [_playListArray addObject:palyDict];
+                }
+                
+            }
         }
         
-        [_playsBaseDict setObject:@0 forKey:@"userKey"];
-        
-        if ([model.sex integerValue] == 0) {
-            [_playsBaseDict setObject:model.sex forKey:@"sex"];
-        }else{
-            [_playsBaseDict setObject:@1 forKey:@"sex"];
-        }
-        
-        if (model.almost) {
-            [_playsBaseDict setObject:model.almost forKey:@"almost"];
-        }
-        
-        if (model.fMobile) {
-            [_playsBaseDict setObject:model.fMobile forKey:@"mobile"];
-        }
-        
-        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:1];
-        NSArray *indexArray=[NSArray arrayWithObject:indexPath];
-        [weakSelf.addTeamPlaysTableView reloadRowsAtIndexPaths:indexArray withRowAnimation:UITableViewRowAnimationAutomatic];
+        [weakSelf.addTeamPlaysTableView reloadData];
     };
     [self.navigationController pushViewController:addTeamMemberCtrl animated:YES];
 }

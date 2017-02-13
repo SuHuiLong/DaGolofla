@@ -38,7 +38,9 @@
 
 @property (strong, nonatomic) NSNumber* sex; // 1 男   0女
 
-@property (assign , nonatomic)NSInteger select;//是否选中0-未，1-选中
+@property (assign , nonatomic)NSInteger selectID;//来源 1-队员，2-球友
+
+@property (assign , nonatomic)NSInteger select;
 
 
 /**

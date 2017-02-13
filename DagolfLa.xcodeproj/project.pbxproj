@@ -12,6 +12,11 @@
 		2006C0651E01729D008B85DF /* JGHAreaListView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2006C0641E01729D008B85DF /* JGHAreaListView.m */; };
 		200CE6E61E30A64500055A85 /* ConvertJson.m in Sources */ = {isa = PBXBuildFile; fileRef = 200CE6E51E30A64500055A85 /* ConvertJson.m */; };
 		200CE6F81E4C995D00055A85 /* JGHAddIntentionPalyerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 200CE6F71E4C995D00055A85 /* JGHAddIntentionPalyerViewController.m */; };
+		200CE6FB1E51511500055A85 /* JGHNewAddApplyTeamPlaysViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 200CE6FA1E51511500055A85 /* JGHNewAddApplyTeamPlaysViewController.m */; };
+		200CE6FE1E5151FD00055A85 /* JGHNewAddTeamMemberViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 200CE6FD1E5151FD00055A85 /* JGHNewAddTeamMemberViewController.m */; };
+		200CE7011E51574000055A85 /* JGHNewMenberTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 200CE7001E51574000055A85 /* JGHNewMenberTableViewCell.m */; };
+		200CE7091E51A76300055A85 /* JGHNewAddPlaysCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 200CE7081E51A76300055A85 /* JGHNewAddPlaysCell.m */; };
+		200CE70C1E51AE1600055A85 /* JGHNewApplyerHeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 200CE70B1E51AE1600055A85 /* JGHNewApplyerHeaderCell.m */; };
 		200D4C151D95244700DDD51D /* JGHScoreHoleListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 200D4C141D95244700DDD51D /* JGHScoreHoleListCell.m */; };
 		201056131D59C92800C90FDE /* JGHBtnCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 201056051D59C92800C90FDE /* JGHBtnCell.m */; };
 		201056141D59C92800C90FDE /* JGHBtnCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 201056061D59C92800C90FDE /* JGHBtnCell.xib */; };
@@ -1228,6 +1233,16 @@
 		200CE6E51E30A64500055A85 /* ConvertJson.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConvertJson.m; sourceTree = "<group>"; };
 		200CE6F61E4C995D00055A85 /* JGHAddIntentionPalyerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHAddIntentionPalyerViewController.h; sourceTree = "<group>"; };
 		200CE6F71E4C995D00055A85 /* JGHAddIntentionPalyerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHAddIntentionPalyerViewController.m; sourceTree = "<group>"; };
+		200CE6F91E51511500055A85 /* JGHNewAddApplyTeamPlaysViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHNewAddApplyTeamPlaysViewController.h; sourceTree = "<group>"; };
+		200CE6FA1E51511500055A85 /* JGHNewAddApplyTeamPlaysViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHNewAddApplyTeamPlaysViewController.m; sourceTree = "<group>"; };
+		200CE6FC1E5151FD00055A85 /* JGHNewAddTeamMemberViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHNewAddTeamMemberViewController.h; sourceTree = "<group>"; };
+		200CE6FD1E5151FD00055A85 /* JGHNewAddTeamMemberViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHNewAddTeamMemberViewController.m; sourceTree = "<group>"; };
+		200CE6FF1E51574000055A85 /* JGHNewMenberTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHNewMenberTableViewCell.h; sourceTree = "<group>"; };
+		200CE7001E51574000055A85 /* JGHNewMenberTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHNewMenberTableViewCell.m; sourceTree = "<group>"; };
+		200CE7071E51A76300055A85 /* JGHNewAddPlaysCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHNewAddPlaysCell.h; sourceTree = "<group>"; };
+		200CE7081E51A76300055A85 /* JGHNewAddPlaysCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHNewAddPlaysCell.m; sourceTree = "<group>"; };
+		200CE70A1E51AE1600055A85 /* JGHNewApplyerHeaderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHNewApplyerHeaderCell.h; sourceTree = "<group>"; };
+		200CE70B1E51AE1600055A85 /* JGHNewApplyerHeaderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHNewApplyerHeaderCell.m; sourceTree = "<group>"; };
 		200D4C131D95244700DDD51D /* JGHScoreHoleListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHScoreHoleListCell.h; sourceTree = "<group>"; };
 		200D4C141D95244700DDD51D /* JGHScoreHoleListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHScoreHoleListCell.m; sourceTree = "<group>"; };
 		201056041D59C92800C90FDE /* JGHBtnCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHBtnCell.h; sourceTree = "<group>"; };
@@ -5486,6 +5501,10 @@
 				20BEF3CE1E2A1BA900E9AED7 /* JGHNewAddTeamPlaysViewController.m */,
 				200CE6F61E4C995D00055A85 /* JGHAddIntentionPalyerViewController.h */,
 				200CE6F71E4C995D00055A85 /* JGHAddIntentionPalyerViewController.m */,
+				200CE6F91E51511500055A85 /* JGHNewAddApplyTeamPlaysViewController.h */,
+				200CE6FA1E51511500055A85 /* JGHNewAddApplyTeamPlaysViewController.m */,
+				200CE6FC1E5151FD00055A85 /* JGHNewAddTeamMemberViewController.h */,
+				200CE6FD1E5151FD00055A85 /* JGHNewAddTeamMemberViewController.m */,
 			);
 			path = "活动添加打球人";
 			sourceTree = "<group>";
@@ -5495,6 +5514,8 @@
 			children = (
 				20BEF3D11E2A24AB00E9AED7 /* JGHApplyerHeaderCell.h */,
 				20BEF3D21E2A24AB00E9AED7 /* JGHApplyerHeaderCell.m */,
+				200CE70A1E51AE1600055A85 /* JGHNewApplyerHeaderCell.h */,
+				200CE70B1E51AE1600055A85 /* JGHNewApplyerHeaderCell.m */,
 			);
 			path = "添加打球人";
 			sourceTree = "<group>";
@@ -5591,6 +5612,8 @@
 				20F025371D6FDC1000D7D7B6 /* JGHAddPlaysCell.h */,
 				20F025381D6FDC1000D7D7B6 /* JGHAddPlaysCell.m */,
 				20F025391D6FDC1000D7D7B6 /* JGHAddPlaysCell.xib */,
+				200CE7071E51A76300055A85 /* JGHNewAddPlaysCell.h */,
+				200CE7081E51A76300055A85 /* JGHNewAddPlaysCell.m */,
 				20F0253C1D6FE9CF00D7D7B6 /* JGHAddPlaysButtonCell.h */,
 				20F0253D1D6FE9CF00D7D7B6 /* JGHAddPlaysButtonCell.m */,
 				20F0253E1D6FE9CF00D7D7B6 /* JGHAddPlaysButtonCell.xib */,
@@ -7785,6 +7808,8 @@
 				828A99F61CE3488700AF9860 /* 球队成员管理 */,
 				828A99F01CE32E9300AF9860 /* JGMenberTableViewCell.h */,
 				828A99F11CE32E9300AF9860 /* JGMenberTableViewCell.m */,
+				200CE6FF1E51574000055A85 /* JGHNewMenberTableViewCell.h */,
+				200CE7001E51574000055A85 /* JGHNewMenberTableViewCell.m */,
 				82AAB7AF1CE5C18E005F5633 /* JGSelfSetTableViewCell.h */,
 				82AAB7B01CE5C18E005F5633 /* JGSelfSetTableViewCell.m */,
 				82E6A6F31CF5812B009DD179 /* JGLAuthorityTableViewCell.h */,
@@ -9333,6 +9358,7 @@
 				36DBFD3B1BEF452200CA64D3 /* NearByModel.m in Sources */,
 				82D595ED1CE4654C00CD9587 /* JGTeamPhotoCollectionViewCell.m in Sources */,
 				F5B647101CE41E7E00A7A056 /* JGTeamDetailView.m in Sources */,
+				200CE6FB1E51511500055A85 /* JGHNewAddApplyTeamPlaysViewController.m in Sources */,
 				F5AEF7311D41B98E009A8C34 /* JGHScoresHoleCell.m in Sources */,
 				36BFFF851BC76D09005B3CE2 /* LazyPageScrollView.m in Sources */,
 				F59A8BA81D5DC27E00E8292B /* JGDPlayerScanViewController.m in Sources */,
@@ -9376,6 +9402,7 @@
 				20591C5E1D220EE0003271EC /* JGDPrivateAccountViewController.m in Sources */,
 				F5AEF74D1D423E54009A8C34 /* JGDWrongViewViewController.m in Sources */,
 				203019CF1E0E4293005568E2 /* ZXEANManufacturerOrgSupport.m in Sources */,
+				200CE70C1E51AE1600055A85 /* JGHNewApplyerHeaderCell.m in Sources */,
 				203019D51E0E4293005568E2 /* ZXOneDReader.m in Sources */,
 				203019671E0E4292005568E2 /* ZXCapture.m in Sources */,
 				203019A31E0E4292005568E2 /* ZXMaxiCodeDecoder.m in Sources */,
@@ -9508,6 +9535,7 @@
 				20513B481CF5D1D8003233FB /* JGHInvoiceCell.m in Sources */,
 				F5EE488E1D462625001D5E44 /* JGLChooseScoreModel.m in Sources */,
 				36BF01071BC775AC005B3CE2 /* MallView.m in Sources */,
+				200CE7091E51A76300055A85 /* JGHNewAddPlaysCell.m in Sources */,
 				F58C4EE51E1B3FC30057DC9C /* JGDOrderListTableViewCell.m in Sources */,
 				F55426751D225E6A00233B20 /* JGDSubMitPayPasswordViewController.m in Sources */,
 				82ABF1BD1D1BFDB0004493DB /* JGLPaySignUpViewController.m in Sources */,
@@ -9684,6 +9712,7 @@
 				F5321AEA1CE449C400CAE1EF /* JGCreateTeamView.m in Sources */,
 				203019A81E0E4292005568E2 /* ZXAI013103decoder.m in Sources */,
 				AA857EE01C5F48AA0034B4C8 /* SelfDataViewController.m in Sources */,
+				200CE7011E51574000055A85 /* JGHNewMenberTableViewCell.m in Sources */,
 				20BA612C1CDC99D0004B61F5 /* ALMoviePlayerControls.m in Sources */,
 				2053FE911DC9C04300975203 /* JGHRegistersViewController.m in Sources */,
 				F51E5EEA1D7FE47B00AE254E /* JGDAlmostScoreDetailViewController.m in Sources */,
@@ -9807,6 +9836,7 @@
 				F58C4EC51E1B3F860057DC9C /* JGDCourtDetailViewController.m in Sources */,
 				F53A05611D518F32009DD489 /* JGHOperationScoreListCell.m in Sources */,
 				36067BCE1C97F915001AE22C /* NewFriendTableViewCell.m in Sources */,
+				200CE6FE1E5151FD00055A85 /* JGHNewAddTeamMemberViewController.m in Sources */,
 				2048E8EA1D4B369E00A2C024 /* JGHSetAlmostPromptViewController.m in Sources */,
 				20513B5C1CF69F3B003233FB /* JGHPlayersModel.m in Sources */,
 				82F944601D89775600A65381 /* XHWebImageDownload.m in Sources */,

@@ -136,6 +136,31 @@
     
 }
 
+- (void)showIntentionData:(JGLTeamMemberModel *)model{
+    [_iconImgv sd_setImageWithURL:[Helper setImageIconUrl:@"user" andTeamKey:[model.userKey integerValue] andIsSetWidth:YES andIsBackGround:NO] placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
+    
+    _nameLabel.text = [NSString stringWithFormat:@"%@",model.userName];
+    
+    if ([model.sex integerValue] == 0) {
+        [_sexImgv setImage: [UIImage imageNamed:@"xb_n"]];
+    }
+    else
+    {
+        [_sexImgv setImage: [UIImage imageNamed:@"xb_nn"]];
+    }
+    
+    _almostLabel.text = [NSString stringWithFormat:@"差点：%.1f",[model.almost floatValue]];
+    
+    //显示模式XXX。。。XXX
+    if (model.mobile.length == 11) {
+        _poleLabel.text = [NSString stringWithFormat:@"%@***%@",[model.mobile substringToIndex:3], [model.mobile substringFromIndex:8]];
+    }else{
+        _poleLabel.text = [NSString stringWithFormat:@"%@***", model.mobile];
+    }
+    
+    _moneyLabel.hidden = YES;
+}
+
 - (void)configJGHPlayersModel:(JGHPlayersModel *)model{
     [_iconImgv sd_setImageWithURL:[Helper setImageIconUrl:@"user" andTeamKey:model.userKey andIsSetWidth:YES andIsBackGround:NO] placeholderImage:[UIImage imageNamed:@"addGroup"]];
     
