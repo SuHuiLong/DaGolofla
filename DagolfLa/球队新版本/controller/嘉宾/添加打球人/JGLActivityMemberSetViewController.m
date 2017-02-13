@@ -334,7 +334,7 @@
     NSString *type = nil;
     JGLAddActiivePlayModel *model = self.listArray[indexPath.section][indexPath.row];
     if ([model.signUpInfoKey integerValue] == -1) {
-        type = @"删除意向";
+        type = @"删除";
         _signUpInfoKey = 0;
     }else{
         _signUpInfoKey = 1;

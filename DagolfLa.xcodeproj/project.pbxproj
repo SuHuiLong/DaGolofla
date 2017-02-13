@@ -1094,6 +1094,9 @@
 		F55426831D25100E00233B20 /* JGDWithDrawTeamMoneyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F55426821D25100E00233B20 /* JGDWithDrawTeamMoneyViewController.m */; };
 		F55426861D2516DD00233B20 /* JGLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = F55426851D2516DD00233B20 /* JGLabel.m */; };
 		F55426891D2534D400233B20 /* JGDTakeTeamMoneyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F55426881D2534D400233B20 /* JGDTakeTeamMoneyViewController.m */; };
+		F55573D01E515C77001A353E /* JGNewsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F55573CF1E515C77001A353E /* JGNewsTableViewCell.m */; };
+		F55573D61E515C89001A353E /* JGNewsSubViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F55573D31E515C89001A353E /* JGNewsSubViewController.m */; };
+		F55573D71E515C89001A353E /* JGNewsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F55573D51E515C89001A353E /* JGNewsViewController.m */; };
 		F55597221CF5328C00F33099 /* JGPreviewTeamViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F55597211CF5328C00F33099 /* JGPreviewTeamViewController.m */; };
 		F55597281CF6DB0F00F33099 /* JGTeamInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F55597271CF6DB0F00F33099 /* JGTeamInfoViewController.m */; };
 		F565BC611D633EFC00F0C7C3 /* bg_somiaohou_03.png in Resources */ = {isa = PBXBuildFile; fileRef = F565BC601D633EFC00F0C7C3 /* bg_somiaohou_03.png */; };
@@ -3336,6 +3339,12 @@
 		F55426851D2516DD00233B20 /* JGLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGLabel.m; sourceTree = "<group>"; };
 		F55426871D2534D400233B20 /* JGDTakeTeamMoneyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGDTakeTeamMoneyViewController.h; sourceTree = "<group>"; };
 		F55426881D2534D400233B20 /* JGDTakeTeamMoneyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGDTakeTeamMoneyViewController.m; sourceTree = "<group>"; };
+		F55573CE1E515C77001A353E /* JGNewsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGNewsTableViewCell.h; sourceTree = "<group>"; };
+		F55573CF1E515C77001A353E /* JGNewsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGNewsTableViewCell.m; sourceTree = "<group>"; };
+		F55573D21E515C89001A353E /* JGNewsSubViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGNewsSubViewController.h; sourceTree = "<group>"; };
+		F55573D31E515C89001A353E /* JGNewsSubViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGNewsSubViewController.m; sourceTree = "<group>"; };
+		F55573D41E515C89001A353E /* JGNewsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGNewsViewController.h; sourceTree = "<group>"; };
+		F55573D51E515C89001A353E /* JGNewsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGNewsViewController.m; sourceTree = "<group>"; };
 		F55597201CF5328C00F33099 /* JGPreviewTeamViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGPreviewTeamViewController.h; sourceTree = "<group>"; };
 		F55597211CF5328C00F33099 /* JGPreviewTeamViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGPreviewTeamViewController.m; sourceTree = "<group>"; };
 		F55597261CF6DB0F00F33099 /* JGTeamInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGTeamInfoViewController.h; sourceTree = "<group>"; };
@@ -4694,6 +4703,7 @@
 		2053ED951DBEF7650076BFE4 /* controller */ = {
 			isa = PBXGroup;
 			children = (
+				F55573D11E515C89001A353E /* 资讯 */,
 				F58C4EA91E1B3F860057DC9C /* 球场预定 */,
 				F5D2F9B31E03DB130070D26C /* 服务定制 */,
 				827E12C11DC21816000BDF65 /* 商城页面 */,
@@ -4716,6 +4726,7 @@
 		2053ED971DBEF7650076BFE4 /* view */ = {
 			isa = PBXGroup;
 			children = (
+				F55573CD1E515C77001A353E /* 资讯 */,
 				F58C4ED61E1B3FC30057DC9C /* 球场预定 */,
 				F5D2F9B41E03DB1C0070D26C /* 服务定制 */,
 				20A4CFB41DC85D3F00F5A81D /* JGHIndexTableViewCell.h */,
@@ -8340,6 +8351,26 @@
 			path = "球队资金提现";
 			sourceTree = "<group>";
 		};
+		F55573CD1E515C77001A353E /* 资讯 */ = {
+			isa = PBXGroup;
+			children = (
+				F55573CE1E515C77001A353E /* JGNewsTableViewCell.h */,
+				F55573CF1E515C77001A353E /* JGNewsTableViewCell.m */,
+			);
+			path = "资讯";
+			sourceTree = "<group>";
+		};
+		F55573D11E515C89001A353E /* 资讯 */ = {
+			isa = PBXGroup;
+			children = (
+				F55573D21E515C89001A353E /* JGNewsSubViewController.h */,
+				F55573D31E515C89001A353E /* JGNewsSubViewController.m */,
+				F55573D41E515C89001A353E /* JGNewsViewController.h */,
+				F55573D51E515C89001A353E /* JGNewsViewController.m */,
+			);
+			path = "资讯";
+			sourceTree = "<group>";
+		};
 		F569A1321CE3334F00CD0FD5 /* 球队详情 */ = {
 			isa = PBXGroup;
 			children = (
@@ -9421,6 +9452,7 @@
 				20513BDA1CF7050A003233FB /* RSADataSigner.m in Sources */,
 				36BF004D1BC77213005B3CE2 /* CommunityModel.m in Sources */,
 				203019871E0E4292005568E2 /* ZXInvertedLuminanceSource.m in Sources */,
+				F55573D61E515C89001A353E /* JGNewsSubViewController.m in Sources */,
 				203019891E0E4292005568E2 /* ZXPlanarYUVLuminanceSource.m in Sources */,
 				2030194A1E0E4292005568E2 /* ZXEmailAddressParsedResult.m in Sources */,
 				20591CA61D23C2A4003271EC /* JGHSelectBlanKCardView.m in Sources */,
@@ -9853,6 +9885,7 @@
 				203019481E0E4292005568E2 /* ZXBookmarkDoCoMoResultParser.m in Sources */,
 				203019641E0E4292005568E2 /* ZXVINResultParser.m in Sources */,
 				3660E0C31BFC530B0033B4D7 /* ScoreViewController.m in Sources */,
+				F55573D01E515C77001A353E /* JGNewsTableViewCell.m in Sources */,
 				203019601E0E4292005568E2 /* ZXURLTOResultParser.m in Sources */,
 				36BF00101BC770C4005B3CE2 /* ChartMessage.m in Sources */,
 				203019A11E0E4292005568E2 /* ZXMaxiCodeBitMatrixParser.m in Sources */,
@@ -9946,6 +9979,7 @@
 				F58C4EC01E1B3F860057DC9C /* JGDBookCourtViewController.m in Sources */,
 				203019801E0E4292005568E2 /* ZXBinarizer.m in Sources */,
 				65B596D61CAD43AC007AB83A /* NSArray+NSArray_ILExtension.m in Sources */,
+				F55573D71E515C89001A353E /* JGNewsViewController.m in Sources */,
 				203019441E0E4292005568E2 /* ZXAddressBookAUResultParser.m in Sources */,
 				36BFFF5D1BC76D09005B3CE2 /* AFSecurityPolicy.m in Sources */,
 				203019921E0E4292005568E2 /* ZXDataMatrixDetector.m in Sources */,

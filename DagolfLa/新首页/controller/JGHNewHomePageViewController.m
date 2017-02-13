@@ -27,6 +27,7 @@
 #import "JGDDPhotoAlbumViewController.h"
 #import "JGDServiceViewController.h" // 定制服务
 #import "JGDBookCourtViewController.h"  // 球场预定
+#import "JGNewsViewController.h" // 咨询
 
 static NSString *const JGHPASHeaderTableViewCellIdentifier = @"JGHPASHeaderTableViewCell";
 static NSString *const JGHShowSectionTableViewCellIdentifier = @"JGHShowSectionTableViewCell";
@@ -542,6 +543,12 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
 #pragma mark -- 服务定制
 - (void)didSelectShitaBtn:(UIButton *)btn{
 
+    JGNewsViewController *newVC = [[JGNewsViewController alloc] init];
+    newVC.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:newVC animated:YES];
+    
+    return;
+    
     [self isLoginUp];
 
     if (btn.tag == 700) {
