@@ -183,7 +183,7 @@ static NSString *const JGHNewApplyerListCellIdentifier = @"JGHNewApplyerListCell
         return (UIView *)addPlaysButtonCell;
     }else {
         JGHApplyerHeaderCell *headerCell = [tableView dequeueReusableCellWithIdentifier:JGHApplyerHeaderCellIdentifier];
-        [headerCell configHeaderName:@"已添加意向成员"];
+        [headerCell configHeaderName:@"已添加打球人"];
         return (UIView *)headerCell;
     }
 }
