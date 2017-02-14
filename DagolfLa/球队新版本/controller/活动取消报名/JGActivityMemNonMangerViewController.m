@@ -40,6 +40,8 @@
     [self.view addSubview:self.tableView];
     
     UIBarButtonItem *barItm = [[UIBarButtonItem alloc] initWithTitle:@"查看分组" style:(UIBarButtonItemStylePlain) target:self action:@selector(check)];
+    [barItm setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:15 * ProportionAdapter], NSFontAttributeName, nil] forState:UIControlStateNormal];
+
     barItm.tintColor = [UIColor whiteColor];
     self.navigationItem.rightBarButtonItem = barItm;
     

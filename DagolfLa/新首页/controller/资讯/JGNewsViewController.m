@@ -78,7 +78,7 @@
         [self.titleBackView addSubview:titleLB];
     
         if (i > 0) {
-            UILabel *lineLB = [self lablerect:CGRectMake(i * screenWidth / titleArray.count, 22 * ProportionAdapter, 0.5 * ProportionAdapter, 20 * ProportionAdapter)  labelColor:[UIColor whiteColor] labelFont:0 text:@"" textAlignment:(NSTextAlignmentCenter)];
+            UILabel *lineLB = [self lablerect:CGRectMake(i * screenWidth / titleArray.count, 22 * ProportionAdapter, 1 * ProportionAdapter, 20 * ProportionAdapter)  labelColor:[UIColor whiteColor] labelFont:0 text:@"" textAlignment:(NSTextAlignmentCenter)];
             lineLB.backgroundColor = [UIColor colorWithHexString:@"#eeeeee"];
             [self.titleBackView addSubview:lineLB];
         }
@@ -435,9 +435,12 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     JGNewsTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"newsCell"];
     
-    [cell.iconImageV sd_setImageWithURL:[self.allDataArray[self.currentType - 1][indexPath.row] objectForKey:@"picURL"] placeholderImage:[UIImage imageNamed:TeamBGImage]];
+    [cell.iconImageV sd_setImageWithURL:[self.allDataArray[self.currentType - 1][indexPath.row] objectForKey:@"picURL"] placeholderImage:[UIImage imageNamed:@"bg_default"]];
     cell.titleNewsLB.text = [self.allDataArray[self.currentType - 1][indexPath.row] objectForKey:@"title"];
     cell.deltailLB.text = [self.allDataArray[self.currentType - 1][indexPath.row] objectForKey:@"summary"];
+    
+    BOOL isMedia = [[self.allDataArray[self.currentType - 1][indexPath.row] objectForKey:@"mediaTypes"] isEqualToString:@"video"];
+    isMedia ? (cell.isVideoImageV.hidden = NO) : (cell.isVideoImageV.hidden = YES);
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
 }

@@ -17,6 +17,11 @@
         self.iconImageV = [[UIImageView alloc] initWithFrame:CGRectMake(10 * ProportionAdapter, 10 * ProportionAdapter, 80 * ProportionAdapter, 60 * ProportionAdapter)];
         [self addSubview:self.iconImageV];
         
+        self.isVideoImageV = [[UIImageView alloc] initWithFrame:CGRectMake(10 * ProportionAdapter, 10 * ProportionAdapter, 80 * ProportionAdapter, 60 * ProportionAdapter)];
+        self.isVideoImageV.image = [UIImage imageNamed:@"icn_news_video"];
+        self.isVideoImageV.contentMode = UIViewContentModeCenter;
+        [self addSubview:self.isVideoImageV];
+        
         self.titleNewsLB = [self lablerect:CGRectMake(100 * ProportionAdapter, 10 * ProportionAdapter, screenWidth - 110 * ProportionAdapter, 20 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#626262"] labelFont:16 text:@"" textAlignment:(NSTextAlignmentLeft)];
         [self addSubview:self.titleNewsLB];
         
@@ -52,6 +57,9 @@
     if ([dict objectForKey:@"summary"]) {
         self.deltailLB.text = [dict objectForKey:@"summary"];
     }
+    
+    BOOL isMedia = [[dict objectForKey:@"mediaTypes"] isEqualToString:@"video"];
+    isMedia ? (self.isVideoImageV.hidden = NO) : (self.isVideoImageV.hidden = YES);
 }
 
 /*

@@ -626,11 +626,6 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
 
 #pragma mark -- 服务定制
 - (void)didSelectShitaBtn:(UIButton *)btn{
-
-    JGNewsViewController *newVC = [[JGNewsViewController alloc] init];
-    [self.navigationController pushViewController:newVC animated:YES];
-    
-    return;
     
     [self isLoginUp];
 
