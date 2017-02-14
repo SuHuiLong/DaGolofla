@@ -110,10 +110,10 @@
         _webView.scrollView.bounces = NO ;
         //设置web占满屏幕
         _webView.scalesPageToFit = YES ;
-        
-        NSString *userAgent = [[[UIWebView alloc] init] stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"];
-        NSString *customUserAgent = [userAgent stringByAppendingFormat:@" dagolfla/2.0"];
-        [[NSUserDefaults standardUserDefaults] registerDefaults:@{@"UserAgent":customUserAgent}];
+//111
+//        NSString *userAgent = [[[UIWebView alloc] init] stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"];
+//        NSString *customUserAgent = [userAgent stringByAppendingFormat:@" dagolfla/2.0"];
+//        [[NSUserDefaults standardUserDefaults] registerDefaults:@{@"UserAgent":customUserAgent}];
         [self.webView loadRequest:[NSURLRequest requestWithURL:url]];
         
         if ([[url query] containsString:@"www.dagolfla.com"] || [[url query] containsString:@"dagolfla://"]) {
@@ -150,9 +150,10 @@
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
-    NSString *userAgent = [[[UIWebView alloc] init] stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"];
-    NSString *customUserAgent = [userAgent stringByAppendingFormat:@" dagolfla/2.0"];
-    [[NSUserDefaults standardUserDefaults] registerDefaults:@{@"UserAgent":customUserAgent}];
+    //111
+//    NSString *userAgent = [[[UIWebView alloc] init] stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"];
+//    NSString *customUserAgent = [userAgent stringByAppendingFormat:@" dagolfla/2.0"];
+//    [[NSUserDefaults standardUserDefaults] registerDefaults:@{@"UserAgent":customUserAgent}];
     
     ////NSLog(@"%@",[request.URL absoluteString]);
     NSString *str = [[request.URL absoluteString] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];

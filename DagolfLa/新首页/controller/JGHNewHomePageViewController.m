@@ -379,7 +379,7 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
         indexTableViewCell.delegate = self;
         
         if (_indexModel.plateList.count > 0) {
-            NSDictionary *dict = _indexModel.plateList[indexPath.section -1];
+            NSDictionary *dict = _indexModel.plateList[indexPath.section -2];
             NSArray *bodyList = [dict objectForKey:@"bodyList"];
             NSInteger bodyLayoutType = [[dict objectForKey:@"bodyLayoutType"] integerValue];
             NSInteger imgHeight = [[dict objectForKey:@"imgHeight"] integerValue];

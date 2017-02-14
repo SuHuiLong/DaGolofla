@@ -13,9 +13,9 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
-    self.infoLableLeft.constant = 10 *ProportionAdapter;
+    self.infoLableLeft.constant = 40 *ProportionAdapter;
     self.infoLableTop.constant = 10 *ProportionAdapter;
-    self.infoLableRight.constant = 10 *ProportionAdapter;
+    self.infoLableRight.constant = 40 *ProportionAdapter;
     self.infoLableDown.constant = 10 *ProportionAdapter;
     
     self.infoLable.font = [UIFont systemFontOfSize:15*ProportionAdapter];

@@ -36,7 +36,7 @@
         [self addSubview:_palyerImageView];
         
         _palyer = [[UILabel alloc]initWithFrame:CGRectMake(screenWidth/2, 65*screenWidth/375, screenWidth/2, 30*screenWidth/375)];
-        _palyer.text = @"添加队友";
+        _palyer.text = @"添加球友";
         _palyer.font = [UIFont systemFontOfSize:15*screenWidth/375];
         _palyer.textAlignment = NSTextAlignmentCenter;
         [self addSubview:_palyer];

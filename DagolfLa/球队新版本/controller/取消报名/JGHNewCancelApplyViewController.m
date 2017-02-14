@@ -46,6 +46,7 @@ static NSString *const JGHNewCancelAppListCellIdentifier = @"JGHNewCancelAppList
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    self.view.backgroundColor = [UIColor colorWithHexString:BG_color];
     self.navigationItem.title = @"退出活动";
     
     [self createTableView];
@@ -53,7 +54,7 @@ static NSString *const JGHNewCancelAppListCellIdentifier = @"JGHNewCancelAppList
 
 #pragma mark -- 创建Tableview
 - (void)createTableView{
-    self.cancelApplyTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight - 44)];
+    self.cancelApplyTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 10*ProportionAdapter, ScreenWidth, ScreenHeight - 44)];
     self.cancelApplyTableView.dataSource = self;
     self.cancelApplyTableView.delegate = self;
     
@@ -145,6 +146,9 @@ static NSString *const JGHNewCancelAppListCellIdentifier = @"JGHNewCancelAppList
     if (section == 0) {
         JGTeamActivityCell *activityCell = [tableView dequeueReusableCellWithIdentifier:JGTeamActivityCellIdentifier];
         [activityCell setJGTeamActivityCellWithModel:_model fromCtrl:1];
+        
+        activityCell.activityTime.textColor = [UIColor lightGrayColor];
+        activityCell.activityAddress.textColor = [UIColor lightGrayColor];
         return (UIView *)activityCell;
     }else if (section == 1){
         JGHNewCancelApplyCell *applyPepoleCell = [tableView dequeueReusableCellWithIdentifier:JGHNewCancelApplyCellIdentifier];
@@ -163,7 +167,7 @@ static NSString *const JGHNewCancelAppListCellIdentifier = @"JGHNewCancelAppList
     }else{
         JGHButtonCell *buttonCell = [tableView dequeueReusableCellWithIdentifier:JGHButtonCellIdentifier];
         buttonCell.selectionStyle = UITableViewCellSelectionStyleNone;
-        [buttonCell.clickBtn setTitle:@"取消报名" forState:UIControlStateNormal];
+        [buttonCell.clickBtn setTitle:@"确认退出" forState:UIControlStateNormal];
         buttonCell.delegate = self;
         buttonCell.backgroundColor = [UIColor colorWithHexString:BG_color];
         return (UIView *)buttonCell;
@@ -190,7 +194,7 @@ static NSString *const JGHNewCancelAppListCellIdentifier = @"JGHNewCancelAppList
     //计算价格
     [self.cancelApplyTableView reloadData];
 }
-#pragma mark --取消报名
+#pragma mark --确认退出
 - (void)selectCommitBtnClick:(UIButton *)btn{
     NSInteger applyCount = 0;
     for (NSMutableDictionary *dict in _dataArray) {
@@ -200,10 +204,10 @@ static NSString *const JGHNewCancelAppListCellIdentifier = @"JGHNewCancelAppList
     }
     
     if (applyCount == 0) {
-        [[ShowHUD showHUD]showToastWithText:@"请选择取消报名人！" FromView:self.view];
+        [[ShowHUD showHUD]showToastWithText:@"请选择确认退出人！" FromView:self.view];
     }else{
-        [Helper alertViewWithTitle:@"确定取消报名？" withBlockCancle:^{
-            NSLog(@"取消报名");
+        [Helper alertViewWithTitle:@"确定确认退出？" withBlockCancle:^{
+            NSLog(@"确认退出");
         } withBlockSure:^{
             [self cancelApply:btn];
         } withBlock:^(UIAlertController *alertView) {
@@ -237,7 +241,7 @@ static NSString *const JGHNewCancelAppListCellIdentifier = @"JGHNewCancelAppList
         NSLog(@"data == %@", data);
         //        [[ShowHUD showHUD]hideAnimationFromView:self.view];
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
-            [[ShowHUD showHUD]showToastWithText:@"取消报名成功！" FromView:self.view];
+            [[ShowHUD showHUD]showToastWithText:@"确认退出成功！" FromView:self.view];
             [self performSelector:@selector(pushCtrl) withObject:self afterDelay:TIMESlEEP];
         }else{
             if ([data objectForKey:@"packResultMsg"]) {

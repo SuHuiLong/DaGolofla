@@ -15,7 +15,7 @@
     // Initialization code
     self.backgroundColor = [UIColor whiteColor];
     
-    self.titleLeft.constant = 60 *ProportionAdapter;
+    self.titleLeft.constant = 40 *ProportionAdapter;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

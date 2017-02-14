@@ -21,6 +21,7 @@
 		200CE7121E5299E800055A85 /* JGHConsultChannelCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 200CE7101E5299E800055A85 /* JGHConsultChannelCell.xib */; };
 		200CE7151E52A5CC00055A85 /* JGHChancelTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 200CE7141E52A5CC00055A85 /* JGHChancelTableViewCell.m */; };
 		200CE7181E52AAB600055A85 /* JGHIndexEventView.m in Sources */ = {isa = PBXBuildFile; fileRef = 200CE7171E52AAB600055A85 /* JGHIndexEventView.m */; };
+		200CE71B1E5313C600055A85 /* JGHNewFriendAddTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 200CE71A1E5313C600055A85 /* JGHNewFriendAddTableViewCell.m */; };
 		200D4C151D95244700DDD51D /* JGHScoreHoleListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 200D4C141D95244700DDD51D /* JGHScoreHoleListCell.m */; };
 		201056131D59C92800C90FDE /* JGHBtnCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 201056051D59C92800C90FDE /* JGHBtnCell.m */; };
 		201056141D59C92800C90FDE /* JGHBtnCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 201056061D59C92800C90FDE /* JGHBtnCell.xib */; };
@@ -1258,6 +1259,8 @@
 		200CE7141E52A5CC00055A85 /* JGHChancelTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHChancelTableViewCell.m; sourceTree = "<group>"; };
 		200CE7161E52AAB600055A85 /* JGHIndexEventView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHIndexEventView.h; sourceTree = "<group>"; };
 		200CE7171E52AAB600055A85 /* JGHIndexEventView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHIndexEventView.m; sourceTree = "<group>"; };
+		200CE7191E5313C600055A85 /* JGHNewFriendAddTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHNewFriendAddTableViewCell.h; sourceTree = "<group>"; };
+		200CE71A1E5313C600055A85 /* JGHNewFriendAddTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHNewFriendAddTableViewCell.m; sourceTree = "<group>"; };
 		200D4C131D95244700DDD51D /* JGHScoreHoleListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHScoreHoleListCell.h; sourceTree = "<group>"; };
 		200D4C141D95244700DDD51D /* JGHScoreHoleListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHScoreHoleListCell.m; sourceTree = "<group>"; };
 		201056041D59C92800C90FDE /* JGHBtnCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHBtnCell.h; sourceTree = "<group>"; };
@@ -8096,6 +8099,8 @@
 			children = (
 				82F2545A1D3CCCB2008BE0AF /* JGLFriendAddTableViewCell.h */,
 				82F2545B1D3CCCB2008BE0AF /* JGLFriendAddTableViewCell.m */,
+				200CE7191E5313C600055A85 /* JGHNewFriendAddTableViewCell.h */,
+				200CE71A1E5313C600055A85 /* JGHNewFriendAddTableViewCell.m */,
 				82FD961A1D3DBFA30047D7A8 /* JGLAddressAddTableViewCell.h */,
 				82FD961B1D3DBFA30047D7A8 /* JGLAddressAddTableViewCell.m */,
 			);
@@ -10014,6 +10019,7 @@
 				203019801E0E4292005568E2 /* ZXBinarizer.m in Sources */,
 				65B596D61CAD43AC007AB83A /* NSArray+NSArray_ILExtension.m in Sources */,
 				F55573D71E515C89001A353E /* JGNewsViewController.m in Sources */,
+				200CE71B1E5313C600055A85 /* JGHNewFriendAddTableViewCell.m in Sources */,
 				203019441E0E4292005568E2 /* ZXAddressBookAUResultParser.m in Sources */,
 				36BFFF5D1BC76D09005B3CE2 /* AFSecurityPolicy.m in Sources */,
 				203019921E0E4292005568E2 /* ZXDataMatrixDetector.m in Sources */,

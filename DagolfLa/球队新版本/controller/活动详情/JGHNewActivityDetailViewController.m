@@ -135,7 +135,7 @@ static CGFloat ImageHeight  = 210.0;
     self.automaticallyAdjustsScrollViewInsets = NO;
     
     _titleArray = @[@"参赛费用", @"活动成员及分组", @"查看成绩", @"查看奖项", @"活动说明"];
-    _imageArray = @[@"icn_preferential", @"icn_event_group", @"icn_event_score", @"icn_awards", @"icn_event_details"];
+    _imageArray = @[@"icn_preferential", @"icn_event_group1", @"icn_event_score", @"icn_awards", @"icn_event_details"];
     
     //监听分组页面返回，刷新数据
     NSNotificationCenter * center = [NSNotificationCenter defaultCenter];
@@ -337,7 +337,7 @@ static CGFloat ImageHeight  = 210.0;
 - (void)initItemsBtnClick:(UIButton *)btn{
     [self.navigationController popViewControllerAnimated:YES];
 }
-#pragma mark -- 取消报名
+#pragma mark -- 退出活动
 - (void)createCancelBtnAndApplyOrPay:(NSInteger)applercatory{
     self.headPortraitBtn.layer.masksToBounds = YES;
     self.headPortraitBtn.layer.cornerRadius = 8.0;
@@ -348,7 +348,7 @@ static CGFloat ImageHeight  = 210.0;
     [self.view addSubview:photoBtn];
     
     UIButton *cancelApplyBtn = [[UIButton alloc]initWithFrame:CGRectMake(photoBtn.frame.size.width, screenHeight-44, screenWidth - 75 *ScreenWidth/375, 44)];
-    [cancelApplyBtn setTitle:@"取消报名" forState:UIControlStateNormal];
+    [cancelApplyBtn setTitle:@"退出活动" forState:UIControlStateNormal];
     cancelApplyBtn.titleLabel.font = [UIFont systemFontOfSize:17 *ProportionAdapter];
     if (applercatory == 0) {
         cancelApplyBtn.backgroundColor = [UIColor colorWithHexString:Nav_Color];
@@ -359,7 +359,7 @@ static CGFloat ImageHeight  = 210.0;
     
     [self.view addSubview:cancelApplyBtn];
 }
-#pragma mark -- 取消报名
+#pragma mark -- 退出活动
 - (void)cancelApplyBtnClick:(UIButton *)btn{
     
     JGHNewCancelApplyViewController *cancelApplyCtrl = [[JGHNewCancelApplyViewController alloc]init];

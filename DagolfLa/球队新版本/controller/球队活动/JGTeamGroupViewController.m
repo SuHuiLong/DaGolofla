@@ -147,7 +147,7 @@ static NSString *const JGGroupdetailsCollectionViewCellIdentifier = @"JGGroupdet
 //    [self.view addSubview:promptLabel];
     //好友分组label
     UILabel *groupLabel = [[UILabel alloc]initWithFrame:CGRectMake(10 *ProportionAdapter, self.collectionView.frame.size.height+_waitGroupLabel.frame.size.height+30 + 10, screenWidth-90, 21)];
-    groupLabel.text = @"好友分组";
+    groupLabel.text = @"球队分组";
     groupLabel.backgroundColor = [UIColor clearColor];
     groupLabel.textAlignment = NSTextAlignmentLeft;
     groupLabel.font = [UIFont systemFontOfSize:15*ProportionAdapter];
@@ -337,7 +337,7 @@ static NSString *const JGGroupdetailsCollectionViewCellIdentifier = @"JGGroupdet
             }
         }
         
-        _waitGroupLabel.text = [NSString stringWithFormat:@"设置分组:%ld(人)", (unsigned long)[self.teamGroupAllDataArray count]];
+        _waitGroupLabel.text = [NSString stringWithFormat:@"待分组:%ld(人)", (unsigned long)[self.teamGroupAllDataArray count]];
         
         if (fenzu == 1) {
             UIAlertAction *commitAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {

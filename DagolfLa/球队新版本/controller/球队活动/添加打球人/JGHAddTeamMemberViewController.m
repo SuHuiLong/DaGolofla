@@ -16,7 +16,7 @@
 #import "ChatDetailViewController.h"
 #import "JGTeamMemberManager.h"
 #import "JGReturnMD5Str.h"
-#import "JGLFriendAddTableViewCell.h"
+#import "JGHNewFriendAddTableViewCell.h"
 
 @interface JGHAddTeamMemberViewController ()<UITableViewDelegate, UITableViewDataSource,UISearchBarDelegate,UISearchResultsUpdating>
 {
@@ -39,7 +39,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.navigationItem.title = @"添加球友";
+    self.navigationItem.title = @"球友添加";
     
     _keyArray        = [[NSMutableArray alloc]init];
     _listArray       = [[NSMutableArray alloc]init];
@@ -97,7 +97,7 @@
     _tableView.dataSource = self;
     [self.view addSubview:_tableView];
     
-    [_tableView registerClass:[JGLFriendAddTableViewCell class] forCellReuseIdentifier:@"JGLFriendAddTableViewCell"];
+    [_tableView registerClass:[JGHNewFriendAddTableViewCell class] forCellReuseIdentifier:@"JGHNewFriendAddTableViewCell"];
     
     
     _tableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
@@ -182,14 +182,13 @@
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    JGLFriendAddTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"JGLFriendAddTableViewCell" forIndexPath:indexPath];
+    JGHNewFriendAddTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"JGHNewFriendAddTableViewCell" forIndexPath:indexPath];
     
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     MyattenModel *model = self.listArray[indexPath.section][indexPath.row];
     
     cell.myModel = model;
-    cell.imgvState.hidden = YES;
     return cell;
 }
 

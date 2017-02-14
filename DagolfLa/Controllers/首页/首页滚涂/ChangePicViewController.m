@@ -44,6 +44,8 @@
     UIAlertController *_actionView;
     
     UIImageView *_statusView;
+    
+    NSString *_urlstring;
 }
 
 @property(nonatomic,retain)UIWebView *webView;
@@ -84,10 +86,10 @@
 //    self.navigationController.navigationBarHidden = NO;
     //    [[NSURLCache sharedURLCache]removeAllCachedResponses];
     
-    NSString *userAgent = [[[UIWebView alloc]init] stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"];
-    NSString *customUserAgent = [userAgent stringByAppendingFormat:@" dagolfla/2.0"];
-    [[NSUserDefaults standardUserDefaults] registerDefaults:@{@"UserAgent":customUserAgent}];
-    [self.webView reload];
+//    NSString *userAgent = [[[UIWebView alloc]init] stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"];
+//    NSString *customUserAgent = [userAgent stringByAppendingFormat:@" dagolfla/2.0"];
+//    [[NSUserDefaults standardUserDefaults] registerDefaults:@{@"UserAgent":customUserAgent}];
+//    [self.webView reload];
     
     if ([_strUrl containsString:@"www.dagolfla.com"] || [_strUrl containsString:@"dagolfla://"]) {
         self.navigationController.navigationBarHidden = YES;
@@ -175,9 +177,9 @@
     }
     //    NSURL* url = [NSURL URLWithString:@"http://www.dagolfla.com/app/Packbookserch.html"];
     
-    NSString *userAgent = [[[UIWebView alloc]init] stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"];
-    NSString *customUserAgent = [userAgent stringByAppendingFormat:@" dagolfla/2.0"];
-    [[NSUserDefaults standardUserDefaults] registerDefaults:@{@"UserAgent":customUserAgent}];
+//    NSString *userAgent = [[[UIWebView alloc]init] stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"];
+//    NSString *customUserAgent = [userAgent stringByAppendingFormat:@" dagolfla/2.0"];
+//    [[NSUserDefaults standardUserDefaults] registerDefaults:@{@"UserAgent":customUserAgent}];
     
     //设置页面禁止滚动
     _webView.scrollView.bounces = NO ;
@@ -207,9 +209,20 @@
 }
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
-    NSString *userAgent = [[[UIWebView alloc] init] stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"];
-    NSString *customUserAgent = [userAgent stringByAppendingFormat:@" dagolfla/2.0"];
-    [[NSUserDefaults standardUserDefaults] registerDefaults:@{@"UserAgent":customUserAgent}];
+    
+//    if([[request.URL absoluteString] isEqualToString:_urlstring])
+//    {
+//        _urlstring = nil;
+//        [self performSegueWithIdentifier:@"baseMoney" sender:self];
+//        
+//        return NO;
+//    }
+//    
+//    _urlstring = [request.URL absoluteString];
+    
+//    NSString *userAgent = [[[UIWebView alloc] init] stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"];
+//    NSString *customUserAgent = [userAgent stringByAppendingFormat:@" dagolfla/2.0"];
+//    [[NSUserDefaults standardUserDefaults] registerDefaults:@{@"UserAgent":customUserAgent}];
     
     NSLog(@"%@",[request.URL absoluteString]);
     NSString *str = [[request.URL absoluteString] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
@@ -373,10 +386,13 @@
         [[JGHPushClass pushClass] URLString:str pushVC:^(UIViewController *vc) {
             vc.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:vc animated:YES];
+            
         }];
+        return NO;
     }
     
     return YES;
+    
 }
 
 -(void)webViewDidFinishLoad:(UIWebView *)webView

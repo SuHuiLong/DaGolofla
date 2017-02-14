@@ -1,5 +1,4 @@
 //
-//  JGHAddTeamMemberViewController.h
 //  DagolfLa
 //
 //  Created by 黄安 on 17/2/13.

@@ -73,7 +73,7 @@ static NSString *const JGHNewApplyerListCellIdentifier = @"JGHNewApplyerListCell
      */
 }
 - (void)createAddTeamPlaysTableView{
-    self.addTeamPlaysTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight - 64)];
+    self.addTeamPlaysTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 10*ProportionAdapter, screenWidth, screenHeight - 64)];
     UINib *addPlaysCellNib = [UINib nibWithNibName:@"JGHAddPlaysCell" bundle: [NSBundle mainBundle]];
     [self.addTeamPlaysTableView registerNib:addPlaysCellNib forCellReuseIdentifier:JGHAddPlaysCellIdentifier];
     

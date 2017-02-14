@@ -328,7 +328,7 @@ static NSString *const JGHNewApplyerListCellIdentifier = @"JGHNewApplyerListCell
     _submitBtn = [[UIButton alloc]initWithFrame:CGRectMake( 10 * ProportionAdapter, screenHeight-44 -64 - 20, screenWidth - 20 * ProportionAdapter, 44)];
     _submitBtn.layer.cornerRadius = 6 * ProportionAdapter;
     _submitBtn.clipsToBounds = YES;
-    [_submitBtn setTitle:@"确定报名" forState:UIControlStateNormal];
+    [_submitBtn setTitle:@"确认报名" forState:UIControlStateNormal];
     _submitBtn.titleLabel.font = [UIFont systemFontOfSize:17 *ProportionAdapter];
     [_submitBtn addTarget:self action:@selector(didJustApplyListApplyBtn:) forControlEvents:UIControlEventTouchUpInside];
     

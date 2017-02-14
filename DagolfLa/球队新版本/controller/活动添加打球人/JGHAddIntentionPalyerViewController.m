@@ -44,7 +44,7 @@ static NSString *const JGHApplyerHeaderCellIdentifier = @"JGHApplyerHeaderCell";
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor colorWithHexString:BG_color];
-    self.navigationItem.title = @"添加意向成员";
+    self.navigationItem.title = @"添加打球人";
     
     UIBarButtonItem *item = [[UIBarButtonItem alloc]initWithTitle:@"完成" style:UIBarButtonItemStylePlain target:self action:@selector(completeBtnClick)];
     item.tintColor=[UIColor whiteColor];
@@ -92,7 +92,7 @@ static NSString *const JGHApplyerHeaderCellIdentifier = @"JGHApplyerHeaderCell";
      */
 }
 - (void)createAddTeamPlaysTableView{
-    self.addTeamPlaysTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight - 64)];
+    self.addTeamPlaysTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 10*ProportionAdapter, screenWidth, screenHeight - 64)];
 //    UINib *addPlaysCellNib = [UINib nibWithNibName:@"JGHAddPlaysCell" bundle: [NSBundle mainBundle]];
 //    [self.addTeamPlaysTableView registerNib:addPlaysCellNib forCellReuseIdentifier:JGHAddPlaysCellIdentifier];
     
