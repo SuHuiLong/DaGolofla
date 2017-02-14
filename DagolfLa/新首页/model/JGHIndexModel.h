@@ -21,6 +21,14 @@
 
 @property (nonatomic, assign)NSInteger isHaveTeam;
 
+@property (nonatomic, strong)NSArray *videoNewList;
+
+@property (nonatomic, strong)NSArray *ballSkillNewList;
+
+@property (nonatomic, strong)NSArray *activityNewList;
+
+@property (nonatomic, strong)NSArray *matchNewList;
+
 @end
 
 
