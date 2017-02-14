@@ -26,6 +26,10 @@
     bar.tintColor = [UIColor whiteColor];
     self.navigationItem.rightBarButtonItem = bar;
     
+    NSString *md5Str = [Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@&newsId=%@dagolfla.com", DEFAULF_USERID, [self.detailDic objectForKey:@"id"]]];
+    self.urlString = [NSString stringWithFormat:@"http://mobile.dagolfla.com/news/getHtmlBody?userKey=%@&newsId=%@&md5=%@", DEFAULF_USERID, [self.detailDic objectForKey:@"id"], md5Str];
+    
+    
     self.webView = [[WKWebView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight - 64)];
     [self.view addSubview:self.webView];
     self.webView.UIDelegate = self;
@@ -36,6 +40,8 @@
 
     // Do any additional setup after loading the view.
 }
+
+
 
 - (void)shareAct{
     ShareAlert* alert = [[ShareAlert alloc]initMyAlert];
@@ -53,26 +59,25 @@
 -(void)shareInfo:(NSInteger)index{
     
     NSData *fiData;
-//    NSLog(@"%@",[Helper setImageIconUrl:@"team" andTeamKey:[self.timeKey integerValue] andIsSetWidth:YES andIsBackGround:NO]);
-//    fiData = [NSData dataWithContentsOfURL:[Helper setImageIconUrl:@"team" andTeamKey:[self.timeKey integerValue] andIsSetWidth:YES andIsBackGround:NO]];
-//    NSObject* obj;
-//    if (fiData != nil && fiData.length > 0) {
-//        obj = fiData;
-//    }
-//    else
-//    {
-//        obj = [UIImage imageNamed:@"iconlogo"];
-//    }
+
+    fiData = [NSData dataWithContentsOfURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@", [self.detailDic objectForKey:@"picURL"]]]];
+    NSObject* obj;
+    if (fiData != nil && fiData.length > 0) {
+        obj = fiData;
+    }
+    else
+    {
+        obj = [UIImage imageNamed:@"iconlogo"];
+    }
     
-    //http://192.168.1.104:8888/imgcache.dagolfla.com/share/team/team.html?key=181
 //    NSString*  shareUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/team/team.html?key=%@",self.timeKey];
-//    [UMSocialData defaultData].extConfig.title=[NSString stringWithFormat:@"欢迎加入%@",[self.dataDict objectForKey:@"name"]];
+    [UMSocialData defaultData].extConfig.title=[NSString stringWithFormat:@"%@",[self.detailDic objectForKey:@"title"]];
     if (index == 0){
         
         //微信
         [UMSocialWechatHandler setWXAppId:@"wxdcdc4e20544ed728" appSecret:@"fdc75aae5a98f2aa0f62ef8cba2b08e9" url:self.urlString];
         [UMSocialConfig hiddenNotInstallPlatforms:@[UMShareToWechatSession,UMShareToWechatTimeline,UMShareToSina]];
-        [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatSession] content:[NSString stringWithFormat:@"资讯分享"]  image:nil location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
+        [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatSession] content:[NSString stringWithFormat:@"%@" ,[self.detailDic objectForKey:@"summary"]]  image:obj location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
             if (response.responseCode == UMSResponseCodeSuccess) {
                 //                [self shareS:indexRow];
             }
@@ -82,7 +87,7 @@
         //朋友圈
         [UMSocialWechatHandler setWXAppId:@"wxdcdc4e20544ed728" appSecret:@"fdc75aae5a98f2aa0f62ef8cba2b08e9" url:self.urlString];
         [UMSocialConfig hiddenNotInstallPlatforms:@[UMShareToWechatSession,UMShareToWechatTimeline,UMShareToSina]];
-        [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatTimeline] content:[NSString stringWithFormat:@"资讯分享"] image:nil location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
+        [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatTimeline] content:[NSString stringWithFormat:@"%@" ,[self.detailDic objectForKey:@"summary"]] image:obj location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
             if (response.responseCode == UMSResponseCodeSuccess) {
                 //                [self shareS:indexRow];
             }

@@ -10,6 +10,7 @@
 
 @interface JGWkNewsViewController : ViewController
 
+@property (nonatomic, strong) NSDictionary *detailDic;
 @property (nonatomic, copy) NSString *urlString;
 
 @end
