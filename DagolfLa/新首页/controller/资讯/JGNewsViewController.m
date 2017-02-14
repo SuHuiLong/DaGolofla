@@ -9,6 +9,7 @@
 #import "JGNewsViewController.h"
 #import "JGNewsSubViewController.h"
 #import "JGNewsTableViewCell.h"
+#import "JGWkNewsViewController.h"
 
 @interface JGNewsViewController ()<UIScrollViewDelegate, UITableViewDataSource, UITableViewDelegate>
 
@@ -47,7 +48,7 @@
     self.allDataArray = [NSMutableArray arrayWithObjects:self.matchDataArray, self.ballSkillDataArray, self.activityDataArray, self.videoDataArray, nil];
     
     self.view.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];
-    NSArray *titleArray = [NSArray arrayWithObjects:@"赛事", @"球技", @"活动", @"视频", nil];
+    NSArray *titleArray = [NSArray arrayWithObjects:@"赛事 ", @"球技 ", @"活动 ", @"视频 ", nil];
     
     self.titleBackView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 44 * ProportionAdapter)];
     for (int i = 0; i < titleArray.count; i ++) {
@@ -57,9 +58,23 @@
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapTitle:)];
         [titleLB addGestureRecognizer:tap];
         titleLB.userInteractionEnabled = YES;
+        
+        
+//        UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(i * screenWidth / titleArray.count, 10 * ProportionAdapter, screenWidth / 4, 44 * ProportionAdapter)];
+        
+        
+        
+        
         if (i == 0) {
             titleLB.textColor = [UIColor blackColor];
+            titleLB.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"line_news"]];
+
+        }else{
+            titleLB.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"linedot_news"]];
         }
+        
+        
+        
         [self.titleBackView addSubview:titleLB];
     }
     [self.view addSubview:self.titleBackView];
@@ -71,6 +86,7 @@
     self.scroller.contentSize = CGSizeMake(screenWidth * 4, screenHeight);
     self.scroller.pagingEnabled = YES;
     self.scroller.bounces = NO;
+    self.scroller.tag = 700;
 //    self.scroller.scrollEnabled = NO;
     
     for (int i = 0; i < 4; i ++) {
@@ -80,6 +96,11 @@
         tableView.delegate = self;
         tableView.dataSource = self;
         tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+        tableView.header = [MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRefresh)];
+        tableView.footer=[MJDIYBackFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRefresh)];
+        [tableView.header beginRefreshing];
+        
+
         [self.scroller addSubview:tableView];
     }
     self.currentTable = [self.scroller viewWithTag:300];
@@ -94,6 +115,56 @@
     self.currentType = 1;
     [self downLoadData];
     // Do any additional setup after loading the view. type  [def objectForKey:CITYNAME]
+}
+
+- (void)headRefresh{
+    switch (self.currentType) {
+            
+        case 1:
+            self.matchOffset = 0;
+            break;
+            
+        case 2:
+            self.ballSkillOffset = 0;
+            break;
+            
+        case 3:
+            self.activityOffset = 0;
+            break;
+            
+        case 4:
+            self.videoOffset = 0;
+            break;
+            
+        default:
+            break;
+    }
+    [self downLoadData];
+}
+
+- (void)footRefresh{
+    switch (self.currentType) {
+            
+        case 1:
+            self.matchOffset ++;
+            break;
+            
+        case 2:
+            self.ballSkillOffset ++;
+            break;
+            
+        case 3:
+            self.activityOffset ++;
+            break;
+            
+        case 4:
+            self.videoOffset ++;
+            break;
+            
+        default:
+            break;
+    }
+    [self downLoadData];
 }
 
 #pragma mark -- 加载数据
@@ -128,21 +199,20 @@
     [dic setObject:[NSNumber numberWithInteger:self.currentType] forKey:@"type"];
     [dic setObject:[Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@&type=%tddagolfla.com", DEFAULF_USERID, self.currentType]] forKey:@"md5"];
 
-    //    [dic setObject:DEFAULF_USERID forKey:@"ballName"];
     if (offset == 0) {
-        [[ShowHUD showHUD] showAnimationWithText:@"加载中…" FromView:self.view];
+//        [[ShowHUD showHUD] showAnimationWithText:@"加载中…" FromView:self.view];
     }
     [[JsonHttp jsonHttp] httpRequest:@"news/getNewList" JsonKey:nil withData:dic requestMethod:@"GET" failedBlock:^(id errType) {
-        //        [self.courtTableView.header endRefreshing];
+        [self.currentTable.header endRefreshing];
         [self.currentTable.footer endRefreshing];
         
-        [[ShowHUD showHUD] hideAnimationFromView:self.view];
+//        [[ShowHUD showHUD] hideAnimationFromView:self.view];
         
     } completionBlock:^(id data) {
-        //        [self.courtTableView.header endRefreshing];
+        [self.currentTable.header endRefreshing];
         [self.currentTable.footer endRefreshing];
         
-        [[ShowHUD showHUD] hideAnimationFromView:self.view];
+//        [[ShowHUD showHUD] hideAnimationFromView:self.view];
         
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
             
@@ -219,7 +289,7 @@
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
  
     
-    if (self.contantOffSetY2 != 0) {
+    if (scrollView.tag != 700) {
         return;
     }
     
@@ -237,6 +307,7 @@
         if ([self.matchDataArray count] == 0) {
             [self downLoadData];
         }
+        [self changeSeleCt:500];
     }else if (scrollView.contentOffset.x >= screenWidth && scrollView.contentOffset.x < screenWidth * 2){
         
         self.currentTable = [self.scroller viewWithTag:301];
@@ -251,6 +322,7 @@
         if ([self.ballSkillDataArray count] == 0) {
             [self downLoadData];
         }
+        [self changeSeleCt:501];
     }else if (scrollView.contentOffset.x >= screenWidth * 2 && scrollView.contentOffset.x < screenWidth * 3){
         
         self.currentTable = [self.scroller viewWithTag:302];
@@ -265,6 +337,7 @@
         if ([self.activityDataArray count] == 0) {
             [self downLoadData];
         }
+        [self changeSeleCt:502];
     }else if (scrollView.contentOffset.x >=  screenWidth * 3 && scrollView.contentOffset.x < screenWidth * 4){
         
         self.currentTable = [self.scroller viewWithTag:303];
@@ -279,6 +352,7 @@
         if ([self.videoDataArray count] == 0) {
             [self downLoadData];
         }
+        [self changeSeleCt:503];
     }
 
 }
@@ -289,10 +363,13 @@
 - (void)tapTitle:(UITapGestureRecognizer *)tap{
     UILabel *label = (UILabel *)[tap view];
     label.textColor = [UIColor blackColor];
-    
+    label.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"line_news"]];
+
     for (UILabel *subLable in self.titleBackView.subviews) {
         if (label.tag != subLable.tag) {
             subLable.textColor = [UIColor colorWithHexString:@"#a0a0a0"];
+            subLable.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"linedot_news"]];
+
         }
     }
     [self.scroller setContentOffset:CGPointMake((label.tag - 500) * screenWidth , 0) animated:YES];
@@ -304,6 +381,28 @@
         [self downLoadData];
     }
     
+}
+
+- (void)changeSeleCt:(NSInteger)tag{
+    
+    UILabel *label = (UILabel *)[self.titleBackView viewWithTag:tag];
+    label.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"line_news"]];
+
+    
+    for (UILabel *subLable in self.titleBackView.subviews) {
+        if (tag != subLable.tag) {
+            subLable.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"linedot_news"]];
+            
+        }
+    }
+
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    JGWkNewsViewController *newVC = [[JGWkNewsViewController alloc] init];
+    newVC.urlString = [self.allDataArray[self.currentType - 1][indexPath.row] objectForKey:@"url"];
+    [self.navigationController pushViewController:newVC animated:YES];
+
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{

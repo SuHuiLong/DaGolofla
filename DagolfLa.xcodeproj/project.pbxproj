@@ -1092,6 +1092,7 @@
 		F55573D01E515C77001A353E /* JGNewsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F55573CF1E515C77001A353E /* JGNewsTableViewCell.m */; };
 		F55573D61E515C89001A353E /* JGNewsSubViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F55573D31E515C89001A353E /* JGNewsSubViewController.m */; };
 		F55573D71E515C89001A353E /* JGNewsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F55573D51E515C89001A353E /* JGNewsViewController.m */; };
+		F55573DA1E51F992001A353E /* JGWkNewsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F55573D91E51F992001A353E /* JGWkNewsViewController.m */; };
 		F55597221CF5328C00F33099 /* JGPreviewTeamViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F55597211CF5328C00F33099 /* JGPreviewTeamViewController.m */; };
 		F55597281CF6DB0F00F33099 /* JGTeamInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F55597271CF6DB0F00F33099 /* JGTeamInfoViewController.m */; };
 		F565BC611D633EFC00F0C7C3 /* bg_somiaohou_03.png in Resources */ = {isa = PBXBuildFile; fileRef = F565BC601D633EFC00F0C7C3 /* bg_somiaohou_03.png */; };
@@ -3330,6 +3331,8 @@
 		F55573D31E515C89001A353E /* JGNewsSubViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGNewsSubViewController.m; sourceTree = "<group>"; };
 		F55573D41E515C89001A353E /* JGNewsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGNewsViewController.h; sourceTree = "<group>"; };
 		F55573D51E515C89001A353E /* JGNewsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGNewsViewController.m; sourceTree = "<group>"; };
+		F55573D81E51F992001A353E /* JGWkNewsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGWkNewsViewController.h; sourceTree = "<group>"; };
+		F55573D91E51F992001A353E /* JGWkNewsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGWkNewsViewController.m; sourceTree = "<group>"; };
 		F55597201CF5328C00F33099 /* JGPreviewTeamViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGPreviewTeamViewController.h; sourceTree = "<group>"; };
 		F55597211CF5328C00F33099 /* JGPreviewTeamViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGPreviewTeamViewController.m; sourceTree = "<group>"; };
 		F55597261CF6DB0F00F33099 /* JGTeamInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGTeamInfoViewController.h; sourceTree = "<group>"; };
@@ -8342,6 +8345,8 @@
 				F55573D31E515C89001A353E /* JGNewsSubViewController.m */,
 				F55573D41E515C89001A353E /* JGNewsViewController.h */,
 				F55573D51E515C89001A353E /* JGNewsViewController.m */,
+				F55573D81E51F992001A353E /* JGWkNewsViewController.h */,
+				F55573D91E51F992001A353E /* JGWkNewsViewController.m */,
 			);
 			path = "资讯";
 			sourceTree = "<group>";
@@ -9326,6 +9331,7 @@
 				20BC97EA1E1F6051007DFD34 /* JGDactivityListTableViewCell.m in Sources */,
 				F5B646D81D52E1B500F30672 /* JGGuestViewController.m in Sources */,
 				82CE50151D4B240600447875 /* JGLScoreRankViewController.m in Sources */,
+				F55573DA1E51F992001A353E /* JGWkNewsViewController.m in Sources */,
 				203019DD1E0E4293005568E2 /* ZXUPCEReader.m in Sources */,
 				822DC40A1D1944A4000F825D /* JGLPowerSettTableViewCell.m in Sources */,
 				20CA136D1CE4784900DA15B9 /* JGInvoiceViewController.m in Sources */,
