@@ -26,6 +26,8 @@
 
 @property (copy, nonatomic) NSString* fMobile;
 
+@property (assign, nonatomic)NSInteger select;
+
 @property (strong,nonatomic) ChineseString *chineseString;
 
 

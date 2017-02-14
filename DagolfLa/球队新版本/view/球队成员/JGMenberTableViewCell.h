@@ -38,6 +38,8 @@
 
 - (void)configJGHPlayersModel:(JGHPlayersModel *)model;
 
+- (void)showIntentionData:(JGLTeamMemberModel *)model;
+
 @property (weak, nonatomic)id <JGMenberPhoneCellDelegate> delegate;
 
 @end

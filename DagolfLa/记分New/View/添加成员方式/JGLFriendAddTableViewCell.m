@@ -39,6 +39,11 @@
         _imgvSex = [[UIImageView alloc]initWithFrame:CGRectMake(100*screenWidth/375, 30*screenWidth/375, 12*screenWidth/375, 14*screenWidth/375)];
         _imgvSex.image = [UIImage imageNamed:@"xb_n"];
         [self addSubview:_imgvSex];
+        
+        _selectImgv = [[UIImageView alloc]initWithFrame:CGRectMake((screenWidth - 45)*screenWidth/375, 17*screenWidth/375, 15*screenWidth/375, 15*screenWidth/375)];
+        //        [_selectImgv setImage: [UIImage imageNamed:@"duihao"]];
+        _selectImgv.hidden = YES;
+        [self addSubview:_selectImgv];
     }
     return self;
 }
@@ -62,6 +67,27 @@
     
     self.imgvIcon.layer.cornerRadius  = self.imgvIcon.frame.size.width /2;
     self.imgvIcon.layer.masksToBounds = YES;
+}
+
+- (void)configJGLFriendAddTableViewCell:(MyattenModel *)model{
+    self.labelTitle.text = model.userName;
+    
+    [self.imgvIcon sd_setImageWithURL:[Helper imageIconUrl:model.pic] placeholderImage:[UIImage imageNamed:TeamLogoImage]];
+    
+    if ([model.sex integerValue] == 0) {
+        _imgvSex.image = [UIImage imageNamed:@"xb_n"];
+    }else{
+        _imgvSex.image = [UIImage imageNamed:@"xb_nn"];
+    }
+    
+    self.imgvIcon.layer.cornerRadius  = self.imgvIcon.frame.size.width /2;
+    self.imgvIcon.layer.masksToBounds = YES;
+    
+    _selectImgv.hidden = NO;
+    _selectImgv.image = nil;
+    if (model.select == 1) {
+        [_selectImgv setImage: [UIImage imageNamed:@"duihao"]];
+    }
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

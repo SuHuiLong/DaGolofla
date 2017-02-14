@@ -22,6 +22,8 @@
 
 @property (strong, nonatomic)MyattenModel *myModel;
 
+@property (strong, nonatomic) UIImageView* selectImgv;
 
+- (void)configJGLFriendAddTableViewCell:(MyattenModel *)model;
 
 @end

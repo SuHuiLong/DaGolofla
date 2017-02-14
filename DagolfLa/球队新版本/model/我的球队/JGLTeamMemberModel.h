@@ -83,5 +83,6 @@
 
 @property (copy, nonatomic)NSString *industry;//行业
 
+@property (assign, nonatomic)NSInteger select;//是否选择
 
 @end
