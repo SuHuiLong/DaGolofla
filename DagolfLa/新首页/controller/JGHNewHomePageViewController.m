@@ -31,6 +31,7 @@
 #import "JGHConsultChannelCell.h"
 #import "JGHChancelTableViewCell.h"
 #import "JGNewsViewController.h"
+#import "JGWkNewsViewController.h"
 
 static NSString *const JGHPASHeaderTableViewCellIdentifier = @"JGHPASHeaderTableViewCell";
 static NSString *const JGHConsultChannelCellIdentifier = @"JGHConsultChannelCell";
@@ -523,16 +524,23 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
 - (void)didSelectChancelClick:(UIButton *)btn{
     NSLog(@"_showEventID == %ld", (long)_showEventID);
     NSLog(@"btn.tag == %td", btn.tag);
-//    JGWkNewsViewController
+    JGWkNewsViewController *wknewsCtrl = [[JGWkNewsViewController alloc]init];
     if (_showEventID == 0) {
-        
+        wknewsCtrl.detailDic = _indexModel.matchNewList[_showEventID];
+        wknewsCtrl.urlString = [_indexModel.matchNewList[_showEventID] objectForKey:@"url"];
     }else if (_showEventID == 1){
-        
+        wknewsCtrl.detailDic = _indexModel.ballSkillNewList[_showEventID];
+        wknewsCtrl.urlString = [_indexModel.ballSkillNewList[_showEventID] objectForKey:@"url"];
     }else if (_showEventID == 2){
-        
+        wknewsCtrl.detailDic = _indexModel.activityNewList[_showEventID];
+        wknewsCtrl.urlString = [_indexModel.activityNewList[_showEventID] objectForKey:@"url"];
     }else{
-        
+        wknewsCtrl.detailDic = _indexModel.videoNewList[_showEventID];
+        wknewsCtrl.urlString = [_indexModel.videoNewList[_showEventID] objectForKey:@"url"];
     }
+    
+    wknewsCtrl.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:wknewsCtrl animated:YES];
 }
 #pragma mark -- 查看更多
 - (void)didSelectChancelMoreClick:(UIButton *)btn{
