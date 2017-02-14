@@ -28,15 +28,22 @@
 #import "JGDServiceViewController.h" // 定制服务
 #import "JGDBookCourtViewController.h"  // 球场预定
 #import "JGNewsViewController.h" // 咨询
+#import "JGHConsultChannelCell.h"
+#import "JGHChancelTableViewCell.h"
+#import "JGNewsViewController.h"
+#import "JGWkNewsViewController.h"
 
 static NSString *const JGHPASHeaderTableViewCellIdentifier = @"JGHPASHeaderTableViewCell";
+static NSString *const JGHConsultChannelCellIdentifier = @"JGHConsultChannelCell";
+static NSString *const JGHChancelTableViewCellIdentifier = @"JGHChancelTableViewCell";
 static NSString *const JGHShowSectionTableViewCellIdentifier = @"JGHShowSectionTableViewCell";
 static NSString *const JGHShowActivityPhotoCellIdentifier = @"JGHShowActivityPhotoCell";
 static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell";
 
-@interface JGHNewHomePageViewController ()<UITableViewDelegate, UITableViewDataSource, JGHShowSectionTableViewCellDelegate, JGHShowActivityPhotoCellDelegate, JGHNavListViewDelegate, JGHPASHeaderTableViewCellDelegate, JGHIndexTableViewCellDelegate>
+@interface JGHNewHomePageViewController ()<UITableViewDelegate, UITableViewDataSource, JGHShowSectionTableViewCellDelegate, JGHShowActivityPhotoCellDelegate, JGHNavListViewDelegate, JGHPASHeaderTableViewCellDelegate, JGHIndexTableViewCellDelegate, JGHConsultChannelCellDelegate, JGHChancelTableViewCellDelegate>
 {
     NSInteger _showLineID;//0-活动，1-相册，2-成绩
+    NSInteger _showEventID;//0-赛事，1-球技，2-活动，3-视频
 }
 @property (nonatomic, strong)HomeHeadView *topScrollView;//BANNAER图
 
@@ -92,6 +99,7 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
     
     self.indexModel = [[JGHIndexModel alloc]init];
     _showLineID = 0;
+    _showEventID = 0;
 
     [self createHomeTableView];
     
@@ -205,6 +213,7 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
     } completionBlock:^(id data) {
         NSLog(@"%@", data);
         _showLineID = 0;
+        _showEventID = 0;
         
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
             [self.indexModel setValuesForKeysWithDictionary:data];
@@ -245,12 +254,17 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
     UINib *pASHeaderTableViewCellNib = [UINib nibWithNibName:@"JGHPASHeaderTableViewCell" bundle: [NSBundle mainBundle]];
     [self.homeTableView registerNib:pASHeaderTableViewCellNib forCellReuseIdentifier:JGHPASHeaderTableViewCellIdentifier];
     
+    UINib *consultChannelCellNib = [UINib nibWithNibName:@"JGHConsultChannelCell" bundle: [NSBundle mainBundle]];
+    [self.homeTableView registerNib:consultChannelCellNib forCellReuseIdentifier:JGHConsultChannelCellIdentifier];
+    
     UINib *showSectionTableViewCellNib = [UINib nibWithNibName:@"JGHShowSectionTableViewCell" bundle: [NSBundle mainBundle]];
     [self.homeTableView registerNib:showSectionTableViewCellNib forCellReuseIdentifier:JGHShowSectionTableViewCellIdentifier];
     
     [self.homeTableView registerClass:[JGHShowActivityPhotoCell class] forCellReuseIdentifier:JGHShowActivityPhotoCellIdentifier];
 
     [self.homeTableView registerClass:[JGHIndexTableViewCell class] forCellReuseIdentifier:JGHIndexTableViewCellIdentifier];
+    
+    [self.homeTableView registerClass:[JGHChancelTableViewCell class] forCellReuseIdentifier:JGHChancelTableViewCellIdentifier];
     
     self.homeTableView.dataSource = self;
     self.homeTableView.delegate = self;
@@ -327,20 +341,20 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
 #pragma mark - UITableViewDataSource 协议方法
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {  
-    return _indexModel.plateList.count +1;
+    return _indexModel.plateList.count +2;
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return 1;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
-    if (section == _indexModel.plateList.count +1) {
+    if (section == _indexModel.plateList.count +2) {
         return 0;
     }
     return 10 *ProportionAdapter;
 }
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
-    if (section == _indexModel.plateList.count +1) {
+    if (section == _indexModel.plateList.count +2) {
         return nil;
     }else{
         UIView *footView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, 10 *ProportionAdapter)];
@@ -355,6 +369,11 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
         showActivityPhotoCell.delegate = self;
         [showActivityPhotoCell configJGHShowActivityPhotoCell:_indexModel.activityList];
         return showActivityPhotoCell;
+    }else if (indexPath.section == 1){
+        JGHChancelTableViewCell *chancelTableViewCell = [tableView dequeueReusableCellWithIdentifier:JGHChancelTableViewCellIdentifier];
+        chancelTableViewCell.delegate = self;
+        [chancelTableViewCell configJGHChancelTableViewCellMatchList:_indexModel.matchNewList];
+        return chancelTableViewCell;
     }else{
         JGHIndexTableViewCell *indexTableViewCell = [tableView dequeueReusableCellWithIdentifier:JGHIndexTableViewCellIdentifier];
         indexTableViewCell.delegate = self;
@@ -395,12 +414,17 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
         pASHeaderCell.delegate = self;
         [pASHeaderCell configJGHPASHeaderTableViewCell:_showLineID];
         return (UIView *)pASHeaderCell;
+    }else if (section == 1){
+        JGHConsultChannelCell *consultChannelCell = [tableView dequeueReusableCellWithIdentifier:JGHConsultChannelCellIdentifier];
+        consultChannelCell.delegate = self;
+        [consultChannelCell configJGHConsultChannelCell:_showEventID];
+        return (UIView *)consultChannelCell;
     }else{
         JGHShowSectionTableViewCell *showSectionCell = [tableView dequeueReusableCellWithIdentifier:JGHShowSectionTableViewCellIdentifier];
         showSectionCell.delegate = self;
         showSectionCell.moreBtn.tag = 100 +section;
         
-        NSDictionary *dict = _indexModel.plateList[section -1];
+        NSDictionary *dict = _indexModel.plateList[section -2];
         NSInteger _more = 0;
         if ([dict objectForKey:@"moreLink"]) {
             _more = 1;
@@ -416,9 +440,11 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
     if (indexPath.section == 0) {
         // 活动－相册－成绩
         return 190 *ProportionAdapter;
+    }else if (indexPath.section == 1){
+        return 300 *ProportionAdapter;
     }else{
         if (_indexModel.plateList.count > 0) {
-            NSDictionary *dict = _indexModel.plateList[indexPath.section -1];
+            NSDictionary *dict = _indexModel.plateList[indexPath.section -2];
             NSArray *bodyList = [dict objectForKey:@"bodyList"];
             NSInteger bodyLayoutType = [[dict objectForKey:@"bodyLayoutType"] integerValue];
             NSInteger imgHeight = [[dict objectForKey:@"imgHeight"] integerValue];
@@ -463,7 +489,65 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
     newTeamVC.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:newTeamVC animated:YES];
 }
-
+#pragma mark -- 资讯点击事件
+- (void)didSelectJGHConsultChannelCellBtnClick:(UIButton *)btn{
+    JGHChancelTableViewCell *cell = [self.homeTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1]];
+    
+    UIButton *oneBtn = [self.view viewWithTag:801];
+    UIButton *twoBtn = [self.view viewWithTag:802];
+    UIButton *threeBtn = [self.view viewWithTag:803];
+    UIButton *fourBtn = [self.view viewWithTag:804];
+    [oneBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+    [twoBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+    [threeBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+    [fourBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+    
+    if (btn.tag == 801) {
+        _showEventID = 0;
+        [oneBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [cell configJGHChancelTableViewCellMatchList:_indexModel.matchNewList];
+    }else if (btn.tag == 802){
+        _showEventID = 1;
+        [twoBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [cell configJGHChancelTableViewCellMatchList:_indexModel.ballSkillNewList];
+    }else if (btn.tag == 803){
+        _showEventID = 2;
+        [threeBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [cell configJGHChancelTableViewCellMatchList:_indexModel.activityNewList];
+    }else if (btn.tag == 804){
+        _showEventID = 3;
+        [fourBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [cell configJGHChancelTableViewCellMatchList:_indexModel.videoNewList];
+    }
+}
+#pragma mark -- 资讯详情跳转
+- (void)didSelectChancelClick:(UIButton *)btn{
+    NSLog(@"_showEventID == %ld", (long)_showEventID);
+    NSLog(@"btn.tag == %td", btn.tag);
+    JGWkNewsViewController *wknewsCtrl = [[JGWkNewsViewController alloc]init];
+    if (_showEventID == 0) {
+        wknewsCtrl.detailDic = _indexModel.matchNewList[_showEventID];
+        wknewsCtrl.urlString = [_indexModel.matchNewList[_showEventID] objectForKey:@"url"];
+    }else if (_showEventID == 1){
+        wknewsCtrl.detailDic = _indexModel.ballSkillNewList[_showEventID];
+        wknewsCtrl.urlString = [_indexModel.ballSkillNewList[_showEventID] objectForKey:@"url"];
+    }else if (_showEventID == 2){
+        wknewsCtrl.detailDic = _indexModel.activityNewList[_showEventID];
+        wknewsCtrl.urlString = [_indexModel.activityNewList[_showEventID] objectForKey:@"url"];
+    }else{
+        wknewsCtrl.detailDic = _indexModel.videoNewList[_showEventID];
+        wknewsCtrl.urlString = [_indexModel.videoNewList[_showEventID] objectForKey:@"url"];
+    }
+    
+    wknewsCtrl.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:wknewsCtrl animated:YES];
+}
+#pragma mark -- 查看更多
+- (void)didSelectChancelMoreClick:(UIButton *)btn{
+    JGNewsViewController *moreCtrl = [[JGNewsViewController alloc]init];
+    moreCtrl.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:moreCtrl animated:YES];
+}
 #pragma mark -- 1001(活动) －－1002(相册) －－ 1003（成绩）
 - (void)didSelectActivityOrPhotoOrResultsBtn:(UIButton *)btn{
     
