@@ -54,7 +54,7 @@ typedef NS_ENUM(NSInteger, GestureType) {
 #define ActivityBGImage @"teamBGImage"
 
 // 4008605308 公司400电话
-#define Company400 @"4008605308"
+#define Company400 @"4008633988"
 
 #define BDMAPLAT @"lat"
 #define BDMAPLNG @"lng"

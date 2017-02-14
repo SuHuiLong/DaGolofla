@@ -620,7 +620,6 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
 - (void)didSelectShitaBtn:(UIButton *)btn{
 
     JGNewsViewController *newVC = [[JGNewsViewController alloc] init];
-    newVC.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:newVC animated:YES];
     
     return;
