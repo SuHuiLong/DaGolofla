@@ -11,6 +11,7 @@
 @interface JGNewsTableViewCell : UITableViewCell
 
 @property (nonatomic, strong) UIImageView *iconImageV;
+@property (nonatomic, strong) UIImageView *isVideoImageV;
 
 @property (nonatomic, strong) UILabel *titleNewsLB;
 @property (nonatomic, strong) UILabel *deltailLB;

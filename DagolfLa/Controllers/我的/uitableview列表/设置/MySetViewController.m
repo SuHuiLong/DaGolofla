@@ -76,7 +76,7 @@
     self.view.backgroundColor = [UIColor colorWithRed:0.93f green:0.93f blue:0.93f alpha:1.00f];
     _titleArray = [[NSArray alloc]init];
 //    _titleArray = @[@[@"关于我们",@"帮助反馈",@"清空缓存"],@[@"是否接受他人约球"]];
-    _titleArray = @[@"推送设置",@"屏蔽管理",@"帮助反馈",@"清空缓存", @"实名认证", @"设置登录密码", @"设置交易密码"];
+    _titleArray = @[@"推送设置",@"屏蔽管理",@"清空缓存", @"实名认证", @"设置登录密码", @"设置交易密码"];
     
     
     
@@ -100,7 +100,7 @@
 
 -(void)uiConfig
 {
-    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, 44*7*ScreenWidth/375) style:UITableViewStylePlain];
+    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, 44*6*ScreenWidth/375) style:UITableViewStylePlain];
     _tableView.delegate = self;
     _tableView.dataSource = self;
     [self.view addSubview:_tableView];
@@ -110,7 +110,7 @@
     
     [_tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"cellid"];
     
-    _labCache = [[UILabel alloc]initWithFrame:CGRectMake(ScreenWidth-130*ScreenWidth/375, 44*3*ScreenWidth/375, 100*ScreenWidth/375, 44*ScreenWidth/375)];
+    _labCache = [[UILabel alloc]initWithFrame:CGRectMake(ScreenWidth-130*ScreenWidth/375, 44*2*ScreenWidth/375, 100*ScreenWidth/375, 44*ScreenWidth/375)];
     [_tableView addSubview:_labCache];
     NSInteger cacha=[[SDImageCache sharedImageCache] getSize];
     float ca=cacha/1000.0/1000.0;
@@ -176,7 +176,7 @@
  */
 -(void)createBtnView
 {
-    _btnExit = [[UIButton alloc]initWithFrame:CGRectMake(10*ScreenWidth/375, 44*7*ScreenWidth/375+1*10*ScreenWidth/375, ScreenWidth-20*ScreenWidth/375, 44*ScreenWidth/375)];
+    _btnExit = [[UIButton alloc]initWithFrame:CGRectMake(10*ScreenWidth/375, 44*6*ScreenWidth/375+1*10*ScreenWidth/375, ScreenWidth-20*ScreenWidth/375, 44*ScreenWidth/375)];
     [self.view addSubview:_btnExit];
     [_btnExit setTitle:@"退出登录" forState:UIControlStateNormal];
     [_btnExit setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
@@ -287,7 +287,7 @@
 //    {
 //        number  = 1;
 //    }
-    return 7;
+    return 6;
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -319,12 +319,12 @@
         ScreenViewController *screenVC = [[ScreenViewController alloc] init];
         [self.navigationController pushViewController:screenVC animated:YES];
     }
+//    else if (indexPath.row == 2)
+//    {
+//        MySetHelpController* mySetVc = [[MySetHelpController alloc]init];
+//        [self.navigationController pushViewController:mySetVc animated:YES];
+//    }
     else if (indexPath.row == 2)
-    {
-        MySetHelpController* mySetVc = [[MySetHelpController alloc]init];
-        [self.navigationController pushViewController:mySetVc animated:YES];
-    }
-    else if (indexPath.row == 3)
     {
         [[SDImageCache sharedImageCache] clearDisk];
         NSInteger cacha=[[SDImageCache sharedImageCache] getSize];
@@ -335,7 +335,7 @@
             _labCache.text=[NSString stringWithFormat:@"%.2fM",ca];
         }
     }
-    else if (indexPath.row == 4) {
+    else if (indexPath.row == 3) {
         
         NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
         [dic setObject:DEFAULF_USERID forKey:@"userKey"];
@@ -358,13 +358,13 @@
 
     }
     
-    else if (indexPath.row == 5) {
+    else if (indexPath.row == 4) {
         
         JGDChangePWDViewController *changePWD = [[JGDChangePWDViewController alloc] init];
         [self.navigationController pushViewController:changePWD animated:YES];
         
     }
-    else if (indexPath.row == 6) {
+    else if (indexPath.row == 5) {
         
         JGDSetBusinessPWDViewController *busPWDVC = [[JGDSetBusinessPWDViewController alloc] init];
         [self.navigationController pushViewController:busPWDVC animated:YES];

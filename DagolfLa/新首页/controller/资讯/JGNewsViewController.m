@@ -438,6 +438,9 @@
     [cell.iconImageV sd_setImageWithURL:[self.allDataArray[self.currentType - 1][indexPath.row] objectForKey:@"picURL"] placeholderImage:[UIImage imageNamed:@"bg_default"]];
     cell.titleNewsLB.text = [self.allDataArray[self.currentType - 1][indexPath.row] objectForKey:@"title"];
     cell.deltailLB.text = [self.allDataArray[self.currentType - 1][indexPath.row] objectForKey:@"summary"];
+    
+    BOOL isMedia = [[self.allDataArray[self.currentType - 1][indexPath.row] objectForKey:@"mediaTypes"] isEqualToString:@"video"];
+    isMedia ? (cell.isVideoImageV.hidden = NO) : (cell.isVideoImageV.hidden = YES);
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
 }

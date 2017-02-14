@@ -111,7 +111,7 @@
         {
             
             MySetAboutController *abVC = [[MySetAboutController alloc] init];
-            abVC.title = @"关于";
+            abVC.title = @"关于我们";
             [self.navigationController pushViewController:abVC animated:YES];
         }
             break;
