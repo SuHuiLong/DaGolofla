@@ -339,14 +339,15 @@
     NSLog(@"indexPath.row == %td", indexPath.row);
     NSString *type = nil;
     JGLAddActiivePlayModel *model = self.listArray[indexPath.section][indexPath.row];
-    if ([model.signUpInfoKey integerValue] == -1) {
-        type = @"删除";
-        _signUpInfoKey = 0;
-    }else{
-        _signUpInfoKey = 1;
-        type = @"取消报名";
-    }
-    
+//    if ([model.signUpInfoKey integerValue] == -1) {
+//        type = @"删除";
+//        _signUpInfoKey = 0;
+//    }else{
+//        _signUpInfoKey = 1;
+//        type = @"取消报名";
+//    }
+    type = @"取消报名";
+
     UITableViewRowAction *deleteRoWAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive title:type handler:^(UITableViewRowAction *action, NSIndexPath *indexPath) {
         
         NSLog(@"00000");
@@ -362,48 +363,52 @@
 }
 #pragma mark -- 取消报名－－取消意向
 - (void)cancelAndDeleateApplyIndex:(NSInteger)index andRow:(NSInteger)row{
-    NSString *alertString = nil;
-    if (_signUpInfoKey == 0) {
-        alertString = @"确定取消意向？";
-    }else{
-        alertString = @"确定取消报名？";
-    }
+    
+    JGLAddActiivePlayModel *mod = self.listArray[index][row];
+
+    
+    NSString *alertString = [NSString stringWithFormat:@"是否要帮%@取消报名",mod.userName];
+//    if (_signUpInfoKey == 0) {
+//        alertString = @"确定取消意向？";
+//    }else{
+//        alertString = @"确定取消报名？";
+//    }
     
     [Helper alertViewWithTitle:alertString withBlockCancle:^{
         NSLog(@"取消");
     } withBlockSure:^{
         JGLAddActiivePlayModel *model = self.listArray[index][row];
-        if (_signUpInfoKey == 0) {
-            //deleteLineTeamActivitySignUp
-            [[ShowHUD showHUD]showAnimationWithText:@"提交中..." FromView:self.view];
-            /**
-             @Param(value="teamKey"               , require=true) Long teamKey,    // 球队key
-             @Param(value="userKey"               , require=true) Long userKey,    // 用户Key
-             @Param(value="signupKey"             , require=true) Long signupKey,  // 报名timeKey
-             */
-            NSMutableDictionary *postDict = [NSMutableDictionary dictionary];
-            [postDict setObject:model.timeKey forKey:@"signupKey"];
-            //activityKey
-            [postDict setObject:[NSString stringWithFormat:@"%@", _teamKey] forKey:@"teamKey"];
-            [postDict setObject:DEFAULF_USERID forKey:@"userKey"];
-            
-            [[JsonHttp jsonHttp]httpRequestWithMD5:@"team/deleteLineTeamActivitySignUp" JsonKey:nil withData:postDict failedBlock:^(id errType) {
-                NSLog(@"errType == %@", errType);
-                [[ShowHUD showHUD]hideAnimationFromView:self.view];
-            } completionBlock:^(id data) {
-                NSLog(@"data == %@", data);
-                [[ShowHUD showHUD]hideAnimationFromView:self.view];
-                
-                if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
-                    [LQProgressHud showMessage:@"删除意向成功"];
-                    [self headRereshing];
-                }else{
-                    if ([data objectForKey:@"packResultMsg"]) {
-                        [LQProgressHud showMessage:[data objectForKey:@"packResultMsg"]];
-                    }
-                }
-            }];
-        }else{
+//        if (_signUpInfoKey == 0) {
+//            //deleteLineTeamActivitySignUp
+//            [[ShowHUD showHUD]showAnimationWithText:@"提交中..." FromView:self.view];
+//            /**
+//             @Param(value="teamKey"               , require=true) Long teamKey,    // 球队key
+//             @Param(value="userKey"               , require=true) Long userKey,    // 用户Key
+//             @Param(value="signupKey"             , require=true) Long signupKey,  // 报名timeKey
+//             */
+//            NSMutableDictionary *postDict = [NSMutableDictionary dictionary];
+//            [postDict setObject:model.timeKey forKey:@"signupKey"];
+//            //activityKey
+//            [postDict setObject:[NSString stringWithFormat:@"%@", _teamKey] forKey:@"teamKey"];
+//            [postDict setObject:DEFAULF_USERID forKey:@"userKey"];
+//            
+//            [[JsonHttp jsonHttp]httpRequestWithMD5:@"team/deleteLineTeamActivitySignUp" JsonKey:nil withData:postDict failedBlock:^(id errType) {
+//                NSLog(@"errType == %@", errType);
+//                [[ShowHUD showHUD]hideAnimationFromView:self.view];
+//            } completionBlock:^(id data) {
+//                NSLog(@"data == %@", data);
+//                [[ShowHUD showHUD]hideAnimationFromView:self.view];
+//                
+//                if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+//                    [LQProgressHud showMessage:@"删除意向成功"];
+//                    [self headRereshing];
+//                }else{
+//                    if ([data objectForKey:@"packResultMsg"]) {
+//                        [LQProgressHud showMessage:[data objectForKey:@"packResultMsg"]];
+//                    }
+//                }
+//            }];
+//        }else{
             //doUnSignUpTeamActivity
             [[ShowHUD showHUD]showAnimationWithText:@"提交中..." FromView:self.view];
             NSMutableDictionary *postDict = [NSMutableDictionary dictionary];
@@ -429,7 +434,7 @@
                     }
                 }
             }];
-        }
+//        }
     } withBlock:^(UIAlertController *alertView) {
        [self presentViewController:alertView animated:YES completion:nil];
     }];
