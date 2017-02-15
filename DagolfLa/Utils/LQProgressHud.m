@@ -98,7 +98,7 @@
     [[UIApplication sharedApplication].keyWindow addSubview:hud];
     //    [hud hide:YES afterDelay:2.0f];
     
-    [NSTimer scheduledTimerWithTimeInterval:2.0f target:self selector:@selector(hide) userInfo:nil repeats:NO];
+    [NSTimer scheduledTimerWithTimeInterval:1.2f target:self selector:@selector(hide) userInfo:nil repeats:NO];
 }
 
 + (void)showInfoMsg:(NSString *)text {
