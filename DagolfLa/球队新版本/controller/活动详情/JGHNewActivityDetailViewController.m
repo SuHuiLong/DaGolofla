@@ -576,7 +576,7 @@ static CGFloat ImageHeight  = 210.0;
     WKCtrl.teamName = @"活动详情";
     [self.navigationController pushViewController:WKCtrl animated:YES];
 }
-#pragma mark -- 查看已报名人列表
+#pragma mark -- 活动成员及分组
 - (void)getTeamActivitySignUpList:(UIButton *)btn{
     if (_isTeamMember == 1) {
         [[ShowHUD showHUD]showToastWithText:@"您不是该球队队员！" FromView:self.view];
