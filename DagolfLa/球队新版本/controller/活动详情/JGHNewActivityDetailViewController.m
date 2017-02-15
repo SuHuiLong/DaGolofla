@@ -509,6 +509,9 @@ static CGFloat ImageHeight  = 210.0;
         activityCell.delegate = self;
         if (section == 2 || section == 6) {
             activityCell.accessoryType = UITableViewCellAccessoryNone;
+            if (section == 6) {
+                activityCell.line.hidden = YES;
+            }
         }else{
             activityCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         }

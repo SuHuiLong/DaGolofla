@@ -31,6 +31,8 @@
         
         [_oneBtn addTarget:self action:@selector(chooseTeamPalyerClick:) forControlEvents:UIControlEventTouchUpInside];
         
+        
+        
         _palyerImageView = [[UIImageView alloc]initWithFrame:CGRectMake(screenWidth/2 +screenWidth/16*3 , 20*screenWidth/375, screenWidth/9, screenWidth/9)];
         _palyerImageView.image = [UIImage imageNamed:@"palylianxiq"];
         [self addSubview:_palyerImageView];
@@ -46,6 +48,11 @@
         [self addSubview:_twoBtn];
         
         [_twoBtn addTarget:self action:@selector(choosePalyerClick:) forControlEvents:UIControlEventTouchUpInside];
+        
+        
+        _line = [[UILabel alloc]initWithFrame:CGRectMake(screenWidth/2 -1, 25*ProportionAdapter, 1, 55*ProportionAdapter)];
+        _line.backgroundColor = [UIColor colorWithHexString:BG_color];
+        [self addSubview:_line];
     }
     return self;
 }

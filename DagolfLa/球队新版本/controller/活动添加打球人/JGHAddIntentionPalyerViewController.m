@@ -60,12 +60,40 @@ static NSString *const JGHApplyerHeaderCellIdentifier = @"JGHApplyerHeaderCell";
 - (void)completeBtnClick{
 //    _blockPlayListArray(_playListArray);
     NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
-    [dict setObject:@(_teamKey) forKey:@"teamKey"];
-    [dict setObject:@(_activityKey) forKey:@"activityKey"];
-    [dict setObject:_playListArray forKey:@"teamActivitySignUpList"];
-    [[JsonHttp jsonHttp]httpRequestWithMD5:@"team/batchAddLineTeamActivitySignUp" JsonKey:@"teamActivitySignUp" withData:dict failedBlock:^(id errType) {
-        
+//    [dict setObject:@(_teamKey) forKey:@"teamKey"];
+//    [dict setObject:@(_activityKey) forKey:@"activityKey"];
+//    [dict setObject:_playListArray forKey:@"teamActivitySignUpList"];
+//    [[JsonHttp jsonHttp]httpRequestWithMD5:@"team/batchAddLineTeamActivitySignUp" JsonKey:@"teamActivitySignUp" withData:dict failedBlock:^(id errType) {
+//        
+//    } completionBlock:^(id data) {
+//        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+//            _blockRefresh();
+//            [self.navigationController popViewControllerAnimated:YES];
+//        }
+//        else{
+//            [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+//        }
+//    }];
+    
+    NSMutableDictionary *info = [NSMutableDictionary dictionary];
+    [info setObject:@(_teamKey) forKey:@"teamKey"];//球队key
+    [info setObject:@(_activityKey) forKey:@"activityKey"];//球队活动key
+    
+    [info setObject:DEFAULF_UserName forKey:@"userName"];//报名人名称//teamkey 156
+    
+    [info setObject:DEFAULF_USERID forKey:@"userKey"];//用户Key
+    [info setObject:@0 forKey:@"timeKey"];//timeKey
+    
+    [dict setObject:info forKey:@"info"];
+    [dict setObject:@0 forKey:@"srcType"];//报名类型－－0非嘉宾通道
+    [dict setObject:_playListArray forKey:@"teamSignUpList"];
+    NSString * uuid= [FCUUID getUUID];
+    [dict setObject:uuid forKey:@"deviceID"];
+    [[JsonHttp jsonHttp]httpRequestWithMD5:@"team/doTeamActivitySignUp" JsonKey:nil withData:dict failedBlock:^(id errType) {
+        NSLog(@"errType == %@", errType);
+        [[ShowHUD showHUD]hideAnimationFromView:self.view];
     } completionBlock:^(id data) {
+        NSLog(@"%@", data);
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
             _blockRefresh();
             [self.navigationController popViewControllerAnimated:YES];
@@ -74,6 +102,7 @@ static NSString *const JGHApplyerHeaderCellIdentifier = @"JGHApplyerHeaderCell";
             [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
         }
     }];
+    
 //    [self.navigationController popViewControllerAnimated:YES];
 }
 #pragma mark -- 初始化报名人信息

@@ -104,22 +104,21 @@
     [self.view addSubview:btn];
     [btn addTarget:self action:@selector(finishClick) forControlEvents:UIControlEventTouchUpInside];
     
-//    UIImageView* imgv = [[UIImageView alloc]initWithFrame:CGRectMake(40*screenWidth/375, 12*screenWidth/375, 20*screenWidth/375, 20*screenWidth/375)];
-//    imgv.image = [UIImage imageNamed:@"addGes"];
-//    [btn addSubview:imgv];
-//    
-//    UILabel* label = [[UILabel alloc]initWithFrame:CGRectMake(10*screenWidth/375, 10*screenWidth/375, screenWidth-40*screenWidth/375, 24*screenWidth/375)];
-//    label.font = [UIFont systemFontOfSize:16*screenWidth/375];
-//    label.textColor = [UIColor whiteColor];
-//    label.text = @"批量添加活动成员";
-//    label.textAlignment = NSTextAlignmentCenter;
-//    [btn addSubview:label];
+    UIImageView* imgv = [[UIImageView alloc]initWithFrame:CGRectMake(105*screenWidth/375, 12*screenWidth/375, 20*screenWidth/375, 20*screenWidth/375)];
+    imgv.image = [UIImage imageNamed:@"addGes"];
+    [btn addSubview:imgv];
     
-    [btn setImage:[UIImage imageNamed:@"addGes"] forState:UIControlStateNormal];
-    [btn setTitle:@"批量添加活动成员" forState:UIControlStateNormal];
-    btn.titleLabel.font = [UIFont systemFontOfSize:17*ProportionAdapter];
-    [btn setImageEdgeInsets:UIEdgeInsetsMake(13*ProportionAdapter, 10*ProportionAdapter, 13*ProportionAdapter, 10*ProportionAdapter)];
+    UILabel* label = [[UILabel alloc]initWithFrame:CGRectMake(30*screenWidth/375, 10*screenWidth/375, screenWidth-40*screenWidth/375, 24*screenWidth/375)];
+    label.font = [UIFont systemFontOfSize:16*screenWidth/375];
+    label.textColor = [UIColor whiteColor];
+    label.text = @"批量添加活动成员";
+    label.textAlignment = NSTextAlignmentCenter;
+    [btn addSubview:label];
     
+//    [btn setImage:[UIImage imageNamed:@"addGes"] forState:UIControlStateNormal];
+//    [btn setTitle:@"批量添加活动成员" forState:UIControlStateNormal];
+//    btn.titleLabel.font = [UIFont systemFontOfSize:17*ProportionAdapter];
+//    [btn setImageEdgeInsets:UIEdgeInsetsMake(13*ProportionAdapter, 20*ProportionAdapter, 13*ProportionAdapter, 20*ProportionAdapter)];
     
 }
 

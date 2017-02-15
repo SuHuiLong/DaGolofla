@@ -34,4 +34,6 @@
 
 @property (nonatomic, retain)UILabel *palyer;
 
+@property (nonatomic, retain)UILabel *line;
+
 @end

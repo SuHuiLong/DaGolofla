@@ -20,6 +20,8 @@
 
 @property (nonatomic, retain)UILabel *name;
 
+@property (nonatomic, retain)UILabel *line;
+
 @property (nonatomic, retain)UIButton *clickBtn;
 
 - (void)configImageName:(NSString *)imageName withName:(NSString *)name;

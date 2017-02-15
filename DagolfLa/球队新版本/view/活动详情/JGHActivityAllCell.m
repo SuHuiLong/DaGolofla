@@ -23,6 +23,10 @@
         [_clickBtn addTarget:self action:@selector(didSelectBtn:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:_clickBtn];
         
+        _line = [[UILabel alloc]initWithFrame:CGRectMake(0, 43.5, screenWidth, 0.5)];
+        _line.backgroundColor = [UIColor colorWithHexString:BG_color];
+        [self addSubview:_line];
+        
         self.backgroundColor = [UIColor whiteColor];
     }
     return self;
