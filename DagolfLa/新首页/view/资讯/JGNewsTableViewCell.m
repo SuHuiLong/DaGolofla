@@ -30,6 +30,7 @@
         [self.contentView addSubview:self.deltailLB];
         
         UILabel *lineLB = [self lablerect:CGRectMake(10 * ProportionAdapter, 79 * ProportionAdapter, screenWidth - 10 * ProportionAdapter, 0.5 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#e5e5e5"] labelFont:0 text:@"" textAlignment:(NSTextAlignmentLeft)];
+        lineLB.backgroundColor = [UIColor colorWithHexString:@"#e5e5e5"];
         [self.contentView addSubview:lineLB];
         
         
