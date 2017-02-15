@@ -232,7 +232,7 @@
         JGLAddActiivePlayModel *palyModel = [[JGLAddActiivePlayModel alloc]init];
         palyModel = _allListArray[i];
         if ([model.fMobile isEqualToString:palyModel.mobile]) {
-            if (palyModel.selectID == 1) {
+            if (palyModel.selectID == 2) {
                 //移除 勾选
                 model.select = 0;
                 [_allListArray removeObjectAtIndex:i];
