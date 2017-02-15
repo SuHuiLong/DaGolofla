@@ -54,7 +54,7 @@ static NSString *const JGHNewCancelAppListCellIdentifier = @"JGHNewCancelAppList
 
 #pragma mark -- 创建Tableview
 - (void)createTableView{
-    self.cancelApplyTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 10*ProportionAdapter, ScreenWidth, ScreenHeight - 44)];
+    self.cancelApplyTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 10*ProportionAdapter, ScreenWidth, ScreenHeight - 64 -10*ProportionAdapter)];
     self.cancelApplyTableView.dataSource = self;
     self.cancelApplyTableView.delegate = self;
     

@@ -490,7 +490,10 @@ static NSString *const JGHApplyerHeaderCellIdentifier = @"JGHApplyerHeaderCell";
         [_playsBaseDict setObject:textField.text forKey:@"name"];
     }else if (textField.tag == 201){
         NSLog(@"差点");
-        [_playsBaseDict setObject:textField.text forKey:@"almost"];
+        if (textField.text.length > 0) {
+            [_playsBaseDict setObject:textField.text forKey:@"almost"];
+        }
+        
     }else{
         NSLog(@"手机号");
         [_playsBaseDict setObject:textField.text forKey:@"mobile"];
