@@ -263,6 +263,15 @@ static NSString *const JGHSysInformCellIdentifier = @"JGHSysInformCell";
             vc.hidesBottomBarWhenPushed = YES;
             [weakSelf.navigationController pushViewController:vc animated:YES];
         }];
+        
+        //统计
+        if ([model.pushLogKey integerValue] > 0) {
+            NSMutableDictionary *pushDict = [NSMutableDictionary dictionary];
+            [pushDict setObject:model.pushLogKey forKey:@"pushLogKey"];
+            [pushDict setObject:DEFAULF_USERID forKey:@"userKey"];
+            [pushDict setObject:@1 forKey:@"type"];
+            [Helper requestCountPushLog:pushDict];
+        }
     }    
 }
 
