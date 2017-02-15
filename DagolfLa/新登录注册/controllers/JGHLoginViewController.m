@@ -649,6 +649,8 @@ void ContactsChangeCallback (ABAddressBookRef addressBook,
     _passwordText.clearButtonMode = UITextFieldViewModeAlways;
     _passwordText.keyboardType = UIKeyboardTypeAlphabet;
     _passwordText.delegate = self;
+    _passwordText.autocorrectionType = YES;
+    _passwordText.autocapitalizationType = UITextAutocapitalizationTypeNone;
     [_passwordView addSubview:_passwordText];
     
     UIButton *forgotPasswordBtn = [[UIButton alloc]initWithFrame:CGRectMake(screenWidth - 88*ProportionAdapter, (15 + 10 +50 +50 +15) *ProportionAdapter, 80 *ProportionAdapter, 15 *ProportionAdapter)];

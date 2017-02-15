@@ -103,6 +103,8 @@
     self.PWDTF.placeholder = @"设置登录密码（至少6位）";
     self.PWDTF.secureTextEntry = NO;
     self.PWDTF.keyboardType = UIKeyboardTypeAlphabet;
+    self.PWDTF.autocorrectionType = YES;
+    self.PWDTF.autocapitalizationType = UITextAutocapitalizationTypeNone;
     self.PWDTF.font = [UIFont systemFontOfSize:16 * ProportionAdapter];
     [PWDView addSubview:self.PWDTF];
     

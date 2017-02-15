@@ -524,19 +524,22 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
 - (void)didSelectChancelClick:(UIButton *)btn{
     NSLog(@"_showEventID == %ld", (long)_showEventID);
     NSLog(@"btn.tag == %td", btn.tag);
+
+    [self isLoginUp];
+
     JGWkNewsViewController *wknewsCtrl = [[JGWkNewsViewController alloc]init];
     if (_showEventID == 0) {
-        wknewsCtrl.detailDic = _indexModel.matchNewList[_showEventID];
-        wknewsCtrl.urlString = [_indexModel.matchNewList[_showEventID] objectForKey:@"url"];
+        wknewsCtrl.detailDic = _indexModel.matchNewList[btn.tag - 900];
+        wknewsCtrl.urlString = [_indexModel.matchNewList[btn.tag - 900] objectForKey:@"url"];
     }else if (_showEventID == 1){
-        wknewsCtrl.detailDic = _indexModel.ballSkillNewList[_showEventID];
-        wknewsCtrl.urlString = [_indexModel.ballSkillNewList[_showEventID] objectForKey:@"url"];
+        wknewsCtrl.detailDic = _indexModel.ballSkillNewList[btn.tag - 900];
+        wknewsCtrl.urlString = [_indexModel.ballSkillNewList[btn.tag - 900] objectForKey:@"url"];
     }else if (_showEventID == 2){
-        wknewsCtrl.detailDic = _indexModel.activityNewList[_showEventID];
-        wknewsCtrl.urlString = [_indexModel.activityNewList[_showEventID] objectForKey:@"url"];
+        wknewsCtrl.detailDic = _indexModel.activityNewList[btn.tag - 900];
+        wknewsCtrl.urlString = [_indexModel.activityNewList[btn.tag - 900] objectForKey:@"url"];
     }else{
-        wknewsCtrl.detailDic = _indexModel.videoNewList[_showEventID];
-        wknewsCtrl.urlString = [_indexModel.videoNewList[_showEventID] objectForKey:@"url"];
+        wknewsCtrl.detailDic = _indexModel.videoNewList[btn.tag - 900];
+        wknewsCtrl.urlString = [_indexModel.videoNewList[btn.tag - 900] objectForKey:@"url"];
     }
     
     wknewsCtrl.hidesBottomBarWhenPushed = YES;
@@ -544,6 +547,9 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
 }
 #pragma mark -- 查看更多
 - (void)didSelectChancelMoreClick:(UIButton *)btn{
+
+    [self isLoginUp];
+
     JGNewsViewController *moreCtrl = [[JGNewsViewController alloc]init];
     moreCtrl.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:moreCtrl animated:YES];
