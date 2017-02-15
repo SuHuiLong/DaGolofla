@@ -608,19 +608,18 @@
                 NSString *urlString = [NSString stringWithFormat:@"%@", [[dict objectForKey:@"pushData"] objectForKey:@"url"]];
                 [self pushSpecifiedViewCtrl:urlString];
                 
-                [Helper alertViewWithTitle:pushDataString withBlock:^(UIAlertController *alertView) {
-                    UIWindow   *alertWindow = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
-                    alertWindow.rootViewController = [[UIViewController alloc] init];
-                    alertWindow.windowLevel = UIWindowLevelAlert + 1;
-                    [alertWindow makeKeyAndVisible];
-                    [alertWindow.rootViewController presentViewController:alertView animated:YES completion:nil];
-                }];
-                
+//                [Helper alertViewWithTitle:urlString withBlock:^(UIAlertController *alertView) {
+//                    UIWindow   *alertWindow = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+//                    alertWindow.rootViewController = [[UIViewController alloc] init];
+//                    alertWindow.windowLevel = UIWindowLevelAlert + 1;
+//                    [alertWindow makeKeyAndVisible];
+//                    [alertWindow.rootViewController presentViewController:alertView animated:YES completion:nil];
+//                }];
                 
                 //统计
                 if ([[dict objectForKey:@"pushData"] objectForKey:@"pushLogKey"]) {
                     NSMutableDictionary *pushDict = [NSMutableDictionary dictionary];
-                    [pushDict setObject:[[dict objectForKey:@"pushData"] objectForKey:@"pushLogKey"] forKey:@"pushLogKey"];
+                    [pushDict setObject:[NSString stringWithFormat:@"%@", [[dict objectForKey:@"pushData"] objectForKey:@"pushLogKey"]] forKey:@"pushLogKey"];
                     [pushDict setObject:DEFAULF_USERID forKey:@"userKey"];
                     [pushDict setObject:@0 forKey:@"type"];
                     [Helper requestCountPushLog:pushDict];

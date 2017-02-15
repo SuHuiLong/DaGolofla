@@ -97,7 +97,7 @@ static CGFloat ImageHeight  = 210.0;
 - (void)setData{
     self.titleField.text = self.model.name;
     self.addressBtn.hidden = NO;
-    NSDictionary *attribute = @{NSFontAttributeName: [UIFont systemFontOfSize:13]};
+    NSDictionary *attribute = @{NSFontAttributeName: [UIFont systemFontOfSize:15*ProportionAdapter]};
     CGSize size = [self.model.ballName boundingRectWithSize:CGSizeMake(screenWidth - 100, 0) options: NSStringDrawingTruncatesLastVisibleLine | NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading attributes:attribute context:nil].size;
     CGRect address = self.addressBtn.frame;
     self.addressBtn.frame = CGRectMake(address.origin.x, address.origin.y, size.width, 25);
@@ -201,16 +201,19 @@ static CGFloat ImageHeight  = 210.0;
     self.addressBtn = [[UIButton alloc]initWithFrame:CGRectMake(85, 180, 70, 25)];
     self.addressBtn.tag = 333;
     [self.addressBtn setTitle:@"地址" forState:UIControlStateNormal];
-    self.addressBtn.titleLabel.font = [UIFont systemFontOfSize:13];
+    self.addressBtn.titleLabel.font = [UIFont systemFontOfSize:15*ProportionAdapter];
     self.addressBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     
     [self.imgProfile addSubview:self.addressBtn];
     
     //分享按钮
-    UIButton *shareBtn = [[UIButton alloc]initWithFrame:CGRectMake(screenWidth-44, self.titleField.frame.origin.y, 44, 25)];
+    UIButton *shareBtn = [UIButton buttonWithType:UIButtonTypeSystem];
+    shareBtn.frame = CGRectMake(screenWidth-44, self.titleField.frame.origin.y, 44, 25);
     [shareBtn setImage:[UIImage imageNamed:@"fenxiang"] forState:UIControlStateNormal];
+    
     [shareBtn addTarget:self action:@selector(addShare) forControlEvents:UIControlEventTouchUpInside];
-    [self.titleView addSubview:shareBtn];
+    [shareBtn setTintColor:[UIColor whiteColor]];
+    [self.imgProfile addSubview:shareBtn];
     
     [self dataSet];
 }

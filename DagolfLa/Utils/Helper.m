@@ -793,7 +793,13 @@
     [dataDic setObject:DEFAULF_USERID forKey:@"seeUserKey"];
     [dataDic setObject:[NSString stringWithFormat:@"userKey=%@&seeUserKey=%@dagolfla.com",DEFAULF_USERID, DEFAULF_USERID] forKey:@"md5"];
     
-    [[JsonHttp jsonHttp]httpRequestWithMD5:@"user/getUserMainInfo" JsonKey:nil withData:dataDic failedBlock:^(id errType) {
+//    [[JsonHttp jsonHttp]httpRequest:@"user/getUserMainInfo" JsonKey:nil withData:dataDic requestMethod:@"GET" failedBlock:^(id errType) {
+//        
+//    } completionBlock:^(id data) {
+//        
+//    }];
+    
+    [[JsonHttp jsonHttp]httpRequest:@"user/getUserMainInfo" JsonKey:nil withData:dataDic requestMethod:@"GET" failedBlock:^(id errType) {
         
     } completionBlock:^(id data) {
         
